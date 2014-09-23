@@ -12,4 +12,4 @@ $ npm install
 $ npm start
 ```
 
-Visit [localhost:3012](http://localhost:3012/).
+Visit [localhost:3012/app/index.html](http://localhost:3012/app/index.html).
