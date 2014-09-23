@@ -4,5 +4,5 @@
 	branch = bip32
 [submodule "assets/js/my-wallet-legacy"]
 	path = assets/js/my-wallet-legacy
-	url = git@github.com:sjors/My-Wallet.git
+	url = https://github.com/sjors/My-Wallet.git
 	branch = nojsqrcode
