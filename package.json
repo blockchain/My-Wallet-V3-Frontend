@@ -21,7 +21,7 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "start": "http-server -a 0.0.0.0 -p 3012"
+    "start": "node ./app.js"
   },
   "engines": {
     "node": "0.10.x"

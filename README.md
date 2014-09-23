@@ -13,3 +13,7 @@ $ npm start
 ```
 
 Visit [localhost:3012/app/index.html](http://localhost:3012/app/index.html).
+
+## Deploy
+
+Curently the app is configured to be deployed on Heroku.
