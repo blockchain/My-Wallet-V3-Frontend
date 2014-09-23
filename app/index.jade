@@ -14,6 +14,16 @@ head
     !=js('controllers')
     !=js('filters')
     !=js('services')
+    
+    //- Blockchain MyWallet javascript: bip32 branch:
+    //- !=js('my-wallet-modern/shared')
+    //- !=js('my-wallet-modern/bitcoinjs')
+    //- !=js('my-wallet-modern/wallet')
+    
+    //- Blockchain MyWallet javascript: master branch:
+    !=js('my-wallet-legacy/shared')
+    !=js('my-wallet-legacy/bitcoinjs')
+    !=js('my-wallet-legacy/wallet')
   body
     .view-container
       .view-frame(ng-view='ng-view')
