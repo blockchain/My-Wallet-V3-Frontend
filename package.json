@@ -19,6 +19,7 @@
     "shelljs": "^0.2.6"
   },
   "scripts": {
+    "postinstall": "bower install",
     "start": "http-server -a 0.0.0.0 -p 3012"
   },
   "engines": {
