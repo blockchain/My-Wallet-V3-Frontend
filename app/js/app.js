@@ -13,7 +13,7 @@ walletApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {
-        templateUrl: 'partials/wallet.html',
+        templateUrl: 'partials/wallet',
         controller: 'WalletCtrl'
       }).
       otherwise({
