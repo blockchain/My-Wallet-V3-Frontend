@@ -1,7 +1,7 @@
-# [submodule "assets/js/my-wallet-modern"]
-#   path = assets/js/my-wallet-modern
-#   url = https://github.com/blockchain/My-Wallet.git
-#   branch = bip32
+[submodule "assets/js/my-wallet-modern"]
+	path = assets/js/my-wallet-modern
+	url = https://github.com/blockchain/My-Wallet.git
+	branch = bip32
 [submodule "assets/js/my-wallet-legacy"]
 	path = assets/js/my-wallet-legacy
 	url = https://github.com/sjors/My-Wallet.git
