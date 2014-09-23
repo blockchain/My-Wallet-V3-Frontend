@@ -4,9 +4,6 @@
   "version": "0.0.0",
   "description": "AngularJS front-end to My-Wallet-HD.",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
   "devDependencies": {
     "karma": "^0.12.16",
     "karma-chrome-launcher": "^0.1.4",
