@@ -28,6 +28,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout) ->
     wallet.generateAddress = () ->
       wallet.my.generateNewKey()
       wallet.updateAddresses()
+      
+    wallet.logout = () ->
+      wallet.my = null
+      wallet.status.isLoggedIn = false
+      while wallet.addresses.length > 0
+        wallet.addresses.pop()
     
     ##################################
     #             Private            #

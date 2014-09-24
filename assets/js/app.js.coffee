@@ -7,6 +7,7 @@ walletApp = angular.module("walletApp", [
   "walletServices"
   "ui.router"
   "ui.bootstrap"
+  "ngCookies"
 ])
 walletApp.config ($stateProvider, $urlRouterProvider) ->
     $urlRouterProvider.otherwise("/");
