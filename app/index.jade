@@ -9,7 +9,8 @@ head
     script(src='bower_components/angular/angular.js')
     script(src='bower_components/angular-animate/angular-animate.js')
     script(src='bower_components/angular-route/angular-route.js')
-    script(src='bower_components/angular-resource/angular-resource.js')
+    script(src='bower_components/angular-ui-router/release/angular-ui-router.min.js')
+    
     !=js('app')
     !=js('controllers')
     !=js('filters')
@@ -21,5 +22,19 @@ head
     !=js('my-wallet/old_bitcoinjs')
     !=js('my-wallet/wallet')
   body
-    .view-container
-      .view-frame(ng-view='ng-view')
+    .navbar.navbar-inverse(role="navigation")
+      .container-fluid
+        a.navbar-brand.col-xs-2(href="#") Blockchain
+        ul.nav.navbar-nav.col-xs-8
+          li.item(ui-sref-active="active") 
+            a(ui-sref="dashboard") Dashboard
+          li.item(ui-sref-active="active") 
+            a(ui-sref="transactions") Transactions
+        ul.nav.navbar-nav.col-xs-2
+          li.pull-right
+            a(href="#") My Account
+                
+    .container
+      .row
+        .col-xs-2
+        .col-xs-10(ui-view)

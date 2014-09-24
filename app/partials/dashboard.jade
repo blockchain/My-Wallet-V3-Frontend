@@ -1,0 +1,14 @@
+div(ng-hide="status.isLoggedIn")
+  form.form-horizontal(role="form")
+    .form-group
+      label.control-label.col-md-1 UID
+      .col-md-3
+        input.form-control(type="text", ng-model="uid")
+    .form-group
+      label.control-label.col-md-1 Password
+      .col-md-3
+        input.form-control(type="password", ng-model="password")
+      .col-md-1
+        button.btn.btn-primary(ng-click="login()") Login
+div(ng-show="status.isLoggedIn")
+  p Welcome to your wallet.
