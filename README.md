@@ -26,7 +26,8 @@ http://morning-mesa-2022.herokuapp.com/
 
 After loading the page and disabling CORS security you can open any wallet. Demo wallet:
 
-| UID | Password |
+UID | Password
+--------------
 | 78019bee-7a27-490b-ab8a-446c2749bf1f | 1234567890 |
 
 After login, you'll see a list of addresses. If something goes wrong during the login process, error messages will appear in the console.
