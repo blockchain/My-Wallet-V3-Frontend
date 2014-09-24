@@ -24,14 +24,9 @@ http://morning-mesa-2022.herokuapp.com/
 
 ## Usage
 
-After loading the page and disabling CORS security, use the console to open a wallet:
+After loading the page and disabling CORS security you can open any wallet. Demo wallet:
 
-```javascript
-root = "https://blockchain.info/"
-MyWallet.setGUID("78019bee-7a27-490b-ab8a-446c2749bf1f")
-MyWallet.restoreWallet("1234567890")
-MyWallet.getActiveAddresses()
-MyWallet.getArchivedAddresses()
-var key = MyWallet.generateNewKey()
-key.pub.getAddress().toString()
-```
+| UID | Password |
+| 78019bee-7a27-490b-ab8a-446c2749bf1f | 1234567890 |
+
+After login, you'll see a list of addresses. If something goes wrong during the login process, error messages will appear in the console.
