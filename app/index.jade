@@ -5,8 +5,10 @@ head
     title Blockchain Wallet HD
     link(rel='stylesheet', href='bower_components/bootstrap/dist/css/bootstrap.css')
     link(rel='stylesheet', href='css/app.css')
-    script(src='bower_components/jquery/jquery.js')
+    link(rel='stylesheet', href='css/transactions.css')
+    script(src='bower_components/jquery/dist/jquery.min.js')
     script(src='bower_components/angular/angular.js')
+    script(src='bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js')
     script(src='bower_components/angular-animate/angular-animate.js')
     script(src='bower_components/angular-route/angular-route.js')
     script(src='bower_components/angular-ui-router/release/angular-ui-router.min.js')
@@ -34,4 +36,4 @@ head
           li.pull-right
             a(href="#") My Account
                 
-    .container(ui-view)
+    .container-fluid(ui-view)

@@ -1,11 +1,21 @@
 .row
-  .col-xs-2
-  .col-xs-10
-    .row
-      .col-md-12
-        ul
-          li(ng-repeat="address in addresses | filter:{active:true}")
-            {{ address.address }}
-    .row(ng-show="status.isLoggedIn")
-      .col-md-12
-        button.btn.btn-primary(ng-click="generateAddress()") New address
+  .col-xs-3
+    table#accounts-header
+      tr
+        td My Accounts
+        td.right
+          a(ng-click="generateAddress()") + NEW
+    table#accounts
+      tr.active
+        td All Accounts
+        td.amount {{ totals.fiat | currency:"$" }} USD
+      tr(ng-repeat="address in addresses | filter:{active:true}")
+        td 
+          a(href="" tooltip-placement="right" tooltip="{{ address.address }}")
+            {{ address.name }}
+        td.amount {{ address.balance | currency:"$" }} USD
+          
+  .col-xs-9
+    h1 {{ totals.fiat | currency:"$" }}
+    p {{ totals.btc | currency:"" }} BTC
+        

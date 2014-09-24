@@ -3,7 +3,7 @@
 # Services 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout) ->
-  wallet = {status: {isLoggedIn: false}}
+  wallet = {status: {isLoggedIn: false}, totals: {}}
   
   wallet.addresses = []
   
@@ -41,6 +41,14 @@ walletServices.factory "Wallet", ($log, $window, $timeout) ->
             match = true
           
         if !match
-          wallet.addresses.push {address: activeAddress, active: true}
-              
+          wallet.addresses.push {address: activeAddress, active: true, balance: 100.00, name: "My " + activeAddress.substring(0,15)}
+      
+      tally = 0.0
+      for address in wallet.addresses
+        tally = tally + address.balance
+      
+      
+      wallet.totals.fiat = tally
+      wallet.totals.btc  = tally / 3.0
+      
   return  wallet

@@ -6,6 +6,7 @@ controllers = angular.module("controllers", [])
 controllers.controller "WalletCtrl", ($scope, Wallet, $state) ->
   $scope.addresses = Wallet.addresses
   $scope.status    = Wallet.status
+  $scope.totals = Wallet.totals
   
   unless Wallet.status.isLoggedIn
     $state.go("dashboard")
