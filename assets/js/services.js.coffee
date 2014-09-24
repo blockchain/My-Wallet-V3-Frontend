@@ -7,6 +7,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout) ->
   
   wallet.addresses = []
   
+  ##################################
+  #             Public             #
+  ##################################
+  
   wallet.login = (uid, password) ->    
     $window.root = "https://blockchain.info/"
     wallet.my = MyWallet
@@ -21,8 +25,22 @@ walletServices.factory "Wallet", ($log, $window, $timeout) ->
       ), 500
     )    
     
+    wallet.generateAddress = () ->
+      wallet.my.generateNewKey()
+      wallet.updateAddresses()
+    
+    ##################################
+    #             Private            #
+    ##################################
+    
     wallet.updateAddresses = () ->
-      for address in wallet.my.getActiveAddresses()
-        wallet.addresses.push {address: address, active: true}
+      for activeAddress in wallet.my.getActiveAddresses()
+        match = false
+        for address in wallet.addresses
+          if address.address == activeAddress
+            match = true
+          
+        if !match
+          wallet.addresses.push {address: activeAddress, active: true}
               
   return  wallet
