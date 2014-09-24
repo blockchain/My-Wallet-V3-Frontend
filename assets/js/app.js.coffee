@@ -8,7 +8,7 @@ walletApp = angular.module("walletApp", [
   "ui.router"
 ])
 walletApp.config ($stateProvider, $urlRouterProvider) ->
-    $urlRouterProvider.otherwise("/dashboard");
+    $urlRouterProvider.otherwise("/");
     
     $stateProvider.state("dashboard",
       url: "/"
