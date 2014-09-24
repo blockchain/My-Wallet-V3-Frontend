@@ -29,9 +29,9 @@ After loading the page and disabling CORS security, use the console to open a wa
 ```javascript
 root = "https://blockchain.info/"
 MyWallet.setGUID("78019bee-7a27-490b-ab8a-446c2749bf1f")
-data = MyWallet.getEncryptedWalletData()
-var wallet = {}
-MyWallet.decryptWallet(data, "1234567890", function(obj, root) {wallet = obj;})
-console.log(wallet.keys[0].addr)
-console.log(wallet.keys[1].addr)
+MyWallet.restoreWallet("1234567890")
+MyWallet.getActiveAddresses()
+MyWallet.getArchivedAddresses()
+var key = MyWallet.generateNewKey()
+key.pub.getAddress().toString()
 ```

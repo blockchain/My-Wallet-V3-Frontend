@@ -15,15 +15,11 @@ head
     !=js('filters')
     !=js('services')
     
-    //- Blockchain MyWallet javascript: bip32 branch:
-    //- !=js('my-wallet-modern/shared')
-    //- !=js('my-wallet-modern/bitcoinjs')
-    //- !=js('my-wallet-modern/wallet')
-    
-    //- Blockchain MyWallet javascript: master branch:
-    !=js('my-wallet-legacy/shared')
-    !=js('my-wallet-legacy/bitcoinjs')
-    !=js('my-wallet-legacy/wallet')
+    //- Blockchain MyWallet javascript:
+    !=js('my-wallet/shared')
+    !=js('my-wallet/bitcoinjs')
+    !=js('my-wallet/old_bitcoinjs')
+    !=js('my-wallet/wallet')
   body
     .view-container
       .view-frame(ng-view='ng-view')
