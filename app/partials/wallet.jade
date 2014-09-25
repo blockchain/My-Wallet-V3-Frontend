@@ -16,7 +16,7 @@
         td.amount {{ address.balance | fiat:settings.currency }}
           
   .col-xs-9
-    h1 {{ totals.fiat | currency:"$" }}
+    h1 {{ totals.fiat | currency:settings.currency.symbol }}
     p {{ totals.btc | btc }}
     #transactions
       .row(ng-repeat="transaction in transactions")
