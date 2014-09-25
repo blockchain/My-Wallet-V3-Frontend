@@ -21,9 +21,18 @@ walletServices.factory "Wallet", ($log, $window, $timeout) ->
       wallet.my.restoreWallet(password)
       wallet.status.isLoggedIn = true
       
-      wallet.updateAddresses()      
-      ), 500
-    )    
+      wallet.updateAddresses()
+      
+      # Debug:
+      $log.info wallet.my.getLanguage()
+      $log.info $window.symbol_local
+      
+      # getTransactions needs to be called after some asynchronous event
+      $timeout((->
+        $log.info wallet.my.getTransactions()
+        ), 500)
+       
+      ), 500)    
     
     wallet.generateAddress = () ->
       wallet.my.generateNewKey()
