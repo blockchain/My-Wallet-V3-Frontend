@@ -36,6 +36,11 @@ table#accounts td.amount {
   padding-top: 10px;
 }
 
+span.note {
+  color: #999999;
+  font-size: 9pt;
+}
+
 a.add-note {
   color: #CCCCCC;
 }
