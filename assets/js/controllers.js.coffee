@@ -9,6 +9,7 @@ controllers.controller "WalletCtrl", ($scope, Wallet, $state, $cookies) ->
   $scope.addresses = Wallet.addresses
   $scope.transactions = Wallet.transactions
   $scope.status    = Wallet.status
+  $scope.settings = Wallet.settings
   $scope.totals = Wallet.totals
   
   # Restore after browser refresh
