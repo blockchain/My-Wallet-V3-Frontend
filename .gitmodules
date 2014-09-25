@@ -1,4 +1,4 @@
 [submodule "assets/js/my-wallet"]
 	path = assets/js/my-wallet
-	url = https://github.com/sjors/My-Wallet.git
+	url = https://github.com/blockchain/My-Wallet.git
 	branch = refactor
