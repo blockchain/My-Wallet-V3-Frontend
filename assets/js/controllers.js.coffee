@@ -3,8 +3,11 @@
 # Controllers 
 controllers = angular.module("controllers", [])
 
+
+
 controllers.controller "WalletCtrl", ($scope, Wallet, $state, $cookies) ->
   $scope.addresses = Wallet.addresses
+  $scope.transactions = Wallet.transactions
   $scope.status    = Wallet.status
   $scope.totals = Wallet.totals
   
@@ -18,7 +21,7 @@ controllers.controller "WalletCtrl", ($scope, Wallet, $state, $cookies) ->
   
   $scope.generateAddress = () ->
     Wallet.generateAddress()
-    
+
 
     
 controllers.controller "DashboardCtrl", ($scope, $log, Wallet, $cookies) ->

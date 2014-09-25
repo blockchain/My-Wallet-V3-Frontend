@@ -29,3 +29,13 @@ table#accounts td {
 table#accounts td.amount {
   text-align: right;
 }
+
+#transactions a.date {
+  color: gray;
+  font-size: 9pt;
+  padding-top: 10px;
+}
+
+a.add-note {
+  color: #CCCCCC;
+}

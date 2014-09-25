@@ -5,7 +5,9 @@ walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout) ->
   wallet = {status: {isLoggedIn: false}, totals: {}}
   
-  wallet.addresses = []
+  wallet.addresses    = []
+  wallet.transactions = []
+  
   
   ##################################
   #             Public             #
@@ -24,12 +26,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout) ->
       wallet.updateAddresses()
       
       # Debug:
-      $log.info wallet.my.getLanguage()
-      $log.info $window.symbol_local
+      # $log.info wallet.my.getLanguage()
+      # $log.info $window.symbol_local
       
       # getTransactions needs to be called after some asynchronous event
       $timeout((->
-        $log.info wallet.my.getTransactions()
+        wallet.updateTransactions()
         ), 500)
        
       ), 500)    
@@ -65,5 +67,13 @@ walletServices.factory "Wallet", ($log, $window, $timeout) ->
       
       wallet.totals.fiat = tally
       wallet.totals.btc  = tally / 3.0
+      
+    wallet.updateTransactions = () ->
+      for tx in wallet.my.getTransactions()
+        transaction = wallet.my.parseTransaction(tx)
+        transaction.fiat = transaction.result / 30000.0
+        wallet.transactions.push transaction 
+      
+      $log.info wallet.transactions
       
   return  wallet
