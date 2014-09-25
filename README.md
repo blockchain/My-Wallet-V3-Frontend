@@ -16,6 +16,16 @@ Visit [localhost:3012](http://localhost:3012/).
 
 You need to disable your browser CORS security for the time being, e.g. with this [Chrome plugin](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en-US).
 
+## Test
+
+You may need to install PhantomJS seperately:
+
+    brew install phantomjs
+
+To run test and monitor for changes:
+
+    npm test
+
 ## Deploy
 
 Curently the app is configured to be deployed on Heroku:

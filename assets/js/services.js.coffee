@@ -2,7 +2,7 @@
 
 # Services 
 walletServices = angular.module("walletServices", [])
-walletServices.factory "Wallet", ($log, $window, $timeout) ->
+walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet) ->
   wallet = {status: {isLoggedIn: false}, totals: {}, language: null, settings: {}}
   
   wallet.addresses    = []
