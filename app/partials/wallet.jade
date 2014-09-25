@@ -45,8 +45,8 @@
             {{ transaction.note }}
         .col-xs-2
           span(ng-show="transaction.intraWallet")
-            a.btn.btn-info.btn-block.btn-sm(href="") $ {{ -transaction.fiat | number:2 }}
+            a.btn.btn-info.btn-block.btn-sm(href="") {{ settings.currency.symbol }} {{ -transaction.fiat | number:2 }}
           span(ng-show="transaction.result > 0 && !transaction.intraWallet")
-            a.btn.btn-success.btn-block.btn-sm(href="") $ {{ transaction.fiat | number:2 }}
+            a.btn.btn-success.btn-block.btn-sm(href="") {{ settings.currency.symbol }} {{ transaction.fiat | number:2 }}
           span(ng-show="transaction.result < 0 && !transaction.intraWallet")
-            a.btn.btn-danger.btn-block.btn-sm(href="") -$ {{ -transaction.fiat | number:2 }}
+            a.btn.btn-danger.btn-block.btn-sm(href="") -{{ settings.currency.symbol }} {{ -transaction.fiat | number:2 }}
