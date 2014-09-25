@@ -59,20 +59,22 @@ walletServices.factory "Wallet", ($log, $window, $timeout) ->
             match = true
           
         if !match
-          wallet.addresses.push {address: activeAddress, active: true, balance: 30000.0, name: (MyWallet.getAddressLabel(activeAddress) || activeAddress.substring(0,15))}
-      
-      tally = 0.0
-      for address in wallet.addresses
-        tally = tally + address.balance
-      
-      
-      wallet.totals.btc = tally
-      wallet.totals.fiat  = tally / wallet.settings.currency.conversion
+          wallet.addresses.push {address: activeAddress, active: true, balance: null, name: (wallet.my.getAddressLabel(activeAddress) || activeAddress.substring(0,15))}
+ 
       
     wallet.updateTransactions = () ->
       for tx in wallet.my.getTransactions()
         transaction = wallet.my.parseTransaction(tx)
         transaction.fiat = transaction.result / wallet.settings.currency.conversion
         wallet.transactions.push transaction 
+      
+      # Update address balances:
+      tally = 0.0
+      for address in wallet.addresses
+        address.balance = wallet.my.getAddressBalance(address.address)
+        tally = tally + address.balance
+      
+      wallet.totals.btc = tally
+      wallet.totals.fiat  = tally / wallet.settings.currency.conversion
             
   return  wallet
