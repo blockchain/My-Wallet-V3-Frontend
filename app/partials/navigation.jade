@@ -1,0 +1,10 @@
+.container-fluid
+  a.navbar-brand.col-xs-2(href="#") Blockchain
+  ul.nav.navbar-nav.col-xs-8(ng-show="status.isLoggedIn")
+    li.item(ui-sref-active="active") 
+      a(ui-sref="dashboard") Dashboard
+    li.item(ui-sref-active="active") 
+      a(ui-sref="transactions") Transactions
+  ul.nav.navbar-nav.col-xs-2(ng-show="status.isLoggedIn")
+    li.pull-right
+      a(href="#") My Account

@@ -22,9 +22,15 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       controller: "TopCtrl"
     }
     
+    navigation =  {
+      templateUrl: "partials/navigation"
+      controller: "NavigationCtrl"
+    }
+    
     $stateProvider.state("dashboard",
       url: "/"
       views: {
+        "navigation" : navigation,
         "top"  : top,
         "left" : left,
         "right": { 
@@ -37,6 +43,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     $stateProvider.state("transactions",
       url: "/transactions"
       views: {
+        "navigation" : navigation,
         "top"  : top,
         "left" : left,
         right: {

@@ -17,6 +17,7 @@ head
     !=js('controllers/dashboard')
     !=js('controllers/addresses')
     !=js('controllers/top')
+    !=js('controllers/navigation')
     !=js('controllers/transactions')
     !=js('my_wallet')
     !=js('filters')
@@ -29,18 +30,7 @@ head
     !=js('my-wallet/blockchainapi')
     !=js('my-wallet-sjors/wallet')
   body
-    .navbar.navbar-inverse(role="navigation")
-      .container-fluid
-        a.navbar-brand.col-xs-2(href="#") Blockchain
-        ul.nav.navbar-nav.col-xs-8
-          li.item(ui-sref-active="active") 
-            a(ui-sref="dashboard") Dashboard
-          li.item(ui-sref-active="active") 
-            a(ui-sref="transactions") Transactions
-        ul.nav.navbar-nav.col-xs-2
-          li.pull-right
-            a(href="#") My Account
-                
+    .navbar.navbar-inverse(role="navigation", ui-view="navigation")
     .container-fluid
       .row
         .col-xs-3(ui-view="left")
