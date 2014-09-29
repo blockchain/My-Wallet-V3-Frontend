@@ -1,4 +1,11 @@
-@NavigationCtrl = ($scope, Wallet) ->
+@NavigationCtrl = ($scope, Wallet, $modal) ->
+  
+  $scope.account = () ->
+    modalInstance = $modal.open(
+      templateUrl: "partials/account"
+      controller: AccountCtrl
+    )
+  
   
   #################################
   #           Private             #
@@ -9,3 +16,5 @@
   
   # First load:      
   $scope.didLoad()
+  
+  

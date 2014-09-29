@@ -11,10 +11,3 @@
     $cookies.uid = $scope.uid
     # Temporary solution: we should not store the password
     $cookies.password = $scope.password
-    
-  $scope.logout = () ->
-    $scope.uid = null
-    $scope.password = null
-    delete $cookies.password
-    delete $cookies.uid
-    Wallet.logout()

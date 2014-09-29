@@ -1,5 +1,8 @@
-describe "DashboardCtrl", ->
+describe "AccountCtrl", ->
   scope = undefined
+  modalInstance =
+    close: ->
+    dismiss: ->
   
   beforeEach angular.mock.module("walletApp")
   
@@ -12,12 +15,12 @@ describe "DashboardCtrl", ->
       $timeout.flush()
       $timeout.flush()
       
-      
       scope = $rootScope.$new()
             
-      $controller "DashboardCtrl",
+      $controller "AccountCtrl",
         $scope: scope,
-        $stateParams: {}
+        $stateParams: {},
+        $modalInstance: modalInstance
       
       return
 
@@ -29,20 +32,14 @@ describe "DashboardCtrl", ->
     return
   )
     
-  it "should login",  inject((Wallet, $state, $timeout) ->
-    # Logout and reload controller first
-    Wallet.logout()
-
-    scope.uid = "user"
-    scope.password = "pass"
+  it "should logout",  inject((Wallet, $state, $timeout) ->
+    spyOn(Wallet, "logout").and.callThrough()
     
-    spyOn(Wallet, "login")
+    scope.logout()
     
-    scope.login()
+    expect(Wallet.logout).toHaveBeenCalled()
     
-    expect(Wallet.login).toHaveBeenCalledWith("user", "pass")
+    expect(scope.status.isLoggedIn).toBe(false)    
+    
     return
-  )
-  
-    
-    
+  )  
