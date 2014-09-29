@@ -10,4 +10,10 @@ walletServices.factory "MyWallet", () ->
     myWallet.setGUID = (uid) ->
       return
       
+    myWallet.getLanguage = () ->
+      return
+      
+    myWallet.getActiveAddresses = () ->
+      return []
+      
     return myWallet 

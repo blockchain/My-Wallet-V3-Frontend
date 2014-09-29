@@ -8,22 +8,23 @@ describe "walletServices", ->
     angular.mock.inject ($injector) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
-      $timeout: (f, _) -> f()  # Doesn't work?
       
       return
     return
     
   describe "login", ->
-    it "should fetch and decrypt the wallet", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet,"setGUID")
+    it "should fetch and decrypt the wallet", inject((Wallet, MyWallet, $timeout) ->
+      spyOn(MyWallet,"setGUID")#.and.callThrough()
       spyOn(MyWallet,"restoreWallet")
       
       Wallet.login("uid", "pwd")
       
-      expect(MyWallet.setGUID).toHaveBeenCalled()
-      # expect(MyWallet.restoreWallet).toHaveBeenCalled()
+      expect(MyWallet.setGUID).toHaveBeenCalledWith("uid")
       
-            
+      $timeout.flush()
+      expect(MyWallet.restoreWallet).toHaveBeenCalledWith("pwd")
+      
+      
       return
     )
     return
