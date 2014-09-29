@@ -16,6 +16,7 @@ head
     !=js('app')
     !=js('controllers/dashboard')
     !=js('controllers/addresses')
+    !=js('controllers/top')
     !=js('controllers/transactions')
     !=js('my_wallet')
     !=js('filters')
@@ -43,4 +44,6 @@ head
     .container-fluid
       .row
         .col-xs-3(ui-view="left")
-        .col-xs-9(ui-view="right")
+        .col-xs-9
+          div(ui-view="top")
+          div(ui-view="right")

@@ -12,13 +12,21 @@ walletApp = angular.module("walletApp", [
 walletApp.config ($stateProvider, $urlRouterProvider) ->
     $urlRouterProvider.otherwise("/");
     
+    left = {
+      templateUrl: "partials/addresses"
+      controller: "AddressesCtrl"
+    }
+    
+    top =  {
+      templateUrl: "partials/top"
+      controller: "TopCtrl"
+    }
+    
     $stateProvider.state("dashboard",
       url: "/"
       views: {
-        "left" : {
-          templateUrl: "partials/addresses"
-          controller: "AddressesCtrl"
-        },
+        "top"  : top,
+        "left" : left,
         "right": { 
           templateUrl: "partials/dashboard"
           controller: "DashboardCtrl"
@@ -29,10 +37,8 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     $stateProvider.state("transactions",
       url: "/transactions"
       views: {
-        "left" : {
-          templateUrl: "partials/addresses"
-          controller: "AddressesCtrl"
-        },
+        "top"  : top,
+        "left" : left,
         right: {
           templateUrl: "partials/transactions"
           controller: "TransactionsCtrl"

@@ -1,4 +1,4 @@
-describe "AddressesCtrl", ->
+describe "TopCtrl", ->
   scope = undefined
   
   beforeEach angular.mock.module("walletApp")
@@ -14,15 +14,19 @@ describe "AddressesCtrl", ->
       
       scope = $rootScope.$new()
             
-      $controller "AddressesCtrl",
+      $controller "TopCtrl",
         $scope: scope,
         $stateParams: {}
       
       return
 
     return
-    
-  it "should let user create a new address", ->
-    expect(scope.addresses.length).toBe(0)
-    scope.generateAddress()
-    expect(scope.addresses.length).toBe(1)
+
+  it "should have access to login status",  inject(() ->
+    expect(scope.status.isLoggedIn).toBe(true)
+  )
+  
+
+  it "should have access to total balance",  inject(() ->
+    expect(scope.totals.btc).toBeDefined()
+  )
