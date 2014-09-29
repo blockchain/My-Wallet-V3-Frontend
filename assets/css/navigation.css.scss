@@ -1,0 +1,33 @@
+.navbar-inverse {
+  background-color: #1A76BA;
+  border-color: white;
+
+  .navbar-brand {
+      color: white;
+  }
+
+  .navbar-nav {
+    li > a {
+      color: white;
+    }
+    
+    li > a:hover {
+        background-color: #269FFD;
+    }
+
+    li.active {
+     a {
+        background-color: #1A76BA;
+        border-bottom: thick solid #269FFD;
+      }
+      
+      a:hover {
+        background-color: #269FFD;
+      }
+    }
+
+  }
+
+
+}
+

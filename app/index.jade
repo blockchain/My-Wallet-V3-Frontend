@@ -4,14 +4,17 @@ head
     meta(charset='utf-8')
     title Blockchain Wallet HD
     link(rel='stylesheet', href='bower_components/bootstrap/dist/css/bootstrap.css')
-    link(rel='stylesheet', href='css/app.css')
-    link(rel='stylesheet', href='css/transactions.css')
     script(src='bower_components/jquery/dist/jquery.min.js')
     script(src='bower_components/angular/angular.js')
     script(src='bower_components/angular-cookies/angular-cookies.min.js')
     script(src='bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js')
     script(src='bower_components/angular-animate/angular-animate.js')
     script(src='bower_components/angular-ui-router/release/angular-ui-router.min.js')
+    
+    !=css('app')
+    !=css('navigation')
+    !=css('transactions')
+    !=css('addresses')
     
     !=js('app')
     !=js('controllers/dashboard')

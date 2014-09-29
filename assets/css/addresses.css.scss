@@ -1,0 +1,32 @@
+table#accounts-header {
+  width: 100%;
+  
+  td.right {
+    text-align: right;
+  }
+  
+  a {
+    color: gray;
+    font-size: 8pt;
+  }
+  
+}
+
+table#accounts {
+  width: 100%;
+  color: gray;
+  font-size: 8pt;
+  
+  tr.active {
+    font-weight: bold;
+  }
+  
+  td {
+    height: 30px;
+    
+    .amount {
+      text-align: right;
+    }
+  }
+  
+}
