@@ -10,7 +10,7 @@ module.exports = function(config){
       'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'app/bower_components/angular-cookies/angular-cookies.js',
       'assets/js/app.js.coffee',
-      'assets/js/controllers.js.coffee',
+      'assets/js/controllers/*.js.coffee',
       'assets/js/filters.js.coffee',
       'assets/js/services.js.coffee',
       'tests/**/*.coffee'

@@ -2,7 +2,6 @@
 
 # App Module 
 walletApp = angular.module("walletApp", [
-  "controllers"
   "walletFilters"
   "walletServices"
   "ui.router"
