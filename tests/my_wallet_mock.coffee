@@ -1,7 +1,7 @@
 # Complete mock of MyWallet.
 
 walletServices = angular.module("myWalletServices", [])
-walletServices.factory "MyWallet", () ->
+walletServices.factory "MyWallet", ($window) ->
     myWallet = {}
 
     myWallet.restoreWallet = (password) ->
@@ -11,9 +11,12 @@ walletServices.factory "MyWallet", () ->
       return
       
     myWallet.getLanguage = () ->
-      return
+      return "en"
       
     myWallet.getActiveAddresses = () ->
       return []
+      
+    # Pending refactoring of MyWallet:
+    $window.symbol_local = {code: "USD",conversion: 250000.0, local: true, name: "Dollar", symbol: "$", symbolAppearsAfter: false}
       
     return myWallet 
