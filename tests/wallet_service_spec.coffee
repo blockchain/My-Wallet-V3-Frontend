@@ -14,6 +14,7 @@ describe "walletServices", () ->
     
       Wallet.login("uid", "pwd")  
       $timeout.flush()
+      $timeout.flush()
       
       return
 
