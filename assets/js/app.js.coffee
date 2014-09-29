@@ -14,12 +14,29 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     
     $stateProvider.state("dashboard",
       url: "/"
-      templateUrl: "partials/dashboard"
-      controller: "DashboardCtrl"
+      views: {
+        "left" : {
+          templateUrl: "partials/addresses"
+          controller: "AddressesCtrl"
+        },
+        "right": { 
+          templateUrl: "partials/dashboard"
+          controller: "DashboardCtrl"
+        }
+      }
     )
     
     $stateProvider.state("transactions",
       url: "/transactions"
-      templateUrl: "partials/wallet"
-      controller: "WalletCtrl"
+      views: {
+        "left" : {
+          templateUrl: "partials/addresses"
+          controller: "AddressesCtrl"
+        },
+        right: {
+          templateUrl: "partials/transactions"
+          controller: "TransactionsCtrl"
+        }
+      }
+
     )

@@ -1,4 +1,4 @@
-describe "WalletCtrl", ->
+describe "TransactionsCtrl", ->
   scope = undefined
   
   beforeEach angular.mock.module("walletApp")
@@ -14,18 +14,13 @@ describe "WalletCtrl", ->
       
       scope = $rootScope.$new()
             
-      $controller "WalletCtrl",
+      $controller "TransactionsCtrl",
         $scope: scope,
         $stateParams: {}
       
       return
 
     return
-    
-  it "should let user create a new address", ->
-    expect(scope.addresses.length).toBe(0)
-    scope.generateAddress()
-    expect(scope.addresses.length).toBe(1)
     
   it "should redirect to dashboard if not logged in",  inject((Wallet, $state) ->
     Wallet.logout()
