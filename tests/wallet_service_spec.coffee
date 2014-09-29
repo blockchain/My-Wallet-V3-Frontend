@@ -19,7 +19,7 @@ describe "walletServices", () ->
 
     return
     
-  describe "login", ->
+  describe "login()", ->
     it "should fetch and decrypt the wallet", inject((Wallet, MyWallet) ->
       expect(MyWallet.setGUID).toHaveBeenCalledWith("uid")
       expect(MyWallet.restoreWallet).toHaveBeenCalledWith("pwd")
@@ -44,12 +44,33 @@ describe "walletServices", () ->
     
     return
 
-  describe "logout", ->      
+  describe "logout()", ->      
     it "should update the status", inject((Wallet, MyWallet) ->
       expect(Wallet.status.isLoggedIn).toBe(true)
       
       Wallet.logout()
       expect(Wallet.status.isLoggedIn).toBe(false)
+      
+      return
+    )
+    
+    return
+    
+  describe "generateAddress()", ->      
+    it "should call generateNewKey()", inject((Wallet, MyWallet) ->
+      spyOn(MyWallet,"generateNewKey")
+      
+      Wallet.generateAddress()
+      
+      expect(MyWallet.generateNewKey).toHaveBeenCalled()
+      
+      return
+    )
+    
+    it "should increase the number of addresses", inject((Wallet, MyWallet) ->
+      Wallet.generateAddress()
+      
+      expect(Wallet.addresses.length).toBe(1)
       
       return
     )

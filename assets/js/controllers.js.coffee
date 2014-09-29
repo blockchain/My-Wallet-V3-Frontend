@@ -22,8 +22,6 @@ controllers.controller "WalletCtrl", ($scope, Wallet, $state, $cookies) ->
   
   $scope.generateAddress = () ->
     Wallet.generateAddress()
-
-
     
 controllers.controller "DashboardCtrl", ($scope, $log, Wallet, $cookies) ->
   $scope.status = Wallet.status    
