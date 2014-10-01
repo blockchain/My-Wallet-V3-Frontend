@@ -1,0 +1,40 @@
+#top {
+  h1 {
+    font-size: 350%;
+    font-weight: bold;
+    margin-top: 0px;
+  }
+  
+  p {
+    margin-top: 20px;
+  }
+  
+  button {
+    margin-top: 10px;
+    margin-left: 5px;
+    height: 40px;
+    width: 117px;
+    padding: 0;
+    border: none;
+    background: none;
+    font-weight: bold;
+  }
+  
+  button.right-arrow.blue {
+    background: blue url(/img/button-blue-arrow-right.png); 
+    background-size: 117px 40px;
+    color: white;
+    padding-right: 20px;
+  }
+  
+  button.left-arrow.white {
+    background: white url(/img/button-white-arrow-left.png); 
+    background-size: 117px 40px;
+    color: black;
+    padding-left: 20px;
+  }
+  
+  img {
+    height: 40px;
+  }
+}
