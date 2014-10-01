@@ -9,6 +9,7 @@ module.exports = function(config){
       'app/bower_components/angular-ui-router/release/angular-ui-router.js',
       'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'app/bower_components/angular-cookies/angular-cookies.js',
+      'app/bower_components/angular-ui-select/dist/select.js',
       'assets/js/app.js.coffee',
       'assets/js/controllers/*.js.coffee',
       'assets/js/filters.js.coffee',
