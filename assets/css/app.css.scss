@@ -1,4 +1,16 @@
 body {
   font-size: 1.2em;
-  //  font-family: Arial;
+  background-image:url('/img/background.png');
+  background-size: 997px 213px;
+  background-color: transparent;
+  background-repeat: horizontal;
+}
+
+.row {
+  background: white;
+}
+
+.row.spacing {
+  height: 50px;
+  background: transparent;
 }
