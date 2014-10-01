@@ -14,3 +14,13 @@
   #################################
   #           Private             #
   #################################
+  
+  $scope.$watchCollection "[transaction.to, transaction.from.address]", () ->
+    $scope.transactionIsValid = $scope.validate($scope.transaction)
+    
+  $scope.validate = (transaction) ->
+    return false if transaction.to == null
+    return false if transaction.to == undefined
+    return false if transaction.to == ""
+    
+    return true

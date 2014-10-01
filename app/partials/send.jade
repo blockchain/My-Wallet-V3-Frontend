@@ -44,4 +44,4 @@
             | ?
 .modal-footer
   button.btn.btn-info(ng-click="close()") Cancel
-  button.btn.btn-primary(ng-click="send()",ng-disabled="transaction.currency!='BTC'") Send
+  button.btn.btn-primary(ng-click="send()",ng-disabled="!transaction.isValid ||transaction.currency!='BTC'") Send
