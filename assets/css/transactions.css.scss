@@ -1,10 +1,32 @@
-#transactions a.date {
-  color: gray;
-  padding-top: 10px;
-}
+#transactions {  
+  h2 {
+    margin-top: 0px;
+    margin-bottom: 30px;
+    color: #4fb5ee;
+    font-size: 150%;
+    font-weight: bold;
+  }
+  
+  a.date {
+    color: #adc0c9;
+    padding-top: 10px;
+  }
+  
+  .description{
+    color: #828181;
+  }
+  
+  font-size: 85%;
+} 
 
 span.note {
-  color: #999999;
+  color: #aeaeae;
+  //  font-weight: lighter;
+  font-weight: 300;
+  img {
+    height: 9px;
+    padding-right: 5px;
+  }
 }
 
 a.add-note {
