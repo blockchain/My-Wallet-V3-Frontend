@@ -1,6 +1,47 @@
 .modal-header
   h3 Send Bitcoin
 .modal-body
-  
+  form.form-horizontal(role="form",name="form",novalidate)
+    .form-group
+      label.col-sm-3.control-label Send From:
+      .col-sm-9
+        ui-select(ng-model="transaction.from")
+          ui-select-match {{ $select.selected.title }}
+          ui-select-choices(repeat="address in addresses") {{ address.title }}
+    .form-group
+      label.col-sm-3.control-label(for:"to") Send To:
+      .col-sm-9
+        .input-group
+          input.form-control(type="text",ng-model="transaction.to")
+          span.input-group-btn
+            button.btn.btn-default(type="button") QR
+    .form-group
+      label.col-sm-3.control-label Amount:
+      .col-sm-5
+        .input-group
+          input.form-control(type="text",ng-model="transaction.amount")
+          .input-group-btn
+            .btn-group(dropdown,is-open="currencies.isOpen")
+              button.btn.btn-default.dropdown-toggle(type="button") 
+                | {{ transaction.currency }} 
+                span.caret
+              ul.dropdown-menu.dropdown-menu-right(role="menu")
+                li
+                  a(href="",ng-click="transaction.currency = 'BTC'; currencies.isOpen = false") BTC
+                li
+                  a(href="",ng-click="transaction.currency = 'EUR'; currencies.isOpen = false") EUR
+                li
+                  a(href="",ng-click="transaction.currency = 'USD'; currencies.isOpen = false") USD
+      .col-sm-4
+        p(ng-show="transaction.currency!='BTC'") Conversion to be implemented...
+        p(ng-show="transaction.currency=='BTC'") {{ transaction.amount }} BTC
+    .form-group
+      label.col-sm-3.control-label Privacy guard:
+      .col-sm-4
+        .checkbox
+          label
+            input(type="checkbox")
+            | ?
 .modal-footer
-  button.btn.btn-info(ng-click="close()") Close
+  button.btn.btn-info(ng-click="close()") Cancel
+  button.btn.btn-primary(ng-click="send()",ng-disabled="transaction.currency!='BTC'") Send

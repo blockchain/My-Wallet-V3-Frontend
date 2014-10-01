@@ -8,7 +8,12 @@ walletApp = angular.module("walletApp", [
   "ui.bootstrap"
   "ngCookies"
   "myWalletServices"
+  "ui.select"
 ])
+
+walletApp.config (uiSelectConfig) ->
+  uiSelectConfig.theme = 'bootstrap';
+
 walletApp.config ($stateProvider, $urlRouterProvider) ->
     $urlRouterProvider.otherwise("/");
     
