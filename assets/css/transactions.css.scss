@@ -7,6 +7,12 @@
     font-weight: bold;
   }
   
+  .row.transaction {
+    min-height: 55px;
+    margin-top: 5px;
+    border-bottom: 1pt solid #f5f5f5;
+  }
+  
   a.date {
     color: #adc0c9;
     padding-top: 10px;
@@ -17,6 +23,33 @@
   }
   
   font-size: 85%;
+  
+  button {
+    margin-top: 0px;
+    margin-left: 5px;
+    height: 24px;
+    width: 80px;
+    padding: 0;
+    border: none;
+    background: none;
+    font-weight: bold;
+    color: white;
+  }
+  
+  button.intra-wallet {
+    background: white url(/img/button-blue.png); 
+    background-size: 80px 24px;
+  }
+  
+  button.spent {
+    background: white url(/img/button-red.png); 
+    background-size: 80px 24px;
+  }
+  
+  button.received {
+    background: white url(/img/button-green.png); 
+    background-size: 80px 24px;
+  }
 } 
 
 span.note {

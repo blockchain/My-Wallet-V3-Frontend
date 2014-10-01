@@ -2,7 +2,7 @@
   .row
     .col-xs-12
       h2 Transactions
-  .row(ng-repeat="transaction in transactions")
+  .row.transaction(ng-repeat="transaction in transactions")
     .col-xs-3
       a.date(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank") {{ transaction.txTime | date:'MMMM d @ hh:mm a' }} 
     .col-xs-4.description
@@ -29,8 +29,8 @@
         {{ transaction.note }}
     .col-xs-2
       span(ng-show="transaction.intraWallet")
-        a.btn.btn-info.btn-block.btn-sm(href="") {{ settings.currency.symbol }} {{ -transaction.fiat | number:2 }}
+        button.intra-wallet {{ settings.currency.symbol }} {{ -transaction.fiat | number:2 }}
       span(ng-show="transaction.result > 0 && !transaction.intraWallet")
-        a.btn.btn-success.btn-block.btn-sm(href="") {{ settings.currency.symbol }} {{ transaction.fiat | number:2 }}
+        button.received {{ settings.currency.symbol }} {{ transaction.fiat | number:2 }}
       span(ng-show="transaction.result < 0 && !transaction.intraWallet")
-        a.btn.btn-danger.btn-block.btn-sm(href="") -{{ settings.currency.symbol }} {{ -transaction.fiat | number:2 }}
+        button.spent -{{ settings.currency.symbol }} {{ -transaction.fiat | number:2 }}
