@@ -1,5 +1,5 @@
 .navbar-inverse {
-  background-color: #1A76BA;
+  background-color: #187fc0;
   border-color: white;
 
   .navbar-brand {
@@ -8,7 +8,26 @@
 
   .navbar-nav {
     li > a {
-      color: white;
+      color: #d3edfb;
+      text-transform: uppercase;
+    }
+    
+    img.tab {
+      height: 15px;
+      padding-right: 10px;
+    }
+    
+    img#account {
+      height: 35px;
+      
+      // Prevent vertical stretch of navbar:
+      margin-top: -5px;
+      margin-bottom: -5px;
+    }
+    
+    img#account-toggle {
+      height: 3px;
+      padding-left: 5px;
     }
     
     li > a:hover {
@@ -19,6 +38,8 @@
      a {
         background-color: #1A76BA;
         border-bottom: thick solid #269FFD;
+        margin-bottom: 1px;
+        color: #d3edfb;
       }
       
       a:hover {
@@ -32,6 +53,6 @@
 }
 
 img#logo {
-  height: 34.5px;
+  height: 34px;
   margin-top: -6px;
 }

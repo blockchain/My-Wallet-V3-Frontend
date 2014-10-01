@@ -3,9 +3,15 @@
     img#logo(src="img/logo.png",alt="Blockchain")
   ul.nav.navbar-nav.col-xs-8(ng-show="status.isLoggedIn")
     li.item(ui-sref-active="active") 
-      a(ui-sref="dashboard") Dashboard
+      a(ui-sref="dashboard") 
+        img.tab(src="img/dashboard-icon.png")
+        | Dashboard
     li.item(ui-sref-active="active") 
-      a(ui-sref="transactions") Transactions
+      a(ui-sref="transactions") 
+        img.tab(src="img/transactions-icon.png")
+        | Transactions
   ul.nav.navbar-nav.col-xs-2(ng-show="status.isLoggedIn")
     li.pull-right
-      a(ng-click="account()") My Account
+      a(ng-click="account()")
+        img#account(src="img/account-icon.png",alt="Account Settings")
+        img#account-toggle(src="img/account-icon-toggle.png")
