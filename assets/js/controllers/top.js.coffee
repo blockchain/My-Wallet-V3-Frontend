@@ -1,4 +1,5 @@
 @TopCtrl = ($scope, Wallet, $modal) ->
+  $scope.settings = Wallet.settings
   
   $scope.request = () ->
     modalInstance = $modal.open(
