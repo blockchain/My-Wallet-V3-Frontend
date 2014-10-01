@@ -3,6 +3,6 @@
     h1 {{ totals.fiat | currency:settings.currency.symbol }}
   .col-xs-3
     p {{ totals.btc | btc }}
-  .col-xs-6
+  .col-xs-6.text-right
     button.left-arrow.white(ng-click="request()") Request 
     button.right-arrow.blue(ng-click="send()") Send
