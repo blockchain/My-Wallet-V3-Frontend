@@ -1,9 +1,11 @@
-div(ng-show="status.isLoggedIn")
-  table#accounts-header
+.left-navigation(ng-show="status.isLoggedIn")
+  table.left-header.accounts
     tr
-      td My Accounts
+      td.header 
+        img(src="img/my-accounts-icon.png") 
+        |My Accounts
       td.right
-        a(ng-click="generateAddress()") + NEW
+        a(ng-click="generateAddress()") + New
   table#accounts
     tr.active
       td All Accounts
@@ -13,3 +15,11 @@ div(ng-show="status.isLoggedIn")
         a(href="" tooltip-placement="right" tooltip="{{ address.address }}")
           {{ address.name }}
       td.amount {{ address.balance | fiat:settings.currency }}
+  table.left-header
+    tr
+      td.header 
+        img(src="img/security-center-icon.png") 
+        |Security Center
+      td.right
+        a
+          img(src="img/icon-collapse.png")

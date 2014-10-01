@@ -1,5 +1,6 @@
 @AddressesCtrl = ($scope, Wallet, $state) ->
   $scope.status    = Wallet.status
+  $scope.totals = Wallet.totals
   
   $scope.generateAddress = () ->
     Wallet.generateAddress()

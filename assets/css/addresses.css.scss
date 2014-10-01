@@ -1,22 +1,59 @@
-table#accounts-header {
+.left-navigation {
+  color: #c9c9c9;
+  
+  a {
+    color: #c9c9c9;
+  }
+  
+  td {
+    padding: 10px;
+  }
+
+}
+
+table.left-header {
   width: 100%;
+  
+  a {
+    color: #cfcfcf;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  td.header {
+    font-size: 150%;
+    font-weight: bold;
+    color: #737373;
+    
+    img {
+      height: 17px;
+      margin: 10px;
+    }
+  }
   
   td.right {
     text-align: right;
   }
   
-  a {
-    color: gray;
+  img {
+    height: 11px;
   }
+  
   
 }
 
 table#accounts {
   width: 100%;
-  color: gray;
+  
+  tr {
+    border-bottom: 1px solid #fafafa;
+  }
   
   tr.active {
     font-weight: bold;
+    color: #838383;
+    background-color: #e5ebef;
+    border-top: 2pt solid #dddfe3;
   }
   
   td {
