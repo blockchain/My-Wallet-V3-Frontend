@@ -1,6 +1,8 @@
 .modal-header
   h3 Send Bitcoin
 .modal-body
+  alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert($index)") 
+    {{alert.msg}}
   form.form-horizontal(role="form",name="form",novalidate)
     .form-group
       label.col-sm-3.control-label Send From:

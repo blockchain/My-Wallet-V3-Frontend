@@ -2,7 +2,7 @@
 
 # Services 
 walletServices = angular.module("walletServices", [])
-walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet) ->
+walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope) ->
   wallet = {status: {isLoggedIn: false}, totals: {}, language: null, settings: {}}
   
   wallet.addresses    = []
@@ -79,16 +79,27 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet) ->
       
     wallet.send = (to, amount, observer) ->
       if observer == undefined || observer == null
-        $log.error "An observer is required"
+        console.error "An observer is required"
         return
         
       if observer.transactionDidFailWithError == undefined
-        $log.error "Observer should implement transactionDidFailWithError"
+        console.error "Observer should implement transactionDidFailWithError"
+        return
+        
+      if observer.transactionDidFinish == undefined
+        console.error "Observer should implement transactionDidFinish"
         return
         
       listener = {}
-      listener.on_error = () ->
-        observer.transactionDidFailWithError()
+      listener.on_error = (e) ->
+        if e.message != undefined
+          observer.transactionDidFailWithError(e.message)
+        else if e isnt null
+          observer.transactionDidFailWithError(e)
+          $rootScope.$apply()
+        else
+          observer.transactionDidFailWithError("Unknown error")
+          $rootScope.$apply()
         
       listener.on_start = () ->
         return
@@ -106,7 +117,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet) ->
         return
         
       listener.on_success = () ->
-        return
+        observer.transactionDidFinish()
       
       wallet.my.quickSendNoUI(to, amount, listener)
 

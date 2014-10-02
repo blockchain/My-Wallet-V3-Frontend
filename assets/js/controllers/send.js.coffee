@@ -1,5 +1,7 @@
 @SendCtrl = ($scope, $log, Wallet, $modalInstance) ->
   
+  $scope.alerts = []
+  
   any = {address: null, title: "Any Account"}
   
   $scope.currencies = {isOpen: false}
@@ -14,6 +16,10 @@
   $scope.send = () ->
     Wallet.send($scope.transaction.to, $scope.transaction.amount, $scope.observer)
   
+  $scope.closeAlert = (index) ->
+    $scope.alerts.splice index, 1
+    return
+    
   #################################
   #           Private             #
   #################################
@@ -30,5 +36,8 @@
     return true
   
   $scope.observer = {}
-  $scope.observer.transactionDidFailWithError = () ->
-      $log.error "Mission failed"
+  $scope.observer.transactionDidFailWithError = (message) ->
+    $scope.alerts.push {type: "danger", msg: message}
+  $scope.observer.transactionDidFinish = () ->
+    $modalInstance.close ""
+  

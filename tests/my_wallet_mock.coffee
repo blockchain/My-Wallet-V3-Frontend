@@ -38,7 +38,12 @@ walletServices.factory "MyWallet", ($window) ->
       
     myWallet.quickSendNoUI = (to, value, listener) ->
       if mockRules.shouldFailToSend
-        listener.on_error()
+        listener.on_error({message: "Reason for failure"})
+        return
+        
+      # A few sanity checks (not complete)
+      if value > addresses[0].balance
+        listener.on_error({message: "Insufficient funds"})
         return
       
       listener.on_start()

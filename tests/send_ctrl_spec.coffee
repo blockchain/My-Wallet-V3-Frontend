@@ -117,8 +117,11 @@ describe "SendCtrl", ->
   )
   
   it "should close the modal when sending process succeeds",  inject(() ->
-    # Listen for "on_succes"
-    pending()
+    spyOn(modalInstance, "close")
+    
+    scope.send()
+      
+    expect(modalInstance.close).toHaveBeenCalled()
     
     return
   )
@@ -130,7 +133,12 @@ describe "SendCtrl", ->
   )
   
   it "should show error message if send() fails",  inject((Wallet) ->
-    pending()  
+    scope.transaction.amount = 10 # Way too much
+    
+    scope.send()
+    
+    expect(scope.alerts.length).toBe(1)
+    expect(scope.alerts[0].type).toBe("danger")
     
     return
   )

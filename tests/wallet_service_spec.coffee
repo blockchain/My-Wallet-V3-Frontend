@@ -94,6 +94,8 @@ describe "walletServices", () ->
       mockObserver = {} # Represents e.g. the controller calling us:
       mockObserver.transactionDidFailWithError = () ->
         return
+      mockObserver.transactionDidFinish = () ->
+        return
               
       return
      
@@ -103,6 +105,16 @@ describe "walletServices", () ->
       Wallet.send("address", 1.0, mockObserver)
       
       expect(MyWallet.quickSendNoUI).toHaveBeenCalled()
+      
+      return
+    )
+    
+    it "should call transactionDidFinish on the listerner if all goes well", inject((Wallet, MyWallet) ->         
+      spyOn(mockObserver, "transactionDidFinish")
+      
+      Wallet.send("address", 1.0, mockObserver)
+      
+      expect(mockObserver.transactionDidFinish).toHaveBeenCalled()
       
       return
     )
