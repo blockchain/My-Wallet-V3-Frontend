@@ -19,6 +19,14 @@ head
     !=css('addresses')
     !=css('top')
     
+    //- Blockchain MyWallet javascript (must be called before 'app')
+    !=js('my-wallet/shared')
+    !=js('my-wallet/bitcoinjs')
+    !=js('my-wallet/old_bitcoinjs')
+    !=js('my-wallet/blockchainapi')
+    !=js('my-wallet/signer')
+    !=js('my-wallet/wallet')
+    
     !=js('app')
     !=js('controllers/dashboard')
     !=js('controllers/addresses')
@@ -32,12 +40,7 @@ head
     !=js('filters')
     !=js('services')
     
-    //- Blockchain MyWallet javascript:
-    !=js('my-wallet/shared')
-    !=js('my-wallet/bitcoinjs')
-    !=js('my-wallet/old_bitcoinjs')
-    !=js('my-wallet/blockchainapi')
-    !=js('my-wallet-sjors/wallet')
+
   body
     .navbar.navbar-inverse(role="navigation", ui-view="navigation")
     .container-fluid
