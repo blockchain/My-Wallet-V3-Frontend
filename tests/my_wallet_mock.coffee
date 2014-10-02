@@ -6,6 +6,8 @@ walletServices.factory "MyWallet", ($window) ->
     addresses = []
     addressesOnServer = [{label: "Savings", address: "abcdefghijk", balance: 2.0}]
     transactions = []
+    monitorFunc = undefined  # New system
+    eventListener = undefined # Old system
     
     mockRules = {shouldFailToSend: false}
 
@@ -36,6 +38,9 @@ walletServices.factory "MyWallet", ($window) ->
     myWallet.getTransactions = () ->
       return transactions
       
+    myWallet.parseTransaction = (tx) ->
+      return tx
+      
     myWallet.quickSendNoUI = (to, value, listener) ->
       if mockRules.shouldFailToSend
         listener.on_error({message: "Reason for failure"})
@@ -58,6 +63,12 @@ walletServices.factory "MyWallet", ($window) ->
       
       return
       
+    myWallet.addEventListener = (func) ->
+      eventListener = func
+      
+    myWallet.monitor = (func) ->
+      monitorFunc = func
+      
     # Pending refactoring of MyWallet:
     $window.symbol_local = {code: "USD",conversion: 250000.0, local: true, name: "Dollar", symbol: "$", symbolAppearsAfter: false}
       
@@ -73,6 +84,13 @@ walletServices.factory "MyWallet", ($window) ->
     #####################################
     myWallet.mockShouldFailToSend = () ->
       mockRules.shouldFailToSend = true
-      return
+      
+    myWallet.mockShouldReceiveNewTransaction = () ->
+      transactions.push {balance: 1.0, result: 1.0, hash: "abcd", confirmations: 1, doubleSpend: false, coinbase: false, sender: "sender", receipient: "receipient", intraWallet: false, note: "Incoming", txTime: null}
+
+      eventListener("on_tx")
+      
+    myWallet.mockShouldReceiveNewBlock = () ->
+      eventListener("on_block")
     
     return myWallet 

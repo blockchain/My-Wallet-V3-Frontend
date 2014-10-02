@@ -19,7 +19,7 @@ playSound = (id) ->
 ##################################
 
 walletServices = angular.module("walletServices", [])
-walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope) ->
+walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio) ->
   wallet = {status: {isLoggedIn: false}, totals: {}, language: null, settings: {}}
   
   wallet.addresses    = []
@@ -33,6 +33,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope)
   wallet.login = (uid, password) ->    
     $window.root = "https://blockchain.info/"
     wallet.my = MyWallet
+    
+    
     
     wallet.my.setGUID(uid)
     # setGUID is asynchronous, temporary workaround:
@@ -53,7 +55,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope)
         ), 500)
        
       ), 500)    
-    
+        
     wallet.generateAddress = () ->
       wallet.my.generateNewKey()
       wallet.updateAddresses()
@@ -81,9 +83,16 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope)
       
     wallet.updateTransactions = () ->
       for tx in wallet.my.getTransactions()
-        transaction = wallet.my.parseTransaction(tx)
-        transaction.fiat = transaction.result / wallet.settings.currency.conversion
-        wallet.transactions.push transaction 
+        match = false
+        for candidate in wallet.transactions
+          if candidate.hash == tx.hash
+            match = true
+            break
+        
+        if !match
+          transaction = wallet.my.parseTransaction(tx)
+          transaction.fiat = transaction.result / wallet.settings.currency.conversion
+          wallet.transactions.push transaction 
       
       # Update address balances:
       tally = 0.0
@@ -137,6 +146,25 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope)
         observer.transactionDidFinish()
       
       wallet.my.quickSendNoUI(to, amount, listener)
+    
+    # The old monitoring system
+    wallet.monitorLegacy = (event) ->
+      console.log "Received: " + event
+      if event == "on_tx" or event == "on_block"
+        before = wallet.transactions.length
+        wallet.updateTransactions()
+        if wallet.transactions.length > before
+          sound = ngAudio.load("beep.wav")
+          sound.play()
+    
+    # The new monitoring system  
+    wallet.monitor = (event) ->
+      console.log event
+
+      
+    wallet.my.monitor((event) -> wallet.monitor(event))
+    wallet.my.addEventListener((event) -> wallet.monitorLegacy(event))
+    
 
     ########################################
     # Testing: only works on mock MyWallet #

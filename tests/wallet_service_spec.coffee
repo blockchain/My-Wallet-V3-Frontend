@@ -17,6 +17,10 @@ describe "walletServices", () ->
       $timeout.flush()
       $timeout.flush()
       
+      spyOn(Wallet,"monitor").and.callThrough()
+      spyOn(Wallet,"monitorLegacy").and.callThrough()
+      
+      
       return
 
     return
@@ -147,3 +151,27 @@ describe "walletServices", () ->
     )
     
     return
+
+  describe "websocket", ->        
+    it "should listen for on_tx and on_block", inject((Wallet, MyWallet) ->
+            
+      MyWallet.mockShouldReceiveNewTransaction()
+            
+      expect(Wallet.monitorLegacy).toHaveBeenCalled()
+      
+      MyWallet.mockShouldReceiveNewBlock()
+      
+      expect(Wallet.monitorLegacy).toHaveBeenCalled()
+      
+      return
+    )
+    
+    it "should obtain the new transaction", inject((Wallet, MyWallet) ->
+      before = Wallet.transactions.length
+      
+      MyWallet.mockShouldReceiveNewTransaction()
+      
+      expect(Wallet.transactions.length).toBe(before + 1)
+      
+      return
+    )
