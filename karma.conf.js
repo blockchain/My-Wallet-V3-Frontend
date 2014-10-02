@@ -10,6 +10,7 @@ module.exports = function(config){
       'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'app/bower_components/angular-cookies/angular-cookies.js',
       'app/bower_components/angular-ui-select/dist/select.js',
+      'app/bower_components/angular-audio/angular.audio.js',
       'assets/js/app.js.coffee',
       'assets/js/controllers/*.js.coffee',
       'assets/js/filters.js.coffee',
