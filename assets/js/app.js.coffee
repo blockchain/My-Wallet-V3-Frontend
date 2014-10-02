@@ -1,13 +1,5 @@
 "use strict"
 
-##################
-# MyWallet hacks #
-##################
-
-# Avoid lazy loading (complicates asset management)
-loadScript = (src, success, error) ->
-  success()
-
 # App Module 
 walletApp = angular.module("walletApp", [
   "walletFilters"
@@ -17,6 +9,7 @@ walletApp = angular.module("walletApp", [
   "ngCookies"
   "myWalletServices"
   "ui.select"
+  "ngAudio"
 ])
 
 walletApp.config (uiSelectConfig) ->

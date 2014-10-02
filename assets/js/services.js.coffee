@@ -1,6 +1,23 @@
 "use strict"
 
-# Services 
+##################
+# MyWallet hacks #
+##################
+
+# Avoid lazy loading (complicates asset management)
+loadScript = (src, success, error) ->
+  success()
+  
+# Don't allow it to play sound:
+playSound = (id) ->
+  return
+
+##################################
+# Wallet service                 #
+#                                #
+# AngularJS wrapper for MyWallet #
+##################################
+
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope) ->
   wallet = {status: {isLoggedIn: false}, totals: {}, language: null, settings: {}}

@@ -1,4 +1,4 @@
-@SendCtrl = ($scope, $log, Wallet, $modalInstance) ->
+@SendCtrl = ($scope, $log, Wallet, $modalInstance, ngAudio) ->
   
   $scope.alerts = []
   
@@ -14,6 +14,9 @@
     $modalInstance.dismiss ""
   
   $scope.send = () ->
+    for alert in $scope.alerts
+      $scope.alerts.pop(alert)
+
     Wallet.send($scope.transaction.to, $scope.transaction.amount, $scope.observer)
   
   $scope.closeAlert = (index) ->
@@ -39,5 +42,7 @@
   $scope.observer.transactionDidFailWithError = (message) ->
     $scope.alerts.push {type: "danger", msg: message}
   $scope.observer.transactionDidFinish = () ->
+    sound = ngAudio.load("beep.wav")
+    sound.play()
     $modalInstance.close ""
   
