@@ -76,5 +76,47 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet) ->
       
       wallet.totals.btc = tally
       wallet.totals.fiat  = tally / wallet.settings.currency.conversion
+      
+    wallet.send = (to, amount, observer) ->
+      if observer == undefined || observer == null
+        $log.error "An observer is required"
+        return
+        
+      if observer.transactionDidFailWithError == undefined
+        $log.error "Observer should implement transactionDidFailWithError"
+        return
+        
+      listener = {}
+      listener.on_error = () ->
+        observer.transactionDidFailWithError()
+        
+      listener.on_start = () ->
+        return
+      
+      listener.on_begin_signing = () ->
+        return
+        
+      listener.on_sign_progress = () ->
+        return
+
+      listener.on_finish_signing = () ->
+        return
+
+      listener.on_before_send = () ->
+        return
+        
+      listener.on_success = () ->
+        return
+      
+      wallet.my.quickSendNoUI(to, amount, listener)
+
+    ########################################
+    # Testing: only works on mock MyWallet #
+    ########################################
+    
+    wallet.refresh = () ->
+      wallet.my.refresh()
+      wallet.updateAddresses()
+      wallet.updateTransactions()
             
   return  wallet

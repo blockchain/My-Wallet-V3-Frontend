@@ -90,3 +90,47 @@ describe "SendCtrl", ->
     
     return
   )
+  
+  
+  it "should call Wallet.send() when Send is pressed",  inject((Wallet) ->
+    spyOn(Wallet,"send")
+    
+    scope.send()
+    
+    expect(Wallet.send).toHaveBeenCalledWith(scope.transaction.to, scope.transaction.amount, scope.observer)
+    
+    return
+  )
+  
+  it "should disable Close button when sending process starts",  inject(() ->
+    # Listen for "on_start"
+    pending()
+    
+    return
+  )
+  
+  it "should enable Close button when sending process fails",  inject(() ->
+    # Listen for "on_error"
+    pending()
+    
+    return
+  )
+  
+  it "should close the modal when sending process succeeds",  inject(() ->
+    # Listen for "on_succes"
+    pending()
+    
+    return
+  )
+  
+  it "should beep when sending process succeeds",  inject(() ->
+    pending()
+    
+    return
+  )
+  
+  it "should show error message if send() fails",  inject((Wallet) ->
+    pending()  
+    
+    return
+  )

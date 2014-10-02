@@ -23,6 +23,6 @@ describe "AddressesCtrl", ->
     return
     
   it "should let user create a new address", ->
-    expect(scope.addresses.length).toBe(0)
+    before = scope.addresses.length
     scope.generateAddress()
-    expect(scope.addresses.length).toBe(1)
+    expect(scope.addresses.length).toBe(before + 1)
