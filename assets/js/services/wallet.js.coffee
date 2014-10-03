@@ -22,7 +22,7 @@ walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio) ->
   wallet = {status: {isLoggedIn: false}, totals: {}, language: null, settings: {}}
   
-  wallet.addresses    = []
+  wallet.accounts     = []
   wallet.transactions = []
   
   
@@ -45,7 +45,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.settings.language = wallet.my.getLanguage()
       wallet.settings.currency = $window.symbol_local
       
-      wallet.updateAddresses()
+      wallet.updateAccounts()
       
 
 
@@ -56,30 +56,46 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
        
       ), 500)    
         
-    wallet.generateAddress = () ->
-      wallet.my.generateNewKey()
-      wallet.updateAddresses()
+    wallet.generateAccount = () ->
+      wallet.my.generateNewAccount()
+      wallet.updateAccounts()
       
     wallet.logout = () ->
       wallet.my = null
       wallet.status.isLoggedIn = false
-      while wallet.addresses.length > 0
-        wallet.addresses.pop()
+      while wallet.accounts.length > 0
+        wallet.accounts.pop()
     
     ##################################
     #             Private            #
     ##################################
     
-    wallet.updateAddresses = () ->
-      for activeAddress in wallet.my.getActiveAddresses()
-        match = false
-        for address in wallet.addresses
-          if address.address == activeAddress
-            match = true
-          
-        if !match
-          wallet.addresses.push {address: activeAddress, active: true, balance: null, name: (wallet.my.getAddressLabel(activeAddress) || activeAddress.substring(0,15))}
- 
+    wallet.updateAccounts = () ->
+      # Carefully update our array of accounts, so Angular watchers don't get confused.
+      # Assuming accounts are never deleted.
+      
+      numberOfOldAccounts = wallet.accounts.length
+      newAccounts = wallet.my.getAccounts()
+      numberOfNewAccounts = newAccounts.length
+      
+      for i in [0..(numberOfNewAccounts - 1)]
+        if i >= numberOfOldAccounts
+          wallet.accounts.push {active: true}
+        
+        # Set or update label and balance:
+        wallet.accounts[i].label = newAccounts[i].label
+        wallet.accounts[i].balance = newAccounts[i].balance
+        
+      # Balances will be 0 until transactions have been loaded.
+      # TODO: MyWallet should let us know when all transactions are loaded; hide
+      # total until that time.
+      
+      tally = 0.0
+      for account in wallet.accounts
+        tally = tally + account.balance
+      
+      wallet.totals.btc = tally
+      wallet.totals.fiat  = tally / wallet.settings.currency.conversion
       
     wallet.updateTransactions = () ->
       for tx in wallet.my.getTransactions()
@@ -90,19 +106,13 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
             break
         
         if !match
+          # TODO refactor parseTransaction so it returns the account index, not the address
           transaction = wallet.my.parseTransaction(tx)
           transaction.fiat = transaction.result / wallet.settings.currency.conversion
           wallet.transactions.push transaction 
       
-      # Update address balances:
-      tally = 0.0
-      for address in wallet.addresses
-        address.balance = wallet.my.getAddressBalance(address.address)
-        tally = tally + address.balance
-      
-      wallet.totals.btc = tally
-      wallet.totals.fiat  = tally / wallet.settings.currency.conversion
-      
+
+    # TODO: set from account index, don't use quickSend method.
     wallet.send = (to, amount, observer) ->
       if observer == undefined || observer == null
         console.error "An observer is required"
@@ -172,7 +182,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     wallet.refresh = () ->
       wallet.my.refresh()
-      wallet.updateAddresses()
+      wallet.updateAccounts()
       wallet.updateTransactions()
             
   return  wallet

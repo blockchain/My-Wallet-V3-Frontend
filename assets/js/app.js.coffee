@@ -19,8 +19,8 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     $urlRouterProvider.otherwise("/");
     
     left = {
-      templateUrl: "partials/addresses"
-      controller: "AddressesCtrl"
+      templateUrl: "partials/accounts"
+      controller: "AccountsCtrl"
     }
     
     top =  {

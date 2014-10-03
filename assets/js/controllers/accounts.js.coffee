@@ -1,17 +1,17 @@
-@AddressesCtrl = ($scope, Wallet, $state) ->
+@AccountsCtrl = ($scope, Wallet, $state) ->
   $scope.status    = Wallet.status
   $scope.totals = Wallet.totals
   $scope.settings = Wallet.settings
   
-  $scope.generateAddress = () ->
-    Wallet.generateAddress()
+  $scope.generateAccount = () ->
+    Wallet.generateAccount()
 
   #################################
   #           Private             #
   #################################
   
   $scope.didLoad = () ->
-    $scope.addresses = Wallet.addresses
+    $scope.accounts = Wallet.accounts
 
   # First load:      
   $scope.didLoad()

@@ -1,11 +1,10 @@
-# MyWallet mock
-
 walletServices = angular.module("myWalletServices", [])
 walletServices.factory "MyWallet", ($window) ->
     myWallet = {}
-    addresses = []
-    addressesOnServer = [{label: "Savings", address: "abcdefghijk", balance: 2.0}]
+    accounts = []
+    accountsOnServer = [{label: "Savings", archived: false, balance: 2.0}]
     transactions = []
+    transactionsOnServer = [{balance: 0.5, result: 0.5, hash: "aaaa", confirmations: 1, doubleSpend: false, coinbase: false, sender: "sender", receipient: "receipient", intraWallet: false, note: "Incoming", txTime: null}]
     monitorFunc = undefined  # New system
     eventListener = undefined # Old system
     
@@ -21,19 +20,11 @@ walletServices.factory "MyWallet", ($window) ->
     myWallet.getLanguage = () ->
       return "en"
       
-    myWallet.getActiveAddresses = () ->
-      return addresses
+    myWallet.getAccounts = () ->
+      return accounts
       
-    myWallet.getAddressLabel = () ->
-      # TODO: fetch correct addresss
-      return addresses[0] 
-      
-    myWallet.getAddressBalance = (address) ->
-      # TODO: fetch correct addresss
-      return addresses[0].balance
-      
-    myWallet.generateNewKey = () ->
-      addresses.push {label: "some new address", address: "abcd", balance: 0.9}
+    myWallet.generateNewAccount = () ->
+      accounts.push {label: "Mobile", archived: false, balance: 0}
       
     myWallet.getTransactions = () ->
       return transactions
@@ -77,7 +68,9 @@ walletServices.factory "MyWallet", ($window) ->
     ###################################
     
     myWallet.refresh = () ->
-      angular.copy(addressesOnServer, addresses)
+      angular.copy(accountsOnServer, accounts)
+      angular.copy(transactionsOnServer, transactions)
+      
       
     #####################################
     # Tell the mock to behave different # 

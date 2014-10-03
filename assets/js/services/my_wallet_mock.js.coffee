@@ -1,0 +1,1 @@
+../../../tests/my_wallet_mock.coffee

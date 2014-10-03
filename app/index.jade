@@ -18,29 +18,33 @@ head
     !=css('app')
     !=css('navigation')
     !=css('transactions')
-    !=css('addresses')
+    !=css('accounts')
     !=css('top')
     
-    //- Blockchain MyWallet javascript (must be called before 'app')
-    !=js('my-wallet/shared')
-    !=js('my-wallet/bitcoinjs')
-    !=js('my-wallet/old_bitcoinjs')
-    !=js('my-wallet/blockchainapi')
-    !=js('my-wallet/signer')
-    !=js('my-wallet-sjors/wallet')
+    // Blockchain MyWallet javascript (must be called before 'app')
+    //- !=js('my-wallet/shared')
+    //- !=js('my-wallet/bitcoinjs')
+    //- !=js('my-wallet/old_bitcoinjs')
+    //- !=js('my-wallet/blockchainapi')
+    //- !=js('my-wallet/signer')
+    //- !=js('my-wallet-sjors/wallet')
+    //- !=js('my_wallet')
+    
+    // Use mock instead (uncomment the above):
+    !=js('services/my_wallet_mock')
+    
     
     !=js('app')
     !=js('controllers/dashboard')
-    !=js('controllers/addresses')
+    !=js('controllers/accounts')
     !=js('controllers/top')
     !=js('controllers/navigation')
     !=js('controllers/transactions')
     !=js('controllers/account')
     !=js('controllers/request')
     !=js('controllers/send')
-    !=js('my_wallet')
     !=js('filters')
-    !=js('services')
+    !=js('services/wallet')
     
 
   body

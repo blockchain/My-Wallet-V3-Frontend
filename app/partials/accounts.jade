@@ -5,16 +5,16 @@
         img(src="img/my-accounts-icon.png") 
         |My Accounts
       td.right
-        a(ng-click="generateAddress()") + New
+        a(ng-click="generateAccount()") + New
   table#accounts
     tr.active
       td All Accounts
       td.amount {{ totals.fiat | fiat:settings.currency }}
-    tr(ng-repeat="address in addresses | filter:{active:true}")
+    tr(ng-repeat="account in accounts | filter:{active:true}")
       td 
-        a(href="" tooltip-placement="right" tooltip="{{ address.address }}")
-          {{ address.name }}
-      td.amount {{ address.balance | fiat:settings.currency }}
+        a(href="")
+          {{ account.label }}
+      td.amount {{ account.balance | fiat:settings.currency }}
   table.left-header
     tr
       td.header 
