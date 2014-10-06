@@ -168,6 +168,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         if wallet.transactions.length > before
           sound = ngAudio.load("beep.wav")
           sound.play()
+          wallet.updateAccounts()
     
     # The new monitoring system  
     wallet.monitor = (event) ->

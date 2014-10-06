@@ -160,7 +160,7 @@ describe "walletServices", () ->
     
     return
 
-  describe "websocket", ->        
+  describe "transactions", ->        
     it "should listen for on_tx and on_block", inject((Wallet, MyWallet) ->
             
       MyWallet.mockShouldReceiveNewTransaction()
@@ -193,7 +193,13 @@ describe "walletServices", () ->
     
     it "should beep on new transaction",  inject((MyWallet, Wallet, $timeout, ngAudio) ->
       spyOn(ngAudio, "load").and.callThrough()
-      MyWallet.mockSpontanuousBehavior()
-      $timeout.flush()
+      MyWallet.mockShouldReceiveNewTransaction()
       expect(ngAudio.load).toHaveBeenCalled()
+    )
+    
+    it "should update the account balance upon a new transaction", inject((MyWallet, Wallet) ->
+      before = Wallet.accounts[1].balance
+      MyWallet.mockShouldReceiveNewTransaction()
+      expect(Wallet.accounts[1].balance).toBeGreaterThan(before)
+      
     )

@@ -101,7 +101,7 @@ walletServices.factory "MyWallet", ($window, $timeout) ->
       
     myWallet.mockShouldReceiveNewTransaction = () ->
       transactions.push {hash: "aaac", amount: 400000, confirmations: 0, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_address: "17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq", to_account: 1, note: "Thanks for the tea", txTime: 21331300839}
-
+      accounts[1].balance += 400000
 
       eventListener("on_tx")
       
