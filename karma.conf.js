@@ -14,8 +14,9 @@ module.exports = function(config){
       'assets/js/app.js.coffee',
       'assets/js/controllers/*.js.coffee',
       'assets/js/filters.js.coffee',
-      'assets/js/services.js.coffee',
-      'tests/**/*.coffee'
+      'assets/js/services/*.js.coffee',
+      'tests/**/*.coffee',
+      'tests/**/*.js'      
     ],
 
     autoWatch : true,

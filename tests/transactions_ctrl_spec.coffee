@@ -41,6 +41,6 @@ describe "TransactionsCtrl", ->
     expect($state.go).not.toHaveBeenCalled()
 
   )
-  
+
     
     

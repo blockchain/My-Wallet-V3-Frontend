@@ -1,5 +1,5 @@
 walletServices = angular.module("myWalletServices", [])
-walletServices.factory "MyWallet", ($window) ->
+walletServices.factory "MyWallet", ($window, $timeout) ->
     myWallet = {}
     accounts = []
     accountsOnServer = [{label: "Savings", archived: false, balance: 2.0}]
@@ -23,7 +23,7 @@ walletServices.factory "MyWallet", ($window) ->
     myWallet.getAccounts = () ->
       return accounts
       
-    myWallet.generateNewAccount = () ->
+    myWallet.generateAccount = () ->
       accounts.push {label: "Mobile", archived: false, balance: 0}
       
     myWallet.getTransactions = () ->
@@ -38,7 +38,7 @@ walletServices.factory "MyWallet", ($window) ->
         return
         
       # A few sanity checks (not complete)
-      if value > addresses[0].balance
+      if value > accounts[0].balance
         listener.on_error({message: "Insufficient funds"})
         return
       
@@ -48,7 +48,7 @@ walletServices.factory "MyWallet", ($window) ->
       listener.on_finish_signing()
       listener.on_before_send()
       
-      addressesOnServer[0].balance = addressesOnServer[0].balance - value
+      accountsOnServer[0].balance = accountsOnServer[0].balance - value
       
       listener.on_success()
       
@@ -62,6 +62,14 @@ walletServices.factory "MyWallet", ($window) ->
       
     # Pending refactoring of MyWallet:
     $window.symbol_local = {code: "USD",conversion: 250000.0, local: true, name: "Dollar", symbol: "$", symbolAppearsAfter: false}
+      
+    ############################################################
+    # Simulate spontanuous behavior when using mock in browser #
+    ############################################################
+    myWallet.mockSpontanuousBehavior = () ->
+      $timeout((->
+        myWallet.mockShouldReceiveNewTransaction()
+        ), 5000)
       
     ###################################
     # Fake methods useful for testing #

@@ -1,4 +1,4 @@
-describe "AddressesCtrl", ->
+describe "AccountsCtrl", ->
   scope = undefined
   
   beforeEach angular.mock.module("walletApp")
@@ -14,7 +14,7 @@ describe "AddressesCtrl", ->
       
       scope = $rootScope.$new()
             
-      $controller "AddressesCtrl",
+      $controller "AccountsCtrl",
         $scope: scope,
         $stateParams: {}
       
@@ -23,6 +23,6 @@ describe "AddressesCtrl", ->
     return
     
   it "should let user create a new address", ->
-    before = scope.addresses.length
-    scope.generateAddress()
-    expect(scope.addresses.length).toBe(before + 1)
+    before = scope.accounts.length
+    scope.generateAccount()
+    expect(scope.accounts.length).toBe(before + 1)

@@ -57,7 +57,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       ), 500)    
         
     wallet.generateAccount = () ->
-      wallet.my.generateNewAccount()
+      wallet.my.generateAccount()
       wallet.updateAccounts()
       
     wallet.logout = () ->
@@ -159,7 +159,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     # The old monitoring system
     wallet.monitorLegacy = (event) ->
-      console.log "Received: " + event
+      # console.logaccountsd: " + event
       if event == "on_tx" or event == "on_block"
         before = wallet.transactions.length
         wallet.updateTransactions()

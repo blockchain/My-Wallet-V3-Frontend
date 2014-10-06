@@ -49,9 +49,9 @@ describe "walletServices", () ->
     )
     
     
-    it "should get a list of addresses", inject((Wallet, MyWallet) ->
-      expect(Wallet.addresses.length).toEqual(1)
-      expect(Wallet.addresses[0].balance).toEqual(2.0)
+    it "should get a list of accounts", inject((Wallet, MyWallet) ->
+      expect(Wallet.accounts.length).toEqual(1)
+      expect(Wallet.accounts[0].balance).toEqual(2.0)
 
       return
     )
@@ -70,23 +70,23 @@ describe "walletServices", () ->
     
     return
     
-  describe "generateAddress()", ->      
+  describe "generateaccount()", ->      
     it "should call generateNewKey()", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet,"generateNewKey")
+      spyOn(MyWallet,"generateAccount")
       
-      Wallet.generateAddress()
+      Wallet.generateAccount()
       
-      expect(MyWallet.generateNewKey).toHaveBeenCalled()
+      expect(MyWallet.generateAccount).toHaveBeenCalled()
       
       return
     )
     
-    it "should increase the number of addresses", inject((Wallet, MyWallet) ->
-      before = Wallet.addresses.length
+    it "should increase the number of accounts", inject((Wallet, MyWallet) ->
+      before = Wallet.accounts.length
       
-      Wallet.generateAddress()
+      Wallet.generateAccount()
       
-      expect(Wallet.addresses.length).toBe(before + 1)
+      expect(Wallet.accounts.length).toBe(before + 1)
       
       return
     )
@@ -106,7 +106,7 @@ describe "walletServices", () ->
     it "should call quickSendNoUI()", inject((Wallet, MyWallet) ->
       spyOn(MyWallet,"quickSendNoUI")
             
-      Wallet.send("address", 1.0, mockObserver)
+      Wallet.send("account", 1.0, mockObserver)
       
       expect(MyWallet.quickSendNoUI).toHaveBeenCalled()
       
@@ -116,7 +116,7 @@ describe "walletServices", () ->
     it "should call transactionDidFinish on the listerner if all goes well", inject((Wallet, MyWallet) ->         
       spyOn(mockObserver, "transactionDidFinish")
       
-      Wallet.send("address", 1.0, mockObserver)
+      Wallet.send("account", 1.0, mockObserver)
       
       expect(mockObserver.transactionDidFinish).toHaveBeenCalled()
       
@@ -128,7 +128,7 @@ describe "walletServices", () ->
          
       spyOn(mockObserver, "transactionDidFailWithError")
       
-      Wallet.send("address", 1.0, mockObserver)
+      Wallet.send("account", 1.0, mockObserver)
       
       expect(mockObserver.transactionDidFailWithError).toHaveBeenCalled()
       
@@ -137,13 +137,13 @@ describe "walletServices", () ->
     
     it "should spend money", inject((Wallet, MyWallet) ->
       
-      before = Wallet.addresses[0].balance
+      before = Wallet.accounts[0].balance
             
-      Wallet.send("address", 1.0, mockObserver)
+      Wallet.send("account", 1.0, mockObserver)
       
       Wallet.refresh()
       
-      after = Wallet.addresses[0].balance
+      after = Wallet.accounts[0].balance
       
       expect(before - after).toEqual(1.0)
       
@@ -174,4 +174,18 @@ describe "walletServices", () ->
       expect(Wallet.transactions.length).toBe(before + 1)
       
       return
+    )
+  
+    it "should receive a new transaction from mock after 5 seconds",  inject((MyWallet, Wallet, $timeout) ->
+      before = Wallet.transactions.length
+      MyWallet.mockSpontanuousBehavior()
+      $timeout.flush()
+      expect(Wallet.transactions.length).toBe(before + 1)
+    )
+    
+    it "should beep on new transaction",  inject((MyWallet, Wallet, $timeout, ngAudio) ->
+      spyOn(ngAudio, "load").and.callThrough()
+      MyWallet.mockSpontanuousBehavior()
+      $timeout.flush()
+      expect(ngAudio.load).toHaveBeenCalled()
     )
