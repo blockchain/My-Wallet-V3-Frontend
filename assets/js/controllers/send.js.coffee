@@ -2,13 +2,14 @@
   
   $scope.alerts = []
   
-  any = {address: null, title: "Any Account"}
-  
   $scope.currencies = {isOpen: false}
   
-  $scope.transaction = {from: any, to: "", amount: 0.0, currency: "BTC", privacyGuard: false, advanced: false}
+  $scope.transaction = {from: null, to: "", amount: 0.0, currency: "BTC", privacyGuard: false, advanced: false}
   
-  $scope.addresses = [any, {address: "abcdefgh", title: "Coming soon..."}]
+  $scope.addressBook = Wallet.addressBook
+  $scope.accounts = Wallet.accounts
+  
+  
   
   $scope.close = () ->
     $modalInstance.dismiss ""
@@ -17,7 +18,7 @@
     for alert in $scope.alerts
       $scope.alerts.pop(alert)
 
-    Wallet.send($scope.transaction.to, $scope.transaction.amount, $scope.observer)
+    Wallet.send($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.to, $scope.transaction.amount, $scope.transaction.currency, $scope.observer)
   
   $scope.closeAlert = (index) ->
     $scope.alerts.splice index, 1
@@ -26,6 +27,10 @@
   #################################
   #           Private             #
   #################################
+  
+  $scope.$watchCollection "accounts", () ->
+    if $scope.transaction.from == null && $scope.accounts.length > 0
+      $scope.transaction.from = $scope.accounts[0]
   
   $scope.$watchCollection "[transaction.to, transaction.from.address]", () ->
     $scope.transactionIsValid = $scope.validate($scope.transaction)

@@ -35,6 +35,18 @@ describe "SendCtrl", ->
     return
   )
   
+  it "should have access to address book",  inject(() ->
+    expect(scope.addressBook).toBeDefined()
+    expect(scope.addressBook["17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq"]).toBe("John")
+    
+  )
+  
+  it "should have access to accounts",  inject(() ->
+    expect(scope.accounts).toBeDefined()
+    expect(scope.accounts.length).toBeGreaterThan(0)
+    
+  )
+  
   # Form validation: should be refactored to move transaction into a service
 
   it "should enable Send button if transaction is valid",  inject(() ->
@@ -97,7 +109,7 @@ describe "SendCtrl", ->
     
     scope.send()
     
-    expect(Wallet.send).toHaveBeenCalledWith(scope.transaction.to, scope.transaction.amount, scope.observer)
+    expect(Wallet.send).toHaveBeenCalledWith(0, scope.transaction.to, scope.transaction.amount, scope.transaction.currency, scope.observer)
     
     return
   )

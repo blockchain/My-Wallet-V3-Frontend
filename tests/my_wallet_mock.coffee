@@ -45,13 +45,14 @@ walletServices.factory "MyWallet", ($window, $timeout) ->
     myWallet.parseTransaction = (tx) ->
       return tx
       
-    myWallet.quickSendNoUI = (to, value, listener) ->
+    # Amount in Satoshi
+    myWallet.makeTransaction = (fromAccountIndex,toAddress, amount, listener) ->
       if mockRules.shouldFailToSend
         listener.on_error({message: "Reason for failure"})
         return
         
       # A few sanity checks (not complete)
-      if value > accounts[0].balance
+      if amount > accounts[fromAccountIndex].balance
         listener.on_error({message: "Insufficient funds"})
         return
       
@@ -61,7 +62,27 @@ walletServices.factory "MyWallet", ($window, $timeout) ->
       listener.on_finish_signing()
       listener.on_before_send()
       
-      accountsOnServer[0].balance = accountsOnServer[0].balance - value
+      ###
+      The MyWallet mock parses transactions by just copying them, so the following 
+      transaction is what a real transaction would look like  *after* processing. 
+      
+      The real transaction may have several inputs (from receiving and change address 
+      for this account). A new change address may need to be generated.
+      
+      Transaction parsing should be able to figure out which account was the sender and 
+      change address and which address represents a recipient.
+      ###
+      transaction  = {hash: "hash-" + (new Date()).getTime(), amount: amount, confirmations: 0, doubleSpend: false, coinbase: false, intraWallet: false, from_account: fromAccountIndex, from_address: null, to_account: null, to_address: toAddress, note: null, txTime: (new Date()).getTime()}
+
+      # MyWallet stores transaction locally (so it already knows it by the time
+      # it receives the websocket notification).
+
+      transactions.push transaction
+      accounts[fromAccountIndex].balance -= amount
+      
+      # Blockchain.info will know about these transactions:
+      accountsOnServer[fromAccountIndex].balance -= amount
+      transactionsOnServer.push transaction
       
       listener.on_success()
       

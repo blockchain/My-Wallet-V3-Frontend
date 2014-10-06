@@ -111,12 +111,22 @@ describe "walletServices", () ->
               
       return
      
-    it "should call quickSendNoUI()", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet,"quickSendNoUI")
+    it "should call makeTransaction()", inject((Wallet, MyWallet) ->
+      spyOn(MyWallet,"makeTransaction")
             
-      Wallet.send("account", 1.0, mockObserver)
+      Wallet.send(0, "account", 1.0, "BTC", mockObserver)
       
-      expect(MyWallet.quickSendNoUI).toHaveBeenCalled()
+      expect(MyWallet.makeTransaction).toHaveBeenCalled()
+      
+      return
+    )
+    
+    it "should convert BTC to Satoshi", inject((Wallet, MyWallet) ->
+      spyOn(MyWallet,"makeTransaction")
+            
+      Wallet.send(0, "account", 1.0, "BTC", mockObserver)
+      
+      expect(MyWallet.makeTransaction.calls.mostRecent().args[2]).toBe(100000000)
       
       return
     )
@@ -124,10 +134,30 @@ describe "walletServices", () ->
     it "should call transactionDidFinish on the listerner if all goes well", inject((Wallet, MyWallet) ->         
       spyOn(mockObserver, "transactionDidFinish")
       
-      Wallet.send("account", 1.0, mockObserver)
+      Wallet.send(0, "account", 1.0, "BTC", mockObserver)
       
       expect(mockObserver.transactionDidFinish).toHaveBeenCalled()
       
+      return
+    )
+    
+    it "should update the account balance if successful", inject((Wallet, MyWallet) ->               
+      before = Wallet.accounts[0].balance
+      
+      Wallet.send(0, "account", 1.0, "BTC", mockObserver)
+      
+      expect(Wallet.accounts[0].balance).toBe(before - 1.0 * 100000000)
+        
+      return
+    )
+    
+    it "should update transactions if successful", inject((Wallet, MyWallet) ->               
+      before = Wallet.transactions.length
+      
+      Wallet.send(0, "account", 1.0, "BTC", mockObserver)
+      
+      expect(Wallet.transactions.length).toBe(before + 1)
+        
       return
     )
     
@@ -136,7 +166,7 @@ describe "walletServices", () ->
          
       spyOn(mockObserver, "transactionDidFailWithError")
       
-      Wallet.send("account", 1.0, mockObserver)
+      Wallet.send(0, "account", 1.0, "BTC", mockObserver)
       
       expect(mockObserver.transactionDidFailWithError).toHaveBeenCalled()
       
@@ -147,13 +177,13 @@ describe "walletServices", () ->
       
       before = Wallet.accounts[0].balance
             
-      Wallet.send("account", 1.0, mockObserver)
+      Wallet.send(0, "account", 1.0, "BTC", mockObserver)
       
       Wallet.refresh()
       
       after = Wallet.accounts[0].balance
       
-      expect(before - after).toEqual(1.0)
+      expect(before - after).toEqual(100000000)
       
       return
     )

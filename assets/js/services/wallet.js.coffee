@@ -112,9 +112,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           transaction.fiat = transaction.amount / wallet.settings.currency.conversion
           wallet.transactions.push transaction 
       
-
-    # TODO: set from account index, don't use quickSend method.
-    wallet.send = (to, amount, observer) ->
+    # Amount in BTC (TODO: convert currency)
+    wallet.send = (fromAccountIndex, to, amount, currency, observer) ->
       if observer == undefined || observer == null
         console.error "An observer is required"
         return
@@ -154,9 +153,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         return
         
       listener.on_success = () ->
+        wallet.updateAccounts()
+        wallet.updateTransactions()
+        
         observer.transactionDidFinish()
       
-      wallet.my.quickSendNoUI(to, amount, listener)
+      wallet.my.makeTransaction(fromAccountIndex, to, amount * 100000000, listener)
     
     # The old monitoring system
     wallet.monitorLegacy = (event) ->
@@ -168,6 +170,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           sound = ngAudio.load("beep.wav")
           sound.play()
           wallet.updateAccounts()
+          wallet.updateTransactions()
     
     # The new monitoring system  
     wallet.monitor = (event) ->

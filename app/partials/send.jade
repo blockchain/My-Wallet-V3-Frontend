@@ -8,8 +8,9 @@
       label.col-sm-3.control-label Send From:
       .col-sm-9
         ui-select(ng-model="transaction.from")
-          ui-select-match {{ $select.selected.title }}
-          ui-select-choices(repeat="address in addresses") {{ address.title }}
+          ui-select-match {{ $select.selected.label }}
+          ui-select-choices(repeat="account in accounts | filter: $select.search") 
+            span(ng-bind-html="account.label | highlight: $select.search")
     .form-group
       label.col-sm-3.control-label(for:"to") Send To:
       .col-sm-9
