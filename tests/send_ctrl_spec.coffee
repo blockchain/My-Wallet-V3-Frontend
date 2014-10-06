@@ -133,7 +133,7 @@ describe "SendCtrl", ->
   )
   
   it "should show error message if send() fails",  inject((Wallet) ->
-    scope.transaction.amount = 10 # Way too much
+    scope.transaction.amount = 3000000000 # Way too much
     
     scope.send()
     
