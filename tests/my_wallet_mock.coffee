@@ -42,9 +42,6 @@ walletServices.factory "MyWallet", ($window, $timeout) ->
     myWallet.getTransactions = () ->
       return transactions
       
-    myWallet.parseTransaction = (tx) ->
-      return tx
-      
     # Amount in Satoshi
     myWallet.makeTransaction = (fromAccountIndex,toAddress, amount, listener) ->
       if mockRules.shouldFailToSend

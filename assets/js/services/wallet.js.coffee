@@ -108,7 +108,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
             break
         
         if !match
-          transaction = wallet.my.parseTransaction(tx)
+          transaction = {}
+          angular.copy(tx, transaction)
           transaction.fiat = transaction.amount / wallet.settings.currency.conversion
           wallet.transactions.push transaction 
       
