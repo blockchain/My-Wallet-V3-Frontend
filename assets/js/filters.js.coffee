@@ -5,7 +5,7 @@
 # Not used:
 angular.module("walletFilters", []).filter "fiat", ->
   (input, currency) ->
-    if input
+    if input != undefined
       if currency
         currency.symbol + (input / currency.conversion).toFixed(2) + " " + currency.code
       else
