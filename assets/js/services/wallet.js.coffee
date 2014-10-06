@@ -49,7 +49,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.updateAccounts()
             
       for address, label of wallet.my.addressBook
-        $log.info "1 item"
         wallet.addressBook[address] = wallet.my.addressBook[address]
     
       # getTransactions needs to be called after some asynchronous event
