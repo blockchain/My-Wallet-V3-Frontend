@@ -9,19 +9,22 @@
       b You 
       span(ng-show="transaction.intraWallet").
         moved bitcoin to 
-      span(ng-show="transaction.receipient && !transaction.intraWallet")
+      span(ng-show="transaction.to_address")
         | sent bitcoin to 
-      span(ng-show="transaction.receipient")
-        b(ng-show="transaction.receipient.label")
-          {{ transaction.receipient.label }}
-        b(ng-hide="transaction.receipient.label")
-          {{ transaction.receipient.address }}
-      span(ng-show="transaction.sender")
+      span(ng-hide="!transaction.intraWallet && transaction.amount > 0")
+          b(ng-show="transaction.to_account")
+          | {{ accounts[transaction.to_account].label }}
+        b(ng-hide="transaction.to_account")
+          b(ng-show="addressBook[transaction.to_address]")
+            {{ addressBook[transaction.to_address] }}
+          b(ng-hide="addressBook[transaction.to_address]")
+            {{ transaction.to_address }}
+      span(ng-show="transaction.from_address")
         | received bitcoin from 
-        b(ng-show="transaction.sender.label")
-          {{ transaction.sender.label }}
-        b(ng-hide="transaction.sender.label")
-          {{ transaction.sender.address }}
+        b(ng-show="addressBook[transaction.from_address]")
+          {{ addressBook[transaction.from_address] }}
+        b(ng-hide="addressBook[transaction.from_address]")
+          {{ transaction.from_address }}
     .col-xs-3 
       span.note
         img(src="img/note.png")
@@ -30,7 +33,7 @@
     .col-xs-2
       span(ng-show="transaction.intraWallet")
         button.intra-wallet {{ settings.currency.symbol }} {{ -transaction.fiat | number:2 }}
-      span(ng-show="transaction.result > 0 && !transaction.intraWallet")
+      span(ng-show="transaction.amount > 0 && !transaction.intraWallet")
         button.received {{ settings.currency.symbol }} {{ transaction.fiat | number:2 }}
-      span(ng-show="transaction.result < 0 && !transaction.intraWallet")
+      span(ng-show="transaction.amount < 0 && !transaction.intraWallet")
         button.spent -{{ settings.currency.symbol }} {{ -transaction.fiat | number:2 }}

@@ -1,14 +1,16 @@
-@TransactionsCtrl = ($scope, Wallet, $state, $cookies) ->
+@TransactionsCtrl = ($scope, Wallet, $state, $cookies, $log) ->
   
   #################################
   #           Private             #
   #################################
     
   $scope.didLoad = () ->
+    $scope.accounts = Wallet.accounts
     $scope.transactions = Wallet.transactions
+    $scope.addressBook = Wallet.addressBook
     $scope.status    = Wallet.status
     $scope.settings = Wallet.settings
-    $scope.totals = Wallet.totals
+    $scope.totals = Wallet.totals  
   
     # Restore after browser refresh
     if !$scope.status.isLoggedIn 

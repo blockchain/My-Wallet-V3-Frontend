@@ -24,6 +24,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   
   wallet.accounts     = []
   wallet.transactions = []
+  wallet.addressBook  = {}
   
   
   ##################################
@@ -46,9 +47,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.settings.currency = $window.symbol_local
       
       wallet.updateAccounts()
-      
-
-
+            
+      for address, label of wallet.my.addressBook
+        $log.info "1 item"
+        wallet.addressBook[address] = wallet.my.addressBook[address]
+    
       # getTransactions needs to be called after some asynchronous event
       $timeout((->
         wallet.updateTransactions()
@@ -106,9 +109,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
             break
         
         if !match
-          # TODO refactor parseTransaction so it returns the account index, not the address
           transaction = wallet.my.parseTransaction(tx)
-          transaction.fiat = transaction.result / wallet.settings.currency.conversion
+          transaction.fiat = transaction.amount / wallet.settings.currency.conversion
           wallet.transactions.push transaction 
       
 

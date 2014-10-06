@@ -2,13 +2,26 @@ walletServices = angular.module("myWalletServices", [])
 walletServices.factory "MyWallet", ($window, $timeout) ->
     myWallet = {}
     accounts = []
-    accountsOnServer = [{label: "Savings", archived: false, balance: 2.0}]
+    accountsOnServer = [
+      {label: "Savings", archived: false, balance: 300000000 - 25000000},
+      {label: "Mobile", archived: false, balance: 25000000 - 1500000}
+    ]
     transactions = []
-    transactionsOnServer = [{balance: 0.5, result: 300000.0, hash: "aaaa", confirmations: 1, doubleSpend: false, coinbase: false, sender: "sender", receipient: "receipient", intraWallet: false, note: "Incoming", txTime: 1331300839}]
+    transactionsOnServer = [
+      {hash: "aaaa", amount: 300000000, confirmations: 13, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_address: "1D2YzLr5qvrwMSm8onYbns5BLJ9jwzPHcQ", to_account: 0, note: "Salary", txTime: 1331300839},
+      {hash: "aaab", amount: -25000000, confirmations: 3, doubleSpend: false, coinbase: false, intraWallet: true, from_account: 0, from_address: null, to_account: 1, to_address: null, note: null, txTime:   2000000000},
+      {hash: "afsdfsdkj", amount: -1500000, confirmations: 1, doubleSpend: false, coinbase: false, intraWallet: false, from_account: 1, from_address: null, to_account: null, to_address: "1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq" ,note: null, txTime:   8200000000},
+    ]
     monitorFunc = undefined  # New system
     eventListener = undefined # Old system
     
     mockRules = {shouldFailToSend: false}
+    
+    myWallet.addressBook = {
+      "17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq": "John"
+      "1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq": "Alice"
+    }
+
 
     myWallet.restoreWallet = (password) ->
       this.refresh()
@@ -87,7 +100,8 @@ walletServices.factory "MyWallet", ($window, $timeout) ->
       mockRules.shouldFailToSend = true
       
     myWallet.mockShouldReceiveNewTransaction = () ->
-      transactions.push {balance: 1.0, result: 280000.0, hash: "abcd", confirmations: 1, doubleSpend: false, coinbase: false, sender: "sender", receipient: "receipient", intraWallet: false, note: "Incoming", txTime: 12331300839}
+      transactions.push {hash: "aaac", amount: 400000, confirmations: 0, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_address: "17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq", to_account: 1, note: "Thanks for the tea", txTime: 21331300839}
+
 
       eventListener("on_tx")
       
