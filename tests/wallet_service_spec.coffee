@@ -93,6 +93,14 @@ describe "walletServices", () ->
     
     return
     
+  describe "addressBook()", ->      
+    it "should find John", inject((Wallet) ->      
+      expect(Wallet.addressBook["17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq"]).toBe("John")
+      return
+    )
+    
+    return
+    
   describe "send()", ->   
     beforeEach ->
       mockObserver = {} # Represents e.g. the controller calling us:
