@@ -4,7 +4,7 @@ walletServices.factory "MyWallet", ($window, $timeout) ->
     accounts = []
     accountsOnServer = [{label: "Savings", archived: false, balance: 2.0}]
     transactions = []
-    transactionsOnServer = [{balance: 0.5, result: 0.5, hash: "aaaa", confirmations: 1, doubleSpend: false, coinbase: false, sender: "sender", receipient: "receipient", intraWallet: false, note: "Incoming", txTime: null}]
+    transactionsOnServer = [{balance: 0.5, result: 0.5, hash: "aaaa", confirmations: 1, doubleSpend: false, coinbase: false, sender: "sender", receipient: "receipient", intraWallet: false, note: "Incoming", txTime: 1331300839}]
     monitorFunc = undefined  # New system
     eventListener = undefined # Old system
     
@@ -87,7 +87,7 @@ walletServices.factory "MyWallet", ($window, $timeout) ->
       mockRules.shouldFailToSend = true
       
     myWallet.mockShouldReceiveNewTransaction = () ->
-      transactions.push {balance: 1.0, result: 1.0, hash: "abcd", confirmations: 1, doubleSpend: false, coinbase: false, sender: "sender", receipient: "receipient", intraWallet: false, note: "Incoming", txTime: null}
+      transactions.push {balance: 1.0, result: 1.0, hash: "abcd", confirmations: 1, doubleSpend: false, coinbase: false, sender: "sender", receipient: "receipient", intraWallet: false, note: "Incoming", txTime: 12331300839}
 
       eventListener("on_tx")
       
