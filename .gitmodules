@@ -1,6 +1,6 @@
 [submodule "assets/js/my-wallet"]
 	path = assets/js/my-wallet
-	url = https://github.com/blockchain/My-Wallet.git
+	url = https://sjors-heroku:ByAwkLPYPN3ADvHmwGVPP9trB@github.com/blockchain/My-Wallet-HD
 	branch = refactor
 [submodule "assets/js/my-wallet-sjors"]
 	path = assets/js/my-wallet-sjors
