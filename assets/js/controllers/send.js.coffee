@@ -9,8 +9,6 @@
   $scope.addressBook = Wallet.addressBook
   $scope.accounts = Wallet.accounts
   
-  
-  
   $scope.close = () ->
     $modalInstance.dismiss ""
   

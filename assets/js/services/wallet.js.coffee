@@ -25,7 +25,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.accounts     = []
   wallet.transactions = []
   wallet.addressBook  = {}
-  
+  wallet.paymentRequests = []
   
   ##################################
   #             Public             #
@@ -112,6 +112,24 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           angular.copy(tx, transaction)
           transaction.fiat = transaction.amount / wallet.settings.currency.conversion
           wallet.transactions.push transaction 
+          
+    wallet.refreshPaymentRequests = () ->
+      for req in wallet.my.getPaymentRequests()
+        match = false
+        for candidate in wallet.paymentRequests
+          if candidate.address == req.address
+            match = true
+            break
+        
+        if !match
+          request = {}
+          angular.copy(req, request)
+          request.account = 0 # TODO: match the correct account
+          wallet.paymentRequests.push request
+          
+    wallet.updatePaymentRequest = (account, address, amount) ->
+      wallet.my.updatePaymentRequest(account, address, amount)
+
       
     # Amount in BTC (TODO: convert currency)
     wallet.send = (fromAccountIndex, to, amount, currency, observer) ->
@@ -160,6 +178,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         observer.transactionDidFinish()
       
       wallet.my.makeTransaction(fromAccountIndex, to, amount * 100000000, listener)
+    
+    wallet.generatePaymentRequestForAccount = (accountIndex)  ->
+      return wallet.my.generatePaymentRequestForAccount(accountIndex)
+    
+    wallet.cancelPaymentRequest = (accountIndex, address)  ->
+      return wallet.my.cancelPaymentRequest(accountIndex, address)
     
     # The old monitoring system
     wallet.monitorLegacy = (event) ->

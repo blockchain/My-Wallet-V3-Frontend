@@ -22,6 +22,7 @@ walletServices.factory "MyWallet", ($window, $timeout) ->
       "1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq": "Alice"
     }
 
+    paymentRequests = []
 
     myWallet.restoreWallet = (password) ->
       this.refresh()
@@ -84,6 +85,30 @@ walletServices.factory "MyWallet", ($window, $timeout) ->
       listener.on_success()
       
       return
+      
+    myWallet.generatePaymentRequestForAccount = (account, amount) ->
+      # It should generate a new receive address or reuse a cancelled address
+      # (never reuse an addres that actually received btc). It should increase
+      # the tally in the wallet.
+      request = {address: "1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp", amount: amount, account: account}
+      paymentRequests.push request
+      return request # This mock method only works once.
+      
+    myWallet.cancelPaymentRequest = (accountIndex, address) ->
+      for candidate in paymentRequests
+        if candidate.address == address
+          paymentRequests.pop(candidate)
+      return
+      
+    # Gets payment requests for all accounts:
+    myWallet.getPaymentRequests = () ->
+      return paymentRequests
+      
+    myWallet.updatePaymentRequest = (account, address, amount) ->
+      for candidate in paymentRequests
+        if candidate.address == address
+          candidate.amount = amount
+          return candidate
       
     myWallet.addEventListener = (func) ->
       eventListener = func

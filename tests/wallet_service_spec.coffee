@@ -233,3 +233,35 @@ describe "walletServices", () ->
       expect(Wallet.accounts[1].balance).toBeGreaterThan(before)
       
     )
+    
+  describe "request", ->
+    it "can be made", inject((MyWallet, Wallet) ->
+      expect(Wallet.generatePaymentRequestForAccount(0, 1).address).toBe("1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp")
+    )
+    
+    it "is stored", inject((MyWallet, Wallet) ->
+      request = Wallet.generatePaymentRequestForAccount(0, 1)
+      
+      Wallet.refreshPaymentRequests() # TODO: this should happen automatically
+      
+      expect(Wallet.paymentRequests.length).toBeGreaterThan(0)
+    )
+    
+    it "amount can be updated", inject((MyWallet, Wallet) ->
+      request = Wallet.generatePaymentRequestForAccount(0, 1)
+      updatedRequest = Wallet.updatePaymentRequest(0, request.address, 2)
+      expect(updatedRequest.amount).toBe(2)
+    )
+        
+
+    it "should be possible to cancel a request", inject((MyWallet, Wallet) ->
+      request = Wallet.generatePaymentRequestForAccount(0, 1)
+      Wallet.cancelPaymentRequest(0, request.address)
+      
+      Wallet.refreshPaymentRequests()
+      
+      expect(Wallet.paymentRequests.length).toBe(0)
+      
+    )
+      
+      
