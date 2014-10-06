@@ -9,7 +9,7 @@
   table#accounts
     tr.active
       td All Accounts
-      td.amount {{ totals.fiat | fiat:settings.currency }}
+      td.amount {{ totals.fiat | currency:settings.currency.symbol }}
     tr(ng-repeat="account in accounts | filter:{active:true}")
       td 
         a(href="")
