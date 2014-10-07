@@ -107,7 +107,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log) ->
         
       address = mockPaymentRequestAddressStack.pop()
       
-      request = {address: address, amount: amount, account: account, paid: 0}
+      request = {address: address, amount: amount, account: account, paid: 0, complete: false}
       
       accounts[account].receive_addresses.push address
       
@@ -174,6 +174,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log) ->
       for request in paymentRequests
         if request.address == transaction.to
           request.paid += transaction.amount # The real thing should use the amount per output
+          
+          request.complete = request.paid == transaction.amount 
           break
       
       

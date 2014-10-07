@@ -15,12 +15,14 @@
       label.col-sm-3.control-label Amount:
       .col-sm-5
         .input-group
-          input.form-control(type="text",ng-model="fields.amount")
+          input.form-control(type="text",ng-model="fields.amount", ng-disabled="paymentRequest && paymentRequest.paid > 0")
     .form-group(ng-show="paymentRequest.address")
       label.col-sm-3.control-label Payment address:
       .col-sm-9
         input.form-control(type:"text", readonly, ng-model="paymentRequest.address")      
 .modal-footer
-  button.btn.btn-info(ng-click="close()", ng-hide="paymentRequest && paymentRequest.paid !=  paymentRequest.amount") Close
-  button.btn.btn-danger(ng-click="cancel()", ng-show="paymentRequest && paymentRequest.paid !=  paymentRequest.amount") Cancel
-  button.btn.btn-primary(ng-click="save()", ng-show="paymentRequest && paymentRequest.paid !=  paymentRequest.amount") Save
+  button.btn.btn-info(ng-click="close()", ng-show="!paymentRequest || paymentRequest.paid <= paymentRequest.amount") Close
+  button.btn.btn-danger(ng-click="cancel()", ng-show="paymentRequest && paymentRequest.paid == 0") Cancel
+  button.btn.btn-primary(ng-click="save()", ng-show="paymentRequest  && paymentRequest.paid == 0") Save
+  button.btn.btn-danger(ng-click="accept()", ng-show="paymentRequest  && paymentRequest.paid > 0 && paymentRequest.paid !=  paymentRequest.amount") Accept
+  

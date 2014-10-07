@@ -3,6 +3,10 @@
   
   $scope.alerts = []
   
+  $scope.closeAlert = (index) ->
+    $scope.alerts.splice index, 1
+    return
+  
   # Managed by this controller, amount in BTC:
   $scope.fields = {to: null, address: null, amount: 0.0}  
   # Managed by Wallet service, amounts in Satoshi, has payment information:
@@ -22,6 +26,10 @@
     if $scope.mockTimer != undefined
       $timeout.cancel($scope.mockTimer) 
       
+    $modalInstance.dismiss ""
+    
+  $scope.accept = () ->
+    $scope.paymentRequest.complete = true
     $modalInstance.dismiss ""
   
   #################################
@@ -53,20 +61,30 @@
       
         if $scope.mockTimer == undefined || $timeout.cancel($scope.mockTimer)                
           $scope.mockTimer = $timeout((->
-            MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" ,$scope.paymentRequest.amount, "")
+            MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" ,100000000, "")
           ), 10000)  
         
   $scope.listenerForPayment = $scope.$watch "paymentRequest.paid", (val) ->
-    if val > 0
-      $scope.alerts.push {type: "success", msg: "Payment received"}
+    if $scope.paymentRequest != null
+      if val == $scope.paymentRequest.amount
+        $scope.alerts.push {type: "success", msg: "Payment received"}
+        
+        $scope.listenerForPayment()
+      else if val > 0 && val < $scope.paymentRequest.amount
+        $scope.alerts.push {msg: "Incomplete payment: " + val / 100000000 + " out of " + $scope.paymentRequest.amount / 100000000 +  " BTC" }
       
-      $scope.listenerForPayment()
+        # Mock pays the remainder after 10 seconds
+        if MyWallet.mockShouldReceiveNewTransaction != undefined
+          $scope.mockTimer = $timeout((->
+            MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , $scope.paymentRequest.amount - 100000000, "")
+          ), 10000)
       
-      
+      else if val > $scope.paymentRequest.amount
+        $scope.alerts.push {msg: "Paid too much: " + val / 100000000 + " instead of " + $scope.paymentRequest.amount / 100000000 +  " BTC" }
       
   $scope.validate = () ->
     return false if $scope.fields.to == null
-    return false if $scope.fields.amount == 0
+    return false if parseFloat($scope.fields.amount) == 0.0
     
     return true
   
