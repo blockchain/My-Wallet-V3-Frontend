@@ -18,8 +18,8 @@ walletApp.config (uiSelectConfig) ->
 
 walletApp.config ($stateProvider, $urlRouterProvider) ->
     $urlRouterProvider.otherwise("/");
-    
-    left = {
+
+    accounts = {
       templateUrl: "partials/accounts"
       controller: "AccountsCtrl"
     }
@@ -39,7 +39,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       views: {
         "navigation" : navigation,
         "top"  : top,
-        "left" : left,
+        "accounts" : accounts,
         "right": { 
           templateUrl: "partials/dashboard"
           controller: "DashboardCtrl"
@@ -52,7 +52,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       views: {
         "navigation" : navigation,
         "top"  : top,
-        "left" : left,
+        "accounts" : accounts,
         right: {
           templateUrl: "partials/transactions"
           controller: "TransactionsCtrl"

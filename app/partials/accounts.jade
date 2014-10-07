@@ -1,25 +1,16 @@
-.left-navigation(ng-show="status.isLoggedIn")
-  table.left-header.accounts
-    tr
-      td.header 
-        img(src="img/my-accounts-icon.png") 
-        |My Accounts
-      td.right
-        a(ng-click="generateAccount()") + New
-  table#accounts
-    tr.active
-      td All Accounts
-      td.amount {{ totals.fiat | currency:settings.currency.symbol }}
-    tr(ng-repeat="account in accounts | filter:{active:true}")
-      td 
-        a(href="")
-          {{ account.label }}
-      td.amount {{ account.balance | fiat:settings.currency }}
-  table.left-header
-    tr
-      td.header 
-        img(src="img/security-center-icon.png") 
-        |Security Center
-      td.right
-        a
-          img(src="img/icon-collapse.png")
+table.left-header.accounts
+  tr
+    td.header 
+      img(src="img/my-accounts-icon.png") 
+      |My Accounts
+    td.right
+      a(ng-click="generateAccount()") + New
+table#accounts
+  tr.active
+    td All Accounts
+    td.amount {{ totals.fiat | currency:settings.currency.symbol }}
+  tr(ng-repeat="account in accounts | filter:{active:true}")
+    td 
+      a(href="")
+        {{ account.label }}
+    td.amount {{ account.balance | fiat:settings.currency }}

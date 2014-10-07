@@ -21,6 +21,7 @@ head
     !=css('transactions')
     !=css('accounts')
     !=css('top')
+    !=css('left')
     
     // Blockchain MyWallet javascript (must be called before 'app')
     //- !=js('my-wallet/shared')
@@ -36,6 +37,7 @@ head
     
     
     !=js('app')
+    !=js('controllers/app')
     !=js('controllers/dashboard')
     !=js('controllers/accounts')
     !=js('controllers/top')
@@ -48,12 +50,22 @@ head
     !=js('services/wallet')
     
 
-  body
+  body(ng-controller="AppCtrl")
     .navbar.navbar-inverse(role="navigation", ui-view="navigation")
     .container-fluid
       .row.spacing
       .row
-        .col-xs-3(ui-view="left")
+        .col-xs-3
+          .left-navigation(ng-show="status.isLoggedIn")
+            div(ui-view="accounts")
+            table.left-header
+              tr
+                td.header 
+                  img(src="img/security-center-icon.png") 
+                  |Security Center
+                td.right
+                  a
+                    img(src="img/icon-collapse.png")
         .col-xs-9
           div(ui-view="top")
           div(ui-view="right")

@@ -47,7 +47,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log) ->
       return accounts
       
     myWallet.generateAccount = () ->
-      accounts.push {label: "Account #" + (accounts.length + 1), archived: false, balance: 0}
+      accounts.push {label: "Account #" + (accounts.length + 1), archived: false, balance: 0, receive_addresses: [] }
       
     myWallet.getTransactions = () ->
       return transactions
