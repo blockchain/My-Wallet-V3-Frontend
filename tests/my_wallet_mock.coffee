@@ -1,5 +1,5 @@
 walletServices = angular.module("myWalletServices", [])
-walletServices.factory "MyWallet", ($window, $timeout) ->
+walletServices.factory "MyWallet", ($window, $timeout, $log) ->
     myWallet = {}
     accounts = []
     accountsOnServer = [
@@ -23,6 +23,15 @@ walletServices.factory "MyWallet", ($window, $timeout) ->
     }
 
     paymentRequests = []
+    
+    mockPaymentRequestAddressStack = [
+      "1ggDhwUX5LRsJHeeEYn8MEimBKNco2Ywq"
+      "1Gyz5MPYY1ZKLcvmXSPHMAi1xpHbdCGaUN"
+      "1M4YSYCarkSeNUk9D1o3F7hHFL9c2EYums"
+      "1LKwobBwhVwq4HF7NqBeebVg4UTLgS3bc5"
+      "1MgYrhUtb5RfV5DTaWiLGTbSMVKuFNVC7Y"
+      "1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp"
+    ]
 
     myWallet.restoreWallet = (password) ->
       this.refresh()
@@ -90,9 +99,16 @@ walletServices.factory "MyWallet", ($window, $timeout) ->
       # It should generate a new receive address or reuse a cancelled address
       # (never reuse an addres that actually received btc). It should increase
       # the tally in the wallet.
-      request = {address: "1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp", amount: amount, account: account}
       
-      accounts[account].receive_addresses.push "1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp"
+      if mockPaymentRequestAddressStack.length == 0
+        $log.error "No more mock payment request addresses; please refresh."
+        return {amount: 0, address: "No more mock addresses available"}
+        
+      address = mockPaymentRequestAddressStack.pop()
+      
+      request = {address: address, amount: amount, account: account}
+      
+      accounts[account].receive_addresses.push address
       
       paymentRequests.push request
       return request # This mock method only works once.

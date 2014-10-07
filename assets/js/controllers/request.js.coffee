@@ -1,6 +1,8 @@
 @RequestCtrl = ($scope, Wallet, MyWallet, $modalInstance, $log, $timeout) ->
   $scope.accounts = Wallet.accounts
   
+  $scope.alerts = []
+  
   $scope.request = {to: null, address: null, amount: 0.0}  
   
   $scope.close = () ->

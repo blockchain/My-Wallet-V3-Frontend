@@ -41,3 +41,8 @@ describe "RequestCtrl", ->
   it "should have an address if the request is valid",  inject(() ->
       expect(scope.request.address).toBe('1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp')
   )
+  
+  it "should notify the user is payment is received", inject(($timeout) ->
+    $timeout.flush()
+    expect(scope.alerts.length).toBe(1)
+  )
