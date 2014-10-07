@@ -21,4 +21,4 @@
       .col-sm-9
         input.form-control(type:"text", readonly, ng-model="paymentRequest.address")      
 .modal-footer
-  button.btn.btn-info(ng-click="close()") Close
+  button.btn.btn-info(ng-click="close()", ng-hide="paymentRequest && paymentRequest.paid !=  paymentRequest.amount") Close
