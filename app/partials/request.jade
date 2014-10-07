@@ -22,3 +22,5 @@
         input.form-control(type:"text", readonly, ng-model="paymentRequest.address")      
 .modal-footer
   button.btn.btn-info(ng-click="close()", ng-hide="paymentRequest && paymentRequest.paid !=  paymentRequest.amount") Close
+  button.btn.btn-danger(ng-click="cancel()", ng-show="paymentRequest && paymentRequest.paid !=  paymentRequest.amount") Cancel
+  button.btn.btn-primary(ng-click="save()", ng-show="paymentRequest && paymentRequest.paid !=  paymentRequest.amount") Save

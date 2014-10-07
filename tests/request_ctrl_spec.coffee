@@ -57,8 +57,25 @@ describe "RequestCtrl", ->
   
   it "should simulate payment after 10 seconds in mock", inject(($timeout) ->
     expect(scope.alerts.length).toBe(0)    
-    $timeout.flush()
+    $timeout.flush(5000)
+    # Don't interrupt...
+    $timeout.flush(5000)
     expect(scope.alerts.length).toBe(1)
+  )
+  
+  it "should cancel() delayed payment simulation", inject(($timeout) ->
+    expect(scope.alerts.length).toBe(0)   
+    $timeout.flush(5000)
+    scope.cancel() 
+    $timeout.flush(5000)
+    expect(scope.alerts.length).toBe(0)
+  )
+  
+  it "should cancel payment request when user presses cancel", inject((Wallet) ->
+    spyOn(Wallet, "cancelPaymentRequest")
+    scope.cancel()
+    expect(Wallet.cancelPaymentRequest).toHaveBeenCalled()
+    expect(scope.paymentRequest).toBeNull()
   )
   
   it "should update amount in request if changed in the form", inject(($timeout) ->

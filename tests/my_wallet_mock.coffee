@@ -118,6 +118,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log) ->
       for candidate in paymentRequests
         if candidate.address == address
           paymentRequests.pop(candidate)
+          mockPaymentRequestAddressStack.push(address)
+          
       return
       
     # Gets payment requests for all accounts:

@@ -10,6 +10,19 @@
   
   $scope.close = () ->
     $modalInstance.dismiss ""
+    
+  $scope.save = () ->
+    $modalInstance.dismiss ""
+    
+  $scope.cancel = () ->
+    if $scope.paymentRequest
+      Wallet.cancelPaymentRequest($scope.accounts.indexOf($scope.fields.to), $scope.paymentRequest.address)
+      $scope.paymentRequest = null 
+    
+    if $scope.mockTimer != undefined
+      $timeout.cancel($scope.mockTimer) 
+      
+    $modalInstance.dismiss ""
   
   #################################
   #           Private             #

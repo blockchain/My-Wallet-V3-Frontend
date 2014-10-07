@@ -121,8 +121,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       return wallet.my.generatePaymentRequestForAccount(accountIndex, amount)
     
     wallet.cancelPaymentRequest = (accountIndex, address)  ->
-      return wallet.my.cancelPaymentRequest(accountIndex, address)
-      
+      wallet.my.cancelPaymentRequest(accountIndex, address)
+      return
+        
     wallet.updatePaymentRequest = (account, address, amount) ->
       wallet.my.updatePaymentRequest(account, address, amount)    
     
