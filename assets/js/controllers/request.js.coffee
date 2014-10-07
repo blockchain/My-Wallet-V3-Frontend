@@ -54,7 +54,7 @@
     $scope.formIsValid = $scope.validate()
     # TODO: warn user if they try to change this after a request has been created
         
-  $scope.$watchCollection "[fields.amount]", () ->
+  $scope.$watch "fields.amount", (newValue, oldValue) ->
     $scope.formIsValid = $scope.validate()
     
     if $scope.paymentRequest == null && $scope.formIsValid

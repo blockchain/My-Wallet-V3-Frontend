@@ -99,46 +99,58 @@ walletServices.factory "MyWallet", ($window, $timeout, $log) ->
       return
       
     # Amount in Satoshi  
-    myWallet.generatePaymentRequestForAccount = (account, amount) ->
-      # It should generate a new receive address or reuse a cancelled address
-      # (never reuse an addres that actually received btc). It should increase
-      # the tally in the wallet.
+    myWallet.getAccount = (index) ->
+      account = {}
       
-      if mockPaymentRequestAddressStack.length == 0
-        $log.error "No more mock payment request addresses; please refresh."
-        return {amount: 0, address: "No more mock addresses available"}
+      account.getPaymentRequests = () ->
+        requests = []
+        for request in paymentRequests
+          requests.push request if request.account == index
+          
+        return requests 
+      
+      account.generatePaymentRequest = (amount) ->
+        # It should generate a new receive address or reuse a cancelled address
+        # (never reuse an addres that actually received btc). It should increase
+        # the tally in the wallet.
+      
+        if mockPaymentRequestAddressStack.length == 0
+          $log.error "No more mock payment request addresses; please refresh."
+          return {amount: 0, address: "No more mock addresses available"}
         
-      address = mockPaymentRequestAddressStack.pop()
+        address = mockPaymentRequestAddressStack.pop()
       
-      request = {address: address, amount: amount, account: account, paid: 0, complete: false}
+        request = {address: address, amount: amount, account: index, paid: 0, complete: false}
       
-      accounts[account].receive_addresses.push address
+        accounts[index].receive_addresses.push address
       
-      paymentRequests.push request
-      return request # This mock method only works once.
-      
-    myWallet.cancelPaymentRequest = (accountIndex, address) ->
-      for candidate in paymentRequests
-        if candidate.address == address
-          paymentRequests.pop(candidate)
-          mockPaymentRequestAddressStack.push(address)
+        paymentRequests.push request
+        return request
+        
+      account.cancelPaymentRequest = (address) ->
+        for candidate in paymentRequests
+          if candidate.address == address
+            paymentRequests.pop(candidate)
+            mockPaymentRequestAddressStack.push(address)
           
-      return
+        return
       
-    # Gets payment requests for all accounts:
-    myWallet.getPaymentRequests = () ->
-      return paymentRequests
-      
-    myWallet.updatePaymentRequest = (account, address, amount) ->
-      for candidate in paymentRequests
-        if candidate.address == address
-          candidate.amount = amount
-          return candidate
+      account.updatePaymentRequest = (address, amount) ->
+        for candidate in paymentRequests
+          if candidate.address == address
+            candidate.amount = amount
+            return candidate
           
-    myWallet.acceptPaymentRequest = (account, address) ->
-      for candidate in paymentRequests
-        if candidate.address == address
-          candidate.complete = true
+      account.acceptPaymentRequest = (address) ->
+        for candidate in paymentRequests
+          if candidate.address == address
+            candidate.complete = true
+      
+      return account
+    
+
+      
+
       
     myWallet.addEventListener = (func) ->
       eventListener = func

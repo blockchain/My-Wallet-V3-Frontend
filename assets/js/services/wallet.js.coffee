@@ -121,22 +121,26 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     # Amount in Satoshi
     wallet.generatePaymentRequestForAccount = (accountIndex, amount)  ->
-      request = wallet.my.generatePaymentRequestForAccount(accountIndex, amount)
+      account = wallet.my.getHDWallet().getAccount(accountIndex)
+      request = account.generatePaymentRequest(amount)
       this.refreshPaymentRequests()
       return request
     
     wallet.cancelPaymentRequest = (accountIndex, address)  ->
-      wallet.my.cancelPaymentRequest(accountIndex, address)
+      account = wallet.my.getHDWallet().getAccount(accountIndex)
+      account.cancelPaymentRequest(address)
       this.refreshPaymentRequests()
       return
         
-    wallet.updatePaymentRequest = (account, address, amount) ->
-      request = wallet.my.updatePaymentRequest(account, address, amount)   
+    wallet.updatePaymentRequest = (accountIndex, address, amount) ->
+      account = wallet.my.getHDWallet().getAccount(accountIndex)
+      request = account.updatePaymentRequest(address, amount)   
       this.refreshPaymentRequests() 
       return request
       
-    wallet.acceptPaymentRequest = (account, address) ->
-      request = wallet.my.acceptPaymentRequest(account, address)   
+    wallet.acceptPaymentRequest = (accountIndex, address) ->
+      account = wallet.my.getHDWallet().getAccount(accountIndex)
+      request = account.acceptPaymentRequest(address)   
       this.refreshPaymentRequests() 
     
     ##################################
@@ -185,9 +189,15 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           wallet.transactions.push transaction 
           
     wallet.refreshPaymentRequests = () ->
+      # Flatten accounts::
+      myWalletRequests = []
+      hd = wallet.my.getHDWallet()
+      for i in [0..hd.getAccounts().length - 1]
+        account = hd.getAccount(i)
+        for request in account.getPaymentRequests()
+          myWalletRequests.push request
+          
       # Remove deleted ones:
-      myWalletRequests = wallet.my.getPaymentRequests()
-      
       for req in wallet.paymentRequests
         match = false
         for candidate in myWalletRequests
