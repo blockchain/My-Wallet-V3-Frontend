@@ -24,6 +24,12 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       controller: "AccountsCtrl"
     }
     
+
+    paymentRequests = {
+      templateUrl: "partials/payment-requests"
+      controller: "PaymentRequestsCtrl"
+    }
+    
     top =  {
       templateUrl: "partials/top"
       controller: "TopCtrl"
@@ -53,6 +59,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
         "navigation" : navigation,
         "top"  : top,
         "accounts" : accounts,
+        "payment-requests" : paymentRequests,
         right: {
           templateUrl: "partials/transactions"
           controller: "TransactionsCtrl"

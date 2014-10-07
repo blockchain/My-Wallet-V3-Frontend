@@ -131,6 +131,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log) ->
         if candidate.address == address
           candidate.amount = amount
           return candidate
+          
+    myWallet.acceptPaymentRequest = (account, address) ->
+      for candidate in paymentRequests
+        if candidate.address == address
+          candidate.complete = true
       
     myWallet.addEventListener = (func) ->
       eventListener = func
@@ -173,9 +178,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log) ->
       # Does the "to" address match any payment requests? If so, update them with the amount:
       for request in paymentRequests
         if request.address == transaction.to
-          request.paid += transaction.amount # The real thing should use the amount per output
-          
-          request.complete = request.paid == transaction.amount 
+          request.paid += parseInt(transaction.amount) # The real thing should use the amount per output
+
+          request.complete = (request.paid == request.amount)
           break
       
       

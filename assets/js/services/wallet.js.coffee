@@ -34,9 +34,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.login = (uid, password) ->    
     $window.root = "https://blockchain.info/"
     wallet.my = MyWallet
-    
-    
-    
+   
     wallet.my.setGUID(uid)
     # setGUID is asynchronous, temporary workaround:
     $timeout((->
@@ -118,14 +116,23 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     # Amount in Satoshi
     wallet.generatePaymentRequestForAccount = (accountIndex, amount)  ->
-      return wallet.my.generatePaymentRequestForAccount(accountIndex, amount)
+      request = wallet.my.generatePaymentRequestForAccount(accountIndex, amount)
+      this.refreshPaymentRequests()
+      return request
     
     wallet.cancelPaymentRequest = (accountIndex, address)  ->
       wallet.my.cancelPaymentRequest(accountIndex, address)
+      this.refreshPaymentRequests()
       return
         
     wallet.updatePaymentRequest = (account, address, amount) ->
-      wallet.my.updatePaymentRequest(account, address, amount)    
+      request = wallet.my.updatePaymentRequest(account, address, amount)   
+      this.refreshPaymentRequests() 
+      return request
+      
+    wallet.acceptPaymentRequest = (account, address) ->
+      request = wallet.my.acceptPaymentRequest(account, address)   
+      this.refreshPaymentRequests() 
     
     ##################################
     #             Private            #
@@ -173,11 +180,30 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           wallet.transactions.push transaction 
           
     wallet.refreshPaymentRequests = () ->
-      for req in wallet.my.getPaymentRequests()
+      # Remove deleted ones:
+      myWalletRequests = wallet.my.getPaymentRequests()
+      
+      for req in wallet.paymentRequests
+        match = false
+        for candidate in myWalletRequests
+          if candidate.address == req.address
+            match = true
+            break
+            
+        if !match
+          index = wallet.paymentRequests.indexOf(req)
+          wallet.paymentRequests.splice(index,1)
+          
+      # Add new ones:
+      for req in myWalletRequests
         match = false
         for candidate in wallet.paymentRequests
           if candidate.address == req.address
             match = true
+            # Update amount and payment
+            candidate.amount = req.amount
+            candidate.paid = req.paid
+            candidate.complete = req.complete
             break
         
         if !match
@@ -185,7 +211,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           angular.copy(req, request)
           request.account = 0 # TODO: match the correct account
           wallet.paymentRequests.push request
-    
+              
     # The old monitoring system
     wallet.monitorLegacy = (event) ->
       # console.logaccountsd: " + event
@@ -197,6 +223,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           sound.play()
           wallet.updateAccounts()
           wallet.updateTransactions()
+          wallet.refreshPaymentRequests() 
     
     # The new monitoring system  
     wallet.monitor = (event) ->

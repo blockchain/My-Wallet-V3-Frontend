@@ -5,7 +5,7 @@ table.left-header.accounts
       |My Accounts
     td.right
       a(ng-click="generateAccount()") + New
-table#accounts
+table.left
   tr.active
     td All Accounts
     td.amount {{ totals.fiat | currency:settings.currency.symbol }}

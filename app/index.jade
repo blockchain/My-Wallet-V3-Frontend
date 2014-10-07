@@ -22,6 +22,8 @@ head
     !=css('accounts')
     !=css('top')
     !=css('left')
+    !=css('payment-requests')
+    
     
     // Blockchain MyWallet javascript (must be called before 'app')
     //- !=js('my-wallet/shared')
@@ -45,6 +47,7 @@ head
     !=js('controllers/transactions')
     !=js('controllers/account')
     !=js('controllers/request')
+    !=js('controllers/payment-requests')
     !=js('controllers/send')
     !=js('filters')
     !=js('services/wallet')
@@ -66,6 +69,7 @@ head
                 td.right
                   a
                     img(src="img/icon-collapse.png")
+            div(ui-view="payment-requests")
         .col-xs-9
           div(ui-view="top")
           div(ui-view="right")

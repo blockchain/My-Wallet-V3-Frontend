@@ -29,7 +29,11 @@
     $modalInstance.dismiss ""
     
   $scope.accept = () ->
-    $scope.paymentRequest.complete = true
+    Wallet.acceptPaymentRequest($scope.accounts.indexOf($scope.fields.to), $scope.paymentRequest.address)
+    
+    if $scope.mockTimer != undefined
+      $timeout.cancel($scope.mockTimer)
+      
     $modalInstance.dismiss ""
   
   #################################
@@ -48,10 +52,10 @@
     $scope.formIsValid = $scope.validate()
     
     if $scope.paymentRequest == null && $scope.formIsValid
-      $scope.paymentRequest =  Wallet.generatePaymentRequestForAccount($scope.accounts.indexOf($scope.fields.to), $scope.fields.amount * 100000000)
+      $scope.paymentRequest =  Wallet.generatePaymentRequestForAccount($scope.accounts.indexOf($scope.fields.to), parseInt($scope.fields.amount * 100000000))
     
     if $scope.paymentRequest && $scope.formIsValid
-      Wallet.updatePaymentRequest($scope.accounts.indexOf($scope.fields.to), $scope.paymentRequest.address, $scope.fields.amount * 100000000)
+      Wallet.updatePaymentRequest($scope.accounts.indexOf($scope.fields.to), $scope.paymentRequest.address, parseInt($scope.fields.amount * 100000000))
         
       if MyWallet.mockShouldReceiveNewTransaction != undefined
         # Check if MyWallet is a mock or the real thing. The mock will simulate payment 
