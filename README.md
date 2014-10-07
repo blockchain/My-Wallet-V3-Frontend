@@ -28,9 +28,14 @@ To run test and monitor for changes:
 
 ## MyWallet mock
 
-MyWallet can simulated using a mock, allowing you to login with fake credentials and simulate sending and receiving bitcoins. Five seconds after login it will simulate an incoming transaction paying for coffee. If you make a payment request, 10 seconds after you stop editing, it will simulate the payment of 1 BTC. If you entered a lower or higher amount it will show the appropriate warnings. If the simulated payment was insufficient and you leave the modal window open, after 10 seconds it will add the missing funds.
+MyWallet can simulated using a mock, allowing you to login with fake credentials and simulate sending and receiving bitcoins. 
 
-To use the mock you need to open `app/index.jade`, comment out the lines below "Blockchain MyWallet javascript" and uncomment the line below "Use mock instead".
+* Five seconds after login it will simulate an incoming transaction paying for coffee. 
+* If you make a payment request, 10 seconds after you stop editing, it will simulate the payment of 1 BTC.
+* If you entered a lower or higher amount it will show the appropriate warnings. 
+* If the simulated payment was insufficient and you leave the modal window open, after 10 seconds it will add the missing funds.
+
+To use the mock you need to open `app/index.jade`, comment out the lines below `Blockchain MyWallet javascript` and uncomment the line below `Use mock instead`.
 
 ## Testnet
 
