@@ -261,7 +261,14 @@ describe "walletServices", () ->
       Wallet.refreshPaymentRequests()
       
       expect(Wallet.paymentRequests.length).toBe(0)
-      
+    )
+    
+    it "should update the request when payment is received", inject((MyWallet, Wallet) ->
+      request = Wallet.generatePaymentRequestForAccount(0, 100000000)
+            
+      MyWallet.mockShouldReceiveNewTransaction(request.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , request.amount, "")
+            
+      expect(request.paid).toBe(request.amount)
     )
       
       

@@ -67,6 +67,64 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.status.isLoggedIn = false
       while wallet.accounts.length > 0
         wallet.accounts.pop()
+              
+    # Amount in BTC (TODO: convert currency)
+    wallet.send = (fromAccountIndex, to, amount, currency, observer) ->
+      if observer == undefined || observer == null
+        console.error "An observer is required"
+        return
+        
+      if observer.transactionDidFailWithError == undefined
+        console.error "Observer should implement transactionDidFailWithError"
+        return
+        
+      if observer.transactionDidFinish == undefined
+        console.error "Observer should implement transactionDidFinish"
+        return
+        
+      listener = {}
+      listener.on_error = (e) ->
+        if e.message != undefined
+          observer.transactionDidFailWithError(e.message)
+        else if e isnt null
+          observer.transactionDidFailWithError(e)
+          $rootScope.$apply()
+        else
+          observer.transactionDidFailWithError("Unknown error")
+          $rootScope.$apply()
+        
+      listener.on_start = () ->
+        return
+      
+      listener.on_begin_signing = () ->
+        return
+        
+      listener.on_sign_progress = () ->
+        return
+
+      listener.on_finish_signing = () ->
+        return
+
+      listener.on_before_send = () ->
+        return
+        
+      listener.on_success = () ->
+        wallet.updateAccounts()
+        wallet.updateTransactions()
+        
+        observer.transactionDidFinish()
+      
+      wallet.my.makeTransaction(fromAccountIndex, to, amount * 100000000, listener)
+    
+    # Amount in Satoshi
+    wallet.generatePaymentRequestForAccount = (accountIndex, amount)  ->
+      return wallet.my.generatePaymentRequestForAccount(accountIndex, amount)
+    
+    wallet.cancelPaymentRequest = (accountIndex, address)  ->
+      return wallet.my.cancelPaymentRequest(accountIndex, address)
+      
+    wallet.updatePaymentRequest = (account, address, amount) ->
+      wallet.my.updatePaymentRequest(account, address, amount)    
     
     ##################################
     #             Private            #
@@ -126,64 +184,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           angular.copy(req, request)
           request.account = 0 # TODO: match the correct account
           wallet.paymentRequests.push request
-          
-    wallet.updatePaymentRequest = (account, address, amount) ->
-      wallet.my.updatePaymentRequest(account, address, amount)
-
-      
-    # Amount in BTC (TODO: convert currency)
-    wallet.send = (fromAccountIndex, to, amount, currency, observer) ->
-      if observer == undefined || observer == null
-        console.error "An observer is required"
-        return
-        
-      if observer.transactionDidFailWithError == undefined
-        console.error "Observer should implement transactionDidFailWithError"
-        return
-        
-      if observer.transactionDidFinish == undefined
-        console.error "Observer should implement transactionDidFinish"
-        return
-        
-      listener = {}
-      listener.on_error = (e) ->
-        if e.message != undefined
-          observer.transactionDidFailWithError(e.message)
-        else if e isnt null
-          observer.transactionDidFailWithError(e)
-          $rootScope.$apply()
-        else
-          observer.transactionDidFailWithError("Unknown error")
-          $rootScope.$apply()
-        
-      listener.on_start = () ->
-        return
-      
-      listener.on_begin_signing = () ->
-        return
-        
-      listener.on_sign_progress = () ->
-        return
-
-      listener.on_finish_signing = () ->
-        return
-
-      listener.on_before_send = () ->
-        return
-        
-      listener.on_success = () ->
-        wallet.updateAccounts()
-        wallet.updateTransactions()
-        
-        observer.transactionDidFinish()
-      
-      wallet.my.makeTransaction(fromAccountIndex, to, amount * 100000000, listener)
-    
-    wallet.generatePaymentRequestForAccount = (accountIndex)  ->
-      return wallet.my.generatePaymentRequestForAccount(accountIndex)
-    
-    wallet.cancelPaymentRequest = (accountIndex, address)  ->
-      return wallet.my.cancelPaymentRequest(accountIndex, address)
     
     # The old monitoring system
     wallet.monitorLegacy = (event) ->

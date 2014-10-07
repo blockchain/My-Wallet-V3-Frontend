@@ -3,11 +3,11 @@
 .modal-body
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert($index)") 
     {{alert.msg}}
-  form.form-horizontal(role="form",name="form",novalidate)
+  fields.form-horizontal(role="form",name="form",novalidate)
     .form-group
       label.col-sm-3.control-label Receive To:
       .col-sm-9
-        ui-select(ng-model="request.to")
+        ui-select(ng-model="fields.to")
           ui-select-match {{ $select.selected.label }}
           ui-select-choices(repeat="account in accounts | filter: $select.search") 
             span(ng-bind-html="account.label | highlight: $select.search")
@@ -15,10 +15,10 @@
       label.col-sm-3.control-label Amount:
       .col-sm-5
         .input-group
-          input.form-control(type="text",ng-model="request.amount")
-    .form-group(ng-show="request.address")
+          input.form-control(type="text",ng-model="fields.amount")
+    .form-group(ng-show="paymentRequest.address")
       label.col-sm-3.control-label Payment address:
       .col-sm-9
-        input.form-control(type:"text", readonly, ng-model="request.address")      
+        input.form-control(type:"text", readonly, ng-model="paymentRequest.address")      
 .modal-footer
   button.btn.btn-info(ng-click="close()") Close

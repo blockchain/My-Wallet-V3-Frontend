@@ -95,6 +95,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log) ->
       
       return
       
+    # Amount in Satoshi  
     myWallet.generatePaymentRequestForAccount = (account, amount) ->
       # It should generate a new receive address or reuse a cancelled address
       # (never reuse an addres that actually received btc). It should increase
@@ -106,7 +107,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log) ->
         
       address = mockPaymentRequestAddressStack.pop()
       
-      request = {address: address, amount: amount, account: account}
+      request = {address: address, amount: amount, account: account, paid: 0}
       
       accounts[account].receive_addresses.push address
       
@@ -166,9 +167,15 @@ walletServices.factory "MyWallet", ($window, $timeout, $log) ->
       
       eventListener("on_tx")
       
-    myWallet.mockProcessNewTransaction = (transaction) ->
-      # Match "to" address to receive address to figure out which account it was sent to:
+    myWallet.mockProcessNewTransaction = (transaction) ->      
+      # Does the "to" address match any payment requests? If so, update them with the amount:
+      for request in paymentRequests
+        if request.address == transaction.to
+          request.paid += transaction.amount # The real thing should use the amount per output
+          break
       
+      
+      # Match "to" address to receive address to figure out which account it was sent to:
       for account in accounts
         for address in account.receive_addresses
           if address == transaction.to
