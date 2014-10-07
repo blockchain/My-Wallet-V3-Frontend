@@ -46,6 +46,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
         "navigation" : navigation,
         "top"  : top,
         "accounts" : accounts,
+        "payment-requests" : paymentRequests,
         "right": { 
           templateUrl: "partials/dashboard"
           controller: "DashboardCtrl"
