@@ -7,6 +7,6 @@ div(ng-show="(requests | filter:{complete:false}).length > 0")
   table.left
     tr(ng-repeat="request in requests | filter:{complete:false}")
       td 
-        a(href="")
+        a(ng-click="open(request)")
           {{ request.address | limitTo: 15 }}...
       td.amount {{ request.amount | fiat:settings.currency }}

@@ -1,4 +1,4 @@
-describe "TopCtrl", ->
+describe "NavigationCtrl", ->
   scope = undefined
   
   beforeEach angular.mock.module("walletApp")
@@ -14,19 +14,15 @@ describe "TopCtrl", ->
       
       scope = $rootScope.$new()
             
-      $controller "TopCtrl",
+      $controller "NavigationCtrl",
         $scope: scope,
         $stateParams: {}
       
       return
 
     return
-
+  
   it "should have access to login status",  inject(() ->
     expect(scope.status.isLoggedIn).toBe(true)
   )
   
-
-  it "should have access to total balance",  inject(() ->
-    expect(scope.totals.btc).toBeDefined()
-  )

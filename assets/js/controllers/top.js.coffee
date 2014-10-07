@@ -5,6 +5,8 @@
     modalInstance = $modal.open(
       templateUrl: "partials/request"
       controller: RequestCtrl
+      resolve:
+        request: null
     )
     
   $scope.send = () ->

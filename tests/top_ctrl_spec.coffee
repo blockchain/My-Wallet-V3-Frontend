@@ -1,5 +1,8 @@
-describe "NavigationCtrl", ->
+describe "TopCtrl", ->
   scope = undefined
+  
+  modal =
+    open: ->
   
   beforeEach angular.mock.module("walletApp")
   
@@ -14,9 +17,10 @@ describe "NavigationCtrl", ->
       
       scope = $rootScope.$new()
             
-      $controller "NavigationCtrl",
+      $controller "TopCtrl",
         $scope: scope,
-        $stateParams: {}
+        $stateParams: {},
+        $modal: modal
       
       return
 
@@ -24,4 +28,20 @@ describe "NavigationCtrl", ->
 
   it "should have access to login status",  inject(() ->
     expect(scope.status.isLoggedIn).toBe(true)
+  )
+
+  it "should have access to total balance",  inject(() ->
+    expect(scope.totals.btc).toBeDefined()
+  )
+  
+  it "should open a popup to send",  inject(($modal) ->
+    spyOn(modal, "open")
+    scope.send()
+    expect(modal.open).toHaveBeenCalled()
+  )
+  
+  it "should open a popup to request",  inject(($modal) ->
+    spyOn(modal, "open")
+    scope.request()
+    expect(modal.open).toHaveBeenCalled()
   )

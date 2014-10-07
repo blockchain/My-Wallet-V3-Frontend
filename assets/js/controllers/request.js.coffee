@@ -1,16 +1,22 @@
-@RequestCtrl = ($scope, Wallet, MyWallet, $modalInstance, $log, $timeout) ->
+@RequestCtrl = ($scope, Wallet, MyWallet, $modalInstance, $log, $timeout, request) ->
   $scope.accounts = Wallet.accounts
   
   $scope.alerts = []
   
+  
+  
   $scope.closeAlert = (index) ->
     $scope.alerts.splice index, 1
     return
-  
-  # Managed by this controller, amount in BTC:
-  $scope.fields = {to: null, address: null, amount: 0.0}  
-  # Managed by Wallet service, amounts in Satoshi, has payment information:
-  $scope.paymentRequest = null 
+    
+  if request == undefined || request == null  
+    # Managed by this controller, amount in BTC:
+    $scope.fields = {to: null, amount: 0.0}  
+    # Managed by Wallet service, amounts in Satoshi, has payment information:
+    $scope.paymentRequest = null 
+  else 
+    $scope.paymentRequest = request
+    $scope.fields = {to: $scope.accounts[request.account], amount: request.amount / 100000000 }
   
   $scope.close = () ->
     $modalInstance.dismiss ""
@@ -57,7 +63,7 @@
     if $scope.paymentRequest && $scope.formIsValid
       Wallet.updatePaymentRequest($scope.accounts.indexOf($scope.fields.to), $scope.paymentRequest.address, parseInt($scope.fields.amount * 100000000))
         
-      if MyWallet.mockShouldReceiveNewTransaction != undefined
+      if MyWallet.mockShouldReceiveNewTransaction != undefined && request == undefined
         # Check if MyWallet is a mock or the real thing. The mock will simulate payment 
         # after 10 seconds of inactivity. Refactor if this breaks any of the
         # request controller spects.

@@ -3,7 +3,7 @@ describe "RequestCtrl", ->
   modalInstance =
     close: ->
     dismiss: ->
-  
+        
   beforeEach angular.mock.module("walletApp")
   
   beforeEach ->
@@ -24,6 +24,7 @@ describe "RequestCtrl", ->
         $scope: scope,
         $stateParams: {},
         $modalInstance: modalInstance
+        request: undefined
         
       # Trigger generation of payment address:
       scope.fields.amount = 1
