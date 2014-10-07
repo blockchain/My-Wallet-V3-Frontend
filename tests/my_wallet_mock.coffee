@@ -32,6 +32,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log) ->
       "1MgYrhUtb5RfV5DTaWiLGTbSMVKuFNVC7Y"
       "1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp"
     ]
+    
+    myWallet.getHDWallet = () ->
+      myWallet
 
     myWallet.restoreWallet = (password) ->
       this.refresh()

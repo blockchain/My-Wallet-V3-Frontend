@@ -44,7 +44,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.settings.language = wallet.my.getLanguage()
       wallet.settings.currency = $window.symbol_local
       
-      wallet.updateAccounts()
+      # Check if we already have an HD wallet. If not, create one.
+      hdwallet = MyWallet.getHDWallet()
+      if hdwallet == null
+        MyWallet.initializeHDWallet(password) # Use same password
+      
+      wallet.updateAccounts()        
             
       for address, label of wallet.my.addressBook
         wallet.addressBook[address] = wallet.my.addressBook[address]
@@ -143,7 +148,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       # Assuming accounts are never deleted.
       
       numberOfOldAccounts = wallet.accounts.length
-      newAccounts = wallet.my.getAccounts()
+      newAccounts = wallet.my.getHDWallet().getAccounts()
       numberOfNewAccounts = newAccounts.length
       
       for i in [0..(numberOfNewAccounts - 1)]
