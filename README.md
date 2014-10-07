@@ -16,6 +16,18 @@ Visit [localhost:3012](http://localhost:3012/).
 
 You need to disable your browser CORS security for the time being, e.g. with this [Chrome plugin](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en-US).
 
+## Usage
+
+After loading the page and disabling CORS security you can open any wallet. Demo wallet:
+
+| UID | Password |
+------|-----------
+| 78019bee-7a27-490b-ab8a-446c2749bf1f | 1234567890 |
+
+After login, you'll see a list of addresses. If something goes wrong during the login process, error messages will appear in the console.
+
+You can add new addresses to your wallet, but they will not be saved to the server.
+
 ## Test
 
 You may need to install PhantomJS seperately:
@@ -46,15 +58,3 @@ Not supported by the server yet.
 Curently the app is configured to be deployed on Heroku:
 
 http://morning-mesa-2022.herokuapp.com/
-
-## Usage
-
-After loading the page and disabling CORS security you can open any wallet. Demo wallet:
-
-| UID | Password |
-------|-----------
-| 78019bee-7a27-490b-ab8a-446c2749bf1f | 1234567890 |
-
-After login, you'll see a list of addresses. If something goes wrong during the login process, error messages will appear in the console.
-
-You can add new addresses to your wallet, but they will not be saved to the server.
