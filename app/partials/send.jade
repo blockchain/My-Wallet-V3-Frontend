@@ -45,6 +45,13 @@
           label
             input(type="checkbox")
             | ?
+    .form-group(ng-show="cameraOn")
+      label.col-sm-3.control-label QR
+      .col-sm-9
+        webcam(on-stream="onStream(stream)"
+               on-access-denied="onError(err)")
+        canvas#qr-canvas
 .modal-footer
+  button.btn.btn-info(ng-click="cameraOff()", ng-show="cameraOn") Camera off
   button.btn.btn-info(ng-click="close()") Cancel
   button.btn.btn-primary(ng-click="send()",ng-disabled="!transactionIsValid") Send

@@ -6,3 +6,6 @@
 	path = assets/js/my-wallet-sjors
 	url = https://github.com/sjors/My-Wallet.git
 	branch = sjors
+[submodule "assets/js/jsqrcode"]
+	path = assets/js/jsqrcode
+	url = https://github.com/LazarSoft/jsqrcode.git

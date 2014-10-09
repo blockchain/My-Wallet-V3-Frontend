@@ -12,6 +12,7 @@ walletApp = angular.module("walletApp", [
   "ngAudio"
   "ngSanitize"
   "ja.qr"
+  "webcam"
 ])
 
 walletApp.config (uiSelectConfig) ->
