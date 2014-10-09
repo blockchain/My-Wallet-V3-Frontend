@@ -15,47 +15,25 @@
     $log.error "Permission denied"
     $scope.alerts.push {type: "danger", msg: "Permission to use camera denied"}
     
-  # QR code recoginized, is it a payment request?
-  qrcode.callback = (result) ->
-    if result.indexOf("bitcoin://") == 0
-      withoutPrefix = result.replace("bitcoin://","")
-      if withoutPrefix.indexOf("?") != -1
-        address = withoutPrefix.substr(0, withoutPrefix.indexOf("?"))
-        $scope.transaction.to = address
-        argumentList = withoutPrefix.replace(address + "?", "")
-        loopCount = 0 
-        
-        for i in [1..argumentList.match(/&/g | []).length]
-          argument = argumentList.substr(0,argumentList.indexOf("="))
-          isLastArgument = argumentList.indexOf("&") == -1
-          
-          value = undefined
-          
-          if !isLastArgument
-            value = argumentList.substr(argument.length + 1, argumentList.indexOf("&") - argument.length - 1)
-          else
-            value = argumentList.substr(argument.length + 1, argumentList.length - argument.length - 1)
-                    
-          if argument == "amount"
-            $scope.transaction.amount = value
-            $scope.transaction.currency = "BTC"
-          else
-            $log.info "Ignoring argument " + argument + " in: " + result
-            loopCount++
-            
-            
-          argumentList = argumentList.replace(argument + "=" + value, "")
+  $scope.processURLfromQR = (url) ->
+    paymentRequest = Wallet.parsePaymentRequest(url)
+    if paymentRequest.isValid
+      $scope.transaction.to = paymentRequest.address
+      $scope.transaction.amount = paymentRequest.amount if paymentRequest.amount
+      $scope.transaction.currency = paymentRequest.currency if paymentRequest.currency
 
-      else
-        $scope.transaction.to = withoutPrefix
-        
       $scope.qrStream.stop()
       $scope.cameraOn = false
-    else 
-      $log.error "Not a bitcoin QR code:" + result
+    else
+      $scope.alerts.push {msg: "Not a bitcoin QR code."}
+      $log.error "Not a bitcoin QR code:" + url
+      
       $timeout((->
         $scope.lookForQR()
       ), 250)
+   
+  qrcode.callback = $scope.processURLfromQR
+  
     
   $scope.cameraOff = () ->
     $scope.qrStream.stop()

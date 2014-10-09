@@ -25,6 +25,10 @@ describe "SendCtrl", ->
       scope.transaction.to = "1DDBEYPPTkgbctmMtH3gXc7UHFURw5HGJD"
       scope.$apply()
       
+      scope.qrStream = {}
+      scope.qrStream.stop = () ->
+        return
+      
       return
 
     return
@@ -153,4 +157,17 @@ describe "SendCtrl", ->
     expect(scope.alerts[0].type).toBe("danger")
     
     return
+  )
+    
+  it "should process a succesfully scaned QR code", inject((Wallet) ->
+    scope.processURLfromQR("bitcoin://abcdefgh?amount=0.001")
+    expect(scope.transaction.amount).toBe(0.001)
+    expect(scope.transaction.to).toBe("abcdefgh") 
+  )
+  
+  it "should warn user if QR code is not recognized", inject((Wallet) ->
+    expect(scope.alerts.length).toBe(0)
+    scope.processURLfromQR("http://www.google.com")
+    expect(scope.alerts.length).toBe(1)
+    
   )

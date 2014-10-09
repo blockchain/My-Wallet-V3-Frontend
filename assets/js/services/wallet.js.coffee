@@ -186,6 +186,48 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       request = account.acceptPaymentRequest(address)   
       this.refreshPaymentRequests() 
       
+    ###################
+    # URL: bitcoin:// #
+    ###################
+    
+    wallet.parsePaymentRequest = (url) ->
+      result = {address: null, amount: null, hasBitcoinPrefix: false, currency: null}
+              
+      if url.indexOf("bitcoin://") == 0
+         result.hasBitcoinPrefix = true
+         result.isValid = true # Optimistic...
+        
+         withoutPrefix = url.replace("bitcoin://","")
+         if withoutPrefix.indexOf("?") != -1
+           address = withoutPrefix.substr(0, withoutPrefix.indexOf("?"))
+           result.address = address
+           argumentList = withoutPrefix.replace(address + "?", "")
+           loopCount = 0
+
+           for i in [0..argumentList.match(/&/g | []).length]
+             argument = argumentList.substr(0,argumentList.indexOf("="))
+             isLastArgument = argumentList.indexOf("&") == -1
+
+             value = undefined
+
+             if !isLastArgument
+               value = argumentList.substr(argument.length + 1, argumentList.indexOf("&") - argument.length - 1)
+             else
+               value = argumentList.substr(argument.length + 1, argumentList.length - argument.length - 1)
+
+             if argument == "amount"
+               result.amount = parseFloat(value)
+               result.currency = "BTC"
+             else
+               $log.info "Ignoring argument " + argument + " in: " + url
+               loopCount++
+
+             argumentList = argumentList.replace(argument + "=" + value + "&", "")
+
+         else
+           result.address = withoutPrefix
+      
+      return result
     
     ##################################
     #        Private (other)         #
