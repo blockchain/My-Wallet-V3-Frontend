@@ -12,6 +12,8 @@ module.exports = function(config){
       'app/bower_components/angular-cookies/angular-cookies.js',
       'app/bower_components/angular-ui-select/dist/select.js',
       'app/bower_components/angular-audio/angular.audio.js',
+      'app/bower_components/qrcode/lib/qrcode.min.js',
+      'app/bower_components/angular-qr/angular-qr.min.js',
       'assets/js/app.js.coffee',
       'assets/js/controllers/*.js.coffee',
       'assets/js/filters.js.coffee',

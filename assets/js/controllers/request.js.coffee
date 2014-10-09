@@ -63,6 +63,8 @@
     if $scope.paymentRequest && $scope.formIsValid
       Wallet.updatePaymentRequest($scope.accounts.indexOf($scope.fields.to), $scope.paymentRequest.address, parseInt($scope.fields.amount * 100000000))
         
+      $scope.paymentRequest.URL = "bitcoin:" + $scope.paymentRequest.address + "?amount=" + $scope.paymentRequest.amount / 100000000.0
+        
       if MyWallet.mockShouldReceiveNewTransaction != undefined && request == undefined
         # Check if MyWallet is a mock or the real thing. The mock will simulate payment 
         # after 10 seconds of inactivity. Refactor if this breaks any of the

@@ -16,6 +16,7 @@
     "angular-cookies": "~1.2.25",
     "angular-audio": "*",
     "angular-ui-select": "~0.7.0",
-    "angular-sanitize": "~1.2.26"
+    "angular-sanitize": "~1.2.26",
+    "angular-qr": "~0.2.0"
   }
 }

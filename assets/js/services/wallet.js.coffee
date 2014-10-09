@@ -119,6 +119,49 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
       wallet.my.makeTransaction(fromAccountIndex, to, amount * 100000000, listener)
     
+    ####################
+    # Payment requests #
+    ####################
+    
+    wallet.refreshPaymentRequests = () ->
+      # Flatten accounts::
+      myWalletRequests = []
+      hd = wallet.my.getHDWallet()
+      for i in [0..hd.getAccounts().length - 1]
+        account = hd.getAccount(i)
+        for request in account.getPaymentRequests()
+          myWalletRequests.push request
+          
+      # Remove deleted ones:
+      for req in wallet.paymentRequests
+        match = false
+        for candidate in myWalletRequests
+          if candidate.address == req.address
+            match = true
+            break
+            
+        if !match
+          index = wallet.paymentRequests.indexOf(req)
+          wallet.paymentRequests.splice(index,1)
+          
+      # Add new ones:
+      for req in myWalletRequests
+        match = false
+        for candidate in wallet.paymentRequests
+          if candidate.address == req.address
+            match = true
+            # Update amount and payment
+            candidate.amount = req.amount
+            candidate.paid = req.paid
+            candidate.complete = req.complete
+            break
+        
+        if !match
+          request = {}
+          angular.copy(req, request)
+          request.account = 0 # TODO: match the correct account
+          wallet.paymentRequests.push request
+    
     # Amount in Satoshi
     wallet.generatePaymentRequestForAccount = (accountIndex, amount)  ->
       account = wallet.my.getHDWallet().getAccount(accountIndex)
@@ -142,9 +185,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       account = wallet.my.getHDWallet().getAccount(accountIndex)
       request = account.acceptPaymentRequest(address)   
       this.refreshPaymentRequests() 
+      
     
     ##################################
-    #             Private            #
+    #        Private (other)         #
     ##################################
     
     wallet.updateAccounts = () ->
@@ -187,45 +231,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           angular.copy(tx, transaction)
           transaction.fiat = transaction.amount / wallet.settings.currency.conversion
           wallet.transactions.push transaction 
-          
-    wallet.refreshPaymentRequests = () ->
-      # Flatten accounts::
-      myWalletRequests = []
-      hd = wallet.my.getHDWallet()
-      for i in [0..hd.getAccounts().length - 1]
-        account = hd.getAccount(i)
-        for request in account.getPaymentRequests()
-          myWalletRequests.push request
-          
-      # Remove deleted ones:
-      for req in wallet.paymentRequests
-        match = false
-        for candidate in myWalletRequests
-          if candidate.address == req.address
-            match = true
-            break
-            
-        if !match
-          index = wallet.paymentRequests.indexOf(req)
-          wallet.paymentRequests.splice(index,1)
-          
-      # Add new ones:
-      for req in myWalletRequests
-        match = false
-        for candidate in wallet.paymentRequests
-          if candidate.address == req.address
-            match = true
-            # Update amount and payment
-            candidate.amount = req.amount
-            candidate.paid = req.paid
-            candidate.complete = req.complete
-            break
-        
-        if !match
-          request = {}
-          angular.copy(req, request)
-          request.account = 0 # TODO: match the correct account
-          wallet.paymentRequests.push request
+     
+    ####################
+    # Notification     #
+    ####################
               
     # The old monitoring system
     wallet.monitorLegacy = (event) ->
@@ -247,7 +256,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
     wallet.my.monitor((event) -> wallet.monitor(event))
     wallet.my.addEventListener((event) -> wallet.monitorLegacy(event))
-    
 
     ########################################
     # Testing: only works on mock MyWallet #
