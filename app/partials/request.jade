@@ -19,7 +19,11 @@
     .form-group(ng-show="paymentRequest.address")
       label.col-sm-3.control-label Payment address:
       .col-sm-9
-        input.form-control(type:"text", readonly, ng-model="paymentRequest.address")     
+        //- .input-group
+        p.form-control-static
+          {{ paymentRequest.address }}  
+        //- span.input-group-btn
+        //-   button.btn.btn-default(type="button") copy
      .form-group(ng-if="paymentRequest.address")
       .col-sm-3
       .col-sm-9
