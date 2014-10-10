@@ -1,8 +1,8 @@
 @DashboardCtrl = ($scope, $log, Wallet, $cookies) ->
   $scope.status = Wallet.status    
   $scope.uid = $cookies.uid
-
-  if !$scope.status.isLoggedIn && !!$cookies.password
+  
+  if $scope.savePassword && !$scope.status.isLoggedIn && !!$cookies.password
     # TODO: don't use the password to restore a session
     Wallet.login($cookies.uid, $cookies.password)
   

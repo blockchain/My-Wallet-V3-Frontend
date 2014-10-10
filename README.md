@@ -28,6 +28,8 @@ After login, you'll see a list of addresses. If something goes wrong during the 
 
 You can add new addresses to your wallet, but they will not be saved to the server.
 
+To automatically login after every page refresh, create a file `.env` and add `SAVE_PASSWORD=1` to it.
+
 ## Test
 
 You may need to install PhantomJS seperately. On a Mac:
