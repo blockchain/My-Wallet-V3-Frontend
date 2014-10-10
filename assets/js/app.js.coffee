@@ -26,7 +26,11 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       controller: "AccountsCtrl"
     }
     
-
+    alerts = {
+      templateUrl: "partials/alerts"
+      controller: "AlertsCtrl"
+    }
+    
     paymentRequests = {
       templateUrl: "partials/payment-requests"
       controller: "PaymentRequestsCtrl"
@@ -46,6 +50,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       url: "/"
       views: {
         "navigation" : navigation,
+        "alerts" : alerts,
         "top"  : top,
         "accounts" : accounts,
         "payment-requests" : paymentRequests,
@@ -60,6 +65,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       url: "/transactions"
       views: {
         "navigation" : navigation,
+        "alerts" : alerts,
         "top"  : top,
         "accounts" : accounts,
         "payment-requests" : paymentRequests,

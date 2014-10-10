@@ -3,8 +3,8 @@
   $scope.totals = Wallet.totals
   $scope.settings = Wallet.settings
   
-  $scope.generateAccount = () ->
-    Wallet.generateAccount()
+  $scope.createAccount = () ->
+    Wallet.createAccount()
 
   #################################
   #           Private             #

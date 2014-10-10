@@ -10,7 +10,6 @@ describe "AccountsCtrl", ->
       
       Wallet.login("uid", "pwd")  
       $timeout.flush()
-      $timeout.flush()
       
       scope = $rootScope.$new()
             
@@ -24,5 +23,5 @@ describe "AccountsCtrl", ->
     
   it "should let user create a new address", ->
     before = scope.accounts.length
-    scope.generateAccount()
+    scope.createAccount()
     expect(scope.accounts.length).toBe(before + 1)

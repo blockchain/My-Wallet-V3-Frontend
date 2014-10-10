@@ -10,7 +10,6 @@ describe "NavigationCtrl", ->
       
       Wallet.login("uid", "pwd")  
       $timeout.flush()
-      $timeout.flush()
       
       scope = $rootScope.$new()
             

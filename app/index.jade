@@ -35,6 +35,7 @@ head
       !=js('my-wallet/blockchainapi')
       !=js('my-wallet/signer')
       !=js('my-wallet/wallet')
+      !=js('my-wallet/hdwallet')
       !=js('my_wallet')
     
     if process.env.MYWALLET_MOCK == "1"
@@ -45,6 +46,7 @@ head
     !=js('controllers/app')
     !=js('controllers/dashboard')
     !=js('controllers/accounts')
+    !=js('controllers/alerts')
     !=js('controllers/top')
     !=js('controllers/navigation')
     !=js('controllers/transactions')
@@ -81,6 +83,8 @@ head
     .navbar.navbar-inverse(role="navigation", ui-view="navigation")
     .container-fluid
       .row.spacing
+      .row
+        .col-xs-12(ui-view="alerts")
       .row
         .col-xs-3
           .left-navigation(ng-show="status.isLoggedIn")

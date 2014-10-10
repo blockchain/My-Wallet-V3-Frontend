@@ -38,10 +38,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log) ->
 
     myWallet.restoreWallet = (password) ->
       this.refresh()
+      eventListener("did_multiaddr")
       return
       
     myWallet.setGUID = (uid) ->
-      return
+       eventListener("did_set_guid")
       
     myWallet.getLanguage = () ->
       return "en"
@@ -49,8 +50,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log) ->
     myWallet.getAccounts = () ->
       return accounts
       
-    myWallet.generateAccount = () ->
-      accounts.push {label: "Account #" + (accounts.length + 1), archived: false, balance: 0, receive_addresses: [] }
+    myWallet.createAccount = (label) ->
+      accounts.push {label: label, archived: false, balance: 0, receive_addresses: [] }
       
     myWallet.getTransactions = () ->
       return transactions

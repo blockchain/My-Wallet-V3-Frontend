@@ -10,11 +10,10 @@ describe "walletServices", () ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       
-      spyOn(MyWallet,"setGUID")
+      spyOn(MyWallet,"setGUID").and.callThrough()
       spyOn(MyWallet,"restoreWallet").and.callThrough()
     
       Wallet.login("uid", "pwd")  
-      $timeout.flush()
       $timeout.flush()
       
       spyOn(Wallet,"monitor").and.callThrough()
@@ -34,11 +33,6 @@ describe "walletServices", () ->
     
     it "should update the status", inject((Wallet, MyWallet) ->
       expect(Wallet.status.isLoggedIn).toBe(true)
-      return
-    )
-    
-    it "should get the language", inject((Wallet, MyWallet) ->
-      expect(Wallet.settings.language).toEqual "en"
       return
     )
     
@@ -69,13 +63,13 @@ describe "walletServices", () ->
     
     return
     
-  describe "generateaccount()", ->      
+  describe "createAccount()", ->      
     it "should call generateNewKey()", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet,"generateAccount")
+      spyOn(MyWallet,"createAccount")
       
-      Wallet.generateAccount()
+      Wallet.createAccount()
       
-      expect(MyWallet.generateAccount).toHaveBeenCalled()
+      expect(MyWallet.createAccount).toHaveBeenCalled()
       
       return
     )
@@ -83,7 +77,7 @@ describe "walletServices", () ->
     it "should increase the number of accounts", inject((Wallet, MyWallet) ->
       before = Wallet.accounts.length
       
-      Wallet.generateAccount()
+      Wallet.createAccount()
       
       expect(Wallet.accounts.length).toBe(before + 1)
       
@@ -248,8 +242,8 @@ describe "walletServices", () ->
     
     it "amount can be updated", inject((MyWallet, Wallet) ->
       request = Wallet.generatePaymentRequestForAccount(0, 1)
-      updatedRequest = Wallet.updatePaymentRequest(0, request.address, 2)
-      expect(updatedRequest.amount).toBe(2)
+      Wallet.updatePaymentRequest(0, request.address, 2)
+      expect(Wallet.paymentRequests[0].amount).toBe(2)
     )
         
 
