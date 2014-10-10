@@ -1,12 +1,12 @@
-# My-Wallet-HD-Frontend
-A.k.a. angular-blockchain-wallet.
+# MyWallet HD Frontend
+An AngularJS bitcoin web wallet powered by Blockchains [MyWallet](https://github.com/blockchain/My-Wallet-HD).
 
 ## Running Locally
 
 Make sure you have [Node.js](http://nodejs.org/) and the [Heroku Toolbelt](https://toolbelt.heroku.com/) installed.
 
 ```sh
-$ git clone git@github.com:blockchain/My-Wallet-HD-Frontend.git # or clone your own fork
+$ git clone --recursive https://github.com/blockchain/My-Wallet-HD-Frontend.git 
 $ cd My-Wallet-HD-Frontend
 $ npm install
 $ npm start
@@ -14,7 +14,7 @@ $ npm start
 
 Visit [localhost:3012](http://localhost:3012/).
 
-You need to disable your browser CORS security for the time being, e.g. with this [Chrome plugin](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en-US).
+If you use the mock (see below) it will work out of the box. If you want to use it with real bitcoins then you need to disable your browser CORS security (for the time being), e.g. with this [Chrome plugin](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en-US). You'll see a red icon with CORS. Click on it to make it green. Click on it again before you visit your banks website...
 
 ## Usage
 
@@ -30,7 +30,7 @@ You can add new addresses to your wallet, but they will not be saved to the serv
 
 ## Test
 
-You may need to install PhantomJS seperately:
+You may need to install PhantomJS seperately. On a Mac:
 
     brew install phantomjs
 
@@ -57,4 +57,5 @@ Not supported by the server yet.
 
 Curently the app is configured to be deployed on Heroku:
 
-http://morning-mesa-2022.herokuapp.com/
+* Real money: http://morning-mesa-2022.herokuapp.com/
+* Mock: http://pure-wildwood-5818.herokuapp.com/
