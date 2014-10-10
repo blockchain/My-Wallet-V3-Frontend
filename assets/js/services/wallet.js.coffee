@@ -46,8 +46,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
       # Check if we already have an HD wallet. If not, create one.
       hdwallet = MyWallet.getHDWallet()
-      if hdwallet == null
-        MyWallet.initializeHDWallet(password) # Use same password
       
       wallet.updateAccounts()        
             
