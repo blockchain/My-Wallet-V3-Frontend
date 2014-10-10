@@ -12,7 +12,8 @@
     "connect-assets": "^4.3.0",
     "crypto-js": "^3.1.2-5",
     "karma-coffee-preprocessor": "^0.2.1",
-    "node-sass": "^0.9.5-rc1"
+    "node-sass": "^0.9.5-rc1",
+    "node-env-file": "^0.1.4"
   },
   "devDependencies": {
     "karma": "^0.12.16",

@@ -22,6 +22,9 @@ app.get "/partials/:name", (req, res) ->
   name = req.params.name
   res.render "partials/" + name
   return
+  
+env = require('node-env-file')
+env(__dirname + '/.env');
 
 port = process.env.PORT or 3012
 app.listen port, ->

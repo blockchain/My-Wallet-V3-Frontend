@@ -26,19 +26,20 @@ head
     !=css('left')
     !=css('payment-requests')
     !=css('send')
-      
+            
     // Blockchain MyWallet javascript (must be called before 'app')
-    //- !=js('my-wallet/shared')
-    //- !=js('my-wallet/bitcoinjs')
-    //- !=js('my-wallet/old_bitcoinjs')
-    //- !=js('my-wallet/blockchainapi')
-    //- !=js('my-wallet/signer')
-    //- !=js('my-wallet-sjors/wallet')
-    //- !=js('my_wallet')
+    unless process.env.MYWALLET_MOCK == "1"
+      !=js('my-wallet/shared')
+      !=js('my-wallet/bitcoinjs')
+      !=js('my-wallet/old_bitcoinjs')
+      !=js('my-wallet/blockchainapi')
+      !=js('my-wallet/signer')
+      !=js('my-wallet/wallet')
+      !=js('my_wallet')
     
-    // Use mock instead (uncomment the above):
-    !=js('services/my_wallet_mock')
-    
+    if process.env.MYWALLET_MOCK == "1"
+      // Use mock instead (uncomment the above):
+      !=js('services/my_wallet_mock')
     
     !=js('app')
     !=js('controllers/app')

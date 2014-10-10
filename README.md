@@ -47,7 +47,7 @@ MyWallet can simulated using a mock, allowing you to login with fake credentials
 * If you entered a lower or higher amount it will show the appropriate warnings. 
 * If the simulated payment was insufficient and you leave the modal window open, after 10 seconds it will add the missing funds.
 
-To use the mock you need to open `app/index.jade`, comment out the lines below `Blockchain MyWallet javascript` and uncomment the line below `Use mock instead`.
+To use the mock you need to add an environment variable MOCK=1. Create a file `.env` with `MOCK=1` at the top.
 
 ## Testnet
 
