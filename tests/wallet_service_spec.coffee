@@ -13,7 +13,7 @@ describe "walletServices", () ->
       spyOn(MyWallet,"setGUID").and.callThrough()
       spyOn(MyWallet,"restoreWallet").and.callThrough()
     
-      Wallet.login("uid", "pwd")  
+      Wallet.login("test", "test")  
       $timeout.flush()
       
       spyOn(Wallet,"monitor").and.callThrough()
@@ -25,8 +25,8 @@ describe "walletServices", () ->
     
   describe "login()", ->
     it "should fetch and decrypt the wallet", inject((Wallet, MyWallet) ->
-      expect(MyWallet.setGUID).toHaveBeenCalledWith("uid")
-      expect(MyWallet.restoreWallet).toHaveBeenCalledWith("pwd")
+      expect(MyWallet.setGUID).toHaveBeenCalledWith("test")
+      expect(MyWallet.restoreWallet).toHaveBeenCalledWith("test")
       
       return
     )

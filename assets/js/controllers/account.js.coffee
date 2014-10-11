@@ -1,4 +1,4 @@
-@AccountCtrl = ($scope, Wallet, $cookies, $modalInstance) ->
+@AccountCtrl = ($scope, Wallet, $cookieStore, $modalInstance) ->
   
   $scope.close = () ->
     $modalInstance.dismiss ""
@@ -6,8 +6,8 @@
   $scope.logout = () ->    
     $scope.uid = null
     $scope.password = null
-    delete $cookies.password
-    delete $cookies.uid
+    $cookieStore.remove("password")
+    $cookieStore.remove("uid")
     Wallet.logout()
   
     $modalInstance.dismiss ""

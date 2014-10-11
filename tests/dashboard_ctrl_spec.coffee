@@ -8,7 +8,7 @@ describe "DashboardCtrl", ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       
-      Wallet.login("uid", "pwd")  
+      Wallet.login("test", "test")  
       $timeout.flush()
       
       
@@ -41,6 +41,18 @@ describe "DashboardCtrl", ->
     
     expect(Wallet.login).toHaveBeenCalledWith("user", "pass")
     return
+  )
+  
+  it "should create a new wallet",  inject((Wallet, $state, $timeout) ->
+    spyOn(Wallet, "create")
+    
+    scope.uid = "user"
+    scope.password = "pass"
+    
+    scope.create()
+    
+    expect(Wallet.create).toHaveBeenCalledWith("user", "pass")
+    
   )
   
     

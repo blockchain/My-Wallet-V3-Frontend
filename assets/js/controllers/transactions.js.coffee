@@ -1,4 +1,4 @@
-@TransactionsCtrl = ($scope, Wallet, $state, $cookies, $log) ->
+@TransactionsCtrl = ($scope, Wallet, $state, $cookieStore, $log) ->
   
   #################################
   #           Private             #
@@ -12,11 +12,10 @@
     $scope.settings = Wallet.settings
     $scope.totals = Wallet.totals  
   
-    # Restore after browser refresh
+    # Restore after browser refresh (developer feature)
     if !$scope.status.isLoggedIn 
-      if !!$cookies.password
-        # TODO: don't use the password to restore a session
-        Wallet.login($cookies.uid, $cookies.password)
+      if !!$cookieStore.get("password")
+        Wallet.login($cookieStore.get("uid"), $cookieStore.get("password"))
       else
         $state.go("dashboard")
   

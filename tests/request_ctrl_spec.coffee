@@ -12,7 +12,7 @@ describe "RequestCtrl", ->
             
       MyWallet = $injector.get("MyWallet")
       
-      Wallet.login("uid", "pwd")  
+      Wallet.login("test", "test")  
       $timeout.flush()
       
       scope = $rootScope.$new()

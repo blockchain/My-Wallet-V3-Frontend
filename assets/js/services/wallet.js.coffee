@@ -37,6 +37,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     $window.root = "https://blockchain.info/"   
     wallet.password = password
     wallet.my.setGUID(uid) 
+    
+  wallet.create = (uid, password) ->
+    return
         
   wallet.createAccount = () ->
     wallet.my.getHDWallet().createAccount( "Account #" + (wallet.accounts.length + 1))
@@ -304,6 +307,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     else if event == "did_decrypt" || event == "did_multiaddr" # Wallet decrypted succesfully      
       wallet.updateTransactions()
       $rootScope.$apply()
+    else if event == "wallet not found" # Only works in the mock atm
+      wallet.alerts.push({type: "danger", msg: "Wallet not found"})
     else
       console.log event
   

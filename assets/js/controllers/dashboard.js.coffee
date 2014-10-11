@@ -1,13 +1,18 @@
-@DashboardCtrl = ($scope, $log, Wallet, $cookies) ->
+@DashboardCtrl = ($scope, $log, Wallet, $cookieStore) ->
   $scope.status = Wallet.status    
-  $scope.uid = $cookies.uid
+  $scope.uid = $cookieStore.get("uid")
   
-  if $scope.savePassword && !$scope.status.isLoggedIn && !!$cookies.password
-    # TODO: don't use the password to restore a session
-    Wallet.login($cookies.uid, $cookies.password)
+  if $scope.savePassword && !$scope.status.isLoggedIn && !!$cookieStore.get("password")
+    Wallet.login($cookieStore.get("uid"), $cookieStore.get("password"))
   
   $scope.login = () ->
     Wallet.login($scope.uid, $scope.password)
-    $cookies.uid = $scope.uid
-    # Temporary solution: we should not store the password
-    $cookies.password = $scope.password
+    $cookieStore.put("uid", $scope.uid)
+    if $scope.savePassword
+       $cookieStore.put("password", $scope.password)
+    
+  $scope.create = () ->
+    if Wallet.create($scope.uid, $scope.password)
+      $cookieStore.put("uid", $scope.uid)
+      if $scope.savePassword
+        $cookieStore.put("password", $scope.password)

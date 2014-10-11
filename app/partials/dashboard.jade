@@ -10,4 +10,6 @@ div(ng-hide="status.isLoggedIn")
         input.form-control(type="password", ng-model="password")
       .col-md-1
         button.btn.btn-primary(ng-click="login()") Login
+      .col-md-1
+        button.btn.btn-primary(ng-click="create()") Create wallet
 div(ng-show="status.isLoggedIn")
