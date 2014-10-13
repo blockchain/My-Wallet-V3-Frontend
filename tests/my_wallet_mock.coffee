@@ -88,21 +88,15 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       return []
     
   # Amount in Satoshi
-  myWallet.makeTransaction = (fromAccountIndex,toAddress, amount, listener) ->
+  myWallet.sendBitcoinsForAccount = (fromAccountIndex,toAddress, amount, fee, success, error) ->
     if mockRules.shouldFailToSend
-      listener.on_error({message: "Reason for failure"})
+      error({message: "Reason for failure"})
       return
       
     # A few sanity checks (not complete)
     if amount > accounts[fromAccountIndex].balance
-      listener.on_error({message: "Insufficient funds"})
+      error({message: "Insufficient funds"})
       return
-    
-    listener.on_start()
-    listener.on_begin_signing()
-    listener.on_sign_progress()
-    listener.on_finish_signing()
-    listener.on_before_send()
     
     ###
     The MyWallet mock parses transactions by just copying them, so the following 
@@ -128,7 +122,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     cookie[this.uid].transactions.push transaction
     localStorageService.set("mockWallets", cookie)
     
-    listener.on_success()
+    success()
     
     return
     

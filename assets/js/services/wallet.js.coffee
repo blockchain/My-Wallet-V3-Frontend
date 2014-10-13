@@ -114,10 +114,17 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
       observer.transactionDidFinish()
       
-    error = (error) ->
-      $log.error(error)
+    error = (e) ->
+      if e.message != undefined
+        observer.transactionDidFailWithError(e.message)
+      else if e isnt null
+        observer.transactionDidFailWithError(e)
+        $rootScope.$apply()
+      else
+        observer.transactionDidFailWithError("Unknown error")
+        $rootScope.$apply()
     
-    wallet.my.sendBitcoinsForAccount(fromAccountIndex, to, amount * 100000000, 10000, null, success, error)
+    wallet.my.sendBitcoinsForAccount(fromAccountIndex, to, amount * 100000000, 10000, success, error)
       
   ####################
   # Payment requests #

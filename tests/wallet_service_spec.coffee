@@ -6,10 +6,12 @@ describe "walletServices", () ->
   beforeEach angular.mock.module("walletApp")
   
   beforeEach ->
-    angular.mock.inject ($injector) ->
+    angular.mock.inject ($injector, localStorageService) ->
+      localStorageService.remove("mockWallets")
+      
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
-      
+            
       spyOn(MyWallet,"setGUID").and.callThrough()
       spyOn(MyWallet,"restoreWallet").and.callThrough()
     
@@ -103,22 +105,22 @@ describe "walletServices", () ->
               
       return
      
-    it "should call makeTransaction()", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet,"makeTransaction")
+    it "should call sendBitcoinsForAccount()", inject((Wallet, MyWallet) ->
+      spyOn(MyWallet,"sendBitcoinsForAccount")
             
       Wallet.send(0, "account", 1.0, "BTC", mockObserver)
       
-      expect(MyWallet.makeTransaction).toHaveBeenCalled()
+      expect(MyWallet.sendBitcoinsForAccount).toHaveBeenCalled()
       
       return
     )
     
     it "should convert BTC to Satoshi", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet,"makeTransaction")
+      spyOn(MyWallet,"sendBitcoinsForAccount")
             
       Wallet.send(0, "account", 1.0, "BTC", mockObserver)
       
-      expect(MyWallet.makeTransaction.calls.mostRecent().args[2]).toBe(100000000)
+      expect(MyWallet.sendBitcoinsForAccount.calls.mostRecent().args[2]).toBe(100000000)
       
       return
     )

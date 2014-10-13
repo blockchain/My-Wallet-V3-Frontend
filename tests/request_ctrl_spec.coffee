@@ -7,8 +7,10 @@ describe "RequestCtrl", ->
   beforeEach angular.mock.module("walletApp")
   
   beforeEach ->
-    angular.mock.inject ($injector) ->
-      Wallet = $injector.get("Wallet")
+    angular.mock.inject ($injector, localStorageService) ->
+      localStorageService.remove("mockWallets")
+      
+      Wallet = $injector.get("Wallet")      
             
       MyWallet = $injector.get("MyWallet")
       
@@ -83,7 +85,7 @@ describe "RequestCtrl", ->
   
     it "should cancel payment request when user presses cancel", inject((Wallet) ->
       before = Wallet.paymentRequests.length
-      spyOn(Wallet, "cancelPaymentRequest")
+      spyOn(Wallet, "cancelPaymentRequest").and.callThrough()
       scope.cancel()
       expect(Wallet.cancelPaymentRequest).toHaveBeenCalled()
       expect(scope.paymentRequest).toBeNull()
@@ -145,7 +147,7 @@ describe "RequestCtrl", ->
     
     it "should cancel payment request when user presses cancel", inject((Wallet) ->
       before = Wallet.paymentRequests.length
-      spyOn(Wallet, "cancelPaymentRequest")
+      spyOn(Wallet, "cancelPaymentRequest").and.callThrough()
       scope.cancel()
       expect(Wallet.cancelPaymentRequest).toHaveBeenCalled()
       expect(scope.paymentRequest).toBeNull()
