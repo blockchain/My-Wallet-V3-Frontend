@@ -13,6 +13,7 @@ walletApp = angular.module("walletApp", [
   "ngSanitize"
   "ja.qr"
   "webcam"
+  "LocalStorageModule"
 ])
 
 walletApp.config (uiSelectConfig) ->

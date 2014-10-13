@@ -1,9 +1,9 @@
 walletServices = angular.module("myWalletServices", [])
-walletServices.factory "MyWallet", ($window, $timeout, $log, $cookieStore) ->
+walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService) ->
   
   # Wallets are stored in a cookie. If there isn't one, we'll create it.
-  unless $cookieStore.get("mockWallets") 
-    $cookieStore.put("mockWallets", {
+  unless localStorageService.get("mockWallets") 
+    localStorageService.set("mockWallets", {
       "test": {
         password: "test"
         accounts: [
@@ -56,7 +56,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, $cookieStore) ->
     return
     
   myWallet.setGUID = (uid) ->
-    if $cookieStore.get("mockWallets")[uid]
+    if localStorageService.get("mockWallets")[uid]
       myWallet.uid = uid
       eventListener("did_set_guid")
     else
@@ -123,10 +123,10 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, $cookieStore) ->
     accounts[fromAccountIndex].balance -= amount
     
     # Blockchain.info will know about these transactions:
-    cookie = $cookieStore.get("mockWallets")
+    cookie = localStorageService.get("mockWallets")
     cookie[this.uid].accounts[fromAccountIndex].balance -= amount
     cookie[this.uid].transactions.push transaction
-    $cookieStore.put("mockWallets", cookie)
+    localStorageService.set("mockWallets", cookie)
     
     listener.on_success()
     
@@ -222,8 +222,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, $cookieStore) ->
   ###################################
   
   myWallet.refresh = () ->
-    accounts = angular.copy($cookieStore.get("mockWallets")[this.uid].accounts)
-    transactions = angular.copy($cookieStore.get("mockWallets")[this.uid].transactions)
+    accounts = angular.copy(localStorageService.get("mockWallets")[this.uid].accounts)
+    transactions = angular.copy(localStorageService.get("mockWallets")[this.uid].transactions)
         
   #####################################
   # Tell the mock to behave different # 
@@ -259,10 +259,10 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, $cookieStore) ->
           transactions.push transaction
           
           # Update the "blockchain" in our cookie:
-          cookie = $cookieStore.get("mockWallets")
+          cookie = localStorageService.get("mockWallets")
           cookie[this.uid].accounts[index].balance += transaction.amount
           cookie[this.uid].transactions.push transaction
-          $cookieStore.put("mockWallets", cookie)
+          localStorageService.set("mockWallets", cookie)
           
           break
 
