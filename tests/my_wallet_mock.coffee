@@ -66,6 +66,15 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, $cookieStore) ->
   myWallet.getAccounts = () ->    
     return accounts
     
+  myWallet.getAccountsCount = () ->
+    return accounts.length
+    
+  myWallet.getLabelForAccount = (idx) ->
+    return accounts[idx].label
+    
+  myWallet.getBalanceForAccount = (idx) ->
+    return accounts[idx].balance
+    
   myWallet.createAccount = (label) ->
     accounts.push {label: label, archived: false, balance: 0, receive_addresses: [] }
     
@@ -119,6 +128,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, $cookieStore) ->
     
   # Amount in Satoshi  
   myWallet.getAccount = (index) ->
+    if index < 0
+      return
+      
     account = {}
     
     account.getPaymentRequests = () ->
@@ -140,7 +152,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, $cookieStore) ->
       address = mockPaymentRequestAddressStack.pop()
     
       request = {address: address, amount: amount, account: index, paid: 0, complete: false}
-    
+
       accounts[index].receive_addresses.push address
     
       paymentRequests.push request
@@ -167,9 +179,20 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, $cookieStore) ->
     
     return account
   
+  myWallet.getPaymentRequestsForAccount = (idx) ->
+    myWallet.getAccount(idx).getPaymentRequests()
+  
+  myWallet.generatePaymentRequestForAccount = (idx, amount) ->
+    myWallet.getAccount(idx).generatePaymentRequest(amount)
 
+  myWallet.cancelPaymentRequestForAccount = (idx, address) ->
+    myWallet.getAccount(idx).cancelPaymentRequest(address)
     
-
+  myWallet.updatePaymentRequestForAccount = (idx, address, amount) ->
+    myWallet.getAccount(idx).updatePaymentRequest(address, amount)
+    
+  myWallet.acceptPaymentRequestForAccount = (idx, address) ->
+    myWallet.getAccount(idx).acceptPaymentRequest(address)
     
   myWallet.addEventListener = (func) ->
     eventListener = func

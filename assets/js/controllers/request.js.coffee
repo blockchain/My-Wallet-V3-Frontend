@@ -3,6 +3,8 @@
   
   $scope.alerts = []
   
+  $scope.fields = {to: null, amount: 0}
+  
   
   
   $scope.closeAlert = (index) ->
@@ -14,9 +16,6 @@
     $scope.fields = {to: null, amount: 0.0}  
     # Managed by Wallet service, amounts in Satoshi, has payment information:
     $scope.paymentRequest = null 
-  else 
-    $scope.paymentRequest = request
-    $scope.fields = {to: $scope.accounts[request.account], amount: request.amount / 100000000 }
   
   $scope.close = () ->
     $modalInstance.dismiss ""
@@ -46,9 +45,19 @@
   #           Private             #
   #################################
   
+  # Set initial form values:
   $scope.$watchCollection "accounts", () ->
     if $scope.fields.to == null && $scope.accounts.length > 0
-      $scope.fields.to = $scope.accounts[0]
+      if request 
+        # Open an existing request
+        $scope.paymentRequest = request
+        
+        $scope.fields = {amount: request.amount / 100000000 }
+        
+        $scope.fields.to = Wallet.accountForPaymentRequest(request)
+      else
+        # Making a new request; default to first account:
+        $scope.fields.to = $scope.accounts[0] 
       
   $scope.$watch "fields.to", () ->
     $scope.formIsValid = $scope.validate()
@@ -59,9 +68,10 @@
     
     if $scope.paymentRequest == null && $scope.formIsValid
       $scope.paymentRequest =  Wallet.generatePaymentRequestForAccount($scope.accounts.indexOf($scope.fields.to), parseInt($scope.fields.amount * 100000000))
-    
+
     if $scope.paymentRequest && $scope.formIsValid
-      Wallet.updatePaymentRequest($scope.accounts.indexOf($scope.fields.to), $scope.paymentRequest.address, parseInt($scope.fields.amount * 100000000))
+      if oldValue isnt newValue && newValue > 0
+        Wallet.updatePaymentRequest($scope.accounts.indexOf($scope.fields.to), $scope.paymentRequest.address, parseInt($scope.fields.amount * 100000000))
         
       $scope.paymentRequest.URL = "bitcoin:" + $scope.paymentRequest.address + "?amount=" + $scope.paymentRequest.amount / 100000000.0
         

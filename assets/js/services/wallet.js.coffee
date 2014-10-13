@@ -42,7 +42,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     return
         
   wallet.createAccount = () ->
-    wallet.my.getHDWallet().createAccount( "Account #" + (wallet.accounts.length + 1))
+    wallet.my.createAccount( "Account #" + (wallet.accounts.length + 1))
     wallet.updateAccounts()
     
   wallet.logout = () ->
@@ -103,13 +103,18 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   # Payment requests #
   ####################
   
+  wallet.accountForPaymentRequest = (request) ->
+    for i in [0..wallet.my.getAccountsCount()-1]
+      for req in wallet.my.getPaymentRequestsForAccount(i)
+        return wallet.accounts[i] if request.address = req.address
+      
+    return -1
+  
   wallet.refreshPaymentRequests = () ->
     # Flatten accounts::
     myWalletRequests = []
-    hd = wallet.my.getHDWallet()
-    for i in [0..hd.getAccounts().length - 1]
-      account = hd.getAccount(i)
-      for request in account.getPaymentRequests()
+    for i in [0..wallet.my.getAccountsCount() - 1]
+      for request in wallet.my.getPaymentRequestsForAccount(i)
         myWalletRequests.push angular.copy(request)
     
     # Update existing amounts, remove deleted addresses:
@@ -146,29 +151,24 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
             
   # Amount in Satoshi
   wallet.generatePaymentRequestForAccount = (accountIndex, amount)  ->
-    account = wallet.my.getHDWallet().getAccount(accountIndex)
-    request = account.generatePaymentRequest(amount)
+    request = wallet.my.generatePaymentRequestForAccount(accountIndex, amount)
     this.refreshPaymentRequests()
     return request
   
   wallet.cancelPaymentRequest = (accountIndex, address)  ->
-    account = wallet.my.getHDWallet().getAccount(accountIndex)
-    account.cancelPaymentRequest(address)
+    wallet.my.cancelPaymentRequestForAccount(accountIndex, address)
     this.refreshPaymentRequests()
     return
       
   wallet.updatePaymentRequest = (accountIndex, address, amount) ->
-    account = wallet.my.getHDWallet().getAccount(accountIndex)
-    result = account.updatePaymentRequest(address, amount)   
-    if result
+    if wallet.my.updatePaymentRequestForAccount(accountIndex, address, amount)
       this.refreshPaymentRequests()
     else 
       console.error "Failed to update request"
     return
     
   wallet.acceptPaymentRequest = (accountIndex, address) ->
-    account = wallet.my.getHDWallet().getAccount(accountIndex)
-    request = account.acceptPaymentRequest(address)   
+    wallet.my.acceptPaymentRequestForAccount(accountIndex, address)
     this.refreshPaymentRequests() 
     
   ###################
@@ -223,16 +223,15 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     # Assuming accounts are never deleted.
     
     numberOfOldAccounts = wallet.accounts.length
-    newAccounts = wallet.my.getHDWallet().getAccounts()
-    numberOfNewAccounts = newAccounts.length
+    numberOfNewAccounts = wallet.my.getAccountsCount()
     
     for i in [0..(numberOfNewAccounts - 1)]
       if i >= numberOfOldAccounts
         wallet.accounts.push {active: true}
       
       # Set or update label and balance:
-      wallet.accounts[i].label = newAccounts[i].label
-      wallet.accounts[i].balance = newAccounts[i].balance
+      wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
+      wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
       
     # Balances will be 0 until transactions have been loaded.
     # TODO: MyWallet should let us know when all transactions are loaded; hide
