@@ -20,14 +20,14 @@ playSound = (id) ->
 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio) ->
-  wallet = {status: {isLoggedIn: false}, totals: {}, settings: {}}
+  wallet = {status: {isLoggedIn: false}, totals: {}, settings: {currency: {conversion: 0}}}
   
   wallet.accounts     = []
-  wallet.transactions = []
   wallet.addressBook  = {}
   wallet.paymentRequests = []
   wallet.alerts = []
   wallet.my = MyWallet
+  wallet.transactions = [[]]
     
   ##################################
   #             Public             #
@@ -43,6 +43,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         
   wallet.createAccount = () ->
     wallet.my.createAccount( "Account #" + (wallet.accounts.length + 1))
+    wallet.transactions.push []
     wallet.updateAccounts()
     
   wallet.logout = () ->
@@ -98,6 +99,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       observer.transactionDidFinish()
     
     wallet.my.makeTransaction(fromAccountIndex, to, amount * 100000000, listener)
+  
+  ####################
+  #   Transactions   #
+  ####################
+  wallet.getTransactionsForAccount = (idx) -> 
+    wallet.transactions[idx]
   
   ####################
   # Payment requests #
@@ -245,20 +252,23 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.totals.fiat  = tally / wallet.settings.currency.conversion
     
   wallet.updateTransactions = () ->
-    # console.log wallet.my.getTransactions()
-    for tx in wallet.my.getTransactions()
-      match = false
-      for candidate in wallet.transactions
-        if candidate.hash == tx.hash
-          match = true
-          break
+    for i in [0..wallet.my.getAccountsCount()-1]
+      for tx in wallet.my.getTransactionsForAccount(i)
+        match = false
+        for candidate in wallet.transactions[i]
+          if candidate.hash == tx.hash
+            match = true
+            break
       
-      if !match
-        transaction = {}
-        angular.copy(tx, transaction)
-        unless wallet.settings.currency == undefined
-          transaction.fiat = transaction.amount / wallet.settings.currency.conversion
-        wallet.transactions.push transaction 
+        if !match
+          transaction = {}
+          angular.copy(tx, transaction)
+          unless wallet.settings.currency == undefined
+            transaction.fiat = transaction.amount / wallet.settings.currency.conversion
+          wallet.transactions[i].push transaction 
+          
+    # This won't work well with watchers:
+    wallet.combinedTransactions = [].concat.apply([],wallet.transactions)
       
   ####################
   # Notification     #
@@ -268,9 +278,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.monitorLegacy = (event) ->
     # console.logaccountsd: " + event
     if event == "on_tx" or event == "on_block"
-      before = wallet.transactions.length
+      before = wallet.combinedTransactions.length
       wallet.updateTransactions()
-      if wallet.transactions.length > before
+      if wallet.combinedTransactions.length > before
         sound = ngAudio.load("beep.wav")
         sound.play()
         wallet.updateAccounts()
@@ -288,9 +298,13 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       success = (result) ->
         # TODO: get currency info from result to avoid using $window
         wallet.settings.currency = $window.symbol_local
-                
-        wallet.updateTransactions()
         
+        for i in [1..wallet.my.getAccountsCount()-1] 
+          # First account is already set to [], otherwise transactions ctrl won't load correctly.
+          wallet.transactions.push []
+                
+        # Update transactions and accounts, in case this gets called after did_multi_address
+        wallet.updateTransactions()        
         wallet.updateAccounts()  
                   
         for address, label of wallet.my.addressBook
@@ -308,9 +322,16 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
       $rootScope.$apply()
 
-    else if event == "did_decrypt" || event == "did_multiaddr" # Wallet decrypted succesfully      
-      wallet.updateTransactions()
+    else if event == "did_decrypt"  # Wallet decrypted succesfully   
       $rootScope.$apply()
+    else if event == "did_multiaddr" # Transactions loaded
+      
+      wallet.updateTransactions()
+      wallet.updateAccounts()  
+      $rootScope.$apply()
+      
+         
+      
     else if event == "wallet not found" # Only works in the mock atm
       wallet.alerts.push({type: "danger", msg: "Wallet not found"})
     else

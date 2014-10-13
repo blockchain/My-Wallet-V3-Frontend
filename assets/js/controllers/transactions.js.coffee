@@ -5,8 +5,7 @@
   #################################
     
   $scope.didLoad = () ->
-    $scope.accounts = Wallet.accounts
-    $scope.transactions = Wallet.transactions
+    $scope.transactions = Wallet.getTransactionsForAccount(0)
     $scope.addressBook = Wallet.addressBook
     $scope.status    = Wallet.status
     $scope.settings = Wallet.settings
@@ -21,3 +20,4 @@
   
   # First load:      
   $scope.didLoad()
+  $log.info $scope.transactions

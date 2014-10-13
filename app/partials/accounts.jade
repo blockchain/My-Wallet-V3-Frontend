@@ -6,11 +6,11 @@ table.left-header.accounts
     td.right
       a(ng-click="createAccount()") + New
 table.left
-  tr.active
-    td All Accounts
-    td.amount {{ totals.fiat | currency:settings.currency.symbol }}
-  tr(ng-repeat="account in accounts | filter:{active:true}")
+  tr
     td 
-      a(href="")
-        {{ account.label }}
+      a(href="") All Accounts
+    td.amount {{ totals.fiat | currency:settings.currency.symbol }}
+  tr(ng-repeat="account in accounts | filter:{active:true}", ng-class="$index == 0 ? 'active' : ''")
+    td 
+      a(href="") {{ account.label }}
     td.amount {{ account.balance | fiat:settings.currency }}

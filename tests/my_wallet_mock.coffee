@@ -81,8 +81,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, $cookieStore) ->
   myWallet.createAccount = (label) ->
     accounts.push {label: label, archived: false, balance: 0, receive_addresses: [] }
     
-  myWallet.getTransactions = () ->
-    return transactions
+  myWallet.getTransactionsForAccount = (idx) ->
+    if idx == 0
+      return transactions
+    else 
+      return []
     
   # Amount in Satoshi
   myWallet.makeTransaction = (fromAccountIndex,toAddress, amount, listener) ->
