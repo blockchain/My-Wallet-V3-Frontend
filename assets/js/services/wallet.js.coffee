@@ -51,7 +51,17 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.status.isLoggedIn = false
     while wallet.accounts.length > 0
       wallet.accounts.pop()
-            
+  
+  ####################
+  #   Transactions   #
+  ####################
+  wallet.getTransactionsForAccount = (idx) -> 
+    wallet.transactions[idx]
+  
+  #############
+  # Spend BTC #
+  #############
+  
   # Amount in BTC (TODO: convert currency)
   wallet.send = (fromAccountIndex, to, amount, currency, observer) ->
     if observer == undefined || observer == null
@@ -66,46 +76,49 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       console.error "Observer should implement transactionDidFinish"
       return
       
-    listener = {}
-    listener.on_error = (e) ->
-      if e.message != undefined
-        observer.transactionDidFailWithError(e.message)
-      else if e isnt null
-        observer.transactionDidFailWithError(e)
-        $rootScope.$apply()
-      else
-        observer.transactionDidFailWithError("Unknown error")
-        $rootScope.$apply()
+    # listener = {}
+    # listener.on_error = (e) ->
+    #   if e.message != undefined
+    #     observer.transactionDidFailWithError(e.message)
+    #   else if e isnt null
+    #     observer.transactionDidFailWithError(e)
+    #     $rootScope.$apply()
+    #   else
+    #     observer.transactionDidFailWithError("Unknown error")
+    #     $rootScope.$apply()
+    #
+    # listener.on_start = () ->
+    #   return
+    #
+    # listener.on_begin_signing = () ->
+    #   return
+    #
+    # listener.on_sign_progress = () ->
+    #   return
+    #
+    # listener.on_finish_signing = () ->
+    #   return
+    #
+    # listener.on_before_send = () ->
+    #   return
+    #
+    # listener.on_success = () ->
+    #   wallet.updateAccounts()
+    #   wallet.updateTransactions()
+    #
+    #   observer.transactionDidFinish()
       
-    listener.on_start = () ->
-      return
-    
-    listener.on_begin_signing = () ->
-      return
-      
-    listener.on_sign_progress = () ->
-      return
-
-    listener.on_finish_signing = () ->
-      return
-
-    listener.on_before_send = () ->
-      return
-      
-    listener.on_success = () ->
+    success = () ->
       wallet.updateAccounts()
       wallet.updateTransactions()
-      
-      observer.transactionDidFinish()
     
-    wallet.my.makeTransaction(fromAccountIndex, to, amount * 100000000, listener)
-  
-  ####################
-  #   Transactions   #
-  ####################
-  wallet.getTransactionsForAccount = (idx) -> 
-    wallet.transactions[idx]
-  
+      observer.transactionDidFinish()
+      
+    error = (error) ->
+      $log.error(error)
+    
+    wallet.my.sendBitcoinsForAccount(fromAccountIndex, to, amount * 100000000, 10000, null, success, error)
+      
   ####################
   # Payment requests #
   ####################
