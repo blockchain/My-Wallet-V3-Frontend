@@ -1,7 +1,7 @@
 [submodule "assets/js/my-wallet"]
 	path = assets/js/my-wallet
 	url = https://sjors-heroku:ByAwkLPYPN3ADvHmwGVPP9trB@github.com/sjors/My-Wallet-HD
-	branch = master
+	branch = dev
 [submodule "assets/js/jsqrcode"]
 	path = assets/js/jsqrcode
 	url = https://github.com/Sjors/jsqrcode.git
