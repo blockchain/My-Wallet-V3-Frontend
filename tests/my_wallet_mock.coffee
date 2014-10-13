@@ -62,6 +62,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, $cookieStore) ->
     else
       $log.error "Wallet not found"
       eventListener("wallet not found")
+      
+  myWallet.get_ticker = (success, fail) ->
+    success()
     
   myWallet.getAccounts = () ->    
     return accounts

@@ -7,13 +7,12 @@ describe "RequestCtrl", ->
   beforeEach angular.mock.module("walletApp")
   
   beforeEach ->
-    angular.mock.inject ($injector, $timeout) ->
+    angular.mock.inject ($injector) ->
       Wallet = $injector.get("Wallet")
             
       MyWallet = $injector.get("MyWallet")
       
       Wallet.login("test", "test")  
-      $timeout.flush()
     
       return
 
@@ -91,7 +90,7 @@ describe "RequestCtrl", ->
       expect(Wallet.paymentRequests.length).toBe(before - 1)
     )
   
-    it "should update amount in request if changed in the form", inject(($timeout) ->
+    it "should update amount in request if changed in the form", inject(() ->
       pending()
     )
   

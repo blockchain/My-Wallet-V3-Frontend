@@ -7,12 +7,11 @@ describe "AccountCtrl", ->
   beforeEach angular.mock.module("walletApp")
   
   beforeEach ->
-    angular.mock.inject ($injector, $timeout, $rootScope, $controller) ->
+    angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       
       Wallet.login("test", "test")  
-      $timeout.flush()
       
       scope = $rootScope.$new()
             
@@ -25,13 +24,13 @@ describe "AccountCtrl", ->
 
     return
     
-  it "specs should be logged in by default",  inject((Wallet, $state, $timeout) ->
+  it "specs should be logged in by default",  inject((Wallet, $state) ->
     expect(scope.status.isLoggedIn).toBe(true)    
   
     return
   )
     
-  it "should logout",  inject((Wallet, $state, $timeout) ->
+  it "should logout",  inject((Wallet, $stateParams) ->
     spyOn(Wallet, "logout").and.callThrough()
     
     scope.logout()

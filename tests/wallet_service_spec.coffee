@@ -6,7 +6,7 @@ describe "walletServices", () ->
   beforeEach angular.mock.module("walletApp")
   
   beforeEach ->
-    angular.mock.inject ($injector, $timeout) ->
+    angular.mock.inject ($injector) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       
@@ -14,7 +14,6 @@ describe "walletServices", () ->
       spyOn(MyWallet,"restoreWallet").and.callThrough()
     
       Wallet.login("test", "test")  
-      $timeout.flush()
       
       spyOn(Wallet,"monitor").and.callThrough()
       spyOn(Wallet,"monitorLegacy").and.callThrough()

@@ -284,9 +284,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.password = undefined
       wallet.status.isLoggedIn = true
   
-      # Exchange rate is loaded asynchronously, but apparently without a callback:
-      $timeout((->
+      # Exchange rate is loaded asynchronously:
+      success = (result) ->
+        # TODO: get currency info from result to avoid using $window
         wallet.settings.currency = $window.symbol_local
+                
         wallet.updateTransactions()
         
         wallet.updateAccounts()  
@@ -296,7 +298,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           
         wallet.refreshPaymentRequests()
         
-      ), 500)
+      fail = (error) ->
+        console.log(error)
+        
+      wallet.my.get_ticker(success, fail)
   
       # Checks if we already have an HD wallet. If not, create one.
       hdwallet = MyWallet.getHDWallet()
