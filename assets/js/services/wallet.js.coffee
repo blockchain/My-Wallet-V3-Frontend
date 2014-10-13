@@ -185,11 +185,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.parsePaymentRequest = (url) ->
     result = {address: null, amount: null, hasBitcoinPrefix: false, currency: null}
             
-    if url.indexOf("bitcoin://") == 0
+    if url.indexOf("bitcoin:") == 0
        result.hasBitcoinPrefix = true
        result.isValid = true # Optimistic...
       
-       withoutPrefix = url.replace("bitcoin://","")
+       withoutPrefix = url.replace("bitcoin://","").replace("bitcoin:", "")
        if withoutPrefix.indexOf("?") != -1
          address = withoutPrefix.substr(0, withoutPrefix.indexOf("?"))
          result.address = address

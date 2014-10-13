@@ -284,6 +284,12 @@ describe "walletServices", () ->
       expect(result.address).toBe "abcdefg"
     )
     
+    it "should recognise bitcoin:address", inject((Wallet) ->
+      result = Wallet.parsePaymentRequest("bitcoin:abc")
+      expect(result.hasBitcoinPrefix).toBeTrue
+      expect(result.address).toBe "abc"
+    )
+    
     it "should extract the address if no amount param is present", inject((Wallet) ->
       result = Wallet.parsePaymentRequest("bitcoin://abcdefg")
       expect(result.address).toBe "abcdefg"
