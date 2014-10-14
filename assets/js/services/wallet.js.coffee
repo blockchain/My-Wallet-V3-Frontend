@@ -340,15 +340,16 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       # Checks if we already have an HD wallet. If not, create one.
       hdwallet = MyWallet.getHDWallet()
       
-      $rootScope.$apply()
+      if MyWallet.mockShouldReceiveNewTransaction == undefined
+        $rootScope.$apply()
 
     else if event == "did_decrypt"  # Wallet decrypted succesfully   
       $rootScope.$apply()
     else if event == "did_multiaddr" # Transactions loaded
-      
       wallet.updateTransactions()
       wallet.updateAccounts()  
-      $rootScope.$apply()
+      if MyWallet.mockShouldReceiveNewTransaction == undefined
+        $rootScope.$apply()
       
          
       
