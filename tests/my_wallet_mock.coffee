@@ -176,6 +176,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       accounts[index].receive_addresses.push address
     
       paymentRequests.push request
+      
+      myWallet.sync()
+      
       return request
       
     account.cancelPaymentRequest = (address) ->
@@ -183,6 +186,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
         if candidate.address == address
           paymentRequests.pop(candidate)
           mockPaymentRequestAddressStack.push(address)
+          myWallet.sync()
         
       return
     
@@ -190,11 +194,13 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       for candidate in paymentRequests
         if candidate.address == address
           candidate.amount = amount
+          myWallet.sync()
           return candidate
         
     account.acceptPaymentRequest = (address) ->
       for candidate in paymentRequests
         if candidate.address == address
+          myWallet.sync()
           candidate.complete = true
     
     return account
@@ -232,9 +238,17 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   # Fake methods useful for testing #
   ###################################
   
+  myWallet.sync = () ->
+    # Save payment requests in our cookie:
+    cookie = localStorageService.get("mockWallets")
+    cookie[this.uid].paymentRequests = paymentRequests
+    localStorageService.set("mockWallets", cookie)
+  
   myWallet.refresh = () ->
     accounts = angular.copy(localStorageService.get("mockWallets")[this.uid].accounts)
     transactions = angular.copy(localStorageService.get("mockWallets")[this.uid].transactions)
+    if localStorageService.get("mockWallets")[this.uid].paymentRequests
+      paymentRequests = angular.copy(localStorageService.get("mockWallets")[this.uid].paymentRequests)      
         
   #####################################
   # Tell the mock to behave different # 
