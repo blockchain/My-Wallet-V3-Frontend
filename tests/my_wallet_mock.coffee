@@ -109,6 +109,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.createAccount = (label) ->
     accounts.push {label: label, archived: false, balance: 0, receive_addresses: [] }
+    myWallet.sync()
     
   myWallet.getTransactionsForAccount = (idx) ->
     res = []
@@ -250,9 +251,10 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   ###################################
   
   myWallet.sync = () ->
-    # Save payment requests in our cookie:
+    # Save payment requests and accounts in our cookie:
     cookie = localStorageService.get("mockWallets")
     cookie[this.uid].paymentRequests = paymentRequests
+    cookie[this.uid].accounts = accounts
     localStorageService.set("mockWallets", cookie)
   
   myWallet.refresh = () ->

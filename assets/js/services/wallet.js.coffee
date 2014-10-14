@@ -20,7 +20,7 @@ playSound = (id) ->
 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio) ->
-  wallet = {status: {isLoggedIn: false}, totals: {}, settings: {currency: {conversion: 0}}}
+  wallet = {status: {isLoggedIn: false}, settings: {currency: {conversion: 0}}}
   
   wallet.accounts     = []
   wallet.addressBook  = {}
@@ -275,12 +275,18 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     # TODO: MyWallet should let us know when all transactions are loaded; hide
     # total until that time.
     
-    tally = 0.0
-    for account in wallet.accounts
-      tally = tally + account.balance
-    
-    wallet.totals.btc = tally
-    wallet.totals.fiat  = tally / wallet.settings.currency.conversion
+  wallet.total_btc = (accountIndex) -> 
+    if !(accountIndex?) || accountIndex == ""
+      tally = 0.0
+      for account in wallet.accounts
+        tally = tally + account.balance
+      
+      return tally
+    else
+      return wallet.accounts[parseInt(accountIndex)].balance
+      
+  wallet.total_fiat = (accountIndex) -> 
+    return wallet.total_btc(accountIndex) / wallet.settings.currency.conversion
     
   wallet.updateTransactions = () ->
     for i in [0..wallet.my.getAccountsCount()-1]

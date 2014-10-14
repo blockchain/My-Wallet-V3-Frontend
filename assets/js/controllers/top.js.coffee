@@ -1,4 +1,4 @@
-@TopCtrl = ($scope, Wallet, $modal) ->
+@TopCtrl = ($scope, Wallet, $modal, $stateParams) ->
   $scope.settings = Wallet.settings
   
   $scope.request = () ->
@@ -22,7 +22,11 @@
     
   $scope.didLoad = () ->
     $scope.status = Wallet.status
-    $scope.totals = Wallet.totals
+    $scope.total_btc = Wallet.total_btc
+    $scope.total_fiat = Wallet.total_fiat
+    
+    $scope.accountIndex = $stateParams.accountIndex
+
   
   # First load:      
   $scope.didLoad()

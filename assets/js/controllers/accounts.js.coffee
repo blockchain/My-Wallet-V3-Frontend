@@ -7,6 +7,7 @@
     
   $scope.createAccount = () ->
     Wallet.createAccount()
+    $state.go("transactions", {accountIndex: Wallet.accounts.length - 1})
 
   #################################
   #           Private             #

@@ -1,4 +1,4 @@
-@RequestCtrl = ($scope, Wallet, MyWallet, $modalInstance, $log, $timeout, request) ->
+@RequestCtrl = ($scope, Wallet, MyWallet, $modalInstance, $log, $timeout, request, $stateParams) ->
   $scope.accounts = Wallet.accounts
   
   $scope.alerts = []
@@ -56,8 +56,11 @@
         
         $scope.fields.to = Wallet.accountForPaymentRequest(request)
       else
-        # Making a new request; default to first account:
-        $scope.fields.to = $scope.accounts[0] 
+        # Making a new request; default to current or first account:
+        if $stateParams.accountIndex == undefined || $stateParams.accountIndex == null || $stateParams.accountIndex == ""
+          $scope.fields.to = $scope.accounts[0]
+        else 
+          $scope.fields.to = $scope.accounts[parseInt($stateParams.accountIndex)]
       
   $scope.$watch "fields.to", () ->
     $scope.formIsValid = $scope.validate()

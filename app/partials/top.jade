@@ -1,8 +1,8 @@
 .row#top(ng-show="status.isLoggedIn")
   .col-xs-3
-    h1 {{ totals.fiat | currency:settings.currency.symbol }}
+    h1 {{ total_fiat(accountIndex) | currency:settings.currency.symbol }}
   .col-xs-3
-    p {{ totals.btc | btc }}
+    p {{ total_btc(accountIndex) | btc }}
   .col-xs-6.text-right
     button.left-arrow.white(ng-click="request()") Request 
     button.right-arrow.blue(ng-click="send()") Send

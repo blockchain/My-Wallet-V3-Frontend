@@ -29,7 +29,7 @@ describe "TopCtrl", ->
   )
 
   it "should have access to total balance",  inject(() ->
-    expect(scope.totals.btc).toBeDefined()
+    expect(scope.total_btc).toBeDefined()
   )
   
   it "should open a popup to send",  inject(($modal) ->
