@@ -351,14 +351,14 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.updateAccounts()  
       if MyWallet.mockShouldReceiveNewTransaction == undefined
         $rootScope.$apply()
-      
-         
-      
+    else if event == "hw_wallet_balance_updated"
+      wallet.updateAccounts()  
+      if MyWallet.mockShouldReceiveNewTransaction == undefined
+        $rootScope.$apply()
     else if event == "wallet not found" # Only works in the mock atm
       wallet.alerts.push({type: "danger", msg: "Wallet not found"})
     else
       console.log event
-  
   # The new monitoring system  
   wallet.monitor = (event) ->
     # if event.type == "error"
