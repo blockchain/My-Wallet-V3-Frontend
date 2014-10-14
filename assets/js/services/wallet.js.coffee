@@ -19,7 +19,7 @@ playSound = (id) ->
 ##################################
 
 walletServices = angular.module("walletServices", [])
-walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio) ->
+walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $state) ->
   wallet = {status: {isLoggedIn: false}, totals: {}, settings: {currency: {conversion: 0}}}
   
   wallet.accounts     = []
@@ -54,13 +54,21 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.updateAccounts()
     
   wallet.logout = () ->
-    wallet.my = null
+    wallet.my.logout()
     wallet.status.isLoggedIn = false
     while wallet.accounts.length > 0
       wallet.accounts.pop()
+    while wallet.transactions.length > 0
+      wallet.transactions.pop()
+    while wallet.paymentRequests.length > 0
+      wallet.paymentRequests.pop()
+    wallet.uid = ""
+    wallet.password = ""
     
-    if MyWallet.mockShouldReceiveNewTransaction == undefined
-      $window.location = "/"
+    
+      
+    $state.go("dashboard")
+    
   
   ####################
   #   Transactions   #

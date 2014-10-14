@@ -79,7 +79,13 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       }
       localStorageService.set("mockWallets", wallets)
       success()
-    
+  
+  myWallet.logout = () ->
+    myWallet.uid = undefined
+    myWallet.password = undefined
+    transactions = []
+    paymentRequests = []
+    accounts = []
       
   myWallet.get_ticker = (success, fail) ->
     success()

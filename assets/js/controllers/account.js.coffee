@@ -8,7 +8,7 @@
     $scope.password = null
     $cookieStore.remove("password")
     $cookieStore.remove("uid")
-    Wallet.logout()
+    Wallet.logout() # Refreshes the browser, so won't return
   
     $modalInstance.dismiss ""
   
