@@ -65,6 +65,22 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       $log.error "Wallet not found"
       eventListener("wallet not found")
       
+  myWallet.register = (uid, pwd, success, fail) ->
+    wallets = localStorageService.get("mockWallets")
+    if wallets[uid]
+      error({message: "Wallet already exists"})
+    else
+      wallets[uid] = {
+        password: pwd
+        accounts: [
+          {label: "Spending", archived: false, balance: 0, receive_addresses: []}
+        ]
+        transactions: []
+      }
+      localStorageService.set("mockWallets", wallets)
+      success()
+    
+      
   myWallet.get_ticker = (success, fail) ->
     success()
     

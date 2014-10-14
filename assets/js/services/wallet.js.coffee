@@ -39,7 +39,14 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.my.setGUID(uid) 
     
   wallet.create = (uid, password) ->
-    return
+    success = () ->
+      wallet.alerts.push({type: "success", msg: "Wallet created"})
+      wallet.login(uid, password)
+    
+    error = (error) ->
+      wallet.alerts.push({type: "danger", msg: error.message})
+      
+    wallet.my.register(uid, password, success, error)
         
   wallet.createAccount = () ->
     wallet.my.createAccount( "Account #" + (wallet.accounts.length + 1))
