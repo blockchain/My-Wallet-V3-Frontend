@@ -27,7 +27,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.paymentRequests = []
   wallet.alerts = []
   wallet.my = MyWallet
-  wallet.transactions = [[]]
+  wallet.transactions = []
     
   ##################################
   #             Public             #
@@ -55,8 +55,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   ####################
   #   Transactions   #
   ####################
-  wallet.getTransactionsForAccount = (idx) -> 
-    wallet.transactions[idx]
   
   #############
   # Spend BTC #
@@ -104,7 +102,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     #
     # listener.on_success = () ->
     #   wallet.updateAccounts()
-    #   wallet.updateTransactions()
+    #   wallet.updateAccounts()
     #
     #   observer.transactionDidFinish()
       
@@ -275,7 +273,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     for i in [0..wallet.my.getAccountsCount()-1]
       for tx in wallet.my.getTransactionsForAccount(i)
         match = false
-        for candidate in wallet.transactions[i]
+        for candidate in wallet.transactions
           if candidate.hash == tx.hash
             match = true
             break
@@ -285,10 +283,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           angular.copy(tx, transaction)
           unless wallet.settings.currency == undefined
             transaction.fiat = transaction.amount / wallet.settings.currency.conversion
-          wallet.transactions[i].push transaction 
-          
-    # This won't work well with watchers:
-    wallet.combinedTransactions = [].concat.apply([],wallet.transactions)
+          wallet.transactions.push transaction 
       
   ####################
   # Notification     #
@@ -298,9 +293,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.monitorLegacy = (event) ->
     # console.logaccountsd: " + event
     if event == "on_tx" or event == "on_block"
-      before = wallet.combinedTransactions.length
+      before = wallet.transactions.length
       wallet.updateTransactions()
-      if wallet.combinedTransactions.length > before
+      if wallet.transactions.length > before
         sound = ngAudio.load("beep.wav")
         sound.play()
         wallet.updateAccounts()
@@ -318,10 +313,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       success = (result) ->
         # TODO: get currency info from result to avoid using $window
         wallet.settings.currency = $window.symbol_local
-        
-        for i in [1..wallet.my.getAccountsCount()-1] 
-          # First account is already set to [], otherwise transactions ctrl won't load correctly.
-          wallet.transactions.push []
                 
         # Update transactions and accounts, in case this gets called after did_multi_address
         wallet.updateTransactions()        

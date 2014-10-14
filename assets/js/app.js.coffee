@@ -63,7 +63,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     )
     
     $stateProvider.state("transactions",
-      url: "/transactions"
+      url: "/transactions/:accountIndex"
       views: {
         "navigation" : navigation,
         "alerts" : alerts,

@@ -1,8 +1,10 @@
-@AccountsCtrl = ($scope, Wallet, $state) ->
+@AccountsCtrl = ($scope, Wallet, $state,$stateParams) ->
   $scope.status    = Wallet.status
   $scope.totals = Wallet.totals
   $scope.settings = Wallet.settings
   
+  $scope.selectedAccountIndex = $stateParams.accountIndex
+    
   $scope.createAccount = () ->
     Wallet.createAccount()
 

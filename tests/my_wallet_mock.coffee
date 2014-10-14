@@ -1,5 +1,7 @@
 walletServices = angular.module("myWalletServices", [])
 walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService) ->
+  # Erase local storage:
+  # localStorageService.remove("mockWallets")
   
   # Wallets are stored in a cookie. If there isn't one, we'll create it.
   unless localStorageService.get("mockWallets") 
@@ -82,10 +84,12 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     accounts.push {label: label, archived: false, balance: 0, receive_addresses: [] }
     
   myWallet.getTransactionsForAccount = (idx) ->
-    if idx == 0
-      return transactions
-    else 
-      return []
+    res = []
+    for transaction in transactions
+      if transaction.to_account == idx || transaction.from_account == idx
+        res.push transaction
+    
+    return res
     
   # Amount in Satoshi
   myWallet.sendBitcoinsForAccount = (fromAccountIndex,toAddress, amount, fee, success, error) ->
@@ -206,10 +210,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   ############################################################
   # Simulate spontanuous behavior when using mock in browser #
   ############################################################
-  myWallet.mockSpontanuousBehavior = () ->
-    $timeout((->
-      myWallet.mockShouldReceiveNewTransaction()
-      ), 5000)
+
     
   ###################################
   # Fake methods useful for testing #
