@@ -19,7 +19,7 @@ playSound = (id) ->
 ##################################
 
 walletServices = angular.module("walletServices", [])
-walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $state) ->
+walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio) ->
   wallet = {status: {isLoggedIn: false}, totals: {}, settings: {currency: {conversion: 0}}}
   
   wallet.accounts     = []
@@ -63,12 +63,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     while wallet.paymentRequests.length > 0
       wallet.paymentRequests.pop()
     wallet.uid = ""
-    wallet.password = ""
-    
-    
-      
-    $state.go("dashboard")
-    
+    wallet.password = ""    
   
   ####################
   #   Transactions   #
@@ -321,29 +316,28 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.updateTransactions()
         wallet.refreshPaymentRequests()
     else if event == "error_restoring_wallet"
-      wallet.alerts.push({type: "danger", msg: "Login failed"})
       $rootScope.$apply()        
     else if event == "did_set_guid" # Wallet retrieved from server
       wallet.my.restoreWallet(wallet.password)
       wallet.password = undefined
-      wallet.status.isLoggedIn = true
   
       # Exchange rate is loaded asynchronously:
       success = (result) ->
         # TODO: get currency info from result to avoid using $window
         wallet.settings.currency = $window.symbol_local
                 
-        # Update transactions and accounts, in case this gets called after did_multi_address
-        wallet.updateTransactions()     
-        wallet.updateAccounts()  
+        if wallet.status.isLoggedIn
+          # Update transactions and accounts, in case this gets called after did_multi_address
+          wallet.updateTransactions()     
+          wallet.updateAccounts()  
                   
-        for address, label of wallet.my.addressBook
-          wallet.addressBook[address] = wallet.my.addressBook[address]
+          for address, label of wallet.my.addressBook
+            wallet.addressBook[address] = wallet.my.addressBook[address]
           
-        wallet.refreshPaymentRequests()
+          wallet.refreshPaymentRequests()
         
-        if MyWallet.mockShouldReceiveNewTransaction == undefined
-          $rootScope.$apply()
+          if MyWallet.mockShouldReceiveNewTransaction == undefined
+            $rootScope.$apply()
         
         
       fail = (error) ->
@@ -356,10 +350,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
       if MyWallet.mockShouldReceiveNewTransaction == undefined
         $rootScope.$apply()
-
-    else if event == "did_decrypt"   # Wallet decrypted succesfully   
+    # else if event == "on_wallet_decrypt_finish"
+    else if event == "did_decrypt"   # Wallet decrypted succesfully  
+      wallet.status.isLoggedIn = true 
       wallet.updateAccounts()  
-      $rootScope.$apply()
+      if MyWallet.mockShouldReceiveNewTransaction == undefined
+        $rootScope.$apply()
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
       wallet.updateAccounts()  
@@ -372,17 +368,20 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     else if event == "wallet not found" # Only works in the mock atm
       wallet.alerts.push({type: "danger", msg: "Wallet not found"})
     else if event == "ticker_updated" || event == "did_set_latest_block"
-      wallet.updateAccounts()  
+      if wallet.status.isLoggedIn 
+        wallet.updateAccounts()  
       if MyWallet.mockShouldReceiveNewTransaction == undefined
         $rootScope.$apply()
     else
       console.log event
   # The new monitoring system  
   wallet.monitor = (event) ->
-    # if event.type == "error"
-    #   wallet.alerts.push({type: "danger", msg: event.message})
-    #   $rootScope.$apply()
-    console.log event
+    if event.type == "error"
+      wallet.alerts.push({type: "danger", msg: event.message})
+      if MyWallet.mockShouldReceiveNewTransaction == undefined
+        $rootScope.$apply()
+    else 
+      console.log event
 
   wallet.my.monitor((event) -> wallet.monitor(event))
   wallet.my.addEventListener((event) -> wallet.monitorLegacy(event))

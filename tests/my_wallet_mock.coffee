@@ -52,8 +52,13 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     myWallet
 
   myWallet.restoreWallet = (password) ->
+    unless password && password == localStorageService.get("mockWallets")[myWallet.uid].password
+      monitorFunc({type: "error", message: "Wrong password", code: 0});
+      return
+      
     this.refresh()
     
+    eventListener("did_decrypt")
     eventListener("did_multiaddr")
     return
     
