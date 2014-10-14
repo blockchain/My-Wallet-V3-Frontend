@@ -327,7 +327,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
                 
         # Update transactions and accounts, in case this gets called after did_multi_address
         wallet.updateTransactions()     
-        console.log wallet.transactions   
         wallet.updateAccounts()  
                   
         for address, label of wallet.my.addressBook
