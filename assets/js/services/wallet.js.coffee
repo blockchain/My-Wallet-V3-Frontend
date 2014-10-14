@@ -51,6 +51,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.status.isLoggedIn = false
     while wallet.accounts.length > 0
       wallet.accounts.pop()
+      
+    $window.location = "/"
   
   ####################
   #   Transactions   #
