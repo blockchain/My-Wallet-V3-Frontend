@@ -333,6 +333,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           
         wallet.refreshPaymentRequests()
         
+        if MyWallet.mockShouldReceiveNewTransaction == undefined
+          $rootScope.$apply()
+        
+        
       fail = (error) ->
         console.log(error)
         
@@ -344,7 +348,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       if MyWallet.mockShouldReceiveNewTransaction == undefined
         $rootScope.$apply()
 
-    else if event == "did_decrypt"  # Wallet decrypted succesfully   
+    else if event == "did_decrypt"   # Wallet decrypted succesfully   
+      wallet.updateAccounts()  
       $rootScope.$apply()
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
@@ -357,6 +362,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         $rootScope.$apply()
     else if event == "wallet not found" # Only works in the mock atm
       wallet.alerts.push({type: "danger", msg: "Wallet not found"})
+    else if event == "ticker_updated" || event == "did_set_latest_block"
+      wallet.updateAccounts()  
+      if MyWallet.mockShouldReceiveNewTransaction == undefined
+        $rootScope.$apply()
     else
       console.log event
   # The new monitoring system  
