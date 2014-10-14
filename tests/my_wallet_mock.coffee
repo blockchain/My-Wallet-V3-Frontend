@@ -73,7 +73,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.register = (uid, pwd, success, fail) ->
     wallets = localStorageService.get("mockWallets")
     if wallets[uid]
-      error({message: "Wallet already exists"})
+      fail({message: "Wallet already exists"})
     else
       wallets[uid] = {
         password: pwd
