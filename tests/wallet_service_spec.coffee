@@ -146,11 +146,11 @@ describe "walletServices", () ->
     )
     
     it "should update transactions if successful", inject((Wallet, MyWallet) ->               
-      before = Wallet.getTransactionsForAccount(0).length
+      before = Wallet.transactions.length
       
       Wallet.send(0, "account", 1.0, "BTC", mockObserver)
       
-      expect(Wallet.getTransactionsForAccount(0).length).toBe(before + 1)
+      expect(Wallet.transactions.length).toBe(before + 1)
         
       return
     )
@@ -199,20 +199,13 @@ describe "walletServices", () ->
     )
     
     it "should obtain the new transaction", inject((Wallet, MyWallet) ->
-      before = Wallet.getTransactionsForAccount(0).length
+      before = Wallet.transactions.length
       
       MyWallet.mockShouldReceiveNewTransaction()
       
-      expect(Wallet.getTransactionsForAccount(0).length).toBe(before + 1)
+      expect(Wallet.transactions.length).toBe(before + 1)
       
       return
-    )
-  
-    it "should receive a new transaction from mock after 5 seconds",  inject((MyWallet, Wallet, $timeout) ->
-      before = Wallet.getTransactionsForAccount(0).length
-      MyWallet.mockSpontanuousBehavior()
-      $timeout.flush()
-      expect(Wallet.getTransactionsForAccount(0).length).toBe(before + 1)
     )
     
     it "should beep on new transaction",  inject((MyWallet, Wallet, $timeout, ngAudio) ->
