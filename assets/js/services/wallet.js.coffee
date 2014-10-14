@@ -285,6 +285,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         match = false
         for candidate in wallet.transactions
           if candidate.hash == tx.hash
+            candidate.fiat = candidate.amount / wallet.settings.currency.conversion
             match = true
             break
       
@@ -325,7 +326,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.settings.currency = $window.symbol_local
                 
         # Update transactions and accounts, in case this gets called after did_multi_address
-        wallet.updateTransactions()        
+        wallet.updateTransactions()     
+        console.log wallet.transactions   
         wallet.updateAccounts()  
                   
         for address, label of wallet.my.addressBook
