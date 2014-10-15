@@ -26,7 +26,7 @@
         b(ng-hide="addressBook[transaction.from_address]")
           {{ transaction.from_address }}
     .col-xs-3 
-      span.note
+      span.note(ng-show="transaction.note")
         img(src="img/note.png")
         a(href="", ng-hide="transaction.note").add-note Add note
         {{ transaction.note }}
