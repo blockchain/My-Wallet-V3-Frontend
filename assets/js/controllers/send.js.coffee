@@ -1,4 +1,4 @@
-@SendCtrl = ($scope, $log, Wallet, $modalInstance, ngAudio, $timeout) ->
+@SendCtrl = ($scope, $log, Wallet, $modalInstance, ngAudio, $timeout, $stateParams) ->
   
   $scope.alerts = []
   
@@ -86,7 +86,10 @@
   
   $scope.$watchCollection "accounts", () ->
     if $scope.transaction.from == null && $scope.accounts.length > 0
-      $scope.transaction.from = $scope.accounts[0]
+      if $stateParams.accountIndex == undefined || $stateParams.accountIndex == null || $stateParams.accountIndex == ""
+        $scope.transaction.from = $scope.accounts[0]
+      else 
+        $scope.transaction.from = $scope.accounts[parseInt($stateParams.accountIndex)]
   
   $scope.$watchCollection "[transaction.to, transaction.from.address]", () ->
     $scope.transactionIsValid = $scope.validate($scope.transaction)
