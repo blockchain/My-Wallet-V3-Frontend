@@ -16,7 +16,7 @@
       .col-sm-5
         .input-group
           input.form-control(type="text",ng-model="fields.amount", ng-disabled="paymentRequest && paymentRequest.paid > 0")
-    .form-group(ng-show="paymentRequest.paid != fields.amount")
+    .form-group(ng-show="paymentRequest && paymentRequest.paid > 0 && paymentRequest.paid != fields.amount")
       label.col-sm-3.control-label Paid:
       .col-sm-9
         p.form-control-static
