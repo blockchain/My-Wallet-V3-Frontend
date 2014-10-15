@@ -2,6 +2,7 @@
   $scope.settings = Wallet.settings
   
   $scope.request = () ->
+    Wallet.clearAlerts()
     modalInstance = $modal.open(
       templateUrl: "partials/request"
       controller: RequestCtrl
@@ -10,6 +11,7 @@
     )
     
   $scope.send = () ->
+    Wallet.clearAlerts()
     modalInstance = $modal.open(
       templateUrl: "partials/send"
       controller: SendCtrl

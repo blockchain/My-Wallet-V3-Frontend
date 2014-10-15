@@ -40,11 +40,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
   wallet.create = (uid, password) ->
     success = () ->
-      wallet.alerts.push({type: "success", msg: "Wallet created"})
+      wallet.displaySuccess("Wallet created")
       wallet.login(uid, password)
     
     error = (error) ->
-      wallet.alerts.push({type: "danger", msg: error.message})
+      wallet.displayError error.message
       
     wallet.my.register(uid, password, success, error)
         
@@ -253,6 +253,32 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     return result
   
+  ###################
+  #      Other      #
+  ###################
+  wallet.lastAlertId = 0
+  
+  wallet.clearAlerts = () ->
+    for alert in wallet.alerts
+      wallet.alerts.pop(alert)
+      
+  wallet.displaySuccess = (message) ->
+    wallet.displayAlert {type: "success", msg: message}
+      
+  wallet.displayWarning = (message) ->
+    wallet.displayAlert  {msg: message}
+    
+  wallet.displayError = (message) ->
+    wallet.displayAlert {type: "warning", msg: message}
+      
+  wallet.displayAlert = (alert) ->
+    wallet.lastAlertId++
+    alert.alertId = wallet.lastAlertId
+    wallet.alerts.push(alert)
+
+      
+    
+        
   ##################################
   #        Private (other)         #
   ##################################
@@ -317,7 +343,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   ####################
             
   # The old monitoring system
-  wallet.monitorLegacy = (event) ->
+  wallet.monitorLegacy = (event, data) ->
     # console.logaccountsd: " + event
     if event == "on_tx" or event == "on_block"
       before = wallet.transactions.length
@@ -327,8 +353,15 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         sound.play()
         wallet.updateAccounts()
         wallet.updateTransactions()
-    else if event == "hw_wallet_accepted_payment_request" || event == "hw_wallet_updated_payment_request"
-        wallet.refreshPaymentRequests()
+    else if event == "hw_wallet_accepted_payment_request"
+      wallet.displaySuccess("Requested payment of " + data.amount / 100000000 + " BTC received")
+      wallet.refreshPaymentRequests()
+    else if event == "hw_wallet_payment_request_received_too_little"
+      wallet.displayWarning("Incomplete payment: " + data.amountReceived / 100000000 + " out of " + data.amountRequested / 100000000 +  " BTC")
+      wallet.refreshPaymentRequests()
+    else if event == "hw_wallet_payment_request_received_too_much"
+      wallet.refreshPaymentRequests()
+      wallet.displayWarning("Paid too much: " + data.amountReceived  / 100000000 + " instead of " + data.amountRequested / 100000000 +  " BTC" )
     else if event == "error_restoring_wallet"
       $rootScope.$apply()        
     else if event == "did_set_guid" # Wallet retrieved from server
@@ -380,7 +413,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       if MyWallet.mockShouldReceiveNewTransaction == undefined
         $rootScope.$apply()
     else if event == "wallet not found" # Only works in the mock atm
-      wallet.alerts.push({type: "danger", msg: "Wallet not found"})
+      wallet.displayError "Wallet not found"
     else if event == "ticker_updated" || event == "did_set_latest_block"
       if wallet.status.isLoggedIn 
         wallet.updateAccounts()  
@@ -391,14 +424,14 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   # The new monitoring system  
   wallet.monitor = (event) ->
     if event.type == "error"
-      wallet.alerts.push({type: "danger", msg: event.message})
+      wallet.displayError event.message
       if MyWallet.mockShouldReceiveNewTransaction == undefined
         $rootScope.$apply()
     else 
       console.log event
 
   wallet.my.monitor((event) -> wallet.monitor(event))
-  wallet.my.addEventListener((event) -> wallet.monitorLegacy(event))
+  wallet.my.addEventListener((event, data) -> wallet.monitorLegacy(event, data))
 
   ########################################
   # Testing: only works on mock MyWallet #

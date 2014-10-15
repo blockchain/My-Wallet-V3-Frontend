@@ -1,6 +1,7 @@
 @AccountCtrl = ($scope, Wallet, $cookieStore, $modalInstance, $state) ->
   
   $scope.close = () ->
+    Wallet.clearAlerts()
     $modalInstance.dismiss ""
   
   $scope.logout = () ->    
@@ -18,6 +19,7 @@
   #################################
     
   $scope.didLoad = () ->
+    Wallet.clearAlerts()
     $scope.status = Wallet.status
   
   # First load:      

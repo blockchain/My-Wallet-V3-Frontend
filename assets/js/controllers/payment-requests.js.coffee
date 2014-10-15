@@ -9,6 +9,7 @@
     $scope.requests = Wallet.paymentRequests
     
   $scope.open = (request) ->
+    Wallet.clearAlerts()
     modalInstance = $modal.open(
       templateUrl: "partials/request"
       controller: RequestCtrl

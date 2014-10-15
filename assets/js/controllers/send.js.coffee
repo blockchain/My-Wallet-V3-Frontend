@@ -1,6 +1,6 @@
 @SendCtrl = ($scope, $log, Wallet, $modalInstance, ngAudio, $timeout, $stateParams) ->
   
-  $scope.alerts = []
+  $scope.alerts = Wallet.alerts
   
   $scope.currencies = {isOpen: false}
   
@@ -13,7 +13,7 @@
   # https://github.com/peekabustudios/webcam-directive/blob/master/app/scripts/webcam.js
   $scope.onError = (error) -> # Never called
     $log.error "Permission denied"
-    $scope.alerts.push {type: "danger", msg: "Permission to use camera denied"}
+    Wallet.displayWarning("Permission to use camera denied")
     
   $scope.processURLfromQR = (url) ->
     paymentRequest = Wallet.parsePaymentRequest(url)
@@ -25,7 +25,7 @@
       $scope.qrStream.stop()
       $scope.cameraOn = false
     else
-      $scope.alerts.push {msg: "Not a bitcoin QR code."}
+      Wallet.displayWarning("Not a bitcoin QR code.")
       $log.error "Not a bitcoin QR code:" + url
       
       $timeout((->
@@ -68,16 +68,16 @@
       
   
   $scope.close = () ->
+    Wallet.clearAlerts()
     $modalInstance.dismiss ""
   
   $scope.send = () ->
-    for alert in $scope.alerts
-      $scope.alerts.pop(alert)
+    Wallet.clearAlerts()
 
     Wallet.send($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.to, $scope.transaction.amount, $scope.transaction.currency, $scope.observer)
   
   $scope.closeAlert = (index) ->
-    $scope.alerts.splice index, 1
+    Wallet.alerts.splice index, 1
     return
     
   #################################
@@ -104,7 +104,7 @@
   
   $scope.observer = {}
   $scope.observer.transactionDidFailWithError = (message) ->
-    $scope.alerts.push {type: "danger", msg: message}
+    Wallet.displayError(message)
   $scope.observer.transactionDidFinish = () ->
     sound = ngAudio.load("beep.wav")
     sound.play()

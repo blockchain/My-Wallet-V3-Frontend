@@ -18,9 +18,11 @@
     $scope.paymentRequest = null 
   
   $scope.close = () ->
+    Wallet.clearAlerts()
     $modalInstance.dismiss ""
     
   $scope.save = () ->
+    Wallet.clearAlerts()
     $modalInstance.dismiss ""
     
   $scope.cancel = () ->
@@ -30,11 +32,12 @@
       if Wallet.cancelPaymentRequest(index, address)
         $scope.paymentRequest = null 
       else
-        Wallet.alerts.push {type: "danger", msg: "Unable to cancel payment request"}
+        Wallet.displayError("Unable to cancel payment request")
     
     if $scope.mockTimer != undefined
       $timeout.cancel($scope.mockTimer) 
       
+    Wallet.clearAlerts()  
     $modalInstance.dismiss ""
     
   $scope.accept = () ->
@@ -42,7 +45,8 @@
     
     if $scope.mockTimer != undefined
       $timeout.cancel($scope.mockTimer)
-      
+    
+    Wallet.clearAlerts()
     $modalInstance.dismiss ""
   
   #################################
@@ -65,6 +69,18 @@
           $scope.fields.to = $scope.accounts[0]
         else 
           $scope.fields.to = $scope.accounts[parseInt($stateParams.accountIndex)]
+          
+      $scope.listenerForPayment = $scope.$watch "paymentRequest.paid", (val,before) ->
+        if val != 0 && before != val && $scope.paymentRequest
+          if val == $scope.paymentRequest.amount
+            $modalInstance.dismiss ""
+        
+          else if val > 0 && val < $scope.paymentRequest.amount
+            # Mock pays the remainder after 10 seconds
+            if MyWallet.mockShouldReceiveNewTransaction != undefined
+              $scope.mockTimer = $timeout((->
+                MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , $scope.paymentRequest.amount - 100000000, "")
+              ), 10000)
       
   $scope.$watch "fields.to", () ->
     $scope.formIsValid = $scope.validate()
@@ -93,25 +109,8 @@
             MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" ,100000000, "")
           ), 10000)  
         
-  $scope.listenerForPayment = $scope.$watch "paymentRequest.paid", (val) ->
-    if $scope.paymentRequest != null && val != 0
-      if val == $scope.paymentRequest.amount
-        $modalInstance.dismiss ""
-        Wallet.alerts.push {type: "success", msg: "Payment received"}
-        
-      else if val > 0 && val < $scope.paymentRequest.amount
-        console.log "Too little"
-        Wallet.alerts.push {msg: "Incomplete payment: " + val / 100000000 + " out of " + $scope.paymentRequest.amount / 100000000 +  " BTC" }
-      
-        # Mock pays the remainder after 10 seconds
-        if MyWallet.mockShouldReceiveNewTransaction != undefined
-          $scope.mockTimer = $timeout((->
-            MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , $scope.paymentRequest.amount - 100000000, "")
-          ), 10000)
-      
-      else if val > $scope.paymentRequest.amount
-        Wallet.alerts.push {msg: "Paid too much: " + val / 100000000 + " instead of " + $scope.paymentRequest.amount / 100000000 +  " BTC" }
-      
+
+
   $scope.validate = () ->
     return false if $scope.fields.to == null
     return false if parseFloat($scope.fields.amount) == 0.0

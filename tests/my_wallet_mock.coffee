@@ -1,7 +1,7 @@
 walletServices = angular.module("myWalletServices", [])
 walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService) ->
   # Erase local storage:
-  # localStorageService.remove("mockWallets")
+  localStorageService.remove("mockWallets")
   
   # Wallets are stored in a cookie. If there isn't one, we'll create it.
   unless localStorageService.get("mockWallets") 
@@ -288,11 +288,13 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
                 
         if request.paid == request.amount
           request.complete = true
-          eventListener("hw_wallet_accepted_payment_request")
+          eventListener("hw_wallet_accepted_payment_request", {amount: request.amount})
           myWallet.sync()
-          console.log "Paid!"
-        else if request.paid > 0
-          eventListener("hw_wallet_updated_payment_request")
+        else if request.paid > 0 && request.amount > request.paid
+          eventListener("hw_wallet_payment_request_received_too_little", {amountRequested: request.amount, amountReceived: request.paid})
+        else if request.amount < request.paid
+          eventListener("hw_wallet_payment_request_received_too_much", {amountRequested: request.amount, amountReceived: request.paid})
+
         break
     
     
