@@ -183,7 +183,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       
       address = mockPaymentRequestAddressStack.pop()
     
-      request = {address: address, amount: amount, account: index, paid: 0, complete: false}
+      request = {address: address, amount: amount, account: index, paid: 0, complete: false, canceled: false}
 
       accounts[index].receive_addresses.push address
     
@@ -263,6 +263,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     transactions = angular.copy(localStorageService.get("mockWallets")[this.uid].transactions)
     if localStorageService.get("mockWallets")[this.uid].paymentRequests
       paymentRequests = angular.copy(localStorageService.get("mockWallets")[this.uid].paymentRequests)      
+      # Update the stack of remaning payment addresses:
+      for request in paymentRequests 
+        index = mockPaymentRequestAddressStack.indexOf(request.address)
+        if index > -1
+          mockPaymentRequestAddressStack.splice(index,1)
         
   #####################################
   # Tell the mock to behave different # 
@@ -280,8 +285,14 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     for request in paymentRequests
       if request.address == transaction.to
         request.paid += parseInt(transaction.amount) # The real thing should use the amount per output
-
-        request.complete = (request.paid == request.amount)
+                
+        if request.paid == request.amount
+          request.complete = true
+          eventListener("hw_wallet_accepted_payment_request")
+          myWallet.sync()
+          console.log "Paid!"
+        else if request.paid > 0
+          eventListener("hw_wallet_updated_payment_request")
         break
     
     

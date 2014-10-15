@@ -1,7 +1,7 @@
 @RequestCtrl = ($scope, Wallet, MyWallet, $modalInstance, $log, $timeout, request, $stateParams) ->
   $scope.accounts = Wallet.accounts
   
-  $scope.alerts = []
+  $scope.alerts = Wallet.alerts
   
   $scope.fields = {to: null, amount: 0}
   
@@ -94,13 +94,14 @@
           ), 10000)  
         
   $scope.listenerForPayment = $scope.$watch "paymentRequest.paid", (val) ->
-    if $scope.paymentRequest != null
+    if $scope.paymentRequest != null && val != 0
       if val == $scope.paymentRequest.amount
-        $scope.alerts.push {type: "success", msg: "Payment received"}
+        $modalInstance.dismiss ""
+        Wallet.alerts.push {type: "success", msg: "Payment received"}
         
-        $scope.listenerForPayment()
       else if val > 0 && val < $scope.paymentRequest.amount
-        $scope.alerts.push {msg: "Incomplete payment: " + val / 100000000 + " out of " + $scope.paymentRequest.amount / 100000000 +  " BTC" }
+        console.log "Too little"
+        Wallet.alerts.push {msg: "Incomplete payment: " + val / 100000000 + " out of " + $scope.paymentRequest.amount / 100000000 +  " BTC" }
       
         # Mock pays the remainder after 10 seconds
         if MyWallet.mockShouldReceiveNewTransaction != undefined
@@ -109,7 +110,7 @@
           ), 10000)
       
       else if val > $scope.paymentRequest.amount
-        $scope.alerts.push {msg: "Paid too much: " + val / 100000000 + " instead of " + $scope.paymentRequest.amount / 100000000 +  " BTC" }
+        Wallet.alerts.push {msg: "Paid too much: " + val / 100000000 + " instead of " + $scope.paymentRequest.amount / 100000000 +  " BTC" }
       
   $scope.validate = () ->
     return false if $scope.fields.to == null
