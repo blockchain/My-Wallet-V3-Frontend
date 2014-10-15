@@ -56,15 +56,6 @@ describe "RequestCtrl", ->
         expect(scope.paymentRequest.address).toBe('1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp')
     )
   
-    it "should notify the user is payment is received", inject(() ->
-      scope.paymentRequest.paid = scope.paymentRequest.amount
-      scope.paymentRequest.complete = true
-    
-      scope.$apply()
-      expect(scope.alerts.length).toBe(1)
-    
-    )
-  
     it "should simulate payment after 10 seconds in mock", inject(($timeout) ->
       expect(scope.alerts.length).toBe(0)    
       $timeout.flush(5000)
@@ -94,23 +85,6 @@ describe "RequestCtrl", ->
   
     it "should update amount in request if changed in the form", inject(() ->
       pending()
-    )
-  
-    it "should warn user if payment is insufficient", inject(() ->
-      scope.paymentRequest.paid = scope.paymentRequest.amount / 2
-      scope.$apply()
-      expect(scope.alerts.length).toBe(1)
-      expect(scope.alerts[0].type).not.toBeDefined()
-      expect(scope.paymentRequest.complete).not.toBe(true)
-    )
-  
-    it "should warn user if payment is too much", inject(() ->
-      scope.paymentRequest.paid = scope.paymentRequest.amount * 2
-      scope.$apply()
-      expect(scope.alerts.length).toBe(1)
-      expect(scope.alerts[0].type).not.toBeDefined()
-      expect(scope.paymentRequest.complete).not.toBe(true)
-    
     )
   
     it "should allow user to accept incorrect amount", inject(() ->

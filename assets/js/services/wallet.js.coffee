@@ -269,7 +269,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.displayAlert  {msg: message}
     
   wallet.displayError = (message) ->
-    wallet.displayAlert {type: "warning", msg: message}
+    wallet.displayAlert {type: "danger", msg: message}
       
   wallet.displayAlert = (alert) ->
     wallet.lastAlertId++

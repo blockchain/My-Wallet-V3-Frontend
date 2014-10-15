@@ -258,6 +258,36 @@ describe "walletServices", () ->
       expect(request.paid).toBe(request.amount)
     )
     
+  
+    it "should notify the user if payment is received", inject((Wallet) ->
+      request = Wallet.generatePaymentRequestForAccount(0, 100000000)
+      MyWallet.mockShouldReceiveNewTransaction(request.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , request.amount, "")
+   
+      expect(Wallet.alerts.length).toBe(1)
+    
+    )
+    
+  
+    it "should warn user if payment is insufficient", inject(() ->
+      
+      request = Wallet.generatePaymentRequestForAccount(0, 100000000)
+      MyWallet.mockShouldReceiveNewTransaction(request.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , request.amount / 2, "")
+      
+      expect(Wallet.alerts.length).toBe(1)
+      expect(Wallet.alerts[0].type).not.toBeDefined()
+      expect(request.complete).not.toBe(true)
+    )
+  
+    it "should warn user if payment is too much", inject(() ->
+      request = Wallet.generatePaymentRequestForAccount(0, 100000000)
+      MyWallet.mockShouldReceiveNewTransaction(request.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , request.amount * 2, "")
+      
+      expect(Wallet.alerts.length).toBe(1)
+      expect(Wallet.alerts[0].type).not.toBeDefined()
+      expect(request.complete).not.toBe(true)
+    
+    )
+    
     return
   
   describe "parsePaymentRequest()", ->
