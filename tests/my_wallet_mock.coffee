@@ -120,7 +120,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     return res
     
   # Amount in Satoshi
-  myWallet.sendBitcoinsForAccount = (fromAccountIndex,toAddress, amount, fee, success, error) ->
+  myWallet.sendBitcoinsForAccount = (fromAccountIndex,toAddress, amount, fee, note, success, error) ->
     if mockRules.shouldFailToSend
       error({message: "Reason for failure"})
       return
@@ -199,8 +199,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
           paymentRequests.pop(candidate)
           mockPaymentRequestAddressStack.push(address)
           myWallet.sync()
+          return true
         
-      return
+      return false
     
     account.updatePaymentRequest = (address, amount) ->
       for candidate in paymentRequests
