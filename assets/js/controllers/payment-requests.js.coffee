@@ -1,4 +1,4 @@
-@PaymentRequestsCtrl = ($scope, Wallet, $modal) ->
+@PaymentRequestsCtrl = ($scope, Wallet, $modal,$timeout) ->
   $scope.settings = Wallet.settings
 
   #################################

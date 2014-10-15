@@ -1,11 +1,11 @@
-div(ng-show="(requests | filter:{complete:false}).length > 0")
+div(ng-show="(requests | filter:{complete:false,canceled:false}).length > 0")
   table.left-header
     tr
       td.header 
         |Pending Payments
       td.right
   table.left
-    tr(ng-repeat="request in requests | filter:{complete:false}")
+    tr(ng-repeat="request in requests | filter:{complete:false,canceled:false}")
       td 
         a(ng-click="open(request)")
           {{ request.address | limitTo: 15 }}...

@@ -144,7 +144,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.accountForPaymentRequest = (request) ->
     for i in [0..wallet.my.getAccountsCount()-1]
       for req in wallet.my.getPaymentRequestsForAccount(i)
-        return wallet.accounts[i] if request.address = req.address
+        return wallet.accounts[i] if request.address == req.address
       
     return -1
   
@@ -179,6 +179,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           candidate.amount = req.amount
           candidate.paid = req.paid
           candidate.complete = req.complete
+          candidate.canceled = req.canceled 
           break
       
       if !match
@@ -194,9 +195,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     return request
   
   wallet.cancelPaymentRequest = (accountIndex, address)  ->
-    wallet.my.cancelPaymentRequestForAccount(accountIndex, address)
+    success = wallet.my.cancelPaymentRequestForAccount(accountIndex, address)
     this.refreshPaymentRequests()
-    return
+    return success 
       
   wallet.updatePaymentRequest = (accountIndex, address, amount) ->
     if wallet.my.updatePaymentRequestForAccount(accountIndex, address, amount)
@@ -279,14 +280,20 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     if !(accountIndex?) || accountIndex == ""
       tally = 0.0
       for account in wallet.accounts
+        return null if account.balance == undefined
         tally = tally + account.balance
       
       return tally
     else
-      return wallet.accounts[parseInt(accountIndex)].balance
+      account = wallet.accounts[parseInt(accountIndex)]
+      return null if account == undefined
+      return account .balance
       
   wallet.total_fiat = (accountIndex) -> 
-    return wallet.total_btc(accountIndex) / wallet.settings.currency.conversion
+    btc = wallet.total_btc(accountIndex)
+    return null if btc == undefined
+    return null if wallet.settings.currency == undefined
+    return btc / wallet.settings.currency.conversion
     
   wallet.updateTransactions = () ->
     for i in [0..wallet.my.getAccountsCount()-1]
@@ -320,6 +327,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         sound.play()
         wallet.updateAccounts()
         wallet.updateTransactions()
+    else if event == "hw_wallet_accepted_payment_request"
         wallet.refreshPaymentRequests()
     else if event == "error_restoring_wallet"
       $rootScope.$apply()        

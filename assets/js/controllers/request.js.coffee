@@ -25,8 +25,12 @@
     
   $scope.cancel = () ->
     if $scope.paymentRequest
-      Wallet.cancelPaymentRequest($scope.accounts.indexOf($scope.fields.to), $scope.paymentRequest.address)
-      $scope.paymentRequest = null 
+      index = $scope.accounts.indexOf($scope.fields.to)
+      address = $scope.paymentRequest.address
+      if Wallet.cancelPaymentRequest(index, address)
+        $scope.paymentRequest = null 
+      else
+        Wallet.alerts.push {type: "danger", msg: "Unable to cancel payment request"}
     
     if $scope.mockTimer != undefined
       $timeout.cancel($scope.mockTimer) 
