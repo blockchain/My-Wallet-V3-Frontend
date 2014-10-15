@@ -242,6 +242,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   # Pending refactoring of MyWallet:
   $window.symbol_local = {code: "USD",conversion: 250000.0, local: true, name: "Dollar", symbol: "$", symbolAppearsAfter: false}
     
+  myWallet.isSyncrhonizedWithServer = (func) ->
+    return myWallet.pendingSync == undefined
+    
   ############################################################
   # Simulate spontanuous behavior when using mock in browser #
   ############################################################
@@ -252,11 +255,22 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   ###################################
   
   myWallet.sync = () ->
-    # Save payment requests and accounts in our cookie:
-    cookie = localStorageService.get("mockWallets")
-    cookie[this.uid].paymentRequests = paymentRequests
-    cookie[this.uid].accounts = accounts
-    localStorageService.set("mockWallets", cookie)
+    if myWallet.pendingSync != undefined
+      $timeout.cancel(myWallet.pendingSync)
+      
+    myWallet.pendingSync = $timeout((->
+      # Save payment requests and accounts in our cookie:
+      cookie = localStorageService.get("mockWallets")
+      unless cookie[myWallet.uid]
+        console.log "User " + myWallet.uid + " not found in local storage."
+        console.log localStorageService.get("mockWallets")
+        return 
+        
+      cookie[myWallet.uid].paymentRequests = paymentRequests
+      cookie[myWallet.uid].accounts = accounts
+      localStorageService.set("mockWallets", cookie)
+    ), 5000)
+
   
   myWallet.refresh = () ->
     accounts = angular.copy(localStorageService.get("mockWallets")[this.uid].accounts)
