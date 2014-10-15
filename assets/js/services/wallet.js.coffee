@@ -327,7 +327,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         sound.play()
         wallet.updateAccounts()
         wallet.updateTransactions()
-    else if event == "hw_wallet_accepted_payment_request"
+    else if event == "hw_wallet_accepted_payment_request" || event == "hw_wallet_updated_payment_request"
         wallet.refreshPaymentRequests()
     else if event == "error_restoring_wallet"
       $rootScope.$apply()        
