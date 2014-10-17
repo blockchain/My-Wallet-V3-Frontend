@@ -72,6 +72,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   #   Transactions   #
   ####################
   
+  wallet.recommendedTransactionFeeForAccount = (idx, amount) ->
+    # amount in Satoshi
+    return wallet.my.recommendedTransactionFeeForAccount(idx, amount)
+    
   #############
   # Spend BTC #
   #############

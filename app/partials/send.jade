@@ -39,6 +39,10 @@
         p(ng-show="transaction.currency!='BTC'") Conversion to be implemented...
         p(ng-show="transaction.currency=='BTC'") {{ transaction.amount }} BTC
     .form-group
+      label.col-sm-3.control-label Fees:
+      .col-sm-5 
+        p.form-control-static {{ transaction.fee }}
+    .form-group
       label.col-sm-3.control-label Privacy guard:
       .col-sm-4
         .checkbox
