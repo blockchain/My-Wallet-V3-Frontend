@@ -44,7 +44,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.login(uid, password)
     
     error = (error) ->
-      wallet.displayError error.message
+      if error.message != undefined
+        wallet.displayError(error.message)
+      else
+        wallet.displayError(error)
       
     wallet.my.register(uid, password, success, error)
         
@@ -397,12 +400,16 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
       if MyWallet.mockShouldReceiveNewTransaction == undefined
         $rootScope.$apply()
-    # else if event == "on_wallet_decrypt_finish"
+    # else if event == "on_wallet_decrypt_finish" # Non-HD part is decrypted
     else if event == "did_decrypt"   # Wallet decrypted succesfully  
       wallet.status.isLoggedIn = true 
       wallet.updateAccounts()  
       if MyWallet.mockShouldReceiveNewTransaction == undefined
         $rootScope.$apply()
+    else if event == "hd_wallets_does_not_exist"
+      # Create a new one:
+      console.log "Creating new HD wallet..."
+      wallet.my.initializeHDWallet()
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
       wallet.updateAccounts()  
@@ -424,7 +431,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   # The new monitoring system  
   wallet.monitor = (event) ->
     if event.type == "error"
-      wallet.displayError event.message
+      wallet.displayError(event.message)
+      console.log event
       if MyWallet.mockShouldReceiveNewTransaction == undefined
         $rootScope.$apply()
     else 
