@@ -61,7 +61,7 @@ Not supported by the server yet.
 
 Curently the app is configured to be deployed on Heroku:
 
-* Real money: http://dev.blockchain.com/ (VPN or IP whitelist)
+* Real money: http://dev.blockchain.info/ (VPN or IP whitelist)
 * Mock: http://pure-wildwood-5818.herokuapp.com/
 
 ## Dependencies
