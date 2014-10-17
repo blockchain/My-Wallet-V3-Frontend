@@ -100,6 +100,13 @@
     return false if transaction.to == null
     return false if transaction.to == undefined
     return false if transaction.to == ""
+    return false if transaction.amount == undefined
+    return false if transaction.amount == null
+    return false if transaction.amount == ""
+    return false if parseFloat(transaction.amount) > $scope.transaction.from.balance / 100000000
+    return false if parseFloat(transaction.amount) == 0
+    
+    
     return false if transaction.currency != 'BTC'
     
     return true

@@ -84,7 +84,10 @@ describe "RequestCtrl", ->
     )
   
     it "should update amount in request if changed in the form", inject(() ->
-      pending()
+      scope.fields.amount = "0.1"
+      scope.$apply()
+      expect(scope.paymentRequest.amount).toBe(10000000)
+      
     )
   
     it "should allow user to accept incorrect amount", inject(() ->

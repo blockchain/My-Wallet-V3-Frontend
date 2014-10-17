@@ -21,6 +21,7 @@ describe "SendCtrl", ->
         $modalInstance: modalInstance
         
       scope.transaction.to = "1DDBEYPPTkgbctmMtH3gXc7UHFURw5HGJD"
+      scope.transaction.amount = "0.2"
       scope.$apply()
       
       scope.qrStream = {}
@@ -78,7 +79,6 @@ describe "SendCtrl", ->
   
   it "should disable Send button if To address is invalid",  inject(() ->
     pending()
-    
     scope.transaction.to = "1AAAA" 
     scope.$apply()
     
@@ -88,20 +88,24 @@ describe "SendCtrl", ->
   )
 
   it "should disable Send button if amount is missing",  inject(() ->
-    pending()
+    scope.transaction.amount = ""
+    scope.$apply()
+    expect(scope.transactionIsValid).toBe(false)
     
     return
   )
   
   it "should disable Send button if amount is zero",  inject(() ->
-    pending()
-    
+    scope.transaction.amount = "0.0"
+    scope.$apply()
+    expect(scope.transactionIsValid).toBe(false)    
     return
   )
   
-  it "should disable Send button if balance is too low",  inject(() ->
-    pending()
-    
+  it "should disable Send button if balance is too low (ex mining fee)",  inject(() ->
+    scope.transaction.amount = "10.0" # Much more than what the mock account has.
+    scope.$apply()
+    expect(scope.transactionIsValid).toBe(false)        
     return
   )
   
