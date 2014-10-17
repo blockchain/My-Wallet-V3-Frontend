@@ -41,3 +41,17 @@ describe "AccountCtrl", ->
     
     return
   )  
+  
+  it "should not logout if save is in progress",  inject((Wallet, MyWallet, $stateParams) ->
+    spyOn(Wallet, "logout").and.callThrough()
+    
+    MyWallet.sync()
+    
+    scope.logout()
+    
+    expect(Wallet.logout).not.toHaveBeenCalled()
+    
+    expect(scope.status.isLoggedIn).toBe(true)    
+    
+    return
+  )

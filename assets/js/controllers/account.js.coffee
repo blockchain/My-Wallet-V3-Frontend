@@ -4,7 +4,12 @@
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
   
-  $scope.logout = () ->    
+  $scope.logout = () ->  
+    if !Wallet.isSynchronizedWithServer()
+      Wallet.displayError("Unable to logout due to pending changes.")
+      $modalInstance.dismiss ""
+      return
+      
     $scope.uid = null
     $scope.password = null
     $cookieStore.remove("password")
