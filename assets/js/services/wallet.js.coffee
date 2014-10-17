@@ -282,7 +282,17 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.lastAlertId++
     alert.alertId = wallet.lastAlertId
     wallet.alerts.push(alert)
+    
+  wallet.isSynchronizedWithServer = () ->
+    return wallet.my.isSynchronizedWithServer()
 
+  window.onbeforeunload = (event) -> 
+    if !wallet.isSynchronizedWithServer()
+      event.preventDefault()
+      # This works in Chrome:
+      return "There are unsaved changes. Are you sure?"
+      
+      
       
     
         

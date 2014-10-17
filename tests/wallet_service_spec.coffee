@@ -339,3 +339,20 @@ describe "walletServices", () ->
      
      
     return
+    
+  describe "isSyncrhonizedWithServer()", ->      
+    it "should be in sync after first load", inject((Wallet) ->      
+      expect(Wallet.isSynchronizedWithServer()).toBe(true)
+      return
+    )
+    
+    it "should not be in sync while new account is saved", inject((Wallet, $timeout) ->     
+      Wallet.createAccount()
+      expect(Wallet.isSynchronizedWithServer()).toBe(false)
+      $timeout.flush()
+      
+      expect(Wallet.isSynchronizedWithServer()).toBe(true)
+      return
+    )
+    
+    return

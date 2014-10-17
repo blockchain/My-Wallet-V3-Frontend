@@ -22,6 +22,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
         
   uid = undefined
   
+  isSynchronizedWithServer = true # In the sense that the server is up to date
+  
   myWallet = {}
   accounts = []
 
@@ -242,8 +244,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   # Pending refactoring of MyWallet:
   $window.symbol_local = {code: "USD",conversion: 250000.0, local: true, name: "Dollar", symbol: "$", symbolAppearsAfter: false}
     
-  myWallet.isSyncrhonizedWithServer = (func) ->
-    return myWallet.pendingSync == undefined
+  myWallet.isSynchronizedWithServer = () ->
+    return isSynchronizedWithServer
     
   myWallet.recommendedTransactionFeeForAccount = () ->
     return 0.0001
@@ -258,6 +260,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   ###################################
   
   myWallet.sync = () ->
+    isSynchronizedWithServer = false
+    
     if myWallet.pendingSync != undefined
       $timeout.cancel(myWallet.pendingSync)
       
@@ -272,8 +276,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       cookie[myWallet.uid].paymentRequests = paymentRequests
       cookie[myWallet.uid].accounts = accounts
       localStorageService.set("mockWallets", cookie)
+      isSynchronizedWithServer = true
     ), 5000)
-
+    
   
   myWallet.refresh = () ->
     accounts = angular.copy(localStorageService.get("mockWallets")[this.uid].accounts)
