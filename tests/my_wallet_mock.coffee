@@ -245,6 +245,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.isSyncrhonizedWithServer = (func) ->
     return myWallet.pendingSync == undefined
     
+  myWallet.recommendedTransactionFeeForAccount = () ->
+    return 0.0001
+    
   ############################################################
   # Simulate spontanuous behavior when using mock in browser #
   ############################################################
