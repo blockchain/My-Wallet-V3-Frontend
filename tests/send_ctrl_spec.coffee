@@ -78,8 +78,7 @@ describe "SendCtrl", ->
   )
   
   it "should disable Send button if To address is invalid",  inject(() ->
-    pending()
-    scope.transaction.to = "1AAAA" 
+    scope.transaction.to = "invalid address" 
     scope.$apply()
     
     expect(scope.transactionIsValid).toBe(false)

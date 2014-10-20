@@ -290,7 +290,12 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
         index = mockPaymentRequestAddressStack.indexOf(request.address)
         if index > -1
           mockPaymentRequestAddressStack.splice(index,1)
-        
+  
+  myWallet.isValidAddress = (address) ->
+    withoutWhiteSpace = address.trim()
+    # Reject if there are spaces inside the address:
+    return withoutWhiteSpace.indexOf(" ") == -1
+    
   #####################################
   # Tell the mock to behave different # 
   #####################################

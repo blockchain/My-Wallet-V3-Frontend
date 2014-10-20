@@ -292,9 +292,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       # This works in Chrome:
       return "There are unsaved changes. Are you sure?"
       
-      
-      
-    
+  wallet.isValidAddress = (address) ->
+    return wallet.my.isValidAddress(address)    
         
   ##################################
   #        Private (other)         #

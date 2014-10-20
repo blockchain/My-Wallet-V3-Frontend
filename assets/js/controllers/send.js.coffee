@@ -100,6 +100,7 @@
     return false if transaction.to == null
     return false if transaction.to == undefined
     return false if transaction.to == ""
+    return false unless Wallet.isValidAddress(transaction.to)
     return false if transaction.amount == undefined
     return false if transaction.amount == null
     return false if transaction.amount == ""
