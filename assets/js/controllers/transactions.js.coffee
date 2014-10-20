@@ -1,5 +1,15 @@
 @TransactionsCtrl = ($scope, Wallet, MyWallet, $state, $cookieStore, $log, $stateParams, $timeout) ->
   
+  $scope.confirmationsTooltip = (confirmations) ->
+    if confirmations == undefined || confirmations == null 
+      return ""
+    else if confirmations == 0
+      return "Unconfirmed"
+    else if confirmations == 1
+      return "1 confirmation"
+    else
+      return confirmations + " confirmations"
+    
   #################################
   #           Private             #
   #################################

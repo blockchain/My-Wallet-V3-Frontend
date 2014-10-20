@@ -47,6 +47,10 @@
   button.received {
     background: white url(/img/button-green.png); 
     background-size: 80px 24px;
+    
+    span.glyphicon {
+      padding-left: 10px;
+    }
   }
 } 
 

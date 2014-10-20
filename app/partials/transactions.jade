@@ -30,10 +30,12 @@
         img(src="img/note.png")
         a(href="", ng-hide="transaction.note").add-note Add note
         {{ transaction.note }}
-    .col-xs-2
+    .col-xs-2(tooltip="{{ confirmationsTooltip(transaction.confirmations) }}")
       span(ng-show="transaction.intraWallet")
         button.intra-wallet {{ settings.currency.symbol }} {{ -transaction.fiat | number:2 }}
       span(ng-show="transaction.amount > 0 && !transaction.intraWallet")
-        button.received {{ settings.currency.symbol }} {{ transaction.fiat | number:2 }}
+        button.received 
+          {{ settings.currency.symbol }} {{ transaction.fiat | number:2 }}
+          span(ng-show="transaction.confirmations == 0").glyphicon.glyphicon-warning-sign
       span(ng-show="transaction.amount < 0 && !transaction.intraWallet")
         button.spent -{{ settings.currency.symbol }} {{ -transaction.fiat | number:2 }}

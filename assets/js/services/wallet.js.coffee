@@ -354,7 +354,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           unless wallet.settings.currency == undefined
             transaction.fiat = transaction.amount / wallet.settings.currency.conversion
           wallet.transactions.push transaction 
-      
+                
   ####################
   # Notification     #
   ####################
