@@ -25,12 +25,12 @@ describe "PaymentRequestsCtrl", ->
     return
     
   it "should show incomplete payment requests",  inject((Wallet) ->
-    Wallet.generatePaymentRequestForAccount(0, 1)
+    Wallet.generatePaymentRequestForAccount(0, numeral(1))
     expect(scope.requests.length).toBe(1)
   )
   
   it "should open a popup with the payment request",  inject((Wallet, $modal) ->
-    Wallet.generatePaymentRequestForAccount(0, 1)
+    Wallet.generatePaymentRequestForAccount(0, numeral(1))
     req = scope.requests[0]
     spyOn(modal, "open")
 

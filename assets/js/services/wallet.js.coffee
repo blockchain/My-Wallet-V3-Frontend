@@ -74,7 +74,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   
   wallet.recommendedTransactionFeeForAccount = (idx, amount) ->
     # amount in Satoshi
-    return wallet.my.recommendedTransactionFeeForAccount(idx, amount)
+    return numeral(wallet.my.recommendedTransactionFeeForAccount(idx, amount.value()))
     
   #############
   # Spend BTC #
@@ -169,7 +169,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       match = false
       for candidate in myWalletRequests
         if candidate.address == req.address
-          req.amount = candidate.amount
+          req.amount = numeral(candidate.amount)
           match = true
           
       if !match
@@ -183,7 +183,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         if candidate.address == req.address
           match = true
           # Update amount and payment
-          candidate.amount = req.amount
+          candidate.amount = numeral(req.amount)
           candidate.paid = req.paid
           candidate.complete = req.complete
           candidate.canceled = req.canceled 
@@ -192,12 +192,13 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       if !match
         request = {}
         angular.copy(req, request)
+        request.amount = numeral(request.amount)
         request.account = 0 # TODO: match the correct account
         wallet.paymentRequests.push request
             
   # Amount in Satoshi
   wallet.generatePaymentRequestForAccount = (accountIndex, amount)  ->
-    request = wallet.my.generatePaymentRequestForAccount(accountIndex, amount)
+    request = wallet.my.generatePaymentRequestForAccount(accountIndex, amount.value())
     this.refreshPaymentRequests()
     return request
   
@@ -247,7 +248,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
              value = argumentList.substr(argument.length + 1, argumentList.length - argument.length - 1)
 
            if argument == "amount"
-             result.amount = parseFloat(value)
+             result.amount = numeral(value).format("0.[00000000]")
              result.currency = "BTC"
            else
              $log.info "Ignoring argument " + argument + " in: " + url
@@ -320,16 +321,16 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
   wallet.total_btc = (accountIndex) -> 
     if !(accountIndex?) || accountIndex == ""
-      tally = 0.0
+      tally = numeral("0.0")
       for account in wallet.accounts
         return null if account.balance == undefined
-        tally = tally + account.balance
+        tally = tally.add(account.balance)
       
       return tally
     else
       account = wallet.accounts[parseInt(accountIndex)]
       return null if account == undefined
-      return account .balance
+      return account.balance
       
   wallet.total_fiat = (accountIndex) -> 
     btc = wallet.total_btc(accountIndex)
@@ -370,14 +371,14 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.updateAccounts()
         wallet.updateTransactions()
     else if event == "hw_wallet_accepted_payment_request"
-      wallet.displaySuccess("Requested payment of " + data.amount / 100000000 + " BTC received")
+      wallet.displaySuccess("Requested payment of " + numeral(data.amount).divide(100000000) + " BTC received")
       wallet.refreshPaymentRequests()
     else if event == "hw_wallet_payment_request_received_too_little"
-      wallet.displayWarning("Incomplete payment: " + data.amountReceived / 100000000 + " out of " + data.amountRequested / 100000000 +  " BTC")
+      wallet.displayWarning("Incomplete payment: " + numeral(data.amountReceived).divide(100000000) + " out of " + numeral(data.amountRequested).divide(100000000) +  " BTC")
       wallet.refreshPaymentRequests()
     else if event == "hw_wallet_payment_request_received_too_much"
       wallet.refreshPaymentRequests()
-      wallet.displayWarning("Paid too much: " + data.amountReceived  / 100000000 + " instead of " + data.amountRequested / 100000000 +  " BTC" )
+      wallet.displayWarning("Paid too much: " + numeral(data.amountReceived).divide(100000000) + " instead of " + numeral(data.amountRequested).divide(100000000) +  " BTC" )
     else if event == "error_restoring_wallet"
       $rootScope.$apply()        
     else if event == "did_set_guid" # Wallet retrieved from server

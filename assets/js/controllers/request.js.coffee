@@ -59,8 +59,8 @@
       if request 
         # Open an existing request
         $scope.paymentRequest = request
-        
-        $scope.fields = {amount: request.amount / 100000000 }
+                
+        $scope.fields = {amount: angular.copy(request.amount).divide(100000000).value() }
         
         $scope.fields.to = Wallet.accountForPaymentRequest(request)
       else
@@ -79,7 +79,7 @@
             # Mock pays the remainder after 10 seconds
             if MyWallet.mockShouldReceiveNewTransaction != undefined
               $scope.mockTimer = $timeout((->
-                MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , $scope.paymentRequest.amount - 100000000, "")
+                MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , numeral($scope.paymentRequest.amount).subtract(100000000), "")
               ), 10000)
       
   $scope.$watch "fields.to", () ->
@@ -90,13 +90,13 @@
     $scope.formIsValid = $scope.validate()
     
     if $scope.paymentRequest == null && $scope.formIsValid
-      $scope.paymentRequest =  Wallet.generatePaymentRequestForAccount($scope.accounts.indexOf($scope.fields.to), parseInt($scope.fields.amount * 100000000))
+      $scope.paymentRequest =  Wallet.generatePaymentRequestForAccount($scope.accounts.indexOf($scope.fields.to), numeral($scope.fields.amount).multiply(100000000))
 
     if $scope.paymentRequest && $scope.formIsValid
       if oldValue isnt newValue && newValue > 0
-        Wallet.updatePaymentRequest($scope.accounts.indexOf($scope.fields.to), $scope.paymentRequest.address, parseInt($scope.fields.amount * 100000000))
+        Wallet.updatePaymentRequest($scope.accounts.indexOf($scope.fields.to), $scope.paymentRequest.address, numeral($scope.fields.amount).multiply(100000000))
         
-      $scope.paymentRequest.URL = "bitcoin:" + $scope.paymentRequest.address + "?amount=" + $scope.paymentRequest.amount / 100000000.0
+      $scope.paymentRequest.URL = "bitcoin:" + $scope.paymentRequest.address + "?amount=" + numeral($scope.paymentRequest.amount).divide(100000000)
         
       if MyWallet.mockShouldReceiveNewTransaction != undefined && request == undefined
         # Check if MyWallet is a mock or the real thing. The mock will simulate payment 
@@ -106,7 +106,7 @@
       
         if $scope.mockTimer == undefined || $timeout.cancel($scope.mockTimer)                
           $scope.mockTimer = $timeout((->
-            MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" ,100000000, "")
+            MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" ,numeral(100000000).value(), "")
           ), 10000)  
         
 

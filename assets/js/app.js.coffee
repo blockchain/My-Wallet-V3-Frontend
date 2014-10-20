@@ -14,10 +14,14 @@ walletApp = angular.module("walletApp", [
   "ja.qr"
   "webcam"
   "LocalStorageModule"
+  "ngNumeraljs"
 ])
 
 walletApp.config (uiSelectConfig) ->
-  uiSelectConfig.theme = 'bootstrap';
+  uiSelectConfig.theme = 'bootstrap'
+  
+walletApp.config ($numeraljsConfigProvider) ->
+  $numeraljsConfigProvider.setFormat('btc', '0,0.00 BTC')
     
 walletApp.config ($stateProvider, $urlRouterProvider) ->
     $urlRouterProvider.otherwise("/");

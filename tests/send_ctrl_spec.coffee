@@ -160,9 +160,9 @@ describe "SendCtrl", ->
     return
   )
     
-  it "should process a succesfully scaned QR code", inject((Wallet) ->
+  it "should process a succesfully scanned QR code", inject((Wallet) ->
     scope.processURLfromQR("bitcoin://abcdefgh?amount=0.001")
-    expect(scope.transaction.amount).toBe(0.001)
+    expect(scope.transaction.amount).toBe("0.001")
     expect(scope.transaction.to).toBe("abcdefgh") 
   )
   

@@ -92,7 +92,7 @@
         $scope.transaction.from = $scope.accounts[parseInt($stateParams.accountIndex)]
   
   $scope.$watchCollection "[transaction.to, transaction.from.address, transaction.amount]", () ->
-    $scope.transaction.fee = Wallet.recommendedTransactionFeeForAccount($scope.accounts.indexOf($scope.transaction.from), parseFloat($scope.transaction.amount) * 100000000) / 100000000
+    $scope.transaction.fee = Wallet.recommendedTransactionFeeForAccount($scope.accounts.indexOf($scope.transaction.from), numeral($scope.transaction.amount).multiply(100000000)).divide(100000000)
     $scope.transactionIsValid = $scope.validate($scope.transaction)
     
     

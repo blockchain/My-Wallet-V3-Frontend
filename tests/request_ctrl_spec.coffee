@@ -31,10 +31,10 @@ describe "RequestCtrl", ->
           $modalInstance: modalInstance
           request: undefined
         
-        scope.fields = {amount: 0, address: null, to: null}
+        scope.fields = {amount: numeral(0), address: null, to: null}
       
         # Trigger generation of payment address:
-        scope.fields.amount = 1
+        scope.fields.amount = numeral(1)
         scope.$apply()
       )
       
@@ -86,7 +86,7 @@ describe "RequestCtrl", ->
     it "should update amount in request if changed in the form", inject(() ->
       scope.fields.amount = "0.1"
       scope.$apply()
-      expect(scope.paymentRequest.amount).toBe(10000000)
+      expect(scope.paymentRequest.amount.value()).toBe(10000000)
       
     )
   
@@ -100,8 +100,8 @@ describe "RequestCtrl", ->
   describe "when opening existing request", ->
     beforeEach ->
       angular.mock.inject((Wallet, $rootScope, $controller) ->
-        Wallet.generatePaymentRequestForAccount(1, 100000)
-        
+        Wallet.generatePaymentRequestForAccount(1, numeral(100000))
+                
         scope = $rootScope.$new()
             
         $controller "RequestCtrl",

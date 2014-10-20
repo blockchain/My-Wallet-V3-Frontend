@@ -41,7 +41,7 @@
     .form-group
       label.col-sm-3.control-label Fees:
       .col-sm-5 
-        p.form-control-static {{ transaction.fee }}
+        p.form-control-static {{ transaction.fee | numeraljs:'btc' }}
     .form-group
       label.col-sm-3.control-label Privacy guard:
       .col-sm-4

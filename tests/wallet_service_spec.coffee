@@ -223,11 +223,11 @@ describe "walletServices", () ->
     
   describe "request", ->
     it "can be made", inject((MyWallet, Wallet) ->
-      expect(Wallet.generatePaymentRequestForAccount(0, 1).address).toBe("1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp")
+      expect(Wallet.generatePaymentRequestForAccount(0, numeral(1)).address).toBe("1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp")
     )
     
     it "is stored", inject((MyWallet, Wallet) ->
-      request = Wallet.generatePaymentRequestForAccount(0, 1)
+      request = Wallet.generatePaymentRequestForAccount(0, numeral(1))
       
       Wallet.refreshPaymentRequests() # TODO: this should happen automatically
       
@@ -235,14 +235,14 @@ describe "walletServices", () ->
     )
     
     it "amount can be updated", inject((MyWallet, Wallet) ->
-      request = Wallet.generatePaymentRequestForAccount(0, 1)
-      Wallet.updatePaymentRequest(0, request.address, 2)
-      expect(Wallet.paymentRequests[0].amount).toBe(2)
+      request = Wallet.generatePaymentRequestForAccount(0, numeral(1))
+      Wallet.updatePaymentRequest(0, request.address, numeral(2))
+      expect(Wallet.paymentRequests[0].amount.value()).toBe(numeral(2).value())
     )
         
 
     it "should be possible to cancel a request", inject((MyWallet, Wallet) ->
-      request = Wallet.generatePaymentRequestForAccount(0, 1)
+      request = Wallet.generatePaymentRequestForAccount(0, numeral(1))
       Wallet.cancelPaymentRequest(0, request.address)
       
       Wallet.refreshPaymentRequests()
@@ -251,7 +251,7 @@ describe "walletServices", () ->
     )
     
     it "should update the request when payment is received", inject((MyWallet, Wallet) ->
-      request = Wallet.generatePaymentRequestForAccount(0, 100000000)
+      request = Wallet.generatePaymentRequestForAccount(0, numeral(100000000))
             
       MyWallet.mockShouldReceiveNewTransaction(request.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , request.amount, "")
             
@@ -260,7 +260,7 @@ describe "walletServices", () ->
     
   
     it "should notify the user if payment is received", inject((Wallet) ->
-      request = Wallet.generatePaymentRequestForAccount(0, 100000000)
+      request = Wallet.generatePaymentRequestForAccount(0, numeral(100000000))
       MyWallet.mockShouldReceiveNewTransaction(request.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , request.amount, "")
    
       expect(Wallet.alerts.length).toBe(1)
@@ -270,7 +270,7 @@ describe "walletServices", () ->
   
     it "should warn user if payment is insufficient", inject(() ->
       
-      request = Wallet.generatePaymentRequestForAccount(0, 100000000)
+      request = Wallet.generatePaymentRequestForAccount(0, numeral(100000000))
       MyWallet.mockShouldReceiveNewTransaction(request.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , request.amount / 2, "")
       
       expect(Wallet.alerts.length).toBe(1)
@@ -279,7 +279,7 @@ describe "walletServices", () ->
     )
   
     it "should warn user if payment is too much", inject(() ->
-      request = Wallet.generatePaymentRequestForAccount(0, 100000000)
+      request = Wallet.generatePaymentRequestForAccount(0, numeral(100000000))
       MyWallet.mockShouldReceiveNewTransaction(request.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , request.amount * 2, "")
       
       expect(Wallet.alerts.length).toBe(1)
@@ -322,18 +322,18 @@ describe "walletServices", () ->
     
     it "should extract the amount", inject((Wallet) ->
       result = Wallet.parsePaymentRequest("bitcoin://abcdefg?amount=0.1")
-      expect(result.amount).toBe 0.1
+      expect(result.amount).toBe "0.1"
     )
      
     it "should ignore additional parameters", inject((Wallet) ->
       result = Wallet.parsePaymentRequest("bitcoin://abcdefg?amount=0.1&other=hello")
-      expect(result.amount).toBe 0.1
+      expect(result.amount).toBe "0.1"
       expect(result.address).toBe "abcdefg"
     )
     
     it "should ignore the order of parameters", inject((Wallet) ->
       result = Wallet.parsePaymentRequest("bitcoin://abcdefg?other=hello&amount=0.1")
-      expect(result.amount).toBe 0.1
+      expect(result.amount).toBe "0.1"
       expect(result.address).toBe "abcdefg"
     )
      
