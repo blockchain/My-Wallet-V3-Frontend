@@ -74,7 +74,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   
   wallet.recommendedTransactionFeeForAccount = (idx, amount) ->
     # amount in Satoshi
-    return numeral(wallet.my.recommendedTransactionFeeForAccount(idx, amount.value()))
+    return numeral(wallet.my.recommendedTransactionFeeForAccount(idx, parseInt(amount.format("1"))))
     
   #############
   # Spend BTC #
@@ -142,7 +142,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         observer.transactionDidFailWithError("Unknown error")
         $rootScope.$apply()
     
-    wallet.my.sendBitcoinsForAccount(fromAccountIndex, to, amount * 100000000, 10000, null, success, error)
+    wallet.my.sendBitcoinsForAccount(fromAccountIndex, to, parseInt(amount.multiply(100000000).format("1")), 10000, null, success, error)
       
   ####################
   # Payment requests #
@@ -184,23 +184,29 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           match = true
           # Update amount and payment
           candidate.amount = numeral(req.amount)
-          candidate.paid = req.paid
+          candidate.paid = numeral(req.paid)
           candidate.complete = req.complete
           candidate.canceled = req.canceled 
           break
       
       if !match
-        request = {}
-        angular.copy(req, request)
+        request = angular.copy(req)
         request.amount = numeral(request.amount)
         request.account = 0 # TODO: match the correct account
         wallet.paymentRequests.push request
             
   # Amount in Satoshi
   wallet.generatePaymentRequestForAccount = (accountIndex, amount)  ->
-    request = wallet.my.generatePaymentRequestForAccount(accountIndex, amount.value())
+    request = wallet.my.generatePaymentRequestForAccount(accountIndex, parseInt(amount.format("1")))
+    console.log request
     this.refreshPaymentRequests()
-    return request
+    return wallet.getPaymentRequest(accountIndex, request.address)
+  
+  wallet.getPaymentRequest = (accountIndex, address) ->    
+    for request in wallet.paymentRequests
+      return request if request.address == address
+      
+    return false
   
   wallet.cancelPaymentRequest = (accountIndex, address)  ->
     success = wallet.my.cancelPaymentRequestForAccount(accountIndex, address)
@@ -208,7 +214,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     return success 
       
   wallet.updatePaymentRequest = (accountIndex, address, amount) ->
-    if wallet.my.updatePaymentRequestForAccount(accountIndex, address, amount)
+    if wallet.my.updatePaymentRequestForAccount(accountIndex, address, parseInt(amount.format("1")))
       this.refreshPaymentRequests()
     else 
       console.error "Failed to update request"
@@ -351,13 +357,14 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         match = false
         for candidate in wallet.transactions
           if candidate.hash == tx.hash
-            candidate.fiat = candidate.amount / wallet.settings.currency.conversion
+            candidate.fiat = candidate.amount.divide(wallet.settings.currency.conversion)
             match = true
             break
       
         if !match
           transaction = {}
-          angular.copy(tx, transaction)
+          transaction = angular.copy(tx)
+          transaction.amount = numeral(tx.amount)
           unless wallet.settings.currency == undefined
             transaction.fiat = transaction.amount / wallet.settings.currency.conversion
           wallet.transactions.push transaction 

@@ -3,7 +3,7 @@
   
   $scope.alerts = Wallet.alerts
   
-  $scope.fields = {to: null, amount: 0}
+  $scope.fields = {to: null, amount: "0"}
   
   
   
@@ -12,7 +12,7 @@
     
   if request == undefined || request == null  
     # Managed by this controller, amount in BTC:
-    $scope.fields = {to: null, amount: 0.0}  
+    $scope.fields = {to: null, amount: "0"}  
     # Managed by Wallet service, amounts in Satoshi, has payment information:
     $scope.paymentRequest = null 
   
@@ -59,7 +59,7 @@
         # Open an existing request
         $scope.paymentRequest = request
                 
-        $scope.fields = {amount: angular.copy(request.amount).divide(100000000).value() }
+        $scope.fields = {amount: angular.copy(request.amount).divide(100000000).format("0.[00000000]") }
         
         $scope.fields.to = Wallet.accountForPaymentRequest(request)
       else
@@ -71,14 +71,14 @@
           
       $scope.listenerForPayment = $scope.$watch "paymentRequest.paid", (val,before) ->
         if val != 0 && before != val && $scope.paymentRequest
-          if val == $scope.paymentRequest.amount
+          if val.format("1") == $scope.paymentRequest.amount.format("1")
             $modalInstance.dismiss ""
         
           else if val > 0 && val < $scope.paymentRequest.amount
             # Mock pays the remainder after 10 seconds
             if MyWallet.mockShouldReceiveNewTransaction != undefined
               $scope.mockTimer = $timeout((->
-                MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , numeral($scope.paymentRequest.amount).subtract(100000000), "")
+                MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , parseInt(numeral($scope.paymentRequest.amount).subtract(100000000).format("1")), "")
               ), 10000)
       
   $scope.$watch "fields.to", () ->
@@ -92,7 +92,7 @@
       $scope.paymentRequest =  Wallet.generatePaymentRequestForAccount($scope.accounts.indexOf($scope.fields.to), numeral($scope.fields.amount).multiply(100000000))
 
     if $scope.paymentRequest && $scope.formIsValid
-      if oldValue isnt newValue && newValue > 0
+      if oldValue isnt newValue && numeral(newValue) > 0
         Wallet.updatePaymentRequest($scope.accounts.indexOf($scope.fields.to), $scope.paymentRequest.address, numeral($scope.fields.amount).multiply(100000000))
         
       $scope.paymentRequest.URL = "bitcoin:" + $scope.paymentRequest.address + "?amount=" + numeral($scope.paymentRequest.amount).divide(100000000)
@@ -105,7 +105,7 @@
       
         if $scope.mockTimer == undefined || $timeout.cancel($scope.mockTimer)                
           $scope.mockTimer = $timeout((->
-            MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" ,numeral(100000000).value(), "")
+            MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" ,parseInt(numeral(100000000).format("1")), "")
           ), 10000)  
         
 

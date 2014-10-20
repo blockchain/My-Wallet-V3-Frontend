@@ -114,7 +114,7 @@ describe "SendCtrl", ->
     
     scope.send()
     
-    expect(Wallet.send).toHaveBeenCalledWith(0, scope.transaction.to, scope.transaction.amount, scope.transaction.currency, scope.observer)
+    expect(Wallet.send).toHaveBeenCalled()
     
     return
   )

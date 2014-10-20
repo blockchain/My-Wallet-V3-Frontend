@@ -31,10 +31,10 @@ describe "RequestCtrl", ->
           $modalInstance: modalInstance
           request: undefined
         
-        scope.fields = {amount: numeral(0), address: null, to: null}
+        scope.fields = {amount: "0", address: null, to: null}
       
         # Trigger generation of payment address:
-        scope.fields.amount = numeral(1)
+        scope.fields.amount = "1"
         scope.$apply()
       )
       
@@ -86,13 +86,14 @@ describe "RequestCtrl", ->
     it "should update amount in request if changed in the form", inject(() ->
       scope.fields.amount = "0.1"
       scope.$apply()
-      expect(scope.paymentRequest.amount.value()).toBe(10000000)
+      expect(scope.paymentRequest.amount.format("1")).toBe("10000000")
       
     )
   
     it "should allow user to accept incorrect amount", inject(() ->
-      scope.paymentRequest.paid = scope.paymentRequest.amount * 0.8
+      scope.paymentRequest.paid = scope.paymentRequest.amount.multiply(0.8)
       scope.$apply()
+      expect(scope.paymentRequest.complete).toBe(false)
       scope.accept()
       expect(scope.paymentRequest.complete).toBe(true)
     )
@@ -115,7 +116,7 @@ describe "RequestCtrl", ->
       )
     
     it "should show the amount",  inject((Wallet) ->
-      expect(scope.fields.amount).toBe(0.001)
+      expect(scope.fields.amount).toBe("0.001")
     )
       
     it "should select the correct account ",  inject((Wallet) ->
