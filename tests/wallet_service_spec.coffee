@@ -356,3 +356,14 @@ describe "walletServices", () ->
     )
     
     return
+    
+  describe "alerts()", ->
+    it "should should remove alert after some time", inject((Wallet, $timeout) ->   
+      Wallet.displaySuccess("Victory")
+      expect(Wallet.alerts.length).toBe(1)
+      $timeout.flush()
+      expect(Wallet.alerts.length).toBe(0)
+      
+    
+    )
+    return

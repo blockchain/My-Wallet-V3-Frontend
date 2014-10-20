@@ -266,9 +266,14 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   ###################
   wallet.lastAlertId = 0
   
+  wallet.closeAlert = (alert) ->
+    $timeout.cancel(alert.timer)
+    wallet.alerts.splice(wallet.alerts.indexOf(alert))    
+  
   wallet.clearAlerts = () ->
     for alert in wallet.alerts
       wallet.alerts.pop(alert)
+      $timeout.cancel(alert.timer)
       
   wallet.displaySuccess = (message) ->
     wallet.displayAlert {type: "success", msg: message}
@@ -281,8 +286,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
   wallet.displayAlert = (alert) ->
     wallet.lastAlertId++
-    alert.alertId = wallet.lastAlertId
     wallet.alerts.push(alert)
+    alert.timer = $timeout((->
+      wallet.alerts.splice(wallet.alerts.indexOf(alert))
+    ), 7000)
     
   wallet.isSynchronizedWithServer = () ->
     return wallet.my.isSynchronizedWithServer()

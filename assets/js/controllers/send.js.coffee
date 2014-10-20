@@ -76,9 +76,8 @@
 
     Wallet.send($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.to, $scope.transaction.amount, $scope.transaction.currency, $scope.observer)
   
-  $scope.closeAlert = (index) ->
-    Wallet.alerts.splice index, 1
-    return
+  $scope.closeAlert = (alert) ->
+    Wallet.closeAlert(alert)
     
   #################################
   #           Private             #

@@ -7,9 +7,8 @@
   
   
   
-  $scope.closeAlert = (index) ->
-    $scope.alerts.splice index, 1
-    return
+  $scope.closeAlert = (alert) ->
+    Wallet.closeAlert(alert)
     
   if request == undefined || request == null  
     # Managed by this controller, amount in BTC:
