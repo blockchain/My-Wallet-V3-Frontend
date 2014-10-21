@@ -27,7 +27,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   
   myWallet = {}
   accounts = []
-
+    
   transactions = []
 
   monitorFunc = undefined  # New system
@@ -95,6 +95,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     transactions = []
     paymentRequests = []
     accounts = []
+    if !(karma?) || !karma
+      window.location = ""
       
   myWallet.get_ticker = (success, fail) ->
     success()
