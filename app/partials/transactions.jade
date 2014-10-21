@@ -33,10 +33,10 @@
         {{ transaction.note }}
     .col-xs-2(tooltip="{{ confirmationsTooltip(transaction.confirmations) }}")
       span(ng-show="transaction.intraWallet")
-        button.intra-wallet {{ -transaction.fiat.value() | currency:settings.currency.symbol }}
+        button.intra-wallet {{ -transaction.fiat | currency:settings.currency.symbol }}
       span(ng-show="transaction.amount > 0 && !transaction.intraWallet")
         button.received 
-          {{ transaction.fiat.value() | currency:settings.currency.symbol }}
+          {{ 0 + transaction.fiat | currency:settings.currency.symbol }}
           span(ng-show="transaction.confirmations == 0").glyphicon.glyphicon-warning-sign
       span(ng-show="transaction.amount < 0 && !transaction.intraWallet")
-        button.spent - {{ -transaction.fiat.value() | currency:settings.currency.symbol }}
+        button.spent - {{ -transaction.fiat | currency:settings.currency.symbol }}

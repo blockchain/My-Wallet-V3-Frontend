@@ -243,7 +243,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     monitorFunc = func
     
   # Pending refactoring of MyWallet:
-  $window.symbol_local = {code: "USD",conversion: 250000.0, local: true, name: "Dollar", symbol: "$", symbolAppearsAfter: false}
+  $window.symbol_local = {code: "USD",conversion: 250000.001, local: true, name: "Dollar", symbol: "$", symbolAppearsAfter: false}
     
   myWallet.isSynchronizedWithServer = () ->
     return isSynchronizedWithServer
