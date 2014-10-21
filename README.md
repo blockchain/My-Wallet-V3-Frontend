@@ -59,7 +59,7 @@ Not supported by the server yet.
 
 ## Deploy
 
-Curently the app is configured to be deployed on Heroku:
+Curently the app is configured to be deployed on Heroku and on a Blockchain staging server:
 
 * Real money: http://dev.blockchain.info/ (VPN or IP whitelist)
 * Mock: http://pure-wildwood-5818.herokuapp.com/

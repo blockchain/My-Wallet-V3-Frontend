@@ -1,6 +1,7 @@
-@AppCtrl = ($scope, Wallet, $state) ->
+@AppCtrl = ($scope, Wallet, $state, $rootScope) ->
   $scope.status    = Wallet.status
   $scope.settings = Wallet.settings
+  $rootScope.isMock = Wallet.isMock
 
   #################################
   #           Private             #

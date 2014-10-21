@@ -3,18 +3,18 @@
 # Filters 
 angular.module("walletFilters", []).filter "fiat", ->
   (input, currency) ->
-    if input != undefined
+    if input != undefined && input != null && currency.conversion != undefined && currency.conversion > 0
       if currency
-        currency.symbol + (input / currency.conversion).toFixed(2) + " " + currency.code
+        currency.symbol + input.clone().divide(currency.conversion).format("0.00") + " " + currency.code
       else
-        (input / 100000000).toFixed(8) + " BTC"
+        input.clone().divide(100000000).format("0.[00000000]") + " BTC"
     else
       ""
       
 .filter "btc", ->
   (input) ->
-    if input
-     (input / 100000000).toFixed(8) + " BTC"
+    if input && !isNaN(input.value()) 
+     input.clone().divide(100000000).format("0.[00000000]") + " BTC"
     else
       ""
 #

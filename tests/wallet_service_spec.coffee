@@ -140,7 +140,7 @@ describe "walletServices", () ->
       
       Wallet.send(0, "account", numeral("1.0"), "BTC", mockObserver)
       
-      expect(Wallet.accounts[0].balance).toBe(before - 1.0 * 100000000)
+      expect(Wallet.accounts[0].balance.value()).toBe(before - 1.0 * 100000000)
         
       return
     )

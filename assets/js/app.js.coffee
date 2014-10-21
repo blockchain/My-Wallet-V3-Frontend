@@ -21,7 +21,7 @@ walletApp.config (uiSelectConfig) ->
   uiSelectConfig.theme = 'bootstrap'
   
 walletApp.config ($numeraljsConfigProvider) ->
-  $numeraljsConfigProvider.setFormat('btc', '0,0.00 BTC')
+  $numeraljsConfigProvider.setFormat('btc', '0,0.00 BTC')  
     
 walletApp.config ($stateProvider, $urlRouterProvider) ->
     $urlRouterProvider.otherwise("/");

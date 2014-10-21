@@ -7,6 +7,7 @@
       a.date(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank") {{ transaction.txTime | date:'MMMM d @ hh:mm a' }} 
     .col-xs-4.description
       b You 
+      i(ng-hide="isMock") (transaction info under construction...)
       span(ng-show="transaction.intraWallet").
         moved bitcoin to 
       span(ng-show="transaction.to_address")
@@ -32,10 +33,10 @@
         {{ transaction.note }}
     .col-xs-2(tooltip="{{ confirmationsTooltip(transaction.confirmations) }}")
       span(ng-show="transaction.intraWallet")
-        button.intra-wallet {{ settings.currency.symbol }} {{ -transaction.fiat | number:2 }}
+        button.intra-wallet {{ -transaction.fiat | currency:settings.currency.symbol }}
       span(ng-show="transaction.amount > 0 && !transaction.intraWallet")
         button.received 
-          {{ settings.currency.symbol }} {{ transaction.fiat | number:2 }}
+          {{ transaction.fiat.value() | currency:settings.currency.symbol }}
           span(ng-show="transaction.confirmations == 0").glyphicon.glyphicon-warning-sign
       span(ng-show="transaction.amount < 0 && !transaction.intraWallet")
-        button.spent -{{ settings.currency.symbol }} {{ -transaction.fiat | number:2 }}
+        button.spent - {{ -transaction.fiat | currency:settings.currency.symbol }}

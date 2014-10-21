@@ -1,6 +1,6 @@
 .row#top(ng-show="status.isLoggedIn")
   .col-xs-3
-    h1 {{ total_fiat(accountIndex) | currency:settings.currency.symbol }}
+    h1 {{ total_fiat(accountIndex).value() | currency:settings.currency.symbol }}
   .col-xs-3
     p {{ total_btc(accountIndex) | btc }}
   .col-xs-6.text-right

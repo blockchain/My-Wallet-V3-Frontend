@@ -198,7 +198,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   # Amount in Satoshi
   wallet.generatePaymentRequestForAccount = (accountIndex, amount)  ->
     request = wallet.my.generatePaymentRequestForAccount(accountIndex, parseInt(amount.format("1")))
-    console.log request
     this.refreshPaymentRequests()
     return wallet.getPaymentRequest(accountIndex, request.address)
   
@@ -326,13 +325,14 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
       # Set or update label and balance:
       wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
-      wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
+      wallet.accounts[i].balance = numeral(wallet.my.getBalanceForAccount(i))
       
     # Balances will be 0 until transactions have been loaded.
     # TODO: MyWallet should let us know when all transactions are loaded; hide
     # total until that time.
     
   wallet.total_btc = (accountIndex) -> 
+    return null if wallet.accounts == undefined
     if !(accountIndex?) || accountIndex == ""
       tally = numeral("0.0")
       for account in wallet.accounts
@@ -346,10 +346,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       return account.balance
       
   wallet.total_fiat = (accountIndex) -> 
+    return null if wallet.settings.currency.conversion == undefined
     btc = wallet.total_btc(accountIndex)
-    return null if btc == undefined
-    return null if wallet.settings.currency == undefined
-    return btc / wallet.settings.currency.conversion
+    return null if btc == undefined || btc == null
+    return btc.clone().divide(wallet.settings.currency.conversion)
     
   wallet.updateTransactions = () ->
     for i in [0..wallet.my.getAccountsCount()-1]
@@ -357,7 +357,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         match = false
         for candidate in wallet.transactions
           if candidate.hash == tx.hash
-            candidate.fiat = candidate.amount.divide(wallet.settings.currency.conversion)
+            candidate.fiat = candidate.amount.clone().divide(wallet.settings.currency.conversion)
             match = true
             break
       
@@ -368,7 +368,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           unless wallet.settings.currency == undefined
             transaction.fiat = transaction.amount / wallet.settings.currency.conversion
           wallet.transactions.push transaction 
-                
+                          
   ####################
   # Notification     #
   ####################
@@ -385,14 +385,14 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.updateAccounts()
         wallet.updateTransactions()
     else if event == "hw_wallet_accepted_payment_request"
-      wallet.displaySuccess("Requested payment of " + numeral(data.amount).divide(100000000) + " BTC received")
+      wallet.displaySuccess("Requested payment of " + numeral(data.amount).clone().divide(100000000) + " BTC received")
       wallet.refreshPaymentRequests()
     else if event == "hw_wallet_payment_request_received_too_little"
-      wallet.displayWarning("Incomplete payment: " + numeral(data.amountReceived).divide(100000000) + " out of " + numeral(data.amountRequested).divide(100000000) +  " BTC")
+      wallet.displayWarning("Incomplete payment: " + numeral(data.amountReceived).clone().divide(100000000) + " out of " + numeral(data.amountRequested).clone().divide(100000000) +  " BTC")
       wallet.refreshPaymentRequests()
     else if event == "hw_wallet_payment_request_received_too_much"
       wallet.refreshPaymentRequests()
-      wallet.displayWarning("Paid too much: " + numeral(data.amountReceived).divide(100000000) + " instead of " + numeral(data.amountRequested).divide(100000000) +  " BTC" )
+      wallet.displayWarning("Paid too much: " + numeral(data.amountReceived).clone().divide(100000000) + " instead of " + numeral(data.amountRequested).clone().divide(100000000) +  " BTC" )
     else if event == "error_restoring_wallet"
       $rootScope.$apply()        
     else if event == "did_set_guid" # Wallet retrieved from server
@@ -477,5 +477,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.my.refresh()
     wallet.updateAccounts()
     wallet.updateTransactions()
+    
+  wallet.isMock = wallet.my.mockShouldFailToSend != undefined
             
   return  wallet
