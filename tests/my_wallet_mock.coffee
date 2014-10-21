@@ -62,6 +62,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     this.refresh()
     
     eventListener("did_decrypt")
+    eventListener("on_wallet_decrypt_finish")
     eventListener("did_multiaddr")
     return
     
@@ -100,6 +101,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       
   myWallet.get_ticker = (success, fail) ->
     success()
+    
+  myWallet.getLanguage = () ->
+    return "nl"
     
   myWallet.getAccounts = () ->    
     return accounts

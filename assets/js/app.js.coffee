@@ -15,6 +15,7 @@ walletApp = angular.module("walletApp", [
   "webcam"
   "LocalStorageModule"
   "ngNumeraljs"
+  "pascalprecht.translate"
 ])
 
 walletApp.config (uiSelectConfig) ->

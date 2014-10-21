@@ -19,7 +19,7 @@ playSound = (id) ->
 ##################################
 
 walletServices = angular.module("walletServices", [])
-walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore) -> 
+walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate) -> 
   wallet = {status: {isLoggedIn: false}, settings: {currency: {conversion: 0}}}
   
   wallet.accounts     = []
@@ -418,13 +418,20 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         console.log(error)
         
       wallet.my.get_ticker(success, fail)
+      
+
   
       # Checks if we already have an HD wallet. If not, create one.
       hdwallet = MyWallet.getHDWallet()
       
       if MyWallet.mockShouldReceiveNewTransaction == undefined
         $rootScope.$apply()
-    # else if event == "on_wallet_decrypt_finish" # Non-HD part is decrypted
+    else if event == "on_wallet_decrypt_finish" # Non-HD part is decrypted
+      # Get language:
+      wallet.language = wallet.my.getLanguage()
+      $translate.use(wallet.language)
+      if MyWallet.mockShouldReceiveNewTransaction == undefined
+        $rootScope.$apply()
     else if event == "did_decrypt"   # Wallet decrypted succesfully  
       wallet.status.isLoggedIn = true 
       wallet.updateAccounts()  

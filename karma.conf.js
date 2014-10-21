@@ -17,6 +17,7 @@ module.exports = function(config){
       'app/bower_components/angular-local-storage/dist/angular-local-storage.min.js',
       'app/bower_components/numeral/numeral.js',
       'app/bower_components/angular-numeraljs/dist/angular-numeraljs.js',
+      'app/bower_components/angular-translate/angular-translate.js',
       'assets/js/app.js.coffee',
       'assets/js/controllers/*.js.coffee',
       'assets/js/filters.js.coffee',

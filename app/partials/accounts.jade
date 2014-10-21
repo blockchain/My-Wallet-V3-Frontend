@@ -1,14 +1,14 @@
 table.left-header.accounts
   tr
     td.header 
-      img(src="img/my-accounts-icon.png") 
-      |My Accounts
+      img(src="img/my-accounts-icon.png")
+      span(translate="MY_ACCOUNTS") 
     td.right
-      a(ng-click="createAccount()") + New
+      a(ng-click="createAccount()", translate="NEW_ACCOUNT")
 table.left
   tr(ng-class="selectedAccountIndex == '' ? 'active' : ''")
     td 
-      a(ui-sref="transactions({accountIndex:''})") All Accounts
+      a(ui-sref="transactions({accountIndex:''})", translate="ALL_ACCOUNTS")
     td.amount {{ totals.fiat | currency:settings.currency.symbol }}
   tr(ng-repeat="account in accounts | filter:{active:true}", ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''")
     td 
