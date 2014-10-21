@@ -5,21 +5,21 @@
     {{alert.msg}}
   form.form-horizontal(role="form",name="form",novalidate)
     .form-group
-      label.col-sm-3.control-label Send From:
+      label.col-sm-3.control-label(translate="SEND_FROM")
       .col-sm-9
         ui-select(ng-model="transaction.from")
           ui-select-match {{ $select.selected.label }}
           ui-select-choices(repeat="account in accounts | filter: $select.search") 
             span(ng-bind-html="account.label | highlight: $select.search")
     .form-group
-      label.col-sm-3.control-label(for:"to") Send To:
+      label.col-sm-3.control-label(for:"to", translate="SEND_TO")
       .col-sm-9
         .input-group
           input.form-control(type="text",ng-model="transaction.to")
           span.input-group-btn
-            button.btn.btn-default(type="button") QR
+            button.btn.btn-default(type="button", translate="QR") 
     .form-group
-      label.col-sm-3.control-label Amount:
+      label.col-sm-3.control-label(translate="AMOUNT")
       .col-sm-5
         .input-group
           input.form-control(type="text",ng-model="transaction.amount")
@@ -39,23 +39,23 @@
         p(ng-show="transaction.currency!='BTC'") Conversion to be implemented...
         p(ng-show="transaction.currency=='BTC'") {{ transaction.amount }} BTC
     .form-group
-      label.col-sm-3.control-label Fees:
+      label.col-sm-3.control-label(translate="FEES")
       .col-sm-5 
         p.form-control-static {{ transaction.fee | numeraljs:'btc' }}
     .form-group
-      label.col-sm-3.control-label Privacy guard:
+      label.col-sm-3.control-label(translate="PRIVACY_GUARD")
       .col-sm-4
         .checkbox
           label
             input(type="checkbox")
             | ?
     .form-group(ng-show="cameraOn")
-      label.col-sm-3.control-label QR
+      label.col-sm-3.control-label(translate="QR")
       .col-sm-9
         webcam(on-stream="onStream(stream)"
                on-access-denied="onError(err)")
         canvas#qr-canvas
 .modal-footer
-  button.btn.btn-info(ng-click="cameraOff()", ng-show="cameraOn") Camera off
-  button.btn.btn-info(ng-click="close()") Cancel
-  button.btn.btn-primary(ng-click="send()",ng-disabled="!transactionIsValid") Send
+  button.btn.btn-info(ng-click="cameraOff()", ng-show="cameraOn", translate="CAMERA_OFF")
+  button.btn.btn-info(ng-click="close()", translate="CANCEL")
+  button.btn.btn-primary(ng-click="send()",ng-disabled="!transactionIsValid", translate="SEND")

@@ -1,7 +1,7 @@
 #transactions
   .row
     .col-xs-12
-      h2 Transactions
+      h2(translate="TRANSACTIONS")
   .row.transaction(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")
     .col-xs-3
       a.date(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank") {{ transaction.txTime | date:'MMMM d @ hh:mm a' }} 
@@ -29,7 +29,7 @@
     .col-xs-3 
       span.note(ng-show="transaction.note")
         img(src="img/note.png")
-        a(href="", ng-hide="transaction.note").add-note Add note
+        a(href="", ng-hide="transaction.note").add-note(translate="ADD_NOTE")
         {{ transaction.note }}
     .col-xs-2(tooltip="{{ confirmationsTooltip(transaction.confirmations) }}")
       span(ng-show="transaction.intraWallet")

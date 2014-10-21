@@ -5,11 +5,11 @@
     li.item(ui-sref-active="active") 
       a(ui-sref="dashboard") 
         img.tab(src="img/dashboard-icon.png")
-        | Dashboard
+        span(translate="DASHBOARD")
     li.item(ui-sref-active="active") 
       a(ui-sref="transactions") 
         img.tab(src="img/transactions-icon.png")
-        | Transactions
+        span(translate="TRANSACTIONS")
   ul.nav.navbar-nav.col-xs-2(ng-show="status.isLoggedIn")
     li.pull-right
       a(ng-click="account()")
