@@ -11,7 +11,7 @@
     else
       $scope.doLogout()
       
-  $scope.doLogout = () ->      
+  $scope.doLogout = () ->   
     $scope.uid = null
     $scope.password = null
     $cookieStore.remove("password")

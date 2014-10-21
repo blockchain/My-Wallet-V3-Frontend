@@ -57,6 +57,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.updateAccounts()
     
   wallet.logout = () ->
+    wallet.didLogoutByChoice = true
     wallet.my.logout() # broadcast "logging_out"
 
   
@@ -272,21 +273,24 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.alerts.pop(alert)
       $timeout.cancel(alert.timer)
       
-  wallet.displaySuccess = (message) ->
-    wallet.displayAlert {type: "success", msg: message}
+  wallet.displaySuccess = (message, keep=false) ->
+    wallet.displayAlert {type: "success", msg: message}, keep
       
-  wallet.displayWarning = (message) ->
-    wallet.displayAlert  {msg: message}
+  wallet.displayWarning = (message, keep=false) ->
+    wallet.displayAlert  {msg: message}, keep
     
-  wallet.displayError = (message) ->
-    wallet.displayAlert {type: "danger", msg: message}
+  wallet.displayError = (message, keep=false) ->
+    wallet.displayAlert {type: "danger", msg: message}, keep
       
-  wallet.displayAlert = (alert) ->
-    wallet.lastAlertId++
+  wallet.displayAlert = (alert, keep=false) ->
+    if !keep
+      wallet.lastAlertId++
+      alert.timer = $timeout((->
+        wallet.alerts.splice(wallet.alerts.indexOf(alert))
+      ), 7000)
+      
     wallet.alerts.push(alert)
-    alert.timer = $timeout((->
-      wallet.alerts.splice(wallet.alerts.indexOf(alert))
-    ), 7000)
+
     
   wallet.isSynchronizedWithServer = () ->
     return wallet.my.isSynchronizedWithServer()
@@ -447,7 +451,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       if MyWallet.mockShouldReceiveNewTransaction == undefined
         $rootScope.$apply()
     else if event == "logging_out"
-      $cookieStore.put("alert-success", "Logged out")
+      if wallet.didLogoutByChoice == true
+        $cookieStore.put("alert-success", "Logged out")
+      else
+        $cookieStore.put("alert-warning", "Logged out automatically")
+        $rootScope.$apply()
+        
       wallet.status.isLoggedIn = false
       while wallet.accounts.length > 0
         wallet.accounts.pop()
@@ -473,11 +482,17 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.my.monitor((event) -> wallet.monitor(event))
   wallet.my.addEventListener((event, data) -> wallet.monitorLegacy(event, data))
 
+  message = $cookieStore.get("alert-warning")
+  if message != undefined && message != null
+    wallet.displayWarning(message, true)
+    $cookieStore.remove("alert-warning")
   
   message = $cookieStore.get("alert-success")
   if message != undefined && message != null
     wallet.displaySuccess(message)
     $cookieStore.remove("alert-success")
+    
+
 
   ########################################
   # Testing: only works on mock MyWallet #
