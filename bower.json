@@ -20,6 +20,7 @@
     "angular-qr": "~0.2.0",
     "angular-local-storage": "~0.1.2",
     "angular-numeraljs": "~1.1.0",
-    "angular-translate": "~2.4.1"
+    "angular-translate": "~2.4.1",
+    "angular-translate-loader-static-files": "~2.4.1"
   }
 }

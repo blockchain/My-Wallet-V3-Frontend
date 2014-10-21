@@ -1,0 +1,9 @@
+{ 
+  "UID": "UID",
+  "PASSWORD": "Password",
+   "LOGIN": "Login",
+   "CREATE_WALLET": "Create wallet",
+   "MY_ACCOUNTS": "My Accounts",
+   "NEW_ACCOUNT": "+ New",
+   "ALL_ACCOUNTS": "All Accounts"
+ }

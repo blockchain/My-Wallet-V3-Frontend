@@ -1,0 +1,9 @@
+{ 
+  "UID": "UID",
+  "PASSWORD": "Wachtwoord",
+   "LOGIN": "Inloggen",
+   "CREATE_WALLET": "Nieuwe wallet",
+   "MY_ACCOUNTS": "Mijn Accounts",
+   "NEW_ACCOUNT": "+ Nieuw",
+   "ALL_ACCOUNTS": "Alle Accounts"
+ }
