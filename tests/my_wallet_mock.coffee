@@ -89,6 +89,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       success()
   
   myWallet.logout = () ->
+    eventListener("logging_out")
     myWallet.uid = undefined
     myWallet.password = undefined
     transactions = []

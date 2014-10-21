@@ -19,7 +19,7 @@ playSound = (id) ->
 ##################################
 
 walletServices = angular.module("walletServices", [])
-walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio) ->
+walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore) -> 
   wallet = {status: {isLoggedIn: false}, settings: {currency: {conversion: 0}}}
   
   wallet.accounts     = []
@@ -57,16 +57,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.updateAccounts()
     
   wallet.logout = () ->
-    wallet.my.logout()
-    wallet.status.isLoggedIn = false
-    while wallet.accounts.length > 0
-      wallet.accounts.pop()
-    while wallet.transactions.length > 0
-      wallet.transactions.pop()
-    while wallet.paymentRequests.length > 0
-      wallet.paymentRequests.pop()
-    wallet.uid = ""
-    wallet.password = ""    
+    wallet.my.logout() # broadcast "logging_out"
+
   
   ####################
   #   Transactions   #
@@ -454,6 +446,18 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.updateAccounts()  
       if MyWallet.mockShouldReceiveNewTransaction == undefined
         $rootScope.$apply()
+    else if event == "logging_out"
+      $cookieStore.put("alert-success", "Logged out")
+      wallet.status.isLoggedIn = false
+      while wallet.accounts.length > 0
+        wallet.accounts.pop()
+      while wallet.transactions.length > 0
+        wallet.transactions.pop()
+      while wallet.paymentRequests.length > 0
+        wallet.paymentRequests.pop()
+      wallet.uid = ""
+      wallet.password = ""
+      # $state.go("dashboard")
     else
       console.log event
   # The new monitoring system  
@@ -468,6 +472,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
 
   wallet.my.monitor((event) -> wallet.monitor(event))
   wallet.my.addEventListener((event, data) -> wallet.monitorLegacy(event, data))
+
+  
+  message = $cookieStore.get("alert-success")
+  if message != undefined && message != null
+    wallet.displaySuccess(message)
+    $cookieStore.remove("alert-success")
 
   ########################################
   # Testing: only works on mock MyWallet #

@@ -5,17 +5,18 @@
     $modalInstance.dismiss ""
   
   $scope.logout = () ->  
-    if !Wallet.isSynchronizedWithServer()
-      Wallet.displayError("Unable to logout due to pending changes.")
-      $modalInstance.dismiss ""
-      return
+    if !Wallet.isSynchronizedWithServer() 
+      if confirm "There are changes still being saved. Are you sure you wish to logout?"
+        $scope.doLogout()
+    else
+      $scope.doLogout()
       
+  $scope.doLogout = () ->      
     $scope.uid = null
     $scope.password = null
     $cookieStore.remove("password")
     $cookieStore.remove("uid")
     Wallet.logout() # Refreshes the browser, so won't return
-    $state.go("dashboard")
   
     $modalInstance.dismiss ""
   
