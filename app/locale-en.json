@@ -29,5 +29,8 @@
   "FEES" : "Fees:",
   "PRIVACY_GUARD" : "Privacy guard:",
   "CAMERA_OFF" : "Camera off",
-  "ADD_NOTE" : "Add note"
+  "ADD_NOTE" : "Add note",
+  "UNCONFIRMED" : "Unconfirmed",
+  "ONE_CONFIRMATION" : "1 confirmation",
+  "N_CONFIRMATIONS" : "{{ n }} confirmations"  
  }

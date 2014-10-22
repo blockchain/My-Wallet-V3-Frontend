@@ -29,5 +29,8 @@
    "FEES" : "Kosten:",
    "PRIVACY_GUARD" : "Extra privacy:",
    "CAMERA_OFF" : "Camera uit",
-   "ADD_NOTE" : "Maak aantekening"
+   "ADD_NOTE" : "Maak aantekening",
+   "UNCONFIRMED" : "Onbevestigd",
+   "ONE_CONFIRMATION" : "1 bevestiging",
+   "N_CONFIRMATIONS" : "{{ n }} bevestigingen"  
  }

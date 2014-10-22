@@ -31,7 +31,7 @@
         img(src="img/note.png")
         a(href="", ng-hide="transaction.note").add-note(translate="ADD_NOTE")
         {{ transaction.note }}
-    .col-xs-2(tooltip="{{ confirmationsTooltip(transaction.confirmations) }}")
+    .col-xs-2(confirmations-tooltip="transaction")
       span(ng-show="transaction.intraWallet")
         button.intra-wallet {{ -transaction.fiat | currency:settings.currency.symbol }}
       span(ng-show="transaction.amount > 0 && !transaction.intraWallet")
