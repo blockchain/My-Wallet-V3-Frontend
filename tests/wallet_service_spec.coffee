@@ -1,7 +1,7 @@
 describe "walletServices", () ->
   Wallet = undefined
   MyWallet = undefined
-  mockObserver = undefined
+  mockObserver = undefined  
   
   beforeEach angular.mock.module("walletApp")
   
@@ -11,6 +11,7 @@ describe "walletServices", () ->
       
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
+      
             
       spyOn(MyWallet,"setGUID").and.callThrough()
       spyOn(MyWallet,"restoreWallet").and.callThrough()
@@ -284,10 +285,13 @@ describe "walletServices", () ->
   
     it "should warn user if payment is too much", inject(() ->
       request = Wallet.generatePaymentRequestForAccount(0, numeral(100000000))
+      
+      spyOn(Wallet, "displayWarning")
+      
       MyWallet.mockShouldReceiveNewTransaction(request.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" ,  parseInt(request.amount.format("1"))  * 2, "")
       
-      expect(Wallet.alerts.length).toBe(1)
-      expect(Wallet.alerts[0].type).not.toBeDefined()
+      expect(Wallet.displayWarning).toHaveBeenCalled()
+      
       expect(request.complete).not.toBe(true)
     
     )
