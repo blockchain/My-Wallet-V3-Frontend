@@ -1,9 +1,5 @@
 "use strict"
 
-# Directives 
-# {{ confirmationsTooltip(transaction.confirmations) }}
-
-
 walletApp.directive('confirmationsTooltip', ($compile, $translate) ->
   {
     restrict: "A"
