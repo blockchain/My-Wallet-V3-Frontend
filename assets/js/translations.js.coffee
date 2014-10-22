@@ -4,7 +4,7 @@
 walletApp.config [
   "$translateProvider"
   ($translateProvider) ->
-    $translateProvider.registerAvailableLanguageKeys(["en", "nl"]) 
+    $translateProvider.registerAvailableLanguageKeys(["en", "nl", "ar"]) 
     
     $translateProvider.useStaticFilesLoader {
         prefix: 'locale-',
