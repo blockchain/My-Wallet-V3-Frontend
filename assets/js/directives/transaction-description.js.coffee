@@ -9,7 +9,6 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet) -
     link: (scope, elem, attrs) ->
       $rootScope.$watch "isMock", (newValue) ->
         if newValue? && !newValue
-          console.log "udate"
           scope.description = "Transaction info currently broken"
               
       phrase = undefined
