@@ -43,12 +43,6 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   paymentRequests = []
   
   mockPaymentRequestAddressStack = [ # Same for everyone
-    "1ggDhwUX5LRsJHeeEYn8MEimBKNco2Ywq"
-    "1Gyz5MPYY1ZKLcvmXSPHMAi1xpHbdCGaUN"
-    "1M4YSYCarkSeNUk9D1o3F7hHFL9c2EYums"
-    "1LKwobBwhVwq4HF7NqBeebVg4UTLgS3bc5"
-    "1MgYrhUtb5RfV5DTaWiLGTbSMVKuFNVC7Y"
-    "1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp"
     "1Hj9XKGY6Fh8koVh6CuTJsQnuiSQrd9iCx"
     "1Bp85Lymp2ViRZwhbsD8NnDgRkEyai9w7i"
     "1LeoeftCD56juxPuGYh1m1bSrPxkBu44aH"
@@ -60,6 +54,12 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     "1C9KKvTW94C4wiwqL5whVPUEAwmGJLXEvt"
     "12L5nz6AYye5DJiWbgCAvkSJBUok1WZPij"
     "1J85hDKybYPXcXY78izocQpezEShW6xfc8"
+    "1ggDhwUX5LRsJHeeEYn8MEimBKNco2Ywq"
+    "1Gyz5MPYY1ZKLcvmXSPHMAi1xpHbdCGaUN"
+    "1M4YSYCarkSeNUk9D1o3F7hHFL9c2EYums"
+    "1LKwobBwhVwq4HF7NqBeebVg4UTLgS3bc5"
+    "1MgYrhUtb5RfV5DTaWiLGTbSMVKuFNVC7Y"
+    "1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp"
   ]
   
   myWallet.getHDWallet = () ->

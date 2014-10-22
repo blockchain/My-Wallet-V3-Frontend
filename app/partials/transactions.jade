@@ -6,26 +6,7 @@
     .col-xs-3
       a.date(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank") {{ transaction.txTime | date:'MMMM d @ hh:mm a' }} 
     .col-xs-4.description
-      b You 
-      i(ng-hide="isMock") (transaction info under construction...)
-      span(ng-show="transaction.intraWallet").
-        moved bitcoin to 
-      span(ng-show="transaction.to_address")
-        | sent bitcoin to 
-      span(ng-hide="!transaction.intraWallet && transaction.amount > 0")
-          b(ng-show="transaction.to_account")
-          | {{ accounts[transaction.to_account].label }}
-        b(ng-hide="transaction.to_account")
-          b(ng-show="addressBook[transaction.to_address]")
-            {{ addressBook[transaction.to_address] }}
-          b(ng-hide="addressBook[transaction.to_address]")
-            {{ transaction.to_address }}
-      span(ng-show="transaction.from_address")
-        | received bitcoin from 
-        b(ng-show="addressBook[transaction.from_address]")
-          {{ addressBook[transaction.from_address] }}
-        b(ng-hide="addressBook[transaction.from_address]")
-          {{ transaction.from_address }}
+      transaction-description(transaction="transaction")
     .col-xs-3 
       span.note(ng-show="transaction.note")
         img(src="img/note.png")

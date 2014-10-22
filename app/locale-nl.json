@@ -41,5 +41,8 @@
   "PAYMENT_REQUEST_CANNOT_CANCEL" : "Kan betaalverzoek niet annuleren",
   "CAMERA_PERMISSION_DENIED" : "Geen toestemming om de camera te gebruiken",
   "QR_CODE_NOT_BITCOIN" : "Geen bitcoin QR code.",
-  "WALLET_NOT_FOUND" : "Wallet niet gevonden"
+  "WALLET_NOT_FOUND" : "Wallet niet gevonden",
+  "RECEIVED_BITCOIN" : "<b>Je</b> ontving bitcoin van <b>{{ from }}</b>",
+  "MOVED_BITCOIN_WITHIN_WALLET" : "<b>Je</b> verplaatste bitcoin naar <b>{{ to }}</b>",
+  "SPENT_BITCOIN" : "<b>Je</b> stuurde bitcoin naar <b>{{ to }}</b>"
  }

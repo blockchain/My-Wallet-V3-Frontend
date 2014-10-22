@@ -41,5 +41,9 @@
   "PAYMENT_REQUEST_CANNOT_CANCEL" : "Unable to cancel payment request",
   "CAMERA_PERMISSION_DENIED" : "Permission to use camera denied",
   "QR_CODE_NOT_BITCOIN" : "Not a bitcoin QR code.",
-  "WALLET_NOT_FOUND" : "Wallet not found"
+  "WALLET_NOT_FOUND" : "Wallet not found",
+  "RECEIVED_BITCOIN" : "<b>You</b> received bitcoin from <b>{{ from }}</b>",
+  "MOVED_BITCOIN_WITHIN_WALLET" : "<b>You</b> moved bitcoin to <b>{{ to }}</b>",
+  "SPENT_BITCOIN" : "<b>You</b> sent bitcoin to <b>{{ to }}</b>"
+  
  }

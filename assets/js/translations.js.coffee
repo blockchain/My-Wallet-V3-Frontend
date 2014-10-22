@@ -15,4 +15,6 @@ walletApp.config [
     # $translateProvider.preferredLanguage("en")
     
     $translateProvider.fallbackLanguage('en')
+    
+    $translateProvider.useSanitizeValueStrategy('escaped');
 ]

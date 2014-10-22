@@ -22,6 +22,11 @@ app.get "/partials/:name", (req, res) ->
   name = req.params.name
   res.render "partials/" + name
   return
+  
+app.get "/templates/:name", (req, res) ->
+  name = req.params.name
+  res.render "templates/" + name
+  return
 
 env = require('node-env-file')
 try

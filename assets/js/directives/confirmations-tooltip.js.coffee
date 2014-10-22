@@ -1,5 +1,3 @@
-"use strict"
-
 walletApp.directive('confirmationsTooltip', ($compile, $translate) ->
   {
     restrict: "A"
