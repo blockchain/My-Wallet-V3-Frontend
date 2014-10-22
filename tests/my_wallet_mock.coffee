@@ -49,6 +49,17 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     "1LKwobBwhVwq4HF7NqBeebVg4UTLgS3bc5"
     "1MgYrhUtb5RfV5DTaWiLGTbSMVKuFNVC7Y"
     "1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp"
+    "1Hj9XKGY6Fh8koVh6CuTJsQnuiSQrd9iCx"
+    "1Bp85Lymp2ViRZwhbsD8NnDgRkEyai9w7i"
+    "1LeoeftCD56juxPuGYh1m1bSrPxkBu44aH"
+    "1B4mSrAoDCufBDNaRbBLVEMiKyuGbG2hYh"
+    "17Nxxw6nS8bqUSGEZ6a3YWsCjCr15reLiy"
+    "1b1da7mU4KAue6BBXYFD7wDfNRmRi3bjH"
+    "1KERjvoD6yPY4qEovfaTmgwcR6SfhMoeSJ"
+    "1JGAyzFGQNpQhjbD1ue528QhuYtbRos7Ax"
+    "1C9KKvTW94C4wiwqL5whVPUEAwmGJLXEvt"
+    "12L5nz6AYye5DJiWbgCAvkSJBUok1WZPij"
+    "1J85hDKybYPXcXY78izocQpezEShW6xfc8"
   ]
   
   myWallet.getHDWallet = () ->

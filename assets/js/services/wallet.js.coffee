@@ -382,14 +382,17 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.updateAccounts()
         wallet.updateTransactions()
     else if event == "hw_wallet_accepted_payment_request"
-      wallet.displaySuccess("Requested payment of " + numeral(data.amount).clone().divide(100000000) + " BTC received")
+      $translate("PAYMENT_REQUEST_RECEIVED",{amount: numeral(data.amount).clone().divide(100000000).format("0.[00000000]")}).then (translation) ->
+        wallet.displaySuccess(translation)
       wallet.refreshPaymentRequests()
     else if event == "hw_wallet_payment_request_received_too_little"
-      wallet.displayWarning("Incomplete payment: " + numeral(data.amountReceived).clone().divide(100000000) + " out of " + numeral(data.amountRequested).clone().divide(100000000) +  " BTC")
+      $translate("PAYMENT_REQUEST_RECEIVED_TOO_LITTLE",{amountReceived: numeral(data.amountReceived).clone().divide(100000000).format("0.[00000000]"), amountRequested: numeral(data.amountRequested).clone().divide(100000000).format("0.[00000000]") }).then (translation) ->
+        wallet.displayWarning(translation)
       wallet.refreshPaymentRequests()
     else if event == "hw_wallet_payment_request_received_too_much"
+      $translate("PAYMENT_REQUEST_RECEIVED_TOO_MUCH",{amountReceived: numeral(data.amountReceived).clone().divide(100000000).format("0.[00000000]"), amountRequested: numeral(data.amountRequested).clone().divide(100000000).format("0.[00000000]") }).then (translation) ->
+        wallet.displayWarning(translation)
       wallet.refreshPaymentRequests()
-      wallet.displayWarning("Paid too much: " + numeral(data.amountReceived).clone().divide(100000000) + " instead of " + numeral(data.amountRequested).clone().divide(100000000) +  " BTC" )
     else if event == "error_restoring_wallet"
       $rootScope.$apply()        
     else if event == "did_set_guid" # Wallet retrieved from server
@@ -452,7 +455,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       if MyWallet.mockShouldReceiveNewTransaction == undefined
         $rootScope.$apply()
     else if event == "wallet not found" # Only works in the mock atm
-      wallet.displayError "Wallet not found"
+      $translate("WALLET_NOT_FOUND").then (translation) ->
+        wallet.displayError(translation)
     else if event == "ticker_updated" || event == "did_set_latest_block"
       if wallet.status.isLoggedIn 
         wallet.updateAccounts()  
@@ -460,10 +464,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         $rootScope.$apply()
     else if event == "logging_out"
       if wallet.didLogoutByChoice == true
-        $cookieStore.put("alert-success", "Logged out")
+        $translate("LOGGED_OUT").then (translation) ->
+          $cookieStore.put("alert-success", translation)
       else
-        $cookieStore.put("alert-warning", "Logged out automatically")
-        $rootScope.$apply()
+        $translate("LOGGED_OUT_AUTOMATICALLY").then (translation) ->
+          $cookieStore.put("alert-warning", translation)
+          $rootScope.$apply()
         
       wallet.status.isLoggedIn = false
       while wallet.accounts.length > 0

@@ -31,7 +31,8 @@
       if Wallet.cancelPaymentRequest(index, address)
         $scope.paymentRequest = null 
       else
-        Wallet.displayError("Unable to cancel payment request")
+        $translate("PAYMENT_REQUEST_CANNOT_CANCEL").then (translation) ->
+          Wallet.displayError(translation)
     
     if $scope.mockTimer != undefined
       $timeout.cancel($scope.mockTimer) 

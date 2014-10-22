@@ -1,4 +1,4 @@
-@SendCtrl = ($scope, $log, Wallet, $modalInstance, ngAudio, $timeout, $stateParams) ->
+@SendCtrl = ($scope, $log, Wallet, $modalInstance, ngAudio, $timeout, $stateParams, $translate) ->
   
   $scope.alerts = Wallet.alerts
   
@@ -11,9 +11,10 @@
   
   # QR Code scan. Uses js from this fork:
   # https://github.com/peekabustudios/webcam-directive/blob/master/app/scripts/webcam.js
-  $scope.onError = (error) -> # Never called
-    $log.error "Permission denied"
-    Wallet.displayWarning("Permission to use camera denied")
+  $scope.onError = (error) -> 
+    # This never gets called...
+    $translate("CAMERA_PERMISSION_DENIED").then (translation) ->
+      Wallet.displayWarning(translation)
     
   $scope.processURLfromQR = (url) ->
     paymentRequest = Wallet.parsePaymentRequest(url)
@@ -25,12 +26,14 @@
       $scope.qrStream.stop()
       $scope.cameraOn = false
     else
-      Wallet.displayWarning("Not a bitcoin QR code.")
+      $translate("QR_CODE_NOT_BITCOIN").then (translation) ->
+        Wallet.displayWarning(translation)
+
       $log.error "Not a bitcoin QR code:" + url
       
       $timeout((->
         $scope.lookForQR()
-      ), 250)
+      ), 2000)
    
   qrcode.callback = $scope.processURLfromQR
   

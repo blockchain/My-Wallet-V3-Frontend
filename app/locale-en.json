@@ -8,6 +8,8 @@
   "ALL_ACCOUNTS": "All Accounts",
   "ACCOUNT": "Account",
   "LOGOUT": "Logout",
+  "LOGGED_OUT" : "Logged out",
+  "LOGGED_OUT_AUTOMATICALLY" : "Logged out automatically",
   "CLOSE": "Close",
   "DASHBOARD": "Dashboard",
   "TRANSACTIONS" : "Transactions",
@@ -32,5 +34,12 @@
   "ADD_NOTE" : "Add note",
   "UNCONFIRMED" : "Unconfirmed",
   "ONE_CONFIRMATION" : "1 confirmation",
-  "N_CONFIRMATIONS" : "{{ n }} confirmations"  
+  "N_CONFIRMATIONS" : "{{ n }} confirmations",
+  "PAYMENT_REQUEST_RECEIVED" : "Requested payment of {{ amount }} BTC received",
+  "PAYMENT_REQUEST_RECEIVED_TOO_LITTLE" : "Incomplete payment: {{ amountReceived }} out of {{ amountRequested }} BTC",
+  "PAYMENT_REQUEST_RECEIVED_TOO_MUCH" : "Received too much: {{ amountReceived }} out of {{ amountRequested }} BTC",
+  "PAYMENT_REQUEST_CANNOT_CANCEL" : "Unable to cancel payment request",
+  "CAMERA_PERMISSION_DENIED" : "Permission to use camera denied",
+  "QR_CODE_NOT_BITCOIN" : "Not a bitcoin QR code.",
+  "WALLET_NOT_FOUND" : "Wallet not found"
  }
