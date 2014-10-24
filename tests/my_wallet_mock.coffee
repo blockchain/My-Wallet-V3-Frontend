@@ -114,7 +114,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     success()
     
   myWallet.getLanguage = () ->
-    return "nl"
+    return "en"
     
   myWallet.getAccounts = () ->    
     return accounts
