@@ -161,7 +161,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     Transaction parsing should be able to figure out which account was the sender and 
     change address and which address represents a recipient.
     ###
-    transaction  = {hash: "hash-" + (new Date()).getTime(), amount: -amount, confirmations: 0, doubleSpend: false, coinbase: false, intraWallet: false, from_account: fromAccountIndex, from_addresses: [], to_account: null, to_addressses: [toAddress], note: null, txTime: (new Date()).getTime()}
+    transaction  = {hash: "hash-" + (new Date()).getTime(), amount: -amount, confirmations: 0, doubleSpend: false, coinbase: false, intraWallet: false, from_account: fromAccountIndex, from_addresses: [], to_account: null, to_addresses: [toAddress], note: null, txTime: (new Date()).getTime()}
 
     # MyWallet stores transaction locally (so it already knows it by the time
     # it receives the websocket notification).

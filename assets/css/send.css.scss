@@ -2,8 +2,16 @@
   display: none;
 }
 
-img#qr {
-  height: 13px;
+#qr {
+  img {
+    height: 13px;
+  }
+  border-left: none;
+}
+
+#send-to {
+  // Causes problems when field is in focus or validated:
+  //  border-right: none;
 }
 
 .advanced-button-header {
@@ -44,10 +52,7 @@ img#qr {
 
 .send-methods {
   .btn-group-justified {
-    padding-right: 37px;
     .btn {
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
       border-bottom: none;
       
     }
@@ -58,9 +63,6 @@ img#qr {
   }
 
   input {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    
     border-top: 1px solid #ccc;
   }
 }

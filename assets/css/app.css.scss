@@ -33,9 +33,19 @@ body {
 
 .modal-body {
   color: #627B8A;
+  button, input, .btn-group, .btn-group-justified, .btn {
+    background-color: #F5F7F9;
+    border-radius: 0;
+    
+  }
+  
   input {
     font-size: 90%;
+    
   }
+
+  
+  
 }
 
 .modal-footer {

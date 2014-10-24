@@ -3,6 +3,7 @@
   $scope.advanced = false
   $scope.privacyGuard = false
   
+  $scope.errors = {to: null, amount: null}
   
   $scope.alerts = Wallet.alerts
   
@@ -16,12 +17,26 @@
       $scope.toPlaceholder = "nic@blockchain.info"
     else
       $scope.toPlaceholder = "+18005550199"
+    
+    $scope.errors.to = null
+    $scope.transaction.to = ""
+    return
       
+  $scope.max = (account) ->
+    idx = $scope.accounts.indexOf(account)
+    balance = account.balance.clone()
+    fees = Wallet.recommendedTransactionFeeForAccount(idx, account.balance)
+    max_btc = balance.subtract(fees).divide("100000000")
+    return max_btc.format("0.[00000000]") + " BTC"
+      
+  
+  
+  
+  $scope.transaction = {from: null, to: "", amount: "", currency: "BTC", privacyGuard: false, advanced: false}
+  
   
   $scope.setMethod("BTC")
   
-  
-  $scope.transaction = {from: null, to: "", amount: "0", currency: "BTC", privacyGuard: false, advanced: false}
   
   $scope.addressBook = Wallet.addressBook
   $scope.accounts = Wallet.accounts
@@ -100,6 +115,10 @@
   $scope.send = () ->
     Wallet.clearAlerts()
 
+    if $scope.method == "EMAIL" || $scope.method == "SMS"
+      Wallet.displayError("SMS and email not yet supported")
+      return
+
     Wallet.send($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.to, numeral($scope.transaction.amount), $scope.transaction.currency, $scope.observer)
   
   $scope.closeAlert = (alert) ->
@@ -118,22 +137,80 @@
   
   $scope.$watchCollection "[transaction.to, transaction.from.address, transaction.amount]", () ->
     $scope.transaction.fee = Wallet.recommendedTransactionFeeForAccount($scope.accounts.indexOf($scope.transaction.from), numeral($scope.transaction.amount).multiply(100000000)).divide(100000000)
-    $scope.transactionIsValid = $scope.validate($scope.transaction)
+    $scope.transactionIsValid = $scope.validate()
     
+  $scope.$watch "transaction.from", () ->
+    $scope.visualValidate("from")
     
-  $scope.validate = (transaction) ->
-    return false if transaction.to == null
-    return false if transaction.to == undefined
-    return false if transaction.to == ""
-    return false unless Wallet.isValidAddress(transaction.to)
-    return false if transaction.amount == undefined
-    return false if transaction.amount == null
-    return false if transaction.amount == ""
-    return false if parseFloat(transaction.amount) > $scope.transaction.from.balance / 100000000
+  $scope.visualValidate = (blurredField) ->
+    if blurredField == "to"
+      $scope.errors.to = null
+    
+    if blurredField == "amount"
+      $scope.errors.amount = null
+  
+    transaction = $scope.transaction
+    unless transaction.to? && transaction.to != ""
+      if transaction.amount > 0 && blurredField == "to"
+        if $scope.method == "BTC"
+          $scope.errors.to = "Bitcoin address missing"
+        else if $scope.method == "EMAIL"
+          $scope.errors.to = "Email address missing"
+        else if $scope.method == "SMS"
+          $scope.errors.to = "Mobile phone number missing"
+    
+    if $scope.method == "BTC"
+      unless Wallet.isValidAddress(transaction.to)
+        if blurredField == "to"
+          $scope.errors.to = "Invalid bitcoin address"
+    else if $scope.method == "EMAIL"
+      unless true
+        if blurredField == "to"
+          $scope.errors.to = "Invalid email address"   
+    else if $scope.method == "SMS"
+      unless true
+        if blurredField == "to"
+          $scope.errors.to = "Invalid international phone number."   
+              
+    
+    unless transaction.amount? && transaction.amount > 0
+      if blurredField == "amount" 
+        $scope.errors.amount = "Please enter amount"
+
+    if parseFloat(transaction.amount) + transaction.fee.value() > transaction.from.balance / 100000000
+      console.log blurredField
+      if blurredField == "amount" || blurredField == "from"
+        $scope.errors.amount = "Insufficient funds"
+  
+    return 
+    
+  $scope.validate = () ->
+    
+    transaction = $scope.transaction
+    unless transaction.to? && transaction.to != ""
+      return false
+      
+    if $scope.method == "BTC"
+      unless Wallet.isValidAddress(transaction.to)
+        return false
+    # else if $scope.method == "EMAIL"
+    #
+    # else if $scope.method == "SMS"
+    
+    $scope.errors.to = null
+    
+      
+    unless transaction.amount? && transaction.amount > 0
+      return false
+
+    return false if parseFloat(transaction.amount) + $scope.transaction.fee.value()  > $scope.transaction.from.balance / 100000000
     return false if parseFloat(transaction.amount) == 0
     
     
     return false if transaction.currency != 'BTC'
+    
+    $scope.errors.amount = null
+    
     
     return true
   

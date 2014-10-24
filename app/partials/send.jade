@@ -17,12 +17,12 @@
       label.col-sm-3.control-label(translate="SEND_FROM")
       .col-sm-7
         ui-select(ng-model="transaction.from")
-          ui-select-match {{ $select.selected.label }}
+          ui-select-match {{ $select.selected.label }} ({{ max($select.selected) }})
           ui-select-choices(repeat="account in accounts | filter: $select.search") 
             span(ng-bind-html="account.label | highlight: $select.search")
-    .form-group
+    .form-group(ng-class="{'has-error': errors.to}")
       label.col-sm-3.control-label(for:"to", translate="SEND_TO")
-      .col-sm-9
+      .col-sm-7
         .input-group-vertical.send-methods
           .btn-group.btn-group-justified
             .btn-group.btn-group-xs
@@ -32,15 +32,16 @@
             .btn-group.btn-group-xs
               button(type="button", ng-class="{active: method=='SMS'}", ng-click="setMethod('SMS')").btn.btn-default SMS         
           .input-group
-            input.form-control(type="text",ng-model="transaction.to",placeholder="{{ toPlaceholder }}",autofocus)
+            input#send-to.form-control(type="text",ng-model="transaction.to",placeholder="{{ toPlaceholder }}",autofocus,ng-blur="visualValidate('to')")
             span.input-group-btn
-              button.btn.btn-default(type="button", ng-click="cameraOn()") 
-                img#qr(src="img/qr.png", alt="QR")
-    .form-group
+              button#qr.btn.btn-default(type="button", ng-click="cameraOn()") 
+                img(src="img/qr.png", alt="QR")
+        span.help-block {{ errors.to }}
+    .form-group(ng-class="{'has-error': errors.amount}")
       label.col-sm-3.control-label(translate="AMOUNT")
       .col-sm-5
         .input-group
-          input.form-control(type="text",ng-model="transaction.amount")
+          input.form-control(type="text",ng-model="transaction.amount", placeholder="0.0000....",ng-blur="visualValidate('amount')")
           .input-group-btn
             .btn-group(dropdown,is-open="currencies.isOpen")
               button.btn.btn-default.dropdown-toggle(type="button") 
@@ -53,6 +54,7 @@
                   a(href="",ng-click="transaction.currency = 'EUR'; currencies.isOpen = false") EUR
                 li
                   a(href="",ng-click="transaction.currency = 'USD'; currencies.isOpen = false") USD
+        span.help-block {{ errors.amount }}
       .col-sm-4
         p(ng-show="transaction.currency!='BTC'") Conversion to be implemented...
         p(ng-show="transaction.currency=='BTC'") {{ transaction.amount }} BTC
