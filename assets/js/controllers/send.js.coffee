@@ -1,5 +1,7 @@
 @SendCtrl = ($scope, $log, Wallet, $modalInstance, ngAudio, $timeout, $stateParams, $translate) ->
   
+  $scope.advanced = false
+  
   $scope.alerts = Wallet.alerts
   
   $scope.currencies = {isOpen: false}

@@ -44,5 +44,6 @@
   "WALLET_NOT_FOUND" : "Wallet niet gevonden",
   "RECEIVED_BITCOIN" : "<b>Je</b> ontving bitcoin van <b>{{ from }}</b>",
   "MOVED_BITCOIN_WITHIN_WALLET" : "<b>Je</b> verplaatste bitcoin naar <b>{{ to }}</b>",
-  "SPENT_BITCOIN" : "<b>Je</b> stuurde bitcoin naar <b>{{ to }}</b>"
+  "SPENT_BITCOIN" : "<b>Je</b> stuurde bitcoin naar <b>{{ to }}</b>",
+  "ADVANCED" : "Geavanceerd"
  }

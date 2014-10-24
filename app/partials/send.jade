@@ -1,5 +1,12 @@
 .modal-header
-  h3 Send Bitcoin
+  .row
+    .col-xs-9
+      h3 Send Bitcoin
+    .col-xs-3.advanced-button-header
+      p 
+        span(translate="ADVANCED")
+        img(ng-src="img/advanced-{{ advanced ? 'on' : 'off' }}.png", alt="Show advanced settings", ng-click="advanced = !advanced")
+          
 .modal-body
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)") 
     {{alert.msg}}
@@ -39,7 +46,7 @@
       .col-sm-4
         p(ng-show="transaction.currency!='BTC'") Conversion to be implemented...
         p(ng-show="transaction.currency=='BTC'") {{ transaction.amount }} BTC
-    .form-group
+    .form-group(ng-show="advanced")
       label.col-sm-3.control-label(translate="FEES")
       .col-sm-5 
         p.form-control-static {{ transaction.fee | numeraljs:'btc' }}
