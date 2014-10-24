@@ -33,6 +33,9 @@ body {
 
 .modal-body {
   color: #627B8A;
+  input {
+    font-size: 90%;
+  }
 }
 
 .modal-footer {
@@ -43,13 +46,13 @@ body {
 }
 
 .btn {
-  font-weight: bold;
 }
 
 .btn-info,.btn-info:link,.btn-info:visited,.btn-info:hover,.btn-info:active,.btn-info:focus {
   background-color: #BDBDBD;
   border-color: #BDBDBD;
   font-size: 80%;
+  font-weight: bold;
   
 }
 
@@ -57,5 +60,7 @@ body {
   background-color: #1973D6 !important;
   border-color: #1973D6;
   font-size: 80%;
+  font-weight: bold;
+  
   
 }

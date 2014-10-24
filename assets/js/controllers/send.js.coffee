@@ -8,13 +8,25 @@
   
   $scope.currencies = {isOpen: false}
   
+  $scope.setMethod = (method) ->
+    $scope.method = method
+    if method == "BTC"
+      $scope.toPlaceholder = "1C9KKvTW94C4wiwqL5whVPUEAwmGJLXEvt"
+    else if method == "EMAIL"
+      $scope.toPlaceholder = "nic@blockchain.info"
+    else
+      $scope.toPlaceholder = "+18005550199"
+      
+  
+  $scope.setMethod("BTC")
+  
+  
   $scope.transaction = {from: null, to: "", amount: "0", currency: "BTC", privacyGuard: false, advanced: false}
   
   $scope.addressBook = Wallet.addressBook
   $scope.accounts = Wallet.accounts
   
-  $translate("SEND_TO_PLACEHOLDER").then (translation) ->
-    $scope.toPlaceholder = translation
+
   $translate("ADVANCED").then (translation) ->
     $scope.advancedLabel = translation
   

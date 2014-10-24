@@ -41,3 +41,26 @@ img#qr {
     height: 11px;
   }
 }
+
+.send-methods {
+  .btn-group-justified {
+    padding-right: 37px;
+    .btn {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom: none;
+      
+    }
+    .middle {
+      border-left: none;
+      border-right: none;
+    }
+  }
+
+  input {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    
+    border-top: 1px solid #ccc;
+  }
+}

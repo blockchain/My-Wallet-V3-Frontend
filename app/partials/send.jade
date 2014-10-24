@@ -23,11 +23,19 @@
     .form-group
       label.col-sm-3.control-label(for:"to", translate="SEND_TO")
       .col-sm-9
-        .input-group
-          input.form-control(type="text",ng-model="transaction.to",placeholder="{{ toPlaceholder }}")
-          span.input-group-btn
-            button.btn.btn-default(type="button", ng-click="cameraOn()") 
-              img#qr(src="img/qr.png", alt="QR")
+        .input-group-vertical.send-methods
+          .btn-group.btn-group-justified
+            .btn-group.btn-group-xs
+              button(type="button", ng-class="{active: method=='BTC'}", ng-click="setMethod('BTC')").btn.btn-default Bitcoin
+            .btn-group.btn-group-xs
+              button(type="button", ng-class="{active: method=='EMAIL'}", ng-click="setMethod('EMAIL')").btn.btn-default.middle Email
+            .btn-group.btn-group-xs
+              button(type="button", ng-class="{active: method=='SMS'}", ng-click="setMethod('SMS')").btn.btn-default SMS         
+          .input-group
+            input.form-control(type="text",ng-model="transaction.to",placeholder="{{ toPlaceholder }}",autofocus)
+            span.input-group-btn
+              button.btn.btn-default(type="button", ng-click="cameraOn()") 
+                img#qr(src="img/qr.png", alt="QR")
     .form-group
       label.col-sm-3.control-label(translate="AMOUNT")
       .col-sm-5
