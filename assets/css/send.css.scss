@@ -21,7 +21,11 @@ img#qr {
 }
 
 .privacy-guard {
-  img {
+  img.privacy-guard {
     height: 17px;
+  }
+  img.question {
+    padding-left: 5px;
+    height: 11px;
   }
 }

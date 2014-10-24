@@ -54,7 +54,8 @@
       label.col-sm-3.control-label(translate="PRIVACY_GUARD")
       .col-sm-4.privacy-guard
         p.form-control-static 
-          img(ng-src="img/switch-{{ privacyGuard ? 'on' : 'off' }}.png", ng-alt="{{ privacyGuard ? 'on' : 'off' }}", ng-click="privacyGuard = !privacyGuard")
+          img.privacy-guard(ng-src="img/switch-{{ privacyGuard ? 'on' : 'off' }}.png", ng-alt="{{ privacyGuard ? 'on' : 'off' }}", ng-click="privacyGuard = !privacyGuard")
+          img.question(src="img/question.png", alt="Explanation")
     .form-group(ng-show="cameraIsOn")
       label.col-sm-3.control-label(translate="QR")
       .col-sm-9
