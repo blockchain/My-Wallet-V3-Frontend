@@ -23,8 +23,7 @@
       $scope.transaction.amount = paymentRequest.amount if paymentRequest.amount
       $scope.transaction.currency = paymentRequest.currency if paymentRequest.currency
 
-      $scope.qrStream.stop()
-      $scope.cameraOn = false
+      $scope.cameraOff()
     else
       $translate("QR_CODE_NOT_BITCOIN").then (translation) ->
         Wallet.displayWarning(translation)
@@ -37,10 +36,13 @@
    
   qrcode.callback = $scope.processURLfromQR
   
+  $scope.cameraOn = () ->
+    $scope.cameraRequested = true
     
   $scope.cameraOff = () ->
     $scope.qrStream.stop()
-    $scope.cameraOn = false
+    $scope.cameraIsOn = false
+    $scope.cameraRequested = false
     
   $scope.onStream = (stream) -> # I removed the second argument in webcam.js!
     # Evil (TODO: use a directive to manipulate the DOM):
@@ -48,7 +50,7 @@
     $scope.qrStream = stream
         
     $scope.lookForQR()
-    $scope.cameraOn = true
+    $scope.cameraIsOn = true
     
   $scope.lookForQR = () ->    
     try 

@@ -17,7 +17,8 @@
         .input-group
           input.form-control(type="text",ng-model="transaction.to")
           span.input-group-btn
-            button.btn.btn-default(type="button", translate="QR") 
+            button.btn.btn-default(type="button", ng-click="cameraOn()") 
+              img#qr(src="img/qr.png", alt="QR")
     .form-group
       label.col-sm-3.control-label(translate="AMOUNT")
       .col-sm-5
@@ -49,13 +50,13 @@
           label
             input(type="checkbox")
             | ?
-    .form-group(ng-show="cameraOn")
+    .form-group(ng-show="cameraIsOn")
       label.col-sm-3.control-label(translate="QR")
       .col-sm-9
         webcam(on-stream="onStream(stream)"
-               on-access-denied="onError(err)")
+               on-access-denied="onError(err)" ng-if="cameraRequested")
         canvas#qr-canvas
 .modal-footer
-  button.btn.btn-info(ng-click="cameraOff()", ng-show="cameraOn", translate="CAMERA_OFF")
+  button.btn.btn-info(ng-click="cameraOff()", ng-show="cameraIsOn", translate="CAMERA_OFF")
   button.btn.btn-info(ng-click="close()", translate="CANCEL")
   button.btn.btn-primary(ng-click="send()",ng-disabled="!transactionIsValid", translate="SEND")
