@@ -1,10 +1,12 @@
 .modal-header
   .row
-    .col-xs-9
-      h3 Send Bitcoin
-    .col-xs-3.advanced-button-header
-      p 
-        span(translate="ADVANCED")
+    .col-xs-6
+      h3(translate="SEND_BITCOIN")
+    .col-xs-6.advanced-button-header.pull-down
+      h3 
+        | 
+      p
+        {{ advancedLabel }}
         img(ng-src="img/advanced-{{ advanced ? 'on' : 'off' }}.png", alt="Show advanced settings", ng-click="advanced = !advanced")
           
 .modal-body
@@ -13,7 +15,7 @@
   form.form-horizontal(role="form",name="form",novalidate)
     .form-group
       label.col-sm-3.control-label(translate="SEND_FROM")
-      .col-sm-9
+      .col-sm-7
         ui-select(ng-model="transaction.from")
           ui-select-match {{ $select.selected.label }}
           ui-select-choices(repeat="account in accounts | filter: $select.search") 

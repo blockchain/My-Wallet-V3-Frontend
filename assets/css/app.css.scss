@@ -8,9 +8,36 @@ body {
 
 .row {
   background: white;
+  vertical-align: bottom;
 }
 
 .row.spacing {
   height: 50px;
   background: transparent;
+}
+
+.modal-content {
+  border: 10px solid #ECECEC;
+}
+
+.modal-header {
+  h3 {
+    color: #2071AA;
+    margin-bottom: 0px;
+    display: inline;    
+  }
+  
+  vertical-align: bottom;
+  border-bottom: 4px solid #e5e5e5
+}
+
+.modal-body {
+  color: #627B8A;
+}
+
+.modal-footer {
+  border-top: none;
+  button {
+    text-transform: uppercase;
+  }
 }

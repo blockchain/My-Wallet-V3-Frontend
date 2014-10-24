@@ -3,6 +3,7 @@
   $scope.advanced = false
   $scope.privacyGuard = false
   
+  
   $scope.alerts = Wallet.alerts
   
   $scope.currencies = {isOpen: false}
@@ -14,6 +15,8 @@
   
   $translate("SEND_TO_PLACEHOLDER").then (translation) ->
     $scope.toPlaceholder = translation
+  $translate("ADVANCED").then (translation) ->
+    $scope.advancedLabel = translation
   
   # QR Code scan. Uses js from this fork:
   # https://github.com/peekabustudios/webcam-directive/blob/master/app/scripts/webcam.js
