@@ -22,7 +22,7 @@
       label.col-sm-3.control-label(for:"to", translate="SEND_TO")
       .col-sm-9
         .input-group
-          input.form-control(type="text",ng-model="transaction.to")
+          input.form-control(type="text",ng-model="transaction.to",placeholder="{{ toPlaceholder }}")
           span.input-group-btn
             button.btn.btn-default(type="button", ng-click="cameraOn()") 
               img#qr(src="img/qr.png", alt="QR")
@@ -52,11 +52,9 @@
         p.form-control-static {{ transaction.fee | numeraljs:'btc' }}
     .form-group
       label.col-sm-3.control-label(translate="PRIVACY_GUARD")
-      .col-sm-4
-        .checkbox
-          label
-            input(type="checkbox")
-            | ?
+      .col-sm-4.privacy-guard
+        p.form-control-static 
+          img(ng-src="img/switch-{{ privacyGuard ? 'on' : 'off' }}.png", ng-alt="{{ privacyGuard ? 'on' : 'off' }}", ng-click="privacyGuard = !privacyGuard")
     .form-group(ng-show="cameraIsOn")
       label.col-sm-3.control-label(translate="QR")
       .col-sm-9
