@@ -7,19 +7,13 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet) -
     }
     templateUrl: 'templates/transaction-description'
     link: (scope, elem, attrs) ->
-      $rootScope.$watch "isMock", (newValue) ->
-        if newValue? && !newValue
-          scope.description = "Transaction info currently broken"
-              
       phrase = undefined
       from = undefined
       to = undefined
       
-      from_address = scope.transaction.from_address #es[0]
-      to_address   = scope.transaction.to_address #es[0]
-      
-      # console.log scope.transaction
-      
+      from_address = scope.transaction.from_addresses[0]
+      to_address   = scope.transaction.to_addresses[0]
+            
       if scope.transaction.intraWallet
         phrase = "MOVED_BITCOIN_WITHIN_WALLET"
         to = Wallet.accounts[scope.transaction.to_account].label

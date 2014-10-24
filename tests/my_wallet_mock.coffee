@@ -14,9 +14,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
           {label: "Mobile", archived: false, balance: 25000000 - 1500000, receive_addresses: ["13QsKpDMchnssikZEaJKdkTX7pycFEcTi1"]}
         ]
         transactions: [
-          {hash: "aaaa", amount: 300000000, confirmations: 13, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_address: "1D2YzLr5qvrwMSm8onYbns5BLJ9jwzPHcQ", to_account: 0, note: "Salary", txTime: 1331300839},
-          {hash: "aaab", amount: -25000000, confirmations: 3, doubleSpend: false, coinbase: false, intraWallet: true, from_account: 0, from_address: null, to_account: 1, to_address: null, note: null, txTime:   2000000000},
-          {hash: "afsdfsdkj", amount: -1500000, confirmations: 1, doubleSpend: false, coinbase: false, intraWallet: false, from_account: 1, from_address: null, to_account: null, to_address: "1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq" ,note: null, txTime:   8200000000},
+          {hash: "aaaa", amount: 300000000, confirmations: 13, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_addresses: ["1D2YzLr5qvrwMSm8onYbns5BLJ9jwzPHcQ"], to_account: 0, to_addresses: [], note: "Salary", txTime: 1331300839},
+          {hash: "aaab", amount: -25000000, confirmations: 3, doubleSpend: false, coinbase: false, intraWallet: true, from_account: 0, from_addresses: [], to_account: 1, to_addresses: [], note: null, txTime:   2000000000},
+          {hash: "afsdfsdkj", amount: -1500000, confirmations: 1, doubleSpend: false, coinbase: false, intraWallet: false, from_account: 1, from_addresses: [], to_account: null, to_addresses: ["1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq"] ,note: null, txTime:   8200000000},
         ]
       }
     })
@@ -161,7 +161,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     Transaction parsing should be able to figure out which account was the sender and 
     change address and which address represents a recipient.
     ###
-    transaction  = {hash: "hash-" + (new Date()).getTime(), amount: -amount, confirmations: 0, doubleSpend: false, coinbase: false, intraWallet: false, from_account: fromAccountIndex, from_address: null, to_account: null, to_address: toAddress, note: null, txTime: (new Date()).getTime()}
+    transaction  = {hash: "hash-" + (new Date()).getTime(), amount: -amount, confirmations: 0, doubleSpend: false, coinbase: false, intraWallet: false, from_account: fromAccountIndex, from_addresses: [], to_account: null, to_addressses: [toAddress], note: null, txTime: (new Date()).getTime()}
 
     # MyWallet stores transaction locally (so it already knows it by the time
     # it receives the websocket notification).
@@ -322,7 +322,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     mockRules.shouldFailToSend = true
     
   myWallet.mockShouldReceiveNewTransaction = (address="13QsKpDMchnssikZEaJKdkTX7pycFEcTi1", from="17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq", amount=400000, note="Thanks for the tea") ->
-    this.mockProcessNewTransaction {hash: "mock-receive-" + (new Date()).getTime(), amount: amount, confirmations: 0, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_address: from, to: address , note: note, txTime: (new Date()).getTime()}
+    this.mockProcessNewTransaction {hash: "mock-receive-" + (new Date()).getTime(), amount: amount, confirmations: 0, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_addresses: [from], to: address , note: note, txTime: (new Date()).getTime()}
     
     eventListener("on_tx")
     
@@ -349,7 +349,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
         if address == transaction.to
           index = accounts.indexOf(account)
           transaction.to_account = index
-          transaction.to_address = null
+          transaction.to_addresses = []
           transaction.to = undefined
           accounts[index].balance += transaction.amount
           
