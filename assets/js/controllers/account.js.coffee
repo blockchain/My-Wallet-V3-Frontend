@@ -1,5 +1,8 @@
-@AccountCtrl = ($scope, Wallet, $cookieStore, $modalInstance, $state) ->
+@AccountCtrl = ($scope, Wallet, $cookieStore, $modalInstance) ->
   
+  $scope.settings = Wallet.settings
+  $scope.languages = Wallet.languages
+    
   $scope.close = () ->
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
@@ -19,6 +22,10 @@
     Wallet.logout() # Refreshes the browser, so won't return
   
     $modalInstance.dismiss ""
+    
+  $scope.$watch "settings.language", (newVal, oldVal) ->
+    if oldVal? && newVal isnt oldVal
+      Wallet.setLanguage(newVal)
   
   #################################
   #           Private             #

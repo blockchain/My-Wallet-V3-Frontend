@@ -29,6 +29,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   accounts = []
     
   transactions = []
+  
+  language = "en"
 
   monitorFunc = undefined  # New system
   eventListener = undefined # Old system
@@ -114,7 +116,10 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     success()
     
   myWallet.getLanguage = () ->
-    return "en"
+    return language
+    
+  myWallet.change_language = (newLanguage) ->
+    language = newLanguage
     
   myWallet.getAccounts = () ->    
     return accounts

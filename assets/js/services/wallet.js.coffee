@@ -19,8 +19,8 @@ playSound = (id) ->
 ##################################
 
 walletServices = angular.module("walletServices", [])
-walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate) -> 
-  wallet = {status: {isLoggedIn: false}, settings: {currency: {conversion: 0}}}
+walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter) -> 
+  wallet = {status: {isLoggedIn: false}, settings: {currency: {conversion: 0}, language: null}}
   
   wallet.accounts     = []
   wallet.addressBook  = {}
@@ -432,8 +432,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         $rootScope.$apply()
     else if event == "on_wallet_decrypt_finish" # Non-HD part is decrypted
       # Get language:
-      wallet.language = wallet.my.getLanguage()
-      $translate.use(wallet.language)
+      code =  wallet.my.getLanguage()
+      language = $filter('getByProperty')('code', code, wallet.languages)
+      wallet.setLanguage(language)
       if MyWallet.mockShouldReceiveNewTransaction == undefined
         $rootScope.$apply()
     else if event == "did_decrypt"   # Wallet decrypted succesfully  
@@ -507,7 +508,43 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     $cookieStore.remove("alert-success")
     
 
-
+  ############
+  # Settings #
+  ############
+  
+  wallet.setLanguage = (language) ->
+    $translate.use(language.code)
+    wallet.my.change_language(language.code)
+    wallet.settings.language = language
+    
+  wallet.languages = [
+    {code: "de", name: "German"}
+    {code: "hi", name: "Hindi"}
+    {code: "no", name: "Norwegian"}
+    {code: "ru", name: "Russian"}
+    {code: "pt", name: "Portugese"}
+    {code: "bg", name: "Bulgarian"}
+    {code: "fr", name: "French"}
+    {code: "zh-cn", name: "Chinese Simplified"}
+    {code: "hu", name: "Hungarian"}
+    {code: "sl", name: "Slovenian"}
+    {code: "id", name: "Indonesian"}
+    {code: "sv", name: "Swedish"}
+    {code: "ko", name: "Korean"}
+    {code: "el", name: "Greek"}
+    {code: "en", name: "English"}
+    {code: "it", name: "Italiano"}
+    {code: "es", name: "Spanish"}
+    {code: "vi", name: "Vietnamese"}
+    {code: "th", name: "Thai"}
+    {code: "ja", name: "Japanese"}
+    {code: "pl", name: "Polski"}
+    {code: "da", name: "Danish"}
+    {code: "ro", name: "Romanian"}
+    {code: "nl", name: "Dutch"}
+    {code: "tr", name: "Turkish"}
+  ]
+  
   ########################################
   # Testing: only works on mock MyWallet #
   ########################################

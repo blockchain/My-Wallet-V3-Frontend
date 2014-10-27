@@ -47,5 +47,6 @@
   "SPENT_BITCOIN" : "<b>You</b> sent bitcoin to <b>{{ to }}</b>",
   "ADVANCED" : "Advanced",
   "SEND_TO_PLACEHOLDER" : "Bitcoin address, email or mobile number",
-  "SEND_BITCOIN" : "Send Bitcoin"
+  "SEND_BITCOIN" : "Send Bitcoin",
+  "LANGUAGE" : "Language"
  }

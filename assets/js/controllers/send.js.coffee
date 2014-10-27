@@ -27,16 +27,11 @@
     balance = account.balance.clone()
     fees = Wallet.recommendedTransactionFeeForAccount(idx, account.balance)
     max_btc = balance.subtract(fees).divide("100000000")
-    return max_btc.format("0.[00000000]") + " BTC"
-      
-  
-  
+    return max_btc.format("0.[00000000]") + " BTC"  
   
   $scope.transaction = {from: null, to: "", amount: "", currency: "BTC", privacyGuard: false, advanced: false}
   
-  
   $scope.setMethod("BTC")
-  
   
   $scope.addressBook = Wallet.addressBook
   $scope.accounts = Wallet.accounts

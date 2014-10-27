@@ -25,3 +25,12 @@ angular.module("walletFilters", []).filter "fiat", ->
 #     return items.filter((item) ->
 #       return item.complete == false && !item.canceled
 #     )
+
+.filter "getByProperty", ->
+  (propertyName, propertyValue, collection) ->
+    i = 0
+    len = collection.length
+    while i < len
+      return collection[i]  if collection[i][propertyName] == propertyValue
+      i++
+    null
