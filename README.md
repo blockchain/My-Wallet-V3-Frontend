@@ -6,10 +6,20 @@ An AngularJS bitcoin web wallet powered by Blockchains [MyWallet](https://github
 Make sure you have [Node.js](http://nodejs.org/) and the [Heroku Toolbelt](https://toolbelt.heroku.com/) installed.
 
 ```sh
-$ git clone --recursive https://github.com/blockchain/My-Wallet-HD-Frontend.git 
-$ cd My-Wallet-HD-Frontend
-$ npm install
-$ npm start
+git clone --recursive https://github.com/blockchain/My-Wallet-HD-Frontend.git 
+cd My-Wallet-HD-Frontend
+npm install
+```
+
+Compile javascript for MyWallet:
+```sh
+cd assets/js/my-wallet
+npm install
+````
+
+Run the server:
+```sh 
+npm start
 ```
 
 Visit [localhost:3012](http://localhost:3012/).
