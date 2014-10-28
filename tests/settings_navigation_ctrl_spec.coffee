@@ -30,7 +30,11 @@ describe "SettingsNavigationCtrl", ->
     
   it "should logout",  inject((Wallet, $stateParams, $state) ->
     spyOn(Wallet, "logout").and.callThrough()
-    spyOn($state, "go")    
+    spyOn($state, "go")  
+    
+    spyOn(window, 'confirm').and.callFake(() ->
+         return true
+    )
     
     scope.logout()
     

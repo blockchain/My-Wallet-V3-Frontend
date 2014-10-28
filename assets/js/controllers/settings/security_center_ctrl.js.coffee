@@ -1,0 +1,1 @@
+@SettingsSecurityCenterCtrl = ($scope, Wallet) ->

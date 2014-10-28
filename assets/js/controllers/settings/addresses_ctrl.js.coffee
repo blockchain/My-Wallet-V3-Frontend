@@ -1,0 +1,1 @@
+@SettingsAddressesCtrl = ($scope, Wallet) ->

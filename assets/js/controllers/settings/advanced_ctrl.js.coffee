@@ -1,0 +1,1 @@
+@SettingsAdvancedCtrl = ($scope, Wallet) ->

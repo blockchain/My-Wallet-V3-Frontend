@@ -1,4 +1,4 @@
-@SettingsNavigationCtrl = ($scope, Wallet, $cookieStore, $state) ->
+@SettingsNavigationCtrl = ($scope, Wallet, $cookieStore, $state, $translate) ->
   $scope.status    = Wallet.status
   
   $scope.logout = () ->  
@@ -9,12 +9,14 @@
       $scope.doLogout()
       
   $scope.doLogout = () ->   
-    $scope.uid = null
-    $scope.password = null
-    $cookieStore.remove("password")
-    $cookieStore.remove("uid")
-    $state.go("dashboard")
+    $translate("ARE_YOU_SURE_LOGOUT").then (translation) ->      
+      if confirm translation
+        $scope.uid = null
+        $scope.password = null
+        $cookieStore.remove("password")
+        $cookieStore.remove("uid")
+        $state.go("dashboard")
         
-    Wallet.logout() # Refreshes the browser, so won't return
+        Wallet.logout() # Refreshes the browser, so won't return
     
   

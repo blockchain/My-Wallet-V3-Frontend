@@ -48,6 +48,11 @@
   "ADVANCED" : "Geavanceerd",
   "SEND_BITCOIN" : "Verzend Bitcoin",
   "MY_DETAILS" : "Mijn Gegevens",
-  "WALLET_SETTINGS" : "Wallet Instellingen"
-  
+  "WALLET_SETTINGS" : "Wallet Instellingen",
+  "MY_ADDRESSES" : "Mijn Addressen",
+  "SECURITY_CENTER" : "Beveiliging",
+  "WALLET_RECOVERY" : "Wallet Herstel",
+  "ARE_YOU_SURE_LOGOUT" : "Weet je zeker dat je wil uitloggen?",
+  "LANGUAGE" : "Taal",
+  "LANGUAGE_EXPLAIN" : "Kies je voorkeurstaal"
  }

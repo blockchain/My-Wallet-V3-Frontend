@@ -48,7 +48,12 @@
   "ADVANCED" : "Advanced",
   "SEND_TO_PLACEHOLDER" : "Bitcoin address, email or mobile number",
   "SEND_BITCOIN" : "Send Bitcoin",
-  "LANGUAGE" : "Language",
+  "LANGUAGE" : "Wallet Language",
   "MY_DETAILS" : "My Details",
-  "WALLET_SETTINGS" : "Wallet Settings"
- }
+  "WALLET_SETTINGS" : "Wallet Settings",
+  "MY_ADDRESSES" : "My Addresses",
+  "SECURITY_CENTER" : "Security Center",
+  "WALLET_RECOVERY" : "Wallet Recovery",
+  "ARE_YOU_SURE_LOGOUT" : "Are you sure you wish to logout?",
+  "LANGUAGE_EXPLAIN" : "Set your preferred language" 
+}

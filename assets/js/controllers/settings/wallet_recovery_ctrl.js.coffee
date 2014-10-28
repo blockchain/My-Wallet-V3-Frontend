@@ -1,0 +1,1 @@
+@SettingsWalletRecoveryCtrl = ($scope, Wallet) ->

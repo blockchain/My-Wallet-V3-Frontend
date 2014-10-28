@@ -85,3 +85,39 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
+  .state("settings.addresses",
+    url: "/addresses"
+    views: {
+      settings: {
+        templateUrl: "partials/settings/addresses"
+        controller: "SettingsAddressesCtrl"
+      }
+    }
+  )
+  .state("settings.security-center",
+    url: "/security-center"
+    views: {
+      settings: {
+        templateUrl: "partials/settings/security-center"
+        controller: "SettingsSecurityCenterCtrl"
+      }
+    }
+  )
+  .state("settings.wallet-recovery",
+    url: "/wallet-recovery"
+    views: {
+      settings: {
+        templateUrl: "partials/settings/wallet-recovery"
+        controller: "SettingsWalletRecoveryCtrl"
+      }
+    }
+  )
+  .state("settings.advanced",
+    url: "/advanced"
+    views: {
+      settings: {
+        templateUrl: "partials/settings/advanced"
+        controller: "SettingsAdvancedCtrl"
+      }
+    }
+  )

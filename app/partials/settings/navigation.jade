@@ -3,8 +3,16 @@ ul.nav.nav-stacked.nav-pills
     a(ui-sref="settings.my-details", translate="MY_DETAILS")
   li.item(ui-sref-active="active") 
     a(ui-sref="settings.wallet", translate="WALLET_SETTINGS")
-hr
-  
-hr
+  li.item(ui-sref-active="active") 
+    a(ui-sref="settings.addresses", translate="MY_ADDRESSES")
+  li.nav-divider
+    li.item(ui-sref-active="active") 
+      a(ui-sref="settings.security-center", translate="SECURITY_CENTER")
+    li.item(ui-sref-active="active") 
+      a(ui-sref="settings.wallet-recovery", translate="WALLET_RECOVERY")
+    li.item(ui-sref-active="active") 
+      a(ui-sref="settings.advanced", translate="ADVANCED")
+  li.nav-divider
+  li.item
+    a(ng-click="logout()", translate="LOGOUT")
 
-button.btn.btn-info(ng-click="logout()", translate="LOGOUT")
