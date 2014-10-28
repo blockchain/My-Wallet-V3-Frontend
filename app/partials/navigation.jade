@@ -11,7 +11,7 @@
         img.tab(src="img/transactions-icon.png")
         span(translate="TRANSACTIONS")
   ul.nav.navbar-nav.col-xs-2(ng-show="status.isLoggedIn")
-    li.pull-right
-      a(ng-click="account()")
+    li.pull-right(ui-sref-active="active")
+      a(ui-sref="settings.my-details")
         img#account(src="img/account-icon.png",alt="Account Settings")
         img#account-toggle(src="img/account-icon-toggle.png")

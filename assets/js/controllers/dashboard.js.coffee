@@ -2,9 +2,6 @@
   $scope.status = Wallet.status    
   $scope.uid = $cookieStore.get("uid")
   
-  if $scope.savePassword && !$scope.status.isLoggedIn && !!$cookieStore.get("password")
-    Wallet.login($cookieStore.get("uid"), $cookieStore.get("password"))
-  
   $scope.login = () ->
     Wallet.clearAlerts()
     Wallet.login($scope.uid, $scope.password)

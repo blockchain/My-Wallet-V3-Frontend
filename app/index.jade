@@ -86,18 +86,7 @@ head
       .row
         .col-xs-12(ui-view="alerts")
       .row
-        .col-xs-3
-          .left-navigation(ng-show="status.isLoggedIn")
-            div(ui-view="accounts")
-            //- table.left-header
-            //-   tr
-            //-     td.header
-            //-       img(src="img/security-center-icon.png")
-            //-       |Security Center
-            //-     td.right
-            //-       a
-            //-         img(src="img/icon-collapse.png")
-            div(ui-view="payment-requests")
+        .col-xs-3(ui-view="left")
         .col-xs-9
           div(ui-view="top")
           div(ui-view="right")

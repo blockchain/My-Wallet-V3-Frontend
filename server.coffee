@@ -23,6 +23,11 @@ app.get "/partials/:name", (req, res) ->
   res.render "partials/" + name
   return
   
+app.get "/partials/settings/:name", (req, res) ->
+  name = req.params.name
+  res.render "partials/settings/" + name
+  return
+  
 app.get "/templates/:name", (req, res) ->
   name = req.params.name
   res.render "templates/" + name

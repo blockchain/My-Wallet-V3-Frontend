@@ -20,7 +20,7 @@ module.exports = function(config){
       // 'app/bower_components/angular-translate/angular-translate.js',
       // 'app/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
       'assets/js/app.js.coffee',
-      'assets/js/controllers/*.js.coffee',
+      'assets/js/controllers/**/*.js.coffee',
       'assets/js/filters.js.coffee',
       'assets/js/services/*.js.coffee',
       'tests/**/*.coffee',

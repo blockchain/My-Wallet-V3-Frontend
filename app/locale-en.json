@@ -48,5 +48,7 @@
   "ADVANCED" : "Advanced",
   "SEND_TO_PLACEHOLDER" : "Bitcoin address, email or mobile number",
   "SEND_BITCOIN" : "Send Bitcoin",
-  "LANGUAGE" : "Language"
+  "LANGUAGE" : "Language",
+  "MY_DETAILS" : "My Details",
+  "WALLET_SETTINGS" : "Wallet Settings"
  }

@@ -1,19 +1,9 @@
 walletApp.config ($stateProvider, $urlRouterProvider) ->
     $urlRouterProvider.otherwise("/");
 
-    accounts = {
-      templateUrl: "partials/accounts"
-      controller: "AccountsCtrl"
-    }
-    
     alerts = {
       templateUrl: "partials/alerts"
       controller: "AlertsCtrl"
-    }
-    
-    paymentRequests = {
-      templateUrl: "partials/payment-requests"
-      controller: "PaymentRequestsCtrl"
     }
     
     top =  {
@@ -26,15 +16,22 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       controller: "NavigationCtrl"
     }
     
+    settingsNavigation = {
+      templateUrl: "partials/settings/navigation"
+      controller: "SettingsNavigationCtrl"
+    }
+    
     $stateProvider.state("dashboard",
       url: "/"
       views: {
-        "navigation" : navigation,
-        "alerts" : alerts,
-        "top"  : top,
-        "accounts" : accounts,
-        "payment-requests" : paymentRequests,
-        "right": { 
+        navigation: navigation,
+        alerts: alerts,
+        top : top,
+        left: { 
+          templateUrl: "partials/accounts-navigation"
+          controller: "AccountsPaymentRequestsCtrl"
+        },
+        right: { 
           templateUrl: "partials/dashboard"
           controller: "DashboardCtrl"
         }
@@ -44,15 +41,47 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     $stateProvider.state("transactions",
       url: "/transactions/:accountIndex"
       views: {
-        "navigation" : navigation,
-        "alerts" : alerts,
-        "top"  : top,
-        "accounts" : accounts,
-        "payment-requests" : paymentRequests,
+        navigation: navigation,
+        alerts: alerts,
+        top: top,
+        left: { 
+          templateUrl: "partials/accounts-navigation"
+          controller: "AccountsPaymentRequestsCtrl"
+        },
         right: {
           templateUrl: "partials/transactions"
           controller: "TransactionsCtrl"
         }
       }
-
+    )
+    
+    $stateProvider.state("settings",  
+      abstract: true
+      views: {
+        navigation: navigation,
+        alerts: alerts,
+        left: settingsNavigation
+        right: {
+          controller: "SettingsCtrl"
+          templateUrl: "partials/settings/settings"
+        }
+      }
+    ) 
+    .state("settings.my-details",
+      url: "/settings/my-details"
+      views: {
+        settings: {
+          templateUrl: "partials/settings/my-details"
+          controller: "SettingsMyDetailsCtrl"
+        }
+      }
+    )
+    .state("settings.wallet",
+      url: "/settings/wallet"
+      views: {
+        settings: {
+          templateUrl: "partials/settings/wallet"
+          controller: "SettingsWalletCtrl"
+        }
+      }
     )

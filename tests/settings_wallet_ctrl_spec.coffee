@@ -1,8 +1,5 @@
-describe "AccountCtrl", ->
+describe "SettingsWalletCtrl", ->
   scope = undefined
-  modalInstance =
-    close: ->
-    dismiss: ->
   
   beforeEach angular.mock.module("walletApp")
   
@@ -15,10 +12,9 @@ describe "AccountCtrl", ->
       
       scope = $rootScope.$new()
             
-      $controller "AccountCtrl",
+      $controller "SettingsWalletCtrl",
         $scope: scope,
         $stateParams: {},
-        $modalInstance: modalInstance
         
       scope.$digest()
       
@@ -26,38 +22,6 @@ describe "AccountCtrl", ->
 
     return
     
-  it "specs should be logged in by default",  inject((Wallet, $state) ->
-    expect(scope.status.isLoggedIn).toBe(true)    
-  
-    return
-  )
-    
-  it "should logout",  inject((Wallet, $stateParams) ->
-    spyOn(Wallet, "logout").and.callThrough()
-    
-    scope.logout()
-    
-    expect(Wallet.logout).toHaveBeenCalled()
-    
-    expect(scope.status.isLoggedIn).toBe(false)    
-    
-    return
-  )  
-  
-  it "should not logout if save is in progress",  inject((Wallet, MyWallet, $stateParams) ->
-    spyOn(Wallet, "logout").and.callThrough()
-    
-    MyWallet.sync()
-    
-    scope.logout()
-    
-    expect(Wallet.logout).not.toHaveBeenCalled()
-    
-    expect(scope.status.isLoggedIn).toBe(true)    
-    
-    return
-  )
-  
   describe "language", ->   
     it "should be set on load", inject((Wallet) ->
       expect(scope.settings.language).toEqual({code: "en", name: "English"})

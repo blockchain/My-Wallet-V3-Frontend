@@ -1,10 +1,4 @@
-@NavigationCtrl = ($scope, Wallet, MyWallet, $modal) ->
-  
-  $scope.account = () ->
-    modalInstance = $modal.open(
-      templateUrl: "partials/account"
-      controller: AccountCtrl
-    )
+@NavigationCtrl = ($scope, Wallet) ->
   
   #################################
   #           Private             #

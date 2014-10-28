@@ -46,6 +46,8 @@
   "MOVED_BITCOIN_WITHIN_WALLET" : "<b>Je</b> verplaatste bitcoin naar <b>{{ to }}</b>",
   "SPENT_BITCOIN" : "<b>Je</b> stuurde bitcoin naar <b>{{ to }}</b>",
   "ADVANCED" : "Geavanceerd",
-  "SEND_BITCOIN" : "Verzend Bitcoin"
+  "SEND_BITCOIN" : "Verzend Bitcoin",
+  "MY_DETAILS" : "Mijn Gegevens",
+  "WALLET_SETTINGS" : "Wallet Instellingen"
   
  }

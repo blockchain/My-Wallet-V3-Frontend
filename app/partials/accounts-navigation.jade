@@ -1,0 +1,38 @@
+.left-navigation(ng-show="status.isLoggedIn")
+  div
+    table.left-header.accounts
+      tr
+        td.header 
+          img(src="img/my-accounts-icon.png")
+          span(translate="MY_ACCOUNTS") 
+        td.right
+          a(ng-click="createAccount()", translate="NEW_ACCOUNT")
+    table.left
+      tr(ng-class="selectedAccountIndex == '' ? 'active' : ''")
+        td 
+          a(ui-sref="transactions({accountIndex:''})", translate="ALL_ACCOUNTS")
+        td.amount {{ totals.fiat | currency:settings.currency.symbol }}
+      tr(ng-repeat="account in accounts | filter:{active:true}", ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''")
+        td 
+          a(ui-sref="transactions({accountIndex: $index.toString()})") {{ account.label }}
+        td.amount {{ account.balance | fiat:settings.currency }}
+  //- table.left-header
+  //-   tr
+  //-     td.header
+  //-       img(src="img/security-center-icon.png")
+  //-       |Security Center
+  //-     td.right
+  //-       a
+  //-         img(src="img/icon-collapse.png")
+  div(ng-show="(requests | filter:{complete:false,canceled:false}).length > 0")
+    table.left-header
+      tr
+        td.header(translate="PENDING_PAYMENTS")
+        td.right
+    table.left
+      tr(ng-repeat="request in requests | filter:{complete:false,canceled:false}")
+        td 
+          a(ng-click="open(request)")
+            {{ request.address | limitTo: 15 }}...
+        td.amount {{ request.amount | fiat:settings.currency }}
+    

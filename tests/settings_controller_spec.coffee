@@ -1,4 +1,4 @@
-describe "TransactionsCtrl", ->
+describe "SettingsCtrl", ->
   scope = undefined
   
   beforeEach angular.mock.module("walletApp")
@@ -12,7 +12,7 @@ describe "TransactionsCtrl", ->
       
       scope = $rootScope.$new()
             
-      $controller "TransactionsCtrl",
+      $controller "SettingsCtrl",
         $scope: scope,
         $stateParams: {}
       
@@ -38,22 +38,6 @@ describe "TransactionsCtrl", ->
     
     expect($state.go).not.toHaveBeenCalled()
 
-  )
-  
-  it "should have access to address book",  inject(() ->
-    expect(scope.addressBook).toBeDefined()
-    expect(scope.addressBook["17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq"]).toBe("John")
-    
-  )
-  
-
-  it "should receive a new transaction from mock after 3 seconds on account 1",  inject((MyWallet, Wallet, $timeout) ->
-    pending() # Not sure how to test this with stateParams
-    # before = Wallet.transactions.length
-    #
-    # MyWallet.mockSpontanuousBehavior()
-    # $timeout.flush()
-    # expect(Wallet.transactions.length).toBe(before + 1)
   )
 
     
