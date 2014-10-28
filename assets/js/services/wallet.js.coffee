@@ -514,8 +514,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   
   wallet.setLanguage = (language) ->
     $translate.use(language.code)
-    wallet.my.change_language(language.code)
     wallet.settings.language = language
+    
+  wallet.changeLanguage = (language) ->
+    wallet.my.change_language(language.code)
+    wallet.setLanguage(language)
     
   wallet.languages = [
     {code: "de", name: "German"}

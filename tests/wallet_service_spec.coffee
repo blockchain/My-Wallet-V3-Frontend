@@ -384,7 +384,7 @@ describe "walletServices", () ->
       
     it "should switch language", inject((Wallet, MyWallet) ->
       spyOn(MyWallet, "change_language").and.callThrough()
-      Wallet.setLanguage(Wallet.languages[0])
+      Wallet.changeLanguage(Wallet.languages[0])
       expect(MyWallet.change_language).toHaveBeenCalledWith("de")
       expect(MyWallet.getLanguage()).toBe("de")
       expect(Wallet.settings.language.code).toBe("de")

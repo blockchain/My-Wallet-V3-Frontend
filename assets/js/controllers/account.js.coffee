@@ -25,7 +25,7 @@
     
   $scope.$watch "settings.language", (newVal, oldVal) ->
     if oldVal? && newVal isnt oldVal
-      Wallet.setLanguage(newVal)
+      Wallet.changeLanguage(newVal)
   
   #################################
   #           Private             #
