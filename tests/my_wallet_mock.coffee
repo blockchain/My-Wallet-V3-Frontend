@@ -122,10 +122,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.getEmail = () ->
     return email
     
-  myWallet.isEmailVerified = false
+  myWallet.isEmailVerified = true
     
   myWallet.changeEmail = (newVal) ->
     email = newVal
+    myWallet.isEmailVerified = false
     
   myWallet.change_language = (newLanguage) ->
     language = newLanguage

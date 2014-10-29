@@ -58,5 +58,7 @@
   "LANGUAGE_EXPLAIN" : "Set your preferred language",
   "EMAIL_ADDRESS" : "Email Address",
   "EMAIL_ADDRESS_EXPLAIN" : "Your email address is used to login to your wallet on the web or on your mobile device.",
-  "CHANGE_EMAIL_ADDRESS" : "change email address"
+  "CHANGE_EMAIL_ADDRESS" : "change email address",
+  "VERIFIED" : "verified",
+  "UNVERIFIED" : "unverified"
 }

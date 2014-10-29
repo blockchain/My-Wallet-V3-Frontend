@@ -2,6 +2,8 @@ form.form-horizontal(role="form",name="form",novalidate)
   .form-group
     .col-sm-6
       label(translate="EMAIL_ADDRESS")
+      span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isEmailVerified")
+      span.label.label-success(translate="VERIFIED", ng-show="user.isEmailVerified")
       br
       p(translate="EMAIL_ADDRESS_EXPLAIN")    
     .col-sm-6

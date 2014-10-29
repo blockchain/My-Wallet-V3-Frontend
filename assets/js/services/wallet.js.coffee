@@ -427,6 +427,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.user.email = wallet.my.getEmail()
       else
         wallet.user.email = "under@contructi.on"
+        
+      wallet.user.isEmailVerified = wallet.my.isEmailVerified 
   
       # Checks if we already have an HD wallet. If not, create one.
       hdwallet = MyWallet.getHDWallet()
@@ -554,6 +556,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.changeEmail = (email) ->
     wallet.my.changeEmail(email)
     wallet.user.email = wallet.my.getEmail()
+    wallet.user.isEmailVerified = wallet.my.isEmailVerified
     
   wallet.isEmailVerified = () ->
     wallet.my.isEmailVerified
