@@ -436,3 +436,23 @@ describe "walletServices", () ->
     )
     
     return
+    
+  describe "password hint", ->
+    it "should be set after loading", inject((Wallet) ->
+      expect(Wallet.user.passwordHint).toEqual("Same as username")
+    )
+    
+    it "should be an empty string if not set", inject((Wallet) ->
+      pending()
+      expect(Wallet.user.passwordHint).toEqual("")
+    )
+    
+
+    it "can be changed", inject((Wallet, MyWallet) ->
+      spyOn(MyWallet, "update_password_hint1").and.callThrough()
+      Wallet.changePasswordHint("Better hint")
+      expect(MyWallet.update_password_hint1).toHaveBeenCalled()
+      expect(Wallet.user.passwordHint).toBe("Better hint")
+    )
+    
+    return

@@ -43,3 +43,15 @@ form.form-horizontal(role="form",name="form",novalidate)
         b.text-success(translate="PASSWORD_SET")
       p
         a(ng-click="changePassword()", translate="CHANGE_PASSWORD")
+  hr
+  .form-group
+    .col-sm-6
+      label(translate="PASSWORD_HINT")
+      br
+      p(translate="PASSWORD_HINT_EXPLAIN")    
+    .col-sm-6
+      div
+        input#send-to.form-control(type="text",placeholder="Open Sesame",ng-model="newPasswordHint", ng-focus="edit.passwordHint = 1")
+      div(ng-show="edit.passwordHint")     
+        button.btn.btn-primary.btn-small(ng-click="changePasswordHint(newPasswordHint)",ng-disabled="user.passwordHint == newPasswordHint", translate="SAVE")
+        button.btn.btn-info.btn-small(ng-click="edit.passwordHint = false", translate="CANCEL")

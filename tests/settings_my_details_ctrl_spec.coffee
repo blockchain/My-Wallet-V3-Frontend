@@ -94,3 +94,16 @@ describe "SettingsMyDetailsCtrl", ->
 
     return
   
+  describe "password hint", ->   
+  
+    it "should let user change it", inject((Wallet) ->
+      spyOn(Wallet, "changePasswordHint")
+      scope.edit.passwordHint = false
+
+      scope.changePasswordHint("Other hint")
+
+          
+      expect(Wallet.changePasswordHint).toHaveBeenCalledWith("Other hint")
+      
+      return
+    )

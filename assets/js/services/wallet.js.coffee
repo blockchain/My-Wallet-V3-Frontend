@@ -20,7 +20,7 @@ playSound = (id) ->
 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter) -> 
-  wallet = {status: {isLoggedIn: false}, settings: {currency: {conversion: 0}, language: null}, user: {email: null, mobile: null}}
+  wallet = {status: {isLoggedIn: false}, settings: {currency: {conversion: 0}, language: null}, user: {email: null, mobile: null, passwordHint: ""}}
   
   wallet.accounts     = []
   wallet.addressBook  = {}
@@ -434,6 +434,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.user.mobile = result.sms_number # Field is not present if not entered
         wallet.user.isEmailVerified = result.email_verified 
         wallet.user.isMobileVerified = result.sms_verified
+        wallet.user.passwordHint = result.password_hint1 # Field not present if not entered
       )
         
         
@@ -572,6 +573,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.my.changeMobile(mobile)
     wallet.user.mobile = mobile
     wallet.user.isMobileVerified = false
+    
+  wallet.changePasswordHint = (hint) ->
+    wallet.my.update_password_hint1(hint,(()->
+      wallet.user.passwordHint = hint
+    ),(()->))
     
   wallet.isMobileVerified = () ->
     wallet.my.isMobileVerified

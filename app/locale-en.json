@@ -73,5 +73,7 @@
   "CONFIRM_PASSWORD" : "Confirm Password",
   "INCORRECT" : "Incorrect",
   "TOO_SHORT" : "Too short",
-  "NO_MATCH" : "Does not match"
+  "NO_MATCH" : "Does not match",
+  "PASSWORD_HINT" : "Password Hint",
+  "PASSWORD_HINT_EXPLAIN" : "If you forget your password(s), hints can be useful to help you jog your memory. Your hint will be emailed to the email address you have verified."
 }

@@ -133,13 +133,16 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
     
   myWallet.get_account_info = (callback) ->
-    callback({email: email, email_verified: 1, sms_number: mobile, sms_verified: 0})
+    callback({email: email, email_verified: 1, sms_number: mobile, sms_verified: 0, password_hint1: "Same as username"})
     
   myWallet.changeEmail = (newVal) ->
     email = newVal
     
   myWallet.changeMobile = (newVal) ->
     mobile = newVal
+    
+  myWallet.update_password_hint1 = (value, success, fail) ->
+    success()
     
   myWallet.change_language = (newLanguage) ->
     language = newLanguage

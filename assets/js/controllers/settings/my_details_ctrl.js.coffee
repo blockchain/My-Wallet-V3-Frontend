@@ -2,6 +2,9 @@
   $scope.edit = {email: false, mobile: false, password: false, passwordHint: false} 
   $scope.user = Wallet.user
   
+  $scope.$watch "user.passwordHint", (newValue) ->
+    $scope.newPasswordHint = newValue
+  
   $scope.changeEmail = (email) ->
     Wallet.changeEmail(email)
     $scope.edit.email = false
@@ -23,4 +26,7 @@
       templateUrl: "partials/settings/change-password"
       controller: ChangePasswordCtrl
     )
-    
+  
+  $scope.changePasswordHint = (hint) ->
+    Wallet.changePasswordHint(hint)
+    $scope.edit.passwordHint = false   
