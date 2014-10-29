@@ -402,9 +402,8 @@ describe "walletServices", () ->
       spyOn(MyWallet, "changeEmail").and.callThrough()
       Wallet.changeEmail("other@me.com")
       expect(MyWallet.changeEmail).toHaveBeenCalledWith("other@me.com")
-      expect(MyWallet.getEmail()).toBe("other@me.com")
       expect(Wallet.user.email).toBe("other@me.com")
-      expect(Wallet.isEmailVerified()).toBe(false)
+      expect(Wallet.user.isEmailVerified).toBe(false)
     )
     
     return
@@ -418,9 +417,8 @@ describe "walletServices", () ->
       spyOn(MyWallet, "changeMobile").and.callThrough()
       Wallet.changeMobile("+3100000000")
       expect(MyWallet.changeMobile).toHaveBeenCalledWith("+3100000000")
-      expect(MyWallet.getMobile()).toBe("+3100000000")
       expect(Wallet.user.mobile).toBe("+3100000000")
-      expect(Wallet.isMobileVerified()).toBe(false)
+      expect(Wallet.user.isMobileVerified).toBe(false)
     )
     
     return

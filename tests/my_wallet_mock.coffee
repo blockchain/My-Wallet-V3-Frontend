@@ -131,23 +131,15 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.getLanguage = () ->
     return language
     
-  myWallet.getEmail = () ->
-    return email
     
-  myWallet.isEmailVerified = true
+  myWallet.get_account_info = (callback) ->
+    callback({email: email, email_verified: 1, sms_number: mobile, sms_verified: 0})
     
   myWallet.changeEmail = (newVal) ->
     email = newVal
-    myWallet.isEmailVerified = false
-    
-  myWallet.getMobile = () ->
-    return mobile
-    
-  myWallet.isMobileVerified = true
     
   myWallet.changeMobile = (newVal) ->
     mobile = newVal
-    myWallet.isMobileVerified = false
     
   myWallet.change_language = (newLanguage) ->
     language = newLanguage

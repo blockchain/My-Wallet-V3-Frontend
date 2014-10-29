@@ -428,19 +428,15 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         
       wallet.my.get_ticker(success, fail)
       
-      if $rootScope.isMock ||  wallet.my.getEmail != undefined
-        wallet.user.email = wallet.my.getEmail()
-      else
-        wallet.user.email = "under@contructi.on"
+      # Get email address, etc
+      wallet.my.get_account_info((result)->
+        wallet.user.email = result.email
+        wallet.user.mobile = result.sms_number # Field is not present if not entered
+        wallet.user.isEmailVerified = result.email_verified 
+        wallet.user.isMobileVerified = result.sms_verified
+      )
         
-      if $rootScope.isMock ||  wallet.my.getMobile != undefined
-        wallet.user.mobile = wallet.my.getMobile()
-      else
-        wallet.user.mobile = "+1800UNDERCONSTRUCTION"
         
-      wallet.user.isEmailVerified = wallet.my.isEmailVerified 
-      wallet.user.isMobileVerified = wallet.my.isMobileVerified 
-  
       # Checks if we already have an HD wallet. If not, create one.
       hdwallet = MyWallet.getHDWallet()
       
@@ -566,16 +562,16 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   
   wallet.changeEmail = (email) ->
     wallet.my.changeEmail(email)
-    wallet.user.email = wallet.my.getEmail()
-    wallet.user.isEmailVerified = wallet.my.isEmailVerified
+    wallet.user.email = email
+    wallet.user.isEmailVerified = false
     
   wallet.isEmailVerified = () ->
     wallet.my.isEmailVerified
     
   wallet.changeMobile = (mobile) ->
     wallet.my.changeMobile(mobile)
-    wallet.user.mobile = wallet.my.getMobile()
-    wallet.user.isMobileVerified = wallet.my.isMobileVerified
+    wallet.user.mobile = mobile
+    wallet.user.isMobileVerified = false
     
   wallet.isMobileVerified = () ->
     wallet.my.isMobileVerified
