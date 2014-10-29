@@ -60,5 +60,8 @@
   "EMAIL_ADDRESS_EXPLAIN" : "Your email address is used to login to your wallet on the web or on your mobile device.",
   "CHANGE_EMAIL_ADDRESS" : "change email address",
   "VERIFIED" : "verified",
-  "UNVERIFIED" : "unverified"
+  "UNVERIFIED" : "unverified",
+  "MOBILE_NUMBER" : "Mobile Number",
+  "MOBILE_NUMBER_EXPLAIN" : "Your mobile is used to help secure your wallet from unauthorized access.",
+  "CHANGE_MOBILE_NUMBER" : "change mobile number"
 }

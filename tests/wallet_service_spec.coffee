@@ -408,4 +408,20 @@ describe "walletServices", () ->
     )
     
     return
+    
+  describe "mobile", ->
+    it "should be set after loading", inject((Wallet) ->
+      expect(Wallet.user.mobile).toEqual("+3112345678")
+    )
+      
+    it "should allow change", inject((Wallet, MyWallet) ->
+      spyOn(MyWallet, "changeMobile").and.callThrough()
+      Wallet.changeMobile("+3100000000")
+      expect(MyWallet.changeMobile).toHaveBeenCalledWith("+3100000000")
+      expect(MyWallet.getMobile()).toBe("+3100000000")
+      expect(Wallet.user.mobile).toBe("+3100000000")
+      expect(Wallet.isMobileVerified()).toBe(false)
+    )
+    
+    return
   

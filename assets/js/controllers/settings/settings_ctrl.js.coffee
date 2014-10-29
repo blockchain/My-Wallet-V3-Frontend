@@ -15,4 +15,3 @@
   
   # First load:      
   $scope.didLoad()
-  

@@ -48,3 +48,35 @@ describe "SettingsMyDetailsCtrl", ->
     )
     
     return
+    
+  describe "mobile", ->   
+    it "should be set on load", inject((Wallet) ->
+      expect(scope.user.mobile).toEqual("+3112345678")
+    )
+    
+    it "should not spontaniously save", inject((Wallet) ->
+      spyOn(Wallet, "changeMobile")
+      expect(Wallet.changeMobile).not.toHaveBeenCalled()
+      
+      return
+    )
+  
+    it "should let user change it", inject((Wallet) ->
+      spyOn(Wallet, "changeMobile")
+
+      scope.changeMobile("+3100000000")
+      
+      scope.$digest()
+    
+      expect(Wallet.changeMobile).toHaveBeenCalledWith("+3100000000")
+      
+      return
+    )
+    
+    it "should validate proposed new number", ->
+      expect(scope.validateMobileNumber("")).toBe(false)
+      expect(scope.validateMobileNumber("+3100000000")).toBe(true)
+      expect(scope.validateMobileNumber("+monkey")).toBe(false)
+      expect(scope.validateMobileNumber("+1800monkey")).toBe(false)
+
+    return

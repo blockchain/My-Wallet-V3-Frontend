@@ -20,7 +20,7 @@ playSound = (id) ->
 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter) -> 
-  wallet = {status: {isLoggedIn: false}, settings: {currency: {conversion: 0}, language: null}, user: {email: null}}
+  wallet = {status: {isLoggedIn: false}, settings: {currency: {conversion: 0}, language: null}, user: {email: null, mobile: null}}
   
   wallet.accounts     = []
   wallet.addressBook  = {}
@@ -428,7 +428,13 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       else
         wallet.user.email = "under@contructi.on"
         
+      if $rootScope.isMock ||  wallet.my.getMobile != undefined
+        wallet.user.mobile = wallet.my.getMobile()
+      else
+        wallet.user.mobile = "+1800UNDERCONSTRUCTION"
+        
       wallet.user.isEmailVerified = wallet.my.isEmailVerified 
+      wallet.user.isMobileVerified = wallet.my.isMobileVerified 
   
       # Checks if we already have an HD wallet. If not, create one.
       hdwallet = MyWallet.getHDWallet()
@@ -560,6 +566,14 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
   wallet.isEmailVerified = () ->
     wallet.my.isEmailVerified
+    
+  wallet.changeMobile = (mobile) ->
+    wallet.my.changeMobile(mobile)
+    wallet.user.mobile = wallet.my.getMobile()
+    wallet.user.isMobileVerified = wallet.my.isMobileVerified
+    
+  wallet.isMobileVerified = () ->
+    wallet.my.isMobileVerified
   
   ########################################
   # Testing: only works on mock MyWallet #
