@@ -63,5 +63,15 @@
   "UNVERIFIED" : "unverified",
   "MOBILE_NUMBER" : "Mobile Number",
   "MOBILE_NUMBER_EXPLAIN" : "Your mobile is used to help secure your wallet from unauthorized access.",
-  "CHANGE_MOBILE_NUMBER" : "change mobile number"
+  "CHANGE_MOBILE_NUMBER" : "change mobile number",
+  "WALLET_PASSWORD" : "Wallet Password",
+  "WALLET_PASSWORD_EXPLAIN" : "Your password is never shared with our servers. This means your wallet would still be safe in the event our servers were compromised. However it means there is no password reset functionality.",
+  "PASSWORD_SET" : "Password Set",
+  "CHANGE_PASSWORD" : "change password",
+  "CURRENT_PASSWORD" : "Current Password",
+  "NEW_PASSWORD" : "New Password",
+  "CONFIRM_PASSWORD" : "Confirm Password",
+  "INCORRECT" : "Incorrect",
+  "TOO_SHORT" : "Too short",
+  "NO_MATCH" : "Does not match"
 }

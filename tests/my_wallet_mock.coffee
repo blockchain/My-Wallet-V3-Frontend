@@ -74,6 +74,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       monitorFunc({type: "error", message: "Wrong password", code: 0});
       return
       
+    myWallet.password = password
+    
     this.refresh()
     
     eventListener("did_decrypt")
@@ -113,6 +115,15 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     accounts = []
     if !(karma?) || !karma
       window.location = ""
+      
+  myWallet.isCorrectMainPassword = (candidate) ->
+    return candidate == myWallet.password
+    
+  myWallet.changePassword = (newPassword) ->
+    myWallet.password = newPassword
+    # wallets = localStorageService.get("mockWallets")
+    # wallets[myWallet.uid].password = newPassword
+    # localStorageService.set("mockWallets", wallets)
       
   myWallet.get_ticker = (success, fail) ->
     success()

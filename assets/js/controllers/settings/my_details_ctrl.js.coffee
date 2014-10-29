@@ -1,4 +1,4 @@
-@SettingsMyDetailsCtrl = ($scope, Wallet) ->
+@SettingsMyDetailsCtrl = ($scope, Wallet, $modal) ->
   $scope.edit = {email: false, mobile: false, password: false, passwordHint: false} 
   $scope.user = Wallet.user
   
@@ -17,3 +17,10 @@
     return false if isNaN(parseInt(candidate.slice(1)))
     return false if parseInt(candidate.slice(1)).toString() != candidate.slice(1)
     return true
+    
+  $scope.changePassword = () ->
+    modalInstance = $modal.open(
+      templateUrl: "partials/settings/change-password"
+      controller: ChangePasswordCtrl
+    )
+    

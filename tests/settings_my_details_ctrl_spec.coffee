@@ -1,6 +1,9 @@
 describe "SettingsMyDetailsCtrl", ->
   scope = undefined
   
+  modal =
+    open: ->
+  
   beforeEach angular.mock.module("walletApp")
   
   beforeEach ->
@@ -15,6 +18,7 @@ describe "SettingsMyDetailsCtrl", ->
       $controller "SettingsMyDetailsCtrl",
         $scope: scope,
         $stateParams: {},
+        $modal: modal
         
       scope.$digest()
       
@@ -80,3 +84,13 @@ describe "SettingsMyDetailsCtrl", ->
       expect(scope.validateMobileNumber("+1800monkey")).toBe(false)
 
     return
+    
+  describe "password", ->   
+    it "can be changed through modal", inject(($modal) ->
+      spyOn(modal, "open")
+      scope.changePassword()
+      expect(modal.open).toHaveBeenCalled()
+    )
+
+    return
+  

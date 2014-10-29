@@ -60,6 +60,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.didLogoutByChoice = true
     wallet.my.logout() # broadcast "logging_out"
 
+  wallet.isCorrectMainPassword = (candidate) ->
+    wallet.my.isCorrectMainPassword(candidate)
+    
+  wallet.changePassword = (newPassword) ->
+    wallet.my.changePassword(newPassword)
   
   ####################
   #   Transactions   #

@@ -425,3 +425,16 @@ describe "walletServices", () ->
     
     return
   
+  describe "password", ->
+    it "can be checked", inject((Wallet, MyWallet) ->
+      expect(MyWallet.isCorrectMainPassword("test")).toBe(true)
+    )
+      
+    it "can be changed", inject((Wallet, MyWallet) ->
+      spyOn(MyWallet, "changePassword").and.callThrough()
+      Wallet.changePassword("newpassword")
+      expect(MyWallet.changePassword).toHaveBeenCalledWith("newpassword")
+      expect(MyWallet.isCorrectMainPassword("newpassword")).toBe(true)
+    )
+    
+    return

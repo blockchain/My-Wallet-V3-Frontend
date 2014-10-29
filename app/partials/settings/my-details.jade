@@ -32,3 +32,14 @@ form.form-horizontal(role="form",name="form",novalidate)
         input#send-to.form-control(type="text",name="mobile",placeholder="{{ user.mobile }}",ng-model="newMobile")
         button.btn.btn-primary.btn-small(ng-click="changeMobile(newEmail)",ng-disabled="!validateMobileNumber(newMobile)", translate="SAVE")
         button.btn.btn-info.btn-small(ng-click="edit.mobile = false", translate="CANCEL")
+  hr
+  .form-group
+    .col-sm-6
+      label(translate="WALLET_PASSWORD")
+      br
+      p(translate="WALLET_PASSWORD_EXPLAIN")    
+    .col-sm-6
+      p
+        b.text-success(translate="PASSWORD_SET")
+      p
+        a(ng-click="changePassword()", translate="CHANGE_PASSWORD")
