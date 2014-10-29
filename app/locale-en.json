@@ -55,5 +55,8 @@
   "SECURITY_CENTER" : "Security Center",
   "WALLET_RECOVERY" : "Wallet Recovery",
   "ARE_YOU_SURE_LOGOUT" : "Are you sure you wish to logout?",
-  "LANGUAGE_EXPLAIN" : "Set your preferred language" 
+  "LANGUAGE_EXPLAIN" : "Set your preferred language",
+  "EMAIL_ADDRESS" : "Email Address",
+  "EMAIL_ADDRESS_EXPLAIN" : "Your email address is used to login to your wallet on the web or on your mobile device.",
+  "CHANGE_EMAIL_ADDRESS" : "change email address"
 }

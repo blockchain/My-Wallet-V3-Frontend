@@ -392,4 +392,20 @@ describe "walletServices", () ->
     )
     
     return
+    
+  describe "email", ->
+    it "should be set after loading", inject((Wallet) ->
+      expect(Wallet.user.email).toEqual("steve@me.com")
+    )
+      
+    it "should allow changing email", inject((Wallet, MyWallet) ->
+      spyOn(MyWallet, "changeEmail").and.callThrough()
+      Wallet.changeEmail("other@me.com")
+      expect(MyWallet.changeEmail).toHaveBeenCalledWith("other@me.com")
+      expect(MyWallet.getEmail()).toBe("other@me.com")
+      expect(Wallet.user.email).toBe("other@me.com")
+      expect(Wallet.isEmailVerified()).toBe(false)
+    )
+    
+    return
   

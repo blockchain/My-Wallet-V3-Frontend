@@ -31,6 +31,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   transactions = []
   
   language = "en"
+  email = "steve@me.com"
 
   monitorFunc = undefined  # New system
   eventListener = undefined # Old system
@@ -117,6 +118,14 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.getLanguage = () ->
     return language
+    
+  myWallet.getEmail = () ->
+    return email
+    
+  myWallet.isEmailVerified = false
+    
+  myWallet.changeEmail = (newVal) ->
+    email = newVal
     
   myWallet.change_language = (newLanguage) ->
     language = newLanguage
