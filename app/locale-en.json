@@ -75,5 +75,10 @@
   "TOO_SHORT" : "Too short",
   "NO_MATCH" : "Does not match",
   "PASSWORD_HINT" : "Password Hint",
-  "PASSWORD_HINT_EXPLAIN" : "If you forget your password(s), hints can be useful to help you jog your memory. Your hint will be emailed to the email address you have verified."
+  "PASSWORD_HINT_EXPLAIN" : "If you forget your password(s), hints can be useful to help you jog your memory. Your hint will be emailed to the email address you have verified.",
+  "VERIFY_MOBILE_FAILED" : "Could not verify mobile number",
+  "CHANGE_MOBILE_FAILED" : "Could not change mobile number",
+  "CHANGE_EMAIL_FAILED" : "Could not change email address",
+  "CHANGE_PASSWORD_SUCCESS" : "Password has been changed", 
+  "CHANGE_PASSWORD_FAILED" : "Could not change password"
 }

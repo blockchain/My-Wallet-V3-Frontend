@@ -398,10 +398,10 @@ describe "walletServices", () ->
       expect(Wallet.user.email).toEqual("steve@me.com")
     )
       
-    it "should allow changing email", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet, "changeEmail").and.callThrough()
+    it "can be changed", inject((Wallet, MyWallet) ->
+      spyOn(MyWallet, "change_email").and.callThrough()
       Wallet.changeEmail("other@me.com")
-      expect(MyWallet.changeEmail).toHaveBeenCalledWith("other@me.com")
+      expect(MyWallet.change_email).toHaveBeenCalled()
       expect(Wallet.user.email).toBe("other@me.com")
       expect(Wallet.user.isEmailVerified).toBe(false)
     )
@@ -410,15 +410,28 @@ describe "walletServices", () ->
     
   describe "mobile", ->
     it "should be set after loading", inject((Wallet) ->
-      expect(Wallet.user.mobile).toEqual("+3112345678")
+      expect(Wallet.user.mobile.number).toEqual("012345678")
     )
       
     it "should allow change", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet, "changeMobile").and.callThrough()
-      Wallet.changeMobile("+3100000000")
-      expect(MyWallet.changeMobile).toHaveBeenCalledWith("+3100000000")
-      expect(Wallet.user.mobile).toBe("+3100000000")
+      spyOn(MyWallet, "changeMobileNumber").and.callThrough()
+      newNumber = {country: "+31", number: "0100000000"}
+      Wallet.changeMobile(newNumber )
+      expect(MyWallet.changeMobileNumber).toHaveBeenCalled()
+      expect(Wallet.user.mobile).toBe(newNumber)
       expect(Wallet.user.isMobileVerified).toBe(false)
+    )
+    
+    it "can be verified", inject((Wallet, MyWallet) ->
+      spyOn(MyWallet, "verifyMobile").and.callThrough()
+
+      Wallet.verifyMobile("12345")
+      
+      expect(MyWallet.verifyMobile).toHaveBeenCalled()
+      
+      expect(Wallet.user.isMobileVerified).toBe(true)
+    
+      return
     )
     
     return
@@ -431,7 +444,7 @@ describe "walletServices", () ->
     it "can be changed", inject((Wallet, MyWallet) ->
       spyOn(MyWallet, "changePassword").and.callThrough()
       Wallet.changePassword("newpassword")
-      expect(MyWallet.changePassword).toHaveBeenCalledWith("newpassword")
+      expect(MyWallet.changePassword).toHaveBeenCalled()
       expect(MyWallet.isCorrectMainPassword("newpassword")).toBe(true)
     )
     

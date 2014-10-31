@@ -2,6 +2,9 @@
   $scope.edit = {email: false, mobile: false, password: false, passwordHint: false} 
   $scope.user = Wallet.user
   
+  $scope.$watch "user.mobile.number + user.mobile.country", (newValue) ->
+    $scope.user.internationalMobileNumber = Wallet.internationalPhoneNumber($scope.user.mobile)
+  
   $scope.$watch "user.passwordHint", (newValue) ->
     $scope.newPasswordHint = newValue
   
@@ -9,16 +12,20 @@
     Wallet.changeEmail(email)
     $scope.edit.email = false
   
-  $scope.changeMobile = (mobile) ->
+  $scope.changeMobile = (number) ->
+    mobile = {country: $scope.user.mobile.country, number: number} # Pending a country dropdown
     Wallet.changeMobile(mobile)
     $scope.edit.mobile = false   
+    
+  $scope.verifyMobile = (code) ->
+    Wallet.verifyMobile(code)
   
   $scope.validateMobileNumber = (candidate) ->
     return false unless candidate?
     return false if candidate.length < 4
-    return false if candidate[0] != "+"
-    return false if isNaN(parseInt(candidate.slice(1)))
-    return false if parseInt(candidate.slice(1)).toString() != candidate.slice(1)
+    return false if candidate[0] != "0"
+    return false if isNaN(parseInt(candidate))
+    return false if parseInt(candidate, 10).toString() != candidate.replace(/^0+/, '')
     return true
     
   $scope.changePassword = () ->

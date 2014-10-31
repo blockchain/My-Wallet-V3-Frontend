@@ -25,13 +25,18 @@ form.form-horizontal(role="form",name="form",novalidate)
       p(translate="MOBILE_NUMBER_EXPLAIN")    
     .col-sm-6
       div(ng-hide="edit.mobile")
-        p.form-control-static {{ user.mobile }}
+        p.form-control-static {{ user.internationalMobileNumber }}
         p
           a(ng-click="edit.mobile = !edit.mobile", translate="CHANGE_MOBILE_NUMBER")
       div(ng-show="edit.mobile")     
-        input#send-to.form-control(type="text",name="mobile",placeholder="{{ user.mobile }}",ng-model="newMobile")
-        button.btn.btn-primary.btn-small(ng-click="changeMobile(newEmail)",ng-disabled="!validateMobileNumber(newMobile)", translate="SAVE")
+        input.form-control(type="text",name="mobile",placeholder="{{ user.mobile.number }}",ng-model="newMobile")
+        button.btn.btn-primary.btn-small(ng-click="changeMobile(newMobile)",ng-disabled="!validateMobileNumber(newMobile)", translate="SAVE")
         button.btn.btn-info.btn-small(ng-click="edit.mobile = false", translate="CANCEL")
+      .row(ng-show="!user.isMobileVerified")
+        .col-xs-9
+          input.form-control(type="text",placeholder="AB123",ng-model="code")
+        .col-xs-3
+          button.btn.btn-primary(ng-click="verifyMobile(code)",ng-disabled="!code || code.length < 3", translate="VERIFY")    
   hr
   .form-group
     .col-sm-6

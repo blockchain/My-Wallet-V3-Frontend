@@ -64,7 +64,13 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.my.isCorrectMainPassword(candidate)
     
   wallet.changePassword = (newPassword) ->
-    wallet.my.changePassword(newPassword)
+    wallet.my.changePassword(newPassword, (()-> 
+      $translate("CHANGE_PASSWORD_SUCCESS").then (translation) ->
+        wallet.displaySuccess(translation)
+    ),() ->
+      $translate("CHANGE_PASSWORD_FAILED").then (translation) ->
+        wallet.displayError(translation) 
+    )
   
   ####################
   #   Transactions   #
@@ -135,10 +141,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         observer.transactionDidFailWithError(e.message)
       else if e isnt null
         observer.transactionDidFailWithError(e)
-        $rootScope.$apply()
+        wallet.applyIfNeeded()
       else
         observer.transactionDidFailWithError("Unknown error")
-        $rootScope.$apply()
+        wallet.applyIfNeeded()
     
     wallet.my.sendBitcoinsForAccount(fromAccountIndex, to, parseInt(amount.multiply(100000000).format("1")), 10000, null, success, error)
       
@@ -399,7 +405,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.displayWarning(translation)
       wallet.refreshPaymentRequests()
     else if event == "error_restoring_wallet"
-      $rootScope.$apply()        
+      wallet.applyIfNeeded()      
     else if event == "did_set_guid" # Wallet retrieved from server
       wallet.my.restoreWallet(wallet.password)
       wallet.password = undefined
@@ -419,10 +425,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           
           wallet.refreshPaymentRequests()
         
-          if MyWallet.mockShouldReceiveNewTransaction == undefined
-            $rootScope.$apply()
-        
-        
+          wallet.applyIfNeeded()
+
       fail = (error) ->
         console.log(error)
         
@@ -431,7 +435,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       # Get email address, etc
       wallet.my.get_account_info((result)->
         wallet.user.email = result.email
-        wallet.user.mobile = result.sms_number # Field is not present if not entered
+        if result.sms_number
+           wallet.user.mobile = {country: result.sms_number.split(" ")[0], number: "0" + result.sms_number.split(" ")[1]}
+        else # Field is not present if not entered
+          wallet.user.mobile = {country: "+1", number: ""}          
+          
         wallet.user.isEmailVerified = result.email_verified 
         wallet.user.isMobileVerified = result.sms_verified
         wallet.user.passwordHint = result.password_hint1 # Field not present if not entered
@@ -441,20 +449,20 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       # Checks if we already have an HD wallet. If not, create one.
       hdwallet = MyWallet.getHDWallet()
       
-      if MyWallet.mockShouldReceiveNewTransaction == undefined
-        $rootScope.$apply()
+      wallet.applyIfNeeded()
+      
     else if event == "on_wallet_decrypt_finish" # Non-HD part is decrypted
       # Get language:
       code =  wallet.my.getLanguage()
       language = $filter('getByProperty')('code', code, wallet.languages)
       wallet.setLanguage(language)
-      if MyWallet.mockShouldReceiveNewTransaction == undefined
-        $rootScope.$apply()
+      wallet.applyIfNeeded()
+      
     else if event == "did_decrypt"   # Wallet decrypted succesfully  
       wallet.status.isLoggedIn = true 
       wallet.updateAccounts()  
-      if MyWallet.mockShouldReceiveNewTransaction == undefined
-        $rootScope.$apply()
+      wallet.applyIfNeeded()
+      
     else if event == "hd_wallets_does_not_exist"
       # Create a new one:
       console.log "Creating new HD wallet..."
@@ -462,20 +470,20 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
       wallet.updateAccounts()  
-      if MyWallet.mockShouldReceiveNewTransaction == undefined
-        $rootScope.$apply()
+      wallet.applyIfNeeded()
+      
     else if event == "hw_wallet_balance_updated"
       wallet.updateAccounts()  
-      if MyWallet.mockShouldReceiveNewTransaction == undefined
-        $rootScope.$apply()
+      wallet.applyIfNeeded()
+      
     else if event == "wallet not found" # Only works in the mock atm
       $translate("WALLET_NOT_FOUND").then (translation) ->
         wallet.displayError(translation)
     else if event == "ticker_updated" || event == "did_set_latest_block"
       if wallet.status.isLoggedIn 
         wallet.updateAccounts()  
-      if MyWallet.mockShouldReceiveNewTransaction == undefined
-        $rootScope.$apply()
+      wallet.applyIfNeeded()
+      
     else if event == "logging_out"
       if wallet.didLogoutByChoice == true
         $translate("LOGGED_OUT").then (translation) ->
@@ -483,7 +491,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       else
         $translate("LOGGED_OUT_AUTOMATICALLY").then (translation) ->
           $cookieStore.put("alert-warning", translation)
-          $rootScope.$apply()
+          wallet.applyIfNeeded()
         
       wallet.status.isLoggedIn = false
       while wallet.accounts.length > 0
@@ -502,8 +510,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     if event.type == "error"
       wallet.displayError(event.message)
       console.log event
-      if MyWallet.mockShouldReceiveNewTransaction == undefined
-        $rootScope.$apply()
+      wallet.applyIfNeeded()
+      
     else 
       console.log event
 
@@ -562,17 +570,49 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   ]
   
   wallet.changeEmail = (email) ->
-    wallet.my.changeEmail(email)
-    wallet.user.email = email
-    wallet.user.isEmailVerified = false
+    wallet.my.change_email(email, (()->
+      wallet.user.email = email
+      wallet.user.isEmailVerified = false
+      wallet.applyIfNeeded()
+    ), ()->
+      $translate("CHANGE_EMAIL_FAILED").then (translation) ->
+        wallet.displayError(translation) 
+        wallet.applyIfNeeded()
+    )
+
     
   wallet.isEmailVerified = () ->
     wallet.my.isEmailVerified
     
+  wallet.internationalPhoneNumber = (mobile) ->
+    return null unless mobile?
+    mobile.country + " " + mobile.number.replace(/^0+/, '')
+    
   wallet.changeMobile = (mobile) ->
-    wallet.my.changeMobile(mobile)
-    wallet.user.mobile = mobile
-    wallet.user.isMobileVerified = false
+    wallet.my.changeMobileNumber(this.internationalPhoneNumber(mobile), (()->
+      wallet.user.mobile = mobile
+      wallet.user.isMobileVerified = false
+      wallet.applyIfNeeded()
+    ), ()->
+      $translate("CHANGE_MOBILE_FAILED").then (translation) ->
+        wallet.displayError(translation) 
+        wallet.applyIfNeeded()
+    )
+
+  wallet.verifyMobile = (code) ->
+    wallet.my.verifyMobile(code, (()->
+      wallet.user.isMobileVerified = true
+      wallet.applyIfNeeded()
+    ), ()->
+      $translate("VERIFY_MOBILE_FAILED").then (translation) ->
+        wallet.displayError(translation)
+        wallet.applyIfNeeded()
+    )
+
+  wallet.applyIfNeeded = () ->
+    if MyWallet.mockShouldReceiveNewTransaction == undefined
+      $rootScope.$apply()    
+
     
   wallet.changePasswordHint = (hint) ->
     wallet.my.update_password_hint1(hint,(()->

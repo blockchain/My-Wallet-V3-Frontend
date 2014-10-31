@@ -32,7 +32,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   
   language = "en"
   email = "steve@me.com"
-  mobile = "+3112345678"
+  mobile = "+31 12345678"
 
   monitorFunc = undefined  # New system
   eventListener = undefined # Old system
@@ -135,11 +135,16 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.get_account_info = (callback) ->
     callback({email: email, email_verified: 1, sms_number: mobile, sms_verified: 0, password_hint1: "Same as username"})
     
-  myWallet.changeEmail = (newVal) ->
+  myWallet.change_email = (newVal, success, error) ->
     email = newVal
+    success()
     
-  myWallet.changeMobile = (newVal) ->
+  myWallet.changeMobileNumber = (newVal, success, error) ->
     mobile = newVal
+    success()
+    
+  myWallet.verifyMobile = (code, success, error) ->
+    success()
     
   myWallet.update_password_hint1 = (value, success, fail) ->
     success()
