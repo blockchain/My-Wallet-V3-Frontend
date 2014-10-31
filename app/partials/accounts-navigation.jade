@@ -11,11 +11,13 @@
       tr(ng-class="selectedAccountIndex == '' ? 'active' : ''")
         td 
           a(ui-sref="transactions({accountIndex:''})", translate="ALL_ACCOUNTS")
-        td.amount {{ totals.fiat | currency:settings.currency.symbol }}
+        td.amount 
+          fiat(btc="total()")
       tr(ng-repeat="account in accounts | filter:{active:true}", ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''")
         td 
           a(ui-sref="transactions({accountIndex: $index.toString()})") {{ account.label }}
-        td.amount {{ account.balance | fiat:settings.currency }}
+        td.amount
+          fiat(btc="account.balance")
   //- table.left-header
   //-   tr
   //-     td.header
@@ -34,5 +36,5 @@
         td 
           a(ng-click="open(request)")
             {{ request.address | limitTo: 15 }}...
-        td.amount {{ request.amount | fiat:settings.currency }}
-    
+        td.amount
+          fiat(btc="request.amount")

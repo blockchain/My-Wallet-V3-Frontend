@@ -56,7 +56,6 @@ describe "walletServices", () ->
     )
     
     it "should get a list of currencies", inject((Wallet, MyWallet) ->
-      pending()
       expect(Wallet.currencies.length).toBeGreaterThan(1)
     )
     
@@ -150,7 +149,7 @@ describe "walletServices", () ->
       
       Wallet.send(0, "account", numeral("1.0"), "BTC", mockObserver)
       
-      expect(Wallet.accounts[0].balance.value()).toBe(before - 1.0 * 100000000)
+      expect(Wallet.accounts[0].balance).toBe(before - 1.0 * 100000000)
         
       return
     )
@@ -398,6 +397,26 @@ describe "walletServices", () ->
       expect(MyWallet.getLanguage()).toBe("de")
       expect(Wallet.settings.language.code).toBe("de")
       
+    )
+    
+    return
+    
+    
+  describe "currency", ->
+    it "should be set after loading", inject((Wallet) ->
+      expect(Wallet.settings.currency.code).toEqual("USD")
+    )
+    
+    
+    it "conversion should be set on load", inject((Wallet) ->
+      expect(Wallet.conversions["USD"].conversion).toBeGreaterThan(0)
+    )
+      
+    it "can be switced", inject((Wallet, MyWallet) ->
+      spyOn(MyWallet, "change_local_currency").and.callThrough()
+      Wallet.changeCurrency(Wallet.currencies[1])
+      expect(MyWallet.change_local_currency).toHaveBeenCalledWith("EUR")
+      expect(Wallet.settings.currency.code).toBe("EUR")
     )
     
     return

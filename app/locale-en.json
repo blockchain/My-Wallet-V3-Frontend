@@ -80,5 +80,7 @@
   "CHANGE_MOBILE_FAILED" : "Could not change mobile number",
   "CHANGE_EMAIL_FAILED" : "Could not change email address",
   "CHANGE_PASSWORD_SUCCESS" : "Password has been changed", 
-  "CHANGE_PASSWORD_FAILED" : "Could not change password"
+  "CHANGE_PASSWORD_FAILED" : "Could not change password",
+  "CURRENCY" : "Local Currency",
+  "CURRENCY_EXPLAIN" : "Select your local currency"
 }

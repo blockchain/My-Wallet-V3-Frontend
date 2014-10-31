@@ -24,9 +24,9 @@
       
   $scope.max = (account) ->
     idx = $scope.accounts.indexOf(account)
-    balance = account.balance.clone()
+    balance = account.balance
     fees = Wallet.recommendedTransactionFeeForAccount(idx, account.balance)
-    max_btc = balance.subtract(fees).divide("100000000")
+    max_btc = numeral(balance - fees).divide("100000000")
     return max_btc.format("0.[00000000]") + " BTC"  
   
   $scope.transaction = {from: null, to: "", amount: "", currency: "BTC", privacyGuard: false, advanced: false}
@@ -172,8 +172,7 @@
       if blurredField == "amount" 
         $scope.errors.amount = "Please enter amount"
 
-    if parseFloat(transaction.amount) + transaction.fee.value() > transaction.from.balance / 100000000
-      console.log blurredField
+    if parseFloat(transaction.amount) + transaction.fee.value() > numeral(transaction.from.balance).divide(100000000)
       if blurredField == "amount" || blurredField == "from"
         $scope.errors.amount = "Insufficient funds"
   

@@ -24,8 +24,7 @@
     
   $scope.didLoad = () ->
     $scope.status = Wallet.status
-    $scope.total_btc = Wallet.total_btc
-    $scope.total_fiat = Wallet.total_fiat
+    $scope.total = Wallet.total
     
     $scope.accountIndex = $stateParams.accountIndex
 

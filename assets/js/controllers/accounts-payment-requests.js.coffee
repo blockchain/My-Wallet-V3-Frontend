@@ -1,6 +1,6 @@
 @AccountsPaymentRequestsCtrl = ($scope, Wallet, $state,$stateParams, $modal) ->
   $scope.status    = Wallet.status
-  $scope.totals = Wallet.totals
+  $scope.total = Wallet.total
   $scope.settings = Wallet.settings
   
   $scope.selectedAccountIndex = $stateParams.accountIndex

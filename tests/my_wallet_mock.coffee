@@ -126,8 +126,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     # localStorageService.set("mockWallets", wallets)
       
   myWallet.get_ticker = (success, fail) ->
-    success()
-    
+    success({
+      USD: {"15m": 250, symbol: "€"}
+      EUR: {"15m": 300, symbol: "$"}
+    })
+ 
   myWallet.getLanguage = () ->
     return language
     
@@ -141,6 +144,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       password_hint1: "Same as username"
       language: language
       languages: {de: "Deutch", en: "English", nl: "Nederlands"}
+      currency: "USD"
+      currencies: {USD: "US Dollar", EUR: "Euro"}
     })
     
   myWallet.change_email = (newVal, success, error) ->
@@ -159,6 +164,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.change_language = (newLanguage) ->
     language = newLanguage
+    
+  myWallet.change_local_currency = (newCurrency) ->
+    currency = newCurrency
     
   myWallet.getAccounts = () ->    
     return accounts

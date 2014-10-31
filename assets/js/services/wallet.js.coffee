@@ -20,7 +20,9 @@ playSound = (id) ->
 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter) -> 
-  wallet = {status: {isLoggedIn: false}, settings: {currency: {conversion: 0}, language: null}, user: {email: null, mobile: null, passwordHint: ""}}
+  wallet = {status: {isLoggedIn: false}, settings: {currency: null, language: null}, user: {email: null, mobile: null, passwordHint: ""}}
+  
+  wallet.conversions = {}
   
   wallet.accounts     = []
   wallet.addressBook  = {}
@@ -334,31 +336,25 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
       # Set or update label and balance:
       wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
-      wallet.accounts[i].balance = numeral(wallet.my.getBalanceForAccount(i))
+      wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
       
     # Balances will be 0 until transactions have been loaded.
     # TODO: MyWallet should let us know when all transactions are loaded; hide
     # total until that time.
-    
-  wallet.total_btc = (accountIndex) -> 
+        
+  wallet.total = (accountIndex) -> 
     return null if wallet.accounts == undefined
     if !(accountIndex?) || accountIndex == ""
-      tally = numeral("0.0")
+      tally = 0
       for account in wallet.accounts
         return null if account.balance == undefined
-        tally = tally.add(account.balance)
-      
+        tally = tally += account.balance
+            
       return tally
     else
       account = wallet.accounts[parseInt(accountIndex)]
       return null if account == undefined
       return account.balance
-      
-  wallet.total_fiat = (accountIndex) -> 
-    return null if wallet.settings.currency.conversion == undefined
-    btc = wallet.total_btc(accountIndex)
-    return null if btc == undefined || btc == null
-    return btc.clone().divide(wallet.settings.currency.conversion)
     
   wallet.updateTransactions = () ->
     for i in [0..wallet.my.getAccountsCount()-1]
@@ -366,19 +362,14 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         match = false
         for candidate in wallet.transactions
           if candidate.hash == tx.hash
-            candidate.fiat = candidate.amount.clone().divide(wallet.settings.currency.conversion)
             match = true
             break
       
         if !match
           transaction = {}
           transaction = angular.copy(tx)
-          transaction.amount = numeral(tx.amount)
-          unless wallet.settings.currency == undefined
-            transaction.fiat = transaction.amount / wallet.settings.currency.conversion
           wallet.transactions.push transaction 
           
-    # console.log wallet.transactions
   ####################
   # Notification     #
   ####################
@@ -411,40 +402,20 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     else if event == "did_set_guid" # Wallet retrieved from server
       wallet.my.restoreWallet(wallet.password)
       wallet.password = undefined
-  
-      # Exchange rate is loaded asynchronously:
-      success = (result) ->
-        # TODO: get currency info from result to avoid using $window
-        wallet.settings.currency = $window.symbol_local
-                
-        if wallet.status.isLoggedIn
-          # Update transactions and accounts, in case this gets called after did_multi_address
-          wallet.updateTransactions()     
-          wallet.updateAccounts()  
-                  
-          for address, label of wallet.my.addressBook
-            wallet.addressBook[address] = wallet.my.addressBook[address]
           
-          wallet.refreshPaymentRequests()
-        
-          wallet.applyIfNeeded()
-
-      fail = (error) ->
-        console.log(error)
-        
-      wallet.my.get_ticker(success, fail)
-        
-        
       # Checks if we already have an HD wallet. If not, create one.
       hdwallet = MyWallet.getHDWallet()
       
       wallet.applyIfNeeded()
       
     else if event == "on_wallet_decrypt_finish" # Non-HD part is decrypted
- 
+
       
     else if event == "did_decrypt"   # Wallet decrypted succesfully  
       wallet.status.isLoggedIn = true 
+      
+      for address, label of wallet.my.addressBook
+        wallet.addressBook[address] = wallet.my.addressBook[address]
       
       # Get email address, etc
       wallet.my.get_account_info((result)->
@@ -458,6 +429,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.user.isMobileVerified = result.sms_verified
         wallet.user.passwordHint = result.password_hint1 # Field not present if not entered
         
+        # Get and sort languages:
         tempLanguages = []
         userLanguage = undefined
         
@@ -474,9 +446,18 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         
         wallet.setLanguage(userLanguage)
         
+        # Get currencies:
+    
+        for code, name of result.currencies
+          currency = {code: code, name: name}
+          wallet.currencies.push currency
+          if code == result.currency
+            wallet.setCurrency(currency)
+            
+        wallet.fetchExchangeRate()
+        wallet.applyIfNeeded()
       )
       
-      wallet.updateAccounts()  
       wallet.applyIfNeeded()
       
     else if event == "hd_wallets_does_not_exist"
@@ -485,7 +466,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.my.initializeHDWallet()
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
-      wallet.updateAccounts()  
       wallet.applyIfNeeded()
       
     else if event == "hw_wallet_balance_updated"
@@ -496,10 +476,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       $translate("WALLET_NOT_FOUND").then (translation) ->
         wallet.displayError(translation)
     else if event == "ticker_updated" || event == "did_set_latest_block"
-      if wallet.status.isLoggedIn 
-        wallet.updateAccounts()  
       wallet.applyIfNeeded()
-      
     else if event == "logging_out"
       if wallet.didLogoutByChoice == true
         $translate("LOGGED_OUT").then (translation) ->
@@ -556,6 +533,14 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.changeLanguage = (language) ->
     wallet.my.change_language(language.code)
     wallet.setLanguage(language)
+    
+  wallet.setCurrency = (currency) ->
+    wallet.settings.currency = currency
+    
+  wallet.changeCurrency = (currency) ->
+    wallet.my.change_local_currency(currency.code)
+    wallet.setCurrency(currency)
+    # wallet.fetchExchangeRate()
   
   wallet.changeEmail = (email) ->
     wallet.my.change_email(email, (()->
@@ -567,7 +552,20 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.displayError(translation) 
         wallet.applyIfNeeded()
     )
+    
+  wallet.fetchExchangeRate = () ->
+      # Exchange rate is loaded asynchronously:
+      success = (result) ->
+        for code, info of result
+          wallet.conversions[code] = {symbol: info.symbol, conversion: numeral(100000000).divide(numeral(info["15m"]))}
+ 
+        wallet.updateAccounts()
+        wallet.applyIfNeeded()
 
+      fail = (error) ->
+        console.log(error)
+        
+      wallet.my.get_ticker(success, fail)
     
   wallet.isEmailVerified = () ->
     wallet.my.isEmailVerified
@@ -600,7 +598,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.applyIfNeeded = () ->
     if MyWallet.mockShouldReceiveNewTransaction == undefined
       $rootScope.$apply()    
-
     
   wallet.changePasswordHint = (hint) ->
     wallet.my.update_password_hint1(hint,(()->

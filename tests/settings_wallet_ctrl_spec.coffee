@@ -52,3 +52,34 @@ describe "SettingsWalletCtrl", ->
     )
     
     return
+    
+  describe "currency", ->   
+    it "should be set on load", inject((Wallet) ->
+      expect(scope.settings.currency.code).toEqual("USD")
+    )
+    
+    it "should not spontaniously save", inject((Wallet) ->
+      scope.$apply()
+      spyOn(Wallet, "changeCurrency")
+      expect(Wallet.changeCurrency).not.toHaveBeenCalled()
+      
+      return
+    )
+  
+    it "can be changed", inject((Wallet) ->
+      spyOn(Wallet, "changeCurrency")
+        
+      expect(scope.currencies.length).toBeGreaterThan(1)
+      expect(scope.settings.currency).not.toBeNull()
+    
+      # Switch language:
+      scope.settings.currency = scope.currencies[1]
+      
+      scope.$digest()
+    
+      expect(Wallet.changeCurrency).toHaveBeenCalledWith(scope.currencies[1])
+      
+      return
+    )
+    
+    return
