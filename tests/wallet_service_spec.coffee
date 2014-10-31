@@ -51,6 +51,15 @@ describe "walletServices", () ->
       return
     )
     
+    it "should get a list of languages", inject((Wallet, MyWallet) ->
+      expect(Wallet.languages.length).toBeGreaterThan(1)
+    )
+    
+    it "should get a list of currencies", inject((Wallet, MyWallet) ->
+      pending()
+      expect(Wallet.currencies.length).toBeGreaterThan(1)
+    )
+    
     return
 
   describe "logout()", ->      

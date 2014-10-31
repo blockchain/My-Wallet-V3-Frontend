@@ -28,6 +28,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.alerts = []
   wallet.my = MyWallet
   wallet.transactions = []
+  wallet.languages = []
+  wallet.currencies = []
     
   ##################################
   #             Public             #
@@ -431,6 +433,18 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         console.log(error)
         
       wallet.my.get_ticker(success, fail)
+        
+        
+      # Checks if we already have an HD wallet. If not, create one.
+      hdwallet = MyWallet.getHDWallet()
+      
+      wallet.applyIfNeeded()
+      
+    else if event == "on_wallet_decrypt_finish" # Non-HD part is decrypted
+ 
+      
+    else if event == "did_decrypt"   # Wallet decrypted succesfully  
+      wallet.status.isLoggedIn = true 
       
       # Get email address, etc
       wallet.my.get_account_info((result)->
@@ -443,23 +457,25 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.user.isEmailVerified = result.email_verified 
         wallet.user.isMobileVerified = result.sms_verified
         wallet.user.passwordHint = result.password_hint1 # Field not present if not entered
+        
+        tempLanguages = []
+        userLanguage = undefined
+        
+        for code, name of result.languages
+          language = {code: code, name: name}
+          tempLanguages.push language
+          if code == result.language
+            userLanguage = language
+            
+        tempLanguages = $filter('orderBy')(tempLanguages, "name")
+        
+        for language in tempLanguages
+          wallet.languages.push language
+        
+        wallet.setLanguage(userLanguage)
+        
       )
-        
-        
-      # Checks if we already have an HD wallet. If not, create one.
-      hdwallet = MyWallet.getHDWallet()
       
-      wallet.applyIfNeeded()
-      
-    else if event == "on_wallet_decrypt_finish" # Non-HD part is decrypted
-      # Get language:
-      code =  wallet.my.getLanguage()
-      language = $filter('getByProperty')('code', code, wallet.languages)
-      wallet.setLanguage(language)
-      wallet.applyIfNeeded()
-      
-    else if event == "did_decrypt"   # Wallet decrypted succesfully  
-      wallet.status.isLoggedIn = true 
       wallet.updateAccounts()  
       wallet.applyIfNeeded()
       
@@ -540,34 +556,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.changeLanguage = (language) ->
     wallet.my.change_language(language.code)
     wallet.setLanguage(language)
-    
-  wallet.languages = [
-    {code: "de", name: "German"}
-    {code: "hi", name: "Hindi"}
-    {code: "no", name: "Norwegian"}
-    {code: "ru", name: "Russian"}
-    {code: "pt", name: "Portugese"}
-    {code: "bg", name: "Bulgarian"}
-    {code: "fr", name: "French"}
-    {code: "zh-cn", name: "Chinese Simplified"}
-    {code: "hu", name: "Hungarian"}
-    {code: "sl", name: "Slovenian"}
-    {code: "id", name: "Indonesian"}
-    {code: "sv", name: "Swedish"}
-    {code: "ko", name: "Korean"}
-    {code: "el", name: "Greek"}
-    {code: "en", name: "English"}
-    {code: "it", name: "Italiano"}
-    {code: "es", name: "Spanish"}
-    {code: "vi", name: "Vietnamese"}
-    {code: "th", name: "Thai"}
-    {code: "ja", name: "Japanese"}
-    {code: "pl", name: "Polski"}
-    {code: "da", name: "Danish"}
-    {code: "ro", name: "Romanian"}
-    {code: "nl", name: "Dutch"}
-    {code: "tr", name: "Turkish"}
-  ]
   
   wallet.changeEmail = (email) ->
     wallet.my.change_email(email, (()->
