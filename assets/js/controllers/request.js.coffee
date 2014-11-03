@@ -1,4 +1,4 @@
-@RequestCtrl = ($scope, Wallet, MyWallet, $modalInstance, $log, $timeout, request, $stateParams) ->
+@RequestCtrl = ($scope, Wallet, MyWallet, $modalInstance, $log, $timeout, request, $stateParams, $translate) ->
   $scope.accounts = Wallet.accounts
   
   $scope.alerts = Wallet.alerts
@@ -61,8 +61,7 @@
         $scope.paymentRequest = request
                 
         $scope.fields = {amount: angular.copy(request.amount).divide(100000000).format("0.[00000000]") }
-        
-        $scope.fields.to = Wallet.accountForPaymentRequest(request)
+        $scope.fields.to = $scope.accounts[request.account]
       else
         # Making a new request; default to current or first account:
         if $stateParams.accountIndex == undefined || $stateParams.accountIndex == null || $stateParams.accountIndex == ""

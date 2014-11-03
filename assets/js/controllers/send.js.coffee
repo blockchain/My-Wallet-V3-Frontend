@@ -23,6 +23,7 @@
     return
       
   $scope.max = (account) ->
+    return null unless account?
     idx = $scope.accounts.indexOf(account)
     balance = account.balance
     fees = Wallet.recommendedTransactionFeeForAccount(idx, account.balance)
@@ -55,6 +56,7 @@
       $scope.transaction.currency = paymentRequest.currency if paymentRequest.currency
 
       $scope.cameraOff()
+      $scope.visualValidate()
     else
       $translate("QR_CODE_NOT_BITCOIN").then (translation) ->
         Wallet.displayWarning(translation)
@@ -124,15 +126,19 @@
   #################################
   
   $scope.$watchCollection "accounts", () ->
-    if $scope.transaction.from == null && $scope.accounts.length > 0
+    if !$scope.transaction.from? && $scope.accounts.length > 0
       if $stateParams.accountIndex == undefined || $stateParams.accountIndex == null || $stateParams.accountIndex == ""
         $scope.transaction.from = $scope.accounts[0]
       else 
         $scope.transaction.from = $scope.accounts[parseInt($stateParams.accountIndex)]
   
   $scope.$watchCollection "[transaction.to, transaction.from.address, transaction.amount]", () ->
-    $scope.transaction.fee = Wallet.recommendedTransactionFeeForAccount($scope.accounts.indexOf($scope.transaction.from), numeral($scope.transaction.amount).multiply(100000000)).divide(100000000)
-    $scope.transactionIsValid = $scope.validate()
+    if $scope.transaction.to? && $scope.transaction.amount > 0
+      amount = parseInt(numeral($scope.transaction.amount).multiply(100000000).format("0"))
+      $scope.transaction.fee = numeral(Wallet.recommendedTransactionFeeForAccount($scope.accounts.indexOf($scope.transaction.from), amount)).divide(100000000)      
+      $scope.transactionIsValid = $scope.validate()
+    else
+      $scope.transactionIsValid = false
     
   $scope.$watch "transaction.from", () ->
     $scope.visualValidate("from")
@@ -172,7 +178,7 @@
       if blurredField == "amount" 
         $scope.errors.amount = "Please enter amount"
 
-    if parseFloat(transaction.amount) + transaction.fee.value() > numeral(transaction.from.balance).divide(100000000)
+    if transaction.amount > 0 && parseFloat(transaction.amount) + transaction.fee.value() > numeral(transaction.from.balance).divide(100000000)
       if blurredField == "amount" || blurredField == "from"
         $scope.errors.amount = "Insufficient funds"
   
