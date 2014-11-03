@@ -504,15 +504,28 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.uid = ""
       wallet.password = ""
       # $state.go("dashboard")
+    else if event.type != undefined
+      if event.type == "error"
+        wallet.displayError(event.msg)
+        console.log event
+        wallet.applyIfNeeded()
+      else if event.type == "success"
+        wallet.displaySuccess(event.msg)
+        wallet.applyIfNeeded()
+      else 
+        console.log event
     else
       console.log event
   # The new monitoring system  
   wallet.monitor = (event) ->
+    console.log "New event"
     if event.type == "error"
       wallet.displayError(event.message)
       console.log event
       wallet.applyIfNeeded()
-      
+    else if event.type == "success"
+      wallet.displaySuccess(event.message)
+      wallet.applyIfNeeded()
     else 
       console.log event
 
