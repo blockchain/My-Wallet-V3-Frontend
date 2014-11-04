@@ -9,8 +9,14 @@
   
   $scope.isOpen = {currencies: false}
   
-  $scope.currencies = Wallet.currencies
+  $scope.currencies = angular.copy(Wallet.currencies)
+  
+  for currency in $scope.currencies
+    currency.type = "Fiat"
     
+  btc = {code: "BTC", type: "Crypto"}  
+  $scope.currencies.unshift btc
+        
   $scope.BTCtoFiat = (amount, currency) ->
     Wallet.BTCtoFiat(amount, currency)
   
@@ -38,7 +44,7 @@
     else 
       return $scope.BTCtoFiat(max_btc, $scope.transaction.currency) + " " + $scope.transaction.currency
   
-  $scope.transaction = {from: null, to: "", amount: "", satoshi: 0, currency: "BTC", privacyGuard: false, advanced: false}
+  $scope.transaction = {from: null, to: "", amount: "", satoshi: 0, currency: "BTC", currencySelected: btc, fee: numeral(0), privacyGuard: false, advanced: false}
   
   $scope.setMethod("BTC")
   
@@ -132,6 +138,11 @@
   #################################
   #           Private             #
   #################################
+  
+  $scope.$watch "transaction.currencySelected", (currency) ->
+    if currency?
+      $scope.transaction.currency = $scope.transaction.currencySelected.code
+      $scope.visualValidate('currency')
   
   $scope.$watchCollection "accounts", () ->
     if !$scope.transaction.from? && $scope.accounts.length > 0

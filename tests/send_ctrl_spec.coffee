@@ -20,9 +20,11 @@ describe "SendCtrl", ->
         $stateParams: {},
         $modalInstance: modalInstance
         
-      scope.transaction.to = "1DDBEYPPTkgbctmMtH3gXc7UHFURw5HGJD"
-      scope.transaction.amount = "0.2"
-      scope.transaction.currency = "BTC"
+      scope.transaction = {
+        to: "1DDBEYPPTkgbctmMtH3gXc7UHFURw5HGJD"
+        amount: "0.2"
+        currency: "BTC"
+      }
       scope.$apply()
       
       scope.qrStream = {}

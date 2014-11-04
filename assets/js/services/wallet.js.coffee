@@ -312,7 +312,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.clearAlerts = () ->
     for alert in wallet.alerts
       wallet.alerts.pop(alert)
-      $timeout.cancel(alert.timer)
+      if alert?
+        $timeout.cancel(alert.timer)
       
   wallet.displaySuccess = (message, keep=false) ->
     wallet.displayAlert {type: "success", msg: message}, keep
