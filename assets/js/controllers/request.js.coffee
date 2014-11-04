@@ -10,6 +10,8 @@
     
   btc = {code: "BTC", type: "Crypto"}  
   $scope.currencies.unshift btc
+  
+  $scope.fields = {to: null, amount: "0", currency: btc }  
       
   $scope.closeAlert = (alert) ->
     Wallet.closeAlert(alert)
@@ -92,7 +94,9 @@
   $scope.$watch "fields.amount + fields.currency.code", (oldValue, newValue) ->
     $scope.formIsValid = $scope.validate()
     
-    if $scope.fields.currency.code == "BTC"
+    if $scope.fields.currency == undefined
+      amount = 0
+    else if $scope.fields.currency.code == "BTC"
       amount = parseInt(numeral($scope.fields.amount).multiply(100000000).format("0"))
     else
       amount  = Wallet.fiatToSatoshi($scope.fields.amount, $scope.fields.currency.code)
@@ -117,7 +121,7 @@
       
         if $scope.mockTimer == undefined || $timeout.cancel($scope.mockTimer)                
           $scope.mockTimer = $timeout((->
-            MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" ,parseInt(numeral(100000000).format("1")), "")
+            MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" ,100000000, "")
           ), 10000)  
         
 
