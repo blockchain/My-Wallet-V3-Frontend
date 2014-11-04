@@ -13,9 +13,13 @@
             span(ng-bind-html="account.label | highlight: $select.search")
     .form-group
       label.col-sm-3.control-label(translate="AMOUNT")
-      .col-sm-5
-        .input-group
-          input.form-control(type="text",ng-model="fields.amount", ng-disabled="paymentRequest && paymentRequest.paid > 0")
+      .col-sm-4
+        input.form-control(type="text",ng-model="fields.amount", ng-disabled="paymentRequest && paymentRequest.paid > 0")
+      .col-sm-4
+        ui-select(ng-model="fields.currency")
+          ui-select-match {{ $select.selected.code }}
+          ui-select-choices(repeat="currency in currencies | filter: $select.search" group-by="'type'") 
+            span(ng-bind-html="currency.code | highlight: $select.search")   
     .form-group(ng-show="paymentRequest && paymentRequest.paid > 0 && paymentRequest.paid != fields.amount")
       label.col-sm-3.control-label(translate="PAID")
       .col-sm-9

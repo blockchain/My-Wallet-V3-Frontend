@@ -2,17 +2,21 @@
   $scope.accounts = Wallet.accounts
   
   $scope.alerts = Wallet.alerts
+    
+  $scope.currencies = angular.copy(Wallet.currencies)
   
-  $scope.fields = {to: null, amount: "0"}
-  
-  
-  
+  for currency in $scope.currencies
+    currency.type = "Fiat"
+    
+  btc = {code: "BTC", type: "Crypto"}  
+  $scope.currencies.unshift btc
+      
   $scope.closeAlert = (alert) ->
     Wallet.closeAlert(alert)
     
   if request == undefined || request == null  
     # Managed by this controller, amount in BTC:
-    $scope.fields = {to: null, amount: "0"}  
+    $scope.fields = {to: null, amount: "0", currency: btc }  
     # Managed by Wallet service, amounts in Satoshi, has payment information:
     $scope.paymentRequest = null 
   
@@ -60,7 +64,7 @@
         # Open an existing request
         $scope.paymentRequest = request
                 
-        $scope.fields = {amount: angular.copy(request.amount).divide(100000000).format("0.[00000000]") }
+        $scope.fields = {amount: angular.copy(request.amount).divide(100000000).format("0.[00000000]"), currency: btc }
         $scope.fields.to = $scope.accounts[request.account]
       else
         # Making a new request; default to current or first account:
@@ -85,22 +89,25 @@
     $scope.formIsValid = $scope.validate()
     # TODO: warn user if they try to change this after a request has been created
         
-  $scope.$watch "fields.amount", (newValue, oldValue) ->
+  $scope.$watch "fields.amount + fields.currency.code", (oldValue, newValue) ->
     $scope.formIsValid = $scope.validate()
     
+    if $scope.fields.currency.code == "BTC"
+      amount = parseInt(numeral($scope.fields.amount).multiply(100000000).format("0"))
+    else
+      amount  = Wallet.fiatToSatoshi($scope.fields.amount, $scope.fields.currency.code)
+          
     if $scope.paymentRequest == null && $scope.formIsValid
       idx = $scope.accounts.indexOf($scope.fields.to)
-      amount = parseInt(numeral($scope.fields.amount).multiply(100000000).format("1"))
-
+  
       $scope.paymentRequest =  Wallet.generatePaymentRequestForAccount(idx, amount)
 
     if $scope.paymentRequest && $scope.formIsValid
-      if oldValue isnt newValue && numeral(newValue) > 0
+      if oldValue isnt newValue && numeral($scope.fields.amount) > 0
         idx = $scope.accounts.indexOf($scope.fields.to)
-        amount = parseInt(numeral($scope.fields.amount).multiply(100000000).format("1"))
         Wallet.updatePaymentRequest(idx, $scope.paymentRequest.address, amount)
         
-      $scope.paymentRequest.URL = "bitcoin:" + $scope.paymentRequest.address + "?amount=" + numeral($scope.paymentRequest.amount).divide(100000000)
+      $scope.paymentRequest.URL = "bitcoin:" + $scope.paymentRequest.address + "?amount=" + numeral(amount).divide(100000000)
         
       if MyWallet.mockShouldReceiveNewTransaction != undefined && request == undefined
         # Check if MyWallet is a mock or the real thing. The mock will simulate payment 
