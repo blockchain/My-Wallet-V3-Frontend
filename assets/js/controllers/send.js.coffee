@@ -142,7 +142,9 @@
   $scope.$watch "transaction.currencySelected", (currency) ->
     if currency?
       $scope.transaction.currency = $scope.transaction.currencySelected.code
-      $scope.visualValidate('currency')
+      $scope.$$postDigest(()->
+        $scope.visualValidate('currency')
+      )
   
   $scope.$watchCollection "accounts", () ->
     if !$scope.transaction.from? && $scope.accounts.length > 0
