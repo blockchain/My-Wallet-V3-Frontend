@@ -43,21 +43,23 @@
         .input-group
           input.form-control(type="text",ng-model="transaction.amount", placeholder="0.0000....",ng-blur="visualValidate('amount')")
           .input-group-btn
-            .btn-group(dropdown,is-open="currencies.isOpen")
+            .btn-group(dropdown,is-open="isOpen.currencies")
               button.btn.btn-default.dropdown-toggle(type="button") 
                 | {{ transaction.currency }} 
                 span.caret
               ul.dropdown-menu.dropdown-menu-right(role="menu")
                 li
-                  a(href="",ng-click="transaction.currency = 'BTC'; currencies.isOpen = false") BTC
-                li
-                  a(href="",ng-click="transaction.currency = 'EUR'; currencies.isOpen = false") EUR
-                li
-                  a(href="",ng-click="transaction.currency = 'USD'; currencies.isOpen = false") USD
+                  a(href="",ng-click="transaction.currency = 'BTC'; isOpen.currencies = false") BTC
+                li(role="presentation").divider
+                li(ng-repeat="currency in currencies") 
+                  a(href="",ng-click="transaction.currency = currency.code; isOpen.currencies = false; visualValidate('currency')") {{ currency.code }}
+                
+                
         span.help-block {{ errors.amount }}
       .col-sm-4
-        p(ng-show="transaction.currency!='BTC'") Conversion to be implemented...
         p(ng-show="transaction.currency=='BTC'") {{ transaction.amount }} BTC
+        p(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
+        
     .form-group(ng-show="advanced")
       label.col-sm-3.control-label(translate="FEES")
       .col-sm-5 

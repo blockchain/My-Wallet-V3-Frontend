@@ -22,6 +22,7 @@ describe "SendCtrl", ->
         
       scope.transaction.to = "1DDBEYPPTkgbctmMtH3gXc7UHFURw5HGJD"
       scope.transaction.amount = "0.2"
+      scope.transaction.currency = "BTC"
       scope.$apply()
       
       scope.qrStream = {}
@@ -101,6 +102,14 @@ describe "SendCtrl", ->
     return
   )
   
+  it "should enable Send button if balance is not too low ",  inject(() ->
+    scope.transaction.amount = "1" # Less than what the mock account has.
+    scope.$apply()
+    expect(scope.transactionIsValid).toBe(true)        
+    return
+  )
+  
+  
   it "should disable Send button if balance is too low (ex mining fee)",  inject(() ->
     scope.transaction.amount = "10.0" # Much more than what the mock account has.
     scope.$apply()
@@ -150,7 +159,7 @@ describe "SendCtrl", ->
   )
   
   it "should show error message if send() fails",  inject((Wallet) ->
-    scope.transaction.amount = 3000000000 # Way too much
+    scope.transaction.amount = "3000000000" # Way too much
     
     scope.send()
     
@@ -172,3 +181,20 @@ describe "SendCtrl", ->
     expect(scope.alerts.length).toBe(1)
     
   )
+  
+  it "should enable Send button if fiat balance is sufficient",  inject(() ->
+    scope.transaction.amount = "10"
+    scope.transaction.currency = "EUR"
+    scope.$apply()
+    expect(scope.transactionIsValid).toBe(true)        
+    return
+  )
+  
+  it "should disable Send button if fiat balance is too low",  inject(() ->
+    scope.transaction.amount = "50000" # Much more than what the mock account has.
+    scope.transaction.currency = "EUR"
+    scope.$apply()
+    expect(scope.transactionIsValid).toBe(false)        
+    return
+  )
+  

@@ -127,7 +127,7 @@ describe "walletServices", () ->
     it "should convert BTC to Satoshi", inject((Wallet, MyWallet) ->
       spyOn(MyWallet,"sendBitcoinsForAccount")
             
-      Wallet.send(0, "account", numeral("1.0"), "BTC", mockObserver)
+      Wallet.send(0, "account", "1", "BTC", mockObserver)
       
       expect(MyWallet.sendBitcoinsForAccount.calls.mostRecent().args[2]).toBe(100000000)
       
@@ -232,11 +232,11 @@ describe "walletServices", () ->
     
   describe "request", ->
     it "can be made", inject((MyWallet, Wallet) ->
-      expect(Wallet.generatePaymentRequestForAccount(0, numeral(1)).address).toBe("1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp")
+      expect(Wallet.generatePaymentRequestForAccount(0, 10000).address).toBe("1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp")
     )
     
     it "is stored", inject((MyWallet, Wallet) ->
-      request = Wallet.generatePaymentRequestForAccount(0, numeral(1))
+      request = Wallet.generatePaymentRequestForAccount(0, 10000)
       
       Wallet.refreshPaymentRequests() # TODO: this should happen automatically
       
@@ -244,14 +244,14 @@ describe "walletServices", () ->
     )
     
     it "amount can be updated", inject((MyWallet, Wallet) ->
-      request = Wallet.generatePaymentRequestForAccount(0, numeral(1000))
-      Wallet.updatePaymentRequest(0, request.address, numeral(2000))
-      expect(parseInt(Wallet.paymentRequests[0].amount.format("1"))).toBe(2000)
+      request = Wallet.generatePaymentRequestForAccount(0, 1000)
+      Wallet.updatePaymentRequest(0, request.address, 2000)
+      expect(Wallet.paymentRequests[0].amount).toBe(2000)
     )
         
 
     it "should be possible to cancel a request", inject((MyWallet, Wallet) ->
-      request = Wallet.generatePaymentRequestForAccount(0, numeral(1))
+      request = Wallet.generatePaymentRequestForAccount(0, 1000)
       Wallet.cancelPaymentRequest(0, request.address)
       
       Wallet.refreshPaymentRequests()
@@ -260,19 +260,19 @@ describe "walletServices", () ->
     )
     
     it "should update the request when payment is received", inject((MyWallet, Wallet) ->
-      request = Wallet.generatePaymentRequestForAccount(0, numeral(100000000))
-            
-      MyWallet.mockShouldReceiveNewTransaction(request.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" ,  parseInt(request.amount.format("1")) , "")
+      request = Wallet.generatePaymentRequestForAccount(0, 100000000)
+                        
+      MyWallet.mockShouldReceiveNewTransaction(request.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" ,  request.amount, null)
             
       request = Wallet.paymentRequests[0]
             
-      expect(request.paid.format("1")).toBe(request.amount.format("1"))
+      expect(request.paid).toBe(request.amount)
     )
     
   
     it "should notify the user if payment is received", inject((Wallet) ->
-      request = Wallet.generatePaymentRequestForAccount(0, numeral(100000000))
-      MyWallet.mockShouldReceiveNewTransaction(request.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , parseInt(request.amount.format("1")), "")
+      request = Wallet.generatePaymentRequestForAccount(0, 100000000)
+      MyWallet.mockShouldReceiveNewTransaction(request.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , request.amount, "")
       
       request = Wallet.paymentRequests[0]
    
@@ -283,8 +283,8 @@ describe "walletServices", () ->
   
     it "should warn user if payment is insufficient", inject(() ->
       
-      request = Wallet.generatePaymentRequestForAccount(0, numeral(100000000))
-      MyWallet.mockShouldReceiveNewTransaction(request.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , parseInt(request.amount.format("1")) / 2, "")
+      request = Wallet.generatePaymentRequestForAccount(0, 100000000)
+      MyWallet.mockShouldReceiveNewTransaction(request.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , request.amount / 2, "")
       
       expect(Wallet.alerts.length).toBe(1)
       expect(Wallet.alerts[0].type).not.toBeDefined()
@@ -292,11 +292,11 @@ describe "walletServices", () ->
     )
   
     it "should warn user if payment is too much", inject(() ->
-      request = Wallet.generatePaymentRequestForAccount(0, numeral(100000000))
+      request = Wallet.generatePaymentRequestForAccount(0, 100000000)
       
       spyOn(Wallet, "displayWarning")
       
-      MyWallet.mockShouldReceiveNewTransaction(request.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" ,  parseInt(request.amount.format("1"))  * 2, "")
+      MyWallet.mockShouldReceiveNewTransaction(request.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" ,  request.amount * 2, "")
       
       expect(Wallet.displayWarning).toHaveBeenCalled()
       
@@ -494,6 +494,21 @@ describe "walletServices", () ->
       Wallet.changePasswordHint("Better hint")
       expect(MyWallet.update_password_hint1).toHaveBeenCalled()
       expect(Wallet.user.passwordHint).toBe("Better hint")
+    )
+    
+    return
+    
+  describe "currency conversion", ->
+    it "should know the exchange rate in satoshi per unit of fiat", inject((Wallet) ->
+      expect(Wallet.conversions.EUR.conversion).toBe(333333)
+    )
+  
+    it "should calculate BTC from fiat amount and currency", inject((Wallet) ->
+      expect(Wallet.fiatToSatoshi("2", "EUR")).toBe(666666)
+    )
+    
+    it "should calculate fiat from BTC", inject((Wallet) ->
+      expect(Wallet.BTCtoFiat("0.1", "EUR")).toBe("30.00")
     )
     
     return

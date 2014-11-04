@@ -7,7 +7,12 @@
   
   $scope.alerts = Wallet.alerts
   
-  $scope.currencies = {isOpen: false}
+  $scope.isOpen = {currencies: false}
+  
+  $scope.currencies = Wallet.currencies
+    
+  $scope.BTCtoFiat = (amount, currency) ->
+    Wallet.BTCtoFiat(amount, currency)
   
   $scope.setMethod = (method) ->
     $scope.method = method
@@ -28,9 +33,12 @@
     balance = account.balance
     fees = Wallet.recommendedTransactionFeeForAccount(idx, account.balance)
     max_btc = numeral(balance - fees).divide("100000000")
-    return max_btc.format("0.[00000000]") + " BTC"  
+    if $scope.transaction.currency == "BTC"
+      return max_btc.format("0.[00000000]") + " BTC"  
+    else 
+      return $scope.BTCtoFiat(max_btc, $scope.transaction.currency) + " " + $scope.transaction.currency
   
-  $scope.transaction = {from: null, to: "", amount: "", currency: "BTC", privacyGuard: false, advanced: false}
+  $scope.transaction = {from: null, to: "", amount: "", satoshi: 0, currency: "BTC", privacyGuard: false, advanced: false}
   
   $scope.setMethod("BTC")
   
@@ -132,10 +140,14 @@
       else 
         $scope.transaction.from = $scope.accounts[parseInt($stateParams.accountIndex)]
   
-  $scope.$watchCollection "[transaction.to, transaction.from.address, transaction.amount]", () ->
+  $scope.$watchCollection "[transaction.to, transaction.from.address, transaction.amount, transaction.currency]", () ->
+    if $scope.transaction.currency == "BTC"
+      $scope.transaction.satoshi = parseInt(numeral($scope.transaction.amount).multiply(100000000).format("0"))
+    else
+      $scope.transaction.satoshi = Wallet.fiatToSatoshi($scope.transaction.amount, $scope.transaction.currency)
+    
     if $scope.transaction.to? && $scope.transaction.amount > 0
-      amount = parseInt(numeral($scope.transaction.amount).multiply(100000000).format("0"))
-      $scope.transaction.fee = numeral(Wallet.recommendedTransactionFeeForAccount($scope.accounts.indexOf($scope.transaction.from), amount)).divide(100000000)      
+      $scope.transaction.fee = numeral(Wallet.recommendedTransactionFeeForAccount($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.satoshi)).divide(100000000)      
       $scope.transactionIsValid = $scope.validate()
     else
       $scope.transactionIsValid = false
@@ -147,7 +159,7 @@
     if blurredField == "to"
       $scope.errors.to = null
     
-    if blurredField == "amount"
+    if blurredField == "amount" || blurredField == "currency"
       $scope.errors.amount = null
   
     transaction = $scope.transaction
@@ -160,36 +172,36 @@
         else if $scope.method == "SMS"
           $scope.errors.to = "Mobile phone number missing"
     
-    if $scope.method == "BTC"
-      unless Wallet.isValidAddress(transaction.to)
-        if blurredField == "to"
-          $scope.errors.to = "Invalid bitcoin address"
-    else if $scope.method == "EMAIL"
-      unless true
-        if blurredField == "to"
-          $scope.errors.to = "Invalid email address"   
-    else if $scope.method == "SMS"
-      unless true
-        if blurredField == "to"
-          $scope.errors.to = "Invalid international phone number."   
+    unless transaction.to == ""
+      if $scope.method == "BTC"
+        unless Wallet.isValidAddress(transaction.to)
+          if blurredField == "to"
+            $scope.errors.to = "Invalid bitcoin address"
+      else if $scope.method == "EMAIL"
+        unless true
+          if blurredField == "to"
+            $scope.errors.to = "Invalid email address"   
+      else if $scope.method == "SMS"
+        unless true
+          if blurredField == "to"
+            $scope.errors.to = "Invalid international phone number."   
               
     
     unless transaction.amount? && transaction.amount > 0
       if blurredField == "amount" 
         $scope.errors.amount = "Please enter amount"
 
-    if transaction.amount > 0 && parseFloat(transaction.amount) + transaction.fee.value() > numeral(transaction.from.balance).divide(100000000)
-      if blurredField == "amount" || blurredField == "from"
+    if transaction.amount > 0 && !$scope.validateAmount()
+      if blurredField == "amount" || blurredField == "from" || blurredField == "currency"
         $scope.errors.amount = "Insufficient funds"
   
     return 
     
-  $scope.validate = () ->
-    
+  $scope.validate = () ->    
     transaction = $scope.transaction
     unless transaction.to? && transaction.to != ""
       return false
-      
+            
     if $scope.method == "BTC"
       unless Wallet.isValidAddress(transaction.to)
         return false
@@ -199,20 +211,20 @@
     
     $scope.errors.to = null
     
-      
-    unless transaction.amount? && transaction.amount > 0
-      return false
-
-    return false if parseFloat(transaction.amount) + $scope.transaction.fee.value()  > $scope.transaction.from.balance / 100000000
-    return false if parseFloat(transaction.amount) == 0
-    
-    
-    return false if transaction.currency != 'BTC'
-    
-    $scope.errors.amount = null
-    
+    return false unless $scope.validateAmount()    
     
     return true
+    
+  $scope.validateAmount = () ->
+    amount = $scope.transaction.amount
+
+    return false unless amount? && amount > 0      
+
+    return false if $scope.transaction.satoshi + parseInt($scope.transaction.fee.multiply(100000000).format("1")) > $scope.transaction.from.balance
+    $scope.errors.amount = null
+    
+    return true
+    
   
   $scope.observer = {}
   $scope.observer.transactionDidFailWithError = (message) ->

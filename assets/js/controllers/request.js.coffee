@@ -71,14 +71,14 @@
           
       $scope.listenerForPayment = $scope.$watch "paymentRequest.paid", (val,before) ->
         if val != 0 && before != val && $scope.paymentRequest
-          if val.format("1") == $scope.paymentRequest.amount.format("1")
+          if val == $scope.paymentRequest.amount
             $modalInstance.dismiss ""
         
           else if val > 0 && val < $scope.paymentRequest.amount
             # Mock pays the remainder after 10 seconds
             if MyWallet.mockShouldReceiveNewTransaction != undefined
               $scope.mockTimer = $timeout((->
-                MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , parseInt(numeral($scope.paymentRequest.amount).subtract(100000000).format("1")), "")
+                MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" , $scope.paymentRequest.amount - 100000000, "")
               ), 10000)
       
   $scope.$watch "fields.to", () ->
@@ -89,11 +89,16 @@
     $scope.formIsValid = $scope.validate()
     
     if $scope.paymentRequest == null && $scope.formIsValid
-      $scope.paymentRequest =  Wallet.generatePaymentRequestForAccount($scope.accounts.indexOf($scope.fields.to), numeral($scope.fields.amount).multiply(100000000))
+      idx = $scope.accounts.indexOf($scope.fields.to)
+      amount = parseInt(numeral($scope.fields.amount).multiply(100000000).format("1"))
+
+      $scope.paymentRequest =  Wallet.generatePaymentRequestForAccount(idx, amount)
 
     if $scope.paymentRequest && $scope.formIsValid
       if oldValue isnt newValue && numeral(newValue) > 0
-        Wallet.updatePaymentRequest($scope.accounts.indexOf($scope.fields.to), $scope.paymentRequest.address, numeral($scope.fields.amount).multiply(100000000))
+        idx = $scope.accounts.indexOf($scope.fields.to)
+        amount = parseInt(numeral($scope.fields.amount).multiply(100000000).format("1"))
+        Wallet.updatePaymentRequest(idx, $scope.paymentRequest.address, amount)
         
       $scope.paymentRequest.URL = "bitcoin:" + $scope.paymentRequest.address + "?amount=" + numeral($scope.paymentRequest.amount).divide(100000000)
         

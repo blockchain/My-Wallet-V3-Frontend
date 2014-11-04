@@ -168,8 +168,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.change_local_currency = (newCurrency) ->
     currency = newCurrency
     
-  myWallet.getAccounts = () ->    
-    return accounts
+  myWallet.getAccounts = () ->  
+    theAccounts = []
+    for i in [0..myWallet.getAccountsCount()]
+      theAccounts.push myWallet.getAccount(i)
+    return theAccounts
     
   myWallet.getAccountsCount = () ->
     return accounts.length
@@ -237,7 +240,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       return
       
     account = {}
-    
+        
     account.getPaymentRequests = () ->
       requests = []
       for request in paymentRequests
@@ -249,7 +252,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       # It should generate a new receive address or reuse a cancelled address
       # (never reuse an addres that actually received btc). It should increase
       # the tally in the wallet.
-    
+          
       if mockPaymentRequestAddressStack.length == 0
         $log.error "No more mock payment request addresses; please refresh."
         return {amount: 0, address: "No more mock addresses available"}
@@ -288,6 +291,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
         if candidate.address == address
           myWallet.sync()
           candidate.complete = true
+          
+    account.getAddressForPaymentRequest = (request) ->
+      return request.address
     
     return account
   

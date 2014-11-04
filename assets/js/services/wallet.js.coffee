@@ -88,8 +88,28 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   # Spend BTC #
   #############
   
-  # Amount in BTC (TODO: convert currency)
+  # Converts units of fiat to BTC (not Satoshi)
+  wallet.fiatToSatoshi = (amount, currency) ->
+    return null if currency == "BTC"
+    return null unless amount?
+    return null unless wallet.conversions[currency]?
+    return parseInt(numeral(amount).multiply(wallet.conversions[currency].conversion).format("0"))
+
+  # amount in BTC, returns formatted amount in fiat
+  wallet.BTCtoFiat = (amount, currency) ->
+    return null if currency == "BTC"
+    return null unless amount?
+    return null unless wallet.conversions[currency]?
+    return numeral(100000000).multiply(amount).divide(wallet.conversions[currency].conversion).format("0.00")
+
+  
+  # Amount in satoshi or fiat
   wallet.send = (fromAccountIndex, to, amount, currency, observer) ->
+    if currency != "BTC"
+      amount = wallet.fiatToSatoshi(amount, currency)
+    else 
+      amount = parseInt(numeral(amount).multiply(100000000).format("0"))
+    
     if observer == undefined || observer == null
       console.error "An observer is required"
       return
@@ -150,7 +170,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         observer.transactionDidFailWithError("Unknown error")
         wallet.applyIfNeeded()
     
-    wallet.my.sendBitcoinsForAccount(fromAccountIndex, to, parseInt(amount.multiply(100000000).format("1")), 10000, null, success, error)
+    wallet.my.sendBitcoinsForAccount(fromAccountIndex, to, amount, 10000, null, success, error)
       
   ####################
   # Payment requests #
@@ -182,7 +202,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       match = false
       for candidate in myWalletRequests
         if candidate.address == req.address
-          req.amount = numeral(candidate.amount)
+          req.amount = candidate.amount
           match = true
           
       if !match
@@ -196,21 +216,21 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         if candidate.address == req.address
           match = true
           # Update amount and payment
-          candidate.amount = numeral(req.amount)
-          candidate.paid = numeral(req.paid)
+          candidate.amount = req.amount
+          candidate.paid = req.paid
           candidate.complete = req.complete
           candidate.canceled = req.canceled 
           break
       
       if !match
         request = angular.copy(req)
-        request.amount = numeral(request.amount)
+        request.amount = request.amount
         wallet.paymentRequests.push request
             
   # Amount in Satoshi
   wallet.generatePaymentRequestForAccount = (accountIndex, amount)  ->
     account = wallet.my.getAccounts()[accountIndex]
-    request = account.generatePaymentRequest(parseInt(amount.format("1")))
+    request = account.generatePaymentRequest(amount)
     request.address = account.getAddressForPaymentRequest(request)
     this.refreshPaymentRequests()
     return wallet.getPaymentRequest(accountIndex, request.address)
@@ -227,7 +247,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     return success 
       
   wallet.updatePaymentRequest = (accountIndex, address, amount) ->
-    if wallet.my.updatePaymentRequestForAccount(accountIndex, address, parseInt(amount.format("1")))
+    if wallet.my.updatePaymentRequestForAccount(accountIndex, address, amount)
       this.refreshPaymentRequests()
     else 
       console.error "Failed to update request"
@@ -392,16 +412,15 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.updateAccounts()
         wallet.updateTransactions()
     else if event == "hw_wallet_accepted_payment_request"
-      console.log "hw_wallet_accepted"
-      $translate("PAYMENT_REQUEST_RECEIVED",{amount: numeral(data.amount).clone().divide(100000000).format("0.[00000000]")}).then (translation) ->
+      $translate("PAYMENT_REQUEST_RECEIVED",{amount: numeral(data.amount).divide(100000000).format("0.[00000000]")}).then (translation) ->
         wallet.displaySuccess(translation)
       wallet.refreshPaymentRequests()
     else if event == "hw_wallet_payment_request_received_too_little"
-      $translate("PAYMENT_REQUEST_RECEIVED_TOO_LITTLE",{amountReceived: numeral(data.amountReceived).clone().divide(100000000).format("0.[00000000]"), amountRequested: numeral(data.amountRequested).clone().divide(100000000).format("0.[00000000]") }).then (translation) ->
+      $translate("PAYMENT_REQUEST_RECEIVED_TOO_LITTLE",{amountReceived: numeral(data.amountReceived).divide(100000000).format("0.[00000000]"), amountRequested: numeral(data.amountRequested).divide(100000000).format("0.[00000000]") }).then (translation) ->
         wallet.displayWarning(translation)
       wallet.refreshPaymentRequests()
     else if event == "hw_wallet_payment_request_received_too_much"
-      $translate("PAYMENT_REQUEST_RECEIVED_TOO_MUCH",{amountReceived: numeral(data.amountReceived).clone().divide(100000000).format("0.[00000000]"), amountRequested: numeral(data.amountRequested).clone().divide(100000000).format("0.[00000000]") }).then (translation) ->
+      $translate("PAYMENT_REQUEST_RECEIVED_TOO_MUCH",{amountReceived: numeral(data.amountReceived).divide(100000000).format("0.[00000000]"), amountRequested: numeral(data.amountRequested).divide(100000000).format("0.[00000000]") }).then (translation) ->
         wallet.displayWarning(translation)
       wallet.refreshPaymentRequests()
     else if event == "error_restoring_wallet"
@@ -578,8 +597,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       # Exchange rate is loaded asynchronously:
       success = (result) ->
         for code, info of result
-          wallet.conversions[code] = {symbol: info.symbol, conversion: numeral(100000000).divide(numeral(info["15m"]))}
- 
+          # Converion:
+          # result: units of fiat per BTC 
+          # convert to: units of satoshi per unit of fiat
+          wallet.conversions[code] = {symbol: info.symbol, conversion: parseInt(numeral(100000000).divide(numeral(info["15m"])).format("1"))}  
+
         wallet.updateAccounts()
         wallet.applyIfNeeded()
 
