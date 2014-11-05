@@ -82,5 +82,7 @@
   "CHANGE_PASSWORD_SUCCESS" : "Password has been changed", 
   "CHANGE_PASSWORD_FAILED" : "Could not change password",
   "CURRENCY" : "Local Currency",
-  "CURRENCY_EXPLAIN" : "Select your local currency"
+  "CURRENCY_EXPLAIN" : "Select your local currency",
+  "SETTINGS" : "Settings",
+  "SECURITY" : "Security"
 }
