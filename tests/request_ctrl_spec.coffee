@@ -31,7 +31,7 @@ describe "RequestCtrl", ->
           $modalInstance: modalInstance
           request: undefined
         
-        scope.fields = {amount: "0", address: null, to: null}
+        scope.fields = {amount: "0", to: null, currency: {code: "BTC", type: "Crypto"}  }
       
         # Trigger generation of payment address:
         scope.fields.amount = "1"
@@ -56,11 +56,13 @@ describe "RequestCtrl", ->
         expect(scope.paymentRequest.address).toBe('1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp')
     )
   
-    it "should simulate payment after 10 seconds in mock", inject(($timeout) ->
+    it "should simulate payment after 10 seconds in mock", inject((Wallet, $timeout) ->
+      before = Wallet.transactions.length
       expect(scope.alerts.length).toBe(0)    
       $timeout.flush(5000)
       # Don't interrupt...
       $timeout.flush(5000)
+      expect(Wallet.transactions.length).toBe(before + 1)
       expect(scope.alerts.length).toBe(1)
       expect(scope.paymentRequest.complete).toBe(true)
     

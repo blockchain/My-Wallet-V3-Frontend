@@ -393,7 +393,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
             break
       
         if !match
-          transaction = {}
           transaction = angular.copy(tx)
           wallet.transactions.push transaction 
           

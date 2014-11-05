@@ -93,7 +93,7 @@
         
   $scope.$watch "fields.amount + fields.currency.code", (oldValue, newValue) ->
     $scope.formIsValid = $scope.validate()
-    
+        
     if $scope.fields.currency == undefined
       amount = 0
     else if $scope.fields.currency.code == "BTC"
