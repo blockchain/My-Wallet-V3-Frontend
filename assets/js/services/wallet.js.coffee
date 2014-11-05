@@ -537,12 +537,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       console.log event
   # The new monitoring system  
   wallet.monitor = (event) ->
-    console.log "New event"
     if event.type == "error"
       wallet.displayError(event.message)
-      console.log event
       wallet.applyIfNeeded()
     else if event.type == "success"
+      console.log event
       wallet.displaySuccess(event.message)
       wallet.applyIfNeeded()
     else 

@@ -1,7 +1,7 @@
 walletServices = angular.module("myWalletServices", [])
 walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService) ->
   # Erase local storage:
-  # localStorageService.remove("mockWallets")
+  localStorageService.remove("mockWallets")
   # console.log localStorageService.get("mockWallets")
   
   # Wallets are stored in a cookie. If there isn't one, we'll create it.

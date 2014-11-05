@@ -1,4 +1,4 @@
-@RequestCtrl = ($scope, Wallet, MyWallet, $modalInstance, $log, $timeout, request, $stateParams, $translate) ->
+@RequestCtrl = ($scope, Wallet, MyWallet, $modalInstance, $log, $timeout, request, $stateParams, $translate) ->  
   $scope.accounts = Wallet.accounts
   
   $scope.alerts = Wallet.alerts
@@ -66,7 +66,7 @@
         # Open an existing request
         $scope.paymentRequest = request
                 
-        $scope.fields = {amount: angular.copy(request.amount).divide(100000000).format("0.[00000000]"), currency: btc }
+        $scope.fields = {amount: numeral(request.amount).divide(100000000).format("0.[00000000]"), currency: btc }
         $scope.fields.to = $scope.accounts[request.account]
       else
         # Making a new request; default to current or first account:
@@ -104,10 +104,11 @@
     if $scope.paymentRequest == null && $scope.formIsValid
       idx = $scope.accounts.indexOf($scope.fields.to)
   
-      $scope.paymentRequest =  Wallet.generatePaymentRequestForAccount(idx, amount)
+      if amount > 0
+        $scope.paymentRequest =  Wallet.generatePaymentRequestForAccount(idx, amount)
 
     if $scope.paymentRequest && $scope.formIsValid
-      if oldValue isnt newValue && numeral($scope.fields.amount) > 0
+      if oldValue isnt newValue
         idx = $scope.accounts.indexOf($scope.fields.to)
         Wallet.updatePaymentRequest(idx, $scope.paymentRequest.address, amount)
         
@@ -128,7 +129,9 @@
 
   $scope.validate = () ->
     return false if $scope.fields.to == null
-    return false if parseFloat($scope.fields.amount) == 0.0
+    return false if isNaN(parseFloat($scope.fields.amount))
+    return false if String(parseFloat($scope.fields.amount)) != $scope.fields.amount
+    return false if parseFloat($scope.fields.amount) < 0.0
     
     return true
   
