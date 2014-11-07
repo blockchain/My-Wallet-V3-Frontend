@@ -39,7 +39,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
   )
   
   $stateProvider.state("transactions",
-    url: "/transactions/:accountIndex"
+    url: "/:accountIndex/transactions/"
     views: {
       navigation: navigation,
       alerts: alerts,
@@ -51,6 +51,22 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       right: {
         templateUrl: "partials/transactions"
         controller: "TransactionsCtrl"
+      }
+    }
+  )
+  
+  $stateProvider.state("transaction",
+    url: "/:accountIndex/transactions/:hash"
+    views: {
+      navigation: navigation,
+      alerts: alerts,
+      left: { 
+        templateUrl: "partials/accounts-navigation"
+        controller: "AccountsPaymentRequestsCtrl"
+      },
+      right: {
+        templateUrl: "partials/transaction"
+        controller: "TransactionCtrl"
       }
     }
   )

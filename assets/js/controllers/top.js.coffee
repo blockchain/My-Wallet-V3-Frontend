@@ -17,7 +17,6 @@
       controller: SendCtrl
     )
   
-  
   #################################
   #           Private             #
   #################################
@@ -28,6 +27,5 @@
     
     $scope.accountIndex = $stateParams.accountIndex
 
-  
   # First load:      
   $scope.didLoad()

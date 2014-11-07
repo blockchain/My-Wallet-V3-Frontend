@@ -10,6 +10,7 @@
     $scope.status    = Wallet.status
     $scope.settings = Wallet.settings
     $scope.totals = Wallet.totals  
+    $scope.accountIndex = $stateParams.accountIndex
       
     # Restore after browser refresh (developer feature)
     if !$scope.status.isLoggedIn 

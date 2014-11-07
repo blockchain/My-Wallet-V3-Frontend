@@ -4,7 +4,7 @@
       h2(translate="TRANSACTIONS")
   .row.transaction(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")
     .col-xs-3
-      a.date(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank") {{ transaction.txTime | date:'MMMM d @ hh:mm a' }} 
+      a.date(ui-sref="transaction({accountIndex: accountIndex, hash: transaction.hash})") {{ transaction.txTime | date:'MMMM d @ hh:mm a' }}
     .col-xs-6.description
       transaction-description(transaction="transaction")
       br

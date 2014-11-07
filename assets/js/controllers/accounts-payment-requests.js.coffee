@@ -25,7 +25,6 @@
   $scope.didLoad = () ->
     $scope.accounts = Wallet.accounts
     $scope.requests = Wallet.paymentRequests
-    
 
   # First load:      
   $scope.didLoad()
