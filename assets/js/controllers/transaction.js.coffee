@@ -9,11 +9,8 @@
     $scope.status    = Wallet.status
     $scope.settings = Wallet.settings
     $scope.accountIndex = $stateParams.accountIndex
-    console.log $stateParams
-    
+        
     $scope.transaction = $filter("getByProperty")("hash", $stateParams.hash, Wallet.transactions)
-    console.log "Transaction:"
-    console.log $scope.transaction
       
     # Restore after browser refresh (developer feature)
     if !$scope.status.isLoggedIn
