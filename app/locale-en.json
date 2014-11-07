@@ -84,5 +84,9 @@
   "CURRENCY" : "Local Currency",
   "CURRENCY_EXPLAIN" : "Select your local currency",
   "SETTINGS" : "Settings",
-  "SECURITY" : "Security"
+  "SECURITY" : "Security",
+  "ADD_NOTE" : "Add Note",
+  "SAVE_NOTE" : "Add",
+  "UPDATE_NOTE" : "Update",
+  "CANCEL_EDIT_NOTE" : "Cancel"
 }

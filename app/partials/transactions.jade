@@ -5,22 +5,19 @@
   .row.transaction(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")
     .col-xs-3
       a.date(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank") {{ transaction.txTime | date:'MMMM d @ hh:mm a' }} 
-    .col-xs-4.description
+    .col-xs-6.description
       transaction-description(transaction="transaction")
-    .col-xs-3 
-      span.note(ng-show="transaction.note")
-        img(src="img/note.png")
-        a(href="", ng-hide="transaction.note").add-note(translate="ADD_NOTE")
-        {{ transaction.note }}
-    .col-xs-2(confirmations-tooltip="transaction")
+      br
+      transaction-note(transaction="transaction")
+    .col-xs-3(confirmations-tooltip="transaction")
       span(ng-show="transaction.intraWallet")
-        button.intra-wallet 
+        button.amount.intra-wallet
           fiat(btc="-transaction.amount")
       span(ng-show="transaction.amount > 0 && !transaction.intraWallet")
-        button.received 
+        button.amount.received 
           fiat(btc="transaction.amount")
           span(ng-show="transaction.confirmations == 0").glyphicon.glyphicon-warning-sign
       span(ng-show="transaction.amount < 0 && !transaction.intraWallet")
-        button.spent 
+        button.amount.spent 
           | - 
           fiat(btc="-transaction.amount")

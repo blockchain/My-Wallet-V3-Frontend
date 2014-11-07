@@ -22,7 +22,7 @@
     color: #828181;
   }
     
-  button {
+  button.amount {
     margin-top: 0px;
     margin-left: 5px;
     height: 24px;
@@ -54,7 +54,7 @@
   }
 } 
 
-span.note {
+.note {
   color: #aeaeae;
   //  font-weight: lighter;
   font-weight: 300;
@@ -62,8 +62,9 @@ span.note {
     height: 9px;
     padding-right: 5px;
   }
+  a {
+    color: #CCCCCC;
+  }
+
 }
 
-a.add-note {
-  color: #CCCCCC;
-}
