@@ -404,6 +404,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.monitorLegacy = (event, data) ->
     # console.logaccountsd: " + event
     if event == "on_tx" or event == "on_block"
+      console.log "on_tx"
       before = wallet.transactions.length
       wallet.updateTransactions()
       if wallet.transactions.length > before
@@ -412,6 +413,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.updateAccounts()
         wallet.updateTransactions()
     else if event == "hw_wallet_accepted_payment_request"
+      console.log "hw_wallet_accepted_payment_request"
       $translate("PAYMENT_REQUEST_RECEIVED",{amount: numeral(data.amount).divide(100000000).format("0.[00000000]")}).then (translation) ->
         wallet.displaySuccess(translation)
       wallet.refreshPaymentRequests()
@@ -531,6 +533,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       else if event.type == "success"
         wallet.displaySuccess(event.msg)
         wallet.applyIfNeeded()
+      else if event.type == "notice"
+        wallet.displayWarning(event.msg)
+        wallet.applyIfNeeded()
       else 
         console.log event
     else
@@ -541,8 +546,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.displayError(event.message)
       wallet.applyIfNeeded()
     else if event.type == "success"
-      console.log event
       wallet.displaySuccess(event.message)
+      wallet.applyIfNeeded()
+    else if event.type == "notice"
+      wallet.displayWarning(event.msg)
       wallet.applyIfNeeded()
     else 
       console.log event
