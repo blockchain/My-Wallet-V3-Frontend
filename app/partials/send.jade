@@ -2,13 +2,7 @@
   .row
     .col-xs-6
       h3(translate="SEND_BITCOIN")
-    .col-xs-6.advanced-button-header.pull-down
-      h3 
-        | 
-      p
-        {{ advancedLabel }}
-        img(ng-src="img/advanced-{{ advanced ? 'on' : 'off' }}.png", alt="Show advanced settings", ng-click="advanced = !advanced")
-          
+    .col-xs-6          
 .modal-body
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)") 
     {{alert.msg}}
@@ -51,16 +45,16 @@
         p(ng-show="transaction.currency=='BTC'") {{ transaction.amount }} BTC
         p(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
         
-    .form-group(ng-show="advanced")
-      label.col-sm-3.control-label(translate="FEES")
-      .col-sm-5 
-        p.form-control-static {{ transaction.fee | numeraljs:'btc' }}
-    .form-group
-      label.col-sm-3.control-label(translate="PRIVACY_GUARD")
-      .col-sm-4.privacy-guard
-        p.form-control-static 
-          img.privacy-guard(ng-src="img/switch-{{ privacyGuard ? 'on' : 'off' }}.png", ng-alt="{{ privacyGuard ? 'on' : 'off' }}", ng-click="privacyGuard = !privacyGuard")
-          img.question(src="img/question.png", alt="Explanation")
+    //- .form-group(ng-show="advanced")
+    //-   label.col-sm-3.control-label(translate="FEES")
+    //-   .col-sm-5
+    //-     p.form-control-static {{ transaction.fee | numeraljs:'btc' }}
+    //- .form-group
+    //-   label.col-sm-3.control-label(translate="PRIVACY_GUARD")
+    //-   .col-sm-4.privacy-guard
+    //-     p.form-control-static
+    //-       img.privacy-guard(ng-src="img/switch-{{ privacyGuard ? 'on' : 'off' }}.png", ng-alt="{{ privacyGuard ? 'on' : 'off' }}", ng-click="privacyGuard = !privacyGuard")
+    //-       img.question(src="img/question.png", alt="Explanation")
     .form-group(ng-show="cameraIsOn")
       label.col-sm-3.control-label(translate="QR")
       .col-sm-9

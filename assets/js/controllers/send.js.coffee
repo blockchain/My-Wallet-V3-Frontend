@@ -1,7 +1,6 @@
 @SendCtrl = ($scope, $log, Wallet, $modalInstance, ngAudio, $timeout, $stateParams, $translate) ->
   
-  $scope.advanced = false
-  $scope.privacyGuard = false
+  # $scope.privacyGuard = false
   
   $scope.errors = {to: null, amount: null}
   
@@ -44,17 +43,13 @@
     else 
       return $scope.BTCtoFiat(max_btc, $scope.transaction.currency) + " " + $scope.transaction.currency
   
-  $scope.transaction = {from: null, to: "", amount: "", satoshi: 0, currency: "BTC", currencySelected: btc, fee: numeral(0), privacyGuard: false, advanced: false}
+  $scope.transaction = {from: null, to: "", amount: "", satoshi: 0, currency: "BTC", currencySelected: btc, fee: numeral(0)}
   
   $scope.setMethod("BTC")
   
   $scope.addressBook = Wallet.addressBook
   $scope.accounts = Wallet.accounts
-  
-
-  $translate("ADVANCED").then (translation) ->
-    $scope.advancedLabel = translation
-  
+    
   # QR Code scan. Uses js from this fork:
   # https://github.com/peekabustudios/webcam-directive/blob/master/app/scripts/webcam.js
   $scope.onError = (error) -> 
