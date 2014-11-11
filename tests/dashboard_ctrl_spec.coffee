@@ -1,6 +1,9 @@
 describe "DashboardCtrl", ->
   scope = undefined
   
+  modal =
+    open: ->
+  
   beforeEach angular.mock.module("walletApp")
   
   beforeEach ->
@@ -16,6 +19,7 @@ describe "DashboardCtrl", ->
       $controller "DashboardCtrl",
         $scope: scope,
         $stateParams: {}
+        $modal: modal
       
       return
 
@@ -42,15 +46,17 @@ describe "DashboardCtrl", ->
     return
   )
   
-  it "should create a new wallet",  inject((Wallet, $state) ->
-    spyOn(Wallet, "create")
-    
-    scope.uid = "user"
-    scope.password = "pass"
-    
+  it "should open a modal to create a new wallet",  inject((Wallet, $modal) -> 
+    spyOn(modal, "open")
     scope.create()
+    expect(modal.open).toHaveBeenCalled()
     
-    expect(Wallet.create).toHaveBeenCalledWith("user", "pass")
+    # scope.uid = "user"
+   #  scope.password = "pass"
+   #
+   #  scope.create()
+   #
+   #  expect(Wallet.create).toHaveBeenCalledWith("user", "pass")
     
   )
   

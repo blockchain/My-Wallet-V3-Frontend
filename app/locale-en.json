@@ -97,5 +97,17 @@
   "IMPORT_RECOVERY_PHRASE" : "Import Recovery Phrase",
   "IMPORT_RECOVERY_PHRASE_EXPLAIN" : "If you already have an existing Blockchain Recovery Phrase you can enter it here and restore your wallet. Some participating wallets can also be imported and converted to a Blockchain Wallet.",
   "CONFIRM_RECOVERY_PHRASE" : "confirm recovery phrase",
+  "SETUP_WALLET" : "Please Setup Your  Wallet",
+  "NEXT_STEP" : "Next Step",
+  "EMAIL" : "Email",
+  "EMAIL_AND_PASSWORD" : "Enter email & pick password",
+  "CHOOSE_LANGUAGE" : "Please choose your local language",
+  "CHOOSE_CURRENCY" : "Please choose your local currency",
+  "CONFIRM_EMAIL" : "Please Confirm Your Email Address",
+  "CONFIRM_EMAIL_EXPLAIN" : "We have sent you an email at {{ email }}. Please open the email and follow the instructions to complete your wallet.",
+  "EMAIL_WHY" : "Why we ask for your email address",
+  "EMAIL_WHY_EXPLAIN" : "Due to the enhanced security of our wallet it is impossible for Blockchain to access your wallet or funds. This means if you lose your password Blockchain cannot help you recover it. To help mitigrater this we can send pasword hints as well as backup files to your vfifed email address. We will never ever sell your email address or spam you. Promise.",  
+  "EMAIL_PROBLEMS" : "Problems receiving your email?",
+  "RESEND_EMAIL" : "Resend email",
   "" : ""
 }

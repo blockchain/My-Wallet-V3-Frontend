@@ -1,4 +1,4 @@
-@DashboardCtrl = ($scope, $log, Wallet, $cookieStore) ->
+@DashboardCtrl = ($scope, $log, Wallet, $cookieStore, $modal) ->
   $scope.status = Wallet.status    
   $scope.uid = $cookieStore.get("uid")
   
@@ -11,7 +11,8 @@
     
   $scope.create = () ->
     Wallet.clearAlerts()
-    if Wallet.create($scope.uid, $scope.password)
-      $cookieStore.put("uid", $scope.uid)
-      if $scope.savePassword
-        $cookieStore.put("password", $scope.password)
+
+    modalInstance = $modal.open(
+      templateUrl: "partials/signup"
+      controller: SignupCtrl
+    )

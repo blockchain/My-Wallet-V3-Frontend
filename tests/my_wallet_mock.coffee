@@ -1,7 +1,11 @@
 walletServices = angular.module("myWalletServices", [])
-walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService) ->
+walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService, $cookieStore) ->
   # Erase local storage:
-  localStorageService.remove("mockWallets")
+  # localStorageService.remove("mockWallets")
+
+  # $cookieStore.remove("uid")
+  # $cookieStore.remove("password")
+
   # console.log localStorageService.get("mockWallets")
   
   # Wallets are stored in a cookie. If there isn't one, we'll create it.
@@ -9,6 +13,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     localStorageService.set("mockWallets", {
       "test": {
         password: "test"
+        email_verified: true
         accounts: [
           {label: "Savings", archived: false, balance: 300000000 - 25000000, receive_addresses: []},
           {label: "Mobile", archived: false, balance: 25000000 - 1500000, receive_addresses: ["13QsKpDMchnssikZEaJKdkTX7pycFEcTi1"]}
@@ -18,6 +23,14 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
           {hash: "aaab", amount: -25000000, confirmations: 3, doubleSpend: false, coinbase: false, intraWallet: true, from_account: 0, from_addresses: [], to_account: 1, to_addresses: [], note: null, txTime:   2000000000},
           {hash: "afsdfsdkj", amount: -1500000, confirmations: 1, doubleSpend: false, coinbase: false, intraWallet: false, from_account: 1, from_addresses: [], to_account: null, to_addresses: ["1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq"] ,note: null, txTime:   8200000000},
         ]
+      },
+      "test-unverified" : {
+        password: "test"
+        email_verified: false
+        accounts: [
+          {label: "Spending", balance: 0, receive_addresses: []}
+        ]
+        transactions: []
       }
     })
         
@@ -37,7 +50,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   monitorFunc = undefined  # New system
   eventListener = undefined # Old system
   
-  mockRules = {shouldFailToSend: false}
+  mockRules = {shouldFailToSend: false, shouldFailToCreateWallet: false}
   
   myWallet.addressBook = { # The same for everyone
     "17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq": "John"
@@ -94,7 +107,13 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       $log.error "Wallet not found"
       eventListener("wallet not found")
       
-  myWallet.register = (uid, pwd, success, fail) ->
+  myWallet.register = (pwd, email, language, currency, success, fail) ->
+    uid = String(Math.floor((Math.random() * 100000000) + 1))
+    
+    if mockRules.shouldFailToCreateWallet
+      fail({message: "Mock asked to fail"})
+      return
+    
     wallets = localStorageService.get("mockWallets")
     if wallets[uid]
       fail({message: "Wallet already exists"})
@@ -105,9 +124,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
           {label: "Spending", archived: false, balance: 0, receive_addresses: []}
         ]
         transactions: []
+        language: language
+        currency: currency
       }
       localStorageService.set("mockWallets", wallets)
-      success()
+      success(uid)
   
   myWallet.logout = () ->
     eventListener("logging_out")
@@ -381,6 +402,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   #####################################
   myWallet.mockShouldFailToSend = () ->
     mockRules.shouldFailToSend = true
+    
+  myWallet.mockShouldFailToCreateWallet = () ->
+    mockRules.shouldFailToCreateWallet = true
     
   myWallet.mockShouldReceiveNewTransaction = (address="13QsKpDMchnssikZEaJKdkTX7pycFEcTi1", from="17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq", amount=400000, note="Thanks for the tea") ->
     this.mockProcessNewTransaction {hash: "mock-receive-" + (new Date()).getTime(), amount: amount, confirmations: 0, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_addresses: [from], to: address , note: note, txTime: (new Date()).getTime()}

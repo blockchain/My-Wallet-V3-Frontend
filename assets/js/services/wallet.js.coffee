@@ -42,18 +42,28 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.password = password
     wallet.my.setGUID(uid) 
     
-  wallet.create = (uid, password) ->
-    success = () ->
-      wallet.displaySuccess("Wallet created")
+  wallet.create = (password, email, currency, language, success_callback) ->      
+    success = (uid) ->
+      wallet.displaySuccess("Wallet created with identifier: " + uid)
       wallet.login(uid, password)
+      success_callback(uid)
     
     error = (error) ->
       if error.message != undefined
         wallet.displayError(error.message)
       else
         wallet.displayError(error)
+        
+    currency_code = "USD"
+    language_code = "en"
+    
+    if currency?
+      currency_code = currency.code
       
-    wallet.my.register(uid, password, success, error)
+    if language?
+      language_code = language.code
+      
+    wallet.my.register(password, email, currency_code, language_code, success, error)
         
   wallet.createAccount = () ->
     wallet.my.createAccount( "Account #" + (wallet.accounts.length + 1))

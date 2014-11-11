@@ -5,17 +5,11 @@ form.form-horizontal(role="form",name="form",novalidate)
       br
       p(translate="LANGUAGE_EXPLAIN")    
     .col-sm-6
-      ui-select(ng-model="settings.language")
-        ui-select-match {{ $select.selected.name }}
-        ui-select-choices(repeat="language in languages | filter:$select.search") 
-          span(ng-bind-html="language.name | highlight: $select.search")
+      language-picker(language="settings.language")
   .form-group
     .col-sm-3
       label(translate="CURRENCY")
       br
       p(translate="CURRENCY_EXPLAIN")    
     .col-sm-6
-      ui-select(ng-model="settings.currency")
-        ui-select-match {{ $select.selected.name + ' (' + $select.selected.code + ')' }}
-        ui-select-choices(repeat="currency in currencies | filter:$select.search") 
-          span(ng-bind-html="currency.name + ' (' + currency.code + ')' | highlight: $select.search")
+      currency-picker(currency="settings.currency")
