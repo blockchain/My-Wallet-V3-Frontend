@@ -83,6 +83,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     eventListener("did_multiaddr")
     return
     
+  myWallet.getPassphraseString = () ->
+    return "banana big me hungry"
+    
   myWallet.setGUID = (uid) ->
     if localStorageService.get("mockWallets")[uid]
       myWallet.uid = uid

@@ -124,7 +124,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     views: {
       settings: {
         templateUrl: "partials/settings/wallet-recovery"
-        controller: "SettingsWalletRecoveryCtrl"
+        controller: "RecoveryCtrl"
       }
     }
   )

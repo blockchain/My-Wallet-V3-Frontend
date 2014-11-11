@@ -1,5 +1,36 @@
 #settings {
   .label {
     margin-left: 10px;
+  }
+  
+  .header-with-label {
+    h2, label {
+      display: inline;
+    }
+    margin-bottom: 20px;
+  }
+  
+  h2.status.incomplete {
+    color: #939393;
+  }
+  
+  h2.status.complete {
+    color: #7ABF3B;
+  }
+  
+  h2 {
+    font-size: 12pt;
+    color: #75AAC9;
+    margin-bottom: 20px;
   }  
+
+  p {
+    color: #898989;
+  }
+  
+  .right {
+    a {
+      text-transform: lowercase;
+    }
+  }
 }

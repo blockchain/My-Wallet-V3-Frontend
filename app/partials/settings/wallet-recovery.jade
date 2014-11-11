@@ -1,1 +1,34 @@
-| Wallet recovery
+.row
+  .col-xs-12
+    .header-with-label
+      h2(translate="MY_RECOVERY_PHRASE")
+      span.label.label-danger(translate="UNCONFIRMED", ng-hide="didConfirmRecoveryPhrase")
+
+.row
+  .col-xs-6
+    p(translate="RECOVERY_PHRASE_EXPLAIN")
+  .col-xs-6.right
+    h2.status.incomplete(ng-hide="didConfirmRecoveryPhrase", translate="UNCONFIRMED")
+    h2.status.complete(ng-show="didConfirmRecoveryPhrase", translate="CONFIRMED")
+    p
+      a(ng-click="confirmRecoveryPhrase()",translate="CONFIRM_RECOVERY_PHRASE", ng-hide="didConfirmRecoveryPhrase")
+
+.row
+  .col-xs-12
+    a(ng-click="toggleRecoveryPhrase()", ng-hide="showRecoveryPhrase", translate="SHOW_RECOVERY_PHRASE")
+    a(ng-click="toggleRecoveryPhrase()", ng-show="showRecoveryPhrase", translate="HIDE_RECOVERY_PHRASE")
+
+.row
+  .col-xs-12
+    pre(ng-show="showRecoveryPhrase") {{ recoveryPhrase }}
+
+.row
+  .col-xs-12
+    h2(translate="IMPORT_RECOVERY_PHRASE")
+.row
+  .col-xs-6
+    p(translate="IMPORT_RECOVERY_PHRASE_EXPLAIN")
+  .col-xs-6.right
+    p
+      a(ng-click="importRecoveryPhrase()",translate="IMPORT_RECOVERY_PHRASE")
+    

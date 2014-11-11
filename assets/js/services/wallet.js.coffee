@@ -20,7 +20,7 @@ playSound = (id) ->
 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter) -> 
-  wallet = {status: {isLoggedIn: false}, settings: {currency: null, language: null}, user: {email: null, mobile: null, passwordHint: ""}}
+  wallet = {status: {isLoggedIn: false}, settings: {currency: null, language: null}, user: {email: null, mobile: null, passwordHint: "", recoveryPhrase: ""}}
   
   wallet.conversions = {}
   
@@ -75,6 +75,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       $translate("CHANGE_PASSWORD_FAILED").then (translation) ->
         wallet.displayError(translation) 
     )
+    
   
   ####################
   #   Transactions   #
@@ -404,7 +405,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.monitorLegacy = (event, data) ->
     # console.logaccountsd: " + event
     if event == "on_tx" or event == "on_block"
-      console.log "on_tx"
       before = wallet.transactions.length
       wallet.updateTransactions()
       if wallet.transactions.length > before
@@ -413,7 +413,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.updateAccounts()
         wallet.updateTransactions()
     else if event == "hw_wallet_accepted_payment_request"
-      console.log "hw_wallet_accepted_payment_request"
       $translate("PAYMENT_REQUEST_RECEIVED",{amount: numeral(data.amount).divide(100000000).format("0.[00000000]")}).then (translation) ->
         wallet.displaySuccess(translation)
       wallet.refreshPaymentRequests()
@@ -441,6 +440,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
     else if event == "did_decrypt"   # Wallet decrypted succesfully  
       wallet.status.isLoggedIn = true 
+      
+      wallet.user.recoveryPhrase = wallet.my.getHDWallet().getPassphraseString()
       
       for address, label of wallet.my.addressBook
         wallet.addressBook[address] = wallet.my.addressBook[address]
