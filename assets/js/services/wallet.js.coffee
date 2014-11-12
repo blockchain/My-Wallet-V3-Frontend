@@ -65,8 +65,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
     wallet.my.register(password, email, currency_code, language_code, success, error)
         
-  wallet.createAccount = () ->
-    wallet.my.createAccount( "Account #" + (wallet.accounts.length + 1))
+  wallet.createAccount = (name) ->
+    wallet.my.createAccount(name)
     wallet.transactions.push []
     wallet.updateAccounts()
     

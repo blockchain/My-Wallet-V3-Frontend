@@ -24,14 +24,11 @@ describe "AccountsPaymentRequestsCtrl", ->
 
     return
     
-  it "should let user create a new address",  inject(($state) ->
-    before = scope.accounts.length
-    spyOn($state, "go")
-    scope.createAccount()
-    expect(scope.accounts.length).toBe(before + 1)
-    expect($state.go).toHaveBeenCalledWith("transactions", { accountIndex : 2 } )
-  )
-    
+  it "should open modal to create a new account",  inject(() ->
+    spyOn(modal, "open")
+    scope.newAccount()
+    expect(modal.open).toHaveBeenCalled()
+  ) 
     
   it "should show incomplete payment requests",  inject((Wallet) ->
     Wallet.generatePaymentRequestForAccount(0, numeral(1))

@@ -5,9 +5,12 @@
   
   $scope.selectedAccountIndex = $stateParams.accountIndex
     
-  $scope.createAccount = () ->
-    Wallet.createAccount()
-    $state.go("transactions", {accountIndex: Wallet.accounts.length - 1})
+  $scope.newAccount = () ->
+    Wallet.clearAlerts()
+    modalInstance = $modal.open(
+      templateUrl: "partials/new-account"
+      controller: NewAccountCtrl
+    )
 
   $scope.open = (request) ->
     Wallet.clearAlerts()

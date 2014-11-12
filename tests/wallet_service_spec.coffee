@@ -94,6 +94,11 @@ describe "walletServices", () ->
       return
     )
     
+    it "should set a name", inject((Wallet, MyWallet) ->
+       Wallet.createAccount("Savings")
+       expect(Wallet.accounts[Wallet.accounts.length - 1].label).toBe("Savings")
+    )
+    
     return
     
   describe "addressBook()", ->      

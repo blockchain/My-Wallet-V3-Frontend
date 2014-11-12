@@ -109,5 +109,8 @@
   "EMAIL_WHY_EXPLAIN" : "Due to the enhanced security of our wallet it is impossible for Blockchain to access your wallet or funds. This means if you lose your password Blockchain cannot help you recover it. To help mitigrater this we can send pasword hints as well as backup files to your vfifed email address. We will never ever sell your email address or spam you. Promise.",  
   "EMAIL_PROBLEMS" : "Problems receiving your email?",
   "RESEND_EMAIL" : "Resend email",
+  "CREATE_NEW_ACCOUNT" : "Create New Account",
+  "CREATE_ACCOUNT" : "Create Account",
+  "ACCOUNT_NAME" : "Account Name",
   "" : ""
 }

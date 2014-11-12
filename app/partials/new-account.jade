@@ -1,0 +1,12 @@
+.modal-header
+  h3(translate="CREATE_NEW_ACCOUNT") 
+.modal-body
+  .form-group(ng-class="{'has-error': errors.name, 'has-success': success.name}")
+    label.col-sm-4.control-label(translate="ACCOUNT_NAME")
+    .col-sm-8
+      input.form-control(type="text",ng-model="fields.name",autofocus,ng-blur="validate()", ng-focus="errors.name = null")
+      span.help-block {{ errors.name }}
+    
+.modal-footer
+  button.btn.btn-info(ng-click="close()", translate="CLOSE")
+  button.btn.btn-primary(ng-click="createAccount()", translate="CREATE_ACCOUNT", ng-disabled="!formIsValid")
