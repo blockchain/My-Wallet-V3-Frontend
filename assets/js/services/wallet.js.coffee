@@ -577,7 +577,15 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   if message != undefined && message != null
     wallet.displaySuccess(message)
     $cookieStore.remove("alert-success")
+  
+  ##################
+  # Notes and tags #
+  ##################
+  wallet.setNote = (tx, text) ->
+    wallet.my.setNote(tx.hash, text)
     
+  wallet.deleteNote = (tx) ->
+    wallet.my.deleteNote(tx.hash)
 
   ############
   # Settings #

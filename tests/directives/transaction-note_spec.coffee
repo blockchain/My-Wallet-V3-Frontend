@@ -1,6 +1,8 @@
 describe "Transaction Note Directive", ->
   $compile = undefined
   $rootScope = undefined
+  element = undefined
+  isoScope = undefined
   
   # Load the myApp module, which contains the directive
   beforeEach module("walletApp")
@@ -19,18 +21,62 @@ describe "Transaction Note Directive", ->
     return
   )
   
-  it "Replaces the element with the appropriate content", ->
-    
+  beforeEach ->
     element = $compile("<transaction-note transaction='transaction'></transaction-note>")($rootScope)
-    
     $rootScope.$digest()
-        
-    expect(element.html()).toContain "Hello World"
-    
     isoScope = element.isolateScope()
-    
+  
+  it "should show the note", ->
+    expect(element.html()).toContain "Hello World"
+        
+  it "should have the note in its scope", ->
     expect(isoScope.transaction.note).toBe("Hello World")
     
-    return
+  it "should save a modified note", inject((Wallet) ->
+    spyOn(Wallet, "setNote")
+    isoScope.transaction.note = "Modified note"
+    isoScope.$digest()
+    expect(Wallet.setNote).toHaveBeenCalled()
+  )
+  
+  it "should not save an unmodified note", inject((Wallet) ->
+    spyOn(Wallet, "setNote")
+    isoScope.$digest()
+    expect(Wallet.setNote).not.toHaveBeenCalled()
+  )
+  
+  it "should create a new note", inject((Wallet) ->
+    isoScope.transaction.note = null
+        
+    spyOn(Wallet, "setNote")
+    
+    isoScope.transaction.note = "New note"
+    isoScope.$digest()    
+    
+    expect(Wallet.setNote).toHaveBeenCalled()
+  )
+  
+  it "should delete a note", inject((Wallet) ->
+    isoScope.transaction.note = null
+        
+    spyOn(Wallet, "deleteNote")
+    
+    isoScope.$digest()    
+    
+    expect(Wallet.deleteNote).toHaveBeenCalled()
+  )
+  
+  
+  it "should delete a note if it's an empty string", inject((Wallet) ->
+    isoScope.transaction.note = ""
+        
+    spyOn(Wallet, "deleteNote")
+    
+    isoScope.$digest()    
+    
+    expect(Wallet.deleteNote).toHaveBeenCalled()
+  )
 
   return
+  
+    
