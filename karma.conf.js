@@ -23,14 +23,17 @@ module.exports = function(config){
       'assets/js/controllers/**/*.js.coffee',
       'assets/js/filters.js.coffee',
       'assets/js/services/*.js.coffee',
+      'assets/js/directives/*.js.coffee',
       'tests/**/*.coffee',
-      'tests/**/*.js'      
+      'tests/**/*.js',
+      'app/templates/*.jade'      
     ],
 
     autoWatch : true,
 
     preprocessors: {
-      '**/*.coffee': ['coffee']
+      '**/*.jade': ['ng-jade2js'],
+      '**/*.coffee': ['coffee'],
     },
 
     coffeePreprocessor: {
@@ -44,22 +47,54 @@ module.exports = function(config){
         return path.replace(/\.coffee$/, '.js');
       }
     },
+    
+    ngJade2JsPreprocessor: {
+      stripPrefix: 'app/',
+      prependPrefix: '',
+
+      // or define a custom transform function
+      // cacheIdFromPath: function(filepath) {
+      //   console.log(filepath);
+      //   return null;
+      // },
+
+      // Support for jade locals to render at compile time
+      // locals: {
+      //   foo: 'bar'
+      // },
+
+      templateExtension: 'html',
+
+      // setting this option will create only a single module that contains templates
+      // from all the files, so you can load them all with module('foo')
+      // moduleName: 'foo',
+
+      // Jade compiler options. For a list of possible options, consult Jade documentation.
+      jadeOptions: {
+        doctype: 'xml'
+      }
+    },
 
     frameworks: ['jasmine'],
 
     browsers : ['PhantomJS'],
 
     plugins : [
-            'karma-coffee-preprocessor',
-            'karma-phantomjs-launcher',
-            'karma-jasmine',
-            'karma-junit-reporter'
-            ],
+      'karma-jade-preprocessor',
+      'karma-coffee-preprocessor',
+      'karma-phantomjs-launcher',
+      'karma-jasmine',
+      'karma-junit-reporter',
+      'karma-osx-reporter',
+      'karma-ng-jade2js-preprocessor'
+    ],
 
     junitReporter : {
       outputFile: 'test_out/unit.xml',
       suite: 'unit'
-    }
+    },
+    
+    reporters: ['progress','osx']
 
   });
 };

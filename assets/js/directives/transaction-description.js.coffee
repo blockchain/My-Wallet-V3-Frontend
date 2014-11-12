@@ -5,7 +5,7 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet) -
     scope: {
       transaction: '='
     }
-    templateUrl: 'templates/transaction-description'
+    templateUrl: 'templates/transaction-description.html'
     link: (scope, elem, attrs) ->
       phrase = undefined
       from = undefined

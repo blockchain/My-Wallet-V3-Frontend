@@ -18,7 +18,7 @@ app.get "/", (request, response) ->
   response.render "index"
   return
 
-app.get "/partials/:name", (req, res) ->
+app.get "/partials/:name.html", (req, res) ->
   name = req.params.name
   res.render "partials/" + name
   return

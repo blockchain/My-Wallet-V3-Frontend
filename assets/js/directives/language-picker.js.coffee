@@ -5,7 +5,7 @@ walletApp.directive('languagePicker', ($translate, Wallet) ->
     scope: {
       language: '='
     }
-    templateUrl: 'templates/language-picker'
+    templateUrl: 'templates/language-picker.html'
     link: (scope, elem, attrs) ->
       scope.languages = Wallet.languages
       
