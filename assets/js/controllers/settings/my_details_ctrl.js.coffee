@@ -1,6 +1,7 @@
 @SettingsMyDetailsCtrl = ($scope, Wallet, $modal) ->
   $scope.edit = {email: false, mobile: false, password: false, passwordHint: false} 
   $scope.user = Wallet.user
+  $scope.countries = require('country-data').countries
   
   $scope.$watch "user.mobile.number + user.mobile.country", (newValue) ->
     $scope.user.internationalMobileNumber = Wallet.internationalPhoneNumber($scope.user.mobile)

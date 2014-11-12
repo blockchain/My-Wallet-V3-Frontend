@@ -2,7 +2,7 @@
   $scope.status    = Wallet.status
   $scope.settings = Wallet.settings
   $rootScope.isMock = Wallet.isMock
-
+  
   #################################
   #           Private             #
   #################################
