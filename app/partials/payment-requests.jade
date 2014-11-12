@@ -1,6 +1,6 @@
 h2(translate="PENDING_PAYMENTS")
 .row(ng-repeat="request in requests | filter:{complete:false,canceled:false}")
   .col-xs-6
-    a(ng-click="open(request)") {{ request.address }}...
+    a(ng-click="open(request)") {{ request.address }}
   .col-xs-6.amount
     fiat(btc="request.amount")
