@@ -1,27 +1,12 @@
 #signup
   .modal-header
-    h3(translate="SETUP_WALLET", ng-show="currentStep == 1")
-    h3(translate="EMAIL_AND_PASSWORD", ng-show="currentStep == 2")
+    h3(translate="EMAIL_AND_PASSWORD", ng-show="currentStep == 1")
+    h3(translate="SETUP_WALLET", ng-show="currentStep == 2")
     h3(translate="CONFIRM_EMAIL", ng-show="currentStep == 3")  
   .modal-body
     form.form-horizontal(role="form",name="form",novalidate)
       div(ng-switch="currentStep")
         div(ng-switch-when="1")
-          .row
-            .col-xs-2
-              | Balloon
-            .col-xs-10
-              .form-group
-                label(translate="CHOOSE_LANGUAGE")
-                language-picker(language="fields.language")
-          .row
-            .col-xs-2
-              | Fiat
-            .col-xs-10
-              .form-group
-                label(translate="CHOOSE_CURRENCY")
-                currency-picker(currency="fields.currency")
-        div(ng-switch-when="2")
           .form-group(ng-class="{'has-error': errors.email, 'has-success': success.email}")
             label.col-sm-4.control-label(translate="EMAIL")
             .col-sm-8
@@ -37,6 +22,21 @@
             .col-sm-8
               input.form-control(type="password",ng-model="fields.confirmation",autofocus,ng-blur="validate()", ng-focus="errors.confirmation = null")
               span.help-block {{ errors.confirmation }}
+        div(ng-switch-when="2")
+          .row
+            .col-xs-2
+              | Balloon
+            .col-xs-10
+              .form-group
+                label(translate="CHOOSE_LANGUAGE")
+                language-picker(language="fields.language")
+          .row
+            .col-xs-2
+              | Fiat
+            .col-xs-10
+              .form-group
+                label(translate="CHOOSE_CURRENCY")
+                currency-picker(currency="fields.currency")
         div(ng-switch-when="3")
           p(translate="CONFIRM_EMAIL_EXPLAIN" translate-values='{ email: fields.email}')
           hr
