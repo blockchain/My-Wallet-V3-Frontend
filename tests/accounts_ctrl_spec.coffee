@@ -1,4 +1,4 @@
-describe "AccountsPaymentRequestsCtrl", ->
+describe "AccountsCtrl", ->
   scope = undefined
   
   modal =
@@ -15,7 +15,7 @@ describe "AccountsPaymentRequestsCtrl", ->
       
       scope = $rootScope.$new()
             
-      $controller "AccountsPaymentRequestsCtrl",
+      $controller "AccountsCtrl",
         $scope: scope,
         $stateParams: {}
         $modal: modal
@@ -29,18 +29,3 @@ describe "AccountsPaymentRequestsCtrl", ->
     scope.newAccount()
     expect(modal.open).toHaveBeenCalled()
   ) 
-    
-  it "should show incomplete payment requests",  inject((Wallet) ->
-    Wallet.generatePaymentRequestForAccount(0, numeral(1))
-    expect(scope.requests.length).toBe(1)
-  )
-  
-  it "should open a popup with the payment request",  inject((Wallet, $modal) ->
-    Wallet.generatePaymentRequestForAccount(0, numeral(1))
-    req = scope.requests[0]
-    spyOn(modal, "open")
-
-    scope.open(req)
-
-    expect(modal.open).toHaveBeenCalled()
-  )

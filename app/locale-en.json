@@ -112,5 +112,6 @@
   "CREATE_NEW_ACCOUNT" : "Create New Account",
   "CREATE_ACCOUNT" : "Create Account",
   "ACCOUNT_NAME" : "Account Name",
+  "PAYMENT_REQUESTS" : "Payment Requests",
   "" : ""
 }

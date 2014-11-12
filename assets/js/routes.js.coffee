@@ -16,6 +16,11 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     controller: "NavigationCtrl"
   }
   
+  accounts = { 
+    templateUrl: "partials/accounts-navigation"
+    controller: "AccountsCtrl"
+  }
+  
   settingsNavigation = {
     templateUrl: "partials/settings/navigation"
     controller: "SettingsNavigationCtrl"
@@ -27,10 +32,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       navigation: navigation,
       alerts: alerts,
       top : top,
-      left: { 
-        templateUrl: "partials/accounts-navigation"
-        controller: "AccountsPaymentRequestsCtrl"
-      },
+      left: accounts,
       right: { 
         templateUrl: "partials/dashboard"
         controller: "DashboardCtrl"
@@ -44,10 +46,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       navigation: navigation,
       alerts: alerts,
       top: top,
-      left: { 
-        templateUrl: "partials/accounts-navigation"
-        controller: "AccountsPaymentRequestsCtrl"
-      },
+      left: accounts,
       right: {
         templateUrl: "partials/transactions"
         controller: "TransactionsCtrl"
@@ -134,6 +133,14 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       settings: {
         templateUrl: "partials/settings/advanced"
         controller: "SettingsAdvancedCtrl"
+      }
+    }
+  ).state("settings.payment-requests",
+    url: "/payment-requests"
+    views: {
+      settings: {
+        templateUrl: "partials/payment-requests"
+        controller: "PaymentRequestsCtrl"
       }
     }
   )
