@@ -227,6 +227,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.getNote = (hash) ->
     notes[hash]
     
+  myWallet.setNote = (hash, text) ->
+    notes[hash] = text
+    myWallet.sync()
+    return
+    
   # Amount in Satoshi
   myWallet.sendBitcoinsForAccount = (fromAccountIndex,toAddress, amount, fee, note, success, error) ->
     if mockRules.shouldFailToSend
@@ -384,6 +389,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
         
       cookie[myWallet.uid].paymentRequests = paymentRequests
       cookie[myWallet.uid].accounts = accounts
+      cookie[myWallet.uid].notes = notes
+            
       localStorageService.set("mockWallets", cookie)
       isSynchronizedWithServer = true
     ), 5000)

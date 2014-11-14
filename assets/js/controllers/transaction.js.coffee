@@ -15,12 +15,13 @@
     $scope.from = ""
     $scope.to = ""
     
+    $scope.transaction = {}
+    
     $scope.$watchCollection "transactions", (newVal) -> 
       transaction = $filter("getByProperty")("hash", $stateParams.hash, newVal)
       $scope.transaction = transaction 
       
     $scope.$watch "transaction", (tx) ->
-      console.log tx
       if tx.from_account?
         $scope.from = Wallet.accounts[tx.from_account].label
       else
