@@ -1,7 +1,15 @@
-@SettingsMyDetailsCtrl = ($scope, Wallet, $modal) ->
+@SettingsMyDetailsCtrl = ($scope, Wallet, $modal, $filter) ->
+  $scope.countries = require('country-data').countries.all
+  
   $scope.edit = {email: false, mobile: false, password: false, passwordHint: false} 
   $scope.user = Wallet.user
-  $scope.countries = require('country-data').countries
+  
+  $scope.newMobile = {country: null, number: null}
+  
+  $scope.$watch "user.mobile", (newValue) -> # Update form
+    $scope.newMobile.country = $filter("getByPropertyNested")("countryCallingCodes", newValue.country, $scope.countries)
+    $scope.newMobile.number = newValue.number
+    
   
   $scope.$watch "user.mobile.number + user.mobile.country", (newValue) ->
     $scope.user.internationalMobileNumber = Wallet.internationalPhoneNumber($scope.user.mobile)
@@ -13,8 +21,9 @@
     Wallet.changeEmail(email)
     $scope.edit.email = false
   
-  $scope.changeMobile = (number) ->
-    mobile = {country: $scope.user.mobile.country, number: number} # Pending a country dropdown
+  $scope.changeMobile = (mobile) ->
+    mobile = {country: mobile.country.countryCallingCodes[0], number: mobile.number}
+    console.log mobile
     Wallet.changeMobile(mobile)
     $scope.edit.mobile = false   
     
@@ -22,11 +31,11 @@
     Wallet.verifyMobile(code)
   
   $scope.validateMobileNumber = (candidate) ->
-    return false unless candidate?
-    return false if candidate.length < 4
-    return false if candidate[0] != "0"
-    return false if isNaN(parseInt(candidate))
-    return false if parseInt(candidate, 10).toString() != candidate.replace(/^0+/, '')
+    return false unless candidate.number?
+    return false if candidate.number.length < 4
+    return false if candidate.number[0] != "0"
+    return false if isNaN(parseInt(candidate.number))
+    return false if parseInt(candidate.number, 10).toString() != candidate.number.replace(/^0+/, '')
     return true
     
   $scope.changePassword = () ->

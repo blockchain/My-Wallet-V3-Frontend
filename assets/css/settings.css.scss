@@ -33,4 +33,13 @@
       text-transform: lowercase;
     }
   }
+  
+  .edit-mobile {
+    button.ui-select-match {
+      width: 75px;
+    }
+    input.ui-select-search {
+      width: 150px;
+    }
+  }
 }

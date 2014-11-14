@@ -28,8 +28,13 @@ form.form-horizontal(role="form",name="form",novalidate)
         p.form-control-static {{ user.internationalMobileNumber }}
         p
           a(ng-click="edit.mobile = !edit.mobile", translate="CHANGE_MOBILE_NUMBER")
-      div(ng-show="edit.mobile")     
-        input.form-control(type="text",name="mobile",placeholder="{{ user.mobile.number }}",ng-model="newMobile")
+      .edit-mobile(ng-show="edit.mobile")
+        .input-group
+          ui-select(ng-model="newMobile.country").input-group-btn
+            ui-select-match {{ $select.selected.alpha2 }}
+            ui-select-choices(repeat="country in countries | filter: $select.search") 
+              span(ng-bind-html="country.name | highlight: $select.search")
+          input.form-control(type="text",name="mobile",ng-model="newMobile.number")
         button.btn.btn-primary.btn-small(ng-click="changeMobile(newMobile)",ng-disabled="!validateMobileNumber(newMobile)", translate="SAVE")
         button.btn.btn-info.btn-small(ng-click="edit.mobile = false", translate="CANCEL")
       .row(ng-show="!user.isMobileVerified")

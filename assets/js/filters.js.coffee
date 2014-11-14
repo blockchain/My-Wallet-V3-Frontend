@@ -25,3 +25,17 @@ angular.module("walletFilters", [])
       return collection[i]  if collection[i][propertyName] == propertyValue
       i++
     null
+
+.filter "getByPropertyNested", ->
+  (propertyName, propertyValue, collection) ->
+    i = 0
+    len = collection.length
+    while i < len
+      subCollection = collection[i][propertyName]
+      j = 0
+      len2 = subCollection.length 
+      while j < len2
+        return collection[i]  if collection[i][propertyName][j] == propertyValue
+        j++
+      i++
+    null
