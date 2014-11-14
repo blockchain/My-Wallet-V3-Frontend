@@ -2,15 +2,24 @@
   padding: 30px;
   padding-bottom: 30px;
   
-  h1 {
-    font-size: 350%;
-    font-weight: bold;
-    margin-top: 0px;
-  }
+  .balance {
+    .content {
+      float: left;
+      h1 {
+        text-align: right;
+        font-size: 350%;
+        font-weight: bold;
+        margin-top: 0px;
+        margin-bottom: 0px;
+      }
   
-  p {
-    margin-top: 20px;
+      p {
+        margin-top: 0px;
+        float: right;
+      }
+    }
   }
+
   
   button {
     margin-top: 10px;

@@ -61,7 +61,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       alerts: alerts,
       left: { 
         templateUrl: "partials/accounts-navigation"
-        controller: "AccountsPaymentRequestsCtrl"
+        controller: "AccountsCtrl"
       },
       right: {
         templateUrl: "partials/transaction"

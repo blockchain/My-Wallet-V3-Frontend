@@ -23,3 +23,7 @@ walletApp.config (uiSelectConfig) ->
   
 walletApp.config ($numeraljsConfigProvider) ->
   $numeraljsConfigProvider.setFormat('btc', '0,0.00 BTC')
+  
+# Danger! Use for debugging only:
+# walletApp.config ($sceProvider) ->
+#   $sceProvider.enabled(false);

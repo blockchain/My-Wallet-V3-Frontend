@@ -1,1 +1,9 @@
-span(ng-bind-html="description")
+span
+  b(translate="YOU")
+  | 
+  span(translate="{{ action }}")
+  |   
+  b(translate="{{ subject }}" tooltip="{{ address }}" ng-if="address")
+  b(translate="{{ subject }}" ng-if="!address")
+    
+ 
