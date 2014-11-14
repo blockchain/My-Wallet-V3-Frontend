@@ -1,4 +1,51 @@
-h2 Transaction Details
-p You ... {{ transaction.amount | btc }} bitcoin
-p
-  a(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank") Verify On The Blockchain Explorer
+#transaction-details
+  h2 Transaction Details
+  hr
+  .row
+    .col-xs-6
+      p.date
+        {{ transaction.txTime | date:'MMMM d @ hh:mm a' }}
+    .col-xs-6
+      p.status
+        span.glyphicon.glyphicon-time
+        span.short(translate="PENDING")
+        br
+        span.status-detail This transaction will complete in 10 minutes
+  .row
+    .col-xs-12
+      .to-from-amount-box 
+        .row
+          .col-xs-10
+            table
+              tr
+                td 
+                  b From:
+                td
+                  {{ from }}
+              tr
+                td 
+                  b To:
+                td
+                  | {{ to }}
+          .col-xs-2
+            amount(transaction="transaction")
+            br
+            | (todo: show BTC)
+  .row
+    .col-xs-6.notes-tags
+      h3 Notes
+      transaction-note(transaction="transaction")
+      h3 Tags
+      | ... +
+    .col-xs-6
+      h4 Value at time of send
+      span.value-at-tx ...
+      hr
+      h4 Value now
+      span.value-now 
+        fiat(btc="transaction.amount")
+    
+  .row
+    .col-xs-12         
+      .blockchain
+        a.btn(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank") Verify On The Blockchain Explorer

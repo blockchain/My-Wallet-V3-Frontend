@@ -19,10 +19,13 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
           {label: "Mobile", archived: false, balance: 25000000 - 1500000, receive_addresses: ["13QsKpDMchnssikZEaJKdkTX7pycFEcTi1"]}
         ]
         transactions: [
-          {hash: "aaaa", amount: 300000000, confirmations: 13, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_addresses: ["1D2YzLr5qvrwMSm8onYbns5BLJ9jwzPHcQ"], to_account: 0, to_addresses: [], note: "Salary", txTime: 1331300839},
+          {hash: "aaaa", amount: 300000000, confirmations: 13, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_addresses: ["1D2YzLr5qvrwMSm8onYbns5BLJ9jwzPHcQ"], to_account: 0, to_addresses: [], txTime: 1331300839},
           {hash: "aaab", amount: -25000000, confirmations: 3, doubleSpend: false, coinbase: false, intraWallet: true, from_account: 0, from_addresses: [], to_account: 1, to_addresses: [], note: null, txTime:   2000000000},
           {hash: "afsdfsdkj", amount: -1500000, confirmations: 1, doubleSpend: false, coinbase: false, intraWallet: false, from_account: 1, from_addresses: [], to_account: null, to_addresses: ["1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq"] ,note: null, txTime:   8200000000},
         ]
+        notes: {
+          "aaaa" : "Salary"
+        }
       },
       "test-unverified" : {
         password: "test"
@@ -31,6 +34,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
           {label: "Spending", balance: 0, receive_addresses: []}
         ]
         transactions: []
+        notes: {}
       }
     })
         
@@ -42,6 +46,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   accounts = []
     
   transactions = []
+  notes = {}
   
   language = "en"
   email = "steve@me.com"
@@ -219,6 +224,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
     return res
     
+  myWallet.getNote = (hash) ->
+    notes["hash"]
+    
   # Amount in Satoshi
   myWallet.sendBitcoinsForAccount = (fromAccountIndex,toAddress, amount, fee, note, success, error) ->
     if mockRules.shouldFailToSend
@@ -384,6 +392,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.refresh = () ->
     accounts = angular.copy(localStorageService.get("mockWallets")[this.uid].accounts)
     transactions = angular.copy(localStorageService.get("mockWallets")[this.uid].transactions)
+    notes = angular.copy(localStorageService.get("mockWallets")[this.uid].notes)
+    
     if localStorageService.get("mockWallets")[this.uid].paymentRequests
       paymentRequests = angular.copy(localStorageService.get("mockWallets")[this.uid].paymentRequests)      
       # Update the stack of remaning payment addresses:

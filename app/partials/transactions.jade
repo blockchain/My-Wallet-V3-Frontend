@@ -10,14 +10,4 @@
     .col-xs-3
       transaction-note(transaction="transaction")
     .col-xs-2(confirmations-tooltip="transaction")
-      span(ng-show="transaction.intraWallet")
-        button.amount.intra-wallet
-          fiat(btc="-transaction.amount")
-      span(ng-show="transaction.amount > 0 && !transaction.intraWallet")
-        button.amount.received 
-          fiat(btc="transaction.amount")
-          span(ng-show="transaction.confirmations == 0").glyphicon.glyphicon-warning-sign
-      span(ng-show="transaction.amount < 0 && !transaction.intraWallet")
-        button.amount.spent 
-          | - 
-          fiat(btc="-transaction.amount")
+      amount(transaction="transaction")
