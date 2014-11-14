@@ -67,8 +67,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         
   wallet.createAccount = (name) ->
     wallet.my.createAccount(name)
-    wallet.transactions.push []
     wallet.updateAccounts()
+    wallet.transactions.push []
     
   wallet.logout = () ->
     wallet.didLogoutByChoice = true
@@ -166,8 +166,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     #   observer.transactionDidFinish()
       
     success = () ->
-      wallet.updateAccounts()
       wallet.updateTransactions()
+      wallet.updateAccounts()
     
       observer.transactionDidFinish()
       
@@ -421,8 +421,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       if wallet.transactions.length > before
         sound = ngAudio.load("beep.wav")
         sound.play()
-        wallet.updateAccounts()
         wallet.updateTransactions()
+        wallet.updateAccounts()
     else if event == "hw_wallet_accepted_payment_request"
       $translate("PAYMENT_REQUEST_RECEIVED",{amount: numeral(data.amount).divide(100000000).format("0.[00000000]")}).then (translation) ->
         wallet.displaySuccess(translation)
