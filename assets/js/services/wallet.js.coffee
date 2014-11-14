@@ -405,7 +405,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
         if !match
           transaction = angular.copy(tx)
-          # transaction.note = wallet.my.getNote(transaction.hash)
+          transaction.note = wallet.my.getNote(transaction.hash)
           wallet.transactions.push transaction 
           
   ####################
