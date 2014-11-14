@@ -7,7 +7,9 @@
   $scope.newMobile = {country: null, number: null}
   
   $scope.$watch "user.mobile", (newValue) -> # Update form
-    $scope.newMobile.country = $filter("getByPropertyNested")("countryCallingCodes", newValue.country, $scope.countries)
+    $scope.newMobile.country = null
+    if newValue.country? && newValue.country != ""
+      $scope.newMobile.country = $filter("getByPropertyNested")("countryCallingCodes", newValue.country, $scope.countries)
     $scope.newMobile.number = newValue.number
     
   
@@ -22,8 +24,8 @@
     $scope.edit.email = false
   
   $scope.changeMobile = (mobile) ->
-    mobile = {country: mobile.country.countryCallingCodes[0], number: mobile.number}
-    console.log mobile
+    country = if (mobile.country? && mobile.country != "") then mobile.country.countryCallingCodes[0] else ""
+    mobile = {country: country, number: mobile.number}
     Wallet.changeMobile(mobile)
     $scope.edit.mobile = false   
     

@@ -225,7 +225,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     return res
     
   myWallet.getNote = (hash) ->
-    notes["hash"]
+    notes[hash]
     
   # Amount in Satoshi
   myWallet.sendBitcoinsForAccount = (fromAccountIndex,toAddress, amount, fee, note, success, error) ->

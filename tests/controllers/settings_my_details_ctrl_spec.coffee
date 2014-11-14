@@ -76,21 +76,21 @@ describe "SettingsMyDetailsCtrl", ->
     )
     
     it "should validate proposed number is not empty", ->
-      expect(scope.validateMobileNumber("")).toBe(false)
+      expect(scope.validateMobileNumber(country: "+31", number:"")).toBe(false)
       return
       
     it "should validate proposed number contains only numbers", ->
-      expect(scope.validateMobileNumber("0800000000")).toBe(true)
+      expect(scope.validateMobileNumber(country: "+31", number: "0800000000")).toBe(true)
       return
     
     it "should validate proposed number does not cotain letters", ->
-      expect(scope.validateMobileNumber("0800monkey")).toBe(false)
+      expect(scope.validateMobileNumber(country: "+31", number: "0800monkey")).toBe(false)
       return
     
     it "can be verified", inject((Wallet) ->
       spyOn(Wallet, "verifyMobile")
 
-      scope.verifyMobile("12345")
+      scope.verifyMobile(country: "+31", number: "12345")
       
       expect(Wallet.verifyMobile).toHaveBeenCalled()
           
