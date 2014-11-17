@@ -148,20 +148,21 @@
       else 
         $scope.transaction.from = $scope.accounts[parseInt($stateParams.accountIndex)]
   
-  $scope.$watchCollection "[transaction.to, transaction.from.address, transaction.amount, transaction.currency]", () ->
+  $scope.$watchCollection "[transaction.to, transaction.from, transaction.amount, transaction.currency]", () ->
     if $scope.transaction.currency == "BTC"
       $scope.transaction.satoshi = parseInt(numeral($scope.transaction.amount).multiply(100000000).format("0"))
     else
       $scope.transaction.satoshi = Wallet.fiatToSatoshi($scope.transaction.amount, $scope.transaction.currency)
     
     if $scope.transaction.to? && $scope.transaction.amount > 0
-      $scope.transaction.fee = numeral(Wallet.recommendedTransactionFeeForAccount($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.satoshi)).divide(100000000)      
+      $scope.transaction.fee = Wallet.recommendedTransactionFeeForAccount($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.satoshi)     
       $scope.transactionIsValid = $scope.validate()
     else
       $scope.transactionIsValid = false
     
   $scope.$watch "transaction.from", () ->
     $scope.visualValidate("from")
+    $scope.from = $scope.transaction.from.label + " Account"
     
   $scope.visualValidate = (blurredField) ->
     if blurredField == "to"
@@ -228,7 +229,7 @@
 
     return false unless amount? && amount > 0      
 
-    return false if $scope.transaction.satoshi + parseInt($scope.transaction.fee.multiply(100000000).format("1")) > $scope.transaction.from.balance
+    return false if $scope.transaction.satoshi + $scope.transaction.fee > $scope.transaction.from.balance
     $scope.errors.amount = null
     
     return true
@@ -242,3 +243,8 @@
     sound.play()
     $modalInstance.close ""
   
+  $scope.goToConfirmation = () ->
+    $scope.confirmationStep = true
+    
+  $scope.backToForm = () ->
+    $scope.confirmationStep = false    

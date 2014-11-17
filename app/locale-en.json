@@ -116,5 +116,13 @@
   "ACCOUNT_NAME" : "Account Name",
   "PAYMENT_REQUESTS" : "Payment Requests",
   "PENDING" : "Pending",
+  "OVERVIEW" : "Overview",
+  "TAGS" : "Tags",
+  "NOTE" : "Note",
+  "MAKE_PUBLIC" : "Make Public",
+  "FROM" : "From",
+  "TO" : "To",
+  "FEE" : "Fee",
+  "TOTAL" : "Total",
   "" : ""
 }

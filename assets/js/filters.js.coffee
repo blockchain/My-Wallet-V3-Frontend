@@ -3,9 +3,9 @@
 angular.module("walletFilters", [])
       
 .filter "btc", ->
-  (input) ->
+  (input,hideCurrency) ->
     if input && !isNaN(input) 
-     numeral(input).divide(100000000).format("0.[00000000]") + " BTC"
+     numeral(input).divide(100000000).format("0.[00000000]") + (if hideCurrency then "" else " BTC")
     else
       ""
 #

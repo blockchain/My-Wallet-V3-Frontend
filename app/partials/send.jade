@@ -3,65 +3,134 @@
     .col-xs-6
       h3(translate="SEND_BITCOIN")
     .col-xs-6          
-.modal-body
+.modal-body#send
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)") 
     {{alert.msg}}
-  form.form-horizontal(role="form",name="form",novalidate)
-    .form-group
-      label.col-sm-3.control-label(translate="SEND_FROM")
-      .col-sm-7
-        ui-select(ng-model="transaction.from")
-          ui-select-match {{ $select.selected.label }} ({{ max($select.selected) }})
-          ui-select-choices(repeat="account in accounts | filter: $select.search") 
-            span(ng-bind-html="account.label | highlight: $select.search")
-    .form-group(ng-class="{'has-error': errors.to}")
-      label.col-sm-3.control-label(for:"to", translate="SEND_TO")
-      .col-sm-7
-        .input-group-vertical.send-methods
-          .btn-group.btn-group-justified
-            .btn-group.btn-group-xs
-              button(type="button", ng-class="{active: method=='BTC'}", ng-click="setMethod('BTC')").btn.btn-default Bitcoin
-            .btn-group.btn-group-xs
-              button(type="button", ng-class="{active: method=='EMAIL'}", ng-click="setMethod('EMAIL')").btn.btn-default.middle Email
-            .btn-group.btn-group-xs
-              button(type="button", ng-class="{active: method=='SMS'}", ng-click="setMethod('SMS')").btn.btn-default SMS         
-          .input-group
-            input#send-to.form-control(type="text",ng-model="transaction.to",placeholder="{{ toPlaceholder }}",autofocus,ng-blur="visualValidate('to')", tabindex="0")
-            span.input-group-btn
-              button#qr.btn.btn-default(type="button", ng-click="cameraOn()") 
-                img(src="img/qr.png", alt="QR")
-        span.help-block {{ errors.to }}
-    .form-group(ng-class="{'has-error': errors.amount}")
-      label.col-sm-3.control-label(translate="AMOUNT")
-      .col-sm-3
-        input.form-control(type="text",ng-model="transaction.amount", placeholder="0.0000....",ng-blur="visualValidate('amount')")          
-        span.help-block {{ errors.amount }}
-      .col-sm-3
-        ui-select(ng-model="transaction.currencySelected")
-          ui-select-match {{ $select.selected.code }}
-          ui-select-choices(repeat="currency in currencies | filter: $select.search" group-by="'type'") 
-            span(ng-bind-html="currency.code | highlight: $select.search")                
-      .col-sm-3
-        p(ng-show="transaction.currency=='BTC'") {{ transaction.amount }} BTC
-        p(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
+  div(ng-hide="confirmationStep")
+    form.form-horizontal(role="form",name="form",novalidate)
+      .form-group
+        label.col-sm-3.control-label(translate="SEND_FROM")
+        .col-sm-7
+          ui-select(ng-model="transaction.from")
+            ui-select-match {{ $select.selected.label }} ({{ max($select.selected) }})
+            ui-select-choices(repeat="account in accounts | filter: $select.search") 
+              span(ng-bind-html="account.label | highlight: $select.search")
+      .form-group(ng-class="{'has-error': errors.to}")
+        label.col-sm-3.control-label(for:"to", translate="SEND_TO")
+        .col-sm-7
+          .input-group-vertical.send-methods
+            .btn-group.btn-group-justified
+              .btn-group.btn-group-xs
+                button(type="button", ng-class="{active: method=='BTC'}", ng-click="setMethod('BTC')").btn.btn-default Bitcoin
+              .btn-group.btn-group-xs
+                button(type="button", ng-class="{active: method=='EMAIL'}", ng-click="setMethod('EMAIL')").btn.btn-default.middle Email
+              .btn-group.btn-group-xs
+                button(type="button", ng-class="{active: method=='SMS'}", ng-click="setMethod('SMS')").btn.btn-default SMS         
+            .input-group
+              input#send-to.form-control(type="text",ng-model="transaction.to",placeholder="{{ toPlaceholder }}",autofocus,ng-blur="visualValidate('to')", tabindex="0")
+              span.input-group-btn
+                button#qr.btn.btn-default(type="button", ng-click="cameraOn()") 
+                  img(src="img/qr.png", alt="QR")
+          span.help-block {{ errors.to }}
+      .form-group(ng-class="{'has-error': errors.amount}")
+        label.col-sm-3.control-label(translate="AMOUNT")
+        .col-sm-3
+          input.form-control(type="text",ng-model="transaction.amount", placeholder="0.0000....",ng-blur="visualValidate('amount')")          
+          span.help-block {{ errors.amount }}
+        .col-sm-3
+          ui-select(ng-model="transaction.currencySelected")
+            ui-select-match {{ $select.selected.code }}
+            ui-select-choices(repeat="currency in currencies | filter: $select.search" group-by="'type'") 
+              span(ng-bind-html="currency.code | highlight: $select.search")                
+        .col-sm-3
+          p(ng-show="transaction.currency=='BTC'") {{ transaction.amount }} BTC
+          p(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
         
-    //- .form-group(ng-show="advanced")
-    //-   label.col-sm-3.control-label(translate="FEES")
-    //-   .col-sm-5
-    //-     p.form-control-static {{ transaction.fee | numeraljs:'btc' }}
-    //- .form-group
-    //-   label.col-sm-3.control-label(translate="PRIVACY_GUARD")
-    //-   .col-sm-4.privacy-guard
-    //-     p.form-control-static
-    //-       img.privacy-guard(ng-src="img/switch-{{ privacyGuard ? 'on' : 'off' }}.png", ng-alt="{{ privacyGuard ? 'on' : 'off' }}", ng-click="privacyGuard = !privacyGuard")
-    //-       img.question(src="img/question.png", alt="Explanation")
-    .form-group(ng-show="cameraIsOn")
-      label.col-sm-3.control-label(translate="QR")
-      .col-sm-9
-        webcam(on-stream="onStream(stream)"
-               on-access-denied="onError(err)" ng-if="cameraRequested")
-        canvas#qr-canvas
+      //- .form-group(ng-show="advanced")
+      //-   label.col-sm-3.control-label(translate="FEES")
+      //-   .col-sm-5
+      //-     p.form-control-static {{ transaction.fee | numeraljs:'btc' }}
+      //- .form-group
+      //-   label.col-sm-3.control-label(translate="PRIVACY_GUARD")
+      //-   .col-sm-4.privacy-guard
+      //-     p.form-control-static
+      //-       img.privacy-guard(ng-src="img/switch-{{ privacyGuard ? 'on' : 'off' }}.png", ng-alt="{{ privacyGuard ? 'on' : 'off' }}", ng-click="privacyGuard = !privacyGuard")
+      //-       img.question(src="img/question.png", alt="Explanation")
+      .form-group(ng-show="cameraIsOn")
+        label.col-sm-3.control-label(translate="QR")
+        .col-sm-9
+          webcam(on-stream="onStream(stream)"
+                 on-access-denied="onError(err)" ng-if="cameraRequested")
+          canvas#qr-canvas
+  div.overview(ng-show="confirmationStep")
+    .row
+      .col-xs-6
+        h4(translate="OVERVIEW")
+        hr
+        table
+          tr
+            td.left
+              b 
+                span(translate="FROM")
+                | :
+            td
+              b {{ from }}
+          tr
+            td.left
+              b 
+                span(translate="TO")
+                | :
+            td
+              | {{ transaction.to }}
+        hr
+        table
+          tr
+            td.left
+              span(translate="AMOUNT")
+              | :
+            td
+              {{ transaction.satoshi | btc:true }}
+            td
+              | BTC
+            td
+              fiat(btc="transaction.satoshi")
+          tr
+            td.left
+              span(translate="FEE")
+              | :
+            td
+              | {{ transaction.fee | btc:true }}
+            td
+              | BTC
+            td
+              fiat(btc="transaction.fee")
+          tr.total
+            td.left
+              b
+                span(translate="TOTAL")
+                | :
+            td
+              b {{ transaction.fee + transaction.satoshi | btc:true }}
+            td
+              b BTC
+            td
+              fiat(btc="transaction.satoshi + transaction.fee")
+      .col-xs-6
+        h4
+          span(translate="TAGS")
+          | 
+          span(ng-click="") +
+        p Coming soon...
+        h4
+          span(translate="NOTE") 
+          |:
+        textarea.form-control(rows="3")
+        | [] 
+        span(translate="MAKE_PUBLIC")
+      
 .modal-footer
   button.btn.btn-info(ng-click="cameraOff()", ng-show="cameraIsOn", translate="CAMERA_OFF")
-  button.btn.btn-info(ng-click="close()", translate="CANCEL")
-  button.btn.btn-primary(ng-click="send()",ng-disabled="!transactionIsValid", translate="SEND")
+  button.btn.btn-info(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
+  button.btn.btn-info(ng-click="backToForm()", translate="BACK", ng-show="confirmationStep")
+  button.btn.btn-primary(ng-click="goToConfirmation()",ng-disabled="!transactionIsValid", translate="CONTINUE", ng-hide="confirmationStep")
+  button.btn.btn-primary(ng-click="send()",ng-disabled="!transactionIsValid", translate="SEND", ng-show="confirmationStep")

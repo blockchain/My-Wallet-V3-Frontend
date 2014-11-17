@@ -66,3 +66,36 @@
     border-top: 1px solid #ccc;
   }
 }
+
+#send {
+  .overview {
+    color: #BBBBBB;
+    font-size: 8pt;
+    
+    b {
+      color: #666666;
+    }
+    
+    h4 {
+      color: #607178;
+      font-size: 9pt;
+    }
+    
+    table {
+      td {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-right: 5px;
+        padding-left: 5px;
+      }
+      
+      td.left {
+        padding-right: 35px;
+      }
+      
+      tr.total {
+        background-color: #EAF3F5;
+      }
+    }
+  }
+}

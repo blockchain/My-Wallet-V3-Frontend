@@ -200,3 +200,8 @@ describe "SendCtrl", ->
     return
   )
   
+  describe "overview", ->
+    it "should show friendly name for from", ->
+      expect(scope.from).toBe("Savings Account")
+      
+  
