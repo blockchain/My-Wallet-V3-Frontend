@@ -8,6 +8,8 @@
   
   $scope.isOpen = {currencies: false}
   
+  $scope.internal = false
+  
   $scope.currencies = angular.copy(Wallet.currencies)
   
   for currency in $scope.currencies
@@ -43,7 +45,7 @@
     else 
       return $scope.BTCtoFiat(max_btc, $scope.transaction.currency) + " " + $scope.transaction.currency
   
-  $scope.transaction = {from: null, to: "", amount: "", satoshi: 0, currency: "BTC", currencySelected: btc, fee: numeral(0)}
+  $scope.transaction = {from: null, to: "", toAccount: null, amount: "", satoshi: 0, currency: "BTC", currencySelected: btc, fee: numeral(0)}
   
   $scope.setMethod("BTC")
   
@@ -120,12 +122,15 @@
   
   $scope.send = () ->
     Wallet.clearAlerts()
+    
+    if $scope.internal
+      Wallet.sendInternal($scope.accounts.indexOf($scope.transaction.from), $scope.accounts.indexOf($scope.transaction.to), numeral($scope.transaction.amount), $scope.transaction.currency, $scope.observer)
+    else
+      if $scope.method == "EMAIL" || $scope.method == "SMS"
+        Wallet.displayError("SMS and email not yet supported")
+        return
 
-    if $scope.method == "EMAIL" || $scope.method == "SMS"
-      Wallet.displayError("SMS and email not yet supported")
-      return
-
-    Wallet.send($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.to, numeral($scope.transaction.amount), $scope.transaction.currency, $scope.observer)
+      Wallet.send($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.to, numeral($scope.transaction.amount), $scope.transaction.currency, $scope.observer)
   
   $scope.closeAlert = (alert) ->
     Wallet.closeAlert(alert)
@@ -142,13 +147,21 @@
       )
   
   $scope.$watchCollection "accounts", () ->
+    idx = 0
     if !$scope.transaction.from? && $scope.accounts.length > 0
       if $stateParams.accountIndex == undefined || $stateParams.accountIndex == null || $stateParams.accountIndex == ""
-        $scope.transaction.from = $scope.accounts[0]
+        idx = 0
       else 
-        $scope.transaction.from = $scope.accounts[parseInt($stateParams.accountIndex)]
+        idx = parseInt($stateParams.accountIndex)
+      $scope.transaction.from = $scope.accounts[idx]
+    if !$scope.transaction.toAccount? && $scope.accounts.length > 1
+      console.log "Set initial toAccount"
+      if idx == 0
+        $scope.transaction.toAccount = $scope.accounts[1]
+      else
+        $scope.transaction.toAccount = $scope.accounts[0]
   
-  $scope.$watchCollection "[transaction.to, transaction.from, transaction.amount, transaction.currency]", () ->
+  $scope.$watchCollection "[transaction.to, transaction.toAccount, transaction.from, transaction.amount, transaction.currency]", () ->
     if $scope.transaction.currency == "BTC"
       $scope.transaction.satoshi = parseInt(numeral($scope.transaction.amount).multiply(100000000).format("0"))
     else
@@ -161,8 +174,19 @@
       $scope.transactionIsValid = false
     
   $scope.$watch "transaction.from", () ->
-    $scope.visualValidate("from")
     $scope.from = $scope.transaction.from.label + " Account"
+    $scope.visualValidate("from")
+    
+  $scope.$watch "transaction.toAccount + transaction.to + internal", () ->
+    console.log "toAccount changed"
+    if $scope.internal
+      $scope.toLabel = $scope.transaction.toAccount.label + " Account"
+      $scope.visualValidate("toAccount")
+      console.log $scope.from
+      console.log $scope.toLabel
+      $scope.transactionIsValid = $scope.validate()
+    else
+      $scope.toLabel = $scope.transaction.to
     
   $scope.visualValidate = (blurredField) ->
     if blurredField == "to"
@@ -172,28 +196,31 @@
       $scope.errors.amount = null
   
     transaction = $scope.transaction
-    unless transaction.to? && transaction.to != ""
-      if transaction.amount > 0 && blurredField == "to"
-        if $scope.method == "BTC"
-          $scope.errors.to = "Bitcoin address missing"
-        else if $scope.method == "EMAIL"
-          $scope.errors.to = "Email address missing"
-        else if $scope.method == "SMS"
-          $scope.errors.to = "Mobile phone number missing"
+    if $scope.internal
+      
+    else
+      unless transaction.to? && transaction.to != ""
+        if transaction.amount > 0 && blurredField == "to"
+          if $scope.method == "BTC"
+            $scope.errors.to = "Bitcoin address missing"
+          else if $scope.method == "EMAIL"
+            $scope.errors.to = "Email address missing"
+          else if $scope.method == "SMS"
+            $scope.errors.to = "Mobile phone number missing"
     
-    unless transaction.to == ""
-      if $scope.method == "BTC"
-        unless Wallet.isValidAddress(transaction.to)
-          if blurredField == "to"
-            $scope.errors.to = "Invalid bitcoin address"
-      else if $scope.method == "EMAIL"
-        unless true
-          if blurredField == "to"
-            $scope.errors.to = "Invalid email address"   
-      else if $scope.method == "SMS"
-        unless true
-          if blurredField == "to"
-            $scope.errors.to = "Invalid international phone number."   
+      unless transaction.to == ""
+        if $scope.method == "BTC"
+          unless Wallet.isValidAddress(transaction.to)
+            if blurredField == "to"
+              $scope.errors.to = "Invalid bitcoin address"
+        else if $scope.method == "EMAIL"
+          unless true
+            if blurredField == "to"
+              $scope.errors.to = "Invalid email address"   
+        else if $scope.method == "SMS"
+          unless true
+            if blurredField == "to"
+              $scope.errors.to = "Invalid international phone number."   
               
     
     unless transaction.amount? && transaction.amount > 0
@@ -208,8 +235,12 @@
     
   $scope.validate = () ->    
     transaction = $scope.transaction
-    unless transaction.to? && transaction.to != ""
-      return false
+    
+    if $scope.internal
+      return false if transaction.toAccount == transaction.fromAccount
+    else
+      unless transaction.to? && transaction.to != ""
+        return false
             
     if $scope.method == "BTC"
       unless Wallet.isValidAddress(transaction.to)
@@ -248,3 +279,9 @@
     
   $scope.backToForm = () ->
     $scope.confirmationStep = false    
+    
+  $scope.switchToExternal = () ->
+    $scope.internal = false
+    
+  $scope.switchToInternal = () ->
+    $scope.internal = true

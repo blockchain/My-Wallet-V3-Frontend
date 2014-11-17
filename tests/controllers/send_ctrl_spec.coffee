@@ -200,8 +200,40 @@ describe "SendCtrl", ->
     return
   )
   
-  describe "overview", ->
-    it "should show friendly name for from", ->
-      expect(scope.from).toBe("Savings Account")
+  it "overview should show friendly name for From", ->
+    expect(scope.from).toBe("Savings Account")
+  
+  describe "internal", ->
+    beforeEach ->
+      scope.internal = true
+      scope.to = ""
+      scope.$apply()
       
+    it "selects the next available account by default", ->
+      expect(scope.transaction.toAccount).toBe(scope.accounts[1])
+    
+    it "does not require a to address", ->
+      expect(scope.transactionIsValid).toBe(true)
+
+    it "does not allow sending to the same account", ->
+      console.log "Update toAccount:"
+      scope.transaction.toAccount = scope.transaction.from
+      scope.$apply()
+      expect(scope.transactionIsValid).toBe(false)
+      
+    it "overview should show friendly name for From", ->
+      expect(scope.from).toBe("Savings Account")
+  
+    it "overview should show friendly name for To", ->
+      expect(scope.toLabel).toBe("Mobile Account")
+      
+    it "should call Wallet.sendInternal() when Send is pressed",  inject((Wallet) ->
+      spyOn(Wallet,"sendInternal")
+    
+      scope.send()
+    
+      expect(Wallet.sendInternal).toHaveBeenCalled()
+    
+      return
+    )
   

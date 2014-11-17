@@ -30,7 +30,15 @@ body {
   
   
   vertical-align: bottom;
-  border-bottom: 4px solid #e5e5e5
+  border-bottom: 4px solid #e5e5e5;
+  
+  a {
+    padding: 10px;
+  }
+  
+  .right {
+    text-align: right;
+  }
 }
 
 .modal-body {

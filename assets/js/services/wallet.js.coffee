@@ -114,8 +114,28 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     return numeral(100000000).multiply(amount).divide(wallet.conversions[currency].conversion).format("0.00")
 
   
-  # Amount in satoshi or fiat
-  wallet.send = (fromAccountIndex, to, amount, currency, observer) ->
+  wallet.transactionObserver = (observer) ->    
+    o = {}
+    
+    o.transactionSuccess = () ->
+        wallet.updateTransactions()
+        wallet.updateAccounts()
+    
+        observer.transactionDidFinish()
+      
+    o.transactionError = (e) ->
+        if e.message != undefined
+          observer.transactionDidFailWithError(e.message)
+        else if e isnt null
+          observer.transactionDidFailWithError(e)
+          wallet.applyIfNeeded()
+        else
+          observer.transactionDidFailWithError("Unknown error")
+          wallet.applyIfNeeded() 
+          
+    return o
+        
+  wallet.checkAndGetTransactionAmount = (amount, currency, observer) ->
     if currency != "BTC"
       amount = wallet.fiatToSatoshi(amount, currency)
     else 
@@ -133,55 +153,18 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       console.error "Observer should implement transactionDidFinish"
       return
       
-    # listener = {}
-    # listener.on_error = (e) ->
-    #   if e.message != undefined
-    #     observer.transactionDidFailWithError(e.message)
-    #   else if e isnt null
-    #     observer.transactionDidFailWithError(e)
-    #     $rootScope.$apply()
-    #   else
-    #     observer.transactionDidFailWithError("Unknown error")
-    #     $rootScope.$apply()
-    #
-    # listener.on_start = () ->
-    #   return
-    #
-    # listener.on_begin_signing = () ->
-    #   return
-    #
-    # listener.on_sign_progress = () ->
-    #   return
-    #
-    # listener.on_finish_signing = () ->
-    #   return
-    #
-    # listener.on_before_send = () ->
-    #   return
-    #
-    # listener.on_success = () ->
-    #   wallet.updateAccounts()
-    #   wallet.updateAccounts()
-    #
-    #   observer.transactionDidFinish()
-      
-    success = () ->
-      wallet.updateTransactions()
-      wallet.updateAccounts()
+    return amount
+  
+  
+  # Amount in satoshi or fiat
+  wallet.send         = (fromAccountIndex, to,             amount, currency, observer) ->
+    amount = wallet.checkAndGetTransactionAmount(amount, currency, observer)
     
-      observer.transactionDidFinish()
+    wallet.my.sendBitcoinsForAccount(fromAccountIndex, to, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
       
-    error = (e) ->
-      if e.message != undefined
-        observer.transactionDidFailWithError(e.message)
-      else if e isnt null
-        observer.transactionDidFailWithError(e)
-        wallet.applyIfNeeded()
-      else
-        observer.transactionDidFailWithError("Unknown error")
-        wallet.applyIfNeeded()
-    
-    wallet.my.sendBitcoinsForAccount(fromAccountIndex, to, amount, 10000, null, success, error)
+  wallet.sendInternal = (fromAccountIndex, toAccountIndex, amount, currency, observer) ->
+    amount = wallet.checkAndGetTransactionAmount(amount, currency, observer)
+    wallet.my.sendBitcoinsForAccount(fromAccountIndex, toAccountIndex, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
       
   ####################
   # Payment requests #

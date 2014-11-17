@@ -25,8 +25,8 @@
   "SAVE" : "Save",
   "ACCEPT" : "Accept",
   "COPY" : "Copy",
-  "SEND_FROM" : "Send From:",
-  "SEND_TO" : "Send To:",
+  "SEND_FROM" : "Send From",
+  "SEND_TO" : "Send To",
   "QR" : "QR",
   "FEES" : "Fees:",
   "PRIVACY_GUARD" : "Privacy guard:",
@@ -124,5 +124,9 @@
   "TO" : "To",
   "FEE" : "Fee",
   "TOTAL" : "Total",
+  "FROM_ACCOUNT" : "From Account",
+  "TO_ACCOUNT" : "To Account",
+  "EXTERNAL" : "External",
+  "INTERNAL" : "Internal",
   "" : ""
 }
