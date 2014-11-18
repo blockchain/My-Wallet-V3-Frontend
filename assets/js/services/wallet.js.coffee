@@ -39,9 +39,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
   wallet.login = (uid, password) ->    
     $window.root = "https://blockchain.info/"   
-    # wallet.password = password
     wallet.my.fetchWalletJson(uid, null, null, password) 
-    # user_guid, shared_key, resend_code, inputedPassword, twoFACode, needs_two_factor_code, wrong_two_factor_code
     
   wallet.create = (password, email, currency, language, success_callback) ->      
     success = (uid) ->
@@ -422,15 +420,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     else if event == "error_restoring_wallet"
       wallet.applyIfNeeded()      
     else if event == "did_set_guid" # Wallet retrieved from server
-      console.log "did_set_guid"
-      # wallet.my.restoreWallet(wallet.password)
-      # wallet.password = undefined
-      #
-      # # Checks if we already have an HD wallet. If not, create one.
-      # hdwallet = MyWallet.getHDWallet()
-      #
-      # wallet.applyIfNeeded()
-      
     else if event == "on_wallet_decrypt_finish" # Non-HD part is decrypted
       hdwallet = MyWallet.getHDWallet()
       wallet.applyIfNeeded()
