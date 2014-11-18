@@ -14,9 +14,7 @@ describe "walletServices", () ->
       
             
       spyOn(MyWallet,"fetchWalletJson").and.callThrough()
-    
-      Wallet.login("test", "test")  
-      
+          
       spyOn(Wallet,"monitor").and.callThrough()
       spyOn(Wallet,"monitorLegacy").and.callThrough()
       
@@ -25,6 +23,9 @@ describe "walletServices", () ->
     return
     
   describe "login()", ->
+    beforeEach ->
+      Wallet.login("test", "test")  
+    
     it "should fetch and decrypt the wallet", inject((Wallet, MyWallet) ->
       expect(MyWallet.fetchWalletJson).toHaveBeenCalled()
       
@@ -57,9 +58,20 @@ describe "walletServices", () ->
       expect(Wallet.currencies.length).toBeGreaterThan(1)
     )
     
+  describe "2FA login()", ->
+    it "should ask for a code", inject((Wallet) ->
+      
+      Wallet.login("test-2FA", "test")
+      
+      expect(Wallet.status.needs2FA).toBe(true)
+    )
+    
     return
 
-  describe "logout()", ->      
+  describe "logout()", ->     
+    beforeEach ->
+      Wallet.login("test", "test")  
+      
     it "should update the status", inject((Wallet, MyWallet) ->
       expect(Wallet.status.isLoggedIn).toBe(true)
       
@@ -72,6 +84,9 @@ describe "walletServices", () ->
     return
     
   describe "createAccount()", ->      
+    beforeEach ->
+      Wallet.login("test", "test")  
+      
     it "should call generateNewKey()", inject((Wallet, MyWallet) ->
       spyOn(MyWallet,"createAccount")
       
@@ -99,7 +114,10 @@ describe "walletServices", () ->
     
     return
     
-  describe "addressBook()", ->      
+  describe "addressBook()", ->          
+    beforeEach ->
+      Wallet.login("test", "test")  
+      
     it "should find John", inject((Wallet) ->      
       expect(Wallet.addressBook["17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq"]).toBe("John")
       return
@@ -109,6 +127,8 @@ describe "walletServices", () ->
     
   describe "send()", ->   
     beforeEach ->
+      Wallet.login("test", "test")  
+      
       mockObserver = {} # Represents e.g. the controller calling us:
       mockObserver.transactionDidFailWithError = () ->
         return
@@ -196,7 +216,10 @@ describe "walletServices", () ->
     
     return
 
-  describe "transactions", ->        
+  describe "transactions", ->           
+    beforeEach ->
+      Wallet.login("test", "test")  
+       
     it "should listen for on_tx and on_block", inject((Wallet, MyWallet) ->
             
       MyWallet.mockShouldReceiveNewTransaction()
@@ -233,7 +256,10 @@ describe "walletServices", () ->
       
     )
     
-  describe "request", ->
+  describe "request", ->    
+    beforeEach ->
+      Wallet.login("test", "test")  
+      
     it "can be made", inject((MyWallet, Wallet) ->
       expect(Wallet.generatePaymentRequestForAccount(0, 10000).address).toBe("1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp")
     )
@@ -309,7 +335,10 @@ describe "walletServices", () ->
     
     return
   
-  describe "parsePaymentRequest()", ->
+  describe "parsePaymentRequest()", ->    
+    beforeEach ->
+      Wallet.login("test", "test")  
+      
     it "should recognise bitcoin://", inject((Wallet) ->
       result = Wallet.parsePaymentRequest("http://")
       expect(result.hasBitcoinPrefix).toBeFalse
@@ -359,7 +388,10 @@ describe "walletServices", () ->
      
     return
     
-  describe "isSyncrhonizedWithServer()", ->      
+  describe "isSyncrhonizedWithServer()", ->         
+    beforeEach ->
+      Wallet.login("test", "test")  
+       
     it "should be in sync after first load", inject((Wallet) ->      
       expect(Wallet.isSynchronizedWithServer()).toBe(true)
       return
@@ -376,7 +408,10 @@ describe "walletServices", () ->
     
     return
     
-  describe "alerts()", ->
+  describe "alerts()", ->    
+    beforeEach ->
+      Wallet.login("test", "test")  
+      
     it "should should remove alert after some time", inject((Wallet, $timeout) ->   
       Wallet.displaySuccess("Victory")
       expect(Wallet.alerts.length).toBe(1)
@@ -388,7 +423,10 @@ describe "walletServices", () ->
     return
     
     
-  describe "language", ->
+  describe "language", ->    
+    beforeEach ->
+      Wallet.login("test", "test")  
+      
     it "should be set after loading", inject((Wallet) ->
       expect(Wallet.settings.language).toEqual({code: "en", name: "English"})
     )
@@ -405,7 +443,10 @@ describe "walletServices", () ->
     return
     
     
-  describe "currency", ->
+  describe "currency", ->    
+    beforeEach ->
+      Wallet.login("test", "test")  
+      
     it "should be set after loading", inject((Wallet) ->
       expect(Wallet.settings.currency.code).toEqual("USD")
     )
@@ -424,7 +465,10 @@ describe "walletServices", () ->
     
     return
     
-  describe "email", ->
+  describe "email", ->    
+    beforeEach ->
+      Wallet.login("test", "test")  
+      
     it "should be set after loading", inject((Wallet) ->
       expect(Wallet.user.email).toEqual("steve@me.com")
     )
@@ -439,7 +483,10 @@ describe "walletServices", () ->
     
     return
     
-  describe "mobile", ->
+  describe "mobile", ->    
+    beforeEach ->
+      Wallet.login("test", "test")  
+      
     it "should be set after loading", inject((Wallet) ->
       expect(Wallet.user.mobile.number).toEqual("012345678")
     )
@@ -467,7 +514,10 @@ describe "walletServices", () ->
     
     return
   
-  describe "password", ->
+  describe "password", ->    
+    beforeEach ->
+      Wallet.login("test", "test")  
+      
     it "can be checked", inject((Wallet, MyWallet) ->
       expect(MyWallet.isCorrectMainPassword("test")).toBe(true)
     )
@@ -481,7 +531,10 @@ describe "walletServices", () ->
     
     return
     
-  describe "password hint", ->
+  describe "password hint", ->    
+    beforeEach ->
+      Wallet.login("test", "test")  
+      
     it "should be set after loading", inject((Wallet) ->
       expect(Wallet.user.passwordHint).toEqual("Same as username")
     )
@@ -501,7 +554,10 @@ describe "walletServices", () ->
     
     return
     
-  describe "currency conversion", ->
+  describe "currency conversion", ->    
+    beforeEach ->
+      Wallet.login("test", "test")  
+      
     it "should know the exchange rate in satoshi per unit of fiat", inject((Wallet) ->
       expect(Wallet.conversions.EUR.conversion).toBe(333333)
     )

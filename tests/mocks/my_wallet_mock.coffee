@@ -13,6 +13,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     localStorageService.set("mockWallets", {
       "test": {
         password: "test"
+        two_factor: null
         email_verified: true
         accounts: [
           {label: "Savings", archived: false, balance: 300000000 - 25000000, receive_addresses: []},
@@ -29,7 +30,18 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       },
       "test-unverified" : {
         password: "test"
+        two_factor: null
         email_verified: false
+        accounts: [
+          {label: "Spending", balance: 0, receive_addresses: []}
+        ]
+        transactions: []
+        notes: {}
+      },
+      "test-2FA" : {
+        password: "test"
+        email_verified: true
+        two_factor: 4
         accounts: [
           {label: "Spending", balance: 0, receive_addresses: []}
         ]
@@ -90,12 +102,16 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.getPassphraseString = () ->
     return "banana big me hungry"
     
-  myWallet.fetchWalletJson = (uid, dummy1, dummy2, password) ->
-    if localStorageService.get("mockWallets")[uid]
+  myWallet.fetchWalletJson = (uid, dummy1, dummy2, password, dummy3, needs_2fa) ->
+    if wallet = localStorageService.get("mockWallets")[uid]
       myWallet.uid = uid
       eventListener("did_set_guid")
       
-      unless password && password == localStorageService.get("mockWallets")[myWallet.uid].password
+      if wallet.two_factor
+        needs_2fa(wallet.two_factor)
+        return
+      
+      unless password && password == wallet.password
         monitorFunc({type: "error", message: "Wrong password", code: 0});
         return
       
