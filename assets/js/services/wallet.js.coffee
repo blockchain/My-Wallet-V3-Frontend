@@ -163,7 +163,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
   wallet.sendInternal = (fromAccountIndex, toAccountIndex, amount, currency, observer) ->
     amount = wallet.checkAndGetTransactionAmount(amount, currency, observer)
-    wallet.my.sendBitcoinsForAccount(fromAccountIndex, toAccountIndex, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
+    console.log fromAccountIndex
+    console.log toAccountIndex
+    console.log amount
+    wallet.my.sendToAccount(fromAccountIndex, toAccountIndex, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
       
   ####################
   # Payment requests #

@@ -124,7 +124,11 @@
     Wallet.clearAlerts()
     
     if $scope.internal
-      Wallet.sendInternal($scope.accounts.indexOf($scope.transaction.from), $scope.accounts.indexOf($scope.transaction.to), numeral($scope.transaction.amount), $scope.transaction.currency, $scope.observer)
+      fromAccountIdx = $scope.accounts.indexOf($scope.transaction.from) 
+      toAccountIdx   = $scope.accounts.indexOf($scope.transaction.toAccount) 
+      amount = numeral($scope.transaction.amount)
+      
+      Wallet.sendInternal(fromAccountIdx, toAccountIdx, amount, $scope.transaction.currency, $scope.observer)
     else
       if $scope.method == "EMAIL" || $scope.method == "SMS"
         Wallet.displayError("SMS and email not yet supported")
@@ -155,7 +159,6 @@
         idx = parseInt($stateParams.accountIndex)
       $scope.transaction.from = $scope.accounts[idx]
     if !$scope.transaction.toAccount? && $scope.accounts.length > 1
-      console.log "Set initial toAccount"
       if idx == 0
         $scope.transaction.toAccount = $scope.accounts[1]
       else
@@ -177,16 +180,26 @@
     $scope.from = $scope.transaction.from.label + " Account"
     $scope.visualValidate("from")
     
-  $scope.$watch "transaction.toAccount + transaction.to + internal", () ->
-    console.log "toAccount changed"
+  $scope.$watch "internal", () ->
+    $scope.updateToLabel()
+    
+  $scope.$watch "transaction.toAccount", ()->
+    if $scope.internal      
+      $scope.updateToLabel()
+      $scope.visualValidate("toAccount")
+      $scope.transactionIsValid = $scope.validate()
+      
+  $scope.$watch "transaction.to", () ->
+    if !$scope.internal
+      $scope.updateToLabel()
+      $scope.transactionIsValid = $scope.validate()
+      
+  $scope.updateToLabel = () ->
     if $scope.internal
       $scope.toLabel = $scope.transaction.toAccount.label + " Account"
-      $scope.visualValidate("toAccount")
-      console.log $scope.from
-      console.log $scope.toLabel
-      $scope.transactionIsValid = $scope.validate()
     else
       $scope.toLabel = $scope.transaction.to
+      
     
   $scope.visualValidate = (blurredField) ->
     if blurredField == "to"
@@ -230,24 +243,24 @@
     if transaction.amount > 0 && !$scope.validateAmount()
       if blurredField == "amount" || blurredField == "from" || blurredField == "currency"
         $scope.errors.amount = "Insufficient funds"
-  
+    
     return 
     
   $scope.validate = () ->    
     transaction = $scope.transaction
     
     if $scope.internal
-      return false if transaction.toAccount == transaction.fromAccount
+      return false if transaction.toAccount == transaction.from
     else
       unless transaction.to? && transaction.to != ""
         return false
             
-    if $scope.method == "BTC"
-      unless Wallet.isValidAddress(transaction.to)
-        return false
-    # else if $scope.method == "EMAIL"
-    #
-    # else if $scope.method == "SMS"
+      if $scope.method == "BTC"
+        unless Wallet.isValidAddress(transaction.to)
+          return false
+      # else if $scope.method == "EMAIL"
+      #
+      # else if $scope.method == "SMS"
     
     $scope.errors.to = null
     
