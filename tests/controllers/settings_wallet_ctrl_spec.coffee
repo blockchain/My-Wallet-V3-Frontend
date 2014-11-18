@@ -1,5 +1,6 @@
 describe "SettingsWalletCtrl", ->
   scope = undefined
+  Wallet = undefined
   
   beforeEach angular.mock.module("walletApp")
   
@@ -8,8 +9,10 @@ describe "SettingsWalletCtrl", ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       
-      Wallet.login("test", "test")  
-      
+      spyOn(Wallet, "setLanguage").and.callThrough()
+      spyOn(Wallet, "changeLanguage").and.callThrough()
+      spyOn(Wallet, "changeCurrency").and.callThrough()
+            
       scope = $rootScope.$new()
             
       $controller "SettingsWalletCtrl",
@@ -23,19 +26,25 @@ describe "SettingsWalletCtrl", ->
     return
     
   describe "language", ->   
-    it "should be set on load", inject((Wallet) ->
+    beforeEach ->
+      Wallet.login("test", "test")   
+      scope.$digest()  
+    
+    it "should be set on load", inject(() ->
+      expect(Wallet.status.isLoggedIn).toBe(true)
       expect(scope.settings.language).toEqual({code: "en", name: "English"})
+      return
     )
     
     it "should not spontaniously save", inject((Wallet) ->
-      spyOn(Wallet, "setLanguage")
-      expect(Wallet.setLanguage).not.toHaveBeenCalled()
+      scope.$digest()
+      
+      expect(Wallet.changeLanguage).not.toHaveBeenCalled()
       
       return
     )
   
     it "should switch to another language", inject((Wallet) ->
-      spyOn(Wallet, "setLanguage")
         
       expect(scope.languages.length).toBeGreaterThan(1)
       expect(scope.settings.language).not.toBeNull()
@@ -46,29 +55,31 @@ describe "SettingsWalletCtrl", ->
       
       scope.$digest()
     
-      expect(Wallet.setLanguage).toHaveBeenCalledWith(scope.languages[0])
+      expect(Wallet.changeLanguage).toHaveBeenCalledWith(scope.languages[0])
       
       return
     )
     
     return
+  
     
   describe "currency", ->   
+    beforeEach ->
+      Wallet.login("test", "test")  
+      scope.$digest()
+            
     it "should be set on load", inject((Wallet) ->
       expect(scope.settings.currency.code).toEqual("USD")
     )
     
     it "should not spontaniously save", inject((Wallet) ->
-      scope.$apply()
-      spyOn(Wallet, "changeCurrency")
+      scope.$digest()
       expect(Wallet.changeCurrency).not.toHaveBeenCalled()
       
       return
     )
   
-    it "can be changed", inject((Wallet) ->
-      spyOn(Wallet, "changeCurrency")
-        
+    it "can be changed", inject((Wallet) ->        
       expect(scope.currencies.length).toBeGreaterThan(1)
       expect(scope.settings.currency).not.toBeNull()
     
@@ -83,3 +94,5 @@ describe "SettingsWalletCtrl", ->
     )
     
     return
+
+      
