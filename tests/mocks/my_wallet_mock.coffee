@@ -85,29 +85,29 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   ]
   
   myWallet.getHDWallet = () ->
-    myWallet
-
-  myWallet.restoreWallet = (password) ->
-    unless password && password == localStorageService.get("mockWallets")[myWallet.uid].password
-      monitorFunc({type: "error", message: "Wrong password", code: 0});
-      return
-      
-    myWallet.password = password
-    
-    this.refresh()
-    
-    eventListener("did_decrypt")
-    eventListener("on_wallet_decrypt_finish")
-    eventListener("did_multiaddr")
-    return
+    myWallet 
     
   myWallet.getPassphraseString = () ->
     return "banana big me hungry"
     
-  myWallet.setGUID = (uid) ->
+  myWallet.fetchWalletJson = (uid, dummy1, dummy2, password) ->
     if localStorageService.get("mockWallets")[uid]
       myWallet.uid = uid
       eventListener("did_set_guid")
+      
+      unless password && password == localStorageService.get("mockWallets")[myWallet.uid].password
+        monitorFunc({type: "error", message: "Wrong password", code: 0});
+        return
+      
+      myWallet.password = password
+    
+      this.refresh()
+    
+      eventListener("did_decrypt")
+      eventListener("on_wallet_decrypt_finish")
+      eventListener("did_multiaddr")
+      return
+      
     else
       $log.error "Wallet not found"
       eventListener("wallet not found")

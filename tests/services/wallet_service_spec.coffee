@@ -13,8 +13,7 @@ describe "walletServices", () ->
       MyWallet = $injector.get("MyWallet")
       
             
-      spyOn(MyWallet,"setGUID").and.callThrough()
-      spyOn(MyWallet,"restoreWallet").and.callThrough()
+      spyOn(MyWallet,"fetchWalletJson").and.callThrough()
     
       Wallet.login("test", "test")  
       
@@ -27,8 +26,7 @@ describe "walletServices", () ->
     
   describe "login()", ->
     it "should fetch and decrypt the wallet", inject((Wallet, MyWallet) ->
-      expect(MyWallet.setGUID).toHaveBeenCalledWith("test")
-      expect(MyWallet.restoreWallet).toHaveBeenCalledWith("test")
+      expect(MyWallet.fetchWalletJson).toHaveBeenCalled()
       
       return
     )
