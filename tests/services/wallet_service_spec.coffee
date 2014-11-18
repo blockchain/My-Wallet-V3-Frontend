@@ -64,13 +64,13 @@ describe "walletServices", () ->
       
       Wallet.login("test-2FA", "test")
       
-      expect(Wallet.status.needs2FA).toBe(true)
+      expect(Wallet.settings.needs2FA).toBe(true)
       expect(Wallet.status.isLoggedIn).toBe(false)
     )
     
     it "should specify the 2FA method", inject((Wallet) ->
       Wallet.login("test-2FA", "test")
-      expect(Wallet.status.twoFactorMethod).toBe(4)
+      expect(Wallet.settings.twoFactorMethod).toBe(4)
     )
     
     it "should login with  2FA code", inject((Wallet) ->
@@ -80,6 +80,18 @@ describe "walletServices", () ->
 
     
     return
+    
+  describe "2FA settings", ->    
+    it "can be disabled", inject((Wallet) ->
+      Wallet.login("test-2FA", "test")
+      
+      Wallet.disableSecondFactor()
+      expect(Wallet.settings.needs2FA).toBe(false)
+      expect(Wallet.settings.twoFactorMethod).toBe(null)
+      
+      
+    )
+  
 
   describe "logout()", ->     
     beforeEach ->
@@ -584,3 +596,5 @@ describe "walletServices", () ->
     )
     
     return
+    
+  

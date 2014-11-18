@@ -20,7 +20,7 @@ playSound = (id) ->
 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state) -> 
-  wallet = {status: {isLoggedIn: false, needs2FA: null}, settings: {currency: null, language: null}, user: {email: null, mobile: null, passwordHint: "", recoveryPhrase: ""}}
+  wallet = {status: {isLoggedIn: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null}, user: {email: null, mobile: null, passwordHint: "", recoveryPhrase: ""}}
   
   wallet.conversions = {}
   
@@ -38,13 +38,13 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   ##################################
     
   wallet.needsTwoFactorCode = (method) ->
-    wallet.status.needs2FA = true
+    wallet.settings.needs2FA = true
     # 2: Email
     # 3: Yubikey (depricated)
     # 4: Google Authenticator
     # 5: SMS
     
-    wallet.status.twoFactorMethod = method 
+    wallet.settings.twoFactorMethod = method 
     $state.go("login")
     return
     
@@ -53,6 +53,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     return
     
   wallet.login = (uid, password, two_factor_code) ->   
+    if two_factor_code? && two_factor_code != ""
+      wallet.settings.needs2FA = true
+      
     $window.root = "https://blockchain.info/"   
     wallet.my.fetchWalletJson(uid, null, null, password, two_factor_code, wallet.needsTwoFactorCode, wallet.wrongTwoFactorCode, ) 
     
@@ -670,6 +673,16 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
   wallet.isMobileVerified = () ->
     wallet.my.isMobileVerified
+    
+  wallet.disableSecondFactor = () ->
+    wallet.my.unsetTwoFactor(()->
+      wallet.settings.needs2FA = false
+      wallet.settings.twoFactorMethod = null
+      wallet.applyIfNeeded()
+    ,()->
+      console.log "Failed"
+      wallet.applyIfNeeded()
+    )
   
   ########################################
   # Testing: only works on mock MyWallet #

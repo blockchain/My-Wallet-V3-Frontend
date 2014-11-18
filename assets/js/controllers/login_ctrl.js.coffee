@@ -1,5 +1,6 @@
 @LoginCtrl = ($scope, $log, Wallet, $cookieStore, $modal, $state) ->
   $scope.status = Wallet.status    
+  $scope.settings = Wallet.settings
   $scope.uid = $cookieStore.get("uid")
   $scope.twoFactorCode = ""
   
@@ -9,7 +10,7 @@
   $scope.login = () ->
     Wallet.clearAlerts()
             
-    if !$scope.status.needs2FA
+    if !$scope.settings.needs2FA
       Wallet.login($scope.uid, $scope.password)
     else if $scope.twoFactorCode != ""
       Wallet.login($scope.uid, $scope.password, $scope.twoFactorCode)

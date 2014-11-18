@@ -132,5 +132,14 @@
   "SMS_CODE" : "SMS Code",
   "EMAIL_CODE" : "Email Code",
   "YUBI_CODE" : "Yubikey Code",
+  "TWO_FACTOR" : "Two Factor Authentication",
+  "TWO_FACTOR_EXPLAIN" : "Lorem Ipsum more secure",
+  "CONFIGURE_2FA" : "Configure 2FA",
+  "2FA_YUBI" : "Yubikey",
+  "2FA_EMAIL" : "Email",
+  "2FA_SMS" : "SMS",
+  "2FA_GOOGLE_AUTH" : "Google Authenticator",
+  "DISABLE" : "Disable",
+  "CONFIRM_DISABLE_2FA" : "Are you sure you wish to disable second factor authentication?",
   "" : ""
 }

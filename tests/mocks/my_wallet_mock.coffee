@@ -439,6 +439,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     # Reject if there are spaces inside the address:
     return withoutWhiteSpace.indexOf(" ") == -1
     
+  myWallet.unsetTwoFactor = (success, error) ->
+    success()
+    
   #####################################
   # Tell the mock to behave different # 
   #####################################

@@ -94,5 +94,31 @@ describe "SettingsWalletCtrl", ->
     )
     
     return
-
+    
+  describe "2FA", ->
+    it "can be disabled", inject((Wallet) ->
+      Wallet.login("test-2FA", "test", "123456")
+      scope.$digest()
+      expect(Wallet.status.isLoggedIn).toBe(true)
+      
+      spyOn(window, 'confirm').and.callFake(() ->
+           return true
+      )
+        
+      spyOn(Wallet, "disableSecondFactor") #.and.callThrough()
+      scope.disableSecondFactor()
+      expect(Wallet.disableSecondFactor).toHaveBeenCalled()
+    )
+    
+    it "can't be disabled if not enabled", inject((Wallet) ->
+      Wallet.login("test", "test")
+      scope.$digest()
+      expect(Wallet.status.isLoggedIn).toBe(true)
+      
+      spyOn(Wallet, "disableSecondFactor")
+      scope.disableSecondFactor()
+      expect(Wallet.disableSecondFactor).not.toHaveBeenCalled()
+    )
+    
+    return
       
