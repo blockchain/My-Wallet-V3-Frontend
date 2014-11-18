@@ -11,7 +11,6 @@ describe "walletServices", () ->
       
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
-      
             
       spyOn(MyWallet,"fetchWalletJson").and.callThrough()
           
@@ -57,6 +56,8 @@ describe "walletServices", () ->
     it "should get a list of currencies", inject((Wallet, MyWallet) ->
       expect(Wallet.currencies.length).toBeGreaterThan(1)
     )
+      
+
     
   describe "2FA login()", ->
     it "should ask for a code", inject((Wallet) ->
@@ -64,6 +65,10 @@ describe "walletServices", () ->
       Wallet.login("test-2FA", "test")
       
       expect(Wallet.status.needs2FA).toBe(true)
+    )
+    
+    it "should call login with the 2FA code", inject((Wallet) ->
+      pending()
     )
     
     return

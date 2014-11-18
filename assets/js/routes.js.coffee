@@ -25,6 +25,19 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     templateUrl: "partials/settings/navigation"
     controller: "SettingsNavigationCtrl"
   }
+
+  $stateProvider.state("login",
+    url: "/login"
+    views: {
+      navigation: navigation,
+      alerts: alerts,
+      top: top,
+      right: {
+        templateUrl: "partials/login"
+        controller: "LoginCtrl"
+      }
+    }
+  )
   
   $stateProvider.state("dashboard",
     url: "/"

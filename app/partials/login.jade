@@ -1,0 +1,20 @@
+form.form-horizontal(role="form")
+  .form-group
+    label.control-label.col-md-2(translate="UID")
+    .col-md-3
+      input.form-control(type="text", ng-model="uid")
+  .form-group
+    label.control-label.col-md-2(translate="PASSWORD")
+    .col-md-3
+      input.form-control(type="password", ng-model="password")
+  .form-group(ng-show="status.needs2FA")
+    label.control-label.col-md-2
+      span(translate="GOOGLE_AUTH_CODE")
+    .col-md-3
+      input.form-control(type="text", ng-model="twoFactorCode")
+  .form-actions
+    .col-md-1
+    .col-md-6
+      button.btn.btn-primary(ng-click="login()",translate="LOGIN")
+      span    
+      button.btn.btn-primary(ng-click="create()",translate="CREATE_WALLET") 

@@ -19,26 +19,7 @@ describe "SettingsCtrl", ->
       return
 
     return
-    
-  it "should redirect to dashboard if not logged in",  inject((Wallet, $state) ->
-    Wallet.logout()
-    expect(scope.status.isLoggedIn).toBe(false)
-    
-    spyOn($state, "go")    
-    scope.didLoad()
-      
-    expect($state.go).toHaveBeenCalledWith("dashboard")
-  )
-  
-  it "should not redirect to dashboard if logged in",  inject((Wallet, $state) ->
-    expect(scope.status.isLoggedIn).toBe(true)
-    
-    spyOn($state, "go")    
-    scope.didLoad()
-    
-    expect($state.go).not.toHaveBeenCalled()
 
-  )
 
     
     

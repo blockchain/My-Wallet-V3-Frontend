@@ -128,5 +128,6 @@
   "TO_ACCOUNT" : "To Account",
   "EXTERNAL" : "External",
   "INTERNAL" : "Internal",
+  "GOOGLE_AUTH_CODE" : "Google Authenticator Code",
   "" : ""
 }

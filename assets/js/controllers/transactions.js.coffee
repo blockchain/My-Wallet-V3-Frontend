@@ -1,4 +1,4 @@
-@TransactionsCtrl = ($scope, Wallet, MyWallet, $state, $cookieStore, $log, $stateParams, $timeout) ->
+@TransactionsCtrl = ($scope, Wallet, MyWallet, $log, $stateParams, $timeout) ->
     
   #################################
   #           Private             #
@@ -11,13 +11,6 @@
     $scope.settings = Wallet.settings
     $scope.totals = Wallet.totals  
     $scope.accountIndex = $stateParams.accountIndex
-      
-    # Restore after browser refresh (developer feature)
-    if !$scope.status.isLoggedIn 
-      if !!$cookieStore.get("password")
-        Wallet.login($cookieStore.get("uid"), $cookieStore.get("password"))
-      else
-        $state.go("dashboard")
         
     # Check if MyWallet is a mock or the real thing. The mock will simulate an 
     # incoming transaction after 3 seconds. 

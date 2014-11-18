@@ -1,15 +1,1 @@
-div(ng-hide="status.isLoggedIn")
-  form.form-horizontal(role="form")
-    .form-group
-      label.control-label.col-md-1(translate="UID")
-      .col-md-3
-        input.form-control(type="text", ng-model="uid")
-    .form-group
-      label.control-label.col-md-1(translate="PASSWORD")
-      .col-md-3
-        input.form-control(type="password", ng-model="password")
-      .col-md-1
-        button.btn.btn-primary(ng-click="login()",translate="LOGIN")
-      .col-md-1
-        button.btn.btn-primary(ng-click="create()",translate="CREATE_WALLET") 
-div(ng-show="status.isLoggedIn")
+h1 Dashboard

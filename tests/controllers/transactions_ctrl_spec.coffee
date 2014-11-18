@@ -20,26 +20,6 @@ describe "TransactionsCtrl", ->
 
     return
     
-  it "should redirect to dashboard if not logged in",  inject((Wallet, $state) ->
-    Wallet.logout()
-    expect(scope.status.isLoggedIn).toBe(false)
-    
-    spyOn($state, "go")    
-    scope.didLoad()
-      
-    expect($state.go).toHaveBeenCalledWith("dashboard")
-  )
-  
-  it "should not redirect to dashboard if logged in",  inject((Wallet, $state) ->
-    expect(scope.status.isLoggedIn).toBe(true)
-    
-    spyOn($state, "go")    
-    scope.didLoad()
-    
-    expect($state.go).not.toHaveBeenCalled()
-
-  )
-  
   it "should have access to address book",  inject(() ->
     expect(scope.addressBook).toBeDefined()
     expect(scope.addressBook["17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq"]).toBe("John")

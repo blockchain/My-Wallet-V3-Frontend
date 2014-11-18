@@ -19,7 +19,7 @@ playSound = (id) ->
 ##################################
 
 walletServices = angular.module("walletServices", [])
-walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter) -> 
+walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state) -> 
   wallet = {status: {isLoggedIn: false, needs2FA: null}, settings: {currency: null, language: null}, user: {email: null, mobile: null, passwordHint: "", recoveryPhrase: ""}}
   
   wallet.conversions = {}
@@ -38,17 +38,18 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   ##################################
     
   wallet.needsTwoFactorCode = (method) ->
-    console.log("2FA method: " + method)
     wallet.status.needs2FA = true
+    $state.go("login")
     return
     
   wallet.wrongTwoFactorCode = (method) ->
     console.log "Wrong Two Factor Code"
+    $state.go("login")
     return
     
-  wallet.login = (uid, password, two_factor_code) ->    
+  wallet.login = (uid, password, two_factor_code) ->   
     $window.root = "https://blockchain.info/"   
-    wallet.my.fetchWalletJson(uid, null, null, password, null, wallet.needsTwoFactorCode, wallet.wrongTwoFactorCode) 
+    wallet.my.fetchWalletJson(uid, null, null, password, two_factor_code, wallet.needsTwoFactorCode, wallet.wrongTwoFactorCode, ) 
     
   
     
