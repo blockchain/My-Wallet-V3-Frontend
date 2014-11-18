@@ -42,6 +42,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
         password: "test"
         email_verified: true
         two_factor: 4
+        two_factor_code: "123456"
         accounts: [
           {label: "Spending", balance: 0, receive_addresses: []}
         ]
@@ -102,14 +103,18 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.getPassphraseString = () ->
     return "banana big me hungry"
     
-  myWallet.fetchWalletJson = (uid, dummy1, dummy2, password, dummy3, needs_2fa) ->
+  myWallet.fetchWalletJson = (uid, dummy1, dummy2, password, two_factor_code, needs_2fa, wrong_2fa) ->
     if wallet = localStorageService.get("mockWallets")[uid]
       myWallet.uid = uid
       eventListener("did_set_guid")
       
       if wallet.two_factor
-        needs_2fa(wallet.two_factor)
-        return
+        if two_factor_code
+          if two_factor_code != wallet.two_factor_code
+            wrong_2fa()
+        else
+          needs_2fa(wallet.two_factor)
+          return
       
       unless password && password == wallet.password
         monitorFunc({type: "error", message: "Wrong password", code: 0});

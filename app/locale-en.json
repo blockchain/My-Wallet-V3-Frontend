@@ -128,6 +128,9 @@
   "TO_ACCOUNT" : "To Account",
   "EXTERNAL" : "External",
   "INTERNAL" : "Internal",
-  "GOOGLE_AUTH_CODE" : "Google Authenticator Code",
+  "GOOGLE_AUTH_CODE" : "Google Authenticator",
+  "SMS_CODE" : "SMS Code",
+  "EMAIL_CODE" : "Email Code",
+  "YUBI_CODE" : "Yubikey Code",
   "" : ""
 }

@@ -9,7 +9,10 @@ form.form-horizontal(role="form")
       input.form-control(type="password", ng-model="password")
   .form-group(ng-show="status.needs2FA")
     label.control-label.col-md-2
-      span(translate="GOOGLE_AUTH_CODE")
+      span(translate="YUBI_CODE", ng-show="status.twoFactorMethod == 3")
+      span(translate="EMAIL_CODE", ng-show="status.twoFactorMethod == 2")
+      span(translate="GOOGLE_AUTH_CODE", ng-show="status.twoFactorMethod == 4")
+      span(translate="SMS_CODE", ng-show="status.twoFactorMethod == 5")
     .col-md-3
       input.form-control(type="text", ng-model="twoFactorCode")
   .form-actions

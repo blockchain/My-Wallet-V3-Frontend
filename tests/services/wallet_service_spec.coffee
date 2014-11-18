@@ -65,11 +65,19 @@ describe "walletServices", () ->
       Wallet.login("test-2FA", "test")
       
       expect(Wallet.status.needs2FA).toBe(true)
+      expect(Wallet.status.isLoggedIn).toBe(false)
     )
     
-    it "should call login with the 2FA code", inject((Wallet) ->
-      pending()
+    it "should specify the 2FA method", inject((Wallet) ->
+      Wallet.login("test-2FA", "test")
+      expect(Wallet.status.twoFactorMethod).toBe(4)
     )
+    
+    it "should login with  2FA code", inject((Wallet) ->
+      Wallet.login("test-2FA", "test", "1234567")
+      expect(Wallet.status.isLoggedIn).toBe(true)
+    )
+
     
     return
 

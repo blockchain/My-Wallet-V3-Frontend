@@ -39,11 +39,16 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
   wallet.needsTwoFactorCode = (method) ->
     wallet.status.needs2FA = true
+    # 2: Email
+    # 3: Yubikey (depricated)
+    # 4: Google Authenticator
+    # 5: SMS
+    
+    wallet.status.twoFactorMethod = method 
     $state.go("login")
     return
     
   wallet.wrongTwoFactorCode = (method) ->
-    console.log "Wrong Two Factor Code"
     $state.go("login")
     return
     
