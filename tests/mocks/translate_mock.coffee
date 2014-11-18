@@ -17,4 +17,7 @@ angular.module("pascalprecht.translate").provider "$translate", ->
     $translate.use = (language) -> 
       return
     
+    $translate.proposedLanguage = () ->
+      return "en"
+    
     return $translate

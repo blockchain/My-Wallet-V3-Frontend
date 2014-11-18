@@ -172,11 +172,15 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       sms_verified: 0
       password_hint1: "Same as username"
       language: language
-      languages: {de: "Deutch", en: "English", nl: "Nederlands"}
       currency: "USD"
-      currencies: {USD: "US Dollar", EUR: "Euro"}
     })
     
+  myWallet.getLanguages = () ->
+    {de: "Deutch", en: "English", nl: "Nederlands"}
+    
+  myWallet.getCurrencies = () ->
+    {USD: "US Dollar", EUR: "Euro"}
+
   myWallet.change_email = (newVal, success, error) ->
     email = newVal
     success()

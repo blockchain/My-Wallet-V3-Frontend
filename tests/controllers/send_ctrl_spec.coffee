@@ -216,7 +216,6 @@ describe "SendCtrl", ->
       expect(scope.transactionIsValid).toBe(true)
 
     it "does not allow sending to the same account", ->
-      console.log "Update toAccount:"
       scope.transaction.toAccount = scope.transaction.from
       scope.$apply()
       expect(scope.transactionIsValid).toBe(false)

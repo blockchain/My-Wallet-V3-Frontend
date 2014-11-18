@@ -22,7 +22,9 @@ describe "SignupCtrl", ->
         $modalInstance: modalInstance
       
       scope.isValid = [false, false]
-      scope.fields = {email: "a@b.com", password: "testing", confirmation: "testing"}
+      scope.fields.email = "a@b.com"
+      scope.fields.password = "testing"
+      scope.fields.confirmation = "testing"
       scope.validate()
     
       return
@@ -93,19 +95,27 @@ describe "SignupCtrl", ->
       scope.currentStep = 2
       
     it "should have a list of languages", ->
-      pending()
       expect(scope.languages.length).toBeGreaterThan(1)
     
     it "should have a list of currencies", ->
-      pending()
       expect(scope.currencies.length).toBeGreaterThan(1)
       
     it "should guess the correct language", ->
-      pending()
+      expect(scope.fields.language.code).toBe("en")
+    
+    it "should switch interface language when new language is selected", inject(($translate) ->
+      spyOn($translate, "use")
+      expect(scope.fields.language.code).not.toBe(scope.languages[0].code)
+      scope.fields.language = scope.languages[0]
       
+      scope.$digest()
+      
+      expect($translate.use).toHaveBeenCalledWith(scope.languages[0].code)
+    )
+    
     it "should guess the correct currency", ->
-      pending()
-        
+      expect(scope.fields.currency.code).toBe("USD")
+      
     it "should go to third step", ->
       scope.nextStep()
       expect(scope.currentStep).toBe(3)

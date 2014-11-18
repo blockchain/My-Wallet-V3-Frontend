@@ -79,5 +79,9 @@
   "CURRENCY" : "Lokale Valuta",
   "CURRENCY_EXPLAIN" : "Kies je lokale valuta",
   "SETTINGS" : "Instellingen",
-  "SECURITY" : "Beveiliging"
+  "SECURITY" : "Beveiliging",
+  "SETUP_WALLET" : "Configureer je wallet",
+  "CHOOSE_LANGUAGE" : "Kies een taal",
+  "CHOOSE_CURRENCY" : "Selecteer je lokale munteenheid",
+  "NEXT_STEP" : "Ga Verder"
  }

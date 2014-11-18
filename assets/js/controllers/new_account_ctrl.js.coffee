@@ -1,5 +1,4 @@
 @NewAccountCtrl = ($scope, Wallet, $modalInstance, $log, $translate) ->        
-
   $scope.fields = {name: ""}
 
   $scope.close = () ->

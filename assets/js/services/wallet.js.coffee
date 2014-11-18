@@ -447,30 +447,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.user.isMobileVerified = result.sms_verified
         wallet.user.passwordHint = result.password_hint1 # Field not present if not entered
         
-        # Get and sort languages:
-        tempLanguages = []
-        userLanguage = undefined
-        
-        for code, name of result.languages
-          language = {code: code, name: name}
-          tempLanguages.push language
-          if code == result.language
-            userLanguage = language
-            
-        tempLanguages = $filter('orderBy')(tempLanguages, "name")
-        
-        for language in tempLanguages
-          wallet.languages.push language
-        
-        wallet.setLanguage(userLanguage)
+        wallet.setLanguage($filter("getByProperty")("code", result.language, wallet.languages))
         
         # Get currencies:
-    
-        for code, name of result.currencies
-          currency = {code: code, name: name}
-          wallet.currencies.push currency
-          if code == result.currency
-            wallet.setCurrency(currency)
+        
+        wallet.setCurrency($filter("getByProperty")("code", result.currency, wallet.currencies))
             
         wallet.fetchExchangeRate()
         wallet.applyIfNeeded()
@@ -570,6 +551,28 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   # Settings #
   ############
   
+  wallet.getLanguages = () ->
+    # Get and sort languages:
+    tempLanguages = []
+  
+    for code, name of wallet.my.getLanguages()
+      language = {code: code, name: name}
+      tempLanguages.push language
+      
+    tempLanguages = $filter('orderBy')(tempLanguages, "name")
+  
+    for language in tempLanguages
+      wallet.languages.push language
+      
+      
+  wallet.getCurrencies = () ->
+    for code, name of wallet.my.getCurrencies()
+      currency = {code: code, name: name}
+      wallet.currencies.push currency
+      
+  wallet.getCurrency = () -> 
+    wallet.my.getCurrency()
+
   wallet.setLanguage = (language) ->
     $translate.use(language.code)
     wallet.settings.language = language
@@ -664,5 +667,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.updateTransactions()
     
   wallet.isMock = wallet.my.mockShouldFailToSend != undefined
-            
+  wallet.getLanguages()
+  wallet.getCurrencies()
+  
   return  wallet

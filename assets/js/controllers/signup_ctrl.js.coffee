@@ -1,11 +1,21 @@
-@SignupCtrl = ($scope, $log, Wallet, $modalInstance, $translate, $cookieStore) ->
+@SignupCtrl = ($scope, $log, Wallet, $modalInstance, $translate, $cookieStore, $filter) ->
   $scope.currentStep = 1
   
-  $scope.fields = {email: "", password: "", confirmation: "", language: null, currency: null}
 
   $scope.languages = Wallet.languages
   $scope.currencies = Wallet.currencies
   $scope.alerts = Wallet.alerts
+  
+  
+  language_guess = $filter("getByProperty")("code", $translate.use(), Wallet.languages)
+  
+  unless language_guess?
+    language_guess =  $filter("getByProperty")("code", "en", Wallet.languages)
+   
+  currency_guess =  $filter("getByProperty")("code", "USD", Wallet.currencies)
+
+  $scope.fields = {email: "", password: "", confirmation: "", language: language_guess, currency: currency_guess}
+
 
   $scope.didLoad = () ->    
     if Wallet.status.isLoggedIn && !Wallet.status.didVerifyEmail
@@ -75,3 +85,7 @@
     $scope.isValid = isValid      
   
   $scope.validate()
+
+  $scope.$watch "fields.language", (newVal, oldVal) ->
+    if newVal?
+      $translate.use(newVal.code)
