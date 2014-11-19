@@ -427,13 +427,13 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         addressItem = undefined
         if i >= numberOfOldAddresses
           address = wallet.my.getAllAddresses()[i]
-          addressItem = {address: address, active: wallet.my.getActiveAddresses().indexOf(address) == -1, legacy: true} 
+          addressItem = {address: address, active: wallet.my.getActiveAddresses().indexOf(address) > -1, legacy: true} 
           wallet.legacyAddresses.push addressItem
         else
           addressItem = wallet.legacyAddresses[i]
       
         # Set or update label and balance:
-        addressItem.label = wallet.my.getAddressLabel(addressItem.address)
+        addressItem.label = wallet.my.getAddressLabel(addressItem.address) || address
         addressItem.balance = 0 # wallet.my.getBalanceForLegacyAddress(address_item.address)
         addressItem.isWatchOnly = wallet.my.isWatchOnly(addressItem.address)
       

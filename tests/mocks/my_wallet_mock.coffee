@@ -25,11 +25,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
           {hash: "afsdfsdkj", amount: -1500000, confirmations: 1, doubleSpend: false, coinbase: false, intraWallet: false, from_account: 1, from_addresses: [], to_account: null, to_addresses: ["1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq"] ,note: null, txTime:   8200000000},
         ]
         legacyAddresses: {
-          "some_legacy_address":            {privateKey: "legacy_private_key"}
-          "some_legacy_watch_only_address": {privateKey: null}
+          "some_legacy_address":            {privateKey: "legacy_private_key", label: "Old"}
+          "some_legacy_watch_only_address": {privateKey: null, label: "Paper wallet"}
+          "some_legacy_address_without_label": {privateKey: null, label: null}
           "some_legacy_archived_address":   {privateKey: "legacy_archived", archived: true}
         }
-       
         
         notes: {
           "aaaa" : "Salary"
@@ -412,12 +412,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.getActiveAddresses = () ->
     activeAddresses = []
     for key, value of legacyAddresses
-      unless value.active == false
+      unless value.archived
         activeAddresses.push key
     return activeAddresses
     
   myWallet.getAddressLabel = (address) ->
-    return undefined unless legacyAddresses[address]?
     return legacyAddresses[address].label
     
   myWallet.isWatchOnly = (address) ->

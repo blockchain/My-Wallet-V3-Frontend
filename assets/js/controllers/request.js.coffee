@@ -9,9 +9,10 @@
     $scope.destinations.push item
   
   for address in $scope.legacyAddresses 
-    item = angular.copy(address)
-    item.type = "Imported Addresses"
-    $scope.destinations.push item
+    if address.active
+      item = angular.copy(address)
+      item.type = "Imported Addresses"
+      $scope.destinations.push item
   
   $scope.alerts = Wallet.alerts
     

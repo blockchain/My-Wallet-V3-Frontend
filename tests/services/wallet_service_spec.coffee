@@ -49,6 +49,19 @@ describe "walletServices", () ->
       return
     )
     
+    it "should get a list of legacy addresses", inject((Wallet, MyWallet) ->
+      expect(Wallet.legacyAddresses.length).toEqual(4)
+
+      return
+    )
+    
+    it "should use address as label if no label is given", inject((Wallet, MyWallet) ->
+      expect(Wallet.legacyAddresses[0].label).toEqual("Old")
+      expect(Wallet.legacyAddresses[2].label).toEqual("some_legacy_address_without_label")
+
+      return
+    )
+    
     it "should get a list of languages", inject((Wallet, MyWallet) ->
       expect(Wallet.languages.length).toBeGreaterThan(1)
     )
