@@ -84,7 +84,7 @@ form.form-horizontal(role="form",name="form",novalidate)
           a(ng-click="edit.twoFactor = !edit.twoFactor", translate="CONFIGURE_2FA", ng-hide="settings.needs2FA")
           a(ng-click="disableSecondFactor()", translate="DISABLE", ng-show="settings.needs2FA")
       div(ng-show="edit.twoFactor") 
-        ul
+        ul(ng-hide="settings.googleAuthenticatorSecret")
           li 
             a(ng-click="setTwoFactorSMS()", ng-show="user.isMobileVerified") Enable SMS
             span(ng-show="!user.isMobileVerified") Enable SMS (Please verify your mobile first)
@@ -96,6 +96,6 @@ form.form-horizontal(role="form",name="form",novalidate)
         div(ng-if="settings.googleAuthenticatorSecret")
           qr(text="settings.googleAuthenticatorSecret", size=172)
           input.form-control(type="text",placeholder="Enter code shown in the app",ng-model="fields.authenticatorCode")
-        button.btn.btn-info.btn-small(ng-click="edit.twoFactor = false", translate="CANCEL")
+        button.btn.btn-info.btn-small(ng-click="edit.twoFactor = false; settings.googleAuthenticatorSecret = null", translate="CANCEL")
         button.btn.btn-info.btn-primary(ng-click="confirmTwoFactorGoogleAuthenticator()", translate="ENABLE",ng-show="settings.googleAuthenticatorSecret", ng-disabled="fields.authenticatorCode.length != 6")
           
