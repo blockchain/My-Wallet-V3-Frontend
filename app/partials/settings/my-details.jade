@@ -65,3 +65,32 @@ form.form-horizontal(role="form",name="form",novalidate)
       div(ng-show="edit.passwordHint")     
         button.btn.btn-primary.btn-small(ng-click="changePasswordHint(newPasswordHint)",ng-disabled="user.passwordHint == newPasswordHint", translate="SAVE")
         button.btn.btn-info.btn-small(ng-click="edit.passwordHint = false", translate="CANCEL")
+  hr
+  .form-group
+    .col-sm-6
+      label(translate="TWO_FACTOR")
+      span.label.label-warning(translate="DISABLED", ng-show="!settings.needs2FA")
+      span.label.label-success(translate="ENABLED", ng-show="settings.needs2FA")
+      br
+      p(translate="TWO_FACTOR_EXPLAIN")    
+    .col-sm-6
+      div(ng-hide="edit.twoFactor")
+        p.form-control-static
+          span(ng-show="settings.twoFactorMethod == 3", translate="2FA_YUBI")
+          span(ng-show="settings.twoFactorMethod == 2", translate="2FA_EMAIL")
+          span(ng-show="settings.twoFactorMethod == 5", translate="2FA_SMS")
+          span(ng-show="settings.twoFactorMethod == 4", translate="2FA_GOOGLE_AUTH")
+        p
+          a(ng-click="edit.twoFactor = !edit.twoFactor", translate="CONFIGURE_2FA", ng-hide="settings.needs2FA")
+          a(ng-click="disableSecondFactor()", translate="DISABLE", ng-show="settings.needs2FA")
+      div(ng-show="edit.twoFactor") 
+        ul
+          li 
+            a(ng-click="setTwoFactorSMS()", ng-show="user.isMobileVerified") Enable SMS
+            span(ng-show="!user.isMobileVerified") Enable SMS (Please verify your mobile first)
+          li
+            a(ng-click="setTwoFactorEmail()", ng-show="user.isEmailVerified") Enable email
+            span(ng-show="!user.isEmailVerified") Enable email (Please verify your email first)
+          li
+            a(ng-click="") Enable Google Authenticator
+        button.btn.btn-info.btn-small(ng-click="edit.twoFactor = false", translate="CANCEL")

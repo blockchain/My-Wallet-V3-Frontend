@@ -1,8 +1,9 @@
-@SettingsMyDetailsCtrl = ($scope, Wallet, $modal, $filter) ->
+@SettingsMyDetailsCtrl = ($scope, Wallet, $modal, $filter, $translate) ->
   $scope.countries = require('country-data').countries.all
   
-  $scope.edit = {email: false, mobile: false, password: false, passwordHint: false} 
+  $scope.edit = {email: false, mobile: false, password: false, passwordHint: false, twoFactor: false} 
   $scope.user = Wallet.user
+  $scope.settings = Wallet.settings
   
   $scope.newMobile = {country: null, number: null}
   
@@ -49,3 +50,20 @@
   $scope.changePasswordHint = (hint) ->
     Wallet.changePasswordHint(hint)
     $scope.edit.passwordHint = false   
+      
+  $scope.disableSecondFactor = () ->
+    return false unless $scope.settings.needs2FA
+    
+    $translate("CONFIRM_DISABLE_2FA").then (translation) ->
+      if confirm translation
+        Wallet.disableSecondFactor()
+        
+  $scope.setTwoFactorSMS = () ->
+    if $scope.user.isMobileVerified
+      Wallet.setTwoFactorSMS()
+      $scope.edit.twoFactor = false
+      
+  $scope.setTwoFactorEmail = () ->
+    if $scope.user.isEmailVerified
+      Wallet.setTwoFactorEmail()
+      $scope.edit.twoFactor = false

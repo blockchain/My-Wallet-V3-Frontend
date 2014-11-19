@@ -1,5 +1,6 @@
 describe "SettingsMyDetailsCtrl", ->
   scope = undefined
+  Wallet = undefined
   
   modal =
     open: ->
@@ -119,3 +120,69 @@ describe "SettingsMyDetailsCtrl", ->
       
       return
     )
+    
+  describe "2FA", ->
+    it "can be disabled", inject((Wallet) ->
+      Wallet.login("test-2FA", "test", "123456")
+      scope.$digest()
+      expect(Wallet.status.isLoggedIn).toBe(true)
+      
+      spyOn(window, 'confirm').and.callFake(() ->
+           return true
+      )
+        
+      spyOn(Wallet, "disableSecondFactor") #.and.callThrough()
+      scope.disableSecondFactor()
+      expect(Wallet.disableSecondFactor).toHaveBeenCalled()
+    )
+    
+    it "can't be disabled if not enabled", inject((Wallet) ->
+      Wallet.login("test", "test")
+      scope.$digest()
+      expect(Wallet.status.isLoggedIn).toBe(true)
+      
+      spyOn(Wallet, "disableSecondFactor")
+      scope.disableSecondFactor()
+      expect(Wallet.disableSecondFactor).not.toHaveBeenCalled()
+    )
+    
+    describe "configure", ->
+      beforeEach ->
+        Wallet.login("test", "test")
+        scope.$digest()
+        scope.user.isEmailVerified = true
+        scope.user.isMobileVerified = true
+    
+      it "with sms", inject((Wallet) ->
+        spyOn(Wallet, "setTwoFactorSMS")
+        scope.setTwoFactorSMS()
+        expect(Wallet.setTwoFactorSMS).toHaveBeenCalled()
+      )
+      
+      it "sms can't be enabled if mobile is not verified", inject((Wallet) ->
+        scope.user.isMobileVerified = false
+        spyOn(Wallet, "setTwoFactorSMS")
+        scope.setTwoFactorSMS()
+        expect(Wallet.setTwoFactorSMS).not.toHaveBeenCalled()
+      )
+      
+      it "with email", inject((Wallet) ->
+        spyOn(Wallet, "setTwoFactorEmail")
+        scope.setTwoFactorEmail()
+        expect(Wallet.setTwoFactorEmail).toHaveBeenCalled()
+      )
+      
+      it "email can't be enabled if email is not verified", inject((Wallet) ->
+        scope.user.isEmailVerified = false
+        spyOn(Wallet, "setTwoFactorEmail")
+        scope.setTwoFactorEmail()
+        expect(Wallet.setTwoFactorEmail).not.toHaveBeenCalled()
+      )
+      
+      it "with Google Authenticator", inject((Wallet) ->
+        pending()
+      )
+      
+      return
+    
+    return
