@@ -120,5 +120,44 @@ describe "SettingsWalletCtrl", ->
       expect(Wallet.disableSecondFactor).not.toHaveBeenCalled()
     )
     
+    describe "configure", ->
+      beforeEach ->
+        Wallet.login("test", "test")
+        scope.$digest()
+        scope.user.isEmailVerified = true
+        scope.user.isMobileVerified = true
+    
+      it "with sms", inject((Wallet) ->
+        spyOn(Wallet, "setTwoFactorSMS")
+        scope.setTwoFactorSMS()
+        expect(Wallet.setTwoFactorSMS).toHaveBeenCalled()
+      )
+      
+      it "sms can't be enabled if mobile is not verified", inject((Wallet) ->
+        scope.user.isMobileVerified = false
+        spyOn(Wallet, "setTwoFactorSMS")
+        scope.setTwoFactorSMS()
+        expect(Wallet.setTwoFactorSMS).not.toHaveBeenCalled()
+      )
+      
+      it "with email", inject((Wallet) ->
+        spyOn(Wallet, "setTwoFactorEmail")
+        scope.setTwoFactorEmail()
+        expect(Wallet.setTwoFactorEmail).toHaveBeenCalled()
+      )
+      
+      it "email can't be enabled if email is not verified", inject((Wallet) ->
+        scope.user.isEmailVerified = false
+        spyOn(Wallet, "setTwoFactorEmail")
+        scope.setTwoFactorEmail()
+        expect(Wallet.setTwoFactorEmail).not.toHaveBeenCalled()
+      )
+      
+      it "with Google Authenticator", inject((Wallet) ->
+        pending()
+      )
+      
+      return
+    
     return
       

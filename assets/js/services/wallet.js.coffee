@@ -690,6 +690,27 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       console.log "Failed"
       wallet.applyIfNeeded()
     )
+    
+  wallet.setTwoFactorSMS = () ->
+    wallet.my.setTwoFactorSMS(()->
+      wallet.settings.needs2FA = true
+      wallet.settings.twoFactorMethod = 5
+      wallet.applyIfNeeded()
+    ,()->
+      console.log "Failed"
+      wallet.applyIfNeeded()
+    )
+  
+  wallet.setTwoFactorEmail = () ->
+    wallet.my.setTwoFactorEmail(()->
+      wallet.settings.needs2FA = true
+      wallet.settings.twoFactorMethod = 2
+      wallet.applyIfNeeded()
+    ,()->
+      console.log "Failed"
+      wallet.applyIfNeeded()
+    )
+  
   
   ########################################
   # Testing: only works on mock MyWallet #

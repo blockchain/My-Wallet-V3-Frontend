@@ -31,5 +31,13 @@ form.form-horizontal(role="form",name="form",novalidate)
           a(ng-click="edit.twoFactor = !edit.twoFactor", translate="CONFIGURE_2FA", ng-hide="settings.needs2FA")
           a(ng-click="disableSecondFactor()", translate="DISABLE", ng-show="settings.needs2FA")
       div(ng-show="edit.twoFactor") 
-        p Coming Soon... 
+        ul
+          li 
+            a(ng-click="setTwoFactorSMS()", ng-show="user.isMobileVerified") Enable SMS
+            span(ng-show="!user.isMobileVerified") Enable SMS (Please verify your mobile first)
+          li
+            a(ng-click="setTwoFactorEmail()", ng-show="user.isEmailVerified") Enable email
+            span(ng-show="!user.isEmailVerified") Enable email (Please verify your email first)
+          li
+            a(ng-click="") Enable Google Authenticator
         button.btn.btn-info.btn-small(ng-click="edit.twoFactor = false", translate="CANCEL")
