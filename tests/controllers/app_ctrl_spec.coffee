@@ -23,8 +23,8 @@ describe "AppCtrl", ->
     
     spyOn($state, "go")    
     
-    scope.didLoad()
-          
+    scope.$broadcast("$stateChangeSuccess", {name: "dashboard"})
+              
     expect($state.go).toHaveBeenCalledWith("login")
   )
   
@@ -34,7 +34,7 @@ describe "AppCtrl", ->
     
     spyOn($state, "go")    
     
-    scope.didLoad()
+    scope.$broadcast("$stateChangeSuccess", {name: "dashboard"})
     
     expect($state.go).not.toHaveBeenCalled()
 

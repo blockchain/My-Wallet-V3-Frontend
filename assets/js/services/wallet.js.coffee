@@ -51,13 +51,53 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.wrongTwoFactorCode = (method) ->
     $state.go("login")
     return
+  
+  wallet.didLogin = () ->
+    wallet.status.isLoggedIn = true 
+    
+    wallet.user.recoveryPhrase = wallet.my.getHDWallet().getPassphraseString()
+    
+    for address, label of wallet.my.addressBook
+      wallet.addressBook[address] = wallet.my.addressBook[address]
+    
+    # Get email address, etc
+    wallet.my.get_account_info((result)->
+      wallet.user.email = result.email
+      if result.sms_number
+         wallet.user.mobile = {country: result.sms_number.split(" ")[0], number: "0" + result.sms_number.split(" ")[1]}
+      else # Field is not present if not entered
+        wallet.user.mobile = {country: "+1", number: ""}          
+        
+      wallet.user.isEmailVerified = result.email_verified 
+      wallet.user.isMobileVerified = result.sms_verified
+      wallet.user.passwordHint = result.password_hint1 # Field not present if not entered
+      
+      wallet.setLanguage($filter("getByProperty")("code", result.language, wallet.languages))
+      
+      # Get currencies:
+      
+      wallet.setCurrency($filter("getByProperty")("code", result.currency, wallet.currencies))
+          
+      wallet.fetchExchangeRate()
+      wallet.applyIfNeeded()
+    )
+    
+    wallet.applyIfNeeded()
+    
+  wallet.loginError = (error) ->
+    console.log error
+    $state.go("login")
+    return
     
   wallet.login = (uid, password, two_factor_code) ->   
     if two_factor_code? && two_factor_code != ""
       wallet.settings.needs2FA = true
+    else
+      two_factor_code = undefined
+    
       
     $window.root = "https://blockchain.info/"   
-    wallet.my.fetchWalletJson(uid, null, null, password, two_factor_code, wallet.needsTwoFactorCode, wallet.wrongTwoFactorCode, ) 
+    wallet.my.fetchWalletJson(uid, null, null, password, two_factor_code, wallet.didLogin, wallet.needsTwoFactorCode, wallet.wrongTwoFactorCode, wallet.loginError ) 
     
   
     
@@ -443,39 +483,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     else if event == "on_wallet_decrypt_finish" # Non-HD part is decrypted
       hdwallet = MyWallet.getHDWallet()
       wallet.applyIfNeeded()
-      
-    else if event == "did_decrypt"   # Wallet decrypted succesfully  
-      wallet.status.isLoggedIn = true 
-      
-      wallet.user.recoveryPhrase = wallet.my.getHDWallet().getPassphraseString()
-      
-      for address, label of wallet.my.addressBook
-        wallet.addressBook[address] = wallet.my.addressBook[address]
-      
-      # Get email address, etc
-      wallet.my.get_account_info((result)->
-        wallet.user.email = result.email
-        if result.sms_number
-           wallet.user.mobile = {country: result.sms_number.split(" ")[0], number: "0" + result.sms_number.split(" ")[1]}
-        else # Field is not present if not entered
-          wallet.user.mobile = {country: "+1", number: ""}          
-          
-        wallet.user.isEmailVerified = result.email_verified 
-        wallet.user.isMobileVerified = result.sms_verified
-        wallet.user.passwordHint = result.password_hint1 # Field not present if not entered
-        
-        wallet.setLanguage($filter("getByProperty")("code", result.language, wallet.languages))
-        
-        # Get currencies:
-        
-        wallet.setCurrency($filter("getByProperty")("code", result.currency, wallet.currencies))
-            
-        wallet.fetchExchangeRate()
-        wallet.applyIfNeeded()
-      )
-      
-      wallet.applyIfNeeded()
-      
     else if event == "hd_wallets_does_not_exist"
       # Create a new one:
       console.log "Creating new HD wallet..."

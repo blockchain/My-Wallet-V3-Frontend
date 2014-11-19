@@ -103,7 +103,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.getPassphraseString = () ->
     return "banana big me hungry"
     
-  myWallet.fetchWalletJson = (uid, dummy1, dummy2, password, two_factor_code, needs_2fa, wrong_2fa) ->
+  myWallet.fetchWalletJson = (uid, dummy1, dummy2, password, two_factor_code, success, needs_2fa, wrong_2fa) ->
     if wallet = localStorageService.get("mockWallets")[uid]
       myWallet.uid = uid
       eventListener("did_set_guid")
@@ -124,7 +124,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
       this.refresh()
     
-      eventListener("did_decrypt")
+      success()
       eventListener("on_wallet_decrypt_finish")
       eventListener("did_multiaddr")
       return
