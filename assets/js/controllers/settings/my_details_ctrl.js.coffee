@@ -75,3 +75,4 @@
     
   $scope.confirmTwoFactorGoogleAuthenticator = () ->
     Wallet.confirmTwoFactorGoogleAuthenticator($scope.fields.authenticatorCode)
+    $scope.edit.twoFactor = false
