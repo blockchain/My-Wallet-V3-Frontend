@@ -133,7 +133,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       $log.error "Wallet not found"
       eventListener("wallet not found")
       
-  myWallet.register = (pwd, email, language, currency, success, fail) ->
+  myWallet.createNewWallet = (email, pwd, language, currency, success, fail) ->
     uid = String(Math.floor((Math.random() * 100000000) + 1))
     
     if mockRules.shouldFailToCreateWallet

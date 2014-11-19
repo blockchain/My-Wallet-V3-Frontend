@@ -14,7 +14,6 @@
   
   $scope.checkLogin = () ->    
     if $scope.status.isLoggedIn == false
-      console.log "Not logged in..."
       if $scope.savePassword && !!$cookieStore.get("password")  
         Wallet.login($cookieStore.get("uid"), $cookieStore.get("password"))
       else 

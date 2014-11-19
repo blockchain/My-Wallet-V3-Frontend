@@ -122,7 +122,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     if language?
       language_code = language.code
       
-    wallet.my.register(password, email, currency_code, language_code, success, error)
+    wallet.my.createNewWallet(email, password, language_code, currency_code, success, error)
         
   wallet.createAccount = (name) ->
     wallet.my.createAccount(name)
