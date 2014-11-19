@@ -1,7 +1,7 @@
 walletServices = angular.module("myWalletServices", [])
 walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService, $cookieStore) ->
   # Erase local storage:
-  # localStorageService.remove("mockWallets")
+  localStorageService.remove("mockWallets")
 
   # $cookieStore.remove("uid")
   # $cookieStore.remove("password")
@@ -27,7 +27,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
         legacyAddresses: {
           "some_legacy_address":            {privateKey: "legacy_private_key", label: "Old"}
           "some_legacy_watch_only_address": {privateKey: null, label: "Paper wallet"}
-          "some_legacy_address_without_label": {privateKey: null, label: null}
+          "some_legacy_address_without_label": {privateKey: "legacy_no_label_private_key", label: null}
           "some_legacy_archived_address":   {privateKey: "legacy_archived", archived: true}
         }
         
