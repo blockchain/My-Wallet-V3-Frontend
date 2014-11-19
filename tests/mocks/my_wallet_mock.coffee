@@ -442,6 +442,21 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.unsetTwoFactor = (success, error) ->
     success()
     
+  myWallet.setTwoFactorSMS = (success, error) ->
+    success()
+    
+  myWallet.setTwoFactorEmail = (success, error) ->
+    success()
+    
+  myWallet.setTwoFactorGoogleAuthenticator = (success, error) ->
+    success("google_secret")
+    
+  myWallet.confirmTwoFactorGoogleAuthenticator = (code, success, error) ->
+    if code == "123456"
+      success()
+    else
+      error()
+    
   #####################################
   # Tell the mock to behave different # 
   #####################################

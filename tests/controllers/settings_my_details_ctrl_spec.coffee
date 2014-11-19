@@ -154,9 +154,11 @@ describe "SettingsMyDetailsCtrl", ->
         scope.user.isMobileVerified = true
     
       it "with sms", inject((Wallet) ->
-        spyOn(Wallet, "setTwoFactorSMS")
+        spyOn(Wallet, "setTwoFactorSMS").and.callThrough()
         scope.setTwoFactorSMS()
         expect(Wallet.setTwoFactorSMS).toHaveBeenCalled()
+        expect(scope.settings.needs2FA).toBe(true)
+        
       )
       
       it "sms can't be enabled if mobile is not verified", inject((Wallet) ->
@@ -167,9 +169,10 @@ describe "SettingsMyDetailsCtrl", ->
       )
       
       it "with email", inject((Wallet) ->
-        spyOn(Wallet, "setTwoFactorEmail")
+        spyOn(Wallet, "setTwoFactorEmail").and.callThrough()
         scope.setTwoFactorEmail()
         expect(Wallet.setTwoFactorEmail).toHaveBeenCalled()
+        expect(scope.settings.needs2FA).toBe(true)
       )
       
       it "email can't be enabled if email is not verified", inject((Wallet) ->
@@ -179,8 +182,24 @@ describe "SettingsMyDetailsCtrl", ->
         expect(Wallet.setTwoFactorEmail).not.toHaveBeenCalled()
       )
       
-      it "with Google Authenticator", inject((Wallet) ->
-        pending()
+      it "configure Google Authenticator returns secret url", inject((Wallet) ->
+        spyOn(Wallet, "setTwoFactorGoogleAuthenticator").and.callThrough()
+        scope.setTwoFactorGoogleAuthenticator()
+        expect(Wallet.setTwoFactorGoogleAuthenticator).toHaveBeenCalled()
+        expect(scope.settings.googleAuthenticatorSecret).toBe("google_secret")        
+      )
+      
+      it "configure Google Auth does not immediately enable", inject((Wallet) ->
+        scope.setTwoFactorGoogleAuthenticator()
+        expect(scope.settings.needs2FA).toBeNull()
+      )
+      
+      it "enable Google Authenticator with confirmation code", inject((Wallet) ->
+        scope.fields.authenticatorCode = "123456"
+        spyOn(Wallet, "confirmTwoFactorGoogleAuthenticator").and.callThrough()
+        scope.confirmTwoFactorGoogleAuthenticator()
+        expect(Wallet.confirmTwoFactorGoogleAuthenticator).toHaveBeenCalledWith("123456")
+        expect(scope.settings.needs2FA).toBe(true)
       )
       
       return

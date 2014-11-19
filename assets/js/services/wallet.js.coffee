@@ -711,7 +711,25 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.applyIfNeeded()
     )
   
-  
+  wallet.setTwoFactorGoogleAuthenticator = () ->
+    wallet.my.setTwoFactorGoogleAuthenticator((secret)->
+      wallet.settings.googleAuthenticatorSecret = secret
+      wallet.applyIfNeeded()
+    ,()->
+      console.log "Failed"
+      wallet.applyIfNeeded()
+    )
+    
+  wallet.confirmTwoFactorGoogleAuthenticator = (code) ->
+    wallet.my.confirmTwoFactorGoogleAuthenticator(code, ()->
+      wallet.settings.needs2FA = true
+      wallet.settings.twoFactorMethod = 4
+      wallet.settings.googleAuthenticatorSecret = null
+      wallet.applyIfNeeded()
+    ,()->
+      console.log "Failed"
+      wallet.applyIfNeeded()
+    )
   ########################################
   # Testing: only works on mock MyWallet #
   ########################################

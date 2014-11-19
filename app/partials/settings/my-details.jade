@@ -92,5 +92,10 @@ form.form-horizontal(role="form",name="form",novalidate)
             a(ng-click="setTwoFactorEmail()", ng-show="user.isEmailVerified") Enable email
             span(ng-show="!user.isEmailVerified") Enable email (Please verify your email first)
           li
-            a(ng-click="") Enable Google Authenticator
+            a(ng-click="setTwoFactorGoogleAuthenticator()") Enable Google Authenticator
+        div(ng-if="settings.googleAuthenticatorSecret")
+          qr(text="settings.googleAuthenticatorSecret", size=172)
+          input.form-control(type="text",placeholder="Enter code shown in the app",ng-model="fields.authenticatorCode")
         button.btn.btn-info.btn-small(ng-click="edit.twoFactor = false", translate="CANCEL")
+        button.btn.btn-info.btn-primary(ng-click="confirmTwoFactorGoogleAuthenticator()", translate="ENABLE",ng-show="settings.googleAuthenticatorSecret", ng-disabled="fields.authenticatorCode.length != 6")
+          

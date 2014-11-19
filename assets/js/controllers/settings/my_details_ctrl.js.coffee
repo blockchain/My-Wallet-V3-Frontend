@@ -1,6 +1,8 @@
 @SettingsMyDetailsCtrl = ($scope, Wallet, $modal, $filter, $translate) ->
   $scope.countries = require('country-data').countries.all
   
+  $scope.fields = {authenticatorCode: ""}
+  
   $scope.edit = {email: false, mobile: false, password: false, passwordHint: false, twoFactor: false} 
   $scope.user = Wallet.user
   $scope.settings = Wallet.settings
@@ -67,3 +69,9 @@
     if $scope.user.isEmailVerified
       Wallet.setTwoFactorEmail()
       $scope.edit.twoFactor = false
+      
+  $scope.setTwoFactorGoogleAuthenticator = () ->
+    Wallet.setTwoFactorGoogleAuthenticator()
+    
+  $scope.confirmTwoFactorGoogleAuthenticator = () ->
+    Wallet.confirmTwoFactorGoogleAuthenticator($scope.fields.authenticatorCode)
