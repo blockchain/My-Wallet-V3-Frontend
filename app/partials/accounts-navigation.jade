@@ -18,6 +18,17 @@
           a(ui-sref="transactions({accountIndex: $index.toString()})") {{ account.label }}
         td.amount
           fiat(btc="account.balance")
+    table.left-header.accounts
+      tr
+        td.header 
+          img(src="img/my-accounts-icon.png")
+          span(translate="IMPORTED_ADDRESSES") 
+    table.left
+      tr(ng-class="selectedAccountIndex == 'imported' ? 'active' : ''")
+        td 
+          a(ui-sref="transactions({accountIndex:'imported'})", translate="ALL_ADDRESSES")
+        td.amount 
+          fiat(btc="legacyTotal()")
   //- table.left-header
   //-   tr
   //-     td.header

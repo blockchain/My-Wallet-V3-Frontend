@@ -29,3 +29,6 @@ describe "AccountsCtrl", ->
     scope.newAccount()
     expect(modal.open).toHaveBeenCalled()
   ) 
+
+  it "should show the total balance of legacy address", ->
+    pending()

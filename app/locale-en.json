@@ -141,5 +141,7 @@
   "2FA_GOOGLE_AUTH" : "Google Authenticator",
   "DISABLE" : "Disable",
   "CONFIRM_DISABLE_2FA" : "Are you sure you wish to disable second factor authentication?",
+  "IMPORTED_ADDRESSES" : "Imported Addresses",
+  "ALL_ADDRESSES" : "All Addresses",
   "" : ""
 }
