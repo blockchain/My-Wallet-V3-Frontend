@@ -25,6 +25,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.conversions = {}
   
   wallet.accounts     = []
+  wallet.legacyAddresses = []
   wallet.addressBook  = {}
   wallet.paymentRequests = []
   wallet.alerts = []
@@ -126,7 +127,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         
   wallet.createAccount = (name) ->
     wallet.my.createAccount(name)
-    wallet.updateAccounts()
+    wallet.updateAccountsAndLegacyAddresses()
     wallet.transactions.push []
     
   wallet.logout = () ->
@@ -178,7 +179,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     o.transactionSuccess = () ->
         wallet.updateTransactions()
-        wallet.updateAccounts()
+        wallet.updateAccountsAndLegacyAddresses()
     
         observer.transactionDidFinish()
       
@@ -403,7 +404,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   #        Private (other)         #
   ##################################
   
-  wallet.updateAccounts = () ->
+  wallet.updateAccountsAndLegacyAddresses = () ->
     # Carefully update our array of accounts, so Angular watchers don't get confused.
     # Assuming accounts are never deleted.
     
@@ -412,15 +413,35 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     for i in [0..(numberOfNewAccounts - 1)]
       if i >= numberOfOldAccounts
-        wallet.accounts.push {active: true}
+        wallet.accounts.push {active: true, legacy: false, index: i}
       
       # Set or update label and balance:
       wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
       wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
       
+    numberOfOldAddresses = wallet.legacyAddresses.length
+    numberOfNewAddresses = wallet.my.getAllAddresses().length
+    
+    if numberOfNewAddresses > 0
+      for i in [0..(numberOfNewAddresses - 1)]
+        addressItem = undefined
+        if i >= numberOfOldAddresses
+          address = wallet.my.getAllAddresses()[i]
+          addressItem = {address: address, active: wallet.my.getActiveAddresses().indexOf(address) == -1, legacy: true} 
+          wallet.legacyAddresses.push addressItem
+        else
+          addressItem = wallet.legacyAddresses[i]
+      
+        # Set or update label and balance:
+        addressItem.label = wallet.my.getAddressLabel(addressItem.address)
+        addressItem.balance = 0 # wallet.my.getBalanceForLegacyAddress(address_item.address)
+        addressItem.isWatchOnly = wallet.my.isWatchOnly(addressItem.address)
+      
     # Balances will be 0 until transactions have been loaded.
     # TODO: MyWallet should let us know when all transactions are loaded; hide
     # total until that time.
+    
+    
         
   wallet.total = (accountIndex) -> 
     return null if wallet.accounts == undefined
@@ -464,7 +485,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         sound = ngAudio.load("beep.wav")
         sound.play()
         wallet.updateTransactions()
-        wallet.updateAccounts()
+        wallet.updateAccountsAndLegacyAddresses()
     else if event == "hw_wallet_accepted_payment_request"
       $translate("PAYMENT_REQUEST_RECEIVED",{amount: numeral(data.amount).divide(100000000).format("0.[00000000]")}).then (translation) ->
         wallet.displaySuccess(translation)
@@ -493,7 +514,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.applyIfNeeded()
       
     else if event == "hw_wallet_balance_updated"
-      wallet.updateAccounts()  
+      wallet.updateAccountsAndLegacyAddresses()  
       wallet.applyIfNeeded()
       
     else if event == "wallet not found" # Only works in the mock atm
@@ -633,7 +654,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           # convert to: units of satoshi per unit of fiat
           wallet.conversions[code] = {symbol: info.symbol, conversion: parseInt(numeral(100000000).divide(numeral(info["15m"])).format("1"))}  
 
-        wallet.updateAccounts()
+        wallet.updateAccountsAndLegacyAddresses()
         wallet.applyIfNeeded()
 
       fail = (error) ->
@@ -736,7 +757,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   
   wallet.refresh = () ->
     wallet.my.refresh()
-    wallet.updateAccounts()
+    wallet.updateAccountsAndLegacyAddresses()
     wallet.updateTransactions()
     
   wallet.isMock = wallet.my.mockShouldFailToSend != undefined

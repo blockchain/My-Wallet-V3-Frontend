@@ -9,8 +9,8 @@
       .col-sm-9
         ui-select(ng-model="fields.to", ng-disabled="paymentRequest")
           ui-select-match {{ $select.selected.label }}
-          ui-select-choices(repeat="account in accounts | filter: $select.search") 
-            span(ng-bind-html="account.label | highlight: $select.search")
+          ui-select-choices(repeat="destination in destinations | filter: $select.search" group-by="'type'") 
+            span(ng-bind-html="destination.label | highlight: $select.search")
     .form-group
       label.col-sm-3.control-label(translate="AMOUNT")
       .col-sm-4
@@ -25,18 +25,18 @@
       .col-sm-9
         p.form-control-static
           {{ paymentRequest.paid / 100000000.0 }}  
-    .form-group(ng-show="paymentRequest.address")
+    .form-group(ng-show="paymentRequestAddress")
       label.col-sm-3.control-label(translate="PAYMENT_ADDRESS")
       .col-sm-9
         //- .input-group
         p.form-control-static
-          {{ paymentRequest.address }}  
+          {{ paymentRequestAddress }}  
         //- span.input-group-btn
         //-   button.btn.btn-default(type="button", translate="COPY")
-     .form-group(ng-if="paymentRequest.address")
+     .form-group(ng-if="paymentRequestURL")
       .col-sm-3
       .col-sm-9
-        qr(text="paymentRequest.URL", size=172)
+        qr(text="paymentRequestURL", size=172)
 .modal-footer
   button.btn.btn-info(ng-click="close()", ng-show="!paymentRequest || (paymentRequest.paid > 0 && paymentRequest.paid <= paymentRequest.amount)", translate="CLOSE")
   button.btn.btn-danger(ng-click="cancel()", ng-show="paymentRequest && paymentRequest.paid == 0", translate="CANCEL")

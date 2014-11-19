@@ -24,6 +24,13 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
           {hash: "aaab", amount: -25000000, confirmations: 3, doubleSpend: false, coinbase: false, intraWallet: true, from_account: 0, from_addresses: [], to_account: 1, to_addresses: [], note: null, txTime:   2000000000},
           {hash: "afsdfsdkj", amount: -1500000, confirmations: 1, doubleSpend: false, coinbase: false, intraWallet: false, from_account: 1, from_addresses: [], to_account: null, to_addresses: ["1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq"] ,note: null, txTime:   8200000000},
         ]
+        legacyAddresses: {
+          "some_legacy_address":            {privateKey: "legacy_private_key"}
+          "some_legacy_watch_only_address": {privateKey: null}
+          "some_legacy_archived_address":   {privateKey: "legacy_archived", archived: true}
+        }
+       
+        
         notes: {
           "aaaa" : "Salary"
         }
@@ -37,6 +44,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
         ]
         transactions: []
         notes: {}
+        legacyAddresses: {}
       },
       "test-2FA" : {
         password: "test"
@@ -48,6 +56,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
         ]
         transactions: []
         notes: {}
+        legacyAddresses: {}
       }
     })
         
@@ -60,6 +69,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   transactions = []
   notes = {}
+  legacyAddresses = []
   
   language = "en"
   email = "steve@me.com"
@@ -389,6 +399,31 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.recommendedTransactionFeeForAccount = () ->
     return 10000
     
+    
+  ####################
+  # Legacy addresses #
+  ####################
+  myWallet.getAllAddresses = () ->
+    res = []
+    for key, value of legacyAddresses
+      res.push key
+    return res
+    
+  myWallet.getActiveAddresses = () ->
+    activeAddresses = []
+    for key, value of legacyAddresses
+      unless value.active == false
+        activeAddresses.push key
+    return activeAddresses
+    
+  myWallet.getAddressLabel = (address) ->
+    return undefined unless legacyAddresses[address]?
+    return legacyAddresses[address].label
+    
+  myWallet.isWatchOnly = (address) ->
+    return legacyAddresses[address].privateKey == null
+    
+    
   ############################################################
   # Simulate spontanuous behavior when using mock in browser #
   ############################################################
@@ -415,6 +450,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       cookie[myWallet.uid].paymentRequests = paymentRequests
       cookie[myWallet.uid].accounts = accounts
       cookie[myWallet.uid].notes = notes
+      cookie[myWallet.uid].legacyAddresses = legacyAddresses
+      
             
       localStorageService.set("mockWallets", cookie)
       isSynchronizedWithServer = true
@@ -425,6 +462,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     accounts = angular.copy(localStorageService.get("mockWallets")[this.uid].accounts)
     transactions = angular.copy(localStorageService.get("mockWallets")[this.uid].transactions)
     notes = angular.copy(localStorageService.get("mockWallets")[this.uid].notes)
+    legacyAddresses = angular.copy(localStorageService.get("mockWallets")[this.uid].legacyAddresses)
+    
     
     if localStorageService.get("mockWallets")[this.uid].paymentRequests
       paymentRequests = angular.copy(localStorageService.get("mockWallets")[this.uid].paymentRequests)      

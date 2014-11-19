@@ -49,12 +49,18 @@ describe "RequestCtrl", ->
       expect(Wallet.accounts[0].balance).toBe(scope.fields.to.balance)
       expect(Wallet.accounts[0].balance).toBeGreaterThan(0)    
     )
-  
 
-  
-    it "should have an address if the request is valid",  inject(() ->
-        expect(scope.paymentRequest.address).toBe('1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp')
+    it "should show an address if the request is valid",  inject(() ->
+        expect(scope.paymentRequestAddress).toBe('1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp')
     )
+    
+    it "should show a payment URL when amount is > 0", ->
+      expect(scope.paymentRequestURL).toContain("bitcoin:")
+      
+    it "payment URL should include amount param if amount > 0", ->
+      scope.fields.amount = "0.1"
+      scope.$digest()
+      expect(scope.paymentRequestURL).toContain("amount=0.1")
   
     it "should simulate payment after 10 seconds in mock", inject((Wallet, $timeout) ->
       before = Wallet.transactions.length
@@ -133,3 +139,58 @@ describe "RequestCtrl", ->
       expect(scope.paymentRequest).toBeNull()
       expect(Wallet.paymentRequests.length).toBe(before - 1)
     )
+    
+  describe "when requesting for a legacy address", ->
+    beforeEach ->
+      angular.mock.inject((Wallet, $rootScope, $controller) ->
+        scope = $rootScope.$new()
+        
+        $controller "RequestCtrl",
+          $scope: scope,
+          $stateParams: {},
+          $modalInstance: modalInstance
+          request: undefined
+    
+        scope.fields = {amount: "0", to: null, currency: {code: "BTC", type: "Crypto"}  }
+  
+        # Trigger generation of payment address:
+        scope.fields.amount = "1"
+        scope.$apply()
+      )  
+    
+    it "should have access to legacy addresses",  inject(() ->
+      expect(scope.legacyAddresses).toBeDefined()
+      expect(scope.legacyAddresses.length).toBeGreaterThan(0)
+    )
+    
+    it "should combine accounts and legacy addresses in destinations", ->
+      expect(scope.destinations).toBeDefined()
+      expect(scope.destinations.length).toBe(scope.accounts.length + scope.legacyAddresses.length)
+      
+    
+    it "should show a payment request address when legacy address is selected", ->
+      scope.fields.to = scope.destinations[scope.accounts.length] # The first legacy address
+      scope.$digest()
+      expect(scope.paymentRequestAddress).toBe(scope.fields.to.address)
+      
+    it "should show a payment URL when legacy address is selected", ->
+      expect(scope.paymentRequestURL).toContain("bitcoin:")
+      
+    it "should show a payment URL with amount when legacy address is selected and amount > 0", ->
+      scope.fields.amount = "0.1"
+      scope.$digest()
+      expect(scope.paymentRequestURL).toContain("amount=0.1")
+      
+    it "should not have amount argument in URL if amount is zero, null or empty", ->
+      scope.fields.amount = "0"
+      scope.$digest()
+      expect(scope.paymentRequestURL).not.toContain("amount=")
+      
+      scope.fields.amount = null
+      scope.$digest()
+      expect(scope.paymentRequestURL).not.toContain("amount=")
+      
+      scope.fields.amount = ""
+      scope.$digest()
+      expect(scope.paymentRequestURL).not.toContain("amount=")
+      

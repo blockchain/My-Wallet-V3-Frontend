@@ -1,5 +1,17 @@
 @RequestCtrl = ($scope, Wallet, MyWallet, $modalInstance, $log, $timeout, request, $stateParams, $translate) ->  
   $scope.accounts = Wallet.accounts
+  $scope.legacyAddresses = Wallet.legacyAddresses
+  $scope.destinations = []
+  
+  for account in $scope.accounts
+    item = angular.copy(account)
+    item.type = "Accounts" 
+    $scope.destinations.push item
+  
+  for address in $scope.legacyAddresses 
+    item = angular.copy(address)
+    item.type = "Imported Addresses"
+    $scope.destinations.push item
   
   $scope.alerts = Wallet.alerts
     
@@ -89,7 +101,8 @@
       
   $scope.$watch "fields.to", () ->
     $scope.formIsValid = $scope.validate()
-    # TODO: warn user if they try to change this after a request has been created
+    if $scope.fields.to.address?
+      $scope.setPaymentRequestURL($scope.fields.to.address, null)
         
   $scope.$watch "fields.amount + fields.currency.code", (oldValue, newValue) ->
     $scope.formIsValid = $scope.validate()
@@ -102,17 +115,20 @@
       amount  = Wallet.fiatToSatoshi($scope.fields.amount, $scope.fields.currency.code)
           
     if $scope.paymentRequest == null && $scope.formIsValid
-      idx = $scope.accounts.indexOf($scope.fields.to)
-  
-      if amount > 0
-        $scope.paymentRequest =  Wallet.generatePaymentRequestForAccount(idx, amount)
+      if $scope.fields.to.address?
+        $scope.setPaymentRequestURL($scope.fields.to.address, amount)
+      else
+        idx = $scope.fields.to.index
+
+        if amount > 0
+          $scope.paymentRequest =  Wallet.generatePaymentRequestForAccount(idx, amount)
+          $scope.paymentRequestAddress = $scope.paymentRequest.address
 
     if $scope.paymentRequest && $scope.formIsValid
       if oldValue isnt newValue
-        idx = $scope.accounts.indexOf($scope.fields.to)
-        Wallet.updatePaymentRequest(idx, $scope.paymentRequest.address, amount)
+        Wallet.updatePaymentRequest($scope.fields.to.index, $scope.paymentRequest.address, amount)
         
-      $scope.paymentRequest.URL = "bitcoin:" + $scope.paymentRequest.address + "?amount=" + numeral(amount).divide(100000000)
+      $scope.setPaymentRequestURL($scope.paymentRequest.address, amount)
         
       if MyWallet.mockShouldReceiveNewTransaction != undefined && request == undefined
         # Check if MyWallet is a mock or the real thing. The mock will simulate payment 
@@ -125,7 +141,11 @@
             MyWallet.mockShouldReceiveNewTransaction($scope.paymentRequest.address, "1Q9abeFt9drSYS1XjwMjR51uFH2csh86iC" ,100000000, "")
           ), 10000)  
         
-
+  $scope.setPaymentRequestURL = (address, amount) ->
+    $scope.paymentRequestAddress = address
+    $scope.paymentRequestURL = "bitcoin:" + address
+    if amount > 0
+      $scope.paymentRequestURL += "?amount=" + numeral(amount).divide(100000000)
 
   $scope.validate = () ->
     return false if $scope.fields.to == null
