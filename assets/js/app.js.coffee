@@ -1,5 +1,8 @@
 "use strict"
 
+window.theFormatter = (val) ->
+  return "Nonsense"
+
 # App Module 
 walletApp = angular.module("walletApp", [
   "walletFilters"
@@ -16,6 +19,7 @@ walletApp = angular.module("walletApp", [
   "LocalStorageModule"
   "ngNumeraljs"
   "pascalprecht.translate"
+  "ui.bootstrap-slider"
 ])
 
 walletApp.config (uiSelectConfig) ->

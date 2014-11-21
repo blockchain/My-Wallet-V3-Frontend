@@ -6,22 +6,28 @@ walletApp.directive('networkFeePicker', ($translate, Wallet) ->
     }
     templateUrl: 'templates/network-fee-picker.html'
     link: (scope, elem, attrs) ->
-      scope.policies = [{value: -1, name: ""}, {value: 0, name: ""}, {value: 1, name: ""}]
       scope.settings = Wallet.settings
-            
-      $translate("FRUGAL").then (translation) ->  
-        scope.policies[0].name = translation.toUpperCase()
-        
-      $translate("NORMAL").then (translation) ->  
-        scope.policies[1].name = translation.toUpperCase()
       
-      $translate("GENEROUS").then (translation) ->  
-        scope.policies[2].name = translation.toUpperCase()
+      scope.translations = {
+        frugal: ""
+        normal: ""
+        generous: ""
+      }
+            
+      $translate("FEE_FRUGAL").then (translation) ->
+        scope.translations.frugal = translation.toUpperCase()
+
+      $translate("FEE_NORMAL").then (translation) ->
+        scope.translations.normal = translation.toUpperCase()
+
+      $translate("FEE_GENEROUS").then (translation) ->
+        scope.translations.generous = translation.toUpperCase()
         
       scope.$watch "settings.feePolicy", (newValue) ->        
-        scope.selectedPolicy = scope.policies[newValue + 1]
+        scope.policy = newValue
               
-      scope.didSelect = (item, model) ->
-        Wallet.setFeePolicy(item.value)
+      scope.$watch "policy", (policy, previousPolicy) ->
+        if previousPolicy? && policy isnt previousPolicy && (policy == -1 || policy == 0 || policy == 1)
+          Wallet.setFeePolicy(policy)
   }
 )

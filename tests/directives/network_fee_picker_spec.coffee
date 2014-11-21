@@ -23,16 +23,18 @@ describe "Network Fee Picker Directive", ->
     element = $compile("<network-fee-picker></network-fee-picker>")($rootScope)
     $rootScope.$digest()
     isoScope = element.isolateScope()
+    isoScope.policy = 0 # Normally this is obtained through wallet.settings
+    isoScope.$digest()
   
   it "should show policy names", ->
     expect(element.html()).toContain "FRUGAL"
         
   it "should have the current policy in its scope", ->
-    expect(isoScope.selectedPolicy.value).toBe(0)
+    expect(isoScope.policy).toBe(0)
     
   it "should save a policy change", inject((Wallet) ->
     spyOn(Wallet, "setFeePolicy")
-    isoScope.didSelect(isoScope.policies[2])
+    isoScope.policy = 1
     isoScope.$digest()
     expect(Wallet.setFeePolicy).toHaveBeenCalled()
   )

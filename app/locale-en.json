@@ -146,8 +146,11 @@
   "SHARE" : "Share",
   "NETWORK_FEE" : "Bitcoin Network Fee",
   "NETWORK_FEE_EXPLAIN" : "Blockchain never charges for transactions, this fee is suggested by the bitcoin network for increased speed",
-  "FRUGAL" : "frugal",
-  "NORMAL" : "normal",
-  "GENEROUS" : "generous",
+  "FEE_FRUGAL" : "Frugal",
+  "FEE_FRUGAL_EXPLAIN" : "Lorem ipsum frugal",
+  "FEE_NORMAL" : "Normal",
+  "FEE_NORMAL_EXPLAIN" : "Follow the fee policy suggested by the mainline bitcoin client. Recommended",
+  "FEE_GENEROUS" : "Generous",
+  "FEE_GENEROUS_EXPLAIN" : "Lorem ipsum generous.",
   "" : ""
 }

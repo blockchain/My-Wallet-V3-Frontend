@@ -22,6 +22,9 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     script(src='bower_components/angular-numeraljs/dist/angular-numeraljs.js')    
     script(src='bower_components/angular-translate/angular-translate.js')
     script(src='bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js')
+    script(src='bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js')    
+    script(src='bower_components/angular-bootstrap-slider/slider.js')    
+    link(rel='stylesheet', href='bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css')
     
     !=css('app')
     !=css('navigation')
@@ -33,6 +36,7 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     !=css('send')
     !=css('settings')
     !=css('signup')
+    !=css('directives')
             
     // Blockchain MyWallet javascript (must be called before 'app')
     unless process.env.MYWALLET_MOCK == "1"
