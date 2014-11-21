@@ -19,6 +19,7 @@ describe "SendCtrl", ->
         $scope: scope,
         $stateParams: {},
         $modalInstance: modalInstance
+        paymentRequest: {address: "", amount: ""}
         
       scope.transaction = {
         to: "1DDBEYPPTkgbctmMtH3gXc7UHFURw5HGJD"
