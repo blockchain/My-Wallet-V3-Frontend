@@ -1,7 +1,8 @@
-@SendCtrl = ($scope, $log, Wallet, $modalInstance, ngAudio, $timeout, $stateParams, $translate) ->
+@SendCtrl = ($scope, $log, Wallet, $modalInstance, ngAudio, $timeout, $stateParams, $translate, paymentRequest) ->
   
+  console.log paymentRequest
   # $scope.privacyGuard = false
-  
+    
   $scope.errors = {to: null, amount: null}
   
   $scope.alerts = Wallet.alerts
@@ -31,7 +32,7 @@
       $scope.toPlaceholder = "+18005550199"
     
     $scope.errors.to = null
-    $scope.transaction.to = ""
+    $scope.transaction.to = paymentRequest.address
     return
       
   $scope.max = (account) ->
@@ -45,7 +46,9 @@
     else 
       return $scope.BTCtoFiat(max_btc, $scope.transaction.currency) + " " + $scope.transaction.currency
   
-  $scope.transaction = {from: null, to: "", toAccount: null, amount: "", satoshi: 0, currency: "BTC", currencySelected: btc, fee: numeral(0)}
+  $scope.transaction = {from: null, to: paymentRequest.address, toAccount: null, amount: paymentRequest.amount, satoshi: 0, currency: "BTC", currencySelected: btc, fee: numeral(0)}
+  
+  console.log $scope.transaction
   
   $scope.setMethod("BTC")
   

@@ -94,3 +94,11 @@ describe "SettingsWalletCtrl", ->
     )
     
     return      
+    
+  describe "handling of bitcoin links", ->
+    it "can be enabled", inject((Wallet) -> 
+      spyOn(Wallet, "handleBitcoinLinks")
+      scope.setHandleBitcoinLinks()
+      expect(Wallet.handleBitcoinLinks).toHaveBeenCalled()
+    )
+      

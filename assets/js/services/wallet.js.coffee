@@ -20,7 +20,7 @@ playSound = (id) ->
 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state) -> 
-  wallet = {status: {isLoggedIn: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null}, user: {email: null, mobile: null, passwordHint: "", recoveryPhrase: ""}}
+  wallet = {status: {isLoggedIn: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false}, user: {email: null, mobile: null, passwordHint: "", recoveryPhrase: ""}}
   
   wallet.conversions = {}
   
@@ -370,6 +370,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.alerts.pop(alert)
       if alert?
         $timeout.cancel(alert.timer)
+ 
+  wallet.displayInfo = (message, keep=false) ->
+    wallet.displayAlert {type: "info", msg: message}, keep
       
   wallet.displaySuccess = (message, keep=false) ->
     wallet.displayAlert {type: "success", msg: message}, keep
@@ -757,6 +760,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       console.log "Failed"
       wallet.applyIfNeeded()
     )
+    
+  wallet.handleBitcoinLinks = () ->
+    $window.navigator.registerProtocolHandler('bitcoin', window.location.origin + '/#/open/%s', "Blockchain")
+    
   ########################################
   # Testing: only works on mock MyWallet #
   ########################################

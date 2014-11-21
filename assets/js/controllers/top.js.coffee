@@ -15,6 +15,9 @@
     modalInstance = $modal.open(
       templateUrl: "partials/send"
       controller: SendCtrl
+      resolve:
+        paymentRequest: ->
+          {address: "", amount: ""}
     )
   
   #################################

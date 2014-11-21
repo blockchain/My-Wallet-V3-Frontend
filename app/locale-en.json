@@ -152,5 +152,10 @@
   "FEE_NORMAL_EXPLAIN" : "Follow the fee policy suggested by the mainline bitcoin client. Recommended",
   "FEE_GENEROUS" : "Generous",
   "FEE_GENEROUS_EXPLAIN" : "Lorem ipsum generous.",
-  "" : ""
+  "DISABLED" : "Disabled",
+  "ENABLED" : "Enabled",
+  "HANDLE_BITCOIN_LINKS" : "Handle Bitcoin Links",
+  "HANDLE_BITCOIN_LINKS_EXPLAIN" : "Blockchain will handle all bitcoin address links in your browser",
+  "SET_HANDLE_BITCOIN_LINKS" : "enable Bitcoin link management",
+  "HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN" : "We can't detect whether or not handling of bitcoin links has been enabled."
 }

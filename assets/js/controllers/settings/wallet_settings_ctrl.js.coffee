@@ -1,4 +1,4 @@
-@SettingsWalletCtrl = ($scope, Wallet, $translate) -> 
+@SettingsWalletCtrl = ($scope, Wallet, $translate, $window) -> 
   $scope.settings = Wallet.settings
   $scope.languages = Wallet.languages
   $scope.currencies = Wallet.currencies
@@ -11,6 +11,10 @@
     if oldVal? && newVal isnt oldVal
       Wallet.changeCurrency(newVal)
 
+  $scope.setHandleBitcoinLinks = () ->
+    Wallet.handleBitcoinLinks()
+    
+  $scope.browserCanHandleBitcoinLinks = $window.navigator.registerProtocolHandler?
   
   #################################
   #           Private             #

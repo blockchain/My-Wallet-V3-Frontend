@@ -20,3 +20,13 @@ form.form-horizontal(role="form",name="form",novalidate)
       p(translate="NETWORK_FEE_EXPLAIN")
     .col-sm-6
       network-fee-picker
+  .form-group(ng-show="browserCanHandleBitcoinLinks")
+    .col-sm-4
+      label(translate="HANDLE_BITCOIN_LINKS")
+      br
+      p(translate="HANDLE_BITCOIN_LINKS_EXPLAIN")    
+    .col-sm-6
+      //- h2.status.incomplete(translate="DISABLED", ng-show="!settings.handleBitcoinLinks")
+      //- h2.status.complete(translate="ENABLED", ng-show="settings.handleBitcoinLinks")
+      a(ng-click="setHandleBitcoinLinks()", translate="SET_HANDLE_BITCOIN_LINKS", ng-hide="settings.handleBitcoinLinks")
+      p(translate="HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN")

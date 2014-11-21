@@ -157,3 +157,17 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
+  
+  $stateProvider.state("open",
+    url: "/open/:uri"
+      
+    views: {
+      navigation: navigation,
+      alerts: alerts,
+      top: {
+        templateUrl: "partials/open-link"
+        controller: "OpenLinkController"
+      }
+    }
+  )
+  
