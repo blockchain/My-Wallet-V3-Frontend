@@ -1,0 +1,5 @@
+div
+  ui-select(ng-model="selectedPolicy" on-select="didSelect($item, $model)")
+    ui-select-match {{ $select.selected.name }}
+    ui-select-choices(repeat="policy in policies") 
+      span(ng-bind-html="policy.name")

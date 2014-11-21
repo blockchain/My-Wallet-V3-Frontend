@@ -20,7 +20,7 @@
   "RECEIVE_TO" : "Ontvang op:",
   "AMOUNT" : "Bedrag:",
   "PAID" : "Voldaan:",
-  "PAYMENT_ADDRESS" : "Betaaladres:",
+  "BITCOIN_ADDRESS" : "Bitcoin Adres",
   "CANCEL" : "Annuleer",
   "SAVE" : "Opslaan",
   "ACCEPT" : "Accepteren",

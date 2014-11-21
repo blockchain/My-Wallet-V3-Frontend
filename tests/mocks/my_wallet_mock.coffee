@@ -74,6 +74,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   language = "en"
   email = "steve@me.com"
   mobile = "+31 12345678"
+  
+  feePolicy = 0
 
   monitorFunc = undefined  # New system
   eventListener = undefined # Old system
@@ -494,6 +496,13 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       success()
     else
       error()
+    
+  myWallet.getFeePolicy = () ->
+    return feePolicy
+    
+  myWallet.setFeePolicy = (policy) ->
+    feePolicy = policy
+    return
     
   #####################################
   # Tell the mock to behave different # 

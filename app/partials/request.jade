@@ -21,23 +21,28 @@
           ui-select-match {{ $select.selected.code }}
           ui-select-choices(repeat="currency in currencies | filter: $select.search" group-by="'type'") 
             span(ng-bind-html="currency.code | highlight: $select.search")   
+    .form-group
+      hr
     .form-group(ng-show="paymentRequest && paymentRequest.paid > 0 && paymentRequest.paid != fields.amount")
       label.col-sm-3.control-label(translate="PAID")
       .col-sm-9
         p.form-control-static
           {{ paymentRequest.paid / 100000000.0 }}  
-    .form-group(ng-show="paymentRequestAddress")
-      label.col-sm-3.control-label(translate="PAYMENT_ADDRESS")
-      .col-sm-9
-        //- .input-group
-        p.form-control-static
+     .form-group(ng-if="paymentRequestURL")
+      .col-sm-2
+      .col-sm-3
+        qr(text="paymentRequestURL", size=120)
+      .col-sm-7
+        p
+        label.black(translate="BITCOIN_ADDRESS")
+        p.form-control-static.bitcoin-address
           {{ paymentRequestAddress }}  
         //- span.input-group-btn
         //-   button.btn.btn-default(type="button", translate="COPY")
-     .form-group(ng-if="paymentRequestURL")
-      .col-sm-3
-      .col-sm-9
-        qr(text="paymentRequestURL", size=172)
+        p
+        label.black(translate="SHARE")
+        br
+        | (t) (f) (g)
 .modal-footer
   button.btn.btn-info(ng-click="close()", ng-show="!paymentRequest || (paymentRequest.paid > 0 && paymentRequest.paid <= paymentRequest.amount)", translate="CLOSE")
   button.btn.btn-danger(ng-click="cancel()", ng-show="paymentRequest && paymentRequest.paid == 0", translate="CANCEL")

@@ -20,7 +20,7 @@ playSound = (id) ->
 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state) -> 
-  wallet = {status: {isLoggedIn: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null}, user: {email: null, mobile: null, passwordHint: "", recoveryPhrase: ""}}
+  wallet = {status: {isLoggedIn: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null}, user: {email: null, mobile: null, passwordHint: "", recoveryPhrase: ""}}
   
   wallet.conversions = {}
   
@@ -60,7 +60,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     for address, label of wallet.my.addressBook
       wallet.addressBook[address] = wallet.my.addressBook[address]
-    
+        
     # Get email address, etc
     wallet.my.get_account_info((result)->
       wallet.user.email = result.email
@@ -78,7 +78,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       # Get currencies:
       
       wallet.setCurrency($filter("getByProperty")("code", result.currency, wallet.currencies))
-          
+      
+      wallet.settings.feePolicy = wallet.my.getFeePolicy()
+      
       wallet.fetchExchangeRate()
       wallet.applyIfNeeded()
     )
@@ -645,6 +647,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.applyIfNeeded()
     )
     
+  wallet.setFeePolicy = (policy) ->
+    wallet.my.setFeePolicy(policy)
+    wallet.settings.feePolicy = policy  
+  
   wallet.fetchExchangeRate = () ->
       # Exchange rate is loaded asynchronously:
       success = (result) ->

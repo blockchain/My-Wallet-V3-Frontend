@@ -3,8 +3,3 @@ div
     ui-select-match {{ $select.selected.name + ' (' + $select.selected.code + ')' }}
     ui-select-choices(repeat="currency in currencies | filter:$select.search") 
       span(ng-bind-html="currency.name + ' (' + currency.code + ')' | highlight: $select.search")
-        
-        
-        
-        
-        
