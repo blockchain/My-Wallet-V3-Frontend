@@ -425,22 +425,22 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
       
     numberOfOldAddresses = wallet.legacyAddresses.length
-    numberOfNewAddresses = wallet.my.getAllAddresses().length
+    numberOfNewAddresses = wallet.my.getAllLegacyAddresses().length
     
     if numberOfNewAddresses > 0
       for i in [0..(numberOfNewAddresses - 1)]
         addressItem = undefined
         if i >= numberOfOldAddresses
-          address = wallet.my.getAllAddresses()[i]
-          addressItem = {address: address, active: wallet.my.getActiveAddresses().indexOf(address) > -1, legacy: true} 
+          address = wallet.my.getAllLegacyAddresses()[i]
+          addressItem = {address: address, active: wallet.my.getLegacyActiveAddresses().indexOf(address) > -1, legacy: true} 
           wallet.legacyAddresses.push addressItem
         else
           addressItem = wallet.legacyAddresses[i]
       
         # Set or update label and balance:
-        addressItem.label = wallet.my.getAddressLabel(addressItem.address) || address
+        addressItem.label = wallet.my.getLegacyAddressLabel(addressItem.address) || address
         addressItem.balance = 0 # wallet.my.getBalanceForLegacyAddress(address_item.address)
-        addressItem.isWatchOnly = wallet.my.isWatchOnly(addressItem.address)
+        addressItem.isWatchOnlyLegacyAddress = wallet.my.isWatchOnlyLegacyAddress(addressItem.address)
       
     # Balances will be 0 until transactions have been loaded.
     # TODO: MyWallet should let us know when all transactions are loaded; hide

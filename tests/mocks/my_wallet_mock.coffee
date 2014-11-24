@@ -405,23 +405,23 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   ####################
   # Legacy addresses #
   ####################
-  myWallet.getAllAddresses = () ->
+  myWallet.getAllLegacyAddresses = () ->
     res = []
     for key, value of legacyAddresses
       res.push key
     return res
     
-  myWallet.getActiveAddresses = () ->
+  myWallet.getLegacyActiveAddresses = () ->
     activeAddresses = []
     for key, value of legacyAddresses
       unless value.archived
         activeAddresses.push key
     return activeAddresses
     
-  myWallet.getAddressLabel = (address) ->
+  myWallet.getLegacyAddressLabel = (address) ->
     return legacyAddresses[address].label
     
-  myWallet.isWatchOnly = (address) ->
+  myWallet.isWatchOnlyLegacyAddress = (address) ->
     return legacyAddresses[address].privateKey == null
     
     
