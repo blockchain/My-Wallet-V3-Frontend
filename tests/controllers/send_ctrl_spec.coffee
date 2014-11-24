@@ -62,33 +62,86 @@ describe "SendCtrl", ->
     return
   )
   
-  it "should disable Send button if To address missing",  inject(() ->
-    scope.transaction.to = ""
-    scope.$apply()
-    
-    expect(scope.transactionIsValid).toBe(false)
-    
-    scope.transaction.to = undefined
-    scope.$apply()
-    
-    expect(scope.transactionIsValid).toBe(false)
-    
-    scope.transaction.to = null
-    scope.$apply()
-    
-    expect(scope.transactionIsValid).toBe(false)
-    
-    return
-  )
+  describe "to address", ->
   
-  it "should disable Send button if To address is invalid",  inject(() ->
-    scope.transaction.to = "invalid address" 
-    scope.$apply()
+    it "should disable Send button if To address missing",  inject(() ->
+      scope.transaction.to = ""
+      scope.$apply()
     
-    expect(scope.transactionIsValid).toBe(false)
+      expect(scope.transactionIsValid).toBe(false)
+    
+      scope.transaction.to = undefined
+      scope.$apply()
+    
+      expect(scope.transactionIsValid).toBe(false)
+    
+      scope.transaction.to = null
+      scope.$apply()
+    
+      expect(scope.transactionIsValid).toBe(false)
+    
+      return
+    )
+  
+    it "should disable Send button if To address is invalid",  inject(() ->
+      scope.transaction.to = "invalid address" 
+      scope.$apply()
+    
+      expect(scope.transactionIsValid).toBe(false)
+    
+      return
+    )
     
     return
-  )
+    
+  describe "to email", ->
+    beforeEach ->
+      scope.transaction.to = "nic@blockchain.info"
+      scope.method = "EMAIL"
+      scope.$apply()
+      
+    it "should be valid", ->
+      expect(scope.transactionIsValid).toBe(true)
+      
+    it "should disable Send button if email is missing",  inject(() ->
+      scope.transaction.to = ""
+      scope.$apply()
+    
+      expect(scope.transactionIsValid).toBe(false)
+    
+      scope.transaction.to = undefined
+      scope.$apply()
+    
+      expect(scope.transactionIsValid).toBe(false)
+    
+      scope.transaction.to = null
+      scope.$apply()
+    
+      expect(scope.transactionIsValid).toBe(false)
+    
+      return
+    )
+  
+    it "should disable Send button if email address is invalid",  inject(() ->
+      scope.transaction.to = "bla.nl" 
+      scope.$apply()
+    
+      expect(scope.transactionIsValid).toBe(false)
+    
+      return
+    )
+    
+    it "should call Wallet.sendToEmail() when Send is pressed",  inject((Wallet) ->
+      spyOn(Wallet,"sendToEmail")
+    
+      scope.send()
+    
+      expect(Wallet.sendToEmail).toHaveBeenCalled()
+    
+      return
+    )
+    
+    return
 
   it "should disable Send button if amount is missing",  inject(() ->
     scope.transaction.amount = ""

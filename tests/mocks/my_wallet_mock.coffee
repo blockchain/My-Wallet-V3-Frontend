@@ -308,6 +308,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
     return
     
+  myWallet.sendToEmail = (accountIdx, value, fixedFee, email, successCallback, errorCallback) ->
+    successCallback()  
+    
   # Amount in Satoshi  
   myWallet.getAccount = (index) ->
     if index < 0
@@ -477,7 +480,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.isValidAddress = (address) ->
     withoutWhiteSpace = address.trim()
     # Reject if there are spaces inside the address:
-    return withoutWhiteSpace.indexOf(" ") == -1
+    return withoutWhiteSpace.indexOf(" ") == -1 && withoutWhiteSpace.indexOf("@") == -1
     
   myWallet.unsetTwoFactor = (success, error) ->
     success()

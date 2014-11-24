@@ -228,6 +228,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     amount = wallet.checkAndGetTransactionAmount(amount, currency, observer)
     wallet.my.sendToAccount(fromAccountIndex, toAccountIndex, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
       
+  wallet.sendToEmail = (fromAccountIndex, email, amount, currency, observer) ->
+    amount = wallet.checkAndGetTransactionAmount(amount, currency, observer)
+    wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError) 
+      
   ####################
   # Payment requests #
   ####################

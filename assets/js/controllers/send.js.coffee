@@ -130,8 +130,10 @@
       
       Wallet.sendInternal(fromAccountIdx, toAccountIdx, amount, $scope.transaction.currency, $scope.observer)
     else
-      if $scope.method == "EMAIL" || $scope.method == "SMS"
-        Wallet.displayError("SMS and email not yet supported")
+      if $scope.method == "EMAIL" 
+        Wallet.sendToEmail($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.to, numeral($scope.transaction.amount), $scope.transaction.currency, $scope.observer)
+      if $scope.method == "SMS"
+        Wallet.displayError("SMS not yet supported")
         return
 
       Wallet.send($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.to, numeral($scope.transaction.amount), $scope.transaction.currency, $scope.observer)
@@ -227,7 +229,7 @@
             if blurredField == "to"
               $scope.errors.to = "Invalid bitcoin address"
         else if $scope.method == "EMAIL"
-          unless true
+          unless $scope.transaction.to.indexOf("@") > -1 && $scope.transaction.to.indexOf(".") > -1
             if blurredField == "to"
               $scope.errors.to = "Invalid email address"   
         else if $scope.method == "SMS"
@@ -258,8 +260,8 @@
       if $scope.method == "BTC"
         unless Wallet.isValidAddress(transaction.to)
           return false
-      # else if $scope.method == "EMAIL"
-      #
+      else if $scope.method == "EMAIL"
+        return false unless $scope.transaction.to.indexOf("@") > -1 && $scope.transaction.to.indexOf(".") > -1
       # else if $scope.method == "SMS"
     
     $scope.errors.to = null
