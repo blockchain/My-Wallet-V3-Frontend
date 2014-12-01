@@ -526,7 +526,7 @@ describe "walletServices", () ->
       Wallet.login("test", "test")  
       
     it "should be set after loading", inject((Wallet) ->
-      expect(Wallet.user.mobile.number).toEqual("012345678")
+      expect(Wallet.user.mobile.number).toEqual("12345678")
     )
       
     it "should allow change", inject((Wallet, MyWallet) ->

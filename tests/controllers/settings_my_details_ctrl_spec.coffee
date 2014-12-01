@@ -56,7 +56,7 @@ describe "SettingsMyDetailsCtrl", ->
     
   describe "mobile", ->   
     it "should be set on load", inject((Wallet) ->
-      expect(scope.user.mobile.number).toEqual("012345678")
+      expect(scope.user.mobile.number).toEqual("12345678")
     )
     
     it "should not spontaniously save", inject((Wallet) ->

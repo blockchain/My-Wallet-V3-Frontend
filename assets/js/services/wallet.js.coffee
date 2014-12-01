@@ -65,7 +65,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.my.get_account_info((result)->
       wallet.user.email = result.email
       if result.sms_number
-         wallet.user.mobile = {country: result.sms_number.split(" ")[0], number: "0" + result.sms_number.split(" ")[1]}
+         wallet.user.mobile = {country: result.sms_number.split(" ")[0], number: result.sms_number.split(" ")[1]}
       else # Field is not present if not entered
         wallet.user.mobile = {country: "+1", number: ""}          
         
@@ -680,7 +680,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
   wallet.internationalPhoneNumber = (mobile) ->
     return null unless mobile?
-    mobile.country + " " + mobile.number.replace(/^0+/, '')
+    mobile.country + " " + mobile.number.replace(/^0*/, '')
     
   wallet.changeMobile = (mobile) ->
     wallet.my.changeMobileNumber(this.internationalPhoneNumber(mobile), (()->

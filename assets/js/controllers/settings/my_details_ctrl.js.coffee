@@ -38,9 +38,8 @@
   $scope.validateMobileNumber = (candidate) ->
     return false unless candidate.number?
     return false if candidate.number.length < 4
-    return false if candidate.number[0] != "0"
     return false if isNaN(parseInt(candidate.number))
-    return false if parseInt(candidate.number, 10).toString() != candidate.number.replace(/^0+/, '')
+    return false if parseInt(candidate.number, 10).toString() != candidate.number.replace(/^0*/, '')
     return true
     
   $scope.changePassword = () ->
