@@ -1,0 +1,29 @@
+h2(translate="ACCOUNT_MANAGEMENT")
+
+p(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
+  
+.row
+  .col-xs-6
+    input(type="text", ng-model="searchText")
+  .col-xs-6(align="right")
+    a.btn.btn-info(ng-click="newAccount()", translate="CREATE_NEW_ACCOUNT")
+.row
+  .col-xs-12
+    table
+      tr
+        th(translate="ACCOUNT_NAME")
+        th(translate="BALANCE")
+        th
+        th
+        th
+      tr(ng-repeat="account in accounts | filter:searchText")
+        td(ng-bind-html="account.label | highlight:searchText")
+        td 
+          span.btc {{ account.balance | btc }} 
+          fiat.fiat(btc="account.balance") 
+        td 
+          a(translate="MAKE_DEFAULT")
+        td 
+          a(translate="RENAME")
+        td 
+          a(translate="BITCOIN_ADDRESS")

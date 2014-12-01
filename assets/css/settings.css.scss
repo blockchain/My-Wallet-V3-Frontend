@@ -46,4 +46,28 @@
       width: 150px;
     }
   }
+  
+  table {
+    width: 100%;
+    
+    th {
+      background-color: #F2F2F2;
+    }
+    
+    td, th {
+      border: 1px solid #E6E6E6;
+      padding: 10px;
+      
+      .btc {
+        color: #545454;
+      }
+      
+      .fiat {
+        color: #9E9E9E;
+        font-style: italic;
+        font-size: 80%;
+      }
+      
+    }
+  }
 }

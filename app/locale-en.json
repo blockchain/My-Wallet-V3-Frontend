@@ -157,5 +157,11 @@
   "HANDLE_BITCOIN_LINKS" : "Handle Bitcoin Links",
   "HANDLE_BITCOIN_LINKS_EXPLAIN" : "Blockchain will handle all bitcoin address links in your browser",
   "SET_HANDLE_BITCOIN_LINKS" : "enable Bitcoin link management",
-  "HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN" : "We can't detect whether or not handling of bitcoin links has been enabled."
+  "HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN" : "We can't detect whether or not handling of bitcoin links has been enabled.",
+  "ACCOUNT_MANAGEMENT" : "Account Management",
+  "ACCOUNT_MANAGEMENT_EXPLAIN" : "You can create as many accounts as your want within your Blockchain Wallet. Creating accounts is a helpful way to organize your funds, for example you can create a Savings Accounts for long term savings and a Spending Account for daily spending.",
+  "BALANCE" : "Balance",
+  "MAKE_DEFAULT" : "Make default",
+  "RENAME" : "Rename",
+  "" : ""
 }
