@@ -443,13 +443,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
         # Set or update label and balance:
         addressItem.label = wallet.my.getLegacyAddressLabel(addressItem.address) || address
-        addressItem.balance = 0 # wallet.my.getBalanceForLegacyAddress(address_item.address)
+        addressItem.balance = wallet.my.getLegacyAddressBalance(addressItem.address)
         addressItem.isWatchOnlyLegacyAddress = wallet.my.isWatchOnlyLegacyAddress(addressItem.address)
       
     # Balances will be 0 until transactions have been loaded.
     # TODO: MyWallet should let us know when all transactions are loaded; hide
     # total until that time.
-    
     
         
   wallet.total = (accountIndex) -> 

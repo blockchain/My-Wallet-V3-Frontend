@@ -109,6 +109,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     "1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp"
   ]
   
+  myWallet.getLegacyAddressBalance = (address) ->
+    return 0.1
+  
   myWallet.getHDWallet = () ->
     myWallet 
     

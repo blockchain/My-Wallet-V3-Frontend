@@ -1,1 +1,57 @@
-| My addresses
+h2(translate="MY_ADDRESSES")
+
+p(translate="MY_ADDRESSES_EXPLAIN")
+  
+.row
+  .col-xs-6
+    | [All accounts]
+    input(type="text", ng-model="searchText", placeholder="filter by address or label")
+  .col-xs-6(align="right")
+    a.btn.btn-info(ng-click="newAddress()", translate="NEW_ADDRESS")
+.row
+  .col-xs-12
+    table
+      tr
+        th(translate="ADDRESS")
+        th(translate="LABEL")
+        th(translate="ACCOUNT")
+        th
+      tr(ng-repeat="address in hdAddresses | filter:searchText")
+        td
+          {{ address.address }}
+        td(ng-bind-html="address.label | highlight:searchText")
+        td 
+          {{ address.account.label }}
+        td 
+          a(translate="DETAILS")
+
+h2(translate="IMPORTED_ADDRESSES")
+
+p(translate="IMPORTED_ADDRESSES_EXPLAIN")
+
+  .row
+    .col-xs-6
+      input(type="text", ng-model="searchTextLegacy", placeholder="filter by address or label")
+    .col-xs-6(align="right")
+      a.btn.btn-info(ng-click="importAddress()", translate="IMPORT_ADDRESS")
+
+.row
+  .col-xs-12
+    table
+      tr
+        th(translate="ADDRESS")
+        th(translate="LABEL")
+        th(translate="BALANCE")
+        th
+        th
+      tr(ng-repeat="address in legacyAddresses | filter:{active: true} | filter:searchTextLegacy")
+        td
+          {{ address.address }}
+        td(ng-bind-html="address.label | highlight:searchTextLegacy")
+        td 
+          span.btc{{ address.balance | btc }}
+          fiat.fiat(btc="address.balance") 
+        td 
+          a(translate="TRANSFER")
+        td 
+          a(translate="ARCHIVE")
