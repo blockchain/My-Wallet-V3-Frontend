@@ -20,7 +20,7 @@ playSound = (id) ->
 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state) -> 
-  wallet = {status: {isLoggedIn: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false}, user: {email: null, mobile: null, passwordHint: "", recoveryPhrase: ""}}
+  wallet = {status: {isLoggedIn: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null}, user: {email: null, mobile: null, passwordHint: "", recoveryPhrase: ""}}
   
   wallet.conversions = {}
   
@@ -80,6 +80,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.setCurrency($filter("getByProperty")("code", result.currency, wallet.currencies))
       
       wallet.settings.feePolicy = wallet.my.getFeePolicy()
+      
+      wallet.settings.blockTOR = !!result.block_tor_ips
       
       wallet.fetchExchangeRate()
       wallet.applyIfNeeded()
@@ -766,6 +768,25 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
   wallet.handleBitcoinLinks = () ->
     $window.navigator.registerProtocolHandler('bitcoin', window.location.origin + '/#/open/%s', "Blockchain")
+  
+  wallet.enableBlockTOR = () ->
+    wallet.my.update_tor_ip_block(true, ()->
+      wallet.settings.blockTOR = true
+      wallet.applyIfNeeded()
+    ,()->
+      console.log "Failed"
+      wallet.applyIfNeeded()
+    )
+    
+  wallet.disableBlockTOR = () ->
+    wallet.my.update_tor_ip_block(false, ()->
+      wallet.settings.blockTOR = false
+      wallet.applyIfNeeded()
+    ,()->
+      console.log "Failed"
+      wallet.applyIfNeeded()
+    )
+  
     
   ########################################
   # Testing: only works on mock MyWallet #

@@ -172,5 +172,17 @@
   "DETAILS" : "Details",
   "TRANSFER" : "Transfer",
   "ARCHIVE" : "Archive",
+  "SECOND_PASSWORD" : "Second Password",
+  "SECOND_PASSWORD_EXPLAIN" : "You may optionally set a second password which will be required when you send funds from your account. For large wallets your browser may become unresponsive for a few minutes when changing this option.",
+  "ENABLE_SECOND_PASSWORD" : "enable second password",
+  "DISABLE_SECOND_PASSWORD" : "disable second password",
+  "REMEMBER_2FA" : "Remember Two Factor Login",
+  "REMEMBER_2FA_EXPLAIN" : "Your browser will be remembered for a short period of time allowing you to login again without having to re-authenticate. Disable this to require full authentication every time you login.",
+  "ENABLE_REMEMBER_2FA" : "Enable convenient login",
+  "DISABLE_REMEMBER_2FA" : "Disable convenient login",
+  "BLOCK_TOR" : "Block TOR Requests",
+  "BLOCK_TOR_EXPLAIN" : "Enable the following option to prevent ip addresses that are known to be part of the TOR anonymizing network from accessing your wallet.",
+  "ENABLE_BLOCK_TOR" : "enable TOR request block",
+  "DISABLE_BLOCK_TOR" : "disable TOR request block",
   "" : ""
 }

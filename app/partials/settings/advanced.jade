@@ -1,1 +1,40 @@
-| Advanced
+.row
+  .col-xs-12
+    h2(translate="SECOND_PASSWORD")
+.row
+  .col-xs-6
+    p(translate="SECOND_PASSWORD_EXPLAIN")
+  .col-xs-6.right
+    h2.status.incomplete(ng-hide="settings.secondPassword", translate="DISABLED")
+    h2.status.complete(ng-show="settings.secondPassword", translate="ENABLED")
+    p
+      a(ng-click="enableSecondPassword()", translate="ENABLE_SECOND_PASSWORD", ng-hide="settings.secondPassword")
+      a(ng-click="disableSecondPassword()", translate="DISABLE_SECOND_PASSWORD", ng-show="settings.secondPassword")
+.row
+  hr
+.row
+  .col-xs-12
+    h2(translate="REMEMBER_2FA")
+.row
+  .col-xs-6
+    p(translate="REMEMBER_2FA_EXPLAIN")
+  .col-xs-6.right
+    h2.status.incomplete(ng-hide="settings.rememberTwoFactor", translate="DISABLED")
+    h2.status.complete(ng-show="settings.rememberTwoFactor", translate="ENABLED")
+    p
+      a(ng-click="enableRememberTwoFactor()", translate="ENABLE_REMEMBER_2FA", ng-hide="settings.rememberTwoFactor")
+      a(ng-click="disableRememberTwoFactor()", translate="DISABLE_REMEMBER_2FA", ng-show="settings.rememberTwoFactor")
+.row
+  hr
+.row
+  .col-xs-12
+    h2(translate="BLOCK_TOR")
+.row
+  .col-xs-6
+    p(translate="BLOCK_TOR_EXPLAIN")
+  .col-xs-6.right
+    h2.status.incomplete(ng-hide="settings.blockTOR", translate="DISABLED")
+    h2.status.complete(ng-show="settings.blockTOR", translate="ENABLED")
+    p
+      a(ng-click="enableBlockTOR()", translate="ENABLE_BLOCK_TOR", ng-hide="settings.blockTOR")
+      a(ng-click="disableBlockTOR()", translate="DISABLE_BLOCK_TOR", ng-show="settings.blockTOR")

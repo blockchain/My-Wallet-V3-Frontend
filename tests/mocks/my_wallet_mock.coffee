@@ -209,6 +209,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       password_hint1: "Same as username"
       language: language
       currency: "USD"
+      block_tor_ips: 0
     })
     
   myWallet.getLanguages = () ->
@@ -509,6 +510,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.setFeePolicy = (policy) ->
     feePolicy = policy
     return
+    
+  myWallet.update_tor_ip_block = (enabled, successCallback, errorCallback) ->
+    successCallback()
     
   #####################################
   # Tell the mock to behave different # 
