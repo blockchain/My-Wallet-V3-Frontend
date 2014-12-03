@@ -10,6 +10,8 @@
     modalInstance = $modal.open(
       templateUrl: "partials/account-form"
       controller: AccountFormCtrl
+      resolve:
+        account: -> undefined
     )
 
   #################################
