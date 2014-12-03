@@ -257,6 +257,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     accounts.push {label: label, archived: false, balance: 0, receive_addresses: [] }
     myWallet.sync()
     
+  myWallet.setLabelForAccount = (idx, label) ->
+    accounts[idx].label = label
+    
   myWallet.getTransactionsForAccount = (idx) ->
     res = []
     for transaction in transactions

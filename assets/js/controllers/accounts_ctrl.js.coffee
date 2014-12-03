@@ -8,8 +8,8 @@
   $scope.newAccount = () ->
     Wallet.clearAlerts()
     modalInstance = $modal.open(
-      templateUrl: "partials/new-account"
-      controller: NewAccountCtrl
+      templateUrl: "partials/account-form"
+      controller: AccountFormCtrl
     )
 
   #################################

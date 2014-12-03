@@ -1,11 +1,21 @@
-@NewAccountCtrl = ($scope, Wallet, $modalInstance, $log, $translate) ->        
+@AccountFormCtrl = ($scope, Wallet, $modalInstance, $log, $translate, account) ->        
   $scope.fields = {name: ""}
+  $scope.accounts = Wallet.accounts
+  $scope.edit = null
+
+  if account?
+    $scope.fields.name = account.label
+    $scope.edit = true
 
   $scope.close = () ->
     $modalInstance.dismiss ""
     
   $scope.createAccount = () ->
     if $scope.validate() && Wallet.createAccount($scope.fields.name)
+      $modalInstance.dismiss ""
+      
+  $scope.updateAccount = () ->
+    if $scope.validate() && Wallet.renameAccount(account, $scope.fields.name)
       $modalInstance.dismiss ""
 
   #################################

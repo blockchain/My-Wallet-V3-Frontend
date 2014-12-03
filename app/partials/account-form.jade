@@ -1,5 +1,6 @@
 .modal-header
-  h3(translate="CREATE_NEW_ACCOUNT") 
+  h3(translate="CREATE_NEW_ACCOUNT", ng-hide="edit") 
+  h3(translate="RENAME_ACCOUNT", ng-show="edit") 
 .modal-body
   .form-group(ng-class="{'has-error': errors.name, 'has-success': success.name}")
     label.col-sm-4.control-label(translate="ACCOUNT_NAME")
@@ -9,4 +10,5 @@
     
 .modal-footer
   button.btn.btn-info(ng-click="close()", translate="CLOSE")
-  button.btn.btn-primary(ng-click="createAccount()", translate="CREATE_ACCOUNT", ng-disabled="!formIsValid")
+  button.btn.btn-primary(ng-click="createAccount()", translate="CREATE_ACCOUNT", ng-disabled="!formIsValid", ng-hide="edit")
+  button.btn.btn-primary(ng-click="updateAccount()", translate="RENAME", ng-disabled="!formIsValid", ng-show="edit")

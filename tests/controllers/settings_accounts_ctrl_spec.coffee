@@ -33,3 +33,10 @@ describe "SettingsAccountsCtrl", ->
   it "should list accounts",  inject(() ->
     expect(scope.accounts.length).toBe(2)
   )
+  
+  it "should open modal to edit an account",  inject(() ->
+    account = scope.accounts[0]
+    spyOn(modal, "open")
+    scope.editAccount(account)
+    expect(modal.open).toHaveBeenCalled()
+  )

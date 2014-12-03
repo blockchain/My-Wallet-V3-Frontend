@@ -184,5 +184,7 @@
   "BLOCK_TOR_EXPLAIN" : "Enable the following option to prevent ip addresses that are known to be part of the TOR anonymizing network from accessing your wallet.",
   "ENABLE_BLOCK_TOR" : "enable TOR request block",
   "DISABLE_BLOCK_TOR" : "disable TOR request block",
+  "RENAME_ACCOUNT" : "Rename Account",
+  "RENAME" : "Rename",
   "" : ""
 }

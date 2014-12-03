@@ -133,6 +133,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.my.createAccount(name)
     wallet.updateAccountsAndLegacyAddresses()
     wallet.transactions.push []
+  
+  wallet.renameAccount = (account, name) ->
+    wallet.my.setLabelForAccount(account.index, name)
+    wallet.updateAccountsAndLegacyAddresses()
     
   wallet.logout = () ->
     wallet.didLogoutByChoice = true
