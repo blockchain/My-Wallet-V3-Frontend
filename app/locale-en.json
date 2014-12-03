@@ -173,6 +173,8 @@
   "DETAILS" : "Details",
   "TRANSFER" : "Transfer",
   "ARCHIVE" : "Archive",
+  "UNARCHIVE" : "Unarchive",
+  "DELETE" : "Delete",
   "SECOND_PASSWORD" : "Second Password",
   "SECOND_PASSWORD_EXPLAIN" : "You may optionally set a second password which will be required when you send funds from your account. For large wallets your browser may become unresponsive for a few minutes when changing this option.",
   "ENABLE_SECOND_PASSWORD" : "enable second password",
@@ -188,5 +190,8 @@
   "RENAME_ACCOUNT" : "Rename Account",
   "RENAME" : "Rename",
   "TRANSACTION_WILL_COMPLETE_IN" : "This transaction will complete in {{ minutes }} minutes",
+  "ARCHIVED_ADDRESSES" : "Archived Addresses",
+  "ARCHIVED_ADDRESSES_EXPLAIN" : "Archived addresses are addresses you may not need anymore that are hidden from the main view but still part of your wallet. You can un-archive them at any time.",
+  "LOSE_ACCESS" : "The wallet does not check the balance of archived addresses, so please make sure there are no funds left. If you receive funds on this address in the future, you will not be able to spend them. Are you sure?",
   "" : ""
 }

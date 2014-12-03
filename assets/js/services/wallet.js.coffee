@@ -418,6 +418,16 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.archive = (address) ->
     wallet.my.archiveLegacyAddr(address.address)
     address.active = false
+    
+  wallet.unarchive = (address) ->
+    wallet.my.unArchiveLegacyAddr(address.address)
+    address.active = true
+        
+  wallet.deleteLegacyAddress = (address) ->
+    wallet.my.deleteLegacyAddress(address.address)
+    idx = wallet.legacyAddresses.indexOf(address)
+    wallet.legacyAddresses.splice(idx,1)
+    
         
   ##################################
   #        Private (other)         #

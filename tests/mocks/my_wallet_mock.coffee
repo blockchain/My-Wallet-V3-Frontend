@@ -23,12 +23,15 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
           {hash: "aaaa", amount: 300000000, confirmations: 13, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_addresses: ["1D2YzLr5qvrwMSm8onYbns5BLJ9jwzPHcQ"], to_account: 0, to_addresses: [], txTime: 1331300839},
           {hash: "aaab", amount: -25000000, confirmations: 3, doubleSpend: false, coinbase: false, intraWallet: true, from_account: 0, from_addresses: [], to_account: 1, to_addresses: [], note: null, txTime:   2000000000},
           {hash: "afsdfsdkj", amount: -1500000, confirmations: 1, doubleSpend: false, coinbase: false, intraWallet: false, from_account: 1, from_addresses: [], to_account: null, to_addresses: ["1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq"] ,note: null, txTime:   8200000000},
+          {hash: "afsdfsdkj", amount: -1500000, confirmations: 1, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_addresses: ["somewhere"], to_account: null, to_addresses: ["some_legacy_archived_address_with_money"] ,note: null, txTime:   8300000000},
         ]
         legacyAddresses: {
           "some_legacy_address":            {privateKey: "legacy_private_key", label: "Old"}
           "some_legacy_watch_only_address": {privateKey: null, label: "Paper wallet"}
           "some_legacy_address_without_label": {privateKey: "legacy_no_label_private_key", label: null}
           "some_legacy_archived_address":   {privateKey: "legacy_archived", archived: true}
+          "some_legacy_archived_address_with_money":   {privateKey: "legacy_archived_with_money", archived: true}
+          
         }
         
         notes: {
@@ -437,7 +440,10 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.archiveLegacyAddr = (address) ->
     return
   
-  myWallet.unarchiveLegacyAddr = (address) ->
+  myWallet.unArchiveLegacyAddr = (address) ->
+    return
+    
+  myWallet.deleteLegacyAddress = (address) ->
     return
     
   ############################################################

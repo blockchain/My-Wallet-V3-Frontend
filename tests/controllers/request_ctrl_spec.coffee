@@ -165,7 +165,7 @@ describe "RequestCtrl", ->
     
     it "should combine accounts and active legacy addresses in destinations", ->
       expect(scope.destinations).toBeDefined()
-      expect(scope.destinations.length).toBe(scope.accounts.length + scope.legacyAddresses.length - 1) # 1 is archived
+      expect(scope.destinations.length).toBe(scope.accounts.length + scope.legacyAddresses.length - 2) # Two are archived
       
     
     it "should show a payment request address when legacy address is selected", ->

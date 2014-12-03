@@ -21,7 +21,7 @@ describe "SettingsAddressesCtrl", ->
         $modal: modal
       
       return
-
+      
     return
     
   describe "legacy addresses", ->
@@ -33,3 +33,25 @@ describe "SettingsAddressesCtrl", ->
       expect(address.active).toBe(true)
       scope.archive(address)
       expect(address.active).toBe(false)
+      
+    it "can be unarchived", ->
+      address = scope.legacyAddresses[3]
+      expect(address.active).toBe(false)
+      scope.unarchive(address)
+      expect(address.active).toBe(true)
+      
+    it "can be deleted", inject((Wallet) ->
+      spyOn(window, 'confirm').and.callFake(() ->
+        return true
+      )
+      
+      address = scope.legacyAddresses[3]
+      before = scope.legacyAddresses.length
+      
+      spyOn(Wallet, "deleteLegacyAddress").and.callThrough()
+      
+      scope.delete(address)
+      expect(Wallet.deleteLegacyAddress).toHaveBeenCalled()
+      expect(scope.legacyAddresses.length).toBe(before - 1)
+    )
+    

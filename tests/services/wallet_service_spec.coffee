@@ -50,7 +50,7 @@ describe "walletServices", () ->
     )
     
     it "should get a list of legacy addresses", inject((Wallet, MyWallet) ->
-      expect(Wallet.legacyAddresses.length).toEqual(4)
+      expect(Wallet.legacyAddresses.length).toEqual(5)
 
       return
     )

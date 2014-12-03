@@ -45,8 +45,7 @@ p(translate="IMPORTED_ADDRESSES_EXPLAIN")
         th
         th
       tr(ng-repeat="address in legacyAddresses | filter:{active: true} | filter:searchTextLegacy")
-        td
-          {{ address.address }}
+        td(ng-bind-html="address.address | highlight:searchTextLegacy")
         td(ng-bind-html="address.label | highlight:searchTextLegacy")
         td 
           span.btc{{ address.balance | btc }}
@@ -55,3 +54,31 @@ p(translate="IMPORTED_ADDRESSES_EXPLAIN")
           a(translate="TRANSFER")
         td 
           a(translate="ARCHIVE", ng-click="archive(address)")
+
+h2(translate="ARCHIVED_ADDRESSES")
+
+p(translate="ARCHIVED_ADDRESSES_EXPLAIN")
+
+  .row
+    .col-xs-6
+      input(type="text", ng-model="searchTextArchived", placeholder="filter by address or label")
+    .col-xs-6(align="right")
+      a.btn.btn-info(ng-click="importAddress()", translate="IMPORT_ADDRESS")
+.row
+  .col-xs-12
+    table
+      tr
+        th(translate="ADDRESS")
+        th(translate="LABEL")
+        th
+        th
+          th
+      tr(ng-repeat="address in legacyAddresses | filter:{active: false} | filter:searchTextArchived")
+        td(ng-bind-html="address.address | highlight:searchTextArchived")
+        td(ng-bind-html="address.label | highlight:searchTextArchived")
+        td 
+          a(translate="TRANSFER")
+        td 
+          a(translate="UNARCHIVE", ng-click="unarchive(address)")
+        td
+          a(translate="DELETE", ng-click="delete(address)")
