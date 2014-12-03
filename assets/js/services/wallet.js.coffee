@@ -413,7 +413,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       return "There are unsaved changes. Are you sure?"
       
   wallet.isValidAddress = (address) ->
-    return wallet.my.isValidAddress(address)    
+    return wallet.my.isValidAddress(address)
+    
+  wallet.archive = (address) ->
+    wallet.my.archiveLegacyAddr(address.address)
+    address.active = false
         
   ##################################
   #        Private (other)         #

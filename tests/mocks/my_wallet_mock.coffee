@@ -434,6 +434,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.isWatchOnlyLegacyAddress = (address) ->
     return legacyAddresses[address].privateKey == null
     
+  myWallet.archiveLegacyAddr = (address) ->
+    return
+  
+  myWallet.unarchiveLegacyAddr = (address) ->
+    return
     
   ############################################################
   # Simulate spontanuous behavior when using mock in browser #
