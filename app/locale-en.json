@@ -116,6 +116,7 @@
   "ACCOUNT_NAME" : "Account Name",
   "PAYMENT_REQUESTS" : "Payment Requests",
   "PENDING" : "Pending",
+  "COMPLETE" : "Complete",
   "OVERVIEW" : "Overview",
   "TAGS" : "Tags",
   "NOTE" : "Note",
@@ -186,5 +187,6 @@
   "DISABLE_BLOCK_TOR" : "disable TOR request block",
   "RENAME_ACCOUNT" : "Rename Account",
   "RENAME" : "Rename",
+  "TRANSACTION_WILL_COMPLETE_IN" : "This transaction will complete in {{ minutes }} minutes",
   "" : ""
 }

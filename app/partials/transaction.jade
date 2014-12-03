@@ -6,11 +6,7 @@
       p.date
         {{ transaction.txTime | date:'MMMM d @ hh:mm a' }}
     .col-xs-6
-      p.status
-        span.glyphicon.glyphicon-time
-        span.short(translate="PENDING")
-        br
-        span.status-detail This transaction will complete in 10 minutes
+      transaction-status(transaction)
   .row
     .col-xs-12
       .to-from-amount-box 

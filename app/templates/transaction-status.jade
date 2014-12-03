@@ -1,0 +1,6 @@
+p.status
+  span.glyphicon.glyphicon-time(ng-if="!complete")
+  span.short(translate="PENDING", ng-if="!complete")
+  span.short(translate="COMPLETE", ng-if="complete")  
+  br
+  span.status-detail(translate="TRANSACTION_WILL_COMPLETE_IN", translate-values="{minutes: minutesRemaining}", ng-if="!complete")
