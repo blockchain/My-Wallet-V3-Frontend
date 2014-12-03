@@ -1,4 +1,4 @@
-@SendCtrl = ($scope, $log, Wallet, $modalInstance, ngAudio, $timeout, $stateParams, $translate, paymentRequest) ->
+@SendCtrl = ($scope, $log, Wallet, $modalInstance, ngAudio, $timeout, $state, $stateParams, $translate, paymentRequest) ->
   
   # $scope.privacyGuard = false
     
@@ -137,7 +137,7 @@
         return
 
       Wallet.send($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.to, numeral($scope.transaction.amount), $scope.transaction.currency, $scope.observer)
-  
+
   $scope.closeAlert = (alert) ->
     Wallet.closeAlert(alert)
     
@@ -288,6 +288,7 @@
     sound = ngAudio.load("beep.wav")
     sound.play()
     $modalInstance.close ""
+    $state.go("transactions", {accountIndex: $scope.transaction.from.index })
   
   $scope.goToConfirmation = () ->
     $scope.confirmationStep = true

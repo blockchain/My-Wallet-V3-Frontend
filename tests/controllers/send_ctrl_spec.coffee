@@ -62,6 +62,17 @@ describe "SendCtrl", ->
     return
   )
   
+  it "should show account transactions after send",  inject(($state) ->
+    spyOn($state, "go")
+    
+    scope.transaction.from = scope.accounts[1]
+    
+    scope.send()
+    
+    expect($state.go).toHaveBeenCalledWith('transactions', { accountIndex: 1 })
+    
+  )
+  
   describe "to address", ->
   
     it "should disable Send button if To address missing",  inject(() ->
