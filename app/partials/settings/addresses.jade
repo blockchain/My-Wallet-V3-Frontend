@@ -55,16 +55,16 @@ p(translate="IMPORTED_ADDRESSES_EXPLAIN")
         td 
           a(translate="ARCHIVE", ng-click="archive(address)")
 
-h2(translate="ARCHIVED_ADDRESSES")
+h2(translate="ARCHIVED_ADDRESSES", ng-click="display.archived = !display.archived")
 
-p(translate="ARCHIVED_ADDRESSES_EXPLAIN")
+p(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
 
-  .row
-    .col-xs-6
-      input(type="text", ng-model="searchTextArchived", placeholder="filter by address or label")
-    .col-xs-6(align="right")
-      a.btn.btn-info(ng-click="importAddress()", translate="IMPORT_ADDRESS")
-.row
+.row(ng-show="display.archived")
+  .col-xs-6
+    input(type="text", ng-model="searchTextArchived", placeholder="filter by address or label")
+  .col-xs-6(align="right")
+    a.btn.btn-info(ng-click="importAddress()", translate="IMPORT_ADDRESS")
+.row(ng-show="display.archived")
   .col-xs-12
     table
       tr
