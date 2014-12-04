@@ -498,6 +498,18 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           transaction = angular.copy(tx)
           transaction.note = wallet.my.getNote(transaction.hash)
           wallet.transactions.push transaction 
+        
+    for tx in wallet.my.getLegacyTransactions()
+      match = false
+      for candidate in wallet.transactions
+        if candidate.hash == tx.hash
+          match = true
+          break
+    
+      if !match
+        transaction = angular.copy(tx)
+        transaction.note = wallet.my.getNote(transaction.hash)
+        wallet.transactions.push transaction
           
   ####################
   # Notification     #

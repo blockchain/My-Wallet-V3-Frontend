@@ -446,6 +446,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.deleteLegacyAddress = (address) ->
     return
     
+  myWallet.getLegacyTransactions = () ->
+    return []
+    
   ############################################################
   # Simulate spontanuous behavior when using mock in browser #
   ############################################################

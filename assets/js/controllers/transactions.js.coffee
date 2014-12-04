@@ -26,6 +26,7 @@
         
   $scope.transactionFilter = (item) ->
     return true if $stateParams.accountIndex == ""
+    return (!item.to_account? || item.to_account == -1) && (!item.from_account? || item.from_account == -1) if  $stateParams.accountIndex == "imported"
     return item.to_account == parseInt($stateParams.accountIndex) || item.from_account == parseInt($stateParams.accountIndex)
   
   # First load:      
