@@ -20,7 +20,7 @@ playSound = (id) ->
 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state) -> 
-  wallet = {status: {isLoggedIn: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null}, user: {email: null, mobile: null, passwordHint: "", recoveryPhrase: ""}}
+  wallet = {status: {isLoggedIn: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null}, user: {email: null, mobile: null, passwordHint: "", recoveryPhrase: "", pairingCode: ""}}
   
   wallet.conversions = {}
   
@@ -57,6 +57,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.status.isLoggedIn = true 
     
     wallet.user.recoveryPhrase = wallet.my.getHDWallet().getPassphraseString()
+    
+    wallet.my.makePairingCode((result)->
+      wallet.user.pairingCode = result
+    )
     
     for address, label of wallet.my.addressBook
       wallet.addressBook[address] = wallet.my.addressBook[address]
@@ -816,7 +820,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       console.log "Failed"
       wallet.applyIfNeeded()
     )
-  
     
   ########################################
   # Testing: only works on mock MyWallet #

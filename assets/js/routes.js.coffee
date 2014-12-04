@@ -122,6 +122,15 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
+  .state("settings.mobile",
+    url: "/mobile"
+    views: {
+      settings: {
+        templateUrl: "partials/settings/mobile"
+        controller: "MobileCtrl"
+      }
+    }
+  )
   .state("settings.addresses",
     url: "/addresses"
     views: {
