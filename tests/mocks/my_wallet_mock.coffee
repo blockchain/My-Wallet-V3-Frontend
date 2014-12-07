@@ -449,6 +449,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.getLegacyTransactions = () ->
     return []
     
+  myWallet.makePairingCode = () ->
+    return ""
+    
   ############################################################
   # Simulate spontanuous behavior when using mock in browser #
   ############################################################
