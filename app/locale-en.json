@@ -167,7 +167,7 @@
   "MY_ADDRESSES_EXPLAIN" : "Your wallet is a large collection of bitcoin addresses that are associated with an Account in your wallet forever. Your wallet manages your addresses for you and automatically creates a new address every time you send or receive bitcoin. If you would like to create an address that you can post publicly and receive multiple payments into click New Address below.",
   "NEW_ADDRESS" : "New Address",
   "IMPORT_ADDRESS" : "Import Address",
-  "IMPORTED_ADDRESSES_EXPLAIN" : "Addresses that are outside of the Account structure of your wallet are listed below. In normal circumstances we recommend you transfer funds from iported addresses into one of your accounts. This increases your security and privacy.",
+  "IMPORTED_ADDRESSES_EXPLAIN" : "Addresses that are outside of the Account structure of your wallet are listed below. In normal circumstances we recommend you transfer funds from imported addresses into one of your accounts. This increases your security and privacy.",
   "ADDRESS" : "Address",
   "LABEL" : "Label",
   "DETAILS" : "Details",
