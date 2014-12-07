@@ -490,7 +490,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       return account.balance
     
   wallet.updateTransactions = () ->
-    console.log(wallet.my.getAllTransactions())
     for tx in wallet.my.getAllTransactions()
       match = false
       for candidate in wallet.transactions
