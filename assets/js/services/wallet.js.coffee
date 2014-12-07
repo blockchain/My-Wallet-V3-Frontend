@@ -490,6 +490,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       return account.balance
     
   wallet.updateTransactions = () ->
+    console.log(wallet.my.getAllTransactions())
     for tx in wallet.my.getAllTransactions()
       match = false
       for candidate in wallet.transactions
@@ -572,6 +573,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.uid = ""
       wallet.password = ""
       # $state.go("dashboard")
+    else if event == "ws_on_close" || event == "ws_on_open"
+      # Do nothing
     else if event.type != undefined
       if event.type == "error"
         wallet.displayError(event.msg)
