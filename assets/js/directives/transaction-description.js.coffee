@@ -19,7 +19,7 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
                       
       if scope.transaction.intraWallet
         scope.action = "MOVED_BITCOIN_TO"
-        scope.subject = Wallet.accounts[scope.transaction.to_account].label
+        scope.subject = Wallet.accounts[parseInt(scope.transaction.to_account)].label
       else
         if scope.transaction.from_account?
           address = to_address
