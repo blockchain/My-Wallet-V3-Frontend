@@ -37,15 +37,5 @@
         label.black(translate="BITCOIN_ADDRESS")
         p.form-control-static.bitcoin-address
           {{ paymentRequestAddress }}  
-        //- span.input-group-btn
-        //-   button.btn.btn-default(type="button", translate="COPY")
-        p
-        label.black(translate="SHARE")
-        br
-        | (t) (f) (g)
 .modal-footer
-  button.btn.btn-info(ng-click="close()", ng-show="!paymentRequest || (paymentRequest.paid > 0 && paymentRequest.paid <= paymentRequest.amount)", translate="CLOSE")
-  button.btn.btn-danger(ng-click="cancel()", ng-show="paymentRequest && paymentRequest.paid == 0", translate="CANCEL")
-  button.btn.btn-primary(ng-click="save()", ng-show="paymentRequest  && paymentRequest.paid == 0", translate="SAVE")
-  button.btn.btn-danger(ng-click="accept()", ng-show="paymentRequest  && paymentRequest.paid > 0 && paymentRequest.paid !=  paymentRequest.amount", translate="ACCEPT")
-  
+  button.btn.btn-info(ng-click="close()", translate="CLOSE")  

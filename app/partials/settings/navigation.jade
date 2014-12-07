@@ -14,8 +14,6 @@ ul.nav.nav-stacked.nav-pills
     a(ui-sref="settings.wallet-recovery", translate="WALLET_RECOVERY")
   li.item(ui-sref-active="active") 
     a(ui-sref="settings.advanced", translate="ADVANCED")
-  li.nav-divider(ng-show="walletHasPaymentRequests()")
-  li.item(ui-sref-active="active", ng-show="walletHasPaymentRequests()") 
-    a(ui-sref="settings.payment-requests", translate="PAYMENT_REQUESTS")    
+  li.nav-divider
   li.item(ui-sref-active="active") 
     a(ui-sref="settings.mobile", translate="MOBILE")

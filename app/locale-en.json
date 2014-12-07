@@ -198,5 +198,10 @@
   "SHOW_PAIRING_CODE"  : "Show Pairing Code",
   "PAIRING_CODE_EXPLAIN" : "Scan the code below with your iPhone or Android device to pair it with your account.",
   "MOBILE" : "Mobile",
+  "REQUESTED_AMOUNT" : "Requested Amount",
+  "REQUEST_PAID" : "Paid",
+  "RECEIVED_X" : "Received {{ paid }} of {{ amount }} BTC",
+  "INSUFFICIENT" : "Insufficient",
+  "TOO_MUCH" : "Too much",
   "" : ""
 }

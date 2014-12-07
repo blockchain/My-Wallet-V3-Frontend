@@ -166,14 +166,6 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
         controller: "SettingsAdvancedCtrl"
       }
     }
-  ).state("settings.payment-requests",
-    url: "/payment-requests"
-    views: {
-      settings: {
-        templateUrl: "partials/payment-requests"
-        controller: "PaymentRequestsCtrl"
-      }
-    }
   )
   
   $stateProvider.state("open",
