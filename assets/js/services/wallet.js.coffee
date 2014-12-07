@@ -142,6 +142,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.my.setLabelForAccount(account.index, name)
     wallet.updateAccountsAndLegacyAddresses()
     
+  wallet.changeLegacyAddressLabel = (address, label) ->
+    wallet.my.setLegacyAddressLabel(address.address, label)
+    address.label = label
+    
   wallet.logout = () ->
     wallet.didLogoutByChoice = true
     wallet.my.logout() # broadcast "logging_out"

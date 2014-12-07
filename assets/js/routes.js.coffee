@@ -140,6 +140,15 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
+  .state("settings.address",
+    url: "/addresses/:address"
+    views: {
+      settings: {
+        templateUrl: "partials/settings/address"
+        controller: "AddressCtrl"
+      }
+    }
+  )
   .state("settings.security-center",
     url: "/security-center"
     views: {

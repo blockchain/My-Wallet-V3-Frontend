@@ -63,12 +63,17 @@ p(translate="IMPORTED_ADDRESSES_EXPLAIN")
         th(translate="BALANCE")
         th
         th
+        th
       tr(ng-repeat="address in legacyAddresses | filter:{active: true} | filter:searchTextLegacy")
-        td(ng-bind-html="address.address | highlight:searchTextLegacy")
+        td
+          span(ng-bind-html="address.address | highlight:searchTextLegacy")
+          span.label.label-warning(ng-show="address.isWatchOnlyLegacyAddress", translate="WATCH_ONLY")    
         td(ng-bind-html="address.label | highlight:searchTextLegacy")
         td 
           span.btc{{ address.balance | btc }}
           fiat.fiat(btc="address.balance") 
+        td
+          a(ui-sref="settings.address({address: address.address})", translate="DETAILS")
         td 
           a(translate="TRANSFER")
         td 

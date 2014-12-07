@@ -203,5 +203,15 @@
   "RECEIVED_X" : "Received {{ paid }} of {{ amount }} BTC",
   "INSUFFICIENT" : "Insufficient",
   "TOO_MUCH" : "Too much",
+  "ADDRESS_DETAILS" : "Address Details",
+  "ADVANCED_OPTIONS" : "Advanced Options",
+  "SIGN_MESSAGE_EXPLAIN" : "Prove ownership of an address by signing a message from this address",
+  "SIGN_MESSAGE" : "Sign Message",
+  "WATCH_ONLY" : "Watch Only",
+  "DISPLAY_QR" : "Display QR Code",
+  "WATCH_ONLY_EXPLAIN" : "You will not be able to access any funds send to this address without the private key. Proceed with caution.",
+  "WARNING" : "Warning",
+  "CLEAR" : "CLEAR",
+  "SAVE_CHANGES" : "SAVE CHANGES",
   "" : ""
 }
