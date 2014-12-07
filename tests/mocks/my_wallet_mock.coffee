@@ -263,11 +263,10 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.setLabelForAccount = (idx, label) ->
     accounts[idx].label = label
     
-  myWallet.getTransactionsForAccount = (idx) ->
+  myWallet.getAllTransactions = (idx) ->
     res = []
     for transaction in transactions
-      if transaction.to_account == idx || transaction.from_account == idx
-        res.push transaction
+      res.push transaction
     
     return res
     
@@ -445,9 +444,6 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.deleteLegacyAddress = (address) ->
     return
-    
-  myWallet.getLegacyTransactions = () ->
-    return []
     
   myWallet.makePairingCode = () ->
     return ""

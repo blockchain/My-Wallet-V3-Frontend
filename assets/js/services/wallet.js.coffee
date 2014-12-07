@@ -490,20 +490,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       return account.balance
     
   wallet.updateTransactions = () ->
-    for i in [0..wallet.my.getAccountsCount()-1]
-      for tx in wallet.my.getTransactionsForAccount(i)
-        match = false
-        for candidate in wallet.transactions
-          if candidate.hash == tx.hash
-            match = true
-            break
-      
-        if !match
-          transaction = angular.copy(tx)
-          transaction.note = wallet.my.getNote(transaction.hash)
-          wallet.transactions.push transaction 
-        
-    for tx in wallet.my.getLegacyTransactions()
+    for tx in wallet.my.getAllTransactions()
       match = false
       for candidate in wallet.transactions
         if candidate.hash == tx.hash
@@ -513,7 +500,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       if !match
         transaction = angular.copy(tx)
         transaction.note = wallet.my.getNote(transaction.hash)
-        wallet.transactions.push transaction
+        wallet.transactions.push transaction 
           
   ####################
   # Notification     #
