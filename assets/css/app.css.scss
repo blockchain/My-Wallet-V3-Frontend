@@ -18,6 +18,10 @@ body {
 
 .modal-content {
   border: 10px solid #ECECEC;
+  
+  textarea {
+    width: 100%;
+  }
 }
 
 .modal-header {

@@ -230,7 +230,43 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       return
       
     return amount
-  
+
+  wallet.addAddressOrPrivateKey = (addressOrPrivateKey, errors) ->
+    if addressOrPrivateKey == ""
+      errors.invalidInput = true
+      return null
+      
+    if address = wallet.my.isValidPrivateKey(addressOrPrivateKey)
+      privateKey = addressOrPrivateKey
+      if wallet.my.containsLegacyAddress(address)
+        address = $filter("getByProperty")("address", address, wallet.legacyAddresses)
+        if address.isWatchOnlyLegacyAddress
+          wallet.my.importPrivateKey(privateKey)
+          wallet.updateLegacyAddresses() # Probably too early
+        else
+          errors.addressPresentInWallet = true
+        return address 
+      else
+        wallet.my.importPrivateKey(privateKey)
+        addressItem = {address: address, isWatchOnlyLegacyAddress: false, active: true, legacy: true, balance: null}
+        wallet.legacyAddresses.push addressItem
+        wallet.updateLegacyAddresses() # Probably too early
+        return addressItem
+    
+    if wallet.my.isValidAddress(addressOrPrivateKey)   
+      address = addressOrPrivateKey  
+      if wallet.my.containsLegacyAddress(address)
+        errors.addressPresentInWallet = true
+        return {address: address}
+      else
+        wallet.my.addWatchOnlyLegacyAddress(address)
+        addressItem = {address: address, isWatchOnlyLegacyAddress: true, active: true, legacy: true, balance: null}
+        wallet.legacyAddresses.push addressItem
+        wallet.updateLegacyAddresses() # Probably too early
+        return addressItem      
+        
+    errors.invalidInput = true
+    return null
   
   # Amount in satoshi or fiat
   wallet.send         = (fromAccountIndex, to,             amount, currency, observer) ->
@@ -241,6 +277,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.sendInternal = (fromAccountIndex, toAccountIndex, amount, currency, observer) ->
     amount = wallet.checkAndGetTransactionAmount(amount, currency, observer)
     wallet.my.sendToAccount(fromAccountIndex, toAccountIndex, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
+      
+  wallet.sweepLegacyToAccount = (fromAddress, toAccountIndex, observer) ->
+    wallet.my.sweepLegacyToAccount(fromAddress.address, toAccountIndex, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
+    wallet.updateLegacyAddresses() # Probably too early  
       
   wallet.sendToEmail = (fromAccountIndex, email, amount, currency, observer) ->
     amount = wallet.checkAndGetTransactionAmount(amount, currency, observer)
@@ -442,6 +482,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   ##################################
   
   wallet.updateAccountsAndLegacyAddresses = () ->
+    wallet.updateAccounts()
+    wallet.updateLegacyAddresses()
+    
+  wallet.updateAccounts = () ->
     # Carefully update our array of accounts, so Angular watchers don't get confused.
     # Assuming accounts are never deleted.
     
@@ -455,7 +499,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       # Set or update label and balance:
       wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
       wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
-      
+    
+  wallet.updateLegacyAddresses = () ->
     numberOfOldAddresses = wallet.legacyAddresses.length
     numberOfNewAddresses = wallet.my.getAllLegacyAddresses().length
     

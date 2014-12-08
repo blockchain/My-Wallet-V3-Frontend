@@ -1,7 +1,7 @@
 walletServices = angular.module("myWalletServices", [])
 walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService, $cookieStore) ->
   # Erase local storage:
-  localStorageService.remove("mockWallets")
+  # localStorageService.remove("mockWallets")
 
   # $cookieStore.remove("uid")
   # $cookieStore.remove("password")
@@ -26,11 +26,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
           {hash: "afsdfsdkj", amount: -1500000, confirmations: 1, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_addresses: ["somewhere"], to_account: null, to_addresses: ["some_legacy_archived_address_with_money"] ,note: null, txTime:   8300000000},
         ]
         legacyAddresses: {
-          "some_legacy_address":            {privateKey: "legacy_private_key", label: "Old"}
-          "some_legacy_watch_only_address": {privateKey: null, label: "Paper wallet"}
-          "some_legacy_address_without_label": {privateKey: "legacy_no_label_private_key", label: null}
-          "some_legacy_archived_address":   {privateKey: "legacy_archived", archived: true}
-          "some_legacy_archived_address_with_money":   {privateKey: "legacy_archived_with_money", archived: true}
+          "some_legacy_address":            {privateKey: "legacy_private_key", label: "Old", balance: 10000000}
+          "some_legacy_watch_only_address": {privateKey: null, label: "Paper wallet", balance: 20000000}
+          "some_legacy_address_without_label": {privateKey: "legacy_no_label_private_key", label: null, balance: 30000000}
+          "some_legacy_archived_address":   {privateKey: "legacy_archived", archived: true, balance: 0}
+          "some_legacy_archived_address_with_money":   {privateKey: "legacy_archived_with_money", archived: true, balance: 40000000}
           
         }
         
@@ -113,13 +113,16 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   ]
   
   myWallet.getLegacyAddressBalance = (address) ->
-    return 0.1
+    return legacyAddresses[address].balance
     
   myWallet.setLegacyAddressLabel = (label) ->
     return
     
   myWallet.getTotalBalanceForActiveLegacyAddresses = () ->
-    return 100000000
+    tally = 0
+    for key, value of legacyAddresses
+      tally += value.balance
+    return tally
   
   myWallet.getHDWallet = () ->
     myWallet 
@@ -323,6 +326,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
     return
     
+  myWallet.sweepLegacyToAccount = (fromAddress, toAccountIndex, observer) ->
+    accounts[toAccountIndex].balance = legacyAddresses[fromAddress].balance
+    legacyAddresses[fromAddress].balance = 0
+    return
+    
   myWallet.sendToEmail = (accountIdx, value, fixedFee, email, successCallback, errorCallback) ->
     successCallback()  
     
@@ -454,6 +462,29 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.makePairingCode = () ->
     return ""
     
+  myWallet.addWatchOnlyLegacyAddress = (address) ->
+    legacyAddresses[address] =  {privateKey: null, balance: 300000000}
+    return
+    
+  myWallet.isValidPrivateKey = (candidate) ->
+    if candidate.indexOf("private_key_for_") > -1
+      return candidate.replace("private_key_for_","")
+    else 
+      return false
+      
+  myWallet.isValidAddress = (address) ->
+    withoutWhiteSpace = address.trim()
+    # Reject if there are spaces inside the address:
+    return withoutWhiteSpace.indexOf(" ") == -1 && withoutWhiteSpace.indexOf("@") == -1
+    
+  myWallet.importPrivateKey = (privateKey) ->
+    address = privateKey.replace("private_key_for_","")
+    legacyAddresses[address] =  {privateKey: privateKey, balance: 200000000}
+    return address
+      
+  myWallet.containsLegacyAddress = (candidate) ->
+    return legacyAddresses[candidate]?
+    
   ############################################################
   # Simulate spontanuous behavior when using mock in browser #
   ############################################################
@@ -502,11 +533,6 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
         index = mockPaymentRequestAddressStack.indexOf(request.address)
         if index > -1
           mockPaymentRequestAddressStack.splice(index,1)
-  
-  myWallet.isValidAddress = (address) ->
-    withoutWhiteSpace = address.trim()
-    # Reject if there are spaces inside the address:
-    return withoutWhiteSpace.indexOf(" ") == -1 && withoutWhiteSpace.indexOf("@") == -1
     
   myWallet.unsetTwoFactor = (success, error) ->
     success()

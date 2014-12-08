@@ -97,3 +97,9 @@ describe "SettingsAddressesCtrl", ->
       expect(scope.legacyAddresses.length).toBe(before - 1)
     )
     
+  describe "importAddress()", ->
+    it "should open a modal",  inject(($modal) ->
+      spyOn(modal, "open")
+      scope.importAddress()
+      expect(modal.open).toHaveBeenCalled()
+    )

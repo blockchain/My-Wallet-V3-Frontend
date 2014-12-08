@@ -38,6 +38,13 @@
       if confirm translation
         Wallet.deleteLegacyAddress(address)
         
+  $scope.importAddress = () ->
+    Wallet.clearAlerts()
+    modalInstance = $modal.open(
+      templateUrl: "partials/settings/import-address"
+      controller: AddressImportCtrl
+    )
+        
         
   #################################
   #           Private             #

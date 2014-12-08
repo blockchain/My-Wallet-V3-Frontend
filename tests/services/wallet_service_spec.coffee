@@ -2,6 +2,7 @@ describe "walletServices", () ->
   Wallet = undefined
   MyWallet = undefined
   mockObserver = undefined  
+  errors = undefined
   
   beforeEach angular.mock.module("walletApp")
   
@@ -576,12 +577,6 @@ describe "walletServices", () ->
     it "should be set after loading", inject((Wallet) ->
       expect(Wallet.user.passwordHint).toEqual("Same as username")
     )
-    
-    it "should be an empty string if not set", inject((Wallet) ->
-      pending()
-      expect(Wallet.user.passwordHint).toEqual("")
-    )
-    
 
     it "can be changed", inject((Wallet, MyWallet) ->
       spyOn(MyWallet, "update_password_hint1").and.callThrough()
@@ -638,4 +633,36 @@ describe "walletServices", () ->
     
     return
     
-  
+  describe "addAddressOrPrivateKey()", ->
+    beforeEach ->
+      errors = {}
+      Wallet.login("test", "test")
+      
+    it "should recoginize an address as such", ->
+      expect(Wallet.addAddressOrPrivateKey("valid_address", errors).address).toBe("valid_address")
+      expect(errors).toEqual({})
+
+    it "should derive the address corresponding to a private key", ->
+      expect(Wallet.addAddressOrPrivateKey("private_key_for_valid_address", {}).address).toBe("valid_address")
+      
+    it "should complain if nothing is entered", ->
+      Wallet.addAddressOrPrivateKey("", errors)
+      expect(errors.invalidInput).toBeDefined()
+      
+    it "should complain if private key already exists", ->
+      address = Wallet.addAddressOrPrivateKey("private_key_for_some_legacy_address", errors)
+      expect(address.address).toBe("some_legacy_address")
+      expect(errors.addressPresentInWallet).toBeDefined()
+      
+    it "should complain if a watch-only address already exists", ->
+      expect(Wallet.addAddressOrPrivateKey("some_legacy_watch_only_address", errors).address).toBe("some_legacy_watch_only_address")
+      expect(errors.addressPresentInWallet).toBeDefined()
+    
+    it "should add private key to existing watch-only address", ->
+      expect(Wallet.addAddressOrPrivateKey("private_key_for_some_legacy_watch_only_address", errors).address).toBe("some_legacy_watch_only_address")
+      expect(errors).toEqual({})
+      expect(Wallet.legacyAddresses[1].isWatchOnlyLegacyAddress).toBe(false)
+      
+    it "should complain if input is invalid", ->
+      expect(Wallet.addAddressOrPrivateKey("invalid address", errors)).toBeNull()
+      expect(errors.invalidInput).toBeDefined()
