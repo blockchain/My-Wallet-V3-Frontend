@@ -1,7 +1,10 @@
-@AccountsCtrl = ($scope, Wallet, $state,$stateParams, $modal) ->
+@AccountsCtrl = ($scope, Wallet, $state,$stateParams, $modal, filterFilter) ->
   $scope.status    = Wallet.status
   $scope.total = Wallet.total
   $scope.settings = Wallet.settings
+  
+  $scope.numberOfActiveLegacyAddresses = () -> 
+    return filterFilter(Wallet.legacyAddresses, {active: true}).length
   
   $scope.selectedAccountIndex = $stateParams.accountIndex
     
@@ -13,6 +16,9 @@
       resolve:
         account: -> undefined
     )
+    
+  $scope.legacyTotal = () ->
+    return Wallet.getTotalBalanceForActiveLegacyAddresses()
 
   #################################
   #           Private             #

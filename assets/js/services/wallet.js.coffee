@@ -488,6 +488,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         tally = tally += account.balance
             
       return tally
+    else if accountIndex == "imported"
+      return wallet.my.getTotalBalanceForActiveLegacyAddresses()
     else
       account = wallet.accounts[parseInt(accountIndex)]
       return null if account == undefined
@@ -813,6 +815,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       console.log "Failed"
       wallet.applyIfNeeded()
     )
+    
+  wallet.getTotalBalanceForActiveLegacyAddresses = () ->
+    return wallet.my.getTotalBalanceForActiveLegacyAddresses()
     
   ########################################
   # Testing: only works on mock MyWallet #

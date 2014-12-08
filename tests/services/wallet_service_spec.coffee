@@ -610,4 +610,32 @@ describe "walletServices", () ->
     
     return
     
+  describe "total()", ->     
+    beforeEach ->
+      Wallet.login("test", "test")  
+      
+    it "should return the balance for each account", inject((Wallet, MyWallet) ->
+      expect(Wallet.total(0)).toBeGreaterThan(0)
+      expect(Wallet.total(0)).toBe(MyWallet.getBalanceForAccount(0))
+      expect(Wallet.total(1)).toBe(MyWallet.getBalanceForAccount(1))
+      
+      return
+    )
+    
+    it "should return the sum of all accounts", inject((Wallet, MyWallet) ->
+      expect(Wallet.total("")).toBeGreaterThan(0)
+      expect(Wallet.total("")).toBe(MyWallet.getBalanceForAccount(0) + MyWallet.getBalanceForAccount(1))
+      
+      return
+    )
+    
+    it "should return the sum of all legacy addresses", inject((Wallet, MyWallet) ->
+      expect(Wallet.total("imported")).toBeGreaterThan(0)
+      expect(Wallet.total("imported")).toBe(MyWallet.getTotalBalanceForActiveLegacyAddresses())
+      
+      return
+    )
+    
+    return
+    
   

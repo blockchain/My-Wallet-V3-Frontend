@@ -117,6 +117,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.setLegacyAddressLabel = (label) ->
     return
+    
+  myWallet.getTotalBalanceForActiveLegacyAddresses = () ->
+    return 100000000
   
   myWallet.getHDWallet = () ->
     myWallet 
