@@ -62,25 +62,25 @@ describe "RequestCtrl", ->
       scope.$digest()
       expect(scope.paymentRequestURL).toContain("amount=0.1")
   
-    it "should simulate payment after 10 seconds in mock", inject((Wallet, $timeout) ->
-      before = Wallet.transactions.length
-      expect(scope.alerts.length).toBe(0)    
-      $timeout.flush(5000)
-      # Don't interrupt...
-      $timeout.flush(5000)
-      expect(Wallet.transactions.length).toBe(before + 1)
-      expect(scope.alerts.length).toBe(1)
-      expect(scope.paymentRequest.complete).toBe(true)
-    
-    )
-  
-    it "should cancel() delayed payment simulation", inject(($timeout) ->
-      expect(scope.alerts.length).toBe(0)   
-      $timeout.flush(5000)
-      scope.cancel() 
-      $timeout.flush(5000)
-      expect(scope.alerts.length).toBe(0)
-    )
+    # it "should simulate payment after 10 seconds in mock", inject((Wallet, $timeout) ->
+    #   before = Wallet.transactions.length
+    #   expect(scope.alerts.length).toBe(0)
+    #   $timeout.flush(5000)
+    #   # Don't interrupt...
+    #   $timeout.flush(5000)
+    #   expect(Wallet.transactions.length).toBe(before + 1)
+    #   expect(scope.alerts.length).toBe(1)
+    #   expect(scope.paymentRequest.complete).toBe(true)
+    #
+    # )
+    #
+    # it "should cancel() delayed payment simulation", inject(($timeout) ->
+    #   expect(scope.alerts.length).toBe(0)
+    #   $timeout.flush(5000)
+    #   scope.cancel()
+    #   $timeout.flush(5000)
+    #   expect(scope.alerts.length).toBe(0)
+    # )
   
     it "should cancel payment request when user presses cancel", inject((Wallet) ->
       before = Wallet.paymentRequests.length

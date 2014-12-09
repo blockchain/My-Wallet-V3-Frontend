@@ -1,7 +1,7 @@
 @SettingsAddressesCtrl = ($scope, Wallet, $translate, $modal) ->
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.accounts = Wallet.accounts
-  $scope.display = {archived: false, account_dropdown_open: false}
+  $scope.display = {archived: false, account_dropdown_open: false}  
   
   $scope.open = (request) ->
     Wallet.clearAlerts()

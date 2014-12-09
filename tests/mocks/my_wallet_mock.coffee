@@ -333,6 +333,15 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.sendToEmail = (accountIdx, value, fixedFee, email, successCallback, errorCallback) ->
     successCallback()  
+  
+  myWallet.generateOrReuseEmptyPaymentRequestForAccount = (accountIdx) ->
+    account = myWallet.getAccount(accountIdx)
+
+    for request in account.getPaymentRequests()
+      return request if request.label is "" and (request.amount is 0)
+
+    paymentRequest = account.generatePaymentRequest(0, "")
+    
     
   # Amount in Satoshi  
   myWallet.getAccount = (index) ->
@@ -368,6 +377,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       myWallet.sync()
       
       return request
+      
       
     account.cancelPaymentRequest = (address) ->
       for candidate in paymentRequests
@@ -482,7 +492,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     legacyAddresses[address] =  {privateKey: privateKey, balance: 200000000}
     return address
       
-  myWallet.containsLegacyAddress = (candidate) ->
+  myWallet.legacyAddressExists = (candidate) ->
     return legacyAddresses[candidate]?
     
   ############################################################

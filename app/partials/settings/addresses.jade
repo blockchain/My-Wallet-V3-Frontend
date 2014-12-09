@@ -26,7 +26,7 @@ p(translate="MY_ADDRESSES_EXPLAIN")
         th    
       tr(ng-repeat="request in requests | filter:{canceled:false} | filter:searchText")
         td {{ request.address }}
-        td(ng-bind-html="address.label | highlight:searchText")
+        td(ng-bind-html="request.label | highlight:searchText")
         td 
           {{ accounts[request.account].label }}
         td.amount
@@ -70,8 +70,11 @@ p(translate="IMPORTED_ADDRESSES_EXPLAIN")
           span.label.label-warning(ng-show="address.isWatchOnlyLegacyAddress", translate="WATCH_ONLY")    
         td(ng-bind-html="address.label | highlight:searchTextLegacy")
         td 
-          span.btc{{ address.balance | btc }}
-          fiat.fiat(btc="address.balance") 
+          span(ng-show="address.balance != null")
+            span.btc{{ address.balance | btc }}
+            fiat.fiat(btc="address.balance") 
+          //- span(us-spinner="{radius:6, width:6, length: 6}" spinner-key="{{ address.address }}" spinner-start-active="true" ng-show="address.balance == null")
+          img(ng-show="address.balance == null" src="img/spinner.gif")
         td
           a(ui-sref="settings.address({address: address.address})", translate="DETAILS")
         td 

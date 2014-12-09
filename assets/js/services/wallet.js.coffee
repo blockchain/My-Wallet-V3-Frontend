@@ -238,7 +238,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
     if address = wallet.my.isValidPrivateKey(addressOrPrivateKey)
       privateKey = addressOrPrivateKey
-      if wallet.my.containsLegacyAddress(address)
+      if wallet.my.legacyAddressExists(address)
         address = $filter("getByProperty")("address", address, wallet.legacyAddresses)
         if address.isWatchOnlyLegacyAddress
           wallet.my.importPrivateKey(privateKey)
@@ -247,7 +247,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           errors.addressPresentInWallet = true
         return address 
       else
-        wallet.my.importPrivateKey(privateKey)
+        address = wallet.my.importPrivateKey(privateKey)
         addressItem = {address: address, isWatchOnlyLegacyAddress: false, active: true, legacy: true, balance: null}
         wallet.legacyAddresses.push addressItem
         wallet.updateLegacyAddresses() # Probably too early
@@ -255,7 +255,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     if wallet.my.isValidAddress(addressOrPrivateKey)   
       address = addressOrPrivateKey  
-      if wallet.my.containsLegacyAddress(address)
+      if wallet.my.legacyAddressExists(address)
         errors.addressPresentInWallet = true
         return {address: address}
       else
@@ -360,8 +360,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     this.refreshPaymentRequests()
     return success 
       
-  wallet.updatePaymentRequest = (accountIndex, address, amount) ->
-    if wallet.my.updatePaymentRequestForAccount(accountIndex, address, amount)
+  wallet.updatePaymentRequest = (accountIndex, address, amount, label) ->
+    if wallet.my.updatePaymentRequestForAccount(accountIndex, address, amount, label)
       this.refreshPaymentRequests()
     else 
       console.error "Failed to update request"
@@ -370,6 +370,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.acceptPaymentRequest = (accountIndex, address) ->
     wallet.my.acceptPaymentRequestForAccount(accountIndex, address)
     this.refreshPaymentRequests() 
+    
+  wallet.generateOrReuseEmptyPaymentRequestForAccount = (accountIndex) ->
+    request = wallet.my.generateOrReuseEmptyPaymentRequestForAccount(accountIndex)
+    this.refreshPaymentRequests()
+    return wallet.getPaymentRequest(accountIndex, request.address)
     
   ###################
   # URL: bitcoin:// #
@@ -597,6 +602,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
     else if event == "hw_wallet_balance_updated"
       wallet.updateAccountsAndLegacyAddresses()  
+      wallet.applyIfNeeded()
+    else if event == "did_update_legacy_address_balance"
+      console.log "did_update_legacy_address_balance"
+      wallet.updateLegacyAddresses()  
       wallet.applyIfNeeded()
       
     else if event == "wallet not found" # Only works in the mock atm

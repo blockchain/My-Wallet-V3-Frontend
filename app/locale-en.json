@@ -223,5 +223,7 @@
   "BALANCE_FOR_ADDRESS": "The balance of this address is",
   "INPUT_NOT_RECOGNIZED" : "The value you entered does not appear to be a valid private key or bitcoin address",
   "ALREADY_IN_WALLET" : "This address is already present in the wallet",
+  "DESCRIPTION" : "Description",
+  "OPTIONAL" : "Optional",
   "" : ""
 }

@@ -15,7 +15,8 @@
       p
         span(translate="BALANCE_FOR_ADDRESS")
         |:
-        b {{ address.balance | btc }}
+        b(ng-show="address.balance != null") {{ address.balance | btc }}
+        img(ng-show="address.balance == null" src="img/spinner.gif")
     p(ng-show="errors.invalidInput", translate="INPUT_NOT_RECOGNIZED")
     p(ng-show="errors.addressPresentInWallet")
       span(translate="ALREADY_IN_WALLET")
@@ -49,6 +50,6 @@
 .modal-footer
   button.btn.btn-primary(ng-show="step == 1", ng-click="validate()", ng-disabled="fields.addressOrPrivateKey == ''", translate="VALIDATE")
   button.btn.btn-info(ng-show="step == 2", ng-click="close()", translate="CLOSE")
-  button.btn.btn-primary(ng-show="step == 2 && !address.isWatchOnlyLegacyAddress && address.balance > 0 && isValid()", ng-click="goToTransfer()", translate="TRANSFER")
+  button.btn.btn-primary(ng-show="step == 2 && !address.isWatchOnlyLegacyAddress && (address.balance == null || address.balance > 0) && isValid()", ng-click="goToTransfer()", translate="TRANSFER", ng-disabled="address.balance == null")
   button.btn.btn-primary(ng-show="step == 3", ng-click="transfer()", translate="CONTINUE")
   

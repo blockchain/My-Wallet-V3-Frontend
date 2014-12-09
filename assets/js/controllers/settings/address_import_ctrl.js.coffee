@@ -2,7 +2,7 @@
   
   $scope.step = 1
   $scope.legacyAddresses  = Wallet.legacyAddresses
-  
+    
   $scope.fields = {addressOrPrivateKey: "", account: null}
   
   $scope.$watchCollection "accounts", (newValue) ->
@@ -20,7 +20,7 @@
     $modalInstance.dismiss ""
   
   $scope.validate = () ->
-    $scope.address = Wallet.addAddressOrPrivateKey($scope.fields.addressOrPrivateKey, $scope.errors)
+    $scope.address = Wallet.addAddressOrPrivateKey($scope.fields.addressOrPrivateKey.trim(), $scope.errors)
     $scope.step = 2
     
   $scope.goToTransfer = () ->
