@@ -225,5 +225,6 @@
   "ALREADY_IN_WALLET" : "This address is already present in the wallet",
   "DESCRIPTION" : "Description",
   "OPTIONAL" : "Optional",
+  "WALLET_IMPORT" : "Already have a wallet? You can import it here",
   "" : ""
 }

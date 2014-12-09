@@ -10,6 +10,7 @@
       controller: RequestCtrl
       resolve:
         request: -> request
+      windowClass: "blockchain-modal"
     )
     
   $scope.clear = (request) ->
@@ -25,6 +26,7 @@
       controller: RequestCtrl
       resolve:
         request: -> request
+      windowClass: "blockchain-modal"
     )
 
   $scope.archive = (address) ->
@@ -43,6 +45,7 @@
     modalInstance = $modal.open(
       templateUrl: "partials/settings/import-address"
       controller: AddressImportCtrl
+      windowClass: "blockchain-modal"
     )
         
         

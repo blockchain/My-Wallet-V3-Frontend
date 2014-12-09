@@ -11,4 +11,54 @@
   p.explanation {
     color: #A9A9A9;
   }
+  
+
+}
+
+.signup {
+  position:fixed;
+  bottom:0px; 
+  
+  .modal-lg {
+    width: 100%;
+    top: 300px;
+    bottom: 0px;
+    
+  }
+  
+  .modal-header {
+    border: none;
+  }
+  
+  .modal-content {
+    border: none;
+    background-color: #1972B6;
+    color: white;
+    border-radius: 0;
+    
+    input {
+      color: #1972B6;
+    }
+    
+    .row {
+      background-color: #1972B6;
+ 
+    }
+  }
+  
+  .modal-footer {
+    
+    border: none;
+    
+    a {
+      color: white !important;
+    }
+    
+    form {
+      background-color: #1972B6;
+    }
+    
+    background-color: #1972B6;
+
+  }
 }

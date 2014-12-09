@@ -3,6 +3,7 @@
   $scope.settings = Wallet.settings
   $scope.uid = $cookieStore.get("uid")
   $scope.twoFactorCode = ""
+  $scope.creatingAccount = false
   
   if !!$cookieStore.get("password")      
     $scope.password = $cookieStore.get("password")
@@ -21,10 +22,16 @@
     
   $scope.create = () ->
     Wallet.clearAlerts()
+    
+    $scope.creatingAccount = true
 
     modalInstance = $modal.open(
       templateUrl: "partials/signup"
       controller: SignupCtrl
+      backdrop: "static"
+      keyboard: false
+      windowClass: "signup"
+      size: "lg"
     )
 
   $scope.$watch "status.isLoggedIn", (newValue) ->

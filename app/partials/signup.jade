@@ -7,19 +7,22 @@
     form.form-horizontal(role="form",name="form",novalidate)
       div(ng-switch="currentStep")
         div(ng-switch-when="1")
-          .form-group(ng-class="{'has-error': errors.email, 'has-success': success.email}")
+          .form-group
+            // (ng-class="{'has-error': errors.email, 'has-success': success.email}")
             label.col-sm-4.control-label(translate="EMAIL")
-            .col-sm-8
+            .col-sm-6
               input.form-control(type="email",ng-model="fields.email",autofocus,ng-blur="validate()", ng-focus="errors.email = null")
               span.help-block {{ errors.email }}
-          .form-group(ng-class="{'has-error': errors.password, 'has-success': success.password}")
+          .form-group
+            // (ng-class="{'has-error': errors.password, 'has-success': success.password}")
             label.col-sm-4.control-label(translate="NEW_PASSWORD")
-            .col-sm-8
+            .col-sm-6
               input.form-control(type="password",ng-model="fields.password",autofocus,ng-blur="validate()", ng-focus="errors.password = null")
               span.help-block {{ errors.password }}
-          .form-group(ng-class="{'has-error': errors.confirmation, 'has-success': success.confirmation}")
+          .form-group
+            // (ng-class="{'has-error': errors.confirmation, 'has-success': success.confirmation}")
             label.col-sm-4.control-label(translate="CONFIRM_PASSWORD")
-            .col-sm-8
+            .col-sm-6
               input.form-control(type="password",ng-model="fields.confirmation",autofocus,ng-blur="validate()", ng-focus="errors.confirmation = null")
               span.help-block {{ errors.confirmation }}
         div(ng-switch-when="2")
@@ -45,7 +48,11 @@
           p.explanation(translate="EMAIL_WHY_EXPLAIN")
       
   .modal-footer
-    button.btn.btn-info(ng-click="close()", translate="CLOSE", ng-hide="currentStep == 3")
-    button.btn.btn-primary(ng-click="nextStep()",ng-disabled="!isValid[0]", translate="NEXT_STEP", ng-show="currentStep == 1")
-    button.btn.btn-primary(ng-click="nextStep()",ng-disabled="!isValid[1]", translate="NEXT_STEP", ng-show="currentStep == 2")
-    button.btn.btn-info(ng-click="resendEmail()", translate="RESEND_EMAIL", ng-show="currentStep == 3")
+    .row
+      .col-xs-6
+        a(translate="WALLET_IMPORT", ng-click="import()", ng-show="currentStep==2")
+      .col.xs-6
+        //- button.btn.btn-info(ng-click="close()", translate="CLOSE", ng-hide="currentStep == 3 || currentStep == 2")
+        a(ng-click="nextStep()",ng-disabled="!isValid[0]", translate="NEXT_STEP", ng-show="currentStep == 1")
+        a(ng-click="nextStep()",ng-disabled="!isValid[1]", translate="NEXT_STEP", ng-show="currentStep == 2")
+        a(ng-click="resendEmail()", translate="RESEND_EMAIL", ng-show="currentStep == 3")

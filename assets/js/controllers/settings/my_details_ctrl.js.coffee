@@ -46,6 +46,7 @@
     modalInstance = $modal.open(
       templateUrl: "partials/settings/change-password"
       controller: ChangePasswordCtrl
+      windowClass: "blockchain-modal"
     )
   
   $scope.changePasswordHint = (hint) ->

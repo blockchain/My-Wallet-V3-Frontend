@@ -1,10 +1,10 @@
 walletServices = angular.module("myWalletServices", [])
 walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService, $cookieStore) ->
   # Erase local storage:
-  # localStorageService.remove("mockWallets")
+  localStorageService.remove("mockWallets")
 
-  # $cookieStore.remove("uid")
-  # $cookieStore.remove("password")
+  $cookieStore.remove("uid")
+  $cookieStore.remove("password")
 
   # console.log localStorageService.get("mockWallets")
   
@@ -204,8 +204,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       
   myWallet.get_ticker = (success, fail) ->
     success({
-      USD: {"15m": 250, symbol: "€"}
-      EUR: {"15m": 300, symbol: "$"}
+      EUR: {"15m": 250, symbol: "€"}
+      USD: {"15m": 300, symbol: "$"}
     })
  
   myWallet.getLanguage = () ->

@@ -16,58 +16,61 @@ body {
   background: transparent;
 }
 
-.modal-content {
-  border: 10px solid #ECECEC;
+.blockchain-modal {
+  .modal-content {
+    border: 10px solid #ECECEC;
   
-  textarea {
-    width: 100%;
+    textarea {
+      width: 100%;
+    }
   }
-}
 
-.modal-header {
-  h3 {
-    color: #2071AA;
-    margin-bottom: 0px;
-    display: inline;    
-    text-transform: capitalize;
+  .modal-header {
+    h3 {
+      color: #2071AA;
+      margin-bottom: 0px;
+      display: inline;    
+      text-transform: capitalize;
+    }
+  
+  
+    vertical-align: bottom;
+    border-bottom: 4px solid #e5e5e5;
+  
+    a {
+      padding: 10px;
+    }
+  
+    .right {
+      text-align: right;
+    }
   }
-  
-  
-  vertical-align: bottom;
-  border-bottom: 4px solid #e5e5e5;
-  
-  a {
-    padding: 10px;
-  }
-  
-  .right {
-    text-align: right;
-  }
-}
 
-.modal-body {
-  color: #627B8A;
-  button, input, .btn-group, .btn-group-justified, .btn {
-    background-color: #F5F7F9;
-    border-radius: 0;
+  .modal-body {
+    color: #627B8A;
+    button, input, .btn-group, .btn-group-justified, .btn {
+      background-color: #F5F7F9;
+      border-radius: 0;
     
-  }
+    }
   
-  input {
-    font-size: 90%;
+    input {
+      font-size: 90%;
     
-  }
+    }
 
   
   
-}
+  }
 
-.modal-footer {
-  border-top: none;
-  button {
-    text-transform: uppercase;
+  .modal-footer {
+    border-top: none;
+    button {
+      text-transform: uppercase;
+    }
   }
 }
+
 
 .btn {
 }

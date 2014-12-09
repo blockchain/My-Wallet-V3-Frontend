@@ -15,6 +15,8 @@
       controller: AccountFormCtrl
       resolve:
         account: -> undefined
+      windowClass: "blockchain-modal"
+      
     )
     
   $scope.legacyTotal = () ->

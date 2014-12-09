@@ -8,6 +8,7 @@
       controller: RequestCtrl
       resolve:
         request: null
+      windowClass: "blockchain-modal"
     )
     
   $scope.send = () ->
@@ -18,6 +19,8 @@
       resolve:
         paymentRequest: ->
           {address: "", amount: ""}
+      windowClass: "blockchain-modal"
+
     )
   
   #################################

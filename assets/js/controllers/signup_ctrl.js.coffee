@@ -30,11 +30,11 @@
   $scope.nextStep = () ->
     $scope.validate()
     if $scope.isValid[$scope.currentStep - 1]
-      if $scope.currentStep == 2
+      if $scope.currentStep == 1
         $scope.createWallet((uid)->
           $cookieStore.put("uid", uid)
-          if $scope.savePassword
-            $cookieStore.put("password", $scope.password)
+          # if $scope.savePassword
+          #   $cookieStore.put("password", $scope.password)
           $scope.currentStep++
         )
           
@@ -46,7 +46,8 @@
       # console.log $scope.fields
       
   $scope.createWallet = (success) ->
-    Wallet.create($scope.fields.password, $scope.fields.email, $scope.fields.language, $scope.fields.currency, ()->
+    Wallet.create($scope.fields.password, $scope.fields.email, $scope.fields.language, $scope.fields.currency, (uid)->
+      Wallet.login(uid,$scope.fields.password)
       success()
     )
 
@@ -87,5 +88,12 @@
   $scope.validate()
 
   $scope.$watch "fields.language", (newVal, oldVal) ->
+    # Update in wallet...
     if newVal?
       $translate.use(newVal.code)
+      Wallet.changeLanguage(newVal)
+  
+  $scope.$watch "fields.currency", (newVal, oldVal) ->
+    # Update in wallet...
+    if newVal?
+      Wallet.changeCurrency(newVal)

@@ -90,6 +90,27 @@ describe "SignupCtrl", ->
       scope.nextStep()
       expect(scope.currentStep).toBe(1)
       
+    it "should show error if wallet creation fails", inject((MyWallet) ->
+            
+      MyWallet.mockShouldFailToCreateWallet()
+      
+      scope.nextStep()
+      expect(scope.alerts.length).toBe(1)
+    )
+    
+    it "should create a wallet", inject((MyWallet) ->
+      pending()
+    )
+      
+    it "should not go to second step is wallet creation fails", inject((MyWallet) ->
+            
+      MyWallet.mockShouldFailToCreateWallet()
+      
+      scope.nextStep()
+      expect(scope.currentStep).toBe(1)
+    )
+    
+      
   describe "second step", ->
     beforeEach ->
       scope.currentStep = 2
@@ -119,26 +140,8 @@ describe "SignupCtrl", ->
     it "should go to third step", ->
       scope.nextStep()
       expect(scope.currentStep).toBe(3)
-      
-    it "should not go to third step is wallet creation fails", inject((MyWallet) ->
-            
-      MyWallet.mockShouldFailToCreateWallet()
-      
-      scope.nextStep()
-      expect(scope.currentStep).toBe(2)
-    )
-    
-    it "should show error if wallet creation fails", inject((MyWallet) ->
-            
-      MyWallet.mockShouldFailToCreateWallet()
-      
-      scope.nextStep()
-      expect(scope.alerts.length).toBe(1)
-    )
-    
-    it "should create a wallet", inject((MyWallet) ->
-      pending()
-    )
+
+ 
       
   describe "third step", ->
     beforeEach ->

@@ -8,6 +8,7 @@
       controller: AccountFormCtrl
       resolve:
         account: -> undefined
+      windowClass: "blockchain-modal"
     )
     
   $scope.editAccount = (account) ->
@@ -17,4 +18,5 @@
       controller: AccountFormCtrl
       resolve:
         account: -> account
+      windowClass: "blockchain-modal"
     )

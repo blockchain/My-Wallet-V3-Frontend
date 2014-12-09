@@ -592,15 +592,15 @@ describe "walletServices", () ->
       Wallet.login("test", "test")  
       
     it "should know the exchange rate in satoshi per unit of fiat", inject((Wallet) ->
-      expect(Wallet.conversions.EUR.conversion).toBe(333333)
+      expect(Wallet.conversions.EUR.conversion).toBe(400000)
     )
   
     it "should calculate BTC from fiat amount and currency", inject((Wallet) ->
-      expect(Wallet.fiatToSatoshi("2", "EUR")).toBe(666666)
+      expect(Wallet.fiatToSatoshi("2", "EUR")).toBe(800000)
     )
     
     it "should calculate fiat from BTC", inject((Wallet) ->
-      expect(Wallet.BTCtoFiat("0.1", "EUR")).toBe("30.00")
+      expect(Wallet.BTCtoFiat("0.1", "EUR")).toBe("25.00")
     )
     
     return
