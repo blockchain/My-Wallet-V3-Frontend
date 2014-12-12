@@ -8,10 +8,6 @@ walletApp.directive('transactionNote', ($translate, $rootScope, Wallet) ->
     templateUrl: 'templates/transaction-note.html'
     link: (scope, elem, attrs) ->
       scope.editNote = false
-      if !scope.transaction?
-        scope.transaction = {}
-        
-      scope.transaction.draftNote = ""
       scope.cancelEditNote = () ->
         scope.transaction.draftNote = ""
         scope.editNote = false
@@ -27,6 +23,9 @@ walletApp.directive('transactionNote', ($translate, $rootScope, Wallet) ->
         scope.editNote = false
         
       scope.$watch "transaction.note", (newVal, oldVal) ->
+        if scope.transaction?
+          scope.transaction.draftNote = ""
+        
         if (!newVal? || newVal == "") && oldVal? && oldVal != ""
           Wallet.deleteNote(scope.transaction)
           

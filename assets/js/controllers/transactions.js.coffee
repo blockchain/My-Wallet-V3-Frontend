@@ -11,7 +11,7 @@
     $scope.settings = Wallet.settings
     $scope.totals = Wallet.totals  
     $scope.accountIndex = $stateParams.accountIndex
-        
+    
     # Check if MyWallet is a mock or the real thing. The mock will simulate an 
     # incoming transaction after 3 seconds. 
     if MyWallet.mockShouldReceiveNewTransaction != undefined && $stateParams.accountIndex == "1"
@@ -26,8 +26,8 @@
         
   $scope.transactionFilter = (item) ->
     return true if $stateParams.accountIndex == ""
-    return (!item.to_account? || item.to_account == -1) && (!item.from_account? || item.from_account == -1) if  $stateParams.accountIndex == "imported"
-    return parseInt(item.to_account) == parseInt($stateParams.accountIndex) || parseInt(item.from_account) == parseInt($stateParams.accountIndex)
+    return !item.to.account? && !item.from.account? if $stateParams.accountIndex == "imported"
+    return (item.to.account? && item.to.account.index == parseInt($stateParams.accountIndex)) || (item.from.account? && item.from.account.index == parseInt($stateParams.accountIndex))
   
   # First load:      
   $scope.didLoad()

@@ -556,6 +556,16 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       if !match
         transaction = angular.copy(tx)
         transaction.note = wallet.my.getNote(transaction.hash)
+        amount = 0
+        if transaction.from.account?
+          amount += transaction.from.account.amount
+        if transaction.from.legacyAddresses? && transaction.from.legacyAddresses.length > 0
+          amount += transaction.from.legacyAddressses[0].amount
+        if transaction.from.externalAddresses?
+          amount += transaction.from.externalAddresses.amount
+          
+        transaction.amount = amount
+          
         wallet.transactions.push transaction 
           
   ####################

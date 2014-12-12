@@ -16,24 +16,39 @@
     $scope.from = ""
     $scope.to = ""
     
-    $scope.transaction = {from_account: null, to_account: null, from_address: null, to_address: null}
+    $scope.transaction = {} # {from_account: null, to_account: null, from_address: null, to_address: null}
     
     $scope.$watchCollection "transactions", (newVal) -> 
       transaction = $filter("getByProperty")("hash", $stateParams.hash, newVal)
-      $scope.transaction = transaction 
+      $scope.transaction = transaction
       
     $scope.$watch "transaction + accounts", () ->
       tx = $scope.transaction
-      if tx? && $scope.accounts.length > 0
-        if tx.from_account?
-          $scope.from = $scope.accounts[tx.from_account].label
+      if tx? && tx.hash && $scope.accounts.length > 0
+        console.log tx
+        if tx.from.account?
+          $scope.from = $scope.accounts[tx.from.account.index].label
         else
-          $scope.from = tx.from_addresses.join(", ")
+          if tx.from.legacyAddresses?
+            address = $filter("getByProperty")("address", tx.from.legacyAddresses[0].address, Wallet.legacyAddresses)
+            if address.label
+              $scope.from = address.label
+            else 
+              $scope.from = address + " (you)"
+          else if tx.from.externalAddresses?
+            $scope.from = tx.from.externalAddresses.addressWithLargestOutput
         
-        if tx.to_account?
-          $scope.to = Wallet.accounts[tx.to_account].label
+        if tx.to.account?
+          $scope.to = $scope.accounts[tx.to.account.index].label
         else
-          $scope.to = tx.to_addresses.join(", ")
+          if tx.to.legacyAddresses?
+            address = $filter("getByProperty")("address", tx.to.legacyAddresses[0].address, Wallet.legacyAddresses)
+            if address.label
+              $scope.to = address.label
+            else
+              $scope.to = address + " (you)"
+          else if tx.to.externalAddresses?
+            $scope.to = tx.to.externalAddresses.addressWithLargestOutput
       
       
     # Restore after browser refresh (developer feature)

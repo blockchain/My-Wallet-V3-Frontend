@@ -8,7 +8,8 @@ walletApp.directive('transactionStatus', ($translate, $rootScope, Wallet, $compi
     templateUrl: 'templates/transaction-status.html'
     link: (scope, elem, attrs) ->
       scope.$watch "transaction.confirmations", () ->
-        scope.minutesRemaining = 30 - scope.transaction.confirmations * 10
-        scope.complete = scope.transaction.confirmations >= 3
+        if scope.transaction? && scope.transaction.confirmations?
+          scope.minutesRemaining = 30 - scope.transaction.confirmations * 10
+          scope.complete = scope.transaction.confirmations >= 3
   }
 )

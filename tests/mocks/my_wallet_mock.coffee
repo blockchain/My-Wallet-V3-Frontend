@@ -1,10 +1,10 @@
 walletServices = angular.module("myWalletServices", [])
 walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService, $cookieStore) ->
   # Erase local storage:
-  localStorageService.remove("mockWallets")
+  # localStorageService.remove("mockWallets")
 
-  $cookieStore.remove("uid")
-  $cookieStore.remove("password")
+  # $cookieStore.remove("uid")
+  # $cookieStore.remove("password")
 
   # console.log localStorageService.get("mockWallets")
   
@@ -20,10 +20,26 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
           {label: "Mobile", archived: false, balance: 25000000 - 1500000, receive_addresses: ["13QsKpDMchnssikZEaJKdkTX7pycFEcTi1"]}
         ]
         transactions: [
-          {hash: "aaaa", amount: 300000000, confirmations: 13, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_addresses: ["1D2YzLr5qvrwMSm8onYbns5BLJ9jwzPHcQ"], to_account: 0, to_addresses: [], txTime: 1331300839},
-          {hash: "aaab", amount: -25000000, confirmations: 3, doubleSpend: false, coinbase: false, intraWallet: true, from_account: 0, from_addresses: [], to_account: 1, to_addresses: [], note: null, txTime:   2000000000},
-          {hash: "afsdfsdkj", amount: -1500000, confirmations: 1, doubleSpend: false, coinbase: false, intraWallet: false, from_account: 1, from_addresses: [], to_account: null, to_addresses: ["1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq"] ,note: null, txTime:   8200000000},
-          {hash: "afsdfsdkj", amount: -1500000, confirmations: 1, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_addresses: ["somewhere"], to_account: null, to_addresses: ["some_legacy_archived_address_with_money"] ,note: null, txTime:   8300000000},
+          {
+            hash: "aaaa", confirmations: 13, doubleSpend: false, coinbase: false, intraWallet: false, txTime: 1331300839, 
+            from: {account: null, legacyAddresses: null, externalAddresses: {addressWithLargestOutput: "1D2YzLr5qvrwMSm8onYbns5BLJ9jwzPHcQ", amount: 300000000}}, 
+            to: {account: {index: 0, amount: 300000000}, legacyAddresses: null}
+          }
+          {
+            hash: "aaab", confirmations: 3, doubleSpend: false, coinbase: false, intraWallet: true, note: null, txTime:   2000000000, 
+            from: {account: {index: 0, amount: 25000000}, legacyAddresses: null}, 
+            to:   {account: {index: 1, amount: 25000000}, legacyAddresses: null}
+          }
+          {
+            hash: "afsdfsdkj", confirmations: 1, doubleSpend: false, coinbase: false, intraWallet: false, note: null, txTime:   8200000000, 
+            from: {account: {index: 1, amount: 1500000}, legacyAddresses: null}  
+            to: {account: null, legacyAddresses: null, externalAddresses: {addressWithLargestOutput: "1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq", amount: 1500000}}
+          }
+          {
+            hash: "afsdfsdkj", confirmations: 1, doubleSpend: false, coinbase: false, intraWallet: false, note: null, txTime: 8300000000
+            from: {account: null, legacyAddresses: null, externalAddresses: {addressWithLargestOutput: ["somewhere"], amount: 1500000}}, 
+            to: {account: null, legacyAddresses: null, externalAddresses: {addressWithLargestOutput:"some_legacy_archived_address_with_money", amount: 1500000}}
+          }
         ]
         legacyAddresses: {
           "some_legacy_address":            {privateKey: "legacy_private_key", label: "Old", balance: 10000000}
@@ -308,8 +324,18 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     Transaction parsing should be able to figure out which account was the sender and 
     change address and which address represents a recipient.
     ###
-    transaction  = {hash: "hash-" + (new Date()).getTime(), amount: -amount, confirmations: 0, doubleSpend: false, coinbase: false, intraWallet: false, from_account: fromAccountIndex, from_addresses: [], to_account: null, to_addresses: [toAddress], note: null, txTime: (new Date()).getTime()}
-
+    
+    transaction = {
+            hash: "hash-" + (new Date()).getTime(), 
+            confirmations: 0
+            doubleSpend: false
+            intraWallet: false, 
+            note: null, 
+            txTime: (new Date()).getTime()
+            from: {account: {index: fromAccountIndex, amount: amount}, legacyAddresses: null, externalAddresses: null}, 
+            to: {account: null, legacyAddresses: null, externalAddresses: {addressWithLargestOutput: toAddress, amount: amount}}
+          }
+    
     # MyWallet stores transaction locally (so it already knows it by the time
     # it receives the websocket notification).
 
@@ -582,11 +608,22 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     mockRules.shouldFailToCreateWallet = true
     
   myWallet.mockShouldReceiveNewTransaction = (address="13QsKpDMchnssikZEaJKdkTX7pycFEcTi1", from="17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq", amount=400000, note="Thanks for the tea") ->
-    this.mockProcessNewTransaction {hash: "mock-receive-" + (new Date()).getTime(), amount: amount, confirmations: 0, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_addresses: [from], to: address , note: note, txTime: (new Date()).getTime()}
+    this.mockProcessNewTransaction {
+      hash: "mock-receive-" + (new Date()).getTime() 
+      confirmations: 0
+      intraWallet: false
+      note: note
+      txTime: (new Date()).getTime() 
+      from: {account: null, legacyAddresses: null, externalAddresses: {addressWithLargestOutput: from, amount: amount}}, 
+      to: address
+      amount: amount
+    }
+   
+    # this.mockProcessNewTransaction { amount: amount, confirmations: 0, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_addresses: [from], to: address , note: note, txTime: }
     
     eventListener("on_tx")
     
-  myWallet.mockProcessNewTransaction = (transaction) ->      
+  myWallet.mockProcessNewTransaction = (transaction) ->  
     # Does the "to" address match any payment requests? If so, update them with the amount:
     for request in paymentRequests
       if request.address == transaction.to
@@ -608,10 +645,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       for address in account.receive_addresses
         if address == transaction.to
           index = accounts.indexOf(account)
-          transaction.to_account = index
-          transaction.to_addresses = []
-          transaction.to = undefined
           accounts[index].balance += transaction.amount
+          transaction.to = {account: {index: index, amount: transaction.amount}, legacyAddresses: null, externalAddresses: null}
           
           transactions.push transaction
           

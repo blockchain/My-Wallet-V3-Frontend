@@ -23,8 +23,12 @@ describe "Transaction Note Directive", ->
     
     MyWallet = $injector.get("MyWallet")
     
-    $rootScope.transaction = {hash: "tx_hash", from_addresses: [], to_addresses: [], from_account: 0, to_account: 1, intraWallet: null}
-    
+    $rootScope.transaction = {
+            hash: "tx_hash", confirmations: 13, intraWallet: null, 
+            from: {account: {index: 0, amount: 300000000}, legacyAddresses: null, externalAddresses: null}, 
+            to: {account: {index: 0, amount: 300000000}, legacyAddresses: null}
+          }
+          
     return
   )
   

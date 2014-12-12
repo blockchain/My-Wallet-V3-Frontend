@@ -31,4 +31,3 @@
     
   # First load:      
   $scope.didLoad()
-  
