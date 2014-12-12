@@ -372,7 +372,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     this.refreshPaymentRequests() 
     
   wallet.generateOrReuseEmptyPaymentRequestForAccount = (accountIndex) ->
+    account = wallet.my.getAccounts()[accountIndex]
     request = wallet.my.generateOrReuseEmptyPaymentRequestForAccount(accountIndex)
+    request.address = account.getAddressForPaymentRequest(request)
     this.refreshPaymentRequests()
     return wallet.getPaymentRequest(accountIndex, request.address)
     
