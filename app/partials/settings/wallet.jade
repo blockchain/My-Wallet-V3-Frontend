@@ -13,13 +13,13 @@ form.form-horizontal(role="form",name="form",novalidate)
       p(translate="CURRENCY_EXPLAIN")    
     .col-sm-6
       currency-picker(currency="settings.currency")
-  .form-group
-    .col-sm-4
-      label(translate="NETWORK_FEE")
-      br
-      p(translate="NETWORK_FEE_EXPLAIN")
-    .col-sm-6
-      network-fee-picker
+  //- .form-group
+  //-   .col-sm-4
+  //-     label(translate="NETWORK_FEE")
+  //-     br
+  //-     p(translate="NETWORK_FEE_EXPLAIN")
+  //-   .col-sm-6
+  //-     network-fee-picker
   .form-group(ng-show="browserCanHandleBitcoinLinks")
     .col-sm-4
       label(translate="HANDLE_BITCOIN_LINKS")

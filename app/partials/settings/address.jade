@@ -32,9 +32,9 @@ h2(translate="ADDRESS_DETAILS")
     qr(text="'bitcoin://' + address.address" size="140", ng-show="!address.isWatchOnlyLegacyAddress || show.watchOnly")
 hr(ng-hide="address.isWatchOnlyLegacyAddress")
   
-h2(translate="ADVANCED_OPTIONS", ng-hide="address.isWatchOnlyLegacyAddress") 
-
-p(translate="SIGN_MESSAGE_EXPLAIN", ng-hide="address.isWatchOnlyLegacyAddress")
-
-p(ng-hide="address.isWatchOnlyLegacyAddress")
-  a(translate="SIGN_MESSAGE", ng-click="signMessage()")
+//- h2(translate="ADVANCED_OPTIONS", ng-hide="address.isWatchOnlyLegacyAddress")
+//-
+//- p(translate="SIGN_MESSAGE_EXPLAIN", ng-hide="address.isWatchOnlyLegacyAddress")
+//-
+//- p(ng-hide="address.isWatchOnlyLegacyAddress")
+//-   a(translate="SIGN_MESSAGE", ng-click="signMessage()")

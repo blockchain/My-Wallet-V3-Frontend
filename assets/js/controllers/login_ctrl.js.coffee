@@ -36,5 +36,6 @@
 
   $scope.$watch "status.isLoggedIn", (newValue) ->
     if newValue
-      $state.go("dashboard")
+      # $state.go("dashboard")
+      $state.go("transactions", {accountIndex: null})
       

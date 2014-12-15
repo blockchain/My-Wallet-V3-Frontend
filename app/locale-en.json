@@ -95,7 +95,7 @@
   "MY_RECOVERY_PHRASE" : "My Recovery Phrase",
   "SHOW_RECOVERY_PHRASE" : "Show Recovery Phrase",
   "HIDE_RECOVERY_PHRASE" : "Hide Recovery Phrase",
-  "RECOVERY_PHRASE_EXPLAIN" : "Your recovery phrase allows you to restore your wallet in case of loss of password or extended downtime on our servers. Confirming your recovery phrase ensures you always have access to your wallet. Write your Recovery Phrase down on a piece of paper and keep it secure.",
+  "RECOVERY_PHRASE_EXPLAIN" : "Your recovery phrase allows you to restore your wallet in case of loss of password or extended downtime on our servers. Write your Recovery Phrase down on a piece of paper and keep it secure.",
   "IMPORT_RECOVERY_PHRASE" : "Import Recovery Phrase",
   "IMPORT_RECOVERY_PHRASE_EXPLAIN" : "If you already have an existing Blockchain Recovery Phrase you can enter it here and restore your wallet. Some participating wallets can also be imported and converted to a Blockchain Wallet.",
   "CONFIRM_RECOVERY_PHRASE" : "confirm recovery phrase",

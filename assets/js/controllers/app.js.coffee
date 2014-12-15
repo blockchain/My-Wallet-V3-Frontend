@@ -6,18 +6,21 @@
   #################################
   #           Private             #
   #################################
-    
-  $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->
+        
+  $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->    
     if toState.name != "login" && toState.name != "open"
       $scope.checkLogin()
   )
   
-  $scope.checkLogin = () ->    
+  $scope.checkLogin = () ->
     if $scope.status.isLoggedIn == false
       if $scope.savePassword && !!$cookieStore.get("password")  
         Wallet.login($cookieStore.get("uid"), $cookieStore.get("password"))
       else 
         $state.go("login")
+  
+  if $state.current.name == ""
+    $state.go("transactions", {accountIndex: null})
         
   $scope.$watch "status.isLoggedIn", (newValue) ->
     if newValue
@@ -31,3 +34,5 @@
         )
           
         Wallet.goal = null
+      
+  

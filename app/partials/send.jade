@@ -38,13 +38,13 @@
           |:
         .col-sm-7
           .input-group-vertical.send-methods
-            .btn-group.btn-group-justified
-              .btn-group.btn-group-xs
-                button(type="button", ng-class="{active: method=='BTC'}", ng-click="setMethod('BTC')").btn.btn-default Bitcoin
-              .btn-group.btn-group-xs
-                button(type="button", ng-class="{active: method=='EMAIL'}", ng-click="setMethod('EMAIL')").btn.btn-default.middle Email
-              .btn-group.btn-group-xs
-                button(type="button", ng-class="{active: method=='SMS'}", ng-click="setMethod('SMS')").btn.btn-default SMS         
+            //- .btn-group.btn-group-justified
+            //-   .btn-group.btn-group-xs
+            //-     button(type="button", ng-class="{active: method=='BTC'}", ng-click="setMethod('BTC')").btn.btn-default Bitcoin
+            //-   .btn-group.btn-group-xs
+            //-     button(type="button", ng-class="{active: method=='EMAIL'}", ng-click="setMethod('EMAIL')").btn.btn-default.middle Email
+            //-   .btn-group.btn-group-xs
+            //-     button(type="button", ng-class="{active: method=='SMS'}", ng-click="setMethod('SMS')").btn.btn-default SMS
             .input-group
               input#send-to.form-control(type="text",ng-model="transaction.to",placeholder="{{ toPlaceholder }}",autofocus,ng-blur="visualValidate('to')", tabindex="0")
               span.input-group-btn
@@ -135,11 +135,11 @@
             td
               fiat(btc="transaction.satoshi + transaction.fee")
       .col-xs-6
-        h4
-          span(translate="TAGS")
-          | 
-          span(ng-click="") +
-        p Coming soon...
+        //- h4
+        //-   span(translate="TAGS")
+        //-   |
+        //-   span(ng-click="") +
+        //- p Coming soon...
         h4
           span(translate="NOTE") 
           |:

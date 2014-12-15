@@ -1,10 +1,9 @@
 @TransactionsCtrl = ($scope, Wallet, MyWallet, $log, $stateParams, $timeout) ->
-    
   #################################
   #           Private             #
   #################################
     
-  $scope.didLoad = () ->
+  $scope.didLoad = () ->    
     $scope.transactions = Wallet.transactions      
     $scope.addressBook = Wallet.addressBook
     $scope.status    = Wallet.status

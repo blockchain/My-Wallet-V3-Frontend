@@ -56,7 +56,8 @@
       if !!$cookieStore.get("password")
         Wallet.login($cookieStore.get("uid"), $cookieStore.get("password"))
       else
-        $state.go("dashboard")
+        # $state.go("dashboard")
+        $state.go("transactions", {accountIndex: null})
         
   # First load:      
   $scope.didLoad()

@@ -649,7 +649,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     else if event.type != undefined
       if event.type == "error"
         wallet.displayError(event.msg)
-        console.log event
+        # console.log event
         wallet.applyIfNeeded()
       else if event.type == "success"
         wallet.displaySuccess(event.msg)
@@ -658,9 +658,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.displayWarning(event.msg)
         wallet.applyIfNeeded()
       else 
-        console.log event
+        # console.log event
     else
-      console.log event
+      # console.log event
   # The new monitoring system  
   wallet.monitor = (event) ->
     if event.type == "error"
