@@ -107,16 +107,24 @@
     $scope.formIsValid = $scope.validate()
     if $scope.fields.to.address?
       $scope.setPaymentRequestURL($scope.fields.to.address, null)
+    else if parseInt($scope.fields.amount) == 0 && $scope.fields.label == ""
+      idx = $scope.fields.to.index
+      $scope.paymentRequest = Wallet.generateOrReuseEmptyPaymentRequestForAccount(idx)
+      amount = $scope.parseAmount()    
+      $scope.setPaymentRequestURL($scope.paymentRequest.address, amount)
+        
+  $scope.parseAmount = () ->
+    if $scope.fields.currency == undefined
+      return 0
+    else if $scope.fields.currency.code == "BTC"
+      return parseInt(numeral($scope.fields.amount).multiply(100000000).format("0"))
+    else
+      return Wallet.fiatToSatoshi($scope.fields.amount, $scope.fields.currency.code)
         
   $scope.$watch "fields.amount + fields.currency.code + fields.label", (oldValue, newValue) ->
     $scope.formIsValid = $scope.validate()
         
-    if $scope.fields.currency == undefined
-      amount = 0
-    else if $scope.fields.currency.code == "BTC"
-      amount = parseInt(numeral($scope.fields.amount).multiply(100000000).format("0"))
-    else
-      amount  = Wallet.fiatToSatoshi($scope.fields.amount, $scope.fields.currency.code)
+    amount = $scope.parseAmount()    
           
     if $scope.paymentRequest == null && $scope.formIsValid
       if $scope.fields.to.address?
@@ -124,6 +132,7 @@
 
     if $scope.paymentRequest && $scope.formIsValid
       if oldValue isnt newValue
+        console.log "Updating request..."
         Wallet.updatePaymentRequest($scope.fields.to.index, $scope.paymentRequest.address, amount, $scope.fields.label)
         
       $scope.setPaymentRequestURL($scope.paymentRequest.address, amount)

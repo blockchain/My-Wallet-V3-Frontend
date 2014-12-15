@@ -7,7 +7,7 @@
     .form-group(ng-class="{'has-warning': fields.to.isWatchOnlyLegacyAddress}")
       label.col-sm-3.control-label(translate="RECEIVE_TO")
       .col-sm-9
-        ui-select(ng-model="fields.to", ng-disabled="paymentRequest")
+        ui-select(ng-model="fields.to", ng-disabled="paymentRequest.amount > 0 || paymentRequest.label")
           ui-select-match {{ $select.selected.label + ($select.selected.isWatchOnlyLegacyAddress ? ' (Watch Only)' : '') }}
           ui-select-choices(repeat="destination in destinations | filter: $select.search" group-by="'type'") 
             span(ng-bind-html="(destination.label | highlight: $select.search) + (destination.isWatchOnlyLegacyAddress ? ' <i>(Watch Only)</i>' : '')")
