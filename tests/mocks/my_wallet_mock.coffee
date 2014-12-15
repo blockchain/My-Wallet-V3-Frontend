@@ -105,6 +105,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     "17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq": "John"
     "1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq": "Alice"
   }
+  
+  myWallet.getAddressBook = () ->
+    myWallet.addressBook
 
   paymentRequests = []
   
