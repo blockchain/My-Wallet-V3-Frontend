@@ -1,4 +1,4 @@
-@TransactionCtrl = ($scope, Wallet, $log, $state, $stateParams, $filter, $cookieStore) ->
+@TransactionCtrl = ($scope, Wallet, $log, $stateParams, $filter, $cookieStore) ->
     
   #################################
   #           Private             #
@@ -36,7 +36,9 @@
             else 
               $scope.from = address + " (you)"
           else if tx.from.externalAddresses?
-            $scope.from = tx.from.externalAddresses.addressWithLargestOutput
+            $scope.from = Wallet.addressBook[tx.from.externalAddresses.addressWithLargestOutput]
+            unless $scope.from
+              $scope.from = tx.from.externalAddresses.addressWithLargestOutput
         
         if tx.to.account?
           $scope.to = $scope.accounts[tx.to.account.index].label
@@ -48,16 +50,10 @@
             else
               $scope.to = address + " (you)"
           else if tx.to.externalAddresses?
-            $scope.to = tx.to.externalAddresses.addressWithLargestOutput
-      
-      
-    # Restore after browser refresh (developer feature)
-    if !$scope.status.isLoggedIn
-      if !!$cookieStore.get("password")
-        Wallet.login($cookieStore.get("uid"), $cookieStore.get("password"))
-      else
-        # $state.go("dashboard")
-        $state.go("transactions", {accountIndex: null})
+            $scope.to = Wallet.addressBook[tx.to.externalAddresses.addressWithLargestOutput]
+            unless $scope.to
+              $scope.from = tx.to.externalAddresses.addressWithLargestOutput
+
         
   # First load:      
   $scope.didLoad()

@@ -62,9 +62,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.user.pairingCode = result
     )
     
-    for address, label of wallet.my.addressBook
-      wallet.addressBook[address] = wallet.my.addressBook[address]
-        
+    for address, label of wallet.my.getAddressBook()
+      wallet.addressBook[address] = label
+            
     # Get email address, etc
     wallet.my.get_account_info((result)->
       wallet.user.email = result.email
