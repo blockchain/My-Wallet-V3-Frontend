@@ -20,7 +20,7 @@ walletApp.directive('fiat', (Wallet , $compile) ->
         (scope.fiat = ""; return) unless scope.btc?
         (scope.fiat = ""; return) if scope.btc == ""
         (scope.fiat = ""; return) if isNaN(scope.btc)
-        (scope.fiat = ""; return) unless scope.settings.currency?
+        (scope.fiat = numeral(scope.btc).divide(100000000).format("0.[0000]") + " BTC"; return) unless scope.settings.currency?
         conversion = scope.conversions[scope.settings.currency.code]
         (scope.fiat = ""; return)  unless conversion? && conversion.conversion > 0
     

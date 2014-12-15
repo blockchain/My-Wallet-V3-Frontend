@@ -7,7 +7,6 @@ walletApp.directive('amount', (Wallet , $compile) ->
     }
     templateUrl: 'templates/amount.html'
     link: (scope, elem, attrs) ->        
-      
         
   }
 )

@@ -87,7 +87,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
       wallet.settings.blockTOR = !!result.block_tor_ips
       
-      wallet.fetchExchangeRate()
       wallet.applyIfNeeded()
     )
     
@@ -108,6 +107,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     $window.root = "https://blockchain.info/"   
     wallet.my.fetchWalletJson(uid, null, null, password, two_factor_code, wallet.didLogin, wallet.needsTwoFactorCode, wallet.wrongTwoFactorCode, wallet.loginError ) 
     
+    wallet.fetchExchangeRate()
   
     
   wallet.create = (password, email, currency, language, success_callback) ->      
@@ -559,8 +559,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         transaction = angular.copy(tx)
         transaction.note = wallet.my.getNote(transaction.hash)
         amount = 0
-        if transaction.from.account?
-          amount += transaction.from.account.amount
+        if transaction.from.account? # Spend or intra-wallet
+          amount -= transaction.from.account.amount
+        else if transaction.to.account?
+          amount += transaction.to.account.amount
         if transaction.from.legacyAddresses? && transaction.from.legacyAddresses.length > 0
           amount += transaction.from.legacyAddressses[0].amount
         if transaction.from.externalAddresses?
@@ -767,6 +769,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.applyIfNeeded()
 
       fail = (error) ->
+        console.log("Failed to load ticker:")
         console.log(error)
         
       wallet.my.get_ticker(success, fail)
