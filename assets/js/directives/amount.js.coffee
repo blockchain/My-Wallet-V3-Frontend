@@ -1,4 +1,4 @@
-walletApp.directive('amount', (Wallet , $compile) ->
+walletApp.directive('amount', () ->
   {
     restrict: "E"
     replace: 'false'
@@ -6,7 +6,7 @@ walletApp.directive('amount', (Wallet , $compile) ->
       transaction: '=transaction'
     }
     templateUrl: 'templates/amount.html'
-    link: (scope, elem, attrs) ->        
-        
+    link: (scope, elem, attrs) ->
+      scope.btc = attrs.btc? # May not work correctly within ng-repeat
   }
 )
