@@ -179,8 +179,9 @@
       $scope.transactionIsValid = false
     
   $scope.$watch "transaction.from", () ->
-    $scope.from = $scope.transaction.from.label + " Account"
-    $scope.visualValidate("from")
+    if $scope.transaction.from?
+      $scope.from = $scope.transaction.from.label + " Account"
+      $scope.visualValidate("from")
     
   $scope.$watch "internal", () ->
     $scope.updateToLabel()

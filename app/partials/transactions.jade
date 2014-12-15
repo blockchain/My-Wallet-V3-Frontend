@@ -6,7 +6,7 @@
     .col-xs-3
       a.date(ui-sref="transaction({accountIndex: accountIndex, hash: transaction.hash})") {{ transaction.txTime | date:'MMMM d @ hh:mm a' }}
     .col-xs-4.description
-      transaction-description(transaction="transaction")
+      transaction-description(transaction="transaction", ng-if="canDisplayDescriptions")
     .col-xs-3
       transaction-note(transaction="transaction")
     .col-xs-2(confirmations-tooltip="transaction")

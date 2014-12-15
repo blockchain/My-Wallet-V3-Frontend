@@ -1,7 +1,13 @@
 @TransactionsCtrl = ($scope, Wallet, MyWallet, $log, $stateParams, $timeout) ->
+  
+  
   #################################
   #           Private             #
   #################################
+  
+  $scope.$watchCollection "accounts", (newValue) ->
+    if $scope.accounts.length > 0
+      $scope.canDisplayDescriptions = true
     
   $scope.didLoad = () ->    
     $scope.transactions = Wallet.transactions      
@@ -10,6 +16,9 @@
     $scope.settings = Wallet.settings
     $scope.totals = Wallet.totals  
     $scope.accountIndex = $stateParams.accountIndex
+    $scope.accounts = Wallet.accounts
+    $scope.canDisplayDescriptions = false # Don't try to show descriptions for before accounts have been loaded
+
     
     # Check if MyWallet is a mock or the real thing. The mock will simulate an 
     # incoming transaction after 3 seconds. 

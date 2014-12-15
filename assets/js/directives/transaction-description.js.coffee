@@ -15,7 +15,7 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
       from_address = null
       
       scope.tooltip = null
-
+      
       if scope.transaction.from.legacyAddresses?
         from_address = scope.transaction.from.legacyAddresses.addressWithLargestOutput
       
@@ -40,7 +40,7 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
           else
             scope.subject = "A_BITCOIN_ADDRESS"
       else
-        if scope.transaction.from.account? && scope.transaction.from.account.index?
+        if scope.transaction.from.account?
           address = to_address
           scope.action = "SENT_BITCOIN_TO"
           if to_name = Wallet.addressBook[to_address]
@@ -56,12 +56,5 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
           else 
             scope.subject = "A_BITCOIN_ADDRESS"
             scope.address = from_address
-
-        $translate(phrase, {from: from, to: to, address: address}).then (translation) ->
-          scope.description = translation
-          
-          $sce.trustAsHtml(scope.description)
-  
-          $compile(elem)(scope)
   }
 )
