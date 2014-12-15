@@ -39,3 +39,4 @@ describe "AccountsCtrl", ->
   it "should know the number of active legacy addresses", inject((Wallet) ->
     expect(scope.numberOfActiveLegacyAddresses()).toBe(3)
   )
+  

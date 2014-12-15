@@ -2,7 +2,7 @@
   $scope.accounts = Wallet.accounts
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.destinations = []
-  
+      
   for account in $scope.accounts
     item = angular.copy(account)
     item.type = "Accounts" 
@@ -28,12 +28,7 @@
       
   $scope.closeAlert = (alert) ->
     Wallet.closeAlert(alert)
-    
-  if request == undefined || request == null  
-    # Managed by this controller, amount in BTC:
-    $scope.fields = {to: null, amount: "0", currency: btc, label: ""}  
-
-  
+      
   $scope.close = () ->
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
@@ -80,17 +75,7 @@
                 
         $scope.fields = {amount: numeral(request.amount).divide(100000000).format("0.[00000000]"), currency: btc, label: request.label}
         $scope.fields.to = $scope.accounts[request.account]
-      else
-        # Making a new request; default to current or first account:
-        idx = 0
-        if $stateParams.accountIndex == undefined || $stateParams.accountIndex == null || $stateParams.accountIndex == ""
-          $scope.fields.to = $scope.accounts[0]
-        else 
-          idx = parseInt($stateParams.accountIndex)
-          $scope.fields.to = $scope.accounts[idx]
-          
-        $scope.paymentRequest = Wallet.generateOrReuseEmptyPaymentRequestForAccount(idx)
-          
+        
       $scope.listenerForPayment = $scope.$watch "paymentRequest.paid", (val,before) ->
         if val != 0 && before != val && $scope.paymentRequest
           if val == $scope.paymentRequest.amount
@@ -105,12 +90,13 @@
       
   $scope.$watch "fields.to", () ->
     $scope.formIsValid = $scope.validate()
-    if $scope.fields.to.address?
-      $scope.setPaymentRequestURL($scope.fields.to.address, null)
+    amount = $scope.parseAmount()
+        
+    if $scope.fields.to? && $scope.fields.to.address?
+      $scope.setPaymentRequestURL($scope.fields.to.address, amount)
     else if parseInt($scope.fields.amount) == 0 && $scope.fields.label == ""
       idx = $scope.fields.to.index
       $scope.paymentRequest = Wallet.generateOrReuseEmptyPaymentRequestForAccount(idx)
-      amount = $scope.parseAmount()    
       $scope.setPaymentRequestURL($scope.paymentRequest.address, amount)
         
   $scope.parseAmount = () ->
@@ -125,14 +111,11 @@
     $scope.formIsValid = $scope.validate()
         
     amount = $scope.parseAmount()    
-          
-    if $scope.paymentRequest == null && $scope.formIsValid
-      if $scope.fields.to.address?
-        $scope.setPaymentRequestURL($scope.fields.to.address, amount)
-
+    if $scope.fields.to? && $scope.fields.to.address?
+      $scope.setPaymentRequestURL($scope.fields.to.address, amount)
+      
     if $scope.paymentRequest && $scope.formIsValid
       if oldValue isnt newValue
-        console.log "Updating request..."
         Wallet.updatePaymentRequest($scope.fields.to.index, $scope.paymentRequest.address, amount, $scope.fields.label)
         
       $scope.setPaymentRequestURL($scope.paymentRequest.address, amount)

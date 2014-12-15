@@ -40,3 +40,15 @@ describe "SettingsAccountsCtrl", ->
     scope.editAccount(account)
     expect(modal.open).toHaveBeenCalled()
   )
+  
+  it "should show a bitcoin address", inject((Wallet) ->
+    spyOn(modal, "open")
+    spyOn(Wallet, "generateOrReuseEmptyPaymentRequestForAccount")
+    account = Wallet.accounts[1]
+      
+    scope.showAddress(account)
+    
+    expect(Wallet.generateOrReuseEmptyPaymentRequestForAccount).toHaveBeenCalled()
+    expect(modal.open).toHaveBeenCalled()
+    
+  )

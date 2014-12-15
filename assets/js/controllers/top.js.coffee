@@ -4,7 +4,6 @@
   $scope.request = () ->
     Wallet.clearAlerts()
       
-      
     if !$scope.accountIndex? || $scope.accountIndex == ""
       request = Wallet.generateOrReuseEmptyPaymentRequestForAccount(0)
     else if $scope.accountIndex == "imported"
@@ -17,7 +16,7 @@
       templateUrl: "partials/request"
       controller: RequestCtrl
       resolve:
-        request: request
+        request: -> request
       windowClass: "blockchain-modal"
     )
     

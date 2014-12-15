@@ -43,3 +43,13 @@ describe "TopCtrl", ->
     scope.request()
     expect(modal.open).toHaveBeenCalled()
   )
+  
+  it "should generate a payment request", inject((Wallet) ->
+    spyOn(Wallet, "generateOrReuseEmptyPaymentRequestForAccount")
+    account = Wallet.accounts[1]
+      
+    scope.request()
+    
+    expect(Wallet.generateOrReuseEmptyPaymentRequestForAccount).toHaveBeenCalled()
+    
+  )
