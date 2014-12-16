@@ -4,8 +4,9 @@ walletApp.directive('fiat', (Wallet , $compile) ->
     replace: 'false'
     scope: {
       btc: '=btc'
+      date: '=date'
     }
-    template: "<span>{{ fiat }}</span>"
+    template: "<span>{{ currencySymbol }}{{ fiat }}</span>"
     link: (scope, elem, attrs) ->      
       scope.settings = Wallet.settings
       scope.conversions = Wallet.conversions
@@ -24,12 +25,22 @@ walletApp.directive('fiat', (Wallet , $compile) ->
         conversion = scope.conversions[scope.settings.currency.code]
         (scope.fiat = ""; return)  unless conversion? && conversion.conversion > 0
     
-        amount = numeral(scope.btc).divide(conversion.conversion).clone()
-          
-        if attrs.abs && amount < 0
-          amount.multiply(-1)
+        btc = scope.btc
         
-        scope.fiat = conversion.symbol + amount.format("0.00")      
+        if attrs.abs && btc < 0
+          btc = btc * -1
+    
+        amount = null
+        if scope.date?
+          scope.fiat = null
+          Wallet.getFiatAtTime(btc, scope.date, scope.settings.currency.code).then (fiat) ->
+            scope.fiat = fiat
+          
+        else
+          amount = numeral(btc).divide(conversion.conversion).clone()
+          scope.fiat = amount.format("0.00")                
+        
+        scope.currencySymbol = conversion.symbol
         
   }
 )

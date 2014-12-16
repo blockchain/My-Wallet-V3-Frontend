@@ -374,7 +374,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
 
     paymentRequest = account.generatePaymentRequest(0, "")
     
-    
+  
   # Amount in Satoshi  
   myWallet.getAccount = (index) ->
     if index < 0
@@ -526,6 +526,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       
   myWallet.legacyAddressExists = (candidate) ->
     return legacyAddresses[candidate]?
+    
+  myWallet.getFiatAtTime = (time, value, currencyCode, successCallback, errorCallback) ->
+    successCallback(3.2)
     
   ############################################################
   # Simulate spontanuous behavior when using mock in browser #

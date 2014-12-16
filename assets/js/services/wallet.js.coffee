@@ -19,8 +19,10 @@ playSound = (id) ->
 ##################################
 
 walletServices = angular.module("walletServices", [])
-walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state) -> 
+walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) -> 
   wallet = {status: {isLoggedIn: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null}, user: {email: null, mobile: null, passwordHint: "", recoveryPhrase: "", pairingCode: ""}}
+  
+  wallet.fiatHistoricalConversionCache = {}
   
   wallet.conversions = {}
   
@@ -189,6 +191,28 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     return null unless wallet.conversions[currency]?
     return numeral(100000000).multiply(amount).divide(wallet.conversions[currency].conversion).format("0.00")
 
+  wallet.getFiatAtTime = (amount, time, currency) ->
+    defer = $q.defer()
+    
+    # Cache the result since historical rates don't change within one session and we don't want to hammer the server
+    key = amount + currency + time
+    
+    success = (fiat) ->
+      console.log fiat
+      wallet.fiatHistoricalConversionCache[key] = fiat
+      defer.resolve(numeral(fiat).format("0.00"))
+      
+    error = (reason) ->
+      defer.reject(reason)
+    
+    if wallet.fiatHistoricalConversionCache[key]
+      success(wallet.fiatHistoricalConversionCache[key])
+    else 
+      # The currency argument in the API is case sensitive.
+      # Time argument in milliseconds
+      wallet.my.getFiatAtTime(time * 1000, amount, currency.toLowerCase(), success, error) 
+    
+    return defer.promise
   
   wallet.transactionObserver = (observer) ->    
     o = {}
@@ -549,6 +573,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       return account.balance
     
   wallet.updateTransactions = () ->
+    console.log wallet.my.getAllTransactions()
     for tx in wallet.my.getAllTransactions()
       match = false
       for candidate in wallet.transactions
