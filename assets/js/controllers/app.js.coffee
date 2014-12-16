@@ -21,6 +21,9 @@
   
   if $state.current.name == ""
     $state.go("transactions", {accountIndex: null})
+    # Tricky because the default account isn't known yet at this point:
+    # $state.go("transactions", {accountIndex: Wallet.getDefaultAccountIndex()})
+    
         
   $scope.$watch "status.isLoggedIn", (newValue) ->
     if newValue

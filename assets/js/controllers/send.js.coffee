@@ -153,10 +153,10 @@
       )
   
   $scope.$watchCollection "accounts", () ->
-    idx = 0
+    idx = Wallet.getDefaultAccountIndex()
     if !$scope.transaction.from? && $scope.accounts.length > 0
       if $stateParams.accountIndex == undefined || $stateParams.accountIndex == null || $stateParams.accountIndex == ""
-        idx = 0
+        # Use default
       else 
         idx = parseInt($stateParams.accountIndex)
       $scope.transaction.from = $scope.accounts[idx]

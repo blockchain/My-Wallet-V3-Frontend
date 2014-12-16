@@ -5,10 +5,10 @@
     Wallet.clearAlerts()
       
     if !$scope.accountIndex? || $scope.accountIndex == ""
-      request = Wallet.generateOrReuseEmptyPaymentRequestForAccount(0)
+      request = Wallet.generateOrReuseEmptyPaymentRequestForAccount()
     else if $scope.accountIndex == "imported"
       # Currently no way to select a random legacy address:
-      request = Wallet.generateOrReuseEmptyPaymentRequestForAccount(0)
+      request = Wallet.generateOrReuseEmptyPaymentRequestForAccount()
     else
       request = Wallet.generateOrReuseEmptyPaymentRequestForAccount(parseInt($scope.accountIndex))
             

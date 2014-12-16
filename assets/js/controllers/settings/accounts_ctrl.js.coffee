@@ -32,3 +32,6 @@
       windowClass: "blockchain-modal"
     )
   
+    
+  $scope.makeDefault = (account) ->
+    Wallet.setDefaultAccount(account)

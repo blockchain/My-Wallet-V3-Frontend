@@ -396,11 +396,16 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     this.refreshPaymentRequests() 
     
   wallet.generateOrReuseEmptyPaymentRequestForAccount = (accountIndex) ->
+    if accountIndex == undefined
+      accountIndex = wallet.my.getDefaultAccountIndex()
     account = wallet.my.getAccounts()[accountIndex]
     request = wallet.my.generateOrReuseEmptyPaymentRequestForAccount(accountIndex)
     request.address = account.getAddressForPaymentRequest(request)
     this.refreshPaymentRequests()
     return wallet.getPaymentRequest(accountIndex, request.address)
+    
+  wallet.getDefaultAccountIndex = () ->
+    wallet.my.getDefaultAccountIndex()
     
   ###################
   # URL: bitcoin:// #
@@ -523,6 +528,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     numberOfOldAccounts = wallet.accounts.length
     numberOfNewAccounts = wallet.my.getAccountsCount()
         
+    defaultAccountIndex = wallet.my.getDefaultAccountIndex()
+        
     if numberOfNewAccounts > 0
       for i in [0..(numberOfNewAccounts - 1)]
         if i >= numberOfOldAccounts
@@ -531,6 +538,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         # Set or update label and balance:
         wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
         wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
+        wallet.accounts[i].isDefault = !(defaultAccountIndex < i or defaultAccountIndex > i) 
     
   wallet.updateLegacyAddresses = () ->
     numberOfOldAddresses = wallet.legacyAddresses.length
@@ -573,7 +581,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       return account.balance
     
   wallet.updateTransactions = () ->
-    console.log wallet.my.getAllTransactions()
     for tx in wallet.my.getAllTransactions()
       match = false
       for candidate in wallet.transactions
@@ -914,6 +921,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
   wallet.getTotalBalanceForActiveLegacyAddresses = () ->
     return wallet.my.getTotalBalanceForActiveLegacyAddresses()
+    
+  wallet.setDefaultAccount = (account) ->
+    wallet.my.setDefaultAccountIndex(account.index)
+    wallet.updateAccounts()
+
     
   ########################################
   # Testing: only works on mock MyWallet #

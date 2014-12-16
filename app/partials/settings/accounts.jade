@@ -22,7 +22,8 @@ p(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
           span.btc {{ account.balance | btc }} 
           fiat.fiat(btc="account.balance") 
         td 
-          a(translate="MAKE_DEFAULT")
+          a(translate="MAKE_DEFAULT", ng-hide="account.isDefault", ng-click="makeDefault(account)")
+          span.label.label-primary(translate="DEFAULT", ng-show="account.isDefault")
         td 
           a(translate="RENAME",          ng-click="editAccount(account)")
         td 

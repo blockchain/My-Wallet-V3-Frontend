@@ -226,5 +226,6 @@
   "DESCRIPTION" : "Description",
   "OPTIONAL" : "Optional",
   "WALLET_IMPORT" : "Already have a wallet? You can import it here",
+  "DEFAULT" : "default",
   "" : ""
 }

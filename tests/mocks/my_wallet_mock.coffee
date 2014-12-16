@@ -94,6 +94,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   email = "steve@me.com"
   mobile = "+31 12345678"
   
+  defaultAccountIndex = 0
+  
   feePolicy = 0
 
   monitorFunc = undefined  # New system
@@ -529,6 +531,13 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.getFiatAtTime = (time, value, currencyCode, successCallback, errorCallback) ->
     successCallback(3.2)
+    
+  myWallet.getDefaultAccountIndex = () ->
+    return defaultAccountIndex
+    
+  myWallet.setDefaultAccountIndex = (idx) ->
+    defaultAccountIndex = idx
+    return
     
   ############################################################
   # Simulate spontanuous behavior when using mock in browser #
