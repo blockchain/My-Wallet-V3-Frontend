@@ -3,7 +3,7 @@ An AngularJS bitcoin web wallet powered by Blockchains [MyWallet](https://github
 
 ## Running Locally
 
-Make sure you have [Node.js](http://nodejs.org/) and the [Heroku Toolbelt](https://toolbelt.heroku.com/) installed.
+Make sure you have [Node.js](http://nodejs.org/) installed.
 
 ```sh
 git clone --recursive https://github.com/blockchain/My-Wallet-HD-Frontend.git 
@@ -24,19 +24,21 @@ npm start
 
 Visit [localhost:3012](http://localhost:3012/).
 
-If you use the mock (see below) it will work out of the box. If you want to use it with real bitcoins then you need to disable your browser CORS security (for the time being), e.g. with this [Chrome plugin](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en-US). You'll see a red icon with CORS. Click on it to make it green. Click on it again before you visit your banks website...
+If you use the mock (see below) it will work out of the box. If you want to use it with real bitcoins then you need to disable your browser CORS security. On a Mac you can install Google Chrome Canary and launch it as follows:
+
+```sh
+/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary --disable-web-security
+```
+
+Alternatively you can drag ```Canary Chrome Insecure``` into your Applications folder and launch with Command + Space Canary.
 
 ## Usage
 
-After loading the page and disabling CORS security you can open any wallet. Demo wallet:
+After loading the page and disabling CORS security you can open any wallet registered with your email address. It will be upgraded to HD automatically. You can also sign up for a new wallet.
 
-| UID | Password |
-------|-----------
-| 78019bee-7a27-490b-ab8a-446c2749bf1f | 1234567890 |
+After login, you'll see a list of accounts. There will be delay before transactions and the correct balances show up. If something goes wrong during the login process, error messages appear in the console. 
 
-After login, you'll see a list of addresses. If something goes wrong during the login process, error messages will appear in the console.
-
-You can add new addresses to your wallet, but they will not be saved to the server.
+The first time you login your browser needs to be verified. There's no UI for this yet, but you will receive an email with an approval link; once you click that login should proceed as normal.
 
 To automatically login after every page refresh, create a file `.env` and add `SAVE_PASSWORD=1` to it.
 
@@ -61,7 +63,7 @@ MyWallet can simulated using a mock, allowing you to login with fake credentials
 * If you entered a lower or higher amount it will show the appropriate warnings. 
 * If the simulated payment was insufficient and you leave the modal window open, after 10 seconds it will add the missing funds.
 
-To use the mock you need to add an environment variable MOCK=1. Create a file `.env` with `MOCK=1` at the top.
+To use the mock create a file `.env` with `MOCK=1` at the top, restart the server and logout.
 
 ## Testnet
 
@@ -71,8 +73,8 @@ Not supported by the server yet.
 
 Curently the app is configured to be deployed on Heroku and on a Blockchain staging server:
 
-* Real money: http://dev.blockchain.info/ (VPN or IP whitelist)
-* Mock: http://pure-wildwood-5818.herokuapp.com/
+* Real money: http://dev.blockchain.info/ (VPN or IP whitelist, might not work at the moment)
+* Mock: http://pure-wildwood-5818.herokuapp.com/ (not always up to date)
 
 ## Dependencies
 
