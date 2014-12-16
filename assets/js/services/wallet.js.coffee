@@ -498,14 +498,15 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     numberOfOldAccounts = wallet.accounts.length
     numberOfNewAccounts = wallet.my.getAccountsCount()
-    
-    for i in [0..(numberOfNewAccounts - 1)]
-      if i >= numberOfOldAccounts
-        wallet.accounts.push {active: true, legacy: false, index: i}
+        
+    if numberOfNewAccounts > 0
+      for i in [0..(numberOfNewAccounts - 1)]
+        if i >= numberOfOldAccounts
+          wallet.accounts.push {active: true, legacy: false, index: i}
       
-      # Set or update label and balance:
-      wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
-      wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
+        # Set or update label and balance:
+        wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
+        wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
     
   wallet.updateLegacyAddresses = () ->
     numberOfOldAddresses = wallet.legacyAddresses.length

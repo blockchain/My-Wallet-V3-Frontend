@@ -279,6 +279,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     return accounts.length
     
   myWallet.getLabelForAccount = (idx) ->
+    return null unless idx?
+    return null if accounts.length < idx - 1
+    return null unless accounts[idx]?
     return accounts[idx].label
     
   myWallet.getBalanceForAccount = (idx) ->
