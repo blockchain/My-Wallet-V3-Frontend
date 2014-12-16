@@ -30,7 +30,7 @@ If you use the mock (see below) it will work out of the box. If you want to use 
 /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary --disable-web-security
 ```
 
-Alternatively you can drag ```Canary Chrome Insecure``` into your Applications folder and launch with Command + Space Canary.
+Alternatively you can drag ```Canary Chrome Insecure``` into your Applications folder and launch with ```Command``` + ```Space``` + ```Canary Insecure```.
 
 ## Usage
 
