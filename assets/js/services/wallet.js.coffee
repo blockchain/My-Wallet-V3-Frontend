@@ -765,8 +765,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           # result: units of fiat per BTC 
           # convert to: units of satoshi per unit of fiat
           wallet.conversions[code] = {symbol: info.symbol, conversion: parseInt(numeral(100000000).divide(numeral(info["15m"])).format("1"))}  
-
-        wallet.updateAccountsAndLegacyAddresses()
+        
+        if wallet.status.isLoggedIn
+          wallet.updateAccountsAndLegacyAddresses()
         wallet.applyIfNeeded()
 
       fail = (error) ->

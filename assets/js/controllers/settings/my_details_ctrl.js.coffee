@@ -10,10 +10,11 @@
   $scope.newMobile = {country: null, number: null}
   
   $scope.$watch "user.mobile", (newValue) -> # Update form
-    $scope.newMobile.country = null
-    if newValue.country? && newValue.country != ""
-      $scope.newMobile.country = $filter("getByPropertyNested")("countryCallingCodes", newValue.country, $scope.countries)
-    $scope.newMobile.number = newValue.number
+    if $scope.user.mobile?
+      $scope.newMobile.country = null
+      if newValue.country? && newValue.country != ""
+        $scope.newMobile.country = $filter("getByPropertyNested")("countryCallingCodes", newValue.country, $scope.countries)
+      $scope.newMobile.number = newValue.number
     
   
   $scope.$watch "user.mobile.number + user.mobile.country", (newValue) ->
