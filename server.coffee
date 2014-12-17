@@ -1,29 +1,29 @@
-# fs = require('fs')
-# https = require('https')
+fs = require('fs')
+https = require('https')
 express = require("express")
-# socket = require('socket.io')
-# sslOptions = {
-#     key: fs.readFileSync(__dirname + '/ssl_dev/server.key'),
-#     cert: fs.readFileSync(__dirname + '/ssl_dev/server.crt'),
-#     honorCipherOrder: true
-#     ca: fs.readFileSync(__dirname + '/ssl_dev/ca.crt'),
-#     requestCert: true,
-#     rejectUnauthorized: false
-# }
+socket = require('socket.io')
+sslOptions = {
+    key: fs.readFileSync(__dirname + '/ssl_dev/server.key'),
+    cert: fs.readFileSync(__dirname + '/ssl_dev/server.crt'),
+    honorCipherOrder: true
+    ca: fs.readFileSync(__dirname + '/ssl_dev/ca.crt'),
+    requestCert: true,
+    rejectUnauthorized: false
+}
 app = express()
 app.use express.logger()
 
-# server = https.createServer(sslOptions, app)
-# io = socket.listen(server, {
-#     "log level" : 3,
-#     "match origin protocol" : true,
-#     "transports" : ['websocket']
-# })
+server = https.createServer(sslOptions, app)
+io = socket.listen(server, {
+    "log level" : 3,
+    "match origin protocol" : true,
+    "transports" : ['websocket']
+})
 
-port = process.env.PORT or 3012
-# port = process.env.PORT or 443
+# port = 3012
+port = 443
 
-server = app
+# server = app
 
 # Configuration
 app.configure ->

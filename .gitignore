@@ -2,4 +2,3 @@ node_modules
 app/bower_components
 *.log
 .env
-ssl_dev
