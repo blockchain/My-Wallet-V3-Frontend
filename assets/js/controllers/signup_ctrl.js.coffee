@@ -1,7 +1,6 @@
 @SignupCtrl = ($scope, $log, Wallet, $modalInstance, $translate, $cookieStore, $filter) ->
   $scope.currentStep = 1
-  
-
+  $scope.importing = false
   $scope.languages = Wallet.languages
   $scope.currencies = Wallet.currencies
   $scope.alerts = Wallet.alerts
@@ -19,9 +18,20 @@
 
   $scope.didLoad = () ->    
     if Wallet.status.isLoggedIn && !Wallet.status.didVerifyEmail
-      $scope.currentStep = 3
+      $scope.currentStep = 4
       
   $scope.didLoad()
+  
+  $scope.import = () ->
+    $scope.currentStep = 3
+    
+  $scope.performImport = () ->
+    if confirm "You will lose all bitcoins in your current wallet. Are you sure?"
+      $scope.importing = true
+      Wallet.importWithMnemonic($scope.fields.mnemonic)
+    
+  $scope.skipImport = () ->
+    $scope.currentStep = 4
 
   $scope.close = () ->
     Wallet.clearAlerts()
@@ -39,7 +49,11 @@
         )
           
       else
-        $scope.currentStep++
+        if $scope.currentStep == 1
+          $scope.currentStep++
+        if $scope.currentStep == 2
+          $scope.currentStep = 4 # Skip import step
+        
     else
       # console.log "Form step not valid"
       # console.log $scope.currentStep
@@ -56,7 +70,7 @@
       $scope.validate(false)
 
   $scope.validate = (visual=true) ->
-    isValid = [true, true] # [step 1, step 2]
+    isValid = [true, true, true] # [step 1, step 2, step 3]
     
     $scope.errors = {email: null, password: null, confirmation: null}
     $scope.success = {password: false, confirmation: false}    

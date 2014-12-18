@@ -333,6 +333,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.my.redeemFromEmailOrMobile(account.index, claim)
     success() 
     
+  wallet.importWithMnemonic = (mnemonic) ->
+    console.log mnemonic
+    wallet.my.recoverMyWalletHDWalletFromMnemonic(mnemonic)    
       
   ####################
   # Payment requests #

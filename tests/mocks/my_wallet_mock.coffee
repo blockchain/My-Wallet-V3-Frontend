@@ -1,10 +1,10 @@
 walletServices = angular.module("myWalletServices", [])
 walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService, $cookieStore) ->
   # Erase local storage:
-  # localStorageService.remove("mockWallets")
+  localStorageService.remove("mockWallets")
 
-  # $cookieStore.remove("uid")
-  # $cookieStore.remove("password")
+  $cookieStore.remove("uid")
+  $cookieStore.remove("password")
 
   # console.log localStorageService.get("mockWallets")
   
@@ -569,6 +569,10 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     address = privateKey.replace("private_key_for_","")
     legacyAddresses[address] =  {privateKey: privateKey, balance: 200000000}
     return address
+    
+  myWallet.recoverMyWalletHDWalletFromMnemonic = (mnemonic, pwd) ->
+    accounts.splice(0,accounts.length)
+    accounts.push({name: "Account #0", balance: 0})
       
   myWallet.legacyAddressExists = (candidate) ->
     return legacyAddresses[candidate]?

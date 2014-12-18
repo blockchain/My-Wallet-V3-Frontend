@@ -230,5 +230,9 @@
   "REDEEM_TO" : "Redeem To",
   "REDEEM" : "Redeem",
   "REDEEM_BITCOINS" : "Redeem Bitcoins",
+  "IMPORT_WALLET" : "Import Wallet",
+  "SKIP_IMPORT" : "Skip Import",
+  "MNEMONIC" : "Mnemonic",
+  "IMPORT" : "Import",
   "" : ""
 }

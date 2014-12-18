@@ -2,7 +2,8 @@
   .modal-header
     h3(translate="EMAIL_AND_PASSWORD", ng-show="currentStep == 1")
     h3(translate="SETUP_WALLET", ng-show="currentStep == 2")
-    h3(translate="CONFIRM_EMAIL", ng-show="currentStep == 3")  
+    h3(translate="IMPORT_WALLET", ng-show="currentStep == 3")    
+    h3(translate="CONFIRM_EMAIL", ng-show="currentStep == 4")  
   .modal-body
     form.form-horizontal(role="form",name="form",novalidate)
       div(ng-switch="currentStep")
@@ -41,6 +42,16 @@
                 label(translate="CHOOSE_CURRENCY")
                 currency-picker(currency="fields.currency")
         div(ng-switch-when="3")
+          .form-group
+            // (ng-class="{'has-error': errors.email, 'has-success': success.email}")
+            label.col-sm-4.control-label(translate="MNEMONIC")
+            .col-sm-6
+              input.form-control(type="text",ng-model="fields.mnemonic",autofocus,ng-blur="validate()", ng-focus="errors.mnemonic = null",placeholder="claw never gift someone eat flight breathe faint hope limit bowl down", ng-disabled="importing")
+              span.help-block {{ errors.mnemomic }}
+              br
+              button.btn.btn-primary(ng-click="performImport()", translate="IMPORT")
+              
+        div(ng-switch-when="4")
           p(translate="CONFIRM_EMAIL_EXPLAIN" translate-values='{ email: fields.email}')
           hr
           .why
@@ -55,4 +66,8 @@
         //- button.btn.btn-info(ng-click="close()", translate="CLOSE", ng-hide="currentStep == 3 || currentStep == 2")
         a(ng-click="nextStep()",ng-disabled="!isValid[0]", translate="NEXT_STEP", ng-show="currentStep == 1")
         a(ng-click="nextStep()",ng-disabled="!isValid[1]", translate="NEXT_STEP", ng-show="currentStep == 2")
-        a(ng-click="resendEmail()", translate="RESEND_EMAIL", ng-show="currentStep == 3")
+        a(ng-click="skipImport()", ng-show="currentStep == 3 && !importing", translate="SKIP_IMPORT")
+        span(ng-show="currentStep == 3")   
+        img(ng-show="currentStep == 3 && importing" src="img/spinner.gif")     
+        a(ng-click="performImport()",ng-disabled="!isValid[2]", translate="IMPORT", ng-show="currentStep == 3 && !importing")
+        a(ng-click="resendEmail()", translate="RESEND_EMAIL", ng-show="currentStep == 4")
