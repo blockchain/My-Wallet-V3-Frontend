@@ -1,29 +1,41 @@
-fs = require('fs')
-https = require('https')
 express = require("express")
-socket = require('socket.io')
-sslOptions = {
-    key: fs.readFileSync(__dirname + '/ssl_dev/server.key'),
-    cert: fs.readFileSync(__dirname + '/ssl_dev/server.crt'),
-    honorCipherOrder: true
-    ca: fs.readFileSync(__dirname + '/ssl_dev/ca.crt'),
-    requestCert: true,
-    rejectUnauthorized: false
-}
 app = express()
 app.use express.logger()
+server = app
 
-server = https.createServer(sslOptions, app)
-io = socket.listen(server, {
-    "log level" : 3,
-    "match origin protocol" : true,
-    "transports" : ['websocket']
-})
+env = require('node-env-file')
+try
+  env(__dirname + '/.env');
+catch 
 
-# port = 3012
-port = 443
+port = env.PORT or 3012
 
-# server = app
+#########
+# HTTPS #
+#########
+
+# fs = require('fs')
+# https = require('https')
+# socket = require('socket.io')
+# sslOptions = {
+#     key: fs.readFileSync(__dirname + '/ssl_dev/server.key'),
+#     cert: fs.readFileSync(__dirname + '/ssl_dev/server.crt'),
+#     honorCipherOrder: true
+#     ca: fs.readFileSync(__dirname + '/ssl_dev/ca.crt'),
+#     requestCert: true,
+#     rejectUnauthorized: false
+# }
+# server = https.createServer(sslOptions, app)
+# io = socket.listen(server, {
+#     "log level" : 3,
+#     "match origin protocol" : true,
+#     "transports" : ['websocket']
+# })
+# port = env.PORT or 443
+
+#############
+# End HTTPS #
+#############
 
 # Configuration
 app.configure ->
@@ -56,10 +68,7 @@ app.get "/templates/:name.html", (req, res) ->
   res.render "templates/" + name
   return
 
-env = require('node-env-file')
-try
-  env(__dirname + '/.env');
-catch 
+
 
 server.listen port, ->
   console.log "Listening on " + port

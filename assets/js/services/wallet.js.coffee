@@ -68,10 +68,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.addressBook[address] = label
             
     # Get email address, etc
-    console.log "Getting info..."
+    # console.log "Getting info..."
     wallet.my.get_account_info((result)->
-      console.log "Info:"
-      console.log result
+      # console.log "Info:"
+      # console.log result
       wallet.user.email = result.email
       if result.sms_number
          wallet.user.mobile = {country: result.sms_number.split(" ")[0], number: result.sms_number.split(" ")[1]}
