@@ -310,9 +310,16 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     amount = wallet.checkAndGetTransactionAmount(amount, currency, observer)
     
     if from.address?
-      wallet.my.sendFromLegacyAddressToAccount(from.address, destination.index, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
+      if destination.index?
+        wallet.my.sendFromLegacyAddressToAccount(from.address, destination.index, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
+      else if destination.address?
+        wallet.my.sendFromLegacyAddressToAddress(from.address, destination.address, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
     else if from.index?
-      wallet.my.sendToAccount(from.index, destination.index, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
+      if destination.index?
+        wallet.my.sendToAccount(from.index, destination.index, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
+      else if destination.address?
+        wallet.my.sendBitcoinsForAccount(from.index, destination.address, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
+      
       
   wallet.sweepLegacyToAccount = (fromAddress, toAccountIndex, observer) ->
     wallet.my.sweepLegacyToAccount(fromAddress.address, toAccountIndex, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
