@@ -77,7 +77,7 @@ p(translate="IMPORTED_ADDRESSES_EXPLAIN")
         td
           a(ui-sref="settings.address({address: address.address})", translate="DETAILS")
         td 
-          a(translate="TRANSFER")
+          a(translate="TRANSFER", ng-click="transfer(address)")
         td 
           a(translate="ARCHIVE", ng-click="archive(address)")
 

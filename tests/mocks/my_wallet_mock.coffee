@@ -359,6 +359,48 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     success()
     
     return
+  
+  myWallet.sendToAccount = (fromAccountIdx, toAccountIdx, amount, feeAmount, note, success, error, getPassword) ->
+    transaction = {
+            hash: "hash-" + (new Date()).getTime(), 
+            confirmations: 0
+            doubleSpend: false
+            intraWallet: true, 
+            note: null, 
+            txTime: (new Date()).getTime()
+            from: {account: {index: fromAccountIdx, amount: amount}, legacyAddresses: null, externalAddresses: null}, 
+            to:   {account: {index: toAccountIdx, amount: amount}, legacyAddresses: null, externalAddresses: null}
+          }
+
+    transactions.push transaction
+    accounts[fromAccountIdx].balance -= amount
+    accounts[toAccountIdx].balance += amount   
+    
+    success()
+    
+    return
+     
+  
+  myWallet.sendFromLegacyAddressToAccount = (fromAddress, toAccountIdx, amount, feeAmount, note, success, error, getPassword) ->
+    transaction = {
+              hash: "hash-" + (new Date()).getTime(), 
+              confirmations: 0
+              doubleSpend: false
+              intraWallet: true, 
+              note: null, 
+              txTime: (new Date()).getTime()
+              from: {account: null, legacyAddresses: [{address: fromAddress, amount: amount}], externalAddresses: null}, 
+              to:   {account: {index: toAccountIdx, amount: amount}, legacyAddresses: null, externalAddresses: null}
+            }
+
+    transactions.push transaction
+    legacyAddresses[fromAddress].balance -= amount
+    accounts[toAccountIdx].balance += amount   
+    
+    success()
+    
+    return
+    
     
   myWallet.sweepLegacyToAccount = (fromAddress, toAccountIndex, observer) ->
     accounts[toAccountIndex].balance = legacyAddresses[fromAddress].balance
@@ -471,6 +513,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.recommendedTransactionFeeForAccount = () ->
     return 10000
     
+  myWallet.recommendedTransactionFeeForAddress = () ->
+    return 10000
     
   ####################
   # Legacy addresses #

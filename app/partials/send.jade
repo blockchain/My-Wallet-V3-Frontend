@@ -16,22 +16,22 @@
       .form-group
         label.col-sm-3.control-label
           span(translate="SEND_FROM", ng-hide="internal")
-          span(translate="FROM_ACCOUNT", ng-show="internal")
+          span(translate="FROM", ng-show="internal")
           |:
         .col-sm-7
           ui-select(ng-model="transaction.from")
             ui-select-match {{ $select.selected.label }} ({{ max($select.selected) }})
-            ui-select-choices(repeat="account in accounts | filter: $select.search") 
-              span(ng-bind-html="account.label | highlight: $select.search")
+            ui-select-choices(repeat="origin in origins | filter: $select.search" group-by="'type'") 
+              span(ng-bind-html="origin.label | highlight: $select.search")
       .form-group(ng-show="internal")
         label.col-sm-3.control-label
-          span(translate="TO_ACCOUNT")
+          span(translate="TO")
           |:  
         .col-sm-7
-          ui-select(ng-model="transaction.toAccount")
+          ui-select(ng-model="transaction.destination")
             ui-select-match {{ $select.selected.label }} ({{ max($select.selected) }})
-            ui-select-choices(repeat="account in accounts | filter: $select.search") 
-              span(ng-bind-html="account.label | highlight: $select.search")
+            ui-select-choices(repeat="destination in destinations | filter: $select.search" group-by="'type'") 
+              span(ng-bind-html="destination.label | highlight: $select.search")
       .form-group(ng-class="{'has-error': errors.to}", ng-hide="internal")
         label.col-sm-3.control-label(for="to")
           span(translate="SEND_TO")

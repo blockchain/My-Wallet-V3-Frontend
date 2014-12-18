@@ -172,9 +172,14 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   #   Transactions   #
   ####################
   
-  wallet.recommendedTransactionFeeForAccount = (idx, amount) ->
+  wallet.recommendedTransactionFee = (origin, amount) ->
     # amount in Satoshi
-    return wallet.my.recommendedTransactionFeeForAccount(idx, amount)
+    if origin.address?
+      return wallet.my.recommendedTransactionFeeForAddress(origin.address, amount)
+    else if origin.index?
+      return wallet.my.recommendedTransactionFeeForAccount(origin.index, amount)
+    else
+      return null
     
   #############
   # Spend BTC #
@@ -301,9 +306,13 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     wallet.my.sendBitcoinsForAccount(fromAccountIndex, to, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
       
-  wallet.sendInternal = (fromAccountIndex, toAccountIndex, amount, currency, observer) ->
+  wallet.sendInternal = (from, destination, amount, currency, observer) ->
     amount = wallet.checkAndGetTransactionAmount(amount, currency, observer)
-    wallet.my.sendToAccount(fromAccountIndex, toAccountIndex, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
+    
+    if from.address?
+      wallet.my.sendFromLegacyAddressToAccount(from.address, destination.index, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
+    else if from.index?
+      wallet.my.sendToAccount(from.index, destination.index, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
       
   wallet.sweepLegacyToAccount = (fromAddress, toAccountIndex, observer) ->
     wallet.my.sweepLegacyToAccount(fromAddress.address, toAccountIndex, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError)
@@ -600,7 +609,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         else if transaction.to.account?
           amount += transaction.to.account.amount
         if transaction.from.legacyAddresses? && transaction.from.legacyAddresses.length > 0
-          amount += transaction.from.legacyAddressses[0].amount
+          amount += transaction.from.legacyAddresses[0].amount
         if transaction.from.externalAddresses?
           amount += transaction.from.externalAddresses.amount
           

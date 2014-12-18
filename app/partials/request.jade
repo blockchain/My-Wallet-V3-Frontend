@@ -19,7 +19,7 @@
       .col-sm-4
         ui-select(ng-model="fields.currency")
           ui-select-match {{ $select.selected.code }}
-          ui-select-choices(repeat="currency in currencies | filter: $select.search" group-by="'type'") 
+          ui-select-choices(repeat="currency in currencies | filter: $select.search" group-by="'type'")
             span(ng-bind-html="currency.code | highlight: $select.search")   
     .form-group
       label.col-sm-3.control-label(translate="DESCRIPTION")

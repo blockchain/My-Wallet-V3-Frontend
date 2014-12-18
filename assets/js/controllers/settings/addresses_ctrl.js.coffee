@@ -47,6 +47,15 @@
       controller: AddressImportCtrl
       windowClass: "blockchain-modal"
     )
+    
+  $scope.transfer = (address) ->
+    $modal.open(
+      templateUrl: "partials/send"
+      controller: SendCtrl
+      resolve:
+        paymentRequest: -> 
+          {fromAddress: address, amount: 0, toAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()]}
+    )
         
         
   #################################

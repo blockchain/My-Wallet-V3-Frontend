@@ -1,4 +1,29 @@
 @SendCtrl = ($scope, $log, Wallet, $modalInstance, ngAudio, $timeout, $state, $stateParams, $translate, paymentRequest) ->
+  $scope.legacyAddresses = Wallet.legacyAddresses
+  $scope.accounts = Wallet.accounts
+  $scope.addressBook = Wallet.addressBook
+  
+  $scope.origins = []
+  $scope.destinations = []  
+      
+  for account in $scope.accounts
+    item = angular.copy(account)
+    item.type = "Accounts" 
+    $scope.origins.push item
+    $scope.destinations.push item
+  
+  for address in $scope.legacyAddresses 
+    if address.active
+      item = angular.copy(address)
+      item.type = "Imported Addresses"
+      $scope.destinations.push item
+      unless address.isWatchOnlyLegacyAddress
+        $scope.origins.push item
+    
+  # for address, label of $scope.addressBook
+  #     item = {address: address, label: label}
+  #     item.type = "Address book"
+  #     $scope.destinations.push item
   
   # $scope.privacyGuard = false
     
@@ -31,26 +56,34 @@
       $scope.toPlaceholder = "+18005550199"
     
     $scope.errors.to = null
-    $scope.transaction.to = paymentRequest.address
+    if paymentRequest.address?
+      $scope.transaction.destination = paymentRequest.address
+    else if paymentRequest.toAccount?
+      $scope.internal = true
+      $scope.transaction.destination = paymentRequest.toAccount
+      console.log paymentRequest.fromAddress
+      $scope.transaction.from = paymentRequest.fromAddress
+      
     return
       
-  $scope.max = (account) ->
-    return null unless account?
-    idx = $scope.accounts.indexOf(account)
-    balance = account.balance
-    fees = Wallet.recommendedTransactionFeeForAccount(idx, account.balance)
+  $scope.max = (origin) ->
+    # console.log origin
+    return null unless origin?
+
+    balance = origin.balance
+    
+    fees = Wallet.recommendedTransactionFee(origin, origin.balance)
+
     max_btc = numeral(balance - fees).divide("100000000")
     if $scope.transaction.currency == "BTC"
       return max_btc.format("0.[00000000]") + " BTC"  
     else 
       return $scope.BTCtoFiat(max_btc, $scope.transaction.currency) + " " + $scope.transaction.currency
   
-  $scope.transaction = {from: null, to: paymentRequest.address, toAccount: null, amount: paymentRequest.amount, satoshi: 0, currency: "BTC", currencySelected: btc, fee: numeral(0)}
+  $scope.transaction = {from: null, to: paymentRequest.address, destination: null, amount: paymentRequest.amount, satoshi: 0, currency: "BTC", currencySelected: btc, fee: 0}
     
   $scope.setMethod("BTC")
   
-  $scope.addressBook = Wallet.addressBook
-  $scope.accounts = Wallet.accounts
     
   # QR Code scan. Uses js from this fork:
   # https://github.com/peekabustudios/webcam-directive/blob/master/app/scripts/webcam.js
@@ -124,11 +157,11 @@
     Wallet.clearAlerts()
     
     if $scope.internal
+      # TODO: differentiate between address, account and address book
       fromAccountIdx = $scope.accounts.indexOf($scope.transaction.from) 
-      toAccountIdx   = $scope.accounts.indexOf($scope.transaction.toAccount) 
       amount = numeral($scope.transaction.amount)
       
-      Wallet.sendInternal(fromAccountIdx, toAccountIdx, amount, $scope.transaction.currency, $scope.observer)
+      Wallet.sendInternal($scope.transaction.from, $scope.transaction.destination, amount, $scope.transaction.currency, $scope.observer)
     else
       if $scope.method == "EMAIL" 
         Wallet.sendToEmail($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.to, numeral($scope.transaction.amount), $scope.transaction.currency, $scope.observer)
@@ -166,14 +199,14 @@
       else
         $scope.transaction.toAccount = $scope.accounts[0]
   
-  $scope.$watchCollection "[transaction.to, transaction.toAccount, transaction.from, transaction.amount, transaction.currency]", () ->
+  $scope.$watchCollection "[transaction.to, transaction.destination, transaction.from, transaction.amount, transaction.currency]", () ->
     if $scope.transaction.currency == "BTC"
       $scope.transaction.satoshi = parseInt(numeral($scope.transaction.amount).multiply(100000000).format("0"))
     else
       $scope.transaction.satoshi = Wallet.fiatToSatoshi($scope.transaction.amount, $scope.transaction.currency)
     
-    if $scope.transaction.to? && $scope.transaction.amount > 0
-      $scope.transaction.fee = Wallet.recommendedTransactionFeeForAccount($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.satoshi)     
+    if ((!$scope.internal && $scope.transaction.to?) || ($scope.internal && $scope.transaction.destination?)) && $scope.transaction.amount > 0
+      $scope.transaction.fee = Wallet.recommendedTransactionFee($scope.transaction.from, $scope.transaction.satoshi)     
       $scope.transactionIsValid = $scope.validate()
     else
       $scope.transactionIsValid = false
@@ -253,7 +286,7 @@
     transaction = $scope.transaction
     
     if $scope.internal
-      return false if transaction.toAccount == transaction.from
+      return false if transaction.destination == transaction.from
     else
       unless transaction.to? && transaction.to != ""
         return false
@@ -267,8 +300,7 @@
     
     $scope.errors.to = null
     
-    return false unless $scope.validateAmount()    
-    
+    return false unless $scope.validateAmount()   
     return true
     
   $scope.validateAmount = () ->
@@ -278,7 +310,6 @@
 
     return false if $scope.transaction.satoshi + $scope.transaction.fee > $scope.transaction.from.balance
     $scope.errors.amount = null
-    
     return true
     
   
