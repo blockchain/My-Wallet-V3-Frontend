@@ -66,19 +66,22 @@
       
     return
       
-  $scope.max = (origin) ->
-    # console.log origin
-    return null unless origin?
-
-    balance = origin.balance
+  $scope.maxAndLabel = (select) ->
+    return "" unless select?
+    return "" unless select.selected?
+    
+    origin = select.selected
+    
+    if origin.balance == undefined
+      return origin.label
     
     fees = Wallet.recommendedTransactionFee(origin, origin.balance)
 
-    max_btc = numeral(balance - fees).divide("100000000")
+    max_btc = numeral(origin.balance - fees).divide("100000000")
     if $scope.transaction.currency == "BTC"
-      return max_btc.format("0.[00000000]") + " BTC"  
+      return origin.label + "(" + max_btc.format("0.[00000000]") + " BTC)"  
     else 
-      return $scope.BTCtoFiat(max_btc, $scope.transaction.currency) + " " + $scope.transaction.currency
+      return origin.label + "(" + $scope.BTCtoFiat(max_btc, $scope.transaction.currency) + " " + $scope.transaction.currency + ")"
   
   $scope.transaction = {from: null, to: paymentRequest.address, destination: null, amount: paymentRequest.amount, satoshi: 0, currency: "BTC", currencySelected: btc, fee: 0}
     

@@ -20,7 +20,7 @@
           |:
         .col-sm-7
           ui-select(ng-model="transaction.from")
-            ui-select-match {{ $select.selected.label }} ({{ max($select.selected) }})
+            ui-select-match {{ maxAndLabel($select) }}
             ui-select-choices(repeat="origin in origins | filter: $select.search" group-by="'type'") 
               span(ng-bind-html="origin.label | highlight: $select.search")
       .form-group(ng-show="internal")
@@ -29,7 +29,7 @@
           |:  
         .col-sm-7
           ui-select(ng-model="transaction.destination")
-            ui-select-match {{ $select.selected.label }} ({{ max($select.selected) }})
+            ui-select-match {{ $select.selected.label }}
             ui-select-choices(repeat="destination in destinations | filter: $select.search" group-by="'type'") 
               span(ng-bind-html="destination.label | highlight: $select.search")
       .form-group(ng-class="{'has-error': errors.to}", ng-hide="internal")
