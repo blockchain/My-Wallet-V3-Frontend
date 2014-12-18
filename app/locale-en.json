@@ -227,5 +227,8 @@
   "OPTIONAL" : "Optional",
   "WALLET_IMPORT" : "Already have a wallet? You can import it here",
   "DEFAULT" : "default",
+  "REDEEM_TO" : "Redeem To",
+  "REDEEM" : "Redeem",
+  "REDEEM_BITCOINS" : "Redeem Bitcoins",
   "" : ""
 }

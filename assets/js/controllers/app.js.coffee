@@ -27,15 +27,27 @@
         
   $scope.$watch "status.isLoggedIn", (newValue) ->
     if newValue
-      if Wallet.goal? && Wallet.goal.send?
-        $modal.open(
-          templateUrl: "partials/send"
-          controller: SendCtrl
-          resolve:
-            paymentRequest: -> 
-              Wallet.goal.send
-        )
+      if Wallet.goal? 
+        if Wallet.goal.send?
+          $modal.open(
+            templateUrl: "partials/send"
+            controller: SendCtrl
+            resolve:
+              paymentRequest: -> 
+                Wallet.goal.send
+          )
           
-        Wallet.goal = null
+          Wallet.goal = null
+          
+        if Wallet.goal.claim?
+          $modal.open(
+            templateUrl: "partials/claim"
+            controller: ClaimModalCtrl
+            resolve:
+              claim: -> 
+                Wallet.goal.claim
+          )
+        
+          Wallet.goal = null
       
   

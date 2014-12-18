@@ -190,3 +190,15 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     }
   )
   
+  $stateProvider.state("claim",
+    url: "/claim/:code"
+      
+    views: {
+      navigation: navigation,
+      alerts: alerts,
+      top: {
+        controller: "ClaimCtrl"
+      }
+    }
+  )
+  

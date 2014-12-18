@@ -42,6 +42,14 @@ The first time you login your browser needs to be verified. There's no UI for th
 
 To automatically login after every page refresh, create a file `.env` and add `SAVE_PASSWORD=1` to it.
 
+To reclaim funds from an email take code at the of link and add it to `#/claim`, e.g.:
+
+    https://blockchain.info/wallet/claim#7Educ5YNnVPQCQ556w7W8tQpj1dchhxPK56vVNab68cK
+    http://localhost:3012/#/claim/7Educ5YNnVPQCQ556w7W8tQpj1dchhxPK56vVNab68cK
+
+Make sure that SAVE_PASSWORD is not enabled.
+
+
 ## Test
 
 You may need to install PhantomJS seperately. On a Mac:
