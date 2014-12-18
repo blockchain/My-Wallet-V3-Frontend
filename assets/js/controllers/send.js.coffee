@@ -188,7 +188,7 @@
         $scope.visualValidate('currency')
       )
   
-  $scope.$watchCollection "accounts", () ->
+  $scope.$watchCollection "destinations", () ->
     idx = Wallet.getDefaultAccountIndex()
     if !$scope.transaction.from? && $scope.accounts.length > 0
       if $stateParams.accountIndex == undefined || $stateParams.accountIndex == null || $stateParams.accountIndex == ""
@@ -196,11 +196,13 @@
       else 
         idx = parseInt($stateParams.accountIndex)
       $scope.transaction.from = $scope.accounts[idx]
-    if !$scope.transaction.toAccount? && $scope.accounts.length > 1
+    if (!$scope.transaction.destination? || $scope.transaction.destination == "") && $scope.destinations.length > 1
       if idx == 0
-        $scope.transaction.toAccount = $scope.accounts[1]
+        $scope.transaction.destination = $scope.destinations[1]
       else
-        $scope.transaction.toAccount = $scope.accounts[0]
+        $scope.transaction.destination = $scope.destinations[0]
+        
+      console.log $scope.transaction
   
   $scope.$watchCollection "[transaction.to, transaction.destination, transaction.from, transaction.amount, transaction.currency]", () ->
     if $scope.transaction.currency == "BTC"
@@ -235,7 +237,9 @@
       
   $scope.updateToLabel = () ->
     if $scope.internal
-      $scope.toLabel = $scope.transaction.toAccount.label + " Account"
+      $scope.toLabel = $scope.transaction.destination.label
+      if $scope.transaction.destination.index?
+        $scope.toLabel += " Account"
     else
       $scope.toLabel = $scope.transaction.to
       
