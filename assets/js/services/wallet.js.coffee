@@ -695,7 +695,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     else if event == "hd_wallets_does_not_exist"
       # Create a new one:
       console.log "Creating new HD wallet..."
-      wallet.my.initializeHDWallet()
+      needsSecondPasswordCallback = (continueCallback) ->
+        $rootScope.$broadcast "requireSecondPassword", continueCallback
+        
+      wallet.my.initializeHDWallet(null, null, needsSecondPasswordCallback)
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
       wallet.refreshPaymentRequests()

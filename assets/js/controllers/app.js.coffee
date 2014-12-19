@@ -50,4 +50,12 @@
         
           Wallet.goal = null
       
-  
+  $scope.$on "requireSecondPassword", (notification, continueCallback) ->
+    modalInstance = $modal.open(
+      templateUrl: "partials/second-password"
+      controller: SecondPasswordCtrl
+    )
+    
+    modalInstance.result.then((secondPassword) ->
+      continueCallback(secondPassword)
+    )

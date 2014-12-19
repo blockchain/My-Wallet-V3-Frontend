@@ -234,5 +234,6 @@
   "SKIP_IMPORT" : "Skip Import",
   "MNEMONIC" : "Mnemonic",
   "IMPORT" : "Import",
+  "SUBMIT" : "Submit",
   "" : ""
 }
