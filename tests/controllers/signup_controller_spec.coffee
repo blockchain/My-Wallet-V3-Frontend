@@ -137,9 +137,9 @@ describe "SignupCtrl", ->
     it "should guess the correct currency", ->
       expect(scope.fields.currency.code).toBe("USD")
       
-    it "should go to third step", ->
+    it "should skip import and go to step 4", ->
       scope.nextStep()
-      expect(scope.currentStep).toBe(3)
+      expect(scope.currentStep).toBe(4)
 
  
       
@@ -157,5 +157,5 @@ describe "SignupCtrl", ->
     )
 
     it "should resume if account was created and popup closed", inject((Wallet) ->
-      expect(scope.currentStep).toBe(3)
+      expect(scope.currentStep).toBe(4)
     )

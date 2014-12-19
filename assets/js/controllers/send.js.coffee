@@ -201,9 +201,7 @@
         $scope.transaction.destination = $scope.destinations[1]
       else
         $scope.transaction.destination = $scope.destinations[0]
-        
-      console.log $scope.transaction
-  
+          
   $scope.$watchCollection "[transaction.to, transaction.destination, transaction.from, transaction.amount, transaction.currency]", () ->
     if $scope.transaction.currency == "BTC"
       $scope.transaction.satoshi = parseInt(numeral($scope.transaction.amount).multiply(100000000).format("0"))

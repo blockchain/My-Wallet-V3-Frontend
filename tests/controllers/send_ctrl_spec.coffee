@@ -275,13 +275,13 @@ describe "SendCtrl", ->
       scope.$apply()
       
     it "selects the next available account by default", ->
-      expect(scope.transaction.toAccount).toBe(scope.accounts[1])
+      expect(scope.transaction.destination.label).toBe(scope.accounts[1].label)
     
     it "does not require a to address", ->
       expect(scope.transactionIsValid).toBe(true)
 
     it "does not allow sending to the same account", ->
-      scope.transaction.toAccount = scope.transaction.from
+      scope.transaction.destination = scope.transaction.from
       scope.$apply()
       expect(scope.transactionIsValid).toBe(false)
       
