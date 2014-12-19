@@ -148,7 +148,13 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.getHDWallet = () ->
     myWallet 
     
-  myWallet.getPassphraseString = () ->
+  myWallet.isValidateBIP39Mnemonic = (mnemonic) ->
+    return false unless mnemonic?
+    return false if mnemonic.indexOf(" ") == -1
+    return false if mnemonic.split(" ").length < 3
+    return true
+    
+  myWallet.getHDWalletPassphraseString = () ->
     return "banana big me hungry"
     
   myWallet.fetchWalletJson = (uid, dummy1, dummy2, password, two_factor_code, success, needs_2fa, wrong_2fa) ->

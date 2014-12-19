@@ -130,9 +130,6 @@
       Wallet.changeCurrency(newVal)
     
   $scope.$watch "fields.mnemonic", (newValue) ->
-    console.log newValue
-    console.log Wallet.isValidBIP39Mnemonic($scope.fields.mnemonic)
     $scope.isValid[2] = Wallet.isValidBIP39Mnemonic($scope.fields.mnemonic)
-    console.log $scope.isValid
     
   
