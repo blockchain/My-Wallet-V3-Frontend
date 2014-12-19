@@ -31,7 +31,7 @@
   .col-xs-6.right
     p
       a(ng-click="importRecoveryPhrase()",translate="IMPORT_RECOVERY_PHRASE", ng-hide="editMnemonic")
-    input.form-control(type="text",ng-model="mnemonic",ng-blur="validate()", ng-focus="errors.mnemonic = null",placeholder="claw never gift someone eat flight breathe faint hope limit bowl down", ng-disabled="importing", ng-show="editMnemonic")
+    input.form-control(type="text",ng-model="mnemonic",ng-blur="validate()", ng-focus="errors.mnemonic = null",placeholder="vapor purchase love swing bullet sort price image humble target bird west", ng-disabled="importing", ng-show="editMnemonic")
     br
     img(ng-show="importing" src="img/spinner.gif")     
     a.btn.btn-primary(ng-click="performImport()", translate="IMPORT", ng-show="editMnemonic && !importing")

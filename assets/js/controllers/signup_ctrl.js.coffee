@@ -25,10 +25,21 @@
   $scope.import = () ->
     $scope.currentStep = 3
     
-  $scope.performImport = () ->
-    if confirm "You will lose all bitcoins in your current wallet. Are you sure?"
-      $scope.importing = true
-      Wallet.importWithMnemonic($scope.fields.mnemonic)
+  $scope.performImport = () ->    
+    success = () ->
+      $scope.currentStep = 4
+      $scope.importing = false
+      Wallet.displaySuccess("Successfully imported seed")
+    
+    error = (message) ->
+      $scope.importing = false
+      Wallet.displayError(message)
+  
+    $scope.importing = true
+  
+    Wallet.importWithMnemonic($scope.fields.mnemonic, success, error)      
+    
+    return
     
   $scope.skipImport = () ->
     $scope.currentStep = 4
@@ -42,7 +53,8 @@
     if $scope.isValid[$scope.currentStep - 1]
       if $scope.currentStep == 1
         $scope.createWallet((uid)->
-          $cookieStore.put("uid", uid)
+          if uid?
+            $cookieStore.put("uid", uid)
           # if $scope.savePassword
           #   $cookieStore.put("password", $scope.password)
           $scope.currentStep++

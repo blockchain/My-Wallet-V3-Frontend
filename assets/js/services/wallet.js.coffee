@@ -202,7 +202,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     return numeral(100000000).multiply(amount).divide(wallet.conversions[currency].conversion).format("0.00")
 
   wallet.getFiatAtTime = (amount, time, currency) ->
-    defer = $q.defer()
     
     # Cache the result since historical rates don't change within one session and we don't want to hammer the server
     key = amount + currency + time
@@ -222,7 +221,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       # Time argument in milliseconds
       wallet.my.getFiatAtTime(time * 1000, amount, currency.toLowerCase(), success, error) 
     
-    return defer.promise
   
   wallet.transactionObserver = (observer) ->    
     o = {}
@@ -335,9 +333,17 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.my.redeemFromEmailOrMobile(account.index, claim)
     success() 
     
-  wallet.importWithMnemonic = (mnemonic) ->
-    console.log mnemonic
-    wallet.my.recoverMyWalletHDWalletFromMnemonic(mnemonic)    
+  wallet.importWithMnemonic = (mnemonic, successCallback, errorCallback) ->
+    success = () ->
+      wallet.updateAccounts()
+      successCallback()
+      
+    deferred = $q.defer();
+    
+    $timeout((->
+      wallet.my.recoverMyWalletHDWalletFromMnemonic(mnemonic, null, success, errorCallback)    
+    ), 100)  
+      
       
   ####################
   # Payment requests #
