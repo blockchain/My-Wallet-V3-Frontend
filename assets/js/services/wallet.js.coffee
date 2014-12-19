@@ -58,7 +58,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.didLogin = () ->
     wallet.status.isLoggedIn = true 
     
-    wallet.user.recoveryPhrase = wallet.my.getHDWallet().getPassphraseString()
+    wallet.user.recoveryPhrase = wallet.my.getHDWalletPassphraseString()
     
     wallet.my.makePairingCode((result)->
       wallet.user.pairingCode = result
@@ -66,6 +66,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     for address, label of wallet.my.getAddressBook()
       wallet.addressBook[address] = label
+      
+    wallet.updateAccounts()
             
     # Get email address, etc
     # console.log "Getting info..."
