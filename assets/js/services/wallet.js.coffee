@@ -355,6 +355,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     success = () ->
       wallet.updateAccounts()
+      wallet.updateTransactions()
+      
       successCallback()
           
     $timeout((->
