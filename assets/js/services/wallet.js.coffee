@@ -334,6 +334,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     success() 
     
   wallet.importWithMnemonic = (mnemonic, successCallback, errorCallback) ->
+    wallet.accounts.splice(0, wallet.accounts.length)
+    wallet.transactions.splice(0, wallet.transactions.length)
+    
     success = () ->
       wallet.updateAccounts()
       successCallback()
@@ -960,6 +963,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.setDefaultAccount = (account) ->
     wallet.my.setDefaultAccountIndex(account.index)
     wallet.updateAccounts()
+    
+  wallet.isValidBIP39Mnemonic = (mnemonic) ->
+    wallet.my.isValidateBIP39Mnemonic(mnemonic)
 
     
   ########################################

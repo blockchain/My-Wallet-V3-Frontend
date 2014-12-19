@@ -46,10 +46,8 @@
             // (ng-class="{'has-error': errors.email, 'has-success': success.email}")
             label.col-sm-4.control-label(translate="MNEMONIC")
             .col-sm-6
-              input.form-control(type="text",ng-model="fields.mnemonic",autofocus,ng-blur="validate()", ng-focus="errors.mnemonic = null",placeholder="vapor purchase love swing bullet sort price image humble target bird west", ng-disabled="importing")
+              input.form-control(type="text",ng-model="fields.mnemonic",autofocus, ng-focus="errors.mnemonic = null",placeholder="vapor purchase love swing bullet sort price image humble target bird west", ng-disabled="importing")
               span.help-block {{ errors.mnemomic }}
-              br
-              button.btn.btn-primary(ng-click="performImport()", translate="IMPORT")
               
         div(ng-switch-when="4")
           p(translate="CONFIRM_EMAIL_EXPLAIN" translate-values='{ email: fields.email}')
@@ -64,10 +62,10 @@
         a(translate="WALLET_IMPORT", ng-click="import()", ng-show="currentStep==2")
       .col.xs-6
         //- button.btn.btn-info(ng-click="close()", translate="CLOSE", ng-hide="currentStep == 3 || currentStep == 2")
-        a(ng-click="nextStep()",ng-disabled="!isValid[0]", translate="NEXT_STEP", ng-show="currentStep == 1")
-        a(ng-click="nextStep()",ng-disabled="!isValid[1]", translate="NEXT_STEP", ng-show="currentStep == 2")
-        a(ng-click="skipImport()", ng-show="currentStep == 3 && !importing", translate="SKIP_IMPORT")
+        button.btn.btn-primary(ng-click="nextStep()",ng-disabled="!isValid[0]", translate="NEXT_STEP", ng-show="currentStep == 1 && !working")
+        button.btn.btn-primary(ng-click="nextStep()",ng-disabled="!isValid[1]", translate="NEXT_STEP", ng-show="currentStep == 2")
+        button.btn.btn-info(ng-click="skipImport()", ng-show="currentStep == 3 && !importing", translate="SKIP_IMPORT")
+        button.btn.btn-primary(ng-click="performImport()", ng-disabled="!isValid[2]", translate="IMPORT", ng-show="currentStep == 3 && !working")
         span(ng-show="currentStep == 3")   
-        img(ng-show="currentStep == 3 && importing" src="img/spinner.gif")     
-        a(ng-click="performImport()",ng-disabled="!isValid[2]", translate="IMPORT", ng-show="currentStep == 3 && !importing")
-        a(ng-click="resendEmail()", translate="RESEND_EMAIL", ng-show="currentStep == 4")
+        img(ng-show="working" src="img/spinner.gif")     
+        button.btn.btn-primary(ng-click="resendEmail()", translate="RESEND_EMAIL", ng-show="currentStep == 4")

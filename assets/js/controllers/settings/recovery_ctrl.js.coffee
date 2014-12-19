@@ -27,9 +27,17 @@
     error = (message) ->
       $scope.importing = false
       Wallet.displayError(message)
-    
-    $scope.importing = true
-    
-    Wallet.importWithMnemonic($scope.mnemonic, success, error)      
+      
+    if confirm("You will lose all your bitcoins! Are you sure?")    
+      $scope.importing = true
+      Wallet.importWithMnemonic($scope.mnemonic, success, error)      
       
     return
+    
+    
+  $scope.validate = () ->
+    $scope.isValid = Wallet.isValidBIP39Mnemonic($scope.mnemonic)
+    
+  $scope.$watch "mnemonic", () ->
+    $scope.validate()
+  

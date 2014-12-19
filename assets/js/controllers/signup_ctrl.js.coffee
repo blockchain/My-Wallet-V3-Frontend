@@ -1,9 +1,11 @@
 @SignupCtrl = ($scope, $log, Wallet, $modalInstance, $translate, $cookieStore, $filter) ->
   $scope.currentStep = 1
-  $scope.importing = false
+  $scope.working = false
   $scope.languages = Wallet.languages
   $scope.currencies = Wallet.currencies
   $scope.alerts = Wallet.alerts
+  
+  $scope.isValid = [true, true, false]
   
   
   language_guess = $filter("getByProperty")("code", $translate.use(), Wallet.languages)
@@ -13,7 +15,7 @@
    
   currency_guess =  $filter("getByProperty")("code", "USD", Wallet.currencies)
 
-  $scope.fields = {email: "", password: "", confirmation: "", language: language_guess, currency: currency_guess}
+  $scope.fields = {email: "", password: "", confirmation: "", language: language_guess, currency: currency_guess, mnemonic: ""}
 
 
   $scope.didLoad = () ->    
@@ -28,14 +30,14 @@
   $scope.performImport = () ->    
     success = () ->
       $scope.currentStep = 4
-      $scope.importing = false
+      $scope.working = false
       Wallet.displaySuccess("Successfully imported seed")
     
     error = (message) ->
-      $scope.importing = false
+      $scope.working = false
       Wallet.displayError(message)
   
-    $scope.importing = true
+    $scope.working = true
   
     Wallet.importWithMnemonic($scope.fields.mnemonic, success, error)      
     
@@ -52,14 +54,16 @@
     $scope.validate()
     if $scope.isValid[$scope.currentStep - 1]
       if $scope.currentStep == 1
+        $scope.working = true
+        
         $scope.createWallet((uid)->
+          $scope.working = false
           if uid?
             $cookieStore.put("uid", uid)
           # if $scope.savePassword
           #   $cookieStore.put("password", $scope.password)
           $scope.currentStep++
-        )
-          
+        ) 
       else
         if $scope.currentStep == 1
           $scope.currentStep++
@@ -82,35 +86,36 @@
       $scope.validate(false)
 
   $scope.validate = (visual=true) ->
-    isValid = [true, true, true] # [step 1, step 2, step 3]
+    # [step 1, step 2, step 4]
+    
+    $scope.isValid[0] = true
+    $scope.isValid[1] = true
     
     $scope.errors = {email: null, password: null, confirmation: null}
     $scope.success = {password: false, confirmation: false}    
           
     if $scope.fields.password == ""
-      isValid[0] = false
+      $scope.isValid[0] = false
     else
       if $scope.fields.password.length > 3
         $scope.success.password = true
       else
-        isValid[0] = false
+        $scope.isValid[0] = false
         if visual
           $translate("TOO_SHORT").then (translation) ->
             $scope.errors.password = translation
       
     if $scope.fields.confirmation == ""
-      isValid[0] = false
+      $scope.isValid[0] = false
     else
       if $scope.fields.confirmation == $scope.fields.password
         $scope.success.confirmation = true
       else
-        isValid[0] = false
+        $scope.isValid[0] = false
         if visual
           $translate("NO_MATCH").then (translation) ->
             $scope.errors.confirmation = translation
-            
-    $scope.isValid = isValid      
-  
+                          
   $scope.validate()
 
   $scope.$watch "fields.language", (newVal, oldVal) ->
@@ -123,3 +128,11 @@
     # Update in wallet...
     if newVal?
       Wallet.changeCurrency(newVal)
+    
+  $scope.$watch "fields.mnemonic", (newValue) ->
+    console.log newValue
+    console.log Wallet.isValidBIP39Mnemonic($scope.fields.mnemonic)
+    $scope.isValid[2] = Wallet.isValidBIP39Mnemonic($scope.fields.mnemonic)
+    console.log $scope.isValid
+    
+  
