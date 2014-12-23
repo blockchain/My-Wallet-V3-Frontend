@@ -101,12 +101,21 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     wallet.applyIfNeeded()
     
-  wallet.loginError = (error) ->
-    console.log error
-    $state.go("login")
-    return
+ 
     
-  wallet.login = (uid, password, two_factor_code) ->   
+  wallet.login = (uid, password, two_factor_code, observer) ->  
+    loginError = (error) ->
+      wallet.displayError(error)
+      
+      if observer?
+        observer.error()
+      else
+        $state.go("login")
+      
+      wallet.applyIfNeeded()
+      
+      return
+  
     if two_factor_code? && two_factor_code != ""
       wallet.settings.needs2FA = true
     else
@@ -114,7 +123,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
       
     $window.root = "https://blockchain.info/"   
-    wallet.my.fetchWalletJson(uid, null, null, password, two_factor_code, wallet.didLogin, wallet.needsTwoFactorCode, wallet.wrongTwoFactorCode, wallet.loginError ) 
+    wallet.my.fetchWalletJson(uid, null, null, password, two_factor_code, wallet.didLogin, wallet.needsTwoFactorCode, wallet.wrongTwoFactorCode, loginError ) 
     
     wallet.fetchExchangeRate()
   

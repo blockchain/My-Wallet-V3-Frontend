@@ -5,18 +5,27 @@
   $scope.twoFactorCode = ""
   $scope.creatingAccount = false
   $scope.busy = false  
+  $scope.isValid = false
   
   if !!$cookieStore.get("password")      
     $scope.password = $cookieStore.get("password")
   
   $scope.login = () ->
+    # Is called twice for some reason... Related to ladda?
+    return if $scope.busy
+    
     $scope.busy = true
     Wallet.clearAlerts()
+    
+    observer = {}
+    
+    observer.error = () ->
+      $scope.busy = false
             
     if !$scope.settings.needs2FA
-      Wallet.login($scope.uid, $scope.password)
+      Wallet.login($scope.uid, $scope.password, null, observer)
     else if $scope.twoFactorCode != ""
-      Wallet.login($scope.uid, $scope.password, $scope.twoFactorCode)
+      Wallet.login($scope.uid, $scope.password, $scope.twoFactorCode, observer)
       
     if $scope.uid? && $scope.uid != ""
       $cookieStore.put("uid", $scope.uid)
@@ -45,3 +54,16 @@
       # $state.go("dashboard")
       $state.go("transactions", {accountIndex: null})
       
+  $scope.$watch "uid + password", () ->
+    isValid = null
+    
+    if !$scope.uid? || $scope.uid == ""
+      isValid = false
+      
+    if !$scope.password? || $scope.password == ""
+      isValid = false
+
+    if !isValid?
+      isValid = true
+      
+    $scope.isValid = isValid      

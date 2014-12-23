@@ -18,5 +18,5 @@ form.form-horizontal(role="form", ng-hide="creatingAccount")
   .form-actions
     .col-md-1
     .col-md-6
-      a.btn.btn-primary(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="LOGIN")
+      a.btn.btn-primary(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="LOGIN", ng-disabled="!isValid")
       button.btn.btn-primary(ng-click="create()",translate="CREATE_WALLET", ng-disabled="busy") 
