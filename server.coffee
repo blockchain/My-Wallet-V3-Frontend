@@ -8,7 +8,7 @@ try
   env(__dirname + '/.env');
 catch 
 
-port = env.PORT or 3012
+port = env.PORT or 8080
 
 #########
 # HTTPS #

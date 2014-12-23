@@ -22,9 +22,9 @@ Run the server:
 npm start
 ```
 
-Visit [localhost:3012](http://localhost:3012/).
+If you use the mock (see below) it will work out of the box. Just visit [local.blockchain.com:8080](http://local.blockchain.com:8080/).
 
-If you use the mock (see below) it will work out of the box. If you want to use it with real bitcoins then you need to disable your browser CORS security. On a Mac you can install Google Chrome Canary and launch it as follows:
+If you want to use it with a real wallet then you need to disable your browser CORS security. On a Mac you can install Google Chrome Canary and launch it as follows:
 
 ```sh
 /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary --disable-web-security
@@ -45,7 +45,7 @@ To automatically login after every page refresh, create a file `.env` and add `S
 To reclaim funds from an email take code at the of link and add it to `#/claim`, e.g.:
 
     https://blockchain.info/wallet/claim#7Educ5YNnVPQCQ556w7W8tQpj1dchhxPK56vVNab68cK
-    http://localhost:3012/#/claim/7Educ5YNnVPQCQ556w7W8tQpj1dchhxPK56vVNab68cK
+    http://local.blockchain.com:8080/#/claim/7Educ5YNnVPQCQ556w7W8tQpj1dchhxPK56vVNab68cK
 
 Make sure that SAVE_PASSWORD is not enabled.
 

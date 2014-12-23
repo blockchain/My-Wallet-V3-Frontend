@@ -58,7 +58,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.didLogin = () ->
     wallet.status.isLoggedIn = true 
     
-    wallet.user.recoveryPhrase = wallet.my.getHDWalletPassphraseString()
+    unless wallet.my.getHDWallet() == null
+      wallet.user.recoveryPhrase = wallet.my.getHDWalletPassphraseString()
     
     wallet.my.makePairingCode((result)->
       wallet.user.pairingCode = result
@@ -67,7 +68,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     for address, label of wallet.my.getAddressBook()
       wallet.addressBook[address] = label
       
-    wallet.updateAccounts()
+    unless wallet.my.getHDWallet() == null
+      wallet.updateAccounts()
             
     # Get email address, etc
     # console.log "Getting info..."
@@ -699,6 +701,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         $rootScope.$broadcast "requireSecondPassword", continueCallback
         
       wallet.my.initializeHDWallet(null, null, needsSecondPasswordCallback)
+      # Afterward, needs to do:
+      #       wallet.user.recoveryPhrase = wallet.my.getHDWalletPassphraseString()
+
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
       wallet.refreshPaymentRequests()
