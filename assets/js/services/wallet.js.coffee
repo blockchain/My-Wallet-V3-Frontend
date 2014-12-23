@@ -97,6 +97,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
       wallet.settings.blockTOR = !!result.block_tor_ips
       
+      # Fetch transactions:
+      wallet.my.getHistoryAndParseMultiAddressJSON()
+      
       wallet.applyIfNeeded()
     )
     
@@ -613,6 +616,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         # Set or update label and balance:
         wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
         wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
+        console.log wallet.my.getBalanceForAccount(i)
         wallet.accounts[i].isDefault = !(defaultAccountIndex < i or defaultAccountIndex > i) 
     
   wallet.updateLegacyAddresses = () ->
@@ -725,6 +729,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
 
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
+      wallet.updateAccountsAndLegacyAddresses()  
       wallet.refreshPaymentRequests()
       wallet.applyIfNeeded()
       
