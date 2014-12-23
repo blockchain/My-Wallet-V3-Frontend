@@ -56,6 +56,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     return
   
   wallet.didLogin = () ->
+    
     wallet.status.isLoggedIn = true 
     
     unless wallet.my.getHDWallet() == null
@@ -121,16 +122,25 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     else
       two_factor_code = undefined
     
+    authorizationProvided = () ->
+      wallet.clearAlerts()
+      wallet.displaySuccess("Login approved, checking password...")
+      wallet.applyIfNeeded()
+    
+    authorizationRequired = (callback) ->
+      callback(authorizationProvided)
+      wallet.displayWarning("Please check your email to approve this login attempt.", true)
+      wallet.applyIfNeeded()
       
     $window.root = "https://blockchain.info/"   
-    wallet.my.fetchWalletJson(uid, null, null, password, two_factor_code, wallet.didLogin, wallet.needsTwoFactorCode, wallet.wrongTwoFactorCode, loginError ) 
+    wallet.my.fetchWalletJson(uid, null, null, password, two_factor_code, wallet.didLogin, wallet.needsTwoFactorCode, wallet.wrongTwoFactorCode, authorizationRequired, loginError ) 
     
     wallet.fetchExchangeRate()
   
     
   wallet.create = (password, email, currency, language, success_callback) ->      
     success = (uid) ->
-      wallet.displaySuccess("Wallet created with identifier: " + uid)
+      wallet.displaySuccess("Wallet created with identifier: " + uid, true)
       wallet.login(uid, password)
       success_callback(uid)
     
