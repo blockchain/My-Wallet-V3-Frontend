@@ -20,6 +20,7 @@ walletApp = angular.module("walletApp", [
   "ngNumeraljs"
   "pascalprecht.translate"
   "ui.bootstrap-slider"
+  # 'angular-ladda'
 ])
 
 walletApp.config (uiSelectConfig) ->

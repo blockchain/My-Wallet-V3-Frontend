@@ -25,7 +25,14 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     script(src='bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js')    
     script(src='bower_components/angular-bootstrap-slider/slider.js')
     
+    // angular-ladda doesn't play nicely with ui-bootstrap
+    // script(src="bower_components/ladda/js/spin.js")
+    // script(src="bower_components/ladda/js/ladda.js")
+    // script(src="bower_components/angular-ladda/dist/angular-ladda.min.js")
+    
     link(rel='stylesheet', href='bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css')
+    //- link(rel="stylesheet", href="bower_components/ladda/dist/ladda-themeless.min.css")
+    !=css('ladda')
     
     !=css('app')
     !=css('navigation')
