@@ -31,7 +31,7 @@ describe "LoginCtrl", ->
     
     scope.login()
     
-    expect(Wallet.login).toHaveBeenCalledWith("user", "pass")
+    expect(Wallet.login).toHaveBeenCalled()
     return
   )
   

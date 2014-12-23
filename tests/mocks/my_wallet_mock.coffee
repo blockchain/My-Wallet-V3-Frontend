@@ -176,16 +176,18 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       
       myWallet.password = password
     
-      this.refresh()
     
       success()
       eventListener("on_wallet_decrypt_finish")
-      eventListener("did_multiaddr")
       return
-      
+
     else
       $log.error "Wallet not found"
       eventListener("wallet not found")
+      
+  myWallet.getHistoryAndParseMultiAddressJSON = () ->
+    this.refresh()
+    eventListener("did_multiaddr")
       
   myWallet.createNewWallet = (email, pwd, language, currency, success, fail) ->
     uid = String(Math.floor((Math.random() * 100000000) + 1))

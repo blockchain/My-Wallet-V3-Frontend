@@ -633,7 +633,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           addressItem = wallet.legacyAddresses[i]
       
         # Set or update label and balance:
-        addressItem.label = wallet.my.getLegacyAddressLabel(addressItem.address) || address
+        addressItem.label = wallet.my.getLegacyAddressLabel(addressItem.address) 
+        unless addressItem.label?
+          addressItem.label = addressItem.address
         addressItem.balance = wallet.my.getLegacyAddressBalance(addressItem.address)
         addressItem.isWatchOnlyLegacyAddress = wallet.my.isWatchOnlyLegacyAddress(addressItem.address)
       
