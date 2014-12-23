@@ -17,7 +17,8 @@
         td 
           a(ui-sref="transactions({accountIndex: $index.toString()})") {{ account.label }}
         td.amount
-          fiat(btc="account.balance")
+          fiat(btc="account.balance", ng-show="account.balance != null")
+          img(ng-show="account.balance == null" src="img/spinner.gif")
     div(ng-show="numberOfActiveLegacyAddresses() > 0")
       table.left-header.accounts
         tr

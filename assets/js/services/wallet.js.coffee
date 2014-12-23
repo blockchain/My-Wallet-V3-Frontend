@@ -616,7 +616,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         # Set or update label and balance:
         wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
         wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
-        console.log wallet.my.getBalanceForAccount(i)
         wallet.accounts[i].isDefault = !(defaultAccountIndex < i or defaultAccountIndex > i) 
     
   wallet.updateLegacyAddresses = () ->
