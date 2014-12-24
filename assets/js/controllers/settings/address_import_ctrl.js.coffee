@@ -20,8 +20,12 @@
     $modalInstance.dismiss ""
   
   $scope.validate = () ->
-    $scope.address = Wallet.addAddressOrPrivateKey($scope.fields.addressOrPrivateKey.trim(), $scope.errors)
-    $scope.step = 2
+    success = (address)->
+      $scope.address = address
+      $scope.step = 2
+    
+        
+    Wallet.addAddressOrPrivateKey($scope.fields.addressOrPrivateKey.trim(), $scope.errors, success)
     
   $scope.goToTransfer = () ->
     $scope.step = 3

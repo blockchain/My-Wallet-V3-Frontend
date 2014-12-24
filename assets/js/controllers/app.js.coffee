@@ -57,5 +57,10 @@
     )
     
     modalInstance.result.then((secondPassword) ->
-      continueCallback(secondPassword)
+      correctPassword = () ->
+        
+      wrongPassword = () ->
+        Wallet.displayError("Second password incorrect")
+        
+      continueCallback(secondPassword, correctPassword, wrongPassword)
     )

@@ -235,5 +235,11 @@
   "MNEMONIC" : "Mnemonic",
   "IMPORT" : "Import",
   "SUBMIT" : "Submit",
+  "WALLET_SECOND_PASSWORD" : "Second Wallet Password",
+  "WALLET_SECOND_PASSWORD_EXPLAIN" : "For additional security you can choose a second password that is asked whenever you want to spend bitcoins. Beware that there is no password reset functionality.",
+  "SECOND_PASSWORD_SET" : "Second Password Enabled",
+  "REMOVE_SECOND_PASSWORD" : "Remove Second Password",
+  "SET_SECOND_PASSWORD" : "Configure Second Password",
+  "SET_PASSWORD" : "Set Password",
   "" : ""
 }

@@ -172,7 +172,7 @@
         Wallet.displayError("SMS not yet supported")
         return
 
-      Wallet.send($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.to, numeral($scope.transaction.amount), $scope.transaction.currency, $scope.observer)
+      Wallet.send($scope.transaction.from, $scope.transaction.to, numeral($scope.transaction.amount), $scope.transaction.currency, $scope.observer)
 
   $scope.closeAlert = (alert) ->
     Wallet.closeAlert(alert)
@@ -312,7 +312,7 @@
     amount = $scope.transaction.amount
 
     return false unless amount? && amount > 0      
-
+    
     return false if $scope.transaction.satoshi + $scope.transaction.fee > $scope.transaction.from.balance
     $scope.errors.amount = null
     return true

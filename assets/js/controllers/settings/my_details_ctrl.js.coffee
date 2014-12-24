@@ -61,6 +61,15 @@
       if confirm translation
         Wallet.disableSecondFactor()
         
+  $scope.removeSecondPassword = () ->
+    Wallet.removeSecondPassword()
+    
+  $scope.setSecondPassword = () ->
+    modalInstance = $modal.open(
+      templateUrl: "partials/settings/set-second-password"
+      controller: SetSecondPasswordCtrl
+      windowClass: "blockchain-modal"
+    )        
   $scope.setTwoFactorSMS = () ->
     if $scope.user.isMobileVerified
       Wallet.setTwoFactorSMS()

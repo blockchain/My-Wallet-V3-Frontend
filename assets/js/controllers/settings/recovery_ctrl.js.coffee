@@ -1,12 +1,18 @@
 @RecoveryCtrl = ($scope, Wallet, $state) ->
-  $scope.recoveryPhrase = Wallet.user.recoveryPhrase
+  $scope.recoveryPhrase = null
   $scope.showRecoveryPhrase = false
   $scope.didConfirmRecoveryPhrase = false
   $scope.editMnemonic = false
   $scope.mnemonic = null
   
   $scope.toggleRecoveryPhrase = () ->
-    $scope.showRecoveryPhrase = !$scope.showRecoveryPhrase
+    if !$scope.showRecoveryPhrase
+      # wallet.my.getHDWalletPassphraseString(
+      # Obtain second password from Wallet, if callback succesful:
+      $scope.showRecoveryPhrase = true
+    else
+      $scope.recoveryPhrase = null
+      $scope.showRecoveryPhrase = false    
     
   $scope.confirmRecoveryPhrase = () ->
     window.alert("Under construction")

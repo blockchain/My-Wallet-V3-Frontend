@@ -20,7 +20,7 @@
           |:
         .col-sm-7
           ui-select(ng-model="transaction.from")
-            ui-select-match {{ maxAndLabel($select) }}
+            ui-select-match {{ maxAndLabel($select) }}            
             ui-select-choices(repeat="origin in origins | filter: $select.search" group-by="'type'") 
               span(ng-bind-html="origin.label | highlight: $select.search")
       .form-group(ng-show="internal")

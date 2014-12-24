@@ -669,6 +669,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     feePolicy = policy
     return
     
+  myWallet.getDoubleEncryption = () ->
+    return false
+    
   myWallet.update_tor_ip_block = (enabled, successCallback, errorCallback) ->
     successCallback()
     
