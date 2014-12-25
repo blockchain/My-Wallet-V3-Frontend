@@ -55,8 +55,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     $state.go("login")
     return
   
-  wallet.didLogin = () ->
-    
+  wallet.didLogin = () ->    
     wallet.status.isLoggedIn = true 
     
     wallet.my.makePairingCode((result)->
@@ -297,10 +296,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
     return amount
 
-  wallet.addAddressOrPrivateKey = (addressOrPrivateKey, errors, successCallback) ->
+  wallet.addAddressOrPrivateKey = (addressOrPrivateKey, successCallback, errorCallback) ->
     if addressOrPrivateKey == ""
-      errors.invalidInput = true
-      return null
+      errorCallback({invalidInput: true})
+      return
       
     needsSecondPasswordCallback = (continueCallback) ->
       $rootScope.$broadcast "requireSecondPassword", continueCallback      
@@ -310,35 +309,41 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       if wallet.my.legacyAddressExists(address)
         address = $filter("getByProperty")("address", address, wallet.legacyAddresses)
         if address.isWatchOnlyLegacyAddress
-          wallet.my.importPrivateKey(privateKey, needsSecondPasswordCallback)
-          wallet.updateLegacyAddresses() # Probably too early
+          success = (address) ->
+            wallet.updateLegacyAddresses() # Probably too early
+            successCallback({address: address})
+            
+          wallet.my.importPrivateKey(privateKey, needsSecondPasswordCallback, success, null)
+          return
         else
-          errors.addressPresentInWallet = true
+          errorCallback({addressPresentInWallet: true}, address)
+          return
           
-        successCallback(address) 
       else
         success = (address) ->
           addressItem = {address: address, isWatchOnlyLegacyAddress: false, active: true, legacy: true, balance: null}
           wallet.legacyAddresses.push addressItem
           wallet.updateLegacyAddresses() # Probably too early
           successCallback(addressItem)
+          return
         
         wallet.my.importPrivateKey(privateKey, needsSecondPasswordCallback, success, null)
-
+      return
     
     if wallet.my.isValidAddress(addressOrPrivateKey)   
       address = addressOrPrivateKey  
       if wallet.my.legacyAddressExists(address)
-        errors.addressPresentInWallet = true
-        successCallback({address: address})
+        errorCallback({addressPresentInWallet: true}, {address: address})
+        return
       else
         wallet.my.addWatchOnlyLegacyAddress(address)
         addressItem = {address: address, isWatchOnlyLegacyAddress: true, active: true, legacy: true, balance: null}
         wallet.legacyAddresses.push addressItem
         wallet.updateLegacyAddresses() # Probably too early
         successCallback(addressItem)
+        return
         
-    # errors.invalidInput = true
+    errorCallback({invalidInput: true})
     return
   
   # Amount in satoshi or fiat

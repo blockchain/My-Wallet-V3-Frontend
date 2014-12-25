@@ -26,9 +26,7 @@ describe "AccountFormCtrl", ->
     
   describe "creation", ->  
     beforeEach ->
-      angular.mock.inject ($injector, localStorageService, $rootScope, $controller) ->
-        localStorageService.remove("mockWallets")
-      
+      angular.mock.inject ($injector, localStorageService, $rootScope, $controller) ->      
         Wallet = $injector.get("Wallet")      
             
         MyWallet = $injector.get("MyWallet")
@@ -45,8 +43,8 @@ describe "AccountFormCtrl", ->
       
       scope.fields = {name: "Savings"}
       scope.$digest()
-      
-    it "should be created",  inject((Wallet) ->
+            
+    it "should be created",  inject((Wallet) ->      
       before = Wallet.accounts.length
       scope.createAccount()
       expect(Wallet.accounts.length).toBe(before + 1)
@@ -67,7 +65,6 @@ describe "AccountFormCtrl", ->
   describe "rename", ->
     beforeEach ->
       angular.mock.inject ($injector, localStorageService, $rootScope, $controller) ->
-        localStorageService.remove("mockWallets")
       
         Wallet = $injector.get("Wallet")      
             

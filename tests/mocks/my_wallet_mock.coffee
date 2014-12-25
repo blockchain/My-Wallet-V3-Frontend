@@ -1,10 +1,10 @@
 walletServices = angular.module("myWalletServices", [])
 walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService, $cookieStore) ->
   # Erase local storage:
-  localStorageService.remove("mockWallets")
+  # localStorageService.remove("mockWallets")
 
-  $cookieStore.remove("uid")
-  $cookieStore.remove("password")
+  # $cookieStore.remove("uid")
+  # $cookieStore.remove("password")
 
   # console.log localStorageService.get("mockWallets")
   
@@ -78,7 +78,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
         legacyAddresses: {}
       }
     })
-        
+            
   uid = undefined
   
   isSynchronizedWithServer = true # In the sense that the server is up to date
@@ -297,9 +297,10 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.getBalanceForAccount = (idx) ->
     return accounts[idx].balance
     
-  myWallet.createAccount = (label) ->
+  myWallet.createAccount = (label, needsPasswordCallback, successCallback, errorCallback) ->
     accounts.push {label: label, archived: false, balance: 0, receive_addresses: [] }
     myWallet.sync()
+    successCallback()
     
   myWallet.setLabelForAccount = (idx, label) ->
     accounts[idx].label = label
@@ -573,10 +574,10 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     # Reject if there are spaces inside the address:
     return withoutWhiteSpace.indexOf(" ") == -1 && withoutWhiteSpace.indexOf("@") == -1
     
-  myWallet.importPrivateKey = (privateKey) ->
+  myWallet.importPrivateKey = (privateKey, getPassword, successCallback, errorCallback) ->
     address = privateKey.replace("private_key_for_","")
     legacyAddresses[address] =  {privateKey: privateKey, balance: 200000000}
-    return address
+    successCallback(address)
     
   myWallet.recoverMyWalletHDWalletFromMnemonic = (mnemonic, pwd) ->
     accounts.splice(0,accounts.length)

@@ -24,8 +24,19 @@
       $scope.address = address
       $scope.step = 2
     
+    errors = (errors, address) ->
+      $scope.address = address or null
+      
+      # We basically just want to do $scope.errors = errors, but AngularJS would
+      # stop monitoring in that case:
+      for key, value in $scope.errors
+        $scope.errors[key] = undefined
         
-    Wallet.addAddressOrPrivateKey($scope.fields.addressOrPrivateKey.trim(), $scope.errors, success)
+      for error, value of errors
+        $scope.errors[error] = value
+    
+    addressOrPrivateKey = $scope.fields.addressOrPrivateKey.trim()
+    Wallet.addAddressOrPrivateKey(addressOrPrivateKey, success, errors)
     
   $scope.goToTransfer = () ->
     $scope.step = 3

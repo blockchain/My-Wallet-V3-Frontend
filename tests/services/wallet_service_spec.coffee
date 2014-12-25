@@ -122,134 +122,12 @@ describe "walletServices", () ->
     
     return
     
-  describe "createAccount()", ->      
-    beforeEach ->
-      Wallet.login("test", "test")  
-      
-    it "should call generateNewKey()", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet,"createAccount")
-      
-      Wallet.createAccount()
-      
-      expect(MyWallet.createAccount).toHaveBeenCalled()
-      
-      return
-    )
-    
-    it "should increase the number of accounts", inject((Wallet, MyWallet) ->
-      before = Wallet.accounts.length
-      
-      Wallet.createAccount()
-      
-      expect(Wallet.accounts.length).toBe(before + 1)
-      
-      return
-    )
-    
-    it "should set a name", inject((Wallet, MyWallet) ->
-       Wallet.createAccount("Savings")
-       expect(Wallet.accounts[Wallet.accounts.length - 1].label).toBe("Savings")
-    )
-    
-    return
-    
   describe "addressBook()", ->          
     beforeEach ->
       Wallet.login("test", "test")  
       
     it "should find John", inject((Wallet) ->      
       expect(Wallet.addressBook["17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq"]).toBe("John")
-      return
-    )
-    
-    return
-    
-  describe "send()", ->   
-    beforeEach ->
-      Wallet.login("test", "test")  
-      
-      mockObserver = {} # Represents e.g. the controller calling us:
-      mockObserver.transactionDidFailWithError = () ->
-        return
-      mockObserver.transactionDidFinish = () ->
-        return
-              
-      return
-     
-    it "should call sendBitcoinsForAccount()", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet,"sendBitcoinsForAccount")
-            
-      Wallet.send(0, "account", numeral("1.0"), "BTC", mockObserver)
-      
-      expect(MyWallet.sendBitcoinsForAccount).toHaveBeenCalled()
-      
-      return
-    )
-    
-    it "should convert BTC to Satoshi", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet,"sendBitcoinsForAccount")
-            
-      Wallet.send(0, "account", "1", "BTC", mockObserver)
-      
-      expect(MyWallet.sendBitcoinsForAccount.calls.mostRecent().args[2]).toBe(100000000)
-      
-      return
-    )
-    
-    it "should call transactionDidFinish on the listerner if all goes well", inject((Wallet, MyWallet) ->         
-      spyOn(mockObserver, "transactionDidFinish")
-      
-      Wallet.send(0, "account", numeral("1.0"), "BTC", mockObserver)
-      
-      expect(mockObserver.transactionDidFinish).toHaveBeenCalled()
-      
-      return
-    )
-    
-    it "should update the account balance if successful", inject((Wallet, MyWallet) ->               
-      before = Wallet.accounts[0].balance
-      
-      Wallet.send(0, "account", numeral("1.0"), "BTC", mockObserver)
-      
-      expect(Wallet.accounts[0].balance).toBe(before - 1.0 * 100000000)
-        
-      return
-    )
-    
-    it "should update transactions if successful", inject((Wallet, MyWallet) ->               
-      before = Wallet.transactions.length
-      
-      Wallet.send(0, "account", numeral("1.0"), "BTC", mockObserver)
-      
-      expect(Wallet.transactions.length).toBe(before + 1)
-        
-      return
-    )
-    
-    it "should call transactionDidFailWithError on the listerner if there's problem", inject((Wallet, MyWallet) ->
-      MyWallet.mockShouldFailToSend()
-         
-      spyOn(mockObserver, "transactionDidFailWithError")
-      
-      Wallet.send(0, "account", numeral("1.0"), "BTC", mockObserver)
-      
-      expect(mockObserver.transactionDidFailWithError).toHaveBeenCalled()
-      
-      return
-    )
-    
-    it "should spend money", inject((Wallet, MyWallet) ->
-      
-      before = Wallet.accounts[0].balance
-            
-      Wallet.send(0, "account", numeral("1.0"), "BTC", mockObserver)
-      
-      Wallet.refresh()
-      
-      after = Wallet.accounts[0].balance
-      
-      expect(before - after).toEqual(100000000)
-      
       return
     )
     
@@ -639,38 +517,67 @@ describe "walletServices", () ->
       Wallet.login("test", "test")
       
     it "should recoginize an address as such", ->
-      expect(Wallet.addAddressOrPrivateKey("valid_address", errors).address).toBe("valid_address")
-      expect(errors).toEqual({})
+      # TODO: use a spy to make sure this gets called
+      success = (address) ->
+        expect(address.address).toBe("valid_address")
+      
+      Wallet.addAddressOrPrivateKey("valid_address", success, null)
+
+      # expect(errors).toEqual({})
 
     it "should derive the address corresponding to a private key", ->
       # TODO: use a spy to make sure this gets called
       success = (address) ->
         expect(address.address).toBe("valid_address")
       
-      Wallet.addAddressOrPrivateKey("private_key_for_valid_address", {}, success)
+      Wallet.addAddressOrPrivateKey("private_key_for_valid_address", success, null)
       
       
     it "should complain if nothing is entered", ->
-      Wallet.addAddressOrPrivateKey("", errors)
-      expect(errors.invalidInput).toBeDefined()
+      success = () ->
+        expect(false).toBe(true)
+        
+      error = (errors) ->
+        expect(errors.invalidInput).toBeDefined()
+        
+      Wallet.addAddressOrPrivateKey("", success, error)
+      
       
     it "should complain if private key already exists", ->
-      address = Wallet.addAddressOrPrivateKey("private_key_for_some_legacy_address", errors)
-      expect(address.address).toBe("some_legacy_address")
-      expect(errors.addressPresentInWallet).toBeDefined()
+      success = () ->
+        expect(false).toBe(true)
+        
+      error = (errors, address) ->
+        expect(errors.addressPresentInWallet).toBeDefined()
+        expect(address.address).toBe("some_legacy_address")
+      
+      address = Wallet.addAddressOrPrivateKey("private_key_for_some_legacy_address", success, error)
 
     it "should complain if a watch-only address already exists", ->
-      pending()
-      expect(Wallet.addAddressOrPrivateKey("some_legacy_watch_only_address", errors).address).toBe("some_legacy_watch_only_address")
-      expect(errors.addressPresentInWallet).toBeDefined()
+      success = () ->
+        expect(false).toBe(true)
+      
+      error = (errors, address) ->
+        expect(address.address).toBe("some_legacy_watch_only_address")
+        expect(errors.addressPresentInWallet).toBeDefined()
+        
+      Wallet.addAddressOrPrivateKey("some_legacy_watch_only_address", success, error)
     
     it "should add private key to existing watch-only address", ->
-      expect(Wallet.addAddressOrPrivateKey("private_key_for_some_legacy_watch_only_address", errors).address).toBe("some_legacy_watch_only_address")
-      expect(errors).toEqual({})
-      expect(Wallet.legacyAddresses[1].isWatchOnlyLegacyAddress).toBe(false)
+      success = (address) ->
+        expect(Wallet.legacyAddresses[1].isWatchOnlyLegacyAddress).toBe(false)
+        expect(address.address).toBe("some_legacy_watch_only_address")
+        
+      error = () ->
+        expect(false).toBe(true)
+      
+      Wallet.addAddressOrPrivateKey("private_key_for_some_legacy_watch_only_address", success, error)
       
     it "should complain if input is invalid", ->
-        pending()
-    #   success = () ->
-    #   expect(Wallet.addAddressOrPrivateKey("invalid address", errors, success)).toBeNull()
-    #   expect(errors.invalidInput).toBeDefined()
+      success = () ->
+        expect(false).toBe(true)
+        
+      error = (errors) ->
+        expect(errors.invalidInput).toBeDefined()
+      
+      Wallet.addAddressOrPrivateKey("invalid address", success, error)

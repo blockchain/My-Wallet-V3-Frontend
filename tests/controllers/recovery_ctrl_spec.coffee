@@ -24,6 +24,7 @@ describe "RecoveryCtrl", ->
     
   describe "recovery phrase", ->   
     it "should be available", inject((Wallet) ->
+      pending()
       expect(scope.recoveryPhrase).toEqual("banana big me hungry")
     )
     

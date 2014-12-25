@@ -43,7 +43,8 @@
     "yargs": "^1.3.2",
     "karma-ng-jade2js-preprocessor": "^0.1.5",
     "karma-osx-reporter": "^0.1.0",
-    "browserify": "^6.3.2"
+    "browserify": "^6.3.2",
+    "karma-jade-preprocessor": "0.0.11"
   },
   "scripts": {
     "postinstall": "bower install && browserify -r country-data assets/js/country-data-import.js > assets/js/country-data.js",

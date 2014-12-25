@@ -41,6 +41,8 @@ describe "AddressImportCtrl", ->
   describe "enter address or private key", ->
   
     it "should go to step 2 when user clicks validate", ->
+      scope.fields.addressOrPrivateKey = "valid_import_address"
+      scope.$digest()
       expect(scope.step).toBe(1)
       scope.validate()
       expect(scope.step).toBe(2)
