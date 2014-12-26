@@ -20,7 +20,7 @@
         $state.go("login")
   
   if $state.current.name == ""
-    $state.go("transactions", {accountIndex: null})
+    $state.go("transactions", {accountIndex: "accounts"})
     # Tricky because the default account isn't known yet at this point:
     # $state.go("transactions", {accountIndex: Wallet.getDefaultAccountIndex()})
     

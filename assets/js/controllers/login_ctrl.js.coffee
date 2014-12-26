@@ -52,7 +52,7 @@
       $scope.busy = false
       
       # $state.go("dashboard")
-      $state.go("transactions", {accountIndex: null})
+      $state.go("transactions", {accountIndex: "accounts"})
       
   $scope.$watch "uid + password", () ->
     isValid = null

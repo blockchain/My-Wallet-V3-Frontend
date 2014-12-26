@@ -8,9 +8,9 @@
         td.right
           a(ng-click="newAccount()", translate="NEW_ACCOUNT")
     table.left
-      tr(ng-class="selectedAccountIndex == '' ? 'active' : ''")
+      tr(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''")
         td 
-          a(ui-sref="transactions({accountIndex:''})", translate="ALL_ACCOUNTS")
+          a(ui-sref="transactions({accountIndex:'accounts'})", translate="ALL_ACCOUNTS")
         td.amount 
           fiat(btc="total()")
       tr(ng-repeat="account in accounts | filter:{active:true}", ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''")

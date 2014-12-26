@@ -12,6 +12,6 @@
         Wallet.login($cookieStore.get("uid"), $cookieStore.get("password"))
       else
         # $state.go("dashboard")
-        $state.go("transactions", {accountIndex: null})
+        $state.go("transactions", {accountIndex: "accounts"})
   # First load:      
   $scope.didLoad()
