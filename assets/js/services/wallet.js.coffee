@@ -39,21 +39,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   ##################################
   #             Public             #
   ##################################
-    
-  wallet.needsTwoFactorCode = (method) ->
-    wallet.settings.needs2FA = true
-    # 2: Email
-    # 3: Yubikey (depricated)
-    # 4: Google Authenticator
-    # 5: SMS
-    
-    wallet.settings.twoFactorMethod = method 
-    $state.go("login")
-    return
-    
-  wallet.wrongTwoFactorCode = (method) ->
-    $state.go("login")
-    return
   
   wallet.didLogin = () ->    
     wallet.status.isLoggedIn = true 
@@ -105,7 +90,26 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
  
     
   wallet.login = (uid, password, two_factor_code, observer) ->  
+    needsTwoFactorCode = (method) ->
+      wallet.displayWarning("Please enter your 2FA code")
+      wallet.settings.needs2FA = true
+      # 2: Email
+      # 3: Yubikey (depricated)
+      # 4: Google Authenticator
+      # 5: SMS
+      
+      observer.needs2FA()
+  
+      wallet.settings.twoFactorMethod = method 
+      $state.go("login")
+      return
+      
+    wrongTwoFactorCode = (method) ->
+      $state.go("login")
+      return
+  
     loginError = (error) ->
+      console.log(error)
       wallet.displayError(error)
       
       if observer?
@@ -133,7 +137,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.applyIfNeeded()
       
     $window.root = "https://blockchain.info/"   
-    wallet.my.fetchWalletJson(uid, null, null, password, two_factor_code, wallet.didLogin, wallet.needsTwoFactorCode, wallet.wrongTwoFactorCode, authorizationRequired, loginError ) 
+    wallet.my.fetchWalletJson(uid, null, null, password, two_factor_code, wallet.didLogin, needsTwoFactorCode, wrongTwoFactorCode, authorizationRequired, loginError ) 
     
     wallet.fetchExchangeRate()
   

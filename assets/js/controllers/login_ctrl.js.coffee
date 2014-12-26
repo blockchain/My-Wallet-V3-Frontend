@@ -17,10 +17,13 @@
     $scope.busy = true
     Wallet.clearAlerts()
     
-    observer = {}
-    
-    observer.error = () ->
-      $scope.busy = false
+    observer = {
+      error: () ->
+        $scope.busy = false
+      
+      needs2FA: () ->
+        $scope.busy = false
+    }      
             
     if !$scope.settings.needs2FA
       Wallet.login($scope.uid, $scope.password, null, observer)
