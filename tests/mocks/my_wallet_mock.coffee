@@ -154,8 +154,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     return false if mnemonic.split(" ").length < 3
     return true
     
-  myWallet.getHDWalletPassphraseString = () ->
-    return "banana big me hungry"
+  myWallet.getHDWalletPassphraseString = (getPassword, success, error) ->
+    success("banana big me hungry")
     
   myWallet.fetchWalletJson = (uid, dummy1, dummy2, password, two_factor_code, success, needs_2fa, wrong_2fa) ->
     if wallet = localStorageService.get("mockWallets")[uid]

@@ -396,6 +396,18 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     return defer.promise
     
+  wallet.getMnemonic = (successCallback, errorCallback) ->
+    needsSecondPasswordCallback = (continueCallback) ->
+      $rootScope.$broadcast "requireSecondPassword", continueCallback
+    
+    success = (mnemonic) ->
+      successCallback(mnemonic)
+    
+    error = () ->
+      wallet.my.displayError("Unable to show mnemonic.")
+      errorCallback()
+  
+    wallet.my.getHDWalletPassphraseString(needsSecondPasswordCallback, success, error)
     
   wallet.importWithMnemonic = (mnemonic, successCallback, errorCallback) ->
     wallet.accounts.splice(0, wallet.accounts.length)

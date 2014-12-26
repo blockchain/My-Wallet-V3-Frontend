@@ -3,13 +3,13 @@
   $scope.showRecoveryPhrase = false
   $scope.didConfirmRecoveryPhrase = false
   $scope.editMnemonic = false
-  $scope.mnemonic = null
   
   $scope.toggleRecoveryPhrase = () ->
     if !$scope.showRecoveryPhrase
-      # wallet.my.getHDWalletPassphraseString(
-      # Obtain second password from Wallet, if callback succesful:
-      $scope.showRecoveryPhrase = true
+      success = (mnemonic) ->
+        $scope.recoveryPhrase = mnemonic
+        $scope.showRecoveryPhrase = true
+      Wallet.getMnemonic(success)
     else
       $scope.recoveryPhrase = null
       $scope.showRecoveryPhrase = false    
