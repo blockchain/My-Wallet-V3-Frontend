@@ -52,7 +52,7 @@
           else if tx.to.externalAddresses?
             $scope.to = Wallet.addressBook[tx.to.externalAddresses.addressWithLargestOutput]
             unless $scope.to
-              $scope.from = tx.to.externalAddresses.addressWithLargestOutput
+              $scope.to = tx.to.externalAddresses.addressWithLargestOutput
 
         
   # First load:      
