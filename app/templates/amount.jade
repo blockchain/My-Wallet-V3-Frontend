@@ -9,5 +9,5 @@ span(ng-class="{unconfirmed: transaction.confirmations < 3}")
       span(ng-if="btc") {{ transaction.amount | btc }}
   span(ng-show="transaction.amount < 0 && !transaction.intraWallet")
     button.amount.spent 
-      fiat(btc="-transaction.amount", ng-hide="btc")
-      span(ng-if="btc") {{ -transaction.amount | btc }}
+      fiat(btc="transaction.amount", ng-hide="btc")
+      span(ng-if="btc") {{ transaction.amount | btc }}

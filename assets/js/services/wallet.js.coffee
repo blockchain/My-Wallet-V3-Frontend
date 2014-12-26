@@ -698,7 +698,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         transaction.note = wallet.my.getNote(transaction.hash)
         amount = 0
         if transaction.from.account? # Spend or intra-wallet
-          amount -= transaction.from.account.amount
+          if transaction.intraWallet
+            amount += transaction.from.account.amount
+          else
+            amount -= transaction.from.account.amount
         else if transaction.to.account?
           amount += transaction.to.account.amount
         if transaction.from.legacyAddresses? && transaction.from.legacyAddresses.length > 0
