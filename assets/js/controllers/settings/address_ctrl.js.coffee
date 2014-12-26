@@ -3,6 +3,12 @@
   $scope.accounts = Wallet.accounts
   $scope.show = {watchOnly: false, editLabel: false}
   $scope.newLabel = null
+  
+  $scope.url = null
+  
+  $scope.$watch "address.address", (newValue) ->
+    if newValue?
+      $scope.url = 'bitcoin://' + newValue
         
   $scope.signMessage = () ->
     window.confirm("Coming soon")  

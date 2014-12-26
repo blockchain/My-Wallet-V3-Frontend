@@ -29,7 +29,7 @@ h2(translate="ADDRESS_DETAILS")
   .col-xs-4
     a(ng-click="show.watchOnly = true", ng-show="address.isWatchOnlyLegacyAddress && !show.watchOnly", translate="DISPLAY_QR")
     p(ng-show="address.isWatchOnlyLegacyAddress")
-    qr(text="'bitcoin://' + address.address" size="140", ng-show="!address.isWatchOnlyLegacyAddress || show.watchOnly")
+    qr(text="url" size="140", ng-show="!address.isWatchOnlyLegacyAddress || show.watchOnly", ng-if="url != null")
 hr(ng-hide="address.isWatchOnlyLegacyAddress")
   
 //- h2(translate="ADVANCED_OPTIONS", ng-hide="address.isWatchOnlyLegacyAddress")
