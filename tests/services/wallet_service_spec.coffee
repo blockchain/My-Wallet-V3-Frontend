@@ -18,6 +18,8 @@ describe "walletServices", () ->
       spyOn(Wallet,"monitor").and.callThrough()
       spyOn(Wallet,"monitorLegacy").and.callThrough()
       
+      mockObserver = {needs2FA: (() ->)}
+      
       return
 
     return
@@ -74,21 +76,22 @@ describe "walletServices", () ->
 
     
   describe "2FA login()", ->
+    
     it "should ask for a code", inject((Wallet) ->
       
-      Wallet.login("test-2FA", "test")
+      Wallet.login("test-2FA", "test", null, mockObserver)
       
       expect(Wallet.settings.needs2FA).toBe(true)
       expect(Wallet.status.isLoggedIn).toBe(false)
     )
     
     it "should specify the 2FA method", inject((Wallet) ->
-      Wallet.login("test-2FA", "test")
+      Wallet.login("test-2FA", "test", null, mockObserver)
       expect(Wallet.settings.twoFactorMethod).toBe(4)
     )
     
     it "should login with  2FA code", inject((Wallet) ->
-      Wallet.login("test-2FA", "test", "1234567")
+      Wallet.login("test-2FA", "test", "1234567", mockObserver)
       expect(Wallet.status.isLoggedIn).toBe(true)
     )
 
@@ -97,7 +100,7 @@ describe "walletServices", () ->
     
   describe "2FA settings", ->    
     it "can be disabled", inject((Wallet) ->
-      Wallet.login("test-2FA", "test")
+      Wallet.login("test-2FA", "test", null, mockObserver)
       
       Wallet.disableSecondFactor()
       expect(Wallet.settings.needs2FA).toBe(false)
