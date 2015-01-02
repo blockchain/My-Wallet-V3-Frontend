@@ -426,104 +426,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     $timeout((->
       wallet.my.recoverMyWalletHDWalletFromMnemonic(mnemonic, null, success, errorCallback)    
     ), 100)  
-      
-      
-  ####################
-  # Payment requests #
-  ####################
-  
-  wallet.accountForPaymentRequest = (request) ->
-    for i in [0..wallet.my.getAccountsCount()-1]
-      for req in wallet.my.getPaymentRequestsForAccount(i)
-        return wallet.accounts[i] if request.address == req.address
-      
-    return -1
-  
-  wallet.refreshPaymentRequests = () ->
-    # Flatten accounts::
-    myWalletRequests = []
-    i = 0
-    for account in wallet.my.getAccounts()
-      for request in account.getPaymentRequests()
-        requestWithAddress = angular.copy(request)
-        requestWithAddress.address =  account.getAddressForPaymentRequest(request)
-        requestWithAddress.account = i
-        myWalletRequests.push angular.copy(requestWithAddress)
-      i++
-                  
-    # Update existing amounts, remove deleted addresses:
-    len = wallet.paymentRequests.length
-    while len--
-      req = wallet.paymentRequests[len]
-      match = false
-      for candidate in myWalletRequests
-        if candidate.address == req.address
-          req.amount = candidate.amount
-          match = true
-          
-      if !match
-        index = wallet.paymentRequests.indexOf(req)
-        wallet.paymentRequests.splice(index,1)
-      
-    # Add new ones:
-    for req in myWalletRequests
-      match = false
-      for candidate in wallet.paymentRequests
-        if candidate.address == req.address
-          match = true
-          # Update amount and payment
-          candidate.amount = req.amount
-          candidate.paid = req.paid
-          candidate.complete = req.complete
-          candidate.canceled = req.canceled 
-          break
-      
-      if !match
-        request = angular.copy(req)
-        request.amount = request.amount
-        wallet.paymentRequests.push request
             
-  # Amount in Satoshi
-  wallet.generatePaymentRequestForAccount = (accountIndex, amount)  ->
-    account = wallet.my.getAccounts()[accountIndex]
-    request = account.generatePaymentRequest(amount)
-    request.address = account.getAddressForPaymentRequest(request)
-    this.refreshPaymentRequests()
-    return wallet.getPaymentRequest(accountIndex, request.address)
-  
-  wallet.getPaymentRequest = (accountIndex, address) ->    
-    for request in wallet.paymentRequests
-      return request if request.address == address
-      
-    return false
-  
-  wallet.cancelPaymentRequest = (accountIndex, address)  ->
-    success = wallet.my.cancelPaymentRequestForAccount(accountIndex, address)
-    this.refreshPaymentRequests()
-    return success 
-      
-  wallet.updatePaymentRequest = (accountIndex, address, amount, label) ->
-    if wallet.my.updatePaymentRequestForAccount(accountIndex, address, amount, label)
-      this.refreshPaymentRequests()
-    else 
-      console.error "Failed to update request"
-    return
-    
-  wallet.acceptPaymentRequest = (accountIndex, address) ->
-    wallet.my.acceptPaymentRequestForAccount(accountIndex, address)
-    this.refreshPaymentRequests() 
-    
-  wallet.generateOrReuseEmptyPaymentRequestForAccount = (accountIndex) ->
-    if accountIndex == undefined
-      accountIndex = wallet.my.getDefaultAccountIndex()
-    account = wallet.my.getAccounts()[accountIndex]
-    request = wallet.my.generateOrReuseEmptyPaymentRequestForAccount(accountIndex)
-    request.address = account.getAddressForPaymentRequest(request)
-    this.refreshPaymentRequests()
-    return wallet.getPaymentRequest(accountIndex, request.address)
-    
   wallet.getDefaultAccountIndex = () ->
     wallet.my.getDefaultAccountIndex()
+    
+  wallet.getReceivingAddressForAccount = (idx) ->
+    wallet.my.getReceivingAddressForAccount(idx)
     
   ###################
   # URL: bitcoin:// #
@@ -744,18 +652,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         sound.play()
         wallet.updateTransactions()
         wallet.updateAccountsAndLegacyAddresses()
-    else if event == "hw_wallet_accepted_payment_request"
-      $translate("PAYMENT_REQUEST_RECEIVED",{amount: numeral(data.amount).divide(100000000).format("0.[00000000]")}).then (translation) ->
-        wallet.displaySuccess(translation)
-      wallet.refreshPaymentRequests()
-    else if event == "hw_wallet_payment_request_received_too_little"
-      $translate("PAYMENT_REQUEST_RECEIVED_TOO_LITTLE",{amountReceived: numeral(data.amountReceived).divide(100000000).format("0.[00000000]"), amountRequested: numeral(data.amountRequested).divide(100000000).format("0.[00000000]") }).then (translation) ->
-        wallet.displayWarning(translation)
-      wallet.refreshPaymentRequests()
-    else if event == "hw_wallet_payment_request_received_too_much"
-      $translate("PAYMENT_REQUEST_RECEIVED_TOO_MUCH",{amountReceived: numeral(data.amountReceived).divide(100000000).format("0.[00000000]"), amountRequested: numeral(data.amountRequested).divide(100000000).format("0.[00000000]") }).then (translation) ->
-        wallet.displayWarning(translation)
-      wallet.refreshPaymentRequests()
     else if event == "error_restoring_wallet"
       wallet.applyIfNeeded()      
     else if event == "did_set_guid" # Wallet retrieved from server
@@ -779,7 +675,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
       wallet.updateAccountsAndLegacyAddresses()  
-      wallet.refreshPaymentRequests()
       wallet.applyIfNeeded()
       
     else if event == "hw_wallet_balance_updated"

@@ -64,6 +64,7 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
       !=js('my-wallet/hdwallet')
       !=js('my-wallet/mnemonic')
       !=js('my-wallet/bip39')
+      !=js('my-wallet/xregexp-all')
       !=js('my_wallet')
     
     if process.env.MYWALLET_MOCK == "1"

@@ -3,20 +3,12 @@
   
   $scope.request = () ->
     Wallet.clearAlerts()
-      
-    if !$scope.accountIndex? || $scope.accountIndex == ""
-      request = Wallet.generateOrReuseEmptyPaymentRequestForAccount()
-    else if $scope.accountIndex == "imported"
-      # Currently no way to select a random legacy address:
-      request = Wallet.generateOrReuseEmptyPaymentRequestForAccount()
-    else
-      request = Wallet.generateOrReuseEmptyPaymentRequestForAccount(parseInt($scope.accountIndex))
-            
+                        
     modalInstance = $modal.open(
       templateUrl: "partials/request"
       controller: RequestCtrl
       resolve:
-        request: -> request
+        destination: -> Wallet.accounts[$scope.accountIndex]
       windowClass: "blockchain-modal"
     )
     

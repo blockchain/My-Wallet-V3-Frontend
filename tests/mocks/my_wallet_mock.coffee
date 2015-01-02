@@ -110,10 +110,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   
   myWallet.getAddressBook = () ->
     myWallet.addressBook
-
-  paymentRequests = []
   
-  mockPaymentRequestAddressStack = [ # Same for everyone
+  mockRequestAddressStack = [ # Same for everyone
     "1Hj9XKGY6Fh8koVh6CuTJsQnuiSQrd9iCx"
     "1Bp85Lymp2ViRZwhbsD8NnDgRkEyai9w7i"
     "1LeoeftCD56juxPuGYh1m1bSrPxkBu44aH"
@@ -217,7 +215,6 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     myWallet.uid = undefined
     myWallet.password = undefined
     transactions = []
-    paymentRequests = []
     accounts = []
     if !(karma?) || !karma
       window.location = ""
@@ -418,14 +415,15 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.sendToEmail = (accountIdx, value, fixedFee, email, successCallback, errorCallback) ->
     successCallback()  
-  
-  myWallet.generateOrReuseEmptyPaymentRequestForAccount = (accountIdx) ->
-    account = myWallet.getAccount(accountIdx)
-
-    for request in account.getPaymentRequests()
-      return request if request.label is "" and (request.amount is 0)
-
-    paymentRequest = account.generatePaymentRequest(0, "")
+    
+  myWallet.getReceivingAddressForAccount = (accountIdx) ->
+    if mockRequestAddressStack.length == 0
+      $log.error "No more mock payment request addresses; please refresh."
+      return {amount: 0, address: "No more mock addresses available"}
+    
+    address = mockRequestAddressStack.pop()
+    
+    return address
     
   
   # Amount in Satoshi  
@@ -434,79 +432,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       return
       
     account = {}
-        
-    account.getPaymentRequests = () ->
-      requests = []
-      for request in paymentRequests
-        requests.push request if request.account == index
-        
-      return requests 
-    
-    account.generatePaymentRequest = (amount) ->
-      # It should generate a new receive address or reuse a cancelled address
-      # (never reuse an addres that actually received btc). It should increase
-      # the tally in the wallet.
-          
-      if mockPaymentRequestAddressStack.length == 0
-        $log.error "No more mock payment request addresses; please refresh."
-        return {amount: 0, address: "No more mock addresses available"}
-      
-      address = mockPaymentRequestAddressStack.pop()
-    
-      request = {address: address, amount: amount, account: index, paid: 0, complete: false, canceled: false}
-
-      accounts[index].receive_addresses.push address
-    
-      paymentRequests.push request
-      
-      myWallet.sync()
-      
-      return request
-      
-      
-    account.cancelPaymentRequest = (address) ->
-      for candidate in paymentRequests
-        if candidate.address == address
-          paymentRequests.pop(candidate)
-          mockPaymentRequestAddressStack.push(address)
-          myWallet.sync()
-          return true
-        
-      return false
-    
-    account.updatePaymentRequest = (address, amount) ->
-      for candidate in paymentRequests
-        if candidate.address == address
-          candidate.amount = amount
-          myWallet.sync()
-          return candidate
-        
-    account.acceptPaymentRequest = (address) ->
-      for candidate in paymentRequests
-        if candidate.address == address
-          myWallet.sync()
-          candidate.complete = true
-          
-    account.getAddressForPaymentRequest = (request) ->
-      return request.address
     
     return account
   
-  myWallet.getPaymentRequestsForAccount = (idx) ->
-    myWallet.getAccount(idx).getPaymentRequests()
-  
-  myWallet.generatePaymentRequestForAccount = (idx, amount) ->
-    myWallet.getAccount(idx).generatePaymentRequest(amount)
-
-  myWallet.cancelPaymentRequestForAccount = (idx, address) ->
-    myWallet.getAccount(idx).cancelPaymentRequest(address)
-    
-  myWallet.updatePaymentRequestForAccount = (idx, address, amount) ->
-    myWallet.getAccount(idx).updatePaymentRequest(address, amount)
-    
-  myWallet.acceptPaymentRequestForAccount = (idx, address) ->
-    myWallet.getAccount(idx).acceptPaymentRequest(address)
-    
   myWallet.addEventListener = (func) ->
     eventListener = func
     
@@ -619,7 +547,6 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
         console.log localStorageService.get("mockWallets")
         return 
         
-      cookie[myWallet.uid].paymentRequests = paymentRequests
       cookie[myWallet.uid].accounts = accounts
       cookie[myWallet.uid].notes = notes
       cookie[myWallet.uid].legacyAddresses = legacyAddresses
@@ -635,15 +562,6 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     transactions = angular.copy(localStorageService.get("mockWallets")[this.uid].transactions)
     notes = angular.copy(localStorageService.get("mockWallets")[this.uid].notes)
     legacyAddresses = angular.copy(localStorageService.get("mockWallets")[this.uid].legacyAddresses)
-    
-    
-    if localStorageService.get("mockWallets")[this.uid].paymentRequests
-      paymentRequests = angular.copy(localStorageService.get("mockWallets")[this.uid].paymentRequests)      
-      # Update the stack of remaning payment addresses:
-      for request in paymentRequests 
-        index = mockPaymentRequestAddressStack.indexOf(request.address)
-        if index > -1
-          mockPaymentRequestAddressStack.splice(index,1)
     
   myWallet.unsetTwoFactor = (success, error) ->
     success()
@@ -702,21 +620,6 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     eventListener("on_tx")
     
   myWallet.mockProcessNewTransaction = (transaction) ->  
-    # Does the "to" address match any payment requests? If so, update them with the amount:
-    for request in paymentRequests
-      if request.address == transaction.to
-        request.paid += parseInt(transaction.amount) # The real thing should use the amount per output
-        if request.paid == request.amount
-          request.complete = true
-          eventListener("hw_wallet_accepted_payment_request", {amount: request.amount})
-          myWallet.sync()
-        else if request.paid > 0 && request.amount > request.paid
-          eventListener("hw_wallet_payment_request_received_too_little", {amountRequested: request.amount, amountReceived: request.paid})
-        else if request.amount < request.paid
-          eventListener("hw_wallet_payment_request_received_too_much", {amountRequested: request.amount, amountReceived: request.paid})
-
-        break
-    
     
     # Match "to" address to receive address to figure out which account it was sent to:
     for account in accounts

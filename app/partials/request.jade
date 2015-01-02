@@ -21,11 +21,11 @@
           ui-select-match {{ $select.selected.code }}
           ui-select-choices(repeat="currency in currencies | filter: $select.search" group-by="'type'")
             span(ng-bind-html="currency.code | highlight: $select.search")   
-    .form-group
-      label.col-sm-3.control-label(translate="DESCRIPTION")
-      .col-sm-9
-        input.form-control(type="text",ng-model="fields.label")
-        span.help-block(translate="OPTIONAL")
+    //- .form-group
+    //-   label.col-sm-3.control-label(translate="DESCRIPTION")
+    //-   .col-sm-9
+    //-     input.form-control(type="text",ng-model="fields.label")
+    //-     span.help-block(translate="OPTIONAL")
     .form-group
       hr
     .form-group(ng-show="paymentRequest && paymentRequest.paid > 0 && paymentRequest.paid != fields.amount")

@@ -164,6 +164,7 @@
   "BALANCE" : "Balance",
   "MAKE_DEFAULT" : "Make default",
   "RENAME" : "Rename",
+  "MY_ADDRESSES_EXPLAIN_TEMP" : "Your wallet is a large collection of bitcoin addresses that are associated with an Account in your wallet forever. Your wallet manages your addresses for you and automatically creates a new address every time you send or receive bitcoin.",
   "MY_ADDRESSES_EXPLAIN" : "Your wallet is a large collection of bitcoin addresses that are associated with an Account in your wallet forever. Your wallet manages your addresses for you and automatically creates a new address every time you send or receive bitcoin. If you would like to create an address that you can post publicly and receive multiple payments into click New Address below.",
   "NEW_ADDRESS" : "New Address",
   "IMPORT_ADDRESS" : "Import Address",

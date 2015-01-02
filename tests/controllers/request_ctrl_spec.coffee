@@ -19,51 +19,6 @@ describe "RequestCtrl", ->
       return
 
     return
-  
-  describe "when opening existing request", ->
-    beforeEach ->
-      angular.mock.inject((Wallet, $rootScope, $controller) ->
-        Wallet.generatePaymentRequestForAccount(1, numeral(100000))
-                
-        scope = $rootScope.$new()
-            
-        $controller "RequestCtrl",
-          $scope: scope,
-          $stateParams: {},
-          $modalInstance: modalInstance
-          request: Wallet.paymentRequests[0] # Set payment request (which doesn't specify the account)
-
-        scope.$apply()
-        
-      )
-      
-    it "should show an address if the request is valid",  inject(() ->
-        expect(scope.paymentRequestAddress).toBe('1Q57Pa6UQiDBeA3o5sQR1orCqfZzGA7Ddp')
-    )
-    
-    it "should show the amount",  inject((Wallet) ->
-      expect(scope.fields.amount).toBe("0.001")
-    )
-      
-    it "should select the correct account ",  inject((Wallet) ->
-      expect(scope.fields.to).toBe(Wallet.accounts[1])
-    )
-    
-    it "should cancel payment request when user presses cancel", inject((Wallet) ->
-      before = Wallet.paymentRequests.length
-      spyOn(Wallet, "cancelPaymentRequest").and.callThrough()
-      scope.cancel()
-      expect(Wallet.cancelPaymentRequest).toHaveBeenCalled()
-      expect(scope.paymentRequest).toBeNull()
-      expect(Wallet.paymentRequests.length).toBe(before - 1)
-    )
-    
-    it "should update amount in request if changed in the form", inject(() ->
-      scope.fields.amount = "0.1"
-      scope.$apply()
-      expect(scope.paymentRequest.amount).toBe(10000000)
-      
-    )
     
   describe "when requesting for a legacy address", ->
     beforeEach ->
@@ -74,7 +29,7 @@ describe "RequestCtrl", ->
           $scope: scope,
           $stateParams: {},
           $modalInstance: modalInstance
-          request: undefined
+          destination: undefined
     
         scope.fields = {amount: "0", to: null, currency: {code: "BTC", type: "Crypto"}  }
   

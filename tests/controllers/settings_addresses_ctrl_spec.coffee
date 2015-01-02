@@ -24,47 +24,7 @@ describe "SettingsAddressesCtrl", ->
       return
       
     return
-  
-  describe "Payment requests and addresses", ->  
-    beforeEach ->
-      Wallet.generatePaymentRequestForAccount(0, numeral(1))
-    
-    it "should show incomplete payment requests",  inject((Wallet) ->
-      expect(scope.requests.length).toBe(1)
-    )
-    
-    it "should have access to account labels",  inject((Wallet) ->
-      account = scope.accounts[scope.requests[0].account]
-      expect(account).toBe(Wallet.accounts[0])
-    )
-  
-    it "should open a popup with the payment request",  inject((Wallet, $modal) ->
-      req = scope.requests[0]
-      spyOn(modal, "open")
 
-      scope.open(req)
-
-      expect(modal.open).toHaveBeenCalled()
-    )
-    
-    it "can clear a request",  inject((Wallet) ->
-      req = scope.requests[0]
-      scope.clear(req)
-      expect(scope.requests.length).toBe(0)
-    )
-    
-    it "can accept a request",  inject((Wallet) ->
-      req = scope.requests[0]
-      scope.accept(req)
-      expect(req.complete).toBe(true)
-    )
-    
-    it "should open a popup to generate a new addresss for an account",  inject(($modal) ->
-      spyOn(modal, "open")
-      scope.generateRequestForAccount(1)
-      expect(modal.open).toHaveBeenCalled()
-      expect(scope.requests.length).toBe(2)
-    )
     
   describe "legacy addresses", ->
     it "should be listed", ->

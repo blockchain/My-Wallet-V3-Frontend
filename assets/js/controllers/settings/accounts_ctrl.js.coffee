@@ -22,13 +22,12 @@
     )
   
   $scope.showAddress = (account) ->
-    request = Wallet.generateOrReuseEmptyPaymentRequestForAccount(account.index)
             
     modalInstance = $modal.open(
       templateUrl: "partials/request"
       controller: RequestCtrl
       resolve:
-        request: -> request
+        destination: -> account
       windowClass: "blockchain-modal"
     )
   
