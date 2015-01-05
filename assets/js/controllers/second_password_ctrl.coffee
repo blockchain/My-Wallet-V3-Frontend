@@ -1,6 +1,8 @@
 @SecondPasswordCtrl = ($scope, $log, Wallet, $modalInstance, insist) ->
   $scope.insist = if insist then true else false 
   
+  $scope.secondPassword = ""
+  
   $scope.cancel = () ->
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
