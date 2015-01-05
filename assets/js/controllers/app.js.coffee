@@ -50,10 +50,14 @@
         
           Wallet.goal = null
       
-  $scope.$on "requireSecondPassword", (notification, continueCallback) ->
+  $scope.$on "requireSecondPassword", (notification, continueCallback, insist) ->
     modalInstance = $modal.open(
       templateUrl: "partials/second-password"
       controller: SecondPasswordCtrl
+      backdrop: if insist then "static" else null # Undismissable if "insist"
+      resolve:
+        insist: ->
+          insist
     )
     
     modalInstance.result.then((secondPassword) ->
@@ -62,5 +66,17 @@
       wrongPassword = () ->
         Wallet.displayError("Second password incorrect")
         
+        
       continueCallback(secondPassword, correctPassword, wrongPassword)
+    )
+  
+  $scope.$on "needsUpgradeToHD", (notification, continueCallback) ->
+    modalInstance = $modal.open(
+      templateUrl: "partials/upgrade"
+      controller: UpgradeCtrl,
+      backdrop: "static" # Undismissable
+    )
+        
+    modalInstance.result.then(() ->
+      continueCallback()
     )

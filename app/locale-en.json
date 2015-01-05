@@ -242,5 +242,8 @@
   "REMOVE_SECOND_PASSWORD" : "Remove Second Password",
   "SET_SECOND_PASSWORD" : "Configure Second Password",
   "SET_PASSWORD" : "Set Password",
+  "UPGRADE_WALLET" : "Upgrade Your Wallet",
+  "UPGRADE_WALLET_EXPLAIN" : "We would like to upgrade your wallet so you can use our new and improved website. However there is no way back. If for some reason you still need to use the old blockchain.info, then press Cancel to be taken back to the old version.",
+  "PROCEED" : "Proceed",
   "" : ""
 }

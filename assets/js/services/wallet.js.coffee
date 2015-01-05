@@ -20,7 +20,7 @@ playSound = (id) ->
 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) -> 
-  wallet = {status: {isLoggedIn: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null}, user: {email: null, mobile: null, passwordHint: "", pairingCode: ""}}
+  wallet = {status: {isLoggedIn: false, didUpgradeToHd: true}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null}, user: {email: null, mobile: null, passwordHint: "", pairingCode: ""}}
   
   wallet.fiatHistoricalConversionCache = {}
   
@@ -42,6 +42,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   
   wallet.didLogin = () ->    
     wallet.status.isLoggedIn = true 
+    # wallet.status.didUpgradeToHd = Wallet.my.didUpgradeToHd()
     
     wallet.my.makePairingCode((result)->
       wallet.user.pairingCode = result
@@ -192,6 +193,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
 
   wallet.isCorrectMainPassword = (candidate) ->
     wallet.my.isCorrectMainPassword(candidate)
+    
+  wallet.isCorrectSecondPassword = (candidate) ->
+    return true
+    # wallet.my.isCorrectSecondPassword(candidate)
     
   wallet.changePassword = (newPassword) ->
     wallet.my.changePassword(newPassword, (()-> 
@@ -657,21 +662,24 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     else if event == "did_set_guid" # Wallet retrieved from server
     else if event == "on_wallet_decrypt_finish" # Non-HD part is decrypted
     else if event == "hd_wallets_does_not_exist"
-      # Create a new one:
-      console.log "Creating new HD wallet..."
-      needsSecondPasswordCallback = (continueCallback) ->
-        $rootScope.$broadcast "requireSecondPassword", continueCallback
+      wallet.status.didUpgradeToHd = false
+      continueCallback = () ->
+        needsSecondPasswordCallback = (continueCallback) ->
+          $rootScope.$broadcast "requireSecondPassword", continueCallback, true
         
-      success = () ->
-        wallet.updateAccounts()  
-        wallet.my.getHistoryAndParseMultiAddressJSON()
+        success = () ->
+          wallet.status.didUpgradeToHd = true
+          wallet.updateAccounts()  
+          wallet.my.getHistoryAndParseMultiAddressJSON()
         
-      error = () ->
-        wallet.my.displayError("Unable to upgrade your wallet. Please try again.")
+        error = () ->
+          wallet.my.displayError("Unable to upgrade your wallet. Please try again.")
+          wallet.my.initializeHDWallet(null, null, needsSecondPasswordCallback, success, error)
+        
         wallet.my.initializeHDWallet(null, null, needsSecondPasswordCallback, success, error)
-        
-      wallet.my.initializeHDWallet(null, null, needsSecondPasswordCallback, success, error)  
-
+      
+      $rootScope.$broadcast "needsUpgradeToHD", continueCallback
+      
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
       wallet.updateAccountsAndLegacyAddresses()  

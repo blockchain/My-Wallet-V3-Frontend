@@ -407,6 +407,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
     return
     
+  myWallet.initializeHDWallet = () ->
     
   myWallet.sweepLegacyToAccount = (fromAddress, toAccountIndex, observer) ->
     accounts[toAccountIndex].balance = legacyAddresses[fromAddress].balance

@@ -1,5 +1,8 @@
 describe "AppCtrl", ->
   scope = undefined
+  modalInstance = undefined      
+  callbacks = undefined
+  modal = undefined
   
   beforeEach angular.mock.module("walletApp")
 
@@ -7,11 +10,30 @@ describe "AppCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
+      
+      modalInstance = {
+        close: () ->
+           modalInstance.confirmCallback()
+        dismiss: jasmine.createSpy('modalInstance.dismiss')
+        result: {
+          then: (confirmCallback, cancelCallback) ->
+            modalInstance.confirmCallback = confirmCallback
+
+        }
+      }
+      
+      modal = 
+        open: -> 
+          modalInstance
     
-      scope = $rootScope.$new()
-        
+      spyOn(modal, "open").and.callThrough()
+    
+      scope = $rootScope.$new()      
+
       $controller "AppCtrl",
         $scope: scope,
+        $modalInstance: modalInstance,
+        $modal: modal,
         $stateParams: {}
   
       return
@@ -40,3 +62,25 @@ describe "AppCtrl", ->
 
   )
   
+  describe "HD upgrade", ->
+    beforeEach ->
+
+      callbacks =  {
+        proceed: () ->
+          console.log "proceed"
+      }      
+      
+      spyOn(callbacks, "proceed")
+      
+      scope.$broadcast("needsUpgradeToHD", callbacks.proceed)
+   
+    
+    it "should show modal if HD upgrade is needed", ->
+      expect(modal.open).toHaveBeenCalled()
+    
+
+    it "should proceed if user agrees",  ->
+      modalInstance.close()
+      expect(callbacks.proceed).toHaveBeenCalled()
+  
+      

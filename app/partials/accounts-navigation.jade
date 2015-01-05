@@ -5,10 +5,10 @@
         td.header 
           img(src="img/my-accounts-icon.png")
           span(translate="MY_ACCOUNTS") 
-        td.right
+        td.right(ng-hide="!status.didUpgradeToHd")
           a(ng-click="newAccount()", translate="NEW_ACCOUNT")
     table.left
-      tr(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''")
+      tr(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ng-hide="!status.didUpgradeToHd")
         td 
           a(ui-sref="transactions({accountIndex:'accounts'})", translate="ALL_ACCOUNTS")
         td.amount 

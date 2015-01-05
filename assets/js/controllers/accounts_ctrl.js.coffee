@@ -2,7 +2,7 @@
   $scope.status    = Wallet.status
   $scope.total = Wallet.total
   $scope.settings = Wallet.settings
-  
+    
   $scope.numberOfActiveLegacyAddresses = () -> 
     return filterFilter(Wallet.legacyAddresses, {active: true}).length
   
