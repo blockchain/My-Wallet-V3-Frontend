@@ -7,6 +7,8 @@ form.form-horizontal(role="form", ng-hide="creatingAccount")
     label.control-label.col-md-2(translate="PASSWORD")
     .col-md-3
       input.form-control(type="password", ng-model="password", ng-disabled="busy")
+    .col-md-3
+      button.btn.btn-primary(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="LOGIN", ng-disabled="!isValid")
   .form-group(ng-show="settings.needs2FA")
     label.control-label.col-md-2
       span(translate="YUBI_CODE", ng-show="settings.twoFactorMethod == 3")
@@ -15,8 +17,7 @@ form.form-horizontal(role="form", ng-hide="creatingAccount")
       span(translate="SMS_CODE", ng-show="settings.twoFactorMethod == 5")
     .col-md-3
       input.form-control(type="text", ng-model="twoFactorCode", ng-disabled="busy")
-  .form-actions
-    .col-md-1
-    .col-md-6
-      a.btn.btn-primary(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="LOGIN", ng-disabled="!isValid")
-      button.btn.btn-primary(ng-click="create()",translate="CREATE_WALLET", ng-disabled="busy") 
+  .form-group
+    .col-md-2
+    p.form-control-static.col-md-3
+      a(ng-click="create()",translate="CREATE_WALLET", ng-disabled="busy") 
