@@ -24,17 +24,11 @@ npm start
 
 If you use the mock (see below) it will work out of the box. Just visit [local.blockchain.com:8080](http://local.blockchain.com:8080/).
 
-If you want to use it with a real wallet then you need to disable your browser CORS security. On a Mac you can install Google Chrome Canary and launch it as follows:
-
-```sh
-/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary --disable-web-security
-```
-
-Alternatively you can drag ```Canary Chrome Insecure``` into your Applications folder and launch with ```Command``` + ```Space``` + ```Canary Insecure```.
+If you want to use it with a real wallet then you need to login at http://blockchain.info/ first and whitelist your IP address.
 
 ## Usage
 
-After loading the page and disabling CORS security you can open any wallet registered with your email address. It will be upgraded to HD automatically. You can also sign up for a new wallet.
+You can open any wallet registered with your email address as long as your IP is whitelisted. It will be upgraded to HD automatically. You can also sign up for a new wallet.
 
 After login, you'll see a list of accounts. There will be delay before transactions and the correct balances show up. If something goes wrong during the login process, error messages appear in the console. 
 
