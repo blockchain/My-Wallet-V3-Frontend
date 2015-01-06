@@ -136,6 +136,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.setLegacyAddressLabel = (label) ->
     return
+  
+  myWallet.setLabelForAccountAddress = (accountIdx, addressIdx, label) ->
+    return
     
   myWallet.getTotalBalanceForActiveLegacyAddresses = () ->
     tally = 0
@@ -426,6 +429,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
     return address
     
+  myWallet.getReceivingAddressIndexForAccount = (accountIdx) ->
+    return 0
   
   # Amount in Satoshi  
   myWallet.getAccount = (index) ->
@@ -515,6 +520,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.legacyAddressExists = (candidate) ->
     return legacyAddresses[candidate]?
     
+  myWallet.getLabeledReceivingAddressesForAccount = () ->
+    return []
+        
   myWallet.getFiatAtTime = (time, value, currencyCode, successCallback, errorCallback) ->
     successCallback(3.2)
     

@@ -3,6 +3,7 @@
   $scope.accounts = Wallet.accounts
   $scope.show = {watchOnly: false, editLabel: false}
   $scope.newLabel = null
+  $scope.hdAddresses = Wallet.hdAddresses
   
   $scope.url = null
   
@@ -14,7 +15,7 @@
     window.confirm("Coming soon")  
     
   $scope.changeLabel = (label) ->
-    Wallet.changeLegacyAddressLabel($scope.address, label)
+    Wallet.changeAddressLabel($scope.address, label)
     $scope.show.editLabel = false
     
   #################################
@@ -26,14 +27,17 @@
     $scope.status    = Wallet.status
     $scope.settings = Wallet.settings
   
-  $scope.$watchCollection "accounts", () ->
+  $scope.$watchCollection "accounts + hdAddresses", () ->
+    # Is it a legacy address?
     address = $filter("getByProperty")("address", $stateParams.address, Wallet.legacyAddresses)
-    if address?
-      $scope.address.address = address.address
-      # $scope.address.account = address.account
-      $scope.address.label = address.label
-      $scope.address.isWatchOnlyLegacyAddress = address.isWatchOnlyLegacyAddress
-      $scope.newLabel = address.label
     
+    # Or an HD address?
+    if !address?
+      address = $filter("getByProperty")("address", $stateParams.address, $scope.hdAddresses)
+    
+    if address?
+      $scope.address = address
+      $scope.newLabel = address.label
+          
   # First load:      
   $scope.didLoad()

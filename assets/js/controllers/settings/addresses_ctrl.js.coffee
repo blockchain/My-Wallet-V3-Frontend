@@ -3,50 +3,11 @@
   $scope.accounts = Wallet.accounts
   $scope.display = {archived: false, account_dropdown_open: false}  
   
-  $scope.hdAddresses = []
-  for account in Wallet.accounts
-    $scope.hdAddresses.push {
-      address: Wallet.getReceivingAddressForAccount(account.index)
-      accountLabel: account.label
-      account: account
-    }
+  $scope.hdAddresses = Wallet.hdAddresses
   
-  # $scope.open = (request) ->
-  #   Wallet.clearAlerts()
-  #   modalInstance = $modal.open(
-  #     templateUrl: "partials/request"
-  #     controller: RequestCtrl
-  #     resolve:
-  #       request: -> request
-  #     windowClass: "blockchain-modal"
-  #   )
-  
-  $scope.open = (address) ->
-      Wallet.clearAlerts()
-      modalInstance = $modal.open(
-        templateUrl: "partials/request"
-        controller: RequestCtrl
-        resolve:
-          destination: -> address.account
-        windowClass: "blockchain-modal"
-      )
-    
   $scope.clear = (request) ->
     Wallet.cancelPaymentRequest(request.account, request.address)
     
-  # $scope.accept = (request) ->
-  #   Wallet.acceptPaymentRequest(request.account, request.address)
-  #
-  # $scope.generateRequestForAccount = (idx) ->
-  #   request = Wallet.generatePaymentRequestForAccount(idx, 0)
-  #   modalInstance = $modal.open(
-  #     templateUrl: "partials/request"
-  #     controller: RequestCtrl
-  #     resolve:
-  #       request: -> request
-  #     windowClass: "blockchain-modal"
-  #   )
-
   $scope.archive = (address) ->
     Wallet.archive(address)
     

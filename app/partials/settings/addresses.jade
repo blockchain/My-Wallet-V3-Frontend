@@ -1,52 +1,53 @@
 h2(translate="MY_ADDRESSES")
 
 p(translate="MY_ADDRESSES_EXPLAIN_TEMP")
-  
-//- .row
-//- .col-xs-6
-//- input(type="text", ng-model="searchText", placeholder="filter by address or label")
-// Generating a new address is disabled pending a new payment request system
-//- .col-xs-6(align="right")
-//-   .btn-group(dropdown is-open="display.account_dropdown_open")
-//-     button.btn.btn-info.dropdown-toggle(type="button", data-toggle="dropdown", aria-expanded="false")
-//-       span(translate="NEW_ADDRESS")
-//-       span.caret
-//-     ul.dropdown-menu(role="menu")
-//-       li(ng-repeat="account in accounts")
-//-         a(ng-click="generateRequestForAccount(account.index)") {{ account.label }}
-.row
-  .col-xs-12
-    table
-      tr
-        th(translate="ADDRESS")
-        //- th(translate="LABEL") // Label is disabled pending new payment request system
-        th(translate="ACCOUNT")
-        //- th(translate="REQUESTED_AMOUNT")
-        th
-        //- th  
-      //- tr(ng-repeat="request in requests | filter:{canceled:false, complete:false} | filter:searchText")
-      tr(ng-repeat="address in hdAddresses")
-        td 
-          //- {{ request.address }}
-          {{ address.address }}
-        //- td(ng-bind-html="request.label | highlight:searchText")
-        td 
-          //- {{ accounts[request.account].label }}
-          {{ address.accountLabel }}
-        //- td.amount
-        //-   fiat(btc="request.amount", ng-show="request.amount > 0")
-        //-   span.label.label-success(ng-show="request.amount > 0 && request.complete", translate="REQUEST_PAID")
-        //-   span(ng-show="request.paid != 0 && request.amount != 0 && request.amount != request.paid && !request.complete")
-        //-     span.label.label-warning(ng-show="request.amount > request.paid", translate="INSUFFICIENT")
-        //-     span.label.label-warning(ng-show="request.amount < request.paid", translate="TOO_MUCH")
-        //-     br
-        //-     span(translate="RECEIVED_X", translate-values="{amount: request.amount / 100000000, paid: request.paid / 100000000}")
-        td 
-          //- a(ng-click="open(request)", translate="DETAILS")
-          a(ng-click="open(address)", translate="DETAILS")
-        //- td
-        //-   a.btn.btn-xs.btn-info(ng-hide="request.complete || request.paid > 0", ng-click="clear(request)") Clear
-        //-   a.btn.btn-xs.btn-warning(ng-show="request.paid != 0 && request.amount != 0 && request.amount != request.paid && !request.complete", ng-click="accept(request)") Accept
+div(ng-show="hdAddresses.length == 0")
+  img(src="img/spinner.gif")
+div(ng-show="hdAddresses.length > 0")
+  .row
+    .col-xs-6
+      input(type="text", ng-model="searchText", placeholder="filter by address or label")
+  // Generating a new address is disabled pending a new payment request system
+  //- .col-xs-6(align="right")
+  //-   .btn-group(dropdown is-open="display.account_dropdown_open")
+  //-     button.btn.btn-info.dropdown-toggle(type="button", data-toggle="dropdown", aria-expanded="false")
+  //-       span(translate="NEW_ADDRESS")
+  //-       span.caret
+  //-     ul.dropdown-menu(role="menu")
+  //-       li(ng-repeat="account in accounts")
+  //-         a(ng-click="generateRequestForAccount(account.index)") {{ account.label }}
+  .row
+    .col-xs-12
+      table
+        tr
+          th(translate="ADDRESS")
+          th(translate="LABEL")
+          th(translate="ACCOUNT")
+          //- th(translate="REQUESTED_AMOUNT")
+          th
+          //- th  
+        //- tr(ng-repeat="request in requests | filter:{canceled:false, complete:false} | filter:searchText")
+        tr(ng-repeat="address in hdAddresses  | filter:searchText | orderBy:['account.index', 'index']")
+          td 
+            {{ address.address | highlight:searchText }}
+          td(ng-bind-html="address.label | highlight:searchText")
+          td 
+            //- {{ accounts[request.account].label }}
+            {{ address.accountLabel }}
+          //- td.amount
+          //-   fiat(btc="request.amount", ng-show="request.amount > 0")
+          //-   span.label.label-success(ng-show="request.amount > 0 && request.complete", translate="REQUEST_PAID")
+          //-   span(ng-show="request.paid != 0 && request.amount != 0 && request.amount != request.paid && !request.complete")
+          //-     span.label.label-warning(ng-show="request.amount > request.paid", translate="INSUFFICIENT")
+          //-     span.label.label-warning(ng-show="request.amount < request.paid", translate="TOO_MUCH")
+          //-     br
+          //-     span(translate="RECEIVED_X", translate-values="{amount: request.amount / 100000000, paid: request.paid / 100000000}")
+          td 
+            //- a(ng-click="open(request)", translate="DETAILS")
+            a(ui-sref="settings.address({address: address.address})", translate="DETAILS")
+          //- td
+          //-   a.btn.btn-xs.btn-info(ng-hide="request.complete || request.paid > 0", ng-click="clear(request)") Clear
+          //-   a.btn.btn-xs.btn-warning(ng-show="request.paid != 0 && request.amount != 0 && request.amount != request.paid && !request.complete", ng-click="accept(request)") Accept
 
 h2(translate="IMPORTED_ADDRESSES")
 

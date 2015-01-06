@@ -34,9 +34,8 @@ describe "AddressCtrl", ->
   )
   
   it "should change the address",  inject((Wallet) ->
-    spyOn(Wallet, "changeLegacyAddressLabel").and.callThrough()
+    spyOn(Wallet, "changeAddressLabel").and.callThrough()
     scope.changeLabel("New Label")
-    expect(Wallet.changeLegacyAddressLabel).toHaveBeenCalled()
-    expect(scope.address.label).toBe("New Label")
+    expect(Wallet.changeAddressLabel).toHaveBeenCalled()
   )
     

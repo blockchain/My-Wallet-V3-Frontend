@@ -1,40 +1,42 @@
 h2(translate="ADDRESS_DETAILS")
-.row
-  .col-xs-8
-    fields.form-horizontal(role="form",name="form",novalidate)
-      .form-group
-        label.col-sm-3.control-label(translate="ADDRESS")
-        .col-sm-9
-          p.form-control-static
-            {{ address.address }}  
-            span.label.label-warning(ng-show="address.isWatchOnlyLegacyAddress", translate="WATCH_ONLY")  
-            
-      //- .form-group
-      //-   label.col-sm-3.control-label(translate="ACCOUNT")
-      //-   .col-sm-9
-      //-     p.form-control-static
-      //-       {{ accounts[address.account].label }}
-      .form-group
-        label.col-sm-3.control-label(translate="LABEL")
-        .col-sm-9
-          input.form-control(type="text",placeholder="Donations", ng-model="newLabel", ng-focus="show.editLabel = 1")
-      div(ng-show="show.editLabel")     
-        button.btn.btn-primary.btn-small(ng-click="changeLabel(newLabel)",ng-disabled="address.label == newLabel", translate="SAVE_CHANGES")
-        button.btn.btn-info.btn-small(ng-click="newLabel = address.label; show.editLabel = false", translate="CLEAR")
-      .form-group(ng-show="address.isWatchOnlyLegacyAddress")
-        label.col-sm-3.control-label(translate="WARNING")  
-        .col-sm-9
-          p(translate="WATCH_ONLY_EXPLAIN")
+div(ng-hide="address.address")
+  img(src="img/spinner.gif")
+div(ng-show="address.address")
+  .row
+    .col-xs-8
+      fields.form-horizontal(role="form",name="form",novalidate)
+        .form-group
+          label.col-sm-3.control-label(translate="ADDRESS")
+          .col-sm-9
+            p.form-control-static
+              {{ address.address }}  
+              span.label.label-warning(ng-show="address.isWatchOnlyLegacyAddress", translate="WATCH_ONLY")              
+        .form-group(ng-show="address.account")
+          label.col-sm-3.control-label(translate="ACCOUNT")
+          .col-sm-9
+            p.form-control-static
+              {{ address.accountLabel }}
+        .form-group
+          label.col-sm-3.control-label(translate="LABEL")
+          .col-sm-9
+            input.form-control(type="text",placeholder="", ng-model="newLabel", ng-focus="show.editLabel = 1")
+        div(ng-show="show.editLabel")     
+          button.btn.btn-primary.btn-small(ng-click="changeLabel(newLabel)",ng-disabled="address.label == newLabel", translate="SAVE_CHANGES")
+          button.btn.btn-info.btn-small(ng-click="newLabel = address.label; show.editLabel = false", translate="CLEAR")
+        .form-group(ng-show="address.isWatchOnlyLegacyAddress")
+          label.col-sm-3.control-label(translate="WARNING")  
+          .col-sm-9
+            p(translate="WATCH_ONLY_EXPLAIN")
         
-  .col-xs-4
-    a(ng-click="show.watchOnly = true", ng-show="address.isWatchOnlyLegacyAddress && !show.watchOnly", translate="DISPLAY_QR")
-    p(ng-show="address.isWatchOnlyLegacyAddress")
-    qr(text="url" size="140", ng-show="!address.isWatchOnlyLegacyAddress || show.watchOnly", ng-if="url != null")
-hr(ng-hide="address.isWatchOnlyLegacyAddress")
+    .col-xs-4
+      a(ng-click="show.watchOnly = true", ng-show="address.isWatchOnlyLegacyAddress && !show.watchOnly", translate="DISPLAY_QR")
+      p(ng-show="address.isWatchOnlyLegacyAddress")
+      qr(text="url" size="140", ng-show="!address.isWatchOnlyLegacyAddress || show.watchOnly", ng-if="url != null")
+  hr(ng-hide="address.isWatchOnlyLegacyAddress") 
   
-//- h2(translate="ADVANCED_OPTIONS", ng-hide="address.isWatchOnlyLegacyAddress")
-//-
-//- p(translate="SIGN_MESSAGE_EXPLAIN", ng-hide="address.isWatchOnlyLegacyAddress")
-//-
-//- p(ng-hide="address.isWatchOnlyLegacyAddress")
-//-   a(translate="SIGN_MESSAGE", ng-click="signMessage()")
+  //- h2(translate="ADVANCED_OPTIONS", ng-hide="address.isWatchOnlyLegacyAddress")
+  //-
+  //- p(translate="SIGN_MESSAGE_EXPLAIN", ng-hide="address.isWatchOnlyLegacyAddress")
+  //-
+  //- p(ng-hide="address.isWatchOnlyLegacyAddress")
+  //-   a(translate="SIGN_MESSAGE", ng-click="signMessage()")

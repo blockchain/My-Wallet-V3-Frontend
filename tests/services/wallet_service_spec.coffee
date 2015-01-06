@@ -24,17 +24,6 @@ describe "walletServices", () ->
 
     return
         
-  describe "addressBook()", ->          
-    beforeEach ->
-      Wallet.login("test", "test")  
-      
-    it "should find John", inject((Wallet) ->      
-      expect(Wallet.addressBook["17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq"]).toBe("John")
-      return
-    )
-    
-    return
-
   describe "transactions", ->           
     beforeEach ->
       Wallet.login("test", "test")  

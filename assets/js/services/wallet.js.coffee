@@ -35,6 +35,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.transactions = []
   wallet.languages = []
   wallet.currencies = []
+  wallet.hdAddresses = []
     
   ##################################
   #             Public             #
@@ -183,9 +184,13 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.my.setLabelForAccount(account.index, name)
     wallet.updateAccountsAndLegacyAddresses()
     
-  wallet.changeLegacyAddressLabel = (address, label) ->
-    wallet.my.setLegacyAddressLabel(address.address, label)
-    address.label = label
+  wallet.changeAddressLabel = (address, label) ->
+    if address.account? # HD Address
+      wallet.my.setLabelForAccountAddress(address.account.index, address.index, label)
+      wallet.updateHDaddresses()
+    else # Legacy address
+      wallet.my.setLegacyAddressLabel(address.address, label)
+      address.label = label
     
   wallet.logout = () ->
     wallet.didLogoutByChoice = true
@@ -571,7 +576,34 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
         wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
         wallet.accounts[i].isDefault = !(defaultAccountIndex < i or defaultAccountIndex > i) 
+   
+  # Update (labelled) HD addresses:      
+  wallet.updateHDaddresses = () ->
     
+    for account in wallet.accounts
+      address = wallet.my.getReceivingAddressForAccount(account.index)
+      if $filter("getByProperty")("address", address, wallet.hdAddresses) == null
+        wallet.hdAddresses.push {
+          index: wallet.my.getReceivingAddressIndexForAccount(account.index)
+          address: address
+          label: null # The last receiving address never has a label
+          accountLabel: account.label
+          account: account
+        }
+        
+      for address in wallet.my.getLabeledReceivingAddressesForAccount(account.index)
+        hdAddress = $filter("getByProperty")("address", address.address, wallet.hdAddresses)
+        if hdAddress == null
+          wallet.hdAddresses.push {
+            index: address.index
+            address: address.address
+            label: address.label
+            accountLabel: account.label
+            account: account
+          }
+        else
+          hdAddress.label = address.label
+                        
   wallet.updateLegacyAddresses = () ->
     numberOfOldAddresses = wallet.legacyAddresses.length
     numberOfNewAddresses = wallet.my.getAllLegacyAddresses().length
@@ -683,6 +715,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
       wallet.updateAccountsAndLegacyAddresses()  
+      wallet.updateHDaddresses()
       wallet.applyIfNeeded()
       
     else if event == "hw_wallet_balance_updated"
