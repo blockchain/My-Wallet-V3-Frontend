@@ -20,7 +20,7 @@ playSound = (id) ->
 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) -> 
-  wallet = {status: {isLoggedIn: false, didUpgradeToHd: true}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null}, user: {email: null, mobile: null, passwordHint: "", pairingCode: ""}}
+  wallet = {status: {isLoggedIn: false, didUpgradeToHd: null}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null}, user: {email: null, mobile: null, passwordHint: "", pairingCode: ""}}
   
   wallet.fiatHistoricalConversionCache = {}
   
@@ -43,7 +43,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   
   wallet.didLogin = () ->    
     wallet.status.isLoggedIn = true 
-    # wallet.status.didUpgradeToHd = Wallet.my.didUpgradeToHd()
+    wallet.status.didUpgradeToHd = wallet.my.didUpgradeToHd()
     
     wallet.my.makePairingCode((result)->
       wallet.user.pairingCode = result
@@ -52,7 +52,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     for address, label of wallet.my.getAddressBook()
       wallet.addressBook[address] = label
       
-    unless wallet.my.getHDWallet() == null
+    if wallet.my.didUpgradeToHd()
       wallet.updateAccounts()
       
     wallet.settings.secondPassword = wallet.my.getDoubleEncryption()
@@ -81,7 +81,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.settings.blockTOR = !!result.block_tor_ips
       
       # Fetch transactions:
-      unless wallet.my.getHDWallet() == null
+      if wallet.my.didUpgradeToHd()
         wallet.my.getHistoryAndParseMultiAddressJSON()
       
       wallet.applyIfNeeded()
@@ -554,7 +554,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   ##################################
   
   wallet.updateAccountsAndLegacyAddresses = () ->
-    unless wallet.my.getHDWallet() == null
+    if wallet.my.didUpgradeToHd()
       wallet.updateAccounts()
     wallet.updateLegacyAddresses()
     

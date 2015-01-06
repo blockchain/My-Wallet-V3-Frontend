@@ -149,6 +149,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.getHDWallet = () ->
     myWallet 
     
+  myWallet.didUpgradeToHd = () ->
+    return true
+    
   myWallet.isValidateBIP39Mnemonic = (mnemonic) ->
     return false unless mnemonic?
     return false if mnemonic.indexOf(" ") == -1
