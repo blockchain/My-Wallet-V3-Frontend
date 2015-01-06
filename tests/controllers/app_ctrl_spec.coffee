@@ -85,7 +85,7 @@ describe "AppCtrl", ->
   
   describe "redeem from email", ->
     it "should proceed after login", inject((Wallet, $rootScope) ->
-      Wallet.goal = {claim: {code: "abcd", balance: 100000}}
+      Wallet.goal.claim = {code: "abcd", balance: 100000}
       
       Wallet.login("test", "test")  
       

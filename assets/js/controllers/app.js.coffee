@@ -2,6 +2,7 @@
   $scope.status    = Wallet.status
   $scope.settings = Wallet.settings
   $rootScope.isMock = Wallet.isMock
+  $scope.goal = Wallet.goal
   
   #################################
   #           Private             #
@@ -25,8 +26,14 @@
     # $state.go("transactions", {accountIndex: Wallet.getDefaultAccountIndex()})
     
         
-  $scope.$watch "status.isLoggedIn", (newValue) ->
-    if newValue
+  $scope.$watch "status.isLoggedIn", () ->
+    $scope.checkGoals()
+    
+  $scope.$watchCollection "goal", () ->
+    $scope.checkGoals()
+
+  $scope.checkGoals = () ->
+    if $scope.status.isLoggedIn
       if Wallet.goal? 
         if Wallet.goal.send?
           $modal.open(
@@ -37,7 +44,7 @@
                 Wallet.goal.send
           )
           
-          Wallet.goal = null
+          Wallet.goal.send = undefined
           
         if Wallet.goal.claim?
           $modal.open(
@@ -48,7 +55,7 @@
                 Wallet.goal.claim
           )
         
-          Wallet.goal = null
+          Wallet.goal.claim = undefined
       
   $scope.$on "requireSecondPassword", (notification, continueCallback, insist) ->
     modalInstance = $modal.open(
