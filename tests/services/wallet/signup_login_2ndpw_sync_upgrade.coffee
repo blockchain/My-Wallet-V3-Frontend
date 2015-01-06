@@ -3,6 +3,7 @@ describe "walletServices", () ->
   MyWallet = undefined
   mockObserver = undefined  
   errors = undefined
+  callbacks = undefined
   
   beforeEach angular.mock.module("walletApp")
   
@@ -177,3 +178,29 @@ describe "walletServices", () ->
     it "should ask for 2nd password if needed", ->
       pending()
       
+  describe "signup", ->
+
+    
+    it "should create a wallet", ->
+      callbacks = {
+        success: () ->
+      }
+        
+      spyOn(callbacks, "success")
+      
+      Wallet.create("1234567890", "a@b.com", "EUR", "EN", callbacks.success) 
+      
+      expect(callbacks.success).toHaveBeenCalled()
+      
+    it "should not prompt user for HD upgrade", inject(($rootScope) ->
+      callbacks = {
+        success: (uid) ->
+          Wallet.login(uid, "1234567890")
+      }
+      
+      Wallet.create("1234567890", "a@b.com", "EUR", "EN", callbacks.success) 
+      
+      spyOn($rootScope, '$broadcast').and.callThrough()
+            
+      expect($rootScope.$broadcast).not.toHaveBeenCalled()
+    )

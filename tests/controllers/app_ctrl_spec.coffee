@@ -83,4 +83,14 @@ describe "AppCtrl", ->
       modalInstance.close()
       expect(callbacks.proceed).toHaveBeenCalled()
   
+  describe "redeem from email", ->
+    it "should proceed after login", inject((Wallet, $rootScope) ->
+      Wallet.goal = {claim: {code: "abcd", balance: 100000}}
       
+      Wallet.login("test", "test")  
+      
+      $rootScope.$digest()    
+            
+      expect(modal.open).toHaveBeenCalled()
+
+    )

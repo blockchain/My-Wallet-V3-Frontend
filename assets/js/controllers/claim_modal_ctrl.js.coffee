@@ -1,6 +1,9 @@
 @ClaimModalCtrl = ($scope, Wallet, $translate, $modalInstance, claim) ->        
   $scope.accounts = Wallet.accounts
-  $scope.fields = {to:  Wallet.accounts[Wallet.getDefaultAccountIndex()]}
+  $scope.fields = {to:  null}
+  
+  $scope.$watchCollection "accounts", ->
+    $scope.fields.to = Wallet.accounts[Wallet.getDefaultAccountIndex()]
   
   $scope.balance = null
   

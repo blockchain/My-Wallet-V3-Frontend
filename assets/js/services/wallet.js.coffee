@@ -51,7 +51,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     for address, label of wallet.my.getAddressBook()
       wallet.addressBook[address] = label
-      
+            
     if wallet.my.didUpgradeToHd()
       wallet.updateAccounts()
       
@@ -392,7 +392,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     amount = wallet.checkAndGetTransactionAmount(amount, currency, observer)
     wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError, wallet.transactionObserver(observer).needsSecondPasswordCallback) 
       
-  wallet.redeemFromEmailOrMobile = (account, claim, success, error) ->
+  wallet.redeemFromEmailOrMobile = (account, claim, successCallback, error) ->
+    success = () ->
+      wallet.updateAccounts()
+      wallet.updateTransactions()
+      successCallback()
+    
     wallet.my.redeemFromEmailOrMobile(account.index, claim, success, error)
     
   wallet.fetchBalanceForRedeemCode = (code) ->
@@ -576,7 +581,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
         wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
         wallet.accounts[i].isDefault = !(defaultAccountIndex < i or defaultAccountIndex > i) 
-   
+      
   # Update (labelled) HD addresses:      
   wallet.updateHDaddresses = () ->
     

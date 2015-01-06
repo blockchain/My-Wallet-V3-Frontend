@@ -423,6 +423,20 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.sendToEmail = (accountIdx, value, fixedFee, email, successCallback, errorCallback) ->
     successCallback()  
     
+  myWallet.getBalanceForRedeemCode = (code, success, error) ->
+    success(100000)
+
+  myWallet.redeemFromEmailOrMobile = (accountIdx, code, success, error) ->
+    amount = myWallet.getBalanceForRedeemCode(code, 
+      (amount) ->
+        accounts[accountIdx].balance += amount
+        success()
+      ,(()->)
+    )
+    
+    
+    
+    
   myWallet.getReceivingAddressForAccount = (accountIdx) ->
     if mockRequestAddressStack.length == 0
       $log.error "No more mock payment request addresses; please refresh."
