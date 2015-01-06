@@ -28,12 +28,10 @@ div(ng-show="hdAddresses.length > 0")
           //- th  
         //- tr(ng-repeat="request in requests | filter:{canceled:false, complete:false} | filter:searchText")
         tr(ng-repeat="address in hdAddresses  | filter:searchText | orderBy:['account.index', 'index']")
-          td 
-            {{ address.address | highlight:searchText }}
+          td(ng-bind-html="address.address | highlight:searchText")
           td(ng-bind-html="address.label | highlight:searchText")
-          td 
-            //- {{ accounts[request.account].label }}
-            {{ address.accountLabel }}
+          td(ng-bind-html="address.accountLabel | highlight:searchText")
+
           //- td.amount
           //-   fiat(btc="request.amount", ng-show="request.amount > 0")
           //-   span.label.label-success(ng-show="request.amount > 0 && request.complete", translate="REQUEST_PAID")
