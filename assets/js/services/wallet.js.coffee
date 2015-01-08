@@ -316,7 +316,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       return
       
     needsSecondPasswordCallback = (continueCallback) ->
-      $rootScope.$broadcast "requireSecondPassword", continueCallback      
+      $rootScope.$broadcast "requireSecondPassword", continueCallback   
+      
+    needsBip38Password = () ->
+      console.log("Needs BIP 38 password...")
         
     if address = wallet.my.isValidPrivateKey(addressOrPrivateKey)
       privateKey = addressOrPrivateKey
@@ -327,7 +330,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
             wallet.updateLegacyAddresses() # Probably too early
             successCallback({address: address})
             
-          wallet.my.importPrivateKey(privateKey, needsSecondPasswordCallback, success, null)
+          error = (error) ->
+            console.log "Error adding new key to existing address"
+            console.log error
+            
+          wallet.my.importPrivateKey(privateKey, needsSecondPasswordCallback, needsBip38Password, success, error)
           return
         else
           errorCallback({addressPresentInWallet: true}, address)
@@ -340,8 +347,13 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           wallet.updateLegacyAddresses() # Probably too early
           successCallback(addressItem)
           return
+          
+        error = (error) ->
+          console.log "Error importing new key"
+          console.log error
+          wallet.displayError(error)
         
-        wallet.my.importPrivateKey(privateKey, needsSecondPasswordCallback, success, null)
+        wallet.my.importPrivateKey(privateKey, needsSecondPasswordCallback, needsBip38Password, success, error)
       return
     
     if wallet.my.isValidAddress(addressOrPrivateKey)   
@@ -710,7 +722,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           wallet.my.getHistoryAndParseMultiAddressJSON()
         
         error = () ->
-          wallet.my.displayError("Unable to upgrade your wallet. Please try again.")
+          wallet.displayError("Unable to upgrade your wallet. Please try again.")
           wallet.my.initializeHDWallet(null, null, needsSecondPasswordCallback, success, error)
         
         wallet.my.initializeHDWallet(null, null, needsSecondPasswordCallback, success, error)
