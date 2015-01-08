@@ -368,7 +368,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.updateLegacyAddresses() # Probably too early
         successCallback(addressItem)
         return
-        
+            
     errorCallback({invalidInput: true})
     return
   

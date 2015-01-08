@@ -8,11 +8,15 @@
   $scope.$watchCollection "accounts", (newValue) ->
     $scope.fields.account = Wallet.accounts[0]
   
-  $scope.errors = {}
+  $scope.errors = {invalidInput: null, addressPresentInWallet: null}
   
   $scope.isValid = () ->
-    Object.keys($scope.errors).length == 0
-  
+    tally = 0
+    for key, value of $scope.errors
+      if $scope.errors[key]
+        tally++
+    return tally == 0
+        
   $scope.address = null
   $scope.accounts = Wallet.accounts
   
