@@ -2,13 +2,15 @@
   
   $scope.step = 1
   $scope.legacyAddresses  = Wallet.legacyAddresses
+  $scope.BIP38 = null
+  $scope.bip38passphrase = ""
     
   $scope.fields = {addressOrPrivateKey: "", account: null}
   
   $scope.$watchCollection "accounts", (newValue) ->
     $scope.fields.account = Wallet.accounts[0]
   
-  $scope.errors = {invalidInput: null, addressPresentInWallet: null}
+  $scope.errors = {invalidInput: null, addressPresentInWallet: null, incorrectBip38Password: null}
   
   $scope.isValid = () ->
     tally = 0
@@ -24,23 +26,33 @@
     $modalInstance.dismiss ""
   
   $scope.validate = () ->
-    success = (address)->
-      $scope.address = address
-      $scope.step = 2
-    
-    errors = (errors, address) ->
-      $scope.address = address or null
+    if $scope.BIP38
+      wrongPassword = () ->
+        $scope.errors.incorrectBip38Password = true
       
-      # We basically just want to do $scope.errors = errors, but AngularJS would
-      # stop monitoring in that case:
-      for key, value in $scope.errors
-        $scope.errors[key] = undefined
+      $scope.bip38callback($scope.bip38passphrase, wrongPassword)
+    else
+      success = (address)->
+        $scope.address = address
+        $scope.step = 2
+    
+      errors = (errors, address) ->
+        $scope.address = address or null
+      
+        # We basically just want to do $scope.errors = errors, but AngularJS would
+        # stop monitoring in that case:
+        for key, value in $scope.errors
+          $scope.errors[key] = undefined
         
-      for error, value of errors
-        $scope.errors[error] = value
+        for error, value of errors
+          $scope.errors[error] = value
+        
+      needsBip38 = (callback) ->
+        $scope.bip38callback = callback
+        $scope.BIP38 = true
     
     addressOrPrivateKey = $scope.fields.addressOrPrivateKey.trim()
-    Wallet.addAddressOrPrivateKey(addressOrPrivateKey, success, errors)
+    Wallet.addAddressOrPrivateKey(addressOrPrivateKey, needsBip38, success, errors)
     
   $scope.goToTransfer = () ->
     $scope.step = 3

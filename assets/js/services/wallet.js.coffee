@@ -310,7 +310,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
     return amount
 
-  wallet.addAddressOrPrivateKey = (addressOrPrivateKey, successCallback, errorCallback) ->
+  wallet.addAddressOrPrivateKey = (addressOrPrivateKey, needsBip38, successCallback, errorCallback) ->
     if addressOrPrivateKey == ""
       errorCallback({invalidInput: true})
       return
@@ -318,8 +318,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     needsSecondPasswordCallback = (continueCallback) ->
       $rootScope.$broadcast "requireSecondPassword", continueCallback   
       
-    needsBip38Password = () ->
-      console.log("Needs BIP 38 password...")
+    needsBip38Password = (callback) ->
+      needsBip38(callback)
         
     if address = wallet.my.isValidPrivateKey(addressOrPrivateKey)
       privateKey = addressOrPrivateKey

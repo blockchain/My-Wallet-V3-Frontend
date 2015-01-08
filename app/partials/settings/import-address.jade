@@ -10,8 +10,10 @@
           span(translate="ALREADY_IN_WALLET")
           |:
           b {{ address.address }}
-      textarea.form-control(rows="3", ng-model="fields.addressOrPrivateKey", id="address")
- 
+      textarea.form-control(rows="3", ng-model="fields.addressOrPrivateKey", id="address", ng-disabled="BIP38")
+    .form-group(ng-class="{'has-error' : errors.incorrectBip38Password}", ng-show="BIP38")
+      label.control-label Password for private key
+      input.form-control(type="password", ng-model="bip38passphrase")
   div(ng-show="step==2")
     div(ng-show="isValid()")
       p(translate="PRIVATE_KEY_VALID", ng-hide="address.isWatchOnlyLegacyAddress")
