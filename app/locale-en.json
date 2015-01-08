@@ -215,7 +215,7 @@
   "CLEAR" : "CLEAR",
   "SAVE_CHANGES" : "SAVE CHANGES",
   "IMPORT_BITCOIN_ADDRESS" : "Import existing bitcoin address",
-  "IMPORT_BITCOIN_ADDRESS_EXPLAIN" : "Your wallet automatically creates bitcoin addresses as it needs them. You can optionally import an existing address into your wallet if you have the corresponding Private Key. This is advanced functionality and only seuggested for advanced users.",
+  "IMPORT_BITCOIN_ADDRESS_EXPLAIN" : "Your wallet automatically creates bitcoin addresses as it needs them. You can optionally import an existing address into your wallet if you have the corresponding Private Key. This is advanced functionality and only suggested for advanced users.",
   "YOUR_PRIVATE_KEY" : "Your Private Key",
   "VALIDATE" : "VALIDATE",
   "PRIVATE_KEY_VALID" : "The private key appears to be <b>Valid</b>",
