@@ -515,7 +515,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     return
     
   myWallet.isValidPrivateKey = (candidate) ->
-    if candidate.indexOf("private_key_for_") > -1
+    if candidate == "BIP38 key"
+      return true
+    else if candidate.indexOf("private_key_for_") > -1
       return candidate.replace("private_key_for_","")
     else 
       return false
@@ -525,10 +527,18 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     # Reject if there are spaces inside the address:
     return withoutWhiteSpace.indexOf(" ") == -1 && withoutWhiteSpace.indexOf("@") == -1
     
-  myWallet.importPrivateKey = (privateKey, getPassword, successCallback, errorCallback) ->
-    address = privateKey.replace("private_key_for_","")
-    legacyAddresses[address] =  {privateKey: privateKey, balance: 200000000}
-    successCallback(address)
+  myWallet.importPrivateKey = (privateKey, getPassword, getBip38Password, successCallback, errorCallback) ->
+    if privateKey == "BIP38 key"
+      getBip38Password((password)->
+        if password == "5678"
+          successCallback("some address")
+        else 
+          console.log "Wrong password!"
+      )
+    else    
+      address = privateKey.replace("private_key_for_","")
+      legacyAddresses[address] =  {privateKey: privateKey, balance: 200000000}
+      successCallback(address)
     
   myWallet.recoverMyWalletHDWalletFromMnemonic = (mnemonic, pwd) ->
     accounts.splice(0,accounts.length)

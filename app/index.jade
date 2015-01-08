@@ -56,6 +56,8 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
       !=js('my-wallet/bower_components/cryptojslib/rollups/pbkdf2.js')
       !=js('my-wallet/bower_components/cryptojslib/components/cipher-core.js')
       !=js('my-wallet/bower_components/cryptojslib/components/pad-iso10126.js')
+      !=js('my-wallet/bower_components/cryptojslib/components/mode-ecb.js')
+      !=js('my-wallet/bower_components/cryptojslib/components/pad-nopadding.js')
       !=js('my-wallet/crypto-util-legacy.js')
       !=js('my-wallet/blockchainapi')
       !=js('my-wallet/signer')

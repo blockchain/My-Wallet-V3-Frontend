@@ -313,7 +313,7 @@ describe "walletServices", () ->
       success = (address) ->
         expect(address.address).toBe("valid_address")
       
-      Wallet.addAddressOrPrivateKey("valid_address", success, null)
+      Wallet.addAddressOrPrivateKey("valid_address", null, success, null)
 
       # expect(errors).toEqual({})
 
@@ -322,7 +322,7 @@ describe "walletServices", () ->
       success = (address) ->
         expect(address.address).toBe("valid_address")
       
-      Wallet.addAddressOrPrivateKey("private_key_for_valid_address", success, null)
+      Wallet.addAddressOrPrivateKey("private_key_for_valid_address", null, success, null)
       
       
     it "should complain if nothing is entered", ->
@@ -332,7 +332,7 @@ describe "walletServices", () ->
       error = (errors) ->
         expect(errors.invalidInput).toBeDefined()
         
-      Wallet.addAddressOrPrivateKey("", success, error)
+      Wallet.addAddressOrPrivateKey("", null, success, error)
       
       
     it "should complain if private key already exists", ->
@@ -343,7 +343,7 @@ describe "walletServices", () ->
         expect(errors.addressPresentInWallet).toBeDefined()
         expect(address.address).toBe("some_legacy_address")
       
-      address = Wallet.addAddressOrPrivateKey("private_key_for_some_legacy_address", success, error)
+      address = Wallet.addAddressOrPrivateKey("private_key_for_some_legacy_address", null, success, error)
 
     it "should complain if a watch-only address already exists", ->
       success = () ->
@@ -353,7 +353,7 @@ describe "walletServices", () ->
         expect(address.address).toBe("some_legacy_watch_only_address")
         expect(errors.addressPresentInWallet).toBeDefined()
         
-      Wallet.addAddressOrPrivateKey("some_legacy_watch_only_address", success, error)
+      Wallet.addAddressOrPrivateKey("some_legacy_watch_only_address", null, success, error)
     
     it "should add private key to existing watch-only address", ->
       success = (address) ->
@@ -363,7 +363,7 @@ describe "walletServices", () ->
       error = () ->
         expect(false).toBe(true)
       
-      Wallet.addAddressOrPrivateKey("private_key_for_some_legacy_watch_only_address", success, error)
+      Wallet.addAddressOrPrivateKey("private_key_for_some_legacy_watch_only_address", null, success, error)
       
     it "should complain if input is invalid", ->
       success = () ->
@@ -372,4 +372,20 @@ describe "walletServices", () ->
       error = (errors) ->
         expect(errors.invalidInput).toBeDefined()
       
-      Wallet.addAddressOrPrivateKey("invalid address", success, error)
+      Wallet.addAddressOrPrivateKey("invalid address", null, success, error)
+      
+    it "should ask for BIP 38 password if needed", ->
+      callbacks = {
+        success: () ->
+          
+        needsBip38: (callback) ->
+          callback("5678")
+      }
+     
+      spyOn(callbacks, "needsBip38").and.callThrough()
+      spyOn(callbacks, "success").and.callThrough()
+    
+      Wallet.addAddressOrPrivateKey("BIP38 key", callbacks.needsBip38, callbacks.success, null)
+     
+      expect(callbacks.needsBip38).toHaveBeenCalled()
+      expect(callbacks.success).toHaveBeenCalled()
