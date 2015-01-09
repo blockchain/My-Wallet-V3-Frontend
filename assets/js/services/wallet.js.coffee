@@ -20,7 +20,7 @@ playSound = (id) ->
 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) -> 
-  wallet = {goal: {}, status: {isLoggedIn: false, didUpgradeToHd: null}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null}, user: {email: null, mobile: null, passwordHint: "", pairingCode: ""}}
+  wallet = {goal: {}, status: {isLoggedIn: false, didUpgradeToHd: null, didLoadBalances: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null}, user: {email: null, mobile: null, passwordHint: "", pairingCode: ""}}
   
   wallet.fiatHistoricalConversionCache = {}
   
@@ -585,6 +585,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
         wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
         wallet.accounts[i].isDefault = !(defaultAccountIndex < i or defaultAccountIndex > i) 
+        
+    wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts[0].balance?
       
   # Update (labelled) HD addresses:      
   wallet.updateHDaddresses = () ->
