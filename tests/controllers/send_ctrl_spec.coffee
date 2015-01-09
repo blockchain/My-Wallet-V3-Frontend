@@ -1,5 +1,6 @@
 describe "SendCtrl", ->
   scope = undefined
+  ngAudio = undefined
   modalInstance =
     close: ->
     dismiss: ->
@@ -11,6 +12,13 @@ describe "SendCtrl", ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       
+      ngAudio = {
+        load: (file) ->
+          {
+            play: () ->
+          }
+      }
+      
       Wallet.login("test", "test")  
       
       scope = $rootScope.$new()
@@ -20,6 +28,7 @@ describe "SendCtrl", ->
         $stateParams: {},
         $modalInstance: modalInstance
         paymentRequest: {address: "", amount: ""}
+        ngAudio: ngAudio
         
       scope.transaction = {
         to: "1DDBEYPPTkgbctmMtH3gXc7UHFURw5HGJD"
@@ -195,6 +204,21 @@ describe "SendCtrl", ->
     return
   )
   
+  it "should show a spinner during sending process",  inject((Wallet) ->
+    spyOn(Wallet, "send").and.callFake((from, to, amount, currency, success, error) ->
+      expect(scope.sending).toBe(true)
+      success()
+    )
+    
+    expect(scope.sending).toBe(false)
+      
+    scope.send()
+    
+    # This is called after success:
+    expect(scope.sending).toBe(false)
+        
+  )
+  
   it "should disable Close button when sending process starts",  inject(() ->
     # Listen for "on_start"
     pending()
@@ -220,9 +244,12 @@ describe "SendCtrl", ->
   )
   
   it "should beep when sending process succeeds",  inject(() ->
-    pending()
+    spyOn(ngAudio, "load").and.callThrough()
     
-    return
+    scope.send()
+    
+    expect(ngAudio.load).toHaveBeenCalled()
+    
   )
   
   it "should show error message if send() fails",  inject((Wallet) ->

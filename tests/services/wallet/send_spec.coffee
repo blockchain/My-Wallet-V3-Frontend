@@ -1,7 +1,7 @@
 describe "walletServices", () ->
   Wallet = undefined
   MyWallet = undefined
-  mockObserver = undefined  
+  mockObserver = undefined
   errors = undefined
   
   beforeEach angular.mock.module("walletApp")
@@ -21,18 +21,19 @@ describe "walletServices", () ->
     beforeEach ->
       Wallet.login("test", "test")  
       
-      mockObserver = {} # Represents e.g. the controller calling us:
-      mockObserver.transactionDidFailWithError = () ->
-        return
-      mockObserver.transactionDidFinish = () ->
-        return
+      mockObserver = {
+        success: () ->
+          return
+        error: () ->
+          return
+      }
               
       return
      
     it "should call sendBitcoinsForAccount()", inject((Wallet, MyWallet) ->
       spyOn(MyWallet,"sendBitcoinsForAccount")
             
-      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver)
+      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
       
       expect(MyWallet.sendBitcoinsForAccount).toHaveBeenCalled()
       
@@ -42,19 +43,19 @@ describe "walletServices", () ->
     it "should convert BTC to Satoshi", inject((Wallet, MyWallet) ->
       spyOn(MyWallet,"sendBitcoinsForAccount")
             
-      Wallet.send(Wallet.accounts[0], "destination_address", "1", "BTC", mockObserver)
+      Wallet.send(Wallet.accounts[0], "destination_address", "1", "BTC", mockObserver.success, mockObserver.error)
       
       expect(MyWallet.sendBitcoinsForAccount.calls.mostRecent().args[2]).toBe(100000000)
       
       return
     )
     
-    it "should call transactionDidFinish on the listerner if all goes well", inject((Wallet, MyWallet) ->         
-      spyOn(mockObserver, "transactionDidFinish")
+    it "should call success callback if all goes well", inject((Wallet, MyWallet) ->         
+      spyOn(mockObserver, "success")
       
-      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver)
+      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
       
-      expect(mockObserver.transactionDidFinish).toHaveBeenCalled()
+      expect(mockObserver.success).toHaveBeenCalled()
       
       return
     )
@@ -62,7 +63,7 @@ describe "walletServices", () ->
     it "should update the account balance if successful", inject((Wallet, MyWallet) ->               
       before = Wallet.accounts[0].balance
       
-      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver)
+      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
       
       expect(Wallet.accounts[0].balance).toBe(before - 1.0 * 100000000)
         
@@ -72,21 +73,21 @@ describe "walletServices", () ->
     it "should update transactions if successful", inject((Wallet, MyWallet) ->               
       before = Wallet.transactions.length
       
-      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver)
+      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
       
       expect(Wallet.transactions.length).toBe(before + 1)
         
       return
     )
     
-    it "should call transactionDidFailWithError on the listerner if there's problem", inject((Wallet, MyWallet) ->
+    it "should call error callback if there's problem", inject((Wallet, MyWallet) ->
       MyWallet.mockShouldFailToSend()
          
-      spyOn(mockObserver, "transactionDidFailWithError")
+      spyOn(mockObserver, "error")
       
-      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver)
+      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
       
-      expect(mockObserver.transactionDidFailWithError).toHaveBeenCalled()
+      expect(mockObserver.error).toHaveBeenCalled()
       
       return
     )
@@ -95,7 +96,7 @@ describe "walletServices", () ->
       
       before = Wallet.accounts[0].balance
             
-      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver)
+      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
       
       Wallet.refresh()
       

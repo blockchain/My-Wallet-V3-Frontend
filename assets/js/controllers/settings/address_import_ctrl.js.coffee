@@ -4,6 +4,7 @@
   $scope.legacyAddresses  = Wallet.legacyAddresses
   $scope.BIP38 = null
   $scope.bip38passphrase = ""
+  $scope.sweeping = false
     
   $scope.fields = {addressOrPrivateKey: "", account: null}
   
@@ -58,7 +59,15 @@
     $scope.step = 3
   
   $scope.transfer = () ->
-    Wallet.sweepLegacyToAccount($scope.address, $scope.fields.account.index)
-    $modalInstance.dismiss ""
-    $state.go("transactions", {accountIndex: $scope.fields.account.index})
-
+    $scope.sweeping = true
+    
+    success = () ->
+      $scope.sweeping = false
+      $modalInstance.dismiss ""
+      $state.go("transactions", {accountIndex: $scope.fields.account.index})
+    
+    error = (error) ->
+      $scope.sweeping = false
+      Wallet.displayError(error)
+      
+    Wallet.sweepLegacyAddressToAccount($scope.address, $scope.fields.account.index, success, error)

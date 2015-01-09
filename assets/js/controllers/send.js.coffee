@@ -5,6 +5,8 @@
   
   $scope.origins = []
   $scope.destinations = []  
+  
+  $scope.sending = false # Sending in progress
       
   for account in $scope.accounts
     item = angular.copy(account)
@@ -157,22 +159,35 @@
     $modalInstance.dismiss ""
   
   $scope.send = () ->
+    $scope.sending = true
+    
+    transactionDidFailWithError = (message) ->
+      Wallet.displayError(message)
+      $scope.sending = false
+      
+    transactionDidFinish = () ->
+      sound = ngAudio.load("beep.wav")
+      sound.play()
+      $scope.sending = false
+      $modalInstance.close ""
+      $state.go("transactions", {accountIndex: $scope.transaction.from.index })
+    
     Wallet.clearAlerts()
     
     if $scope.internal
-      # TODO: differentiate between address, account and address book
       fromAccountIdx = $scope.accounts.indexOf($scope.transaction.from) 
       amount = numeral($scope.transaction.amount)
       
-      Wallet.sendInternal($scope.transaction.from, $scope.transaction.destination, amount, $scope.transaction.currency, $scope.observer)
+      Wallet.sendInternal($scope.transaction.from, $scope.transaction.destination, amount, $scope.transaction.currency, transactionDidFinish, transactionDidFailWithError)
     else
       if $scope.method == "EMAIL" 
-        Wallet.sendToEmail($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.to, numeral($scope.transaction.amount), $scope.transaction.currency, $scope.observer)
+        Wallet.sendToEmail($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.to, numeral($scope.transaction.amount), $scope.transaction.currency, transactionDidFinish, transactionDidFailWithError)
+        return
       if $scope.method == "SMS"
         Wallet.displayError("SMS not yet supported")
         return
 
-      Wallet.send($scope.transaction.from, $scope.transaction.to, numeral($scope.transaction.amount), $scope.transaction.currency, $scope.observer)
+      Wallet.send($scope.transaction.from, $scope.transaction.to, numeral($scope.transaction.amount), $scope.transaction.currency, transactionDidFinish, transactionDidFailWithError)
 
   $scope.closeAlert = (alert) ->
     Wallet.closeAlert(alert)
@@ -317,15 +332,6 @@
     $scope.errors.amount = null
     return true
     
-  
-  $scope.observer = {}
-  $scope.observer.transactionDidFailWithError = (message) ->
-    Wallet.displayError(message)
-  $scope.observer.transactionDidFinish = () ->
-    sound = ngAudio.load("beep.wav")
-    sound.play()
-    $modalInstance.close ""
-    $state.go("transactions", {accountIndex: $scope.transaction.from.index })
   
   $scope.goToConfirmation = () ->
     $scope.confirmationStep = true

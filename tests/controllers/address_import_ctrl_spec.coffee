@@ -79,9 +79,24 @@ describe "AddressImportCtrl", ->
       expect(scope.accounts).toBeDefined()
   
     it "should sweep address if user clicks continue", inject((Wallet) ->
-      spyOn(Wallet, "sweepLegacyToAccount") #.and.callThrough()
+      spyOn(Wallet, "sweepLegacyAddressToAccount") #.and.callThrough()
       scope.transfer()
-      expect(Wallet.sweepLegacyToAccount).toHaveBeenCalled()
+      expect(Wallet.sweepLegacyAddressToAccount).toHaveBeenCalled()
       # expect(scope.address.balance).toBe(0)
+    )
+    
+    it "should show a spinner during sweep",  inject((Wallet) ->
+      spyOn(Wallet, "sweepLegacyAddressToAccount").and.callFake((address, accountIdx, success, error) ->
+        expect(scope.sweeping).toBe(true)
+        success()
+      )
+    
+      expect(scope.sweeping).toBe(false)
+      
+      scope.transfer()
+    
+      # This is called after success:
+      expect(scope.sweeping).toBe(false)
+        
     )
   

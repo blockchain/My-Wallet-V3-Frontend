@@ -152,4 +152,5 @@
   button.btn.btn-info(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
   button.btn.btn-info(ng-click="backToForm()", translate="BACK", ng-show="confirmationStep")
   button.btn.btn-primary(ng-click="goToConfirmation()",ng-disabled="!transactionIsValid", translate="CONTINUE", ng-hide="confirmationStep")
-  button.btn.btn-primary(ng-click="send()",ng-disabled="!transactionIsValid", translate="SEND", ng-show="confirmationStep")
+  button.btn.btn-primary(ui-ladda="{{ sending }}", ng-click="send()",ng-disabled="!transactionIsValid", data-style="expand-left", ladda-translate="SEND", ng-show="confirmationStep")
+  

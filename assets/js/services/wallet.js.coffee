@@ -266,23 +266,23 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     return defer.promise
   
-  wallet.transactionObserver = (observer) ->    
+  wallet.transactionObserver = (success, error) ->    
     o = {}
     
     o.transactionSuccess = () ->
         wallet.updateTransactions()
         wallet.updateAccountsAndLegacyAddresses()
     
-        observer.transactionDidFinish()
+        success()
       
     o.transactionError = (e) ->
         if e.message != undefined
-          observer.transactionDidFailWithError(e.message)
+          error(e.message)
         else if e isnt null
-          observer.transactionDidFailWithError(e)
+          error(e)
           wallet.applyIfNeeded()
         else
-          observer.transactionDidFailWithError("Unknown error")
+          error("Unknown error")
           wallet.applyIfNeeded() 
           
     o.needsSecondPasswordCallback = (continueCallback) ->
@@ -290,24 +290,16 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           
     return o
         
-  wallet.checkAndGetTransactionAmount = (amount, currency, observer) ->
+  wallet.checkAndGetTransactionAmount = (amount, currency, success, error) ->
     if currency != "BTC"
       amount = wallet.fiatToSatoshi(amount, currency)
     else 
       amount = parseInt(numeral(amount).multiply(100000000).format("0"))
     
-    if observer == undefined || observer == null
-      console.error "An observer is required"
+    if !success? || !error?
+      console.error "Success and error callbacks are required"
       return
-      
-    if observer.transactionDidFailWithError == undefined
-      console.error "Observer should implement transactionDidFailWithError"
-      return
-      
-    if observer.transactionDidFinish == undefined
-      console.error "Observer should implement transactionDidFinish"
-      return
-      
+            
     return amount
 
   wallet.addAddressOrPrivateKey = (addressOrPrivateKey, needsBip38, successCallback, errorCallback) ->
@@ -373,36 +365,36 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     return
   
   # Amount in satoshi or fiat
-  wallet.send         = (from, to,             amount, currency, observer) ->
-    amount = wallet.checkAndGetTransactionAmount(amount, currency, observer)
+  wallet.send         = (from, to,             amount, currency, success, error) ->
+    amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
     
     if from.index?
-      wallet.my.sendBitcoinsForAccount(from.index, to, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError, wallet.transactionObserver(observer).needsSecondPasswordCallback)
+      wallet.my.sendBitcoinsForAccount(from.index, to, amount, 10000, null, wallet.transactionObserver(success, error).transactionSuccess, wallet.transactionObserver(success, error).transactionError, wallet.transactionObserver(success, error).needsSecondPasswordCallback)
     else if from.address?
-      wallet.my.sendFromLegacyAddressToAddress(from.address, to, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError, wallet.transactionObserver(observer).needsSecondPasswordCallback)
+      wallet.my.sendFromLegacyAddressToAddress(from.address, to, amount, 10000, null, wallet.transactionObserver(success, error).transactionSuccess, wallet.transactionObserver(success, error).transactionError, wallet.transactionObserver(success, error).needsSecondPasswordCallback)
       
-  wallet.sendInternal = (from, destination, amount, currency, observer) ->
-    amount = wallet.checkAndGetTransactionAmount(amount, currency, observer)
+  wallet.sendInternal = (from, destination, amount, currency, success, error) ->
+    amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
     
     if from.address?
       if destination.index?
-        wallet.my.sendFromLegacyAddressToAccount(from.address, destination.index, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError, wallet.transactionObserver(observer).needsSecondPasswordCallback)
+        wallet.my.sendFromLegacyAddressToAccount(from.address, destination.index, amount, 10000, null, wallet.transactionObserver(success, error).transactionSuccess, wallet.transactionObserver(success, error).transactionError, wallet.transactionObserver(success, error).needsSecondPasswordCallback)
       else if destination.address?
-        wallet.my.sendFromLegacyAddressToAddress(from.address, destination.address, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError, wallet.transactionObserver(observer).needsSecondPasswordCallback)
+        wallet.my.sendFromLegacyAddressToAddress(from.address, destination.address, amount, 10000, null, wallet.transactionObserver(success, error).transactionSuccess, wallet.transactionObserver(success, error).transactionError, wallet.transactionObserver(success, error).needsSecondPasswordCallback)
     else if from.index?
       if destination.index?
-        wallet.my.sendToAccount(from.index, destination.index, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError, wallet.transactionObserver(observer).needsSecondPasswordCallback)
+        wallet.my.sendToAccount(from.index, destination.index, amount, 10000, null, wallet.transactionObserver(success, error).transactionSuccess, wallet.transactionObserver(success, error).transactionError, wallet.transactionObserver(success, error).needsSecondPasswordCallback)
       else if destination.address?
-        wallet.my.sendBitcoinsForAccount(from.index, destination.address, amount, 10000, null, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError, wallet.transactionObserver(observer).needsSecondPasswordCallback)
+        wallet.my.sendBitcoinsForAccount(from.index, destination.address, amount, 10000, null, wallet.transactionObserver(success, error).transactionSuccess, wallet.transactionObserver(success, error).transactionError, wallet.transactionObserver(success, error).needsSecondPasswordCallback)
       
       
-  wallet.sweepLegacyToAccount = (fromAddress, toAccountIndex, observer) ->
-    wallet.my.sweepLegacyToAccount(fromAddress.address, toAccountIndex, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError, wallet.transactionObserver(observer).needsSecondPasswordCallback)
+  wallet.sweepLegacyAddressToAccount = (fromAddress, toAccountIndex, success, error) ->
+    wallet.my.sweepLegacyAddressToAccount(fromAddress.address, toAccountIndex, wallet.transactionObserver(success, error).transactionSuccess, wallet.transactionObserver(success, error).transactionError, wallet.transactionObserver(success, error).needsSecondPasswordCallback)
     wallet.updateLegacyAddresses() # Probably too early  
       
-  wallet.sendToEmail = (fromAccountIndex, email, amount, currency, observer) ->
-    amount = wallet.checkAndGetTransactionAmount(amount, currency, observer)
-    wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, wallet.transactionObserver(observer).transactionSuccess, wallet.transactionObserver(observer).transactionError, wallet.transactionObserver(observer).needsSecondPasswordCallback) 
+  wallet.sendToEmail = (fromAccountIndex, email, amount, currency, success, error) ->
+    amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
+    wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, wallet.transactionObserver(success, error).transactionSuccess, wallet.transactionObserver(success, error).transactionError, wallet.transactionObserver(success, error).needsSecondPasswordCallback) 
       
   wallet.redeemFromEmailOrMobile = (account, claim, successCallback, error) ->
     success = () ->
