@@ -206,8 +206,8 @@
   $scope.$watchCollection "destinations", () ->
     idx = Wallet.getDefaultAccountIndex()
     if !$scope.transaction.from? && $scope.accounts.length > 0
-      if $stateParams.accountIndex == undefined || $stateParams.accountIndex == null || $stateParams.accountIndex == ""
-        # Use default
+      if $stateParams.accountIndex == "accounts"
+        # Nothing to do, just use the default index
       else 
         idx = parseInt($stateParams.accountIndex)
       $scope.transaction.from = $scope.accounts[idx]
