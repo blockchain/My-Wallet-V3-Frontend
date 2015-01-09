@@ -52,8 +52,8 @@
         $scope.bip38callback = callback
         $scope.BIP38 = true
     
-    addressOrPrivateKey = $scope.fields.addressOrPrivateKey.trim()
-    Wallet.addAddressOrPrivateKey(addressOrPrivateKey, needsBip38, success, errors)
+      addressOrPrivateKey = $scope.fields.addressOrPrivateKey.trim()
+      Wallet.addAddressOrPrivateKey(addressOrPrivateKey, needsBip38, success, errors)
     
   $scope.goToTransfer = () ->
     $scope.step = 3

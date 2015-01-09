@@ -306,7 +306,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     if addressOrPrivateKey == ""
       errorCallback({invalidInput: true})
       return
-      
+            
     needsSecondPasswordCallback = (continueCallback) ->
       $rootScope.$broadcast "requireSecondPassword", continueCallback   
       
@@ -584,7 +584,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         # Set or update label and balance:
         wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
         wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
-        console.log wallet.accounts[i].balance
         wallet.accounts[i].isDefault = !(defaultAccountIndex < i or defaultAccountIndex > i) 
         
     wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts[0].balance?
