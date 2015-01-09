@@ -584,6 +584,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         # Set or update label and balance:
         wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
         wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
+        console.log wallet.accounts[i].balance
         wallet.accounts[i].isDefault = !(defaultAccountIndex < i or defaultAccountIndex > i) 
         
     wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts[0].balance?
@@ -676,9 +677,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
             amount -= transaction.from.account.amount
         else if transaction.to.account?
           amount += transaction.to.account.amount
-        if transaction.from.legacyAddresses? && transaction.from.legacyAddresses.length > 0
+        else if transaction.from.legacyAddresses? && transaction.from.legacyAddresses.length > 0
           amount += transaction.from.legacyAddresses[0].amount
-        if transaction.from.externalAddresses?
+        else if transaction.from.externalAddresses?
           amount += transaction.from.externalAddresses.amount
           
         transaction.amount = amount
@@ -698,7 +699,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       if wallet.transactions.length > before
         sound = ngAudio.load("beep.wav")
         sound.play()
-        wallet.updateTransactions()
         wallet.updateAccountsAndLegacyAddresses()
     else if event == "error_restoring_wallet"
       wallet.applyIfNeeded()      
