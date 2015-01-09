@@ -219,6 +219,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   
   wallet.recommendedTransactionFee = (origin, amount) ->
     # amount in Satoshi
+    if !origin?
+      return null
+    
     if origin.address?
       return wallet.my.recommendedTransactionFeeForAddress(origin.address, amount)
     else if origin.index?

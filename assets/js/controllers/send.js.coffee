@@ -63,7 +63,6 @@
     else if paymentRequest.toAccount?
       $scope.internal = true
       $scope.transaction.destination = paymentRequest.toAccount
-      console.log paymentRequest.fromAddress
       $scope.transaction.from = paymentRequest.fromAddress
       
     return
@@ -206,12 +205,14 @@
   $scope.$watchCollection "destinations", () ->
     idx = Wallet.getDefaultAccountIndex()
     if !$scope.transaction.from? && $scope.accounts.length > 0
-      if $stateParams.accountIndex == "accounts"
+      if $stateParams.accountIndex == "accounts" || !$stateParams.accountIndex? # The latter is for Jasmine
         # Nothing to do, just use the default index
       else 
         idx = parseInt($stateParams.accountIndex)
       $scope.transaction.from = $scope.accounts[idx]
+
     if (!$scope.transaction.destination? || $scope.transaction.destination == "") && $scope.destinations.length > 1
+      # Destination is ignored unless it's an internal spend
       if idx == 0
         $scope.transaction.destination = $scope.destinations[1]
       else
@@ -304,7 +305,7 @@
     
   $scope.validate = () ->    
     transaction = $scope.transaction
-    
+        
     if $scope.internal
       return false if transaction.destination == transaction.from
     else
@@ -327,6 +328,8 @@
     amount = $scope.transaction.amount
 
     return false unless amount? && amount > 0      
+    
+    return false unless $scope.transaction.from? && $scope.transaction.from.balance?
     
     return false if $scope.transaction.satoshi + $scope.transaction.fee > $scope.transaction.from.balance
     $scope.errors.amount = null
