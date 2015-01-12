@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="walletApp">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>Blockchain Wallet HD</title>
+    <link rel="stylesheet" href="application.css">
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="bitcoinjs.min.js"></script>
+    <script type="text/javascript" src="application.min.js"></script>
+  </head>
+  <body ng-controller="AppCtrl">
+    <div role="navigation" ui-view="navigation" class="navbar navbar-inverse"></div>
+    <div class="container-fluid">
+      <div class="row spacing"></div>
+      <div class="row">
+        <div ui-view="alerts" class="col-xs-12"></div>
+      </div>
+      <div class="row">
+        <div ui-view="left" class="col-xs-3"></div>
+        <div class="col-xs-9">
+          <div ui-view="top"></div>
+          <div ui-view="right"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

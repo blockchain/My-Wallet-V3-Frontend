@@ -78,6 +78,14 @@ Curently the app is configured to be deployed on Heroku and on a Blockchain stag
 * Real money: http://dev.blockchain.info/ (VPN or IP whitelist, might not work at the moment)
 * Mock: http://pure-wildwood-5818.herokuapp.com/ (not always up to date)
 
+Install Grunt:
+
+    npm install -g grunt-cli
+
+Create a static HTML/JS/CSS distribution package in `dist`:
+
+    grunt
+
 ## Dependencies
 
 * MyWallet: use `git pull` inside `assets/js/mywallet` to get the latest version. The tests use a mock for MyWallet, so you need to manually test if everything still works, including all edge cases.
