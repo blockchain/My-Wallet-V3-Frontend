@@ -648,7 +648,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       txTime: (new Date()).getTime() 
       from: {account: null, legacyAddresses: null, externalAddresses: {addressWithLargestOutput: from, amount: amount}}, 
       to: address
-      amount: amount
+      result: amount
     }
    
     # this.mockProcessNewTransaction { amount: amount, confirmations: 0, doubleSpend: false, coinbase: false, intraWallet: false, from_account: null, from_addresses: [from], to: address , note: note, txTime: }
@@ -662,14 +662,14 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       for address in account.receive_addresses
         if address == transaction.to
           index = accounts.indexOf(account)
-          accounts[index].balance += transaction.amount
-          transaction.to = {account: {index: index, amount: transaction.amount}, legacyAddresses: null, externalAddresses: null}
+          accounts[index].balance += transaction.result
+          transaction.to = {account: {index: index, amount: transaction.result}, legacyAddresses: null, externalAddresses: null}
           
           transactions.push transaction
           
           # Update the "blockchain" in our cookie:
           cookie = localStorageService.get("mockWallets")
-          cookie[this.uid].accounts[index].balance += transaction.amount
+          cookie[this.uid].accounts[index].balance += transaction.result
           cookie[this.uid].transactions.push transaction
           localStorageService.set("mockWallets", cookie)
           

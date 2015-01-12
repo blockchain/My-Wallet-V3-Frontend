@@ -29,7 +29,7 @@
         if tx.from.account?
           $scope.from = $scope.accounts[tx.from.account.index].label
         else
-          if tx.from.legacyAddresses?
+          if tx.from.legacyAddresses? && tx.from.legacyAddresses.length > 0
             address = $filter("getByProperty")("address", tx.from.legacyAddresses[0].address, Wallet.legacyAddresses)
             if address.label
               $scope.from = address.label
@@ -43,7 +43,7 @@
         if tx.to.account?
           $scope.to = $scope.accounts[tx.to.account.index].label
         else
-          if tx.to.legacyAddresses?
+          if tx.to.legacyAddresses? && tx.to.legacyAddresses.length > 0
             address = $filter("getByProperty")("address", tx.to.legacyAddresses[0].address, Wallet.legacyAddresses)
             if address.label
               $scope.to = address.label

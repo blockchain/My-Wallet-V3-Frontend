@@ -671,20 +671,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       if !match
         transaction = angular.copy(tx)
         transaction.note = wallet.my.getNote(transaction.hash)
-        amount = 0
-        if transaction.from.account? # Spend or intra-wallet
-          if transaction.intraWallet
-            amount += transaction.from.account.amount
-          else
-            amount -= transaction.from.account.amount
-        else if transaction.to.account?
-          amount += transaction.to.account.amount
-        else if transaction.from.legacyAddresses? && transaction.from.legacyAddresses.length > 0
-          amount += transaction.from.legacyAddresses[0].amount
-        else if transaction.from.externalAddresses?
-          amount += transaction.from.externalAddresses.amount
-          
-        transaction.amount = amount
           
         wallet.transactions.push transaction 
           

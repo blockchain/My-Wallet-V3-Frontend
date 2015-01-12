@@ -54,7 +54,7 @@
       .form-group(ng-class="{'has-error': errors.amount}")
         label.col-sm-3.control-label(translate="AMOUNT")
         .col-sm-3
-          input.form-control(type="text",ng-model="transaction.amount", placeholder="0.0000....",ng-blur="visualValidate('amount')")          
+          input.form-control(type="text",ng-model="transaction.result", placeholder="0.0000....",ng-blur="visualValidate('amount')")          
           span.help-block {{ errors.amount }}
         .col-sm-3
           ui-select(ng-model="transaction.currencySelected")
@@ -62,7 +62,7 @@
             ui-select-choices(repeat="currency in currencies | filter: $select.search" group-by="'type'") 
               span(ng-bind-html="currency.code | highlight: $select.search")                
         .col-sm-3
-          p(ng-show="transaction.currency=='BTC'") {{ transaction.amount }} BTC
+          p(ng-show="transaction.currency=='BTC'") {{ transaction.result }} BTC
           p(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
         
       //- .form-group(ng-show="advanced")

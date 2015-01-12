@@ -38,10 +38,10 @@
     .col-xs-6
       h4 Value at time of send
       span.value-at-tx
-        fiat(btc="transaction.amount" abs date="transaction.txTime")
+        fiat(btc="transaction.result" abs date="transaction.txTime")
       h4 Value now
       span.value-now 
-        fiat(btc="transaction.amount" abs)
+        fiat(btc="transaction.result" abs)
     
   .row
     .col-xs-12         
