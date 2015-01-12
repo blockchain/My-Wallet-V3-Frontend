@@ -16,7 +16,12 @@
   $scope.checkLogin = () ->
     if $scope.status.isLoggedIn == false
       if $scope.savePassword && !!$cookieStore.get("password")  
-        Wallet.login($cookieStore.get("uid"), $cookieStore.get("password"))
+        observer = {
+          needs2FA: () ->
+            console.log("Needs 2FA, go to login")
+            $state.go("login")
+        }
+        Wallet.login($cookieStore.get("uid"), $cookieStore.get("password"), null, observer)
       else 
         $state.go("login")
   
