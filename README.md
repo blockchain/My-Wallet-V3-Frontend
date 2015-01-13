@@ -17,6 +17,16 @@ cd assets/js/my-wallet
 npm install
 ````
 
+Grunt compiles the view templates and copies some CSS:
+
+Install Grunt:
+
+    npm install -g grunt-cli
+
+Run it:
+
+    grunt
+
 Run the server:
 ```sh 
 npm start
@@ -55,16 +65,7 @@ To run test and monitor for changes:
     npm test
 
 ## Development
-
-Grunt keeps an eye on things in the background. E.g. it compiles the view templates whenever you change them:
-
-Install Grunt:
-
-    npm install -g grunt-cli
-
-Run it:
-
-    grunt
+Grunt keeps an eye on things in the background. In particular it compiles the Jade files whenever you change them.
 
 ## MyWallet mock
 

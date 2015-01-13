@@ -156,6 +156,7 @@ module.exports = (grunt) ->
           "app/bower_components/bootstrap/dist/css/bootstrap.css"
           "app/bower_components/angular-ui-select/dist/select.min.css"
           "app/bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css"
+          'app/bower_components/angular/angular-csp.css'
           "build/css/**/*.css"
         ],
         dest: "dist/application.css"
@@ -181,7 +182,10 @@ module.exports = (grunt) ->
           {src: ["index.html"], dest: "dist/"}
           {src: ["img/*"], dest: "dist/", cwd: "app", expand: true}
           {src: ["fonts/*"], dest: "dist/", cwd: "app/bower_components/bootstrap/dist", expand: true}
-          
+        ]
+      angular_css:
+        files: [
+          {src: ["angular-csp.css"], dest: "assets/css", cwd: "app/bower_components/angular", expand: true }
         ]
         
     watch: {
@@ -192,6 +196,10 @@ module.exports = (grunt) ->
           spawn: false,
         },
       },
+      css: {
+        files: ['app/bower_components/angular/angular-csp.css']
+        task:  ['copy:angular_css']
+      }
     },
     
     rename:
@@ -250,6 +258,8 @@ module.exports = (grunt) ->
   grunt.registerTask "compile", ["coffee"]  
     
   grunt.registerTask "default", [
+    "html2js"
+    "copy:angular_css"
     "watch"
   ]
     
@@ -268,7 +278,7 @@ module.exports = (grunt) ->
     "concat:application"
     "sass"
     "concat_css"
-    "copy"
+    "copy:main"
     "rename"
   ]
   
