@@ -5,7 +5,7 @@ walletApp.directive('transactionNote', ($translate, $rootScope, Wallet) ->
     scope: {
       transaction: '='
     }
-    templateUrl: 'templates/transaction-note.html'
+    templateUrl: 'templates/transaction-note.jade'
     link: (scope, elem, attrs) ->
       scope.editNote = false
       scope.cancelEditNote = () ->

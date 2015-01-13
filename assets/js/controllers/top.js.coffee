@@ -5,7 +5,7 @@
     Wallet.clearAlerts()
                         
     modalInstance = $modal.open(
-      templateUrl: "partials/request"
+      templateUrl: "partials/request.jade"
       controller: RequestCtrl
       resolve:
         destination: -> Wallet.accounts[$scope.accountIndex]
@@ -15,7 +15,7 @@
   $scope.send = () ->
     Wallet.clearAlerts()
     modalInstance = $modal.open(
-      templateUrl: "partials/send"
+      templateUrl: "partials/send.jade"
       controller: SendCtrl
       resolve:
         paymentRequest: ->

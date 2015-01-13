@@ -2,27 +2,27 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
   $urlRouterProvider.otherwise("/");
 
   alerts = {
-    templateUrl: "partials/alerts"
+    templateUrl: "partials/alerts.jade"
     controller: "AlertsCtrl"
   }
   
   top =  {
-    templateUrl: "partials/top"
+    templateUrl: "partials/top.jade"
     controller: "TopCtrl"
   }
   
   navigation =  {
-    templateUrl: "partials/navigation"
+    templateUrl: "partials/navigation.jade"
     controller: "NavigationCtrl"
   }
   
   accounts = { 
-    templateUrl: "partials/accounts-navigation"
+    templateUrl: "partials/accounts-navigation.jade"
     controller: "AccountsCtrl"
   }
   
   settingsNavigation = {
-    templateUrl: "partials/settings/navigation"
+    templateUrl: "partials/settings/navigation.jade"
     controller: "SettingsNavigationCtrl"
   }
 
@@ -33,7 +33,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       alerts: alerts,
       top: top,
       right: {
-        templateUrl: "partials/login"
+        templateUrl: "partials/login.jade"
         controller: "LoginCtrl"
       }
     }
@@ -61,7 +61,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       top: top,
       left: accounts,
       right: {
-        templateUrl: "partials/transactions"
+        templateUrl: "partials/transactions.jade"
         controller: "TransactionsCtrl"
       }
     }
@@ -73,11 +73,11 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       navigation: navigation,
       alerts: alerts,
       left: { 
-        templateUrl: "partials/accounts-navigation"
+        templateUrl: "partials/accounts-navigation.jade"
         controller: "AccountsCtrl"
       },
       right: {
-        templateUrl: "partials/transaction"
+        templateUrl: "partials/transaction.jade"
         controller: "TransactionCtrl"
       }
     }
@@ -91,7 +91,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       left: settingsNavigation
       right: {
         controller: "SettingsCtrl"
-        templateUrl: "partials/settings/settings"
+        templateUrl: "partials/settings/settings.jade"
       }
     }
   ) 
@@ -99,7 +99,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     url: "/my-details"
     views: {
       settings: {
-        templateUrl: "partials/settings/my-details"
+        templateUrl: "partials/settings/my-details.jade"
         controller: "SettingsMyDetailsCtrl"
       }
     }
@@ -108,7 +108,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     url: "/wallet"
     views: {
       settings: {
-        templateUrl: "partials/settings/wallet"
+        templateUrl: "partials/settings/wallet.jade"
         controller: "SettingsWalletCtrl"
       }
     }
@@ -117,7 +117,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     url: "/accounts"
     views: {
       settings: {
-        templateUrl: "partials/settings/accounts"
+        templateUrl: "partials/settings/accounts.jade"
         controller: "SettingsAccountsCtrl"
       }
     }
@@ -126,7 +126,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     url: "/mobile"
     views: {
       settings: {
-        templateUrl: "partials/settings/mobile"
+        templateUrl: "partials/settings/mobile.jade"
         controller: "MobileCtrl"
       }
     }
@@ -135,7 +135,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     url: "/addresses"
     views: {
       settings: {
-        templateUrl: "partials/settings/addresses"
+        templateUrl: "partials/settings/addresses.jade"
         controller: "SettingsAddressesCtrl"
       }
     }
@@ -144,7 +144,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     url: "/addresses/:address"
     views: {
       settings: {
-        templateUrl: "partials/settings/address"
+        templateUrl: "partials/settings/address.jade"
         controller: "AddressCtrl"
       }
     }
@@ -153,7 +153,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     url: "/security-center"
     views: {
       settings: {
-        templateUrl: "partials/settings/security-center"
+        templateUrl: "partials/settings/security-center.jade"
         controller: "SettingsSecurityCenterCtrl"
       }
     }
@@ -162,7 +162,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     url: "/wallet-recovery"
     views: {
       settings: {
-        templateUrl: "partials/settings/wallet-recovery"
+        templateUrl: "partials/settings/wallet-recovery.jade"
         controller: "RecoveryCtrl"
       }
     }
@@ -171,7 +171,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     url: "/advanced"
     views: {
       settings: {
-        templateUrl: "partials/settings/advanced"
+        templateUrl: "partials/settings/advanced.jade"
         controller: "SettingsAdvancedCtrl"
       }
     }
@@ -184,7 +184,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       navigation: navigation,
       alerts: alerts,
       top: {
-        templateUrl: "partials/open-link"
+        templateUrl: "partials/open-link.jade"
         controller: "OpenLinkController"
       }
     }

@@ -54,6 +54,18 @@ To run test and monitor for changes:
 
     npm test
 
+## Development
+
+Grunt keeps an eye on things in the background. E.g. it compiles the view templates whenever you change them:
+
+Install Grunt:
+
+    npm install -g grunt-cli
+
+Run it:
+
+    grunt
+
 ## MyWallet mock
 
 MyWallet can simulated using a mock, allowing you to login with fake credentials and simulate sending and receiving bitcoins. 
@@ -78,13 +90,13 @@ Curently the app is configured to be deployed on Heroku and on a Blockchain stag
 * Real money: http://dev.blockchain.info/ (VPN or IP whitelist, might not work at the moment)
 * Mock: http://pure-wildwood-5818.herokuapp.com/ (not always up to date)
 
-Install Grunt:
-
-    npm install -g grunt-cli
-
 Create a static HTML/JS/CSS distribution package in `dist`:
 
-    grunt
+    grunt dist
+
+You can test the resulting files with:
+
+    coffee server-dist.coffee
 
 ## Dependencies
 

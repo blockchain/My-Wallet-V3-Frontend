@@ -6,7 +6,7 @@ walletApp.directive('virtualKeyboard', () ->
     scope: {
       ngModel: '='
     }
-    templateUrl: 'templates/virtual-keyboard.html'
+    templateUrl: 'templates/virtual-keyboard.jade'
     link: (scope, elem, attrs, ngModel) ->
       scope.keysLowerCase = [
         ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "="]

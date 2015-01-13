@@ -11,7 +11,7 @@
   $scope.newAccount = () ->
     Wallet.clearAlerts()
     modalInstance = $modal.open(
-      templateUrl: "partials/account-form"
+      templateUrl: "partials/account-form.jade"
       controller: AccountFormCtrl
       resolve:
         account: -> undefined

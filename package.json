@@ -53,7 +53,8 @@
     "grunt-contrib-clean": "^0.6.0",
     "grunt-concat-css": "^0.3.1",
     "grunt-contrib-sass": "^0.8.1",
-    "grunt-html2js": "^0.2.9"
+    "grunt-html2js": "^0.2.9",
+    "grunt-contrib-watch": "^0.6.1"
   },
   "scripts": {
     "postinstall": "bower install && browserify -r country-data assets/js/country-data-import.js > assets/js/country-data.js",

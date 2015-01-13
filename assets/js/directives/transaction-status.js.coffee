@@ -5,7 +5,7 @@ walletApp.directive('transactionStatus', ($translate, $rootScope, Wallet, $compi
     scope: {
       transaction: '='
     }
-    templateUrl: 'templates/transaction-status.html'
+    templateUrl: 'templates/transaction-status.haml'
     link: (scope, elem, attrs) ->
       scope.$watch "transaction.confirmations", () ->
         if scope.transaction? && scope.transaction.confirmations?

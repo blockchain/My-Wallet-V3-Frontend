@@ -10,3 +10,4 @@ dist/*.css
 dist/*.html
 dist/*.json
 dist/img
+assets/js/templates.js

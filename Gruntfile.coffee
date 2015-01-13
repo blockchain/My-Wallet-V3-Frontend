@@ -88,6 +88,7 @@ module.exports = (grunt) ->
           'build/my_wallet.js' # This is just a wrapper around MyWallet
           'build/services/*.js'
           'build/controllers/*.js'
+          'build/controllers/settings/*.js'
           'build/app.js' 
           'build/directives/*.js'
           'build/filters.js'
@@ -97,7 +98,7 @@ module.exports = (grunt) ->
           'assets/js/webcam.js'
           'app/bower_components/angular-audio/app/angular.audio.js'
           'app/bower_components/angular-bootstrap-slider/slider.js'
-          'build/templates.js'
+          'assets/js/templates.js'
         ]
 
         dest: "build/application-dependencies.js"
@@ -114,7 +115,7 @@ module.exports = (grunt) ->
           'app/bower_components/qrcode/lib/qrcode.min.js'
           'app/bower_components/angular-qr/angular-qr.min.js'
           'app/bower_components/angular-local-storage/dist/angular-local-storage.min.js'
-          'app/bower_components/numeral/numeral.min.js'
+          'app/bower_components/numeral/min/numeral.min.js'
           'app/bower_components/angular-numeraljs/dist/angular-numeraljs.min.js'
           'app/bower_components/angular-translate/angular-translate.min.js'
           'app/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js'
@@ -152,9 +153,9 @@ module.exports = (grunt) ->
     concat_css: {
       all: {
         src: [
-          "bower_components/bootstrap/dist/css/bootstrap.css"
-          "bower_components/angular-ui-select/dist/select.min.css"
-          "bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css"
+          "app/bower_components/bootstrap/dist/css/bootstrap.css"
+          "app/bower_components/angular-ui-select/dist/select.min.css"
+          "app/bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css"
           "build/css/**/*.css"
         ],
         dest: "dist/application.css"
@@ -167,8 +168,8 @@ module.exports = (grunt) ->
           doctype: "html"
         base: "app"
       main: {
-        src: ["app/partials/*.jade", "app/templates/*.jade"],
-        dest: 'build/templates.js'
+        src: ["app/partials/settings/*.jade", "app/partials/*.jade", "app/templates/*.jade"],
+        dest: 'assets/js/templates.js'
       },
     },
 
@@ -180,6 +181,16 @@ module.exports = (grunt) ->
           {src: ["img/*"], dest: "dist/", cwd: "app", expand: true}
           
         ]
+        
+    watch: {
+      scripts: {
+        files: ['app/partials/**/*.jade', 'app/templates/**/*.jade'],
+        tasks: ['html2js'],
+        options: {
+          spawn: false,
+        },
+      },
+    },
   
   # Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks "grunt-contrib-uglify"
@@ -190,11 +201,16 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-sass')
   grunt.loadNpmTasks('grunt-concat-css')
   grunt.loadNpmTasks('grunt-html2js')
+  grunt.loadNpmTasks('grunt-contrib-watch')
     
   grunt.registerTask "compile", ["coffee"]  
     
-  # Default task(s).
   grunt.registerTask "default", [
+    "watch"
+  ]
+    
+  # Default task(s).
+  grunt.registerTask "dist", [
     "clean"
     "compile"
     "uglify:bitcoinjs"

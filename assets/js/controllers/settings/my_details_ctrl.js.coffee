@@ -45,7 +45,7 @@
     
   $scope.changePassword = () ->
     modalInstance = $modal.open(
-      templateUrl: "partials/settings/change-password"
+      templateUrl: "partials/settings/change-password.jade"
       controller: ChangePasswordCtrl
       windowClass: "blockchain-modal"
     )
@@ -66,7 +66,7 @@
     
   $scope.setSecondPassword = () ->
     modalInstance = $modal.open(
-      templateUrl: "partials/settings/set-second-password"
+      templateUrl: "partials/settings/set-second-password.jade"
       controller: SetSecondPasswordCtrl
       windowClass: "blockchain-modal"
     )        

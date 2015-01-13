@@ -4,7 +4,7 @@ walletApp.directive('networkFeePicker', ($translate, Wallet) ->
     replace: 'false'
     scope: {
     }
-    templateUrl: 'templates/network-fee-picker.html'
+    templateUrl: 'templates/network-fee-picker.jade'
     link: (scope, elem, attrs) ->
       scope.settings = Wallet.settings
       

@@ -22,14 +22,14 @@
   $scope.importAddress = () ->
     Wallet.clearAlerts()
     modalInstance = $modal.open(
-      templateUrl: "partials/settings/import-address"
+      templateUrl: "partials/settings/import-address.jade"
       controller: AddressImportCtrl
       windowClass: "blockchain-modal"
     )
     
   $scope.transfer = (address) ->
     $modal.open(
-      templateUrl: "partials/send"
+      templateUrl: "partials/send.jade"
       controller: SendCtrl
       resolve:
         paymentRequest: -> 

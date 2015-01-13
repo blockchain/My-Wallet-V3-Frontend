@@ -42,7 +42,7 @@
       if Wallet.goal? 
         if Wallet.goal.send?
           $modal.open(
-            templateUrl: "partials/send"
+            templateUrl: "partials/send.jade"
             controller: SendCtrl
             resolve:
               paymentRequest: -> 
@@ -53,7 +53,7 @@
           
         if Wallet.goal.claim?
           $modal.open(
-            templateUrl: "partials/claim"
+            templateUrl: "partials/claim.jade"
             controller: ClaimModalCtrl
             resolve:
               claim: -> 
@@ -64,7 +64,7 @@
       
   $scope.$on "requireSecondPassword", (notification, continueCallback, insist) ->
     modalInstance = $modal.open(
-      templateUrl: "partials/second-password"
+      templateUrl: "partials/second-password.jade"
       controller: SecondPasswordCtrl
       backdrop: if insist then "static" else null # Undismissable if "insist"
       resolve:
@@ -84,7 +84,7 @@
   
   $scope.$on "needsUpgradeToHD", (notification, continueCallback) ->
     modalInstance = $modal.open(
-      templateUrl: "partials/upgrade"
+      templateUrl: "partials/upgrade.jade"
       controller: UpgradeCtrl,
       backdrop: "static" # Undismissable
     )

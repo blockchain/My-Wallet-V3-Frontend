@@ -42,7 +42,7 @@
     $scope.creatingAccount = true
 
     modalInstance = $modal.open(
-      templateUrl: "partials/signup"
+      templateUrl: "partials/signup.jade"
       controller: SignupCtrl
       backdrop: "static"
       keyboard: false
