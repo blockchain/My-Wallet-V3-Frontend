@@ -226,6 +226,11 @@ module.exports = (grunt) ->
             'dist/application.css'
           ]
         
+    shell: 
+      staging: 
+        command: () -> 
+           'scp -Cr dist/* ssh.blockchain.com:dist'
+
       
   
   # Load the plugin that provides the "uglify" task.
@@ -239,6 +244,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-html2js')
   grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-rename-assets')
+  grunt.loadNpmTasks('grunt-shell')
     
   grunt.registerTask "compile", ["coffee"]  
     
@@ -264,4 +270,10 @@ module.exports = (grunt) ->
     "copy"
     "rename"
   ]
+  
+  grunt.registerTask "staging", [
+    "dist"
+    "shell:staging"
+  ]
+  
   return

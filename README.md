@@ -98,6 +98,10 @@ You can test the resulting files with:
 
     coffee server-dist.coffee
 
+Deploy to staging (assuming your host file has an entry ssh.blockchain.com):
+
+    grunt staging
+
 index.html should be cached using If-Modified-Since or etag. The assets which contain a hash of their content should be cached forever. The remaining assets (e.g. beep.wav and images): unsure.
 
 ## Dependencies
