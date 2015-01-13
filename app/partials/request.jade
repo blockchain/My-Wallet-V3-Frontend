@@ -2,7 +2,7 @@
   h3(translate="RECEIVE_BITCOIN")
 .modal-body
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)") 
-    {{alert.msg}}
+    | {{alert.msg}}
   fields.form-horizontal(role="form",name="form",novalidate)
     .form-group(ng-class="{'has-warning': fields.to.isWatchOnlyLegacyAddress}")
       label.col-sm-3.control-label(translate="RECEIVE_TO")
@@ -32,7 +32,7 @@
       label.col-sm-3.control-label(translate="PAID")
       .col-sm-9
         p.form-control-static
-          {{ paymentRequest.paid / 100000000.0 }}  
+          | {{ paymentRequest.paid / 100000000.0 }}  
      .form-group(ng-if="paymentRequestURL")
       .col-sm-2
       .col-sm-3
@@ -41,6 +41,6 @@
         p
         label.black(translate="BITCOIN_ADDRESS")
         p.form-control-static.bitcoin-address
-          {{ paymentRequestAddress }}  
+          | {{ paymentRequestAddress }}  
 .modal-footer
   button.btn.btn-info(ng-click="close()", translate="CLOSE")  

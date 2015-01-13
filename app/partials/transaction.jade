@@ -4,7 +4,7 @@
   .row
     .col-xs-6
       p.date
-        {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
+        | {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
     .col-xs-6
       transaction-status(transaction)
   .row
@@ -19,7 +19,7 @@
                     span(translate="FROM")
                     | :
                 td
-                  {{ from }}
+                  | {{ from }}
               tr
                 td 
                   b 

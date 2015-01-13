@@ -9,13 +9,13 @@ div(ng-show="address.address")
           label.col-sm-3.control-label(translate="ADDRESS")
           .col-sm-9
             p.form-control-static
-              {{ address.address }}  
+              | {{ address.address }}  
               span.label.label-warning(ng-show="address.isWatchOnlyLegacyAddress", translate="WATCH_ONLY")              
         .form-group(ng-show="address.account")
           label.col-sm-3.control-label(translate="ACCOUNT")
           .col-sm-9
             p.form-control-static
-              {{ address.accountLabel }}
+              | {{ address.accountLabel }}
         .form-group
           label.col-sm-3.control-label(translate="LABEL")
           .col-sm-9

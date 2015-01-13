@@ -10,7 +10,7 @@
         
 .modal-body#send
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)") 
-    {{alert.msg}}
+    | {{alert.msg}}
   div(ng-hide="confirmationStep")
     form.form-horizontal(role="form",name="form",novalidate)
       .form-group
@@ -108,7 +108,7 @@
               span(translate="AMOUNT")
               | :
             td
-              {{ transaction.satoshi | btc:true }}
+              | {{ transaction.satoshi | btc:true }}
             td
               | BTC
             td
