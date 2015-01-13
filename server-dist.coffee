@@ -4,13 +4,11 @@ app = express()
 
 options = {
   dotfiles: 'ignore',
-  etag: false,
+  etag: true,
   extensions: ['html', "js"],
   index: false,
-  maxAge: '1d',
+  maxAge: '1y',
   redirect: false,
-  setHeaders: (res, path, stat) -> 
-    res.set('x-timestamp', Date.now())
 };
 
 app.use(express.static('dist', options));
