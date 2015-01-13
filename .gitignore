@@ -10,4 +10,6 @@ dist/*.css
 dist/*.html
 dist/*.json
 dist/img
+dist/beep.wav
+dist/favicon.ico
 assets/js/templates.js

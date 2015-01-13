@@ -177,7 +177,7 @@ module.exports = (grunt) ->
       main:
         files: [
           {src: ["jquery.min.js"],     dest: "dist/", cwd: "app/bower_components/jquery/dist", expand: true }
-          {src: ["locale-*.json"], dest: "dist/", cwd: "app", expand: true}
+          {src: ["locale-*.json", "beep.wav", "favicon.ico"], dest: "dist/", cwd: "app", expand: true}
           {src: ["img/*"], dest: "dist/", cwd: "app", expand: true}
           
         ]
