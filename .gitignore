@@ -4,12 +4,5 @@ app/bower_components
 .env
 build
 .sass-cache
-dist/*.js
-dist/*.map
-dist/*.css
-dist/*.html
-dist/*.json
-dist/img
-dist/beep.wav
-dist/favicon.ico
+dist
 assets/js/templates.js

@@ -98,6 +98,8 @@ You can test the resulting files with:
 
     coffee server-dist.coffee
 
+index.html should be cached using If-Modified-Since or etag. The assets which contain a hash of their content should be cached forever. The remaining assets (e.g. beep.wav and images): unsure.
+
 ## Dependencies
 
 * MyWallet: use `git pull` inside `assets/js/mywallet` to get the latest version. The tests use a mock for MyWallet, so you need to manually test if everything still works, including all edge cases.

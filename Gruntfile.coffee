@@ -178,6 +178,7 @@ module.exports = (grunt) ->
         files: [
           {src: ["jquery.min.js"],     dest: "dist/", cwd: "app/bower_components/jquery/dist", expand: true }
           {src: ["locale-*.json", "beep.wav", "favicon.ico"], dest: "dist/", cwd: "app", expand: true}
+          {src: ["index.html"], dest: "dist/"}
           {src: ["img/*"], dest: "dist/", cwd: "app", expand: true}
           
         ]
@@ -191,6 +192,41 @@ module.exports = (grunt) ->
         },
       },
     },
+    
+    rename:
+      assets:
+        options:
+          skipIfHashed: true
+          startSymbol: "{{"
+          endSymbol: "}}"
+          algorithm: "sha1"
+          format: "{{basename}}-{{hash}}.{{ext}}"
+
+          callback: (befores, afters) ->
+            publicdir = require("fs").realpathSync("dist")
+            path = require("path")
+            index = grunt.file.read("dist/index.html")
+            before = undefined
+            after = undefined
+            i = 0
+
+            while i < befores.length
+              before = path.relative(publicdir, befores[i])
+              after = path.relative(publicdir, afters[i])
+              index = index.replace(before, after)
+              i++
+            grunt.file.write "dist/index.html", index
+            return
+    
+        files: 
+          src: [
+            'dist/application.min.js'
+            'dist/jquery.min.js'
+            'dist/bitcoinjs.min.js'
+            'dist/application.css'
+          ]
+        
+      
   
   # Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks "grunt-contrib-uglify"
@@ -202,6 +238,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-concat-css')
   grunt.loadNpmTasks('grunt-html2js')
   grunt.loadNpmTasks('grunt-contrib-watch')
+  grunt.loadNpmTasks('grunt-rename-assets')
     
   grunt.registerTask "compile", ["coffee"]  
     
@@ -225,5 +262,6 @@ module.exports = (grunt) ->
     "sass"
     "concat_css"
     "copy"
+    "rename"
   ]
   return
