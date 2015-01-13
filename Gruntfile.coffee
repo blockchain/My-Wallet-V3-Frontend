@@ -180,6 +180,7 @@ module.exports = (grunt) ->
           {src: ["locale-*.json", "beep.wav", "favicon.ico"], dest: "dist/", cwd: "app", expand: true}
           {src: ["index.html"], dest: "dist/"}
           {src: ["img/*"], dest: "dist/", cwd: "app", expand: true}
+          {src: ["fonts/*"], dest: "dist/", cwd: "app/bower_components/bootstrap/dist", expand: true}
           
         ]
         
