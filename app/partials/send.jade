@@ -54,7 +54,7 @@
       .form-group(ng-class="{'has-error': errors.amount}")
         label.col-sm-3.control-label(translate="AMOUNT")
         .col-sm-3
-          input.form-control(type="text",ng-model="transaction.result", placeholder="0.0000....",ng-blur="visualValidate('amount')")          
+          input.form-control(type="text",ng-model="transaction.amount", placeholder="0.0000....",ng-blur="visualValidate('amount')")          
           span.help-block {{ errors.amount }}
         .col-sm-3
           ui-select(ng-model="transaction.currencySelected")
