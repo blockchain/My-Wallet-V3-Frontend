@@ -60,16 +60,7 @@
     $translate("CONFIRM_DISABLE_2FA").then (translation) ->
       if confirm translation
         Wallet.disableSecondFactor()
-        
-  $scope.removeSecondPassword = () ->
-    Wallet.removeSecondPassword()
-    
-  $scope.setSecondPassword = () ->
-    modalInstance = $modal.open(
-      templateUrl: "partials/settings/set-second-password.jade"
-      controller: SetSecondPasswordCtrl
-      windowClass: "blockchain-modal"
-    )        
+          
   $scope.setTwoFactorSMS = () ->
     if $scope.user.isMobileVerified
       Wallet.setTwoFactorSMS()

@@ -1,15 +1,15 @@
 .row
   .col-xs-12
-    h2(translate="SECOND_PASSWORD")
+    h2(translate="WALLET_SECOND_PASSWORD")
 .row
   .col-xs-6
-    p(translate="SECOND_PASSWORD_EXPLAIN")
-  .col-xs-6.right
-    h2.status.incomplete(ng-hide="settings.secondPassword", translate="DISABLED")
-    h2.status.complete(ng-show="settings.secondPassword", translate="ENABLED")
+    p(translate="WALLET_SECOND_PASSWORD_EXPLAIN")
+  .col-xs-6
     p
-      a(ng-click="enableSecondPassword()", translate="ENABLE_SECOND_PASSWORD", ng-hide="settings.secondPassword")
-      a(ng-click="disableSecondPassword()", translate="DISABLE_SECOND_PASSWORD", ng-show="settings.secondPassword")
+      b.text-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")  
+    p
+      a(ng-click="setSecondPassword()", translate="SET_SECOND_PASSWORD", ng-hide="settings.secondPassword")
+      a(ng-click="removeSecondPassword()", translate="REMOVE_SECOND_PASSWORD", ng-show="settings.secondPassword")
 .row
   hr
 .row
@@ -38,3 +38,37 @@
     p
       a(ng-click="enableBlockTOR()", translate="ENABLE_BLOCK_TOR", ng-hide="settings.blockTOR")
       a(ng-click="disableBlockTOR()", translate="DISABLE_BLOCK_TOR", ng-show="settings.blockTOR")
+.row
+  hr
+.row
+  .col-xs-12
+    h2(translate="PBKDF2_ITERATIONS")
+.row
+  .col-xs-6
+    p(translate="PBKDF2_ITERATIONS_EXPLAIN")
+  .col-xs-6.right
+    div(ng-hide="edit.pbkdf2")
+      p.form-control-static {{ settings.pbkdf2 }}
+      p
+        a(ng-click="edit.pbkdf2 = !edit.pbkdf2", translate="CHANGE_PBKDF2")
+    .edit-mobile(ng-show="edit.pbkdf2")
+      input.form-control(type="text", ng-model="newPbkdf2")
+      button.btn.btn-primary.btn-small(ng-click="changePbkdf2(newPbkdf2)",ng-disabled="!validatePbkdf2(newPbkdf2)", translate="SAVE")
+      button.btn.btn-info.btn-small(ng-click="edit.pbkdf2 = false", translate="CANCEL")
+.row(ng-show="settings.secondPassword")
+  hr
+.row(ng-show="settings.secondPassword")
+  .col-xs-12
+    h2(translate="PBKDF2_ITERATIONS_SECOND_PASSWORD")
+.row(ng-show="settings.secondPassword")
+  .col-xs-6
+    p(translate="PBKDF2_ITERATIONS_SECOND_PASSWORD_EXPLAIN")
+  .col-xs-6.right
+    div(ng-hide="edit.pbkdf2")
+      p.form-control-static {{ settings.pbkdf2 }}
+      p
+        a(ng-click="edit.pbkdf2_second_password = !edit.pbkdf2_second_password", translate="CHANGE_PBKDF2")
+    .edit-mobile(ng-show="edit.pbkdf2_second_password")
+      input.form-control(type="text",ng-model="newPbkdf2")
+      button.btn.btn-primary.btn-small(ng-click="changeSecondPasswordPbkdf2(newPbkdf2)",ng-disabled="!validatePbkdf2(newPbkdf2)", translate="SAVE")
+      button.btn.btn-info.btn-small(ng-click="edit.pbkdf2_second_password = false", translate="CANCEL")

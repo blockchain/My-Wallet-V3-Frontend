@@ -56,19 +56,6 @@ form.form-horizontal(role="form",name="form",novalidate)
   hr
   .form-group
     .col-sm-6
-      label(translate="WALLET_SECOND_PASSWORD")
-      br
-      p(translate="WALLET_SECOND_PASSWORD_EXPLAIN")
-    .col-sm-6
-      p
-        b.text-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")  
-      p
-        a(ng-click="setSecondPassword()", translate="SET_SECOND_PASSWORD", ng-hide="settings.secondPassword")
-        a(ng-click="removeSecondPassword()", translate="REMOVE_SECOND_PASSWORD", ng-show="settings.secondPassword")
-          
-  hr
-  .form-group
-    .col-sm-6
       label(translate="PASSWORD_HINT")
       br
       p(translate="PASSWORD_HINT_EXPLAIN")    

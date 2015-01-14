@@ -245,5 +245,9 @@
   "UPGRADE_WALLET" : "Upgrade Your Wallet",
   "UPGRADE_WALLET_EXPLAIN" : "We would like to upgrade your wallet so you can use our new and improved website. However there is no way back. If for some reason you still need to use the old blockchain.info, then press Cancel to be taken back to the old version.",
   "PROCEED" : "Proceed",
-  "" : ""
+  "PBKDF2_ITERATIONS" : "PBKDF2 Iterations",
+  "PBKDF2_ITERATIONS_SECOND_PASSWORD" : "Second Password PBKDF2 Iterations",
+  "PBKDF2_ITERATIONS_EXPLAIN" : "This increases the difficulty to discover your password using a brute-force attack, but slows down loading and saving your wallet.",
+  "PBKDF2_ITERATIONS_SECOND_PASSWORD_EXPLAIN" : "This increases the difficulty to discover your second password using a brute-force attack, but slows down actions which require the second password.",
+  "CHANGE_PBKDF2" : "change number of iterations"
 }
