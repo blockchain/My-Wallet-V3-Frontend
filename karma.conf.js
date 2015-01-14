@@ -17,6 +17,7 @@ module.exports = function(config){
       'app/bower_components/numeral/numeral.js',
       'app/bower_components/angular-numeraljs/dist/angular-numeraljs.js',
       'assets/js/app.js.coffee',
+      'assets/js/templates.js',
       'assets/js/controllers/**/*.js.coffee',
       'assets/js/filters.js.coffee',
       'assets/js/services/*.js.coffee',
