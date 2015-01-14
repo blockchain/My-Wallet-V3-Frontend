@@ -4,8 +4,8 @@ p(translate="SECURITY_LEVEL_EXPLAIN")
   .col-xs-6.col-centered
     h2(translate="CURRENT_LEVEL")
     br
-    security-badge(level="level").current
-  .col-xs-6.col-centered(ng-hide="level == 2")
+    security-badge(level="level", ng-hide="level == 0").current
+  .col-xs-6.col-centered(ng-hide="level == 3")
     h2(translate="IN_PROGRESS")
     br
     security-badge(level="level + 1", pending="1")

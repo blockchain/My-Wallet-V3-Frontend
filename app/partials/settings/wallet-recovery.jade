@@ -2,16 +2,16 @@
   .col-xs-12
     .header-with-label
       h2(translate="MY_RECOVERY_PHRASE")
-      span.label.label-danger(translate="UNCONFIRMED", ng-hide="didConfirmRecoveryPhrase")
+      span.label.label-danger(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
 
 .row
   .col-xs-6
     p(translate="RECOVERY_PHRASE_EXPLAIN")
-  //- .col-xs-6.right
-  //-   h2.status.incomplete(ng-hide="didConfirmRecoveryPhrase", translate="UNCONFIRMED")
-  //-   h2.status.complete(ng-show="didConfirmRecoveryPhrase", translate="CONFIRMED")
-  //-   p
-  //-     a(ng-click="confirmRecoveryPhrase()",translate="CONFIRM_RECOVERY_PHRASE", ng-hide="didConfirmRecoveryPhrase")
+  .col-xs-6.right
+    h2.status.incomplete(ng-hide="status.didConfirmRecoveryPhrase ", translate="UNCONFIRMED")
+    h2.status.complete(ng-show="status.didConfirmRecoveryPhrase ", translate="CONFIRMED")
+    p
+      a(ng-click="confirmRecoveryPhrase()",translate="CONFIRM_RECOVERY_PHRASE", ng-hide="status.didConfirmRecoveryPhrase ")
 
 .row
   .col-xs-12

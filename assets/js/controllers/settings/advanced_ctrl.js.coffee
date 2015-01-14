@@ -1,4 +1,4 @@
-@SettingsAdvancedCtrl = ($scope, Wallet) ->
+@SettingsAdvancedCtrl = ($scope, Wallet, $modal) ->
   $scope.settings = Wallet.settings
   
   $scope.edit = {pbkdf2: false, pbkdf2_second_password: false} 

@@ -20,7 +20,7 @@ playSound = (id) ->
 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) -> 
-  wallet = {goal: {}, status: {isLoggedIn: false, didUpgradeToHd: null, didLoadBalances: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null}, user: {email: null, mobile: null, passwordHint: "", pairingCode: ""}}
+  wallet = {goal: {}, status: {isLoggedIn: false, didUpgradeToHd: null, didLoadBalances: false, didConfirmRecoveryPhrase: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null}, user: {email: null, mobile: null, passwordHint: "", pairingCode: ""}}
   
   wallet.fiatHistoricalConversionCache = {}
   

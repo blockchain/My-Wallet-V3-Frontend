@@ -1,8 +1,8 @@
 @RecoveryCtrl = ($scope, Wallet, $state) ->
   $scope.recoveryPhrase = null
   $scope.showRecoveryPhrase = false
-  $scope.didConfirmRecoveryPhrase = false
   $scope.editMnemonic = false
+  $scope.status = Wallet.status
   
   $scope.toggleRecoveryPhrase = () ->
     if !$scope.showRecoveryPhrase
@@ -16,7 +16,7 @@
     
   $scope.confirmRecoveryPhrase = () ->
     window.alert("Under construction")
-    $scope.didConfirmRecoveryPhrase = true
+    $scope.status.didConfirmRecoveryPhrase = true
     
   $scope.importRecoveryPhrase = () ->
     $scope.editMnemonic = true
