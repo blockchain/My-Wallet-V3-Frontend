@@ -1,0 +1,6 @@
+span.security-badge
+  p.title 
+    span(ng-if="level == 0", translate="BASIC")
+    span(ng-if="level == 1", translate="INTERMEDIATE")
+    span(ng-if="level == 2", translate="SECURE")
+  img(ng-src="{{ badgeUrl }}")

@@ -249,5 +249,14 @@
   "PBKDF2_ITERATIONS_SECOND_PASSWORD" : "Second Password PBKDF2 Iterations",
   "PBKDF2_ITERATIONS_EXPLAIN" : "This increases the difficulty to discover your password using a brute-force attack, but slows down loading and saving your wallet.",
   "PBKDF2_ITERATIONS_SECOND_PASSWORD_EXPLAIN" : "This increases the difficulty to discover your second password using a brute-force attack, but slows down actions which require the second password.",
-  "CHANGE_PBKDF2" : "change number of iterations"
+  "CHANGE_PBKDF2" : "change number of iterations",
+  "SECURITY_LEVEL" : "Security Level",
+  "SECURITY_LEVEL_EXPLAIN" : "Blockchain makes security management easy. Follow the next steps to level up your security.",
+  "BASIC" : "Basic",
+  "INTERMEDIATE" : "Intermediate",
+  "SECURE" : "Secure",
+  "NEXT_STEP" : "Next Step",
+  "CURRENT_LEVEL" : "Current Level",
+  "IN_PROGRESS" : "In Progress",
+  "" : ""
 }

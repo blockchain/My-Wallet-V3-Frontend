@@ -1,1 +1,18 @@
-| Security Center
+h2(translate="SECURITY_LEVEL")
+p(translate="SECURITY_LEVEL_EXPLAIN")
+.row
+  .col-xs-6.col-centered
+    h2(translate="CURRENT_LEVEL")
+    br
+    security-badge(level="level").current
+  .col-xs-6.col-centered(ng-hide="level == 2")
+    h2(translate="IN_PROGRESS")
+    br
+    security-badge(level="level + 1", pending="1")
+.row.spacing 
+.row(ng-repeat="action in actions")
+  .col-xs-6.col-centered 
+    | Next step
+  .col-xs-6.col-centered
+    a(ng-click="doSomething()") Do Something
+  hr

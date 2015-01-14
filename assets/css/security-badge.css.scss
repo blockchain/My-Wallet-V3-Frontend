@@ -1,0 +1,25 @@
+.security-badge {
+  display: block;
+  width: 150px;
+  height: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  
+  p.title {
+    color: #ADA493;
+    font-size: 130%;
+    align: center;
+    margin: 10px auto  5px auto;
+  }
+
+  img {
+    align: center;
+    height: 100px;
+  }
+
+}
+
+.security-badge.current {
+  background-color: #F4F4F4;
+}
