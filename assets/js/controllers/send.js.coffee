@@ -158,35 +158,36 @@
     $modalInstance.dismiss ""
   
   $scope.send = () ->
-    $scope.sending = true
+    unless $scope.sending # send() gets called twice for some reason
+      $scope.sending = true
     
-    transactionDidFailWithError = (message) ->
-      Wallet.displayError(message)
-      $scope.sending = false
+      transactionDidFailWithError = (message) ->
+        Wallet.displayError(message)
+        $scope.sending = false
       
-    transactionDidFinish = () ->
-      sound = ngAudio.load("beep.wav")
-      sound.play()
-      $scope.sending = false
-      $modalInstance.close ""
-      $state.go("transactions", {accountIndex: $scope.transaction.from.index })
+      transactionDidFinish = () ->
+        sound = ngAudio.load("beep.wav")
+        sound.play()
+        $scope.sending = false
+        $modalInstance.close ""
+        $state.go("transactions", {accountIndex: $scope.transaction.from.index })
     
-    Wallet.clearAlerts()
+      Wallet.clearAlerts()
     
-    if $scope.internal
-      fromAccountIdx = $scope.accounts.indexOf($scope.transaction.from) 
-      amount = numeral($scope.transaction.amount)
+      if $scope.internal
+        fromAccountIdx = $scope.accounts.indexOf($scope.transaction.from) 
+        amount = numeral($scope.transaction.amount)
       
-      Wallet.sendInternal($scope.transaction.from, $scope.transaction.destination, amount, $scope.transaction.currency, transactionDidFinish, transactionDidFailWithError)
-    else
-      if $scope.method == "EMAIL" 
-        Wallet.sendToEmail($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.to, numeral($scope.transaction.amount), $scope.transaction.currency, transactionDidFinish, transactionDidFailWithError)
-        return
-      if $scope.method == "SMS"
-        Wallet.displayError("SMS not yet supported")
-        return
-
-      Wallet.send($scope.transaction.from, $scope.transaction.to, numeral($scope.transaction.amount), $scope.transaction.currency, transactionDidFinish, transactionDidFailWithError)
+        Wallet.sendInternal($scope.transaction.from, $scope.transaction.destination, amount, $scope.transaction.currency, transactionDidFinish, transactionDidFailWithError)
+      else
+        if $scope.method == "EMAIL" 
+          Wallet.sendToEmail($scope.accounts.indexOf($scope.transaction.from), $scope.transaction.to, numeral($scope.transaction.amount), $scope.transaction.currency, transactionDidFinish, transactionDidFailWithError)
+          return
+        if $scope.method == "SMS"
+          Wallet.displayError("SMS not yet supported")
+          return
+      
+        Wallet.send($scope.transaction.from, $scope.transaction.to, numeral($scope.transaction.amount), $scope.transaction.currency, transactionDidFinish, transactionDidFailWithError)
 
   $scope.closeAlert = (alert) ->
     Wallet.closeAlert(alert)
