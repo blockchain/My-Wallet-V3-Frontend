@@ -36,7 +36,7 @@
           legacyAddresses = filterFilter($scope.legacyAddresses, {active: true, isWatchOnlyLegacyAddress: false})
       
           for address in legacyAddresses
-            return unless address.balance < 30000 # Allow small amounts
+            return unless address.balance < 50000 # Allow small amounts
             
           
             
