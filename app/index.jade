@@ -117,8 +117,9 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
       .row.spacing
       .row
         .col-xs-12(ui-view="alerts")
-      .row
-        .col-xs-3(ui-view="left")
+      .row.tx-row
+        .col-xs-3.left-view(ui-view="left")
         .col-xs-9
-          div(ui-view="top")
-          div(ui-view="right")
+          .right-container
+            div.top-view(ui-view="top")
+            div.right-view(ui-view="right")

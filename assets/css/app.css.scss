@@ -1,13 +1,11 @@
 body {
   font-size: 1.3em;
   background-image:url('/img/background.png');
-  background-size: 997px 213px;
-  background-color: transparent;
-  background-repeat: horizontal;
+  background-color: rgb(242, 242, 242);
+  background-repeat: repeat-x;
 }
 
 .row {
-  background: white;
   vertical-align: bottom;
 }
 
@@ -97,4 +95,42 @@ body {
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+}
+
+.tx-row{
+  margin: 0;
+  
+    .left-view{
+      padding-left: 1px;
+      padding-right: 1px;
+ 
+	  .active-accounts{
+		  
+	  }
+	  .legacy-addresses{
+	    margin-top: 10px;
+	  }
+	  
+	  .side-box{
+        background-color: #FAFCFD;
+	    box-shadow: 0 0px 3px 3px rgba(0, 0, 0, 0.05);  		  
+	  }
+	  
+	     
+    }	
+    .right-view{
+      background-color: #FFFFFF;
+      padding: 30px;
+      
+    }
+    .top-view{
+      background-color: #FFFFFF;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }	 
+    
+    .right-container{
+	  background: #fff;  
+	  box-shadow: 0 0px 3px 3px rgba(0, 0, 0, 0.05);    
+    }   	    
 }
