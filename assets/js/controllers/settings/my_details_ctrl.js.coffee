@@ -1,7 +1,5 @@
-@SettingsMyDetailsCtrl = ($scope, Wallet, $modal, $filter, $translate) ->  
-  $scope.fields = {authenticatorCode: ""}
-  
-  $scope.edit = {email: false, password: false, passwordHint: false, twoFactor: false} 
+@SettingsMyDetailsCtrl = ($scope, Wallet, $modal, $filter, $translate) ->    
+  $scope.edit = {email: false, password: false, passwordHint: false} 
   $scope.user = Wallet.user
   $scope.settings = Wallet.settings
 
@@ -22,27 +20,3 @@
   $scope.changePasswordHint = (hint) ->
     Wallet.changePasswordHint(hint)
     $scope.edit.passwordHint = false   
-      
-  $scope.disableSecondFactor = () ->
-    return false unless $scope.settings.needs2FA
-    
-    $translate("CONFIRM_DISABLE_2FA").then (translation) ->
-      if confirm translation
-        Wallet.disableSecondFactor()
-          
-  $scope.setTwoFactorSMS = () ->
-    if $scope.user.isMobileVerified
-      Wallet.setTwoFactorSMS()
-      $scope.edit.twoFactor = false
-      
-  $scope.setTwoFactorEmail = () ->
-    if $scope.user.isEmailVerified
-      Wallet.setTwoFactorEmail()
-      $scope.edit.twoFactor = false
-      
-  $scope.setTwoFactorGoogleAuthenticator = () ->
-    Wallet.setTwoFactorGoogleAuthenticator()
-    
-  $scope.confirmTwoFactorGoogleAuthenticator = () ->
-    Wallet.confirmTwoFactorGoogleAuthenticator($scope.fields.authenticatorCode)
-    $scope.edit.twoFactor = false
