@@ -9,10 +9,15 @@ p(translate="SECURITY_LEVEL_EXPLAIN")
     h2(translate="IN_PROGRESS")
     br
     security-badge(level="level + 1", pending="1")
-.row.spacing 
-.row(ng-repeat="action in actions")
-  .col-xs-6.col-centered 
-    | Next step
-  .col-xs-6.col-centered
-    a(ng-click="doSomething()") Do Something
-  hr
+.row.spacing
+div(ng-hide="user.isEmailVerified")
+  .row
+    .col-xs-12
+      h2(translate="VERIFY_EMAIL")
+  .row(ng-hide="user.isEmailVerified")
+    .col-xs-6
+      p(translate="VERIFY_EMAIL_EXPLAIN")
+    .col-xs-6
+      p
+        a(ng-click="resendEmailConfirmation()", translate="RESEND_EMAIL_VERIFICATION")
+configure-mobile-number(ng-hide="user.isMobileVerified")

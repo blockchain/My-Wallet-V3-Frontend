@@ -81,8 +81,6 @@ describe "SettingsSecurityCenterCtrl", ->
       
       for address in legacyAddresses
         address.balance = 0
-        console.log "Set to zero:"
-        console.log address
         
       # Dummy transaction to trigger the watcher:
       scope.transactions.push {}

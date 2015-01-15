@@ -6,11 +6,6 @@
   $scope.status = Wallet.status
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.transactions = Wallet.transactions
-  
-  $scope.doSomething = () ->
-    if $scope.level < 2
-      $scope.level++
-      $scope.actions.splice(0,1)
       
   # Check for upgrade to level 1:    
   $scope.$watch "user.isEmailVerified", ->

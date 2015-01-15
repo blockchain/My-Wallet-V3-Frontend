@@ -3,12 +3,12 @@ require = (name) ->
     c = {}
     
     c.countries = {
-      all: {
-        GB: {name: "United Kingdom", countryCallingCodes: ["+44"]} 
-        NL: {name: "The Netherlands", countryCallingCodes: ["+31"]} 
-        US: {name: "United States", countryCallingCodes: ["+1"]}
-        DE: {name: "Germany", countryCallingCodes: ["+49"]}
-      }
+      all: [
+        {alpha2: "GB", name: "United Kingdom", countryCallingCodes: ["+44"]} 
+        {alpha2: "NL", name: "The Netherlands", countryCallingCodes: ["+31"]} 
+        {alpha2: "US", name: "United States", countryCallingCodes: ["+1"]}
+        {alpha2: "DE", name: "Germany", countryCallingCodes: ["+49"]}
+      ]
 
     }
     

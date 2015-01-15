@@ -258,5 +258,8 @@
   "NEXT_STEP" : "Next Step",
   "CURRENT_LEVEL" : "Current Level",
   "IN_PROGRESS" : "In Progress",
+  "VERIFY_EMAIL" : "Verify your email address",
+  "VERIFY_EMAIL_EXPLAIN" : "Whenever you use use a different browser or computer, we'll send you a verification email to make sure it's you.",
+  "RESEND_EMAIL_VERIFICATION" : "Resend verification email",
   "" : ""
 }

@@ -54,50 +54,6 @@ describe "SettingsMyDetailsCtrl", ->
     
     return
     
-  describe "mobile", ->   
-    it "should be set on load", inject((Wallet) ->
-      expect(scope.user.mobile.number).toEqual("12345678")
-    )
-    
-    it "should not spontaniously save", inject((Wallet) ->
-      spyOn(Wallet, "changeMobile")
-      expect(Wallet.changeMobile).not.toHaveBeenCalled()
-      
-      return
-    )
-  
-    it "should let user change it", inject((Wallet) ->
-      spyOn(Wallet, "changeMobile")
-
-      scope.changeMobile("+3100000000")
-          
-      expect(Wallet.changeMobile).toHaveBeenCalled()
-      
-      return
-    )
-    
-    it "should validate proposed number is not empty", ->
-      expect(scope.validateMobileNumber(country: "+31", number:"")).toBe(false)
-      return
-      
-    it "should validate proposed number contains only numbers", ->
-      expect(scope.validateMobileNumber(country: "+31", number: "0800000000")).toBe(true)
-      return
-    
-    it "should validate proposed number does not cotain letters", ->
-      expect(scope.validateMobileNumber(country: "+31", number: "0800monkey")).toBe(false)
-      return
-    
-    it "can be verified", inject((Wallet) ->
-      spyOn(Wallet, "verifyMobile")
-
-      scope.verifyMobile(country: "+31", number: "12345")
-      
-      expect(Wallet.verifyMobile).toHaveBeenCalled()
-          
-      return
-    )
-    
   describe "password", ->   
     it "can be changed through modal", inject(($modal) ->
       spyOn(modal, "open")
