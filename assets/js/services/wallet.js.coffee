@@ -20,7 +20,7 @@ playSound = (id) ->
 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) -> 
-  wallet = {goal: {}, status: {isLoggedIn: false, didUpgradeToHd: null, didLoadBalances: false, didConfirmRecoveryPhrase: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null}, user: {email: null, mobile: null, passwordHint: "", pairingCode: ""}}
+  wallet = {goal: {}, status: {isLoggedIn: false, didUpgradeToHd: null, didLoadBalances: false, legacyAddressBalancesLoaded: false, didConfirmRecoveryPhrase: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null}, user: {email: null, mobile: null, passwordHint: "", pairingCode: ""}}
   
   wallet.fiatHistoricalConversionCache = {}
   
@@ -650,6 +650,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     numberOfOldAddresses = wallet.legacyAddresses.length
     numberOfNewAddresses = wallet.my.getAllLegacyAddresses().length
     
+    if numberOfNewAddresses == 0
+      wallet.status.legacyAddressBalancesLoaded = true # No legacy addresses, so all balances are loaded
+    
     if numberOfNewAddresses > 0
       for i in [0..(numberOfNewAddresses - 1)]
         addressItem = undefined
@@ -666,6 +669,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           addressItem.label = addressItem.address
         addressItem.balance = wallet.my.getLegacyAddressBalance(addressItem.address)
         addressItem.isWatchOnlyLegacyAddress = wallet.my.isWatchOnlyLegacyAddress(addressItem.address)
+        
+        if addressItem.balance != null
+          wallet.status.legacyAddressBalancesLoaded = true
       
     # Balances will be 0 until transactions have been loaded.
     # TODO: MyWallet should let us know when all transactions are loaded; hide

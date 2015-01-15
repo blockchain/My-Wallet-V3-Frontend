@@ -1,16 +1,22 @@
-@SettingsSecurityCenterCtrl = ($scope, Wallet, filterFilter) ->
+@SettingsSecurityCenterCtrl = ($scope, Wallet, filterFilter, $modal) ->
   $scope.level = 0
   $scope.actions = [{}, {}, {}]
   $scope.settings = Wallet.settings
   $scope.user = Wallet.user
   $scope.status = Wallet.status
+  $scope.legacyAddresses = []
+  $scope.unfilteredLegacyAddresses = Wallet.legacyAddresses
   
   $scope.greaterThan = (prop, val) ->
     (item) ->
       if item[prop] > val
         true
-  
-  $scope.legacyAddresses = filterFilter(filterFilter(Wallet.legacyAddresses, {active: true, isWatchOnlyLegacyAddress: false}), $scope.greaterThan('balance', 50000))
+    
+  $scope.$watchCollection "status.legacyAddressBalancesLoaded", ->  
+    if $scope.legacyAddresses.length == 0 && $scope.status.legacyAddressBalancesLoaded == true
+      for address in filterFilter(filterFilter($scope.unfilteredLegacyAddresses, {active: true, isWatchOnlyLegacyAddress: false}), $scope.greaterThan('balance', 50000))
+        $scope.legacyAddresses.push address
+
   $scope.transactions = Wallet.transactions
       
   # Check for upgrade to level 1:    

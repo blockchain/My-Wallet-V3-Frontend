@@ -4,8 +4,10 @@ p(translate="SECURITY_LEVEL_EXPLAIN")
   .col-xs-6.col-centered
     h2(translate="CURRENT_LEVEL")
     br
-    security-badge(level="level", ng-hide="level == 0").current
-  .col-xs-6.col-centered(ng-hide="level == 3")
+    span(ng-show="!status.legacyAddressBalancesLoaded")
+      img(src="img/spinner.gif")
+    security-badge(level="level", ng-hide="level == 0 || !status.legacyAddressBalancesLoaded").current
+  .col-xs-6.col-centered(ng-hide="level == 3 || !status.legacyAddressBalancesLoaded")
     h2(translate="IN_PROGRESS")
     br
     security-badge(level="level + 1", pending="1")
@@ -20,15 +22,15 @@ div(ng-hide="user.isEmailVerified")
     .col-xs-6
       p
         a(ng-click="resendEmailConfirmation()", translate="RESEND_EMAIL_VERIFICATION")
-configure-mobile-number(ng-hide="user.isMobileVerified")
-confirm-recovery-phrase(ng-hide="status.didConfirmRecoveryPhrase")
-two-factor(ng-hide="settings.needs2FA")
-configure-second-password(ng-hide="settings.secondPassword")
-tor(ng-hide="settings.blockTOR")
-.row(ng-hide="legacyAddresses.length == 0")
+configure-mobile-number(ng-hide="user.isMobileVerified || level < 1")
+confirm-recovery-phrase(ng-hide="status.didConfirmRecoveryPhrase || level < 1")
+two-factor(ng-hide="settings.needs2FA || level < 1")
+configure-second-password(ng-hide="settings.secondPassword || level < 2")
+tor(ng-hide="settings.blockTOR || level < 2")
+.row(ng-hide="legacyAddresses.length == 0 || level < 2")
   .col-xs-12
     h2(translate="SWEEP_LEGACY")
-.row(ng-hide="legacyAddresses.length == 0")
+.row(ng-hide="legacyAddresses.length == 0 || level < 2")
   .col-xs-6
     p(translate="SWEEP_LEGACY_EXPLAIN")
   .col-xs-6
@@ -37,4 +39,4 @@ tor(ng-hide="settings.blockTOR")
         a(ui-sref="settings.address({address: address.address})")
           {{ address.address | limitTo:8 }}... 
         | : {{ address.balance | btc }} 
-        a(on-click="sweep(address)") (transfer)
+        a(ng-click="transfer(address)") (transfer)
