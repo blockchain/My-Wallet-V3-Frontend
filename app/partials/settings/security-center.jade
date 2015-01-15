@@ -25,3 +25,16 @@ confirm-recovery-phrase(ng-hide="status.didConfirmRecoveryPhrase")
 two-factor(ng-hide="settings.needs2FA")
 configure-second-password(ng-hide="settings.secondPassword")
 tor(ng-hide="settings.blockTOR")
+.row(ng-hide="legacyAddresses.length == 0")
+  .col-xs-12
+    h2(translate="SWEEP_LEGACY")
+.row(ng-hide="legacyAddresses.length == 0")
+  .col-xs-6
+    p(translate="SWEEP_LEGACY_EXPLAIN")
+  .col-xs-6
+    ul
+      li(ng-repeat="address in legacyAddresses")
+        a(ui-sref="settings.address({address: address.address})")
+          {{ address.address | limitTo:8 }}... 
+        | : {{ address.balance | btc }} 
+        a(on-click="sweep(address)") (transfer)

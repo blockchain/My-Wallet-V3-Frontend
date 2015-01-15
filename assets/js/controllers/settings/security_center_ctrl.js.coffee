@@ -4,7 +4,13 @@
   $scope.settings = Wallet.settings
   $scope.user = Wallet.user
   $scope.status = Wallet.status
-  $scope.legacyAddresses = Wallet.legacyAddresses
+  
+  $scope.greaterThan = (prop, val) ->
+    (item) ->
+      if item[prop] > val
+        true
+  
+  $scope.legacyAddresses = filterFilter(filterFilter(Wallet.legacyAddresses, {active: true, isWatchOnlyLegacyAddress: false}), $scope.greaterThan('balance', 50000))
   $scope.transactions = Wallet.transactions
       
   # Check for upgrade to level 1:    
@@ -37,8 +43,14 @@
       
           for address in legacyAddresses
             return unless address.balance < 50000 # Allow small amounts
-            
-          
-            
+  
           $scope.level = 3
           
+  $scope.transfer = (address) ->
+    $modal.open(
+      templateUrl: "partials/send.jade"
+      controller: SendCtrl
+      resolve:
+        paymentRequest: -> 
+          {fromAddress: address, amount: 0, toAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()]}
+    )

@@ -76,10 +76,8 @@ describe "SettingsSecurityCenterCtrl", ->
       scope.settings.blockTOR = true
       scope.$digest()
       expect(scope.level).toBe(2)
-      
-      legacyAddresses = filterFilter(scope.legacyAddresses, {active: true, isWatchOnlyLegacyAddress: false})
-      
-      for address in legacyAddresses
+            
+      for address in scope.legacyAddresses
         address.balance = 0
         
       # Dummy transaction to trigger the watcher:
@@ -87,15 +85,4 @@ describe "SettingsSecurityCenterCtrl", ->
       
       scope.$digest()
       expect(scope.level).toBe(3)
-    )
-    
-    it "should be increased if the right conditions are met", ->
-      pending()
-
-  describe "actions", ->
-    it "...", ->
-      pending()
-      
-    it "...", inject(($modal) ->
-      pending()
     )
