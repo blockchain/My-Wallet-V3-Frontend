@@ -16,11 +16,13 @@
       <div class="row">
         <div ui-view="alerts" class="col-xs-12"></div>
       </div>
-      <div class="row">
-        <div ui-view="left" class="col-xs-3"></div>
+      <div class="row tx-row">
+        <div ui-view="left" class="col-xs-3 left-view"></div>
         <div class="col-xs-9">
-          <div ui-view="top"></div>
-          <div ui-view="right"></div>
+          <div class="right-container">
+            <div ui-view="top" class="top-view"></div>
+            <div ui-view="right" class="right-view"></div>
+          </div>
         </div>
       </div>
     </div>
