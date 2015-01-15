@@ -20,6 +20,7 @@ walletApp = angular.module("walletApp", [
   "ngNumeraljs"
   "pascalprecht.translate"
   "ui.bootstrap-slider"
+  # TODO: have grunt generate the list of partials and templates
   "partials/account-form.jade"
   "partials/accounts-navigation.jade"
   "partials/alerts.jade"
@@ -60,6 +61,7 @@ walletApp = angular.module("walletApp", [
   "templates/transaction-status.jade"
   "templates/security-badge.jade"
   "templates/configure-mobile-number.jade"
+  "templates/confirm-recovery-phrase.jade"
   # 'angular-ladda'
 ])
 

@@ -14,10 +14,6 @@
       $scope.recoveryPhrase = null
       $scope.showRecoveryPhrase = false    
     
-  $scope.confirmRecoveryPhrase = () ->
-    window.alert("Under construction")
-    $scope.status.didConfirmRecoveryPhrase = true
-    
   $scope.importRecoveryPhrase = () ->
     $scope.editMnemonic = true
     
