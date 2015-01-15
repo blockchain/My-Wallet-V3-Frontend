@@ -23,23 +23,6 @@ describe "SettingsAdvancedCtrl", ->
 
     return   
     
-  describe "block TOR requests", ->
-    it "has an initial status", ->
-      expect(scope.settings.blockTOR).toBe(false)
-      
-    it "can be enabled", inject((Wallet) -> 
-      spyOn(Wallet, "enableBlockTOR").and.callThrough()
-      scope.enableBlockTOR()
-      expect(Wallet.enableBlockTOR).toHaveBeenCalled()
-      expect(scope.settings.blockTOR).toBe(true)
-    )
-    
-    it "can be disabled", inject((Wallet) -> 
-      spyOn(Wallet, "disableBlockTOR")
-      scope.disableBlockTOR()
-      expect(Wallet.disableBlockTOR).toHaveBeenCalled()
-    )
-  
   describe "remember 2FA", ->
     it "pending", ->
       pending()

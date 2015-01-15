@@ -1,15 +1,4 @@
-.row
-  .col-xs-12
-    h2(translate="WALLET_SECOND_PASSWORD")
-.row
-  .col-xs-6
-    p(translate="WALLET_SECOND_PASSWORD_EXPLAIN")
-  .col-xs-6
-    p
-      b.text-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")  
-    p
-      a(ng-click="setSecondPassword()", translate="SET_SECOND_PASSWORD", ng-hide="settings.secondPassword")
-      a(ng-click="removeSecondPassword()", translate="REMOVE_SECOND_PASSWORD", ng-show="settings.secondPassword")
+configure-second-password
 .row
   hr
 .row
@@ -24,20 +13,7 @@
     p
       a(ng-click="enableRememberTwoFactor()", translate="ENABLE_REMEMBER_2FA", ng-hide="settings.rememberTwoFactor")
       a(ng-click="disableRememberTwoFactor()", translate="DISABLE_REMEMBER_2FA", ng-show="settings.rememberTwoFactor")
-.row
-  hr
-.row
-  .col-xs-12
-    h2(translate="BLOCK_TOR")
-.row
-  .col-xs-6
-    p(translate="BLOCK_TOR_EXPLAIN")
-  .col-xs-6.right
-    h2.status.incomplete(ng-hide="settings.blockTOR", translate="DISABLED")
-    h2.status.complete(ng-show="settings.blockTOR", translate="ENABLED")
-    p
-      a(ng-click="enableBlockTOR()", translate="ENABLE_BLOCK_TOR", ng-hide="settings.blockTOR")
-      a(ng-click="disableBlockTOR()", translate="DISABLE_BLOCK_TOR", ng-show="settings.blockTOR")
+tor
 .row
   hr
 .row
