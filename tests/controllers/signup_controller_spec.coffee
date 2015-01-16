@@ -137,9 +137,9 @@ describe "SignupCtrl", ->
     it "should guess the correct currency", ->
       expect(scope.fields.currency.code).toBe("USD")
       
-    it "should skip import and go to step 4", ->
-      scope.nextStep()
-      expect(scope.currentStep).toBe(4)
+    # it "should skip import and go to step 4", ->
+    #   scope.nextStep()
+    #   expect(scope.currentStep).toBe(4)
 
  
       
