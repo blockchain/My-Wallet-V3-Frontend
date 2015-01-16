@@ -68,7 +68,8 @@
         if $scope.currentStep == 1
           $scope.currentStep++
         if $scope.currentStep == 2
-          $scope.currentStep = 4 # Skip import step
+          $scope.close() # Skip email verification step
+          # $scope.currentStep = 4 # Skip import step
         
     else
       # console.log "Form step not valid"
