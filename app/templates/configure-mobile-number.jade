@@ -21,6 +21,6 @@
       button.btn.btn-info.btn-small(ng-click="edit.mobile = false", translate="CANCEL")
     .row(ng-show="!user.isMobileVerified")
       .col-xs-9
-        input.form-control(type="text",placeholder="AB123",ng-model="code")
+        input.form-control(type="text",ng-model="code")
       .col-xs-3
         button.btn.btn-primary(ng-click="verifyMobile(code)",ng-disabled="!code || code.length < 3", translate="VERIFY")

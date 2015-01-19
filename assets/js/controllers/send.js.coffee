@@ -50,12 +50,6 @@
   
   $scope.setMethod = (method) ->
     $scope.method = method
-    if method == "BTC"
-      $scope.toPlaceholder = "1C9KKvTW94C4wiwqL5whVPUEAwmGJLXEvt"
-    else if method == "EMAIL"
-      $scope.toPlaceholder = "nic@blockchain.info"
-    else
-      $scope.toPlaceholder = "+18005550199"
     
     $scope.errors.to = null
     if paymentRequest.address?

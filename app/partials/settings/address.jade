@@ -19,7 +19,7 @@ div(ng-show="address.address")
         .form-group
           label.col-sm-3.control-label(translate="LABEL")
           .col-sm-9
-            input.form-control(type="text",placeholder="", ng-model="newLabel", ng-focus="show.editLabel = 1")
+            input.form-control(type="text", ng-model="newLabel", ng-focus="show.editLabel = 1")
         div(ng-show="show.editLabel")     
           button.btn.btn-primary.btn-small(ng-click="changeLabel(newLabel)",ng-disabled="address.label == newLabel", translate="SAVE_CHANGES")
           button.btn.btn-info.btn-small(ng-click="newLabel = address.label; show.editLabel = false", translate="CLEAR")
