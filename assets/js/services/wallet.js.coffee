@@ -233,18 +233,18 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
     wallet.my.setPbkdf2Iterations(n, needsSecondPassword, success, error)
     
-  wallet.setSecondPasswordPbkdf2Iterations = (n, successCallback, errorCallback) ->
-    needsSecondPassword = (continueCallback) ->
-      $rootScope.$broadcast "requireSecondPassword", continueCallback
-    
-    success = () ->
-      wallet.settings.pbkdf2_second_password = wallet.my.getSecondPasswordPbkdf2Iterations()
-      successCallback()
-      
-    error = (error) ->
-      errorCallback(error)
-      
-    wallet.my.setSecondPasswordPbkdf2Iterations(n, needsSecondPassword, success, error)
+  # wallet.setSecondPasswordPbkdf2Iterations = (n, successCallback, errorCallback) ->
+  #   needsSecondPassword = (continueCallback) ->
+  #     $rootScope.$broadcast "requireSecondPassword", continueCallback
+  #
+  #   success = () ->
+  #     wallet.settings.pbkdf2_second_password = wallet.my.getSecondPasswordPbkdf2Iterations()
+  #     successCallback()
+  #
+  #   error = (error) ->
+  #     errorCallback(error)
+  #
+  #   wallet.my.setSecondPasswordPbkdf2Iterations(n, needsSecondPassword, success, error)
     
   ####################
   #   Transactions   #

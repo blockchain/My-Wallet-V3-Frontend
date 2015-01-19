@@ -12,6 +12,6 @@
     Wallet.setPbkdf2Iterations(n, (()->), (()->))
     $scope.edit.pbkdf2 = false
     
-  $scope.changeSecondPasswordPbkdf2 = (n) ->
-    Wallet.setSecondPasswordPbkdf2Iterations(n, (()->), (()->))
-    $scope.edit.pbkdf2_second_password = false
+  # $scope.changeSecondPasswordPbkdf2 = (n) ->
+  #   Wallet.setSecondPasswordPbkdf2Iterations(n, (()->), (()->))
+  #   $scope.edit.pbkdf2_second_password = false

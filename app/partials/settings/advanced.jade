@@ -31,20 +31,20 @@ tor
       input.form-control(type="text", ng-model="newPbkdf2")
       button.btn.btn-primary.btn-small(ng-click="changePbkdf2(newPbkdf2)",ng-disabled="!validatePbkdf2(newPbkdf2)", translate="SAVE")
       button.btn.btn-info.btn-small(ng-click="edit.pbkdf2 = false", translate="CANCEL")
-.row(ng-show="settings.secondPassword")
-  hr
-.row(ng-show="settings.secondPassword")
-  .col-xs-12
-    h2(translate="PBKDF2_ITERATIONS_SECOND_PASSWORD")
-.row(ng-show="settings.secondPassword")
-  .col-xs-6
-    p(translate="PBKDF2_ITERATIONS_SECOND_PASSWORD_EXPLAIN")
-  .col-xs-6.right
-    div(ng-hide="edit.pbkdf2")
-      p.form-control-static {{ settings.pbkdf2 }}
-      p
-        a(ng-click="edit.pbkdf2_second_password = !edit.pbkdf2_second_password", translate="CHANGE_PBKDF2")
-    .edit-mobile(ng-show="edit.pbkdf2_second_password")
-      input.form-control(type="text",ng-model="newPbkdf2")
-      button.btn.btn-primary.btn-small(ng-click="changeSecondPasswordPbkdf2(newPbkdf2)",ng-disabled="!validatePbkdf2(newPbkdf2)", translate="SAVE")
-      button.btn.btn-info.btn-small(ng-click="edit.pbkdf2_second_password = false", translate="CANCEL")
+//- .row(ng-show="settings.secondPassword")
+//-   hr
+//- .row(ng-show="settings.secondPassword")
+//-   .col-xs-12
+//-     h2(translate="PBKDF2_ITERATIONS_SECOND_PASSWORD")
+//- .row(ng-show="settings.secondPassword")
+//-   .col-xs-6
+//-     p(translate="PBKDF2_ITERATIONS_SECOND_PASSWORD_EXPLAIN")
+//-   .col-xs-6.right
+//-     div(ng-hide="edit.pbkdf2")
+//-       p.form-control-static {{ settings.pbkdf2 }}
+//-       p
+//-         a(ng-click="edit.pbkdf2_second_password = !edit.pbkdf2_second_password", translate="CHANGE_PBKDF2")
+//-     .edit-mobile(ng-show="edit.pbkdf2_second_password")
+//-       input.form-control(type="text",ng-model="newPbkdf2")
+//-       button.btn.btn-primary.btn-small(ng-click="changeSecondPasswordPbkdf2(newPbkdf2)",ng-disabled="!validatePbkdf2(newPbkdf2)", translate="SAVE")
+//-       button.btn.btn-info.btn-small(ng-click="edit.pbkdf2_second_password = false", translate="CANCEL")
