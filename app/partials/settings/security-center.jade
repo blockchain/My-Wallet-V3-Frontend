@@ -37,6 +37,6 @@ tor(ng-hide="settings.blockTOR || level < 2")
     ul
       li(ng-repeat="address in legacyAddresses")
         a(ui-sref="settings.address({address: address.address})")
-          {{ address.address | limitTo:8 }}... 
+          | {{ address.address | limitTo:8 }}... 
         | : {{ address.balance | btc }} 
         a(ng-click="transfer(address)") (transfer)

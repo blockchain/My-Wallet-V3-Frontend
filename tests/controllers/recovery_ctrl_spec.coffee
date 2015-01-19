@@ -25,7 +25,7 @@ describe "RecoveryCtrl", ->
   describe "recovery phrase", ->   
     it "should be available", inject((Wallet) ->
       pending()
-      expect(scope.recoveryPhrase).toEqual("banana big me hungry")
+      expect(scope.recoveryPhrase).toEqual("banana big me hungry very must eat now")
     )
     
     it "is hidden by default", ->

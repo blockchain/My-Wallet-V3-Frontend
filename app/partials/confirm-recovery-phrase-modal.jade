@@ -1,0 +1,51 @@
+.modal-header
+  .row
+    .col-xs-6
+      h3(translate="VERIFY_RECOVERY_PHRASE")        
+.modal-body#verify-recovery
+  p(translate="VERIFY_RECOVERY_PHRASE_EXPLAIN")
+    
+  p
+    img(src="img/pencil.png", align="left", ng-show="step==1 || step == 2")
+    img(src="img/lock.png",   align="left", ng-show="step == 3")  
+  p
+    b
+      span(translate="WRITE_DOWN", ng-show="step==1")
+      span(translate="VERIFY_WRITE_DOWN", ng-show="step==2")
+      span(translate="STORE_SAFE", ng-show="step==3")  
+    br
+    span(translate="DO_NOT_PRINT", ng-show="step==1")
+    span(translate="ENTER_WORDS", ng-show="step==2")  
+    span(translate="STORE_SAFE_EXPLAIN", ng-show="step==3")  
+    br(clear="all")
+        
+    .row(ng-show="step==1")
+      .col-xs-12
+        pre {{ recoveryPhrase }}
+    .row(ng-show="step==2")
+      .col-xs-3
+        .form-group(ng-class="{'has-error': errors.word1}")
+          p(translate="WORD_1")
+          input.form-control(type="text", ng-model="word1")
+      .col-xs-3
+        .form-group(ng-class="{'has-error': errors.word2}")
+          p(translate="WORD_2")
+          input.form-control(type="text", ng-model="word2")
+      .col-xs-3
+        .form-group(ng-class="{'has-error': errors.word6}")
+          p(translate="WORD_6")
+          input.form-control(type="text", ng-model="word6")
+      .col-xs-3
+        .form-group(ng-class="{'has-error': errors.word8}")
+          p(translate="WORD_8")
+          input.form-control(type="text", ng-model="word8")
+        
+        
+  div(ng-show="step==2")
+    
+      
+.modal-footer
+  button.btn.btn-info(ng-click="close()", translate="CANCEL", ng-hide="step==3")
+  button.btn.btn-primary(ng-click="goToVerify()",translate="DONE_THIS", ng-show="step==1")
+  button.btn.btn-primary(ng-click="verify()",translate="VERIFY", ng-show="step==2")
+  button.btn.btn-primary(ng-click="close()",translate="DONE_THIS", ng-show="step==3")

@@ -10,8 +10,13 @@ walletApp.directive('confirmRecoveryPhrase', ($translate, Wallet, $modal) ->
       scope.status = Wallet.status
               
       scope.confirmRecoveryPhrase = () ->
-        window.alert("Under construction")
-        scope.status.didConfirmRecoveryPhrase = true
+        modalInstance = $modal.open(
+          templateUrl: "partials/confirm-recovery-phrase-modal.jade"
+          controller: ConfirmRecoveryPhraseCtrl
+          windowClass: "blockchain-modal"
+        )
+
+        return
   }
 )
 

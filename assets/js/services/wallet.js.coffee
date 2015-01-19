@@ -44,6 +44,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.didLogin = () ->    
     wallet.status.isLoggedIn = true 
     wallet.status.didUpgradeToHd = wallet.my.didUpgradeToHd()
+    wallet.status.didConfirmRecoveryPhrase = wallet.my.isMnemonicVerified()
     
     wallet.my.makePairingCode((result)->
       wallet.user.pairingCode = result
@@ -198,6 +199,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.logout = () ->
     wallet.didLogoutByChoice = true
     wallet.my.logout() # broadcast "logging_out"
+    
+  wallet.confirmRecoveryPhrase = () ->
+    wallet.my.didVerifyMnemonic()
+    wallet.status.didConfirmRecoveryPhrase = true
 
   wallet.isCorrectMainPassword = (candidate) ->
     wallet.my.isCorrectMainPassword(candidate)

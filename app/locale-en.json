@@ -263,5 +263,18 @@
   "RESEND_EMAIL_VERIFICATION" : "Resend verification email",
   "SWEEP_LEGACY" : "Move funds away from imported addresses",
   "SWEEP_LEGACY_EXPLAIN" : "Your recovery phrase does not apply to imported addresses. Therefor we recommend that you transfer fund from imported addresses to one of your accounts.",
+  "VERIFY_RECOVERY_PHRASE" : "Verify Recovery Phrase",
+  "WRITE_DOWN" : "Write down your recovery phrase on a piece of paper",
+  "DO_NOT_PRINT" : "do not print or save it on your computer",
+  "DONE_THIS" : "I've done this",
+  "VERIFY_WRITE_DOWN" : "Verify you have written down your Recovery Phrase",
+  "ENTER_WORDS" : "enter the appropriate word into the text boxes below to prove you have written down your phrase",
+  "WORD_1" : "First Word",
+  "WORD_2" : "First Word",
+  "WORD_6" : "Sixth Word",
+  "WORD_8" : "Eigth Word",
+  "STORE_SAFE" : "Store your Recovery Phrase in a safe place",
+  "STORE_SAFE_EXPLAIN" : "Your Recovery Phrase will give you access to your account even without a password. Never share this with anyone and keep it safe and secure.",
+  "VERIFY_RECOVERY_PHRASE_EXPLAIN" : "Your recovery phrase is 12 unique words that were generated when you created your wallet. Your recovery phrase can be used to restore your wallet and your funds in the case of a lost password or a loss of service at Blockchain. Your recovery phrase ensures you are firmly in control of your bitcoin at all time. It is very important that you follow the steps below.",
   "" : ""
 }

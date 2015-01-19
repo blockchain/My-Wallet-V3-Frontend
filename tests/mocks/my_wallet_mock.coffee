@@ -159,7 +159,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     return true
     
   myWallet.getHDWalletPassphraseString = (getPassword, success, error) ->
-    success("banana big me hungry")
+    success("banana big me hungry very must eat now")
     
   myWallet.fetchWalletJson = (uid, dummy1, dummy2, password, two_factor_code, success, needs_2fa, wrong_2fa) ->
     if wallet = localStorageService.get("mockWallets")[uid]
@@ -188,6 +188,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     else
       $log.error "Wallet not found"
       eventListener("wallet not found")
+      
+  myWallet.isMnemonicVerified = () ->
+    false
+    
+  myWallet.didVerifyMnemonic = () ->
       
   myWallet.getHistoryAndParseMultiAddressJSON = () ->
     this.refresh()

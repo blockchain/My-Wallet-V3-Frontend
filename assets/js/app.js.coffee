@@ -51,6 +51,7 @@ walletApp = angular.module("walletApp", [
   "partials/settings/settings.jade"
   "partials/settings/wallet-recovery.jade"
   "partials/settings/wallet.jade"  
+  "partials/confirm-recovery-phrase-modal.jade"  
   "templates/amount.jade"
   "templates/virtual-keyboard.jade"
   "templates/currency-picker.jade"
