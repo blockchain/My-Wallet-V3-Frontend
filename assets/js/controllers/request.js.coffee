@@ -75,8 +75,10 @@
         
   $scope.$watch "fields.amount + fields.currency.code + fields.label", (oldValue, newValue) ->
     $scope.formIsValid = $scope.validate()
-        
+                
     amount = $scope.parseAmount()    
+    $scope.paymentRequestAmount = amount
+    
     if $scope.fields.to?
       if $scope.fields.to.address?
         $scope.setPaymentRequestURL($scope.fields.to.address, amount)
