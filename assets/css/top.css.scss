@@ -22,28 +22,47 @@
 
   
   button {
+    background-color: #EAEFF4;
     margin-top: 10px;
-    margin-left: 5px;
+    margin-left: -1px;
     height: 40px;
     width: 117px;
     padding: 0;
-    border: none;
-    background: none;
+    border: 1px solid #d7d7d7;
     font-weight: bold;
+    color: rgb(100, 110, 126);
   }
   
-  button.right-arrow.blue {
-    background: blue url(/img/button-blue-arrow-right.png); 
-    background-size: 117px 40px;
-    color: white;
+  button.right-arrow {
+    background-image: url(/img/arrow-up.png); 
+    background-size: 30px;
+    background-repeat: no-repeat;
     padding-right: 20px;
+    background-position: 90% 50%;
+    
+    &:hover{
+      background-color: #4D9DCF;
+      background-image: url(/img/arrow-up-white.png);
+      color: #fff;
+      border: 1px solid #187FC0;
+    }    
+    
   }
   
-  button.left-arrow.white {
-    background: white url(/img/button-white-arrow-left.png); 
-    background-size: 117px 40px;
-    color: black;
+  button.left-arrow {
+    background-image: url(/img/arrow-down.png); 
+    background-size: 30px;
+    background-repeat: no-repeat;
     padding-left: 20px;
+    background-position: 5% 50%;
+    
+    &:hover{
+      background-color: #4D9DCF;
+      background-image: url(/img/arrow-down-white.png);
+      color: #fff;
+      border: 1px solid #187FC0;
+    }    
+    
   }
   
   img {

@@ -19,17 +19,20 @@
   }
   
   h2 {
-    font-size: 12pt;
-    color: #75AAC9;
     margin-bottom: 20px;
   }  
   
   h2.status {
     margin-bottom: 5px;
   }
+  
+  h2{
+    font-size: 12pt;
+    color: #75AAC9;
+    margin-bottom: 20px;	  
+  }
 
   p {
-    color: #898989;
   }
   
   .right {
@@ -66,8 +69,46 @@
         color: #9E9E9E;
         font-style: italic;
         font-size: 80%;
+        display: block;
       }
       
     }
   }
+}
+
+.left-view{
+  ul.nav{
+    padding: 20px;
+    background: #ffffff;	  
+  
+    li{
+	  a{
+	  color: #adadad;
+	  font-size: 110%;
+		  &:hover{
+		   background-color: #fff;
+	       color: #75B0D3;  
+		  }  
+	  }    
+    }
+    
+    li.active{
+	  a{
+	   background: none; 
+	   color: #75B0D3;	  
+	  }    
+    }
+  
+  }	
+}
+
+.title{
+  h2{
+	margin: 0 0 15px 0;
+  }
+  p{
+   font-size: 120%;
+   color: #AEAEAE;	  
+  }	
+	
 }
