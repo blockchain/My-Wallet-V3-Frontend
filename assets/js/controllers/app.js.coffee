@@ -1,4 +1,4 @@
-@AppCtrl = ($scope, Wallet, $state, $rootScope,$cookieStore, $timeout, $modal) ->
+@AppCtrl = ($scope, Wallet, $state, $rootScope,$cookieStore, $timeout, $modal, $window) ->
   $scope.status    = Wallet.status
   $scope.settings = Wallet.settings
   $rootScope.isMock = Wallet.isMock
@@ -92,3 +92,6 @@
     modalInstance.result.then(() ->
       continueCallback()
     )
+    
+  $scope.back = () ->
+    $window.history.back()

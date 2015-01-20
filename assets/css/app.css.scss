@@ -134,3 +134,12 @@ body {
 	  box-shadow: 0 0px 3px 3px rgba(0, 0, 0, 0.05);    
     }   	    
 }
+
+a.back {
+  float: left;
+  margin-left: -15px;
+  
+  img {
+    height: 15px;
+  }
+}
