@@ -3,6 +3,9 @@
   
   a {
     color: #c9c9c9;
+    display: block;
+    cursor: pointer;
+
   }
   
   td {
@@ -21,6 +24,7 @@ table.left-header {
     color: #cfcfcf;
     font-weight: bold;
     text-transform: uppercase;
+    cursor: pointer;
   }
   
   td.header {
@@ -29,7 +33,7 @@ table.left-header {
     color: #737373;
     
     img {
-      height: 17px;
+      height: 25px;
       margin: 10px;
     }
   }
