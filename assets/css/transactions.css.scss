@@ -14,9 +14,9 @@
   
   
   .row.transaction {
-    min-height: 55px;
-    margin-top: 5px;
-    border-bottom: 1pt solid #f5f5f5;
+	margin-top: 5px;
+	border-bottom: 1pt solid #f5f5f5;
+	padding: 20px 0;
   }
   
   .description{
@@ -166,12 +166,16 @@ button.received {
   //  font-weight: lighter;
   font-weight: 300;
   img {
-    height: 9px;
+    height: 15px;
     padding-right: 5px;
   }
   a {
     color: #CCCCCC;
   }
+
+.btn-note{
+	margin: 5px;
+}
 
 }
 

@@ -5,9 +5,14 @@ body {
   background-repeat: repeat-x;
   color: #6C6C6C;
 }
+a{
+ cursor: pointer;	
+}
 .row {
   vertical-align: bottom;
 }
+
+
 
 .row.spacing {
   height: 20px;
@@ -108,7 +113,7 @@ body {
 		  
 	  }
 	  .legacy-addresses{
-	    margin-top: 10px;
+	    margin-top: 30px;
 	  }
 	  
 	  .side-box{
