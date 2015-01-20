@@ -530,7 +530,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.isValidAddress = (address) ->
     withoutWhiteSpace = address.trim()
     # Reject if there are spaces inside the address:
-    return withoutWhiteSpace.indexOf(" ") == -1 && withoutWhiteSpace.indexOf("@") == -1
+    return withoutWhiteSpace.indexOf(" ") == -1 && withoutWhiteSpace.indexOf("@") == -1 && withoutWhiteSpace.indexOf("/") == -1
     
   myWallet.importPrivateKey = (privateKey, getPassword, getBip38Password, successCallback, errorCallback) ->
     if privateKey == "BIP38 key"
