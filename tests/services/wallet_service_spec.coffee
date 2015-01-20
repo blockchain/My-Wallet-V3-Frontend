@@ -63,59 +63,6 @@ describe "walletServices", () ->
       expect(Wallet.accounts[1].balance).toBeGreaterThan(before)
       
     )
-  
-  describe "parsePaymentRequest()", ->    
-    beforeEach ->
-      Wallet.login("test", "test")  
-      
-    it "should recognise bitcoin://", inject((Wallet) ->
-      result = Wallet.parsePaymentRequest("http://")
-      expect(result.hasBitcoinPrefix).toBeFalse
-      
-      result = Wallet.parsePaymentRequest("bitcoin://")
-      expect(result.hasBitcoinPrefix).toBeTrue
-    )
-    
-    it "should recognise a valid request", inject((Wallet) ->
-      result = Wallet.parsePaymentRequest("bitcoin://abcdefg?amount=10")
-      expect(result.isValid).toBeTrue
-    )
-    
-    it "should extract the address", inject((Wallet) ->
-      result = Wallet.parsePaymentRequest("bitcoin://abcdefg?amount=0.1")
-      expect(result.address).toBe "abcdefg"
-    )
-    
-    it "should recognise bitcoin:address", inject((Wallet) ->
-      result = Wallet.parsePaymentRequest("bitcoin:abc")
-      expect(result.hasBitcoinPrefix).toBeTrue
-      expect(result.address).toBe "abc"
-    )
-    
-    it "should extract the address if no amount param is present", inject((Wallet) ->
-      result = Wallet.parsePaymentRequest("bitcoin://abcdefg")
-      expect(result.address).toBe "abcdefg"
-    )
-    
-    it "should extract the amount", inject((Wallet) ->
-      result = Wallet.parsePaymentRequest("bitcoin://abcdefg?amount=0.1")
-      expect(result.amount).toBe "0.1"
-    )
-     
-    it "should ignore additional parameters", inject((Wallet) ->
-      result = Wallet.parsePaymentRequest("bitcoin://abcdefg?amount=0.1&other=hello")
-      expect(result.amount).toBe "0.1"
-      expect(result.address).toBe "abcdefg"
-    )
-    
-    it "should ignore the order of parameters", inject((Wallet) ->
-      result = Wallet.parsePaymentRequest("bitcoin://abcdefg?other=hello&amount=0.1")
-      expect(result.amount).toBe "0.1"
-      expect(result.address).toBe "abcdefg"
-    )
-     
-     
-    return
     
   describe "alerts()", ->    
     beforeEach ->

@@ -528,6 +528,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
 
        else
          result.address = withoutPrefix
+    else
+      # Check if it's just a bitcoin address
+      if wallet.my.isValidAddress(url)
+        result.address = url
+        result.isValid = true
     
     return result
   
