@@ -1,5 +1,14 @@
 walletApp.config ($stateProvider, $urlRouterProvider) ->
   $urlRouterProvider.otherwise("/");
+  
+  $urlRouterProvider.otherwise(($injector, $location) ->
+    Wallet = $injector.get("Wallet")
+
+    if Wallet.status.isLoggedIn == false
+      $location = "/login"
+    else
+      $location = "/accounts/transactions"
+  )
 
   alerts = {
     templateUrl: "partials/alerts.jade"

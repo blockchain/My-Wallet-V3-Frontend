@@ -4,6 +4,6 @@
   
   Wallet.goal.send = paymentRequest
   
-  Wallet.displayInfo "Please login to your wallet to proceed.", true
-  
-  $state.go("login")
+  if !Wallet.status.isLoggedIn
+    Wallet.displayInfo "Please login to your wallet to proceed.", true
+    $state.go("login")

@@ -3,34 +3,16 @@
   $scope.settings = Wallet.settings
   $rootScope.isMock = Wallet.isMock
   $scope.goal = Wallet.goal
-  
+    
   #################################
   #           Private             #
   #################################
         
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->    
-    if toState.name != "login" && toState.name != "open"
-      $scope.checkLogin()
+    if toState.name != "login" && toState.name != "open" && $scope.status.isLoggedIn == false
+      $state.go("login")
   )
-  
-  $scope.checkLogin = () ->
-    if $scope.status.isLoggedIn == false
-      if $scope.savePassword && !!$cookieStore.get("password")  
-        observer = {
-          needs2FA: () ->
-            console.log("Needs 2FA, go to login")
-            $state.go("login")
-        }
-        Wallet.login($cookieStore.get("uid"), $cookieStore.get("password"), null, observer)
-      else 
-        $state.go("login")
-  
-  if $state.current.name == ""
-    $state.go("transactions", {accountIndex: "accounts"})
-    # Tricky because the default account isn't known yet at this point:
-    # $state.go("transactions", {accountIndex: Wallet.getDefaultAccountIndex()})
     
-        
   $scope.$watch "status.isLoggedIn", () ->
     $scope.checkGoals()
     
