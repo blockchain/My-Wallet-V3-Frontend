@@ -1,4 +1,4 @@
-@RequestCtrl = ($scope, Wallet, $modalInstance, $log, destination, $translate) ->  
+@RequestCtrl = ($scope, Wallet, $modalInstance, $log, destination, $translate, $stateParams) ->  
   $scope.accounts = Wallet.accounts
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.destinations = []
@@ -28,11 +28,6 @@
       item.type = "Imported Addresses"
       $scope.destinations.push item
       
-  if $scope.fields.to == null
-    $scope.fields.to =  $scope.destinations[0]
-      
-      
-  
   $scope.alerts = Wallet.alerts
     
 
@@ -49,6 +44,15 @@
   #################################
   #           Private             #
   #################################
+  
+  $scope.$watchCollection "destinations", () ->
+    idx = Wallet.getDefaultAccountIndex()
+    if !$scope.fields.to? && $scope.accounts.length > 0
+      if $stateParams.accountIndex == "accounts" || !$stateParams.accountIndex? # The latter is for Jasmine
+        # Nothing to do, just use the default index
+      else 
+        idx = parseInt($stateParams.accountIndex)
+      $scope.fields.to = $scope.accounts[idx]
         
   $scope.$watch "fields.to", () ->
     $scope.formIsValid = $scope.validate()

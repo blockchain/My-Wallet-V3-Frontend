@@ -8,7 +8,7 @@
       templateUrl: "partials/request.jade"
       controller: RequestCtrl
       resolve:
-        destination: -> Wallet.accounts[$scope.accountIndex]
+        destination: -> null
       windowClass: "blockchain-modal"
     )
     
