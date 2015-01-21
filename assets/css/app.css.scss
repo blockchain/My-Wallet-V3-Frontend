@@ -131,7 +131,6 @@ a{
     .top-view{
       background-color: #FFFFFF;
       padding: 10px;
-      border-bottom: 1px solid #eee;
     }	 
     
     .right-container{
@@ -146,5 +145,18 @@ a.back {
   
   img {
     height: 15px;
+  }
+}
+
+.clearfix {
+  *zoom: 1;
+  &:before,
+  &:after {
+    display: table;
+    content: "";
+    line-height: 0;
+  }
+  &:after {
+    clear: both;
   }
 }

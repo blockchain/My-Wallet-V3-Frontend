@@ -278,5 +278,6 @@
   "STORE_SAFE_EXPLAIN" : "Your Recovery Phrase will give you access to your account even without a password. Never share this with anyone and keep it safe and secure.",
   "VERIFY_RECOVERY_PHRASE_EXPLAIN" : "Your recovery phrase is 12 unique words that were generated when you created your wallet. Your recovery phrase can be used to restore your wallet and your funds in the case of a lost password or a loss of service at Blockchain. Your recovery phrase ensures you are firmly in control of your bitcoin at all time. It is very important that you follow the steps below.",
   "TEMP_POINTS" : "+10 Points",
+  "PROFILE" : "Profile",
   "" : ""
 }

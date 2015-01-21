@@ -1,7 +1,7 @@
 .container-fluid
   a.navbar-brand.col-xs-2(ui-sref="transactions({accountIndex:'accounts'})")
     img#logo(src="img/logo.png",alt="Blockchain")
-  ul.nav.navbar-nav.col-xs-8(ng-show="status.isLoggedIn")
+  ul.nav.navbar-nav.col-xs-7(ng-show="status.isLoggedIn")
     //- li.item(ui-sref-active="active")
     //-   a(ui-sref="dashboard")
     //-     img.tab(src="img/dashboard-icon.png")
@@ -10,17 +10,21 @@
       a(ui-sref="transactions({accountIndex:'accounts'})") 
         img.tab(src="img/transactions-icon.png")
         span(translate="TRANSACTIONS")
-  ul.nav.navbar-nav.col-xs-2(ng-show="status.isLoggedIn")
-    li.pull-right.dropdown
+  ul.nav.navbar-nav.col-xs-3(ng-show="status.isLoggedIn")
+    li.pull-right.dropdown.account-details
       a.dropdown-toggle(href="")
         img#account(src="img/account-icon.png",alt="Account Settings")
-        img#account-toggle(src="img/account-icon-toggle.png")
+        p(translate="PROFILE")
+
       ul.dropdown-menu
         li
           a(ui-sref="settings.my-details", translate="SETTINGS")
         li
-          a(ui-sref="settings.security-center", translate="SECURITY")
-        li
           a(ui-sref="settings.mobile", translate="MOBILE")
         li
           a(ng-click="logout()", translate="LOGOUT")
+    li.security-center.clearfix
+      a(ui-sref="settings.security-center")
+        img#security(src="img/security-icon.png",alt="Your Security Score")
+        p(translate="SECURITY")
+                  

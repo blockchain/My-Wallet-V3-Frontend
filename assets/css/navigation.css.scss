@@ -26,6 +26,36 @@
       margin-bottom: -5px;
     }
     
+    img#security {
+      height: 35px;
+      
+      // Prevent vertical stretch of navbar:
+      margin-top: -5px;
+      margin-bottom: -5px;
+    }    
+    
+    li.security-center{
+	  float: right;
+	    p{
+		  float: right;
+		  margin: 5px 0px 0 5px;
+		  font-weight: bold;
+		  color: #fff;
+		  letter-spacing: 0.05em; 
+	    }
+
+    }
+    
+    li.account-details{
+		p{
+		  float: right;
+		  margin: 5px 0px 0 5px;
+		  font-weight: bold;
+		  color: #fff;
+		  letter-spacing: 0.05em; 			
+		}	    
+    }
+    
     img#account-toggle {
       height: 3px;
       padding-left: 5px;
