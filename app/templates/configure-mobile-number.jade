@@ -19,7 +19,7 @@
         input.form-control(type="text",name="mobile",ng-model="newMobile.number")
       button.btn.btn-primary.btn-small(ng-click="changeMobile(newMobile)",ng-disabled="!validateMobileNumber(newMobile)", translate="SAVE")
       button.btn.btn-info.btn-small(ng-click="edit.mobile = false", translate="CANCEL")
-    .row(ng-show="!user.isMobileVerified")
+    .row(ng-show="!user.isMobileVerified && !noMobile")
       .col-xs-9
         input.form-control(type="text",ng-model="code")
       .col-xs-3

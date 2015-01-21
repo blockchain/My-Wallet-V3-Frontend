@@ -22,7 +22,7 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
     
       scope.$watch "user.mobile.number + user.mobile.country", (newValue) ->
         scope.user.internationalMobileNumber = Wallet.internationalPhoneNumber(scope.user.mobile)
-  
+        scope.noMobile = scope.user.internationalMobileNumber == "+1 "
   
       scope.changeMobile = (mobile) ->
         country = if (mobile.country? && mobile.country != "") then mobile.country.countryCallingCodes[0] else ""
