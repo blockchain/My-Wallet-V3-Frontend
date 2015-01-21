@@ -78,9 +78,7 @@
       .form-group(ng-show="cameraIsOn")
         label.col-sm-3.control-label(translate="QR")
         .col-sm-9
-          webcam(on-stream="onStream(stream)"
-                 on-access-denied="onError(err)" ng-if="cameraRequested")
-          canvas#qr-canvas
+          bc-qr-reader(active="cameraRequested", on-result="processURLfromQR" on-error="onError" camera-status="cameraIsOn")
   div.overview(ng-show="confirmationStep")
     .row
       .col-xs-6

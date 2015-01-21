@@ -83,8 +83,7 @@
   $scope.setMethod("BTC")
   
     
-  # QR Code scan. Uses js from this fork:
-  # https://github.com/peekabustudios/webcam-directive/blob/master/app/scripts/webcam.js
+
   $scope.onError = (error) -> 
     # This never gets called...
     $translate("CAMERA_PERMISSION_DENIED").then (translation) ->
@@ -115,37 +114,9 @@
     $scope.cameraRequested = true
     
   $scope.cameraOff = () ->
-    $scope.qrStream.stop()
+    # $scope.qrStream.stop()
     $scope.cameraIsOn = false
-    $scope.cameraRequested = false
-    
-  $scope.onStream = (stream) -> # I removed the second argument in webcam.js!
-    # Evil (TODO: use a directive to manipulate the DOM):
-    canvas = document.getElementById("qr-canvas")
-    $scope.qrStream = stream
-        
-    $scope.lookForQR()
-    $scope.cameraIsOn = true
-    
-  $scope.lookForQR = () ->    
-    try 
-      canvas = document.getElementById("qr-canvas")
-      video = document.getElementsByTagName("video")[0]
-      
-      if video.videoWidth > 0
-        # This won't be set at the first iteration.
-        canvas.width =  video.videoWidth
-        canvas.height = video.videoHeight
-           
-        canvas.getContext("2d").drawImage(video,0,0)
-      
-      qrcode.decode()
-    catch e
-      # $log.error e
-      $timeout((->
-        $scope.lookForQR()
-      ), 250)
-      
+    $scope.cameraRequested = false      
   
   $scope.close = () ->
     Wallet.clearAlerts()

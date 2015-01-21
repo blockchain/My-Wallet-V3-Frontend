@@ -241,8 +241,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       
   myWallet.get_ticker = (success, fail) ->
     success({
-      EUR: {"15m": 250, symbol: "€"}
-      USD: {"15m": 300, symbol: "$"}
+      EUR: {"last": 250, symbol: "€"}
+      USD: {"last": 300, symbol: "$"}
     })
  
   myWallet.getLanguage = () ->
