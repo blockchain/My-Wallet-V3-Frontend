@@ -235,8 +235,8 @@ describe "walletServices", () ->
     )
     
     it "should return the sum of all accounts", inject((Wallet, MyWallet) ->
-      expect(Wallet.total("")).toBeGreaterThan(0)
-      expect(Wallet.total("")).toBe(MyWallet.getBalanceForAccount(0) + MyWallet.getBalanceForAccount(1))
+      expect(Wallet.total("accounts")).toBeGreaterThan(0)
+      expect(Wallet.total("accounts")).toBe(MyWallet.getBalanceForAccount(0) + MyWallet.getBalanceForAccount(1))
       
       return
     )
