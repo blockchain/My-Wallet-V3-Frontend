@@ -61,8 +61,18 @@
           p        
             configure-second-password
   .next-step.row(ng-hide="settings.blockTOR || security.level < 2")
-    .col-xs-12          
-      tor(ng-hide="settings.blockTOR || security.level < 2")
+    .col-xs-12 
+      .row
+        .col-xs-12
+          h2(translate="BLOCK_TOR")
+      .row
+        .col-xs-6
+          p(translate="BLOCK_TOR_EXPLAIN")
+        .col-xs-6
+          h2.status.incomplete(ng-hide="settings.blockTOR", translate="DISABLED")
+          h2.status.complete(ng-show="settings.blockTOR", translate="ENABLED")
+          p 
+            tor
   .next-step.row(ng-hide="legacyAddresses.length == 0 || security.level < 2")
     .col-xs-12         
       .row(ng-hide="legacyAddresses.length == 0 || security.level < 2")

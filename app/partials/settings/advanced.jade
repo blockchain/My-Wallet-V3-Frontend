@@ -23,7 +23,17 @@
     p
       a(ng-click="enableRememberTwoFactor()", translate="ENABLE_REMEMBER_2FA", ng-hide="settings.rememberTwoFactor")
       a(ng-click="disableRememberTwoFactor()", translate="DISABLE_REMEMBER_2FA", ng-show="settings.rememberTwoFactor")
-tor
+.row
+  .col-xs-12
+    h2(translate="BLOCK_TOR")
+.row
+  .col-xs-6
+    p(translate="BLOCK_TOR_EXPLAIN")
+  .col-xs-6.right
+    h2.status.incomplete(ng-hide="settings.blockTOR", translate="DISABLED")
+    h2.status.complete(ng-show="settings.blockTOR", translate="ENABLED")
+    p 
+      tor
 .row
   hr
 .row
