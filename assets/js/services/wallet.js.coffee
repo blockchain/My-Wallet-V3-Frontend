@@ -746,6 +746,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           wallet.status.didUpgradeToHd = true
           wallet.updateAccounts()  
           wallet.my.getHistoryAndParseMultiAddressJSON()
+          wallet.my.backupWallet()
         
         error = () ->
           wallet.displayError("Unable to upgrade your wallet. Please try again.")
