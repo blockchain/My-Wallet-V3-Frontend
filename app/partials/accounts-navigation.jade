@@ -14,7 +14,8 @@
             a(ui-sref="transactions({accountIndex:'accounts'})", translate="ALL_ACCOUNTS")
           td.amount 
              a(ui-sref="transactions({accountIndex:'accounts'})")
-               fiat(btc="total()")
+               fiat(btc="total()", ng-hide="total() == null")
+               img(ng-show="total() == null" src="img/spinner.gif")
         tr(ng-repeat="account in accounts | filter:{active:true}", ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''")
           td 
             a(ui-sref="transactions({accountIndex: $index.toString()})") {{ account.label }}
