@@ -6,7 +6,7 @@ div(ng-show="hdAddresses.length == 0")
 div(ng-show="hdAddresses.length > 0")
   .row
     .col-xs-6
-      input(type="text", ng-model="searchText")
+      input(type="text", ng-model="searchText").form-control
   // Generating a new address is disabled pending a new payment request system
   //- .col-xs-6(align="right")
   //-   .btn-group(dropdown is-open="display.account_dropdown_open")
@@ -53,7 +53,7 @@ p(translate="IMPORTED_ADDRESSES_EXPLAIN")
 
 .row
   .col-xs-6
-    input(type="text", ng-model="searchTextLegacy")
+    input(type="text", ng-model="searchTextLegacy").form-control
   .col-xs-6(align="right")
     a.btn.btn-info(ng-click="importAddress()", translate="IMPORT_ADDRESS")
 
