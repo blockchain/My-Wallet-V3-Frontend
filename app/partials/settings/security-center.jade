@@ -33,9 +33,17 @@
           p(translate="MOBILE_NUMBER_EXPLAIN")    
         .col-sm-6
            configure-mobile-number(ng-hide="user.isMobileVerified || security.level < 1")
-  .next-step.row(ng-hide="settings.needs2FA || security.level < 1")
+  .next-step.row(ng-hide="settings.needs2FA || security.level < 1")     
     .col-xs-12
-      two-factor(ng-hide="settings.needs2FA || security.level < 1")
+      .form-group 
+        .col-sm-6
+          label(translate="TWO_FACTOR")
+          span.label.label-warning(translate="DISABLED", ng-show="!settings.needs2FA")
+          span.label.label-success(translate="ENABLED", ng-show="settings.needs2FA")
+          br
+          p(translate="TWO_FACTOR_EXPLAIN")    
+        .col-sm-6
+          two-factor
   .next-step.row(ng-hide="status.didConfirmRecoveryPhrase || security.level < 1")
     .col-xs-12    
       confirm-recovery-phrase(ng-hide="status.didConfirmRecoveryPhrase || security.level < 1")
