@@ -7,19 +7,21 @@
             img(src="img/my-accounts-icon.png")
             span(translate="MY_ACCOUNTS") 
           td.right(ng-hide="!status.didUpgradeToHd")
-            a(ng-click="newAccount()", translate="NEW_ACCOUNT")
+            a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
       table.left
         tr(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ng-hide="!status.didUpgradeToHd")
           td 
             a(ui-sref="transactions({accountIndex:'accounts'})", translate="ALL_ACCOUNTS")
           td.amount 
-            fiat(btc="total()")
+             a(ui-sref="transactions({accountIndex:'accounts'})")
+               fiat(btc="total()")
         tr(ng-repeat="account in accounts | filter:{active:true}", ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''")
           td 
             a(ui-sref="transactions({accountIndex: $index.toString()})") {{ account.label }}
           td.amount
-            fiat(btc="account.balance", ng-show="account.balance != null")
-            img(ng-show="account.balance == null" src="img/spinner.gif")
+            a(ui-sref="transactions({accountIndex: $index.toString()})")
+              fiat(btc="account.balance", ng-show="account.balance != null")
+              img(ng-show="account.balance == null" src="img/spinner.gif")
     
     div.legacy-addresses.side-box  
             
@@ -34,4 +36,5 @@
             td 
               a(ui-sref="transactions({accountIndex:'imported'})", translate="ALL_ADDRESSES")
             td.amount 
-              fiat(btc="legacyTotal()")
+              a(ui-sref="transactions({accountIndex:'imported'})")
+                fiat(btc="legacyTotal()")

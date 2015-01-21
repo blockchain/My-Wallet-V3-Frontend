@@ -60,7 +60,10 @@ table.left {
     }
     
     td.amount{
-	  text-align: right;	    
+	  text-align: right;
+	  
+	  a{}
+	  	    
     }
 
   }
@@ -78,3 +81,7 @@ table.left {
   
 }
 
+a.new-acct{
+  font-weight: bold;
+  color: #666;
+}
