@@ -11,3 +11,6 @@
       transaction-note(transaction="transaction")
     .col-xs-2(confirmations-tooltip="transaction")
       amount(transaction="transaction")
+  .row(ng-hide="status.didLoadTransactions")    
+    .col-xs4
+      img(src="img/spinner.gif")
