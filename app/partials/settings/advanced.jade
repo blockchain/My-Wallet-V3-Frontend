@@ -1,4 +1,14 @@
-configure-second-password
+.row
+  .col-xs-12
+    h2(translate="WALLET_SECOND_PASSWORD")
+.row
+  .col-xs-6
+    p(translate="WALLET_SECOND_PASSWORD_EXPLAIN")
+  .col-xs-6
+    p
+      b.text-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")  
+    p   
+      configure-second-password
 .row
   hr
 .row

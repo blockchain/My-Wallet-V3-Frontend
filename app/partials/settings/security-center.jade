@@ -48,8 +48,18 @@
     .col-xs-12    
       confirm-recovery-phrase(ng-hide="status.didConfirmRecoveryPhrase || security.level < 1")
   .next-step.row(ng-hide="settings.secondPassword || security.level < 2")
-    .col-xs-12          
-      configure-second-password(ng-hide="settings.secondPassword || security.level < 2")
+    .col-xs-12
+      .row
+        .col-xs-12
+          h2(translate="WALLET_SECOND_PASSWORD")
+      .row
+        .col-xs-6
+          p(translate="WALLET_SECOND_PASSWORD_EXPLAIN")
+        .col-xs-6
+          p
+            b.text-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")  
+          p        
+            configure-second-password
   .next-step.row(ng-hide="settings.blockTOR || security.level < 2")
     .col-xs-12          
       tor(ng-hide="settings.blockTOR || security.level < 2")
