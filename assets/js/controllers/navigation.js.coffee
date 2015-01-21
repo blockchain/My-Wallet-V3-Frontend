@@ -18,10 +18,10 @@
   $scope.$watch "security.level", () ->
     switch $scope.security.level
       when null then $scope.securityIconURL = "img/security-icon-0.png"
-      when 0 then $scope.securityIconURL = "img/security-icon-0.png"; console.log "0"      
-      when 1 then $scope.securityIconURL = "img/security-icon-1.png"; console.log "1"
-      when 2 then $scope.securityIconURL = "img/security-icon-2.png"; console.log "2"
-      when 3 then $scope.securityIconURL = "img/security-icon-3.png"; console.log "3"
+      when 0 then $scope.securityIconURL = "img/security-icon-0.png"     
+      when 1 then $scope.securityIconURL = "img/security-icon-1.png"
+      when 2 then $scope.securityIconURL = "img/security-icon-2.png"
+      when 3 then $scope.securityIconURL = "img/security-icon-3.png"
       
 
   $scope.doLogout = () ->   
