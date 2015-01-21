@@ -9,7 +9,7 @@
 		.col-xs-6.col-centered.thebadge(ng-hide="security.level == 3 || security.level == null")
 			h2(translate="IN_PROGRESS")
 			security-badge(level="security.level + 1", pending="1")    
-	.row.spacing
+	.row.spacing(ng-hide="security.level == 3")
 		.col-xs-12
 			h2(translate="SECURITY_LEVEL_NEXT_STEPS")
 	.next-step.row(ng-hide="user.isEmailVerified")
