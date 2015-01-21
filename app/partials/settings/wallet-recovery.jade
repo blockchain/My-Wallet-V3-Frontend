@@ -1,4 +1,13 @@
-confirm-recovery-phrase
+.row
+  .col-xs-12
+    .header-with-label
+      h2(translate="MY_RECOVERY_PHRASE")
+      span.label.label-danger(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
+.row
+  .col-xs-6
+    p(translate="RECOVERY_PHRASE_EXPLAIN")
+  .col-xs-6.right
+    confirm-recovery-phrase
 
 .row
   .col-xs-12
