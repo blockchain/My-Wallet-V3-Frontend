@@ -7,6 +7,7 @@ window.theFormatter = (val) ->
 walletApp = angular.module("walletApp", [
   "walletFilters"
   "walletServices"
+  "securityCenter"
   "ui.router"
   "ui.bootstrap"
   "ngCookies"

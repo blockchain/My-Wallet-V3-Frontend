@@ -3,12 +3,12 @@
 	.row.badge-container
 		.col-xs-6.col-centered.thebadge.current
 			h2(translate="CURRENT_LEVEL")
-			span(ng-show="!status.legacyAddressBalancesLoaded")
+			span(ng-show="security.level == null")
 				img(src="img/spinner.gif")
-			security-badge(level="level", ng-hide="level == 0 || !status.legacyAddressBalancesLoaded").current
-		.col-xs-6.col-centered.thebadge(ng-hide="level == 3 || !status.legacyAddressBalancesLoaded")
+			security-badge(level="security.level", ng-hide="security.level == 0 || security.level == null").current
+		.col-xs-6.col-centered.thebadge(ng-hide="security.level == 3 || security.level == null")
 			h2(translate="IN_PROGRESS")
-			security-badge(level="level + 1", pending="1")    
+			security-badge(level="security.level + 1", pending="1")    
 	.row.spacing
 		.col-xs-12
 			h2(translate="SECURITY_LEVEL_NEXT_STEPS")
@@ -24,24 +24,24 @@
 				.col-xs-6
 					p
 						a(ng-click="resendEmailConfirmation()", translate="RESEND_EMAIL_VERIFICATION")
-	.next-step.row(ng-hide="user.isMobileVerified || level < 1")
+	.next-step.row(ng-hide="user.isMobileVerified || security.level < 1")
 		.col-xs-12
-			configure-mobile-number(ng-hide="user.isMobileVerified || level < 1")
-	.next-step.row(ng-hide="settings.needs2FA || level < 1")
+			configure-mobile-number(ng-hide="user.isMobileVerified || security.level < 1")
+	.next-step.row(ng-hide="settings.needs2FA || security.level < 1")
 		.col-xs-12
-			two-factor(ng-hide="settings.needs2FA || level < 1")
-	.next-step.row(ng-hide="status.didConfirmRecoveryPhrase || level < 1")
+			two-factor(ng-hide="settings.needs2FA || security.level < 1")
+	.next-step.row(ng-hide="status.didConfirmRecoveryPhrase || security.level < 1")
 		.col-xs-12	  
-			confirm-recovery-phrase(ng-hide="status.didConfirmRecoveryPhrase || level < 1")
-	.next-step.row(ng-hide="settings.secondPassword || level < 2")
+			confirm-recovery-phrase(ng-hide="status.didConfirmRecoveryPhrase || security.level < 1")
+	.next-step.row(ng-hide="settings.secondPassword || security.level < 2")
 		.col-xs-12          
-			configure-second-password(ng-hide="settings.secondPassword || level < 2")
-	.next-step.row(ng-hide="settings.blockTOR || level < 2")
+			configure-second-password(ng-hide="settings.secondPassword || security.level < 2")
+	.next-step.row(ng-hide="settings.blockTOR || security.level < 2")
 		.col-xs-12          
-			tor(ng-hide="settings.blockTOR || level < 2")
-	.next-step.row(ng-hide="legacyAddresses.length == 0 || level < 2")
+			tor(ng-hide="settings.blockTOR || security.level < 2")
+	.next-step.row(ng-hide="legacyAddresses.length == 0 || security.level < 2")
 		.col-xs-12   			
-			.row(ng-hide="legacyAddresses.length == 0 || level < 2")
+			.row(ng-hide="legacyAddresses.length == 0 || security.level < 2")
 				//-.col-xs-2
 					//-p.points(translate="TEMP_POINTS")
 				.col-xs-6

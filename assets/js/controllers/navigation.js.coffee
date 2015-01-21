@@ -1,4 +1,8 @@
-@NavigationCtrl = ($scope, Wallet, $translate, $cookieStore, $state) ->
+@NavigationCtrl = ($scope, Wallet, SecurityCenter, $translate, $cookieStore, $state) ->
+  
+  $scope.securityIconURL = ""
+  $scope.status = Wallet.status
+  $scope.security = SecurityCenter.security
   
   $scope.logout = () ->  
     if !Wallet.isSynchronizedWithServer() 
@@ -10,12 +14,14 @@
   #################################
   #           Private             #
   #################################
-    
-  $scope.didLoad = () ->
-    $scope.status = Wallet.status
   
-  # First load:      
-  $scope.didLoad()
+  $scope.$watch "security.level", () ->
+    switch $scope.security.level
+      when null then $scope.securityIconURL = "img/security-icon.png"
+      when 1 then $scope.securityIconURL = "img/security-icon.png"; console.log "1"
+      when 2 then $scope.securityIconURL = "img/security-icon.png"
+      when 3 then $scope.securityIconURL = "img/security-icon.png"
+      
 
   $scope.doLogout = () ->   
     $translate("ARE_YOU_SURE_LOGOUT").then (translation) ->      

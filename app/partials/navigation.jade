@@ -24,6 +24,6 @@
           a(ng-click="logout()", translate="LOGOUT")
     li.security-center.clearfix
       a(ui-sref="settings.security-center")
-        img#security(src="img/security-icon.png",alt="Your Security Score")
+        img#security(ng-src="{{ securityIconURL }}",alt="Your Security Score", ng-if="securityIconURL")
         p(translate="SECURITY")
                   
