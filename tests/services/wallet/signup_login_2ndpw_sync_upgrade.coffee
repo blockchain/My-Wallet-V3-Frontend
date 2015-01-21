@@ -136,7 +136,7 @@ describe "walletServices", () ->
     )
     
     it "should not be in sync while new account is saved", inject((Wallet, $timeout) ->     
-      Wallet.createAccount()
+      Wallet.createAccount("Some name", (()->))
       expect(Wallet.isSynchronizedWithServer()).toBe(false)
       $timeout.flush()
       

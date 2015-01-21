@@ -25,7 +25,6 @@
     $scope.$watch "transaction + accounts", () ->
       tx = $scope.transaction
       if tx? && tx.hash && $scope.accounts.length > 0
-        console.log tx
         if tx.from.account?
           $scope.from = $scope.accounts[tx.from.account.index].label
         else

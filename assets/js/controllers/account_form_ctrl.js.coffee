@@ -11,8 +11,11 @@
     $modalInstance.dismiss ""
     
   $scope.createAccount = () ->
-    if $scope.validate() && Wallet.createAccount($scope.fields.name)
-      $modalInstance.dismiss ""
+    if $scope.validate() 
+      success = () ->
+        $modalInstance.dismiss ""
+        
+      Wallet.createAccount($scope.fields.name, success)
       
   $scope.updateAccount = () ->
     if $scope.validate() && Wallet.renameAccount(account, $scope.fields.name)

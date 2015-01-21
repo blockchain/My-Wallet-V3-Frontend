@@ -171,14 +171,14 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
     wallet.my.createNewWallet(email, password, language_code, currency_code, success, error)
         
-  wallet.createAccount = (name) ->
+  wallet.createAccount = (name, successCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->
       $rootScope.$broadcast "requireSecondPassword", continueCallback
       
     success = () ->
       wallet.updateAccounts()  
-      wallet.transactions.push []
       wallet.my.getHistoryAndParseMultiAddressJSON()
+      successCallback()
       
     error = () ->
     
