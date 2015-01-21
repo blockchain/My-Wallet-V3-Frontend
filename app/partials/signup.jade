@@ -1,7 +1,7 @@
 #signup
   .modal-header
-    h3(translate="EMAIL_AND_PASSWORD", ng-show="currentStep == 1")
-    h3(translate="SETUP_WALLET", ng-show="currentStep == 2")
+    h3(translate="NEW_ACCT_WELCOME", ng-show="currentStep == 1")
+    h3(translate="WALLET_GREETING_SETUP", ng-show="currentStep == 2")
     h3(translate="IMPORT_WALLET", ng-show="currentStep == 3")    
     h3(translate="CONFIRM_EMAIL", ng-show="currentStep == 4")  
   .modal-body
@@ -13,34 +13,35 @@
             label.col-sm-4.control-label(translate="EMAIL")
             .col-sm-6
               input.form-control(type="email",ng-model="fields.email",autofocus,ng-blur="validate()", ng-focus="errors.email = null")
-              span.help-block {{ errors.email }}
+              span.help-block 
+                p
+                  {{ errors.email }}
           .form-group
             // (ng-class="{'has-error': errors.password, 'has-success': success.password}")
             label.col-sm-4.control-label(translate="NEW_PASSWORD")
             .col-sm-6
               input.form-control(type="password",ng-model="fields.password",autofocus,ng-blur="validate()", ng-focus="errors.password = null")
-              span.help-block {{ errors.password }}
+              span.help-block 
+                p              
+                  {{ errors.password }}
           .form-group
             // (ng-class="{'has-error': errors.confirmation, 'has-success': success.confirmation}")
             label.col-sm-4.control-label(translate="CONFIRM_PASSWORD")
             .col-sm-6
               input.form-control(type="password",ng-model="fields.confirmation",autofocus,ng-blur="validate()", ng-focus="errors.confirmation = null")
-              span.help-block {{ errors.confirmation }}
+              span.help-block 
+                p
+                  {{ errors.confirmation }}
         div(ng-switch-when="2")
-          .row
-            .col-xs-2
-              | Balloon
-            .col-xs-10
-              .form-group
-                label(translate="CHOOSE_LANGUAGE")
-                language-picker(language="fields.language")
-          .row
-            .col-xs-2
-              | Fiat
-            .col-xs-10
-              .form-group
-                label(translate="CHOOSE_CURRENCY")
-                currency-picker(currency="fields.currency")
+          .form-group
+            label.col-sm-4.control-label(translate="CHOOSE_LANGUAGE")
+            .col-sm-6
+              language-picker(language="fields.language")
+
+          .form-group
+            label.col-sm-4.control-label(translate="CHOOSE_CURRENCY")
+            .col-sm-6
+              currency-picker(currency="fields.currency")
         div(ng-switch-when="3")
           .form-group
             // (ng-class="{'has-error': errors.email, 'has-success': success.email}")
@@ -62,10 +63,10 @@
         a(translate="WALLET_IMPORT", ng-click="import()", ng-show="currentStep==2")
       .col.xs-6
         //- button.btn.btn-info(ng-click="close()", translate="CLOSE", ng-hide="currentStep == 3 || currentStep == 2")
-        button.btn.btn-primary(ng-click="nextStep()",ng-disabled="!isValid[0]", translate="NEXT_STEP", ng-show="currentStep == 1 && !working")
-        button.btn.btn-primary(ng-click="nextStep()",ng-disabled="!isValid[1]", translate="NEXT_STEP", ng-show="currentStep == 2")
-        button.btn.btn-info(ng-click="skipImport()", ng-show="currentStep == 3 && !importing", translate="SKIP_IMPORT")
-        button.btn.btn-primary(ng-click="performImport()", ng-disabled="!isValid[2]", translate="IMPORT", ng-show="currentStep == 3 && !working")
+        button.btn.btn-primary.btn-signup(ng-click="nextStep()",ng-disabled="!isValid[0]", translate="CONTINUE", ng-show="currentStep == 1 && !working")
+        button.btn.btn-primary.btn-signup(ng-click="nextStep()",ng-disabled="!isValid[1]", translate="NEXT_STEP", ng-show="currentStep == 2")
+        button.btn.btn-info.btn-signup(ng-click="skipImport()", ng-show="currentStep == 3 && !importing", translate="SKIP_IMPORT")
+        button.btn.btn-primary.btn-signup(ng-click="performImport()", ng-disabled="!isValid[2]", translate="IMPORT", ng-show="currentStep == 3 && !working")
         span(ng-show="currentStep == 3")   
         img(ng-show="working" src="img/spinner.gif")     
-        button.btn.btn-primary(ng-click="resendEmail()", translate="RESEND_EMAIL", ng-show="currentStep == 4")
+        button.btn.btn-primary.btn-signup(ng-click="resendEmail()", translate="RESEND_EMAIL", ng-show="currentStep == 4")

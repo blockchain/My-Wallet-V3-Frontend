@@ -19,6 +19,10 @@ a{
   background: transparent;
 }
 
+.modal-backdrop{
+	background: #EDEDED;
+}
+
 .blockchain-modal {
   .modal-content {
     border: 10px solid #ECECEC;
@@ -159,4 +163,19 @@ a.back {
   &:after {
     clear: both;
   }
+}
+
+.modal.signup{
+	display: block;
+	position: fixed;
+	bottom: 0;
+	
+	.modal-lg{
+		width: 100%;
+		position: absolute;
+		top: auto;
+		bottom: 0;
+		margin: 0 auto;
+	}
+	
 }

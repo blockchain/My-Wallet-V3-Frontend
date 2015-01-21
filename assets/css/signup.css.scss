@@ -28,22 +28,51 @@
   
   .modal-header {
     border: none;
+    text-align: center;
+      h3{
+		font-size: 30pt;
+		font-weight: 200;
+		color: #C8E9F0;
+		margin: 20px 0 20px;
+      }
   }
   
   .modal-content {
     border: none;
-    background-color: #1972B6;
+    background-color: #1b8ac7;
     color: white;
     border-radius: 0;
     
     input {
-      color: #1972B6;
+		color: #1972B6;
+		box-shadow: 1px 1px 4px -1px rgba(0, 0, 0, 0.34);
+		padding: 20px;
+		background: #fff;
+		border: 1px solid #FFF;
     }
     
     .row {
-      background-color: #1972B6;
+      background-color: #1b8ac7;
  
     }
+    label{
+	font-size: 120%;
+	font-weight: 400;	 
+	color: #C8E9F0;   
+    }
+
+	.help-block{
+	display: block;
+	margin-top: -2px;
+	margin-bottom: 10px;
+	border-radius: 0 0 5px 5px;
+	color: #BE5858;
+	background: #BBDBEC;
+	font-size: 15px;
+	
+	 p{padding: 1px;}
+	}  
+  
   }
   
   .modal-footer {
@@ -58,7 +87,18 @@
       background-color: #1972B6;
     }
     
-    background-color: #1972B6;
+    .btn-signup{
+	background: none!important;
+	color: #fff!important;
+	border: none;
+	font-size: 20px;
+	font-weight: 200;
+	padding: 10px 50px;
+    }
+    
+    background-color: #1b8ac7;
+    
 
   }
+  
 }
