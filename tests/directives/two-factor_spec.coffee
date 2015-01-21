@@ -25,7 +25,7 @@ describe "2FA Directive", ->
     isoScope.$digest()
   
   it "should have text", ->
-    expect(element.html()).toContain "TWO_FACTOR"
+    expect(element.html()).toContain "2FA_EMAIL"
     
   it "can be disabled", inject((Wallet) ->
     Wallet.login("test-2FA", "test", "123456")
