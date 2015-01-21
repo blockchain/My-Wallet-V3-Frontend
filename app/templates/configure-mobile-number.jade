@@ -1,26 +1,19 @@
-.form-group
-  .col-sm-6
-    label(translate="MOBILE_NUMBER")
-    span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isMobileVerified")
-    span.label.label-success(translate="VERIFIED", ng-show="user.isMobileVerified")
-    br
-    p(translate="MOBILE_NUMBER_EXPLAIN")    
-  .col-sm-6
-    div(ng-hide="edit.mobile")
-      p.form-control-static {{ user.internationalMobileNumber }}
-      p
-        a(ng-click="edit.mobile = !edit.mobile", translate="CHANGE_MOBILE_NUMBER")
-    .edit-mobile(ng-show="edit.mobile")
-      .input-group
-        ui-select(ng-model="newMobile.country").input-group-btn
-          ui-select-match {{ $select.selected.alpha2 }}
-          ui-select-choices(repeat="country in countries | filter: $select.search")
-            span(ng-bind-html="country.name | highlight: $select.search")
-        input.form-control(type="text",name="mobile",ng-model="newMobile.number")
-      button.btn.btn-primary.btn-small(ng-click="changeMobile(newMobile)",ng-disabled="!validateMobileNumber(newMobile)", translate="SAVE")
-      button.btn.btn-info.btn-small(ng-click="edit.mobile = false", translate="CANCEL")
-    .row(ng-show="!user.isMobileVerified && !noMobile")
-      .col-xs-9
-        input.form-control(type="text",ng-model="code")
-      .col-xs-3
-        button.btn.btn-primary(ng-click="verifyMobile(code)",ng-disabled="!code || code.length < 3", translate="VERIFY")
+div
+  div(ng-hide="edit.mobile")
+    p.form-control-static {{ user.internationalMobileNumber }}
+    p
+      a(ng-click="edit.mobile = !edit.mobile", translate="CHANGE_MOBILE_NUMBER")
+  .edit-mobile(ng-show="edit.mobile")
+    .input-group
+      ui-select(ng-model="newMobile.country").input-group-btn
+        ui-select-match {{ $select.selected.alpha2 }}
+        ui-select-choices(repeat="country in countries | filter: $select.search")
+          span(ng-bind-html="country.name | highlight: $select.search")
+      input.form-control(type="text",name="mobile",ng-model="newMobile.number")
+    button.btn.btn-primary.btn-small(ng-click="changeMobile(newMobile)",ng-disabled="!validateMobileNumber(newMobile)", translate="SAVE")
+    button.btn.btn-info.btn-small(ng-click="edit.mobile = false", translate="CANCEL")
+  .row(ng-show="!user.isMobileVerified && !noMobile")
+    .col-xs-9
+      input.form-control(type="text",ng-model="code")
+    .col-xs-3
+      button.btn.btn-primary(ng-click="verifyMobile(code)",ng-disabled="!code || code.length < 3", translate="VERIFY")

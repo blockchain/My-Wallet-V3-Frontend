@@ -16,7 +16,15 @@ form.form-horizontal(role="form",name="form",novalidate)
         button.btn.btn-primary.btn-small(ng-click="changeEmail(newEmail)",ng-disabled="!newEmail || form.email.$error.email", translate="SAVE")
         button.btn.btn-info.btn-small(ng-click="edit.email = false", translate="CANCEL")
   hr
-  configure-mobile-number
+  .form-group
+    .col-sm-6
+      label(translate="MOBILE_NUMBER")
+      span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isMobileVerified")
+      span.label.label-success(translate="VERIFIED", ng-show="user.isMobileVerified")
+      br
+      p(translate="MOBILE_NUMBER_EXPLAIN")    
+    .col-sm-6
+       configure-mobile-number
   hr
   .form-group
     .col-sm-6

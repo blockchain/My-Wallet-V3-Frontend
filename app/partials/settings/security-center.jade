@@ -1,57 +1,63 @@
 .security-center
-	p(translate="SECURITY_LEVEL_EXPLAIN")
-	.row.badge-container
-		.col-xs-6.col-centered.thebadge.current
-			h2(translate="CURRENT_LEVEL")
-			span(ng-show="security.level == null")
-				img(src="img/spinner.gif")
-			security-badge(level="security.level", ng-hide="security.level == 0 || security.level == null").current
-		.col-xs-6.col-centered.thebadge(ng-hide="security.level == 3 || security.level == null")
-			h2(translate="IN_PROGRESS")
-			security-badge(level="security.level + 1", pending="1")    
-	.row.spacing(ng-hide="security.level == 3")
-		.col-xs-12
-			h2(translate="SECURITY_LEVEL_NEXT_STEPS")
-	.next-step.row(ng-hide="user.isEmailVerified")
-		.col-xs-12
-			.row(ng-hide="user.isEmailVerified")
-				//-.col-xs-2
-					//-p.points(translate="TEMP_POINTS")
-				.col-xs-6
-					p
-						strong(translate="VERIFY_EMAIL")
-					p(translate="VERIFY_EMAIL_EXPLAIN")
-				.col-xs-6
-					p
-						a(ng-click="resendEmailConfirmation()", translate="RESEND_EMAIL_VERIFICATION")
-	.next-step.row(ng-hide="user.isMobileVerified || security.level < 1")
-		.col-xs-12
-			configure-mobile-number(ng-hide="user.isMobileVerified || security.level < 1")
-	.next-step.row(ng-hide="settings.needs2FA || security.level < 1")
-		.col-xs-12
-			two-factor(ng-hide="settings.needs2FA || security.level < 1")
-	.next-step.row(ng-hide="status.didConfirmRecoveryPhrase || security.level < 1")
-		.col-xs-12	  
-			confirm-recovery-phrase(ng-hide="status.didConfirmRecoveryPhrase || security.level < 1")
-	.next-step.row(ng-hide="settings.secondPassword || security.level < 2")
-		.col-xs-12          
-			configure-second-password(ng-hide="settings.secondPassword || security.level < 2")
-	.next-step.row(ng-hide="settings.blockTOR || security.level < 2")
-		.col-xs-12          
-			tor(ng-hide="settings.blockTOR || security.level < 2")
-	.next-step.row(ng-hide="legacyAddresses.length == 0 || security.level < 2")
-		.col-xs-12   			
-			.row(ng-hide="legacyAddresses.length == 0 || security.level < 2")
-				//-.col-xs-2
-					//-p.points(translate="TEMP_POINTS")
-				.col-xs-6
-					p
-						strong(translate="SWEEP_LEGACY")
-					p(translate="SWEEP_LEGACY_EXPLAIN")
-				.col-xs-6
-					ul
-						li(ng-repeat="address in legacyAddresses")
-							a(ui-sref="settings.address({address: address.address})")
-								{{ address.address | limitTo:8 }}... 
-								| : {{ address.balance | btc }} 
-					a(ng-click="transfer(address)") (transfer)
+  p(translate="SECURITY_LEVEL_EXPLAIN")
+  .row.badge-container
+    .col-xs-6.col-centered.thebadge.current
+      h2(translate="CURRENT_LEVEL")
+      span(ng-show="security.level == null")
+        img(src="img/spinner.gif")
+      security-badge(level="security.level", ng-hide="security.level == 0 || security.level == null").current
+    .col-xs-6.col-centered.thebadge(ng-hide="security.level == 3 || security.level == null")
+      h2(translate="IN_PROGRESS")
+      security-badge(level="security.level + 1", pending="1")    
+  .row.spacing(ng-hide="security.level == 3")
+    .col-xs-12
+      h2(translate="SECURITY_LEVEL_NEXT_STEPS")
+  .next-step.row(ng-hide="user.isEmailVerified")
+    //- .col-xs-2
+    //- p.points(translate="TEMP_POINTS")
+    .col-xs-6
+      p
+        strong(translate="VERIFY_EMAIL")
+      p(translate="VERIFY_EMAIL_EXPLAIN")
+    .col-xs-6
+      p
+        a(ng-click="resendEmailConfirmation()", translate="RESEND_EMAIL_VERIFICATION")
+  .next-step.row(ng-hide="user.isMobileVerified || security.level < 1")
+    .col-xs-12
+      .form-group
+        .col-sm-6
+          label(translate="MOBILE_NUMBER")
+          span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isMobileVerified")
+          span.label.label-success(translate="VERIFIED", ng-show="user.isMobileVerified")
+          br
+          p(translate="MOBILE_NUMBER_EXPLAIN")    
+        .col-sm-6
+           configure-mobile-number(ng-hide="user.isMobileVerified || security.level < 1")
+  .next-step.row(ng-hide="settings.needs2FA || security.level < 1")
+    .col-xs-12
+      two-factor(ng-hide="settings.needs2FA || security.level < 1")
+  .next-step.row(ng-hide="status.didConfirmRecoveryPhrase || security.level < 1")
+    .col-xs-12    
+      confirm-recovery-phrase(ng-hide="status.didConfirmRecoveryPhrase || security.level < 1")
+  .next-step.row(ng-hide="settings.secondPassword || security.level < 2")
+    .col-xs-12          
+      configure-second-password(ng-hide="settings.secondPassword || security.level < 2")
+  .next-step.row(ng-hide="settings.blockTOR || security.level < 2")
+    .col-xs-12          
+      tor(ng-hide="settings.blockTOR || security.level < 2")
+  .next-step.row(ng-hide="legacyAddresses.length == 0 || security.level < 2")
+    .col-xs-12         
+      .row(ng-hide="legacyAddresses.length == 0 || security.level < 2")
+        //-.col-xs-2
+          //-p.points(translate="TEMP_POINTS")
+        .col-xs-6
+          p
+            strong(translate="SWEEP_LEGACY")
+          p(translate="SWEEP_LEGACY_EXPLAIN")
+        .col-xs-6
+          ul
+            li(ng-repeat="address in legacyAddresses")
+              a(ui-sref="settings.address({address: address.address})")
+                | {{ address.address | limitTo:8 }}... 
+                | : {{ address.balance | btc }} 
+          a(ng-click="transfer(address)") (transfer)
