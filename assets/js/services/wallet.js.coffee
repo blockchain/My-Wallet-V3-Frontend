@@ -689,7 +689,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
         
   wallet.total = (accountIndex) -> 
-    return null if wallet.accounts == undefined
+    return null if wallet.accounts == undefined || wallet.accounts.length == 0
     if !(accountIndex?) || accountIndex == "accounts"
       return null if wallet.accounts[0].balance == null
       tally = 0
