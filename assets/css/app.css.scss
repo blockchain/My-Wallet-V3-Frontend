@@ -24,6 +24,7 @@ a{
 }
 
 .blockchain-modal {
+
   .modal-content {
     border: 10px solid #ECECEC;
   
@@ -76,6 +77,10 @@ a{
       text-transform: uppercase;
     }
   }
+}
+
+.modal-dialog{
+	width: 70%;
 }
 
 
@@ -179,3 +184,23 @@ a.back {
 	}
 	
 }
+
+.form-ctrl{
+  padding: 15px 0;	
+	  .btn-bci{
+	    margin: 6px 0px 0 5px;	
+	  }
+	  input{
+		border: 1px solid #CCC;
+		border-radius: 5px;
+		padding: 3px;
+		width: 60%;	  
+	  }
+	  input.filter{
+	  background-image:url('/img/spyglass.png');
+	  background-repeat: no-repeat;
+	  background-position: 98% center;
+	  background-size: 7%;
+	  }  
+  }
+

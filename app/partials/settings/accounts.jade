@@ -2,11 +2,12 @@ h2(translate="ACCOUNT_MANAGEMENT")
 
 p(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
   
-.row
+.row.form-ctrl
   .col-xs-6
-    input(type="text", ng-model="searchText")
+    input.filter(type="text", ng-model="searchText").form-control
   .col-xs-6(align="right")
-    a.btn.btn-info(ng-click="newAccount()", translate="CREATE_NEW_ACCOUNT")
+    a.btn.btn-info.btn-bci(ng-click="newAccount()", translate="CREATE_NEW_ACCOUNT")
+    a.btn.btn-info.btn-bci(ng-click="transfer(address)", translate="TRANSFER_BETWEEN_ACCOUNTS") (transfer)
 .row
   .col-xs-12
     table

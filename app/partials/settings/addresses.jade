@@ -4,9 +4,9 @@ p(translate="MY_ADDRESSES_EXPLAIN_TEMP")
 div(ng-show="hdAddresses.length == 0")
   img(src="img/spinner.gif")
 div(ng-show="hdAddresses.length > 0")
-  .row
+  .row.form-ctrl
     .col-xs-6
-      input(type="text", ng-model="searchText").form-control
+      input.filter(type="text", ng-model="searchText").form-control
   // Generating a new address is disabled pending a new payment request system
   //- .col-xs-6(align="right")
   //-   .btn-group(dropdown is-open="display.account_dropdown_open")
@@ -51,9 +51,9 @@ h2(translate="IMPORTED_ADDRESSES")
 
 p(translate="IMPORTED_ADDRESSES_EXPLAIN")
 
-.row
+.row.form-ctrl
   .col-xs-6
-    input(type="text", ng-model="searchTextLegacy").form-control
+    input.filter(type="text", ng-model="searchTextLegacy").form-control
   .col-xs-6(align="right")
     a.btn.btn-info(ng-click="importAddress()", translate="IMPORT_ADDRESS")
 
@@ -89,9 +89,9 @@ h2(translate="ARCHIVED_ADDRESSES", ng-click="display.archived = !display.archive
 
 p(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
 
-.row(ng-show="display.archived")
+.row.form-ctrl(ng-show="display.archived")
   .col-xs-12
-    input(type="text", ng-model="searchTextArchived")
+    input.filter(type="text", ng-model="searchTextArchived")
 .row(ng-show="display.archived")
   .col-xs-12
     table

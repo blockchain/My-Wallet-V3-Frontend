@@ -175,6 +175,7 @@
   "LABEL" : "Label",
   "DETAILS" : "Details",
   "TRANSFER" : "Transfer",
+  "TRANSFER_BETWEEN_ACCOUNTS" : "Transfer Between Accounts",
   "ARCHIVE" : "Archive",
   "UNARCHIVE" : "Unarchive",
   "DELETE" : "Delete",

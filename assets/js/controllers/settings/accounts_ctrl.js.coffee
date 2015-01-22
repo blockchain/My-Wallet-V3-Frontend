@@ -34,3 +34,13 @@
     
   $scope.makeDefault = (account) ->
     Wallet.setDefaultAccount(account)
+    
+
+  $scope.transfer = (address) ->
+    $modal.open(
+      templateUrl: "partials/send.jade"
+      controller: SendCtrl
+      resolve:
+        paymentRequest: -> 
+          {fromAddress: address, amount: 0, toAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()]}
+    )
