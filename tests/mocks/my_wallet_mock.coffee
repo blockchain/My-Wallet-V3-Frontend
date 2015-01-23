@@ -418,7 +418,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
     return
     
-  myWallet.initializeHDWallet = () ->
+  myWallet.upgradeToHDWallet = (needsPassword, success, error) ->
+    success()
     
   myWallet.sweepLegacyAddressToAccount = (fromAddress, toAccountIndex, observer) ->
     accounts[toAccountIndex].balance = legacyAddresses[fromAddress].balance

@@ -746,13 +746,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           wallet.status.didUpgradeToHd = true
           wallet.updateAccounts()  
           wallet.my.getHistoryAndParseMultiAddressJSON()
-          wallet.my.backupWallet()
         
         error = () ->
           wallet.displayError("Unable to upgrade your wallet. Please try again.")
-          wallet.my.initializeHDWallet(null, null, needsSecondPasswordCallback, success, error)
+          wallet.my.upgradeToHDWallet(needsSecondPasswordCallback, success, error)
         
-        wallet.my.initializeHDWallet(null, null, needsSecondPasswordCallback, success, error)
+        wallet.my.upgradeToHDWallet(needsSecondPasswordCallback, success, error)
       
       $rootScope.$broadcast "needsUpgradeToHD", continueCallback
       

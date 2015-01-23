@@ -168,11 +168,11 @@ describe "walletServices", () ->
         if message == "needsUpgradeToHD"
           callback()
       
-      spyOn(MyWallet, "initializeHDWallet")
+      spyOn(MyWallet, "upgradeToHDWallet")
       
       Wallet.monitorLegacy("hd_wallets_does_not_exist")
       
-      expect(MyWallet.initializeHDWallet).toHaveBeenCalled()
+      expect(MyWallet.upgradeToHDWallet).toHaveBeenCalled()
     )
     
     it "should ask for 2nd password if needed", ->
