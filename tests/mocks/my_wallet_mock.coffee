@@ -635,14 +635,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.setSecondPassword = (password, success, error) ->
     success()
     
-  myWallet.getMainPasswordPbkdf2Iterations = () ->
+  myWallet.getPbkdf2Iterations = () ->
     10
     
   myWallet.setPbkdf2Iterations = (pbkdf2_iterations, success) ->
     success()
-    
-  myWallet.getSecondPasswordPbkdf2Iterations = () ->
-    10
     
   myWallet.update_tor_ip_block = (enabled, successCallback, errorCallback) ->
     successCallback()

@@ -57,9 +57,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.updateAccounts()
       
     wallet.settings.secondPassword = wallet.my.getDoubleEncryption()
-    wallet.settings.pbkdf2 = wallet.my.getMainPasswordPbkdf2Iterations()
-    wallet.settings.pbkdf2_second_password = wallet.my.getSecondPasswordPbkdf2Iterations()
-    
+    wallet.settings.pbkdf2 = wallet.my.getPbkdf2Iterations()    
             
     # Get email address, etc
     # console.log "Getting info..."
