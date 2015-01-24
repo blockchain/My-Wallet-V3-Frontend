@@ -1,7 +1,6 @@
 describe "walletServices", () ->
   Wallet = undefined
   MyWallet = undefined
-  mockObserver = undefined  
   errors = undefined
   callbacks = undefined
   
@@ -18,9 +17,7 @@ describe "walletServices", () ->
           
       spyOn(Wallet,"monitor").and.callThrough()
       spyOn(Wallet,"monitorLegacy").and.callThrough()
-      
-      mockObserver = {needs2FA: (() ->)}
-      
+            
       return
 
     return
@@ -80,19 +77,19 @@ describe "walletServices", () ->
     
     it "should ask for a code", inject((Wallet) ->
       
-      Wallet.login("test-2FA", "test", null, mockObserver)
+      Wallet.login("test-2FA", "test", null, (() ->), (()->), (()->))
       
       expect(Wallet.settings.needs2FA).toBe(true)
       expect(Wallet.status.isLoggedIn).toBe(false)
     )
     
     it "should specify the 2FA method", inject((Wallet) ->
-      Wallet.login("test-2FA", "test", null, mockObserver)
+      Wallet.login("test-2FA", "test", null, (() ->), (()->), (()->))
       expect(Wallet.settings.twoFactorMethod).toBe(4)
     )
     
     it "should login with  2FA code", inject((Wallet) ->
-      Wallet.login("test-2FA", "test", "1234567", mockObserver)
+      Wallet.login("test-2FA", "test", "1234567", (() ->), (()->), (()->))
       expect(Wallet.status.isLoggedIn).toBe(true)
     )
 
@@ -101,7 +98,7 @@ describe "walletServices", () ->
     
   describe "2FA settings", ->    
     it "can be disabled", inject((Wallet) ->
-      Wallet.login("test-2FA", "test", null, mockObserver)
+      Wallet.login("test-2FA", "test", null, (() ->), (()->), (()->))
       
       Wallet.disableSecondFactor()
       expect(Wallet.settings.needs2FA).toBe(false)

@@ -20,7 +20,7 @@ playSound = (id) ->
 
 walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) -> 
-  wallet = {goal: {}, status: {isLoggedIn: false, didUpgradeToHd: null, didLoadTransactions: false, didLoadBalances: false, legacyAddressBalancesLoaded: false, didConfirmRecoveryPhrase: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null}, user: {email: null, mobile: null, passwordHint: "", pairingCode: ""}}
+  wallet = {goal: {}, status: {isLoggedIn: false, didUpgradeToHd: null, didLoadTransactions: false, didLoadBalances: false, legacyAddressBalancesLoaded: false, didConfirmRecoveryPhrase: false}, settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null}, user: {current_ip: null, email: null, mobile: null, passwordHint: "", pairingCode: ""}}
   
   wallet.fiatHistoricalConversionCache = {}
   
@@ -40,60 +40,62 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   ##################################
   #             Public             #
   ##################################
-  
-  wallet.didLogin = () ->    
-    wallet.status.isLoggedIn = true 
-    wallet.status.didUpgradeToHd = wallet.my.didUpgradeToHd()
-    wallet.status.didConfirmRecoveryPhrase = wallet.my.isMnemonicVerified()
     
-    wallet.my.makePairingCode((result)->
-      wallet.user.pairingCode = result
-    )
+  wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) ->  
+    didLogin = () ->    
+      wallet.status.isLoggedIn = true 
+      wallet.status.didUpgradeToHd = wallet.my.didUpgradeToHd()
+      wallet.status.didConfirmRecoveryPhrase = wallet.my.isMnemonicVerified()
     
-    for address, label of wallet.my.getAddressBook()
-      wallet.addressBook[address] = label
+      wallet.my.makePairingCode((result)->
+        wallet.user.pairingCode = result
+      )
+    
+      for address, label of wallet.my.getAddressBook()
+        wallet.addressBook[address] = label
             
-    if wallet.my.didUpgradeToHd()
-      wallet.updateAccounts()
-      
-    wallet.settings.secondPassword = wallet.my.getDoubleEncryption()
-    wallet.settings.pbkdf2 = wallet.my.getPbkdf2Iterations()    
-            
-    # Get email address, etc
-    # console.log "Getting info..."
-    wallet.my.get_account_info((result)->
-      wallet.user.email = result.email
-      if result.sms_number
-         wallet.user.mobile = {country: result.sms_number.split(" ")[0], number: result.sms_number.split(" ")[1]}
-      else # Field is not present if not entered
-        wallet.user.mobile = {country: "+1", number: ""}          
-        
-      wallet.user.isEmailVerified = result.email_verified 
-      wallet.user.isMobileVerified = result.sms_verified
-      wallet.user.passwordHint = result.password_hint1 # Field not present if not entered
-      
-      wallet.setLanguage($filter("getByProperty")("code", result.language, wallet.languages))
-      
-      # Get currencies:
-      
-      wallet.setCurrency($filter("getByProperty")("code", result.currency, wallet.currencies))
-      
-      wallet.settings.feePolicy = wallet.my.getFeePolicy()
-      
-      wallet.settings.blockTOR = !!result.block_tor_ips
-      
-      # Fetch transactions:
       if wallet.my.didUpgradeToHd()
-        wallet.my.getHistoryAndParseMultiAddressJSON()
+        wallet.updateAccounts()
       
+      wallet.settings.secondPassword = wallet.my.getDoubleEncryption()
+      wallet.settings.pbkdf2 = wallet.my.getPbkdf2Iterations()    
+            
+      # Get email address, etc
+      # console.log "Getting info..."
+      wallet.my.get_account_info((result)->
+        wallet.user.email = result.email
+        wallet.user.current_ip = result.my_ip
+        if result.sms_number
+           wallet.user.mobile = {country: result.sms_number.split(" ")[0], number: result.sms_number.split(" ")[1]}
+        else # Field is not present if not entered
+          wallet.user.mobile = {country: "+1", number: ""}          
+        
+        wallet.user.isEmailVerified = result.email_verified 
+        wallet.user.isMobileVerified = result.sms_verified
+        wallet.user.passwordHint = result.password_hint1 # Field not present if not entered
+      
+        wallet.setLanguage($filter("getByProperty")("code", result.language, wallet.languages))
+      
+        # Get currencies:
+      
+        wallet.setCurrency($filter("getByProperty")("code", result.currency, wallet.currencies))
+      
+        wallet.settings.feePolicy = wallet.my.getFeePolicy()
+      
+        wallet.settings.blockTOR = !!result.block_tor_ips
+      
+        # Fetch transactions:
+        if wallet.my.didUpgradeToHd()
+          wallet.my.getHistoryAndParseMultiAddressJSON()
+      
+        wallet.applyIfNeeded()
+      )
+      
+      if successCallback?
+        successCallback()
+    
       wallet.applyIfNeeded()
-    )
-    
-    wallet.applyIfNeeded()
-    
- 
-    
-  wallet.login = (uid, password, two_factor_code, observer) ->  
+  
     needsTwoFactorCode = (method) ->
       wallet.displayWarning("Please enter your 2FA code")
       wallet.settings.needs2FA = true
@@ -102,7 +104,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       # 4: Google Authenticator
       # 5: SMS
       
-      observer.needs2FA()
+      needsTwoFactorCallback()
   
       wallet.settings.twoFactorMethod = method 
       $state.go("login")
@@ -117,7 +119,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.displayError(error)
       
       if observer?
-        observer.error()
+        errorCallback()
       else
         $state.go("login")
       
@@ -141,7 +143,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.applyIfNeeded()
       
     $window.root = "https://blockchain.info/"   
-    wallet.my.fetchWalletJson(uid, null, null, password, two_factor_code, wallet.didLogin, needsTwoFactorCode, wrongTwoFactorCode, authorizationRequired, loginError ) 
+    wallet.my.fetchWalletJson(uid, null, null, password, two_factor_code, didLogin, needsTwoFactorCode, wrongTwoFactorCode, authorizationRequired, loginError ) 
     
     wallet.fetchExchangeRate()
   
@@ -149,8 +151,15 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.create = (password, email, currency, language, success_callback) ->      
     success = (uid) ->
       wallet.displaySuccess("Wallet created with identifier: " + uid, true)
-      wallet.login(uid, password)
-      success_callback(uid)
+      
+      loginSuccess = () ->
+        success_callback(uid)
+        
+      loginError = (error) ->
+        console.log(error)
+        wallet.displayError("Unable to login to new wallet")
+      
+      wallet.login(uid, password, null, null, loginSuccess, loginError)
     
     error = (error) ->
       if error.message != undefined

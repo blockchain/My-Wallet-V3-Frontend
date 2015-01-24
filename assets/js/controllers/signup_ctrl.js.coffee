@@ -76,10 +76,9 @@
       # console.log $scope.currentStep
       # console.log $scope.fields
       
-  $scope.createWallet = (success) ->
+  $scope.createWallet = (successCallback) ->
     Wallet.create($scope.fields.password, $scope.fields.email, $scope.fields.language, $scope.fields.currency, (uid)->
-      Wallet.login(uid,$scope.fields.password)
-      success()
+        successCallback()        
     )
 
   $scope.$watch "fields.confirmation", (newVal) ->

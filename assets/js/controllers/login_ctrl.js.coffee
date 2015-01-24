@@ -17,18 +17,19 @@
     $scope.busy = true
     Wallet.clearAlerts()
     
-    observer = {
-      error: () ->
-        $scope.busy = false
+    error = () ->
+      $scope.busy = false
+    
+    needs2FA = () ->
+      $scope.busy = false
       
-      needs2FA: () ->
-        $scope.busy = false
-    }      
+    success = () ->
+      $scope.busy = false
             
     if !$scope.settings.needs2FA
-      Wallet.login($scope.uid, $scope.password, null, observer)
+      Wallet.login($scope.uid, $scope.password, null, needs2FA, success, error)
     else if $scope.twoFactorCode != ""
-      Wallet.login($scope.uid, $scope.password, $scope.twoFactorCode, observer)
+      Wallet.login($scope.uid, $scope.password, $scope.twoFactorCode, needs2FA, success, error)
       
     if $scope.uid? && $scope.uid != ""
       $cookieStore.put("uid", $scope.uid)
