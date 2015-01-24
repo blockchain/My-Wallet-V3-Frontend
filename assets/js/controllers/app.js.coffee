@@ -1,4 +1,4 @@
-@AppCtrl = ($scope, Wallet, $state, $rootScope,$cookieStore, $timeout, $modal, $window) ->
+@AppCtrl = ($scope, Wallet, $state, $rootScope,$cookieStore, $timeout, $modal, $window, $translate) ->
   $scope.status    = Wallet.status
   $scope.settings = Wallet.settings
   $rootScope.isMock = Wallet.isMock
@@ -8,8 +8,8 @@
   #           Private             #
   #################################
         
-  $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->    
-    if toState.name != "login" && toState.name != "open" && $scope.status.isLoggedIn == false
+  $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->  
+    if toState.name != "login" && toState.name != "open" && toState.name != "verify-email" && $scope.status.isLoggedIn == false
       $state.go("login")
   )
     
@@ -43,6 +43,35 @@
           )
         
           Wallet.goal.claim = undefined
+
+    # Goals which don't necessarily require a login:
+    if Wallet.goal.verifyEmail?
+      unless Wallet.status.isLoggedIn
+        $translate("PLEASE_LOGIN_FIRST").then (translation) ->
+          Wallet.displayInfo translation, true
+        $state.go("login")
+        return
+
+      success = (message) ->
+        Wallet.user.isEmailVerified = true
+    
+        $state.go("transactions", {accountIndex: "accounts"})
+    
+        # Ignoring message, using our own:
+        $translate("EMAIL_VERIFIED").then (translation) ->
+          Wallet.displaySuccess(translation)
+  
+      error = (error) ->
+        $state.go "/"
+    
+        console.log(error)
+        $translate("EMAIL_VERIFICATION_FAILED").then (translation) ->
+          Wallet.displayError(translation)
+
+      Wallet.verifyEmail(Wallet.goal.verifyEmail, success, error)
+      
+      
+      Wallet.goal.verifyEmail = undefined
       
   $scope.$on "requireSecondPassword", (notification, continueCallback, insist) ->
     modalInstance = $modal.open(

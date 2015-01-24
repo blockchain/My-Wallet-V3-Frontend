@@ -48,7 +48,15 @@
               span.help-block {{ errors.mnemomic }}
               
         div(ng-switch-when="4")
-          p(translate="CONFIRM_EMAIL_EXPLAIN" translate-values='{ email: fields.email}')
+          .form-group
+            .col-xs-12
+              p(translate="CONFIRM_EMAIL_EXPLAIN" translate-values='{ email: fields.email}')
+          .form-group(ng-class="{'has-error': errors.emailVerificationCode}")
+            label.col-sm-4.control-label(translate="EMAIL_VERIFICATION_CODE")
+            .col-sm-6
+              input.form-control(type="text",ng-model="fields.emailVerificationCode",autofocus,ng-blur="validate()")
+              span.help-block 
+                p {{ errors.emailVerificationCode }}
           hr
           .why
             p(translate="EMAIL_WHY")
@@ -67,3 +75,5 @@
         span(ng-show="currentStep == 3")   
         img(ng-show="working" src="img/spinner.gif")     
         button.btn.btn-primary.btn-signup(ng-click="resendEmail()", translate="RESEND_EMAIL", ng-show="currentStep == 4")
+        button.btn.btn-primary.btn-signup(ng-click="nextStep()", translate="GO_VERIFY_EMAIL", ng-show="currentStep == 4")
+          

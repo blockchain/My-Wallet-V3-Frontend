@@ -5,7 +5,7 @@
   $scope.currencies = Wallet.currencies
   $scope.alerts = Wallet.alerts
   
-  $scope.isValid = [true, true, false]
+  $scope.isValid = [true, true, false, false]
   
   
   language_guess = $filter("getByProperty")("code", $translate.use(), Wallet.languages)
@@ -15,7 +15,8 @@
    
   currency_guess =  $filter("getByProperty")("code", "USD", Wallet.currencies)
 
-  $scope.fields = {email: "", password: "", confirmation: "", language: language_guess, currency: currency_guess, mnemonic: ""}
+  $scope.fields = {email: "", password: "", confirmation: "", language: language_guess, currency: currency_guess, mnemonic: "", emailVerificationCode: ""}
+  $scope.errors = {emailVerificationCode: null}
 
 
   $scope.didLoad = () ->    
@@ -67,9 +68,35 @@
       else
         if $scope.currentStep == 1
           $scope.currentStep++
-        if $scope.currentStep == 2
-          $scope.close() # Skip email verification step
-          # $scope.currentStep = 4 # Skip import step
+        else if $scope.currentStep == 2
+          $scope.currentStep = 4 # Skip import step
+        else if $scope.currentStep == 4
+          $scope.errors.emailVerificationCode = null
+          
+          success = () ->
+            # Hack: whitelist the current IP
+            Wallet.setIPWhitelist(
+              Wallet.user.current_ip,
+              (() ->
+                console.log "White listed current IP..."
+                $scope.close ""
+              ),
+              ((error) ->
+                console.log(error)
+                Wallet.displayError("Could not whitelist your IP.")
+              )
+            )
+          
+          
+            
+          error = () ->
+            $translate("EMAIL_VERIFICATION_FAILED").then (translation) ->
+              $scope.errors.emailVerificationCode = translation
+          
+          
+          Wallet.verifyEmail($scope.fields.emailVerificationCode, success, error)
+          
+
         
     else
       # console.log "Form step not valid"
@@ -80,6 +107,9 @@
     Wallet.create($scope.fields.password, $scope.fields.email, $scope.fields.language, $scope.fields.currency, (uid)->
         successCallback()        
     )
+    
+  $scope.resendEmail = () ->
+    Wallet.resendEmail() 
 
   $scope.$watch "fields.confirmation", (newVal) ->
     if newVal?
@@ -90,6 +120,8 @@
     
     $scope.isValid[0] = true
     $scope.isValid[1] = true
+    $scope.isValid[3] = true
+    
     
     $scope.errors = {email: null, password: null, confirmation: null}
     $scope.success = {password: false, confirmation: false}    
@@ -115,6 +147,9 @@
         if visual
           $translate("NO_MATCH").then (translation) ->
             $scope.errors.confirmation = translation
+            
+    if $scope.fields.emailVerificationCode == ""
+      $scope.isValid[3] = false
                           
   $scope.validate()
 

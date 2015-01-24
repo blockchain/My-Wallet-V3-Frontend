@@ -211,3 +211,9 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     }
   )
   
+  $stateProvider.state("verify-email",
+    url: "/verify-email/*code"
+    onEnter: ($stateParams, $state, Wallet, $translate) ->
+      Wallet.goal.verifyEmail = $stateParams.code
+  )
+  

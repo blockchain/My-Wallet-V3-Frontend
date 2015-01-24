@@ -5,5 +5,6 @@
   Wallet.goal.send = paymentRequest
   
   if !Wallet.status.isLoggedIn
-    Wallet.displayInfo "Please login to your wallet to proceed.", true
+    $translate("PLEASE_LOGIN_FIRST").then (translation) ->
+      Wallet.displayInfo translation, true
     $state.go("login")
