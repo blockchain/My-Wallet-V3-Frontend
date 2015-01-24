@@ -18,10 +18,11 @@ div(ng-show="address.address")
           .col-sm-9
             p.form-control-static
               | {{ address.accountLabel }}
-        .form-group
+        .form-group(ng-class="{'has-error': errors.label}")
           label.col-sm-3.control-label(translate="LABEL")
           .col-sm-9
             input.form-control(type="text", ng-model="newLabel", ng-focus="show.editLabel = 1")
+            span.help-block {{ errors.label }}
         div(ng-show="show.editLabel")     
           button.btn.btn-primary.btn-small(ng-click="changeLabel(newLabel)",ng-disabled="address.label == newLabel", translate="SAVE_CHANGES")
           button.btn.btn-info.btn-small(ng-click="newLabel = address.label; show.editLabel = false", translate="CLEAR")

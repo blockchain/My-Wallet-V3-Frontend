@@ -186,13 +186,19 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.my.setLabelForAccount(account.index, name)
     wallet.updateAccountsAndLegacyAddresses()
     
-  wallet.changeAddressLabel = (address, label) ->
+  wallet.changeAddressLabel = (address, label, successCallback, errorCallback) ->
     if address.account? # HD Address
-      wallet.my.setLabelForAccountAddress(address.account.index, address.index, label)
-      wallet.updateHDaddresses()
+      success = () ->
+         wallet.updateHDaddresses()
+         successCallback()
+         
+      wallet.my.setLabelForAccountAddress(address.account.index, address.index, label, success, errorCallback)
     else # Legacy address
-      wallet.my.setLegacyAddressLabel(address.address, label)
-      address.label = label
+      success = () ->
+        address.label = label
+        successCallback()
+        
+      wallet.my.setLegacyAddressLabel(address.address, label, success, errorCallback)
     
   wallet.logout = () ->
     wallet.didLogoutByChoice = true

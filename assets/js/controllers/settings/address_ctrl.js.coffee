@@ -1,7 +1,8 @@
-@AddressCtrl = ($scope, Wallet, $log, $state, $stateParams, $filter) ->
+@AddressCtrl = ($scope, Wallet, $log, $state, $stateParams, $filter, $translate) ->
   $scope.address = {address: null}
   $scope.accounts = Wallet.accounts
   $scope.show = {watchOnly: false, editLabel: false}
+  $scope.errors = {label: null}
   $scope.newLabel = null
   $scope.hdAddresses = Wallet.hdAddresses
   
@@ -15,8 +16,16 @@
     window.confirm("Coming soon")  
     
   $scope.changeLabel = (label) ->
-    Wallet.changeAddressLabel($scope.address, label)
-    $scope.show.editLabel = false
+    $scope.errors.label = null
+    
+    success = () ->
+      $scope.show.editLabel = false
+      
+    error = (error) ->
+      $translate("INVALID_CHARACTERS_FOR_LABEL").then (translation) ->      
+        $scope.errors.label = translation
+    
+    Wallet.changeAddressLabel($scope.address, label, success, error)
     
   #################################
   #           Private             #
