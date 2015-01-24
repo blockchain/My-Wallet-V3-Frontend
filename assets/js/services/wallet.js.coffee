@@ -155,6 +155,16 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       loginSuccess = () ->
         success_callback(uid)
         
+        # Hack: whitelist the current IP
+        wallet.my.setIPWhitelist(
+          wallet.user.current_ip,
+          (() ->),
+          ((error) ->
+            console.log(error)
+            wallet.displayError("Could not whitelist your IP.")
+          )
+        )
+        
       loginError = (error) ->
         console.log(error)
         wallet.displayError("Unable to login to new wallet")
