@@ -244,12 +244,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.setIPWhitelist = (ips, successCallback, errorCallback) ->
     success = () ->
       wallet.settings.ipWhitelist = ips
-      wallet.applyIfNeeded()
       successCallback()
+      wallet.applyIfNeeded()
      
     error = () ->
-      wallet.applyIfNeeded()
       errorCallback() 
+      wallet.applyIfNeeded()
       
     wallet.my.setIPWhitelist(ips, success, error)
     
@@ -919,15 +919,18 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.setCurrency(currency)
     # wallet.fetchExchangeRate()
   
-  wallet.changeEmail = (email) ->
+  wallet.changeEmail = (email, successCallback, errorCallback) ->
     wallet.my.change_email(email, (()->
       wallet.user.email = email
       wallet.user.isEmailVerified = false
+      successCallback()
       wallet.applyIfNeeded()
     ), ()->
       $translate("CHANGE_EMAIL_FAILED").then (translation) ->
         wallet.displayError(translation) 
         wallet.applyIfNeeded()
+        
+      errorCallback()
     )
     
   wallet.setFeePolicy = (policy) ->

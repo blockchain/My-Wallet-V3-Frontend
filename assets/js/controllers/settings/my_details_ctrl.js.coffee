@@ -6,9 +6,8 @@
   $scope.$watch "user.passwordHint", (newValue) ->
     $scope.newPasswordHint = newValue
   
-  $scope.changeEmail = (email) ->
-    Wallet.changeEmail(email)
-    $scope.edit.email = false
+  $scope.changeEmail = (email, success, error) ->
+    Wallet.changeEmail(email, success, error)
     
   $scope.changePassword = () ->
     modalInstance = $modal.open(
