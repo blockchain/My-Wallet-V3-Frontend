@@ -112,7 +112,7 @@
     Wallet.resendEmail() 
 
   $scope.$watch "fields.confirmation", (newVal) ->
-    if newVal?
+    if newVal? && $scope.fields.password != ""
       $scope.validate(false)
 
   $scope.validate = (visual=true) ->
@@ -124,7 +124,18 @@
     
     
     $scope.errors = {email: null, password: null, confirmation: null}
-    $scope.success = {password: false, confirmation: false}    
+    $scope.success = {email: false, password: false, confirmation: false}    
+        
+    if $scope.fields.email == ""
+      $scope.isValid[0] = false
+      $translate("EMAIL_ADDRESS_REQUIRED").then (translation) ->
+        $scope.errors.email = translation
+    else if $scope.form.$error.email
+      $scope.isValid[0] = false
+      $translate("EMAIL_ADDRESS_INVALID").then (translation) ->
+        $scope.errors.email = translation
+    else 
+       $scope.success.email = true
           
     if $scope.fields.password == ""
       $scope.isValid[0] = false
