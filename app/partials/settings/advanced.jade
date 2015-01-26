@@ -62,14 +62,7 @@
   .col-xs-6
     p(translate="IP_WHITELIST_EXPLAIN")
   .col-xs-6.right
-    div(ng-hide="edit.ipWhitelist")
-      p.form-control-static {{ settings.ipWhitelist }}
-      p
-        a(ng-click="edit.ipWhitelist = !edit.ipWhitelist", translate="CHANGE_IP_WHITELIST")
-    .form-group(ng-class="{'has-error': !validateIpWhitelist(newIpWhitelist)}",ng-show="edit.ipWhitelist")
-      input.form-control(type="text", ng-model="newIpWhitelist")
-      button.btn.btn-primary.btn-small(ng-click="changeIpWhitelist(newIpWhitelist)",ng-disabled="!validateIpWhitelist(newIpWhitelist)",ui-ladda="{{ saving.ipWhitelist }}", ladda-translate="SAVE", data-style="expand-left")
-      button.btn.btn-info.btn-small(ng-click="edit.ipWhitelist = false; newIpWhitelist = settings.ipWhitelist", translate="CANCEL", ng-hide="saving.ipWhitelist")        
+    bc-async-input(ng-model="settings.ipWhitelist", validator="validateIpWhitelist", on-save="changeIpWhitelist", action-title="'CHANGE_IP_WHITELIST' | translate")
 .row
   hr
 .row

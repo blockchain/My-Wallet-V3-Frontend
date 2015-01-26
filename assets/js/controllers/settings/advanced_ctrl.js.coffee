@@ -1,10 +1,8 @@
 @SettingsAdvancedCtrl = ($scope, Wallet, $modal) ->
   $scope.settings = Wallet.settings
-  
-  $scope.newIpWhitelist = $scope.settings.ipWhitelist
-  
-  $scope.edit =   {pbkdf2: false, ipWhitelist: false} 
-  $scope.saving = {pbkdf2: false, ipWhitelist: false} 
+    
+  $scope.edit =   {pbkdf2: false} 
+  $scope.saving = {pbkdf2: false} 
     
   $scope.validatePbkdf2 = (candidate) ->
     n = parseInt(candidate)
@@ -28,16 +26,9 @@
    
     return true
     
-  $scope.changeIpWhitelist = (list) ->
-    $scope.saving.ipWhitelist = true
-    
-    success = () ->
-      $scope.saving.ipWhitelist = false
-      $scope.settings.ipWhitelist = list
-      $scope.edit.ipWhitelist = false
-      
+  $scope.changeIpWhitelist = (list, success, errorCallback) ->
     error = () ->
-       $scope.saving.ipWhitelist = false
-       Wallet.displayError("Failed to update IP whitelist")
-          
+      Wallet.displayError("Failed to update IP whitelist")
+      errorCallback()
+    
     Wallet.setIPWhitelist(list, success, error)
