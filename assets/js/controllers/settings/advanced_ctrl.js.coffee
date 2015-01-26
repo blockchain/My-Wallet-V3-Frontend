@@ -1,17 +1,10 @@
 @SettingsAdvancedCtrl = ($scope, Wallet, $modal) ->
   $scope.settings = Wallet.settings
     
-  $scope.edit =   {pbkdf2: false} 
-  $scope.saving = {pbkdf2: false} 
-    
   $scope.validatePbkdf2 = (candidate) ->
     n = parseInt(candidate)
     return false if isNaN(candidate) || candidate < 1
     return true
-    
-  $scope.changePbkdf2 = (n) ->
-    Wallet.setPbkdf2Iterations(n, (()->), (()->))
-    $scope.edit.pbkdf2 = false
     
   $scope.validateIpWhitelist = (candidates) ->
     return false unless candidates? && candidates != ""
@@ -25,6 +18,14 @@
           return false if isNaN(digit) || digit < 0 || digit > 255          
    
     return true
+    
+    
+  $scope.changePbkdf2 = (n, success, errorCallback) ->
+    error = () ->
+      Wallet.displayError("Failed to update PBKDF2 iterations")
+      errorCallback()
+      
+    Wallet.setPbkdf2Iterations(n, success, error)
     
   $scope.changeIpWhitelist = (list, success, errorCallback) ->
     error = () ->

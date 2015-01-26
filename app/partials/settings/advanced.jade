@@ -45,14 +45,7 @@
   .col-xs-6
     p(translate="PBKDF2_ITERATIONS_EXPLAIN")
   .col-xs-6.right
-    div(ng-hide="edit.pbkdf2")
-      p.form-control-static {{ settings.pbkdf2 }}
-      p
-        a(ng-click="edit.pbkdf2 = !edit.pbkdf2", translate="CHANGE_PBKDF2")
-    .edit-mobile(ng-show="edit.pbkdf2")
-      input.form-control(type="text", ng-model="newPbkdf2")
-      button.btn.btn-primary.btn-small(ng-click="changePbkdf2(newPbkdf2)",ng-disabled="!validatePbkdf2(newPbkdf2)", translate="SAVE")
-      button.btn.btn-info.btn-small(ng-click="edit.pbkdf2 = false", translate="CANCEL")
+    bc-async-input(ng-model="settings.pbkdf2", validator="validatePbkdf2", on-save="changePbkdf2", action-title="'CHANGE_PBKDF2' | translate")
 .row
   hr
 .row
