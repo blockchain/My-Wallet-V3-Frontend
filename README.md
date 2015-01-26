@@ -32,13 +32,13 @@ Run the server:
 npm start
 ```
 
-If you use the mock (see below) it will work out of the box. Just visit [local.blockchain.com:8080](http://local.blockchain.com:8080/).
-
-If you want to use it with a real wallet then you need to login at http://blockchain.info/ first and whitelist your IP address.
+Visit [local.blockchain.com:8080](http://local.blockchain.com:8080/).  Do not use `localhost:8080`.
 
 ## Usage
 
-You can open any wallet registered with your email address as long as your IP is whitelisted. It will be upgraded to HD automatically. You can also sign up for a new wallet.
+You can open any wallet registered with your email address as long as your IP is whitelisted. It will be upgraded to HD automatically. 
+
+You can also sign up for a new wallet. In that case you should use a valid email address. In the final registration step you need to enter the 5 letter code from the registration email. This will automatically whitelist your current IP address. You won't be able to login from another IP address, unless you add it to the whitelist in advanced settings.
 
 After login, you'll see a list of accounts. There will be delay before transactions and the correct balances show up. If something goes wrong during the login process, error messages appear in the console. 
 
@@ -51,8 +51,9 @@ To reclaim funds from an email take code at the of link and add it to `#/claim`,
     https://blockchain.info/wallet/claim#7Educ5YNnVPQCQ556w7W8tQpj1dchhxPK56vVNab68cK
     http://local.blockchain.com:8080/#/claim/7Educ5YNnVPQCQ556w7W8tQpj1dchhxPK56vVNab68cK
 
-Make sure that SAVE_PASSWORD is not enabled.
+If you enable "handle bitcoin links" in your wallet settings, you can open bitcoin URI's like this one:
 
+    bitcoin:?address=1FeerpCgswvGRLVKme759C96DUBtf7SvA2?amount=0.01
 
 ## Test
 
@@ -65,7 +66,9 @@ To run test and monitor for changes:
     npm test
 
 ## Development
-Grunt keeps an eye on things in the background. In particular it compiles the Jade files whenever you change them.
+Grunt keeps an eye on things in the background. In particular it compiles the Jade files whenever you change them. So make sure it's running:
+
+    grunt
 
 ## MyWallet mock
 
@@ -73,12 +76,11 @@ MyWallet can simulated using a mock, allowing you to login with fake credentials
 
 * Login with username `test` and password `test` to see some existing transactions.
 * Create an account with any username and password; they will be stored in a cookie
-* The first time you visit the mobile wallet transaction screen, it will simulate an incoming transaction paying for coffee after 3 seconds.
 * If you make a payment request, 10 seconds after you stop editing, it will simulate the payment of 1 BTC.
-* If you entered a lower or higher amount it will show the appropriate warnings. 
-* If the simulated payment was insufficient and you leave the modal window open, after 10 seconds it will add the missing funds.
 
 To use the mock create a file `.env` with `MOCK=1` at the top, restart the server and logout.
+
+The mock has limited functionality. It's main purpuse is to facilitate Jasmine tests and make it easier to tweak UI. Not every change is saved, not every setting is honored, etc..
 
 ## Testnet
 
