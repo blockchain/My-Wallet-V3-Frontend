@@ -289,5 +289,8 @@
   "EMAIL_VERIFICATION_FAILED" : "We could not verify your email address",
   "PLEASE_LOGIN_FIRST" : "Please login to your wallet to proceed.",
   "EMAIL_VERIFICATION_CODE" : "Verification Code",
+  "IP_WHITELIST" : "IP Whitelist",
+  "IP_WHITELIST_EXPLAIN" : "Allow login without email verification as well as API access from the following list of IP addresses. Comma seperated. Use % as a wildcard.",
+  "CHANGE_IP_WHITELIST" : "Change IP Whitelist",
   "" : ""
 }
