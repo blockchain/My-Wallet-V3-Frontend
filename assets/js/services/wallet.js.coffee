@@ -1100,7 +1100,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     )
     
   wallet.disableRestrictToWhiteListedIPs = () ->
-    wallet.my.enableRestrictToWhiteListedIPs(()->
+    wallet.my.disableRestrictToWhiteListedIPs(()->
       wallet.settings.restrictToWhitelist = false
       wallet.applyIfNeeded()
     ,()->
