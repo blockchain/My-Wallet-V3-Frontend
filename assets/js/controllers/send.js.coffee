@@ -2,25 +2,33 @@
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.accounts = Wallet.accounts
   $scope.addressBook = Wallet.addressBook
+  $scope.status = Wallet.status
   
   $scope.origins = []
   $scope.destinations = []  
   
-  $scope.sending = false # Sending in progress
-      
-  for account in $scope.accounts
-    item = angular.copy(account)
-    item.type = "Accounts" 
-    $scope.origins.push item
-    $scope.destinations.push item
+  $scope.originsLoaded = false
   
-  for address in $scope.legacyAddresses 
-    if address.active
-      item = angular.copy(address)
-      item.type = "Imported Addresses"
-      $scope.destinations.push item
-      unless address.isWatchOnlyLegacyAddress
-        $scope.origins.push item
+  $scope.sending = false # Sending in progress
+  
+  $scope.$watch "status.didLoadBalances + status.legacyAddressBalancesLoaded", ->
+    if $scope.status.didLoadBalances && $scope.status.legacyAddressBalancesLoaded
+      if $scope.origins.length == 0      
+        for account in $scope.accounts
+          item = angular.copy(account)
+          item.type = "Accounts" 
+          $scope.origins.push item
+          $scope.destinations.push item
+  
+        for address in $scope.legacyAddresses 
+          if address.active
+            item = angular.copy(address)
+            item.type = "Imported Addresses"
+            $scope.destinations.push item
+            unless address.isWatchOnlyLegacyAddress
+              $scope.origins.push item
+              
+        $scope.originsLoaded = true
     
   # for address, label of $scope.addressBook
   #     item = {address: address, label: label}
@@ -263,13 +271,20 @@
       if blurredField == "amount" 
         $scope.errors.amount = "Please enter amount"
 
-    if transaction.amount > 0 && !$scope.validateAmount()
+    if $scope.originsLoaded && transaction.amount > 0 && !$scope.validateAmount()
       if blurredField == "amount" || blurredField == "from" || blurredField == "currency"
         $scope.errors.amount = "Insufficient funds"
     
     return 
     
+  $scope.$watch "originsLoaded", ->
+    $scope.transactionIsValid = $scope.validate()
+    if $scope.transaction.amount? && $scope.transaction.amount > 0
+      $scope.visualValidate("amount")
+    
   $scope.validate = () ->    
+    return false unless $scope.originsLoaded
+  
     transaction = $scope.transaction
         
     if $scope.internal

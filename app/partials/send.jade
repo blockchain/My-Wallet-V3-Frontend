@@ -19,10 +19,13 @@
           span(translate="FROM", ng-show="internal")
           |:
         .col-sm-7
-          ui-select(ng-model="transaction.from")
-            ui-select-match {{ maxAndLabel($select) }}            
-            ui-select-choices(repeat="origin in origins | filter: $select.search" group-by="'type'") 
-              span(ng-bind-html="origin.label | highlight: $select.search")
+          p.form-control-static(ng-hide="originsLoaded")
+            img(src="img/spinner.gif")     
+          span(ng-show="originsLoaded")
+            ui-select(ng-model="transaction.from")
+              ui-select-match {{ maxAndLabel($select) }}            
+              ui-select-choices(repeat="origin in origins | filter: $select.search" group-by="'type'") 
+                span(ng-bind-html="origin.label | highlight: $select.search")
       .form-group(ng-show="internal")
         label.col-sm-3.control-label
           span(translate="TO")
