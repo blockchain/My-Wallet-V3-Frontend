@@ -15,15 +15,17 @@
   $scope.signMessage = () ->
     window.confirm("Coming soon")  
     
-  $scope.changeLabel = (label) ->
+  $scope.changeLabel = (label, successCallback, errorCallback) ->
     $scope.errors.label = null
     
     success = () ->
       $scope.show.editLabel = false
+      successCallback()
       
     error = (error) ->
       $translate("INVALID_CHARACTERS_FOR_LABEL").then (translation) ->      
         $scope.errors.label = translation
+      errorCallback()
     
     Wallet.changeAddressLabel($scope.address, label, success, error)
     
