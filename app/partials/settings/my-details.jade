@@ -36,11 +36,7 @@ form.form-horizontal(role="form",name="form",novalidate)
       br
       p(translate="PASSWORD_HINT_EXPLAIN")    
     .col-sm-6
-      div
-        input#send-to.form-control(type="text",ng-model="newPasswordHint", ng-focus="edit.passwordHint = 1")
-      div(ng-show="edit.passwordHint")     
-        button.btn.btn-primary.btn-small(ng-click="changePasswordHint(newPasswordHint)",ng-disabled="user.passwordHint == newPasswordHint", translate="SAVE")
-        button.btn.btn-info.btn-small(ng-click="edit.passwordHint = false", translate="CANCEL")
+      bc-async-input(inline ng-model="user.passwordHint", on-save="changePasswordHint")      
   hr
   .form-group
     .col-sm-6

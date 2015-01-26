@@ -1,4 +1,4 @@
-walletApp.directive('bcAsyncInput', ($compile) ->
+walletApp.directive('bcAsyncInput', () ->
   {
     restrict: "E"
     replace: 'true'
@@ -19,12 +19,16 @@ walletApp.directive('bcAsyncInput', ($compile) ->
       scope.form = 
         newValue: scope.ngModel
         
+      if attrs.inline?
+        scope.inline = true
+        
       if scope.type?
         scope.type = "text"
-      # else
-      #   $compile(elem, scope)
         
       scope.edit = () ->
+        scope.status.edit = 1
+        
+      scope.focus = () ->
         scope.status.edit = 1
         
       scope.validate = () ->

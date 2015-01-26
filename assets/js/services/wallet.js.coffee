@@ -252,8 +252,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.applyIfNeeded()
       
     wallet.my.setIPWhitelist(ips, success, error)
-    
-  
   
   wallet.verifyEmail = (code, successCallback, errorCallback) ->
     success = () ->
@@ -988,10 +986,15 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     if MyWallet.mockShouldReceiveNewTransaction == undefined
       $rootScope.$apply()    
     
-  wallet.changePasswordHint = (hint) ->
+  wallet.changePasswordHint = (hint, successCallback, errorCallback) ->
     wallet.my.update_password_hint1(hint,(()->
       wallet.user.passwordHint = hint
-    ),(()->))
+      successCallback()
+      wallet.applyIfNeeded()
+    ),()->
+      errorCallback()
+      wallet.applyIfNeeded()
+    )
     
   wallet.isMobileVerified = () ->
     wallet.my.isMobileVerified
