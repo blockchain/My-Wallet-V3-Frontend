@@ -243,6 +243,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
   wallet.setIPWhitelist = (ips, successCallback, errorCallback) ->
     success = () ->
+      wallet.settings.ipWhitelist = ips
       wallet.applyIfNeeded()
       successCallback()
      
@@ -255,7 +256,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   
   
   wallet.verifyEmail = (code, successCallback, errorCallback) ->
-    wallet.my.verifyEmail(code, successCallback, errorCallback) 
+    success = () ->
+      wallet.user.isEmailVerified = true
+      successCallback()
+      
+    wallet.my.verifyEmail(code, success, errorCallback) 
     
   wallet.setPbkdf2Iterations = (n, successCallback, errorCallback) ->
     needsSecondPassword = (continueCallback) ->

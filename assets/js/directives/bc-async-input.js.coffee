@@ -26,7 +26,6 @@ walletApp.directive('bcAsyncInput', () ->
     
         success = () ->
           scope.status.saving = false
-          scope.ngModel = scope.form.newValue
           scope.status.edit = false
       
         error = () ->
