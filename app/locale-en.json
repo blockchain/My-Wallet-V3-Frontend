@@ -290,7 +290,15 @@
   "PLEASE_LOGIN_FIRST" : "Please login to your wallet to proceed.",
   "EMAIL_VERIFICATION_CODE" : "Verification Code",
   "IP_WHITELIST" : "IP Whitelist",
-  "IP_WHITELIST_EXPLAIN" : "Allow login without email verification as well as API access from the following list of IP addresses. Comma seperated. Use % as a wildcard.",
+  "IP_WHITELIST_EXPLAIN" : "Allow login without email verification as well as API access from the following list of IP addresses. Comma seperated. Use % as a wildcard. This requires your email address to be verified.",
   "CHANGE_IP_WHITELIST" : "Change IP Whitelist",
+  "API_ACCESS" : "API Access",
+  "API_ACCESS_EXPLAIN" : "Allow API access to your wallet. This requires an IP whitelist and does not work if 2FA is enabled.",
+  "ENABLE_API_ACCESS" : "Enable API Access",
+  "DISABLE_API_ACCESS" : "Disable API Access",
+  "IP_WHITELIST_RESTRICT" : "Restrict login to IP whitelist",
+  "IP_WHITELIST_RESTRICT_EXPLAIN" : "Only allow login from IP address in the whitelist. If you do not have a static IP address, this may lock you out of your wallet.",
+  "ENABLE_IP_WHITELIST_RESTRICT" : "Enable Restriction",
+  "DISABLE_IP_WHITELIST_RESTRICT" : "Disable Restriction",
   "" : ""
 }

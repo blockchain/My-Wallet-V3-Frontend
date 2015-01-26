@@ -251,6 +251,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       errorCallback() 
       
     wallet.my.setIPWhitelist(ips, success, error)
+    
+  
   
   wallet.verifyEmail = (code, successCallback, errorCallback) ->
     wallet.my.verifyEmail(code, successCallback, errorCallback) 
@@ -1064,6 +1066,42 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.disableBlockTOR = () ->
     wallet.my.update_tor_ip_block(false, ()->
       wallet.settings.blockTOR = false
+      wallet.applyIfNeeded()
+    ,()->
+      console.log "Failed"
+      wallet.applyIfNeeded()
+    )
+    
+  wallet.enableApiAccess = () ->
+    wallet.my.enableApiAccess(()->
+      wallet.settings.apiAccess = true
+      wallet.applyIfNeeded()
+    ,()->
+      console.log "Failed"
+      wallet.applyIfNeeded()
+    )
+    
+  wallet.disableApiAccess = () ->
+    wallet.my.disableApiAccess(()->
+      wallet.settings.apiAccess = false
+      wallet.applyIfNeeded()
+    ,()->
+      console.log "Failed"
+      wallet.applyIfNeeded()
+    )  
+  
+  wallet.enableRestrictToWhiteListedIPs = () ->
+    wallet.my.enableRestrictToWhiteListedIPs(()->
+      wallet.settings.restrictToWhitelist = true
+      wallet.applyIfNeeded()
+    ,()->
+      console.log "Failed"
+      wallet.applyIfNeeded()
+    )
+    
+  wallet.disableRestrictToWhiteListedIPs = () ->
+    wallet.my.enableRestrictToWhiteListedIPs(()->
+      wallet.settings.restrictToWhitelist = false
       wallet.applyIfNeeded()
     ,()->
       console.log "Failed"

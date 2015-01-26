@@ -67,6 +67,8 @@ walletApp = angular.module("walletApp", [
   "templates/two-factor.jade"
   "templates/configure-second-password.jade"
   "templates/tor.jade"
+  "templates/api-access.jade"
+  "templates/ip-whitelist-restrict.jade"
   "templates/bc-qr-reader.jade"
   # 'angular-ladda'
 ])

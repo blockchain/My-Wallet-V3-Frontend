@@ -24,6 +24,8 @@
       a(ng-click="enableRememberTwoFactor()", translate="ENABLE_REMEMBER_2FA", ng-hide="settings.rememberTwoFactor")
       a(ng-click="disableRememberTwoFactor()", translate="DISABLE_REMEMBER_2FA", ng-show="settings.rememberTwoFactor")
 .row
+  hr
+.row
   .col-xs-12
     h2(translate="BLOCK_TOR")
 .row
@@ -68,3 +70,29 @@
       input.form-control(type="text", ng-model="newIpWhitelist")
       button.btn.btn-primary.btn-small(ng-click="changeIpWhitelist(newIpWhitelist)",ng-disabled="!validateIpWhitelist(newIpWhitelist)",ui-ladda="{{ saving.ipWhitelist }}", ladda-translate="SAVE", data-style="expand-left")
       button.btn.btn-info.btn-small(ng-click="edit.ipWhitelist = false; newIpWhitelist = settings.ipWhitelist", translate="CANCEL", ng-hide="saving.ipWhitelist")        
+.row
+  hr
+.row
+  .col-xs-12
+    h2(translate="API_ACCESS")
+.row
+  .col-xs-6
+    p(translate="API_ACCESS_EXPLAIN")
+  .col-xs-6.right
+    h2.status.incomplete(ng-hide="settings.apiAccess", translate="DISABLED")
+    h2.status.complete(ng-show="settings.apiAccess", translate="ENABLED")
+    p 
+      api-access
+.row
+  hr
+.row
+  .col-xs-12
+    h2(translate="IP_WHITELIST_RESTRICT")
+.row
+  .col-xs-6
+    p(translate="IP_WHITELIST_RESTRICT_EXPLAIN")
+  .col-xs-6.right
+    h2.status.incomplete(ng-hide="settings.restrictToWhitelist", translate="DISABLED")
+    h2.status.complete(ng-show="settings.restrictToWhitelist", translate="ENABLED")
+    p 
+      ip-whitelist-restrict
