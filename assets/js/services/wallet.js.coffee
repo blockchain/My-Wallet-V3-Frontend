@@ -262,7 +262,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
     wallet.my.verifyEmail(code, success, errorCallback) 
     
-  wallet.setPbkdf2Iterations = (n, successCallback, errorCallback) ->
+  wallet.setPbkdf2Iterations = (n, successCallback, errorCallback) ->    
     needsSecondPassword = (continueCallback) ->
       $rootScope.$broadcast "requireSecondPassword", continueCallback
     
@@ -273,7 +273,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     error = (error) ->
       errorCallback(error)
       
-    wallet.my.setPbkdf2Iterations(n, needsSecondPassword, success, error)
+    wallet.my.setPbkdf2Iterations(n, success, error, needsSecondPassword)
     
   ####################
   #   Transactions   #
