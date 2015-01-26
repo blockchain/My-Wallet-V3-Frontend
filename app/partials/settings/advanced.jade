@@ -66,5 +66,5 @@
         a(ng-click="edit.ipWhitelist = !edit.ipWhitelist", translate="CHANGE_IP_WHITELIST")
     .form-group(ng-class="{'has-error': !validateIpWhitelist(newIpWhitelist)}",ng-show="edit.ipWhitelist")
       input.form-control(type="text", ng-model="newIpWhitelist")
-      button.btn.btn-primary.btn-small(ng-click="changeIpWhitelist(newIpWhitelist)",ng-disabled="!validateIpWhitelist(newIpWhitelist)", translate="SAVE")
-      button.btn.btn-info.btn-small(ng-click="edit.ipWhitelist = false; newIpWhitelist = settings.ipWhitelist", translate="CANCEL")        
+      button.btn.btn-primary.btn-small(ng-click="changeIpWhitelist(newIpWhitelist)",ng-disabled="!validateIpWhitelist(newIpWhitelist)",ui-ladda="{{ saving.ipWhitelist }}", ladda-translate="SAVE", data-style="expand-left")
+      button.btn.btn-info.btn-small(ng-click="edit.ipWhitelist = false; newIpWhitelist = settings.ipWhitelist", translate="CANCEL", ng-hide="saving.ipWhitelist")        

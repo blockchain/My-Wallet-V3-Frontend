@@ -241,7 +241,15 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.displayError(translation) 
     )
     
-  wallet.setIPWhitelist = (ips, success, error) ->
+  wallet.setIPWhitelist = (ips, successCallback, errorCallback) ->
+    success = () ->
+      wallet.applyIfNeeded()
+      successCallback()
+     
+    error = () ->
+      wallet.applyIfNeeded()
+      errorCallback() 
+      
     wallet.my.setIPWhitelist(ips, success, error)
   
   wallet.verifyEmail = (code, successCallback, errorCallback) ->

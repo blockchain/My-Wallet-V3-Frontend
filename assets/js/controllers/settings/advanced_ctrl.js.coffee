@@ -3,8 +3,9 @@
   
   $scope.newIpWhitelist = $scope.settings.ipWhitelist
   
-  $scope.edit = {pbkdf2: false, ipWhitelist: false} 
-  
+  $scope.edit =   {pbkdf2: false, ipWhitelist: false} 
+  $scope.saving = {pbkdf2: false, ipWhitelist: false} 
+    
   $scope.validatePbkdf2 = (candidate) ->
     n = parseInt(candidate)
     return false if isNaN(candidate) || candidate < 1
@@ -28,10 +29,15 @@
     return true
     
   $scope.changeIpWhitelist = (list) ->
+    $scope.saving.ipWhitelist = true
+    
     success = () ->
+      $scope.saving.ipWhitelist = false
+      $scope.settings.ipWhitelist = list
       $scope.edit.ipWhitelist = false
       
     error = () ->
+       $scope.saving.ipWhitelist = false
        Wallet.displayError("Failed to update IP whitelist")
           
     Wallet.setIPWhitelist(list, success, error)
