@@ -271,7 +271,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     error = (error) ->
       errorCallback(error)
       
-    wallet.my.setPbkdf2Iterations(n, success, error, needsSecondPassword)
+    wallet.my.setPbkdf2Iterations(parseInt(n), success, error, needsSecondPassword)
     
   ####################
   #   Transactions   #
