@@ -50,6 +50,12 @@
       windowClass: "signup"
       size: "lg"
     )
+    
+    modalInstance.result.then (() ->
+      $scope.creatingAccount = false
+    ), () ->
+      $scope.creatingAccount = false
+        
 
   $scope.$watch "status.isLoggedIn", (newValue) ->
     if newValue

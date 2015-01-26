@@ -62,9 +62,9 @@
   .modal-footer
     .row
       .col-xs-6
+        button.btn.btn-info(ng-click="close()", translate="CANCEL", ng-show="currentStep == 1")
         a(translate="WALLET_IMPORT", ng-click="import()", ng-show="currentStep==2")
       .col.xs-6
-        //- button.btn.btn-info(ng-click="close()", translate="CLOSE", ng-hide="currentStep == 3 || currentStep == 2")
         button.btn.btn-primary.btn-signup(ng-click="nextStep()",ng-disabled="!isValid[0]", translate="CONTINUE", ng-show="currentStep == 1 && !working")
         button.btn.btn-primary.btn-signup(ng-click="nextStep()",ng-disabled="!isValid[1]", translate="NEXT_STEP", ng-show="currentStep == 2")
         button.btn.btn-info.btn-signup(ng-click="skipImport()", ng-show="currentStep == 3 && !importing", translate="SKIP_IMPORT")
