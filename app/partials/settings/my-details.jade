@@ -9,6 +9,7 @@ form.form-horizontal(role="form",name="form",novalidate)
     .col-sm-6
       bc-async-input(type="email", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate")
       verify-email
+      resend-email-confirmation
   hr
   .form-group
     .col-sm-6

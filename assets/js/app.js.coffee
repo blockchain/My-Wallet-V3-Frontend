@@ -72,6 +72,7 @@ walletApp = angular.module("walletApp", [
   "templates/bc-qr-reader.jade"
   "templates/bc-async-input.jade"
   "templates/verify-email.jade"
+  "templates/resend-email-confirmation.jade"
   # 'angular-ladda'
 ])
 
