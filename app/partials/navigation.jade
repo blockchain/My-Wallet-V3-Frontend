@@ -11,8 +11,8 @@
         img.tab(src="img/transactions-icon.png")
         span(translate="TRANSACTIONS")
   ul.nav.navbar-nav.col-xs-3(ng-show="status.isLoggedIn")
-    li.pull-right.dropdown.account-details
-      a.dropdown-toggle(href="")
+    li.pull-right.dropdown.account-details(dropdown)
+      a.dropdown-toggle(href dropdown-toggle)
         img#account(src="img/account-icon.png",alt="Account Settings")
         p(translate="PROFILE")
       ul.dropdown-menu
