@@ -2,7 +2,9 @@ describe "LoginCtrl", ->
   scope = undefined
 
   modal =
-   open: ->
+   open: (args) ->  
+     result:
+       then: ->
 
   beforeEach angular.mock.module("walletApp")
 
@@ -10,7 +12,6 @@ describe "LoginCtrl", ->
    angular.mock.inject ($injector, $rootScope, $controller) ->
      Wallet = $injector.get("Wallet")
      MyWallet = $injector.get("MyWallet")    
-
   
      scope = $rootScope.$new()
         
@@ -35,9 +36,8 @@ describe "LoginCtrl", ->
     return
   )
   
-  it "should open a modal to create a new wallet",  inject((Wallet, $modal) -> 
-    spyOn(modal, "open")
+  it "should open a modal to create a new wallet",  inject((Wallet) -> 
+    spyOn(modal, "open").and.callThrough()
     scope.create()
     expect(modal.open).toHaveBeenCalled()
   )
-  

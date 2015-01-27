@@ -4,6 +4,10 @@ describe "SettingsMyDetailsCtrl", ->
   
   modal =
     open: ->
+      
+  mockObserver = {
+    success: (() ->), 
+    error: (() ->)}
   
   beforeEach angular.mock.module("walletApp")
   
@@ -42,11 +46,11 @@ describe "SettingsMyDetailsCtrl", ->
     it "should let user change their email", inject((Wallet) ->
       spyOn(Wallet, "changeEmail").and.callThrough()
 
-      scope.changeEmail("other@me.com")
+      scope.changeEmail("other@me.com", mockObserver.success, mockObserver.error)
       
       scope.$digest()
     
-      expect(Wallet.changeEmail).toHaveBeenCalledWith("other@me.com")
+      expect(Wallet.changeEmail).toHaveBeenCalledWith("other@me.com", mockObserver.success, mockObserver.error)
       expect(scope.user.email).toBe("other@me.com")
       
       return
@@ -69,10 +73,10 @@ describe "SettingsMyDetailsCtrl", ->
       spyOn(Wallet, "changePasswordHint")
       scope.edit.passwordHint = false
 
-      scope.changePasswordHint("Other hint")
+      scope.changePasswordHint("Other hint", mockObserver.success, mockObserver.error)
 
           
-      expect(Wallet.changePasswordHint).toHaveBeenCalledWith("Other hint")
+      expect(Wallet.changePasswordHint).toHaveBeenCalledWith("Other hint", mockObserver.success, mockObserver.error)
       
       return
     )

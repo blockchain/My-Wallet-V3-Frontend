@@ -50,7 +50,7 @@
       windowClass: "signup"
       size: "lg"
     )
-    
+        
     modalInstance.result.then (() ->
       $scope.creatingAccount = false
     ), () ->

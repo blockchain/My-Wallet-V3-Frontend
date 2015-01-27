@@ -18,7 +18,10 @@ describe "walletServices", () ->
       spyOn(Wallet,"monitor").and.callThrough()
       spyOn(Wallet,"monitorLegacy").and.callThrough()
       
-      mockObserver = {needs2FA: (() ->)}
+      mockObserver = {
+        needs2FA: (() ->), 
+        success: (() ->), 
+        error: (() ->)}
       
       return
 
@@ -131,7 +134,7 @@ describe "walletServices", () ->
       
     it "can be changed", inject((Wallet, MyWallet) ->
       spyOn(MyWallet, "change_email").and.callThrough()
-      Wallet.changeEmail("other@me.com")
+      Wallet.changeEmail("other@me.com", mockObserver.success, mockObserver.error)
       expect(MyWallet.change_email).toHaveBeenCalled()
       expect(Wallet.user.email).toBe("other@me.com")
       expect(Wallet.user.isEmailVerified).toBe(false)
@@ -197,7 +200,7 @@ describe "walletServices", () ->
 
     it "can be changed", inject((Wallet, MyWallet) ->
       spyOn(MyWallet, "update_password_hint1").and.callThrough()
-      Wallet.changePasswordHint("Better hint")
+      Wallet.changePasswordHint("Better hint", mockObserver.success, mockObserver.error)
       expect(MyWallet.update_password_hint1).toHaveBeenCalled()
       expect(Wallet.user.passwordHint).toBe("Better hint")
     )
