@@ -303,5 +303,6 @@
   "DISABLE_IP_WHITELIST_RESTRICT" : "Disable Restriction",
   "EMAIL_ADDRESS_REQUIRED" : "Required",
   "EMAIL_ADDRESS_INVALID" : "Invalid",
+  "EMAIL_CONFIRMATION_SENT" : "Sent",
   "" : ""
 }
