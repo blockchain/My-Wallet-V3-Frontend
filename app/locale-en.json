@@ -33,6 +33,7 @@
   "CAMERA_OFF" : "Camera off",
   "ADD_NOTE" : "Add note",
   "UNCONFIRMED" : "Unconfirmed",
+  "UNCONFIRMED_WARNING" : "This transaction has not been confirmed yet!",
   "CONFIRMED" : "Confirmed",
   "ONE_CONFIRMATION" : "1 confirmation",
   "N_CONFIRMATIONS" : "{{ n }} confirmations",
