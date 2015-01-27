@@ -68,6 +68,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       # Get email address, etc
       # console.log "Getting info..."
       wallet.my.get_account_info((result)->
+        $window.name = "blockchain-"  + result.guid
         wallet.settings.ipWhitelist = result.ip_lock
         wallet.settings.restrictToWhitelist = result.ip_lock_on
         wallet.settings.apiAccess = result.is_api_access_enabled
@@ -219,6 +220,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
   wallet.logout = () ->
     wallet.didLogoutByChoice = true
+    $window.name = "blockchain"
     wallet.my.logout() # broadcast "logging_out"
     
   wallet.confirmRecoveryPhrase = () ->
@@ -257,6 +259,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     success = () ->
       wallet.user.isEmailVerified = true
       successCallback()
+      wallet.applyIfNeeded()
       
     wallet.my.verifyEmail(code, success, errorCallback) 
     

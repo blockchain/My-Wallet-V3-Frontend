@@ -8,6 +8,7 @@ form.form-horizontal(role="form",name="form",novalidate)
       p(translate="EMAIL_ADDRESS_EXPLAIN")    
     .col-sm-6
       bc-async-input(type="email", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate")
+      verify-email
   hr
   .form-group
     .col-sm-6
