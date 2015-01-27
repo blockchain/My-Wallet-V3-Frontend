@@ -440,17 +440,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
             
     errorCallback({invalidInput: true})
     return
-  
-  # Amount in satoshi or fiat
-  wallet.send         = (from, to,             amount, currency, success, error) ->
-    amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
-    
-    if from.index?
-      wallet.my.sendBitcoinsForAccount(from.index, to, amount, 10000, null, wallet.transactionObserver(success, error).transactionSuccess, wallet.transactionObserver(success, error).transactionError, wallet.transactionObserver(success, error).needsSecondPasswordCallback)
-    else if from.address?
-      wallet.my.sendFromLegacyAddressToAddress(from.address, to, amount, 10000, null, wallet.transactionObserver(success, error).transactionSuccess, wallet.transactionObserver(success, error).transactionError, wallet.transactionObserver(success, error).needsSecondPasswordCallback)
-      
-  wallet.sendInternal = (from, destination, amount, currency, success, error) ->
+        
+  wallet.send = (from, destination, amount, currency, success, error) ->
     amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
     
     if from.address?

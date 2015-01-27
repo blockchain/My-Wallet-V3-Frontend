@@ -2,12 +2,6 @@
   .row
     .col-xs-6
       h3(translate="SEND_BITCOIN")
-    .col-xs-6.right
-      a(href="", ng-click="switchToExternal()", translate="EXTERNAL", ng-show="internal", ng-disabled="accounts.length == 1")
-      span(translate="EXTERNAL", ng-hide="internal")
-      a(href="", ng-click="switchToInternal()", translate="INTERNAL", ng-hide="internal") 
-      span(translate="INTERNAL", ng-show="internal")
-        
 .modal-body#send
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)") 
     | {{alert.msg}}
@@ -15,8 +9,7 @@
     form.form-horizontal(role="form",name="form",novalidate)
       .form-group
         label.col-sm-3.control-label
-          span(translate="SEND_FROM", ng-hide="internal")
-          span(translate="FROM", ng-show="internal")
+          span(translate="SEND_FROM")
           |:
         .col-sm-7
           p.form-control-static(ng-hide="originsLoaded")
@@ -26,33 +19,21 @@
               ui-select-match {{ maxAndLabel($select) }}            
               ui-select-choices(repeat="origin in origins | filter: $select.search" group-by="'type'") 
                 span(ng-bind-html="origin.label | highlight: $select.search")
-      .form-group(ng-show="internal")
+      .form-group(ng-class="{'has-error': errors.to, 'has-success' : success.to}")
         label.col-sm-3.control-label
           span(translate="TO")
           |:  
         .col-sm-7
-          ui-select(ng-model="transaction.destination")
-            ui-select-match {{ $select.selected.label }}
-            ui-select-choices(repeat="destination in destinations | filter: $select.search" group-by="'type'") 
-              span(ng-bind-html="destination.label | highlight: $select.search")
-      .form-group(ng-class="{'has-error': errors.to}", ng-hide="internal")
-        label.col-sm-3.control-label(for="to")
-          span(translate="SEND_TO")
-          |:
-        .col-sm-7
-          .input-group-vertical.send-methods
-            //- .btn-group.btn-group-justified
-            //-   .btn-group.btn-group-xs
-            //-     button(type="button", ng-class="{active: method=='BTC'}", ng-click="setMethod('BTC')").btn.btn-default Bitcoin
-            //-   .btn-group.btn-group-xs
-            //-     button(type="button", ng-class="{active: method=='EMAIL'}", ng-click="setMethod('EMAIL')").btn.btn-default.middle Email
-            //-   .btn-group.btn-group-xs
-            //-     button(type="button", ng-class="{active: method=='SMS'}", ng-click="setMethod('SMS')").btn.btn-default SMS
-            .input-group
-              input#send-to.form-control(type="text",ng-model="transaction.to",autofocus,ng-blur="visualValidate('to')", tabindex="0")
-              span.input-group-btn
-                button#qr.btn.btn-default(type="button", ng-click="cameraOn()") 
-                  img(src="img/qr.png", alt="QR")
+          p.form-control-static(ng-hide="originsLoaded", )
+            img(src="img/spinner.gif")     
+          .input-group(ng-show="originsLoaded")
+            ui-select(ng-model="transaction.destination", ng-blur="visualValidate('to')")
+              ui-select-match {{ $select.selected.label }}
+              ui-select-choices(repeat="destination in destinations | filter: $select.search" group-by="'type'" refresh="refreshDestinations($select.search)" refresh-delay="0") 
+                span(ng-bind-html="destination.label | highlight: $select.search")
+            span.input-group-btn
+              button#qr.btn.btn-default(type="button", ng-click="cameraOn()")
+                img(src="img/qr.png", alt="QR")
           span.help-block {{ errors.to }}
       .form-group(ng-class="{'has-error': errors.amount}")
         label.col-sm-3.control-label(translate="AMOUNT")
