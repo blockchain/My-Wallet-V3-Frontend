@@ -3,7 +3,8 @@
     h3(translate="NEW_ACCT_WELCOME", ng-show="currentStep == 1")
     h3(translate="WALLET_GREETING_SETUP", ng-show="currentStep == 2")
     h3(translate="IMPORT_WALLET", ng-show="currentStep == 3")    
-    h3(translate="CONFIRM_EMAIL", ng-show="currentStep == 4")  
+    h3(translate="CONFIRM_EMAIL", ng-show="currentStep == 4")
+    p(translate="CONFIRM_EMAIL_EXPLAIN" translate-values='{ email: fields.email}', ng-show="currentStep == 4")  
   .modal-body
     form.form-horizontal(role="form",name="form",novalidate)
       div(ng-switch="currentStep")
@@ -45,19 +46,15 @@
               span.help-block {{ errors.mnemomic }}
               
         div(ng-switch-when="4")
-          .form-group
-            .col-xs-12
-              p(translate="CONFIRM_EMAIL_EXPLAIN" translate-values='{ email: fields.email}')
           .form-group(ng-class="{'has-error': errors.emailVerificationCode}")
             label.col-sm-4.control-label(translate="EMAIL_VERIFICATION_CODE")
             .col-sm-6
               input.form-control(type="text",ng-model="fields.emailVerificationCode",autofocus,ng-blur="validate()")
               span.help-block 
                 p {{ errors.emailVerificationCode }}
-          hr
           .why
-            p(translate="EMAIL_WHY")
-          p.explanation(translate="EMAIL_WHY_EXPLAIN")
+            h4(translate="EMAIL_WHY")
+            p.explanation(translate="EMAIL_WHY_EXPLAIN")
       
   .modal-footer
     .row

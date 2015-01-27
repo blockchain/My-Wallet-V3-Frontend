@@ -1,9 +1,15 @@
 .navbar-inverse {
   background-color: #187fc0;
   border-color: white;
+  border-radius: 0px;
 
   .navbar-brand {
       color: white;
+  }
+  
+  
+  .container-fluid{
+	  padding: 15px;
   }
 
   .navbar-nav {
@@ -90,6 +96,6 @@
 }
 
 img#logo {
-  height: 34px;
-  margin-top: -6px;
+  height: 45px;
+  margin-top: -10px;
 }
