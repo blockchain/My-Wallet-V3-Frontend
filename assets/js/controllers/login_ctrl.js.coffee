@@ -1,7 +1,13 @@
 @LoginCtrl = ($scope, $log, Wallet, $cookieStore, $modal, $state, $timeout) ->
   $scope.status = Wallet.status    
   $scope.settings = Wallet.settings
-  $scope.uid = $cookieStore.get("uid")
+  
+  if Wallet.guid?
+    $scope.uid = Wallet.guid
+  else
+    $scope.uid = $cookieStore.get("uid")
+  
+  
   $scope.twoFactorCode = ""
   $scope.creatingAccount = false
   $scope.busy = false  
