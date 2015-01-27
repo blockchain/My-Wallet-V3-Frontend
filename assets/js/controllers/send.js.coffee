@@ -29,7 +29,7 @@
               $scope.origins.push item
         
         $scope.destinations.push({address: "", label: "", type: "External"})
-        $scope.destination =  $scope.destinations.slice(-1)[0]
+        $scope.transaction.destination =  $scope.destinations.slice(-1)[0]
         $scope.originsLoaded = true
         
     
