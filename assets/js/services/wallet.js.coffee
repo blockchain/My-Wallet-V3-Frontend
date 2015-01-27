@@ -259,6 +259,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     success = () ->
       wallet.user.isEmailVerified = true
       successCallback()
+      wallet.applyIfNeeded()
       
     wallet.my.verifyEmail(code, success, errorCallback) 
     

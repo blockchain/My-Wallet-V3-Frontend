@@ -8,6 +8,11 @@ form.form-horizontal(role="form",name="form",novalidate)
       p(translate="EMAIL_ADDRESS_EXPLAIN")    
     .col-sm-6
       bc-async-input(type="email", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate")
+      .form-group(ng-class="{'has-error': errors.emailVerificationCode }", ng-show="!user.isEmailVerified && user.email != null && user.email != ''")
+        .col-xs-9
+          input.form-control(type="text",ng-model="code")
+        .col-xs-3
+          button.btn.btn-primary(ng-click="verifyEmail(code)",ng-disabled="!code || code.length < 3", translate="VERIFY")
   hr
   .form-group
     .col-sm-6
