@@ -2,8 +2,6 @@
   $scope.edit = {email: false, password: false, passwordHint: false} 
   $scope.user = Wallet.user
   $scope.settings = Wallet.settings
-  $scope.errors = 
-    emailVerificationCode: null
   
   $scope.changeEmail = (email, success, error) ->
     Wallet.changeEmail(email, success, error)
@@ -17,13 +15,3 @@
       controller: ChangePasswordCtrl
       windowClass: "blockchain-modal"
     )
-    
-  $scope.verifyEmail = (code) ->  
-    error = () ->
-      $translate("EMAIL_VERIFICATION_FAILED").then (translation) ->
-        $scope.errors.emailVerificationCode = translation
-        
-    success = () ->
-  
-    Wallet.verifyEmail(code, success, error)
-  
