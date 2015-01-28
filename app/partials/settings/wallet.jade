@@ -1,17 +1,16 @@
+p.headliner(translate="WALLET_SETTINGS_EXPLAIN")
 form.form-horizontal(role="form",name="form",novalidate)  
   .form-group
-    .col-sm-4
-      label(translate="LANGUAGE")
-      br
-      p(translate="LANGUAGE_EXPLAIN")    
     .col-sm-6
+      label(translate="LANGUAGE")
+      p.explain(translate="LANGUAGE_EXPLAIN")    
+    .col-sm-6.setting-result
       language-picker(language="settings.language")
   .form-group
-    .col-sm-4
-      label(translate="CURRENCY")
-      br
-      p(translate="CURRENCY_EXPLAIN")    
     .col-sm-6
+      label(translate="CURRENCY")
+      p.explain(translate="CURRENCY_EXPLAIN")    
+    .col-sm-6.setting-result
       currency-picker(currency="settings.currency")
   //- .form-group
   //-   .col-sm-4
@@ -21,12 +20,11 @@ form.form-horizontal(role="form",name="form",novalidate)
   //-   .col-sm-6
   //-     network-fee-picker
   .form-group(ng-show="browserCanHandleBitcoinLinks")
-    .col-sm-4
-      label(translate="HANDLE_BITCOIN_LINKS")
-      br
-      p(translate="HANDLE_BITCOIN_LINKS_EXPLAIN")    
     .col-sm-6
+      label(translate="HANDLE_BITCOIN_LINKS")
+      p.explain(translate="HANDLE_BITCOIN_LINKS_EXPLAIN")    
+    .col-sm-6.setting-result
       //- h2.status.incomplete(translate="DISABLED", ng-show="!settings.handleBitcoinLinks")
       //- h2.status.complete(translate="ENABLED", ng-show="settings.handleBitcoinLinks")
-      a(ng-click="setHandleBitcoinLinks()", translate="SET_HANDLE_BITCOIN_LINKS", ng-hide="settings.handleBitcoinLinks")
-      p(translate="HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN")
+      a.settingaction(ng-click="setHandleBitcoinLinks()", translate="SET_HANDLE_BITCOIN_LINKS", ng-hide="settings.handleBitcoinLinks")
+      p.settingtext(translate="HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN")

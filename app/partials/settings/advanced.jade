@@ -1,84 +1,63 @@
-.row
-  .col-xs-12
-    h2(translate="WALLET_SECOND_PASSWORD")
-.row
-  .col-xs-6
-    p(translate="WALLET_SECOND_PASSWORD_EXPLAIN")
-  .col-xs-6
-    p
-      b.text-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")  
-    p   
+p.headliner(translate="ADVANCED_EXPLAIN")
+
+form.form-horizontal(role="form",name="form",novalidate)  
+  .form-group
+    .col-sm-6
+      label(translate="WALLET_SECOND_PASSWORD")
+      span.label.label-danger(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
+      p.explain(translate="WALLET_SECOND_PASSWORD_EXPLAIN")    
+    .col-sm-6.setting-result
+      h2.status.complete(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
       configure-second-password
-.row
-  hr
-.row
-  .col-xs-12
-    h2(translate="REMEMBER_2FA")
-.row
-  .col-xs-6
-    p(translate="REMEMBER_2FA_EXPLAIN")
-  .col-xs-6.right
-    h2.status.incomplete(ng-hide="settings.rememberTwoFactor", translate="DISABLED")
-    h2.status.complete(ng-show="settings.rememberTwoFactor", translate="ENABLED")
-    p
-      a(ng-click="enableRememberTwoFactor()", translate="ENABLE_REMEMBER_2FA", ng-hide="settings.rememberTwoFactor")
-      a(ng-click="disableRememberTwoFactor()", translate="DISABLE_REMEMBER_2FA", ng-show="settings.rememberTwoFactor")
-.row
-  hr
-.row
-  .col-xs-12
-    h2(translate="BLOCK_TOR")
-.row
-  .col-xs-6
-    p(translate="BLOCK_TOR_EXPLAIN")
-  .col-xs-6.right
-    h2.status.incomplete(ng-hide="settings.blockTOR", translate="DISABLED")
-    h2.status.complete(ng-show="settings.blockTOR", translate="ENABLED")
-    p 
+
+  .form-group
+    .col-sm-6
+      label(translate="REMEMBER_2FA")
+      p.explain(translate="REMEMBER_2FA_EXPLAIN")    
+    .col-sm-6.setting-result
+      h2.status.incomplete(ng-hide="settings.rememberTwoFactor", translate="DISABLED")
+      h2.status.complete(ng-show="settings.rememberTwoFactor", translate="ENABLED")
+      p
+        a.settingaction(ng-click="enableRememberTwoFactor()", translate="ENABLE_REMEMBER_2FA", ng-hide="settings.rememberTwoFactor")
+        a.settingaction(ng-click="disableRememberTwoFactor()", translate="DISABLE_REMEMBER_2FA", ng-show="settings.rememberTwoFactor")
+
+  .form-group
+    .col-sm-6
+      label(translate="BLOCK_TOR")
+      p.explain(translate="BLOCK_TOR_EXPLAIN")    
+    .col-sm-6.setting-result
+      h2.status.incomplete(ng-hide="settings.blockTOR", translate="DISABLED")
+      h2.status.complete(ng-show="settings.blockTOR", translate="ENABLED")
       tor
-.row
-  hr
-.row
-  .col-xs-12
-    h2(translate="PBKDF2_ITERATIONS")
-.row
-  .col-xs-6
-    p(translate="PBKDF2_ITERATIONS_EXPLAIN")
-  .col-xs-6.right
-    bc-async-input(ng-model="settings.pbkdf2", validator="validatePbkdf2", on-save="changePbkdf2", action-title="'CHANGE_PBKDF2' | translate")
-.row
-  hr
-.row
-  .col-xs-12
-    h2(translate="IP_WHITELIST")
-.row
-  .col-xs-6
-    p(translate="IP_WHITELIST_EXPLAIN")
-  .col-xs-6.right
-    bc-async-input(ng-model="settings.ipWhitelist", validator="validateIpWhitelist", on-save="changeIpWhitelist", action-title="'CHANGE_IP_WHITELIST' | translate")
-.row
-  hr
-.row
-  .col-xs-12
-    h2(translate="API_ACCESS")
-.row
-  .col-xs-6
-    p(translate="API_ACCESS_EXPLAIN")
-  .col-xs-6.right
-    h2.status.incomplete(ng-hide="settings.apiAccess", translate="DISABLED")
-    h2.status.complete(ng-show="settings.apiAccess", translate="ENABLED")
-    p 
+
+  .form-group
+    .col-sm-6
+      label(translate="PBKDF2_ITERATIONS")
+      p.explain(translate="PBKDF2_ITERATIONS_EXPLAIN")    
+    .col-sm-6.setting-result
+      bc-async-input(ng-model="settings.pbkdf2", validator="validatePbkdf2", on-save="changePbkdf2", action-title="'CHANGE_PBKDF2' | translate")
+
+  .form-group
+    .col-sm-6
+      label(translate="IP_WHITELIST")
+      p.explain(translate="IP_WHITELIST_EXPLAIN")    
+    .col-sm-6.setting-result
+      bc-async-input(ng-model="settings.ipWhitelist", validator="validateIpWhitelist", on-save="changeIpWhitelist", action-title="'CHANGE_IP_WHITELIST' | translate")
+
+  .form-group
+    .col-sm-6
+      label(translate="API_ACCESS")
+      p.explain(translate="API_ACCESS_EXPLAIN")    
+    .col-sm-6.setting-result
+      h2.status.incomplete(ng-hide="settings.apiAccess", translate="DISABLED")
+      h2.status.complete(ng-show="settings.apiAccess", translate="ENABLED")
       api-access
-.row
-  hr
-.row
-  .col-xs-12
-    h2(translate="IP_WHITELIST_RESTRICT")
-.row
-  .col-xs-6
-    p(translate="IP_WHITELIST_RESTRICT_EXPLAIN")
-  .col-xs-6.right
-    h2.status.incomplete(ng-hide="settings.restrictToWhitelist", translate="DISABLED")
-    h2.status.complete(ng-show="settings.restrictToWhitelist", translate="ENABLED")
-    p 
+
+  .form-group
+    .col-sm-6
+      label(translate="IP_WHITELIST_RESTRICT")
+      p.explain(translate="IP_WHITELIST_RESTRICT_EXPLAIN")    
+    .col-sm-6.setting-result
+      h2.status.incomplete(ng-hide="settings.restrictToWhitelist", translate="DISABLED")
+      h2.status.complete(ng-show="settings.restrictToWhitelist", translate="ENABLED")
       ip-whitelist-restrict

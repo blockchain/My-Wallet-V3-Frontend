@@ -1,7 +1,31 @@
 #settings {
-  .label {
-    margin-left: 10px;
-  }
+	padding: 15px;
+
+	.label{
+	font-size: 85%;
+	font-weight: normal;	
+	margin-left: 10px;  
+	}
+	
+	.label-warning {
+	background-color: #EA7E7E;
+	} 
+	
+	label-success {
+	background-color: #84BB84;
+	} 
+
+	.settings-list{
+	list-style: none;
+	text-align: left;
+	background: #F9F9F9;
+	padding: 20px;
+	border: 1px solid #F0F0F0;
+	}
+	
+	.qr{
+	padding: 20px 0;	
+	}
   
   .header-with-label {
     h2, label {
@@ -11,11 +35,11 @@
   }
   
   h2.status.incomplete {
-    color: #939393;
+    color: #C89898;
   }
   
   h2.status.complete {
-    color: #7ABF3B;
+    color: #85AD5F;
   }
   
   h2 {
@@ -23,7 +47,7 @@
   }  
   
   h2.status {
-    margin-bottom: 5px;
+    margin: 0px 0px 15px;
   }
   
   h2{
@@ -32,7 +56,13 @@
     margin-bottom: 20px;	  
   }
 
-  p {
+  p.headliner{
+    font-size: 115%;
+    color: #999;
+    line-height: 1.7em;
+    border-bottom: 1px solid #EAEAEA;
+    padding: 0 0 15px 0;
+    margin: 0 0 20px 0;
   }
   
   .right {
@@ -49,6 +79,12 @@
       width: 150px;
     }
   }
+  
+  pre.recovery{
+  padding: 15px;
+  margin: 15px;	  
+  }
+  
   
   table {
     width: 100%;
@@ -73,6 +109,59 @@
       }
       
     }
+  }
+  
+  form.form-horizontal{
+	.form-group{
+     margin: 0!important;
+	 border-bottom: 1px solid #EFEFEF;
+	 padding: 20px 0;
+	 
+	   &:hover{
+	    background: rgb(237, 246, 252);	 
+	   }
+	   
+	   label{
+		color: #838383;
+		font-size: 125%;
+		font-weight: 400;		   
+	   }
+	   
+	   p.explain{
+		color: #9D9D9D;
+		line-height: 1.6em;
+		font-size: 10pt;		   
+	   }
+	   
+	   p.settingtext{
+		 font-size: 8pt;
+		 clear: both;}
+	   
+	   .setting-result{
+		text-align: right;  
+		padding: 0 40px;
+	   }	   
+	   
+	   a.settingaction{
+		background: #56AADD;
+		padding: 10px;
+		color: rgba(255, 255, 255, 0.8);
+		min-width: 175px;
+		border-radius: 5px;
+		display: block;
+		text-align: center;
+		font-weight: 500;		
+		float: right;   
+		
+		&:hover{
+		  color: rgba(255, 255, 255, 1);	
+		  background: #4296C8;
+		  text-decoration: none;
+		}
+		
+	   }
+	 	  
+	}  
   }
 }
 
@@ -112,3 +201,5 @@
   }	
 	
 }
+
+

@@ -1,51 +1,41 @@
+p.headliner(translate="MY_DETAILS_EXPLAIN")
 form.form-horizontal(role="form",name="form",novalidate)  
   .form-group
     .col-sm-6
       label(translate="EMAIL_ADDRESS")
       span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isEmailVerified")
       span.label.label-success(translate="VERIFIED", ng-show="user.isEmailVerified")
-      br
-      p(translate="EMAIL_ADDRESS_EXPLAIN")    
-    .col-sm-6
+      p.explain(translate="EMAIL_ADDRESS_EXPLAIN")    
+    .col-sm-6.setting-result
       bc-async-input(type="email", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate")
       verify-email
       resend-email-confirmation
-  hr
   .form-group
     .col-sm-6
       label(translate="MOBILE_NUMBER")
       span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isMobileVerified")
       span.label.label-success(translate="VERIFIED", ng-show="user.isMobileVerified")
-      br
-      p(translate="MOBILE_NUMBER_EXPLAIN")    
-    .col-sm-6
+      p.explain(translate="MOBILE_NUMBER_EXPLAIN")    
+    .col-sm-6.setting-result
        configure-mobile-number
-  hr
-  .form-group
-    .col-sm-6
-      label(translate="WALLET_PASSWORD")
-      br
-      p(translate="WALLET_PASSWORD_EXPLAIN")
-    .col-sm-6
-      p
-        b.text-success(translate="PASSWORD_SET")
-      p
-        a(ng-click="changePassword()", translate="CHANGE_PASSWORD")
-  hr
-  .form-group
-    .col-sm-6
-      label(translate="PASSWORD_HINT")
-      br
-      p(translate="PASSWORD_HINT_EXPLAIN")    
-    .col-sm-6
-      bc-async-input(inline ng-model="user.passwordHint", on-save="changePasswordHint")      
-  hr
   .form-group
     .col-sm-6
       label(translate="TWO_FACTOR")
       span.label.label-warning(translate="DISABLED", ng-show="!settings.needs2FA")
       span.label.label-success(translate="ENABLED", ng-show="settings.needs2FA")
-      br
-      p(translate="TWO_FACTOR_EXPLAIN")    
+      p.explain(translate="TWO_FACTOR_EXPLAIN")    
+    .col-sm-6.setting-result
+      two-factor  
+  .form-group
     .col-sm-6
-      two-factor
+      label(translate="WALLET_PASSWORD")
+      p.explain(translate="WALLET_PASSWORD_EXPLAIN")
+    .col-sm-6.setting-result
+      h2.status.complete(translate="PASSWORD_SET")
+      a.settingaction(ng-click="changePassword()", translate="CHANGE_PASSWORD")
+  .form-group
+    .col-sm-6
+      label(translate="PASSWORD_HINT")
+      p.explain(translate="PASSWORD_HINT_EXPLAIN")    
+    .col-sm-6.setting-result
+      bc-async-input(ng-model="user.passwordHint", on-save="changePasswordHint", action-title="'CHANGE_PASSWORD_HINT' | translate")      

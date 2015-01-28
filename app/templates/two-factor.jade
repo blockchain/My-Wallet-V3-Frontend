@@ -1,15 +1,15 @@
 div
   div(ng-hide="edit.twoFactor")
-    p.form-control-static
+    h2.status.complete
       span(ng-show="settings.twoFactorMethod == 3", translate="2FA_YUBI")
       span(ng-show="settings.twoFactorMethod == 2", translate="2FA_EMAIL")
       span(ng-show="settings.twoFactorMethod == 5", translate="2FA_SMS")
       span(ng-show="settings.twoFactorMethod == 4", translate="2FA_GOOGLE_AUTH")
     p
-      a(ng-click="edit.twoFactor = !edit.twoFactor", translate="CONFIGURE_2FA", ng-hide="settings.needs2FA")
-      a(ng-click="disableSecondFactor()", translate="DISABLE", ng-show="settings.needs2FA")
+      a.settingaction(ng-click="edit.twoFactor = !edit.twoFactor", translate="CONFIGURE_2FA", ng-hide="settings.needs2FA")
+      a.settingaction(ng-click="disableSecondFactor()", translate="DISABLE", ng-show="settings.needs2FA")
   div(ng-show="edit.twoFactor") 
-    ul(ng-hide="settings.googleAuthenticatorSecret")
+    ul.settings-list(ng-hide="settings.googleAuthenticatorSecret")
       li 
         a(ng-click="setTwoFactorSMS()", ng-show="user.isMobileVerified") Enable SMS
         span(ng-show="!user.isMobileVerified") Enable SMS (Please verify your mobile first)

@@ -1,8 +1,7 @@
 div
   div(ng-hide="edit.mobile")
-    p.form-control-static {{ user.internationalMobileNumber }}
-    p
-      a(ng-click="edit.mobile = !edit.mobile", translate="CHANGE_MOBILE_NUMBER")
+    h2.status.complete {{ user.internationalMobileNumber }}
+    a.settingaction(ng-click="edit.mobile = !edit.mobile", translate="CHANGE_MOBILE_NUMBER")
   .edit-mobile(ng-show="edit.mobile")
     .input-group
       ui-select(ng-model="newMobile.country").input-group-btn

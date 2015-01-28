@@ -1,8 +1,8 @@
 div
   div(ng-hide="status.edit || inline")
-    p.form-control-static {{ ngModel }}
+    h2.status.complete {{ ngModel }}
     p
-      a(ng-click="edit()") {{ actionTitle }}
+      a.settingaction(ng-click="edit()") {{ actionTitle }}
   .form-group(ng-class="{'has-error': !validate()}",ng-show="inline || status.edit")
     input.form-control(type="{{ type }}", ng-model="form.newValue", ng-focus="focus()")
     span(ng-hide="inline && !status.edit")

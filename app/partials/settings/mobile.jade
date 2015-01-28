@@ -1,9 +1,7 @@
-h2(translate="PAIRING_CODE")
-
-p(translate="PAIRING_CODE_EXPLAIN")
+p.headliner(translate="PAIRING_CODE_EXPLAIN")
 
 a(ng-click="display.pairingCode = !display.pairingCode", translate="SHOW_PAIRING_CODE", ng-hide="display.pairingCode")
 a(ng-click="display.pairingCode = !display.pairingCode", translate="HIDE_PAIRING_CODE", ng-show="display.pairingCode")
 
-div(ng-show="display.pairingCode")
+div.qr(ng-show="display.pairingCode")
   qr(text="user.pairingCode", size=250)
