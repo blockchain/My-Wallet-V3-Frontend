@@ -36,6 +36,7 @@ table.left-header {
       height: 25px;
       margin: 10px;
     }
+    
   }
   
   td.right {
@@ -83,5 +84,11 @@ table.left {
 
 a.new-acct{
   font-weight: bold;
-  color: #666;
+  color: #747474;
+  &:hover{color: #444;}  
+}
+
+.headinglink{
+  cursor: pointer;
+  &:hover{color: #444;}
 }

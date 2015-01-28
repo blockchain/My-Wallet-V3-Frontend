@@ -142,24 +142,6 @@
 		padding: 0 40px;
 	   }	   
 	   
-	   a.settingaction{
-		background: #56AADD;
-		padding: 10px;
-		color: rgba(255, 255, 255, 0.8);
-		min-width: 175px;
-		border-radius: 5px;
-		display: block;
-		text-align: center;
-		font-weight: 500;		
-		float: right;   
-		
-		&:hover{
-		  color: rgba(255, 255, 255, 1);	
-		  background: #4296C8;
-		  text-decoration: none;
-		}
-		
-	   }
 	 	  
 	}  
   }
@@ -202,4 +184,29 @@
 	
 }
 
+a.settingaction{
+background: #56AADD;
+padding: 10px;
+color: rgba(255, 255, 255, 0.8);
+min-width: 175px;
+border-radius: 5px;
+display: block;
+text-align: center;
+font-weight: 500;		
+float: right;   
+margin: 5px 0;
 
+&:hover{
+  color: rgba(255, 255, 255, 1);	
+  background: #4296C8;
+  text-decoration: none;
+}
+
+}
+
+.setting-result{
+text-align: right;  
+padding: 0 40px;
+}
+
+.inneredit{padding: 10px 15px 0;}

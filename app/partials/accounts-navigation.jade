@@ -5,7 +5,7 @@
         tr
           td.header 
             img(src="img/my-accounts-icon.png")
-            span(translate="MY_ACCOUNTS") 
+            span.headinglink(ui-sref="settings.accounts", translate="MY_ACCOUNTS") 
           td.right(ng-hide="!status.didUpgradeToHd")
             a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
       table.left

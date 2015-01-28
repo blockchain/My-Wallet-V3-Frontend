@@ -4,9 +4,9 @@ form.form-horizontal(role="form",name="form",novalidate)
   .form-group
     .col-sm-6
       label(translate="WALLET_SECOND_PASSWORD")
-      span.label.label-danger(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
       p.explain(translate="WALLET_SECOND_PASSWORD_EXPLAIN")    
     .col-sm-6.setting-result
+      h2.status.incomplete(ng-hide="settings.secondPassword", translate="DISABLED")    
       h2.status.complete(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
       configure-second-password
 
