@@ -146,7 +146,7 @@
         sound.play()
         $scope.sending = false
         $modalInstance.close ""
-        $state.go("transactions", {accountIndex: $scope.transaction.from.index })
+        $state.go("wallet.common.transactions", {accountIndex: $scope.transaction.from.index })
     
       Wallet.clearAlerts()
   

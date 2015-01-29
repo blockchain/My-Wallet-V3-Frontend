@@ -23,7 +23,7 @@
       $scope.importing = false
       $scope.editMnemonic = false
       $scope.mnemonic = null
-      $state.go("transactions", accountIndex: "accounts")
+      $state.go("wallet.common.transactions", accountIndex: "accounts")
       Wallet.displaySuccess("Successfully imported seed")
       
     error = (message) ->

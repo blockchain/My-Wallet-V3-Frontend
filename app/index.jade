@@ -114,14 +114,4 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     
 
   body(ng-controller="AppCtrl")
-    .navbar.navbar-inverse(role="navigation", ui-view="navigation")
-    .container-fluid
-      .row.spacing
-      .row
-        .col-xs-12(ui-view="alerts")
-      .row.tx-row
-        .col-xs-3.left-view(ui-view="left")
-        .col-xs-9
-          .right-container
-            div.top-view(ui-view="top")
-            div.right-view(ui-view="right")
+    div(ui-view="body")

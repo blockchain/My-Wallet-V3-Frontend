@@ -4,7 +4,7 @@
       h2(translate="TRANSACTIONS")
   .row.transaction(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")
     .col-xs-2
-      a.date(ui-sref="transaction({accountIndex: accountIndex, hash: transaction.hash})") {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
+      a.date(ui-sref="wallet.common.transaction({accountIndex: accountIndex, hash: transaction.hash})") {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
     .col-xs-4.description
       transaction-description(transaction="transaction", ng-if="canDisplayDescriptions")
     .col-xs-4

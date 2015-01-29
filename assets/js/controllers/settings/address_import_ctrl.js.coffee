@@ -64,7 +64,7 @@
     success = () ->
       $scope.sweeping = false
       $modalInstance.dismiss ""
-      $state.go("transactions", {accountIndex: $scope.fields.account.index})
+      $state.go("wallet.common.transactions", {accountIndex: $scope.fields.account.index})
     
     error = (error) ->
       $scope.sweeping = false

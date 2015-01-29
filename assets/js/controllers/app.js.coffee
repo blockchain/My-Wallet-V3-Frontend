@@ -10,7 +10,7 @@
         
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->  
     if toState.name != "login" && toState.name != "open" && toState.name != "verify-email" && toState.name != "verify-email-with-guid" && $scope.status.isLoggedIn == false
-      $state.go("login")
+      $state.go("login.show")
   )
     
   $scope.$watch "status.isLoggedIn", () ->
@@ -49,13 +49,13 @@
       unless Wallet.status.isLoggedIn
         $translate("PLEASE_LOGIN_FIRST").then (translation) ->
           Wallet.displayInfo translation, true
-        $state.go("login")
+        $state.go("login.show")
         return
 
       success = (message) ->
         Wallet.user.isEmailVerified = true
     
-        $state.go("transactions", {accountIndex: "accounts"})
+        $state.go("wallet.common.transactions", {accountIndex: "accounts"})
     
         # Ignoring message, using our own:
         $translate("EMAIL_VERIFIED").then (translation) ->

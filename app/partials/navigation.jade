@@ -1,5 +1,5 @@
 .container-fluid
-  a.navbar-brand.col-xs-2(ui-sref="transactions({accountIndex:'accounts'})")
+  a.navbar-brand.col-xs-2(ui-sref="wallet.common.transactions({accountIndex:'accounts'})")
     img#logo(src="img/logo.png",alt="Blockchain")
   ul.nav.navbar-nav.col-xs-7(ng-show="status.isLoggedIn")
     //- li.item(ui-sref-active="active")
@@ -7,7 +7,7 @@
     //-     img.tab(src="img/dashboard-icon.png")
     //-     span(translate="DASHBOARD")
     li.item(ui-sref-active="active") 
-      a(ui-sref="transactions({accountIndex:'accounts'})") 
+      a(ui-sref="wallet.common.transactions({accountIndex:'accounts'})") 
         img.tab(src="img/transactions-icon.png")
         span(translate="TRANSACTIONS")
   ul.nav.navbar-nav.col-xs-3(ng-show="status.isLoggedIn")
@@ -17,13 +17,13 @@
         p(translate="PROFILE")
       ul.dropdown-menu
         li
-          a(ui-sref="settings.my-details", translate="SETTINGS")
+          a(ui-sref="wallet.common.settings.my-details", translate="SETTINGS")
         li
-          a(ui-sref="settings.mobile", translate="MOBILE")
+          a(ui-sref="wallet.common.settings.mobile", translate="MOBILE")
         li
           a(ng-click="logout()", translate="LOGOUT")
     li.security-center.clearfix
-      a(ui-sref="settings.security-center")
+      a(ui-sref="wallet.common.settings.security-center")
         img#security(ng-src="{{ securityIconURL }}",alt="Your Security Score", ng-if="securityIconURL")
         p(translate="SECURITY")
                   

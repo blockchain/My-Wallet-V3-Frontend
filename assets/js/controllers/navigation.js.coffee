@@ -31,7 +31,7 @@
         $scope.password = null
         $cookieStore.remove("password")
         $cookieStore.remove("uid")
-        # $state.go("dashboard")
-        $state.go("transactions", {accountIndex: "accounts"})
+        # $state.go("wallet.common.dashboard")
+        $state.go("wallet.common.transactions", {accountIndex: "accounts"})
         
         Wallet.logout() # Refreshes the browser, so won't return

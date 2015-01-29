@@ -67,8 +67,8 @@
     if newValue
       $scope.busy = false
       
-      # $state.go("dashboard")
-      $state.go("transactions", {accountIndex: "accounts"})
+      # $state.go("wallet.common.dashboard")
+      $state.go("wallet.common.transactions", {accountIndex: "accounts"})
       
   $scope.$watch "uid + password", () ->
     isValid = null

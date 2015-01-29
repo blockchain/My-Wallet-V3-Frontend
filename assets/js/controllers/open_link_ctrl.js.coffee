@@ -7,4 +7,4 @@
   if !Wallet.status.isLoggedIn
     $translate("PLEASE_LOGIN_FIRST").then (translation) ->
       Wallet.displayInfo translation, true
-    $state.go("login")
+    $state.go("login.show")

@@ -10,21 +10,6 @@
     <script type="text/javascript" src="application.min.js"></script>
   </head>
   <body ng-controller="AppCtrl">
-    <div role="navigation" ui-view="navigation" class="navbar navbar-inverse"></div>
-    <div class="container-fluid">
-      <div class="row spacing"></div>
-      <div class="row">
-        <div ui-view="alerts" class="col-xs-12"></div>
-      </div>
-      <div class="row tx-row">
-        <div ui-view="left" class="col-xs-3 left-view"></div>
-        <div class="col-xs-9">
-          <div class="right-container">
-            <div ui-view="top" class="top-view"></div>
-            <div ui-view="right" class="right-view"></div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div ui-view="body"></div>
   </body>
 </html>

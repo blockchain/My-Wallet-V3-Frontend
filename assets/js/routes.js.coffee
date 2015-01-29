@@ -9,64 +9,72 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     else
       $location = "/accounts/transactions"
   )
-
-  alerts = {
-    templateUrl: "partials/alerts.jade"
-    controller: "AlertsCtrl"
-  }
   
   top =  {
     templateUrl: "partials/top.jade"
     controller: "TopCtrl"
   }
-  
-  navigation =  {
-    templateUrl: "partials/navigation.jade"
-    controller: "NavigationCtrl"
-  }
-  
+    
   accounts = { 
     templateUrl: "partials/accounts-navigation.jade"
     controller: "AccountsCtrl"
   }
-  
-  settingsNavigation = {
-    templateUrl: "partials/settings/navigation.jade"
-    controller: "SettingsNavigationCtrl"
-  }
-
-  $stateProvider.state("login",
-    url: "/login"
+    
+  $stateProvider.state("wallet",
     views: {
-      navigation: navigation,
-      alerts: alerts,
-      top: top,
-      right: {
+      body: {
+        templateUrl: "partials/wallet.jade"
+      }
+    }
+  )
+  .state("wallet.common",
+    views: {
+      navigation:  {
+        templateUrl: "partials/navigation.jade"
+        controller: "NavigationCtrl"
+      },
+      alerts: {
+        templateUrl: "partials/alerts.jade"
+        controller: "AlertsCtrl"
+      }
+      common: {
+        templateUrl: "partials/common.jade"
+      }
+    }
+  )
+  .state("login",
+    views: {
+      body: {
         templateUrl: "partials/login.jade"
         controller: "LoginCtrl"
       }
     }
   )
+  .state("login.show",
+    url: "/login"
+    views: {
+      alerts: {
+        templateUrl: "partials/alerts.jade"
+        controller: "AlertsCtrl"
+      }
+    }
+  )
   
-  # $stateProvider.state("dashboard",
-  #   url: "/"
-  #   views: {
-  #     navigation: navigation,
-  #     alerts: alerts,
-  #     top : top,
-  #     left: accounts,
-  #     right: {
-  #       templateUrl: "partials/dashboard"
-  #       controller: "DashboardCtrl"
-  #     }
-  #   }
-  # )
-  
-  $stateProvider.state("transactions",
+  $stateProvider.state("wallet.common.dashboard",
+    url: "/"
+    views: {
+      top : top,
+      left: accounts,
+      right: {
+        templateUrl: "partials/dashboard"
+        controller: "DashboardCtrl"
+      }
+    }
+  )
+
+  $stateProvider.state("wallet.common.transactions",
     url: "/:accountIndex/transactions/"
     views: {
-      navigation: navigation,
-      alerts: alerts,
       top: top,
       left: accounts,
       right: {
@@ -75,13 +83,11 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  
-  $stateProvider.state("transaction",
+
+  $stateProvider.state("wallet.common.transaction",
     url: "/:accountIndex/transactions/:hash"
     views: {
-      navigation: navigation,
-      alerts: alerts,
-      left: { 
+      left: {
         templateUrl: "partials/accounts-navigation.jade"
         controller: "AccountsCtrl"
       },
@@ -91,20 +97,21 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  
-  $stateProvider.state("settings",  
+
+  $stateProvider.state("wallet.common.settings",
     url: "/settings"
     views: {
-      navigation: navigation,
-      alerts: alerts,
-      left: settingsNavigation
+      left: {
+        templateUrl: "partials/settings/navigation.jade"
+        controller: "SettingsNavigationCtrl"
+      }
       right: {
         controller: "SettingsCtrl"
         templateUrl: "partials/settings/settings.jade"
       }
     }
-  ) 
-  .state("settings.my-details",
+  )
+  .state("wallet.common.settings.my-details",
     url: "/my-details"
     views: {
       settings: {
@@ -113,7 +120,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  .state("settings.wallet",
+  .state("wallet.common.settings.wallet",
     url: "/wallet"
     views: {
       settings: {
@@ -122,7 +129,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  .state("settings.accounts",
+  .state("wallet.common.settings.accounts",
     url: "/accounts"
     views: {
       settings: {
@@ -131,7 +138,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  .state("settings.mobile",
+  .state("wallet.common.settings.mobile",
     url: "/mobile"
     views: {
       settings: {
@@ -140,7 +147,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  .state("settings.addresses",
+  .state("wallet.common.settings.addresses",
     url: "/addresses"
     views: {
       settings: {
@@ -149,7 +156,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  .state("settings.address",
+  .state("wallet.common.settings.address",
     url: "/addresses/:address"
     views: {
       settings: {
@@ -158,7 +165,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  .state("settings.security-center",
+  .state("wallet.common.settings.security-center",
     url: "/security-center"
     views: {
       settings: {
@@ -167,7 +174,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  .state("settings.wallet-recovery",
+  .state("wallet.common.settings.wallet-recovery",
     url: "/wallet-recovery"
     views: {
       settings: {
@@ -176,7 +183,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  .state("settings.advanced",
+  .state("wallet.common.settings.advanced",
     url: "/advanced"
     views: {
       settings: {
@@ -185,51 +192,49 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  
-  $stateProvider.state("open",
+
+  $stateProvider.state("wallet.common.open",
     url: "/open/:uri"
-      
+
     views: {
-      navigation: navigation,
-      alerts: alerts,
       top: {
         templateUrl: "partials/open-link.jade"
         controller: "OpenLinkController"
       }
     }
   )
-  
-  $stateProvider.state("claim",
+
+  $stateProvider.state("wallet.common.claim",
     url: "/claim/:code"
-      
+
     views: {
-      navigation: navigation,
-      alerts: alerts,
-      top: {
+      top: top,
+      left: accounts,
+      right: {
         controller: "ClaimCtrl"
       }
     }
   )
-  
+
   $stateProvider.state("verify-email-with-guid",
     url: "/verify-email/:code/:guid"
     onEnter: ($stateParams, $state, Wallet, $translate) ->
       # If the link target blockchain-...uid... was preserved and we are logged in on another tab,
       # then we are in the wrong process and there's no way to switch to the correct tab.
-      # If however the target was not preserved, there's still a chance the user is logged in on 
+      # If however the target was not preserved, there's still a chance the user is logged in on
       # another tab. We try to get them there and close the current tab. Unfortunately there's no
       # way of knowing without trying, so we may end up needlessly opening a new tab and closing this one.
-      
+
       if !Wallet.status.isLoggedIn && window.name != "blockchain-" + $stateParams.guid
         Wallet.guid = $stateParams.guid
         href = "http://local.blockchain.com:8080/#/verify-email/" + $stateParams.code
         target= "blockchain-" + $stateParams.guid
         if window.open(href, target)
           window.close()
-        
+
       Wallet.goal.verifyEmail = $stateParams.code
   )
-  
+
   $stateProvider.state("verify-email",
     url: "/verify-email/:code"
     onEnter: ($stateParams, $state, Wallet, $translate) ->

@@ -41,7 +41,7 @@ div(ng-show="hdAddresses.length > 0")
           //-     span(translate="RECEIVED_X", translate-values="{amount: request.amount / 100000000, paid: request.paid / 100000000}")
           td 
             //- a(ng-click="open(request)", translate="DETAILS")
-            a(ui-sref="settings.address({address: address.address})", translate="DETAILS")
+            a(ui-sref="wallet.common.settings.address({address: address.address})", translate="DETAILS")
           //- td
           //-   a.btn.btn-xs.btn-info(ng-hide="request.complete || request.paid > 0", ng-click="clear(request)") Clear
           //-   a.btn.btn-xs.btn-warning(ng-show="request.paid != 0 && request.amount != 0 && request.amount != request.paid && !request.complete", ng-click="accept(request)") Accept
@@ -78,7 +78,7 @@ p(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
           //- span(us-spinner="{radius:6, width:6, length: 6}" spinner-key="{{ address.address }}" spinner-start-active="true" ng-show="address.balance == null")
           img(ng-show="address.balance == null" src="img/spinner.gif")
         td
-          a(ui-sref="settings.address({address: address.address})", translate="DETAILS")
+          a(ui-sref="wallet.common.settings.address({address: address.address})", translate="DETAILS")
         td 
           a(translate="TRANSFER", ng-click="transfer(address)")
         td 

@@ -1,23 +1,28 @@
-form.form-horizontal(role="form", ng-hide="creatingAccount")
-  .form-group
-    label.control-label.col-md-2(translate="UID")
-    .col-md-3
-      input.form-control(type="text", ng-model="uid", ng-disabled="busy")
-  .form-group
-    label.control-label.col-md-2(translate="PASSWORD")
-    .col-md-3
-      input.form-control(type="password", ng-model="password", ng-disabled="busy")
-    .col-md-3
-      button.btn.btn-primary(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="LOGIN", ng-disabled="!isValid")
-  .form-group(ng-show="settings.needs2FA")
-    label.control-label.col-md-2
-      span(translate="YUBI_CODE", ng-show="settings.twoFactorMethod == 3")
-      span(translate="EMAIL_CODE", ng-show="settings.twoFactorMethod == 2")
-      span(translate="GOOGLE_AUTH_CODE", ng-show="settings.twoFactorMethod == 4")
-      span(translate="SMS_CODE", ng-show="settings.twoFactorMethod == 5")
-    .col-md-3
-      input.form-control(type="text", ng-model="twoFactorCode", ng-disabled="busy")
-  .form-group
-    .col-md-2
-    p.form-control-static.col-md-3
-      a(ng-click="create()",translate="CREATE_WALLET", ng-disabled="busy") 
+.navbar.navbar-inverse(role="navigation")
+.container-fluid
+  .row.spacing
+  .row
+    .col-xs-12(ui-view="alerts")
+  form.form-horizontal(role="form", ng-hide="creatingAccount")
+    .form-group
+      label.control-label.col-md-2(translate="UID")
+      .col-md-3
+        input.form-control(type="text", ng-model="uid", ng-disabled="busy")
+    .form-group
+      label.control-label.col-md-2(translate="PASSWORD")
+      .col-md-3
+        input.form-control(type="password", ng-model="password", ng-disabled="busy")
+      .col-md-3
+        button.btn.btn-primary(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="LOGIN", ng-disabled="!isValid")
+    .form-group(ng-show="settings.needs2FA")
+      label.control-label.col-md-2
+        span(translate="YUBI_CODE", ng-show="settings.twoFactorMethod == 3")
+        span(translate="EMAIL_CODE", ng-show="settings.twoFactorMethod == 2")
+        span(translate="GOOGLE_AUTH_CODE", ng-show="settings.twoFactorMethod == 4")
+        span(translate="SMS_CODE", ng-show="settings.twoFactorMethod == 5")
+      .col-md-3
+        input.form-control(type="text", ng-model="twoFactorCode", ng-disabled="busy")
+    .form-group
+      .col-md-2
+      p.form-control-static.col-md-3
+        a(ng-click="create()",translate="CREATE_WALLET", ng-disabled="busy") 

@@ -116,11 +116,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       needsTwoFactorCallback()
   
       wallet.settings.twoFactorMethod = method 
-      $state.go("login")
+      $state.go("login.show")
       return
       
     wrongTwoFactorCode = (method) ->
-      $state.go("login")
+      $state.go("login.show")
       return
   
     loginError = (error) ->
@@ -130,7 +130,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       if observer?
         errorCallback()
       else
-        $state.go("login")
+        $state.go("login.show")
       
       wallet.applyIfNeeded()
       
@@ -825,7 +825,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.paymentRequests.pop()
       wallet.uid = ""
       wallet.password = ""
-      # $state.go("dashboard")
+      # $state.go("wallet.common.dashboard")
     else if event == "ws_on_close" || event == "ws_on_open"
       # Do nothing
     else if event.type != undefined

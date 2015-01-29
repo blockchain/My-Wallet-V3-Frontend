@@ -67,7 +67,7 @@
         .col-sm-6.setting-result 
           ul
             li(ng-repeat="address in legacyAddresses")
-              a(ui-sref="settings.address({address: address.address})")
+              a(ui-sref="wallet.common.settings.address({address: address.address})")
                 | {{ address.address | limitTo:8 }}... 
                 | : {{ address.balance | btc }} 
           a(ng-click="transfer(address)") (transfer)
