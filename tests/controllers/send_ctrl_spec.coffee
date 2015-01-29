@@ -98,6 +98,21 @@ describe "SendCtrl", ->
       scope.transactionIsValid = scope.validate()
 
       expect(scope.transactionIsValid).toBe(false)
+      
+    it "should select the external address if no accounts match", ->
+      scope.transaction.destination = scope.accounts[0] # Account selected
+      
+      scope.destinations.slice(-1)[0].address = "M" # Matches Mobile
+      scope.$apply()
+      scope.refreshDestinations("M")
+      # Account type should still be selected
+      expect(scope.transaction.destination.index).toBeDefined() 
+      
+      scope.destinations.slice(-1)[0].address = "1Mvp" # Doesn't match any account or internal address
+      scope.$apply()
+      scope.refreshDestinations("1Mvp")
+      # External should now be selected
+      expect(scope.transaction.destination.type).toEqual("External")
   
   # describe "to email", ->
   #   beforeEach ->
