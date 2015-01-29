@@ -33,7 +33,7 @@ describe "walletServices", () ->
     it "should call sendBitcoinsForAccount()", inject((Wallet, MyWallet) ->
       spyOn(MyWallet,"sendBitcoinsForAccount")
             
-      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
+      Wallet.send(Wallet.accounts[0], {address: "destination_address", type: "External"}, numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
       
       expect(MyWallet.sendBitcoinsForAccount).toHaveBeenCalled()
       
@@ -43,7 +43,7 @@ describe "walletServices", () ->
     it "should convert BTC to Satoshi", inject((Wallet, MyWallet) ->
       spyOn(MyWallet,"sendBitcoinsForAccount")
             
-      Wallet.send(Wallet.accounts[0], "destination_address", "1", "BTC", mockObserver.success, mockObserver.error)
+      Wallet.send(Wallet.accounts[0], {address: "destination_address", type: "External"}, "1", "BTC", mockObserver.success, mockObserver.error)
       
       expect(MyWallet.sendBitcoinsForAccount.calls.mostRecent().args[2]).toBe(100000000)
       
@@ -53,7 +53,7 @@ describe "walletServices", () ->
     it "should call success callback if all goes well", inject((Wallet, MyWallet) ->         
       spyOn(mockObserver, "success")
       
-      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
+      Wallet.send(Wallet.accounts[0], {address: "destination_address", type: "External"}, numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
       
       expect(mockObserver.success).toHaveBeenCalled()
       
@@ -63,7 +63,7 @@ describe "walletServices", () ->
     it "should update the account balance if successful", inject((Wallet, MyWallet) ->               
       before = Wallet.accounts[0].balance
       
-      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
+      Wallet.send(Wallet.accounts[0], {address: "destination_address", type: "External"}, numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
       
       expect(Wallet.accounts[0].balance).toBe(before - 1.0 * 100000000)
         
@@ -73,7 +73,7 @@ describe "walletServices", () ->
     it "should update transactions if successful", inject((Wallet, MyWallet) ->               
       before = Wallet.transactions.length
       
-      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
+      Wallet.send(Wallet.accounts[0], {address: "destination_address", type: "External"}, numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
       
       expect(Wallet.transactions.length).toBe(before + 1)
         
@@ -85,7 +85,7 @@ describe "walletServices", () ->
          
       spyOn(mockObserver, "error")
       
-      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
+      Wallet.send(Wallet.accounts[0], {address: "destination_address", type: "External"}, numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
       
       expect(mockObserver.error).toHaveBeenCalled()
       
@@ -96,7 +96,7 @@ describe "walletServices", () ->
       
       before = Wallet.accounts[0].balance
             
-      Wallet.send(Wallet.accounts[0], "destination_address", numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
+      Wallet.send(Wallet.accounts[0], {address: "destination_address", type: "External"}, numeral("1.0"), "BTC", mockObserver.success, mockObserver.error)
       
       Wallet.refresh()
       

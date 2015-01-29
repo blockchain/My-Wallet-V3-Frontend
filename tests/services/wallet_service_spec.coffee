@@ -16,7 +16,6 @@ describe "walletServices", () ->
       spyOn(MyWallet,"fetchWalletJson").and.callThrough()
           
       spyOn(Wallet,"monitor").and.callThrough()
-      spyOn(Wallet,"monitorLegacy").and.callThrough()
       
       mockObserver = {
         needs2FA: (() ->), 
@@ -35,11 +34,11 @@ describe "walletServices", () ->
             
       MyWallet.mockShouldReceiveNewTransaction()
             
-      expect(Wallet.monitorLegacy).toHaveBeenCalled()
+      expect(Wallet.  monitor).toHaveBeenCalled()
       
       MyWallet.mockShouldReceiveNewBlock()
       
-      expect(Wallet.monitorLegacy).toHaveBeenCalled()
+      expect(Wallet.  monitor).toHaveBeenCalled()
       
       return
     )

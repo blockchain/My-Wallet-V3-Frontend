@@ -16,7 +16,6 @@ describe "walletServices", () ->
       spyOn(MyWallet,"fetchWalletJson").and.callThrough()
           
       spyOn(Wallet,"monitor").and.callThrough()
-      spyOn(Wallet,"monitorLegacy").and.callThrough()
             
       return
 
@@ -158,7 +157,7 @@ describe "walletServices", () ->
       
       spyOn($rootScope, '$broadcast').and.callThrough()
       
-      Wallet.monitorLegacy("hd_wallets_does_not_exist")
+      Wallet.  monitor("hd_wallets_does_not_exist")
       
       expect($rootScope.$broadcast).toHaveBeenCalled()
       expect($rootScope.$broadcast.calls.argsFor(0)[0]).toEqual("needsUpgradeToHD")
@@ -171,7 +170,7 @@ describe "walletServices", () ->
       
       spyOn(MyWallet, "upgradeToHDWallet")
       
-      Wallet.monitorLegacy("hd_wallets_does_not_exist")
+      Wallet.  monitor("hd_wallets_does_not_exist")
       
       expect(MyWallet.upgradeToHDWallet).toHaveBeenCalled()
     )

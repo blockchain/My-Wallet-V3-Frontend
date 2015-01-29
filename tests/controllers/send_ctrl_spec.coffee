@@ -85,17 +85,12 @@ describe "SendCtrl", ->
   describe "to address", ->
   
     it "should disable Send button if To address missing",  inject(() ->
-      scope.transaction.to = ""
+      scope.transaction.destination = {type: "External", address: ""}
       scope.$apply()
     
       expect(scope.transactionIsValid).toBe(false)
     
-      scope.transaction.to = undefined
-      scope.$apply()
-    
-      expect(scope.transactionIsValid).toBe(false)
-    
-      scope.transaction.to = null
+      scope.transaction.destination = null
       scope.$apply()
     
       expect(scope.transactionIsValid).toBe(false)
@@ -104,7 +99,7 @@ describe "SendCtrl", ->
     )
   
     it "should disable Send button if To address is invalid",  inject(() ->
-      scope.transaction.to = "invalid address" 
+      scope.transaction.destination = {address: "invalid address", type: "External"}
       scope.$apply()
     
       expect(scope.transactionIsValid).toBe(false)
@@ -114,54 +109,54 @@ describe "SendCtrl", ->
     
     return
     
-  describe "to email", ->
-    beforeEach ->
-      scope.transaction.to = "nic@blockchain.info"
-      scope.method = "EMAIL"
-      scope.$apply()
-      
-    it "should be valid", ->
-      expect(scope.transactionIsValid).toBe(true)
-      
-    it "should disable Send button if email is missing",  inject(() ->
-      scope.transaction.to = ""
-      scope.$apply()
-    
-      expect(scope.transactionIsValid).toBe(false)
-    
-      scope.transaction.to = undefined
-      scope.$apply()
-    
-      expect(scope.transactionIsValid).toBe(false)
-    
-      scope.transaction.to = null
-      scope.$apply()
-    
-      expect(scope.transactionIsValid).toBe(false)
-    
-      return
-    )
-  
-    it "should disable Send button if email address is invalid",  inject(() ->
-      scope.transaction.to = "bla.nl" 
-      scope.$apply()
-    
-      expect(scope.transactionIsValid).toBe(false)
-    
-      return
-    )
-    
-    it "should call Wallet.sendToEmail() when Send is pressed",  inject((Wallet) ->
-      spyOn(Wallet,"sendToEmail")
-    
-      scope.send()
-    
-      expect(Wallet.sendToEmail).toHaveBeenCalled()
-    
-      return
-    )
-    
-    return
+  # describe "to email", ->
+  #   beforeEach ->
+  #     scope.transaction.destination = "nic@blockchain.info"
+  #     scope.method = "EMAIL"
+  #     scope.$apply()
+  #
+  #   it "should be valid", ->
+  #     expect(scope.transactionIsValid).toBe(true)
+  #
+  #   it "should disable Send button if email is missing",  inject(() ->
+  #     scope.transaction.destination = ""
+  #     scope.$apply()
+  #
+  #     expect(scope.transactionIsValid).toBe(false)
+  #
+  #     scope.transaction.destination = undefined
+  #     scope.$apply()
+  #
+  #     expect(scope.transactionIsValid).toBe(false)
+  #
+  #     scope.transaction.destination = null
+  #     scope.$apply()
+  #
+  #     expect(scope.transactionIsValid).toBe(false)
+  #
+  #     return
+  #   )
+  #
+  #   it "should disable Send button if email address is invalid",  inject(() ->
+  #     scope.transaction.destination = "bla.nl"
+  #     scope.$apply()
+  #
+  #     expect(scope.transactionIsValid).toBe(false)
+  #
+  #     return
+  #   )
+  #
+  #   it "should call Wallet.sendToEmail() when Send is pressed",  inject((Wallet) ->
+  #     spyOn(Wallet,"sendToEmail")
+  #
+  #     scope.send()
+  #
+  #     expect(Wallet.sendToEmail).toHaveBeenCalled()
+  #
+  #     return
+  #   )
+  #
+  #   return
 
   it "should disable Send button if amount is missing",  inject(() ->
     scope.transaction.amount = ""
@@ -266,7 +261,7 @@ describe "SendCtrl", ->
   it "should process a succesfully scanned QR code", inject((Wallet) ->
     scope.processURLfromQR("bitcoin://abcdefgh?amount=0.001")
     expect(scope.transaction.amount).toBe("0.001")
-    expect(scope.transaction.to).toBe("abcdefgh") 
+    expect(scope.transaction.destination.address).toBe("abcdefgh") 
   )
   
   it "should warn user if QR code is not recognized", inject((Wallet) ->
@@ -294,37 +289,20 @@ describe "SendCtrl", ->
   
   it "overview should show friendly name for From", ->
     expect(scope.from).toBe("Savings Account")
-  
-  describe "internal", ->
-    beforeEach ->
-      scope.internal = true
-      scope.to = ""
-      scope.$apply()
-      
-    it "selects the next available account by default", ->
-      expect(scope.transaction.destination.label).toBe(scope.accounts[1].label)
-    
-    it "does not require a to address", ->
-      expect(scope.transactionIsValid).toBe(true)
 
-    it "does not allow sending to the same account", ->
-      scope.transaction.destination = scope.transaction.from
-      scope.$apply()
-      expect(scope.transactionIsValid).toBe(false)
-      
-    it "overview should show friendly name for From", ->
-      expect(scope.from).toBe("Savings Account")
+  it "selects an empty external address by default", ->
+    expect(scope.transaction.destination.type).toBe("External")
+    expect(scope.transaction.destination.address).toBe("")
+
+  it "does not allow sending to the same account", ->
+    scope.transaction.destination = scope.transaction.from
+    scope.$apply()
+    expect(scope.transactionIsValid).toBe(false)
   
-    it "overview should show friendly name for To", ->
-      expect(scope.toLabel).toBe("Mobile Account")
-      
-    it "should call Wallet.sendInternal() when Send is pressed",  inject((Wallet) ->
-      spyOn(Wallet,"sendInternal")
-    
-      scope.send()
-    
-      expect(Wallet.sendInternal).toHaveBeenCalled()
-    
-      return
-    )
+  it "overview should show friendly name for From", ->
+    expect(scope.from).toBe("Savings Account")
   
+  it "overview should show friendly name for To", ->
+    scope.transaction.destination = scope.accounts[1]
+    scope.$apply()
+    expect(scope.toLabel).toBe("Mobile Account")
