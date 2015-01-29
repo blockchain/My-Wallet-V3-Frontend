@@ -1,7 +1,9 @@
 p.headliner(translate="PAIRING_CODE_EXPLAIN")
 
-a(ng-click="display.pairingCode = !display.pairingCode", translate="SHOW_PAIRING_CODE", ng-hide="display.pairingCode")
-a(ng-click="display.pairingCode = !display.pairingCode", translate="HIDE_PAIRING_CODE", ng-show="display.pairingCode")
+a(ng-click="showPairingCode()", translate="SHOW_PAIRING_CODE", ng-hide="display.pairingCode")
+a(ng-click="hidePairingCode()", translate="HIDE_PAIRING_CODE", ng-show="display.pairingCode")
 
-div.qr(ng-show="display.pairingCode")
-  qr(text="user.pairingCode", size=250)
+div.qr
+  img(ng-show="loading" src="img/spinner.gif")
+  span(ng-show="display.pairingCode")
+    qr(text="pairingCode", size=250)

@@ -24,7 +24,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     goal: {}, 
     status: {isLoggedIn: false, didUpgradeToHd: null, didLoadTransactions: false, didLoadBalances: false, legacyAddressBalancesLoaded: false, didConfirmRecoveryPhrase: false}, 
     settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null, ipWhitelist: null, apiAccess: null, restrictToWhitelist: null}, 
-    user: {current_ip: null, email: null, mobile: null, passwordHint: "", pairingCode: ""}
+    user: {current_ip: null, email: null, mobile: null, passwordHint: ""}
   }
   
   wallet.fiatHistoricalConversionCache = {}
@@ -51,10 +51,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.status.isLoggedIn = true 
       wallet.status.didUpgradeToHd = wallet.my.didUpgradeToHd()
       wallet.status.didConfirmRecoveryPhrase = wallet.my.isMnemonicVerified()
-    
-      wallet.my.makePairingCode((result)->
-        wallet.user.pairingCode = result
-      )
     
       for address, label of wallet.my.getAddressBook()
         wallet.addressBook[address] = label
@@ -222,6 +218,17 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.didLogoutByChoice = true
     $window.name = "blockchain"
     wallet.my.logout() # broadcast "logging_out"
+    
+  wallet.makePairingCode = (successCallback, errorCallback) ->
+    success = (code) ->
+      successCallback(code)
+      wallet.applyIfNeeded()
+      
+    error = () ->
+      errorCallback()
+      wallet.applyIfNeeded()
+    
+    wallet.my.makePairingCode(success, error)
     
   wallet.confirmRecoveryPhrase = () ->
     wallet.my.didVerifyMnemonic()
