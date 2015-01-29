@@ -756,8 +756,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   # Notification     #
   ####################
             
-  # The old monitoring system
-  wallet.monitorLegacy = (event, data) ->
+  wallet.monitor = (event, data) ->
     # console.logaccountsd: " + event
     if event == "on_tx" or event == "on_block"
       before = wallet.transactions.length
@@ -844,22 +843,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         # console.log event
     else
       # console.log event
-  # The new monitoring system  
-  wallet.monitor = (event) ->
-    if event.type == "error"
-      wallet.displayError(event.message)
-      wallet.applyIfNeeded()
-    else if event.type == "success"
-      wallet.displaySuccess(event.message)
-      wallet.applyIfNeeded()
-    else if event.type == "notice"
-      wallet.displayWarning(event.msg)
-      wallet.applyIfNeeded()
-    else 
-      console.log event
 
-  wallet.my.monitor((event) -> wallet.monitor(event))
-  wallet.my.addEventListener((event, data) -> wallet.monitorLegacy(event, data))
+  wallet.my.addEventListener((event, data) -> wallet.monitor(event, data))
 
   message = $cookieStore.get("alert-warning")
   if message != undefined && message != null
