@@ -196,6 +196,7 @@
     $scope.transactionIsValid = $scope.validate()
       
   $scope.updateToLabel = () ->
+    return unless $scope.transaction.destination?
     $scope.toLabel = $scope.transaction.destination.label
     if $scope.transaction.destination.index?
       $scope.toLabel += " Account"
@@ -206,6 +207,9 @@
     unless !query? || query == ""
        last.address = query
        last.label = query
+    
+    $scope.transactionIsValid = $scope.validate()  
+    $scope.updateToLabel() 
     
   $scope.$watch "transaction.destination", ((newValue) ->
     $scope.visualValidate("to")
@@ -260,14 +264,19 @@
     
   $scope.validate = () ->    
     return false unless $scope.originsLoaded
-  
     transaction = $scope.transaction
+    
+    return false if transaction.destination == null || (transaction.destination.type == "External" && transaction.destination.address == "")
+        
+    if transaction.destination.type == "External"
+      return false unless Wallet.isValidAddress(transaction.destination.address)
         
     return false if transaction.destination == transaction.from
     
     $scope.errors.to = null
     
-    return false unless $scope.validateAmount()   
+    return false unless $scope.validateAmount()  
+    
     return true
     
   $scope.validateAmount = () ->
