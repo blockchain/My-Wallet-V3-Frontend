@@ -34,6 +34,7 @@ walletApp = angular.module("walletApp", [
   "partials/second-password.jade"
   "partials/send.jade"
   "partials/signup.jade"
+  "partials/register.jade"
   "partials/top.jade"
   "partials/transaction.jade"
   "partials/transactions.jade"

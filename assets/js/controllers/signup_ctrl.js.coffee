@@ -1,4 +1,4 @@
-@SignupCtrl = ($scope, $log, Wallet, $modalInstance, $translate, $cookieStore, $filter) ->
+@SignupCtrl = ($scope, $log, Wallet, $modalInstance, $translate, $cookieStore, $filter, $state) ->
   $scope.currentStep = 1
   $scope.working = false
   $scope.languages = Wallet.languages
@@ -50,6 +50,7 @@
   $scope.close = () ->
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
+    $state.go("wallet.common.transactions", {accountIndex: "accounts"})
     
   $scope.nextStep = () ->
     $scope.validate()

@@ -19,6 +19,29 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     templateUrl: "partials/accounts-navigation.jade"
     controller: "AccountsCtrl"
   }
+  
+  commonViews = {
+    navigation:  {
+      templateUrl: "partials/navigation.jade"
+      controller: "NavigationCtrl"
+    },
+    alerts: {
+      templateUrl: "partials/alerts.jade"
+      controller: "AlertsCtrl"
+    }
+    common: {
+      templateUrl: "partials/common.jade"
+    }
+  }
+  
+  transactionsViews = {
+    top: top,
+    left: accounts,
+    right: {
+      templateUrl: "partials/transactions.jade"
+      controller: "TransactionsCtrl"
+    }
+  }
     
   $stateProvider.state("wallet",
     views: {
@@ -28,19 +51,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     }
   )
   .state("wallet.common",
-    views: {
-      navigation:  {
-        templateUrl: "partials/navigation.jade"
-        controller: "NavigationCtrl"
-      },
-      alerts: {
-        templateUrl: "partials/alerts.jade"
-        controller: "AlertsCtrl"
-      }
-      common: {
-        templateUrl: "partials/common.jade"
-      }
-    }
+    views: commonViews
   )
   .state("login",
     views: {
@@ -59,6 +70,24 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
+  .state("register",
+    url: "/register"
+    views: {
+      body: {
+        templateUrl: "partials/register.jade"
+        controller: "RegistrationCtrl"
+      }
+    }
+  )
+  # Use the same layout as the transactions screen, once signup is complete
+  .state("register.finish", 
+    url: "/register/finish"
+    views: commonViews
+  )
+  .state("register.finish.show",
+    views: transactionsViews
+  )
+  
   
   $stateProvider.state("wallet.common.dashboard",
     url: "/"
@@ -74,14 +103,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
 
   $stateProvider.state("wallet.common.transactions",
     url: "/:accountIndex/transactions/"
-    views: {
-      top: top,
-      left: accounts,
-      right: {
-        templateUrl: "partials/transactions.jade"
-        controller: "TransactionsCtrl"
-      }
-    }
+    views: transactionsViews
   )
 
   $stateProvider.state("wallet.common.transaction",

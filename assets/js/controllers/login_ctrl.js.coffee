@@ -9,7 +9,6 @@
   
   
   $scope.twoFactorCode = ""
-  $scope.creatingAccount = false
   $scope.busy = false  
   $scope.isValid = false
   
@@ -42,26 +41,6 @@
 
     if $scope.savePassword && $scope.password? && $scope.password != ""
        $cookieStore.put("password", $scope.password)
-    
-  $scope.create = () ->
-    Wallet.clearAlerts()
-    
-    $scope.creatingAccount = true
-
-    modalInstance = $modal.open(
-      templateUrl: "partials/signup.jade"
-      controller: SignupCtrl
-      backdrop: "static"
-      keyboard: false
-      windowClass: "signup"
-      size: "lg"
-    )
-        
-    modalInstance.result.then (() ->
-      $scope.creatingAccount = false
-    ), () ->
-      $scope.creatingAccount = false
-        
 
   $scope.$watch "status.isLoggedIn", (newValue) ->
     if newValue
