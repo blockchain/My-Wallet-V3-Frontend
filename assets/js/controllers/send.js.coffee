@@ -236,11 +236,13 @@
           $translate("BITCOIN_ADDRESS_INVALID").then (translation) ->          
             $scope.errors.to = translation
       else
-        if $scope.transaction.destination == $scope.transaction.from
+        if (
+          $scope.transaction.destination.index? && ($scope.transaction.destination.index == $scope.transaction.from.index) ||
+          $scope.transaction.destination.address? && ($scope.transaction.destination.address == $scope.transaction.from.address)
+        
+        )
           $translate("SAME_DESTINATION").then (translation) ->          
             $scope.errors.to = translation
-        else if $scope.transaction.destination != null && $scope.transaction.destination != ""
-           $scope.success.to = true
     
     if blurredField == "amount" || blurredField == "currency"
       $scope.errors.amount = null
