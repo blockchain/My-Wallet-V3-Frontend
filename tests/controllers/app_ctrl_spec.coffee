@@ -47,7 +47,7 @@ describe "AppCtrl", ->
     
     scope.$broadcast("$stateChangeSuccess", {name: "dashboard"})
               
-    expect($state.go).toHaveBeenCalledWith("login")
+    expect($state.go).toHaveBeenCalledWith("login.show")
   )
   
   it "should not redirect to login if logged in",  inject((Wallet, $state) ->

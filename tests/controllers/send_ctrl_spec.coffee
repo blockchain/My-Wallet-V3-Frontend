@@ -174,7 +174,7 @@ describe "SendCtrl", ->
     
       scope.send()
     
-      expect($state.go).toHaveBeenCalledWith('transactions', { accountIndex: 1 })
+      expect($state.go).toHaveBeenCalledWith('wallet.common.transactions', { accountIndex: 1 })
     
     )
 

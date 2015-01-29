@@ -1,4 +1,4 @@
-describe "LoginCtrl", ->
+describe "RegistrationCtrl", ->
   scope = undefined
 
   modal =
@@ -14,8 +14,10 @@ describe "LoginCtrl", ->
      MyWallet = $injector.get("MyWallet")    
   
      scope = $rootScope.$new()
+     
+     spyOn(modal, "open").and.callThrough()
         
-     $controller "LoginCtrl",
+     $controller "RegistrationCtrl",
        $scope: scope,
        $stateParams: {}
        $modal: modal
@@ -23,15 +25,7 @@ describe "LoginCtrl", ->
      return
 
    return
-   
-  it "should login",  inject((Wallet) ->
-    scope.uid = "user"
-    scope.password = "pass"
-    
-    spyOn(Wallet, "login")
-    
-    scope.login()
-    
-    expect(Wallet.login).toHaveBeenCalled()
-    return
+  
+  it "should open a modal to create a new wallet",  inject((Wallet) -> 
+    expect(modal.open).toHaveBeenCalled()
   )
