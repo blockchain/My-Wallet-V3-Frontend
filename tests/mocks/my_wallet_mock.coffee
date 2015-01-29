@@ -382,6 +382,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     return
   
   myWallet.sendToAccount = (fromAccountIdx, toAccountIdx, amount, feeAmount, note, success, error, getPassword) ->
+    # A few sanity checks (not complete)
+    if amount > accounts[fromAccountIdx].balance
+      error({message: "Insufficient funds"})
+      return
+    
     transaction = {
             hash: "hash-" + (new Date()).getTime(), 
             confirmations: 0
