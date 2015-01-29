@@ -1,9 +1,18 @@
-@SettingsAddressesCtrl = ($scope, Wallet, $translate, $modal) ->
+@SettingsAddressesCtrl = ($scope, Wallet, $translate, $modal, $state) ->
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.accounts = Wallet.accounts
   $scope.display = {archived: false, account_dropdown_open: false}  
   
   $scope.hdAddresses = Wallet.hdAddresses
+  
+  $scope.addAddressForAccount = (account) ->
+    
+    success = (address) ->
+      $state.go "wallet.common.settings.address", {address: address.address}
+      
+    error = () ->
+      
+    Wallet.addAddressForAccount(account, success, error)
   
   $scope.clear = (request) ->
     Wallet.cancelPaymentRequest(request.account, request.address)
