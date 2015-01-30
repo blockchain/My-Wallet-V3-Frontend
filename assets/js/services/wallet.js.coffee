@@ -820,7 +820,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         
         wallet.my.upgradeToHDWallet(needsSecondPasswordCallback, success, error)
       
-      $rootScope.$broadcast "needsUpgradeToHD", continueCallback
+      $timeout(()->
+        $rootScope.$broadcast "needsUpgradeToHD", continueCallback
+        , 1000
+      )
       
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()

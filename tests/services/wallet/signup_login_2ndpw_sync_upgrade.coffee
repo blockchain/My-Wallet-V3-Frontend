@@ -153,24 +153,28 @@ describe "walletServices", () ->
   
   
   describe "HD upgrade", ->
-    it "should prompt the user if upgrade to HD is needed", inject(($rootScope) ->
+    it "should prompt the user if upgrade to HD is needed", inject(($rootScope, $timeout) ->
       
       spyOn($rootScope, '$broadcast').and.callThrough()
       
-      Wallet.  monitor("hd_wallets_does_not_exist")
+      Wallet.monitor("hd_wallets_does_not_exist")
+      
+      $timeout.flush()
       
       expect($rootScope.$broadcast).toHaveBeenCalled()
       expect($rootScope.$broadcast.calls.argsFor(0)[0]).toEqual("needsUpgradeToHD")
     )
       
-    it "should proceed with upgrade if user agrees", inject(($rootScope, MyWallet) ->
+    it "should proceed with upgrade if user agrees", inject(($rootScope, MyWallet, $timeout) ->
       spyOn($rootScope, '$broadcast').and.callFake (message, callback) ->
         if message == "needsUpgradeToHD"
           callback()
       
       spyOn(MyWallet, "upgradeToHDWallet")
       
-      Wallet.  monitor("hd_wallets_does_not_exist")
+      Wallet.monitor("hd_wallets_does_not_exist")
+      
+      $timeout.flush()
       
       expect(MyWallet.upgradeToHDWallet).toHaveBeenCalled()
     )
