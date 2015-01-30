@@ -828,7 +828,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.updateHDaddresses()
       wallet.applyIfNeeded()
       
-    else if event == "hw_wallet_balance_updated"
+    else if event == "hd_wallet_balance_updated"
       wallet.updateAccountsAndLegacyAddresses()  
       wallet.applyIfNeeded()
     else if event == "did_update_legacy_address_balance"
