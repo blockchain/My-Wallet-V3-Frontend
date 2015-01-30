@@ -118,9 +118,7 @@
       $timeout((->
         $scope.lookForQR()
       ), 2000)
-   
-  qrcode.callback = $scope.processURLfromQR
-  
+     
   $scope.cameraOn = () ->
     $scope.cameraRequested = true
     

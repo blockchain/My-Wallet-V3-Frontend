@@ -91,26 +91,6 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     !=js('services/security_center')
     !=js('templates')
     
-    // https://github.com/LazarSoft/jsqrcode
-    !=js('jsqrcode/src/grid')
-    !=js('jsqrcode/src/version')
-    !=js('jsqrcode/src/detector')
-    !=js('jsqrcode/src/formatinf')
-    !=js('jsqrcode/src/errorlevel')
-    !=js('jsqrcode/src/bitmat')
-    !=js('jsqrcode/src/datablock')
-    !=js('jsqrcode/src/bmparser')
-    !=js('jsqrcode/src/datamask')
-    !=js('jsqrcode/src/rsdecoder')
-    !=js('jsqrcode/src/gf256poly')
-    !=js('jsqrcode/src/gf256')
-    !=js('jsqrcode/src/decoder')
-    !=js('jsqrcode/src/qrcode')
-    !=js('jsqrcode/src/findpat')
-    !=js('jsqrcode/src/alignpat')
-    !=js('jsqrcode/src/databr')  
-    
-    !=js('webcam')
-    
+    !=js('bc-qr-reader')
 
   body(ng-controller="AppCtrl", ui-view="body")

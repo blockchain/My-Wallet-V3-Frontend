@@ -20,10 +20,6 @@ module.exports = (grunt) ->
         src:  "build/mywallet.js"
         dest: "build/mywallet.min.js"
         
-      jsqrcode:
-        src: "build/jsqrcode.js"
-        dest: "build/jsqrcode.min.js"
-        
       application_dependencies:
         src: "build/application-dependencies.js"
         dest: "build/application-dependencies.min.js"
@@ -61,28 +57,6 @@ module.exports = (grunt) ->
         ]
         dest: "build/mywallet.js"
         
-      jsqrcode:
-        src: [
-          'assets/js/jsqrcode/src/grid.js'
-          'assets/js/jsqrcode/src/version.js'
-          'assets/js/jsqrcode/src/detector.js'
-          'assets/js/jsqrcode/src/formatinf.js'
-          'assets/js/jsqrcode/src/errorlevel.js'
-          'assets/js/jsqrcode/src/bitmat.js'
-          'assets/js/jsqrcode/src/datablock.js'
-          'assets/js/jsqrcode/src/bmparser.js'
-          'assets/js/jsqrcode/src/datamask.js'
-          'assets/js/jsqrcode/src/rsdecoder.js'
-          'assets/js/jsqrcode/src/gf256poly.js'
-          'assets/js/jsqrcode/src/gf256.js'
-          'assets/js/jsqrcode/src/decoder.js'
-          'assets/js/jsqrcode/src/qrcode.js'
-          'assets/js/jsqrcode/src/findpat.js'
-          'assets/js/jsqrcode/src/alignpat.js'
-          'assets/js/jsqrcode/src/databr.js'
-        ]
-        dest: "build/jsqrcode.js" 
-        
       application_dependencies:
         src: [
           'build/my_wallet.js' # This is just a wrapper around MyWallet
@@ -99,6 +73,7 @@ module.exports = (grunt) ->
           'app/bower_components/angular-audio/app/angular.audio.js'
           'app/bower_components/angular-bootstrap-slider/slider.js'
           'assets/js/templates.js'
+          'node_modules/bc-qr-reader/dist/bc-qr-reader.js'
         ]
 
         dest: "build/application-dependencies.js"
@@ -121,7 +96,6 @@ module.exports = (grunt) ->
           'app/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js'
           'app/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js'
           'build/application-dependencies.min.js'
-          'build/jsqrcode.min.js'
         ]
         
         dest: "dist/application.min.js"
@@ -186,6 +160,10 @@ module.exports = (grunt) ->
       angular_css:
         files: [
           {src: ["angular-csp.css"], dest: "assets/css", cwd: "app/bower_components/angular", expand: true }
+        ]
+      bc_qr_code:
+        files: [
+          {src: ["bc-qr-reader.js"], dest: "assets/js", cwd: "node_modules/bc-qr-reader/dist", expand: true }
         ]
         
     watch: {
@@ -260,6 +238,7 @@ module.exports = (grunt) ->
   grunt.registerTask "default", [
     "html2js"
     "copy:angular_css"
+    "copy:bc_qr_code"
     "watch"
   ]
     
@@ -273,8 +252,6 @@ module.exports = (grunt) ->
     "uglify:application_dependencies"
     "concat:mywallet"
     "uglify:mywallet"
-    "concat:jsqrcode"
-    "uglify:jsqrcode"
     "concat:application"
     "sass"
     "concat_css"

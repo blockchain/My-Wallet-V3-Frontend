@@ -36,9 +36,9 @@ Visit [local.blockchain.com:8080](http://local.blockchain.com:8080/).  Do not us
 
 ## Usage
 
-You can open any wallet registered with your email address as long as your IP is whitelisted. It will be upgraded to HD automatically. 
+You can open any wallet registered with your email address. It will ask you to upgrade to HD if needed.
 
-You can also sign up for a new wallet. In that case you should use a valid email address. In the final registration step you need to enter the 5 letter code from the registration email. This will automatically whitelist your current IP address. You won't be able to login from another IP address, unless you add it to the whitelist in advanced settings.
+You can also sign up for a new wallet. In that case you should use a valid email address. In the final registration step you need to enter the 5 letter code from the registration email (do not click the link).
 
 After login, you'll see a list of accounts. There will be delay before transactions and the correct balances show up. If something goes wrong during the login process, error messages appear in the console. 
 
@@ -54,6 +54,12 @@ To reclaim funds from an email take code at the of link and add it to `#/claim`,
 If you enable "handle bitcoin links" in your wallet settings, you can open bitcoin URI's like this one:
 
     bitcoin:?address=1FeerpCgswvGRLVKme759C96DUBtf7SvA2?amount=0.01
+
+There's no UI for this yet, but you can send bitcoins to an email address from the console:
+
+    MyWallet.sendToEmail(0, 100000, 10000, "sjors@blockchain.com", function(){console.log('Done')}, function(e){console.log('Failed'); console.log(e)})
+
+The first argument is the account index, the second the amount in satoshi and the third the mining fee.
 
 ## Test
 
@@ -88,10 +94,9 @@ Not supported by the server yet.
 
 ## Deploy
 
-Curently the app is configured to be deployed on Heroku and on a Blockchain staging server:
+Curently the app is configured to be deployed on a Blockchain staging server:
 
-* Real money: http://dev.blockchain.info/ (VPN or IP whitelist, might not work at the moment)
-* Mock: http://pure-wildwood-5818.herokuapp.com/ (not always up to date)
+https://dev.blockchain.info/ (password protected)
 
 Create a static HTML/JS/CSS distribution package in `dist`:
 

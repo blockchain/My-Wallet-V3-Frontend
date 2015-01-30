@@ -72,7 +72,6 @@ walletApp = angular.module("walletApp", [
   "templates/tor.jade"
   "templates/api-access.jade"
   "templates/ip-whitelist-restrict.jade"
-  "templates/bc-qr-reader.jade"
   "templates/bc-async-input.jade"
   "templates/verify-email.jade"
   "templates/resend-email-confirmation.jade"
