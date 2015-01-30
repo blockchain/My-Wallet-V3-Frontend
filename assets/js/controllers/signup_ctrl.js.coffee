@@ -75,30 +75,14 @@
           $scope.errors.emailVerificationCode = null
           
           success = () ->
-            # Hack: whitelist the current IP
-            Wallet.setIPWhitelist(
-              Wallet.user.current_ip,
-              (() ->
-                console.log "White listed current IP..."
-                $scope.close ""
-              ),
-              ((error) ->
-                console.log(error)
-                Wallet.displayError("Could not whitelist your IP.")
-              )
-            )
+            $scope.close ""
           
-          
-            
           error = () ->
             $translate("EMAIL_VERIFICATION_FAILED").then (translation) ->
               $scope.errors.emailVerificationCode = translation
           
-          
           Wallet.verifyEmail($scope.fields.emailVerificationCode, success, error)
-          
-
-        
+                
     else
       # console.log "Form step not valid"
       # console.log $scope.currentStep
