@@ -15,8 +15,11 @@ form.form-horizontal(role="form",name="form",novalidate)
       label(translate="REMEMBER_2FA")
       p.explain(translate="REMEMBER_2FA_EXPLAIN")    
     .col-sm-6.setting-result
-      h2.status.incomplete(ng-hide="settings.rememberTwoFactor", translate="DISABLED")
-      h2.status.complete(ng-show="settings.rememberTwoFactor", translate="ENABLED")
+      div(ng-show="processToggleRememberTwoFactor")
+        img(src="img/spinner.gif")
+      div(ng-hide="processToggleRememberTwoFactor")
+        h2.status.incomplete(ng-hide="settings.rememberTwoFactor", translate="DISABLED")
+        h2.status.complete(ng-show="settings.rememberTwoFactor", translate="ENABLED")
       p
         a.settingaction(ng-click="enableRememberTwoFactor()", translate="ENABLE_REMEMBER_2FA", ng-hide="settings.rememberTwoFactor")
         a.settingaction(ng-click="disableRememberTwoFactor()", translate="DISABLE_REMEMBER_2FA", ng-show="settings.rememberTwoFactor")

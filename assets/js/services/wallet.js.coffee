@@ -64,10 +64,14 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       # Get email address, etc
       # console.log "Getting info..."
       wallet.my.get_account_info((result)->
+        # console.log result
         $window.name = "blockchain-"  + result.guid
         wallet.settings.ipWhitelist = result.ip_lock
         wallet.settings.restrictToWhitelist = result.ip_lock_on
         wallet.settings.apiAccess = result.is_api_access_enabled
+        wallet.settings.rememberTwoFactor = !result.never_save_auth_type
+        wallet.settings.needs2FA = result.auth_type != 0
+        wallet.settings.twoFactorMethod = result.auth_type
         wallet.user.email = result.email
         wallet.user.current_ip = result.my_ip
         if result.sms_number
@@ -1075,6 +1079,30 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       console.log "Failed"
       wallet.applyIfNeeded()
     )
+    
+  wallet.enableRememberTwoFactor = (successCallback, errorCallback) ->
+    success = () ->
+      wallet.settings.rememberTwoFactor = true
+      successCallback()
+      wallet.applyIfNeeded()
+      
+    error = () ->
+      errorCallback()
+      wallet.applyIfNeeded()
+      
+    wallet.my.enableSaveTwoFactor(success, error)
+    
+  wallet.disableRememberTwoFactor = (successCallback, errorCallback) ->
+    success = () ->
+      wallet.settings.rememberTwoFactor = false
+      successCallback()
+      wallet.applyIfNeeded()
+    
+    error = () ->
+      errorCallback()
+      wallet.applyIfNeeded()
+      
+    wallet.my.disableSaveTwoFactor(success, error)
     
   wallet.handleBitcoinLinks = () ->
     $window.navigator.registerProtocolHandler('bitcoin', window.location.origin + '/#/open/%s', "Blockchain")

@@ -1,5 +1,6 @@
 @SettingsAdvancedCtrl = ($scope, Wallet, $modal) ->
   $scope.settings = Wallet.settings
+  $scope.processToggleRememberTwoFactor = null
     
   $scope.validatePbkdf2 = (candidate) ->
     n = parseInt(candidate)
@@ -33,3 +34,25 @@
       errorCallback()
     
     Wallet.setIPWhitelist(list, success, error)
+
+  $scope.enableRememberTwoFactor = () ->
+    $scope.processToggleRememberTwoFactor = true
+    
+    success = () ->
+      $scope.processToggleRememberTwoFactor = false
+    
+    error = () ->
+      $scope.processToggleRememberTwoFactor = false
+    
+    Wallet.enableRememberTwoFactor(success, error)
+  
+  $scope.disableRememberTwoFactor = () ->
+    $scope.processToggleRememberTwoFactor = true
+    
+    success = () ->
+      $scope.processToggleRememberTwoFactor = false
+    
+    error = () ->
+      $scope.processToggleRememberTwoFactor = false
+    
+    Wallet.disableRememberTwoFactor(success, error) 
