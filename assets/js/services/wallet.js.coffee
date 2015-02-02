@@ -653,13 +653,21 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.isValidAddress = (address) ->
     return wallet.my.isValidAddress(address)
     
-  wallet.archive = (address) ->
-    wallet.my.archiveLegacyAddr(address.address)
-    address.active = false
+  wallet.archive = (address_or_account) ->
+    if address_or_account.address?
+      wallet.my.archiveLegacyAddr(address_or_account.address)
+    else
+      wallet.my.archiveAccount(address_or_account.index)
+      
+    address_or_account.active = false
     
-  wallet.unarchive = (address) ->
-    wallet.my.unArchiveLegacyAddr(address.address)
-    address.active = true
+  wallet.unarchive = (address_or_account) ->
+    if address_or_account.address?
+      wallet.my.unArchiveLegacyAddr(address_or_account.address)
+    else
+      wallet.my.unarchiveAccount(address_or_account.index)
+    
+    address_or_account.active = true
         
   wallet.deleteLegacyAddress = (address) ->
     wallet.my.deleteLegacyAddress(address.address)

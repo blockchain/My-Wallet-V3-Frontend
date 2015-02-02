@@ -26,6 +26,4 @@ walletApp.directive "uiLadda",  ($timeout, $compile, $translate) ->
           else
             element.removeAttr("data-loading")
             element.removeAttr("disabled")
-            
-
   }

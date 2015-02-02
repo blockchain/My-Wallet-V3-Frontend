@@ -15,7 +15,8 @@ p.headliner(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
         th
         th
         th
-      tr(ng-repeat="account in accounts | filter:searchText")
+        //- th
+      tr(ng-repeat="account in accounts | filter:searchText | filter:{active: true}")
         td(ng-bind-html="account.label | highlight:searchText")
         td 
           span.btc {{ account.balance | btc }} 
@@ -27,3 +28,26 @@ p.headliner(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
           a(translate="RENAME",          ng-click="editAccount(account)")
         td 
           a(translate="BITCOIN_ADDRESS", ng-click="showAddress(account)")
+        //- td
+        //-   a(translate="ARCHIVE",          ng-click="archive(account)")
+            
+h2(translate="ARCHIVED_ACCOUNTS", ng-click="display.archived = !display.archived")
+
+p(translate="ARCHIVED_ACCOUNTS_EXPLAIN", ng-show="display.archived")
+  
+.row(ng-show="display.archived") 
+  p Coming soon...
+
+.row(ng-show="display.archived")
+  .col-xs-12
+    table
+      tr
+        th(translate="ACCOUNT_NAME")
+        th
+        th
+      tr(ng-repeat="account in accounts | filter:searchText | filter:{active: false}")
+        td(ng-bind-html="account.label | highlight:searchText")
+        td 
+          a(translate="RENAME",          ng-click="editAccount(account)")
+        td
+          a(translate="UNARCHIVE",          ng-click="unarchive(account)")

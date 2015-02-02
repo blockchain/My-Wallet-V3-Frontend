@@ -1,6 +1,9 @@
 @SettingsAccountsCtrl = ($scope, Wallet, $modal) ->
   $scope.accounts = Wallet.accounts
   
+  $scope.display = {archived: false}  
+  
+  
   $scope.newAccount = () ->
     Wallet.clearAlerts()
     modalInstance = $modal.open(
@@ -44,3 +47,9 @@
         paymentRequest: -> 
           {fromAddress: address, amount: 0, toAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()]}
     )
+
+  $scope.archive = (account) ->
+    Wallet.archive(account)
+    
+  $scope.unarchive = (account) ->
+    Wallet.unarchive(account)
