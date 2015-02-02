@@ -8,7 +8,7 @@
       p.date
         | {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
     .col-xs-6
-      transaction-status(transaction)
+      transaction-status(transaction="transaction")
   .row
     .col-xs-12
       .to-from-amount-box 
