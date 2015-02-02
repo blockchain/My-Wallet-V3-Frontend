@@ -22,7 +22,9 @@
           ui-select-choices(repeat="currency in currencies | filter: $select.search" group-by="'type'")
             span(ng-bind-html="currency.code | highlight: $select.search")   
       .col-sm-3
-        p(ng-hide="fields.currency.code=='BTC'") {{ paymentRequestAmount | btc }}
+        p.form-control-static
+          fiat(currency="settings.currency", btc="paymentRequestAmount",  ng-show="fields.currency.code=='BTC'")
+          span(ng-hide="fields.currency.code=='BTC'") {{ paymentRequestAmount | btc }}
       
     //- .form-group
     //-   label.col-sm-3.control-label(translate="DESCRIPTION")
