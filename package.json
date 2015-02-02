@@ -63,7 +63,6 @@
   "scripts": {
     "postinstall": "bower install && browserify -r country-data assets/js/country-data-import.js > assets/js/country-data.js",
     "start": "coffee server.coffee",
-    "pretest": "npm install",
     "test": "node ./node_modules/karma/bin/karma start karma.conf.js",
     "test-single-run": "node ./node_modules/karma/bin/karma start karma.conf.js  --single-run"
   },

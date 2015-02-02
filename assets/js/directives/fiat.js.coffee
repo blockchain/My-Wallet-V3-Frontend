@@ -1,29 +1,42 @@
 walletApp.directive('fiat', (Wallet , $compile) ->
   {
     restrict: "E"
-    replace: 'false'
+    replace: 'true'
     scope: {
       btc: '=btc'
       date: '=date'
+      currency: '=currency'
     }
-    template: "<span>{{ currencySymbol }}{{ fiat }}</span>"
-    link: (scope, elem, attrs) ->      
+    template: "<span>{{ fiat.currencySymbol }}{{ fiat.amount }}</span>"
+    link: (scope, elem, attrs) ->   
+      scope.fiat = 
+        currencySymbol: null
+        amount: null
+      
       scope.settings = Wallet.settings
       scope.conversions = Wallet.conversions
       scope.$watchCollection "conversions", (newVal) ->
         updateFiat()
-      scope.$watch "settings.currency", (newVal) ->
-        updateFiat()
-      scope.$watch "btc", (newVal) ->
+      scope.$watch "settings.currency + btc + currency", () ->
         updateFiat()
         
       updateFiat = () ->
-        (scope.fiat = ""; return) unless scope.btc?
-        (scope.fiat = ""; return) if scope.btc == ""
-        (scope.fiat = ""; return) if isNaN(scope.btc)
-        (scope.fiat = numeral(scope.btc).divide(100000000).format("0.[0000]") + " BTC"; return) unless scope.settings.currency?
-        conversion = scope.conversions[scope.settings.currency.code]
-        (scope.fiat = ""; return)  unless conversion? && conversion.conversion > 0
+        scope.fiat.currencySymbol = null
+        scope.fiat.amount = null
+        
+        return unless scope.btc?
+        return if scope.btc == ""
+        return if isNaN(scope.btc)
+        currency = undefined
+        if scope.currency?
+          currency = scope.currency 
+        else
+          currency = scope.settings.currency
+                  
+        (scope.fiat.amount = numeral(scope.btc).divide(100000000).format("0.[0000]") + " BTC"; return) unless currency?
+        
+        conversion = scope.conversions[currency.code]
+        return  unless conversion? && conversion.conversion > 0
     
         btc = scope.btc
         
@@ -32,15 +45,14 @@ walletApp.directive('fiat', (Wallet , $compile) ->
     
         amount = null
         if scope.date?
-          scope.fiat = null
-          Wallet.getFiatAtTime(btc, scope.date, scope.settings.currency.code).then (fiat) ->
-            scope.fiat = fiat
+          Wallet.getFiatAtTime(btc, scope.date, currency.code).then (fiat) ->
+            scope.fiat.amount = fiat
           
         else
           amount = numeral(btc).divide(conversion.conversion).clone()
-          scope.fiat = amount.format("0.00")                
+          scope.fiat.amount = amount.format("0.00")        
         
-        scope.currencySymbol = conversion.symbol
-        
+        scope.fiat.currencySymbol = conversion.symbol
+                        
   }
 )

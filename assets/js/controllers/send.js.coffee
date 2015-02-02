@@ -83,9 +83,9 @@
 
     max_btc = numeral(origin.balance - fees).divide("100000000")
     if $scope.transaction.currency == "BTC"
-      return origin.label + "(" + max_btc.format("0.[00000000]") + " BTC)"  
+      return origin.label + " (" + max_btc.format("0.[00000000]") + " BTC)"  
     else 
-      return origin.label + "(" + $scope.BTCtoFiat(max_btc, $scope.transaction.currency) + " " + $scope.transaction.currency + ")"
+      return origin.label + " (" + $scope.BTCtoFiat(max_btc, $scope.transaction.currency) + " " + $scope.transaction.currency + ")"
   
   
   

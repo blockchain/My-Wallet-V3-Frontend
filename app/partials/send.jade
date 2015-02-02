@@ -46,8 +46,9 @@
             ui-select-choices(repeat="currency in currencies | filter: $select.search" group-by="'type'") 
               span(ng-bind-html="currency.code | highlight: $select.search")                
         .col-sm-3
-          p(ng-show="transaction.currency=='BTC'") {{ transaction.result }} BTC
-          p(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
+          p.form-control-static
+            fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="transaction.currency=='BTC'")
+            span(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
         
       //- .form-group(ng-show="advanced")
       //-   label.col-sm-3.control-label(translate="FEES")
