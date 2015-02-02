@@ -30,13 +30,16 @@ describe "RequestCtrl", ->
           $stateParams: {},
           $modalInstance: modalInstance
           destination: undefined
-    
-        scope.fields = {amount: "0", to: null, currency: {code: "BTC", type: "Crypto"}  }
-  
+      
         # Trigger generation of payment address:
         scope.fields.amount = "1"
         scope.$apply()
       )  
+    
+    it "should select the users currency by default", inject((Wallet)->
+      expect(Wallet.settings.currency.code).toBe("USD")
+      expect(scope.fields.currency.code).toBe "USD"
+    )
     
     it "should have access to legacy addresses",  inject(() ->
       expect(scope.legacyAddresses).toBeDefined()
@@ -63,6 +66,7 @@ describe "RequestCtrl", ->
     it "should show a payment URL with amount when legacy address is selected and amount > 0", ->
       scope.fields.to = scope.destinations[scope.accounts.length] # The first legacy address
       scope.$digest()
+      scope.fields.currency = scope.currencies[0]
       scope.fields.amount = "0.1"
       scope.$digest()
       expect(scope.paymentRequestURL).toBeDefined()
@@ -84,6 +88,7 @@ describe "RequestCtrl", ->
       expect(scope.paymentRequestURL).not.toContain("amount=")
     
     it "should show the amount in BTC", ->
-      scope.currency = {code: "EUR", type: "Fiat"}
+      expect(scope.currencies[2].code).toBe("EUR")
+      scope.fields.currency = scope.currencies[2]
       scope.$digest()
-      expect(scope.paymentRequestAmount).toBe(100000000)
+      expect(scope.paymentRequestAmount).toBe(400000)

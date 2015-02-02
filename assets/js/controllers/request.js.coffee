@@ -12,7 +12,7 @@
   btc = {code: "BTC", type: "Crypto"}  
   $scope.currencies.unshift btc
   
-  $scope.fields = {to: null, amount: "0", currency: btc, label: ""}  
+  $scope.fields = {to: null, amount: "0", currency: Wallet.settings.currency, label: ""}  
       
   for account in $scope.accounts
     item = angular.copy(account)
