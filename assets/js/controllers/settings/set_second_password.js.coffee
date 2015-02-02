@@ -4,15 +4,20 @@
   
   $scope.fields = {password: "", confirmation: ""}
 
-
+  $scope.busy = null
 
   $scope.close = () ->
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
 
   $scope.setPassword = () ->
-    Wallet.setSecondPassword($scope.fields.password)
-    $modalInstance.dismiss ""
+    $scope.busy = true
+    
+    success = () ->
+      $scope.busy = false
+      $modalInstance.dismiss ""
+    
+    Wallet.setSecondPassword($scope.fields.password, success)
     
   $scope.$watch "fields.confirmation", (newVal) ->
     if newVal?

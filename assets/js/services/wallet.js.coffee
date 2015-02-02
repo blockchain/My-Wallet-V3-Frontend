@@ -1179,22 +1179,24 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.isValidBIP39Mnemonic = (mnemonic) ->
     wallet.my.isValidateBIP39Mnemonic(mnemonic)
 
-  wallet.removeSecondPassword = () ->
+  wallet.removeSecondPassword = (successCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->
       $rootScope.$broadcast "requireSecondPassword", continueCallback
       
     success = () ->
       wallet.displaySuccess("Second password has been removed.")
       wallet.settings.secondPassword = false
+      successCallback()
       
     error = () ->
     
     wallet.my.unsetSecondPassword(success, error, needsSecondPasswordCallback)
     
-  wallet.setSecondPassword = (password) ->
+  wallet.setSecondPassword = (password, successCallback) ->
     success = () ->
       wallet.displaySuccess("Second password set.")
       wallet.settings.secondPassword = true
+      successCallback()
     
     error = () ->
   

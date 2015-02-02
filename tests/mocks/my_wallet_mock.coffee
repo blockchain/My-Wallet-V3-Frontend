@@ -651,6 +651,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.setSecondPassword = (password, success, error) ->
     success()
     
+  myWallet.unsetSecondPassword = (success, error) ->
+    success()
+    
   myWallet.getPbkdf2Iterations = () ->
     10
     
