@@ -55,6 +55,7 @@ describe "2FA Directive", ->
     beforeEach ->
       isoScope.user.isEmailVerified = true
       isoScope.user.isMobileVerified = true
+      isoScope.settings.needs2FA = null
   
     it "with sms", inject((Wallet) ->
       spyOn(Wallet, "setTwoFactorSMS").and.callThrough()
@@ -93,6 +94,7 @@ describe "2FA Directive", ->
     )
     
     it "configure Google Auth does not immediately enable", inject((Wallet) ->
+      expect(isoScope.settings.needs2FA).toBeNull()
       isoScope.setTwoFactorGoogleAuthenticator()
       expect(isoScope.settings.needs2FA).toBeNull()
     )
