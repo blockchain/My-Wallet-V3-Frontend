@@ -30,10 +30,8 @@ describe "SendCtrl", ->
         paymentRequest: {address: "", amount: ""}
         ngAudio: ngAudio
         
-      scope.transaction = {
-        amount: "0.2"
-        currency: "BTC"
-      }
+      scope.transaction.amount = "0.2"
+
       scope.$apply()
       
       scope.qrStream = {}
@@ -65,6 +63,11 @@ describe "SendCtrl", ->
   it "selects an empty external address by default", ->    
     expect(scope.transaction.destination.type).toBe("External")
     expect(scope.transaction.destination.address).toBe("")
+    
+  it "selects the users currency by default", inject((Wallet)->
+    expect(Wallet.settings.currency.code).toBe("USD")
+    expect(scope.transaction.currency).toBe "USD"
+  )
   
   describe "to custom address", ->
     beforeEach ->
@@ -202,7 +205,7 @@ describe "SendCtrl", ->
   
   
     it "should disable Send button if balance is too low (ex mining fee)",  inject(() ->
-      scope.transaction.amount = "10.0" # Much more than what the mock account has.
+      scope.transaction.amount = "1000.0" # Much more than what the mock account has.
       scope.$apply()
       expect(scope.transactionIsValid).toBe(false)        
       return

@@ -87,7 +87,18 @@
     else 
       return origin.label + "(" + $scope.BTCtoFiat(max_btc, $scope.transaction.currency) + " " + $scope.transaction.currency + ")"
   
-  $scope.transaction = {from: null, to: paymentRequest.address, destination: null, amount: paymentRequest.amount, satoshi: 0, currency: "BTC", currencySelected: btc, fee: 0}
+  
+  
+  $scope.transaction = {
+    from: null, 
+    to: paymentRequest.address, 
+    destination: null, 
+    amount: paymentRequest.amount, 
+    satoshi: 0, 
+    currency: Wallet.settings.currency.code, 
+    currencySelected: Wallet.settings.currency, 
+    fee: 0
+  }
     
   $scope.setMethod("BTC")
   
