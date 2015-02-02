@@ -154,7 +154,6 @@
       
       transactionDidFinish = () ->
         $scope.sending = false
-        console.log "Done"
         sound = ngAudio.load("beep.wav")
         sound.play()
         $modalInstance.close ""
