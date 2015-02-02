@@ -16,7 +16,6 @@
     $scope.password = $cookieStore.get("password")
   
   $scope.login = () ->
-    # Is called twice for some reason... Related to ladda?
     return if $scope.busy
     
     $scope.busy = true

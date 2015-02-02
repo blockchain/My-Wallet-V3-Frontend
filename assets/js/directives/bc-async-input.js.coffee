@@ -39,17 +39,16 @@ walletApp.directive('bcAsyncInput', () ->
             !scope.form.$error
         
       scope.save = () ->
-        unless scope.status.saving # This gets called twice
-          scope.status.saving = true
+        scope.status.saving = true
+  
+        success = () ->
+          scope.status.saving = false
+          scope.status.edit = false
     
-          success = () ->
-            scope.status.saving = false
-            scope.status.edit = false
-      
-          error = () ->
-            scope.status.saving = false
-      
-          scope.onSave(scope.form.newValue, success, error)
+        error = () ->
+          scope.status.saving = false
+    
+        scope.onSave(scope.form.newValue, success, error)
           
   }
 )

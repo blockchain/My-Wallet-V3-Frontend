@@ -145,7 +145,7 @@
     $modalInstance.dismiss ""
   
   $scope.send = () ->
-    unless $scope.sending # send() gets called twice for some reason
+    unless $scope.sending
       $scope.sending = true
     
       transactionDidFailWithError = (message) ->
@@ -153,9 +153,10 @@
         $scope.sending = false
       
       transactionDidFinish = () ->
+        $scope.sending = false
+        console.log "Done"
         sound = ngAudio.load("beep.wav")
         sound.play()
-        $scope.sending = false
         $modalInstance.close ""
         $state.go("wallet.common.transactions", {accountIndex: $scope.transaction.from.index })
     

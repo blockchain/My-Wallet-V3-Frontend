@@ -9,6 +9,8 @@ walletApp.directive "uiLadda",  ($timeout, $compile, $translate) ->
       element.attr("ladda", attrs["uiLadda"])
 
       element.removeAttr("ui-ladda")
+      element.removeAttr("ng-click") # Prevent action from being called twice
+      
       $compile(element)(scope)
       
       scope.translation = null
