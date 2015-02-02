@@ -2,6 +2,7 @@
   $scope.fields = {name: ""}
   $scope.accounts = Wallet.accounts
   $scope.edit = null
+  $scope.busy = null
 
   if account?
     $scope.fields.name = account.label
@@ -12,14 +13,30 @@
     
   $scope.createAccount = () ->
     if $scope.validate() 
+      $scope.busy = true
+      
       success = () ->
+        $scope.busy = false
         $modalInstance.dismiss ""
         
-      Wallet.createAccount($scope.fields.name, success)
+      error = () ->
+        $scope.busy = false
+        
+      Wallet.createAccount($scope.fields.name, success, error)
       
   $scope.updateAccount = () ->
-    if $scope.validate() && Wallet.renameAccount(account, $scope.fields.name)
-      $modalInstance.dismiss ""
+    
+    if $scope.validate() 
+      $scope.busy = true
+      
+      success = () ->
+        $scope.busy = false
+        $modalInstance.dismiss ""
+        
+      error = () ->
+        $scope.busy = false
+      
+      Wallet.renameAccount(account, $scope.fields.name, success, error)
 
   #################################
   #           Private             #

@@ -9,6 +9,6 @@
       span.help-block {{ errors.name }}
     
 .modal-footer
-  button.btn.btn-info(ng-click="close()", translate="CLOSE")
-  button.btn.btn-primary(ng-click="createAccount()", translate="CREATE_ACCOUNT", ng-disabled="!formIsValid", ng-hide="edit")
-  button.btn.btn-primary(ng-click="updateAccount()", translate="RENAME", ng-disabled="!formIsValid", ng-show="edit")
+  button.btn.btn-info(ng-click="close()", translate="CLOSE", ng-hide="busy")
+  button.btn.btn-primary(ui-ladda="{{ busy }}", ng-click="createAccount()", ladda-translate="CREATE_ACCOUNT", ng-disabled="!formIsValid", ng-hide="edit")
+  button.btn.btn-primary(ui-ladda="{{ busy }}", ng-click="updateAccount()", ladda-translate="RENAME", ng-disabled="!formIsValid", ng-show="edit")

@@ -187,7 +187,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
     wallet.my.createNewWallet(email, password, language_code, currency_code, success, error)
         
-  wallet.createAccount = (name, successCallback) ->
+  wallet.createAccount = (name, successCallback, errorCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->
       $rootScope.$broadcast "requireSecondPassword", continueCallback
       
@@ -197,12 +197,19 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       successCallback()
       
     error = () ->
+      errorCallback()
     
     wallet.my.createAccount(name, needsSecondPasswordCallback, success, error)
   
-  wallet.renameAccount = (account, name) ->
-    wallet.my.setLabelForAccount(account.index, name)
-    wallet.updateAccountsAndLegacyAddresses()
+  wallet.renameAccount = (account, name, successCallback, errorCallback) ->
+    needsSecondPasswordCallback = (continueCallback) ->
+      $rootScope.$broadcast "requireSecondPassword", continueCallback
+    
+    if wallet.my.setLabelForAccount(account.index, name)
+      success()
+    else
+      wallet.displayError("Failed to rename account")
+      error()
     
   wallet.addAddressForAccount = (account, successCallback, errorCallback) ->        
     labeledReceivingAddresses = wallet.my.getLabeledReceivingAddressesForAccount(account.index)
