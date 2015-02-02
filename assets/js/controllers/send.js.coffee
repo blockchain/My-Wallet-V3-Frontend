@@ -11,6 +11,8 @@
   
   $scope.sending = false # Sending in progress
   
+  $scope.browserWithCamera = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia) != undefined
+    
   $scope.$watch "status.didLoadBalances + status.legacyAddressBalancesLoaded", ->
     if $scope.status.didLoadBalances && $scope.status.legacyAddressBalancesLoaded
       if $scope.origins.length == 0      
