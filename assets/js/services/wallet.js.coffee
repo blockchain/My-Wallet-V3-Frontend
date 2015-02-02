@@ -206,10 +206,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       $rootScope.$broadcast "requireSecondPassword", continueCallback
     
     if wallet.my.setLabelForAccount(account.index, name)
-      success()
+      account.label = name
+      successCallback()
     else
       wallet.displayError("Failed to rename account")
-      error()
+      errorCallback()
     
   wallet.addAddressForAccount = (account, successCallback, errorCallback) ->        
     labeledReceivingAddresses = wallet.my.getLabeledReceivingAddressesForAccount(account.index)

@@ -1,40 +1,41 @@
 @AccountFormCtrl = ($scope, Wallet, $modalInstance, $log, $translate, account) ->        
   $scope.fields = {name: ""}
   $scope.accounts = Wallet.accounts
-  $scope.edit = null
-  $scope.busy = null
+  $scope.status =
+    edit: false
+    busy: null
 
   if account?
     $scope.fields.name = account.label
-    $scope.edit = true
+    $scope.status.edit = true
 
   $scope.close = () ->
     $modalInstance.dismiss ""
     
   $scope.createAccount = () ->
     if $scope.validate() 
-      $scope.busy = true
+      $scope.status.busy = true
       
       success = () ->
-        $scope.busy = false
+        $scope.status.busy = false
         $modalInstance.dismiss ""
         
       error = () ->
-        $scope.busy = false
+        $scope.status.busy = false
         
       Wallet.createAccount($scope.fields.name, success, error)
       
   $scope.updateAccount = () ->
     
     if $scope.validate() 
-      $scope.busy = true
+      $scope.status.busy = true
       
       success = () ->
-        $scope.busy = false
+        $scope.status.busy = false
         $modalInstance.dismiss ""
         
       error = () ->
-        $scope.busy = false
+        $scope.status.busy = false
       
       Wallet.renameAccount(account, $scope.fields.name, success, error)
 
