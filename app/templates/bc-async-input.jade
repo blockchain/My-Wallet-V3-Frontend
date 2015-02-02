@@ -6,5 +6,5 @@ div
   .form-group(ng-class="{'has-error': !validate()}",ng-show="inline || status.edit")
     input.form-control(type="{{ type }}", ng-model="form.newValue", ng-focus="focus()")
     span(ng-hide="inline && !status.edit")
-      button.btn.btn-primary.btn-small(ng-click="save()",ng-disabled="!validate() || form.newValue == ngModel",ui-ladda="{{ status.saving }}", ladda-translate="SAVE", data-style="expand-left")
+      button.btn.btn-primary.btn-small(ng-click="save()",ng-disabled="!validate() || form.newValue == ngModel",ui-ladda="{{ status.saving }}", ladda-translate="SAVE", data-style="expand-left", data-style="expand-left")
       button.btn.btn-info.btn-small(ng-click="status.edit = false; newValue = ngModel", translate="CANCEL", ng-hide="status.saving")

@@ -1,4 +1,4 @@
-@SetSecondPasswordCtrl = ($scope, $log, Wallet, $modalInstance, $translate) ->
+@SetSecondPasswordCtrl = ($scope, $log, Wallet, $modalInstance, $translate, $timeout) ->
   
   $scope.isValid = false
   
@@ -17,8 +17,10 @@
       $scope.busy = false
       $modalInstance.dismiss ""
     
-    Wallet.setSecondPassword($scope.fields.password, success)
-    
+    $timeout((->
+      Wallet.setSecondPassword($scope.fields.password, success)
+    ), 100)
+      
   $scope.$watch "fields.confirmation", (newVal) ->
     if newVal?
       $scope.validate(false)
