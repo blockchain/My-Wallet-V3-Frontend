@@ -71,6 +71,8 @@ To run test and monitor for changes:
 
     npm test
 
+A coverage report is generated after you run the test for the first time. Just open `coverage/PhantomJS\ 1.9.8\ \(Mac\ OS\ X\)/index.html` in your browser.
+
 ## Development
 Grunt keeps an eye on things in the background. In particular it compiles the Jade files whenever you change them. So make sure it's running:
 
