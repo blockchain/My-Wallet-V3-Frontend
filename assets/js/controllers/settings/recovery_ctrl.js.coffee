@@ -1,4 +1,4 @@
-@RecoveryCtrl = ($scope, Wallet, $state) ->
+@RecoveryCtrl = ($scope, Wallet, $state, $translate) ->
   $scope.recoveryPhrase = null
   $scope.showRecoveryPhrase = false
   $scope.editMnemonic = false
@@ -42,4 +42,9 @@
     
   $scope.$watch "mnemonic", () ->
     $scope.validate()
+    
+  $scope.doNotCopyPaste = (event) ->
+    event.preventDefault()
+    $translate("DO_NOT_COPY_PASTE").then (translation) ->
+      Wallet.displayWarning translation
   

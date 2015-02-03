@@ -12,7 +12,7 @@ form.form-horizontal(role="form",name="form",novalidate)
 
     .row
       .col-xs-12
-        pre.recovery(ng-show="showRecoveryPhrase") {{ recoveryPhrase }}
+        pre.recovery(ng-show="showRecoveryPhrase", ng-cut="doNotCopyPaste($event)" ng-copy="doNotCopyPaste($event)") {{ recoveryPhrase }}
         
   .form-group
     .col-sm-6
