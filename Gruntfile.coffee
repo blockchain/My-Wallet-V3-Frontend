@@ -72,6 +72,7 @@ module.exports = (grunt) ->
           'assets/js/webcam.js'
           'app/bower_components/angular-audio/app/angular.audio.js'
           'app/bower_components/angular-bootstrap-slider/slider.js'
+          'app/bower_components/angular-inview/angular-inview.js'
           'assets/js/templates.js'
           'node_modules/bc-qr-reader/dist/bc-qr-reader.js'
         ]

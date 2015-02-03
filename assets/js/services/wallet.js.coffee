@@ -250,7 +250,27 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     wallet.my.setLabelForAccountAddress(account.index, firstAvailableReceivingAddressIdx, "", success, error)
     
+  wallet.fetchMoreTransactions = (where, successCallback, errorCallback, allTransactionsLoadedCallback) ->
+    success = (res) ->
+      wallet.appendTransactions(res)
+      # wallet.updateTransactions()
+      successCallback()
+      wallet.applyIfNeeded()
+      
+    error = () ->
+      errorCallback()
+      wallet.applyIfNeeded()
+      
+    allTransactionsLoaded = () ->
+      allTransactionsLoadedCallback()
+      wallet.applyIfNeeded()
     
+    if where == "accounts"
+      wallet.my.fetchMoreTransactionsForAccounts(success, error, allTransactionsLoaded)
+    else if where == "imported"
+      wallet.my.fetchMoreTransactionsForLegacyAddresses(success, error, allTransactionsLoaded)
+    else
+      wallet.my.fetchMoreTransactionsForAccount(parseInt(where), success, error, allTransactionsLoaded)
     
   wallet.changeAddressLabel = (address, label, successCallback, errorCallback) ->
     if address.account? # HD Address
@@ -820,6 +840,20 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           
         wallet.transactions.push transaction 
     wallet.status.didLoadTransactions = true
+          
+  wallet.appendTransactions = (transactions) ->
+   for tx in transactions
+     match = false
+     for candidate in wallet.transactions
+       if candidate.hash == tx.hash
+         match = true
+         break
+
+     if !match
+       transaction = angular.copy(tx)
+       transaction.note = wallet.my.getNote(transaction.hash)
+    
+       wallet.transactions.push transaction   
           
   ####################
   # Notification     #
