@@ -32,9 +32,15 @@ module.exports = function(config){
 
     preprocessors: {
       '**/*.jade': ['ng-jade2js'],
-      '**/*.coffee': ['coffee'],
+      'assets/js/controllers/**/*.js.coffee' : ['coverage'],
+      'assets/js/filters.js.coffee' : ['coverage'], 
+      'assets/js/services/*.js.coffee' : ['coverage'],
+      'assets/js/directives/*.js.coffee' : ['coverage'],
+      'assets/js/my_wallet.js.coffee': ['coffee'],
+      'assets/js/routes.js.coffee' : ['coffee'],
+      'assets/js/app.js.coffee' : ['coffee'],
+      'tests/**/*.coffee' : ['coffee']
     },
-
     coffeePreprocessor: {
       // options passed to the coffee compiler
       options: {
@@ -85,7 +91,8 @@ module.exports = function(config){
       'karma-jasmine',
       'karma-junit-reporter',
       'karma-osx-reporter',
-      'karma-ng-jade2js-preprocessor'
+      'karma-ng-jade2js-preprocessor',
+      'karma-coverage'
     ],
 
     junitReporter : {
@@ -93,7 +100,12 @@ module.exports = function(config){
       suite: 'unit'
     },
     
-    reporters: ['progress','osx']
+    reporters: ['progress','osx', 'coverage'],
+
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/'
+    }
 
   });
 };
