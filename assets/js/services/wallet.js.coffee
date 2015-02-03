@@ -750,7 +750,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       
   # Update (labelled) HD addresses:      
   wallet.updateHDaddresses = () ->
-    
     for account in wallet.accounts
       labeledAddresses = wallet.my.getLabeledReceivingAddressesForAccount(account.index)
       for address in labeledAddresses
@@ -894,10 +893,13 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         , 1000
       )
       
+    else if event == "hd_wallet_set"
+      wallet.updateHDaddresses()
+      wallet.applyIfNeeded()
+      
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
       wallet.updateAccountsAndLegacyAddresses()  
-      wallet.updateHDaddresses()
       wallet.applyIfNeeded()
       
     else if event == "hd_wallet_balance_updated"

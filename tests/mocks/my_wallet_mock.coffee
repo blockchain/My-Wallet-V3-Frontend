@@ -197,6 +197,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.getHistoryAndParseMultiAddressJSON = () ->
     this.refresh()
     eventListener("did_multiaddr")
+    eventListener("hd_wallet_set")
       
   myWallet.createNewWallet = (email, pwd, language, currency, success, fail) ->
     uid = String(Math.floor((Math.random() * 100000000) + 1))
