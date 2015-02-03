@@ -5,6 +5,6 @@ span
   |   
   b(translate="{{ subject }}" tooltip="{{ address }}" ng-if="address")
   b(translate="{{ subject }}" ng-if="!address")
-  span(ng-show="transaction.confirmations == 0")
+  span(ng-show="transaction.confirmations == 0 && transaction.from.externalAddresses")
     br
     i(translate="UNCONFIRMED_WARNING")
