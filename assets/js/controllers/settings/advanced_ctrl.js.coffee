@@ -1,6 +1,8 @@
-@SettingsAdvancedCtrl = ($scope, Wallet, $modal) ->
+@SettingsAdvancedCtrl = ($scope, Wallet, $modal, $translate) ->
   $scope.settings = Wallet.settings
   $scope.processToggleRememberTwoFactor = null
+  $scope.errors = 
+    ipWhitelist: null
     
   $scope.validatePbkdf2 = (candidate) ->
     n = parseInt(candidate)
@@ -8,8 +10,22 @@
     return true
     
   $scope.validateIpWhitelist = (candidates) ->
+    $scope.errors.ipWhitelist = null
+    
     return false unless candidates? && candidates != ""
-    for candidate in candidates.split(",")
+    if candidates.length > 255
+      $translate("MAX_CHARACTERS", {max: 255}).then (translation) ->
+        $scope.errors.ipWhitelist = translation
+      return false 
+    candidatesArray = candidates.split(",")
+    if candidatesArray.length > 16
+      $translate("MAX_IP_ADDRESSES", {max: 16}).then (translation) ->
+        $scope.errors.ipWhitelist = translation
+      return false 
+    for candidate in candidatesArray
+      if candidate.trim() == "%.%.%.%"
+        $translate("NOT_ALLOWED", {forbidden:  "%.%.%.%"}).then (translation) ->
+          $scope.errors.ipWhitelist = translation
       digits_or_wildcards = candidate.trim().split(".")
       return false if digits_or_wildcards.length != 4
       for digit_or_wildcard in digits_or_wildcards

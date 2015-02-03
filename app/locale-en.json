@@ -320,5 +320,8 @@
   "ARCHIVED_ACCOUNTS_EXPLAIN" : "Archived accounts are account you may not need anymore that are hidden from the main view but still part of your wallet. You can un-archive them at any time.",
   "RESENT_2FA_SMS" : "Verification SMS has been sent again.",
   "RESENT_2FA_SMS_FAILED" : "Failed to resend verification SMS.",
+  "MAX_CHARACTERS" : "Maximum of {{ max }} characters",
+  "MAX_IP_ADDRESSES" : "Maximum of {{ max }} IP addresses",
+  "NOT_ALLOWED" : "{{ forbidden }} is not allowed",
   "" : ""
 }

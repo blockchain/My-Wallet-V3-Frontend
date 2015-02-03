@@ -40,12 +40,12 @@ form.form-horizontal(role="form",name="form",novalidate)
     .col-sm-6.setting-result
       bc-async-input(ng-model="settings.pbkdf2", validator="validatePbkdf2", on-save="changePbkdf2", action-title="'CHANGE_PBKDF2' | translate")
 
-  .form-group
+  .form-group(ng-class="{'has-error': errors.ipWhitelist}")
     .col-sm-6
       label(translate="IP_WHITELIST")
       p.explain(translate="IP_WHITELIST_EXPLAIN")    
     .col-sm-6.setting-result
-      bc-async-input(ng-model="settings.ipWhitelist", validator="validateIpWhitelist", on-save="changeIpWhitelist", action-title="'CHANGE_IP_WHITELIST' | translate")
+      bc-async-input(ng-model="settings.ipWhitelist", validator="validateIpWhitelist", on-save="changeIpWhitelist", action-title="'CHANGE_IP_WHITELIST' | translate", error-message="errors.ipWhitelist")
 
   .form-group
     .col-sm-6
