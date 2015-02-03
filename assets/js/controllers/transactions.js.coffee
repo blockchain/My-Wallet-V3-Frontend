@@ -1,6 +1,7 @@
 @TransactionsCtrl = ($scope, Wallet, MyWallet, $log, $stateParams, $timeout) ->
   
   $scope.nextPage = () ->
+    return if $scope.allTransactionsLoaded
     $scope.loading = true
     
     success = () ->
