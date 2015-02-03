@@ -156,6 +156,21 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
     wallet.fetchExchangeRate()
   
+  wallet.resendTwoFactorSms = (successCallback, errorCallback) ->
+    success = () ->
+      $translate("RESENT_2FA_SMS").then (translation) ->
+        wallet.displaySuccess(translation)
+        
+      successCallback()
+      wallet.applyIfNeeded()
+      
+    error = () ->
+      $translate("RESENT_2FA_SMS_FAILED").then (translation) ->
+        wallet.displayError(translation)
+      errorCallback()
+      wallet.applyIfNeeded()
+    
+    wallet.my.resendTwoFactorSms(success, error)
     
   wallet.create = (password, email, currency, language, success_callback) ->      
     success = (uid) ->

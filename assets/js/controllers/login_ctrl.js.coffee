@@ -40,6 +40,17 @@
 
     if $scope.savePassword && $scope.password? && $scope.password != ""
        $cookieStore.put("password", $scope.password)
+       
+  $scope.resendTwoFactorSms = () ->
+    $scope.resending = true
+    
+    success = () ->
+      $scope.resending = false
+      
+    error = () ->
+      $scope.resending = false
+      
+    Wallet.resendTwoFactorSms(succes, error)
 
   $scope.$watch "status.isLoggedIn", (newValue) ->
     if newValue
