@@ -121,9 +121,13 @@
       $scope.transaction.destination.label = paymentRequest.address       
       $scope.transaction.amount = paymentRequest.amount if paymentRequest.amount
       $scope.transaction.currency = paymentRequest.currency if paymentRequest.currency
-
+      
       $scope.cameraOff()
       $scope.visualValidate()
+      $scope.transactionIsValid = $scope.validate()
+      
+      $scope.updateToLabel()
+      
     else
       $translate("QR_CODE_NOT_BITCOIN").then (translation) ->
         Wallet.displayWarning(translation)
