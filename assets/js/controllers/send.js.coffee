@@ -102,6 +102,7 @@
     currency: Wallet.settings.currency.code, 
     currencySelected: Wallet.settings.currency, 
     fee: 0
+    note: ""
   }
     
   $scope.setMethod("BTC")
@@ -158,7 +159,12 @@
         Wallet.displayError(message)
         $scope.sending = false
       
-      transactionDidFinish = () ->
+      transactionDidFinish = (tx_hash) ->
+        # Save note, if any:
+        note = $scope.transaction.note.trim()
+        if note != ""
+          Wallet.setNote({hash: tx_hash}, note)
+        
         $scope.sending = false
         sound = ngAudio.load("beep.wav")
         sound.play()

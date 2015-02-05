@@ -419,11 +419,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.transactionObserver = (success, error) ->    
     o = {}
     
-    o.transactionSuccess = () ->
+    o.transactionSuccess = (tx_hash) ->
+        success(tx_hash) # Allow caller to set a note before refreshing transactions
+        
         wallet.updateTransactions()
         wallet.updateAccountsAndLegacyAddresses()
-    
-        success()
+        wallet.applyIfNeeded() 
       
     o.transactionError = (e) ->
         if e.message != undefined
