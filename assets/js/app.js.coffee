@@ -22,6 +22,7 @@ walletApp = angular.module("walletApp", [
   "pascalprecht.translate"
   "ui.bootstrap-slider"
   "angular-inview"
+  "passwordStr"
   # TODO: have grunt generate the list of partials and templates
   "partials/account-form.jade"
   "partials/accounts-navigation.jade"

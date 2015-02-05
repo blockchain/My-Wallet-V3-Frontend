@@ -25,7 +25,8 @@ module.exports = function(config){
       'assets/js/directives/*.js.coffee',
       'tests/**/*.coffee',
       'tests/**/*.js',
-      'app/templates/*.jade'      
+      'app/templates/*.jade',
+      'assets/js/directives/password-str.js' 
     ],
 
     autoWatch : true,

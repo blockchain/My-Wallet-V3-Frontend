@@ -47,12 +47,12 @@ describe "SignupCtrl", ->
       expect(scope.isValid[0]).toBe(false)
       expect(scope.errors.password).toBeNull()
     
-    it "should display an error if password is too short", ->
-      scope.fields.currentPassword = "test"
-      scope.fields.password = "1"
-      scope.validate()
-      expect(scope.isValid[0]).toBe(false)
-      expect(scope.errors.password).not.toBeNull()
+    # it "should display an error if password is too short", ->
+    #   scope.fields.currentPassword = "test"
+    #   scope.fields.password = "1"
+    #   scope.validate()
+    #   expect(scope.isValid[0]).toBe(false)
+    #   expect(scope.errors.password).not.toBeNull()
     
     it "should not display an error if password confirmation is still empty", ->
       scope.fields.currentPassword = "test"

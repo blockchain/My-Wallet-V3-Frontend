@@ -894,12 +894,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       )
       
     else if event == "hd_wallet_set"
-      console.log "REMOVE updateHDaddresses() from did_multiaddr!"
       wallet.updateHDaddresses()
       wallet.applyIfNeeded()
       
     else if event == "did_multiaddr" # Transactions loaded
-      wallet.updateHDaddresses()
       wallet.updateTransactions()
       wallet.updateAccountsAndLegacyAddresses()  
       wallet.applyIfNeeded()

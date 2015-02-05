@@ -129,9 +129,6 @@
         $scope.success.password = true
       else
         $scope.isValid[0] = false
-        if visual
-          $translate("TOO_SHORT").then (translation) ->
-            $scope.errors.password = translation
       
     if $scope.fields.confirmation == ""
       $scope.isValid[0] = false

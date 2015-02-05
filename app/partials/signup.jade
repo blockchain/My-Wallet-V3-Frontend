@@ -19,8 +19,7 @@
             label.col-sm-4.control-label(translate="NEW_PASSWORD")
             .col-sm-6
               input.form-control(type="password",ng-model="fields.password",autofocus,ng-blur="validate()", ng-focus="errors.password = null")
-              span.help-block 
-                p {{ errors.password }}
+              div(password-str password="{{ fields.password }}").help-block 
           .form-group(ng-class="{'has-error': errors.confirmation, 'has-success': success.confirmation}")
             label.col-sm-4.control-label(translate="CONFIRM_PASSWORD")
             .col-sm-6
