@@ -116,26 +116,20 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       needsTwoFactorCallback()
   
       wallet.settings.twoFactorMethod = method 
-      $state.go("login.show")
-      return
-      
-    wrongTwoFactorCode = (method) ->
-      $state.go("login.show")
-      return
-  
-    loginError = (error) ->
-      console.log(error)
-      wallet.displayError(error)
-      
-      if observer?
-        errorCallback()
-      else
-        $state.go("login.show")
-      
       wallet.applyIfNeeded()
       
-      return
-  
+    wrongTwoFactorCode = (method) ->
+      errorCallback()
+      wallet.applyIfNeeded()
+     
+    loginError = (error) ->
+      console.log(error)
+      wallet.displayError(error, true)
+      
+      errorCallback()
+      
+      wallet.applyIfNeeded()
+        
     if two_factor_code? && two_factor_code != ""
       wallet.settings.needs2FA = true
     else
