@@ -59,7 +59,8 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-rename-assets": "0.0.1",
     "grunt-shell": "^1.1.1",
-    "karma-coverage": "^0.2.7"
+    "karma-coverage": "^0.2.7",
+    "grunt-surround": "^0.1.0"
   },
   "scripts": {
     "postinstall": "bower install && browserify -r country-data assets/js/country-data-import.js > assets/js/country-data.js",

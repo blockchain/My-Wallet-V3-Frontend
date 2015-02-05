@@ -4,7 +4,7 @@ window.theFormatter = (val) ->
   return "Nonsense"
 
 # App Module 
-walletApp = angular.module("walletApp", [
+modules = [
   "walletFilters"
   "walletServices"
   "securityCenter"
@@ -16,7 +16,6 @@ walletApp = angular.module("walletApp", [
   "ngAudio"
   "ngSanitize"
   "ja.qr"
-  "webcam"
   "LocalStorageModule"
   "ngNumeraljs"
   "pascalprecht.translate"
@@ -78,7 +77,12 @@ walletApp = angular.module("walletApp", [
   "templates/verify-email.jade"
   "templates/resend-email-confirmation.jade"
   # 'angular-ladda'
-])
+]
+
+unless (/internet explorer/i).test(window.navigator.userAgent) || (/MSIE/i).test(window.navigator.userAgent)
+  modules.push "webcam"
+
+walletApp = angular.module("walletApp", modules)
 
 walletApp.config (uiSelectConfig) ->
   uiSelectConfig.theme = 'bootstrap'
