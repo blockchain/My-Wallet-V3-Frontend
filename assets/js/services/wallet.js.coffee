@@ -41,6 +41,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.languages = []
   wallet.currencies = []
   wallet.hdAddresses = []
+  
+  wallet.my.setUseBuildHDWalletWebworker(false) # Don't use web workers for the time being
     
   ##################################
   #             Public             #
