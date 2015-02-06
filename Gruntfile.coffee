@@ -33,6 +33,7 @@ module.exports = (grunt) ->
         
       mywallet:
         src: [
+          'assets/js/my-wallet/ie.js'
           "assets/js/my-wallet/shared.js"
           'assets/js/my-wallet/bower_components/cryptojslib/rollups/sha256.js'
           'assets/js/my-wallet/bower_components/cryptojslib/rollups/aes.js'
