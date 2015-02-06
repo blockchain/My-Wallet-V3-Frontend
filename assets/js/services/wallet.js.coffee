@@ -42,7 +42,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.currencies = []
   wallet.hdAddresses = []
   
-  wallet.my.setUseBuildHDWalletWebworker(false) # Don't use web workers for the time being
+  wallet.my.setUseBuildHDWalletWebworker(true) # Use web workers
     
   ##################################
   #             Public             #
@@ -891,6 +891,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       )
       
     else if event == "hd_wallet_set"
+      wallet.updateAccounts()
       wallet.updateHDaddresses()
       wallet.applyIfNeeded()
       
