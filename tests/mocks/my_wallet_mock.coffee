@@ -664,6 +664,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.update_tor_ip_block = (enabled, successCallback, errorCallback) ->
     successCallback()
     
+  myWallet.setUseBuildHDWalletWebworker = (value) ->
+    
+    
   #####################################
   # Tell the mock to behave different # 
   #####################################
