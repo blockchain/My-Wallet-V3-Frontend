@@ -3,8 +3,8 @@
   $scope.isValid = false
   
   $scope.fields = {currentPassword: "", password: "", confirmation: ""}
-
-
+  
+  $scope.form = {}
 
   $scope.close = () ->
     Wallet.clearAlerts()
@@ -34,15 +34,11 @@
         if visual
           $translate("INCORRECT").then (translation) ->
             $scope.errors.currentPassword = translation
-          
-    if $scope.fields.password == ""
-      isValid = false
-    else
-      if $scope.fields.password.length > 3
-        $scope.success.password = true
-      else
+    if $scope.form.theForm? 
+      if $scope.form.theForm.password.$error.minEntropy
         isValid = false
-      
+        $translate("TOO_WEAK").then (translation) ->
+          $scope.errors.password =  translation  
     if $scope.fields.confirmation == ""
       isValid = false
     else

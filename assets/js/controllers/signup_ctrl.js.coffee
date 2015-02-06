@@ -8,6 +8,7 @@
   $scope.isValid = [true, true, false, false]
   
   
+  
   language_guess = $filter("getByProperty")("code", $translate.use(), Wallet.languages)
   
   unless language_guess?
@@ -17,7 +18,6 @@
 
   $scope.fields = {email: "", password: "", confirmation: "", language: language_guess, currency: currency_guess, mnemonic: "", emailVerificationCode: ""}
   $scope.errors = {emailVerificationCode: null}
-
 
   $scope.didLoad = () ->    
     if Wallet.status.isLoggedIn && !Wallet.status.didVerifyEmail
@@ -121,14 +121,6 @@
         $scope.errors.email = translation
     else 
        $scope.success.email = true
-          
-    if $scope.fields.password == ""
-      $scope.isValid[0] = false
-    else
-      if $scope.fields.password.length > 3
-        $scope.success.password = true
-      else
-        $scope.isValid[0] = false
       
     if $scope.fields.confirmation == ""
       $scope.isValid[0] = false

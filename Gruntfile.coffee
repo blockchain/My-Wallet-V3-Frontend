@@ -75,7 +75,7 @@ module.exports = (grunt) ->
           'app/bower_components/angular-inview/angular-inview.js'
           'assets/js/templates.js'
           'node_modules/bc-qr-reader/dist/bc-qr-reader.js'
-          'assets/js/directives/password-str.js'
+          'app/bower_components/angular-password-entropy/password-entropy.js'
         ]
 
         dest: "build/application-dependencies.js"

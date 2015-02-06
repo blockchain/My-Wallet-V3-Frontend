@@ -25,6 +25,7 @@
     "seiyria-bootstrap-slider": "~4.2.0",
     "angular-bootstrap-slider": "sjors/angular-bootstrap-slider#~0.0.8",
     "angular-ladda": "~0.1.9",
-    "angular-inview": "~1.5.0"
+    "angular-inview": "~1.5.0",
+    "angular-password-entropy": "sjors/angular-password-entropy#188703e"
   }
 }
