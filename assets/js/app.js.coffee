@@ -8,6 +8,7 @@ modules = [
   "walletFilters"
   "walletServices"
   "securityCenter"
+  "adverts"
   "ui.router"
   "ui.bootstrap"
   "ngCookies"
@@ -76,6 +77,7 @@ modules = [
   "templates/bc-async-input.jade"
   "templates/verify-email.jade"
   "templates/resend-email-confirmation.jade"
+  "templates/adverts.jade"
   # 'angular-ladda'
 ]
 

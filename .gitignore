@@ -8,3 +8,4 @@ dist
 assets/js/templates.js
 assets/js/bc-qr-reader.js
 coverage
+.idea

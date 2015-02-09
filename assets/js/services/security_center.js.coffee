@@ -1,5 +1,4 @@
-walletServices = angular.module("securityCenter", [])
-walletServices.factory "SecurityCenter", ($log, Wallet, $rootScope, filterFilter) -> 
+angular.module("securityCenter", []).factory "SecurityCenter", ($log, Wallet, $rootScope, filterFilter) -> 
   settings = Wallet.settings
   user = Wallet.user
   status = Wallet.status

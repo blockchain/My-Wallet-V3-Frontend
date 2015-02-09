@@ -52,6 +52,7 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     !=css('security-badge')
     !=css('verify-recovery-phrase.css')
     !=css('angular-csp')
+    !=css('adverts')
     
     // Blockchain MyWallet javascript (must be called before 'app')
     unless process.env.MYWALLET_MOCK == "1"
@@ -92,6 +93,7 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     !=js('directives')
     !=js('services/wallet')
     !=js('services/security_center')
+    !=js('services/adverts')
     !=js('templates')
     
     !=js('bc-qr-reader')
