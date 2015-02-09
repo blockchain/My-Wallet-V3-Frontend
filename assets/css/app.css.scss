@@ -150,7 +150,12 @@ a{
 
 a.back {
   float: left;
-  margin-left: -15px;
+  margin-top: -15px;
+  padding-top: 15px;
+  margin-bottom: -15px;
+  padding-bottom: 15px;
+  margin-left: -30px;
+  padding-left: 15px;
   
   img {
     height: 15px;
