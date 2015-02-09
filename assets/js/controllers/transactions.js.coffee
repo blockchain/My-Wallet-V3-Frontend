@@ -1,4 +1,4 @@
-@TransactionsCtrl = ($scope, Wallet, MyWallet, $log, $stateParams, $timeout) ->
+@TransactionsCtrl = ($scope, Wallet, MyWallet, $log, $stateParams, $timeout, $state) ->
   
   $scope.nextPage = () ->
     return if $scope.allTransactionsLoaded
@@ -16,6 +16,9 @@
       
     
     Wallet.fetchMoreTransactions($stateParams.accountIndex, success, error, allTransactionsLoaded)
+  
+  $scope.showTransaction = (transaction) ->
+    $state.go("wallet.common.transaction", {accountIndex: $scope.accountIndex, hash: transaction.hash})
   
   #################################
   #           Private             #

@@ -14,13 +14,18 @@
   
   
   .row.transaction {
-	margin-top: 5px;
-	border-bottom: 1pt solid #f5f5f5;
-	padding: 20px 0;
+  	margin-top: 5px;
+  	border-bottom: 1pt solid #f5f5f5;
+  	padding: 20px 0;
+  }
+  
+  .col-xs-2 {
+    cursor: pointer;
   }
   
   .description{
     color: #828181;
+    cursor: pointer;
   }
     
 
