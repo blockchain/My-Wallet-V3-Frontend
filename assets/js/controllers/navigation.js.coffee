@@ -11,7 +11,6 @@
     return $state.current.name == "wallet.common.transactions" || $state.current.name == "wallet.common.transaction"
 
   $scope.isSettingsState = () ->
-    console.log $state.current.name.indexOf("wallet.common.settings")
     return $state.current.name.indexOf("wallet.common.settings") == 0 && $state.current.name != "wallet.common.settings.security-center"
 
   $scope.isSecurityState = () ->
