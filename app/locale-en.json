@@ -61,7 +61,7 @@
   "MY_ADDRESSES" : "My Addresses",
   "SECURITY_CENTER" : "Security Center",
   "WALLET_RECOVERY" : "Wallet Recovery",
-  "WALLET_RECOVERY_EXPLAIN" : "In the case you lose access to your wallet, either by lost or stolen device, or forgotten password, Blockchain CANNOT reset your password. Your Recovery Phrase allows you a foolproof way to access your wallet and funds, it is very important that you write this down and store it safely.",
+  "WALLET_RECOVERY_EXPLAIN" : "If you lose access to your wallet, either by lost or stolen device, or forgotten password, Blockchain CANNOT reset your password. Your Recovery Phrase allows you a foolproof way to access your wallet and funds. It is very important that you write this down and store it safely.",
   "ADD_WALLET_RECOVERY" : "Confirm Your Recovery Phrase.",
   "ARE_YOU_SURE_LOGOUT" : "Are you sure you wish to logout?",
   "LANGUAGE_EXPLAIN" : "Set your preferred language",
