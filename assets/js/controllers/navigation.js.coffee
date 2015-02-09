@@ -15,7 +15,6 @@
 
   $scope.isSecurityState = () ->
     return $state.current.name == "wallet.common.settings.security-center" 
-
   
   $scope.logout = () ->  
     if !Wallet.isSynchronizedWithServer() 
