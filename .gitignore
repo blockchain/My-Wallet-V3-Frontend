@@ -9,5 +9,3 @@ assets/js/templates.js
 assets/js/bc-qr-reader.js
 coverage
 .idea
-app/img/flags.png
-assets/css/intlTelInput.css
