@@ -1,29 +1,22 @@
 .container-fluid
-  a.navbar-brand.col-xs-2(ui-sref="wallet.common.transactions({accountIndex:'accounts'})")
+  .navbar-brand.col-sm-3.hidden-xs
     img#logo(src="img/logo.png",alt="Blockchain")
-  ul.nav.navbar-nav.col-xs-7(ng-show="status.isLoggedIn")
-    //- li.item(ui-sref-active="active")
-    //-   a(ui-sref="dashboard")
-    //-     img.tab(src="img/dashboard-icon.png")
-    //-     span(translate="DASHBOARD")
-    li.item(ng-class="{ active: isTransactionState() }") 
-      a(ng-click="visitTransactions()") 
-        img.tab(src="img/transactions-icon.png")
-        span(translate="TRANSACTIONS")
-  ul.nav.navbar-nav.col-xs-3(ng-show="status.isLoggedIn")
-    li.pull-right.dropdown.account-details(dropdown, ng-class="{ active: isSettingsState() }") 
-      a.dropdown-toggle(href dropdown-toggle)
-        img#account(src="img/account-icon.png",alt="Account Settings")
-        p(translate="PROFILE")
-      ul.dropdown-menu
-        li
-          a(ui-sref="wallet.common.settings.my-details", translate="SETTINGS")
-        li
-          a(ui-sref="wallet.common.settings.mobile", translate="MOBILE")
-        li
-          a(ng-click="logout()", translate="LOGOUT")
-    li.security-center.clearfix.item(ng-class="{ active: isSecurityState() }") 
-      a(ui-sref="wallet.common.settings.security-center")
-        img#security(ng-src="{{ securityIconURL }}",alt="Your Security Score", ng-if="securityIconURL")
-        p(translate="SECURITY")
-                  
+  .col-sm-9.col-xs-12
+    ul.navbar-nav(ng-show="status.isLoggedIn")
+      li.item(ng-class="{ active: isTransactionState() }")  
+        a.transactions(ng-click="visitTransactions()")
+          span(translate="TRANSACTIONS")
+    ul.navbar-nav.extra-nav(ng-show="status.isLoggedIn")
+      li.item(ng-class="{ active: isSecurityState() }")
+        a.security(ui-sref="wallet.common.settings.security-center", ng-class="{'security-level-0': security.level == 0, 'security-level-1': security.level == 1, 'security-level-2': security.level == 2, 'security-level-3': security.level == 3}")
+          span(translate="SECURITY")
+      li.dropdown.item(dropdown, ng-class="{ active: isSettingsState() }")
+        a.dropdown-toggle.profile(href dropdown-toggle)
+          span(translate="PROFILE")
+        ul.dropdown-menu
+          li
+            a(ui-sref="wallet.common.settings.my-details", translate="SETTINGS")
+          li
+            a(ui-sref="wallet.common.settings.mobile", translate="MOBILE")
+          li
+            a(ng-click="logout()", translate="LOGOUT")

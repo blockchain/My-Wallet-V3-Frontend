@@ -115,8 +115,6 @@ a{
   margin: 0;
   
     .left-view{
-      padding-left: 1px;
-      padding-right: 1px;
  
 	  .active-accounts{
 		  
@@ -212,4 +210,12 @@ a.back {
 
 .tooltip-inner {
     max-width: 300px;
+}
+
+
+// this is naughty, and I need to put these styles in the appropriate places.
+
+@media (min-width: 768px){
+.tx-row .left-view{padding: 0 15px;}
+
 }

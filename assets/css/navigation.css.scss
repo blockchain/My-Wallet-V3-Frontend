@@ -96,6 +96,71 @@
 }
 
 img#logo {
-  height: 45px;
+  height: 40px;
   margin-top: -10px;
+}
+
+ul.navbar-nav{
+  list-style: none;	
+  padding: 0;
+  margin: 0 0 0 15px;
+  
+  li.item{
+    a{
+	 padding: 15px;    
+	 font-weight: 500;
+     background-repeat: no-repeat;
+	 background-position: 5px 50%;
+     background-size: 25px;
+
+      span{
+	    padding-left: 20px;    
+      }	
+     
+    }
+    a.active{
+	  color: #E6EAEB;      
+    }
+    a.transactions{
+      background-image: url('/img/transactions-icon.png');    
+    }
+    a.profile{
+      background-image: url('/img/account-icon.png');    	    
+    }
+    a.security{
+	  background-image: url('/img/security-icon-0.png');  
+    }
+    a.security-level-1{
+	  background-image: url('/img/security-icon-1.png');  
+    }
+    a.security-level-2{
+	  background-image: url('/img/security-icon-2.png');  
+    }
+    a.security-level-3{
+	  background-image: url('/img/security-icon-3.png');  
+    }    
+  }
+}
+
+
+ul.extra-nav{
+  li.item{
+    a{
+	  background-size: 35px;
+	  span{
+		padding-left: 40px;  
+	  }    
+    }	  
+  }
+  
+}
+
+
+@media (min-width: 768px){
+  ul.extra-nav{
+	float: right;
+	li.item{
+	  margin: 0 0 0 10px;
+	}
+  }	
 }
