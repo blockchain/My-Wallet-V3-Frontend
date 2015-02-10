@@ -1,4 +1,4 @@
-span(ng-class="{unconfirmed: transaction.confirmations < 3}")
+span.amountTotal(ng-class="{unconfirmed: transaction.confirmations < 3}")
   span(ng-show="transaction.intraWallet")
     button.amount.intra-wallet
       fiat(btc="-transaction.result", ng-hide="btc")

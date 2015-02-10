@@ -1,9 +1,9 @@
 .row#top(ng-show="status.isLoggedIn")
-  .col-xs-6.balance
+  .col-xs-12.col-sm-7.col-md-6.balance
     .content
       h1 
         fiat(btc="total(accountIndex)")
       p {{ total(accountIndex) | btc }}
-  .col-xs-6.text-right
+  .col-xs-12.col-sm-5.col-md-6.text-right
     button.left-arrow.white(ng-click="request()", translate="REQUEST") 
     button.right-arrow.blue(ng-click="send()", translate="SEND")

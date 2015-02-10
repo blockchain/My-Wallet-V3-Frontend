@@ -1,6 +1,5 @@
 @NavigationCtrl = ($scope, Wallet, SecurityCenter, $translate, $cookieStore, $state) ->
   
-  $scope.securityIconURL = ""
   $scope.status = Wallet.status
   $scope.security = SecurityCenter.security
   
@@ -27,14 +26,6 @@
   #           Private             #
   #################################
   
-  $scope.$watch "security.level", () ->
-    switch $scope.security.level
-      when null then $scope.securityIconURL = "img/security-icon-0.png"
-      when 0 then $scope.securityIconURL = "img/security-icon-0.png"     
-      when 1 then $scope.securityIconURL = "img/security-icon-1.png"
-      when 2 then $scope.securityIconURL = "img/security-icon-2.png"
-      when 3 then $scope.securityIconURL = "img/security-icon-3.png"
-      
 
   $scope.doLogout = () ->   
     $translate("ARE_YOU_SURE_LOGOUT").then (translation) ->      

@@ -26,12 +26,59 @@
     margin-top: 10px;
     margin-left: -1px;
     height: 40px;
+    width: 100%;
+    padding: 0;
+    border: 1px solid #d7d7d7;
+    font-weight: bold;
+    color: rgb(100, 110, 126);
+  } 
+  
+  button.right-arrow {
+    background-image: url(/img/arrow-up.png); 
+    background-size: 30px;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    background-position: 5% 50%;
+    
+    &:hover{
+      background-color: #4D9DCF;
+      background-image: url(/img/arrow-up-white.png);
+      color: #fff;
+      border: 1px solid #187FC0;
+    }    
+    
+  }
+  
+  button.left-arrow {
+    background-image: url(/img/arrow-down.png); 
+    background-size: 30px;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    background-position: 5% 50%;
+    
+    &:hover{
+      background-color: #4D9DCF;
+      background-image: url(/img/arrow-down-white.png);
+      color: #fff;
+      border: 1px solid #187FC0;
+    }    
+    
+  }
+  
+  @media (min-width: 768px){
+
+
+  button {
+    background-color: #EAEFF4;
+    margin-top: 10px;
+    margin-left: -1px;
+    height: 40px;
     width: 117px;
     padding: 0;
     border: 1px solid #d7d7d7;
     font-weight: bold;
     color: rgb(100, 110, 126);
-  }
+  } 
   
   button.right-arrow {
     background-image: url(/img/arrow-up.png); 
@@ -64,6 +111,10 @@
     }    
     
   }
+
+
+
+  }   
   
   img {
     height: 40px;
