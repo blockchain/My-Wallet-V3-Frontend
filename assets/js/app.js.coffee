@@ -23,6 +23,7 @@ modules = [
   "ui.bootstrap-slider"
   "angular-inview"
   "passwordEntropy"
+  "internationalPhoneNumber"
   # TODO: have grunt generate the list of partials and templates
   "partials/account-form.jade"
   "partials/accounts-navigation.jade"

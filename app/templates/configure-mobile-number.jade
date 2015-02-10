@@ -3,13 +3,9 @@ div
     h2.status.complete {{ user.internationalMobileNumber }}
     a.settingaction(ng-click="edit.mobile = !edit.mobile", translate="CHANGE_MOBILE_NUMBER")
   .edit-mobile(ng-show="edit.mobile")
-    .input-group
-      ui-select(ng-model="newMobile.country").input-group-btn
-        ui-select-match {{ $select.selected.alpha2 }}
-        ui-select-choices(repeat="country in countries | filter: $select.search")
-          span(ng-bind-html="country.name | highlight: $select.search")
-      input.form-control(type="text",name="mobile",ng-model="newMobile.number")
-    button.btn.btn-primary.btn-small(ng-click="changeMobile(newMobile)",ng-disabled="!validateMobileNumber(newMobile)", translate="SAVE")
+    input(type="text" international-phone-number ng-model="fields.newMobile" default-country="{{ mobileDefaultCountry }}" preferred-countries="us,ca,gb,au" skip-util-script-download auto-placeholder="false").form-control
+    br
+    button.btn.btn-primary.btn-small(ng-click="changeMobile(fields.newMobile)",ng-disabled="!validateMobileNumber(fields.newMobile)", translate="SAVE")
     button.btn.btn-info.btn-small(ng-click="edit.mobile = false", translate="CANCEL")
   .row(ng-show="!user.isMobileVerified && !noMobile")
     .col-xs-9.inneredit

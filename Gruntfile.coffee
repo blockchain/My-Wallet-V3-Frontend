@@ -69,7 +69,6 @@ module.exports = (grunt) ->
           'build/filters.js'
           'build/routes.js'
           'build/translations.js'
-          'assets/js/country-data.js'
           'assets/js/webcam.js'
           'app/bower_components/angular-audio/app/angular.audio.js'
           'app/bower_components/angular-bootstrap-slider/slider.js'
@@ -77,6 +76,7 @@ module.exports = (grunt) ->
           'assets/js/templates.js'
           'node_modules/bc-qr-reader/dist/bc-qr-reader.js'
           'app/bower_components/angular-password-entropy/password-entropy.js'
+          'app/bower_components/intl-tel-input/lib/libphonenumber/build/utils.js'
         ]
 
         dest: "build/application-dependencies.js"
@@ -98,6 +98,8 @@ module.exports = (grunt) ->
           'app/bower_components/angular-translate/angular-translate.min.js'
           'app/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js'
           'app/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js'
+          'app/bower_components/intl-tel-input/build/js/intlTelInput.min.js'
+          'app/bower_components/international-phone-number/releases/international-phone-number.min.js'
           'build/application-dependencies.min.js'
         ]
         
@@ -120,7 +122,7 @@ module.exports = (grunt) ->
           files: [{
             expand: true,
             cwd: 'assets/css',
-            src: ['**/*.scss'],
+            src: ['**/*.scss', '**/*.css'],
             dest: 'build/css',
             ext: '.css'
           }]

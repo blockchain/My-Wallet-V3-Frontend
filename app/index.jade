@@ -26,6 +26,9 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     script(src='bower_components/angular-bootstrap-slider/slider.js')
     script(src='bower_components/angular-inview/angular-inview.js')
     script(src='bower_components/angular-password-entropy/password-entropy.js')
+    script(src='bower_components/intl-tel-input/build/js/intlTelInput.js')
+    script(src='bower_components/intl-tel-input/lib/libphonenumber/build/utils.js')
+    script(src='bower_components/international-phone-number/releases/international-phone-number.js')
     
     // angular-ladda doesn't play nicely with ui-bootstrap
     // script(src="bower_components/ladda/js/spin.js")
@@ -53,6 +56,7 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     !=css('verify-recovery-phrase.css')
     !=css('angular-csp')
     !=css('adverts')
+    !=css('intlTelInput')
     
     // Blockchain MyWallet javascript (must be called before 'app')
     unless process.env.MYWALLET_MOCK == "1"
@@ -84,7 +88,6 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
       // Use mock instead (uncomment the above):
       !=js('services/my_wallet_mock')
     
-    !=js('country-data')
     !=js('app')
     !=js('translations')
     !=js('controllers')

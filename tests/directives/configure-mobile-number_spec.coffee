@@ -46,22 +46,14 @@ describe "Change Mobile Number Directive", ->
     return
   )
   
-  it "should validate proposed number is not empty", ->
-    expect(isoScope.validateMobileNumber(country: "+31", number:"")).toBe(false)
-    return
-    
-  it "should validate proposed number contains only numbers", ->
-    expect(isoScope.validateMobileNumber(country: "+31", number: "0800000000")).toBe(true)
-    return
-  
-  it "should validate proposed number does not cotain letters", ->
-    expect(isoScope.validateMobileNumber(country: "+31", number: "0800monkey")).toBe(false)
+  it "should validate proposed number", ->
+    expect(isoScope.validateMobileNumber("31")).toBe(false)
     return
   
   it "can be verified", inject((Wallet) ->
     spyOn(Wallet, "verifyMobile")
 
-    isoScope.verifyMobile(country: "+31", number: "12345")
+    isoScope.verifyMobile("31 1 2345")
     
     expect(Wallet.verifyMobile).toHaveBeenCalled()
         

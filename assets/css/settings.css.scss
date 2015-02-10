@@ -82,6 +82,9 @@
     input.ui-select-search {
       width: 150px;
     }
+    li {
+      text-align: left; // Country dropdown
+    }
   }
   
   pre.recovery{
@@ -143,17 +146,17 @@
 		font-size: 10pt;		   
 	   }
 	   
-	   p.settingtext{
-		 font-size: 8pt;
-		 clear: both;}
+	   p.settingtext {
+  		 font-size: 8pt;
+  		 clear: both;
+     }
 	   
-	   .setting-result{
-		text-align: right;  
-		padding: 0 40px;
+	   .setting-result {
+    		padding: 0 40px;
 	   }	   
 	   
 	 	  
-	}  
+	  }  
   }
 }
 
@@ -214,9 +217,9 @@ margin: 5px 0;
 
 }
 
-.setting-result{
-text-align: right;  
-padding: 0 40px;
+.setting-result {
+  text-align: right;
+  padding: 0 40px;
 }
 
 .inneredit{padding: 10px 15px 0;}
