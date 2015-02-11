@@ -1,12 +1,12 @@
-p.headliner(translate="MY_ADDRESSES_EXPLAIN_TEMP")
+p.headliner.hidden-xs(translate="MY_ADDRESSES_EXPLAIN_TEMP")
 
 div(ng-show="hdAddresses.length == 0")
   img(src="img/spinner.gif")
 div(ng-show="hdAddresses.length > 0")
   .row.form-ctrl
-    .col-xs-10
+    .col-xs-12.col-sm-7.col-md-8.col-lg-6
       input.filter(type="text", ng-model="searchText").form-control
-    .col-xs-2(align="right")
+    .hidden-xs.col-sm-5.col-md-4.col-lg-6(align="right")
       .btn-group(dropdown is-open="display.account_dropdown_open")
         button.btn.btn-info.dropdown-toggle(dropdown-toggle type="button", data-toggle="dropdown", aria-expanded="false")
           span(translate="NEW_ADDRESS")
@@ -16,19 +16,20 @@ div(ng-show="hdAddresses.length > 0")
             a(ng-click="addAddressForAccount(account)") {{ account.label }}
   .row
     .col-xs-12
-      table
+      table.responsive
         tr
           th(translate="ADDRESS")
-          th(translate="LABEL")
-          th(translate="ACCOUNT")
+          th.hidden-xs(translate="LABEL")
+          td.hidden-xs(translate="ACCOUNT")
           //- th(translate="REQUESTED_AMOUNT")
-          th
+          //- th
           //- th  
         //- tr(ng-repeat="request in requests | filter:{canceled:false, complete:false} | filter:searchText")
         tr(ng-repeat="address in hdAddresses  | filter:searchText | orderBy:['account.index', 'index']")
-          td(ng-bind-html="address.address | highlight:searchText")
-          td(ng-bind-html="address.label | highlight:searchText")
-          td(ng-bind-html="address.accountLabel | highlight:searchText")
+          td
+            a(ng-bind-html="address.address | highlight:searchText", ui-sref="wallet.common.settings.address({address: address.address})")
+          td.hidden-xs(ng-bind-html="address.label | highlight:searchText")
+          td.hidden-xs(ng-bind-html="address.accountLabel | highlight:searchText")
 
           //- td.amount
           //-   fiat(btc="request.amount", ng-show="request.amount > 0")
@@ -38,36 +39,36 @@ div(ng-show="hdAddresses.length > 0")
           //-     span.label.label-warning(ng-show="request.amount < request.paid", translate="TOO_MUCH")
           //-     br
           //-     span(translate="RECEIVED_X", translate-values="{amount: request.amount / 100000000, paid: request.paid / 100000000}")
-          td 
+          //- td 
             //- a(ng-click="open(request)", translate="DETAILS")
-            a(ui-sref="wallet.common.settings.address({address: address.address})", translate="DETAILS")
+            //- a(ui-sref="wallet.common.settings.address({address: address.address})", translate="DETAILS")
           //- td
           //-   a.btn.btn-xs.btn-info(ng-hide="request.complete || request.paid > 0", ng-click="clear(request)") Clear
           //-   a.btn.btn-xs.btn-warning(ng-show="request.paid != 0 && request.amount != 0 && request.amount != request.paid && !request.complete", ng-click="accept(request)") Accept
 
 h2(translate="IMPORTED_ADDRESSES", ng-click="display.imported = !display.imported")
 
-p(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
+p.hidden-xs(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
 
 .row.form-ctrl(ng-show="display.imported")
-  .col-xs-6
+  .col-xs-12.col-sm-7.col-md-8.col-lg-6
     input.filter(type="text", ng-model="searchTextLegacy").form-control
-  .col-xs-6(align="right")
+  .hidden-xs.col-sm-5.col-md-4.col-lg-6(align="right")
     a.btn.btn-info(ng-click="importAddress()", translate="IMPORT_ADDRESS")
 
 .row(ng-show="display.imported")
   .col-xs-12
-    table
+    table.responsive
       tr
         th(translate="ADDRESS")
         th(translate="LABEL")
         th(translate="BALANCE")
-        th
+        //- th
         th
         th
       tr(ng-repeat="address in legacyAddresses | filter:{active: true} | filter:searchTextLegacy")
         td
-          span(ng-bind-html="address.address | highlight:searchTextLegacy")
+          a(ng-bind-html="address.address | highlight:searchTextLegacy", ui-sref="wallet.common.settings.address({address: address.address})")
           span.label.label-warning(ng-show="address.isWatchOnlyLegacyAddress", translate="WATCH_ONLY")    
         td(ng-bind-html="address.label | highlight:searchTextLegacy")
         td 
@@ -76,8 +77,8 @@ p(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
             fiat.fiat(btc="address.balance") 
           //- span(us-spinner="{radius:6, width:6, length: 6}" spinner-key="{{ address.address }}" spinner-start-active="true" ng-show="address.balance == null")
           img(ng-show="address.balance == null" src="img/spinner.gif")
-        td
-          a(ui-sref="wallet.common.settings.address({address: address.address})", translate="DETAILS")
+        //- td
+          //- a(ui-sref="wallet.common.settings.address({address: address.address})", translate="DETAILS")
         td 
           a(translate="TRANSFER", ng-click="transfer(address)")
         td 
@@ -85,14 +86,14 @@ p(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
 
 h2(translate="ARCHIVED_ADDRESSES", ng-click="display.archived = !display.archived")
 
-p(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
+p.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
 
 .row.form-ctrl(ng-show="display.archived")
-  .col-xs-6
+  .col-xs-12.col-sm-7.col-md-8.col-lg-6
     input.filter(type="text", ng-model="searchTextArchived").form-control
 .row(ng-show="display.archived")
   .col-xs-12
-    table
+    table.responsive
       tr
         th(translate="ADDRESS")
         th(translate="LABEL")

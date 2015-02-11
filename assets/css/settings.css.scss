@@ -1,5 +1,5 @@
 #settings {
-	padding: 15px;
+	padding: 0;
 
 	.label{
 	font-size: 85%;
@@ -47,7 +47,7 @@
   }  
   
   h2.status {
-    margin: 0px 0px 15px;
+    margin: 0 5px;
   }
   
   h2{
@@ -201,12 +201,10 @@ a.settingaction{
 background: #56AADD;
 padding: 10px;
 color: rgba(255, 255, 255, 0.8);
-min-width: 175px;
 border-radius: 5px;
 display: block;
 text-align: center;
 font-weight: 500;		
-float: right;   
 margin: 5px 0;
 
 &:hover{
@@ -218,8 +216,37 @@ margin: 5px 0;
 }
 
 .setting-result {
-  text-align: right;
-  padding: 0 40px;
+  text-align: center;
+  padding: 0;
+}
+
+
+.btn-group{
+  button{float: none;}
 }
 
 .inneredit{padding: 10px 15px 0;}
+
+@media (min-width: 992px){
+	#settings{padding: 15px;}
+	.setting-result {
+	  text-align: right;
+	  padding: 0 40px;
+	  
+	}
+	
+	a.settingaction{
+	  float: right;   
+	  min-width: 175px;
+	}
+	
+	
+	h2.status {
+	  margin: 0px 0px 15px;
+	}
+	
+	.btn-group{
+		button{float: left;}
+	}
+
+}
