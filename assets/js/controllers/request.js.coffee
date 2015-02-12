@@ -3,6 +3,7 @@
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.destinations = []
   $scope.receiveAddress = null
+  $scope.status = Wallet.status
   
   $scope.currencies = angular.copy(Wallet.currencies)
   
@@ -54,13 +55,13 @@
         idx = parseInt($stateParams.accountIndex)
       $scope.fields.to = $scope.accounts[idx]
         
-  $scope.$watch "fields.to", () ->
+  $scope.$watch "fields.to + status.didInitializeHD", () ->
     $scope.formIsValid = $scope.validate()
     amount = $scope.parseAmount()
         
     if $scope.fields.to? && $scope.fields.to.address?
       $scope.setPaymentRequestURL($scope.fields.to.address, amount)
-    else if $scope.fields.label == ""
+    else if $scope.fields.label == "" && $scope.status.didInitializeHD
       idx = $scope.fields.to.index
       $scope.receiveAddress = Wallet.getReceivingAddressForAccount(idx)
       $scope.setPaymentRequestURL($scope.receiveAddress, amount)

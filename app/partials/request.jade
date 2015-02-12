@@ -41,11 +41,16 @@
      .form-group(ng-if="paymentRequestURL")
       .col-sm-2
       .col-sm-3
-        qr(text="paymentRequestURL", size=120, correction-level="'M'")
+        p.form-control-static(ng-hide="status.didInitializeHD")
+          img(src="img/spinner.gif")  
+        span(ng-show="status.didInitializeHD")
+          qr(text="paymentRequestURL", size=120, correction-level="'M'")
       .col-sm-7
         p
         label.black(translate="BITCOIN_ADDRESS")
         p.form-control-static.bitcoin-address
-          | {{ paymentRequestAddress }}  
+          img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
+          span(ng-show="status.didInitializeHD")
+            | {{ paymentRequestAddress }}  
 .modal-footer
   button.btn.btn-info(ng-click="close()", translate="CLOSE")  
