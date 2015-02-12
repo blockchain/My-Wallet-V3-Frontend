@@ -499,7 +499,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     success = (tx_hash) ->
         successCallback(tx_hash) # Allow caller to set a note before refreshing transactions
         
-        wallet.updateTransactions()
+        wallet.updateTransactions() # This is also called by on_tx, but the note might not be set yet
         wallet.updateAccountsAndLegacyAddresses()
         wallet.applyIfNeeded() 
       
@@ -828,6 +828,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       for candidate in wallet.transactions
         if candidate.hash == tx.hash
           match = true
+          if !candidate.note?
+            candidate.note = wallet.my.getNote(tx.hash) # In case a note was just set
           break
     
       if !match
