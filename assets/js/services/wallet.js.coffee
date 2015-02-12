@@ -420,31 +420,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.my.getFiatAtTime(time * 1000, amount, currency.toLowerCase(), success, error) 
     
     return defer.promise
-  
-  wallet.transactionObserver = (success, error) ->    
-    o = {}
-    
-    o.transactionSuccess = (tx_hash) ->
-        success(tx_hash) # Allow caller to set a note before refreshing transactions
-        
-        wallet.updateTransactions()
-        wallet.updateAccountsAndLegacyAddresses()
-        wallet.applyIfNeeded() 
-      
-    o.transactionError = (e) ->
-        if e.message != undefined
-          error(e.message)
-        else if e isnt null
-          error(e)
-          wallet.applyIfNeeded()
-        else
-          error("Unknown error")
-          wallet.applyIfNeeded() 
-          
-    o.needsSecondPasswordCallback = (continueCallback) ->
-      $rootScope.$broadcast "requireSecondPassword", continueCallback
-          
-    return o
         
   wallet.checkAndGetTransactionAmount = (amount, currency, success, error) ->
     if currency != "BTC"
@@ -520,29 +495,51 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     errorCallback({invalidInput: true})
     return
         
-  wallet.send = (from, destination, amount, currency, success, error) ->
-    amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
+  wallet.transaction = (successCallback, errorCallback) -> 
+    success = (tx_hash) ->
+        successCallback(tx_hash) # Allow caller to set a note before refreshing transactions
+        
+        wallet.updateTransactions()
+        wallet.updateAccountsAndLegacyAddresses()
+        wallet.applyIfNeeded() 
+      
+    error = (e) ->
+        if e.message != undefined
+          errorCallback(e.message)
+        else if e isnt null
+          errorCallback(e)
+          wallet.applyIfNeeded()
+        else
+          errorCallback("Unknown error")
+          wallet.applyIfNeeded() 
+          
+    needsSecondPassword = (continueCallback) ->
+      $rootScope.$broadcast "requireSecondPassword", continueCallback
+      
+    {  
+      send: (from, destination, amount, currency) ->
+        amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
     
-    if from.address?
-      if destination.index?
-        wallet.my.sendFromLegacyAddressToAccount(from.address, destination.index, amount, 10000, null, wallet.transactionObserver(success, error).transactionSuccess, wallet.transactionObserver(success, error).transactionError, wallet.transactionObserver(success, error).needsSecondPasswordCallback)
-      else if destination.address?
-        wallet.my.sendFromLegacyAddressToAddress(from.address, destination.address, amount, 10000, null, wallet.transactionObserver(success, error).transactionSuccess, wallet.transactionObserver(success, error).transactionError, wallet.transactionObserver(success, error).needsSecondPasswordCallback)
-    else if from.index?
-      if destination.index?
-        wallet.my.sendToAccount(from.index, destination.index, amount, 10000, null, wallet.transactionObserver(success, error).transactionSuccess, wallet.transactionObserver(success, error).transactionError, wallet.transactionObserver(success, error).needsSecondPasswordCallback)
-      else if destination.address?
-        wallet.my.sendBitcoinsForAccount(from.index, destination.address, amount, 10000, null, wallet.transactionObserver(success, error).transactionSuccess, wallet.transactionObserver(success, error).transactionError, wallet.transactionObserver(success, error).needsSecondPasswordCallback)
+        if from.address?
+          if destination.index?
+            wallet.my.sendFromLegacyAddressToAccount(from.address, destination.index, amount, 10000, null, success, error, needsSecondPassword)
+          else if destination.address?
+            wallet.my.sendFromLegacyAddressToAddress(from.address, destination.address, amount, 10000, null, success, error, needsSecondPassword)
+        else if from.index?
+          if destination.index?
+            wallet.my.sendToAccount(from.index, destination.index, amount, 10000, null, success, error, needsSecondPassword)
+          else if destination.address?
+            wallet.my.sendBitcoinsForAccount(from.index, destination.address, amount, 10000, null, success, error, needsSecondPassword)
+    
+      sweepLegacyAddressToAccount: (fromAddress, toAccountIndex) ->
+        wallet.my.sweepLegacyAddressToAccount(fromAddress.address, toAccountIndex, success, error, needsSecondPassword)
+        wallet.updateLegacyAddresses() # Probably too early  
       
-      
-  wallet.sweepLegacyAddressToAccount = (fromAddress, toAccountIndex, success, error) ->
-    wallet.my.sweepLegacyAddressToAccount(fromAddress.address, toAccountIndex, wallet.transactionObserver(success, error).transactionSuccess, wallet.transactionObserver(success, error).transactionError, wallet.transactionObserver(success, error).needsSecondPasswordCallback)
-    wallet.updateLegacyAddresses() # Probably too early  
-      
-  wallet.sendToEmail = (fromAccountIndex, email, amount, currency, success, error) ->
-    amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
-    wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, wallet.transactionObserver(success, error).transactionSuccess, wallet.transactionObserver(success, error).transactionError, wallet.transactionObserver(success, error).needsSecondPasswordCallback) 
-      
+      sendToEmail: (fromAccountIndex, email, amount, currency) ->
+        amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
+        wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, success, error, needsSecondPassword) 
+    }
+        
   wallet.redeemFromEmailOrMobile = (account, claim, successCallback, error) ->
     success = () ->
       wallet.updateAccounts()

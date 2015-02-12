@@ -173,8 +173,8 @@
     
       Wallet.clearAlerts()
   
-      # TODO: let figure out if it's internal or exteranl
-      Wallet.send($scope.transaction.from, $scope.transaction.destination, numeral($scope.transaction.amount), $scope.transaction.currency, transactionDidFinish, transactionDidFailWithError)
+      Wallet.transaction(transactionDidFinish, transactionDidFailWithError).send($scope.transaction.from, $scope.transaction.destination, numeral($scope.transaction.amount), $scope.transaction.currency)
+      return
 
   $scope.closeAlert = (alert) ->
     Wallet.closeAlert(alert)

@@ -70,4 +70,4 @@
       $scope.sweeping = false
       Wallet.displayError(error)
       
-    Wallet.sweepLegacyAddressToAccount($scope.address, $scope.fields.account.index, success, error)
+    Wallet.transaction(success, error).sweepLegacyAddressToAccount($scope.address, $scope.fields.account.index)
