@@ -152,7 +152,7 @@ describe "walletServices", () ->
     it "should allow change", inject((Wallet, MyWallet) ->
       spyOn(MyWallet, "changeMobileNumber").and.callThrough()
       newNumber = {country: "+31", number: "0100000000"}
-      Wallet.changeMobile(newNumber )
+      Wallet.changeMobile(newNumber, (()->),(()->))
       expect(MyWallet.changeMobileNumber).toHaveBeenCalled()
       expect(Wallet.user.mobile).toBe(newNumber)
       expect(Wallet.user.isMobileVerified).toBe(false)
@@ -161,7 +161,7 @@ describe "walletServices", () ->
     it "can be verified", inject((Wallet, MyWallet) ->
       spyOn(MyWallet, "verifyMobile").and.callThrough()
 
-      Wallet.verifyMobile("12345")
+      Wallet.verifyMobile("12345", (()->),(()->))
       
       expect(MyWallet.verifyMobile).toHaveBeenCalled()
       
