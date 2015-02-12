@@ -74,11 +74,14 @@
       
     return
       
-  $scope.maxAndLabel = (select) ->
+  $scope.maxAndLabelForSelect = (select) ->
     return "" unless select?
     return "" unless select.selected?
     
-    origin = select.selected
+    $scope.maxAndLabel(select.selected)
+    
+  $scope.maxAndLabel = (origin) ->
+    
     
     if origin.balance == undefined
       return origin.label
@@ -86,6 +89,9 @@
     fees = Wallet.recommendedTransactionFee(origin, origin.balance)
 
     max_btc = numeral(origin.balance - fees).divide("100000000")
+    
+    max_btc = 0 if max_btc < 0
+    
     if $scope.transaction.currency == "BTC"
       return origin.label + " (" + max_btc.format("0.[00000000]") + " BTC)"  
     else 
