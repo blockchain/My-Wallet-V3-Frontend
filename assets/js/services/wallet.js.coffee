@@ -577,6 +577,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.my.getHDWalletPassphraseString(needsSecondPasswordCallback, success, error)
     
   wallet.importWithMnemonic = (mnemonic, successCallback, errorCallback) ->
+    needsSecondPasswordCallback = (continueCallback) ->
+      $rootScope.$broadcast "requireSecondPassword", continueCallback
+      
     wallet.accounts.splice(0, wallet.accounts.length)
     wallet.transactions.splice(0, wallet.transactions.length)
     
@@ -587,7 +590,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       successCallback()
           
     $timeout((->
-      wallet.my.recoverMyWalletHDWalletFromMnemonic(mnemonic, null, success, errorCallback)    
+      wallet.my.recoverMyWalletHDWalletFromMnemonic(mnemonic, null, needsSecondPasswordCallback, success, errorCallback)    
     ), 100)  
             
   wallet.getDefaultAccountIndex = () ->
