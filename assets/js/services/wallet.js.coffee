@@ -455,7 +455,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
             
           error = (error) ->
             console.log "Error adding new key to existing address"
-            console.log error
             
           wallet.my.importPrivateKey(privateKey, needsSecondPasswordCallback, needsBip38Password, success, error)
           return
@@ -865,7 +864,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     if event == "on_tx" or event == "on_block"
       before = wallet.transactions.length
       wallet.updateTransactions()
-      if wallet.transactions.length > before
+      if wallet.transactions.length > before        
         sound = ngAudio.load("beep.wav")
         sound.play()
         wallet.updateAccountsAndLegacyAddresses()

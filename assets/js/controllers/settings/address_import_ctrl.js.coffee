@@ -1,4 +1,4 @@
-@AddressImportCtrl = ($scope, $log, Wallet, $modalInstance, $translate, $state) ->
+@AddressImportCtrl = ($scope, $log, Wallet, $modalInstance, $translate, $state, $timeout) ->
   
   $scope.step = 1
   $scope.legacyAddresses  = Wallet.legacyAddresses
@@ -12,6 +12,8 @@
     $scope.fields.account = Wallet.accounts[0]
   
   $scope.errors = {invalidInput: null, addressPresentInWallet: null, incorrectBip38Password: null}
+  
+  $scope.status = {busy: false}
   
   $scope.isValid = () ->
     tally = 0
@@ -27,18 +29,29 @@
     $modalInstance.dismiss ""
   
   $scope.validate = () ->
+    $scope.status.busy = true
+    
     if $scope.BIP38
       wrongPassword = () ->
         $scope.errors.incorrectBip38Password = true
-      
-      $scope.bip38callback($scope.bip38passphrase, wrongPassword)
+        $scope.status.busy = false
+        $scope.$digest()
+              
+      # Slight delay to display spinner, because this blocks the UI.
+      $timeout(()->
+        $scope.bip38callback($scope.bip38passphrase, wrongPassword)
+      , 100)
     else
       success = (address)->
         $scope.address = address
         $scope.step = 2
+        $scope.status.busy = false
+        
     
       errors = (errors, address) ->
         $scope.address = address or null
+        $scope.status.busy = false
+        
       
         # We basically just want to do $scope.errors = errors, but AngularJS would
         # stop monitoring in that case:
@@ -51,6 +64,7 @@
       needsBip38 = (callback) ->
         $scope.bip38callback = callback
         $scope.BIP38 = true
+        $scope.status.busy = false      
     
       addressOrPrivateKey = $scope.fields.addressOrPrivateKey.trim()
       Wallet.addAddressOrPrivateKey(addressOrPrivateKey, needsBip38, success, errors)

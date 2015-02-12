@@ -324,5 +324,6 @@
   "MAX_IP_ADDRESSES" : "Maximum of {{ max }} IP addresses",
   "NOT_ALLOWED" : "{{ forbidden }} is not allowed",
   "DO_NOT_COPY_PASTE" : "It is not safe to copy paste this.",
+  "INCORRECT_PASSWORD" : "Incorrect Password",
   "" : ""
 }
