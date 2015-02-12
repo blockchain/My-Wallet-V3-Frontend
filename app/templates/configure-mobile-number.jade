@@ -3,12 +3,12 @@ div
     h2.status.complete {{ user.internationalMobileNumber }}
     a.settingaction(ng-click="edit.mobile = !edit.mobile", translate="CHANGE_MOBILE_NUMBER")
   .edit-mobile(ng-show="edit.mobile")
-    input(type="text" international-phone-number ng-model="fields.newMobile" default-country="{{ mobileDefaultCountry }}" preferred-countries="us,ca,gb,au" skip-util-script-download auto-placeholder="false").form-control
+    input(type="text" international-phone-number ng-model="fields.newMobile" default-country="{{ mobileDefaultCountry }}" preferred-countries="us,ca,gb,au" skip-util-script-download auto-placeholder="false", ng-disabled="status.busy").form-control
     br
-    button.btn.btn-primary.btn-small(ng-click="changeMobile(fields.newMobile)",ng-disabled="!validateMobileNumber(fields.newMobile)", translate="SAVE")
+    button.btn.btn-primary.btn-small(ui-ladda="{{ status.busy }}", ng-click="changeMobile(fields.newMobile)",ng-disabled="!validateMobileNumber(fields.newMobile)", ladda-translate="SAVE", data-style="expand-left")
     button.btn.btn-info.btn-small(ng-click="edit.mobile = false", translate="CANCEL")
   .row(ng-show="!user.isMobileVerified && !noMobile")
     .col-xs-9.inneredit
-      input.form-control(type="text",ng-model="code")
+      input.form-control(type="text",ng-model="code", ng-disabled="status.busy")
     .col-xs-3.inneredit
-      button.btn.btn-primary(ng-click="verifyMobile(code)",ng-disabled="!code || code.length < 3", translate="VERIFY")
+      button.btn.btn-primary(ui-ladda="{{ status.busy }}", ng-click="verifyMobile(code)",ng-disabled="!code || code.length < 3", ladda-translate="VERIFY", data-style="expand-left")

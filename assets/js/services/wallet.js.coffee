@@ -861,7 +861,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   ####################
             
   wallet.monitor = (event, data) ->
-    # console.logaccountsd: " + event
+    # console.log event
     if event == "on_tx" or event == "on_block"
       before = wallet.transactions.length
       wallet.updateTransactions()
@@ -1063,25 +1063,30 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     return null unless mobile?
     mobile.country + " " + mobile.number.replace(/^0*/, '')
     
-  wallet.changeMobile = (mobile) ->
+  wallet.changeMobile = (mobile, successCallback, errorCallback) ->
+    
     wallet.my.changeMobileNumber(this.internationalPhoneNumber(mobile), (()->
       wallet.user.mobile = mobile
       wallet.user.isMobileVerified = false
+      successCallback()
       wallet.applyIfNeeded()
     ), ()->
       $translate("CHANGE_MOBILE_FAILED").then (translation) ->
         wallet.displayError(translation) 
-        wallet.applyIfNeeded()
+      errorCallback()
+      wallet.applyIfNeeded()
     )
 
-  wallet.verifyMobile = (code) ->
+  wallet.verifyMobile = (code, successCallback, errorCallback) ->
     wallet.my.verifyMobile(code, (()->
       wallet.user.isMobileVerified = true
+      successCallback()
       wallet.applyIfNeeded()
     ), ()->
       $translate("VERIFY_MOBILE_FAILED").then (translation) ->
         wallet.displayError(translation)
-        wallet.applyIfNeeded()
+      errorCallback()
+      wallet.applyIfNeeded()
     )
 
   wallet.applyIfNeeded = () ->

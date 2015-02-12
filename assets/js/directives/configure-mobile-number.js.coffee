@@ -9,6 +9,8 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
       scope.user = Wallet.user
       scope.edit = {mobile: false}
       
+      scope.status = {busy: false}
+      
       scope.mobileDefaultCountry = null
       
       scope.fields = {newMobile: null}
@@ -24,15 +26,32 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
           scope.fields.newMobile = null
             
       scope.changeMobile = (mobile) ->
+        scope.status.busy = true
+        
+        success = () ->
+          scope.edit.mobile = false   
+          scope.status.busy = false
+          
+        error = (error) ->
+          scope.status.busy = false
+        
         formattedNumber = intlTelInputUtils.formatNumber("+" + mobile)
         country = formattedNumber.split(" ")[0]
         number = formattedNumber.split(" ").slice(1).join("")
         mobile = {country: country, number: number}
-        Wallet.changeMobile(mobile)
-        scope.edit.mobile = false   
+        Wallet.changeMobile(mobile, success, error)
     
       scope.verifyMobile = (code) ->
-        Wallet.verifyMobile(code)
+        scope.status.busy = true
+        
+        success = () ->
+          scope.edit.mobile = false   
+          scope.status.busy = false
+          
+        error = (error) ->
+          scope.status.busy = false
+          
+        Wallet.verifyMobile(code, success, error)
   
       scope.validateMobileNumber = (candidate) ->
         # Duplicate effort:
