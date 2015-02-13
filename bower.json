@@ -26,7 +26,7 @@
     "angular-bootstrap-slider": "sjors/angular-bootstrap-slider#~0.0.8",
     "angular-ladda": "~0.1.9",
     "angular-inview": "~1.5.0",
-    "angular-password-entropy": "pernas/angular-password-entropy",
+    "angular-password-entropy": "sjors/angular-password-entropy#2bb12c6b4",
     "international-phone-number": "sjors/international-phone-number#0.0.2"
   }
 }
