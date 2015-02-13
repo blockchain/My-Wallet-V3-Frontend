@@ -80,7 +80,6 @@ button.received {
   
   .status {
     color: gray;
-    text-align: right;
     font-size: 10px;
     
     span.short {
@@ -187,4 +186,29 @@ a.date,p.date {
   color: #adc0c9;
 }
 
-.amountTotal{float: right;}
+.amountTotal{float: none;}
+
+.from, .to{
+	padding: 5px 0;
+  strong{
+    span{
+	  font-weight: normal;
+    }
+    span.result{
+	  padding: 5px 0;
+	  font-weight: bold;
+	  display: block;
+	  overflow-wrap: break-word;
+	}
+  }
+}
+
+@media (min-width: 768px){
+  #transaction-details{
+    .status{text-align: right;}	  
+  }  
+}
+
+@media (min-width: 992px){
+	.amountTotal{float: right;}
+}

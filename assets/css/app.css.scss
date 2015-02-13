@@ -132,7 +132,7 @@ a{
     }	
     .right-view{
       background-color: #FFFFFF;
-      padding: 30px;
+      padding: 15px;
       
     }
     .top-view{
@@ -147,16 +147,13 @@ a{
 }
 
 a.back {
-  float: left;
-  margin-top: -15px;
-  padding-top: 15px;
-  margin-bottom: -15px;
-  padding-bottom: 15px;
-  margin-left: -30px;
-  padding-left: 15px;
-  
-  img {
-    height: 15px;
+ h2{
+  background: url("/img/back.png") no-repeat left center;
+  background-size: 15px;
+  padding: 0 20px; 
+ }
+ &:hover{
+  text-decoration: none;
   }
 }
 
@@ -211,10 +208,27 @@ a.back {
     max-width: 300px;
 }
 
+table.responsive{
+	a{overflow-wrap: break-word;}
+}
+
+.container-fluid {
+padding-right: 5px;
+padding-left: 5px;
+}
 
 // this is naughty, and I need to put these styles in the appropriate places.
 
 @media (min-width: 768px){
 .tx-row .left-view{padding: 0 15px;}
+.tx-row .right-view {
+background-color: #FFFFFF;
+padding: 30px;
+}
+
+.container-fluid {
+padding-right: 15px;
+padding-left: 15px;
+}
 
 }

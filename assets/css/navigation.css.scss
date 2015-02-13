@@ -9,8 +9,10 @@
   
   
   .container-fluid{
-	  padding: 15px;
+	  padding: 10px 50px;
   }
+  
+  ul.mainNav{display: none;}
 
   .navbar-nav {
     li > a {
@@ -68,20 +70,22 @@
     }
     
     li > a:hover {
-        background-color: #358CCD;
+	    background-color: transparent; 
     }
 
     li.active {
      a {
         background-color: transparent;
-        border-bottom: thick solid #269FFD;
-        margin-bottom: 1px;
-        color: #d3edfb;
       }
       
-      a:hover {
-        background-color: #358CCD;
+      a:hover, a:active, a:focus {
+	    background-color: transparent; 	      
       }
+      
+    }
+    
+    li.open{
+	  a{background-color: transparent;}  
     }
     
     // The dropdown on the top right:
@@ -103,23 +107,18 @@ img#logo {
 ul.navbar-nav{
   list-style: none;	
   padding: 0;
-  margin: 0 0 0 15px;
+  margin: 0 0 0 0;
   
   li.item{
     a{
-	 padding: 15px;    
+	 padding: 15px 15px 15px 35px;    
 	 font-weight: 500;
      background-repeat: no-repeat;
 	 background-position: 5px 50%;
      background-size: 25px;
-
-      span{
-	    padding-left: 20px;    
-      }	
-     
     }
     a.active{
-	  color: #E6EAEB;      
+
     }
     a.transactions{
       background-image: url('/img/transactions-icon.png');    
@@ -142,25 +141,37 @@ ul.navbar-nav{
   }
 }
 
-
-ul.extra-nav{
-  li.item{
-    a{
-	  background-size: 35px;
-	  span{
-		padding-left: 40px;  
-	  }    
-    }	  
-  }
-  
+.navbar-collapse{
+	border: none;
+	box-shadow: none;
 }
 
-
 @media (min-width: 768px){
-  ul.extra-nav{
-	float: right;
-	li.item{
-	  margin: 0 0 0 10px;
-	}
+
+.navbar-collapse{
+	display: block!important;
+}
+
+ul.navbar-nav{
+  .container-fluid{
+    padding: 10px 50px;
   }	
+ li.active{
+	 a{
+        border-bottom: thick solid #269FFD;
+        margin-bottom: 1px;
+        color: #d3edfb;
+	 }
+ }	
+}
+
+ul.navbar-right{
+  li.item{
+    a{
+	 padding: 15px 15px 15px 55px;    
+	 background-size: 40px;  
+    }	  
+  }
+}  
+  	
 }

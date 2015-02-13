@@ -1,11 +1,11 @@
-p.headliner(translate="WALLET_RECOVERY_EXPLAIN")
+p.headliner.hidden-xs(translate="WALLET_RECOVERY_EXPLAIN")
 form.form-horizontal(role="form",name="form",novalidate)  
   .form-group
-    .col-sm-6
+    .col-sm-12.col-md-6
       label(translate="MY_RECOVERY_PHRASE")
-      span.label.label-danger(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
-      p.explain(translate="RECOVERY_PHRASE_EXPLAIN")    
-    .col-sm-6.setting-result
+      span.label.label-danger.hidden-xs.hidden-sm(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
+      p.explain.hidden-xs.hidden-sm(translate="RECOVERY_PHRASE_EXPLAIN")    
+    .col-sm-12.col-md-6.setting-result
       confirm-recovery-phrase
       a.recovery.settingaction(ng-click="toggleRecoveryPhrase()", ng-hide="showRecoveryPhrase", translate="SHOW_RECOVERY_PHRASE")
       a.recovery.settingaction(ng-click="toggleRecoveryPhrase()", ng-show="showRecoveryPhrase", translate="HIDE_RECOVERY_PHRASE")
@@ -15,10 +15,10 @@ form.form-horizontal(role="form",name="form",novalidate)
         pre.recovery(ng-show="showRecoveryPhrase", ng-cut="doNotCopyPaste($event)" ng-copy="doNotCopyPaste($event)") {{ recoveryPhrase }}
         
   .form-group
-    .col-sm-6
+    .col-sm-12.col-md-6
       label(translate="IMPORT_RECOVERY_PHRASE")
-      p.explain(translate="IMPORT_RECOVERY_PHRASE_EXPLAIN")    
-    .col-sm-6.setting-result
+      p.explain.hidden-xs.hidden-sm(translate="IMPORT_RECOVERY_PHRASE_EXPLAIN")    
+    .col-sm-12.col-md-6.setting-result
       p
         a.settingaction(ng-click="importRecoveryPhrase()",translate="IMPORT_RECOVERY_PHRASE", ng-hide="editMnemonic")
       input.form-control(type="text",ng-model="mnemonic", ng-focus="errors.mnemonic = null", ng-disabled="importing", ng-show="editMnemonic")

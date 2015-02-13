@@ -1,14 +1,14 @@
-p.headliner(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
+p.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
   
 .row.form-ctrl
-  .col-xs-6
+  .col-xs-12.col-sm-7.col-md-8.col-lg-6
     input.filter(type="text", ng-model="searchText").form-control
-  .col-xs-6(align="right")
+  .hidden-xs.col-sm-5.col-md-4.col-lg-6(align="right")
     a.btn.btn-info.btn-bci(ng-click="newAccount()", translate="CREATE_NEW_ACCOUNT")
     a.btn.btn-info.btn-bci(ng-click="transfer(address)", translate="TRANSFER_BETWEEN_ACCOUNTS") (transfer)
 .row
   .col-xs-12
-    table
+    table.responsive
       tr
         th(translate="ACCOUNT_NAME")
         th(translate="BALANCE")
@@ -33,14 +33,14 @@ p.headliner(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
             
 h2(translate="ARCHIVED_ACCOUNTS", ng-click="display.archived = !display.archived")
 
-p(translate="ARCHIVED_ACCOUNTS_EXPLAIN", ng-show="display.archived")
+p.hidden-xs(translate="ARCHIVED_ACCOUNTS_EXPLAIN", ng-show="display.archived")
   
 .row(ng-show="display.archived") 
   p Coming soon...
 
 .row(ng-show="display.archived")
   .col-xs-12
-    table
+    table.responsive
       tr
         th(translate="ACCOUNT_NAME")
         th

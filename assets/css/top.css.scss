@@ -1,6 +1,5 @@
 #top {
-  padding: 30px;
-  padding-bottom: 15px;
+  padding: 10px;
   
   .balance {
     .content {
@@ -118,5 +117,12 @@
   
   img {
     height: 40px;
+  }
+}
+
+@media (min-width: 768px){
+  #top{
+    padding: 30px;
+    padding-bottom: 15px;
   }
 }
