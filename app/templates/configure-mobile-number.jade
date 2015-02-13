@@ -2,7 +2,7 @@ div
   div(ng-hide="edit.mobile")
     h2.status.complete {{ user.internationalMobileNumber }}
     a.settingaction(ng-click="edit.mobile = !edit.mobile", translate="CHANGE_MOBILE_NUMBER")
-  .edit-mobile(ng-show="edit.mobile")
+  .edit-mobile(ng-if="edit.mobile")
     input(type="text" international-phone-number ng-model="fields.newMobile" default-country="{{ mobileDefaultCountry }}" preferred-countries="us,ca,gb,au" skip-util-script-download auto-placeholder="false", ng-disabled="status.busy").form-control
     br
     button.btn.btn-primary.btn-small(ui-ladda="{{ status.busy }}", ng-click="changeMobile(fields.newMobile)",ng-disabled="!validateMobileNumber(fields.newMobile)", ladda-translate="SAVE", data-style="expand-left")
