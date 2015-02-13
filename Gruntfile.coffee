@@ -132,7 +132,7 @@ module.exports = (grunt) ->
     concat_css: {
       all: {
         src: [
-          "app/bower_components/bootstrap/dist/css/bootstrap.css"
+          "app/bower_components/bootstrap-css-only/css/bootstrap.css"
           "app/bower_components/angular-ui-select/dist/select.min.css"
           # "app/bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css"
           'app/bower_components/angular/angular-csp.css'
@@ -160,7 +160,7 @@ module.exports = (grunt) ->
           {src: ["locale-*.json", "beep.wav", "favicon.ico"], dest: "dist/", cwd: "app", expand: true}
           {src: ["index.html"], dest: "dist/"}
           {src: ["img/*"], dest: "dist/", cwd: "app", expand: true}
-          {src: ["fonts/*"], dest: "dist/", cwd: "app/bower_components/bootstrap/dist", expand: true}
+          {src: ["fonts/*"], dest: "dist/", cwd: "app/bower_components/bootstrap-css-only", expand: true}
         ]
       angular_css:
         files: [
