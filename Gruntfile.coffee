@@ -71,7 +71,7 @@ module.exports = (grunt) ->
           'build/translations.js'
           'assets/js/webcam.js'
           'app/bower_components/angular-audio/app/angular.audio.js'
-          'app/bower_components/angular-bootstrap-slider/slider.js'
+          # 'app/bower_components/angular-bootstrap-slider/slider.js'
           'app/bower_components/angular-inview/angular-inview.js'
           'assets/js/templates.js'
           'node_modules/bc-qr-reader/dist/bc-qr-reader.js'
@@ -97,7 +97,7 @@ module.exports = (grunt) ->
           'app/bower_components/angular-numeraljs/dist/angular-numeraljs.min.js'
           'app/bower_components/angular-translate/angular-translate.min.js'
           'app/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js'
-          'app/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js'
+          # 'app/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js'
           'app/bower_components/intl-tel-input/build/js/intlTelInput.min.js'
           'app/bower_components/international-phone-number/releases/international-phone-number.min.js'
           'build/application-dependencies.min.js'
@@ -134,7 +134,7 @@ module.exports = (grunt) ->
         src: [
           "app/bower_components/bootstrap/dist/css/bootstrap.css"
           "app/bower_components/angular-ui-select/dist/select.min.css"
-          "app/bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css"
+          # "app/bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css"
           'app/bower_components/angular/angular-csp.css'
           "build/css/**/*.css"
         ],

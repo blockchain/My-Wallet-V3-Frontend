@@ -12,21 +12,20 @@
     "angular-ui-router": "~0.2.11",
     "jquery": "~2.1.1",
     "angular-bootstrap": "~0.12.0",
-    "bootstrap": "~3.2.0",
     "angular-cookies": "~1.2.25",
     "angular-audio": "*",
     "angular-ui-select": "~0.7.0",
     "angular-sanitize": "~1.2.26",
     "angular-qr": "~0.2.0",
-    "angular-local-storage": "~0.1.2",
     "angular-numeraljs": "~1.1.0",
     "angular-translate": "~2.4.1",
     "angular-translate-loader-static-files": "~2.4.1",
-    "seiyria-bootstrap-slider": "~4.2.0",
-    "angular-bootstrap-slider": "sjors/angular-bootstrap-slider#~0.0.8",
-    "angular-ladda": "~0.1.9",
     "angular-inview": "~1.5.0",
     "angular-password-entropy": "sjors/angular-password-entropy#2bb12c6b4",
-    "international-phone-number": "sjors/international-phone-number#0.0.2"
+    "international-phone-number": "sjors/international-phone-number#0.0.2",
+    "bootstrap-css-only": "~3.3.2"
+  },
+  "devDependencies": {
+    "angular-local-storage": "~0.1.5"
   }
 }

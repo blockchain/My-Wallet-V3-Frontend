@@ -5,7 +5,7 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1") 
     meta(name="theme-color" content="#187fc0") 
     title Blockchain Wallet HD
-    link(rel='stylesheet', href='bower_components/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet', href='bower_components/bootstrap-css-only/css/bootstrap.css')
     link(rel="stylesheet", href="bower_components/angular-ui-select/dist/select.min.css")
     script(src='bower_components/jquery/dist/jquery.min.js')
     script(src='bower_components/angular/angular.js')
@@ -23,8 +23,11 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     script(src='bower_components/angular-numeraljs/dist/angular-numeraljs.js')    
     script(src='bower_components/angular-translate/angular-translate.js')
     script(src='bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js')
-    script(src='bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js')    
-    script(src='bower_components/angular-bootstrap-slider/slider.js')
+    
+    // Not used a.t.m. and they depend on jQuery:
+    // script(src='bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js')    
+    // script(src='bower_components/angular-bootstrap-slider/slider.js')
+   
     script(src='bower_components/angular-inview/angular-inview.js')
     script(src='bower_components/angular-password-entropy/password-entropy.js')
     script(src='bower_components/intl-tel-input/build/js/intlTelInput.js')
@@ -36,7 +39,7 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     // script(src="bower_components/ladda/js/ladda.js")
     // script(src="bower_components/angular-ladda/dist/angular-ladda.min.js")
     
-    link(rel='stylesheet', href='bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css')
+    //- link(rel='stylesheet', href='bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css')
     //- link(rel="stylesheet", href="bower_components/ladda/dist/ladda-themeless.min.css")
     !=css('ladda')
     
