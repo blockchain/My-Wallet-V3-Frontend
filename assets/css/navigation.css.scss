@@ -68,19 +68,19 @@
     }
     
     li > a:hover {
-        background-color: #269FFD;
+        background-color: #358CCD;
     }
 
     li.active {
      a {
-        background-color: #1A76BA;
+        background-color: transparent;
         border-bottom: thick solid #269FFD;
         margin-bottom: 1px;
         color: #d3edfb;
       }
       
       a:hover {
-        background-color: #269FFD;
+        background-color: #358CCD;
       }
     }
     
