@@ -325,5 +325,7 @@
   "NOT_ALLOWED" : "{{ forbidden }} is not allowed",
   "DO_NOT_COPY_PASTE" : "It is not safe to copy paste this.",
   "INCORRECT_PASSWORD" : "Incorrect Password",
+  "TOO_WEAK" : "Your password is not strong enough",
+  "TOO_LONG" : "You password is too long.",
   "" : ""
 }
