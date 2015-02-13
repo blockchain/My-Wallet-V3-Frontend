@@ -121,7 +121,17 @@
         $scope.errors.email = translation
     else 
        $scope.success.email = true
-      
+    
+    if $scope.form && $scope.form.$error
+      if $scope.form.$error.minEntropy
+        $scope.isValid[0] = false
+        $translate("TOO_WEAK").then (translation) ->
+          $scope.errors.password =  translation  
+      if $scope.form.$error.maxlength
+        $scope.isValid[0] = false
+        $translate("TOO_LONG").then (translation) ->
+          $scope.errors.password =  translation
+    
     if $scope.fields.confirmation == ""
       $scope.isValid[0] = false
     else

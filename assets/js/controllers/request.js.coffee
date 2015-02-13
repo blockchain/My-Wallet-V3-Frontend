@@ -55,7 +55,7 @@
         idx = parseInt($stateParams.accountIndex)
       $scope.fields.to = $scope.accounts[idx]
         
-  $scope.$watch "fields.to + status.didInitializeHD", () ->
+  $scope.$watch "fields.to.index + fields.to.address + status.didInitializeHD", () ->
     $scope.formIsValid = $scope.validate()
     amount = $scope.parseAmount()
         

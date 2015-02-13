@@ -16,9 +16,9 @@
             img(src="img/spinner.gif")     
           span(ng-show="originsLoaded")
             ui-select(ng-model="transaction.from")
-              ui-select-match {{ maxAndLabel($select) }}            
+              ui-select-match {{ maxAndLabelForSelect($select) }}            
               ui-select-choices(repeat="origin in origins | filter: $select.search" group-by="'type'") 
-                span(ng-bind-html="origin.label | highlight: $select.search")
+                span(ng-bind-html="maxAndLabel(origin) | highlight: $select.search")
       .form-group(ng-class="{'has-error': errors.to, 'has-success' : success.to}")
         label.col-sm-3.control-label
           span(translate="TO")

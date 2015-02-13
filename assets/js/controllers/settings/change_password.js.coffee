@@ -39,6 +39,10 @@
         isValid = false
         $translate("TOO_WEAK").then (translation) ->
           $scope.errors.password =  translation  
+      if $scope.form.theForm.password.$error.maxlength
+        isValid = false
+        $translate("TOO_LONG").then (translation) ->
+          $scope.errors.password =  translation
     if $scope.fields.confirmation == ""
       isValid = false
     else

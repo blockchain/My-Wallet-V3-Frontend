@@ -8,4 +8,4 @@
       span.ad(ng-repeat="ad in ads")
         button.btn(ng-class="[ ad.button_class ]", ng-click="visit(ad)")
           img(ng-src="{{ ad.image }}")
-          {{ ad.title }}
+          | {{ ad.title }}
