@@ -1,73 +1,89 @@
 .security-center
   p.headliner(translate="SECURITY_LEVEL_EXPLAIN")
-  .row.badge-container
-    .col-xs-6.col-centered.thebadge.current
-      h2(translate="CURRENT_LEVEL")
-      span(ng-show="security.level == null")
-        img(src="img/spinner.gif")
-      security-badge(level="security.level", ng-hide="security.level == 0 || security.level == null").current
-    .col-xs-6.col-centered.thebadge(ng-hide="security.level == 3 || security.level == null")
-      h2(translate="IN_PROGRESS")
-      security-badge(level="security.level + 1", pending="1")    
-  .row.spacing(ng-hide="security.level == 3")
-    .col-xs-12
-      h2.nextsteps(translate="SECURITY_LEVEL_NEXT_STEPS")
-  .next-step.row(ng-hide="user.isEmailVerified")
-    .col-xs-6
-      label(translate="VERIFY_EMAIL")
-      p(translate="VERIFY_EMAIL_EXPLAIN")
-    .col-xs-6.setting-result
-      resend-email-confirmation
-  .next-step.row(ng-hide="user.isMobileVerified || security.level < 1")
-    .col-xs-12
-      .form-group
-        .col-sm-6
-          label(translate="ADD_MOBILE_NUMBER")
-          p(translate="MOBILE_NUMBER_EXPLAIN")    
-        .col-sm-6.setting-result
-           configure-mobile-number(ng-hide="user.isMobileVerified || security.level < 1")
-  .next-step.row(ng-hide="settings.needs2FA || security.level < 1")     
-    .col-xs-12
-      .form-group 
-        .col-sm-6
-          label(translate="ADD_TWO_FACTOR")
-          p(translate="TWO_FACTOR_EXPLAIN")    
-        .col-sm-6.setting-result
-          two-factor
-  .next-step.row(ng-hide="status.didConfirmRecoveryPhrase || security.level < 1")
-    .col-xs-12    
-      .form-group 
-        .col-sm-6
-          label(translate="ADD_WALLET_RECOVERY")
-          p(translate="RECOVERY_PHRASE_EXPLAIN")
-        .col-sm-6.setting-result
+  .row.bucket
+    .col-xs-12.level1.level
+      .col-md-3.title
+        img(src="img/security-icon-1.png")
+        p Level 1
+      .col-md-3.secbadge(ng-class="{'badge-active': user.isEmailVerified}")
+        a(ng-click="display.email_action = !display.email_action")
+          img(src="img/badge-verifyemail.png")
+          p(translate="ADD_VERIFY_EMAIL")
+      .col-md-3.secbadge(ng-class="{'badge-active': user.didConfirmRecoveryPhrase}")
+        a(ng-click="display.securityphrase_action = !display.securityphrase_action")
+          img(src="img/badge-securityphrase.png")
+          p(translate="ADD_WALLET_RECOVERY")
+      .col-md-3.secbadge
+        a(ng-click="display.passwordhint_action = !display.passwordhint_action")
+          img(src="img/badge-passwordhint.png")
+          p(translate="ADD_PASSWORD_HINT")
+          
+      .col-xs-12.actionHolder(ng-show="display.email_action")	  
+        .actionitem(ng-hide="user.isEmailVerified")
+          h3 Add Your Email Address
+          p Adding your email address will allow us to email you password and GUID reminders.
+          resend-email-confirmation
+
+      .col-xs-12.actionHolder(ng-show="display.securityphrase_action")
+        .actionitem(ng-hide="status.didConfirmRecoveryPhrase")
+          h3 Backup Your Security Phrase
+          p Your Security Phrase allows you to access your wallet in case you forget your password. Keep it very safe!
           confirm-recovery-phrase
-  .next-step.row(ng-hide="settings.secondPassword || security.level < 2")
-    .col-xs-12
-      .form-group 
-        .col-sm-6
-          label(translate="ADD_SECOND_PASSWORD")
-          p(translate="WALLET_SECOND_PASSWORD_EXPLAIN")
-        .col-sm-6.setting-result      
-          configure-second-password
-  .next-step.row(ng-hide="settings.blockTOR || security.level < 2")
-    .col-xs-12 
-      .form-group 
-        .col-sm-6
-          label(translate="ADD_BLOCK_TOR")
-          p(translate="BLOCK_TOR_EXPLAIN")
-        .col-sm-6.setting-result     
-            tor
-  .next-step.row(ng-hide="legacyAddresses.length == 0 || security.level < 2")
-    .col-xs-12         
-      .form-group(ng-hide="legacyAddresses.length == 0 || security.level < 2")
-        .col-sm-6
-          label(translate="SWEEP_LEGACY")
-          p(translate="SWEEP_LEGACY_EXPLAIN")
-        .col-sm-6.setting-result 
-          ul
-            li(ng-repeat="address in legacyAddresses")
-              a(ui-sref="wallet.common.settings.address({address: address.address})")
-                | {{ address.address | limitTo:8 }}... 
-                | : {{ address.balance | btc }} 
-          a(ng-click="transfer(address)") (transfer)
+
+      .col-xs-12.actionHolder(ng-show="display.passwordhint_action")
+        .actionitem
+          h3 Set A Password Hint
+          p We cannot reset or help you if you lose your password. Set a memorable hint that will jar your memory that we can send to your email address.
+        
+  .row.bucket
+    .col-xs-12.level2.level
+      .col-md-3.title
+        img(src="img/security-icon-2.png")
+        p Level 2
+      .col-md-3.secbadge(ng-class="{'badge-active': user.isMobileVerified}")
+        a(ng-click="display.mobilenumber_action = !display.mobilenumber_action")
+          img(src="img/badge-addmobile.png")
+          p(TRANSLATE="ADD_MOBILE_NUMBER")
+      .col-md-3.secbadge(ng-class="{'badge-active': settings.needs2FA}")
+        a(ng-click="display.twofactor_action = !display.twofactor_action")
+          img(src="img/badge-add2FA.png")
+          p(TRANSLATE="ADD_TWO_FACTOR")
+      .col-md-3.secbadge
+
+      .col-xs-12.actionHolder(ng-show="display.mobilenumber_action")
+        .actionitem(ng-hide="user.isMobileVerified")
+          h3 Add Your Mobile Number for Instant Alerts
+          p By adding a mobile number you will be alerted whenever your wallet is accessed and when funds are sent or received.
+          configure-mobile-number
+      
+      .col-xs-12.actionHolder(ng-show="display.twofactor_action")
+        .actionitem(ng-hide="settings.needs2FA")
+          h3 Add Two Factor Authorization
+          p By adding a Two Factor option you will be required to confirm every access attempt into your wallet.
+          two-factor
+ 
+  .row.bucket
+    .col-xs-12.level3.level
+      .col-md-3.title
+        img(src="img/security-icon-3.png")
+        p Level 3
+      .col-md-3.secbadge
+        a(ng-click="display.blockie_action = !display.blockie_action")
+          img(src="img/badge-blockIE.png")
+          p("TRANSLATE=ADD_BLOCK_IE")
+      .col-md-3.secbadge(ng-class="{'badge-active': settings.blockTOR}")
+        a(ng-click="display.blocktor_action = !display.blocktor_action")
+          img(src="img/badge-blockTOR.png")
+          p(TRANSLATE="ADD_BLOCK_TOR")
+      .col-md-3.secbadge
+
+      .col-xs-12.actionHolder(ng-show="display.blockie_action")
+        .actionitem()
+          h3 Block IE
+          p Blah
+
+      .col-xs-12.actionHolder(ng-show="display.blocktor_action")
+        .actionitem(ng-hide="settings.blockTOR")
+          h3 Block Tor
+          p Blah
+          tor

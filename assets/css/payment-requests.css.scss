@@ -14,4 +14,9 @@ p.form-control-static.bitcoin-address {
   font-family: "Courier New", monospace;
   font-size: 9pt;
   color: black;
+  
+  span{
+	overflow-wrap: break-word;
+	line-height: 1.9em;  
+  }
 }

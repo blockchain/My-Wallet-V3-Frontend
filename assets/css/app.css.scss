@@ -80,7 +80,8 @@ a{
 }
 
 .modal-dialog{
-	width: 70%;
+	width: 100%;
+	margin: 0;
 }
 
 
@@ -170,21 +171,6 @@ a.back {
   }
 }
 
-.modal.signup{
-	display: block;
-	position: fixed;
-	bottom: 0;
-	
-	.modal-lg{
-		width: 100%;
-		position: absolute;
-		top: auto;
-		bottom: 0;
-		margin: 0 auto;
-	}
-	
-}
-
 .form-ctrl{
   padding: 15px 0;	
 	  .btn-bci{
@@ -229,6 +215,11 @@ padding: 30px;
 .container-fluid {
 padding-right: 15px;
 padding-left: 15px;
+}
+
+.modal-dialog{
+	width: 70%;
+	margin: 10px;
 }
 
 }
