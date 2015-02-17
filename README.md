@@ -108,7 +108,7 @@ You can test the resulting files with:
 
     coffee server-dist.coffee
 
-Deploy to staging (assuming your host file has an entry ssh.blockchain.com):
+Deploy to staging (assuming your host file has an entry server11):
 
     grunt staging
 

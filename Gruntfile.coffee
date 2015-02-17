@@ -221,7 +221,7 @@ module.exports = (grunt) ->
     shell: 
       staging: 
         command: () -> 
-           'scp -Cr dist/* ssh.blockchain.com:dist'
+           'scp -Cr dist/* server11:dist'
 
       
   
