@@ -14,7 +14,7 @@
     border: none;
     text-align: center;
       h3{
-		font-size: 30pt;
+		font-size: 25pt;
 		font-weight: 200;
 		color: #C8E9F0;
 		margin: 20px 0 20px;
@@ -109,4 +109,42 @@
 
   }
   
+}
+
+.modal.signup{
+display: block;
+position: fixed;
+bottom: 0;
+
+  .modal-lg{
+	width: 100%;
+	position: relative;
+	top: auto;
+	bottom: 0;
+	margin: 0 auto;
+	min-height: 568px;
+	overflow: scroll;
+  }
+
+}
+
+
+@media (min-width: 768px){
+  .modal-header{
+	h3{
+	  font-size: 30pt;	
+	}
+  }
+  .modal.signup{
+	position: fixed;
+	
+	.modal-lg{
+	 position: absolute;
+	 min-height: inherit;
+	 overflow: auto;
+	}
+	
+  }
+
+	
 }

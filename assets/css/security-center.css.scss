@@ -56,3 +56,112 @@ padding-bottom:15px;
 	margin: 3px 0 0 -20px	
 }
 
+
+
+
+
+.security-center{
+	.bucket{
+	  margin-bottom: 15px;
+	  
+	 .level{
+		background: #FFFFFF;
+		border: 1px solid #EAEAEA;
+		padding: 10px; 
+		.actionitem{
+		padding: 20px 30px;
+
+		
+				  
+		  h3{
+			margin: 10px inherit;
+			font-weight: 200;  
+		  }
+		}		 
+		
+	   .title{
+		background: #fff;
+		text-align: center;
+		padding: 15px;
+		border-right: 1px solid #DFDCDC;
+		height: 130px;
+
+		img{
+		  height: 75px;	
+		}   
+		p{
+		  color: #ddd;
+		  font-size: 160%;
+		}
+	   }
+	   .secbadge{
+		text-align: center;
+		padding: 10px;
+		display: block;
+		height: 130px;
+		background: #F7F7F7;
+	       img{
+		     height: 65px;
+		     margin: 20px 0 0;
+		     opacity: .25;
+
+	       }  
+	       p{
+		    color: #999;
+		    margin: 10px 0;;
+		   }
+		   a{
+		     display: block;
+		     height: 130px;
+		     margin: -10px 0 0 0;
+		     
+		     &:hover{
+				 text-decoration: none;
+				 img{opacity: .5;}
+		     }
+		   }
+	   }
+	   
+	   .badge-active{
+		   
+		   a{
+			 cursor: default;
+			 img{opacity: 1;}
+			 &:hover{img{opacity: 1;}}
+		   }
+		   
+		   p{
+		   }
+	   }
+	   
+	   
+	 }
+	 .level1{
+		.title{
+// 			background: #b6cfdf;
+			p{color:#E47F7F;}
+		}
+		
+		
+	 }  
+	 .level2{
+		.title{
+// 			background: #7098b3;
+			p{color:#FCCC65;}
+		
+		}
+		
+	 }
+	 .level3{
+		.title{
+// 			background: #177ec1;
+			p{color:#3CC476;}
+
+		}
+	 }
+	 
+	}
+}
+
+.actionHolder{padding: 0;}
+.hasBadge{display: none;}
