@@ -6,34 +6,35 @@
         img(src="img/security-icon-1.png")
         p Level 1
       .col-md-3.secbadge(ng-class="{'badge-active': user.isEmailVerified}")
-        a(ng-click="display.email_action = !display.email_action")
+        a(ng-click="user.isEmailVerified || toggle('email')")
           img(src="img/badge-verifyemail.png")
           p(translate="ADD_VERIFY_EMAIL")
-      .col-md-3.secbadge(ng-class="{'badge-active': user.didConfirmRecoveryPhrase}")
-        a(ng-click="display.securityphrase_action = !display.securityphrase_action")
+      .col-md-3.secbadge(ng-class="{'badge-active': status.didConfirmRecoveryPhrase}")
+        a(ng-click="status.didConfirmRecoveryPhrase || toggle('securityphrase')")
           img(src="img/badge-securityphrase.png")
           p(translate="ADD_WALLET_RECOVERY")
-      .col-md-3.secbadge
-        a(ng-click="display.passwordhint_action = !display.passwordhint_action")
+      .col-md-3.secbadge(ng-class="{'badge-active': user.passwordHint}")
+        a(ng-click="user.passwordHint || toggle('passwordhint')")
           img(src="img/badge-passwordhint.png")
           p(translate="ADD_PASSWORD_HINT")
-          
-      .col-xs-12.actionHolder(ng-show="display.email_action")	  
-        .actionitem(ng-hide="user.isEmailVerified")
+
+      .col-xs-12.actionHolder(ng-show="display.action == 'email'")	  
+        .actionitem
           h3 Add Your Email Address
           p Adding your email address will allow us to email you password and GUID reminders.
           resend-email-confirmation
 
-      .col-xs-12.actionHolder(ng-show="display.securityphrase_action")
-        .actionitem(ng-hide="status.didConfirmRecoveryPhrase")
+      .col-xs-12.actionHolder(ng-show="display.action == 'securityphrase'")
+        .actionitem
           h3 Backup Your Security Phrase
           p Your Security Phrase allows you to access your wallet in case you forget your password. Keep it very safe!
           confirm-recovery-phrase
 
-      .col-xs-12.actionHolder(ng-show="display.passwordhint_action")
+      .col-xs-12.actionHolder(ng-show="display.action == 'passwordhint'")
         .actionitem
           h3 Set A Password Hint
           p We cannot reset or help you if you lose your password. Set a memorable hint that will jar your memory that we can send to your email address.
+          bc-async-input(ng-model="user.passwordHint", on-save="changePasswordHint", action-title="'CHANGE_PASSWORD_HINT' | translate")      
         
   .row.bucket
     .col-xs-12.level2.level
@@ -41,23 +42,23 @@
         img(src="img/security-icon-2.png")
         p Level 2
       .col-md-3.secbadge(ng-class="{'badge-active': user.isMobileVerified}")
-        a(ng-click="display.mobilenumber_action = !display.mobilenumber_action")
+        a(ng-click="user.isMobileVerified || toggle('mobilenumber')")
           img(src="img/badge-addmobile.png")
           p(TRANSLATE="ADD_MOBILE_NUMBER")
       .col-md-3.secbadge(ng-class="{'badge-active': settings.needs2FA}")
-        a(ng-click="display.twofactor_action = !display.twofactor_action")
+        a(ng-click="settings.needs2FA || toggle('twofactor')")
           img(src="img/badge-add2FA.png")
           p(TRANSLATE="ADD_TWO_FACTOR")
       .col-md-3.secbadge
 
-      .col-xs-12.actionHolder(ng-show="display.mobilenumber_action")
-        .actionitem(ng-hide="user.isMobileVerified")
+      .col-xs-12.actionHolder(ng-show="display.action == 'mobilenumber'")
+        .actionitem
           h3 Add Your Mobile Number for Instant Alerts
           p By adding a mobile number you will be alerted whenever your wallet is accessed and when funds are sent or received.
           configure-mobile-number
       
-      .col-xs-12.actionHolder(ng-show="display.twofactor_action")
-        .actionitem(ng-hide="settings.needs2FA")
+      .col-xs-12.actionHolder(ng-show="display.action == 'twofactor'")
+        .actionitem
           h3 Add Two Factor Authorization
           p By adding a Two Factor option you will be required to confirm every access attempt into your wallet.
           two-factor
@@ -67,23 +68,24 @@
       .col-md-3.title
         img(src="img/security-icon-3.png")
         p Level 3
-      .col-md-3.secbadge
-        a(ng-click="display.blockie_action = !display.blockie_action")
-          img(src="img/badge-blockIE.png")
-          p("TRANSLATE=ADD_BLOCK_IE")
+      //- .col-md-3.secbadge
+      //-   a(ng-click="settings.blockIE || toggle('blockie')")
+      //-     img(src="img/badge-blockIE.png")
+      //-     p(TRANSLATE="ADD_BLOCK_IE")
       .col-md-3.secbadge(ng-class="{'badge-active': settings.blockTOR}")
-        a(ng-click="display.blocktor_action = !display.blocktor_action")
+        a(ng-click="settings.blockTOR || toggle('blocktor')")
           img(src="img/badge-blockTOR.png")
           p(TRANSLATE="ADD_BLOCK_TOR")
       .col-md-3.secbadge
+      .col-md-3.secbadge  
 
-      .col-xs-12.actionHolder(ng-show="display.blockie_action")
-        .actionitem()
+      .col-xs-12.actionHolder(ng-show="display.action == 'blockie'")
+        .actionitem
           h3 Block IE
           p Blah
 
-      .col-xs-12.actionHolder(ng-show="display.blocktor_action")
-        .actionitem(ng-hide="settings.blockTOR")
+      .col-xs-12.actionHolder(ng-show="display.action == 'blocktor'")
+        .actionitem
           h3 Block Tor
           p Blah
           tor

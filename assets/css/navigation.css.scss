@@ -126,7 +126,9 @@ ul.navbar-nav{
     a.profile{
       background-image: url('/img/account-icon.png');    	    
     }
-    a.security{
+    a.security {
+    }
+    a.security-level-0 {
 	  background-image: url('/img/security-icon-0.png');  
     }
     a.security-level-1{

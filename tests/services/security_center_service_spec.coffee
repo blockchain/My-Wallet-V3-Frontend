@@ -33,65 +33,60 @@ describe "securityCenterServices", () ->
     return  
     
   describe "level", ->   
-    it "should be null before legacy transactions have been loaded", ->
-      Wallet.status.legacyAddressBalancesLoaded = false
-      rootScope.$digest()
+    # it "should be null before legacy transactions have been loaded", ->
+   #    Wallet.status.legacyAddressBalancesLoaded = false
+   #    rootScope.$digest()
+   #
+   #    expect(SecurityCenter.security.level).toBe(null)
       
-      expect(SecurityCenter.security.level).toBe(null)
-      
-    it "should be 0 once legacy transactions have been loaded", ->
+    it "should start at 0", -> # once legacy transactions have been loaded", ->
       expect(SecurityCenter.security.level).toBe(0)    
     
-    it "basic requires a verified email address", ->
+    it "basic requires a verified email address,  a confirmed recovery phrase and a password hint", ->
       Wallet.user.isEmailVerified = true
+      rootScope.$digest()
+      expect(SecurityCenter.security.level).toBe(0)
+      Wallet.user.passwordHint = true
+      rootScope.$digest()
+      expect(SecurityCenter.security.level).toBe(0)
+      Wallet.status.didConfirmRecoveryPhrase = true
       rootScope.$digest()
       expect(SecurityCenter.security.level).toBe(1)
     
     
-    it "mid level requires 2FA, a verified mobile and a confirmed recovery phrase", ->
+    it "level 2 requires 2FA and a verified mobile", ->
       # Level 1:
       Wallet.user.isEmailVerified = true
+      Wallet.user.passwordHint = true
+      Wallet.status.didConfirmRecoveryPhrase = true
       
       
       Wallet.settings.needs2FA = true
       Wallet.user.isMobileVerified = true
-      Wallet.status.didConfirmRecoveryPhrase = true
       
-      rootScope.$digest()
-      expect(SecurityCenter.security.level).toBe(2)
-      
-    it "mid level can be reached via any sequence", ->
-      Wallet.settings.needs2FA = true
-      rootScope.$digest()
-      Wallet.user.isMobileVerified = true
-      Wallet.status.didConfirmRecoveryPhrase = true
-      rootScope.$digest()
-      Wallet.user.isEmailVerified = true
       rootScope.$digest()
       expect(SecurityCenter.security.level).toBe(2)
 
-    it "secure requires 2nd password, block TOR and no money in imported addresses", inject((filterFilter)->
+    it "level 3 requires block TOR", -> # and no money in imported addresses", inject((filterFilter)->
       # Level 2:
       Wallet.user.isEmailVerified = true
+      Wallet.user.passwordHint = true
+      Wallet.status.didConfirmRecoveryPhrase = true      
       Wallet.settings.needs2FA = true
       Wallet.user.isMobileVerified = true
-      Wallet.status.didConfirmRecoveryPhrase = true
       
       # Level 3:
-      Wallet.settings.secondPassword = true
-      rootScope.$digest()
-      expect(SecurityCenter.security.level).toBe(2)
           
       Wallet.settings.blockTOR = true
       rootScope.$digest()
-      expect(SecurityCenter.security.level).toBe(2)
-            
-      for address in Wallet.legacyAddresses
-        address.balance = 0
-        
-      # Dummy transaction to trigger the watcher:
-      Wallet.transactions.push {}
-      
-      rootScope.$digest()
       expect(SecurityCenter.security.level).toBe(3)
-    )
+            
+      # for address in Wallet.legacyAddresses
+    #     address.balance = 0
+    #
+    #   # Dummy transaction to trigger the watcher:
+    #   Wallet.transactions.push {}
+    #
+    #   rootScope.$digest()
+    #   expect(SecurityCenter.security.level).toBe(3)
+    
