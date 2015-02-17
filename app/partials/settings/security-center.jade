@@ -18,19 +18,20 @@
           img(src="img/badge-passwordhint.png")
           p(translate="ADD_PASSWORD_HINT")
 
-      .col-xs-12.actionHolder(ng-show="display.action == 'email'")	  
+      .col-xs-3
+      .col-xs-9.actionHolder(ng-show="display.action == 'email'")	  
         .actionitem
           h3 Add Your Email Address
           p Adding your email address will allow us to email you password and GUID reminders.
           resend-email-confirmation
 
-      .col-xs-12.actionHolder(ng-show="display.action == 'securityphrase'")
+      .col-xs-9.actionHolder(ng-show="display.action == 'securityphrase'")
         .actionitem
           h3 Backup Your Security Phrase
           p Your Security Phrase allows you to access your wallet in case you forget your password. Keep it very safe!
           confirm-recovery-phrase
 
-      .col-xs-12.actionHolder(ng-show="display.action == 'passwordhint'")
+      .col-xs-9.actionHolder(ng-show="display.action == 'passwordhint'")
         .actionitem
           h3 Set A Password Hint
           p We cannot reset or help you if you lose your password. Set a memorable hint that will jar your memory that we can send to your email address.
@@ -50,14 +51,15 @@
           img(src="img/badge-add2FA.png")
           p(TRANSLATE="ADD_TWO_FACTOR")
       .col-md-3.secbadge
-
-      .col-xs-12.actionHolder(ng-show="display.action == 'mobilenumber'")
+        
+      .col-xs-3
+      .col-xs-9.actionHolder(ng-show="display.action == 'mobilenumber'")
         .actionitem
           h3 Add Your Mobile Number for Instant Alerts
           p By adding a mobile number you will be alerted whenever your wallet is accessed and when funds are sent or received.
           configure-mobile-number
       
-      .col-xs-12.actionHolder(ng-show="display.action == 'twofactor'")
+      .col-xs-9.actionHolder(ng-show="display.action == 'twofactor'")
         .actionitem
           h3 Add Two Factor Authorization
           p By adding a Two Factor option you will be required to confirm every access attempt into your wallet.
@@ -78,13 +80,15 @@
           p(TRANSLATE="ADD_BLOCK_TOR")
       .col-md-3.secbadge
       .col-md-3.secbadge  
+      
+      .col-xs-3
 
-      .col-xs-12.actionHolder(ng-show="display.action == 'blockie'")
+      .col-xs-9.actionHolder(ng-show="display.action == 'blockie'")
         .actionitem
           h3 Block IE
           p Blah
 
-      .col-xs-12.actionHolder(ng-show="display.action == 'blocktor'")
+      .col-xs-9.actionHolder(ng-show="display.action == 'blocktor'")
         .actionitem
           h3 Block Tor
           p Blah
