@@ -21,7 +21,7 @@
     "angular-translate": "~2.4.1",
     "angular-translate-loader-static-files": "~2.4.1",
     "angular-inview": "~1.5.0",
-    "angular-password-entropy": "sjors/angular-password-entropy#2bb12c6b4",
+    "angular-password-entropy": "pernas/angular-password-entropy#0.0.6",
     "international-phone-number": "sjors/international-phone-number#0.0.2",
     "bootstrap-css-only": "~3.3.2"
   },
