@@ -4,7 +4,7 @@
   $scope.settings = Wallet.settings
   $scope.user = Wallet.user
   $scope.status = Wallet.status
-    
+      
   $scope.legacyAddresses = []
   $scope.unfilteredLegacyAddresses = Wallet.legacyAddresses
   

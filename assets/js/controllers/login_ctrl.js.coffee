@@ -1,6 +1,10 @@
-@LoginCtrl = ($scope, $log, Wallet, $cookieStore, $modal, $state, $timeout) ->
+@LoginCtrl = ($scope, $log, Wallet, $cookieStore, $modal, $state, $timeout, $translate) ->
   $scope.status = Wallet.status    
   $scope.settings = Wallet.settings
+  
+  if browserDetection().browser == "ie"
+    $translate("WARN_AGAINST_IE").then (translation) ->
+      Wallet.displayWarning(translation, true)
   
   if Wallet.guid?
     $scope.uid = Wallet.guid

@@ -77,6 +77,7 @@ module.exports = (grunt) ->
           'node_modules/bc-qr-reader/dist/bc-qr-reader.js'
           'app/bower_components/angular-password-entropy/password-entropy.js'
           'app/bower_components/intl-tel-input/lib/libphonenumber/build/utils.js'
+          'app/bower_components/browserdetection/src/browser-detection.js'
         ]
 
         dest: "build/application-dependencies.js"
