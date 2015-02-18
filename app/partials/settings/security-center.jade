@@ -18,24 +18,27 @@
           img(src="img/badge-passwordhint.png")
           p(translate="ADD_PASSWORD_HINT")
 
-      .col-xs-3
-      .col-xs-9.actionHolder(ng-show="display.action == 'email'")	  
+      .col-md-3
+      .col-md-9.actionHolder(ng-show="display.action == 'email'")	  
         .actionitem
           h3 Add Your Email Address
           p Adding your email address will allow us to email you password and GUID reminders.
-          resend-email-confirmation
+          .action-button
+            resend-email-confirmation
 
-      .col-xs-9.actionHolder(ng-show="display.action == 'securityphrase'")
+      .col-md-9.actionHolder(ng-show="display.action == 'securityphrase'")
         .actionitem
           h3 Backup Your Security Phrase
           p Your Security Phrase allows you to access your wallet in case you forget your password. Keep it very safe!
-          confirm-recovery-phrase
+          .action-button
+            confirm-recovery-phrase
 
-      .col-xs-9.actionHolder(ng-show="display.action == 'passwordhint'")
+      .col-md-9.actionHolder(ng-show="display.action == 'passwordhint'")
         .actionitem
-          h3 Set A Password Hint
+          h3 Create A Password Hint
           p We cannot reset or help you if you lose your password. Set a memorable hint that will jar your memory that we can send to your email address.
-          bc-async-input(ng-model="user.passwordHint", on-save="changePasswordHint", action-title="'CHANGE_PASSWORD_HINT' | translate")      
+          .action-button
+            bc-async-input(ng-model="user.passwordHint", on-save="changePasswordHint", action-title="'CHANGE_PASSWORD_HINT' | translate")      
         
   .row.bucket
     .col-xs-12.level2.level
@@ -52,18 +55,20 @@
           p(TRANSLATE="ADD_TWO_FACTOR")
       .col-md-3.secbadge
         
-      .col-xs-3
-      .col-xs-9.actionHolder(ng-show="display.action == 'mobilenumber'")
+      .col-md-3
+      .col-md-9.actionHolder(ng-show="display.action == 'mobilenumber'")
         .actionitem
-          h3 Add Your Mobile Number for Instant Alerts
+          h3 Link Your Mobile Number for Instant Alerts
           p By adding a mobile number you will be alerted whenever your wallet is accessed and when funds are sent or received.
-          configure-mobile-number
+          .action-button
+            configure-mobile-number
       
-      .col-xs-9.actionHolder(ng-show="display.action == 'twofactor'")
+      .col-md-9.actionHolder(ng-show="display.action == 'twofactor'")
         .actionitem
-          h3 Add Two Factor Authorization
+          h3 Setup Two Factor Authorization
           p By adding a Two Factor option you will be required to confirm every access attempt into your wallet.
-          two-factor
+          .action-button
+            two-factor
  
   .row.bucket
     .col-xs-12.level3.level
@@ -81,15 +86,16 @@
       .col-md-3.secbadge
       .col-md-3.secbadge  
       
-      .col-xs-3
+      .col-md-3
 
-      .col-xs-9.actionHolder(ng-show="display.action == 'blockie'")
+      .col-md-9.actionHolder(ng-show="display.action == 'blockie'")
         .actionitem
           h3 Block IE
           p Blah
 
-      .col-xs-9.actionHolder(ng-show="display.action == 'blocktor'")
+      .col-md-9.actionHolder(ng-show="display.action == 'blocktor'")
         .actionitem
-          h3 Block Tor
+          h3 Block Tor Requests
           p Blah
-          tor
+          .action-button
+            tor

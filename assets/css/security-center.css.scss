@@ -70,20 +70,24 @@ padding-bottom:15px;
 		padding: 10px; 
 		.actionitem{
 		padding: 20px 30px;
-
-		
-				  
+	  
 		  h3{
 			margin: 10px inherit;
-			font-weight: 200;  
+			font-weight: 100;
+			color: #89ABC0;
+			font-size: 200%;
+		  }
+		  p{
+			color: #B0B0B0;
+			line-height: 1.7em;			  
 		  }
 		}		 
 		
 	   .title{
-		background: #fff;
+		background: #EBECEF;
 		text-align: center;
 		padding: 15px;
-		border-right: 1px solid #DFDCDC;
+		border-right: 1px solid #E0E0E0;
 		height: 130px;
 
 		img{
@@ -108,7 +112,7 @@ padding-bottom:15px;
 	       }  
 	       p{
 		    color: #999;
-		    margin: 10px 0;;
+		    margin: 10px 0;
 		   }
 		   a{
 		     display: block;
@@ -119,6 +123,7 @@ padding-bottom:15px;
 				 text-decoration: none;
 				 img{opacity: .5;}
 		     }
+		     
 		   }
 	   }
 	   
@@ -164,4 +169,22 @@ padding-bottom:15px;
 }
 
 .actionHolder{padding: 0;}
+.action-button{
+	a.settingaction{
+		float: none;
+		background: #2683DD;
+		padding: 15px;
+		box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.15);
+		border: 1px solid #FFFFFF;
+		color: rgba(255, 255, 255, 1);
+		border-radius: 3px;
+		display: block;
+		text-align: center;
+		margin: 0 auto;
+		width: 50%;
+		font-weight: bold;
+		&:hover{background: #1C8FFF;}
+		
+	}	
+}
 .hasBadge{display: none;}
