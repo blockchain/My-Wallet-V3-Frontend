@@ -33,6 +33,7 @@ module.exports = (grunt) ->
         
       mywallet:
         src: [
+          'app/bower_components/browserdetection/src/browser-detection.js'
           'assets/js/my-wallet/ie.js'
           "assets/js/my-wallet/shared.js"
           'assets/js/my-wallet/bower_components/cryptojslib/rollups/sha256.js'
@@ -77,7 +78,6 @@ module.exports = (grunt) ->
           'node_modules/bc-qr-reader/dist/bc-qr-reader.js'
           'app/bower_components/angular-password-entropy/password-entropy.js'
           'app/bower_components/intl-tel-input/lib/libphonenumber/build/utils.js'
-          'app/bower_components/browserdetection/src/browser-detection.js'
         ]
 
         dest: "build/application-dependencies.js"
