@@ -1,11 +1,12 @@
 .adverts
-  .row
-    .col-xs-12
-      h2(translate="PARTNERS")
-  .row
-    // Assuming there's never more than 6 ads:
-    .col-xs-12
-      span.ad(ng-repeat="ad in ads")
-        button.btn(ng-class="[ ad.button_class ]", ng-click="visit(ad)")
-          img(ng-src="{{ ad.image }}")
-          | {{ ad.title }}
+  table.left-header.accounts
+    tr
+      td.header 
+        img
+        span(translate="PARTNERS") 
+      table.left
+        tr.ad(ng-repeat="ad in ads")
+          td 
+            button.btn(ng-class="[ ad.button_class ]", ng-click="visit(ad)")
+              img(ng-src="{{ ad.image }}")
+              | {{ ad.title }}
