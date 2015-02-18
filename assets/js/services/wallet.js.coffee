@@ -42,7 +42,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.currencies = []
   wallet.hdAddresses = []
   
-  if internet_explorer
+  if browserDetection().browser == "firefox" || (browserDetection().browser == "ie" && browserDetection().version < 11)
     wallet.my.setUseBuildHDWalletWebworker(false) # Don't use web workers (pending IE fixes)
   else
     wallet.my.setUseBuildHDWalletWebworker(true) # Use web workers

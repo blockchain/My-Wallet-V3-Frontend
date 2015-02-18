@@ -82,9 +82,7 @@ modules = [
   # 'angular-ladda'
 ]
 
-internet_explorer = (/internet explorer/i).test(window.navigator.userAgent) || (/MSIE/i).test(window.navigator.userAgent)
-
-unless internet_explorer
+unless browserDetection().browser == "ie"
   modules.push "webcam"
 
 walletApp = angular.module("walletApp", modules)
