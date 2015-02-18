@@ -23,7 +23,8 @@
     "angular-inview": "~1.5.0",
     "angular-password-entropy": "pernas/angular-password-entropy#0.0.6",
     "international-phone-number": "sjors/international-phone-number#0.0.2",
-    "bootstrap-css-only": "~3.3.2"
+    "bootstrap-css-only": "~3.3.2",
+    "browserdetection": "~0.3.3"
   },
   "devDependencies": {
     "angular-local-storage": "~0.1.5"
