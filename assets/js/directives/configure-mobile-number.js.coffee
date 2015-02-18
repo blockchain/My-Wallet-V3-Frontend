@@ -20,10 +20,10 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
         
         scope.noMobile = scope.user.internationalMobileNumber == "+1"
         scope.fields.newMobile = scope.user.internationalMobileNumber
-        
+                
         if scope.noMobile
-          # scope.mobileDefaultCountry = "nl"
-          scope.fields.newMobile = null
+          scope.mobileDefaultCountry = Wallet.status.currentCountryCode
+          scope.fields.newMobile = "+" + Wallet.status.currentCountryDialCode
             
       scope.changeMobile = (mobile) ->
         scope.status.busy = true

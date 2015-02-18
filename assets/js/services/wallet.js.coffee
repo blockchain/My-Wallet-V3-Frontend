@@ -79,6 +79,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.settings.twoFactorMethod = result.auth_type
         wallet.user.email = result.email
         wallet.user.current_ip = result.my_ip
+        wallet.status.currentCountryDialCode = result.dial_code
+        wallet.status.currentCountryCode = result.country_code
         if result.sms_number
            wallet.user.mobile = {country: result.sms_number.split(" ")[0], number: result.sms_number.split(" ")[1]}
         else # Field is not present if not entered
