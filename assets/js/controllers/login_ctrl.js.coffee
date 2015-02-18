@@ -3,8 +3,12 @@
   $scope.settings = Wallet.settings
   
   if browserDetection().browser == "ie"
-    $translate("WARN_AGAINST_IE").then (translation) ->
-      Wallet.displayWarning(translation, true)
+    if browserDetection().version < 10
+      $translate("MINIMUM_IE_10", {version: browserDetection().version}).then (translation) ->
+        Wallet.displayError(translation, true)
+    else  
+      $translate("WARN_AGAINST_IE").then (translation) ->
+        Wallet.displayWarning(translation, true)
   
   if Wallet.guid?
     $scope.uid = Wallet.guid
