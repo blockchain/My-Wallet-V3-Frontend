@@ -330,7 +330,7 @@
   "INCORRECT_PASSWORD" : "Incorrect Password",
   "TOO_WEAK" : "Your password is not strong enough",
   "TOO_LONG" : "You password is too long.",
-  "WARN_AGAINST_IE" : "We recommend that you login using a more secure browser like Chrome, Firefox or Safari.",
-  "MINIMUM_IE_10" : "Internet Explorer {{ version }} is not supported. Please install Internet Explorer 10 or newer or a more secure browser like Chrome, Firefox or Safari.",
+  "WARN_AGAINST_IE" : "We recommend that you login using a more secure browser like Chrome or Safari.",
+  "MINIMUM_IE_10" : "Internet Explorer {{ version }} is not supported. Please install Internet Explorer 10 or newer or a more secure browser like Chrome or Safari.",
   "" : ""
 }
