@@ -1,6 +1,6 @@
 div
   div(ng-hide="edit.mobile")
-    h2.status.complete {{ user.internationalMobileNumber }}
+    h2.status.complete.securityhide {{ user.internationalMobileNumber }}
     a.settingaction(ng-click="edit.mobile = !edit.mobile", translate="CHANGE_MOBILE_NUMBER")
   .edit-mobile(ng-if="edit.mobile")
     input(type="text" international-phone-number ng-model="fields.newMobile" default-country="{{ mobileDefaultCountry }}" preferred-countries="us,ca,gb,au" skip-util-script-download auto-placeholder="false", ng-disabled="status.busy").form-control

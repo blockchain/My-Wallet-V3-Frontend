@@ -92,3 +92,17 @@ a.new-acct{
   cursor: pointer;
   &:hover{color: #444;}
 }
+
+.sidebox{
+	header{
+	padding: 5px 16px 10px;
+	border-bottom: 1px solid #E8E8E8;
+	margin: 0 0 10px;
+	box-shadow: 0px 2px 20px -4px #CFCFCF;
+		h3{
+		font-size: 130%;
+		font-weight: bold;
+		color: #737373;			
+		}
+	}
+}
