@@ -332,5 +332,7 @@
   "TOO_LONG" : "You password is too long.",
   "WARN_AGAINST_IE" : "We recommend that you login using a more secure browser like Chrome or Safari.",
   "MINIMUM_IE_10" : "Internet Explorer {{ version }} is not supported. Please install Internet Explorer 10 or newer or a more secure browser like Chrome or Safari.",
+  "WARN_IE_10_NO_WEB_WORKERS" : "Upgrade to Internet Explorer 11 or newer for improved performance.",
+  "WARN_FIREFOX_NO_WEB_WORKERS" : "Use Chrome of Safari for improved performance.",
   "" : ""
 }
