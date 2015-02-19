@@ -1,11 +1,33 @@
-.adverts {
-  .ad {
-    margin: 10px;
-    
-    button {
-      img {
-        margin-right: 10px;
-      }
-    }
-  }
+.adverts{
+	table.left-header{
+		td.header{padding: 10px 10px 0 10px;}
+	}
+	table.left{
+		margin: 5px 0 0 0px;
+	  tr.ad{
+		  margin: 0;
+		  border: 15px solid #FFF;
+		  opacity: .8;
+		  &:hover{
+			  opacity: 1;
+		  }
+	    td{
+		  padding: 0;
+		  height: inherit;
+		 a{
+		  display: block;
+		  padding: 10px;
+		   img{
+			 padding: 5px 0px 5px 5px;
+		   }
+		   p{
+			 font-weight: bold;
+			 color: #FFF;
+			 font-size: 12px;
+			 text-align: right;
+		   }
+		  }   
+	    }
+	  }
+	}
 }

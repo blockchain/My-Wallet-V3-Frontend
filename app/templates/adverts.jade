@@ -3,10 +3,10 @@
     tr
       td.header 
         img
-        span(translate="PARTNERS") 
+        span Partners 
       table.left
-        tr.ad(ng-repeat="ad in ads")
+        tr.ad(ng-repeat="ad in ads", ng-class="[ ad.button_class ]")
           td 
-            button.btn(ng-class="[ ad.button_class ]", ng-click="visit(ad)")
+            a(ng-click="visit(ad)")
               img(ng-src="{{ ad.image }}")
-              | {{ ad.title }}
+              p{{ ad.title }}
