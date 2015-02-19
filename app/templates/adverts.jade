@@ -1,12 +1,9 @@
-.adverts
-  table.left-header.accounts
-    tr
-      td.header 
-        img
-        span Partners 
-      table.left
-        tr.ad(ng-repeat="ad in ads", ng-class="[ ad.button_class ]")
-          td 
-            a(ng-click="visit(ad)")
-              img(ng-src="{{ ad.image }}")
-              p{{ ad.title }}
+.adverts.sidebox
+  header
+    h3 Sponsored Links
+  ul
+    li.ad(ng-repeat="ad in ads")
+      a(ng-click="visit(ad)")
+        button.btn(ng-click="visit(ad)", ng-class="[ ad.button_class ]")
+          img(ng-src="{{ ad.image }}")
+        span(ng-class="[ ad.button_class ]"){{ ad.title }}

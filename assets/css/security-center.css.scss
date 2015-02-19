@@ -72,14 +72,14 @@ padding-bottom:15px;
 		padding: 20px 30px;
 	  
 		  h3{
-			margin: 10px inherit;
-			font-weight: 100;
-			color: #89ABC0;
+			font-weight: 200;
+			color: #7E7E7E;
 			font-size: 200%;
 		  }
 		  p{
 			color: #B0B0B0;
-			line-height: 1.7em;			  
+			line-height: 1.7em;	
+			font-size: 15px;		  
 		  }
 		}		 
 		
@@ -171,20 +171,20 @@ padding-bottom:15px;
 .actionHolder{padding: 0;}
 .action-button{
 	a.settingaction{
-		float: none;
-		background: #2683DD;
-		padding: 15px;
-		box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.15);
-		border: 1px solid #FFFFFF;
-		color: rgba(255, 255, 255, 1);
-		border-radius: 3px;
-		display: block;
-		text-align: center;
-		margin: 0 auto;
-		width: 50%;
-		font-weight: bold;
-		&:hover{background: #1C8FFF;}
+	float: none;
+	background: #3099FF;
+	padding: 15px;
+	box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.15);
+	border: 1px solid #2789DD;
+	color: white;
+	border-radius: 3px;
+	display: block;
+	text-align: center;
+	margin: 0 auto;
+	font-weight: bold;
+	font-size: 110%;
 		
 	}	
 }
 .hasBadge{display: none;}
+.securityhide{display: none;}
