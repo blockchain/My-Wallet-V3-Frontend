@@ -11,14 +11,14 @@
       $translate("WARN_AGAINST_IE").then (translation) ->
         Wallet.displayWarning(translation, true)
     
-  # Browser performance warnings:
-  if browserDetection().browser == "firefox" 
-    $translate("WARN_FIREFOX_NO_WEB_WORKERS").then (translation) ->
-      Wallet.displayWarning(translation, true)
-  
-  if browserDetection().browser == "ie" && browserDetection().version == 10
-    $translate("WARN_IE_10_NO_WEB_WORKERS").then (translation) ->
-      Wallet.displayWarning(translation, true)
+  # # Browser performance warnings:
+  # if browserDetection().browser == "firefox"
+  #   $translate("WARN_FIREFOX_NO_WEB_WORKERS").then (translation) ->
+  #     Wallet.displayWarning(translation, true)
+  #
+  # if browserDetection().browser == "ie" && browserDetection().version == 10
+  #   $translate("WARN_IE_10_NO_WEB_WORKERS").then (translation) ->
+  #     Wallet.displayWarning(translation, true)
   
   if Wallet.guid?
     $scope.uid = Wallet.guid

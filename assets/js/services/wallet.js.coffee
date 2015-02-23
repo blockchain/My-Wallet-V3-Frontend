@@ -41,16 +41,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.languages = []
   wallet.currencies = []
   wallet.hdAddresses = []
-  
-  # Web workers do not work in:
-  # IE 10: still trying to fix this
-  # Firefox refuses to run a web worker from a blob if content-security-policy is set https://bugzilla.mozilla.org/show_bug.cgi?id=1037768
-  
-  if browserDetection().browser == "firefox" || (browserDetection().browser == "ie" && browserDetection().version < 11)
-    wallet.my.setUseBuildHDWalletWebworker(false) # Don't use web workers (pending IE fixes)
-  else
-    wallet.my.setUseBuildHDWalletWebworker(true) # Use web workers
-    
+
   ##################################
   #             Public             #
   ##################################

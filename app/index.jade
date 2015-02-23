@@ -68,7 +68,7 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     unless process.env.MYWALLET_MOCK == "1"
       !=js('my-wallet/ie')
       !=js('my-wallet/shared')
-      !=js('my-wallet/bitcoinjs')
+      !=js('my-wallet/browserify')
       !=js('my-wallet/bower_components/cryptojslib/rollups/sha256.js')
       !=js('my-wallet/bower_components/cryptojslib/rollups/aes.js')
       !=js('my-wallet/bower_components/cryptojslib/rollups/pbkdf2.js')

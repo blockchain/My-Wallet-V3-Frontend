@@ -11,10 +11,7 @@ module.exports = (grunt) ->
     uglify:
       options:
         banner: "/*! <%= pkg.name %> <%= grunt.template.today(\"yyyy-mm-dd\") %> */\n"
-
-      bitcoinjs: 
-        src: "assets/js/my-wallet/bitcoinjs.js"
-        dest: "dist/bitcoinjs.min.js"
+        mangle: false
         
       mywallet:
         src:  "build/mywallet.js"
@@ -44,6 +41,7 @@ module.exports = (grunt) ->
           'assets/js/my-wallet/bower_components/cryptojslib/components/mode-ecb.js'
           'assets/js/my-wallet/bower_components/cryptojslib/components/pad-nopadding.js'
           'assets/js/my-wallet/node_modules/sjcl/sjcl.js'
+          'assets/js/my-wallet/browserify.js'
           'assets/js/my-wallet/crypto-util-legacy.js'
           'assets/js/my-wallet/blockchainapi.js'
           'assets/js/my-wallet/signer.js'
@@ -87,6 +85,30 @@ module.exports = (grunt) ->
           'build/mywallet.min.js'
           'app/bower_components/angular/angular.min.js'
           'app/bower_components/angular-sanitize/angular-sanitize.min.js'
+          'app/bower_components/angular-cookies/angular-cookies.min.js'
+          'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
+          'app/bower_components/angular-ui-router/release/angular-ui-router.min.js'
+          'app/bower_components/angular-ui-select/dist/select.min.js'
+          'app/bower_components/qrcode/lib/qrcode.min.js'
+          'app/bower_components/angular-qr/angular-qr.min.js'
+          'app/bower_components/angular-local-storage/dist/angular-local-storage.min.js'
+          'app/bower_components/numeral/min/numeral.min.js'
+          'app/bower_components/angular-numeraljs/dist/angular-numeraljs.min.js'
+          'app/bower_components/angular-translate/angular-translate.min.js'
+          'app/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js'
+          # 'app/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js'
+          'app/bower_components/intl-tel-input/build/js/intlTelInput.min.js'
+          'app/bower_components/international-phone-number/releases/international-phone-number.min.js'
+          'build/application-dependencies.min.js'
+        ]
+        
+        dest: "dist/application.min.js"
+        
+      application_debug: 
+        src: [
+          'build/mywallet.js'
+          'app/bower_components/angular/angular.js'
+          'app/bower_components/angular-sanitize/angular-sanitize.js'
           'app/bower_components/angular-cookies/angular-cookies.min.js'
           'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
           'app/bower_components/angular-ui-router/release/angular-ui-router.min.js'
@@ -151,7 +173,7 @@ module.exports = (grunt) ->
       main: {
         src: ["app/partials/settings/*.jade", "app/partials/*.jade", "app/templates/*.jade"],
         dest: 'assets/js/templates.js'
-      },
+      }
     },
 
     copy: 
@@ -215,7 +237,6 @@ module.exports = (grunt) ->
           src: [
             'dist/application.min.js'
             'dist/jquery.min.js'
-            'dist/bitcoinjs.min.js'
             'dist/application.css'
           ]
         
@@ -252,13 +273,26 @@ module.exports = (grunt) ->
   grunt.registerTask "dist", [
     "clean"
     "compile"
-    "uglify:bitcoinjs"
     "html2js"
     "concat:application_dependencies"
     "uglify:application_dependencies"
     "concat:mywallet"
     "uglify:mywallet"
     "concat:application"
+    "sass"
+    "concat_css"
+    "copy:main"
+    "rename"
+  ]
+  
+  grunt.registerTask "dist_debug", [
+    "clean"
+    "compile"
+    "html2js"
+    "concat:application_dependencies"
+    "uglify:application_dependencies"
+    "concat:mywallet"
+    "concat:application_debug"
     "sass"
     "concat_css"
     "copy:main"
