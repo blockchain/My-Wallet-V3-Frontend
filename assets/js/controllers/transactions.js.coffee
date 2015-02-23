@@ -1,7 +1,7 @@
 @TransactionsCtrl = ($scope, Wallet, MyWallet, $log, $stateParams, $timeout, $state) ->
   
   $scope.nextPage = () ->
-    return if $scope.allTransactionsLoaded
+    return if $scope.allTransactionsLoaded || $scope.loading
     $scope.loading = true
     
     success = () ->
@@ -13,7 +13,6 @@
     allTransactionsLoaded = () ->
       $scope.allTransactionsLoaded = true
       $scope.loading = false
-      
     
     Wallet.fetchMoreTransactions($stateParams.accountIndex, success, error, allTransactionsLoaded)
   
@@ -41,9 +40,6 @@
     $scope.accounts = Wallet.accounts
     $scope.canDisplayDescriptions = false # Don't try to show descriptions for before accounts have been loaded
     $scope.allTransactionsLoaded = false
-    if $stateParams.accountIndex == "accounts"
-      # Pending implementation:
-      $scope.allTransactionsLoaded = true
         
   $scope.transactionFilter = (item) ->
     return item.to.account? || item.from.account? if $stateParams.accountIndex == "accounts"

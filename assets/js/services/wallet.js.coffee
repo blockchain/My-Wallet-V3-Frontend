@@ -260,7 +260,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     allTransactionsLoaded = () ->
       allTransactionsLoadedCallback()
       wallet.applyIfNeeded()
-    
+          
     if where == "accounts"
       wallet.my.fetchMoreTransactionsForAccounts(success, error, allTransactionsLoaded)
     else if where == "imported"
