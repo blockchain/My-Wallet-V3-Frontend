@@ -11,6 +11,8 @@ cd My-Wallet-HD-Frontend
 npm install
 ```
 
+You may have to run `npm install` twice.
+
 Compile javascript for MyWallet:
 ```sh
 cd assets/js/my-wallet
