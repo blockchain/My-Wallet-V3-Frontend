@@ -434,12 +434,19 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     if addressOrPrivateKey == ""
       errorCallback({invalidInput: true})
       return
+      
+    bip38 = false
             
     needsSecondPasswordCallback = (continueCallback) ->
       $rootScope.$broadcast "requireSecondPassword", continueCallback   
       
     needsBip38Password = (callback) ->
+      bip38 = true
       needsBip38(callback)
+      
+    alreadyImported = (address) ->
+      errorCallback({addressPresentInWallet: true})
+      wallet.applyIfNeeded() if bip38
         
     if address = wallet.my.isValidPrivateKey(addressOrPrivateKey)
       privateKey = addressOrPrivateKey
@@ -449,14 +456,17 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           success = (address) ->
             wallet.updateLegacyAddresses() # Probably too early
             successCallback({address: address})
+            wallet.applyIfNeeded() if bip38     
             
           error = (error) ->
             console.log "Error adding new key to existing address"
+            wallet.applyIfNeeded() if bip38     
+      
             
-          wallet.my.importPrivateKey(privateKey, needsSecondPasswordCallback, needsBip38Password, success, error)
+          wallet.my.importPrivateKey(privateKey, needsSecondPasswordCallback, needsBip38Password, alreadyImported, success, error)
           return
         else
-          errorCallback({addressPresentInWallet: true}, address)
+          alreadyImported()
           return
           
       else
@@ -465,14 +475,17 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           wallet.legacyAddresses.push addressItem
           wallet.updateLegacyAddresses() # Probably too early
           successCallback(addressItem)
+          wallet.applyIfNeeded() if bip38     
+          
           return
           
         error = (error) ->
           console.log "Error importing new key"
           console.log error
           wallet.displayError(error)
+          wallet.applyIfNeeded() if bip38     
         
-        wallet.my.importPrivateKey(privateKey, needsSecondPasswordCallback, needsBip38Password, success, error)
+        wallet.my.importPrivateKey(privateKey, needsSecondPasswordCallback, needsBip38Password, success, alreadyImported, error)
       return
     
     if wallet.my.isValidAddress(addressOrPrivateKey)   

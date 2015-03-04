@@ -32,6 +32,9 @@
     $scope.status.busy = true
     
     if $scope.BIP38
+      correctPassword = () ->
+        # console.log("Correct password")
+      
       wrongPassword = () ->
         $scope.errors.incorrectBip38Password = true
         $scope.status.busy = false
@@ -39,7 +42,7 @@
               
       # Slight delay to display spinner, because this blocks the UI.
       $timeout(()->
-        $scope.bip38callback($scope.bip38passphrase, wrongPassword)
+        $scope.bip38callback($scope.bip38passphrase, correctPassword, wrongPassword)
       , 100)
     else
       success = (address)->
