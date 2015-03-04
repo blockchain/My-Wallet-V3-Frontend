@@ -290,7 +290,6 @@ describe "walletServices", () ->
         
       error = (errors, address) ->
         expect(errors.addressPresentInWallet).toBeDefined()
-        expect(address.address).toBe("some_legacy_address")
       
       address = Wallet.addAddressOrPrivateKey("private_key_for_some_legacy_address", null, success, error)
 
@@ -298,10 +297,9 @@ describe "walletServices", () ->
       success = () ->
         expect(false).toBe(true)
       
-      error = (errors, address) ->
-        expect(address.address).toBe("some_legacy_watch_only_address")
+      error = (errors) ->
         expect(errors.addressPresentInWallet).toBeDefined()
-        
+                
       Wallet.addAddressOrPrivateKey("some_legacy_watch_only_address", null, success, error)
     
     it "should add private key to existing watch-only address", ->

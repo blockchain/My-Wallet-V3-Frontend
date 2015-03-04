@@ -463,7 +463,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
             wallet.applyIfNeeded() if bip38     
       
             
-          wallet.my.importPrivateKey(privateKey, needsSecondPasswordCallback, needsBip38Password, alreadyImported, success, error)
+          wallet.my.importPrivateKey(privateKey, needsSecondPasswordCallback, needsBip38Password, success, alreadyImported, error)
           return
         else
           alreadyImported()
