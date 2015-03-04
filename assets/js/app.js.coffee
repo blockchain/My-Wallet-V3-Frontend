@@ -82,9 +82,6 @@ modules = [
   # 'angular-ladda'
 ]
 
-unless browserDetection().browser == "ie"
-  modules.push "webcam"
-
 walletApp = angular.module("walletApp", modules)
 
 walletApp.config (uiSelectConfig) ->

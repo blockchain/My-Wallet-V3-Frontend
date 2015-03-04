@@ -29,7 +29,7 @@ describe "Adverts Directive", ->
       )
     
   it "should have text", inject(() ->
-    expect(element.html()).toContain "PARTNERS"
+    expect(element.html()).toContain "<h3>"
   )
   
   it "should show fetch the ads",  inject((Adverts) ->
