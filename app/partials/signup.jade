@@ -68,6 +68,6 @@
         button.btn.btn-primary.btn-signup(ng-click="performImport()", ng-disabled="!isValid[2]", translate="IMPORT", ng-show="currentStep == 3 && !working")
         span(ng-show="currentStep == 3")   
         img(ng-show="working" src="img/spinner.gif")     
-        button.btn.btn-primary.btn-signup(ng-click="resendEmail()", translate="RESEND_EMAIL", ng-show="currentStep == 4")
+        button.btn.btn-primary.btn-signup(ui-ladda="{{ resendingEmailCode }}", ng-click="resendEmail()", ladda-translate="RESEND_EMAIL", ng-show="currentStep == 4", data-style="expand-left")        
         button.btn.btn-primary.btn-signup(ng-click="nextStep()", translate="GO_VERIFY_EMAIL", ng-show="currentStep == 4")
           

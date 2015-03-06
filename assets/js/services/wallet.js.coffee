@@ -896,7 +896,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         error = () ->
           wallet.displayError("Unable to upgrade your wallet. Please try again.")
           wallet.my.upgradeToHDWallet(needsSecondPasswordCallback, success, error)
-        
+                
         wallet.my.upgradeToHDWallet(needsSecondPasswordCallback, success, error)
       
       $timeout(()->

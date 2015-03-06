@@ -4,6 +4,7 @@
   $scope.languages = Wallet.languages
   $scope.currencies = Wallet.currencies
   $scope.alerts = Wallet.alerts
+  $scope.resendingEmailCode = false
   
   $scope.isValid = [true, true, false, false]
   
@@ -94,7 +95,16 @@
     )
     
   $scope.resendEmail = () ->
-    Wallet.resendEmail() 
+    $scope.resendingEmailCode = true
+    
+    success = () ->
+      $scope.resendingEmailCode = false
+      
+    error = () ->
+      Wallet.displayError("Unable to resend confirmation email")
+      $scope.resendingEmailCode = false
+      
+    Wallet.resendEmailConfirmation(success, error) 
 
   $scope.$watch "fields.confirmation", (newVal) ->
     if newVal? && $scope.fields.password != ""
