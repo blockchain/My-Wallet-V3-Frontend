@@ -8,6 +8,8 @@
   $scope.destinations = []  
   
   $scope.originsLoaded = false
+  $scope.cameraIsOn = false
+  
   
   $scope.sending = false # Sending in progress
   
