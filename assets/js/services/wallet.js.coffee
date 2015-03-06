@@ -595,6 +595,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     success = () ->
       wallet.updateAccounts()
       wallet.updateTransactions()
+      wallet.updateHDaddresses()
       
       successCallback()
           
@@ -784,7 +785,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
             accountLabel: account.label
             account: account
           }
-                        
+                                  
   wallet.updateLegacyAddresses = () ->
     numberOfOldAddresses = wallet.legacyAddresses.length
     numberOfNewAddresses = wallet.my.getAllLegacyAddresses().length
@@ -891,6 +892,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         success = () ->
           wallet.status.didUpgradeToHd = true
           wallet.updateAccounts()  
+          wallet.updateHDaddresses()
           wallet.my.getHistoryAndParseMultiAddressJSON()
         
         error = () ->
