@@ -32,6 +32,8 @@
     $scope.status.busy = true
     
     if $scope.BIP38
+      $scope.errors.incorrectBip38Password = false
+      
       correctPassword = () ->
         # console.log("Correct password")
       
