@@ -84,12 +84,14 @@ describe "AppCtrl", ->
       expect(callbacks.proceed).toHaveBeenCalled()
   
   describe "redeem from email", ->
-    it "should proceed after login", inject((Wallet, $rootScope) ->
+    it "should proceed after login", inject((Wallet, $rootScope, $timeout) ->
       Wallet.goal.claim = {code: "abcd", balance: 100000}
       
       Wallet.login("test", "test")  
       
       $rootScope.$digest()    
+      
+      $timeout.flush() # Modal won't open otherwise
             
       expect(modal.open).toHaveBeenCalled()
 

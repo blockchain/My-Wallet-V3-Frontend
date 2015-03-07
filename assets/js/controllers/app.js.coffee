@@ -14,10 +14,14 @@
   )
     
   $scope.$watch "status.isLoggedIn", () ->
-    $scope.checkGoals()
-    
+    $timeout(()->
+      $scope.checkGoals()
+    ,0)
+        
   $scope.$watchCollection "goal", () ->
-    $scope.checkGoals()
+    $timeout(()->
+      $scope.checkGoals()
+    ,0)
 
   $scope.checkGoals = () ->
     if $scope.status.isLoggedIn
@@ -34,15 +38,19 @@
           Wallet.goal.send = undefined
           
         if Wallet.goal.claim?
-          $modal.open(
+          modalInstance = $modal.open(
             templateUrl: "partials/claim.jade"
             controller: ClaimModalCtrl
             resolve:
               claim: -> 
                 Wallet.goal.claim
           )
+          
+          modalInstance.result.then(() ->
+            Wallet.goal.claim = undefined
+          )
         
-          Wallet.goal.claim = undefined
+          
 
     # Goals which don't necessarily require a login:
     if Wallet.goal.verifyEmail?
