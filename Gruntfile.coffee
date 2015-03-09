@@ -13,10 +13,6 @@ module.exports = (grunt) ->
         banner: "/*! <%= pkg.name %> <%= grunt.template.today(\"yyyy-mm-dd\") %> */\n"
         mangle: false
         
-      mywallet:
-        src:  "build/mywallet.js"
-        dest: "build/mywallet.min.js"
-        
       application_dependencies:
         src: "build/application-dependencies.js"
         dest: "build/application-dependencies.min.js"
@@ -27,35 +23,6 @@ module.exports = (grunt) ->
     concat:
       options:
         separator: ";"
-        
-      mywallet:
-        src: [
-          'app/bower_components/browserdetection/src/browser-detection.js'
-          'assets/js/my-wallet/ie.js'
-          "assets/js/my-wallet/shared.js"
-          'assets/js/my-wallet/bower_components/cryptojslib/rollups/sha256.js'
-          'assets/js/my-wallet/bower_components/cryptojslib/rollups/aes.js'
-          'assets/js/my-wallet/bower_components/cryptojslib/rollups/pbkdf2.js'
-          'assets/js/my-wallet/bower_components/cryptojslib/components/cipher-core.js'
-          'assets/js/my-wallet/bower_components/cryptojslib/components/pad-iso10126.js'
-          'assets/js/my-wallet/bower_components/cryptojslib/components/mode-ecb.js'
-          'assets/js/my-wallet/bower_components/cryptojslib/components/pad-nopadding.js'
-          'assets/js/my-wallet/node_modules/sjcl/sjcl.js'
-          'assets/js/my-wallet/browserify.js'
-          'assets/js/my-wallet/crypto-util-legacy.js'
-          'assets/js/my-wallet/blockchainapi.js'
-          'assets/js/my-wallet/signer.js'
-          'assets/js/my-wallet/wallet.js'
-          'assets/js/my-wallet/wallet-signup.js'
-          'assets/js/my-wallet/HDWalletAccount.js'
-          'assets/js/my-wallet/hdwallet.js'
-          'assets/js/my-wallet/mnemonic.js'
-          'assets/js/my-wallet/bip39.js'
-          'assets/js/my-wallet/xregexp-all.js'
-          'assets/js/my-wallet/import-export.js'
-          'assets/js/my_wallet.js'
-        ]
-        dest: "build/mywallet.js"
         
       application_dependencies:
         src: [
@@ -82,7 +49,7 @@ module.exports = (grunt) ->
                 
       application: # All components should first be minimized:
         src: [
-          'build/mywallet.min.js'
+          'assets/js/my-wallet/dist/my-wallet.min.js'
           'app/bower_components/angular/angular.min.js'
           'app/bower_components/angular-sanitize/angular-sanitize.min.js'
           'app/bower_components/angular-cookies/angular-cookies.min.js'
@@ -179,7 +146,7 @@ module.exports = (grunt) ->
     copy: 
       main:
         files: [
-          {src: ["jquery.min.js"],     dest: "dist/", cwd: "app/bower_components/jquery/dist", expand: true }
+          # {src: ["jquery.min.js"],     dest: "dist/", cwd: "app/bower_components/jquery/dist", expand: true }
           {src: ["locale-*.json", "beep.wav", "favicon.ico"], dest: "dist/", cwd: "app", expand: true}
           {src: ["index.html"], dest: "dist/"}
           {src: ["img/*"], dest: "dist/", cwd: "app", expand: true}
@@ -236,7 +203,7 @@ module.exports = (grunt) ->
         files: 
           src: [
             'dist/application.min.js'
-            'dist/jquery.min.js'
+            # 'dist/jquery.min.js' # Included in my-wallet.min.js
             'dist/application.css'
           ]
         
@@ -276,8 +243,6 @@ module.exports = (grunt) ->
     "html2js"
     "concat:application_dependencies"
     "uglify:application_dependencies"
-    "concat:mywallet"
-    "uglify:mywallet"
     "concat:application"
     "sass"
     "concat_css"

@@ -5,6 +5,10 @@ An AngularJS bitcoin web wallet powered by Blockchains [MyWallet](https://github
 
 Make sure you have [Node.js](http://nodejs.org/) installed.
 
+Install Grunt:
+
+    npm install -g grunt-cli
+
 ```sh
 git clone --recursive https://github.com/blockchain/My-Wallet-HD-Frontend.git 
 cd My-Wallet-HD-Frontend
@@ -13,19 +17,7 @@ npm install
 
 You may have to run `npm install` twice.
 
-Compile javascript for MyWallet:
-```sh
-cd assets/js/my-wallet
-npm install
-````
-
-Grunt compiles the view templates and copies some CSS:
-
-Install Grunt:
-
-    npm install -g grunt-cli
-
-Run it:
+Grunt compiles the view templates and copies some CSS. Keep it running:
 
     grunt
 
@@ -118,5 +110,5 @@ index.html should be cached using If-Modified-Since or etag. The assets which co
 
 ## Dependencies
 
-* MyWallet: use `git pull` inside `assets/js/mywallet` to get the latest version. The tests use a mock for MyWallet, so you need to manually test if everything still works, including all edge cases.
+* MyWallet: use `git pull` inside `assets/js/mywallet` to get the latest version. The tests use a mock for MyWallet, so you need to manually test if everything still works.
 * jsqrcode: uses a fork which was modified not to extend Array.prototype. The original repository seems dormant, but a pull request should be made if it becomes active again and we need their latest changes.

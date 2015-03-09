@@ -58,7 +58,7 @@
     "grunt-surround": "^0.1.0"
   },
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "bower install && cd assets/js/my-wallet && npm install && grunt dist",
     "start": "coffee server.coffee",
     "test": "node ./node_modules/karma/bin/karma start karma.conf.js",
     "test-single-run": "node ./node_modules/karma/bin/karma start karma.conf.js  --single-run"
