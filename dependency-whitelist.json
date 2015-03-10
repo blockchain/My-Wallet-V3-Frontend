@@ -1,0 +1,63 @@
+{
+  "ignore" : ["grunt", "jasmine-core", "jquery", "istanbul", "esprima", "typeforce", "angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize", "bootstrap-css-only"],
+  "bc-qr-reader" : {
+    "version": "0.1.0",
+    "commits" : ["0ac6cf9c043af90ff504d6acaa6fd8d4826d96be"],
+    "repo" : "blockchain/bc-qr-reader"
+  },
+  "angular-ui-router" : {
+    "version": "0.2.13",
+    "commits" : ["c3d543aae43d4600512520a0d70723ac31f2cb62"],
+    "repo" : "angular-ui/ui-router"
+  },
+  "angular-audio" : {
+    "version": "1.4.1",
+    "commits" : ["66b7590b3921b02d87e6c2bbc22daed1267e71d7"],
+    "repo" : "danielstern/ngAudio"
+  },
+  "angular-ui-select" : {
+    "version": "0.11.1",
+    "commits" : ["27c565e6347597bf7ac4bae58f9effa39ddaac11", "28776e5150d71872f9d4cc9f9970c15eb175c370"],
+    "repo" : "angular-ui/ui-select"
+  },
+  "angular-qr" : {
+    "version": "0.2.0",
+    "commits" : ["1134e40510ab773d45cc26a066ef6c787a96011a"],
+    "repo" : "janantala/angular-qr"
+  },
+  "angular-numeraljs" : {
+    "version": "1.1.6",
+    "commits" : ["0ca4f1a9db849ea24ad22becd0cc923e2a47ec9d"],
+    "repo" : "baumandm/angular-numeraljs"
+  },
+  "angular-translate" : {
+    "version": "2.6.1",
+    "commits" : ["6dd0ce6459b271498c05b7e9a9f0e78f9c008c74"],
+    "repo" : "angular-translate/bower-angular-translate"
+  },
+  "angular-translate-loader-static-files" : {
+    "version": "2.6.1",
+    "commits" : ["310b86f60d63dc3d72064d6f600b62bc847cc8ab"],
+    "repo" : "angular-translate/bower-angular-translate-loader-static-files"
+  },
+  "angular-inview" : {
+    "version": "1.5.0",
+    "commits" : ["a4a3ce66181979a34a004d996982199f5bf69d32"],
+    "repo" : "thenikso/angular-inview"
+  },
+  "angular-password-entropy" : {
+    "version": "0.1.3",
+    "commits" : ["15c7ae1182a1a6c2881b0e3b03b4bb46a65a8077"],
+    "repo" : "pernas/angular-password-entropy"
+  },
+  "international-phone-number" : {
+    "version": "0.0.2",
+    "commits" : ["89b27e591c6a3de3f70db9c07c188de9943886aa"],
+    "repo" : "sjors/international-phone-number"
+  },
+  "browserdetection" : {
+    "version": "0.3.3",
+    "commits" : ["97f9718f8811e0a058c5296d69a879de7754ad91"],
+    "repo" : "sub2home/browser-detection"
+  }
+}
