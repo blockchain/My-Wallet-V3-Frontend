@@ -77,6 +77,30 @@ describe "Transaction Note Directive", ->
     expect(Wallet.deleteNote).toHaveBeenCalled()
   )
 
+  it "does cancel edit note", ->
+    isoScope.cancelEditNote()
+    expect(isoScope.transaction.draftNote).toBe("")
+    expect(isoScope.editNote).toBe(false)
+    return
+
+  it "does start edit note", ->
+    isoScope.startEditNote()
+    expect(isoScope.transaction.draftNote).toBe(isoScope.transaction.note)
+    expect(isoScope.editNote).toBe(true)
+    return
+
+  it "does save note", ->
+    isoScope.saveNote()
+    expect(isoScope.transaction.draftNote).toBe(isoScope.transaction.note)
+    expect(isoScope.editNote).toBe(false)
+    return
+
+  it "does delete note", ->
+    isoScope.deleteNote()
+    expect(isoScope.transaction.note).toBe(null)
+    expect(isoScope.editNote).toBe(false)
+    return
+
   return
   
     
