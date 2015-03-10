@@ -15,6 +15,14 @@ cd My-Wallet-HD-Frontend
 npm install
 ```
 
+Prepare the MyWallet submodule:
+
+```sh
+cd assets/js/my-wallet
+npm install
+grunt build
+```
+
 You may have to run `npm install` twice.
 
 Grunt compiles the view templates and copies some CSS. Keep it running:
@@ -93,6 +101,19 @@ Not supported by the server yet.
 Curently the app is configured to be deployed on a Blockchain staging server:
 
 https://dev.blockchain.info/ (password protected)
+
+First create a minified javascript file for the MyWallet submodule:
+
+    cd assets/js/my-wallet
+    grunt dist
+
+If you get 403 error from Github (because you exceeded their rate limit), try:
+
+    GITHUB_USER=... GITHUB_PASSWORD=... grunt dist
+
+Return to the root of the frontend project:
+
+    cd ../../..
 
 Create a static HTML/JS/CSS distribution package in `dist`:
 

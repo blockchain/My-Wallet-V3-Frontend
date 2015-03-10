@@ -7,6 +7,8 @@ module.exports = (grunt) ->
       dist: {
         src: ["dist/*.js"]
       }
+      shrinkwrap: 
+        src: ["npm-shrinkwrap.json"]
     }
     uglify:
       options:
@@ -36,36 +38,36 @@ module.exports = (grunt) ->
           'build/routes.js'
           'build/translations.js'
           'assets/js/webcam.js'
-          'app/bower_components/angular-audio/app/angular.audio.js'
+          'build/bower_components/angular-audio/app/angular.audio.js'
           # 'app/bower_components/angular-bootstrap-slider/slider.js'
-          'app/bower_components/angular-inview/angular-inview.js'
+          'build/bower_components/angular-inview/angular-inview.js'
           'assets/js/templates.js'
-          'node_modules/bc-qr-reader/dist/bc-qr-reader.js'
-          'app/bower_components/angular-password-entropy/password-entropy.js'
-          'app/bower_components/intl-tel-input/lib/libphonenumber/build/utils.js'
+          'build/node_modules/bc-qr-reader/dist/bc-qr-reader.js'
+          'build/bower_components/angular-password-entropy/password-entropy.js'
+          'build/bower_components/intl-tel-input/lib/libphonenumber/build/utils.js'
+          'build/bower_components/qrcode/lib/qrcode.js'
+          'build/bower_components/angular-qr/src/angular-qr.js'
+          'build/bower_components/angular-ui-select/dist/select.js'
+          'build/bower_components/angular-local-storage/dist/angular-local-storage.js'
+          'build/bower_components/angular-ui-router/release/angular-ui-router.js'
+          'build/bower_components/angular-translate/angular-translate.js'
+          'build/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js'
+          'app/bower_components/intl-tel-input/build/js/intlTelInput.js'
+          'app/bower_components/international-phone-number/releases/international-phone-number.js'
+          # 'app/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.js'
         ]
 
         dest: "build/application-dependencies.js"
                 
-      application: # All components should first be minimized:
+      application: # All components should first be minimized. Only trusted sources should be imported as minified..
         src: [
           'assets/js/my-wallet/dist/my-wallet.min.js'
           'app/bower_components/angular/angular.min.js'
           'app/bower_components/angular-sanitize/angular-sanitize.min.js'
           'app/bower_components/angular-cookies/angular-cookies.min.js'
           'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
-          'app/bower_components/angular-ui-router/release/angular-ui-router.min.js'
-          'app/bower_components/angular-ui-select/dist/select.min.js'
-          'app/bower_components/qrcode/lib/qrcode.min.js'
-          'app/bower_components/angular-qr/angular-qr.min.js'
-          'app/bower_components/angular-local-storage/dist/angular-local-storage.min.js'
           'app/bower_components/numeral/min/numeral.min.js'
-          'app/bower_components/angular-numeraljs/dist/angular-numeraljs.min.js'
-          'app/bower_components/angular-translate/angular-translate.min.js'
-          'app/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js'
-          # 'app/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js'
-          'app/bower_components/intl-tel-input/build/js/intlTelInput.min.js'
-          'app/bower_components/international-phone-number/releases/international-phone-number.min.js'
+          'app/bower_components/angular-numeraljs/dist/angular-numeraljs.js'
           'build/application-dependencies.min.js'
         ]
         
@@ -211,8 +213,21 @@ module.exports = (grunt) ->
       staging: 
         command: () -> 
            'scp -Cr dist/* server11:dist'
+           
+      check_dependencies: 
+        command: () -> 
+           'mkdir -p build && ruby assets/js/my-wallet/check-dependencies.rb'
+        
+      npm_install_dependencies:
+        command: () ->
+           'cd build && npm install'
+           
+      bower_install_dependencies:
+        command: () ->
+           'cd build && touch .bowerrc && bower install'
 
       
+    shrinkwrap: {}
   
   # Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks "grunt-contrib-uglify"
@@ -226,6 +241,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-rename-assets')
   grunt.loadNpmTasks('grunt-shell')
+  grunt.loadNpmTasks('grunt-shrinkwrap')
     
   grunt.registerTask "compile", ["coffee"]  
     
@@ -241,6 +257,11 @@ module.exports = (grunt) ->
     "clean"
     "compile"
     "html2js"
+    "shrinkwrap"
+    "shell:check_dependencies"
+    "clean:shrinkwrap"
+    "shell:npm_install_dependencies"
+    "shell:bower_install_dependencies"
     "concat:application_dependencies"
     "uglify:application_dependencies"
     "concat:application"
