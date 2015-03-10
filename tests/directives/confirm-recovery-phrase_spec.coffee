@@ -27,3 +27,7 @@ describe "Confirm Recovery Phrase", ->
     expect(isoScope.status).toBe(Wallet.status)
     return
   )
+
+  it "covers confirmRecoveryPhrase", ->
+    isoScope.confirmRecoveryPhrase()
+    return

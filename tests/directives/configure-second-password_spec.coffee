@@ -35,3 +35,7 @@ describe "Configure Second Password", ->
 
     return
   )
+
+  it "covers setSecondPassword", ->
+    isoScope.setSecondPassword()
+    return
