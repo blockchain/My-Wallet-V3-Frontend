@@ -61,7 +61,6 @@ describe "SettingsAdvancedCtrl", ->
         n = '1.1.1.1'
         for i in [0..15] by 1
           n += ',1.1.1.1'
-        console.log(n.split(',').length)
         expect(scope.validateIpWhitelist(n)).toBe(false)
 
       it "should return NOT_ALLOWED error", ->
