@@ -48,6 +48,9 @@ describe "SettingsAdvancedCtrl", ->
 
     describe "whitelist validation", ->
 
+      it "should return false", ->
+        expect(scope.validateIpWhitelist(undefined)).toBe(false)
+
       it "should return MAX_CHARACTERS error", ->
         n = ''
         for i in [0..255] by 1
@@ -55,13 +58,14 @@ describe "SettingsAdvancedCtrl", ->
         expect(scope.validateIpWhitelist(n)).toBe(false)
 
       it "should return MAX_IP_ADDRESSES error", ->
-        n = ''
-        for i in [0..9] by 1
-          n += 'a,'
+        n = '1.1.1.1'
+        for i in [0..15] by 1
+          n += ',1.1.1.1'
+        console.log(n.split(',').length)
         expect(scope.validateIpWhitelist(n)).toBe(false)
 
       it "should return NOT_ALLOWED error", ->
-        expect(scope.validateIpWhitelist('300.300.300.300')).toBe(false)
+        expect(scope.validateIpWhitelist('%.%.%.%')).toBe(false)
 
       it "should return true, no errors", ->
         expect(scope.validateIpWhitelist('1.2.3.4')).toBe(true)

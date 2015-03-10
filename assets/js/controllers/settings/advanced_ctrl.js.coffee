@@ -26,6 +26,7 @@
       if candidate.trim() == "%.%.%.%"
         $translate("NOT_ALLOWED", {forbidden:  "%.%.%.%"}).then (translation) ->
           $scope.errors.ipWhitelist = translation
+        return false
       digits_or_wildcards = candidate.trim().split(".")
       return false if digits_or_wildcards.length != 4
       for digit_or_wildcard in digits_or_wildcards
