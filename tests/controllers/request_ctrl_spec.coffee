@@ -51,6 +51,12 @@ describe "RequestCtrl", ->
       expect(scope.destinations.length).toBe(scope.accounts.length + scope.legacyAddresses.length - 2) # Two are archived
       
     
+    it "should close", inject((Wallet) ->
+      spyOn(Wallet, "clearAlerts")
+      scope.close()
+      expect(Wallet.clearAlerts).toHaveBeenCalled()
+    )
+
     it "should show a payment request address when legacy address is selected", inject(()->
       scope.fields.to = scope.destinations[scope.accounts.length] # The first legacy address
       
