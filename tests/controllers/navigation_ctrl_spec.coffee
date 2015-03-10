@@ -19,7 +19,13 @@ describe "NavigationCtrl", ->
       return
 
     return
-  
+
+  it "is in transaction state", ->
+    expect(scope.isTransactionState()).toBe(false)
+
+  it "is in security state", ->
+    expect(scope.isSecurityState()).toBe(false)
+
   it "should have access to login status",  inject(() ->
     expect(scope.status.isLoggedIn).toBe(true)
   )
