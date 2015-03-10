@@ -25,7 +25,12 @@ describe "TransactionsCtrl", ->
     expect(scope.addressBook["17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq"]).toBe("John")
     
   )
-  
+
+  it "should be able to fetch more transactions", inject((Wallet) ->
+    spyOn(Wallet, "fetchMoreTransactions")
+    scope.nextPage()
+    expect(Wallet.fetchMoreTransactions).toHaveBeenCalled()
+  )
 
   it "should receive a new transaction from mock after 3 seconds on account 1",  inject((MyWallet, Wallet, $timeout) ->
     pending() # Not sure how to test this with stateParams
