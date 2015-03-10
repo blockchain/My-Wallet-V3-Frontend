@@ -1,5 +1,8 @@
 describe "UpgradeCtrl", ->
   scope = undefined
+  modalInstance =
+    close: ->
+    dismiss: ->
 
   beforeEach angular.mock.module("walletApp")
 
@@ -14,8 +17,17 @@ describe "UpgradeCtrl", ->
 
       $controller "UpgradeCtrl",
         $scope: scope,
-        $stateParams: {}
+        $stateParams: {},
+        $modalInstance: modalInstance
 
       return
 
+    return
+
+  it "covers close", ->
+    scope.close()
+    return
+
+  it "covers cancel", ->
+    scope.cancel()
     return
