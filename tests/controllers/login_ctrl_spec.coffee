@@ -35,3 +35,12 @@ describe "LoginCtrl", ->
     expect(Wallet.login).toHaveBeenCalled()
     return
   )
+
+  it "should resend two factor sms", inject((Wallet) ->
+    spyOn(Wallet, "resendTwoFactorSms")
+
+    scope.resendTwoFactorSms()
+
+    expect(Wallet.resendTwoFactorSms).toHaveBeenCalled()
+    return
+  )
