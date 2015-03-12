@@ -52,8 +52,8 @@ module.exports = (grunt) ->
           'build/bower_components/angular-ui-router/release/angular-ui-router.js'
           'build/bower_components/angular-translate/angular-translate.js'
           'build/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js'
-          'app/bower_components/intl-tel-input/build/js/intlTelInput.js'
-          'app/bower_components/international-phone-number/releases/international-phone-number.js'
+          'build/bower_components/intl-tel-input/build/js/intlTelInput.js'
+          'build/bower_components/international-phone-number/releases/international-phone-number.js'
           # 'app/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.js'
         ]
 
@@ -62,12 +62,12 @@ module.exports = (grunt) ->
       application: # All components should first be minimized. Only trusted sources should be imported as minified..
         src: [
           'assets/js/my-wallet/dist/my-wallet.min.js'
-          'app/bower_components/angular/angular.min.js'
-          'app/bower_components/angular-sanitize/angular-sanitize.min.js'
-          'app/bower_components/angular-cookies/angular-cookies.min.js'
-          'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
-          'app/bower_components/numeral/min/numeral.min.js'
-          'app/bower_components/angular-numeraljs/dist/angular-numeraljs.js'
+          'build/bower_components/angular/angular.min.js'
+          'build/bower_components/angular-sanitize/angular-sanitize.min.js'
+          'build/bower_components/angular-cookies/angular-cookies.min.js'
+          'build/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
+          'build/bower_components/numeral/min/numeral.min.js'
+          'build/bower_components/angular-numeraljs/dist/angular-numeraljs.js'
           'build/application-dependencies.min.js'
         ]
         
@@ -124,10 +124,10 @@ module.exports = (grunt) ->
     concat_css: {
       all: {
         src: [
-          "app/bower_components/bootstrap-css-only/css/bootstrap.css"
-          "app/bower_components/angular-ui-select/dist/select.min.css"
-          # "app/bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css"
-          'app/bower_components/angular/angular-csp.css'
+          "build/bower_components/bootstrap-css-only/css/bootstrap.css"
+          "build/bower_components/angular-ui-select/dist/select.min.css"
+          # "build/bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css"
+          'build/bower_components/angular/angular-csp.css'
           "build/css/**/*.css"
         ],
         dest: "dist/application.css"
