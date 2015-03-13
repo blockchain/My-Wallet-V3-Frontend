@@ -15,7 +15,7 @@ p.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
         th
         th
         th
-        //- th
+        th
       tr(ng-repeat="account in accounts | filter:searchText | filter:{active: true}")
         td(ng-bind-html="account.label | highlight:searchText")
         td 
@@ -28,17 +28,14 @@ p.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
           a(translate="RENAME",          ng-click="editAccount(account)")
         td 
           a(translate="BITCOIN_ADDRESS", ng-click="showAddress(account)")
-        //- td
-        //-   a(translate="ARCHIVE",          ng-click="archive(account)")
+        td
+          a(translate="ARCHIVE",          ng-click="archive(account)")
 
 div.settings-options
 
 h2(translate="ARCHIVED_ACCOUNTS", ng-click="display.archived = !display.archived")
 
 p.hidden-xs(translate="ARCHIVED_ACCOUNTS_EXPLAIN", ng-show="display.archived")
-  
-.row(ng-show="display.archived") 
-  p Coming soon...
 
 .row(ng-show="display.archived")
   .col-xs-12

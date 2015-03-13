@@ -80,6 +80,8 @@ Grunt keeps an eye on things in the background. In particular it compiles the Ja
 
     grunt
 
+For easier debugging of MyWallet javascript, put `DEBUG=1` in your `.env` file.
+
 ## MyWallet mock
 
 MyWallet can simulated using a mock, allowing you to login with fake credentials and simulate sending and receiving bitcoins. 
