@@ -2,7 +2,7 @@
   "ignore" : ["grunt", "jasmine-core", "jquery", "istanbul", "esprima", "typeforce", "angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize", "bootstrap-css-only"],
   "bc-qr-reader" : {
     "version": "0.1.0",
-    "commits" : ["0ac6cf9c043af90ff504d6acaa6fd8d4826d96be"],
+    "commits" : ["c23d1f446acaa63723f70ecfb669787216b86c57"],
     "repo" : "blockchain/bc-qr-reader"
   },
   "angular-ui-router" : {
