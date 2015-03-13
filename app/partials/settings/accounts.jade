@@ -19,8 +19,9 @@ p.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
       tr(ng-repeat="account in accounts | filter:searchText | filter:{active: true}")
         td(ng-bind-html="account.label | highlight:searchText")
         td 
-          span.btc {{ account.balance | btc }} 
-          fiat.fiat(btc="account.balance") 
+          span.btc(ng-show="account.balance != null") {{ account.balance | btc }}           
+          fiat.fiat(btc="account.balance", ng-show="account.balance != null")
+          img(ng-show="account.balance == null" src="img/spinner.gif")
         td 
           a(translate="MAKE_DEFAULT", ng-hide="account.isDefault", ng-click="makeDefault(account)")
           span.label.label-primary(translate="DEFAULT", ng-show="account.isDefault")
@@ -29,7 +30,7 @@ p.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
         td 
           a(translate="BITCOIN_ADDRESS", ng-click="showAddress(account)")
         td
-          a(translate="ARCHIVE",          ng-click="archive(account)")
+          a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="account.isDefault")
 
 div.settings-options
 
@@ -43,10 +44,7 @@ p.hidden-xs(translate="ARCHIVED_ACCOUNTS_EXPLAIN", ng-show="display.archived")
       tr
         th(translate="ACCOUNT_NAME")
         th
-        th
       tr(ng-repeat="account in accounts | filter:searchText | filter:{active: false}")
         td(ng-bind-html="account.label | highlight:searchText")
-        td 
-          a(translate="RENAME",          ng-click="editAccount(account)")
         td
           a(translate="UNARCHIVE",          ng-click="unarchive(account)")

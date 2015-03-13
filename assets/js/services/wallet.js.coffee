@@ -715,12 +715,21 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     address_or_account.active = false
     
   wallet.unarchive = (address_or_account) ->
+    success = (txs) ->
+      address_or_account.active = true
+      wallet.updateAccounts()
+      
+      if txs?
+        wallet.appendTransactions(txs, true) # Re-insert tx with latest account info
+      
+      wallet.applyIfNeeded() # Unarchive involves an async operation
+    
     if address_or_account.address?
       wallet.my.unArchiveLegacyAddr(address_or_account.address)
+      success()
     else
-      wallet.my.unarchiveAccount(address_or_account.index)
+      wallet.my.unarchiveAccount(address_or_account.index, success)
     
-    address_or_account.active = true
         
   wallet.deleteLegacyAddress = (address) ->
     wallet.my.deleteLegacyAddress(address.address)
@@ -749,18 +758,21 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     if numberOfNewAccounts > 0
       for i in [0..(numberOfNewAccounts - 1)]
         if i >= numberOfOldAccounts
-          wallet.accounts.push {active: true, legacy: false, index: i}
+          wallet.accounts.push {legacy: false, index: i}
       
         # Set or update label and balance:
         wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
-        wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
-        wallet.accounts[i].isDefault = !(defaultAccountIndex < i or defaultAccountIndex > i) 
+        wallet.accounts[i].active = !wallet.my.isArchivedForAccount(i)
+        if wallet.accounts[i].active
+          wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
+          wallet.accounts[i].isDefault = !(defaultAccountIndex < i or defaultAccountIndex > i) 
         
     wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts[0].balance?
       
   # Update (labelled) HD addresses:      
   wallet.updateHDaddresses = () ->
     for account in wallet.accounts
+      continue if !account.active
       labeledAddresses = wallet.my.getLabeledReceivingAddressesForAccount(account.index)
       for address in labeledAddresses
         hdAddress = $filter("getByProperty")("address", address.address, wallet.hdAddresses)
@@ -824,8 +836,9 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       return null if wallet.accounts[0].balance == null
       tally = 0
       for account in wallet.accounts
-        return null if account.balance == undefined
-        tally = tally += account.balance
+        if account.active
+          return null if account.balance == undefined
+          tally = tally += account.balance
             
       return tally
     else if accountIndex == "imported"
@@ -852,12 +865,15 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         wallet.transactions.push transaction 
     wallet.status.didLoadTransactions = true
           
-  wallet.appendTransactions = (transactions) ->
+  wallet.appendTransactions = (transactions, override) ->
    for tx in transactions
      match = false
      for candidate in wallet.transactions
        if candidate.hash == tx.hash
-         match = true
+         if override
+           wallet.transactions.splice(wallet.transactions.splice(candidate))
+          else
+           match = true
          break
 
      if !match
