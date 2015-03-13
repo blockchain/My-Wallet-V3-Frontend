@@ -526,6 +526,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.unarchiveAccount = (account) ->
     return
     
+  myWallet.isArchivedForAccount = (account) ->
+    return false
+    
   myWallet.deleteLegacyAddress = (address) ->
     return
     
