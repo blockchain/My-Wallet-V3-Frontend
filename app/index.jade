@@ -108,6 +108,7 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     !=js('services/adverts')
     !=js('templates')
     
-    !=js('bc-qr-reader')
+    script(src='bower_components/bc-qr-reader/dist/bc-qr-reader.js')
+    
 
   body(ng-controller="AppCtrl", ui-view="body")

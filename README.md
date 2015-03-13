@@ -132,4 +132,3 @@ index.html should be cached using If-Modified-Since or etag. The assets which co
 ## Dependencies
 
 * MyWallet: use `git pull` inside `assets/js/mywallet` to get the latest version. The tests use a mock for MyWallet, so you need to manually test if everything still works.
-* jsqrcode: uses a fork which was modified not to extend Array.prototype. The original repository seems dormant, but a pull request should be made if it becomes active again and we need their latest changes.

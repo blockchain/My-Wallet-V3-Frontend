@@ -42,7 +42,7 @@ module.exports = (grunt) ->
           # 'app/bower_components/angular-bootstrap-slider/slider.js'
           'build/bower_components/angular-inview/angular-inview.js'
           'assets/js/templates.js'
-          'build/node_modules/bc-qr-reader/dist/bc-qr-reader.js'
+          'build/bower_components/bc-qr-reader/dist/bc-qr-reader.js'
           'build/bower_components/angular-password-entropy/password-entropy.js'
           'build/bower_components/intl-tel-input/lib/libphonenumber/build/utils.js'
           'build/bower_components/qrcode/lib/qrcode.js'
@@ -158,11 +158,7 @@ module.exports = (grunt) ->
         files: [
           {src: ["angular-csp.css"], dest: "assets/css", cwd: "app/bower_components/angular", expand: true }
         ]
-      bc_qr_code:
-        files: [
-          {src: ["bc-qr-reader.js"], dest: "assets/js", cwd: "node_modules/bc-qr-reader/dist", expand: true }
-        ]
-        
+                
     watch: {
       scripts: {
         files: ['app/partials/**/*.jade', 'app/templates/**/*.jade'],
@@ -248,7 +244,6 @@ module.exports = (grunt) ->
   grunt.registerTask "default", [
     "html2js"
     "copy:angular_css"
-    "copy:bc_qr_code"
     "watch"
   ]
     
