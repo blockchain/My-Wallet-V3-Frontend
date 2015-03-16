@@ -23,7 +23,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet = {
     goal: {}, 
     status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadTransactions: false, didLoadBalances: false, legacyAddressBalancesLoaded: false, didConfirmRecoveryPhrase: false}, 
-    settings: {currency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null, ipWhitelist: null, apiAccess: null, restrictToWhitelist: null}, 
+    settings: {currency: null,  displayCurrency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null, ipWhitelist: null, apiAccess: null, restrictToWhitelist: null}, 
     user: {current_ip: null, email: null, mobile: null, passwordHint: ""}
   }
   
@@ -90,6 +90,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
         # Get currencies:
       
         wallet.setCurrency($filter("getByProperty")("code", result.currency, wallet.currencies))
+        
+        wallet.settings.displayCurrency = wallet.settings.currency
       
         wallet.settings.feePolicy = wallet.my.getFeePolicy()
       
