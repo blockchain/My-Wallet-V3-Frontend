@@ -2,6 +2,7 @@
   
   $scope.status = Wallet.status
   $scope.security = SecurityCenter.security
+  $scope.settings = Wallet.settings
   
   $scope.visitTransactions = () ->
     $state.go("wallet.common.transactions", {accountIndex:'accounts'})

@@ -61,6 +61,7 @@ modules = [
   "partials/confirm-recovery-phrase-modal.jade"  
   "partials/wallet.jade"
   "templates/amount.jade"
+  "templates/fiat-or-btc.jade"
   "templates/virtual-keyboard.jade"
   "templates/currency-picker.jade"
   "templates/language-picker.jade"

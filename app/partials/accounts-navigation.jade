@@ -14,15 +14,17 @@
             a(translate="ALL_ACCOUNTS")
           td.amount 
              a
-               fiat(btc="total()", ng-hide="total() == null")
+               span(ng-hide="total() == null")
+                 fiat-or-btc(btc="total()")  
                img(ng-show="total() == null" src="img/spinner.gif")
         tr(ng-repeat="account in accounts | filter:{active:true}", ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex: $index.toString()})")
           td 
             a {{ account.label }}
           td.amount
             a
-              fiat(btc="account.balance", ng-show="account.balance != null")
               img(ng-show="account.balance == null" src="img/spinner.gif")
+              span(ng-show="account.balance != null")
+                  fiat-or-btc(btc="account.balance")                
     
     div.legacy-addresses.side-box  
             
@@ -38,7 +40,8 @@
               a(translate="ALL_ADDRESSES")
             td.amount 
               a
-                fiat(btc="legacyTotal()")
+                span(ng-hide="legacyTotal() == null")
+                  fiat-or-btc(btc="legacyTotal()")  
                 
       div.partners.side-box.hidden-xs
         adverts
