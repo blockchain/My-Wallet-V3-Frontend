@@ -59,7 +59,12 @@ If you enable "handle bitcoin links" in your wallet settings, you can open bitco
 
 There's no UI for this yet, but you can send bitcoins to an email address from the console:
 
-    MyWallet.sendToEmail(0, 100000, 10000, "sjors@blockchain.com", function(){console.log('Done')}, function(e){console.log('Failed'); console.log(e)})
+    MyWallet.sendToEmail(0, 20000, 10000, "sjors@blockchain.com", function(){console.log('Done')}, function(e){console.log('Failed'); console.log(e)}, {dummy: false}, function(){ console.log("Second password required") })
+
+Or to a mobile number:
+
+    MyWallet.sendToMobile(0, 22000, 10000, "+.....", function(){console.log('Done')}, function(e){console.log('Failed'); console.log(e)}, {dummy: false}, function(){ console.log("Second password required") })
+
 
 The first argument is the account index, the second the amount in satoshi and the third the mining fee.
 
