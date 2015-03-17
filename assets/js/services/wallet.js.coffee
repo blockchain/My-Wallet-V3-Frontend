@@ -533,22 +533,22 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
         if from.address?
           if destination.index?
-            wallet.my.sendFromLegacyAddressToAccount(from.address, destination.index, amount, 10000, null, success, error, needsSecondPassword)
+            wallet.my.sendFromLegacyAddressToAccount(from.address, destination.index, amount, 10000, null, success, error, {},needsSecondPassword)
           else if destination.address?
-            wallet.my.sendFromLegacyAddressToAddress(from.address, destination.address, amount, 10000, null, success, error, needsSecondPassword)
+            wallet.my.sendFromLegacyAddressToAddress(from.address, destination.address, amount, 10000, null, success, error, {},needsSecondPassword)
         else if from.index?
           if destination.index?
-            wallet.my.sendToAccount(from.index, destination.index, amount, 10000, null, success, error, needsSecondPassword)
+            wallet.my.sendToAccount(from.index, destination.index, amount, 10000, null, success, error, {}, needsSecondPassword)
           else if destination.address?
-            wallet.my.sendBitcoinsForAccount(from.index, destination.address, amount, 10000, null, success, error, needsSecondPassword)
+            wallet.my.sendBitcoinsForAccount(from.index, destination.address, amount, 10000, null, success, error, {}, needsSecondPassword)
     
       sweepLegacyAddressToAccount: (fromAddress, toAccountIndex) ->
-        wallet.my.sweepLegacyAddressToAccount(fromAddress.address, toAccountIndex, success, error, needsSecondPassword)
+        wallet.my.sweepLegacyAddressToAccount(fromAddress.address, toAccountIndex, success, error, {}, needsSecondPassword)
         wallet.updateLegacyAddresses() # Probably too early  
       
       sendToEmail: (fromAccountIndex, email, amount, currency) ->
         amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
-        wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, success, error, needsSecondPassword) 
+        wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, success, error, {}, needsSecondPassword) 
     }
         
   wallet.redeemFromEmailOrMobile = (account, claim, successCallback, error) ->
