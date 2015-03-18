@@ -34,13 +34,16 @@ Run the server:
 npm start
 ```
 
-Visit [local.blockchain.com:8080](http://local.blockchain.com:8080/).  Do not use `localhost:8080`.
+Visit [local.blockchain.com:8080](http://local.blockchain.com:8080/).  Do not use `localhost:8080`. You will need to modify your "hosts" (/etc/hosts on OSX and most UNIX systems) because this is no longer registered at the DNS level for application security reasons. Add this line to /etc/hosts:
+127.0.0.1   local.blockchain.com
 
 ## Usage
 
 You can open any wallet registered with your email address. It will ask you to upgrade to HD if needed.
 
 You can also sign up for a new wallet. In that case you should use a valid email address. In the final registration step you need to enter the 5 letter code from the registration email (do not click the link).
+
+If the login hangs indefinitely, try the following hack. In the root directory of My-Wallet-HD-Frontend, create a file with the name ".env" with the contents "DEBUG=1". Restart grunt and the webserver with "npm start".
 
 After login, you'll see a list of accounts. There will be delay before transactions and the correct balances show up. If something goes wrong during the login process, error messages appear in the console. 
 
