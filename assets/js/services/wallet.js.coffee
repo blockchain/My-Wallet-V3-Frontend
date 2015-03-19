@@ -404,7 +404,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     key = amount + currency + time
     
     success = (fiat) ->
-      console.log fiat
       wallet.fiatHistoricalConversionCache[key] = fiat
       defer.resolve(numeral(fiat).format("0.00"))
       
