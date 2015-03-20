@@ -210,9 +210,17 @@ module.exports = (grunt) ->
         command: () -> 
            'scp -Cr dist/* server11:dist'
            
+      staging_experimental: 
+        command: () -> 
+           'scp -Cr dist/* server11:dist-experimental'
+           
       check_dependencies: 
         command: () -> 
            'mkdir -p build && ruby assets/js/my-wallet/check-dependencies.rb'
+           
+      skip_check_dependencies:
+        command: () ->
+          'cp package.json build && cp bower.json build'
         
       npm_install_dependencies:
         command: () ->
@@ -266,6 +274,22 @@ module.exports = (grunt) ->
     "rename"
   ]
   
+  grunt.registerTask "dist_unsafe", [
+    "clean"
+    "compile"
+    "html2js"
+    "shell:skip_check_dependencies"
+    "shell:npm_install_dependencies"
+    "shell:bower_install_dependencies"
+    "concat:application_dependencies"
+    "uglify:application_dependencies"
+    "concat:application"
+    "sass"
+    "concat_css"
+    "copy:main"
+    "rename"
+  ]
+  
   grunt.registerTask "dist_debug", [
     "clean"
     "compile"
@@ -283,6 +307,11 @@ module.exports = (grunt) ->
   grunt.registerTask "staging", [
     "dist"
     "shell:staging"
+  ]
+  
+  grunt.registerTask "staging_experimental", [
+    "dist_unsafe"
+    "shell:staging_experimental"
   ]
   
   return
