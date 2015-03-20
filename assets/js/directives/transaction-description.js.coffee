@@ -40,7 +40,7 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
           else
             scope.subject = "A_BITCOIN_ADDRESS"
       else
-        if scope.transaction.from.account?
+        if scope.transaction.result < 0
           address = to_address
           scope.action = "SENT_BITCOIN_TO"
           if to_name = Wallet.addressBook[to_address]
