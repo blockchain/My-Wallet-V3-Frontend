@@ -22,7 +22,7 @@
       transaction = $filter("getByProperty")("hash", $stateParams.hash, newVal)
       $scope.transaction = transaction
       
-    $scope.$watch "transaction + accounts", () ->
+    $scope.$watch "transaction.hash + accounts", () ->
       tx = $scope.transaction
       if tx? && tx.hash && $scope.accounts.length > 0
         if tx.from.account?
@@ -30,7 +30,7 @@
         else
           if tx.from.legacyAddresses? && tx.from.legacyAddresses.length > 0
             address = $filter("getByProperty")("address", tx.from.legacyAddresses[0].address, Wallet.legacyAddresses)
-            if address.label
+            if address.label != address.address
               $scope.from = address.label
             else 
               $scope.from = address + " (you)"
@@ -44,7 +44,7 @@
         else
           if tx.to.legacyAddresses? && tx.to.legacyAddresses.length > 0
             address = $filter("getByProperty")("address", tx.to.legacyAddresses[0].address, Wallet.legacyAddresses)
-            if address.label
+            if address.label != address.address
               $scope.to = address.label
             else
               $scope.to = address + " (you)"
