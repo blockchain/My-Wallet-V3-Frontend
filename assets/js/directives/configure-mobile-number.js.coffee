@@ -14,6 +14,12 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
       scope.mobileDefaultCountry = null
       
       scope.fields = {newMobile: null}
+
+      scope.$watch "edit.mobile", (newValue) ->
+        if newValue
+          # finds and focuses on the text input field
+          # a brief timeout is necessary before trying to focus
+          setTimeout (-> elem[0].children[1].children[0].children[0].focus()), 50
   
       scope.$watch "user.mobile.number + user.mobile.country", (newValue) ->
         scope.user.internationalMobileNumber = intlTelInputUtils.formatNumber(Wallet.internationalPhoneNumber(scope.user.mobile))

@@ -27,6 +27,9 @@ walletApp.directive('bcAsyncInput', () ->
         scope.type = "text"
         
       scope.edit = () ->
+        # finds and focuses on the text input field
+        # a brief timeout is necessary before trying to focus
+        setTimeout (-> elem[0].children[1].children[0].focus()), 50
         scope.status.edit = 1
         
       scope.focus = () ->
