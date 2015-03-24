@@ -163,6 +163,18 @@ a.back {
 .clickable{
   cursor: pointer;
 }
+
+.long-input{overflow-wrap:break-word; }
+
+.table-container{
+ display: block;
+ overflow-x: auto;
+}
+
+.text-center{
+ text-align: center;
+}
+
 .clearfix {
   *zoom: 1;
   &:before,

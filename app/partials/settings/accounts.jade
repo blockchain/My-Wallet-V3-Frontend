@@ -7,7 +7,7 @@ p.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
     a.btn.btn-info.btn-bci(ng-click="newAccount()", translate="CREATE_NEW_ACCOUNT")
     a.btn.btn-info.btn-bci(ng-click="transfer(address)", translate="TRANSFER_BETWEEN_ACCOUNTS") (transfer)
 .row
-  .col-xs-12
+  .col-xs-12.table-container
     table.responsive
       tr
         th(translate="ACCOUNT_NAME")
@@ -39,7 +39,7 @@ h2.clickable(translate="ARCHIVED_ACCOUNTS", ng-click="display.archived = !displa
 p.hidden-xs(translate="ARCHIVED_ACCOUNTS_EXPLAIN", ng-show="display.archived")
 
 .row(ng-show="display.archived")
-  .col-xs-12
+  .col-xs-12.table-container
     table.responsive
       tr
         th(translate="ACCOUNT_NAME")

@@ -7,12 +7,12 @@ div(ng-hide="address.address")
   img(src="img/spinner.gif")
 div(ng-show="address.address")
   .row
-    .col-xs-8
+    .col-xs-12.col-md-6
       fields.form-horizontal(role="form",name="form",novalidate)
         .form-group
           label.col-sm-3.control-label(translate="ADDRESS")
           .col-sm-9
-            p.form-control-static
+            p.form-control-static.long-input
               | {{ address.address }}  
               span.label.label-warning(ng-show="address.isWatchOnlyLegacyAddress", translate="WATCH_ONLY")              
         .form-group(ng-show="address.account")
@@ -38,7 +38,7 @@ div(ng-show="address.address")
           .col-sm-9
             p(translate="WATCH_ONLY_EXPLAIN")
         
-    .col-xs-4
+    .col-xs-12.col-md-6.text-center
       a(ng-click="show.watchOnly = true", ng-show="address.isWatchOnlyLegacyAddress && !show.watchOnly", translate="DISPLAY_QR")
       p(ng-show="address.isWatchOnlyLegacyAddress")
       qr(text="url" size="140", ng-show="!address.isWatchOnlyLegacyAddress || show.watchOnly", ng-if="url != null")
