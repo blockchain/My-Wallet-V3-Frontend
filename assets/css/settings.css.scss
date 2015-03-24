@@ -229,6 +229,54 @@ margin: 5px 0;
 
 .inneredit{padding: 10px 15px 0;}
 
+
+.account-container{
+  border: 1px solid #EFEFEF;
+  padding: 5px;
+  margin: 10px 0 10px 0;
+    
+    .label-primary{background-color: #7CA6CB;color: #fff;}
+    
+    header{
+      border-bottom: 1px solid rgb(229, 229, 229);
+      padding: 0 0 5px 0;
+      margin: 0 0 15px 0;
+        h2{
+          background: url('/img/my-accounts-icon.png') no-repeat 0 0;
+          padding: 5px 0px 5px 40px;
+          background-size: 35px;
+          margin-bottom: 10px;
+          margin-top: 10px;
+            span{font-size: 13pt;word-break: break-word;color: #686868;margin-bottom: 10px;}
+            span.label{font-size: 10pt!important;}
+          }
+        h3.fiat{
+          font-size: 10pt;
+          font-style: italic;
+          color: #ccc; 
+          margin: 0;
+          padding: 0;
+        }
+         h3.btc{
+          font-size: 12pt;
+          font-style: italic;
+          color: rgb(160, 160, 160);
+        }
+        .balance{
+          text-align: right;
+        }
+    }
+    ul{
+      margin: 0;
+      padding: 0;
+        list-style: none;
+        li{
+          padding: 2px 0;
+        }
+    }
+    
+}
+
 @media (min-width: 992px){
 	#settings{padding: 15px;}
 	.setting-result {

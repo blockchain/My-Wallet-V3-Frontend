@@ -4,11 +4,11 @@ div(ng-show="hdAddresses.length == 0")
   img(src="img/spinner.gif")
 div(ng-show="hdAddresses.length > 0")
   .row.form-ctrl
-    .col-xs-12.col-sm-7.col-md-8.col-lg-6
+    .col-xs-12.col-lg-6
       input.filter(type="text", ng-model="searchText").form-control
-    .hidden-xs.col-sm-5.col-md-4.col-lg-6(align="right")
+    .hidden-xs.col-lg-6(align="right")
       .btn-group(dropdown is-open="display.account_dropdown_open")
-        button.btn.btn-info.dropdown-toggle(dropdown-toggle type="button", data-toggle="dropdown", aria-expanded="false")
+        button.btn.btn-info.dropdown-toggle.btn-bci(dropdown-toggle type="button", data-toggle="dropdown", aria-expanded="false")
           span(translate="NEW_ADDRESS")
           span.caret
         ul.dropdown-menu(role="menu")
@@ -53,10 +53,10 @@ h2.clickable(translate="IMPORTED_ADDRESSES", ng-click="display.imported = !displ
 p.hidden-xs(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
 
 .row.form-ctrl(ng-show="display.imported")
-  .col-xs-12.col-sm-7.col-md-8.col-lg-6
+  .col-xs-12.col-lg-6
     input.filter(type="text", ng-model="searchTextLegacy").form-control
-  .hidden-xs.col-sm-5.col-md-4.col-lg-6(align="right")
-    a.btn.btn-info(ng-click="importAddress()", translate="IMPORT_ADDRESS")
+  .hidden-xs.col-lg-6(align="right")
+    a.btn.btn-info.btn-bci(ng-click="importAddress()", translate="IMPORT_ADDRESS")
 
 .row(ng-show="display.imported")
   .col-xs-12.table-container
@@ -93,7 +93,7 @@ h2.clickable(translate="ARCHIVED_ADDRESSES", ng-click="display.archived = !displ
 p.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
 
 .row.form-ctrl(ng-show="display.archived")
-  .col-xs-12.col-sm-7.col-md-8.col-lg-6
+  .col-xs-12.col-lg-6
     input.filter(type="text", ng-model="searchTextArchived").form-control
 .row(ng-show="display.archived")
   .col-xs-12.table-container

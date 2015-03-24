@@ -1,36 +1,33 @@
 p.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
   
 .row.form-ctrl
-  .col-xs-12.col-sm-7.col-md-8.col-lg-6
+  .col-xs-12.col-lg-6
     input.filter(type="text", ng-model="searchText").form-control
-  .hidden-xs.col-sm-5.col-md-4.col-lg-6(align="right")
+  .hidden-xs.col-lg-6(align="right")
     a.btn.btn-info.btn-bci(ng-click="newAccount()", translate="CREATE_NEW_ACCOUNT")
     a.btn.btn-info.btn-bci(ng-click="transfer(address)", translate="TRANSFER_BETWEEN_ACCOUNTS") (transfer)
 .row
-  .col-xs-12.table-container
-    table.responsive
-      tr
-        th(translate="ACCOUNT_NAME")
-        th(translate="BALANCE")
-        th
-        th
-        th
-        th
-      tr(ng-repeat="account in accounts | filter:searchText | filter:{active: true}")
-        td(ng-bind-html="account.label | highlight:searchText")
-        td 
-          span.btc(ng-show="account.balance != null") {{ account.balance | btc }}           
-          fiat.fiat(btc="account.balance", ng-show="account.balance != null")
-          img(ng-show="account.balance == null" src="img/spinner.gif")
-        td 
-          a(translate="MAKE_DEFAULT", ng-hide="account.isDefault", ng-click="makeDefault(account)")
-          span.label.label-primary(translate="DEFAULT", ng-show="account.isDefault")
-        td 
-          a(translate="RENAME",          ng-click="editAccount(account)")
-        td 
-          a(translate="BITCOIN_ADDRESS", ng-click="showAddress(account)")
-        td
-          a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="account.isDefault")
+  .col-xs-12
+    div.account-container.clearfix(ng-repeat="account in accounts | filter:searchText | filter:{active: true}")
+      header
+        hgroup.clearfix
+          div.col-xs-6
+            h2
+              span(ng-bind-html="account.label | highlight:searchText")
+              span.label.label-primary(translate="DEFAULT", ng-show="account.isDefault")
+          div.col-xs-6.balance
+            h3.btc(ng-show="account.balance != null") {{ account.balance | btc }}
+            h3.fiat(btc="account.balance", ng-show="account.balance != null")
+      div.actions.col-xs-12
+        ul
+          li
+            a(translate="RENAME",          ng-click="editAccount(account)")
+          li
+            a(translate="MAKE_DEFAULT", ng-hide="account.isDefault", ng-click="makeDefault(account)")            
+          li
+            a(translate="BITCOIN_ADDRESS", ng-click="showAddress(account)")
+          li
+            a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="account.isDefault")
 
 div.settings-options
 
