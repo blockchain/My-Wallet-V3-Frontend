@@ -30,7 +30,7 @@
     input {
 		color: #1972B6;
 		box-shadow: 1px 1px 4px -1px rgba(0, 0, 0, 0.34);
-		padding: 20px;
+		padding: 10px;
 		background: #fff;
 		border: 1px solid #FFF;
     }
@@ -128,6 +128,9 @@ bottom: 0;
 
 }
 
+.form-control {
+height: auto;
+}
 
 @media (min-width: 768px){
   .modal-header{
