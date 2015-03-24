@@ -45,7 +45,7 @@ form.form-horizontal(role="form",name="form",novalidate)
       label(translate="IP_WHITELIST")
       p.explain.hidden-xs.hidden-sm(translate="IP_WHITELIST_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
-      bc-async-input(ng-model="settings.ipWhitelist", validator="validateIpWhitelist", on-save="changeIpWhitelist", action-title="'CHANGE_IP_WHITELIST' | translate", error-message="errors.ipWhitelist")
+      bc-async-input.long-input(ng-model="settings.ipWhitelist", validator="validateIpWhitelist", on-save="changeIpWhitelist", action-title="'CHANGE_IP_WHITELIST' | translate", error-message="errors.ipWhitelist")
 
   .form-group
     .col-sm-12.col-md-6

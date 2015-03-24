@@ -6,7 +6,8 @@ body {
   color: #6C6C6C;
 }
 a{
- cursor: pointer;	
+ cursor: pointer;
+ outline: 0;
 }
 .row {
   vertical-align: bottom;
@@ -148,9 +149,10 @@ a{
 }
 
 a.back {
+    cursor: pointer;
  h2{
   background: url("/img/back.png") no-repeat left center;
-  background-size: 15px;
+  background-size: 10px;
   padding: 0 20px; 
  }
  &:hover{
@@ -158,6 +160,9 @@ a.back {
   }
 }
 
+.clickable{
+  cursor: pointer;
+}
 .clearfix {
   *zoom: 1;
   &:before,
