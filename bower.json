@@ -14,7 +14,7 @@
     "angular-bootstrap": "0.12.*",
     "angular-cookies": "1.2.*",
     "angular-audio": "1.4.*",
-    "angular-ui-select": "0.11.*",
+    "angular-ui-select": "0.8.3",
     "angular-sanitize": "1.2.*",
     "angular-qr": "0.2.*",
     "angular-numeraljs": "1.1.*",
