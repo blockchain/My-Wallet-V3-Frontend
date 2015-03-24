@@ -115,7 +115,8 @@
     
   $scope.setMethod("BTC")
   
-    
+  $scope.hasZeroBalance = (origin) ->
+    return origin.balance == 0.0
 
   $scope.onError = (error) -> 
     # This never gets called...
