@@ -11,12 +11,12 @@
     "repo" : "angular-ui/ui-router"
   },
   "angular-audio" : {
-    "version": "1.4.1",
-    "commits" : ["66b7590b3921b02d87e6c2bbc22daed1267e71d7"],
+    "version": "1.6.2",
+    "commits" : ["e67ab71574e09759b5fce058ea042bbe3ad7d98d"],
     "repo" : "danielstern/ngAudio"
   },
   "angular-ui-select" : {
-    "version": "0.11.2",
+    "version": "0.8.3",
     "commits" : ["b044b4109615982b75db4a46647741e96abe05fd","0ac10b09d57ee568e2891167f6bc49303f010608", "032b15213a61c2bae79e25e020231bc2fc7a5328", "28776e5150d71872f9d4cc9f9970c15eb175c370"],
     "repo" : "angular-ui/ui-select"
   },
