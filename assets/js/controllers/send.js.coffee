@@ -24,7 +24,7 @@
           item = angular.copy(account)
           item.type = "Accounts" 
           $scope.origins.push item
-          $scope.destinations.push item
+          $scope.destinations.push angular.copy(item) # https://github.com/angular-ui/ui-select/issues/656
   
         for address in $scope.legacyAddresses 
           if address.active
@@ -32,7 +32,7 @@
             item.type = "Imported Addresses"
             $scope.destinations.push item
             unless address.isWatchOnlyLegacyAddress
-              $scope.origins.push item
+              $scope.origins.push angular.copy(item)
         
         $scope.destinations.push({address: "", label: "", type: "External"})
         $scope.transaction.destination =  $scope.destinations.slice(-1)[0]
