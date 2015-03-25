@@ -44,8 +44,16 @@
         paymentRequest: -> 
           {fromAddress: address, amount: 0, toAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()]}
     )
-        
-        
+
+  $scope.showPrivKey = (address) ->
+    $modal.open(
+      templateUrl: "partials/settings/show-private-key.jade"
+      controller: ShowPrivateKeyCtrl
+      resolve:
+        addressObj: ->
+          address
+    )
+
   #################################
   #           Private             #
   #################################

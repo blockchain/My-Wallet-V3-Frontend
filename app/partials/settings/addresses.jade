@@ -63,7 +63,7 @@ p.hidden-xs(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
         th(translate="ADDRESS")
         th(translate="LABEL")
         th(translate="BALANCE")
-        //- th
+        th
         th
         th
       tr(ng-repeat="address in legacyAddresses | filter:{active: true} | filter:searchTextLegacy")
@@ -83,6 +83,8 @@ p.hidden-xs(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
           a(translate="TRANSFER", ng-click="transfer(address)")
         td 
           a(translate="ARCHIVE", ng-click="archive(address)")
+        td 
+          a(translate="YOUR_PRIVATE_KEY", ng-click="showPrivKey(address)")
 
 h2.clickable(translate="ARCHIVED_ADDRESSES", ng-click="display.archived = !display.archived")
 

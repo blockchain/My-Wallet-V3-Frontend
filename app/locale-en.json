@@ -237,6 +237,7 @@
   "PRIVATE_KEY_VALID" : "The private key appears to be <b>Valid</b>",
   "ADDRESS_VALID" : "The Bitcoin address is valid",
   "ADDRESS_FOR_PRIVATE_KEY" : "The Bitcoin address associated with this private key is",
+  "PRIVATE_KEY_WARNING" : "<b>Warning:</b> Allowing someone access to this private key gives him/her the ability to send bitcoin from this address. Therefore, exposing your private key to others is a security risk that may result in lost bitcoin. Do you wish to continue?",
   "BALANCE_FOR_ADDRESS": "The balance of this address is",
   "INPUT_NOT_RECOGNIZED" : "The value you entered does not appear to be a valid private key or bitcoin address",
   "ALREADY_IN_WALLET" : "This address is already present in the wallet",

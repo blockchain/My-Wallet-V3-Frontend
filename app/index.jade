@@ -63,6 +63,7 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     !=css('angular-csp')
     !=css('adverts')
     !=css('intlTelInput')
+    !=css('show-private-key')
     
     // Blockchain MyWallet javascript (must be called before 'app')
     unless process.env.MYWALLET_MOCK == "1"
