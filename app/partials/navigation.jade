@@ -17,13 +17,11 @@
           a(ui-sref="wallet.common.settings.security-center", ng-class="{'security-level-0': security.level == 0, 'security-level-1': security.level == 1, 'security-level-2': security.level == 2, 'security-level-3': security.level == 3}", translate="SECURITY")
         li.dropdown.item.hidden-xs(dropdown, ng-class="{ active: isSettingsState() }")
           a.dropdown-toggle.profile(href dropdown-toggle, translate="PROFILE")
-          ul.dropdown-menu(role='menu')
+          ul.dropdown-menu.sub-dropdown(role='menu')
             li
               a(ui-sref="wallet.common.settings.my-details", translate="SETTINGS")
             li
               a(ui-sref="wallet.common.settings.mobile", translate="MOBILE")
-            li.divider
-            li.dropdown-header Nav header
             li
               a(ng-click="logout()", translate="LOGOUT")
         li.item.visible-xs

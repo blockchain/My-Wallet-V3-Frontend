@@ -148,6 +148,15 @@ ul.navbar-nav{
 	box-shadow: none;
 }
 
+ul.sub-dropdown{
+  li{
+    a{padding: 10px;}
+  }
+  li.active{
+    a{border-bottom: none;}
+  }
+}
+
 @media (min-width: 768px){
 
 .navbar-collapse{
@@ -160,7 +169,7 @@ ul.navbar-nav{
   }	
  li.active{
 	 a{
-        border-bottom: thick solid #269FFD;
+        border-bottom: none;
         margin-bottom: 1px;
         color: #d3edfb;
 	 }
