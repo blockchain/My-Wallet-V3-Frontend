@@ -5,15 +5,11 @@
     div(ng-hide="accessAllowed")
       .col-sm-11.col-sm-offset-1
         p [Text explaining the consequences of exposing ones private key]
-      .col-sm-11.col-sm-offset-1(ng-hide="needsSecondPassword")
-        label(translate="WALLET_PASSWORD")
-        span : 
-        input(type="password", ng-model="passwordInput", autofocus)
       .col-sm-11.col-sm-offset-1(ng-show="needsSecondPassword")
         label(translate="SECOND_PASSWORD")
         span : 
         input(type="password", ng-model="secondPasswordInput", autofocus)
-      .col-sm-11.col-sm-offset-1(ng-show="incorrectPassword")
+      .col-sm-11.col-sm-offset-1(ng-show="incorrectSecondPassword")
         label.wrong-password(translate="INCORRECT_PASSWORD")
     div(ng-show="accessAllowed")
       .col-sm-2.col-sm-offset-1
@@ -30,4 +26,4 @@
           span : {{ privKey }}
 .modal-footer
   button.btn.btn-info(ng-click="close()", translate="CLOSE")
-  button.btn.btn-primary(ng-hide="accessAllowed", ng-click="tryConfirmPassword()", translate="CONTINUE")
+  button.btn.btn-primary(ng-hide="accessAllowed", ng-click="tryContinue()", translate="CONTINUE")
