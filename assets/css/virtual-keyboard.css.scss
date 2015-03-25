@@ -1,5 +1,36 @@
 table.virtual-keyboard {  
-  td {
-    padding: 5pt 10pt;
-  }
+  width: 100%;
+  background: #FDFDFD;
+  border: 1px solid #F2F2F2;
+  border-radius: 5px;
+  font-size: 11pt;
+  border-collapse: separate;
+    
+    td{
+     padding: 0;
+        
+        a{
+          padding: 5pt;
+          display: block;
+          color: rgb(161, 161, 161);
+          border: 1px solid transparent;
+          text-align: center;
+            
+            
+            &:hover{
+              color: rgb(0, 0, 0);
+              border: 1px solid rgb(255, 255, 255);
+              background: rgb(252, 251, 251);
+              box-shadow: 0px 0px 6px -3px inset;
+              text-decoration: none;
+            }
+            
+        }
+    }
+        
+}
+    
+    
+@media (min-width: 768px){
+table.virtual-keyboard td a{padding: 5pt 10pt}
 }
