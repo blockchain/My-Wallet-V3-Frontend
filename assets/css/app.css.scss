@@ -21,30 +21,36 @@ a{
 }
 
 .modal-backdrop{
-	background: #EDEDED;
+	background: #fff;
+}
+
+.modal-backdrop.in {
+  opacity: 0.8;
 }
 
 .blockchain-modal {
 
   .modal-content {
-    border: 10px solid #ECECEC;
+    border: 10px solid #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .11);
   
     textarea {
       width: 100%;
     }
   }
 
+    
+    
   .modal-header {
     h3 {
       color: #2071AA;
       margin-bottom: 0px;
       display: inline;    
       text-transform: capitalize;
+      font-size: 20pt
     }
-  
-  
     vertical-align: bottom;
-    border-bottom: 4px solid #e5e5e5;
+    border-bottom: 1px solid #EAEAEA;
   
     a {
       padding: 10px;
@@ -236,7 +242,7 @@ padding-left: 15px;
 
 .modal-dialog{
 	width: 70%;
-	margin: 10px;
+	margin: 10px auto;
 }
 
 }
