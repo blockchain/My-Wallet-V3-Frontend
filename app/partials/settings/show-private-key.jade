@@ -8,11 +8,11 @@
       .col-sm-11.col-sm-offset-1(ng-hide="needsSecondPassword")
         label(translate="WALLET_PASSWORD")
         span : 
-        input(type="password", ng-model="passwordInput")
+        input(type="password", ng-model="passwordInput", autofocus)
       .col-sm-11.col-sm-offset-1(ng-show="needsSecondPassword")
         label(translate="SECOND_PASSWORD")
         span : 
-        input(type="password", ng-model="secondPasswordInput")
+        input(type="password", ng-model="secondPasswordInput", autofocus)
       .col-sm-11.col-sm-offset-1(ng-show="incorrectPassword")
         label.wrong-password(translate="INCORRECT_PASSWORD")
     div(ng-show="accessAllowed")
