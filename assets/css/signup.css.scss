@@ -59,23 +59,23 @@
   
   .why{
   text-align: center;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(40, 40, 40, 0.4);
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.4); 
+  border: 1px solid transparent; 
 	h4{
 	color: #F2F2F2;
 	font-weight: 400;
 	padding: 10px 0 0px 0;
 	display: block;
-	font-size: 20px;
+	font-size: 18pt;
 	}
 	p{
-	  color: #C8E9F0;
+	  color: #fff;
 	  padding: 10px 50px 0;
 	  display: block;
 	  font-weight: 200;
 	  line-height: 1.5em;
-	  font-size: 120%;
+	  font-size: 12pt;
 
 	}  
 	  
@@ -122,8 +122,7 @@ bottom: 0;
 	top: auto;
 	bottom: 0;
 	margin: 0 auto;
-	min-height: 568px;
-	overflow: scroll;
+	min-height: 100%;
   }
 
 }
