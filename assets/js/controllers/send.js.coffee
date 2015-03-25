@@ -1,4 +1,4 @@
-@SendCtrl = ($scope, $log, Wallet, $modalInstance, ngAudio, $timeout, $state, $stateParams, $translate, paymentRequest) ->
+@SendCtrl = ($scope, $log, Wallet, $modalInstance, ngAudio, $timeout, $state, $filter, $stateParams, $translate, paymentRequest) ->
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.accounts = Wallet.accounts
   $scope.addressBook = Wallet.addressBook
@@ -128,9 +128,12 @@
     if paymentRequest.isValid
       $scope.transaction.destination = $scope.destinations.slice(-1)[0]
       $scope.transaction.destination.address = paymentRequest.address
-      $scope.transaction.destination.label = paymentRequest.address       
-      $scope.transaction.amount = paymentRequest.amount if paymentRequest.amount
-      $scope.transaction.currency = paymentRequest.currency if paymentRequest.currency
+      $scope.transaction.destination.label = paymentRequest.address  
+      if paymentRequest.amount  
+        $scope.transaction.amount = paymentRequest.amount 
+        $scope.transaction.currency = "BTC"
+        $scope.$digest()
+      
       
       $scope.cameraOff()
       $scope.visualValidate()
@@ -198,6 +201,10 @@
       $scope.$$postDigest(()->
         $scope.visualValidate('currency')
       )
+      
+  $scope.$watch "transaction.currency", (currency) ->
+    if currency? && $scope.transaction.currencySelected && $scope.transaction.currencySelected.code != currency
+      $scope.transaction.currencySelected = $filter("getByProperty")("code", currency, $scope.currencies)
         
   $scope.$watchCollection "destinations", () ->
     idx = Wallet.getDefaultAccountIndex()
