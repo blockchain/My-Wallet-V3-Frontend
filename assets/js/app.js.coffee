@@ -56,6 +56,7 @@ modules = [
   "partials/settings/security-center.jade"
   "partials/settings/set-second-password.jade"
   "partials/settings/settings.jade"
+  "partials/settings/show-private-key.jade"
   "partials/settings/wallet-recovery.jade"
   "partials/settings/wallet.jade"  
   "partials/confirm-recovery-phrase-modal.jade"  

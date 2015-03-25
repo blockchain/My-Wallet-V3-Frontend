@@ -1,0 +1,20 @@
+.modal-header
+  h3(translate="YOUR_PRIVATE_KEY")
+.modal-body
+  alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)") 
+    | {{alert.msg}}
+  div.show-key-body
+    .col-sm-2.col-sm-offset-1
+      qr(text="privKey", size=120, correction-level="'M'")
+    .col-sm-9
+      p
+        label(translate="ADDRESS")
+        span : {{ address }}
+      p
+        label(translate="BALANCE")
+        span : {{ balance | btc }}
+      p
+        label(translate="YOUR_PRIVATE_KEY") 
+        span : {{ privKey }}
+.modal-footer
+  button.btn.btn-info(ng-click="close()", translate="CLOSE")
