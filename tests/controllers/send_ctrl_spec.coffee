@@ -65,9 +65,8 @@ describe "SendCtrl", ->
     expect(scope.transaction.destination.type).toBe("External")
     expect(scope.transaction.destination.address).toBe("")
     
-  it "selects the users currency by default", inject((Wallet)->
-    expect(Wallet.settings.currency.code).toBe("USD")
-    expect(scope.transaction.currency).toBe "USD"
+  it "selects BTC by default", inject((Wallet)->
+    expect(scope.transaction.currency).toBe "BTC"
   )
   
   describe "to custom address", ->

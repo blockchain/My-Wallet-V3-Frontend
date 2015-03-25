@@ -107,8 +107,8 @@
     destination: null, 
     amount: paymentRequest.amount, 
     satoshi: 0, 
-    currency: Wallet.settings.currency.code, 
-    currencySelected: Wallet.settings.currency, 
+    currency: "BTC", 
+    currencySelected: btc, 
     fee: 0
     note: ""
   }
