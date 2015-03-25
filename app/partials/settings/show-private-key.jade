@@ -3,13 +3,13 @@
 .modal-body
   div.show-key-body
     div(ng-hide="accessAllowed")
-      .col-sm-11.col-sm-offset-1
-        p [Text explaining the consequences of exposing ones private key]
-      .col-sm-11.col-sm-offset-1(ng-show="needsSecondPassword")
+      .col-sm-10.col-sm-offset-1
+        p(translate="PRIVATE_KEY_WARNING")
+      .col-sm-10.col-sm-offset-1(ng-show="needsSecondPassword")
         label(translate="SECOND_PASSWORD")
         span : 
         input(type="password", ng-model="secondPasswordInput", autofocus)
-      .col-sm-11.col-sm-offset-1(ng-show="incorrectSecondPassword")
+      .col-sm-10.col-sm-offset-1(ng-show="incorrectSecondPassword")
         label.wrong-password(translate="INCORRECT_PASSWORD")
     div(ng-show="accessAllowed")
       .col-sm-2.col-sm-offset-1
