@@ -1,9 +1,9 @@
 span.amountTotal(ng-class="{unconfirmed: transaction.confirmations < 3}")
   span(ng-show="transaction.intraWallet")
     button.amount.intra-wallet(ng-click="toggle()")
-      fiat(btc="-transaction.result", ng-hide="showBTC() || showMBTC()")
-      span(ng-if="showBTC()") {{ -transaction.result | btc }}
-      span(ng-if="showMBTC()") {{ -transaction.result | mbtc }}
+      fiat(btc="transaction.result", ng-hide="showBTC() || showMBTC()")
+      span(ng-if="showBTC()") {{ transaction.result | btc }}
+      span(ng-if="showMBTC()") {{ transaction.result | mbtc }}
   span(ng-show="transaction.result > 0 && !transaction.intraWallet")
     button.amount.received(ng-click="toggle()")
       fiat(btc="transaction.result", ng-hide="showBTC() || showMBTC()")
