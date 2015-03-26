@@ -8,23 +8,27 @@
         span(ng-show="errors.invalidInput", translate="INPUT_NOT_RECOGNIZED")
         span(ng-show="errors.addressPresentInWallet")
           span(translate="ALREADY_IN_WALLET")
-          |:
+          |: 
           b {{ address.address }}
       textarea.form-control(rows="3", ng-model="fields.addressOrPrivateKey", id="address", ng-disabled="BIP38", autofocus)
     .form-group(ng-class="{'has-error' : errors.incorrectBip38Password}", ng-show="BIP38")
       label.control-label Password for private key
       input.form-control(type="password", ng-model="bip38passphrase")
       span.help-block(ng-show="errors.incorrectBip38Password", translate="INCORRECT_PASSWORD")
+    .form-group(ng-hide="!cameraIsOn")
+        label.col-sm-1.control-label(translate="QR")
+        .col-sm-11
+          bc-qr-reader(active="cameraRequested", on-result="processURLfromQR" on-error="onError" camera-status="cameraIsOn")
   div(ng-show="step==2")
     p(translate="PRIVATE_KEY_VALID", ng-hide="address.isWatchOnlyLegacyAddress")
     p
       span(translate="ADDRESS_VALID", ng-show="address.isWatchOnlyLegacyAddress")
       span(translate="ADDRESS_FOR_PRIVATE_KEY", ng-hide="address.isWatchOnlyLegacyAddress")
-      |:
+      |: 
       b {{ address.address }}
     p
       span(translate="BALANCE_FOR_ADDRESS")
-      |:
+      |: 
       b(ng-show="address.balance != null") {{ address.balance | btc }}
       img(ng-show="address.balance == null" src="img/spinner.gif")
   form.form-horizontal(role="form",name="form",novalidate, ng-show="step==3")
@@ -53,6 +57,7 @@
           span.fiat
             fiat(btc="address.balance")
 .modal-footer
+  button.btn.btn-info(ng-click="cameraOn()", ng-show="step == 1", ng-if="browserWithCamera", translate="QR")
   button.btn.btn-primary(ui-ladda="{{ status.busy }}", ng-show="step == 1", ng-click="validate()", ng-disabled="fields.addressOrPrivateKey == ''", ladda-translate="VALIDATE", data-style="expand-left")
   button.btn.btn-info(ng-show="step == 2", ng-click="close()", translate="CLOSE")
   button.btn.btn-primary(ng-show="step == 2 && !address.isWatchOnlyLegacyAddress && address.balance > 0 && isValid()", ng-click="goToTransfer()", translate="TRANSFER")

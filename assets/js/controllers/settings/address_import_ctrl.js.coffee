@@ -5,6 +5,7 @@
   $scope.BIP38 = null
   $scope.bip38passphrase = ""
   $scope.sweeping = false
+  $scope.cameraIsOn = false
     
   $scope.fields = {addressOrPrivateKey: "", account: null}
   
@@ -14,6 +15,8 @@
   $scope.errors = {invalidInput: null, addressPresentInWallet: null, incorrectBip38Password: null}
   
   $scope.status = {busy: false}
+
+  $scope.browserWithCamera = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia) != undefined
   
   $scope.isValid = () ->
     tally = 0
@@ -24,6 +27,17 @@
         
   $scope.address = null
   $scope.accounts = Wallet.accounts
+
+  $scope.cameraOn = () ->
+    $scope.cameraRequested = true
+
+  $scope.cameraOff = () ->
+    $scope.cameraIsOn = false
+    $scope.cameraRequested = false
+
+  $scope.processURLfromQR = (url) ->
+    $scope.fields.addressOrPrivateKey = url
+    $scope.cameraOff()
   
   $scope.close = () ->
     $modalInstance.dismiss ""
