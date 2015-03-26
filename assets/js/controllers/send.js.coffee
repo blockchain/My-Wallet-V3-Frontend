@@ -181,8 +181,11 @@
         sound = ngAudio.load("beep.wav")
         sound.play()
         $modalInstance.close ""
-        $state.go("wallet.common.transactions", {accountIndex: $scope.transaction.from.index })
-    
+        if $scope.transaction.from.index?
+          $state.go("wallet.common.transactions", {accountIndex: $scope.transaction.from.index })
+        else
+          $state.go("wallet.common.transactions", {accountIndex: "imported" })
+          
       Wallet.clearAlerts()
   
       Wallet.transaction(transactionDidFinish, transactionDidFailWithError).send($scope.transaction.from, $scope.transaction.destination, numeral($scope.transaction.amount), $scope.transaction.currency)
