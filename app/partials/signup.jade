@@ -24,7 +24,7 @@
           .form-group(ng-class="{'has-error': errors.confirmation, 'has-success': success.confirmation}")
             label.col-sm-4.control-label(translate="CONFIRM_PASSWORD")
             .col-sm-6
-              input.form-control(type="password",ng-model="fields.confirmation",autofocus,ng-blur="validate()", ng-focus="errors.confirmation = null")
+              input.form-control(type="password",ng-model="fields.confirmation",on-enter="tryNextStep()",autofocus,ng-blur="validate()", ng-focus="errors.confirmation = null")
               span.help-block 
                 p {{ errors.confirmation }}
         div(ng-switch-when="2")

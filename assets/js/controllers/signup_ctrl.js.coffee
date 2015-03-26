@@ -53,6 +53,10 @@
     $modalInstance.dismiss ""
     $state.go("wallet.common.transactions", {accountIndex: "accounts"})
     
+  $scope.tryNextStep = () ->
+    if $scope.isValid[0]
+      $scope.nextStep()
+
   $scope.nextStep = () ->
     $scope.validate()
     if $scope.isValid[$scope.currentStep - 1]
