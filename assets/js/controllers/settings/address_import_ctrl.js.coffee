@@ -36,8 +36,12 @@
     $scope.cameraRequested = false
 
   $scope.processURLfromQR = (url) ->
-    $scope.fields.addressOrPrivateKey = url
+    $scope.fields.addressOrPrivateKey = $scope.parseBitcoinUrl(url)
     $scope.cameraOff()
+
+  $scope.parseBitcoinUrl = (url) ->
+    url = url.split('bitcoin:')
+    return url[url.length - 1]
   
   $scope.close = () ->
     $modalInstance.dismiss ""
