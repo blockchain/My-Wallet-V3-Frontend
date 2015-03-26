@@ -43,7 +43,7 @@
         
   $scope.transactionFilter = (item) ->
     return item.to.account? || item.from.account? if $stateParams.accountIndex == "accounts"
-    return !item.to.account? && !item.from.account? if $stateParams.accountIndex == "imported"
+    return (item.to.legacyAddresses && item.to.legacyAddresses.length) || (item.from.legacyAddresses && item.from.legacyAddresses.length) if $stateParams.accountIndex == "imported"
     return (item.to.account? && item.to.account.index == parseInt($stateParams.accountIndex)) || (item.from.account? && item.from.account.index == parseInt($stateParams.accountIndex))
   
   $scope.$watch "status.didLoadTransactions", (newValue) ->
