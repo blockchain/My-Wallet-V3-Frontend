@@ -1,31 +1,60 @@
-.navbar.navbar-inverse(role="navigation")
-.container-fluid
-  .row.spacing
+.navbar.navbar-default.navbar-inverse.navbar-unauth(role='navigation')
+  .container-fluid
+    .navbar-header
+      button.navbar-toggle(type="button", ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.navbar-brand(href='#') 
+        img#logo(src="img/logo-updated.png",alt="Blockchain")
+    .navbar-collapse.collapse(ng-class="{'in' : !navCollapsed}", ng-click="navCollapsed=true")
+      ul.nav.navbar-nav.navbar-right
+        li.item
+          a(href="/") Home
+        li.item
+          a(href="/") About
+        li.item.active
+          a(href="/") Wallet
+        li.item
+          a(href="/") Explorer
+        li.item
+          a(href="/") Merchant
+        li.item
+          a(href="/") Support          
+    // /.nav-collapse
+
+
+
+.container-fluid.login
   .row
-    .col-xs-12(ui-view="alerts")
-  form.form-horizontal(role="form")
-    .form-group
-      label.control-label.col-md-2(translate="UID")
-      .col-md-3
-        input.form-control(type="text", ng-model="uid", ng-disabled="busy")
-    .form-group
-      label.control-label.col-md-2(translate="PASSWORD")
-      .col-md-3
-        input.form-control(type="password", ng-model="password", ng-disabled="busy")
-      .col-md-3
-        button.btn.btn-primary(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="LOGIN", ng-disabled="!isValid")
-        //- span(ng-show="settings.needs2FA && settings.twoFactorMethod == 5")
-        //-   button.btn.btn-info(ui-ladda="{{ resending }}", ng-click="resendTwoFactorSms()", data-style="expand-left", ladda-translate="RESEND_SMS")
+    .col-xs-12.col-xs-12(ui-view="alerts")
+  .row
+    .col-xs-2
+    .login-form.col-xs-8
+      form.form-horizontal(role="form")
+        .form-group
+          label.control-label.col-md-3(translate="UID")
+          .col-md-6
+            input.form-control(type="text", ng-model="uid", ng-disabled="busy")
+        .form-group
+          label.control-label.col-md-3(translate="PASSWORD")
+          .col-md-6
+            input.form-control(type="password", ng-model="password", ng-disabled="busy")
+            
+        .form-group(ng-show="settings.needs2FA")
+          label.control-label.col-md-3
+            span(translate="YUBI_CODE", ng-show="settings.twoFactorMethod == 3")
+            span(translate="EMAIL_CODE", ng-show="settings.twoFactorMethod == 2")
+            span(translate="GOOGLE_AUTH_CODE", ng-show="settings.twoFactorMethod == 4")
+            span(translate="SMS_CODE", ng-show="settings.twoFactorMethod == 5")         
+          .col-md-6
+            input.form-control(type="text", ng-model="twoFactorCode", ng-disabled="busy")            
+            
+        .form-group   
+          .col-md-9
+            a.create(ui-sref="register",translate="CREATE_WALLET", ng-disabled="busy")
+            button.btn.btn-primary.btn-login(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="LOGIN", ng-disabled="!isValid")
+            
+
         
-    .form-group(ng-show="settings.needs2FA")
-      label.control-label.col-md-2
-        span(translate="YUBI_CODE", ng-show="settings.twoFactorMethod == 3")
-        span(translate="EMAIL_CODE", ng-show="settings.twoFactorMethod == 2")
-        span(translate="GOOGLE_AUTH_CODE", ng-show="settings.twoFactorMethod == 4")
-        span(translate="SMS_CODE", ng-show="settings.twoFactorMethod == 5")
-      .col-md-3
-        input.form-control(type="text", ng-model="twoFactorCode", ng-disabled="busy")
-    .form-group
-      .col-md-2
-      p.form-control-static.col-md-3
-        a(ui-sref="register",translate="CREATE_WALLET", ng-disabled="busy") 
