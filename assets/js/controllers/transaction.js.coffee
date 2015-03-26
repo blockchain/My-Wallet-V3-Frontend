@@ -33,7 +33,7 @@
             if address.label != address.address
               $scope.from = address.label
             else 
-              $scope.from = address + " (you)"
+              $scope.from = address.address + " (you)"
           else if tx.from.externalAddresses?
             $scope.from = Wallet.addressBook[tx.from.externalAddresses.addressWithLargestOutput]
             unless $scope.from
