@@ -5,6 +5,8 @@
     edit: false
     busy: null
 
+  $scope.errors = {}
+  
   if account?
     $scope.fields.name = account.label
     $scope.status.edit = true
@@ -47,8 +49,14 @@
     $scope.formIsValid = $scope.validate()
 
   $scope.validate = () ->
+    $scope.errors.name = null
+    
     return false if $scope.fields.name == null
     return false if $scope.fields.name.length == 0
+    
+    if $scope.fields.name.length > 17
+      $scope.errors.name = "Max. 17 characters"
+      return false
     
     return true
   
