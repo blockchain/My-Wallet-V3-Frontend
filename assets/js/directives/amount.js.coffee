@@ -8,15 +8,21 @@ walletApp.directive('amount', (Wallet) ->
     templateUrl: 'templates/amount.jade'
     link: (scope, elem, attrs) ->
       scope.settings = Wallet.settings
-      scope.showBTC = () -> attrs.btc? || scope.settings.displayCurrency.code == "BTC" # May not work correctly within ng-repeat
+      scope.showBTC = () -> (attrs.btc? || scope.settings.displayCurrency.code == "BTC") && scope.settings.displayCurrency.code != "mBTC"
       scope.showMBTC = () -> scope.settings.displayCurrency.code == "mBTC"
       
       scope.toggle = () ->
         if scope.settings.displayCurrency.code == "BTC"
           scope.settings.displayCurrency = {code: "mBTC"}
         else if scope.settings.displayCurrency.code == "mBTC"
-          scope.settings.displayCurrency = scope.settings.currency
+          if attrs.btc?
+            scope.settings.displayCurrency = {code: "BTC"}
+          else
+            scope.settings.displayCurrency = scope.settings.currency
         else
-          scope.settings.displayCurrency = {code: "BTC"}
+          if attrs.btc?
+            scope.settings.displayCurrency = {code: "mBTC"}
+          else
+            scope.settings.displayCurrency = {code: "BTC"}
   }
 )
