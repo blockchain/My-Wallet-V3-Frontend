@@ -2,5 +2,4 @@
   .col-xs-12.col-sm-12.col-md-12.col-lg-4
     span.action(ng-class="{incoming_tx: transaction.result > 0, outgoing_tx: transaction.result < 0, local_tx: transaction.intraWallet}", translate="{{ action }}")
   .hidden-xs.hidden-sm.col-md-12.col-lg-8
-    span.destination.hidden-sm.hidden-xs(translate="{{ address }}" ng-if="address")
-    span.destination.hidden-sm.hidden-xs(translate="{{ subject }}" ng-if="!address")  
+    span.destination.hidden-sm.hidden-xs(translate="{{ address }}")

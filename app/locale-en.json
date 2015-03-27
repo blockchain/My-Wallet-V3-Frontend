@@ -48,7 +48,6 @@
   "RECEIVED_BITCOIN_FROM" : "Received",
   "SENT_BITCOIN_TO" : "Sent",
   "MOVED_BITCOIN_TO" : "Transferred",
-  "A_BITCOIN_ADDRESS" : "a bitcoin address",
   "ADVANCED" : "Advanced",
   "ADVANCED_EXPLAIN" : "These settings are for advanced users and should only be modified if you know what you are doing.",  
   "SEND_TO_PLACEHOLDER" : "Bitcoin address, email or mobile number",

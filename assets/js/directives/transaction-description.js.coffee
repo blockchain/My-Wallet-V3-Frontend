@@ -17,13 +17,13 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
       scope.tooltip = null
       
       if scope.transaction.from.legacyAddresses?
-        from_address = scope.transaction.from.legacyAddresses.addressWithLargestOutput
+        from_address = scope.transaction.from.legacyAddresses[0]
       
       if scope.transaction.from.externalAddresses?
         from_address = scope.transaction.from.externalAddresses.addressWithLargestOutput
 
       if scope.transaction.to.legacyAddresses?
-        to_address = scope.transaction.to.legacyAddresses.addressWithLargestOutput
+        to_address = scope.transaction.to.legacyAddresses[0]
         
       if scope.transaction.to.externalAddresses?
         to_address = scope.transaction.to.externalAddresses.addressWithLargestOutput
@@ -33,28 +33,26 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
       if scope.transaction.intraWallet
         scope.action = "MOVED_BITCOIN_TO"
         if scope.transaction.to.account?
-          scope.subject = Wallet.accounts[parseInt(scope.transaction.to.account.index)].label
+          scope.address = Wallet.accounts[parseInt(scope.transaction.to.account.index)].label
         else
           if to_name = Wallet.addressBook[to_address]
-            scope.subject = to_name 
+            scope.address = to_name 
           else
-            scope.subject = "A_BITCOIN_ADDRESS"
+            scope.address = to_address
       else
         if scope.transaction.result < 0
           address = to_address
           scope.action = "SENT_BITCOIN_TO"
           if to_name = Wallet.addressBook[to_address]
-            scope.subject = to_name
+            scope.address = to_name
           else 
-            scope.subject = "A_BITCOIN_ADDRESS"
             scope.address = to_address
         else
           address = from_address
           scope.action = "RECEIVED_BITCOIN_FROM"
           if from_name = Wallet.addressBook[to_address]
-            scope.subject = from_name
+            scope.address = from_name
           else 
-            scope.subject = "A_BITCOIN_ADDRESS"
             scope.address = from_address
   }
 )
