@@ -17,13 +17,13 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
       scope.tooltip = null
       
       if scope.transaction.from.legacyAddresses?
-        from_address = scope.transaction.from.legacyAddresses[0]
+        from_address = scope.transaction.from.legacyAddresses[0].address
       
       if scope.transaction.from.externalAddresses?
         from_address = scope.transaction.from.externalAddresses.addressWithLargestOutput
 
       if scope.transaction.to.legacyAddresses?
-        to_address = scope.transaction.to.legacyAddresses[0]
+        to_address = scope.transaction.to.legacyAddresses[0].address
         
       if scope.transaction.to.externalAddresses?
         to_address = scope.transaction.to.externalAddresses.addressWithLargestOutput
@@ -42,10 +42,15 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
       else
         if scope.transaction.result < 0
           scope.action = "SENT_BITCOIN_TO"
-          if to_name = Wallet.addressBook[to_address]
-            scope.address = to_name
-          else 
-            scope.address = to_address
+          if scope.transaction.to.externalAddresses?
+            if to_name = Wallet.addressBook[to_address]
+              scope.address = to_name
+            else 
+              scope.address = to_address
+          else if scope.transaction.to.email?
+            scope.address = scope.transaction.to.email.email
+          else if scope.transaction.to.mobile?
+            scope.address = scope.transaction.to.mobile.number
         else
           scope.action = "RECEIVED_BITCOIN_FROM"
           if from_name = Wallet.addressBook[from_address]
