@@ -168,7 +168,8 @@
       $scope.sending = true
     
       transactionDidFailWithError = (message) ->
-        Wallet.displayError(message)
+        if message
+          Wallet.displayError(message)
         $scope.sending = false
       
       transactionDidFinish = (tx_hash) ->
