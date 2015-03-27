@@ -59,6 +59,9 @@ table.left {
 
     td {
       height: 30px;
+       a{
+       font-size: 11pt;
+       }
     }
     
     td.amount{
@@ -73,10 +76,11 @@ table.left {
   tr.active {
     font-weight: bold;
     color: #FFFFFF;
-    background-color: #9CBACA;    
+    background-color: #10ace5;    
       td{
 	    a{
-		  color: #FFFFFF;    
+		  color: #FFFFFF; 
+          font-weight: 400;
 	    }    
       }
   }  
