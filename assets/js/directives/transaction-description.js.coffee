@@ -16,13 +16,13 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
       
       scope.tooltip = null
       
-      if scope.transaction.from.legacyAddresses?
+      if scope.transaction.from.legacyAddresses? && scope.transaction.from.legacyAddresses.length
         from_address = scope.transaction.from.legacyAddresses[0].address
       
       if scope.transaction.from.externalAddresses?
         from_address = scope.transaction.from.externalAddresses.addressWithLargestOutput
 
-      if scope.transaction.to.legacyAddresses?
+      if scope.transaction.to.legacyAddresses? && scope.transaction.to.legacyAddresses.length
         to_address = scope.transaction.to.legacyAddresses[0].address
         
       if scope.transaction.to.externalAddresses?
