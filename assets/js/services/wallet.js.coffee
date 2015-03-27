@@ -1037,7 +1037,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyWalletSto
       
       
   wallet.getCurrencies = () ->
-    for code, name of wallet.my.getCurrencies()
+    for code, name of wallet.store.getCurrencies()
       currency = {code: code, name: name}
       wallet.currencies.push currency
       
