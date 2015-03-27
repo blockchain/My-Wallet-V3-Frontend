@@ -81,7 +81,7 @@
       
       Wallet.goal.verifyEmail = undefined
       
-  $scope.$on "requireSecondPassword", (notification, continueCallback, insist) ->
+  $scope.$on "requireSecondPassword", (notification, continueCallback, cancelCallback, insist) ->
     modalInstance = $modal.open(
       templateUrl: "partials/second-password.jade"
       controller: SecondPasswordCtrl
@@ -89,16 +89,11 @@
       resolve:
         insist: ->
           insist
-    )
-    
-    modalInstance.result.then((secondPassword) ->
-      correctPassword = () ->
-        
-      wrongPassword = () ->
-        Wallet.displayError("Second password incorrect")
-        
-        
-      continueCallback(secondPassword, correctPassword, wrongPassword)
+        continueCallback: ->
+          continueCallback
+        cancelCallback: ->
+          cancelCallback
+          
     )
   
   $scope.$on "needsUpgradeToHD", (notification, continueCallback) ->

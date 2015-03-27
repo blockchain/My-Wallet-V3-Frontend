@@ -14,7 +14,10 @@ walletApp.directive('configureSecondPassword', ($translate, Wallet, $modal) ->
         success = () ->
           scope.busy = false
           
-        Wallet.removeSecondPassword(success)
+        error = () ->
+          scope.busy = false
+          
+        Wallet.removeSecondPassword(success, error)
     
       scope.setSecondPassword = () ->
         modalInstance = $modal.open(

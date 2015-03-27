@@ -201,8 +201,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.my.createNewWallet(email, password, language_code, currency_code, success, error)
         
   wallet.createAccount = (name, successCallback, errorCallback) ->
+    cancelCallback = () ->
+      
     needsSecondPasswordCallback = (continueCallback) ->
-      $rootScope.$broadcast "requireSecondPassword", continueCallback
+      cancelCallback = () ->
+      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
       
     success = () ->
       wallet.updateAccounts()  
@@ -215,9 +218,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     wallet.my.createAccount(name, needsSecondPasswordCallback, success, error)
   
   wallet.renameAccount = (account, name, successCallback, errorCallback) ->
-    needsSecondPasswordCallback = (continueCallback) ->
-      $rootScope.$broadcast "requireSecondPassword", continueCallback
-    
     if wallet.my.setLabelForAccount(account.index, name)
       account.label = name
       successCallback()
@@ -353,7 +353,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
   wallet.setPbkdf2Iterations = (n, successCallback, errorCallback) ->    
     needsSecondPassword = (continueCallback) ->
-      $rootScope.$broadcast "requireSecondPassword", continueCallback
+      cancelCallback = () ->
+      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
     
     success = () ->
       wallet.settings.pbkdf2 = wallet.my.getPbkdf2Iterations()
@@ -439,7 +440,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     bip38 = false
             
     needsSecondPasswordCallback = (continueCallback) ->
-      $rootScope.$broadcast "requireSecondPassword", continueCallback   
+      cancelCallback = () ->
+        errorCallback()
+        
+      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback 
       
     needsBip38Password = (callback) ->
       bip38 = true
@@ -524,7 +528,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
           wallet.applyIfNeeded() 
           
     needsSecondPassword = (continueCallback) ->
-      $rootScope.$broadcast "requireSecondPassword", continueCallback
+      cancelCallback = () ->
+        errorCallback()
+        
+      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
       
     {  
       send: (from, destination, amount, currency) ->
@@ -575,7 +582,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
   wallet.getMnemonic = (successCallback, errorCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->
-      $rootScope.$broadcast "requireSecondPassword", continueCallback
+      cancelCallback = () ->
+      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
     
     success = (mnemonic) ->
       successCallback(mnemonic)
@@ -588,7 +596,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     
   wallet.importWithMnemonic = (mnemonic, successCallback, errorCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->
-      $rootScope.$broadcast "requireSecondPassword", continueCallback
+      cancelCallback = () ->
+      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
       
     wallet.accounts.splice(0, wallet.accounts.length)
     wallet.transactions.splice(0, wallet.transactions.length)
@@ -904,7 +913,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       wallet.status.didUpgradeToHd = false
       continueCallback = () ->
         needsSecondPasswordCallback = (continueCallback) ->
-          $rootScope.$broadcast "requireSecondPassword", continueCallback, true
+          cancelCallback = () ->
+          $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback, true
         
         success = () ->
           wallet.status.didUpgradeToHd = true
@@ -1275,9 +1285,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.isValidBIP39Mnemonic = (mnemonic) ->
     wallet.my.isValidateBIP39Mnemonic(mnemonic)
 
-  wallet.removeSecondPassword = (successCallback) ->
+  wallet.removeSecondPassword = (successCallback, errorCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->
-      $rootScope.$broadcast "requireSecondPassword", continueCallback
+      cancelCallback = () ->
+        errorCallback()
+        
+      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
       
     success = () ->
       wallet.displaySuccess("Second password has been removed.")
@@ -1285,6 +1298,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
       successCallback()
       
     error = () ->
+      errorCallback()
     
     wallet.my.unsetSecondPassword(success, error, needsSecondPasswordCallback)
     
