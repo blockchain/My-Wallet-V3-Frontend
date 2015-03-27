@@ -155,7 +155,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyWalletSto
     
     wallet.fetchExchangeRate()
   
-  wallet.resendTwoFactorSms = (successCallback, errorCallback) ->
+  wallet.resendTwoFactorSMS = (uid, successCallback, errorCallback) ->
     success = () ->
       $translate("RESENT_2FA_SMS").then (translation) ->
         wallet.displaySuccess(translation)
@@ -164,12 +164,13 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyWalletSto
       wallet.applyIfNeeded()
       
     error = () ->
+      throw("erro")
       $translate("RESENT_2FA_SMS_FAILED").then (translation) ->
         wallet.displayError(translation)
       errorCallback()
       wallet.applyIfNeeded()
     
-    wallet.my.resendTwoFactorSms(success, error)
+    wallet.my.resendTwoFactorSMS(uid, success, error)
     
   wallet.create = (password, email, currency, language, success_callback) ->      
     success = (uid) ->
@@ -907,7 +908,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyWalletSto
         sound.play()
         wallet.updateAccountsAndLegacyAddresses()
     else if event == "error_restoring_wallet"
-      wallet.applyIfNeeded()      
+      # wallet.applyIfNeeded()
+      return  
     else if event == "did_set_guid" # Wallet retrieved from server
     else if event == "on_wallet_decrypt_finish" # Non-HD part is decrypted
     else if event == "hd_wallets_does_not_exist"

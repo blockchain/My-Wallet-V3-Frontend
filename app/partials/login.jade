@@ -49,12 +49,15 @@
             span(translate="GOOGLE_AUTH_CODE", ng-show="settings.twoFactorMethod == 4")
             span(translate="SMS_CODE", ng-show="settings.twoFactorMethod == 5")         
           .col-md-6
-            input.form-control(type="text", ng-model="twoFactorCode", ng-disabled="busy")            
+            input.form-control(type="text", ng-model="twoFactorCode", ng-disabled="busy") 
+          .col-md-2(ng-show="settings.twoFactorMethod == 5")
+            p.form-control-static
+              a(ng-click="resend()") Resend
             
         .form-group   
           .col-md-9
             a.create(ui-sref="register",translate="CREATE_WALLET", ng-disabled="busy")
-            button.btn.btn-primary.btn-login(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="LOGIN", ng-disabled="!isValid")
+            button#login.btn.btn-primary.btn-login(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="LOGIN", ng-disabled="!isValid")
             
 
         
