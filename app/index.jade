@@ -91,9 +91,11 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
         !=js('my-wallet/build/bip39')
         !=js('my-wallet/build/xregexp-all')
         !=js('my-wallet/src/import-export')
+        !=js('my-wallet/src/wallet-store')
       else
         !=js('my-wallet/dist/my-wallet.js')
       !=js('my_wallet')
+      !=js('my_wallet_store')
     
     if process.env.MYWALLET_MOCK == "1"
       // Use mock instead (uncomment the above):

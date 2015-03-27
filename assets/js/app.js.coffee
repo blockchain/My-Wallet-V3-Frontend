@@ -13,6 +13,7 @@ modules = [
   "ui.bootstrap"
   "ngCookies"
   "myWalletServices"
+  "myWalletStoreServices"
   "ui.select"
   "ngAudio"
   "ngSanitize"

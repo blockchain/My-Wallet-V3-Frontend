@@ -19,7 +19,7 @@ playSound = (id) ->
 ##################################
 
 walletServices = angular.module("walletServices", [])
-walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) -> 
+walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyWalletStore, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) -> 
   wallet = {
     goal: {}, 
     status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadTransactions: false, didLoadBalances: false, legacyAddressBalancesLoaded: false, didConfirmRecoveryPhrase: false}, 
@@ -37,6 +37,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
   wallet.paymentRequests = []
   wallet.alerts = []
   wallet.my = MyWallet
+  wallet.store = MyWalletStore
   wallet.transactions = []
   wallet.languages = []
   wallet.currencies = []
@@ -1023,7 +1024,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, $rootScope,
     # Get and sort languages:
     tempLanguages = []
   
-    for code, name of wallet.my.getLanguages()
+    for code, name of wallet.store.getLanguages()
       language = {code: code, name: name}
       tempLanguages.push language
       
