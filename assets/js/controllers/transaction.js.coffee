@@ -1,5 +1,5 @@
 @TransactionCtrl = ($scope, Wallet, $log, $stateParams, $filter, $cookieStore) ->
-    
+  window.scrollTo(0, 0);
   #################################
   #           Private             #
   #################################
