@@ -268,29 +268,6 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.getCurrencies = () ->
     {USD: "US Dollar", EUR: "Euro"}
-
-  myWallet.change_email = (newVal, success, error) ->
-    email = newVal
-    success()
-    
-  myWallet.changeMobileNumber = (newVal, success, error) ->
-    mobile = newVal
-    success()
-    
-  myWallet.verifyMobile = (code, success, error) ->
-    success()
-    
-  myWallet.update_password_hint1 = (value, success, fail) ->
-    success()
-    
-  myWallet.change_language = (newLanguage) ->
-    language = newLanguage
-    
-  myWallet.change_local_currency = (newCurrency) ->
-    currency = newCurrency
-    
-  myWallet.setIPWhitelist = (ips, success, error) ->
-    success()
     
   myWallet.getAccounts = () ->  
     theAccounts = []
@@ -624,23 +601,14 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     notes = angular.copy(localStorageService.get("mockWallets")[this.uid].notes)
     legacyAddresses = angular.copy(localStorageService.get("mockWallets")[this.uid].legacyAddresses)
     
-  myWallet.unsetTwoFactor = (success, error) ->
-    success()
-    
-  myWallet.setTwoFactorSMS = (success, error) ->
-    success()
-    
-  myWallet.setTwoFactorEmail = (success, error) ->
-    success()
-    
-  myWallet.setTwoFactorGoogleAuthenticator = (success, error) ->
-    success("google_secret")
-    
-  myWallet.confirmTwoFactorGoogleAuthenticator = (code, success, error) ->
-    if code == "123456"
-      success()
-    else
-      error()
+  # myWallet.setTwoFactorGoogleAuthenticator = (success, error) ->
+  #   success("google_secret")
+  #
+  # myWallet.confirmTwoFactorGoogleAuthenticator = (code, success, error) ->
+  #   if code == "123456"
+  #     success()
+  #   else
+  #     error()
     
   myWallet.getFeePolicy = () ->
     return feePolicy
@@ -663,9 +631,6 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.setPbkdf2Iterations = (pbkdf2_iterations, success) ->
     success()
-    
-  myWallet.update_tor_ip_block = (enabled, successCallback, errorCallback) ->
-    successCallback()
     
   myWallet.setUseBuildHDWalletWebworker = (value) ->
     

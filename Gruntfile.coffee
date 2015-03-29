@@ -29,6 +29,7 @@ module.exports = (grunt) ->
       application_dependencies:
         src: [
           'build/my_wallet.js' # This is just a wrapper around MyWallet
+          'build/my_wallet_store.js'  # This is just a wrapper around MyWalletStore
           'build/services/*.js'
           'build/controllers/*.js'
           'build/controllers/settings/*.js'

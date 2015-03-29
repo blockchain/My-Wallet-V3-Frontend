@@ -12,8 +12,13 @@ modules = [
   "ui.router"
   "ui.bootstrap"
   "ngCookies"
-  "myWalletServices"
+  
+  # TODO get rid of these wrappers and modify the original files to work with injection?
+  "myWalletServices" 
   "myWalletStoreServices"
+  "myBlockchainApiServices"
+  "myBlockchainSettingsServices"
+  
   "ui.select"
   "ngAudio"
   "ngSanitize"
