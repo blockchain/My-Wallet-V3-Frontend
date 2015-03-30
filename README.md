@@ -10,15 +10,16 @@ Install Grunt:
     npm install -g grunt-cli
 
 ```sh
-git clone --recursive https://github.com/blockchain/My-Wallet-HD-Frontend.git 
+git clone https://github.com/blockchain/My-Wallet-HD-Frontend.git 
 cd My-Wallet-HD-Frontend
 npm install
 ```
 
-Prepare the MyWallet submodule:
+Include My-Wallet-HD (which is shared between the web and iOs app):
 
 ```sh
-cd assets/js/my-wallet
+cd assets/js
+git clone https://github.com/blockchain/My-Wallet-HD.git 
 npm install
 grunt build
 ```
@@ -112,7 +113,7 @@ Curently the app is configured to be deployed on a Blockchain staging server:
 
 https://dev.blockchain.info/ (password protected)
 
-First create a minified javascript file for the MyWallet submodule:
+First create a minified javascript file for the MyWalletHD component:
 
     cd assets/js/my-wallet
     grunt dist

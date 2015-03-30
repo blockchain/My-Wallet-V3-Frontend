@@ -1,7 +1,3 @@
-[submodule "assets/js/my-wallet"]
-	path = assets/js/my-wallet
-	url = git@github.com:blockchain/My-Wallet-HD
-	branch = master
 [submodule "assets/js/jsqrcode"]
 	path = assets/js/jsqrcode
 	url = https://github.com/Sjors/jsqrcode.git
