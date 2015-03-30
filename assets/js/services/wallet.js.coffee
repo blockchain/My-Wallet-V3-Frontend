@@ -92,7 +92,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       
         # Get currencies:
       
-        wallet.setCurrency($filter("getByProperty")("code", result.currency, wallet.currencies))
+        wallet.settings.currency = ($filter("getByProperty")("code", result.currency, wallet.currencies))
         
         wallet.settings.displayCurrency = wallet.settings.currency
       
@@ -1054,14 +1054,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
     
   wallet.changeLanguage = (language) ->
     wallet.settings_api.change_language(language.code, (()->))
-    wallet.setLanguage(language)
-    
-  wallet.setCurrency = (currency) ->
-    wallet.settings.currency = currency
+    wallet.setLanguage(language)    
     
   wallet.changeCurrency = (currency) ->
     wallet.settings_api.change_local_currency(currency.code)
-    wallet.setCurrency(currency)
+    wallet.settings.currency = currency
     # wallet.fetchExchangeRate()
   
   wallet.changeEmail = (email, successCallback, errorCallback) ->
