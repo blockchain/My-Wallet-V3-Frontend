@@ -24,9 +24,4 @@
       Wallet.displayError("Second password incorrect")
       $scope.busy = false
       
-      
     continueCallback($scope.secondPassword, correctPassword, wrongPassword)
-    
-    
-    
- 
