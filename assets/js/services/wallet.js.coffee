@@ -53,7 +53,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
     didLogin = () ->    
       wallet.status.isLoggedIn = true 
       wallet.status.didUpgradeToHd = wallet.my.didUpgradeToHd()
-      wallet.status.didConfirmRecoveryPhrase = wallet.my.isMnemonicVerified()
+      wallet.status.didConfirmRecoveryPhrase = wallet.store.isMnemonicVerified()
     
       for address, label of wallet.my.getAddressBook()
         wallet.addressBook[address] = label
@@ -304,7 +304,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
     wallet.my.makePairingCode(success, error)
     
   wallet.confirmRecoveryPhrase = () ->
-    wallet.my.didVerifyMnemonic()
+    wallet.store.didVerifyMnemonic()
     wallet.status.didConfirmRecoveryPhrase = true
 
   wallet.isCorrectMainPassword = (candidate) ->
