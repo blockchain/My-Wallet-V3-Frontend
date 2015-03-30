@@ -3,6 +3,7 @@ describe "walletServices", () ->
   MyWallet = undefined
   mockObserver = undefined  
   errors = undefined
+  MyBlockchainSettings = undefined
   
   beforeEach angular.mock.module("walletApp")
   
@@ -12,6 +13,7 @@ describe "walletServices", () ->
       
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
+      MyBlockchainSettings = $injector.get("MyBlockchainSettings")
             
       spyOn(MyWallet,"fetchWalletJson").and.callThrough()
           
@@ -90,10 +92,10 @@ describe "walletServices", () ->
     )
       
     it "should switch language", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet, "change_language").and.callThrough()
+      spyOn(MyBlockchainSettings, "change_language").and.callThrough()
       Wallet.changeLanguage(Wallet.languages[0])
-      expect(MyWallet.change_language).toHaveBeenCalledWith("de")
-      expect(MyWallet.getLanguage()).toBe("de")
+      expect(MyBlockchainSettings.change_language).toHaveBeenCalled()
+      expect(MyBlockchainSettings.change_language.calls.argsFor(0)[0]).toBe("de")
       expect(Wallet.settings.language.code).toBe("de")
       
     )
@@ -114,10 +116,10 @@ describe "walletServices", () ->
       expect(Wallet.conversions["USD"].conversion).toBeGreaterThan(0)
     )
       
-    it "can be switced", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet, "change_local_currency").and.callThrough()
+    it "can be switched", inject((Wallet, MyWallet) ->
+      spyOn(MyBlockchainSettings, "change_local_currency").and.callThrough()
       Wallet.changeCurrency(Wallet.currencies[1])
-      expect(MyWallet.change_local_currency).toHaveBeenCalledWith("EUR")
+      expect(MyBlockchainSettings.change_local_currency).toHaveBeenCalledWith("EUR")
       expect(Wallet.settings.currency.code).toBe("EUR")
     )
     
@@ -132,9 +134,9 @@ describe "walletServices", () ->
     )
       
     it "can be changed", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet, "change_email").and.callThrough()
+      spyOn(MyBlockchainSettings, "change_email").and.callThrough()
       Wallet.changeEmail("other@me.com", mockObserver.success, mockObserver.error)
-      expect(MyWallet.change_email).toHaveBeenCalled()
+      expect(MyBlockchainSettings.change_email).toHaveBeenCalled()
       expect(Wallet.user.email).toBe("other@me.com")
       expect(Wallet.user.isEmailVerified).toBe(false)
     )
@@ -150,20 +152,20 @@ describe "walletServices", () ->
     )
       
     it "should allow change", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet, "changeMobileNumber").and.callThrough()
+      spyOn(MyBlockchainSettings, "changeMobileNumber").and.callThrough()
       newNumber = {country: "+31", number: "0100000000"}
       Wallet.changeMobile(newNumber, (()->),(()->))
-      expect(MyWallet.changeMobileNumber).toHaveBeenCalled()
+      expect(MyBlockchainSettings.changeMobileNumber).toHaveBeenCalled()
       expect(Wallet.user.mobile).toBe(newNumber)
       expect(Wallet.user.isMobileVerified).toBe(false)
     )
     
     it "can be verified", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet, "verifyMobile").and.callThrough()
+      spyOn(MyBlockchainSettings, "verifyMobile").and.callThrough()
 
       Wallet.verifyMobile("12345", (()->),(()->))
       
-      expect(MyWallet.verifyMobile).toHaveBeenCalled()
+      expect(MyBlockchainSettings.verifyMobile).toHaveBeenCalled()
       
       expect(Wallet.user.isMobileVerified).toBe(true)
     
@@ -198,9 +200,9 @@ describe "walletServices", () ->
     )
 
     it "can be changed", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet, "update_password_hint1").and.callThrough()
+      spyOn(MyBlockchainSettings, "update_password_hint1").and.callThrough()
       Wallet.changePasswordHint("Better hint", mockObserver.success, mockObserver.error)
-      expect(MyWallet.update_password_hint1).toHaveBeenCalled()
+      expect(MyBlockchainSettings.update_password_hint1).toHaveBeenCalled()
       expect(Wallet.user.passwordHint).toBe("Better hint")
     )
     

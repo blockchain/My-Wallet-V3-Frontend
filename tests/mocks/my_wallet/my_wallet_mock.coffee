@@ -89,11 +89,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   transactions = []
   notes = {}
   legacyAddresses = []
-  
-  language = "en"
-  email = "steve@me.com"
-  mobile = "+31 12345678"
-  
+    
   defaultAccountIndex = 0
   
   feePolicy = 0
@@ -239,36 +235,10 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     # wallets = localStorageService.get("mockWallets")
     # wallets[myWallet.uid].password = newPassword
     # localStorageService.set("mockWallets", wallets)
-      
-  myWallet.get_ticker = (success, fail) ->
-    success({
-      EUR: {"last": 250, symbol: "€"}
-      USD: {"last": 300, symbol: "$"}
-    })
- 
+       
   myWallet.getLanguage = () ->
     return language
-    
-    
-  myWallet.get_account_info = (callback) ->
-    callback({
-      email: email
-      email_verified: 1
-      sms_number: mobile
-      sms_verified: 0
-      password_hint1: "Same as username"
-      language: language
-      currency: "USD"
-      block_tor_ips: 0
-      my_ip: "123.456.789.012"
-    })
-    
-  myWallet.getLanguages = () ->
-    {de: "Deutch", en: "English", nl: "Nederlands"}
-    
-  myWallet.getCurrencies = () ->
-    {USD: "US Dollar", EUR: "Euro"}
-    
+        
   myWallet.getAccounts = () ->  
     theAccounts = []
     for i in [0..myWallet.getAccountsCount()]
@@ -468,7 +438,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.recommendedTransactionFeeForAddress = () ->
     return 10000
-    
+        
   ####################
   # Legacy addresses #
   ####################
@@ -634,6 +604,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.setUseBuildHDWalletWebworker = (value) ->
     
+  myWallet.resendTwoFactorSms = (uid, success, error) ->
+    success()
     
   #####################################
   # Tell the mock to behave different # 

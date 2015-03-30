@@ -27,7 +27,7 @@ describe "LoginCtrl", ->
   it "should login",  inject((Wallet) ->
     scope.uid = "user"
     scope.password = "pass"
-    
+        
     spyOn(Wallet, "login")
     
     scope.login()
@@ -37,9 +37,11 @@ describe "LoginCtrl", ->
   )
 
   it "should resend two factor sms", inject((Wallet) ->
+    Wallet.settings.twoFactorMethod = 5
+    
     spyOn(Wallet, "resendTwoFactorSms")
 
-    scope.resendTwoFactorSms()
+    scope.resend()
 
     expect(Wallet.resendTwoFactorSms).toHaveBeenCalled()
     return

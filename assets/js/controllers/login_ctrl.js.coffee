@@ -69,7 +69,7 @@
       error = () ->
         $scope.resending = false
       
-      Wallet.resendTwoFactorSMS($scope.uid,success, error)
+      Wallet.resendTwoFactorSms($scope.uid,success, error)
 
   $scope.$watch "status.isLoggedIn", (newValue) ->
     if newValue

@@ -157,7 +157,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
     
     wallet.fetchExchangeRate()
   
-  wallet.resendTwoFactorSMS = (uid, successCallback, errorCallback) ->
+  wallet.resendTwoFactorSms = (uid, successCallback, errorCallback) ->
     success = () ->
       $translate("RESENT_2FA_SMS").then (translation) ->
         wallet.displaySuccess(translation)
@@ -166,13 +166,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       wallet.applyIfNeeded()
       
     error = () ->
-      throw("erro")
       $translate("RESENT_2FA_SMS_FAILED").then (translation) ->
         wallet.displayError(translation)
       errorCallback()
       wallet.applyIfNeeded()
     
-    wallet.my.resendTwoFactorSMS(uid, success, error)
+    wallet.my.resendTwoFactorSms(uid, success, error)
     
   wallet.create = (password, email, currency, language, success_callback) ->      
     success = (uid) ->
@@ -1054,7 +1053,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
     wallet.settings.language = language
     
   wallet.changeLanguage = (language) ->
-    wallet.settings_api.change_language(language.code)
+    wallet.settings_api.change_language(language.code, (()->))
     wallet.setLanguage(language)
     
   wallet.setCurrency = (currency) ->
