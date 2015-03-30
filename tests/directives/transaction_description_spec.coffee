@@ -1,4 +1,4 @@
-describe "Transaction Note Directive", ->
+describe "Transaction Description Directive", ->
   $compile = undefined
   $rootScope = undefined
   element = undefined
@@ -26,7 +26,7 @@ describe "Transaction Note Directive", ->
     $rootScope.transaction = {
             hash: "tx_hash", confirmations: 13, intraWallet: null, 
             from: {account: {index: 0, amount: 300000000}, legacyAddresses: null, externalAddresses: null}, 
-            to: {account: {index: 0, amount: 300000000}, legacyAddresses: null}
+            to: {account: {index: 1, amount: 300000000}, legacyAddresses: null, externalAddresses: null}
           }
           
     return
@@ -38,8 +38,8 @@ describe "Transaction Note Directive", ->
     $rootScope.$digest()
     isoScope = element.isolateScope()
   
-  it "should say You", ->
-    expect(element.html()).toContain '<b translate="YOU"></b>'
+  it "should include incoming_tx class", ->
+    expect(element.html()).toContain 'incoming_tx'
         
   it "should have the transaction in its scope", ->
     expect(isoScope.transaction.hash).toBe("tx_hash")
