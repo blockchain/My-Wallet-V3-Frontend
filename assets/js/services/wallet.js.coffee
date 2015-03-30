@@ -52,13 +52,13 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
   wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) ->  
     didLogin = () ->    
       wallet.status.isLoggedIn = true 
-      wallet.status.didUpgradeToHd = wallet.my.didUpgradeToHd()
+      wallet.status.didUpgradeToHd = wallet.store.didUpgradeToHd()
       wallet.status.didConfirmRecoveryPhrase = wallet.store.isMnemonicVerified()
     
       for address, label of wallet.my.getAddressBook()
         wallet.addressBook[address] = label
             
-      if wallet.my.didUpgradeToHd()
+      if wallet.store.didUpgradeToHd()
         wallet.updateAccounts()
       
       wallet.settings.secondPassword = wallet.my.getDoubleEncryption()
@@ -101,7 +101,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
         wallet.settings.blockTOR = !!result.block_tor_ips
       
         # Fetch transactions:
-        if wallet.my.didUpgradeToHd()
+        if wallet.store.didUpgradeToHd()
           wallet.my.getHistoryAndParseMultiAddressJSON()
       
         wallet.applyIfNeeded()
@@ -758,7 +758,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
   ##################################
   
   wallet.updateAccountsAndLegacyAddresses = () ->
-    if wallet.my.didUpgradeToHd()
+    if wallet.store.didUpgradeToHd()
       wallet.updateAccounts()
     wallet.updateLegacyAddresses()
     
@@ -865,7 +865,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       return account.balance
     
   wallet.updateTransactions = () ->
-    for tx in wallet.my.getAllTransactions()
+    for tx in wallet.store.getAllTransactions()
       match = false
       for candidate in wallet.transactions
         if candidate.hash == tx.hash
