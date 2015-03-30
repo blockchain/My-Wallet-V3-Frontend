@@ -19,7 +19,7 @@ Include My-Wallet-HD (which is shared between the web and iOs app):
 
 ```sh
 cd assets/js
-git clone https://github.com/blockchain/My-Wallet-HD.git 
+git clone https://github.com/blockchain/My-Wallet-HD.git my-wallet
 npm install
 grunt build
 ```
