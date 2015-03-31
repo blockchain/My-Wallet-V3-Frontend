@@ -18,7 +18,9 @@
   for account in $scope.accounts
     item = angular.copy(account)
     item.type = "Accounts" 
-    $scope.destinations.push item
+    
+    unless item.index? && !item.active
+      $scope.destinations.push item
     
     if destination == account
       $scope.fields.to = item
