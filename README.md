@@ -126,7 +126,7 @@ Return to the root of the frontend project:
 
     cd ../../..
 
-Create a static HTML/JS/CSS distribution package in `dist`:
+Create a static HTML/JS/CSS distribution package in `dist`. You must use your Github credentials here, because some packages are private:
 
     grunt dist
 
