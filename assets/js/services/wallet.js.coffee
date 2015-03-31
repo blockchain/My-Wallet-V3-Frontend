@@ -55,7 +55,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       wallet.status.didUpgradeToHd = wallet.store.didUpgradeToHd()
       wallet.status.didConfirmRecoveryPhrase = wallet.store.isMnemonicVerified()
     
-      for address, label of wallet.my.getAddressBook()
+      for address, label of wallet.store.getAddressBook()
         wallet.addressBook[address] = label
             
       if wallet.store.didUpgradeToHd()
