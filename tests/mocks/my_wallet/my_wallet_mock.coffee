@@ -1,5 +1,5 @@
 walletServices = angular.module("myWalletServices", [])
-walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService, $cookieStore) ->
+walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService, $cookieStore, MyWalletStore) ->
   # Erase local storage:
   # localStorageService.remove("mockWallets")
 
@@ -86,7 +86,6 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet = {}
   accounts = []
     
-  transactions = []
   notes = {}
   legacyAddresses = []
     
@@ -144,10 +143,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   
   myWallet.getHDWallet = () ->
     myWallet 
-    
-  myWallet.didUpgradeToHd = () ->
-    return true
-    
+        
   myWallet.isValidateBIP39Mnemonic = (mnemonic) ->
     return false unless mnemonic?
     return false if mnemonic.indexOf(" ") == -1
@@ -184,10 +180,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     else
       $log.error "Wallet not found"
       eventListener("wallet not found")
-      
-  myWallet.isMnemonicVerified = () ->
-    false
-    
+          
   myWallet.didVerifyMnemonic = () ->
       
   myWallet.getHistoryAndParseMultiAddressJSON = () ->
@@ -222,7 +215,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     eventListener("logging_out")
     myWallet.uid = undefined
     myWallet.password = undefined
-    transactions = []
+    MyWalletStore.setTransactions([])
     accounts = []
     if !(karma?) || !karma
       window.location = ""
@@ -264,14 +257,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.setLabelForAccount = (idx, label) ->
     accounts[idx].label = label
-    
-  myWallet.getAllTransactions = (idx) ->
-    res = []
-    for transaction in transactions
-      res.push transaction
-    
-    return res
-    
+        
   myWallet.getNote = (hash) ->
     notes[hash]
     
@@ -316,7 +302,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     # MyWallet stores transaction locally (so it already knows it by the time
     # it receives the websocket notification).
 
-    transactions.push transaction
+    MyWalletStore.appendTransaction(transaction)
     accounts[fromAccountIndex].balance -= amount
     
     # Blockchain.info will know about these transactions:
@@ -346,7 +332,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
             to:   {account: {index: toAccountIdx, amount: amount}, legacyAddresses: null, externalAddresses: null}
           }
 
-    transactions.push transaction
+    MyWalletStore.appendTransaction(transaction)
     accounts[fromAccountIdx].balance -= amount
     accounts[toAccountIdx].balance += amount   
     
@@ -367,7 +353,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
               to:   {account: {index: toAccountIdx, amount: amount}, legacyAddresses: null, externalAddresses: null}
             }
 
-    transactions.push transaction
+    MyWalletStore.appendTransaction(transaction)
     legacyAddresses[fromAddress].balance -= amount
     accounts[toAccountIdx].balance += amount   
     
@@ -567,10 +553,10 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   
   myWallet.refresh = () ->
     accounts = angular.copy(localStorageService.get("mockWallets")[this.uid].accounts)
-    transactions = angular.copy(localStorageService.get("mockWallets")[this.uid].transactions)
+    MyWalletStore.setTransactions(angular.copy(localStorageService.get("mockWallets")[this.uid].transactions))
     notes = angular.copy(localStorageService.get("mockWallets")[this.uid].notes)
     legacyAddresses = angular.copy(localStorageService.get("mockWallets")[this.uid].legacyAddresses)
-    
+        
   # myWallet.setTwoFactorGoogleAuthenticator = (success, error) ->
   #   success("google_secret")
   #
@@ -642,7 +628,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
           accounts[index].balance += transaction.result
           transaction.to = {account: {index: index, amount: transaction.result}, legacyAddresses: null, externalAddresses: null}
           
-          transactions.push transaction
+          MyWalletStore.appendTransaction(transaction)
           
           # Update the "blockchain" in our cookie:
           cookie = localStorageService.get("mockWallets")
