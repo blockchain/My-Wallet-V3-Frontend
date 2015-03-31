@@ -31,7 +31,7 @@ describe "SettingsAccountsCtrl", ->
   ) 
   
   it "should list accounts",  inject(() ->
-    expect(scope.accounts.length).toBe(2)
+    expect(scope.accounts.length).toBeGreaterThan(1)
   )
   
   it "should open modal to edit an account",  inject(() ->

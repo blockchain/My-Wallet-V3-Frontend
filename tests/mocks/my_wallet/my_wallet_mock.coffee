@@ -18,6 +18,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
         accounts: [
           {label: "Savings", archived: false, balance: 300000000 - 25000000, receive_addresses: []},
           {label: "Mobile", archived: false, balance: 25000000 - 1500000, receive_addresses: ["13QsKpDMchnssikZEaJKdkTX7pycFEcTi1"]}
+          {label: "Old", archived: true, balance: 0, receive_addresses: []}
+       
         ]
         transactions: [
           {
@@ -459,8 +461,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.unarchiveAccount = (account) ->
     return
     
-  myWallet.isArchivedForAccount = (account) ->
-    return false
+  myWallet.isArchivedForAccount = (idx) ->
+    accounts[idx].archived
     
   myWallet.deleteLegacyAddress = (address) ->
     return

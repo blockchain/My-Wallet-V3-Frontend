@@ -23,8 +23,9 @@
         for account in $scope.accounts
           item = angular.copy(account)
           item.type = "Accounts" 
-          $scope.origins.push item
-          $scope.destinations.push angular.copy(item) # https://github.com/angular-ui/ui-select/issues/656
+          unless item.index? && !item.active
+            $scope.origins.push item 
+            $scope.destinations.push angular.copy(item) # https://github.com/angular-ui/ui-select/issues/656
   
         for address in $scope.legacyAddresses 
           if address.active

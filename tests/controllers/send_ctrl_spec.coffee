@@ -69,6 +69,42 @@ describe "SendCtrl", ->
     expect(scope.transaction.currency).toBe "BTC"
   )
   
+  describe "origins", ->
+    it "should include accounts",  ->
+      expect(scope.origins.length).toBeGreaterThan(0)
+      expect(scope.origins[0].index).toBeDefined()
+      
+    it "should not include archived accounts",  inject((Wallet) ->
+      # Make sure there's an archived account in the mocks:
+      match = false
+      for account in scope.accounts
+        match = true if !account.active
+        
+      expect(match).toBe(true, "No archived account in mocks")
+      
+      # Test that this archived account is not included in origins:
+      for origin in scope.origins
+        expect(origin.active).not.toBe(false, "Archived account in origins")
+    )
+    
+  describe "destinations", ->
+    it "should include accounts",  ->
+      expect(scope.destinations.length).toBeGreaterThan(0)
+      expect(scope.destinations[0].index).toBeDefined()
+      
+    it "should not include archived accounts",  inject((Wallet) ->
+      # Make sure there's an archived account in the mocks:
+      match = false
+      for account in scope.accounts
+        match = true if !account.active
+        
+      expect(match).toBe(true, "No archived account in mocks")
+      
+      # Test that this archived account is not included in origins:
+      for destination in scope.destinations
+        expect(destination.active).not.toBe(false, "Archived account in destinations")
+    )
+  
   describe "to custom address", ->
     beforeEach ->
       # Simulate user typing an address and moving to another field:
