@@ -4,7 +4,7 @@
   $scope.incorrectSecondPassword = false
   $scope.address = addressObj.address
   $scope.balance = addressObj.balance
-  $scope.privKey = Wallet.my.getPrivateKey($scope.address)
+  $scope.privKey = Wallet.store.getPrivateKey($scope.address)
 
   $scope.tryContinue = () ->
     if $scope.needsSecondPassword

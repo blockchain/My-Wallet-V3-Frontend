@@ -285,7 +285,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
         address.label = label
         successCallback()
         
-      wallet.my.setLegacyAddressLabel(address.address, label, success, errorCallback)
+      wallet.store.setLegacyAddressLabel(address.address, label, success, errorCallback)
     
   wallet.logout = () ->
     wallet.didLogoutByChoice = true
@@ -458,7 +458,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
         
     if address = wallet.my.isValidPrivateKey(addressOrPrivateKey)
       privateKey = addressOrPrivateKey
-      if wallet.my.legacyAddressExists(address)
+      if wallet.store.legacyAddressExists(address)
         address = $filter("getByProperty")("address", address, wallet.legacyAddresses)
         if address.isWatchOnlyLegacyAddress
           success = (address) ->
@@ -498,7 +498,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
     
     if wallet.my.isValidAddress(addressOrPrivateKey)   
       address = addressOrPrivateKey  
-      if wallet.my.legacyAddressExists(address)
+      if wallet.store.legacyAddressExists(address)
         errorCallback({addressPresentInWallet: true}, {address: address})
         return
       else
@@ -724,7 +724,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
     
   wallet.archive = (address_or_account) ->
     if address_or_account.address?
-      wallet.my.archiveLegacyAddr(address_or_account.address)
+      wallet.store.archiveLegacyAddr(address_or_account.address)
     else
       wallet.my.archiveAccount(address_or_account.index)
       
@@ -741,14 +741,14 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       wallet.applyIfNeeded() # Unarchive involves an async operation
     
     if address_or_account.address?
-      wallet.my.unArchiveLegacyAddr(address_or_account.address)
+      wallet.store.unArchiveLegacyAddr(address_or_account.address)
       success()
     else
       wallet.my.unarchiveAccount(address_or_account.index, success)
     
         
   wallet.deleteLegacyAddress = (address) ->
-    wallet.my.deleteLegacyAddress(address.address)
+    wallet.store.deleteLegacyAddress(address.address)
     idx = wallet.legacyAddresses.indexOf(address)
     wallet.legacyAddresses.splice(idx,1)
     
@@ -816,7 +816,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
                                   
   wallet.updateLegacyAddresses = () ->
     numberOfOldAddresses = wallet.legacyAddresses.length
-    numberOfNewAddresses = wallet.my.getAllLegacyAddresses().length
+    numberOfNewAddresses = wallet.store.getAllLegacyAddresses().length
     
     if numberOfNewAddresses == 0
       wallet.status.legacyAddressBalancesLoaded = true # No legacy addresses, so all balances are loaded
@@ -825,18 +825,18 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       for i in [0..(numberOfNewAddresses - 1)]
         addressItem = undefined
         if i >= numberOfOldAddresses
-          address = wallet.my.getAllLegacyAddresses()[i]
-          addressItem = {address: address, active: wallet.my.getLegacyActiveAddresses().indexOf(address) > -1, legacy: true} 
+          address = wallet.store.getAllLegacyAddresses()[i]
+          addressItem = {address: address, active: wallet.store.getLegacyActiveAddresses().indexOf(address) > -1, legacy: true} 
           wallet.legacyAddresses.push addressItem
         else
           addressItem = wallet.legacyAddresses[i]
       
         # Set or update label and balance:
-        addressItem.label = wallet.my.getLegacyAddressLabel(addressItem.address) 
+        addressItem.label = wallet.store.getLegacyAddressLabel(addressItem.address) 
         unless addressItem.label?
           addressItem.label = addressItem.address
-        addressItem.balance = wallet.my.getLegacyAddressBalance(addressItem.address)
-        addressItem.isWatchOnlyLegacyAddress = wallet.my.isWatchOnlyLegacyAddress(addressItem.address)
+        addressItem.balance = wallet.store.getLegacyAddressBalance(addressItem.address)
+        addressItem.isWatchOnlyLegacyAddress = wallet.store.isWatchOnlyLegacyAddress(addressItem.address)
         
         if addressItem.balance != null
           wallet.status.legacyAddressBalancesLoaded = true
@@ -858,7 +858,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
             
       return tally
     else if accountIndex == "imported"
-      return wallet.my.getTotalBalanceForActiveLegacyAddresses()
+      return wallet.store.getTotalBalanceForActiveLegacyAddresses()
     else
       account = wallet.accounts[parseInt(accountIndex)]
       return null if account == undefined
@@ -1280,7 +1280,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
     )
     
   wallet.getTotalBalanceForActiveLegacyAddresses = () ->
-    return wallet.my.getTotalBalanceForActiveLegacyAddresses()
+    return wallet.store.getTotalBalanceForActiveLegacyAddresses()
     
   wallet.setDefaultAccount = (account) ->
     wallet.my.setDefaultAccountIndex(account.index)
