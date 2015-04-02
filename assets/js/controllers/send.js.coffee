@@ -308,7 +308,10 @@
 
     if $scope.originsLoaded && transaction.amount > 0 && !$scope.validateAmount()
       if blurredField == "amount" || blurredField == "from" || blurredField == "currency"
-        $scope.errors.amount = "Insufficient funds"
+        if !$scope.validateAmountDecimals()
+          $scope.errors.amount = "Maximum of " + $scope.allowedDecimals() + " decimal places"
+        else
+          $scope.errors.amount = "Insufficient funds"
     
     return 
     
@@ -342,10 +345,22 @@
     return false unless $scope.transaction.from? && $scope.transaction.from.balance?
     
     return false if $scope.transaction.satoshi + $scope.transaction.fee > $scope.transaction.from.balance
+
+    return false if !$scope.validateAmountDecimals()
     $scope.errors.amount = null
     return true
-    
   
+  $scope.validateAmountDecimals = () ->
+    return $scope.decimalPlaces($scope.transaction.amount) <= $scope.allowedDecimals()
+
+  $scope.allowedDecimals = () ->
+    currency = $scope.transaction.currencySelected
+    return 8 if currency.code == 'BTC'
+    return 2
+
+  $scope.decimalPlaces = (number) ->
+    return (number.split('.')[1] || []).length
+
   $scope.goToConfirmation = () ->
     $scope.confirmationStep = true
     
