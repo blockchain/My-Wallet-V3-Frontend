@@ -245,9 +245,9 @@ describe "walletServices", () ->
       return
     )
     
-    it "should return the sum of all legacy addresses", inject((Wallet, MyWallet) ->
+    it "should return the sum of all legacy addresses", inject((Wallet, MyWallet, MyWalletStore) ->
       expect(Wallet.total("imported")).toBeGreaterThan(0)
-      expect(Wallet.total("imported")).toBe(MyWallet.getTotalBalanceForActiveLegacyAddresses())
+      expect(Wallet.total("imported")).toBe(MyWalletStore.getTotalBalanceForActiveLegacyAddresses())
       
       return
     )
@@ -311,7 +311,7 @@ describe "walletServices", () ->
         
       error = () ->
         expect(false).toBe(true)
-      
+            
       Wallet.addAddressOrPrivateKey("private_key_for_some_legacy_watch_only_address", null, success, error)
       
     it "should complain if input is invalid", ->

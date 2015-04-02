@@ -1,6 +1,8 @@
 describe "walletServices", () ->
   Wallet = undefined
   MyWallet = undefined
+  MyWalletStore = undefined
+  
   mockObserver = undefined  
   errors = undefined
   
@@ -12,7 +14,8 @@ describe "walletServices", () ->
       
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
-            
+      MyWalletStore = $injector.get("MyWalletStore")
+      
       spyOn(MyWallet,"fetchWalletJson").and.callThrough()
           
       spyOn(Wallet,"monitor").and.callThrough()
@@ -35,9 +38,9 @@ describe "walletServices", () ->
   describe "address label", ->
     it "can be set for a legacy address", ->
       address = Wallet.legacyAddresses[0]
-      spyOn(MyWallet, "setLegacyAddressLabel")
+      spyOn(MyWalletStore, "setLegacyAddressLabel")
       Wallet.changeAddressLabel(address, "New Label")
-      expect(MyWallet.setLegacyAddressLabel).toHaveBeenCalled()
+      expect(MyWalletStore.setLegacyAddressLabel).toHaveBeenCalled()
     
     it "can be set for an HD address", ->
       address = Wallet.hdAddresses[0]
