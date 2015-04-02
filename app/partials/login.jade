@@ -6,7 +6,7 @@
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      a.navbar-brand(href='#') 
+      a.navbar-brand(ng-click="visitTransactions()") 
         img#logo(src="img/logo-updated.png",alt="Blockchain")
     .navbar-collapse.collapse(ng-class="{'in' : !navCollapsed}", ng-click="navCollapsed=true")
       ul.nav.navbar-nav.navbar-right
