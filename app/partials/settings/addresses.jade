@@ -99,12 +99,18 @@ p.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
       tr
         th(translate="ADDRESS")
         th(translate="LABEL")
+        th(translate="BALANCE")
         th
         th
           th
       tr(ng-repeat="address in legacyAddresses | filter:{active: false} | filter:searchTextArchived")
         td(ng-bind-html="address.address | highlight:searchTextArchived")
         td(ng-bind-html="address.label | highlight:searchTextArchived")
+        td 
+          span(ng-show="address.balance != null")
+            span.btc {{ address.balance | btc }}
+            fiat.fiat(btc="address.balance") 
+          img(ng-show="address.balance == null" src="img/spinner.gif")
         td 
           a(translate="TRANSFER")
         td 
