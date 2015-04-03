@@ -165,7 +165,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       successCallback()
       wallet.applyIfNeeded()
       
-    error = () ->
+    error = (e) ->
       $translate("RESENT_2FA_SMS_FAILED").then (translation) ->
         wallet.displayError(translation)
       errorCallback()
@@ -948,10 +948,6 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
-      wallet.updateAccountsAndLegacyAddresses()  
-      wallet.applyIfNeeded()
-      
-    else if event == "hd_wallet_balance_updated"
       wallet.updateAccountsAndLegacyAddresses()  
       wallet.applyIfNeeded()
     else if event == "did_update_legacy_address_balance"

@@ -52,7 +52,8 @@
             input.form-control(type="text", ng-model="twoFactorCode", ng-disabled="busy") 
           .col-md-2(ng-show="settings.twoFactorMethod == 5")
             p.form-control-static
-              a(ng-click="resend()") Resend
+              img(ng-show="resending" src="img/spinner.gif")
+              a(ng-click="resend()", ng-show="!resending" ) Resend
             
         .form-group   
           .col-md-9
