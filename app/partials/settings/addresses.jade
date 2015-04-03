@@ -84,7 +84,7 @@ p.hidden-xs(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
         td 
           a(translate="ARCHIVE", ng-click="archive(address)")
         td 
-          a(translate="YOUR_PRIVATE_KEY", ng-click="showPrivKey(address)")
+          a(translate="YOUR_PRIVATE_KEY", ng-hide="address.isWatchOnlyLegacyAddress", ng-click="showPrivKey(address)")
 
 h2.clickable(translate="ARCHIVED_ADDRESSES", ng-click="display.archived = !display.archived")
 
