@@ -62,7 +62,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
         wallet.updateAccounts()
       
       wallet.settings.secondPassword = wallet.my.getDoubleEncryption()
-      wallet.settings.pbkdf2 = wallet.my.getPbkdf2Iterations()    
+      wallet.settings.pbkdf2 = wallet.store.getPbkdf2Iterations()    
             
       # Get email address, etc
       # console.log "Getting info..."
@@ -360,7 +360,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
     
     success = () ->
-      wallet.settings.pbkdf2 = wallet.my.getPbkdf2Iterations()
+      wallet.settings.pbkdf2 = wallet.store.getPbkdf2Iterations()
       successCallback()
       
     error = (error) ->

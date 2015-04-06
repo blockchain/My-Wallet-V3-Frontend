@@ -10,6 +10,12 @@ walletStoreServices.factory "MyWalletStore", () ->
   legacyAddresses = {}
   
   {
+    getPbkdf2Iterations: () ->
+      10
+      
+    setPbkdf2Iterations: () ->
+      return
+    
     getLanguages: () ->
       {de: "Deutch", en: "English", nl: "Nederlands"}
     
