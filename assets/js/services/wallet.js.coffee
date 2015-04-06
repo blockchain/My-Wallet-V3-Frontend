@@ -620,7 +620,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
     ), 100)  
             
   wallet.getDefaultAccountIndex = () ->
-    wallet.my.getDefaultAccountIndex()
+    wallet.store.getDefaultAccountIndex()
     
   wallet.getReceivingAddressForAccount = (idx) ->
     wallet.my.getReceivingAddressForAccount(idx)
@@ -769,7 +769,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
     numberOfOldAccounts = wallet.accounts.length
     numberOfNewAccounts = wallet.my.getAccountsCount()
         
-    defaultAccountIndex = wallet.my.getDefaultAccountIndex()
+    defaultAccountIndex = wallet.store.getDefaultAccountIndex()
         
     if numberOfNewAccounts > 0
       for i in [0..(numberOfNewAccounts - 1)]
@@ -1279,7 +1279,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
     return wallet.store.getTotalBalanceForActiveLegacyAddresses()
     
   wallet.setDefaultAccount = (account) ->
-    wallet.my.setDefaultAccountIndex(account.index)
+    wallet.store.setDefaultAccountIndex(account.index)
     wallet.updateAccounts()
     
   wallet.isValidBIP39Mnemonic = (mnemonic) ->
