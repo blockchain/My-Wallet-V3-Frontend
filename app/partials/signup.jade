@@ -49,7 +49,7 @@
           .form-group(ng-class="{'has-error': errors.emailVerificationCode}")
             label.col-sm-4.control-label(translate="EMAIL_VERIFICATION_CODE")
             .col-sm-6
-              input.form-control(type="text",ng-model="fields.emailVerificationCode",autofocus,ng-blur="validate()")
+              input.form-control(type="text",ng-model="fields.emailVerificationCode",autofocus,ng-blur="validate()",on-enter="nextStep()")
               span.help-block 
                 p {{ errors.emailVerificationCode }}
           .why
