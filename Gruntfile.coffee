@@ -220,7 +220,7 @@ module.exports = (grunt) ->
            
       skip_check_dependencies:
         command: () ->
-          'cp package.json build && cp bower.json build'
+          'cp -r node_modules build && cp -r app/bower_components build'
         
       npm_install_dependencies:
         command: () ->
@@ -279,8 +279,6 @@ module.exports = (grunt) ->
     "compile"
     "html2js"
     "shell:skip_check_dependencies"
-    "shell:npm_install_dependencies"
-    "shell:bower_install_dependencies"
     "concat:application_dependencies"
     "uglify:application_dependencies"
     "concat:application"
