@@ -871,12 +871,12 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
         if candidate.hash == tx.hash
           match = true
           if !candidate.note?
-            candidate.note = wallet.my.getNote(tx.hash) # In case a note was just set
+            candidate.note = wallet.store.getNote(tx.hash) # In case a note was just set
           break
     
       if !match
         transaction = angular.copy(tx)
-        transaction.note = wallet.my.getNote(transaction.hash)
+        transaction.note = wallet.store.getNote(transaction.hash)
           
         wallet.transactions.push transaction 
     wallet.status.didLoadTransactions = true
@@ -894,7 +894,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
 
      if !match
        transaction = angular.copy(tx)
-       transaction.note = wallet.my.getNote(transaction.hash)
+       transaction.note = wallet.store.getNote(transaction.hash)
     
        wallet.transactions.push transaction   
           
@@ -1013,10 +1013,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
   # Notes and tags #
   ##################
   wallet.setNote = (tx, text) ->
-    wallet.my.setNote(tx.hash, text)
+    wallet.store.setNote(tx.hash, text)
     
   wallet.deleteNote = (tx) ->
-    wallet.my.deleteNote(tx.hash)
+    wallet.store.deleteNote(tx.hash)
 
   ############
   # Settings #
