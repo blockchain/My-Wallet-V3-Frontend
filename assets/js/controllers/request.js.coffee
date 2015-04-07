@@ -4,6 +4,7 @@
   $scope.destinations = []
   $scope.receiveAddress = null
   $scope.status = Wallet.status
+  $scope.settings = Wallet.settings
   
   $scope.currencies = angular.copy(Wallet.currencies)
   
@@ -18,7 +19,8 @@
   for account in $scope.accounts
     item = angular.copy(account)
     item.type = "Accounts" 
-    
+    item.multiAccount = if item.index == 0 then false else true
+
     unless item.index? && !item.active
       $scope.destinations.push item
     
@@ -29,6 +31,7 @@
     if address.active
       item = angular.copy(address)
       item.type = "Imported Addresses"
+      item.multiAccount = false
       $scope.destinations.push item
       
   $scope.alerts = Wallet.alerts
@@ -47,6 +50,12 @@
   #################################
   #           Private             #
   #################################
+  
+  $scope.getFilter = (search) ->
+    filter =
+      label: search
+    filter.multiAccount = false if not $scope.settings.multiAccount
+    return filter
   
   $scope.$watchCollection "destinations", () ->
     idx = Wallet.getDefaultAccountIndex()

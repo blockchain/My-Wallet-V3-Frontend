@@ -88,6 +88,7 @@ modules = [
   "templates/verify-email.jade"
   "templates/resend-email-confirmation.jade"
   "templates/adverts.jade"
+  "templates/multi-account.jade"
   # 'angular-ladda'
 ]
 

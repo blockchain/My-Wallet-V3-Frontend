@@ -3,6 +3,7 @@
   $scope.accounts = Wallet.accounts
   $scope.addressBook = Wallet.addressBook
   $scope.status = Wallet.status
+  $scope.settings = Wallet.settings
   
   $scope.origins = []
   $scope.destinations = []  
@@ -23,6 +24,7 @@
         for account in $scope.accounts
           item = angular.copy(account)
           item.type = "Accounts" 
+          item.multiAccount = if item.index == 0 then false else true
           unless item.index? && !item.active
             $scope.origins.push item 
             $scope.destinations.push angular.copy(item) # https://github.com/angular-ui/ui-select/issues/656
@@ -31,6 +33,7 @@
           if address.active
             item = angular.copy(address)
             item.type = "Imported Addresses"
+            item.multiAccount = false
             $scope.destinations.push item
             unless address.isWatchOnlyLegacyAddress
               $scope.origins.push angular.copy(item)
@@ -115,6 +118,12 @@
   }
     
   $scope.setMethod("BTC")
+  
+  $scope.getFilter = (search) ->
+    filter =
+      label: search
+    filter.multiAccount = false if not $scope.settings.multiAccount
+    return filter
   
   $scope.hasZeroBalance = (origin) ->
     return origin.balance == 0.0

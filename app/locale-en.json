@@ -334,5 +334,8 @@
   "MINIMUM_IE_10" : "Internet Explorer {{ version }} is not supported. Please install Internet Explorer 10 or newer or a more secure browser like Chrome or Safari.",
   "WARN_IE_10_NO_WEB_WORKERS" : "Upgrade to Internet Explorer 11 or newer for improved performance.",
   "WARN_FIREFOX_NO_WEB_WORKERS" : "Use Chrome of Safari for improved performance.",
+  "MULTI_ACCOUNT" : "Multiple Accounts",
+  "MULTI_ACCOUNT_DESC" : "Enabling this setting will allow your wallet to have multiple accounts.",
+  "DEVELOPER" : "Developer",
   "" : ""
 }

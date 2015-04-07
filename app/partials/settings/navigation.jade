@@ -5,7 +5,7 @@ ul.nav.nav-stacked.nav-pills
     a(ui-sref="wallet.common.settings.wallet", translate="WALLET_SETTINGS")
   li.item(ui-sref-active="active") 
     a(ui-sref="wallet.common.settings.addresses", translate="MY_ADDRESSES")
-  li.item(ui-sref-active="active") 
+  li.item(ui-sref-active="active",ng-show="settings.multiAccount")
     a(ui-sref="wallet.common.settings.accounts", translate="MY_ACCOUNTS")
   li.nav-divider
   li.item(ui-sref-active="active") 

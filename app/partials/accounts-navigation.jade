@@ -1,6 +1,6 @@
 .left-navigation(ng-show="status.isLoggedIn")
   div
-    div.active-accounts.side-box  
+    div.active-accounts.side-box(ng-show="settings.multiAccount")
       table.left-header.accounts
         tr
           td.header 
@@ -26,7 +26,7 @@
               span(ng-show="account.balance != null")
                   fiat-or-btc(btc="account.balance")                
     
-    div.legacy-addresses.side-box  
+    div.legacy-addresses.side-box(ng-show="settings.multiAccount")  
             
       div(ng-show="numberOfActiveLegacyAddresses() > 0")
         table.left-header.accounts

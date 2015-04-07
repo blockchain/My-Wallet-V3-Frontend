@@ -63,6 +63,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       
       wallet.settings.secondPassword = wallet.my.getDoubleEncryption()
       wallet.settings.pbkdf2 = wallet.store.getPbkdf2Iterations()    
+      wallet.settings.multiAccount = wallet.my.getMultiAccountSetting()
             
       # Get email address, etc
       # console.log "Getting info..."
@@ -1021,6 +1022,10 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
   ############
   # Settings #
   ############
+  
+  wallet.setMultiAccount = (flag) ->
+    wallet.my.setMultiAccountSetting(flag)
+    wallet.settings.multiAccount = flag
   
   wallet.getLanguages = () ->
     # Get and sort languages:
