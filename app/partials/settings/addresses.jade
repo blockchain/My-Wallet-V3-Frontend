@@ -2,7 +2,7 @@ p.headliner.hidden-xs(translate="MY_ADDRESSES_EXPLAIN_TEMP")
 
 div(ng-show="hdAddresses.length == 0")
   img(src="img/spinner.gif")
-div(ng-show="hdAddresses.length > 0")
+div(ng-show="settings.multiAccount && hdAddresses.length > 0")
   .row.form-ctrl
     .col-xs-12.col-lg-6
       input.filter(type="text", ng-model="searchText").form-control

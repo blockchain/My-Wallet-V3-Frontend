@@ -3,6 +3,8 @@
   $scope.accounts = Wallet.accounts
   $scope.display = {archived: false, account_dropdown_open: false}  
   
+  $scope.settings = Wallet.settings
+  
   $scope.hdAddresses = Wallet.hdAddresses
   
   $scope.addAddressForAccount = (account) ->
