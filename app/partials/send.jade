@@ -31,14 +31,14 @@
             ui-select(ng-model="transaction.destination", ng-blur="visualValidate('to')")
               ui-select-match {{ $select.selected.label }}
               ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search)" refresh-delay="0") 
-                span(ng-bind-html="destination.label | highlight: $select.search")
+                span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
             span.input-group-btn
               button#qr.btn.btn-default(type="button", ng-click="cameraOn()")
                 img(src="img/qr.png", alt="QR")
           ui-select(ng-model="transaction.destination", ng-blur="visualValidate('to')", ng-if="!browserWithCamera")
             ui-select-match {{ $select.selected.label }}
             ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search)" refresh-delay="0") 
-              span(ng-bind-html="destination.label | highlight: $select.search")
+              span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
           span.help-block {{ errors.to }}
       .form-group(ng-class="{'has-error': errors.amount}")
         label.col-sm-3.control-label(translate="AMOUNT")

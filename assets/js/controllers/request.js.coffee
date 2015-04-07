@@ -37,7 +37,9 @@
   $scope.alerts = Wallet.alerts
     
 
-  
+  $scope.determineLabel = (origin) ->
+    label = origin.label || origin.address
+    return label
       
   $scope.closeAlert = (alert) ->
     Wallet.closeAlert(alert)
