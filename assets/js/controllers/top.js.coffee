@@ -24,6 +24,9 @@
 
     )
   
+  $scope.getTotal = (index) ->
+    add = if not $scope.settings.multiAccount then $scope.total('imported') else 0
+    return $scope.total(index) + add
   #################################
   #           Private             #
   #################################
