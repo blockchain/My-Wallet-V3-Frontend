@@ -336,5 +336,6 @@
   "WARN_FIREFOX_NO_WEB_WORKERS" : "Use Chrome of Safari for improved performance.",
   "MULTI_ACCOUNT" : "Multiple Accounts",
   "MULTI_ACCOUNT_DESC" : "Enabling this setting will allow your wallet to have multiple accounts.",
+  "DEVELOPER" : "Developer",
   "" : ""
 }

@@ -3,6 +3,7 @@
   $scope.processToggleRememberTwoFactor = null
   $scope.errors = 
     ipWhitelist: null
+  $scope.display = {dev: false}
     
   $scope.validatePbkdf2 = (candidate) ->
     n = parseInt(candidate)

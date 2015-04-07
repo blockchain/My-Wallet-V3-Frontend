@@ -64,3 +64,15 @@ form.form-horizontal(role="form",name="form",novalidate)
       h2.status.incomplete.hidden-xs.hidden-sm(ng-hide="settings.restrictToWhitelist", translate="DISABLED")
       h2.status.complete.hidden-xs.hidden-sm(ng-show="settings.restrictToWhitelist", translate="ENABLED")
       ip-whitelist-restrict
+
+h2.clickable(translate="DEVELOPER", ng-click="display.dev = !display.dev")
+
+form.form-horizontal(role="form", name="form2", ng-show="display.dev", novalidate)
+  .form-group
+    .col-sm-12.col-md-6
+      label(translate="MULTI_ACCOUNT")
+      span.label.label-warning.hidden-sm.hidden-xs(translate="DISABLED", ng-show="!settings.multiAccount")
+      span.label.label-success.hidden-sm.hidden-xs(translate="ENABLED", ng-show="settings.multiAccount")
+      p.explain.hidden-xs(translate="MULTI_ACCOUNT_DESC")
+    .col-sm-12.col-md-6.setting-result
+      multi-account
