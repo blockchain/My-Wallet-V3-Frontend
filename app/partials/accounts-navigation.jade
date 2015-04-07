@@ -1,6 +1,6 @@
 .left-navigation(ng-show="status.isLoggedIn")
   div
-    div.active-accounts.side-box  
+    div.active-accounts.side-box(ng-show="settings.multiAccount")
       table.left-header.accounts
         tr
           td.header 
