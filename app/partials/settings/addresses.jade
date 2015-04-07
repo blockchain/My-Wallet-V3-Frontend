@@ -2,7 +2,7 @@ p.headliner.hidden-xs(translate="MY_ADDRESSES_EXPLAIN_TEMP")
 
 div(ng-show="hdAddresses.length == 0")
   img(src="img/spinner.gif")
-div(ng-show="settings.multiAccount && hdAddresses.length > 0")
+div(ng-show="hdAddresses.length > 0")
   .row.form-ctrl
     .col-xs-12.col-lg-6
       input.filter(type="text", ng-model="searchText").form-control
@@ -20,7 +20,7 @@ div(ng-show="settings.multiAccount && hdAddresses.length > 0")
         tr
           th(translate="ADDRESS")
           th.hidden-xs(translate="LABEL")
-          th.hidden-xs(translate="ACCOUNT")
+          th.hidden-xs(translate="ACCOUNT" ng-show="settings.multiAccount")
           //- th(translate="REQUESTED_AMOUNT")
           //- th
           //- th  
@@ -29,7 +29,7 @@ div(ng-show="settings.multiAccount && hdAddresses.length > 0")
           td
             a(ng-bind-html="address.address | highlight:searchText", ui-sref="wallet.common.settings.address({address: address.address})")
           td.hidden-xs(ng-bind-html="address.label | highlight:searchText")
-          td.hidden-xs(ng-bind-html="address.accountLabel | highlight:searchText")
+          td.hidden-xs(ng-bind-html="address.accountLabel | highlight:searchText" ng-show="settings.multiAccount")
 
           //- td.amount
           //-   fiat(btc="request.amount", ng-show="request.amount > 0")
