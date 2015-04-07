@@ -2,13 +2,12 @@ p.headliner.hidden-xs(translate="MY_DETAILS_EXPLAIN")
 form.form-horizontal(role="form",name="form",novalidate)  
   .form-group
     .col-sm-12.col-md-6
-      label Multiple accounts
+      label(translate="MULTI_ACCOUNT")
       span.label.label-warning.hidden-sm.hidden-xs(translate="DISABLED", ng-show="!settings.multiAccount")
       span.label.label-success.hidden-sm.hidden-xs(translate="ENABLED", ng-show="settings.multiAccount")
-      p.explain.hidden-xs Allow multiple accounts?  
+      p.explain.hidden-xs(translate="MULTI_ACCOUNT_DESC")
     .col-sm-12.col-md-6.setting-result
-      button(ng-show="!settings.multiAccount", ng-click="changeMultiAccountSetting()") Enable
-      button(ng-show="settings.multiAccount", ng-click="changeMultiAccountSetting()") Disable
+      multi-account
   .form-group
     .col-sm-12.col-md-6
       label(translate="EMAIL_ADDRESS")
