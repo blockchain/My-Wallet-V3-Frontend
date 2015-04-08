@@ -61,7 +61,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       if wallet.store.didUpgradeToHd()
         wallet.updateAccounts()
       
-      wallet.settings.secondPassword = wallet.my.getDoubleEncryption()
+      wallet.settings.secondPassword = wallet.store.getDoubleEncryption()
       wallet.settings.pbkdf2 = wallet.store.getPbkdf2Iterations()    
       wallet.settings.multiAccount = wallet.my.getMultiAccountSetting()
             
