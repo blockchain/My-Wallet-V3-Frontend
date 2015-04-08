@@ -34,7 +34,7 @@
 
   $scope.$watch 'accessAllowed', (access) ->
     if access && $scope.needsSecondPassword
-      $scope.privKey = Wallet.my.decryptSecretWithSecondPassword($scope.privKey, $scope.secondPasswordInput, Wallet.my.getSharedKey())
+      $scope.privKey = Wallet.my.decryptSecretWithSecondPassword($scope.privKey, $scope.secondPasswordInput, Wallet.store.getSharedKey())
 
   $scope.$watch 'incorrectSecondPassword', (value) ->
     if value
