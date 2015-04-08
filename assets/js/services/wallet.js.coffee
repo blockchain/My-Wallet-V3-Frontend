@@ -1031,6 +1031,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
   wallet.setLogoutTime = (s, success, error) ->
     wallet.my.setLogoutTime(s * 60000)
     wallet.settings.logoutTimeSeconds = s
+    wallet.my.backupWalletDelayed()
     success()
 
   wallet.getLanguages = () ->
