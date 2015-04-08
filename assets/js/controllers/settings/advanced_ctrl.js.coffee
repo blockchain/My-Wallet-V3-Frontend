@@ -46,6 +46,13 @@
       
     Wallet.setPbkdf2Iterations(n, success, error)
     
+  $scope.changeLogoutTime = (s, success, errorCallback) ->
+    error = () ->
+      Wallet.displayError("Failed to update auto logout time")
+      errorCallback()
+
+    Wallet.setLogoutTime(s, success, error)
+
   $scope.changeIpWhitelist = (list, success, errorCallback) ->
     error = () ->
       Wallet.displayError("Failed to update IP whitelist")
