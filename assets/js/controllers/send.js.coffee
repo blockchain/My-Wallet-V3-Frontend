@@ -42,6 +42,13 @@
         $scope.transaction.destination =  $scope.destinations.slice(-1)[0]
         $scope.originsLoaded = true
         
+        $scope.errors.to = null
+        if paymentRequest.address?
+          $scope.applyPaymentRequest(paymentRequest)      
+        else if paymentRequest.toAccount?
+          $scope.transaction.destination = paymentRequest.toAccount
+          $scope.transaction.from = paymentRequest.fromAddress
+        
     
   # for address, label of $scope.addressBook
   #     item = {address: address, label: label}
@@ -67,18 +74,6 @@
         
   $scope.BTCtoFiat = (amount, currency) ->
     Wallet.BTCtoFiat(amount, currency)
-  
-  $scope.setMethod = (method) ->
-    $scope.method = method
-    
-    $scope.errors.to = null
-    if paymentRequest.address?
-      $scope.transaction.destination = paymentRequest.address
-    else if paymentRequest.toAccount?
-      $scope.transaction.destination = paymentRequest.toAccount
-      $scope.transaction.from = paymentRequest.fromAddress
-      
-    return
       
   $scope.determineLabel = (origin) ->
     label = origin.label || origin.address
@@ -121,9 +116,7 @@
     fee: 0
     note: ""
   }
-    
-  $scope.setMethod("BTC")
-  
+      
   $scope.getFilter = (search) ->
     filter =
       label: search
@@ -137,25 +130,32 @@
     # This never gets called...
     $translate("CAMERA_PERMISSION_DENIED").then (translation) ->
       Wallet.displayWarning(translation)
-    
-  $scope.processURLfromQR = (url) ->
-    paymentRequest = Wallet.parsePaymentRequest(url)
-    if paymentRequest.isValid
+  
+  $scope.applyPaymentRequest = (paymentRequest) ->
       $scope.transaction.destination = $scope.destinations.slice(-1)[0]
       $scope.transaction.destination.address = paymentRequest.address
       $scope.transaction.destination.label = paymentRequest.address  
       if paymentRequest.amount  
         $scope.transaction.amount = paymentRequest.amount 
-        $scope.transaction.currency = "BTC"
-        $scope.$digest()
-      
+        $scope.transaction.currency = "BTC"    
       
       $scope.cameraOff()
       $scope.visualValidate()
       $scope.transactionIsValid = $scope.validate()
       
       $scope.updateToLabel()
-      
+  
+  $scope.setMethod = (method) ->
+    $scope.method = method
+    return
+    
+  $scope.setMethod("BTC")
+    
+  $scope.processURLfromQR = (url) ->
+    paymentRequest = Wallet.parsePaymentRequest(url)
+    
+    if paymentRequest.isValid
+      $scope.applyPaymentRequest(paymentRequest)
     else
       $translate("QR_CODE_NOT_BITCOIN").then (translation) ->
         Wallet.displayWarning(translation)
@@ -165,7 +165,7 @@
       $timeout((->
         $scope.lookForQR()
       ), 2000)
-     
+         
   $scope.cameraOn = () ->
     $scope.cameraRequested = true
     

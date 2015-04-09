@@ -322,6 +322,7 @@ describe "SendCtrl", ->
       scope.transaction.currency = "EUR"
       scope.$digest()
       scope.processURLfromQR("bitcoin://abcdefgh?amount=0.001")
+      scope.$digest()
       expect(scope.transaction.currency).toBe("BTC")
       expect(scope.transaction.currencySelected.code).toBe("BTC")
       
