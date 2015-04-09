@@ -87,11 +87,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   
   myWallet = {}
   accounts = []
-    
-  notes = {}
-    
-  defaultAccountIndex = 0
-  
+          
   feePolicy = 0
 
   monitorFunc = undefined  # New system
@@ -238,14 +234,6 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.setLabelForAccount = (idx, label) ->
     accounts[idx].label = label
-        
-  myWallet.getNote = (hash) ->
-    notes[hash]
-    
-  myWallet.setNote = (hash, text) ->
-    notes[hash] = text
-    myWallet.sync()
-    return
     
   # Amount in Satoshi
   myWallet.sendBitcoinsForAccount = (fromAccountIndex,toAddress, amount, fee, note, success, error) ->
@@ -458,13 +446,6 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.getFiatAtTime = (time, value, currencyCode, successCallback, errorCallback) ->
     successCallback(3.2)
     
-  myWallet.getDefaultAccountIndex = () ->
-    return defaultAccountIndex
-    
-  myWallet.setDefaultAccountIndex = (idx) ->
-    defaultAccountIndex = idx
-    return
-    
   ############################################################
   # Simulate spontanuous behavior when using mock in browser #
   ############################################################
@@ -489,7 +470,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
         return 
         
       cookie[myWallet.uid].accounts = accounts
-      cookie[myWallet.uid].notes = notes
+      cookie[myWallet.uid].notes = MyWalletStore.getNotes()
       cookie[myWallet.uid].legacyAddresses = MyWalletStore.getAllLegacyAddresses()
       
             
@@ -501,7 +482,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.refresh = () ->
     accounts = angular.copy(localStorageService.get("mockWallets")[this.uid].accounts)
     MyWalletStore.setTransactions(angular.copy(localStorageService.get("mockWallets")[this.uid].transactions))
-    notes = angular.copy(localStorageService.get("mockWallets")[this.uid].notes)
+    MyWalletStore.setNotes(angular.copy(localStorageService.get("mockWallets")[this.uid].notes))
     for address, data of localStorageService.get("mockWallets")[this.uid].legacyAddresses
       MyWalletStore.addLegacyAddress(address, data.privateKey, data.balance, data.label, data.archived)
         
@@ -520,10 +501,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.setFeePolicy = (policy) ->
     feePolicy = policy
     return
-    
-  myWallet.getDoubleEncryption = () ->
-    return false
-    
+        
   myWallet.setSecondPassword = (password, success, error) ->
     success()
     
@@ -538,6 +516,12 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.resendTwoFactorSms = (uid, success, error) ->
     success()
+    
+  myWallet.getMultiAccountSetting = () ->
+    true
+    
+  myWallet.getLogoutTime = () ->
+    10
     
   #####################################
   # Tell the mock to behave different # 

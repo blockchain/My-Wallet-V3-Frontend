@@ -1,11 +1,15 @@
 walletStoreServices = angular.module("myWalletStoreServices", [])
 walletStoreServices.factory "MyWalletStore", () ->
   transactions = [];
+  notes = {}
+  
+  defaultAccountIndex = 0
   
   addressBook = { # The same for everyone
       "17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq": "John"
       "1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq": "Alice"
   }
+  
   
   legacyAddresses = {}
   
@@ -86,7 +90,32 @@ walletStoreServices.factory "MyWalletStore", () ->
     unArchiveLegacyAddr: (address) ->
       return    
       
+    getDefaultAccountIndex: () ->
+      return defaultAccountIndex
+    
+    setDefaultAccountIndex: (idx) ->
+      defaultAccountIndex = idx
+      return
+      
+    getDoubleEncryption: () ->
+      return false
+      
+    getNote: (hash) ->
+      notes[hash]
+    
+    setNote: (hash, text) ->
+      notes[hash] = text
+      # Circular reference:
+      # MyWallet.sync()
+      return
+      
     # Mock only:
+    
+    setNotes: (theNotes) ->
+      notes = theNotes
+    
+    getNotes: () ->
+      notes
       
     setTransactions: (theTransactions) ->
       transactions = theTransactions
