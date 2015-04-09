@@ -292,7 +292,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
   wallet.logout = () ->
     wallet.didLogoutByChoice = true
     $window.name = "blockchain"
-    wallet.my.logout() # broadcast "logging_out"
+    wallet.my.logout(true)
+    return
     
   wallet.makePairingCode = (successCallback, errorCallback) ->
     success = (code) ->
