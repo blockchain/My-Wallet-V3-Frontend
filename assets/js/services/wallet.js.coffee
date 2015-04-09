@@ -714,7 +714,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
 
     
   wallet.isSynchronizedWithServer = () ->
-    return wallet.my.isSynchronizedWithServer()
+    return wallet.store.isSynchronizedWithServer()
 
   window.onbeforeunload = (event) -> 
     if !wallet.isSynchronizedWithServer()
