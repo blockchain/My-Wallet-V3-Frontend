@@ -4,6 +4,6 @@ walletApp.directive('watchForInactivity', (Wallet) ->
     link: () ->
       document.onmousedown = () ->
         if Wallet.store.getGuid()
-          Wallet.my.setLogoutTime(Wallet.my.getLogoutTime())
+          Wallet.store.setLogoutTime(Wallet.store.getLogoutTime())
   }
 )

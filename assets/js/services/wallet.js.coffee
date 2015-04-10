@@ -63,8 +63,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       
       wallet.settings.secondPassword = wallet.store.getDoubleEncryption()
       wallet.settings.pbkdf2 = wallet.store.getPbkdf2Iterations()    
-      wallet.settings.multiAccount = wallet.my.getMultiAccountSetting()
-      wallet.settings.logoutTimeSeconds = wallet.my.getLogoutTime() / 60000
+      wallet.settings.multiAccount = wallet.store.getMultiAccountSetting()
+      wallet.settings.logoutTimeSeconds = wallet.store.getLogoutTime() / 60000
             
       # Get email address, etc
       # console.log "Getting info..."
@@ -98,7 +98,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
         
         wallet.settings.displayCurrency = wallet.settings.currency
       
-        wallet.settings.feePolicy = wallet.my.getFeePolicy()
+        wallet.settings.feePolicy = wallet.store.getFeePolicy()
       
         wallet.settings.blockTOR = !!result.block_tor_ips
       
@@ -311,14 +311,14 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
     wallet.status.didConfirmRecoveryPhrase = true
 
   wallet.isCorrectMainPassword = (candidate) ->
-    wallet.my.isCorrectMainPassword(candidate)
+    wallet.store.isCorrectMainPassword(candidate)
     
   wallet.isCorrectSecondPassword = (candidate) ->
     return true
     # wallet.my.isCorrectSecondPassword(candidate)
     
   wallet.changePassword = (newPassword) ->
-    wallet.my.changePassword(newPassword, (()-> 
+    wallet.store.changePassword(newPassword, (()-> 
       $translate("CHANGE_PASSWORD_SUCCESS").then (translation) ->
         wallet.displaySuccess(translation)
     ),() ->
@@ -1026,11 +1026,11 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
   ############
   
   wallet.setMultiAccount = (flag) ->
-    wallet.my.setMultiAccountSetting(flag)
+    wallet.store.setMultiAccountSetting(flag)
     wallet.settings.multiAccount = flag
   
   wallet.setLogoutTime = (s, success, error) ->
-    wallet.my.setLogoutTime(s * 60000)
+    wallet.store.setLogoutTime(s * 60000)
     wallet.settings.logoutTimeSeconds = s
     wallet.my.backupWalletDelayed()
     success()
@@ -1085,7 +1085,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
     )
     
   wallet.setFeePolicy = (policy) ->
-    wallet.my.setFeePolicy(policy)
+    wallet.store.setFeePolicy(policy)
     wallet.settings.feePolicy = policy  
   
   wallet.fetchExchangeRate = () ->
