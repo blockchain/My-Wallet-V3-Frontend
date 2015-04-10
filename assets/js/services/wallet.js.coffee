@@ -1000,7 +1000,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
     else
       # console.log event
 
-  wallet.my.addEventListener((event, data) -> wallet.monitor(event, data))
+  wallet.store.addEventListener((event, data) -> wallet.monitor(event, data))
 
   message = $cookieStore.get("alert-warning")
   if message != undefined && message != null
