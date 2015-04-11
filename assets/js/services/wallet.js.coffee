@@ -19,7 +19,7 @@ playSound = (id) ->
 ##################################
 
 walletServices = angular.module("walletServices", [])
-walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) -> 
+walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletSpender, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) -> 
   wallet = {
     goal: {}, 
     status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadTransactions: false, didLoadBalances: false, legacyAddressBalancesLoaded: false, didConfirmRecoveryPhrase: false}, 
@@ -39,6 +39,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
   wallet.my = MyWallet
   wallet.settings_api = MyBlockchainSettings
   wallet.store = MyWalletStore
+  wallet.spender = MyWalletSpender
   wallet.api = MyBlockchainApi
   wallet.transactions = []
   wallet.languages = []
@@ -542,28 +543,31 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
     {  
       send: (from, destination, amount, currency) ->
         amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
+        
+        spender = wallet.spender(null, success, error, {}, needsSecondPassword)
     
         if from.address?
-          if destination.index?
-            console.log "Send from legacy to account"
-            console.log from.address
-            console.log destination.index
-            wallet.my.sendFromLegacyAddressToAccount(from.address, destination.index, amount, 10000, null, success, error, {},needsSecondPassword)
-          else if destination.address?
-            wallet.my.sendFromLegacyAddressToAddress(from.address, destination.address, amount, 10000, null, success, error, {},needsSecondPassword)
+          spender.prepareFromAddress(from.address, amount, 10000, (origin)->
+            if destination.index?
+              origin.toAccount(destination.index)
+            else if destination.address?
+              origin.toAddress(destination.address)
+          )
         else if from.index?
-          if destination.index?
-            wallet.my.sendToAccount(from.index, destination.index, amount, 10000, null, success, error, {}, needsSecondPassword)
-          else if destination.address?
-            wallet.my.sendBitcoinsForAccount(from.index, destination.address, amount, 10000, null, success, error, {}, needsSecondPassword)
+          spender.prepareFromAccount(from.index, amount, 10000, (origin)->
+            if destination.index?
+              origin.toAccount(destination.index)
+            else if destination.address?
+              origin.toAddress(destination.address)
+          )
     
-      sweepLegacyAddressToAccount: (fromAddress, toAccountIndex) ->
-        wallet.my.sweepLegacyAddressToAccount(fromAddress.address, toAccountIndex, success, error, {}, needsSecondPassword)
-        wallet.updateLegacyAddresses() # Probably too early  
+      # sweepLegacyAddressToAccount: (fromAddress, toAccountIndex) ->
+      #   wallet.my.sweepLegacyAddressToAccount(fromAddress.address, toAccountIndex, success, error, {}, needsSecondPassword)
+      #   wallet.updateLegacyAddresses() # Probably too early
       
-      sendToEmail: (fromAccountIndex, email, amount, currency) ->
-        amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
-        wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, success, error, {}, needsSecondPassword) 
+      # sendToEmail: (fromAccountIndex, email, amount, currency) ->
+      #   amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
+      #   wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, success, error, {}, needsSecondPassword)
     }
         
   wallet.redeemFromEmailOrMobile = (account, claim, successCallback, error) ->

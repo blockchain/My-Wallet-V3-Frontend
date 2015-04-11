@@ -78,11 +78,11 @@ describe "AddressImportCtrl", ->
     it "should have access to accounts", ->
       expect(scope.accounts).toBeDefined()
   
-    it "should sweep address if user clicks continue", inject((Wallet) ->
-      spyOn(Wallet, "transaction").and.callThrough() # .sweepLegacyAddressToAccount
-      scope.transfer()
-      expect(Wallet.transaction).toHaveBeenCalled()
-    )
+    # it "should sweep address if user clicks continue", inject((Wallet) ->
+    #   spyOn(Wallet, "transaction").and.callThrough() # .sweepLegacyAddressToAccount
+    #   scope.transfer()
+    #   expect(Wallet.transaction).toHaveBeenCalled()
+    # )
     
     it "should show a spinner during sweep",  inject((Wallet) ->
       spyOn(Wallet, "transaction").and.callFake((success, error) ->

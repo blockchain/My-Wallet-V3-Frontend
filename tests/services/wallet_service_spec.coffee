@@ -178,15 +178,15 @@ describe "walletServices", () ->
     beforeEach ->
       Wallet.login("test", "test")  
       
-    it "can be checked", inject((Wallet, MyWallet) ->
-      expect(MyWallet.isCorrectMainPassword("test")).toBe(true)
+    it "can be checked", inject((Wallet, MyWallet, MyWalletStore) ->
+      expect(MyWalletStore.isCorrectMainPassword("test")).toBe(true)
     )
       
-    it "can be changed", inject((Wallet, MyWallet) ->
-      spyOn(MyWallet, "changePassword").and.callThrough()
+    it "can be changed", inject((Wallet, MyWallet, MyWalletStore) ->
+      spyOn(MyWalletStore, "changePassword").and.callThrough()
       Wallet.changePassword("newpassword")
-      expect(MyWallet.changePassword).toHaveBeenCalled()
-      expect(MyWallet.isCorrectMainPassword("newpassword")).toBe(true)
+      expect(MyWalletStore.changePassword).toHaveBeenCalled()
+      expect(MyWalletStore.isCorrectMainPassword("newpassword")).toBe(true)
     )
     
     return
