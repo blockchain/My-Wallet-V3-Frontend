@@ -156,9 +156,25 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       wallet.applyIfNeeded()
       
     $window.root = "https://blockchain.info/"   
-    wallet.my.fetchWalletJson(uid, null, null, password, two_factor_code, didLogin, needsTwoFactorCode, wrongTwoFactorCode, authorizationRequired, loginError ) 
+    #                         , shared_key, resend_code, inputedPassword, twoFACode,       success,  needs_two_factor_code, wrong_two_factor_code, authorization_required, other_error, fetch_success, decrypt_success, build_hd_success
+    wallet.my.fetchWalletJson(
+      uid,      
+      null,       # shared_key
+      null,       # resend_code
+      password,        
+      two_factor_code, 
+      didLogin, 
+      needsTwoFactorCode,    
+      wrongTwoFactorCode,    
+      authorizationRequired,  
+      loginError,  # other_error
+      () -> return,     # fetch_success
+      () -> return,     # decrypt_success
+      () -> return      # build_hd_success
+    )
     
     wallet.fetchExchangeRate()
+    return
   
   wallet.resendTwoFactorSms = (uid, successCallback, errorCallback) ->
     success = () ->
