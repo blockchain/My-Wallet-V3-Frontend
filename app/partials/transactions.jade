@@ -12,24 +12,13 @@
         transaction-description(transaction="transaction", ng-if="canDisplayDescriptions")
     .amount.col-xs-6.col-sm-3
       span 
-        amount(transaction="transaction")
-        
-        
-//  .row.transaction(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")
-//    .hidden-xs.col-sm-3.col-md-2(ng-click="showTransaction(transaction)")
-//      date {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
-//    .col-xs-12.col-sm-5.col-md-4.description(ng-click="showTransaction(transaction)")
-//      transaction-description(transaction="transaction", ng-if="canDisplayDescriptions")
-//    .hidden-xs.hidden-sm.col-md-4
-//      transaction-note(transaction="transaction")
-//    .col-xs-12.col-sm-4.col-md-2
-//      amount(transaction="transaction")
-//  .row
-//    .col-xs-5
-//    .col-xs-2
-//      p(align="center", ng-hide= "loading || allTransactionsLoaded")
-//        a(in-view="nextPage()", ng-click="nextPage()") Load more...
-//  .row(ng-show="loading") 
-//     .col-xs-5
-//     .col-xs-2
-//       img(src="img/spinner.gif")
+        amount(transaction="transaction")        
+  .row
+    .col-xs-5
+    .col-xs-2
+      p(align="center", ng-hide= "loading || allTransactionsLoaded")
+        a(in-view="nextPage()", ng-click="nextPage()") Load more...
+  .row(ng-show="loading")
+     .col-xs-5
+     .col-xs-2
+       img(src="img/spinner.gif")
