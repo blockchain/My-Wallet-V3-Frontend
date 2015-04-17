@@ -1,4 +1,5 @@
 walletApp.config ($stateProvider, $urlRouterProvider) ->
+
   $urlRouterProvider.otherwise("/");
   
   $urlRouterProvider.otherwise(($injector, $location) ->
@@ -216,7 +217,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
   )
 
   $stateProvider.state("wallet.common.open",
-    url: "/open/:uri"
+    url: "/open/{uri:.*}"
 
     views: {
       top: {
