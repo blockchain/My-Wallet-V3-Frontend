@@ -51,9 +51,9 @@
     "repo" : "pernas/angular-password-entropy"
   },
   "international-phone-number" : {
-    "version": "0.0.2",
-    "commits" : ["89b27e591c6a3de3f70db9c07c188de9943886aa"],
-    "repo" : "sjors/international-phone-number"
+    "version": "0.0.5",
+    "commits" : ["9c41abeffcc7537b5847c1052cb1c7ae16d7fc56"],
+    "repo" : "mareczek/international-phone-number"
   },
   "browserdetection" : {
     "version": "0.3.3",
