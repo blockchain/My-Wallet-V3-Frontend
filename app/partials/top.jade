@@ -2,8 +2,9 @@
   .col-xs-12.col-sm-7.col-md-6.balance
     .content
       h1 
-        img(ng-show="getTotal(accountIndex) == null" src="img/spinner.gif")
         fiat(btc="getTotal(accountIndex)")
+      p(ng-show="getTotal(accountIndex) == null")
+        img(src="img/spinner.gif").spinner  
       p {{ getTotal(accountIndex) | btc }}
   .col-xs-12.col-sm-5.col-md-6.text-right
     button.left-arrow.white(ng-click="request()", translate="REQUEST") 
