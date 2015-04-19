@@ -13,6 +13,7 @@ form.form-horizontal(role="form",name="form",novalidate)
     .row
       .col-xs-12
         pre.recovery(ng-show="showRecoveryPhrase", ng-cut="doNotCopyPaste($event)" ng-copy="doNotCopyPaste($event)") {{ recoveryPhrase }}
+        pre.recovery(ng-show="showRecoveryPhrase && recoveryPassphrase != ''", ng-cut="doNotCopyPaste($event)" ng-copy="doNotCopyPaste($event)") {{ recoveryPassphrase }}
         
   .form-group
     .col-sm-12.col-md-6
@@ -21,7 +22,16 @@ form.form-horizontal(role="form",name="form",novalidate)
     .col-sm-12.col-md-6.setting-result
       p
         a.settingaction(ng-click="importRecoveryPhrase()",translate="IMPORT_RECOVERY_PHRASE", ng-hide="editMnemonic")
-      input.form-control(type="text",ng-model="mnemonic", ng-focus="errors.mnemonic = null", ng-disabled="importing", ng-show="editMnemonic", autofocus)
+      div(ng-show="editMnemonic")
+        label
+          span(translate="MNEMONIC")
+          |:
+        input.form-control(type="text",ng-model="mnemonic", ng-focus="errors.mnemonic = null", ng-disabled="importing", autofocus)
+        label
+          span(translate="OPTIONAL_PASSPHRASE")
+          |:
+        input.form-control(type="text",ng-model="passphrase", ng-disabled="importing", ng-show="editMnemonic")
+      
       img(ng-show="importing" src="img/spinner.gif")     
       a.btn.btn-primary(ng-click="performImport()", translate="IMPORT", ng-show="editMnemonic && !importing", ng-disabled="!isValid")       
 

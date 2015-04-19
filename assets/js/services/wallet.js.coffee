@@ -614,8 +614,8 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       cancelCallback = () ->
       $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
     
-    success = (mnemonic) ->
-      successCallback(mnemonic)
+    success = (mnemonic, passphrase) ->
+      successCallback(mnemonic, passphrase)
     
     error = () ->
       wallet.my.displayError("Unable to show mnemonic.")
@@ -623,7 +623,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
   
     wallet.my.getHDWalletPassphraseString(needsSecondPasswordCallback, success, error)
     
-  wallet.importWithMnemonic = (mnemonic, successCallback, errorCallback) ->
+  wallet.importWithMnemonic = (mnemonic, passphrase, successCallback, errorCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->
       cancelCallback = () ->
       $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
@@ -639,7 +639,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       successCallback()
           
     $timeout((->
-      wallet.my.recoverMyWalletHDWalletFromMnemonic(mnemonic, null, needsSecondPasswordCallback, success, errorCallback)    
+      wallet.my.recoverMyWalletHDWalletFromMnemonic(mnemonic, passphrase, needsSecondPasswordCallback, success, errorCallback)    
     ), 100)  
             
   wallet.getDefaultAccountIndex = () ->

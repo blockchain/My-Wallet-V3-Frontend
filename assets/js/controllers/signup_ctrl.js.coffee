@@ -17,7 +17,7 @@
    
   currency_guess =  $filter("getByProperty")("code", "USD", Wallet.currencies)
 
-  $scope.fields = {email: "", password: "", confirmation: "", language: language_guess, currency: currency_guess, mnemonic: "", emailVerificationCode: ""}
+  $scope.fields = {email: "", password: "", confirmation: "", language: language_guess, currency: currency_guess, mnemonic: "", bip39phrase: "", emailVerificationCode: ""}
   $scope.errors = {emailVerificationCode: null}
 
   $scope.didLoad = () ->    
@@ -41,7 +41,7 @@
   
     $scope.working = true
   
-    Wallet.importWithMnemonic($scope.fields.mnemonic, success, error)      
+    Wallet.importWithMnemonic($scope.fields.mnemonic, $scope.fields.bip39phrase, success, error)      
     
     return
     

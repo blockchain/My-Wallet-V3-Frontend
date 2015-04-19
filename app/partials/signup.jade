@@ -40,10 +40,12 @@
         div(ng-switch-when="3")
           .form-group
             // (ng-class="{'has-error': errors.email, 'has-success': success.email}")
-            label.col-sm-4.control-label(translate="MNEMONIC")
+            label.col-sm-3.control-label(translate="MNEMONIC")
             .col-sm-6
               input.form-control(type="text",ng-model="fields.mnemonic",autofocus, ng-focus="errors.mnemonic = null", ng-disabled="importing")
               span.help-block {{ errors.mnemomic }}
+            .col-sm-3
+              input.form-control(type="text",ng-model="fields.bip39phrase", ng-disabled="importing")            
               
         div(ng-switch-when="4")
           .form-group(ng-class="{'has-error': errors.emailVerificationCode}")

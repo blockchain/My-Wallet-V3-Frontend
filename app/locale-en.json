@@ -253,6 +253,7 @@
   "IMPORT_WALLET" : "Import Wallet",
   "SKIP_IMPORT" : "Skip Import",
   "MNEMONIC" : "Mnemonic",
+  "OPTIONAL_PASSPHRASE" : "Optional passphrase",
   "IMPORT" : "Import",
   "SUBMIT" : "Submit",
   "WALLET_SECOND_PASSWORD" : "Second Wallet Password",

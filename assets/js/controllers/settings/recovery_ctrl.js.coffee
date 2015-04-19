@@ -1,17 +1,20 @@
 @RecoveryCtrl = ($scope, Wallet, $state, $translate) ->
   $scope.recoveryPhrase = null
+  $scope.recoveryPassphrase = null
   $scope.showRecoveryPhrase = false
   $scope.editMnemonic = false
   $scope.status = Wallet.status
   
   $scope.toggleRecoveryPhrase = () ->
     if !$scope.showRecoveryPhrase
-      success = (mnemonic) ->
+      success = (mnemonic, passphrase) ->
         $scope.recoveryPhrase = mnemonic
+        $scope.recoveryPassphrase = passphrase
         $scope.showRecoveryPhrase = true
       Wallet.getMnemonic(success)
     else
       $scope.recoveryPhrase = null
+      $scope.recoveryPassphrase = null
       $scope.showRecoveryPhrase = false    
     
   $scope.importRecoveryPhrase = () ->
@@ -32,7 +35,7 @@
       
     if confirm("You will lose all your bitcoins! Are you sure?")    
       $scope.importing = true
-      Wallet.importWithMnemonic($scope.mnemonic, success, error)      
+      Wallet.importWithMnemonic($scope.mnemonic, $scope.passphrase, success, error)      
       
     return
     
