@@ -1206,6 +1206,19 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       console.log "Failed"
       wallet.applyIfNeeded()
     )
+    
+  wallet.setTwoFactorYubiKey = (code) ->
+    wallet.settings_api.setTwoFactorYubiKey(
+      code
+      ()->
+        wallet.settings.needs2FA = true
+        wallet.settings.twoFactorMethod = 3
+        wallet.applyIfNeeded()
+      (error)->
+        console.log(error)
+        wallet.displayError(error)
+        wallet.applyIfNeeded()
+    )
   
   wallet.setTwoFactorGoogleAuthenticator = () ->
     wallet.settings_api.setTwoFactorGoogleAuthenticator((secret)->

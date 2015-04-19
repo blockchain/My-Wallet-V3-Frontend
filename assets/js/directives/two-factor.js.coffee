@@ -6,9 +6,9 @@ walletApp.directive('twoFactor', ($translate, Wallet) ->
     }
     templateUrl: 'templates/two-factor.jade'
     link: (scope, elem, attrs) ->
-      scope.fields = {authenticatorCode: ""}
+      scope.fields = {authenticatorCode: "", yubiKeyCode: ""}
       scope.settings = Wallet.settings
-      scope.edit = {twoFactor: false} 
+      scope.edit = {twoFactor: false, yubiKey: false} 
       scope.user = Wallet.user
       
       scope.disableSecondFactor = () ->
@@ -27,8 +27,14 @@ walletApp.directive('twoFactor', ($translate, Wallet) ->
         if scope.user.isEmailVerified
           Wallet.setTwoFactorEmail()
           scope.edit.twoFactor = false
+          
+      scope.setTwoFactorYubiKey = () ->
+        if scope.fields.yubiKeyCode != ""
+          Wallet.setTwoFactorYubiKey(scope.fields.yubiKeyCode)
+          scope.edit.twoFactor = false
       
       scope.setTwoFactorGoogleAuthenticator = () ->
+        scope.edit.yubiKey = false
         Wallet.setTwoFactorGoogleAuthenticator()
     
       scope.confirmTwoFactorGoogleAuthenticator = () ->

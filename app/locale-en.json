@@ -341,5 +341,6 @@
   "MULTI_ACCOUNT_DESC" : "Enabling this setting will allow your wallet to have multiple accounts.",
   "DEVELOPER" : "Developer",
   "VALUE_AT_TX_TIME" : "Value at time of send",
+  "YUBIKEY_INPUT_EXPLAIN" : "To pair your key with your account select the text box below and press the green LED button on your yubikey device.",
   "" : ""
 }

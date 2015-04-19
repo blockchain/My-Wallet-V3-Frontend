@@ -9,7 +9,7 @@ div
       a.settingaction(ng-click="edit.twoFactor = !edit.twoFactor", translate="CONFIGURE_2FA", ng-hide="settings.needs2FA")
       a.settingaction(ng-click="disableSecondFactor()", translate="DISABLE", ng-show="settings.needs2FA")
   div(ng-show="edit.twoFactor") 
-    ul.settings-list(ng-hide="settings.googleAuthenticatorSecret")
+    ul.settings-list(ng-hide="settings.googleAuthenticatorSecret || edit.yubiKey")
       li 
         a(ng-click="setTwoFactorSMS()", ng-show="user.isMobileVerified") Enable SMS
         span(ng-show="!user.isMobileVerified") Enable SMS (Please verify your mobile first)
@@ -18,8 +18,14 @@ div
         span(ng-show="!user.isEmailVerified") Enable email (Please verify your email first)
       li
         a(ng-click="setTwoFactorGoogleAuthenticator()") Enable Google Authenticator
+      li
+        a(ng-click="edit.yubiKey = 1; ") Enable Yubikey
     div(ng-if="settings.googleAuthenticatorSecret")
       qr(text="settings.googleAuthenticatorSecret", size=172)
       input.form-control(type="text",ng-model="fields.authenticatorCode")
-    button.btn.btn-info.btn-small(ng-click="edit.twoFactor = false; settings.googleAuthenticatorSecret = null", translate="CANCEL")
+    div(ng-show="edit.yubiKey")
+      p.explain(translate="YUBIKEY_INPUT_EXPLAIN")
+      input.form-control(type="text",ng-model="fields.yubiKeyCode")
+    button.btn.btn-info.btn-small(ng-click="edit.twoFactor = false; settings.googleAuthenticatorSecret = null; edit.yubiKey = false", translate="CANCEL")
     button.btn.btn-info.btn-primary(ng-click="confirmTwoFactorGoogleAuthenticator()", translate="ENABLE",ng-show="settings.googleAuthenticatorSecret", ng-disabled="fields.authenticatorCode.length != 6")
+    button.btn.btn-info.btn-primary(ng-click="setTwoFactorYubiKey()", translate="ENABLE",ng-show="edit.yubiKey", ng-disabled="fields.yubiKeyCode.length == 0")
