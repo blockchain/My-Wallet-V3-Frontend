@@ -68,6 +68,9 @@ describe "SettingsAdvancedCtrl", ->
 
       it "should return true, no errors", ->
         expect(scope.validateIpWhitelist('1.2.3.4')).toBe(true)
+        
+      it "should allow an empty list", ->
+        expect(scope.validateIpWhitelist('')).toBe(true)
 
     it "can change IP whitelist", inject((Wallet) ->
       spyOn(Wallet, "setIPWhitelist")

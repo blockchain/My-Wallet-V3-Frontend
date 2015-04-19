@@ -12,8 +12,10 @@
     
   $scope.validateIpWhitelist = (candidates) ->
     $scope.errors.ipWhitelist = null
+      
+    return false unless candidates? 
+    return true if candidates == ""
     
-    return false unless candidates? && candidates != ""
     if candidates.length > 255
       $translate("MAX_CHARACTERS", {max: 255}).then (translation) ->
         $scope.errors.ipWhitelist = translation
