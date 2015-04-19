@@ -33,9 +33,10 @@
       //- h3 Tags
       //- | ... +
     .col-xs-12.col-sm-6
-      h4 Value at time of send
-      span.value-at-tx
-        fiat(btc="transaction.result" abs date="transaction.txTime")
+      span(ng-show="settings.currency.code == 'USD'")
+        h4(translate="VALUE_AT_TX_TIME")
+        span.value-at-tx
+          fiat(btc="transaction.result" abs date="transaction.txTime")
       h4 Value now
       span.value-now 
         fiat(btc="transaction.result" abs)
