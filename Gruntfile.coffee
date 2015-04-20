@@ -3,9 +3,11 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON("package.json")
     clean: {
-      build: ["build"]
+      build: {
+        src: ["build/**/*"]
+      }
       dist: {
-        src: ["dist/*.js"]
+        src: ["dist/**/*"]
       }
       shrinkwrap: 
         src: ["npm-shrinkwrap.json"]
@@ -152,6 +154,7 @@ module.exports = (grunt) ->
           {src: ["locale-*.json", "beep.wav", "favicon.ico"], dest: "dist/", cwd: "app", expand: true}
           {src: ["index.html"], dest: "dist/"}
           {src: ["img/*"], dest: "dist/", cwd: "app", expand: true}
+          {src: ["locales/*"], dest: "dist/", cwd: "app", expand: true}
           {src: ["fonts/*"], dest: "dist/", cwd: "app/bower_components/bootstrap-css-only", expand: true}
         ]
       angular_css:
@@ -174,7 +177,7 @@ module.exports = (grunt) ->
     },
     
     rename:
-      assets:
+      assets: # Renames all images, fonts, etc and updates application.min.js and application.css with their new names.
         options:
           skipIfHashed: true
           startSymbol: "{{"
@@ -185,7 +188,40 @@ module.exports = (grunt) ->
           callback: (befores, afters) ->
             publicdir = require("fs").realpathSync("dist")
             path = require("path")
-            index = grunt.file.read("dist/index.html")
+            for referring_file_path in ["dist/application.min.js", "dist/application.css"]
+              contents = grunt.file.read(referring_file_path)
+              before = undefined
+              after = undefined
+              i = 0
+
+              while i < befores.length
+                before = path.relative(publicdir, befores[i])
+                after = path.relative(publicdir, afters[i])
+                contents = contents.split(before).join(after)
+                i++
+              grunt.file.write referring_file_path, contents
+            return
+    
+        files: 
+          src: [
+            'dist/img/*'
+            'dist/fonts/*'
+            'dist/locales/*'
+            'dist/beep.wav'
+          ]
+    
+      html: # Renames application.min.js and application.css and updates index.html
+        options:
+          skipIfHashed: true
+          startSymbol: "{{"
+          endSymbol: "}}"
+          algorithm: "sha1"
+          format: "{{basename}}-{{hash}}.{{ext}}"
+
+          callback: (befores, afters) ->
+            publicdir = require("fs").realpathSync("dist")
+            path = require("path")
+            contents = grunt.file.read("dist/index.html")
             before = undefined
             after = undefined
             i = 0
@@ -193,16 +229,16 @@ module.exports = (grunt) ->
             while i < befores.length
               before = path.relative(publicdir, befores[i])
               after = path.relative(publicdir, afters[i])
-              index = index.replace(before, after)
+              contents = contents.split(before).join(after)
               i++
-            grunt.file.write "dist/index.html", index
+            grunt.file.write "dist/index.html", contents
             return
-    
+  
         files: 
           src: [
             'dist/application.min.js'
-            # 'dist/jquery.min.js' # Included in my-wallet.min.js
             'dist/application.css'
+            'dist/favicon.ico'
           ]
         
     shell: 
@@ -271,7 +307,8 @@ module.exports = (grunt) ->
     "sass"
     "concat_css"
     "copy:main"
-    "rename"
+    "rename:assets"
+    "rename:html"
   ]
   
   grunt.registerTask "dist_unsafe", [
@@ -285,7 +322,8 @@ module.exports = (grunt) ->
     "sass"
     "concat_css"
     "copy:main"
-    "rename"
+    "rename:assets"
+    "rename:html"
   ]
   
   grunt.registerTask "dist_debug", [
@@ -299,7 +337,8 @@ module.exports = (grunt) ->
     "sass"
     "concat_css"
     "copy:main"
-    "rename"
+    "rename:assets"
+    "rename:html"
   ]
   
   grunt.registerTask "staging", [

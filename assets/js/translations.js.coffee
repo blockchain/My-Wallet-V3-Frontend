@@ -1,18 +1,16 @@
-# If necessary, the translations can be stored in seperate JSON files and be loaded dynamically:
-# http://technpol.wordpress.com/2013/11/02/adding-translation-using-angular-translate-to-an-angularjs-app/
-
 walletApp.config [
   "$translateProvider"
   ($translateProvider) ->
-    $translateProvider.registerAvailableLanguageKeys(["en", "nl", "ar"]) 
+    $translateProvider.registerAvailableLanguageKeys(["en", "nl"]) 
     
     $translateProvider.useStaticFilesLoader {
-        prefix: 'locale-',
-        suffix: '.json'
+        # Grunt will parse the lookup table and replace the file names with easier to cache versions.
+        lookup:
+          en: "locales/en.json"
+          nl: "locales/nl.json"          
     }
 
     $translateProvider.determinePreferredLanguage()
-    # $translateProvider.preferredLanguage("en")
     
     $translateProvider.fallbackLanguage('en')
     

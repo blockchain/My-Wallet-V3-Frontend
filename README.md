@@ -124,4 +124,4 @@ Deploy to staging (assuming your host file has an entry server11):
 
     grunt staging
 
-index.html should be cached using If-Modified-Since or etag. The assets which contain a hash of their content should be cached forever. The remaining assets (e.g. beep.wav and images): unsure.
+index.html should be cached using If-Modified-Since or etag. All other files contain a hash of their content and should be cached forever.
