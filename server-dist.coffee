@@ -18,7 +18,7 @@ app.configure ->
 
   app.set "views", __dirname + "/dist"
   app.use app.router  
-  app.engine "html", require("ejs").renderFile
+  app.engine "html", require(__dirname + "/dist/beta/node_modules/ejs").renderFile
   app.use express.errorHandler(
     dumpExceptions: true
     showStack: true
