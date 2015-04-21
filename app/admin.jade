@@ -1,0 +1,30 @@
+doctype
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title Beta Admin
+    link(rel='stylesheet', href='bower_components/bootstrap-css-only/css/bootstrap.css')
+    script(src='bower_components/jquery/dist/jquery.js')
+
+  body
+    div.container
+      h1 HD Beta Admin Interface
+      .form-group
+        label New Key
+        form#key-form.form-inline
+          input#name-input.form-control(type="text" placeholder="Name")
+          input#email-input.form-control(type="text" placeholder="Email")
+          input.btn.btn-default(type="submit" value="Assign")
+      .form-group
+        label Sort By
+        .form-inline
+          input.btn.btn-default.sort(type="button" value="Name: A-Z" data-sort="name ASC")
+          input.btn.btn-default.sort(type="button" value="Email: A-Z" data-sort="email ASC")
+          input.btn.btn-default.sort(type="button" value="Last Seen: Least Recent" data-sort="lastseen ASC")
+        .form-inline
+          input.btn.btn-default.sort(type="button" value="Name: Z-A" data-sort="name DESC")
+          input.btn.btn-default.sort(type="button" value="Email: Z-A" data-sort="email DESC")
+          input.btn.btn-default.sort(type="button" value="Last Seen: Most Recent" data-sort="lastseen DESC")
+      .table-div
+        table#key-table.table.table-hover.table-condensed
+    script(src='beta/betaAdminClient.js')

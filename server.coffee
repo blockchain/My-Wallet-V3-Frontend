@@ -55,10 +55,43 @@ app.configure ->
   app.use require("connect-assets")()
   return
 
+# <== beta changes start ==>
+# beta key public
+
+betaKeyDB = require('./app/beta/betaAdminServer')
+
 app.get "/", (request, response) ->
-  response.render "index.jade"
+	if not request.query.key
+	  response.render "beta.jade"
+	  return
+	else
+		betaKeyDB.doesKeyExist request.query.key, (verified) ->
+	  	if verified == true
+	  		response.render "index.jade"
+	  	else
+	  		response.end "could not authorize beta key"
+
+# beta key admin
+
+app.get "/betaadmin", (request, response) ->
+  response.render "admin.jade"
   return
 
+app.get "/betaadmin/:method", (request, response) ->
+  if request.params.method == 'get-all-keys'
+    betaKeyDB.getAllKeys (err, rows) ->
+      response.end JSON.stringify(rows)
+  else if request.params.method == 'get-sorted-keys'
+    betaKeyDB.getSortedKeys request.query.sort, (err, rows) ->
+      response.end JSON.stringify(rows)
+  else if request.params.method == 'assign-key'
+    betaKeyDB.assignNewKey request.query.name, request.query.email, (key) ->
+      response.end JSON.stringify({key:key})
+  else if request.params.method == 'delete-key'
+    betaKeyDB.deleteKeyById request.query.id, (err) ->
+      response.end JSON.stringify({error:err})
+
+# <== beta changes end ==>
 
 server.listen port, ->
   console.log "Listening on " + port

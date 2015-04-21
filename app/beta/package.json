@@ -1,0 +1,9 @@
+{
+  "name": "hd-wallet-beta-admin",
+  "version": "0.1.0",
+  "author": "Justin Tormey",
+  "dependencies": {
+    "guid": "0.0.12",
+    "sqlite3": "^3.0.5"
+  }
+}
