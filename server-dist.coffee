@@ -19,6 +19,7 @@ app.configure ->
   app.set "views", __dirname + "/dist"
   app.use app.router  
   app.engine "html", require(__dirname + "/dist/beta/node_modules/ejs").renderFile
+  app.use(express.static(__dirname + '/dist'));
   app.use express.errorHandler(
     dumpExceptions: true
     showStack: true
@@ -40,10 +41,6 @@ app.get "/", (request, response) ->
         response.render "index.html"
       else
         response.end "could not authorize beta key"
-
-app.get "/beta/betaAdminClient.js", (request, response) ->
-  response.send fs.readFileSync(__dirname + '/dist/beta/betaAdminClient.js')
-  return
 
 # beta key admin
 
