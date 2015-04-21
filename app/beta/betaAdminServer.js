@@ -1,7 +1,7 @@
 var Guid = require('guid');
 var sqlite3 = require('sqlite3').verbose();
 
-var db = new sqlite3.Database(__dirname + '/dist/beta/betakeys.MDF');
+var db = new sqlite3.Database('/home/sjors/betakeys.MDF');
 
 function generateKey() {
 	return Guid.raw().split('-')[0];
