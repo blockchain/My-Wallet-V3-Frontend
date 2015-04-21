@@ -122,7 +122,21 @@ module.exports = (grunt) ->
           }]
         }
       }
-        
+    
+    jade: {
+      compile: {
+        options: {
+          data: {
+            debug: false
+          }
+        },
+        files: {
+          "admin.html": ["app/admin.jade"],
+          "beta.html": ["app/beta.jade"]
+        }
+      }
+    }
+
     concat_css: {
       all: {
         src: [
@@ -153,6 +167,8 @@ module.exports = (grunt) ->
           # {src: ["jquery.min.js"],     dest: "dist/", cwd: "app/bower_components/jquery/dist", expand: true }
           {src: ["locale-*.json", "beep.wav", "favicon.ico"], dest: "dist/", cwd: "app", expand: true}
           {src: ["index.html"], dest: "dist/"}
+          {src: ["admin.html"], dest: "dist/"}
+          {src: ["beta.html"], dest: "dist/"}
           {src: ["img/*"], dest: "dist/", cwd: "app", expand: true}
           {src: ["locales/*"], dest: "dist/", cwd: "app", expand: true}
           {src: ["fonts/*"], dest: "dist/", cwd: "app/bower_components/bootstrap-css-only", expand: true}
@@ -223,6 +239,8 @@ module.exports = (grunt) ->
             publicdir = require("fs").realpathSync("dist")
             path = require("path")
             contents = grunt.file.read("dist/index.html")
+            contentsAdmin = grunt.file.read("dist/admin.html")
+            contentsBeta = grunt.file.read("dist/beta.html")
             before = undefined
             after = undefined
             i = 0
@@ -231,8 +249,12 @@ module.exports = (grunt) ->
               before = path.relative(publicdir, befores[i])
               after = path.relative(publicdir, afters[i])
               contents = contents.split(before).join(after)
+              contentsAdmin = contentsAdmin.split(before).join(after)
+              contentsBeta = contentsBeta.split(before).join(after)
               i++
             grunt.file.write "dist/index.html", contents
+            grunt.file.write "dist/admin.html", contentsAdmin
+            grunt.file.write "dist/beta.html", contentsBeta
             return
   
         files: 
@@ -265,7 +287,7 @@ module.exports = (grunt) ->
 
       npm_install_beta_dependencies:
         command: () ->
-           'cd app/beta && npm install'
+           'cd dist/beta && npm install'
            
       bower_install_dependencies:
         command: () ->
@@ -281,6 +303,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-contrib-sass')
+  grunt.loadNpmTasks('grunt-contrib-jade')
   grunt.loadNpmTasks('grunt-concat-css')
   grunt.loadNpmTasks('grunt-html2js')
   grunt.loadNpmTasks('grunt-contrib-watch')
@@ -305,7 +328,6 @@ module.exports = (grunt) ->
     "shell:check_dependencies"
     "clean:shrinkwrap"
     "shell:npm_install_dependencies"
-    "shell:npm_install_beta_dependencies"
     "shell:bower_install_dependencies"
     "concat:application_dependencies"
     "uglify:application_dependencies"
@@ -313,6 +335,7 @@ module.exports = (grunt) ->
     "sass"
     "concat_css"
     "copy:main"
+    "shell:npm_install_beta_dependencies"
     "rename:assets"
     "rename:html"
   ]
