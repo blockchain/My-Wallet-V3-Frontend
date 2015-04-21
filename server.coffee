@@ -58,7 +58,7 @@ app.configure ->
 # <== beta changes start ==>
 # beta key public
 
-betaKeyDB = require('./app/beta/betaAdminServer')
+betaKeyDB = require(__dirname + '/app/beta/betaAdminServer')
 
 app.get "/", (request, response) ->
 	if not request.query.key

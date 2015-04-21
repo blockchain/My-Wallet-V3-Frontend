@@ -156,6 +156,7 @@ module.exports = (grunt) ->
           {src: ["img/*"], dest: "dist/", cwd: "app", expand: true}
           {src: ["locales/*"], dest: "dist/", cwd: "app", expand: true}
           {src: ["fonts/*"], dest: "dist/", cwd: "app/bower_components/bootstrap-css-only", expand: true}
+          {src: ["beta/*"], dest: "dist/", cwd: "app", expand: true}
         ]
       angular_css:
         files: [
@@ -261,6 +262,10 @@ module.exports = (grunt) ->
       npm_install_dependencies:
         command: () ->
            'cd build && npm install'
+
+      npm_install_beta_dependencies:
+        command: () ->
+           'cd app/beta && npm install'
            
       bower_install_dependencies:
         command: () ->
@@ -300,6 +305,7 @@ module.exports = (grunt) ->
     "shell:check_dependencies"
     "clean:shrinkwrap"
     "shell:npm_install_dependencies"
+    "shell:npm_install_beta_dependencies"
     "shell:bower_install_dependencies"
     "concat:application_dependencies"
     "uglify:application_dependencies"
