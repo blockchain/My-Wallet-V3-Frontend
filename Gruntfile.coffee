@@ -285,10 +285,6 @@ module.exports = (grunt) ->
         command: () ->
            'cd build && npm install'
 
-      npm_install:
-        command: () ->
-           'npm install'
-
       npm_install_beta_dependencies:
         command: () ->
            'cd dist/beta && npm install'
@@ -332,7 +328,6 @@ module.exports = (grunt) ->
     "shell:check_dependencies"
     "clean:shrinkwrap"
     "shell:npm_install_dependencies"
-    "shell:npm_install"
     "shell:bower_install_dependencies"
     "concat:application_dependencies"
     "uglify:application_dependencies"
