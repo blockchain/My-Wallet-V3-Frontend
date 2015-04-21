@@ -24,6 +24,12 @@ npm install
 grunt build
 ```
 
+Run npm install in the app/beta directory:
+
+```sh
+cd app/beta && npm install
+```
+
 Grunt compiles the view templates and copies some CSS. Keep it running:
 
     grunt
