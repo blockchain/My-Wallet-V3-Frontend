@@ -76,6 +76,13 @@ module.exports = (grunt) ->
         
         dest: "dist/application.min.js"
         
+      beta:
+        src: [
+          "build/bower_components/jquery/dist/jquery.js"
+          "app/beta/betaAdminClient.js"
+        ]
+        dest: "dist/beta.js"
+        
       application_debug: 
         src: [
           'build/mywallet.js'
@@ -139,7 +146,7 @@ module.exports = (grunt) ->
     }
 
     concat_css: {
-      all: {
+      app: {
         src: [
           "build/bower_components/bootstrap-css-only/css/bootstrap.css"
           "build/bower_components/angular-ui-select/dist/select.min.css"
@@ -148,6 +155,16 @@ module.exports = (grunt) ->
           "build/css/**/*.css"
         ],
         dest: "dist/application.css"
+      },
+      beta: {
+        src: [
+          "build/bower_components/bootstrap-css-only/css/bootstrap.css"
+          "build/bower_components/angular/angular-csp.css"
+          "build/css/app.css"
+          "build/css/login.css"
+          "build/css/navigation.css"
+        ],
+        dest: "dist/beta.css"
       },
     },
     
@@ -173,12 +190,19 @@ module.exports = (grunt) ->
           {src: ["img/*"], dest: "dist/", cwd: "app", expand: true}
           {src: ["locales/*"], dest: "dist/", cwd: "app", expand: true}
           {src: ["fonts/*"], dest: "dist/", cwd: "app/bower_components/bootstrap-css-only", expand: true}
-          {src: ["beta/*"], dest: "dist/", cwd: "app", expand: true}
         ]
+        
       angular_css:
         files: [
           {src: ["angular-csp.css"], dest: "assets/css", cwd: "app/bower_components/angular", expand: true }
         ]
+        
+      beta:
+        files: [
+          {src: ["beta/betaAdminServer.js"], dest: "dist/", cwd: "app", expand: true}
+          {src: ["beta/package.json"], dest: "dist/", cwd: "app", expand: true}
+        ]
+        
                 
     watch: {
       scripts: {
@@ -195,7 +219,7 @@ module.exports = (grunt) ->
     },
     
     rename:
-      assets: # Renames all images, fonts, etc and updates application.min.js and application.css with their new names.
+      assets: # Renames all images, fonts, etc and updates application.min.js, application.css and beta.html with their new names.
         options:
           skipIfHashed: true
           startSymbol: "{{"
@@ -206,7 +230,7 @@ module.exports = (grunt) ->
           callback: (befores, afters) ->
             publicdir = require("fs").realpathSync("dist")
             path = require("path")
-            for referring_file_path in ["dist/application.min.js", "dist/application.css"]
+            for referring_file_path in ["dist/application.min.js", "dist/application.css", "dist/beta.html"]
               contents = grunt.file.read(referring_file_path)
               before = undefined
               after = undefined
@@ -228,7 +252,7 @@ module.exports = (grunt) ->
             'dist/beep.wav'
           ]
     
-      html: # Renames application.min.js and application.css and updates index.html
+      html: # Renames application/beta.min.js/css and updates index/beta/admin.html
         options:
           skipIfHashed: true
           startSymbol: "{{"
@@ -239,40 +263,38 @@ module.exports = (grunt) ->
           callback: (befores, afters) ->
             publicdir = require("fs").realpathSync("dist")
             path = require("path")
-            contents = grunt.file.read("dist/index.html")
-            contentsAdmin = grunt.file.read("dist/admin.html")
-            contentsBeta = grunt.file.read("dist/beta.html")
-            before = undefined
-            after = undefined
-            i = 0
+            
+            for referring_file_path in ["dist/index.html", "dist/admin.html", "dist/beta.html"]
+              contents = grunt.file.read(referring_file_path)
+              before = undefined
+              after = undefined
+              i = 0
 
-            while i < befores.length
-              before = path.relative(publicdir, befores[i])
-              after = path.relative(publicdir, afters[i])
-              contents = contents.split(before).join(after)
-              contentsAdmin = contentsAdmin.split(before).join(after)
-              contentsBeta = contentsBeta.split(before).join(after)
-              i++
-            grunt.file.write "dist/index.html", contents
-            grunt.file.write "dist/admin.html", contentsAdmin
-            grunt.file.write "dist/beta.html", contentsBeta
-            return
+              while i < befores.length
+                before = path.relative(publicdir, befores[i])
+                after = path.relative(publicdir, afters[i])
+                contents = contents.split(before).join(after)
+
+                i++
+              grunt.file.write referring_file_path, contents
   
         files: 
           src: [
             'dist/application.min.js'
             'dist/application.css'
+            'dist/beta.js'
+            'dist/beta.css'
             'dist/favicon.ico'
           ]
         
     shell: 
       staging: 
         command: () -> 
-           'scp -Cr dist/* server11:dist'
+           'rsync -r dist/ server12:dist'
            
-      staging_experimental: 
-        command: () -> 
-           'scp -Cr dist/* server11:dist-experimental'
+      staging_experimental:
+        command: () ->
+           'scp -Cr dist/* server12:dist-experimental'
            
       check_dependencies: 
         command: () -> 
@@ -285,7 +307,7 @@ module.exports = (grunt) ->
       npm_install_dependencies:
         command: () ->
            'cd build && npm install'
-
+           
       npm_install_beta_dependencies:
         command: () ->
            'cd dist/beta && npm install'
@@ -319,6 +341,12 @@ module.exports = (grunt) ->
     "copy:angular_css"
     "watch"
   ]
+  
+  grunt.registerTask "dist_beta", [
+    "concat:beta"
+    "concat_css:beta"    
+    "shell:npm_install_beta_dependencies"
+  ]
     
   # Default task(s).
   grunt.registerTask "dist", [
@@ -334,9 +362,10 @@ module.exports = (grunt) ->
     "uglify:application_dependencies"
     "concat:application"
     "sass"
-    "concat_css"
+    "concat_css:app"
     "copy:main"
-    "shell:npm_install_beta_dependencies"
+    "copy:beta"
+    "dist_beta" # We don't check beta dependencies against a whitelist 
     "rename:assets"
     "rename:html"
   ]
@@ -350,9 +379,10 @@ module.exports = (grunt) ->
     "uglify:application_dependencies"
     "concat:application"
     "sass"
-    "concat_css"
+    "concat_css:app"
     "copy:main"
-    "shell:npm_install_beta_dependencies"
+    "copy:beta"
+    "dist_beta"
     "rename:assets"
     "rename:html"
   ]
@@ -366,8 +396,10 @@ module.exports = (grunt) ->
     "concat:mywallet"
     "concat:application_debug"
     "sass"
-    "concat_css"
+    "concat_css:app"
     "copy:main"
+    "copy:beta"
+    "dist_beta"
     "rename:assets"
     "rename:html"
   ]

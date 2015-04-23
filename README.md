@@ -143,3 +143,5 @@ Deploy to staging (assuming your host file has an entry server12):
     grunt staging
 
 index.html should be cached using If-Modified-Since or etag. All other files contain a hash of their content and should be cached forever.
+
+Copy `server.coffee` anytime you change it.
