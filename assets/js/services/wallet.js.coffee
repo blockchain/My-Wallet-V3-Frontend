@@ -248,7 +248,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       errorCallback()
     
   wallet.addAddressForAccount = (account, successCallback, errorCallback) ->        
-    labeledReceivingAddresses = wallet.my.getLabeledReceivingAddressesForAccount(account.index)
+    labeledReceivingAddresses = [] # wallet.my.getLabeledReceivingAddressesForAccount(account.index)
             
     # Add a new address rather than reuse the first one if no labeled addresses exist. This requires
     # labeling the first address as well.
@@ -812,7 +812,7 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
   wallet.updateHDaddresses = () ->
     for account in wallet.accounts
       continue if !account.active
-      labeledAddresses = wallet.my.getLabeledReceivingAddressesForAccount(account.index)
+      labeledAddresses = [] # wallet.my.getLabeledReceivingAddressesForAccount(account.index)
       for address in labeledAddresses
         hdAddress = $filter("getByProperty")("address", address.address, wallet.hdAddresses)
         if hdAddress == null
