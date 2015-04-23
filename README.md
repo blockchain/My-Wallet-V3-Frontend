@@ -24,12 +24,6 @@ npm install
 grunt build
 ```
 
-Run npm install in the app/beta directory:
-
-```sh
-cd app/beta && npm install
-```
-
 Grunt compiles the view templates and copies some CSS. Keep it running:
 
     grunt
@@ -42,6 +36,26 @@ npm start
 Visit [local.blockchain.com:8080](http://local.blockchain.com:8080/).  Do not use `localhost:8080`. You will need to modify your "hosts" file (`/etc/hosts` on OSX and most UNIX systems) because this is no longer registered at the DNS level for application security reasons. Add this line to `/etc/hosts`:
 
     127.0.0.1   local.blockchain.com
+
+## Use Beta Invites Locally
+
+To enable the beta invite functionality, create a file called `.env` and add the following to it:
+`INVITE=1`
+`BETA_DATABASE_PATH=app/beta/betakeys.MDF`
+
+Run npm install in the app/beta directory:
+
+```sh
+cd app/beta && npm install
+```
+
+Copy the database file template (`betakeys.MDF` is ignored by git):
+```sh
+cp betakeys-template.MDF betakeys.MDF  
+```
+
+You should see a number of example users at:
+http://local.blockchain.com:8080/betaadmin
 
 ## Usage
 
@@ -122,11 +136,9 @@ Create a static HTML/JS/CSS distribution package in `dist`. You must use your Gi
 
 Alternatively use `grunt dist_unsafe` without Github credentials.
 
-You can test the resulting files with:
+You can test the resulting files by setting `DIST=1` in `.env` and restarting the server.
 
-    coffee server-dist.coffee
-
-Deploy to staging (assuming your host file has an entry server11):
+Deploy to staging (assuming your host file has an entry server12):
 
     grunt staging
 

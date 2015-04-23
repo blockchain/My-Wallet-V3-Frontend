@@ -56,6 +56,7 @@ module.exports = (grunt) ->
           'build/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js'
           'build/bower_components/intl-tel-input/build/js/intlTelInput.js'
           'build/bower_components/international-phone-number/releases/international-phone-number.js'
+          'build/bower_components/browserdetection/src/browser-detection.js'
           # 'app/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.js'
         ]
 
@@ -351,6 +352,7 @@ module.exports = (grunt) ->
     "sass"
     "concat_css"
     "copy:main"
+    "shell:npm_install_beta_dependencies"
     "rename:assets"
     "rename:html"
   ]
