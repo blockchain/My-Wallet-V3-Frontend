@@ -314,7 +314,7 @@
   "API_ACCESS_EXPLAIN" : "Allow API access to your wallet. This requires an IP whitelist and does not work if 2FA is enabled.",
   "ENABLE_API_ACCESS" : "Enable API Access",
   "DISABLE_API_ACCESS" : "Disable API Access",
-  "IP_WHITELIST_RESTRICT" : "Restrict login to IP whitelist",
+  "IP_WHITELIST_RESTRICT" : "Restrict Login to IP Whitelist",
   "IP_WHITELIST_RESTRICT_EXPLAIN" : "Only allow login from IP address in the whitelist. If you do not have a static IP address, this may lock you out of your wallet.",
   "ENABLE_IP_WHITELIST_RESTRICT" : "Enable Restriction",
   "DISABLE_IP_WHITELIST_RESTRICT" : "Disable Restriction",
