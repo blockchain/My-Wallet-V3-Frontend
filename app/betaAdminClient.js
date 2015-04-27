@@ -42,7 +42,7 @@ function generateTable(tableData) {
 		var rowData = tableData[i];
 		var lastSeen = 'Never';
 		if (rowData.lastseen) lastSeen = new Date(rowData.lastseen);
-		createRow(rowData.id, rowData.key, rowData.name, rowData.email, lastSeen, rowData.guid).appendTo(table);
+		createRow(rowData.rowid, rowData.key, rowData.name, rowData.email, lastSeen, rowData.guid).appendTo(table);
 	}
 	$('#key-table').detach().remove();
 	tableDiv.append(table);
@@ -74,9 +74,9 @@ function getAllKeys() {
 	$.getJSON(getRootUrl() + 'get-all-keys', generateTable);
 }
 
-function getSortedKeys(sort) {
+function getSortedKeys(sort, order) {
 	if (wait()) return;
-	callAjax('get-sorted-keys', {sort:sort}, function(data) {
+	callAjax('get-sorted-keys', {sort:sort,order:order}, function(data) {
 		generateTable(JSON.parse(data));
 	});
 }
@@ -110,7 +110,8 @@ $(document).ready(function() {
 	$('#key-form').on('submit', assignKey);
 	$('.sort').on('click', function() {
 		var sort = $(this).data('sort');
-		getSortedKeys(sort);
+		var order = $(this).data('order');
+		getSortedKeys(sort, order);
 	});
 	getAllKeys();
 });

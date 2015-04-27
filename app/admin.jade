@@ -21,13 +21,13 @@ html(lang='en')
       .form-group
         label Sort By
         .form-inline
-          input.btn.btn-default.sort(type="button" value="Name: A-Z" data-sort="name ASC")
-          input.btn.btn-default.sort(type="button" value="Email: A-Z" data-sort="email ASC")
-          input.btn.btn-default.sort(type="button" value="Last Seen: Least Recent" data-sort="lastseen ASC")
+          input.btn.btn-default.sort(type="button" value="Name: A-Z" data-sort="name" data-order="A")
+          input.btn.btn-default.sort(type="button" value="Email: A-Z" data-sort="email" data-order="A")
+          input.btn.btn-default.sort(type="button" value="Last Seen: Least Recent" data-sort="lastseen" data-order="A")
         .form-inline
-          input.btn.btn-default.sort(type="button" value="Name: Z-A" data-sort="name DESC")
-          input.btn.btn-default.sort(type="button" value="Email: Z-A" data-sort="email DESC")
-          input.btn.btn-default.sort(type="button" value="Last Seen: Most Recent" data-sort="lastseen DESC")
+          input.btn.btn-default.sort(type="button" value="Name: Z-A" data-sort="name" data-order="Z")
+          input.btn.btn-default.sort(type="button" value="Email: Z-A" data-sort="email" data-order="Z")
+          input.btn.btn-default.sort(type="button" value="Last Seen: Most Recent" data-sort="lastseen" data-order="Z")
       .table-div
         table#key-table.table.table-hover.table-condensed
     script(src='../betaAdminClient.js')
