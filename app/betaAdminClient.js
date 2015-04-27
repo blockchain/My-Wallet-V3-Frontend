@@ -18,7 +18,7 @@ function wait() {
 }
 
 function getRootUrl() {
-	return '/betaadmin/';
+	return '/betaadmin/api/';
 }
 
 function convertDate(dateObj) {

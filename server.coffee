@@ -4,6 +4,8 @@ Guid = require('node-uuid')
 sqlite3 = require('sqlite3').verbose()
 app = express()
 bodyParser = require('body-parser')
+auth = require('basic-auth')
+basic = undefined
 app.use express.logger()
 app.use( bodyParser.json() )
 
@@ -223,26 +225,41 @@ if process.env.BETA? && parseInt(process.env.BETA)
 
   # beta key admin
 
-  app.get "/betaadmin", (request, response) ->
-    if dist
-      response.render "admin.html"
+  app.get "/betaadmin/", (request, response, next) ->
+    # credentials = auth(request)
+    
+    if false # (!credentials || credentials.name != 'blockchain' || credentials.pass != process.env.ADMIN_PASSWORD) 
+      response.writeHead(401, {
+        'WWW-Authenticate': 'Basic realm="blockchain-beta-admin"'
+      })
+      response.end()
     else
-      response.render "admin.jade"
-    return
+      if dist
+        response.render "admin.html"
+      else
+        response.render "admin.jade"      
 
-  app.get "/betaadmin/:method", (request, response) ->
-    if request.params.method == 'get-all-keys'
-      betaKeyDB.getAllKeys (err, rows) ->
-        response.end JSON.stringify(rows)
-    else if request.params.method == 'get-sorted-keys'
-      betaKeyDB.getSortedKeys request.query.sort, (err, rows) ->
-        response.end JSON.stringify(rows)
-    else if request.params.method == 'assign-key'
-      betaKeyDB.assignNewKey request.query.name, request.query.email, request.query.guid, (key) ->
-        response.end JSON.stringify({key:key})
-    else if request.params.method == 'delete-key'
-      betaKeyDB.deleteKeyById request.query.id, (err) ->
-        response.end JSON.stringify({error:err})
+  app.get "/betaadmin/api/:method", (request, response, next) ->
+    # credentials = auth(request)
+    
+    if false # (!credentials || credentials.name != 'blockchain' || credentials.pass != process.env.ADMIN_PASSWORD) 
+      response.writeHead(401, {
+        'WWW-Authenticate': 'Basic realm="blockchain-beta-admin"'
+      })
+      response.end()
+    else
+      if request.params.method == 'get-all-keys'
+        betaKeyDB.getAllKeys (err, rows) ->
+          response.end JSON.stringify(rows)
+      else if request.params.method == 'get-sorted-keys'
+        betaKeyDB.getSortedKeys request.query.sort, (err, rows) ->
+          response.end JSON.stringify(rows)
+      else if request.params.method == 'assign-key'
+        betaKeyDB.assignNewKey request.query.name, request.query.email, request.query.guid, (key) ->
+          response.end JSON.stringify({key:key})
+      else if request.params.method == 'delete-key'
+        betaKeyDB.deleteKeyById request.query.id, (err) ->
+          response.end JSON.stringify({error:err})
         
 else
   app.get "/", (request, response) ->
