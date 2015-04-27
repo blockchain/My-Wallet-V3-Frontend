@@ -134,7 +134,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
         callback false
         return
         
-      db.all 'SELECT key, email FROM betakeys WHERE key IS "' + keyName + '" AND guid IS NULL', (err, data) ->
+      db.all 'SELECT key, email FROM betakeys WHERE key IS "' + keyName + '" AND (guid IS NULL OR guid == "")', (err, data) ->
         exists = data.length > 0
         if exists
           betaKeyDB.updateLastSeen keyName
@@ -226,9 +226,9 @@ if process.env.BETA? && parseInt(process.env.BETA)
   # beta key admin
 
   app.get "/betaadmin/", (request, response, next) ->
-    # credentials = auth(request)
+    credentials = auth(request)
     
-    if false # (!credentials || credentials.name != 'blockchain' || credentials.pass != process.env.ADMIN_PASSWORD) 
+    if (!credentials || credentials.name != 'blockchain' || credentials.pass != process.env.ADMIN_PASSWORD) 
       response.writeHead(401, {
         'WWW-Authenticate': 'Basic realm="blockchain-beta-admin"'
       })
@@ -240,9 +240,9 @@ if process.env.BETA? && parseInt(process.env.BETA)
         response.render "admin.jade"      
 
   app.get "/betaadmin/api/:method", (request, response, next) ->
-    # credentials = auth(request)
+    credentials = auth(request)
     
-    if false # (!credentials || credentials.name != 'blockchain' || credentials.pass != process.env.ADMIN_PASSWORD) 
+    if (!credentials || credentials.name != 'blockchain' || credentials.pass != process.env.ADMIN_PASSWORD) 
       response.writeHead(401, {
         'WWW-Authenticate': 'Basic realm="blockchain-beta-admin"'
       })
