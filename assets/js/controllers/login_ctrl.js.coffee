@@ -1,4 +1,4 @@
-@LoginCtrl = ($scope, $log, Wallet, $cookieStore, $modal, $state, $timeout, $translate) ->
+@LoginCtrl = ($scope, $rootScope, $log, $http, Wallet, $cookieStore, $modal, $state, $timeout, $translate) ->
   $scope.status = Wallet.status    
   $scope.settings = Wallet.settings
   
@@ -70,6 +70,29 @@
         $scope.resending = false
       
       Wallet.resendTwoFactorSms($scope.uid,success, error)
+      
+  $scope.register = () ->
+    # If BETA=1 is set in .env then in index.html/jade $rootScope.beta is set.
+    # The following checks are not ideal as they can be bypassed with some creative Javascript commands.
+    if $rootScope.beta
+      # Check if there is an invite code associated with
+      $http.post("/check_beta_key_unused", {key: $scope.key}
+      ).success((data) ->
+        if(data.verified) 
+          betaCheckFinished(data.key, data.email)
+        else
+          if(data.error && data.error.message)
+            Wallet.displayError(data.error.message)
+      ).error () ->
+        Wallet.displayError("Unable to verify your invite code.")
+        
+    else
+      betaCheckFinished()
+      
+    betaCheckFinished = (key, email) ->
+      $rootScope.beta = {key: $scope.key, email: email}
+
+      $state.go("register")
 
   $scope.$watch "status.isLoggedIn", (newValue) ->
     if newValue

@@ -3,7 +3,7 @@ var waiting = false;
 var tableElem = $('<table></table>')
 	.attr('id', 'key-table')
 	.addClass('table table-hover table-condensed')
-	.append($('<tr></tr>').html('<th>id</th><th>Key</th><th>Name</th><th>Email</th><th>Last Seen</th><th>Revoke</th>'));
+	.append($('<tr></tr>').html('<th>id</th><th>Key</th><th>Name</th><th>Email</th><th>Last Seen</th><th>GUID</th><th>Revoke</th>'));
 
 var rowElem = $('<tr></tr>')
 	.append($('<td></td>')
@@ -25,8 +25,9 @@ function convertDate(dateObj) {
 	return dateObj.getHours() + ':' + dateObj.getMinutes() + ',\t' + dateObj.getMonth() + '/' + dateObj.getDate() + '/' + dateObj.getFullYear();
 }
 
-function createRow(id, key, name, email, lastSeen) {
+function createRow(id, key, name, email, lastSeen, guid) {
 	return rowElem.clone().data('id', id)
+		.prepend($('<td></td>').text(guid))
 		.prepend($('<td></td>').text(lastSeen))
 		.prepend($('<td></td>').text(email))
 		.prepend($('<td></td>').text(name))
@@ -41,7 +42,7 @@ function generateTable(tableData) {
 		var rowData = tableData[i];
 		var lastSeen = 'Never';
 		if (rowData.lastseen) lastSeen = new Date(rowData.lastseen);
-		createRow(rowData.id, rowData.key, rowData.name, rowData.email, lastSeen).appendTo(table);
+		createRow(rowData.id, rowData.key, rowData.name, rowData.email, lastSeen, rowData.guid).appendTo(table);
 	}
 	$('#key-table').detach().remove();
 	tableDiv.append(table);
@@ -83,8 +84,20 @@ function getSortedKeys(sort) {
 function assignKey() {
 	if (wait()) return;
 	var name = $('#name-input').val(),
-		email = $('#email-input').val();
-	callAjax('assign-key', {name:name,email:email});
+		email = $('#email-input').val(), 
+    guid = $('#guid-input').val();
+  
+  if (!email || email == "") {
+    alert("Email required");
+    return;
+  }
+  
+  if (!name || name == "") {
+    alert("Email required");
+    return;
+  }
+    
+	callAjax('assign-key', {name:name,email:email,guid: guid});
 }
 
 function revokeKey(elem) {

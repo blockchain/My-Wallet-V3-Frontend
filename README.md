@@ -41,13 +41,7 @@ Visit [local.blockchain.com:8080](http://local.blockchain.com:8080/).  Do not us
 
 To enable the beta invite functionality, create a file called `.env` and add the following to it:
 `INVITE=1`
-`BETA_DATABASE_PATH=app/beta/betakeys.MDF`
-
-Run npm install in the app/beta directory:
-
-```sh
-cd app/beta && npm install
-```
+`BETA_DATABASE_PATH=betakeys.MDF`
 
 Copy the database file template (`betakeys.MDF` is ignored by git):
 ```sh

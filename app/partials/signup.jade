@@ -12,7 +12,7 @@
           .form-group(ng-class="{'has-error': errors.email, 'has-success': success.email}")
             label.col-sm-4.control-label(translate="EMAIL")
             .col-sm-6
-              input.form-control(type="email",ng-model="fields.email",autofocus,ng-blur="validate()", ng-focus="errors.email = null")
+              input.form-control(type="email",ng-model="fields.email",autofocus,ng-blur="validate()", ng-focus="errors.email = null", ng-disabled="beta")
               span.help-block 
                 p {{ errors.email }}
           .form-group(ng-class="{'has-error': errors.password, 'has-success': success.password}")

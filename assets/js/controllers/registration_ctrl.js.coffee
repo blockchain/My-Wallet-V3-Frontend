@@ -1,5 +1,9 @@
-@RegistrationCtrl = ($scope, $log, Wallet, $cookieStore, $modal, $state, $timeout) ->
+@RegistrationCtrl = ($scope, $rootScope, $log, Wallet, $cookieStore, $modal, $state, $timeout) ->
   $scope.status = Wallet.status    
+    
+  if $rootScope.beta && !($rootScope.beta.email && $rootScope.beta.key) 
+    $state.go("login")
+    return
       
   modalInstance = $modal.open(
     templateUrl: "partials/signup.jade"
@@ -8,7 +12,7 @@
     keyboard: false
     windowClass: "signup"
     size: "lg"
-  )
+  )  
       
   $scope.$watch "status.isLoggedIn", (newValue) ->
     if newValue

@@ -19,7 +19,7 @@ playSound = (id) ->
 ##################################
 
 walletServices = angular.module("walletServices", [])
-walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletSpender, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) -> 
+walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletSpender, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) -> 
   wallet = {
     goal: {}, 
     status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadTransactions: false, didLoadBalances: false, legacyAddressBalancesLoaded: false, didConfirmRecoveryPhrase: false}, 
@@ -155,26 +155,46 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       wallet.displayWarning("Please check your email to approve this login attempt.", true)
       wallet.applyIfNeeded()
       
-    $window.root = "https://blockchain.info/"   
-    #                         , shared_key, resend_code, inputedPassword, twoFACode,       success,  needs_two_factor_code, wrong_two_factor_code, authorization_required, other_error, fetch_success, decrypt_success, build_hd_success
-    wallet.my.fetchWalletJson(
-      uid,      
-      null,       # shared_key
-      null,       # resend_code
-      password,        
-      two_factor_code, 
-      didLogin, 
-      needsTwoFactorCode,    
-      wrongTwoFactorCode,    
-      authorizationRequired,  
-      loginError,  # other_error
-      () -> return,     # fetch_success
-      () -> return,     # decrypt_success
-      () -> return      # build_hd_success
-    )
+    betaCheckFinished = () ->
+      $window.root = "https://blockchain.info/"   
+      #                         , shared_key, resend_code, inputedPassword, twoFACode,       success,  needs_two_factor_code, wrong_two_factor_code, authorization_required, other_error, fetch_success, decrypt_success, build_hd_success
+      wallet.my.fetchWalletJson(
+        uid,      
+        null,       # shared_key
+        null,       # resend_code
+        password,        
+        two_factor_code, 
+        didLogin, 
+        needsTwoFactorCode,    
+        wrongTwoFactorCode,    
+        authorizationRequired,  
+        loginError,  # other_error
+        () -> return,     # fetch_success
+        () -> return,     # decrypt_success
+        () -> return      # build_hd_success
+      )
     
-    wallet.fetchExchangeRate()
-    return
+      wallet.fetchExchangeRate()
+      return
+      
+    # If BETA=1 is set in .env then in index.html/jade $rootScope.beta is set.
+    # The following checks are not ideal as they can be bypassed with some creative Javascript commands.
+    if $rootScope.beta
+      # Check if there is an invite code associated with
+      $http.post("/check_guid_for_beta_key", {guid: uid}
+      ).success((data) ->
+        if(data.verified) 
+          betaCheckFinished()
+        else
+          if(data.error && data.error.message)
+            wallet.displayError(data.error.message)
+          errorCallback()
+      ).error () ->
+        wallet.displayError("Unable to verify your wallet UID.")
+        errorCallback()
+        
+    else
+      betaCheckFinished()
   
   wallet.resendTwoFactorSms = (uid, successCallback, errorCallback) ->
     success = () ->
@@ -202,8 +222,20 @@ walletServices.factory "Wallet", ($log, $window, $timeout, MyWallet, MyBlockchai
       loginError = (error) ->
         console.log(error)
         wallet.displayError("Unable to login to new wallet")
-      
-      wallet.login(uid, password, null, null, loginSuccess, loginError)
+        
+      # Associate the UID with the beta key:
+      if $rootScope.beta
+        $http.post("/set_guid_for_beta_key", {key: $rootScope.beta.key, guid: uid}
+        ).success((data) ->
+          if(data.success) 
+            wallet.login(uid, password, null, null, loginSuccess, loginError)   
+          else
+            if(data.error && data.error.message)
+              Wallet.displayError(data.error.message)
+        ).error () ->
+          Wallet.displayWarning("Unable to associate your new wallet with your invite code. Please try to login using your UID " + uid + " or register again.", true)  
+      else
+        wallet.login(uid, password, null, null, loginSuccess, loginError)
     
     error = (error) ->
       if error.message != undefined

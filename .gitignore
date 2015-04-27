@@ -11,3 +11,4 @@ assets/js/my-wallet
 coverage
 .idea
 *.DS_Store
+betakeys.MDF

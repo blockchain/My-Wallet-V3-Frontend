@@ -79,7 +79,7 @@ module.exports = (grunt) ->
       beta:
         src: [
           "build/bower_components/jquery/dist/jquery.js"
-          "app/beta/betaAdminClient.js"
+          "app/betaAdminClient.js"
         ]
         dest: "dist/beta.js"
         
@@ -130,20 +130,6 @@ module.exports = (grunt) ->
           }]
         }
       }
-    
-    jade: {
-      compile: {
-        options: {
-          data: {
-            debug: false
-          }
-        },
-        files: {
-          "admin.html": ["app/admin.jade"],
-          "beta.html": ["app/beta.jade"]
-        }
-      }
-    }
 
     concat_css: {
       app: {
@@ -159,9 +145,6 @@ module.exports = (grunt) ->
       beta: {
         src: [
           "build/bower_components/bootstrap-css-only/css/bootstrap.css"
-          "build/bower_components/angular/angular-csp.css"
-          "build/css/app.css"
-          "build/css/login.css"
           "build/css/navigation.css"
         ],
         dest: "dist/beta.css"
@@ -185,8 +168,8 @@ module.exports = (grunt) ->
           # {src: ["jquery.min.js"],     dest: "dist/", cwd: "app/bower_components/jquery/dist", expand: true }
           {src: ["locale-*.json", "beep.wav", "favicon.ico"], dest: "dist/", cwd: "app", expand: true}
           {src: ["index.html"], dest: "dist/"}
+          {src: ["index-beta.html"], dest: "dist/"}
           {src: ["admin.html"], dest: "dist/"}
-          {src: ["beta.html"], dest: "dist/"}
           {src: ["img/*"], dest: "dist/", cwd: "app", expand: true}
           {src: ["locales/*"], dest: "dist/", cwd: "app", expand: true}
           {src: ["fonts/*"], dest: "dist/", cwd: "app/bower_components/bootstrap-css-only", expand: true}
@@ -219,7 +202,7 @@ module.exports = (grunt) ->
     },
     
     rename:
-      assets: # Renames all images, fonts, etc and updates application.min.js, application.css and beta.html with their new names.
+      assets: # Renames all images, fonts, etc and updates application.min.js, application.css and admin.html with their new names.
         options:
           skipIfHashed: true
           startSymbol: "{{"
@@ -230,7 +213,7 @@ module.exports = (grunt) ->
           callback: (befores, afters) ->
             publicdir = require("fs").realpathSync("dist")
             path = require("path")
-            for referring_file_path in ["dist/application.min.js", "dist/application.css", "dist/beta.html"]
+            for referring_file_path in ["dist/application.min.js", "dist/application.css", "dist/admin.html"]
               contents = grunt.file.read(referring_file_path)
               before = undefined
               after = undefined
@@ -252,7 +235,7 @@ module.exports = (grunt) ->
             'dist/beep.wav'
           ]
     
-      html: # Renames application/beta.min.js/css and updates index/beta/admin.html
+      html: # Renames application/beta.min.js/css and updates index/admin.html
         options:
           skipIfHashed: true
           startSymbol: "{{"
@@ -264,7 +247,7 @@ module.exports = (grunt) ->
             publicdir = require("fs").realpathSync("dist")
             path = require("path")
             
-            for referring_file_path in ["dist/index.html", "dist/admin.html", "dist/beta.html"]
+            for referring_file_path in ["dist/index.html", "dist/index-beta.html", "dist/admin.html"]
               contents = grunt.file.read(referring_file_path)
               before = undefined
               after = undefined
@@ -308,10 +291,6 @@ module.exports = (grunt) ->
         command: () ->
            'cd build && npm install'
            
-      npm_install_beta_dependencies:
-        command: () ->
-           'cd dist/beta && npm install'
-           
       bower_install_dependencies:
         command: () ->
            'cd build && touch .bowerrc && bower install'
@@ -345,7 +324,6 @@ module.exports = (grunt) ->
   grunt.registerTask "dist_beta", [
     "concat:beta"
     "concat_css:beta"    
-    "shell:npm_install_beta_dependencies"
   ]
     
   # Default task(s).
