@@ -6,6 +6,7 @@
   "dependencies": {
     "basic-auth": "^1.0.0",
     "body-parser": "^1.12.3",
+    "hd-beta": "git+ssh://git@github.com/blockchain/hd-wallet-beta-module.git",
     "node-uuid": "^1.4.3",
     "sqlite3": "^3.0.5"
   },

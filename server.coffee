@@ -84,106 +84,10 @@ app.configure ->
   
   return
 
-generateKey = undefined
-isTooLong = undefined
-db = undefined
-
 if process.env.BETA? && parseInt(process.env.BETA)
   console.log("Enabling beta invite system")
-  
-  db = new (sqlite3.Database)(process.env.BETA_DATABASE_PATH)
-  
-  generateKey = () ->
-    Guid.v4().split('-')[0]
 
-  isTooLong = (str, len) ->
-    if str
-      if str.length > len
-        return true
-      else
-        return false
-    false
-
-  betaKeyDB =
-    createTable: ->
-      db.run 'CREATE TABLE betakeys (key TEXT, name TEXT, email TEXT, lastseen INT, guid TEXT)'
-      return
-
-    getAllKeys: (callback) ->
-      db.all 'SELECT rowid AS id, key, name, email, lastseen, guid FROM betakeys', callback
-      return
-
-    getSortedKeys: (sort, callback) ->
-      db.all 'SELECT rowid AS id, key, name, email, lastseen, guid FROM betakeys ORDER BY ' + sort, callback
-      return
-
-    doesKeyExist: (keyName, callback) ->
-      if isTooLong(keyName, 8)
-        callback false
-        return
-      db.all 'SELECT key FROM betakeys WHERE key IS "' + keyName + '"', (err, data) ->
-        exists = data.length > 0
-        if exists
-          betaKeyDB.updateLastSeen keyName
-        callback exists
-        return
-      return
-      
-    doesKeyExistWithoutGUID: (keyName, callback) ->
-      if isTooLong(keyName, 8)
-        callback false
-        return
-        
-      db.all 'SELECT key, email FROM betakeys WHERE key IS "' + keyName + '" AND (guid IS NULL OR guid == "")', (err, data) ->
-        exists = data.length > 0
-        if exists
-          betaKeyDB.updateLastSeen keyName
-          callback true, data[0].email
-        else
-          callback false
-        return
-      return
-      
-    isBetaKeyAssociatedWithGUID: (guid, callback) ->
-      console.log "Is it?", guid
-      db.all 'SELECT key FROM betakeys WHERE guid IS "' + guid + '"', (err, data) ->
-        exists = data.length > 0
-        if exists
-          betaKeyDB.updateLastSeen data[0].key
-        callback exists
-        return
-      return
-
-    setBetaKeyGUID: (keyName, guid, callback) ->
-      db.run 'UPDATE betakeys SET guid="' + guid + '" WHERE key IS "' + keyName + '"'
-      callback()
-      return
-
-    deleteKeyById: (keyId, callback) ->
-      if isTooLong(keyId, 4)
-        callback()
-        return
-      db.run 'DELETE FROM betakeys WHERE rowid IS "' + keyId + '"', callback
-      return
-
-    assignNewKey: (name, email, guid, callback) ->
-      key = generateKey()
-      if isTooLong(name, 25) or isTooLong(email, 25)
-        callback()
-        return
-      console.log("Assign key...", name)
-      db.run 'INSERT INTO betakeys (key, name, email, guid) VALUES ("' + key + '", "' + name + '", "' + email + '", "' + guid + '")', ->
-        console.log("Inserted")
-        callback key
-        return
-      return
-
-    updateLastSeen: (keyName) ->
-      if isTooLong(keyName, 8)
-        return
-      now = Date.now()
-      db.run 'UPDATE betakeys SET lastseen=' + now + ' WHERE key IS "' + keyName + '"'
-      return
+  hdBeta = require('hd-beta')(__dirname + '/' + process.env.BETA_DATABASE_PATH)
   
   # beta key public
 
@@ -196,9 +100,9 @@ if process.env.BETA? && parseInt(process.env.BETA)
       response.render "index.jade"
       
   app.post "/check_beta_key_unused", (request, response) ->
-    betaKeyDB.doesKeyExist request.body.key, (verified) ->
+    hdBeta.verifyKey request.body.key, (verified) ->
       if verified
-        betaKeyDB.doesKeyExistWithoutGUID request.body.key, (verified, email) ->
+        hdBeta.doesKeyExistWithoutGUID request.body.key, (verified, email) ->
           if verified
             response.json {verified : true, email: email}
           else
@@ -209,16 +113,16 @@ if process.env.BETA? && parseInt(process.env.BETA)
 
     
   app.post "/check_guid_for_beta_key", (request, response) ->
-    betaKeyDB.isBetaKeyAssociatedWithGUID request.body.guid, (verified) ->
+    hdBeta.isGuidAssociatedWithBetaKey request.body.guid, (verified) ->
       if verified
         response.json {verified : true}
       else
         response.json {verified : false, error: {message: "This wallet is not associated with a beta invite key. Please create a new wallet first."}}
         
   app.post "/set_guid_for_beta_key", (request, response) ->
-    betaKeyDB.doesKeyExistWithoutGUID request.body.key, (unclaimed, email) ->
+    hdBeta.doesKeyExistWithoutGUID request.body.key, (unclaimed, email) ->
       if unclaimed
-        betaKeyDB.setBetaKeyGUID request.body.key, request.body.guid, () ->
+        hdBeta.setGuid request.body.key, request.body.guid, () ->
           response.json {success : true}
       else
         response.json {success : false}
@@ -249,17 +153,17 @@ if process.env.BETA? && parseInt(process.env.BETA)
       response.end()
     else
       if request.params.method == 'get-all-keys'
-        betaKeyDB.getAllKeys (err, rows) ->
-          response.end JSON.stringify(rows)
+        hdBeta.getKeys (data) ->
+          response.send JSON.stringify data
       else if request.params.method == 'get-sorted-keys'
-        betaKeyDB.getSortedKeys request.query.sort, (err, rows) ->
-          response.end JSON.stringify(rows)
+        hdBeta.getKeys request.query, (data) ->
+          response.end JSON.stringify data
       else if request.params.method == 'assign-key'
-        betaKeyDB.assignNewKey request.query.name, request.query.email, request.query.guid, (key) ->
+        hdBeta.assignKey request.query.name, request.query.email, request.query.guid, (key) ->
           response.end JSON.stringify({key:key})
       else if request.params.method == 'delete-key'
-        betaKeyDB.deleteKeyById request.query.id, (err) ->
-          response.end JSON.stringify({error:err})
+        hdBeta.deleteKey { rowid: parseInt(request.query.id) }, () ->
+          response.json {success: true}
         
 else
   app.get "/", (request, response) ->
