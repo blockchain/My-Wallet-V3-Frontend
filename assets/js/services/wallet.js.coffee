@@ -591,21 +591,16 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
         
         spender = wallet.spender(null, success, error, {}, needsSecondPassword)
-    
+
         if from.address?
-          spender.prepareFromAddress(from.address, amount, 10000, (origin)->
-            if destination.index?
-              origin.toAccount(destination.index)
-            else if destination.address?
-              origin.toAddress(destination.address)
-          )
+          spendFrom = spender.fromAddress(from.address, amount, 10000)
         else if from.index?
-          spender.prepareFromAccount(from.index, amount, 10000, (origin)->
-            if destination.index?
-              origin.toAccount(destination.index)
-            else if destination.address?
-              origin.toAddress(destination.address)
-          )
+          spendFrom = spender.fromAccount(from.index, amount, 10000)
+
+        if destination.index?
+          spendFrom.toAccount(destination.index)
+        else if destination.address?
+          spendFrom.toAddress(destination.address)
     
       # sweepLegacyAddressToAccount: (fromAddress, toAccountIndex) ->
       #   wallet.my.sweepLegacyAddressToAccount(fromAddress.address, toAccountIndex, success, error, {}, needsSecondPassword)
