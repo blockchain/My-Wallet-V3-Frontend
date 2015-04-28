@@ -153,8 +153,8 @@ function assignKey() {
 
 function revokeKey(elem) {
 	if (wait()) return;
-	var id = ($(elem).parent().parent().data('id'));
-	callAjax('delete-key', {id:id});
+	var key = ($(elem).parent().parent().data('key'));
+	callAjax('delete-key', {key:key});
 }
 
 function updateKey(key) {
