@@ -59,7 +59,7 @@ function wait() {
 }
 
 function getRootUrl() {
-	return '/betaadmin/api/';
+	return '/admin/api/';
 }
 
 function convertDate(dateObj) {

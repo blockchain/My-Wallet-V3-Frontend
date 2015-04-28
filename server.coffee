@@ -127,7 +127,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
 
   # beta key admin
 
-  app.get "/betaadmin/", (request, response, next) ->
+  app.get "/admin/", (request, response, next) ->
     credentials = auth(request)
     
     if (!credentials || credentials.name != 'blockchain' || credentials.pass != process.env.ADMIN_PASSWORD) 
@@ -141,7 +141,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
       else
         response.render "app/admin.jade"      
 
-  app.get "/betaadmin/api/:method", (request, response, next) ->
+  app.get "/admin/api/:method", (request, response, next) ->
     credentials = auth(request)
     
     if (!credentials || credentials.name != 'blockchain' || credentials.pass != process.env.ADMIN_PASSWORD) 
