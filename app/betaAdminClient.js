@@ -66,14 +66,14 @@ function convertDate(dateObj) {
 	return dateObj.getHours() + ':' + dateObj.getMinutes() + ',\t' + dateObj.getMonth() + '/' + dateObj.getDate() + '/' + dateObj.getFullYear();
 }
 
-function createRow(id, key, name, email, lastSeen, guid) {
-	return rowElem.clone().data('id', id).data('key', key)
+function createRow(rowid, key, name, email, lastSeen, guid) {
+	return rowElem.clone().data('rowid', rowid).data('key', key)
 		.prepend($('<td></td>').text(guid))
 		.prepend($('<td></td>').text(lastSeen))
 		.prepend($('<td></td>').text(email))
 		.prepend($('<td></td>').text(name))
 		.prepend($('<td></td>').text(key))
-		.prepend($('<td></td>').text(id));
+		.prepend($('<td></td>').text(rowid));
 }
 
 function generateTable(tableData) {
@@ -149,8 +149,8 @@ function assignKey() {
 
 function revokeKey(elem) {
 	if (wait()) return;
-	var id = ($(elem).parent().parent().data('id'));
-	callAjax('delete-key', {id:id});
+	var rowid = ($(elem).parent().parent().data('rowid'));
+	callAjax('delete-key', {rowid:rowid});
 }
 
 function updateKey(key) {

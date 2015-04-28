@@ -162,7 +162,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
         hdBeta.assignKey request.query.name, request.query.email, request.query.guid, (key) ->
           response.end JSON.stringify({key:key})
       else if request.params.method == 'delete-key'
-        hdBeta.deleteKey { rowid: parseInt(request.query.id) }, () ->
+        hdBeta.deleteKey { rowid: parseInt(request.query.rowid) }, () ->
           response.json {success: true}
       else if request.params.method == 'update-key'
         hdBeta.updateKey request.query.selection, request.query.update, () ->
