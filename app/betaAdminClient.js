@@ -4,6 +4,8 @@ var sortedElem = 'rowid';
 var sort = 'rowid';
 var order = 'A';
 
+var editing;
+
 var tableElem = $('<table></table>')
 	.attr('id', 'key-table')
 	.addClass('table table-hover table-condensed')
@@ -19,7 +21,7 @@ var tableElem = $('<table></table>')
 
 var rowElem = $('<tr></tr>')
 	.append($('<td></td>')
-		.append($('<a>edit</a>').attr('onclick', 'alert("edit")').css('cursor', 'pointer')))
+		.append($('<a>edit</a>').attr('onclick', 'showEditModal(this)').css('cursor', 'pointer').data('toggle', 'modal').data('target', '#key-modal')))
 	.append($('<td></td>')
 		.append($('<a>revoke</a>').attr('onclick', 'revokeKey(this)').css('cursor', 'pointer')));
 
@@ -65,7 +67,7 @@ function convertDate(dateObj) {
 }
 
 function createRow(id, key, name, email, lastSeen, guid) {
-	return rowElem.clone().data('id', id)
+	return rowElem.clone().data('id', id).data('key', key)
 		.prepend($('<td></td>').text(guid))
 		.prepend($('<td></td>').text(lastSeen))
 		.prepend($('<td></td>').text(email))
@@ -91,7 +93,7 @@ function generateTable(tableData) {
 function successCallback(err) {
 	if (err) console.log(err);
 	setIsWaiting(false);
-	getAllKeys();
+	getSortedKeys(sort, order);
 }
 
 function errorCallback(err) {
@@ -151,9 +153,40 @@ function revokeKey(elem) {
 	callAjax('delete-key', {id:id});
 }
 
+function updateKey(key) {
+	if (wait()) return;
+	var key = $('#edit-key-input').val();
+	var name = $('#edit-name-input').val();
+	var email = $('#edit-email-input').val();
+	var guid = $('#edit-guid-input').val();
+	var update = {};
+	if (name !== '') update.name = name;
+	if (email !== '') update.email = email;
+	if (guid !== '') update.guid = guid;
+	callAjax('update-key', {
+		selection: {key:key},
+		update: update
+	});
+}
+
+function showEditModal(elem) {
+	editing = $(elem).parent().parent().data('key');
+	$('#edit-modal').modal('show');
+}
+
 $(document).ready(function() {
-	$('#key-form').on('submit', assignKey);
 	$('#search-form').on('submit', search);
+	$('#key-form').on('submit', assignKey);
+	$('#key-modal').on('shown.bs.modal', function () {
+	  $('#name-input').focus();
+	});
+	$('#edit-form').on('submit', updateKey);
+	$('#edit-modal').on('shown.bs.modal', function () {
+	  $('#edit-name-input').focus();
+	});
+	$('#edit-modal').on('show.bs.modal', function (event) {
+	  $(this).find('#edit-key-input').val(editing);
+	});
 	getSortedKeys(sort, order);
 });
 

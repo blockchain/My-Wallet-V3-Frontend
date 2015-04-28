@@ -164,6 +164,9 @@ if process.env.BETA? && parseInt(process.env.BETA)
       else if request.params.method == 'delete-key'
         hdBeta.deleteKey { rowid: parseInt(request.query.id) }, () ->
           response.json {success: true}
+      else if request.params.method == 'update-key'
+        hdBeta.updateKey request.query.selection, request.query.update, () ->
+          response.json {success: true}
         
 else
   app.get "/", (request, response) ->
