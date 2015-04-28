@@ -200,6 +200,19 @@ module.exports = (grunt) ->
         task:  ['copy:angular_css']
       }
     },
+
+    jade: {
+      debug: {
+        options: {
+          data: {
+            timestamp: "<%= 'test' %>"
+          }
+        },
+        files: {
+          "admin.html": "app/admin.jade"
+        }
+      }
+    },
     
     rename:
       assets: # Renames all images, fonts, etc and updates application.min.js, application.css and admin.html with their new names.
