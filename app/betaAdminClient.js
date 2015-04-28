@@ -76,7 +76,7 @@ function createRow(rowid, key, name, email, lastSeen, guid) {
 		.prepend($('<td></td>').text(rowid));
 }
 
-function generateTable(tableData) {
+function generateTable(tableData, callback) {
 	var tableDiv = $('.table-div'),
 		table = tableElem.clone();
 	for (i in tableData) {
@@ -88,6 +88,7 @@ function generateTable(tableData) {
 	$('#key-table').detach().remove();
 	tableDiv.append(table);
 	setIsWaiting(false);
+	if (callback) callback();
 }
 
 function successCallback(err) {
@@ -119,13 +120,16 @@ function getSortedKeys(sort, order, filter) {
 	if (wait()) return;
 	filter = filter || {};
 	callAjax('get-sorted-keys', {sort:sort,order:order,filter:filter}, function(data) {
-		generateTable(JSON.parse(data));
-		if (sortedElem) {
-			sortedElem = '#' + sortedElem;
-			if (order === 'A') $('<span></span>').addClass('glyphicon glyphicon-menu-down').appendTo(sortedElem);
-			else $('<span></span>').addClass('glyphicon glyphicon-menu-up').appendTo(sortedElem);
-		}
+		generateTable(JSON.parse(data), insertSortIcon);
 	});
+}
+
+function insertSortIcon() {
+	if (sortedElem) {
+		sortedElem = '#' + sortedElem;
+		if (order === 'A') $('<span></span>').addClass('glyphicon glyphicon-menu-down').appendTo(sortedElem);
+		else $('<span></span>').addClass('glyphicon glyphicon-menu-up').appendTo(sortedElem);
+	}
 }
 
 function assignKey() {
