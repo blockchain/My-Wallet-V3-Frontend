@@ -126,9 +126,9 @@ function getSortedKeys(sort, order, filter) {
 
 function insertSortIcon() {
 	if (sortedElem) {
-		sortedElem = '#' + sortedElem;
-		if (order === 'A') $('<span></span>').addClass('glyphicon glyphicon-menu-down').appendTo(sortedElem);
-		else $('<span></span>').addClass('glyphicon glyphicon-menu-up').appendTo(sortedElem);
+		var selector = '#' + sortedElem;
+		if (order === 'A') $('<span></span>').addClass('glyphicon glyphicon-menu-down').appendTo(selector);
+		else $('<span></span>').addClass('glyphicon glyphicon-menu-up').appendTo(selector);
 	}
 }
 
