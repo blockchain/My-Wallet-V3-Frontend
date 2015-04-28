@@ -1,13 +1,52 @@
 var waiting = false;
 
+var sortedElem = 'rowid';
+var sort = 'rowid';
+var order = 'A';
+
 var tableElem = $('<table></table>')
 	.attr('id', 'key-table')
 	.addClass('table table-hover table-condensed')
-	.append($('<tr></tr>').html('<th>id</th><th>Key</th><th>Name</th><th>Email</th><th>Last Seen</th><th>GUID</th><th>Revoke</th>'));
+	.append($('<tr></tr>')
+		.append($('<th>id </th>').attr('id', 'rowid').css({'cursor':'pointer'}))
+		.append($('<th>Key </th>').attr('id', 'key').css({'cursor':'pointer'}))
+		.append($('<th>Name </th>').attr('id', 'name').css({'cursor':'pointer'}))
+		.append($('<th>Email </th>').attr('id', 'email').css({'cursor':'pointer'}))
+		.append($('<th>Last Seen </th>').attr('id', 'lastseen').css({'cursor':'pointer'}))
+		.append($('<th>Guid </th>').attr('id', 'guid').css({'cursor':'pointer'}))
+		.append($('<th>Edit </th>'))
+		.append($('<th>Revoke </th>')));
 
 var rowElem = $('<tr></tr>')
 	.append($('<td></td>')
+		.append($('<a>edit</a>').attr('onclick', 'alert("edit")').css('cursor', 'pointer')))
+	.append($('<td></td>')
 		.append($('<a>revoke</a>').attr('onclick', 'revokeKey(this)').css('cursor', 'pointer')));
+
+function changeSort(col) {
+	if (sort === col) changeOrder();
+	else {
+		sort = col;
+		order = 'A';
+	}
+	getSortedKeys(sort, order);
+}
+
+function changeOrder() {
+	if (order === 'A') order = 'Z';
+	else if (order === 'Z') order = 'A';
+	else order = 'A';
+}
+
+function search(event) {
+	event.preventDefault();
+	var search = $('#search-input').val();
+	var searchCategory = $('#search-dropdown').val();
+	var filter = {};
+	filter[searchCategory] = search;
+	if (search !== '') getSortedKeys(sort, order, filter);
+	else getSortedKeys(sort, order, {});
+}
 
 function setIsWaiting(flag) { waiting = flag; }
 
@@ -74,10 +113,16 @@ function getAllKeys() {
 	$.getJSON(getRootUrl() + 'get-all-keys', generateTable);
 }
 
-function getSortedKeys(sort, order) {
+function getSortedKeys(sort, order, filter) {
 	if (wait()) return;
-	callAjax('get-sorted-keys', {sort:sort,order:order}, function(data) {
+	filter = filter || {};
+	callAjax('get-sorted-keys', {sort:sort,order:order,filter:filter}, function(data) {
 		generateTable(JSON.parse(data));
+		if (sortedElem) {
+			sortedElem = '#' + sortedElem;
+			if (order === 'A') $('<span></span>').addClass('glyphicon glyphicon-menu-down').appendTo(sortedElem);
+			else $('<span></span>').addClass('glyphicon glyphicon-menu-up').appendTo(sortedElem);
+		}
 	});
 }
 
@@ -85,18 +130,18 @@ function assignKey() {
 	if (wait()) return;
 	var name = $('#name-input').val(),
 		email = $('#email-input').val(), 
-    guid = $('#guid-input').val();
+		guid = $('#guid-input').val();
   
-  if (!email || email == "") {
-    alert("Email required");
-    return;
-  }
-  
-  if (!name || name == "") {
-    alert("Email required");
-    return;
-  }
-    
+	if (!email || email == "") {
+		alert("Email required");
+		return;
+	}
+	 
+	if (!name || name == "") {
+		alert("Name required");
+		return;
+	}
+	
 	callAjax('assign-key', {name:name,email:email,guid: guid});
 }
 
@@ -108,10 +153,11 @@ function revokeKey(elem) {
 
 $(document).ready(function() {
 	$('#key-form').on('submit', assignKey);
-	$('.sort').on('click', function() {
-		var sort = $(this).data('sort');
-		var order = $(this).data('order');
-		getSortedKeys(sort, order);
-	});
-	getAllKeys();
+	$('#search-form').on('submit', search);
+	getSortedKeys(sort, order);
+});
+
+$(document).on('click', 'th', function() {
+	sortedElem = $(this).attr('id');
+	changeSort(sortedElem);
 });
