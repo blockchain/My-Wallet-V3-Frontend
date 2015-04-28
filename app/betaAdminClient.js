@@ -132,7 +132,8 @@ function insertSortIcon() {
 	}
 }
 
-function assignKey() {
+function assignKey(event) {
+	event.preventDefault();
 	if (wait()) return;
 	var name = $('#name-input').val(),
 		email = $('#email-input').val(), 
@@ -157,7 +158,8 @@ function revokeKey(elem) {
 	callAjax('delete-key', {key:key});
 }
 
-function updateKey(key) {
+function updateKey(event) {
+	event.preventDefault();
 	if (wait()) return;
 	var key = $('#edit-key-input').val();
 	var name = $('#edit-name-input').val();
