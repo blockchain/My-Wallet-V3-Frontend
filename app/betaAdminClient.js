@@ -150,6 +150,7 @@ function assignKey(event) {
 	}
 	
 	callAjax('assign-key', {name:name,email:email,guid: guid});
+	$('#key-modal').modal('toggle');
 }
 
 function revokeKey(elem) {
@@ -173,6 +174,7 @@ function updateKey(event) {
 		selection: {key:key},
 		update: update
 	});
+	$('#edit-modal').modal('toggle');
 }
 
 function showEditModal(elem) {
