@@ -196,5 +196,5 @@ $(document).ready(function() {
 
 $(document).on('click', 'th', function() {
 	sortedElem = $(this).attr('id');
-	changeSort(sortedElem);
+	if (sortedElem !== undefined) changeSort(sortedElem);
 });
