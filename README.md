@@ -24,7 +24,7 @@ npm install
 grunt build
 ```
 
-Grunt compiles the view templates and copies some CSS. Keep it running:
+Grunt compiles the view templates and CSS. Keep it running:
 
     grunt
 
@@ -50,7 +50,7 @@ cp betakeys-template.MDF betakeys.MDF
 ```
 
 You should see a number of example users at:
-http://local.blockchain.com:8080/betaadmin
+http://local.blockchain.com:8080/betaadmin/
 
 ## Usage
 

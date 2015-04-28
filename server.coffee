@@ -1,7 +1,5 @@
 express = require("express")
 compression = require('compression')
-Guid = require('node-uuid')
-sqlite3 = require('sqlite3').verbose()
 app = express()
 bodyParser = require('body-parser')
 auth = require('basic-auth')
@@ -73,8 +71,8 @@ app.configure ->
     app.set "view engine", "jade"
     app.use express.bodyParser()
     app.use express.methodOverride()
-    app.set "views", __dirname + "/app"
-    app.use express.static(__dirname + "/app")
+    app.set "views", __dirname
+    app.use express.static(__dirname)
     app.use require("connect-assets")()
   
   app.use express.errorHandler(
@@ -97,7 +95,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
     else if dist
       response.render "index.html"  
     else
-      response.render "index.jade"
+      response.render "app/index.jade"
       
   app.post "/check_beta_key_unused", (request, response) ->
     hdBeta.verifyKey request.body.key, (verified) ->
@@ -141,7 +139,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
       if dist
         response.render "admin.html"
       else
-        response.render "admin.jade"      
+        response.render "app/admin.jade"      
 
   app.get "/betaadmin/api/:method", (request, response, next) ->
     credentials = auth(request)
@@ -173,7 +171,7 @@ else
     if dist
       response.render "index.html"
     else
-      response.render "index.jade"
+      response.render "app/index.jade"
       
 app.listen port, ->
   console.log "Listening on " + port

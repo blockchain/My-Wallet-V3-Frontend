@@ -3,20 +3,29 @@ html(lang='en')
   head
     meta(charset='utf-8')
     title Beta Admin
+    
+    <!-- @if !PRODUCTION -->
     link(rel='stylesheet', href='../bower_components/bootstrap-css-only/css/bootstrap.css')
     script(src='../bower_components/jquery/dist/jquery.js')
-    script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
 
-    !=css('app')
-    !=css('navigation')
-    !=css('login')
+    link(rel='stylesheet', href='../build/css/app.css')
+    link(rel='stylesheet', href='../build/css/navigation.css')
+    link(rel='stylesheet', href='../build/css/login.css')
+    <!-- @endif -->
+    
+    script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
+    
+    <!-- @if PRODUCTION !>
+    link(rel='stylesheet', href='../beta-admin.css')
+    script(src='../beta-admin.js')
+    <!-- @endif -->
 
   body
     .navbar.navbar-default.navbar-inverse.navbar-unauth(role='navigation')
       .container-fluid
         .navbar-header
           a.navbar-brand
-            img#logo(src="/img/logo-updated.png" alt="Blockchain")
+            img#logo(src="../img/logo-updated.png" alt="Blockchain")
         .navbar-collapse.collapse
           ul.nav.navbar-nav.navbar-right
             li.item
@@ -103,5 +112,6 @@ html(lang='en')
               .form-group
                 .col-xs-2.col-xs-offset-2
                   input#edit-button.btn.btn-default(type="submit" value="Update")
-
-    script(src='../betaAdminClient.js')
+    <!-- @if !PRODUCTION -->
+    script(src='../app/betaAdminClient.js')
+    <!-- @endif -->

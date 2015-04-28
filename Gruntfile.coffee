@@ -23,6 +23,17 @@ module.exports = (grunt) ->
         options: {
           mangle: false
         }
+        
+    preprocess:
+      options: {
+        context : {
+          PRODUCTION: true
+        }
+      },
+      html:
+        expand: true
+        src: 'build/admin.html'
+        dest: ''
 
     concat:
       options:
@@ -41,9 +52,8 @@ module.exports = (grunt) ->
           'build/translations.js'
           'assets/js/webcam.js'
           'build/bower_components/angular-audio/app/angular.audio.js'
-          # 'app/bower_components/angular-bootstrap-slider/slider.js'
           'build/bower_components/angular-inview/angular-inview.js'
-          'assets/js/templates.js'
+          'build/js/templates.js'
           'build/bower_components/bc-qr-reader/dist/bc-qr-reader.js'
           'build/bower_components/angular-password-entropy/password-entropy.js'
           'build/bower_components/intl-tel-input/lib/libphonenumber/build/utils.js'
@@ -57,7 +67,6 @@ module.exports = (grunt) ->
           'build/bower_components/intl-tel-input/build/js/intlTelInput.js'
           'build/bower_components/international-phone-number/releases/international-phone-number.js'
           'build/bower_components/browserdetection/src/browser-detection.js'
-          # 'app/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.js'
         ]
 
         dest: "build/application-dependencies.js"
@@ -81,27 +90,27 @@ module.exports = (grunt) ->
           "build/bower_components/jquery/dist/jquery.js"
           "app/betaAdminClient.js"
         ]
-        dest: "dist/beta.js"
+        dest: "dist/beta-admin.js"
         
       application_debug: 
         src: [
           'build/mywallet.js'
-          'app/bower_components/angular/angular.js'
-          'app/bower_components/angular-sanitize/angular-sanitize.js'
-          'app/bower_components/angular-cookies/angular-cookies.min.js'
-          'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
-          'app/bower_components/angular-ui-router/release/angular-ui-router.min.js'
-          'app/bower_components/angular-ui-select/dist/select.min.js'
-          'app/bower_components/qrcode/lib/qrcode.min.js'
-          'app/bower_components/angular-qr/angular-qr.min.js'
-          'app/bower_components/angular-local-storage/dist/angular-local-storage.min.js'
-          'app/bower_components/numeral/min/numeral.min.js'
-          'app/bower_components/angular-numeraljs/dist/angular-numeraljs.min.js'
-          'app/bower_components/angular-translate/angular-translate.min.js'
-          'app/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js'
-          # 'app/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js'
-          'app/bower_components/intl-tel-input/build/js/intlTelInput.min.js'
-          'app/bower_components/international-phone-number/releases/international-phone-number.min.js'
+          'bower_components/angular/angular.js'
+          'bower_components/angular-sanitize/angular-sanitize.js'
+          'bower_components/angular-cookies/angular-cookies.min.js'
+          'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
+          'bower_components/angular-ui-router/release/angular-ui-router.min.js'
+          'bower_components/angular-ui-select/dist/select.min.js'
+          'bower_components/qrcode/lib/qrcode.min.js'
+          'bower_components/angular-qr/angular-qr.min.js'
+          'bower_components/angular-local-storage/dist/angular-local-storage.min.js'
+          'bower_components/numeral/min/numeral.min.js'
+          'bower_components/angular-numeraljs/dist/angular-numeraljs.min.js'
+          'bower_components/angular-translate/angular-translate.min.js'
+          'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js'
+          # 'bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js'
+          'bower_components/intl-tel-input/build/js/intlTelInput.min.js'
+          'bower_components/international-phone-number/releases/international-phone-number.min.js'
           'build/application-dependencies.min.js'
         ]
         
@@ -120,7 +129,7 @@ module.exports = (grunt) ->
         ext: ".js"
         
     sass: {
-        dist: {
+        build: {
           files: [{
             expand: true,
             cwd: 'assets/css',
@@ -147,7 +156,7 @@ module.exports = (grunt) ->
           "build/bower_components/bootstrap-css-only/css/bootstrap.css"
           "build/css/navigation.css"
         ],
-        dest: "dist/beta.css"
+        dest: "dist/beta-admin.css"
       },
     },
     
@@ -158,26 +167,26 @@ module.exports = (grunt) ->
         base: "app"
       main: {
         src: ["app/partials/settings/*.jade", "app/partials/*.jade", "app/templates/*.jade"],
-        dest: 'assets/js/templates.js'
+        dest: 'build/js/templates.js'
       }
     },
 
     copy: 
       main:
         files: [
-          # {src: ["jquery.min.js"],     dest: "dist/", cwd: "app/bower_components/jquery/dist", expand: true }
-          {src: ["locale-*.json", "beep.wav", "favicon.ico"], dest: "dist/", cwd: "app", expand: true}
+          # {src: ["jquery.min.js"],     dest: "dist/", cwd: "bower_components/jquery/dist", expand: true }
+          {src: ["beep.wav", "favicon.ico"], dest: "dist/", cwd: "app", expand: true}
           {src: ["index.html"], dest: "dist/"}
           {src: ["index-beta.html"], dest: "dist/"}
-          {src: ["admin.html"], dest: "dist/"}
-          {src: ["img/*"], dest: "dist/", cwd: "app", expand: true}
-          {src: ["locales/*"], dest: "dist/", cwd: "app", expand: true}
-          {src: ["fonts/*"], dest: "dist/", cwd: "app/bower_components/bootstrap-css-only", expand: true}
+          {src: ["admin.html"], dest: "dist/", cwd: "build", expand: true}
+          {src: ["img/*"], dest: "dist/", expand: true}
+          {src: ["locales/*"], dest: "dist/", expand: true}
+          {src: ["fonts/*"], dest: "dist/", cwd: "bower_components/bootstrap-css-only", expand: true}
         ]
         
       angular_css:
         files: [
-          {src: ["angular-csp.css"], dest: "assets/css", cwd: "app/bower_components/angular", expand: true }
+          {src: ["angular-csp.css"], dest: "assets/css", cwd: "bower_components/angular", expand: true }
         ]
         
       beta:
@@ -190,26 +199,24 @@ module.exports = (grunt) ->
     watch: {
       scripts: {
         files: ['app/partials/**/*.jade', 'app/templates/**/*.jade'],
-        tasks: ['html2js'],
+        tasks: ['html2js', 'sass'],
         options: {
           spawn: false,
         },
       },
       css: {
-        files: ['app/bower_components/angular/angular-csp.css']
+        files: ['bower_components/angular/angular-csp.css']
         task:  ['copy:angular_css']
       }
     },
 
     jade: {
-      debug: {
+      html: {
         options: {
-          data: {
-            timestamp: "<%= 'test' %>"
-          }
+          client: false
         },
         files: {
-          "admin.html": "app/admin.jade"
+          "build/admin.html": "app/admin.jade"
         }
       }
     },
@@ -278,8 +285,8 @@ module.exports = (grunt) ->
           src: [
             'dist/application.min.js'
             'dist/application.css'
-            'dist/beta.js'
-            'dist/beta.css'
+            'dist/beta-admin.js'
+            'dist/beta-admin.css'
             'dist/favicon.ico'
           ]
         
@@ -298,7 +305,7 @@ module.exports = (grunt) ->
            
       skip_check_dependencies:
         command: () ->
-          'cp -r node_modules build && cp -r app/bower_components build'
+          'cp -r node_modules build && cp -r bower_components build'
         
       npm_install_dependencies:
         command: () ->
@@ -325,6 +332,8 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-rename-assets')
   grunt.loadNpmTasks('grunt-shell')
   grunt.loadNpmTasks('grunt-shrinkwrap')
+  grunt.loadNpmTasks('grunt-preprocess')
+  
     
   grunt.registerTask "compile", ["coffee"]  
     
@@ -354,6 +363,8 @@ module.exports = (grunt) ->
     "concat:application"
     "sass"
     "concat_css:app"
+    "jade"
+    "preprocess"
     "copy:main"
     "copy:beta"
     "dist_beta" # We don't check beta dependencies against a whitelist 
@@ -371,6 +382,8 @@ module.exports = (grunt) ->
     "concat:application"
     "sass"
     "concat_css:app"
+    "jade"
+    "preprocess"
     "copy:main"
     "copy:beta"
     "dist_beta"
@@ -388,6 +401,8 @@ module.exports = (grunt) ->
     "concat:application_debug"
     "sass"
     "concat_css:app"
+    "jade"
+    "preprocess"
     "copy:main"
     "copy:beta"
     "dist_beta"
