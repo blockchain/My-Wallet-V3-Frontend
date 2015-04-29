@@ -79,9 +79,15 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     !=js('services/wallet')
     !=js('services/security_center')
     !=js('services/adverts')
-    !=js('templates')
     
+    script(src='build/js/templates.js')
+        
     script(src='bower_components/bc-qr-reader/dist/bc-qr-reader.js')
     
+    script.
+      if(browserDetection().browser === "ie" && browserDetection().version < 11) {
+        alert("Internet Explorer 10 and older are not supported");
+        window.location = "https://blockchain.info/"
+      }
 
   body(ng-controller="AppCtrl", ui-view="body")

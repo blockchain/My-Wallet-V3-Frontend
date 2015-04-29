@@ -55,8 +55,11 @@ app.configure ->
       res.setHeader "content-security-policy", "img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-src 'self' https://*.youtube.com;; script-src 'self'; connect-src 'self' *.blockchain.info wss://*.blockchain.info https://blockchain.info https://api.sharedcoin.com; object-src 'none'; media-src 'self' data: mediastream:; font-src local.blockchain.com:* dev.blockchain.info;"
     else if req.url.indexOf("beta_key")
       # Don't cache these
+      res.setHeader('Cache-Control', 'public, max-age=0, no-cache');
     else if dist
       res.setHeader('Cache-Control', 'public, max-age=31557600');
+    else
+      res.setHeader('Cache-Control', 'public, max-age=0, no-cache');
     next()
     
   app.use app.router  

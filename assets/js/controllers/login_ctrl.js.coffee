@@ -2,23 +2,45 @@
   $scope.status = Wallet.status    
   $scope.settings = Wallet.settings
   
+  $scope.disableLogin = null
+  
   # Browser compatibility warnings:
+  # * Secure random number generator: https://developer.mozilla.org/en-US/docs/Web/API/RandomSource/getRandomValues
+  # * AngularJS support (?)
+  
   if browserDetection().browser == "ie"
-    if browserDetection().version < 10
-      $translate("MINIMUM_IE_10", {version: browserDetection().version}).then (translation) ->
+    if browserDetection().version < 11
+      $translate("MINIMUM_BROWSER", {browser: "Internet Explorer", requiredVersion: 11, userVersion: browserDetection().version}).then (translation) ->
         Wallet.displayError(translation, true)
+      $scope.disableLogin = true
     else  
       $translate("WARN_AGAINST_IE").then (translation) ->
         Wallet.displayWarning(translation, true)
+  else if browserDetection().browser == "chrome" 
+    if browserDetection().version < 11
+      $translate("MINIMUM_BROWSER", {browser: "Chrome", requiredVersion: 11, userVersion: browserDetection().version}).then (translation) ->
+        Wallet.displayError(translation, true)
+      $scope.disableLogin = true
+  else if browserDetection().browser == "firefox" 
+    if browserDetection().version < 21
+      $translate("MINIMUM_BROWSER", {browser: "Firefox", requiredVersion: 21, userVersion: browserDetection().version}).then (translation) ->
+        Wallet.displayError(translation, true)
+      $scope.disableLogin = true
+  else if browserDetection().browser == "safari" 
+    if browserDetection().version < 3
+      $translate("MINIMUM_BROWSER", {browser: "Safari", requiredVersion: 3, userVersion: browserDetection().version}).then (translation) ->
+        Wallet.displayError(translation, true)
+      $scope.disableLogin = true
+  else if browserDetection().browser == "opera" 
+    if browserDetection().version < 15
+      $translate("MINIMUM_BROWSER", {browser: "Opera", requiredVersion: 15, userVersion: browserDetection().version}).then (translation) ->
+        Wallet.displayError(translation, true)
+      $scope.disableLogin = true
+  else
+    # Warn against unknown browser. Tell user to pay attention to random number generator and CORS protection.
+    $translate("UNKNOWN_BROWSER").then (translation) ->
+      Wallet.displayWarning(translation, true)
     
-  # # Browser performance warnings:
-  # if browserDetection().browser == "firefox"
-  #   $translate("WARN_FIREFOX_NO_WEB_WORKERS").then (translation) ->
-  #     Wallet.displayWarning(translation, true)
-  #
-  # if browserDetection().browser == "ie" && browserDetection().version == 10
-  #   $translate("WARN_IE_10_NO_WEB_WORKERS").then (translation) ->
-  #     Wallet.displayWarning(translation, true)
   
   if Wallet.guid?
     $scope.uid = Wallet.guid

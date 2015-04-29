@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="application.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <script type="text/javascript" src="application.min.js"></script>
+    <script>if(browserDetection().browser === "ie" && browserDetection().version < 11) {
+      alert("Internet Explorer 10 and older are not supported");
+      window.location = "https://blockchain.info/"
+    }
+    </script>
   </head>
   <body ng-controller="AppCtrl" ui-view="body">
   </body>
