@@ -6,6 +6,7 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     meta(name="theme-color" content="#187fc0")
     meta(name="apple-itunes-app" content="app-id=493253309")
     title Blockchain Wallet HD
+    <!-- @if !PRODUCTION -->
     link(rel="stylesheet", href="bower_components/angular-ui-select/dist/select.css")
     script(src='bower_components/jquery/dist/jquery.js')
     script(src='bower_components/angular/angular.js')
@@ -153,6 +154,13 @@ html(lang='en', ng-app='walletApp', ng-init='savePassword=' + process.env.SAVE_P
     script(src='build/js/templates.js')
         
     script(src='bower_components/bc-qr-reader/dist/bc-qr-reader.js')
+    
+    <!-- @endif -->
+    
+    <!-- @if PRODUCTION !>
+    link(rel='stylesheet', href='application.css')
+    script(src='application.min.js')
+    <!-- @endif -->
     
     script.
       if(browserDetection().browser === "ie" && browserDetection().version < 11) {

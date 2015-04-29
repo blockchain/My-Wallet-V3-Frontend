@@ -32,7 +32,7 @@ module.exports = (grunt) ->
       },
       html:
         expand: true
-        src: 'build/admin.html'
+        src: ['build/admin.html', 'build/index.html']
         dest: ''
 
     concat:
@@ -41,16 +41,15 @@ module.exports = (grunt) ->
         
       application_dependencies:
         src: [
-          'build/wrappers/*.js' # Wrappers around MyWallet, MyWalletStore, etc
-          'build/services/*.js'
-          'build/controllers/*.js'
-          'build/controllers/settings/*.js'
-          'build/app.js' 
-          'build/directives/*.js'
-          'build/filters.js'
-          'build/routes.js'
-          'build/translations.js'
-          'assets/js/webcam.js'
+          'build/js/wrappers/*.js' # Wrappers around MyWallet, MyWalletStore, etc
+          'build/js/services/*.js'
+          'build/js/controllers/*.js'
+          'build/js/controllers/settings/*.js'
+          'build/js/app.js' 
+          'build/js/directives/*.js'
+          'build/js/filters.js'
+          'build/js/routes.js'
+          'build/js/translations.js'
           'build/bower_components/angular-audio/app/angular.audio.js'
           'build/bower_components/angular-inview/angular-inview.js'
           'build/js/templates.js'
@@ -175,7 +174,7 @@ module.exports = (grunt) ->
       main:
         files: [
           {src: ["beep.wav", "favicon.ico"], dest: "dist/", cwd: "app", expand: true}
-          {src: ["index.html"], dest: "dist/"}
+          {src: ["index.html"], dest: "dist/", cwd: "build", expand: true}
           {src: ["index-beta.html"], dest: "dist/"}
           {src: ["admin.html"], dest: "dist/", cwd: "build", expand: true}
           {src: ["img/*"], dest: "dist/", expand: true}
@@ -227,6 +226,8 @@ module.exports = (grunt) ->
           client: false
         files:
           "build/admin.html": "app/admin.jade"
+          "build/index.html": "app/index.jade"
+          
     
     rename:
       assets: # Renames all images, fonts, etc and updates application.min.js, application.css and admin.html with their new names.
