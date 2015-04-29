@@ -128,32 +128,32 @@ module.exports = (grunt) ->
         dest: 'build'
         ext: ".js"
         
-    sass: {
-        build: {
-          files: [{
-            expand: true,
-            cwd: 'assets/css',
-            src: ['**/*.scss', '**/*.css'],
-            dest: 'build/css',
-            ext: '.css'
-          }]
-        }
-      }
+    sass: 
+      build: 
+        files: [{
+          expand: true,
+          cwd: 'assets/css',
+          src: ['**/*.scss'],
+          dest: 'build/css',
+          ext: '.css'
+        }]
+      options:
+        loadPath: ["bower_components/bootstrap-sass/assets/stylesheets"] 
 
     concat_css: {
       app: {
         src: [
-          "build/bower_components/bootstrap-css-only/css/bootstrap.css"
           "build/bower_components/angular-ui-select/dist/select.min.css"
           # "build/bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css"
-          'build/bower_components/angular/angular-csp.css'
+          "build/bower_components/angular/angular-csp.css"
+          "build/css/blockchain.css" # Needs to be loaded first
           "build/css/**/*.css"
         ],
         dest: "dist/application.css"
       },
       beta: {
         src: [
-          "build/bower_components/bootstrap-css-only/css/bootstrap.css"
+          "build/css/blockchain.css"
           "build/css/navigation.css"
         ],
         dest: "dist/beta-admin.css"
@@ -174,19 +174,21 @@ module.exports = (grunt) ->
     copy: 
       main:
         files: [
-          # {src: ["jquery.min.js"],     dest: "dist/", cwd: "bower_components/jquery/dist", expand: true }
           {src: ["beep.wav", "favicon.ico"], dest: "dist/", cwd: "app", expand: true}
           {src: ["index.html"], dest: "dist/"}
           {src: ["index-beta.html"], dest: "dist/"}
           {src: ["admin.html"], dest: "dist/", cwd: "build", expand: true}
           {src: ["img/*"], dest: "dist/", expand: true}
           {src: ["locales/*"], dest: "dist/", expand: true}
-          {src: ["fonts/*"], dest: "dist/", cwd: "bower_components/bootstrap-css-only", expand: true}
+          {src: ["*"], dest: "dist/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts/bootstrap", expand: true}
         ]
         
-      angular_css:
+      css:
         files: [
-          {src: ["angular-csp.css"], dest: "assets/css", cwd: "bower_components/angular", expand: true }
+          {src: ["angular-csp.css"], dest: "build/css", cwd: "bower_components/angular", expand: true }
+          {src: ["intlTelInput.css"], dest: "build/css", cwd: "bower_components/intl-tel-input/build/css", expand: true }
+          {src: ["*.css"], dest: "build/css", cwd: "assets/css", expand: true }
+          {src: ["*"], dest: "build/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts/bootstrap", expand: true}
         ]
         
       beta:
@@ -195,18 +197,26 @@ module.exports = (grunt) ->
           {src: ["beta/package.json"], dest: "dist/", cwd: "app", expand: true}
         ]
         
+      images:
+        files: [
+          {src: ["*"], dest: "build/img", cwd: "img", expand: true }
+        ]
+        
                 
     watch: {
-      scripts: {
+      jade: {
         files: ['app/partials/**/*.jade', 'app/templates/**/*.jade'],
-        tasks: ['html2js', 'sass'],
+        tasks: ['html2js'],
         options: {
           spawn: false,
         },
-      },
+      }
       css: {
-        files: ['bower_components/angular/angular-csp.css']
-        task:  ['copy:angular_css']
+        files: ['assets/css/*.scss'],
+        tasks: ['sass', 'copy:css'],
+        options: {
+          spawn: false,
+        },
       }
     },
 
@@ -339,7 +349,9 @@ module.exports = (grunt) ->
     
   grunt.registerTask "default", [
     "html2js"
-    "copy:angular_css"
+    "sass"
+    "copy:css"
+    "copy:images"
     "watch"
   ]
   
@@ -362,6 +374,7 @@ module.exports = (grunt) ->
     "uglify:application_dependencies"
     "concat:application"
     "sass"
+    "copy:css" # CSS files not processed with sass
     "concat_css:app"
     "jade"
     "preprocess"
@@ -381,6 +394,7 @@ module.exports = (grunt) ->
     "uglify:application_dependencies"
     "concat:application"
     "sass"
+    "copy:css" # CSS files not processed with sass
     "concat_css:app"
     "jade"
     "preprocess"
@@ -400,6 +414,7 @@ module.exports = (grunt) ->
     "concat:mywallet"
     "concat:application_debug"
     "sass"
+    "copy:css" # CSS files not processed with sass
     "concat_css:app"
     "jade"
     "preprocess"
