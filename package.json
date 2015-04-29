@@ -14,7 +14,6 @@
     "chalk": "^0.5.1",
     "coffee-script": "^1.9.1",
     "compression": "^1.3.0",
-    "connect-assets": "^4.3.0",
     "ejs": "~0.8.4",
     "express": "~3.0.0",
     "get-stdin": "^3.0.0",

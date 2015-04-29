@@ -125,7 +125,7 @@ module.exports = (grunt) ->
         flatten: false
         cwd: "assets/js"
         src: ["*.js.coffee", "wrappers/**/*.js.coffee", "controllers/**/*.js.coffee", "directives/**/*.js.coffee", "services/**/*.js.coffee"]
-        dest: 'build'
+        dest: 'build/js'
         ext: ".js"
         
     sass: 
@@ -201,35 +201,32 @@ module.exports = (grunt) ->
         files: [
           {src: ["*"], dest: "build/img", cwd: "img", expand: true }
         ]
-        
                 
-    watch: {
-      jade: {
-        files: ['app/partials/**/*.jade', 'app/templates/**/*.jade'],
-        tasks: ['html2js'],
-        options: {
-          spawn: false,
-        },
-      }
-      css: {
-        files: ['assets/css/*.scss'],
-        tasks: ['sass', 'copy:css'],
-        options: {
-          spawn: false,
-        },
-      }
-    },
+    watch: 
+      jade:
+        files: ['app/partials/**/*.jade', 'app/templates/**/*.jade']
+        tasks: ['html2js']
+        options: 
+          spawn: false
 
-    jade: {
-      html: {
-        options: {
+      css: 
+        files: ['assets/css/*.scss']
+        tasks: ['sass', 'copy:css']
+        options: 
+          spawn: false
+
+      js: 
+        files: ['assets/js/**/*.js.coffee']
+        tasks: ['compile']
+        options: 
+          spawn: false        
+
+    jade: 
+      html:
+        options:
           client: false
-        },
-        files: {
+        files:
           "build/admin.html": "app/admin.jade"
-        }
-      }
-    },
     
     rename:
       assets: # Renames all images, fonts, etc and updates application.min.js, application.css and admin.html with their new names.
@@ -349,6 +346,7 @@ module.exports = (grunt) ->
     
   grunt.registerTask "default", [
     "html2js"
+    "compile"
     "sass"
     "copy:css"
     "copy:images"

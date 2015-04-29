@@ -76,7 +76,6 @@ app.configure ->
     app.use express.methodOverride()
     app.set "views", __dirname
     app.use express.static(__dirname)
-    app.use require("connect-assets")()
   
   app.use express.errorHandler(
     dumpExceptions: true
