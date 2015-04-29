@@ -25,16 +25,27 @@ module.exports = (grunt) ->
         }
         
     preprocess:
-      options: {
-        context : {
-          PRODUCTION: true
-        }
-      },
       html:
+        options: {
+          context : {
+            PRODUCTION: true
+            BETA: false
+          }
+        },
         expand: true
-        src: ['build/admin.html', 'build/index.html']
+        src: ['build/index.html']
         dest: ''
-
+      beta:
+        options: {
+          context : {
+            PRODUCTION: true
+            BETA: true
+          }
+        },
+        expand: true
+        src: ['build/admin.html', 'build/index-beta.html']
+        dest: ''
+        
     concat:
       options:
         separator: ";"
@@ -174,8 +185,7 @@ module.exports = (grunt) ->
       main:
         files: [
           {src: ["beep.wav", "favicon.ico"], dest: "dist/", cwd: "app", expand: true}
-          {src: ["index.html"], dest: "dist/", cwd: "build", expand: true}
-          {src: ["index-beta.html"], dest: "dist/"}
+          {src: ["index.html", "index-beta.html"], dest: "dist/", cwd: "build", expand: true}
           {src: ["admin.html"], dest: "dist/", cwd: "build", expand: true}
           {src: ["img/*"], dest: "dist/", expand: true}
           {src: ["locales/*"], dest: "dist/", expand: true}
@@ -195,6 +205,10 @@ module.exports = (grunt) ->
           {src: ["beta/betaAdminServer.js"], dest: "dist/", cwd: "app", expand: true}
           {src: ["beta/package.json"], dest: "dist/", cwd: "app", expand: true}
         ]
+      
+      beta_index:
+        src: "build/index.html"
+        dest: "build/index-beta.html"
         
       images:
         files: [
@@ -376,6 +390,7 @@ module.exports = (grunt) ->
     "copy:css" # CSS files not processed with sass
     "concat_css:app"
     "jade"
+    "copy:beta_index"
     "preprocess"
     "copy:main"
     "copy:beta"
@@ -396,6 +411,7 @@ module.exports = (grunt) ->
     "copy:css" # CSS files not processed with sass
     "concat_css:app"
     "jade"
+    "copy:beta_index"
     "preprocess"
     "copy:main"
     "copy:beta"
@@ -416,6 +432,7 @@ module.exports = (grunt) ->
     "copy:css" # CSS files not processed with sass
     "concat_css:app"
     "jade"
+    "copy:beta_index"
     "preprocess"
     "copy:main"
     "copy:beta"
