@@ -7,7 +7,7 @@ exports.config = {
     specs: ['**/*_spec.js'],
 
     suites: {
-        transactions: '**/transactions_spec.js',
+        trans: '**/transactions_spec.js',
         login: '**/login_spec.js'
     },
 
@@ -19,7 +19,7 @@ exports.config = {
             pwnormal:   'asdf!@#$asdf',
             email:      'example@example.com',
             nums:       '1234567890',
-            chars:      '$^*%(^*#$&@'
+            chars:      '$^*%(^*#$&@',
         }
     },
 
