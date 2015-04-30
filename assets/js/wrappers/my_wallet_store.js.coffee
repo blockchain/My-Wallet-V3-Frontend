@@ -1,3 +1,3 @@
 walletStoreServices = angular.module("myWalletStoreServices", [])
 walletStoreServices.factory "MyWalletStore", () ->
-  WalletStore
+  Blockchain.WalletStore

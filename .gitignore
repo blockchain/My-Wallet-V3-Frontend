@@ -1,14 +1,14 @@
 node_modules
-app/bower_components
+bower_components
 *.log
 .env
 build
 .sass-cache
 dist
-assets/js/templates.js
 assets/js/bc-qr-reader.js
 assets/js/my-wallet
 coverage
 .idea
 /tests/e2e/login_ignore.js
 *.DS_Store
+betakeys.MDF

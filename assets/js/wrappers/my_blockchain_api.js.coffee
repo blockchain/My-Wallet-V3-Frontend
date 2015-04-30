@@ -1,2 +1,2 @@
 angular.module("myBlockchainApiServices", []).factory "MyBlockchainApi", () ->
-    return BlockchainAPI
+    return Blockchain.BlockchainAPI

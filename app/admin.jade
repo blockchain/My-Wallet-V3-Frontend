@@ -3,30 +3,113 @@ html(lang='en')
   head
     meta(charset='utf-8')
     title Beta Admin
-    link(rel='stylesheet', href='bower_components/bootstrap-css-only/css/bootstrap.css')
-    script(src='bower_components/jquery/dist/jquery.js')
-    //- script(type="text/javascript" src='application.min.js')
-    //- link(rel="stylesheet" href="application.css")
+    
+    <!-- @if !PRODUCTION -->
+    script(src='../bower_components/jquery/dist/jquery.js')
+
+    link(rel='stylesheet', href='../build/css/blockchain.css')
+    link(rel='stylesheet', href='../build/css/navigation.css')
+    <!-- @endif -->
+        
+    <!-- @if PRODUCTION !>
+    link(rel='stylesheet', href='../beta-admin.css')
+    script(src='../beta-admin.js')
+    <!-- @endif -->
+    
+    script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
 
   body
-    div.container
+    .navbar.navbar-default.navbar-inverse.navbar-unauth(role='navigation')
+      .container-fluid
+        .navbar-header
+          a.navbar-brand
+            img#logo(src="../img/logo-updated.png" alt="Blockchain")
+        .navbar-collapse.collapse
+          ul.nav.navbar-nav.navbar-right
+            li.item
+              a(href="/") Home
+            li.item
+              a(href="/") About
+            li.item.active
+              a(href="/") Wallet
+            li.item
+              a(href="/") Explorer
+            li.item
+              a(href="/") Merchant
+            li.item
+              a(href="/") Support
+
+    div.container.login-form
       h1 HD Beta Admin Interface
-      .form-group
-        label New Key
-        form#key-form.form-inline
-          input#name-input.form-control(type="text" placeholder="Name")
-          input#email-input.form-control(type="text" placeholder="Email")
-          input.btn.btn-default(type="submit" value="Assign")
-      .form-group
-        label Sort By
-        .form-inline
-          input.btn.btn-default.sort(type="button" value="Name: A-Z" data-sort="name ASC")
-          input.btn.btn-default.sort(type="button" value="Email: A-Z" data-sort="email ASC")
-          input.btn.btn-default.sort(type="button" value="Last Seen: Least Recent" data-sort="lastseen ASC")
-        .form-inline
-          input.btn.btn-default.sort(type="button" value="Name: Z-A" data-sort="name DESC")
-          input.btn.btn-default.sort(type="button" value="Email: Z-A" data-sort="email DESC")
-          input.btn.btn-default.sort(type="button" value="Last Seen: Most Recent" data-sort="lastseen DESC")
+      .form-group.col-xs-6
+        form.form-inline
+          button.btn.btn-default(type="button" data-toggle="modal" data-target="#key-modal") + New Key
+      .form-group.col-xs-6
+        form#search-form.form-inline.pull-right
+          input#search-input.form-control(type="text" placeholder="Search")
+          select#search-dropdown.form-control
+            option name
+            option email
+            option key
+            option guid
+          button#search.btn.btn-default(type="submit")
+            span(class="glyphicon glyphicon-arrow-right")
       .table-div
         table#key-table.table.table-hover.table-condensed
-    script(src='beta/betaAdminClient.js')
+
+    div#key-modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="keyModal" aria-hidden="true")
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button.close(type="button" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") &times;
+            h3 Assign New Key
+          div.modal-body
+            form#key-form.form-horizontal
+              .form-group
+                label.col-xs-2.control-label Name
+                .col-xs-8
+                  input#name-input.form-control(type="text")
+              .form-group
+                label.col-xs-2.control-label Email
+                .col-xs-8
+                  input#email-input.form-control(type="text")
+              .form-group
+                label.col-xs-2.control-label Existing Guid
+                .col-xs-8
+                  input#guid-input.form-control(type="text" placeholder="(optional)")
+              .form-group
+                .col-xs-2.col-xs-offset-2
+                  input#key-button.btn.btn-default(type="submit" value="Assign")
+
+    div#edit-modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true")
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button.close(type="button" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") &times;
+            h3 Edit Entry
+          div.modal-body
+            form#edit-form.form-horizontal
+              .form-group
+                label.col-xs-2.control-label Key
+                .col-xs-8
+                  input#edit-key-input.form-control(type="text" disabled)
+              .form-group
+                label.col-xs-2.control-label Name
+                .col-xs-8
+                  input#edit-name-input.form-control(type="text" placeholder="(optional)")
+              .form-group
+                label.col-xs-2.control-label Email
+                .col-xs-8
+                  input#edit-email-input.form-control(type="text" placeholder="(optional)")
+              .form-group
+                label.col-xs-2.control-label Guid
+                .col-xs-8
+                  input#edit-guid-input.form-control(type="text" placeholder="(optional)")
+              .form-group
+                .col-xs-2.col-xs-offset-2
+                  input#edit-button.btn.btn-default(type="submit" value="Update")
+    <!-- @if !PRODUCTION -->
+    script(src='../app/betaAdminClient.js')
+    <!-- @endif -->
