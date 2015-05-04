@@ -110,9 +110,10 @@ walletStoreServices.factory "MyWalletSpender", () ->
        successCallback()      
     }
     {
-        prepareFromAddress: (fromAddress, amount, feeAmount, proceed) ->
-          proceed(spendTo)
-        prepareFromAccount: (fromIndex, amount, feeAmount, proceed) ->
-          proceed(spendTo)
-        
+        fromAddress: (fromAddress, amount, feeAmount) ->
+          spendTo
+        fromAccount: (fromIndex, amount, feeAmount) ->
+          spendTo
+        sweep: (address, amount) ->
+          successCallback()
     }

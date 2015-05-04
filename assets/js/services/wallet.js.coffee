@@ -601,11 +601,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           spendFrom.toAccount(destination.index)
         else if destination.address?
           spendFrom.toAddress(destination.address)
-    
-      # sweepLegacyAddressToAccount: (fromAddress, toAccountIndex) ->
-      #   wallet.my.sweepLegacyAddressToAccount(fromAddress.address, toAccountIndex, success, error, {}, needsSecondPassword)
-      #   wallet.updateLegacyAddresses() # Probably too early
-      
+          
+      sweep: (fromAddress, toAccountIndex) ->
+        spender = wallet.spender(null, success, error, {}, needsSecondPassword)
+        spender.addressSweep(fromAddress.address).toAccount(toAccountIndex)
+        
       # sendToEmail: (fromAccountIndex, email, amount, currency) ->
       #   amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
       #   wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, success, error, {}, needsSecondPassword)
