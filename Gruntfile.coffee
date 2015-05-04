@@ -197,7 +197,7 @@ module.exports = (grunt) ->
           {src: ["angular-csp.css"], dest: "build/css", cwd: "bower_components/angular", expand: true }
           {src: ["intlTelInput.css"], dest: "build/css", cwd: "bower_components/intl-tel-input/build/css", expand: true }
           {src: ["*.css"], dest: "build/css", cwd: "assets/css", expand: true }
-          {src: ["*"], dest: "build/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts/bootstrap", expand: true}
+          {src: ["bootstrap/*"], dest: "build/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
         ]
         
       beta:
