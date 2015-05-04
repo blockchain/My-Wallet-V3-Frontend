@@ -15,8 +15,7 @@
   $scope.sending = false # Sending in progress
   
   # getUserMedia is not supported by Safari and IE. 
-  # It is supported but doesn't seem to work in Firefox ( navigator.mozGetUserMedia)
-  $scope.browserWithCamera = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia) != undefined
+  $scope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia ||  navigator.webkitGetUserMedia || navigator.msGetUserMedia) != undefined
     
   $scope.$watch "status.didLoadBalances + status.legacyAddressBalancesLoaded", ->
     if $scope.status.didLoadBalances && $scope.status.legacyAddressBalancesLoaded

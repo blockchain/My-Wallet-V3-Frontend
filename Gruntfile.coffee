@@ -64,6 +64,7 @@ module.exports = (grunt) ->
           'build/bower_components/angular-audio/app/angular.audio.js'
           'build/bower_components/angular-inview/angular-inview.js'
           'build/js/templates.js'
+          'build/bower_components/webcam-directive/app/scripts/webcam.js'
           'build/bower_components/bc-qr-reader/dist/bc-qr-reader.js'
           'build/bower_components/angular-password-entropy/password-entropy.js'
           'build/bower_components/intl-tel-input/lib/libphonenumber/build/utils.js'
