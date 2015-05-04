@@ -114,5 +114,6 @@ walletStoreServices.factory "MyWalletSpender", () ->
           spendTo
         fromAccount: (fromIndex, amount, feeAmount) ->
           spendTo
-        
+        sweep: (address, amount) ->
+          successCallback()
     }

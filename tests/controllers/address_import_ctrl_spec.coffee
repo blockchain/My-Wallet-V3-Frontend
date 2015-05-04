@@ -87,9 +87,9 @@ describe "AddressImportCtrl", ->
     it "should show a spinner during sweep",  inject((Wallet) ->
       spyOn(Wallet, "transaction").and.callFake((success, error) ->
         expect(scope.sweeping).toBe(true)
-        success()
         {
-          sweepLegacyAddressToAccount: () ->
+          sweep: () ->
+            success()
         }
       )
     
