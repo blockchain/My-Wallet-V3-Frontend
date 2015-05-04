@@ -189,7 +189,7 @@ module.exports = (grunt) ->
           {src: ["admin.html"], dest: "dist/", cwd: "build", expand: true}
           {src: ["img/*"], dest: "dist/", expand: true}
           {src: ["locales/*"], dest: "dist/", expand: true}
-          {src: ["*"], dest: "dist/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts/bootstrap", expand: true}
+          {src: ["bootstrap/*"], dest: "dist/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
         ]
         
       css:
@@ -255,7 +255,7 @@ module.exports = (grunt) ->
           callback: (befores, afters) ->
             publicdir = require("fs").realpathSync("dist")
             path = require("path")
-            for referring_file_path in ["dist/application.min.js", "dist/application.css", "dist/admin.html"]
+            for referring_file_path in ["dist/application.min.js", "dist/beta-admin.js", "dist/application.css", "dist/beta-admin.css", "dist/admin.html"]
               contents = grunt.file.read(referring_file_path)
               before = undefined
               after = undefined
@@ -272,7 +272,7 @@ module.exports = (grunt) ->
         files: 
           src: [
             'dist/img/*'
-            'dist/fonts/*'
+            'dist/fonts/bootstrap/*'
             'dist/locales/*'
             'dist/beep.wav'
           ]
