@@ -1,0 +1,24 @@
+#!/bin/sh
+# Shell script that runs Karma tests prior to commit
+
+# Get branch name
+branch=`git rev-parse --abbrev-ref HEAD`
+
+# Check that commit is to staging
+if [[ $branch = "staging" ]];
+then
+	echo "Running tests, please be patient..."
+
+	# Running tests and looking for output that indicates failure
+	test_output=`npm run test-single-run | awk '{ print }' | grep FAILED | sed '1q'`
+
+	# Testing the output for failure
+	if [[ $test_output = '' ]];
+	then
+		echo "Tests are passing! Changes committed."
+		exit 0
+	else
+		echo "Tests do not pass! Aborting commit."
+		exit 1
+	fi
+fi

@@ -68,7 +68,8 @@
     "postinstall": "node_modules/bower/bin/bower install",
     "start": "node_modules/coffee-script/bin/coffee server.coffee",
     "test": "node ./node_modules/karma/bin/karma start karma.conf.js",
-    "test-single-run": "node ./node_modules/karma/bin/karma start karma.conf.js  --single-run"
+    "test-single-run": "node ./node_modules/karma/bin/karma start karma.conf.js  --single-run",
+    "install-hooks": "sh ./hooks/installer"
   },
   "engines": {
     "node": "0.10.x"

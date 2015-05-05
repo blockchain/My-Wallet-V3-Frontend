@@ -1,0 +1,10 @@
+#!/bin/sh
+
+while true; do
+    read -p "This installation may overwrite existing git hooks. Continue? (y/n): " yn
+    case $yn in
+        [Yy]* ) exec `cp hooks/pre-commit .git/hooks/pre-commit`; echo "Successfully installed hooks"; break;;
+        [Nn]* ) echo "Canceling installation"; exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
