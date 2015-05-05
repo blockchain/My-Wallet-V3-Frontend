@@ -61,7 +61,7 @@
             span(translate="EMAIL_CODE", ng-show="settings.twoFactorMethod == 2")
             span(translate="GOOGLE_AUTH_CODE", ng-show="settings.twoFactorMethod == 4")
             span(translate="SMS_CODE", ng-show="settings.twoFactorMethod == 5")         
-          div(ng-class="{'col-md-9': settings.twoFactorMethod != 5,  'col-md-7' : settings.twoFactorMethod == 5}" )
+          div(ng-class="{'col-md-9': settings.twoFactorMethod != 5 && beta, 'col-md-6' : settings.twoFactorMethod != 5 && !beta,  'col-md-7' : settings.twoFactorMethod == 5 && beta,  'col-md-6' : settings.twoFactorMethod == 5 && !beta}" )
             input.form-control(type="text", ng-model="twoFactorCode", ng-disabled="busy") 
           .col-md-2(ng-show="settings.twoFactorMethod == 5")
             p.form-control-static
