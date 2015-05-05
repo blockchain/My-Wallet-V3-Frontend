@@ -951,15 +951,18 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   ####################
   # Notification     #
   ####################
+  
+  wallet.beep = () ->
+    sound = ngAudio.load("beep.wav")
+    sound.play()
             
   wallet.monitor = (event, data) ->
     # console.log event
     if event == "on_tx" or event == "on_block"
       before = wallet.transactions.length
       wallet.updateTransactions()
-      if wallet.transactions.length > before        
-        sound = ngAudio.load("beep.wav")
-        sound.play()
+      if wallet.transactions.length > before  
+        wallet.beep()      
         wallet.updateAccountsAndLegacyAddresses()
     else if event == "error_restoring_wallet"
       # wallet.applyIfNeeded()

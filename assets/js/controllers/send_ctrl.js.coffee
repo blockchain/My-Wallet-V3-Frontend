@@ -1,4 +1,4 @@
-@SendCtrl = ($scope, $log, Wallet, $modalInstance, ngAudio, $timeout, $state, $filter, $stateParams, $translate, paymentRequest) ->
+@SendCtrl = ($scope, $log, Wallet, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest) ->
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.accounts = Wallet.accounts
   $scope.addressBook = Wallet.addressBook
@@ -193,8 +193,9 @@
           Wallet.setNote({hash: tx_hash}, note)
         
         $scope.sending = false
-        sound = ngAudio.load("beep.wav")
-        sound.play()
+        
+        Wallet.beep()
+        
         $modalInstance.close ""
         if $scope.transaction.from.index?
           $state.go("wallet.common.transactions", {accountIndex: $scope.transaction.from.index })
