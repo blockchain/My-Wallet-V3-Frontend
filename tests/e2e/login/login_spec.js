@@ -36,6 +36,13 @@ describe('login-page', function() {
 
     });
 
+    afterEach(function() {
+
+        // Refresh to begin test on login page
+        browser.refresh();
+
+    });
+
     it('should validate top navigation items', function() {
 
         browser.findElement(by.id('logo'));
@@ -61,7 +68,6 @@ describe('login-page', function() {
 
     it('should test password strength', function() {
 
-        // Enter beta key and click Create Wallet button
         util.submitBetaKey();
 
         // Test weak password
@@ -104,7 +110,6 @@ describe('login-page', function() {
         confField.clear();
 
     });
-
 
     // Beta key pre-fills email address and disables editing, this test case is disabled
     xit('should test email address validation', function() {

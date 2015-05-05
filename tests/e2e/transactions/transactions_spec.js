@@ -25,43 +25,45 @@ describe('transactions-page', function() {
 
         // Validate account homepage details
         browser.sleep(1000); // Required wait for Request and Send button validation
-
         browser.findElement(by.css('[ng-click="send()"]'));
 
         //////////////////////////////////////////////////////////
         //  This excessive timeout is required as of 4/10/2015  //
         // to avoid 'There are changes still being saved' alert //
+        //    Caused by a bug that triggers a wallet backup     //
         //////////////////////////////////////////////////////////
         browser.sleep(4000);
+
+    });
+
+    afterEach(function() {
+
+        // Refresh to begin test on login page
+        browser.refresh();
 
     });
 
     it('should log out via the "Log Out" button', function() {
 
         // Open Profile drop down menu, click Logout, and dismiss alert
-        element(by.css('a.dropdown-toggle.profile.ng-scope')).click();
-        element.all(by.css('[ng-click="logout()"]')).first().click();
-        browser.switchTo().alert().accept();
+        util.logOut();
 
         // Protractor waits 5 seconds until 'Logged Out' message dismisses
 
         // Find UID label and text field
-        browser.sleep(1000); //Required wait for UID field
-        //util.shouldContainCSS('label.ng-scope', 'UID');
-        browser.findElement(by.css('[translate="UID"]'))
+        browser.sleep(4000); //Required wait for UID field
+        browser.findElement(by.css('[translate="UID"]'));
         browser.findElement(by.model('uid'));
 
         // Find password label and text field
-        //util.shouldContainCSS('label.ng-scope', 'Password');
-        browser.findElement(by.css('[translate="PASSWORD"]'))
+        browser.findElement(by.css('[translate="PASSWORD"]'));
         browser.findElement(by.model('password'));
 
         // Find login and create wallet buttons
         browser.findElement(by.id('login'));
-        browser.findElement(by.css('[ng-click="register()"]'))
-        //util.shouldContainCSS('a.ng-scope', 'Create wallet');
+        browser.findElement(by.css('[ng-click="register()"]'));
 
-    })
+    });
 
     it('should validate account names and balances', function() {
 
@@ -98,7 +100,8 @@ describe('transactions-page', function() {
         // TODO Change to translate="" after translations added
         util.shouldContainCSS('h2', 'Transaction Details');
         browser.findElement(by.css('[translate="VALUE_AT_TX_TIME"]'));
-        browser.sleep(200); // Required for next step to pass
+        browser.sleep(200); // Required for next step to pass in Chrome
+        expect(element(by.cssContainingText('div > span > span > span.ng-binding.ng-isolate-scope', '$0.10')).isPresent()).toBe(true);
         util.shouldContainCSS('div > span > span > span.ng-binding.ng-isolate-scope', '$0.10');
         // TODO Change to translate="" after translations added
         util.shouldContainCSS('h4', 'Value now');
@@ -143,9 +146,9 @@ describe('transactions-page', function() {
         browser.findElement(by.css('[translate="SEND_FROM"]'));
         util.shouldContainCSS('span.ng-binding.ng-scope', account1Name + ' (' + account1TransValue + ')');
 
-        // Close Send modal, open Receive modal
+        // Close Send modal, wait for and click Request button
         browser.findElement(by.css('[ng-click="close()"]')).click();
-        browser.sleep(500);  // Required for modal to dismiss
+        expect(element(by.css('[ng-click="request()"]')).isPresent()).toBe(true);
         browser.findElement(by.css('[ng-click="request()"]')).click();
 
         // Validate Receive modal details

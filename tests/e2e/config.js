@@ -34,11 +34,11 @@ exports.config = {
     },
 
     // Capabilities to be passed to the webdriver instance
-    multiCapabilities: [
-        {
-        // Firefox is not working at the moment, add phantomjs in the future
-        browserName: 'chrome'
-        }
-    ]
+    multiCapabilities: [{
+        'browserName': 'chrome'
+    }, {
+        'browserName': 'firefox'
+    }]
 
 }
+

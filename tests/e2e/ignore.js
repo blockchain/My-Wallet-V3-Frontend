@@ -1,5 +1,3 @@
-
-
 // This file should be ignored as it contains login credentials
 
 exports.uid = 'c8825e86-0cc9-47b1-a025-1f872bc57818';
