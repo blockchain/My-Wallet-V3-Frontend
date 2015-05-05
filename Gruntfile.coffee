@@ -182,10 +182,10 @@ module.exports = (grunt) ->
       }
     },
 
-    copy: 
+    copy:
       main:
         files: [
-          {src: ["beep.wav", "favicon.ico"], dest: "dist/", cwd: "app", expand: true}
+          {src: ["beep.wav"], dest: "dist/"}
           {src: ["index.html", "index-beta.html"], dest: "dist/", cwd: "build", expand: true}
           {src: ["admin.html"], dest: "dist/", cwd: "build", expand: true}
           {src: ["img/*"], dest: "dist/", expand: true}
@@ -256,7 +256,7 @@ module.exports = (grunt) ->
           callback: (befores, afters) ->
             publicdir = require("fs").realpathSync("dist")
             path = require("path")
-            for referring_file_path in ["dist/application.min.js", "dist/beta-admin.js", "dist/application.css", "dist/beta-admin.css", "dist/admin.html"]
+            for referring_file_path in ["dist/application.min.js", "dist/beta-admin.js", "dist/application.css", "dist/beta-admin.css", "dist/admin.html", "dist/index.html", "dist/index-beta.html"]
               contents = grunt.file.read(referring_file_path)
               before = undefined
               after = undefined
@@ -310,7 +310,6 @@ module.exports = (grunt) ->
             'dist/application.css'
             'dist/beta-admin.js'
             'dist/beta-admin.css'
-            'dist/favicon.ico'
           ]
         
     shell: 
