@@ -22,7 +22,7 @@ module.exports = function (shipit) {
       keepReleases: 3,
       shallowClone: true,
       branch: 'shipit-staging',
-      key: '~/.ssh/dev_rsa'
+      key: '~/.ssh/devnyc/justin_id_rsa'
     },
     staging: {
       servers: 'justin@10.0.0.2'
