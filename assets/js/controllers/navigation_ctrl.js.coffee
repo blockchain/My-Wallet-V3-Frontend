@@ -23,6 +23,10 @@
     else
       $scope.doLogout()
   
+  $scope.openZeroBlock = () ->
+    win = window.open('https://zeroblock.com', "_blank")
+    win.focus()
+
   #################################
   #           Private             #
   #################################

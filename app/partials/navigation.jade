@@ -12,6 +12,11 @@
       ul.nav.navbar-nav(ng-show="status.isLoggedIn")
         li.item(ng-class="{ active: isTransactionState() }")
           a.transactions(ng-click="visitTransactions()", translate="TRANSACTIONS")
+        li.item
+          a(ng-click="openZeroBlock()")
+            span
+              fiat(btc="100000000.0")
+            span  / BTC
       ul.nav.navbar-nav.navbar-right(ng-show="status.isLoggedIn")
         li.item(ng-class="{ active: isSecurityState() }")
           a(ui-sref="wallet.common.settings.security-center", ng-class="{'security-level-0': security.level == 0, 'security-level-1': security.level == 1, 'security-level-2': security.level == 2, 'security-level-3': security.level == 3}", translate="SECURITY")
