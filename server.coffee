@@ -129,7 +129,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
 
   # beta key admin
 
-  app.get "/admin/", (request, response, next) ->
+  app.get "/admin/?", (request, response, next) ->
     credentials = auth(request)
     
     if (!credentials || credentials.name != 'blockchain' || credentials.pass != process.env.ADMIN_PASSWORD) 
