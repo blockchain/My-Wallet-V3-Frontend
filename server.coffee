@@ -99,6 +99,18 @@ if process.env.BETA? && parseInt(process.env.BETA)
     else
       response.render "app/index.jade"
       
+  app.get "/request_beta_key", (request, response) ->
+    response.setHeader 'Access-Control-Allow-Origin', (process.env.BLOCKCHAINLOCAL || 'http://localhost:9000')
+    userEmail = request.query.email
+    if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(userEmail))
+      hdBeta.requestKey userEmail, (err) ->
+        if !err
+          response.json { message: 'Successfully submitted request', success: true }
+        else
+          response.json { message: 'Error requesting key', success: false }
+    else
+      response.json { message: 'Invalid email address', success: false }
+
   app.post "/check_beta_key_unused", (request, response) ->
     hdBeta.verifyKey request.body.key, (verified) ->
       if verified
@@ -162,10 +174,13 @@ if process.env.BETA? && parseInt(process.env.BETA)
         hdBeta.assignKey request.query.name, request.query.email, request.query.guid, (key) ->
           response.end JSON.stringify({key:key})
       else if request.params.method == 'delete-key'
-        hdBeta.deleteKey {key:request.query.key}, () ->
+        hdBeta.deleteKey request.query, () ->
           response.json {success: true}
       else if request.params.method == 'update-key'
         hdBeta.updateKey request.query.selection, request.query.update, () ->
+          response.json {success: true}
+      else if request.params.method == 'activate-key'
+        hdBeta.activateKey request.query.selection, request.query.update, () ->
           response.json {success: true}
         
 else

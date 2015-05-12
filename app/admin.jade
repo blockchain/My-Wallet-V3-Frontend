@@ -110,6 +110,27 @@ html(lang='en')
               .form-group
                 .col-xs-2.col-xs-offset-2
                   input#edit-button.btn.btn-default(type="submit" value="Update")
+
+    div#activate-modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="activateModal" aria-hidden="true")
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button.close(type="button" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") &times;
+            h3 Activate
+          div.modal-body
+            form#activate-form.form-horizontal
+              .form-group
+                label.col-xs-2.control-label Email
+                .col-xs-8
+                  input#activate-email-input.form-control(type="text" disabled)
+              .form-group
+                label.col-xs-2.control-label Name
+                .col-xs-8
+                  input#activate-name-input.form-control(type="text" placeholder="(optional)")
+              .form-group
+                .col-xs-2.col-xs-offset-2
+                  input#activate-button.btn.btn-default(type="submit" value="Activate")
     <!-- @if !PRODUCTION -->
     script(src='../app/betaAdminClient.js')
     <!-- @endif -->
