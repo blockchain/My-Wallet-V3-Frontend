@@ -100,11 +100,11 @@ if process.env.BETA? && parseInt(process.env.BETA)
       response.render "app/index.jade"
       
   app.get "/percent_requested", (request, response) ->
-    response.setHeader 'Access-Control-Allow-Origin', (process.env.BLOCKCHAIN || 'http://localhost:9000')
+    response.setHeader 'Access-Control-Allow-Origin', (process.env.BLOCKCHAIN || 'http://blockchain.com')
     response.json { width: (process.env.PERCENT_REQUESTED || 60) }
 
   app.get "/request_beta_key", (request, response) ->
-    response.setHeader 'Access-Control-Allow-Origin', (process.env.BLOCKCHAIN || 'http://localhost:9000')
+    response.setHeader 'Access-Control-Allow-Origin', (process.env.BLOCKCHAIN || 'http://blockchain.com')
     userEmail = request.query.email
     if (parseInt(process.env.PERCENT_REQUESTED) != 100)
       if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(userEmail))
