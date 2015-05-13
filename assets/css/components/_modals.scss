@@ -8,25 +8,46 @@ $black: #595959;
 $send: #8CCA6A;
 
 .bc-modal {
-  .modal-content { background: $light-grey; }
+  .modal-content { background: $light-grey; box-shadow: 0 5px 1px rgba(0, 0, 0, 0.6); }
   .modal-dialog { width: 50%; }
   .modal-body { background: white; }
   .bc-modal-header {
+    position: relative;
     h3 {
       font-weight: 500;
       font-size: 1.5em;
-      margin: 0 0 10px 0;
+      margin-top: 10px;
     }
     h5 {
       font-weight: 100;
       color: darken($ccc, 10%);
-      margin-bottom: 5px;
-      margin-top: 0;
+      margin: 5px 0;
     }
     img {
       margin-right: 10px;
       height: 40px;
     }
+    .step {
+      position: absolute;
+      top: 8px;
+      right: 0;
+      font-size: 11px;
+      padding-right: 14px;
+    }
+  }
+  form { padding: 0 2em; }
+  .form-group { margin-bottom: 10px; }
+  /* .form-control { */
+    /* border: none; */
+    /* box-shadow: none; */
+    /* border-radius: none; */
+    /* border-bottom: 1px solid $ccc; */
+  /* } */
+  label {
+    font-weight: 400;
+    color: darken($ccc, 45%);
+    font-size: 1.2em;
+    margin-bottom: 10px;
   }
   textarea {
     border-radius: 3px;
@@ -73,13 +94,6 @@ $send: #8CCA6A;
       }
     }
   }
-  .total-item {
-    border-top: 1px solid RGBA(4,4,4,.1);
-    border-radius: 3px;
-    p {
-      color: $blue;
-    }
-  }
 
   input[readonly="readonly"] {
     color: $ccc;
@@ -95,11 +109,18 @@ $send: #8CCA6A;
     font-size: 13px;
   }
   .actions {
-    border-top: 1px solid $eee;
     padding: 2em;
     display: flex;
     justify-content: flex-end;
-    .cancel {
+    .cancel, .next, .back, .send {
+      &:focus {
+        outline: none;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .cancel, .back {
       border: none;
       background: transparent;
       color: $ccc;
@@ -117,24 +138,17 @@ $send: #8CCA6A;
         background: darken($black, 10%);
       }
     }
-    .fa-chevron-right, .fa-check {
-      color: white;
-      margin-left: 5px;
-      font-size: 12px;
-    }
-    .next.send {
+    .send {
+      @extend .next;
       padding: 12px 36px;
       background: $send;
       &:hover {
-        text-decoration: none;
+        background: darken($send, 5%);
       }
     }
   }
 
   button {
-    &:focus {
-      outline: none;
-    }
   }
   .fa-arrows-h {
     color: $ccc;
@@ -158,17 +172,6 @@ $send: #8CCA6A;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    label {
-      margin: 0;
-      color: darken($ccc, 45%) !important;
-    }
-    input {
-      border: none;
-      background: transparent;
-      &:focus {
-        outline: none;
-      }
-    }
   }
   .amount-field {
     display: flex;
@@ -229,42 +232,6 @@ $send: #8CCA6A;
       background: #efefef;
     }
   }
-  .control-group {
-    padding: 1em 2em;
-    background: white;
-    input[type="text"]{
-      border: none;
-      background: transparent;
-      padding: 8px 0;
-      border-bottom: 1px solid $ccc;
-      min-width: 350px;
-      &:focus {
-        outline: none;
-        -webkit-appearance: none;
-      }
-    }
-    label {
-      color: darken($ccc, 45%);
-    }
-  }
-  .step {
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 11px;
-    padding-right: 14px;
-  }
-
-  form {
-    transition: all 1s ease-in-out;
-  }
-  .form-wrapper {
-    box-shadow: 0 5px 1px 0 rgba(0,40,68,.4);
-    border-radius: 3px;
-    background: $light-grey;
-    position: relative;
-    margin: 1em;
-  }
   .collapse {
     -webkit-animation: collapse .6s linear 0s 1;
     animation: collapse .6s linear 0s 1;
@@ -282,33 +249,7 @@ $send: #8CCA6A;
 //overrides
 .modal.in .modal-dialog {
   -webkit-transform: translate(0, 20%);
-  -ms-transform: translate(0, 0);
-  -o-transform: translate(0, 0);
+  -ms-transform: translate(0, 20%);
+  -o-transform: translate(0, 20%);
   transform: translate(0, 20%);
-}
-
-//animation crud
-@-webkit-keyframes collapse {
-  10% { -webkit-transform: scale(.9) }
-  20% { -webkit-transform: scale(.8) }
-  30% { -webkit-transform: scale(.7); }
-  40% { -webkit-transform: scale(.6); }
-  50% { -webkit-transform: scale(.5); }
-  60% { -webkit-transform: scale(.6); }
-  70% { -webkit-transform: scale(.7); }
-  80% { -webkit-transform: scale(.8); }
-  90% { -webkit-transform: scale(.9); }
-  100% { -webkit-transform: scale(1); }
-}
-@keyframes collapse {
-  10% { transform: scale(.9) }
-  20% { transform: scale(.8) }
-  30% { transform: scale(.7); }
-  40% { transform: scale(.6); }
-  50% { transform: scale(.5); }
-  60% { transform: scale(.6); }
-  70% { transform: scale(.7); }
-  80% { transform: scale(.8); }
-  90% { transform: scale(.9); }
-  100% { transform: scale(1); }
 }

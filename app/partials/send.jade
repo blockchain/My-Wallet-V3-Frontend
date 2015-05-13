@@ -3,16 +3,17 @@
     img(src="img/arrow-up.png")
     h3(translate="SEND_BITCOIN")
   h5 Send bitcoin instantly to any bitcoin address, email, or phone number
+  p.step Step 1 of 2
 .modal-body#send
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)") 
     | {{alert.msg}}
   div(ng-hide="confirmationStep")
     form.form-horizontal(role="form",name="form",novalidate)
-      .form-group
-        label.col-sm-3.control-label
+      .flex-column.form-group
+        label
           span(translate="SEND_FROM")
           |:
-        .col-sm-7
+        div
           p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")     
           span(ng-show="originsLoaded")
@@ -20,11 +21,11 @@
               ui-select-match {{ maxAndLabelForSelect($select) }}            
               ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)") 
                 span(ng-bind-html="maxAndLabel(origin) | highlight: $select.search" ng-class="{zerobalance: hasZeroBalance(origin)}")
-      .form-group(ng-class="{'has-error': errors.to, 'has-success' : success.to}")
-        label.col-sm-3.control-label
+      .flex-column.form-group(ng-class="{'has-error': errors.to, 'has-success' : success.to}")
+        label
           span(translate="TO")
           |:  
-        .col-sm-7
+        div
           p.form-control-static(ng-hide="originsLoaded", )
             img(src="img/spinner.gif")
           // Use input-group if camera is present.
@@ -41,7 +42,7 @@
             ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search)" refresh-delay="0") 
               span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
           span.help-block {{ errors.to }}
-      .form-group(ng-class="{'has-error': errors.amount}")
+      .flex.form-group(ng-class="{'has-error': errors.amount}")
         label.col-sm-3.control-label(translate="AMOUNT")
         .col-sm-3
           input.form-control(type="text",ng-model="transaction.amount",ng-blur="visualValidate('amount')")          
@@ -137,8 +138,7 @@
       
 .modal-footer.actions
   button.btn.btn-info(ng-click="cameraOff()", ng-show="cameraIsOn", translate="CAMERA_OFF")
-  button.btn.btn-info(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
-  button.btn.btn-info(ng-click="backToForm()", translate="BACK", ng-show="confirmationStep")
-  button.btn.btn-primary(ng-click="goToConfirmation()",ng-disabled="!transactionIsValid", translate="CONTINUE", ng-hide="confirmationStep")
-  button.btn.btn-primary(ui-ladda="{{ sending }}", ng-click="send()",ng-disabled="!transactionIsValid", data-style="expand-left", ladda-translate="SEND", ng-show="confirmationStep")
-  
+  button.cancel(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
+  button.back(ng-click="backToForm()", translate="BACK", ng-show="confirmationStep")
+  button.next(ng-click="goToConfirmation()",ng-disabled="!transactionIsValid", translate="CONTINUE", ng-hide="confirmationStep")
+  button.send(ui-ladda="{{ sending }}", ng-click="send()",ng-disabled="!transactionIsValid", data-style="expand-left", ladda-translate="SEND", ng-show="confirmationStep")
