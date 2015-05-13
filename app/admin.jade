@@ -44,6 +44,7 @@ html(lang='en')
       .form-group.col-xs-6
         form.form-inline
           button.btn.btn-default(type="button" data-toggle="modal" data-target="#key-modal") + New Key
+          button.btn.btn-default(type="button" data-toggle="modal" data-target="#capture-modal") Capture Page
       .form-group.col-xs-6
         form#search-form.form-inline.pull-right
           input#search-input.form-control(type="text" placeholder="Search")
@@ -131,6 +132,53 @@ html(lang='en')
               .form-group
                 .col-xs-2.col-xs-offset-2
                   input#activate-button.btn.btn-default(type="submit" value="Activate")
+
+    div#capture-modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="captureModal" aria-hidden="true")
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button.close(type="button" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") &times;
+            h3 Capture Page Settings
+          div.modal-body
+            form#capture-form.form-horizontal
+              .form-group
+                label.col-xs-4.control-label Current
+                .col-xs-6
+                  .progress
+                    .progress-bar.progress-bar-striped.active(style="width: 0%") 0%
+              .form-group
+                label.col-xs-4.control-label Percent Requested
+                .col-xs-6
+                  input#capture-percent-input.form-control(type="text")
+              .form-group
+                .col-xs-3.col-xs-offset-4
+                  input#capture-button.btn.btn-default(type="submit" value="Set")
+
+    //-div#capture-modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="captureModal" aria-hidden="true")
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button.close(type="button" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") &times;
+            h3 Assign New Cap
+          div.modal-body
+            form#capture-form.form-horizontal
+              .form-group
+                label.col-xs-2.control-label Name
+                .col-xs-8
+                  input#name-input.form-control(type="text")
+              .form-group
+                label.col-xs-2.control-label Email
+                .col-xs-8
+                  input#email-input.form-control(type="text")
+              .form-group
+                label.col-xs-2.control-label Existing Guid
+                .col-xs-8
+                  input#guid-input.form-control(type="text" placeholder="(optional)")
+              .form-group
+                .col-xs-2.col-xs-offset-2
+                  input#capture-button.btn.btn-default(type="submit" value="Assign")
     <!-- @if !PRODUCTION -->
     script(src='../app/betaAdminClient.js')
     <!-- @endif -->
