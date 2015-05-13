@@ -1,0 +1,314 @@
+$blue: #0498D4;
+$green: #86B360;
+$grey: #EEEEEE;
+$light-grey: #F5F7F9;
+$eee: #EEEEEE;
+$ccc: #CCCCCC;
+$black: #595959;
+$send: #8CCA6A;
+
+.bc-modal {
+  .modal-content { background: $light-grey; }
+  .modal-dialog { width: 50%; }
+  .modal-body { background: white; }
+  .bc-modal-header {
+    h3 {
+      font-weight: 500;
+      font-size: 1.5em;
+      margin: 0 0 10px 0;
+    }
+    h5 {
+      font-weight: 100;
+      color: darken($ccc, 10%);
+      margin-bottom: 5px;
+      margin-top: 0;
+    }
+    img {
+      margin-right: 10px;
+      height: 40px;
+    }
+  }
+  textarea {
+    border-radius: 3px;
+    border-color: $eee;
+    height: 60px;
+    width: 300px;
+    &:focus {
+      outline: none;
+    }
+  }
+  .total-amounts {
+    display: flex;
+    flex-direction: column;
+  }
+  .amount-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+    p {
+      margin: 0;
+      flex: 1;
+      color: $ccc;
+      font-size: 14px;
+    }
+    span {
+      font-size: 11px;
+      margin-left: 10px;
+      font-weight: 100;
+      &:hover {
+        cursor: pointer;
+        &:after {
+          content: 'Fees are given to the miners who verify your transaction on the blockchain';
+          position: absolute;
+          margin-left: 5px;
+          background: darken($blue, 25%);
+          color: white;
+          padding: 5px;
+          border-radius: 3px;
+          min-width: 100px;
+          font-size: 13px;
+          z-index: 10000;
+        }
+      }
+    }
+  }
+  .total-item {
+    border-top: 1px solid RGBA(4,4,4,.1);
+    border-radius: 3px;
+    p {
+      color: $blue;
+    }
+  }
+
+  input[readonly="readonly"] {
+    color: $ccc;
+    margin-left: 10px;
+    border-bottom: none !important;
+  }
+  .available {
+    color: $ccc;
+    margin-top: 30px;
+    margin-bottom: 5px;
+    padding: 0;
+    font-weight: 100;
+    font-size: 13px;
+  }
+  .actions {
+    border-top: 1px solid $eee;
+    padding: 2em;
+    display: flex;
+    justify-content: flex-end;
+    .cancel {
+      border: none;
+      background: transparent;
+      color: $ccc;
+      margin-right: 10px;
+    }
+    .next {
+      background: $black;
+      border-radius: 3px;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      transition: all .5s ease-in-out;
+      &:hover {
+        text-decoration: none;
+        background: darken($black, 10%);
+      }
+    }
+    .fa-chevron-right, .fa-check {
+      color: white;
+      margin-left: 5px;
+      font-size: 12px;
+    }
+    .next.send {
+      padding: 12px 36px;
+      background: $send;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  button {
+    &:focus {
+      outline: none;
+    }
+  }
+  .fa-arrows-h {
+    color: $ccc;
+    padding: 0px 10px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .label {
+    color: $blue;
+    margin-bottom: 15px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .usd-amount, .btc-amount {
+    border-bottom: 1px solid $ccc;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    label {
+      margin: 0;
+      color: darken($ccc, 45%) !important;
+    }
+    input {
+      border: none;
+      background: transparent;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  .amount-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    label {
+      margin-right: 10px;
+    }
+  }
+  .send-by {
+    list-style-type: none;
+    position: absolute;
+    top: 0px;
+    right: 25px;
+    li {
+      display: inline-block;
+      margin: 0 10px;
+      color: $ccc;
+      &.active {
+        color: $blue;
+        font-weight: 700;
+      }
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .hide {
+    display: none !important;
+  }
+
+  .hidden {
+    opacity: 0;
+  }
+  .to-field, .public-note {
+    position: relative;
+    label {
+      margin-bottom: 15px;
+    }
+  }
+  .btc, .email, .phone {
+    display: flex;
+    flex-direction: column;
+  }
+  .qr-code {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    right: 33px;
+    top: 50px;
+    background: #fdfdfd;
+    border:1px solid #e5e5e5;
+    padding:5px;
+    &:hover {
+      cursor: pointer;
+      background: #efefef;
+    }
+  }
+  .control-group {
+    padding: 1em 2em;
+    background: white;
+    input[type="text"]{
+      border: none;
+      background: transparent;
+      padding: 8px 0;
+      border-bottom: 1px solid $ccc;
+      min-width: 350px;
+      &:focus {
+        outline: none;
+        -webkit-appearance: none;
+      }
+    }
+    label {
+      color: darken($ccc, 45%);
+    }
+  }
+  .step {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 11px;
+    padding-right: 14px;
+  }
+
+  form {
+    transition: all 1s ease-in-out;
+  }
+  .form-wrapper {
+    box-shadow: 0 5px 1px 0 rgba(0,40,68,.4);
+    border-radius: 3px;
+    background: $light-grey;
+    position: relative;
+    margin: 1em;
+  }
+  .collapse {
+    -webkit-animation: collapse .6s linear 0s 1;
+    animation: collapse .6s linear 0s 1;
+  }
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  ::-webkit-input-placeholder {
+    color: $ccc;
+  }
+}
+
+//overrides
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 20%);
+  -ms-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 20%);
+}
+
+//animation crud
+@-webkit-keyframes collapse {
+  10% { -webkit-transform: scale(.9) }
+  20% { -webkit-transform: scale(.8) }
+  30% { -webkit-transform: scale(.7); }
+  40% { -webkit-transform: scale(.6); }
+  50% { -webkit-transform: scale(.5); }
+  60% { -webkit-transform: scale(.6); }
+  70% { -webkit-transform: scale(.7); }
+  80% { -webkit-transform: scale(.8); }
+  90% { -webkit-transform: scale(.9); }
+  100% { -webkit-transform: scale(1); }
+}
+@keyframes collapse {
+  10% { transform: scale(.9) }
+  20% { transform: scale(.8) }
+  30% { transform: scale(.7); }
+  40% { transform: scale(.6); }
+  50% { transform: scale(.5); }
+  60% { transform: scale(.6); }
+  70% { transform: scale(.7); }
+  80% { transform: scale(.8); }
+  90% { transform: scale(.9); }
+  100% { transform: scale(1); }
+}

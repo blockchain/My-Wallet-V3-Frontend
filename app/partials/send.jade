@@ -1,7 +1,8 @@
-.modal-header
-  .row
-    .col-xs-6
-      h3(translate="SEND_BITCOIN")
+.modal-header.flex-column.bc-modal-header
+  .flex-center
+    img(src="img/arrow-up.png")
+    h3(translate="SEND_BITCOIN")
+  h5 Send bitcoin instantly to any bitcoin address, email, or phone number
 .modal-body#send
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)") 
     | {{alert.msg}}
@@ -135,7 +136,7 @@
         |&nbsp
         input(type="checkbox", ng-model="transaction.publicNote")
       
-.modal-footer
+.modal-footer.actions
   button.btn.btn-info(ng-click="cameraOff()", ng-show="cameraIsOn", translate="CAMERA_OFF")
   button.btn.btn-info(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
   button.btn.btn-info(ng-click="backToForm()", translate="BACK", ng-show="confirmationStep")

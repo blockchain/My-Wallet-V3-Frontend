@@ -9,7 +9,7 @@
       controller: RequestCtrl
       resolve:
         destination: -> null
-      windowClass: "blockchain-modal"
+      windowClass: "bc-modal"
     )
     
   $scope.send = () ->
@@ -20,7 +20,7 @@
       resolve:
         paymentRequest: ->
           {address: "", amount: ""}
-      windowClass: "blockchain-modal"
+      windowClass: "bc-modal"
 
     )
   
