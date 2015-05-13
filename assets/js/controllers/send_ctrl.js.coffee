@@ -204,7 +204,7 @@
           
       Wallet.clearAlerts()
   
-      Wallet.transaction(transactionDidFinish, transactionDidFailWithError).send($scope.transaction.from, $scope.transaction.destination, numeral($scope.transaction.amount), $scope.transaction.currency)
+      Wallet.transaction(transactionDidFinish, transactionDidFailWithError).send($scope.transaction.from, $scope.transaction.destination, numeral($scope.transaction.amount), $scope.transaction.currency, "PublicNote")
       return
 
   $scope.closeAlert = (alert) ->
