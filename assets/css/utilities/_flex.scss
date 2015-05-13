@@ -1,0 +1,29 @@
+%flex { display: flex; }
+
+.flex, .flex-end, .flex-between, .flex-start, .flex-column, .flex-center {
+  @extend %flex;
+}
+
+.flex-none {
+  flex: 0 !important;
+  display: block !important;
+}
+
+.flex-between { justify-content: space-between; }
+
+.flex-align-end { align-items: flex-end; }
+
+.flex-end { justify-content: flex-end; }
+
+.flex-start { justify-content: flex-start; }
+
+.flex-column { flex-direction: column; }
+.flex-center { align-items: center; }
+
+@for $i from 1 through 12 {
+  .flex-#{$i} { flex: $i; }
+}
+
+.flex-justify {
+  justify-content: center;
+}

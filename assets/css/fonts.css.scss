@@ -1,0 +1,21 @@
+@mixin declare-font-face($font-family, $font-filename, $font-weight : normal, $font-style :normal, $font-stretch : normal) {
+  @font-face {
+    font-family: '#{$font-family}';
+    src: url('../fonts/#{$font-filename}.eot');
+    src: url('../fonts/#{$font-filename}.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/#{$font-filename}.ttf') format('truetype'),
+         url('../fonts/#{$font-filename}.svg') format('svg');
+    font-weight: $font-weight;
+    font-style: $font-style;
+    font-stretch: $font-stretch;
+  }
+}
+//Icon Fonts
+
+//Roboto
+@include declare-font-face('Roboto', 'Roboto-Thin', 100);
+@include declare-font-face('Roboto', 'Roboto-Light', 300);
+@include declare-font-face('Roboto', 'Roboto-Regular', 400);
+@include declare-font-face('Roboto', 'Roboto-Medium', 500);
+@include declare-font-face('Roboto', 'Roboto-Bold', 700);
+@include declare-font-face('Roboto', 'Roboto-Black', 900);

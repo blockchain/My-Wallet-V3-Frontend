@@ -191,6 +191,7 @@ module.exports = (grunt) ->
           {src: ["img/*"], dest: "dist/", expand: true}
           {src: ["locales/*"], dest: "dist/", expand: true}
           {src: ["bootstrap/*"], dest: "dist/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
+          {src: ["assets/fonts/*"], dest: "dist/fonts", cwd: "assets/fonts", expand: true}
         ]
         
       css:
@@ -224,7 +225,7 @@ module.exports = (grunt) ->
           spawn: false
 
       css: 
-        files: ['assets/css/*.scss']
+        files: ['assets/css/**/*.scss']
         tasks: ['sass', 'copy:css']
         options: 
           spawn: false
