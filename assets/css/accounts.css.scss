@@ -1,0 +1,38 @@
+nav.main{
+  ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;   
+    
+    li{
+      padding: 3px 0;
+      a{
+        color: rgb(119, 119, 119);
+        font-size: 1.15em;
+        padding: 10px 15px;
+      }
+      
+      a.active{
+      background: rgba(0, 0, 0, 0.06);
+      }
+      
+      ul{
+        background: white;
+        padding: 20px;
+        border: 1px solid rgb(238, 238, 238);
+        padding: 10px 15px;
+        
+        li{
+          span.title{font-weight: 400; float: left;}
+          span.amount{font-weight: 300; float: right;}
+          
+          a{padding: 5px 0;}
+        
+        }
+        
+      }
+      
+    }
+    
+  }
+}

@@ -16,7 +16,7 @@
   "CLOSE": "Close",
   "DASHBOARD": "Dashboard",
   "TRANSACTIONS" : "Transactions",
-  "REQUEST" : "Request",
+  "REQUEST" : "Receive",
   "SEND" : "Send",
   "PENDING_PAYMENTS" : "Pending Payments",
   "RECEIVE_BITCOIN" : "Request",

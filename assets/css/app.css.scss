@@ -1,7 +1,6 @@
 body {
-  font-size: 1.3em;
-  background-color: #f7f7f7 ;
-  background-repeat: repeat-x;
+  font-size: small;
+  background-color: #fff;
   color: #6C6C6C;
   /* Margin bottom by footer height */
   margin-bottom: 110px;
@@ -104,6 +103,11 @@ a{
   margin: 0;
 
     .left-view{
+      //testing
+      margin: -20px 0 0 -30px;
+      background: rgb(246, 246, 246);
+      border-right: 1px solid rgb(221, 221, 221);  
+      
 
 	  .active-accounts{
 		  margin-bottom: 30px;
@@ -113,8 +117,8 @@ a{
 	  }
 
 	  .side-box{
-        background-color: #FAFCFD;
-	    box-shadow: 0 0px 3px 3px rgba(0, 0, 0, 0.05);
+      background-color: #FDFDFD;
+      border: 1px solid rgb(229, 229, 229);
 	  }
 
 
@@ -131,7 +135,6 @@ a{
 
     .right-container{
 	  background: #fff;
-	  box-shadow: 0 0px 3px 3px rgba(0, 0, 0, 0.05);
     }
 }
 
@@ -227,7 +230,6 @@ padding-left: 5px;
 .tx-row .left-view{padding: 0 15px;}
 .tx-row .right-view {
 background-color: #FFFFFF;
-padding: 30px;
 }
 
 .container-fluid {
