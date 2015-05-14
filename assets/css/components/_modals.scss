@@ -1,16 +1,10 @@
-$blue: #0498D4;
-$green: #86B360;
-$grey: #EEEEEE;
-$light-grey: #F5F7F9;
-$eee: #EEEEEE;
-$ccc: #CCCCCC;
-$black: #595959;
-$send: #8CCA6A;
-
 .bc-modal {
-  .modal-content { background: $light-grey; box-shadow: 0 5px 1px rgba(0, 0, 0, 0.6); }
+  .modal-content { background: $light-grey-alt; box-shadow: 0 5px 1px rgba(0, 0, 0, 0.6); }
   .modal-dialog { width: 50%; }
-  .modal-body { background: white; }
+  .modal-body {
+    background: white;
+    min-height: 100px;
+  }
   .bc-modal-header {
     position: relative;
     h3 {
@@ -112,39 +106,8 @@ $send: #8CCA6A;
     padding: 2em;
     display: flex;
     justify-content: flex-end;
-    .cancel, .next, .back, .send {
-      &:focus {
-        outline: none;
-      }
-      &:hover {
-        cursor: pointer;
-      }
-    }
-    .cancel, .back {
-      border: none;
-      background: transparent;
-      color: $ccc;
+    .button-muted {
       margin-right: 10px;
-    }
-    .next {
-      background: $black;
-      border-radius: 3px;
-      border: none;
-      color: white;
-      padding: 8px 12px;
-      transition: all .5s ease-in-out;
-      &:hover {
-        text-decoration: none;
-        background: darken($black, 10%);
-      }
-    }
-    .send {
-      @extend .next;
-      padding: 12px 36px;
-      background: $send;
-      &:hover {
-        background: darken($send, 5%);
-      }
     }
   }
 

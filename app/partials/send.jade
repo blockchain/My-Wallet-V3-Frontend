@@ -11,7 +11,7 @@
     form.form-horizontal(role="form",name="form",novalidate)
       .flex-column.form-group
         label
-          span(translate="SEND_FROM")
+          span(translate="FROM")
           |:
         div
           p.form-control-static(ng-hide="originsLoaded")
@@ -138,7 +138,7 @@
       
 .modal-footer.actions
   button.btn.btn-info(ng-click="cameraOff()", ng-show="cameraIsOn", translate="CAMERA_OFF")
-  button.cancel(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
-  button.back(ng-click="backToForm()", translate="BACK", ng-show="confirmationStep")
-  button.next(ng-click="goToConfirmation()",ng-disabled="!transactionIsValid", translate="CONTINUE", ng-hide="confirmationStep")
-  button.send(ui-ladda="{{ sending }}", ng-click="send()",ng-disabled="!transactionIsValid", data-style="expand-left", ladda-translate="SEND", ng-show="confirmationStep")
+  button.button-muted(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
+  button.button-muted(ng-click="backToForm()", translate="BACK", ng-show="confirmationStep")
+  button.button-default(ng-click="goToConfirmation()",ng-disabled="!transactionIsValid", translate="NEXT", ng-hide="confirmationStep")
+  button.button-success.button-lg(ui-ladda="{{ sending }}", ng-click="send()",ng-disabled="!transactionIsValid", data-style="expand-left", ladda-translate="SEND", ng-show="confirmationStep")
