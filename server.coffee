@@ -99,17 +99,24 @@ if process.env.BETA? && parseInt(process.env.BETA)
     else
       response.render "app/index.jade"
       
+  app.get "/percent_requested", (request, response) ->
+    response.setHeader 'Access-Control-Allow-Origin', (process.env.BLOCKCHAIN || 'http://blockchain.com')
+    response.json { width: (process.env.PERCENT_REQUESTED || 60) }
+
   app.get "/request_beta_key", (request, response) ->
-    response.setHeader 'Access-Control-Allow-Origin', (process.env.BLOCKCHAINLOCAL || 'http://localhost:9000')
+    response.setHeader 'Access-Control-Allow-Origin', (process.env.BLOCKCHAIN || 'http://blockchain.com')
     userEmail = request.query.email
-    if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(userEmail))
-      hdBeta.requestKey userEmail, (err) ->
-        if !err
-          response.json { message: 'Successfully submitted request', success: true }
-        else
-          response.json { message: 'Error requesting key', success: false }
+    if (parseInt(process.env.PERCENT_REQUESTED) != 100)
+      if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(userEmail))
+        hdBeta.requestKey userEmail, (err) ->
+          if !err
+            response.json { message: 'Successfully submitted request', success: true }
+          else
+            response.json { message: 'Error requesting key', success: false }
+      else
+        response.json { message: 'Invalid email address', success: false }
     else
-      response.json { message: 'Invalid email address', success: false }
+      response.json { message: 'Beta key request limit reached', success: false }
 
   app.post "/check_beta_key_unused", (request, response) ->
     hdBeta.verifyKey request.body.key, (verified) ->
@@ -121,8 +128,6 @@ if process.env.BETA? && parseInt(process.env.BETA)
             response.json {verified : false, error: {message: "Invite key already used. Please login instead."}}
       else
         response.json {verified : false, error: {message: "Invite key not found"}}
-        
-
     
   app.post "/check_guid_for_beta_key", (request, response) ->
     hdBeta.isGuidAssociatedWithBetaKey request.body.guid, (verified) ->
@@ -182,6 +187,9 @@ if process.env.BETA? && parseInt(process.env.BETA)
       else if request.params.method == 'activate-key'
         hdBeta.activateKey request.query.selection, request.query.update, () ->
           response.json {success: true}
+      else if request.params.method == 'set-percent-requested'
+        process.env.PERCENT_REQUESTED = parseInt(request.query.percent)
+        response.json {success: true}
         
 else
   app.get "/", (request, response) ->

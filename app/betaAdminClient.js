@@ -143,7 +143,7 @@ function assignKey(event) {
 	if (wait()) return;
 	var name = $('#name-input').val(),
 		email = $('#email-input').val(), 
-		guid = $('#guid-input').val();
+		guid = $.trim($('#guid-input').val());
   
 	if (!email || email == "") {
 		alert("Email required");
@@ -172,7 +172,7 @@ function updateKey(event) {
 	var key = $('#edit-key-input').val();
 	var name = $('#edit-name-input').val();
 	var email = $('#edit-email-input').val();
-	var guid = $('#edit-guid-input').val();
+	var guid = $.trim($('#edit-guid-input').val());
 	var update = {};
 	if (name !== '') update.name = name;
 	if (email !== '') update.email = email;
@@ -209,6 +209,23 @@ function showEditModal(elem) {
 	else $('#activate-modal').modal('show');
 }
 
+function getRequestPercent() {
+	$.getJSON('/percent_requested', function(data) {
+		$('.progress-bar').css('width', data.width + '%').text(data.width + '%');
+	});
+}
+
+function updateCapturePage(event) {
+	event.preventDefault();
+	var percent = $('#capture-percent-input').val();
+	if (percent === '') return;
+	$.get(getRootUrl() + 'set-percent-requested', {
+		percent: percent
+	}).done(getRequestPercent);
+	$('#capture-modal').modal('toggle');
+	$('#capture-percent-input').val('');
+}
+
 $(document).ready(function() {
 	$('#search-form').on('submit', search);
 	$('#key-form').on('submit', assignKey);
@@ -229,7 +246,12 @@ $(document).ready(function() {
 	$('#activate-modal').on('show.bs.modal', function (event) {
 	  $(this).find('#activate-email-input').val(editing.data('email'));
 	});
+	$('#capture-form').on('submit', updateCapturePage);
+	$('#capture-modal').on('shown.bs.modal', function () {
+	  $('#capture-percent-input').focus();
+	});
 	getSortedKeys(sort, order);
+	getRequestPercent();
 });
 
 $(document).on('click', 'th', function() {
