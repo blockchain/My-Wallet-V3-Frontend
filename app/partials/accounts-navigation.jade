@@ -1,4 +1,32 @@
 .left-navigation(ng-show="status.isLoggedIn")
+  nav.main
+    ul
+      li.home
+        a Home
+      li.tx-accounts
+        a Transactions
+        ul.accounts
+          li.clearfix 
+            span.title
+              a(translate="ALL_ACCOUNTS")
+            span.amount(ng-hide="total() == null")
+              a
+                fiat-or-btc(btc="total()") 
+          li.clearfix(ng-repeat="account in accounts | filter:{active:true}", ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex: $index.toString()})")
+            span.title
+              a {{ account.label }}
+            span.amount(ng-show="account.balance != null")
+              a 
+                fiat-or-btc(btc="account.balance") 
+      li.addresses
+        a Addresses
+      li.security
+        a Security
+      li.setting
+        a Setttings
+      li.support
+        a Support
+        
   div
     div.active-accounts.side-box(ng-show="settings.multiAccount")
       table.left-header.accounts
