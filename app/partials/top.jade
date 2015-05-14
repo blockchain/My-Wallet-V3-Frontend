@@ -1,7 +1,7 @@
 .row#top(ng-show="status.isLoggedIn")
   .col-xs-12.col-sm-5.col-md-6
-    button.left-arrow.white(ng-click="request()", translate="REQUEST") 
-    button.right-arrow.blue(ng-click="send()", translate="SEND")
+    button.left-arrow(ng-click="request()", translate="REQUEST") 
+    button.right-arrow(ng-click="send()", translate="SEND")
   .col-xs-12.col-sm-7.col-md-6.balance
     .content
       h1 
