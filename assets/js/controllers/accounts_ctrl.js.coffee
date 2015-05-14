@@ -15,7 +15,7 @@
       controller: AccountFormCtrl
       resolve:
         account: -> undefined
-      windowClass: "blockchain-modal"
+      windowClass: "bc-modal"
       
     )
     

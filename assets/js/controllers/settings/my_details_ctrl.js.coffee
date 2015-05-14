@@ -16,5 +16,5 @@
     modalInstance = $modal.open(
       templateUrl: "partials/settings/change-password.jade"
       controller: ChangePasswordCtrl
-      windowClass: "blockchain-modal"
+      windowClass: "bc-modal"
     )
