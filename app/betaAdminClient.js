@@ -143,7 +143,7 @@ function assignKey(event) {
 	if (wait()) return;
 	var name = $('#name-input').val(),
 		email = $('#email-input').val(), 
-		guid = $('#guid-input').val();
+		guid = $.trim($('#guid-input').val());
   
 	if (!email || email == "") {
 		alert("Email required");
@@ -172,7 +172,7 @@ function updateKey(event) {
 	var key = $('#edit-key-input').val();
 	var name = $('#edit-name-input').val();
 	var email = $('#edit-email-input').val();
-	var guid = $('#edit-guid-input').val();
+	var guid = $.trim($('#edit-guid-input').val());
 	var update = {};
 	if (name !== '') update.name = name;
 	if (email !== '') update.email = email;
