@@ -1,21 +1,94 @@
-@mixin declare-font-face($font-family, $font-filename, $font-weight : normal, $font-style :normal, $font-stretch : normal) {
+@mixin declare-font-face($font-name, $font-family, $font-filename, $font-weight : normal, $font-style :normal, $font-stretch : normal) {
   @font-face {
     font-family: '#{$font-family}';
-    src: url('../fonts/#{$font-filename}.eot');
-    src: url('../fonts/#{$font-filename}.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/#{$font-filename}.ttf') format('truetype'),
-         url('../fonts/#{$font-filename}.svg') format('svg');
+    src: url('../fonts/#{$font-name}/#{$font-filename}.eot');
+    src: url('../fonts/#{$font-name}/#{$font-filename}.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/#{$font-name}/#{$font-filename}.ttf') format('truetype'),
+         url('../fonts/#{$font-name}/#{$font-filename}.svg') format('svg');
     font-weight: $font-weight;
     font-style: $font-style;
     font-stretch: $font-stretch;
   }
 }
 //Icon Fonts
+@include declare-font-face('bc-icons', 'BlockchainFontIcons', 'bc-icons');
+@include declare-font-face('font-awesome', 'FontAwesome', 'fontawesome-webfont');
 
 //Roboto
-@include declare-font-face('Roboto', 'Roboto-Thin', 100);
-@include declare-font-face('Roboto', 'Roboto-Light', 300);
-@include declare-font-face('Roboto', 'Roboto-Regular', 400);
-@include declare-font-face('Roboto', 'Roboto-Medium', 500);
-@include declare-font-face('Roboto', 'Roboto-Bold', 700);
-@include declare-font-face('Roboto', 'Roboto-Black', 900);
+@include declare-font-face('roboto', 'Roboto', 'Roboto-Thin', 100);
+@include declare-font-face('roboto', 'Roboto', 'Roboto-Light', 300);
+@include declare-font-face('roboto', 'Roboto', 'Roboto-Regular', 400);
+@include declare-font-face('roboto', 'Roboto', 'Roboto-Medium', 500);
+@include declare-font-face('roboto', 'Roboto', 'Roboto-Bold', 700);
+@include declare-font-face('roboto', 'Roboto', 'Roboto-Black', 900);
+
+
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translate(0, 0);
+}
+
+[class^="bc-"], [class*=" bc-"] {
+  font-family: 'bc-icons';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+//Blockchain font icon unicode
+
+.bc-address:before {
+  content: "\e600";
+}
+
+.bc-home:before {
+  content: "\e601";
+}
+
+.bc-location:before {
+  content: "\e602";
+}
+
+.bc-logo:before {
+  content: "\e603";
+}
+
+.bc-menu:before {
+  content: "\e604";
+}
+
+.bc-money:before {
+  content: "\e605";
+}
+
+.bc-profile:before {
+  content: "\e606";
+}
+
+.bc-qr-code:before {
+  content: "\e607";
+}
+
+.bc-receive:before {
+  content: "\e608";
+}
+
+.bc-security:before {
+  content: "\e609";
+}
+
+.bc-send:before {
+  content: "\e60a";
+}
