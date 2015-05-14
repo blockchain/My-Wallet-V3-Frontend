@@ -587,10 +587,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
       
     {  
-      send: (from, destination, amount, currency) ->
+      send: (from, destination, amount, currency, publicNote) ->
         amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
         
-        spender = wallet.spender(null, success, error, {}, needsSecondPassword)
+        spender = wallet.spender(publicNote, success, error, {}, needsSecondPassword)
 
         if from.address?
           spendFrom = spender.fromAddress(from.address, amount, 10000)

@@ -114,6 +114,7 @@
     currencySelected: btc, 
     fee: 0
     note: ""
+    publicNote: false
   }
       
   $scope.getFilter = (search) ->
@@ -180,6 +181,11 @@
   $scope.send = () ->
     unless $scope.sending
       $scope.sending = true
+
+      if $scope.transaction.publicNote
+        publicNote = $scope.transaction.note
+        if publicNote == ""
+          publicNote = null
     
       transactionDidFailWithError = (message) ->
         if message
@@ -187,11 +193,12 @@
         $scope.sending = false
       
       transactionDidFinish = (tx_hash) ->
-        # Save note, if any:
-        note = $scope.transaction.note.trim()
-        if note != ""
-          Wallet.setNote({hash: tx_hash}, note)
-        
+        if not $scope.transaction.publicNote
+          # Save private note, if any:
+          note = $scope.transaction.note.trim()
+          if note != ""
+            Wallet.setNote({hash: tx_hash}, note)          
+
         $scope.sending = false
         
         Wallet.beep()
@@ -204,7 +211,7 @@
           
       Wallet.clearAlerts()
   
-      Wallet.transaction(transactionDidFinish, transactionDidFailWithError).send($scope.transaction.from, $scope.transaction.destination, numeral($scope.transaction.amount), $scope.transaction.currency)
+      Wallet.transaction(transactionDidFinish, transactionDidFailWithError).send($scope.transaction.from, $scope.transaction.destination, numeral($scope.transaction.amount), $scope.transaction.currency, publicNote)
       return
 
   $scope.closeAlert = (alert) ->
