@@ -131,8 +131,9 @@
           span(translate="NOTE") 
           |:
         textarea.form-control(rows="3", ng-model="transaction.note")
-        //- | []
-        //- span(translate="MAKE_PUBLIC")
+        span(translate="MAKE_PUBLIC")
+        |&nbsp
+        input(type="checkbox", ng-model="transaction.publicNote")
       
 .modal-footer
   button.btn.btn-info(ng-click="cameraOff()", ng-show="cameraIsOn", translate="CAMERA_OFF")

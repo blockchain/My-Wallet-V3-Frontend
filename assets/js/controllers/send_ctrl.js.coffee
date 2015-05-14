@@ -114,6 +114,7 @@
     currencySelected: btc, 
     fee: 0
     note: ""
+    publicNote: false
   }
       
   $scope.getFilter = (search) ->
