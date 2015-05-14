@@ -3,17 +3,17 @@
 
 	.label{
 	font-size: 85%;
-	font-weight: normal;	
-	margin-left: 10px;  
+	font-weight: normal;
+	margin-left: 10px;
 	}
-	
+
 	.label-warning {
 	background-color: #EA7E7E;
-	} 
-	
+	}
+
 	label-success {
 	background-color: #84BB84;
-	} 
+	}
 
 	.settings-list{
 	list-style: none;
@@ -22,34 +22,34 @@
 	padding: 20px;
 	border: 1px solid #F0F0F0;
 	}
-	
+
 	.qr{
-	padding: 20px 0;	
+	padding: 20px 0;
 	}
-  
+
   .header-with-label {
     h2, label {
       display: inline;
     }
     margin-bottom: 20px;
   }
-  
+
   h2.status.incomplete {
     color: #C89898;
   }
-  
+
   h2.status.complete {
     color: #85AD5F;
   }
-  
+
   h2 {
     margin-bottom: 20px;
-  }  
-  
+  }
+
   h2.status {
     margin: 0 5px;
   }
-  
+
   h2{
     font-size: 12pt;
     color: #75AAC9;
@@ -68,13 +68,13 @@
     padding: 0 0 15px 0;
     margin: 0 0 20px 0;
   }
-  
+
   .right {
     a {
       text-transform: lowercase;
     }
   }
-  
+
   .edit-mobile {
     button.ui-select-match {
       width: 75px;
@@ -86,10 +86,10 @@
       text-align: left; // Country dropdown
     }
   }
-  
+
   pre.recovery{
   padding: 15px;
-  margin: 15px;	  
+  margin: 15px;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
@@ -97,90 +97,90 @@
   -o-user-select: none;
   user-select: none;
   }
-  
-  
+
+
   table {
     width: 100%;
-    
+
     th {
       background-color: #F2F2F2;
     }
-    
+
     td, th {
       border: 1px solid #E6E6E6;
       padding: 10px;
-      
+
       .btc {
         color: #545454;
       }
-      
+
       .fiat {
         color: #9E9E9E;
         font-style: italic;
         font-size: 80%;
         display: block;
       }
-      
+
     }
   }
-  
+
   form.form-horizontal{
 	.form-group{
      margin: 0!important;
 	 border-bottom: 1px solid #EFEFEF;
 	 padding: 20px 0;
-	 
+
 	   &:hover{
-	    background: rgb(237, 246, 252);	 
+	    background: rgb(237, 246, 252);
 	   }
-	   
+
 	   label{
 		color: #838383;
 		font-size: 125%;
-		font-weight: 400;		   
+		font-weight: 400;
 	   }
-	   
+
 	   p.explain{
 		color: #9D9D9D;
 		line-height: 1.6em;
-		font-size: 10pt;		   
+		font-size: 10pt;
 	   }
-	   
+
 	   p.settingtext {
   		 font-size: 8pt;
   		 clear: both;
      }
-	   
 
-	 	  
-	  }  
+
+
+	  }
   }
 }
 
 .left-view{
   ul.nav{
     padding: 20px;
-    background: #ffffff;	  
-  
+    background: #ffffff;
+
     li{
 	  a{
 	  color: #adadad;
 	  font-size: 110%;
 		  &:hover{
 		   background-color: #fff;
-	       color: #75B0D3;  
-		  }  
-	  }    
+	       color: #75B0D3;
+		  }
+	  }
     }
-    
+
     li.active{
 	  a{
-	   background: none; 
-	   color: #75B0D3;	  
-	  }    
+	   background: none;
+	   color: #75B0D3;
+	  }
     }
-  
-  }	
+
+  }
 }
 
 .title{
@@ -189,23 +189,23 @@
   }
   p{
    font-size: 120%;
-   color: #AEAEAE;	  
-  }	
-	
+   color: #AEAEAE;
+  }
+
 }
 
 a.settingaction{
 background: #56AADD;
 padding: 10px;
-color: rgba(255, 255, 255, 0.8);
+color: white;
 border-radius: 5px;
 display: block;
 text-align: center;
-font-weight: 500;		
+font-weight: 500;
 margin: 5px 0;
 
 &:hover{
-  color: rgba(255, 255, 255, 1);	
+  color: rgba(255, 255, 255, 1);
   background: #4296C8;
   text-decoration: none;
 }
@@ -230,9 +230,9 @@ margin: 5px 0;
   border: 1px solid #EFEFEF;
   padding: 5px;
   margin: 10px 0 10px 0;
-    
+
     .label-primary{background-color: #7CA6CB;color: #fff;}
-    
+
     header{
       border-bottom: 1px solid rgb(229, 229, 229);
       padding: 0 0 5px 0;
@@ -249,7 +249,7 @@ margin: 5px 0;
         h3.fiat{
           font-size: 10pt;
           font-style: italic;
-          color: #ccc; 
+          color: #ccc;
           margin: 0;
           padding: 0;
         }
@@ -270,7 +270,7 @@ margin: 5px 0;
           padding: 2px 0;
         }
     }
-    
+
 }
 
 @media (min-width: 992px){
@@ -278,19 +278,19 @@ margin: 5px 0;
 	.setting-result {
 	  text-align: right;
 	  padding: 0 40px;
-	  
+
 	}
-	
+
 	a.settingaction{
-	  float: right;   
+	  float: right;
 	  min-width: 175px;
 	}
-	
-	
+
+
 	h2.status {
 	  margin: 0px 0px 15px;
 	}
-	
+
 	.btn-group{
 		button{float: left;}
 	}

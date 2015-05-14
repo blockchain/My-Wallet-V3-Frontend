@@ -1,0 +1,66 @@
+$false: nil;
+
+button[disabled] {
+  opacity: .6;
+}
+
+%button-base {
+  border-radius: 3px;
+  border: none;
+  padding: .8em 1.2em;
+  transition: all .2s ease-in-out;
+  margin-bottom: 0;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  text-decoration: none;
+  text-transform: capitalize;
+  white-space: nowrap;
+  font-size: 1em;
+  &:hover {
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2);
+  }
+  &:focus {
+    outline: none;
+  }
+}
+
+@mixin button($name, $background:white, $color:white, $max-width:none) {
+  @if $name == $false {
+    .button {
+      @extend %button-base;
+      background: $background;
+      color: $color;
+    }
+  }
+  @else {
+    .button-#{$name} {
+      @extend %button-base;
+      background: $background;
+      color: $color;
+      max-width: $max-width;
+    }
+  }
+}
+
+@include button($false, white, $black);
+@include button('primary', $blue, white);
+@include button('success', $receive-green, white);
+@include button('default', $black, white);
+@include button('info', $light-grey, white);
+
+.button-sm {
+  padding: .3125em .625em;
+}
+.button-lg {
+  padding: 1em 1.5em;
+  font-size: 1.2em;
+}
+
+.button-muted {
+  border: none;
+  background: transparent;
+  color: $ccc;
+  //most muted buttons will be next to primary/success buttons, hence the margin
+  margin-right: 10px;
+}
