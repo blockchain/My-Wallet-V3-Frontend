@@ -45,11 +45,11 @@ module.exports = (grunt) ->
         expand: true
         src: ['build/admin.html', 'build/index-beta.html']
         dest: ''
-        
+
     concat:
       options:
         separator: ";"
-        
+
       application_dependencies:
         src: [
           'build/js/wrappers/*.js' # Wrappers around MyWallet, MyWalletStore, etc
@@ -191,9 +191,10 @@ module.exports = (grunt) ->
           {src: ["img/*"], dest: "dist/", expand: true}
           {src: ["locales/*"], dest: "dist/", expand: true}
           {src: ["bootstrap/*"], dest: "dist/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
-          {src: ["assets/fonts/*"], dest: "dist/fonts", cwd: "assets/fonts", expand: true}
+          {src: ["assets/fonts/**/*"], dest: "dist/fonts", cwd: "assets/fonts", expand: true}
+          {src: ['bower_components/font-awesome/fonts/*'], dest: "dist/fonts", expand: true, flatten: true}
         ]
-        
+
       css:
         files: [
           {src: ["angular-csp.css"], dest: "build/css", cwd: "bower_components/angular", expand: true }
