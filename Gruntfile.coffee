@@ -190,9 +190,7 @@ module.exports = (grunt) ->
           {src: ["admin.html"], dest: "dist/", cwd: "build", expand: true}
           {src: ["img/*"], dest: "dist/", expand: true}
           {src: ["locales/*"], dest: "dist/", expand: true}
-          {src: ["bootstrap/*"], dest: "dist/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
-          {src: ["assets/fonts/**/*"], dest: "dist/fonts", cwd: "assets/fonts", expand: true}
-          {src: ['bower_components/font-awesome/fonts/*'], dest: "dist/fonts", expand: true, flatten: true}
+          {src: ["**/*"], dest: "dist/fonts", cwd: "build/fonts", expand: true}
         ]
 
       css:
@@ -200,9 +198,16 @@ module.exports = (grunt) ->
           {src: ["angular-csp.css"], dest: "build/css", cwd: "bower_components/angular", expand: true }
           {src: ["intlTelInput.css"], dest: "build/css", cwd: "bower_components/intl-tel-input/build/css", expand: true }
           {src: ["*.css"], dest: "build/css", cwd: "assets/css", expand: true }
-          {src: ["bootstrap/*"], dest: "build/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
         ]
-        
+      fonts:
+        files: [
+          {src: ["bootstrap/*"], dest: "build/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
+          {src: ["*"], dest: "build/fonts", cwd: "bower_components/fontawesome/fonts", expand: true}        
+          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/bc-icons", expand: true}      
+          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/roboto", expand: true}        
+            
+          
+        ]
       beta:
         files: [
           {src: ["beta/betaAdminServer.js"], dest: "dist/", cwd: "app", expand: true}
@@ -227,7 +232,7 @@ module.exports = (grunt) ->
 
       css: 
         files: ['assets/css/**/*.scss']
-        tasks: ['sass', 'copy:css']
+        tasks: ['sass', 'copy:css', 'copy:fonts']
         options: 
           spawn: false
 
@@ -275,6 +280,7 @@ module.exports = (grunt) ->
         files: 
           src: [
             'dist/img/*'
+            'dist/fonts/*.*'            
             'dist/fonts/bootstrap/*'
             'dist/locales/*'
             'dist/beep.wav'
@@ -366,6 +372,7 @@ module.exports = (grunt) ->
     "compile"
     "sass"
     "copy:css"
+    "copy:fonts"
     "copy:images"
     "watch"
   ]
@@ -390,6 +397,7 @@ module.exports = (grunt) ->
     "concat:application"
     "sass"
     "copy:css" # CSS files not processed with sass
+    "copy:fonts"
     "concat_css:app"
     "jade"
     "copy:beta_index"
@@ -411,6 +419,7 @@ module.exports = (grunt) ->
     "concat:application"
     "sass"
     "copy:css" # CSS files not processed with sass
+    "copy:fonts"
     "concat_css:app"
     "jade"
     "copy:beta_index"
@@ -432,6 +441,7 @@ module.exports = (grunt) ->
     "concat:application_debug"
     "sass"
     "copy:css" # CSS files not processed with sass
+    "copy:fonts"
     "concat_css:app"
     "jade"
     "copy:beta_index"

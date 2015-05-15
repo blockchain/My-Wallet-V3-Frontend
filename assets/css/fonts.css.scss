@@ -1,10 +1,10 @@
 @mixin declare-font-face($font-name, $font-family, $font-filename, $font-weight : normal, $font-style :normal, $font-stretch : normal) {
   @font-face {
     font-family: '#{$font-family}';
-    src: url('../fonts/#{$font-name}/#{$font-filename}.eot');
-    src: url('../fonts/#{$font-name}/#{$font-filename}.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/#{$font-name}/#{$font-filename}.ttf') format('truetype'),
-         url('../fonts/#{$font-name}/#{$font-filename}.svg') format('svg');
+    src: url('../fonts/#{$font-filename}.eot');
+    src: url('../fonts/#{$font-filename}.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/#{$font-filename}.ttf') format('truetype'),
+         url('../fonts/#{$font-filename}.svg') format('svg');
     font-weight: $font-weight;
     font-style: $font-style;
     font-stretch: $font-stretch;
