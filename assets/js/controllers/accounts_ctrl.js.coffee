@@ -5,6 +5,9 @@
     
   $scope.numberOfActiveLegacyAddresses = () -> 
     return filterFilter(Wallet.legacyAddresses, {active: true}).length
+
+  $scope.numberOfAccounts = () -> 
+    return Wallet.accounts.length
   
   $scope.selectedAccountIndex = $stateParams.accountIndex
     
@@ -28,6 +31,8 @@
   
   $scope.didLoad = () ->
     $scope.accounts = Wallet.accounts
+    if $scope.numberOfAccounts() == 1
+      location.assign '/#/0/transactions/'
 
   # First load:      
   $scope.didLoad()
