@@ -97,8 +97,8 @@ function generateTable(tableData, callback) {
 	if (callback) callback();
 }
 
-function successCallback(err) {
-	if (err) console.log(err);
+function successCallback(res) {
+	if (res.error) console.warn(res.error);
 	setIsWaiting(false);
 	getSortedKeys(sort, order);
 }
@@ -117,16 +117,17 @@ function callAjax(endpoint, data, success) {
 	});
 }
 
-function getAllKeys() {
-	if (wait()) return;
-	$.getJSON(getRootUrl() + 'get-all-keys', generateTable);
-}
+// function getAllKeys() {
+// 	if (wait()) return;
+// 	$.getJSON(getRootUrl() + 'get-all-keys', generateTable);
+// }
 
 function getSortedKeys(sort, order, filter) {
 	if (wait()) return;
 	filter = filter || {};
-	callAjax('get-sorted-keys', {sort:sort,order:order,filter:filter}, function(data) {
-		generateTable(JSON.parse(data), insertSortIcon);
+	callAjax('get-sorted-keys', {sort:sort,order:order,filter:filter}, function(res) {
+		if (!res.error) generateTable(res.data, insertSortIcon);
+		else console.warn(res.error);
 	});
 }
 

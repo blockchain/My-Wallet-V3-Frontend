@@ -120,7 +120,9 @@ if process.env.BETA? && parseInt(process.env.BETA)
 
   app.post "/check_beta_key_unused", (request, response) ->
     hdBeta.verifyKey request.body.key, (err, verified) ->
-      if verified
+      if err
+        response.json {verified : false, error: {message: err}}
+      else if verified
         hdBeta.doesKeyExistWithoutGUID request.body.key, (err, verified, email) ->
           if verified
             response.json {verified : true, email: email}
@@ -131,14 +133,18 @@ if process.env.BETA? && parseInt(process.env.BETA)
     
   app.post "/check_guid_for_beta_key", (request, response) ->
     hdBeta.isGuidAssociatedWithBetaKey request.body.guid, (err, verified) ->
-      if verified
+      if err
+        response.json {verified : false, error: {message: err}}
+      else if verified
         response.json {verified : true}
       else
         response.json {verified : false, error: {message: "This wallet is not associated with a beta invite key. Please create a new wallet first."}}
         
   app.post "/set_guid_for_beta_key", (request, response) ->
     hdBeta.doesKeyExistWithoutGUID request.body.key, (err, unclaimed, email) ->
-      if unclaimed
+      if err
+        response.json {success : false, error: {message: err}}
+      else if unclaimed
         hdBeta.setGuid request.body.key, request.body.guid, () ->
           response.json {success : true}
       else
@@ -169,29 +175,30 @@ if process.env.BETA? && parseInt(process.env.BETA)
       })
       response.end()
     else
+      # get-all-keys depricated
       if request.params.method == 'get-all-keys'
         hdBeta.getKeys (err, data) ->
           response.send JSON.stringify data
 
       else if request.params.method == 'get-sorted-keys'
         hdBeta.getKeys request.query, (err, data) ->
-          response.end JSON.stringify data
+          response.json { error: err, data: data }
 
       else if request.params.method == 'assign-key'
         hdBeta.assignKey request.query.name, request.query.email, request.query.guid, (err, key) ->
-          response.end JSON.stringify({key:key})
+          response.json { error: err, key: key }
 
       else if request.params.method == 'delete-key'
         hdBeta.deleteKey request.query, (err) ->
-          response.json {success: true}
+          response.json { error: err }
 
       else if request.params.method == 'update-key'
         hdBeta.updateKey request.query.selection, request.query.update, (err) ->
-          response.json {success: true}
+          response.json { error: err }
 
       else if request.params.method == 'activate-key'
         hdBeta.activateKey request.query.selection, request.query.update, (err) ->
-          response.json {success: true}
+          response.json { error: err }
 
       else if request.params.method == 'set-percent-requested'
         process.env.PERCENT_REQUESTED = parseInt(request.query.percent)
