@@ -68,7 +68,12 @@ function convertDate(dateObj) {
 }
 
 function createRow(id, key, name, email, lastSeen, guid, status) {
-	return rowElem.clone().data('id', id).data('key', key).data('email', email || '')
+	return rowElem.clone()
+		.data('id', id)
+		.data('key', key)
+		.data('name', name || '')
+		.data('email', email || '')
+		.data('guid', guid || '')
 		.prepend($('<td></td>').html('<i>' + status + '</i>'))
 		.prepend($('<td></td>').text(guid))
 		.prepend($('<td></td>').text(lastSeen))
@@ -239,6 +244,9 @@ $(document).ready(function() {
 	});
 	$('#edit-modal').on('show.bs.modal', function (event) {
 	  $(this).find('#edit-key-input').val(editing.data('key'));
+	  $(this).find('#edit-name-input').val(editing.data('name'));
+	  $(this).find('#edit-email-input').val(editing.data('email'));
+	  $(this).find('#edit-guid-input').val(editing.data('guid'));
 	});
 	$('#activate-form').on('submit', activateKey);
 	$('#activate-modal').on('shown.bs.modal', function () {
@@ -246,6 +254,7 @@ $(document).ready(function() {
 	});
 	$('#activate-modal').on('show.bs.modal', function (event) {
 	  $(this).find('#activate-email-input').val(editing.data('email'));
+	  $(this).find('#activate-name-input').val(editing.data('name'));
 	});
 	$('#capture-form').on('submit', updateCapturePage);
 	$('#capture-modal').on('shown.bs.modal', function () {
