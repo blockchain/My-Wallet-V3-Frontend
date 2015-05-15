@@ -120,7 +120,8 @@
   $scope.getFilter = (search) ->
     filter =
       label: search
-    filter.multiAccount = false if not $scope.settings.multiAccount
+    if not $scope.settings.multiAccount or $scope.numberOfAccounts() == 1
+      filter.multiAccount = false
     return filter
   
   $scope.hasZeroBalance = (origin) ->
@@ -178,6 +179,9 @@
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
   
+  $scope.numberOfAccounts = () -> 
+    return Wallet.accounts.length
+
   $scope.send = () ->
     unless $scope.sending
       $scope.sending = true

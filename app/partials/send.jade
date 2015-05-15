@@ -7,7 +7,7 @@
     | {{alert.msg}}
   div(ng-hide="confirmationStep")
     form.form-horizontal(role="form",name="form",novalidate)
-      .form-group
+      .form-group(ng-show="numberOfAccounts() > 1")
         label.col-sm-3.control-label
           span(translate="SEND_FROM")
           |:
