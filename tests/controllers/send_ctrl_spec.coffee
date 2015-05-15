@@ -284,11 +284,11 @@ describe "SendCtrl", ->
       )
   
       it "should beep when sending process succeeds",  inject(() ->
-        spyOn(ngAudio, "load").and.callThrough()
+        spyOn(Wallet, "beep")
     
         scope.send()
     
-        expect(ngAudio.load).toHaveBeenCalled()
+        expect(Wallet.beep).toHaveBeenCalled()
     
       )
   
