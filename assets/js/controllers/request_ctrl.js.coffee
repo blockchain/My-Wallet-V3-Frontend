@@ -48,6 +48,8 @@
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
     
+  $scope.numberOfAccounts = () -> 
+    return Wallet.accounts.length
   
   #################################
   #           Private             #
