@@ -172,21 +172,27 @@ if process.env.BETA? && parseInt(process.env.BETA)
       if request.params.method == 'get-all-keys'
         hdBeta.getKeys (err, data) ->
           response.send JSON.stringify data
+
       else if request.params.method == 'get-sorted-keys'
         hdBeta.getKeys request.query, (err, data) ->
           response.end JSON.stringify data
+
       else if request.params.method == 'assign-key'
         hdBeta.assignKey request.query.name, request.query.email, request.query.guid, (err, key) ->
           response.end JSON.stringify({key:key})
+
       else if request.params.method == 'delete-key'
         hdBeta.deleteKey request.query, (err) ->
           response.json {success: true}
+
       else if request.params.method == 'update-key'
         hdBeta.updateKey request.query.selection, request.query.update, (err) ->
           response.json {success: true}
+
       else if request.params.method == 'activate-key'
         hdBeta.activateKey request.query.selection, request.query.update, (err) ->
           response.json {success: true}
+
       else if request.params.method == 'set-percent-requested'
         process.env.PERCENT_REQUESTED = parseInt(request.query.percent)
         response.json {success: true}
