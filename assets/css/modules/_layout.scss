@@ -1,0 +1,55 @@
+.tx-row{
+  margin: 0;
+    .left-nav {
+      background: rgb(246, 246, 246);
+      border-right: 1px solid rgb(221, 221, 221);
+      height: 100%;
+      position: absolute;
+      width: 25%;
+    .active-accounts{
+      margin-bottom: 30px;
+    }
+    .legacy-addresses, .partners{
+      margin-bottom: 30px;
+    }
+
+    .side-box{
+      background-color: #FDFDFD;
+      border: 1px solid rgb(229, 229, 229);
+    }
+
+
+    }
+    .right-view{
+      background-color: #FFFFFF;
+      padding: 15px;
+    }
+    .top-view{
+      background-color: #FFFFFF;
+      padding: 10px;
+    }
+    .right-container{
+    background: #fff;
+    }
+    .main-container {
+      margin-left: 27%;
+    }
+}
+
+@media (max-width: 768px) {
+  .tx-row {
+    .left-nav {
+      position: relative;
+      width: 100%;
+      border-right: none;
+    }
+    .main-container {
+      margin-left: 0;
+    }
+  }
+  .bc-modal {
+    .modal-dialog {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,61 @@
+$blue: #039BD3;
+$black: #4B4D4E;
+$dark-blue: #0079A6;
+$deep-blue: #005380;
+
+//HD Wallet Colors
+$transfer-blue: #5bacd0;
+$send-red: #e27e82;
+$receive-green: #85b45b;
+$light-grey: #eaeff4;
+$light-grey-alt: #F5F7F9;
+$grey: #EEEEEE;
+$mid-grey: #b0b0b0;
+$dark-grey: #737373;
+
+//Social Colors
+$twitter: #29C5F6;
+$google: #DD332C;
+$facebook: #3B5998;
+$linkedin: #006DC0;
+
+//Button colors
+$default: #3F3F3F;
+$success: #8CCA6A;
+$eee: #EEEEEE;
+$ccc: #CCCCCC;
+
+
+//Color Mixin
+@mixin color($name, $color) {
+  .#{$name} {
+    color: $color;
+  }
+}
+
+@include color('blue', $blue);
+@include color('white', white);
+@include color('dark-blue', $dark-blue);
+@include color('deep-blue', $deep-blue);
+@include color('black', $black);
+@include color('dark-grey', $dark-grey);
+@include color('light-grey', $light-grey);
+@include color('mid-grey', $mid-grey);
+@include color('twitter', $twitter);
+@include color('google', $google);
+@include color('facebook', $facebook);
+@include color('linkedin', $linkedin);
+@include color('receive-green', $receive-green);
+
+//Background Mixin
+@mixin bg-color($name, $color) {
+  .bg-#{$name} {
+    background: $color;
+  }
+}
+
+@include bg-color('blue', $blue);
+@include bg-color('black', $black);
+@include bg-color('dark-grey', $dark-grey);
+@include bg-color('light-grey', $light-grey);
+@include bg-color('mid-grey', $mid-grey);

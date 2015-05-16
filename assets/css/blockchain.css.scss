@@ -1,1 +1,16 @@
+//import bootstrap
 @import 'bootstrap-blockchain';
+
+//import utilitarian CSS
+@import 'utilities/animations';
+@import 'utilities/colors';
+@import 'utilities/flex';
+
+//import elements
+@import 'elements/buttons';
+
+//import components
+@import 'components/modals';
+
+//import modules
+@import 'modules/layout';

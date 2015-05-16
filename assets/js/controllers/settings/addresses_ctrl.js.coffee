@@ -35,7 +35,7 @@
     modalInstance = $modal.open(
       templateUrl: "partials/settings/import-address.jade"
       controller: AddressImportCtrl
-      windowClass: "blockchain-modal"
+      windowClass: "bc-modal"
     )
     
   $scope.transfer = (address) ->

@@ -14,10 +14,9 @@
     border: none;
     text-align: center;
       h3{
-		font-size: 25pt;
-		font-weight: 200;
-		color: #C8E9F0;
-		margin: 20px 0 20px;
+    font-weight: 200;
+    color: #C8E9F0;
+    margin: 20px 0 20px;
       }
   }
   
@@ -28,11 +27,11 @@
     border-radius: 0;
     
     input {
-		color: #1972B6;
-		box-shadow: 1px 1px 4px -1px rgba(0, 0, 0, 0.34);
-		padding: 10px;
-		background: #fff;
-		border: 1px solid #FFF;
+    color: #1972B6;
+    box-shadow: 1px 1px 4px -1px rgba(0, 0, 0, 0.34);
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #FFF;
     }
     
     .row {
@@ -40,45 +39,45 @@
  
     }
     label{
-	font-size: 120%;
-	font-weight: 400;	 
-	color: #C8E9F0;   
+  font-size: 120%;
+  font-weight: 400;   
+  color: #C8E9F0;   
     }
 
-	.help-block{
-	display: block;
-	margin-top: -2px;
-	margin-bottom: 10px;
-	border-radius: 0 0 5px 5px;
-	color: #BE5858;
-	background: #BBDBEC;
-	font-size: 15px;
-	
-	 p{padding: 1px;}
-	}  
+  .help-block{
+  display: block;
+  margin-top: -2px;
+  margin-bottom: 10px;
+  border-radius: 0 0 5px 5px;
+  color: #BE5858;
+  background: #BBDBEC;
+  font-size: 15px;
+  
+   p{padding: 1px;}
+  }  
   
   .why{
   text-align: center;
   background: rgba(40, 40, 40, 0.4);
   border-radius: 10px;
   border: 1px solid transparent; 
-	h4{
-	color: #F2F2F2;
-	font-weight: 400;
-	padding: 10px 0 0px 0;
-	display: block;
-	font-size: 18pt;
-	}
-	p{
-	  color: #fff;
-	  padding: 10px 50px 0;
-	  display: block;
-	  font-weight: 200;
-	  line-height: 1.5em;
-	  font-size: 12pt;
+  h4{
+  color: #F2F2F2;
+  font-weight: 400;
+  padding: 10px 0 0px 0;
+  display: block;
+  font-size: 18pt;
+  }
+  p{
+    color: #fff;
+    padding: 10px 50px 0;
+    display: block;
+    font-weight: 200;
+    line-height: 1.5em;
+    font-size: 12pt;
 
-	}  
-	  
+  }  
+    
   }
   
   }
@@ -96,12 +95,12 @@
     }
     
     .btn-signup{
-	background: none!important;
-	color: #fff!important;
-	border: none;
-	font-size: 20px;
-	font-weight: 200;
-	padding: 10px 50px;
+  background: none!important;
+  color: #fff!important;
+  border: none;
+  font-size: 20px;
+  font-weight: 200;
+  padding: 10px 50px;
     }
     
     background-color: #1b8ac7;
@@ -117,12 +116,12 @@ position: fixed;
 bottom: 0;
 
   .modal-lg{
-	width: 100%;
-	position: relative;
-	top: auto;
-	bottom: 0;
-	margin: 0 auto;
-	min-height: 100%;
+  width: 100%;
+  position: relative;
+  top: auto;
+  bottom: 0;
+  margin: 0 auto;
+  min-height: 100%;
   }
 
 }
@@ -132,21 +131,16 @@ height: auto;
 }
 
 @media (min-width: 768px){
-  .modal-header{
-	h3{
-	  font-size: 30pt;	
-	}
-  }
   .modal.signup{
-	position: fixed;
-	
-	.modal-lg{
-	 position: absolute;
-	 min-height: inherit;
-	 overflow: auto;
-	}
-	
+  position: fixed;
+  
+  .modal-lg{
+   position: absolute;
+   min-height: inherit;
+   overflow: auto;
+  }
+  
   }
 
-	
+  
 }
