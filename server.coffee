@@ -134,7 +134,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
   app.post "/check_guid_for_beta_key", (request, response) ->
     hdBeta.isGuidAssociatedWithBetaKey request.body.guid, (err, verified) ->
       if err
-        response.json {verified : false, error: {message: err}}
+        response.json {verified : false, error: {message: "There was a problem verifying your invite key. Please try again later.", err }}
       else if verified
         response.json {verified : true}
       else

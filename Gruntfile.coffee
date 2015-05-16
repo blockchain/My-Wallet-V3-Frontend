@@ -75,6 +75,7 @@ module.exports = (grunt) ->
           'build/bower_components/angular-ui-router/release/angular-ui-router.js'
           'build/bower_components/angular-translate/angular-translate.js'
           'build/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js'
+          "build/bower_components/jquery/dist/jquery.js" # Duplicate; also included in my-wallet a.t.m.
           'build/bower_components/intl-tel-input/build/js/intlTelInput.js'
           'build/bower_components/international-phone-number/releases/international-phone-number.js'
           'build/bower_components/browserdetection/src/browser-detection.js'
@@ -120,6 +121,7 @@ module.exports = (grunt) ->
           'bower_components/angular-translate/angular-translate.min.js'
           'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js'
           # 'bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js'
+          "bower_components/jquery/dist/jquery.js"
           'bower_components/intl-tel-input/build/js/intlTelInput.min.js'
           'bower_components/international-phone-number/releases/international-phone-number.min.js'
           'build/application-dependencies.min.js'
