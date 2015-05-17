@@ -1,0 +1,20 @@
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+  background: $blue;
+}
+
+.btn-info {
+  background: $mid-grey;
+  border-color: $mid-grey;
+  font-size: 100%;
+  font-weight: normal;
+}
+
+.btn-info:hover, .btn-info:focus, .btn-info.focus, .btn-info:active, .btn-info.active, .open > .btn-info.dropdown-toggle {
+  background: darken($mid-grey, 5%);
+  border-color: darken($mid-grey, 5%);
+}
+
+.btn .caret {
+  margin-left: 5px;
+}
+
