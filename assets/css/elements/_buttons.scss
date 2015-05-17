@@ -17,9 +17,6 @@ button[disabled] {
   text-transform: capitalize;
   white-space: nowrap;
   font-size: 1em;
-  &:hover {
-    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2);
-  }
   &:focus {
     outline: none;
   }
@@ -39,12 +36,22 @@ button[disabled] {
       background: $background;
       color: $color;
       max-width: $max-width;
+      &:hover {
+        background: darken($background, 5%);
+        color: $color;
+      }
+      [disabled] {
+        &:hover {
+          background: $background;
+          opacity: .6;
+        }
+      }
     }
   }
 }
 
 @include button($false, white, $black);
-@include button('primary', $blue, white);
+@include button('primary', $blue, white, 175px);
 @include button('success', $receive-green, white);
 @include button('default', $black, white);
 @include button('info', $light-grey, white);
@@ -56,11 +63,13 @@ button[disabled] {
   padding: 1em 1.5em;
   font-size: 1.2em;
 }
-
 .button-muted {
   border: none;
   background: transparent;
   color: $ccc;
   //most muted buttons will be next to primary/success buttons, hence the margin
   margin-right: 10px;
+  &:hover {
+    color: darken($ccc, 10%);
+  }
 }

@@ -46,6 +46,7 @@
       resolve:
         paymentRequest: -> 
           {fromAddress: address, amount: 0, toAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()]}
+      windowClass: "bc-modal"
     )
 
   $scope.archive = (account) ->

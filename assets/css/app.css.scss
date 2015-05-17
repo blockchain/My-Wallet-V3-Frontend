@@ -1,59 +1,30 @@
-body {
+html,body {
   font-size: small;
   background-color: #fff;
   color: #6C6C6C;
   font-family: 'Roboto', 'Helvetica', sans-serif !important;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
-a{
- cursor: pointer;
- outline: 0;
-}
+
 .row {
   vertical-align: bottom;
 }
-
-
-
 .row.spacing {
   height: 20px;
   background: transparent;
 }
-
-
 .modal-dialog{
-	width: 100%;
-	margin: 0;
+  width: 100%;
+  margin: 0;
 }
-
-
-.btn {
-}
-
-.btn-info,.btn-info:link,.btn-info:visited,.btn-info:hover,.btn-info:active,.btn-info:focus {
-  background-color: #BDBDBD;
-  border-color: #BDBDBD;
-  font-size: 80%;
-  font-weight: bold;
-
-}
-
-.btn-primary,.btn-primary:link,.btn-primary:visited,.btn-primary:hover,.btn-primary:active,.btn-primary:focus {
-  background-color: #1973D6 !important;
-  border-color: #1973D6;
-  font-size: 80%;
-  font-weight: bold;
-
-
-}
-
 .col-centered {
   display: block;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
 }
-
-
 a.back {
     cursor: pointer;
  h2{
@@ -65,11 +36,9 @@ a.back {
   text-decoration: none;
   }
 }
-
 .clickable{
   cursor: pointer;
 }
-
 .long-input{overflow-wrap:break-word; }
 
 .table-container{
@@ -80,7 +49,6 @@ a.back {
 .text-center{
  text-align: center;
 }
-
 .clearfix {
   *zoom: 1;
   &:before,
@@ -93,23 +61,22 @@ a.back {
     clear: both;
   }
 }
-
 .form-ctrl{
   padding: 15px 0;
-	  .btn-bci{
-	    margin: 6px 0px 0 5px;
-	  }
-	  input{
-		border: 1px solid #CCC;
-		border-radius: 5px;
-		padding: 3px;
-	  }
-	  input.filter{
-	  background-image:url('/img/spyglass.png');
-	  background-repeat: no-repeat;
-	  background-position: 98% center;
-	  background-size: 20px;
-	  }
+    .btn-bci{
+      margin: 6px 0px 0 5px;
+    }
+    input{
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    padding: 3px;
+    }
+    input.filter{
+    background-image:url('/img/spyglass.png');
+    background-repeat: no-repeat;
+    background-position: 98% center;
+    background-size: 20px;
+    }
   }
 
 
@@ -118,28 +85,13 @@ a.back {
 }
 
 table.responsive{
-	a{overflow-wrap: break-word;}
+  a{overflow-wrap: break-word;}
 }
 
 .container-fluid {
 padding-right: 5px;
 padding-left: 5px;
 }
-
-
-
-//.footer {
-//  position: absolute;
-//  bottom: 0;
-//  width: 100%;
-//  /* Set the fixed height of the footer here */
-//  height: 60px;
-//  background-color: #ebebeb;
-//
-//    a{color: #029bd4;}
-//}
-
-
 // this is naughty, and I need to put these styles in the appropriate places.
 
 @media (min-width: 768px){

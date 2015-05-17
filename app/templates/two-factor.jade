@@ -1,4 +1,4 @@
-div
+.mtl
   div(ng-hide="edit.twoFactor")
     h2.status.complete
       span(ng-show="settings.twoFactorMethod == 3", translate="2FA_YUBI")
@@ -6,8 +6,8 @@ div
       span(ng-show="settings.twoFactorMethod == 5", translate="2FA_SMS")
       span(ng-show="settings.twoFactorMethod == 4", translate="2FA_GOOGLE_AUTH")
     p
-      a.settingaction(ng-click="edit.twoFactor = !edit.twoFactor", translate="CONFIGURE_2FA", ng-hide="settings.needs2FA")
-      a.settingaction(ng-click="disableSecondFactor()", translate="DISABLE", ng-show="settings.needs2FA")
+      a.button-primary(ng-click="edit.twoFactor = !edit.twoFactor", translate="CONFIGURE_2FA", ng-hide="settings.needs2FA")
+      a.button-primary(ng-click="disableSecondFactor()", translate="DISABLE", ng-show="settings.needs2FA")
   div(ng-show="edit.twoFactor") 
     ul.settings-list(ng-hide="settings.googleAuthenticatorSecret || edit.yubiKey")
       li 
@@ -26,6 +26,6 @@ div
     div(ng-show="edit.yubiKey")
       p.explain(translate="YUBIKEY_INPUT_EXPLAIN")
       input.form-control(type="text",ng-model="fields.yubiKeyCode")
-    button.btn.btn-info.btn-small(ng-click="edit.twoFactor = false; settings.googleAuthenticatorSecret = null; edit.yubiKey = false", translate="CANCEL")
-    button.btn.btn-info.btn-primary(ng-click="confirmTwoFactorGoogleAuthenticator()", translate="ENABLE",ng-show="settings.googleAuthenticatorSecret", ng-disabled="fields.authenticatorCode.length != 6")
-    button.btn.btn-info.btn-primary(ng-click="setTwoFactorYubiKey()", translate="ENABLE",ng-show="edit.yubiKey", ng-disabled="fields.yubiKeyCode.length == 0")
+    button.button-muted.btn-small(ng-click="edit.twoFactor = false; settings.googleAuthenticatorSecret = null; edit.yubiKey = false", translate="CANCEL")
+    button.button-primary(ng-click="confirmTwoFactorGoogleAuthenticator()", translate="ENABLE",ng-show="settings.googleAuthenticatorSecret", ng-disabled="fields.authenticatorCode.length != 6")
+    button.button-primary(ng-click="setTwoFactorYubiKey()", translate="ENABLE",ng-show="edit.yubiKey", ng-disabled="fields.yubiKeyCode.length == 0")

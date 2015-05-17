@@ -1,14 +1,14 @@
-p.headliner.hidden-xs(translate="WALLET_RECOVERY_EXPLAIN")
+h5.well.headliner.hidden-xs(translate="WALLET_RECOVERY_EXPLAIN")
 form.form-horizontal(role="form",name="form",novalidate)  
   .form-group
     .col-sm-12.col-md-6
       label(translate="MY_RECOVERY_PHRASE")
       span.label.label-danger.hidden-xs.hidden-sm(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
       p.explain.hidden-xs.hidden-sm(translate="RECOVERY_PHRASE_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result
+    .col-sm-12.col-md-6.setting-result.flex-column.flex-align-end
       confirm-recovery-phrase
-      a.recovery.settingaction(ng-click="toggleRecoveryPhrase()", ng-hide="showRecoveryPhrase", translate="SHOW_RECOVERY_PHRASE")
-      a.recovery.settingaction(ng-click="toggleRecoveryPhrase()", ng-show="showRecoveryPhrase", translate="HIDE_RECOVERY_PHRASE")
+      a.recovery.button-muted(ng-click="toggleRecoveryPhrase()", ng-hide="showRecoveryPhrase", translate="SHOW_RECOVERY_PHRASE")
+      a.recovery.button-muted(ng-click="toggleRecoveryPhrase()", ng-show="showRecoveryPhrase", translate="HIDE_RECOVERY_PHRASE")
 
     .row
       .col-xs-12
@@ -21,7 +21,7 @@ form.form-horizontal(role="form",name="form",novalidate)
       p.explain.hidden-xs.hidden-sm(translate="IMPORT_RECOVERY_PHRASE_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       p
-        a.settingaction(ng-click="importRecoveryPhrase()",translate="IMPORT_RECOVERY_PHRASE", ng-hide="editMnemonic")
+        a.button-primary(ng-click="importRecoveryPhrase()",translate="IMPORT_RECOVERY_PHRASE", ng-hide="editMnemonic")
       div(ng-show="editMnemonic")
         label
           span(translate="MNEMONIC")
@@ -33,5 +33,5 @@ form.form-horizontal(role="form",name="form",novalidate)
         input.form-control(type="text",ng-model="passphrase", ng-disabled="importing", ng-show="editMnemonic")
       
       img(ng-show="importing" src="img/spinner.gif")     
-      a.btn.btn-primary(ng-click="performImport()", translate="IMPORT", ng-show="editMnemonic && !importing", ng-disabled="!isValid")       
+      a.button-primary(ng-click="performImport()", translate="IMPORT", ng-show="editMnemonic && !importing", ng-disabled="!isValid")       
 
