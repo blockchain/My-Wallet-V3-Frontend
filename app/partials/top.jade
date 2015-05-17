@@ -1,12 +1,11 @@
-.row#top(ng-show="status.isLoggedIn")
-  .col-xs-12.col-sm-5.col-md-6
+.flex-between#top(ng-show="status.isLoggedIn")
+  div
     button.left-arrow(ng-click="request()", translate="REQUEST") 
     button.right-arrow(ng-click="send()", translate="SEND")
-  .col-xs-12.col-sm-7.col-md-6.balance
+  .balance
     .content
       h1 
         {{ getTotal(accountIndex) | btc }}
-        
       p(ng-show="getTotal(accountIndex) == null")
         img(src="img/spinner.gif").spinner  
       p

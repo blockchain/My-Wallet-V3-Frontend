@@ -1,11 +1,9 @@
-.tx-row{
+.wallet-container{
   margin: 0;
+  display: flex;
+  background: rgb(246, 246, 246);
     .left-nav {
-      background: rgb(246, 246, 246);
-      border-right: 1px solid rgb(221, 221, 221);
-      height: 100%;
-      position: absolute;
-      width: 25%;
+      flex: 1;
     .active-accounts{
       margin-bottom: 30px;
     }
@@ -22,34 +20,36 @@
     }
     .right-view{
       background-color: #FFFFFF;
-      padding: 15px;
     }
     .top-view{
       background-color: #FFFFFF;
-      padding: 10px;
     }
     .right-container{
     background: #fff;
     }
     .main-container {
-      margin-left: 27%;
+      flex: 3;
+      border-left: 1px solid rgb(221, 221, 221);
+      background: white;
     }
 }
 
 @media (max-width: 768px) {
-  .tx-row {
+  .wallet-container {
+    display: block;
     .left-nav {
-      position: relative;
-      width: 100%;
-      border-right: none;
+      position: absolute;
+      top: 0;
+      left: -210px;
     }
     .main-container {
-      margin-left: 0;
+      flex: 1;
     }
   }
   .bc-modal {
     .modal-dialog {
-      width: 100%;
+      width: 98%; /* fallback for browsers without support for calc() */
+      width: calc(100% - 1em)
     }
   }
 }
