@@ -1,4 +1,4 @@
-@SendCtrl = ($scope, $log, Wallet, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest) ->
+@SendCtrl = ($scope, $log, Wallet, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter) ->
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.accounts = Wallet.accounts
   $scope.addressBook = Wallet.addressBook
@@ -120,7 +120,7 @@
   $scope.getFilter = (search) ->
     filter =
       label: search
-    if not $scope.settings.multiAccount or $scope.numberOfAccounts() == 1
+    if not $scope.settings.multiAccount or $scope.numberOfActiveAccountsAndLegacyAddresses() == 1
       filter.multiAccount = false
     return filter
   
@@ -179,8 +179,8 @@
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
   
-  $scope.numberOfAccounts = () -> 
-    return Wallet.accounts.length
+  $scope.numberOfActiveAccountsAndLegacyAddresses = () -> 
+    return filterFilter(Wallet.accounts, {active: true}).length + filterFilter(Wallet.legacyAddresses, {active: true}).length
 
   $scope.send = () ->
     unless $scope.sending
