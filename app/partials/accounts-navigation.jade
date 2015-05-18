@@ -26,22 +26,20 @@
               span(ng-show="account.balance != null")
                   fiat-or-btc(btc="account.balance")                
     
-    div.legacy-addresses.side-box(ng-show="settings.multiAccount")  
-            
-      div(ng-show="numberOfActiveLegacyAddresses() > 0")
-        table.left-header.accounts
-          tr
-            td.header 
-              img(src="img/my-legacy-icon.png")
-              span.headinglink(ui-sref="wallet.common.settings.addresses", translate="IMPORTED_ADDRESSES") 
-        table.left
-          tr(ng-class="selectedAccountIndex == 'imported' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'imported'})")
-            td 
-              a(translate="ALL_ADDRESSES")
-            td.amount 
-              a
-                span(ng-hide="legacyTotal() == null")
-                  fiat-or-btc(btc="legacyTotal()")  
+    div.legacy-addresses.side-box(ng-show="settings.multiAccount && numberOfActiveLegacyAddresses() > 0")
+      table.left-header.accounts
+        tr
+          td.header 
+            img(src="img/my-legacy-icon.png")
+            span.headinglink(ui-sref="wallet.common.settings.addresses", translate="IMPORTED_ADDRESSES") 
+      table.left
+        tr(ng-class="selectedAccountIndex == 'imported' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'imported'})")
+          td 
+            a(translate="ALL_ADDRESSES")
+          td.amount 
+            a
+              span(ng-hide="legacyTotal() == null")
+                fiat-or-btc(btc="legacyTotal()")  
                 
     div.partners.side-box.hidden-xs
       adverts
