@@ -7,7 +7,7 @@
     return filterFilter(Wallet.legacyAddresses, {active: true}).length
 
   $scope.numberOfAccounts = () -> 
-    return Wallet.accounts.length
+    return filterFilter(Wallet.accounts, {active: true}).length
   
   $scope.selectedAccountIndex = $stateParams.accountIndex
     
