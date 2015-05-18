@@ -1,11 +1,8 @@
 body {
-  font-size: 1.3em;
-//  background-image:url('/img/background.png');
-  background-color: #f7f7f7 ;
-  background-repeat: repeat-x;
+  font-size: small;
+  background-color: #fff;
   color: #6C6C6C;
-  /* Margin bottom by footer height */
-  margin-bottom: 110px;    
+  font-family: 'Roboto', 'Helvetica', sans-serif !important;
 }
 a{
  cursor: pointer;
@@ -22,71 +19,6 @@ a{
   background: transparent;
 }
 
-.modal-backdrop{
-	background: #fff;
-}
-
-.modal-backdrop.in {
-  opacity: 0.8;
-}
-
-.blockchain-modal {
-
-  .modal-content {
-    border: 10px solid #fff;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, .11);
-  
-    textarea {
-      width: 100%;
-    }
-  }
-
-    
-    
-  .modal-header {
-    h3 {
-      color: #2071AA;
-      margin-bottom: 0px;
-      display: inline;    
-      text-transform: capitalize;
-      font-size: 20pt
-    }
-    vertical-align: bottom;
-    border-bottom: 1px solid #EAEAEA;
-  
-    a {
-      padding: 10px;
-    }
-  
-    .right {
-      text-align: right;
-    }
-  }
-
-  .modal-body {
-    color: #627B8A;
-    button, input, .btn-group, .btn-group-justified, .btn {
-      background-color: #F5F7F9;
-      border-radius: 0;
-    
-    }
-  
-    input {
-      font-size: 90%;
-    
-    }
-
-  
-  
-  }
-
-  .modal-footer {
-    border-top: none;
-    button {
-      text-transform: uppercase;
-    }
-  }
-}
 
 .modal-dialog{
 	width: 100%;
@@ -102,7 +34,7 @@ a{
   border-color: #BDBDBD;
   font-size: 80%;
   font-weight: bold;
-  
+
 }
 
 .btn-primary,.btn-primary:link,.btn-primary:visited,.btn-primary:hover,.btn-primary:active,.btn-primary:focus {
@@ -110,8 +42,8 @@ a{
   border-color: #1973D6;
   font-size: 80%;
   font-weight: bold;
-  
-  
+
+
 }
 
 .col-centered {
@@ -121,47 +53,13 @@ a{
   text-align: center;
 }
 
-.tx-row{
-  margin: 0;
-  
-    .left-view{
- 
-	  .active-accounts{
-		  margin-bottom: 30px;
-	  }
-	  .legacy-addresses, .partners{
-	    margin-bottom: 30px;
-	  }
-	  
-	  .side-box{
-        background-color: #FAFCFD;
-	    box-shadow: 0 0px 3px 3px rgba(0, 0, 0, 0.05);  		  
-	  }
-	  
-	     
-    }	
-    .right-view{
-      background-color: #FFFFFF;
-      padding: 15px;
-      
-    }
-    .top-view{
-      background-color: #FFFFFF;
-      padding: 10px;
-    }	 
-    
-    .right-container{
-	  background: #fff;  
-	  box-shadow: 0 0px 3px 3px rgba(0, 0, 0, 0.05);    
-    }   	    
-}
 
 a.back {
     cursor: pointer;
  h2{
   background: url("/img/back.png") no-repeat left center;
   background-size: 10px;
-  padding: 0 20px; 
+  padding: 0 20px;
  }
  &:hover{
   text-decoration: none;
@@ -197,9 +95,9 @@ a.back {
 }
 
 .form-ctrl{
-  padding: 15px 0;	
+  padding: 15px 0;
 	  .btn-bci{
-	    margin: 6px 0px 0 5px;	
+	    margin: 6px 0px 0 5px;
 	  }
 	  input{
 		border: 1px solid #CCC;
@@ -211,7 +109,7 @@ a.back {
 	  background-repeat: no-repeat;
 	  background-position: 98% center;
 	  background-size: 20px;
-	  }  
+	  }
   }
 
 
@@ -237,7 +135,7 @@ padding-left: 5px;
 //  /* Set the fixed height of the footer here */
 //  height: 60px;
 //  background-color: #ebebeb;
-//    
+//
 //    a{color: #029bd4;}
 //}
 
@@ -248,7 +146,6 @@ padding-left: 5px;
 .tx-row .left-view{padding: 0 15px;}
 .tx-row .right-view {
 background-color: #FFFFFF;
-padding: 30px;
 }
 
 .container-fluid {
@@ -257,8 +154,8 @@ padding-left: 15px;
 }
 
 .modal-dialog{
-	width: 70%;
-	margin: 10px auto;
+  width: 70%;
+  margin: 10px auto;
 }
 
 }

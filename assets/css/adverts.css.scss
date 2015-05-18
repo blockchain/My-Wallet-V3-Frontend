@@ -65,7 +65,7 @@
 			  }
 			}  
 		  }
-		  span.btn, span.btn-danger, span.btn-success, span.btn-primary{
+		  span.btn, span.btn-danger, span.btn-success, span.btn-primary, span.btn-warning{
 			  background: none!important;
 			  border: none!important;
 			  font-size: 13px!important;
@@ -83,6 +83,11 @@
 		  span.btn-primary{
 			  color: #1973D6;
 		  }
+    
+		  span.btn-warning{
+			  color: #f0ad4e;
+		  }    
 
+    
 	}
 }

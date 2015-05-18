@@ -119,9 +119,11 @@ if process.env.BETA? && parseInt(process.env.BETA)
       response.json { message: 'Beta key request limit reached', success: false }
 
   app.post "/check_beta_key_unused", (request, response) ->
-    hdBeta.verifyKey request.body.key, (verified) ->
-      if verified
-        hdBeta.doesKeyExistWithoutGUID request.body.key, (verified, email) ->
+    hdBeta.verifyKey request.body.key, (err, verified) ->
+      if err
+        response.json {verified : false, error: {message: err}}
+      else if verified
+        hdBeta.doesKeyExistWithoutGUID request.body.key, (err, verified, email) ->
           if verified
             response.json {verified : true, email: email}
           else
@@ -130,15 +132,19 @@ if process.env.BETA? && parseInt(process.env.BETA)
         response.json {verified : false, error: {message: "Invite key not found"}}
     
   app.post "/check_guid_for_beta_key", (request, response) ->
-    hdBeta.isGuidAssociatedWithBetaKey request.body.guid, (verified) ->
-      if verified
+    hdBeta.isGuidAssociatedWithBetaKey request.body.guid, (err, verified) ->
+      if err
+        response.json {verified : false, error: {message: "There was a problem verifying your invite key. Please try again later.", err }}
+      else if verified
         response.json {verified : true}
       else
         response.json {verified : false, error: {message: "This wallet is not associated with a beta invite key. Please create a new wallet first."}}
         
   app.post "/set_guid_for_beta_key", (request, response) ->
-    hdBeta.doesKeyExistWithoutGUID request.body.key, (unclaimed, email) ->
-      if unclaimed
+    hdBeta.doesKeyExistWithoutGUID request.body.key, (err, unclaimed, email) ->
+      if err
+        response.json {success : false, error: {message: err}}
+      else if unclaimed
         hdBeta.setGuid request.body.key, request.body.guid, () ->
           response.json {success : true}
       else
@@ -169,24 +175,31 @@ if process.env.BETA? && parseInt(process.env.BETA)
       })
       response.end()
     else
+      # get-all-keys depricated
       if request.params.method == 'get-all-keys'
-        hdBeta.getKeys (data) ->
+        hdBeta.getKeys (err, data) ->
           response.send JSON.stringify data
+
       else if request.params.method == 'get-sorted-keys'
-        hdBeta.getKeys request.query, (data) ->
-          response.end JSON.stringify data
+        hdBeta.getKeys request.query, (err, data) ->
+          response.json { error: err, data: data }
+
       else if request.params.method == 'assign-key'
-        hdBeta.assignKey request.query.name, request.query.email, request.query.guid, (key) ->
-          response.end JSON.stringify({key:key})
+        hdBeta.assignKey request.query.name, request.query.email, request.query.guid, (err, key) ->
+          response.json { error: err, key: key }
+
       else if request.params.method == 'delete-key'
-        hdBeta.deleteKey request.query, () ->
-          response.json {success: true}
+        hdBeta.deleteKey request.query, (err) ->
+          response.json { error: err }
+
       else if request.params.method == 'update-key'
-        hdBeta.updateKey request.query.selection, request.query.update, () ->
-          response.json {success: true}
+        hdBeta.updateKey request.query.selection, request.query.update, (err) ->
+          response.json { error: err }
+
       else if request.params.method == 'activate-key'
-        hdBeta.activateKey request.query.selection, request.query.update, () ->
-          response.json {success: true}
+        hdBeta.activateKey request.query.selection, request.query.update, (err) ->
+          response.json { error: err }
+
       else if request.params.method == 'set-percent-requested'
         process.env.PERCENT_REQUESTED = parseInt(request.query.percent)
         response.json {success: true}

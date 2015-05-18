@@ -11,7 +11,7 @@
       controller: AccountFormCtrl
       resolve:
         account: -> undefined
-      windowClass: "blockchain-modal"
+      windowClass: "bc-modal"
     )
     
   $scope.editAccount = (account) ->
@@ -21,7 +21,7 @@
       controller: AccountFormCtrl
       resolve:
         account: -> account
-      windowClass: "blockchain-modal"
+      windowClass: "bc-modal"
     )
   
   $scope.showAddress = (account) ->
@@ -31,7 +31,7 @@
       controller: RequestCtrl
       resolve:
         destination: -> account
-      windowClass: "blockchain-modal"
+      windowClass: "bc-modal"
     )
   
     

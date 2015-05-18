@@ -23,7 +23,7 @@ walletApp.directive('configureSecondPassword', ($translate, Wallet, $modal) ->
         modalInstance = $modal.open(
           templateUrl: "partials/settings/set-second-password.jade"
           controller: SetSecondPasswordCtrl
-          windowClass: "blockchain-modal"
+          windowClass: "bc-modal"
         )
   }
 )

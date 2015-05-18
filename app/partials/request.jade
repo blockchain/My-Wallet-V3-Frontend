@@ -1,5 +1,8 @@
-.modal-header
-  h3(translate="RECEIVE_BITCOIN")
+.modal-header.flex-column.bc-modal-header
+  .flex-center
+    img(src="img/arrow-down.png")
+    h3(translate="RECEIVE_BITCOIN")
+  h5 We've just created a new address for you to share with anyone in order to receive bitcoins
 .modal-body
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)") 
     | {{alert.msg}}
@@ -53,4 +56,4 @@
           span(ng-show="status.didInitializeHD")
             | {{ paymentRequestAddress }}  
 .modal-footer
-  button.btn.btn-info(ng-click="close()", translate="CLOSE")  
+  button.button-default(ng-click="close()", translate="GOT_IT")  

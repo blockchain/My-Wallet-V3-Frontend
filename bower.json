@@ -13,7 +13,7 @@
     "jquery": "2.1.*",
     "angular-bootstrap": "0.12.*",
     "angular-cookies": "1.2.*",
-    "angular-audio": "1.4.*",
+    "angular-audio": "1.6.*",
     "angular-ui-select": "0.11.2",
     "angular-sanitize": "1.2.*",
     "angular-qr": "0.2.*",
@@ -23,9 +23,10 @@
     "angular-inview": "1.5.0",
     "angular-password-entropy": "pernas/angular-password-entropy#0.1.3",
     "international-phone-number": "mareczek/international-phone-number#0.0.5",
-    "browserdetection": "~0.3.3",
+    "browserdetection": "0.3.*",
     "bc-qr-reader": "git+ssh://git@github.com/blockchain/bc-qr-reader.git#0.1.1",
-    "bootstrap-sass": "3.3.*"
+    "bootstrap-sass": "3.3.*",
+    "fontawesome": "4.3.*"
   },
   "devDependencies": {
     "angular-local-storage": "~0.1.5"

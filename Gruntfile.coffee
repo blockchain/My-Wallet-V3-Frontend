@@ -9,8 +9,6 @@ module.exports = (grunt) ->
       dist: {
         src: ["dist/**/*"]
       }
-      shrinkwrap: 
-        src: ["npm-shrinkwrap.json"]
     }
     uglify:
       options:
@@ -45,11 +43,11 @@ module.exports = (grunt) ->
         expand: true
         src: ['build/admin.html', 'build/index-beta.html']
         dest: ''
-        
+
     concat:
       options:
         separator: ";"
-        
+
       application_dependencies:
         src: [
           'build/js/wrappers/*.js' # Wrappers around MyWallet, MyWalletStore, etc
@@ -75,6 +73,7 @@ module.exports = (grunt) ->
           'build/bower_components/angular-ui-router/release/angular-ui-router.js'
           'build/bower_components/angular-translate/angular-translate.js'
           'build/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js'
+          "build/bower_components/jquery/dist/jquery.js" # Duplicate; also included in my-wallet a.t.m.
           'build/bower_components/intl-tel-input/build/js/intlTelInput.js'
           'build/bower_components/international-phone-number/releases/international-phone-number.js'
           'build/bower_components/browserdetection/src/browser-detection.js'
@@ -120,6 +119,7 @@ module.exports = (grunt) ->
           'bower_components/angular-translate/angular-translate.min.js'
           'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js'
           # 'bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js'
+          "bower_components/jquery/dist/jquery.js"
           'bower_components/intl-tel-input/build/js/intlTelInput.min.js'
           'bower_components/international-phone-number/releases/international-phone-number.min.js'
           'build/application-dependencies.min.js'
@@ -190,17 +190,24 @@ module.exports = (grunt) ->
           {src: ["admin.html"], dest: "dist/", cwd: "build", expand: true}
           {src: ["img/*"], dest: "dist/", expand: true}
           {src: ["locales/*"], dest: "dist/", expand: true}
-          {src: ["bootstrap/*"], dest: "dist/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
+          {src: ["**/*"], dest: "dist/fonts", cwd: "build/fonts", expand: true}
         ]
-        
+
       css:
         files: [
           {src: ["angular-csp.css"], dest: "build/css", cwd: "bower_components/angular", expand: true }
           {src: ["intlTelInput.css"], dest: "build/css", cwd: "bower_components/intl-tel-input/build/css", expand: true }
           {src: ["*.css"], dest: "build/css", cwd: "assets/css", expand: true }
-          {src: ["bootstrap/*"], dest: "build/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
         ]
-        
+      fonts:
+        files: [
+          {src: ["bootstrap/*"], dest: "build/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
+          {src: ["*"], dest: "build/fonts", cwd: "bower_components/fontawesome/fonts", expand: true}        
+          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/bc-icons", expand: true}      
+          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/roboto", expand: true}        
+            
+          
+        ]
       beta:
         files: [
           {src: ["beta/betaAdminServer.js"], dest: "dist/", cwd: "app", expand: true}
@@ -224,8 +231,8 @@ module.exports = (grunt) ->
           spawn: false
 
       css: 
-        files: ['assets/css/*.scss']
-        tasks: ['sass', 'copy:css']
+        files: ['assets/css/**/*.scss']
+        tasks: ['sass', 'copy:css', 'copy:fonts']
         options: 
           spawn: false
 
@@ -273,6 +280,7 @@ module.exports = (grunt) ->
         files: 
           src: [
             'dist/img/*'
+            'dist/fonts/*.*'            
             'dist/fonts/bootstrap/*'
             'dist/locales/*'
             'dist/beep.wav'
@@ -336,9 +344,6 @@ module.exports = (grunt) ->
       bower_install_dependencies:
         command: () ->
            'cd build && touch .bowerrc && bower install'
-
-      
-    shrinkwrap: {}
   
   # Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks "grunt-contrib-uglify"
@@ -353,7 +358,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-rename-assets')
   grunt.loadNpmTasks('grunt-shell')
-  grunt.loadNpmTasks('grunt-shrinkwrap')
   grunt.loadNpmTasks('grunt-preprocess')
   
     
@@ -364,6 +368,7 @@ module.exports = (grunt) ->
     "compile"
     "sass"
     "copy:css"
+    "copy:fonts"
     "copy:images"
     "watch"
   ]
@@ -378,9 +383,7 @@ module.exports = (grunt) ->
     "clean"
     "compile"
     "html2js"
-    "shrinkwrap"
     "shell:check_dependencies"
-    "clean:shrinkwrap"
     "shell:npm_install_dependencies"
     "shell:bower_install_dependencies"
     "concat:application_dependencies"
@@ -388,6 +391,7 @@ module.exports = (grunt) ->
     "concat:application"
     "sass"
     "copy:css" # CSS files not processed with sass
+    "copy:fonts"
     "concat_css:app"
     "jade"
     "copy:beta_index"
@@ -409,6 +413,7 @@ module.exports = (grunt) ->
     "concat:application"
     "sass"
     "copy:css" # CSS files not processed with sass
+    "copy:fonts"
     "concat_css:app"
     "jade"
     "copy:beta_index"
@@ -430,6 +435,7 @@ module.exports = (grunt) ->
     "concat:application_debug"
     "sass"
     "copy:css" # CSS files not processed with sass
+    "copy:fonts"
     "concat_css:app"
     "jade"
     "copy:beta_index"
