@@ -9,7 +9,7 @@
           td.right(ng-hide="!status.didUpgradeToHd")
             a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
       table.left
-        tr(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd || numberOfAccounts() == 1")
+        tr(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd || numberOfActiveAccounts() == 1")
           td 
             a(translate="ALL_ACCOUNTS")
           td.amount 
