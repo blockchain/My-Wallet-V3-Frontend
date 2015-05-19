@@ -3,7 +3,7 @@
     img(src="img/arrow-up.png")
     h3(translate="SEND_BITCOIN")
   h5 Send bitcoin instantly to any bitcoin address, email, or phone number
-  p.step Step 1 of 2
+  p.step Step {{step}} of 2
 .modal-body#send
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)") 
     | {{alert.msg}}
@@ -42,19 +42,23 @@
             ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search)" refresh-delay="0") 
               span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
           span.help-block {{ errors.to }}
-      .flex.form-group(ng-class="{'has-error': errors.amount}")
-        div
-          input.form-control(type="text",ng-model="transaction.amount",ng-blur="visualValidate('amount')")          
-          span.help-block {{ errors.amount }}
-        div
-          ui-select(ng-model="transaction.currencySelected")
-            ui-select-match {{ $select.selected.code }}
-            ui-select-choices(repeat="currency in currencies | filter: $select.search" group-by="'type'") 
-              span(ng-bind-html="currency.code | highlight: $select.search")                
-        div
-          p.form-control-static
-            fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="transaction.currency=='BTC'")
-            span(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
+      .flex-column.form-group(ng-class="{'has-error': errors.amount}")
+        label
+          span(translate="AMOUNT")
+          |
+        .flex
+          .flex-1.mrl
+            input.form-control(type="text",ng-model="transaction.amount",ng-blur="visualValidate('amount')")          
+            span.help-block {{ errors.amount }}
+          .flex-1.mrl
+            ui-select(ng-model="transaction.currencySelected")
+              ui-select-match {{ $select.selected.code }}
+              ui-select-choices(repeat="currency in currencies | filter: $select.search" group-by="'type'") 
+                span(ng-bind-html="currency.code | highlight: $select.search")                
+          .flex-2
+            p.form-control-static
+              fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="transaction.currency=='BTC'")
+              span(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
         
       //- .form-group(ng-show="advanced")
       //-   label.col-sm-3.control-label(translate="FEES")

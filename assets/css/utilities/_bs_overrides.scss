@@ -22,7 +22,7 @@
 //*** Angular UI Select Madness!***//
 ////////////////////////////////////
 
-$select-bg: #F5F7F9;
+$select-bg: #fff;
 $select-fg: #808080;
 
 .ui-select-container {
@@ -31,11 +31,10 @@ $select-fg: #808080;
       outline: none;
     }
     > span {
-      border: none !important;
-      border-bottom: 1px solid $ccc !important;
+      border: 1px solid $eee !important;
       color: $black !important;
+      border-radius: 5px !important;
       box-shadow: none;
-      border-radius: 0;
       padding-bottom: 0;
     }
     .ui-select-container .ui-select-toggle {
@@ -63,10 +62,11 @@ $select-fg: #808080;
   .ui-select-choices-group-label.dropdown-header {
     color: $select-fg;
     padding: .7em 1.25em;
-    background: white;
+    background: $light-grey-alt;
     font-weight: 400;
     font-size: 1em;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid $eee;
+    border-top: 1px solid $eee;
   }
   .form-control:focus {
     border-color: none;
@@ -100,5 +100,11 @@ $select-fg: #808080;
 .ui-select-bootstrap .ui-select-choices-row>a:hover, .ui-select-bootstrap .ui-select-choices-row>a:focus {
   text-decoration: none;
   color: darken($select-fg, 3%);
-  background-color: darken($select-bg, 3%);
+  background-color: darken($light-grey-alt, 3%);
+}
+
+//Kill the divider for dropdowns. It's awful
+.dropdown-menu .divider {
+  height: 0;
+  margin: 0;
 }
