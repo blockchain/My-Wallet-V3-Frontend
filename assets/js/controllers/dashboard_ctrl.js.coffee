@@ -1,6 +1,4 @@
 @DashboardCtrl = ($scope, Wallet, $log) ->
-  $scope.$state = $state
-  
   $scope.accounts = Wallet.accounts
   $scope.status = Wallet.status
 

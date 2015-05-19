@@ -4,12 +4,12 @@
       a(ui-sref="wallet.common.dashboard")
         i.ti-home
         span(translate="HOME")
-    li.header.current(toggle-nav ng-class="{current:selectedAccountIndex == 'accounts'}")
+    li.header(ng-class="{current:selectedAccountIndex == 'accounts'}")
       a(ui-sref="wallet.common.transactions({accountIndex: getMainAccountId() })")
-        i.bc-icon-address
+        i.ti-import
         span(translate="MY_TRANSACTIONS")
-      ul.aside-list.pas
-        li(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd || numberOfActiveAccounts() <= 1")
+      ul.aside-list.pas(ng-show="selectedAccountIndex != 'imported'")
+        li(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd")
           a(translate="ALL_ACCOUNTS")
             span
               fiat-or-btc(btc="total()")    
