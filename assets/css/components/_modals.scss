@@ -1,6 +1,6 @@
 .bc-modal {
   .modal-content { background: $light-grey-alt; box-shadow: 0 5px 1px rgba(0, 0, 0, 0.6); }
-  .modal-dialog { width: 50%; }
+  .modal-dialog { width: 45vw; }
   .modal-body {
     background: white;
     min-height: 100px;
@@ -13,7 +13,7 @@
       margin-top: 10px;
     }
     h5 {
-      font-weight: 100;
+      font-weight: 300;
       color: darken($ccc, 30%);
       margin: 5px 0;
     }
@@ -31,12 +31,16 @@
   }
   form { padding: 0 2em; }
   .form-group { margin-bottom: 10px; }
-  /* .form-control { */
-    /* border: none; */
-    /* box-shadow: none; */
-    /* border-radius: none; */
-    /* border-bottom: 1px solid $ccc; */
-  /* } */
+  .form-control {
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    border-bottom: 1px solid $ccc;
+    &:focus {
+      border-color: none;
+      box-shadow: none
+    }
+  }
   label {
     font-weight: 400;
     color: darken($ccc, 45%);
@@ -215,4 +219,13 @@
   -ms-transform: translate(0, 20%);
   -o-transform: translate(0, 20%);
   transform: translate(0, 20%);
+}
+
+@media (max-width: 768px) {
+  .bc-modal {
+    .modal-dialog {
+      width: 100%; /* fallback for browsers without support for vw */
+      width: 100vw;
+    }
+  }
 }

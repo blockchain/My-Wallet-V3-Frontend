@@ -50,10 +50,4 @@
       margin-left: 0;
     }
   }
-  .bc-modal {
-    .modal-dialog {
-      width: 98%; /* fallback for browsers without support for calc() */
-      width: calc(100% - 1em)
-    }
-  }
 }

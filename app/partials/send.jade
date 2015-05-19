@@ -43,16 +43,15 @@
               span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
           span.help-block {{ errors.to }}
       .flex.form-group(ng-class="{'has-error': errors.amount}")
-        label.col-sm-3.control-label(translate="AMOUNT")
-        .col-sm-3
+        div
           input.form-control(type="text",ng-model="transaction.amount",ng-blur="visualValidate('amount')")          
           span.help-block {{ errors.amount }}
-        .col-sm-3
+        div
           ui-select(ng-model="transaction.currencySelected")
             ui-select-match {{ $select.selected.code }}
             ui-select-choices(repeat="currency in currencies | filter: $select.search" group-by="'type'") 
               span(ng-bind-html="currency.code | highlight: $select.search")                
-        .col-sm-3
+        div
           p.form-control-static
             fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="transaction.currency=='BTC'")
             span(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
@@ -136,7 +135,7 @@
         span(translate="MAKE_PUBLIC")
         |&nbsp
         input(type="checkbox", ng-model="transaction.publicNote")
-      
+
 .modal-footer.actions
   button.btn.btn-info(ng-click="cameraOff()", ng-show="cameraIsOn", translate="CAMERA_OFF")
   button.button-muted(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
