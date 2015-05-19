@@ -115,3 +115,34 @@ padding-left: 15px;
 }
 
 }
+
+//random crap for dashboard
+//TODO rip this out once we have a real dashboard
+
+.dashboard {
+  position: relative;
+  top: 150px;
+  background: #0081CD;
+  color: white;
+  border-radius: 5px;
+  margin-left: 30px;
+  margin-right: 30px;
+  img {
+    height: 100%;
+    width: 400px;
+  }
+  h1 {
+    font-weight: 100;
+  }
+  h4 {
+    margin-top: 20px;
+    font-weight: 300;
+  }
+  .bc-well {
+    margin: 10px 0px;
+    background: white;
+    color: #0081CD;
+    padding: 10px;
+    border-radius: 5px;
+  }
+}

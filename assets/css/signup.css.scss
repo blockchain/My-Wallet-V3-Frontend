@@ -1,15 +1,10 @@
-
 .signup {
   position:fixed;
-  bottom:0px; 
-  
   .modal-lg {
     width: 100%;
-    top: 300px;
-    bottom: 0px;
-    
+    bottom: 0;
+    top: 0;
   }
-  
   .modal-header {
     border: none;
     text-align: center;
@@ -19,13 +14,13 @@
     margin: 20px 0 20px;
       }
   }
-  
+
   .modal-content {
     border: none;
     background-color: #1b8ac7;
     color: white;
     border-radius: 0;
-    
+    height: 100%;
     input {
     color: #1972B6;
     box-shadow: 1px 1px 4px -1px rgba(0, 0, 0, 0.34);
@@ -33,15 +28,14 @@
     background: #fff;
     border: 1px solid #FFF;
     }
-    
     .row {
       background-color: #1b8ac7;
- 
+
     }
     label{
   font-size: 120%;
-  font-weight: 400;   
-  color: #C8E9F0;   
+  font-weight: 400;
+  color: #C8E9F0;
     }
 
   .help-block{
@@ -52,15 +46,15 @@
   color: #BE5858;
   background: #BBDBEC;
   font-size: 15px;
-  
+
    p{padding: 1px;}
-  }  
-  
+  }
+
   .why{
   text-align: center;
   background: rgba(40, 40, 40, 0.4);
   border-radius: 10px;
-  border: 1px solid transparent; 
+  border: 1px solid transparent;
   h4{
   color: #F2F2F2;
   font-weight: 400;
@@ -76,24 +70,24 @@
     line-height: 1.5em;
     font-size: 12pt;
 
-  }  
-    
   }
-  
+
   }
-  
+
+  }
+
   .modal-footer {
-    
+
     border: none;
-    
+
     a {
       color: white !important;
     }
-    
+
     form {
       background-color: #1972B6;
     }
-    
+
     .btn-signup{
   background: none!important;
   color: #fff!important;
@@ -102,45 +96,23 @@
   font-weight: 200;
   padding: 10px 50px;
     }
-    
     background-color: #1b8ac7;
-    
-
   }
-  
 }
 
-.modal.signup{
-display: block;
-position: fixed;
-bottom: 0;
-
+.modal.signup {
+  display: block;
+  position: fixed;
   .modal-lg{
-  width: 100%;
-  position: relative;
-  top: auto;
-  bottom: 0;
-  margin: 0 auto;
-  min-height: 100%;
+    width: 100%;
+    position: relative;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    margin: 0;
+    transform: none;
   }
-
 }
-
 .form-control {
 height: auto;
-}
-
-@media (min-width: 768px){
-  .modal.signup{
-  position: fixed;
-  
-  .modal-lg{
-   position: absolute;
-   min-height: inherit;
-   overflow: auto;
-  }
-  
-  }
-
-  
 }

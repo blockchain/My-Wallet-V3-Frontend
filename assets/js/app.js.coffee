@@ -38,6 +38,8 @@ modules = [
   "partials/alerts.jade"
   "partials/claim.jade"
   "partials/dashboard.jade"
+  "partials/support.jade"
+  "partials/feedback.jade"
   "partials/login.jade"
   "partials/navigation.jade"
   "partials/open-link.jade"

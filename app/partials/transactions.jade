@@ -18,7 +18,7 @@
     .col-xs-2
       p(align="center", ng-hide= "loading || allTransactionsLoaded")
         a(in-view="nextPage()", ng-click="nextPage()") Load more...
-  .row(ng-show="loading")
+  .row(ng-show="loading").mtm
      .col-xs-5
      .col-xs-2
        img(src="img/spinner.gif")

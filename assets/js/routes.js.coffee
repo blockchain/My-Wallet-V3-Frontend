@@ -43,7 +43,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       controller: "TransactionsCtrl"
     }
   }
-    
+
   $stateProvider.state("wallet",
     views: {
       body: {
@@ -91,13 +91,42 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
   
   
   $stateProvider.state("wallet.common.dashboard",
-    url: "/"
+    url: "/dashboard"
     views: {
       top : top,
-      left: accounts,
+      left: {
+        templateUrl: "partials/accounts-navigation.jade"
+        controller: "AccountsCtrl"
+      },
       right: {
-        templateUrl: "partials/dashboard"
+        templateUrl: "partials/dashboard.jade"
         controller: "DashboardCtrl"
+      }
+    }
+  )
+  $stateProvider.state("wallet.common.support",
+    url: "/contact-support"
+    views: {
+      top : top,
+      left: {
+        templateUrl: "partials/accounts-navigation.jade"
+        controller: "AccountsCtrl"
+      },
+      right: {
+        templateUrl: "partials/support.jade"
+      }
+    }
+  )
+  $stateProvider.state("wallet.common.feedback",
+    url: "/feedback"
+    views: {
+      top : top,
+      left: {
+        templateUrl: "partials/accounts-navigation.jade"
+        controller: "AccountsCtrl"
+      },
+      right: {
+        templateUrl: "partials/feedback.jade"
       }
     }
   )
