@@ -9,8 +9,9 @@
     if amount? && amount > 0
       $scope.paymentRequestURL += "?amount=" + numeral(amount).divide(100000000)
 
-  $scope.$watch 'accounts', (accts) ->
-  	if accts[0]?
-  		defaultAcctIdx = Wallet.getDefaultAccountIndex()
-  		receiveAddress = Wallet.getReceivingAddressForAccount(defaultAcctIdx)
-  		$scope.setPaymentRequestURL(receiveAddress)
+  $scope.updatePaymentInfo = () ->
+  	defaultAcctIdx = Wallet.getDefaultAccountIndex()
+  	receiveAddress = Wallet.getReceivingAddressForAccount(defaultAcctIdx)
+  	$scope.setPaymentRequestURL(receiveAddress)
+
+  $scope.$watch 'accounts', $scope.updatePaymentInfo, true
