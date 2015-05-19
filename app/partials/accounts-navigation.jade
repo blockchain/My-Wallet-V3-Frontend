@@ -5,7 +5,7 @@
         i.bc-icon-home
         span(translate="HOME")
     li.header.current(toggle-nav)
-      a(ui-sref="wallet.common.transactions({accountIndex:'accounts'})")
+      a(ui-sref="wallet.common.transactions({accountIndex: getMainAccountId() })")
         i.bc-icon-address
         span(translate="MY_TRANSACTIONS")
       ul.aside-list.pas

@@ -8,6 +8,12 @@
 
   $scope.numberOfActiveAccounts = () -> 
     return filterFilter(Wallet.accounts, {active: true}).length
+
+  $scope.getMainAccountId = () ->
+    account = 'accounts'
+    if $scope.numberOfActiveAccounts() <= 1
+      account = '0'
+    return account
   
   $scope.selectedAccountIndex = $stateParams.accountIndex
     
