@@ -4,12 +4,12 @@
       a(ui-sref="wallet.common.dashboard")
         i.ti-home
         span(translate="HOME")
-    li.header(toggle-nav ng-class="{current:selectedAccountIndex == 'accounts'}")
-      a(ui-sref="wallet.common.transactions({accountIndex:'accounts'})")
-        i.ti-import
+    li.header.current(toggle-nav ng-class="{current:selectedAccountIndex == 'accounts'}")
+      a(ui-sref="wallet.common.transactions({accountIndex: getMainAccountId() })")
+        i.bc-icon-address
         span(translate="MY_TRANSACTIONS")
-      ul.aside-list.pas(ng-show="selectedAccountIndex != 'imported'")
-        li(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd")
+      ul.aside-list.pas
+        li(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd || numberOfActiveAccounts() <= 1")
           a(translate="ALL_ACCOUNTS")
             span
               fiat-or-btc(btc="total()")    
@@ -20,7 +20,7 @@
               fiat-or-btc(btc="account.balance")
         li
           a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
-    li.header(ng-show="numberOfActiveLegacyAddresses() > 0", ng-class="{current:selectedAccountIndex == 'imported'}")
+    li.header(ng-show="settings.multiAccount && numberOfActiveLegacyAddresses() > 0", ng-class="{current:selectedAccountIndex == 'imported'}")
       a(ui-sref="wallet.common.transactions({accountIndex:'imported'})")
         i.ti-agenda
         span(translate="IMPORTED_ADDRESSES")

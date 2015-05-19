@@ -7,7 +7,7 @@
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)") 
     | {{alert.msg}}
   fields.form-horizontal(role="form",name="form",novalidate)
-    .form-group(ng-class="{'has-warning': fields.to.isWatchOnlyLegacyAddress}")
+    .form-group(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': fields.to.isWatchOnlyLegacyAddress}")
       label.col-sm-3.control-label(translate="RECEIVE_TO")
       .col-sm-9
         ui-select(ng-model="fields.to", ng-disabled="paymentRequest.amount > 0 || paymentRequest.label")

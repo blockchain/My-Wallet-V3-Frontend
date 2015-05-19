@@ -1,11 +1,17 @@
-@NavigationCtrl = ($scope, Wallet, SecurityCenter, $translate, $cookieStore, $state) ->
+@NavigationCtrl = ($scope, Wallet, SecurityCenter, $translate, $cookieStore, $state, filterFilter) ->
   
   $scope.status = Wallet.status
   $scope.security = SecurityCenter.security
   $scope.settings = Wallet.settings
   
   $scope.visitTransactions = () ->
-    $state.go("wallet.common.transactions", {accountIndex:'accounts'})
+    if $scope.numberOfActiveAccounts() > 1
+      $state.go("wallet.common.transactions", {accountIndex:'accounts'})
+    else
+      $state.go("wallet.common.transactions", {accountIndex:'0'})
+
+  $scope.numberOfActiveAccounts = () -> 
+    return filterFilter(Wallet.accounts, {active: true}).length
   
   $scope.isTransactionState = () ->
     return $state.current.name == "wallet.common.transactions" || $state.current.name == "wallet.common.transaction"

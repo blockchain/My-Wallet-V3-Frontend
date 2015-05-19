@@ -1,4 +1,4 @@
-@LoginCtrl = ($scope, $rootScope, $log, $http, Wallet, $cookieStore, $modal, $state, $timeout, $translate) ->
+@LoginCtrl = ($scope, $rootScope, $log, $http, Wallet, $cookieStore, $modal, $state, $timeout, $translate, filterFilter) ->
   $scope.status = Wallet.status    
   $scope.settings = Wallet.settings
   
@@ -116,12 +116,18 @@
 
       $state.go("register")
 
+  $scope.numberOfActiveAccounts = () -> 
+    return filterFilter(Wallet.accounts, {active: true}).length
+
   $scope.$watch "status.isLoggedIn", (newValue) ->
     if newValue
       $scope.busy = false
       
       # $state.go("wallet.common.dashboard")
-      $state.go("wallet.common.transactions", {accountIndex: "accounts"})
+      if $scope.numberOfActiveAccounts() > 1
+        $state.go("wallet.common.transactions", {accountIndex: "accounts"})
+      else
+        $state.go("wallet.common.transactions", {accountIndex: "0"})
       
   $scope.$watch "uid + password", () ->
     isValid = null
