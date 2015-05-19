@@ -1,50 +1,53 @@
 .wallet-container{
   margin: 0;
-  display: flex;
-  background: rgb(246, 246, 246);
-  height: 100%;
-    .left-nav {
-      flex: 1;
+  .left-nav {
+    position: absolute;
+    width: 25%;
+    height: 100%;
+    background: $light-grey-alt;
+    border-right: 1px solid #ddd;
     .active-accounts{
       margin-bottom: 30px;
     }
     .legacy-addresses, .partners{
       margin-bottom: 30px;
     }
-
-    .side-box{
+    .side-box {
       background-color: #FDFDFD;
       border: 1px solid rgb(229, 229, 229);
     }
-
-
-    }
-    .right-view{
-      background-color: #FFFFFF;
-    }
-    .top-view{
-      background-color: #FFFFFF;
-    }
-    .right-container{
-    background: #fff;
-    }
-    .main-container {
-      flex: 3;
-      border-left: 1px solid rgb(221, 221, 221);
-      background: white;
-    }
+  }
+  .sticky-header {
+    position: fixed;
+    width: 74%;
+    z-index: 1;
+    background: white;
+    box-shadow: 0px 10px 14px -12px $ccc;
+    -webkit-box-shadow: 0px 10px 14px -12px $ccc;
+    -moz-box-shadow: 0px 10px 14px -12px $ccc;
+  }
+  .main-container {
+    background: white;
+    position: relative;
+    margin-left: 25%;
+  }
 }
 
 @media (max-width: 768px) {
   .wallet-container {
-    display: block;
     .left-nav {
-      position: absolute;
+      position: relative;
+      width: 100%;
+    }
+    .sticky-header {
+      width: 100%;
+      position: relative;
+    }
+    .transactions {
       top: 0;
-      left: -210px;
     }
     .main-container {
-      flex: 1;
+      margin-left: 0;
     }
   }
   .bc-modal {

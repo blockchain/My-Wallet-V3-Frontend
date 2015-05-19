@@ -1,5 +1,7 @@
 #transactions {
   padding: 30px;
+  position: relative;
+  top: 90px;
   h2 {
     margin-top: 0px;
     margin-bottom: 30px;
@@ -266,5 +268,11 @@ a.date,p.date {
 
 @media (min-width: 992px){
   .amountTotal{float: right;}
+}
+
+@media (max-width: 620px) {
+  #transactions {
+    top: 0;
+  }
 }
 
