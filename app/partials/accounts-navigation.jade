@@ -1,10 +1,10 @@
 .left-navigation(ng-show="status.isLoggedIn")
   ul.aside
-    li.header.mbm(toggle-nav)
+    li.header(ui-sref-active="current")
       a(ui-sref="wallet.common.dashboard")
         i.ti-home
         span(translate="HOME")
-    li.header(toggle-nav, ng-class="{current:selectedAccountIndex == 'accounts'}")
+    li.header(toggle-nav ng-class="{current:selectedAccountIndex == 'accounts'}")
       a(ui-sref="wallet.common.transactions({accountIndex:'accounts'})")
         i.ti-import
         span(translate="MY_TRANSACTIONS")
@@ -31,19 +31,19 @@
               fiat-or-btc(btc="legacyTotal()")
         li
           a(ui-sref="wallet.common.settings.addresses", translate="VIEW_ADDRESSES")
-    li.header.mbm
+    li.header.mbm(ui-sref-active="current")
       a(ui-sref="wallet.common.settings.security-center")
         i.bc-icon-security
         span(translate="SECURITY")
-    li.header.mbm
+    li.header.mbm(ui-sref-active="current")
       a(ui-sref="wallet.common.settings.wallet")
         i.ti-settings
         span(translate="SETTINGS")
-    li.header.mbm(toggle-nav)
+    li.header.mbm(ui-sref-active="current")
       a(ui-sref="wallet.common.support")
         i.ti-headphone
         span(translate="CONTACT_SUPPORT")
-    li.header.mbm(toggle-nav)
+    li.header.mbm(ui-sref-active="current")
       a(ui-sref="wallet.common.feedback")
         i.ti-thumb-up
         span(translate="SEND_FEEDBACK")
