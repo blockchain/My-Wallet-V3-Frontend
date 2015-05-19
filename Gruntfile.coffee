@@ -9,8 +9,6 @@ module.exports = (grunt) ->
       dist: {
         src: ["dist/**/*"]
       }
-      shrinkwrap: 
-        src: ["npm-shrinkwrap.json"]
     }
     uglify:
       options:
@@ -347,9 +345,6 @@ module.exports = (grunt) ->
       bower_install_dependencies:
         command: () ->
            'cd build && touch .bowerrc && bower install'
-
-      
-    shrinkwrap: {}
   
   # Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks "grunt-contrib-uglify"
@@ -364,7 +359,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-rename-assets')
   grunt.loadNpmTasks('grunt-shell')
-  grunt.loadNpmTasks('grunt-shrinkwrap')
   grunt.loadNpmTasks('grunt-preprocess')
   
     
@@ -390,9 +384,7 @@ module.exports = (grunt) ->
     "clean"
     "compile"
     "html2js"
-    "shrinkwrap"
     "shell:check_dependencies"
-    "clean:shrinkwrap"
     "shell:npm_install_dependencies"
     "shell:bower_install_dependencies"
     "concat:application_dependencies"
