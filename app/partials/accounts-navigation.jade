@@ -6,7 +6,7 @@
         span(translate="HOME")
     li.header.current(toggle-nav)
       a(ui-sref="wallet.common.transactions({accountIndex:'accounts'})")
-        i.bc-icon-address
+        i.bc-icon-menu
         span(translate="MY_TRANSACTIONS")
       ul.aside-list.pas
         li(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd")
@@ -20,10 +20,17 @@
               fiat-or-btc(btc="account.balance")
         li
           a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
-    li.header.mvm
-      a(ui-sref="wallet.common.settings.addresses")
-        i.fa.fa-book
-        span(translate="ADDRESSES")
+    li.header(ng-show="numberOfActiveLegacyAddresses() > 0")
+      a(ng-click="display.imported = !display.imported")
+        i.bc-icon-address
+        span(translate="IMPORTED_ADDRESSES")
+      ul.aside-list.pas.pln(ng-show="display.imported")
+        li(ng-class="selectedAccountIndex == 'imported' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'imported'})")
+          a(translate="ALL_ADDRESSES")
+            span
+              fiat-or-btc(btc="legacyTotal()")
+        li
+          a(ui-sref="wallet.common.settings.addresses", translate="VIEW_ADDRESSES")
     li.header.mbm
       a(ui-sref="wallet.common.settings.security-center")
         i.bc-icon-security
@@ -40,15 +47,11 @@
       a(ui-sref="wallet.common.feedback")
         i.fa.fa-paper-plane
         span(translate="SEND_FEEDBACK")
-  ul.aside(ng-show="numberOfActiveLegacyAddresses() > 0")
-    li.header 
-      a(ui-sref="wallet.common.settings.addresses", translate="IMPORTED_ADDRESSES") 
-      ul.aside-list.pas.pln
-        li(ng-class="selectedAccountIndex == 'imported' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'imported'})")
-          a(translate="ALL_ADDRESSES")
-            span
-              fiat-or-btc(btc="legacyTotal()") 
   ul.aside.adverts
-    ul.aside-list.pln.pam
-      adverts
+    li.header.mbm
+      a(ui-sref="wallet.common.settings.security-center")
+        i.bc-icon-security
+        span(translate="SPONSORS")  
+      ul.aside-list.pln.pam
+        adverts
 
