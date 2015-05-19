@@ -1,15 +1,15 @@
 .left-navigation(ng-show="status.isLoggedIn")
   ul.aside
-    li.header.mbm(toggle-nav)
+    li.header(ui-sref-active="current")
       a(ui-sref="wallet.common.dashboard")
-        i.bc-icon-home
+        i.ti-home
         span(translate="HOME")
-    li.header.current(toggle-nav)
+    li.header(ui-sref-active="current")
       a(ui-sref="wallet.common.transactions({accountIndex: getMainAccountId() })")
-        i.bc-icon-address
+        i.ti-import
         span(translate="MY_TRANSACTIONS")
-      ul.aside-list.pas
-        li(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd || numberOfActiveAccounts() <= 1")
+      ul.aside-list.pas(ng-show="selectedAccountIndex != 'imported'")
+        li(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd")
           a(translate="ALL_ACCOUNTS")
             span
               fiat-or-btc(btc="total()")    
@@ -20,35 +20,35 @@
               fiat-or-btc(btc="account.balance")
         li
           a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
-    li.header.mvm(ng-show="settings.multiAccount && numberOfActiveLegacyAddresses() > 0")
-      a(ui-sref="wallet.common.settings.addresses")
-        i.fa.fa-book
-        span(translate="ADDRESSES")
-    li.header.mbm
+    li.header(ng-show="settings.multiAccount && numberOfActiveLegacyAddresses() > 0", ng-class="{current:selectedAccountIndex == 'imported'}")
+      a(ui-sref="wallet.common.transactions({accountIndex:'imported'})")
+        i.ti-agenda
+        span(translate="IMPORTED_ADDRESSES")
+      ul.aside-list.pas.pln(ng-show="selectedAccountIndex == 'imported'")
+        li(ng-class="selectedAccountIndex == 'imported' ? 'active' : ''")
+          a(translate="ALL_ADDRESSES")
+            span
+              fiat-or-btc(btc="legacyTotal()")
+        li
+          a(ui-sref="wallet.common.settings.addresses", translate="VIEW_ADDRESSES")
+    li.header.mbm(ui-sref-active="current")
       a(ui-sref="wallet.common.settings.security-center")
         i.bc-icon-security
         span(translate="SECURITY")
-    li.header.mbm
+    li.header.mbm(ui-sref-active="current")
       a(ui-sref="wallet.common.settings.wallet")
-        i.fa.fa-cog
+        i.ti-settings
         span(translate="SETTINGS")
-    li.header.mbm(toggle-nav)
+    li.header.mbm(ui-sref-active="current")
       a(ui-sref="wallet.common.support")
-        i.fa.fa-life-ring
+        i.ti-headphone
         span(translate="CONTACT_SUPPORT")
-    li.header.mbm(toggle-nav)
+    li.header.mbm(ui-sref-active="current")
       a(ui-sref="wallet.common.feedback")
-        i.fa.fa-paper-plane
+        i.ti-thumb-up
         span(translate="SEND_FEEDBACK")
-  ul.aside(ng-show="numberOfActiveLegacyAddresses() > 0")
-    li.header 
-      a(ui-sref="wallet.common.settings.addresses", translate="IMPORTED_ADDRESSES") 
-      ul.aside-list.pas.pln
-        li(ng-class="selectedAccountIndex == 'imported' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'imported'})")
-          a(translate="ALL_ADDRESSES")
-            span
-              fiat-or-btc(btc="legacyTotal()") 
   ul.aside.adverts
-
-    adverts
-
+    li.header.mbm
+      span(translate="SPONSORS")  
+      ul.aside-list.pln.pas.mtm
+        adverts

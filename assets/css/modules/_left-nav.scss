@@ -3,6 +3,11 @@
 }
 .left-navigation {
   color: #c9c9c9;
+  width: initial;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   a {
     color: #c9c9c9;
     display: block;
@@ -28,14 +33,16 @@ ul.aside {
     &:hover{color: #444;}
   }
   li.header{
-    font-size: 1.3em;
-    font-weight: 300;
+    font-size: 1em;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin:0 0 10px 0;
     a {
-      color: rgb(75, 75, 75);
-      padding: .25em .8em;
+      color: #737373;
+      padding: .6em 1em;
       display: flex;
       align-items: center;
-      i { margin-right: .55em; line-height: 0; }
+      i { margin-right: .55em; line-height: 0; font-size: 1.3em; }
     }
   }
   li.current {
@@ -44,7 +51,8 @@ ul.aside {
   ul.aside-list{
     background: white;
     list-style: none;
-    font-size: .8em;
+    font-size: 1em;
+    text-transform: none;
     .btn {  min-width: 110px; }
     a{
       color: #878787;
@@ -61,7 +69,25 @@ ul.aside {
   }
 }
 .adverts{
+  position: relative;
+  bottom: calc(0% + 7%);
+  ul.aside-list{
+    background: transparent;
+    li {
+      display: none;
+    }
+    li:first-child {
+      display: block;
+    }
+    li:last-child {
+      display: block;
+    }
+    a { 
+      padding: .25em .5em;
+    }
+  }
   span.btn, span.btn-danger, span.btn-success, span.btn-primary, span.btn-warning{
+    text-align: right;
     background: none!important;
     border: none!important;
     font-size: 13px!important;
@@ -81,7 +107,7 @@ ul.aside {
   }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 768px) {
   .adverts {
     display: none;
   }
