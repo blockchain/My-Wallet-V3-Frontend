@@ -25,8 +25,7 @@
     "international-phone-number": "mareczek/international-phone-number#0.0.5",
     "browserdetection": "0.3.*",
     "bc-qr-reader": "git+ssh://git@github.com/blockchain/bc-qr-reader.git#0.1.1",
-    "bootstrap-sass": "3.3.*",
-    "fontawesome": "4.3.*"
+    "bootstrap-sass": "3.3.*"
   },
   "devDependencies": {
     "angular-local-storage": "~0.1.5"
