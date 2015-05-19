@@ -4,7 +4,7 @@
       a(ui-sref="wallet.common.dashboard")
         i.ti-home
         span(translate="HOME")
-    li.header(ng-class="{current:selectedAccountIndex == 'accounts'}")
+    li.header(ui-sref-active="current")
       a(ui-sref="wallet.common.transactions({accountIndex: getMainAccountId() })")
         i.ti-import
         span(translate="MY_TRANSACTIONS")
