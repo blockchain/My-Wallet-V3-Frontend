@@ -1,4 +1,4 @@
-@RequestCtrl = ($scope, Wallet, $modalInstance, $log, destination, $translate, $stateParams) ->  
+@RequestCtrl = ($scope, Wallet, $modalInstance, $log, destination, $translate, $stateParams, filterFilter) ->  
   $scope.accounts = Wallet.accounts
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.destinations = []
@@ -48,6 +48,8 @@
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
     
+  $scope.numberOfActiveAccountsAndLegacyAddresses = () -> 
+    return filterFilter(Wallet.accounts, {active: true}).length + filterFilter(Wallet.legacyAddresses, {active: true}).length
   
   #################################
   #           Private             #

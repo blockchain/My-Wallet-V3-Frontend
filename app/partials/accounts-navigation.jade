@@ -5,11 +5,11 @@
         i.bc-icon-home
         span(translate="HOME")
     li.header.current(toggle-nav)
-      a(ui-sref="wallet.common.transactions({accountIndex:'accounts'})")
+      a(ui-sref="wallet.common.transactions({accountIndex: getMainAccountId() })")
         i.bc-icon-address
         span(translate="MY_TRANSACTIONS")
       ul.aside-list.pas
-        li(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd")
+        li(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd || numberOfActiveAccounts() <= 1")
           a(translate="ALL_ACCOUNTS")
             span
               fiat-or-btc(btc="total()")    
@@ -20,7 +20,7 @@
               fiat-or-btc(btc="account.balance")
         li
           a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
-    li.header.mvm
+    li.header.mvm(ng-show="settings.multiAccount && numberOfActiveLegacyAddresses() > 0")
       a(ui-sref="wallet.common.settings.addresses")
         i.fa.fa-book
         span(translate="ADDRESSES")
@@ -49,5 +49,6 @@
             span
               fiat-or-btc(btc="legacyTotal()") 
   ul.aside.adverts
+
     adverts
 
