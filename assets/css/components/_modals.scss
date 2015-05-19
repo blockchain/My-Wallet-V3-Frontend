@@ -195,9 +195,9 @@
       background: #efefef;
     }
   }
-  .collapse {
-    -webkit-animation: collapse .6s linear 0s 1;
-    animation: collapse .6s linear 0s 1;
+  .scale {
+    -webkit-animation: scale .6s linear 0s 1;
+    animation: scale .6s linear 0s 1;
   }
   input[type=number]::-webkit-inner-spin-button,
   input[type=number]::-webkit-outer-spin-button {

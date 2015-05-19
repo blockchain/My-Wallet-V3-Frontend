@@ -1,0 +1,164 @@
+.bc-header {
+  .dropdown-menu > li {
+    &:hover {
+      background: #EBEBEB;
+    }
+  }
+}
+
+//bootstrap overrides
+
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+  background-color: $dark-blue;
+  border-color: $dark-blue;
+}
+
+.navbar-inverse .navbar-toggle {
+  border: none;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: white;
+}
+
+.navbar-inverse {
+  background-color: #049bd4;
+  border:none;
+  border-radius: 0px;
+
+  .navbar-brand {
+      color: white;
+  }
+
+
+  .container-fluid{
+    padding: 10px 50px;
+  }
+
+  ul.mainNav{display: none;}
+
+  .navbar-nav {
+    li.security-center{
+    float: right;
+      p{
+      float: right;
+      margin: 5px 0px 0 5px;
+      font-weight: bold;
+      color: #fff;
+      letter-spacing: 0.05em;
+      }
+
+    }
+
+    li.account-details{
+    p{
+      float: right;
+      margin: 5px 0px 0 5px;
+      font-weight: bold;
+      color: #fff;
+      letter-spacing: 0.05em;
+    }
+    }
+
+    img#account-toggle {
+      height: 3px;
+      padding-left: 5px;
+    }
+
+    li > a:hover {
+      background-color: transparent;
+    }
+
+    li.active {
+     a {
+        background-color: #10ace5;
+      }
+
+      a:hover, a:active, a:focus {
+      background-color: #10ace5;
+      }
+
+    }
+
+    li.open{
+    a{background-color: transparent;}
+    }
+
+    // The dropdown on the top right:
+    .dropdown-menu a {
+      color: $black;
+      text-transform: none;
+    }
+
+  }
+
+}
+
+ul.navbar-right{
+  li.active{background:#10ace5; }
+  li.open{
+      background:#10ace5;
+      border-radius: 3px;
+      a{background-color: transparent;
+        &:hover{background-color: transparent!important;}
+        &:focus{background-color: transparent!important;}
+      }
+  }
+}
+
+img#logo {
+  height: 40px;
+  margin-top: -10px;
+}
+
+.navbar-header{
+  .navbar-brand{
+    padding: 15px 25px 15px 15px
+  }
+}
+
+.navbar-collapse{
+  border: none;
+  box-shadow: none;
+}
+
+ul.sub-dropdown{
+  li{
+    a{padding: 10px;}
+  }
+  li.active{
+    a{border-bottom: none;}
+  }
+}
+
+@media (min-width: 768px){
+
+.navbar-collapse{
+  display: block!important;
+}
+
+ul.navbar-nav{
+  .container-fluid{
+    padding: 10px 50px;
+  }
+ li.active{
+   a{
+        border-bottom: none;
+        margin-bottom: 1px;
+        color: #d3edfb;
+   }
+ }
+}
+
+
+.navbar-unauth {
+    ul.navbar-right{
+      li.item{
+        a{
+         padding: 15px 25px;
+        }
+      }
+    }
+}
+
+}
