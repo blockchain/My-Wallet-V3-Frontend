@@ -89,7 +89,7 @@ $select-fg: #808080;
 
 .ui-select-bootstrap .ui-select-choices-row>a {
   color: $select-fg;
-  font-weight: 100;
+  font-weight: 300;
 }
 
 .ui-select-bootstrap .ui-select-choices-row.active>a {
@@ -108,3 +108,17 @@ $select-fg: #808080;
   height: 0;
   margin: 0;
 }
+
+//Too many effing hover states.
+.ui-select-container .btn-default:hover, .ui-select-container .btn-default:focus, .ui-select-container .btn-default.focus, .ui-select-container .btn-default:active, .ui-select-container .btn-default.active, .ui-select-container .open > .btn-default.dropdown-toggle {
+  background-color: white;
+}
+
+//Get rid out outlines
+.dropdown {
+  outline: none;
+  &:focus {
+    outline: none;
+  }
+}
+
