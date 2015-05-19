@@ -37,8 +37,6 @@
   
   $scope.didLoad = () ->
     $scope.accounts = Wallet.accounts
-    if $scope.numberOfActiveAccounts() == 1
-      location.assign '/#/0/transactions/'
 
   # First load:      
   $scope.didLoad()
