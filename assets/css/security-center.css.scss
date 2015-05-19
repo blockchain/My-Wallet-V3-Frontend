@@ -1,7 +1,7 @@
 .badge-container{
 	width: 60%;
 	margin: 0 auto;
-	
+
 	h2{
 		font-size: 15pt;
 	}
@@ -10,34 +10,34 @@
 .thebadge{
   opacity: 0.5;
 	h2{
-	color: #999;	
+	color: #999;
 	}
-    .security-badge img {height: 150px;}	
+    .security-badge img {height: 150px;}
 }
 .thebadge.current{
   opacity: 1;
 	h2{
 	color: #1b8ac7;
 	}
-    .security-badge img {height: 200px;}	
-	
+    .security-badge img {height: 200px;}
+
 }
 
 .next-step{
-	
+
 border-bottom: 1px solid #eee;
 padding: 15px 0 15px;
-	
+
 	p.points{
 	color: rgb(94, 182, 95);
 	font-weight: bold;
 	font-size: 130%;
 	}
-	
+
 	a{
 	cursor: pointer;
 	}
-	
+
 }
 
 .row.spacing h2{
@@ -46,14 +46,14 @@ font-weight: 200;
 border-bottom: 1px solid #E0E0E0;
 color: #898989;
 display: block;
-padding-bottom:15px;	
+padding-bottom:15px;
 }
 
 .edit-mobile .btn-info{
 	margin: 5px;
 }
 .btn-verify{
-	margin: 3px 0 0 -20px	
+	margin: 3px 0 0 -20px
 }
 
 
@@ -63,14 +63,14 @@ padding-bottom:15px;
 .security-center{
 	.bucket{
 	  margin-bottom: 15px;
-	  
+
 	 .level{
 		background: #FFFFFF;
 		border: 1px solid #EAEAEA;
-		padding: 10px; 
+		padding: 10px;
 		.actionitem{
 		padding: 20px 30px;
-	  
+
 		  h3{
 			font-weight: 200;
 			color: #7E7E7E;
@@ -78,11 +78,11 @@ padding-bottom:15px;
 		  }
 		  p{
 			color: #B0B0B0;
-			line-height: 1.7em;	
-			font-size: 15px;		  
+			line-height: 1.7em;
+			font-size: 15px;
 		  }
-		}		 
-		
+		}
+
 	   .title{
 		background: #EBECEF;
 		text-align: center;
@@ -91,8 +91,8 @@ padding-bottom:15px;
 		height: 130px;
 
 		img{
-		  height: 75px;	
-		}   
+		  height: 75px;
+		}
 		p{
 		  color: #ddd;
 		  font-size: 160%;
@@ -109,7 +109,7 @@ padding-bottom:15px;
 		     margin: 20px 0 0;
 		     opacity: .25;
 
-	       }  
+	       }
 	       p{
 		    color: #999;
 		    margin: 10px 0;
@@ -118,44 +118,44 @@ padding-bottom:15px;
 		     display: block;
 		     height: 130px;
 		     margin: -10px 0 0 0;
-		     
+
 		     &:hover{
 				 text-decoration: none;
 				 img{opacity: .5;}
 		     }
-		     
+
 		   }
 	   }
-	   
+
 	   .badge-active{
-		   
+
 		   a{
 			 cursor: default;
 			 img{opacity: 1;}
 			 &:hover{img{opacity: 1;}}
 		   }
-		   
+
 		   p{
 		   }
 	   }
-	   
-	   
+
+
 	 }
 	 .level1{
 		.title{
 // 			background: #b6cfdf;
 			p{color:#E47F7F;}
 		}
-		
-		
-	 }  
+
+
+	 }
 	 .level2{
 		.title{
 // 			background: #7098b3;
 			p{color:#FCCC65;}
-		
+
 		}
-		
+
 	 }
 	 .level3{
 		.title{
@@ -164,27 +164,10 @@ padding-bottom:15px;
 
 		}
 	 }
-	 
+
 	}
 }
 
 .actionHolder{padding: 0;}
-.action-button{
-	a.settingaction{
-	float: none;
-	background: #3099FF;
-	padding: 15px;
-	box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.15);
-	border: 1px solid #2789DD;
-	color: white;
-	border-radius: 3px;
-	display: block;
-	text-align: center;
-	margin: 0 auto;
-	font-weight: bold;
-	font-size: 110%;
-		
-	}	
-}
 .hasBadge{display: none;}
 .securityhide{display: none;}

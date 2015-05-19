@@ -1,13 +1,14 @@
-.row#top(ng-show="status.isLoggedIn")
-  .col-xs-12.col-sm-5.col-md-6
-    button.left-arrow(ng-click="request()", translate="REQUEST") 
-    button.right-arrow(ng-click="send()", translate="SEND")
-  .col-xs-12.col-sm-7.col-md-6.balance
-    .content
-      h1 
-        {{ getTotal(accountIndex) | btc }}
-        
-      p(ng-show="getTotal(accountIndex) == null")
-        img(src="img/spinner.gif").spinner  
-      p
-        fiat(btc="getTotal(accountIndex)")
+.sticky-header.flex-center.flex-between#top(ng-show="status.isLoggedIn")
+  .button-group.flex
+    button.flex-center.flex-justify.mrm(ng-click="request()")
+      i.bc-icon-receive
+      span(translate="REQUEST")
+    button.flex-center.flex-justify(ng-click="send()")
+      i.bc-icon-send
+      span(translate="SEND")
+  .balance
+    h1 {{ getTotal(accountIndex) | btc }}
+    p(ng-show="getTotal(accountIndex) == null")
+      img(src="img/spinner.gif").spinner  
+    p
+      fiat(btc="getTotal(accountIndex)")

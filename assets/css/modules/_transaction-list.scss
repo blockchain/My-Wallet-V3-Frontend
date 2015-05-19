@@ -1,4 +1,7 @@
-#transactions {  
+#transactions {
+  padding: 30px;
+  position: relative;
+  top: 90px;
   h2 {
     margin-top: 0px;
     margin-bottom: 30px;
@@ -6,28 +9,29 @@
     font-size: 150%;
     font-weight: bold;
   }
-  
+
   a.date {
     padding-top: 10px;
-    
+
   }
-  
-  
+
+
   .row.transaction {
-  	margin-top: 5px;
-  	border-bottom: 1pt solid #f5f5f5;
-  	padding: 15px 0;
-    
+    border-bottom: 1pt solid $light-grey;
+    padding: 15px 0;
+    &:hover {
+      background: $hover-blue;
+    }
     div.info{
-    padding: 5px 0;  
+    padding: 5px 0;
     font-size: 9pt;
     color: rgb(190, 190, 190);
     font-style: italic;
       &:hover{cursor: pointer;}
     }
-    
+
     div.type{
-      padding-bottom: 10px;    
+      padding-bottom: 10px;
       padding-top: 10px;
        &:hover{cursor: pointer;}
       span.action{
@@ -52,39 +56,38 @@
       font-weight: 300;
       color: #B0B0B0;
       }
-    
+
     }
-    
+
     div.amount{
      padding-bottom: 5px;
      padding-top: 5px;
      font-size: 12pt;
-      
+
       button.amount{
       font-size: 11pt;
-      font-weight: normal;  
+      font-weight: normal;
       min-width: 150px;
       float: right;
-        
+
       }
-      
+
     }
-    
+
   }
-  
   .col-xs-2 {
     cursor: pointer;
   }
-  
   .description{
     color: #828181;
     cursor: pointer;
   }
-    
 
-  
+}
 
-} 
+#transaction-details {
+  padding: 10px 30px;
+}
 
 button.amount {
   margin-top: 0px;
@@ -96,25 +99,25 @@ button.amount {
   font-weight: bold;
   color: white;
   border-radius: 5px;
-  outline: none;    
+  outline: none;
 }
 
 
 
 button.intra-wallet  {
-  background: #5BACD0; 
+  background: #5BACD0;
   background-size: 80px 24px;
 }
 
 button.spent {
-  background: #E27E82; 
+  background: #E27E82;
   background-size: 80px 24px;
 }
 
 button.received {
-  background: #85B45B; 
+  background: #85B45B;
   background-size: 80px 24px;
-  
+
   span.glyphicon {
     padding-left: 10px;
   }
@@ -131,27 +134,27 @@ button.received {
     color: #57AACA;
     font-size: 17px;
   }
-  
+
   .status {
     color: gray;
     font-size: 10px;
-    
+
     span.short {
       font-weight: bold;
       margin-left: 3px;
     }
   }
-  
+
   .to-from-amount-box {
     background-color: #F7FAFB;
     border: 1px solid #ECEDEC;
     padding: 20px;
     color: #939393;
-    
+
     .row {
       background-color: transparent;
     }
-    
+
     table {
       td {
         padding-top: 5px;
@@ -160,16 +163,16 @@ button.received {
       }
     }
   }
-  
+
   button.amount {
     height: 50px;
     width: 100%;
   }
-  
+
   .right {
     float: right;
   }
-  
+
   .blockchain {
     .btn {
       background: #1A75BC;
@@ -185,15 +188,15 @@ button.received {
   .notes-tags {
     border-right: 1px solid #E1E1E1;
   }
-  
+
   h3, h4, p {
     color: #565E64;
   }
-  
+
   h3 {
     font-size: 15px;
   }
-  
+
   h4 {
     font-size: 14px;
     font-weight: normal;
@@ -201,21 +204,21 @@ button.received {
     margin-top: 20px;
     margin-bottom: 10px;
   }
-  
+
   .note {
     font-size: 120%;
   }
-  
+
   .value-at-tx {
-    font-size: 25px; 
+    font-size: 25px;
     font-weight: bold;
   }
-  
+
   .value-now {
-    font-size: 25px; 
+    font-size: 25px;
     font-weight: bold;
     color: #B3B3B3;
-  } 
+  }
 }
 
 .note {
@@ -231,7 +234,7 @@ button.received {
   }
 
 .btn-note{
-	margin: 5px;
+  margin: 5px;
 }
 
 }
@@ -243,26 +246,33 @@ a.date,p.date {
 .amountTotal{float: none;}
 
 .from, .to{
-	padding: 5px 0;
+  padding: 5px 0;
   strong{
     span{
-	  font-weight: normal;
+    font-weight: normal;
     }
     span.result{
-	  padding: 5px 0;
-	  font-weight: bold;
-	  display: block;
-	  overflow-wrap: break-word;
-	}
+    padding: 5px 0;
+    font-weight: bold;
+    display: block;
+    overflow-wrap: break-word;
+  }
   }
 }
 
 @media (min-width: 768px){
   #transaction-details{
-    .status{text-align: right;}	  
-  }  
+    .status{text-align: right;}
+  }
 }
 
 @media (min-width: 992px){
-	.amountTotal{float: right;}
+  .amountTotal{float: right;}
 }
+
+@media (max-width: 620px) {
+  #transactions {
+    top: 0;
+  }
+}
+

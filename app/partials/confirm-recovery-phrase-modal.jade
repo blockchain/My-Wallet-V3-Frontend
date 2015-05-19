@@ -45,7 +45,7 @@
     
       
 .modal-footer
-  button.btn.btn-info(ng-click="close()", translate="CANCEL", ng-hide="step==3")
+  button.button-muted(ng-click="close()", translate="CANCEL", ng-hide="step==3")
   button.button-default(ng-click="goToVerify()",translate="DONE_THIS", ng-show="step==1")
   button.button-default(ng-click="verify()",translate="VERIFY", ng-show="step==2")
   button.button-success(ng-click="close()",translate="DONE_THIS", ng-show="step==3")

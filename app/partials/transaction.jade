@@ -18,12 +18,10 @@
               strong
                 span(translate="FROM")
                 span.result {{ from }}
-                
             .to
               strong
                 span(translate="TO")
-                span.result {{ to }}                
-                
+                span.result {{ to }}
           .col-xs-12.col-md-5
             amount(transaction="transaction" btc)
   .row
@@ -40,8 +38,8 @@
       h4 Value now
       span.value-now 
         fiat(btc="transaction.result" abs)
-    
+
   .row
-    .col-xs-12         
+    .col-xs-12
       .blockchain
         a.btn(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank") Verify On Blockchain.info

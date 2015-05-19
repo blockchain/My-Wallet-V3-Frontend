@@ -1,5 +1,5 @@
-//animation crud
-@-webkit-keyframes collapse {
+//modal collapse and come back
+@-webkit-keyframes scale {
   10% { -webkit-transform: scale(.9) }
   20% { -webkit-transform: scale(.8) }
   30% { -webkit-transform: scale(.7); }
@@ -11,7 +11,7 @@
   90% { -webkit-transform: scale(.9); }
   100% { -webkit-transform: scale(1); }
 }
-@keyframes collapse {
+@keyframes scale {
   10% { transform: scale(.9) }
   20% { transform: scale(.8) }
   30% { transform: scale(.7); }
@@ -24,3 +24,15 @@
   100% { transform: scale(1); }
 }
 
+//bounce the icons
+@-webkit-keyframes bounce {
+  10% { -webkit-transform: translate(0,3); }
+  50% { -webkit-transform: translate(0,-3); }
+  100% { -webkit-transform: translate(0,0); }
+}
+
+@keyframes bounce {
+  10% { transform: translate(0,3); }
+  50% { transform: translate(0,-3); }
+  100% { transform: translate(0,0); }
+}

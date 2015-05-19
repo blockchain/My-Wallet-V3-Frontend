@@ -157,6 +157,7 @@ module.exports = (grunt) ->
           "build/bower_components/angular-ui-select/dist/select.min.css"
           # "build/bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css"
           "build/bower_components/angular/angular-csp.css"
+          "build/bower_components/fontawesome/css/font-awesome.css"
           "build/css/blockchain.css" # Needs to be loaded first
           "build/css/**/*.css"
         ],
@@ -197,15 +198,15 @@ module.exports = (grunt) ->
         files: [
           {src: ["angular-csp.css"], dest: "build/css", cwd: "bower_components/angular", expand: true }
           {src: ["intlTelInput.css"], dest: "build/css", cwd: "bower_components/intl-tel-input/build/css", expand: true }
+          {src: ["font-awesome.min.css"], dest: "build/css", cwd: "bower_components/fontawesome/css", expand: true }
           {src: ["*.css"], dest: "build/css", cwd: "assets/css", expand: true }
         ]
       fonts:
         files: [
           {src: ["bootstrap/*"], dest: "build/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
-          {src: ["*"], dest: "build/fonts", cwd: "bower_components/fontawesome/fonts", expand: true}        
-          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/bc-icons", expand: true}      
-          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/roboto", expand: true}        
-            
+          {src: ["*"], dest: "build/fonts", cwd: "bower_components/fontawesome/fonts", expand: true}
+          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/bc-icons", expand: true}
+          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/roboto", expand: true}
           
         ]
       beta:

@@ -1,5 +1,5 @@
-.form-group(ng-class="{'has-error': errors.emailVerificationCode }", ng-show="!user.isEmailVerified && user.email != null && user.email != ''")
+.pvm(ng-class="{'has-error': errors.emailVerificationCode }", ng-show="!user.isEmailVerified && user.email != null && user.email != ''")
   .col-xs-9
     input.form-control(type="text",ng-model="code")
   .col-xs-3
-    button.btn.btn-primary(ng-click="verifyEmail(code)",ng-disabled="!code || code.length < 3", translate="VERIFY")
+    button.button-success.button-sm(ng-click="verifyEmail(code)",ng-disabled="!code || code.length < 3", translate="VERIFY")

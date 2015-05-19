@@ -1,4 +1,4 @@
-p.headliner.hidden-xs(translate="WALLET_SETTINGS_EXPLAIN")
+h5.well.headliner.hidden-xs(translate="WALLET_SETTINGS_EXPLAIN")
 form.form-horizontal(role="form",name="form",novalidate)  
   .form-group
     .col-sm-12.col-md-6
@@ -27,5 +27,5 @@ form.form-horizontal(role="form",name="form",novalidate)
     .col-sm-12.col-md-6.setting-result
       //- h2.status.incomplete(translate="DISABLED", ng-show="!settings.handleBitcoinLinks")
       //- h2.status.complete(translate="ENABLED", ng-show="settings.handleBitcoinLinks")
-      a.settingaction(ng-click="setHandleBitcoinLinks()", translate="SET_HANDLE_BITCOIN_LINKS", ng-hide="settings.handleBitcoinLinks")
-      p.settingtext(translate="HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN")
+      a.button-primary(ng-click="setHandleBitcoinLinks()", translate="SET_HANDLE_BITCOIN_LINKS", ng-hide="settings.handleBitcoinLinks")
+      p.settingtext.mtl(translate="HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN")
