@@ -49,12 +49,11 @@ div(ng-show="hdAddresses.length > 0")
           //-   a.btn.btn-xs.btn-warning(ng-show="request.paid != 0 && request.amount != 0 && request.amount != request.paid && !request.complete", ng-click="accept(request)") Accept
 
 .flex.mtl
-  .flex-column.mrm
-    button.button-primary(translate="IMPORTED_ADDRESSES", ng-click="display.imported = !display.imported")
-    p.hidden-xs(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
-  .flex-column
-    button.button-primary(translate="ARCHIVED_ADDRESSES", ng-click="display.archived = !display.archived")
-    p.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
+  button.button-primary.mrl(translate="IMPORTED_ADDRESSES", ng-click="display.imported = !display.imported")
+  button.button-primary(translate="ARCHIVED_ADDRESSES", ng-click="display.archived = !display.archived")
+
+p.mtl.hidden-xs(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
+p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
 
 .row.form-ctrl(ng-show="display.imported")
   .col-xs-12.col-lg-6

@@ -1,6 +1,5 @@
-ul.aside-list.pln.pam
-  li.ad.mbm(ng-repeat="ad in ads")
-    a(ng-click="visit(ad)")
-      button.btn(ng-click="visit(ad)", ng-class="[ ad.button_class ]")
-        img(ng-src="{{ ad.image }}")
-      span.adtext(ng-class="[ ad.button_class ]") {{ ad.title }}
+li.ad(ng-repeat="ad in ads")
+  a(ng-click="visit(ad)")
+    button.btn(ng-click="visit(ad)", ng-class="[ ad.button_class ]")
+      img(ng-src="{{ ad.image }}")
+    span.adtext(ng-class="[ ad.button_class ]") {{ ad.title }}

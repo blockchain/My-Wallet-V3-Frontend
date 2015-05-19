@@ -5,21 +5,21 @@
   }
   button {
     padding: .25em .8em;
-    background: #EBEEF0;
-    border: none;
+    background: #FEFEFE;
+    border: 1px solid #e0e0e0;
     border-radius: 5px;
     font-weight: 300;
-    font-size: 1.6em;
-    min-width: 140px;
-    box-shadow: 0 2px 0 0 #ddd;
+    font-size: 1.4em;
+    min-width: 115px;
     transition: all .2s ease-in-out;
-    -moz-box-shadow: 0 2px 0 0 #ddd;
-    -webkit-box-shadow: 0 2px 0 0 #ddd;
+//    box-shadow: -4px 4px 0 0 #E7E7E7;
+//    -moz-box-shadow: -4px 4px 0 0 #E7E7E7;
+//    -webkit-box-shadow: -4px 4px 0 0 #E7E7E7;
     &:hover {
-      background: darken(#EBEEF0, 2%);
-      box-shadow: 0 3px 0 0 #ddd;
-      -moz-box-shadow: 0 3px 0 0 #ddd;
-      -webkit-box-shadow: 0 3px 0 0 #ddd;
+      background: darken(#FEFEFE, 5%);
+//      box-shadow: -4px 4px 0 0 darken(#E7E7E7, 5%);
+//      -moz-box-shadow: -4px 4px 0 0 darken(#E7E7E7, 5%);
+//      -webkit-box-shadow: -4px 4px 0 0 darken(#E7E7E7, 5%);
       .bc-icon-receive, .bc-icon-send {
         animation: bounce .5s ease-in-out inifinite;
         webkit-animation: bounce .5s ease-in-out infinite;
