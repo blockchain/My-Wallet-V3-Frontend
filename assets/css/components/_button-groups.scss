@@ -1,0 +1,46 @@
+.button-group {
+  i {
+    transition: all .2s ease-in-out;
+    margin-right: .25em;
+  }
+  button {
+    padding: .25em .8em;
+    background: #EBEEF0;
+    border: none;
+    border-radius: 5px;
+    font-weight: 300;
+    font-size: 1.6em;
+    min-width: 140px;
+    box-shadow: 0 2px 0 0 #ddd;
+    transition: all .2s ease-in-out;
+    -moz-box-shadow: 0 2px 0 0 #ddd;
+    -webkit-box-shadow: 0 2px 0 0 #ddd;
+    &:hover {
+      background: darken(#EBEEF0, 2%);
+      box-shadow: 0 3px 0 0 #ddd;
+      -moz-box-shadow: 0 3px 0 0 #ddd;
+      -webkit-box-shadow: 0 3px 0 0 #ddd;
+      .bc-icon-receive, .bc-icon-send {
+        animation: bounce .5s ease-in-out inifinite;
+        webkit-animation: bounce .5s ease-in-out infinite;
+      }
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .button-group {
+    button {
+      min-width: 50px;
+    }
+    button span {
+      display: none;
+    }
+    i {
+      margin-right: 0px;
+    }
+  }
+}

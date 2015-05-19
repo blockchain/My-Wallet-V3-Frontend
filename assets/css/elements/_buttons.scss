@@ -5,7 +5,7 @@ button[disabled] {
 }
 
 %button-base {
-  border-radius: 3px;
+  border-radius: 5px;
   border: none;
   padding: .8em 1.2em;
   transition: all .2s ease-in-out;
@@ -40,7 +40,7 @@ button[disabled] {
         background: darken($background, 5%);
         color: $color;
       }
-      [disabled] {
+      &:disabled {
         &:hover {
           background: $background;
           opacity: .6;

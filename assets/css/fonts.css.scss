@@ -23,8 +23,8 @@
 @include declare-font-face('roboto', 'Roboto', 'Roboto-Black', 900);
 
 
-[class^="bc-"], [class*=" bc-"] {
-  /* font-family: 'bc-icons'; */
+[class^="bc-icon-"], [class*=" bc-icon-"] {
+  font-family: 'BlockchainFontIcons';
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -39,46 +39,46 @@
 
 //Blockchain font icon unicode
 
-.bc-address:before {
+.bc-icon-address:before {
   content: "\e600";
 }
 
-.bc-home:before {
+.bc-icon-home:before {
   content: "\e601";
 }
 
-.bc-location:before {
+.bc-icon-location:before {
   content: "\e602";
 }
 
-.bc-logo:before {
+.bc-icon-logo:before {
   content: "\e603";
 }
 
-.bc-menu:before {
+.bc-icon-menu:before {
   content: "\e604";
 }
 
-.bc-money:before {
+.bc-icon-money:before {
   content: "\e605";
 }
 
-.bc-profile:before {
+.bc-icon-profile:before {
   content: "\e606";
 }
 
-.bc-qr-code:before {
+.bc-icon-qr-code:before {
   content: "\e607";
 }
 
-.bc-receive:before {
+.bc-icon-receive:before {
   content: "\e608";
 }
 
-.bc-security:before {
+.bc-icon-security:before {
   content: "\e609";
 }
 
-.bc-send:before {
+.bc-icon-send:before {
   content: "\e60a";
 }
