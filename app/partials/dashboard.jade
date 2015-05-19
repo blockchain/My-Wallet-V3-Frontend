@@ -1,6 +1,6 @@
 .flex.dashboard.pal
   img(src="img/rocket.gif" alt="Welcome to your new Blockchain wallet!")
-  .flex-column.mll.pal
+  .flex-column.mll.phl
     h1 Welcome to the new Blockchain Wallet!
     p.bc-well
       | We’ve been hard at work creating the ultimate new wallet experience for our 3+ million users worldwide. 
@@ -24,17 +24,16 @@
       | by pressing the “Send Feedback” button on the left hand side of the page. 
 
 
-.flex.dashboard.pal
-  .form-group(ng-if="paymentRequestURL")
-    .col-sm-2
-    .col-sm-3
+.flex-column.dashboard.pal
+  h4 With our new HD wallet, we create a new bitcoin address for you on every transaction.
+  h6 This is your current bitcoin address:
+  .form-group.flex.mtl(ng-if="paymentRequestURL")
+    .mrl
       p.form-control-static(ng-hide="status.didInitializeHD")
         img(src="img/spinner.gif")  
       span(ng-show="status.didInitializeHD")
         qr(text="paymentRequestURL", size=120, correction-level="'M'")
-    .col-sm-7
-      p
-      label.black(translate="BITCOIN_ADDRESS")
+    .plm
       p.form-control-static.bitcoin-address
         img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
         span(ng-show="status.didInitializeHD")

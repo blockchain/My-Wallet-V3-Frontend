@@ -143,10 +143,12 @@ padding-left: 15px;
   img {
     height: 100%;
     width: 400px;
+    border-radius: 5px;
   }
   h1 {
     font-weight: 300;
     font-size: 2em;
+    margin-top: 0;
   }
   h4 {
     margin-top: 20px;
@@ -161,10 +163,10 @@ padding-left: 15px;
   line-height: 2em;
   font-size: 1.1em;
   }
-  
+
   ul{
     list-style-type: square;
     font-size: 1.2em;
   }
-  
+
 }
