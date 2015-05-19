@@ -21,39 +21,10 @@ port = process.env.PORT or 8080
 
 dist = process.env.DIST? && parseInt(process.env.DIST)
 
-#########
-# HTTPS #
-#########
-
-# fs = require('fs')
-# https = require('https')
-# socket = require('socket.io')
-# sslOptions = {
-#     key: fs.readFileSync(__dirname + '/ssl_dev/server.key'),
-#     cert: fs.readFileSync(__dirname + '/ssl_dev/server.crt'),
-#     honorCipherOrder: true
-#     ca: fs.readFileSync(__dirname + '/ssl_dev/ca.crt'),
-#     requestCert: true,
-#     rejectUnauthorized: false
-# }
-# server = https.createServer(sslOptions, app)
-# io = socket.listen(server, {
-#     "log level" : 3,
-#     "match origin protocol" : true,
-#     "transports" : ['websocket']
-# })
-# port = process.env.PORT or 443
-
-#############
-# End HTTPS #
-#############
-
 # Configuration
 app.configure ->
   app.use (req, res, next) ->
-    if req.url == "/"
-      res.setHeader "content-security-policy", "img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-src 'self' https://*.youtube.com;; script-src 'self'; connect-src 'self' *.blockchain.info wss://*.blockchain.info https://blockchain.info https://api.sharedcoin.com; object-src 'none'; media-src 'self' data: mediastream:; font-src local.blockchain.com:* dev.blockchain.info;"
-    else if req.url.indexOf("beta_key")
+    if req.url.indexOf("beta_key")
       # Don't cache these
       res.setHeader('Cache-Control', 'public, max-age=0, no-cache');
     else if dist
