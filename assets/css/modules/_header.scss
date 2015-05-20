@@ -72,10 +72,12 @@
     li.active {
      a {
         background-color: #10ace5;
+        border-radius: 5px;
       }
 
       a:hover, a:active, a:focus {
-      background-color: #10ace5;
+        background-color: #10ace5;
+        border-radius: 5px;
       }
 
     }
@@ -95,7 +97,7 @@
 }
 
 ul.navbar-right{
-  li.active{background:#10ace5; }
+  li.active{background:#10ace5; border-radius: 5px; }
   li.open{
       background:#10ace5;
       border-radius: 3px;
