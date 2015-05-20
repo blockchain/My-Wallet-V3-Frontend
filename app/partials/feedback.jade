@@ -2,7 +2,7 @@
   div(ng-show="formSubmitted")
     h1 Thank you for your feedback!
   div(ng-hide="formSubmitted")
-    form.bc-form.pal(ng-submit="setFormSubmitted()" method="POST" target="_blank" action="/feedback")
+    form.bc-form.pal(ng-submit="setFormSubmitted()" method="POST" target="_blank" action="https://blockchain.atlassian.net/rest/collectors/1.0/template/feedback/e6ce4d72")
       .bc-form-header
         h1 Tell us what you think!
       label.mbl What's your overall impression of the wallet?
