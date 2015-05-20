@@ -320,31 +320,55 @@ module.exports = (grunt) ->
             'dist/beta-admin.css'
           ]
         
-    shell: 
-      staging: 
+    shell:
+      deploy_static_to_dev:
         command: () -> 
-           'rsync -r dist/ server12:dist'
-           
-      staging_experimental:
+          'rsync -rz --delete dist node-dev@server12:'
+
+      deploy_server_to_dev:
+        command: () -> 
+          'rsync -rz --delete server.coffee node-dev@server12:'
+
+      deploy_beta_to_dev:
+        command: () -> 
+          'rsync -rz --delete node_modules/hd-beta node-dev@server12:node_modules/'
+
+      deploy_static_to_alpha:
+        command: () -> 
+          'rsync -rz --delete dist node-alpha@server12:'
+
+      deploy_server_to_alpha:
+        command: () -> 
+          'rsync -rz --delete server.coffee node-alpha@server12:'
+
+      deploy_beta_to_alpha:
         command: () ->
-           'scp -Cr dist/* server12:dist-experimental'
-           
+          'rsync -rz --delete node_modules/hd-beta node-alpha@server12:node_modules/'
+
+      deploy_start_dev:
+        command: () ->
+          'ssh node-dev@server12 "./start.sh"'
+
+      deploy_start_alpha:
+        command: () ->
+          'ssh node-alpha@server12 "./start.sh"'
+
       check_dependencies: 
         command: () -> 
-           'mkdir -p build && ruby assets/js/my-wallet/check-dependencies.rb'
-           
+          'mkdir -p build && ruby assets/js/my-wallet/check-dependencies.rb'
+
       skip_check_dependencies:
         command: () ->
           'cp -r node_modules build && cp -r bower_components build'
-        
+
       npm_install_dependencies:
         command: () ->
            'cd build && npm install'
-           
+
       bower_install_dependencies:
         command: () ->
            'cd build && touch .bowerrc && bower install'
-  
+
   # Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks "grunt-contrib-uglify"
   grunt.loadNpmTasks('grunt-contrib-concat')
@@ -447,14 +471,40 @@ module.exports = (grunt) ->
     "rename:html"
   ]
   
-  grunt.registerTask "staging", [
-    "dist"
-    "shell:staging"
-  ]
-  
-  grunt.registerTask "staging_experimental", [
+  grunt.registerTask "deploy_static_to_dev", [
     "dist_unsafe"
-    "shell:staging_experimental"
+    "shell:deploy_static_to_dev"
+    "shell:deploy_start_dev"
+  ]
+
+  grunt.registerTask "deploy_server_to_dev", [
+    "dist_unsafe"
+    "shell:deploy_server_to_dev"
+    "shell:deploy_start_dev"
+  ]
+
+  grunt.registerTask "deploy_beta_to_dev", [
+    "dist_unsaef"
+    "shell:deploy_beta_to_dev"
+    "shell:deploy_start_dev"
   ]
   
+  grunt.registerTask "deploy_static_to_alpha", [
+    "dist_unsafe"
+    "shell:deploy_static_to_alpha"
+    "shell:deploy_start_alpha"
+  ]
+
+  grunt.registerTask "deploy_server_to_alpha", [
+    "dist_unsafe"
+    "shell:deploy_server_to_alpha"
+    "shell:deploy_start_alpha"
+  ]
+
+  grunt.registerTask "deploy_beta_to_alpha", [
+    "dist_unsafe"
+    "shell:deploy_beta_to_alpha"
+    "shell:deploy_start_alpha"
+  ]
+
   return
