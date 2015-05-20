@@ -122,3 +122,8 @@ $select-fg: #808080;
   }
 }
 
+//Give toggle min height
+.ui-select-container{
+.ui-select-toggle{height: 34px;}
+}
+

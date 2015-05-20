@@ -1,4 +1,4 @@
 span
-    fiat(btc="btc", ng-hide="settings.displayCurrency.code == 'BTC' || settings.displayCurrency.code == 'mBTC' ")
-    span(ng-show="settings.displayCurrency.code == 'BTC'") {{ btc | btc }}
-    span(ng-show="settings.displayCurrency.code == 'mBTC'") {{ btc | mbtc }}  
+  fiat(btc="btc", ng-hide="settings.displayCurrency.code == 'BTC' || settings.displayCurrency.code == 'mBTC' ")
+  span(ng-show="settings.displayCurrency.code == 'BTC'") {{ btc | btc }}
+  span(ng-show="settings.displayCurrency.code == 'mBTC'") {{ btc | mbtc }}  

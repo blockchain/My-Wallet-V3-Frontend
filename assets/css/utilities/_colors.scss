@@ -47,6 +47,7 @@ $ccc: #CCCCCC;
 @include color('facebook', $facebook);
 @include color('linkedin', $linkedin);
 @include color('receive-green', $receive-green);
+@include color('ccc', $ccc);
 
 //Background Mixin
 @mixin bg-color($name, $color) {

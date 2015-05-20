@@ -1,8 +1,10 @@
 .modal-header.flex-column.bc-modal-header
   .flex-center
     img(src="img/arrow-up.png")
-    h3(translate="SEND_BITCOIN")
-  h5 Send bitcoin instantly to any bitcoin address, email, or phone number
+    h3(ng-show="step == 1", translate="SEND_BITCOIN")
+    h3(ng-show="confirmationStep", translate="CONFIRM")
+  h5(ng-show="step == 1") Send bitcoin instantly to any bitcoin address, email, or phone number
+  h5(ng-show="confirmationStep") Please review your transaction
   p.step Step {{step}} of 2
 .modal-body#send
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)") 
@@ -10,7 +12,7 @@
   div(ng-hide="confirmationStep")
     form.form-horizontal(role="form",name="form",novalidate)
       .flex-column.form-group(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
-        label
+        label.mbm
           span(translate="FROM")
           |:
         div
@@ -22,7 +24,7 @@
               ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)") 
                 span(ng-bind-html="maxAndLabel(origin) | highlight: $select.search" ng-class="{zerobalance: hasZeroBalance(origin)}")
       .flex-column.form-group(ng-class="{'has-error': errors.to, 'has-success' : success.to}")
-        label
+        label.mbm
           span(translate="TO")
           |:  
         div
@@ -43,7 +45,7 @@
               span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
           span.help-block {{ errors.to }}
       .flex-column.form-group(ng-class="{'has-error': errors.amount}")
-        label
+        label.mbm
           span(translate="AMOUNT")
         .flex
           .flex-1.mrl
@@ -73,71 +75,42 @@
         .col-sm-9
           bc-qr-reader(active="cameraRequested", on-result="processURLfromQR" on-error="onError" camera-status="cameraIsOn")
   div.overview(ng-show="confirmationStep")
-    .row
-      .col-xs-6
-        h4(translate="OVERVIEW")
-        hr
-        table
-          tr
-            td.left
-              b 
-                span(translate="FROM")
-                | :
-            td
-              b {{ from }}
-          tr
-            td.left
-              b 
-                span(translate="TO")
-                | :
-            td
-              | {{ toLabel }}
-        hr
-        table
-          tr
-            td.left
-              span(translate="AMOUNT")
-              | :
-            td
-              | {{ transaction.satoshi | btc:true }}
-            td
-              | BTC
-            td
-              fiat(btc="transaction.satoshi")
-          tr
-            td.left
-              span(translate="FEE")
-              | :
-            td
-              | {{ transaction.fee | btc:true }}
-            td
-              | BTC
-            td
-              fiat(btc="transaction.fee")
-          tr.total
-            td.left
-              b
-                span(translate="TOTAL")
-                | :
-            td
-              b {{ transaction.fee + transaction.satoshi | btc:true }}
-            td
-              b BTC
-            td
-              fiat(btc="transaction.satoshi + transaction.fee")
-      .col-xs-6
-        //- h4
-        //-   span(translate="TAGS")
-        //-   |
-        //-   span(ng-click="") +
-        //- p Coming soon...
-        h4
-          span(translate="NOTE") 
+    .flex-column
+      .flex-center.control-group.mbl
+        label.mbn.mrl(translate="FROM:")
+        h6.mvn.flex-1.ccc {{ from }}
+        label.mbn.mrl(translate="TO:")
+        h6.mvn.flex-1.ccc {{ toLabel }}
+      ul.total-amounts.ccc.ptm
+        label.mbn(translate="OVERVIEW")
+        li.amount-item
+          p(translate="AMOUNT")
+          p
+            | {{ transaction.satoshi | btc:true }} BTC
+          p
+            fiat(btc="transaction.satoshi")
+        li.amount-item
+          p(translate="FEE")
+            | :
+          p
+            | {{ transaction.fee | btc:true }} BTC
+          p
+            fiat(btc="transaction.fee")
+            span.why-fee why?
+        li.amount-item.blue
+          p(translate="TOTAL")
+            | :
+          p {{ transaction.fee + transaction.satoshi | btc:true }} BTC
+          p
+            fiat(btc="transaction.satoshi + transaction.fee")
+      .flex-column
+        label(translate="NOTE") 
           |:
-        textarea.form-control(rows="3", ng-model="transaction.note")
-        span(translate="MAKE_PUBLIC")
-        |&nbsp
-        input(type="checkbox", ng-model="transaction.publicNote")
+        textarea(rows="4", ng-model="transaction.note")
+        .flex-center.mtm
+          input.mrs(type="checkbox", ng-model="transaction.publicNote")
+          |&nbsp
+          span(translate="MAKE_PUBLIC")
 
 .modal-footer.actions
   button.btn.btn-info(ng-click="cameraOff()", ng-show="cameraIsOn", translate="CAMERA_OFF")
