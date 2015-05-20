@@ -174,8 +174,11 @@ if process.env.BETA? && parseInt(process.env.BETA)
           response.json { error: err }
 
       else if request.params.method == 'set-percent-requested'
-        process.env.PERCENT_REQUESTED = parseInt(request.query.percent)
-        response.json {success: true}
+        percent = parseInt(request.query.percent)
+        isNumber = not isNaN(percent)
+        if isNumber
+          process.env.PERCENT_REQUESTED = percent
+        response.json { success: Boolean(isNumber) }
         
 else
   app.get "/", (request, response) ->
