@@ -44,7 +44,7 @@
         $scope.uid = null
         $scope.password = null
         $cookieStore.remove("password")
-        $cookieStore.remove("uid")
+        # $cookieStore.remove("uid") // Pending a "Forget Me feature"
         $state.go("wallet.common.transactions", {accountIndex: "accounts"})
         Wallet.logout() # Refreshes the browser, so won't return
         return
