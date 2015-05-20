@@ -127,6 +127,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       },
       right: {
         templateUrl: "partials/feedback.jade"
+        controller: "FeedbackCtrl"
       }
     }
   )
