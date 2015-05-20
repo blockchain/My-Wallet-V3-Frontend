@@ -36,3 +36,11 @@
   50% { transform: translate(0,-3); }
   100% { transform: translate(0,0); }
 }
+
+//speed up fade in animation
+
+.fade {
+  -webkit-transition: opacity 0.05s linear;
+  -o-transition: opacity 0.05s linear;
+  transition: opacity 0.05s linear;
+}
