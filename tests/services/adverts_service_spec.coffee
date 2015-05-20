@@ -27,7 +27,7 @@ describe "AdvertsServices", () ->
       $httpBackend.flush()
       
     it "should download the most recent adverts feed", ->
-      expect(Adverts.ads.length).toBe 1
+      expect(Adverts.ads.length).toBe 2
       
     it "should get the ad title", ->
       expect(Adverts.ads[0].title).toBe "Kraken Deposit"
