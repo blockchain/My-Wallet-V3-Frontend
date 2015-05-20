@@ -485,11 +485,19 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "deploy_beta_to_dev", [
-    "dist_unsaef"
+    "dist_unsafe"
     "shell:deploy_beta_to_dev"
     "shell:deploy_start_dev"
   ]
-  
+
+  grunt.registerTask "deploy_to_dev", [
+    "dist_unsafe"
+    "shell:deploy_static_to_dev"
+    "shell:deploy_beta_to_dev"
+    "shell:deploy_server_to_dev"
+    "shell:deploy_start_dev"
+  ]
+
   grunt.registerTask "deploy_static_to_alpha", [
     "dist_unsafe"
     "shell:deploy_static_to_alpha"
@@ -505,6 +513,14 @@ module.exports = (grunt) ->
   grunt.registerTask "deploy_beta_to_alpha", [
     "dist_unsafe"
     "shell:deploy_beta_to_alpha"
+    "shell:deploy_start_alpha"
+  ]
+
+  grunt.registerTask "deploy_to_alpha", [
+    "dist_unsafe"
+    "shell:deploy_static_to_alpha"
+    "shell:deploy_beta_to_alpha"
+    "shell:deploy_server_to_alpha"
     "shell:deploy_start_alpha"
   ]
 
