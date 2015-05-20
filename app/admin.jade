@@ -6,6 +6,7 @@ html(lang='en')
     
     <!-- @if !PRODUCTION -->
     script(src='../bower_components/jquery/dist/jquery.js')
+    script(src="../bower_components/bootstrap/dist/js/bootstrap.min.js")
 
     link(rel='stylesheet', href='../build/css/blockchain.css')
     link(rel='stylesheet', href='../build/css/navigation.css')
@@ -16,9 +17,6 @@ html(lang='en')
     script(src='../beta-admin.js')
     <!-- @endif -->
     
-    //- script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
-    script(src="../bower_components/bootstrap/dist/js/bootstrap.min.js")
-
   body
     .navbar.navbar-default.navbar-inverse.navbar-unauth(role='navigation')
       .container-fluid

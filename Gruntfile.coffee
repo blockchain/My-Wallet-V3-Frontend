@@ -98,6 +98,7 @@ module.exports = (grunt) ->
       beta:
         src: [
           "build/bower_components/jquery/dist/jquery.js"
+          "build/bower_components/bootstrap/dist/js/bootstrap.min.js"
           "app/betaAdminClient.js"
         ]
         dest: "dist/beta-admin.js"
