@@ -1,10 +1,10 @@
 div
-  .flex-column(ng-show="!complete")
+  .flex-column(ng-if="!complete")
     .flex-center.ccc
       i.ti-time.mrm
       h6(translate="PENDING")
     h6.status-detail(translate="TRANSACTION_WILL_COMPLETE_IN", translate-values="{minutes: minutesRemaining}")
 
-  .success.flex-center(ng-show="complete")
+  .success.flex-center(ng-if="complete")
     i.ti-check.mrm
     h6(translate="TRANSACTION_COMPLETE")
