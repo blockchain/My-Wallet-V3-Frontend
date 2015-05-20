@@ -54,6 +54,8 @@ $security-green: #3CC476;
 @include color('security-red', $security-red);
 @include color('security-yellow', $security-yellow);
 @include color('security-green', $security-green);
+@include color('ccc', $ccc);
+@include color('success', $success);
 
 //Background Mixin
 @mixin bg-color($name, $color) {

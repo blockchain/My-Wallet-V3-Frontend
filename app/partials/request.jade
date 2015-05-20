@@ -49,11 +49,11 @@
         span(ng-show="status.didInitializeHD")
           qr(text="paymentRequestURL", size=120, correction-level="'M'")
       .col-sm-7
-        p
         label.black(translate="BITCOIN_ADDRESS")
         p.form-control-static.bitcoin-address
           img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
           span(ng-show="status.didInitializeHD")
             | {{ paymentRequestAddress }}  
+        p.ccc.mtm Just copy the address above and share
 .modal-footer
   button.button-default(ng-click="close()", translate="GOT_IT")  

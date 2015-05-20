@@ -386,8 +386,13 @@
   $scope.decimalPlaces = (number) ->
     return (number.split('.')[1] || []).length
 
+  $scope.step = 1
+
   $scope.goToConfirmation = () ->
     $scope.confirmationStep = true
+    $scope.step++
     
   $scope.backToForm = () ->
     $scope.confirmationStep = false    
+    $scope.step--
+

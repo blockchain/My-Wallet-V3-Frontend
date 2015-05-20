@@ -1,14 +1,14 @@
 .flex.dashboard.pal
   img(src="img/rocket.gif" alt="Welcome to your new Blockchain wallet!")
-  .flex-column.mll.pal
+  .flex-column.mll.phl
     h1 Welcome to the new Blockchain Wallet!
     p.bc-well
       | We’ve been hard at work creating the ultimate new wallet experience for our 3+ million users worldwide. 
       | Thank you for taking the time to help test and explore what we’ve been working on. 
  
-    h4 What's New?:
+    h4 What's New?
     ul
-      li Backup your entire wallet once with a simple 12 word Recovery Phrase and restore it anywhere, anytime on any supported HD wallet
+      li Backup your entire wallet once with a simple 12 word Recovery Phrase and restore it anywhere, anytime on any supported HD wallet.
       li Create multiple accounts in your wallet allowing you to keep funds completely separate from each other, in one easy to manage wallet.
       li 
         | Our brand new Security Center helps you secure your wallet from unauthorized access and ensures you can recover your wallet and funds
@@ -24,17 +24,16 @@
       | by pressing the “Send Feedback” button on the left hand side of the page. 
 
 
-.flex.dashboard.pal
-  .form-group(ng-if="paymentRequestURL")
-    .col-sm-2
-    .col-sm-3
+.flex-column.dashboard.pal
+  h4 With our new HD wallet, we create a new bitcoin address for you on every transaction.
+  h6 This is your current bitcoin address:
+  .form-group.flex.mtl(ng-if="paymentRequestURL")
+    .mrl
       p.form-control-static(ng-hide="status.didInitializeHD")
         img(src="img/spinner.gif")  
       span(ng-show="status.didInitializeHD")
         qr(text="paymentRequestURL", size=120, correction-level="'M'")
-    .col-sm-7
-      p
-      label.black(translate="BITCOIN_ADDRESS")
+    .plm
       p.form-control-static.bitcoin-address
         img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
         span(ng-show="status.didInitializeHD")

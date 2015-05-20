@@ -1,6 +1,6 @@
 .bc-modal {
   .modal-content { background: $light-grey-alt; box-shadow: 0 5px 1px rgba(0, 0, 0, 0.6); }
-  .modal-dialog { width: 50%; }
+  .modal-dialog { width: 45vw; }
   .modal-body {
     background: white;
     min-height: 100px;
@@ -13,7 +13,7 @@
       margin-top: 10px;
     }
     h5 {
-      font-weight: 100;
+      font-weight: 300;
       color: darken($ccc, 30%);
       margin: 5px 0;
     }
@@ -29,19 +29,25 @@
       padding-right: 14px;
     }
   }
+  input[type="checkbox"] {
+    margin: 0;
+  }
   form { padding: 0 2em; }
   .form-group { margin-bottom: 10px; }
-  /* .form-control { */
-    /* border: none; */
-    /* box-shadow: none; */
-    /* border-radius: none; */
-    /* border-bottom: 1px solid $ccc; */
-  /* } */
+  .form-control {
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    border-bottom: 1px solid $ccc;
+    &:focus {
+      border-color: none;
+      box-shadow: none
+    }
+  }
   label {
     font-weight: 400;
     color: darken($ccc, 45%);
     font-size: 1.2em;
-    margin-bottom: 10px;
   }
   textarea {
     border-radius: 3px;
@@ -60,14 +66,13 @@
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 5px;
-    p {
+    padding: 2px 0;
+    p, span {
       margin: 0;
       flex: 1;
-      color: $ccc;
       font-size: 14px;
     }
-    span {
+    .why-fee {
       font-size: 11px;
       margin-left: 10px;
       font-weight: 100;
@@ -87,20 +92,6 @@
         }
       }
     }
-  }
-
-  input[readonly="readonly"] {
-    color: $ccc;
-    margin-left: 10px;
-    border-bottom: none !important;
-  }
-  .available {
-    color: $ccc;
-    margin-top: 30px;
-    margin-bottom: 5px;
-    padding: 0;
-    font-weight: 100;
-    font-size: 13px;
   }
   .actions {
     padding: 2em;
@@ -215,4 +206,13 @@
   -ms-transform: translate(0, 20%);
   -o-transform: translate(0, 20%);
   transform: translate(0, 20%);
+}
+
+@media (max-width: 768px) {
+  .bc-modal {
+    .modal-dialog {
+      width: 100%; /* fallback for browsers without support for vw */
+      width: 100vw;
+    }
+  }
 }

@@ -5,18 +5,16 @@ label.black {
 }
 
 p.form-control-static.bitcoin-address {
-  background-color: #EBEBEB;
-  padding-top: 5pt;
-  padding-bottom: 5pt;
-  padding-left: 15pt;
-  padding-right: 15pt;
+  background-color: #F5F7F9;
+  padding: 10px;
   text-align: center;
   font-family: "Courier New", monospace;
-  font-size: 9pt;
-  color: black;
-  
+  font-size: 10pt;
+  color: $black;
+
   span{
 	overflow-wrap: break-word;
-	line-height: 1.9em;  
+	line-height: 1.9em;
   }
 }
+

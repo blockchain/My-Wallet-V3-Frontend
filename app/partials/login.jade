@@ -1,85 +1,98 @@
-.navbar.navbar-default.navbar-inverse.navbar-unauth(role='navigation')
-  .container-fluid
-    .navbar-header
-      button.navbar-toggle(type="button", ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
-        span.sr-only Toggle navigation
-        span.icon-bar
-        span.icon-bar
-        span.icon-bar
-      a.navbar-brand(ng-click="visitTransactions()") 
-        img#logo(src="img/logo-updated.png",alt="Blockchain")
-    .navbar-collapse.collapse(ng-class="{'in' : !navCollapsed}", ng-click="navCollapsed=true")
-      ul.nav.navbar-nav.navbar-right
-        li.item
-          a(href="https://www.blockchain.com") Home
-        li.item
-          a(href="https://blockchain.com/about") About
-        li.item.active
-          a(href="https://alpha.blockchain.info") Wallet
-        li.item
-          a(href="https://www.blockchain.info") Explorer
-        li.item
-          a(href="http://blockchain.com/our-products/blockchain-merchant/") Merchant
-        li.item
-          a(href="https://blockchain.zendesk.com/") Support          
+.login-pg
+  .navbar.navbar-default.navbar-inverse.navbar-unauth(role='navigation')
+    .container-fluid
+      .navbar-header
+        button.navbar-toggle(type="button", ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(ng-click="visitTransactions()") 
+          img#logo(src="img/logo-updated.png",alt="Blockchain")
+      .navbar-collapse.collapse(ng-class="{'in' : !navCollapsed}", ng-click="navCollapsed=true")
+        ul.nav.navbar-nav.navbar-right
+          li.item
+            a(href="https://www.blockchain.com") Home
+          li.item
+            a(href="https://blockchain.com/about") About
+          li.item.active
+            a(href="https://alpha.blockchain.info") Wallet
+          li.item
+            a(href="https://www.blockchain.info") Explorer
+          li.item
+            a(href="http://blockchain.com/our-products/blockchain-merchant/") Merchant
+          li.item
+            a(href="https://blockchain.zendesk.com/") Support          
     // /.nav-collapse
 
-
-
-.container-fluid.login
-  .row
-    .col-xs-12.col-xs-12(ui-view="alerts")
-  .row(ng-show="beta")
-    .col-xs-7
-      h2 Existing Beta User Login
-      p If you created a wallet using your beta invite key, please login.
-    .col-xs-5
-      h2 New Beta User
-      p Create a new wallet using your invite key.
-
-  .row
-    .col-xs-2(ng-hide="beta")
-    .login-form(ng-class="{'col-xs-7': beta,  'col-xs-8' : !beta}" )
-      form.form-horizontal(role="form")
+  .container-fluid.login
+    .row
+      .col-xs-12.col-xs-12(ui-view="alerts")
+    .login-box
+      header
+        hgroup(ng-hide="display.enterkey")
+          h1 Welcome back
+          p Login to your wallet below.
+        hgroup(ng-show="display.enterkey")
+          h1 Create A Wallet
+          p Enter the Alpha Key you received by email to access our private Alpha
+    
+      form.form-horizontal.clearfix(role="form" ng-hide="display.enterkey")
         .form-group
-          label.control-label.col-md-3(translate="UID")
-          div(ng-class="{'col-md-9': beta,  'col-md-6' : !beta}" )
-            input.form-control(type="text", ng-model="uid", ng-disabled="busy || disableLogin")
+          label.control-label(translate="UID", for="UID_input")
+          div
+            input#UID_input.form-control(type="text", ng-model="uid", ng-disabled="busy || disableLogin" name="UID_input")
             span.help-block
-              | Find the login link in your email, e.g. 
+              | Find the login link in your email, e.g.
               i blockchain.info/wallet/1111-222-333... 
-              | The series of numbers and dashes at the end of the link is your UID.
-              
+              | The series of numbers and dashes at the end of the link is your Login ID.
         .form-group
-          label.control-label.control-label.col-md-3(translate="PASSWORD")
-          div(ng-class="{'col-md-9': beta,  'col-md-6' : !beta}" )
-            input.form-control(type="password", ng-model="password", ng-disabled="busy || disableLogin")
-            
+          label.control-label(translate="PASSWORD", for="pass_input")
+          div
+            input#pass_input.form-control(type="password", name="pass_input" ng-model="password", ng-disabled="busy || disableLogin")
         .form-group(ng-show="settings.needs2FA")
-          label.control-label.col-md-3
-            span(translate="YUBI_CODE", ng-show="settings.twoFactorMethod == 3")
-            span(translate="EMAIL_CODE", ng-show="settings.twoFactorMethod == 2")
-            span(translate="GOOGLE_AUTH_CODE", ng-show="settings.twoFactorMethod == 4")
-            span(translate="SMS_CODE", ng-show="settings.twoFactorMethod == 5")         
-          div(ng-class="{'col-md-9': settings.twoFactorMethod != 5 && beta, 'col-md-6' : settings.twoFactorMethod != 5 && !beta,  'col-md-7' : settings.twoFactorMethod == 5 && beta,  'col-md-6' : settings.twoFactorMethod == 5 && !beta}" )
-            input.form-control(type="text", ng-model="twoFactorCode", ng-disabled="busy") 
-          .col-md-2(ng-show="settings.twoFactorMethod == 5")
-            p.form-control-static
+          label.control-label
+              span(translate="YUBI_CODE", ng-show="settings.twoFactorMethod == 3")
+              span(translate="EMAIL_CODE", ng-show="settings.twoFactorMethod == 2")
+              span(translate="GOOGLE_AUTH_CODE", ng-show="settings.twoFactorMethod == 4")
+              span(translate="SMS_CODE", ng-show="settings.twoFactorMethod == 5")
+          div
+            input.form-control(type="text", ng-model="twoFactorCode", ng-disabled="busy")
+            p.form-control-static(ng-show="settings.twoFactorMethod == 5")
               img(ng-show="resending" src="img/spinner.gif")
               a(ng-click="resend()", ng-show="!resending" ) Resend
-            
-        .form-group  
-          div(ng-class="{'col-md-12': beta,  'col-md-9' : !beta}" )
-            a.create(ui-sref="register",translate="CREATE_WALLET", ng-disabled="busy  || disableLogin", ng-hide="beta")
+        .form-group.bttn
+          div.bttn-container
             button#login.btn.btn-primary.btn-login(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="LOGIN", ng-disabled="!isValid")
-            
-    .login-form.col-xs-5(ng-show="beta")
-      form.form-horizontal(role="form")
-        .form-group
-          label.control-label.col-md-3 Beta Invite Key
-          .col-md-9
-            input.form-control(type="text", ng-model="key", ng-disabled="busy || disableLogin")
+          span.register
+            a(ng-click="display.enterkey = !display.enterkey")
+              | If you have an Alpha Key and would like to create a new wallet click here
+              
 
-        .form-group   
-          .col-md-12
+      form.form-horizontal.clearfix(role="form", ng-show="display.enterkey")
+        .form-group
+          label.control-label(for="beta_key") Alpha Invite Key
+          div
+            input#beta_key.form-control(type="text", name="beta_key" ng-model="key", ng-disabled="busy || disableLogin")
+        .form-group.bttn
+          div.bttn-container
             button.btn.btn-primary.btn-login(ng-click="register()",translate="CREATE_WALLET", ng-disabled="key == null || key == '' ")
+            span.register
+              a(ng-click="display.enterkey = !display.enterkey")
+                | Go Back
+
+
+              
+//-    .login-box(ng-show="beta")
+//-      header
+//-        hgroup
+//-          h1 Welcome to Blockchain Wallet Alpha
+//-          p Please enter your Alpha Key to create a new wallet
+//-      form.form-horizontal.clearfix(role="form")
+//-        .form-group
+//-          label.control-label(for="beta_key") Beta Invite Key
+//-          div
+//-            input#beta_key.form-control(type="text", name="beta_key" ng-model="key", ng-disabled="busy || disableLogin")
+//-        .form-group.bttn
+//-          button.btn.btn-primary.btn-login(ng-click="register()",translate="CREATE_WALLET", ng-disabled="key == null || key == '' ")
+//-              

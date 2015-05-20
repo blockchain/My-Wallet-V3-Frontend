@@ -1,41 +1,44 @@
 .flex.flex-justify.dashboard
-	h1.mvn.pam Send your feedback
-	div(ng-show="formSubmitted")
-		span Thank you for your feedback!
-	div(ng-hide="formSubmitted")
-		form(ng-submit="setFormSubmitted()" method="POST" target="_self" action="/feedback")
-			span Rate this page
-			div
-				input(type="radio" name="rating" id="rating-awesome" value="AWESOME")
-				label(for="rating-awesome")
-					span Awesome!
-			div
-				input(type="radio" name="rating" id="rating-good" value="GOOD")
-				label(for="rating-good")
-					span Good
-			div
-				input(type="radio" name="rating" id="rating-meh" value="MEH")
-				label(for="rating-meh")
-					span Meh
-			div
-				input(type="radio" name="rating" id="rating-bad" value="BAD")
-				label(for="rating-bad")
-					span Bad
-			div
-				input(type="radio" name="rating" id="rating-horrible" value="HORRIBLE")
-				label(for="rating-horrible")
-					span Horrible
-			div
-				label(for="description-good") What do you like?
-				textarea(rows="5" id="description-good" name="description-good")
-			div
-				label(for="description-bad") What needs to be improved?
-				textarea(rows="5" id="description-bad" name="description-bad")
-			div
-				label(for="fullname") Name
-				input(type="text" name="fullname" id="fullname")
-			div
-				label(for="email") Email
-				input(type="text" name="email" id="email")
-			div
-				input(type="submit" value="Submit")
+  div(ng-show="formSubmitted")
+    h1 Thank you for your feedback!
+  div(ng-hide="formSubmitted")
+    form.bc-form.pal(ng-submit="setFormSubmitted()" method="POST" target="_blank" action="/feedback")
+      .bc-form-header
+        h1 Tell us what you think!
+      label.mbl What's your overall impression of the wallet?
+      .flex.flex-between.bc-radio-group
+        .flex-column.flex-center
+          label.mbs(for="rating-awesome")
+            span Awesome!
+          input(type="radio" name="rating" id="rating-awesome" value="AWESOME")
+        .flex-column.flex-center
+          label.mbs(for="rating-good")
+            span Good
+          input(type="radio" name="rating" id="rating-good" value="GOOD")
+        .flex-column.flex-center
+          label.mbs(for="rating-meh")
+            span Meh, it's ok
+          input(type="radio" name="rating" id="rating-meh" value="MEH")
+        .flex-column.flex-center
+          label.mbs(for="rating-bad")
+            span Bad
+          input(type="radio" name="rating" id="rating-bad" value="BAD")
+        .flex-column.flex-center
+          label.mbs(for="rating-horrible")
+            span Horrible
+          input(type="radio" name="rating" id="rating-horrible" value="HORRIBLE")
+      .flex-column.mtl
+        label(for="description-good") What did you like?
+        textarea.plm(rows="3" id="description-good" name="description-good")
+      .flex-column.mtl
+        label(for="description-bad") What can we improve on?
+        textarea.plm(rows="3" id="description-bad" name="description-bad")
+      .flex.flex-between.mvl
+        .flex-column.flex-1.prl
+          label(for="fullname") Name
+          input.plm(type="text" name="fullname" id="fullname")
+        .flex-column.flex-1.mll
+          label(for="email") Email
+          input.plm(type="text" name="email" id="email")
+      .flex-column.ptl
+        input.button-success(type="submit" value="Submit")
