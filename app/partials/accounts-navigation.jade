@@ -9,7 +9,7 @@
         i.ti-import
         span(translate="MY_TRANSACTIONS")
       ul.aside-list.pas(ng-show="selectedAccountIndex != 'imported'")
-        li(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd")
+        li(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd || numberOfActiveAccounts() <= 1")
           a(translate="ALL_ACCOUNTS")
             span
               fiat-or-btc(btc="total()")    
