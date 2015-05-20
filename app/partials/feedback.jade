@@ -5,48 +5,46 @@
 	* type attributes
 	* name attributes
 	* value attributes for radio inputs
-	* hidden input fields
 
 .flex.flex-justify.dashboard
 	h1.mvn.pam Send your feedback
-	form.form(action="https://blockchain.atlassian.net/rest/collectors/1.0/template/feedback/e6ce4d72" method="POST" target="_self")
-		div
-			fieldset.form-inline
-				span Rate this page
-				div
-					input(type="radio" name="rating" id="rating-awesome" value="AWESOME")
-					label(for="rating-awesome")
-						span Awesome!
-				div
-					input(type="radio" name="rating" id="rating-good" value="GOOD")
-					label(for="rating-good")
-						span Good
-				div
-					input(type="radio" name="rating" id="rating-meh" value="MEH")
-					label(for="rating-meh")
-						span Meh
-				div
-					input(type="radio" name="rating" id="rating-bad" value="BAD")
-					label(for="rating-bad")
-						span Bad
-				div
-					input(type="radio" name="rating" id="rating-horrible" value="HORRIBLE")
-					label(for="rating-horrible")
-						span Horrible
+	iframe(style="display:none;" name="hidden-frame")
+	div(ng-show="formSubmitted")
+		span Thank you for your feedback!
+	div(ng-hide="formSubmitted")
+		form.form(ng-submit="setFormSubmitted()" method="POST" target="hidden-frame" action="https://blockchain.atlassian.net/rest/collectors/1.0/template/feedback/e6ce4d72")
+			span Rate this page
+			div
+				input(type="radio" name="rating" id="rating-awesome" value="AWESOME")
+				label(for="rating-awesome")
+					span Awesome!
+			div
+				input(type="radio" name="rating" id="rating-good" value="GOOD")
+				label(for="rating-good")
+					span Good
+			div
+				input(type="radio" name="rating" id="rating-meh" value="MEH")
+				label(for="rating-meh")
+					span Meh
+			div
+				input(type="radio" name="rating" id="rating-bad" value="BAD")
+				label(for="rating-bad")
+					span Bad
+			div
+				input(type="radio" name="rating" id="rating-horrible" value="HORRIBLE")
+				label(for="rating-horrible")
+					span Horrible
 			div
 				label(for="description-good") What do you like?
 				textarea(rows="5" id="description-good" name="description-good")
 			div
 				label(for="description-bad") What needs to be improved?
 				textarea(rows="5" id="description-bad" name="description-bad")
-			fieldset.hidden
-				input(type="hidden" title="collectorId" value="e6ce4d72")
 			div
 				label(for="fullname") Name
 				input(type="text" name="fullname" id="fullname")
 			div
 				label(for="email") Email
 				input(type="text" name="email" id="email")
-			input(type="hidden" name="webInfo" id="webInfo" ng-value="webInfo")
-		div
-			input(type="submit" value="Submit")
+			div
+				input(type="submit" value="Submit")
