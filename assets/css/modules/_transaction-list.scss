@@ -86,17 +86,17 @@
 }
 
 .transaction-card{
-  background-color: rgb(252, 252, 252);
-  border: 1px solid rgb(237, 237, 237);
+  background-color: $light-grey-alt;
+  border: 1px solid $eee;
+  border-radius: 5px;
   padding: 20px 30px;
   max-width: 700px;
   margin: 0 auto;
-  box-shadow: 0px 0px 15px -10px black;
   font-size: 1.1em;
   .tx-date{
     border-bottom: 1px solid rgb(223, 223, 223);
     padding: 0 0px 15px 0;
-    margin-bottom: 15px;  
+    margin-bottom: 15px;
     color: rgb(166, 166, 166);
     font-size: 1.1em;
   }
@@ -118,8 +118,8 @@
   }
   .tx-sidebar{
   float: right;
-  width: 30%; 
-  border-left: 2px solid rgb(242, 242, 242);   
+  width: 30%;
+  border-left: 2px solid rgb(242, 242, 242);
     .gutter{padding:20px;}
   }
   .tx-status{
@@ -130,26 +130,26 @@
   .tx-notes{
   margin-top: 25px;
   padding-top: 25px;
-  border-top: 1px solid #ECECEC;  
+  border-top: 1px solid #ECECEC;
   }
   .tx-amount{
     span{float: none;}
   }
-  .tx-value{  
+  .tx-value{
     margin-bottom: 10px;
     p{font-size: .9em; margin: 0; color: darkgrey;}
     span{font-weight: bold; font-size: 1.3em;}
-    
+
   }
-  
+
   .tx-bci-link{
   float: none;
   margin: 0;
-  padding: 0;  
+  padding: 0;
   }
-  
+
   button.amount{padding: 10px;height: auto;}
-  
+
 }
 
 button.amount {
