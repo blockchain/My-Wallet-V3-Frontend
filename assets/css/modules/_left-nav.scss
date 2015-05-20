@@ -74,12 +74,6 @@ ul.aside {
   ul.aside-list{
     background: transparent;
     li {
-      display: none;
-    }
-    li:first-child {
-      display: block;
-    }
-    li:last-child {
       display: block;
     }
     a { 
