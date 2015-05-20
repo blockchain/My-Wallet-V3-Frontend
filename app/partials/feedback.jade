@@ -3,7 +3,7 @@
 	div(ng-show="formSubmitted")
 		span Thank you for your feedback!
 	div(ng-hide="formSubmitted")
-		form.form(ng-submit="setFormSubmitted()" method="POST" target="_self" action="/feedback")
+		form(ng-submit="setFormSubmitted()" method="POST" target="_self" action="/feedback")
 			span Rate this page
 			div
 				input(type="radio" name="rating" id="rating-awesome" value="AWESOME")
