@@ -1,7 +1,8 @@
-@AccountsCtrl = ($scope, Wallet, $state,$stateParams, $modal, filterFilter) ->
+@AccountsCtrl = ($scope, Wallet, SecurityCenter, $state, $stateParams, $modal, filterFilter) ->
   $scope.status    = Wallet.status
   $scope.total = Wallet.total
   $scope.settings = Wallet.settings
+  $scope.security = SecurityCenter.security
     
   $scope.numberOfActiveLegacyAddresses = () -> 
     return filterFilter(Wallet.legacyAddresses, {active: true}).length

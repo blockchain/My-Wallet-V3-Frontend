@@ -26,6 +26,10 @@ $success: #8CCA6A;
 $eee: #EEEEEE;
 $ccc: #CCCCCC;
 
+//Security Badge Colors
+$security-red: #E47F7F;
+$security-yellow: #FCCC65;
+$security-green: #3CC476;
 
 //Color Mixin
 @mixin color($name, $color) {
@@ -47,6 +51,9 @@ $ccc: #CCCCCC;
 @include color('facebook', $facebook);
 @include color('linkedin', $linkedin);
 @include color('receive-green', $receive-green);
+@include color('security-red', $security-red);
+@include color('security-yellow', $security-yellow);
+@include color('security-green', $security-green);
 
 //Background Mixin
 @mixin bg-color($name, $color) {
