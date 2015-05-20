@@ -147,6 +147,7 @@
   "PAYMENT_REQUESTS" : "Payment Requests",
   "PENDING" : "Pending",
   "COMPLETE" : "Complete",
+  "TRANSACTION_COMPLETE" : "Transaction Complete",
   "OVERVIEW" : "Overview",
   "TAGS" : "Tags",
   "NOTE" : "Note",

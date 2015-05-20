@@ -142,6 +142,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
   $stateProvider.state("wallet.common.transaction",
     url: "/:accountIndex/transactions/:hash"
     views: {
+      top : top,
       left: {
         templateUrl: "partials/accounts-navigation.jade"
         controller: "AccountsCtrl"
