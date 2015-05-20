@@ -33,3 +33,6 @@
         .tx-notes
           p Notes
           transaction-note(transaction="transaction")
+  .transaction-card.clearfix(ng-if="transaction.publicNote")
+    strong Public Note:
+    p.mtl {{ transaction.publicNote }}
