@@ -22,9 +22,9 @@ var tableElem = $('<table></table>')
 
 var rowElem = $('<tr></tr>')
 	.append($('<td></td>')
-		.append($('<a>edit</a>').attr('onclick', 'showEditModal(this)').css('cursor', 'pointer').data('toggle', 'modal').data('target', '#key-modal')))
+		.append($('<a>edit</a>').css('cursor', 'pointer').addClass('edit').data('toggle', 'modal').data('target', '#key-modal')))
 	.append($('<td></td>')
-		.append($('<a>revoke</a>').attr('onclick', 'revokeKey(this)').css('cursor', 'pointer')));
+		.append($('<a>revoke</a>').css('cursor', 'pointer').addClass('revoke')));
 
 function changeSort(col) {
 	if (sort === col) changeOrder();
@@ -267,4 +267,8 @@ $(document).ready(function() {
 $(document).on('click', 'th', function() {
 	sortedElem = $(this).attr('id');
 	if (sortedElem !== undefined) changeSort(sortedElem);
+}).on('click', '.edit', function() {
+	showEditModal(this);
+}).on('click', '.revoke', function() {
+	revokeKey(this);
 });
