@@ -1,18 +1,9 @@
-
-//-
-	Things in this code that should not be changed:
-	* the form action/method attributes
-	* type attributes
-	* name attributes
-	* value attributes for radio inputs
-
 .flex.flex-justify.dashboard
 	h1.mvn.pam Send your feedback
-	iframe(style="display:none;" name="hidden-frame")
 	div(ng-show="formSubmitted")
 		span Thank you for your feedback!
 	div(ng-hide="formSubmitted")
-		form.form(ng-submit="setFormSubmitted()" method="POST" target="hidden-frame" action="https://blockchain.atlassian.net/rest/collectors/1.0/template/feedback/e6ce4d72")
+		form.form(ng-submit="setFormSubmitted()" method="POST" target="_self" action="/feedback")
 			span Rate this page
 			div
 				input(type="radio" name="rating" id="rating-awesome" value="AWESOME")
