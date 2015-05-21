@@ -131,6 +131,9 @@
   margin-top: 25px;
   padding-top: 25px;
   border-top: 1px solid #ECECEC;
+    
+    i{margin-right: 5px;}
+    
   }
   .tx-amount{
     span{float: none;}
@@ -268,7 +271,9 @@ button.received {
   }
 
   .note {
-    font-size: 120%;
+    font-size: 1em;
+    margin-top: 10px;
+    display: block;
   }
 
   .value-at-tx {

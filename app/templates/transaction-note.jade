@@ -1,5 +1,5 @@
 span.note
-  img(src="img/note.png", ng-show="transaction.note && !editNote")
+  i.ti-notepad(ng-show="transaction.note && !editNote")
   a(ng-click="startEditNote()", ng-hide="transaction.note || editNote", translate="ADD_NOTE").add-note
   a(ng-hide="editNote", ng-click="startEditNote()") {{ transaction.note }}
   div(ng-show="editNote")
