@@ -17,10 +17,10 @@
           |:
         div
           p.form-control-static(ng-hide="originsLoaded")
-            img(src="img/spinner.gif")     
+            img(src="img/spinner.gif")
           span(ng-show="originsLoaded")
             ui-select(ng-model="transaction.from")
-              ui-select-match {{ maxAndLabelForSelect($select) }}            
+              ui-select-match {{ maxAndLabelForSelect($select) }} 
               ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)") 
                 span(ng-bind-html="maxAndLabel(origin) | highlight: $select.search" ng-class="{zerobalance: hasZeroBalance(origin)}")
       .flex-column.form-group(ng-class="{'has-error': errors.to, 'has-success' : success.to}")
@@ -36,7 +36,7 @@
               ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
               ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search)" refresh-delay="0") 
                 span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
-            span.input-group-btn
+            span.input-group-btn.mls
               button#qr.btn.btn-default(type="button", ng-click="cameraOn()")
                 img(src="img/qr.png", alt="QR")
           ui-select(ng-model="transaction.destination", ng-blur="visualValidate('to')", ng-if="!browserWithCamera")
@@ -47,17 +47,17 @@
       .flex-column.form-group(ng-class="{'has-error': errors.amount}")
         label.mbm
           span(translate="AMOUNT")
-        .flex
-          .flex-1.mrl
-            input.form-control(type="text",ng-model="transaction.amount",ng-blur="visualValidate('amount')")          
+        .flex-center
+          .mrl
+            .flex-center
+              span.mrm {{ transaction.currency }}:
+              input.form-control(type="text",ng-model="transaction.amount",ng-blur="visualValidate('amount')")          
             span.help-block {{ errors.amount }}
-          .flex-1.mrl
-            p 
-              | {{ transaction.currency }}
-              | / 
-              a(ng-click="toggleCurrency()") {{ nextAlternativeCurrency() }}
-          .flex-2
-            p.form-control-static
+          a.button-success.button-sm.type-sm.mrl.flex-center(ng-click="toggleCurrency()")
+            i.ti-arrows-horizontal
+          .flex-center.ccc.conversion.flex-1
+            span.mrs {{ nextAlternativeCurrency() }}:
+            p.mbn
               fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="transaction.currency=='BTC'")
               span(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
         

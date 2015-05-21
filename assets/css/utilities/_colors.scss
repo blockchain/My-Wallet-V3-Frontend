@@ -35,6 +35,7 @@ $security-green: #3CC476;
 @mixin color($name, $color) {
   .#{$name} {
     color: $color;
+    &:hover { color: $color; }
   }
 }
 
