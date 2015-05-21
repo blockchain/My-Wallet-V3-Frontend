@@ -2,6 +2,7 @@
   $scope.settings = Wallet.settings
   $scope.languages = Wallet.languages
   $scope.currencies = Wallet.currencies
+  $scope.btcCurrencies = Wallet.btcCurrencies
       
   $scope.$watch "settings.language", (newVal, oldVal) ->
     if oldVal? && newVal isnt oldVal

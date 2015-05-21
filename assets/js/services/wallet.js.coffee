@@ -44,7 +44,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.transactions = []
   wallet.languages = []
   wallet.currencies = []
-  wallet.btcCurrencies = ['BTC', 'mBTC', 'bits']
+  wallet.btcCurrencies = [{ name: 'Bitcoin', code: 'BTC' }, { name: 'Bits', code: 'UBC' }, { name: 'MilliBit', code: 'MBC' }]
   wallet.hdAddresses = []
 
   ##################################
@@ -98,7 +98,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       
         wallet.settings.currency = ($filter("getByProperty")("code", result.currency, wallet.currencies))
         
-        wallet.settings.btcCurrency = result.btc_currency
+        wallet.settings.btcCurrency = ($filter("getByProperty")("code", result.btc_currency, wallet.btcCurrencies))
 
         wallet.settings.displayCurrency = wallet.settings.currency
       
@@ -1124,7 +1124,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     # wallet.fetchExchangeRate()
 
   wallet.changeBTCCurrency = (btcCurrency) ->
-    wallet.settings_api.change_btc_currency(btcCurrency)
+    wallet.settings_api.change_btc_currency(btcCurrency.code)
     wallet.settings.btcCurrency = btcCurrency
   
   wallet.changeEmail = (email, successCallback, errorCallback) ->
