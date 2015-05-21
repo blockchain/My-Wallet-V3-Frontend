@@ -8,67 +8,64 @@
   .modal-header {
     border: none;
     text-align: center;
+    padding: 30px;
+    background: white;
       h3{
-    font-weight: 200;
-    color: #C8E9F0;
-    margin: 20px 0 20px;
+      font-weight: 200;
+      color: #049BD4;
+      font-size: 3em;
       }
+    p{color:#999;}
   }
 
   .modal-content {
     border: none;
-    background-color: #1b8ac7;
+    background-color: #049BD4;
     color: white;
     border-radius: 0;
     height: 100%;
     input {
-    color: #1972B6;
-    box-shadow: 1px 1px 4px -1px rgba(0, 0, 0, 0.34);
-    padding: 10px;
-    background: #fff;
-    border: 1px solid #FFF;
+
     }
     .row {
-      background-color: #1b8ac7;
 
     }
     label{
-  font-size: 120%;
+  font-size: 1.1em;
   font-weight: 400;
-  color: #C8E9F0;
+  color: #fff;
     }
 
   .help-block{
-  display: block;
-  margin-top: -2px;
-  margin-bottom: 10px;
-  border-radius: 0 0 5px 5px;
-  color: #BE5858;
-  background: #BBDBEC;
-  font-size: 15px;
+//  display: block;
+//  margin-top: -2px;
+//  margin-bottom: 10px;
+//  border-radius: 0 0 5px 5px;
+//  color: #BE5858;
+//  background: #BBDBEC;
+//  font-size: 15px;
+    color: white;
 
    p{padding: 1px;}
   }
 
   .why{
-  text-align: center;
-  background: rgba(40, 40, 40, 0.4);
-  border-radius: 10px;
-  border: 1px solid transparent;
+  border-top: 1px solid rgba(255, 255, 255, 0.26);
+  text-align: left;
+  padding: 20px 50px 50px;
+  margin-top: 25px;
+
   h4{
-  color: #F2F2F2;
+  color: #FFFFFF;
   font-weight: 400;
-  padding: 10px 0 0px 0;
   display: block;
-  font-size: 18pt;
+  font-size: 1.3em;
   }
   p{
-    color: #fff;
-    padding: 10px 50px 0;
-    display: block;
-    font-weight: 200;
-    line-height: 1.5em;
-    font-size: 12pt;
+  color: #fff;
+  display: block;
+  font-weight: 200;
+  font-size: 1.1em;
 
   }
 
@@ -77,7 +74,7 @@
   }
 
   .modal-footer {
-
+    text-align: center;
     border: none;
 
     a {
@@ -89,15 +86,19 @@
     }
 
     .btn-signup{
-  background: none!important;
-  color: #fff!important;
+  background: rgb(59, 75, 81);
+  color: #FFFFFF !important;
   border: none;
-  font-size: 20px;
-  font-weight: 200;
+  font-size: 1.5em;
+  font-weight: 300;
   padding: 10px 50px;
     }
-    background-color: #1b8ac7;
   }
+
+  .btn-resend{
+  background: none!important;
+  }
+  
 }
 
 .modal.signup {
@@ -116,3 +117,45 @@
 .form-control {
 height: auto;
 }
+
+
+.alpha-warning{
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 10px;
+  font-size: 1.2em;
+  background-color: #CA3E3E;
+  font-weight: 300;
+  margin: 0 160px 35px;
+  
+  i{font-size: 3em;float: left;padding: 0 10px 0 0;}
+}
+
+
+.agreement{
+
+  input{
+  color: white;
+  box-shadow: none;
+  padding: inherit;
+  background: transparent;
+  border: none;
+  height: 35px;
+  float: left;
+  width: 20px;
+  margin-right: 10px;
+
+  &:focus{
+    outline: none;
+    border: none;
+    box-shadow: none;
+  }    
+  
+  }
+
+  
+  label{
+  padding: 11px 0;
+  display: block;  
+  }
+  
+  }
