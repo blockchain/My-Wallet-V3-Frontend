@@ -62,17 +62,12 @@
   $scope.alerts = Wallet.alerts
   
   $scope.isOpen = {currencies: false}
-    
-  $scope.currencies = angular.copy(Wallet.currencies)
   
-  for currency in $scope.currencies
-    currency.type = "Fiat"
-    
-  btc = {code: "BTC", type: "Crypto"}  
-  $scope.currencies.unshift btc
-        
-  $scope.BTCtoFiat = (amount, currency) ->
-    Wallet.BTCtoFiat(amount, currency)
+  $scope.fiatCurrency = Wallet.settings.currency
+  $scope.btcCurrency = Wallet.settings.btcCurrency
+          
+  $scope.BTCtoFiat = (amount) ->
+    Wallet.BTCtoFiat(amount, Wallet.settings.currency.code)
       
   $scope.determineLabel = (origin) ->
     label = origin.label || origin.address
@@ -100,7 +95,7 @@
     if $scope.transaction.currency == "BTC"
       return label + " (" + max_btc.format("0.[00000000]") + " BTC)"  
     else 
-      return label + " (" + $scope.BTCtoFiat(max_btc, $scope.transaction.currency) + " " + $scope.transaction.currency + ")"
+      return label + " (" + $scope.BTCtoFiat(max_btc) + " " + $scope.transaction.currency + ")"
   
   
   
@@ -111,7 +106,6 @@
     amount: paymentRequest.amount, 
     satoshi: 0, 
     currency: "BTC", 
-    currencySelected: btc, 
     fee: 0
     note: ""
     publicNote: false
@@ -178,7 +172,16 @@
   $scope.close = () ->
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
-  
+    
+  $scope.nextAlternativeCurrency = () ->
+    if $scope.transaction.currency == "BTC"
+       return $scope.fiatCurrency.code
+    else
+      return $scope.btcCurrency.code
+    
+  $scope.toggleCurrency = () ->
+    $scope.transaction.currency = $scope.nextAlternativeCurrency()
+        
   $scope.numberOfActiveAccountsAndLegacyAddresses = () -> 
     return filterFilter(Wallet.accounts, {active: true}).length + filterFilter(Wallet.legacyAddresses, {active: true}).length
 
@@ -224,13 +227,6 @@
   #################################
   #           Private             #
   #################################
-  
-  $scope.$watch "transaction.currencySelected", (currency) ->
-    if currency?
-      $scope.transaction.currency = $scope.transaction.currencySelected.code
-      $scope.$$postDigest(()->
-        $scope.visualValidate('currency')
-      )
       
   $scope.$watch "transaction.currency", (currency) ->
     if currency? && $scope.transaction.currencySelected && $scope.transaction.currencySelected.code != currency
@@ -380,7 +376,7 @@
 
   $scope.allowedDecimals = () ->
     currency = $scope.transaction.currencySelected
-    return 8 if currency.code == 'BTC'
+    return 8 if $scope.transaction.currency == 'BTC'
     return 2
 
   $scope.decimalPlaces = (number) ->
