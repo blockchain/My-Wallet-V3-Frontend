@@ -78,8 +78,6 @@
         if $scope.currentStep == 1
           $scope.currentStep++
         else if $scope.currentStep == 2
-          $scope.currentStep = 4 # Skip import step
-        else if $scope.currentStep == 4
           $scope.errors.emailVerificationCode = null
           
           success = () ->
