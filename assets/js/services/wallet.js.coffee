@@ -997,10 +997,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       )
 
     else if event == "hd_wallet_set"
-      wallet.status.didInitializeHD = true
-      wallet.updateAccounts()
-      wallet.updateHDaddresses()
-      wallet.applyIfNeeded()
+      if not wallet.status.didInitializeHD
+        wallet.status.didInitializeHD = true
+        wallet.updateAccounts()
+        wallet.updateHDaddresses()
+        wallet.applyIfNeeded()
 
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
