@@ -12,6 +12,12 @@ form.form-horizontal(role="form",name="form",novalidate)
       p.explain.hidden-xs(translate="CURRENCY_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       currency-picker(currency="settings.currency")
+  .form-group
+    .col-sm-12.col-md-6
+      label BTC Currencies
+      p.explain.hidden-xs Select your preferred unit of Bitcoin    
+    .col-sm-12.col-md-6.setting-result
+      btc-picker(currency="settings.btcCurrency")
   // Depends on bootstrap-slider which has been disabled
   //- .form-group
   //-   .col-sm-4

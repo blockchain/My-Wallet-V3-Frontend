@@ -92,6 +92,7 @@ modules = [
   "templates/resend-email-confirmation.jade"
   "templates/adverts.jade"
   "templates/multi-account.jade"
+  "templates/btc-picker.jade"
   # 'angular-ladda'
 ]
 
