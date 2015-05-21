@@ -177,7 +177,7 @@
     if $scope.transaction.currency == "BTC"
        return $scope.fiatCurrency.code
     else
-      return $scope.btcCurrency.code
+      return "BTC" #$scope.btcCurrency.code
     
   $scope.toggleCurrency = () ->
     $scope.transaction.currency = $scope.nextAlternativeCurrency()
