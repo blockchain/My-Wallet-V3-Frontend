@@ -18,7 +18,7 @@
             span {{ account.label }}
             span
               fiat-or-btc(btc="account.balance")
-      li.action-bar
+      li.action-bar(ng-show="selectedAccountIndex != 'imported'")
         a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
     li.header(ng-show="settings.multiAccount && numberOfActiveLegacyAddresses() > 0", ng-class="{current:selectedAccountIndex == 'imported'}")
       a(ui-sref="wallet.common.transactions({accountIndex:'imported'})")
