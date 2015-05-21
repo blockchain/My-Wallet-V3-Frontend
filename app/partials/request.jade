@@ -18,7 +18,7 @@
     .form-group
       label.col-sm-3.control-label(translate="AMOUNT")
       .col-sm-3
-        input.form-control(type="text",ng-model="fields.amount", ng-disabled="paymentRequest && paymentRequest.paid > 0")
+        input.form-control(type="text",ng-model="fields.amount", ng-class="{'security-red': !validate()}" ng-disabled="paymentRequest && paymentRequest.paid > 0")
       .col-sm-3
         ui-select(ng-model="fields.currency")
           ui-select-match {{ $select.selected.code }}
