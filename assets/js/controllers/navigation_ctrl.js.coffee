@@ -33,6 +33,10 @@
     win = window.open('https://zeroblock.com', "_blank")
     win.focus()
 
+  $scope.openBCmarkets = () ->
+    win = window.open('https://markets.blockchain.info/', "_blank")
+    win.focus()
+
   #################################
   #           Private             #
   #################################
