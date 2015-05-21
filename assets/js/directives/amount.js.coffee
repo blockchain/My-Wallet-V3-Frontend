@@ -8,21 +8,24 @@ walletApp.directive('amount', (Wallet) ->
     templateUrl: 'templates/amount.jade'
     link: (scope, elem, attrs) ->
       scope.settings = Wallet.settings
-      scope.showBTC = () -> (attrs.btc? || scope.settings.displayCurrency.code == "BTC") && scope.settings.displayCurrency.code != "mBTC"
-      scope.showMBTC = () -> scope.settings.displayCurrency.code == "mBTC"
+
+      scope.shouldShowFiat = () ->
+        for btcCur in ['BTC', 'mBTC', 'bits']
+          return false if btcCur == scope.settings.displayCurrency.code
+        return true
+
+      scope.currencyCodeIs = (code) ->
+        return code == scope.settings.displayCurrency.code
       
       scope.toggle = () ->
-        if scope.settings.displayCurrency.code == "BTC"
-          scope.settings.displayCurrency = {code: "mBTC"}
-        else if scope.settings.displayCurrency.code == "mBTC"
-          if attrs.btc?
-            scope.settings.displayCurrency = {code: "BTC"}
-          else
-            scope.settings.displayCurrency = scope.settings.currency
+        if scope.settings.displayCurrency == scope.settings.currency
+          scope.settings.displayCurrency = scope.settings.btcCurrency
         else
-          if attrs.btc?
-            scope.settings.displayCurrency = {code: "mBTC"}
-          else
-            scope.settings.displayCurrency = {code: "BTC"}
+          scope.settings.displayCurrency = scope.settings.currency
+
+      scope.$watch 'settings.btcCurrency', (newBtcCurrency) ->
+        if not scope.shouldShowFiat()
+          scope.settings.displayCurrency = newBtcCurrency
+
   }
 )
