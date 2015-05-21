@@ -11,7 +11,7 @@
     .navbar-collapse.collapse(ng-class="{'in' : !navCollapsed}", ng-click="navCollapsed=true")
       ul.nav.navbar-nav.navbar-right(ng-show="status.isLoggedIn")
         li.item.mrl
-          a(ng-click="openZeroBlock()")
+          a(ng-click="openBCmarkets()")
             span
               fiat(btc="100000000.0")
             span  / BTC

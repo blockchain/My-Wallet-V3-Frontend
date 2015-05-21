@@ -101,6 +101,25 @@ ul.aside {
   }
 }
 
+.scroll-parent{
+
+  .scroll{
+  height: 150px;
+  overflow-x: auto;
+  }
+  
+}
+
+li.action-bar{
+  background: #fff;
+  margin: -10px 0 5px;
+  padding: 5px 15px;
+  box-shadow: 0px -2px 5px -3px;
+  border-top: 1px solid white;
+  z-index: 1;
+  position: relative;
+}
+
 @media (max-width: 768px) {
   .adverts {
     display: none;
