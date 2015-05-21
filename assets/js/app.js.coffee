@@ -42,6 +42,7 @@ modules = [
   "partials/feedback.jade"
   "partials/login.jade"
   "partials/navigation.jade"
+  "partials/alpha-agreement.jade"
   "partials/open-link.jade"
   "partials/request.jade"
   "partials/second-password.jade"

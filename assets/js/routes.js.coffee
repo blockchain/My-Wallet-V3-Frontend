@@ -133,6 +133,18 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
+  $stateProvider.state("wallet.common.agreement",
+    url: "/alpha-agreement"
+    views: {
+      left: {
+        templateUrl: "partials/accounts-navigation.jade"
+        controller: "AccountsCtrl"
+      },
+      right: {
+        templateUrl: "partials/alpha-agreement.jade"
+      }
+    }
+  )
 
   $stateProvider.state("wallet.common.transactions",
     url: "/:accountIndex/transactions/"
