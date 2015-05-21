@@ -5,9 +5,9 @@
   color: #c9c9c9;
   width: initial;
   height: 100%;
-  display: flex;
+  @extend .flex-between;
   flex-direction: column;
-  justify-content: space-between;
+  -webkit-flex-direction: column;
   a {
     color: #c9c9c9;
     display: block;
