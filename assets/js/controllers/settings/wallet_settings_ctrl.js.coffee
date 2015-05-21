@@ -11,6 +11,10 @@
     if oldVal? && newVal isnt oldVal
       Wallet.changeCurrency(newVal)
 
+  $scope.$watch "settings.btcCurrency", (newVal, oldVal) ->
+    if oldVal? && newVal isnt oldVal
+      Wallet.changeBTCCurrency(newVal)
+
   $scope.setHandleBitcoinLinks = () ->
     Wallet.handleBitcoinLinks()
     

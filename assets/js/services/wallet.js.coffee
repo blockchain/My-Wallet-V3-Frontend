@@ -23,7 +23,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet = {
     goal: {}, 
     status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadTransactions: false, didLoadBalances: false, legacyAddressBalancesLoaded: false, didConfirmRecoveryPhrase: false}, 
-    settings: {currency: null,  displayCurrency: null, language: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null, ipWhitelist: null, apiAccess: null, restrictToWhitelist: null}, 
+    settings: {currency: null,  displayCurrency: null, language: null, btcCurrency: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null, ipWhitelist: null, apiAccess: null, restrictToWhitelist: null}, 
     user: {current_ip: null, email: null, mobile: null, passwordHint: ""}
   }
   
@@ -44,6 +44,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.transactions = []
   wallet.languages = []
   wallet.currencies = []
+  wallet.btcCurrencies = ['BTC', 'mBTC', 'bits']
   wallet.hdAddresses = []
 
   ##################################
@@ -97,6 +98,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       
         wallet.settings.currency = ($filter("getByProperty")("code", result.currency, wallet.currencies))
         
+        wallet.settings.btcCurrency = result.btc_currency
+
         wallet.settings.displayCurrency = wallet.settings.currency
       
         wallet.settings.feePolicy = wallet.store.getFeePolicy()
@@ -1119,6 +1122,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.settings_api.change_local_currency(currency.code)
     wallet.settings.currency = currency
     # wallet.fetchExchangeRate()
+
+  wallet.changeBTCCurrency = (btcCurrency) ->
+    wallet.settings_api.change_btc_currency(btcCurrency)
+    wallet.settings.btcCurrency = btcCurrency
   
   wallet.changeEmail = (email, successCallback, errorCallback) ->
     wallet.settings_api.change_email(email, (()->
