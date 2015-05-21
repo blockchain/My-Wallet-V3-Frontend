@@ -44,7 +44,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.transactions = []
   wallet.languages = []
   wallet.currencies = []
-  wallet.btcCurrencies = [{ name: 'BTC', code: 'BTC', conversion: 1 }, { name: 'mBTC', code: 'MBC', conversion: 1000 }, { name: 'bits', code: 'UBC', conversion: 1000000 }]
+  wallet.btcCurrencies = [{ serverCode: 'BTC', code: 'BTC', conversion: 1 }, { serverCode: 'MBC', code: 'mBTC', conversion: 1000 }, { serverCode: 'UBC', code: 'bits', conversion: 1000000 }]
   wallet.hdAddresses = []
 
   ##################################
@@ -98,7 +98,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       
         wallet.settings.currency = ($filter("getByProperty")("code", result.currency, wallet.currencies))
         
-        wallet.settings.btcCurrency = ($filter("getByProperty")("code", result.btc_currency, wallet.btcCurrencies))
+        wallet.settings.btcCurrency = ($filter("getByProperty")("serverCode", result.btc_currency, wallet.btcCurrencies))
 
         wallet.settings.displayCurrency = wallet.settings.currency
       
@@ -450,6 +450,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   # amount in BTC, returns formatted amount in fiat
   wallet.BTCtoFiat = (amount, currency) ->
+    console.log wallet.conversions
     return null if currency == "BTC"
     return null unless amount?
     return null unless wallet.conversions[currency]?
@@ -1124,7 +1125,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     # wallet.fetchExchangeRate()
 
   wallet.changeBTCCurrency = (btcCurrency) ->
-    wallet.settings_api.change_btc_currency(btcCurrency.code)
+    wallet.settings_api.change_btc_currency(btcCurrency.serverCode)
     wallet.settings.btcCurrency = btcCurrency
   
   wallet.changeEmail = (email, successCallback, errorCallback) ->
