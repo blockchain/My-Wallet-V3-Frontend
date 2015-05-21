@@ -54,7 +54,7 @@
   $scope.close = () ->
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
-    $state.go("wallet.common.transactions", {accountIndex: "accounts"})
+    $state.go("wallet.common.dashboard")
     
   $scope.tryNextStep = () ->
     if $scope.isValid[0]
