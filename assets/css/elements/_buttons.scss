@@ -19,6 +19,7 @@ button[disabled] {
   font-size: 1em;
   &:focus {
     outline: none;
+    text-decoration: none;
   }
 }
 
