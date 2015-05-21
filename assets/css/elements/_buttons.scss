@@ -41,6 +41,9 @@ button[disabled] {
         background: darken($background, 5%);
         color: $color;
       }
+      &:visited {
+        color: $color;
+      }
       &:disabled {
         &:hover {
           background: $background;
