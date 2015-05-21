@@ -43,3 +43,18 @@ describe "TopCtrl", ->
     scope.request()
     expect(modal.open).toHaveBeenCalled()
   )
+
+  it "should show Fiat if USD is set as display currency", inject((Wallet) ->
+    Wallet.settings.displayCurrency = {code: 'USD'}
+    expect(scope.shouldShowFiat()).toBe(true)
+  )
+
+  it "should not show Fiat if BTC is set as display currency", inject((Wallet) ->
+    Wallet.settings.displayCurrency = {code: 'BTC'}
+    expect(scope.shouldShowFiat()).toBe(false)
+  )
+
+  it "should recognize when btc currency code is set to BTC", inject((Wallet) ->
+    Wallet.settings.btcCurrency = {code: 'BTC'}
+    expect(scope.btcCurrencyCodeIs('BTC')).toBe(true)
+  )
