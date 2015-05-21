@@ -33,7 +33,7 @@
           .form-group.agreement
               .col-sm-4
               .col-sm-6
-                  input.form-control#agreement_accept(type="checkbox" name="agreement_accept")
+                  input.form-control#agreement_accept(ng-model="fields.acceptedAgreement" type="checkbox" name="agreement_accept")
                   label(for="agreement_accept")
                     | I have read and agree to the Alpha Program Participation Agreement
 
@@ -48,7 +48,7 @@
   .modal-footer
     .row
       .col.xs-12
-        button.btn.btn-primary.btn-signup(ng-click="nextStep()",ng-disabled="!form.$valid || !isValid[0]", translate="CONTINUE", ng-show="currentStep == 1 && !working")  
+        button.btn.btn-primary.btn-signup(ng-click="nextStep()",ng-disabled="!form.$valid || !isValid[0] || !fields.acceptedAgreement", translate="CONTINUE", ng-show="currentStep == 1 && !working")  
         img(ng-show="working" src="img/spinner.gif")     
         button.btn.btn-primary.btn-signup.btn-resend(ui-ladda="{{ resendingEmailCode }}", ng-click="resendEmail()", ladda-translate="RESEND_EMAIL", ng-show="currentStep == 2", data-style="expand-left")        
         button.btn.btn-primary.btn-signup(ng-click="nextStep()", translate="GO_VERIFY_EMAIL", ng-show="currentStep == 2")
