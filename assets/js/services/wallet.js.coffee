@@ -100,7 +100,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         
         wallet.settings.btcCurrency = ($filter("getByProperty")("serverCode", result.btc_currency, wallet.btcCurrencies))
 
-        wallet.settings.displayCurrency = wallet.settings.currency
+        wallet.settings.displayCurrency = wallet.settings.btcCurrency
       
         wallet.settings.feePolicy = wallet.store.getFeePolicy()
       
