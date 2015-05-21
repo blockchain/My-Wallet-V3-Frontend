@@ -139,9 +139,9 @@ module.exports = (grunt) ->
         src: ["*.js.coffee", "wrappers/**/*.js.coffee", "controllers/**/*.js.coffee", "directives/**/*.js.coffee", "services/**/*.js.coffee"]
         dest: 'build/js'
         ext: ".js"
-        
-    sass: 
-      build: 
+
+    sass:
+      build:
         files: [{
           expand: true,
           cwd: 'assets/css',
@@ -171,7 +171,16 @@ module.exports = (grunt) ->
         dest: "dist/beta-admin.css"
       },
     },
-    
+
+    autoprefixer: {
+      options: {
+        browsers: ['last 2 versions']
+      }
+      no_dest: {
+        src: 'build/css/*.css'
+      }
+    },
+
     html2js: {
       options: 
         jade: 
@@ -384,6 +393,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-rename-assets')
   grunt.loadNpmTasks('grunt-shell')
   grunt.loadNpmTasks('grunt-preprocess')
+  grunt.loadNpmTasks('grunt-autoprefixer')
   
     
   grunt.registerTask "compile", ["coffee"]  
@@ -394,6 +404,7 @@ module.exports = (grunt) ->
     "sass"
     "copy:css"
     "copy:fonts"
+    "autoprefixer"
     "copy:images"
     "watch"
   ]
@@ -417,6 +428,7 @@ module.exports = (grunt) ->
     "sass"
     "copy:css" # CSS files not processed with sass
     "copy:fonts"
+    "autoprefixer"
     "concat_css:app"
     "jade"
     "copy:beta_index"
@@ -440,6 +452,7 @@ module.exports = (grunt) ->
     "copy:css" # CSS files not processed with sass
     "copy:fonts"
     "concat_css:app"
+    # "autoprefixer"
     "jade"
     "copy:beta_index"
     "preprocess"
@@ -462,6 +475,7 @@ module.exports = (grunt) ->
     "copy:css" # CSS files not processed with sass
     "copy:fonts"
     "concat_css:app"
+    "autoprefixer"
     "jade"
     "copy:beta_index"
     "preprocess"
