@@ -7,7 +7,18 @@
       i.bc-icon-send
       span(translate="SEND")
   .balance
-    h1 {{ getTotal(accountIndex) | btc }}
-    h1(ng-show="getTotal(accountIndex) == null") 0 BTC
+    span(ng-show="getTotal(accountIndex) == null")
+      h1 0 BTC
+    span(ng-show="getTotal(accountIndex) != null")
+      h1(ng-show="shouldShowFiat()") 
+        fiat(btc="getTotal(accountIndex)")
+      span(ng-hide="shouldShowFiat()")
+        h1(ng-if="btcCurrencyCodeIs('BTC')") {{ getTotal(accountIndex) | btc }}
+        h1(ng-if="btcCurrencyCodeIs('mBTC')") {{ getTotal(accountIndex) | mbtc }}
+        h1(ng-if="btcCurrencyCodeIs('bits')") {{ getTotal(accountIndex) | bits }}
     p
-      fiat(btc="getTotal(accountIndex)")
+      fiat(btc="getTotal(accountIndex)", ng-hide="shouldShowFiat()")
+      span(ng-show="shouldShowFiat()")
+        span(ng-if="btcCurrencyCodeIs('BTC')") {{ getTotal(accountIndex) | btc }}
+        span(ng-if="btcCurrencyCodeIs('mBTC')") {{ getTotal(accountIndex) | mbtc }}
+        span(ng-if="btcCurrencyCodeIs('bits')") {{ getTotal(accountIndex) | bits }}
