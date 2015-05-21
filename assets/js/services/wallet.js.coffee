@@ -450,7 +450,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   # amount in BTC, returns formatted amount in fiat
   wallet.BTCtoFiat = (amount, currency) ->
-    console.log wallet.conversions
     return null if currency == "BTC"
     return null unless amount?
     return null unless wallet.conversions[currency]?
