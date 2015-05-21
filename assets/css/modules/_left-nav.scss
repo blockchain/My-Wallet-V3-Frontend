@@ -106,7 +106,7 @@ ul.aside {
 
 .scroll-parent{
   .scroll{
-    height: 150px;
+    max-height: 150px;
     overflow-x: auto;
   }
   ::-webkit-scrollbar {

@@ -48,7 +48,7 @@
         label.mbm
           span(translate="AMOUNT")
         .flex-center
-          .mrl
+          .mrl.flex-1
             .flex-center
               span.mrm {{ transaction.currency }}:
               input.form-control(type="text",ng-model="transaction.amount",ng-blur="visualValidate('amount')")          
