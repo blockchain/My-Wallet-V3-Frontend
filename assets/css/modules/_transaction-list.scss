@@ -131,9 +131,9 @@
   margin-top: 25px;
   padding-top: 25px;
   border-top: 1px solid #ECECEC;
-    
+
     i{margin-right: 5px;}
-    
+
   }
   .tx-amount{
     span{float: none;}
@@ -346,3 +346,10 @@ a.date,p.date {
   }
 }
 
+@media(max-width: 767px) {
+  .transaction-card {
+    .tx-sidebar, .tx-details {
+      width: 100%;
+    }
+  }
+}
