@@ -194,7 +194,7 @@ function updateKey(event) {
 function activateKey(event) {
 	event.preventDefault();
 	if (wait()) return;
-	var email = $('#activate-email-input').val();
+	var email = $('#activate-email-input').val() || editing.data('email');
 	var name = $('#activate-name-input').val();
 	var update = {};
 	if (email !== '') update.email = email;
