@@ -1,6 +1,6 @@
 walletApp.config ($stateProvider, $urlRouterProvider) ->
 
-  $urlRouterProvider.otherwise("/");
+  $urlRouterProvider.otherwise("/")
   
   $urlRouterProvider.otherwise(($injector, $location) ->
     Wallet = $injector.get("Wallet")
@@ -80,6 +80,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
+  
   # Use the same layout as the transactions screen, once signup is complete
   .state("register.finish", 
     url: "/register/finish"
@@ -130,18 +131,6 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       right: {
         templateUrl: "partials/feedback.jade"
         controller: "FeedbackCtrl"
-      }
-    }
-  )
-  $stateProvider.state("wallet.common.agreement",
-    url: "/alpha-agreement"
-    views: {
-      left: {
-        templateUrl: "partials/accounts-navigation.jade"
-        controller: "AccountsCtrl"
-      },
-      right: {
-        templateUrl: "partials/alpha-agreement.jade"
       }
     }
   )
