@@ -787,7 +787,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.updateAccounts()
 
       if txs?
-        wallet.appendTransactions(txs, true) # Re-insert tx with latest account info
+        wallet.appendTransactions(txs, false) # Re-insert tx with latest account info
 
       wallet.applyIfNeeded() # Unarchive involves an async operation
 
@@ -935,21 +935,22 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.status.didLoadTransactions = true
 
   wallet.appendTransactions = (transactions, override) ->
-   for tx in transactions
-     match = false
-     for candidate in wallet.transactions
-       if candidate.hash == tx.hash
-         if override
-           wallet.transactions.splice(wallet.transactions.splice(candidate))
+    if not transactions? or not wallet.transactions?
+      return
+    for tx in transactions
+      match = false
+      for candidate in wallet.transactions
+        if candidate.hash == tx.hash
+          if override
+            wallet.transactions.splice(wallet.transactions.splice(candidate))
           else
-           match = true
-         break
+            match = true
+          break
 
-     if !match
-       transaction = angular.copy(tx)
-       transaction.note = wallet.store.getNote(transaction.hash)
-
-       wallet.transactions.push transaction
+      if !match
+        transaction = angular.copy(tx)
+        transaction.note = wallet.store.getNote(transaction.hash)
+        wallet.transactions.push transaction
 
   ####################
   # Notification     #
