@@ -8,7 +8,7 @@
     if $scope.numberOfActiveAccounts() > 1
       $state.go("wallet.common.transactions", {accountIndex:'accounts'})
     else
-      $state.go("wallet.common.transactions", {accountIndex:'0'})
+      $state.go("wallet.common.transactions", {accountIndex:Wallet.getDefaultAccountIndex()})
 
   $scope.numberOfActiveAccounts = () -> 
     return filterFilter(Wallet.accounts, {active: true}).length

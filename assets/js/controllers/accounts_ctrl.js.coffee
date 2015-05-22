@@ -13,7 +13,7 @@
   $scope.getMainAccountId = () ->
     account = 'accounts'
     if $scope.numberOfActiveAccounts() <= 1
-      account = '0'
+      account = Wallet.getDefaultAccountIndex()
     return account
   
   $scope.selectedAccountIndex = $stateParams.accountIndex
