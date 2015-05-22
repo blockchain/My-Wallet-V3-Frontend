@@ -42,6 +42,7 @@
     $modal.open(
       templateUrl: "partials/send.jade"
       controller: SendCtrl
+      windowClass: "bc-modal"
       resolve:
         paymentRequest: -> 
           {fromAddress: address, amount: 0, toAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()]}
