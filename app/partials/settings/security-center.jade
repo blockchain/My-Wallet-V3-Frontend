@@ -95,7 +95,8 @@
 
       .col-md-9.actionHolder(ng-show="display.action == 'blocktor'")
         .actionitem
-          h3 Block Tor Requests
-          p Blah
+          h3(TRANSLATE="BLOCK_TOR") Block Tor Requests
+          p(TRANSLATE="BLOCK_TOR_EXPLAIN")
+            | Enable the following option to prevent IP addresses that are known to be part of the TOR anonymizing network from accessing your wallet.
           .action-button
             tor
