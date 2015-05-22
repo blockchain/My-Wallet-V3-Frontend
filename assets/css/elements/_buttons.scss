@@ -77,3 +77,10 @@ button[disabled] {
     color: darken($ccc, 10%);
   }
 }
+.button-muted-off {
+  @extend .button-muted;
+  color: $security-red;
+  &:hover {
+    color: darken($security-red, 10%);
+  }
+}
