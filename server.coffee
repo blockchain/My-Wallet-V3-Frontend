@@ -3,6 +3,9 @@ compression = require('compression')
 app = express()
 bodyParser = require('body-parser')
 auth = require('basic-auth')
+path = require('path')
+r = require('request');
+
 basic = undefined
 app.use express.logger()
 app.use( bodyParser.json() )
@@ -179,7 +182,31 @@ if process.env.BETA? && parseInt(process.env.BETA)
         if isNumber
           process.env.PERCENT_REQUESTED = percent
         response.json { success: Boolean(isNumber) }
-        
+
+  # /verify-email?token=$token sends a request to blockchain.info and redirects to login
+  app.get "/verify-email", (request, response) ->
+    r.get 'https://blockchain.info/wallet' + request.originalUrl
+    response.redirect '/'
+
+  # /authorize-approve?token=$token sends a request to blockchain.info and redirects to login
+  app.get "/authorize-approve", (request, response) ->
+    r.get 'https://blockchain.info/wallet' + request.originalUrl
+    response.redirect '/'
+
+  # /unsubscribe?token=$token sends a request to blockchain.info and redirects to login
+  app.get "/unsubscribe", (request, response) ->
+    r.get 'https://blockchain.info/wallet' + request.originalUrl
+    response.redirect '/'
+
+  # *.blockchain.info/guid fills in the guid on the login page
+  app.get "/*-*-*-*", (request, response) ->
+    response.cookie 'uid', '"' + request.path.split(path.sep)[1] + '"'
+    response.redirect '/'
+
+  # TODO Better 404 page
+  app.use (req, res) ->
+    res.send '<center><h1>404 Not Found</h1></center>'
+
 else
   app.get "/", (request, response) ->
     if dist
