@@ -109,16 +109,47 @@ ul.aside {
     max-height: 150px;
     overflow-x: auto;
   }
-  ::-webkit-scrollbar {
-   background: white;
-  }
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #fff;
+  border: 0px none #d4d4d4;
+  border-radius: 100px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c9c9c9;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #606060;
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+  border: 0px none #ff5a28;
+  border-radius: 100px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-track:active {
+  background: #ededed;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+   
 }
 
 li.action-bar{
   background: #fff;
   margin: -10px 0 5px;
   padding: 5px 15px;
-  box-shadow: 0px -2px 13px -9px;
+  box-shadow: 0px -2px 13px -9px black;
   border-top: 1px solid white;
   z-index: 1;
   position: relative;
