@@ -15,7 +15,7 @@
               fiat-or-btc(btc="total()")    
         li(ng-repeat="account in accounts" ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''" ui-sref="wallet.common.transactions({accountIndex: account.index.toString()})")
           a(ng-if="account.active == true")
-            span {{ account.label }}
+            span.prs {{ account.label }}
             span
               fiat-or-btc(btc="account.balance")
       li.action-bar(ng-show="selectedAccountIndex != 'imported'")
