@@ -23,7 +23,7 @@ form.form-horizontal(role="form",name="form",novalidate)
     .col-sm-12.col-md-6.setting-result
       p
         a.button-primary(ng-click="importRecoveryPhrase()",translate="IMPORT_RECOVERY_PHRASE", ng-hide="editMnemonic")
-      div(ng-show="editMnemonic")
+      .flex-column.flex-around.mbl(ng-show="editMnemonic")
         label
           span(translate="MNEMONIC")
           |:
@@ -32,7 +32,7 @@ form.form-horizontal(role="form",name="form",novalidate)
           span(translate="OPTIONAL_PASSPHRASE")
           |:
         input.form-control(type="text",ng-model="passphrase", ng-disabled="importing", ng-show="editMnemonic")
-      
+
       img(ng-show="importing" src="img/spinner.gif")     
       a.button-primary(ng-click="performImport()", translate="IMPORT", ng-show="editMnemonic && !importing", ng-disabled="!isValid")       
 
