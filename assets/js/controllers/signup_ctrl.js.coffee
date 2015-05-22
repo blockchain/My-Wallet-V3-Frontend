@@ -48,6 +48,9 @@
     
     return
     
+  $scope.showAgreement = () ->
+    Wallet.status.shouldShowAgreement = true
+
   $scope.skipImport = () ->
     $scope.currentStep = 4
 
