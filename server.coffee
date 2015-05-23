@@ -221,6 +221,11 @@ if process.env.BETA? && parseInt(process.env.BETA)
     response.cookie 'uid', '"' + request.path.split(path.sep)[1] + '"'
     response.redirect '/'
 
+  # *.blockchain.info/key-{key} brings the user to the register page and fills in the key
+  app.get "/key-*", (request, response) ->
+    response.cookie 'key', '"' + request.path.split(path.sep)[1].split('-')[1] + '"'
+    response.redirect '/'
+
   # TODO Better 404 page
   app.use (req, res) ->
     res.send '<center><h1>404 Not Found</h1></center>'

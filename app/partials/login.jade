@@ -30,14 +30,14 @@
       .col-xs-12.col-xs-12(ui-view="alerts")
     .login-box
       header
-        hgroup(ng-hide="display.enterkey")
+        hgroup(ng-hide="status.enterkey")
           h1 Welcome back
           p Login to your wallet below.
-        hgroup(ng-show="display.enterkey")
+        hgroup(ng-show="status.enterkey")
           h1 Create A Wallet
           p Enter the Alpha Key you received by email to access our private Alpha
     
-      form.form-horizontal.clearfix(role="form" ng-hide="display.enterkey")
+      form.form-horizontal.clearfix(role="form" ng-hide="status.enterkey")
         .form-group
           label.control-label(translate="UID", for="UID_input")
           div
@@ -65,11 +65,11 @@
           div.bttn-container
             button#login.btn.btn-primary.btn-login(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="LOGIN", ng-disabled="!isValid")
           span.register
-            a(ng-click="display.enterkey = !display.enterkey")
+            a(ng-click="status.enterkey = !status.enterkey")
               | If you have an Alpha Key and would like to create a new wallet click here
               
 
-      form.form-horizontal.clearfix(role="form", ng-show="display.enterkey")
+      form.form-horizontal.clearfix(role="form", ng-show="status.enterkey")
         .form-group
           label.control-label(for="beta_key") Alpha Invite Key
           div
@@ -78,7 +78,7 @@
           div.bttn-container
             button.btn.btn-primary.btn-login(ng-click="register()",translate="CREATE_WALLET", ng-disabled="key == null || key == '' ")
             span.register
-              a(ng-click="display.enterkey = !display.enterkey")
+              a(ng-click="status.enterkey = !status.enterkey")
                 | Go Back
 
 

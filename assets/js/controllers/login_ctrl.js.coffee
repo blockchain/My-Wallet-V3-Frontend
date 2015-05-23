@@ -3,6 +3,9 @@
   $scope.settings = Wallet.settings
   
   $scope.disableLogin = null
+
+  $scope.status.enterkey = false
+  $scope.key = $cookieStore.get("key")
   
   # Browser compatibility warnings:
   # * Secure random number generator: https://developer.mozilla.org/en-US/docs/Web/API/RandomSource/getRandomValues
@@ -47,6 +50,9 @@
   else
     $scope.uid = $cookieStore.get("uid")
   
+  if $scope.key?
+    $scope.status.enterkey = true
+
   
   $scope.twoFactorCode = ""
   $scope.busy = false  
@@ -94,6 +100,7 @@
       Wallet.resendTwoFactorSms($scope.uid,success, error)
       
   $scope.register = () ->
+    $cookieStore.remove("key")
     # If BETA=1 is set in .env then in index.html/jade $rootScope.beta is set.
     # The following checks are not ideal as they can be bypassed with some creative Javascript commands.
     if $rootScope.beta
