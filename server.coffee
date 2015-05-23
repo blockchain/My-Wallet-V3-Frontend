@@ -190,8 +190,26 @@ if process.env.BETA? && parseInt(process.env.BETA)
 
   # /authorize-approve?token=$token sends a request to blockchain.info and redirects to login
   app.get "/authorize-approve", (request, response) ->
-    r.get 'https://blockchain.info/wallet' + request.originalUrl
-    response.redirect '/'
+    response.send """
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Verifying autorization request</title>
+    <script> 
+      var xmlHttp = new XMLHttpRequest();
+      // The redirect should be done in the callback, but currently the callback doesn't get called because the authorize-approve page makes an ajax request to /wallet over http which is blocked 
+      // xmlHttp.onload = function () {
+      //   window.location.replace("/");
+      // };
+      xmlHttp.open("GET", "https://blockchain.info/wallet#{request.originalUrl}", true);
+      xmlHttp.send();
+
+      window.location.replace("/");
+    </script>
+  </head>
+</html>
+"""
 
   # /unsubscribe?token=$token sends a request to blockchain.info and redirects to login
   app.get "/unsubscribe", (request, response) ->
