@@ -205,7 +205,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
       xmlHttp.open("GET", "https://blockchain.info/wallet#{request.originalUrl}", true);
       xmlHttp.send();
 
-      window.location.replace("/");
+      setTimeout(function() { window.location.replace("/"); }, 500);
     </script>
   </head>
 </html>
