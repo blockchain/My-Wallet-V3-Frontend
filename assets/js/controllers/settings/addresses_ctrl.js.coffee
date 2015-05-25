@@ -52,6 +52,7 @@
     $modal.open(
       templateUrl: "partials/settings/show-private-key.jade"
       controller: ShowPrivateKeyCtrl
+      windowClass: "bc-modal"
       resolve:
         addressObj: ->
           address
