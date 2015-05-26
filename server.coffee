@@ -126,6 +126,13 @@ if process.env.BETA? && parseInt(process.env.BETA)
       else
         response.json {success : false}
 
+  app.post "/verify_wallet_created", (request, response) ->
+    hdBeta.newWalletCreated request.body.key, (err) ->
+      if err
+        response.json {success : false, error: {message: err}}
+      else
+        response.json {success : true}
+
   # beta key admin
 
   app.get "/admin/?", (request, response, next) ->
@@ -175,6 +182,10 @@ if process.env.BETA? && parseInt(process.env.BETA)
       else if request.params.method == 'activate-key'
         hdBeta.activateKey request.query.selection, request.query.update, (err) ->
           response.json { error: err }
+
+      else if request.params.method == 'wallets-created'
+        hdBeta.fetchNumWalletsCreated (err, count) ->
+          response.json { error: err, count: count }
 
       else if request.params.method == 'set-percent-requested'
         percent = parseInt(request.query.percent)

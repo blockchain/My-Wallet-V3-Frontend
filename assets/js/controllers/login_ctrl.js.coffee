@@ -100,7 +100,6 @@
       Wallet.resendTwoFactorSms($scope.uid,success, error)
       
   $scope.register = () ->
-    $cookieStore.remove("key")
     # If BETA=1 is set in .env then in index.html/jade $rootScope.beta is set.
     # The following checks are not ideal as they can be bypassed with some creative Javascript commands.
     if $rootScope.beta
