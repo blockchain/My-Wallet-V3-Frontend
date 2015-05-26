@@ -1,4 +1,4 @@
-@SignupCtrl = ($scope, $log, Wallet, $modalInstance, $translate, $cookieStore, $filter, $state, $http) ->
+@SignupCtrl = ($scope, $rootScope, $log, Wallet, $modalInstance, $translate, $cookieStore, $filter, $state, $http) ->
   $scope.currentStep = 1
   $scope.working = false
   $scope.languages = Wallet.languages
@@ -99,11 +99,13 @@
       
   $scope.createWallet = (successCallback) ->
     Wallet.create($scope.fields.password, $scope.fields.email, $scope.fields.language, $scope.fields.currency, (uid)->
-      $http.post('verify_wallet_created', { key: $cookieStore.get("key") }).
+      inviteKey = null
+      if $rootScope.beta? && $rootScope.beta.key?
+        inviteKey = $rootScope.beta.key
+      $http.post('verify_wallet_created', { key: inviteKey }).
         success (data) ->
           if data.error? && data.error.message?
             console.warn 'There was an issue verifying wallet creation'
-          $cookieStore.remove 'key'
       successCallback()        
     )
     
