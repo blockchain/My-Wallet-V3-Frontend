@@ -1,7 +1,7 @@
 doctype
 <!-- @if !PRODUCTION -->
 if (!process.env.DIST)
-  html(lang='en' ng-app='walletApp' ng-init="savePassword=#{ process.env.SAVE_PASSWORD }; beta=#{ process.env.BETA }" ng-csp)
+  html(lang='en' ng-app='walletApp' ng-init="savePassword=#{ process.env.SAVE_PASSWORD || false }; beta=#{ process.env.BETA || false }" ng-csp)
 <!-- @endif -->
 <!-- @if PRODUCTION && !BETA !>
 if (process.env.DIST && !process.env.BETA)
