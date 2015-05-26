@@ -38,6 +38,9 @@
   justify-content: center;
   -webkit-justify-content: center;
 }
+.flex-important {
+  display: flex !important;
+}
 
 @for $i from 1 through 12 {
   .flex-#{$i} {

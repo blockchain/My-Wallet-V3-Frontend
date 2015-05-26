@@ -11,10 +11,10 @@
     .navbar-collapse.collapse(ng-class="{'in' : !navCollapsed}", ng-click="navCollapsed=true")
       ul.nav.navbar-nav.navbar-right(ng-show="status.isLoggedIn")
         li.item.mrl
-          a(ng-click="openBCmarkets()")
-            span
+          a.flex-important.flex-column(ng-click="openBCmarkets()")
+            span.type-sm
+              | 1 Bitcoin =&nbsp;
               fiat(btc="100000000.0")
-            span  / BTC
         li.dropdown.item.hidden-xs(dropdown)
           a.dropdown-toggle(href="#" data-toggle="dropdown" role="button" aria-expanded="false" dropdown-toggle)
             span(translate="EXPLORE")

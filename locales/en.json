@@ -230,7 +230,7 @@
   "ADD_BLOCK_IE" : "Block Internet Explorer",
   "RENAME_ACCOUNT" : "Rename Account",
   "RENAME" : "Rename",
-  "TRANSACTION_WILL_COMPLETE_IN" : "This transaction will complete in {{ minutes }} minutes",
+  "TRANSACTION_WILL_COMPLETE_IN" : "This transaction will complete in approximately {{ minutes }} minutes",
   "ARCHIVED_ADDRESSES" : "Archived Addresses",
   "ARCHIVED_ADDRESSES_EXPLAIN" : "Archived addresses are addresses you may not need anymore that are hidden from the main view but still part of your wallet. You can un-archive them at any time.",
   "LOSE_ACCESS" : "The wallet does not check the balance of archived addresses, so please make sure there are no funds left. If you receive funds on this address in the future, you will not be able to spend them. Are you sure?",
