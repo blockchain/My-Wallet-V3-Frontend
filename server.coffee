@@ -28,7 +28,7 @@ dist = process.env.DIST? && parseInt(process.env.DIST)
 app.configure ->
   app.use (req, res, next) ->
     if req.url == "/"
-      res.setHeader "content-security-policy", "img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-src 'self' https://*.youtube.com; script-src 'self'; connect-src 'self' *.blockchain.info *.blockchain.com wss://*.blockchain.info https://blockchain.info https://api.sharedcoin.com; object-src 'none'; media-src 'self' data: mediastream:; font-src 'self'"
+      res.setHeader "content-security-policy", "img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-src 'self' https://*.youtube.com; script-src 'self' 'unsafe-inline'; connect-src 'self' *.blockchain.info *.blockchain.com wss://*.blockchain.info https://blockchain.info https://api.sharedcoin.com; object-src 'none'; media-src 'self' data: mediastream:; font-src 'self'"
     if req.url.indexOf("beta_key")
       # Don't cache these
       res.setHeader('Cache-Control', 'public, max-age=0, no-cache');
