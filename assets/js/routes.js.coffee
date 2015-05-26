@@ -134,6 +134,20 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
+  $stateProvider.state("wallet.common.security-center",
+    url: "/security-center"
+    views: {
+      top: top,
+      left: {
+        templateUrl: "partials/accounts-navigation.jade"
+        controller: "AccountsCtrl"
+      },
+      right: {
+        templateUrl: "partials/security-center.jade"
+        controller: "SettingsSecurityCenterCtrl"
+      }
+    }
+  )
 
   $stateProvider.state("wallet.common.transactions",
     url: "/:accountIndex/transactions/"
@@ -219,15 +233,6 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       settings: {
         templateUrl: "partials/settings/address.jade"
         controller: "AddressCtrl"
-      }
-    }
-  )
-  .state("wallet.common.settings.security-center",
-    url: "/security-center"
-    views: {
-      settings: {
-        templateUrl: "partials/settings/security-center.jade"
-        controller: "SettingsSecurityCenterCtrl"
       }
     }
   )

@@ -15,6 +15,8 @@
       if item[prop] > val
         true
 
+  console.log($scope.security.level)
+
   $scope.$watchCollection "status.legacyAddressBalancesLoaded", ->
     if $scope.legacyAddresses.length == 0 && $scope.status.legacyAddressBalancesLoaded == true
       for address in filterFilter(filterFilter($scope.unfilteredLegacyAddresses, {active: true, isWatchOnlyLegacyAddress: false}), $scope.greaterThan('balance', 50000))
