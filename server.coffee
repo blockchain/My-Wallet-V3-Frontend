@@ -84,11 +84,11 @@ if process.env.BETA? && parseInt(process.env.BETA)
     userEmail = request.query.email
     if (parseInt(process.env.PERCENT_REQUESTED) != 100)
       if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(userEmail))
-        hdBeta.requestKey userEmail, (err) ->
+        hdBeta.attemptToRequestKey userEmail, (err) ->
           if !err
             response.json { message: 'Successfully submitted request', success: true }
           else
-            response.json { message: 'Error requesting key', success: false }
+            response.json { message: err, success: false }
       else
         response.json { message: 'Invalid email address', success: false }
     else
