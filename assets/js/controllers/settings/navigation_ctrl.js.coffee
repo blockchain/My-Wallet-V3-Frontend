@@ -3,4 +3,4 @@
   $scope.settings  = Wallet.settings
 
   $scope.goHome = () ->
-    $state.go("wallet.common.dashboard")
+    $state.go("wallet.common.transactions", {accountIndex:'accounts'})

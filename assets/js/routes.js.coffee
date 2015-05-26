@@ -8,7 +8,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     if Wallet.status.isLoggedIn == false
       $location = "/login"
     else
-      $location = "/dashboard"
+      $location = "/accounts/transactions"
   )
   
   top =  {
