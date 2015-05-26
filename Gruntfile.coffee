@@ -333,35 +333,51 @@ module.exports = (grunt) ->
     shell:
       deploy_static_to_dev:
         command: () -> 
-          'rsync -rz --delete dist node-dev@server12:'
+          'rsync -rz --delete dist hd-dev@server12:'
 
       deploy_server_to_dev:
         command: () -> 
-          'rsync -rz --delete server.coffee node-dev@server12:'
+          'rsync -rz --delete server.coffee hd-dev@server12:'
 
       deploy_beta_to_dev:
         command: () -> 
-          'rsync -rz --delete node_modules/hd-beta node-dev@server12:node_modules/'
+          'rsync -rz --delete node_modules/hd-beta hd-dev@server12:node_modules/'
+
+      deploy_static_to_staging:
+        command: () -> 
+          'rsync -rz --delete dist hd-staging@server12:'
+
+      deploy_server_to_staging:
+        command: () -> 
+          'rsync -rz --delete server.coffee hd-staging@server12:'
+
+      deploy_beta_to_staging:
+        command: () -> 
+          'rsync -rz --delete node_modules/hd-beta hd-staging@server12:node_modules/'
 
       deploy_static_to_alpha:
         command: () -> 
-          'rsync -rz --delete dist node-alpha@server12:'
+          'rsync -rz --delete dist hd-alpha@server12:'
 
       deploy_server_to_alpha:
         command: () -> 
-          'rsync -rz --delete server.coffee node-alpha@server12:'
+          'rsync -rz --delete server.coffee hd-alpha@server12:'
 
       deploy_beta_to_alpha:
         command: () ->
-          'rsync -rz --delete node_modules/hd-beta node-alpha@server12:node_modules/'
+          'rsync -rz --delete node_modules/hd-beta hd-alpha@server12:node_modules/'
 
       deploy_start_dev:
         command: () ->
-          'ssh node-dev@server12 "./start.sh"'
+          'ssh hd-dev@server12 "./start.sh"'
+
+      deploy_start_staging:
+        command: () ->
+          'ssh hd-staging@server12 "./start.sh"'
 
       deploy_start_alpha:
         command: () ->
-          'ssh node-alpha@server12 "./start.sh"'
+          'ssh hd-alpha@server12 "./start.sh"'
 
       check_dependencies: 
         command: () -> 
@@ -508,6 +524,30 @@ module.exports = (grunt) ->
     "shell:deploy_beta_to_dev"
     "shell:deploy_server_to_dev"
     "shell:deploy_start_dev"
+  ]
+
+  grunt.registerTask "deploy_static_to_staging", [
+    "dist_unsafe"
+    "shell:deploy_static_to_staging"
+    "shell:deploy_start_staging"
+  ]
+
+  grunt.registerTask "deploy_server_to_staging", [
+    "shell:deploy_server_to_staging"
+    "shell:deploy_start_staging"
+  ]
+
+  grunt.registerTask "deploy_beta_to_staging", [
+    "shell:deploy_beta_to_staging"
+    "shell:deploy_start_staging"
+  ]
+
+  grunt.registerTask "deploy_to_staging", [
+    "dist_unsafe"
+    "shell:deploy_static_to_staging"
+    "shell:deploy_beta_to_staging"
+    "shell:deploy_server_to_staging"
+    "shell:deploy_start_staging"
   ]
 
   grunt.registerTask "deploy_static_to_alpha", [
