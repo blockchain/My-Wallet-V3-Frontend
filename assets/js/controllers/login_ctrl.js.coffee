@@ -129,13 +129,13 @@
   $scope.$watch "status.isLoggedIn", (newValue) ->
     if newValue
       $scope.busy = false
-      
-      # $state.go("wallet.common.dashboard")
-      if $scope.numberOfActiveAccounts() > 1
-        $state.go("wallet.common.transactions", {accountIndex: "accounts"})
-      else
-        $state.go("wallet.common.transactions", {accountIndex: "0"})
-      
+
+      $state.go("wallet.common.dashboard")
+      # if $scope.numberOfActiveAccounts() > 1
+        # $state.go("wallet.common.transactions", {accountIndex: "accounts"})
+      # else
+        # $state.go("wallet.common.transactions", {accountIndex: "0"})
+
   $scope.$watch "uid + password", () ->
     isValid = null
     

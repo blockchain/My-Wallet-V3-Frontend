@@ -20,6 +20,12 @@
 
   $scope.currentLocation = $location.url()
 
+  $scope.showOrHide = () ->
+    if $location.url().indexOf('/transactions') > -1
+      return true
+    else
+      return false
+
   $scope.newAccount = () ->
     Wallet.clearAlerts()
     modalInstance = $modal.open(
