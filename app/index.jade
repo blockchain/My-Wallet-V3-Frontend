@@ -1,7 +1,16 @@
 doctype
-<!-- @if !PRODUCTION --><html lang='en' ng-app='walletApp' ng-init="savePassword=#{ process.env.SAVE_PASSWORD }; beta=#{ process.env.BETA }" ng-csp><!-- @endif -->
-<!-- @if PRODUCTION && !BETA !><html lang='en' ng-app='walletApp' ng-init='beta=0' ng-csp><!-- @endif -->
-<!-- @if PRODUCTION && BETA !><html lang='en' ng-app='walletApp' ng-init='beta=1' ng-csp><!-- @endif -->
+<!-- @if !PRODUCTION -->
+if (!process.env.DIST)
+  html(lang='en' ng-app='walletApp' ng-init="savePassword=#{ process.env.SAVE_PASSWORD }; beta=#{ process.env.BETA }" ng-csp)
+<!-- @endif -->
+<!-- @if PRODUCTION && !BETA !>
+if (process.env.DIST && !process.env.BETA)
+  html(lang='en' ng-app='walletApp' ng-init='beta=0' ng-csp)
+<!-- @endif -->
+<!-- @if PRODUCTION && BETA !>
+if (process.env.DIST && process.env.BETA)
+  html(lang='en' ng-app='walletApp' ng-init='beta=1' ng-csp)
+<!-- @endif -->
 head
   meta(charset='utf-8')
   meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1") 
