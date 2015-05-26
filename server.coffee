@@ -217,7 +217,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
     response.redirect '/'
 
   # *.blockchain.info/guid fills in the guid on the login page
-  app.get "/*-*-*-*", (request, response) ->
+  app.get /^\/.{8}-.{4}-.{4}-.{4}-.{12}$/, (request, response) ->
     response.cookie 'uid', '"' + request.path.split(path.sep)[1] + '"'
     response.redirect '/'
 
