@@ -221,6 +221,11 @@ if process.env.BETA? && parseInt(process.env.BETA)
   </head>
 </html>
 """
+  # pass the feedback post to jira
+  app.post "/feedback", (request, response) ->
+    jira = 'https://blockchain.atlassian.net/rest/collectors/1.0/template/feedback/e6ce4d72'
+    r.post { url: jira, form: request.body }, (err, httpResponse, body) ->
+      response.json { success: !(err?) }
 
   # /unsubscribe?token=$token sends a request to blockchain.info and redirects to login
   app.get "/unsubscribe", (request, response) ->
