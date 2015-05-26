@@ -221,6 +221,12 @@ function getRequestPercent() {
 	});
 }
 
+function getNumWalletsCreated() {
+	$.getJSON(getRootUrl() + 'wallets-created', function(data) {
+		$('#wallets-created').text(data.count);
+	});
+}
+
 function updateCapturePage(event) {
 	event.preventDefault();
 	var percent = $('#capture-percent-input').val();
@@ -262,6 +268,7 @@ $(document).ready(function() {
 	});
 	getSortedKeys(sort, order);
 	getRequestPercent();
+	getNumWalletsCreated();
 });
 
 $(document).on('click', 'th', function() {
