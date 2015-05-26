@@ -1,4 +1,4 @@
-@AccountsCtrl = ($scope, Wallet, SecurityCenter, $state, $stateParams, $modal, filterFilter) ->
+@AccountsCtrl = ($scope, Wallet, SecurityCenter, $state, $stateParams, $modal, filterFilter, $location) ->
   $scope.status    = Wallet.status
   $scope.total = Wallet.total
   $scope.settings = Wallet.settings
@@ -15,9 +15,11 @@
     if $scope.numberOfActiveAccounts() <= 1
       account = Wallet.getDefaultAccountIndex()
     return account
-  
+
   $scope.selectedAccountIndex = $stateParams.accountIndex
-    
+
+  $scope.currentLocation = $location.url()
+
   $scope.newAccount = () ->
     Wallet.clearAlerts()
     modalInstance = $modal.open(
