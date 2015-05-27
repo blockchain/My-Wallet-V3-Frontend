@@ -751,6 +751,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.displayError = (message, keep=false) ->
     wallet.displayAlert {type: "danger", msg: message}, keep
 
+  wallet.displayReceivedBitcoin = (message, keep=false) ->
+    wallet.displayAlert {type: "received-bitcoin", msg: message}, keep
+
   wallet.displayAlert = (alert, keep=false) ->
     if !keep
       wallet.lastAlertId++
@@ -759,7 +762,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       ), 7000)
 
     wallet.alerts.push(alert)
-
 
   wallet.isSynchronizedWithServer = () ->
     return wallet.store.isSynchronizedWithServer()

@@ -1,0 +1,21 @@
+.notification {
+  border-radius: 5px;
+  background: white;
+  position: absolute;
+  z-index: 100000;
+  right: 12px;
+  top: 12px;
+  padding: 10px 20px;
+  box-shadow: 0px 2px 4px 0px #9FA6AB;
+  .ti-close {
+    position: absolute;
+    top: -10px;
+    right: 15px;
+    background-color: #D4D9DD;
+    color: grey;
+    border-radius: 100%;
+    font-size: 1em;
+    border: 1px solid #D4D9DD;
+    padding: 3px;
+  }
+}
