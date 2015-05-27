@@ -238,7 +238,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
     response.redirect '/'
 
   # *.blockchain.info/key-{key} brings the user to the register page and fills in the key
-  app.get "/key-*", (request, response) ->
+  app.get /^\/key-.{8}$/, (request, response) ->
     response.cookie 'key', '"' + request.path.split(path.sep)[1].split('-')[1] + '"'
     response.redirect '/'
 
