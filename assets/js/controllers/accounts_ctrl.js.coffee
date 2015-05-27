@@ -34,7 +34,6 @@
       resolve:
         account: -> undefined
       windowClass: "bc-modal"
-      
     )
     
   $scope.legacyTotal = () ->

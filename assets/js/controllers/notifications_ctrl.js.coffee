@@ -1,1 +1,0 @@
-@NotificationsCtrl = ($scope, Wallet) ->

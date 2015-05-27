@@ -1,0 +1,7 @@
+.modal-header.flex-column.flex-center
+  h4.em-300.success {{notification.heading}}
+  p {{notification.msg}}
+.modal-body.bg-success.flex-justify.flex-center
+  i.h1.white(class="{{notification.icon}}")
+.flex.flex-justify.pam
+  button.button-muted.button-lg(translate="OK", ng-click="ok()") OK
