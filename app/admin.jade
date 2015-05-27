@@ -44,6 +44,9 @@ html(lang='en')
         form.form-inline
           button.btn.btn-default(type="button" data-toggle="modal" data-target="#key-modal") + New Key
           button.btn.btn-default(type="button" data-toggle="modal" data-target="#capture-modal") Capture Page
+          button.btn.btn-default(type="button" data-toggle="modal" data-target="#activation-modal")
+            span.glyphicon.glyphicon-flash
+            span &nbsp;Activate Keys
       .form-group.col-xs-6
         form#search-form.form-inline.pull-right
           input#search-input.form-control(type="text" placeholder="Search")
@@ -157,6 +160,40 @@ html(lang='en')
               .form-group
                 .col-xs-3.col-xs-offset-4
                   input#capture-button.btn.btn-default(type="submit" value="Set")
+
+    div#activation-modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="activationModal" aria-hidden="true")
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button.close(type="button" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") &times;
+            h3 Activate Multiple
+          div.modal-body(style="height:220px;")
+            .activation.activation-step-1
+              form#activation-form.form-horizontal
+                .form-group
+                  label.col-xs-3.control-label Min id
+                  .col-xs-6
+                    input#activation-min-input.form-control(type="text")
+                .form-group
+                  label.col-xs-3.control-label Max id
+                  .col-xs-6
+                    input#activation-max-input.form-control(type="text")
+                .form-group
+                  .col-xs-3.col-xs-offset-3
+                    input#activation-button.btn.btn-danger(type="submit" value="Activate")
+              span 
+                i Note: Min id and Max id will default to 0 and 100,000, respectively, if left blank. Leaving both blank results in every pending request being activated.
+            .activation.activation-step-2.hidden
+              span Please wait...
+            .activation.activation-step-3.hidden
+              form.form-horizontal
+                label.col-xs-offset-4
+                  span#activation-count
+                  span &nbsp;keys have been activated
+                .col-xs-3.col-xs-offset-4
+                  input#activation-button-close.btn.btn-default(type="button" value="Close")
+
 
     //-div#capture-modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="captureModal" aria-hidden="true")
       div.modal-dialog
