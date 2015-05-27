@@ -207,6 +207,32 @@ function activateKey(event) {
 	$('#activate-modal').modal('toggle');
 }
 
+function activateMany(event) {
+	event.preventDefault();
+	if (wait()) return;
+	var min = $('#activation-min-input').val();
+	var max = $('#activation-max-input').val();
+	range = {};
+	if (min) range.min = min;
+	if (max) range.max = max;
+	$.ajax({
+		url: getRootUrl() + 'activate-all',
+		data: range,
+		beforeSend: function() {
+			$('.activation').addClass('hidden');
+			$('.activation-step-2').removeClass('hidden');
+		},
+		success: function(res) {
+			if (res.data) $('#activation-count').text(res.data.count);
+			$('.activation').addClass('hidden');
+			$('.activation-step-3').removeClass('hidden');
+			$('#activation-form')[0].reset();
+			successCallback(res);
+		},
+		error: errorCallback
+	});
+}
+
 function showEditModal(elem) {
 	editing = $(elem).parent().parent();
 	$ ('#edit-form')[0].reset();
@@ -265,6 +291,14 @@ $(document).ready(function() {
 	$('#capture-form').on('submit', updateCapturePage);
 	$('#capture-modal').on('shown.bs.modal', function () {
 	  $('#capture-percent-input').focus();
+	});
+	$('#activation-form').on('submit', activateMany);
+	$('#activation-button-close').on('click', function() {
+		$('#activation-modal').modal('toggle');
+		setTimeout(function() {
+			$('.activation').addClass('hidden');
+			$('.activation-step-1').removeClass('hidden');
+		}, 500);
 	});
 	getSortedKeys(sort, order);
 	getRequestPercent();

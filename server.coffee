@@ -183,6 +183,11 @@ if process.env.BETA? && parseInt(process.env.BETA)
         hdBeta.activateKey request.query.selection, request.query.update, (err) ->
           response.json { error: err }
 
+      else if request.params.method == 'activate-all'
+        range = [request.query.min || 0, request.query.max || 100000]
+        hdBeta.activateAll range, (err, data) ->
+          response.json { error: err, data: data }
+
       else if request.params.method == 'wallets-created'
         hdBeta.fetchNumWalletsCreated (err, count) ->
           response.json { error: err, count: count }
@@ -238,7 +243,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
     response.redirect '/'
 
   # *.blockchain.info/key-{key} brings the user to the register page and fills in the key
-  app.get "/key-*", (request, response) ->
+  app.get /^\/key-.{8}$/, (request, response) ->
     response.cookie 'key', '"' + request.path.split(path.sep)[1].split('-')[1] + '"'
     response.redirect '/'
 
