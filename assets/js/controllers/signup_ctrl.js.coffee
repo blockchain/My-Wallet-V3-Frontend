@@ -167,7 +167,10 @@
         if visual
           $translate("NO_MATCH").then (translation) ->
             $scope.errors.confirmation = translation
-            
+
+    if !$scope.fields.acceptedAgreement
+      $scope.isValid[0] = false
+    
     if $scope.fields.emailVerificationCode == ""
       $scope.isValid[3] = false
                           
