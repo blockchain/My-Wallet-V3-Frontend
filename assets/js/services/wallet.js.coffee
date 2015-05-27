@@ -66,7 +66,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.settings.secondPassword = wallet.store.getDoubleEncryption()
       wallet.settings.pbkdf2 = wallet.store.getPbkdf2Iterations()
       wallet.settings.multiAccount = wallet.store.getMultiAccountSetting()
-      wallet.settings.logoutTimeSeconds = wallet.store.getLogoutTime() / 60000
+      wallet.settings.logoutTimeMinutes = wallet.store.getLogoutTime() / 60000
 
       # Get email address, etc
       # console.log "Getting info..."
@@ -1084,9 +1084,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.store.setMultiAccountSetting(flag)
     wallet.settings.multiAccount = flag
 
-  wallet.setLogoutTime = (s, success, error) ->
-    wallet.store.setLogoutTime(s * 60000)
-    wallet.settings.logoutTimeSeconds = s
+  wallet.setLogoutTime = (minutes, success, error) ->
+    wallet.store.setLogoutTime(minutes * 60000)
+    wallet.settings.logoutTimeMinutes = minutes
     wallet.my.backupWalletDelayed()
     success()
 
