@@ -5,5 +5,13 @@
   font-size: .9em;
 }
 .underline {
-	text-decoration: underline;
+  text-decoration: underline;
+}
+
+$multiplier: 100;
+
+@for $i from 1 through 9 {
+  .em-#{$i}00 {
+    font-weight: $i * $multiplier;
+  }
 }

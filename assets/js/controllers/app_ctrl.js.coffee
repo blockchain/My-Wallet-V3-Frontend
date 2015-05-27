@@ -33,10 +33,11 @@
             resolve:
               paymentRequest: -> 
                 Wallet.goal.send
+            windowClass: "bc-modal"
           )
-          
+
           Wallet.goal.send = undefined
-          
+
         if Wallet.goal.claim?
           modalInstance = $modal.open(
             templateUrl: "partials/claim.jade"
@@ -44,13 +45,14 @@
             resolve:
               claim: -> 
                 Wallet.goal.claim
+            windowClass: "bc-modal"
           )
-          
+
           modalInstance.result.then(() ->
             Wallet.goal.claim = undefined
           )
-        
-          
+
+
 
     # Goals which don't necessarily require a login:
     if Wallet.goal.verifyEmail?
