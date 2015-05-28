@@ -44,7 +44,8 @@
     $scope.nextAction()
     
   $scope.$watchCollection "settings", (newValue, oldValue) ->
-    $scope.nextAction()
+    if $scope.settings.googleAuthenticatorSecret == null # Google 2FA requires two steps
+      $scope.nextAction()
     
   $scope.$watchCollection "status", (newValue, oldValue) ->
     $scope.nextAction()

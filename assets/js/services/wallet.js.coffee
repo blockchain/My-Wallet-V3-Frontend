@@ -1268,14 +1268,16 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.applyIfNeeded()
     )
 
-  wallet.confirmTwoFactorGoogleAuthenticator = (code) ->
+  wallet.confirmTwoFactorGoogleAuthenticator = (code, successCallback, errorCallback) ->
     wallet.settings_api.confirmTwoFactorGoogleAuthenticator(code, ()->
       wallet.settings.needs2FA = true
       wallet.settings.twoFactorMethod = 4
       wallet.settings.googleAuthenticatorSecret = null
+      successCallback()
       wallet.applyIfNeeded()
-    ,()->
-      console.log "Failed"
+    ,(error)->
+      wallet.displayError(error)
+      errorCallback()
       wallet.applyIfNeeded()
     )
 
