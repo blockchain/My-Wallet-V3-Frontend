@@ -1,7 +1,7 @@
 walletApp.directive('focusWhen', ($timeout) ->
   {
     scope: {
-      trigger: '=focusWhen'
+      trigger: '@focusWhen'
     }
     link: (scope, elem) ->
       scope.$watch 'trigger', (value) ->
