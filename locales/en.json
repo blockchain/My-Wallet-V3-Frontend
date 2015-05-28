@@ -374,5 +374,7 @@
   "BITCOIN_SENT" : "You've successfully sent bitcoin",
   "NO_TRANSACTIONS_YET" : "You have no transactions yet!",
   "HIT_SEND_AND_RECEIVE" : "Hit <b>Send</b> and <b>Receive</b> and start filling your feed",
+  "NO_TRANSACTIONS_YET" : "You have no transactions yet!",
+  "HIT_SEND_AND_RECEIVE" : "Hit <b>Send</b> and <b>Receive</b> and start filling your feed",
   "" : ""
 }
