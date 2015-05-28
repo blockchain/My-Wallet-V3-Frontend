@@ -1,4 +1,4 @@
-@AccountFormCtrl = ($scope, Wallet, $modalInstance, $log, $translate, account) ->        
+@AccountFormCtrl = ($scope, Wallet, $modalInstance, $log, $translate, account, $modal) ->        
   $scope.fields = {name: ""}
   $scope.accounts = Wallet.accounts
   $scope.status =
@@ -21,6 +21,20 @@
       success = () ->
         $scope.status.busy = false
         $modalInstance.dismiss ""
+        
+        modalInstance = $modal.open(
+          templateUrl: "partials/modal-notification.jade"
+          controller: ModalNotificationCtrl
+          windowClass: "notification-modal"
+          resolve:
+            notification: ->
+              {
+                type: 'created-account'
+                icon: 'ti-layout-list-post'
+                heading: 'Success!'
+                msg: "You've successfully created an account"
+              }
+        )
         
       error = () ->
         $scope.status.busy = false

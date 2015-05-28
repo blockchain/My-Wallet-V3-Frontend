@@ -1,4 +1,4 @@
-@SendCtrl = ($scope, $log, Wallet, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter) ->
+@SendCtrl = ($scope, $log, Wallet, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $modal) ->
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.accounts = Wallet.accounts
   $scope.addressBook = Wallet.addressBook
@@ -215,6 +215,20 @@
           $state.go("wallet.common.transactions", {accountIndex: $scope.transaction.from.index })
         else
           $state.go("wallet.common.transactions", {accountIndex: "imported" })
+          
+        modalInstance = $modal.open(
+          templateUrl: "partials/modal-notification.jade"
+          controller: ModalNotificationCtrl
+          windowClass: "notification-modal"
+          resolve:
+            notification: ->
+              {
+                type: 'sent-bitcoin'
+                icon: 'bc-icon-send'
+                heading: 'Success!'
+                msg: "You've successfully sent bitcoin"
+              }
+        )
           
       Wallet.clearAlerts()
   
