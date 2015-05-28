@@ -65,7 +65,6 @@ module.exports = (grunt) ->
           'build/bower_components/webcam-directive/app/scripts/webcam.js'
           'build/bower_components/bc-qr-reader/dist/bc-qr-reader.js'
           'build/bower_components/angular-password-entropy/password-entropy.js'
-          'build/bower_components/intl-tel-input/lib/libphonenumber/build/utils.js'
           'build/bower_components/qrcode/lib/qrcode.js'
           'build/bower_components/angular-qr/src/angular-qr.js'
           'build/bower_components/angular-ui-select/dist/select.js'
@@ -73,8 +72,8 @@ module.exports = (grunt) ->
           'build/bower_components/angular-ui-router/release/angular-ui-router.js'
           'build/bower_components/angular-translate/angular-translate.js'
           'build/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js'
-          "build/bower_components/jquery/dist/jquery.js" # Duplicate; also included in my-wallet a.t.m.
           'build/bower_components/intl-tel-input/build/js/intlTelInput.js'
+          'build/bower_components/intl-tel-input/lib/libphonenumber/build/utils.js'
           'build/bower_components/international-phone-number/releases/international-phone-number.js'
           'build/bower_components/browserdetection/src/browser-detection.js'
         ]
@@ -84,6 +83,7 @@ module.exports = (grunt) ->
       application: # All components should first be minimized. Only trusted sources should be imported as minified..
         src: [
           'assets/js/my-wallet/dist/my-wallet.min.js'
+          "build/bower_components/jquery/dist/jquery.js" # Duplicate; also included in my-wallet a.t.m. Minified version causes problems.
           'build/bower_components/angular/angular.min.js'
           'build/bower_components/angular-sanitize/angular-sanitize.min.js'
           'build/bower_components/angular-cookies/angular-cookies.min.js'
