@@ -23,6 +23,10 @@
       $scope.checkGoals()
     ,0)
 
+  $scope.resetLogoutTimeout = () ->
+    if Wallet.status.isLoggedIn
+      Wallet.store.resetLogoutTimeout()
+
   $scope.checkGoals = () ->
     if $scope.status.isLoggedIn
       if Wallet.goal? 

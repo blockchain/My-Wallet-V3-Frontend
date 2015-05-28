@@ -177,4 +177,4 @@ head
       window.location = "https://blockchain.info/"
     }
 
-body(ng-controller="AppCtrl", ui-view="body")
+body(ng-controller="AppCtrl", ui-view="body", on-document-click="resetLogoutTimeout()")
