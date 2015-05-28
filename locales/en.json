@@ -367,5 +367,8 @@
   "YUBIKEY_INPUT_EXPLAIN" : "To pair your key with your account select the text box below and press the green LED button on your yubikey device.",
   "BITCOIN_CURRENCY" : "Bitcoin Display",
   "BITCOIN_CURRENCY_EXPLAIN": "Adjust the precision you would prefer bitcoin values to be displayed in.",
+  "NO_TRANSACTIONS_YET" : "You have no transactions yet!",
+  "HIT_SEND_AND_RECEIVE" : "Hit <b>Send</b> and <b>Receive</b> and start filling your feed",
+  
   "" : ""
 }
