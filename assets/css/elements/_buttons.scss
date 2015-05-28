@@ -84,3 +84,8 @@ button[disabled] {
     color: darken($security-red, 10%);
   }
 }
+.button-transparent {
+  background: transparent;
+  color: white;
+  border: none;
+}

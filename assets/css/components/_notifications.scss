@@ -1,6 +1,17 @@
 .notification-modal {
-  .modal-dialog { 
+  .modal-dialog {
     width: 40vw;
+  }
+  .modal-content {
+    box-shadow: 0 5px 1px rgba(0, 0, 0, 0.6);
+  }
+}
+
+@media (max-width: 768px) {
+  .notification-modal {
+    .modal-dialog {
+      width: 100vw;
+    }
   }
 }
 
