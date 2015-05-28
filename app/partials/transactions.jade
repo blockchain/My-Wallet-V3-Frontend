@@ -1,4 +1,10 @@
 #transactions
+  .row(ng-hide="loading || transactions.length > 0")
+    .col-xs-12.text-center#zero-transactions
+      p
+        span(translate="NO_TRANSACTIONS_YET")
+        br
+        span(translate="HIT_SEND_AND_RECEIVE")
   .row.transaction(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")
     .info.clearfix(ng-click="showTransaction(transaction)")
       .col-xs-6.col-sm-6.col-md-3
