@@ -27,17 +27,8 @@
   100% { transform: scale(1); }
 }
 
-//bounce the icons
-@-webkit-keyframes bounce {
-  10% { -webkit-transform: translate(0,3); }
-  50% { -webkit-transform: translate(0,-3); }
-  100% { -webkit-transform: translate(0,0); }
-}
-
-@keyframes bounce {
-  10% { transform: translate(0,3); }
-  50% { transform: translate(0,-3); }
-  100% { transform: translate(0,0); }
+.scale { 
+  animation: scale .4s;
 }
 
 //speed up fade in animation
