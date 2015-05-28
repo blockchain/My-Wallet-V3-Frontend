@@ -32,10 +32,7 @@
       item = angular.copy(address)
       item.type = "Imported Addresses"
       item.multiAccount = false
-      $scope.destinations.push item
-      
-  $scope.alerts = Wallet.alerts
-    
+      $scope.destinations.push item    
 
   $scope.determineLabel = (origin) ->
     label = origin.label || origin.address
