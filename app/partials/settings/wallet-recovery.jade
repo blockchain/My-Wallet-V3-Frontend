@@ -25,7 +25,7 @@ form.form-horizontal(role="form",name="form",novalidate)
         a.button-primary(ng-click="importRecoveryPhrase()",translate="IMPORT_RECOVERY_PHRASE", ng-hide="editMnemonic")
       .flex-column.flex-around.mbl(ng-show="editMnemonic")
         label
-          span(translate="MNEMONIC")
+          span(translate="RECOVERY_PHRASE")
           |:
         input.form-control(type="text",ng-model="mnemonic", ng-focus="errors.mnemonic = null", ng-disabled="importing", autofocus)
         label
