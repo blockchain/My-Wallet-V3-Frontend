@@ -168,7 +168,7 @@ html(lang='en')
             button.close(type="button" data-dismiss="modal" aria-label="Close")
               span(aria-hidden="true") &times;
             h3 Activate Multiple
-          div.modal-body(style="height:220px;")
+          div.modal-body(style="min-height:220px;")
             .activation.activation-step-1
               form#activation-form.form-horizontal
                 .form-group
@@ -191,6 +191,7 @@ html(lang='en')
                 label.col-xs-offset-4
                   span#activation-count
                   span &nbsp;keys have been activated
+                span#activation-errors.text-danger.hidden
                 .col-xs-3.col-xs-offset-4
                   input#activation-button-close.btn.btn-default(type="button" value="Close")
 

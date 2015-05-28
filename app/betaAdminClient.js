@@ -223,7 +223,17 @@ function activateMany(event) {
 			$('.activation-step-2').removeClass('hidden');
 		},
 		success: function(res) {
-			if (res.data) $('#activation-count').text(res.data.count);
+			if (res.data) {
+				$('#activation-count').text(res.data.count);
+			}
+			if (res.error && typeof res.error === 'object') {
+				res.error.forEach(function (error) {
+					$('#activation-errors').append(
+						$('<p></p>').text('Error [' + error.i + '] (' + error.key + ', ' + error.email + '): ' + error.message)
+					);
+				});
+				$('#activation-errors').removeClass('hidden');
+			} 
 			$('.activation').addClass('hidden');
 			$('.activation-step-3').removeClass('hidden');
 			$('#activation-form')[0].reset();
@@ -298,6 +308,7 @@ $(document).ready(function() {
 		setTimeout(function() {
 			$('.activation').addClass('hidden');
 			$('.activation-step-1').removeClass('hidden');
+			$('#activation-errors').empty().addClass('hidden');
 		}, 500);
 	});
 	getSortedKeys(sort, order);
