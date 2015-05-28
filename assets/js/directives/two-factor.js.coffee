@@ -10,6 +10,10 @@ walletApp.directive('twoFactor', ($translate, Wallet) ->
       scope.settings = Wallet.settings
       scope.edit = {twoFactor: false, yubiKey: false} 
       scope.user = Wallet.user
+      scope.errors = {authenticatorCode: false}
+      
+      scope.$watch "fields.authenticatorCode", () ->
+        scope.errors.authenticatorCode = false
       
       scope.disableSecondFactor = () ->
         return false unless scope.settings.needs2FA
@@ -38,8 +42,13 @@ walletApp.directive('twoFactor', ($translate, Wallet) ->
         Wallet.setTwoFactorGoogleAuthenticator()
     
       scope.confirmTwoFactorGoogleAuthenticator = () ->
-        Wallet.confirmTwoFactorGoogleAuthenticator(scope.fields.authenticatorCode)
-        scope.edit.twoFactor = false
+        success = () ->
+          scope.edit.twoFactor = false
+        
+        error = () -> 
+          scope.errors.authenticatorCode = true
+          
+        Wallet.confirmTwoFactorGoogleAuthenticator(scope.fields.authenticatorCode, success, error)
   }
 )
 

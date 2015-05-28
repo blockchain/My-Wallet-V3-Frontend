@@ -20,7 +20,7 @@
         a(ng-click="setTwoFactorGoogleAuthenticator()") Enable Google Authenticator
       li
         a(ng-click="edit.yubiKey = 1; ") Enable Yubikey
-    div(ng-if="settings.googleAuthenticatorSecret")
+    .form-group(ng-if="settings.googleAuthenticatorSecret", ng-class="{'has-error': errors.authenticatorCode }")
       qr(text="settings.googleAuthenticatorSecret", size=172)
       input.form-control(type="text",ng-model="fields.authenticatorCode")
     div(ng-show="edit.yubiKey")
