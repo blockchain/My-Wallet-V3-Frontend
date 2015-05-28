@@ -372,9 +372,9 @@
   "SUCCESS" : "Success!",
   "ACCOUNT_CREATED" : "You've successfully created an account",
   "BITCOIN_SENT" : "You've successfully sent bitcoin",
-  "NO_TRANSACTIONS_YET" : "You have no transactions yet!",
-  "HIT_SEND_AND_RECEIVE" : "Hit <b>Send</b> and <b>Receive</b> and start filling your feed",
-  "NO_TRANSACTIONS_YET" : "You have no transactions yet!",
-  "HIT_SEND_AND_RECEIVE" : "Hit <b>Send</b> and <b>Receive</b> and start filling your feed",
+  "NO_TRANSACTIONS_YET" : "Your Transactions",
+  "DESCRIBE_TRANSACTIONS" : "Transactions occur when you receive and send bitcoin.",
+  "HIT_RECEIVE" : "Click <b><i class='bc-icon-receive'></i> Receive </b> to deposit bitcoin into your wallet.",
+  "HIT_SEND" : "Click <b><i class='bc-icon-send'></i> Send </b> to send bitcoin anywhere in the world instantly!",
   "" : ""
 }
