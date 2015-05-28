@@ -61,6 +61,11 @@
   if !!$cookieStore.get("password")      
     $scope.password = $cookieStore.get("password")
   
+  $scope.whereToFocus = () ->
+    return 2 if $cookieStore.get('uid')?
+    return 0 if $cookieStore.get('password')?
+    return 1
+
   $scope.login = () ->
     return if $scope.busy
     

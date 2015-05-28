@@ -40,7 +40,7 @@
         .form-group
           label.control-label(translate="UID", for="UID_input")
           div
-            input#UID_input.form-control(type="text", ng-model="uid", ng-disabled="busy || disableLogin" name="UID_input")
+            input#UID_input.form-control(type="text", ng-model="uid", ng-disabled="busy || disableLogin" name="UID_input" focus-when="whereToFocus() == 1")
             span.help-block
               | Find the login link in your email, e.g.
               i blockchain.info/wallet/1111-222-333... 
@@ -48,7 +48,7 @@
         .form-group
           label.control-label(translate="PASSWORD", for="pass_input")
           div
-            input#pass_input.form-control(type="password", name="pass_input" ng-model="password", ng-disabled="busy || disableLogin")
+            input#pass_input.form-control(type="password", name="pass_input" ng-model="password", ng-disabled="busy || disableLogin" focus-when="whereToFocus() == 2")
         .form-group(ng-show="settings.needs2FA")
           label.control-label
               span(translate="YUBI_CODE", ng-show="settings.twoFactorMethod == 3")
