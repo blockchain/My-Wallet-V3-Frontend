@@ -32,7 +32,6 @@
     "angular-local-storage": "~0.1.5"
   },
   "resolutions": {
-    "angular-translate": "6dd0ce6459b271498c05b7e9a9f0e78f9c008c74",
     "angular": "1.2.*"
   }
 }
