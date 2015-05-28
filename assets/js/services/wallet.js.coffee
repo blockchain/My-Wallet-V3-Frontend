@@ -751,8 +751,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.displayError = (message, keep=false) ->
     wallet.displayAlert {type: "danger", msg: message}, keep
 
-  wallet.displayReceivedBitcoin = (message, keep=false) ->
-    wallet.displayAlert {type: "received-bitcoin", msg: message}, keep
+  wallet.displayReceivedBitcoin = () ->
+    $translate("JUST_RECEIVED_BITCOIN").then (translation) ->
+      wallet.displayAlert {type: "received-bitcoin", msg: translation}
 
   wallet.displayAlert = (alert, keep=false) ->
     if !keep
