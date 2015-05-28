@@ -18,6 +18,8 @@
   
   $scope.showTransaction = (transaction) ->
     $state.go("wallet.common.transaction", {accountIndex: $scope.accountIndex, hash: transaction.hash})
+
+  $scope.selectedAccountIndex = $stateParams.accountIndex
   
   #################################
   #           Private             #

@@ -1,5 +1,5 @@
 #transactions
-  .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || (transactions | filter:transactionFilter).length > 0")
+  .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || (transactions | filter:transactionFilter).length > 0 || selectedAccountIndex == 'imported'")
     .flex-column.mbl.border-bottom.black
       .flex-center.flex-justify
         i.ti-layout-list-post.h3.mrm
@@ -20,7 +20,7 @@
         transaction-description(transaction="transaction", ng-if="canDisplayDescriptions")
     .amount.col-xs-6.col-sm-3
       span 
-        amount(transaction="transaction")        
+        amount(transaction="transaction")
   .row
     .col-xs-5
     .col-xs-2
