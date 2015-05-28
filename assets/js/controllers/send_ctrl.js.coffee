@@ -216,19 +216,22 @@
         else
           $state.go("wallet.common.transactions", {accountIndex: "imported" })
           
-        modalInstance = $modal.open(
-          templateUrl: "partials/modal-notification.jade"
-          controller: ModalNotificationCtrl
-          windowClass: "notification-modal"
-          resolve:
-            notification: ->
-              {
-                type: 'sent-bitcoin'
-                icon: 'bc-icon-send'
-                heading: 'Success!'
-                msg: "You've successfully sent bitcoin"
-              }
-        )
+        $translate("SUCCESS").then (titleTranslation) ->
+          $translate("BITCOIN_SENT").then (messageTranslation) ->
+          
+            modalInstance = $modal.open(
+              templateUrl: "partials/modal-notification.jade"
+              controller: ModalNotificationCtrl
+              windowClass: "notification-modal"
+              resolve:
+                notification: ->
+                  {
+                    type: 'sent-bitcoin'
+                    icon: 'bc-icon-send'
+                    heading: titleTranslation
+                    msg: messageTranslation
+                  }
+            )
           
       Wallet.clearAlerts()
   

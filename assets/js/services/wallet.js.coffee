@@ -764,16 +764,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     wallet.alerts.push(alert)
 
-  # wallet.notifications = [
-  #   {
-  #     type: 'sent-bitcoin'
-  #     icon: 'bc-icon-send'
-  #     heading: 'Success!'
-  #     msg: "You've successfully sent bitcoin"
-  #   }
-  #
-  # ]
-
   wallet.isSynchronizedWithServer = () ->
     return wallet.store.isSynchronizedWithServer()
 

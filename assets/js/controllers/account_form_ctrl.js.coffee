@@ -22,19 +22,23 @@
         $scope.status.busy = false
         $modalInstance.dismiss ""
         
-        modalInstance = $modal.open(
-          templateUrl: "partials/modal-notification.jade"
-          controller: ModalNotificationCtrl
-          windowClass: "notification-modal"
-          resolve:
-            notification: ->
-              {
-                type: 'created-account'
-                icon: 'ti-layout-list-post'
-                heading: 'Success!'
-                msg: "You've successfully created an account"
-              }
-        )
+        $translate("SUCCESS").then (titleTranslation) ->
+          $translate("ACCOUNT_CREATED").then (messageTranslation) ->
+        
+        
+            modalInstance = $modal.open(
+              templateUrl: "partials/modal-notification.jade"
+              controller: ModalNotificationCtrl
+              windowClass: "notification-modal"
+              resolve:
+                notification: ->
+                  {
+                    type: 'created-account'
+                    icon: 'ti-layout-list-post'
+                    heading: titleTranslation
+                    msg: messageTranslation
+                  }
+            )
         
       error = () ->
         $scope.status.busy = false
