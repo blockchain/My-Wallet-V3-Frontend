@@ -1,5 +1,5 @@
 #transactions
-  .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || transactions.length > 0")
+  .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || (transactions | filter:transactionFilter).length > 0")
     .flex-column.mbl.border-bottom.black
       .flex-center.flex-justify
         i.ti-layout-list-post.h3.mrm
