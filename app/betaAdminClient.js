@@ -226,6 +226,9 @@ function activateMany(event) {
 			if (res.data) {
 				$('#activation-count').text(res.data.count);
 				$('#activation-success').text(res.data.successful);
+			} else {
+				$('#activation-count').text(0);
+				$('#activation-success').text(0);
 			}
 			if (res.error && typeof res.error === 'object') {
 				$('#activation-errors').append($('<p></p>').html('<u>' + res.error.length + ' emails failed to send</u>'));
