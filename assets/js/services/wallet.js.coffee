@@ -967,13 +967,13 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     sound.play()
 
   wallet.monitor = (event, data) ->
-    # console.log event
     if event == "on_tx" or event == "on_block"
       before = wallet.transactions.length
       wallet.updateTransactions()
-      if wallet.transactions.length > before
+      numberOfTransactions = wallet.transactions.length
+      if numberOfTransactions > before
         wallet.beep()
-        if wallet.transactions[0].result > 0 && !wallet.transactions[0].intraWallet
+        if wallet.transactions[numberOfTransactions - 1].result > 0 && !wallet.transactions[[numberOfTransactions - 1]].intraWallet
           wallet.displayReceivedBitcoin()
         wallet.updateAccountsAndLegacyAddresses()
     else if event == "error_restoring_wallet"
