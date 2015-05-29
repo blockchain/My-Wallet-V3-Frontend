@@ -219,7 +219,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.setLabelForAccount = (idx, label) ->
     accounts[idx].label = label
     
-  myWallet.upgradeToHDWallet = (needsPassword, success, error) ->
+  myWallet.upgradeToHDWallet = (firstAccountName, needsPassword, success, error) ->
     success()
     
   myWallet.sweepLegacyAddressToAccount = (fromAddress, toAccountIndex, observer) ->
