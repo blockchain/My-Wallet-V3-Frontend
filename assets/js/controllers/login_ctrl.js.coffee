@@ -114,7 +114,18 @@
       
       Wallet.resendTwoFactorSms($scope.uid,success, error)
       
+  $scope.prepareRegister = () ->
+    if $rootScope.beta
+      $scope.status.enterkey = !$scope.status.enterkey    
+    else
+      $scope.register()
+      
   $scope.register = () ->
+    betaCheckFinished = (key, email) ->
+      $rootScope.beta = {key: $scope.key, email: email}
+
+      $state.go("register")
+    
     $cookieStore.remove 'key'
     # If BETA=1 is set in .env then in index.html/jade $rootScope.beta is set.
     # The following checks are not ideal as they can be bypassed with some creative Javascript commands.
@@ -131,12 +142,7 @@
         Wallet.displayError("Unable to verify your invite code.")
         
     else
-      betaCheckFinished()
-      
-    betaCheckFinished = (key, email) ->
-      $rootScope.beta = {key: $scope.key, email: email}
-
-      $state.go("register")
+      $state.go("register")      
 
   $scope.numberOfActiveAccounts = () -> 
     return filterFilter(Wallet.accounts, {active: true}).length

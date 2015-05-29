@@ -67,12 +67,14 @@
           div.bttn-container
             button#login.btn.btn-primary.btn-login(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="LOGIN", ng-disabled="!isValid")
           span.register
-            a(ng-click="status.enterkey = !status.enterkey")
-              | If you have an Alpha Key and would like to create a new wallet click here
-              
+            a(ng-click="prepareRegister()")
+              span(ng-show="beta")
+                | If you have an Alpha Key and would like to create a new wallet click here
+              span(ng-hide="beta")
+                | If you would like to create a new wallet click here
 
       form.form-horizontal.clearfix(role="form", ng-show="status.enterkey")
-        .form-group
+        .form-group(ng-show="beta")
           label.control-label(for="beta_key") Alpha Invite Key
           div
             input#beta_key.form-control(type="text", name="beta_key" ng-model="key", ng-disabled="busy || disableLogin")
@@ -82,19 +84,3 @@
             span.register
               a(ng-click="status.enterkey = !status.enterkey")
                 | Go Back
-
-
-              
-//-    .login-box(ng-show="beta")
-//-      header
-//-        hgroup
-//-          h1 Welcome to Blockchain Wallet Alpha
-//-          p Please enter your Alpha Key to create a new wallet
-//-      form.form-horizontal.clearfix(role="form")
-//-        .form-group
-//-          label.control-label(for="beta_key") Beta Invite Key
-//-          div
-//-            input#beta_key.form-control(type="text", name="beta_key" ng-model="key", ng-disabled="busy || disableLogin")
-//-        .form-group.bttn
-//-          button.btn.btn-primary.btn-login(ng-click="register()",translate="CREATE_WALLET", ng-disabled="key == null || key == '' ")
-//-              
