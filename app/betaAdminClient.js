@@ -225,11 +225,13 @@ function activateMany(event) {
 		success: function(res) {
 			if (res.data) {
 				$('#activation-count').text(res.data.count);
+				$('#activation-success').text(res.data.successful);
 			}
 			if (res.error && typeof res.error === 'object') {
+				$('#activation-errors').append($('<p></p>').html('<u>' + res.error.length + ' emails failed to send</u>'));
 				res.error.forEach(function (error) {
 					$('#activation-errors').append(
-						$('<p></p>').text('Error [' + error.i + '] (' + error.key + ', ' + error.email + '): ' + error.message)
+						$('<p></p>').text('Send Failed (' + error.key + ', ' + error.email + '): ' + error.message)
 					);
 				});
 				$('#activation-errors').removeClass('hidden');
