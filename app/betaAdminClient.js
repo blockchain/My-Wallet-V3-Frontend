@@ -235,6 +235,10 @@ function activateMany(event) {
 					);
 				});
 				$('#activation-errors').removeClass('hidden');
+			} else if (res.error) {
+				$('#activation-errors').append($('<p></p>').html('<u>Error activating keys</u>'));
+				$('#activation-errors').append($('<p></p>').text(res.error.toString()));
+				$('#activation-errors').removeClass('hidden');
 			} 
 			$('.activation').addClass('hidden');
 			$('.activation-step-3').removeClass('hidden');
