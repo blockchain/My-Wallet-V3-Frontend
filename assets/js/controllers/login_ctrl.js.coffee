@@ -7,6 +7,10 @@
   $scope.status.enterkey = false
   $scope.key = $cookieStore.get("key")
   
+  $scope.errors = {uid: null, password: null, twoFactor: null}
+  
+
+  
   # Browser compatibility warnings:
   # * Secure random number generator: https://developer.mozilla.org/en-US/docs/Web/API/RandomSource/getRandomValues
   # * AngularJS support (?)
@@ -43,7 +47,6 @@
     # Warn against unknown browser. Tell user to pay attention to random number generator and CORS protection.
     $translate("UNKNOWN_BROWSER").then (translation) ->
       Wallet.displayWarning(translation, true)
-    
   
   if Wallet.guid?
     $scope.uid = Wallet.guid
@@ -72,19 +75,26 @@
     $scope.busy = true
     Wallet.clearAlerts()
     
-    error = () ->
+    error = (field, message) ->
       $scope.busy = false
+      if field == "uid"
+        $scope.errors.uid = message
+      else if field == "password"
+        $scope.errors.password = message
+      else if field == "twoFactor"
+        $scope.errors.twoFactor = message
     
     needs2FA = () ->
       $scope.busy = false
+      $scope.didAsk2FA = true
       
     success = () ->
       $scope.busy = false
             
-    if !$scope.settings.needs2FA
+    if $scope.settings.needs2FA
+      Wallet.login($scope.uid, $scope.password, $scope.twoFactorCode, (() ->), success, error)
+    else
       Wallet.login($scope.uid, $scope.password, null, needs2FA, success, error)
-    else if $scope.twoFactorCode != ""
-      Wallet.login($scope.uid, $scope.password, $scope.twoFactorCode, needs2FA, success, error)
       
     if $scope.uid? && $scope.uid != ""
       $cookieStore.put("uid", $scope.uid)
@@ -141,13 +151,20 @@
       # else
         # $state.go("wallet.common.transactions", {accountIndex: "0"})
 
-  $scope.$watch "uid + password", () ->
+  $scope.$watch "uid + password + twoFactor", () ->
+    $scope.errors.uid = null
+    $scope.errors.password = null
+    $scope.errors.twoFactor = null
+      
     isValid = null
     
     if !$scope.uid? || $scope.uid == ""
       isValid = false
       
     if !$scope.password? || $scope.password == ""
+      isValid = false
+      
+    if $scope.settings.needs2FA && $scope.twoFactorCode == ""
       isValid = false
 
     if !isValid?

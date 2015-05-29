@@ -131,15 +131,19 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.settings.twoFactorMethod = method
       wallet.applyIfNeeded()
 
-    wrongTwoFactorCode = (method) ->
-      errorCallback()
+    wrongTwoFactorCode = (message) ->
+      errorCallback("twoFactor", message)
       wallet.applyIfNeeded()
 
     loginError = (error) ->
       console.log(error)
-      wallet.displayError(error, true)
-
-      errorCallback()
+      if error.indexOf("Unknown Wallet Identifier") > -1 # Brittle, for lack of a more useful server response
+        errorCallback("uid", error)
+      else if error.indexOf("password") > -1 # Brittle
+         errorCallback("password", error)
+      else
+        wallet.displayError(error, true)
+        errorCallback()
 
       wallet.applyIfNeeded()
 
@@ -160,7 +164,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     betaCheckFinished = () ->
       $window.root = "https://blockchain.info/"
-      #                         , shared_key, resend_code, inputedPassword, twoFACode,       success,  needs_two_factor_code, wrong_two_factor_code, authorization_required, other_error, fetch_success, decrypt_success, build_hd_success
       wallet.my.fetchWalletJson(
         uid,
         null,       # shared_key

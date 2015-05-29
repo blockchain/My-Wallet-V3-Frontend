@@ -37,19 +37,21 @@
           p Enter the Alpha Key you received by email to access our private Alpha
     
       form.form-horizontal.clearfix(role="form" ng-hide="status.enterkey")
-        .form-group
+        .form-group(ng-class="{'has-error': errors.uid}")
           label.control-label(translate="UID", for="UID_input")
           div
             input#UID_input.form-control(type="text", ng-model="uid", ng-disabled="busy || disableLogin" name="UID_input" focus-when="whereToFocus() == 1")
-            span.help-block
+            span.help-block {{ errors.uid }}
+            span.help-block.info
               | Find the login link in your email, e.g.
               i blockchain.info/wallet/1111-222-333... 
               | The series of numbers and dashes at the end of the link is your Login ID.
-        .form-group
+        .form-group(ng-class="{'has-error': errors.password}")
           label.control-label(translate="PASSWORD", for="pass_input")
           div
             input#pass_input.form-control(type="password", name="pass_input" ng-model="password", ng-disabled="busy || disableLogin" focus-when="whereToFocus() == 2")
-        .form-group(ng-show="settings.needs2FA")
+            span.help-block {{ errors.password }}  
+        .form-group(ng-show="settings.needs2FA", ng-class="{'has-error': errors.twoFactor}")
           label.control-label
               span(translate="YUBI_CODE", ng-show="settings.twoFactorMethod == 3")
               span(translate="EMAIL_CODE", ng-show="settings.twoFactorMethod == 2")
@@ -57,6 +59,7 @@
               span(translate="SMS_CODE", ng-show="settings.twoFactorMethod == 5")
           div
             input.form-control(type="text", ng-model="twoFactorCode", ng-disabled="busy")
+            span.help-block {{ errors.twoFactor }}
             p.form-control-static(ng-show="settings.twoFactorMethod == 5")
               img(ng-show="resending" src="img/spinner.gif")
               a(ng-click="resend()", ng-show="!resending" ) Resend
