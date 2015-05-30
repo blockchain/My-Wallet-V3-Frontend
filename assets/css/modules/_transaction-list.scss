@@ -74,7 +74,7 @@
 }
 
 #transaction-details {
-  padding: 105px 30px 10px;
+  padding: 20px 30px 10px;
 }
 
 .transaction-card{
@@ -347,5 +347,8 @@ a.date,p.date {
     .tx-sidebar, .tx-details {
       width: 100%;
     }
+  }
+  #transactions .row.transaction div.amount button.amount {
+    min-width: 100px;
   }
 }

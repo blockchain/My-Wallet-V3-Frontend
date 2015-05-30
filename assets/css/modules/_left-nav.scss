@@ -169,3 +169,9 @@ li.action-bar{
   }
   .left-nav { top: 0; }
 }
+
+@media (max-height: 425px) {
+  .adverts {
+    display: none;
+  }
+}
