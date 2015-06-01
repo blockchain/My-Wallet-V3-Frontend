@@ -99,6 +99,7 @@
       
   $scope.createWallet = (successCallback) ->
     Wallet.create($scope.fields.password, $scope.fields.email, $scope.fields.language, $scope.fields.currency, (uid)->
+      $cookieStore.put("uid", uid)
       inviteKey = null
       if $rootScope.beta? && $rootScope.beta.key?
         inviteKey = $rootScope.beta.key
