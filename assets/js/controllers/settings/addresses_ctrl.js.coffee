@@ -37,9 +37,12 @@
       controller: AddressImportCtrl
       windowClass: "bc-modal"
     )
+    if modalInstance?
+      modalInstance.opened.then () ->
+        Wallet.store.resetLogoutTimeout()
     
   $scope.transfer = (address) ->
-    $modal.open(
+    modalInstance = $modal.open(
       templateUrl: "partials/send.jade"
       controller: SendCtrl
       windowClass: "bc-modal"
@@ -47,9 +50,12 @@
         paymentRequest: -> 
           {fromAddress: address, amount: 0, toAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()]}
     )
+    if modalInstance?
+      modalInstance.opened.then () ->
+        Wallet.store.resetLogoutTimeout()
 
   $scope.showPrivKey = (address) ->
-    $modal.open(
+    modalInstance = $modal.open(
       templateUrl: "partials/settings/show-private-key.jade"
       controller: ShowPrivateKeyCtrl
       windowClass: "bc-modal"
@@ -57,6 +63,9 @@
         addressObj: ->
           address
     )
+    if modalInstance?
+      modalInstance.opened.then () ->
+        Wallet.store.resetLogoutTimeout()
 
   #################################
   #           Private             #

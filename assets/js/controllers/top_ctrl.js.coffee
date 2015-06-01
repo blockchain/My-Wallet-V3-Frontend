@@ -11,6 +11,9 @@
         destination: -> null
       windowClass: "bc-modal"
     )
+    if modalInstance?
+      modalInstance.opened.then () ->
+        Wallet.store.resetLogoutTimeout()
     
   $scope.send = () ->
     Wallet.clearAlerts()
@@ -23,6 +26,9 @@
       windowClass: "bc-modal"
 
     )
+    if modalInstance?
+      modalInstance.opened.then () ->
+        Wallet.store.resetLogoutTimeout()
   
   $scope.getTotal = (index) ->
     return null if $scope.total(index) == null

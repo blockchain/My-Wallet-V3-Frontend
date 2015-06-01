@@ -29,7 +29,8 @@
       resolve:
         paymentRequest: -> 
           {fromAddress: address, amount: 0, toAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()]}
-    )
+    ).opened.then () ->
+      Wallet.store.resetLogoutTimeout()
     
   $scope.toggle = (action) ->
     if $scope.display.action == action

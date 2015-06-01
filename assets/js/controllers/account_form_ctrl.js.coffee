@@ -38,7 +38,8 @@
                     heading: titleTranslation
                     msg: messageTranslation
                   }
-            )
+            ).opened.then () ->
+              Wallet.store.resetLogoutTimeout()
         
       error = () ->
         $scope.status.busy = false

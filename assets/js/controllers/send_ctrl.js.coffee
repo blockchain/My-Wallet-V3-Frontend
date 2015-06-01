@@ -231,7 +231,8 @@
                     heading: titleTranslation
                     msg: messageTranslation
                   }
-            )
+            ).opened.then () ->
+              Wallet.store.resetLogoutTimeout()
           
       Wallet.clearAlerts()
   

@@ -35,6 +35,9 @@
         account: -> undefined
       windowClass: "bc-modal"
     )
+    if modalInstance?
+      modalInstance.opened.then () ->
+        Wallet.store.resetLogoutTimeout()
     
   $scope.legacyTotal = () ->
     return Wallet.getTotalBalanceForActiveLegacyAddresses()
