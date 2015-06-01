@@ -60,8 +60,8 @@
       Wallet.renameAccount(account, $scope.fields.name, success, error)
 
   $scope.isAccountNameTaken = (name) ->
-    for account in $scope.accounts
-      return true if account.label == name
+    for acct in $scope.accounts
+      return true if acct.label == name
     return false
 
 
