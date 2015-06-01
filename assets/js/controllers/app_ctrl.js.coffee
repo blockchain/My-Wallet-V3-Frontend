@@ -11,7 +11,7 @@
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->  
     if toState.name != "login.show" && toState.name != "login" && toState.name != "register" && toState.name != "open" && toState.name != "verify-email" && toState.name != "verify-email-with-guid" && $scope.status.isLoggedIn == false
       $state.go("login.show")
-    if Wallet.status.isLoggedIn
+    if Wallet.status.isLoggedIn && Wallet.store.resetLogoutTimeout?
       Wallet.store.resetLogoutTimeout()
   )
     
