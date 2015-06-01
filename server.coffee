@@ -203,6 +203,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
   # /verify-email?token=$token sends a request to blockchain.info and redirects to login
   app.get "/verify-email", (request, response) ->
     r.get 'https://blockchain.info/wallet' + request.originalUrl
+    response.cookie 'email-verified', true
     response.redirect '/'
 
   # /authorize-approve?token=$token sends a request to blockchain.info and redirects to login

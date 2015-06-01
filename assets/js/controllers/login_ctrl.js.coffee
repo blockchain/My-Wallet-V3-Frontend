@@ -56,6 +56,23 @@
   if $scope.key?
     $scope.status.enterkey = true
 
+  if $cookieStore.get('email-verified')
+    $cookieStore.remove 'email-verified'
+    $translate("SUCCESS").then (titleTranslation) ->
+      $translate("EMAIL_VERIFIED_SUCCESS").then (messageTranslation) ->
+        modalInstance = $modal.open(
+          templateUrl: "partials/modal-notification.jade"
+          controller: ModalNotificationCtrl
+          windowClass: "notification-modal"
+          resolve:
+            notification: ->
+              {
+                type: 'verified-email'
+                icon: 'ti-email'
+                heading: titleTranslation
+                msg: messageTranslation
+              }
+          )
   
   $scope.twoFactorCode = ""
   $scope.busy = false  
