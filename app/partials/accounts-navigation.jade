@@ -9,12 +9,12 @@
         i.ti-layout-list-post
         span(translate="MY_TRANSACTIONS")
       ul.scroll.aside-list.pas(ng-show="selectedAccountIndex != 'imported' && showOrHide()")
-        li(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd || numberOfActiveAccounts() <= 1")
-          a(translate="ALL_ACCOUNTS")
+        li.mvs(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd || numberOfActiveAccounts() <= 1")
+          a.pas(translate="ALL_ACCOUNTS")
             span
               fiat-or-btc(btc="total()")    
         li(ng-repeat="account in accounts" ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''" ui-sref="wallet.common.transactions({accountIndex: account.index.toString()})")
-          a(ng-if="account.active == true")
+          a.flex-between.pas(ng-if="account.active == true")
             span.prs {{ account.label }}
             span
               fiat-or-btc(btc="account.balance")
@@ -25,12 +25,12 @@
         i.ti-agenda
         span(translate="IMPORTED_ADDRESSES")
       ul.aside-list.pas.pln(ng-show="selectedAccountIndex == 'imported' && currentLocation == '/imported/transactions/'")
-        li(ng-class="selectedAccountIndex == 'imported' ? 'active' : ''")
-          a(translate="ALL_ADDRESSES")
+        li.mvs(ng-class="selectedAccountIndex == 'imported' ? 'active' : ''")
+          a.pas(translate="ALL_ADDRESSES")
             span
               fiat-or-btc(btc="legacyTotal()")
         li
-          a(ui-sref="wallet.common.settings.addresses", translate="VIEW_ADDRESSES")
+          a.pas(ui-sref="wallet.common.settings.addresses", translate="VIEW_ADDRESSES")
     li.header.mbm(ui-sref-active="current")
       a(ui-sref="wallet.common.security-center")
         i.bc-icon-security.security-red(ng-show="security.level == 0 || security.level == 1")

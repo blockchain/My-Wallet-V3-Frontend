@@ -1,9 +1,9 @@
 .sticky-header.flex-center.flex-between#top(ng-show="status.isLoggedIn")
   .button-group.flex
-    button.flex-center.flex-justify.mrm(ng-click="request()")
+    a.flex-center.flex-justify.mrm(ng-click="request()")
       i.bc-icon-receive
       span(translate="REQUEST")
-    button.flex-center.flex-justify(ng-click="send()")
+    a.flex-center.flex-justify(ng-click="send()")
       i.bc-icon-send
       span(translate="SEND")
   .balance.flex-column.flex-align-end

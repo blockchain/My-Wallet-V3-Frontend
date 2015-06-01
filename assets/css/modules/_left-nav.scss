@@ -11,7 +11,6 @@
   -webkit-flex-direction: column;
   a {
     color: #c9c9c9;
-    display: block;
     cursor: pointer;
   }
 }
@@ -38,7 +37,7 @@ ul.aside {
     font-weight: 400;
     text-transform: uppercase;
     margin:0 0 10px 0;
-    a {
+    > a {
       color: #737373;
       padding: .4em .8em;
       display: flex;
@@ -57,9 +56,6 @@ ul.aside {
     .btn {  min-width: 110px; }
     a{
       color: #878787;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
     li.active{
       a{
