@@ -59,6 +59,12 @@
       
       Wallet.renameAccount(account, $scope.fields.name, success, error)
 
+  $scope.isAccountNameTaken = (name) ->
+    for account in $scope.accounts
+      return true if account.label == name
+    return false
+
+
   #################################
   #           Private             #
   #################################
@@ -71,6 +77,10 @@
     
     return false if $scope.fields.name == null
     return false if $scope.fields.name.length == 0
+
+    if $scope.isAccountNameTaken($scope.fields.name)
+      $scope.errors.name = "Account name already in use"
+      return false
     
     if $scope.fields.name.length > 17
       $scope.errors.name = "Max. 17 characters"
