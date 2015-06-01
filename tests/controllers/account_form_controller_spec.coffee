@@ -41,7 +41,7 @@ describe "AccountFormCtrl", ->
       
         return
       
-      scope.fields = {name: "Savings"}
+      scope.fields = {name: "New Account"}
       scope.$digest()
             
     it "should be created",  inject((Wallet) ->      
@@ -52,7 +52,7 @@ describe "AccountFormCtrl", ->
   
     it "should have a name",  inject((Wallet) ->
       scope.createAccount()
-      expect(Wallet.accounts[Wallet.accounts.length - 1].label).toBe("Savings")
+      expect(Wallet.accounts[Wallet.accounts.length - 1].label).toBe("New Account")
     )
   
     it "name should be 1 character or more",  inject((Wallet) ->
