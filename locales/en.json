@@ -377,5 +377,6 @@
   "HIT_RECEIVE" : "Click <b><i class='bc-icon-receive'></i> Receive </b> to deposit bitcoin into your wallet.",
   "HIT_SEND" : "Click <b><i class='bc-icon-send'></i> Send </b> to send bitcoin anywhere in the world instantly!",
   "FIRST_ACCOUNT_NAME" : "My Bitcoin Wallet",
+  "EMAIL_VERIFIED_SUCCESS" : "You've successfully verified your email! Login with your password, we've gone ahead and filled out your UID for you.",
   "" : ""
 }
