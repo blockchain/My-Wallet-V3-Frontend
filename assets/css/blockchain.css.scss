@@ -225,3 +225,6 @@ padding-left: 15px;
 
 }
 
+@media (max-width: 768px) {
+  .dashboard img { display: none; }
+}

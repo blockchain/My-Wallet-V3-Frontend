@@ -25,10 +25,10 @@
 
 @media (max-width: 700px) {
   .button-group {
-    button {
+    button, a {
       min-width: 50px;
     }
-    button span {
+    button span, a span {
       display: none;
     }
     i {
