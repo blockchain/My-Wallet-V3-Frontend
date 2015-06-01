@@ -40,6 +40,6 @@ describe "Transaction Status Directive", ->
   it "should say 'Complete' if there are >= 3 confirmations", ->
     isoScope.transaction.confirmations = 3
     isoScope.$digest()
-    expect(element.html()).toContain "translate=\"COMPLETE"   
+    expect(element.html()).toContain "translate=\"TRANSACTION_COMPLETE"   
     expect(element.html()).not.toContain "TRANSACTION_WILL_COMPLETE_IN"      
        

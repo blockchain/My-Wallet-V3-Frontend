@@ -9,8 +9,6 @@ module.exports = (grunt) ->
       dist: {
         src: ["dist/**/*"]
       }
-      shrinkwrap: 
-        src: ["npm-shrinkwrap.json"]
     }
     uglify:
       options:
@@ -45,11 +43,11 @@ module.exports = (grunt) ->
         expand: true
         src: ['build/admin.html', 'build/index-beta.html']
         dest: ''
-        
+
     concat:
       options:
         separator: ";"
-        
+
       application_dependencies:
         src: [
           'build/js/wrappers/*.js' # Wrappers around MyWallet, MyWalletStore, etc
@@ -67,7 +65,6 @@ module.exports = (grunt) ->
           'build/bower_components/webcam-directive/app/scripts/webcam.js'
           'build/bower_components/bc-qr-reader/dist/bc-qr-reader.js'
           'build/bower_components/angular-password-entropy/password-entropy.js'
-          'build/bower_components/intl-tel-input/lib/libphonenumber/build/utils.js'
           'build/bower_components/qrcode/lib/qrcode.js'
           'build/bower_components/angular-qr/src/angular-qr.js'
           'build/bower_components/angular-ui-select/dist/select.js'
@@ -76,6 +73,7 @@ module.exports = (grunt) ->
           'build/bower_components/angular-translate/angular-translate.js'
           'build/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js'
           'build/bower_components/intl-tel-input/build/js/intlTelInput.js'
+          'build/bower_components/intl-tel-input/lib/libphonenumber/build/utils.js'
           'build/bower_components/international-phone-number/releases/international-phone-number.js'
           'build/bower_components/browserdetection/src/browser-detection.js'
         ]
@@ -85,6 +83,7 @@ module.exports = (grunt) ->
       application: # All components should first be minimized. Only trusted sources should be imported as minified..
         src: [
           'assets/js/my-wallet/dist/my-wallet.min.js'
+          "build/bower_components/jquery/dist/jquery.js" # Duplicate; also included in my-wallet a.t.m. Minified version causes problems.
           'build/bower_components/angular/angular.min.js'
           'build/bower_components/angular-sanitize/angular-sanitize.min.js'
           'build/bower_components/angular-cookies/angular-cookies.min.js'
@@ -99,6 +98,7 @@ module.exports = (grunt) ->
       beta:
         src: [
           "build/bower_components/jquery/dist/jquery.js"
+          "build/bower_components/bootstrap/dist/js/bootstrap.min.js"
           "app/betaAdminClient.js"
         ]
         dest: "dist/beta-admin.js"
@@ -120,6 +120,7 @@ module.exports = (grunt) ->
           'bower_components/angular-translate/angular-translate.min.js'
           'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js'
           # 'bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js'
+          "bower_components/jquery/dist/jquery.js"
           'bower_components/intl-tel-input/build/js/intlTelInput.min.js'
           'bower_components/international-phone-number/releases/international-phone-number.min.js'
           'build/application-dependencies.min.js'
@@ -138,9 +139,9 @@ module.exports = (grunt) ->
         src: ["*.js.coffee", "wrappers/**/*.js.coffee", "controllers/**/*.js.coffee", "directives/**/*.js.coffee", "services/**/*.js.coffee"]
         dest: 'build/js'
         ext: ".js"
-        
-    sass: 
-      build: 
+
+    sass:
+      build:
         files: [{
           expand: true,
           cwd: 'assets/css',
@@ -170,14 +171,23 @@ module.exports = (grunt) ->
         dest: "dist/beta-admin.css"
       },
     },
-    
+
+    autoprefixer: {
+      options: {
+        browsers: ['last 2 versions']
+      }
+      no_dest: {
+        src: 'build/css/*.css'
+      }
+    },
+
     html2js: {
       options: 
         jade: 
           doctype: "html"
         base: "app"
       main: {
-        src: ["app/partials/settings/*.jade", "app/partials/*.jade", "app/templates/*.jade"],
+        src: ["app/partials/notifications/*.jade", "app/partials/settings/*.jade", "app/partials/*.jade", "app/templates/*.jade"],
         dest: 'build/js/templates.js'
       }
     },
@@ -190,17 +200,24 @@ module.exports = (grunt) ->
           {src: ["admin.html"], dest: "dist/", cwd: "build", expand: true}
           {src: ["img/*"], dest: "dist/", expand: true}
           {src: ["locales/*"], dest: "dist/", expand: true}
-          {src: ["bootstrap/*"], dest: "dist/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
+          {src: ["**/*"], dest: "dist/fonts", cwd: "build/fonts", expand: true}
         ]
-        
+
       css:
         files: [
           {src: ["angular-csp.css"], dest: "build/css", cwd: "bower_components/angular", expand: true }
           {src: ["intlTelInput.css"], dest: "build/css", cwd: "bower_components/intl-tel-input/build/css", expand: true }
+          {src: ["font-awesome.min.css"], dest: "build/css", cwd: "bower_components/fontawesome/css", expand: true }
           {src: ["*.css"], dest: "build/css", cwd: "assets/css", expand: true }
-          {src: ["bootstrap/*"], dest: "build/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
         ]
-        
+      fonts:
+        files: [
+          {src: ["bootstrap/*"], dest: "build/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
+          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/bc-icons", expand: true}
+          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/roboto", expand: true}
+          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/themify", expand: true}
+          
+        ]
       beta:
         files: [
           {src: ["beta/betaAdminServer.js"], dest: "dist/", cwd: "app", expand: true}
@@ -224,8 +241,8 @@ module.exports = (grunt) ->
           spawn: false
 
       css: 
-        files: ['assets/css/*.scss']
-        tasks: ['sass', 'copy:css']
+        files: ['assets/css/**/*.scss']
+        tasks: ['sass', 'copy:css', 'copy:fonts']
         options: 
           spawn: false
 
@@ -273,6 +290,7 @@ module.exports = (grunt) ->
         files: 
           src: [
             'dist/img/*'
+            'dist/fonts/*.*'            
             'dist/fonts/bootstrap/*'
             'dist/locales/*'
             'dist/beep.wav'
@@ -312,34 +330,71 @@ module.exports = (grunt) ->
             'dist/beta-admin.css'
           ]
         
-    shell: 
-      staging: 
+    shell:
+      deploy_static_to_dev:
         command: () -> 
-           'rsync -r dist/ server12:dist'
-           
-      staging_experimental:
+          'rsync -rz --delete dist hd-dev@server12:'
+
+      deploy_server_to_dev:
+        command: () -> 
+          'rsync -rz --delete server.coffee hd-dev@server12:'
+
+      deploy_beta_to_dev:
+        command: () -> 
+          'rsync -rz --delete node_modules/hd-beta hd-dev@server12:node_modules/'
+
+      deploy_static_to_staging:
+        command: () -> 
+          'rsync -rz --delete dist hd-staging@server12:'
+
+      deploy_server_to_staging:
+        command: () -> 
+          'rsync -rz --delete server.coffee hd-staging@server12:'
+
+      deploy_beta_to_staging:
+        command: () -> 
+          'rsync -rz --delete node_modules/hd-beta hd-staging@server12:node_modules/'
+
+      deploy_static_to_alpha:
+        command: () -> 
+          'rsync -rz --delete dist hd-alpha@server12:'
+
+      deploy_server_to_alpha:
+        command: () -> 
+          'rsync -rz --delete server.coffee hd-alpha@server12:'
+
+      deploy_beta_to_alpha:
         command: () ->
-           'scp -Cr dist/* server12:dist-experimental'
-           
+          'rsync -rz --delete node_modules/hd-beta hd-alpha@server12:node_modules/'
+
+      deploy_start_dev:
+        command: () ->
+          'ssh hd-dev@server12 "./start.sh"'
+
+      deploy_start_staging:
+        command: () ->
+          'ssh hd-staging@server12 "./start.sh"'
+
+      deploy_start_alpha:
+        command: () ->
+          'ssh hd-alpha@server12 "./start.sh"'
+
       check_dependencies: 
         command: () -> 
-           'mkdir -p build && ruby assets/js/my-wallet/check-dependencies.rb'
-           
+          'mkdir -p build && ruby assets/js/my-wallet/check-dependencies.rb'
+
       skip_check_dependencies:
         command: () ->
           'cp -r node_modules build && cp -r bower_components build'
-        
+
       npm_install_dependencies:
         command: () ->
            'cd build && npm install'
-           
+
       bower_install_dependencies:
         command: () ->
            'cd build && touch .bowerrc && bower install'
 
-      
-    shrinkwrap: {}
-  
   # Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks "grunt-contrib-uglify"
   grunt.loadNpmTasks('grunt-contrib-concat')
@@ -353,8 +408,8 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-rename-assets')
   grunt.loadNpmTasks('grunt-shell')
-  grunt.loadNpmTasks('grunt-shrinkwrap')
   grunt.loadNpmTasks('grunt-preprocess')
+  grunt.loadNpmTasks('grunt-autoprefixer')
   
     
   grunt.registerTask "compile", ["coffee"]  
@@ -364,6 +419,8 @@ module.exports = (grunt) ->
     "compile"
     "sass"
     "copy:css"
+    "copy:fonts"
+    "autoprefixer"
     "copy:images"
     "watch"
   ]
@@ -378,9 +435,7 @@ module.exports = (grunt) ->
     "clean"
     "compile"
     "html2js"
-    "shrinkwrap"
     "shell:check_dependencies"
-    "clean:shrinkwrap"
     "shell:npm_install_dependencies"
     "shell:bower_install_dependencies"
     "concat:application_dependencies"
@@ -388,6 +443,8 @@ module.exports = (grunt) ->
     "concat:application"
     "sass"
     "copy:css" # CSS files not processed with sass
+    "copy:fonts"
+    "autoprefixer"
     "concat_css:app"
     "jade"
     "copy:beta_index"
@@ -409,7 +466,9 @@ module.exports = (grunt) ->
     "concat:application"
     "sass"
     "copy:css" # CSS files not processed with sass
+    "copy:fonts"
     "concat_css:app"
+    # "autoprefixer"
     "jade"
     "copy:beta_index"
     "preprocess"
@@ -430,7 +489,9 @@ module.exports = (grunt) ->
     "concat:application_debug"
     "sass"
     "copy:css" # CSS files not processed with sass
+    "copy:fonts"
     "concat_css:app"
+    "autoprefixer"
     "jade"
     "copy:beta_index"
     "preprocess"
@@ -441,14 +502,76 @@ module.exports = (grunt) ->
     "rename:html"
   ]
   
-  grunt.registerTask "staging", [
-    "dist"
-    "shell:staging"
-  ]
-  
-  grunt.registerTask "staging_experimental", [
+  grunt.registerTask "deploy_static_to_dev", [
     "dist_unsafe"
-    "shell:staging_experimental"
+    "shell:deploy_static_to_dev"
+    "shell:deploy_start_dev"
   ]
-  
+
+  grunt.registerTask "deploy_server_to_dev", [
+    "shell:deploy_server_to_dev"
+    "shell:deploy_start_dev"
+  ]
+
+  grunt.registerTask "deploy_beta_to_dev", [
+    "shell:deploy_beta_to_dev"
+    "shell:deploy_start_dev"
+  ]
+
+  grunt.registerTask "deploy_to_dev", [
+    "dist_unsafe"
+    "shell:deploy_static_to_dev"
+    "shell:deploy_beta_to_dev"
+    "shell:deploy_server_to_dev"
+    "shell:deploy_start_dev"
+  ]
+
+  grunt.registerTask "deploy_static_to_staging", [
+    "dist_unsafe"
+    "shell:deploy_static_to_staging"
+    "shell:deploy_start_staging"
+  ]
+
+  grunt.registerTask "deploy_server_to_staging", [
+    "shell:deploy_server_to_staging"
+    "shell:deploy_start_staging"
+  ]
+
+  grunt.registerTask "deploy_beta_to_staging", [
+    "shell:deploy_beta_to_staging"
+    "shell:deploy_start_staging"
+  ]
+
+  grunt.registerTask "deploy_to_staging", [
+    "dist_unsafe"
+    "shell:deploy_static_to_staging"
+    "shell:deploy_beta_to_staging"
+    "shell:deploy_server_to_staging"
+    "shell:deploy_start_staging"
+  ]
+
+  grunt.registerTask "deploy_static_to_alpha", [
+    "dist_unsafe"
+    "shell:deploy_static_to_alpha"
+    "shell:deploy_start_alpha"
+  ]
+
+  grunt.registerTask "deploy_server_to_alpha", [
+    "shell:deploy_server_to_alpha"
+    "shell:deploy_start_alpha"
+  ]
+
+  grunt.registerTask "deploy_beta_to_alpha", [
+    "shell:deploy_beta_to_alpha"
+    "shell:deploy_start_alpha"
+  ]
+
+  grunt.registerTask "deploy_to_alpha", [
+    "dist_unsafe"
+    "shell:deploy_static_to_alpha"
+    "shell:deploy_beta_to_alpha"
+    "shell:deploy_server_to_alpha"
+    "shell:deploy_start_alpha"
+  ]
+
   return

@@ -1,0 +1,132 @@
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+  background: $blue;
+}
+
+.btn-info {
+  background: $mid-grey;
+  border-color: $mid-grey;
+  font-size: 100%;
+  font-weight: normal;
+}
+
+.btn-info:hover, .btn-info:focus, .btn-info.focus, .btn-info:active, .btn-info.active, .open > .btn-info.dropdown-toggle {
+  background: darken($mid-grey, 5%);
+  border-color: darken($mid-grey, 5%);
+}
+
+.btn .caret {
+  margin-left: 5px;
+}
+
+/////////////////////////////////////
+//*** Angular UI Select Madness!***//
+////////////////////////////////////
+
+$select-bg: #fff;
+$select-fg: #686868;
+
+.ui-select-container {
+  .ui-select-match {
+    &:focus {
+      outline: none;
+    }
+    > span {
+      border: 1px solid $eee !important;
+      color: $black !important;
+      border-radius: 5px !important;
+      box-shadow: none;
+      padding-bottom: 0;
+    }
+    .ui-select-container .ui-select-toggle {
+    height: 30px;
+    }
+  }
+
+  .btn-default:hover, .btn-default:focus, .btn-default.focus, .btn-default:active, .btn-default.active, .open > .btn-default.dropdown-toggle {
+    color: darken($black, 5%);
+    background-color: transparent;
+    border-color: none;
+  }
+  &.ui-select-bootstrap.dropdown.open {
+    input {
+      border-radius: 0;
+      background: $select-bg;
+      color: $select-fg;
+      border: 1px solid $eee;
+      box-shadow: none;
+    }
+    .caret {
+      color: $select-fg;
+    }
+  }
+  .ui-select-choices-group-label.dropdown-header { //idk what you want to call these colors.
+    color: $select-fg;
+    padding: .4em 1.25em;
+    background: #F4F4F4;
+    text-shadow: 0px 1px 0px #FFFFFF;
+    font-weight: 500;
+    font-size: 1em;
+    border-bottom: 1px solid #E4E4E4;
+    border-top: 1px solid #FFFFFF;
+  }
+  .form-control:focus {
+    border-color: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+}
+.input-group-btn {
+  #qr {
+    border: none;
+    outline: none;
+  }
+}
+
+.ui-select-bootstrap > .ui-select-choices {
+  border-radius: 0;
+  background: $select-bg;
+  border: 1px solid #E9E9E9; //you'll want to add this color in your sassy way
+  -webkit-box-shadow: 0px 5px 10px -6px black;
+  box-shadow: 0px 5px 10px -6px black;
+}
+
+.ui-select-bootstrap .ui-select-choices-row>a {
+  color: $select-fg;
+  font-weight: 300;
+}
+
+.ui-select-bootstrap .ui-select-choices-row.active>a {
+  background-color: $select-bg;
+  color: $select-fg;
+}
+
+.ui-select-bootstrap .ui-select-choices-row>a:hover, .ui-select-bootstrap .ui-select-choices-row>a:focus {
+  text-decoration: none;
+  color: darken($select-fg, 3%);
+  background-color: #EEF4FA; // you'll want to add this color in your sassy way
+}
+
+//Kill the divider for dropdowns. It's awful
+.dropdown-menu .divider {
+  height: 0;
+  margin: 0;
+}
+
+//Too many effing hover states.
+.ui-select-container .btn-default:hover, .ui-select-container .btn-default:focus, .ui-select-container .btn-default.focus, .ui-select-container .btn-default:active, .ui-select-container .btn-default.active, .ui-select-container .open > .btn-default.dropdown-toggle {
+  background-color: white;
+}
+
+//Get rid out outlines
+.dropdown {
+  outline: none;
+  &:focus {
+    outline: none;
+  }
+}
+
+//Give toggle min height
+.ui-select-container{
+.ui-select-toggle{height: 34px;}
+}
+

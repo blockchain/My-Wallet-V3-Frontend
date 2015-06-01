@@ -24,3 +24,73 @@ div.login-form{
       font-size: 11pt;
     }
 }
+
+.login-pg{
+background-color: #049BD4;
+height: calc(100%);
+}
+
+.login{
+
+  .login-box{
+      background-color: white;
+      padding: 10px 50px 50px;
+      margin-bottom: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+      BORDER-RADIUS: 10px;
+      border: 1px solid white;
+      box-shadow: 0px 0px 20px -8px black;
+    
+    header{
+      padding: 15px 0 10px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid rgb(240, 236, 236);
+      
+      h1{
+        font-size: 3em;
+        color: rgb(133, 133, 133);
+        font-weight: 400;      
+      }
+      
+      p{
+        font-weight: 300;
+        font-size: 1.25em;
+        color: rgb(4, 155, 212);      
+      }
+      
+    }
+    .form-horizontal .form-group {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .help-block .info {
+      color: #C9C9C9;
+      
+      &:hover{
+      color: #A3A0A0;
+      }
+      
+    }
+    
+    .bttn{
+      margin-top: 20px;
+      
+      .bttn-container{
+        float: right;
+      }
+      
+      span.register{
+        float: left;
+        padding: 10px 10px 10px 0px;
+      }
+      
+    }
+    
+
+    
+  }
+  
+  
+}

@@ -21,6 +21,7 @@
     $scope.$watchCollection "transactions", (newVal) -> 
       transaction = $filter("getByProperty")("hash", $stateParams.hash, newVal)
       $scope.transaction = transaction
+      return
       
     $scope.$watch "transaction.hash + accounts", () ->
       tx = $scope.transaction

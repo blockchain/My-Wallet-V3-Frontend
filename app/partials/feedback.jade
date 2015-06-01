@@ -1,0 +1,44 @@
+.flex.flex-justify.dashboard
+  div(ng-show="formStage == 2")
+    h1 Thank you for your feedback!
+  div(ng-hide="formStage >= 2")
+    form.bc-form.pal(ng-submit="setFormSubmitted()")
+      .bc-form-header
+        h1 Tell us what you think!
+      label.mbl What's your overall impression of the wallet?
+      .flex.flex-between.bc-radio-group
+        .flex-column.flex-center
+          label.mbs(for="rating-awesome")
+            span Awesome!
+          input(ng-model="rating" type="radio" name="rating" id="rating-awesome" value="AWESOME")
+        .flex-column.flex-center
+          label.mbs(for="rating-good")
+            span Good
+          input(ng-model="rating" type="radio" name="rating" id="rating-good" value="GOOD")
+        .flex-column.flex-center
+          label.mbs(for="rating-meh")
+            span Meh, it's ok
+          input(ng-model="rating" type="radio" name="rating" id="rating-meh" value="MEH")
+        .flex-column.flex-center
+          label.mbs(for="rating-bad")
+            span Bad
+          input(ng-model="rating" type="radio" name="rating" id="rating-bad" value="BAD")
+        .flex-column.flex-center
+          label.mbs(for="rating-horrible")
+            span Horrible
+          input(ng-model="rating" type="radio" name="rating" id="rating-horrible" value="HORRIBLE")
+      .flex-column.mtl
+        label(for="description-good") What did you like?
+        textarea.plm(ng-model="descriptionGood" rows="3" id="description-good" name="description-good")
+      .flex-column.mtl
+        label(for="description-bad") What can we improve on?
+        textarea.plm(ng-model="descriptionBad" rows="3" id="description-bad" name="description-bad")
+      .flex.flex-between.mvl
+        .flex-column.flex-1.prl
+          label(for="fullname") Name
+          input.plm(ng-model="fullname" type="text" name="fullname" id="fullname")
+        .flex-column.flex-1.mll
+          label(for="email") Email
+          input.plm(ng-model="email" type="text" name="email" id="email")
+      .flex-center.flex-justify.ptl
+        input.button-success(ng-class="{disabled: formStage == 1}" type="submit" value="Submit")

@@ -1,4 +1,4 @@
-p.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
+h5.well.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
   
 .row.form-ctrl
   .col-xs-12.col-lg-6
@@ -29,9 +29,9 @@ p.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
           li
             a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="account.isDefault")
 
-h2.clickable(translate="ARCHIVED_ACCOUNTS", ng-click="display.archived = !display.archived")
-
-p.hidden-xs(translate="ARCHIVED_ACCOUNTS_EXPLAIN", ng-show="display.archived")
+.flex-column.mtl
+  button.button-primary(translate="ARCHIVED_ACCOUNTS", ng-click="display.archived = !display.archived")
+  p.mtm.hidden-xs(translate="ARCHIVED_ACCOUNTS_EXPLAIN", ng-show="display.archived")
 
 .row(ng-show="display.archived")
   .col-xs-12.table-container

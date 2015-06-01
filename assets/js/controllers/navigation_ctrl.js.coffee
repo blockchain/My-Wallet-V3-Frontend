@@ -1,17 +1,20 @@
-@NavigationCtrl = ($scope, Wallet, SecurityCenter, $translate, $cookieStore, $state) ->
+@NavigationCtrl = ($scope, Wallet, SecurityCenter, $translate, $cookieStore, $state, filterFilter) ->
   
   $scope.status = Wallet.status
   $scope.security = SecurityCenter.security
   $scope.settings = Wallet.settings
   
   $scope.visitTransactions = () ->
-    $state.go("wallet.common.transactions", {accountIndex:'accounts'})
+    if $scope.numberOfActiveAccounts() > 1
+      $state.go("wallet.common.transactions", {accountIndex:'accounts'})
+    else
+      $state.go("wallet.common.transactions", {accountIndex:Wallet.getDefaultAccountIndex()})
+
+  $scope.numberOfActiveAccounts = () -> 
+    return filterFilter(Wallet.accounts, {active: true}).length
   
   $scope.isTransactionState = () ->
     return $state.current.name == "wallet.common.transactions" || $state.current.name == "wallet.common.transaction"
-
-  $scope.isSettingsState = () ->
-    return $state.current.name.indexOf("wallet.common.settings") == 0 && $state.current.name != "wallet.common.settings.security-center"
 
   $scope.isSecurityState = () ->
     return $state.current.name == "wallet.common.settings.security-center" 
@@ -23,6 +26,14 @@
     else
       $scope.doLogout()
   
+  $scope.openZeroBlock = () ->
+    win = window.open('https://zeroblock.com', "_blank")
+    win.focus()
+
+  $scope.openBCmarkets = () ->
+    win = window.open('https://markets.blockchain.info/', "_blank")
+    win.focus()
+
   #################################
   #           Private             #
   #################################
@@ -34,7 +45,7 @@
         $scope.uid = null
         $scope.password = null
         $cookieStore.remove("password")
-        $cookieStore.remove("uid")
+        # $cookieStore.remove("uid") // Pending a "Forget Me feature"
         $state.go("wallet.common.transactions", {accountIndex: "accounts"})
         Wallet.logout() # Refreshes the browser, so won't return
         return

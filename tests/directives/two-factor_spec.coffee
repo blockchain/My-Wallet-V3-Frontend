@@ -103,7 +103,7 @@ describe "2FA Directive", ->
       isoScope.fields.authenticatorCode = "123456"
       spyOn(Wallet, "confirmTwoFactorGoogleAuthenticator").and.callThrough()
       isoScope.confirmTwoFactorGoogleAuthenticator()
-      expect(Wallet.confirmTwoFactorGoogleAuthenticator).toHaveBeenCalledWith("123456")
+      expect(Wallet.confirmTwoFactorGoogleAuthenticator).toHaveBeenCalled()
       expect(isoScope.settings.needs2FA).toBe(true)
     )
     

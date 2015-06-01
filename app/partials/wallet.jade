@@ -1,6 +1,3 @@
-.navbar.navbar-inverse(role="navigation", ui-view="navigation", watch-for-inactivity)
-.container-fluid
-  .row.spacing
-  .row
-    .col-xs-12(ui-view="alerts")
-  .row.tx-row(ui-view="common")
+.navbar.navbar-inverse(role="navigation", ui-view="navigation")
+.flex.flex-justify(ui-view="alerts")
+.wallet-container(ui-view="common")

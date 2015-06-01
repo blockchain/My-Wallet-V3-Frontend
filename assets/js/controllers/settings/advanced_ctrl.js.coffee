@@ -9,6 +9,11 @@
     n = parseInt(candidate)
     return false if isNaN(candidate) || candidate < 1
     return true
+
+  $scope.validateLogoutTime = (candidate) ->
+    n = parseInt(candidate)
+    return false if isNaN(candidate) || n < 1 || n > 1440
+    return true
     
   $scope.validateIpWhitelist = (candidates) ->
     $scope.errors.ipWhitelist = null
@@ -48,12 +53,12 @@
       
     Wallet.setPbkdf2Iterations(n, success, error)
     
-  $scope.changeLogoutTime = (s, success, errorCallback) ->
+  $scope.changeLogoutTime = (m, success, errorCallback) ->
     error = () ->
       Wallet.displayError("Failed to update auto logout time")
       errorCallback()
 
-    Wallet.setLogoutTime(s, success, error)
+    Wallet.setLogoutTime(m, success, error)
 
   $scope.changeIpWhitelist = (list, success, errorCallback) ->
     error = () ->

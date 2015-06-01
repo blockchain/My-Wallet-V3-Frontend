@@ -11,8 +11,11 @@
       controller: AccountFormCtrl
       resolve:
         account: -> undefined
-      windowClass: "blockchain-modal"
+      windowClass: "bc-modal"
     )
+    if modalInstance?
+      modalInstance.opened.then () ->
+        Wallet.store.resetLogoutTimeout()
     
   $scope.editAccount = (account) ->
     Wallet.clearAlerts()
@@ -21,8 +24,11 @@
       controller: AccountFormCtrl
       resolve:
         account: -> account
-      windowClass: "blockchain-modal"
+      windowClass: "bc-modal"
     )
+    if modalInstance?
+      modalInstance.opened.then () ->
+        Wallet.store.resetLogoutTimeout()
   
   $scope.showAddress = (account) ->
             
@@ -31,8 +37,11 @@
       controller: RequestCtrl
       resolve:
         destination: -> account
-      windowClass: "blockchain-modal"
+      windowClass: "bc-modal"
     )
+    if modalInstance?
+      modalInstance.opened.then () ->
+        Wallet.store.resetLogoutTimeout()
   
     
   $scope.makeDefault = (account) ->
@@ -40,13 +49,17 @@
     
 
   $scope.transfer = (address) ->
-    $modal.open(
+    modalInstance = $modal.open(
       templateUrl: "partials/send.jade"
       controller: SendCtrl
       resolve:
         paymentRequest: -> 
           {fromAddress: address, amount: 0, toAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()]}
+      windowClass: "bc-modal"
     )
+    if modalInstance?
+      modalInstance.opened.then () ->
+        Wallet.store.resetLogoutTimeout()
 
   $scope.archive = (account) ->
     Wallet.archive(account)

@@ -20,12 +20,18 @@ Include My-Wallet-HD (which is shared between the web and iOs app):
 ```sh
 cd assets/js
 git clone https://github.com/blockchain/My-Wallet-HD.git my-wallet
+cd my-wallet
 npm install
 grunt build
 ```
 
-Grunt compiles the view templates and CSS. Keep it running:
+cd back into the root of the directory
+```sh
+cd ~/path/to/My-Wall-HD-Frontend
+```
 
+Grunt compiles the view templates and CSS. Keep it running:
+    
     grunt
 
 Run the server:

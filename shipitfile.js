@@ -18,11 +18,17 @@ module.exports = function (shipit) {
       workspace: '/tmp/github-monitor',
       deployTo: '~/HD-Wallet',
       repositoryUrl: 'https://github.com/blockchain/My-Wallet-HD-Frontend.git',
-      ignores: ['.git', 'node_modules'],
+      ignores: ['.git',
+                'node_modules',
+                'bower_components',
+                'build',
+                'dist',
+                'hooks'
+                ],
       keepReleases: 3,
       shallowClone: true,
       branch: 'shipit-staging',
-      key: '~/.ssh/dev_rsa'
+      key: '~/.ssh/devnyc/justin_id_rsa'
     },
     staging: {
       servers: 'justin@10.0.0.2'

@@ -1,4 +1,4 @@
-@SignupCtrl = ($scope, $log, Wallet, $modalInstance, $translate, $cookieStore, $filter, $state) ->
+@SignupCtrl = ($scope, $rootScope, $log, Wallet, $modalInstance, $translate, $cookieStore, $filter, $state, $http) ->
   $scope.currentStep = 1
   $scope.working = false
   $scope.languages = Wallet.languages
@@ -48,13 +48,16 @@
     
     return
     
+  $scope.showAgreement = () ->
+    Wallet.status.shouldShowAgreement = true
+
   $scope.skipImport = () ->
     $scope.currentStep = 4
 
   $scope.close = () ->
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
-    $state.go("wallet.common.transactions", {accountIndex: "accounts"})
+    $state.go("wallet.common.dashboard")
     
   $scope.tryNextStep = () ->
     if $scope.isValid[0]
@@ -78,8 +81,6 @@
         if $scope.currentStep == 1
           $scope.currentStep++
         else if $scope.currentStep == 2
-          $scope.currentStep = 4 # Skip import step
-        else if $scope.currentStep == 4
           $scope.errors.emailVerificationCode = null
           
           success = () ->
@@ -98,6 +99,14 @@
       
   $scope.createWallet = (successCallback) ->
     Wallet.create($scope.fields.password, $scope.fields.email, $scope.fields.language, $scope.fields.currency, (uid)->
+      $cookieStore.put("uid", uid)
+      inviteKey = null
+      if $rootScope.beta? && $rootScope.beta.key?
+        inviteKey = $rootScope.beta.key
+      $http.post('verify_wallet_created', { key: inviteKey }).
+        success (data) ->
+          if data.error? && data.error.message?
+            console.warn 'There was an issue verifying wallet creation'
       successCallback()        
     )
     
@@ -159,7 +168,10 @@
         if visual
           $translate("NO_MATCH").then (translation) ->
             $scope.errors.confirmation = translation
-            
+
+    if !$scope.fields.acceptedAgreement
+      $scope.isValid[0] = false
+    
     if $scope.fields.emailVerificationCode == ""
       $scope.isValid[3] = false
                           

@@ -29,7 +29,8 @@
       resolve:
         paymentRequest: -> 
           {fromAddress: address, amount: 0, toAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()]}
-    )
+    ).opened.then () ->
+      Wallet.store.resetLogoutTimeout()
     
   $scope.toggle = (action) ->
     if $scope.display.action == action
@@ -44,7 +45,8 @@
     $scope.nextAction()
     
   $scope.$watchCollection "settings", (newValue, oldValue) ->
-    $scope.nextAction()
+    if $scope.settings.googleAuthenticatorSecret == null # Google 2FA requires two steps
+      $scope.nextAction()
     
   $scope.$watchCollection "status", (newValue, oldValue) ->
     $scope.nextAction()

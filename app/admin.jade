@@ -6,6 +6,7 @@ html(lang='en')
     
     <!-- @if !PRODUCTION -->
     script(src='../bower_components/jquery/dist/jquery.js')
+    script(src="../bower_components/bootstrap/dist/js/bootstrap.min.js")
 
     link(rel='stylesheet', href='../build/css/blockchain.css')
     link(rel='stylesheet', href='../build/css/navigation.css')
@@ -16,8 +17,6 @@ html(lang='en')
     script(src='../beta-admin.js')
     <!-- @endif -->
     
-    script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
-
   body
     .navbar.navbar-default.navbar-inverse.navbar-unauth(role='navigation')
       .container-fluid
@@ -44,6 +43,10 @@ html(lang='en')
       .form-group.col-xs-6
         form.form-inline
           button.btn.btn-default(type="button" data-toggle="modal" data-target="#key-modal") + New Key
+          button.btn.btn-default(type="button" data-toggle="modal" data-target="#capture-modal") Capture Page
+          button.btn.btn-default(type="button" data-toggle="modal" data-target="#activation-modal")
+            span.glyphicon.glyphicon-flash
+            span &nbsp;Activate Keys
       .form-group.col-xs-6
         form#search-form.form-inline.pull-right
           input#search-input.form-control(type="text" placeholder="Search")
@@ -54,6 +57,10 @@ html(lang='en')
             option guid
           button#search.btn.btn-default(type="submit")
             span(class="glyphicon glyphicon-arrow-right")
+      .form-group.col-xs-6
+        label
+          span#wallets-created
+          | &nbsp;Wallets Created
       .table-div
         table#key-table.table.table-hover.table-condensed
 
@@ -110,6 +117,113 @@ html(lang='en')
               .form-group
                 .col-xs-2.col-xs-offset-2
                   input#edit-button.btn.btn-default(type="submit" value="Update")
+
+    div#activate-modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="activateModal" aria-hidden="true")
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button.close(type="button" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") &times;
+            h3 Activate
+          div.modal-body
+            form#activate-form.form-horizontal
+              .form-group
+                label.col-xs-2.control-label Email
+                .col-xs-8
+                  input#activate-email-input.form-control(type="text" disabled)
+              .form-group
+                label.col-xs-2.control-label Name
+                .col-xs-8
+                  input#activate-name-input.form-control(type="text" placeholder="(optional)")
+              .form-group
+                .col-xs-2.col-xs-offset-2
+                  input#activate-button.btn.btn-default(type="submit" value="Activate")
+
+    div#capture-modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="captureModal" aria-hidden="true")
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button.close(type="button" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") &times;
+            h3 Capture Page Settings
+          div.modal-body
+            form#capture-form.form-horizontal
+              .form-group
+                label.col-xs-4.control-label Current
+                .col-xs-6
+                  .progress
+                    .progress-bar.progress-bar-striped.active(style="width: 0%") 0%
+              .form-group
+                label.col-xs-4.control-label Percent Requested
+                .col-xs-6
+                  input#capture-percent-input.form-control(type="text")
+              .form-group
+                .col-xs-3.col-xs-offset-4
+                  input#capture-button.btn.btn-default(type="submit" value="Set")
+
+    div#activation-modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="activationModal" aria-hidden="true")
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button.close(type="button" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") &times;
+            h3 Activate Multiple
+          div.modal-body(style="min-height:220px;")
+            .activation.activation-step-1
+              form#activation-form.form-horizontal
+                .form-group
+                  label.col-xs-3.control-label Min id
+                  .col-xs-6
+                    input#activation-min-input.form-control(type="text")
+                .form-group
+                  label.col-xs-3.control-label Max id
+                  .col-xs-6
+                    input#activation-max-input.form-control(type="text")
+                .form-group
+                  .col-xs-3.col-xs-offset-3
+                    input#activation-button.btn.btn-danger(type="submit" value="Activate")
+              span 
+                i Note: Min id and Max id will default to 0 and 100,000, respectively, if left blank. Leaving both blank results in every pending request being activated.
+            .activation.activation-step-2.hidden
+              p Please wait...
+              p This process may take several minutes to complete
+            .activation.activation-step-3.hidden
+              form.form-horizontal
+                label.col-xs-offset-3
+                  span#activation-count
+                  span &nbsp;keys have been activated
+                label.col-xs-offset-3
+                  span#activation-success
+                  span &nbsp;notification emails were sent
+                span#activation-errors.text-danger.hidden
+                .col-xs-3.col-xs-offset-4
+                  input#activation-button-close.btn.btn-default(type="button" value="Close")
+
+
+    //-div#capture-modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="captureModal" aria-hidden="true")
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button.close(type="button" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") &times;
+            h3 Assign New Cap
+          div.modal-body
+            form#capture-form.form-horizontal
+              .form-group
+                label.col-xs-2.control-label Name
+                .col-xs-8
+                  input#name-input.form-control(type="text")
+              .form-group
+                label.col-xs-2.control-label Email
+                .col-xs-8
+                  input#email-input.form-control(type="text")
+              .form-group
+                label.col-xs-2.control-label Existing Guid
+                .col-xs-8
+                  input#guid-input.form-control(type="text" placeholder="(optional)")
+              .form-group
+                .col-xs-2.col-xs-offset-2
+                  input#capture-button.btn.btn-default(type="submit" value="Assign")
     <!-- @if !PRODUCTION -->
     script(src='../app/betaAdminClient.js')
     <!-- @endif -->

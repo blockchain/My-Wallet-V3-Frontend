@@ -158,7 +158,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     MyWalletStore.sendEvent("did_multiaddr")
     MyWalletStore.sendEvent("hd_wallet_set")
       
-  myWallet.createNewWallet = (email, pwd, language, currency, success, fail) ->
+  myWallet.createNewWallet = (email, pwd, firstAccount, language, currency, success, fail) ->
     uid = String(Math.floor((Math.random() * 100000000) + 1))
     
     if mockRules.shouldFailToCreateWallet
@@ -172,7 +172,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
       wallets[uid] = {
         password: pwd
         accounts: [
-          {label: "Spending", archived: false, balance: 0, receive_addresses: []}
+          {label: firstAccount, archived: false, balance: 0, receive_addresses: []}
         ]
         transactions: []
         language: language
@@ -219,7 +219,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.setLabelForAccount = (idx, label) ->
     accounts[idx].label = label
     
-  myWallet.upgradeToHDWallet = (needsPassword, success, error) ->
+  myWallet.upgradeToHDWallet = (firstAccountName, needsPassword, success, error) ->
     success()
     
   myWallet.sweepLegacyAddressToAccount = (fromAddress, toAccountIndex, observer) ->

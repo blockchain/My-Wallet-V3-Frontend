@@ -2,46 +2,36 @@
   .row
     .col-xs-12
       a.back(ng-click="back()")
-        h2.back Transaction Details
-  .row
-    .col-xs-12.col-sm-7
-      p.date
-        | {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
-    .col-xs-12.col-sm-4
-      transaction-status(transaction="transaction")
-  .row
-    .col-xs-12
-      .to-from-amount-box 
-        .row
-          .col-xs-12.col-md-7
-            .from
-              strong
-                span(translate="FROM")
-                span.result {{ from }}
-                
-            .to
-              strong
-                span(translate="TO")
-                span.result {{ to }}                
-                
-          .col-xs-12.col-md-5
-            amount(transaction="transaction" btc)
-  .row
-    .col-xs-12.col-sm-6.notes-tags
-      h3 Notes
-      transaction-note(transaction="transaction")
-      //- h3 Tags
-      //- | ... +
-    .col-xs-12.col-sm-6
-      span(ng-show="settings.currency.code == 'USD'")
-        h4(translate="VALUE_AT_TX_TIME")
-        span.value-at-tx
+        h2.back Back to feed
+  .transaction-card.clearfix
+    .tx-date
+      strong Transaction Details 
+      | {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
+    .tx-details
+      .gutter
+        .tx-sender
+          p(translate="FROM")
+          strong {{ from }}
+        .tx-receiver
+          p(translate="TO")
+          strong {{ to }}
+        .tx-notes
+          p Notes
+          transaction-note(transaction="transaction")
+    .tx-sidebar 
+      .gutter
+        .tx-amount
+          amount(transaction="transaction" btc)
+        .tx-status
+          transaction-status(transaction="transaction")  
+        .tx-value-then.tx-value
+          p Value at Send
           fiat(btc="transaction.result" abs date="transaction.txTime")
-      h4 Value now
-      span.value-now 
-        fiat(btc="transaction.result" abs)
-    
-  .row
-    .col-xs-12         
-      .blockchain
-        a.btn(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank") Verify On Blockchain.info
+        .tx-value-now.tx-value
+          p Value now
+          fiat(btc="transaction.result" abs)
+        .tx-bci-link
+          a.button-default.button-sm(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank") Verify On Blockchain.info
+  .transaction-card.clearfix(ng-if="transaction.publicNote")
+    strong Public Note:
+    p.mtl {{ transaction.publicNote }}

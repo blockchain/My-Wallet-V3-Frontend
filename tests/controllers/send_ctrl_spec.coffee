@@ -284,11 +284,11 @@ describe "SendCtrl", ->
       )
   
       it "should beep when sending process succeeds",  inject(() ->
-        spyOn(ngAudio, "load").and.callThrough()
+        spyOn(Wallet, "beep")
     
         scope.send()
     
-        expect(ngAudio.load).toHaveBeenCalled()
+        expect(Wallet.beep).toHaveBeenCalled()
     
       )
   
@@ -308,30 +308,19 @@ describe "SendCtrl", ->
       expect(scope.transaction.amount).toBe("0.001")
       expect(scope.transaction.destination.address).toBe("abcdefgh") 
     )
-    
-    it "should switch selected currency if currency is changed", ->
-      scope.transaction.currency = "EUR"
-      scope.$digest()
-      expect(scope.transaction.currencySelected.code).toBe("EUR")
-      
-      scope.transaction.currency = "USD"
-      scope.$digest()
-      expect(scope.transaction.currencySelected.code).toBe("USD")
-    
+        
     it "should switch to BTC if amount is specified", ->
       scope.transaction.currency = "EUR"
       scope.$digest()
       scope.processURLfromQR("bitcoin://abcdefgh?amount=0.001")
       scope.$digest()
       expect(scope.transaction.currency).toBe("BTC")
-      expect(scope.transaction.currencySelected.code).toBe("BTC")
       
     it "should not switch to BTC if amount is specified", ->
       scope.transaction.currency = "EUR"
       scope.$digest()
       scope.processURLfromQR("bitcoin://abcdefgh")
       expect(scope.transaction.currency).toBe("EUR")
-      expect(scope.transaction.currencySelected.code).toBe("EUR")
   
     it "should warn user if QR code is not recognized", inject((Wallet) ->
       expect(scope.alerts.length).toBe(0)

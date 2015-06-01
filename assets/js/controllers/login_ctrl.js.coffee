@@ -1,8 +1,15 @@
-@LoginCtrl = ($scope, $rootScope, $log, $http, Wallet, $cookieStore, $modal, $state, $timeout, $translate) ->
+@LoginCtrl = ($scope, $rootScope, $log, $http, Wallet, $cookieStore, $modal, $state, $timeout, $translate, filterFilter) ->
   $scope.status = Wallet.status    
   $scope.settings = Wallet.settings
   
   $scope.disableLogin = null
+
+  $scope.status.enterkey = false
+  $scope.key = $cookieStore.get("key")
+  
+  $scope.errors = {uid: null, password: null, twoFactor: null}
+  
+
   
   # Browser compatibility warnings:
   # * Secure random number generator: https://developer.mozilla.org/en-US/docs/Web/API/RandomSource/getRandomValues
@@ -40,13 +47,32 @@
     # Warn against unknown browser. Tell user to pay attention to random number generator and CORS protection.
     $translate("UNKNOWN_BROWSER").then (translation) ->
       Wallet.displayWarning(translation, true)
-    
   
   if Wallet.guid?
     $scope.uid = Wallet.guid
   else
     $scope.uid = $cookieStore.get("uid")
   
+  if $scope.key?
+    $scope.status.enterkey = true
+
+  if $cookieStore.get('email-verified')
+    $cookieStore.remove 'email-verified'
+    $translate("SUCCESS").then (titleTranslation) ->
+      $translate("EMAIL_VERIFIED_SUCCESS").then (messageTranslation) ->
+        modalInstance = $modal.open(
+          templateUrl: "partials/modal-notification.jade"
+          controller: ModalNotificationCtrl
+          windowClass: "notification-modal"
+          resolve:
+            notification: ->
+              {
+                type: 'verified-email'
+                icon: 'ti-email'
+                heading: titleTranslation
+                msg: messageTranslation
+              }
+          )
   
   $scope.twoFactorCode = ""
   $scope.busy = false  
@@ -55,25 +81,37 @@
   if !!$cookieStore.get("password")      
     $scope.password = $cookieStore.get("password")
   
+  $scope.whereToFocus = () ->
+    return 2 if $cookieStore.get('uid')?
+    return 0 if $cookieStore.get('password')?
+    return 1
+
   $scope.login = () ->
     return if $scope.busy
     
     $scope.busy = true
     Wallet.clearAlerts()
     
-    error = () ->
+    error = (field, message) ->
       $scope.busy = false
+      if field == "uid"
+        $scope.errors.uid = message
+      else if field == "password"
+        $scope.errors.password = message
+      else if field == "twoFactor"
+        $scope.errors.twoFactor = message
     
     needs2FA = () ->
       $scope.busy = false
-      
+      $scope.didAsk2FA = true
+
     success = () ->
       $scope.busy = false
-            
-    if !$scope.settings.needs2FA
+
+    if $scope.settings.needs2FA
+      Wallet.login($scope.uid, $scope.password, $scope.twoFactorCode, (() ->), success, error)
+    else
       Wallet.login($scope.uid, $scope.password, null, needs2FA, success, error)
-    else if $scope.twoFactorCode != ""
-      Wallet.login($scope.uid, $scope.password, $scope.twoFactorCode, needs2FA, success, error)
       
     if $scope.uid? && $scope.uid != ""
       $cookieStore.put("uid", $scope.uid)
@@ -93,7 +131,19 @@
       
       Wallet.resendTwoFactorSms($scope.uid,success, error)
       
+  $scope.prepareRegister = () ->
+    if $rootScope.beta
+      $scope.status.enterkey = !$scope.status.enterkey    
+    else
+      $scope.register()
+      
   $scope.register = () ->
+    betaCheckFinished = (key, email) ->
+      $rootScope.beta = {key: $scope.key, email: email}
+
+      $state.go("register")
+    
+    $cookieStore.remove 'key'
     # If BETA=1 is set in .env then in index.html/jade $rootScope.beta is set.
     # The following checks are not ideal as they can be bypassed with some creative Javascript commands.
     if $rootScope.beta
@@ -109,27 +159,30 @@
         Wallet.displayError("Unable to verify your invite code.")
         
     else
-      betaCheckFinished()
-      
-    betaCheckFinished = (key, email) ->
-      $rootScope.beta = {key: $scope.key, email: email}
+      $state.go("register")      
 
-      $state.go("register")
+  $scope.numberOfActiveAccounts = () -> 
+    return filterFilter(Wallet.accounts, {active: true}).length
 
   $scope.$watch "status.isLoggedIn", (newValue) ->
     if newValue
       $scope.busy = false
+      $state.go("wallet.common.dashboard")
+
+  $scope.$watch "uid + password + twoFactor", () ->
+    $scope.errors.uid = null
+    $scope.errors.password = null
+    $scope.errors.twoFactor = null
       
-      # $state.go("wallet.common.dashboard")
-      $state.go("wallet.common.transactions", {accountIndex: "accounts"})
-      
-  $scope.$watch "uid + password", () ->
     isValid = null
     
     if !$scope.uid? || $scope.uid == ""
       isValid = false
       
     if !$scope.password? || $scope.password == ""
+      isValid = false
+      
+    if $scope.settings.needs2FA && $scope.twoFactorCode == ""
       isValid = false
 
     if !isValid?

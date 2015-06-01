@@ -1,0 +1,38 @@
+.button-group {
+  i {
+    transition: all .2s ease-in-out;
+    margin-right: .25em;
+  }
+  button, a {
+    padding: .25em .8em;
+    background: #FEFEFE;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    font-weight: 300;
+    font-size: 1.4em;
+    min-width: 115px;
+    transition: all .2s ease-in-out;
+    color: $text;
+    &:hover {
+      background: darken(#FEFEFE, 5%);
+      color: $text;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .button-group {
+    button, a {
+      min-width: 50px;
+    }
+    button span, a span {
+      display: none;
+    }
+    i {
+      margin-right: 0px;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-.navbar.navbar-default.navbar-fixed-top.navbar-inverse(role='navigation')
+.navbar.navbar-default.navbar-fixed-top.navbar-inverse.bc-header(role='navigation')
   .container-fluid
     .navbar-header
       button.navbar-toggle(type="button", ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
@@ -9,23 +9,37 @@
       a.navbar-brand(ng-click="visitTransactions()") 
         img#logo(src="img/logo-updated.png",alt="Blockchain")
     .navbar-collapse.collapse(ng-class="{'in' : !navCollapsed}", ng-click="navCollapsed=true")
-      ul.nav.navbar-nav(ng-show="status.isLoggedIn")
-        li.item(ng-class="{ active: isTransactionState() }")
-          a.transactions(ng-click="visitTransactions()", translate="TRANSACTIONS")
       ul.nav.navbar-nav.navbar-right(ng-show="status.isLoggedIn")
-        li.item(ng-class="{ active: isSecurityState() }")
-          a(ui-sref="wallet.common.settings.security-center", ng-class="{'security-level-0': security.level == 0, 'security-level-1': security.level == 1, 'security-level-2': security.level == 2, 'security-level-3': security.level == 3}", translate="SECURITY")
-        li.dropdown.item.hidden-xs(dropdown, ng-class="{ active: isSettingsState() }")
-          a.dropdown-toggle.profile(href dropdown-toggle, translate="PROFILE")
-          ul.dropdown-menu.sub-dropdown(role='menu')
+        li.item.mrl
+          a.flex-important.flex-column(ng-click="openBCmarkets()")
+            span.type-sm
+              | 1 Bitcoin =&nbsp;
+              fiat(btc="100000000.0")
+        li.dropdown.item.hidden-xs(dropdown)
+          a.dropdown-toggle(href="#" data-toggle="dropdown" role="button" aria-expanded="false" dropdown-toggle)
+            span(translate="EXPLORE")
+            i.ti-angle-down.mlm
+          ul.dropdown-menu(role='menu')
             li
-              a(ui-sref="wallet.common.settings.my-details", translate="SETTINGS")
+              a(href="https://www.blockchain.info/wallet/bitcoin-faq", target="_blank", translate="WHATS_BITCOIN")
             li
-              a(ui-sref="wallet.common.settings.mobile", translate="MOBILE")
+              a(href="https://www.blockchain.info/", target="_blank", translate="BLOCKCHAIN_INFO")
             li
-              a(ng-click="logout()", translate="LOGOUT")
+              a(href="https://www.blockchain.info/api", target="_blank", translate="API")
+            li
+              a(href="https://www.blockchain.info/charts", target="_blank",translate="CHARTS")
+            li
+              a(href="https://markets.blockchain.info/", target="_blank", translate="MARKETS")
         li.item.visible-xs
-          a(ui-sref="wallet.common.settings.my-details", translate="SETTINGS")
+          a(href="https://www.blockchain.info/wallet/bitcoin-faq", target="_blank",translate="WHATS_BITCOIN")
         li.item.visible-xs
+          a(href="https://www.blockchain.info/", target="_blank",translate="BLOCKCHAIN_INFO")
+        li.item.visible-xs
+          a(href="https://www.blockchain.info/api",target="_blank", translate="API")
+        li.item.visible-xs
+          a(href="https://www.blockchain.info/charts", target="_blank",translate="CHARTS")
+        li.item.visible-xs
+          a(href="https://markets.blockchain.info/", target="_blank",translate="MARKETS")
+        li.item
           a(ng-click="logout()", translate="LOGOUT")
     // /.nav-collapse

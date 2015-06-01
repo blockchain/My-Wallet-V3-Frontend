@@ -192,7 +192,7 @@ describe "walletServices", () ->
         
       spyOn(callbacks, "success")
       
-      Wallet.create("1234567890", "a@b.com", "EUR", "EN", callbacks.success) 
+      Wallet.create("1234567890", "a@b.com","EUR", "EN", callbacks.success) 
       
       expect(callbacks.success).toHaveBeenCalled()
       

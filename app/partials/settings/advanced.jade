@@ -1,13 +1,13 @@
-p.headliner.hidden-xs(translate="ADVANCED_EXPLAIN")
+h5.well.headliner.hidden-xs(translate="ADVANCED_EXPLAIN")
 
 form.form-horizontal(role="form",name="form",novalidate)  
   .form-group
     .col-sm-12.col-md-6
       label(translate="WALLET_SECOND_PASSWORD")
       p.explain.hidden-xs.hidden-sm(translate="WALLET_SECOND_PASSWORD_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result
-      h2.status.incomplete.hidden-xs.hidden-sm(ng-hide="settings.secondPassword", translate="DISABLED")    
-      h2.status.complete.hidden-xs.hidden-sm(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
+    .col-sm-12.col-md-6.setting-result.flex-column.flex-align-end
+      h2.status.incomplete.hidden-xs.hidden-sm.mbm(ng-hide="settings.secondPassword", translate="DISABLED")    
+      h2.status.complete.hidden-xs.hidden-sm.mbm(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
       configure-second-password
 
   .form-group
@@ -20,9 +20,9 @@ form.form-horizontal(role="form",name="form",novalidate)
       div(ng-hide="processToggleRememberTwoFactor")
         h2.status.incomplete.hidden-xs.hidden-sm(ng-hide="settings.rememberTwoFactor", translate="DISABLED")
         h2.status.complete.hidden-xs.hidden-sm(ng-show="settings.rememberTwoFactor", translate="ENABLED")
-      p
-        a.settingaction(ng-click="enableRememberTwoFactor()", translate="ENABLE_REMEMBER_2FA", ng-hide="settings.rememberTwoFactor")
-        a.settingaction(ng-click="disableRememberTwoFactor()", translate="DISABLE_REMEMBER_2FA", ng-show="settings.rememberTwoFactor")
+      .mtl
+        a.button-primary(ng-click="enableRememberTwoFactor()", translate="ENABLE_REMEMBER_2FA", ng-hide="settings.rememberTwoFactor")
+        a.button-primary(ng-click="disableRememberTwoFactor()", translate="DISABLE_REMEMBER_2FA", ng-show="settings.rememberTwoFactor")
 
   .form-group
     .col-sm-12.col-md-6
@@ -45,7 +45,7 @@ form.form-horizontal(role="form",name="form",novalidate)
       label(translate="AUTO_LOGOUT")
       p.explain.hidden-sm.hidden-xs(translate="AUTO_LOGOUT_EXPLAIN") 
     .col-sm-12.col-md-6.setting-result
-      bc-async-input(ng-model="settings.logoutTimeSeconds", on-save="changeLogoutTime", action-title="'CHANGE_AUTO_LOGOUT' | translate")
+      bc-async-input(ng-model="settings.logoutTimeMinutes", validator="validateLogoutTime", on-save="changeLogoutTime", action-title="'CHANGE_AUTO_LOGOUT' | translate")
 
   .form-group(ng-class="{'has-error': errors.ipWhitelist}")
     .col-sm-12.col-md-6

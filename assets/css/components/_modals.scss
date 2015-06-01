@@ -1,0 +1,222 @@
+.bc-modal {
+  .modal-content { background: $light-grey-alt; box-shadow: 0 5px 1px rgba(0, 0, 0, 0.6); }
+  .modal-dialog { width: 45vw; }
+  .modal-body {
+    background: white;
+    min-height: 100px;
+  }
+  .bc-modal-header {
+    position: relative;
+    h3 {
+      font-weight: 500;
+      font-size: 2em;
+      margin-top: 10px;
+    }
+    h5 {
+      font-weight: 300;
+      color: darken($ccc, 30%);
+      margin: 5px 0;
+    }
+    img {
+      margin-right: 10px;
+      height: 40px;
+    }
+    .step {
+      position: absolute;
+      top: 8px;
+      right: 0;
+      font-size: 11px;
+      padding-right: 14px;
+    }
+  }
+  input[type="checkbox"] {
+    margin: 0;
+  }
+  form { padding: 0 2em; }
+  .form-group { margin-bottom: 10px; }
+  .form-control {
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    border-bottom: 1px solid $ccc;
+    &:focus {
+      border-color: none;
+      box-shadow: none
+    }
+  }
+  label {
+    font-weight: 400;
+    color: darken($ccc, 45%);
+    font-size: 1.2em;
+  }
+  textarea {
+    border-radius: 3px;
+    border: 1px solid $eee;
+    height: 60px;
+    width: 300px;
+    &:focus {
+      outline: none;
+    }
+  }
+  .total-amounts {
+    display: flex;
+    flex-direction: column;
+  }
+  .amount-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 2px 0;
+    p, span {
+      margin: 0;
+      flex: 1;
+      font-size: 14px;
+    }
+    .why-fee {
+      font-size: 11px;
+      margin-left: 10px;
+      font-weight: 100;
+      &:hover {
+        cursor: pointer;
+        &:after {
+          content: 'Fees are given to the miners who verify your transaction on the blockchain';
+          position: absolute;
+          margin-left: 5px;
+          background: darken($blue, 25%);
+          color: white;
+          padding: 5px;
+          border-radius: 3px;
+          min-width: 100px;
+          font-size: 13px;
+          z-index: 10000;
+        }
+      }
+    }
+  }
+  .actions {
+    padding: 2em;
+    display: flex;
+    justify-content: flex-end;
+    .button-muted {
+      margin-right: 10px;
+    }
+  }
+
+  button {
+  }
+  .fa-arrows-h {
+    color: $ccc;
+    padding: 0px 10px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .label {
+    color: $blue;
+    margin-bottom: 15px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .usd-amount, .btc-amount {
+    border-bottom: 1px solid $ccc;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .amount-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    label {
+      margin-right: 10px;
+    }
+  }
+  .send-by {
+    list-style-type: none;
+    position: absolute;
+    top: 0px;
+    right: 25px;
+    li {
+      display: inline-block;
+      margin: 0 10px;
+      color: $ccc;
+      &.active {
+        color: $blue;
+        font-weight: 700;
+      }
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .hide {
+    display: none !important;
+  }
+
+  .hidden {
+    opacity: 0;
+  }
+  .to-field, .public-note {
+    position: relative;
+    label {
+      margin-bottom: 15px;
+    }
+  }
+  .btc, .email, .phone {
+    display: flex;
+    flex-direction: column;
+  }
+  .qr-code {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    right: 33px;
+    top: 50px;
+    background: #fdfdfd;
+    border:1px solid #e5e5e5;
+    padding:5px;
+    &:hover {
+      cursor: pointer;
+      background: #efefef;
+    }
+  }
+  .scale {
+    -webkit-animation: scale .6s linear 0s 1;
+    animation: scale .6s linear 0s 1;
+  }
+  .conversion {
+    border-bottom: 1px solid $eee;
+    padding-bottom: 5px;
+  }
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  ::-webkit-input-placeholder {
+    color: $ccc;
+  }
+}
+
+//overrides
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 20%);
+  -ms-transform: translate(0, 20%);
+  -o-transform: translate(0, 20%);
+  transform: translate(0, 20%);
+}
+
+@media (max-width: 768px) {
+  .bc-modal {
+    .modal-dialog {
+      width: 100%; /* fallback for browsers without support for vw */
+      width: 100vw;
+    }
+  }
+}

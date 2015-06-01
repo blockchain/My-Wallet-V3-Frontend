@@ -1,4 +1,4 @@
-@SendCtrl = ($scope, $log, Wallet, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest) ->
+@SendCtrl = ($scope, $log, Wallet, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $modal) ->
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.accounts = Wallet.accounts
   $scope.addressBook = Wallet.addressBook
@@ -62,17 +62,12 @@
   $scope.alerts = Wallet.alerts
   
   $scope.isOpen = {currencies: false}
-    
-  $scope.currencies = angular.copy(Wallet.currencies)
   
-  for currency in $scope.currencies
-    currency.type = "Fiat"
-    
-  btc = {code: "BTC", type: "Crypto"}  
-  $scope.currencies.unshift btc
-        
-  $scope.BTCtoFiat = (amount, currency) ->
-    Wallet.BTCtoFiat(amount, currency)
+  $scope.fiatCurrency = Wallet.settings.currency
+  $scope.btcCurrency = Wallet.settings.btcCurrency
+          
+  $scope.BTCtoFiat = (amount) ->
+    Wallet.BTCtoFiat(amount, Wallet.settings.currency.code)
       
   $scope.determineLabel = (origin) ->
     label = origin.label || origin.address
@@ -100,7 +95,7 @@
     if $scope.transaction.currency == "BTC"
       return label + " (" + max_btc.format("0.[00000000]") + " BTC)"  
     else 
-      return label + " (" + $scope.BTCtoFiat(max_btc, $scope.transaction.currency) + " " + $scope.transaction.currency + ")"
+      return label + " (" + $scope.BTCtoFiat(max_btc) + " " + $scope.transaction.currency + ")"
   
   
   
@@ -111,15 +106,16 @@
     amount: paymentRequest.amount, 
     satoshi: 0, 
     currency: "BTC", 
-    currencySelected: btc, 
     fee: 0
     note: ""
+    publicNote: false
   }
       
   $scope.getFilter = (search) ->
     filter =
       label: search
-    filter.multiAccount = false if not $scope.settings.multiAccount
+    if not $scope.settings.multiAccount or $scope.numberOfActiveAccountsAndLegacyAddresses() == 1
+      filter.multiAccount = false
     return filter
   
   $scope.hasZeroBalance = (origin) ->
@@ -176,10 +172,27 @@
   $scope.close = () ->
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
-  
+    
+  $scope.nextAlternativeCurrency = () ->
+    if $scope.transaction.currency == "BTC"
+       return $scope.fiatCurrency.code
+    else
+      return "BTC" #$scope.btcCurrency.code
+    
+  $scope.toggleCurrency = () ->
+    $scope.transaction.currency = $scope.nextAlternativeCurrency()
+        
+  $scope.numberOfActiveAccountsAndLegacyAddresses = () -> 
+    return filterFilter(Wallet.accounts, {active: true}).length + filterFilter(Wallet.legacyAddresses, {active: true}).length
+
   $scope.send = () ->
     unless $scope.sending
       $scope.sending = true
+
+      if $scope.transaction.publicNote
+        publicNote = $scope.transaction.note
+        if publicNote == ""
+          publicNote = null
     
       transactionDidFailWithError = (message) ->
         if message
@@ -187,11 +200,12 @@
         $scope.sending = false
       
       transactionDidFinish = (tx_hash) ->
-        # Save note, if any:
-        note = $scope.transaction.note.trim()
-        if note != ""
-          Wallet.setNote({hash: tx_hash}, note)
-        
+        if not $scope.transaction.publicNote
+          # Save private note, if any:
+          note = $scope.transaction.note.trim()
+          if note != ""
+            Wallet.setNote({hash: tx_hash}, note)          
+
         $scope.sending = false
         
         Wallet.beep()
@@ -202,9 +216,27 @@
         else
           $state.go("wallet.common.transactions", {accountIndex: "imported" })
           
+        $translate("SUCCESS").then (titleTranslation) ->
+          $translate("BITCOIN_SENT").then (messageTranslation) ->
+          
+            modalInstance = $modal.open(
+              templateUrl: "partials/modal-notification.jade"
+              controller: ModalNotificationCtrl
+              windowClass: "notification-modal"
+              resolve:
+                notification: ->
+                  {
+                    type: 'sent-bitcoin'
+                    icon: 'bc-icon-send'
+                    heading: titleTranslation
+                    msg: messageTranslation
+                  }
+            ).opened.then () ->
+              Wallet.store.resetLogoutTimeout()
+          
       Wallet.clearAlerts()
   
-      Wallet.transaction(transactionDidFinish, transactionDidFailWithError).send($scope.transaction.from, $scope.transaction.destination, numeral($scope.transaction.amount), $scope.transaction.currency)
+      Wallet.transaction(transactionDidFinish, transactionDidFailWithError).send($scope.transaction.from, $scope.transaction.destination, numeral($scope.transaction.amount), $scope.transaction.currency, publicNote)
       return
 
   $scope.closeAlert = (alert) ->
@@ -213,13 +245,6 @@
   #################################
   #           Private             #
   #################################
-  
-  $scope.$watch "transaction.currencySelected", (currency) ->
-    if currency?
-      $scope.transaction.currency = $scope.transaction.currencySelected.code
-      $scope.$$postDigest(()->
-        $scope.visualValidate('currency')
-      )
       
   $scope.$watch "transaction.currency", (currency) ->
     if currency? && $scope.transaction.currencySelected && $scope.transaction.currencySelected.code != currency
@@ -369,14 +394,19 @@
 
   $scope.allowedDecimals = () ->
     currency = $scope.transaction.currencySelected
-    return 8 if currency.code == 'BTC'
+    return 8 if $scope.transaction.currency == 'BTC'
     return 2
 
   $scope.decimalPlaces = (number) ->
     return (number.split('.')[1] || []).length
 
+  $scope.step = 1
+
   $scope.goToConfirmation = () ->
     $scope.confirmationStep = true
+    $scope.step++
     
   $scope.backToForm = () ->
     $scope.confirmationStep = false    
+    $scope.step--
+

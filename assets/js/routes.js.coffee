@@ -1,6 +1,6 @@
 walletApp.config ($stateProvider, $urlRouterProvider) ->
 
-  $urlRouterProvider.otherwise("/");
+  $urlRouterProvider.otherwise("/")
   
   $urlRouterProvider.otherwise(($injector, $location) ->
     Wallet = $injector.get("Wallet")
@@ -8,7 +8,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     if Wallet.status.isLoggedIn == false
       $location = "/login"
     else
-      $location = "/accounts/transactions"
+      $location = "/dashboard"
   )
   
   top =  {
@@ -43,7 +43,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       controller: "TransactionsCtrl"
     }
   }
-    
+
   $stateProvider.state("wallet",
     views: {
       body: {
@@ -80,6 +80,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
+  
   # Use the same layout as the transactions screen, once signup is complete
   .state("register.finish", 
     url: "/register/finish"
@@ -91,13 +92,59 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
   
   
   $stateProvider.state("wallet.common.dashboard",
-    url: "/"
+    url: "/dashboard"
     views: {
       top : top,
-      left: accounts,
+      left: {
+        templateUrl: "partials/accounts-navigation.jade"
+        controller: "AccountsCtrl"
+      },
       right: {
-        templateUrl: "partials/dashboard"
+        templateUrl: "partials/dashboard.jade"
         controller: "DashboardCtrl"
+      }
+    }
+  )
+  $stateProvider.state("wallet.common.support",
+    url: "/contact-support"
+    views: {
+      top : top,
+      left: {
+        templateUrl: "partials/accounts-navigation.jade"
+        controller: "AccountsCtrl"
+      },
+      right: {
+        templateUrl: "partials/support.jade"
+        controller: ($scope, $log, $state) -> 
+          $scope.state = $state
+      }
+    }
+  )
+  $stateProvider.state("wallet.common.feedback",
+    url: "/feedback"
+    views: {
+      top : top,
+      left: {
+        templateUrl: "partials/accounts-navigation.jade"
+        controller: "AccountsCtrl"
+      },
+      right: {
+        templateUrl: "partials/feedback.jade"
+        controller: "FeedbackCtrl"
+      }
+    }
+  )
+  $stateProvider.state("wallet.common.security-center",
+    url: "/security-center"
+    views: {
+      top: top,
+      left: {
+        templateUrl: "partials/accounts-navigation.jade"
+        controller: "AccountsCtrl"
+      },
+      right: {
+        templateUrl: "partials/security-center.jade"
+        controller: "SettingsSecurityCenterCtrl"
       }
     }
   )
@@ -110,6 +157,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
   $stateProvider.state("wallet.common.transaction",
     url: "/:accountIndex/transactions/:hash"
     views: {
+      top : top,
       left: {
         templateUrl: "partials/accounts-navigation.jade"
         controller: "AccountsCtrl"
@@ -185,15 +233,6 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       settings: {
         templateUrl: "partials/settings/address.jade"
         controller: "AddressCtrl"
-      }
-    }
-  )
-  .state("wallet.common.settings.security-center",
-    url: "/security-center"
-    views: {
-      settings: {
-        templateUrl: "partials/settings/security-center.jade"
-        controller: "SettingsSecurityCenterCtrl"
       }
     }
   )

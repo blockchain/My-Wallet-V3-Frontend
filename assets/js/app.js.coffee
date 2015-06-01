@@ -38,6 +38,8 @@ modules = [
   "partials/alerts.jade"
   "partials/claim.jade"
   "partials/dashboard.jade"
+  "partials/support.jade"
+  "partials/feedback.jade"
   "partials/login.jade"
   "partials/navigation.jade"
   "partials/open-link.jade"
@@ -51,6 +53,8 @@ modules = [
   "partials/transactions.jade"
   "partials/upgrade.jade"
   "partials/common.jade"
+  "partials/modal-notification.jade"
+  "partials/security-center.jade"
   "partials/settings/accounts.jade"
   "partials/settings/addresses.jade"
   "partials/settings/address.jade"
@@ -60,7 +64,6 @@ modules = [
   "partials/settings/mobile.jade"
   "partials/settings/my-details.jade"
   "partials/settings/navigation.jade"
-  "partials/settings/security-center.jade"
   "partials/settings/set-second-password.jade"
   "partials/settings/settings.jade"
   "partials/settings/show-private-key.jade"
@@ -90,6 +93,7 @@ modules = [
   "templates/resend-email-confirmation.jade"
   "templates/adverts.jade"
   "templates/multi-account.jade"
+  "templates/btc-picker.jade"
   # 'angular-ladda'
 ]
 

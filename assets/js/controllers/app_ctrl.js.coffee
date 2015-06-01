@@ -11,6 +11,8 @@
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->  
     if toState.name != "login.show" && toState.name != "login" && toState.name != "register" && toState.name != "open" && toState.name != "verify-email" && toState.name != "verify-email-with-guid" && $scope.status.isLoggedIn == false
       $state.go("login.show")
+    if Wallet.status.isLoggedIn && Wallet.store.resetLogoutTimeout?
+      Wallet.store.resetLogoutTimeout()
   )
     
   $scope.$watch "status.isLoggedIn", () ->
@@ -33,10 +35,11 @@
             resolve:
               paymentRequest: -> 
                 Wallet.goal.send
+            windowClass: "bc-modal"
           )
-          
+
           Wallet.goal.send = undefined
-          
+
         if Wallet.goal.claim?
           modalInstance = $modal.open(
             templateUrl: "partials/claim.jade"
@@ -44,13 +47,30 @@
             resolve:
               claim: -> 
                 Wallet.goal.claim
+            windowClass: "bc-modal"
           )
-          
+
           modalInstance.result.then(() ->
             Wallet.goal.claim = undefined
           )
-        
-          
+
+        if Wallet.goal.auth == true
+          $translate("AUTHORIZED").then (titleTranslation) ->
+            $translate("AUTHORIZED_MESSAGE").then (messageTranslation) ->
+              modalInstance = $modal.open(
+                templateUrl: "partials/modal-notification.jade"
+                controller: ModalNotificationCtrl
+                windowClass: "notification-modal"
+                resolve:
+                  notification: ->
+                    {
+                      type: 'authorization-verified'
+                      icon: 'bc-icon-logo'
+                      heading: titleTranslation
+                      msg: messageTranslation
+                    }
+              )
+
 
     # Goals which don't necessarily require a login:
     if Wallet.goal.verifyEmail?
@@ -62,25 +82,24 @@
 
       success = (message) ->
         Wallet.user.isEmailVerified = true
-    
+
         $state.go("wallet.common.transactions", {accountIndex: "accounts"})
-    
+
         # Ignoring message, using our own:
         $translate("EMAIL_VERIFIED").then (translation) ->
           Wallet.displaySuccess(translation)
-  
+
       error = (error) ->
         $state.go "/"
-    
+
         console.log(error)
         $translate("EMAIL_VERIFICATION_FAILED").then (translation) ->
           Wallet.displayError(translation)
 
       Wallet.verifyEmail(Wallet.goal.verifyEmail, success, error)
-      
-      
+
       Wallet.goal.verifyEmail = undefined
-      
+
   $scope.$on "requireSecondPassword", (notification, continueCallback, cancelCallback, insist) ->
     modalInstance = $modal.open(
       templateUrl: "partials/second-password.jade"

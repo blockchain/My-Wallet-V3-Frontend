@@ -1,14 +1,17 @@
 #signup
   .modal-header
     h3(translate="NEW_ACCT_WELCOME", ng-show="currentStep == 1")
-    h3(translate="WALLET_GREETING_SETUP", ng-show="currentStep == 2")
-    h3(translate="IMPORT_WALLET", ng-show="currentStep == 3")    
-    h3(translate="CONFIRM_EMAIL", ng-show="currentStep == 4")
-    p(translate="CONFIRM_EMAIL_EXPLAIN" translate-values='{ email: fields.email}', ng-show="currentStep == 4")  
+    h3(translate="CONFIRM_EMAIL", ng-show="currentStep == 2")
+    p(translate="CONFIRM_EMAIL_EXPLAIN" translate-values='{ email: fields.email}', ng-show="currentStep == 2")  
   .modal-body
     form.form-horizontal(role="form",name="form",novalidate)
       div(ng-switch="currentStep")
         div(ng-switch-when="1")
+          .alpha-warning.clearfix
+            span
+              i.ti-hand-stop
+              | Welcome! Please note, this is an Alpha version of a new product. Please do not test this wallet with more funds than you are willing to lose.
+              
           .form-group(ng-class="{'has-error': errors.email, 'has-success': success.email}")
             label.col-sm-4.control-label(translate="EMAIL")
             .col-sm-6
@@ -27,49 +30,30 @@
               input.form-control(type="password",ng-model="fields.confirmation",on-enter="tryNextStep()",autofocus,ng-blur="validate()", ng-focus="errors.confirmation = null")
               span.help-block 
                 p {{ errors.confirmation }}
-        div(ng-switch-when="2")
-          .form-group
-            label.col-sm-4.control-label(translate="CHOOSE_LANGUAGE")
-            .col-sm-6
-              language-picker(language="fields.language")
+          .form-group.agreement
+              .col-sm-4
+              .col-sm-6
+                  input.form-control#agreement_accept(ng-model="fields.acceptedAgreement" type="checkbox" name="agreement_accept" ng-change="validate()")
+                  label(for="agreement_accept")
+                    | I have read and agree to the 
+                    a.white.underline(ng-click="showAgreement()") Alpha Program Participation Agreement
 
-          .form-group
-            label.col-sm-4.control-label(translate="CHOOSE_CURRENCY")
-            .col-sm-6
-              currency-picker(currency="fields.currency")
-        div(ng-switch-when="3")
-          .form-group
-            // (ng-class="{'has-error': errors.email, 'has-success': success.email}")
-            label.col-sm-3.control-label(translate="MNEMONIC")
-            .col-sm-6
-              input.form-control(type="text",ng-model="fields.mnemonic",autofocus, ng-focus="errors.mnemonic = null", ng-disabled="importing")
-              span.help-block {{ errors.mnemomic }}
-            .col-sm-3
-              input.form-control(type="text",ng-model="fields.bip39phrase", ng-disabled="importing")            
-              
-        div(ng-switch-when="4")
+        div(ng-switch-when="2")
           .form-group(ng-class="{'has-error': errors.emailVerificationCode}")
             label.col-sm-4.control-label(translate="EMAIL_VERIFICATION_CODE")
             .col-sm-6
               input.form-control(type="text",ng-model="fields.emailVerificationCode",autofocus,ng-blur="validate()",on-enter="nextStep()")
               span.help-block 
                 p {{ errors.emailVerificationCode }}
-          .why
-            h4(translate="EMAIL_WHY")
-            p.explanation(translate="EMAIL_WHY_EXPLAIN")
       
   .modal-footer
     .row
-      .col-xs-6
-        a(translate="WALLET_IMPORT", ng-click="import()", ng-show="currentStep==2")
-      .col.xs-6
-        button.btn.btn-primary.btn-signup(ng-click="close()", translate="CANCEL", ng-show="currentStep == 1")      
-        button.btn.btn-primary.btn-signup(ng-click="nextStep()",ng-disabled="!form.$valid || !isValid[0]", translate="CONTINUE", ng-show="currentStep == 1 && !working")
-        button.btn.btn-primary.btn-signup(ng-click="nextStep()",ng-disabled="!isValid[1]", translate="NEXT_STEP", ng-show="currentStep == 2")
-        button.btn.btn-info.btn-signup(ng-click="skipImport()", ng-show="currentStep == 3 && !importing", translate="SKIP_IMPORT")
-        button.btn.btn-primary.btn-signup(ng-click="performImport()", ng-disabled="!isValid[2]", translate="IMPORT", ng-show="currentStep == 3 && !working")
-        span(ng-show="currentStep == 3")   
+      .col.xs-12
+        button.btn.btn-primary.btn-signup(ng-click="nextStep()",ng-disabled="!form.$valid || !isValid[0] || !fields.acceptedAgreement", translate="CONTINUE", ng-show="currentStep == 1 && !working")  
         img(ng-show="working" src="img/spinner.gif")     
-        button.btn.btn-primary.btn-signup(ui-ladda="{{ resendingEmailCode }}", ng-click="resendEmail()", ladda-translate="RESEND_EMAIL", ng-show="currentStep == 4", data-style="expand-left")        
-        button.btn.btn-primary.btn-signup(ng-click="nextStep()", translate="GO_VERIFY_EMAIL", ng-show="currentStep == 4")
-          
+        button.btn.btn-primary.btn-signup.btn-resend(ui-ladda="{{ resendingEmailCode }}", ng-click="resendEmail()", ladda-translate="RESEND_EMAIL", ng-show="currentStep == 2", data-style="expand-left")        
+        button.btn.btn-primary.btn-signup(ng-click="nextStep()", translate="GO_VERIFY_EMAIL", ng-show="currentStep == 2")
+                
+        .why.col-xs-12(ng-show= "currentStep == 2")
+          h4(translate="EMAIL_WHY")
+          p.explanation(translate="EMAIL_WHY_EXPLAIN")  

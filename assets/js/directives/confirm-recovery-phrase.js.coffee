@@ -13,8 +13,9 @@ walletApp.directive('confirmRecoveryPhrase', ($translate, Wallet, $modal) ->
         modalInstance = $modal.open(
           templateUrl: "partials/confirm-recovery-phrase-modal.jade"
           controller: ConfirmRecoveryPhraseCtrl
-          windowClass: "blockchain-modal"
-        )
+          windowClass: "bc-modal"
+        ).opened.then () ->
+          Wallet.store.resetLogoutTimeout()
 
         return
   }

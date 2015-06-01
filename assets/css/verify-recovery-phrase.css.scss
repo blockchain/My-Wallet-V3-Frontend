@@ -4,4 +4,8 @@
      align: left;
      margin-right: 10px;
   }
+  pre {
+    -webkit-user-select: none;
+    user-select: none;
+  }
 }

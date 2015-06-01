@@ -1,9 +1,6 @@
-.adverts.sidebox
-  header
-    h3 Sponsored Links
-  ul
-    li.ad(ng-repeat="ad in ads")
-      a(ng-click="visit(ad)")
-        button.btn(ng-click="visit(ad)", ng-class="[ ad.button_class ]")
-          img(ng-src="{{ ad.image }}")
-        span(ng-class="[ ad.button_class ]") {{ ad.title }}
+ul.aside-list.pln.pas.mtm
+  li.ad(ng-repeat="ad in ads")
+    a.flex-between.flex-center.mbs(ng-click="visit(ad)")
+      button.btn(ng-click="visit(ad)", ng-class="[ ad.button_class ]")
+        img(ng-src="{{ ad.image }}")
+      span.adtext(ng-class="[ ad.button_class ]") {{ ad.title }}

@@ -1,0 +1,23 @@
+.alert {
+  width: 40vw;
+  animation: fade-in-down .5s;
+  margin-top: 1vw;
+}
+.alert-received-bitcoin {
+  background: white;
+  padding: 20px;
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  font-size: 1.2em;
+  text-align: center;
+  color: $success;
+  max-width: 300px;
+  z-index: 10000;
+  animation: fade-in-right .5s;
+  box-shadow: 0 2px 3px 0 #676767;
+  .close {
+    right: -11px !important;
+    color: grey;
+  }
+}

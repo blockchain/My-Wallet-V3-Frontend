@@ -1,4 +1,4 @@
-@RequestCtrl = ($scope, Wallet, $modalInstance, $log, destination, $translate, $stateParams) ->  
+@RequestCtrl = ($scope, Wallet, $modalInstance, $log, destination, $translate, $stateParams, filterFilter) ->  
   $scope.accounts = Wallet.accounts
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.destinations = []
@@ -32,10 +32,7 @@
       item = angular.copy(address)
       item.type = "Imported Addresses"
       item.multiAccount = false
-      $scope.destinations.push item
-      
-  $scope.alerts = Wallet.alerts
-    
+      $scope.destinations.push item    
 
   $scope.determineLabel = (origin) ->
     label = origin.label || origin.address
@@ -48,7 +45,22 @@
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
     
+  $scope.numberOfActiveAccountsAndLegacyAddresses = () -> 
+    return filterFilter(Wallet.accounts, {active: true}).length + filterFilter(Wallet.legacyAddresses, {active: true}).length
   
+
+  $scope.validateAmountDecimals = () ->
+    return $scope.decimalPlaces($scope.fields.amount) <= $scope.allowedDecimals()
+
+  $scope.allowedDecimals = () ->
+    currency = $scope.fields.currency.code
+    return 8 if currency == 'BTC'
+    return 2
+
+  $scope.decimalPlaces = (number) ->
+    if number?
+      return (number.split('.')[1] || []).length
+
   #################################
   #           Private             #
   #################################
@@ -110,5 +122,6 @@
     return false if isNaN(parseFloat($scope.fields.amount))
     return false if String(parseFloat($scope.fields.amount)) != $scope.fields.amount
     return false if parseFloat($scope.fields.amount) < 0.0
+    return false if not $scope.validateAmountDecimals()
     
     return true

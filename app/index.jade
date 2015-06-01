@@ -1,5 +1,5 @@
 doctype
-<!-- @if !PRODUCTION --><html lang='en' ng-app='walletApp' ng-init="savePassword=#{ process.env.SAVE_PASSWORD }; beta=#{ process.env.BETA }" ng-csp><!-- @endif -->
+<!-- @if !PRODUCTION --><html lang='en' ng-app='walletApp' ng-init="savePassword=#{ process.env.SAVE_PASSWORD || false }; beta=#{ process.env.BETA || false }" ng-csp><!-- @endif -->
 <!-- @if PRODUCTION && !BETA !><html lang='en' ng-app='walletApp' ng-init='beta=0' ng-csp><!-- @endif -->
 <!-- @if PRODUCTION && BETA !><html lang='en' ng-app='walletApp' ng-init='beta=1' ng-csp><!-- @endif -->
 head
@@ -34,9 +34,14 @@ head
  
   script(src='bower_components/angular-inview/angular-inview.js')
   script(src='bower_components/angular-password-entropy/password-entropy.js')
+  
+  // Depends on jQuery: 
+  // https://github.com/mareczek/international-phone-number/issues/44
   script(src='bower_components/intl-tel-input/build/js/intlTelInput.js')
   script(src='bower_components/intl-tel-input/lib/libphonenumber/build/utils.js')
   script(src='bower_components/international-phone-number/releases/international-phone-number.js')
+  
+  
   script(src='bower_components/browserdetection/src/browser-detection.js')
   
   // angular-ladda doesn't play nicely with ui-bootstrap
@@ -48,13 +53,8 @@ head
   //- link(rel="stylesheet", href="bower_components/ladda/dist/ladda-themeless.css")
   link(rel='stylesheet', href='build/css/ladda.css')
   link(rel='stylesheet', href='build/css/blockchain.css')
-  link(rel='stylesheet', href='build/css/app.css')
-  link(rel='stylesheet', href='build/css/navigation.css')
-  link(rel='stylesheet', href='build/css/transactions.css')
-  link(rel='stylesheet', href='build/css/accounts.css')
+  link(rel='stylesheet', href='build/css/fonts.css')
   link(rel='stylesheet', href='build/css/top.css')
-  link(rel='stylesheet', href='build/css/left.css')
-  link(rel='stylesheet', href='build/css/payment-requests.css')
   link(rel='stylesheet', href='build/css/send.css')
   link(rel='stylesheet', href='build/css/settings.css')
   link(rel='stylesheet', href='build/css/signup.css')
@@ -65,7 +65,6 @@ head
   link(rel='stylesheet', href='build/css/security-badge.css')
   link(rel='stylesheet', href='build/css/verify-recovery-phrase.css')
   link(rel='stylesheet', href='build/css/angular-csp.css')
-  link(rel='stylesheet', href='build/css/adverts.css')
       
   link(rel='stylesheet', href='build/css/intlTelInput.css')
   link(rel='stylesheet', href='build/css/show-private-key.css')
@@ -89,19 +88,21 @@ head
   script(src='build/js/controllers/claim_modal_ctrl.js')
   script(src='build/js/controllers/confirm_recovery_phrase_ctrl.js')
   script(src='build/js/controllers/dashboard_ctrl.js')
+  script(src='build/js/controllers/feedback_ctrl.js')
   script(src='build/js/controllers/login_ctrl.js')
   script(src='build/js/controllers/navigation_ctrl.js')
   script(src='build/js/controllers/open_link_ctrl.js')
   script(src='build/js/controllers/registration_ctrl.js')
   script(src='build/js/controllers/request_ctrl.js')
   script(src='build/js/controllers/second_password_ctrl.js')
+  script(src='build/js/controllers/security_center_ctrl.js')
   script(src='build/js/controllers/send_ctrl.js')
   script(src='build/js/controllers/signup_ctrl.js')
   script(src='build/js/controllers/top_ctrl.js')
   script(src='build/js/controllers/transaction_ctrl.js')
   script(src='build/js/controllers/transactions_ctrl.js')
   script(src='build/js/controllers/upgrade_ctrl.js')
-
+  script(src='build/js/controllers/modal_notification_ctrl.js')
   script(src='build/js/controllers/settings/accounts_ctrl.js')
   script(src='build/js/controllers/settings/address_ctrl.js')
   script(src='build/js/controllers/settings/address_import_ctrl.js')
@@ -112,7 +113,6 @@ head
   script(src='build/js/controllers/settings/my_details_ctrl.js')
   script(src='build/js/controllers/settings/navigation_ctrl.js')
   script(src='build/js/controllers/settings/recovery_ctrl.js')
-  script(src='build/js/controllers/settings/security_center_ctrl.js')
   script(src='build/js/controllers/settings/set_second_password_ctrl.js')
   script(src='build/js/controllers/settings/settings_ctrl.js')
   script(src='build/js/controllers/settings/show_private_key_ctrl.js')
@@ -140,6 +140,7 @@ head
   script(src='build/js/directives/on-enter.js')
   script(src='build/js/directives/resend-email-confirmation.js')
   script(src='build/js/directives/security-badge.js')
+  script(src='build/js/directives/toggle-nav.js')
   script(src='build/js/directives/tor.js')
   script(src='build/js/directives/transaction-description.js')
   script(src='build/js/directives/transaction-note.js')
@@ -148,7 +149,8 @@ head
   script(src='build/js/directives/ui-ladda.js')
   script(src='build/js/directives/verify-email.js')
   script(src='build/js/directives/virtual-keyboard.js')
-  script(src='build/js/directives/watch-for-inactivity.js')    
+  script(src='build/js/directives/btc-picker.js')
+  script(src='build/js/directives/focus-when.js')
   
   script(src='build/js/services/wallet.js')
   script(src='build/js/services/security_center.js')

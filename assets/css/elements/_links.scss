@@ -1,0 +1,18 @@
+a {
+  cursor: pointer;
+  outline: 0;
+  color: $blue;
+  transition: all .2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  &:hover, &:visited {
+    text-decoration: none;
+  }
+  &:hover {
+    color: $blue;
+    cursor: pointer;
+  }
+  &:focus {
+    outline: 0;
+  }
+}

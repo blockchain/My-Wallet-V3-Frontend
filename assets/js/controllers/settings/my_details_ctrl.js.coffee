@@ -3,6 +3,8 @@
   $scope.user = Wallet.user
   $scope.settings = Wallet.settings
 
+  $scope.uid = Wallet.uid
+
   $scope.changeMultiAccountSetting = () ->
     Wallet.setMultiAccount(!Wallet.settings.multiAccount)
   
@@ -16,5 +18,8 @@
     modalInstance = $modal.open(
       templateUrl: "partials/settings/change-password.jade"
       controller: ChangePasswordCtrl
-      windowClass: "blockchain-modal"
+      windowClass: "bc-modal"
     )
+    if modalInstance?
+      modalInstance.opened.then () ->
+        Wallet.store.resetLogoutTimeout()

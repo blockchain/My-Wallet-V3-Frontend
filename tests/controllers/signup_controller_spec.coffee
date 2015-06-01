@@ -25,6 +25,7 @@ describe "SignupCtrl", ->
       scope.fields.email = "a@b.com"
       scope.fields.password = "testing"
       scope.fields.confirmation = "testing"
+      scope.fields.acceptedAgreement = true
       scope.form = {$error: {email: null}}
       scope.validate()
     

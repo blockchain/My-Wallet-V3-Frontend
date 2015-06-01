@@ -1,20 +1,20 @@
-ul.nav.nav-stacked.nav-pills
-  li.item(ui-sref-active="active") 
-    a(ui-sref="wallet.common.settings.my-details", translate="MY_DETAILS")
-  li.item(ui-sref-active="active") 
-    a(ui-sref="wallet.common.settings.wallet", translate="WALLET_SETTINGS")
-  li.item(ui-sref-active="active") 
-    a(ui-sref="wallet.common.settings.addresses", translate="MY_ADDRESSES")
-  li.item(ui-sref-active="active",ng-show="settings.multiAccount")
-    a(ui-sref="wallet.common.settings.accounts", translate="MY_ACCOUNTS")
-  li.nav-divider
-  li.item(ui-sref-active="active") 
-    a(ui-sref="wallet.common.settings.security-center", translate="SECURITY_CENTER")
-  li.item(ui-sref-active="active") 
-    a(ui-sref="wallet.common.settings.wallet-recovery", translate="WALLET_RECOVERY")
-  li.item(ui-sref-active="active") 
-    a(ui-sref="wallet.common.settings.advanced", translate="ADVANCED")
-  li.nav-divider
-  li.item(ui-sref-active="active") 
-    a(ui-sref="wallet.common.settings.mobile", translate="MOBILE")
-    
+ul.aside.settings-nav
+  a.plm(ng-click="goHome()")
+    i.ti-arrow-left.mrs
+    | Go Back
+  li.settings-nav-header.current.phl.pvm.mbn.mtl Settings
+  ul.aside-list.pas
+    li.header(ui-sref-active="active") 
+      a(ui-sref="wallet.common.settings.my-details", translate="MY_DETAILS")
+    li.header(ui-sref-active="active") 
+      a(ui-sref="wallet.common.settings.wallet", translate="WALLET_SETTINGS")
+    li.header(ui-sref-active="active") 
+      a(ui-sref="wallet.common.settings.addresses", translate="MY_ADDRESSES")
+    li.header(ui-sref-active="active",ng-show="settings.multiAccount")
+      a(ui-sref="wallet.common.settings.accounts", translate="MY_ACCOUNTS")
+    li.header(ui-sref-active="active") 
+      a(ui-sref="wallet.common.settings.wallet-recovery", translate="WALLET_RECOVERY")
+    li.header(ui-sref-active="active") 
+      a(ui-sref="wallet.common.settings.advanced", translate="ADVANCED")
+    li.header(ui-sref-active="active") 
+      a(ui-sref="wallet.common.settings.mobile", translate="MOBILE")

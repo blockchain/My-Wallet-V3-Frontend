@@ -1,4 +1,4 @@
-p.headliner.hidden-xs(translate="MY_ADDRESSES_EXPLAIN_TEMP")
+h5.well.headliner.hidden-xs(translate="MY_ADDRESSES_EXPLAIN_TEMP")
 
 div(ng-show="hdAddresses.length == 0")
   img(src="img/spinner.gif")
@@ -48,9 +48,12 @@ div(ng-show="hdAddresses.length > 0")
           //-   a.btn.btn-xs.btn-info(ng-hide="request.complete || request.paid > 0", ng-click="clear(request)") Clear
           //-   a.btn.btn-xs.btn-warning(ng-show="request.paid != 0 && request.amount != 0 && request.amount != request.paid && !request.complete", ng-click="accept(request)") Accept
 
-h2.clickable(translate="IMPORTED_ADDRESSES", ng-click="display.imported = !display.imported")
+.flex.mtl
+  button.button-primary.mrl(translate="IMPORTED_ADDRESSES", ng-click="display.imported = !display.imported")
+  button.button-primary(translate="ARCHIVED_ADDRESSES", ng-click="display.archived = !display.archived")
 
-p.hidden-xs(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
+p.mtl.hidden-xs(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
+p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
 
 .row.form-ctrl(ng-show="display.imported")
   .col-xs-12.col-lg-6
@@ -88,9 +91,6 @@ p.hidden-xs(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
         td 
           a(translate="YOUR_PRIVATE_KEY", ng-hide="address.isWatchOnlyLegacyAddress", ng-click="showPrivKey(address)")
 
-h2.clickable(translate="ARCHIVED_ADDRESSES", ng-click="display.archived = !display.archived")
-
-p.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
 
 .row.form-ctrl(ng-show="display.archived")
   .col-xs-12.col-lg-6

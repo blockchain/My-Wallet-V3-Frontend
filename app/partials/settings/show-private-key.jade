@@ -12,18 +12,19 @@
       .col-sm-10.col-sm-offset-1(ng-show="incorrectSecondPassword")
         label.wrong-password(translate="INCORRECT_PASSWORD")
     div(ng-show="accessAllowed")
-      .col-sm-2.col-sm-offset-1
-        qr(text="privKey", size=120, correction-level="'M'")
-      .col-sm-9
-        p
-          label(translate="ADDRESS")
-          span : {{ address }}
-        p
-          label(translate="BALANCE")
-          span : {{ balance | btc }}
-        p
-          label(translate="YOUR_PRIVATE_KEY") 
-          span : {{ privKey }}
+      .row
+        .col-sm-4.col-xs-offset-4.col-md-3.col-lg-offset-1
+          qr(text="privKey", size=120, correction-level="'M'")
+        .col-sm-12.col-md-8
+          p
+            label(translate="ADDRESS")
+            span : {{ address }}
+          p
+            label(translate="BALANCE")
+            span : {{ balance | btc }}
+          p
+            label(translate="YOUR_PRIVATE_KEY") 
+            span : {{ privKey }}
 .modal-footer
   button.btn.btn-info(ng-click="close()", translate="CLOSE")
   button.btn.btn-primary(ng-hide="accessAllowed", ng-click="tryContinue()", translate="CONTINUE")

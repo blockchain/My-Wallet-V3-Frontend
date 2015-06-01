@@ -1,4 +1,4 @@
-@AccountFormCtrl = ($scope, Wallet, $modalInstance, $log, $translate, account) ->        
+@AccountFormCtrl = ($scope, Wallet, $modalInstance, $log, $translate, account, $modal) ->        
   $scope.fields = {name: ""}
   $scope.accounts = Wallet.accounts
   $scope.status =
@@ -22,6 +22,25 @@
         $scope.status.busy = false
         $modalInstance.dismiss ""
         
+        $translate("SUCCESS").then (titleTranslation) ->
+          $translate("ACCOUNT_CREATED").then (messageTranslation) ->
+        
+        
+            modalInstance = $modal.open(
+              templateUrl: "partials/modal-notification.jade"
+              controller: ModalNotificationCtrl
+              windowClass: "notification-modal"
+              resolve:
+                notification: ->
+                  {
+                    type: 'created-account'
+                    icon: 'ti-layout-list-post'
+                    heading: titleTranslation
+                    msg: messageTranslation
+                  }
+            ).opened.then () ->
+              Wallet.store.resetLogoutTimeout()
+        
       error = () ->
         $scope.status.busy = false
         
@@ -41,6 +60,12 @@
       
       Wallet.renameAccount(account, $scope.fields.name, success, error)
 
+  $scope.isAccountNameTaken = (name) ->
+    for acct in $scope.accounts
+      return true if acct.label == name
+    return false
+
+
   #################################
   #           Private             #
   #################################
@@ -53,6 +78,10 @@
     
     return false if $scope.fields.name == null
     return false if $scope.fields.name.length == 0
+
+    if $scope.isAccountNameTaken($scope.fields.name)
+      $scope.errors.name = "Account name already in use"
+      return false
     
     if $scope.fields.name.length > 17
       $scope.errors.name = "Max. 17 characters"
