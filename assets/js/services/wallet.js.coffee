@@ -913,7 +913,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       tally = 0
       for account in wallet.accounts
         if account.active
-          return null if account.balance == undefined
+          return null if account.balance == undefined || account.balance == null
           tally = tally += account.balance
 
       return tally
