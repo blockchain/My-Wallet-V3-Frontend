@@ -3,6 +3,8 @@
   $scope.user = Wallet.user
   $scope.settings = Wallet.settings
 
+  $scope.uid = Wallet.uid
+
   $scope.changeMultiAccountSetting = () ->
     Wallet.setMultiAccount(!Wallet.settings.multiAccount)
   

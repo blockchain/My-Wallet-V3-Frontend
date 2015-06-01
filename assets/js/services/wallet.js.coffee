@@ -57,6 +57,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.status.didUpgradeToHd = wallet.store.didUpgradeToHd()
       wallet.status.didConfirmRecoveryPhrase = wallet.store.isMnemonicVerified()
 
+      wallet.uid = uid
+
       for address, label of wallet.store.getAddressBook()
         wallet.addressBook[address] = label
 

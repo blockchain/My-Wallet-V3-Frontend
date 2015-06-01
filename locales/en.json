@@ -378,5 +378,6 @@
   "HIT_SEND" : "Click <b><i class='bc-icon-send'></i> Send </b> to send bitcoin anywhere in the world instantly!",
   "FIRST_ACCOUNT_NAME" : "My Bitcoin Wallet",
   "EMAIL_VERIFIED_SUCCESS" : "You've successfully verified your email! Login with your password, we've gone ahead and filled out your UID for you.",
+  "UID_EXPLAIN" : "Your Wallet ID is your unique identifier. It is completely unique to you, and it is what you use to access your wallet.",
   "" : ""
 }
