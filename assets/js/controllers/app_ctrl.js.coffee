@@ -54,23 +54,23 @@
             Wallet.goal.claim = undefined
           )
 
-      if $scope.status.didGetAuthorized == true
-        $translate("AUTHORIZED").then (titleTranslation) ->
-          $translate("AUTHORIZED_MESSAGE").then (messageTranslation) ->
+        if Wallet.goal.auth == true
+          $translate("AUTHORIZED").then (titleTranslation) ->
+            $translate("AUTHORIZED_MESSAGE").then (messageTranslation) ->
+              modalInstance = $modal.open(
+                templateUrl: "partials/modal-notification.jade"
+                controller: ModalNotificationCtrl
+                windowClass: "notification-modal"
+                resolve:
+                  notification: ->
+                    {
+                      type: 'authorization-verified'
+                      icon: 'bc-icon-logo'
+                      heading: titleTranslation
+                      msg: messageTranslation
+                    }
+              )
 
-            modalInstance = $modal.open(
-              templateUrl: "partials/modal-notification.jade"
-              controller: ModalNotificationCtrl
-              windowClass: "notification-modal"
-              resolve:
-                notification: ->
-                  {
-                    type: 'authorization-verified'
-                    icon: 'bc-icon-logo'
-                    heading: titleTranslation
-                    msg: messageTranslation
-                  }
-            )
 
     # Goals which don't necessarily require a login:
     if Wallet.goal.verifyEmail?
