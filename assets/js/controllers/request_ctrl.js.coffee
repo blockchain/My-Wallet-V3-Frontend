@@ -120,7 +120,6 @@
   $scope.validate = () ->
     return false if $scope.fields.to == null
     return false if isNaN(parseFloat($scope.fields.amount))
-    return false if String(parseFloat($scope.fields.amount)) != $scope.fields.amount
     return false if parseFloat($scope.fields.amount) < 0.0
     return false if not $scope.validateAmountDecimals()
     
