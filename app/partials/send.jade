@@ -103,14 +103,15 @@
           p {{ transaction.fee + transaction.satoshi | btc:true }} BTC
           p
             fiat(btc="transaction.satoshi + transaction.fee")
-      .flex-column
+      .flex-column.form-group(ng-class="{'has-error': errors.note}")
         label(translate="NOTE") 
           |:
-        textarea(rows="4", ng-model="transaction.note")
+        textarea(rows="4", ng-model="transaction.note", ng-blur="visualValidate('note')")
         .flex-center.mtm
           input.mrs(type="checkbox", ng-model="transaction.publicNote")
-          |&nbsp
+          | &nbsp;
           span(translate="MAKE_PUBLIC")
+        span.help-block {{ errors.note }}
 
 .modal-footer.actions
   button.button-muted-off(ng-click="cameraOff()", ng-show="cameraIsOn", translate="CAMERA_OFF")

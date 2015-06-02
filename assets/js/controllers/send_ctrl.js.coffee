@@ -259,7 +259,7 @@
         idx = parseInt($stateParams.accountIndex)
       $scope.transaction.from = $scope.accounts[idx]
           
-  $scope.$watchCollection "[transaction.destination, transaction.from, transaction.amount, transaction.currency]", () ->
+  $scope.$watchCollection "[transaction.destination, transaction.from, transaction.amount, transaction.currency, transaction.note]", () ->
     if $scope.transaction.currency == "BTC"
       $scope.transaction.satoshi = parseInt(numeral($scope.transaction.amount).multiply(100000000).format("0"))
     else
@@ -351,6 +351,10 @@
           $scope.errors.amount = "Maximum of " + $scope.allowedDecimals() + " decimal places"
         else
           $scope.errors.amount = "Insufficient funds"
+
+    if blurredField == "note"
+      if !$scope.validateNote()
+        $scope.errors.note = "Note cannot exceed 512 characters in length"
     
     return 
     
@@ -358,6 +362,10 @@
     $scope.transactionIsValid = $scope.validate()
     if $scope.transaction.amount? && $scope.transaction.amount > 0
       $scope.visualValidate("amount")
+
+  $scope.validateNote = () ->
+    return false if $scope.transaction.note.length > 512
+    return true
     
   $scope.validate = () ->    
     return false unless $scope.originsLoaded
@@ -373,6 +381,10 @@
     $scope.errors.to = null
     
     return false unless $scope.validateAmount()  
+
+    return false unless $scope.validateNote()
+
+    $scope.errors.note = null
     
     return true
     
