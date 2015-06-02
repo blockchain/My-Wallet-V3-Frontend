@@ -9,7 +9,7 @@
   .balance.flex-column.flex-align-end
     span(ng-show="getTotal(accountIndex) == null")
       h3
-        i Decrypting Wallet
+        img(ng-show="balance == null" src="img/spinner.gif") 
     span(ng-show="getTotal(accountIndex) != null")
       span(ng-show="shouldShowFiat()")
         h1
