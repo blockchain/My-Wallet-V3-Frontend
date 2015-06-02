@@ -113,11 +113,9 @@
           span(translate="MAKE_PUBLIC")
         span.help-block {{ errors.note }}
 
-.modal-footer.flex-between.flex-center.pal
-  .flex
-    button.button-muted-off(ng-click="cameraOff()", ng-show="cameraIsOn", translate="CAMERA_OFF")
-    button.button-muted(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
-    button.button-muted(ng-click="backToForm()", translate="BACK", ng-show="confirmationStep")
-  .flex
-    button.button-success.button-lg(ng-click="goToConfirmation()",ng-disabled="!transactionIsValid", translate="NEXT_STEP", ng-hide="confirmationStep")
-    button.button-success.button-lg(ui-ladda="{{ sending }}", ng-click="send()",ng-disabled="!transactionIsValid", data-style="expand-left", ladda-translate="SEND", ng-show="confirmationStep")
+.modal-footer.flex-end.flex-center.pal
+  button.button-muted-off.mrm(ng-click="cameraOff()", ng-show="cameraIsOn", translate="CAMERA_OFF")
+  button.button-muted.mrm(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
+  button.button-muted.mrm(ng-click="backToForm()", translate="BACK", ng-show="confirmationStep")
+  button.button-success.button-lg(ng-click="goToConfirmation()",ng-disabled="!transactionIsValid", translate="NEXT_STEP", ng-hide="confirmationStep")
+  button.button-success.button-lg(ui-ladda="{{ sending }}", ng-click="send()",ng-disabled="!transactionIsValid", data-style="expand-left", ladda-translate="SEND", ng-show="confirmationStep")
