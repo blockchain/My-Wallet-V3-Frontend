@@ -44,7 +44,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.transactions = []
   wallet.languages = []
   wallet.currencies = []
-  wallet.btcCurrencies = [{ serverCode: 'BTC', code: 'BTC', conversion: 1 }, { serverCode: 'MBC', code: 'mBTC', conversion: 1000 }, { serverCode: 'UBC', code: 'bits', conversion: 1000000 }]
+  wallet.btcCurrencies = [{ serverCode: 'BTC', code: 'BTC', conversion: 100000000 }, { serverCode: 'MBC', code: 'mBTC', conversion: 100000 }, { serverCode: 'UBC', code: 'bits', conversion: 100 }]
   wallet.hdAddresses = []
 
   ##################################
