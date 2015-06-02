@@ -85,6 +85,8 @@
   max-width: 700px;
   margin: 0 auto;
   font-size: 1.1em;
+  position: relative;
+  top: 90px;
   .tx-date{
     border-bottom: 1px solid rgb(223, 223, 223);
     padding: 0 0px 15px 0;
@@ -344,6 +346,7 @@ a.date,p.date {
 
 @media(max-width: 767px) {
   .transaction-card {
+    top: 0;
     .tx-sidebar, .tx-details {
       width: 100%;
     }
