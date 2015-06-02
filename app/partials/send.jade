@@ -62,6 +62,35 @@
             p.mbn
               fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="transaction.currency=='BTC'")
               span(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
+      .flex-column.form-group.scale(ng-class="{'has-error': errors.amount}", ng-show="advanced")
+        label.mbm
+          span(translate="MINERS_FEE")
+        p.ccc(translate="MINERS_FEE_EXPLAIN")
+        .flex-center
+          .flex-column.border-right.prm.miners-fee-selection
+            label
+              input(type="radio" name="miners-fee")
+              | Frugal
+            label
+              input(type="radio" name="miners-fee")
+              | Normal
+              span.success.mls (Recommended)
+            label
+              input(type="radio" name="miners-fee")
+              | Generous
+          .flex-center.plm
+            .mrl.flex-1
+              .flex-center
+                span.mrm {{ transaction.currency }}:
+                input.form-control(type="text",ng-blur="visualValidate('amount')")          
+              span.help-block {{ errors.amount }}
+            a.button-success.button-sm.type-sm.mrl.flex-center(ng-click="toggleCurrency()")
+              i.ti-arrows-horizontal
+            .flex-center.ccc.conversion.flex-1
+              span.mrs {{ nextAlternativeCurrency() }}:
+              p.mbn
+                fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="transaction.currency=='BTC'")
+                span(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
         
       //- .form-group(ng-show="advanced")
       //-   label.col-sm-3.control-label(translate="FEES")
