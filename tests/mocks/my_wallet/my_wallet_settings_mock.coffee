@@ -13,6 +13,7 @@ angular.module("myBlockchainSettingsServices", []).factory "MyBlockchainSettings
           password_hint1: "Same as username"
           language: language
           currency: "USD"
+          btc_currency: "BTC"
           block_tor_ips: 0
           my_ip: "123.456.789.012"
         })

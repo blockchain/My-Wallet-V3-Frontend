@@ -461,6 +461,28 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return null unless wallet.conversions[currency]?
     return numeral(100000000).multiply(amount).divide(wallet.conversions[currency].conversion).format("0.00")
 
+  wallet.isBitCurrency = (currency) ->
+    return null unless currency?
+    return ['BTC', 'mBTC', 'bits'].indexOf(currency.code) > -1
+
+  wallet.convertCurrency = (amount, currency1, currency2) ->
+    return null unless amount?
+    return null unless (wallet.conversions[currency1.code]? || wallet.conversions[currency2.code]?)
+    if wallet.isBitCurrency(currency1)
+      return parseFloat(numeral(currency1.conversion).multiply(amount).divide(wallet.conversions[currency2.code].conversion).format("0.00"))
+    else
+      return parseFloat(numeral(amount).multiply(wallet.conversions[currency1.code].conversion).divide(currency2.conversion).format("0.00000000"))
+    
+  wallet.convertToSatoshi = (amount, currency) ->
+    return null unless amount?
+    return null unless currency?
+    if wallet.isBitCurrency(currency)
+      return parseInt(numeral(amount).multiply(currency.conversion).format("0"))
+    else if wallet.conversions[currency.code]?
+      return parseInt(numeral(amount).multiply(wallet.conversions[currency.code].conversion).format("0"))
+    else
+      return null
+
   wallet.getFiatAtTime = (amount, time, currency) ->
     defer = $q.defer()
     # Cache the result since historical rates don't change within one session and we don't want to hammer the server
@@ -483,10 +505,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return defer.promise
 
   wallet.checkAndGetTransactionAmount = (amount, currency, success, error) ->
-    if currency != "BTC"
-      amount = wallet.fiatToSatoshi(amount, currency)
-    else
-      amount = parseInt(numeral(amount).multiply(100000000).format("0"))
+    amount = wallet.convertToSatoshi(amount, currency)
 
     if !success? || !error?
       console.error "Success and error callbacks are required"

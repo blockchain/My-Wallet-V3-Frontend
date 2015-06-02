@@ -65,9 +65,17 @@
   
   $scope.fiatCurrency = Wallet.settings.currency
   $scope.btcCurrency = Wallet.settings.btcCurrency
-          
-  $scope.BTCtoFiat = (amount) ->
-    Wallet.BTCtoFiat(amount, Wallet.settings.currency.code)
+
+  $scope.isBitCurrency = Wallet.isBitCurrency
+
+  $scope.convertToFiat = (amount) ->
+    Wallet.convertCurrency(amount, Wallet.settings.btcCurrency, Wallet.settings.currency)
+
+  $scope.convertToBTC = (amount) ->
+    Wallet.convertCurrency(amount, Wallet.settings.currency, Wallet.settings.btcCurrency)
+
+  $scope.convertToSatoshi = (amount) ->
+    Wallet.convertToSatoshi(amount, $scope.transaction.currency)
       
   $scope.determineLabel = (origin) ->
     label = origin.label || origin.address
@@ -82,20 +90,21 @@
   $scope.maxAndLabel = (origin) ->
     
     label = $scope.determineLabel(origin)
+    code = $scope.transaction.currency.code
     
     if origin.balance == undefined
       return label
     
     fees = Wallet.recommendedTransactionFee(origin, origin.balance)
 
-    max_btc = numeral(origin.balance - fees).divide("100000000")
+    max_btc = numeral(origin.balance - fees).divide($scope.btcCurrency.conversion)
     
     max_btc = numeral(0) if max_btc < 0
     
-    if $scope.transaction.currency == "BTC"
-      return label + " (" + max_btc.format("0.[00000000]") + " BTC)"  
+    if $scope.isBitCurrency($scope.transaction.currency)
+      return label + " (" + max_btc.format("0.[00000000]") + " " + code + ")"  
     else 
-      return label + " (" + $scope.BTCtoFiat(max_btc) + " " + $scope.transaction.currency + ")"
+      return label + " (" + $scope.convertToFiat(max_btc) + " " + code + ")"
   
   
   
@@ -105,7 +114,7 @@
     destination: null, 
     amount: paymentRequest.amount, 
     satoshi: 0, 
-    currency: "BTC", 
+    currency: Wallet.settings.btcCurrency, 
     fee: 0
     note: ""
     publicNote: false
@@ -132,7 +141,7 @@
       $scope.transaction.destination.label = paymentRequest.address  
       if paymentRequest.amount  
         $scope.transaction.amount = paymentRequest.amount 
-        $scope.transaction.currency = "BTC"    
+        $scope.transaction.currency = Wallet.settings.btcCurrency   
       
       $scope.cameraOff()
       $scope.visualValidate()
@@ -174,10 +183,10 @@
     $modalInstance.dismiss ""
     
   $scope.nextAlternativeCurrency = () ->
-    if $scope.transaction.currency == "BTC"
-       return $scope.fiatCurrency.code
+    if $scope.isBitCurrency($scope.transaction.currency)
+       return $scope.fiatCurrency
     else
-      return "BTC" #$scope.btcCurrency.code
+      return $scope.btcCurrency
     
   $scope.toggleCurrency = () ->
     $scope.transaction.currency = $scope.nextAlternativeCurrency()
@@ -260,11 +269,8 @@
       $scope.transaction.from = $scope.accounts[idx]
           
   $scope.$watchCollection "[transaction.destination, transaction.from, transaction.amount, transaction.currency, transaction.note]", () ->
-    if $scope.transaction.currency == "BTC"
-      $scope.transaction.satoshi = parseInt(numeral($scope.transaction.amount).multiply(100000000).format("0"))
-    else
-      $scope.transaction.satoshi = Wallet.fiatToSatoshi($scope.transaction.amount, $scope.transaction.currency)
-    
+    $scope.transaction.satoshi = $scope.convertToSatoshi($scope.transaction.amount)
+
     $scope.transaction.fee = Wallet.recommendedTransactionFee($scope.transaction.from, $scope.transaction.satoshi)     
     $scope.transactionIsValid = $scope.validate()
     
@@ -406,7 +412,7 @@
 
   $scope.allowedDecimals = () ->
     currency = $scope.transaction.currencySelected
-    return 8 if $scope.transaction.currency == 'BTC'
+    return 8 if $scope.isBitCurrency($scope.transaction.currency)
     return 2
 
   $scope.decimalPlaces = (number) ->

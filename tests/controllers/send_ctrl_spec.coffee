@@ -66,7 +66,7 @@ describe "SendCtrl", ->
     expect(scope.transaction.destination.address).toBe("")
     
   it "selects BTC by default", inject((Wallet)->
-    expect(scope.transaction.currency).toBe "BTC"
+    expect(scope.transaction.currency.code).toBe "BTC"
   )
   
   describe "origins", ->
@@ -309,18 +309,20 @@ describe "SendCtrl", ->
       expect(scope.transaction.destination.address).toBe("abcdefgh") 
     )
         
-    it "should switch to BTC if amount is specified", ->
-      scope.transaction.currency = "EUR"
+    it "should switch to BTC if amount is specified", inject((Wallet) ->
+      scope.transaction.currency = Wallet.currencies[1]
       scope.$digest()
       scope.processURLfromQR("bitcoin://abcdefgh?amount=0.001")
       scope.$digest()
-      expect(scope.transaction.currency).toBe("BTC")
+      expect(scope.transaction.currency.code).toBe("BTC")
+    )
       
-    it "should not switch to BTC if amount is specified", ->
-      scope.transaction.currency = "EUR"
+    it "should not switch to BTC if amount is specified", inject((Wallet) ->
+      scope.transaction.currency = Wallet.currencies[1]
       scope.$digest()
       scope.processURLfromQR("bitcoin://abcdefgh")
-      expect(scope.transaction.currency).toBe("EUR")
+      expect(scope.transaction.currency.code).toBe("EUR")
+    )
   
     it "should warn user if QR code is not recognized", inject((Wallet) ->
       expect(scope.alerts.length).toBe(0)
@@ -328,17 +330,17 @@ describe "SendCtrl", ->
       expect(scope.alerts.length).toBe(1)
     )
   
-    it "should enable Send button if fiat balance is sufficient",  inject(() ->
+    it "should enable Send button if fiat balance is sufficient",  inject((Wallet) ->
       scope.transaction.amount = "10"
-      scope.transaction.currency = "EUR"
+      scope.transaction.currency = Wallet.currencies[1]
       scope.$apply()
       expect(scope.transactionIsValid).toBe(true)        
       return
     )
   
-    it "should disable Send button if fiat balance is too low",  inject(() ->
+    it "should disable Send button if fiat balance is too low",  inject((Wallet) ->
       scope.transaction.amount = "50000" # Much more than what the mock account has.
-      scope.transaction.currency = "EUR"
+      scope.transaction.currency = Wallet.currencies[1]
       scope.$apply()
       expect(scope.transactionIsValid).toBe(false)        
       return

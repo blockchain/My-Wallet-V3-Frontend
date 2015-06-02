@@ -50,16 +50,19 @@
         .flex-center
           .mrl.flex-1
             .flex-center
-              span.mrm {{ transaction.currency }}:
+              span.mrm {{ transaction.currency.code }}:
               input.form-control(type="text",ng-model="transaction.amount",ng-blur="visualValidate('amount')")          
             span.help-block {{ errors.amount }}
           a.button-success.button-sm.type-sm.mrl.flex-center(ng-click="toggleCurrency()")
             i.ti-arrows-horizontal
           .flex-center.ccc.conversion.flex-1
-            span.mrs {{ nextAlternativeCurrency() }}:
+            //- span.mrs {{ nextAlternativeCurrency().code }}:
             p.mbn
-              fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="transaction.currency=='BTC'")
-              span(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
+              fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="isBitCurrency(transaction.currency)")
+              span(ng-hide="isBitCurrency(transaction.currency)")
+                span(ng-show="btcCurrency.code == 'BTC'") {{ transaction.satoshi | btc }}
+                span(ng-show="btcCurrency.code == 'mBTC'") {{ transaction.satoshi | mbtc }}
+                span(ng-show="btcCurrency.code == 'bits'") {{ transaction.satoshi | bits }}
         
       //- .form-group(ng-show="advanced")
       //-   label.col-sm-3.control-label(translate="FEES")
@@ -85,22 +88,26 @@
         label.mbn(translate="OVERVIEW")
         li.amount-item
           p(translate="AMOUNT")
-          p
-            | {{ transaction.satoshi | btc:true }} BTC
+          p(ng-show="btcCurrency.code == 'BTC'") {{ transaction.satoshi | btc:true }} BTC
+          p(ng-show="btcCurrency.code == 'mBTC'") {{ transaction.satoshi | mbtc:true }} mBTC
+          p(ng-show="btcCurrency.code == 'bits'") {{ transaction.satoshi | bits:true }} bits
           p
             fiat(btc="transaction.satoshi")
         li.amount-item
           p(translate="FEE")
             | :
-          p
-            | {{ transaction.fee | btc:true }} BTC
+          p(ng-show="btcCurrency.code == 'BTC'") {{ transaction.fee | btc:true }} BTC
+          p(ng-show="btcCurrency.code == 'mBTC'") {{ transaction.fee | mbtc:true }} mBTC
+          p(ng-show="btcCurrency.code == 'bits'") {{ transaction.fee | bits:true }} bits
           p
             fiat(btc="transaction.fee")
             span.why-fee why?
         li.amount-item.blue
           p(translate="TOTAL")
             | :
-          p {{ transaction.fee + transaction.satoshi | btc:true }} BTC
+          p(ng-show="btcCurrency.code == 'BTC'") {{ transaction.fee + transaction.satoshi | btc:true }} BTC
+          p(ng-show="btcCurrency.code == 'mBTC'") {{ transaction.fee + transaction.satoshi | mbtc:true }} mBTC
+          p(ng-show="btcCurrency.code == 'bits'") {{ transaction.fee + transaction.satoshi | bits:true }} bits
           p
             fiat(btc="transaction.satoshi + transaction.fee")
       .flex-column.form-group(ng-class="{'has-error': errors.note}")
