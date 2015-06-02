@@ -3,26 +3,18 @@
 ////////////////////////////////
 
 @-webkit-keyframes scale {
-  10% { -webkit-transform: scale(.9) }
-  20% { -webkit-transform: scale(.8) }
-  30% { -webkit-transform: scale(.7); }
-  40% { -webkit-transform: scale(.6); }
-  50% { -webkit-transform: scale(.5); }
-  60% { -webkit-transform: scale(.6); }
-  70% { -webkit-transform: scale(.7); }
-  80% { -webkit-transform: scale(.8); }
+  10% { -webkit-transform: scale(.9); }
+  30% { -webkit-transform: scale(.8); }
+  50% { -webkit-transform: scale(.65); }
+  70% { -webkit-transform: scale(.8); }
   90% { -webkit-transform: scale(.9); }
   100% { -webkit-transform: scale(1); }
 }
 @keyframes scale {
-  10% { transform: scale(.9) }
-  20% { transform: scale(.8) }
-  30% { transform: scale(.7); }
-  40% { transform: scale(.6); }
-  50% { transform: scale(.5); }
-  60% { transform: scale(.6); }
-  70% { transform: scale(.7); }
-  80% { transform: scale(.8); }
+  10% { transform: scale(.9); }
+  30% { transform: scale(.8); }
+  50% { transform: scale(.65); }
+  70% { transform: scale(.8); }
   90% { transform: scale(.9); }
   100% { transform: scale(1); }
 }

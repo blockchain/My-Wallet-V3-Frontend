@@ -382,5 +382,7 @@
   "AUTHORIZED" : "Authorized!",
   "AUTHORIZED_MESSAGE" : "You've successfully been authorized into your account.",
   "ADVANCED_SEND" : "Advanced Send",
+  "RESET_FORM" : "Reset Form",
+  "REGULAR_SEND" : "Back To Regular Send",
   "" : ""
 }

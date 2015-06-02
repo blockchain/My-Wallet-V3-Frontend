@@ -1,10 +1,12 @@
 .modal-header.flex-column.bc-modal-header
   .flex-center
     img(src="img/arrow-up.png")
-    h3(ng-show="step == 1", translate="SEND_BITCOIN")
+    h3(ng-show="step == 1 && !advanced", translate="SEND_BITCOIN")
+    h3.scale(ng-show="advanced && step == 1", translate="ADVANCED_SEND")
     h3(ng-show="confirmationStep", translate="CONFIRM")
-  h5(ng-show="step == 1") Send bitcoin instantly to any bitcoin address, email, or phone number
+  h5(ng-show="step == 1 && !advanced") Send bitcoin instantly to any bitcoin address, email, or phone number
   h5(ng-show="confirmationStep") Please review your transaction
+  h5(ng-show="advanced && step == 1") Send bitcoin to one or more addresses, choose your fee price and review your transaction before submitting
   p.step Step {{step}} of 2
 .modal-body#send
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)") 
@@ -114,9 +116,12 @@
         span.help-block {{ errors.note }}
 
 .modal-footer.flex-between.flex-center.pal
-  a.ccc(ng-class="{invisible: step == 2}", translate="ADVANCED_SEND")
+  .flex-center
+    a.ccc(ng-class="{invisible: step == 2}", ng-hide="advanced", ng-click="advancedSend()", translate="ADVANCED_SEND")
+    a.ccc(ng-show="advanced", ng-click="regularSend()", translate="REGULAR_SEND")
   .flex-center.flex-end
     button.button-muted-off.mrm(ng-click="cameraOff()", ng-show="cameraIsOn", translate="CAMERA_OFF")
+    button.button-muted.scale.mrm(ng-show="advanced", translate="RESET_FORM")
     button.button-muted.mrm(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
     button.button-muted.mrm(ng-click="backToForm()", translate="BACK", ng-show="confirmationStep")
     button.button-success.button-lg(ng-click="goToConfirmation()",ng-disabled="!transactionIsValid", translate="NEXT_STEP", ng-hide="confirmationStep")

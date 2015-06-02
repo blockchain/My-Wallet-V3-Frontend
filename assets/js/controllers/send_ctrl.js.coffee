@@ -11,7 +11,6 @@
   $scope.originsLoaded = false
   $scope.cameraIsOn = false
   
-  
   $scope.sending = false # Sending in progress
   
   # getUserMedia is not supported by Safari and IE. 
@@ -422,3 +421,12 @@
     $scope.confirmationStep = false    
     $scope.step--
 
+  # Advanced Send temporarily show HTML
+
+  $scope.advanced = false
+
+  $scope.advancedSend = () ->
+    return $scope.advanced = true
+
+  $scope.regularSend = () ->
+    return $scope.advanced = false
