@@ -381,5 +381,6 @@
   "UID_EXPLAIN" : "Your Wallet ID is your unique identifier. It is completely unique to you, and it is what you use to access your wallet.",
   "AUTHORIZED" : "Authorized!",
   "AUTHORIZED_MESSAGE" : "You've successfully been authorized into your account.",
+  "ADVANCED_SEND" : "Advanced Send",
   "" : ""
 }

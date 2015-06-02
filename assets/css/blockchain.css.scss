@@ -47,6 +47,8 @@ html,body {
 
 .hide { display: none; }
 
+.invisible { visibility: hidden; opacity: 0; }
+
 .alpha-agreement {
   background: rgba(10,10,10,.5);
   position: fixed;
