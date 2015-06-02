@@ -198,6 +198,13 @@
   ::-webkit-input-placeholder {
     color: $ccc;
   }
+
+  .advanced-recipient-row {
+    margin-bottom: 10px;
+    .ui-select-container {
+      min-width: 225px;
+    }
+  }
 }
 
 //overrides

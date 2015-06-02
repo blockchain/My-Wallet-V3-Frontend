@@ -15,8 +15,7 @@
     form.form-horizontal(role="form",name="form",novalidate)
       .flex-column.form-group(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
         label.mbm
-          span(translate="FROM")
-          |:
+          span(translate="FROM:")
         div
           p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")
@@ -25,11 +24,10 @@
               ui-select-match {{ maxAndLabelForSelect($select) }} 
               ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)") 
                 span(ng-bind-html="maxAndLabel(origin) | highlight: $select.search" ng-class="{zerobalance: hasZeroBalance(origin)}")
-      .flex-column.form-group(ng-class="{'has-error': errors.to, 'has-success' : success.to}")
-        label.mbm
-          span(translate="TO")
-          |:  
-        div
+      .flex-column.form-group(ng-class="{'has-error': errors.to, 'has-success' : success.to}", ng-hide="advanced")
+        label.mbm.flex-between
+          span(translate="TO:")
+        .flex-center.prl
           p.form-control-static(ng-hide="originsLoaded", )
             img(src="img/spinner.gif")
           // Use input-group if camera is present.
@@ -46,7 +44,7 @@
             ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search)" refresh-delay="0") 
               span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
           span.help-block {{ errors.to }}
-      .flex-column.form-group(ng-class="{'has-error': errors.amount}")
+      .flex-column.form-group(ng-class="{'has-error': errors.amount}", ng-hide="advanced")
         label.mbm
           span(translate="AMOUNT")
         .flex-center
@@ -61,7 +59,34 @@
             span.mrs {{ nextAlternativeCurrency() }}:
             p.mbn
               fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="transaction.currency=='BTC'")
-              span(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
+                span(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
+      .flex-center.flex-column.scale.form-group.mvl.advanced-recipient(ng-show="advanced")
+        label.mbm.flex-between.width-100
+          span(translate="TO:")
+          span.flex-center.type-sm(ng-show="advanced")
+            | Add Another Recipient
+            i.ti-plus.mlm
+        .flex-center.prl.advanced-recipient-row
+          p.form-control-static(ng-hide="originsLoaded")
+            img(src="img/spinner.gif")
+          // Use input-group if camera is present.
+          .flex(ng-show="originsLoaded", ng-if="browserWithCamera")
+            ui-select(ng-model="transaction.destination", ng-blur="visualValidate('to')")
+              ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
+              ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search)" refresh-delay="0") 
+                span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
+            span.mls
+              button#qr.button(type="button", ng-click="cameraOn()")
+                img(src="img/qr.png", alt="QR")
+          ui-select(ng-model="transaction.destination", ng-blur="visualValidate('to')", ng-if="!browserWithCamera")
+            ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
+            ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search)" refresh-delay="0") 
+              span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
+          span.help-block {{ errors.to }}
+          .flex-center
+            span.mrm {{ transaction.currency }}:
+            input.form-control(type="text",ng-blur="visualValidate('amount')")
+          i.ti-close.mlm
       .flex-column.form-group.scale(ng-class="{'has-error': errors.amount}", ng-show="advanced")
         label.mbm
           span(translate="MINERS_FEE")
@@ -74,7 +99,7 @@
             label
               input(type="radio" name="miners-fee")
               | Normal
-              span.success.mls (Recommended)
+              span.success.mls.type-xs (Recommended)
             label
               input(type="radio" name="miners-fee")
               | Generous
@@ -82,7 +107,7 @@
             .mrl.flex-1
               .flex-center
                 span.mrm {{ transaction.currency }}:
-                input.form-control(type="text",ng-blur="visualValidate('amount')")          
+                input.form-control(type="text",ng-blur="visualValidate('amount')")
               span.help-block {{ errors.amount }}
             a.button-success.button-sm.type-sm.mrl.flex-center(ng-click="toggleCurrency()")
               i.ti-arrows-horizontal
