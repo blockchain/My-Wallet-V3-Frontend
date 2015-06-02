@@ -37,7 +37,7 @@
   "RECEIVE_TO" : "Receive To:",
   "AMOUNT" : "Amount:",
   "PAID" : "Paid:",
-  "BITCOIN_ADDRESS" : "Bitcoin address",
+  "BITCOIN_ADDRESS" : "Bitcoin address:",
   "CANCEL" : "Cancel",
   "SAVE" : "Save",
   "ACCEPT" : "Accept",

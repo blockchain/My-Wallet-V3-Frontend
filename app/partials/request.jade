@@ -40,7 +40,7 @@
       .col-sm-9
         p.form-control-static
           | {{ paymentRequest.paid / 100000000.0 }}  
-    .flex(ng-if="paymentRequestURL")
+    .flex.pam(ng-if="paymentRequestURL")
       .flex-1
         p(ng-hide="status.didInitializeHD")
           img(src="img/spinner.gif")  
@@ -52,6 +52,8 @@
           img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
           span(ng-show="status.didInitializeHD")
             | {{ paymentRequestAddress }}  
-        p.ccc.mtm Just copy the address above and share
-.modal-footer
-  button.button-default(ng-click="close()", translate="GOT_IT")  
+        p.black.mtm.flex-center
+          i.ti-mouse-alt.mrs
+          | Just copy the address above and share
+.modal-footer.flex-end.pal
+  button.button-success.button-lg(ng-click="close()", translate="GOT_IT")  

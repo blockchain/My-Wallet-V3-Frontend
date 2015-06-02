@@ -56,7 +56,7 @@
           b {{ address.balance | btc }}
           span.fiat
             fiat(btc="address.balance")
-.modal-footer
+.modal-footer.pal.flex-end
   button.btn.btn-info(ng-click="cameraOn()", ng-show="step == 1", ng-if="browserWithCamera", translate="QR")
   button.btn.btn-primary(ui-ladda="{{ status.busy }}", ng-show="step == 1", ng-click="validate()", ng-disabled="fields.addressOrPrivateKey == ''", ladda-translate="VALIDATE", data-style="expand-left")
   button.btn.btn-info(ng-show="step == 2", ng-click="close()", translate="CLOSE")
