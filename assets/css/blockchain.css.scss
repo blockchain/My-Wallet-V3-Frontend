@@ -47,6 +47,9 @@ html,body {
 
 .hide { display: none; }
 
+//Because <span>'s are evil
+.display-block { display: block; }
+
 .alpha-agreement {
   background: rgba(10,10,10,.5);
   position: fixed;

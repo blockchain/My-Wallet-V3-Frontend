@@ -12,6 +12,14 @@
 .left-align { text-align: left; }
 .center-align { text-align: center; }
 
+.text-overflow-hidden, .ui-select-match-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: calc(100% - 50px);
+  display: block;
+}
+
 $multiplier: 100;
 
 @for $i from 1 through 9 {
