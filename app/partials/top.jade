@@ -6,7 +6,7 @@
     a.flex-center.flex-justify(ng-click="send()")
       i.bc-icon-send
       span(translate="SEND")
-  .balance.flex-column.flex-align-end(ng-click="toggleCurrency()")
+  .balance.flex-column.flex-align-end.right-align(ng-click="toggleCurrency()")
     span(ng-show="getTotal(accountIndex) == null")
       h3
         img(ng-show="balance == null" src="img/spinner.gif") 

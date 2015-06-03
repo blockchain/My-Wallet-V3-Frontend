@@ -8,6 +8,10 @@
   text-decoration: underline;
 }
 
+.right-align { text-align: right; }
+.left-align { text-align: left; }
+.center-align { text-align: center; }
+
 $multiplier: 100;
 
 @for $i from 1 through 9 {
