@@ -483,6 +483,12 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     else
       return null
 
+  wallet.toggleDisplayCurrency = () ->
+    if wallet.isBitCurrency(wallet.settings.displayCurrency)
+      wallet.settings.displayCurrency = wallet.settings.currency
+    else
+      wallet.settings.displayCurrency = wallet.settings.btcCurrency
+
   wallet.getFiatAtTime = (amount, time, currency) ->
     defer = $q.defer()
     # Cache the result since historical rates don't change within one session and we don't want to hammer the server
