@@ -110,9 +110,11 @@
   $scope.transactionTemplate = {
     from: null, 
     to: paymentRequest.address, 
-    destination: null, 
+    destination: null,
     amount: paymentRequest.amount, 
     satoshi: 0, 
+    multipleDestinations: [null],
+    multipleAmounts: [0],
     currency: Wallet.settings.btcCurrency, 
     fee: 10000
     note: ""
@@ -196,6 +198,14 @@
   $scope.resetSendForm = () ->
     $scope.transaction = angular.copy($scope.transactionTemplate)
     $scope.transaction.feeAmount = $scope.transaction.fee / $scope.btcCurrency.conversion
+
+  $scope.addDestination = () ->
+    $scope.transaction.multipleAmounts.push(0)
+    $scope.transaction.multipleDestinations.push(null)
+
+  $scope.removeDestination = (index) ->
+    $scope.transaction.multipleAmounts.splice(index, 1)
+    $scope.transaction.multipleDestinations.splice(index, 1)
         
   $scope.numberOfActiveAccountsAndLegacyAddresses = () -> 
     return filterFilter(Wallet.accounts, {active: true}).length + filterFilter(Wallet.legacyAddresses, {active: true}).length

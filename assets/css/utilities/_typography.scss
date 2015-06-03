@@ -8,6 +8,10 @@
   text-decoration: underline;
 }
 
+.pointer {
+	cursor: pointer;
+}
+
 $multiplier: 100;
 
 @for $i from 1 through 9 {
