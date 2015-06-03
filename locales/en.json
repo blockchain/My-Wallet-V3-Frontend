@@ -402,5 +402,6 @@
   "EXPLORER" : "Explorer",
   "MERCHANT" : "Merchant",
   "SUPPORT" : "Support",
-  "ADD_ANOTHER_RECIPIENT" : "Add Another Recipient"
+  "ADD_ANOTHER_RECIPIENT" : "Add Another Recipient",
+  "REMOVE" : "Remove"
 }

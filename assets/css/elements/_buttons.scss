@@ -58,6 +58,7 @@ button[disabled] {
 @include button('success', $receive-green, white);
 @include button('default', white, $black);
 @include button('info', $light-grey, white);
+@include button('danger', #E28081, white);
 
 .button-sm {
   padding: .3125em .625em;

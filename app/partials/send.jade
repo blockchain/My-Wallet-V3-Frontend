@@ -63,8 +63,9 @@
       .flex-column.form-group.bc-modal-fade.mvl.advanced-recipient(ng-show="advanced" ng-class="{'has-error': errors.amounts}")
         label.mbm.flex-between
           span(translate="TO:")
-          a.flex-center.type-sm.button-sm.button-default(ng-click="addDestination()", translate="ADD_ANOTHER_RECIPIENT")
-            i.ti-plus.mlm
+          a.flex-center.type-sm.button-sm.button-default(ng-click="addDestination()")
+            i.ti-plus.mrm
+            span(translate="ADD_ANOTHER_RECIPIENT")
         .flex-column.prl.advanced-recipient-row(ng-repeat="item in transaction.multipleDestinations track by $index")
           p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")
@@ -93,7 +94,9 @@
               p.mbn
                 fiat(currency="settings.currency", btc="convertToSatoshi(transaction.multipleAmounts[$index])",  ng-show="isBitCurrency(transaction.currency)")
                 span(ng-hide="isBitCurrency(transaction.currency)") {{ convertToSatoshi(transaction.multipleAmounts[$index]) | toBitCurrency:btcCurrency:false }}
-            i.ti-close.mlm.pointer(ng-click="removeDestination($index)")
+            a.mlm.button-danger.type-sm.button-sm(ng-click="removeDestination($index)")
+              i.ti-close.mrm
+              span(translate="REMOVE")
         span.help-block {{ errors.amounts }}
       .flex-column.form-group.bc-modal-fade(ng-class="{'has-error': errors.fee}" ng-show="advanced")
         label.mbm

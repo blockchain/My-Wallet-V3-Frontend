@@ -209,6 +209,11 @@
       margin-right: 10px;
     }
   }
+  .recipient-currency {
+    .form-control {
+      padding: 3px 10px;
+    }
+  }
   .has-error .form-control {
     border-color: #a94442 !important;
   }
