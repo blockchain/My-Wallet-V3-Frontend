@@ -118,7 +118,7 @@
             .mrl.flex-1
               .flex-center
                 span.mrm {{ transaction.currency.code }}:
-                input.form-control(type="text" ng-blur="visualValidate('fee')" ng-change="updateFee()" ng-model="feeAmount")
+                input.form-control(type="text" ng-blur="visualValidate('fee')" ng-change="updateFee()" ng-model="feeAmount" placeholder="Enter your fee here")
               span.help-block {{ errors.fee }}
         
       //- .form-group(ng-show="advanced")
