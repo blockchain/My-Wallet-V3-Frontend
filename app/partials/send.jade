@@ -57,8 +57,8 @@
             i.ti-arrows-horizontal
           .flex-center.ccc.conversion.flex-1
             p.mbn
-              fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="transaction.currency=='BTC'")
-              span(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
+              fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="isBitCurrency(transaction.currency)")
+              span(ng-hide="isBitCurrency(transaction.currency)") {{ transaction.satoshi | toBitCurrency:btcCurrency:false }}
       //- Advanced Send
       .flex-center.flex-column.scale.form-group.mvl.advanced-recipient(ng-show="advanced")
         label.mbm.flex-between.width-100
@@ -87,34 +87,34 @@
             span.mrm {{ transaction.currency.code }}:
             input.form-control(type="text",ng-blur="visualValidate('amount')")
           i.ti-close.mlm
-      .flex-column.form-group.scale(ng-class="{'has-error': errors.amount}", ng-show="advanced")
+      .flex-column.form-group.scale(ng-class="{'has-error': errors.fee}" ng-show="advanced")
         label.mbm
           span(translate="MINERS_FEE")
         p.ccc(translate="MINERS_FEE_EXPLAIN")
         .flex-center
           .flex-column.border-right.prm.miners-fee-selection
             label
-              input(type="radio" name="miners-fee")
+              input(type="radio" ng-model="transaction.fee" value="5000" name="miners-fee")
               | Frugal
             label
-              input(type="radio" name="miners-fee")
+              input(type="radio" ng-model="transaction.fee" value="10000" name="miners-fee")
               | Normal
               span.success.mls.type-xs (Recommended)
             label
-              input(type="radio" name="miners-fee")
+              input(type="radio" ng-model="transaction.fee" value="15000" name="miners-fee")
               | Generous
           .flex-center.plm
             .mrl.flex-1
               .flex-center
                 span.mrm {{ transaction.currency.code }}:
-                input.form-control(type="text",ng-blur="visualValidate('amount')")
-              span.help-block {{ errors.amount }}
+                input.form-control(type="text" ng-blur="visualValidate('fee')" ng-model="transaction.feeAmount")
+              span.help-block {{ errors.fee }}
             a.button-success.button-sm.type-sm.mrl.flex-center(ng-click="toggleCurrency()")
               i.ti-arrows-horizontal
             .flex-center.ccc.conversion.flex-1
               p.mbn
-                fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="isBitCurrency(transaction.currency)")
-                span(ng-hide="isBitCurrency(transaction.currency)") {{ transaction.satoshi | toBitCurrency:btcCurrency:false }}
+                fiat(currency="settings.currency", btc="transaction.fee",  ng-show="isBitCurrency(transaction.currency)")
+                span(ng-hide="isBitCurrency(transaction.currency)") {{ transaction.fee | toBitCurrency:btcCurrency:false }}
         
       //- .form-group(ng-show="advanced")
       //-   label.col-sm-3.control-label(translate="FEES")
@@ -175,7 +175,7 @@
     a.ccc(ng-show="advanced", ng-click="regularSend()", translate="REGULAR_SEND")
   .flex-center.flex-end
     button.button-muted-off.mrm(ng-click="cameraOff()", ng-show="cameraIsOn", translate="CAMERA_OFF")
-    button.button-muted.scale.mrm(ng-show="advanced", translate="RESET_FORM")
+    button.button-muted.scale.mrm(ng-show="advanced", translate="RESET_FORM", ng-click="resetSendForm()")
     button.button-muted.mrm(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
     button.button-muted.mrm(ng-click="backToForm()", translate="BACK", ng-show="confirmationStep")
     button.button-success.button-lg(ng-click="goToConfirmation()",ng-disabled="!transactionIsValid", translate="NEXT_STEP", ng-hide="confirmationStep")

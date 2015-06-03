@@ -107,17 +107,20 @@
   
   
   
-  $scope.transaction = {
+  $scope.transactionTemplate = {
     from: null, 
     to: paymentRequest.address, 
     destination: null, 
     amount: paymentRequest.amount, 
     satoshi: 0, 
     currency: Wallet.settings.btcCurrency, 
-    fee: 0
+    fee: 10000
     note: ""
     publicNote: false
   }
+
+  $scope.transaction = angular.copy($scope.transactionTemplate)
+  $scope.transaction.feeAmount = numeral($scope.transaction.fee).divide($scope.btcCurrency.conversion)
       
   $scope.getFilter = (search) ->
     filter =
@@ -189,6 +192,10 @@
     
   $scope.toggleCurrency = () ->
     $scope.transaction.currency = $scope.nextAlternativeCurrency()
+
+  $scope.resetSendForm = () ->
+    $scope.transaction = angular.copy($scope.transactionTemplate)
+    $scope.transaction.feeAmount = $scope.transaction.fee / $scope.btcCurrency.conversion
         
   $scope.numberOfActiveAccountsAndLegacyAddresses = () -> 
     return filterFilter(Wallet.accounts, {active: true}).length + filterFilter(Wallet.legacyAddresses, {active: true}).length
@@ -253,6 +260,13 @@
   #################################
   #           Private             #
   #################################
+
+  $scope.$watch "transaction.fee", (fee) ->
+    $scope.visualValidate('fee')
+    $scope.transaction.feeAmount = fee / $scope.btcCurrency.conversion
+
+  $scope.$watch "transaction.feeAmount", (feeAmount) ->
+    $scope.transaction.fee = $scope.convertToSatoshi(feeAmount)
       
   $scope.$watch "transaction.currency", (currency) ->
     if currency? && $scope.transaction.currencySelected && $scope.transaction.currencySelected.code != currency
@@ -270,7 +284,8 @@
   $scope.$watchCollection "[transaction.destination, transaction.from, transaction.amount, transaction.currency, transaction.note]", () ->
     $scope.transaction.satoshi = $scope.convertToSatoshi($scope.transaction.amount)
 
-    $scope.transaction.fee = Wallet.recommendedTransactionFee($scope.transaction.from, $scope.transaction.satoshi)     
+    if !$scope.advanced
+      $scope.transaction.fee = Wallet.recommendedTransactionFee($scope.transaction.from, $scope.transaction.satoshi)     
     $scope.transactionIsValid = $scope.validate()
     
   $scope.$watch "transaction.from", () ->
@@ -360,6 +375,10 @@
     if blurredField == "note"
       if !$scope.validateNote()
         $scope.errors.note = "Note cannot exceed 512 characters in length"
+
+    if blurredField == "fee"
+      if !$scope.validateFee()
+        $scope.errors.fee = "Cannot leave fee empty"
     
     return 
     
@@ -367,6 +386,14 @@
     $scope.transactionIsValid = $scope.validate()
     if $scope.transaction.amount? && $scope.transaction.amount > 0
       $scope.visualValidate("amount")
+
+  $scope.validateFee = () ->
+    return false unless $scope.transaction.fee?
+    return false unless $scope.transaction.feeAmount?
+    return false if isNaN(parseInt($scope.transaction.fee))
+    return false if $scope.transaction.feeAmount == ""
+    $scope.errors.fee = null
+    return true
 
   $scope.validateNote = () ->
     return false if $scope.transaction.note.length > 512
@@ -387,8 +414,9 @@
     
     return false unless $scope.validateAmount()  
 
-    return false unless $scope.validateNote()
+    return false unless $scope.validateFee()
 
+    return false unless $scope.validateNote()
     $scope.errors.note = null
     
     return true
