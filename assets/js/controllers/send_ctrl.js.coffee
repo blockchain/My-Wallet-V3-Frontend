@@ -197,7 +197,7 @@
     
   $scope.toggleCurrency = () ->
     $scope.transaction.currency = $scope.nextAlternativeCurrency()
-    $scope.convertFromSatoshi($scope.transaction.fee)
+    $scope.feeAmount = $scope.convertFromSatoshi($scope.transaction.fee)
 
   $scope.resetSendForm = () ->
     $scope.transaction = angular.copy($scope.transactionTemplate)

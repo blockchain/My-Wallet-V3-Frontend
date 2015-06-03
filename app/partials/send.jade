@@ -85,14 +85,14 @@
             .mrl.flex-1
               .flex-center
                 span.mrm {{ transaction.currency.code }}:
-                input.form-control(type="text" ng-blur="visualValidate('amounts')" ng-model="transaction.multipleAmounts[$index]")
+                input.form-control(type="text" ng-blur="visualValidate('amounts')" ng-change="visualValidate('amounts')" ng-model="transaction.multipleAmounts[$index]")
             span.help-block {{ errors.fee }}
             a.button-success.button-sm.type-sm.mrl(ng-click="toggleCurrency()")
               i.ti-arrows-horizontal
             .flex-center.ccc.conversion.flex-1
               p.mbn
-                fiat(currency="settings.currency", btc="transaction.fee",  ng-show="isBitCurrency(transaction.currency)")
-                span(ng-hide="isBitCurrency(transaction.currency)") {{ transaction.fee | toBitCurrency:btcCurrency:false }}
+                fiat(currency="settings.currency", btc="convertToSatoshi(transaction.multipleAmounts[$index])",  ng-show="isBitCurrency(transaction.currency)")
+                span(ng-hide="isBitCurrency(transaction.currency)") {{ convertToSatoshi(transaction.multipleAmounts[$index]) | toBitCurrency:btcCurrency:false }}
             i.ti-close.mlm.pointer(ng-click="removeDestination($index)")
         span.help-block {{ errors.amounts }}
       .flex-column.form-group.bc-modal-fade(ng-class="{'has-error': errors.fee}" ng-show="advanced")
