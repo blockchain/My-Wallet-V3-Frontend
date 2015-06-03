@@ -4,7 +4,7 @@ div(ng-show="hdAddresses.length == 0")
   img(src="img/spinner.gif")
 div(ng-show="hdAddresses.length > 0")
   .form-ctrl.flex-between.flex-center
-    .flex-1.mrm
+    .flex-1.mrl
       input.filter(type="text", ng-model="searchText").form-control
     .btn-group(dropdown is-open="display.account_dropdown_open" ng-show="settings.multiAccount")
       button.btn.btn-info.dropdown-toggle.btn-bci(dropdown-toggle type="button", data-toggle="dropdown", aria-expanded="false")
@@ -54,11 +54,10 @@ div(ng-show="hdAddresses.length > 0")
 p.mtl.hidden-xs(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
 p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
 
-.row.form-ctrl(ng-show="display.imported")
-  .col-xs-12.col-lg-6
+.flex-between.flex-center.form-ctrl(ng-show="display.imported")
+  .flex-1.mrl
     input.filter(type="text", ng-model="searchTextLegacy").form-control
-  .hidden-xs.col-lg-6(align="right")
-    a.btn.btn-info.btn-bci(ng-click="importAddress()", translate="IMPORT_ADDRESS")
+  a.btn.btn-info.btn-bci(ng-click="importAddress()", translate="IMPORT_ADDRESS")
 
 .row(ng-show="display.imported")
   .col-xs-12.table-container
