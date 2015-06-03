@@ -52,6 +52,9 @@ html,body {
 
 .width-100 { width: 100%; }
 
+//Because <span>'s are evil
+.display-block { display: block; }
+
 .alpha-agreement {
   background: rgba(10,10,10,.5);
   position: fixed;
