@@ -1,19 +1,4 @@
 span.amountTotal(ng-class="{unconfirmed: transaction.confirmations < 3}")
-  span(ng-show="transaction.intraWallet")
-    button.amount.intra-wallet(ng-click="toggle()")
-      fiat(btc="transaction.result", ng-show="shouldShowFiat()")
-      span(ng-show="currencyCodeIs('BTC')") {{ transaction.result | btc }}
-      span(ng-show="currencyCodeIs('mBTC')") {{ transaction.result | mbtc }}
-      span(ng-show="currencyCodeIs('bits')") {{ transaction.result | bits }}
-  span(ng-show="transaction.result > 0 && !transaction.intraWallet")
-    button.amount.received(ng-click="toggle()")
-      fiat(btc="transaction.result", ng-show="shouldShowFiat()")
-      span(ng-show="currencyCodeIs('BTC')") {{ transaction.result | btc }}
-      span(ng-show="currencyCodeIs('mBTC')") {{ transaction.result | mbtc }}
-      span(ng-show="currencyCodeIs('bits')") {{ transaction.result | bits }}
-  span(ng-show="transaction.result < 0 && !transaction.intraWallet")
-    button.amount.spent(ng-click="toggle()")
-      fiat(btc="transaction.result", ng-show="shouldShowFiat()")
-      span(ng-show="currencyCodeIs('BTC')") {{ transaction.result | btc }}
-      span(ng-show="currencyCodeIs('mBTC')") {{ transaction.result | mbtc }}
-      span(ng-show="currencyCodeIs('bits')") {{ transaction.result | bits }}
+  button.amount(ng-class="{'intra-wallet':transaction.intraWallet, 'received':transaction.result > 0 && !transaction.intraWallet, 'spent':transaction.result < 0 && !transaction.intraWallet}" ng-click="toggle()")
+    fiat(btc="transaction.result", ng-hide="isBitCurrency(settings.displayCurrency)")
+    span(ng-show="isBitCurrency(settings.displayCurrency)") {{ transaction.result | toBitCurrency:settings.btcCurrency }}

@@ -16,7 +16,7 @@ h5.well.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
               span(ng-bind-html="account.label | highlight:searchText")
               span.label.label-primary(translate="DEFAULT", ng-show="account.isDefault")
           div.col-xs-6.balance
-            h3.btc(ng-show="account.balance != null") {{ account.balance | btc }}
+            h3.btc(ng-show="account.balance != null") {{ account.balance | toBitCurrency:settings.btcCurrency }}
             h3.fiat(btc="account.balance", ng-show="account.balance != null")
       div.actions.col-xs-12
         ul

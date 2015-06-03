@@ -78,7 +78,7 @@ p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archive
         td(ng-bind-html="address.label | highlight:searchTextLegacy")
         td 
           span(ng-show="address.balance != null")
-            span.btc {{ address.balance | btc }}
+            span.btc {{ address.balance | toBitCurrency:settings.btcCurrency }}
             fiat.fiat(btc="address.balance") 
           //- span(us-spinner="{radius:6, width:6, length: 6}" spinner-key="{{ address.address }}" spinner-start-active="true" ng-show="address.balance == null")
           img(ng-show="address.balance == null" src="img/spinner.gif")
@@ -110,7 +110,7 @@ p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archive
         td(ng-bind-html="address.label | highlight:searchTextArchived")
         td 
           span(ng-show="address.balance != null")
-            span.btc {{ address.balance | btc }}
+            span.btc {{ address.balance | toBitCurrency:settings.btcCurrency }}
             fiat.fiat(btc="address.balance") 
           img(ng-show="address.balance == null" src="img/spinner.gif")
         td 
