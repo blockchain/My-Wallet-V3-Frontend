@@ -265,8 +265,14 @@
               Wallet.store.resetLogoutTimeout()
           
       Wallet.clearAlerts()
-  
-      Wallet.transaction(transactionDidFinish, transactionDidFailWithError).send($scope.transaction.from, $scope.transaction.destination, numeral($scope.transaction.amount), $scope.transaction.currency, publicNote)
+      
+      transaction = Wallet.transaction(transactionDidFinish, transactionDidFailWithError)
+
+      if $scope.advanced
+        transaction.sendAdvanced($scope.transaction.from, $scope.transaction.multipleDestinations, $scope.transaction.multipleAmounts, $scope.transaction.fee, $scope.transaction.currency, publicNote)
+      else
+        transaction.send($scope.transaction.from, $scope.transaction.destination, numeral($scope.transaction.amount), $scope.transaction.currency, publicNote)
+        
       return
 
   $scope.closeAlert = (alert) ->

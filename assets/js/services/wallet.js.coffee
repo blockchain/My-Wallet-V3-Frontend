@@ -646,6 +646,28 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         else if destination.address?
           spendFrom.toAddress(destination.address)
 
+      sendAdvanced: (from, destinations, amounts, fee, currency, publicNote) ->
+        addressesArray = []
+        amountsArray = []
+
+        for destination in destinations
+          if destination.type == "Accounts"
+            addressesArray.push(wallet.getReceivingAddressForAccount(destination.index))
+          else
+            addressesArray.push(destination.address)
+
+        for amount in amounts
+          amountsArray.push(wallet.checkAndGetTransactionAmount(amount, currency, success, error))
+
+        spender = wallet.spender(publicNote, success, error, {}, needsSecondPassword)
+
+        if from.address?
+          spendFrom = spender.fromAddress(from.address, 1000, fee)
+        else if from.index?
+          spendFrom = spender.fromAccount(from.index, 1000, fee)
+
+        spendFrom.toAddresses(addressesArray, amountsArray)
+
       sweep: (fromAddress, toAccountIndex) ->
         spender = wallet.spender(null, success, error, {}, needsSecondPassword)
         spender.addressSweep(fromAddress.address).toAccount(toAccountIndex)
