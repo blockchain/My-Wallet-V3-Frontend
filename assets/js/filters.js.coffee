@@ -2,6 +2,14 @@
 
 angular.module("walletFilters", [])
       
+.filter "toBitCurrency", ->
+  (input, btcCurrency, hideCurrency) ->
+    if input? && !isNaN(input) && btcCurrency.code? && btcCurrency.conversion?
+      format = "0.[" + btcCurrency.conversion.toString().substr(1) + "]"
+      numeral(input).divide(btcCurrency.conversion).format(format) + (if hideCurrency then "" else (" " + btcCurrency.code))
+    else
+      ""
+
 .filter "btc", ->
   (input,hideCurrency) ->
     if input? && !isNaN(input) 
