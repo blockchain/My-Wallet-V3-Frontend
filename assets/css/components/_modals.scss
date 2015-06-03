@@ -201,8 +201,12 @@
 
   .advanced-recipient-row {
     margin-bottom: 10px;
+    position: relative;
+    border: 1px solid #eee;
+    padding: 1em;
     .ui-select-container {
       min-width: 225px;
+      margin-right: 10px;
     }
   }
   .has-error .form-control {

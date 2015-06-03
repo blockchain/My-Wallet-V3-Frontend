@@ -385,7 +385,7 @@
   "RESET_FORM" : "Reset Form",
   "REGULAR_SEND" : "Back To Regular Send",
   "MINERS_FEE" : "Miner's Fee:",
-  "MINERS_FEE_EXPLAIN" : "Select from a predetermined list or enter your own amount",
+  "MINERS_FEE_EXPLAIN" : "Select from a predetermined list or enter a custom amount",
   "GO_BACK" : "Go Back",
   "CLICK_HERE_TO_CREATE_WALLET" : "If you would like to create a new wallet click here",
   "CLICK_HERE_TO_CREATE_WALLET_ALPHA_KEY" : "If you have an Alpha Key and would like to create a new wallet click here",
@@ -401,5 +401,6 @@
   "WALLET" : "Wallet",
   "EXPLORER" : "Explorer",
   "MERCHANT" : "Merchant",
-  "SUPPORT" : "Support"
+  "SUPPORT" : "Support",
+  "ADD_ANOTHER_RECIPIENT" : "Add Another Recipient"
 }
