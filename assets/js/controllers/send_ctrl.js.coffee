@@ -75,6 +75,9 @@
 
   $scope.convertToSatoshi = (amount) ->
     Wallet.convertToSatoshi(amount, $scope.transaction.currency)
+
+  $scope.convertFromSatoshi = (amount) ->
+    Wallet.convertFromSatoshi(amount, $scope.transaction.currency)
       
   $scope.determineLabel = (origin) ->
     label = origin.label || origin.address
@@ -194,6 +197,7 @@
     
   $scope.toggleCurrency = () ->
     $scope.transaction.currency = $scope.nextAlternativeCurrency()
+    $scope.convertFromSatoshi($scope.transaction.fee)
 
   $scope.resetSendForm = () ->
     $scope.transaction = angular.copy($scope.transactionTemplate)
@@ -206,6 +210,7 @@
   $scope.removeDestination = (index) ->
     $scope.transaction.multipleAmounts.splice(index, 1)
     $scope.transaction.multipleDestinations.splice(index, 1)
+    $scope.visualValidate('amounts')
         
   $scope.numberOfActiveAccountsAndLegacyAddresses = () -> 
     return filterFilter(Wallet.accounts, {active: true}).length + filterFilter(Wallet.legacyAddresses, {active: true}).length
@@ -300,7 +305,7 @@
   
   $scope.updateFee = (feeAmount) ->
     if feeAmount
-      $scope.feeAmount = ($scope.transaction.fee / $scope.btcCurrency.conversion)
+      $scope.feeAmount = $scope.convertFromSatoshi($scope.transaction.fee)
     else
       $scope.transaction.fee = $scope.convertToSatoshi($scope.feeAmount)
 

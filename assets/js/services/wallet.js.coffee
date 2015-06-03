@@ -483,6 +483,16 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     else
       return null
 
+  wallet.convertFromSatoshi = (amount, currency) ->
+    return null unless amount?
+    return null unless currency?
+    if wallet.isBitCurrency(currency)
+      return parseFloat(numeral(amount).divide(currency.conversion).format("0.[00000000]"))
+    else if wallet.conversions[currency.code]?
+      return parseFloat(numeral(amount).divide(wallet.conversions[currency.code].conversion).format("0.[00]"))
+    else
+      return null
+
   wallet.toggleDisplayCurrency = () ->
     if wallet.isBitCurrency(wallet.settings.displayCurrency)
       wallet.settings.displayCurrency = wallet.settings.currency
