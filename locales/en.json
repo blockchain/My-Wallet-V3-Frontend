@@ -95,7 +95,7 @@
   "WALLET_PASSWORD" : "Wallet Password",
   "WALLET_PASSWORD_EXPLAIN" : "Your password is never shared with our servers, which means we cannot help reset your password if you forget it. Make sure you write down your recovery phrase which can restore access to your wallet in the event of a lost password.",
   "PASSWORD_SET" : "Password Set",
-  "CHANGE_PASSWORD" : "change password",
+  "CHANGE_PASSWORD" : "Change Password",
   "CURRENT_PASSWORD" : "Current Password",
   "NEW_PASSWORD" : "New Password",
   "CONFIRM_PASSWORD" : "Confirm Password",
