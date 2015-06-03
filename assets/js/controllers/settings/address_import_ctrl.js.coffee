@@ -1,5 +1,6 @@
 @AddressImportCtrl = ($scope, $log, Wallet, $modalInstance, $translate, $state, $timeout) ->
   
+  $scope.settings = Wallet.settings
   $scope.step = 1
   $scope.legacyAddresses  = Wallet.legacyAddresses
   $scope.BIP38 = null
