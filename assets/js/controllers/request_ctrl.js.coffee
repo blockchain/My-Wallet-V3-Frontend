@@ -5,6 +5,7 @@
   $scope.receiveAddress = null
   $scope.status = Wallet.status
   $scope.settings = Wallet.settings
+  $scope.isBitCurrency = Wallet.isBitCurrency
   
   $scope.currencies = angular.copy(Wallet.currencies)
   
@@ -53,8 +54,7 @@
     return $scope.decimalPlaces($scope.fields.amount) <= $scope.allowedDecimals()
 
   $scope.allowedDecimals = () ->
-    currency = $scope.fields.currency.code
-    return 8 if currency == 'BTC'
+    return 8 if $scope.isBitCurrency($scope.fields.currency)
     return 2
 
   $scope.decimalPlaces = (number) ->
