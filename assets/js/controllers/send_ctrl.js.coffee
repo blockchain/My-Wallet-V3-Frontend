@@ -122,7 +122,7 @@
   }
 
   $scope.transaction = angular.copy($scope.transactionTemplate)
-  $scope.transaction.feeAmount = numeral($scope.transaction.fee).divide($scope.btcCurrency.conversion)
+  $scope.feeAmount =  parseFloat(numeral($scope.transaction.fee).divide($scope.btcCurrency.conversion).format('0.[00000]'))
       
   $scope.getFilter = (search) ->
     filter =
@@ -197,7 +197,7 @@
 
   $scope.resetSendForm = () ->
     $scope.transaction = angular.copy($scope.transactionTemplate)
-    $scope.transaction.feeAmount = $scope.transaction.fee / $scope.btcCurrency.conversion
+    $scope.feeAmount = $scope.transaction.fee / $scope.btcCurrency.conversion
 
   $scope.addDestination = () ->
     $scope.transaction.multipleAmounts.push(0)
@@ -266,17 +266,52 @@
 
   $scope.closeAlert = (alert) ->
     Wallet.closeAlert(alert)
+
+  $scope.allowedDecimals = () ->
+    currency = $scope.transaction.currencySelected
+    return 8 if $scope.isBitCurrency($scope.transaction.currency)
+    return 2
+
+  $scope.decimalPlaces = (number) ->
+    return (number.split('.')[1] || []).length
+
+  $scope.updateToLabel = () ->
+    return unless $scope.transaction.destination?
+    $scope.toLabel = $scope.transaction.destination.label
+    if $scope.transaction.destination.index?
+      $scope.toLabel += " Account"
+      
+  $scope.refreshDestinations = (query) ->
+    return if $scope.destinations.length == 0
+    last = $scope.destinations.slice(-1)[0]
+    unless !query? || query == ""
+       last.address = query
+       last.label = query
     
+    $scope.transactionIsValid = $scope.validate()  
+    $scope.updateToLabel() 
+    
+    unless $scope.transaction.destination.type == "External"
+      # Select the external account if it's the only match; otherwise when the user moves away from the field
+      # the address will be forgotten. This is only an issue if the user selects an account first and then starts typing.
+      for destination in $scope.destinations
+        return if destination.type != "External" && destination.label.indexOf(query) != -1
+      $scope.transaction.destination = last
+  
+  $scope.updateFee = (feeAmount) ->
+    if feeAmount
+      $scope.feeAmount = ($scope.transaction.fee / $scope.btcCurrency.conversion)
+    else
+      $scope.transaction.fee = $scope.convertToSatoshi($scope.feeAmount)
+
   #################################
   #           Private             #
   #################################
 
+  # Validation watchers
+
   $scope.$watch "transaction.fee", (fee) ->
     $scope.visualValidate('fee')
-    $scope.transaction.feeAmount = fee / $scope.btcCurrency.conversion
-
-  $scope.$watch "transaction.feeAmount", (feeAmount) ->
-    $scope.transaction.fee = $scope.convertToSatoshi(feeAmount)
       
   $scope.$watch "transaction.currency", (currency) ->
     if currency? && $scope.transaction.currencySelected && $scope.transaction.currencySelected.code != currency
@@ -307,189 +342,128 @@
     $scope.updateToLabel()
     $scope.visualValidate("toAccount")
     $scope.transactionIsValid = $scope.validate()
-      
-  $scope.updateToLabel = () ->
-    return unless $scope.transaction.destination?
-    $scope.toLabel = $scope.transaction.destination.label
-    if $scope.transaction.destination.index?
-      $scope.toLabel += " Account"
-      
-  $scope.refreshDestinations = (query) ->
-    return if $scope.destinations.length == 0
-    last = $scope.destinations.slice(-1)[0]
-    unless !query? || query == ""
-       last.address = query
-       last.label = query
-    
-    $scope.transactionIsValid = $scope.validate()  
-    $scope.updateToLabel() 
-    
-    unless $scope.transaction.destination.type == "External"
-      # Select the external account if it's the only match; otherwise when the user moves away from the field
-      # the address will be forgotten. This is only an issue if the user selects an account first and then starts typing.
-      for destination in $scope.destinations
-        return if destination.type != "External" && destination.label.indexOf(query) != -1
-      $scope.transaction.destination = last
-      
-      
+  
+  $scope.$watch "originsLoaded", ->
+    $scope.transactionIsValid = $scope.validate()
+    if $scope.transaction.amount? && $scope.transaction.amount > 0
+      $scope.visualValidate("amount")
     
   $scope.$watch "transaction.destination", ((newValue) ->
     $scope.visualValidate("to")
     ), true
   
+  # Form validation
     
-  $scope.visualValidate = (blurredField) ->
-    if blurredField == "to"
-      return if $scope.destinations.length == 0
-      
+  $scope.visualValidate = (field) ->
+    validation = null
+
+    if field == "to"      
       $scope.errors.to = null
       $scope.success.to = null
-      
-      # If the user types a custom address but "forgets" to select it, it would otherwise be lost:
-      if $scope.transaction.destination == "" && $scope.destinations.slice(-1)[0].type == "External"
-        $scope.transaction.destination = $scope.destinations.slice(-1)[0]
-      
-      if $scope.transaction.destination == null  
-      else if $scope.transaction.destination.type == "External"
-        if $scope.transaction.destination.address == ""
-        else if Wallet.isValidAddress($scope.transaction.destination.address)
-          $scope.success.to = true
-        else
-          $translate("BITCOIN_ADDRESS_INVALID").then (translation) ->          
-            $scope.errors.to = translation
-      else
-        if (
-          $scope.transaction.destination.index? && ($scope.transaction.destination.index == $scope.transaction.from.index) ||
-          $scope.transaction.destination.address? && ($scope.transaction.destination.address == $scope.transaction.from.address)
-        
-        )
-          $translate("SAME_DESTINATION").then (translation) ->          
-            $scope.errors.to = translation
-    
-    if blurredField == "amount" || blurredField == "currency"
-      $scope.errors.amount = null
-  
-    transaction = $scope.transaction
-    
-    unless transaction.amount? && transaction.amount > 0
-      if blurredField == "amount" 
-        $scope.errors.amount = "Please enter amount"
+      validation = $scope.validateDestination()
 
-    if $scope.originsLoaded && transaction.amount > 0 && !$scope.validateAmount()
-      if blurredField == "amount" || blurredField == "from" || blurredField == "currency"
-        if !$scope.validateAmountDecimals()
-          $scope.errors.amount = "Maximum of " + $scope.allowedDecimals() + " decimal places"
-        else
-          $scope.errors.amount = "Insufficient funds"
+      if !validation.isValid && validation.error?
+        $translate(validation.error).then (translation) ->
+          $scope.errors.to = translation
+      else if validation.isValid
+        $scope.success.to = true
+      return
 
-    if blurredField == "note"
-      if !$scope.validateNote()
-        $scope.errors.note = "Note cannot exceed 512 characters in length"
+    if field == "amount"
+      validation = $scope.validateAmount()
 
-    if blurredField == "fee"
-      if !$scope.validateFee()
-        $scope.errors.fee = "Cannot leave fee empty"
+    if field == "note"
+      validation = $scope.validateNote()
 
-    if blurredField == "amounts"
-      $scope.errors.amounts = $scope.validateAmounts()
-    
+    if field == "fee"
+      validation = $scope.validateFee()
+
+    if field == "amounts"
+      validation = $scope.validateAmounts()
+
+    return unless validation?
+
+    if !validation.isValid
+      $scope.errors[field] = validation.error
+    else
+      $scope.errors[field] = null
+
     return 
-    
-  $scope.$watch "originsLoaded", ->
-    $scope.transactionIsValid = $scope.validate()
-    if $scope.transaction.amount? && $scope.transaction.amount > 0
-      $scope.visualValidate("amount")
 
   $scope.validateAmounts = () ->
     sum = 0
     for i in $scope.transaction.multipleAmounts
       amount = parseFloat(i)
       if isNaN(amount)
-        return "Please enter a valid amount"
+        return {error: "Please enter a valid amount", isValid: false}
       else if amount < 0
-        return "Cannot enter a negative amount"
+        return {error: "Cannot enter a negative amount", isValid: false}
       sum += amount
-    if !$scope.transaction.from? || !$scope.transaction.from.balance?
-      return null
-    if numeral(sum).multiply($scope.btcCurrency.conversion) > $scope.transaction.from.balance
-      return "Insufficient funds"
-    return null
+    if $scope.transaction.from? && $scope.transaction.from.balance?
+      if numeral(sum).multiply($scope.btcCurrency.conversion) > $scope.transaction.from.balance
+        return {error: "Insufficient funds", isValid: false}
+    return {isValid: true}
 
   $scope.validateDestinations = () ->
     for dest in $scope.transaction.multipleDestinations
-      return false unless dest? && dest.type?
+      return {isValid: false} unless dest? && dest.type?
       if (dest.type == "External" && dest.address == "")
-        return false if dest.address == ""
-        return false unless Wallet.isValidAddress(dest.address)
-      return false if dest == $scope.transaction.from
-    return true
+        return {isValid: false} if dest.address == ""
+        return {isValid: false} unless Wallet.isValidAddress(dest.address)
+      return {isValid: false} if dest == $scope.transaction.from
+    return {isValid: true}
+
+  $scope.validateAmount = () ->
+    amount = $scope.transaction.amount
+    return {error: 'Please enter amount', isValid: false} unless amount? && amount > 0
+    return {error: 'Please fill out the "From" field', isValid: false} unless $scope.transaction.from? && $scope.transaction.from.balance?
+    return {error: 'Insufficient funds', isValid: false} if $scope.transaction.satoshi + $scope.transaction.fee > $scope.transaction.from.balance
+    return {error: 'Maximum number of decimal places exceeded', isValid: false} if !$scope.validateAmountDecimals().isValid
+    return {isValid: true}
+
+  $scope.validateAmountDecimals = () ->
+    return {isValid: false} unless $scope.decimalPlaces($scope.transaction.amount) <= $scope.allowedDecimals()
+    return {isValid: true}
+
+  $scope.validateDestination = () ->
+    transaction = $scope.transaction
+    return {isValid: false} if transaction.destination == null || (transaction.destination.type == 'External' && transaction.destination.address == '')
+    if transaction.destination.type == 'External'
+      return {error: 'BITCOIN_ADDRESS_INVALID', isValid: false} unless Wallet.isValidAddress(transaction.destination.address)
+    return {error: 'SAME_DESTINATION', isValid: false} if transaction.destination == transaction.from
+    return {isValid: true}
 
   $scope.validateFee = () ->
-    return false unless $scope.transaction.fee?
-    return false unless $scope.transaction.feeAmount?
-    return false if isNaN(parseInt($scope.transaction.fee))
-    return false if $scope.transaction.feeAmount == ""
-    $scope.errors.fee = null
-    return true
+    return {error: 'Fee cannot be less than zero', isValid: false} if parseInt($scope.feeAmount) < 0
+    return {error: 'Fee must be a number', isValid: false} if isNaN(parseInt($scope.feeAmount))
+    return {error: 'Fee cannot be left blank', isValid: false} if $scope.feeAmount == ""
+    return {isValid: true}
 
   $scope.validateNote = () ->
-    return false if $scope.transaction.note.length > 512
-    return true
-    
+    return {isValid: false} if $scope.transaction.note.length > 512
+    return {isValid: true}
+
   $scope.validateForAdvanced = () ->
-    return false unless $scope.validateAmounts() == null
-    return false unless $scope.validateDestinations()
+    return false unless $scope.validateAmounts().isValid
+    return false unless $scope.validateDestinations().isValid
+    return true
+
+  $scope.validateForSimple = () ->
+    return false unless $scope.validateAmount().isValid
+    return false unless $scope.validateAmountDecimals().isValid
+    return false unless $scope.validateDestination().isValid
     return true
 
   $scope.validate = () ->    
     return false unless $scope.originsLoaded
-
     return false unless $scope.validateFee()
-
     return false unless $scope.validateNote()
-    $scope.errors.note = null
-
     if $scope.advanced
       return $scope.validateForAdvanced()
+    else
+      return $scope.validateForSimple()  
 
-    transaction = $scope.transaction
-    
-    return false if transaction.destination == null || (transaction.destination.type == "External" && transaction.destination.address == "")
-        
-    if transaction.destination.type == "External"
-      return false unless Wallet.isValidAddress(transaction.destination.address)
-        
-    return false if transaction.destination == transaction.from
-    
-    $scope.errors.to = null
-    
-    return false unless $scope.validateAmount()
-    
-    return true
-    
-  $scope.validateAmount = () ->
-    amount = $scope.transaction.amount
-
-    return false unless amount? && amount > 0      
-    
-    return false unless $scope.transaction.from? && $scope.transaction.from.balance?
-    
-    return false if $scope.transaction.satoshi + $scope.transaction.fee > $scope.transaction.from.balance
-
-    return false if !$scope.validateAmountDecimals()
-    $scope.errors.amount = null
-    return true
-  
-  $scope.validateAmountDecimals = () ->
-    return $scope.decimalPlaces($scope.transaction.amount) <= $scope.allowedDecimals()
-
-  $scope.allowedDecimals = () ->
-    currency = $scope.transaction.currencySelected
-    return 8 if $scope.isBitCurrency($scope.transaction.currency)
-    return 2
-
-  $scope.decimalPlaces = (number) ->
-    return (number.split('.')[1] || []).length
+  # Step switching
 
   $scope.step = 1
 
@@ -506,7 +480,9 @@
   $scope.advanced = false
 
   $scope.advancedSend = () ->
+    $scope.transactionIsValid = $scope.validate()
     return $scope.advanced = true
 
   $scope.regularSend = () ->
+    $scope.transactionIsValid = $scope.validate()
     return $scope.advanced = false

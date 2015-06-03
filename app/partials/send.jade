@@ -84,7 +84,7 @@
               span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
           .flex-center
             span.mrm {{ transaction.currency.code }}:
-            input.form-control(type="text" ng-blur="visualValidate('amounts')" ng-model="transaction.multipleAmounts[$index]")
+            input.form-control(type="text" ng-blur="visualValidate('amounts')" ng-change="visualValidate('amounts')" ng-model="transaction.multipleAmounts[$index]")
           i.ti-close.mlm.pointer(ng-click="removeDestination($index)")
         span.help-block {{ errors.amounts }}
       .flex-column.form-group.bc-modal-fade(ng-class="{'has-error': errors.fee}" ng-show="advanced")
@@ -94,20 +94,20 @@
         .flex-center
           .flex-column.border-right.prm.miners-fee-selection
             label
-              input(type="radio" ng-model="transaction.fee" value="0" name="miners-fee")
+              input(type="radio" ng-model="transaction.fee" value="0" ng-change="updateFee(true)" name="miners-fee")
               | Frugal
             label
-              input(type="radio" ng-model="transaction.fee" value="10000" name="miners-fee")
+              input(type="radio" ng-model="transaction.fee" value="10000" ng-change="updateFee(true)" name="miners-fee")
               | Normal
               span.success.mls.type-xs (Recommended)
             label
-              input(type="radio" ng-model="transaction.fee" value="100000" name="miners-fee")
+              input(type="radio" ng-model="transaction.fee" value="100000" ng-change="updateFee(true)" name="miners-fee")
               | Generous
           .flex-center.plm
             .mrl.flex-1
               .flex-center
                 span.mrm {{ transaction.currency.code }}:
-                input.form-control(type="text" ng-blur="visualValidate('fee')" ng-model="transaction.feeAmount")
+                input.form-control(type="text" ng-blur="visualValidate('fee')" ng-change="updateFee()" ng-model="feeAmount")
               span.help-block {{ errors.fee }}
             a.button-success.button-sm.type-sm.mrl.flex-center(ng-click="toggleCurrency()")
               i.ti-arrows-horizontal
