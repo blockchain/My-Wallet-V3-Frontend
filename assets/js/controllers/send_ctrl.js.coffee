@@ -394,14 +394,11 @@
     sum = 0
     for i in $scope.transaction.multipleAmounts
       amount = parseFloat(i)
-      if isNaN(amount)
-        return {error: "Please enter a valid amount", isValid: false}
-      else if amount < 0
-        return {error: "Cannot enter a negative amount", isValid: false}
+      return {error: "Please enter a valid amount", isValid: false} if isNaN(amount)
+      return {error: "Cannot enter a negative amount", isValid: false} if amount < 0
       sum += amount
     if $scope.transaction.from? && $scope.transaction.from.balance?
-      if numeral(sum).multiply($scope.btcCurrency.conversion) > $scope.transaction.from.balance
-        return {error: "Insufficient funds", isValid: false}
+      return {error: "Insufficient funds", isValid: false} if numeral(sum).multiply($scope.btcCurrency.conversion) > $scope.transaction.from.balance
     return {isValid: true}
 
   $scope.validateDestinations = () ->
