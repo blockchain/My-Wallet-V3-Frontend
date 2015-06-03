@@ -2,7 +2,7 @@
   .flex-center
     img(src="img/arrow-up.png")
     h3(ng-show="step == 1 && !advanced", translate="SEND_BITCOIN")
-    h3.scale(ng-show="advanced && step == 1", translate="ADVANCED_SEND")
+    h3(ng-show="advanced && step == 1", translate="ADVANCED_SEND")
     h3(ng-show="confirmationStep", translate="CONFIRM")
   h5(ng-show="step == 1 && !advanced") Send bitcoin instantly to any bitcoin address, email, or phone number
   h5(ng-show="confirmationStep") Please review your transaction
@@ -60,7 +60,7 @@
             p.mbn
               fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="transaction.currency=='BTC'")
               span(ng-hide="transaction.currency=='BTC'") {{ transaction.satoshi | btc }}
-      .flex-center.flex-column.scale.form-group.mvl.advanced-recipient(ng-show="advanced")
+      .flex-center.flex-column.bc-modal-fade.form-group.mvl.advanced-recipient(ng-show="advanced")
         label.mbm.flex-between.width-100
           span(translate="TO:")
           span.flex-center.type-sm(ng-show="advanced")
@@ -87,7 +87,7 @@
             span.mrm {{ transaction.currency }}:
             input.form-control(type="text",ng-blur="visualValidate('amount')")
           i.ti-close.mlm
-      .flex-column.form-group.scale(ng-class="{'has-error': errors.amount}", ng-show="advanced")
+      .flex-column.form-group.bc-modal-fade(ng-class="{'has-error': errors.amount}", ng-show="advanced")
         label.mbm
           span(translate="MINERS_FEE")
         p.ccc(translate="MINERS_FEE_EXPLAIN")
@@ -172,11 +172,11 @@
 
 .modal-footer.flex-between.flex-center.pal
   .flex-center
-    a.ccc(ng-class="{invisible: step == 2}", ng-hide="advanced", ng-click="advancedSend()", translate="ADVANCED_SEND")
+    a.ccc(ng-hide="advanced", ng-click="advancedSend()", translate="ADVANCED_SEND")
     a.ccc(ng-show="advanced", ng-click="regularSend()", translate="REGULAR_SEND")
   .flex-center.flex-end
     button.button-muted-off.mrm(ng-click="cameraOff()", ng-show="cameraIsOn", translate="CAMERA_OFF")
-    button.button-muted.scale.mrm(ng-show="advanced", translate="RESET_FORM")
+    button.button-muted.bc-modal-fade.mrm(ng-show="advanced", translate="RESET_FORM")
     button.button-muted.mrm(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
     button.button-muted.mrm(ng-click="backToForm()", translate="BACK", ng-show="confirmationStep")
     button.button-success.button-lg(ng-click="goToConfirmation()",ng-disabled="!transactionIsValid", translate="NEXT_STEP", ng-hide="confirmationStep")

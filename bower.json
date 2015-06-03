@@ -32,6 +32,7 @@
     "angular-local-storage": "~0.1.5"
   },
   "resolutions": {
-    "angular": "1.2.*"
+    "angular": "1.2.28",
+    "angular-animate": "1.2.*"
   }
 }

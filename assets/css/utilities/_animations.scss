@@ -19,7 +19,7 @@
   100% { transform: scale(1); }
 }
 
-.scale { 
+.scale {
   animation: scale .4s;
 }
 
@@ -32,7 +32,7 @@
 }
 
 ///////////////////////////////////
-//flash message and notifications//
+//Fade in & out animations/////////
 ///////////////////////////////////
 
 @-webkit-keyframes fade-in-right {
@@ -67,6 +67,43 @@
   -webkit-animation-name: fade-in-right;
   animation-name: fade-in-right;
 }
+
+@-webkit-keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.fade-in-down {
+  -webkit-animation-name: fade-in-down;
+  animation-name: fade-in-down;
+}
+
+////////////////////////////////////
+/////Zooming in out animations//////
+////////////////////////////////////
 
 @-webkit-keyframes zoom-out {
   0% {
@@ -105,31 +142,27 @@
   animation-name: zoom-out;
 }
 
-@-webkit-keyframes fade-in-down {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
-  }
 
-  100% {
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none;
-  }
+///////////////////////////////////////////
+/////////                    //////////////
+////****** ANGULAR ANIMATIONs ******* /////
+////////                    ///////////////
+//////////////////////////////////////////
+
+.bc-modal .ng-animate {
+  -webkit-animation: none 0s;
+  animation: none 0s;
 }
 
-@keyframes fade-in-down {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
-  }
-
-  100% {
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none;
-  }
+/* Initial state when showing */
+.bc-modal-fade.ng-hide-remove {
+  opacity: 0;
+  display: block !important;
+  -webkit-transition: linear .4s opacity !important;
+  transition: linear .4s opacity !important;
 }
 
+/* Will transition towards this state */
+.bc-modal-fade.ng-hide-remove.ng-hide-remove-active {
+  opacity: 1;
+}
