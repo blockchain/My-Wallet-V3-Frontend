@@ -11,6 +11,8 @@
     $modalInstance.dismiss ""
 
   $scope.setPassword = () ->
+    return if $scope.busy
+    
     $scope.busy = true
     
     success = () ->
