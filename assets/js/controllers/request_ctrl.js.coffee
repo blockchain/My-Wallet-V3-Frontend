@@ -8,13 +8,15 @@
   $scope.isBitCurrency = Wallet.isBitCurrency
   
   $scope.currencies = angular.copy(Wallet.currencies)
+  $scope.btcCurrencies = angular.copy(Wallet.btcCurrencies).reverse()
   
   for currency in $scope.currencies
     currency.type = "Fiat"
-    
-  btc = {code: "BTC", type: "Crypto"}  
-  $scope.currencies.unshift btc
-  
+
+  for btcCurrency in $scope.btcCurrencies
+    btcCurrency.type = "Crypto"
+    $scope.currencies.unshift btcCurrency
+
   $scope.fields = {to: null, amount: "0", currency: Wallet.settings.currency, label: ""}  
       
   for account in $scope.accounts
@@ -94,8 +96,8 @@
   $scope.parseAmount = () ->
     if $scope.fields.currency == undefined
       return 0
-    else if $scope.fields.currency.code == "BTC"
-      return parseInt(numeral($scope.fields.amount).multiply(100000000).format("0"))
+    else if $scope.isBitCurrency($scope.fields.currency)
+      return parseInt(numeral($scope.fields.amount).multiply($scope.fields.currency.conversion).format("0"))
     else
       return Wallet.fiatToSatoshi($scope.fields.amount, $scope.fields.currency.code)
         
