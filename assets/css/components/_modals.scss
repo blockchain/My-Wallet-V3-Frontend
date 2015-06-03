@@ -195,6 +195,9 @@
   ::-webkit-input-placeholder {
     color: $ccc;
   }
+  .has-error .form-control {
+    border-color: #a94442 !important;
+  }
 }
 
 //overrides
