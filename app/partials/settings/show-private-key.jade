@@ -21,7 +21,7 @@
             span : {{ address }}
           p
             label(translate="BALANCE")
-            span : {{ balance | btc }}
+            span : {{ balance | toBitCurrency:settings.btcCurrency }}
           p
             label(translate="YOUR_PRIVATE_KEY") 
             span : {{ privKey }}
