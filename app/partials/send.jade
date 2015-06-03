@@ -60,33 +60,33 @@
               fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="isBitCurrency(transaction.currency)")
               span(ng-hide="isBitCurrency(transaction.currency)") {{ transaction.satoshi | toBitCurrency:btcCurrency:false }}
       //- Advanced Send
-      .flex-center.flex-column.form-group.mvl.advanced-recipient(ng-show="advanced")
+      .flex-center.flex-column.form-group.mvl.advanced-recipient(ng-show="advanced" ng-class="{'has-error': errors.amounts}")
         label.mbm.flex-between.width-100
           span(translate="TO:")
-          span.flex-center.type-sm(ng-show="advanced")
+          span.flex-center.type-sm.pointer(ng-click="addDestination()")
             | Add Another Recipient
             i.ti-plus.mlm
-        .flex-center.prl.advanced-recipient-row
+        .flex-center.prl.advanced-recipient-row(ng-repeat="item in transaction.multipleDestinations track by $index")
           p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")
           // Use input-group if camera is present.
           .flex(ng-show="originsLoaded", ng-if="browserWithCamera")
-            ui-select(ng-model="transaction.destination", ng-blur="visualValidate('to')")
+            ui-select(ng-model="transaction.multipleDestinations[$index]", ng-blur="visualValidate('to')")
               ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
               ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search)" refresh-delay="0") 
                 span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
             span.mls
               button#qr.button(type="button", ng-click="cameraOn()")
                 img(src="img/qr.png", alt="QR")
-          ui-select(ng-model="transaction.destination", ng-blur="visualValidate('to')", ng-if="!browserWithCamera")
+          ui-select(ng-model="transaction.multipleDestinations[$index]", ng-blur="visualValidate('to')", ng-if="!browserWithCamera")
             ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
             ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search)" refresh-delay="0") 
               span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
-          span.help-block {{ errors.to }}
           .flex-center
             span.mrm {{ transaction.currency.code }}:
-            input.form-control(type="text",ng-blur="visualValidate('amount')")
-          i.ti-close.mlm
+            input.form-control(type="text" ng-blur="visualValidate('amounts')" ng-model="transaction.multipleAmounts[$index]")
+          i.ti-close.mlm.pointer(ng-click="removeDestination($index)")
+        span.help-block {{ errors.amounts }}
       .flex-column.form-group.bc-modal-fade(ng-class="{'has-error': errors.fee}" ng-show="advanced")
         label.mbm
           span(translate="MINERS_FEE")
@@ -94,14 +94,14 @@
         .flex-center
           .flex-column.border-right.prm.miners-fee-selection
             label
-              input(type="radio" ng-model="transaction.fee" value="5000" name="miners-fee")
+              input(type="radio" ng-model="transaction.fee" value="0" name="miners-fee")
               | Frugal
             label
               input(type="radio" ng-model="transaction.fee" value="10000" name="miners-fee")
               | Normal
               span.success.mls.type-xs (Recommended)
             label
-              input(type="radio" ng-model="transaction.fee" value="15000" name="miners-fee")
+              input(type="radio" ng-model="transaction.fee" value="100000" name="miners-fee")
               | Generous
           .flex-center.plm
             .mrl.flex-1
