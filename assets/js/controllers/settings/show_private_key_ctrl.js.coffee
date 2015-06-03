@@ -1,5 +1,6 @@
 @ShowPrivateKeyCtrl = ($scope, $log, Wallet, $modalInstance, $timeout, $translate, addressObj) ->
 
+  $scope.settings = Wallet.settings
   $scope.accessAllowed = false
   $scope.incorrectSecondPassword = false
   $scope.address = addressObj.address

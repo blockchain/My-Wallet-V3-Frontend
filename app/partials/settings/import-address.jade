@@ -29,7 +29,7 @@
     p
       span(translate="BALANCE_FOR_ADDRESS")
       |: 
-      b(ng-show="address.balance != null") {{ address.balance | btc }}
+      b(ng-show="address.balance != null") {{ address.balance | toBitCurrency:settings.btcCurrency }}
       img(ng-show="address.balance == null" src="img/spinner.gif")
   form.form-horizontal(role="form",name="form",novalidate, ng-show="step==3")
     .form-group
@@ -53,7 +53,7 @@
         |:  
       .col-sm-5
         p.form-control-static 
-          b {{ address.balance | btc }}
+          b {{ address.balance | toBitCurrency:settings.btcCurrency }}
           span.fiat
             fiat(btc="address.balance")
 .modal-footer.pal.flex-end
