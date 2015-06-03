@@ -12,29 +12,28 @@
       .navbar-collapse.collapse(ng-class="{'in' : !navCollapsed}", ng-click="navCollapsed=true")
         ul.nav.navbar-nav.navbar-right
           li.item
-            a(href="https://www.blockchain.com") Home
+            a(href="https://www.blockchain.com", translate="HOME")
           li.item
-            a(href="https://blockchain.com/about") About
+            a(href="https://blockchain.com/about", translate="ABOUT")
           li.item.active
-            a(href="https://alpha.blockchain.info") Wallet
+            a(href="#", translate="WALLET")
           li.item
-            a(href="https://www.blockchain.info") Explorer
+            a(href="https://www.blockchain.info", translate="EXPLORER")
           li.item
-            a(href="http://blockchain.com/our-products/blockchain-merchant/") Merchant
+            a(href="http://blockchain.com/our-products/blockchain-merchant/", translate="MERCHANT")
           li.item
-            a(href="https://blockchain.zendesk.com/") Support          
-    // /.nav-collapse
+            a(href="https://blockchain.zendesk.com/", translate="SUPPORT")          
 
   .container-fluid.login
     .flex.flex-justify(ui-view="alerts")
     .login-box
       header
         hgroup(ng-hide="status.enterkey")
-          h1 Welcome back
-          p Login to your wallet below.
+          h1(translate="WELCOME_BACK")
+          p(translate="LOGIN_BELOW")
         hgroup(ng-show="status.enterkey")
-          h1 Create A Wallet
-          p Enter the Alpha Key you received by email to access our private Alpha
+          h1(translate="CREATE_A_WALLET")
+          p(translate="ALPHA_KEY_EXPLAIN")
     
       form.form-horizontal.clearfix(role="form" ng-hide="status.enterkey")
         .form-group(ng-class="{'has-error': errors.uid}")
@@ -42,10 +41,7 @@
           div
             input#UID_input.form-control(type="text", ng-model="uid", ng-disabled="busy || disableLogin" name="UID_input" focus-when="whereToFocus() == 1")
             span.help-block {{ errors.uid }}
-            span.help-block.info
-              | Find the login link in your email, e.g.
-              i blockchain.info/wallet/1111-222-333... 
-              | The series of numbers and dashes at the end of the link is your Login ID.
+            span.help-block.info(translate="FIND_GUID_EXPLAIN")
         .form-group(ng-class="{'has-error': errors.password}")
           label.control-label(translate="PASSWORD", for="pass_input")
           div
@@ -62,20 +58,20 @@
             span.help-block {{ errors.twoFactor }}
             p.form-control-static(ng-show="settings.twoFactorMethod == 5")
               img(ng-show="resending" src="img/spinner.gif")
-              a(ng-click="resend()", ng-show="!resending" ) Resend
+              a(ng-click="resend()", ng-show="!resending", translate="RESEND") 
         .form-group.bttn
           div.bttn-container
             button#login.btn.btn-primary.btn-login(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="LOGIN", ng-disabled="!isValid")
           span.register
             a(ng-click="prepareRegister()")
               span(ng-show="beta")
-                | If you have an Alpha Key and would like to create a new wallet click here
+                span(translate="CLICK_HERE_TO_CREATE_WALLET_ALPHA_KEY")| 
               span(ng-hide="beta")
-                | If you would like to create a new wallet click here
+                span(translate="CLICK_HERE_TO_CREATE_WALLET")
 
       form.form-horizontal.clearfix(role="form", ng-show="status.enterkey")
         .form-group(ng-show="beta")
-          label.control-label(for="beta_key") Alpha Invite Key
+          label.control-label(for="beta_key", translate="ALPHA_INVITE_KEY")
           div
             input#beta_key.form-control(type="text", name="beta_key" ng-model="key", ng-disabled="busy || disableLogin")
         .form-group.bttn
@@ -83,4 +79,4 @@
             button.btn.btn-primary.btn-login(ng-click="register()",translate="CREATE_WALLET", ng-disabled="key == null || key == '' ")
             span.register
               a(ng-click="status.enterkey = !status.enterkey")
-                | Go Back
+                span(translate="GO_BACK")

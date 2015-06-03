@@ -25,8 +25,8 @@
             span(ng-bind-html="currency.code | highlight: $select.search")   
       .col-sm-3
         p.form-control-static
-          fiat(currency="settings.currency", btc="paymentRequestAmount",  ng-show="fields.currency.code=='BTC'")
-          span(ng-hide="fields.currency.code=='BTC'") {{ paymentRequestAmount | btc }}
+          fiat(currency="settings.currency", btc="paymentRequestAmount",  ng-show="isBitCurrency(fields.currency)")
+          span(ng-hide="isBitCurrency(fields.currency)") {{ paymentRequestAmount | toBitCurrency:settings.btcCurrency }}
       
     //- .form-group
     //-   label.col-sm-3.control-label(translate="DESCRIPTION")

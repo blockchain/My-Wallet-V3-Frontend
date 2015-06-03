@@ -386,5 +386,20 @@
   "REGULAR_SEND" : "Back To Regular Send",
   "MINERS_FEE" : "Miner's Fee:",
   "MINERS_FEE_EXPLAIN" : "Select from a predetermined list or enter your own amount",
-  "" : ""
+  "GO_BACK" : "Go Back",
+  "CLICK_HERE_TO_CREATE_WALLET" : "If you would like to create a new wallet click here",
+  "CLICK_HERE_TO_CREATE_WALLET_ALPHA_KEY" : "If you have an Alpha Key and would like to create a new wallet click here",
+  "RESEND" : "Resend",
+  "ALPHA_INVITE_KEY" :"Alpha Invite Key",
+  "FIND_GUID_EXPLAIN" : "Find the login link in your email, e.g. <i>blockchain.info/wallet/1111-222-333...</i> The series of numbers and dashes at the end of the link is your Login ID.",
+  "WELCOME_BACK" : "Welcome back",
+  "LOGIN_BELOW" : "Login to your wallet below.",
+  "CREATE_A_WALLET" : "Create A Wallet",
+  "ALPHA_KEY_EXPLAIN" : "Enter the Alpha Key you received by email to access our private Alpha",
+  "HOME" : "Home",
+  "ABOUT" : "About",
+  "WALLET" : "Wallet",
+  "EXPLORER" : "Explorer",
+  "MERCHANT" : "Merchant",
+  "SUPPORT" : "Support"
 }
