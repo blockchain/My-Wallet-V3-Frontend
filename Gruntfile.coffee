@@ -333,51 +333,51 @@ module.exports = (grunt) ->
     shell:
       deploy_static_to_dev:
         command: () -> 
-          'rsync -rz --delete dist hd-dev@server12:'
+          'rsync -rz --delete dist hd-dev@server:'
 
       deploy_server_to_dev:
         command: () -> 
-          'rsync -rz --delete server.coffee hd-dev@server12:'
+          'rsync -rz --delete server.coffee hd-dev@server:'
 
       deploy_beta_to_dev:
         command: () -> 
-          'rsync -rz --delete node_modules/hd-beta hd-dev@server12:node_modules/'
+          'rsync -rz --delete node_modules/hd-beta hd-dev@server:node_modules/'
 
       deploy_static_to_staging:
         command: () -> 
-          'rsync -rz --delete dist hd-staging@server12:'
+          'rsync -rz --delete dist hd-staging@server:'
 
       deploy_server_to_staging:
         command: () -> 
-          'rsync -rz --delete server.coffee hd-staging@server12:'
+          'rsync -rz --delete server.coffee hd-staging@server:'
 
       deploy_beta_to_staging:
         command: () -> 
-          'rsync -rz --delete node_modules/hd-beta hd-staging@server12:node_modules/'
+          'rsync -rz --delete node_modules/hd-beta hd-staging@server:node_modules/'
 
       deploy_static_to_alpha:
         command: () -> 
-          'rsync -rz --delete dist hd-alpha@server12:'
+          'rsync -rz --delete dist hd-alpha@server:'
 
       deploy_server_to_alpha:
         command: () -> 
-          'rsync -rz --delete server.coffee hd-alpha@server12:'
+          'rsync -rz --delete server.coffee hd-alpha@server:'
 
       deploy_beta_to_alpha:
         command: () ->
-          'rsync -rz --delete node_modules/hd-beta hd-alpha@server12:node_modules/'
+          'rsync -rz --delete node_modules/hd-beta hd-alpha@server:node_modules/'
 
       deploy_start_dev:
         command: () ->
-          'ssh hd-dev@server12 "./start.sh"'
+          'ssh hd-dev@server "./start.sh"'
 
       deploy_start_staging:
         command: () ->
-          'ssh hd-staging@server12 "./start.sh"'
+          'ssh hd-staging@server "./start.sh"'
 
       deploy_start_alpha:
         command: () ->
-          'ssh hd-alpha@server12 "./start.sh"'
+          'ssh hd-alpha@server "./start.sh"'
 
       check_dependencies: 
         command: () -> 
@@ -393,7 +393,7 @@ module.exports = (grunt) ->
 
       bower_install_dependencies:
         command: () ->
-           'cd build && touch .bowerrc && bower install'
+           'cp bower.json build/ && cd build && bower install'
 
   # Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks "grunt-contrib-uglify"
@@ -503,7 +503,7 @@ module.exports = (grunt) ->
   ]
   
   grunt.registerTask "deploy_static_to_dev", [
-    "dist_unsafe"
+    "dist"
     "shell:deploy_static_to_dev"
     "shell:deploy_start_dev"
   ]
@@ -519,7 +519,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "deploy_to_dev", [
-    "dist_unsafe"
+    "dist"
     "shell:deploy_static_to_dev"
     "shell:deploy_beta_to_dev"
     "shell:deploy_server_to_dev"
@@ -527,7 +527,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "deploy_static_to_staging", [
-    "dist_unsafe"
+    "dist"
     "shell:deploy_static_to_staging"
     "shell:deploy_start_staging"
   ]
@@ -543,7 +543,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "deploy_to_staging", [
-    "dist_unsafe"
+    "dist"
     "shell:deploy_static_to_staging"
     "shell:deploy_beta_to_staging"
     "shell:deploy_server_to_staging"
@@ -551,7 +551,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "deploy_static_to_alpha", [
-    "dist_unsafe"
+    "dist"
     "shell:deploy_static_to_alpha"
     "shell:deploy_start_alpha"
   ]
@@ -567,7 +567,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "deploy_to_alpha", [
-    "dist_unsafe"
+    "dist"
     "shell:deploy_static_to_alpha"
     "shell:deploy_beta_to_alpha"
     "shell:deploy_server_to_alpha"
