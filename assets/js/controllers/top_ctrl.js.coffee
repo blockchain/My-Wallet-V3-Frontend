@@ -1,5 +1,6 @@
 @TopCtrl = ($scope, Wallet, $modal, $stateParams) ->
   $scope.settings = Wallet.settings
+  $scope.isBitCurrency = Wallet.isBitCurrency
   
   $scope.request = () ->
     Wallet.clearAlerts()
@@ -36,17 +37,6 @@
       return null if $scope.total('imported') == null
       return $scope.total('imported') + $scope.total(index)
     return $scope.total(index)
-
-  $scope.shouldShowFiat = () ->
-    if $scope.settings.displayCurrency?
-      for btcCur in ['BTC', 'mBTC', 'bits']
-        return false if btcCur == $scope.settings.displayCurrency.code
-    return true
-
-  $scope.btcCurrencyCodeIs = (code) ->
-    if $scope.settings.btcCurrency?
-      return code == $scope.settings.btcCurrency.code
-    else return false
     
   #################################
   #           Private             #
