@@ -149,17 +149,12 @@
 ////////                    ///////////////
 //////////////////////////////////////////
 
-.bc-modal .ng-animate {
-  -webkit-animation: none 0s;
-  animation: none 0s;
-}
-
 /* Initial state when showing */
 .bc-modal-fade.ng-hide-remove {
   opacity: 0;
   display: block !important;
-  -webkit-transition: linear .4s opacity !important;
-  transition: linear .4s opacity !important;
+  -webkit-transition: linear .4s all !important;
+  transition: linear .4s all !important;
 }
 
 /* Will transition towards this state */
