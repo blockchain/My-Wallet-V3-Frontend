@@ -1,5 +1,5 @@
 {
-  "ignore" : ["grunt", "jasmine-core", "jquery", "istanbul", "esprima", "typeforce", "angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize", "angular-translate-loader-static-files","bootstrap-sass"],
+  "ignore" : ["grunt", "jasmine-core", "jquery", "istanbul", "esprima", "typeforce", "angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize", "angular-translate-loader-static-files","bootstrap-sass","bootstrap"],
   "bc-qr-reader" : {
     "version": "0.1.1",
     "commits" : ["a9e3a13f08165fb51d9f835f731fddf8b5e135cb"],
