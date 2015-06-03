@@ -60,7 +60,7 @@
               fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="isBitCurrency(transaction.currency)")
               span(ng-hide="isBitCurrency(transaction.currency)") {{ transaction.satoshi | toBitCurrency:btcCurrency:false }}
       //- Advanced Send
-      .flex-center.flex-column.scale.form-group.mvl.advanced-recipient(ng-show="advanced")
+      .flex-center.flex-column.scale.form-group.mvl.advanced-recipient(ng-show="advanced" ng-class="{'has-error': errors.amounts}")
         label.mbm.flex-between.width-100
           span(translate="TO:")
           span.flex-center.type-sm.pointer(ng-click="addDestination()")
@@ -82,11 +82,11 @@
             ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
             ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search)" refresh-delay="0") 
               span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
-          span.help-block {{ errors.to }}
           .flex-center
             span.mrm {{ transaction.currency.code }}:
-            input.form-control(type="text" ng-blur="visualValidate('multipleAmounts')" ng-model="transaction.multipleAmounts[$index]")
+            input.form-control(type="text" ng-blur="visualValidate('amounts')" ng-model="transaction.multipleAmounts[$index]")
           i.ti-close.mlm.pointer(ng-click="removeDestination($index)")
+        span.help-block {{ errors.amounts }}
       .flex-column.form-group.scale(ng-class="{'has-error': errors.fee}" ng-show="advanced")
         label.mbm
           span(translate="MINERS_FEE")

@@ -389,6 +389,9 @@
     if blurredField == "fee"
       if !$scope.validateFee()
         $scope.errors.fee = "Cannot leave fee empty"
+
+    if blurredField == "amounts"
+      $scope.errors.amounts = $scope.validateAmounts()
     
     return 
     
@@ -396,6 +399,30 @@
     $scope.transactionIsValid = $scope.validate()
     if $scope.transaction.amount? && $scope.transaction.amount > 0
       $scope.visualValidate("amount")
+
+  $scope.validateAmounts = () ->
+    sum = 0
+    for i in $scope.transaction.multipleAmounts
+      amount = parseFloat(i)
+      if isNaN(amount)
+        return "Please enter a valid amount"
+      else if amount < 0
+        return "Cannot enter a negative amount"
+      sum += amount
+    if !$scope.transaction.from? || !$scope.transaction.from.balance?
+      return null
+    if numeral(sum).multiply($scope.btcCurrency.conversion) > $scope.transaction.from.balance
+      return "Insufficient funds"
+    return null
+
+  $scope.validateDestinations = () ->
+    for dest in $scope.transaction.multipleDestinations
+      return false unless dest? && dest.type?
+      if (dest.type == "External" && dest.address == "")
+        return false if dest.address == ""
+        return false unless Wallet.isValidAddress(dest.address)
+      return false if dest == $scope.transaction.from
+    return true
 
   $scope.validateFee = () ->
     return false unless $scope.transaction.fee?
@@ -409,8 +436,22 @@
     return false if $scope.transaction.note.length > 512
     return true
     
+  $scope.validateForAdvanced = () ->
+    return false unless $scope.validateAmounts() == null
+    return false unless $scope.validateDestinations()
+    return true
+
   $scope.validate = () ->    
     return false unless $scope.originsLoaded
+
+    return false unless $scope.validateFee()
+
+    return false unless $scope.validateNote()
+    $scope.errors.note = null
+
+    if $scope.advanced
+      return $scope.validateForAdvanced()
+
     transaction = $scope.transaction
     
     return false if transaction.destination == null || (transaction.destination.type == "External" && transaction.destination.address == "")
@@ -422,12 +463,7 @@
     
     $scope.errors.to = null
     
-    return false unless $scope.validateAmount()  
-
-    return false unless $scope.validateFee()
-
-    return false unless $scope.validateNote()
-    $scope.errors.note = null
+    return false unless $scope.validateAmount()
     
     return true
     
