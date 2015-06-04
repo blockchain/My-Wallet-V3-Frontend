@@ -8,8 +8,8 @@
   $scope.legacyAddresses = []
   $scope.unfilteredLegacyAddresses = Wallet.legacyAddresses
   
-  $scope.display = {action: null}
-
+  $scope.display = {action: null, editingEmail: false}
+  
   $scope.greaterThan = (prop, val) ->
     (item) ->
       if item[prop] > val
@@ -38,6 +38,13 @@
     else
       $scope.display.action = action
       
+  $scope.beginEditEmail = () ->
+    $scope.display.editingEmail = true
+    console.log "blah"
+
+  $scope.cancelEditEmail = () ->
+    $scope.display.editingEmail = false
+
   $scope.changePasswordHint = (hint, success, error) ->
     Wallet.changePasswordHint(hint, success, error)    
     

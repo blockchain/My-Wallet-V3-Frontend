@@ -8,6 +8,7 @@ walletApp.directive('bcAsyncInput', () ->
       validator: '='
       onSave: '='
       actionTitle: '='
+      placeholder: '='
       type: '@'
       errorMessage: '='
     }

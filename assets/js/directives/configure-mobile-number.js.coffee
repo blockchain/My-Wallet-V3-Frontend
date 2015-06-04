@@ -14,6 +14,9 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
       scope.mobileDefaultCountry = null
       
       scope.fields = {newMobile: null}
+      
+      if attrs.inline?
+        scope.inline = true
 
       scope.$watch "edit.mobile", (newValue) ->
         if newValue

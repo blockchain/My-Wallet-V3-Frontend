@@ -6,7 +6,7 @@
       span(ng-show="settings.twoFactorMethod == 5", translate="2FA_SMS")
       span(ng-show="settings.twoFactorMethod == 4", translate="2FA_GOOGLE_AUTH")
     p
-      a.button-primary(ng-click="edit.twoFactor = !edit.twoFactor", translate="CONFIGURE_2FA", ng-hide="settings.needs2FA")
+      a.button-success.button-lg(ng-click="edit.twoFactor = !edit.twoFactor", translate="CONFIGURE_2FA", ng-hide="settings.needs2FA")
       a.button-primary(ng-click="disableSecondFactor()", translate="DISABLE", ng-show="settings.needs2FA")
   div(ng-show="edit.twoFactor") 
     ul.settings-list(ng-hide="settings.googleAuthenticatorSecret || edit.yubiKey")

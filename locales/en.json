@@ -345,6 +345,7 @@
   "EMAIL_ADDRESS_REQUIRED" : "Required",
   "EMAIL_ADDRESS_INVALID" : "Invalid",
   "EMAIL_CONFIRMATION_SENT" : "Sent",
+  "PLEASE_CHECK_EMAIL" : "We have sent an email to {{ email }} please check your email and enter the verification code in the field below.",
   "SAME_DESTINATION" : "Cannot send to self",
   "ARCHIVED_ACCOUNTS" : "Archived Accounts",
   "ARCHIVED_ACCOUNTS_EXPLAIN" : "Archived accounts are account you may not need anymore that are hidden from the main view but still part of your wallet. You can un-archive them at any time.",
