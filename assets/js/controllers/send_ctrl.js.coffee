@@ -338,10 +338,12 @@
   # Validation watchers
 
   $scope.$watch "transaction.fee", (fee) ->
+    if typeof fee == 'string'
+      return $scope.transaction.fee = parseInt(fee)
     $scope.transactionIsValid = $scope.validate()
     $scope.visualValidate('fee')
 
-  $scope.$watchCollection "transaction.multipleAmounts", (fee) ->
+  $scope.$watchCollection "transaction.multipleAmounts", () ->
     $scope.transactionIsValid = $scope.validate()
     $scope.transaction.satoshi = $scope.addAmounts()
 
