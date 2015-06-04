@@ -205,10 +205,8 @@
     $modalInstance.dismiss ""
 
   $scope.nextAlternativeCurrency = () ->
-    if $scope.isBitCurrency($scope.transaction.currency)
-       return $scope.fiatCurrency
-    else
-      return $scope.btcCurrency
+    return $scope.fiatCurrency if $scope.isBitCurrency($scope.transaction.currency)
+    return $scope.btcCurrency
 
   $scope.toggleCurrency = () ->
     $scope.transaction.currency = $scope.nextAlternativeCurrency()
