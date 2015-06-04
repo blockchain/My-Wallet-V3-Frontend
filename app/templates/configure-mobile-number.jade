@@ -9,6 +9,7 @@ div
     button.button-muted.btn-small(ng-click="edit.mobile = false", translate="CANCEL")
   .row(ng-show="!user.isMobileVerified && !noMobile")
     .col-xs-9.inneredit
+      p We have sent your mobile phone an SMS message with a verification code. Enter the code below to verify your mobile phone number.
       input.form-control(type="text",ng-model="code", ng-disabled="status.busy")
     .col-xs-3.inneredit
       button.button-primary(ui-ladda="{{ status.busy }}", ng-click="verifyMobile(code)",ng-disabled="!code || code.length < 3", ladda-translate="VERIFY", data-style="expand-left")

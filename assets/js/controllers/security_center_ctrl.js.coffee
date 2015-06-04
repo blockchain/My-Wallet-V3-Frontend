@@ -40,7 +40,13 @@
       
   $scope.beginEditEmail = () ->
     $scope.display.editingEmail = true
-    console.log "blah"
+
+  $scope.changeEmail = (email, success, error) ->
+    _success = () ->
+      $scope.cancelEditEmail()
+      success()
+      
+    Wallet.changeEmail(email, _success, error)
 
   $scope.cancelEditEmail = () ->
     $scope.display.editingEmail = false
