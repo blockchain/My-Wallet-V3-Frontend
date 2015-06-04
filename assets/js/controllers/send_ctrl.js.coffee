@@ -365,10 +365,11 @@
       $scope.transaction.from = $scope.accounts[idx]
 
   $scope.$watchCollection "[transaction.destination, transaction.from, transaction.amount, transaction.currency, transaction.note]", () ->
-    $scope.transaction.satoshi = $scope.convertToSatoshi($scope.transaction.amount)
-
     if !$scope.advanced
+      $scope.transaction.satoshi = $scope.convertToSatoshi($scope.transaction.amount)
       $scope.transaction.fee = Wallet.recommendedTransactionFee($scope.transaction.from, $scope.transaction.satoshi)
+    else
+      $scope.transaction.satoshi = $scope.addAmounts()
     $scope.transactionIsValid = $scope.validate()
 
   $scope.$watch "transaction.from", () ->
