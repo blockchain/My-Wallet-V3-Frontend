@@ -159,7 +159,6 @@ module.exports = (grunt) ->
         src: [
           "build/bower_components/angular-ui-select/dist/select.min.css"
           # "build/bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css"
-          "build/bower_components/angular/angular-csp.css"
           "build/css/blockchain.css" # Needs to be loaded first
           "build/css/**/*.css"
         ],
@@ -207,7 +206,6 @@ module.exports = (grunt) ->
 
       css:
         files: [
-          {src: ["angular-csp.css"], dest: "build/css", cwd: "bower_components/angular", expand: true }
           {src: ["intlTelInput.css"], dest: "build/css", cwd: "bower_components/intl-tel-input/build/css", expand: true }
           {src: ["font-awesome.min.css"], dest: "build/css", cwd: "bower_components/fontawesome/css", expand: true }
           {src: ["*.css"], dest: "build/css", cwd: "assets/css", expand: true }
