@@ -299,11 +299,6 @@
       $scope.toLabel += " Account"
 
   $scope.refreshDestinations = (query, i) ->
-    console.log("index: " + i)
-    console.log "query: "
-    console.log query
-    console.log "destinations: "
-    console.log $scope.destinations
     return if $scope.destinations[i].length == 0
     last = $scope.destinations[i].slice(-1)[0]
     unless !query? || query == ""
