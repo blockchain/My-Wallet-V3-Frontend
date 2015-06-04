@@ -325,7 +325,7 @@
     else
       $scope.transaction.fee = $scope.convertToSatoshi($scope.feeAmount, $scope.btcCurrency)
 
-  $scope.addAmounts = () ->
+  $scope.getSatoshiFromAmounts = () ->
     sum = 0
     for amount in $scope.transaction.multipleAmounts
       sum += $scope.convertToSatoshi(amount)
@@ -338,12 +338,14 @@
   # Validation watchers
 
   $scope.$watch "transaction.fee", (fee) ->
+    if typeof fee == 'string'
+      return $scope.transaction.fee = parseInt(fee)
     $scope.transactionIsValid = $scope.validate()
     $scope.visualValidate('fee')
 
-  $scope.$watchCollection "transaction.multipleAmounts", (fee) ->
+  $scope.$watchCollection "transaction.multipleAmounts", () ->
     $scope.transactionIsValid = $scope.validate()
-    $scope.transaction.satoshi = $scope.addAmounts()
+    $scope.transaction.satoshi = $scope.getSatoshiFromAmounts()
 
   $scope.$watchCollection "transaction.multipleDestinations", (fee) ->
     $scope.transactionIsValid = $scope.validate()
@@ -363,10 +365,11 @@
       $scope.transaction.from = $scope.accounts[idx]
 
   $scope.$watchCollection "[transaction.destination, transaction.from, transaction.amount, transaction.currency, transaction.note]", () ->
-    $scope.transaction.satoshi = $scope.convertToSatoshi($scope.transaction.amount)
-
     if !$scope.advanced
+      $scope.transaction.satoshi = $scope.convertToSatoshi($scope.transaction.amount)
       $scope.transaction.fee = Wallet.recommendedTransactionFee($scope.transaction.from, $scope.transaction.satoshi)
+    else
+      $scope.transaction.satoshi = $scope.getSatoshiFromAmounts()
     $scope.transactionIsValid = $scope.validate()
 
   $scope.$watch "transaction.from", () ->
