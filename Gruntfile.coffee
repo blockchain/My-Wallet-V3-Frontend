@@ -271,6 +271,22 @@ module.exports = (grunt) ->
           format: "{{basename}}-{{hash}}.{{ext}}"
 
           callback: (befores, afters) ->
+            # Start with the longest file names, so e.g. some-font.woff2 is renamed before some-font.woff.
+            tuples = new Array
+            i = 0
+            while i < befores.length
+              tuples.push [befores[i],afters[i]]
+              i++      
+                          
+            tuples.sort((a,b) -> 
+              if a[0].length != b[0].length
+                return a[0].length < b[0].length
+              return a < b
+            )              
+            
+            befores = tuples.map((t)->t[0])
+            afters = tuples.map((t)->t[1])
+            
             publicdir = require("fs").realpathSync("dist")
             path = require("path")
             for referring_file_path in ["dist/application.min.js", "dist/beta-admin.js", "dist/application.css", "dist/beta-admin.css", "dist/admin.html", "dist/index.html", "dist/index-beta.html"]
