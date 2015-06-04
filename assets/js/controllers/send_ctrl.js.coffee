@@ -315,6 +315,12 @@
     else
       $scope.transaction.fee = $scope.convertToSatoshi($scope.feeAmount)
 
+  $scope.addAmounts = () ->
+    sum = 0
+    for amount in $scope.transaction.multipleAmounts
+      sum += $scope.convertToSatoshi(amount)
+    return sum
+
   #################################
   #           Private             #
   #################################
@@ -327,6 +333,7 @@
 
   $scope.$watchCollection "transaction.multipleAmounts", (fee) ->
     $scope.transactionIsValid = $scope.validate()
+    $scope.transaction.satoshi = $scope.addAmounts()
 
   $scope.$watchCollection "transaction.multipleDestinations", (fee) ->
     $scope.transactionIsValid = $scope.validate()
