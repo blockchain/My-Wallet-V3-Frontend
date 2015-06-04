@@ -324,6 +324,7 @@
       $scope.feeAmount = $scope.convertFromSatoshi($scope.transaction.fee, $scope.btcCurrency)
     else
       $scope.transaction.fee = $scope.convertToSatoshi($scope.feeAmount, $scope.btcCurrency)
+    $scope.visualValidate('amounts')
 
   $scope.getSatoshiFromAmounts = () ->
     sum = 0
@@ -342,6 +343,7 @@
       return $scope.transaction.fee = parseInt(fee)
     $scope.transactionIsValid = $scope.validate()
     $scope.visualValidate('fee')
+    $scope.visualValidate('amounts')
 
   $scope.$watchCollection "transaction.multipleAmounts", () ->
     $scope.transactionIsValid = $scope.validate()
