@@ -324,11 +324,9 @@
   $scope.$watch "transaction.fee", (fee) ->
     $scope.transactionIsValid = $scope.validate()
     $scope.visualValidate('fee')
-    $scope.visualValidate('amounts')
 
   $scope.$watchCollection "transaction.multipleAmounts", (fee) ->
     $scope.transactionIsValid = $scope.validate()
-    $scope.visualValidate('amounts')
 
   $scope.$watchCollection "transaction.multipleDestinations", (fee) ->
     $scope.transactionIsValid = $scope.validate()
@@ -361,8 +359,6 @@
       $scope.visualValidate("from")
       $scope.visualValidate("to")
       $scope.visualValidate("destinations")
-      $scope.visualValidate("amount")
-      $scope.visualValidate("amounts")
   
   $scope.$watch "originsLoaded", ->
     $scope.transactionIsValid = $scope.validate()
@@ -422,6 +418,7 @@
       amount = parseFloat(i)
       return {error: "Please enter a valid amount", isValid: false} if isNaN(amount)
       return {error: "Cannot enter a negative amount", isValid: false} if amount < 0
+      return {error: "Please enter an amount", isValid: false} unless amount? && amount > 0
       sum += amount
     if $scope.transaction.from? && $scope.transaction.from.balance?
       return {error: "Insufficient funds", isValid: false} if numeral(sum).multiply($scope.btcCurrency.conversion) + $scope.transaction.fee > $scope.transaction.from.balance
