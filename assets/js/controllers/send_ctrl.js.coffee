@@ -324,6 +324,7 @@
       $scope.feeAmount = $scope.convertFromSatoshi($scope.transaction.fee, $scope.btcCurrency)
     else
       $scope.transaction.fee = $scope.convertToSatoshi($scope.feeAmount, $scope.btcCurrency)
+    $scope.visualValidate('amounts')
 
   $scope.getSatoshiFromAmounts = () ->
     sum = 0
@@ -342,6 +343,7 @@
       return $scope.transaction.fee = parseInt(fee)
     $scope.transactionIsValid = $scope.validate()
     $scope.visualValidate('fee')
+    $scope.visualValidate('amounts')
 
   $scope.$watchCollection "transaction.multipleAmounts", () ->
     $scope.transactionIsValid = $scope.validate()
@@ -433,15 +435,15 @@
     return
 
   $scope.validateAmounts = () ->
-    sum = 0
+    totalAmount = 0
     for i in $scope.transaction.multipleAmounts
       amount = parseFloat(i)
       return {error: "Please enter a valid amount", isValid: false} if isNaN(amount)
       return {error: "Cannot enter a negative amount", isValid: false} if amount < 0
       return {error: "Please enter an amount", isValid: false} unless amount? && amount > 0
-      sum += amount
+      totalAmount += $scope.convertToSatoshi(amount)
     if $scope.transaction.from? && $scope.transaction.from.balance?
-      return {error: "Insufficient funds", isValid: false} if numeral(sum).multiply($scope.btcCurrency.conversion) + parseInt($scope.transaction.fee) > $scope.transaction.from.balance
+      return {error: "Insufficient funds", isValid: false} if totalAmount + $scope.transaction.fee > $scope.transaction.from.balance
     return {isValid: true}
 
   $scope.validateDestinations = () ->
