@@ -32,18 +32,18 @@
             img(src="img/spinner.gif")
           // Use input-group if camera is present.
           .input-group(ng-show="originsLoaded", ng-if="browserWithCamera")
-            ui-select(ng-model="transaction.destination", ng-blur="visualValidate('to')")
+            ui-select(ng-model="transaction.destination", ng-blur="visualValidate('to')" ng-change="visualValidate('to')")
               ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
               ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search)" refresh-delay="0") 
                 span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
             span.input-group-btn.mls
               button#qr.btn.btn-default(type="button", ng-click="cameraOn()")
                 img(src="img/qr.png", alt="QR")
-          ui-select(ng-model="transaction.destination", ng-blur="visualValidate('to')", ng-if="!browserWithCamera")
+          ui-select(ng-model="transaction.destination", ng-blur="visualValidate('to')", ng-change="visualValidate('to')", ng-if="!browserWithCamera")
             ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
             ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search)" refresh-delay="0") 
               span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
-          span.help-block {{ errors.to }}
+        span.help-block {{ errors.to }}
       .flex-column.form-group(ng-class="{'has-error': errors.amount}", ng-hide="advanced")
         label.mbm
           span(translate="AMOUNT")
@@ -51,7 +51,7 @@
           .mrl.flex-1
             .flex-center
               span.mrm {{ transaction.currency.code }}:
-              input.form-control(type="text",ng-model="transaction.amount",ng-blur="visualValidate('amount')")          
+              input.form-control(type="text",ng-model="transaction.amount",ng-blur="visualValidate('amount')" ng-change="visualValidate('amount')")          
             span.help-block {{ errors.amount }}
           a.button-success.button-sm.type-sm.mrl.flex-center(ng-click="toggleCurrency()")
             i.ti-arrows-horizontal
@@ -60,7 +60,7 @@
               fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="isBitCurrency(transaction.currency)")
               span(ng-hide="isBitCurrency(transaction.currency)") {{ transaction.satoshi | toBitCurrency:btcCurrency:false }}
       //- Advanced Send
-      .flex-column.form-group.bc-modal-fade.mvl.advanced-recipient(ng-show="advanced" ng-class="{'has-error': errors.amounts}")
+      .flex-column.form-group.bc-modal-fade.mvl.advanced-recipient(ng-show="advanced" ng-class="{'has-error': errors.amounts || errors.destinations }")
         label.mbm.flex-between
           span(translate="TO:")
           a.flex-center.type-sm.button-sm.button-default(ng-click="addDestination()")
@@ -98,6 +98,7 @@
               i.ti-close.mrm
               span(translate="REMOVE")
         span.help-block {{ errors.amounts }}
+        span.help-block {{ errors.destinations }}
       .flex-column.form-group.bc-modal-fade(ng-class="{'has-error': errors.fee}" ng-show="advanced")
         label.mbm
           span(translate="MINERS_FEE")

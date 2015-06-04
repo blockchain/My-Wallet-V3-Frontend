@@ -322,7 +322,17 @@
   # Validation watchers
 
   $scope.$watch "transaction.fee", (fee) ->
+    $scope.transactionIsValid = $scope.validate()
     $scope.visualValidate('fee')
+    $scope.visualValidate('amounts')
+
+  $scope.$watchCollection "transaction.multipleAmounts", (fee) ->
+    $scope.transactionIsValid = $scope.validate()
+    $scope.visualValidate('amounts')
+
+  $scope.$watchCollection "transaction.multipleDestinations", (fee) ->
+    $scope.transactionIsValid = $scope.validate()
+    $scope.visualValidate('destinations')
       
   $scope.$watch "transaction.currency", (currency) ->
     if currency? && $scope.transaction.currencySelected && $scope.transaction.currencySelected.code != currency
@@ -345,14 +355,14 @@
     $scope.transactionIsValid = $scope.validate()
     
   $scope.$watch "transaction.from", () ->
+    $scope.transactionIsValid = $scope.validate()
     if $scope.transaction.from?
       $scope.from = $scope.transaction.from.label + " Account"
       $scope.visualValidate("from")
-    
-  $scope.$watch "transaction.destination", ()->
-    $scope.updateToLabel()
-    $scope.visualValidate("toAccount")
-    $scope.transactionIsValid = $scope.validate()
+      $scope.visualValidate("to")
+      $scope.visualValidate("destinations")
+      $scope.visualValidate("amount")
+      $scope.visualValidate("amounts")
   
   $scope.$watch "originsLoaded", ->
     $scope.transactionIsValid = $scope.validate()
@@ -360,8 +370,10 @@
       $scope.visualValidate("amount")
     
   $scope.$watch "transaction.destination", ((newValue) ->
+    $scope.updateToLabel()
     $scope.visualValidate("to")
-    ), true
+    $scope.transactionIsValid = $scope.validate()
+  ), true
   
   # Form validation
     
@@ -392,6 +404,9 @@
     if field == "amounts"
       validation = $scope.validateAmounts()
 
+    if field == "destinations"
+      validation = $scope.validateDestinations()
+
     return unless validation?
 
     if !validation.isValid
@@ -409,16 +424,19 @@
       return {error: "Cannot enter a negative amount", isValid: false} if amount < 0
       sum += amount
     if $scope.transaction.from? && $scope.transaction.from.balance?
-      return {error: "Insufficient funds", isValid: false} if numeral(sum).multiply($scope.btcCurrency.conversion) > $scope.transaction.from.balance
+      return {error: "Insufficient funds", isValid: false} if numeral(sum).multiply($scope.btcCurrency.conversion) + $scope.transaction.fee > $scope.transaction.from.balance
     return {isValid: true}
 
   $scope.validateDestinations = () ->
     for dest in $scope.transaction.multipleDestinations
       return {isValid: false} unless dest? && dest.type?
       if (dest.type == "External" && dest.address == "")
-        return {isValid: false} if dest.address == ""
-        return {isValid: false} unless Wallet.isValidAddress(dest.address)
-      return {isValid: false} if dest == $scope.transaction.from
+        return {error: 'Cannot leave destination field blank', isValid: false} if dest.address == ""
+        return {error: 'Not a valid bitcoin address', isValid: false} unless Wallet.isValidAddress(dest.address)
+      if dest.type == "Accounts"
+        return {error: 'Cannot send to self', isValid: false} if dest.index == $scope.transaction.from.index
+      else
+        return {error: 'Cannot send to self', isValid: false} if dest.address == $scope.transaction.from.address
     return {isValid: true}
 
   $scope.validateAmount = () ->
@@ -438,7 +456,10 @@
     return {isValid: false} if transaction.destination == null || (transaction.destination.type == 'External' && transaction.destination.address == '')
     if transaction.destination.type == 'External'
       return {error: 'BITCOIN_ADDRESS_INVALID', isValid: false} unless Wallet.isValidAddress(transaction.destination.address)
-    return {error: 'SAME_DESTINATION', isValid: false} if transaction.destination == transaction.from
+    if transaction.destination.type == 'Accounts'
+      return {error: 'SAME_DESTINATION', isValid: false} if transaction.destination.index == transaction.from.index
+    else
+      return {error: 'SAME_DESTINATION', isValid: false} if transaction.destination == transaction.from
     return {isValid: true}
 
   $scope.validateFee = () ->
