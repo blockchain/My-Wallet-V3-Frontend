@@ -365,3 +365,28 @@ describe "SendCtrl", ->
       scope.transaction.destination = scope.accounts[1]
       scope.$apply()
       expect(scope.toLabel).toBe("Mobile Account")
+
+
+  describe 'advanced', ->
+
+    beforeEach ->
+      scope.advanced = true
+
+    describe 'fee', ->
+      it 'should convert correctly when the currency is BTC', ->
+        scope.feeAmount = '0.0005'
+        scope.updateFee()
+        expect(scope.transaction.fee).toBe(50000)
+
+    describe 'amounts', ->
+      it 'should convert BTC to satoshi', ->
+        scope.transaction.multipleAmounts = ['0.1', '0.25']
+        scope.transaction.satoshi = scope.getSatoshiFromAmounts()
+        expect(scope.transaction.satoshi).toBe(35000000)
+
+      it 'should convert USD to satoshi', inject((Wallet) ->
+        scope.transaction.currency = scope.fiatCurrency
+        scope.transaction.multipleAmounts = ['2.15', '0.75']
+        scope.transaction.satoshi = scope.getSatoshiFromAmounts()
+        expect(scope.transaction.satoshi).toBe(Math.round(Wallet.conversions['USD'].conversion * (2.15 + 0.75)))
+      )
