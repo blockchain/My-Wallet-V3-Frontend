@@ -94,7 +94,7 @@
               p.mbn
                 fiat(currency="settings.currency", btc="convertToSatoshi(transaction.multipleAmounts[$index])",  ng-show="isBitCurrency(transaction.currency)")
                 span(ng-hide="isBitCurrency(transaction.currency)") {{ convertToSatoshi(transaction.multipleAmounts[$index]) | toBitCurrency:btcCurrency:false }}
-            a.mlm.button-danger.type-sm.button-sm(ng-click="removeDestination($index)")
+            a.mlm.button-danger.type-sm.button-sm(ng-click="removeDestination($index)" ng-hide="$first && $last")
               i.ti-close.mrm
               span(translate="REMOVE")
         span.help-block {{ errors.amounts }}
