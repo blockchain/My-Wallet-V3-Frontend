@@ -146,18 +146,24 @@
 
 # TODO: what is supposed to do that with multiple accounts
   $scope.applyPaymentRequest = (paymentRequest, i) ->
-      $scope.transaction.destination = $scope.destinations[i].slice(-1)[0]
-      $scope.transaction.destination.address = paymentRequest.address
-      $scope.transaction.destination.label = paymentRequest.address
-      if paymentRequest.amount
-        $scope.transaction.amount = paymentRequest.amount
-        $scope.transaction.currency = Wallet.settings.btcCurrency
+    destination = $scope.destinations[i].slice(-1)[0]
+    destination.address = paymentRequest.address
+    destination.label = paymentRequest.address
+    
+    if $scope.advanced
+      $scope.transaction.multipleDestinations[i] = destination
+    else
+      $scope.transaction.destination = destination
+        
+    if paymentRequest.amount
+      $scope.transaction.amount = paymentRequest.amount
+      $scope.transaction.currency = Wallet.settings.btcCurrency
 
-      $scope.cameraOff()
-      $scope.visualValidate()
-      $scope.transactionIsValid = $scope.validate()
+    $scope.cameraOff()
+    $scope.visualValidate()
+    $scope.transactionIsValid = $scope.validate()
 
-      $scope.updateToLabel()
+    $scope.updateToLabel()
 
   $scope.setMethod = (method) ->
     $scope.method = method
@@ -169,7 +175,7 @@
     paymentRequest = Wallet.parsePaymentRequest(url)
 
     if paymentRequest.isValid
-      $scope.applyPaymentRequest(paymentRequest, 0)
+      $scope.applyPaymentRequest(paymentRequest, $scope.qrIndex)
     else
       $translate("QR_CODE_NOT_BITCOIN").then (translation) ->
         Wallet.displayWarning(translation)
@@ -180,13 +186,15 @@
         $scope.lookForQR()
       ), 2000)
 
-  $scope.cameraOn = () ->
+  $scope.cameraOn = (index=0) ->
     $scope.cameraRequested = true
+    $scope.qrIndex = index
 
   $scope.cameraOff = () ->
     # $scope.qrStream.stop()
     $scope.cameraIsOn = false
     $scope.cameraRequested = false
+    $scope.qrIndex = null
 
   $scope.close = () ->
     Wallet.clearAlerts()

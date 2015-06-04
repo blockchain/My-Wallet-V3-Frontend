@@ -37,7 +37,7 @@
               ui-select-choices(repeat="destination in destinations[0] | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search, 0)" refresh-delay="0")
                 span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
             span.input-group-btn.mls
-              button#qr.btn.btn-default(type="button", ng-click="cameraOn()")
+              button#qr.btn.btn-default(type="button", ng-click="cameraOn(0)")
                 img(src="img/qr.png", alt="QR")
           ui-select(ng-model="transaction.destination", ng-blur="visualValidate('to')", ng-change="visualValidate('to')", ng-if="!browserWithCamera")
             ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
@@ -76,7 +76,7 @@
               ui-select-choices(repeat="destination in destinations[$index] | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search, $index)" refresh-delay="0")
                 span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
             span.input-group-btn.mls
-              button#qr.button(type="button", ng-click="cameraOn()")
+              button#qr.button(type="button", ng-click="cameraOn($index)")
                 img(src="img/qr.png", alt="QR")
           ui-select(ng-model="transaction.multipleDestinations[$index]", ng-blur="visualValidate('to')", ng-if="!browserWithCamera")
             ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
