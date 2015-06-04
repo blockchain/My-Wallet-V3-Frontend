@@ -4,6 +4,9 @@
   .modal-body {
     background: white;
     min-height: 100px;
+    max-height: 500px;
+    overflow: hidden;
+    overflow-y: scroll;
   }
   .modal-footer { border-top: 1px solid #e5e5e5; }
   .bc-modal-header {
@@ -217,14 +220,6 @@
   .has-error .form-control {
     border-color: #a94442 !important;
   }
-}
-
-//overrides
-.modal.in .modal-dialog {
-  -webkit-transform: translate(0, 20%);
-  -ms-transform: translate(0, 20%);
-  -o-transform: translate(0, 20%);
-  transform: translate(0, 20%);
 }
 
 @media (max-width: 768px) {
