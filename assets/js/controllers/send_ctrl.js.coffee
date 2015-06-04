@@ -116,7 +116,6 @@
 
   $scope.transactionTemplate = {
     from: null,
-    to: paymentRequest.address,
     destination: null,
     amount: paymentRequest.amount,
     satoshi: 0,
@@ -445,7 +444,7 @@
   $scope.validateDestinations = () ->
     for dest in $scope.transaction.multipleDestinations
       return {isValid: false} unless dest? && dest.type?
-      if (dest.type == "External" && dest.address == "")
+      if (dest.type == "External")
         return {error: 'Cannot leave destination field blank', isValid: false} if dest.address == ""
         return {error: 'Not a valid bitcoin address', isValid: false} unless Wallet.isValidAddress(dest.address)
       if dest.type == "Accounts"
@@ -524,9 +523,15 @@
   $scope.advanced = false
 
   $scope.advancedSend = () ->
+    $scope.advanced = true
+    transaction = $scope.transaction
+    # copy normal send to address if we have 1 destination in advanced and it's not an account
+    if transaction.multipleDestinations.length == 1 and transaction.destination? and transaction.destination.address != '' and not transaction.destination.index?
+      console.log transaction.destination
+      transaction.multipleDestinations[0] = transaction.destination
+      $scope.visualValidate("destinations")
     $scope.transactionIsValid = $scope.validate()
-    return $scope.advanced = true
 
   $scope.regularSend = () ->
+    $scope.advanced = false
     $scope.transactionIsValid = $scope.validate()
-    return $scope.advanced = false
