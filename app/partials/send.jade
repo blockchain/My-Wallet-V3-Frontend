@@ -119,7 +119,7 @@
           .flex-center.pll.mll
             .mrl.flex-1
               .flex-center
-                span.mrm {{ transaction.currency.code }}:
+                span.mrm {{ btcCurrency.code }}:
                 input.form-control(type="text" ng-blur="visualValidate('fee')" ng-change="updateFee()" ng-model="feeAmount" placeholder="Enter your fee here")
               span.help-block {{ errors.fee }}
 
