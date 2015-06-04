@@ -304,6 +304,7 @@ describe "SendCtrl", ->
       # )
 
     it "should process a succesfully scanned QR code", inject((Wallet) ->
+      scope.qrIndex = 0
       scope.processURLfromQR("bitcoin://abcdefgh?amount=0.001")
       expect(scope.transaction.amount).toBe("0.001")
       expect(scope.transaction.destination.address).toBe("abcdefgh")
@@ -312,6 +313,7 @@ describe "SendCtrl", ->
     it "should switch to BTC if amount is specified", inject((Wallet) ->
       scope.transaction.currency = Wallet.currencies[1]
       scope.$digest()
+      scope.qrIndex = 0
       scope.processURLfromQR("bitcoin://abcdefgh?amount=0.001")
       scope.$digest()
       expect(scope.transaction.currency.code).toBe("BTC")
@@ -320,6 +322,7 @@ describe "SendCtrl", ->
     it "should not switch to BTC if amount is specified", inject((Wallet) ->
       scope.transaction.currency = Wallet.currencies[1]
       scope.$digest()
+      scope.qrIndex = 0
       scope.processURLfromQR("bitcoin://abcdefgh")
       expect(scope.transaction.currency.code).toBe("EUR")
     )
