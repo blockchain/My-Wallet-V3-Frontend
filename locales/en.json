@@ -403,5 +403,7 @@
   "MERCHANT" : "Merchant",
   "SUPPORT" : "Support",
   "ADD_ANOTHER_RECIPIENT" : "Add Another Recipient",
-  "REMOVE" : "Remove"
+  "REMOVE" : "Remove",
+  "MULTIPLE_ADDRESSES" : "Multiple Addresses"
+
 }

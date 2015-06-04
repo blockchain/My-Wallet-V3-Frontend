@@ -138,9 +138,10 @@
     .flex-column
       .flex-center.control-group.mbl
         label.mbn.mrl(translate="FROM:")
-        h4.mvn.flex-1.ccc.em-300 {{ from }}
+        h5.mvn.flex-1.ccc.em-300 {{ from }}
         label.mbn.mrl(translate="TO:")
-        h4.btcaddr.mvn.flex-1.ccc.em-300 {{ toLabel }}
+        h5.btcaddr.mvn.flex-1.ccc.em-300(ng-hide="advanced") {{ toLabel }}
+        h5.mvn.flex-1.ccc.em-300(ng-show="advanced && step == 2", translate="MULTIPLE_ADDRESSES")
       ul.total-amounts.ccc.ptm
         label.mbn(translate="OVERVIEW")
         li.amount-item
@@ -176,12 +177,12 @@
 
 .modal-footer.flex-between.flex-center.pal
   .flex-center
-    a.ccc(ng-hide="advanced", ng-click="advancedSend()", translate="ADVANCED_SEND")
-    a.ccc(ng-show="advanced", ng-click="regularSend()", translate="REGULAR_SEND")
+    a.ccc(ng-hide="advanced || step == 2", ng-click="advancedSend()", translate="ADVANCED_SEND")
+    a.ccc(ng-show="advanced && step == 1", ng-click="regularSend()", translate="REGULAR_SEND")
   .flex-center.flex-end
     button.button-muted-off.mrm(ng-click="cameraOff()", ng-show="cameraIsOn", translate="CAMERA_OFF")
     button.button-muted.mrm(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
     button.button-muted.mrm(ng-click="backToForm()", translate="BACK", ng-show="confirmationStep")
-    button.button-muted.bc-modal-fade.mrm(ng-show="advanced", translate="RESET_FORM", ng-click="resetSendForm()")
+    button.button-muted.bc-modal-fade.mrm(ng-show="advanced && step == 1", translate="RESET_FORM", ng-click="resetSendForm()")
     button.button-success.button-lg(ng-click="goToConfirmation()",ng-disabled="!transactionIsValid", translate="NEXT_STEP", ng-hide="confirmationStep")
     button.button-success.button-lg(ui-ladda="{{ sending }}", ng-click="send()",ng-disabled="!transactionIsValid", data-style="expand-left", ladda-translate="SEND", ng-show="confirmationStep")
