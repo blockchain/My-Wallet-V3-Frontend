@@ -259,7 +259,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     if language?
       language_code = language.code
-      
+
     $translate("FIRST_ACCOUNT_NAME").then (translation) ->
       wallet.my.createNewWallet(email, password, translation,language_code, currency_code, success, error)
 
@@ -472,7 +472,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       return parseFloat(numeral(currency1.conversion).multiply(amount).divide(wallet.conversions[currency2.code].conversion).format("0.00"))
     else
       return parseFloat(numeral(amount).multiply(wallet.conversions[currency1.code].conversion).divide(currency2.conversion).format("0.00000000"))
-    
+
   wallet.convertToSatoshi = (amount, currency) ->
     return null unless amount?
     return null unless currency?
@@ -900,7 +900,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
           wallet.accounts[i].isDefault = !(defaultAccountIndex < i or defaultAccountIndex > i)
 
-    wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts[0].balance?
+    wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts.some((a)->a.active and a.balance)
 
   # Update (labelled) HD addresses:
   wallet.updateHDaddresses = () ->
@@ -1045,7 +1045,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.status.didUpgradeToHd = false
       continueCallback = () ->
         $translate("FIRST_ACCOUNT_NAME").then (translation) ->
-        
+
           needsSecondPasswordCallback = (continueCallback) ->
             cancelCallback = () ->
             $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback, true

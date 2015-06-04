@@ -152,12 +152,12 @@
     destination = $scope.destinations[i].slice(-1)[0]
     destination.address = paymentRequest.address
     destination.label = paymentRequest.address
-    
+
     if $scope.advanced
       $scope.transaction.multipleDestinations[i] = destination
     else
       $scope.transaction.destination = destination
-        
+
     if paymentRequest.amount
       $scope.transaction.amount = paymentRequest.amount
       $scope.transaction.currency = Wallet.settings.btcCurrency
