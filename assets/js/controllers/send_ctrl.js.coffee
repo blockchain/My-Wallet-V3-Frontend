@@ -197,11 +197,11 @@
     
   $scope.toggleCurrency = () ->
     $scope.transaction.currency = $scope.nextAlternativeCurrency()
-    $scope.feeAmount = $scope.convertFromSatoshi($scope.transaction.fee)
+    $scope.feeAmount = $scope.convertFromSatoshi(parseInt($scope.transaction.fee))
 
   $scope.resetSendForm = () ->
     $scope.transaction = angular.copy($scope.transactionTemplate)
-    $scope.feeAmount = $scope.transaction.fee / $scope.btcCurrency.conversion
+    $scope.feeAmount = parseInt($scope.transaction.fee) / $scope.btcCurrency.conversion
 
   $scope.addDestination = () ->
     $scope.transaction.multipleAmounts.push(0)
@@ -421,7 +421,7 @@
       return {error: "Please enter an amount", isValid: false} unless amount? && amount > 0
       sum += amount
     if $scope.transaction.from? && $scope.transaction.from.balance?
-      return {error: "Insufficient funds", isValid: false} if numeral(sum).multiply($scope.btcCurrency.conversion) + $scope.transaction.fee > $scope.transaction.from.balance
+      return {error: "Insufficient funds", isValid: false} if numeral(sum).multiply($scope.btcCurrency.conversion) + parseInt($scope.transaction.fee) > $scope.transaction.from.balance
     return {isValid: true}
 
   $scope.validateDestinations = () ->
@@ -440,7 +440,7 @@
     amount = $scope.transaction.amount
     return {error: 'Please enter amount', isValid: false} unless amount? && amount > 0
     return {error: 'Please fill out the "From" field', isValid: false} unless $scope.transaction.from? && $scope.transaction.from.balance?
-    return {error: 'Insufficient funds', isValid: false} if $scope.transaction.satoshi + $scope.transaction.fee > $scope.transaction.from.balance
+    return {error: 'Insufficient funds', isValid: false} if $scope.transaction.satoshi + parseInt($scope.transaction.fee) > $scope.transaction.from.balance
     return {error: 'Maximum number of decimal places exceeded', isValid: false} if !$scope.validateAmountDecimals().isValid
     return {isValid: true}
 
