@@ -325,7 +325,7 @@
     else
       $scope.transaction.fee = $scope.convertToSatoshi($scope.feeAmount, $scope.btcCurrency)
 
-  $scope.addAmounts = () ->
+  $scope.getSatoshiFromAmounts = () ->
     sum = 0
     for amount in $scope.transaction.multipleAmounts
       sum += $scope.convertToSatoshi(amount)
@@ -345,7 +345,7 @@
 
   $scope.$watchCollection "transaction.multipleAmounts", () ->
     $scope.transactionIsValid = $scope.validate()
-    $scope.transaction.satoshi = $scope.addAmounts()
+    $scope.transaction.satoshi = $scope.getSatoshiFromAmounts()
 
   $scope.$watchCollection "transaction.multipleDestinations", (fee) ->
     $scope.transactionIsValid = $scope.validate()
@@ -369,7 +369,7 @@
       $scope.transaction.satoshi = $scope.convertToSatoshi($scope.transaction.amount)
       $scope.transaction.fee = Wallet.recommendedTransactionFee($scope.transaction.from, $scope.transaction.satoshi)
     else
-      $scope.transaction.satoshi = $scope.addAmounts()
+      $scope.transaction.satoshi = $scope.getSatoshiFromAmounts()
     $scope.transactionIsValid = $scope.validate()
 
   $scope.$watch "transaction.from", () ->
