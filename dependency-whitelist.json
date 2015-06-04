@@ -1,10 +1,5 @@
 {
-  "ignore" : ["grunt", "jasmine-core", "jquery", "istanbul", "esprima", "typeforce", "angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize", "angular-translate-loader-static-files","bootstrap-sass","bootstrap"],
-  "bc-qr-reader" : {
-    "version": "0.1.1",
-    "commits" : ["a9e3a13f08165fb51d9f835f731fddf8b5e135cb"],
-    "repo" : "blockchain/bc-qr-reader"
-  },
+  "ignore" : ["grunt", "jasmine-core", "jquery", "istanbul", "esprima", "typeforce", "angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize", "angular-translate-loader-static-files", "bootstrap-sass", "bootstrap", "bc-qr-reader"],
   "angular-ui-router" : {
     "version": "0.2.13",
     "commits" : ["c3d543aae43d4600512520a0d70723ac31f2cb62"],
