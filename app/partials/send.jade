@@ -73,14 +73,14 @@
           .input-group(ng-show="originsLoaded", ng-if="browserWithCamera")
             ui-select(ng-model="transaction.multipleDestinations[$index]", ng-blur="visualValidate('to')")
               ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
-              ui-select-choices(repeat="destination in destinations[$index] | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search, $index)" refresh-delay="0")
+              ui-select-choices(repeat="destination in destinations[$index] | filter: getFilter($select.search, true)" group-by="'type'" refresh="refreshDestinations($select.search, $index)" refresh-delay="0")
                 span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
             span.input-group-btn.mls
               button#qr.button(type="button", ng-click="cameraOn($index)")
                 img(src="img/qr.png", alt="QR")
           ui-select(ng-model="transaction.multipleDestinations[$index]", ng-blur="visualValidate('to')", ng-if="!browserWithCamera")
             ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
-            ui-select-choices(repeat="destination in destinations[$index] | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search, $index)" refresh-delay="0")
+            ui-select-choices(repeat="destination in destinations[$index] | filter: getFilter($select.search, true)" group-by="'type'" refresh="refreshDestinations($select.search, $index)" refresh-delay="0")
               span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
           .flex-center.recipient-currency.mtl
             .mrl.flex-1

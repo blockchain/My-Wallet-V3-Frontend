@@ -24,6 +24,7 @@
           item = angular.copy(account)
           item.type = "Accounts"
           item.multiAccount = if item.index == 0 then false else true
+          item.isAccount = true
           unless item.index? && !item.active
             $scope.origins.push item
             $scope.destinationsBase.push angular.copy(item) # https://github.com/angular-ui/ui-select/issues/656
@@ -33,11 +34,12 @@
             item = angular.copy(address)
             item.type = "Imported Addresses"
             item.multiAccount = false
+            item.isAccount = false
             $scope.destinationsBase.push item
             unless address.isWatchOnlyLegacyAddress
               $scope.origins.push angular.copy(item)
 
-        $scope.destinationsBase.push({address: "", label: "", type: "External"})
+        $scope.destinationsBase.push({address: "", label: "", isAccount: false, type: "External"})
         $scope.transaction.destination =  $scope.destinationsBase.slice(-1)[0]
         $scope.destinations.push $scope.destinationsBase
         $scope.originsLoaded = true
@@ -129,9 +131,11 @@
   $scope.transaction = angular.copy($scope.transactionTemplate)
   $scope.feeAmount =  parseFloat(numeral($scope.transaction.fee).divide($scope.btcCurrency.conversion).format('0.[00000]'))
 
-  $scope.getFilter = (search) ->
+  $scope.getFilter = (search, advanced) ->
     filter =
       label: search
+    if advanced
+      filter.isAccount = false
     if not $scope.settings.multiAccount or $scope.numberOfActiveAccountsAndLegacyAddresses() == 1
       filter.multiAccount = false
     return filter
