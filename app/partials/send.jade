@@ -133,7 +133,7 @@
       //-     p.form-control-static
       //-       img.privacy-guard(ng-src="img/switch-{{ privacyGuard ? 'on' : 'off' }}.png", ng-alt="{{ privacyGuard ? 'on' : 'off' }}", ng-click="privacyGuard = !privacyGuard")
       .flex-column.form-group(ng-hide="!cameraIsOn")
-        label.flex-1(translate="QR") Scan your QR code:
+        label.flex-1(translate="QR")
         .flex-1
           bc-qr-reader(active="cameraRequested", on-result="processURLfromQR" on-error="onError" camera-status="cameraIsOn")
   div.overview(ng-show="confirmationStep")

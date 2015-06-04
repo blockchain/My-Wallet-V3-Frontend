@@ -163,7 +163,6 @@
       $scope.transaction.amount = paymentRequest.amount
       $scope.transaction.currency = Wallet.settings.btcCurrency
 
-    $scope.cameraOff()
     $scope.visualValidate()
     $scope.transactionIsValid = $scope.validate()
 
@@ -180,15 +179,12 @@
 
     if paymentRequest.isValid
       $scope.applyPaymentRequest(paymentRequest, $scope.qrIndex)
+      $scope.cameraOff()
     else
       $translate("QR_CODE_NOT_BITCOIN").then (translation) ->
         Wallet.displayWarning(translation)
 
       $log.error "Not a bitcoin QR code:" + url
-
-      $timeout((->
-        $scope.lookForQR()
-      ), 2000)
 
   $scope.cameraOn = (index=0) ->
     $scope.cameraRequested = true
