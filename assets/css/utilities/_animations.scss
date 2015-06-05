@@ -3,31 +3,23 @@
 ////////////////////////////////
 
 @-webkit-keyframes scale {
-  10% { -webkit-transform: scale(.9) }
-  20% { -webkit-transform: scale(.8) }
-  30% { -webkit-transform: scale(.7); }
-  40% { -webkit-transform: scale(.6); }
-  50% { -webkit-transform: scale(.5); }
-  60% { -webkit-transform: scale(.6); }
-  70% { -webkit-transform: scale(.7); }
-  80% { -webkit-transform: scale(.8); }
+  10% { -webkit-transform: scale(.9); }
+  30% { -webkit-transform: scale(.8); }
+  50% { -webkit-transform: scale(.65); }
+  70% { -webkit-transform: scale(.8); }
   90% { -webkit-transform: scale(.9); }
   100% { -webkit-transform: scale(1); }
 }
 @keyframes scale {
-  10% { transform: scale(.9) }
-  20% { transform: scale(.8) }
-  30% { transform: scale(.7); }
-  40% { transform: scale(.6); }
-  50% { transform: scale(.5); }
-  60% { transform: scale(.6); }
-  70% { transform: scale(.7); }
-  80% { transform: scale(.8); }
+  10% { transform: scale(.9); }
+  30% { transform: scale(.8); }
+  50% { transform: scale(.65); }
+  70% { transform: scale(.8); }
   90% { transform: scale(.9); }
   100% { transform: scale(1); }
 }
 
-.scale { 
+.scale {
   animation: scale .4s;
 }
 
@@ -40,7 +32,7 @@
 }
 
 ///////////////////////////////////
-//flash message and notifications//
+//Fade in & out animations/////////
 ///////////////////////////////////
 
 @-webkit-keyframes fade-in-right {
@@ -75,6 +67,43 @@
   -webkit-animation-name: fade-in-right;
   animation-name: fade-in-right;
 }
+
+@-webkit-keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.fade-in-down {
+  -webkit-animation-name: fade-in-down;
+  animation-name: fade-in-down;
+}
+
+////////////////////////////////////
+/////Zooming in out animations//////
+////////////////////////////////////
 
 @-webkit-keyframes zoom-out {
   0% {
@@ -113,31 +142,22 @@
   animation-name: zoom-out;
 }
 
-@-webkit-keyframes fade-in-down {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
-  }
 
-  100% {
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none;
-  }
+///////////////////////////////////////////
+/////////                    //////////////
+////****** ANGULAR ANIMATIONs ******* /////
+////////                    ///////////////
+//////////////////////////////////////////
+
+/* Initial state when showing */
+.bc-modal-fade.ng-hide-remove {
+  opacity: 0;
+  display: block !important;
+  -webkit-transition: linear .4s all !important;
+  transition: linear .4s all !important;
 }
 
-@keyframes fade-in-down {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
-  }
-
-  100% {
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none;
-  }
+/* Will transition towards this state */
+.bc-modal-fade.ng-hide-remove.ng-hide-remove-active {
+  opacity: 1;
 }
-

@@ -95,7 +95,7 @@
   "WALLET_PASSWORD" : "Wallet Password",
   "WALLET_PASSWORD_EXPLAIN" : "Your password is never shared with our servers, which means we cannot help reset your password if you forget it. Make sure you write down your recovery phrase which can restore access to your wallet in the event of a lost password.",
   "PASSWORD_SET" : "Password Set",
-  "CHANGE_PASSWORD" : "change password",
+  "CHANGE_PASSWORD" : "Change Password",
   "CURRENT_PASSWORD" : "Current Password",
   "NEW_PASSWORD" : "New Password",
   "CONFIRM_PASSWORD" : "Confirm Password",
@@ -381,6 +381,11 @@
   "UID_EXPLAIN" : "Your Wallet ID is your unique identifier. It is completely unique to you, and it is what you use to access your wallet.",
   "AUTHORIZED" : "Authorized!",
   "AUTHORIZED_MESSAGE" : "You've successfully been authorized into your account.",
+  "ADVANCED_SEND" : "Advanced Send",
+  "RESET_FORM" : "Reset Form",
+  "REGULAR_SEND" : "Back To Regular Send",
+  "MINERS_FEE" : "Miner's Fee:",
+  "MINERS_FEE_EXPLAIN" : "Select from a predetermined list or enter a custom amount",
   "GO_BACK" : "Go Back",
   "CLICK_HERE_TO_CREATE_WALLET" : "If you would like to create a new wallet click here",
   "CLICK_HERE_TO_CREATE_WALLET_ALPHA_KEY" : "If you have an Alpha Key and would like to create a new wallet click here",
@@ -397,5 +402,7 @@
   "EXPLORER" : "Explorer",
   "MERCHANT" : "Merchant",
   "SUPPORT" : "Support",
-  "RABBIT_HOLE" : "Are you sure you wish to know how deep the rabbit hole goes?"
+  "ADD_ANOTHER_RECIPIENT" : "Add Another Recipient",
+  "REMOVE" : "Remove",
+  "MULTIPLE_ADDRESSES" : "Multiple Addresses"
 }

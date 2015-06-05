@@ -11,6 +11,7 @@
 
 //import elements
 @import 'elements/buttons';
+@import 'elements/inputs';
 @import 'elements/links';
 @import 'elements/textareas';
 
@@ -46,6 +47,10 @@ html,body {
 }
 
 .hide { display: none; }
+
+.invisible { visibility: hidden; opacity: 0; }
+
+.width-100 { width: 100%; }
 
 //Because <span>'s are evil
 .display-block { display: block; }
@@ -88,8 +93,7 @@ html,body {
   text-align: center;
 }
 a.back {
-    cursor: pointer;
- h2{
+ h4{
   background: url("/img/back.png") no-repeat left center;
   background-size: 10px;
   padding: 0 20px;

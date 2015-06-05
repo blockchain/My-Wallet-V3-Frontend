@@ -87,6 +87,7 @@ module.exports = (grunt) ->
           'build/bower_components/angular/angular.min.js'
           'build/bower_components/angular-sanitize/angular-sanitize.min.js'
           'build/bower_components/angular-cookies/angular-cookies.min.js'
+          'build/bower_components/angular-animate/angular-animate.min.js'
           'build/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
           'build/bower_components/numeral/min/numeral.min.js'
           'build/bower_components/angular-numeraljs/dist/angular-numeraljs.js'
@@ -109,6 +110,7 @@ module.exports = (grunt) ->
           'bower_components/angular/angular.js'
           'bower_components/angular-sanitize/angular-sanitize.js'
           'bower_components/angular-cookies/angular-cookies.min.js'
+          'bower_components/angular-animate/angular-animate.min.js'
           'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
           'bower_components/angular-ui-router/release/angular-ui-router.min.js'
           'bower_components/angular-ui-select/dist/select.min.js'
@@ -157,7 +159,6 @@ module.exports = (grunt) ->
         src: [
           "build/bower_components/angular-ui-select/dist/select.min.css"
           # "build/bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css"
-          "build/bower_components/angular/angular-csp.css"
           "build/css/blockchain.css" # Needs to be loaded first
           "build/css/**/*.css"
         ],
@@ -205,7 +206,6 @@ module.exports = (grunt) ->
 
       css:
         files: [
-          {src: ["angular-csp.css"], dest: "build/css", cwd: "bower_components/angular", expand: true }
           {src: ["intlTelInput.css"], dest: "build/css", cwd: "bower_components/intl-tel-input/build/css", expand: true }
           {src: ["font-awesome.min.css"], dest: "build/css", cwd: "bower_components/fontawesome/css", expand: true }
           {src: ["*.css"], dest: "build/css", cwd: "assets/css", expand: true }

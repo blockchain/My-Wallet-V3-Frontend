@@ -483,6 +483,16 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     else
       return null
 
+  wallet.convertFromSatoshi = (amount, currency) ->
+    return null unless amount?
+    return null unless currency?
+    if wallet.isBitCurrency(currency)
+      return parseFloat(numeral(amount).divide(currency.conversion).format("0.[00000000]"))
+    else if wallet.conversions[currency.code]?
+      return parseFloat(numeral(amount).divide(wallet.conversions[currency.code].conversion).format("0.[00]"))
+    else
+      return null
+
   wallet.toggleDisplayCurrency = () ->
     if wallet.isBitCurrency(wallet.settings.displayCurrency)
       wallet.settings.displayCurrency = wallet.settings.currency
@@ -635,6 +645,28 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           spendFrom.toAccount(destination.index)
         else if destination.address?
           spendFrom.toAddress(destination.address)
+
+      sendAdvanced: (from, destinations, amounts, fee, currency, publicNote) ->
+        addressesArray = []
+        amountsArray = []
+
+        for destination in destinations
+          if destination.type == "Accounts"
+            addressesArray.push(wallet.getReceivingAddressForAccount(destination.index))
+          else
+            addressesArray.push(destination.address)
+
+        for amount in amounts
+          amountsArray.push(wallet.checkAndGetTransactionAmount(amount, currency, success, error))
+
+        spender = wallet.spender(publicNote, success, error, {}, needsSecondPassword)
+
+        if from.address?
+          spendFrom = spender.fromAddress(from.address, 1000, fee)
+        else if from.index?
+          spendFrom = spender.fromAccount(from.index, 1000, fee)
+
+        spendFrom.toAddresses(addressesArray, amountsArray)
 
       sweep: (fromAddress, toAccountIndex) ->
         spender = wallet.spender(null, success, error, {}, needsSecondPassword)
@@ -868,7 +900,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
           wallet.accounts[i].isDefault = !(defaultAccountIndex < i or defaultAccountIndex > i)
 
-    wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts[0].balance?
+    wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts.some((a)->a.active and a.balance)
 
   # Update (labelled) HD addresses:
   wallet.updateHDaddresses = () ->
