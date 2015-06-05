@@ -11,6 +11,7 @@ walletApp.directive('bcAsyncInput', () ->
       placeholder: '='
       type: '@'
       errorMessage: '='
+      securityCenter: '='
     }
     templateUrl: 'templates/bc-async-input.jade'
     link: (scope, elem, attrs, ngModel) ->

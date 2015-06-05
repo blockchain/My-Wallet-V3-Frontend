@@ -3,6 +3,7 @@ walletApp.directive('twoFactor', ($translate, Wallet) ->
     restrict: "E"
     replace: 'true'
     scope: {
+      securityCenter: '='
     }
     templateUrl: 'templates/two-factor.jade'
     link: (scope, elem, attrs) ->

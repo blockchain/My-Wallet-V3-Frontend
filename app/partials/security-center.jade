@@ -26,12 +26,12 @@
           div(ng-show="display.action == 'email' && !display.editingEmail")        
             .col-sm-12
               p(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
-              verify-email
+              verify-email(security-center='true')
             .col-sm-12
               p(ng-hide="user.isEmailVerified")
                 | Didn't receive the email? 
                 span 
-                  resend-email-confirmation
+                  resend-email-confirmation(security-center='true')
                   |  or 
                 span
                   a(ng-click="beginEditEmail()") Change email address
@@ -39,7 +39,7 @@
           div(ng-show="display.action == 'email' && display.editingEmail")       
             .col-sm-12.col-md-12
               p Your email address
-              bc-async-input(inline, type="email", placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
+              bc-async-input(inline security-center='true' type="email", placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
               
           div(ng-show="display.action == 'securityphrase'")        
             .col-sm-12.col-md-8
@@ -47,14 +47,14 @@
                 |  Make a one-time backup of your wallet to ensure you are always able to access your funds, 
                 |  even if you lose your password or our service becomes unavailable.
             .col-sm-12.col-md-4
-              confirm-recovery-phrase
+              confirm-recovery-phrase(security-center='true')
                         
           div(ng-show="display.action == 'passwordhint'")       
             .col-sm-12.col-md-12
               p 
                 |  Blockchain has no knowledge of your password and has no ability to reset your lost password.
                 |  Create a memorable password hint that can be emailed to you in the case of a forgotten password.
-              bc-async-input(inline, placeholder="'CHANGE_PASSWORD_HINT' | translate" ng-model="user.passwordHint", on-save="changePasswordHint", action-title="'CHANGE_PASSWORD_HINT' | translate") 
+              bc-async-input(inline security-center='true' placeholder="'CHANGE_PASSWORD_HINT' | translate" ng-model="user.passwordHint", on-save="changePasswordHint", action-title="'CHANGE_PASSWORD_HINT' | translate") 
       
     section.level.level_two
       header
@@ -78,7 +78,7 @@
         div.gutter
           div(ng-show="display.action == 'mobilenumber'")     
             .col-sm-12.col-md-12
-              configure-mobile-number(inline)
+              configure-mobile-number(inline security-center='true')
             
           div(ng-show="display.action == 'twofactor'")     
             .col-sm-12.col-md-8
@@ -87,7 +87,7 @@
                 |  a one-time password after every login attempt. Enabling this option
                 |  helps keep unauthorized users from being able to access your wallet.
             .col-sm-12.col-md-4
-              two-factor
+              two-factor(security-center='true')
                         
     section.level.level_three
       header
@@ -108,5 +108,5 @@
             .col-sm-12.col-md-8
               p(TRANSLATE="BLOCK_TOR_EXPLAIN")
             .col-sm-12.col-md-4
-              tor
+              tor(security-center='true')
             

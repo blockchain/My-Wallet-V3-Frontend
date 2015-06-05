@@ -3,6 +3,7 @@ walletApp.directive('verifyEmail', ($translate, Wallet) ->
     restrict: "E"
     replace: 'true'
     scope: {
+      securityCenter: '='
     }
     templateUrl: 'templates/verify-email.jade'
     link: (scope, elem, attrs) ->

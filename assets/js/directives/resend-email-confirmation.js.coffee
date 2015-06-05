@@ -3,6 +3,7 @@ walletApp.directive('resendEmailConfirmation', ($translate, Wallet) ->
     restrict: "E"
     replace: 'true'
     scope: {
+      securityCenter: '='
     }
     templateUrl: 'templates/resend-email-confirmation.jade'
     link: (scope, elem, attrs) ->
