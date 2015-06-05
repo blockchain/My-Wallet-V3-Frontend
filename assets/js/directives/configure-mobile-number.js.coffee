@@ -14,6 +14,8 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
       scope.mobileDefaultCountry = null
       
       scope.fields = {newMobile: null}
+
+      scope.step = 1
       
       if attrs.inline?
         scope.inline = true
@@ -40,6 +42,7 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
         success = () ->
           scope.edit.mobile = false   
           scope.status.busy = false
+          scope.step++
           
         error = (error) ->
           scope.status.busy = false
@@ -56,6 +59,7 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
         success = () ->
           scope.edit.mobile = false   
           scope.status.busy = false
+          scope.step--
           
         error = (error) ->
           scope.status.busy = false
