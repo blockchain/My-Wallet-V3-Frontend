@@ -6,6 +6,23 @@
   }
 }
 
+
+span.ti-menu {
+  display: none;
+  font-size: 24px;
+  line-height: 0;
+  padding: 0px 20px;
+  position: relative;
+  top: 20px;
+}
+
+@media (max-width: 768px) {
+  span.ti-menu {
+    display: inline-block;
+  }
+}
+
+
 //bootstrap overrides
 
 .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
@@ -32,7 +49,7 @@
 
 
   .container-fluid{
-    padding: 10px 50px;
+    padding: 10px 30px;
   }
 
   ul.mainNav{display: none;}
@@ -115,7 +132,8 @@ img#logo {
 
 .navbar-header{
   .navbar-brand{
-    padding: 15px 25px 15px 15px
+    padding: 0;
+    padding-top: 15px;
   }
 }
 
@@ -141,7 +159,7 @@ ul.sub-dropdown{
 
 ul.navbar-nav{
   .container-fluid{
-    padding: 10px 50px;
+    padding: 10px 30px;
   }
  li.active{
    a{

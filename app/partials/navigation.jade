@@ -3,9 +3,9 @@
     .navbar-header
       button.navbar-toggle(type="button", ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
         span.sr-only Toggle navigation
-        span.icon-bar
-        span.icon-bar
-        span.icon-bar
+        span.ti-angle-down.white
+      a.pull-left(title="Wallet Navigation Menu" ng-click="#")
+        span.ti-menu.white
       a.navbar-brand(ng-click="visitTransactions()") 
         img#logo(src="img/logo-updated.png",alt="Blockchain")
     .navbar-collapse.collapse(ng-class="{'in' : !navCollapsed}", ng-click="navCollapsed=true")
