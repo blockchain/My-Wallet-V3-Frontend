@@ -27,7 +27,7 @@
       .flex-column.form-group(ng-class="{'has-error': errors.to, 'has-success' : success.to}", ng-hide="advanced")
         label.mbm.flex-between
           span(translate="TO:")
-        .flex-center
+        div
           p.form-control-static(ng-hide="originsLoaded", )
             img(src="img/spinner.gif")
           // Use input-group if camera is present.
@@ -104,8 +104,8 @@
         label.mbm
           span(translate="MINERS_FEE")
         p.ccc(translate="MINERS_FEE_EXPLAIN")
-        .flex-center
-          .flex-column.border-right.prl.mrl.miners-fee-selection
+        .flex-center.miners-fee-selection
+          .flex-column.border-right.prl.mrl
             label
               input(type="radio" ng-model="transaction.fee" value="0" ng-change="updateFee(true)" name="miners-fee")
               | Frugal
