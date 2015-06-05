@@ -50,6 +50,8 @@ html,body {
 //Because <span>'s are evil
 .display-block { display: block; }
 
+.pointer { cursor: pointer; }
+
 .alpha-agreement {
   background: rgba(10,10,10,.5);
   position: fixed;

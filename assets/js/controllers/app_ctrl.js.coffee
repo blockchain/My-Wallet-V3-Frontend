@@ -65,7 +65,7 @@
                   notification: ->
                     {
                       type: 'authorization-verified'
-                      icon: 'bc-icon-logo'
+                      icon: 'ti-check'
                       heading: titleTranslation
                       msg: messageTranslation
                     }
