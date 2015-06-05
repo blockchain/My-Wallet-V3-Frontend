@@ -47,7 +47,9 @@
         span(ng-show="status.didInitializeHD")
           qr(text="paymentRequestURL", size=120, correction-level="'M'")
       .phs.flex-2
-        label.black(translate="BITCOIN_ADDRESS")
+        label.black
+          span(translate="BITCOIN_ADDRESS")
+          span :
         p.form-control-static.bitcoin-address
           img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
           span(ng-show="status.didInitializeHD")

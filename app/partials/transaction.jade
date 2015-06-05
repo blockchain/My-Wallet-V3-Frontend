@@ -1,11 +1,11 @@
-#transaction-details
+.transaction-details
   .row
     .col-xs-12
       a.back(ng-click="back()")
-        h2.back Back to feed
+        h4.back Back to feed
   .transaction-card.clearfix
     .tx-date
-      strong Transaction Details 
+      strong Transaction Details
       | {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
     .tx-details
       .gutter
@@ -14,17 +14,17 @@
           strong {{ from }}
         .tx-receiver
           p(translate="TO")
-          strong {{ to }}
+          strong(ng-bind-html="to")
         .tx-notes
           p Notes
           transaction-note(transaction="transaction")
-    .tx-sidebar 
+    .tx-sidebar
       .gutter
         .tx-amount
           amount(transaction="transaction" btc)
         .tx-status
-          transaction-status(transaction="transaction")  
-        .tx-value-then.tx-value
+          transaction-status(transaction="transaction")
+        .tx-value-then.tx-value(ng-show="settings.currency.code == 'USD'")
           p Value at Send
           fiat(btc="transaction.result" abs date="transaction.txTime")
         .tx-value-now.tx-value

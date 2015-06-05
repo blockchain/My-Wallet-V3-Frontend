@@ -94,6 +94,10 @@
       }
     }
   }
+  .miners-fee-selection {
+    label { font-size: small; }
+    .form-control { width: auto; }
+  }
 
   button {
   }
@@ -195,17 +199,25 @@
   ::-webkit-input-placeholder {
     color: $ccc;
   }
+
+  .advanced-recipient-row {
+    margin-bottom: 10px;
+    position: relative;
+    border: 1px solid #eee;
+    padding: 1em;
+    .ui-select-container {
+      min-width: 225px;
+      margin-right: 10px;
+    }
+  }
+  .recipient-currency {
+    .form-control {
+      padding: 3px 10px;
+    }
+  }
   .has-error .form-control {
     border-color: #a94442 !important;
   }
-}
-
-//overrides
-.modal.in .modal-dialog {
-  -webkit-transform: translate(0, 20%);
-  -ms-transform: translate(0, 20%);
-  -o-transform: translate(0, 20%);
-  transform: translate(0, 20%);
 }
 
 @media (max-width: 768px) {
