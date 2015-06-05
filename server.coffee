@@ -5,6 +5,7 @@ bodyParser = require('body-parser')
 auth = require('basic-auth')
 path = require('path')
 r = require('request');
+fs = require('fs')
 
 basic = undefined
 app.use express.logger()
@@ -192,6 +193,12 @@ if process.env.BETA? && parseInt(process.env.BETA)
       else if request.params.method == 'wallets-created'
         hdBeta.fetchNumWalletsCreated (err, count) ->
           response.json { error: err, count: count }
+
+      else if request.params.method == 'get-csv'
+        hdBeta.fetchCSV {}, (err, csv) ->
+          fs.writeFileSync 'tmp.csv', csv
+          response.download 'tmp.csv', 'emails.csv', () ->
+            fs.unlink 'tmp.csv'
 
       else if request.params.method == 'set-percent-requested'
         percent = parseInt(request.query.percent)
