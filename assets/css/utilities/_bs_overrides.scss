@@ -130,3 +130,10 @@ $select-fg: #686868;
 .ui-select-toggle{height: 34px;}
 }
 
+//override BS modal-footer alignment craziness
+.modal-footer {
+  &:after, &:before {
+    content: none;
+    display: none;
+  }
+}
