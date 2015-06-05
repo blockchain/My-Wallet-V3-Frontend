@@ -312,12 +312,20 @@
     $scope.transactionIsValid = $scope.validate()
     $scope.updateToLabel()
 
-    unless $scope.transaction.destination.type == "External"
-      # Select the external account if it's the only match; otherwise when the user moves away from the field
-      # the address will be forgotten. This is only an issue if the user selects an account first and then starts typing.
-      for destination in $scope.destinations[i]
-        return if destination.type != "External" && destination.label.indexOf(query) != -1
-      $scope.transaction.destination = last
+    if !$scope.advanced 
+      if $scope.transaction.destination.type != "External"
+        # Select the external account if it's the only match; otherwise when the user moves away from the field
+        # the address will be forgotten. This is only an issue if the user selects an account first and then starts typing.
+        for destination in $scope.destinations[i]
+          return if destination.type != "External" && destination.label.indexOf(query) != -1
+        $scope.transaction.destination = last
+    else
+      if $scope.transaction.multipleDestinations[i] == null || $scope.transaction.multipleDestinations[i].type != "External"
+        # Select the external account if it's the only match; otherwise when the user moves away from the field
+        # the address will be forgotten. This is only an issue if the user selects an account first and then starts typing.
+        for destination in $scope.destinations[i]
+          return if destination.type != "External" && destination.label.indexOf(query) != -1
+        $scope.transaction.multipleDestinations[i] = last
 
   $scope.updateFee = (feeAmount) ->
     if feeAmount
