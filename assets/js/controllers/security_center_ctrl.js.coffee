@@ -59,6 +59,8 @@
       $scope.nextAction()
     
   $scope.$watchCollection "settings", (newValue, oldValue) ->
+    if newValue.blockTOR && $scope.display.action == 'blocktor'
+      $scope.toggle('blocktor')
     if $scope.settings.googleAuthenticatorSecret == null # Google 2FA requires two steps
       $scope.nextAction()
     
