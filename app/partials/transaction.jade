@@ -24,7 +24,7 @@
           amount(transaction="transaction" btc)
         .tx-status
           transaction-status(transaction="transaction")
-        .tx-value-then.tx-value
+        .tx-value-then.tx-value(ng-show="settings.currency.code == 'USD'")
           p Value at Send
           fiat(btc="transaction.result" abs date="transaction.txTime")
         .tx-value-now.tx-value
