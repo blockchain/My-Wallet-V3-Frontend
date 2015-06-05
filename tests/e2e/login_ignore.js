@@ -1,5 +1,6 @@
 // This file should be ignored as it contains login credentials
 
-exports.uid = 'c8825e86-0cc9-47b1-a025-1f872bc57818';
+exports.uid = 'f873682e-177a-443e-9c1f-ec05d6134d14';
 exports.pw = '3J#xPukqeHzd#5xE';
+exports.pwNew = '2$E6SCAFZ!yPniz$';
 exports.betaKey = '5f871452';

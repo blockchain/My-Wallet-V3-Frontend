@@ -18,21 +18,12 @@ describe('transactions-page', function() {
     var account1TransDate = 'April 7 @ 03:51 PM';
     var account3TransDate = 'February 18 @ 06:56 PM';
 
+
     beforeEach(function() {
 
         util.getURL();
         util.logIn();
-
-        // Validate account homepage details
-        browser.sleep(1000); // Required wait for Request and Send button validation
-        browser.findElement(by.css('[ng-click="send()"]'));
-
-        //////////////////////////////////////////////////////////
-        //  This excessive timeout is required as of 4/10/2015  //
-        // to avoid 'There are changes still being saved' alert //
-        //    Caused by a bug that triggers a wallet backup     //
-        //////////////////////////////////////////////////////////
-        browser.sleep(4000);
+        util.validateHome();
 
     });
 
@@ -67,66 +58,87 @@ describe('transactions-page', function() {
 
     it('should validate account names and balances', function() {
 
+        // Open Transactions drawer in left navigation
+        browser.findElement(by.css('[translate="MY_TRANSACTIONS"]')).click();
+
         // Validate all account names
         browser.findElement(by.css('[translate="ALL_ACCOUNTS"]'));
-        util.shouldContainCSS('a.ng-binding', account1Name);
-        util.shouldContainCSS('a.ng-binding', account2Name);
-        util.shouldContainCSS('a.ng-binding', account3Name);
-        util.shouldContainCSS('a.ng-binding', account4Name);
+        util.shouldContainCSS('span.prs.ng-binding', account1Name);
+        util.shouldContainCSS('span.prs.ng-binding', account2Name);
+        util.shouldContainCSS('span.prs.ng-binding', account3Name);
+        util.shouldContainCSS('span.prs.ng-binding', account4Name);
 
         // Validate two account balances
-        util.shouldContainCSS('body > div > div > div > div > div > div > div > table > tbody > tr > td > a > span > span > span.ng-binding.ng-isolate-scope', '0.00');
-        util.shouldContainCSS('span.ng-binding.ng-hide', account3TransValue);
+        util.shouldContainCSS('a > span > span > span.ng-binding.ng-isolate-scope.ng-hide', '0.00');
+        browser.findElement(by.cssContainingText('span.ng-binding', account3TransValue));
 
     });
 
     it('should show account balance and transaction history when selecting account name', function() {
 
+        // Open Transactions drawer in left navigation
+        browser.findElement(by.css('[translate="MY_TRANSACTIONS"]')).click();
+
         // Click on account 'DONT EDIT 3' and validate value and date
-        browser.findElement(by.cssContainingText('a.ng-binding', account3Name)).click();
-        util.shouldContainCSS('p.ng-binding', account3TransValue);
+        browser.findElement(by.cssContainingText('span.prs.ng-binding', account3Name)).click();
+        util.shouldContainCSS('h1.ng-binding.ng-scope', account3TransValue);
         util.shouldContainCSS('date.ng-binding', account3TransDate);
 
     });
 
     it('should show transaction details when clicking on date/time of transaction', function() {
 
-        // Click on account 'DONT EDIT 3' and view transaction details
-        browser.findElement(by.cssContainingText('a.ng-binding', account3Name)).click();
-        util.shouldContainCSS('p.ng-binding', account3TransValue);
+        // Open Transactions drawer in left navigation
+        browser.findElement(by.css('[translate="MY_TRANSACTIONS"]')).click();
+
+        // Click on account 'DONT EDIT 3' and validate value and date
+        browser.findElement(by.cssContainingText('span.prs.ng-binding', account3Name)).click();
+        util.shouldContainCSS('h1.ng-binding.ng-scope', account3TransValue);
         browser.findElement(by.cssContainingText('date.ng-binding', account3TransDate)).click();
 
         // Validate transaction details page
         // TODO Change to translate="" after translations added
-        util.shouldContainCSS('h2', 'Transaction Details');
-        browser.findElement(by.css('[translate="VALUE_AT_TX_TIME"]'));
+        util.shouldContainCSS('strong', 'Transaction Details');
+
+        browser.findElement(by.css('[translate="TRANSACTION_COMPLETE"]'));
+
+        // TODO Change to translate="" after translations added
+        util.shouldContainCSS('p', 'Value at Send');
+
         browser.sleep(200); // Required for next step to pass in Chrome
-        expect(element(by.cssContainingText('div > span > span > span.ng-binding.ng-isolate-scope', '$0.10')).isPresent()).toBe(true);
-        util.shouldContainCSS('div > span > span > span.ng-binding.ng-isolate-scope', '$0.10');
+        expect(element(by.cssContainingText('div > span.ng-binding.ng-isolate-scope', '$0.10')).isPresent()).toBe(true);
+
         // TODO Change to translate="" after translations added
-        util.shouldContainCSS('h4', 'Value now');
+        util.shouldContainCSS('p', 'Value now');
+
         // TODO Change to translate="" after translations added
-        util.shouldContainCSS('a.btn', 'Verify On Blockchain.info');
+        util.shouldContainCSS('a.button-default.button-sm', 'Verify On Blockchain.info');
 
     });
 
     it('should return to account balance and transaction history from transaction details', function() {
 
+        // Open Transactions drawer in left navigation
+        browser.findElement(by.css('[translate="MY_TRANSACTIONS"]')).click();
+
         // Click on account 'DONT EDIT 3' and view transaction details
-        browser.findElement(by.cssContainingText('a.ng-binding', account3Name)).click();
+        browser.findElement(by.cssContainingText('span.prs.ng-binding', account3Name)).click();
         browser.findElement(by.cssContainingText('date.ng-binding', account3TransDate)).click();
 
         // Return to account details and validate Request/Send buttons
-        browser.findElement(by.css('h2.back')).click();
-        browser.findElement(by.css('[ng-click="request()"]'));
-        browser.findElement(by.css('[ng-click="send()"]'));
+        browser.findElement(by.css( 'div > a > h2.back')).click();
+        browser.findElement(by.css('[translate="REQUEST"]'));
+        browser.findElement(by.css('[translate="SEND"]'));
 
     });
 
     it('should show transacted bitcoin address for each listed transaction', function() {
 
+        // Open Transactions drawer in left navigation
+        browser.findElement(by.css('[translate="MY_TRANSACTIONS"]')).click();
+
         // Click on account 'DONT EDIT 1' and validate transaction date
-        browser.findElement(by.cssContainingText('a.ng-binding', account1Name)).click();
+        browser.findElement(by.cssContainingText('span.prs.ng-binding', account1Name)).click();
         util.shouldContainCSS('date.ng-binding', account1TransDate);
 
         // Validate  address labels within account details
@@ -138,18 +150,21 @@ describe('transactions-page', function() {
 
     it('should auto populate account name on Send/Receive modal', function() {
 
-        // View account 1 details and open Send modal
-        browser.findElement(by.cssContainingText('a.ng-binding', account1Name)).click();
-        browser.findElement(by.css('[ng-click="send()"]')).click();
+        // Open Transactions drawer in left navigation
+        browser.findElement(by.css('[translate="MY_TRANSACTIONS"]')).click();
+
+        // Click on account 'DONT EDIT 1' and validate transaction date
+        browser.findElement(by.cssContainingText('span.prs.ng-binding', account1Name)).click();
+        browser.findElement(by.css('[translate="SEND"]')).click();
 
         // Validate Send modal details
-        browser.findElement(by.css('[translate="SEND_FROM"]'));
+        browser.findElement(by.css('[translate="FROM"]'));
         util.shouldContainCSS('span.ng-binding.ng-scope', account1Name + ' (' + account1TransValue + ')');
 
         // Close Send modal, wait for and click Request button
         browser.findElement(by.css('[ng-click="close()"]')).click();
         expect(element(by.css('[ng-click="request()"]')).isPresent()).toBe(true);
-        browser.findElement(by.css('[ng-click="request()"]')).click();
+        browser.findElement(by.css('[translate="REQUEST"]')).click();
 
         // Validate Receive modal details
         browser.findElement(by.css('[translate="RECEIVE_TO"]'));

@@ -43,10 +43,15 @@ describe('login-page', function() {
 
     });
 
-    it('should validate top navigation items', function() {
+    xit('should validate top navigation items', function() {
 
         browser.findElement(by.id('logo'));
-        // Add more navigation elements as they are developed
+        browser.findElement(by.linkText('Home'));
+        browser.findElement(by.linkText('About'));
+        browser.findElement(by.linkText('Wallet'));
+        browser.findElement(by.linkText('Explorer'));
+        browser.findElement(by.linkText('Merchant'));
+        browser.findElement(by.linkText('Support'));
 
     });
 
@@ -94,7 +99,7 @@ describe('login-page', function() {
 
     it('should test password matching', function() {
 
-        // Enter beta key and click Create Wallet button
+        // Enter  key and click Create Wallet button
         util.submitBetaKey();
 
         // Enter non-matching passwords
@@ -111,7 +116,7 @@ describe('login-page', function() {
 
     });
 
-    // Beta key pre-fills email address and disables editing, this test case is disabled
+    // Invite key pre-fills email address and disables editing, this test case is disabled
     xit('should test email address validation', function() {
 
         // Enter beta key and click Create Wallet button
@@ -159,7 +164,7 @@ describe('login-page', function() {
         // Submit and validate error messaging
         loginButton.click();
         browser.sleep(1000);
-        util.shouldContainCSS('span.ng-binding.ng-scope', 'Error Decrypting Wallet. Please check your password is correct.');
+        util.shouldContainCSS('span.help-block.ng-binding', 'Error Decrypting Wallet. Please check your password is correct.');
 
     });
 

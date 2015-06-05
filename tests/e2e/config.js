@@ -8,7 +8,8 @@ exports.config = {
 
     suites: {
         trans: '**/transactions_spec.js',
-        login: '**/login_spec.js'
+        login: '**/login_spec.js',
+        settings: '**/settings/*_spec.js'
     },
 
     params: {
@@ -36,8 +37,8 @@ exports.config = {
     // Capabilities to be passed to the webdriver instance
     multiCapabilities: [{
         'browserName': 'chrome'
-    }, {
-        'browserName': 'firefox'
+ //   }, {
+ //       'browserName': 'firefox'
     }]
 
 }
