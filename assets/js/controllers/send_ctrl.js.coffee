@@ -540,9 +540,12 @@
     transaction = $scope.transaction
     # copy normal send to address if we have 1 destination in advanced and it's not an account
     if transaction.multipleDestinations.length == 1 and transaction.destination? and transaction.destination.address != '' and not transaction.destination.index?
-      console.log transaction.destination
       transaction.multipleDestinations[0] = transaction.destination
       $scope.visualValidate("destinations")
+    # copy amount in regular send to advanced send, if there is one
+    if transaction.multipleAmounts.length == 1 and not isNaN(transaction.amount) and transaction.amount > 0
+      transaction.multipleAmounts[0] = transaction.amount
+      $scope.visualValidate('amounts')
     $scope.transactionIsValid = $scope.validate()
 
   $scope.regularSend = () ->
