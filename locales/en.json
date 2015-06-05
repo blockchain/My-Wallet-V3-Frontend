@@ -396,5 +396,6 @@
   "WALLET" : "Wallet",
   "EXPLORER" : "Explorer",
   "MERCHANT" : "Merchant",
-  "SUPPORT" : "Support"
+  "SUPPORT" : "Support",
+  "RABBIT_HOLE" : "Are you sure you wish to know how deep the rabbit hole goes?"
 }
