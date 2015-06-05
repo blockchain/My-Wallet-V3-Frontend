@@ -259,7 +259,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     if language?
       language_code = language.code
-      
+
     $translate("FIRST_ACCOUNT_NAME").then (translation) ->
       wallet.my.createNewWallet(email, password, translation,language_code, currency_code, success, error)
 
@@ -472,7 +472,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       return parseFloat(numeral(currency1.conversion).multiply(amount).divide(wallet.conversions[currency2.code].conversion).format("0.00"))
     else
       return parseFloat(numeral(amount).multiply(wallet.conversions[currency1.code].conversion).divide(currency2.conversion).format("0.00000000"))
-    
+
   wallet.convertToSatoshi = (amount, currency) ->
     return null unless amount?
     return null unless currency?
@@ -1013,7 +1013,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.status.didUpgradeToHd = false
       continueCallback = () ->
         $translate("FIRST_ACCOUNT_NAME").then (translation) ->
-        
+
           needsSecondPasswordCallback = (continueCallback) ->
             cancelCallback = () ->
             $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback, true
@@ -1404,7 +1404,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return wallet.store.getTotalBalanceForActiveLegacyAddresses()
 
   wallet.setDefaultAccount = (account) ->
-    wallet.store.setDefaultAccountIndex(account.index)
+    wallet.store.changeDefaultAccountIndex(account.index)
     wallet.updateAccounts()
 
   wallet.isValidBIP39Mnemonic = (mnemonic) ->
