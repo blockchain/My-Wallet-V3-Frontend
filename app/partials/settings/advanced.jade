@@ -72,9 +72,9 @@ form.form-horizontal(role="form",name="form",novalidate)
       h2.status.complete.hidden-xs.hidden-sm(ng-show="settings.restrictToWhitelist", translate="ENABLED")
       ip-whitelist-restrict
 
-h2.clickable(translate="DEVELOPER", ng-click="display.dev = !display.dev")
+h2.clickable(ng-if="!dist" translate="DEVELOPER", ng-click="display.dev = !display.dev")
 
-form.form-horizontal(role="form", name="form2", ng-show="display.dev", novalidate)
+form.form-horizontal(ng-if="!dist" role="form", name="form2", ng-show="display.dev", novalidate)
   .form-group
     .col-sm-12.col-md-6
       label(translate="MULTI_ACCOUNT")

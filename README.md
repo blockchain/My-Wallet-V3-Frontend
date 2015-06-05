@@ -133,10 +133,6 @@ Not supported by the server yet.
 
 ## Deploy
 
-Curently the app is configured to be deployed on a Blockchain staging server:
-
-https://dev.blockchain.info/ (password protected)
-
 First create a minified javascript file for the MyWalletHD component:
 
     cd assets/js/my-wallet
@@ -160,13 +156,11 @@ Alternatively use `grunt dist_unsafe` without Github credentials.
 
 You can test the resulting files by setting `DIST=1` in `.env` and restarting the server.
 
-Deploy to staging (assuming your host file has an entry server12):
+Deploy to staging 
 
-    grunt staging
+    grunt deploy_to_staging
 
 index.html should be cached using If-Modified-Since or etag. All other files contain a hash of their content and should be cached forever.
-
-Copy `server.coffee` anytime you change it.
 
 ## Git branches
 

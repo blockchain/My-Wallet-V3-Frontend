@@ -122,7 +122,7 @@ describe "RequestCtrl", ->
       expect(scope.paymentRequestURL).not.toContain("amount=")
     
     it "should show the amount in BTC", ->
-      expect(scope.currencies[2].code).toBe("EUR")
-      scope.fields.currency = scope.currencies[2]
+      expect(scope.currencies[4].code).toBe("EUR")
+      scope.fields.currency = scope.currencies[4]
       scope.$digest()
       expect(scope.paymentRequestAmount).toBe(400000)

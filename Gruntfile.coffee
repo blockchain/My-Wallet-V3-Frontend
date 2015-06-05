@@ -87,6 +87,7 @@ module.exports = (grunt) ->
           'build/bower_components/angular/angular.min.js'
           'build/bower_components/angular-sanitize/angular-sanitize.min.js'
           'build/bower_components/angular-cookies/angular-cookies.min.js'
+          'build/bower_components/angular-animate/angular-animate.min.js'
           'build/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
           'build/bower_components/numeral/min/numeral.min.js'
           'build/bower_components/angular-numeraljs/dist/angular-numeraljs.js'
@@ -109,6 +110,7 @@ module.exports = (grunt) ->
           'bower_components/angular/angular.js'
           'bower_components/angular-sanitize/angular-sanitize.js'
           'bower_components/angular-cookies/angular-cookies.min.js'
+          'bower_components/angular-animate/angular-animate.min.js'
           'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
           'bower_components/angular-ui-router/release/angular-ui-router.min.js'
           'bower_components/angular-ui-select/dist/select.min.js'
@@ -157,7 +159,6 @@ module.exports = (grunt) ->
         src: [
           "build/bower_components/angular-ui-select/dist/select.min.css"
           # "build/bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css"
-          "build/bower_components/angular/angular-csp.css"
           "build/css/blockchain.css" # Needs to be loaded first
           "build/css/**/*.css"
         ],
@@ -205,7 +206,6 @@ module.exports = (grunt) ->
 
       css:
         files: [
-          {src: ["angular-csp.css"], dest: "build/css", cwd: "bower_components/angular", expand: true }
           {src: ["intlTelInput.css"], dest: "build/css", cwd: "bower_components/intl-tel-input/build/css", expand: true }
           {src: ["font-awesome.min.css"], dest: "build/css", cwd: "bower_components/fontawesome/css", expand: true }
           {src: ["*.css"], dest: "build/css", cwd: "assets/css", expand: true }
@@ -271,6 +271,22 @@ module.exports = (grunt) ->
           format: "{{basename}}-{{hash}}.{{ext}}"
 
           callback: (befores, afters) ->
+            # Start with the longest file names, so e.g. some-font.woff2 is renamed before some-font.woff.
+            tuples = new Array
+            i = 0
+            while i < befores.length
+              tuples.push [befores[i],afters[i]]
+              i++      
+                          
+            tuples.sort((a,b) -> 
+              if a[0].length != b[0].length
+                return a[0].length < b[0].length
+              return a < b
+            )              
+            
+            befores = tuples.map((t)->t[0])
+            afters = tuples.map((t)->t[1])
+            
             publicdir = require("fs").realpathSync("dist")
             path = require("path")
             for referring_file_path in ["dist/application.min.js", "dist/beta-admin.js", "dist/application.css", "dist/beta-admin.css", "dist/admin.html", "dist/index.html", "dist/index-beta.html"]
@@ -333,51 +349,51 @@ module.exports = (grunt) ->
     shell:
       deploy_static_to_dev:
         command: () -> 
-          'rsync -rz --delete dist hd-dev@server12:'
+          'rsync -rz --delete dist hd-dev@server:'
 
       deploy_server_to_dev:
         command: () -> 
-          'rsync -rz --delete server.coffee hd-dev@server12:'
+          'rsync -rz --delete server.coffee hd-dev@server:'
 
       deploy_beta_to_dev:
         command: () -> 
-          'rsync -rz --delete node_modules/hd-beta hd-dev@server12:node_modules/'
+          'rsync -rz --delete node_modules/hd-beta hd-dev@server:node_modules/'
 
       deploy_static_to_staging:
         command: () -> 
-          'rsync -rz --delete dist hd-staging@server12:'
+          'rsync -rz --delete dist hd-staging@server:'
 
       deploy_server_to_staging:
         command: () -> 
-          'rsync -rz --delete server.coffee hd-staging@server12:'
+          'rsync -rz --delete server.coffee hd-staging@server:'
 
       deploy_beta_to_staging:
         command: () -> 
-          'rsync -rz --delete node_modules/hd-beta hd-staging@server12:node_modules/'
+          'rsync -rz --delete node_modules/hd-beta hd-staging@server:node_modules/'
 
       deploy_static_to_alpha:
         command: () -> 
-          'rsync -rz --delete dist hd-alpha@server12:'
+          'rsync -rz --delete dist hd-alpha@server:'
 
       deploy_server_to_alpha:
         command: () -> 
-          'rsync -rz --delete server.coffee hd-alpha@server12:'
+          'rsync -rz --delete server.coffee hd-alpha@server:'
 
       deploy_beta_to_alpha:
         command: () ->
-          'rsync -rz --delete node_modules/hd-beta hd-alpha@server12:node_modules/'
+          'rsync -rz --delete node_modules/hd-beta hd-alpha@server:node_modules/'
 
       deploy_start_dev:
         command: () ->
-          'ssh hd-dev@server12 "./start.sh"'
+          'ssh hd-dev@server "./start.sh"'
 
       deploy_start_staging:
         command: () ->
-          'ssh hd-staging@server12 "./start.sh"'
+          'ssh hd-staging@server "./start.sh"'
 
       deploy_start_alpha:
         command: () ->
-          'ssh hd-alpha@server12 "./start.sh"'
+          'ssh hd-alpha@server "./start.sh"'
 
       check_dependencies: 
         command: () -> 
@@ -393,7 +409,7 @@ module.exports = (grunt) ->
 
       bower_install_dependencies:
         command: () ->
-           'cd build && touch .bowerrc && bower install'
+           'cp bower.json build/ && cd build && bower install'
 
   # Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks "grunt-contrib-uglify"
@@ -503,7 +519,7 @@ module.exports = (grunt) ->
   ]
   
   grunt.registerTask "deploy_static_to_dev", [
-    "dist_unsafe"
+    "dist"
     "shell:deploy_static_to_dev"
     "shell:deploy_start_dev"
   ]
@@ -519,7 +535,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "deploy_to_dev", [
-    "dist_unsafe"
+    "dist"
     "shell:deploy_static_to_dev"
     "shell:deploy_beta_to_dev"
     "shell:deploy_server_to_dev"
@@ -527,7 +543,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "deploy_static_to_staging", [
-    "dist_unsafe"
+    "dist"
     "shell:deploy_static_to_staging"
     "shell:deploy_start_staging"
   ]
@@ -543,7 +559,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "deploy_to_staging", [
-    "dist_unsafe"
+    "dist"
     "shell:deploy_static_to_staging"
     "shell:deploy_beta_to_staging"
     "shell:deploy_server_to_staging"
@@ -551,7 +567,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "deploy_static_to_alpha", [
-    "dist_unsafe"
+    "dist"
     "shell:deploy_static_to_alpha"
     "shell:deploy_start_alpha"
   ]
@@ -567,7 +583,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "deploy_to_alpha", [
-    "dist_unsafe"
+    "dist"
     "shell:deploy_static_to_alpha"
     "shell:deploy_beta_to_alpha"
     "shell:deploy_server_to_alpha"

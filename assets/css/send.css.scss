@@ -4,7 +4,8 @@
 
 #qr {
   img {
-    height: 13px;
+    height: 20px;
+    width: 20px;
   }
   border-left: none;
 }
@@ -16,22 +17,6 @@
   img.question {
     padding-left: 5px;
     height: 11px;
-  }
-}
-
-.send-methods {
-  .btn-group-justified {
-    .btn {
-      border-bottom: none;
-    }
-    .middle {
-      border-left: none;
-      border-right: none;
-    }
-  }
-
-  input {
-    border-top: 1px solid #ccc;
   }
 }
 

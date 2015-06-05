@@ -1,13 +1,14 @@
-@AppCtrl = ($scope, Wallet, $state, $rootScope,$cookieStore, $timeout, $modal, $window, $translate) ->
+@AppCtrl = ($scope, Wallet, $state, $rootScope, $location, $cookieStore, $timeout, $modal, $window, $translate) ->
   $scope.status    = Wallet.status
   $scope.settings = Wallet.settings
   $rootScope.isMock = Wallet.isMock
   $scope.goal = Wallet.goal
-    
+  $rootScope.dist = if $location.host() == 'alpha.blockchain.info' then true else false
+
   #################################
   #           Private             #
   #################################
-        
+
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->  
     if toState.name != "login.show" && toState.name != "login" && toState.name != "register" && toState.name != "open" && toState.name != "verify-email" && toState.name != "verify-email-with-guid" && $scope.status.isLoggedIn == false
       $state.go("login.show")
@@ -65,7 +66,7 @@
                   notification: ->
                     {
                       type: 'authorization-verified'
-                      icon: 'bc-icon-logo'
+                      icon: 'ti-check'
                       heading: titleTranslation
                       msg: messageTranslation
                     }
@@ -120,6 +121,7 @@
       templateUrl: "partials/upgrade.jade"
       controller: UpgradeCtrl,
       backdrop: "static" # Undismissable
+      windowClass: "bc-modal"
     )
         
     modalInstance.result.then(() ->

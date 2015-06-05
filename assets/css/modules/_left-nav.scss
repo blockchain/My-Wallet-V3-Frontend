@@ -1,7 +1,3 @@
-.left-nav {
-  padding: 15px;
-  top: 65px;
-}
 .left-navigation {
   color: #c9c9c9;
   width: initial;
@@ -163,10 +159,9 @@ li.action-bar{
   .adverts {
     display: none;
   }
-  .left-nav { top: 0; }
 }
 
-@media (max-height: 425px) {
+@media (max-height: 620px) {
   .adverts {
     display: none;
   }

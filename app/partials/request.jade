@@ -25,8 +25,8 @@
             span(ng-bind-html="currency.code | highlight: $select.search")   
       .col-sm-3
         p.form-control-static
-          fiat(currency="settings.currency", btc="paymentRequestAmount",  ng-show="fields.currency.code=='BTC'")
-          span(ng-hide="fields.currency.code=='BTC'") {{ paymentRequestAmount | btc }}
+          fiat(currency="settings.currency", btc="paymentRequestAmount",  ng-show="isBitCurrency(fields.currency)")
+          span(ng-hide="isBitCurrency(fields.currency)") {{ paymentRequestAmount | toBitCurrency:settings.btcCurrency }}
       
     //- .form-group
     //-   label.col-sm-3.control-label(translate="DESCRIPTION")
@@ -40,18 +40,22 @@
       .col-sm-9
         p.form-control-static
           | {{ paymentRequest.paid / 100000000.0 }}  
-    .flex(ng-if="paymentRequestURL")
+    .flex.pam(ng-if="paymentRequestURL")
       .flex-1
         p(ng-hide="status.didInitializeHD")
           img(src="img/spinner.gif")  
         span(ng-show="status.didInitializeHD")
           qr(text="paymentRequestURL", size=120, correction-level="'M'")
       .phs.flex-2
-        label.black(translate="BITCOIN_ADDRESS")
+        label.black
+          span(translate="BITCOIN_ADDRESS")
+          span :
         p.form-control-static.bitcoin-address
           img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
           span(ng-show="status.didInitializeHD")
             | {{ paymentRequestAddress }}  
-        p.ccc.mtm Just copy the address above and share
-.modal-footer
-  button.button-default(ng-click="close()", translate="GOT_IT")  
+        p.black.mtm.flex-center
+          i.ti-mouse-alt.mrs
+          | Just copy the address above and share
+.modal-footer.flex-end.pal
+  button.button-success.button-lg(ng-click="close()", translate="GOT_IT")  

@@ -8,8 +8,8 @@
       input.form-control(type="text",ng-model="fields.name",autofocus,ng-blur="validate()", ng-focus="errors.name = null")
       span.help-block {{ errors.name }}
   span(ng-show="!status.edit")
-.modal-footer
-  button.button-muted(ng-click="close()", translate="CLOSE", ng-hide="status.busy")
+.modal-footer.pal.flex-end.flex-center
+  button.button-muted.mrm(ng-click="close()", translate="CLOSE", ng-hide="status.busy")
   span(ng-if="!status.edit")
     button.button-primary(ui-ladda="{{ status.busy }}", ng-click="createAccount()", ladda-translate="CREATE_ACCOUNT", ng-disabled="!formIsValid", data-style="expand-left")
   span(ng-if="status.edit")

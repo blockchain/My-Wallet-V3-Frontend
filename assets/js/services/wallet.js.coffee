@@ -44,7 +44,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.transactions = []
   wallet.languages = []
   wallet.currencies = []
-  wallet.btcCurrencies = [{ serverCode: 'BTC', code: 'BTC', conversion: 1 }, { serverCode: 'MBC', code: 'mBTC', conversion: 1000 }, { serverCode: 'UBC', code: 'bits', conversion: 1000000 }]
+  wallet.btcCurrencies = [{ serverCode: 'BTC', code: 'BTC', conversion: 100000000 }, { serverCode: 'MBC', code: 'mBTC', conversion: 100000 }, { serverCode: 'UBC', code: 'bits', conversion: 100 }]
   wallet.hdAddresses = []
 
   ##################################
@@ -259,7 +259,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     if language?
       language_code = language.code
-      
+
     $translate("FIRST_ACCOUNT_NAME").then (translation) ->
       wallet.my.createNewWallet(email, password, translation,language_code, currency_code, success, error)
 
@@ -461,6 +461,44 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return null unless wallet.conversions[currency]?
     return numeral(100000000).multiply(amount).divide(wallet.conversions[currency].conversion).format("0.00")
 
+  wallet.isBitCurrency = (currency) ->
+    return null unless currency?
+    return ['BTC', 'mBTC', 'bits'].indexOf(currency.code) > -1
+
+  wallet.convertCurrency = (amount, currency1, currency2) ->
+    return null unless amount?
+    return null unless (wallet.conversions[currency1.code]? || wallet.conversions[currency2.code]?)
+    if wallet.isBitCurrency(currency1)
+      return parseFloat(numeral(currency1.conversion).multiply(amount).divide(wallet.conversions[currency2.code].conversion).format("0.00"))
+    else
+      return parseFloat(numeral(amount).multiply(wallet.conversions[currency1.code].conversion).divide(currency2.conversion).format("0.00000000"))
+
+  wallet.convertToSatoshi = (amount, currency) ->
+    return null unless amount?
+    return null unless currency?
+    if wallet.isBitCurrency(currency)
+      return parseInt(numeral(amount).multiply(currency.conversion).format("0"))
+    else if wallet.conversions[currency.code]?
+      return parseInt(numeral(amount).multiply(wallet.conversions[currency.code].conversion).format("0"))
+    else
+      return null
+
+  wallet.convertFromSatoshi = (amount, currency) ->
+    return null unless amount?
+    return null unless currency?
+    if wallet.isBitCurrency(currency)
+      return parseFloat(numeral(amount).divide(currency.conversion).format("0.[00000000]"))
+    else if wallet.conversions[currency.code]?
+      return parseFloat(numeral(amount).divide(wallet.conversions[currency.code].conversion).format("0.[00]"))
+    else
+      return null
+
+  wallet.toggleDisplayCurrency = () ->
+    if wallet.isBitCurrency(wallet.settings.displayCurrency)
+      wallet.settings.displayCurrency = wallet.settings.currency
+    else
+      wallet.settings.displayCurrency = wallet.settings.btcCurrency
+
   wallet.getFiatAtTime = (amount, time, currency) ->
     defer = $q.defer()
     # Cache the result since historical rates don't change within one session and we don't want to hammer the server
@@ -483,10 +521,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return defer.promise
 
   wallet.checkAndGetTransactionAmount = (amount, currency, success, error) ->
-    if currency != "BTC"
-      amount = wallet.fiatToSatoshi(amount, currency)
-    else
-      amount = parseInt(numeral(amount).multiply(100000000).format("0"))
+    amount = wallet.convertToSatoshi(amount, currency)
 
     if !success? || !error?
       console.error "Success and error callbacks are required"
@@ -610,6 +645,28 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           spendFrom.toAccount(destination.index)
         else if destination.address?
           spendFrom.toAddress(destination.address)
+
+      sendAdvanced: (from, destinations, amounts, fee, currency, publicNote) ->
+        addressesArray = []
+        amountsArray = []
+
+        for destination in destinations
+          if destination.type == "Accounts"
+            addressesArray.push(wallet.getReceivingAddressForAccount(destination.index))
+          else
+            addressesArray.push(destination.address)
+
+        for amount in amounts
+          amountsArray.push(wallet.checkAndGetTransactionAmount(amount, currency, success, error))
+
+        spender = wallet.spender(publicNote, success, error, {}, needsSecondPassword)
+
+        if from.address?
+          spendFrom = spender.fromAddress(from.address, 1000, fee)
+        else if from.index?
+          spendFrom = spender.fromAccount(from.index, 1000, fee)
+
+        spendFrom.toAddresses(addressesArray, amountsArray)
 
       sweep: (fromAddress, toAccountIndex) ->
         spender = wallet.spender(null, success, error, {}, needsSecondPassword)
@@ -843,7 +900,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
           wallet.accounts[i].isDefault = !(defaultAccountIndex < i or defaultAccountIndex > i)
 
-    wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts[0].balance?
+    wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts.some((a)->a.active and a.balance)
 
   # Update (labelled) HD addresses:
   wallet.updateHDaddresses = () ->
@@ -988,7 +1045,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.status.didUpgradeToHd = false
       continueCallback = () ->
         $translate("FIRST_ACCOUNT_NAME").then (translation) ->
-        
+
           needsSecondPasswordCallback = (continueCallback) ->
             cancelCallback = () ->
             $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback, true
@@ -1379,7 +1436,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return wallet.store.getTotalBalanceForActiveLegacyAddresses()
 
   wallet.setDefaultAccount = (account) ->
-    wallet.store.setDefaultAccountIndex(account.index)
+    wallet.store.changeDefaultAccountIndex(account.index)
     wallet.updateAccounts()
 
   wallet.isValidBIP39Mnemonic = (mnemonic) ->

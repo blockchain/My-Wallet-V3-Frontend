@@ -320,6 +320,9 @@ $(document).ready(function() {
 			$('#activation-errors').empty().addClass('hidden');
 		}, 500);
 	});
+	$('#get-csv-button').on('click', function () {
+		location.assign(getRootUrl() + 'get-csv');
+	});
 	getSortedKeys(sort, order);
 	getRequestPercent();
 	getNumWalletsCreated();

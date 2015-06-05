@@ -12,7 +12,8 @@
 
   $scope.validateLogoutTime = (candidate) ->
     n = parseInt(candidate)
-    return false if isNaN(candidate) || n < 1 || n > 1440
+    return false if isNaN(candidate) || n > 1440
+    return false unless n >= 1
     return true
     
   $scope.validateIpWhitelist = (candidates) ->

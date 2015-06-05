@@ -9,6 +9,8 @@ walletApp.directive('configureSecondPassword', ($translate, Wallet, $modal) ->
       scope.settings = Wallet.settings
       
       scope.removeSecondPassword = () ->
+        return if scope.busy
+          
         scope.busy = true
         
         success = () ->

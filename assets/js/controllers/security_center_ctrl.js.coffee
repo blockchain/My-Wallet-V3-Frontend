@@ -42,7 +42,8 @@
     Wallet.changePasswordHint(hint, success, error)    
     
   $scope.$watchCollection "user", (newValue, oldValue) ->
-    $scope.nextAction()
+    unless $scope.display.action == "mobilenumber" && !$scope.user.isMobileVerified
+      $scope.nextAction()
     
   $scope.$watchCollection "settings", (newValue, oldValue) ->
     if $scope.settings.googleAuthenticatorSecret == null # Google 2FA requires two steps

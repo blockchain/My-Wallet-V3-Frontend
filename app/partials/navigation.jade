@@ -3,18 +3,18 @@
     .navbar-header
       button.navbar-toggle(type="button", ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
         span.sr-only Toggle navigation
-        span.icon-bar
-        span.icon-bar
-        span.icon-bar
+        span.ti-angle-down.white
+      a.pull-left#wallet-nav-toggle(title="Wallet Navigation Menu")
+        span.ti-menu.white
       a.navbar-brand(ng-click="visitTransactions()") 
         img#logo(src="img/logo-updated.png",alt="Blockchain")
     .navbar-collapse.collapse(ng-class="{'in' : !navCollapsed}", ng-click="navCollapsed=true")
       ul.nav.navbar-nav.navbar-right(ng-show="status.isLoggedIn")
-        li.item.mrl
+        li.item.mrl(ng-show="settings.btcCurrency")
           a.flex-important.flex-column(ng-click="openBCmarkets()")
             span.type-sm
-              | 1 Bitcoin =&nbsp;
-              fiat(btc="100000000.0")
+              | 1 {{ settings.btcCurrency.code }} =&nbsp;
+              fiat(btc="settings.btcCurrency.conversion")
         li.dropdown.item.hidden-xs(dropdown)
           a.dropdown-toggle(href="#" data-toggle="dropdown" role="button" aria-expanded="false" dropdown-toggle)
             span(translate="EXPLORE")

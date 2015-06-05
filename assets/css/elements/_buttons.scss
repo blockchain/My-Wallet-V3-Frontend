@@ -16,7 +16,6 @@ button[disabled] {
   text-decoration: none;
   text-transform: capitalize;
   white-space: nowrap;
-  font-size: 1em;
   &:focus {
     outline: none;
     text-decoration: none;
@@ -57,22 +56,21 @@ button[disabled] {
 @include button($false, white, $black);
 @include button('primary', $blue, white, 175px);
 @include button('success', $receive-green, white);
-@include button('default', $black, white);
+@include button('default', white, $black);
 @include button('info', $light-grey, white);
+@include button('danger', #E28081, white);
 
 .button-sm {
   padding: .3125em .625em;
 }
 .button-lg {
-  padding: 1em 1.5em;
+  padding: 1em 2em;
   font-size: 1.2em;
 }
 .button-muted {
   border: none;
   background: transparent;
   color: $ccc;
-  //most muted buttons will be next to primary/success buttons, hence the margin
-  margin-right: 10px;
   &:hover {
     color: darken($ccc, 10%);
   }
@@ -89,3 +87,4 @@ button[disabled] {
   color: white;
   border: none;
 }
+.button-default { border: 1px solid #e0e0e0; }

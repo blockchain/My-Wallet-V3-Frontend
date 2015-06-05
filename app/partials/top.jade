@@ -1,4 +1,4 @@
-.sticky-header.flex-center.flex-between#top(ng-show="status.isLoggedIn")
+.flex-center.flex-between#top(ng-show="status.isLoggedIn")
   .button-group.flex
     a.flex-center.flex-justify.mrm(ng-click="request()")
       i.bc-icon-receive
@@ -6,21 +6,17 @@
     a.flex-center.flex-justify(ng-click="send()")
       i.bc-icon-send
       span(translate="SEND")
-  .balance.flex-column.flex-align-end
+  .balance.flex-column.flex-align-end.right-align(ng-click="toggleCurrency()")
     span(ng-show="getTotal(accountIndex) == null")
       h3
-        i Decrypting Wallet
+        img(ng-show="balance == null" src="img/spinner.gif") 
     span(ng-show="getTotal(accountIndex) != null")
-      span(ng-show="shouldShowFiat()")
+      span(ng-hide="isBitCurrency(settings.displayCurrency)")
         h1
           fiat(btc="getTotal(accountIndex)")
-      span(ng-hide="shouldShowFiat()")
-        h1(ng-if="btcCurrencyCodeIs('BTC')") {{ getTotal(accountIndex) | btc }}
-        h1(ng-if="btcCurrencyCodeIs('mBTC')") {{ getTotal(accountIndex) | mbtc }}
-        h1(ng-if="btcCurrencyCodeIs('bits')") {{ getTotal(accountIndex) | bits }}
+      span(ng-show="isBitCurrency(settings.displayCurrency)")
+        h1 {{ getTotal(accountIndex) | toBitCurrency:settings.btcCurrency }}
       p
-        fiat(btc="getTotal(accountIndex)", ng-hide="shouldShowFiat()")
-        span(ng-show="shouldShowFiat()")
-          span(ng-if="btcCurrencyCodeIs('BTC')") {{ getTotal(accountIndex) | btc }}
-          span(ng-if="btcCurrencyCodeIs('mBTC')") {{ getTotal(accountIndex) | mbtc }}
-          span(ng-if="btcCurrencyCodeIs('bits')") {{ getTotal(accountIndex) | bits }}
+        fiat(btc="getTotal(accountIndex)", ng-show="isBitCurrency(settings.displayCurrency)")
+        span(ng-hide="isBitCurrency(settings.displayCurrency)")
+          span {{ getTotal(accountIndex) | toBitCurrency:settings.btcCurrency }}

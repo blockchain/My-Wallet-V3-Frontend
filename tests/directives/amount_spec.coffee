@@ -23,37 +23,16 @@ describe "Amount", ->
     isoScope = element.isolateScope()
     isoScope.$digest()
   
-  it "should show BTC if set as display currency", inject((Wallet) ->
-    Wallet.settings.displayCurrency = {code: "BTC"}
-    expect(isoScope.currencyCodeIs('BTC')).toBe(true)
-
-    return
-  )
-  
-  it "should show mBTC if set as display currency", inject((Wallet) ->
-    Wallet.settings.displayCurrency = {code: "mBTC"}
-    expect(isoScope.currencyCodeIs('mBTC')).toBe(true)
-
-    return
-  )
-
-  it "should show bits if set as display currency", inject((Wallet) ->
-    Wallet.settings.displayCurrency = {code: "bits"}
-    expect(isoScope.currencyCodeIs('bits')).toBe(true)
-
-    return
-  )
-  
   it "should not show Fiat if BTC is set as display currency", inject((Wallet) ->
     Wallet.settings.displayCurrency = {code: "BTC"}
-    expect(isoScope.shouldShowFiat()).toBe(false)
+    expect(isoScope.isBitCurrency(Wallet.settings.displayCurrency)).toBe(true)
 
     return
   )
 
   it "should show Fiat if BTC is not set as display currency", inject((Wallet) ->
     Wallet.settings.displayCurrency = {code: "USD"}
-    expect(isoScope.shouldShowFiat()).toBe(true)
+    expect(isoScope.isBitCurrency(Wallet.settings.displayCurrency)).toBe(false)
 
     return
   )

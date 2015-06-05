@@ -12,6 +12,7 @@
     $modalInstance.dismiss ""
   
   $scope.submit = () ->
+    return if $scope.busy
     $scope.busy = true
     
     Wallet.clearAlerts()
