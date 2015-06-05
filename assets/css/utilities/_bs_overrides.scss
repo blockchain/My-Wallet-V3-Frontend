@@ -137,3 +137,9 @@ $select-fg: #686868;
     display: none;
   }
 }
+
+.modal.in .modal-dialog {
+  margin-top: 5vw;
+  transform: none;
+  transition: all .3s ease-in-out;
+}

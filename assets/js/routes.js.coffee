@@ -172,6 +172,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
   $stateProvider.state("wallet.common.settings",
     url: "/settings"
     views: {
+      top: top,
       left: {
         templateUrl: "partials/settings/navigation.jade"
         controller: "SettingsNavigationCtrl"
