@@ -312,12 +312,20 @@
     $scope.transactionIsValid = $scope.validate()
     $scope.updateToLabel()
 
-    unless $scope.transaction.destination.type == "External"
-      # Select the external account if it's the only match; otherwise when the user moves away from the field
-      # the address will be forgotten. This is only an issue if the user selects an account first and then starts typing.
-      for destination in $scope.destinations[i]
-        return if destination.type != "External" && destination.label.indexOf(query) != -1
-      $scope.transaction.destination = last
+    if !$scope.advanced 
+      if $scope.transaction.destination.type != "External"
+        # Select the external account if it's the only match; otherwise when the user moves away from the field
+        # the address will be forgotten. This is only an issue if the user selects an account first and then starts typing.
+        for destination in $scope.destinations[i]
+          return if destination.type != "External" && destination.label.indexOf(query) != -1
+        $scope.transaction.destination = last
+    else
+      if $scope.transaction.multipleDestinations[i] == null || $scope.transaction.multipleDestinations[i].type != "External"
+        # Select the external account if it's the only match; otherwise when the user moves away from the field
+        # the address will be forgotten. This is only an issue if the user selects an account first and then starts typing.
+        for destination in $scope.destinations[i]
+          return if destination.type != "External" && destination.label.indexOf(query) != -1
+        $scope.transaction.multipleDestinations[i] = last
 
   $scope.updateFee = (feeAmount) ->
     if feeAmount
@@ -532,9 +540,12 @@
     transaction = $scope.transaction
     # copy normal send to address if we have 1 destination in advanced and it's not an account
     if transaction.multipleDestinations.length == 1 and transaction.destination? and transaction.destination.address != '' and not transaction.destination.index?
-      console.log transaction.destination
       transaction.multipleDestinations[0] = transaction.destination
       $scope.visualValidate("destinations")
+    # copy amount in regular send to advanced send, if there is one
+    if transaction.multipleAmounts.length == 1 and not isNaN(transaction.amount) and transaction.amount > 0
+      transaction.multipleAmounts[0] = transaction.amount
+      $scope.visualValidate('amounts')
     $scope.transactionIsValid = $scope.validate()
 
   $scope.regularSend = () ->
