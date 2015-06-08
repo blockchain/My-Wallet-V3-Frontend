@@ -54,7 +54,7 @@ button[disabled] {
 }
 
 @include button($false, white, $black);
-@include button('primary', $blue, white, 175px);
+@include button('primary', $blue, white);
 @include button('success', $receive-green, white);
 @include button('default', white, $black);
 @include button('info', $light-grey, white);
