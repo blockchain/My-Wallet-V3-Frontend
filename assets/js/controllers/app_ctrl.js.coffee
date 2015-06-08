@@ -5,6 +5,12 @@
   $scope.goal = Wallet.goal
   $rootScope.dist = if $location.host() == 'alpha.blockchain.info' then true else false
 
+  $scope.menu = { isCollapsed: false }
+  $scope.toggleMenu = () ->
+    $scope.menu.isCollapsed = !$scope.menu.isCollapsed
+  $scope.hideMenu = () ->
+    $scope.menu.isCollapsed = false
+
   #################################
   #           Private             #
   #################################

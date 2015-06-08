@@ -1,6 +1,6 @@
 .left-navigation(ng-show="status.isLoggedIn")
   ul.aside
-    li.header(ui-sref-active="current")
+    li.header(ui-sref-active="current", ng-click="hideMenu()")
       a(ui-sref="wallet.common.dashboard")
         i.ti-home
         span(translate="HOME")
@@ -8,7 +8,7 @@
       a(ui-sref="wallet.common.transactions({accountIndex: getMainAccountId() })")
         i.ti-layout-list-post
         span(translate="MY_TRANSACTIONS")
-      ul.scroll.aside-list.pas(ng-show="selectedAccountIndex != 'imported' && showOrHide()")
+      ul.scroll.aside-list.pas(ng-show="selectedAccountIndex != 'imported' && showOrHide()", ng-click="hideMenu()")
         li.mvs(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd || numberOfActiveAccounts() <= 1")
           a.pas(translate="ALL_ACCOUNTS")
             span
@@ -20,7 +20,7 @@
               fiat-or-btc(btc="account.balance")
       li.action-bar(ng-show="selectedAccountIndex != 'imported' && showOrHide()")
         a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
-    li.header(ng-show="settings.multiAccount && numberOfActiveLegacyAddresses() > 0", ng-class="{current:selectedAccountIndex == 'imported'}")
+    li.header(ng-show="settings.multiAccount && numberOfActiveLegacyAddresses() > 0", ng-class="{current:selectedAccountIndex == 'imported'}",  ng-click="hideMenu()")
       a(ui-sref="wallet.common.transactions({accountIndex:'imported'})")
         i.ti-agenda
         span(translate="IMPORTED_ADDRESSES")
@@ -31,21 +31,21 @@
               fiat-or-btc(btc="legacyTotal()")
         li
           a.pas(ui-sref="wallet.common.settings.addresses", translate="VIEW_ADDRESSES")
-    li.header.mbm(ui-sref-active="current")
+    li.header.mbm(ui-sref-active="current",  ng-click="hideMenu()")
       a(ui-sref="wallet.common.security-center")
         i.bc-icon-security.security-red(ng-show="security.level == 0 || security.level == 1")
         i.bc-icon-security.security-yellow(ng-show="security.level == 2")
         i.bc-icon-security.security-green(ng-show="security.level == 3")
         span(translate="SECURITY")
-    li.header.mbm(ui-sref-active="current")
+    li.header.mbm(ui-sref-active="current", ng-click="hideMenu()")
       a(ui-sref="wallet.common.settings.wallet")
         i.ti-settings
         span(translate="SETTINGS")
-    li.header.mbm(ui-sref-active="current")
+    li.header.mbm(ui-sref-active="current", ng-click="hideMenu()")
       a(ui-sref="wallet.common.support")
         i.ti-headphone
         span(translate="CONTACT_SUPPORT")
-    li.header.mbm(ui-sref-active="current")
+    li.header.mbm(ui-sref-active="current", ng-click="hideMenu()")
       a(ui-sref="wallet.common.feedback")
         i.ti-thumb-up
         span(translate="SEND_FEEDBACK")
