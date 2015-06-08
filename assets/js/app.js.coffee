@@ -70,6 +70,7 @@ modules = [
   "partials/settings/show-private-key.jade"
   "partials/settings/wallet-recovery.jade"
   "partials/settings/wallet.jade"  
+  "partials/settings/two-factor.jade"
   "partials/confirm-recovery-phrase-modal.jade"  
   "partials/wallet.jade"
   "templates/amount.jade"
