@@ -16,8 +16,8 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     controller: "TopCtrl"
   }
     
-  accounts = { 
-    templateUrl: "partials/accounts-navigation.jade"
+  walletNav = { 
+    templateUrl: "partials/wallet-navigation.jade"
     controller: "AccountsCtrl"
   }
   
@@ -37,7 +37,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
   
   transactionsViews = {
     top: top,
-    left: accounts,
+    left: walletNav,
     right: {
       templateUrl: "partials/transactions.jade"
       controller: "TransactionsCtrl"
@@ -96,7 +96,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     views: {
       top : top,
       left: {
-        templateUrl: "partials/accounts-navigation.jade"
+        templateUrl: "partials/wallet-navigation.jade"
         controller: "AccountsCtrl"
       },
       right: {
@@ -110,7 +110,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     views: {
       top : top,
       left: {
-        templateUrl: "partials/accounts-navigation.jade"
+        templateUrl: "partials/wallet-navigation.jade"
         controller: "AccountsCtrl"
       },
       right: {
@@ -125,7 +125,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     views: {
       top : top,
       left: {
-        templateUrl: "partials/accounts-navigation.jade"
+        templateUrl: "partials/wallet-navigation.jade"
         controller: "AccountsCtrl"
       },
       right: {
@@ -139,7 +139,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     views: {
       top: top,
       left: {
-        templateUrl: "partials/accounts-navigation.jade"
+        templateUrl: "partials/wallet-navigation.jade"
         controller: "AccountsCtrl"
       },
       right: {
@@ -159,7 +159,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     views: {
       top : top,
       left: {
-        templateUrl: "partials/accounts-navigation.jade"
+        templateUrl: "partials/wallet-navigation.jade"
         controller: "AccountsCtrl"
       },
       right: {
@@ -272,7 +272,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
 
     views: {
       top: top,
-      left: accounts,
+      left: walletNav,
       right: {
         controller: "ClaimCtrl"
       }

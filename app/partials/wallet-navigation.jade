@@ -20,11 +20,11 @@
               fiat-or-btc(btc="account.balance")
       li.action-bar(ng-show="selectedAccountIndex != 'imported' && showOrHide()")
         a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
-    li.header(ng-show="settings.multiAccount && numberOfActiveLegacyAddresses() > 0", ng-class="{current:selectedAccountIndex == 'imported'}",  ng-click="hideMenu()")
+    li.header(ng-show="settings.multiAccount && numberOfActiveLegacyAddresses() > 0", ng-class="{current:selectedAccountIndex == 'imported'}")
       a(ui-sref="wallet.common.transactions({accountIndex:'imported'})")
         i.ti-agenda
         span(translate="IMPORTED_ADDRESSES")
-      ul.aside-list.pas.pln(ng-show="selectedAccountIndex == 'imported' && currentLocation == '/imported/transactions/'")
+      ul.aside-list.pas.pln(ng-show="selectedAccountIndex == 'imported' && currentLocation == '/imported/transactions/'", ng-click="hideMenu()")
         li.mvs(ng-class="selectedAccountIndex == 'imported' ? 'active' : ''")
           a.pas(translate="ALL_ADDRESSES")
             span
@@ -37,7 +37,7 @@
         i.bc-icon-security.security-yellow(ng-show="security.level == 2")
         i.bc-icon-security.security-green(ng-show="security.level == 3")
         span(translate="SECURITY")
-    li.header.mbm(ui-sref-active="current", ng-click="hideMenu()")
+    li.header.mbm(ui-sref-active="current")
       a(ui-sref="wallet.common.settings.wallet")
         i.ti-settings
         span(translate="SETTINGS")
