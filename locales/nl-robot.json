@@ -1,13 +1,6 @@
 {
-  "UID":"Portemonnee ID",
-  "PASSWORD":"Wachtwoord",
   "LOGIN":"Login",
   "CREATE_WALLET":"Portemonnee maken",
-  "MY_ACCOUNTS":"Rekeningen",
-  "NEW_ACCOUNT":"Account toevoegen +",
-  "MY_TRANSACTIONS":"Transacties",
-  "ALL_ACCOUNTS":"Alle Accounts",
-  "ACCOUNT":"Rekening",
   "SEND_FEEDBACK":"Feedback verzenden",
   "BACK":"Terug",
   "CONTACT_SUPPORT":"Contact opnemen met ondersteuning",

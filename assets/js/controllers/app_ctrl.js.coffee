@@ -1,8 +1,15 @@
-@AppCtrl = ($scope, Wallet, $state, $rootScope,$cookieStore, $timeout, $modal, $window, $translate) ->
+@AppCtrl = ($scope, Wallet, $state, $rootScope, $location, $cookieStore, $timeout, $modal, $window, $translate) ->
   $scope.status    = Wallet.status
   $scope.settings = Wallet.settings
   $rootScope.isMock = Wallet.isMock
   $scope.goal = Wallet.goal
+  $rootScope.dist = if ($location.host() == 'alpha.blockchain.info' || $location.host() == 'dev.blockchain.info') then true else false
+
+  $scope.menu = { isCollapsed: false }
+  $scope.toggleMenu = () ->
+    $scope.menu.isCollapsed = !$scope.menu.isCollapsed
+  $scope.hideMenu = () ->
+    $scope.menu.isCollapsed = false
 
   #################################
   #           Private             #

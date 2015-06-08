@@ -1,53 +1,61 @@
-.wallet-container{
-  margin: 0;
-  .left-nav {
-    position: absolute;
-    width: 24%;
-    height: 100%;
-    background: $light-grey-alt;
-    border-right: 1px solid #ddd;
-    .active-accounts{
-      margin-bottom: 30px;
-    }
-    .legacy-addresses, .partners{
-      margin-bottom: 30px;
-    }
-    .side-box {
-      background-color: #FDFDFD;
-      border: 1px solid rgb(229, 229, 229);
-    }
+.left-nav {
+  position: absolute;
+  width: 280px;
+  height: 100%;
+  padding: 15px;
+  top: 65px;
+  background: $light-grey-alt;
+  border-right: 1px solid #ddd;
+  .active-accounts{
+    margin-bottom: 30px;
   }
-  .sticky-header {
-    position: fixed;
-    width: 74%;
-    z-index: 1;
-    background: white;
-    box-shadow: 0px 10px 14px -12px $ccc;
-    -webkit-box-shadow: 0px 10px 14px -12px $ccc;
-    -moz-box-shadow: 0px 10px 14px -12px $ccc;
+  .legacy-addresses, .partners{
+    margin-bottom: 30px;
   }
-  .main-container {
-    background: white;
-    position: relative;
-    margin-left: 25%;
+  .side-box {
+    background-color: #FDFDFD;
+    border: 1px solid rgb(229, 229, 229);
   }
+}
+.top-view {
+  position: fixed;
+  width: calc(100% - 280px);
+  z-index: 1;
+  background: white;
+  margin-left: 280px;
+  box-shadow: 0px 10px 14px -12px $ccc;
+  -webkit-box-shadow: 0px 10px 14px -12px $ccc;
+  -moz-box-shadow: 0px 10px 14px -12px $ccc;
+}
+
+.main-container {
+  background: white;
+  position: relative;
+  margin-left: 280px;
+  top: 110px;
+  padding: 5px 30px 20px 30px;
 }
 
 @media (max-width: 768px) {
-  .wallet-container {
-    .left-nav {
-      position: relative;
-      width: 100%;
-    }
-    .sticky-header {
-      width: 100%;
-      position: relative;
-    }
-    .transactions {
-      top: 0;
-    }
-    .main-container {
-      margin-left: 0;
-    }
+  .left-nav {
+    left: -280px;
+    z-index: 10;
+    transition: all .3s ease-in-out;
+  }
+  .left-nav.toggled {
+    left: 0;
+  }
+  .top-view {
+    width: 100%;
+    position: relative;
+    margin-left: 0;
+  }
+  .transactions {
+    top: 0;
+  }
+  .main-container {
+    margin-left: 0;
+    top: 0;
+    padding: 10px 30px;
   }
 }

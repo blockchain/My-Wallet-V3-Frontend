@@ -8,7 +8,7 @@ walletApp.directive('fiat', (Wallet , $compile) ->
       currency: '=currency'
     }
     template: "<span>{{ fiat.currencySymbol }}{{ fiat.amount }}</span>"
-    link: (scope, elem, attrs) ->   
+    link: (scope, elem, attrs) ->  
       scope.fiat = 
         currencySymbol: null
         amount: null

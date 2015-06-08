@@ -144,3 +144,16 @@ $select-fg: #686868;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
+//override BS modal-footer alignment craziness
+.modal-footer {
+  &:after, &:before {
+    content: none;
+    display: none;
+  }
+}
+
+.modal.in .modal-dialog {
+  margin-top: 5vw;
+  transform: none;
+  transition: all .3s ease-in-out;
+}

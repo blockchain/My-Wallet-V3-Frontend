@@ -35,7 +35,6 @@ modules = [
   "webcam"
   # TODO: have grunt generate the list of partials and templates
   "partials/account-form.jade"
-  "partials/accounts-navigation.jade"
   "partials/alerts.jade"
   "partials/claim.jade"
   "partials/dashboard.jade"
@@ -53,6 +52,7 @@ modules = [
   "partials/transaction.jade"
   "partials/transactions.jade"
   "partials/upgrade.jade"
+  "partials/wallet-navigation.jade"
   "partials/common.jade"
   "partials/modal-notification.jade"
   "partials/security-center.jade"
