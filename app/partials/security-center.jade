@@ -19,8 +19,8 @@
           img(src="img/badge-passwordhint.png")
           p(translate="ADD_PASSWORD_HINT")
 
-    .badge-panel.pal(ng-show="display.action == 'email' || display.action == 'securityphrase' || display.action == 'passwordhint' ")
-      .flex(ng-show="display.action == 'email' && !display.editingEmail")        
+    .badge-panel(ng-show="display.action == 'email' || display.action == 'securityphrase' || display.action == 'passwordhint' ")
+      div(ng-show="display.action == 'email' && !display.editingEmail")        
         p(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
         verify-email(security-center='true')
         p(ng-hide="user.isEmailVerified")
@@ -63,12 +63,11 @@
           img(src="img/badge-add2FA.png")
           p(translate="ADD_TWO_FACTOR")
 
-    .badge-panel.pal(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
-      .flex(ng-show="display.action == 'mobilenumber'")     
+    .badge-panel(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
+      div(ng-show="display.action == 'mobilenumber'")     
         configure-mobile-number(inline security-center='true')
-
       .flex(ng-show="display.action == 'twofactor'")     
-        p 
+        p.flex-1.mrl 
           |  2FA helps prevent unauthorized access to your wallet by requiring 
           |  a one-time password after every login attempt. Enabling this option
           |  helps keep unauthorized users from being able to access your wallet.
@@ -86,7 +85,7 @@
           img(src="img/badge-blockTOR.png")
           p(TRANSLATE="ADD_BLOCK_TOR")
 
-    .badge-panel.pal(ng-show="display.action == 'blocktor'")
+    .badge-panel(ng-show="display.action == 'blocktor'")
       .flex(ng-show="display.action == 'blocktor'")     
         p(TRANSLATE="BLOCK_TOR_EXPLAIN")
         tor(security-center='true')

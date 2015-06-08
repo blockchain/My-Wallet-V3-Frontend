@@ -1,5 +1,5 @@
-.verifyemail.pvm.clearfix(ng-class="{'has-error': errors.emailVerificationCode }", ng-show="!user.isEmailVerified && user.email != null && user.email != ''")
-  .col-xs-9
+.pvm.flex(ng-class="{'has-error': errors.emailVerificationCode }", ng-show="!user.isEmailVerified && user.email != null && user.email != ''")
+  .flex-2.mrl
     input.form-control(type="text",ng-model="code", placeholder="Enter Verification Code")
-  .col-xs-3
-    button.button-success.button-lg.verifybutton(ng-click="verifyEmail(code)",ng-disabled="!code || code.length < 3", translate="VERIFY")
+  .flex-1
+    button(ng-click="verifyEmail(code)",ng-disabled="!code || code.length < 3", translate="VERIFY", ng-class="securityCenter ? 'button-success button-lg' : 'button-primary'")
