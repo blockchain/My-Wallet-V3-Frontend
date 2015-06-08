@@ -1264,8 +1264,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.applyIfNeeded()
     ), ()->
       $translate("VERIFY_MOBILE_FAILED").then (translation) ->
-        wallet.displayError(translation)
-      errorCallback()
+        errorCallback(translation)
       wallet.applyIfNeeded()
     )
 
