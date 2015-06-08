@@ -178,18 +178,18 @@ padding-bottom:15px;
   background: none;
   border: none;
   }
-  
+
 padding: 150px 50px 0 50px;
-  
+
   section.level{
     margin: 0 0 30px 0;
-    
+
     header{
       margin: 0 0 20px 0;
       h1{
         font-size: 1.5em;
         display: inline;
-        padding: 0 10px 0 0;      
+        padding: 0 10px 0 0;
       }
       h2{
         font-size: 1.3em;
@@ -197,7 +197,7 @@ padding: 150px 50px 0 50px;
         color: rgba(0, 0, 0, 0.4);
       }
     }
-    
+
     ul{
       display: block;
       background-color: #fdfdfd;
@@ -235,16 +235,16 @@ padding: 150px 50px 0 50px;
           border-left: 1px solid rgb(234, 234, 234);
         }
     }
-      
+
       li.level-badge{
         img{opacity: .5}
       }
-      
+
       li.badge-active{
         img{opacity: 1;}
         a{cursor: default;}
       }
-      
+
       li.level-header{
         background-color: #f5f7f9;
         border-right: 1px solid #ebebeb;
@@ -256,18 +256,18 @@ padding: 150px 50px 0 50px;
           img{
             width: 85px;
           }
-        
+
         }
-      } 
-    
+      }
+
     div.badge-panel{
-      
+
       .gutter{width:70%; margin: 0 auto;}
-      
+
         border: 1px solid rgb(234, 234, 234);
         border-top: none;
-        padding: 25px;      
-      
+        padding: 25px;
+
       input{
         border: none;
         border-bottom: 1px solid #DBDBDB;
@@ -278,24 +278,31 @@ padding: 150px 50px 0 50px;
         background-color: white;
         box-shadow: none;
       }
-      
+
       input:focus{
         outline: none;
       }
-      
+
       input:active{
         border-bottom: 1px solid rgb(145, 208, 232);
       }
-      
+
       p{
         font-size: 1.1em;
         font-weight: 300;
         color: rgb(117, 117, 117);
-        line-height: 1.5em;      
+        line-height: 1.5em;
       }
-      
+
     }
-    
-    
+
+
     }
   }
+.security-badge {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
