@@ -550,4 +550,8 @@
 
   $scope.regularSend = () ->
     $scope.advanced = false
+    transaction = $scope.transaction
+    if transaction.multipleAmounts[0]? && !isNaN(transaction.multipleAmounts[0])
+      transaction.amount = transaction.multipleAmounts[0]
+      $scope.visualValidate('amount')
     $scope.transactionIsValid = $scope.validate()
