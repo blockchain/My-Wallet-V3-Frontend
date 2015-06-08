@@ -43,6 +43,10 @@
         isValid = false
         $translate("TOO_LONG").then (translation) ->
           $scope.errors.password =  translation
+      if $scope.fields.password == Wallet.uid
+        isValid = false
+        $translate("CANT_USE_GUID").then (translation) ->
+          $scope.errors.password =  translation
     if $scope.fields.confirmation == ""
       isValid = false
     else
