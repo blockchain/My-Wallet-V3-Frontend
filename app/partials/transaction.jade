@@ -5,7 +5,7 @@
         h4.back Back to feed
   .transaction-card.clearfix
     .tx-date
-      strong Transaction Details
+      strong(translate="TRANSACTION_DETAILS")
       | {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
     .tx-details
       .gutter

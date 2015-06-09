@@ -405,5 +405,6 @@
   "SUPPORT" : "Support",
   "ADD_ANOTHER_RECIPIENT" : "Add Another Recipient",
   "REMOVE" : "Remove",
-  "MULTIPLE_ADDRESSES" : "Multiple Addresses"
+  "MULTIPLE_ADDRESSES" : "Multiple Addresses",
+  "TRANSACTION_DETAILS" : "Transaction Details "
 }
