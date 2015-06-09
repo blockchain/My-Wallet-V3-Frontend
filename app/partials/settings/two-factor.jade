@@ -1,5 +1,54 @@
 .modal-header
   h3(translate="TWO_FACTOR")
 .modal-body
+
+  div(ng-show="isStep('disable')")
+    p(translate="CONFIRM_DISABLE_2FA")
+    button(translate="DISABLE" ng-click="disableTwoFactor()")
+
+  div(ng-show="isStep('disabled')")
+    p 2FA disabled
+
+  div(ng-show="isStep('enable')")
+    p(ng-click="authWithPhone()") Use my mobile phone number
+    p(ng-click="authWithApp()") Use Google Authenticator of YubiKey
+
+  div(ng-show="isStep('configure_mobile')")
+    p User your mobile phone to receive a one-time-password after a login attempt. Add your mobile phone number below to continue.
+    configure-mobile-number(inline)
+
+  div(ng-show="isStep('pair')")
+    .col-xs-6(ng-click="pairWith = 'authenticator'") Google Authenticator
+    .col-xs-6(ng-click="pairWith = 'yubiKey'") YubiKey
+    .col-xs-12(ng-show="pairWith == 'authenticator'")
+      p Pairing with GA
+      .form-group(ng-if="settings.googleAuthenticatorSecret" ng-class="{'has-error': errors.authenticatorCode}")
+        qr(text="settings.googleAuthenticatorSecret", size=172)
+        input.form-control(type="text" ng-model="fields.authenticatorCode")
+    .col-xs-12(ng-show="pairWith == 'yubiKey'")
+      p Pairing with YubiKey
+      .form-group(ng-class="{'has-error': errors.yubiKeyCode}")
+        input.form-control(type="text" ng-model="fields.yubiKeyCode")
+
+  //- div(ng-show="isStep('confirm_sms')")
+    p We have sent a SMS message to <b>{{ user.mobile.number }}</b> containing a 5 digit code. Enter that code below to complete the 2FA setup.
+    input(ng-model="fields.smsCode")
+    button(translate="CONTINUE" ng-click="goToStep('success')")
+
+  div(ng-show="isStep('success')")
+    h2.status.complete
+      span(ng-show="settings.twoFactorMethod == 3" translate="2FA_YUBI")
+      span(ng-show="settings.twoFactorMethod == 4" translate="2FA_GOOGLE_AUTH")
+      span(ng-show="settings.twoFactorMethod == 5" translate="2FA_SMS")
+    p Congratulations! 2FA successfully enabled
+
+  div(ng-show="isStep('loading')")
+    span Loading...
+
+  div(ng-show="isStep('error')")
+    p An error occurred!
+    p Please try again later
+
 .modal-footer.pal.flex-end
-  button.button-muted.mrm(ng-click="close()", translate="CLOSE")
+  button.button-muted.mrm(ng-click="close()" translate="CLOSE")
+  button.button-primary(ng-show="isStep('pair')" ng-disabled="!validateCode(pairWith)" ng-click="pairWithApp(pairWith)" translate="CONTINUE")
