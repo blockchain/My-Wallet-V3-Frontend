@@ -1,4 +1,4 @@
-walletApp.directive('bcAsyncInput', () ->
+walletApp.directive('bcAsyncInput', (Wallet) ->
   {
     restrict: "E"
     replace: 'true'
@@ -15,6 +15,7 @@ walletApp.directive('bcAsyncInput', () ->
     }
     templateUrl: 'templates/bc-async-input.jade'
     link: (scope, elem, attrs, ngModel) ->
+      scope.user = Wallet.user
       scope.status = 
         edit: false
         saving: false

@@ -41,12 +41,12 @@
         p.form-control-static
           | {{ paymentRequest.paid / 100000000.0 }}  
     .flex.pam(ng-if="paymentRequestURL")
-      .flex-1
+      .flex-2
         p(ng-hide="status.didInitializeHD")
           img(src="img/spinner.gif")  
         span(ng-show="status.didInitializeHD")
           qr(text="paymentRequestURL", size=120, correction-level="'M'")
-      .phs.flex-2
+      .phs.flex-3.flex-center.flex-column
         label.black
           span(translate="BITCOIN_ADDRESS")
           span :
@@ -54,7 +54,7 @@
           img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
           span(ng-show="status.didInitializeHD")
             | {{ paymentRequestAddress }}  
-        p.black.mtm.flex-center
+        p.black.mtm.flex-center.center-align
           i.ti-mouse-alt.mrs
           | Just copy the address above and share
 .modal-footer.flex-end.pal

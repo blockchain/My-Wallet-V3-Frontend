@@ -1,112 +1,91 @@
 .security-center-ui
-  .row
-    section.level.level_one
-      header
-        hgroup
-          h1 Level 1
-          h2 Prevent losing access to your funds
-      ul.clearfix
-        li.level-header
-          img(src="img/security-icon-1.png")
-        li.level-badge(ng-class="{'badge-active': user.isEmailVerified}")
-          a(ng-click="user.isEmailVerified || toggle('email')", ng-class="{'active' : display.action == 'email' }")
-            img(src="img/badge-verifyemail.png")
-            p(translate="ADD_VERIFY_EMAIL")
-        li.level-badge(ng-class="{'badge-active': status.didConfirmRecoveryPhrase}")
-          a(ng-click="status.didConfirmRecoveryPhrase || toggle('securityphrase')", ng-class="{'active' : display.action == 'securityphrase' }")
-            img(src="img/badge-securityphrase.png")
-            p(translate="ADD_WALLET_RECOVERY")
-        li.level-badge(ng-class="{'badge-active': user.passwordHint}")
-          a(ng-click="user.passwordHint || toggle('passwordhint')", ng-class="{'active' : display.action == 'passwordhint' }")
-            img(src="img/badge-passwordhint.png")
-            p(translate="ADD_PASSWORD_HINT")
-      
-      div.badge-panel.clearfix(ng-show="display.action == 'email' || display.action == 'securityphrase' || display.action == 'passwordhint' ")
-        div.gutter
-          div(ng-show="display.action == 'email' && !display.editingEmail")        
-            .col-sm-12
-              p(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
-              verify-email(security-center='true')
-            .col-sm-12
-              p(ng-hide="user.isEmailVerified")
-                | Didn't receive the email? 
-                span 
-                  resend-email-confirmation(security-center='true')
-                  |  or 
-                span
-                  a(ng-click="beginEditEmail()") Change email address
-                  
-          div(ng-show="display.action == 'email' && display.editingEmail")       
-            .col-sm-12.col-md-12
-              p Your email address
-              bc-async-input(inline security-center='true' type="email", placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
-              
-          div(ng-show="display.action == 'securityphrase'")        
-            .col-sm-12.col-md-8
-              p 
-                |  Make a one-time backup of your wallet to ensure you are always able to access your funds, 
-                |  even if you lose your password or our service becomes unavailable.
-            .col-sm-12.col-md-4
-              confirm-recovery-phrase(security-center='true')
-                        
-          div(ng-show="display.action == 'passwordhint'")       
-            .col-sm-12.col-md-12
-              p 
-                |  Blockchain has no knowledge of your password and has no ability to reset your lost password.
-                |  Create a memorable password hint that can be emailed to you in the case of a forgotten password.
-              bc-async-input(inline security-center='true' placeholder="'CHANGE_PASSWORD_HINT' | translate" ng-model="user.passwordHint", on-save="changePasswordHint", action-title="'CHANGE_PASSWORD_HINT' | translate") 
-      
-    section.level.level_two
-      header
-        hgroup
-          h1 Level 2
-          h2 Prevent unauthorized access to your wallet
-      ul.clearfix
-        li.level-header
-          img(src="img/security-icon-2.png")
-        li.level-badge(ng-class="{'badge-active': user.isMobileVerified}")
-          a(ng-click="user.isMobileVerified || toggle('mobilenumber')", ng-class="{'active' : display.action == 'mobilenumber' }")
-            img(src="img/badge-addmobile.png")
-            p(TRANSLATE="ADD_MOBILE_NUMBER")
-        li.level-badge(ng-class="{'badge-active': settings.needs2FA}")
-          a(ng-click="settings.needs2FA || toggle('twofactor')", ng-class="{'active' : display.action == 'twofactor' }")
-            img(src="img/badge-add2FA.png")
-            p(translate="ADD_TWO_FACTOR")
+  section.level.level_one
+    header.flex-center
+      h1.prm.type-h4 Level 1
+      h2.type-h5.mid-grey-alt.em-300 Prevent losing access to your funds
+    ul.flex.flex-start.pln.mbn
+      li.level-header.bg-light-grey-alt
+        img(src="img/security-icon-1.png")
+      li.level-badge(ng-class="{'badge-active': user.isEmailVerified}")
+        a(ng-click="user.isEmailVerified || toggle('email')", ng-class="{'active' : display.action == 'email' }")
+          img(src="img/badge-verifyemail.png")
+          p(translate="ADD_VERIFY_EMAIL")
+      li.level-badge(ng-class="{'badge-active': status.didConfirmRecoveryPhrase}")
+        a(ng-click="status.didConfirmRecoveryPhrase || toggle('securityphrase')", ng-class="{'active' : display.action == 'securityphrase' }")
+          img(src="img/badge-securityphrase.png")
+          p(translate="ADD_WALLET_RECOVERY")
+      li.level-badge(ng-class="{'badge-active': user.passwordHint}")
+        a(ng-click="user.passwordHint || toggle('passwordhint')", ng-class="{'active' : display.action == 'passwordhint' }")
+          img(src="img/badge-passwordhint.png")
+          p(translate="ADD_PASSWORD_HINT")
 
-      
-      div.badge-panel.clearfix(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
-        div.gutter
-          div(ng-show="display.action == 'mobilenumber'")     
-            .col-sm-12.col-md-12
-              configure-mobile-number(inline security-center='true')
-            
-          div(ng-show="display.action == 'twofactor'")     
-            .col-sm-12.col-md-8
-              p 
-                |  2FA helps prevent unauthorized access to your wallet by requiring 
-                |  a one-time password after every login attempt. Enabling this option
-                |  helps keep unauthorized users from being able to access your wallet.
-            .col-sm-12.col-md-4
-              two-factor(security-center='true')
-                        
-    section.level.level_three
-      header
-        hgroup
-          h1 Level 3
-          h2 Advanced Security Options to harden your wallet
-      ul.clearfix
-        li.level-header
-          img(src="img/security-icon-3.png")
-        li.level-badge(ng-class="{'badge-active': settings.blockTOR}")
-          a(ng-click="settings.blockTOR || toggle('blocktor')", ng-class="{'active' : display.action == 'blocktor' }")
-            img(src="img/badge-blockTOR.png")
-            p(TRANSLATE="ADD_BLOCK_TOR")
+    .badge-panel(ng-show="display.action == 'email' || display.action == 'securityphrase' || display.action == 'passwordhint' ")
+      div(ng-show="display.action == 'email' && !display.editingEmail")        
+        p(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
+        verify-email(security-center='true')
+        p(ng-hide="user.isEmailVerified")
+          | Didn't receive the email? 
+          span 
+            resend-email-confirmation(security-center='true')
+            |  or 
+          span
+            a(ng-click="beginEditEmail()") Change email address
 
-      div.badge-panel.clearfix(ng-show="display.action == 'blocktor'")
-        div.gutter
-          div(ng-show="display.action == 'blocktor'")     
-            .col-sm-12.col-md-8
-              p(TRANSLATE="BLOCK_TOR_EXPLAIN")
-            .col-sm-12.col-md-4
-              tor(security-center='true')
-            
+      .flex-center(ng-show="display.action == 'email' && display.editingEmail")       
+        p Your email address
+        bc-async-input(inline security-center='true' type="email", placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
+
+      .flex(ng-show="display.action == 'securityphrase'")        
+        p 
+          |  Make a one-time backup of your wallet to ensure you are always able to access your funds, 
+          |  even if you lose your password or our service becomes unavailable.
+        confirm-recovery-phrase(security-center='true')
+
+      .flex(ng-show="display.action == 'passwordhint'")       
+        p 
+          |  Blockchain has no knowledge of your password and has no ability to reset your lost password.
+          |  Create a memorable password hint that can be emailed to you in the case of a forgotten password.
+        bc-async-input(inline security-center='true' placeholder="'CHANGE_PASSWORD_HINT' | translate" ng-model="user.passwordHint", on-save="changePasswordHint", action-title="'CHANGE_PASSWORD_HINT' | translate") 
+
+  section.level.level_two
+    header.flex-center
+      h1.prm.type-h4 Level 2
+      h2.type-h5.mid-grey-alt.em-300 Prevent unauthorized access to your wallet
+    ul.flex.flex-start.pln.mbn
+      li.level-header.bg-light-grey-alt
+        img(src="img/security-icon-2.png")
+      li.level-badge(ng-class="{'badge-active': user.isMobileVerified}")
+        a(ng-click="user.isMobileVerified || toggle('mobilenumber')", ng-class="{'active' : display.action == 'mobilenumber' }")
+          img(src="img/badge-addmobile.png")
+          p(TRANSLATE="ADD_MOBILE_NUMBER")
+      li.level-badge(ng-class="{'badge-active': settings.needs2FA}")
+        a(ng-click="settings.needs2FA || toggle('twofactor')", ng-class="{'active' : display.action == 'twofactor' }")
+          img(src="img/badge-add2FA.png")
+          p(translate="ADD_TWO_FACTOR")
+
+    .badge-panel(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
+      div(ng-show="display.action == 'mobilenumber'")     
+        configure-mobile-number(inline security-center='true')
+      .flex(ng-show="display.action == 'twofactor'")     
+        p.flex-1.prl 
+          |  2FA helps prevent unauthorized access to your wallet by requiring 
+          |  a one-time password after every login attempt. Enabling this option
+          |  helps keep unauthorized users from being able to access your wallet.
+        two-factor(security-center='true')
+
+  section.level.level_three
+    header.flex-center
+      h1.prm.type-h4 Level 3
+      h2.type-h5.mid-grey-alt.em-300 Advanced Security Options to harden your wallet
+    ul.flex.flex-start.pln.mbn
+      li.level-header.bg-light-grey-alt
+        img(src="img/security-icon-3.png")
+      li.level-badge(ng-class="{'badge-active': settings.blockTOR}")
+        a(ng-click="settings.blockTOR || toggle('blocktor')", ng-class="{'active' : display.action == 'blocktor' }")
+          img(src="img/badge-blockTOR.png")
+          p(TRANSLATE="ADD_BLOCK_TOR")
+
+    .badge-panel(ng-show="display.action == 'blocktor'")
+      .flex(ng-show="display.action == 'blocktor'")     
+        p(TRANSLATE="BLOCK_TOR_EXPLAIN")
+        tor(security-center='true')

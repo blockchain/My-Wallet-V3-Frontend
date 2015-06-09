@@ -102,6 +102,7 @@
   "INCORRECT" : "Incorrect",
   "TOO_SHORT" : "Too short",
   "NO_MATCH" : "Does not match",
+  "CANT_USE_GUID" : "You cannot use a guid as your password",
   "ADD_PASSWORD_HINT" : "Create Password Hint",
   "PASSWORD_HINT" : "Password Hint",
   "PASSWORD_HINT_EXPLAIN" : "If you forget your password(s), hints can be useful to help you jog your memory. Your hint will be emailed to the email address you have verified.",

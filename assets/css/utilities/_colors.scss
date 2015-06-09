@@ -13,6 +13,7 @@ $light-grey: #eaeff4;
 $light-grey-alt: #F5F7F9;
 $grey: #EEEEEE;
 $mid-grey: #b0b0b0;
+$mid-grey-alt: #9F9F9F;
 $dark-grey: #737373;
 
 //Social Colors
@@ -48,6 +49,7 @@ $security-green: #3CC476;
 @include color('dark-grey', $dark-grey);
 @include color('light-grey', $light-grey);
 @include color('mid-grey', $mid-grey);
+@include color('mid-grey-alt', $mid-grey-alt);
 @include color('twitter', $twitter);
 @include color('google', $google);
 @include color('facebook', $facebook);

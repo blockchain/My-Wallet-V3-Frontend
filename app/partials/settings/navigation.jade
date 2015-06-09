@@ -3,7 +3,7 @@ ul.aside.settings-nav
     i.ti-arrow-left.mrs
     | Go Back
   li.settings-nav-header.current.phl.pvm.mbn.mtl Settings
-  ul.aside-list.pas
+  ul.aside-list.pas(ng-click="hideMenu()")
     li.header(ui-sref-active="active") 
       a(ui-sref="wallet.common.settings.my-details", translate="MY_DETAILS")
     li.header(ui-sref-active="active") 

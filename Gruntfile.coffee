@@ -192,7 +192,33 @@ module.exports = (grunt) ->
         dest: 'build/js/templates.js'
       }
     },
-
+    "merge-json": # TODO: generate this list...
+      bg: {src: [ "locales/bg-*.json" ], dest: "build/locales/bg.json"}
+      da: {src: [ "locales/da-*.json" ], dest: "build/locales/da.json"}
+      de: {src: [ "locales/de-*.json" ], dest: "build/locales/de.json"}
+      el: {src: [ "locales/el-*.json" ], dest: "build/locales/el.json"}
+      en: {src: [ "locales/en-*.json" ], dest: "build/locales/en.json"}
+      es: {src: [ "locales/es-*.json" ], dest: "build/locales/es.json"}
+      fr: {src: [ "locales/fr-*.json" ], dest: "build/locales/fr.json"}
+      hi: {src: [ "locales/hi-*.json" ], dest: "build/locales/hi.json"}
+      hu: {src: [ "locales/hu-*.json" ], dest: "build/locales/hu.json"}
+      id: {src: [ "locales/id-*.json" ], dest: "build/locales/id.json"}
+      it: {src: [ "locales/it-*.json" ], dest: "build/locales/it.json"}
+      ja: {src: [ "locales/ja-*.json" ], dest: "build/locales/ja.json"}
+      ko: {src: [ "locales/ko-*.json" ], dest: "build/locales/ko.json"}
+      nl: {src: [ "locales/nl-*.json" ], dest: "build/locales/nl.json"}
+      no: {src: [ "locales/no-*.json" ], dest: "build/locales/no.json"}
+      pl: {src: [ "locales/pl-*.json" ], dest: "build/locales/pl.json"}
+      pt: {src: [ "locales/pt-*.json" ], dest: "build/locales/pt.json"}
+      ro: {src: [ "locales/ro-*.json" ], dest: "build/locales/ro.json"}
+      ru: {src: [ "locales/ru-*.json" ], dest: "build/locales/ru.json"}
+      sl: {src: [ "locales/sl-*.json" ], dest: "build/locales/sl.json"}
+      sv: {src: [ "locales/sv-*.json" ], dest: "build/locales/sv.json"}
+      th: {src: [ "locales/th-*.json" ], dest: "build/locales/th.json"}
+      tr: {src: [ "locales/tr-*.json" ], dest: "build/locales/tr.json"}
+      vi: {src: [ "locales/vi-*.json" ], dest: "build/locales/vi.json"}
+      "zh-cn": {src: [ "locales/zh-cn-*.json" ], dest: "build/locales/zh-cn.json"}
+          
     copy:
       main:
         files: [
@@ -200,7 +226,7 @@ module.exports = (grunt) ->
           {src: ["index.html", "index-beta.html"], dest: "dist/", cwd: "build", expand: true}
           {src: ["admin.html"], dest: "dist/", cwd: "build", expand: true}
           {src: ["img/*"], dest: "dist/", expand: true}
-          {src: ["locales/*"], dest: "dist/", expand: true}
+          {src: ["locales/*"], dest: "dist/", cwd: "build", expand: true}
           {src: ["**/*"], dest: "dist/fonts", cwd: "build/fonts", expand: true}
         ]
 
@@ -250,7 +276,13 @@ module.exports = (grunt) ->
         files: ['assets/js/**/*.js.coffee']
         tasks: ['compile']
         options: 
-          spawn: false        
+          spawn: false     
+          
+      locales:   
+        files: ['locales/*.json']
+        tasks: ['merge-json']
+        options: 
+          spawn: false
 
     jade: 
       html:
@@ -298,7 +330,9 @@ module.exports = (grunt) ->
               while i < befores.length
                 before = path.relative(publicdir, befores[i])
                 after = path.relative(publicdir, afters[i])
+                contents = contents.split("build/" + before).join(after)
                 contents = contents.split(before).join(after)
+                
                 i++
               grunt.file.write referring_file_path, contents
             return
@@ -426,7 +460,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-shell')
   grunt.loadNpmTasks('grunt-preprocess')
   grunt.loadNpmTasks('grunt-autoprefixer')
-  
+  grunt.loadNpmTasks('grunt-merge-json')
     
   grunt.registerTask "compile", ["coffee"]  
     
@@ -438,6 +472,7 @@ module.exports = (grunt) ->
     "copy:fonts"
     "autoprefixer"
     "copy:images"
+    "merge-json"
     "watch"
   ]
   
@@ -451,6 +486,7 @@ module.exports = (grunt) ->
     "clean"
     "compile"
     "html2js"
+    "merge-json"
     "shell:check_dependencies"
     "shell:npm_install_dependencies"
     "shell:bower_install_dependencies"
@@ -476,6 +512,7 @@ module.exports = (grunt) ->
     "clean"
     "compile"
     "html2js"
+    "merge-json"
     "shell:skip_check_dependencies"
     "concat:application_dependencies"
     "uglify:application_dependencies"
@@ -499,6 +536,7 @@ module.exports = (grunt) ->
     "clean"
     "compile"
     "html2js"
+    "merge-json"
     "concat:application_dependencies"
     "uglify:application_dependencies"
     "concat:mywallet"

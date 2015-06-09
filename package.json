@@ -32,6 +32,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-html2js": "^0.2.9",
     "grunt-legacy-util": "^0.2.0",
+    "grunt-merge-json": "^0.9.5",
     "grunt-preprocess": "^4.1.0",
     "grunt-rename-assets": "0.0.1",
     "grunt-shell": "^1.1.1",

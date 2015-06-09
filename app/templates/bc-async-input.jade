@@ -1,9 +1,9 @@
-div
+div(ng-class="{'width-100 pll' : securityCenter}")
   div(ng-hide="status.edit || inline")
     h2.status.complete.hidden-xs.long-input {{ ngModel }}
-    button.button-success.button-lg(ng-click="edit()"){{ actionTitle }}
+    button.button-primary(ng-click="edit()", ng-show="user.isEmailVerified") {{ actionTitle }}
   .form-group(ng-class="{'has-error': !validate()}",ng-show="inline || status.edit")
-    input.form-control(type="{{ type }}", ng-model="form.newValue", ng-focus="focus()", placeholder="{{ placeholder }}")
+    input.form-control(type="{{ type }}", ng-model="form.newValue", ng-focus="focus()", placeholder="{{ placeholder }}", ng-class="{'width-100' : securityCenter}")
     span.help-block {{ errorMessage }}  
     span(ng-hide="inline && !status.edit")
       button.button-primary.btn-small(ng-click="save()",ng-disabled="!validate() || form.newValue == ngModel",ui-ladda="{{ status.saving }}", ladda-translate="SAVE", data-style="expand-left")

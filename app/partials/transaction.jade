@@ -26,10 +26,10 @@
           transaction-status(transaction="transaction")
         .tx-value-then.tx-value(ng-show="settings.currency.code == 'USD'")
           p Value at Send
-          fiat(btc="transaction.result" abs date="transaction.txTime")
+          fiat(btc="transaction.result" abs='true' date="transaction.txTime")
         .tx-value-now.tx-value
           p Value now
-          fiat(btc="transaction.result" abs)
+          fiat(btc="transaction.result" abs='true')
         .tx-bci-link
           a.button-default.button-sm(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank") Verify On Blockchain.info
   .transaction-card.clearfix(ng-if="transaction.publicNote")
