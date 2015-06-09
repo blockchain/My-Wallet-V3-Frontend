@@ -31,7 +31,7 @@
           span
             a(ng-click="beginEditEmail()") Change email address
 
-      .flex(ng-show="display.action == 'email' && display.editingEmail")       
+      .flex-center(ng-show="display.action == 'email' && display.editingEmail")       
         p Your email address
         bc-async-input(inline security-center='true' type="email", placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
 
@@ -67,7 +67,7 @@
       div(ng-show="display.action == 'mobilenumber'")     
         configure-mobile-number(inline security-center='true')
       .flex(ng-show="display.action == 'twofactor'")     
-        p.flex-1.mrl 
+        p.flex-1.prl 
           |  2FA helps prevent unauthorized access to your wallet by requiring 
           |  a one-time password after every login attempt. Enabling this option
           |  helps keep unauthorized users from being able to access your wallet.

@@ -157,3 +157,9 @@ $select-fg: #686868;
   transform: none;
   transition: all .3s ease-in-out;
 }
+
+.has-error .form-control, .has-error .form-contorl:focus {
+  border-color: #a94442 !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
