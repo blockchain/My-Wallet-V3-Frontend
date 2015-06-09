@@ -59,6 +59,8 @@
       $scope.nextAction()
     
   $scope.$watchCollection "settings", (newValue, oldValue) ->
+    if newValue.needs2FA && $scope.display.action == 'twofactor'
+      $scope.toggle('twofactor')
     if newValue.blockTOR && $scope.display.action == 'blocktor'
       $scope.toggle('blocktor')
     if $scope.settings.googleAuthenticatorSecret == null # Google 2FA requires two steps
@@ -66,6 +68,16 @@
     
   $scope.$watchCollection "status", (newValue, oldValue) ->
     $scope.nextAction()
+
+  $scope.changeTwoFactor = () ->
+    modalInstance = $modal.open(
+      templateUrl: "partials/settings/two-factor.jade"
+      controller: TwoFactorCtrl
+      windowClass: "bc-modal"
+    )
+    if modalInstance?
+      modalInstance.opened.then () ->
+        Wallet.store.resetLogoutTimeout()
     
   $scope.nextAction = () ->
     $scope.display.action = null
