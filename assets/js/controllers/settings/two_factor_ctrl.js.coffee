@@ -7,7 +7,6 @@
 
   $scope.step = if $scope.settings.needs2FA then 'disable' else 'enable'
   $scope.pairWith = 'authenticator'
-  $scope.isValid = false
   $scope.fields = { authenticatorCode: '', yubiKeyCode: '' }
   $scope.errors = {}
 
