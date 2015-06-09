@@ -143,3 +143,8 @@ $select-fg: #686868;
   transform: none;
   transition: all .3s ease-in-out;
 }
+
+.ui-select-match .btn-default-focus {
+  outline: none;
+  box-shadow: none;
+}
