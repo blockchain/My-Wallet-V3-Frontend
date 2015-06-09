@@ -9,7 +9,7 @@ div(ng-class="{ 'mtl' : !securityCenter }")
       a(ng-click="edit.twoFactor = !edit.twoFactor", translate="CONFIGURE_2FA", ng-hide="settings.needs2FA", ng-class="securityCenter ? 'button-success button-lg' : 'button-primary'")
       a.button-primary(ng-click="disableSecondFactor()", translate="DISABLE", ng-show="settings.needs2FA")
   div(ng-show="edit.twoFactor") 
-    ul.settings-list(ng-hide="settings.googleAuthenticatorSecret || edit.yubiKey")
+    ul.settings-list.pam(ng-hide="settings.googleAuthenticatorSecret || edit.yubiKey")
       li 
         a(ng-click="setTwoFactorSMS()", ng-show="user.isMobileVerified") Enable SMS
         span(ng-show="!user.isMobileVerified") Enable SMS (Please verify your mobile first)
