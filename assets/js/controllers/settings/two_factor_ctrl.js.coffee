@@ -12,12 +12,10 @@
   $scope.errors = {}
 
   $scope.validateCode = (pairWith) ->
-    if pairWith == 'yubiKey' && $scope.fields.yubiKeyCode.length > 0
-      $scope.errors.yubiKeyCode = false
-      return true
-    else if pairWith == 'authenticator' && $scope.fields.authenticatorCode.length == 6
-      $scope.errors.authenticatorCode = false
-      return true
+    if pairWith == 'yubiKey'
+      return $scope.fields.yubiKeyCode.length > 0
+    else if pairWith == 'authenticator'
+      return $scope.fields.authenticatorCode.length == 6
     return false
 
   $scope.disableTwoFactor = () ->
