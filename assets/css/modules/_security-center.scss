@@ -147,3 +147,22 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .security-center-ui {
+    ul {
+      flex-direction: column;
+    }
+    .level-header {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      img {
+        height: 85px;
+      }
+    }
+    .level-badge {
+      width: 100%;
+    }
+  }
+}
