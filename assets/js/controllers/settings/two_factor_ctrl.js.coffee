@@ -48,7 +48,7 @@
     error = () ->
       $scope.errors.yubiKeyCode = true
       $scope.goToStep('pair')
-    Wallet.setTwoFactorYubiKey(key)
+    Wallet.setTwoFactorYubiKey(key, success, error)
 
   $scope.pairWithApp = (pairWith) ->
     return unless $scope.validateCode(pairWith)
