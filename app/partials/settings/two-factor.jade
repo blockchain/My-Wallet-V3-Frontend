@@ -5,11 +5,11 @@
   h5.em-300.mtm(translate="TWO_FACTOR_EXPLAIN")
 .modal-body
   div(ng-show="isStep('disable')")
-    p(translate="CONFIRM_DISABLE_2FA")
+    h5(translate="CONFIRM_DISABLE_2FA")
     button.button-danger(translate="DISABLE" ng-click="disableTwoFactor()")
 
   div(ng-show="isStep('disabled')")
-    p 2FA disabled
+    h4 2FA disabled
 
   div(ng-show="isStep('enable')")
     .flex-center.row.pal
@@ -30,6 +30,7 @@
     .col-xs-6.flex-justify.flex
       a(ng-click="pairWith = 'yubiKey'", ng-class="{'ccc' : pairWith == 'authenticator'}") YubiKey
     .col-xs-12.mtl(ng-show="pairWith == 'authenticator'")
+      img(ng-hide="settings.googleAuthenticatorSecret" src="img/spinner.gif")
       .form-group.flex-between(ng-if="settings.googleAuthenticatorSecret" ng-class="{'has-error': errors.authenticatorCode}")
         qr(text="settings.googleAuthenticatorSecret", size=172)
         .flex-column.flex-center.flex-1.pal
@@ -50,10 +51,10 @@
       span(ng-show="settings.twoFactorMethod == 3" translate="2FA_YUBI")
       span(ng-show="settings.twoFactorMethod == 4" translate="2FA_GOOGLE_AUTH")
       span(ng-show="settings.twoFactorMethod == 5" translate="2FA_SMS")
-    p Congratulations! 2FA successfully enabled
+    h5 Congratulations! 2FA successfully enabled
 
   div(ng-show="isStep('loading')")
-    span Loading...
+    img(src="img/spinner.gif")
 
   div(ng-show="isStep('error')")
     p An error occurred!
@@ -61,4 +62,4 @@
 
 .modal-footer.pal.flex-end
   button.button-muted.mrm(ng-click="close()" translate="CLOSE")
-  button.button-success(ng-show="isStep('pair')" ng-disabled="!validateCode(pairWith)" ng-click="pairWithApp(pairWith)" translate="ENABLE_2FA")
+  button.button-success(ui-ladda="{{ status.loading }}" data-style="expand-left" ng-show="isStep('pair')" ng-disabled="!validateCode(pairWith)" ng-click="pairWithApp(pairWith)" ladda-translate="ENABLE_2FA")

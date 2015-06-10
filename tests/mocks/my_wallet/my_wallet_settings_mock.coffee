@@ -45,7 +45,13 @@ angular.module("myBlockchainSettingsServices", []).factory "MyBlockchainSettings
           success()		
         else		
           error()
-          
+      
+      setTwoFactorYubiKey: (code, success, error) ->
+        if code == "123456"
+          success()
+        else
+          error()
+
       setTwoFactorEmail: (success, error) ->
         success()
       
