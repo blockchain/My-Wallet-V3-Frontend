@@ -9,6 +9,7 @@
   $scope.pairWith = 'authenticator'
   $scope.fields = { authenticatorCode: '', yubiKeyCode: '' }
   $scope.errors = {}
+  $scope.status = {}
 
   $scope.validateCode = (pairWith) ->
     if pairWith == 'yubiKey'
@@ -31,20 +32,20 @@
 
   $scope.confirmTwoFactorGoogleAuthenticator = (code) ->
     success = () ->
-      return unless $scope.isStep('loading')
+      return unless $scope.isStep('pair')
       $scope.goToStep('success')
     error = () ->
       $scope.errors.authenticatorCode = true
-      $scope.goToStep('pair')
+      $scope.status.loading = false
     Wallet.confirmTwoFactorGoogleAuthenticator(code, success, error)
 
   $scope.setTwoFactorYubiKey = (key) ->
     success = () ->
-      return unless $scope.isStep('loading')
+      return unless $scope.isStep('pair')
       $scope.goToStep('success')
     error = () ->
       $scope.errors.yubiKeyCode = true
-      $scope.goToStep('pair')
+      $scope.status.loading = false
     Wallet.setTwoFactorYubiKey(key, success, error)
 
   $scope.pairWithApp = (pairWith) ->
@@ -55,7 +56,7 @@
       $scope.confirmTwoFactorGoogleAuthenticator($scope.fields.authenticatorCode)
     else
       return $scope.goToStep('error')
-    $scope.goToStep('loading')
+    $scope.status.loading = true
 
   # UI Navigation
 
