@@ -11,12 +11,12 @@
     h4(translate="2FA_DISABLED")
   div(ng-show="isStep('enable')")
     .flex-center.row.pal
-      .flex-column.col-xs-6.flex-center.border-right
-        img.phone-image.mbl(src="img/phone.png")
-        a(ng-click="authWithPhone()", translate="USE_MOBILE")
-      .flex-column.col-xs-6.flex-center
-        i.ti-lock
-        a(ng-click="authWithApp()", translate="USE_AUTH_YUBIKEY")
+      .flex-column.col-xs-6.flex-center.border-right(ng-click="authWithPhone()")
+        img.phone-image.mbl.pointer(src="img/phone.png")
+        a(translate="USE_MOBILE")
+      .flex-column.col-xs-6.flex-center(ng-click="authWithApp()")
+        i.ti-lock.pointer
+        a(translate="USE_AUTH_YUBIKEY")
   .pal(ng-show="isStep('configure_mobile')")
     p(translate="ENABLE_2FA_ENTER_MOBILE")
     configure-mobile-number(inline)
