@@ -6,13 +6,20 @@
   
   $scope.form = {}
 
+  $scope.status = {}
+
   $scope.close = () ->
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
 
   $scope.changePassword = () ->
-    Wallet.changePassword($scope.fields.password)
-    $modalInstance.dismiss ""
+    success = () ->
+      $modalInstance.dismiss ""
+    error = (err) ->
+      $scope.status.waiting = false
+      $scope.errors.unsuccessful = err
+    $scope.status.waiting = true
+    Wallet.changePassword($scope.fields.password, success, error)
     
   $scope.$watch "fields.confirmation", (newVal) ->
     if newVal?

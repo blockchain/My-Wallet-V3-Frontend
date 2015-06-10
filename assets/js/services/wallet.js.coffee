@@ -373,13 +373,15 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return true
     # wallet.my.isCorrectSecondPassword(candidate)
 
-  wallet.changePassword = (newPassword) ->
+  wallet.changePassword = (newPassword, successCallback, errorCallback) ->
     wallet.store.changePassword(newPassword, (()->
       $translate("CHANGE_PASSWORD_SUCCESS").then (translation) ->
         wallet.displaySuccess(translation)
+        successCallback(translation)
     ),() ->
       $translate("CHANGE_PASSWORD_FAILED").then (translation) ->
         wallet.displayError(translation)
+        errorCallback(translation)
     )
 
   wallet.setIPWhitelist = (ips, successCallback, errorCallback) ->
