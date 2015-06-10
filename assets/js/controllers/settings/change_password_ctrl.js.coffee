@@ -13,6 +13,7 @@
     $modalInstance.dismiss ""
 
   $scope.changePassword = () ->
+    return unless $scope.validate(false)
     success = () ->
       $modalInstance.dismiss ""
     error = (err) ->
