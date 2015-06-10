@@ -7,10 +7,8 @@
   div(ng-show="isStep('disable')")
     h5(translate="CONFIRM_DISABLE_2FA")
     button.button-danger(translate="DISABLE" ng-click="disableTwoFactor()")
-
   div(ng-show="isStep('disabled')")
-    h4 2FA disabled
-
+    h4(translate="2FA_DISABLED")
   div(ng-show="isStep('enable')")
     .flex-center.row.pal
       .flex-column.col-xs-6.flex-center.border-right
@@ -19,11 +17,9 @@
       .flex-column.col-xs-6.flex-center
         i.ti-lock
         a(ng-click="authWithApp()", translate="USE_AUTH_YUBIKEY")
-
   .pal(ng-show="isStep('configure_mobile')")
     p(translate="ENABLE_2FA_ENTER_MOBILE")
     configure-mobile-number(inline)
-
   .row.clearfix.pal(ng-show="isStep('pair')")
     .col-xs-6.flex-justify.flex
       a(ng-click="pairWith = 'authenticator'", ng-class="{'ccc' : pairWith == 'yubiKey'}") Google Authenticator
@@ -40,26 +36,20 @@
       .flex-center.flex-column.pal.form-group(ng-class="{'has-error': errors.yubiKeyCode}")
         p.mbm(translate="PAIR_YUBIKEY")
         input.form-control(type="text" ng-model="fields.yubiKeyCode")
-
   //- div(ng-show="isStep('confirm_sms')")
     p We have sent a SMS message to <b>{{ user.mobile.number }}</b> containing a 5 digit code. Enter that code below to complete the 2FA setup.
     input(ng-model="fields.smsCode")
     button(translate="CONTINUE" ng-click="goToStep('success')")
-
   div(ng-show="isStep('success')")
     h2.status.complete
       span(ng-show="settings.twoFactorMethod == 3" translate="2FA_YUBI")
       span(ng-show="settings.twoFactorMethod == 4" translate="2FA_GOOGLE_AUTH")
       span(ng-show="settings.twoFactorMethod == 5" translate="2FA_SMS")
-    h5 Congratulations! 2FA successfully enabled
-
+    h5(translate="2FA_SUCCESS")
   div(ng-show="isStep('loading')")
     img(src="img/spinner.gif")
-
   div(ng-show="isStep('error')")
-    p An error occurred!
-    p Please try again later
-
+    p(translate="2FA_ERROR")
 .modal-footer.pal.flex-end
   button.button-muted.mrm(ng-click="close()" translate="CLOSE")
   button.button-success(ui-ladda="{{ status.loading }}" data-style="expand-left" ng-show="isStep('pair')" ng-disabled="!validateCode(pairWith)" ng-click="pairWithApp(pairWith)" ladda-translate="ENABLE_2FA")
