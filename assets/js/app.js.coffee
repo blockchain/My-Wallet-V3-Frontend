@@ -85,7 +85,6 @@ modules = [
   "templates/security-badge.jade"
   "templates/configure-mobile-number.jade"
   "templates/confirm-recovery-phrase.jade"
-  "templates/two-factor.jade"
   "templates/configure-second-password.jade"
   "templates/tor.jade"
   "templates/api-access.jade"
