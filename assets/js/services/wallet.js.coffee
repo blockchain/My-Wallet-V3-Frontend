@@ -124,7 +124,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.displayWarning("Please enter your 2FA code")
       wallet.settings.needs2FA = true
       # 2: Email
-      # 3: Yubikey (depricated)
+      # 3: Yubikey
       # 4: Google Authenticator
       # 5: SMS
 
