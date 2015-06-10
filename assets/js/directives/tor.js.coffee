@@ -6,6 +6,8 @@ walletApp.directive('tor', ($translate, Wallet) ->
     }
     templateUrl: 'templates/tor.jade'
     link: (scope, elem, attrs) ->
+      scope.securityCenter = attrs.securityCenter?
+
       scope.settings = Wallet.settings
       
       scope.enableBlockTOR = () ->

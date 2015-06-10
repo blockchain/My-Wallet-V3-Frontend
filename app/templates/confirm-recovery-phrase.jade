@@ -1,4 +1,4 @@
 .mbl
   //-h2.status.incomplete(ng-hide="status.didConfirmRecoveryPhrase ", translate="UNCONFIRMED")
   //-h2.status.complete(ng-show="status.didConfirmRecoveryPhrase ", translate="CONFIRMED")
-  a.button-primary(ng-click="confirmRecoveryPhrase()",translate="CONFIRM_RECOVERY_PHRASE", ng-hide="status.didConfirmRecoveryPhrase ")
+  button(ng-click="confirmRecoveryPhrase()",translate="CONFIRM_RECOVERY_PHRASE", ng-hide="status.didConfirmRecoveryPhrase ", ng-class="securityCenter ? 'button-success button-lg' : 'button-primary'")

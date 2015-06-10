@@ -23,3 +23,13 @@
     if modalInstance?
       modalInstance.opened.then () ->
         Wallet.store.resetLogoutTimeout()
+
+  $scope.changeTwoFactor = () ->
+    modalInstance = $modal.open(
+      templateUrl: "partials/settings/two-factor.jade"
+      controller: TwoFactorCtrl
+      windowClass: "bc-modal"
+    )
+    if modalInstance?
+      modalInstance.opened.then () ->
+        Wallet.store.resetLogoutTimeout()

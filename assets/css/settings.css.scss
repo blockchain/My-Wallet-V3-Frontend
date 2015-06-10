@@ -1,7 +1,4 @@
 #settings {
-  padding: 0;
-  
-
   .label{
   font-size: 85%;
   font-weight: normal;
@@ -39,22 +36,8 @@
     color: #C89898;
   }
 
-  h2.status.complete {
-    color: #85AD5F;
-  }
-
-  h2 {
-    margin-bottom: 20px;
-  }
-
-  h2.status {
-    margin: 5px;
-  }
-
   h2{
     font-size: 12pt;
-    color: #75AAC9;
-    margin-bottom: 20px;
   }
 
   h2.back {
@@ -196,13 +179,7 @@
 }
 
 .setting-result {
-  text-align: center;
-  padding: 0;
-  
-  p{
-  margin-top: 15px;
-  }
-  
+  p { margin-top: 15px; }
 }
 
 
@@ -261,32 +238,19 @@
 
 }
 
-
-.verifyemail{
-  background-color: rgb(245, 247, 249);
-  border: 1px solid rgb(227, 234, 242);
-  
-  .verifybutton{
-  margin-top: 5px;
-  }
-  
-}
-
 .intl-tel-input { margin-bottom: 10px; }
 
 @media (min-width: 992px){
-  #settings{padding: 15px;}
   .setting-result {
     text-align: right;
-    padding: 0 40px;
-
   }
-
   h2.status {
     margin: 0px 0px 15px;
   }
-
   .btn-group{
     button{float: left;}
   }
+}
+@media (max-width: 991px) {
+  .setting-result { margin-top: 10px; }
 }

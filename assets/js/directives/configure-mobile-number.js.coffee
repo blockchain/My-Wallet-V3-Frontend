@@ -5,7 +5,9 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
     scope: {
     }
     templateUrl: 'templates/configure-mobile-number.jade'
-    link: (scope, elem, attrs) ->      
+    link: (scope, elem, attrs) ->
+      scope.securityCenter = attrs.securityCenter?
+
       scope.user = Wallet.user
       scope.edit = {mobile: false}
       
@@ -16,6 +18,11 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
       scope.fields = {newMobile: null}
       
       scope.errors = {verify: null}
+
+      scope.step = 1
+      
+      if attrs.inline?
+        scope.inline = true
 
       scope.$watch "edit.mobile", (newValue) ->
         if newValue
@@ -43,6 +50,7 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
         success = () ->
           scope.edit.mobile = false   
           scope.status.busy = false
+          scope.step++
           
         error = (error) ->
           scope.status.busy = false
@@ -59,6 +67,7 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
         success = () ->
           scope.edit.mobile = false   
           scope.status.busy = false
+          scope.step--
           
         error = (message) ->
           scope.errors.verify = message

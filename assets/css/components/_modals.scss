@@ -218,6 +218,11 @@
   .has-error .form-control {
     border-color: #a94442 !important;
   }
+
+  //Specific to the 2FA modal
+  .two-fa-image { width: 40px; }
+  .phone-image { width: 85px; }
+  .ti-lock { font-size: 7.5em; color: #C6C6C6; }
 }
 
 @media (max-width: 768px) {

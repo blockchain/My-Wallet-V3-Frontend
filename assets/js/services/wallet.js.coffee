@@ -124,7 +124,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.displayWarning("Please enter your 2FA code")
       wallet.settings.needs2FA = true
       # 2: Email
-      # 3: Yubikey (depricated)
+      # 3: Yubikey
       # 4: Google Authenticator
       # 5: SMS
 
@@ -1317,16 +1317,17 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.applyIfNeeded()
     )
 
-  wallet.setTwoFactorYubiKey = (code) ->
+  wallet.setTwoFactorYubiKey = (code, successCallback, errorCallback) ->
     wallet.settings_api.setTwoFactorYubiKey(
       code
       ()->
         wallet.settings.needs2FA = true
         wallet.settings.twoFactorMethod = 3
+        successCallback()
         wallet.applyIfNeeded()
       (error)->
         console.log(error)
-        wallet.displayError(error)
+        errorCallback(error)
         wallet.applyIfNeeded()
     )
 
