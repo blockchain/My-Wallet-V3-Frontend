@@ -1325,7 +1325,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.applyIfNeeded()
       (error)->
         console.log(error)
-        wallet.displayError(error)
         errorCallback(error)
         wallet.applyIfNeeded()
     )
