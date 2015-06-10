@@ -6,7 +6,7 @@
 .modal-body
   div(ng-show="isStep('disable')")
     p(translate="CONFIRM_DISABLE_2FA")
-    button(translate="DISABLE" ng-click="disableTwoFactor()")
+    button.button-danger(translate="DISABLE" ng-click="disableTwoFactor()")
 
   div(ng-show="isStep('disabled')")
     p 2FA disabled
