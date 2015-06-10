@@ -60,6 +60,7 @@
   # UI Navigation
 
   $scope.goToStep = (step) ->
+    return unless step in steps
     $scope.step = step
 
   $scope.isStep = (step) ->

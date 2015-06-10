@@ -35,6 +35,11 @@ describe "TwoFactorCtrl", ->
     scope.goToStep('success')
     expect(scope.step).toBe('success')
 
+  it "should not go to the wrong step", () ->
+    initialStep = scope.step
+    scope.goToStep('invalid_step')
+    expect(scope.step).toBe(initialStep)
+
   it "should know the current step", () ->
     expect(scope.isStep(scope.step)).toBe(true)
 
