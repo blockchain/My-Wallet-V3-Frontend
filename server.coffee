@@ -220,7 +220,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Verifying autorization request</title>
+    <title>Verifying authorization request</title>
     <script> 
       var xmlHttp = new XMLHttpRequest();
       // The redirect should be done in the callback, but currently the callback doesn't get called because the authorize-approve page makes an ajax request to /wallet over http which is blocked 

@@ -6,13 +6,21 @@
   
   $scope.form = {}
 
+  $scope.status = {}
+
   $scope.close = () ->
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
 
   $scope.changePassword = () ->
-    Wallet.changePassword($scope.fields.password)
-    $modalInstance.dismiss ""
+    return unless $scope.validate(false)
+    success = () ->
+      $modalInstance.dismiss ""
+    error = (err) ->
+      $scope.status.waiting = false
+      $scope.errors.unsuccessful = err
+    $scope.status.waiting = true
+    Wallet.changePassword($scope.fields.password, success, error)
     
   $scope.$watch "fields.confirmation", (newVal) ->
     if newVal?
@@ -43,10 +51,10 @@
         isValid = false
         $translate("TOO_LONG").then (translation) ->
           $scope.errors.password =  translation
-      if $scope.fields.password == Wallet.uid
-        isValid = false
-        $translate("CANT_USE_GUID").then (translation) ->
-          $scope.errors.password =  translation
+    if $scope.fields.password == Wallet.uid
+      isValid = false
+      $translate("CANT_USE_GUID").then (translation) ->
+        $scope.errors.password =  translation
     if $scope.fields.confirmation == ""
       isValid = false
     else

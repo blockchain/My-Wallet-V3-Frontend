@@ -163,3 +163,8 @@ $select-fg: #686868;
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
 }
+
+.ui-select-match .btn-default-focus {
+  outline: none;
+  box-shadow: none;
+}

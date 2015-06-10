@@ -18,7 +18,8 @@
 
   $scope.selectedAccountIndex = $stateParams.accountIndex
 
-  $scope.currentLocation = $location.url()
+  $scope.showImported = () ->
+    $scope.selectedAccountIndex == 'imported' && $state.current.name == 'wallet.common.transactions'
 
   $scope.showOrHide = () ->
     if $location.url().indexOf('/transactions') > -1

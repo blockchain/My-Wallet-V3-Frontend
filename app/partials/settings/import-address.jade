@@ -50,11 +50,10 @@
     .form-group
       label.col-sm-3.control-label
         span(translate="AMOUNT")
-        |:  
       .col-sm-5
         p.form-control-static 
           b {{ address.balance | toBitCurrency:settings.btcCurrency }}
-          span.fiat
+          span.fiat.plm
             fiat(btc="address.balance")
 .modal-footer.pal.flex-end
   button.btn.btn-info(ng-click="cameraOn()", ng-show="step == 1", ng-if="browserWithCamera", translate="QR")
