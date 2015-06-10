@@ -11,10 +11,11 @@ walletApp.directive('bcAsyncInput', (Wallet) ->
       placeholder: '='
       type: '@'
       errorMessage: '='
-      securityCenter: '='
     }
     templateUrl: 'templates/bc-async-input.jade'
     link: (scope, elem, attrs, ngModel) ->
+      scope.securityCenter = attrs.securityCenter?
+
       scope.user = Wallet.user
       scope.status = 
         edit: false

@@ -3,10 +3,11 @@ walletApp.directive('configureSecondPassword', ($translate, Wallet, $modal) ->
     restrict: "E"
     replace: 'true'
     scope: {
-      securityCenter: '='
     }
     templateUrl: 'templates/configure-second-password.jade'
     link: (scope, elem, attrs) ->
+      scope.securityCenter = attrs.securityCenter?
+
       scope.settings = Wallet.settings
       
       scope.removeSecondPassword = () ->

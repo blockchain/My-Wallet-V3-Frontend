@@ -22,26 +22,25 @@
     .badge-panel(ng-show="display.action == 'email' || display.action == 'securityphrase' || display.action == 'passwordhint' ")
       div(ng-show="display.action == 'email' && !display.editingEmail")        
         p(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
-        verify-email(security-center='true')
+        verify-email(security-center)
         p(ng-hide="user.isEmailVerified")
           | Didn't receive the email? 
           span 
-            resend-email-confirmation(security-center='true')
+            resend-email-confirmation(security-center)
             |  or 
           span
             a(ng-click="beginEditEmail()") Change email address
 
       .flex-center(ng-show="display.action == 'email' && display.editingEmail")       
         p Your email address
-        bc-async-input(inline security-center='true' type="email", placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
-
+        bc-async-input(inline security-center type="email", placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
       div(ng-show="display.action == 'securityphrase'")        
         p.pbl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
-        confirm-recovery-phrase(security-center='true')
+        confirm-recovery-phrase(security-center)
 
       .flex(ng-show="display.action == 'passwordhint'")       
         p(translate="CHANGE_PASSWORD_HINT_SECURITY_CENTER")
-        bc-async-input(inline security-center='true' placeholder="'CHANGE_PASSWORD_HINT' | translate" ng-model="user.passwordHint", on-save="changePasswordHint", action-title="'CHANGE_PASSWORD_HINT' | translate") 
+        bc-async-input(inline security-center placeholder="'CHANGE_PASSWORD_HINT' | translate" ng-model="user.passwordHint", on-save="changePasswordHint", action-title="'CHANGE_PASSWORD_HINT' | translate") 
 
   section.level.level_two
     header.flex-center
@@ -61,7 +60,7 @@
 
     .badge-panel(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
       div(ng-show="display.action == 'mobilenumber'")     
-        configure-mobile-number(inline security-center='true')
+        configure-mobile-number(inline security-center)
       .flex(ng-show="display.action == 'twofactor'")     
         p.flex-1.prl 
           |  2FA helps prevent unauthorized access to your wallet by requiring 
@@ -82,6 +81,12 @@
           p(TRANSLATE="ADD_BLOCK_TOR")
 
     .badge-panel(ng-show="display.action == 'blocktor'")
+<<<<<<< HEAD
       div(ng-show="display.action == 'blocktor'")     
         p.pbl(TRANSLATE="BLOCK_TOR_EXPLAIN")
         tor(security-center='true')
+=======
+      .flex(ng-show="display.action == 'blocktor'")     
+        p(TRANSLATE="BLOCK_TOR_EXPLAIN")
+        tor(security-center)
+>>>>>>> 87d640965d9ef830e2b3eee72e4436cdd3c1ec17

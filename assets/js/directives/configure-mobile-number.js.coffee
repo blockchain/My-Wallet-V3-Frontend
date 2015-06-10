@@ -3,10 +3,11 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
     restrict: "E"
     replace: 'true'
     scope: {
-      securityCenter: '='
     }
     templateUrl: 'templates/configure-mobile-number.jade'
-    link: (scope, elem, attrs) ->      
+    link: (scope, elem, attrs) ->
+      scope.securityCenter = attrs.securityCenter?
+
       scope.user = Wallet.user
       scope.edit = {mobile: false}
       
