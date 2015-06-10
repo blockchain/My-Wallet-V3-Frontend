@@ -40,7 +40,7 @@ walletApp.directive('fiat', (Wallet , $compile) ->
     
         btc = scope.btc
         
-        if attrs.abs && btc < 0
+        if attrs.abs? && btc < 0
           btc = btc * -1
     
         amount = null
