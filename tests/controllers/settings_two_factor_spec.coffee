@@ -71,6 +71,47 @@ describe "TwoFactorCtrl", ->
       it "should have google authenticator secret", () ->
         expect(scope.settings.googleAuthenticatorSecret).toBeDefined()
 
+      describe "YubiKey", ->
+
+        it "should pair correctly", () ->
+          scope.fields.yubiKeyCode = '123456'
+          scope.pairWithApp('yubiKey')
+          expect(scope.settings.needs2FA).toBe(true)
+          expect(scope.settings.twoFactorMethod).toBe(3)
+          expect(scope.step).toBe('success')
+
+        it "should not pair if code is invalid", () ->
+          spyOn(scope, "setTwoFactorYubiKey")
+          scope.pairWithApp('yubiKeyCode')
+          expect(scope.setTwoFactorYubiKey).not.toHaveBeenCalled()
+
+        it "should not pair if code is wrong", () ->
+          scope.fields.yubiKeyCode = '123457'
+          scope.pairWithApp('yubiKey')
+          expect(scope.settings.needs2FA).toBe(false)
+          expect(scope.step).toBe('pair')
+
+      describe "Google Authenticator", ->
+
+        it "should pair correctly", () ->
+          scope.fields.authenticatorCode = '123456'
+          scope.pairWithApp('authenticator')
+          expect(scope.settings.needs2FA).toBe(true)
+          expect(scope.settings.twoFactorMethod).toBe(4)
+          expect(scope.step).toBe('success')
+
+        it "should not pair if code is invalid", () ->
+          spyOn(scope, "confirmTwoFactorGoogleAuthenticator")
+          scope.fields.authenticatorCode = 'asdf'
+          scope.pairWithApp('authenticator')
+          expect(scope.confirmTwoFactorGoogleAuthenticator).not.toHaveBeenCalled()
+
+        it "should not pair if code is wrong", () ->
+          scope.fields.authenticatorCode = '123457'
+          scope.pairWithApp('authenticator')
+          expect(scope.settings.needs2FA).toBe(false)
+          expect(scope.step).toBe('pair')
+
   describe "disable", ->
 
     beforeEach ->
