@@ -1,7 +1,7 @@
 @TopCtrl = ($scope, Wallet, $modal, $stateParams) ->
   $scope.settings = Wallet.settings
   $scope.isBitCurrency = Wallet.isBitCurrency
-  $scope.toggleCurrency = Wallet.toggleDisplayCurrency
+  $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency
   
   $scope.request = () ->
     Wallet.clearAlerts()
