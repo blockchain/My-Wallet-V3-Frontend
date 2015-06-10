@@ -114,7 +114,10 @@
   }
   .badge-active {
     img { opacity: 1; }
-    a { cursor: default; }
+    a {
+      cursor: default;
+      p { margin: 0;  }
+    }
   }
   .level-header {
     border-right: 1px solid #ebebeb;
