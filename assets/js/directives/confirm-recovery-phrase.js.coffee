@@ -3,10 +3,10 @@ walletApp.directive('confirmRecoveryPhrase', ($translate, Wallet, $modal) ->
     restrict: "E"
     replace: 'true'
     scope: {
-      securityCenter: '='
     }
     templateUrl: 'templates/confirm-recovery-phrase.jade'
     link: (scope, elem, attrs) ->
+      scope.securityCenter = attrs.securityCenter?
 
       scope.status = Wallet.status
               
