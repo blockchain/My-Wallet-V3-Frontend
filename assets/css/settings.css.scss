@@ -1,7 +1,4 @@
 #settings {
-  padding: 0;
-
-
   .label{
   font-size: 85%;
   font-weight: normal;
@@ -182,13 +179,7 @@
 }
 
 .setting-result {
-  text-align: center;
-  padding: 0;
-
-  p{
-  margin-top: 15px;
-  }
-
+  p { margin-top: 15px; }
 }
 
 
@@ -250,18 +241,16 @@
 .intl-tel-input { margin-bottom: 10px; }
 
 @media (min-width: 992px){
-  #settings{padding: 15px;}
   .setting-result {
     text-align: right;
-    padding: 0 40px;
-
   }
-
   h2.status {
     margin: 0px 0px 15px;
   }
-
   .btn-group{
     button{float: left;}
   }
+}
+@media (max-width: 991px) {
+  .setting-result { margin-top: 10px; }
 }
