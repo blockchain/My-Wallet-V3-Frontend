@@ -4,7 +4,7 @@
       h1.prm.type-h4(translate="LEVEL_1")
       h2.type-h5.mid-grey-alt.em-300(translate="LEVEL_1_TITLE")
     ul.flex.flex-start.pln.mbn
-      li.level-header.bg-light-grey-alt
+      li.level-header.bg-light-grey-alt.flex-center.flex-justify
         img(src="img/security-icon-1.png")
       li.level-badge(ng-class="{'badge-active': user.isEmailVerified}")
         a(ng-click="user.isEmailVerified || toggle('email')", ng-class="{'active' : display.action == 'email' }")
@@ -53,7 +53,7 @@
       h1.prm.type-h4(translate="LEVEL_2")
       h2.type-h5.mid-grey-alt.em-300(translate="LEVEL_2_TITLE")
     ul.flex.flex-start.pln.mbn
-      li.level-header.bg-light-grey-alt
+      li.level-header.bg-light-grey-alt.flex-center.flex-justify
         img(src="img/security-icon-2.png")
       li.level-badge(ng-class="{'badge-active': user.isMobileVerified}")
         a(ng-click="user.isMobileVerified || toggle('mobilenumber')", ng-class="{'active' : display.action == 'mobilenumber' }")
@@ -83,7 +83,7 @@
       h1.prm.type-h4(translate="LEVEL_3")
       h2.type-h5.mid-grey-alt.em-300(translate="LEVEL_3_TITLE")
     ul.flex.flex-start.pln.mbn
-      li.level-header.bg-light-grey-alt
+      li.level-header.bg-light-grey-alt.flex-center.flex-justify
         img(src="img/security-icon-3.png")
       li.level-badge(ng-class="{'badge-active': settings.blockTOR}")
         a(ng-click="settings.blockTOR || toggle('blocktor')", ng-class="{'active' : display.action == 'blocktor' }")
