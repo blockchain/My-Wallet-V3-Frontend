@@ -1,8 +1,8 @@
 .security-center-ui
   section.level.level_one
     header.flex-center
-      h1.prm.type-h4 Level 1
-      h2.type-h5.mid-grey-alt.em-300 Prevent losing access to your funds
+      h1.prm.type-h4(translate="LEVEL_1")
+      h2.type-h5.mid-grey-alt.em-300(translate="LEVEL_1_TITLE")
     ul.flex.flex-start.pln.mbn
       li.level-header.bg-light-grey-alt
         img(src="img/security-icon-1.png")
@@ -35,22 +35,18 @@
         p Your email address
         bc-async-input(inline security-center='true' type="email", placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
 
-      .flex(ng-show="display.action == 'securityphrase'")        
-        p 
-          |  Make a one-time backup of your wallet to ensure you are always able to access your funds, 
-          |  even if you lose your password or our service becomes unavailable.
+      div(ng-show="display.action == 'securityphrase'")        
+        p.pbl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
         confirm-recovery-phrase(security-center='true')
 
       .flex(ng-show="display.action == 'passwordhint'")       
-        p 
-          |  Blockchain has no knowledge of your password and has no ability to reset your lost password.
-          |  Create a memorable password hint that can be emailed to you in the case of a forgotten password.
+        p(translate="CHANGE_PASSWORD_HINT_SECURITY_CENTER")
         bc-async-input(inline security-center='true' placeholder="'CHANGE_PASSWORD_HINT' | translate" ng-model="user.passwordHint", on-save="changePasswordHint", action-title="'CHANGE_PASSWORD_HINT' | translate") 
 
   section.level.level_two
     header.flex-center
-      h1.prm.type-h4 Level 2
-      h2.type-h5.mid-grey-alt.em-300 Prevent unauthorized access to your wallet
+      h1.prm.type-h4(translate="LEVEL_2")
+      h2.type-h5.mid-grey-alt.em-300(translate="LEVEL_2_TITLE")
     ul.flex.flex-start.pln.mbn
       li.level-header.bg-light-grey-alt
         img(src="img/security-icon-2.png")
@@ -75,8 +71,8 @@
 
   section.level.level_three
     header.flex-center
-      h1.prm.type-h4 Level 3
-      h2.type-h5.mid-grey-alt.em-300 Advanced Security Options to harden your wallet
+      h1.prm.type-h4(translate="LEVEL_3")
+      h2.type-h5.mid-grey-alt.em-300(translate="LEVEL_3_TITLE")
     ul.flex.flex-start.pln.mbn
       li.level-header.bg-light-grey-alt
         img(src="img/security-icon-3.png")
@@ -86,6 +82,6 @@
           p(TRANSLATE="ADD_BLOCK_TOR")
 
     .badge-panel(ng-show="display.action == 'blocktor'")
-      .flex(ng-show="display.action == 'blocktor'")     
-        p(TRANSLATE="BLOCK_TOR_EXPLAIN")
+      div(ng-show="display.action == 'blocktor'")     
+        p.pbl(TRANSLATE="BLOCK_TOR_EXPLAIN")
         tor(security-center='true')

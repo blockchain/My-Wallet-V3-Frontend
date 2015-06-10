@@ -406,5 +406,14 @@
   "SUPPORT" : "Support",
   "ADD_ANOTHER_RECIPIENT" : "Add Another Recipient",
   "REMOVE" : "Remove",
-  "MULTIPLE_ADDRESSES" : "Multiple Addresses"
+  "MULTIPLE_ADDRESSES" : "Multiple Addresses",
+  "CHANGE_PASSWORD_HINT_SECURITY_CENTER" : "Blockchain has no knowledge of your password and has no ability to reset your lost password. Create a memorable password hint that can be emailed to you in the case of a forgotten password.",
+  "RECOVERY_PHRASE_SECURITY_CENTER" : "Make a one-time backup of your wallet to ensure you are always able to access your funds, even if you lose your password or our service becomes unavailable.",
+  "LEVEL_1" : "Level 1",
+  "LEVEL_1_TITLE" : "Prevent losing access to your funds",
+  "LEVEL_2" : "Level 2",
+  "LEVEL_2_TITLE" : "Prevent unauthorized access to your wallet",
+  "LEVEL_3" : "Level 3",
+  "LEVEL_3_TITLE" : "Advanced Security Options to harden your wallet"
+
 }
