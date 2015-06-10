@@ -24,7 +24,7 @@
       a(ui-sref="wallet.common.transactions({accountIndex:'imported'})")
         i.ti-agenda
         span(translate="IMPORTED_ADDRESSES")
-      ul.aside-list.pas.pln(ng-show="selectedAccountIndex == 'imported' && currentLocation == '/imported/transactions/'", ng-click="hideMenu()")
+      ul.aside-list.pas.pln(ng-show="showImported()", ng-click="hideMenu()")
         li.mvs(ng-class="selectedAccountIndex == 'imported' ? 'active' : ''")
           a.pas(translate="ALL_ADDRESSES")
             span
