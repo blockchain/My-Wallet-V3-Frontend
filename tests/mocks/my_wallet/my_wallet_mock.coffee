@@ -85,6 +85,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   
   myWallet = {}
   accounts = []
+  
+  shouldFetchOldestTransaction = false
           
   mockRules = {shouldFailToSend: false, shouldFailToCreateWallet: false}
     
@@ -392,6 +394,27 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.resendTwoFactorSms = (uid, success, error) ->
     success()
+    
+  myWallet.fetchMoreTransactionsForAccounts = (success, error, last) ->
+    if shouldFetchOldestTransaction
+      last()
+      
+    success([])
+    return
+    
+  myWallet.fetchMoreTransactionsForAccount = (n, success, error, last) ->
+    if shouldFetchOldestTransaction
+      last()
+    
+    success([])
+    return
+    
+  myWallet.fetchMoreTransactionsForLegacyAddresses = (success, error, last) ->
+    if shouldFetchOldestTransaction
+      last()
+    
+    success([])
+    return
             
   #####################################
   # Tell the mock to behave different # 
@@ -440,5 +463,8 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
 
   myWallet.mockShouldReceiveNewBlock = () ->
     MyWalletStore.sendEvent("on_block")
+    
+  myWallet.mockShouldFetchOldestTransaction = () ->
+    shouldFetchOldestTransaction = true
   
   return myWallet 

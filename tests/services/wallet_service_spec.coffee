@@ -371,3 +371,60 @@ describe "walletServices", () ->
         Wallet.monitor("on_tx")
         expect(Wallet.displayReceivedBitcoin).not.toHaveBeenCalled()
         
+  describe "fetchMoreTransactions()", ->
+    it "should call the right method for individual accounts", ->
+      spyOn(MyWallet, "fetchMoreTransactionsForAccount")
+      Wallet.fetchMoreTransactions(0)
+      expect(MyWallet.fetchMoreTransactionsForAccount).toHaveBeenCalled()
+    
+    it "should call the right method for all accounts combined", ->
+      spyOn(MyWallet, "fetchMoreTransactionsForAccounts")
+      Wallet.fetchMoreTransactions("accounts")      
+      expect(MyWallet.fetchMoreTransactionsForAccounts).toHaveBeenCalled()
+    
+    it "should call the right method for imported addresses", ->
+      spyOn(MyWallet, "fetchMoreTransactionsForLegacyAddresses")
+      Wallet.fetchMoreTransactions("imported")    
+      expect(MyWallet.fetchMoreTransactionsForLegacyAddresses).toHaveBeenCalled()   
+      
+    it "should the caller know if there are no more transactions", ->
+      observer = 
+        allTransactionsLoadedCallback: () -> 
+          
+      MyWallet.mockShouldFetchOldestTransaction()
+          
+      spyOn(observer, "allTransactionsLoadedCallback")
+      Wallet.fetchMoreTransactions("imported", (()->), (()->), observer.allTransactionsLoadedCallback)    
+    
+      expect(observer.allTransactionsLoadedCallback).toHaveBeenCalled()
+      
+    it "should call appendTransactions()", ->
+      spyOn(Wallet, "appendTransactions")
+      Wallet.fetchMoreTransactions(0, (()->), (()->), (()->))
+      expect(Wallet.appendTransactions).toHaveBeenCalled()
+      
+  describe "appendTransactions()", ->
+    it "should add a new transaction", ->
+      transaction1 = {hash: "123456890"}
+      Wallet.appendTransactions([transaction1])
+      expect(Wallet.transactions.pop().hash).toBe(transaction1.hash)
+      
+    it "should ignore a known transaction", ->
+      transaction1 = {hash: "123456890", result: 0}
+      transaction2 = {hash: "123456890", result: 1}
+      
+      Wallet.appendTransactions([transaction1])
+      Wallet.appendTransactions([transaction2]) # Same hash: should be ignored
+      
+      lastTx = Wallet.transactions.pop()
+      expect(lastTx.result).not.toBe(transaction2.result)
+      expect(lastTx.result).toBe(transaction1.result)
+            
+    it "should update an existing transaction if override flag is set", ->
+      transaction1 = {hash: "123456890", result: 0}
+      transaction2 = {hash: "123456890", result: 1}
+      
+      Wallet.appendTransactions([transaction1])
+      Wallet.appendTransactions([transaction2], true) 
+      
+      expect(Wallet.transactions.pop().result).toBe(transaction2.result)
