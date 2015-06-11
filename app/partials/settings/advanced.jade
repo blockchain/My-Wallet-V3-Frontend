@@ -5,7 +5,7 @@ form.form-horizontal(role="form",name="form",novalidate)
     .col-sm-12.col-md-6
       label(translate="WALLET_SECOND_PASSWORD")
       p.explain.hidden-xs.hidden-sm(translate="WALLET_SECOND_PASSWORD_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result.flex-column.flex-align-end
+    .col-sm-12.col-md-6.setting-result
       h2.status.incomplete.hidden-xs.hidden-sm.mbm(ng-hide="settings.secondPassword", translate="DISABLED")    
       h2.status.complete.hidden-xs.hidden-sm.mbm(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
       configure-second-password
