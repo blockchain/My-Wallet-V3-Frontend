@@ -61,7 +61,7 @@
             Wallet.goal.claim = undefined
           )
 
-        if Wallet.goal.auth == true
+        if Wallet.goal.auth
           $translate("AUTHORIZED").then (titleTranslation) ->
             $translate("AUTHORIZED_MESSAGE").then (messageTranslation) ->
               modalInstance = $modal.open(

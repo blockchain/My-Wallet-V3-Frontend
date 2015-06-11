@@ -16,7 +16,7 @@
         true
 
   $scope.$watchCollection "status.legacyAddressBalancesLoaded", ->
-    if $scope.legacyAddresses.length == 0 && $scope.status.legacyAddressBalancesLoaded == true
+    if $scope.legacyAddresses.length == 0 && $scope.status.legacyAddressBalancesLoaded
       for address in filterFilter(filterFilter($scope.unfilteredLegacyAddresses, {active: true, isWatchOnlyLegacyAddress: false}), $scope.greaterThan('balance', 50000))
         $scope.legacyAddresses.push address
 
