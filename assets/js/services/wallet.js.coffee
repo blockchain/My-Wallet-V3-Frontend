@@ -1351,12 +1351,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.applyIfNeeded()
     ,(error)->
       if !error?
-        $translate("2FA_ERROR").then (err_translation) ->
-          wallet.displayError(err_translation)
-          errorCallback(err_translation)
-      else
-        wallet.displayError(error)
-        errorCallback(error)
+        error = "The two factor authentication code could not be verified. Please try again."
+      #wallet.displayError(error)
+      errorCallback(error)
       wallet.applyIfNeeded()
     )
 
