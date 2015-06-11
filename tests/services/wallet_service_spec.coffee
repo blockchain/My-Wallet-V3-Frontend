@@ -124,6 +124,24 @@ describe "walletServices", () ->
     )
     
     return
+
+  describe "conversions", ->
+    beforeEach ->
+      Wallet.login("test", "test")
+
+    describe "convertCurrency", ->
+
+      it "should not convert a null amount", () ->
+        result = Wallet.convertCurrency(null, Wallet.btcCurrencies[0], Wallet.btcCurrencies[1])
+        expect(result).toBe(null)
+
+      it "should convert from fiat to bit currency", () ->
+        result = Wallet.convertCurrency(300, Wallet.currencies[0], Wallet.btcCurrencies[0])
+        expect(result).toBe(0.999999)
+
+      it "should convert from bit currency to fiat", () ->
+        result = Wallet.convertCurrency(1, Wallet.btcCurrencies[0], Wallet.currencies[0])
+        expect(result).toBe(300)
     
   describe "email", ->    
     beforeEach ->
