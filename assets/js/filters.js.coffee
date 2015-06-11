@@ -16,20 +16,7 @@ angular.module("walletFilters", [])
      numeral(input).divide(100000000).format("0.[00000000]") + (if hideCurrency then "" else " BTC")
     else
       ""
-      
-.filter "mbtc", ->
-  (input,hideCurrency) ->
-    if input? && !isNaN(input) 
-     numeral(input).divide(100000).format("0.[00000]") + (if hideCurrency then "" else " mBTC")
-    else
-      ""
 
-.filter "bits", ->
-  (input,hideCurrency) ->
-    if input? && !isNaN(input) 
-     numeral(input).divide(100).format("0.[00]") + (if hideCurrency then "" else " bits")
-    else
-      ""
 #
 # .filter "currentRequests", ->
 #   (items) ->
