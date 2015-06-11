@@ -1350,8 +1350,13 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       successCallback()
       wallet.applyIfNeeded()
     ,(error)->
-      wallet.displayError(error)
-      errorCallback()
+      if !error?
+        $translate("2FA_ERROR").then (err_translation) ->
+          wallet.displayError(err_translation)
+          errorCallback(err_translation)
+      else
+        wallet.displayError(error)
+        errorCallback(error)
       wallet.applyIfNeeded()
     )
 
