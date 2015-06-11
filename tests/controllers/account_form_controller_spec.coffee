@@ -71,6 +71,20 @@ describe "AccountFormCtrl", ->
       expect($modal.open).toHaveBeenCalled()
       expect($modal.open.calls.argsFor(0)[0].windowClass).toEqual("notification-modal")
     )
+
+    it "should not have a name longer than 17 characters", inject((Wallet) ->
+      spyOn(Wallet, 'createAccount')
+      scope.fields.name = 'abcdefghijklmnopqr'
+      scope.createAccount()
+      expect(Wallet.createAccount).not.toHaveBeenCalled()
+    )
+
+    it "should not create an account with an existing account name", inject((Wallet) ->
+      spyOn(Wallet, 'createAccount')
+      scope.fields.name = 'Savings'
+      scope.createAccount()
+      expect(Wallet.createAccount).not.toHaveBeenCalled()
+    )
     
   describe "rename", ->
     beforeEach ->
