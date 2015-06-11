@@ -428,3 +428,17 @@ describe "walletServices", () ->
       Wallet.appendTransactions([transaction2], true) 
       
       expect(Wallet.transactions.pop().result).toBe(transaction2.result)
+
+  describe "toggleDisplayCurrency()", ->
+
+    it "should toggle from btc to fiat", inject((Wallet) ->
+      Wallet.settings.displayCurrency = Wallet.settings.btcCurrency
+      Wallet.toggleDisplayCurrency()
+      expect(Wallet.settings.displayCurrency).toBe(Wallet.settings.currency)
+    )
+
+    it "should toggle from fiat to btc", inject((Wallet) ->
+      Wallet.settings.displayCurrency = Wallet.settings.currency
+      Wallet.toggleDisplayCurrency()
+      expect(Wallet.settings.displayCurrency).toBe(Wallet.settings.currency)
+    )
