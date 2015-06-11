@@ -44,6 +44,14 @@ describe "SettingsAdvancedCtrl", ->
       return
     )
 
+  describe "logout time", ->
+
+    it "should be a valid time", () ->
+      expect(scope.validateLogoutTime(-42)).toBe(false)
+      expect(scope.validateLogoutTime(0.6)).toBe(false)
+      expect(scope.validateLogoutTime('x')).toBe(false)
+      expect(scope.validateLogoutTime(5.5)).toBe(true)
+
   describe "whitelist", ->
 
     describe "whitelist validation", ->
