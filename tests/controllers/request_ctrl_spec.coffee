@@ -57,6 +57,10 @@ describe "RequestCtrl", ->
       expect(Wallet.settings.currency.code).toBe("USD")
       expect(scope.fields.currency.code).toBe "USD"
     )
+
+    it "should have a bit currency", inject((Wallet)->
+      expect(scope.settings.btcCurrency).toBeDefined()
+    )
     
     it "should have access to legacy addresses",  inject(() ->
       expect(scope.legacyAddresses).toBeDefined()
