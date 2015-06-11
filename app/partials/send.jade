@@ -4,10 +4,13 @@
     h3(ng-show="step == 1 && !advanced", translate="SEND_BITCOIN")
     h3(ng-show="advanced && step == 1", translate="ADVANCED_SEND")
     h3(ng-show="confirmationStep", translate="CONFIRM")
-  h5(ng-show="step == 1 && !advanced") Send bitcoin instantly to any bitcoin address, email, or phone number
-  h5(ng-show="confirmationStep") Please review your transaction
-  h5(ng-show="advanced && step == 1") Send bitcoin to one or more addresses, choose your fee price and review your transaction before submitting
-  p.step Step {{step}} of 2
+  h5(ng-show="step == 1 && !advanced", translate="SEND_STEP_1")
+  h5(ng-show="confirmationStep", translate="SEND_STEP_2")
+  h5(ng-show="advanced && step == 1", translate="SEND_STEP_1_ADVANCED")
+  p.step
+    span(translate="STEP")
+    span {{step}}
+    span(translate="OF_2")
 .modal-body#send
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)")
     | {{alert.msg}}
@@ -108,14 +111,14 @@
           .flex-column.border-right.prl.mrl
             label
               input(type="radio" ng-model="transaction.fee" value="0" ng-change="updateFee(true)" name="miners-fee")
-              | Frugal
+              span(translate="FRUGAL")
             label
               input(type="radio" ng-model="transaction.fee" value="10000" ng-change="updateFee(true)" name="miners-fee")
-              | Normal
-              span.success.mls.type-xs (Recommended)
+              span(translate="NORMAL")
+              span.success.mls.type-xs(translate="RECOMMENDED")
             label
               input(type="radio" ng-model="transaction.fee" value="100000" ng-change="updateFee(true)" name="miners-fee")
-              | Generous
+              span(translate="GENEROUS")
           .flex-center.pll.mll
             .mrl.flex-1
               .flex-center
