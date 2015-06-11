@@ -408,3 +408,40 @@ describe "SendCtrl", ->
         scope.transaction.satoshi = scope.getSatoshiFromAmounts()
         expect(scope.transaction.satoshi).toBe(Math.round(Wallet.conversions['USD'].conversion * (2.15 + 0.75)))
       )
+
+    describe 'destinations', ->
+
+      it 'should be able to add a destination', () ->
+        originalAmount = scope.transaction.multipleDestinations.length
+        scope.addDestination()
+        expect(scope.transaction.multipleDestinations.length).toBe(originalAmount + 1)
+        expect(scope.transaction.multipleAmounts.length).toBe(originalAmount + 1)
+
+      it 'should be able to remove a destination', () ->
+        scope.transaction.multipleAmounts = [0, 0]
+        scope.transaction.multipleDestinations = ['dest0', 'dest1']
+        scope.removeDestination(1)
+        expect(scope.transaction.multipleAmounts.length).toBe(1)
+        expect(scope.transaction.multipleDestinations.length).toBe(1)
+
+    describe 'validation', ->
+
+      beforeEach ->
+        scope.transaction.multipleAmounts = [0.1, 0.2]
+
+      describe 'amounts', ->
+
+        it "should be false if the amount is null", () ->
+          scope.transaction.multipleAmounts[0] = null
+          expect(scope.validateAmounts().isValid).toBe(false)
+
+        it "should be false if the amount is negative", () ->
+          scope.transaction.multipleAmounts[0] = -0.5
+          expect(scope.validateAmounts().isValid).toBe(false)
+
+        it "should be false if the amount is more than the balance", () ->
+          scope.transaction.multipleAmounts[0] = 5
+          expect(scope.validateAmounts().isValid).toBe(false)
+
+        it "should be true if the amounts are ok", () ->
+          expect(scope.validateAmounts().isValid).toBe(true)
