@@ -43,6 +43,74 @@ describe "ChangePasswordCtrl", ->
 
   describe "validate", ->
 
+    it "should not display an error if new password is still empty", ->
+      scope.fields.currentPassword = "test"
+      scope.fields.password = ""
+      scope.validate()
+      expect(scope.isValid).toBe(false)
+      expect(scope.errors.password).toBeNull()
+      
+    # it "should display an error if new password is too short", ->
+    #   scope.fields.currentPassword = "test"
+    #   scope.fields.password = "1"
+    #   scope.validate()
+    #   expect(scope.isValid).toBe(false)
+    #   expect(scope.errors.password).not.toBeNull()
+      
+    it "should not display an error if password confirmation is still empty", ->
+      scope.fields.currentPassword = "test"
+      scope.fields.password = "testing"
+      scope.fields.confirmation = ""
+      
+      scope.validate()
+      
+      expect(scope.isValid).toBe(false)
+      expect(scope.errors.confirmation).toBeNull()
+      
+    it "should not display an error if password confirmation matches", ->
+      scope.fields.currentPassword = "test"
+      scope.fields.password = "testing"
+      scope.fields.confirmation = "testing"
+      
+      scope.validate()
+      
+      expect(scope.isValid).toBe(true)
+      expect(scope.errors.confirmation).toBeNull()
+      
+    it "should display an error if password confirmation does not match", ->
+      scope.fields.currentPassword = "test"
+      scope.fields.password = "testing"
+      scope.fields.confirmation = "wrong"
+      
+      scope.validate()
+      
+      expect(scope.isValid).toBe(false)
+      expect(scope.errors.confirmation).not.toBeNull()
+
+    it "should check the original password",  inject(() ->
+      expect(scope.isValid).toBe(true)
+      
+      scope.fields.currentPassword = "test"
+      scope.validate()
+      expect(scope.isValid).toBe(true)
+      
+      scope.fields.currentPassword = "wrong"
+      scope.validate()
+      expect(scope.isValid).toBe(false)
+    )
+
+    it "should display an error if password is wrong", ->
+      scope.fields.currentPassword = "wrong"
+      scope.validate()
+      expect(scope.isValid).toBe(false)
+      expect(scope.errors.currentPassword).not.toBeNull()
+
+    it "should not display error is field is still empty", ->
+      scope.validate()
+      expect(scope.errors.currentPassword).toBeNull()
+      expect(scope.errors.password).toBeNull()
+      expect(scope.errors.confirmation).toBeNull()
+
     it "should fail if main password is incorrect", inject((Wallet) ->
       spyOn(Wallet, "changePassword")
       scope.fields.currentPassword = 'wrong'
