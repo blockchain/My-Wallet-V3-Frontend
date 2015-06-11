@@ -48,7 +48,3 @@ angular.module("walletFilters", [])
         j++
       i++
     null
-.filter "highlight", ($sce) ->
-  (text, phrase) ->
-    text = text.replace(new RegExp("(" + phrase + ")", "gi"), "<span class=\"highlighted\">$1</span>")  if phrase
-    $sce.trustAsHtml text
