@@ -69,6 +69,12 @@ describe "SendCtrl", ->
     expect(scope.transaction.currency.code).toBe "BTC"
   )
 
+  it "should be able to alternate currencies", () ->
+    scope.transaction.currency = scope.nextAlternativeCurrency()
+    expect(scope.transaction.currency).toBe(scope.fiatCurrency)
+    scope.transaction.currency = scope.nextAlternativeCurrency()
+    expect(scope.transaction.currency).toBe(scope.btcCurrency)
+
   describe "origins", ->
     it "should include accounts",  ->
       expect(scope.origins.length).toBeGreaterThan(0)
