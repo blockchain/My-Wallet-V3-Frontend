@@ -1,3 +1,9 @@
 input[type="radio"] {
   margin-right: 5px;
 }
+
+.btn-default-focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
