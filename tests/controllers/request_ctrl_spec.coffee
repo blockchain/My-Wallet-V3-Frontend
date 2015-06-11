@@ -130,3 +130,37 @@ describe "RequestCtrl", ->
       scope.fields.currency = scope.currencies[4]
       scope.$digest()
       expect(scope.paymentRequestAmount).toBe(400000)
+
+  describe "validate", ->
+
+    it "should return false if 'to' is null", () ->
+      scope.fields.to = null
+      expect(scope.validate()).toBe(false)
+
+    it "should return false if 'amount' is not a number", () ->
+      scope.fields.amount = 'asdf'
+      expect(scope.validate()).toBe(false)
+
+    it "should return false if 'amount' is negative", () ->
+      scope.fields.amount = -69
+      expect(scope.validate()).toBe(false)
+
+    it "should return false if 'amount' has too many decimal places (btc)", () ->
+      scope.fields.amount = '0.000000001'
+      scope.fields.currency = {code: 'BTC'}
+      expect(scope.validate()).toBe(false)
+
+    it "should return false if 'amount' has too many decimal places (fiat)", () ->
+      scope.fields.amount = '0.001'
+      scope.fields.currency = {code: 'USD'}
+      expect(scope.validate()).toBe(false)
+
+  describe "allowedDecimals", ->
+
+    it "should return 8 if the currency is a btc currency", () ->
+      scope.fields.currency = {code: 'mBTC'}
+      expect(scope.allowedDecimals()).toBe(8)
+
+    it "should return 2 if the currency is fiat", () ->
+      scope.fields.currency = {code: 'USD'}
+      expect(scope.allowedDecimals()).toBe(2)
