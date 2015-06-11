@@ -437,5 +437,10 @@
   "GENEROUS" : "Generous",
   "RECEIVE_BITCOIN_MESSAGE" : "We've just created a new address for you to share with anyone in order to receive bitcoins",
   "ENTER_VALID_AMOUNT" : "Enter valid amount",
-  "COPY_ADDRESS" : "Just copy the address above and share"
+  "COPY_ADDRESS" : "Just copy the address above and share",
+  "SC_CONFIGURE_2FA" : "2FA helps prevent unauthorized access to your wallet by requiring a one-time password after every login attempt. Enabling this option helps keep unauthorized users from being able to access your wallet.",
+  "OR" : " or ",
+  "DIDNT_RECEIVE_EMAIL" : "Didn't receive the email?",
+  "YOUR_EMAIL_ADDRESS" : "You email address"
+
 }
