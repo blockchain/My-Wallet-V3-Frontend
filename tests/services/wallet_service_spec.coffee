@@ -338,3 +338,36 @@ describe "walletServices", () ->
      
       expect(callbacks.needsBip38).toHaveBeenCalled()
       expect(callbacks.success).toHaveBeenCalled()
+      
+  describe "displayReceivedBitcoin()", ->
+    it "should display an alert", ->
+      spyOn(Wallet, "displayAlert")
+      Wallet.displayReceivedBitcoin()
+      expect(Wallet.displayAlert).toHaveBeenCalled()
+      
+  describe "notifications", ->      
+    describe "on_tx", ->
+      beforeEach ->
+        spyOn(Wallet, "displayReceivedBitcoin")
+        
+      it "should display a message if the user received bitcoin", ->
+        spyOn(Wallet, "updateTransactions").and.callFake () ->
+          Wallet.transactions.push {result: 1}
+        
+        Wallet.monitor("on_tx")
+        expect(Wallet.displayReceivedBitcoin).toHaveBeenCalled()
+        
+      it "should not display a message if the user spent bitcoin", ->
+        spyOn(Wallet, "updateTransactions").and.callFake () ->
+          Wallet.transactions.push {result: -1}
+          
+        Wallet.monitor("on_tx")
+        expect(Wallet.displayReceivedBitcoin).not.toHaveBeenCalled()
+
+      it "should not display a message if the user moved bitcoin between accounts", ->
+        spyOn(Wallet, "updateTransactions").and.callFake () ->
+          Wallet.transactions.push {result: 1, intraWallet: true}
+          
+        Wallet.monitor("on_tx")
+        expect(Wallet.displayReceivedBitcoin).not.toHaveBeenCalled()
+        

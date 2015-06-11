@@ -1035,7 +1035,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       numberOfTransactions = wallet.transactions.length
       if numberOfTransactions > before
         wallet.beep()
+        console.log("Beep")
         if wallet.transactions[numberOfTransactions - 1].result > 0 && !wallet.transactions[[numberOfTransactions - 1]].intraWallet
+          console.log("Received!")
           wallet.displayReceivedBitcoin()
         wallet.updateAccountsAndLegacyAddresses()
     else if event == "error_restoring_wallet"
