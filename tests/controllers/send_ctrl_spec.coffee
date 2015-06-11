@@ -373,6 +373,11 @@ describe "SendCtrl", ->
       scope.$apply()
       expect(scope.toLabel).toBe("Mobile Account")
 
+  describe 'note', ->
+
+    it 'should not allow a note longer than 512 characters', () ->
+      scope.transaction.note = (new Array(512)).join('x')
+      expect(scope.validate()).toBe(false)
 
   describe 'advanced', ->
 
