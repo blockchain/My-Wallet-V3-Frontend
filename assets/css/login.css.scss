@@ -26,8 +26,8 @@ div.login-form{
 }
 
 .login-pg{
-background-color: #049BD4;
-height: calc(100%);
+  background-color: #049BD4;
+  height: calc(100% + 50px); //offset margin from bootstrap
 }
 
 .login{
