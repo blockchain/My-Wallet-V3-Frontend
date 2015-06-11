@@ -1,8 +1,9 @@
 describe "AccountFormCtrl", ->
   scope = undefined
-  modalInstance =
+  
+  modalInstance = 
     close: ->
-    dismiss: ->
+    dismiss: ->      
         
   beforeEach angular.mock.module("walletApp")
   
@@ -32,6 +33,8 @@ describe "AccountFormCtrl", ->
         MyWallet = $injector.get("MyWallet")
             
         scope = $rootScope.$new()
+        
+
           
         $controller "AccountFormCtrl",
           $scope: scope,
@@ -60,6 +63,13 @@ describe "AccountFormCtrl", ->
       scope.fields.name = ""
       scope.$digest()
       expect(scope.formIsValid).toBe(false)
+    )
+    
+    it "should show a confirmation modal", inject(($modal)->
+      spyOn($modal, "open").and.callThrough()
+      scope.createAccount()
+      expect($modal.open).toHaveBeenCalled()
+      expect($modal.open.calls.argsFor(0)[0].windowClass).toEqual("notification-modal")
     )
     
   describe "rename", ->

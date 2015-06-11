@@ -291,6 +291,13 @@ describe "SendCtrl", ->
         expect(Wallet.beep).toHaveBeenCalled()
 
       )
+      
+      it "should show a confirmation modal", inject(($modal)->
+        spyOn($modal, "open").and.callThrough()
+        scope.send()
+        expect($modal.open).toHaveBeenCalled()
+        expect($modal.open.calls.argsFor(0)[0].windowClass).toEqual("notification-modal")
+      )
 
       # it "should show error message if send() fails",  inject((Wallet) ->
       #   scope.transaction.amount = "3000000000" # Way too much
