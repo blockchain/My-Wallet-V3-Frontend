@@ -109,7 +109,7 @@ describe "TransactionCtrl", ->
 
       scope.$digest()
 
-      expect(scope.to).toContain("Old")
+      expect(scope.destinations[0].address).toContain("Old")
 
     it "should add 'you' to an unlabelled wallet address", ->
       scope.transaction =
@@ -126,7 +126,7 @@ describe "TransactionCtrl", ->
 
       scope.$digest()
 
-      expect(scope.to).toContain("you")
+      expect(scope.destinations[0].you).toContain("you")
 
     it "should create a multiline with both 'to' addresses and each amount", ->
       scope.transaction =
@@ -143,11 +143,10 @@ describe "TransactionCtrl", ->
             {address: "external address 2", amount: 70000}
           ]
       scope.$digest()
-      expect(scope.to).toContain("0.0005 BTC")
-      expect(scope.to).toContain("0.0007 BTC")
-      expect(scope.to).toContain("br")
-      expect(scope.to).toContain("address 1")
-      expect(scope.to).toContain("address 2")
+      expect(scope.destinations[0].amount).toContain("0.0005 BTC")
+      expect(scope.destinations[1].amount).toContain("0.0007 BTC")
+      expect(scope.destinations[0].address).toContain("address 1")
+      expect(scope.destinations[1].address).toContain("address 2")
 
     it "should show the account", inject((Wallet) ->
       scope.transaction =
@@ -164,5 +163,5 @@ describe "TransactionCtrl", ->
 
       scope.$digest()
 
-      expect(scope.to).toBe("Savings")
+      expect(scope.destinations[0].address).toBe("Savings")
     )

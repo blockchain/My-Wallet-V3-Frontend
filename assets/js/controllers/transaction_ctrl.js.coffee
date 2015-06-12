@@ -51,16 +51,17 @@
           convert = (y) -> " [" + $filter("btc")(y) + "]"
           label = (a) ->
             address = $filter("getByProperty")("address", a, Wallet.legacyAddresses)
-            res = if address.label != address.address then address.label else address.address
-            "(you) " + res
+            if address.label != address.address then address.label else address.address
           adBook = (a) ->
             name = Wallet.addressBook[a]
             if name then name else a
-          makeRow = (name,a) -> {"address": name(a.address), "amount": convert(a.amount)}
+
+          makeLegacyRow   = (a) -> {"address": label(a.address),  "amount": convert(a.amount), "you":"(you) "}
+          makeExternalRow = (a) -> {"address": adBook(a.address), "amount": convert(a.amount), "you": ""}
 
           if tx.to.legacyAddresses?   then l = tx.to.legacyAddresses   else l = []
           if tx.to.externalAddresses? then e = tx.to.externalAddresses else e = []
-          $scope.destinations = l.map(makeRow.bind(undefined, label)).concat e.map(makeRow.bind(undefined, adBook))
+          $scope.destinations = l.map(makeLegacyRow).concat e.map(makeExternalRow)
           if $scope.destinations.length is 1 then $scope.destinations[0].amount = ""
 
   # First load:
