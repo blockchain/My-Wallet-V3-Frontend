@@ -43,19 +43,23 @@
         if tx.to.account?
           $scope.to = $scope.accounts[tx.to.account.index].label
         else
-          if tx.to.legacyAddresses? && tx.to.legacyAddresses.length > 0
-            address = $filter("getByProperty")("address", tx.to.legacyAddresses[0].address, Wallet.legacyAddresses)
-            if address.label != address.address
-              $scope.to = address.label
-            else
-              $scope.to = address.address + " (you)"
-          else if tx.to.externalAddresses?
+          convert = (y) -> $filter("btc")(y)
+          label = (a) ->
+            address = $filter("getByProperty")("address", a, Wallet.legacyAddresses)
+            if address.label != address.address then address.label else address.address
 
-            $scope.to = Wallet.addressBook[tx.to.externalAddresses[0].address]
-            unless $scope.to
-              convert = (y) -> $filter("btc")(y)
-              $scope.to = tx.to.externalAddresses.map((x)->"(" + convert(x.amount) + ") " + x.address ).join("<br />")
-              $sce.trustAsHtml $scope.to
+          adBook = (a) ->
+            name = Wallet.addressBook[a]
+            if name then name else a
+
+          makeRowExternal = (a) -> "(" + convert(a.amount) + ") " + adBook(a.address)
+          makeRowLegacy   = (a) -> "(" + convert(a.amount) + ") " + label(a.address) + "  (you) "
+
+          if tx.to.legacyAddresses? then l = tx.to.legacyAddresses else l = []
+          if tx.to.externalAddresses? then e = tx.to.externalAddresses else e = []
+          tab = l.map(makeRowLegacy).concat e.map(makeRowExternal)
+          $scope.to = if tab.length > 1 then tab.join("<br />") else tab.join("<br />").replace(/\(.*?\)/, "");
+          $sce.trustAsHtml $scope.to
 
   # First load:
   $scope.didLoad()
