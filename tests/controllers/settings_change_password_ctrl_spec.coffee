@@ -43,6 +43,10 @@ describe "ChangePasswordCtrl", ->
 
   describe "validate", ->
 
+    beforeEach ->
+      scope.form.theForm = 
+        password: $error: {}
+
     it "should not display an error if new password is still empty", ->
       scope.fields.currentPassword = "test"
       scope.fields.password = ""
@@ -50,12 +54,19 @@ describe "ChangePasswordCtrl", ->
       expect(scope.isValid).toBe(false)
       expect(scope.errors.password).toBeNull()
       
-    # it "should display an error if new password is too short", ->
-    #   scope.fields.currentPassword = "test"
-    #   scope.fields.password = "1"
-    #   scope.validate()
-    #   expect(scope.isValid).toBe(false)
-    #   expect(scope.errors.password).not.toBeNull()
+    it "should display an error if the new password is too weak", ->
+      scope.fields.currentPassword = "test"
+      scope.form.theForm.password.$error.minEntropy = true
+      scope.validate()
+      expect(scope.isValid).toBe(false)
+      expect(scope.errors.password).not.toBeNull()
+
+    it "should display an error if the new password is too long", ->
+      scope.fields.currentPassword = "test"
+      scope.form.theForm.password.$error.maxlength = true
+      scope.validate()
+      expect(scope.isValid).toBe(false)
+      expect(scope.errors.password).not.toBeNull()
       
     it "should not display an error if password confirmation is still empty", ->
       scope.fields.currentPassword = "test"
