@@ -18,8 +18,11 @@ angular.module("myBlockchainSettingsServices", []).factory "MyBlockchainSettings
           my_ip: "123.456.789.012"
         })
         
-      update_password_hint1: (hint, success) ->
-        success()
+      update_password_hint1: (hint, success, error) ->
+        if hint.split('').some((c) -> c.charCodeAt(0) > 255)
+          error(101)
+        else
+          success()
         
       verifyMobile: (code, success, error) ->		
         success()
