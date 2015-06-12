@@ -14,7 +14,11 @@
           strong {{ from }}
         .tx-receiver
           p(translate="TO")
-          strong(ng-bind-html="to")
+          table
+            tr(ng-repeat="destination in destinations")
+              td {{ destination.address }}
+              td {{ destination.amount }}
+
         .tx-notes
           p Notes
           transaction-note(transaction="transaction")

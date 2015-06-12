@@ -40,26 +40,28 @@
             unless $scope.from
               $scope.from = tx.from.externalAddresses.addressWithLargestOutput
 
+        $scope.destinations = []
+        # $scope.destinations.push {"address": "mi add", "amount": 123}
+        # $scope.destinations.push {"address": "mi addfdsf", "amount": 1234324}
+
         if tx.to.account?
-          $scope.to = $scope.accounts[tx.to.account.index].label
+          accountLabel = $scope.accounts[tx.to.account.index].label
+          $scope.destinations.push {"address": accountLabel, "amount": ""}
         else
-          convert = (y) -> $filter("btc")(y)
+          convert = (y) -> " [" + $filter("btc")(y) + "]"
           label = (a) ->
             address = $filter("getByProperty")("address", a, Wallet.legacyAddresses)
-            if address.label != address.address then address.label else address.address
-
+            res = if address.label != address.address then address.label else address.address
+            "(you) " + res
           adBook = (a) ->
             name = Wallet.addressBook[a]
             if name then name else a
+          makeRow = (name,a) -> {"address": name(a.address), "amount": convert(a.amount)}
 
-          makeRowExternal = (a) -> "(" + convert(a.amount) + ") " + adBook(a.address)
-          makeRowLegacy   = (a) -> "(" + convert(a.amount) + ") " + label(a.address) + "  (you) "
-
-          if tx.to.legacyAddresses? then l = tx.to.legacyAddresses else l = []
+          if tx.to.legacyAddresses?   then l = tx.to.legacyAddresses   else l = []
           if tx.to.externalAddresses? then e = tx.to.externalAddresses else e = []
-          tab = l.map(makeRowLegacy).concat e.map(makeRowExternal)
-          $scope.to = if tab.length > 1 then tab.join("<br />") else tab.join("<br />").replace(/\(.*?\)/, "");
-          $sce.trustAsHtml $scope.to
+          $scope.destinations = l.map(makeRow.bind(undefined, label)).concat e.map(makeRow.bind(undefined, adBook))
+          if $scope.destinations.length is 1 then $scope.destinations[0].amount = ""
 
   # First load:
   $scope.didLoad()
