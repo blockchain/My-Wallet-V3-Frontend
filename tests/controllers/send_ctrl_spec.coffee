@@ -385,6 +385,41 @@ describe "SendCtrl", ->
       scope.transaction.note = (new Array(512)).join('x')
       expect(scope.validate()).toBe(false)
 
+  describe 'switch to advanced', ->
+
+    it 'should preserve the amount', () ->
+      scope.transaction.amount = 0.5
+      scope.advancedSend()
+      expect(scope.transaction.multipleAmounts[0]).toBe(0.5)
+
+    it 'should not preserve an invalid amount', () ->
+      scope.transaction.amount = 'asdf'
+      scope.advancedSend()
+      expect(scope.transaction.multipleAmounts[0]).toBe(0)
+
+    it 'should preserve the destination if it is an address', () ->
+      scope.transaction.destination = {address: '123456789'}
+      scope.advancedSend()
+      expect(scope.transaction.multipleDestinations[0]).toBe(scope.transaction.destination)
+
+    it 'should not preserve the destination if it is an account', () ->
+      scope.transaction.destination = {index: '1'}
+      scope.advancedSend()
+      expect(scope.transaction.multipleDestinations[0]).toBeNull()
+
+  describe 'switch to regular', ->
+
+    it 'should preserve the amount', () ->
+      scope.transaction.multipleAmounts[0] = 0.5
+      scope.regularSend()
+      expect(scope.transaction.amount).toBe(0.5)
+
+    it 'should not preserve an invalid amount', () ->
+      originalAmount = scope.transaction.amount
+      scope.transaction.multipleAmounts[0] = 'asdf'
+      scope.regularSend()
+      expect(scope.transaction.amount).toBe(originalAmount)
+
   describe 'advanced', ->
 
     beforeEach ->
