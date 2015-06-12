@@ -4,7 +4,7 @@
   $scope.errors = 
     ipWhitelist: null
   $scope.display = {dev: false}
-    
+        
   $scope.validatePbkdf2 = (candidate) ->
     n = parseInt(candidate)
     return false if isNaN(candidate) || candidate < 1

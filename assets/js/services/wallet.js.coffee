@@ -75,7 +75,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.settings_api.get_account_info((result)->
         # console.log result
         $window.name = "blockchain-"  + result.guid
-        wallet.settings.ipWhitelist = result.ip_lock
+        wallet.settings.ipWhitelist = result.ip_lock || ""
         wallet.settings.restrictToWhitelist = result.ip_lock_on
         wallet.settings.apiAccess = result.is_api_access_enabled
         wallet.settings.rememberTwoFactor = !result.never_save_auth_type
