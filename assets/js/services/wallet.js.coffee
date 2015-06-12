@@ -1279,8 +1279,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.user.passwordHint = hint
       successCallback()
       wallet.applyIfNeeded()
-    ),()->
-      errorCallback()
+    ),(err)->
+      errorCallback(err)
       wallet.applyIfNeeded()
     )
 
