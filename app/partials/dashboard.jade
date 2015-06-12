@@ -1,32 +1,30 @@
 .flex.dashboard.pal
   img(src="img/rocket.gif" alt="Welcome to your new Blockchain wallet!")
   .flex-column.mll.phl
-    h1 Welcome to the new Blockchain Wallet!
+    h1 Welcome to the Alpha of our new wallet experience!
     p.bc-well
-      | We’ve been hard at work creating the ultimate new wallet experience for our 3+ million users worldwide. 
-      | Thank you for taking the time to help test and explore what we’ve been working on. 
- 
+      | Thank you for taking time to help test and explore what we’ve been working on.
     h4 What's New?
     ul
-      li Backup your entire wallet once with a simple 12 word Recovery Phrase and restore it anywhere, anytime on any supported HD wallet.
-      li Create multiple accounts in your wallet allowing you to keep funds completely separate from each other, in one easy to manage wallet.
       li 
-        | Our brand new Security Center helps you secure your wallet from unauthorized access and ensures you can recover your wallet and funds
-        | anytime, anywhere.
+        | Backup your entire wallet with a simple 12-word Recovery Phrase and restore it on any supported HD 
+        | wallet, anytime, anywhere.
+      li Create multiple accounts in your wallet to allow you to keep funds completely separate from each other in one easy-to-manage wallet.
+      li Our brand new Security Center helps you to secure your wallet from unauthorized access and ensures successful recovery of your wallet and funds.
       li 
-        | Our revamped Sending algorithm makes sure never to re-use addresses after a transaction is made, keeping your transactions 
-        | more private on the blockchain. 
+        | Our revamped Sending algorithm makes sure to never reuse addresses after a transaction is 
+        | made, keeping your transactions more private on the blockchain. 
 
 
-    h4 How to leave us feedback:
+    h4 We’d love your feedback!
     p.bc-well
-      | Your feedback and comments are essential to creating the best Bitcoin wallet. Please send us bug reports, or general feedback 
-      | by pressing the “Send Feedback” button on the left hand side of the page. 
+      | Your feedback and comments are essential to creating the best bitcoin 
+      | wallet. Please send us bug reports or general feedback by pressing the “Send Feedback” button 
+      | on the left side of the page. 
 
 
 .flex-column.dashboard.pal
-  h4 With our new HD wallet, we create a new bitcoin address for you on every transaction.
-  h6 This is your current bitcoin address:
+  h4 This is your bitcoin address:
   .form-group.flex.mtl(ng-if="paymentRequestURL")
     .mrl
       p.form-control-static(ng-hide="status.didInitializeHD")
