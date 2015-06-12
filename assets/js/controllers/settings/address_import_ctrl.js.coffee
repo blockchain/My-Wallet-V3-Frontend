@@ -16,8 +16,6 @@
   $scope.errors = {invalidInput: null, addressPresentInWallet: null, incorrectBip38Password: null}
   
   $scope.status = {busy: false}
-
-  $scope.browserWithCamera = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia) != undefined
   
   $scope.isValid = () ->
     tally = 0

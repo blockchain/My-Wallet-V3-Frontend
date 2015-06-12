@@ -11,6 +11,9 @@
   $scope.hideMenu = () ->
     $scope.menu.isCollapsed = false
 
+  # getUserMedia is not supported by Safari and IE.
+  $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia ||  navigator.webkitGetUserMedia || navigator.msGetUserMedia) != undefined
+
   #################################
   #           Private             #
   #################################
