@@ -107,7 +107,7 @@
         success (data) ->
           if data.error? && data.error.message?
             console.warn 'There was an issue verifying wallet creation'
-      successCallback()        
+      successCallback(uid)        
     )
     
   $scope.resendEmail = () ->
