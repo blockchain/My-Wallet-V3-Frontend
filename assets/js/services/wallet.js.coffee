@@ -1091,7 +1091,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     else if event == "ticker_updated" || event == "did_set_latest_block"
       wallet.applyIfNeeded()
     else if event == "logging_out"
-      if wallet.didLogoutByChoice == true
+      if wallet.didLogoutByChoice
         $translate("LOGGED_OUT").then (translation) ->
           $cookieStore.put("alert-success", translation)
       else
