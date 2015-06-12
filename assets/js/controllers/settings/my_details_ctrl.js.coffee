@@ -2,6 +2,7 @@
   $scope.edit = {email: false, password: false, passwordHint: false} 
   $scope.user = Wallet.user
   $scope.settings = Wallet.settings
+  $scope.errors = {}
 
   $scope.uid = Wallet.uid
 
@@ -11,7 +12,15 @@
   $scope.changeEmail = (email, success, error) ->
     Wallet.changeEmail(email, success, error)
     
-  $scope.changePasswordHint = (hint, success, error) ->
+  $scope.changePasswordHint = (hint, successCallback, errorCallback) ->
+    success = () ->
+      $scope.clearErrors()
+      successCallback()
+    error = (err) ->
+      if err == 101
+        $translate('PASSWORD_HINT_ERROR').then (translation) ->
+          $scope.errors.passwordHint = translation
+      errorCallback(err)
     Wallet.changePasswordHint(hint, success, error)
     
   $scope.changePassword = () ->
@@ -33,3 +42,6 @@
     if modalInstance?
       modalInstance.opened.then () ->
         Wallet.store.resetLogoutTimeout()
+
+  $scope.clearErrors = () ->
+    $scope.errors = {}

@@ -7,6 +7,7 @@ walletApp.directive('bcAsyncInput', (Wallet) ->
       ngModel: '='
       validator: '='
       onSave: '='
+      onChange: '='
       actionTitle: '='
       placeholder: '='
       type: '@'
