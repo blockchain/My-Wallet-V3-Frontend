@@ -112,6 +112,12 @@ walletStoreServices.factory "MyWalletStore", () ->
     getLegacyAddressBalance: (address) ->
       return legacyAddresses[address].balance
 
+    getPrivateKey: (address) ->
+      if address in legacyAddresses
+        return legacyAddresses[address].privateKey;
+      else
+        return null
+
     setLegacyAddressBalance: (address, balance) ->
       legacyAddresses[address] = balance
       return
