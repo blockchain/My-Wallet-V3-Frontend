@@ -291,7 +291,7 @@
     return 2
 
   $scope.decimalPlaces = (number) ->
-    return (number.split('.')[1] || []).length
+    return (number.toString().split('.')[1] || []).length
 
   $scope.updateToLabel = () ->
     return unless $scope.transaction.destination?
