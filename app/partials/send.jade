@@ -87,7 +87,6 @@
               .flex-center
                 span.mrm {{ transaction.currency.code }}:
                 input.form-control(type="text" ng-blur="visualValidate('amounts')" ng-change="visualValidate('amounts')" ng-model="transaction.multipleAmounts[$index]")
-            span.help-block {{ errors.fee }}
             a.button-success.button-sm.type-sm.mrl(ng-click="toggleCurrency()")
               i.ti-arrows-horizontal
             .flex-center.ccc.conversion.flex-1
