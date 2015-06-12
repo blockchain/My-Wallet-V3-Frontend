@@ -1,4 +1,4 @@
-@NavigationCtrl = ($scope, Wallet, SecurityCenter, $translate, $cookieStore, $state, filterFilter) ->
+@NavigationCtrl = ($scope, Wallet, SecurityCenter, $translate, $cookieStore, $state, filterFilter, $interval) ->
   
   $scope.status = Wallet.status
   $scope.security = SecurityCenter.security
@@ -48,4 +48,9 @@
         # $cookieStore.remove("uid") // Pending a "Forget Me feature"
         $state.go("wallet.common.transactions", {accountIndex: "accounts"})
         Wallet.logout() # Refreshes the browser, so won't return
-        return
+        return  
+
+  $interval (->
+    if Wallet.status.isLoggedIn
+      Wallet.fetchExchangeRate()
+  ), 60000
