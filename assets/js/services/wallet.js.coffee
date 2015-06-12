@@ -1348,8 +1348,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       successCallback()
       wallet.applyIfNeeded()
     ,(error)->
-      wallet.displayError(error)
-      errorCallback()
+      if !error?
+        error = "The two factor authentication code could not be verified. Please try again."
+      #wallet.displayError(error)
+      errorCallback(error)
       wallet.applyIfNeeded()
     )
 

@@ -1,4 +1,4 @@
-@TwoFactorCtrl = ($scope, Wallet, $modalInstance, $translate) ->
+@TwoFactorCtrl = ($scope, Wallet, $modalInstance, $translate, $timeout) ->
 
   $scope.settings = Wallet.settings
   $scope.user = Wallet.user
@@ -10,6 +10,7 @@
   $scope.fields = { authenticatorCode: '', yubiKeyCode: '' }
   $scope.errors = {}
   $scope.status = {}
+  $scope.alerts = []
 
   $scope.validateCode = (pairWith) ->
     if pairWith == 'yubiKey'
@@ -34,7 +35,12 @@
     success = () ->
       return unless $scope.isStep('pair')
       $scope.goToStep('success')
-    error = () ->
+    error = (err) ->
+      alert = {type: "danger", msg: err}
+      alert.timer = $timeout((->
+        $scope.alerts.splice($scope.alerts.indexOf(alert))
+      ), 7000)
+      $scope.alerts.push(alert)
       $scope.errors.authenticatorCode = true
       $scope.status.loading = false
     Wallet.confirmTwoFactorGoogleAuthenticator(code, success, error)
