@@ -406,6 +406,10 @@ describe "SendCtrl", ->
       scope.transaction.destination = {index: '1'}
       scope.advancedSend()
       expect(scope.transaction.multipleDestinations[0]).toBeNull()
+      
+    it "should not show validation errors if nothing is entered yet", ->
+      scope.advancedSend()
+      expect(scope.errors.amounts).toBeUndefined()
 
   describe 'switch to regular', ->
 
