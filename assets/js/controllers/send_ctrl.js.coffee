@@ -489,8 +489,8 @@
     return {isValid: true}
 
   $scope.validateFee = () ->
-    return {error: 'Fee cannot be less than zero', isValid: false} if parseInt($scope.feeAmount) < 0
-    return {error: 'Fee must be a number', isValid: false} if isNaN(parseInt($scope.feeAmount))
+    return {error: 'Fee cannot be less than zero', isValid: false} if parseFloat($scope.feeAmount) < 0
+    return {error: 'Fee must be a number', isValid: false} if isNaN(parseFloat($scope.feeAmount))
     return {error: 'Fee cannot be left blank', isValid: false} if $scope.feeAmount == ""
     return {isValid: true}
 
