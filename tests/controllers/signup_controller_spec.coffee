@@ -116,11 +116,7 @@ describe "SignupCtrl", ->
       
       scope.nextStep()
       expect(scope.alerts.length).toBe(1)
-    )
-    
-    it "should create a wallet", inject((MyWallet) ->
-      pending()
-    )
+    )     
       
     it "should not go to second step is wallet creation fails", inject((MyWallet) ->
             
@@ -129,6 +125,24 @@ describe "SignupCtrl", ->
       scope.nextStep()
       expect(scope.currentStep).toBe(1)
     )
+
+    describe "wallet creation", ->
+
+      it "should create a new wallet", (done) ->
+        inject((MyWallet) ->
+          spyOn(MyWallet, 'createNewWallet')
+          scope.createWallet (-> )
+          expect(MyWallet.createNewWallet).toHaveBeenCalled()
+          done()
+        )
+
+      it "should add uid to cookieStore", (done) ->
+        inject(($cookieStore) ->
+          spyOn($cookieStore, 'put')
+          scope.createWallet (uid) ->
+            expect($cookieStore.put).toHaveBeenCalledWith('uid', uid)
+            done()
+        )
 
   describe "second step", ->
     beforeEach ->

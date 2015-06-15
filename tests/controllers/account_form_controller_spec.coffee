@@ -1,8 +1,9 @@
 describe "AccountFormCtrl", ->
   scope = undefined
-  modalInstance =
+  
+  modalInstance = 
     close: ->
-    dismiss: ->
+    dismiss: ->      
         
   beforeEach angular.mock.module("walletApp")
   
@@ -32,6 +33,8 @@ describe "AccountFormCtrl", ->
         MyWallet = $injector.get("MyWallet")
             
         scope = $rootScope.$new()
+        
+
           
         $controller "AccountFormCtrl",
           $scope: scope,
@@ -61,6 +64,43 @@ describe "AccountFormCtrl", ->
       scope.$digest()
       expect(scope.formIsValid).toBe(false)
     )
+    
+    it "should show a confirmation modal", inject(($modal)->
+      spyOn($modal, "open").and.callThrough()
+      scope.createAccount()
+      expect($modal.open).toHaveBeenCalled()
+      expect($modal.open.calls.argsFor(0)[0].windowClass).toEqual("notification-modal")
+    )
+
+    describe "validate", ->
+
+      it "should not have a null name", inject((Wallet) ->
+        spyOn(Wallet, 'createAccount')
+        scope.fields.name = null
+        scope.createAccount()
+        expect(Wallet.createAccount).not.toHaveBeenCalled()
+      )
+
+      it "should not have a name of zero length", inject((Wallet) ->
+        spyOn(Wallet, 'createAccount')
+        scope.fields.name = ''
+        scope.createAccount()
+        expect(Wallet.createAccount).not.toHaveBeenCalled()
+      )
+
+      it "should not have a name longer than 17 characters", inject((Wallet) ->
+        spyOn(Wallet, 'createAccount')
+        scope.fields.name = 'abcdefghijklmnopqr'
+        scope.createAccount()
+        expect(Wallet.createAccount).not.toHaveBeenCalled()
+      )
+
+      it "should not create an account with an existing account name", inject((Wallet) ->
+        spyOn(Wallet, 'createAccount')
+        scope.fields.name = 'Savings'
+        scope.createAccount()
+        expect(Wallet.createAccount).not.toHaveBeenCalled()
+      )
     
   describe "rename", ->
     beforeEach ->

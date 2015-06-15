@@ -76,7 +76,17 @@ describe "SettingsMyDetailsCtrl", ->
       scope.changePasswordHint("Other hint", mockObserver.success, mockObserver.error)
 
           
-      expect(Wallet.changePasswordHint).toHaveBeenCalledWith("Other hint", mockObserver.success, mockObserver.error)
+      expect(Wallet.changePasswordHint).toHaveBeenCalled()
+      
+      return
+    )
+
+    it "should not change to an improper value", inject((Wallet) ->
+      scope.edit.passwordHint = false
+      expect(scope.errors.passwordHint).not.toBeDefined()
+
+      scope.changePasswordHint("आपकी पसंदीदा", mockObserver.success, mockObserver.error)
+      expect(scope.errors.passwordHint).toBeDefined()
       
       return
     )

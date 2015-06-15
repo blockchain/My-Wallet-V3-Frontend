@@ -39,4 +39,25 @@ describe "AccountsCtrl", ->
   it "should know the number of active legacy addresses", inject((Wallet) ->
     expect(scope.numberOfActiveLegacyAddresses()).toBe(3)
   )
+
+  it "should know the number of active acounts", inject(() ->
+    expect(scope.numberOfActiveAccounts()).toBe(2)
+  )
+
+  it "should know the main account index when there is one account", inject(() ->
+    scope.numberOfActiveAccounts = (-> 1)
+    expect(scope.getMainAccountId()).toBe(0)
+  )
+
+  it "should know the main account index when there are multiple accounts", inject(() ->
+    expect(scope.getMainAccountId()).toBe('accounts')
+  )
   
+  it "should show imported addresses based on state", inject(() ->
+    scope.selectedAccountIndex = 'imported'
+    expect(scope.showImported()).toBe(false)
+  )
+
+  it "should show account based on state", inject(() ->
+    expect(scope.showOrHide()).toBe(false)
+  )

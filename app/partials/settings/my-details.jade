@@ -31,17 +31,20 @@ form.form-horizontal(role="form",name="form",novalidate)
       span.label.label-success.hidden-sm.hidden-xs(translate="ENABLED", ng-show="settings.needs2FA")
       p.explain.hidden-xs(translate="TWO_FACTOR_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
-      two-factor  
+      a.button-primary(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA" ng-hide="settings.needs2FA")
+      a.button-primary(ng-click="changeTwoFactor()" translate="DISABLE" ng-show="settings.needs2FA")
   .form-group
     .col-sm-12.col-md-6
       label(translate="WALLET_PASSWORD")
       p.explain.hidden-xs(translate="WALLET_PASSWORD_EXPLAIN")
-    .col-sm-12.col-md-6.setting-result.flex-column.flex-align-end
+    .col-sm-12.col-md-6.setting-result
       h2.status.complete.hidden-sm.hidden-xs.mbm(translate="PASSWORD_SET")
       a.button-primary(ng-click="changePassword()", translate="CHANGE_PASSWORD")
-  .form-group
+  .form-group(ng-class="{'has-error':errors.passwordHint}")
     .col-sm-12.col-md-6
       label(translate="PASSWORD_HINT")
       p.explain.hidden-sm.hidden-xs(translate="PASSWORD_HINT_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
-      bc-async-input(ng-model="user.passwordHint", on-save="changePasswordHint", action-title="'CHANGE_PASSWORD_HINT' | translate")      
+      bc-async-input(ng-model="user.passwordHint", on-save="changePasswordHint", on-change="clearErrors", action-title="'CHANGE_PASSWORD_HINT' | translate")
+    .help-block
+      span {{ errors.passwordHint }}

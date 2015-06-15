@@ -10,7 +10,7 @@ walletStoreServices.factory "MyWalletStore", () ->
   defaultAccountIndex = 0
   
   isSynchronizedWithServer = true # In the sense that the server is up to date
-  
+    
   addressBook = { # The same for everyone
       "17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq": "John"
       "1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq": "Alice"
@@ -43,6 +43,9 @@ walletStoreServices.factory "MyWalletStore", () ->
         
     getLogoutTime: () ->
         10
+        
+    resetLogoutTimeout: () ->
+      return
       
     addEventListener: (func) ->
         eventListener = func
@@ -108,6 +111,12 @@ walletStoreServices.factory "MyWalletStore", () ->
       
     getLegacyAddressBalance: (address) ->
       return legacyAddresses[address].balance
+
+    getPrivateKey: (address) ->
+      if address in legacyAddresses
+        return legacyAddresses[address].privateKey;
+      else
+        return null
 
     setLegacyAddressBalance: (address, balance) ->
       legacyAddresses[address] = balance

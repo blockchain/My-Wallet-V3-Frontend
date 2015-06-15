@@ -1,102 +1,95 @@
-.security-center
-  h5.well.headliner.hidden-xs(translate="SECURITY_LEVEL_EXPLAIN")
-  .row.bucket
-    .col-xs-12.level1.level
-      .col-md-3.title
+.security-center-ui
+  section.level.level_one
+    header.flex-center
+      h1.prm.type-h4(translate="LEVEL_1")
+      h2.type-h5.mid-grey-alt.em-300(translate="LEVEL_1_TITLE")
+    ul.flex.flex-start.pln.mbn
+      li.level-header.bg-light-grey-alt.flex-center.flex-justify
         img(src="img/security-icon-1.png")
-        p Level 1
-      .col-md-3.secbadge(ng-class="{'badge-active': user.isEmailVerified}")
-        a(ng-click="user.isEmailVerified || toggle('email')")
-          img(src="img/badge-verifyemail.png")
+      li.level-badge(ng-class="{'badge-active': user.isEmailVerified}")
+        a(ng-click="user.isEmailVerified || toggle('email')", ng-class="{'active' : display.action == 'email' }")
+          .flex-center.flex-column
+            img(src="img/badge-verifyemail.png")
+            img.ribbon(src="img/ribbon.svg", ng-show="user.isEmailVerified")
           p(translate="ADD_VERIFY_EMAIL")
-      .col-md-3.secbadge(ng-class="{'badge-active': status.didConfirmRecoveryPhrase}")
-        a(ng-click="status.didConfirmRecoveryPhrase || toggle('securityphrase')")
-          img(src="img/badge-securityphrase.png")
+      li.level-badge(ng-class="{'badge-active': status.didConfirmRecoveryPhrase}")
+        a(ng-click="status.didConfirmRecoveryPhrase || toggle('securityphrase')", ng-class="{'active' : display.action == 'securityphrase' }")
+          .flex-center.flex-column
+            img(src="img/badge-securityphrase.png")
+            img.ribbon(src="img/ribbon.svg", ng-show="status.didConfirmRecoveryPhrase")
           p(translate="ADD_WALLET_RECOVERY")
-      .col-md-3.secbadge(ng-class="{'badge-active': user.passwordHint}")
-        a(ng-click="user.passwordHint || toggle('passwordhint')")
-          img(src="img/badge-passwordhint.png")
+      li.level-badge(ng-class="{'badge-active': user.passwordHint}")
+        a(ng-click="user.passwordHint || toggle('passwordhint')", ng-class="{'active' : display.action == 'passwordhint' }")
+          .flex-center.flex-column
+            img(src="img/badge-passwordhint.png")
+            img.ribbon(src="img/ribbon.svg", ng-show="user.passwordHint")
           p(translate="ADD_PASSWORD_HINT")
 
-      .col-md-3
-      .col-md-9.actionHolder(ng-show="display.action == 'email'")
-        .actionitem
-          h3 Verify Your Email Address
-          p Adding and verifying your email address will allow us to email you password and GUID reminders.
-          .action-button
-            resend-email-confirmation
+    .badge-panel(ng-show="display.action == 'email' || display.action == 'securityphrase' || display.action == 'passwordhint' ")
+      div(ng-show="display.action == 'email' && !display.editingEmail")        
+        p(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
+        verify-email(security-center)
+        p(ng-hide="user.isEmailVerified")
+          span(translate="DIDNT_RECEIVE_EMAIL")
+          span 
+            resend-email-confirmation(security-center)
+            span(translate="OR")
+          span
+            a(ng-click="beginEditEmail()", translate="CHANGE_EMAIL_ADDRESS")
 
-      .col-md-9.actionHolder(ng-show="display.action == 'securityphrase'")
-        .actionitem
-          h3 Backup Your Security Phrase
-          p Your Security Phrase allows you to access your wallet in case you forget your password. Keep it very safe!
-          .action-button
-            confirm-recovery-phrase
+      .flex-center(ng-show="display.action == 'email' && display.editingEmail")       
+        p(translate="YOUR_EMAIL_ADDRESS")
+        bc-async-input(inline security-center type="email", placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
+      div(ng-show="display.action == 'securityphrase'")        
+        p.pbl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
+        confirm-recovery-phrase(security-center)
 
-      .col-md-9.actionHolder(ng-show="display.action == 'passwordhint'")
-        .actionitem
-          h3 Create A Password Hint
-          p We cannot reset or help you if you lose your password. Set a memorable hint that will jar your memory that we can send to your email address.
-          .action-button
-            bc-async-input(ng-model="user.passwordHint", on-save="changePasswordHint", action-title="'CHANGE_PASSWORD_HINT' | translate")      
-        
-  .row.bucket
-    .col-xs-12.level2.level
-      .col-md-3.title
+      .flex(ng-show="display.action == 'passwordhint'")       
+        p(translate="CHANGE_PASSWORD_HINT_SECURITY_CENTER")
+        bc-async-input(inline security-center placeholder="'CHANGE_PASSWORD_HINT' | translate" ng-model="user.passwordHint", on-save="changePasswordHint", action-title="'CHANGE_PASSWORD_HINT' | translate") 
+
+  section.level.level_two
+    header.flex-center
+      h1.prm.type-h4(translate="LEVEL_2")
+      h2.type-h5.mid-grey-alt.em-300(translate="LEVEL_2_TITLE")
+    ul.flex.flex-start.pln.mbn
+      li.level-header.bg-light-grey-alt.flex-center.flex-justify
         img(src="img/security-icon-2.png")
-        p Level 2
-      .col-md-3.secbadge(ng-class="{'badge-active': user.isMobileVerified}")
-        a(ng-click="user.isMobileVerified || toggle('mobilenumber')")
-          img(src="img/badge-addmobile.png")
+      li.level-badge(ng-class="{'badge-active': user.isMobileVerified}")
+        a(ng-click="user.isMobileVerified || toggle('mobilenumber')", ng-class="{'active' : display.action == 'mobilenumber' }")
+          .flex-center.flex-column
+            img(src="img/badge-addmobile.png")
+            img.ribbon(src="img/ribbon.svg", ng-show="user.isMobileVerified")
           p(TRANSLATE="ADD_MOBILE_NUMBER")
-      .col-md-3.secbadge(ng-class="{'badge-active': settings.needs2FA}")
-        a(ng-click="settings.needs2FA || toggle('twofactor')")
-          img(src="img/badge-add2FA.png")
-          p(TRANSLATE="ADD_TWO_FACTOR")
-      .col-md-3.secbadge
-        
-      .col-md-3
-      .col-md-9.actionHolder(ng-show="display.action == 'mobilenumber'")
-        .actionitem
-          h3 Link Your Mobile Number for Instant Alerts
-          p By adding a mobile number you will be alerted whenever your wallet is accessed and when funds are sent or received.
-          .action-button
-            configure-mobile-number
-      
-      .col-md-9.actionHolder(ng-show="display.action == 'twofactor'")
-        .actionitem
-          h3 Setup Two Factor Authorization
-          p By adding a Two Factor option you will be required to confirm every access attempt into your wallet.
-          .action-button
-            two-factor
- 
-  .row.bucket
-    .col-xs-12.level3.level
-      .col-md-3.title
+      li.level-badge(ng-class="{'badge-active': settings.needs2FA}")
+        a(ng-click="settings.needs2FA || toggle('twofactor')", ng-class="{'active' : display.action == 'twofactor' }")
+          .flex-column.flex-center
+            img(src="img/badge-add2FA.png")
+            img.ribbon(src="img/ribbon.svg", ng-show="settings.needs2FA")
+          p(translate="ADD_TWO_FACTOR")
+
+    .badge-panel(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
+      div(ng-show="display.action == 'mobilenumber'")     
+        configure-mobile-number(inline security-center)
+      .flex(ng-show="display.action == 'twofactor'")     
+        p.flex-1.prl(translate="SC_CONFIGURE_2FA")
+        a.button-success.button-lg(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA")
+
+  section.level.level_three
+    header.flex-center
+      h1.prm.type-h4(translate="LEVEL_3")
+      h2.type-h5.mid-grey-alt.em-300(translate="LEVEL_3_TITLE")
+    ul.flex.flex-start.pln.mbn
+      li.level-header.bg-light-grey-alt.flex-center.flex-justify
         img(src="img/security-icon-3.png")
-        p Level 3
-      //- .col-md-3.secbadge
-      //-   a(ng-click="settings.blockIE || toggle('blockie')")
-      //-     img(src="img/badge-blockIE.png")
-      //-     p(TRANSLATE="ADD_BLOCK_IE")
-      .col-md-3.secbadge(ng-class="{'badge-active': settings.blockTOR}")
-        a(ng-click="settings.blockTOR || toggle('blocktor')")
-          img(src="img/badge-blockTOR.png")
+      li.level-badge(ng-class="{'badge-active': settings.blockTOR}")
+        a(ng-click="settings.blockTOR || toggle('blocktor')", ng-class="{'active' : display.action == 'blocktor' }")
+          .flex-column.flex-center
+            img(src="img/badge-blockTOR.png")
+            img.ribbon(src="img/ribbon.svg", ng-show="settings.blockTOR")
           p(TRANSLATE="ADD_BLOCK_TOR")
-      .col-md-3.secbadge
-      .col-md-3.secbadge  
-      
-      .col-md-3
 
-      .col-md-9.actionHolder(ng-show="display.action == 'blockie'")
-        .actionitem
-          h3 Block IE
-          p Blah
-
-      .col-md-9.actionHolder(ng-show="display.action == 'blocktor'")
-        .actionitem
-          h3(TRANSLATE="BLOCK_TOR") Block Tor Requests
-          p(TRANSLATE="BLOCK_TOR_EXPLAIN")
-            | Enable the following option to prevent IP addresses that are known to be part of the TOR anonymizing network from accessing your wallet.
-          .action-button
-            tor
+    .badge-panel(ng-show="display.action == 'blocktor'")
+      div(ng-show="display.action == 'blocktor'")     
+        p.pbl(TRANSLATE="BLOCK_TOR_EXPLAIN")
+        tor(security-center)

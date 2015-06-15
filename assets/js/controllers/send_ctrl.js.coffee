@@ -14,9 +14,6 @@
 
   $scope.sending = false # Sending in progress
 
-  # getUserMedia is not supported by Safari and IE.
-  $scope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia ||  navigator.webkitGetUserMedia || navigator.msGetUserMedia) != undefined
-
   $scope.$watch "status.didLoadBalances + status.legacyAddressBalancesLoaded", ->
     if $scope.status.didLoadBalances && $scope.status.legacyAddressBalancesLoaded
       if $scope.origins.length == 0
@@ -294,7 +291,7 @@
     return 2
 
   $scope.decimalPlaces = (number) ->
-    return (number.split('.')[1] || []).length
+    return (number.toString().split('.')[1] || []).length
 
   $scope.updateToLabel = () ->
     return unless $scope.transaction.destination?
@@ -405,7 +402,7 @@
 
   $scope.visualValidate = (field) ->
     validation = null
-
+    
     if field == "to"
       $scope.errors.to = null
       $scope.success.to = null
@@ -444,6 +441,7 @@
 
   $scope.validateAmounts = () ->
     totalAmount = 0
+    return null if !$scope.advanced
     for i in $scope.transaction.multipleAmounts
       amount = parseFloat(i)
       return {error: "Please enter a valid amount", isValid: false} if isNaN(amount)
@@ -452,9 +450,10 @@
       totalAmount += $scope.convertToSatoshi(amount)
     if $scope.transaction.from? && $scope.transaction.from.balance?
       return {error: "Insufficient funds", isValid: false} if totalAmount + $scope.transaction.fee > $scope.transaction.from.balance
-    return {isValid: true}
+    return {error: null, isValid: true}
 
   $scope.validateDestinations = () ->
+    return null if !$scope.advanced
     for dest in $scope.transaction.multipleDestinations
       return {isValid: false} unless dest? && dest.type?
       if (dest.type == "External")
@@ -464,7 +463,7 @@
         return {error: 'Cannot send to self', isValid: false} if dest.index == $scope.transaction.from.index
       else
         return {error: 'Cannot send to self', isValid: false} if dest.address == $scope.transaction.from.address
-    return {isValid: true}
+    return {error: null, isValid: true}
 
   $scope.validateAmount = () ->
     amount = $scope.transaction.amount
@@ -490,8 +489,8 @@
     return {isValid: true}
 
   $scope.validateFee = () ->
-    return {error: 'Fee cannot be less than zero', isValid: false} if parseInt($scope.feeAmount) < 0
-    return {error: 'Fee must be a number', isValid: false} if isNaN(parseInt($scope.feeAmount))
+    return {error: 'Fee cannot be less than zero', isValid: false} if parseFloat($scope.feeAmount) < 0
+    return {error: 'Fee must be a number', isValid: false} if isNaN(parseFloat($scope.feeAmount))
     return {error: 'Fee cannot be left blank', isValid: false} if $scope.feeAmount == ""
     return {isValid: true}
 
@@ -500,6 +499,8 @@
     return {isValid: true}
 
   $scope.validateForAdvanced = () ->
+    $scope.errors.amounts = null
+    $scope.errors.destinations = null
     return false unless $scope.validateAmounts().isValid
     return false unless $scope.validateDestinations().isValid
     return true
@@ -538,16 +539,25 @@
   $scope.advancedSend = () ->
     $scope.advanced = true
     transaction = $scope.transaction
+    
     # copy normal send to address if we have 1 destination in advanced and it's not an account
     if transaction.multipleDestinations.length == 1 and transaction.destination? and transaction.destination.address != '' and not transaction.destination.index?
       transaction.multipleDestinations[0] = transaction.destination
-      $scope.visualValidate("destinations")
+      unless transaction.multipleDestinations[0] == null # Don't validate if nothing is entered yet
+        $scope.visualValidate("destinations")
     # copy amount in regular send to advanced send, if there is one
     if transaction.multipleAmounts.length == 1 and not isNaN(transaction.amount) and transaction.amount > 0
       transaction.multipleAmounts[0] = transaction.amount
-      $scope.visualValidate('amounts')
-    $scope.transactionIsValid = $scope.validate()
+      unless transaction.multipleDestinations[0] == null # Don't validate if nothing is entered yet
+        $scope.visualValidate('amounts')
+    
+    unless transaction.multipleDestinations[0] == null # Don't validate if nothing is entered yet
+      $scope.transactionIsValid = $scope.validate()
 
   $scope.regularSend = () ->
     $scope.advanced = false
+    transaction = $scope.transaction
+    if transaction.multipleAmounts[0]? && !isNaN(transaction.multipleAmounts[0])
+      transaction.amount = transaction.multipleAmounts[0]
+      $scope.visualValidate('amount')
     $scope.transactionIsValid = $scope.validate()

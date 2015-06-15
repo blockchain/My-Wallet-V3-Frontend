@@ -75,7 +75,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.settings_api.get_account_info((result)->
         # console.log result
         $window.name = "blockchain-"  + result.guid
-        wallet.settings.ipWhitelist = result.ip_lock
+        wallet.settings.ipWhitelist = result.ip_lock || ""
         wallet.settings.restrictToWhitelist = result.ip_lock_on
         wallet.settings.apiAccess = result.is_api_access_enabled
         wallet.settings.rememberTwoFactor = !result.never_save_auth_type
@@ -124,7 +124,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.displayWarning("Please enter your 2FA code")
       wallet.settings.needs2FA = true
       # 2: Email
-      # 3: Yubikey (depricated)
+      # 3: Yubikey
       # 4: Google Authenticator
       # 5: SMS
 
@@ -321,7 +321,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.applyIfNeeded()
 
     allTransactionsLoaded = () ->
-      allTransactionsLoadedCallback()
+      allTransactionsLoadedCallback() if allTransactionsLoadedCallback?
       wallet.applyIfNeeded()
 
     if where == "accounts"
@@ -373,13 +373,15 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return true
     # wallet.my.isCorrectSecondPassword(candidate)
 
-  wallet.changePassword = (newPassword) ->
+  wallet.changePassword = (newPassword, successCallback, errorCallback) ->
     wallet.store.changePassword(newPassword, (()->
       $translate("CHANGE_PASSWORD_SUCCESS").then (translation) ->
         wallet.displaySuccess(translation)
+        successCallback(translation)
     ),() ->
       $translate("CHANGE_PASSWORD_FAILED").then (translation) ->
         wallet.displayError(translation)
+        errorCallback(translation)
     )
 
   wallet.setIPWhitelist = (ips, successCallback, errorCallback) ->
@@ -1089,7 +1091,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     else if event == "ticker_updated" || event == "did_set_latest_block"
       wallet.applyIfNeeded()
     else if event == "logging_out"
-      if wallet.didLogoutByChoice == true
+      if wallet.didLogoutByChoice
         $translate("LOGGED_OUT").then (translation) ->
           $cookieStore.put("alert-success", translation)
       else
@@ -1264,8 +1266,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.applyIfNeeded()
     ), ()->
       $translate("VERIFY_MOBILE_FAILED").then (translation) ->
-        wallet.displayError(translation)
-      errorCallback()
+        errorCallback(translation)
       wallet.applyIfNeeded()
     )
 
@@ -1278,8 +1279,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.user.passwordHint = hint
       successCallback()
       wallet.applyIfNeeded()
-    ),()->
-      errorCallback()
+    ),(err)->
+      errorCallback(err)
       wallet.applyIfNeeded()
     )
 
@@ -1316,16 +1317,17 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.applyIfNeeded()
     )
 
-  wallet.setTwoFactorYubiKey = (code) ->
+  wallet.setTwoFactorYubiKey = (code, successCallback, errorCallback) ->
     wallet.settings_api.setTwoFactorYubiKey(
       code
       ()->
         wallet.settings.needs2FA = true
         wallet.settings.twoFactorMethod = 3
+        successCallback()
         wallet.applyIfNeeded()
       (error)->
         console.log(error)
-        wallet.displayError(error)
+        errorCallback(error)
         wallet.applyIfNeeded()
     )
 
@@ -1346,8 +1348,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       successCallback()
       wallet.applyIfNeeded()
     ,(error)->
-      wallet.displayError(error)
-      errorCallback()
+      if !error?
+        error = "The two factor authentication code could not be verified. Please try again."
+      #wallet.displayError(error)
+      errorCallback(error)
       wallet.applyIfNeeded()
     )
 

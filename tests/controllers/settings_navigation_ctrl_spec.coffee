@@ -21,10 +21,19 @@ describe "SettingsNavigationCtrl", ->
       return
 
     return
-    
+
   it "specs should be logged in by default",  inject((Wallet, $state) ->
-    expect(scope.status.isLoggedIn).toBe(true)    
-  
+    expect(scope.status.isLoggedIn).toBe(true)
     return
   )
-  
+
+  describe "the Go Back function", ->
+    it "should be defined", ->
+      expect(scope.goHome).toBeDefined()
+
+    it "should take me back tothe home page", inject((Wallet, $state)-> 
+      spyOn($state, "go")
+      scope.goHome()
+      expect($state.go).toHaveBeenCalled()
+      return
+  )

@@ -40,22 +40,29 @@
             unless $scope.from
               $scope.from = tx.from.externalAddresses.addressWithLargestOutput
 
-        if tx.to.account?
-          $scope.to = $scope.accounts[tx.to.account.index].label
-        else
-          if tx.to.legacyAddresses? && tx.to.legacyAddresses.length > 0
-            address = $filter("getByProperty")("address", tx.to.legacyAddresses[0].address, Wallet.legacyAddresses)
-            if address.label != address.address
-              $scope.to = address.label
-            else
-              $scope.to = address.address + " (you)"
-          else if tx.to.externalAddresses?
+        $scope.destinations = []
+        # $scope.destinations.push {"address": "mi add", "amount": 123}
+        # $scope.destinations.push {"address": "mi addfdsf", "amount": 1234324}
 
-            $scope.to = Wallet.addressBook[tx.to.externalAddresses[0].address]
-            unless $scope.to
-              convert = (y) -> $filter("btc")(y)
-              $scope.to = tx.to.externalAddresses.map((x)->"(" + convert(x.amount) + ") " + x.address ).join("<br />")
-              $sce.trustAsHtml $scope.to
+        if tx.to.account?
+          accountLabel = $scope.accounts[tx.to.account.index].label
+          $scope.destinations.push {"address": accountLabel, "amount": ""}
+        else
+          convert = (y) -> " [" + $filter("btc")(y) + "]"
+          label = (a) ->
+            address = $filter("getByProperty")("address", a, Wallet.legacyAddresses)
+            if address.label != address.address then address.label else address.address
+          adBook = (a) ->
+            name = Wallet.addressBook[a]
+            if name then name else a
+
+          makeLegacyRow   = (a) -> {"address": label(a.address),  "amount": convert(a.amount), "you":"(you) "}
+          makeExternalRow = (a) -> {"address": adBook(a.address), "amount": convert(a.amount), "you": ""}
+
+          if tx.to.legacyAddresses?   then l = tx.to.legacyAddresses   else l = []
+          if tx.to.externalAddresses? then e = tx.to.externalAddresses else e = []
+          $scope.destinations = l.map(makeLegacyRow).concat e.map(makeExternalRow)
+          if $scope.destinations.length is 1 then $scope.destinations[0].amount = ""
 
   # First load:
   $scope.didLoad()

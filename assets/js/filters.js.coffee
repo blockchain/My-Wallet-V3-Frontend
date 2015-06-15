@@ -4,7 +4,7 @@ angular.module("walletFilters", [])
       
 .filter "toBitCurrency", ->
   (input, btcCurrency, hideCurrency) ->
-    if input? && !isNaN(input) && btcCurrency.code? && btcCurrency.conversion?
+    if input? && !isNaN(input) && btcCurrency? && btcCurrency.code? && btcCurrency.conversion?
       format = "0.[" + btcCurrency.conversion.toString().substr(1) + "]"
       numeral(input).divide(btcCurrency.conversion).format(format) + (if hideCurrency then "" else (" " + btcCurrency.code))
     else
@@ -16,20 +16,7 @@ angular.module("walletFilters", [])
      numeral(input).divide(100000000).format("0.[00000000]") + (if hideCurrency then "" else " BTC")
     else
       ""
-      
-.filter "mbtc", ->
-  (input,hideCurrency) ->
-    if input? && !isNaN(input) 
-     numeral(input).divide(100000).format("0.[00000]") + (if hideCurrency then "" else " mBTC")
-    else
-      ""
 
-.filter "bits", ->
-  (input,hideCurrency) ->
-    if input? && !isNaN(input) 
-     numeral(input).divide(100).format("0.[00]") + (if hideCurrency then "" else " bits")
-    else
-      ""
 #
 # .filter "currentRequests", ->
 #   (items) ->
@@ -61,7 +48,3 @@ angular.module("walletFilters", [])
         j++
       i++
     null
-.filter "highlight", ($sce) ->
-  (text, phrase) ->
-    text = text.replace(new RegExp("(" + phrase + ")", "gi"), "<span class=\"highlighted\">$1</span>")  if phrase
-    $sce.trustAsHtml text

@@ -6,7 +6,7 @@ form.form-horizontal(role="form",name="form",novalidate)
       span.label.label-danger.hidden-xs.hidden-sm(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
       span.label.label-success.hidden-sm.hidden-xs(translate="VERIFIED", ng-show="status.didConfirmRecoveryPhrase")
       p.explain.hidden-xs.hidden-sm(translate="RECOVERY_PHRASE_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result.flex-column.flex-align-end
+    .col-sm-12.col-md-6.setting-result
       confirm-recovery-phrase
       a.recovery.button-muted(ng-click="toggleRecoveryPhrase()", ng-hide="showRecoveryPhrase", translate="SHOW_RECOVERY_PHRASE")
       a.recovery.button-muted(ng-click="toggleRecoveryPhrase()", ng-show="showRecoveryPhrase", translate="HIDE_RECOVERY_PHRASE")

@@ -2,7 +2,7 @@
   .flex-center
     img(src="img/arrow-down.png")
     h3(translate="RECEIVE_BITCOIN")
-  h5 We've just created a new address for you to share with anyone in order to receive bitcoins
+  h5(translate="RECEIVE_BITCOIN_MESSAGE")
 .modal-body
   fields.form-horizontal(role="form",name="form",novalidate)
     .form-group(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': fields.to.isWatchOnlyLegacyAddress}")
@@ -17,7 +17,7 @@
       label.col-sm-3.control-label(translate="AMOUNT")
       .col-sm-3
         input.form-control(type="text",ng-model="fields.amount",  ng-disabled="paymentRequest && paymentRequest.paid > 0")
-        span.help-block.security-red(ng-if="!validate()") Enter valid amount
+        span.help-block.security-red(ng-if="!validate()", translate="ENTER_VALID_AMOUNT")
       .col-sm-3
         ui-select(ng-model="fields.currency")
           ui-select-match {{ $select.selected.code }}
@@ -41,12 +41,12 @@
         p.form-control-static
           | {{ paymentRequest.paid / 100000000.0 }}  
     .flex.pam(ng-if="paymentRequestURL")
-      .flex-1
+      .flex-2
         p(ng-hide="status.didInitializeHD")
           img(src="img/spinner.gif")  
         span(ng-show="status.didInitializeHD")
           qr(text="paymentRequestURL", size=120, correction-level="'M'")
-      .phs.flex-2
+      .phs.flex-3.flex-center.flex-column
         label.black
           span(translate="BITCOIN_ADDRESS")
           span :
@@ -54,8 +54,8 @@
           img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
           span(ng-show="status.didInitializeHD")
             | {{ paymentRequestAddress }}  
-        p.black.mtm.flex-center
+        p.black.mtm.flex-center.center-align
           i.ti-mouse-alt.mrs
-          | Just copy the address above and share
+          span(translate="COPY_ADDRESS")
 .modal-footer.flex-end.pal
   button.button-success.button-lg(ng-click="close()", translate="GOT_IT")  

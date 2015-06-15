@@ -98,7 +98,9 @@
   .btn-resend{
   background: none!important;
   }
-  
+  .form-control {
+    height: auto;
+  }
 }
 
 .modal.signup {
@@ -113,9 +115,6 @@
     margin: 0;
     transform: none;
   }
-}
-.form-control {
-height: auto;
 }
 
 

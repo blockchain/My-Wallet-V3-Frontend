@@ -69,6 +69,12 @@ describe "SendCtrl", ->
     expect(scope.transaction.currency.code).toBe "BTC"
   )
 
+  it "should be able to alternate currencies", () ->
+    scope.transaction.currency = scope.nextAlternativeCurrency()
+    expect(scope.transaction.currency).toBe(scope.fiatCurrency)
+    scope.transaction.currency = scope.nextAlternativeCurrency()
+    expect(scope.transaction.currency).toBe(scope.btcCurrency)
+
   describe "origins", ->
     it "should include accounts",  ->
       expect(scope.origins.length).toBeGreaterThan(0)
@@ -291,6 +297,13 @@ describe "SendCtrl", ->
         expect(Wallet.beep).toHaveBeenCalled()
 
       )
+      
+      it "should show a confirmation modal", inject(($modal)->
+        spyOn($modal, "open").and.callThrough()
+        scope.send()
+        expect($modal.open).toHaveBeenCalled()
+        expect($modal.open.calls.argsFor(0)[0].windowClass).toEqual("notification-modal")
+      )
 
       # it "should show error message if send() fails",  inject((Wallet) ->
       #   scope.transaction.amount = "3000000000" # Way too much
@@ -366,6 +379,50 @@ describe "SendCtrl", ->
       scope.$apply()
       expect(scope.toLabel).toBe("Mobile Account")
 
+  describe 'note', ->
+
+    it 'should not allow a note longer than 512 characters', () ->
+      scope.transaction.note = (new Array(512)).join('x')
+      expect(scope.validate()).toBe(false)
+
+  describe 'switch to advanced', ->
+
+    it 'should preserve the amount', () ->
+      scope.transaction.amount = 0.5
+      scope.advancedSend()
+      expect(scope.transaction.multipleAmounts[0]).toBe(0.5)
+
+    it 'should not preserve an invalid amount', () ->
+      scope.transaction.amount = 'asdf'
+      scope.advancedSend()
+      expect(scope.transaction.multipleAmounts[0]).toBe(0)
+
+    it 'should preserve the destination if it is an address', () ->
+      scope.transaction.destination = {address: '123456789'}
+      scope.advancedSend()
+      expect(scope.transaction.multipleDestinations[0]).toBe(scope.transaction.destination)
+
+    it 'should not preserve the destination if it is an account', () ->
+      scope.transaction.destination = {index: '1'}
+      scope.advancedSend()
+      expect(scope.transaction.multipleDestinations[0]).toBeNull()
+      
+    it "should not show validation errors if nothing is entered yet", ->
+      scope.advancedSend()
+      expect(scope.errors.amounts).toBeUndefined()
+
+  describe 'switch to regular', ->
+
+    it 'should preserve the amount', () ->
+      scope.transaction.multipleAmounts[0] = 0.5
+      scope.regularSend()
+      expect(scope.transaction.amount).toBe(0.5)
+
+    it 'should not preserve an invalid amount', () ->
+      originalAmount = scope.transaction.amount
+      scope.transaction.multipleAmounts[0] = 'asdf'
+      scope.regularSend()
+      expect(scope.transaction.amount).toBe(originalAmount)
 
   describe 'advanced', ->
 
@@ -390,3 +447,40 @@ describe "SendCtrl", ->
         scope.transaction.satoshi = scope.getSatoshiFromAmounts()
         expect(scope.transaction.satoshi).toBe(Math.round(Wallet.conversions['USD'].conversion * (2.15 + 0.75)))
       )
+
+    describe 'destinations', ->
+
+      it 'should be able to add a destination', () ->
+        originalAmount = scope.transaction.multipleDestinations.length
+        scope.addDestination()
+        expect(scope.transaction.multipleDestinations.length).toBe(originalAmount + 1)
+        expect(scope.transaction.multipleAmounts.length).toBe(originalAmount + 1)
+
+      it 'should be able to remove a destination', () ->
+        scope.transaction.multipleAmounts = [0, 0]
+        scope.transaction.multipleDestinations = ['dest0', 'dest1']
+        scope.removeDestination(1)
+        expect(scope.transaction.multipleAmounts.length).toBe(1)
+        expect(scope.transaction.multipleDestinations.length).toBe(1)
+
+    describe 'validation', ->
+
+      beforeEach ->
+        scope.transaction.multipleAmounts = [0.1, 0.2]
+
+      describe 'amounts', ->
+
+        it "should be false if the amount is null", () ->
+          scope.transaction.multipleAmounts[0] = null
+          expect(scope.validateAmounts().isValid).toBe(false)
+
+        it "should be false if the amount is negative", () ->
+          scope.transaction.multipleAmounts[0] = -0.5
+          expect(scope.validateAmounts().isValid).toBe(false)
+
+        it "should be false if the amount is more than the balance", () ->
+          scope.transaction.multipleAmounts[0] = 5
+          expect(scope.validateAmounts().isValid).toBe(false)
+
+        it "should be true if the amounts are ok", () ->
+          expect(scope.validateAmounts().isValid).toBe(true)

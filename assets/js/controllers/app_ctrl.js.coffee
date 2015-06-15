@@ -3,7 +3,16 @@
   $scope.settings = Wallet.settings
   $rootScope.isMock = Wallet.isMock
   $scope.goal = Wallet.goal
-  $rootScope.dist = if $location.host() == 'alpha.blockchain.info' then true else false
+  $rootScope.dist = if ($location.host() == 'alpha.blockchain.info' || $location.host() == 'dev.blockchain.info') then true else false
+
+  $scope.menu = { isCollapsed: false }
+  $scope.toggleMenu = () ->
+    $scope.menu.isCollapsed = !$scope.menu.isCollapsed
+  $scope.hideMenu = () ->
+    $scope.menu.isCollapsed = false
+
+  # getUserMedia is not supported by Safari and IE.
+  $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia ||  navigator.webkitGetUserMedia || navigator.msGetUserMedia) != undefined
 
   #################################
   #           Private             #
@@ -55,7 +64,7 @@
             Wallet.goal.claim = undefined
           )
 
-        if Wallet.goal.auth == true
+        if Wallet.goal.auth
           $translate("AUTHORIZED").then (titleTranslation) ->
             $translate("AUTHORIZED_MESSAGE").then (messageTranslation) ->
               modalInstance = $modal.open(

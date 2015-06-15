@@ -5,7 +5,9 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
     scope: {
     }
     templateUrl: 'templates/configure-mobile-number.jade'
-    link: (scope, elem, attrs) ->      
+    link: (scope, elem, attrs) ->
+      scope.securityCenter = attrs.securityCenter?
+
       scope.user = Wallet.user
       scope.edit = {mobile: false}
       
@@ -14,13 +16,24 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
       scope.mobileDefaultCountry = null
       
       scope.fields = {newMobile: null}
+      
+      scope.errors = {verify: null}
+
+      scope.step = 1
+      
+      if attrs.inline?
+        scope.inline = true
 
       scope.$watch "edit.mobile", (newValue) ->
         if newValue
           # finds and focuses on the text input field
           # a brief timeout is necessary before trying to focus
           setTimeout (-> elem[0].children[1].children[0].children[0].focus()), 50
-  
+          
+      scope.$watchCollection "fields", () ->
+        scope.errors.verify = null
+        return
+      
       scope.$watch "user.mobile.number + user.mobile.country", (newValue) ->
         scope.user.internationalMobileNumber = intlTelInputUtils.formatNumber(Wallet.internationalPhoneNumber(scope.user.mobile))
         
@@ -37,6 +50,7 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
         success = () ->
           scope.edit.mobile = false   
           scope.status.busy = false
+          scope.step++
           
         error = (error) ->
           scope.status.busy = false
@@ -53,8 +67,10 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
         success = () ->
           scope.edit.mobile = false   
           scope.status.busy = false
+          scope.step--
           
-        error = (error) ->
+        error = (message) ->
+          scope.errors.verify = message
           scope.status.busy = false
           
         Wallet.verifyMobile(code, success, error)

@@ -124,6 +124,60 @@ describe "walletServices", () ->
     )
     
     return
+
+  describe "conversions", ->
+    beforeEach ->
+      Wallet.login("test", "test")
+
+    describe "convertCurrency", ->
+
+      it "should not convert a null amount", () ->
+        result = Wallet.convertCurrency(null, Wallet.btcCurrencies[0], Wallet.btcCurrencies[1])
+        expect(result).toBe(null)
+
+      it "should convert from fiat to bit currency", () ->
+        result = Wallet.convertCurrency(300, Wallet.currencies[0], Wallet.btcCurrencies[0])
+        expect(result).toBe(0.999999)
+
+      it "should convert from bit currency to fiat", () ->
+        result = Wallet.convertCurrency(1, Wallet.btcCurrencies[0], Wallet.currencies[0])
+        expect(result).toBe(300)
+
+    describe "convertToSatoshi", ->
+
+      it "should not convert a null amount", () ->
+        expect(Wallet.convertToSatoshi(null, Wallet.currencies[0])).toBe(null)
+
+      it "should not convert from a null currency", () ->
+        expect(Wallet.convertToSatoshi(9000, null)).toBe(null)
+
+      it "should convert from fiat to satoshi", () ->
+        currency = Wallet.currencies[0]
+        result = Wallet.convertToSatoshi(1, currency)
+        expect(result).toBe(Wallet.conversions[currency.code].conversion)
+
+      it "should convert from bit currency to satoshi", () ->
+        currency = Wallet.btcCurrencies[0]
+        result = Wallet.convertToSatoshi(1, currency)
+        expect(result).toBe(currency.conversion)
+
+    describe "convertFromSatoshi", ->
+
+      it "should not convert a null amount", () ->
+        expect(Wallet.convertFromSatoshi(null, Wallet.currencies[0])).toBe(null)
+
+      it "should not convert from a null currency", () ->
+        expect(Wallet.convertFromSatoshi(9000, null)).toBe(null)
+
+      it "should convert from satoshi to fiat", () ->
+        currency = Wallet.currencies[0]
+        result = Wallet.convertFromSatoshi(Wallet.conversions[currency.code].conversion, currency)
+        expect(result).toBe(1)
+
+      it "should convert from satoshi to bit currency", () ->
+        currency = Wallet.btcCurrencies[0]
+        result = Wallet.convertFromSatoshi(100000000, currency)
+        expect(result).toBe(1)
     
   describe "email", ->    
     beforeEach ->
@@ -338,3 +392,107 @@ describe "walletServices", () ->
      
       expect(callbacks.needsBip38).toHaveBeenCalled()
       expect(callbacks.success).toHaveBeenCalled()
+      
+  describe "displayReceivedBitcoin()", ->
+    it "should display an alert", ->
+      spyOn(Wallet, "displayAlert")
+      Wallet.displayReceivedBitcoin()
+      expect(Wallet.displayAlert).toHaveBeenCalled()
+      
+  describe "notifications", ->      
+    describe "on_tx", ->
+      beforeEach ->
+        spyOn(Wallet, "displayReceivedBitcoin")
+        
+      it "should display a message if the user received bitcoin", ->
+        spyOn(Wallet, "updateTransactions").and.callFake () ->
+          Wallet.transactions.push {result: 1}
+        
+        Wallet.monitor("on_tx")
+        expect(Wallet.displayReceivedBitcoin).toHaveBeenCalled()
+        
+      it "should not display a message if the user spent bitcoin", ->
+        spyOn(Wallet, "updateTransactions").and.callFake () ->
+          Wallet.transactions.push {result: -1}
+          
+        Wallet.monitor("on_tx")
+        expect(Wallet.displayReceivedBitcoin).not.toHaveBeenCalled()
+
+      it "should not display a message if the user moved bitcoin between accounts", ->
+        spyOn(Wallet, "updateTransactions").and.callFake () ->
+          Wallet.transactions.push {result: 1, intraWallet: true}
+          
+        Wallet.monitor("on_tx")
+        expect(Wallet.displayReceivedBitcoin).not.toHaveBeenCalled()
+        
+  describe "fetchMoreTransactions()", ->
+    it "should call the right method for individual accounts", ->
+      spyOn(MyWallet, "fetchMoreTransactionsForAccount")
+      Wallet.fetchMoreTransactions(0)
+      expect(MyWallet.fetchMoreTransactionsForAccount).toHaveBeenCalled()
+    
+    it "should call the right method for all accounts combined", ->
+      spyOn(MyWallet, "fetchMoreTransactionsForAccounts")
+      Wallet.fetchMoreTransactions("accounts")      
+      expect(MyWallet.fetchMoreTransactionsForAccounts).toHaveBeenCalled()
+    
+    it "should call the right method for imported addresses", ->
+      spyOn(MyWallet, "fetchMoreTransactionsForLegacyAddresses")
+      Wallet.fetchMoreTransactions("imported")    
+      expect(MyWallet.fetchMoreTransactionsForLegacyAddresses).toHaveBeenCalled()   
+      
+    it "should the caller know if there are no more transactions", ->
+      observer = 
+        allTransactionsLoadedCallback: () -> 
+          
+      MyWallet.mockShouldFetchOldestTransaction()
+          
+      spyOn(observer, "allTransactionsLoadedCallback")
+      Wallet.fetchMoreTransactions("imported", (()->), (()->), observer.allTransactionsLoadedCallback)    
+    
+      expect(observer.allTransactionsLoadedCallback).toHaveBeenCalled()
+      
+    it "should call appendTransactions()", ->
+      spyOn(Wallet, "appendTransactions")
+      Wallet.fetchMoreTransactions(0, (()->), (()->), (()->))
+      expect(Wallet.appendTransactions).toHaveBeenCalled()
+      
+  describe "appendTransactions()", ->
+    it "should add a new transaction", ->
+      transaction1 = {hash: "123456890"}
+      Wallet.appendTransactions([transaction1])
+      expect(Wallet.transactions.pop().hash).toBe(transaction1.hash)
+      
+    it "should ignore a known transaction", ->
+      transaction1 = {hash: "123456890", result: 0}
+      transaction2 = {hash: "123456890", result: 1}
+      
+      Wallet.appendTransactions([transaction1])
+      Wallet.appendTransactions([transaction2]) # Same hash: should be ignored
+      
+      lastTx = Wallet.transactions.pop()
+      expect(lastTx.result).not.toBe(transaction2.result)
+      expect(lastTx.result).toBe(transaction1.result)
+            
+    it "should update an existing transaction if override flag is set", ->
+      transaction1 = {hash: "123456890", result: 0}
+      transaction2 = {hash: "123456890", result: 1}
+      
+      Wallet.appendTransactions([transaction1])
+      Wallet.appendTransactions([transaction2], true) 
+      
+      expect(Wallet.transactions.pop().result).toBe(transaction2.result)
+
+  describe "toggleDisplayCurrency()", ->
+
+    it "should toggle from btc to fiat", inject((Wallet) ->
+      Wallet.settings.displayCurrency = Wallet.settings.btcCurrency
+      Wallet.toggleDisplayCurrency()
+      expect(Wallet.settings.displayCurrency).toBe(Wallet.settings.currency)
+    )
+
+    it "should toggle from fiat to btc", inject((Wallet) ->
+      Wallet.settings.displayCurrency = Wallet.settings.currency
+      Wallet.toggleDisplayCurrency()
+      expect(Wallet.settings.displayCurrency).toBe(Wallet.settings.currency)
+    )
