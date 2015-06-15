@@ -209,7 +209,9 @@ padding-left: 15px;
     list-style-type: square;
     font-size: 1.2em;
   }
-
+  .form-control-static img {
+    max-width: 40px;
+  }
 }
 
 @media (max-width: 768px) {
