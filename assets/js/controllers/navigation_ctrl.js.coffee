@@ -50,7 +50,8 @@
         Wallet.logout() # Refreshes the browser, so won't return
         return  
 
+  intervalTime = 15 * 60 * 1000
   $interval (->
     if Wallet.status.isLoggedIn
       Wallet.fetchExchangeRate()
-  ), 60000
+  ), intervalTime
