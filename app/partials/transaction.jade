@@ -3,12 +3,12 @@
     .col-xs-12
       a.back(ng-click="back()")
         h4.back Back to feed
-  .transaction-card.clearfix
+  .transaction-card.flex-column.flex
     .tx-date
       strong.prs(translate="TRANSACTION_DETAILS")
-      | {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
-    .tx-details
-      .gutter
+        | {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
+    .flex
+      .tx-details.pal.flex-1
         .tx-sender
           p(translate="FROM")
           strong {{ from }}
@@ -19,12 +19,10 @@
               td {{ destination.you }}
               td {{ destination.address }}
               td {{ destination.amount }}
-
         .tx-notes
           p Notes
           transaction-note(transaction="transaction")
-    .tx-sidebar
-      .gutter
+      .tx-sidebar.pal
         .tx-amount
           amount(transaction="transaction" btc)
         .tx-status
