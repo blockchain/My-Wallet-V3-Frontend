@@ -41,7 +41,7 @@ module.exports = {
         browser.sleep(2000); // Required wait for Request and Send button validation
         browser.findElement(by.css('[translate="REQUEST"]'));
         browser.findElement(by.css('[translate="SEND"]'));
-        browser.findElement(by.cssContainingText('h1', 'Welcome to the new Blockchain Wallet!'));
+        browser.findElement(by.css('.bc-well'));
 
     },
 

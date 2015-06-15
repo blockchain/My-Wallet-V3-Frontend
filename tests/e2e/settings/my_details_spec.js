@@ -4,6 +4,9 @@ describe('my-details-page', function() {
     var login = require('../ignore.js');
     var util = require('../util.js');
 
+    // My Details specific variables
+    var passwordHintCSS = 'button.button-primary.ng-binding';
+    var passwordHintText = 'Change Password Hint';
 
     beforeEach(function() {
 
@@ -30,10 +33,11 @@ describe('my-details-page', function() {
 
     });
 
+
     it('should have wallet password elements', function() {
 
         // Scroll to password hint section
-        util.scrollTo('a.button-muted.mtm.ng-binding', 'Change Password Hint');
+        util.scrollTo(passwordHintCSS, passwordHintText);
 
         // Validate password elements
         browser.findElement(by.css('[translate="WALLET_PASSWORD"]'));
@@ -45,7 +49,7 @@ describe('my-details-page', function() {
     it('should have a wallet password modal', function() {
 
         // Scroll to password hint section
-        util.scrollTo('a.button-muted.mtm.ng-binding', 'Change Password Hint');
+        util.scrollTo(passwordHintCSS, passwordHintText);
 
         // Click Change Password Button
         browser.findElement(by.css('[translate="CHANGE_PASSWORD"]')).click();
@@ -60,47 +64,6 @@ describe('my-details-page', function() {
 
     });
 
-    it('should change the wallet password', function() {
-
-        // Bring focus to scrollable portion
-        browser.findElement(by.css('[translate="UID"]')).click();
-
-        // Scroll to password hint section
-        util.scrollTo('a.button-muted.mtm.ng-binding', 'Change Password Hint');
-
-        // Open Change Password modal
-        browser.findElement(by.css('[translate="CHANGE_PASSWORD"]')).click();
-
-        // Validate modal open
-        browser.findElement(by.css('div.modal-content'));
-
-        // Enter current and new passwords
-        element(by.model('fields.currentPassword')).sendKeys(login.pw);
-        element(by.model('fields.password')).sendKeys(login.pwNew);
-        element(by.model('fields.confirmation')).sendKeys(login.pwNew);
-        browser.sleep(200);
-
-        // Click Change Password button on modal
-        browser.findElement(by.css('div.modal-content')).findElement(by.css('[ng-click="changePassword()"]')).click();
-        browser.sleep(200);
-
-        // Reopen Change Password modal
-        browser.findElement(by.css('[translate="CHANGE_PASSWORD"]')).click();
-
-        // Enter current and new passwords
-        element(by.model('fields.currentPassword')).sendKeys(login.pwNew);
-        element(by.model('fields.password')).sendKeys(login.pw);
-        element(by.model('fields.confirmation')).sendKeys(login.pw);
-
-        // Click Change Password button on modal
-        browser.findElement(by.css('div.modal-content')).findElement(by.css('[ng-click="changePassword()"]')).click();
-        browser.sleep(200);
-
-        // Validate Password Set label
-        util.shouldContainCSS('h2.status.complete.hidden-sm.hidden-xs.mbm.ng-scope', 'Password Set');
-
-    });
-
     it('should change the wallet password hint', function() {
 
         // Bring focus to scrollable portion
@@ -112,11 +75,11 @@ describe('my-details-page', function() {
         util.shouldContainCSS('h2.status.complete.hidden-xs.long-input.ng-binding', 'original password hint');
 
         // Scroll to password hint section
-        util.scrollTo('a.button-muted.mtm.ng-binding', 'Change Password Hint');
+        util.scrollTo(passwordHintCSS, passwordHintText);
 
         // Set new password hint
         // TODO use translate string once implemented
-        browser.findElement(by.cssContainingText('a.button-muted.mtm.ng-binding', 'Change Password Hint')).click();
+        browser.findElement(by.cssContainingText(passwordHintCSS, passwordHintText)).click();
         browser.element(by.css('[ng-model="user.passwordHint"]')).element(by.css('[ng-model="form.newValue"]')).clear();
         browser.element(by.css('[ng-model="user.passwordHint"]')).element(by.css('[ng-model="form.newValue"]')).sendKeys('new password hint');
         browser.element(by.css('[ng-model="user.passwordHint"]')).element(by.css('[translate="Save"]')).click();
@@ -125,7 +88,7 @@ describe('my-details-page', function() {
 
         // Set new password hint
         // TODO use translate string once implemented
-        browser.findElement(by.cssContainingText('a.button-muted.mtm.ng-binding', 'Change Password Hint')).click();
+        browser.findElement(by.cssContainingText(passwordHintCSS, passwordHintText)).click();
         browser.element(by.css('[ng-model="user.passwordHint"]')).element(by.css('[ng-model="form.newValue"]')).clear();
         browser.element(by.css('[ng-model="user.passwordHint"]')).element(by.css('[ng-model="form.newValue"]')).sendKeys('original password hint');
         browser.element(by.css('[ng-model="user.passwordHint"]')).element(by.css('[translate="Save"]')).click();

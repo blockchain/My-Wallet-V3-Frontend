@@ -13,6 +13,7 @@ describe('transactions-page', function() {
     // Account transaction value variables
     var account1TransValue = '0.00077847 BTC';
     var account3TransValue = '0.00042116 BTC';
+    var account3TransLocationPage = 'h1.ng-binding';
 
     // Account date variables
     var account1TransDate = 'April 7 @ 03:51 PM';
@@ -81,7 +82,7 @@ describe('transactions-page', function() {
 
         // Click on account 'DONT EDIT 3' and validate value and date
         browser.findElement(by.cssContainingText('span.prs.ng-binding', account3Name)).click();
-        util.shouldContainCSS('h1.ng-binding.ng-scope', account3TransValue);
+        util.shouldContainCSS(account3TransLocationPage, account3TransValue);
         util.shouldContainCSS('date.ng-binding', account3TransDate);
 
     });
@@ -93,7 +94,7 @@ describe('transactions-page', function() {
 
         // Click on account 'DONT EDIT 3' and validate value and date
         browser.findElement(by.cssContainingText('span.prs.ng-binding', account3Name)).click();
-        util.shouldContainCSS('h1.ng-binding.ng-scope', account3TransValue);
+        util.shouldContainCSS(account3TransLocationPage, account3TransValue);
         browser.findElement(by.cssContainingText('date.ng-binding', account3TransDate)).click();
 
         // Validate transaction details page
@@ -126,7 +127,7 @@ describe('transactions-page', function() {
         browser.findElement(by.cssContainingText('date.ng-binding', account3TransDate)).click();
 
         // Return to account details and validate Request/Send buttons
-        browser.findElement(by.css( 'div > a > h2.back')).click();
+        browser.findElement(by.css('[ng-click="back()"]')).click();
         browser.findElement(by.css('[translate="REQUEST"]'));
         browser.findElement(by.css('[translate="SEND"]'));
 
@@ -158,7 +159,7 @@ describe('transactions-page', function() {
         browser.findElement(by.css('[translate="SEND"]')).click();
 
         // Validate Send modal details
-        browser.findElement(by.css('[translate="FROM"]'));
+        browser.findElement(by.css('[translate="FROM:"]'));
         util.shouldContainCSS('span.ng-binding.ng-scope', account1Name + ' (' + account1TransValue + ')');
 
         // Close Send modal, wait for and click Request button
