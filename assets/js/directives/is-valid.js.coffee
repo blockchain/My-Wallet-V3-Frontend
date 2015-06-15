@@ -10,10 +10,10 @@ walletApp.directive('isValid', (Wallet) ->
       ngModel.$parsers.unshift (viewValue) ->
 
         if scope.isValid(viewValue)
-          ngModel.$setValidity('isValid', true)
+          ngModel.$setValidity('isNotValid', true)
           return viewValue
         else
-          ngModel.$setValidity('isValid', false)
+          ngModel.$setValidity('isNotValid', false)
           return undefined
 
   }
