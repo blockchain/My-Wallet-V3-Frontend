@@ -34,7 +34,7 @@ describe('wallet-settings-page', function() {
 
     it('should change language settings', function() {
 
-        browser.findElement(by.css('[language="settings.language"]')).findElement(by.css('span.btn.btn-default.form-control.ui-select-toggle')).click();
+        browser.findElement(by.css('[language="settings.language"]')).findElement(by.css('.ui-select-toggle')).click();
 
 
     });

@@ -5,7 +5,7 @@ describe('my-details-page', function() {
     var util = require('../util.js');
 
     // My Details specific variables
-    var passwordHintCSS = 'button.button-primary.ng-binding';
+    var passwordHintCSS = '.button-primary';
     var passwordHintText = 'Change Password Hint';
 
     beforeEach(function() {
@@ -42,7 +42,7 @@ describe('my-details-page', function() {
         // Validate password elements
         browser.findElement(by.css('[translate="WALLET_PASSWORD"]'));
         browser.findElement(by.css('[translate="WALLET_PASSWORD_EXPLAIN"]'));
-        util.shouldContainCSS('h2.status.complete.hidden-sm.hidden-xs.mbm.ng-scope', 'Password Set');
+        browser.findElement(by.css('[translate="PASSWORD_SET"]'));
 
     });
 
@@ -55,7 +55,7 @@ describe('my-details-page', function() {
         browser.findElement(by.css('[translate="CHANGE_PASSWORD"]')).click();
 
         // Validate modal open
-        browser.findElement(by.css('div.modal-content'));
+        browser.findElement(by.css('.modal-content'));
 
         // Validate modal elements
         browser.findElement(by.css('[translate="CURRENT_PASSWORD"]'));
@@ -72,7 +72,7 @@ describe('my-details-page', function() {
         // Validate password hint elements
         browser.findElement(by.css('[translate="PASSWORD_HINT"]'));
         browser.findElement(by.css('[translate="PASSWORD_HINT_EXPLAIN"]'));
-        util.shouldContainCSS('h2.status.complete.hidden-xs.long-input.ng-binding', 'original password hint');
+        util.shouldContainCSS('h2.status', 'original password hint');
 
         // Scroll to password hint section
         util.scrollTo(passwordHintCSS, passwordHintText);
@@ -84,7 +84,7 @@ describe('my-details-page', function() {
         browser.element(by.css('[ng-model="user.passwordHint"]')).element(by.css('[ng-model="form.newValue"]')).sendKeys('new password hint');
         browser.element(by.css('[ng-model="user.passwordHint"]')).element(by.css('[translate="Save"]')).click();
         browser.sleep(500);
-        util.shouldContainCSS('h2.status.complete.hidden-xs.long-input.ng-binding', 'new password hint');
+        util.shouldContainCSS('h2.status', 'new password hint');
 
         // Set new password hint
         // TODO use translate string once implemented
@@ -93,7 +93,7 @@ describe('my-details-page', function() {
         browser.element(by.css('[ng-model="user.passwordHint"]')).element(by.css('[ng-model="form.newValue"]')).sendKeys('original password hint');
         browser.element(by.css('[ng-model="user.passwordHint"]')).element(by.css('[translate="Save"]')).click();
         browser.sleep(500);
-        util.shouldContainCSS('h2.status.complete.hidden-xs.long-input.ng-binding', 'original password hint');
+        util.shouldContainCSS('h2.status', 'original password hint');
 
         // Reset old password hint
 

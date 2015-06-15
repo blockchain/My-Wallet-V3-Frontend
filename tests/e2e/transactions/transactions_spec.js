@@ -64,10 +64,10 @@ describe('transactions-page', function() {
 
         // Validate all account names
         browser.findElement(by.css('[translate="ALL_ACCOUNTS"]'));
-        util.shouldContainCSS('span.prs.ng-binding', account1Name);
-        util.shouldContainCSS('span.prs.ng-binding', account2Name);
-        util.shouldContainCSS('span.prs.ng-binding', account3Name);
-        util.shouldContainCSS('span.prs.ng-binding', account4Name);
+        util.shouldContainCSS('span.ng-binding', account1Name);
+        util.shouldContainCSS('span.ng-binding', account2Name);
+        util.shouldContainCSS('span.ng-binding', account3Name);
+        util.shouldContainCSS('span.ng-binding', account4Name);
 
         // Validate two account balances
         util.shouldContainCSS('a > span > span > span.ng-binding.ng-isolate-scope.ng-hide', '0.00');

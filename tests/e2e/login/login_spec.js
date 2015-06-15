@@ -77,22 +77,22 @@ describe('login-page', function() {
 
         // Test weak password
         passwordField.sendKeys(browser.params.login.pwweak);
-        browser.findElement(by.css('div.progress-bar.ng-binding.progress-bar-danger'));
+        browser.findElement(by.css('.progress-bar-danger'));
         passwordField.clear();
 
         // Test regular password
         passwordField.sendKeys(browser.params.login.pwregular);
-        browser.findElement(by.css('div.progress-bar.ng-binding.progress-bar-warning'));
+        browser.findElement(by.css('.progress-bar-warning'));
         passwordField.clear();
 
         // Test normal password
         passwordField.sendKeys(browser.params.login.pwnormal);
-        browser.findElement(by.css('div.progress-bar.ng-binding.progress-bar-info'));
+        browser.findElement(by.css('.progress-bar-info'));
         passwordField.clear();
 
         // Test strong password
         passwordField.sendKeys(login.pw);
-        browser.findElement(by.css('div.progress-bar.ng-binding.progress-bar-success'));
+        browser.findElement(by.css('.progress-bar-success'));
         passwordField.clear();
 
     });
@@ -164,7 +164,7 @@ describe('login-page', function() {
         // Submit and validate error messaging
         loginButton.click();
         browser.sleep(1000);
-        util.shouldContainCSS('span.help-block.ng-binding', 'Error Decrypting Wallet. Please check your password is correct.');
+        util.shouldContainCSS('.help-block', 'Error Decrypting Wallet. Please check your password is correct.');
 
     });
 
