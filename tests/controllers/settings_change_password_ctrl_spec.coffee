@@ -1,6 +1,9 @@
 describe "ChangePasswordCtrl", ->
   scope = undefined
   Wallet = undefined
+
+  strongPassword = 't3stp@ssw0rd'
+
   modalInstance =
     close: ->
     dismiss: ->
@@ -8,7 +11,7 @@ describe "ChangePasswordCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller) ->
+    angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
 
@@ -21,7 +24,15 @@ describe "ChangePasswordCtrl", ->
         $stateParams: {},
         $modalInstance: modalInstance
 
-      scope.fields = {currentPassword: "test", password: "t3$tp@s$w0rd", confirmation: "t3$tp@s$w0rd"}
+      element = angular.element(
+        '<form role="form" name="passwordForm" novalidate>' +
+        '<input type="password" name="currentPassword"    ng-model="fields.currentPassword"   is-valid="isCorrectMainPassword"    required />' +
+        '<input type="password" name="password"           ng-model="fields.password"          is-valid="isNotGuid"                min-entropy="25" ng-maxlength="255" required />' +
+        '<input type="password" name="confirmation"       ng-model="fields.confirmation"      is-valid="passwordsMatch"           required />' +
+        '</form>'
+      )
+      scope.model = { fields: {} }
+      $compile(element)(scope)
 
       scope.$digest()
 
@@ -35,112 +46,83 @@ describe "ChangePasswordCtrl", ->
     expect(Wallet.clearAlerts).toHaveBeenCalled()
   )
 
-  it "should be able to change password", inject((Wallet) ->
-    spyOn(Wallet, "changePassword")
-    scope.changePassword()
-    expect(Wallet.changePassword).toHaveBeenCalled()
+  it "should get model values from the form", (() ->
+    scope.passwordForm.currentPassword.$setViewValue('test')
+    expect(scope.fields.currentPassword).toBe('test')
+
+    scope.passwordForm.password.$setViewValue(strongPassword)
+    expect(scope.fields.password).toBe(strongPassword)
+
+    scope.passwordForm.confirmation.$setViewValue(strongPassword)
+    expect(scope.fields.confirmation).toBe(strongPassword)
   )
+
+  describe "change", ->
+
+    it "should be able to change password", inject((Wallet) ->
+      spyOn(Wallet, "changePassword")
+      scope.passwordForm.currentPassword.$setViewValue('test')
+      scope.passwordForm.password.$setViewValue(strongPassword)
+      scope.passwordForm.confirmation.$setViewValue(strongPassword)
+      scope.changePassword()
+      expect(Wallet.changePassword).toHaveBeenCalled()
+    )
+
+    it "should not be able to change password if form is invalid", inject((Wallet) ->
+      spyOn(Wallet, "changePassword")
+      expect(scope.passwordForm.$invalid).toBe(true)
+      scope.changePassword()
+      expect(Wallet.changePassword).not.toHaveBeenCalled()
+    )
 
   describe "validate", ->
 
-    beforeEach ->
-      scope.form.theForm = 
-        password: $error: {}
+    it "should not be valid if all fields are empty", ->
+      expect(scope.passwordForm.$invalid).toBe(true)
+      expect(scope.passwordForm.$valid).toBe(false)
 
-    it "should not display an error if new password is still empty", ->
-      scope.fields.currentPassword = "test"
-      scope.fields.password = ""
-      scope.validate()
-      expect(scope.isValid).toBe(false)
-      expect(scope.errors.password).toBeNull()
-      
-    it "should display an error if the new password is too weak", ->
-      scope.fields.currentPassword = "test"
-      scope.form.theForm.password.$error.minEntropy = true
-      scope.validate()
-      expect(scope.isValid).toBe(false)
-      expect(scope.errors.password).not.toBeNull()
+    it "should be valid if all fields are valid", ->
+      scope.passwordForm.currentPassword.$setViewValue('test')
+      scope.passwordForm.password.$setViewValue(strongPassword)
+      scope.passwordForm.confirmation.$setViewValue(strongPassword)
+      expect(scope.passwordForm.$invalid).toBe(false)
+      expect(scope.passwordForm.$valid).toBe(true)
 
-    it "should display an error if the new password is too long", ->
-      scope.fields.currentPassword = "test"
-      scope.form.theForm.password.$error.maxlength = true
-      scope.validate()
-      expect(scope.isValid).toBe(false)
-      expect(scope.errors.password).not.toBeNull()
-      
-    it "should not display an error if password confirmation is still empty", ->
-      scope.fields.currentPassword = "test"
-      scope.fields.password = "testing"
-      scope.fields.confirmation = ""
-      
-      scope.validate()
-      
-      expect(scope.isValid).toBe(false)
-      expect(scope.errors.confirmation).toBeNull()
-      
-    it "should not display an error if password confirmation matches", ->
-      scope.fields.currentPassword = "test"
-      scope.fields.password = "testing"
-      scope.fields.confirmation = "testing"
-      
-      scope.validate()
-      
-      expect(scope.isValid).toBe(true)
-      expect(scope.errors.confirmation).toBeNull()
-      
-    it "should display an error if password confirmation does not match", ->
-      scope.fields.currentPassword = "test"
-      scope.fields.password = "testing"
-      scope.fields.confirmation = "wrong"
-      
-      scope.validate()
-      
-      expect(scope.isValid).toBe(false)
-      expect(scope.errors.confirmation).not.toBeNull()
+    describe "currentPassword", ->
 
-    it "should check the original password",  inject(() ->
-      expect(scope.isValid).toBe(true)
+      it "should check that the original password is correct", ->
+        scope.passwordForm.currentPassword.$setViewValue('wrong')
+        expect(scope.passwordForm.currentPassword.$error.isNotValid).toBe(true)
+        scope.passwordForm.currentPassword.$setViewValue('test')
+        expect(scope.passwordForm.currentPassword.$error.isNotValid).toBe(false)
+
+    describe "password", ->
+
+      it "should display an error if the new password is too weak", ->
+        scope.passwordForm.password.$setViewValue('weak')
+        expect(scope.passwordForm.password.$error.minEntropy).toBe(true)
+
+      it "should display an error if the new password is too long", ->
+        scope.passwordForm.password.$setViewValue(new Array(257).join('x'))
+        expect(scope.passwordForm.password.$error.maxlength).toBe(true)
+
+      it "should display an error if the new password is the users guid", ->
+        scope.passwordForm.password.$setViewValue('test')
+        expect(scope.passwordForm.password.$error.isNotValid).toBe(true)
+
+      it "should be valid if all requirements are met", ->
+        scope.passwordForm.password.$setViewValue(strongPassword)
+        expect(scope.passwordForm.password.$valid).toBe(true)
+        expect(scope.passwordForm.password.$invalid).toBe(false)
+
+    describe "confirmation", ->
       
-      scope.fields.currentPassword = "test"
-      scope.validate()
-      expect(scope.isValid).toBe(true)
-      
-      scope.fields.currentPassword = "wrong"
-      scope.validate()
-      expect(scope.isValid).toBe(false)
-    )
+      it "should not display an error if password confirmation matches", ->
+        scope.passwordForm.password.$setViewValue('testing')
+        scope.passwordForm.confirmation.$setViewValue('testing')
+        expect(scope.passwordForm.confirmation.$error.isNotValid).toBe(false)
 
-    it "should display an error if password is wrong", ->
-      scope.fields.currentPassword = "wrong"
-      scope.validate()
-      expect(scope.isValid).toBe(false)
-      expect(scope.errors.currentPassword).not.toBeNull()
-
-    it "should not display error is field is still empty", ->
-      scope.validate()
-      expect(scope.errors.currentPassword).toBeNull()
-      expect(scope.errors.password).toBeNull()
-      expect(scope.errors.confirmation).toBeNull()
-
-    it "should fail if main password is incorrect", inject((Wallet) ->
-      spyOn(Wallet, "changePassword")
-      scope.fields.currentPassword = 'wrong'
-      scope.changePassword()
-      expect(Wallet.changePassword).not.toHaveBeenCalled()
-    )
-
-    it "should fail if new password is the guid", inject((Wallet) ->
-      spyOn(Wallet, "changePassword")
-      scope.fields.password = 'test'
-      scope.fields.confirmation = 'test'
-      scope.changePassword()
-      expect(Wallet.changePassword).not.toHaveBeenCalled()
-    )
-
-    it "should fail if new passwords do not match", inject((Wallet) ->
-      spyOn(Wallet, "changePassword")
-      scope.fields.password = 'foo'
-      scope.fields.confirmation = 'bar'
-      scope.changePassword()
-      expect(Wallet.changePassword).not.toHaveBeenCalled()
-    )
+      it "should display an error if password confirmation does not match", ->
+        scope.passwordForm.password.$setViewValue('testing')
+        scope.passwordForm.confirmation.$setViewValue('different')
+        expect(scope.passwordForm.confirmation.$error.isNotValid).toBe(true)
