@@ -79,16 +79,16 @@
     .badge-panel(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
       div(ng-show="display.action == 'mobilenumber'")     
         configure-mobile-number
-          .edit-mobile(ng-if="step == 1")
+          .edit-mobile.flex(ng-if="step == 1")
             input(type="text" international-phone-number ng-model="fields.newMobile" default-country="{{ mobileDefaultCountry }}" preferred-countries="us,ca,gb,au" skip-util-script-download auto-placeholder="false", ng-disabled="status.busy").form-control
-            br
-            button.button-success.button-lg(ui-ladda="{{ status.busy }}", ng-click="changeMobile(fields.newMobile)",ng-disabled="!validateMobileNumber(fields.newMobile)", ladda-translate="SAVE", data-style="expand-left")
-          .flex(ng-show="!user.isMobileVerified && !noMobile && step == 2")
-            .flex-3
+            .flex-1.mll
+              button.button-success.button-lg(ui-ladda="{{ status.busy }}", ng-click="changeMobile(fields.newMobile)",ng-disabled="!validateMobileNumber(fields.newMobile)", ladda-translate="SAVE", data-style="expand-left")
+          .flex-center(ng-show="!user.isMobileVerified && !noMobile && step == 2")
+            .flex-1.prl
               p We have sent your mobile phone an SMS message with a verification code. Enter the code below to verify your mobile phone number.
               input.form-control(type="text",ng-model="code", ng-disabled="status.busy")
               span.help-block {{ errors.verify }}
-            .flex-1.mhl
+            .flex-1.mll
               button.button-success.button-lg(ui-ladda="{{ status.busy }}", ng-click="verifyMobile(code)",ng-disabled="!code || code.length < 3", ladda-translate="VERIFY", data-style="expand-left")
       .flex(ng-show="display.action == 'twofactor'")     
         p.flex-1.prl(translate="SC_CONFIGURE_2FA")
