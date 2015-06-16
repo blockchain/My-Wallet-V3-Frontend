@@ -92,6 +92,7 @@
           p(TRANSLATE="ADD_BLOCK_TOR")
 
     .badge-panel(ng-show="display.action == 'blocktor'")
-      div(ng-show="display.action == 'blocktor'")     
-        p.pbl(TRANSLATE="BLOCK_TOR_EXPLAIN")
-        tor(security-center)
+      .flex-center(ng-show="display.action == 'blocktor'")
+        p.flex-1.prl(TRANSLATE="BLOCK_TOR_EXPLAIN")
+        .flex-1.mll
+          tor(security-center)
