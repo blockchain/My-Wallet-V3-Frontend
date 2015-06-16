@@ -1,4 +1,4 @@
-@SettingsCtrl = ($scope, Wallet, $cookieStore, $state) ->    
+walletApp.controller "SettingsCtrl", ($scope, Wallet, $cookieStore, $state) ->    
   if $state.current.name == "settings"
     $state.go "settings.my-details"
 

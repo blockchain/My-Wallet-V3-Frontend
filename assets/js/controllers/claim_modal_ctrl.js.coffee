@@ -1,4 +1,4 @@
-@ClaimModalCtrl = ($scope, Wallet, $translate, $modalInstance, claim) ->        
+walletApp.controller "ClaimModalCtrl", ($scope, Wallet, $translate, $modalInstance, claim) ->        
   $scope.accounts = Wallet.accounts
   $scope.fields = {to:  null}
   

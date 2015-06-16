@@ -86,13 +86,9 @@
     font-size: 1.1em;
   }
   .tx-details{
-    float: left;
-    width: 70%;
-    .gutter{padding: 0 10px;}
-
     div{
-    margin-bottom: 10px;
-    margin-top: 20px;
+      margin-bottom: 10px;
+      margin-top: 20px;
     }
     p{
       margin: 0 10px 0px 0;
@@ -106,21 +102,17 @@
     }
   }
   .tx-sidebar{
-  float: right;
-  width: 30%;
-  border-left: 2px solid rgb(242, 242, 242);
-    .gutter{padding:20px;}
+    border-left: 2px solid rgb(242, 242, 242);
   }
   .tx-status{
-  font-weight: 600;
-  color: rgb(4, 155, 212);
-  padding: 15px 0px;
+    font-weight: 600;
+    color: rgb(4, 155, 212);
+    padding: 15px 0px;
   }
   .tx-notes{
-  margin-top: 25px;
-  padding-top: 25px;
-  border-top: 1px solid #ECECEC;
-
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid #ECECEC;
     i{margin-right: 5px;}
 
   }
@@ -133,13 +125,11 @@
     span{font-weight: bold; font-size: 1.3em;}
 
   }
-
   .tx-bci-link{
-  float: none;
-  margin: 0;
-  padding: 0;
+    float: none;
+    margin: 0;
+    padding: 0;
   }
-
   button.amount{padding: 10px;height: auto;}
 
 }

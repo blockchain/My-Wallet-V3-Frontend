@@ -1,4 +1,4 @@
-@UpgradeCtrl = ($scope, Wallet, $modalInstance, $log, $window, $translate) ->  
+walletApp.controller "UpgradeCtrl", ($scope, Wallet, $modalInstance, $log, $window, $translate) ->  
   $scope.close = () ->
     $translate("RABBIT_HOLE").then (translation) ->
       if confirm translation

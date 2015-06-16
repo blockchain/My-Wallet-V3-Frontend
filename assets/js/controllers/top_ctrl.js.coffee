@@ -1,4 +1,4 @@
-@TopCtrl = ($scope, Wallet, $modal, $stateParams) ->
+walletApp.controller "TopCtrl", ($scope, Wallet, $modal, $stateParams) ->
   $scope.settings = Wallet.settings
   $scope.isBitCurrency = Wallet.isBitCurrency
   $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency
@@ -8,7 +8,7 @@
                         
     modalInstance = $modal.open(
       templateUrl: "partials/request.jade"
-      controller: RequestCtrl
+      controller: "RequestCtrl"
       resolve:
         destination: -> null
       windowClass: "bc-modal"
@@ -21,7 +21,7 @@
     Wallet.clearAlerts()
     modalInstance = $modal.open(
       templateUrl: "partials/send.jade"
-      controller: SendCtrl
+      controller: "SendCtrl"
       resolve:
         paymentRequest: ->
           {address: "", amount: ""}

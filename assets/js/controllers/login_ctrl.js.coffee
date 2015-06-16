@@ -1,4 +1,4 @@
-@LoginCtrl = ($scope, $rootScope, $log, $http, Wallet, $cookieStore, $modal, $state, $timeout, $translate, filterFilter) ->
+walletApp.controller "LoginCtrl", ($scope, $rootScope, $log, $http, Wallet, $cookieStore, $modal, $state, $timeout, $translate, filterFilter) ->
   $scope.status = Wallet.status    
   $scope.settings = Wallet.settings
   
@@ -62,7 +62,7 @@
       $translate("EMAIL_VERIFIED_SUCCESS").then (messageTranslation) ->
         modalInstance = $modal.open(
           templateUrl: "partials/modal-notification.jade"
-          controller: ModalNotificationCtrl
+          controller: "ModalNotificationCtrl"
           windowClass: "notification-modal"
           resolve:
             notification: ->

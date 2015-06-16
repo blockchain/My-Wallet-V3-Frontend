@@ -1,4 +1,4 @@
-@AppCtrl = ($scope, Wallet, $state, $rootScope, $location, $cookieStore, $timeout, $modal, $window, $translate) ->
+walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, $cookieStore, $timeout, $modal, $window, $translate) ->
   $scope.status    = Wallet.status
   $scope.settings = Wallet.settings
   $rootScope.isMock = Wallet.isMock
@@ -41,7 +41,7 @@
         if Wallet.goal.send?
           $modal.open(
             templateUrl: "partials/send.jade"
-            controller: SendCtrl
+            controller: "SendCtrl"
             resolve:
               paymentRequest: -> 
                 Wallet.goal.send
@@ -53,7 +53,7 @@
         if Wallet.goal.claim?
           modalInstance = $modal.open(
             templateUrl: "partials/claim.jade"
-            controller: ClaimModalCtrl
+            controller: "ClaimModalCtrl"
             resolve:
               claim: -> 
                 Wallet.goal.claim
@@ -69,7 +69,7 @@
             $translate("AUTHORIZED_MESSAGE").then (messageTranslation) ->
               modalInstance = $modal.open(
                 templateUrl: "partials/modal-notification.jade"
-                controller: ModalNotificationCtrl
+                controller: "ModalNotificationCtrl"
                 windowClass: "notification-modal"
                 resolve:
                   notification: ->
@@ -113,7 +113,7 @@
   $scope.$on "requireSecondPassword", (notification, continueCallback, cancelCallback, insist) ->
     modalInstance = $modal.open(
       templateUrl: "partials/second-password.jade"
-      controller: SecondPasswordCtrl
+      controller: "SecondPasswordCtrl"
       backdrop: if insist then "static" else null # Undismissable if "insist"
       resolve:
         insist: ->
@@ -128,7 +128,7 @@
   $scope.$on "needsUpgradeToHD", (notification, continueCallback) ->
     modalInstance = $modal.open(
       templateUrl: "partials/upgrade.jade"
-      controller: UpgradeCtrl,
+      controller: "UpgradeCtrl",
       backdrop: "static" # Undismissable
       windowClass: "bc-modal"
     )
