@@ -60,6 +60,16 @@ form.form-horizontal(role="form",name="form",novalidate)
       label(translate="PASSWORD_HINT")
       p.explain.hidden-sm.hidden-xs(translate="PASSWORD_HINT_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
-      bc-async-input(ng-model="user.passwordHint", on-save="changePasswordHint", on-change="clearErrors", action-title="'CHANGE_PASSWORD_HINT' | translate")
+      bc-async-input-custom(ng-model="user.passwordHint", on-save="changePasswordHint", on-change="clearErrors", action-title="'CHANGE_PASSWORD_HINT' | translate")
+          div(ng-hide="status.edit")
+            h2.status.complete.hidden-xs.long-input {{ ngModel }}
+            button.button-primary(ng-click="edit()") {{ actionTitle }}
+          .form-group(ng-class="{'has-error': !validate()}",ng-show="status.edit")
+            input.form-control(type="{{ type }}", ng-model="form.newValue", ng-focus="focus()", placeholder="{{ placeholder }}", ng-change="onChange()")
+            span.help-block {{ errorMessage }}  
+            span(ng-hide="inline && !status.edit")
+              button.button-primary.btn-small(ng-click="save()",ng-disabled="!validate() || form.newValue == ngModel",ui-ladda="{{ status.saving }}", ladda-translate="SAVE", data-style="expand-left")
+              button.button-muted.btn-small.mlm(ng-click="status.edit = false; newValue = ngModel; onChange()", translate="CANCEL", ng-hide="status.saving")
+
     .help-block
       span {{ errors.passwordHint }}

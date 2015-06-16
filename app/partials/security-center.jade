@@ -46,7 +46,15 @@
 
       .flex(ng-show="display.action == 'passwordhint'")       
         p(translate="CHANGE_PASSWORD_HINT_SECURITY_CENTER")
-        bc-async-input(inline security-center placeholder="'CHANGE_PASSWORD_HINT' | translate" ng-model="user.passwordHint", on-save="changePasswordHint", action-title="'CHANGE_PASSWORD_HINT' | translate") 
+        bc-async-input-custom(inline security-center placeholder="'CHANGE_PASSWORD_HINT' | translate" ng-model="user.passwordHint", on-save="changePasswordHint", action-title="'CHANGE_PASSWORD_HINT' | translate")
+          div.width-100.pll
+            .form-group(ng-class="{'has-error': !validate()}")
+              input.form-control.width-100(type="{{ type }}", ng-model="form.newValue", ng-focus="focus()", placeholder="{{ placeholder }}" ng-change="onChange()")
+              span.help-block {{ errorMessage }}  
+              span(ng-hide="inline && !status.edit")
+                button.button-success.button-lg(ng-click="save()",ng-disabled="!validate() || form.newValue == ngModel",ui-ladda="{{ status.saving }}", ladda-translate="SAVE", data-style="expand-left")
+                button.button-muted.btn-small.mlm(ng-click="status.edit = false; newValue = ngModel; onChange()", translate="CANCEL", ng-hide="status.saving")
+
 
   section.level.level_two
     header.flex-center
