@@ -1,39 +1,3 @@
-.badge-container{
-  width: 60%;
-  margin: 0 auto;
-  h2 {
-    font-size: 15pt;
-  }
-}
-
-.thebadge{
-  opacity: 0.5;
-  h2 {
-    color: #999;
-  }
-  .security-badge img {height: 150px;}
-}
-.thebadge.current{
-  opacity: 1;
-  h2{
-  color: #1b8ac7;
-  }
-  .security-badge img {height: 200px;}
-}
-
-.next-step{
-  border-bottom: 1px solid #eee;
-  padding: 15px 0 15px;
-  p.points{
-  color: rgb(94, 182, 95);
-  font-weight: bold;
-  font-size: 130%;
-  }
-  a{
-  cursor: pointer;
-  }
-}
-
 .row.spacing h2 {
   font-size: 20pt;
   font-weight: 200;
