@@ -1,13 +1,11 @@
 walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
   {
     restrict: "E"
-    replace: 'true'
     scope: {
     }
-    templateUrl: 'templates/configure-mobile-number.jade'
-    link: (scope, elem, attrs) ->
-      scope.securityCenter = attrs.securityCenter?
-
+    transclude: true
+    template: '<div ng-transclude></div>'
+    link: (scope, elem, attrs, ctrl, transclude) ->
       scope.user = Wallet.user
       scope.edit = {mobile: false}
       
@@ -78,11 +76,9 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
       scope.validateMobileNumber = (candidate) ->
         # Duplicate effort:
         return intlTelInputUtils.isValidNumber("+" + candidate)
+
+      transclude(scope, (clone, scope) ->
+        elem.empty().append(clone)
+      )
   }
 )
-
-
-
-
-
-
