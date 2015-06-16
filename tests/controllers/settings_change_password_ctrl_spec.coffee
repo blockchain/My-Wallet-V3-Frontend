@@ -90,11 +90,13 @@ describe "ChangePasswordCtrl", ->
 
     describe "currentPassword", ->
 
-      it "should check that the original password is correct", ->
+      it "should fail if currentPassword is wrong", ->
         scope.passwordForm.currentPassword.$setViewValue('wrong')
         expect(scope.passwordForm.currentPassword.$error.isNotValid).toBe(true)
+
+      it "should pass if currentPassword is correct", ->
         scope.passwordForm.currentPassword.$setViewValue('test')
-        expect(scope.passwordForm.currentPassword.$error.isNotValid).toBe(false)
+        expect(scope.passwordForm.currentPassword.$error.isNotValid).not.toBe(true)
 
     describe "password", ->
 
@@ -120,7 +122,7 @@ describe "ChangePasswordCtrl", ->
       it "should not display an error if password confirmation matches", ->
         scope.passwordForm.password.$setViewValue('testing')
         scope.passwordForm.confirmation.$setViewValue('testing')
-        expect(scope.passwordForm.confirmation.$error.isNotValid).toBe(false)
+        expect(scope.passwordForm.confirmation.$error.isNotValid).not.toBe(true)
 
       it "should display an error if password confirmation does not match", ->
         scope.passwordForm.password.$setViewValue('testing')
