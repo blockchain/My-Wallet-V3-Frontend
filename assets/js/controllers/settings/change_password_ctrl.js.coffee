@@ -10,11 +10,11 @@ walletApp.controller "ChangePasswordCtrl", ($scope, $log, Wallet, $modalInstance
   $scope.isNotGuid = (candidate) ->
     return !(candidate == Wallet.uid)
 
-  $scope.passwordsMatch = (confirmation) ->
-    return confirmation == $scope.fields.password
+  $scope.passwordsMatch = () ->
+    return $scope.fields.confirmation == $scope.fields.password
 
   $scope.changePassword = () ->
-    return unless $scope.passwordForm.$valid
+    return unless $scope.passwordForm.$valid && $scope.passwordsMatch()
     success = () ->
       $modalInstance.dismiss ""
     error = (err) ->
