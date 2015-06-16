@@ -5,7 +5,6 @@ describe "Change Mobile Number Directive", ->
   isoScope = undefined
   
   beforeEach module("walletApp")
-  beforeEach(module('templates/configure-mobile-number.jade'))
   
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
     
@@ -18,7 +17,11 @@ describe "Change Mobile Number Directive", ->
   )
   
   beforeEach ->
-    element = $compile("<configure-mobile-number></configure-mobile-number>")($rootScope)
+    element = $compile(
+      "<configure-mobile-number>" +
+      "<a translate='CHANGE_MOBILE_NUMBER'></a>" +
+      "</configure-mobile-number>"
+    )($rootScope)
     $rootScope.$digest()
     isoScope = element.isolateScope()
     isoScope.$digest()
