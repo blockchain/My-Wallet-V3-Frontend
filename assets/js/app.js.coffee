@@ -83,7 +83,6 @@ modules = [
   "templates/transaction-note.jade"
   "templates/transaction-status.jade"
   "templates/security-badge.jade"
-  "templates/configure-mobile-number.jade"
   "templates/confirm-recovery-phrase.jade"
   "templates/configure-second-password.jade"
   "templates/tor.jade"
