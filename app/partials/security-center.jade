@@ -10,32 +10,30 @@
         a(ng-click="user.isEmailVerified || toggle('email')", ng-class="{'active' : display.action == 'email' }")
           .flex-center.flex-column
             img(src="img/badge-verifyemail.png")
-            img.ribbon(src="img/ribbon.svg", ng-show="user.isEmailVerified")
           p(translate="ADD_VERIFY_EMAIL")
       li.level-badge(ng-class="{'badge-active': status.didConfirmRecoveryPhrase}")
         a(ng-click="status.didConfirmRecoveryPhrase || toggle('securityphrase')", ng-class="{'active' : display.action == 'securityphrase' }")
           .flex-center.flex-column
             img(src="img/badge-securityphrase.png")
-            img.ribbon(src="img/ribbon.svg", ng-show="status.didConfirmRecoveryPhrase")
           p(translate="ADD_WALLET_RECOVERY")
       li.level-badge(ng-class="{'badge-active': user.passwordHint}")
         a(ng-click="user.passwordHint || toggle('passwordhint')", ng-class="{'active' : display.action == 'passwordhint' }")
           .flex-center.flex-column
             img(src="img/badge-passwordhint.png")
-            img.ribbon(src="img/ribbon.svg", ng-show="user.passwordHint")
           p(translate="ADD_PASSWORD_HINT")
 
     .badge-panel(ng-show="display.action == 'email' || display.action == 'securityphrase' || display.action == 'passwordhint' ")
-      div(ng-show="display.action == 'email' && !display.editingEmail")        
-        p(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
-        verify-email(security-center)
-        p(ng-hide="user.isEmailVerified")
-          span(translate="DIDNT_RECEIVE_EMAIL")
-          span 
-            resend-email-confirmation(security-center)
-            span(translate="OR")
-          span
-            a(ng-click="beginEditEmail()", translate="CHANGE_EMAIL_ADDRESS")
+      div(ng-show="display.action == 'email' && !display.editingEmail")
+        .verify-email
+          p(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
+          verify-email(security-center)
+          p(ng-hide="user.isEmailVerified")
+            span(translate="DIDNT_RECEIVE_EMAIL")
+            span 
+              resend-email-confirmation(security-center)
+              span(translate="OR")
+            span
+              a(ng-click="beginEditEmail()", translate="CHANGE_EMAIL_ADDRESS")
 
       .flex-center(ng-show="display.action == 'email' && display.editingEmail")       
         p(translate="YOUR_EMAIL_ADDRESS")
@@ -60,13 +58,11 @@
         a(ng-click="user.isMobileVerified || toggle('mobilenumber')", ng-class="{'active' : display.action == 'mobilenumber' }")
           .flex-center.flex-column
             img(src="img/badge-addmobile.png")
-            img.ribbon(src="img/ribbon.svg", ng-show="user.isMobileVerified")
           p(TRANSLATE="ADD_MOBILE_NUMBER")
       li.level-badge(ng-class="{'badge-active': settings.needs2FA}")
         a(ng-click="settings.needs2FA || toggle('twofactor')", ng-class="{'active' : display.action == 'twofactor' }")
           .flex-column.flex-center
             img(src="img/badge-add2FA.png")
-            img.ribbon(src="img/ribbon.svg", ng-show="settings.needs2FA")
           p(translate="ENABLE_TWO_STEP")
 
     .badge-panel(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
@@ -88,7 +84,6 @@
         a(ng-click="settings.blockTOR || toggle('blocktor')", ng-class="{'active' : display.action == 'blocktor' }")
           .flex-column.flex-center
             img(src="img/badge-blockTOR.png")
-            img.ribbon(src="img/ribbon.svg", ng-show="settings.blockTOR")
           p(TRANSLATE="ADD_BLOCK_TOR")
 
     .badge-panel(ng-show="display.action == 'blocktor'")

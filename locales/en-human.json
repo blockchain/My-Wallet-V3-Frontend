@@ -442,6 +442,6 @@
   "SC_CONFIGURE_2FA" : "2-Step Verification helps prevent unauthorized access to your wallet by requiring a one-time password after every login attempt. Enabling this option helps keep unauthorized users from being able to access your wallet.",
   "OR" : " or ",
   "DIDNT_RECEIVE_EMAIL" : "Didn't receive the email?",
-  "YOUR_EMAIL_ADDRESS" : "You email address"
-
+  "YOUR_EMAIL_ADDRESS" : "You email address",
+  "VERIFY" : "Verify"
 }
