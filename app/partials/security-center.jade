@@ -67,14 +67,15 @@
           .flex-column.flex-center
             img(src="img/badge-add2FA.png")
             img.ribbon(src="img/ribbon.svg", ng-show="settings.needs2FA")
-          p(translate="ADD_TWO_FACTOR")
+          p(translate="ENABLE_TWO_STEP")
 
     .badge-panel(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
       div(ng-show="display.action == 'mobilenumber'")     
         configure-mobile-number(inline security-center)
-      .flex(ng-show="display.action == 'twofactor'")     
+      .flex-center(ng-show="display.action == 'twofactor'")     
         p.flex-1.prl(translate="SC_CONFIGURE_2FA")
-        a.button-success.button-lg(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA")
+        .flex-1.mll
+          a.button-success.button-lg(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA")
 
   section.level.level_three
     header.flex-center
