@@ -40,9 +40,10 @@
       .flex-center(ng-show="display.action == 'email' && display.editingEmail")       
         p(translate="YOUR_EMAIL_ADDRESS")
         bc-async-input(inline security-center type="email", placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
-      div(ng-show="display.action == 'securityphrase'")        
-        p.pbl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
-        confirm-recovery-phrase(security-center)
+      .flex-center(ng-show="display.action == 'securityphrase'")        
+        p.flex-1.prl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
+        .flex-1.mll
+          confirm-recovery-phrase(security-center)
 
       .flex(ng-show="display.action == 'passwordhint'")       
         p(translate="CHANGE_PASSWORD_HINT_SECURITY_CENTER")
