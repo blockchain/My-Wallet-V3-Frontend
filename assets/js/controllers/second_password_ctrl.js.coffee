@@ -1,4 +1,4 @@
-@SecondPasswordCtrl = ($scope, $log, Wallet, $modalInstance, insist, continueCallback, cancelCallback) ->
+walletApp.controller "SecondPasswordCtrl", ($scope, $log, Wallet, $modalInstance, insist, continueCallback, cancelCallback) ->
   $scope.insist = if insist then true else false 
   $scope.alerts = Wallet.alerts
   

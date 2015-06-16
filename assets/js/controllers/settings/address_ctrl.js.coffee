@@ -1,4 +1,4 @@
-@AddressCtrl = ($scope, Wallet, $log, $state, $stateParams, $filter, $translate) ->
+walletApp.controller "AddressCtrl", ($scope, Wallet, $log, $state, $stateParams, $filter, $translate) ->
   $scope.address = {address: null}
   $scope.accounts = Wallet.accounts
   $scope.show = {watchOnly: false, editLabel: false}

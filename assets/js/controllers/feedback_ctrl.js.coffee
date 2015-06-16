@@ -1,4 +1,4 @@
-@FeedbackCtrl = ($scope, $log, $state, $http) ->
+walletApp.controller "FeedbackCtrl", ($scope, $log, $state, $http) ->
  
   $scope.state = $state
 
