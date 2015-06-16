@@ -81,7 +81,6 @@
     img { opacity: 1; }
     a {
       cursor: default;
-      p { margin: 0;  }
     }
   }
   .level-header {
@@ -115,6 +114,11 @@
       margin: 0;
     }
   }
+}
+
+.verify-email {
+  width: 100%;
+  p { width: 50%; }
 }
 
 @media (max-width: 768px) {
