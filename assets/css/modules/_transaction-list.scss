@@ -125,11 +125,6 @@
     span{font-weight: bold; font-size: 1.3em;}
 
   }
-  .tx-bci-link{
-    float: none;
-    margin: 0;
-    padding: 0;
-  }
   button.amount{padding: 10px;height: auto;}
 
 }
@@ -137,7 +132,6 @@
 button.amount {
   margin-top: 0px;
   margin-left: 5px;
-  width: 100px;
   padding: 10px 20px;
   border: none;
   background: none;
@@ -306,22 +300,19 @@ a.date,p.date {
   }
 }
 
-@media (min-width: 768px){
-  #transaction-details{
-    .status{text-align: right;}
-  }
-}
-
 @media (min-width: 992px){
   .amountTotal{float: right;}
 }
 
-@media (max-width: 620px) {
-  #transactions {
-    top: 0;
-  }
+@media(max-width: 902px) {
   .tx-bci-link {
-    font-size: 0.4em;
+    font-size: .8em;
+  }
+}
+
+@media (min-width: 768px){
+  #transaction-details{
+    .status{text-align: right;}
   }
 }
 
@@ -335,5 +326,18 @@ a.date,p.date {
   #transactions .row.transaction div.amount button.amount {
     min-width: 121px;
     font-size: .8em;
+  }
+}
+
+@media (max-width: 620px) {
+  #transactions {
+    top: 0;
+  }
+  .tx-bci-link {
+    font-size: 0.4em;
+    width: 85px;
+  }
+  .transaction-card {
+    button.amount { font-size: .75em; }
   }
 }
