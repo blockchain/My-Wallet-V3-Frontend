@@ -3,12 +3,10 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON("package.json")
     clean: {
-      build: {
-        src: ["build/**/*"]
-      }
-      dist: {
-        src: ["dist/**/*"]
-      }
+      build: ["build"]
+      dist: ["dist"]
+      test: ["coverage"]
+      sass: [".sass-cache"]
     }
     uglify:
       options:
