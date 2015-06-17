@@ -11,7 +11,8 @@ describe('transactions-page', function() {
     var account4Name = 'Spending';
 
     // Account transaction value variables
-    var account1TransValue = '0.00077847 BTC';
+    var account1TransValue = '0.00087847 BTC';
+    var account1TransValueTx = '0.00077847 BTC';
     var account3TransValue = '0.00042116 BTC';
     var account3TransLocationPage = 'h1.ng-binding';
 
@@ -64,14 +65,14 @@ describe('transactions-page', function() {
 
         // Validate all account names
         browser.findElement(by.css('[translate="ALL_ACCOUNTS"]'));
-        util.shouldContainCSS('span.ng-binding', account1Name);
-        util.shouldContainCSS('span.ng-binding', account2Name);
-        util.shouldContainCSS('span.ng-binding', account3Name);
-        util.shouldContainCSS('span.ng-binding', account4Name);
+        util.shouldContainCSS('[ng-repeat="account in accounts"]', account1Name);
+        util.shouldContainCSS('[ng-repeat="account in accounts"]', account2Name);
+        util.shouldContainCSS('[ng-repeat="account in accounts"]', account3Name);
+        util.shouldContainCSS('[ng-repeat="account in accounts"]', account4Name);
 
         // Validate two account balances
-        util.shouldContainCSS('a > span > span > span.ng-binding.ng-isolate-scope.ng-hide', '0.00');
-        browser.findElement(by.cssContainingText('span.ng-binding', account3TransValue));
+        util.shouldContainCSS('[ng-repeat="account in accounts"]', account1TransValue);
+        util.shouldContainCSS('[ng-repeat="account in accounts"]', account3TransValue);
 
     });
 
@@ -80,10 +81,10 @@ describe('transactions-page', function() {
         // Open Transactions drawer in left navigation
         browser.findElement(by.css('[translate="MY_TRANSACTIONS"]')).click();
 
-        // Click on account 'DONT EDIT 3' and validate value and date
-        browser.findElement(by.cssContainingText('span.prs.ng-binding', account3Name)).click();
+        // Click on 4th account and validate value and date
+        browser.element.all(by.repeater('account in accounts')).get(3).click();
         util.shouldContainCSS(account3TransLocationPage, account3TransValue);
-        util.shouldContainCSS('date.ng-binding', account3TransDate);
+        util.shouldContainCSS('date', account3TransDate);
 
     });
 
@@ -92,28 +93,20 @@ describe('transactions-page', function() {
         // Open Transactions drawer in left navigation
         browser.findElement(by.css('[translate="MY_TRANSACTIONS"]')).click();
 
-        // Click on account 'DONT EDIT 3' and validate value and date
-        browser.findElement(by.cssContainingText('span.prs.ng-binding', account3Name)).click();
+        // Click on 4th account and validate value and date
+        browser.element.all(by.repeater('account in accounts')).get(3).click()
         util.shouldContainCSS(account3TransLocationPage, account3TransValue);
-        browser.findElement(by.cssContainingText('date.ng-binding', account3TransDate)).click();
+        browser.findElement(by.cssContainingText('date', account3TransDate)).click();
 
         // Validate transaction details page
-        // TODO Change to translate="" after translations added
-        util.shouldContainCSS('strong', 'Transaction Details');
-
         browser.findElement(by.css('[translate="TRANSACTION_COMPLETE"]'));
 
-        // TODO Change to translate="" after translations added
+        // TODO use translations and validate more items
         util.shouldContainCSS('p', 'Value at Send');
-
         browser.sleep(200); // Required for next step to pass in Chrome
-        expect(element(by.cssContainingText('div > span.ng-binding.ng-isolate-scope', '$0.10')).isPresent()).toBe(true);
-
-        // TODO Change to translate="" after translations added
-        util.shouldContainCSS('p', 'Value now');
-
-        // TODO Change to translate="" after translations added
-        util.shouldContainCSS('a.button-default.button-sm', 'Verify On Blockchain.info');
+        expect(element(by.cssContainingText('[btc="transaction.result"]', '$0.10')).isPresent()).toBe(true);
+        util.shouldContainCSS('.tx-value', 'Value now');
+        util.shouldContainCSS('a', 'Verify On Blockchain.info');
 
     });
 
@@ -122,12 +115,12 @@ describe('transactions-page', function() {
         // Open Transactions drawer in left navigation
         browser.findElement(by.css('[translate="MY_TRANSACTIONS"]')).click();
 
-        // Click on account 'DONT EDIT 3' and view transaction details
-        browser.findElement(by.cssContainingText('span.prs.ng-binding', account3Name)).click();
-        browser.findElement(by.cssContainingText('date.ng-binding', account3TransDate)).click();
+        // Click on 4th account in list and view transaction details
+        browser.element.all(by.repeater('account in accounts')).get(3).click();
+        browser.element.all(by.repeater("transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")).get(0).click();
 
         // Return to account details and validate Request/Send buttons
-        browser.findElement(by.css('[ng-click="back()"]')).click();
+        browser.findElement(by.css('h4.back')).click();
         browser.findElement(by.css('[translate="REQUEST"]'));
         browser.findElement(by.css('[translate="SEND"]'));
 
@@ -139,7 +132,7 @@ describe('transactions-page', function() {
         browser.findElement(by.css('[translate="MY_TRANSACTIONS"]')).click();
 
         // Click on account 'DONT EDIT 1' and validate transaction date
-        browser.findElement(by.cssContainingText('span.prs.ng-binding', account1Name)).click();
+        browser.element.all(by.repeater('account in accounts')).get(1).click();
         util.shouldContainCSS('date.ng-binding', account1TransDate);
 
         // Validate  address labels within account details
@@ -155,12 +148,12 @@ describe('transactions-page', function() {
         browser.findElement(by.css('[translate="MY_TRANSACTIONS"]')).click();
 
         // Click on account 'DONT EDIT 1' and validate transaction date
-        browser.findElement(by.cssContainingText('span.prs.ng-binding', account1Name)).click();
+        browser.element.all(by.repeater('account in accounts')).get(1).click();
         browser.findElement(by.css('[translate="SEND"]')).click();
 
         // Validate Send modal details
         browser.findElement(by.css('[translate="FROM:"]'));
-        util.shouldContainCSS('span.ng-binding.ng-scope', account1Name + ' (' + account1TransValue + ')');
+        util.shouldContainCSS('span.ng-binding.ng-scope', account1Name + ' (' + account1TransValueTx + ')');
 
         // Close Send modal, wait for and click Request button
         browser.findElement(by.css('[ng-click="close()"]')).click();

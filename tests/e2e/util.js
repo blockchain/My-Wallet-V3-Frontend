@@ -6,7 +6,8 @@ module.exports = {
 
         // Visit URL and validate page title
         // Use ONE of the following two lines to enable tests on staging versus localhost.
-        browser.driver.get('https://dev.blockchain.info/#/login'); // Staging server
+        browser.driver.get('https://dev.blockchain.info/#/login'); // Dev server
+        //browser.driver.get('https://staging.blockchain.info/#/login'); // Staging server
         //browser.driver.get('https://alpha.blockchain.info/#/login'); // Alpha server
         //browser.driver.get('http://local.blockchain.com:8080/#/login'); // Localhost
 
