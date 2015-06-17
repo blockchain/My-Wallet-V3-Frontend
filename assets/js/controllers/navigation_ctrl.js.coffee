@@ -1,4 +1,4 @@
-@NavigationCtrl = ($scope, Wallet, SecurityCenter, $translate, $cookieStore, $state, filterFilter, $interval) ->
+walletApp.controller "NavigationCtrl", ($scope, Wallet, SecurityCenter, $translate, $cookieStore, $state, filterFilter, $interval) ->
   
   $scope.status = Wallet.status
   $scope.security = SecurityCenter.security

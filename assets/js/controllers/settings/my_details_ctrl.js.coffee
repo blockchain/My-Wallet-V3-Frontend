@@ -1,4 +1,4 @@
-@SettingsMyDetailsCtrl = ($scope, Wallet, $modal, $filter, $translate) ->    
+walletApp.controller "SettingsMyDetailsCtrl", ($scope, Wallet, $modal, $filter, $translate) ->    
   $scope.edit = {email: false, password: false, passwordHint: false} 
   $scope.user = Wallet.user
   $scope.settings = Wallet.settings
@@ -26,7 +26,7 @@
   $scope.changePassword = () ->
     modalInstance = $modal.open(
       templateUrl: "partials/settings/change-password.jade"
-      controller: ChangePasswordCtrl
+      controller: "ChangePasswordCtrl"
       windowClass: "bc-modal"
     )
     if modalInstance?
@@ -36,7 +36,7 @@
   $scope.changeTwoFactor = () ->
     modalInstance = $modal.open(
       templateUrl: "partials/settings/two-factor.jade"
-      controller: TwoFactorCtrl
+      controller: "TwoFactorCtrl"
       windowClass: "bc-modal"
     )
     if modalInstance?

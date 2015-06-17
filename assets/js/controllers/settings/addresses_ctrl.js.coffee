@@ -1,4 +1,4 @@
-@SettingsAddressesCtrl = ($scope, Wallet, $translate, $modal, $state) ->
+walletApp.controller "SettingsAddressesCtrl", ($scope, Wallet, $translate, $modal, $state) ->
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.accounts = Wallet.accounts
   $scope.display = {archived: false, account_dropdown_open: false}  
@@ -34,7 +34,7 @@
     Wallet.clearAlerts()
     modalInstance = $modal.open(
       templateUrl: "partials/settings/import-address.jade"
-      controller: AddressImportCtrl
+      controller: "AddressImportCtrl"
       windowClass: "bc-modal"
     )
     if modalInstance?
@@ -44,7 +44,7 @@
   $scope.transfer = (address) ->
     modalInstance = $modal.open(
       templateUrl: "partials/send.jade"
-      controller: SendCtrl
+      controller: "SendCtrl"
       windowClass: "bc-modal"
       resolve:
         paymentRequest: -> 
@@ -57,7 +57,7 @@
   $scope.showPrivKey = (address) ->
     modalInstance = $modal.open(
       templateUrl: "partials/settings/show-private-key.jade"
-      controller: ShowPrivateKeyCtrl
+      controller: "ShowPrivateKeyCtrl"
       windowClass: "bc-modal"
       resolve:
         addressObj: ->

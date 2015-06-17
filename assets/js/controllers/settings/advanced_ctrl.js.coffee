@@ -1,4 +1,4 @@
-@SettingsAdvancedCtrl = ($scope, Wallet, $modal, $translate) ->
+walletApp.controller "SettingsAdvancedCtrl", ($scope, Wallet, $modal, $translate) ->
   $scope.settings = Wallet.settings
   $scope.processToggleRememberTwoFactor = null
   $scope.errors = 

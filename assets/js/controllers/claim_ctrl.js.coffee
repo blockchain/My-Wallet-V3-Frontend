@@ -1,4 +1,4 @@
-@ClaimCtrl = ($scope, Wallet, $translate, $stateParams, $state) ->
+walletApp.controller "ClaimCtrl", ($scope, Wallet, $translate, $stateParams, $state) ->
   balance = Wallet.fetchBalanceForRedeemCode($stateParams.code)        
   Wallet.goal.claim = {code: $stateParams.code, balance: balance}
   

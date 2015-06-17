@@ -1,4 +1,4 @@
-@TransactionCtrl = ($scope, Wallet, $log, $stateParams, $filter, $cookieStore, $sce) ->
+walletApp.controller "TransactionCtrl", ($scope, Wallet, $log, $stateParams, $filter, $cookieStore, $sce) ->
   window.scrollTo(0, 0);
   #################################
   #           Private             #

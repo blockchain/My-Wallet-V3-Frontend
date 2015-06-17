@@ -1,4 +1,4 @@
-@OpenLinkController = ($scope, Wallet, $translate, $stateParams, $state) ->        
+walletApp.controller "OpenLinkController", ($scope, Wallet, $translate, $stateParams, $state) ->        
   
   paymentRequest = Wallet.parsePaymentRequest($stateParams.uri)  
   

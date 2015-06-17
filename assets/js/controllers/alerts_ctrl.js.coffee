@@ -1,4 +1,4 @@
-@AlertsCtrl = ($scope, Wallet) ->
+walletApp.controller "AlertsCtrl", ($scope, Wallet) ->
   $scope.alerts = Wallet.alerts
   $scope.$watchCollection "alerts", () ->
     

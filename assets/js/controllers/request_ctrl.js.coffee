@@ -1,4 +1,4 @@
-@RequestCtrl = ($scope, Wallet, $modalInstance, $log, destination, $translate, $stateParams, filterFilter) ->  
+walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, destination, $translate, $stateParams, filterFilter) ->  
   $scope.accounts = Wallet.accounts
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.destinations = []

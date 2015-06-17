@@ -1,4 +1,4 @@
-@ChangePasswordCtrl = ($scope, $log, Wallet, $modalInstance, $translate) ->
+walletApp.controller "ChangePasswordCtrl", ($scope, $log, Wallet, $modalInstance, $translate) ->
   
   $scope.isValid = false
   

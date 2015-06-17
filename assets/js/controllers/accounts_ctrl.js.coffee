@@ -1,4 +1,4 @@
-@AccountsCtrl = ($scope, Wallet, SecurityCenter, $state, $stateParams, $modal, filterFilter, $location) ->
+walletApp.controller "AccountsCtrl", ($scope, Wallet, SecurityCenter, $state, $stateParams, $modal, filterFilter, $location) ->
   $scope.status    = Wallet.status
   $scope.total = Wallet.total
   $scope.settings = Wallet.settings
@@ -28,7 +28,7 @@
     Wallet.clearAlerts()
     modalInstance = $modal.open(
       templateUrl: "partials/account-form.jade"
-      controller: AccountFormCtrl
+      controller: "AccountFormCtrl"
       resolve:
         account: -> undefined
       windowClass: "bc-modal"

@@ -1,4 +1,4 @@
-@MobileCtrl = ($scope, Wallet) ->
+walletApp.controller "MobileCtrl", ($scope, Wallet) ->
   $scope.display = {pairingCode: false}
   $scope.pairingCode = null
   

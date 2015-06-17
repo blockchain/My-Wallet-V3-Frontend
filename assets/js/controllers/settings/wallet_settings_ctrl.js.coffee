@@ -1,4 +1,4 @@
-@SettingsWalletCtrl = ($scope, Wallet, $translate, $window) -> 
+walletApp.controller "SettingsWalletCtrl", ($scope, Wallet, $translate, $window) -> 
   $scope.settings = Wallet.settings
   $scope.languages = Wallet.languages
   $scope.currencies = Wallet.currencies

@@ -1,4 +1,4 @@
-@SettingsSecurityCenterCtrl = ($scope, Wallet, SecurityCenter, filterFilter, $modal) ->
+walletApp.controller "SettingsSecurityCenterCtrl", ($scope, Wallet, SecurityCenter, filterFilter, $modal) ->
   $scope.security = SecurityCenter.security
   
   $scope.settings = Wallet.settings
@@ -25,7 +25,7 @@
   $scope.transfer = (address) ->
     $modal.open(
       templateUrl: "partials/send.jade"
-      controller: SendCtrl
+      controller: "SendCtrl"
       resolve:
         paymentRequest: -> 
           {fromAddress: address, amount: 0, toAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()]}
@@ -72,7 +72,7 @@
   $scope.changeTwoFactor = () ->
     modalInstance = $modal.open(
       templateUrl: "partials/settings/two-factor.jade"
-      controller: TwoFactorCtrl
+      controller: "TwoFactorCtrl"
       windowClass: "bc-modal"
     )
     if modalInstance?

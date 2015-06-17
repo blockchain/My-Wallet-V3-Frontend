@@ -1,4 +1,4 @@
-@SettingsNavigationCtrl = ($scope, Wallet, filterFilter, $state) ->
+walletApp.controller "SettingsNavigationCtrl", ($scope, Wallet, filterFilter, $state) ->
   $scope.status    = Wallet.status
   $scope.settings  = Wallet.settings
 
