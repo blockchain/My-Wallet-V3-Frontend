@@ -191,8 +191,8 @@
 .level-complete-animation.ng-hide-remove {
   opacity: 0;
   display: block !important;
-  -webkit-transition: all 2s linear .7s !important;
-  transition: all 2s linear .7s !important;
+  -webkit-transition: all 2s linear .9s !important;
+  transition: all 2s linear .9s !important;
 }
 .level-complete-animation.ng-hide-remove.ng-hide-remove-active {
   opacity: 1;
@@ -202,8 +202,8 @@
 .level-complete-container.ng-hide-remove {
   opacity: 0;
   display: block !important;
-  -webkit-transition: opacity .5s linear 3s !important;
-  transition: opacity .5s linear 3s !important;
+  -webkit-transition: opacity .5s linear 3.2s !important;
+  transition: opacity .5s linear 3.2s !important;
 }
 .level-complete-container.ng-hide-remove.ng-hide-remove-active {
   opacity: 1;
