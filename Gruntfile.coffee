@@ -49,10 +49,10 @@ module.exports = (grunt) ->
       application_dependencies:
         src: [
           'build/js/wrappers/*.js' # Wrappers around MyWallet, MyWalletStore, etc
+          'build/js/app.js' # Needs to be included before controllers
           'build/js/services/*.js'
           'build/js/controllers/*.js'
           'build/js/controllers/settings/*.js'
-          'build/js/app.js' 
           'build/js/directives/*.js'
           'build/js/filters.js'
           'build/js/routes.js'
