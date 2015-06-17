@@ -51,7 +51,11 @@
   .level-badge {
     width: 22%;
     transition: all .3s ease-in-out;
-    img {opacity: .5}
+    img {
+      opacity: .3;
+      -webkit-filter: grayscale(100%);
+      filter: grayscale(100%);
+    }
     a {
       display: block;
       text-align: center;
@@ -78,7 +82,11 @@
     }
   }
   .badge-active {
-    img { opacity: 1; }
+    img {
+      opacity: 1;
+      -webkit-filter: none;
+      filter: none;
+    }
     a {
       cursor: default;
     }
@@ -119,6 +127,14 @@
 .verify-email {
   width: 100%;
   p { width: 50%; }
+}
+
+.level-complete {
+  width: 75px;
+  height: 75px;
+  border: 5px solid $bright-green;
+  border-radius: 100%;
+  i { font-size: 2em; }
 }
 
 @media (max-width: 768px) {
