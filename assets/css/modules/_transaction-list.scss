@@ -74,21 +74,20 @@
   background-color: $light-grey-alt;
   border: 1px solid $eee;
   border-radius: 5px;
-  padding: 20px 30px;
-  max-width: 700px;
-  margin: 0 auto;
+  padding: 20px;
+  max-width: 780px;
+  margin: 10px auto;
   font-size: 1.1em;
   .tx-date{
-    border-bottom: 1px solid rgb(223, 223, 223);
+    border-bottom: 1px solid #DCDCDC;
     padding: 0 0px 15px 0;
     margin-bottom: 15px;
-    color: rgb(166, 166, 166);
+    color: #6C6C6C;
     font-size: 1.1em;
   }
   .tx-details{
     div{
-      margin-bottom: 10px;
-      margin-top: 20px;
+      margin-bottom: 20px;
     }
     p{
       margin: 0 10px 0px 0;
@@ -102,7 +101,7 @@
     }
   }
   .tx-sidebar{
-    border-left: 2px solid rgb(242, 242, 242);
+    border-left: 1px solid #DCDCDC;
   }
   .tx-status{
     font-weight: 600;
@@ -112,7 +111,7 @@
   .tx-notes{
     margin-top: 25px;
     padding-top: 25px;
-    border-top: 1px solid #ECECEC;
+    border-top: 1px solid #E5E5E5;
     i{margin-right: 5px;}
 
   }
@@ -120,13 +119,14 @@
     span{float: none;}
   }
   .tx-value{
+    text-align: center;
     margin-bottom: 10px;
     p{font-size: .9em; margin: 0; color: darkgrey;}
     span{font-weight: bold; font-size: 1.3em;}
 
   }
-  button.amount{padding: 10px;height: auto;}
-
+  button.amount{padding: 10px;height: auto;width: 100%;}
+  span.you{opacity: .5; font-style: italic;padding-right: 5px;}
 }
 
 button.amount {
