@@ -142,6 +142,74 @@
   animation-name: zoom-out;
 }
 
+//////////////////////////////////////////
+/////////                         ///////
+///*** SECURITY CENTER ANIMATIONS ***////
+////////                        ////////
+////////////////////////////////////////
+
+@-webkit-keyframes image-fade {
+  0% {
+    opacity: .3;
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes image-fade {
+  0% {
+    opacity: .5;
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+.level-incomplete-container.ng-hide-add {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  display: block !important;
+  -webkit-transition: all .5s linear !important;
+  transition: all .5s linear !important;
+}
+
+.level-incomplete-container.ng-hide-add.ng-hide-add-active {
+  -webkit-animation: image-fade 1s ease-in-out;
+  animation: image-fade 1s ease-in-out;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+}
+// level complete animation
+.level-complete-animation {
+  display: none !important;
+}
+.level-complete-animation.ng-hide-remove {
+  opacity: 0;
+  display: block !important;
+  -webkit-transition: all 2s linear .7s !important;
+  transition: all 2s linear .7s !important;
+}
+.level-complete-animation.ng-hide-remove.ng-hide-remove-active {
+  opacity: 1;
+}
+
+// after animation done, bring back full image
+.level-complete-container.ng-hide-remove {
+  opacity: 0;
+  display: block !important;
+  -webkit-transition: opacity .5s linear 3s !important;
+  transition: opacity .5s linear 3s !important;
+}
+.level-complete-container.ng-hide-remove.ng-hide-remove-active {
+  opacity: 1;
+}
+
+
 
 ///////////////////////////////////////////
 /////////                    //////////////

@@ -443,5 +443,12 @@
   "OR" : " or ",
   "DIDNT_RECEIVE_EMAIL" : "Didn't receive the email?",
   "YOUR_EMAIL_ADDRESS" : "You email address",
-  "VERIFY" : "Verify"
+  "VERIFY" : "Verify",
+  "NICELY_DONE" : "Nicely done!",
+  "TOR_BLOCKED" : "Tor Blocked",
+  "TWO_STEP_ENABLED" : "2-Step Enabled",
+  "MOBILE_LINKED" : "Mobile Linked",
+  "HINT_STORED" : "Hint Stored",
+  "PHRASE_BACKED" : "Phrase Backed",
+  "EMAIL_VERIFIED" : "Email Verified"
 }
