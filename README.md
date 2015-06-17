@@ -103,7 +103,7 @@ A coverage report is generated after you run the test for the first time. Just o
 
 **UI Tests**
 
-Protractor UI tests are currently running on https://dev.blockchain.info/ or http://local.blockchain.com. Choose instance in util.js. File with login credentials (ignore.js) will be distributed separately and placed in the e2e folder.
+Protractor UI tests are currently running on https://dev.blockchain.info/ or http://local.blockchain.com. Choose instance in util.js. File with login credentials (ignore.js) will be distributed separately and placed in the `e2e-tests` folder.
 
 Install Protractor globally:
 
@@ -119,7 +119,7 @@ Start up a server:
 
 Open a new Terminal tab, navigate to the e2e test folder, and begin the tests:
 
-    cd tests/e2e/
+    cd e2e-tests/
     protractor config.js
 
 ## Development
