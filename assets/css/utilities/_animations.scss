@@ -142,6 +142,50 @@
   animation-name: zoom-out;
 }
 
+//////////////////////////////////////////
+/////////                         ///////
+///*** SECURITY CENTER ANIMATIONS ***////
+////////                        ////////
+////////////////////////////////////////
+
+@-webkit-keyframes image-fade {
+  0% {
+    opacity: .5;
+  }
+  50% {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes image-fade {
+  0% {
+    opacity: .5;
+  }
+  50% {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+.image-fade {
+  -webkit-animation: image-fade 5s;
+  animation: image-fade 5s;
+}
+
+
 
 ///////////////////////////////////////////
 /////////                    //////////////
