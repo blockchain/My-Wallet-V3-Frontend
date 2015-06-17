@@ -3,28 +3,26 @@
     .col-xs-12
       a.back(ng-click="back()")
         h4.back Back to feed
-  .transaction-card.clearfix
+  .transaction-card.flex-column.flex
     .tx-date
       strong.prs(translate="TRANSACTION_DETAILS")
-      | {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
-    .tx-details
-      .gutter
+        | {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
+    .flex
+      .tx-details.pal.flex-3
         .tx-sender
           p(translate="FROM")
           strong {{ from }}
         .tx-receiver
           p(translate="TO")
-          table
-            tr(ng-repeat="destination in destinations")
-              td {{ destination.you }}
-              td {{ destination.address }}
-              td {{ destination.amount }}
-
+          ul.pln.flex-column.flex.type-sm
+            li.flex-center.mbm(ng-repeat="destination in destinations")
+              span.prm {{ destination.you }}
+              span.text-overflow-hidden.flex-1 {{ destination.address }}
+              span.plm.center-align {{ destination.amount }}
         .tx-notes
           p Notes
           transaction-note(transaction="transaction")
-    .tx-sidebar
-      .gutter
+      .tx-sidebar.pal.flex-1
         .tx-amount
           amount(transaction="transaction" btc)
         .tx-status
@@ -35,8 +33,8 @@
         .tx-value-now.tx-value
           p Value now
           fiat(btc="transaction.result" abs)
-        .tx-bci-link
-          a.button-default.button-sm(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank") Verify On Blockchain.info
+        .tx-bci-link.button-default.button-sm
+          a.black(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank") Verify On Blockchain.info
   .transaction-card.clearfix(ng-if="transaction.publicNote")
     strong Public Note:
     p.mtl {{ transaction.publicNote }}

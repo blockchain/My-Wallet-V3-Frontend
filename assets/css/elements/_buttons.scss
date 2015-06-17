@@ -15,7 +15,6 @@ button[disabled] {
   cursor: pointer;
   text-decoration: none;
   text-transform: capitalize;
-  white-space: nowrap;
   &:focus {
     outline: none;
     text-decoration: none;

@@ -2,7 +2,6 @@
   background: $light-grey-alt;
   border: 1px solid $eee;
   border-radius: 5px;
-  width: 35vw;
   margin-bottom: 3em;
   input,textarea {
     border: 1px solid $eee;
@@ -38,5 +37,11 @@
 @media (max-width: 768px) {
   .bc-form {
     width: 90vw;
+    width: 100%;
+  }
+}
+@media (min-width: 992px) {
+  .bc-form {
+    min-width: 40vw;
   }
 }
