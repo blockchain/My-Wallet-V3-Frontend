@@ -1,7 +1,7 @@
 walletApp.directive('bcAsyncInput', (Wallet) ->
   {
     restrict: "E"
-    replace: 'true'
+    replace: true
     require: 'ngModel'
     scope: {
       ngModel: '='
@@ -13,8 +13,13 @@ walletApp.directive('bcAsyncInput', (Wallet) ->
       type: '@'
       errorMessage: '='
     }
-    templateUrl: 'templates/bc-async-input.jade'
-    link: (scope, elem, attrs, ngModel) ->
+    transclude: true
+    templateUrl: (elem, attrs) ->
+      if !attrs.custom?
+        return 'templates/bc-async-input.jade'
+      else
+        return 'templates/transclude.jade'
+    link: (scope, elem, attrs, ngModel, transclude) ->
       scope.securityCenter = attrs.securityCenter?
 
       scope.user = Wallet.user
@@ -59,6 +64,11 @@ walletApp.directive('bcAsyncInput', (Wallet) ->
           scope.status.saving = false
     
         scope.onSave(scope.form.newValue, success, error)
+
+      transclude(scope, (clone, scope) ->
+        if attrs.custom?
+          elem.empty().append(clone)
+      )
           
   }
 )
