@@ -15,10 +15,9 @@
       label.control-label Password for private key
       input.form-control(type="password", ng-model="bip38passphrase")
       span.help-block(ng-show="errors.incorrectBip38Password", translate="INCORRECT_PASSWORD")
-    .form-group(ng-hide="!cameraIsOn")
-        label.col-sm-1.control-label(translate="QR")
-        .col-sm-11
-          bc-qr-reader(active="cameraRequested", on-result="processURLfromQR" on-error="onError" camera-status="cameraIsOn")
+    .pal.flex-center.flex-column(ng-hide="!cameraIsOn")
+        label(translate="SCAN_QR_CODE")
+        bc-qr-reader(active="cameraRequested", on-result="processURLfromQR" on-error="onError" camera-status="cameraIsOn")
   div(ng-show="step==2")
     p(translate="PRIVATE_KEY_VALID", ng-hide="address.isWatchOnlyLegacyAddress")
     p
