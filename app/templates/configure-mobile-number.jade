@@ -1,0 +1,6 @@
+.edit-mobile(ng-class="{'flex': fullWidth}" ng-show="step == 1")
+  input.form-control(type="text" international-phone-number ng-model="fields.newMobile" default-country="{{ mobileDefaultCountry }}" preferred-countries="us,ca,gb,au" skip-util-script-download auto-placeholder="false" ng-disabled="status.busy")
+  br(ng-if="!fullWidth")
+  div(ng-class="{'flex-1': fullWidth, 'mll': fullWidth}")
+    button(ng-class="buttonLg ? 'button-success button-lg' : 'button-primary'" ui-ladda="{{ status.busy }}" ng-click="changeMobile(fields.newMobile)" ng-disabled="!validateMobileNumber(fields.newMobile)" ladda-translate="SAVE" data-style="expand-left")
+    button.button-muted.btn-small(ng-if="!fullWidth" ng-click="cancel()" translate="CANCEL")

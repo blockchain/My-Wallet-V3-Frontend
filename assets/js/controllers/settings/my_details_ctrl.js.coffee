@@ -4,6 +4,7 @@
   $scope.settings = Wallet.settings
   $scope.errors = {}
 
+  $scope.mobile = {step: 0}
   $scope.uid = Wallet.uid
 
   $scope.changeMultiAccountSetting = () ->

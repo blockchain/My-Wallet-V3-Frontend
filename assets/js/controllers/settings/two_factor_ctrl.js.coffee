@@ -12,6 +12,8 @@
   $scope.status = {}
   $scope.alerts = []
 
+  $scope.mobile = {step: 1}
+
   $scope.validateCode = (pairWith) ->
     if pairWith == 'yubiKey'
       return $scope.fields.yubiKeyCode.length > 0

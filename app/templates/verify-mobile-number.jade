@@ -1,0 +1,7 @@
+div(ng-class="fullWidth ? 'flex-center' : 'flex'" ng-show="step == 2")
+  div(ng-class="fullWidth ? 'flex-1 prl' : 'flex-3'")
+    p We have sent your mobile phone an SMS message with a verification code. Enter the code below to verify your mobile phone number.
+      input.form-control(type="text" ng-model="code" ng-disabled="status.busy")
+      span.help-block {{ errors.verify }}
+    .flex-1(ng-class="fullWidth ? 'mll' : 'mhl'")
+      button(ng-class="buttonLg ? 'button-success button-lg' : 'button-primary'" ui-ladda="{{ status.busy }}" ng-click="verifyMobile(code)" ng-disabled="!code || code.length < 3" ladda-translate="VERIFY" data-style="expand-left")

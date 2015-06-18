@@ -23,22 +23,11 @@ form.form-horizontal(role="form",name="form",novalidate)
       span.label.label-success.hidden-sm.hidden-xs(translate="VERIFIED", ng-show="user.isMobileVerified")
       p.explain.hidden-xs(translate="MOBILE_NUMBER_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
-      configure-mobile-number
-        div(ng-hide="edit.mobile || step == 2")
-          h2.status.complete.securityhide {{ user.internationalMobileNumber }}
-          a.button-primary(ng-click="edit.mobile = !edit.mobile", translate="CHANGE_MOBILE_NUMBER")
-        .edit-mobile(ng-if="edit.mobile && step == 1")
-          input(type="text" international-phone-number ng-model="fields.newMobile" default-country="{{ mobileDefaultCountry }}" preferred-countries="us,ca,gb,au" skip-util-script-download auto-placeholder="false", ng-disabled="status.busy").form-control
-          br
-          button.button-primary(ui-ladda="{{ status.busy }}", ng-click="changeMobile(fields.newMobile)",ng-disabled="!validateMobileNumber(fields.newMobile)", ladda-translate="SAVE", data-style="expand-left")
-          button.button-muted.btn-small(ng-click="edit.mobile = false", translate="CANCEL")
-        .flex(ng-show="!user.isMobileVerified && !noMobile && step == 2")
-          .flex-3
-            p We have sent your mobile phone an SMS message with a verification code. Enter the code below to verify your mobile phone number.
-            input.form-control(type="text",ng-model="code", ng-disabled="status.busy")
-            span.help-block {{ errors.verify }}
-          .flex-1.mhl
-            button.button-primary(ui-ladda="{{ status.busy }}", ng-click="verifyMobile(code)",ng-disabled="!code || code.length < 3", ladda-translate="VERIFY", data-style="expand-left")
+      div(ng-show="mobile.step == 0")
+        h2.status.complete.securityhide {{ user.internationalMobileNumber }}
+        a.button-primary(ng-click="mobile.step = 1", translate="CHANGE_MOBILE_NUMBER")
+      configure-mobile-number(step="mobile.step")
+      verify-mobile-number(step="mobile.step")
   .form-group
     .col-sm-12.col-md-6
       label(translate="TWO_FACTOR")
