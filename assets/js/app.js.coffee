@@ -96,6 +96,7 @@ modules = [
   "templates/btc-picker.jade"
   "templates/configure-mobile-number.jade"
   "templates/verify-mobile-number.jade"
+  "templates/transclude.jade"
   # 'angular-ladda'
 ]
 
