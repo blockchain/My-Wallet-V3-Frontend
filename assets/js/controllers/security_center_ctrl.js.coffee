@@ -9,6 +9,8 @@ walletApp.controller "SettingsSecurityCenterCtrl", ($scope, Wallet, SecurityCent
   $scope.unfilteredLegacyAddresses = Wallet.legacyAddresses
   
   $scope.display = {action: null, editingEmail: false}
+
+  $scope.mobile = {step: 1}
   
   $scope.greaterThan = (prop, val) ->
     (item) ->

@@ -1,16 +1,6 @@
-div
-  div(ng-hide="edit.mobile || inline || step == 2")
-    h2.status.complete.securityhide {{ user.internationalMobileNumber }}
-    a(ng-click="edit.mobile = !edit.mobile", translate="CHANGE_MOBILE_NUMBER", ng-class="securityCenter ? 'button-success button-lg' : 'button-primary'")
-  .edit-mobile(ng-if="(edit.mobile || inline) && step == 1")
-    input(type="text" international-phone-number ng-model="fields.newMobile" default-country="{{ mobileDefaultCountry }}" preferred-countries="us,ca,gb,au" skip-util-script-download auto-placeholder="false", ng-disabled="status.busy").form-control
-    br
-    button(ui-ladda="{{ status.busy }}", ng-click="changeMobile(fields.newMobile)",ng-disabled="!validateMobileNumber(fields.newMobile)", ladda-translate="SAVE", data-style="expand-left", ng-class="securityCenter ? 'button-success button-lg' : 'button-primary'")
-    button.button-muted.btn-small(ng-click="edit.mobile = false", translate="CANCEL", ng-class="{ 'hidden' : securityCenter }")
-  .flex(ng-show="!user.isMobileVerified && !noMobile && step == 2")
-    .flex-3
-      p We have sent your mobile phone an SMS message with a verification code. Enter the code below to verify your mobile phone number.
-      input.form-control(type="text",ng-model="code", ng-disabled="status.busy")
-      span.help-block {{ errors.verify }}
-    .flex-1.mhl
-      button(ui-ladda="{{ status.busy }}", ng-click="verifyMobile(code)",ng-disabled="!code || code.length < 3", ladda-translate="VERIFY", data-style="expand-left", ng-class="securityCenter ? 'button-success button-lg' : 'button-primary'")
+.edit-mobile(ng-class="{'flex': fullWidth}" ng-show="step == 1")
+  input.form-control(type="text" international-phone-number ng-model="fields.newMobile" default-country="{{ mobileDefaultCountry }}" preferred-countries="us,ca,gb,au" skip-util-script-download auto-placeholder="false" ng-disabled="status.busy")
+  br(ng-if="!fullWidth")
+  div(ng-class="{'flex-1': fullWidth, 'mll': fullWidth}")
+    button(ng-class="buttonLg ? 'button-success button-lg' : 'button-primary'" ui-ladda="{{ status.busy }}" ng-click="changeMobile(fields.newMobile)" ng-disabled="!validateMobileNumber(fields.newMobile)" ladda-translate="SAVE" data-style="expand-left")
+    button.button-muted.btn-small(ng-if="!fullWidth" ng-click="cancel()" translate="CANCEL")

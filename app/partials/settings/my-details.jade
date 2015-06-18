@@ -23,7 +23,11 @@ form.form-horizontal(role="form",name="form",novalidate)
       span.label.label-success.hidden-sm.hidden-xs(translate="VERIFIED", ng-show="user.isMobileVerified")
       p.explain.hidden-xs(translate="MOBILE_NUMBER_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
-       configure-mobile-number
+      div(ng-show="mobile.step == 0")
+        h2.status.complete.securityhide {{ user.internationalMobileNumber }}
+        a.button-primary(ng-click="mobile.step = 1", translate="CHANGE_MOBILE_NUMBER")
+      configure-mobile-number(step="mobile.step")
+      verify-mobile-number(step="mobile.step")
   .form-group
     .col-sm-12.col-md-6
       label(translate="ENABLE_TWO_STEP")
@@ -45,6 +49,6 @@ form.form-horizontal(role="form",name="form",novalidate)
       label(translate="PASSWORD_HINT")
       p.explain.hidden-sm.hidden-xs(translate="PASSWORD_HINT_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
-      bc-async-input(ng-model="user.passwordHint", on-save="changePasswordHint", on-change="clearErrors", action-title="'CHANGE_PASSWORD_HINT' | translate")
+      bc-async-input(ng-model="user.passwordHint" on-save="changePasswordHint" on-change="clearErrors" action-title="'CHANGE_PASSWORD_HINT' | translate")
     .help-block
       span {{ errors.passwordHint }}

@@ -443,6 +443,7 @@
   "OR" : " or ",
   "DIDNT_RECEIVE_EMAIL" : "Didn't receive the email?",
   "YOUR_EMAIL_ADDRESS" : "You email address",
+  "LINK_MOBILE_EXPLAIN" : "We have sent your mobile phone an SMS message with a verification code. Enter the code below to verify your mobile phone number",
   "VERIFY" : "Verify",
   "NICELY_DONE" : "Nicely done!",
   "TOR_BLOCKED" : "Tor Blocked",

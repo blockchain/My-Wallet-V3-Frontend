@@ -5,7 +5,7 @@ describe "Change Mobile Number Directive", ->
   isoScope = undefined
   
   beforeEach module("walletApp")
-  beforeEach(module('templates/configure-mobile-number.jade'))
+  beforeEach module("templates/configure-mobile-number.jade")
   
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
     
@@ -24,7 +24,7 @@ describe "Change Mobile Number Directive", ->
     isoScope.$digest()
   
   it "should have text", ->
-    expect(element.html()).toContain "MOBILE_NUMBER"
+    expect(element.html()).toContain "SAVE"
         
   it "should have the current phone number in its scope", ->
     expect(isoScope.user.mobile.number).toBe("12345678")
@@ -49,16 +49,6 @@ describe "Change Mobile Number Directive", ->
   it "should validate proposed number", ->
     expect(isoScope.validateMobileNumber("31")).toBe(false)
     return
-  
-  it "can be verified", inject((Wallet) ->
-    spyOn(Wallet, "verifyMobile")
-
-    isoScope.verifyMobile("31 1 2345")
-    
-    expect(Wallet.verifyMobile).toHaveBeenCalled()
-        
-    return
-  )
   
   return
   

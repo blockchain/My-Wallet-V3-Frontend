@@ -83,7 +83,6 @@ modules = [
   "templates/transaction-note.jade"
   "templates/transaction-status.jade"
   "templates/security-badge.jade"
-  "templates/configure-mobile-number.jade"
   "templates/confirm-recovery-phrase.jade"
   "templates/configure-second-password.jade"
   "templates/tor.jade"
@@ -95,6 +94,9 @@ modules = [
   "templates/adverts.jade"
   "templates/multi-account.jade"
   "templates/btc-picker.jade"
+  "templates/configure-mobile-number.jade"
+  "templates/verify-mobile-number.jade"
+  "templates/transclude.jade"
   # 'angular-ladda'
 ]
 
