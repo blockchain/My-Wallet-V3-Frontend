@@ -62,6 +62,18 @@ describe "AppCtrl", ->
 
   )
   
+  it "should open a popup to send",  inject(($modal) ->
+    spyOn(modal, "open")
+    scope.send()
+    expect(modal.open).toHaveBeenCalled()
+  )
+  
+  it "should open a popup to request",  inject(($modal) ->
+    spyOn(modal, "open")
+    scope.request()
+    expect(modal.open).toHaveBeenCalled()
+  )
+    
   describe "HD upgrade", ->
     beforeEach ->
 

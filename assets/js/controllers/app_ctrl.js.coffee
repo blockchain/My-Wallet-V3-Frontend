@@ -13,6 +13,35 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
 
   # getUserMedia is not supported by Safari and IE.
   $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia ||  navigator.webkitGetUserMedia || navigator.msGetUserMedia) != undefined
+  
+  $scope.request = () ->
+    Wallet.clearAlerts()
+                        
+    modalInstance = $modal.open(
+      templateUrl: "partials/request.jade"
+      controller: "RequestCtrl"
+      resolve:
+        destination: -> null
+      windowClass: "bc-modal"
+    )
+    if modalInstance?
+      modalInstance.opened.then () ->
+        Wallet.store.resetLogoutTimeout()
+    
+  $scope.send = () ->
+    Wallet.clearAlerts()
+    modalInstance = $modal.open(
+      templateUrl: "partials/send.jade"
+      controller: "SendCtrl"
+      resolve:
+        paymentRequest: ->
+          {address: "", amount: ""}
+      windowClass: "bc-modal"
+
+    )
+    if modalInstance?
+      modalInstance.opened.then () ->
+        Wallet.store.resetLogoutTimeout()
 
   #################################
   #           Private             #
