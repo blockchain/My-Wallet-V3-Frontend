@@ -37,7 +37,7 @@
         i.bc-icon-security.security-yellow(ng-show="security.level > 2 && security.level < 6")
         i.bc-icon-security.security-green(ng-show="security.level == 6")
         span(translate="SECURITY")
-        .progress-bar-wrapper.mlm
+        .progress-bar-wrapper.mlm(ng-hide="security.level == 6")
           .bar(ng-class="'level-' + security.level")
     li.header.mbm(ui-sref-active="current")
       a(ui-sref="wallet.common.settings.wallet")

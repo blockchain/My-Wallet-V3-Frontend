@@ -198,6 +198,7 @@
   opacity: 1;
 }
 
+
 // after animation done, bring back full image
 .level-complete-container.ng-hide-remove {
   opacity: 0;
@@ -209,11 +210,22 @@
   opacity: 1;
 }
 
+// progress bar animation
+.progress-bar-wrapper.ng-hide-add {
+  display: block !important;
+  -webkit-transition: all .5s linear 1s !important;
+  transition: all .5s linear 1s !important;
+}
+
+.progress-bar-wrapper.ng-hide-add.ng-hide-add-active {
+  opacity: 0;
+}
+
 
 
 ///////////////////////////////////////////
 /////////                    //////////////
-////****** ANGULAR ANIMATIONs ******* /////
+////****** SEND ANIMATIONs ******* ////////
 ////////                    ///////////////
 //////////////////////////////////////////
 

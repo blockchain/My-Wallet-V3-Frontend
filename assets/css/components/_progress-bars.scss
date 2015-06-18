@@ -1,14 +1,14 @@
 .level-6 {
-  background: #3CC576;
+  background: $security-green;
   border-radius: 10px !important;
 }
 
 .level-3, .level-4, .level-5 {
-  background: #FEC655;
+  background: $security-yellow;
 }
 
 .level-1, .level-2 {
-  background: #E58080;
+  background: $security-red;
 }
 
 @for $i from 0 through 6 {
