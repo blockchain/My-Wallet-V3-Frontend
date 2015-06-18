@@ -3,7 +3,7 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
     restrict: "E"
     replace: true
     scope: {
-      step: "="
+      setStep: '='
     }
     templateUrl: 'templates/configure-mobile-number.jade'
     link: (scope, elem, attrs) ->
@@ -30,14 +30,14 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
           scope.fields.newMobile = "+" + Wallet.status.currentCountryDialCode
 
       scope.cancel = () ->
-        scope.step = 0
+        scope.setStep(0)
             
       scope.changeMobile = (mobile) ->
         scope.status.busy = true
         
         success = () ->
           scope.status.busy = false
-          scope.step = 2
+          scope.setStep(2)
           
         error = (error) ->
           scope.status.busy = false

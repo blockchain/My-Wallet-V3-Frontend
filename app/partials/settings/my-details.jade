@@ -26,8 +26,8 @@ form.form-horizontal(role="form",name="form",novalidate)
       div(ng-show="mobile.step == 0")
         h2.status.complete.securityhide {{ user.internationalMobileNumber }}
         a.button-primary(ng-click="mobile.step = 1", translate="CHANGE_MOBILE_NUMBER")
-      configure-mobile-number(step="mobile.step")
-      verify-mobile-number(step="mobile.step")
+      configure-mobile-number(set-step="setMobileStep" ng-show="mobile.step == 1")
+      verify-mobile-number(set-step="setMobileStep" ng-show="mobile.step == 2")
   .form-group
     .col-sm-12.col-md-6
       label(translate="ENABLE_TWO_STEP")
