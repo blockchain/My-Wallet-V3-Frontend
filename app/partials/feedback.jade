@@ -1,6 +1,9 @@
 .flex.flex-justify.dashboard
-  div(ng-show="formStage == 2")
-    h1 Thank you for your feedback!
+  .flex-center.flex-column.mtl(ng-show="formStage == 2")
+    h1.success.flex-center
+      i.ti-check.prm
+      | Success!
+    h2 Thank you for your feedback
   div(ng-hide="formStage >= 2")
     form.bc-form.pal(ng-submit="setFormSubmitted()")
       .bc-form-header
