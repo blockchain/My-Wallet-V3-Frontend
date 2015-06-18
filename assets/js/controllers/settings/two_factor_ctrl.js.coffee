@@ -14,6 +14,18 @@ walletApp.controller "TwoFactorCtrl", ($scope, Wallet, $modalInstance, $translat
 
   $scope.mobileNumber = {step: 1}
 
+  $scope.closeAlert = (alert) ->
+    $scope.alerts.splice $scope.alerts.indexOf(alert)
+
+  $scope.displayConfirmationError = () ->
+    return unless $scope.alerts.length == 0
+    $translate('2FA_INVALID').then (translation) ->
+      alert = {type: 'danger', msg: translation}
+      alert.timer = $timeout (->
+        $scope.alerts.splice $scope.alerts.indexOf(alert)
+      ), 7000
+      $scope.alerts.push(alert)
+
   $scope.validateCode = (pairWith) ->
     if pairWith == 'yubiKey'
       return $scope.fields.yubiKeyCode.length > 0
@@ -37,12 +49,8 @@ walletApp.controller "TwoFactorCtrl", ($scope, Wallet, $modalInstance, $translat
     success = () ->
       return unless $scope.isStep('pair')
       $scope.goToStep('success')
-    error = (err) ->
-      alert = {type: "danger", msg: err}
-      alert.timer = $timeout((->
-        $scope.alerts.splice($scope.alerts.indexOf(alert))
-      ), 7000)
-      $scope.alerts.push(alert)
+    error = () ->
+      $scope.displayConfirmationError()
       $scope.errors.authenticatorCode = true
       $scope.status.loading = false
     Wallet.confirmTwoFactorGoogleAuthenticator(code, success, error)
