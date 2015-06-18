@@ -8,7 +8,7 @@ walletApp.directive('isValid', (Wallet) ->
     link: (scope, elem, attrs, ctrl) ->
 
       ctrl.$validators.isNotValid = (modelValue, viewValue) ->
-        if scope.isValid(viewValue)
+        if typeof scope.isValid == 'function' && scope.isValid(viewValue)
           return true
         return false
   }
