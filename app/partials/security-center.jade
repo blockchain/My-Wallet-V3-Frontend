@@ -134,8 +134,8 @@
 
     .badge-panel(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
       div(ng-show="display.action == 'mobilenumber'")
-        configure-mobile-number(on-success="mobile.step = 2" on-cancel="mobile.step = 0" ng-show="mobile.step == 1" button-lg full-width)
-        verify-mobile-number(on-success="mobile.step = 0" ng-show="mobile.step == 2" button-lg full-width)
+        configure-mobile-number(on-success="mobileNumber.step = 2" on-cancel="mobileNumber.step = 0" ng-show="mobileNumber.step == 1" button-lg full-width)
+        verify-mobile-number(on-success="mobileNumber.step = 0" ng-show="mobileNumber.step == 2" button-lg full-width)
       .flex-center(ng-show="display.action == 'twofactor'")     
         p.flex-1.prl(translate="SC_CONFIGURE_2FA")
         .flex-1.mll
