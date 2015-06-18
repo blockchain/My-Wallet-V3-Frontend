@@ -10,10 +10,7 @@ walletApp.controller "SettingsSecurityCenterCtrl", ($scope, Wallet, SecurityCent
   
   $scope.display = {action: null, editingEmail: false}
 
-  $scope.mobile = {step: 1}
-
-  $scope.setMobileStep = (step) ->
-    $scope.mobile.step = step
+  $scope.mobileNumber = {step: 1}
   
   $scope.greaterThan = (prop, val) ->
     (item) ->
