@@ -1,4 +1,4 @@
-.edit-mobile(ng-class="{'flex': fullWidth}" ng-show="step == 1")
+.edit-mobile(ng-class="{'flex offset-flag': fullWidth}" ng-show="step == 1")
   input.form-control(type="text" international-phone-number ng-model="fields.newMobile" default-country="{{ mobileDefaultCountry }}" preferred-countries="us,ca,gb,au" skip-util-script-download auto-placeholder="false" ng-disabled="status.busy")
   br(ng-if="!fullWidth")
   div(ng-class="{'flex-1': fullWidth, 'mll': fullWidth}")

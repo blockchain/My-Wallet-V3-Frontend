@@ -136,7 +136,7 @@
       div(ng-show="display.action == 'mobilenumber'")
         configure-mobile-number(step="mobile.step" button-lg full-width)
         verify-mobile-number(step="mobile.step" button-lg full-width)
-      .flex(ng-show="display.action == 'twofactor'")     
+      .flex-center(ng-show="display.action == 'twofactor'")     
         p.flex-1.prl(translate="SC_CONFIGURE_2FA")
         .flex-1.mll
           a.button-success.button-lg(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA")
