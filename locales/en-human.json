@@ -442,6 +442,8 @@
   "SC_CONFIGURE_2FA" : "2FA helps prevent unauthorized access to your wallet by requiring a one-time password after every login attempt. Enabling this option helps keep unauthorized users from being able to access your wallet.",
   "OR" : " or ",
   "DIDNT_RECEIVE_EMAIL" : "Didn't receive the email?",
-  "YOUR_EMAIL_ADDRESS" : "You email address"
+  "YOUR_EMAIL_ADDRESS" : "You email address",
+  "LINK_MOBILE_EXPLAIN" : "We have sent your mobile phone an SMS message with a verification code. Enter the code below to verify your mobile phone number"
+
 
 }
