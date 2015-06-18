@@ -451,5 +451,6 @@
   "MOBILE_LINKED" : "Mobile Linked",
   "HINT_STORED" : "Hint Stored",
   "PHRASE_BACKED" : "Phrase Backed",
-  "EMAIL_VERIFIED" : "Email Verified"
+  "EMAIL_VERIFIED" : "Email Verified",
+  "SCAN_QR_CODE" : "Scan your QR code:"
 }

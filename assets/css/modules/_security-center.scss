@@ -26,6 +26,7 @@
 .securityhide{display: none;}
 
 .security-center-ui {
+  margin-bottom: 3em; //offset for animation
   .intl-tel-input{
     width:100%;
     margin: 0 0 10px 0!important;
@@ -128,10 +129,13 @@
   .intl-tel-input {
     padding-right: 20px;
     flex: 1;
-    .selected-flag {
-      bottom: 6px;
-      left: -5px;
-    }
+  }
+}
+
+.offset-flag {
+  .selected-flag {
+    bottom: 6px;
+    left: -5px;
   }
 }
 
