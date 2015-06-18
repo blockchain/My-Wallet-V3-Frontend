@@ -12,7 +12,7 @@ walletApp.controller "TwoFactorCtrl", ($scope, Wallet, $modalInstance, $translat
   $scope.status = {}
   $scope.alerts = []
 
-  $scope.mobile = {step: 1}
+  $scope.mobileNumber = {step: 1}
 
   $scope.validateCode = (pairWith) ->
     if pairWith == 'yubiKey'
