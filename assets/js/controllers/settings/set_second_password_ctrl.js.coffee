@@ -1,4 +1,4 @@
-@SetSecondPasswordCtrl = ($scope, $log, Wallet, $modalInstance, $translate, $timeout) ->
+walletApp.controller "SetSecondPasswordCtrl", ($scope, $log, Wallet, $modalInstance, $translate, $timeout) ->
   
   $scope.isValid = false
   

@@ -1,4 +1,4 @@
-@AccountFormCtrl = ($scope, Wallet, $modalInstance, $log, $translate, account, $modal) ->        
+walletApp.controller "AccountFormCtrl", ($scope, Wallet, $modalInstance, $log, $translate, account, $modal) ->        
   $scope.fields = {name: ""}
   $scope.accounts = Wallet.accounts
   $scope.status =
@@ -28,7 +28,7 @@
         
             modalInstance = $modal.open(
               templateUrl: "partials/modal-notification.jade"
-              controller: ModalNotificationCtrl
+              controller: "ModalNotificationCtrl"
               windowClass: "notification-modal"
               resolve:
                 notification: ->

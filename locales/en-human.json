@@ -173,7 +173,7 @@
   "TWO_FACTOR" : "Two Factor Authentication",
   "TWO_FACTOR_EXPLAIN" : "Two-factor authentication helps prevent unauthorized access to your wallet by requiring a one-time password after a login attempt. Enable two-factor using your email address, mobile phone number, or by using an app like Google Authenticator. We suggest using Google Authenticator.",
   "CONFIGURE_2FA" : "Enable",
-  "ADD_TWO_FACTOR" : "Setup Two Factor",  
+  "ENABLE_TWO_STEP" : "Enable Two Step",  
   "2FA_YUBI" : "Yubikey",
   "2FA_EMAIL" : "Email",
   "2FA_SMS" : "SMS",
@@ -416,7 +416,7 @@
   "LEVEL_2_TITLE" : "Prevent unauthorized access to your wallet",
   "LEVEL_3" : "Level 3",
   "LEVEL_3_TITLE" : "Advanced Security Options to harden your wallet",
-  "TWO_FACTOR_EXPLAIN" : "Protect your wallet from unathorized access by enabling 2FA. You can choose to use a free app or your mobile phone number to secure your wallet.",
+  "TWO_STEP_EXPLAIN" : "Protect your wallet from unathorized access by enabling 2-Step Verification. You can choose to use a free app or your mobile phone number to secure your wallet.",
   "ENABLE_2FA_ENTER_MOBILE" : "User your mobile phone to receive a one-time-password after a login attempt. Add your mobile phone number below to continue",
   "USE_AUTH_YUBIKEY" : "Use Google Authenticator or Yubikey",
   "USE_MOBILE" : "Use your mobile phone number",
@@ -439,11 +439,17 @@
   "RECEIVE_BITCOIN_MESSAGE" : "We've just created a new address for you to share with anyone in order to receive bitcoins",
   "ENTER_VALID_AMOUNT" : "Enter valid amount",
   "COPY_ADDRESS" : "Just copy the address above and share",
-  "SC_CONFIGURE_2FA" : "2FA helps prevent unauthorized access to your wallet by requiring a one-time password after every login attempt. Enabling this option helps keep unauthorized users from being able to access your wallet.",
+  "SC_CONFIGURE_2FA" : "2-Step Verification helps prevent unauthorized access to your wallet by requiring a one-time password after every login attempt. Enabling this option helps keep unauthorized users from being able to access your wallet.",
   "OR" : " or ",
   "DIDNT_RECEIVE_EMAIL" : "Didn't receive the email?",
   "YOUR_EMAIL_ADDRESS" : "You email address",
-  "LINK_MOBILE_EXPLAIN" : "We have sent your mobile phone an SMS message with a verification code. Enter the code below to verify your mobile phone number"
-
-
+  "LINK_MOBILE_EXPLAIN" : "We have sent your mobile phone an SMS message with a verification code. Enter the code below to verify your mobile phone number",
+  "VERIFY" : "Verify",
+  "NICELY_DONE" : "Nicely done!",
+  "TOR_BLOCKED" : "Tor Blocked",
+  "TWO_STEP_ENABLED" : "2-Step Enabled",
+  "MOBILE_LINKED" : "Mobile Linked",
+  "HINT_STORED" : "Hint Stored",
+  "PHRASE_BACKED" : "Phrase Backed",
+  "EMAIL_VERIFIED" : "Email Verified"
 }

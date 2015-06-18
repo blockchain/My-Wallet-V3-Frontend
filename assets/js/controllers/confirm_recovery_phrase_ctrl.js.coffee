@@ -1,4 +1,4 @@
-@ConfirmRecoveryPhraseCtrl = ($scope, $log, Wallet, $modalInstance) ->
+walletApp.controller "ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalInstance) ->
   $scope.step = 1
   $scope.recoveryPhrase = null
   

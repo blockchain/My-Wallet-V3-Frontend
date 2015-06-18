@@ -26,7 +26,7 @@ walletApp.directive('configureSecondPassword', ($translate, Wallet, $modal) ->
       scope.setSecondPassword = () ->
         modalInstance = $modal.open(
           templateUrl: "partials/settings/set-second-password.jade"
-          controller: SetSecondPasswordCtrl
+          controller: "SetSecondPasswordCtrl"
           windowClass: "bc-modal"
         ).opened.then () ->
           Wallet.store.resetLogoutTimeout()

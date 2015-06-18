@@ -1,4 +1,4 @@
-@DashboardCtrl = ($scope, Wallet, $log) ->
+walletApp.controller "DashboardCtrl", ($scope, Wallet, $log) ->
   $scope.accounts = Wallet.accounts
   $scope.status = Wallet.status
 

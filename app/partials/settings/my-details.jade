@@ -30,10 +30,10 @@ form.form-horizontal(role="form",name="form",novalidate)
       verify-mobile-number(step="mobile.step")
   .form-group
     .col-sm-12.col-md-6
-      label(translate="TWO_FACTOR")
+      label(translate="ENABLE_TWO_STEP")
       span.label.label-warning.hidden-sm.hidden-xs(translate="DISABLED", ng-show="!settings.needs2FA")
       span.label.label-success.hidden-sm.hidden-xs(translate="ENABLED", ng-show="settings.needs2FA")
-      p.explain.hidden-xs(translate="TWO_FACTOR_EXPLAIN")    
+      p.explain.hidden-xs(translate="SC_CONFIGURE_2FA")    
     .col-sm-12.col-md-6.setting-result
       a.button-primary(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA" ng-hide="settings.needs2FA")
       a.button-primary(ng-click="changeTwoFactor()" translate="DISABLE" ng-show="settings.needs2FA")

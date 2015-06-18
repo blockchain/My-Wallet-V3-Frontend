@@ -1,4 +1,4 @@
-@RecoveryCtrl = ($scope, Wallet, $state, $translate) ->
+walletApp.controller "RecoveryCtrl", ($scope, Wallet, $state, $translate) ->
   $scope.recoveryPhrase = null
   $scope.recoveryPassphrase = null
   $scope.showRecoveryPhrase = false

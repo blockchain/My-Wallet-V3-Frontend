@@ -1,4 +1,4 @@
-@SignupCtrl = ($scope, $rootScope, $log, Wallet, $modalInstance, $translate, $cookieStore, $filter, $state, $http) ->
+walletApp.controller "SignupCtrl", ($scope, $rootScope, $log, Wallet, $modalInstance, $translate, $cookieStore, $filter, $state, $http) ->
   $scope.currentStep = 1
   $scope.working = false
   $scope.languages = Wallet.languages

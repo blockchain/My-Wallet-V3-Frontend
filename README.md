@@ -101,6 +101,27 @@ To run test and monitor for changes:
 
 A coverage report is generated after you run the test for the first time. Just open `coverage/index.html` in your browser.
 
+**UI Tests**
+
+Protractor UI tests are currently running on https://dev.blockchain.info/ or http://local.blockchain.com. Choose instance in util.js. File with login credentials (ignore.js) will be distributed separately and placed in the `e2e-tests` folder.
+
+Install Protractor globally:
+
+    npm install -g protractor
+
+This installs both protractor and webdriver-manager. Update webdriver-manager:
+
+    webdriver-manager update
+
+Start up a server:
+
+    webdriver-manager start
+
+Open a new Terminal tab, navigate to the e2e test folder, and begin the tests:
+
+    cd e2e-tests/
+    protractor config.js
+
 ## Development
 Grunt keeps an eye on things in the background. In particular it compiles the Jade files whenever you change them. So make sure it's running:
 

@@ -1,4 +1,4 @@
-@RegistrationCtrl = ($scope, $rootScope, $log, Wallet, $cookieStore, $modal, $state, $timeout) ->
+walletApp.controller "RegistrationCtrl", ($scope, $rootScope, $log, Wallet, $cookieStore, $modal, $state, $timeout) ->
   $scope.status = Wallet.status    
     
   $scope.dismissAgreement = () ->
@@ -10,7 +10,7 @@
       
   modalInstance = $modal.open(
     templateUrl: "partials/signup.jade"
-    controller: SignupCtrl
+    controller: "SignupCtrl"
     backdrop: "static"
     keyboard: false
     windowClass: "signup"

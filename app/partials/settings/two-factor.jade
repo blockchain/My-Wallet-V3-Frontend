@@ -1,8 +1,8 @@
 .modal-header
   .flex-center
     img.mrm.two-fa-image(src="img/2FA.png")
-    h3.mvn(translate="TWO_FACTOR")
-  h5.em-300.mtm(translate="TWO_FACTOR_EXPLAIN")
+    h3.mvn(translate="ENABLE_TWO_STEP")
+  h5.em-300.mtm(translate="TWO_STEP_EXPLAIN")
 .modal-body
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)")
     | {{alert.msg}}

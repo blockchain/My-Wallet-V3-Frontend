@@ -1,4 +1,4 @@
-@SendCtrl = ($scope, $log, Wallet, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $modal) ->
+walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $modal) ->
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.accounts = Wallet.accounts
   $scope.addressBook = Wallet.addressBook
@@ -258,7 +258,7 @@
 
             modalInstance = $modal.open(
               templateUrl: "partials/modal-notification.jade"
-              controller: ModalNotificationCtrl
+              controller: "ModalNotificationCtrl"
               windowClass: "notification-modal"
               resolve:
                 notification: ->

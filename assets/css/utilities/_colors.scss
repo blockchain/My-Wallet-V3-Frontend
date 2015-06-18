@@ -9,6 +9,7 @@ $text: #6C6C6C;
 $transfer-blue: #5bacd0;
 $send-red: #e27e82;
 $receive-green: #85b45b;
+$bright-green:  #3CC476 !important; //override Security Center nested css selectors
 $light-grey: #eaeff4;
 $light-grey-alt: #F5F7F9;
 $grey: #EEEEEE;
@@ -60,6 +61,7 @@ $security-green: #3CC476;
 @include color('security-green', $security-green);
 @include color('ccc', $ccc);
 @include color('success', $success);
+@include color('bright-green', $bright-green);
 
 //Background Mixin
 @mixin bg-color($name, $color) {

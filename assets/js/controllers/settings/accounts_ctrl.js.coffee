@@ -1,4 +1,4 @@
-@SettingsAccountsCtrl = ($scope, Wallet, $modal) ->
+walletApp.controller "SettingsAccountsCtrl", ($scope, Wallet, $modal) ->
   $scope.accounts = Wallet.accounts
   
   $scope.display = {archived: false}  
@@ -8,7 +8,7 @@
     Wallet.clearAlerts()
     modalInstance = $modal.open(
       templateUrl: "partials/account-form.jade"
-      controller: AccountFormCtrl
+      controller: "AccountFormCtrl"
       resolve:
         account: -> undefined
       windowClass: "bc-modal"
@@ -21,7 +21,7 @@
     Wallet.clearAlerts()
     modalInstance = $modal.open(
       templateUrl: "partials/account-form.jade"
-      controller: AccountFormCtrl
+      controller: "AccountFormCtrl"
       resolve:
         account: -> account
       windowClass: "bc-modal"
@@ -34,7 +34,7 @@
             
     modalInstance = $modal.open(
       templateUrl: "partials/request.jade"
-      controller: RequestCtrl
+      controller: "RequestCtrl"
       resolve:
         destination: -> account
       windowClass: "bc-modal"
@@ -51,7 +51,7 @@
   $scope.transfer = (address) ->
     modalInstance = $modal.open(
       templateUrl: "partials/send.jade"
-      controller: SendCtrl
+      controller: "SendCtrl"
       resolve:
         paymentRequest: -> 
           {fromAddress: address, amount: 0, toAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()]}
