@@ -45,7 +45,7 @@
         confirm-recovery-phrase(security-center)
 
       .flex(ng-show="display.action == 'passwordhint'")       
-        bc-async-input-custom(inline security-center placeholder="'CHANGE_PASSWORD_HINT' | translate" ng-model="user.passwordHint", on-save="changePasswordHint", action-title="'CHANGE_PASSWORD_HINT' | translate")
+        bc-async-input(custom inline security-center placeholder="'CHANGE_PASSWORD_HINT' | translate" ng-model="user.passwordHint" on-save="changePasswordHint" action-title="'CHANGE_PASSWORD_HINT' | translate")
           .flex-center
             .form-group.flex-1.flex-column.prl(ng-class="{'has-error': !validate()}")
               p(translate="CHANGE_PASSWORD_HINT_SECURITY_CENTER")
