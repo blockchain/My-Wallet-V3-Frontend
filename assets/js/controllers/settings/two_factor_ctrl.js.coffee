@@ -14,9 +14,6 @@ walletApp.controller "TwoFactorCtrl", ($scope, Wallet, $modalInstance, $translat
 
   $scope.mobile = {step: 1}
 
-  $scope.setMobileStep = (step) ->
-    $scope.mobile.step = step
-
   $scope.validateCode = (pairWith) ->
     if pairWith == 'yubiKey'
       return $scope.fields.yubiKeyCode.length > 0

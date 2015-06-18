@@ -7,9 +7,6 @@ walletApp.controller "SettingsMyDetailsCtrl", ($scope, Wallet, $modal, $filter, 
   $scope.mobile = {step: 0}
   $scope.uid = Wallet.uid
 
-  $scope.setMobileStep = (step) ->
-    $scope.mobile.step = step
-
   $scope.changeMultiAccountSetting = () ->
     Wallet.setMultiAccount(!Wallet.settings.multiAccount)
   

@@ -3,7 +3,7 @@ walletApp.directive('verifyMobileNumber', ($translate, Wallet, $filter) ->
     restrict: "E"
     replace: true
     scope: {
-      setStep: '='
+      onSuccess: '&'
     }
     templateUrl: 'templates/verify-mobile-number.jade'
     link: (scope, elem, attrs) ->      
@@ -21,7 +21,7 @@ walletApp.directive('verifyMobileNumber', ($translate, Wallet, $filter) ->
         
         success = () ->
           scope.status.busy = false
-          scope.setStep(0)
+          scope.onSuccess()
           
         error = (message) ->
           scope.errors.verify = message

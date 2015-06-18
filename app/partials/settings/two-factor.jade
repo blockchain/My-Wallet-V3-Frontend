@@ -21,8 +21,8 @@
         a(translate="USE_AUTH_YUBIKEY")
   .pal(ng-show="isStep('configure_mobile')")
     p(translate="ENABLE_2FA_ENTER_MOBILE")
-    configure-mobile-number(set-step="setMobileStep" ng-show="mobile.step == 1" button-lg)
-    verify-mobile-number(set-step="setMobileStep" ng-show="mobile.step == 2" button-lg)
+    configure-mobile-number(on-success="mobile.step = 2" ng-show="mobile.step == 1" button-lg)
+    verify-mobile-number(on-success="mobile.step = 0" ng-show="mobile.step == 2" button-lg)
   .row.clearfix.pal(ng-show="isStep('pair')")
     .col-xs-6.flex-justify.flex
       a(ng-click="pairWith = 'authenticator'", ng-class="{'ccc' : pairWith == 'yubiKey'}") Google Authenticator
