@@ -46,6 +46,11 @@ module.exports = {
 
     },
 
+    navigateTo: function(section) {
+      browser.sleep(2000);
+      browser.findElement(by.css('[translate="' + section + '"]')).click();
+    },
+
     submitBetaKey: function () {
 
         var promise = browser.getCurrentUrl();
