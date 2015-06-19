@@ -24,23 +24,9 @@ angular.module("securityCenter", []).factory "SecurityCenter", ($log, Wallet, $r
   # )
  
   
-  # Check for upgrade to level 1:
+  # Check for when it should update the security level:
   $rootScope.$watch(
-    () -> user.isEmailVerified  + status.didConfirmRecoveryPhrase + user.passwordHint,
-    () -> 
-      updateLevel()
-  )
-  
-  # Check for upgrade to level 2:
-  $rootScope.$watch(
-    () -> settings.needs2FA + user.isMobileVerified,
-    () -> 
-      updateLevel()
-  )
-
-  # Check for upgrade to level 3 (settings):
-  $rootScope.$watch(
-    () -> settings.blockTOR,
+    () -> user.isEmailVerified + status.didConfirmRecoveryPhrase + user.passwordHint + settings.needs2FA + user.isMobileVerified + settings.blockTOR,
     () -> 
       updateLevel()
   )
@@ -62,20 +48,22 @@ angular.module("securityCenter", []).factory "SecurityCenter", ($log, Wallet, $r
     # if !status.legacyAddressBalancesLoaded
     #   service.security.level = null
     #   return
+
+    securityObjectives = [
+      user.isEmailVerified
+      status.didConfirmRecoveryPhrase
+      user.passwordHint
+      settings.needs2FA
+      user.isMobileVerified
+      settings.blockTOR
+    ]
         
-    service.security.level = 0
-    if user.isEmailVerified && status.didConfirmRecoveryPhrase && user.passwordHint
-      service.security.level = 1
+    securityLevel = 0
 
-      if settings.needs2FA && user.isMobileVerified 
-        service.security.level = 2
+    for objective in securityObjectives
+      if objective
+        securityLevel++
 
-        if settings.blockTOR
-          # addrs = filterFilter(legacyAddresses, {active: true, isWatchOnlyLegacyAddress: false})
-          #
-          # for address in addrs
-          #   return unless address.balance < 50000 # Allow small amounts
-
-          service.security.level = 3
+    service.security.level = securityLevel;
   
   return service
