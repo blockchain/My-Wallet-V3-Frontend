@@ -3,6 +3,13 @@
     padding-top: 10px;
 
   }
+  
+  h3.emptystate b{
+  color: rgb(108, 108, 108);
+  font-weight: 500;
+    &:hover{cursor: pointer;}
+  }
+  
   .row.transaction {
     border-bottom: 1pt solid $light-grey;
     padding: 15px 0;

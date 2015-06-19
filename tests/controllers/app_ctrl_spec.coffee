@@ -1,8 +1,7 @@
 describe "AppCtrl", ->
   scope = undefined
-  modalInstance = undefined      
   callbacks = undefined
-  modal = undefined
+  mockModalInstance = undefined
   
   beforeEach angular.mock.module("walletApp")
 
@@ -11,29 +10,25 @@ describe "AppCtrl", ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       
-      modalInstance = {
-        close: () ->
-           modalInstance.confirmCallback()
-        dismiss: jasmine.createSpy('modalInstance.dismiss')
-        result: {
-          then: (confirmCallback, cancelCallback) ->
-            modalInstance.confirmCallback = confirmCallback
-
-        }
-      }
+      mockModalInstance = 
+        result: then: (confirmCallback, cancelCallback) ->
+          #Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
+          @confirmCallBack = confirmCallback
+          @cancelCallback = cancelCallback
+          return
+        close: (item) ->
+          #The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
+          @result.confirmCallBack item
+          return
+        dismiss: (type) ->
+          #The user clicked cancel on the modal dialog, call the stored cancel callback
+          @result.cancelCallback type
+          return
       
-      modal = 
-        open: -> 
-          modalInstance
-    
-      spyOn(modal, "open").and.callThrough()
-    
       scope = $rootScope.$new()      
 
       $controller "AppCtrl",
         $scope: scope,
-        $modalInstance: modalInstance,
-        $modal: modal,
         $stateParams: {}
   
       return
@@ -62,6 +57,18 @@ describe "AppCtrl", ->
 
   )
   
+  it "should open a popup to send",  inject(($modal) ->
+    spyOn($modal, "open")
+    scope.send()
+    expect($modal.open).toHaveBeenCalled()
+  )
+  
+  it "should open a popup to request",  inject(($modal) ->
+    spyOn($modal, "open")
+    scope.request()
+    expect($modal.open).toHaveBeenCalled()
+  )
+    
   describe "HD upgrade", ->
     beforeEach ->
 
@@ -71,20 +78,30 @@ describe "AppCtrl", ->
       }      
       
       spyOn(callbacks, "proceed")
+    
+    it "should show modal if HD upgrade is needed", inject(($modal) ->
+      spyOn($modal, "open").and.callThrough()
       
       scope.$broadcast("needsUpgradeToHD", callbacks.proceed)
-   
-    
-    it "should show modal if HD upgrade is needed", ->
-      expect(modal.open).toHaveBeenCalled()
+      expect($modal.open).toHaveBeenCalled()
+    )
     
 
-    it "should proceed if user agrees",  ->
-      modalInstance.close()
+    it "should proceed if user agrees", inject(($modal, $q) ->
+      spyOn($modal, 'open').and.returnValue(mockModalInstance)
+      
+      scope.$broadcast("needsUpgradeToHD", callbacks.proceed)
+      
+      mockModalInstance.close()
+        
       expect(callbacks.proceed).toHaveBeenCalled()
+    )
   
   describe "redeem from email", ->
-    it "should proceed after login", inject((Wallet, $rootScope, $timeout) ->
+    it "should proceed after login", inject((Wallet, $rootScope, $timeout, $modal) ->
+      
+      spyOn($modal, 'open').and.returnValue(mockModalInstance)
+      
       Wallet.goal.claim = {code: "abcd", balance: 100000}
       
       Wallet.login("test", "test")  
@@ -93,6 +110,6 @@ describe "AppCtrl", ->
       
       $timeout.flush() # Modal won't open otherwise
             
-      expect(modal.open).toHaveBeenCalled()
+      expect($modal.open).toHaveBeenCalled()
 
     )

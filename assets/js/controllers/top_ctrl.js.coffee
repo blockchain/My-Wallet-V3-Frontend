@@ -1,36 +1,9 @@
-walletApp.controller "TopCtrl", ($scope, Wallet, $modal, $stateParams) ->
+walletApp.controller "TopCtrl", ($scope, Wallet, $stateParams) ->
   $scope.settings = Wallet.settings
   $scope.isBitCurrency = Wallet.isBitCurrency
   $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency
   
-  $scope.request = () ->
-    Wallet.clearAlerts()
-                        
-    modalInstance = $modal.open(
-      templateUrl: "partials/request.jade"
-      controller: "RequestCtrl"
-      resolve:
-        destination: -> null
-      windowClass: "bc-modal"
-    )
-    if modalInstance?
-      modalInstance.opened.then () ->
-        Wallet.store.resetLogoutTimeout()
-    
-  $scope.send = () ->
-    Wallet.clearAlerts()
-    modalInstance = $modal.open(
-      templateUrl: "partials/send.jade"
-      controller: "SendCtrl"
-      resolve:
-        paymentRequest: ->
-          {address: "", amount: ""}
-      windowClass: "bc-modal"
 
-    )
-    if modalInstance?
-      modalInstance.opened.then () ->
-        Wallet.store.resetLogoutTimeout()
   
   $scope.getTotal = (index) ->
     return null if $scope.total(index) == null

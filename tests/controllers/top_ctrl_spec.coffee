@@ -32,18 +32,6 @@ describe "TopCtrl", ->
     expect(scope.total).toBeDefined()
   )
   
-  it "should open a popup to send",  inject(($modal) ->
-    spyOn(modal, "open")
-    scope.send()
-    expect(modal.open).toHaveBeenCalled()
-  )
-  
-  it "should open a popup to request",  inject(($modal) ->
-    spyOn(modal, "open")
-    scope.request()
-    expect(modal.open).toHaveBeenCalled()
-  )
-
   it "should show Fiat if USD is set as display currency", inject((Wallet) ->
     Wallet.settings.displayCurrency = {code: 'USD'}
     expect(scope.isBitCurrency(scope.settings.displayCurrency)).toBe(false)
