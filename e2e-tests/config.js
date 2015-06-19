@@ -32,7 +32,7 @@ exports.config = {
     },
 
     onPrepare: function() {
-        browser.driver.manage().window().setSize(1024, 768);
+        browser.driver.manage().window().setSize(1400, 1200);
     },
 
     // Capabilities to be passed to the webdriver instance
