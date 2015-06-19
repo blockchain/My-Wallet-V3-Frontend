@@ -7,9 +7,10 @@ exports.config = {
     specs: ['**/*_spec.js'],
 
     suites: {
-        trans: '**/transactions_spec.js',
-        login: '**/login_spec.js',
-        settings: '**/settings/*_spec.js'
+        trans: '**/*_spec.js',
+        global: '**/*_spec.js',
+        settings: '**/settings/*_spec.js',
+        securityCenter: '**/security-center/*_spec.js'
     },
 
     params: {
