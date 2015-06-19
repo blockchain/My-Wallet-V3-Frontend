@@ -11,13 +11,13 @@ form.form-horizontal(role="form",name="form",novalidate)
       label(translate="CURRENCY")
       p.explain.hidden-xs(translate="CURRENCY_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
-      currency-picker(currency="settings.currency")
+      currency-picker(currency="settings.currency" display-currency="settings.displayCurrency")
   .form-group
     .col-sm-12.col-md-6
       label(translate="BITCOIN_CURRENCY")
       p.explain.hidden-xs(translate="BITCOIN_CURRENCY_EXPLAIN")
     .col-sm-12.col-md-6.setting-result
-      btc-picker(currency="settings.btcCurrency")
+      btc-picker(currency="settings.btcCurrency" display-currency="settings.displayCurrency")
   // Depends on bootstrap-slider which has been disabled
   //- .form-group
   //-   .col-sm-4
