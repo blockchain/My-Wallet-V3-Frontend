@@ -427,6 +427,7 @@
   "2FA_DISABLED" : "Two factor authentication has been disabled",
   "2FA_SUCCESS" : "Congratulations! Two factor authentication has been successfully enabled.",
   "2FA_ERROR" : "An error occurred while enabling 2FA. Please try again later.",
+  "2FA_INVALID" : "The two factor authentication code could not be verified. Please try again.",
   "SEND_STEP_1" : "Send bitcoin instantly to any bitcoin address, email or phone number",
   "SEND_STEP_1_ADVANCED" : "Send bitcoin to one or more addresses, choose your fee price and review your transaction before submitting",
   "SEND_STEP_2" : "Please review your transaction",
