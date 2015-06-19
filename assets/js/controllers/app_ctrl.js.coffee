@@ -161,7 +161,6 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
       backdrop: "static" # Undismissable
       windowClass: "bc-modal"
     )
-        
     modalInstance.result.then(() ->
       continueCallback()
     )
