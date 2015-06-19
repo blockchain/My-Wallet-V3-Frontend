@@ -5,8 +5,8 @@
         h4.back Back to feed
   .transaction-card.flex-column.flex
     .tx-date
-      strong.prs(translate="TRANSACTION_DETAILS")
-        | {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
+      span.em-600.prm(translate="TRANSACTION_DETAILS")
+      span {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
     .flex
       .tx-details.pal.flex-3
         .tx-sender
