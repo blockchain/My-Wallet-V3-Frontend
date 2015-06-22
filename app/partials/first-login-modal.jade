@@ -1,7 +1,6 @@
 .modal-header.flex-column.bc-modal-header
-  h3(translate="WELCOME_FIRST_TIME")
-.modal-body.rocket-body
-  img.rocket-gif.pull-left.mrl(src="img/rocket.gif")
-  p.rocket-gif-text.em-300.center-align(translate="WELCOME_TEXT")
+  h3(translate="WELCOME")
+.modal-body.flex-center.flex-justify
+  img.rocket-gif(src="img/rocket.gif")
 .modal-footer.flex-end.pal
-  button.button-success.button-lg(ng-click="close()", translate="GET_STARTED")
+  button.button-success.button-lg(ng-click="ok()", translate="GET_STARTED")
