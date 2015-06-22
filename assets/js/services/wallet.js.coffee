@@ -22,7 +22,7 @@ walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletSpender, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) ->
   wallet = {
     goal: {auth: false},
-    status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadTransactions: false, didLoadBalances: false, legacyAddressBalancesLoaded: false, didConfirmRecoveryPhrase: false},
+    status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadTransactions: false, didLoadBalances: false, legacyAddressBalancesLoaded: false, didConfirmRecoveryPhrase: false, firstTime: null},
     settings: {currency: null,  displayCurrency: null, language: null, btcCurrency: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null, ipWhitelist: null, apiAccess: null, restrictToWhitelist: null},
     user: {current_ip: null, email: null, mobile: null, passwordHint: ""}
   }
@@ -223,6 +223,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.create = (password, email, currency, language, success_callback) ->
     success = (uid) ->
       wallet.displaySuccess("Wallet created with identifier: " + uid, true)
+      wallet.status.firstTime = true
 
       loginSuccess = () ->
         success_callback(uid)
