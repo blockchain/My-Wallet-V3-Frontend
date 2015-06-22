@@ -48,10 +48,10 @@ walletApp.directive('bcAsyncInput', (Wallet) ->
       scope.validate = () ->
         if scope.form.newValue?
           if scope.validator?
-            scope.validator(scope.form.newValue)
+            return scope.validator(scope.form.newValue)
           else
-            !scope.form.$error
-        return true
+            return !scope.form.$error
+        return false
         
       scope.save = () ->
         scope.status.saving = true
