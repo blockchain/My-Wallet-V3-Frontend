@@ -453,5 +453,9 @@
   "SCAN_QR_CODE" : "Scan your QR code:",
   "HINT_STORED" : "Password Hint Stored",
   "PHRASE_BACKED" : "Recovery Phrase Backed Up",
-  "EMAIL_VERIFIED" : "Email Verified"
+  "EMAIL_VERIFIED" : "Email Verified",
+  "WELCOME_FIRST_TIME" : "Our HD Wallet is here!",
+  "GET_STARTED" : "Get Started",
+  "WELCOME_TEXT" : "We've launched our wallet! And we're excited to show you all the great features along with a shiny new interface to make your bitcoin experience better."
+
 }

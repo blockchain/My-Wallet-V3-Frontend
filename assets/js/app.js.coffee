@@ -40,6 +40,7 @@ modules = [
   "partials/dashboard.jade"
   "partials/support.jade"
   "partials/feedback.jade"
+  "partials/first-login-modal.jade"
   "partials/login.jade"
   "partials/navigation.jade"
   "partials/open-link.jade"
