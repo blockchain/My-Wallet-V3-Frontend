@@ -1,38 +1,33 @@
-.flex.dashboard.pal
-  img(src="img/rocket.gif" alt="Welcome to your new Blockchain wallet!")
-  .flex-column.mll.phl
-    h1 Welcome to the Alpha of our new wallet experience!
-    p.bc-well
-      | Thank you for taking time to help test and explore what we’ve been working on.
-    h4 What's New?
-    ul
-      li 
-        | Backup your entire wallet with a simple 12-word Recovery Phrase and restore it on any supported HD 
-        | wallet, anytime, anywhere.
-      li Create multiple accounts in your wallet to allow you to keep funds completely separate from each other in one easy-to-manage wallet.
-      li Our brand new Security Center helps you to secure your wallet from unauthorized access and ensures successful recovery of your wallet and funds.
-      li 
-        | Our revamped Sending algorithm makes sure to never reuse addresses after a transaction is 
-        | made, keeping your transactions more private on the blockchain. 
+.flex.dashboard.pal.flex-column
+  h1 Welcome to the Alpha of our new wallet experience!
+  p.bc-well
+    | Thank you for taking time to help test and explore what we’ve been working on.
+  h4.mbl.em-300 What's New?
+  ul
+    li.pbm
+      | Backup your entire wallet with a simple 12-word Recovery Phrase and restore it on any supported HD 
+      | wallet, anytime, anywhere.
+    li.pbm Create multiple accounts in your wallet to allow you to keep funds completely separate from each other in one easy-to-manage wallet.
+    li.pbm Our brand new Security Center helps you to secure your wallet from unauthorized access and ensures successful recovery of your wallet and funds.
+    li.pbm
+      | Our revamped Sending algorithm makes sure to never reuse addresses after a transaction is 
+      | made, keeping your transactions more private on the blockchain. 
 
 
-    h4 We’d love your feedback!
-    p.bc-well
-      | Your feedback and comments are essential to creating the best bitcoin 
-      | wallet. Please send us bug reports or general feedback by pressing the “Send Feedback” button 
-      | on the left side of the page. 
+  h4.em-300 We’d love your feedback!
+  p.bc-well
+    | Your feedback and comments are essential to creating the best bitcoin 
+    | wallet. Please send us bug reports or general feedback by pressing the “Send Feedback” button 
+    | on the left side of the page. 
 
-
-.flex-column.dashboard.pal
-  h4 This is your bitcoin address:
-  .form-group.flex.mtl(ng-if="paymentRequestURL")
-    .mrl
-      p.form-control-static(ng-hide="status.didInitializeHD")
-        img(src="img/spinner.gif")  
-      span(ng-show="status.didInitializeHD")
-        qr(text="paymentRequestURL", size=120, correction-level="'M'")
-    .plm
-      p.form-control-static.bitcoin-address
+.flex-column.flex-1.pal.dashboard
+  h4.mtn.em-300 This is your bitcoin address:
+  .mtl(ng-if="paymentRequestURL")
+    p.form-control-static(ng-hide="status.didInitializeHD")
+      img(src="img/spinner.gif")  
+    .flex.flex-column(ng-show="status.didInitializeHD")
+      qr(text="paymentRequestURL", size=120, correction-level="'M'")
+      p.form-control-static.bitcoin-address.mtl
         img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
         span(ng-show="status.didInitializeHD")
           | {{ paymentRequestAddress }}  

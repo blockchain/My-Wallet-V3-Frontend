@@ -182,29 +182,19 @@ padding-left: 15px;
 //TODO rip this out once we have a real dashboard
 
 .dashboard {
-  img {
-    max-height: 575px;
-    height: 100%;
-    width: 400px;
-    border-radius: 5px;
-  }
   h1 {
     font-weight: 300;
     font-size: 2em;
     margin-top: 0;
   }
-  h4 {
-    margin-top: 20px;
-    font-weight: 300;
-  }
   .bc-well {
-  margin: 10px 0px;
-  background: white;
-  color: #0081CD;
-  padding: 0;
-  border-radius: 5px;
-  line-height: 2em;
-  font-size: 1.1em;
+    margin: 10px 0px;
+    background: white;
+    color: #0081CD;
+    padding: 0;
+    border-radius: 5px;
+    line-height: 2em;
+    font-size: 1.1em;
   }
 
   ul{
@@ -214,8 +204,7 @@ padding-left: 15px;
   .form-control-static img {
     max-width: 40px;
   }
-}
-
-@media (max-width: 768px) {
-  .dashboard img { display: none; }
+  p.form-control-static.bitcoin-address {
+    max-width: 300px;
+  }
 }
