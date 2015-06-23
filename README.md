@@ -1,5 +1,5 @@
 # MyWallet HD Frontend
-An AngularJS bitcoin web wallet powered by Blockchains [MyWallet](https://github.com/blockchain/My-Wallet-HD).
+An AngularJS bitcoin web wallet powered by [My-Wallet-HD](https://github.com/blockchain/My-Wallet-HD).
 
 ## Running Locally
 
