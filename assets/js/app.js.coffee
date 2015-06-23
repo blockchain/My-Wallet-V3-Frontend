@@ -80,6 +80,7 @@ modules = [
   "templates/fiat-or-btc.jade"
   "templates/virtual-keyboard.jade"
   "templates/currency-picker.jade"
+  "templates/helper.jade"
   "templates/language-picker.jade"
   "templates/network-fee-picker.jade"
   "templates/transaction-description.jade"
