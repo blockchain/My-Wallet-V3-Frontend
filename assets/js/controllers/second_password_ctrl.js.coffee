@@ -24,5 +24,6 @@ walletApp.controller "SecondPasswordCtrl", ($scope, $log, Wallet, $modalInstance
     wrongPassword = () ->
       Wallet.displayError("Second password incorrect")
       $scope.busy = false
+      $modalInstance.close ""
       
     continueCallback($scope.secondPassword, correctPassword, wrongPassword)
