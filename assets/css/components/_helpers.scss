@@ -1,0 +1,24 @@
+//class should be applied on elements that have a focus state
+.helper {
+  color: $border-grey;
+  border: 1px solid $border-grey;
+  border-radius: 100%;
+  background-color: white;
+  width: 20px;
+  height: 20px;
+  font-size: .75em;
+  font-weight: 300;
+  &:focus {
+    outline: none;
+    background: $blue-alt;
+    color: white;
+    border: none;
+  }
+}
+
+//override bootstrap popover
+.popover {
+  box-shadow: 0 4px 0 0 #9F9F9F !important;
+  border-radius: 7px !important;
+  padding: 1em !important;
+}
