@@ -7,7 +7,7 @@ describe "RequestCtrl", ->
   beforeEach angular.mock.module("walletApp")
   
   beforeEach ->
-    angular.mock.inject ($injector, localStorageService, $controller, $rootScope) ->
+    angular.mock.inject ($injector, localStorageService, $controller, $rootScope, $compile) ->
       localStorageService.remove("mockWallets")
       
       Wallet = $injector.get("Wallet")      
@@ -23,9 +23,19 @@ describe "RequestCtrl", ->
         $stateParams: {},
         $modalInstance: modalInstance
         destination: undefined
-    
-      # Trigger generation of payment address:
-      scope.fields.amount = "1"
+
+      element = angular.element(
+        '<form role="form" name="requestForm" novalidate>' +
+        '<input type="text" name="to"       ng-model="fields.to"        is-not-null />' +
+        '<input type="text" name="amount"   ng-model="fields.amount"    is-valid-amount currency="fields.currency" />' +
+        '</form>'
+      )
+      scope.model = { fields: {to: null, amount: '0', currency: Wallet.settings.currency, label: ""} }
+      $compile(element)(scope)
+
+      scope.$digest()
+
+      scope.fields.amount = '1'
       scope.$apply()
     
       return
@@ -131,26 +141,22 @@ describe "RequestCtrl", ->
       scope.$digest()
       expect(scope.paymentRequestAmount).toBe(400000)
 
-  describe "validate", ->
+  describe "form validation", ->
 
-    it "should return false if 'to' is null", () ->
-      scope.fields.to = null
-      expect(scope.validate()).toBe(false)
+    it "should not be valid if 'amount' is not a number", () ->
+      scope.requestForm.amount.$setViewValue('asdf')
+      expect(scope.requestForm.$valid).toBe(false)
 
-    it "should return false if 'amount' is not a number", () ->
-      scope.fields.amount = 'asdf'
-      expect(scope.validate()).toBe(false)
+    it "should not be valid if 'amount' is negative", () ->
+      scope.requestForm.amount.$setViewValue(-69)
+      expect(scope.requestForm.$valid).toBe(false)
 
-    it "should return false if 'amount' is negative", () ->
-      scope.fields.amount = -69
-      expect(scope.validate()).toBe(false)
-
-    it "should return false if 'amount' has too many decimal places (btc)", () ->
-      scope.fields.amount = '0.000000001'
+    it "should not be valid if 'amount' has too many decimal places (btc)", () ->
+      scope.requestForm.amount.$setViewValue('0.000000001')
       scope.fields.currency = {code: 'BTC'}
-      expect(scope.validate()).toBe(false)
+      expect(scope.requestForm.$valid).toBe(false)
 
-    it "should return false if 'amount' has too many decimal places (fiat)", () ->
-      scope.fields.amount = '0.001'
+    it "should not be valid if 'amount' has too many decimal places (fiat)", () ->
+      scope.requestForm.amount.$setViewValue('0.001')
       scope.fields.currency = {code: 'USD'}
-      expect(scope.validate()).toBe(false)
+      expect(scope.requestForm.$valid).toBe(false)
