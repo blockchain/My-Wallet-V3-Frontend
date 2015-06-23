@@ -4,6 +4,7 @@ walletApp.directive('currencyPicker', ($translate, Wallet) ->
     replace: 'false'
     scope: {
       currency: '='
+      displayCurrency: '='
     }
     templateUrl: 'templates/currency-picker.jade'
     link: (scope, elem, attrs) ->
@@ -11,5 +12,7 @@ walletApp.directive('currencyPicker', ($translate, Wallet) ->
             
       scope.didSelect = (item, model) ->
         scope.currency = item
+        unless Wallet.isBitCurrency(scope.displayCurrency)
+          scope.displayCurrency = item
   }
 )
