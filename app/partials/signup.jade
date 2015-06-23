@@ -45,15 +45,15 @@
               input.form-control(type="text",ng-model="fields.emailVerificationCode",autofocus,ng-blur="validate()",on-enter="nextStep()")
               span.help-block 
                 p {{ errors.emailVerificationCode }}
-      
+
   .modal-footer
     .row
       .col.xs-12
         button.btn.btn-primary.btn-signup(ng-click="nextStep()",ng-disabled="!form.$valid || !isValid[0] || !fields.acceptedAgreement", translate="CONTINUE", ng-show="currentStep == 1 && !working")  
         img(ng-show="working" src="img/spinner.gif")     
         button.btn.btn-primary.btn-signup.btn-resend(ui-ladda="{{ resendingEmailCode }}", ng-click="resendEmail()", ladda-translate="RESEND_EMAIL", ng-show="currentStep == 2", data-style="expand-left")        
-        button.btn.btn-primary.btn-signup(ng-click="nextStep()", translate="GO_VERIFY_EMAIL", ng-show="currentStep == 2")
-                
+        button.button-success.btn-signup(ng-click="nextStep()", translate="GO_VERIFY_EMAIL", ng-show="currentStep == 2")
+
         .why.col-xs-12(ng-show= "currentStep == 2")
           h4(translate="EMAIL_WHY")
           p.explanation(translate="EMAIL_WHY_EXPLAIN")  

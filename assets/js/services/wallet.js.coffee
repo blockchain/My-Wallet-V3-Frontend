@@ -223,6 +223,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.create = (password, email, currency, language, success_callback) ->
     success = (uid) ->
       wallet.displaySuccess("Wallet created with identifier: " + uid, true)
+      wallet.status.firstTime = true
 
       loginSuccess = () ->
         success_callback(uid)
