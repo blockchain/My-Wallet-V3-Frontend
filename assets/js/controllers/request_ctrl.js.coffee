@@ -50,18 +50,6 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
     
   $scope.numberOfActiveAccountsAndLegacyAddresses = () -> 
     return filterFilter(Wallet.accounts, {active: true}).length + filterFilter(Wallet.legacyAddresses, {active: true}).length
-  
-
-  $scope.validateAmountDecimals = () ->
-    return $scope.decimalPlaces($scope.fields.amount) <= $scope.allowedDecimals()
-
-  $scope.allowedDecimals = () ->
-    return 8 if $scope.isBitCurrency($scope.fields.currency)
-    return 2
-
-  $scope.decimalPlaces = (number) ->
-    if number?
-      return (number.split('.')[1] || []).length
 
   #################################
   #           Private             #
@@ -121,8 +109,4 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
 
   $scope.validate = () ->
     return false if $scope.fields.to == null
-    return false if isNaN(parseFloat($scope.fields.amount))
-    return false if parseFloat($scope.fields.amount) < 0.0
-    return false if not $scope.validateAmountDecimals()
-    
     return true
