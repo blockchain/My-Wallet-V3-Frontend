@@ -154,13 +154,3 @@ describe "RequestCtrl", ->
       scope.fields.amount = '0.001'
       scope.fields.currency = {code: 'USD'}
       expect(scope.validate()).toBe(false)
-
-  describe "allowedDecimals", ->
-
-    it "should return 8 if the currency is a btc currency", () ->
-      scope.fields.currency = {code: 'mBTC'}
-      expect(scope.allowedDecimals()).toBe(8)
-
-    it "should return 2 if the currency is fiat", () ->
-      scope.fields.currency = {code: 'USD'}
-      expect(scope.allowedDecimals()).toBe(2)
