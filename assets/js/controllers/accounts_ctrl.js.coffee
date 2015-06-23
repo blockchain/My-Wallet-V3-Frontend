@@ -40,6 +40,16 @@ walletApp.controller "AccountsCtrl", ($scope, Wallet, SecurityCenter, $state, $s
   $scope.legacyTotal = () ->
     return Wallet.getTotalBalanceForActiveLegacyAddresses()
 
+  $scope.termsOfService = () ->
+    modalInstance = $modal.open(
+      templateUrl: "partials/terms-of-service.jade"
+      windowClass: "bc-modal terms-modal"
+    )
+  $scope.privacyPolicy = () ->
+    modalInstance = $modal.open(
+      templateUrl: "partials/privacy-policy.jade"
+      windowClass: "bc-modal terms-modal"
+    )
   #################################
   #           Private             #
   #################################
