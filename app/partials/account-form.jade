@@ -1,5 +1,9 @@
 .modal-header
-  h3(translate="CREATE_NEW_ACCOUNT", ng-hide="status.edit") 
+  .flex-center.pam(ng-hide="status.edit")
+    h3.man(translate="CREATE_NEW_ACCOUNT")
+    button.mll.helper(popover-template="helperText.templateUrl", popover-placement="right", ng-hide="status.edit") ?
+    script(type="text/ng-template" id="helperTextNewAccount.html").
+      <div ng-include=" 'templates/helper.jade' "></div>
   h3(translate="RENAME_ACCOUNT", ng-show="status.edit") 
 .modal-body
   .form-group.flex.flex-justify(ng-class="{'has-error': errors.name, 'has-success': success.name}")
