@@ -50,18 +50,6 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
     
   $scope.numberOfActiveAccountsAndLegacyAddresses = () -> 
     return filterFilter(Wallet.accounts, {active: true}).length + filterFilter(Wallet.legacyAddresses, {active: true}).length
-  
-
-  $scope.validateAmountDecimals = () ->
-    return $scope.decimalPlaces($scope.fields.amount) <= $scope.allowedDecimals()
-
-  $scope.allowedDecimals = () ->
-    return 8 if $scope.isBitCurrency($scope.fields.currency)
-    return 2
-
-  $scope.decimalPlaces = (number) ->
-    if number?
-      return (number.split('.')[1] || []).length
 
   #################################
   #           Private             #
@@ -83,7 +71,6 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
       $scope.fields.to = $scope.accounts[idx]
         
   $scope.$watch "fields.to.index + fields.to.address + status.didInitializeHD", () ->
-    $scope.formIsValid = $scope.validate()
     amount = $scope.parseAmount()
         
     if $scope.fields.to? && $scope.fields.to.address?
@@ -101,16 +88,14 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
     else
       return Wallet.fiatToSatoshi($scope.fields.amount, $scope.fields.currency.code)
         
-  $scope.$watch "fields.amount + fields.currency.code + fields.label", (oldValue, newValue) ->
-    $scope.formIsValid = $scope.validate()
-                
+  $scope.$watch "fields.amount + fields.currency.code + fields.label", (oldValue, newValue) ->                
     amount = $scope.parseAmount()    
     $scope.paymentRequestAmount = amount
     
     if $scope.fields.to?
       if $scope.fields.to.address?
         $scope.setPaymentRequestURL($scope.fields.to.address, amount)
-      else if $scope.formIsValid        
+      else if $scope.requestForm.$valid     
         $scope.setPaymentRequestURL($scope.receiveAddress, amount)
         
   $scope.setPaymentRequestURL = (address, amount) ->
@@ -118,11 +103,3 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
     $scope.paymentRequestURL = "bitcoin:" + address
     if amount > 0
       $scope.paymentRequestURL += "?amount=" + numeral(amount).divide(100000000)
-
-  $scope.validate = () ->
-    return false if $scope.fields.to == null
-    return false if isNaN(parseFloat($scope.fields.amount))
-    return false if parseFloat($scope.fields.amount) < 0.0
-    return false if not $scope.validateAmountDecimals()
-    
-    return true
