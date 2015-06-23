@@ -239,6 +239,15 @@
   }
 }
 
+.terms-modal {
+  .modal-body {
+    max-height: 400px;
+    overflow-y: scroll;
+    padding: 0;
+  }
+  .modal-dialog { width: 65vw; }
+}
+
 @media (max-width: 768px) {
   .bc-modal {
     .modal-dialog {

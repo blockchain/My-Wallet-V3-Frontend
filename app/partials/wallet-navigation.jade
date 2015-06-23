@@ -51,7 +51,13 @@
       a(ui-sref="wallet.common.feedback")
         i.ti-thumb-up
         span(translate="SEND_FEEDBACK")
-  ul.aside.adverts
-    li.header.mbm
-      span(translate="SPONSORS")  
+  ul.aside.wallet-footer
+    li.header.adverts.mbm
+      span(translate="SPONSORS")
       adverts
+    li.terms-policy
+      ul.flex-center.aside.em-300.type-sm
+        li.pointer.mrm(ng-click="termsOfService()", translate="TOS")
+        li.mrm.type-xs
+          i.ti-control-record
+        li.pointer(ng-click="privacyPolicy()", translate="PRIVACY")
