@@ -1,4 +1,5 @@
-# MyWallet HD Frontend
+# MyWallet HD Frontend [![Build Status](https://travis-ci.org/blockchain/My-Wallet-HD-Frontend.png?branch=master)](https://travis-ci.org/blockchain/My-Wallet-HD-Frontend)
+
 An AngularJS bitcoin web wallet powered by [My-Wallet-HD](https://github.com/blockchain/My-Wallet-HD).
 
 ## Running Locally

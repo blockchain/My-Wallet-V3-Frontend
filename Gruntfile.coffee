@@ -459,10 +459,10 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-preprocess')
   grunt.loadNpmTasks('grunt-autoprefixer')
   grunt.loadNpmTasks('grunt-merge-json')
-    
+
   grunt.registerTask "compile", ["coffee"]  
-    
-  grunt.registerTask "default", [
+
+  grunt.registerTask "build", [
     "html2js"
     "compile"
     "sass"
@@ -471,6 +471,10 @@ module.exports = (grunt) ->
     "autoprefixer"
     "copy:images"
     "merge-json"
+  ]
+
+  grunt.registerTask "default", [
+    "build"
     "watch"
   ]
   
