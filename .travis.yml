@@ -1,10 +1,10 @@
 language: node_js
-
 node_js:
-  - "node"
-
+- node
 before_install:
-  - npm install -g grunt-cli
-  - gem install sass
-
+- npm install -g grunt-cli
+- gem install sass
 script: grunt build && node_modules/karma/bin/karma start karma.conf.js --single-run
+notifications:
+  slack:
+    secure: hUYe9QAGIGNEzglz1iiHx3RhunYb0oFDnBmDbwn2+EyFe0GK6yB3kdPnH6HIjEH6tRKj80UuNOMjiFJ5QWF5hSN5EbOYFznmXbay2bJRK8SnRsRTf4gA2+UJ2tX0zoTMltfNTB5VxDBqCNK5YpPRluWw/dVuwuhGvF6H2xvCULGw4f0ij58Bpn+CgbTv1fuaZkhPXVLwYyEqdn/wB2Mqo3VdG8InQ/ltFSArYBU1oq1MYpdT6yhBGd0wnLNIMMjZ/4Eld0XOWgM/q+gkn/iRtC71wwpa45UvVZpbOCHzG0QkuOn70zCXULkTFQOVeKA3Bmtoke0lUTVqxAKIQNa+UFlwCTeLD5CS8W/mMlDTBag+OHyIOPgEFrGXoeFij1IvLKvqoMkJP8mqA0DX4b2YuLkq90dJis1zVRrt6j30NZOCWuUaGKSLQj58XawfbFg+p/GDVRMIcLbOMB06TUU/k6xgaSZ+smiecwH8g6+/QbyYdgJROx1IRl2libN78jhxHKSQJvVmqngYj4zwnW/WIwh7igQfsMMfMvoTdy6ATqO0aB866J87BVpaKnk44bVF/it03CmJ56JHJWjDbN1yq1RCXZObQADDNnm1DrEKz4X8DnHWoH5WIvpkKdguWYugDGiKh8j4LQYVtcBVaQMNWn8h7t1IkWOrXy5LqMFjV3I=
