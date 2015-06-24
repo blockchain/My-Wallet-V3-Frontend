@@ -3,6 +3,8 @@ language: node_js
 node_js:
   - "node"
 
-before_install: npm install -g grunt-cli
+before_install:
+  - npm install -g grunt-cli
+  - gem install sass
 
 script: grunt build && node_modules/karma/bin/karma start karma.conf.js --single-run
