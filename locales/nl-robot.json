@@ -188,8 +188,6 @@
   "FEE_NORMAL_EXPLAIN":"Volg het beleid van de vergoeding voorgesteld door de mainline bitcoin client. Aanbevolen",
   "FEE_GENEROUS":"Royale",
   "FEE_GENEROUS_EXPLAIN":"Lorem ipsum genereus.",
-  "DISABLED":"Handicap",
-  "ENABLED":"Ingeschakeld",
   "HANDLE_BITCOIN_LINKS":"Handvat Bitcoin Links",
   "HANDLE_BITCOIN_LINKS_EXPLAIN":"Dit om uw portemonnee Blockchain om bitcoin betaling koppelingen in de webbrowser mogelijk te maken. Dit zal uw ervaring gemakkelijker maken wanneer online transacties te verrichten.",
   "SET_HANDLE_BITCOIN_LINKS":"Bitcoin link management inschakelen",

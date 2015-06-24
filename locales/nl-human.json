@@ -5,5 +5,7 @@
   "NEW_ACCOUNT":"Rekening toevoegen +",
   "MY_TRANSACTIONS":"Transacties",
   "ALL_ACCOUNTS":"Alle Rekeningen",
-  "ACCOUNT":"Rekening"
+  "ACCOUNT":"Rekening",
+  "DISABLED":"Uitgeschakeld",
+  "ENABLED":"Ingeschakeld"
 }
