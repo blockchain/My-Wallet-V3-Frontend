@@ -6,7 +6,6 @@ walletApp.directive('helperButton', ($translate) ->
       content: '@'
       url: '@'
       placement: '@'
-      title: '@'
     }
     templateUrl: "templates/helper-button.jade"
     link: (scope, elem, attrs) ->
