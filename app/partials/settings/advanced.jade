@@ -10,7 +10,7 @@ form.form-horizontal(role="form",name="form",novalidate)
       h2.status.complete.hidden-xs.hidden-sm.mbm(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
       configure-second-password
 
-  .form-group
+  .form-group(ng-if="false")
     .col-sm-12.col-md-6
       label(translate="REMEMBER_2FA")
       p.explain.hidden-xs.hidden-sm(translate="REMEMBER_2FA_EXPLAIN")    
