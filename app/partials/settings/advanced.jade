@@ -47,7 +47,7 @@ form.form-horizontal(role="form",name="form",novalidate)
     .col-sm-12.col-md-6.setting-result
       bc-async-input(ng-model="settings.logoutTimeMinutes", validator="validateLogoutTime", on-save="changeLogoutTime", action-title="'CHANGE_AUTO_LOGOUT' | translate")
 
-  .form-group(ng-class="{'has-error': errors.ipWhitelist}")
+  .form-group(ng-class="{'has-error': errors.ipWhitelist}" ng-if="false")
     .col-sm-12.col-md-6
       label(translate="IP_WHITELIST")
       p.explain.hidden-xs.hidden-sm(translate="IP_WHITELIST_EXPLAIN")    
