@@ -1,7 +1,7 @@
 .modal-header
   .flex-center.pam(ng-hide="status.edit")
     h3.man(translate="CREATE_NEW_ACCOUNT")
-    helper-button(content="Does this work?", url="http://abhiously.com", popover-placement="right", ng-hide="status.edit")
+    helper-button(content="What is an account?" url="http://www.lmgtfy.com/?q=what+is+an+account")
   h3(translate="RENAME_ACCOUNT", ng-show="status.edit") 
 .modal-body
   .form-group.flex.flex-justify(ng-class="{'has-error': errors.name, 'has-success': success.name}")

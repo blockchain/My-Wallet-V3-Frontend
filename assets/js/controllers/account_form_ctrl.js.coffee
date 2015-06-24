@@ -7,11 +7,6 @@ walletApp.controller "AccountFormCtrl", ($scope, Wallet, $modalInstance, $log, $
 
   $scope.errors = {}
 
-  $scope.helperText =
-    content: 'You may divide your funds into segregated accounts within your wallet. Some common applications of accounts are Savings, Spending & Business Expenses'
-    templateUrl: 'helperTextNewAccount.html'
-    link: 'https://blockchain.info/'
-
   if account?
     $scope.fields.name = account.label
     $scope.status.edit = true
