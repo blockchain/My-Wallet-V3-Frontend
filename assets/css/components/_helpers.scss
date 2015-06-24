@@ -10,6 +10,8 @@
   font-weight: 500;
   &:focus {
     outline: none;
+  }
+  &.active {
     background: $blue-alt;
     color: white;
     border: none;
