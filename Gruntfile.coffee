@@ -186,7 +186,7 @@ module.exports = (grunt) ->
           doctype: "html"
         base: "app"
       main: {
-        src: ["app/partials/notifications/*.jade", "app/partials/settings/*.jade", "app/partials/*.jade", "app/templates/*.jade"],
+        src: ["app/partials/notifications/*.jade", "app/partials/settings/*.jade", "app/partials/*.jade", "app/templates/*.jade", "app/partials/*.html"],
         dest: 'build/js/templates.js'
       }
     },
@@ -258,6 +258,12 @@ module.exports = (grunt) ->
         ]
                 
     watch: 
+      html: 
+        files: ['app/partials/**/*.html']
+        tasks: ['html2js']
+        options: 
+          spawn: false
+
       jade:
         files: ['app/partials/**/*.jade', 'app/templates/**/*.jade']
         tasks: ['html2js']
