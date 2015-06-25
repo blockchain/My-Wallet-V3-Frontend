@@ -57,11 +57,12 @@ describe "ShowPrivateKeyCtrl", ->
       scope.tryContinue()
       expect(scope.accessAllowed).toBe(true)
 
-    # it "should try to verify if a second password is needed", inject((Wallet) ->
-    #   spyOn(scope, 'verifySecondPassword')
-    #   scope.tryContinue()
-    #   expect(scope.verifySecondPassword).toHaveBeenCalled()
-    # )
+    it "should check to see if the second password is correct", inject((Wallet) ->
+      spyOn(Wallet.my, 'isCorrectSecondPassword')
+      scope.needsSecondPassword = true
+      scope.tryContinue()
+      expect(Wallet.my.isCorrectSecondPassword).toHaveBeenCalled()
+    )
 
     it "should not continue if second password is incorrect", inject((Wallet) ->
       expect(scope.accessAllowed).toBe(false)
@@ -88,19 +89,3 @@ describe "ShowPrivateKeyCtrl", ->
       scope.needsSecondPassword = scope.checkForSecondPassword()
       expect(scope.needsSecondPassword).toBe(true)
     )
-
-  # describe "verifySecondPassword", ->
-
-  #   it "should verify if the second password is correct", inject((Wallet) ->
-  #     Wallet.my.isCorrectSecondPassword = (-> true)
-  #     scope.verifySecondPassword()
-  #     expect(scope.accessAllowed).toBe(true)
-  #     expect(scope.incorrectSecondPassword).toBe(false)
-  #   )
-
-  #   it "should not verify if the second password is wrong", inject((Wallet) ->
-  #     Wallet.my.isCorrectSecondPassword = (-> false)
-  #     scope.verifySecondPassword()
-  #     expect(scope.accessAllowed).toBe(false)
-  #     expect(scope.incorrectSecondPassword).toBe(true)
-  #   )
