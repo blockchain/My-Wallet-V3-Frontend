@@ -5,17 +5,17 @@ walletApp.controller "ShowPrivateKeyCtrl", ($scope, $log, Wallet, $modalInstance
   $scope.incorrectSecondPassword = false
   $scope.address = addressObj.address
   $scope.balance = addressObj.balance
-  $scope.privKey = Wallet.store.getPrivateKey($scope.address)
+  $scope.privKey = null
 
   $scope.tryContinue = () ->
     if $scope.needsSecondPassword
-      $scope.verifySecondPassword()
-    else $scope.allowAccess()
-
-  $scope.verifySecondPassword = () ->
-    if Wallet.my.isCorrectSecondPassword($scope.secondPasswordInput)
+      if Wallet.my.isCorrectSecondPassword($scope.secondPasswordInput)
+        $scope.privKey = Wallet.store.getPrivateKey($scope.address, $scope.secondPasswordInput)
+        $scope.allowAccess()
+      else $scope.incorrectSecondPassword = true
+    else
+      $scope.privKey = Wallet.store.getPrivateKey($scope.address)
       $scope.allowAccess()
-    else $scope.incorrectSecondPassword = true
 
   $scope.checkForSecondPassword = () ->
     doubleEncryption = false
@@ -32,10 +32,6 @@ walletApp.controller "ShowPrivateKeyCtrl", ($scope, $log, Wallet, $modalInstance
   $scope.close = () ->
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
-
-  $scope.$watch 'accessAllowed', (access) ->
-    if access && $scope.needsSecondPassword
-      $scope.privKey = Wallet.my.decryptSecretWithSecondPassword($scope.privKey, $scope.secondPasswordInput, Wallet.store.getSharedKey())
 
   $scope.$watch 'incorrectSecondPassword', (value) ->
     if value
