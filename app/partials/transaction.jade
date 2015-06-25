@@ -2,7 +2,7 @@
   .row
     .col-xs-12
       a.back(ng-click="back()")
-        h4.back Back to feed
+        h4.back(translate="BACK_TO_FEED")
   .transaction-card.flex-column.flex
     .tx-date
       span.em-600.prm(translate="TRANSACTION_DETAILS")
@@ -20,7 +20,7 @@
               span.text-overflow-hidden.flex-1 {{ destination.address }}
               span.plm.center-align {{ destination.amount }}
         .tx-notes
-          p Notes
+          p(translate="NOTES")
           transaction-note(transaction="transaction")
       .tx-sidebar.pal.flex-1
         .tx-amount
@@ -28,13 +28,14 @@
         .tx-status
           transaction-status(transaction="transaction")
         .tx-value-then.tx-value(ng-show="settings.currency.code == 'USD'")
-          p Value at Send
+          p(translate="VALUE_AT_SEND")
           fiat(btc="transaction.result" abs date="transaction.txTime")
         .tx-value-now.tx-value
-          p Value now
+          p(translate="VALUE_NOW")
           fiat(btc="transaction.result" abs)
         .tx-bci-link.button-default.button-sm
-          a.black(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank") Verify On Blockchain.info
+          a.black(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank")
+           span(translate="VERIFY_ON_BCI")
   .transaction-card.clearfix(ng-if="transaction.publicNote")
-    strong Public Note:
+    strong(translate="PUBLIC_NOTE")
     p.mtl {{ transaction.publicNote }}
