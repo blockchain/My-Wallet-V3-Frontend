@@ -21,7 +21,7 @@
       .col-xs-12
         pre {{ recoveryPhrase }}
     .row(ng-show="step==2")
-      .col-xs-3(ng-repeat="word in words | orderBy:'index'")
+      .col-xs-3(ng-repeat="word in words")
         .form-group(ng-class="{'has-error': word.error}")
           p(translate="{{'WORD_' + word.index}}")
           input.form-control(type="text" ng-model="word.value")
