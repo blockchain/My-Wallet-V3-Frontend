@@ -21,23 +21,10 @@
       .col-xs-12
         pre {{ recoveryPhrase }}
     .row(ng-show="step==2")
-      .col-xs-3
-        .form-group(ng-class="{'has-error': errors.word1}")
-          p(translate="WORD_1")
-          input.form-control(type="text", ng-model="word1", autofocus)
-      .col-xs-3
-        .form-group(ng-class="{'has-error': errors.word2}")
-          p(translate="WORD_2")
-          input.form-control(type="text", ng-model="word2")
-      .col-xs-3
-        .form-group(ng-class="{'has-error': errors.word6}")
-          p(translate="WORD_6")
-          input.form-control(type="text", ng-model="word6")
-      .col-xs-3
-        .form-group(ng-class="{'has-error': errors.word8}")
-          p(translate="WORD_8")
-          input.form-control(type="text", ng-model="word8")
-
+      .col-xs-3(ng-repeat="word in words | orderBy:'index'")
+        .form-group(ng-class="{'has-error': word.error}")
+          p(translate="{{'WORD_' + word.index}}")
+          input.form-control(type="text" ng-model="word.value")
 
   div(ng-show="step==2")
 

@@ -31,10 +31,9 @@ describe "ConfirmRecoveryPhraseCtrl", ->
 
   it "should verify", inject((Wallet) ->
 
-    scope.word1 = "banana"
-    scope.word2 = "big"
-    scope.word6 = "must"
-    scope.word8 = "now"
+    for word in scope.words
+      word.value = word.actual
+
     scope.$apply()
 
     spyOn(Wallet, "confirmRecoveryPhrase")
