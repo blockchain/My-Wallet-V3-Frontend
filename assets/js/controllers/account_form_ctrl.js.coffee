@@ -6,7 +6,7 @@ walletApp.controller "AccountFormCtrl", ($scope, Wallet, $modalInstance, $log, $
     busy: null
 
   $scope.errors = {}
-  
+
   if account?
     $scope.fields.name = account.label
     $scope.status.edit = true

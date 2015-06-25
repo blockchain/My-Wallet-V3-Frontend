@@ -103,8 +103,9 @@
             i.ti-plus.mrm
             span(translate="ADD_ANOTHER_RECIPIENT")
       .flex-column.form-group.bc-modal-fade(ng-class="{'has-error': errors.fee}" ng-show="advanced")
-        label.mbm
-          span(translate="MINERS_FEE")
+        label.mbm.flex-center
+          span.mlm(translate="MINERS_FEE")
+          helper-button(content="ADVANCED_SEND_STEP_1")          
         p.ccc(translate="MINERS_FEE_EXPLAIN")
         .flex-center.miners-fee-selection
           .flex-column.border-right.prl.mrl
@@ -161,7 +162,7 @@
             {{ transaction.fee | toBitCurrency:btcCurrency:false }}
           p
             fiat(btc="transaction.fee")
-            span.why-fee why?
+            //- helper-button(content="SEND_BITOIN_STEP2A" placement='left' class="mls")
         li.amount-item.blue
           p(translate="TOTAL")
             | :
@@ -170,8 +171,10 @@
           p
             fiat(btc="transaction.satoshi + transaction.fee")
       .flex-column.form-group(ng-class="{'has-error': errors.note}")
-        label(translate="NOTE")
-          |:
+        .flex-center.pbs
+          label.mbn(translate="NOTE")
+          helper-button(content="SEND_BITOIN_STEP2B" placement='top')          
+            |:
         textarea(rows="4", ng-model="transaction.note", ng-blur="visualValidate('note')")
         .flex-center.mtm
           input.mrs(type="checkbox", ng-model="transaction.publicNote")

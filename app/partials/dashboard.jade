@@ -21,7 +21,9 @@
     | on the left side of the page. 
 
 .flex-column.flex-1.pal.dashboard
-  h4.mtn.em-300 This is your bitcoin address:
+  .flex-center
+    h4.mtn.em-300.mbn This is your bitcoin address:
+    helper-button(content="DASHBOARD_ADDRESS" placement='top')
   .mtl(ng-if="paymentRequestURL")
     p.form-control-static(ng-hide="status.didInitializeHD")
       img(src="img/spinner.gif")  

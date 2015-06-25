@@ -1,5 +1,7 @@
 .modal-header
-  h3(translate="CREATE_NEW_ACCOUNT", ng-hide="status.edit") 
+  .flex-center.pam(ng-hide="status.edit")
+    h3.man.mrm(translate="CREATE_NEW_ACCOUNT")
+    helper-button(content="CREATE_NEW_ACCOUNT_MODAL")
   h3(translate="RENAME_ACCOUNT", ng-show="status.edit") 
 .modal-body
   .form-group.flex.flex-justify(ng-class="{'has-error': errors.name, 'has-success': success.name}")
