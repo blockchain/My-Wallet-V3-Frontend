@@ -173,8 +173,12 @@ head
   
   script.
     if(browserDetection().browser === "ie" && browserDetection().version < 11) {
-      alert("Internet Explorer 10 and older are not supported");
-      window.location = "https://blockchain.info/"
+      if ( confirm("We're sorry, our HD Wallet uses the latest web technologies to provide you a more secure and private experience. Unfortunately Internet Explorer 10 and older do not meet these standards. If you'd like to experience the Wallet, click OK to upgrade your browser. Or, hit cancel to explore Blockchain.info instead. Thanks!") ) {
+        window.location = "http://browsehappy.com/";
+      }
+      else {
+        window.location = "https://blockchain.info/";
+      }
     }
 
 body(ng-controller="AppCtrl", ui-view="body")
