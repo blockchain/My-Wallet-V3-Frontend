@@ -3,7 +3,7 @@ walletApp.directive('isNotNull', (Wallet) ->
     restrict: 'A'
     require: 'ngModel'
     link: (scope, elem, attrs, ctrl) ->
-      ctrl.$validators.isNull = (modelValue, viewValue) ->
+      ctrl.$validators.isNotNull = (modelValue, viewValue) ->
         if attrs.isNotNull != ''
           modelValue = modelValue[attrs.isNotNull]
         return false if modelValue == null

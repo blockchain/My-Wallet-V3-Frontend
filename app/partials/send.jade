@@ -46,7 +46,7 @@
             ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
             ui-select-choices(repeat="destination in destinations[0] | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search, 0)" refresh-delay="0")
               span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
-        span.help-block(ng-show="sendForm.destination.$error.isNull")
+        span.help-block(ng-show="sendForm.destination.$error.isNotNull")
       .flex-column.form-group(ng-class="{'has-error': errors.amount}", ng-hide="advanced")
         label.mbm
           span(translate="AMOUNT")
