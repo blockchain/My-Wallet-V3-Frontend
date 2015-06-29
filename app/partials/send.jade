@@ -27,26 +27,22 @@
               ui-select-match {{ maxAndLabelForSelect($select) }}
               ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)")
                 span(ng-bind-html="maxAndLabel(origin) | highlight: $select.search" ng-class="{zerobalance: hasZeroBalance(origin)}")
-      .flex-column.form-group(ng-class="{'has-error': errors.to, 'has-success' : success.to}", ng-hide="advanced")
+      .flex-column.form-group(ng-class="{'has-error': sendForm.destination.$error.isNotNull, 'has-success' : success.to}", ng-hide="advanced")
         label.mbm.flex-between
           span(translate="TO:")
         div
-          p.form-control-static(ng-hide="originsLoaded", )
+          p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")
           // Use input-group if camera is present.
-          .input-group(ng-show="originsLoaded", ng-if="browserWithCamera")
+          div(ng-show="originsLoaded" ng-class="{'input-group': browserWithCamera}")
             ui-select(ng-model="transaction.destination" name="destination" is-not-null="label")
               ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
               ui-select-choices(repeat="destination in destinations[0] | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search, 0)" refresh-delay="0")
                 span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
-            span.input-group-btn.mls
+            span.input-group-btn.mls(ng-if="browserWithCamera")
               button#qr.btn.btn-default(type="button", ng-click="cameraOn(0)")
                 img(src="img/qr.png", alt="QR")
-          ui-select(ng-model="transaction.destination", ng-blur="visualValidate('to')", ng-change="visualValidate('to')", ng-if="!browserWithCamera")
-            ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
-            ui-select-choices(repeat="destination in destinations[0] | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search, 0)" refresh-delay="0")
-              span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
-        span.help-block(ng-show="sendForm.destination.$error.isNotNull")
+        span.help-block(ng-show="sendForm.destination.$error.isNotNull") Destination cannot be empty
       .flex-column.form-group(ng-class="{'has-error': errors.amount}", ng-hide="advanced")
         label.mbm
           span(translate="AMOUNT")
