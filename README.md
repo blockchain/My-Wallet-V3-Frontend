@@ -169,8 +169,6 @@ index.html should be cached using If-Modified-Since or etag. All other files con
 
 ## Git branches
 
-* `master` : where the action is
-* `staging` : I try to keep this in sync with dev.blockchain.info (and hopefully Travis will take care of that the other way around in the future)
-* `send-to-email-mobile` : UI of sending to email / mobile (works but pending product feedback, a second dev server, etc)
-* `ticker` : a feature Justin worked on, same status as send-to-email-mobile
-* `experimental` : a brach we can use to deploy features that we aren't sure about yet, such as send-to-email-mobile. This branch can be recreated by combining other feature branches.
+* `dev` : Current development with latest changes
+* `staging` : QA stage before going live
+* `master` : Current live version
