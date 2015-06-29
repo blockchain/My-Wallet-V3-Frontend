@@ -15,7 +15,7 @@ walletApp.directive('isValidAmount', (Wallet) ->
           return 4 if currency.code == 'bits'
         return 2
 
-      ctrl.$validators.isNotValidAmount = (modelValue, viewValue) ->
+      ctrl.$validators.isValidAmount = (modelValue, viewValue) ->
         return false if isNaN(viewValue)
         return false if parseFloat(viewValue) < 0
         return false if decimalPlaces(viewValue) > allowedDecimalPlaces(attrs.currency)
