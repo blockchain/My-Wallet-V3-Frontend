@@ -15,7 +15,7 @@
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)")
     | {{alert.msg}}
   div(ng-hide="confirmationStep")
-    form.form-horizontal(role="form",name="form",novalidate)
+    form.form-horizontal(role="form",name="sendForm",novalidate)
       .flex-column.form-group(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
         label.mbm
           span(translate="FROM:")
@@ -35,7 +35,7 @@
             img(src="img/spinner.gif")
           // Use input-group if camera is present.
           .input-group(ng-show="originsLoaded", ng-if="browserWithCamera")
-            ui-select(ng-model="transaction.destination", ng-blur="visualValidate('to')" ng-change="visualValidate('to')")
+            ui-select(ng-model="transaction.destination" name="destination" is-not-null="label")
               ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
               ui-select-choices(repeat="destination in destinations[0] | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search, 0)" refresh-delay="0")
                 span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
@@ -46,7 +46,7 @@
             ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
             ui-select-choices(repeat="destination in destinations[0] | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search, 0)" refresh-delay="0")
               span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
-        span.help-block {{ errors.to }}
+        span.help-block(ng-show="sendForm.destination.$error.isNull")
       .flex-column.form-group(ng-class="{'has-error': errors.amount}", ng-hide="advanced")
         label.mbm
           span(translate="AMOUNT")
