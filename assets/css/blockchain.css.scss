@@ -36,10 +36,6 @@
 //override bootstrap
 @import 'utilities/bs_overrides';
 
-html {
-  overflow-y: hidden;
-}
-
 html,body {
   font-size: small;
   background-color: #fff;
@@ -47,7 +43,7 @@ html,body {
   font-family: 'Roboto', 'Helvetica', sans-serif !important;
   height: 100%;
   width: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .hide { display: none; }
