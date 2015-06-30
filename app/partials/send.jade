@@ -43,15 +43,15 @@
               button#qr.btn.btn-default(type="button", ng-click="cameraOn(0)")
                 img(src="img/qr.png", alt="QR")
         span.help-block(ng-show="sendForm.destination.$error.isNotNull") Destination cannot be empty
-      .flex-column.form-group(ng-class="{'has-error': errors.amount}", ng-hide="advanced")
+      .flex-column.form-group(ng-class="{'has-error': sendForm.amount.$invalid && sendForm.amount.$touched}", ng-hide="advanced")
         label.mbm
           span(translate="AMOUNT")
         .flex-center
           .mrl.flex-1
             .flex-center
               span.mrm {{ transaction.currency.code }}:
-              input.form-control(type="text",ng-model="transaction.amount",ng-blur="visualValidate('amount')" ng-change="visualValidate('amount')")
-            span.help-block {{ errors.amount }}
+              input.form-control(type="text" ng-model="transaction.amount" name="amount" is-valid-amount currency="{{transaction.currency}}")
+            span.help-block(ng-show="sendForm.amount.$invalid && sendForm.amount.$touched") Please enter a valid amount
           a.button-success.button-sm.type-sm.mrl.flex-center(ng-click="toggleCurrency()")
             i.ti-arrows-horizontal
           .flex-center.ccc.conversion.flex-1
