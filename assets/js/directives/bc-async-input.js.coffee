@@ -64,11 +64,17 @@ walletApp.directive('bcAsyncInput', (Wallet) ->
           scope.status.saving = false
     
         scope.onSave(scope.form.newValue, success, error)
+      
+      scope.cancel = () ->
+        scope.status.edit = false
+        scope.form.newValue = scope.ngModel
 
       transclude(scope, (clone, scope) ->
         if attrs.custom?
           elem.empty().append(clone)
       )
+	  
+
           
   }
 )
