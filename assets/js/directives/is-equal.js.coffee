@@ -4,7 +4,8 @@ walletApp.directive('isEqual', (Wallet) ->
     require: 'ngModel'
     link: (scope, elem, attrs, ctrl) ->
       ctrl.$validators.isEqual = (modelValue, viewValue) ->
-        return attrs.isEqual == viewValue unless attrs.not?
-        return attrs.isEqual != viewValue
+        if attrs.property? && attrs.property != '' && viewValue?
+          viewValue = viewValue[attrs.property]
+        return attrs.isEqual == viewValue
   }
 )
