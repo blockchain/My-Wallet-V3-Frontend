@@ -16,89 +16,58 @@
     | {{alert.msg}}
   div(ng-hide="confirmationStep")
     form.form-horizontal(role="form",name="sendForm",novalidate)
+      //- From
       .flex-column.form-group(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
         label.mbm
           span(translate="FROM:")
-        div
+        div(ng-class="{'has-error': sendForm.from.$invalid && sendForm.destinations0.$touched}")
           p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")
           span(ng-show="originsLoaded")
-            ui-select(ng-model="transaction.from")
+            ui-select(ng-model="transaction.from" name="from" required)
               ui-select-match {{ maxAndLabelForSelect($select) }}
               ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)")
                 span(ng-bind-html="maxAndLabel(origin) | highlight: $select.search" ng-class="{zerobalance: hasZeroBalance(origin)}")
-      .flex-column.form-group(ng-class="{'has-error': sendForm.destination.$error.isNotNull, 'has-success' : success.to}", ng-hide="advanced")
+          span.help-block(ng-show="sendForm.from.$invalid && sendForm.destinations0.$touched") Must select an account to send from
+      //- Advanced Send
+      .flex-column.form-group.bc-modal-fade.mvl.advanced-recipient
+        //- To
         label.mbm.flex-between
           span(translate="TO:")
-        div
+        .flex-column.prl(ng-class="{'advanced-recipient-row': advanced}" ng-repeat="item in transaction.destinations track by $index")
           p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")
-          // Use input-group if camera is present.
-          div(ng-show="originsLoaded" ng-class="{'input-group': browserWithCamera}")
-            ui-select(ng-model="transaction.destination" name="destination" is-not-null="label")
+          div(ng-show="originsLoaded" ng-class="{'input-group': browserWithCamera, 'has-error': sendForm['destinations' + $index].$error.required && sendForm['amounts' + $index].$touched}")
+            ui-select(ng-model="transaction.destinations[$index]" name="{{'destinations' + $index}}" is-not-equal="{{transaction.from.label}}" property="label" ng-change="updateToLabel()" required)
               ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
-              ui-select-choices(repeat="destination in destinations[0] | filter: getFilter($select.search)" group-by="'type'" refresh="refreshDestinations($select.search, 0)" refresh-delay="0")
+              ui-select-choices(repeat="destination in destinations[$index] | filter: getFilter($select.search, !advanced)" group-by="'type'" refresh="refreshDestinations($select.search, $index)" refresh-delay="0")
                 span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
             span.input-group-btn.mls(ng-if="browserWithCamera")
-              button#qr.btn.btn-default(type="button", ng-click="cameraOn(0)")
-                img(src="img/qr.png", alt="QR")
-        span.help-block(ng-show="sendForm.destination.$error.isNotNull") Destination cannot be empty
-      .flex-column.form-group(ng-class="{'has-error': sendForm.amount.$invalid && sendForm.amount.$touched}", ng-hide="advanced")
-        label.mbm
-          span(translate="AMOUNT")
-        .flex-center
-          .mrl.flex-1
-            .flex-center
-              span.mrm {{ transaction.currency.code }}:
-              input.form-control(type="text" ng-model="transaction.amount" name="amount" is-valid-amount currency="{{transaction.currency}}")
-            span.help-block(ng-show="sendForm.amount.$invalid && sendForm.amount.$touched") Please enter a valid amount
-          a.button-success.button-sm.type-sm.mrl.flex-center(ng-click="toggleCurrency()")
-            i.ti-arrows-horizontal
-          .flex-center.ccc.conversion.flex-1
-            p.mbn
-              fiat(currency="settings.currency", btc="transaction.satoshi",  ng-show="isBitCurrency(transaction.currency)")
-              span(ng-hide="isBitCurrency(transaction.currency)") {{ transaction.satoshi | toBitCurrency:btcCurrency:false }}
-      //- Advanced Send
-      .flex-column.form-group.bc-modal-fade.mvl.advanced-recipient(ng-show="advanced" ng-class="{'has-error': errors.amounts || errors.destinations }")
-        label.mbm.flex-between
-          span(translate="TO:")
-        .flex-column.prl.advanced-recipient-row(ng-repeat="item in transaction.multipleDestinations track by $index")
-          p.form-control-static(ng-hide="originsLoaded")
-            img(src="img/spinner.gif")
-          // Use input-group if camera is present.
-          .input-group(ng-show="originsLoaded", ng-if="browserWithCamera")
-            ui-select(ng-model="transaction.multipleDestinations[$index]", ng-blur="visualValidate('destinations')")
-              ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
-              ui-select-choices(repeat="destination in destinations[$index] | filter: getFilter($select.search, true)" group-by="'type'" refresh="refreshDestinations($select.search, $index)" refresh-delay="0")
-                span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
-            span.input-group-btn.mls
               button#qr.button(type="button", ng-click="cameraOn($index)")
                 img(src="img/qr.png", alt="QR")
-          ui-select(ng-model="transaction.multipleDestinations[$index]", ng-blur="visualValidate('destinations')", ng-if="!browserWithCamera")
-            ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
-            ui-select-choices(repeat="destination in destinations[$index] | filter: getFilter($select.search, true)" group-by="'type'" refresh="refreshDestinations($select.search, $index)" refresh-delay="0")
-              span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
-          .flex-center.recipient-currency.mtl
+          //- Amount
+          div.flex-center.recipient-currency.mtl(ng-class="{'has-error': sendForm['amounts' + $index].$invalid && sendForm['amounts' + $index].$touched}")
             .mrl.flex-1
               .flex-center
-                span.mrm {{ transaction.currency.code }}:
-                input.form-control(type="text" ng-blur="visualValidate('amounts')" ng-change="visualValidate('amounts')" ng-model="transaction.multipleAmounts[$index]")
-            a.button-success.button-sm.type-sm.mrl(ng-click="toggleCurrency()")
-              i.ti-arrows-horizontal
-            .flex-center.ccc.conversion.flex-1
-              p.mbn
-                fiat(currency="settings.currency", btc="convertToSatoshi(transaction.multipleAmounts[$index])",  ng-show="isBitCurrency(transaction.currency)")
-                span(ng-hide="isBitCurrency(transaction.currency)") {{ convertToSatoshi(transaction.multipleAmounts[$index]) | toBitCurrency:btcCurrency:false }}
+                span.mrm {{ btcCurrency.code }}:
+                input.form-control(type="number" ng-model="transaction.amounts[$index]" name="{{'amounts' + $index}}" transform-currency="btcCurrency" min="0.00000001" required)
+            .mrl.flex-1
+              .flex-center
+                span.mrm {{ fiatCurrency.code }}:
+                input.form-control(type="number" ng-model="transaction.amounts[$index]" name="" transform-currency="fiatCurrency" min="0.01" required)
             a.mlm.button-danger.type-sm.button-sm(ng-click="removeDestination($index)" ng-hide="$first && $last")
               i.ti-close.mrm
               span(translate="REMOVE")
-        span.help-block {{ errors.amounts }}
-        span.help-block {{ errors.destinations }}
-        label.mbm.flex-between
+          .has-error
+            span.help-block(ng-show="sendForm['destinations' + $index].$error.required && sendForm['amounts' + $index].$touched") Destination cannot be empty
+            span.help-block(translate="SAME_DESTINATION" ng-show="sendForm['destinations' + $index].$error.isNotEqual")
+            span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="sendForm['amounts' + $index].$invalid && sendForm['amounts' + $index].$touched")
+        label.mbm.flex-between(ng-show="advanced")
           a.flex-center.type-sm.button-sm.button-default(ng-click="addDestination()")
             i.ti-plus.mrm
             span(translate="ADD_ANOTHER_RECIPIENT")
-      .flex-column.form-group.bc-modal-fade(ng-class="{'has-error': errors.fee}" ng-show="advanced")
+      //- Fee
+      .flex-column.form-group.bc-modal-fade(ng-class="{'has-error': sendForm.fee.$invalid && sendForm.fee.$touched}" ng-show="advanced")
         label.mbm.flex-center
           span.mlm(translate="MINERS_FEE")
           helper-button(content="ADVANCED_SEND_STEP_1")
@@ -106,40 +75,32 @@
         .flex-center.miners-fee-selection
           .flex-column.border-right.prl.mrl
             label
-              input(type="radio" ng-model="transaction.fee" value="5000" ng-change="updateFee(true)" name="miners-fee")
+              input(type="radio" ng-model="transaction.fee" value="5000" name="miners-fee")
               span(translate="FRUGAL")
             label
-              input(type="radio" ng-model="transaction.fee" value="10000" ng-change="updateFee(true)" name="miners-fee")
+              input(type="radio" ng-model="transaction.fee" value="10000" name="miners-fee")
               span(translate="NORMAL")
               span.success.mls.type-xs(translate="RECOMMENDED")
             label
-              input(type="radio" ng-model="transaction.fee" value="100000" ng-change="updateFee(true)" name="miners-fee")
+              input(type="radio" ng-model="transaction.fee" value="100000" name="miners-fee")
               span(translate="GENEROUS")
           .flex-center.pll.mll
             .mrl.flex-1
               .flex-center
                 span.mrm {{ btcCurrency.code }}:
-                input.form-control(type="text" ng-blur="visualValidate('fee')" ng-change="updateFee()" ng-model="feeAmount" placeholder="Enter your fee here")
-              span.help-block {{ errors.fee }}
-
-      //- .form-group(ng-show="advanced")
-      //-   label.col-sm-3.control-label(translate="FEES")
-      //-   .col-sm-5
-      //-     p.form-control-static {{ transaction.fee | numeraljs:'btc' }}
-      //- .form-group
-      //-   label.col-sm-3.control-label(translate="PRIVACY_GUARD")
-      //-   .col-sm-4.privacy-guard
-      //-     p.form-control-static
-      //-       img.privacy-guard(ng-src="img/switch-{{ privacyGuard ? 'on' : 'off' }}.png", ng-alt="{{ privacyGuard ? 'on' : 'off' }}", ng-click="privacyGuard = !privacyGuard")
+                input.form-control(type="number" name="fee" ng-model="transaction.fee" min="0" required transform-currency="settings.btcCurrency" placeholder="Enter your fee here")
+              span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$touched")
+      //- QR Scanner
       .flex-column.form-group(ng-hide="!cameraIsOn")
         label.flex-1(translate="QR")
         .flex-1
           bc-qr-reader(active="cameraRequested", on-result="processURLfromQR" on-error="onError" camera-status="cameraIsOn")
+  //- Step 2 (confirmation)
   div.overview(ng-show="confirmationStep")
     .flex-column
       .flex-center.control-group.mbl
         label.mbn.mrl(translate="FROM:")
-        h5.mvn.flex-1.ccc.em-300 {{ from }}
+        h5.mvn.flex-1.ccc.em-300 {{ transaction.from.label || transaction.from.address }}
         label.mbn.mrl(translate="TO:")
         h5.btcaddr.mvn.flex-1.ccc.em-300(ng-hide="advanced") {{ toLabel }}
         h5.mvn.flex-1.ccc.em-300(ng-show="advanced && step == 2", translate="MULTIPLE_ADDRESSES")
@@ -148,9 +109,9 @@
         li.amount-item
           p(translate="AMOUNT")
           p
-            {{ transaction.satoshi | toBitCurrency:btcCurrency:false }}
+            {{ getTransactionTotal() | toBitCurrency:btcCurrency:false }}
           p
-            fiat(btc="transaction.satoshi")
+            fiat(btc="getTransactionTotal()")
         li.amount-item
           p(translate="FEE")
             | :
@@ -163,20 +124,21 @@
           p(translate="TOTAL")
             | :
           p
-            {{ transaction.fee + transaction.satoshi | toBitCurrency:btcCurrency:false }}
+            {{ getTransactionTotal(true) | toBitCurrency:btcCurrency:false }}
           p
-            fiat(btc="transaction.satoshi + transaction.fee")
-      .flex-column.form-group(ng-class="{'has-error': errors.note}")
-        .flex-center.pbs
-          label.mbn(translate="NOTE")
-          helper-button(content="SEND_BITOIN_STEP2B" placement='top')
-            |:
-        textarea(rows="4", ng-model="transaction.note", ng-blur="visualValidate('note')")
-        .flex-center.mtm
-          input.mrs(type="checkbox", ng-model="transaction.publicNote")
-          | &nbsp;
-          span(translate="MAKE_PUBLIC")
-        span.help-block {{ errors.note }}
+            fiat(btc="getTransactionTotal(true)")
+      form(name="noteForm" novalidate)
+        .flex-column.form-group(ng-class="{'has-error': noteForm.note.$error.maxlength && noteForm.note.$touched}")
+          .flex-center.pbs
+            label.mbn(translate="NOTE")
+            helper-button(content="SEND_BITOIN_STEP2B" placement='top')
+              |:
+          textarea(rows="4" ng-model="transaction.note" name="note" ng-maxlength="512")
+          .flex-center.mtm
+            input.mrs(type="checkbox" ng-model="transaction.publicNote" name="public")
+            | &nbsp;
+            span(translate="MAKE_PUBLIC")
+          span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="noteForm.note.$error.maxlength && noteForm.note.$touched")
 
 .modal-footer.flex-between.flex-center.pal
   .flex-center
@@ -187,5 +149,5 @@
     button.button-muted.mrm(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
     button.button-muted.mrm(ng-click="backToForm()", translate="BACK", ng-show="confirmationStep")
     button.button-muted.bc-modal-fade.mrm(ng-show="advanced && step == 1", translate="RESET_FORM", ng-click="resetSendForm()")
-    button.button-success.button-lg(ng-click="goToConfirmation()",ng-disabled="!transactionIsValid", translate="NEXT_STEP", ng-hide="confirmationStep")
-    button.button-success.button-lg(ui-ladda="{{ sending }}", ng-click="send()",ng-disabled="!transactionIsValid", data-style="expand-left", ladda-translate="SEND", ng-show="confirmationStep")
+    button.button-success.button-lg(ng-click="goToConfirmation()" ng-disabled="sendForm.$invalid" translate="NEXT_STEP" ng-hide="confirmationStep")
+    button.button-success.button-lg(ui-ladda="{{ sending }}" ng-click="send()" ng-disabled="noteForm.$invalid" data-style="expand-left" ladda-translate="SEND" ng-show="confirmationStep")
