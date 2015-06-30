@@ -101,6 +101,23 @@
   i {font-size: 3em;float: left;padding: 0 10px 0 0;}
 }
 
+.alpha-agreement {
+  background: rgba(10,10,10,.5);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  .alpha-agreement-container {
+    overflow-y: scroll;
+    border-radius: 5px;
+    border: 1px solid #eee;
+    margin: 5em;
+    background: white;
+    height: 85%
+  }
+}
 .agreement {
   input{
     color: white;
