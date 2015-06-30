@@ -132,6 +132,9 @@ Grunt keeps an eye on things in the background. In particular it compiles the Ja
 
     grunt
 
+## Contribute
+Did you know you can [sign your commits](https://git-scm.com/book/tr/v2/Git-Tools-Signing-Your-Work) using a PGP key?
+
 ## Testnet
 
 Not supported by the server yet.
