@@ -248,9 +248,9 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       transaction = Wallet.transaction(transactionDidFinish, transactionDidFailWithError)
 
       if $scope.advanced
-        transaction.sendAdvanced($scope.transaction.from, $scope.transaction.destinations, $scope.transaction.amounts, $scope.transaction.fee, $scope.transaction.currency, publicNote)
+        transaction.sendAdvanced($scope.transaction.from, $scope.transaction.destinations, $scope.transaction.amounts, parseInt($scope.transaction.fee), publicNote)
       else
-        transaction.send($scope.transaction.from, $scope.transaction.destinations[0], numeral($scope.transaction.amounts[0]), $scope.transaction.currency, publicNote)
+        transaction.send($scope.transaction.from, $scope.transaction.destinations[0], $scope.transaction.amounts[0], publicNote)
 
       return
 
@@ -295,8 +295,8 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.getTransactionTotal = (includeFee) ->
     if includeFee then fee = $scope.transaction.fee else fee = 0
     $scope.transaction.amounts.reduce (previous, current) ->
-      previous + current
-    , fee
+      parseInt(previous) + parseInt(current)
+    , parseInt(fee)
 
   #################################
   #           Private             #
