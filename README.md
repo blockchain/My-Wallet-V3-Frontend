@@ -6,11 +6,18 @@ An AngularJS bitcoin web wallet powered by [My-Wallet-HD](https://github.com/blo
 
 Make sure you have [Node.js](http://nodejs.org/) installed. You also need to install the [Java JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (not to be confused with SDK).
 
-Install Grunt:
-
-    npm install -g grunt-cli
+Some NodeJS components need to be installed system wide:
 
 ```sh
+npm install -g grunt-cli coffee-script http-server bower
+```	
+
+You also need Sass (use `sudo` if you're not using a [Ruby version manager](https://rvm.io)):
+
+```sh
+gem install sass
+```
+
 git clone https://github.com/blockchain/My-Wallet-HD-Frontend.git 
 cd My-Wallet-HD-Frontend
 npm install
