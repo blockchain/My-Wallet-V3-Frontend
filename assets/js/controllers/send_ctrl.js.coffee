@@ -298,6 +298,12 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       parseInt(previous) + parseInt(current)
     , parseInt(fee)
 
+  $scope.validateAmounts = () ->
+    return unless $scope.transaction.from?
+    available = $scope.transaction.from.balance
+    transactionTotal = $scope.getTransactionTotal(true)
+    $scope.amountIsValid = available - transactionTotal >= 0
+
   #################################
   #           Private             #
   #################################
