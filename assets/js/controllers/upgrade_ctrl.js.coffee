@@ -1,6 +1,6 @@
 walletApp.controller "UpgradeCtrl", ($scope, Wallet, $modalInstance, $log, $window, $translate) ->  
   $scope.close = () ->
-    $translate("RABBIT_HOLE").then (translation) ->
+    $translate("ARE_YOU_SURE").then (translation) ->
       if confirm translation
         $modalInstance.close()
     
