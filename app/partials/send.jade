@@ -20,7 +20,7 @@
       .flex-column.form-group(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
         label.mbm
           span(translate="FROM:")
-        div(ng-class="{'has-error': sendForm.from.$invalid && sendForm.destinations0.$touched, 'has-error': !amountIsValid && sendForm.amounts0.$touched}")
+        div(ng-class="{'has-error': (sendForm.from.$invalid && sendForm.destinations0.$touched) || (!amountIsValid && sendForm.amounts0.$touched)}")
           p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")
           span(ng-show="originsLoaded")
