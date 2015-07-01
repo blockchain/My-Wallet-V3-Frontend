@@ -212,8 +212,10 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         Wallet.beep()
 
         $modalInstance.close ""
+        # Switch to the from account transactions view, unless "all accounts" are visible.
         if $scope.transaction.from.index?
-          $state.go("wallet.common.transactions", {accountIndex: $scope.transaction.from.index })
+          if $state.current.name != "wallet.common.transactions" || ($state.params.accountIndex? && $state.params.accountIndex != "accounts")
+            $state.go("wallet.common.transactions", {accountIndex: $scope.transaction.from.index })
         else
           $state.go("wallet.common.transactions", {accountIndex: "imported" })
 
