@@ -424,6 +424,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     success = () ->
       wallet.settings.pbkdf2 = wallet.store.getPbkdf2Iterations()
       successCallback()
+      wallet.applyIfNeeded()
 
     error = (error) ->
       errorCallback(error)
