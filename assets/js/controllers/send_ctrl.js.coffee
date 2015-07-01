@@ -66,15 +66,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.convertToFiat = (amount) ->
     Wallet.convertCurrency(amount, Wallet.settings.btcCurrency, Wallet.settings.currency)
 
-  $scope.convertToBTC = (amount) ->
-    Wallet.convertCurrency(amount, Wallet.settings.currency, Wallet.settings.btcCurrency)
-
-  $scope.convertToSatoshi = (amount, currency) ->
-    Wallet.convertToSatoshi(amount, currency || $scope.transaction.currency)
-
-  $scope.convertFromSatoshi = (amount, currency) ->
-    Wallet.convertFromSatoshi(amount, currency || $scope.transaction.currency)
-
   $scope.determineLabel = (origin) ->
     label = origin.label || origin.address
     return label
