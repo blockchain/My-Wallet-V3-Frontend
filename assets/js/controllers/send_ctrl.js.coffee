@@ -38,7 +38,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.maxAndLabel = (origin) ->
 
-    return unless $scope.transaction.currency? && Wallet.settings.btcCurrency?
+    return unless Wallet.settings.btcCurrency?
 
     label = $scope.determineLabel(origin)
     code = $scope.settings.displayCurrency.code
