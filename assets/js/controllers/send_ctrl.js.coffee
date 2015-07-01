@@ -195,10 +195,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
       transaction = Wallet.transaction(transactionDidFinish, transactionDidFailWithError)
 
-      if $scope.advanced
-        transaction.sendAdvanced($scope.transaction.from, $scope.transaction.destinations, $scope.transaction.amounts, parseInt($scope.transaction.fee), publicNote)
-      else
-        transaction.send($scope.transaction.from, $scope.transaction.destinations[0], $scope.transaction.amounts[0], publicNote)
+      transaction.send($scope.transaction.from, $scope.transaction.destinations, $scope.transaction.amounts, parseInt($scope.transaction.fee), publicNote)
 
       return
 

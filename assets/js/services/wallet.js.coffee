@@ -635,21 +635,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
 
     {
-      send: (from, destination, amount, publicNote) ->
 
-        spender = wallet.spender(publicNote, success, error, {}, needsSecondPassword)
-
-        if from.address?
-          spendFrom = spender.fromAddress(from.address, amount, 10000)
-        else if from.index?
-          spendFrom = spender.fromAccount(from.index, amount, 10000)
-
-        if destination.index?
-          spendFrom.toAccount(destination.index)
-        else if destination.address?
-          spendFrom.toAddress(destination.address)
-
-      sendAdvanced: (from, destinations, amounts, fee, publicNote) ->
+      send: (from, destinations, amounts, fee, publicNote) ->
 
         destinations = destinations.map (dest) ->
           return dest.address unless dest.type == 'Accounts'
