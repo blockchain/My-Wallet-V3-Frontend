@@ -63,3 +63,18 @@ describe "SettingsAddressesCtrl", ->
       scope.importAddress()
       expect(modal.open).toHaveBeenCalled()
     )
+
+  describe "toggling import & archived addresses", ->
+    it "should toggle import address", ->
+      spyOn(scope, "toggleDisplayImported").and.callThrough()
+      scope.toggleDisplayImported()
+      expect(scope.toggleDisplayImported).toHaveBeenCalled()
+      expect(scope.display.imported).toBe(true)
+      expect(scope.display.archived).toBe(false)
+
+    it "should toggle archived address", ->
+      spyOn(scope, "toggleDisplayArchived").and.callThrough()
+      scope.toggleDisplayArchived()
+      expect(scope.toggleDisplayArchived).toHaveBeenCalled()
+      expect(scope.display.imported).toBe(false)
+      expect(scope.display.archived).toBe(true)
