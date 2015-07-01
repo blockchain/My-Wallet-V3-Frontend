@@ -241,7 +241,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.getTransactionTotal = (includeFee) ->
     if includeFee then fee = $scope.transaction.fee else fee = 0
     $scope.transaction.amounts.reduce (previous, current) ->
-      parseInt(previous) + parseInt(current)
+      (parseInt previous + parseInt current) || 0
     , parseInt(fee)
 
   $scope.validateAmounts = () ->
