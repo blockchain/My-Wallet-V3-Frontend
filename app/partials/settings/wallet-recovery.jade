@@ -1,5 +1,5 @@
 h5.well.headliner.hidden-xs(translate="WALLET_RECOVERY_EXPLAIN")
-form.form-horizontal(role="form",name="form",novalidate)  
+form.form-horizontal(role="form" name="recoveryForm" novalidate)  
   .form-group
     .col-sm-12.col-md-6
       label(translate="MY_RECOVERY_PHRASE")
@@ -24,15 +24,17 @@ form.form-horizontal(role="form",name="form",novalidate)
       p
         a.button-primary(ng-click="importRecoveryPhrase()",translate="IMPORT_RECOVERY_PHRASE", ng-hide="editMnemonic")
       .flex-column.flex-around.mbl(ng-show="editMnemonic")
-        label
-          span(translate="RECOVERY_PHRASE")
-          |:
-        input.form-control(type="text",ng-model="mnemonic", ng-focus="errors.mnemonic = null", ng-disabled="importing", autofocus)
-        label
-          span(translate="OPTIONAL_PASSPHRASE")
-          |:
-        input.form-control(type="text",ng-model="passphrase", ng-disabled="importing", ng-show="editMnemonic")
+        .mbl(ng-class="{'has-error': recoveryForm.mnemonic.$invalid && recoveryForm.mnemonic.$touched}")
+          label
+            span(translate="RECOVERY_PHRASE")
+            |:
+          input.form-control(type="text" ng-model="mnemonic" name="mnemonic" ng-focus="errors.mnemonic = null" ng-disabled="importing" is-valid="isValidMnemonic" autofocus required)
+          span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="recoveryForm.mnemonic.$invalid && recoveryForm.mnemonic.$touched")
+        .mbs
+          label
+            span(translate="OPTIONAL_PASSPHRASE")
+            |:
+          input.form-control(type="text",ng-model="passphrase", ng-disabled="importing", ng-show="editMnemonic")
 
       img(ng-show="importing" src="img/spinner.gif")     
-      a.button-primary(ng-click="performImport()", translate="IMPORT", ng-show="editMnemonic && !importing", ng-disabled="!isValid")       
-
+      button.button-primary(ui-ladda="{{ importing }}" ng-click="performImport()" ng-disabled="recoveryForm.$invalid" data-style="expand-left" ladda-translate="IMPORT" ng-show="editMnemonic")       
