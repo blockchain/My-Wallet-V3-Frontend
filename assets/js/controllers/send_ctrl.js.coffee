@@ -278,7 +278,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
             unless address.isWatchOnlyLegacyAddress
               $scope.origins.push angular.copy(item)
 
-        $scope.destinationsBase.push(null)
+        $scope.destinationsBase.push({address: "", label: "", isAccount: false, type: "External"})
         $scope.destinations.push $scope.destinationsBase
         $scope.originsLoaded = true
 
