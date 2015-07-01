@@ -1,7 +1,7 @@
-walletApp.controller "ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalInstance) ->
+walletApp.controller "ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalInstance, $translate) ->
   $scope.step = 1
   $scope.recoveryPhrase = null
-  
+
   $scope.words = [
     {value: '', actual: '', index: null, error: null}
     {value: '', actual: '', index: null, error: null}
@@ -22,10 +22,10 @@ walletApp.controller "ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalI
 
   $scope.close = () ->
     $modalInstance.dismiss ""
-    
-  $scope.goToVerify = () -> 
+
+  $scope.goToVerify = () ->
     $scope.step = 2
-  
+
   $scope.verify = () ->
     valid = true
 
@@ -41,3 +41,7 @@ walletApp.controller "ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalI
   Wallet.getMnemonic (mnemonic) ->
     $scope.recoveryPhrase = mnemonic
     $scope.setRandomWords(mnemonic)
+  , (error) ->
+    $translate(error).then (translation) ->
+      Wallet.displayError(translation)
+    $scope.close()

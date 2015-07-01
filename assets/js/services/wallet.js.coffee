@@ -685,14 +685,14 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.getMnemonic = (successCallback, errorCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->
       cancelCallback = () ->
+        errorCallback('INCORRECT_PASSWORD')
       $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
 
     success = (mnemonic, passphrase) ->
       successCallback(mnemonic, passphrase)
 
-    error = () ->
-      wallet.my.displayError("Unable to show mnemonic.")
-      errorCallback()
+    error = (err="Unable to show mnemonic.") ->
+      errorCallback(err)
 
     wallet.my.getHDWalletPassphraseString(needsSecondPasswordCallback, success, error)
 
