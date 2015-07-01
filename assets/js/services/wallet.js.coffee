@@ -649,7 +649,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         else if destination.address?
           spendFrom.toAddress(destination.address)
 
-      sendAdvanced: (from, destinations, amounts, fee, publicNote) ->
+      send: (from, destinations, amounts, fee=10000, publicNote) ->
 
         destinations = destinations.map (dest) ->
           return dest.address unless dest.type == 'Accounts'
