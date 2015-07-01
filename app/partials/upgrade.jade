@@ -5,4 +5,4 @@
   p(translate="UPGRADE_WALLET_EXPLAIN")
 .modal-footer.pal.flex-end
   button.button-muted.mrm(ng-click="cancel()", translate="CANCEL")
-  button.button-danger(ng-click="close()", translate="PROCEED")
+  button.button-danger(ng-click="close()" ng-disabled="waiting" translate="PROCEED")
