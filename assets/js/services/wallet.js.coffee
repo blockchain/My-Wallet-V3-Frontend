@@ -619,14 +619,13 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.applyIfNeeded()
 
     error = (e) ->
-        if e.message != undefined
-          errorCallback(e.message)
-        else if e isnt null
-          errorCallback(e)
-          wallet.applyIfNeeded()
-        else
-          errorCallback("Unknown error")
-          wallet.applyIfNeeded()
+      if e? && e.message != undefined
+        errorCallback(e.message)
+      else if e != null && e != undefined
+        errorCallback(e)
+      else
+        errorCallback("Unknown error")
+      wallet.applyIfNeeded()
 
     needsSecondPassword = (continueCallback) ->
       cancelCallback = () ->

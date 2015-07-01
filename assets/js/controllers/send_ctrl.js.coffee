@@ -151,7 +151,8 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
       transactionDidFailWithError = (message) ->
         if message
-          Wallet.displayError(message)
+          $translate(message).then (translation) ->
+            Wallet.displayError(translation)
         $scope.sending = false
 
       transactionDidFinish = (tx_hash) ->
