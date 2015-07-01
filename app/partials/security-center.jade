@@ -76,17 +76,17 @@
         bc-async-input(inline security-center type="email", placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
       .flex-center(ng-show="display.action == 'securityphrase'")        
         p.flex-1.prl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
-        .flex-1.mll
+        .flex-1.mll.backup-phrase-actions
           confirm-recovery-phrase(security-center)
 
       div(ng-show="display.action == 'passwordhint'")       
         bc-async-input(custom inline security-center placeholder="'CHANGE_PASSWORD_HINT' | translate" ng-model="user.passwordHint" on-save="changePasswordHint" action-title="'CHANGE_PASSWORD_HINT' | translate")
           .flex-center
-            .form-group.width-50.flex-column.prl(ng-class="{'has-error': !validate()}")
+            .form-group.width-50.flex-column(ng-class="{'has-error': !validate()}")
               p(translate="CHANGE_PASSWORD_HINT_SECURITY_CENTER")
-              input.form-control.mtm(type="{{ type }}", ng-model="form.newValue", ng-focus="focus()", placeholder="{{ placeholder }}" ng-change="onChange()")
+              input.form-control.mtm(on-enter="save()" type="{{ type }}", ng-model="form.newValue", ng-focus="focus()", placeholder="{{ placeholder }}" ng-change="onChange()")
               span.help-block {{ errorMessage }}  
-            .width-50.mll
+            .width-50.mll.pll
               button.button-success.button-lg(ng-click="save()",ng-disabled="!validate() || form.newValue == ngModel",ui-ladda="{{ status.saving }}", ladda-translate="SAVE", data-style="expand-left")
 
 
@@ -168,6 +168,6 @@
 
     .badge-panel(ng-show="display.action == 'blocktor'")
       .flex-center(ng-show="display.action == 'blocktor'")
-        p.flex-1.prl(TRANSLATE="BLOCK_TOR_EXPLAIN")
-        .flex-1.mll
+        p.flex-1(TRANSLATE="BLOCK_TOR_EXPLAIN")
+        .mll.pll.block-tor-actions
           tor(security-center)

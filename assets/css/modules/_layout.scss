@@ -31,9 +31,16 @@
 .main-container {
   background: white;
   position: relative;
-  margin-left: 280px;
+  left: 280px;
   top: 110px;
   padding: 5px 30px 20px 30px;
+  overflow-y: scroll;
+  width: calc(100% - 280px);
+  height: calc(100% - 200px); // make viewport smaller for overflow-y to work
+}
+
+.wallet-container {
+  height: 100%;
 }
 
 @media (max-width: 768px) {
@@ -54,8 +61,9 @@
     top: 0;
   }
   .main-container {
-    margin-left: 0;
+    left: 0;
     top: 0;
+    width: 100%;
     padding: 10px 30px;
   }
 }

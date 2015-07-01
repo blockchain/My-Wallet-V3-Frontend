@@ -14,46 +14,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.sending = false # Sending in progress
 
-  $scope.$watch "status.didLoadBalances + status.legacyAddressBalancesLoaded", ->
-    if $scope.status.didLoadBalances && $scope.status.legacyAddressBalancesLoaded
-      if $scope.origins.length == 0
-        for account in $scope.accounts
-          item = angular.copy(account)
-          item.type = "Accounts"
-          item.multiAccount = if item.index == 0 then false else true
-          item.isAccount = true
-          unless item.index? && !item.active
-            $scope.origins.push item
-            $scope.destinationsBase.push angular.copy(item) # https://github.com/angular-ui/ui-select/issues/656
-
-        for address in $scope.legacyAddresses
-          if address.active
-            item = angular.copy(address)
-            item.type = "Imported Addresses"
-            item.multiAccount = false
-            item.isAccount = false
-            $scope.destinationsBase.push item
-            unless address.isWatchOnlyLegacyAddress
-              $scope.origins.push angular.copy(item)
-
-        $scope.destinationsBase.push({address: "", label: "", isAccount: false, type: "External"})
-        $scope.destinations.push $scope.destinationsBase
-        $scope.originsLoaded = true
-
-        if paymentRequest.address? && paymentRequest.address != ''
-          $scope.applyPaymentRequest(paymentRequest, 0)
-        else if paymentRequest.toAccount?
-          $scope.transaction.destinations[0] = paymentRequest.toAccount
-          $scope.transaction.from = paymentRequest.fromAddress
-
-
-  # for address, label of $scope.addressBook
-  #     item = {address: address, label: label}
-  #     item.type = "Address book"
-  #     $scope.destinations.push item
-
-  # $scope.privacyGuard = false
-
   $scope.alerts = Wallet.alerts
 
   $scope.isOpen = {currencies: false}
@@ -78,6 +38,8 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.maxAndLabel = (origin) ->
 
+    return unless $scope.transaction.currency? && Wallet.settings.btcCurrency?
+
     label = $scope.determineLabel(origin)
     code = $scope.settings.displayCurrency.code
 
@@ -86,7 +48,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
     fees = Wallet.recommendedTransactionFee(origin, origin.balance)
 
-    max_btc = numeral(origin.balance - fees).divide($scope.btcCurrency.conversion)
+    max_btc = numeral(origin.balance - fees).divide(Wallet.settings.btcCurrency.conversion)
 
     max_btc = numeral(0) if max_btc < 0
 
@@ -211,8 +173,10 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         Wallet.beep()
 
         $modalInstance.close ""
+        # Switch to the from account transactions view, unless "all accounts" are visible.
         if $scope.transaction.from.index?
-          $state.go("wallet.common.transactions", {accountIndex: $scope.transaction.from.index })
+          if $state.current.name != "wallet.common.transactions" || ($state.params.accountIndex? && $state.params.accountIndex != "accounts")
+            $state.go("wallet.common.transactions", {accountIndex: $scope.transaction.from.index })
         else
           $state.go("wallet.common.transactions", {accountIndex: "imported" })
 
@@ -298,6 +262,40 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   #################################
   #           Private             #
   #################################
+
+  $scope.$watch "status.didLoadBalances + status.legacyAddressBalancesLoaded", ->
+    if $scope.status.didLoadBalances && $scope.status.legacyAddressBalancesLoaded
+      if $scope.origins.length == 0
+        for account in $scope.accounts
+          item = angular.copy(account)
+          item.type = "Accounts"
+          item.multiAccount = if item.index == 0 then false else true
+          item.isAccount = true
+          unless item.index? && !item.active
+            $scope.origins.push item
+            $scope.destinationsBase.push angular.copy(item) # https://github.com/angular-ui/ui-select/issues/656
+
+        for address in $scope.legacyAddresses
+          if address.active
+            item = angular.copy(address)
+            item.type = "Imported Addresses"
+            item.multiAccount = false
+            item.isAccount = false
+            $scope.destinationsBase.push item
+            unless address.isWatchOnlyLegacyAddress
+              $scope.origins.push angular.copy(item)
+
+        $scope.destinationsBase.push({address: "", label: "", isAccount: false, type: "External"})
+        $scope.transaction.destination =  $scope.destinationsBase.slice(-1)[0]
+        $scope.destinations.push $scope.destinationsBase
+        $scope.originsLoaded = true
+
+        $scope.errors.to = null
+        if paymentRequest.address?
+          $scope.applyPaymentRequest(paymentRequest, 0)
+        else if paymentRequest.toAccount?
+          $scope.transaction.destination = paymentRequest.toAccount
+          $scope.transaction.from = paymentRequest.fromAddress
 
   # Step switching
   $scope.confirmationStep = false

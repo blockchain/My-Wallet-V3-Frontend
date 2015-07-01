@@ -1,96 +1,76 @@
-div.login-form{
+div.login-form {
   background: white;
   box-shadow: 0px 0px 8px 0px rgba(211, 211, 211, 0.32);
   border: 1px solid white;
-    
-    form{
-      margin: 0 auto;
-      padding: 30px;
-    }
-    
-    .btn-login{
-      float: right;
-      background-color: rgb(4, 155, 212)!important;
-      border: none;
-      font-size: 12pt;
-      font-weight: 200;
-      margin: 20px 0 -20px;
-    }
-    
-    a.create{
-      float: right;
-      margin: 28px 0px -28px 10px;
-      color: rgb(182, 182, 182);
-      font-size: 11pt;
-    }
+  form {
+    margin: 0 auto;
+    padding: 30px;
+  }
+  .btn-login {
+    float: right;
+    background-color: rgb(4, 155, 212) !important;
+    border: none;
+    font-size: 12pt;
+    font-weight: 200;
+    margin: 20px 0 -20px;
+  }
+  a.create{
+    float: right;
+    margin: 28px 0px -28px 10px;
+    color: rgb(182, 182, 182);
+    font-size: 11pt;
+  }
 }
 
-.login-pg{
+.login-pg {
   background-color: #049BD4;
   height: calc(100% + 50px); //offset margin from bootstrap
 }
 
 .login{
-
-  .login-box{
-      background-color: white;
-      padding: 10px 50px 50px;
-      margin-bottom: 20px;
-      max-width: 600px;
-      margin: 0 auto;
-      BORDER-RADIUS: 10px;
-      border: 1px solid white;
-      box-shadow: 0px 0px 20px -8px black;
-    
-    header{
-      padding: 15px 0 10px;
-      margin-bottom: 15px;
-      border-bottom: 1px solid rgb(240, 236, 236);
-      
-      h1{
-        font-size: 3em;
-        color: rgb(133, 133, 133);
-        font-weight: 400;      
-      }
-      
-      p{
-        font-weight: 300;
-        font-size: 1.25em;
-        color: rgb(4, 155, 212);      
-      }
-      
+  .login-box {
+    background-color: white;
+    padding: 10px 50px 50px;
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 10px;
+    border: 1px solid white;
+    box-shadow: 0px 0px 20px -8px black;
+  header {
+    padding: 15px 0 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgb(240, 236, 236);
+    h1 {
+      font-size: 3em;
+      color: rgb(133, 133, 133);
+      font-weight: 400;
     }
-    .form-horizontal .form-group {
-      margin-left: auto;
-      margin-right: auto;
+    p {
+      font-weight: 300;
+      font-size: 1.25em;
+      color: rgb(4, 155, 212);
     }
-    
-    .help-block .info {
-      color: #C9C9C9;
-      
-      &:hover{
-      color: #A3A0A0;
-      }
-      
-    }
-    
-    .bttn{
-      margin-top: 20px;
-      
-      .bttn-container{
-        float: right;
-      }
-      
-      span.register{
-        float: left;
-        padding: 10px 10px 10px 0px;
-      }
-      
-    }
-    
-
-    
   }
-  
-  
+  .form-horizontal .form-group {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .help-block .info {
+    color: #C9C9C9;
+    &:hover {
+      color: #A3A0A0;
+    }
+  }
+  .bttn {
+    margin-top: 20px;
+    .bttn-container {
+      float: right;
+    }
+    span.register {
+      float: left;
+      padding: 10px 10px 10px 0px;
+    }
+  }
+}
 }
