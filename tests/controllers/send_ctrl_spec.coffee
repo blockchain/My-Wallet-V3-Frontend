@@ -135,6 +135,8 @@ describe "SendCtrl", ->
     describe "from", ->
 
       it "should be invalid if null", ->
+        scope.transaction.from = null
+        scope.$apply()
         expect(scope.transaction.from).toBeNull()
         expect(scope.sendForm.from.$error.required).toBe(true)
 
