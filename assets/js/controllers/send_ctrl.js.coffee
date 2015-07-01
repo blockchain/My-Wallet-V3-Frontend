@@ -92,8 +92,8 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
     $scope.transaction.destinations[i] = destination
 
-    if paymentRequest.amount
-      $scope.transaction.amounts[0] = paymentRequest.amount
+    if paymentRequest.amount && paymentRequest.currency == 'BTC'
+      $scope.transaction.amounts[i] = Wallet.convertToSatoshi(paymentRequest.amount, Wallet.btcCurrencies[0])
 
     $scope.updateToLabel()
 
