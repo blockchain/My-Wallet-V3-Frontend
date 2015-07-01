@@ -7,11 +7,15 @@ walletApp.controller "SettingsAdvancedCtrl", ($scope, Wallet, $modal, $translate
         
   $scope.validatePbkdf2 = (candidate) ->
     n = parseInt(candidate)
-    return false if isNaN(candidate) || candidate < 1
+    return false unless candidate
+    return false if isNaN(candidate)
+    return false if n < 1
+    return false if n > 20000
     return true
 
   $scope.validateLogoutTime = (candidate) ->
     n = parseInt(candidate)
+    return false unless candidate
     return false if isNaN(candidate) || n > 1440
     return false unless n >= 1
     return true
@@ -47,11 +51,14 @@ walletApp.controller "SettingsAdvancedCtrl", ($scope, Wallet, $modal, $translate
     return true
     
     
-  $scope.changePbkdf2 = (n, success, errorCallback) ->
+  $scope.changePbkdf2 = (n, successCallback, errorCallback) ->
+    success = () ->
+      successCallback()
+      
     error = () ->
       Wallet.displayError("Failed to update PBKDF2 iterations")
       errorCallback()
-      
+            
     Wallet.setPbkdf2Iterations(n, success, error)
     
   $scope.changeLogoutTime = (m, success, errorCallback) ->

@@ -1,5 +1,5 @@
 .edit-mobile(ng-class="{'flex offset-flag': fullWidth}")
-  input.form-control(type="text" international-phone-number ng-model="fields.newMobile" default-country="{{ mobileDefaultCountry }}" preferred-countries="us,ca,gb,au" skip-util-script-download auto-placeholder="false" ng-disabled="status.busy")
+  input.form-control(on-enter="changeMobile(fields.newMobile)" type="text" international-phone-number ng-model="fields.newMobile" default-country="{{ mobileDefaultCountry }}" preferred-countries="us,ca,gb,au" skip-util-script-download auto-placeholder="false" ng-disabled="status.busy")
   br(ng-if="!fullWidth")
   div(ng-class="{'flex-1': fullWidth, 'mll': fullWidth}")
     button(ng-class="buttonLg ? 'button-success button-lg' : 'button-primary'" ui-ladda="{{ status.busy }}" ng-click="changeMobile(fields.newMobile)" ng-disabled="!validateMobileNumber(fields.newMobile)" ladda-translate="SAVE" data-style="expand-left")

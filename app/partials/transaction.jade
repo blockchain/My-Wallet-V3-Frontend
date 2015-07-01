@@ -16,8 +16,9 @@
           p(translate="TO")
           ul.pln.flex-column.flex.type-sm
             li.flex-center.mbm(ng-repeat="destination in destinations")
-              span.prm {{ destination.you }}
-              span.text-overflow-hidden.flex-1 {{ destination.address }}
+              span.text-overflow-hidden.flex-1.flex
+                | {{ destination.address }}
+                span.plm {{ destination.you }}
               span.plm.center-align {{ destination.amount }}
         .tx-notes
           p(translate="NOTES")

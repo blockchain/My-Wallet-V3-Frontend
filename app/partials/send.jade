@@ -105,12 +105,12 @@
       .flex-column.form-group.bc-modal-fade(ng-class="{'has-error': errors.fee}" ng-show="advanced")
         label.mbm.flex-center
           span.mlm(translate="MINERS_FEE")
-          helper-button(content="ADVANCED_SEND_STEP_1")          
+          helper-button(content="ADVANCED_SEND_STEP_1")
         p.ccc(translate="MINERS_FEE_EXPLAIN")
         .flex-center.miners-fee-selection
           .flex-column.border-right.prl.mrl
             label
-              input(type="radio" ng-model="transaction.fee" value="0" ng-change="updateFee(true)" name="miners-fee")
+              input(type="radio" ng-model="transaction.fee" value="5000" ng-change="updateFee(true)" name="miners-fee")
               span(translate="FRUGAL")
             label
               input(type="radio" ng-model="transaction.fee" value="10000" ng-change="updateFee(true)" name="miners-fee")
@@ -173,7 +173,7 @@
       .flex-column.form-group(ng-class="{'has-error': errors.note}")
         .flex-center.pbs
           label.mbn(translate="NOTE")
-          helper-button(content="SEND_BITOIN_STEP2B" placement='top')          
+          helper-button(content="SEND_BITOIN_STEP2B" placement='top')
             |:
         textarea(rows="4", ng-model="transaction.note", ng-blur="visualValidate('note')")
         .flex-center.mtm

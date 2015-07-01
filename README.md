@@ -4,13 +4,20 @@ An AngularJS bitcoin web wallet powered by [My-Wallet-HD](https://github.com/blo
 
 ## Running Locally
 
-Make sure you have [Node.js](http://nodejs.org/) installed.
+Make sure you have [Node.js](http://nodejs.org/) installed. You also need to install the [Java JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (not to be confused with SDK).
 
-Install Grunt:
-
-    npm install -g grunt-cli
+Some NodeJS components need to be installed system wide:
 
 ```sh
+npm install -g grunt-cli coffee-script http-server bower
+```	
+
+You also need Sass (use `sudo` if you're not using a [Ruby version manager](https://rvm.io)):
+
+```sh
+gem install sass
+```
+
 git clone https://github.com/blockchain/My-Wallet-HD-Frontend.git 
 cd My-Wallet-HD-Frontend
 npm install
@@ -132,6 +139,9 @@ Grunt keeps an eye on things in the background. In particular it compiles the Ja
 
     grunt
 
+## Contribute
+Did you know you can [sign your commits](https://git-scm.com/book/tr/v2/Git-Tools-Signing-Your-Work) using a PGP key?
+
 ## Testnet
 
 Not supported by the server yet.
@@ -169,8 +179,6 @@ index.html should be cached using If-Modified-Since or etag. All other files con
 
 ## Git branches
 
-* `master` : where the action is
-* `staging` : I try to keep this in sync with dev.blockchain.info (and hopefully Travis will take care of that the other way around in the future)
-* `send-to-email-mobile` : UI of sending to email / mobile (works but pending product feedback, a second dev server, etc)
-* `ticker` : a feature Justin worked on, same status as send-to-email-mobile
-* `experimental` : a brach we can use to deploy features that we aren't sure about yet, such as send-to-email-mobile. This branch can be recreated by combining other feature branches.
+* `dev` : Current development with latest changes
+* `staging` : QA stage before going live
+* `master` : Current live version

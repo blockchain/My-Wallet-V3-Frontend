@@ -107,11 +107,12 @@
       border: none;
       border-bottom: 1px solid #DBDBDB;
       width: 100%;
-      padding: 10px 0;
-      font-size: 1.35em;
+      padding: 0;
+      font-size: 1.3em;
       border-radius: 0px;
       background-color: white;
       box-shadow: none;
+      height: 38px;
       &:focus { outline: none; }
       &:active { border-bottom: 1px solid rgb(145, 208, 232); }
     }
@@ -123,6 +124,9 @@
       margin: 0;
     }
   }
+  .block-tor-actions {
+    flex: 1;
+  }
 }
 
 .edit-mobile {
@@ -133,7 +137,7 @@
 
 .offset-flag {
   .selected-flag {
-    bottom: 6px;
+    bottom: 4px;
     left: -5px;
   }
 }
@@ -167,6 +171,30 @@
     }
     .level-badge {
       width: 100%;
+    }
+    .badge-panel {
+      p {
+        font-size: .85em;
+      }
+      input {
+        font-size: .8em;
+      }
+    }
+    .button-lg {
+      font-size: 1em;
+    }
+    .intl-tel-input input {
+      padding: 0 !important;
+      padding-left: 35px !important;
+    }
+    .backup-phrase-actions {
+      .button-success {
+        padding: 1.8em 1.2em;
+        font-size: .8em;
+      }
+    }
+    .offset-flag .selected-flag {
+      bottom: 2px;
     }
   }
 }

@@ -424,6 +424,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     success = () ->
       wallet.settings.pbkdf2 = wallet.store.getPbkdf2Iterations()
       successCallback()
+      wallet.applyIfNeeded()
 
     error = (error) ->
       errorCallback(error)
@@ -1363,7 +1364,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       errorCallback()
       wallet.applyIfNeeded()
 
-    wallet.settings_api.toggleSave2FA(true, success, error)
+    wallet.settings_api.toggleSave2FA(false, success, error)
 
   wallet.disableRememberTwoFactor = (successCallback, errorCallback) ->
     success = () ->
@@ -1375,7 +1376,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       errorCallback()
       wallet.applyIfNeeded()
 
-    wallet.settings_api.toggleSave2FA(false, success, error)
+    wallet.settings_api.toggleSave2FA(true, success, error)
 
   wallet.handleBitcoinLinks = () ->
     $window.navigator.registerProtocolHandler('bitcoin', window.location.origin + '/#/open/%s', "Blockchain")

@@ -33,8 +33,8 @@
       .form-group.flex-between(ng-if="settings.googleAuthenticatorSecret" ng-class="{'has-error': errors.authenticatorCode}")
         qr(text="settings.googleAuthenticatorSecret", size=172)
         .flex-column.flex-center.flex-1.pal
-          p(translate="SCAN_QR_CODE_GA")
-          input.form-control(type="text" ng-model="fields.authenticatorCode")
+          p.width-75(translate="SCAN_QR_CODE_GA")
+          input.form-control.width-75(type="text" ng-model="fields.authenticatorCode")
     .col-xs-12.mtl(ng-show="pairWith == 'yubiKey'")
       .flex-center.flex-column.pal.form-group(ng-class="{'has-error': errors.yubiKeyCode}")
         p.mbm(translate="PAIR_YUBIKEY")
@@ -45,7 +45,8 @@
     button(translate="CONTINUE" ng-click="goToStep('success')")
   div(ng-show="isStep('success')")
     h2.status.complete
-      span(ng-show="settings.twoFactorMethod == 3" translate="2FA_YUBI")
+      span(ng-show="settings.twoFactorMethod == 1" translate="2FA_YUBI")
+      span(ng-show="settings.twoFactorMethod == 3" translate="2FA_YUBI_GOX")
       span(ng-show="settings.twoFactorMethod == 4" translate="2FA_GOOGLE_AUTH")
       span(ng-show="settings.twoFactorMethod == 5" translate="2FA_SMS")
     h5(translate="2FA_SUCCESS")
