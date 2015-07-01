@@ -86,15 +86,14 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
 # TODO: what is supposed to do that with multiple accounts
   $scope.applyPaymentRequest = (paymentRequest, i) ->
-    destination = $scope.destinations[i].slice(-1)[0]
+    destination = {address: "", label: "", type: "External"}
     destination.address = paymentRequest.address
     destination.label = paymentRequest.address
 
     $scope.transaction.destinations[i] = destination
 
     if paymentRequest.amount
-      $scope.transaction.amount = paymentRequest.amount
-      $scope.transaction.currency = Wallet.settings.btcCurrency
+      $scope.transaction.amounts[0] = paymentRequest.amount
 
     $scope.updateToLabel()
 
@@ -285,16 +284,14 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
             unless address.isWatchOnlyLegacyAddress
               $scope.origins.push angular.copy(item)
 
-        $scope.destinationsBase.push({address: "", label: "", isAccount: false, type: "External"})
-        $scope.transaction.destination =  $scope.destinationsBase.slice(-1)[0]
+        $scope.destinationsBase.push(null)
         $scope.destinations.push $scope.destinationsBase
         $scope.originsLoaded = true
 
-        $scope.errors.to = null
-        if paymentRequest.address?
+        if paymentRequest.address? && paymentRequest.address != ''
           $scope.applyPaymentRequest(paymentRequest, 0)
         else if paymentRequest.toAccount?
-          $scope.transaction.destination = paymentRequest.toAccount
+          $scope.transaction.destinations[0] = paymentRequest.toAccount
           $scope.transaction.from = paymentRequest.fromAddress
 
   # Step switching
