@@ -315,4 +315,5 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     $scope.advanced = true
 
   $scope.regularSend = () ->
+    $scope.transaction.fee = $scope.transactionTemplate.fee
     $scope.advanced = false
