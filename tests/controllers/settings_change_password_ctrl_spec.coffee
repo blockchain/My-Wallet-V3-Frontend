@@ -15,7 +15,7 @@ describe "ChangePasswordCtrl", ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
 
-      Wallet.login("test", "test")  
+      Wallet.login("test", "test")
 
       scope = $rootScope.$new()
 
@@ -28,7 +28,7 @@ describe "ChangePasswordCtrl", ->
         '<form role="form" name="passwordForm" novalidate>' +
         '<input type="password" name="currentPassword"    ng-model="fields.currentPassword"   is-valid="isCorrectMainPassword"    required />' +
         '<input type="password" name="password"           ng-model="fields.password"          is-valid="isNotGuid"                min-entropy="25" ng-maxlength="255" required />' +
-        '<input type="password" name="confirmation"       ng-model="fields.confirmation"      is-equal="fields.password"          required />' +
+        '<input type="password" name="confirmation"       ng-model="fields.confirmation"      is-equal="{{fields.password}}"          required />' +
         '</form>'
       )
       scope.model = { fields: {} }
@@ -92,11 +92,11 @@ describe "ChangePasswordCtrl", ->
 
       it "should fail if currentPassword is wrong", ->
         scope.passwordForm.currentPassword.$setViewValue('wrong')
-        expect(scope.passwordForm.currentPassword.$error.isNotValid).toBe(true)
+        expect(scope.passwordForm.currentPassword.$error.isValid).toBe(true)
 
       it "should pass if currentPassword is correct", ->
         scope.passwordForm.currentPassword.$setViewValue('test')
-        expect(scope.passwordForm.currentPassword.$error.isNotValid).not.toBe(true)
+        expect(scope.passwordForm.currentPassword.$error.isValid).not.toBe(true)
 
     describe "password", ->
 
@@ -110,7 +110,7 @@ describe "ChangePasswordCtrl", ->
 
       it "should display an error if the new password is the users guid", ->
         scope.passwordForm.password.$setViewValue('test')
-        expect(scope.passwordForm.password.$error.isNotValid).toBe(true)
+        expect(scope.passwordForm.password.$error.isValid).toBe(true)
 
       it "should be valid if all requirements are met", ->
         scope.passwordForm.password.$setViewValue(strongPassword)
@@ -118,13 +118,13 @@ describe "ChangePasswordCtrl", ->
         expect(scope.passwordForm.password.$invalid).toBe(false)
 
     describe "confirmation", ->
-      
+
       it "should not display an error if password confirmation matches", ->
         scope.passwordForm.password.$setViewValue('testing')
         scope.passwordForm.confirmation.$setViewValue('testing')
-        expect(scope.passwordForm.confirmation.$error.isNotValid).not.toBe(true)
+        expect(scope.passwordForm.confirmation.$error.isValid).not.toBe(true)
 
       it "should display an error if password confirmation does not match", ->
         scope.passwordForm.password.$setViewValue('testing')
         scope.passwordForm.confirmation.$setViewValue('different')
-        expect(scope.passwordForm.confirmation.$error.isNotValid).not.toBe(true)
+        expect(scope.passwordForm.confirmation.$error.isValid).not.toBe(true)

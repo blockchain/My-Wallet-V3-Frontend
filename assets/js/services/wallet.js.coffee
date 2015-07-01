@@ -635,8 +635,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
 
     {
-      send: (from, destination, amount, currency, publicNote) ->
-        amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
+      send: (from, destination, amount, publicNote) ->
 
         spender = wallet.spender(publicNote, success, error, {}, needsSecondPassword)
 
@@ -650,18 +649,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         else if destination.address?
           spendFrom.toAddress(destination.address)
 
-      sendAdvanced: (from, destinations, amounts, fee, currency, publicNote) ->
-        addressesArray = []
-        amountsArray = []
+      sendAdvanced: (from, destinations, amounts, fee, publicNote) ->
 
-        for destination in destinations
-          if destination.type == "Accounts"
-            addressesArray.push(wallet.getReceivingAddressForAccount(destination.index))
-          else
-            addressesArray.push(destination.address)
-
-        for amount in amounts
-          amountsArray.push(wallet.checkAndGetTransactionAmount(amount, currency, success, error))
+        destinations = destinations.map (dest) ->
+          return dest.address unless dest.type == 'Accounts'
+          return wallet.getReceivingAddressForAccount(dest.index)
 
         spender = wallet.spender(publicNote, success, error, {}, needsSecondPassword)
 
@@ -670,7 +662,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         else if from.index?
           spendFrom = spender.fromAccount(from.index, 1000, fee)
 
-        spendFrom.toAddresses(addressesArray, amountsArray)
+        spendFrom.toAddresses(destinations, amounts)
 
       sweep: (fromAddress, toAccountIndex) ->
         spender = wallet.spender(null, success, error, {}, needsSecondPassword)
