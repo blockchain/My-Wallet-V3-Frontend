@@ -97,12 +97,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
     $scope.updateToLabel()
 
-  $scope.setMethod = (method) ->
-    $scope.method = method
-    return
-
-  $scope.setMethod("BTC")
-
   $scope.processURLfromQR = (url) ->
     paymentRequest = Wallet.parsePaymentRequest(url)
 
