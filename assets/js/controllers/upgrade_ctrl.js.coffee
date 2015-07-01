@@ -3,9 +3,7 @@ walletApp.controller "UpgradeCtrl", ($scope, Wallet, $modalInstance, $log, $wind
   $scope.waiting = true
 
   $scope.close = () ->
-    $translate("ARE_YOU_SURE").then (translation) ->
-      if confirm translation
-        $modalInstance.close()
+    $modalInstance.close()
 
   $scope.cancel = () ->
     $window.location = "https://blockchain.info/"
