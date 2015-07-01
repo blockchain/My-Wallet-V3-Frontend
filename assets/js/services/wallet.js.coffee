@@ -265,10 +265,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.my.createNewWallet(email, password, translation,language_code, currency_code, success, error)
 
   wallet.createAccount = (name, successCallback, errorCallback) ->
-    cancelCallback = () ->
 
     needsSecondPasswordCallback = (continueCallback) ->
       cancelCallback = () ->
+        errorCallback()
       $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
 
     success = () ->
