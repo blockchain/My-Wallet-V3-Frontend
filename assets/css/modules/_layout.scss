@@ -43,6 +43,11 @@
   height: 100%;
 }
 
+.overflow-scroll {
+  overflow-y: scroll !important;
+  height: 100%;
+}
+
 @media (max-width: 768px) {
   .left-nav {
     left: -280px;
