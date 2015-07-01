@@ -300,15 +300,13 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   #################################
 
   # Step switching
-  $scope.step = 1
+  $scope.confirmationStep = false
 
   $scope.goToConfirmation = () ->
     $scope.confirmationStep = true
-    $scope.step++
 
   $scope.backToForm = () ->
     $scope.confirmationStep = false
-    $scope.step--
 
   # Advanced Send temporarily show HTML
   $scope.advanced = false
