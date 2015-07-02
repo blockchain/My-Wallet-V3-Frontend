@@ -18,7 +18,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     
   walletNav = { 
     templateUrl: "partials/wallet-navigation.jade"
-    controller: "AccountsCtrl"
+    controller: "WalletNavigationCtrl"
   }
   
   commonViews = {
@@ -97,7 +97,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       top : top,
       left: {
         templateUrl: "partials/wallet-navigation.jade"
-        controller: "AccountsCtrl"
+        controller: "WalletNavigationCtrl"
       },
       right: {
         templateUrl: "partials/dashboard.jade"
@@ -111,7 +111,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       top : top,
       left: {
         templateUrl: "partials/wallet-navigation.jade"
-        controller: "AccountsCtrl"
+        controller: "WalletNavigationCtrl"
       },
       right: {
         templateUrl: "partials/support.jade"
@@ -126,7 +126,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       top : top,
       left: {
         templateUrl: "partials/wallet-navigation.jade"
-        controller: "AccountsCtrl"
+        controller: "WalletNavigationCtrl"
       },
       right: {
         templateUrl: "partials/feedback.jade"
@@ -140,7 +140,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       top: top,
       left: {
         templateUrl: "partials/wallet-navigation.jade"
-        controller: "AccountsCtrl"
+        controller: "WalletNavigationCtrl"
       },
       right: {
         templateUrl: "partials/security-center.jade"
@@ -160,7 +160,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       top : top,
       left: {
         templateUrl: "partials/wallet-navigation.jade"
-        controller: "AccountsCtrl"
+        controller: "WalletNavigationCtrl"
       },
       right: {
         templateUrl: "partials/transaction.jade"
@@ -206,7 +206,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     views: {
       settings: {
         templateUrl: "partials/settings/accounts.jade"
-        controller: "SettingsAccountsCtrl"
+        controller: "SettingsWalletNavigationCtrl"
       }
     }
   )

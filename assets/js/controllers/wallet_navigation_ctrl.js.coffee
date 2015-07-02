@@ -1,4 +1,4 @@
-walletApp.controller "AccountsCtrl", ($scope, Wallet, SecurityCenter, $state, $stateParams, $modal, filterFilter, $location) ->
+walletApp.controller "WalletNavigationCtrl", ($scope, Wallet, SecurityCenter, $state, $stateParams, $modal, filterFilter, $location) ->
   $scope.status    = Wallet.status
   $scope.total = Wallet.total
   $scope.settings = Wallet.settings
