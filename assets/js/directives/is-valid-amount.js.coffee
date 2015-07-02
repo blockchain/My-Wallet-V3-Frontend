@@ -18,7 +18,7 @@ walletApp.directive('isValidAmount', (Wallet) ->
       ctrl.$validators.isValidAmount = (modelValue, viewValue) ->
         return false if isNaN(viewValue)
         return false if parseFloat(viewValue) < 0
-        return false if decimalPlaces(viewValue) > allowedDecimalPlaces(JSON.parse attrs.currency)
+        return false if decimalPlaces(viewValue) > allowedDecimalPlaces(scope.$eval attrs.currency)
         return true
   }
 )
