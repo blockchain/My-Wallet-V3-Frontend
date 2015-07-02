@@ -254,6 +254,13 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   #           Private             #
   #################################
 
+  $scope.$watch "transaction.destinations", (destinations) ->
+    destinations.forEach (dest, index) ->
+      return unless dest? && dest.address?
+      valid = Wallet.isValidAddress(dest.address)
+      $scope.sendForm['destinations' + index].$setValidity('isValidAddress', valid)
+  , true
+
   $scope.$watch "status.didLoadBalances + status.legacyAddressBalancesLoaded", ->
     if $scope.status.didLoadBalances && $scope.status.legacyAddressBalancesLoaded
       if $scope.origins.length == 0
