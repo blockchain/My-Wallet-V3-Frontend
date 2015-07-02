@@ -50,8 +50,8 @@ describe "SecondPasswordCtrl", ->
     
     expect(modalInstance.close).toHaveBeenCalled()
     
-  it "should close the modal when password is wrong", ->
+  it "should not close the modal when password is wrong", ->
     scope.secondPassword = "wrong"
       
     scope.submit()
-    expect(modalInstance.close).toHaveBeenCalled()
+    expect(modalInstance.close).not.toHaveBeenCalled()
