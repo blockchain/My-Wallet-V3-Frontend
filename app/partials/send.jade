@@ -39,9 +39,21 @@
           p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")
           div(ng-show="originsLoaded" ng-class="{'input-group': browserWithCamera, 'has-error': sendForm['destinations' + $index].$error.required && sendForm['amounts' + $index].$touched}")
-            ui-select(ng-model="transaction.destinations[$index]" name="{{'destinations' + $index}}" is-not-equal="{{transaction.from.label}}" property="label" ng-change="updateToLabel()" required)
+            ui-select(
+              ng-model="transaction.destinations[$index]" 
+              name="{{'destinations' + $index}}" 
+              is-not-equal="{{transaction.from.label}}" 
+              property="label" 
+              ng-change="updateToLabel()" 
+              required
+            )
               ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
-              ui-select-choices(repeat="destination in destinations[$index] | filter: getFilter($select.search, !advanced)" group-by="'type'" refresh="refreshDestinations($select.search, $index)" refresh-delay="0")
+              ui-select-choices(
+                repeat="destination in destinations[$index] | filter: getFilter($select.search, !advanced)" 
+                group-by="'type'" 
+                refresh="refreshDestinations($select.search, $index)" 
+                refresh-delay="0"
+              )
                 span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
             span.input-group-btn.mls(ng-if="browserWithCamera")
               button#qr.button(type="button", ng-click="cameraOn($index)")
