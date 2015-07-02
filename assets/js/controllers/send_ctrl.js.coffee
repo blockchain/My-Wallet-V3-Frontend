@@ -129,6 +129,10 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.resetSendForm = () ->
     $scope.transaction = angular.copy($scope.transactionTemplate)
     $scope.transaction.from = Wallet.accounts[Wallet.getDefaultAccountIndex()]
+    tmp = angular.copy($scope.destinations[0])
+    $scope.removeDestination(0)
+    $scope.destinations.push(tmp)
+    $timeout (-> $scope.addDestination()), 0
 
   $scope.addDestination = () ->
     originalDestinations = angular.copy($scope.destinations[0])
