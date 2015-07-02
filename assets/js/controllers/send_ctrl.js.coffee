@@ -24,40 +24,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.isBitCurrency = Wallet.isBitCurrency
 
-  $scope.convertToFiat = (amount) ->
-    Wallet.convertCurrency(amount, Wallet.settings.btcCurrency, Wallet.settings.currency)
-
-  $scope.determineLabel = (origin) ->
-    label = origin.label || origin.address
-    return label
-
-  $scope.maxAndLabelForSelect = (select) ->
-    return "" unless select?
-    return "" unless select.selected?
-
-    $scope.maxAndLabel(select.selected)
-
-  $scope.maxAndLabel = (origin) ->
-
-    return unless Wallet.settings.btcCurrency?
-
-    label = $scope.determineLabel(origin)
-    code = $scope.settings.displayCurrency.code
-
-    if origin.balance == undefined
-      return label
-
-    fees = Wallet.recommendedTransactionFee(origin, origin.balance)
-
-    max_btc = numeral(origin.balance - fees).divide(Wallet.settings.btcCurrency.conversion)
-
-    max_btc = numeral(0) if max_btc < 0
-
-    if $scope.isBitCurrency($scope.settings.displayCurrency)
-      return label + " (" + max_btc.format("0.[00000000]") + " " + code + ")"
-    else
-      return label + " (" + $scope.convertToFiat(max_btc) + " " + code + ")"
-
   $scope.transactionTemplate = {
     from: null,
     destinations: [null],
@@ -68,6 +34,9 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   }
 
   $scope.transaction = angular.copy($scope.transactionTemplate)
+
+  $scope.determineLabel = (origin) ->
+    origin.label || origin.address
 
   $scope.getFilter = (search, accounts=true) ->
     filter =
