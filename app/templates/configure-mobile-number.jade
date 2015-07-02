@@ -1,6 +1,6 @@
 .edit-mobile(ng-class="{'flex offset-flag': fullWidth}")
   input.form-control(
-    on-enter="changeMobile(fields.newMobile)" 
+    on-enter="changeMobile()" 
     type="text" international-phone-number 
     ng-model="fields.newMobile" 
     default-country="{{ mobileDefaultCountry }}" 
@@ -12,8 +12,8 @@
   div(ng-class="{'flex-1': fullWidth, 'mll': fullWidth}")
     button(
       ng-class="buttonLg ? 'button-success button-lg' : 'button-primary'" 
-      ui-ladda="{{ status.busy }}" ng-click="changeMobile(fields.newMobile)" 
-      ng-disabled="!validateMobileNumber(fields.newMobile)" 
+      ui-ladda="{{ status.busy }}" ng-click="changeMobile()" 
+      ng-disabled="!validateMobileNumber()" 
       ladda-translate="SAVE" 
       data-style="expand-left"
     )
