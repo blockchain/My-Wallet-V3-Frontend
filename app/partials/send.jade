@@ -24,7 +24,7 @@
           p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")
           span(ng-show="originsLoaded")
-            ui-select(ng-model="transaction.from" name="from" ng-change="validateAmounts()" required)
+            ui-select(ng-model="transaction.from" name="from" ng-change="validateAmounts(); checkForSameDestination()" required)
               ui-select-match {{ maxAndLabelForSelect($select) }}
               ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)")
                 span(ng-bind-html="maxAndLabel(origin) | highlight: $select.search" ng-class="{zerobalance: hasZeroBalance(origin)}")
