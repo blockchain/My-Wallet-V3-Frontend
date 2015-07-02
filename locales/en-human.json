@@ -290,6 +290,7 @@
   "WALLET_SECOND_PASSWORD_EXPLAIN" : "For additional security, you can choose a second password that is asked whenever you want to spend bitcoins. Beware that there is no password reset functionality.",
   "SECOND_PASSWORD_SET" : "Second Password Enabled",
   "REMOVE_SECOND_PASSWORD" : "Remove Second Password",
+  "SECOND_PASSWORD_INCORRECT" : "Incorrect Second Password, please try again.",
   "SET_SECOND_PASSWORD" : "Set Second Password",
   "SET_PASSWORD" : "Set Password",
   "UPGRADE_WALLET" : "Upgrade Your Wallet",
