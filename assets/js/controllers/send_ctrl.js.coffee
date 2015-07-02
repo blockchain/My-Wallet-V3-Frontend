@@ -259,9 +259,12 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.$watch "transaction.destinations", (destinations) ->
     destinations.forEach (dest, index) ->
-      return unless dest? && dest.address?
-      valid = Wallet.isValidAddress(dest.address)
-      $scope.sendForm['destinations' + index].$setValidity('isValidAddress', valid)
+      return unless dest?
+      if dest.type == 'Accounts'
+        $scope.sendForm['destinations' + index].$setValidity('isValidAddress', true)
+      else
+        valid = Wallet.isValidAddress(dest.address)
+        $scope.sendForm['destinations' + index].$setValidity('isValidAddress', valid)
       $scope.updateToLabel()
   , true
 
