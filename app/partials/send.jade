@@ -84,8 +84,8 @@
             span(translate="ADD_ANOTHER_RECIPIENT")
       //- Fee
       .flex-column.form-group.bc-modal-fade(ng-class="{'has-error': sendForm.fee.$invalid && sendForm.fee.$touched}" ng-show="advanced")
-        label.mbm.flex-center
-          span.mlm(translate="MINERS_FEE")
+        div.mbm.flex-center
+          label.mbn(translate="MINERS_FEE")
           helper-button(content="ADVANCED_SEND_STEP_1")
         p.ccc(translate="MINERS_FEE_EXPLAIN")
         .flex-center.miners-fee-selection
