@@ -192,6 +192,7 @@
   "NETWORK_FEE_EXPLAIN" : "Blockchain never charges for transactions, this fee is suggested by the bitcoin network for increased speed",
   "FEE_FRUGAL" : "Frugal",
   "FEE_FRUGAL_EXPLAIN" : "Lorem ipsum frugal",
+  "TRANSACTION_FRUGAL" : "This transaction may take a while to confirm, if ever, due to a low bitcoin network fee",
   "FEE_NORMAL" : "Normal",
   "FEE_NORMAL_EXPLAIN" : "Follow the fee policy suggested by the mainline bitcoin client. Recommended",
   "FEE_GENEROUS" : "Generous",

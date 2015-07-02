@@ -4,7 +4,8 @@ div
       i.ti-time.mrm
       h6.prs(translate="PENDING")
       helper-button(content="TRANSACTION_DETAIL_STATUS" placement='bottom')
-    h6.status-detail(translate="TRANSACTION_WILL_COMPLETE_IN", translate-values="{minutes: minutesRemaining}")
+    h6.status-detail(translate="TRANSACTION_WILL_COMPLETE_IN", translate-values="{minutes: minutesRemaining}", ng-if="!frugalWarning")
+    h6.status-detail(translate="TRANSACTION_FRUGAL", ng-if="frugalWarning")
 
   .success.flex-center(ng-if="complete")
     i.ti-check.mrm
