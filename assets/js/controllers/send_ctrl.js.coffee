@@ -13,6 +13,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.cameraIsOn = false
 
   $scope.sending = false # Sending in progress
+  $scope.amountIsValid = true
 
   $scope.alerts = Wallet.alerts
 
