@@ -47,7 +47,8 @@ describe "Change Mobile Number Directive", ->
   )
   
   it "should validate proposed number", ->
-    expect(isoScope.validateMobileNumber("31")).toBe(false)
+    isoScope.fields.newMobile = "31"
+    expect(isoScope.validateMobileNumber()).toBe(false)
     return
   
   return
