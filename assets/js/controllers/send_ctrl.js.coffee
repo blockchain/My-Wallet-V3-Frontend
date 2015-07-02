@@ -71,8 +71,9 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.getFilter = (search, accounts=true) ->
     filter =
       label: search
+      type: "!External"
     if !accounts
-      filter.type = '!Account'
+      filter.type = 'Imported'
     if $scope.numberOfActiveAccountsAndLegacyAddresses() == 1
       filter.multiAccount = false
     return filter
