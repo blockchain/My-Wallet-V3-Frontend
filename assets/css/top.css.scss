@@ -17,10 +17,15 @@
     }
   }
 }
+@media (max-width: 992px) {
+  #top .balance h1 {
+    font-size: 2em;
+  }
+}
 
 @media (max-width: 768px) {
   #top .balance h1 {
-    font-size: 1.15em;
+    font-size: 1.35em;
   }
   #top .balance p {
     font-size: .9em;
