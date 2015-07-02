@@ -45,6 +45,7 @@
               is-not-equal="{{transaction.from.label}}" 
               property="label" 
               ng-change="updateToLabel()" 
+              reset-search-input="false"
               required
             )
               ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}

@@ -225,7 +225,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.refreshDestinations = (query, i) ->
     return if $scope.destinations[i].length == 0
     last = $scope.destinations[i].slice(-1)[0]
-    unless !query? || query == ""
+    unless !query?
        last.address = query
        last.label = query
 
