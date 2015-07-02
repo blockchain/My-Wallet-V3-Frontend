@@ -116,9 +116,9 @@
     .flex-column
       .flex-center.control-group.mbl
         label.mbn.mrl(translate="FROM:")
-        h5.mvn.flex-1.ccc.em-300 {{ transaction.from.label || transaction.from.address }}
+        h5.mvn.flex-1.ccc.em-300.long-input {{ transaction.from.label || transaction.from.address }}
         label.mbn.mrl(translate="TO:")
-        h5.btcaddr.mvn.flex-1.ccc.em-300(ng-hide="advanced") {{ toLabel }}
+        h5.btcaddr.mvn.flex-1.ccc.em-300.long-input(ng-hide="advanced") {{ toLabel }}
         h5.mvn.flex-1.ccc.em-300(ng-show="advanced", translate="MULTIPLE_ADDRESSES")
       ul.total-amounts.ccc.ptm
         label.mbn(translate="OVERVIEW")

@@ -261,6 +261,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       return unless dest? && dest.address?
       valid = Wallet.isValidAddress(dest.address)
       $scope.sendForm['destinations' + index].$setValidity('isValidAddress', valid)
+      $scope.updateToLabel()
   , true
 
   $scope.$watch "status.didLoadBalances + status.legacyAddressBalancesLoaded", ->
