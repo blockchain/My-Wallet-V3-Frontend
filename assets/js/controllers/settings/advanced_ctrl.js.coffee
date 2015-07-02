@@ -58,8 +58,11 @@ walletApp.controller "SettingsAdvancedCtrl", ($scope, Wallet, $modal, $translate
     error = () ->
       Wallet.displayError("Failed to update PBKDF2 iterations")
       errorCallback()
+      
+    cancel = () ->
+      errorCallback()
             
-    Wallet.setPbkdf2Iterations(n, success, error)
+    Wallet.setPbkdf2Iterations(n, success, error, cancel)
     
   $scope.changeLogoutTime = (m, success, errorCallback) ->
     error = () ->
