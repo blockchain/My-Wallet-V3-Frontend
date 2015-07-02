@@ -26,9 +26,9 @@ describe "ChangePasswordCtrl", ->
 
       element = angular.element(
         '<form role="form" name="passwordForm" novalidate>' +
-        '<input type="password" name="currentPassword"    ng-model="fields.currentPassword"   is-valid="isCorrectMainPassword"    required />' +
-        '<input type="password" name="password"           ng-model="fields.password"          is-valid="isNotGuid"                min-entropy="25" ng-maxlength="255" required />' +
-        '<input type="password" name="confirmation"       ng-model="fields.confirmation"      is-equal="{{fields.password}}"          required />' +
+        '<input type="password" name="currentPassword"    ng-model="fields.currentPassword"   is-valid="isCorrectMainPassword(fields.currentPassword)"      required />' +
+        '<input type="password" name="password"           ng-model="fields.password"          is-valid="fields.password != uid"                             min-entropy="25" ng-maxlength="255" required />' +
+        '<input type="password" name="confirmation"       ng-model="fields.confirmation"      is-valid="fields.confirmation == fields.password"             required />' +
         '</form>'
       )
       scope.model = { fields: {} }
@@ -127,4 +127,4 @@ describe "ChangePasswordCtrl", ->
       it "should display an error if password confirmation does not match", ->
         scope.passwordForm.password.$setViewValue('testing')
         scope.passwordForm.confirmation.$setViewValue('different')
-        expect(scope.passwordForm.confirmation.$error.isValid).not.toBe(true)
+        expect(scope.passwordForm.confirmation.$error.isValid).toBe(true)

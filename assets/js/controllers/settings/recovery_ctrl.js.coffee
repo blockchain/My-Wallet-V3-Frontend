@@ -5,6 +5,8 @@ walletApp.controller "RecoveryCtrl", ($scope, Wallet, $state, $translate) ->
   $scope.editMnemonic = false
   $scope.status = Wallet.status
 
+  $scope.isValidMnemonic = Wallet.isValidBIP39Mnemonic
+
   $scope.toggleRecoveryPhrase = () ->
     if !$scope.showRecoveryPhrase
       success = (mnemonic, passphrase) ->
@@ -38,9 +40,6 @@ walletApp.controller "RecoveryCtrl", ($scope, Wallet, $state, $translate) ->
       Wallet.importWithMnemonic($scope.mnemonic, $scope.passphrase, success, error)
 
     return
-
-  $scope.isValidMnemonic = (value) ->
-    Wallet.isValidBIP39Mnemonic(value)
 
   $scope.doNotCopyPaste = (event) ->
     event.preventDefault()
