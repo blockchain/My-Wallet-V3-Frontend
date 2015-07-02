@@ -174,3 +174,9 @@ index.html should be cached using If-Modified-Since or etag. All other files con
 * `send-to-email-mobile` : UI of sending to email / mobile (works but pending product feedback, a second dev server, etc)
 * `ticker` : a feature Justin worked on, same status as send-to-email-mobile
 * `experimental` : a brach we can use to deploy features that we aren't sure about yet, such as send-to-email-mobile. This branch can be recreated by combining other feature branches.
+
+## Security
+
+Security issues can be reported to us in the following venues:
+* Email: security@blockchain.info
+* Bug Bounty: https://www.crowdcurity.com/blockchain-info
