@@ -61,8 +61,8 @@
               span(translate="REMOVE")
           .has-error
             span.help-block(ng-show="sendForm['destinations' + $index].$error.required && sendForm['amounts' + $index].$touched") Destination cannot be empty
-            span.help-block(translate="SAME_DESTINATION" ng-show="sendForm['destinations' + $index].$error.isNotEqual")
             span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="sendForm['amounts' + $index].$invalid && sendForm['amounts' + $index].$touched")
+            span.help-block(translate="SAME_DESTINATION" ng-show="sendForm['destinations' + $index].$error.isNotEqual")
         label.mbm.flex-between(ng-show="advanced")
           a.flex-center.type-sm.button-sm.button-default(ng-click="addDestination()")
             i.ti-plus.mrm
