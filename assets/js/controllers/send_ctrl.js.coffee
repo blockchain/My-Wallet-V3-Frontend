@@ -67,6 +67,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     $scope.transaction.amounts[i] = paymentRequest.amount || 0
     $scope.transaction.note = paymentRequest.message || ''
 
+    $scope.validateAmounts()
     $scope.updateToLabel()
 
   $scope.processURLfromQR = (url) ->
