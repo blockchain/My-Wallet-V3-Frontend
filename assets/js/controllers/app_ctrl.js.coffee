@@ -65,6 +65,8 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
 
   $scope.checkGoals = () ->
     if $scope.status.isLoggedIn
+      unless Wallet.settings.currency? && Wallet.settings.btcCurrency?
+        return $timeout (-> $scope.checkGoals()), 100
       if Wallet.goal?
         if Wallet.goal.send?
           $modal.open(
