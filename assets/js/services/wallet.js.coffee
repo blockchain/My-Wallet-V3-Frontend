@@ -727,46 +727,34 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   ###################
 
   wallet.parsePaymentRequest = (url) ->
-    result = {address: null, amount: null, hasBitcoinPrefix: false, currency: null}
+    result = { address: null, amount: null }
+    result.isValid = true
 
-    if url.indexOf("bitcoin:") == 0
-       result.hasBitcoinPrefix = true
-       result.isValid = true # Optimistic...
+    if url.indexOf('bitcoin:') == 0
+      withoutPrefix = url.replace('bitcoin://', '').replace('bitcoin:', '')
+      qIndex = withoutPrefix.indexOf('?')
 
-       withoutPrefix = url.replace("bitcoin://","").replace("bitcoin:", "")
-       if withoutPrefix.indexOf("?") != -1
-         address = withoutPrefix.substr(0, withoutPrefix.indexOf("?"))
-         result.address = address
-         argumentList = withoutPrefix.replace(address + "?", "")
-         loopCount = 0
+      if qIndex != -1
+        result.address = withoutPrefix.substr(0, qIndex)
+        keys = withoutPrefix.substr(qIndex + 1).split('&')
 
-         for i in [0..argumentList.match(/&/g | []).length]
-           argument = argumentList.substr(0,argumentList.indexOf("="))
-           isLastArgument = argumentList.indexOf("&") == -1
+        keys.forEach (item) ->
+          key = item.split('=')[0]
+          value = item.split('=')[1]
 
-           value = undefined
+          if key == 'amount'
+            result.amount = wallet.convertToSatoshi(parseFloat(value), wallet.btcCurrencies[0])
+          else if result[key]
+            result[key] = value
 
-           if !isLastArgument
-             value = argumentList.substr(argument.length + 1, argumentList.indexOf("&") - argument.length - 1)
-           else
-             value = argumentList.substr(argument.length + 1, argumentList.length - argument.length - 1)
+      else
+        result.address = withoutPrefix
 
-           if argument == "amount"
-             result.amount = numeral(value).format("0.[00000000]")
-             result.currency = "BTC"
-           else
-             $log.info "Ignoring argument " + argument + " in: " + url
-             loopCount++
+    else if wallet.my.isValidAddress(url)
+      result.address = url
 
-           argumentList = argumentList.replace(argument + "=" + value + "&", "")
-
-       else
-         result.address = withoutPrefix
     else
-      # Check if it's just a bitcoin address
-      if wallet.my.isValidAddress(url)
-        result.address = url
-        result.isValid = true
+      result.isValid = false
 
     return result
 

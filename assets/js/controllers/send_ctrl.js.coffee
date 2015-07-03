@@ -58,14 +58,13 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
 # TODO: what is supposed to do that with multiple accounts
   $scope.applyPaymentRequest = (paymentRequest, i) ->
-    destination = {address: "", label: "", type: "External"}
-    destination.address = paymentRequest.address
-    destination.label = paymentRequest.address
+    destination =
+      address: paymentRequest.address || ""
+      label: paymentRequest.address || ""
+      type: "External"
 
     $scope.transaction.destinations[i] = destination
-
-    if paymentRequest.amount && paymentRequest.currency == 'BTC'
-      $scope.transaction.amounts[i] = Wallet.convertToSatoshi(paymentRequest.amount, Wallet.btcCurrencies[0])
+    $scope.transaction.amounts[i] = paymentRequest.amount || 0
 
     $scope.updateToLabel()
 
