@@ -1,5 +1,5 @@
-.edit-mobile(ng-class="{'flex offset-flag': fullWidth}")
-  form(role="form" name="mobileForm" ng-submit="changeMobile()")
+.edit-mobile(ng-class="{'offset-flag': fullWidth}")
+  form(ng-class="{'width-100 flex' : fullWidth}" role="form" name="mobileForm" ng-submit="changeMobile()")
     input.form-control(
       type="text" international-phone-number 
       ng-model="fields.newMobile" 
@@ -7,6 +7,7 @@
       preferred-countries="us,ca,gb,au" 
       skip-util-script-download auto-placeholder="false" 
       ng-disabled="status.busy"
+      ng-class"{'prl' : fullWidth}"
     )
     br(ng-if="!fullWidth")
     div(ng-class="{'flex-1': fullWidth, 'mll': fullWidth}")
