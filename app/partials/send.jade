@@ -24,10 +24,12 @@
           p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")
           span(ng-show="originsLoaded")
-            ui-select(ng-model="transaction.from" name="from" ng-change="validateAmounts()" required)
-              ui-select-match {{ maxAndLabelForSelect($select) }}
+            ui-select(ng-model="transaction.from" name="from" ng-change="validateAmounts(); checkForSameDestination()" required)
+              ui-select-match
+                label-origin(origin="$select.selected" fee="transaction.fee")
               ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)")
-                span(ng-bind-html="maxAndLabel(origin) | highlight: $select.search" ng-class="{zerobalance: hasZeroBalance(origin)}")
+                span(ng-class="{zerobalance: hasZeroBalance(origin)}")
+                  label-origin(origin='origin' fee='transaction.fee' highlight="$select.search")
           span.help-block(translate="INSUFFICIENT" ng-show="!amountIsValid && sendForm.amounts0.$touched")
           span.help-block(ng-show="sendForm.from.$invalid && sendForm.destinations0.$touched") Must select an account to send from
       //- Advanced Send
@@ -84,8 +86,8 @@
             span(translate="ADD_ANOTHER_RECIPIENT")
       //- Fee
       .flex-column.form-group.bc-modal-fade(ng-class="{'has-error': sendForm.fee.$invalid && sendForm.fee.$touched}" ng-show="advanced")
-        label.mbm.flex-center
-          span.mlm(translate="MINERS_FEE")
+        div.mbm.flex-center
+          label.mbn(translate="MINERS_FEE")
           helper-button(content="ADVANCED_SEND_STEP_1")
         p.ccc(translate="MINERS_FEE_EXPLAIN")
         .flex-center.miners-fee-selection
