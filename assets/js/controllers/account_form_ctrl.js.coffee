@@ -59,21 +59,7 @@ walletApp.controller "AccountFormCtrl", ($scope, Wallet, $modalInstance, $log, $
 
     Wallet.renameAccount(account, $scope.fields.name, success, error)
 
-  $scope.isAccountNameTaken = (name) ->
+  $scope.isNameUnused = (name) ->
     for acct in $scope.accounts
-      return true if acct.label == name
-    return false
-
-  #################################
-  #           Private             #
-  #################################
-
-  $scope.validate = () ->
-    return false if $scope.fields.name == null
-    return false if $scope.fields.name.length == 0
-
-    taken = $scope.isAccountNameTaken($scope.fields.name)
-    $scope.accountForm.new.$setValidity('taken', !taken)
-    return false if taken
-
+      return false if acct.label == name
     return true
