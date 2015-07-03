@@ -11,7 +11,6 @@ walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
       actionTitle: '='
       placeholder: '='
       type: '@'
-      isRequired: '@'
       errorMessage: '='
     }
     transclude: true
@@ -22,6 +21,7 @@ walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
         return 'templates/transclude.jade'
     link: (scope, elem, attrs, ctrl, transclude) ->
       scope.securityCenter = attrs.securityCenter?
+      scope.isRequired = attrs.isRequired?
 
       scope.user = Wallet.user
       scope.status =
