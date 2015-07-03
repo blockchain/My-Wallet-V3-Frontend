@@ -67,7 +67,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
       wallet.settings.secondPassword = wallet.store.getDoubleEncryption()
       wallet.settings.pbkdf2 = wallet.store.getPbkdf2Iterations()
-      wallet.settings.multiAccount = wallet.store.getMultiAccountSetting()
       wallet.settings.logoutTimeMinutes = wallet.store.getLogoutTime() / 60000
 
       # Get email address, etc
@@ -420,7 +419,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     needsSecondPassword = (continueCallback) ->
       cancel = () ->
         cancelCallback()
-        
+
       $rootScope.$broadcast "requireSecondPassword", continueCallback, cancel
 
     success = () ->
@@ -687,7 +686,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.getMnemonic = (successCallback, errorCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->
       cancelCallback = () ->
-                
+
       $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
 
     success = (mnemonic, passphrase) ->
@@ -1133,10 +1132,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   ############
   # Settings #
   ############
-
-  wallet.setMultiAccount = (flag) ->
-    wallet.store.setMultiAccountSetting(flag)
-    wallet.settings.multiAccount = flag
 
   wallet.setLogoutTime = (minutes, success, error) ->
     wallet.store.setLogoutTime(minutes * 60000)
