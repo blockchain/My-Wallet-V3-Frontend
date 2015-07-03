@@ -52,9 +52,9 @@
           span :
         p.form-control-static.bitcoin-address
           img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
-          span(ng-show="status.didInitializeHD")
-            | {{ paymentRequestAddress }}  
-        p.black.mtm.flex-center.center-align
+          span(ng-show="status.didInitializeHD" single-click-select)
+            | {{ paymentRequestAddress }}
+        p.black.mtm.flex-center.center-align(ng-class="{ 'hidden' : !highlighted }")
           i.ti-mouse-alt.mrs
           span(translate="COPY_ADDRESS")
 .modal-footer.flex-end.pal
