@@ -3,7 +3,7 @@ div
     h2.status.complete.hidden-xs.long-input {{ ngModel }}
     button.button-primary(ng-click="edit()") {{ actionTitle }}
   form(role="form" name="bcAsyncForm" novalidate)
-    .form-group(ng-class="{'has-error': bcAsyncForm.$invalid && bcAsyncForm.$dirty}" ng-show="inline || status.edit")
+    .form-group(ng-class="{'has-error': bcAsyncForm.$invalid && bcAsyncForm.$dirty && !bcAsyncForm.input.$error.required}" ng-show="inline || status.edit")
       input.form-control(on-enter="save()" is-valid="validate()" ng-required="isRequired" name="input" type="{{ type }}" ng-model="form.newValue" ng-focus="focus()" placeholder="{{ placeholder }}" ng-class="{'width-100' : securityCenter}" ng-change="onChange()")
       span.help-block {{ errorMessage }}  
       span(ng-hide="inline && !status.edit")
