@@ -14,10 +14,13 @@ walletApp.directive('singleClickSelect', ($window) ->
         selection = $window.getSelection()
         selection.removeAllRanges()
         selection.addRange(range)
-        
+
         unless $window.getSelection().toString() == ''
           scope.highlighted = true
 
+      elem.bind('click', ->
+        scope.select()
+      )
+
   }
 )
-
