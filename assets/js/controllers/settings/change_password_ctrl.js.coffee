@@ -1,5 +1,5 @@
 walletApp.controller "ChangePasswordCtrl", ($scope, $log, Wallet, $modalInstance, $translate) ->
-  
+
   $scope.fields = {currentPassword: "", password: "", confirmation: ""}
 
   $scope.errors = {}
@@ -7,8 +7,7 @@ walletApp.controller "ChangePasswordCtrl", ($scope, $log, Wallet, $modalInstance
 
   $scope.isCorrectMainPassword = Wallet.isCorrectMainPassword
 
-  $scope.isNotGuid = (candidate) ->
-    return !(candidate == Wallet.uid)
+  $scope.uid = Wallet.uid
 
   $scope.changePassword = () ->
     return unless $scope.passwordForm.$valid

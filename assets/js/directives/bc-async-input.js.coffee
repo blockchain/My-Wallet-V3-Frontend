@@ -1,4 +1,4 @@
-walletApp.directive('bcAsyncInput', (Wallet) ->
+walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
   {
     restrict: "E"
     replace: true
@@ -11,6 +11,7 @@ walletApp.directive('bcAsyncInput', (Wallet) ->
       actionTitle: '='
       placeholder: '='
       type: '@'
+      isRequired: '@'
       errorMessage: '='
     }
     transclude: true
@@ -19,56 +20,63 @@ walletApp.directive('bcAsyncInput', (Wallet) ->
         return 'templates/bc-async-input.jade'
       else
         return 'templates/transclude.jade'
-    link: (scope, elem, attrs, ngModel, transclude) ->
+    link: (scope, elem, attrs, ctrl, transclude) ->
       scope.securityCenter = attrs.securityCenter?
 
       scope.user = Wallet.user
-      scope.status = 
+      scope.status =
         edit: false
         saving: false
-        
-      scope.form = 
+
+      scope.form =
         newValue: scope.ngModel
-        
+
       if attrs.inline?
         scope.inline = true
-        
-      if scope.type?
+
+      unless scope.type?
         scope.type = "text"
-        
+
       scope.edit = () ->
         # finds and focuses on the text input field
         # a brief timeout is necessary before trying to focus
-        setTimeout (-> elem[0].children[1].children[0].focus()), 50
+        $timeout (-> elem.find('input').focus()), 50
         scope.status.edit = 1
-        
+
       scope.focus = () ->
         scope.status.edit = 1
-        
+
       scope.validate = () ->
-        if scope.form.newValue?
-          if scope.validator?
-            scope.validator(scope.form.newValue)
-          else
-            !scope.form.$error
-        return true
-        
+        return true unless scope.validator?
+        return scope.validator(scope.form.newValue)
+
+      scope.noChange = () ->
+        return false if scope.form.newValue == ''
+        return scope.form.newValue == ctrl.$viewValue.toString()
+
       scope.save = () ->
         scope.status.saving = true
-  
+
         success = () ->
+          unless attrs.custom?
+            scope.bcAsyncForm.$setPristine()
           scope.status.saving = false
           scope.status.edit = false
-    
+
         error = () ->
           scope.status.saving = false
-    
+
         scope.onSave(scope.form.newValue, success, error)
+
+      scope.cancel = () ->
+        scope.bcAsyncForm.$setPristine()
+        scope.status.edit = false
+        scope.form.newValue = scope.ngModel
 
       transclude(scope, (clone, scope) ->
         if attrs.custom?
           elem.empty().append(clone)
       )
-          
+
   }
 )

@@ -3,7 +3,7 @@
 window.theFormatter = (val) ->
   return "Nonsense"
 
-# App Module 
+# App Module
 modules = [
   "walletFilters"
   "walletServices"
@@ -13,14 +13,14 @@ modules = [
   "ui.bootstrap"
   "ngCookies"
   "ngAnimate"
-  
+
   # TODO get rid of these wrappers and modify the original files to work with injection?
-  "myWalletServices" 
+  "myWalletServices"
   "myWalletStoreServices"
   "myWalletSpenderServices"
   "myBlockchainApiServices"
   "myBlockchainSettingsServices"
-  
+
   "ui.select"
   "ngAudio"
   "ngSanitize"
@@ -72,9 +72,9 @@ modules = [
   "partials/settings/settings.jade"
   "partials/settings/show-private-key.jade"
   "partials/settings/wallet-recovery.jade"
-  "partials/settings/wallet.jade"  
+  "partials/settings/wallet.jade"
   "partials/settings/two-factor.jade"
-  "partials/confirm-recovery-phrase-modal.jade"  
+  "partials/confirm-recovery-phrase-modal.jade"
   "partials/wallet.jade"
   "templates/amount.jade"
   "templates/fiat-or-btc.jade"
@@ -102,6 +102,7 @@ modules = [
   "templates/configure-mobile-number.jade"
   "templates/verify-mobile-number.jade"
   "templates/transclude.jade"
+  "templates/label-origin.jade"
   # 'angular-ladda'
 ]
 
@@ -109,10 +110,10 @@ walletApp = angular.module("walletApp", modules)
 
 walletApp.config (uiSelectConfig) ->
   uiSelectConfig.theme = 'bootstrap'
-  
+
 walletApp.config ($numeraljsConfigProvider) ->
   $numeraljsConfigProvider.setFormat('btc', '0,0.00 BTC')
-  
+
 # Danger! Use for debugging only:
 # walletApp.config ($sceProvider) ->
 #   $sceProvider.enabled(false);

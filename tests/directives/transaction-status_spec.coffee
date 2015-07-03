@@ -43,3 +43,19 @@ describe "Transaction Status Directive", ->
     expect(element.html()).toContain "translate=\"TRANSACTION_COMPLETE"   
     expect(element.html()).not.toContain "TRANSACTION_WILL_COMPLETE_IN"      
        
+
+  it "should should warn about frugal fee if zero confirmations", ->
+    isoScope.transaction.confirmations = 0
+    isoScope.transaction.frugal = true
+    isoScope.$digest()
+    expect(isoScope.frugalWarning).toBe(true)
+    expect(element.html()).toContain "translate=\"TRANSACTION_FRUGAL"   
+    expect(element.html()).not.toContain "TRANSACTION_WILL_COMPLETE_IN"
+  
+  it "should should not warn about frugal fee if confirmed", ->
+    isoScope.transaction.confirmations = 1
+    isoScope.transaction.frugal = false    
+    isoScope.$digest()
+    expect(isoScope.frugalWarning).toBe(false)
+    expect(element.html()).not.toContain "translate=\"TRANSACTION_FRUGAL"   
+    expect(element.html()).toContain "TRANSACTION_WILL_COMPLETE_IN"

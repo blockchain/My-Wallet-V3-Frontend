@@ -11,5 +11,6 @@ walletApp.directive('transactionStatus', ($translate, $rootScope, Wallet, $compi
         if scope.transaction? && scope.transaction.confirmations?
           scope.minutesRemaining = 30 - scope.transaction.confirmations * 10
           scope.complete = scope.transaction.confirmations >= 3
+          scope.frugalWarning = scope.transaction.frugal && scope.transaction.confirmations == 0
   }
 )

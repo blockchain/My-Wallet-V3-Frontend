@@ -1,4 +1,4 @@
-walletApp.controller "SettingsAccountsCtrl", ($scope, Wallet, $modal) ->
+walletApp.controller "SettingsWalletNavigationCtrl", ($scope, Wallet, $modal) ->
   $scope.accounts = Wallet.accounts
   
   $scope.display = {archived: false}  

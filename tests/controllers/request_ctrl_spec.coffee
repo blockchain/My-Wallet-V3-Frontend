@@ -3,21 +3,21 @@ describe "RequestCtrl", ->
   modalInstance =
     close: ->
     dismiss: ->
-        
+
   beforeEach angular.mock.module("walletApp")
-  
+
   beforeEach ->
     angular.mock.inject ($injector, localStorageService, $controller, $rootScope, $compile) ->
       localStorageService.remove("mockWallets")
-      
-      Wallet = $injector.get("Wallet")      
-            
+
+      Wallet = $injector.get("Wallet")
+
       MyWallet = $injector.get("MyWallet")
-      
-      Wallet.login("test", "test")  
-    
+
+      Wallet.login("test", "test")
+
       scope = $rootScope.$new()
-      
+
       $controller "RequestCtrl",
         $scope: scope,
         $stateParams: {},
@@ -26,8 +26,7 @@ describe "RequestCtrl", ->
 
       element = angular.element(
         '<form role="form" name="requestForm" novalidate>' +
-        '<input type="text" name="to"       ng-model="fields.to"        is-not-null />' +
-        '<input type="text" name="amount"   ng-model="fields.amount"    is-valid-amount currency="fields.currency" />' +
+        '<input type="text" name="amount"   ng-model="fields.amount"    is-valid-amount currency="{{fields.currency}}" />' +
         '</form>'
       )
       scope.model = { fields: {to: null, amount: '0', currency: Wallet.settings.currency, label: ""} }
@@ -37,32 +36,32 @@ describe "RequestCtrl", ->
 
       scope.fields.amount = '1'
       scope.$apply()
-    
+
       return
-      
+
 
     return
-    
+
   describe "destinations", ->
     it "should include accounts",  ->
       expect(scope.destinations.length).toBeGreaterThan(0)
       expect(scope.destinations[0].index).toBeDefined()
-      
+
     it "should not include archived accounts",  inject((Wallet) ->
       # Make sure there's an archived account in the mocks:
       match = false
       for account in scope.accounts
         match = true if !account.active
-        
+
       expect(match).toBe(true, "No archived account in mocks")
-      
+
       # Test that this archived account is not included in origins:
       for destination in scope.destinations
         expect(destination.active).not.toBe(false, "Archived account in destinations")
     )
-    
+
   describe "when requesting for a legacy address", ->
-    
+
     it "should select the users currency by default", inject((Wallet)->
       expect(Wallet.settings.currency.code).toBe("USD")
       expect(scope.fields.currency.code).toBe "USD"
@@ -71,25 +70,25 @@ describe "RequestCtrl", ->
     it "should have a bit currency", inject((Wallet)->
       expect(scope.settings.btcCurrency).toBeDefined()
     )
-    
+
     it "should have access to legacy addresses",  inject(() ->
       expect(scope.legacyAddresses).toBeDefined()
       expect(scope.legacyAddresses.length).toBeGreaterThan(0)
     )
-    
+
     it "should combine accounts and active legacy addresses in destinations", ->
       expect(scope.destinations).toBeDefined()
-      
+
       foundAccount = false
       foundLegacyAddress = false
-      
+
       for destination in scope.destinations
         foundAccount = true if destination.index?
-        foundLegacyAddress = true if !destination.index?      
-      
-      expect(foundAccount).toBe(true)    
-      expect(foundLegacyAddress).toBe(true)      
-    
+        foundLegacyAddress = true if !destination.index?
+
+      expect(foundAccount).toBe(true)
+      expect(foundLegacyAddress).toBe(true)
+
     it "should close", inject((Wallet) ->
       spyOn(Wallet, "clearAlerts")
       scope.close()
@@ -98,19 +97,19 @@ describe "RequestCtrl", ->
 
     it "should show a payment request address when legacy address is selected", inject(()->
       scope.fields.to = scope.destinations[scope.accounts.length] # The first legacy address
-      
+
       scope.$digest()
-      
+
       expect(scope.paymentRequestAddress).toBe(scope.fields.to.address)
     )
-      
+
     it "should show a payment URL when legacy address is selected", ->
       scope.fields.to = scope.destinations[scope.accounts.length] # The first legacy address
       scope.$digest()
       expect(scope.paymentRequestURL).toBeDefined()
       expect(scope.paymentRequestURL).toContain("bitcoin:")
-      
-      
+
+
     it "should show a payment URL with amount when legacy address is selected and amount > 0", ->
       scope.fields.to = scope.destinations[scope.accounts.length] # The first legacy address
       scope.$digest()
@@ -118,23 +117,23 @@ describe "RequestCtrl", ->
       scope.fields.amount = "0.1"
       scope.$digest()
       expect(scope.paymentRequestURL).toBeDefined()
-      expect(scope.paymentRequestURL).toContain("amount=0.1")      
-      
+      expect(scope.paymentRequestURL).toContain("amount=0.1")
+
     it "should not have amount argument in URL if amount is zero, null or empty", ->
       scope.fields.to = scope.destinations[scope.accounts.length] # The first legacy address
       scope.fields.amount = "0"
       scope.$digest()
       expect(scope.paymentRequestURL).toBeDefined()
       expect(scope.paymentRequestURL).not.toContain("amount=")
-      
+
       scope.fields.amount = null
       scope.$digest()
       expect(scope.paymentRequestURL).not.toContain("amount=")
-      
+
       scope.fields.amount = ""
       scope.$digest()
       expect(scope.paymentRequestURL).not.toContain("amount=")
-    
+
     it "should show the amount in BTC", ->
       expect(scope.currencies[4].code).toBe("EUR")
       scope.fields.currency = scope.currencies[4]

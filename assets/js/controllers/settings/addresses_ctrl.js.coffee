@@ -2,6 +2,14 @@ walletApp.controller "SettingsAddressesCtrl", ($scope, Wallet, $translate, $moda
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.accounts = Wallet.accounts
   $scope.display = {archived: false, account_dropdown_open: false}  
+
+  $scope.toggleDisplayImported = () ->
+    $scope.display.imported = !$scope.display.imported
+    $scope.display.archived = false
+
+  $scope.toggleDisplayArchived = () ->
+    $scope.display.archived = !$scope.display.archived
+    $scope.display.imported = false
   
   $scope.settings = Wallet.settings
   

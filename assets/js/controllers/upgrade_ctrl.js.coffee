@@ -1,8 +1,13 @@
-walletApp.controller "UpgradeCtrl", ($scope, Wallet, $modalInstance, $log, $window, $translate) ->  
+walletApp.controller "UpgradeCtrl", ($scope, Wallet, $modalInstance, $log, $window, $translate, $timeout) ->
+
+  $scope.waiting = true
+
   $scope.close = () ->
-    $translate("RABBIT_HOLE").then (translation) ->
-      if confirm translation
-        $modalInstance.close()
-    
+    $modalInstance.close()
+
   $scope.cancel = () ->
     $window.location = "https://blockchain.info/"
+
+  $timeout ->
+    $scope.waiting = false
+  , 3000

@@ -265,10 +265,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.my.createNewWallet(email, password, translation,language_code, currency_code, success, error)
 
   wallet.createAccount = (name, successCallback, errorCallback) ->
-    cancelCallback = () ->
 
     needsSecondPasswordCallback = (continueCallback) ->
       cancelCallback = () ->
+        errorCallback()
       $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
 
     success = () ->
@@ -416,14 +416,17 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     wallet.settings_api.resendEmailConfirmation(wallet.user.email, success, error)
 
-  wallet.setPbkdf2Iterations = (n, successCallback, errorCallback) ->
+  wallet.setPbkdf2Iterations = (n, successCallback, errorCallback, cancelCallback) ->
     needsSecondPassword = (continueCallback) ->
-      cancelCallback = () ->
-      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
+      cancel = () ->
+        cancelCallback()
+        
+      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancel
 
     success = () ->
       wallet.settings.pbkdf2 = wallet.store.getPbkdf2Iterations()
       successCallback()
+      wallet.applyIfNeeded()
 
     error = (error) ->
       errorCallback(error)
@@ -618,14 +621,13 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.applyIfNeeded()
 
     error = (e) ->
-        if e.message != undefined
-          errorCallback(e.message)
-        else if e isnt null
-          errorCallback(e)
-          wallet.applyIfNeeded()
-        else
-          errorCallback("Unknown error")
-          wallet.applyIfNeeded()
+      if e? && e.message != undefined
+        errorCallback(e.message)
+      else if e != null && e != undefined
+        errorCallback(e)
+      else
+        errorCallback("Unknown error")
+      wallet.applyIfNeeded()
 
     needsSecondPassword = (continueCallback) ->
       cancelCallback = () ->
@@ -634,33 +636,12 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
 
     {
-      send: (from, destination, amount, currency, publicNote) ->
-        amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
 
-        spender = wallet.spender(publicNote, success, error, {}, needsSecondPassword)
+      send: (from, destinations, amounts, fee, publicNote) ->
 
-        if from.address?
-          spendFrom = spender.fromAddress(from.address, amount, 10000)
-        else if from.index?
-          spendFrom = spender.fromAccount(from.index, amount, 10000)
-
-        if destination.index?
-          spendFrom.toAccount(destination.index)
-        else if destination.address?
-          spendFrom.toAddress(destination.address)
-
-      sendAdvanced: (from, destinations, amounts, fee, currency, publicNote) ->
-        addressesArray = []
-        amountsArray = []
-
-        for destination in destinations
-          if destination.type == "Accounts"
-            addressesArray.push(wallet.getReceivingAddressForAccount(destination.index))
-          else
-            addressesArray.push(destination.address)
-
-        for amount in amounts
-          amountsArray.push(wallet.checkAndGetTransactionAmount(amount, currency, success, error))
+        destinations = destinations.map (dest) ->
+          return dest.address unless dest.type == 'Accounts'
+          return wallet.getReceivingAddressForAccount(dest.index)
 
         spender = wallet.spender(publicNote, success, error, {}, needsSecondPassword)
 
@@ -669,7 +650,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         else if from.index?
           spendFrom = spender.fromAccount(from.index, 1000, fee)
 
-        spendFrom.toAddresses(addressesArray, amountsArray)
+        spendFrom.toAddresses(destinations, amounts)
 
       sweep: (fromAddress, toAccountIndex) ->
         spender = wallet.spender(null, success, error, {}, needsSecondPassword)
@@ -706,14 +687,14 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.getMnemonic = (successCallback, errorCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->
       cancelCallback = () ->
+        errorCallback('INCORRECT_PASSWORD')
       $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
 
     success = (mnemonic, passphrase) ->
       successCallback(mnemonic, passphrase)
 
-    error = () ->
-      wallet.my.displayError("Unable to show mnemonic.")
-      errorCallback()
+    error = (err="Unable to show mnemonic.") ->
+      errorCallback(err)
 
     wallet.my.getHDWalletPassphraseString(needsSecondPasswordCallback, success, error)
 
@@ -1363,7 +1344,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       errorCallback()
       wallet.applyIfNeeded()
 
-    wallet.settings_api.toggleSave2FA(true, success, error)
+    wallet.settings_api.toggleSave2FA(false, success, error)
 
   wallet.disableRememberTwoFactor = (successCallback, errorCallback) ->
     success = () ->
@@ -1375,7 +1356,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       errorCallback()
       wallet.applyIfNeeded()
 
-    wallet.settings_api.toggleSave2FA(false, success, error)
+    wallet.settings_api.toggleSave2FA(true, success, error)
 
   wallet.handleBitcoinLinks = () ->
     $window.navigator.registerProtocolHandler('bitcoin', window.location.origin + '/#/open/%s', "Blockchain")

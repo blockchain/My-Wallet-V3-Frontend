@@ -3,9 +3,9 @@ describe "SecondPasswordCtrl", ->
   modalInstance =
     close: ->
     dismiss: ->
-      
+
   $controller = undefined
-      
+
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
@@ -13,24 +13,24 @@ describe "SecondPasswordCtrl", ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
 
-      Wallet.login("test", "test") 
+      Wallet.login("test", "test")
 
       scope = $rootScope.$new()
-      
+
       $controller "SecondPasswordCtrl",
         $scope: scope,
         $stateParams: {},
         $modalInstance: modalInstance,
         insist: false
-        continueCallback: (password, correct, wrong) -> 
+        continueCallback: (password, correct, wrong) ->
           if password == "correct"
             correct()
           else
             wrong()
         cancelCallback:  (() ->)
-      
+
       spyOn(modalInstance, "close")
-      
+
       return
 
     return
@@ -41,17 +41,17 @@ describe "SecondPasswordCtrl", ->
     expect(Wallet.clearAlerts).toHaveBeenCalled()
     return
   )
-  
+
   it "should close the modal when password is correct", ->
 
     scope.secondPassword = "correct"
-    
+
     scope.submit()
-    
+
     expect(modalInstance.close).toHaveBeenCalled()
-    
+
   it "should close the modal when password is wrong", ->
     scope.secondPassword = "wrong"
-      
+
     scope.submit()
     expect(modalInstance.close).toHaveBeenCalled()

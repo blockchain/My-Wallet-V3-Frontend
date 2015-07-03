@@ -5,7 +5,7 @@
       | Success!
     h2 Thank you for your feedback
   div(ng-hide="formStage >= 2")
-    form.bc-form.pal(ng-submit="setFormSubmitted()")
+    form.bc-form.pal(ng-submit="setFormSubmitted()" name="feedbackForm")
       .bc-form-header
         h1 Tell us what you think!
       label.mbl What's your overall impression of the wallet?
@@ -13,23 +13,23 @@
         .flex-column.flex-center
           label.mbs(for="rating-awesome")
             span Awesome!
-          input(ng-model="rating" type="radio" name="rating" id="rating-awesome" value="AWESOME")
+          input(ng-model="rating" type="radio" name="rating" id="rating-awesome" value="AWESOME" ng-required="!rating")
         .flex-column.flex-center
           label.mbs(for="rating-good")
             span Good
-          input(ng-model="rating" type="radio" name="rating" id="rating-good" value="GOOD")
+          input(ng-model="rating" type="radio" name="rating" id="rating-good" value="GOOD" ng-required="!rating")
         .flex-column.flex-center
           label.mbs(for="rating-meh")
             span Meh, it's ok
-          input(ng-model="rating" type="radio" name="rating" id="rating-meh" value="MEH")
+          input(ng-model="rating" type="radio" name="rating" id="rating-meh" value="MEH" ng-required="!rating")
         .flex-column.flex-center
           label.mbs(for="rating-bad")
             span Bad
-          input(ng-model="rating" type="radio" name="rating" id="rating-bad" value="BAD")
+          input(ng-model="rating" type="radio" name="rating" id="rating-bad" value="BAD" ng-required="!rating")
         .flex-column.flex-center
           label.mbs(for="rating-horrible")
             span Horrible
-          input(ng-model="rating" type="radio" name="rating" id="rating-horrible" value="HORRIBLE")
+          input(ng-model="rating" type="radio" name="rating" id="rating-horrible" value="HORRIBLE" ng-required="!rating")
       .flex-column.mtl
         label(for="description-good") What did you like?
         textarea.plm(ng-model="descriptionGood" rows="3" id="description-good" name="description-good")

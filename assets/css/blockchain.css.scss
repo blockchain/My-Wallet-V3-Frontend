@@ -36,10 +36,6 @@
 //override bootstrap
 @import 'utilities/bs_overrides';
 
-html {
-  overflow-y: hidden;
-}
-
 html,body {
   font-size: small;
   background-color: #fff;
@@ -47,7 +43,7 @@ html,body {
   font-family: 'Roboto', 'Helvetica', sans-serif !important;
   height: 100%;
   width: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .hide { display: none; }
@@ -56,29 +52,12 @@ html,body {
 
 .width-100 { width: 100%; }
 .width-50 { width: 50%; }
+.width-75 { width: 75%; }
 
 //Because <span>'s are evil
 .display-block { display: block; }
 
 .pointer { cursor: pointer; }
-
-.alpha-agreement {
-  background: rgba(10,10,10,.5);
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  z-index: 10000;
-  top: 0;
-  left: 0;
-  .alpha-agreement-container {
-    overflow-y: scroll;
-    border-radius: 5px;
-    border: 1px solid #eee;
-    margin: 5em;
-    background: white;
-    height: 85%
-  }
-}
 
 .row {
   vertical-align: bottom;
@@ -208,4 +187,11 @@ padding-left: 15px;
   p.form-control-static.bitcoin-address {
     max-width: 300px;
   }
+}
+
+//override pre from bootstrap
+pre {
+  word-break: normal;
+  word-wrap: normal;
+  white-space: pre-line;
 }

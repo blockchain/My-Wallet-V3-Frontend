@@ -11,8 +11,8 @@
     "repo" : "danielstern/ngAudio"
   },
   "angular-ui-select" : {
-    "version": "0.11.2",
-    "commits" : ["b044b4109615982b75db4a46647741e96abe05fd","0ac10b09d57ee568e2891167f6bc49303f010608", "032b15213a61c2bae79e25e020231bc2fc7a5328", "28776e5150d71872f9d4cc9f9970c15eb175c370"],
+    "version": "0.12.0",
+    "commits" : ["2d1422d109dc1cd64213271e59506b14f74d356f"],
     "repo" : "angular-ui/ui-select"
   },
   "angular-qr" : {
@@ -46,8 +46,8 @@
     "repo" : "pernas/angular-password-entropy"
   },
   "international-phone-number" : {
-    "version": "0.0.5",
-    "commits" : ["9c41abeffcc7537b5847c1052cb1c7ae16d7fc56"],
+    "version": "0.0.7",
+    "commits" : ["6c23f83221d1d6fe976925d4d8b14944104a931a"],
     "repo" : "mareczek/international-phone-number"
   },
   "browserdetection" : {

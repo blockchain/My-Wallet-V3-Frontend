@@ -79,7 +79,6 @@ head
   script(src='build/js/translations.js')
   
   script(src='build/js/controllers/account_form_ctrl.js')
-  script(src='build/js/controllers/accounts_ctrl.js')
   script(src='build/js/controllers/alerts_ctrl.js')
   script(src='build/js/controllers/app_ctrl.js')
   script(src='build/js/controllers/claim_ctrl.js')
@@ -102,6 +101,7 @@ head
   script(src='build/js/controllers/transactions_ctrl.js')
   script(src='build/js/controllers/upgrade_ctrl.js')
   script(src='build/js/controllers/modal_notification_ctrl.js')
+  script(src='build/js/controllers/wallet_navigation_ctrl.js')
   script(src='build/js/controllers/settings/accounts_ctrl.js')
   script(src='build/js/controllers/settings/address_ctrl.js')
   script(src='build/js/controllers/settings/address_import_ctrl.js')
@@ -141,6 +141,7 @@ head
   script(src='build/js/directives/on-enter.js')
   script(src='build/js/directives/resend-email-confirmation.js')
   script(src='build/js/directives/security-badge.js')
+  script(src='build/js/directives/scroll-to-top.js')
   script(src='build/js/directives/tor.js')
   script(src='build/js/directives/transaction-description.js')
   script(src='build/js/directives/transaction-note.js')
@@ -152,8 +153,10 @@ head
   script(src='build/js/directives/focus-when.js')
   script(src='build/js/directives/is-valid.js')
   script(src='build/js/directives/is-valid-amount.js')
-  script(src='build/js/directives/is-equal.js')
+  script(src='build/js/directives/is-not-equal.js')
   script(src='build/js/directives/is-not-null.js')
+  script(src='build/js/directives/transform-currency.js')
+  script(src='build/js/directives/label-origin.js')
   
   script(src='build/js/services/wallet.js')
   script(src='build/js/services/security_center.js')
@@ -173,8 +176,12 @@ head
   
   script.
     if(browserDetection().browser === "ie" && browserDetection().version < 11) {
-      alert("Internet Explorer 10 and older are not supported");
-      window.location = "https://blockchain.info/"
+      if ( confirm("We're sorry, our HD Wallet uses the latest web technologies to provide you a more secure and private experience. Unfortunately Internet Explorer 10 and older do not meet these standards. If you'd like to experience the Wallet, click OK to upgrade your browser. Or, hit cancel to explore Blockchain.info instead. Thanks!") ) {
+        window.location = "http://browsehappy.com/";
+      }
+      else {
+        window.location = "https://blockchain.info/";
+      }
     }
 
 body(ng-controller="AppCtrl", ui-view="body")
