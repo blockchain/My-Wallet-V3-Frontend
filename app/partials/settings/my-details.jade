@@ -13,7 +13,7 @@ form.form-horizontal(role="form",name="form",novalidate)
       span.label.label-success.hidden-sm.hidden-xs(translate="VERIFIED", ng-show="user.isEmailVerified")
       p.explain.hidden-xs(translate="EMAIL_ADDRESS_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result.flex-column
-      bc-async-input(type="email", ng-required="true", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
+      bc-async-input(type="email", is-required="true", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
       verify-email
       resend-email-confirmation
   .form-group
