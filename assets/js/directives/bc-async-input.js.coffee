@@ -11,6 +11,7 @@ walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
       actionTitle: '='
       placeholder: '='
       type: '@'
+      isRequired: '@'
       errorMessage: '='
     }
     transclude: true
@@ -46,17 +47,19 @@ walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
         scope.status.edit = 1
 
       scope.validate = () ->
-        val = scope.form.newValue
-        return false if val == ctrl.$viewValue.toString()
-        return false if val == ''
         return true unless scope.validator?
-        return scope.validator(val)
+        return scope.validator(scope.form.newValue)
+
+      scope.noChange = () ->
+        return false if scope.form.newValue == ''
+        return scope.form.newValue == ctrl.$viewValue.toString()
 
       scope.save = () ->
         scope.status.saving = true
 
         success = () ->
-          scope.bcAsyncForm.$setPristine()
+          unless attrs.custom?
+            scope.bcAsyncForm.$setPristine()
           scope.status.saving = false
           scope.status.edit = false
 
