@@ -15,7 +15,7 @@ form.form-horizontal(role="form",name="form",novalidate)
     .col-sm-12.col-md-6.setting-result.flex-column
       bc-async-input(type="email", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
       verify-email
-      resend-email-confirmation
+      resend-email-confirmation.mtl
   .form-group
     .col-sm-12.col-md-6
       label(translate="MOBILE_NUMBER")
