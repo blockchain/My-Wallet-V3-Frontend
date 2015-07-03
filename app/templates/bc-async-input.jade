@@ -7,5 +7,5 @@ div(ng-class="{'width-100 pll' : securityCenter}")
       input.form-control(is-valid="validate()" name="input" type="{{ type }}" ng-model="form.newValue" ng-focus="focus()" placeholder="{{ placeholder }}" ng-class="{'width-100' : securityCenter}" ng-change="onChange()")
       span.help-block {{ errorMessage }}  
       span(ng-hide="inline && !status.edit")
-        button(ng-disabled="bcAsyncForm.$invalid || bcAsyncForm.$pristine" ui-ladda="{{ status.saving }}" ladda-translate="SAVE" data-style="expand-left" ng-class="securityCenter ? 'button-success button-lg' : 'button-primary btn-small'")
-        button.button-muted.btn-small.mlm(ng-click="cancel(); onChange()" translate="CANCEL" ng-hide="status.saving")
+        button(type="submit" ng-disabled="bcAsyncForm.$invalid || bcAsyncForm.$pristine" ui-ladda="{{ status.saving }}" ladda-translate="SAVE" data-style="expand-left" ng-class="securityCenter ? 'button-success button-lg' : 'button-primary btn-small'")
+        button.button-muted.btn-small.mlm(type="button" ng-click="cancel(); onChange()" translate="CANCEL" ng-hide="status.saving")
