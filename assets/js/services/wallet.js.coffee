@@ -687,7 +687,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.getMnemonic = (successCallback, errorCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->
       cancelCallback = () ->
-        errorCallback('INCORRECT_PASSWORD')
+                
       $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
 
     success = (mnemonic, passphrase) ->
@@ -1441,6 +1441,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       errorCallback()
 
     wallet.my.unsetSecondPassword(success, error, needsSecondPasswordCallback)
+
+  wallet.validateSecondPassword = (password) ->
+    wallet.my.validateSecondPassword(password)
 
   wallet.setSecondPassword = (password, successCallback) ->
     success = () ->
