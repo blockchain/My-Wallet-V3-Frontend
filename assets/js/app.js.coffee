@@ -97,7 +97,6 @@ modules = [
   "templates/verify-email.jade"
   "templates/resend-email-confirmation.jade"
   "templates/adverts.jade"
-  "templates/multi-account.jade"
   "templates/btc-picker.jade"
   "templates/configure-mobile-number.jade"
   "templates/verify-mobile-number.jade"
