@@ -11,6 +11,7 @@
     br(ng-if="!fullWidth")
     div(ng-class="{'flex-1': fullWidth, 'mll': fullWidth}")
       button(
+        type="submit"
         ng-class="buttonLg ? 'button-success button-lg' : 'button-primary'" 
         ui-ladda="{{ status.busy }}"
         ng-disabled="!validateMobileNumber()" 
@@ -18,6 +19,7 @@
         data-style="expand-left"
       )
       button.button-muted.btn-small(
+        type="button"
         ng-if="!fullWidth" 
         ng-click="cancel()" 
         translate="CANCEL"
