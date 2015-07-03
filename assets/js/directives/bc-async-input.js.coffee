@@ -1,4 +1,4 @@
-walletApp.directive('bcAsyncInput', (Wallet) ->
+walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
   {
     restrict: "E"
     replace: true
@@ -39,7 +39,7 @@ walletApp.directive('bcAsyncInput', (Wallet) ->
       scope.edit = () ->
         # finds and focuses on the text input field
         # a brief timeout is necessary before trying to focus
-        # setTimeout (-> elem[0].children[1].children[0].focus()), 50
+        $timeout (-> elem.find('input').focus()), 50
         scope.status.edit = 1
 
       scope.focus = () ->
