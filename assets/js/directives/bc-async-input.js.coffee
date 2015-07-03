@@ -11,6 +11,7 @@ walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
       actionTitle: '='
       placeholder: '='
       type: '@'
+      ngRequired: '@'
       errorMessage: '='
     }
     transclude: true
@@ -47,15 +48,24 @@ walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
 
       scope.validate = () ->
         val = scope.form.newValue
-        return false if val == ctrl.$viewValue.toString()
-        return false if val == ''
         return true unless scope.validator?
         return scope.validator(val)
+        
+      # Additional constraints (view already checks if the form is changed and valid)
+      scope.disableSubmit = () ->
+        val = scope.form.newValue
+        return true if scope.bcAsyncForm.$invalid
+        return true if scope.bcAsyncForm.$pristine
+        return true if val == ctrl.$viewValue.toString() # Not the same as $pristine
+        return true if scope.ngRequired && val == ""
+        return false
 
       scope.save = () ->
         scope.status.saving = true
-
+        
         success = () ->
+          unless attrs.custom? 
+            scope.bcAsyncForm.$setPristine()
           scope.status.saving = false
           scope.status.edit = false
 
