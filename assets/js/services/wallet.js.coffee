@@ -727,7 +727,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   ###################
 
   wallet.parsePaymentRequest = (url) ->
-    result = { address: null, amount: null }
+    result = { address: null, amount: null, label: null, message: null }
     result.isValid = true
 
     if url.indexOf('bitcoin:') == 0
@@ -744,7 +744,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
           if key == 'amount'
             result.amount = wallet.convertToSatoshi(parseFloat(value), wallet.btcCurrencies[0])
-          else if result[key]
+          else if result[key] != undefined
             result[key] = value
 
       else

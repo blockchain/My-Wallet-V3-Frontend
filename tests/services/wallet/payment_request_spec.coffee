@@ -75,3 +75,17 @@ describe "walletServices", () ->
       expect(result.amount).toBe 10000000000
       expect(result.address).toBe "abcdefg"
     )
+
+    it "should extract label", inject((Wallet) ->
+      result = Wallet.parsePaymentRequest("bitcoin://abcdefg?amount=0.1&label=Label")
+      expect(result.amount).toBe 10000000
+      expect(result.address).toBe "abcdefg"
+      expect(result.label).toBe "Label"
+    )
+
+    it "should extract message", inject((Wallet) ->
+      result = Wallet.parsePaymentRequest("bitcoin://abcdefg?amount=0.1&message=take_my_bitcoins")
+      expect(result.amount).toBe 10000000
+      expect(result.address).toBe "abcdefg"
+      expect(result.message).toBe "take_my_bitcoins"
+    )
