@@ -44,8 +44,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       type: "!External"
     if !accounts
       filter.type = 'Imported'
-    if $scope.numberOfActiveAccountsAndLegacyAddresses() == 1
-      filter.multiAccount = false
     return filter
 
   $scope.hasZeroBalance = (origin) ->
@@ -261,7 +259,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         for account in $scope.accounts
           item = angular.copy(account)
           item.type = "Accounts"
-          item.multiAccount = if item.index == 0 then false else true
           unless item.index? && !item.active
             if item.index == defaultAccountIndex
               $scope.transaction.from = item
@@ -272,7 +269,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
           if address.active
             item = angular.copy(address)
             item.type = "Imported Addresses"
-            item.multiAccount = false
             $scope.destinationsBase.push item
             unless address.isWatchOnlyLegacyAddress
               $scope.origins.push angular.copy(item)

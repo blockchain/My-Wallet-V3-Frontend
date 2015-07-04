@@ -20,7 +20,7 @@
               fiat-or-btc(btc="account.balance")
       li.action-bar(ng-show="selectedAccountIndex != 'imported' && showOrHide()")
         a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
-    li.header(ng-show="settings.multiAccount && numberOfActiveLegacyAddresses() > 0", ng-class="{current:selectedAccountIndex == 'imported'}")
+    li.header(ng-show="numberOfActiveLegacyAddresses() > 0" ng-class="{current:selectedAccountIndex == 'imported'}")
       a(ui-sref="wallet.common.transactions({accountIndex:'imported'})")
         i.ti-agenda
         span(translate="IMPORTED_ADDRESSES")
