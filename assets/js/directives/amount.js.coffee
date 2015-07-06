@@ -12,5 +12,7 @@ walletApp.directive('amount', (Wallet) ->
       scope.isBitCurrency = Wallet.isBitCurrency
       scope.toggle = Wallet.toggleDisplayCurrency
 
+      scope.absolute = (value) -> Math.abs(value)
+
   }
 )
