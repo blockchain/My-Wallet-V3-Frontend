@@ -46,8 +46,8 @@ describe 'bcAsyncInput Directive', ->
     it 'should have access to the model value', ->
       expect(isoScope.form.newValue).toBe('oldValue')
 
-    it 'should not have securityCenter be true', ->
-      expect(isoScope.securityCenter).toBe(false)
+    it 'should have buttonClass', ->
+      expect(isoScope.buttonClass).toBe('button-primary btn-small')
 
     it 'should not have inline attribute defined', ->
       expect(isoScope.inline).toBeUndefined()
@@ -57,9 +57,9 @@ describe 'bcAsyncInput Directive', ->
 
   describe 'inline attributes', ->
 
-    it 'should get passed securityCenter', ->
-      isoScope = compileElement(['security-center'])
-      expect(isoScope.securityCenter).toBe(true)
+    it 'should get passed buttonClass', ->
+      isoScope = compileElement(['button-class="button-success button-lg"'])
+      expect(isoScope.buttonClass).toBe('button-success button-lg')
 
     it 'should get passed inline attribute', ->
       isoScope = compileElement(['inline'])
