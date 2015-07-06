@@ -683,11 +683,13 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     return defer.promise
 
-  wallet.getMnemonic = (successCallback, errorCallback) ->
+  wallet.getMnemonic = (successCallback, errorCallback, cancelCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->
-      cancelCallback = () ->
+      cancel = () ->
+        if cancelCallback?
+          cancelCallback()
 
-      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
+      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancel
 
     success = (mnemonic, passphrase) ->
       successCallback(mnemonic, passphrase)
