@@ -3,6 +3,7 @@ walletApp.directive('singleClickSelect', ($window) ->
     restrict: "A"
     link: (scope, elem, attrs) ->
       scope.highlighted = false
+      scope.validBrowser = (browserDetection().browser == "chrome" && browserDetection().version > 42) || (browserDetection().browser == "firefox" && browserDetection().version > 40) || (browserDetection().browser == "ie" && browserDetection().version > 10)
 
       scope.select = () ->
         text = elem[0]
@@ -17,6 +18,9 @@ walletApp.directive('singleClickSelect', ($window) ->
 
         unless $window.getSelection().toString() == ''
           scope.highlighted = true
+
+        if scope.validBrowser
+          document.execCommand('copy')
 
       elem.bind('click', ->
         scope.select()
