@@ -2,12 +2,12 @@
   h3(translate="IMPORT_BITCOIN_ADDRESS")
 .modal-body
   div(ng-show="step==1")
-    p(translate="IMPORT_BITCOIN_ADDRESS_EXPLAIN")
     form(role="form" name="importForm" novalidate)
+      p(translate="IMPORT_BITCOIN_ADDRESS_EXPLAIN")
       .form-group(ng-class="{'has-error': importForm.$invalid }")
         label.control-label(for="address")
           span(translate="INPUT_NOT_RECOGNIZED" ng-show="importForm.privateKey.$error.isValid")
-          span(ng-show="errors.addressPresentInWallet")
+          span(ng-show="importForm.privateKey.$error.present")
             span(translate="ALREADY_IN_WALLET")
             |: 
             b {{ address.address }}
@@ -17,22 +17,24 @@
           ng-disabled="BIP38"
           name="privateKey"
           is-valid="isValidAddressOrPrivateKey(fields.addressOrPrivateKey)"
+          ng-change="importForm.privateKey.$setValidity('present', true)"
           required
           autofocus
         )
-      .form-group(ng-class="{'has-error': importForm.bipPassphrase.$invalid}" ng-show="BIP38")
+      .form-group(ng-class="{'has-error': importForm.bipPassphrase.$invalid && importForm.bipPassphrase.$dirty}" ng-show="BIP38")
         label.control-label Password for private key
         input.form-control(
           type="password"
           name="bipPassphrase"
           ng-model="fields.bip38passphrase"
-          ng-model-options="{ debounce: 100 }"
-          is-valid-async="verifyBIP38Passphrase"
+          ng-required="BIP38"
+          ng-change="importForm.bipPassphrase.$setValidity('wrong', true)"
         )
-        span.help-block(translate="INCORRECT_PASSWORD" ng-show="importForm.bipPassphrase.$invalid")
-      .pal.flex-center.flex-column(ng-hide="!cameraIsOn")
+        div(ng-show="importForm.bipPassphrase.$dirty")
+          span.help-block(translate="INCORRECT_PASSWORD" ng-show="importForm.bipPassphrase.$error.wrong")
+      .pal.flex-center.flex-column(ng-hide="!status.cameraIsOn")
         label(translate="SCAN_QR_CODE")
-        bc-qr-reader(active="cameraRequested" on-result="processURLfromQR" on-error="onError" camera-status="cameraIsOn")
+        bc-qr-reader(active="cameraRequested" on-result="processURLfromQR" on-error="onError" camera-status="status.cameraIsOn")
 
   div(ng-show="step==2")
     p(translate="PRIVATE_KEY_VALID", ng-hide="address.isWatchOnlyLegacyAddress")
@@ -74,8 +76,8 @@
             fiat(btc="address.balance")
 
 .modal-footer.pal.flex-end
-  button.btn.btn-info(ng-click="cameraOn()", ng-show="step == 1", ng-if="browserWithCamera", translate="QR")
-  button.btn.btn-primary(ui-ladda="{{ status.busy }}" ng-show="step == 1" ng-click="attemptImport()" ng-disabled="importForm.$invalid" ladda-translate="VALIDATE" data-style="expand-left")
+  button.btn.btn-info(ng-click="cameraOn()" ng-show="step == 1" ng-disabled="status.busy" ng-if="browserWithCamera" translate="QR")
+  button.btn.btn-primary(ui-ladda="{{ status.busy }}" ng-show="step == 1" ng-click="import()" ng-disabled="importForm.$invalid && !importForm.bipPassphrase.$error.wrong" ladda-translate="VALIDATE" data-style="expand-left")
   button.btn.btn-info(ng-show="step == 2", ng-click="close()", translate="CLOSE")
-  button.btn.btn-primary(ng-show="step == 2 && !address.isWatchOnlyLegacyAddress && address.balance > 0 && isValid()", ng-click="goToTransfer()", translate="TRANSFER")
-  button.btn.btn-primary(ng-show="step == 3", ui-ladda="{{ sweeping }}", ng-click="transfer()", data-style="expand-left", ladda-translate="CONTINUE")
+  button.btn.btn-primary(ng-show="step == 2 && !address.isWatchOnlyLegacyAddress && address.balance > 0" ng-click="goToTransfer()" translate="TRANSFER")
+  button.btn.btn-primary(ng-show="step == 3", ui-ladda="{{ status.sweeping }}", ng-click="transfer()", data-style="expand-left", ladda-translate="CONTINUE")

@@ -2,22 +2,22 @@ walletApp.controller "AddressImportCtrl", ($scope, $log, Wallet, $modalInstance,
 
   $scope.settings = Wallet.settings
   $scope.accounts = Wallet.accounts
+  $scope.address = null
+
   $scope.step = 1
   $scope.BIP38 = false
-  $scope.sweeping = false
-  $scope.cameraIsOn = false
 
   $scope.verifyBIP38Passphrase = undefined
 
   $scope.status =
     busy: false
+    sweeping: false
+    cameraIsOn: false
 
   $scope.fields =
     addressOrPrivateKey: ''
     bip38passphrase: ''
     account: null
-
-  $scope.address = null
 
   $scope.$watchCollection "accounts", (newValue) ->
     $scope.fields.account = Wallet.accounts[0]
@@ -27,8 +27,26 @@ walletApp.controller "AddressImportCtrl", ($scope, $log, Wallet, $modalInstance,
 
   # Import address or private key
 
-  $scope.attemptImport = () ->
+  $scope.import = () ->
     $scope.status.busy = true
+
+    if $scope.BIP38
+      correct = () ->
+        $scope.status.busy = false
+        $scope.step = 2
+
+      wrong = () ->
+        $scope.status.busy = false
+        $scope.importForm.bipPassphrase.$setValidity('wrong', false)
+
+      $timeout (->
+        $scope.verifyBIP38Passphrase($scope.fields.bip38passphrase, correct, wrong)
+      ), 100
+
+    else
+      $scope.attemptImport()
+
+  $scope.attemptImport = () ->
     addressOrPrivateKey = $scope.fields.addressOrPrivateKey.trim()
 
     needsBip38 = (callback) ->
@@ -42,6 +60,8 @@ walletApp.controller "AddressImportCtrl", ($scope, $log, Wallet, $modalInstance,
       $scope.step = 2
 
     error = (err, address=null) ->
+      if err? && err.addressPresentInWallet
+        $scope.importForm.privateKey.$setValidity('present', false)
       $scope.status.busy = false
       $scope.address = address
 
@@ -50,15 +70,15 @@ walletApp.controller "AddressImportCtrl", ($scope, $log, Wallet, $modalInstance,
   # Transfer funds
 
   $scope.transfer = () ->
-    $scope.sweeping = true
+    $scope.status.sweeping = true
 
     success = () ->
-      $scope.sweeping = false
+      $scope.status.sweeping = false
       $modalInstance.dismiss ""
       $state.go("wallet.common.transactions", {accountIndex: $scope.fields.account.index})
 
     error = (error) ->
-      $scope.sweeping = false
+      $scope.status.sweeping = false
       Wallet.displayError(error)
 
     Wallet.transaction(success, error).sweep($scope.address, $scope.fields.account.index)
@@ -68,11 +88,16 @@ walletApp.controller "AddressImportCtrl", ($scope, $log, Wallet, $modalInstance,
   $scope.goToTransfer = () ->
     $scope.step = 3
 
+  $scope.onError = (error) ->
+    # This never gets called...
+    $translate("CAMERA_PERMISSION_DENIED").then (translation) ->
+      Wallet.displayWarning(translation)
+
   $scope.cameraOn = () ->
     $scope.cameraRequested = true
 
   $scope.cameraOff = () ->
-    $scope.cameraIsOn = false
+    $scope.status.cameraIsOn = false
     $scope.cameraRequested = false
 
   $scope.processURLfromQR = (url) ->
