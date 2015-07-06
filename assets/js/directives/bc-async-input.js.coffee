@@ -13,6 +13,7 @@ walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
       type: '@'
       errorMessage: '='
       buttonClass: '@'
+      maxLength: '@'
     }
     transclude: true
     templateUrl: (elem, attrs) ->
