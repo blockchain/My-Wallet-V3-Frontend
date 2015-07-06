@@ -115,15 +115,6 @@ describe 'bcAsyncInput Directive', ->
       isoScope.bcAsyncForm.input.$setViewValue('test@test.')
       expect(isoScope.bcAsyncForm.$valid).toBe(false)
 
-  describe 'noChange', ->
-
-    beforeEach ->
-      isoScope = compileElement()
-
-    it 'should return false if the view is an empty string', ->
-      isoScope.bcAsyncForm.input.$setViewValue('')
-      expect(isoScope.noChange()).toBe(false)
-
     it 'should return true if the view is equal to the model', ->
       isoScope.bcAsyncForm.input.$setViewValue('oldValue')
-      expect(isoScope.noChange()).toBe(true)
+      expect(isoScope.bcAsyncForm.$valid).toBe(false)
