@@ -13,6 +13,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.cameraIsOn = false
 
   $scope.sending = false # Sending in progress
+  $scope.amountIsValid = true
 
   $scope.alerts = Wallet.alerts
 
@@ -22,40 +23,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.btcCurrency = Wallet.settings.btcCurrency
 
   $scope.isBitCurrency = Wallet.isBitCurrency
-
-  $scope.convertToFiat = (amount) ->
-    Wallet.convertCurrency(amount, Wallet.settings.btcCurrency, Wallet.settings.currency)
-
-  $scope.determineLabel = (origin) ->
-    label = origin.label || origin.address
-    return label
-
-  $scope.maxAndLabelForSelect = (select) ->
-    return "" unless select?
-    return "" unless select.selected?
-
-    $scope.maxAndLabel(select.selected)
-
-  $scope.maxAndLabel = (origin) ->
-
-    return unless Wallet.settings.btcCurrency?
-
-    label = $scope.determineLabel(origin)
-    code = $scope.settings.displayCurrency.code
-
-    if origin.balance == undefined
-      return label
-
-    fees = Wallet.recommendedTransactionFee(origin, origin.balance)
-
-    max_btc = numeral(origin.balance - fees).divide(Wallet.settings.btcCurrency.conversion)
-
-    max_btc = numeral(0) if max_btc < 0
-
-    if $scope.isBitCurrency($scope.settings.displayCurrency)
-      return label + " (" + max_btc.format("0.[00000000]") + " " + code + ")"
-    else
-      return label + " (" + $scope.convertToFiat(max_btc) + " " + code + ")"
 
   $scope.transactionTemplate = {
     from: null,
@@ -68,13 +35,15 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.transaction = angular.copy($scope.transactionTemplate)
 
+  $scope.determineLabel = (origin) ->
+    origin.label || origin.address
+
   $scope.getFilter = (search, accounts=true) ->
     filter =
       label: search
+      type: "!External"
     if !accounts
-      filter.type = '!Account'
-    if $scope.numberOfActiveAccountsAndLegacyAddresses() == 1
-      filter.multiAccount = false
+      filter.type = 'Imported'
     return filter
 
   $scope.hasZeroBalance = (origin) ->
@@ -87,15 +56,16 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
 # TODO: what is supposed to do that with multiple accounts
   $scope.applyPaymentRequest = (paymentRequest, i) ->
-    destination = {address: "", label: "", type: "External"}
-    destination.address = paymentRequest.address
-    destination.label = paymentRequest.address
+    destination =
+      address: paymentRequest.address || ""
+      label: paymentRequest.address || ""
+      type: "External"
 
     $scope.transaction.destinations[i] = destination
+    $scope.transaction.amounts[i] = paymentRequest.amount || 0
+    $scope.transaction.note = paymentRequest.message || ''
 
-    if paymentRequest.amount && paymentRequest.currency == 'BTC'
-      $scope.transaction.amounts[i] = Wallet.convertToSatoshi(paymentRequest.amount, Wallet.btcCurrencies[0])
-
+    $scope.validateAmounts()
     $scope.updateToLabel()
 
   $scope.processURLfromQR = (url) ->
@@ -126,6 +96,11 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.resetSendForm = () ->
     $scope.transaction = angular.copy($scope.transactionTemplate)
+    $scope.transaction.from = Wallet.accounts[Wallet.getDefaultAccountIndex()]
+    tmp = angular.copy($scope.destinations[0])
+    $scope.removeDestination(0)
+    $scope.destinations.push(tmp)
+    $timeout (-> $scope.addDestination()), 0
 
   $scope.addDestination = () ->
     originalDestinations = angular.copy($scope.destinations[0])
@@ -251,15 +226,28 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     transactionTotal = $scope.getTransactionTotal(true)
     $scope.amountIsValid = available - transactionTotal >= 0
 
+  $scope.checkForSameDestination = () ->
+    transaction = $scope.transaction
+    transaction.destinations.forEach (dest, index) ->
+      match = false
+      $timeout (-> $scope.checkForSameDestination()), 0 unless dest?
+      match = dest.label == transaction.from.label if dest?
+      return unless $scope.sendForm?
+      $scope.sendForm['destinations' + index].$setValidity('isNotEqual', !match)
+
   #################################
   #           Private             #
   #################################
 
   $scope.$watch "transaction.destinations", (destinations) ->
     destinations.forEach (dest, index) ->
-      return unless dest? && dest.address?
-      valid = Wallet.isValidAddress(dest.address)
-      $scope.sendForm['destinations' + index].$setValidity('isValidAddress', valid)
+      return unless dest?
+      if dest.type == 'Accounts'
+        $scope.sendForm['destinations' + index].$setValidity('isValidAddress', true)
+      else
+        valid = Wallet.isValidAddress(dest.address)
+        $scope.sendForm['destinations' + index].$setValidity('isValidAddress', valid)
+      $scope.updateToLabel()
   , true
 
   $scope.$watch "status.didLoadBalances + status.legacyAddressBalancesLoaded", ->
@@ -271,7 +259,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         for account in $scope.accounts
           item = angular.copy(account)
           item.type = "Accounts"
-          item.multiAccount = if item.index == 0 then false else true
           unless item.index? && !item.active
             if item.index == defaultAccountIndex
               $scope.transaction.from = item
@@ -282,7 +269,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
           if address.active
             item = angular.copy(address)
             item.type = "Imported Addresses"
-            item.multiAccount = false
             $scope.destinationsBase.push item
             unless address.isWatchOnlyLegacyAddress
               $scope.origins.push angular.copy(item)

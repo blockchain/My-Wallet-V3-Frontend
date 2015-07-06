@@ -38,10 +38,18 @@ walletApp.controller "ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalI
       Wallet.confirmRecoveryPhrase()
       $scope.step = 3
 
-  Wallet.getMnemonic (mnemonic) ->
+  success = (mnemonic) ->
     $scope.recoveryPhrase = mnemonic
     $scope.setRandomWords(mnemonic)
-  , (error) ->
+    
+  error = (error) ->
     $translate(error).then (translation) ->
       Wallet.displayError(translation)
-    $scope.close()
+    $modalInstance.dismiss ""
+    
+  cancel = () ->
+    $modalInstance.dismiss ""
+
+  Wallet.getMnemonic(success, error, cancel)
+  
+    

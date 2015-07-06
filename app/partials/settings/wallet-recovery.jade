@@ -29,7 +29,7 @@ form.form-horizontal(role="form" name="recoveryForm" novalidate)
             span(translate="RECOVERY_PHRASE")
             |:
           input.form-control(type="text" ng-model="mnemonic" name="mnemonic" ng-focus="errors.mnemonic = null" ng-disabled="importing" is-valid="isValidMnemonic(mnemonic)" autofocus required)
-          span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="recoveryForm.mnemonic.$invalid && recoveryForm.mnemonic.$touched")
+          span.help-block(translate="INVALID_RECOVERY" ng-show="recoveryForm.mnemonic.$invalid && recoveryForm.mnemonic.$touched")
         .mbs
           label
             span(translate="OPTIONAL_PASSPHRASE")

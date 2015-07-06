@@ -331,6 +331,9 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.getFiatAtTime = (time, value, currencyCode, successCallback, errorCallback) ->
     successCallback(3.2)
     
+  myWallet.validateSecondPassword = (candidate) ->
+    candidate != "wrong"
+    
   ############################################################
   # Simulate spontanuous behavior when using mock in browser #
   ############################################################

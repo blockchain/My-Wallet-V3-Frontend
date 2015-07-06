@@ -1,24 +1,27 @@
-.edit-mobile(ng-class="{'flex offset-flag': fullWidth}")
-  input.form-control(
-    on-enter="changeMobile()" 
-    type="text" international-phone-number 
-    ng-model="fields.newMobile" 
-    default-country="{{ mobileDefaultCountry }}" 
-    preferred-countries="us,ca,gb,au" 
-    skip-util-script-download auto-placeholder="false" 
-    ng-disabled="status.busy"
-  )
-  br(ng-if="!fullWidth")
-  div(ng-class="{'flex-1': fullWidth, 'mll': fullWidth}")
-    button(
-      ng-class="buttonLg ? 'button-success button-lg' : 'button-primary'" 
-      ui-ladda="{{ status.busy }}" ng-click="changeMobile()" 
-      ng-disabled="!validateMobileNumber()" 
-      ladda-translate="SAVE" 
-      data-style="expand-left"
+.edit-mobile(ng-class="{'offset-flag': fullWidth}")
+  form(ng-class="{'width-100 flex' : fullWidth}" role="form" name="mobileForm" ng-submit="changeMobile()")
+    input.form-control(
+      type="text" international-phone-number 
+      ng-model="fields.newMobile" 
+      default-country="{{ mobileDefaultCountry }}" 
+      preferred-countries="us,ca,gb,au" 
+      skip-util-script-download auto-placeholder="false" 
+      ng-disabled="status.busy"
+      ng-class"{'prl' : fullWidth}"
     )
-    button.button-muted.btn-small(
-      ng-if="!fullWidth" 
-      ng-click="cancel()" 
-      translate="CANCEL"
-    )
+    br(ng-if="!fullWidth")
+    div(ng-class="{'flex-1': fullWidth, 'mll': fullWidth}")
+      button(
+        type="submit"
+        ng-class="buttonLg ? 'button-success button-lg' : 'button-primary'" 
+        ui-ladda="{{ status.busy }}"
+        ng-disabled="!validateMobileNumber()" 
+        ladda-translate="SAVE" 
+        data-style="expand-left"
+      )
+      button.button-muted.btn-small(
+        type="button"
+        ng-if="!fullWidth" 
+        ng-click="cancel()" 
+        translate="CANCEL"
+      )

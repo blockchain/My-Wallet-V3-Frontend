@@ -188,3 +188,10 @@ padding-left: 15px;
     max-width: 300px;
   }
 }
+
+//override pre from bootstrap
+pre {
+  word-break: normal;
+  word-wrap: normal;
+  white-space: pre-line;
+}
