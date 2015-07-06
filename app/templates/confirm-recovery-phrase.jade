@@ -1,4 +1,4 @@
 div.mbl
   //-h2.status.incomplete(ng-hide="status.didConfirmRecoveryPhrase ", translate="UNCONFIRMED")
   //-h2.status.complete(ng-show="status.didConfirmRecoveryPhrase ", translate="CONFIRMED")
-  button(ng-click="confirmRecoveryPhrase()" translate="CONFIRM_RECOVERY_PHRASE" ng-hide="status.didConfirmRecoveryPhrase " ng-class="buttonClass")
+  button(type="button" ng-click="confirmRecoveryPhrase()" translate="CONFIRM_RECOVERY_PHRASE" ng-hide="status.didConfirmRecoveryPhrase " ng-class="buttonClass")
