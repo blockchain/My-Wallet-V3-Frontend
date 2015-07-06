@@ -23,6 +23,9 @@ describe "Click to highlight directive", ->
   it "will initially not be highlighted", ->
     expect($scope.highlighted).toBe(false)
 
+  it "will check a browser version", ->
+    expect($scope.validBrowser).toBeDefined()
+
   it "can fire the select function", ->
     spyOn($scope, "select").and.callThrough()
     $scope.select()
