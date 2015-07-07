@@ -168,10 +168,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     betaCheckFinished = () ->
       $window.root = "https://blockchain.info/"
-      wallet.my.fetchWalletJson(
+      wallet.my.login(
         uid,
-        null,       # shared_key
-        null,       # resend_code
         password,
         two_factor_code,
         didLogin,
@@ -860,21 +858,22 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     # Assuming accounts are never deleted.
 
     numberOfOldAccounts = wallet.accounts.length
-    numberOfNewAccounts = wallet.my.getAccountsCount()
 
-    defaultAccountIndex = wallet.store.getDefaultAccountIndex()
+    if wallet.my.wallet.hdwallet
+      numberOfNewAccounts = wallet.my.wallet.hdwallet.accounts.length
+      defaultAccountIndex = wallet.my.wallet.hdwallet.defaultAccountIndex
 
-    if numberOfNewAccounts > 0
-      for i in [0..(numberOfNewAccounts - 1)]
-        if i >= numberOfOldAccounts
-          wallet.accounts.push {legacy: false, index: i}
+      if numberOfNewAccounts > 0
+        for i in [0..(numberOfNewAccounts - 1)]
+          if i >= numberOfOldAccounts
+            wallet.accounts.push {legacy: false, index: i}
 
-        # Set or update label and balance:
-        wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
-        wallet.accounts[i].active = !wallet.my.isArchivedForAccount(i)
-        if wallet.accounts[i].active
-          wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
-          wallet.accounts[i].isDefault = !(defaultAccountIndex < i or defaultAccountIndex > i)
+          # Set or update label and balance:
+          wallet.accounts[i].label = wallet.my.wallet.hdwallet.accounts[i].label
+          wallet.accounts[i].active = !wallet.my.wallet.hdwallet.accounts[i].archived
+          if wallet.accounts[i].active
+            wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
+            wallet.accounts[i].isDefault = !(defaultAccountIndex < i or defaultAccountIndex > i)
 
     wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts.some((a)->a.active and a.balance)
 
