@@ -296,10 +296,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.my.createAccount(name, needsSecondPasswordCallback, success, error)
 
   wallet.renameAccount = (account, name, successCallback, errorCallback) ->
-    if wallet.my.setLabelForAccount(account.index, name)
+    try
       account.label = name
       successCallback()
-    else
+    catch
       wallet.displayError("Failed to rename account")
       errorCallback()
 
@@ -451,17 +451,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   #   Transactions   #
   ####################
 
-  wallet.recommendedTransactionFee = (origin, amount) ->
-    # amount in Satoshi
-    if !origin?
-      return null
-
-    if origin.address?
-      return wallet.my.recommendedTransactionFeeForAddress(origin.address, amount)
-    else if origin.index?
-      return wallet.my.recommendedTransactionFeeForAccount(origin.index, amount)
-    else
-      return null
+  # amount in Satoshi (we must compute the fee using the tx, not the amount and origin)
+  wallet.recommendedTransactionFee = (origin, amount) -> wallet.my.getBaseFee()
 
   #############
   # Spend BTC #
@@ -1349,7 +1340,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return wallet.store.getTotalBalanceForActiveLegacyAddresses()
 
   wallet.setDefaultAccount = (account) ->
-    wallet.store.changeDefaultAccountIndex(account.index)
+    wallet.my.wallet.hdwallet.defaultAccountIndex = account.index
 
   wallet.isValidBIP39Mnemonic = (mnemonic) ->
     wallet.my.isValidateBIP39Mnemonic(mnemonic)
