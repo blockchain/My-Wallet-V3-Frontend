@@ -697,6 +697,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     return defer.promise
 
+  wallet.getAddressBookLabel = (address) ->
+    wallet.my.wallet.getAddressBookLabel(address)
+
   wallet.getMnemonic = (successCallback, errorCallback, cancelCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->
       cancel = () ->
@@ -732,7 +735,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     ), 100)
 
   wallet.getDefaultAccountIndex = () ->
-    wallet.store.getDefaultAccountIndex()
+    wallet.my.wallet.hdwallet.defaultAccountIndex
 
   wallet.getReceivingAddressForAccount = (idx) ->
     wallet.my.getReceivingAddressForAccount(idx)
