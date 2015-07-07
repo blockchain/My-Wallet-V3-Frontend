@@ -63,8 +63,6 @@ walletApp.controller "SettingsWalletNavigationCtrl", ($scope, Wallet, $modal, fi
       modalInstance.opened.then () ->
         Wallet.store.resetLogoutTimeout()
 
-  $scope.archive = (account) ->
-    Wallet.archive(account)
-
-  $scope.unarchive = (account) ->
-    Wallet.unarchive(account)
+  $scope.archive = (account) -> Wallet.archive(account)
+  $scope.unarchive = (account) -> Wallet.unarchive(account)
+  $scope.isDefault = (account) -> Wallet.isDefaultAccount(account)

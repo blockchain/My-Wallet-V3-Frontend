@@ -20,7 +20,7 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
   $scope.fields = {to: null, amount: "0", currency: Wallet.settings.currency, label: ""}
 
   for account in $scope.accounts
-    item = angular.copy(account)
+    item = account
     item.type = "Accounts"
 
     unless item.index? && !item.active
@@ -31,9 +31,9 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
 
   for address in $scope.legacyAddresses
     if address.active
-      item = angular.copy(address)
+      item = address
       item.type = "Imported Addresses"
-      $scope.destinations.push item    
+      $scope.destinations.push item
 
   $scope.determineLabel = (origin) ->
     label = origin.label || origin.address

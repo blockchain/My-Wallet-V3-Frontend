@@ -729,7 +729,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.my.wallet.hdwallet.defaultAccountIndex
 
   wallet.getReceivingAddressForAccount = (idx) ->
-    wallet.my.getReceivingAddressForAccount(idx)
+    wallet.my.wallet.hdwallet.accounts[idx].receiveAddress
 
   ###################
   # URL: bitcoin:// #
@@ -820,27 +820,26 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return wallet.my.isValidAddress(address)
 
   wallet.archive = (address_or_account) ->
-    if address_or_account.address?
-      wallet.store.archiveLegacyAddr(address_or_account.address)
-    else
-      wallet.my.archiveAccount(address_or_account.index)
-
-    address_or_account.active = false
+    address_or_account.archived = true
+    return
 
   wallet.unarchive = (address_or_account) ->
-    success = (txs) ->
-      address_or_account.active = true
-
-      if txs?
-        wallet.appendTransactions(txs, false) # Re-insert tx with latest account info
-
-      wallet.applyIfNeeded() # Unarchive involves an async operation
-
-    if address_or_account.address?
-      wallet.store.unArchiveLegacyAddr(address_or_account.address)
-      success()
-    else
-      wallet.my.unarchiveAccount(address_or_account.index, success)
+    address_or_account.archived = false
+    # TODO :: REVIEW unarchiving process
+    # success = (txs) ->
+    #   address_or_account.active = true
+    #
+    #   if txs?
+    #     wallet.appendTransactions(txs, false) # Re-insert tx with latest account info
+    #
+    #   wallet.applyIfNeeded() # Unarchive involves an async operation
+    #
+    # if address_or_account.address?
+    #   wallet.store.unArchiveLegacyAddr(address_or_account.address)
+    #   success()
+    # else
+    #   wallet.my.unarchiveAccount(address_or_account.index, success)
+    return
 
 
   wallet.deleteLegacyAddress = (address) ->
@@ -1341,6 +1340,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.setDefaultAccount = (account) ->
     wallet.my.wallet.hdwallet.defaultAccountIndex = account.index
+
+  wallet.isDefaultAccount = (account) ->
+    wallet.my.wallet.hdwallet.defaultAccountIndex == account.index
 
   wallet.isValidBIP39Mnemonic = (mnemonic) ->
     wallet.my.isValidateBIP39Mnemonic(mnemonic)

@@ -15,7 +15,7 @@ h5.well.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
           div.col-xs-6
             h2
               span(ng-bind-html="account.label | highlight:searchText")
-              span.label.label-primary(translate="DEFAULT", ng-show="account.isDefault")
+              span.label.label-primary(translate="DEFAULT", ng-show="isDefault(account)")
           div.col-xs-6.balance
             h3.btc(ng-show="account.balance != null") {{ account.balance | toBitCurrency:settings.btcCurrency }}
             h3.fiat(btc="account.balance", ng-show="account.balance != null")
@@ -24,11 +24,11 @@ h5.well.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
           li
             a(translate="RENAME",          ng-click="editAccount(account)")
           li
-            a(translate="MAKE_DEFAULT", ng-hide="account.isDefault", ng-click="makeDefault(account)")            
+            a(translate="MAKE_DEFAULT", ng-hide="isDefault(account)", ng-click="makeDefault(account)")            
           li
             a(translate="BITCOIN_ADDRESS", ng-click="showAddress(account)")
           li
-            a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="account.isDefault")
+            a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="isDefault(account)")
 
 .mtl
   button.button-primary(translate="ARCHIVED_ACCOUNTS", ng-click="display.archived = !display.archived")
