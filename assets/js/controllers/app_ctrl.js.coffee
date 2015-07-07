@@ -140,7 +140,7 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
 
       Wallet.goal.verifyEmail = undefined
 
-  $scope.$on "requireSecondPassword", (notification, continueCallback, cancelCallback, insist) ->
+  $scope.$on "requireSecondPassword", (notification, defer, insist) ->
     modalInstance = $modal.open(
       templateUrl: "partials/second-password.jade"
       controller: "SecondPasswordCtrl"
@@ -148,10 +148,8 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
       resolve:
         insist: ->
           insist
-        continueCallback: ->
-          continueCallback
-        cancelCallback: ->
-          cancelCallback
+        defer: ->
+          defer
 
     )
 

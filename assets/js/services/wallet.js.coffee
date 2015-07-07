@@ -279,51 +279,27 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.my.createNewWallet(email, password, translation,language_code, currency_code, success, error)
 
   wallet.askForSecondPassword = (continueCallback, cancelCallback) ->
-    $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
+    defer = $q.defer()
+    if wallet.my.wallet.isDoubleEncrypted
+      $rootScope.$broadcast "requireSecondPassword", defer
+    else
+      defer.resolve()
+    return defer.promise
 
   wallet.createAccount = (name, successCallback, errorCallback) ->
-    # cancelCallback = () ->
-    # needsSecondPasswordCallback = (continueCallback) ->
-    #   cancelCallback = () ->
-    #     errorCallback()
-    #   $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
+    proceed = (password) ->
+      newAccount = wallet.my.wallet.newAccount(label, password)
+      wallet.accounts.push(newAccount)
+      wallet.my.getHistoryAndParseMultiAddressJSON()
+      successCallback && successCallback()
 
-    defer = $q.defer()
-    promise = defer.promise
-
-    promise.then(
-      success = (data) -> console.log("before: ", data),
-      error = (msg) -> console.error(msg)
-    )
-
-    # $timeout((() -> defer.resolve('All done... eventually')), 3000)
-
-    asyncPrintPassword = (getPassword) ->
-      getPassword((pw) -> defer.resolve(wallet.my.printPassword(pw)))
-
-    promise.then(
-      success = (data) -> console.log("after: ", data),
-      error = (msg) -> console.error(msg)
-    )
-
-    # success = (account) ->
-    #   wallet.accounts.push(account)
-    #   wallet.my.getHistoryAndParseMultiAddressJSON()
-    #   successCallback()
-
-    # error = () ->
-    #   errorCallback()
-
-    asyncPrintPassword wallet.askForSecondPassword
-    # wallet.my.createAccount(name, needsSecondPasswordCallback, success, error)
+    wallet.askForSecondPassword()
+      .then proceed
+      .catch errorCallback
 
   wallet.renameAccount = (account, name, successCallback, errorCallback) ->
-    try
-      account.label = name
-      successCallback()
-    catch
-      wallet.displayError("Failed to rename account")
-      errorCallback()
+    account.label = name
+    successCallback()
 
   wallet.addAddressForAccount = (account, successCallback, errorCallback) ->
     labeledReceivingAddresses = wallet.my.getLabeledReceivingAddressesForAccount(account.index)
