@@ -33,7 +33,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.accounts     = []
   wallet.legacyAddresses = []
-  wallet.addressBook  = {}
+  # wallet.addressBook  = {}
   wallet.paymentRequests = []
   wallet.alerts = []
   wallet.my = MyWallet
@@ -62,9 +62,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
       wallet.uid = uid
 
-      # todo: jaume: need to implement addressBook in mywallet
-      for address, label of wallet.store.getAddressBook()
-        wallet.addressBook[address] = label
+      # I (jaume) should use address book directly from the wallet object, not copy it
+      # for address, label of wallet.store.getAddressBook()
+      #   wallet.addressBook[address] = label
 
       # if wallet.my.wallet.isUpgradedToHD
       #   # probably not need if hdwallet_is_set
@@ -80,6 +80,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.status.didInitializeHD = true
         for account in wallet.my.wallet.hdwallet.accounts
           wallet.accounts.push(account)
+
+      for key in wallet.my.wallet.keys
+        wallet.legacyAddresses.push key
 
         # wallet.updateHDaddresses()
 
@@ -573,7 +576,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         address = $filter("getByProperty")("address", address, wallet.legacyAddresses)
         if address.isWatchOnlyLegacyAddress
           success = (address) ->
-            wallet.updateLegacyAddresses() # Probably too early
+            # wallet.updateLegacyAddresses() # Probably too early
             successCallback({address: address})
             wallet.applyIfNeeded() if bip38
 
@@ -592,7 +595,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         success = (address) ->
           addressItem = {address: address, isWatchOnlyLegacyAddress: false, active: true, legacy: true, balance: null}
           wallet.legacyAddresses.push addressItem
-          wallet.updateLegacyAddresses() # Probably too early
+          # wallet.updateLegacyAddresses() # Probably too early
           successCallback(addressItem)
           wallet.applyIfNeeded() if bip38
 
@@ -616,7 +619,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.my.addWatchOnlyLegacyAddress(address)
         addressItem = {address: address, isWatchOnlyLegacyAddress: true, active: true, legacy: true, balance: null}
         wallet.legacyAddresses.push addressItem
-        wallet.updateLegacyAddresses() # Probably too early
+        # wallet.updateLegacyAddresses() # Probably too early
         successCallback(addressItem)
         return
 
@@ -628,7 +631,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         successCallback(tx_hash) # Allow caller to set a note before refreshing transactions
 
         wallet.updateTransactions() # This is also called by on_tx, but the note might not be set yet
-        wallet.updateLegacyAddresses()
+        # wallet.updateLegacyAddresses()
         wallet.applyIfNeeded()
 
     error = (e) ->
@@ -890,56 +893,15 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
             account: account
           }
 
-  wallet.updateLegacyAddresses = () ->
-    numberOfOldAddresses = wallet.legacyAddresses.length
-    numberOfNewAddresses = wallet.store.getAllLegacyAddresses().length
-
-    if numberOfNewAddresses == 0
-      wallet.status.legacyAddressBalancesLoaded = true # No legacy addresses, so all balances are loaded
-
-    if numberOfNewAddresses > 0
-      for i in [0..(numberOfNewAddresses - 1)]
-        addressItem = undefined
-        if i >= numberOfOldAddresses
-          address = wallet.store.getAllLegacyAddresses()[i]
-          addressItem = {address: address, active: wallet.store.getLegacyActiveAddresses().indexOf(address) > -1, legacy: true}
-          wallet.legacyAddresses.push addressItem
-        else
-          addressItem = wallet.legacyAddresses[i]
-
-        # Set or update label and balance:
-        addressItem.label = wallet.store.getLegacyAddressLabel(addressItem.address)
-        unless addressItem.label?
-          addressItem.label = addressItem.address
-        addressItem.balance = wallet.store.getLegacyAddressBalance(addressItem.address)
-        addressItem.isWatchOnlyLegacyAddress = wallet.store.isWatchOnlyLegacyAddress(addressItem.address)
-
-        if addressItem.balance != null
-          wallet.status.legacyAddressBalancesLoaded = true
-
-    # Balances will be 0 until transactions have been loaded.
-    # TODO: MyWallet should let us know when all transactions are loaded; hide
-    # total until that time.
-
-
   wallet.total = (accountIndex) ->
-    return 0 # TODO : fix
-    return null if wallet.accounts == undefined || wallet.accounts.length == 0
-    if !(accountIndex?) || accountIndex == "accounts"
-      return null if wallet.accounts[0].balance == null
-      tally = 0
-      for account in wallet.accounts
-        if account.active
-          return null if account.balance == undefined || account.balance == null
-          tally = tally += account.balance
-
-      return tally
-    else if accountIndex == "imported"
-      return wallet.store.getTotalBalanceForActiveLegacyAddresses()
-    else
-      account = wallet.accounts[parseInt(accountIndex)]
-      return null if account == undefined
-      return account.balance
+    switch accountIndex
+      when "accounts", undefined, null
+        wallet.my.wallet.hdwallet.balanceActiveAccounts
+      when "imported"
+        wallet.my.wallet.balanceActiveLegacy
+      else
+        account = wallet.accounts[parseInt(accountIndex)]
+        if account == null then null else account.balance
 
   wallet.updateTransactions = () ->
     for tx in wallet.store.getAllTransactions()
@@ -948,12 +910,12 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         if candidate.hash == tx.hash
           match = true
           if !candidate.note?
-            candidate.note = wallet.store.getNote(tx.hash) # In case a note was just set
+            candidate.note = wallet.my.wallet.getNote(tx.hash) # In case a note was just set
           break
 
       if !match
         transaction = angular.copy(tx)
-        transaction.note = wallet.store.getNote(transaction.hash)
+        transaction.note = wallet.my.wallet.getNote(transaction.hash)
 
         wallet.transactions.push transaction
     wallet.status.didLoadTransactions = true
@@ -993,7 +955,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.beep()
         if wallet.transactions[numberOfTransactions - 1].result > 0 && !wallet.transactions[[numberOfTransactions - 1]].intraWallet
           wallet.displayReceivedBitcoin()
-        wallet.updateLegacyAddresses()
+        # wallet.updateLegacyAddresses()
     else if event == "error_restoring_wallet"
       # wallet.applyIfNeeded()
       return
@@ -1028,12 +990,12 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
-      wallet.updateLegacyAddresses()
+      # wallet.updateLegacyAddresses()
       wallet.status.didLoadBalances = true if wallet.my.wallet.isUpgradedToHD
       wallet.applyIfNeeded()
     else if event == "did_update_legacy_address_balance"
       console.log "did_update_legacy_address_balance"
-      wallet.updateLegacyAddresses()
+      # wallet.updateLegacyAddresses()
       wallet.applyIfNeeded()
 
     else if event == "wallet not found" # Only works in the mock atm
@@ -1175,8 +1137,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           # convert to: units of satoshi per unit of fiat
           wallet.conversions[code] = {symbol: info.symbol, conversion: parseInt(numeral(100000000).divide(numeral(info["last"])).format("1"))}
 
-        if wallet.status.isLoggedIn
-          wallet.updateLegacyAddresses()
+        # if wallet.status.isLoggedIn
+        #   wallet.updateLegacyAddresses()
         wallet.applyIfNeeded()
 
       fail = (error) ->
@@ -1426,7 +1388,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.refresh = () ->
     wallet.my.refresh()
-    wallet.updateLegacyAddresses()
+    # wallet.updateLegacyAddresses()
     wallet.updateTransactions()
 
   wallet.isMock = wallet.my.mockShouldFailToSend != undefined
