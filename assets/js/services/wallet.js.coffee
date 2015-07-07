@@ -84,7 +84,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       for key in wallet.my.wallet.keys
         wallet.legacyAddresses.push key
 
-        # wallet.updateHDaddresses()
+      wallet.updateHDaddresses()
 
       # Get email address, etc
       # console.log "Getting info..."
@@ -278,7 +278,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     $translate("FIRST_ACCOUNT_NAME").then (translation) ->
       wallet.my.createNewWallet(email, password, translation,language_code, currency_code, success, error)
 
-  wallet.askForSecondPassword = (continueCallback, cancelCallback) ->
+  wallet.askForSecondPasswordIfNeeded = (continueCallback, cancelCallback) ->
     defer = $q.defer()
     if wallet.my.wallet.isDoubleEncrypted
       $rootScope.$broadcast "requireSecondPassword", defer
@@ -293,7 +293,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.my.getHistoryAndParseMultiAddressJSON()
       successCallback && successCallback()
 
-    wallet.askForSecondPassword()
+    wallet.askForSecondPasswordIfNeeded()
       .then proceed
       .catch errorCallback
 
@@ -302,25 +302,20 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     successCallback()
 
   wallet.addAddressForAccount = (account, successCallback, errorCallback) ->
-    labeledReceivingAddresses = wallet.my.getLabeledReceivingAddressesForAccount(account.index)
-    # Add a new address rather than reuse the first one if no labeled addresses exist.
-    if labeledReceivingAddresses.length == 0
-      firstAvailableReceivingAddressIdx = wallet.my.getReceivingAddressIndexForAccount(account.index)
+    console.log account
+    console.log successCallback
+    ri = undefined
+    if account.receivingAddressesLabels.length is 0
+      ri = account.receiveIndex
+      account.setLabelForReceivingAddress(ri, "");
 
-      wallet.my.setLabelForAccountAddress(account.index, firstAvailableReceivingAddressIdx, "", (()->), (()->))
+    ri = account.receiveIndex;
+    account.setLabelForReceivingAddress(ri, "");
 
-    firstAvailableReceivingAddressIdx = wallet.my.getReceivingAddressIndexForAccount(account.index)
-
-    success = () ->
-      wallet.updateHDaddresses()
-      address = wallet.my.getLabeledReceivingAddressesForAccount(account.index).slice(-1)[0]
-      successCallback(address)
-
-    error = () ->
-      console.log "fail"
-      errorCallback()
-
-    wallet.my.setLabelForAccountAddress(account.index, firstAvailableReceivingAddressIdx, "", success, error)
+    wallet.updateHDaddresses()
+    address = account.receivingAddressesLabels.slice(-1)[0]
+    address.address = account.receiveAddressAtIndex(address.index)
+    successCallback(address)
 
   wallet.fetchMoreTransactions = (where, successCallback, errorCallback, allTransactionsLoadedCallback) ->
     success = (res) ->
@@ -345,13 +340,13 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.my.fetchMoreTransactionsForAccount(parseInt(where), success, error, allTransactionsLoaded)
 
   wallet.changeAddressLabel = (address, label, successCallback, errorCallback) ->
-    if address.account? # HD Address
-      success = () ->
-         wallet.updateHDaddresses()
-         successCallback()
+    if address.accountIndex? # HD Address
+      account = wallet.my.wallet.hdwallet.accounts[address.accountIndex]
+      account.setLabelForReceivingAddress(address.index, label);
+      wallet.updateHDaddresses()
+      successCallback()
 
-      wallet.my.setLabelForAccountAddress(address.account.index, address.index, label, success, errorCallback)
-    else # Legacy address
+    else # Legacy address (still must be rewritten)
       success = () ->
         address.label = label
         successCallback()
@@ -856,10 +851,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.updateHDaddresses = () ->
     for account in wallet.accounts
       continue if !account.active
-      labeledAddresses = wallet.my.getLabeledReceivingAddressesForAccount(account.index)
+      labeledAddresses = account.receivingAddressesLabels
 
       for address in labeledAddresses
-        address.address = wallet.my.getReceiveAddressAtIndexForAccount(account.index, address.index)
+        address.address = account.receiveAddressAtIndex(address.index);
         hdAddress = $filter("getByProperty")("address", address.address, wallet.hdAddresses)
         if hdAddress == null
           wallet.hdAddresses.push {
@@ -867,20 +862,20 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
             address: address.address
             label: address.label
             accountLabel: account.label
-            account: account
+            accountIndex: account.index
           }
         else
           hdAddress.label = address.label
 
       if labeledAddresses.length == 0
-        address = wallet.my.getReceivingAddressForAccount(account.index)
+        address = account.receiveAddress;
         if $filter("getByProperty")("address", address, wallet.hdAddresses) == null
           wallet.hdAddresses.push {
-            index: wallet.my.getReceivingAddressIndexForAccount(account.index)
+            index: account.receiveIndex
             address: address
             label: null # The last receiving address never has a label
             accountLabel: account.label
-            account: account
+            accountIndex: account.index
           }
 
   wallet.total = (accountIndex) ->
