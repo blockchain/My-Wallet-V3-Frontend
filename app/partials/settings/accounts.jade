@@ -9,7 +9,7 @@ h5.well.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
       a.btn.btn-info.btn-bci(ng-click="transfer(address)" translate="TRANSFER_BETWEEN_ACCOUNTS" ng-show="numberOfActiveAccounts() > 1") (transfer)
 .row
   .col-xs-12
-    div.account-container.clearfix(ng-repeat="account in accounts | filter:searchText | filter:{active: true}")
+    div.account-container.clearfix(ng-repeat="account in accounts | filter:searchText | filter:{archived: false}")
       header
         hgroup.clearfix
           div.col-xs-6
@@ -40,7 +40,7 @@ h5.well.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
       tr
         th(translate="ACCOUNT_NAME")
         th
-      tr(ng-repeat="account in accounts | filter:searchText | filter:{active: false}")
+      tr(ng-repeat="account in accounts | filter:searchText | filter:{archived: true}")
         td(ng-bind-html="account.label | highlight:searchText")
         td
           a(translate="UNARCHIVE",          ng-click="unarchive(account)")

@@ -57,20 +57,31 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) ->
     didLogin = () ->
       wallet.status.isLoggedIn = true
-      wallet.status.didUpgradeToHd = wallet.store.didUpgradeToHd()
-      wallet.status.didConfirmRecoveryPhrase = wallet.store.isMnemonicVerified()
+      wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD
+      wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.isMnemonicVerified
 
       wallet.uid = uid
 
+      # todo: jaume: need to implement addressBook in mywallet
       for address, label of wallet.store.getAddressBook()
         wallet.addressBook[address] = label
 
-      if wallet.store.didUpgradeToHd()
-        wallet.updateAccounts()
+      # if wallet.my.wallet.isUpgradedToHD
+      #   # probably not need if hdwallet_is_set
+      #   wallet.updateAccounts()
 
-      wallet.settings.secondPassword = wallet.store.getDoubleEncryption()
+      wallet.settings.secondPassword = wallet.store.isDoubleEncrypted
+      # todo: jaume: implement pbkdf2 iterations out of walletstore in mywallet
       wallet.settings.pbkdf2 = wallet.store.getPbkdf2Iterations()
+      # todo: jaume: implement logout time in mywallet
       wallet.settings.logoutTimeMinutes = wallet.store.getLogoutTime() / 60000
+
+      if wallet.my.wallet.isUpgradedToHD and not wallet.status.didInitializeHD
+        wallet.status.didInitializeHD = true
+        for account in wallet.my.wallet.hdwallet.accounts
+          wallet.accounts.push(account)
+
+        # wallet.updateHDaddresses()
 
       # Get email address, etc
       # console.log "Getting info..."
@@ -111,7 +122,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.settings.blockTOR = !!result.block_tor_ips
 
         # Fetch transactions:
-        if wallet.store.didUpgradeToHd()
+        if wallet.my.wallet.isUpgradedToHD
           wallet.my.getHistoryAndParseMultiAddressJSON()
 
         wallet.applyIfNeeded()
@@ -271,8 +282,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         errorCallback()
       $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
 
-    success = () ->
-      wallet.updateAccounts()
+    success = (account) ->
+      wallet.accounts.push(account)
       wallet.my.getHistoryAndParseMultiAddressJSON()
       successCallback()
 
@@ -617,7 +628,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         successCallback(tx_hash) # Allow caller to set a note before refreshing transactions
 
         wallet.updateTransactions() # This is also called by on_tx, but the note might not be set yet
-        wallet.updateAccountsAndLegacyAddresses()
+        wallet.updateLegacyAddresses()
         wallet.applyIfNeeded()
 
     error = (e) ->
@@ -663,7 +674,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.redeemFromEmailOrMobile = (account, claim, successCallback, error) ->
     success = () ->
-      wallet.updateAccounts()
       wallet.updateTransactions()
       successCallback()
 
@@ -709,7 +719,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.transactions.splice(0, wallet.transactions.length)
 
     success = () ->
-      wallet.updateAccounts()
       wallet.updateTransactions()
       wallet.updateHDaddresses()
 
@@ -824,7 +833,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.unarchive = (address_or_account) ->
     success = (txs) ->
       address_or_account.active = true
-      wallet.updateAccounts()
 
       if txs?
         wallet.appendTransactions(txs, false) # Re-insert tx with latest account info
@@ -848,34 +856,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   #        Private (other)         #
   ##################################
 
-  wallet.updateAccountsAndLegacyAddresses = () ->
-    if wallet.store.didUpgradeToHd()
-      wallet.updateAccounts()
-    wallet.updateLegacyAddresses()
-
-  wallet.updateAccounts = () ->
-    # Carefully update our array of accounts, so Angular watchers don't get confused.
-    # Assuming accounts are never deleted.
-
-    numberOfOldAccounts = wallet.accounts.length
-
-    if wallet.my.wallet.hdwallet
-      numberOfNewAccounts = wallet.my.wallet.hdwallet.accounts.length
-      defaultAccountIndex = wallet.my.wallet.hdwallet.defaultAccountIndex
-
-      if numberOfNewAccounts > 0
-        for i in [0..(numberOfNewAccounts - 1)]
-          if i >= numberOfOldAccounts
-            wallet.accounts.push {legacy: false, index: i}
-
-          # Set or update label and balance:
-          wallet.accounts[i].label = wallet.my.wallet.hdwallet.accounts[i].label
-          wallet.accounts[i].active = !wallet.my.wallet.hdwallet.accounts[i].archived
-          if wallet.accounts[i].active
-            wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
-            wallet.accounts[i].isDefault = !(defaultAccountIndex < i or defaultAccountIndex > i)
-
-    wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts.some((a)->a.active and a.balance)
+  # wallet.updateAccounts = () ->
+  # wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts.some((a) -> a.active and a.balance)
 
   # Update (labelled) HD addresses:
   wallet.updateHDaddresses = () ->
@@ -941,6 +923,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
 
   wallet.total = (accountIndex) ->
+    return 0 # TODO : fix
     return null if wallet.accounts == undefined || wallet.accounts.length == 0
     if !(accountIndex?) || accountIndex == "accounts"
       return null if wallet.accounts[0].balance == null
@@ -1010,7 +993,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.beep()
         if wallet.transactions[numberOfTransactions - 1].result > 0 && !wallet.transactions[[numberOfTransactions - 1]].intraWallet
           wallet.displayReceivedBitcoin()
-        wallet.updateAccountsAndLegacyAddresses()
+        wallet.updateLegacyAddresses()
     else if event == "error_restoring_wallet"
       # wallet.applyIfNeeded()
       return
@@ -1027,7 +1010,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
           success = () ->
             wallet.status.didUpgradeToHd = true
-            wallet.updateAccounts()
+            # might not be necessary (if hd-wallet-Set is called)
+            wallet.accounts = wallet.my.wallet.hdwallet.accounts
             wallet.updateHDaddresses()
             wallet.my.getHistoryAndParseMultiAddressJSON()
 
@@ -1042,16 +1026,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         , 1000
       )
 
-    else if event == "hd_wallet_set"
-      if not wallet.status.didInitializeHD
-        wallet.status.didInitializeHD = true
-        wallet.updateAccounts()
-        wallet.updateHDaddresses()
-        wallet.applyIfNeeded()
-
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
-      wallet.updateAccountsAndLegacyAddresses()
+      wallet.updateLegacyAddresses()
+      wallet.status.didLoadBalances = true if wallet.my.wallet.isUpgradedToHD
       wallet.applyIfNeeded()
     else if event == "did_update_legacy_address_balance"
       console.log "did_update_legacy_address_balance"
@@ -1198,7 +1176,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           wallet.conversions[code] = {symbol: info.symbol, conversion: parseInt(numeral(100000000).divide(numeral(info["last"])).format("1"))}
 
         if wallet.status.isLoggedIn
-          wallet.updateAccountsAndLegacyAddresses()
+          wallet.updateLegacyAddresses()
         wallet.applyIfNeeded()
 
       fail = (error) ->
@@ -1407,7 +1385,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.setDefaultAccount = (account) ->
     wallet.store.changeDefaultAccountIndex(account.index)
-    wallet.updateAccounts()
 
   wallet.isValidBIP39Mnemonic = (mnemonic) ->
     wallet.my.isValidateBIP39Mnemonic(mnemonic)
@@ -1449,7 +1426,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.refresh = () ->
     wallet.my.refresh()
-    wallet.updateAccountsAndLegacyAddresses()
+    wallet.updateLegacyAddresses()
     wallet.updateTransactions()
 
   wallet.isMock = wallet.my.mockShouldFailToSend != undefined
