@@ -278,22 +278,44 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     $translate("FIRST_ACCOUNT_NAME").then (translation) ->
       wallet.my.createNewWallet(email, password, translation,language_code, currency_code, success, error)
 
+  wallet.askForSecondPassword = (continueCallback, cancelCallback) ->
+    $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
+
   wallet.createAccount = (name, successCallback, errorCallback) ->
+    # cancelCallback = () ->
+    # needsSecondPasswordCallback = (continueCallback) ->
+    #   cancelCallback = () ->
+    #     errorCallback()
+    #   $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
 
-    needsSecondPasswordCallback = (continueCallback) ->
-      cancelCallback = () ->
-        errorCallback()
-      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
+    defer = $q.defer()
+    promise = defer.promise
 
-    success = (account) ->
-      wallet.accounts.push(account)
-      wallet.my.getHistoryAndParseMultiAddressJSON()
-      successCallback()
+    promise.then(
+      success = (data) -> console.log("before: ", data),
+      error = (msg) -> console.error(msg)
+    )
 
-    error = () ->
-      errorCallback()
+    # $timeout((() -> defer.resolve('All done... eventually')), 3000)
 
-    wallet.my.createAccount(name, needsSecondPasswordCallback, success, error)
+    asyncPrintPassword = (getPassword) ->
+      getPassword((pw) -> defer.resolve(wallet.my.printPassword(pw)))
+
+    promise.then(
+      success = (data) -> console.log("after: ", data),
+      error = (msg) -> console.error(msg)
+    )
+
+    # success = (account) ->
+    #   wallet.accounts.push(account)
+    #   wallet.my.getHistoryAndParseMultiAddressJSON()
+    #   successCallback()
+
+    # error = () ->
+    #   errorCallback()
+
+    asyncPrintPassword wallet.askForSecondPassword
+    # wallet.my.createAccount(name, needsSecondPasswordCallback, success, error)
 
   wallet.renameAccount = (account, name, successCallback, errorCallback) ->
     try
