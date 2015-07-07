@@ -46,6 +46,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.currencies = []
   wallet.btcCurrencies = [{ serverCode: 'BTC', code: 'BTC', conversion: 100000000 }, { serverCode: 'MBC', code: 'mBTC', conversion: 100000 }, { serverCode: 'UBC', code: 'bits', conversion: 100 }]
   wallet.hdAddresses = []
+  wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8'
+
+  wallet.store.setAPICode(wallet.api_code)
 
   ##################################
   #             Public             #
