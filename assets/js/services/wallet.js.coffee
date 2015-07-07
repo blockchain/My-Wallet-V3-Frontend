@@ -385,8 +385,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.store.isCorrectMainPassword(candidate)
 
   wallet.isCorrectSecondPassword = (candidate) ->
-    return true
-    # wallet.my.isCorrectSecondPassword(candidate)
+    wallet.my.wallet.validateSecondPassword(candidate)
 
   wallet.changePassword = (newPassword, successCallback, errorCallback) ->
     wallet.store.changePassword(newPassword, (()->
