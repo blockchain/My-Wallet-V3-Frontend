@@ -282,6 +282,8 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         else if paymentRequest.toAccount?
           $scope.transaction.destinations[0] = paymentRequest.toAccount
           $scope.transaction.from = paymentRequest.fromAddress
+        else if paymentRequest.fromAccount?
+          $scope.transaction.from = paymentRequest.fromAccount
 
   # Step switching
   $scope.confirmationStep = false
