@@ -341,12 +341,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.updateHDaddresses()
       successCallback()
 
-    else # Legacy address (still must be rewritten)
-      success = () ->
-        address.label = label
-        successCallback()
-
-      wallet.store.setLegacyAddressLabel(address.address, label, success, errorCallback)
+    else # Legacy address
+      address.label = label
+      successCallback()
 
   wallet.logout = () ->
     wallet.didLogoutByChoice = true
