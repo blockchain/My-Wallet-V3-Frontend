@@ -22,7 +22,7 @@ walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletSpender, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) ->
   wallet = {
     goal: {auth: false},
-    status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadTransactions: false, didLoadBalances: false, legacyAddressBalancesLoaded: false, didConfirmRecoveryPhrase: false},
+    status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadTransactions: false, didLoadBalances: false, didConfirmRecoveryPhrase: false},
     settings: {currency: null,  displayCurrency: null, language: null, btcCurrency: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null, ipWhitelist: null, apiAccess: null, restrictToWhitelist: null},
     user: {current_ip: null, email: null, mobile: null, passwordHint: ""}
   }
@@ -278,12 +278,12 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     $translate("FIRST_ACCOUNT_NAME").then (translation) ->
       wallet.my.createNewWallet(email, password, translation,language_code, currency_code, success, error)
 
-  wallet.askForSecondPasswordIfNeeded = (continueCallback, cancelCallback) ->
+  wallet.askForSecondPasswordIfNeeded = () ->
     defer = $q.defer()
     if wallet.my.wallet.isDoubleEncrypted
       $rootScope.$broadcast "requireSecondPassword", defer
     else
-      defer.resolve()
+      defer.resolve(null)
     return defer.promise
 
   wallet.createAccount = (label, successCallback, errorCallback, cancelCallback) ->
@@ -293,7 +293,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.my.getHistoryAndParseMultiAddressJSON()
       successCallback && successCallback()
 
-    console.log successCallback
     wallet.askForSecondPasswordIfNeeded()
       .then proceed
       .catch cancelCallback
@@ -609,11 +608,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return
 
   wallet.transaction = (successCallback, errorCallback) ->
+
     success = (tx_hash) ->
         successCallback(tx_hash) # Allow caller to set a note before refreshing transactions
-
         wallet.updateTransactions() # This is also called by on_tx, but the note might not be set yet
-        # wallet.updateLegacyAddresses()
         wallet.applyIfNeeded()
 
     error = (e) ->
@@ -625,37 +623,38 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         errorCallback("Unknown error")
       wallet.applyIfNeeded()
 
-    needsSecondPassword = (continueCallback) ->
-      cancelCallback = () ->
-        errorCallback()
-
-      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
+    cancelCallback = () -> errorCallback()
 
     {
-
       send: (from, destinations, amounts, fee, publicNote) ->
-
-        destinations = destinations.map (dest) ->
-          return dest.address unless dest.type == 'Accounts'
-          return wallet.getReceivingAddressForAccount(dest.index)
-
-        spender = wallet.spender(publicNote, success, error, {}, needsSecondPassword)
-
-        if from.address?
-          spendFrom = spender.fromAddress(from.address, 1000, fee)
-        else if from.index?
-          spendFrom = spender.fromAccount(from.index, 1000, fee)
-
-        spendFrom.toAddresses(destinations, amounts)
+        proceed = (password) ->
+          destinations = destinations.map (dest) ->
+            return dest.address unless dest.type == 'Accounts'
+            return wallet.my.wallet.hdwallet.accounts[dest.index].receiveAddress
+          spender = wallet.spender(publicNote, success, error, {}, password)
+          if from.address?
+            spendFrom = spender.fromAddress(from.address, 1000, fee)
+          else if from.index?
+            spendFrom = spender.fromAccount(from.index, 1000, fee)
+          spendFrom.toAddresses(destinations, amounts)
+        wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
 
       sweep: (fromAddress, toAccountIndex) ->
-        spender = wallet.spender(null, success, error, {}, needsSecondPassword)
-        spender.addressSweep(fromAddress.address).toAccount(toAccountIndex)
+        proceed = (password) ->
+          spender = wallet.spender(null, success, error, {}, password)
+          spender.addressSweep(fromAddress.address).toAccount(toAccountIndex)
+        wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
 
-      # sendToEmail: (fromAccountIndex, email, amount, currency) ->
-      #   amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
-      #   wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, success, error, {}, needsSecondPassword)
+      sendToEmail: (fromAccountIndex, email, amount, currency) ->
+        proceed = (password) ->
+          amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
+          wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, success, error, {}, needsSecondPassword)
+        wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
     }
+
+
+
+
 
   wallet.redeemFromEmailOrMobile = (account, claim, successCallback, error) ->
     success = () ->

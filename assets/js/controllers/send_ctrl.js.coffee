@@ -96,7 +96,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.resetSendForm = () ->
     $scope.transaction = angular.copy($scope.transactionTemplate)
-    $scope.transaction.from = Wallet.accounts[Wallet.getDefaultAccountIndex()]
+    $scope.transaction.from = Wallet.accounts[Wallet.my.wallet.hdwallet.defaultAccountIndex]
     tmp = angular.copy($scope.destinations[0])
     $scope.removeDestination(0)
     $scope.destinations.push(tmp)
@@ -250,16 +250,19 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       $scope.updateToLabel()
   , true
 
-  $scope.$watch "status.didLoadBalances + status.legacyAddressBalancesLoaded", ->
-    if $scope.status.didLoadBalances && $scope.status.legacyAddressBalancesLoaded
+  $scope.$watch "status.didLoadBalances", ->
+    if $scope.status.didLoadBalances
       if $scope.origins.length == 0
 
-        defaultAccountIndex = Wallet.getDefaultAccountIndex()
+        defaultAccountIndex = Wallet.my.wallet.hdwallet.defaultAccountIndex
 
         for account in $scope.accounts
-          item = angular.copy(account)
+          item = {}
           item.type = "Accounts"
-          unless item.index? && !item.active
+          item.label = account.label
+          item.index = account.index
+          item.balance = account.balance
+          unless item.index? && account.archived
             if item.index == defaultAccountIndex
               $scope.transaction.from = item
             $scope.origins.push item
@@ -267,8 +270,11 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
         for address in $scope.legacyAddresses
           if address.active
-            item = angular.copy(address)
+            item = {}
             item.type = "Imported Addresses"
+            item.label = address.label || address.addr
+            item.address = address.addr
+            item.balance = address.balance
             $scope.destinationsBase.push item
             unless address.isWatchOnlyLegacyAddress
               $scope.origins.push angular.copy(item)
