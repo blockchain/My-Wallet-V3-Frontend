@@ -6,6 +6,7 @@ walletApp.directive('completedLevel', ($translate) ->
       content: '@'
       img: '@'
       message: '@'
+      placement: '@'
     }
     templateUrl: 'templates/completed-level.jade'
     link: (scope, elem, attrs) ->
@@ -18,6 +19,7 @@ walletApp.directive('completedLevel', ($translate) ->
 
       scope.tooltip =
         templateUrl: 'templates/completed-level-tooltip.jade'
+        placement: scope.placement || 'top'
 
   }
 )

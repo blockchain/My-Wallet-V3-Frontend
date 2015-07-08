@@ -173,8 +173,10 @@ $select-fg: #686868;
 }
 .tooltip-arrow {
   border-top-color: #ccc !important;
+  border-bottom-color: #ccc !important;
 }
 .tooltip-inner {
   background: white;
   border: 1px solid #ccc;
+  padding: 1em;
 }
