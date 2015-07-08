@@ -286,24 +286,23 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       defer.resolve()
     return defer.promise
 
-  wallet.createAccount = (name, successCallback, errorCallback) ->
+  wallet.createAccount = (label, successCallback, errorCallback, cancelCallback) ->
     proceed = (password) ->
       newAccount = wallet.my.wallet.newAccount(label, password)
       wallet.accounts.push(newAccount)
       wallet.my.getHistoryAndParseMultiAddressJSON()
       successCallback && successCallback()
 
+    console.log successCallback
     wallet.askForSecondPasswordIfNeeded()
       .then proceed
-      .catch errorCallback
+      .catch cancelCallback
 
   wallet.renameAccount = (account, name, successCallback, errorCallback) ->
     account.label = name
     successCallback()
 
   wallet.addAddressForAccount = (account, successCallback, errorCallback) ->
-    console.log account
-    console.log successCallback
     ri = undefined
     if account.receivingAddressesLabels.length is 0
       ri = account.receiveIndex
@@ -1357,7 +1356,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.my.unsetSecondPassword(success, error, needsSecondPasswordCallback)
 
   wallet.validateSecondPassword = (password) ->
-    wallet.my.validateSecondPassword(password)
+    return wallet.my.wallet.validateSecondPassword(password)
 
   wallet.setSecondPassword = (password, successCallback) ->
     success = () ->

@@ -45,7 +45,10 @@ walletApp.controller "AccountFormCtrl", ($scope, Wallet, $modalInstance, $log, $
       $scope.accountForm.new.$setValidity('incorrectPassword', false)
       $scope.status.busy = false
 
-    Wallet.createAccount($scope.fields.name, success, error)
+    cancel = () ->
+      $scope.status.busy = false
+
+    Wallet.createAccount($scope.fields.name, success, error, cancel)
 
   $scope.updateAccount = () ->
     $scope.status.busy = true
