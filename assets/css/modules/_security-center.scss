@@ -148,6 +148,12 @@
   i { font-size: 2em; }
 }
 
+@media (max-width: 620px) {
+  .security-center-ui header {
+    flex-direction: column;
+  }
+}
+
 @media (max-width: 768px) {
   .security-center-ui {
     ul {
