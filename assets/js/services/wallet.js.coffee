@@ -369,7 +369,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.my.makePairingCode(success, error)
 
   wallet.confirmRecoveryPhrase = () ->
-    wallet.store.didVerifyMnemonic()
+    wallet.my.wallet.hdwallet.isMnemonicVerified = true
     wallet.status.didConfirmRecoveryPhrase = true
 
   wallet.isCorrectMainPassword = (candidate) ->
