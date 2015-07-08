@@ -24,4 +24,5 @@ describe "Completed Level directive", ->
   it "has a templateUrl", -> 
     expect(isoScope.tooltip.templateUrl).toBeTruthy()
 
-
+  it "has a placement", -> 
+    expect(isoScope.tooltip.placement).toBeTruthy()
