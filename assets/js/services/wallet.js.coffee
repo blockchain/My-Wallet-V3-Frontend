@@ -70,9 +70,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       #   # probably not need if hdwallet_is_set
       #   wallet.updateAccounts()
 
-      wallet.settings.secondPassword = wallet.store.isDoubleEncrypted
+      wallet.settings.secondPassword = wallet.my.wallet.isDoubleEncrypted
       # todo: jaume: implement pbkdf2 iterations out of walletstore in mywallet
-      wallet.settings.pbkdf2 = wallet.store.getPbkdf2Iterations()
+      wallet.settings.pbkdf2 = wallet.my.wallet.pbkdf2_iterations;
       # todo: jaume: implement logout time in mywallet
       wallet.settings.logoutTimeMinutes = wallet.store.getLogoutTime() / 60000
 
@@ -292,10 +292,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.accounts.push(newAccount)
       wallet.my.getHistoryAndParseMultiAddressJSON()
       successCallback && successCallback()
-
-    wallet.askForSecondPasswordIfNeeded()
-      .then proceed
-      .catch cancelCallback
+    wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
 
   wallet.renameAccount = (account, name, successCallback, errorCallback) ->
     account.label = name
@@ -1338,21 +1335,14 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.my.isValidateBIP39Mnemonic(mnemonic)
 
   wallet.removeSecondPassword = (successCallback, errorCallback) ->
-    needsSecondPasswordCallback = (continueCallback) ->
-      cancelCallback = () ->
-        errorCallback()
-
-      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
-
     success = () ->
       wallet.displaySuccess("Second password has been removed.")
       wallet.settings.secondPassword = false
       successCallback()
-
-    error = () ->
-      errorCallback()
-
-    wallet.my.unsetSecondPassword(success, error, needsSecondPasswordCallback)
+    error = errorCallback
+    cancel = errorCallback
+    proceed = (password) -> wallet.my.wallet.decrypt(password, success, error)
+    wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
 
   wallet.validateSecondPassword = (password) ->
     return wallet.my.wallet.validateSecondPassword(password)
