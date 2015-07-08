@@ -675,21 +675,15 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.getAddressBookLabel = (address) ->
     wallet.my.wallet.getAddressBookLabel(address)
 
-  wallet.getMnemonic = (successCallback, errorCallback, cancelCallback) ->
-    needsSecondPasswordCallback = (continueCallback) ->
-      cancel = () ->
-        if cancelCallback?
-          cancelCallback()
+  wallet.getMnemonic = (successCallback, errorCallback) ->
 
-      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancel
+    proceed = (password) ->
+      mnemonic = wallet.my.wallet.getMnemonic(password)
+      successCallback(mnemonic)
 
-    success = (mnemonic, passphrase) ->
-      successCallback(mnemonic, passphrase)
-
-    error = (err="Unable to show mnemonic.") ->
-      errorCallback(err)
-
-    wallet.my.getHDWalletPassphraseString(needsSecondPasswordCallback, success, error)
+    wallet.askForSecondPasswordIfNeeded()
+      .then proceed
+      .catch errorCallback
 
   wallet.importWithMnemonic = (mnemonic, passphrase, successCallback, errorCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->
