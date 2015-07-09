@@ -674,7 +674,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     wallet.askForSecondPasswordIfNeeded()
       .then proceed
-      .catch errorCallback
 
   wallet.importWithMnemonic = (mnemonic, passphrase, successCallback, errorCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->
