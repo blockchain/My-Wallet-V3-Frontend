@@ -61,13 +61,15 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       label: paymentRequest.address || ""
       type: "External"
 
-    $scope.transaction.destinations[i] = destination
+    # $scope.transaction.destinations[i] = destination
+    $scope.refreshDestinations(paymentRequest.address, i)
+    
     $scope.transaction.amounts[i] = paymentRequest.amount || 0
     $scope.transaction.note = paymentRequest.message || ''
 
     $scope.validateAmounts()
     $scope.updateToLabel()
-
+    
   $scope.processURLfromQR = (url) ->
     paymentRequest = Wallet.parsePaymentRequest(url)
 
@@ -81,6 +83,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       $log.error "Not a bitcoin QR code:" + url
 
   $scope.cameraOn = (index=0) ->
+    $scope.$broadcast('ResetSearch' + index)
     $scope.cameraRequested = true
     $scope.qrIndex = index
 
