@@ -69,9 +69,9 @@ button[disabled] {
 .button-muted {
   border: none;
   background: transparent;
-  color: $ccc;
+  color: $dark-grey;
   &:hover {
-    color: darken($ccc, 10%);
+    color: darken($dark-grey, 10%);
   }
 }
 .button-muted-off {
