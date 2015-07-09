@@ -20,6 +20,7 @@
 @import 'components/ribbons';
 @import 'components/bitcoin-addresses';
 @import 'components/button-groups';
+@import 'components/filter-bar';
 @import 'components/forms';
 @import 'components/helpers';
 @import 'components/modals';
@@ -159,6 +160,7 @@ padding-left: 15px;
 //TODO rip this out once we have a real dashboard
 
 .dashboard {
+  padding: 20px 30px;
   h1 {
     font-weight: 300;
     font-size: 2em;
