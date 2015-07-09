@@ -666,7 +666,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.getAddressBookLabel = (address) ->
     wallet.my.wallet.getAddressBookLabel(address)
 
-  wallet.getMnemonic = (successCallback, errorCallback) ->
+  wallet.getMnemonic = (successCallback, errorCallback, cancelCallback) ->
 
     proceed = (password) ->
       mnemonic = wallet.my.wallet.getMnemonic(password)
@@ -674,6 +674,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     wallet.askForSecondPasswordIfNeeded()
       .then proceed
+      .catch cancelCallback
 
   wallet.importWithMnemonic = (mnemonic, passphrase, successCallback, errorCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->

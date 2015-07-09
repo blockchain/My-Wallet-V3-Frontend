@@ -17,6 +17,7 @@ walletApp.controller "AccountFormCtrl", ($scope, Wallet, $modalInstance, $log, $
     $modalInstance.dismiss ""
 
   $scope.createAccount = () ->
+    console.log "Create account..."
     $scope.status.busy = true
 
     success = () ->
@@ -42,10 +43,11 @@ walletApp.controller "AccountFormCtrl", ($scope, Wallet, $modalInstance, $log, $
             Wallet.store.resetLogoutTimeout()
 
     error = () ->
-      $scope.accountForm.new.$setValidity('incorrectPassword', false)
+      console.log "Error"
       $scope.status.busy = false
 
     cancel = () ->
+      console.log "Cancel"
       $scope.status.busy = false
 
     Wallet.createAccount($scope.fields.name, success, error, cancel)
