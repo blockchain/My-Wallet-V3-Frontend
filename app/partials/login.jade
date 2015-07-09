@@ -49,7 +49,7 @@
             span.help-block {{ errors.password }}  
         .form-group(ng-show="settings.needs2FA", ng-class="{'has-error': errors.twoFactor}")
           label.control-label
-              span(translate="YUBI_CODE", ng-show="settings.twoFactorMethod == 3")
+              span(translate="YUBI_CODE", ng-show="settings.twoFactorMethod == 1")
               span(translate="EMAIL_CODE", ng-show="settings.twoFactorMethod == 2")
               span(translate="GOOGLE_AUTH_CODE", ng-show="settings.twoFactorMethod == 4")
               span(translate="SMS_CODE", ng-show="settings.twoFactorMethod == 5")
