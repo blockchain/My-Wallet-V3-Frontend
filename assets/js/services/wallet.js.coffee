@@ -58,7 +58,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     didLogin = () ->
       wallet.status.isLoggedIn = true
       wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD
-      wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.isMnemonicVerified
+      wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.hdwallet.isMnemonicVerified
 
       wallet.uid = uid
 
@@ -363,7 +363,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.my.makePairingCode(success, error)
 
   wallet.confirmRecoveryPhrase = () ->
-    wallet.my.wallet.hdwallet.isMnemonicVerified = true
+    wallet.my.wallet.hdwallet.verifyMnemonic()
     wallet.status.didConfirmRecoveryPhrase = true
 
   wallet.isCorrectMainPassword = (candidate) ->
