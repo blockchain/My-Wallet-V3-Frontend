@@ -3,12 +3,11 @@ walletApp.directive('tor', ($translate, Wallet) ->
     restrict: "E"
     replace: 'true'
     scope: {
-      buttonClass: '@'
+      _buttonClass: '@buttonClass'
     }
     templateUrl: 'templates/tor.jade'
     link: (scope, elem, attrs) ->
-      unless scope.buttonClass?
-        scope.buttonClass = 'button-primary'
+      scope.buttonClass = scope._buttonClass || 'button-primary'
 
       scope.settings = Wallet.settings
 

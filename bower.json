@@ -6,16 +6,16 @@
   "license": "",
   "private": true,
   "dependencies": {
-    "angular": "1.3.*",
-    "angular-mocks": "1.3.*",
-    "angular-animate": "1.3.*",
+    "angular": "1.4.*",
+    "angular-mocks": "1.4.*",
+    "angular-animate": "1.4.*",
     "angular-ui-router": "0.2.*",
     "jquery": "2.1.*",
     "angular-bootstrap": "0.13.*",
-    "angular-cookies": "1.3.*",
+    "angular-cookies": "1.4.*",
     "angular-audio": "1.6.*",
-    "angular-ui-select": "sjors/ui-select#reset-search-input-on-dist",
-    "angular-sanitize": "1.3.*",
+    "angular-ui-select": "0.12.*",
+    "angular-sanitize": "1.4.*",
     "angular-qr": "0.2.*",
     "angular-numeraljs": "1.1.*",
     "angular-translate": "2.6.*",
@@ -32,6 +32,6 @@
     "angular-local-storage": "~0.1.5"
   },
   "resolutions": {
-    "angular": "1.3.17"
+    "angular": "1.4.*"
   }
 }
