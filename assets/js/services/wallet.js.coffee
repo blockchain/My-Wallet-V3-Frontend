@@ -46,6 +46,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.currencies = []
   wallet.btcCurrencies = [{ serverCode: 'BTC', code: 'BTC', conversion: 100000000 }, { serverCode: 'MBC', code: 'mBTC', conversion: 100000 }, { serverCode: 'UBC', code: 'bits', conversion: 100 }]
   wallet.hdAddresses = []
+  wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8'
+
+  wallet.store.setAPICode(wallet.api_code)
 
   ##################################
   #             Public             #
@@ -67,7 +70,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
       wallet.settings.secondPassword = wallet.store.getDoubleEncryption()
       wallet.settings.pbkdf2 = wallet.store.getPbkdf2Iterations()
-      wallet.settings.multiAccount = wallet.store.getMultiAccountSetting()
       wallet.settings.logoutTimeMinutes = wallet.store.getLogoutTime() / 60000
 
       # Get email address, etc
@@ -420,7 +422,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     needsSecondPassword = (continueCallback) ->
       cancel = () ->
         cancelCallback()
-        
+
       $rootScope.$broadcast "requireSecondPassword", continueCallback, cancel
 
     success = () ->
@@ -684,11 +686,13 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     return defer.promise
 
-  wallet.getMnemonic = (successCallback, errorCallback) ->
+  wallet.getMnemonic = (successCallback, errorCallback, cancelCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->
-      cancelCallback = () ->
-        errorCallback('INCORRECT_PASSWORD')
-      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
+      cancel = () ->
+        if cancelCallback?
+          cancelCallback()
+
+      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancel
 
     success = (mnemonic, passphrase) ->
       successCallback(mnemonic, passphrase)
@@ -728,46 +732,34 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   ###################
 
   wallet.parsePaymentRequest = (url) ->
-    result = {address: null, amount: null, hasBitcoinPrefix: false, currency: null}
+    result = { address: null, amount: null, label: null, message: null }
+    result.isValid = true
 
-    if url.indexOf("bitcoin:") == 0
-       result.hasBitcoinPrefix = true
-       result.isValid = true # Optimistic...
+    if url.indexOf('bitcoin:') == 0
+      withoutPrefix = url.replace('bitcoin://', '').replace('bitcoin:', '')
+      qIndex = withoutPrefix.indexOf('?')
 
-       withoutPrefix = url.replace("bitcoin://","").replace("bitcoin:", "")
-       if withoutPrefix.indexOf("?") != -1
-         address = withoutPrefix.substr(0, withoutPrefix.indexOf("?"))
-         result.address = address
-         argumentList = withoutPrefix.replace(address + "?", "")
-         loopCount = 0
+      if qIndex != -1
+        result.address = withoutPrefix.substr(0, qIndex)
+        keys = withoutPrefix.substr(qIndex + 1).split('&')
 
-         for i in [0..argumentList.match(/&/g | []).length]
-           argument = argumentList.substr(0,argumentList.indexOf("="))
-           isLastArgument = argumentList.indexOf("&") == -1
+        keys.forEach (item) ->
+          key = item.split('=')[0]
+          value = item.split('=')[1]
 
-           value = undefined
+          if key == 'amount'
+            result.amount = wallet.convertToSatoshi(parseFloat(value), wallet.btcCurrencies[0])
+          else if result[key] != undefined
+            result[key] = value
 
-           if !isLastArgument
-             value = argumentList.substr(argument.length + 1, argumentList.indexOf("&") - argument.length - 1)
-           else
-             value = argumentList.substr(argument.length + 1, argumentList.length - argument.length - 1)
+      else
+        result.address = withoutPrefix
 
-           if argument == "amount"
-             result.amount = numeral(value).format("0.[00000000]")
-             result.currency = "BTC"
-           else
-             $log.info "Ignoring argument " + argument + " in: " + url
-             loopCount++
+    else if wallet.my.isValidAddress(url)
+      result.address = url
 
-           argumentList = argumentList.replace(argument + "=" + value + "&", "")
-
-       else
-         result.address = withoutPrefix
     else
-      # Check if it's just a bitcoin address
-      if wallet.my.isValidAddress(url)
-        result.address = url
-        result.isValid = true
+      result.isValid = false
 
     return result
 
@@ -1134,10 +1126,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   # Settings #
   ############
 
-  wallet.setMultiAccount = (flag) ->
-    wallet.store.setMultiAccountSetting(flag)
-    wallet.settings.multiAccount = flag
-
   wallet.setLogoutTime = (minutes, success, error) ->
     wallet.store.setLogoutTime(minutes * 60000)
     wallet.settings.logoutTimeMinutes = minutes
@@ -1441,6 +1429,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       errorCallback()
 
     wallet.my.unsetSecondPassword(success, error, needsSecondPasswordCallback)
+
+  wallet.validateSecondPassword = (password) ->
+    wallet.my.validateSecondPassword(password)
 
   wallet.setSecondPassword = (password, successCallback) ->
     success = () ->

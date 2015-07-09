@@ -163,3 +163,20 @@ $select-fg: #686868;
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
 }
+
+//override tooltip
+.tooltip {
+  font-family: "Roboto", sans-serif;
+  &.in {
+    opacity: 1;
+  }
+}
+.tooltip-arrow {
+  border-top-color: #ccc !important;
+  border-bottom-color: #ccc !important;
+}
+.tooltip-inner {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 1em;
+}

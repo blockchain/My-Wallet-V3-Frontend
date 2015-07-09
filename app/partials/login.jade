@@ -39,13 +39,13 @@
         .form-group(ng-class="{'has-error': errors.uid}")
           label.control-label(translate="UID", for="UID_input")
           div
-            input#UID_input.form-control(type="text", ng-model="uid", ng-disabled="busy || disableLogin" name="UID_input" focus-when="whereToFocus() == 1")
+            input#UID_input.form-control(type="text", ng-model="uid", ng-disabled="busy || disableLogin" name="UID_input" focus-when="!uidAvailable")
             span.help-block {{ errors.uid }}
             span.help-block.info(translate="FIND_GUID_EXPLAIN")
         .form-group(ng-class="{'has-error': errors.password}")
           label.control-label(translate="PASSWORD", for="pass_input")
           div
-            input#pass_input.form-control(type="password", name="pass_input" ng-model="password", ng-disabled="busy || disableLogin" focus-when="whereToFocus() == 2")
+            input#pass_input.form-control(type="password", name="pass_input" ng-model="password", ng-disabled="busy || disableLogin" focus-when="uidAvailable")
             span.help-block {{ errors.password }}  
         .form-group(ng-show="settings.needs2FA", ng-class="{'has-error': errors.twoFactor}")
           label.control-label

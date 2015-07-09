@@ -126,6 +126,7 @@ head
   script(src='build/js/directives/api-access.js')
   script(src='build/js/directives/bc-async-input.js')
   script(src='build/js/directives/btc.js')
+  script(src='build/js/directives/completed-level.js')
   script(src='build/js/directives/configure-mobile-number.js')
   script(src='build/js/directives/verify-mobile-number.js')
   script(src='build/js/directives/configure-second-password.js')
@@ -136,12 +137,11 @@ head
   script(src='build/js/directives/helper-button.js')
   script(src='build/js/directives/ip-whitelist-restrict.js')
   script(src='build/js/directives/language-picker.js')
-  script(src='build/js/directives/multi-account.js')
   script(src='build/js/directives/network-fee-picker.js')
   script(src='build/js/directives/on-enter.js')
   script(src='build/js/directives/resend-email-confirmation.js')
-  script(src='build/js/directives/security-badge.js')
   script(src='build/js/directives/scroll-to-top.js')
+  script(src='build/js/directives/single-click-select.js')
   script(src='build/js/directives/tor.js')
   script(src='build/js/directives/transaction-description.js')
   script(src='build/js/directives/transaction-note.js')
@@ -153,6 +153,7 @@ head
   script(src='build/js/directives/focus-when.js')
   script(src='build/js/directives/is-valid.js')
   script(src='build/js/directives/is-valid-amount.js')
+  script(src='build/js/directives/is-valid-async.js')
   script(src='build/js/directives/is-not-equal.js')
   script(src='build/js/directives/is-not-null.js')
   script(src='build/js/directives/transform-currency.js')
@@ -176,7 +177,7 @@ head
   
   script.
     if(browserDetection().browser === "ie" && browserDetection().version < 11) {
-      if ( confirm("We're sorry, our HD Wallet uses the latest web technologies to provide you a more secure and private experience. Unfortunately Internet Explorer 10 and older do not meet these standards. If you'd like to experience the Wallet, click OK to upgrade your browser. Or, hit cancel to explore Blockchain.info instead. Thanks!") ) {
+      if ( confirm("Your browser is out of date! It looks like you're using an old version of Internet Explorer. For the best Blockchain experience, please update your browser or hit cancel to return to our homepage.") ) {
         window.location = "http://browsehappy.com/";
       }
       else {

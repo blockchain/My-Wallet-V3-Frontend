@@ -6,23 +6,21 @@ walletApp.directive('configureSecondPassword', ($translate, Wallet, $modal) ->
     }
     templateUrl: 'templates/configure-second-password.jade'
     link: (scope, elem, attrs) ->
-      scope.securityCenter = attrs.securityCenter?
-
       scope.settings = Wallet.settings
-      
+
       scope.removeSecondPassword = () ->
         return if scope.busy
-          
+
         scope.busy = true
-        
+
         success = () ->
           scope.busy = false
-          
+
         error = () ->
           scope.busy = false
-          
+
         Wallet.removeSecondPassword(success, error)
-    
+
       scope.setSecondPassword = () ->
         modalInstance = $modal.open(
           templateUrl: "partials/settings/set-second-password.jade"
@@ -32,9 +30,3 @@ walletApp.directive('configureSecondPassword', ($translate, Wallet, $modal) ->
           Wallet.store.resetLogoutTimeout()
   }
 )
-
-
-
-
-
-

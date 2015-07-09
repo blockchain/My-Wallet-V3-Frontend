@@ -11,8 +11,9 @@ walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
       actionTitle: '='
       placeholder: '='
       type: '@'
-      isRequired: '@'
       errorMessage: '='
+      buttonClass: '@'
+      maxLength: '@'
     }
     transclude: true
     templateUrl: (elem, attrs) ->
@@ -21,7 +22,7 @@ walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
       else
         return 'templates/transclude.jade'
     link: (scope, elem, attrs, ctrl, transclude) ->
-      scope.securityCenter = attrs.securityCenter?
+      scope.isRequired = attrs.isRequired?
 
       scope.user = Wallet.user
       scope.status =
@@ -37,6 +38,9 @@ walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
       unless scope.type?
         scope.type = "text"
 
+      unless scope.buttonClass?
+        scope.buttonClass = 'button-primary btn-small'
+
       scope.edit = () ->
         # finds and focuses on the text input field
         # a brief timeout is necessary before trying to focus
@@ -49,10 +53,6 @@ walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
       scope.validate = () ->
         return true unless scope.validator?
         return scope.validator(scope.form.newValue)
-
-      scope.noChange = () ->
-        return false if scope.form.newValue == ''
-        return scope.form.newValue == ctrl.$viewValue.toString()
 
       scope.save = () ->
         scope.status.saving = true

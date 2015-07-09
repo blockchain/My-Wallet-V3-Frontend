@@ -22,11 +22,7 @@ describe "SecondPasswordCtrl", ->
         $stateParams: {},
         $modalInstance: modalInstance,
         insist: false
-        continueCallback: (password, correct, wrong) ->
-          if password == "correct"
-            correct()
-          else
-            wrong()
+        continueCallback: (password) ->
         cancelCallback:  (() ->)
 
       spyOn(modalInstance, "close")
@@ -54,4 +50,4 @@ describe "SecondPasswordCtrl", ->
     scope.secondPassword = "wrong"
 
     scope.submit()
-    expect(modalInstance.close).toHaveBeenCalled()
+    expect(modalInstance.close).not.toHaveBeenCalled()

@@ -38,14 +38,14 @@ form.form-horizontal(role="form",name="form",novalidate)
       label(translate="PBKDF2_ITERATIONS")
       p.explain.hidden-xs.hidden-sm(translate="PBKDF2_ITERATIONS_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
-      bc-async-input(ng-model="settings.pbkdf2", validator="validatePbkdf2", on-save="changePbkdf2", action-title="'CHANGE_PBKDF2' | translate")
+      bc-async-input(ng-model="settings.pbkdf2" validator="validatePbkdf2" is-required on-save="changePbkdf2" action-title="'CHANGE_PBKDF2' | translate")
 
   .form-group
     .col-sm-12.col-md-6
       label(translate="AUTO_LOGOUT")
       p.explain.hidden-sm.hidden-xs(translate="AUTO_LOGOUT_EXPLAIN") 
     .col-sm-12.col-md-6.setting-result
-      bc-async-input(ng-model="settings.logoutTimeMinutes", validator="validateLogoutTime", on-save="changeLogoutTime", action-title="'CHANGE_AUTO_LOGOUT' | translate")
+      bc-async-input(ng-model="settings.logoutTimeMinutes" validator="validateLogoutTime" is-required on-save="changeLogoutTime" action-title="'CHANGE_AUTO_LOGOUT' | translate")
 
   .form-group(ng-class="{'has-error': errors.ipWhitelist}")
     .col-sm-12.col-md-6
@@ -71,15 +71,3 @@ form.form-horizontal(role="form",name="form",novalidate)
       h2.status.incomplete.hidden-xs.hidden-sm(ng-hide="settings.restrictToWhitelist", translate="DISABLED")
       h2.status.complete.hidden-xs.hidden-sm(ng-show="settings.restrictToWhitelist", translate="ENABLED")
       ip-whitelist-restrict
-
-h2.pointer(ng-if="!dist" translate="DEVELOPER", ng-click="display.dev = !display.dev")
-
-form.form-horizontal(ng-if="!dist" role="form", name="form2", ng-show="display.dev", novalidate)
-  .form-group
-    .col-sm-12.col-md-6
-      label(translate="MULTI_ACCOUNT")
-      span.label.label-warning.hidden-sm.hidden-xs(translate="DISABLED", ng-show="!settings.multiAccount")
-      span.label.label-success.hidden-sm.hidden-xs(translate="ENABLED", ng-show="settings.multiAccount")
-      p.explain.hidden-xs(translate="MULTI_ACCOUNT_DESC")
-    .col-sm-12.col-md-6.setting-result
-      multi-account

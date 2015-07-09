@@ -23,7 +23,7 @@ div(ng-show="address.address")
         .form-group(ng-class="{'has-error': errors.label}")
           label.col-sm-3.control-label(translate="LABEL")
           .col-sm-9(ng-if="address")
-            bc-async-input(inline ng-model="address.label", on-save="changeLabel")    
+            bc-async-input(inline ng-model="address.label" on-save="changeLabel" is-required)
             span.help-block {{ errors.label }}
         //- .form-group(ng-class="{'has-error': errors.label}")
         //-   label.col-sm-3.control-label(translate="LABEL")

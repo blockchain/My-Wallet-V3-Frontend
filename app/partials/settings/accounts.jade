@@ -6,7 +6,7 @@ h5.well.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
       input.filter.form-control(type="text" ng-model="searchText")
     .hidden-xs.col-lg-6(align="right")
       a.btn.btn-info.btn-bci(ng-click="newAccount()", translate="CREATE_NEW_ACCOUNT")
-      a.btn.btn-info.btn-bci(ng-click="transfer(address)", translate="TRANSFER_BETWEEN_ACCOUNTS") (transfer)
+      a.btn.btn-info.btn-bci(ng-click="transfer(address)" translate="TRANSFER_BETWEEN_ACCOUNTS" ng-show="numberOfActiveAccounts() > 1") (transfer)
 .row
   .col-xs-12
     div.account-container.clearfix(ng-repeat="account in accounts | filter:searchText | filter:{active: true}")
