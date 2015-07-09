@@ -1,49 +1,41 @@
 #settings {
+  padding: 15px 30px;
   .label{
-  font-size: 85%;
-  font-weight: normal;
-  margin-left: 10px;
+    font-size: 85%;
+    font-weight: normal;
+    margin-left: 10px;
   }
-
   .label-warning {
-  background-color: #EA7E7E;
+    background-color: #EA7E7E;
   }
-
   label-success {
-  background-color: #84BB84;
+    background-color: #84BB84;
   }
-
   .settings-list{
-  list-style: none;
-  text-align: left;
-  background: #F9F9F9;
-  padding: 20px;
-  border: 1px solid #F0F0F0;
+    list-style: none;
+    text-align: left;
+    background: #F9F9F9;
+    padding: 20px;
+    border: 1px solid #F0F0F0;
   }
-
   .qr{
-  padding: 20px 0;
+    padding: 20px 0;
   }
-
   .header-with-label {
     h2, label {
       display: inline;
     }
     margin-bottom: 20px;
   }
-
   h2.status.incomplete {
     color: #C89898;
   }
-
   h2{
     font-size: 12pt;
   }
-
   h2.back {
     margin-top: 0px;
   }
-
   p.headliner{
     font-size: 115%;
     color: #999;
@@ -52,13 +44,11 @@
     padding: 0 0 15px 0;
     margin: 0 0 20px 0;
   }
-
   .right {
     a {
       text-transform: lowercase;
     }
   }
-
   .edit-mobile {
     button.ui-select-match {
       width: 75px;
@@ -70,19 +60,16 @@
       text-align: left; // Country dropdown
     }
   }
-
   pre.recovery{
-  padding: 15px;
-  margin: 15px;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none;
+    padding: 15px;
+    margin: 15px;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
   }
-
-
   table {
     width: 100%;
 
@@ -107,7 +94,6 @@
 
     }
   }
-
   form.form-horizontal{
   .form-group{
      margin: 0!important;
@@ -134,9 +120,6 @@
        font-size: 8pt;
        clear: both;
      }
-
-
-
     }
   }
 }
@@ -186,18 +169,13 @@
 .btn-group{
   button{float: none;}
 }
-
-
 .inneredit{padding: 10px 15px 0;}
-
 
 .account-container{
   border: 1px solid #EFEFEF;
   padding: 5px;
   margin: 10px 0 10px 0;
-
-    .label-primary{background-color: #7CA6CB;color: #fff;}
-
+  .label-primary{background-color: #7CA6CB;color: #fff;}
     header{
       border-bottom: 1px solid rgb(229, 229, 229);
       padding: 0 0 5px 0;
