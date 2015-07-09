@@ -1,7 +1,7 @@
 walletApp.controller "SetSecondPasswordCtrl", ($scope, $log, Wallet, $modalInstance, $translate, $timeout) ->
-  
+
   $scope.isValid = false
-  
+
   $scope.fields = {password: "", confirmation: ""}
 
   $scope.busy = null
@@ -11,28 +11,28 @@ walletApp.controller "SetSecondPasswordCtrl", ($scope, $log, Wallet, $modalInsta
     $modalInstance.dismiss ""
 
   $scope.setPassword = () ->
-    return if $scope.busy
-    
+    return if $scope.busy || !$scope.isValid
+
     $scope.busy = true
-    
+
     success = () ->
       $scope.busy = false
       $modalInstance.dismiss ""
-    
+
     $timeout((->
       Wallet.setSecondPassword($scope.fields.password, success)
     ), 100)
-      
+
   $scope.$watch "fields.confirmation", (newVal) ->
     if newVal?
       $scope.validate(false)
 
   $scope.validate = (visual=true) ->
     isValid = true
-    
+
     $scope.errors = {password: null, confirmation: null}
-    $scope.success = {password: false, confirmation: false}    
-          
+    $scope.success = {password: false, confirmation: false}
+
     if $scope.fields.password == ""
       isValid = false
     else
@@ -43,7 +43,7 @@ walletApp.controller "SetSecondPasswordCtrl", ($scope, $log, Wallet, $modalInsta
         if visual
           $translate("TOO_SHORT").then (translation) ->
             $scope.errors.password = translation
-      
+
     if $scope.fields.confirmation == ""
       isValid = false
     else
@@ -54,7 +54,7 @@ walletApp.controller "SetSecondPasswordCtrl", ($scope, $log, Wallet, $modalInsta
         if visual
           $translate("NO_MATCH").then (translation) ->
             $scope.errors.confirmation = translation
-            
-    $scope.isValid = isValid      
-  
+
+    $scope.isValid = isValid
+
   $scope.validate()

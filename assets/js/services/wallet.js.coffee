@@ -22,7 +22,7 @@ walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletSpender, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) ->
   wallet = {
     goal: {auth: false},
-    status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadTransactions: false, didLoadBalances: false, legacyAddressBalancesLoaded: false, didConfirmRecoveryPhrase: false},
+    status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadTransactions: false, didLoadBalances: false, didConfirmRecoveryPhrase: false},
     settings: {currency: null,  displayCurrency: null, language: null, btcCurrency: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null, ipWhitelist: null, apiAccess: null, restrictToWhitelist: null},
     user: {current_ip: null, email: null, mobile: null, passwordHint: ""}
   }
@@ -33,7 +33,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.accounts     = []
   wallet.legacyAddresses = []
-  wallet.addressBook  = {}
+  # wallet.addressBook  = {}
   wallet.paymentRequests = []
   wallet.alerts = []
   wallet.my = MyWallet
@@ -46,6 +46,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.currencies = []
   wallet.btcCurrencies = [{ serverCode: 'BTC', code: 'BTC', conversion: 100000000 }, { serverCode: 'MBC', code: 'mBTC', conversion: 100000 }, { serverCode: 'UBC', code: 'bits', conversion: 100 }]
   wallet.hdAddresses = []
+  wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8'
+
+  wallet.store.setAPICode(wallet.api_code)
 
   ##################################
   #             Public             #
@@ -54,21 +57,34 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) ->
     didLogin = () ->
       wallet.status.isLoggedIn = true
-      wallet.status.didUpgradeToHd = wallet.store.didUpgradeToHd()
-      wallet.status.didConfirmRecoveryPhrase = wallet.store.isMnemonicVerified()
+      wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD
+      wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.hdwallet.isMnemonicVerified
 
       wallet.uid = uid
 
-      for address, label of wallet.store.getAddressBook()
-        wallet.addressBook[address] = label
+      # I (jaume) should use address book directly from the wallet object, not copy it
+      # for address, label of wallet.store.getAddressBook()
+      #   wallet.addressBook[address] = label
 
-      if wallet.store.didUpgradeToHd()
-        wallet.updateAccounts()
+      # if wallet.my.wallet.isUpgradedToHD
+      #   # probably not need if hdwallet_is_set
+      #   wallet.updateAccounts()
 
-      wallet.settings.secondPassword = wallet.store.getDoubleEncryption()
-      wallet.settings.pbkdf2 = wallet.store.getPbkdf2Iterations()
-      wallet.settings.multiAccount = wallet.store.getMultiAccountSetting()
+      wallet.settings.secondPassword = wallet.my.wallet.isDoubleEncrypted
+      # todo: jaume: implement pbkdf2 iterations out of walletstore in mywallet
+      wallet.settings.pbkdf2 = wallet.my.wallet.pbkdf2_iterations;
+      # todo: jaume: implement logout time in mywallet
       wallet.settings.logoutTimeMinutes = wallet.store.getLogoutTime() / 60000
+
+      if wallet.my.wallet.isUpgradedToHD and not wallet.status.didInitializeHD
+        wallet.status.didInitializeHD = true
+        for account in wallet.my.wallet.hdwallet.accounts
+          wallet.accounts.push(account)
+
+      for key in wallet.my.wallet.keys
+        wallet.legacyAddresses.push key
+
+      wallet.updateHDaddresses()
 
       # Get email address, etc
       # console.log "Getting info..."
@@ -109,7 +125,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.settings.blockTOR = !!result.block_tor_ips
 
         # Fetch transactions:
-        if wallet.store.didUpgradeToHd()
+        if wallet.my.wallet.isUpgradedToHD
           wallet.my.getHistoryAndParseMultiAddressJSON()
 
         wallet.applyIfNeeded()
@@ -166,10 +182,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     betaCheckFinished = () ->
       $window.root = "https://blockchain.info/"
-      wallet.my.fetchWalletJson(
+      wallet.my.login(
         uid,
-        null,       # shared_key
-        null,       # resend_code
         password,
         two_factor_code,
         didLogin,
@@ -264,51 +278,39 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     $translate("FIRST_ACCOUNT_NAME").then (translation) ->
       wallet.my.createNewWallet(email, password, translation,language_code, currency_code, success, error)
 
-  wallet.createAccount = (name, successCallback, errorCallback) ->
+  wallet.askForSecondPasswordIfNeeded = () ->
+    defer = $q.defer()
+    if wallet.my.wallet.isDoubleEncrypted
+      $rootScope.$broadcast "requireSecondPassword", defer
+    else
+      defer.resolve(null)
+    return defer.promise
 
-    needsSecondPasswordCallback = (continueCallback) ->
-      cancelCallback = () ->
-        errorCallback()
-      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
-
-    success = () ->
-      wallet.updateAccounts()
+  wallet.createAccount = (label, successCallback, errorCallback, cancelCallback) ->
+    proceed = (password) ->
+      newAccount = wallet.my.wallet.newAccount(label, password)
+      wallet.accounts.push(newAccount)
       wallet.my.getHistoryAndParseMultiAddressJSON()
-      successCallback()
-
-    error = () ->
-      errorCallback()
-
-    wallet.my.createAccount(name, needsSecondPasswordCallback, success, error)
+      successCallback && successCallback()
+    wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
 
   wallet.renameAccount = (account, name, successCallback, errorCallback) ->
-    if wallet.my.setLabelForAccount(account.index, name)
-      account.label = name
-      successCallback()
-    else
-      wallet.displayError("Failed to rename account")
-      errorCallback()
+    account.label = name
+    successCallback()
 
   wallet.addAddressForAccount = (account, successCallback, errorCallback) ->
-    labeledReceivingAddresses = wallet.my.getLabeledReceivingAddressesForAccount(account.index)
-    # Add a new address rather than reuse the first one if no labeled addresses exist.
-    if labeledReceivingAddresses.length == 0
-      firstAvailableReceivingAddressIdx = wallet.my.getReceivingAddressIndexForAccount(account.index)
+    ri = undefined
+    if account.receivingAddressesLabels.length is 0
+      ri = account.receiveIndex
+      account.setLabelForReceivingAddress(ri, "");
 
-      wallet.my.setLabelForAccountAddress(account.index, firstAvailableReceivingAddressIdx, "", (()->), (()->))
+    ri = account.receiveIndex;
+    account.setLabelForReceivingAddress(ri, "");
 
-    firstAvailableReceivingAddressIdx = wallet.my.getReceivingAddressIndexForAccount(account.index)
-
-    success = () ->
-      wallet.updateHDaddresses()
-      address = wallet.my.getLabeledReceivingAddressesForAccount(account.index).slice(-1)[0]
-      successCallback(address)
-
-    error = () ->
-      console.log "fail"
-      errorCallback()
-
-    wallet.my.setLabelForAccountAddress(account.index, firstAvailableReceivingAddressIdx, "", success, error)
+    wallet.updateHDaddresses()
+    address = account.receivingAddressesLabels.slice(-1)[0]
+    address.address = account.receiveAddressAtIndex(address.index)
+    successCallback(address)
 
   wallet.fetchMoreTransactions = (where, successCallback, errorCallback, allTransactionsLoadedCallback) ->
     success = (res) ->
@@ -333,18 +335,15 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.my.fetchMoreTransactionsForAccount(parseInt(where), success, error, allTransactionsLoaded)
 
   wallet.changeAddressLabel = (address, label, successCallback, errorCallback) ->
-    if address.account? # HD Address
-      success = () ->
-         wallet.updateHDaddresses()
-         successCallback()
+    if address.accountIndex? # HD Address
+      account = wallet.my.wallet.hdwallet.accounts[address.accountIndex]
+      account.setLabelForReceivingAddress(address.index, label);
+      wallet.updateHDaddresses()
+      successCallback()
 
-      wallet.my.setLabelForAccountAddress(address.account.index, address.index, label, success, errorCallback)
     else # Legacy address
-      success = () ->
-        address.label = label
-        successCallback()
-
-      wallet.store.setLegacyAddressLabel(address.address, label, success, errorCallback)
+      address.label = label
+      successCallback()
 
   wallet.logout = () ->
     wallet.didLogoutByChoice = true
@@ -364,15 +363,14 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.my.makePairingCode(success, error)
 
   wallet.confirmRecoveryPhrase = () ->
-    wallet.store.didVerifyMnemonic()
+    wallet.my.wallet.hdwallet.verifyMnemonic()
     wallet.status.didConfirmRecoveryPhrase = true
 
   wallet.isCorrectMainPassword = (candidate) ->
     wallet.store.isCorrectMainPassword(candidate)
 
   wallet.isCorrectSecondPassword = (candidate) ->
-    return true
-    # wallet.my.isCorrectSecondPassword(candidate)
+    wallet.my.wallet.validateSecondPassword(candidate)
 
   wallet.changePassword = (newPassword, successCallback, errorCallback) ->
     wallet.store.changePassword(newPassword, (()->
@@ -417,37 +415,19 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.settings_api.resendEmailConfirmation(wallet.user.email, success, error)
 
   wallet.setPbkdf2Iterations = (n, successCallback, errorCallback, cancelCallback) ->
-    needsSecondPassword = (continueCallback) ->
-      cancel = () ->
-        cancelCallback()
-        
-      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancel
-
-    success = () ->
-      wallet.settings.pbkdf2 = wallet.store.getPbkdf2Iterations()
+    proceed = (password) ->
+      wallet.my.wallet.changePbkdf2Iterations(parseInt(n), password)
+      wallet.settings.pbkdf2 = wallet.my.wallet.pbkdf2_iterations
       successCallback()
-      wallet.applyIfNeeded()
-
-    error = (error) ->
-      errorCallback(error)
-
-    wallet.my.setPbkdf2Iterations(parseInt(n), success, error, needsSecondPassword)
+      # wallet.applyIfNeeded()
+    wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
 
   ####################
   #   Transactions   #
   ####################
 
-  wallet.recommendedTransactionFee = (origin, amount) ->
-    # amount in Satoshi
-    if !origin?
-      return null
-
-    if origin.address?
-      return wallet.my.recommendedTransactionFeeForAddress(origin.address, amount)
-    else if origin.index?
-      return wallet.my.recommendedTransactionFeeForAccount(origin.index, amount)
-    else
-      return null
+  # amount in Satoshi (we must compute the fee using the tx, not the amount and origin)
+  wallet.recommendedTransactionFee = (origin, amount) -> wallet.my.getBaseFee()
 
   #############
   # Spend BTC #
@@ -536,88 +516,60 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return amount
 
   wallet.addAddressOrPrivateKey = (addressOrPrivateKey, needsBip38, successCallback, errorCallback) ->
-    if addressOrPrivateKey == ""
-      errorCallback({invalidInput: true})
-      return
 
-    bip38 = false
+    proceed = (secondPassword='') ->
 
-    needsSecondPasswordCallback = (continueCallback) ->
-      cancelCallback = () ->
-        errorCallback()
+      if wallet.my.isValidPrivateKey(addressOrPrivateKey)
+        privKey = addressOrPrivateKey
+        format = wallet.my.detectPrivateKeyFormat(privKey)
 
-      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
+        if format == 'bip38'
 
-    needsBip38Password = (callback) ->
-      bip38 = true
-      needsBip38(callback)
+          correctCallback = (key, correct) ->
+            address = key.pub.getAddress()
 
-    alreadyImported = (address) ->
-      errorCallback({addressPresentInWallet: true})
-      wallet.applyIfNeeded() if bip38
+            if wallet.my.wallet.containsLegacyAddress(address)
+              return errorCallback({addressPresentInWallet: true})
 
-    if address = wallet.my.isValidPrivateKey(addressOrPrivateKey)
-      privateKey = addressOrPrivateKey
-      if wallet.store.legacyAddressExists(address)
-        address = $filter("getByProperty")("address", address, wallet.legacyAddresses)
-        if address.isWatchOnlyLegacyAddress
-          success = (address) ->
-            wallet.updateLegacyAddresses() # Probably too early
-            successCallback({address: address})
-            wallet.applyIfNeeded() if bip38
+            correct(address)
+            wallet.my.wallet.importLegacyAddress(key, '', secondPassword)
 
-          error = (error) ->
-            console.log "Error adding new key to existing address"
-            wallet.applyIfNeeded() if bip38
+          return needsBip38 (bipPassphrase, correct, wrong)->
+            wallet.my.parseBIP38toECKey(
+              privKey
+              bipPassphrase
+              (key) -> correctCallback(key, correct)
+              wrong
+              errorCallback
+            )
 
+        key = wallet.my.privateKeyStringToKey(privKey, format)
+        address = key.pub.getAddress().toString()
 
-          wallet.my.importPrivateKey(privateKey, needsSecondPasswordCallback, needsBip38Password, success, alreadyImported, error)
-          return
-        else
-          alreadyImported()
-          return
+        if wallet.my.wallet.containsLegacyAddress(address)
+          return errorCallback({addressPresentInWallet: true})
 
-      else
-        success = (address) ->
-          addressItem = {address: address, isWatchOnlyLegacyAddress: false, active: true, legacy: true, balance: null}
-          wallet.legacyAddresses.push addressItem
-          wallet.updateLegacyAddresses() # Probably too early
-          successCallback(addressItem)
-          wallet.applyIfNeeded() if bip38
+        wallet.my.wallet.importLegacyAddress(key, '', secondPassword)
+        successCallback()
 
-          return
+      else if wallet.my.isValidAddress(addressOrPrivateKey)
+        address = addressOrPrivateKey
 
-        error = (error) ->
-          console.log "Error importing new key"
-          console.log error
-          wallet.displayError(error)
-          wallet.applyIfNeeded() if bip38
+        if wallet.my.wallet.containsLegacyAddress(address)
+          return errorCallback({addressPresentInWallet: true})
 
-        wallet.my.importPrivateKey(privateKey, needsSecondPasswordCallback, needsBip38Password, success, alreadyImported, error)
-      return
+        wallet.my.wallet.importLegacyAddress(address, '', secondPassword, true)
+        successCallback()
 
-    if wallet.my.isValidAddress(addressOrPrivateKey)
-      address = addressOrPrivateKey
-      if wallet.store.legacyAddressExists(address)
-        errorCallback({addressPresentInWallet: true}, {address: address})
-        return
-      else
-        wallet.my.addWatchOnlyLegacyAddress(address)
-        addressItem = {address: address, isWatchOnlyLegacyAddress: true, active: true, legacy: true, balance: null}
-        wallet.legacyAddresses.push addressItem
-        wallet.updateLegacyAddresses() # Probably too early
-        successCallback(addressItem)
-        return
-
-    errorCallback({invalidInput: true})
-    return
+    wallet.askForSecondPasswordIfNeeded()
+      .then proceed
+      .catch errorCallback
 
   wallet.transaction = (successCallback, errorCallback) ->
+
     success = (tx_hash) ->
         successCallback(tx_hash) # Allow caller to set a note before refreshing transactions
-
         wallet.updateTransactions() # This is also called by on_tx, but the note might not be set yet
-        wallet.updateAccountsAndLegacyAddresses()
         wallet.applyIfNeeded()
 
     error = (e) ->
@@ -629,41 +581,41 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         errorCallback("Unknown error")
       wallet.applyIfNeeded()
 
-    needsSecondPassword = (continueCallback) ->
-      cancelCallback = () ->
-        errorCallback()
-
-      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
+    cancelCallback = () -> errorCallback()
 
     {
-
       send: (from, destinations, amounts, fee, publicNote) ->
-
-        destinations = destinations.map (dest) ->
-          return dest.address unless dest.type == 'Accounts'
-          return wallet.getReceivingAddressForAccount(dest.index)
-
-        spender = wallet.spender(publicNote, success, error, {}, needsSecondPassword)
-
-        if from.address?
-          spendFrom = spender.fromAddress(from.address, 1000, fee)
-        else if from.index?
-          spendFrom = spender.fromAccount(from.index, 1000, fee)
-
-        spendFrom.toAddresses(destinations, amounts)
+        proceed = (password) ->
+          destinations = destinations.map (dest) ->
+            return dest.address unless dest.type == 'Accounts'
+            return wallet.my.wallet.hdwallet.accounts[dest.index].receiveAddress
+          spender = wallet.spender(publicNote, success, error, {}, password)
+          if from.address?
+            spendFrom = spender.fromAddress(from.address, 1000, fee)
+          else if from.index?
+            spendFrom = spender.fromAccount(from.index, 1000, fee)
+          spendFrom.toAddresses(destinations, amounts)
+        wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
 
       sweep: (fromAddress, toAccountIndex) ->
-        spender = wallet.spender(null, success, error, {}, needsSecondPassword)
-        spender.addressSweep(fromAddress.address).toAccount(toAccountIndex)
+        proceed = (password) ->
+          spender = wallet.spender(null, success, error, {}, password)
+          spender.addressSweep(fromAddress.address).toAccount(toAccountIndex)
+        wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
 
-      # sendToEmail: (fromAccountIndex, email, amount, currency) ->
-      #   amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
-      #   wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, success, error, {}, needsSecondPassword)
+      sendToEmail: (fromAccountIndex, email, amount, currency) ->
+        proceed = (password) ->
+          amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
+          wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, success, error, {}, needsSecondPassword)
+        wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
     }
+
+
+
+
 
   wallet.redeemFromEmailOrMobile = (account, claim, successCallback, error) ->
     success = () ->
-      wallet.updateAccounts()
       wallet.updateTransactions()
       successCallback()
 
@@ -684,19 +636,18 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     return defer.promise
 
-  wallet.getMnemonic = (successCallback, errorCallback) ->
-    needsSecondPasswordCallback = (continueCallback) ->
-      cancelCallback = () ->
-        errorCallback('INCORRECT_PASSWORD')
-      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
+  wallet.getAddressBookLabel = (address) ->
+    wallet.my.wallet.getAddressBookLabel(address)
 
-    success = (mnemonic, passphrase) ->
-      successCallback(mnemonic, passphrase)
+  wallet.getMnemonic = (successCallback, errorCallback, cancelCallback) ->
 
-    error = (err="Unable to show mnemonic.") ->
-      errorCallback(err)
+    proceed = (password) ->
+      mnemonic = wallet.my.wallet.getMnemonic(password)
+      successCallback(mnemonic)
 
-    wallet.my.getHDWalletPassphraseString(needsSecondPasswordCallback, success, error)
+    wallet.askForSecondPasswordIfNeeded()
+      .then proceed
+      .catch cancelCallback
 
   wallet.importWithMnemonic = (mnemonic, passphrase, successCallback, errorCallback) ->
     needsSecondPasswordCallback = (continueCallback) ->
@@ -707,7 +658,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.transactions.splice(0, wallet.transactions.length)
 
     success = () ->
-      wallet.updateAccounts()
       wallet.updateTransactions()
       wallet.updateHDaddresses()
 
@@ -718,56 +668,44 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     ), 100)
 
   wallet.getDefaultAccountIndex = () ->
-    wallet.store.getDefaultAccountIndex()
+    wallet.my.wallet.hdwallet.defaultAccountIndex
 
   wallet.getReceivingAddressForAccount = (idx) ->
-    wallet.my.getReceivingAddressForAccount(idx)
+    wallet.my.wallet.hdwallet.accounts[idx].receiveAddress
 
   ###################
   # URL: bitcoin:// #
   ###################
 
   wallet.parsePaymentRequest = (url) ->
-    result = {address: null, amount: null, hasBitcoinPrefix: false, currency: null}
+    result = { address: null, amount: null, label: null, message: null }
+    result.isValid = true
 
-    if url.indexOf("bitcoin:") == 0
-       result.hasBitcoinPrefix = true
-       result.isValid = true # Optimistic...
+    if url.indexOf('bitcoin:') == 0
+      withoutPrefix = url.replace('bitcoin://', '').replace('bitcoin:', '')
+      qIndex = withoutPrefix.indexOf('?')
 
-       withoutPrefix = url.replace("bitcoin://","").replace("bitcoin:", "")
-       if withoutPrefix.indexOf("?") != -1
-         address = withoutPrefix.substr(0, withoutPrefix.indexOf("?"))
-         result.address = address
-         argumentList = withoutPrefix.replace(address + "?", "")
-         loopCount = 0
+      if qIndex != -1
+        result.address = withoutPrefix.substr(0, qIndex)
+        keys = withoutPrefix.substr(qIndex + 1).split('&')
 
-         for i in [0..argumentList.match(/&/g | []).length]
-           argument = argumentList.substr(0,argumentList.indexOf("="))
-           isLastArgument = argumentList.indexOf("&") == -1
+        keys.forEach (item) ->
+          key = item.split('=')[0]
+          value = item.split('=')[1]
 
-           value = undefined
+          if key == 'amount'
+            result.amount = wallet.convertToSatoshi(parseFloat(value), wallet.btcCurrencies[0])
+          else if result[key] != undefined
+            result[key] = value
 
-           if !isLastArgument
-             value = argumentList.substr(argument.length + 1, argumentList.indexOf("&") - argument.length - 1)
-           else
-             value = argumentList.substr(argument.length + 1, argumentList.length - argument.length - 1)
+      else
+        result.address = withoutPrefix
 
-           if argument == "amount"
-             result.amount = numeral(value).format("0.[00000000]")
-             result.currency = "BTC"
-           else
-             $log.info "Ignoring argument " + argument + " in: " + url
-             loopCount++
+    else if wallet.my.isValidAddress(url)
+      result.address = url
 
-           argumentList = argumentList.replace(argument + "=" + value + "&", "")
-
-       else
-         result.address = withoutPrefix
     else
-      # Check if it's just a bitcoin address
-      if wallet.my.isValidAddress(url)
-        result.address = url
-        result.isValid = true
+      result.isValid = false
 
     return result
 
@@ -824,28 +762,26 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return wallet.my.isValidAddress(address)
 
   wallet.archive = (address_or_account) ->
-    if address_or_account.address?
-      wallet.store.archiveLegacyAddr(address_or_account.address)
-    else
-      wallet.my.archiveAccount(address_or_account.index)
-
-    address_or_account.active = false
+    address_or_account.archived = true
+    return
 
   wallet.unarchive = (address_or_account) ->
-    success = (txs) ->
-      address_or_account.active = true
-      wallet.updateAccounts()
-
-      if txs?
-        wallet.appendTransactions(txs, false) # Re-insert tx with latest account info
-
-      wallet.applyIfNeeded() # Unarchive involves an async operation
-
-    if address_or_account.address?
-      wallet.store.unArchiveLegacyAddr(address_or_account.address)
-      success()
-    else
-      wallet.my.unarchiveAccount(address_or_account.index, success)
+    address_or_account.archived = false
+    # TODO :: REVIEW unarchiving process
+    # success = (txs) ->
+    #   address_or_account.active = true
+    #
+    #   if txs?
+    #     wallet.appendTransactions(txs, false) # Re-insert tx with latest account info
+    #
+    #   wallet.applyIfNeeded() # Unarchive involves an async operation
+    #
+    # if address_or_account.address?
+    #   wallet.store.unArchiveLegacyAddr(address_or_account.address)
+    #   success()
+    # else
+    #   wallet.my.unarchiveAccount(address_or_account.index, success)
+    return
 
 
   wallet.deleteLegacyAddress = (address) ->
@@ -858,42 +794,17 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   #        Private (other)         #
   ##################################
 
-  wallet.updateAccountsAndLegacyAddresses = () ->
-    if wallet.store.didUpgradeToHd()
-      wallet.updateAccounts()
-    wallet.updateLegacyAddresses()
-
-  wallet.updateAccounts = () ->
-    # Carefully update our array of accounts, so Angular watchers don't get confused.
-    # Assuming accounts are never deleted.
-
-    numberOfOldAccounts = wallet.accounts.length
-    numberOfNewAccounts = wallet.my.getAccountsCount()
-
-    defaultAccountIndex = wallet.store.getDefaultAccountIndex()
-
-    if numberOfNewAccounts > 0
-      for i in [0..(numberOfNewAccounts - 1)]
-        if i >= numberOfOldAccounts
-          wallet.accounts.push {legacy: false, index: i}
-
-        # Set or update label and balance:
-        wallet.accounts[i].label = wallet.my.getLabelForAccount(i)
-        wallet.accounts[i].active = !wallet.my.isArchivedForAccount(i)
-        if wallet.accounts[i].active
-          wallet.accounts[i].balance = wallet.my.getBalanceForAccount(i)
-          wallet.accounts[i].isDefault = !(defaultAccountIndex < i or defaultAccountIndex > i)
-
-    wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts.some((a)->a.active and a.balance)
+  # wallet.updateAccounts = () ->
+  # wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts.some((a) -> a.active and a.balance)
 
   # Update (labelled) HD addresses:
   wallet.updateHDaddresses = () ->
     for account in wallet.accounts
       continue if !account.active
-      labeledAddresses = wallet.my.getLabeledReceivingAddressesForAccount(account.index)
+      labeledAddresses = account.receivingAddressesLabels
 
       for address in labeledAddresses
-        address.address = wallet.my.getReceiveAddressAtIndexForAccount(account.index, address.index)
+        address.address = account.receiveAddressAtIndex(address.index);
         hdAddress = $filter("getByProperty")("address", address.address, wallet.hdAddresses)
         if hdAddress == null
           wallet.hdAddresses.push {
@@ -901,71 +812,31 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
             address: address.address
             label: address.label
             accountLabel: account.label
-            account: account
+            accountIndex: account.index
           }
         else
           hdAddress.label = address.label
 
       if labeledAddresses.length == 0
-        address = wallet.my.getReceivingAddressForAccount(account.index)
+        address = account.receiveAddress;
         if $filter("getByProperty")("address", address, wallet.hdAddresses) == null
           wallet.hdAddresses.push {
-            index: wallet.my.getReceivingAddressIndexForAccount(account.index)
+            index: account.receiveIndex
             address: address
             label: null # The last receiving address never has a label
             accountLabel: account.label
-            account: account
+            accountIndex: account.index
           }
 
-  wallet.updateLegacyAddresses = () ->
-    numberOfOldAddresses = wallet.legacyAddresses.length
-    numberOfNewAddresses = wallet.store.getAllLegacyAddresses().length
-
-    if numberOfNewAddresses == 0
-      wallet.status.legacyAddressBalancesLoaded = true # No legacy addresses, so all balances are loaded
-
-    if numberOfNewAddresses > 0
-      for i in [0..(numberOfNewAddresses - 1)]
-        addressItem = undefined
-        if i >= numberOfOldAddresses
-          address = wallet.store.getAllLegacyAddresses()[i]
-          addressItem = {address: address, active: wallet.store.getLegacyActiveAddresses().indexOf(address) > -1, legacy: true}
-          wallet.legacyAddresses.push addressItem
-        else
-          addressItem = wallet.legacyAddresses[i]
-
-        # Set or update label and balance:
-        addressItem.label = wallet.store.getLegacyAddressLabel(addressItem.address)
-        unless addressItem.label?
-          addressItem.label = addressItem.address
-        addressItem.balance = wallet.store.getLegacyAddressBalance(addressItem.address)
-        addressItem.isWatchOnlyLegacyAddress = wallet.store.isWatchOnlyLegacyAddress(addressItem.address)
-
-        if addressItem.balance != null
-          wallet.status.legacyAddressBalancesLoaded = true
-
-    # Balances will be 0 until transactions have been loaded.
-    # TODO: MyWallet should let us know when all transactions are loaded; hide
-    # total until that time.
-
-
   wallet.total = (accountIndex) ->
-    return null if wallet.accounts == undefined || wallet.accounts.length == 0
-    if !(accountIndex?) || accountIndex == "accounts"
-      return null if wallet.accounts[0].balance == null
-      tally = 0
-      for account in wallet.accounts
-        if account.active
-          return null if account.balance == undefined || account.balance == null
-          tally = tally += account.balance
-
-      return tally
-    else if accountIndex == "imported"
-      return wallet.store.getTotalBalanceForActiveLegacyAddresses()
-    else
-      account = wallet.accounts[parseInt(accountIndex)]
-      return null if account == undefined
-      return account.balance
+    switch accountIndex
+      when "accounts", undefined, null
+        wallet.my.wallet.hdwallet.balanceActiveAccounts
+      when "imported"
+        wallet.my.wallet.balanceActiveLegacy
+      else
+        account = wallet.accounts[parseInt(accountIndex)]
+        if account == null then null else account.balance
 
   wallet.updateTransactions = () ->
     for tx in wallet.store.getAllTransactions()
@@ -974,12 +845,12 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         if candidate.hash == tx.hash
           match = true
           if !candidate.note?
-            candidate.note = wallet.store.getNote(tx.hash) # In case a note was just set
+            candidate.note = wallet.my.wallet.getNote(tx.hash) # In case a note was just set
           break
 
       if !match
         transaction = angular.copy(tx)
-        transaction.note = wallet.store.getNote(transaction.hash)
+        transaction.note = wallet.my.wallet.getNote(transaction.hash)
 
         wallet.transactions.push transaction
     wallet.status.didLoadTransactions = true
@@ -1019,7 +890,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.beep()
         if wallet.transactions[numberOfTransactions - 1].result > 0 && !wallet.transactions[[numberOfTransactions - 1]].intraWallet
           wallet.displayReceivedBitcoin()
-        wallet.updateAccountsAndLegacyAddresses()
+        # wallet.updateLegacyAddresses()
     else if event == "error_restoring_wallet"
       # wallet.applyIfNeeded()
       return
@@ -1036,7 +907,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
           success = () ->
             wallet.status.didUpgradeToHd = true
-            wallet.updateAccounts()
+            # might not be necessary (if hd-wallet-Set is called)
+            wallet.accounts = wallet.my.wallet.hdwallet.accounts
             wallet.updateHDaddresses()
             wallet.my.getHistoryAndParseMultiAddressJSON()
 
@@ -1051,20 +923,14 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         , 1000
       )
 
-    else if event == "hd_wallet_set"
-      if not wallet.status.didInitializeHD
-        wallet.status.didInitializeHD = true
-        wallet.updateAccounts()
-        wallet.updateHDaddresses()
-        wallet.applyIfNeeded()
-
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
-      wallet.updateAccountsAndLegacyAddresses()
+      # wallet.updateLegacyAddresses()
+      wallet.status.didLoadBalances = true if wallet.my.wallet.isUpgradedToHD
       wallet.applyIfNeeded()
     else if event == "did_update_legacy_address_balance"
       console.log "did_update_legacy_address_balance"
-      wallet.updateLegacyAddresses()
+      # wallet.updateLegacyAddresses()
       wallet.applyIfNeeded()
 
     else if event == "wallet not found" # Only works in the mock atm
@@ -1134,14 +1000,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   # Settings #
   ############
 
-  wallet.setMultiAccount = (flag) ->
-    wallet.store.setMultiAccountSetting(flag)
-    wallet.settings.multiAccount = flag
-
   wallet.setLogoutTime = (minutes, success, error) ->
     wallet.store.setLogoutTime(minutes * 60000)
     wallet.settings.logoutTimeMinutes = minutes
-    wallet.my.backupWalletDelayed()
+    # wallet.my.backupWalletDelayed()
     success()
 
   wallet.getLanguages = () ->
@@ -1210,8 +1072,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           # convert to: units of satoshi per unit of fiat
           wallet.conversions[code] = {symbol: info.symbol, conversion: parseInt(numeral(100000000).divide(numeral(info["last"])).format("1"))}
 
-        if wallet.status.isLoggedIn
-          wallet.updateAccountsAndLegacyAddresses()
+        # if wallet.status.isLoggedIn
+        #   wallet.updateLegacyAddresses()
         wallet.applyIfNeeded()
 
       fail = (error) ->
@@ -1419,38 +1281,34 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return wallet.store.getTotalBalanceForActiveLegacyAddresses()
 
   wallet.setDefaultAccount = (account) ->
-    wallet.store.changeDefaultAccountIndex(account.index)
-    wallet.updateAccounts()
+    wallet.my.wallet.hdwallet.defaultAccountIndex = account.index
+
+  wallet.isDefaultAccount = (account) ->
+    wallet.my.wallet.hdwallet.defaultAccountIndex == account.index
 
   wallet.isValidBIP39Mnemonic = (mnemonic) ->
     wallet.my.isValidateBIP39Mnemonic(mnemonic)
 
   wallet.removeSecondPassword = (successCallback, errorCallback) ->
-    needsSecondPasswordCallback = (continueCallback) ->
-      cancelCallback = () ->
-        errorCallback()
-
-      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
-
     success = () ->
       wallet.displaySuccess("Second password has been removed.")
       wallet.settings.secondPassword = false
       successCallback()
+    error = errorCallback
+    cancel = errorCallback
+    proceed = (password) -> wallet.my.wallet.decrypt(password, success, error)
+    wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
 
-    error = () ->
-      errorCallback()
-
-    wallet.my.unsetSecondPassword(success, error, needsSecondPasswordCallback)
+  wallet.validateSecondPassword = (password) ->
+    return wallet.my.wallet.validateSecondPassword(password)
 
   wallet.setSecondPassword = (password, successCallback) ->
     success = () ->
       wallet.displaySuccess("Second password set.")
       wallet.settings.secondPassword = true
       successCallback()
-
     error = () ->
-
-    wallet.my.setSecondPassword(password, success, error)
+    wallet.my.wallet.encrypt(password, success, error)
 
 
   ########################################
@@ -1459,7 +1317,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.refresh = () ->
     wallet.my.refresh()
-    wallet.updateAccountsAndLegacyAddresses()
+    # wallet.updateLegacyAddresses()
     wallet.updateTransactions()
 
   wallet.isMock = wallet.my.mockShouldFailToSend != undefined

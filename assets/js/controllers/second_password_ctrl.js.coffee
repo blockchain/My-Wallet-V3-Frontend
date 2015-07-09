@@ -1,4 +1,4 @@
-walletApp.controller "SecondPasswordCtrl", ($scope, $log, Wallet, $modalInstance, $translate, insist, continueCallback, cancelCallback) ->
+walletApp.controller "SecondPasswordCtrl", ($scope, $log, Wallet, $modalInstance, $translate, insist, defer) ->
   $scope.insist = if insist then true else false
   $scope.alerts = Wallet.alerts
 
@@ -7,8 +7,8 @@ walletApp.controller "SecondPasswordCtrl", ($scope, $log, Wallet, $modalInstance
   $scope.secondPassword = ""
 
   $scope.cancel = () ->
+    defer.reject("Cancel pressed")
     Wallet.clearAlerts()
-    cancelCallback()
     $modalInstance.dismiss ""
 
   $scope.submit = () ->
@@ -17,12 +17,11 @@ walletApp.controller "SecondPasswordCtrl", ($scope, $log, Wallet, $modalInstance
 
     Wallet.clearAlerts()
 
-    correctPassword = () ->
+    if Wallet.validateSecondPassword($scope.secondPassword)
       $scope.busy = false
+      defer.resolve($scope.secondPassword)
       $modalInstance.close ""
-
-    wrongPassword = () ->
+    else
       $scope.busy = false
-      $modalInstance.close ""
-
-    continueCallback($scope.secondPassword, correctPassword, wrongPassword)
+      $translate("SECOND_PASSWORD_INCORRECT").then (translation) ->
+        Wallet.displayError(translation)

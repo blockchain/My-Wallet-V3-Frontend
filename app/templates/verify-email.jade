@@ -1,5 +1,20 @@
-.pvm.flex(ng-class="{'has-error': errors.emailVerificationCode }", ng-show="!user.isEmailVerified && user.email != null && user.email != ''")
-  .flex-1.mrl
-    input.form-control(on-enter="verifyEmail(code)" type="text",ng-model="code", placeholder="Enter Verification Code")
-  .flex-1.mll
-    button(ng-click="verifyEmail(code)",ng-disabled="!code || code.length < 3", translate="VERIFY", ng-class="securityCenter ? 'button-success button-lg' : 'button-primary'")
+.pvm(
+  ng-class="{'has-error': errors.emailVerificationCode }"
+  ng-show="!user.isEmailVerified && user.email != null && user.email != ''"
+)
+  form.flex(role="form" name="verifyEmailForm" ng-submit="verifyEmail(code)")
+    .flex-1.mrl
+      input.form-control(
+        type="text"
+        ng-model="code"
+        placeholder="Enter Verification Code"
+      )
+    .flex-1.mll
+      button(
+        type="submit"
+        ng-class="buttonClass"
+        ui-ladda="{{ status.busy }}"
+        ng-disabled="!code || code.length < 3"
+        ladda-translate="VERIFY"
+        data-style="expand-left"
+      )

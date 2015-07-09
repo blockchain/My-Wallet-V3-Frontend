@@ -6,16 +6,16 @@ h5.well.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
       input.filter.form-control(type="text" ng-model="searchText")
     .hidden-xs.col-lg-6(align="right")
       a.btn.btn-info.btn-bci(ng-click="newAccount()", translate="CREATE_NEW_ACCOUNT")
-      a.btn.btn-info.btn-bci(ng-click="transfer(address)", translate="TRANSFER_BETWEEN_ACCOUNTS") (transfer)
+      a.btn.btn-info.btn-bci(ng-click="transfer(address)" translate="TRANSFER_BETWEEN_ACCOUNTS" ng-show="numberOfActiveAccounts() > 1") (transfer)
 .row
   .col-xs-12
-    div.account-container.clearfix(ng-repeat="account in accounts | filter:searchText | filter:{active: true}")
+    div.account-container.clearfix(ng-repeat="account in accounts | filter:{archived: false, label: searchText}")
       header
         hgroup.clearfix
           div.col-xs-6
             h2
               span(ng-bind-html="account.label | highlight:searchText")
-              span.label.label-primary(translate="DEFAULT", ng-show="account.isDefault")
+              span.label.label-primary(translate="DEFAULT", ng-show="isDefault(account)")
           div.col-xs-6.balance
             h3.btc(ng-show="account.balance != null") {{ account.balance | toBitCurrency:settings.btcCurrency }}
             h3.fiat(btc="account.balance", ng-show="account.balance != null")
@@ -24,11 +24,11 @@ h5.well.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
           li
             a(translate="RENAME",          ng-click="editAccount(account)")
           li
-            a(translate="MAKE_DEFAULT", ng-hide="account.isDefault", ng-click="makeDefault(account)")            
+            a(translate="MAKE_DEFAULT", ng-hide="isDefault(account)", ng-click="makeDefault(account)")            
           li
             a(translate="BITCOIN_ADDRESS", ng-click="showAddress(account)")
           li
-            a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="account.isDefault")
+            a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="isDefault(account)")
 
 .mtl
   button.button-primary(translate="ARCHIVED_ACCOUNTS", ng-click="display.archived = !display.archived")
@@ -40,7 +40,7 @@ h5.well.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
       tr
         th(translate="ACCOUNT_NAME")
         th
-      tr(ng-repeat="account in accounts | filter:searchText | filter:{active: false}")
+      tr(ng-repeat="account in accounts | filter:{archived: true, label: searchText}")
         td(ng-bind-html="account.label | highlight:searchText")
         td
           a(translate="UNARCHIVE",          ng-click="unarchive(account)")

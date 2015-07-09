@@ -44,8 +44,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       type: "!External"
     if !accounts
       filter.type = 'Imported'
-    if $scope.numberOfActiveAccountsAndLegacyAddresses() == 1
-      filter.multiAccount = false
     return filter
 
   $scope.hasZeroBalance = (origin) ->
@@ -58,15 +56,18 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
 # TODO: what is supposed to do that with multiple accounts
   $scope.applyPaymentRequest = (paymentRequest, i) ->
-    destination = {address: "", label: "", type: "External"}
-    destination.address = paymentRequest.address
-    destination.label = paymentRequest.address
+    destination =
+      address: paymentRequest.address || ""
+      label: paymentRequest.address || ""
+      type: "External"
 
-    $scope.transaction.destinations[i] = destination
+    # $scope.transaction.destinations[i] = destination
+    $scope.refreshDestinations(paymentRequest.address, i)
+    
+    $scope.transaction.amounts[i] = paymentRequest.amount || 0
+    $scope.transaction.note = paymentRequest.message || ''
 
-    if paymentRequest.amount && paymentRequest.currency == 'BTC'
-      $scope.transaction.amounts[i] = Wallet.convertToSatoshi(paymentRequest.amount, Wallet.btcCurrencies[0])
-
+    $scope.validateAmounts()
     $scope.updateToLabel()
 
   $scope.processURLfromQR = (url) ->
@@ -82,6 +83,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       $log.error "Not a bitcoin QR code:" + url
 
   $scope.cameraOn = (index=0) ->
+    $scope.$broadcast('ResetSearch' + index)
     $scope.cameraRequested = true
     $scope.qrIndex = index
 
@@ -97,7 +99,10 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.resetSendForm = () ->
     $scope.transaction = angular.copy($scope.transactionTemplate)
-    $scope.transaction.from = Wallet.accounts[Wallet.getDefaultAccountIndex()]
+    $scope.transaction.from = Wallet.accounts[Wallet.my.wallet.hdwallet.defaultAccountIndex]
+
+    for i in [0..($scope.destinations.length - 1)]
+      $scope.$broadcast('ResetSearch' + i)
 
   $scope.addDestination = () ->
     originalDestinations = angular.copy($scope.destinations[0])
@@ -239,7 +244,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.$watch "transaction.destinations", (destinations) ->
     destinations.forEach (dest, index) ->
       return unless dest?
-      if dest.type == 'Accounts'
+      if dest.type == 'Accounts' || dest.index?
         $scope.sendForm['destinations' + index].$setValidity('isValidAddress', true)
       else
         valid = Wallet.isValidAddress(dest.address)
@@ -247,17 +252,19 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       $scope.updateToLabel()
   , true
 
-  $scope.$watch "status.didLoadBalances + status.legacyAddressBalancesLoaded", ->
-    if $scope.status.didLoadBalances && $scope.status.legacyAddressBalancesLoaded
+  $scope.$watch "status.didLoadBalances", ->
+    if $scope.status.didLoadBalances
       if $scope.origins.length == 0
 
-        defaultAccountIndex = Wallet.getDefaultAccountIndex()
+        defaultAccountIndex = Wallet.my.wallet.hdwallet.defaultAccountIndex
 
         for account in $scope.accounts
-          item = angular.copy(account)
+          item = {}
           item.type = "Accounts"
-          item.multiAccount = if item.index == 0 then false else true
-          unless item.index? && !item.active
+          item.label = account.label
+          item.index = account.index
+          item.balance = account.balance
+          unless item.index? && account.archived
             if item.index == defaultAccountIndex
               $scope.transaction.from = item
             $scope.origins.push item
@@ -265,9 +272,11 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
         for address in $scope.legacyAddresses
           if address.active
-            item = angular.copy(address)
+            item = {}
             item.type = "Imported Addresses"
-            item.multiAccount = false
+            item.label = address.label || address.address
+            item.address = address.address
+            item.balance = address.balance
             $scope.destinationsBase.push item
             unless address.isWatchOnlyLegacyAddress
               $scope.origins.push angular.copy(item)
@@ -281,6 +290,8 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         else if paymentRequest.toAccount?
           $scope.transaction.destinations[0] = paymentRequest.toAccount
           $scope.transaction.from = paymentRequest.fromAddress
+        else if paymentRequest.fromAccount?
+          $scope.transaction.from = paymentRequest.fromAccount
 
   # Step switching
   $scope.confirmationStep = false

@@ -10,7 +10,7 @@
       .col-sm-9
         ui-select(ng-model="fields.to" ng-disabled="paymentRequest.amount > 0 || paymentRequest.label")
           ui-select-match {{ $select.selected.label + ($select.selected.isWatchOnlyLegacyAddress ? ' (Watch Only)' : '') }}
-          ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'") 
+          ui-select-choices(repeat="destination in destinations | filter: $select.search" group-by="'type'") 
             span(ng-bind-html="(determineLabel(destination) | highlight: $select.search) + (destination.isWatchOnlyLegacyAddress ? ' <i>(Watch Only)</i>' : '')")
         span.help-block(ng-show="fields.to.isWatchOnlyLegacyAddress") Your wallet does not have the private key for this address. Without the private key you will not have access to the bitcoins sent to this address. Make sure you have this private key somewhere else!
     .form-group(ng-class="{'has-error': requestForm.amount.$error.isValidAmount && requestForm.amount.$touched}")
@@ -52,10 +52,13 @@
           span :
         p.form-control-static.bitcoin-address
           img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
-          span(ng-show="status.didInitializeHD")
-            | {{ paymentRequestAddress }}  
-        p.black.mtm.flex-center.center-align
+          span(ng-show="status.didInitializeHD" single-click-select)
+            | {{ paymentRequestAddress }}
+        p.black.mtm.flex-center.center-align(ng-class="{ 'hidden' : !highlighted }" ng-hide="browserCanExecCommand")
           i.ti-mouse-alt.mrs
           span(translate="COPY_ADDRESS")
+        p.success.mtm.flex-center.center-align(ng-class="{ 'hidden' : !highlighted }" ng-show="browserCanExecCommand")
+          i.ti-check.mrs
+          span Successfully copied to your clipboard!
 .modal-footer.flex-end.pal
   button.button-success.button-lg(ng-click="close()", translate="GOT_IT")  

@@ -3,9 +3,9 @@ div
     h2.status.complete.hidden-xs.long-input {{ ngModel }}
     button.button-primary(ng-click="edit()") {{ actionTitle }}
   form(role="form" name="bcAsyncForm" ng-submit="save()" novalidate)
-    .form-group(ng-class="{'has-error': bcAsyncForm.$invalid && bcAsyncForm.$dirty && !bcAsyncForm.input.$error.required}" ng-show="inline || status.edit")
-      input.form-control(is-valid="validate()" ng-required="isRequired" name="input" type="{{ type }}" ng-model="form.newValue" ng-focus="focus()" placeholder="{{ placeholder }}" ng-class="{'width-100' : securityCenter}" ng-change="onChange()")
+    .form-group(ng-class="{'has-error': bcAsyncForm.$invalid && bcAsyncForm.$dirty && !bcAsyncForm.input.$error.required && !bcAsyncForm.input.$error.isNotEqual}" ng-show="inline || status.edit")
+      input.form-control(is-valid="validate()" is-not-equal="{{ ngModel }}" ng-required="isRequired" name="input" type="{{ type }}" ng-model="form.newValue" maxlength="{{ maxLength }}" ng-focus="focus()" placeholder="{{ placeholder }}" ng-change="onChange()")
       span.help-block {{ errorMessage }}
       span(ng-hide="inline && !status.edit")
-        button(type="submit" ng-disabled="bcAsyncForm.$invalid || bcAsyncForm.$pristine || noChange()" ui-ladda="{{ status.saving }}" ladda-translate="SAVE" data-style="expand-left" ng-class="securityCenter ? 'button-success button-lg' : 'button-primary btn-small'")
+        button(type="submit" ng-disabled="bcAsyncForm.$invalid || bcAsyncForm.$pristine" ui-ladda="{{ status.saving }}" ladda-translate="SAVE" data-style="expand-left" ng-class="buttonClass")
         button.button-muted.btn-small.mlm(type="button" ng-click="cancel(); onChange()" translate="CANCEL" ng-hide="status.saving")

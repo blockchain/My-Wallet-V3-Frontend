@@ -1,37 +1,103 @@
 walletApp.controller "AddressImportCtrl", ($scope, $log, Wallet, $modalInstance, $translate, $state, $timeout) ->
-  
+
   $scope.settings = Wallet.settings
+  $scope.accounts = Wallet.accounts
+  $scope.address = null
+
   $scope.step = 1
-  $scope.legacyAddresses  = Wallet.legacyAddresses
-  $scope.BIP38 = null
-  $scope.bip38passphrase = ""
-  $scope.sweeping = false
-  $scope.cameraIsOn = false
-    
-  $scope.fields = {addressOrPrivateKey: "", account: null}
-  
+  $scope.BIP38 = false
+
+  $scope.verifyBIP38Passphrase = undefined
+
+  $scope.status =
+    busy: false
+    sweeping: false
+    cameraIsOn: false
+
+  $scope.fields =
+    addressOrPrivateKey: ''
+    bip38passphrase: ''
+    account: null
+
   $scope.$watchCollection "accounts", (newValue) ->
     $scope.fields.account = Wallet.accounts[0]
-  
-  $scope.errors = {invalidInput: null, addressPresentInWallet: null, incorrectBip38Password: null}
-  
-  $scope.status = {busy: false}
-  
-  $scope.isValid = () ->
-    tally = 0
-    for key, value of $scope.errors
-      if $scope.errors[key]
-        tally++
-    return tally == 0
-        
-  $scope.address = null
-  $scope.accounts = Wallet.accounts
+
+  $scope.isValidAddressOrPrivateKey = (val) ->
+    Wallet.my.isValidAddress(val) || Wallet.my.isValidPrivateKey(val)
+
+  # Import address or private key
+
+  $scope.import = () ->
+    $scope.status.busy = true
+
+    if $scope.BIP38
+      correct = () ->
+        $scope.status.busy = false
+        $scope.step = 2
+
+      wrong = () ->
+        $scope.status.busy = false
+        $scope.importForm.bipPassphrase.$setValidity('wrong', false)
+
+      $timeout (->
+        $scope.verifyBIP38Passphrase($scope.fields.bip38passphrase, correct, wrong)
+      ), 100
+
+    else
+      $scope.attemptImport()
+
+  $scope.attemptImport = () ->
+    addressOrPrivateKey = $scope.fields.addressOrPrivateKey.trim()
+
+    needsBip38 = (callback) ->
+      $scope.status.busy = false
+      $scope.BIP38 = true
+      $scope.verifyBIP38Passphrase = callback
+
+    success = (address) ->
+      $scope.status.busy = false
+      $scope.address = address
+      $scope.step = 2
+
+    error = (err, address=null) ->
+      if err? && err.addressPresentInWallet
+        $scope.importForm.privateKey.$setValidity('present', false)
+      $scope.status.busy = false
+      $scope.address = address
+
+    Wallet.addAddressOrPrivateKey(addressOrPrivateKey, needsBip38, success, error)
+
+  # Transfer funds
+
+  $scope.transfer = () ->
+    $scope.status.sweeping = true
+
+    success = () ->
+      $scope.status.sweeping = false
+      $modalInstance.dismiss ""
+      $state.go("wallet.common.transactions", {accountIndex: $scope.fields.account.index})
+
+    error = (error) ->
+      $scope.status.sweeping = false
+      Wallet.displayError(error)
+
+    Wallet.transaction(success, error).sweep($scope.address, $scope.fields.account.index)
+
+  # Misc functions
+
+  $scope.goToTransfer = () ->
+    $scope.step = 3
+
+  $scope.onError = (error) ->
+    # This never gets called...
+    $translate("CAMERA_PERMISSION_DENIED").then (translation) ->
+      Wallet.displayWarning(translation)
 
   $scope.cameraOn = () ->
     $scope.cameraRequested = true
 
   $scope.cameraOff = () ->
-    $scope.cameraIsOn = false
+    $scope.status.cameraIsOn = false
     $scope.cameraRequested = false
 
   $scope.processURLfromQR = (url) ->
@@ -41,69 +107,6 @@ walletApp.controller "AddressImportCtrl", ($scope, $log, Wallet, $modalInstance,
   $scope.parseBitcoinUrl = (url) ->
     url = url.split('bitcoin:')
     return url[url.length - 1]
-  
+
   $scope.close = () ->
     $modalInstance.dismiss ""
-  
-  $scope.validate = () ->
-    $scope.status.busy = true
-    
-    if $scope.BIP38
-      $scope.errors.incorrectBip38Password = false
-      
-      correctPassword = () ->
-        # console.log("Correct password")
-      
-      wrongPassword = () ->
-        $scope.errors.incorrectBip38Password = true
-        $scope.status.busy = false
-        $scope.$digest()
-              
-      # Slight delay to display spinner, because this blocks the UI.
-      $timeout(()->
-        $scope.bip38callback($scope.bip38passphrase, correctPassword, wrongPassword)
-      , 100)
-    else
-      success = (address)->
-        $scope.address = address
-        $scope.step = 2
-        $scope.status.busy = false
-        
-    
-      errors = (errors, address) ->
-        $scope.address = address or null
-        $scope.status.busy = false
-        
-      
-        # We basically just want to do $scope.errors = errors, but AngularJS would
-        # stop monitoring in that case:
-        for key, value in $scope.errors
-          $scope.errors[key] = undefined
-        
-        for error, value of errors
-          $scope.errors[error] = value
-        
-      needsBip38 = (callback) ->
-        $scope.bip38callback = callback
-        $scope.BIP38 = true
-        $scope.status.busy = false      
-    
-      addressOrPrivateKey = $scope.fields.addressOrPrivateKey.trim()
-      Wallet.addAddressOrPrivateKey(addressOrPrivateKey, needsBip38, success, errors)
-    
-  $scope.goToTransfer = () ->
-    $scope.step = 3
-  
-  $scope.transfer = () ->
-    $scope.sweeping = true
-    
-    success = () ->
-      $scope.sweeping = false
-      $modalInstance.dismiss ""
-      $state.go("wallet.common.transactions", {accountIndex: $scope.fields.account.index})
-    
-    error = (error) ->
-      $scope.sweeping = false
-      Wallet.displayError(error)
-    
-    Wallet.transaction(success, error).sweep($scope.address, $scope.fields.account.index)

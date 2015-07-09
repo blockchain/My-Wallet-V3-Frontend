@@ -3,7 +3,6 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
   $scope.settings = Wallet.settings
   $rootScope.isMock = Wallet.isMock
   $scope.goal = Wallet.goal
-  $rootScope.dist = if ($location.host() == 'alpha.blockchain.info' || $location.host() == 'dev.blockchain.info') then true else false
 
   $scope.menu = { isCollapsed: false }
   $scope.toggleMenu = () ->
@@ -13,10 +12,10 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
 
   # getUserMedia is not supported by Safari and IE.
   $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia ||  navigator.webkitGetUserMedia || navigator.msGetUserMedia) != undefined
-  
+
   $scope.request = () ->
     Wallet.clearAlerts()
-                        
+
     modalInstance = $modal.open(
       templateUrl: "partials/request.jade"
       controller: "RequestCtrl"
@@ -27,7 +26,7 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
     if modalInstance?
       modalInstance.opened.then () ->
         Wallet.store.resetLogoutTimeout()
-    
+
   $scope.send = () ->
     Wallet.clearAlerts()
     modalInstance = $modal.open(
@@ -47,18 +46,18 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
   #           Private             #
   #################################
 
-  $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->  
+  $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->
     if toState.name != "login.show" && toState.name != "login" && toState.name != "register" && toState.name != "open" && toState.name != "verify-email" && toState.name != "verify-email-with-guid" && $scope.status.isLoggedIn == false
       $state.go("login.show")
     if Wallet.status.isLoggedIn && Wallet.store.resetLogoutTimeout?
       Wallet.store.resetLogoutTimeout()
   )
-    
+
   $scope.$watch "status.isLoggedIn", () ->
     $timeout(()->
       $scope.checkGoals()
     ,0)
-        
+
   $scope.$watchCollection "goal", () ->
     $timeout(()->
       $scope.checkGoals()
@@ -66,13 +65,15 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
 
   $scope.checkGoals = () ->
     if $scope.status.isLoggedIn
-      if Wallet.goal? 
+      unless Wallet.settings.currency? && Wallet.settings.btcCurrency?
+        return $timeout (-> $scope.checkGoals()), 100
+      if Wallet.goal?
         if Wallet.goal.send?
           $modal.open(
             templateUrl: "partials/send.jade"
             controller: "SendCtrl"
             resolve:
-              paymentRequest: -> 
+              paymentRequest: ->
                 Wallet.goal.send
             windowClass: "bc-modal"
           )
@@ -84,7 +85,7 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
             templateUrl: "partials/claim.jade"
             controller: "ClaimModalCtrl"
             resolve:
-              claim: -> 
+              claim: ->
                 Wallet.goal.claim
             windowClass: "bc-modal"
           )
@@ -139,7 +140,7 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
 
       Wallet.goal.verifyEmail = undefined
 
-  $scope.$on "requireSecondPassword", (notification, continueCallback, cancelCallback, insist) ->
+  $scope.$on "requireSecondPassword", (notification, defer, insist) ->
     modalInstance = $modal.open(
       templateUrl: "partials/second-password.jade"
       controller: "SecondPasswordCtrl"
@@ -147,13 +148,11 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
       resolve:
         insist: ->
           insist
-        continueCallback: ->
-          continueCallback
-        cancelCallback: ->
-          cancelCallback
-          
+        defer: ->
+          defer
+
     )
-  
+
   $scope.$on "needsUpgradeToHD", (notification, continueCallback) ->
     modalInstance = $modal.open(
       templateUrl: "partials/upgrade.jade"
@@ -164,6 +163,6 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
     modalInstance.result.then(() ->
       continueCallback()
     )
-    
+
   $scope.back = () ->
     $window.history.back()

@@ -6,31 +6,29 @@ div(ng-show="hdAddresses.length > 0")
   .form-ctrl.flex-between.flex-center
     .flex-1.mrl
       input.filter(type="text", ng-model="searchText").form-control
-    .btn-group(dropdown is-open="display.account_dropdown_open" ng-show="settings.multiAccount")
+    .btn-group(dropdown is-open="display.account_dropdown_open")
       button.btn.btn-info.dropdown-toggle.btn-bci(dropdown-toggle type="button", data-toggle="dropdown", aria-expanded="false")
         span(translate="NEW_ADDRESS")
         span.caret
       ul.dropdown-menu(role="menu")
-        li(ng-repeat="account in accounts")
+        li(ng-repeat="account in accounts | filter:{active: true}")
           a(ng-click="addAddressForAccount(account)") {{ account.label }}
-    .btn-group(ng-hide="settings.multiAccount")
-      button.btn.btn-info.btn-bci(type="button" translate="NEW_ADDRESS" ng-click="addAddressForAccount(accounts[0])")
   .row
     .col-xs-12.table-container
       table.responsive
         tr
           th(translate="ADDRESS")
           th.hidden-xs(translate="LABEL")
-          th.hidden-xs(translate="ACCOUNT" ng-show="settings.multiAccount")
+          th.hidden-xs(translate="ACCOUNT")
           //- th(translate="REQUESTED_AMOUNT")
           //- th
-          //- th  
+          //- th
         //- tr(ng-repeat="request in requests | filter:{canceled:false, complete:false} | filter:searchText")
         tr(ng-repeat="address in hdAddresses  | filter:searchText | orderBy:['account.index', 'index']")
           td
             a(ng-bind-html="address.address | highlight:searchText", ui-sref="wallet.common.settings.address({address: address.address})")
           td.hidden-xs(ng-bind-html="address.label | highlight:searchText")
-          td.hidden-xs(ng-bind-html="address.accountLabel | highlight:searchText" ng-show="settings.multiAccount")
+          td.hidden-xs(ng-bind-html="address.accountLabel | highlight:searchText")
 
           //- td.amount
           //-   fiat(btc="request.amount", ng-show="request.amount > 0")
@@ -40,7 +38,7 @@ div(ng-show="hdAddresses.length > 0")
           //-     span.label.label-warning(ng-show="request.amount < request.paid", translate="TOO_MUCH")
           //-     br
           //-     span(translate="RECEIVED_X", translate-values="{amount: request.amount / 100000000, paid: request.paid / 100000000}")
-          //- td 
+          //- td
             //- a(ng-click="open(request)", translate="DETAILS")
             //- a(ui-sref="wallet.common.settings.address({address: address.address})", translate="DETAILS")
           //- td
@@ -72,21 +70,21 @@ p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archive
       tr(ng-repeat="address in legacyAddresses | filter:{active: true} | filter:searchTextLegacy")
         td
           a(ng-bind-html="address.address | highlight:searchTextLegacy", ui-sref="wallet.common.settings.address({address: address.address})")
-          span.label.label-warning(ng-show="address.isWatchOnlyLegacyAddress", translate="WATCH_ONLY")    
+          span.label.label-warning(ng-show="address.isWatchOnlyLegacyAddress", translate="WATCH_ONLY")
         td(ng-bind-html="address.label | highlight:searchTextLegacy")
-        td 
+        td
           span(ng-show="address.balance != null")
             span.btc {{ address.balance | toBitCurrency:settings.btcCurrency }}
-            fiat.fiat(btc="address.balance") 
+            fiat.fiat(btc="address.balance")
           //- span(us-spinner="{radius:6, width:6, length: 6}" spinner-key="{{ address.address }}" spinner-start-active="true" ng-show="address.balance == null")
           img(ng-show="address.balance == null" src="img/spinner.gif")
         //- td
           //- a(ui-sref="wallet.common.settings.address({address: address.address})", translate="DETAILS")
-        td 
+        td
           a(translate="TRANSFER", ng-click="transfer(address)")
-        td 
+        td
           a(translate="ARCHIVE", ng-click="archive(address)")
-        td 
+        td
           a(translate="YOUR_PRIVATE_KEY", ng-hide="address.isWatchOnlyLegacyAddress", ng-click="showPrivKey(address)")
 
 
@@ -105,12 +103,12 @@ p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archive
       tr(ng-repeat="address in legacyAddresses | filter:{active: false} | filter:searchTextArchived")
         td(ng-bind-html="address.address | highlight:searchTextArchived")
         td(ng-bind-html="address.label | highlight:searchTextArchived")
-        td 
+        td
           span(ng-show="address.balance != null")
             span.btc {{ address.balance | toBitCurrency:settings.btcCurrency }}
-            fiat.fiat(btc="address.balance") 
+            fiat.fiat(btc="address.balance")
           img(ng-show="address.balance == null" src="img/spinner.gif")
-        td 
+        td
           a(translate="UNARCHIVE", ng-click="unarchive(address)")
         td
           a(translate="DELETE", ng-click="delete(address)")
