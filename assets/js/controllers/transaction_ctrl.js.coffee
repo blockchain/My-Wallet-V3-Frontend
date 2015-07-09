@@ -29,11 +29,11 @@ walletApp.controller "TransactionCtrl", ($scope, Wallet, $log, $stateParams, $fi
           $scope.from = $scope.accounts[tx.from.account.index].label
         else
           if tx.from.legacyAddresses? && tx.from.legacyAddresses.length > 0
-            address = $filter("getByProperty")("addr", tx.from.legacyAddresses[0].address, Wallet.legacyAddresses)
-            if address.label? and (address.label != address.addr)
+            address = $filter("getByProperty")("address", tx.from.legacyAddresses[0].address, Wallet.legacyAddresses)
+            if address.label? and (address.label != address.address)
               $scope.from = address.label
             else
-              $scope.from = address.addr + " (you)"
+              $scope.from = address.address + " (you)"
           else if tx.from.externalAddresses?
             $scope.from = Wallet.getAddressBookLabel(tx.from.externalAddresses.addressWithLargestOutput)
             unless $scope.from
@@ -49,8 +49,8 @@ walletApp.controller "TransactionCtrl", ($scope, Wallet, $log, $stateParams, $fi
         else
           convert = (y) -> " [" + $filter("btc")(y) + "]"
           label = (a) ->
-            address = $filter("getByProperty")("addr", a, Wallet.legacyAddresses)
-            if (address.label? and address.label isnt address.addr) then address.label else address.address
+            address = $filter("getByProperty")("address", a, Wallet.legacyAddresses)
+            if (address.label? and address.label isnt address.address) then address.label else address.address
           adBook = (a) ->
             name = Wallet.getAddressBookLabel(a)
             if name then name else a

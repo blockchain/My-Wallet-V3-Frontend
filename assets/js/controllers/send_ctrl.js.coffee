@@ -272,8 +272,8 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
           if address.active
             item = {}
             item.type = "Imported Addresses"
-            item.label = address.label || address.addr
-            item.address = address.addr
+            item.label = address.label || address.address
+            item.address = address.address
             item.balance = address.balance
             $scope.destinationsBase.push item
             unless address.isWatchOnlyLegacyAddress
