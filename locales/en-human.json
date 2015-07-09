@@ -399,7 +399,7 @@
   "AUTHORIZED_MESSAGE" : "You have authorized this login attempt.",
   "ADVANCED_SEND" : "Advanced Send",
   "RESET_FORM" : "Reset Form",
-  "REGULAR_SEND" : "Back To Regular Send",
+  "REGULAR_SEND" : "Regular Send",
   "MINERS_FEE" : "Miner's Fee",
   "MINERS_FEE_EXPLAIN" : "Select from a predetermined list or enter a custom amount",
   "GO_BACK" : "Go Back",

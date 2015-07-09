@@ -91,8 +91,8 @@
           label.mbn(translate="MINERS_FEE")
           helper-button(content="ADVANCED_SEND_STEP_1")
         p.ccc(translate="MINERS_FEE_EXPLAIN")
-        .flex-center.miners-fee-selection
-          .flex-column.border-right.prl.mrl
+        .miners-fee-selection
+          .fee-choices
             label
               input(type="radio" ng-model="transaction.fee" value="5000" name="miners-fee" ng-change="validateAmounts()")
               span(translate="FRUGAL")
@@ -103,7 +103,7 @@
             label
               input(type="radio" ng-model="transaction.fee" value="100000" name="miners-fee" ng-change="validateAmounts()")
               span(translate="GENEROUS")
-          .flex-center.pll.mll
+          .fee-custom
             .mrl.flex-1
               .flex-center
                 span.mrm {{ btcCurrency.code }}:
@@ -161,9 +161,9 @@
 
 .modal-footer.flex-between.flex-center.pal
   .flex-center
-    a.ccc(ng-hide="advanced || confirmationStep", ng-click="advancedSend()", translate="ADVANCED_SEND")
-    a.ccc(ng-show="advanced && !confirmationStep", ng-click="regularSend()", translate="REGULAR_SEND")
-  .flex-center.flex-end
+    a.dark-grey(ng-hide="advanced || confirmationStep", ng-click="advancedSend()", translate="ADVANCED_SEND")
+    a.dark-grey(ng-show="advanced && !confirmationStep", ng-click="regularSend()", translate="REGULAR_SEND")
+  .flex-center.flex-end.send-actions
     button.button-muted-off.mrm(ng-click="cameraOff()", ng-show="cameraIsOn", translate="CAMERA_OFF")
     button.button-muted.mrm(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
     button.button-muted.mrm(ng-click="backToForm()", translate="BACK", ng-show="confirmationStep")
