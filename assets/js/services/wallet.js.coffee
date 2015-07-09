@@ -1343,10 +1343,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.displaySuccess("Second password set.")
       wallet.settings.secondPassword = true
       successCallback()
-
     error = () ->
-
-    wallet.my.setSecondPassword(password, success, error)
+    wallet.my.wallet.encrypt(password, success, error)
 
 
   ########################################
