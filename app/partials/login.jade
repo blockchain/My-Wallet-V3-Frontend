@@ -47,14 +47,15 @@
           div
             input#pass_input.form-control(type="password", name="pass_input" ng-model="password", ng-disabled="busy || disableLogin" focus-when="uidAvailable")
             span.help-block {{ errors.password }}  
-        .form-group(ng-show="settings.needs2FA", ng-class="{'has-error': errors.twoFactor}")
+        .form-group(ng-show="settings.needs2FA", ng-class="{'has-error': errors.twoFactor || settings.twoFactorMethod == 3}")
           label.control-label
               span(translate="YUBI_CODE", ng-show="settings.twoFactorMethod == 1")
               span(translate="EMAIL_CODE", ng-show="settings.twoFactorMethod == 2")
+              span(translate="2FA_NOT_SUPPORTED", ng-show="settings.twoFactorMethod == 3")
               span(translate="GOOGLE_AUTH_CODE", ng-show="settings.twoFactorMethod == 4")
               span(translate="SMS_CODE", ng-show="settings.twoFactorMethod == 5")
           div
-            input.form-control(type="text", ng-model="twoFactorCode", ng-disabled="busy")
+            input.form-control(type="text", ng-model="twoFactorCode", ng-disabled="busy || settings.twoFactorMethod == 3")
             span.help-block {{ errors.twoFactor }}
             p.form-control-static(ng-show="settings.twoFactorMethod == 5")
               img(ng-show="resending" src="img/spinner.gif")

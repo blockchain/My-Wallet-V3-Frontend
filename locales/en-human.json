@@ -181,6 +181,7 @@
   "2FA_EMAIL" : "Email",
   "2FA_SMS" : "SMS",
   "2FA_GOOGLE_AUTH" : "Google Authenticator",
+  "2FA_NOT_SUPPORTED" : "This method of two factor authentication is not supported",
   "DISABLE" : "Disable",
   "CONFIRM_DISABLE_2FA" : "Are you sure you wish to disable two step authentication?",
   "IMPORTED_ADDRESSES" : "Imported Addresses",
