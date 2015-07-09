@@ -490,6 +490,12 @@
   "VALUE_NOW" : "Value Now",
   "VERIFY_ON_BCI" : "Verify on Blockchain.info",
   "ARE_YOU_SURE" : "We just want to double check! Are you sure you wish to proceed? Remember you cannot go back to your old wallet :)",
-  "ACCOUNT_NAME_TAKEN" : "That account name is already in use"
+  "ACCOUNT_NAME_TAKEN" : "That account name is already in use",
+  "EMAIL_ADDRESS_TOOLTIP" : "Your verified email address is used to send login codes when unusual activity is detected and to send bitcoin payment alerts when funds are sent or received.",
+  "RECOVERY_PHRASE_TOOLTIP" : "Your recovery phrase allows you to restore your wallet in case of loss of password or extended downtime on our servers.",
+  "PASSWORD_HINT_TOOLTIP" : "Allows us to send your password hint to your verified email address in case you forget your password.",
+  "MOBILE_NUMBER_TOOLTIP" : "Your mobile phone can be used to enable two-factor authentication, helping to secure your wallet from unauthorized access.",
+  "2FA_TOOLTIP" : "2-Step Verification helps prevent unauthorized access to your wallet by requiring a one-time password after every login attempt.",
+  "BLOCK_TOR_TOOLTIP" : "Prevent IP addresses that are known to be part of the Tor anonymizing network from accessing your wallet."
 
 }

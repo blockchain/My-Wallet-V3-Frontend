@@ -61,7 +61,9 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       label: paymentRequest.address || ""
       type: "External"
 
-    $scope.transaction.destinations[i] = destination
+    # $scope.transaction.destinations[i] = destination
+    $scope.refreshDestinations(paymentRequest.address, i)
+    
     $scope.transaction.amounts[i] = paymentRequest.amount || 0
     $scope.transaction.note = paymentRequest.message || ''
 
@@ -81,6 +83,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       $log.error "Not a bitcoin QR code:" + url
 
   $scope.cameraOn = (index=0) ->
+    $scope.$broadcast('ResetSearch' + index)
     $scope.cameraRequested = true
     $scope.qrIndex = index
 
@@ -97,10 +100,9 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.resetSendForm = () ->
     $scope.transaction = angular.copy($scope.transactionTemplate)
     $scope.transaction.from = Wallet.accounts[Wallet.my.wallet.hdwallet.defaultAccountIndex]
-    tmp = angular.copy($scope.destinations[0])
-    $scope.removeDestination(0)
-    $scope.destinations.push(tmp)
-    $timeout (-> $scope.addDestination()), 0
+
+    for i in [0..($scope.destinations.length - 1)]
+      $scope.$broadcast('ResetSearch' + i)
 
   $scope.addDestination = () ->
     originalDestinations = angular.copy($scope.destinations[0])
