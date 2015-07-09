@@ -15,7 +15,7 @@
         span.help-block(ng-show="fields.to.isWatchOnlyLegacyAddress") Your wallet does not have the private key for this address. Without the private key you will not have access to the bitcoins sent to this address. Make sure you have this private key somewhere else!
     .form-group(ng-class="{'has-error': requestForm.amount.$error.isValidAmount && requestForm.amount.$touched}")
       label.col-sm-3.control-label(translate="AMOUNT")
-      .col-sm-3
+      .col-sm-3.mbl
         input.form-control(name="amount" type="text" ng-model="fields.amount" ng-disabled="paymentRequest && paymentRequest.paid > 0" is-valid-amount currency="fields.currency")
         span.help-block(ng-show="requestForm.amount.$error.isValidAmount && requestForm.amount.$touched" translate="ENTER_VALID_AMOUNT")
       .col-sm-4
@@ -33,20 +33,20 @@
     //-   .col-sm-9
     //-     input.form-control(type="text",ng-model="fields.label")
     //-     span.help-block(translate="OPTIONAL")
-    .form-group
+    div
       hr
     .form-group(ng-show="paymentRequest && paymentRequest.paid > 0 && paymentRequest.paid != fields.amount")
       label.col-sm-3.control-label(translate="PAID")
       .col-sm-9
         p.form-control-static
           | {{ paymentRequest.paid / 100000000.0 }}  
-    .flex.pam(ng-if="paymentRequestURL")
-      .flex-2
+    .payment-url.pam(ng-if="paymentRequestURL")
+      .receive-code
         p(ng-hide="status.didInitializeHD")
           img(src="img/spinner.gif")  
         span(ng-show="status.didInitializeHD")
           qr(text="paymentRequestURL", size=120, correction-level="'M'")
-      .phs.flex-3.flex-center.flex-column
+      .phs.flex-center.flex-column.receive-address
         label.black
           span(translate="BITCOIN_ADDRESS")
           span :

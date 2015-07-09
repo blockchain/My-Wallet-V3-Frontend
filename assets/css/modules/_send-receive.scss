@@ -1,0 +1,14 @@
+.payment-url {
+  @extend .flex;
+  .receive-code { flex: 2; }
+  .receive-address { flex: 3; }
+}
+
+@media (max-width: 668px) {
+  .payment-url {
+    flex-direction: column;
+    align-items: center;
+    -webkit-align-items: center;
+  }
+  .receive-code, .receive-address { flex: 0; }
+}
