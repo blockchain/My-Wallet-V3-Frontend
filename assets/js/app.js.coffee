@@ -28,6 +28,7 @@ modules = [
   "LocalStorageModule"
   "ngNumeraljs"
   "pascalprecht.translate"
+  "bcTranslateStaticFilesLoader"
   # "ui.bootstrap-slider" // Mining fee picker is not used a.t.m.
   "angular-inview"
   "passwordEntropy"
