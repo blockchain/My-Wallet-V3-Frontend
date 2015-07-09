@@ -1,32 +1,42 @@
 #transactions
-  .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || (transactions | filter:transactionFilter).length > 0 || selectedAccountIndex == 'imported'")
-    .flex-column.mbl.border-bottom.black
-      .flex-center.flex-justify
-        i.ti-layout-list-post.h3.mrm
-        h3.em-100(translate="NO_TRANSACTIONS_YET")
-      p.em-400(translate="DESCRIBE_TRANSACTIONS")
-    h3.em-100.text-center.mid-grey.emptystate(translate="HIT_RECEIVE", ng-click="request()")
-    h3.em-100.text-center.mid-grey.emptystate(translate="HIT_SEND", ng-click="send()")
-  .row.transaction(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")
-    .info.clearfix(ng-click="showTransaction(transaction)")
-      .col-xs-6.col-sm-6.col-md-3
+  .filter-bar.flex-between.flex-center
+    .filter-buttons.flex
+      a.black.em-500.em-alt.alt.mrl.active All
+      a.black.em-500.em-alt.mrl(ng-click="") Sent
+      a.black.em-500.em-alt.mrl(ng-click="") Received
+      a.black.em-500.em-alt(ng-click="") Transferred
+    .filter-search
+      input(type="text" placeholder="Search by Account name or Address")
+      i.ti-search
+  .transaction-feed
+    .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || (transactions | filter:transactionFilter).length > 0 || selectedAccountIndex == 'imported'")
+      .flex-column.mbl.border-bottom.black
+        .flex-center.flex-justify
+          i.ti-layout-list-post.h3.mrm
+          h3.em-100(translate="NO_TRANSACTIONS_YET")
+        p.em-400(translate="DESCRIBE_TRANSACTIONS")
+      h3.em-100.text-center.mid-grey.emptystate(translate="HIT_RECEIVE", ng-click="request()")
+      h3.em-100.text-center.mid-grey.emptystate(translate="HIT_SEND", ng-click="send()")
+    .row.transaction(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")
+      .info.clearfix(ng-click="showTransaction(transaction)")
+        .col-xs-6.col-sm-6.col-md-3
+          span 
+            date {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
+        .col-xs-6.col-sm-6.col-md-9
+          span(ng-show="transaction.confirmations == 0 && transaction.from.externalAddresses")
+            i(translate="UNCONFIRMED_WARNING")
+      .type.col-xs-6.col-sm-9(ng-click="showTransaction(transaction)")
         span 
-          date {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
-      .col-xs-6.col-sm-6.col-md-9
-        span(ng-show="transaction.confirmations == 0 && transaction.from.externalAddresses")
-          i(translate="UNCONFIRMED_WARNING")
-    .type.col-xs-6.col-sm-9(ng-click="showTransaction(transaction)")
-      span 
-        transaction-description(transaction="transaction", ng-if="canDisplayDescriptions")
-    .amount.col-xs-6.col-sm-3
-      span 
-        amount(transaction="transaction")
-  .row
-    .col-xs-5
-    .col-xs-2
-      p(align="center", ng-hide= "loading || allTransactionsLoaded")
-        a(in-view="nextPage()", ng-click="nextPage()") Load more...
-  .row(ng-show="loading").mtm
-     .col-xs-5
-     .col-xs-2
-       img(src="img/spinner.gif")
+          transaction-description(transaction="transaction", ng-if="canDisplayDescriptions")
+      .amount.col-xs-6.col-sm-3
+        span 
+          amount(transaction="transaction")
+    .row
+      .col-xs-5
+      .col-xs-2
+        p(align="center", ng-hide= "loading || allTransactionsLoaded")
+          a(in-view="nextPage()", ng-click="nextPage()") Load more...
+    .row(ng-show="loading").mtm
+       .col-xs-5
+       .col-xs-2
+         img(src="img/spinner.gif")
