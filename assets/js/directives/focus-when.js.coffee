@@ -1,12 +1,7 @@
 walletApp.directive('focusWhen', ($timeout) ->
   {
-    scope: {
-      trigger: '@focusWhen'
-    }
-    link: (scope, elem) ->
-      scope.$watch 'trigger', (value) ->
-        if value
-          elem[0].focus()
-          scope.trigger = false
+    restrict: 'A'
+    link: (scope, elem, attrs, ctrl) ->
+      elem[0].focus() if scope.$eval(attrs.focusWhen)
   }
 )

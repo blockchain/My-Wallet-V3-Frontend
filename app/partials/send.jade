@@ -48,6 +48,7 @@
               property="label" 
               ng-change="updateToLabel()" 
               reset-search-input="false"
+              reset-search-input-on="{{ 'ResetSearch' + $index }}"
               required
             )
               ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}

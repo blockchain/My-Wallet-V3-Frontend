@@ -17,12 +17,7 @@
               .level-complete.flex-center.flex-justify
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
-          .level-complete-container(ng-show="user.isEmailVerified")
-            .flex-column.flex-center
-              img(src="img/badge-verifyemail.png")
-            p.bright-green
-              i.ti-check.prm
-              span(TRANSLATE="EMAIL_VERIFIED")
+          completed-level(ng-show="user.isEmailVerified" placement="bottom" content="EMAIL_ADDRESS_TOOLTIP" img="img/badge-verifyemail.png" message="EMAIL_VERIFIED")
       li.level-badge(ng-class="{'badge-active': status.didConfirmRecoveryPhrase}")
         a(ng-click="status.didConfirmRecoveryPhrase || toggle('securityphrase')", ng-class="{'active' : display.action == 'securityphrase' }")
           .level-incomplete-container(ng-hide="status.didConfirmRecoveryPhrase")
@@ -34,12 +29,7 @@
               .level-complete.flex-center.flex-justify
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
-          .level-complete-container(ng-show="status.didConfirmRecoveryPhrase")
-            .flex-column.flex-center
-              img(src="img/badge-securityphrase.png")
-            p.bright-green
-              i.ti-check.prm
-              span(TRANSLATE="PHRASE_BACKED")
+          completed-level(ng-show="status.didConfirmRecoveryPhrase" placement="bottom" content="RECOVERY_PHRASE_TOOLTIP" img="img/badge-securityphrase.png" message="PHRASE_BACKED")
       li.level-badge(ng-class="{'badge-active': user.passwordHint}")
         a(ng-click="user.passwordHint || toggle('passwordhint')", ng-class="{'active' : display.action == 'passwordhint' }")
           .level-incomplete-container(ng-hide="user.passwordHint")
@@ -51,18 +41,13 @@
               .level-complete.flex-center.flex-justify
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
-          .level-complete-container(ng-show="user.passwordHint")
-            .flex-column.flex-center
-              img(src="img/badge-passwordhint.png")
-            p.bright-green
-              i.ti-check.prm
-              span(TRANSLATE="HINT_STORED")
+          completed-level(ng-show="user.passwordHint" placement="bottom" content="PASSWORD_HINT_TOOLTIP" img="img/badge-passwordhint.png" message="HINT_STORED")
 
     .badge-panel(ng-show="display.action == 'email' || display.action == 'securityphrase' || display.action == 'passwordhint' ")
       div(ng-show="display.action == 'email' && !display.editingEmail")
         .verify-email
           p(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
-          verify-email(security-center)
+          verify-email(button-class="button-success button-lg")
           p(ng-hide="user.isEmailVerified")
             span(translate="DIDNT_RECEIVE_EMAIL")
             span 
@@ -73,14 +58,14 @@
 
       .flex-center(ng-show="display.action == 'email' && display.editingEmail")       
         p(translate="YOUR_EMAIL_ADDRESS")
-        bc-async-input.width-100.pll(inline security-center type="email" is-required="true" placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
+        bc-async-input.width-100.pll(inline button-class="button-success button-lg" type="email" is-required placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
       .flex-center(ng-show="display.action == 'securityphrase'")        
         p.flex-1.prl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
         .flex-1.mll.backup-phrase-actions
-          confirm-recovery-phrase(security-center)
+          confirm-recovery-phrase(button-class="button-success button-lg")
 
       div(ng-show="display.action == 'passwordhint'")       
-        bc-async-input(custom inline security-center placeholder="'CHANGE_PASSWORD_HINT' | translate" ng-model="user.passwordHint" on-save="changePasswordHint" action-title="'CHANGE_PASSWORD_HINT' | translate")
+        bc-async-input(custom inline placeholder="'CHANGE_PASSWORD_HINT' | translate" ng-model="user.passwordHint" on-save="changePasswordHint" action-title="'CHANGE_PASSWORD_HINT' | translate")
           .flex-center
             .form-group.width-50.flex-column(ng-class="{'has-error': !validate()}")
               p(translate="CHANGE_PASSWORD_HINT_SECURITY_CENTER")
@@ -108,12 +93,7 @@
               .level-complete.flex-center.flex-justify
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
-          .level-complete-container(ng-show="user.isMobileVerified")
-            .flex-column.flex-center
-              img(src="img/badge-addmobile.png")
-            p.bright-green
-              i.ti-check.prm
-              span(TRANSLATE="MOBILE_LINKED")
+          completed-level(ng-show="user.isMobileVerified" content="MOBILE_NUMBER_TOOLTIP" img="img/badge-addmobile.png" message="MOBILE_LINKED")
       li.level-badge(ng-class="{'badge-active': settings.needs2FA}")
         a(ng-click="settings.needs2FA || toggle('twofactor')", ng-class="{'active' : display.action == 'twofactor' }")
           .level-incomplete-container(ng-hide="settings.needs2FA")
@@ -125,12 +105,7 @@
               .level-complete.flex-center.flex-justify
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
-          .level-complete-container(ng-show="settings.needs2FA")
-            .flex-column.flex-center
-              img(src="img/badge-add2FA.png")
-            p.bright-green
-              i.ti-check.prm
-              span(TRANSLATE="TWO_STEP_ENABLED")
+          completed-level(ng-show="settings.needs2FA" content="2FA_TOOLTIP" img="img/badge-add2FA.png" message="TWO_STEP_ENABLED")
 
     .badge-panel(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
       div(ng-show="display.action == 'mobilenumber'")
@@ -159,15 +134,10 @@
               .level-complete.flex-center.flex-justify
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
-          .level-complete-container(ng-show="settings.blockTOR")
-            .flex-column.flex-center
-              img(src="img/badge-blockTOR.png")
-            p.bright-green
-              i.ti-check.prm
-              span(TRANSLATE="TOR_BLOCKED")
+          completed-level(ng-show="settings.blockTOR" content="BLOCK_TOR_TOOLTIP" img="img/badge-blockTOR.png" message="TOR_BLOCKED")
 
     .badge-panel(ng-show="display.action == 'blocktor'")
       .flex-center(ng-show="display.action == 'blocktor'")
         p.flex-1(TRANSLATE="BLOCK_TOR_EXPLAIN")
         .mll.pll.block-tor-actions
-          tor(security-center)
+          tor(button-class="button-success button-lg")

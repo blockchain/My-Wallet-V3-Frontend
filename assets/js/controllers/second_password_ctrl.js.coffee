@@ -17,12 +17,11 @@ walletApp.controller "SecondPasswordCtrl", ($scope, $log, Wallet, $modalInstance
 
     Wallet.clearAlerts()
 
-    correctPassword = () ->
+    if Wallet.validateSecondPassword($scope.secondPassword)
       $scope.busy = false
       $modalInstance.close ""
-
-    wrongPassword = () ->
+      continueCallback($scope.secondPassword)
+    else
       $scope.busy = false
-      $modalInstance.close ""
-
-    continueCallback($scope.secondPassword, correctPassword, wrongPassword)
+      $translate("SECOND_PASSWORD_INCORRECT").then (translation) ->
+        Wallet.displayError(translation)

@@ -14,13 +14,6 @@
   margin: 3px 0 0 -20px
 }
 
-.security-badge {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-
 .actionHolder{padding: 0;}
 .hasBadge{display: none;}
 .securityhide{display: none;}
@@ -153,6 +146,12 @@
   border: 5px solid $bright-green;
   border-radius: 100%;
   i { font-size: 2em; }
+}
+
+@media (max-width: 620px) {
+  .security-center-ui header {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 768px) {

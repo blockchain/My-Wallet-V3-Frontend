@@ -317,6 +317,7 @@
   "GO_VERIFY_EMAIL" : "Verify Email",
   "VERIFY_EMAIL_EXPLAIN" : "Whenever you use a different browser or computer, we'll send you a verification email to make sure it's you.",
   "RESEND_EMAIL_VERIFICATION" : "Re-send Email",
+  "SWEEP" : "Sweep",
   "SWEEP_LEGACY" : "Move funds away from imported addresses",
   "SWEEP_LEGACY_EXPLAIN" : "Your recovery phrase does not apply to imported addresses. Therefor we recommend that you transfer fund from imported addresses to one of your accounts.",
   "VERIFY_RECOVERY_PHRASE" : "Verify Recovery Phrase",
@@ -378,9 +379,6 @@
   "WARN_AGAINST_IE" : "We recommend that you login using a more secure browser like Chrome or Safari.",
   "MINIMUM_BROWSER" : "{{ browser }} {{ userVersion }} is not supported. Please install {{ browser }} {{ requiredVersion }} or newer.",
   "UNKNOWN_BROWSER" : "Be careful when using a browser other than Chrome, Firefox or Safari. Make sure it supports secure random number generation and offers strong protection against cross site scripting attacks or you may lose your bitcoins.",
-  "MULTI_ACCOUNT" : "Multiple Accounts",
-  "MULTI_ACCOUNT_DESC" : "Enabling this setting will allow your wallet to have multiple accounts.",
-  "DEVELOPER" : "Developer",
   "VALUE_AT_TX_TIME" : "Value at time of send",
   "SPONSORS" : "Sponsored Links",
   "YUBIKEY_INPUT_EXPLAIN" : "To pair your key with your account select the text box below and press the green LED button on your yubikey device.",
@@ -492,6 +490,12 @@
   "VALUE_NOW" : "Value Now",
   "VERIFY_ON_BCI" : "Verify on Blockchain.info",
   "ARE_YOU_SURE" : "We just want to double check! Are you sure you wish to proceed? Remember you cannot go back to your old wallet :)",
-  "ACCOUNT_NAME_TAKEN" : "That account name is already in use"
+  "ACCOUNT_NAME_TAKEN" : "That account name is already in use",
+  "EMAIL_ADDRESS_TOOLTIP" : "Your verified email address is used to send login codes when unusual activity is detected and to send bitcoin payment alerts when funds are sent or received.",
+  "RECOVERY_PHRASE_TOOLTIP" : "Your recovery phrase allows you to restore your wallet in case of loss of password or extended downtime on our servers.",
+  "PASSWORD_HINT_TOOLTIP" : "Allows us to send your password hint to your verified email address in case you forget your password.",
+  "MOBILE_NUMBER_TOOLTIP" : "Your mobile phone can be used to enable two-factor authentication, helping to secure your wallet from unauthorized access.",
+  "2FA_TOOLTIP" : "2-Step Verification helps prevent unauthorized access to your wallet by requiring a one-time password after every login attempt.",
+  "BLOCK_TOR_TOOLTIP" : "Prevent IP addresses that are known to be part of the Tor anonymizing network from accessing your wallet."
 
 }

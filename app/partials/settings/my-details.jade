@@ -13,7 +13,7 @@ form.form-horizontal(role="form",name="form",novalidate)
       span.label.label-success.hidden-sm.hidden-xs(translate="VERIFIED", ng-show="user.isEmailVerified")
       p.explain.hidden-xs(translate="EMAIL_ADDRESS_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result.flex-column
-      bc-async-input(type="email", is-required="true", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
+      bc-async-input(type="email" is-required ng-model="user.email" on-save="changeEmail" action-title="'CHANGE_EMAIL_ADDRESS' | translate" autofocus)
       verify-email
       resend-email-confirmation.mtl
   .form-group
@@ -50,6 +50,6 @@ form.form-horizontal(role="form",name="form",novalidate)
       label(translate="PASSWORD_HINT")
       p.explain.hidden-sm.hidden-xs(translate="PASSWORD_HINT_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
-      bc-async-input(ng-model="user.passwordHint" on-save="changePasswordHint" on-change="clearErrors" action-title="'CHANGE_PASSWORD_HINT' | translate")
+      bc-async-input(ng-model="user.passwordHint" on-save="changePasswordHint" on-change="clearErrors" max-length="255" action-title="'CHANGE_PASSWORD_HINT' | translate")
     .help-block
       span {{ errors.passwordHint }}

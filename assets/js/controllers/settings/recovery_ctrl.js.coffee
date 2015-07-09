@@ -13,7 +13,10 @@ walletApp.controller "RecoveryCtrl", ($scope, Wallet, $state, $translate) ->
         $scope.recoveryPhrase = mnemonic
         $scope.recoveryPassphrase = passphrase
         $scope.showRecoveryPhrase = true
-      Wallet.getMnemonic(success)
+        
+      error = (message) ->
+        
+      Wallet.getMnemonic(success, error)
     else
       $scope.recoveryPhrase = null
       $scope.recoveryPassphrase = null

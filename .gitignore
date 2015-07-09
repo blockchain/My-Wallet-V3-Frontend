@@ -19,6 +19,7 @@ bower_components
 .env
 betakeys.MDF
 e2e-tests/ignore.js
+.settings
 
 # Generated files
 .idea
