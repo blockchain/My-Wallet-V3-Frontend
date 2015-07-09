@@ -415,21 +415,12 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.settings_api.resendEmailConfirmation(wallet.user.email, success, error)
 
   wallet.setPbkdf2Iterations = (n, successCallback, errorCallback, cancelCallback) ->
-    needsSecondPassword = (continueCallback) ->
-      cancel = () ->
-        cancelCallback()
-
-      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancel
-
-    success = () ->
-      wallet.settings.pbkdf2 = wallet.store.getPbkdf2Iterations()
+    proceed = (password) ->
+      wallet.my.wallet.changePbkdf2Iterations(parseInt(n), password)
+      wallet.settings.pbkdf2 = wallet.my.wallet.pbkdf2_iterations
       successCallback()
-      wallet.applyIfNeeded()
-
-    error = (error) ->
-      errorCallback(error)
-
-    wallet.my.setPbkdf2Iterations(parseInt(n), success, error, needsSecondPassword)
+      # wallet.applyIfNeeded()
+    wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
 
   ####################
   #   Transactions   #
