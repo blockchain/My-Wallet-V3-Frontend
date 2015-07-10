@@ -518,7 +518,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bipPassphrase, successCallback, errorCallback) ->
 
     proceed = (secondPassword='') ->
-      wallet.my.wallet.import(
+      wallet.my.wallet.importLegacyAddress(
         addressOrPrivateKey, '', secondPassword, bipPassphrase
       ).then(successCallback, errorCallback)
 
