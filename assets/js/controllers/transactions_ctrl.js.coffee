@@ -51,8 +51,27 @@ walletApp.controller "TransactionsCtrl", ($scope, Wallet, MyWallet, $log, $state
     $scope.canDisplayDescriptions = false # Don't try to show descriptions for before accounts have been loaded
     $scope.allTransactionsLoaded = false
     $scope.setFilterType(0)
+    console.log $scope.transactions
 
   $scope.transactionFilter = (item) ->
+    $scope.filterByLocation(item) && $scope.filterByType(item) && $scope.filterByName(item, $scope.searchText)
+
+  $scope.filterByName = (tx, search) ->
+    JSON.stringify(tx).search(search) > -1 || search == '' || !search?
+
+  $scope.filterByType = (tx) ->
+    switch $scope.filterBy
+      when $scope.filterTypes[0]
+        return true
+      when $scope.filterTypes[1]
+        return tx.result < 0 && !tx.intraWallet
+      when $scope.filterTypes[2]
+        return tx.result > 0 && !tx.intraWallet
+      when $scope.filterTypes[3]
+        return tx.intraWallet
+    return false
+
+  $scope.filterByLocation = (item) ->
     return item.to.account? || item.from.account? if $stateParams.accountIndex == "accounts"
     return (item.to.legacyAddresses && item.to.legacyAddresses.length) || (item.from.legacyAddresses && item.from.legacyAddresses.length) if $stateParams.accountIndex == "imported"
     return (item.to.account? && item.to.account.index == parseInt($stateParams.accountIndex)) || (item.from.account? && item.from.account.index == parseInt($stateParams.accountIndex))
