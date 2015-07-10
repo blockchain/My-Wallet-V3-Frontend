@@ -58,7 +58,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     didLogin = () ->
       wallet.status.isLoggedIn = true
       wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD
-      wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.hdwallet.isMnemonicVerified
+      if wallet.my.wallet.isUpgradedToHD
+        wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.hdwallet.isMnemonicVerified
 
       wallet.uid = uid
 
@@ -695,10 +696,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     ), 100)
 
   wallet.getDefaultAccountIndex = () ->
-    wallet.my.wallet.hdwallet.defaultAccountIndex
+    if wallet.my.wallet.isUpgradedToHD then wallet.my.wallet.hdwallet.defaultAccountIndex else 0
+
 
   wallet.getReceivingAddressForAccount = (idx) ->
-    wallet.my.wallet.hdwallet.accounts[idx].receiveAddress
+    if wallet.my.wallet.isUpgradedToHD then wallet.my.wallet.hdwallet.accounts[idx].receiveAddress else ""
 
   ###################
   # URL: bitcoin:// #
@@ -858,7 +860,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.total = (accountIndex) ->
     switch accountIndex
       when "accounts", undefined, null
-        wallet.my.wallet.hdwallet.balanceActiveAccounts
+        if wallet.my.wallet.isUpgradedToHD then wallet.my.wallet.hdwallet.balanceActiveAccounts else null
       when "imported"
         wallet.my.wallet.balanceActiveLegacy
       else
