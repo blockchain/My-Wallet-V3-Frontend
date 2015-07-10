@@ -18,6 +18,7 @@ You also need Sass (use `sudo` if you're not using a [Ruby version manager](http
 gem install sass
 ```
 
+```sh
 git clone https://github.com/blockchain/My-Wallet-HD-Frontend.git 
 cd My-Wallet-HD-Frontend
 npm install
