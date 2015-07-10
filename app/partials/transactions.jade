@@ -1,12 +1,14 @@
 #transactions
   .filter-bar.flex-between.flex-center
     .filter-buttons.flex
-      a.black.em-500.em-alt.alt.active(translate="ALL")
-      a.black.em-500.em-alt(ng-click="" translate="SENT_BITCOIN_TO" )
-      a.black.em-500.em-alt(ng-click="" translate="RECEIVED_BITCOIN_FROM")
-      a.black.em-500.em-alt(ng-click="" translate="MOVED_BITCOIN_TO")
+      a.black.em-500.em-alt(
+        ng-repeat="f in filterTypes"
+        ng-click="setFilterType($index)"
+        ng-class="{'active': isFilterType($index)}"
+        translate="{{ f }}"
+      )
     .filter-search
-      input(type="text" placeholder="Search by Account name or Address" ng-model="")
+      input(type="text" placeholder="Search by Account name or Address" ng-model="searchText")
       i.ti-search
   .transaction-feed
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || (transactions | filter:transactionFilter).length > 0 || selectedAccountIndex == 'imported'")
