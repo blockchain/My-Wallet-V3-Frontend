@@ -112,15 +112,14 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   
   myWallet.setLabelForAccountAddress = (accountIdx, addressIdx, label) ->
     return
-  
-  myWallet.getHDWallet = () ->
-    myWallet 
-    
+
   myWallet.wallet = {
     isUpgradedToHD: true
     hdwallet: {
       isMnemonicVerified: true
+      accounts: []
     }
+    keys: []
   }
         
   myWallet.isValidateBIP39Mnemonic = (mnemonic) ->
@@ -199,15 +198,6 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
        
   myWallet.getLanguage = () ->
     return language
-        
-  myWallet.getAccounts = () ->  
-    theAccounts = []
-    for i in [0..myWallet.getAccountsCount()]
-      theAccounts.push myWallet.getAccount(i)
-    return theAccounts
-    
-  myWallet.getAccountsCount = () ->
-    return accounts.length
     
   myWallet.getLabelForAccount = (idx) ->
     return null unless idx?
