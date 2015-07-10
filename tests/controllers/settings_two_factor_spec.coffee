@@ -77,7 +77,7 @@ describe "TwoFactorCtrl", ->
           scope.fields.yubiKeyCode = '123456'
           scope.pairWithApp('yubiKey')
           expect(scope.settings.needs2FA).toBe(true)
-          expect(scope.settings.twoFactorMethod).toBe(3)
+          expect(scope.settings.twoFactorMethod).toBe(1)
           expect(scope.step).toBe('success')
 
         it "should not pair if code is invalid", () ->
