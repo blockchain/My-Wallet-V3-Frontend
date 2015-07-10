@@ -515,50 +515,12 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     return amount
 
-  wallet.addAddressOrPrivateKey = (addressOrPrivateKey, needsBip38, successCallback, errorCallback) ->
+  wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bipPassphrase, successCallback, errorCallback) ->
 
     proceed = (secondPassword='') ->
-
-      switch
-        # import bip38 or rawHex
-        when wallet.my.isValidPrivateKey(addressOrPrivateKey)
-          privKey = addressOrPrivateKey
-          format = wallet.my.detectPrivateKeyFormat(privKey)
-
-          if format == 'bip38'
-            ####################################################
-            correctCallback = (key, correct) ->
-              address = key.pub.getAddress()
-              if wallet.my.wallet.importLegacyAddress(key, '', secondPassword)
-                correct(address)
-              else
-                errorCallback({addressPresentInWallet: true})
-
-            return needsBip38 (bipPassphrase, correct, wrong)->
-              wallet.my.parseBIP38toECKey(
-                privKey
-                bipPassphrase
-                (key) -> correctCallback(key, correct)
-                wrong
-                errorCallback
-              )
-            ####################################################
-
-          key = wallet.my.privateKeyStringToKey(privKey, format)
-          if wallet.my.wallet.importLegacyAddress(key, '', secondPassword)
-            successCallback()
-          else
-            errorCallback({addressPresentInWallet: true})
-
-        # import read-only address
-        when wallet.my.isValidAddress(addressOrPrivateKey)
-          if wallet.my.wallet.importLegacyAddress(addressOrPrivateKey, '', secondPassword)
-            successCallback()
-          else
-            errorCallback({addressPresentInWallet: true})
-
-        else
-          errorCallback("format not supported")
+      wallet.my.wallet.import(
+        addressOrPrivateKey, '', secondPassword, bipPassphrase
+      ).then(successCallback, errorCallback)
 
     wallet.askForSecondPasswordIfNeeded()
       .then proceed
