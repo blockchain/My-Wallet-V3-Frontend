@@ -116,9 +116,9 @@ describe "TwoFactorCtrl", ->
 
     beforeEach ->
       angular.mock.inject ($injector) ->
-      
-        Wallet = $injector.get("Wallet")      
-      
+
+        Wallet = $injector.get("Wallet")
+
         Wallet.settings.twoFactorMethod = 5
         Wallet.settings.needs2FA = true
 
