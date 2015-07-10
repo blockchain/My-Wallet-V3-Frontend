@@ -169,7 +169,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     if two_factor_code? && two_factor_code != ""
       wallet.settings.needs2FA = true
     else
-      two_factor_code = undefined
+      two_factor_code = null
 
     authorizationProvided = () ->
       wallet.clearAlerts()
@@ -183,6 +183,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     betaCheckFinished = () ->
       $window.root = "https://blockchain.info/"
+            
       wallet.my.login(
         uid,
         password,
