@@ -15,7 +15,7 @@ describe "securityCenterServices", () ->
       rootScope = _$rootScope_
       
             
-      spyOn(MyWallet,"fetchWalletJson").and.callThrough()
+      spyOn(MyWallet,"login").and.callThrough()
           
       spyOn(Wallet,"monitor").and.callThrough()
       

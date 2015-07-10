@@ -16,7 +16,7 @@ describe "walletServices", () ->
       MyWallet = $injector.get("MyWallet")
       MyWalletStore = $injector.get("MyWalletStore")
       
-      spyOn(MyWallet,"fetchWalletJson").and.callThrough()
+      spyOn(MyWallet,"login").and.callThrough()
           
       spyOn(Wallet,"monitor").and.callThrough()
       

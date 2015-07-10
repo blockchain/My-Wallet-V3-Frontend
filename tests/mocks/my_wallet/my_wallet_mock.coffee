@@ -115,6 +115,13 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   
   myWallet.getHDWallet = () ->
     myWallet 
+    
+  myWallet.wallet = {
+    isUpgradedToHD: true
+    hdwallet: {
+      isMnemonicVerified: true
+    }
+  }
         
   myWallet.isValidateBIP39Mnemonic = (mnemonic) ->
     return false unless mnemonic?
@@ -125,7 +132,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
   myWallet.getHDWalletPassphraseString = (getPassword, success, error) ->
     success("banana big me hungry very must eat now")
     
-  myWallet.fetchWalletJson = (uid, dummy1, dummy2, password, two_factor_code, success, needs_2fa, wrong_2fa) ->
+  myWallet.login = (uid, password, two_factor_code, success, needs_2fa, wrong_2fa) ->
     if wallet = localStorageService.get("mockWallets")[uid]
       myWallet.uid = uid
       MyWalletStore.sendEvent("did_set_guid")
@@ -152,9 +159,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     else
       $log.error "Wallet not found"
       MyWalletStore.sendEvent("wallet not found")
-          
-  myWallet.didVerifyMnemonic = () ->
-      
+                
   myWallet.getHistoryAndParseMultiAddressJSON = () ->
     this.refresh()
     MyWalletStore.sendEvent("did_multiaddr")
@@ -220,7 +225,7 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.setLabelForAccount = (idx, label) ->
     accounts[idx].label = label
-    
+        
   myWallet.upgradeToHDWallet = (firstAccountName, needsPassword, success, error) ->
     success()
     
