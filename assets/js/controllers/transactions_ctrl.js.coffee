@@ -51,13 +51,31 @@ walletApp.controller "TransactionsCtrl", ($scope, Wallet, MyWallet, $log, $state
     $scope.canDisplayDescriptions = false # Don't try to show descriptions for before accounts have been loaded
     $scope.allTransactionsLoaded = false
     $scope.setFilterType(0)
-    console.log $scope.transactions
 
   $scope.transactionFilter = (item) ->
-    $scope.filterByLocation(item) && $scope.filterByType(item) && $scope.filterByName(item, $scope.searchText)
+    $scope.filterByLocation(item) && $scope.filterByType(item) && $scope.filterSearch(item, $scope.searchText)
 
-  $scope.filterByName = (tx, search) ->
-    JSON.stringify(tx).search(search) > -1 || search == '' || !search?
+  $scope.filterSearch = (tx, search) ->
+    return true if search == '' || !search?
+    $scope.filterTo(tx, search) || $scope.filterFrom(tx, search)
+
+  $scope.filterTo = (tx, search) ->
+    if tx.to.account? && tx.to.account.index?
+      text = Wallet.accounts[tx.to.account.index].label
+    else if tx.to.legacyAddresses?
+      text = JSON.stringify(tx.to.legacyAddresses.map((ad) -> ad.address))
+    else if tx.to.externalAddresses?
+      text = JSON.stringify(tx.to.externalAddresses.map((ad) -> ad.address))
+    return text.toLowerCase().search(search.toLowerCase()) > -1
+
+  $scope.filterFrom = (tx, search) ->
+    if tx.from.account? && tx.from.account.index?
+      text = Wallet.accounts[tx.from.account.index].label
+    else if tx.from.legacyAddresses?
+      text = JSON.stringify(tx.from.legacyAddresses.map((ad) -> ad.address))
+    else if tx.from.externalAddresses?
+      text = tx.from.externalAddresses.addressWithLargestOutput
+    return text.toLowerCase().search(search.toLowerCase()) > -1
 
   $scope.filterByType = (tx) ->
     switch $scope.filterBy
