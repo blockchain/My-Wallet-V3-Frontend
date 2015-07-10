@@ -153,9 +153,9 @@ First create a minified javascript file for the MyWalletHD component:
     cd assets/js/my-wallet
     grunt dist
 
-If you get 403 error from Github (because you exceeded their rate limit), try:
+If you get 403 error from Github (because you exceeded their rate limit), create a [personal access token](https://github.com/settings/tokens). Only select `public_repo` from the list.
 
-    GITHUB_USER=... GITHUB_PASSWORD=... grunt dist
+    GITHUB_USER=... GITHUB_TOKEN=... grunt dist
 
 If you don't care about securely downloading dependencies and want to avoid using your Github credentials, use `grunt dist_unsafe` instead.
 
