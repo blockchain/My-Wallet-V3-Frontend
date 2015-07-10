@@ -182,3 +182,9 @@ index.html should be cached using If-Modified-Since or etag. All other files con
 * `dev` : Current development with latest changes
 * `staging` : QA stage before going live
 * `master` : Current live version
+
+## Security
+
+Security issues can be reported to us in the following venues:
+* Email: security@blockchain.info
+* Bug Bounty: https://www.crowdcurity.com/blockchain-info
