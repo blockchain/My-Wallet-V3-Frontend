@@ -519,47 +519,46 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     proceed = (secondPassword='') ->
 
-      if wallet.my.isValidPrivateKey(addressOrPrivateKey)
-        privKey = addressOrPrivateKey
-        format = wallet.my.detectPrivateKeyFormat(privKey)
+      switch
+        # import bip38 or rawHex
+        when wallet.my.isValidPrivateKey(addressOrPrivateKey)
+          privKey = addressOrPrivateKey
+          format = wallet.my.detectPrivateKeyFormat(privKey)
 
-        if format == 'bip38'
+          if format == 'bip38'
+            ####################################################
+            correctCallback = (key, correct) ->
+              address = key.pub.getAddress()
+              if wallet.my.wallet.importLegacyAddress(key, '', secondPassword)
+                correct(address)
+              else
+                errorCallback({addressPresentInWallet: true})
 
-          correctCallback = (key, correct) ->
-            address = key.pub.getAddress()
+            return needsBip38 (bipPassphrase, correct, wrong)->
+              wallet.my.parseBIP38toECKey(
+                privKey
+                bipPassphrase
+                (key) -> correctCallback(key, correct)
+                wrong
+                errorCallback
+              )
+            ####################################################
 
-            if wallet.my.wallet.containsLegacyAddress(address)
-              return errorCallback({addressPresentInWallet: true})
+          key = wallet.my.privateKeyStringToKey(privKey, format)
+          if wallet.my.wallet.importLegacyAddress(key, '', secondPassword)
+            successCallback()
+          else
+            errorCallback({addressPresentInWallet: true})
 
-            correct(address)
-            wallet.my.wallet.importLegacyAddress(key, '', secondPassword)
+        # import read-only address
+        when wallet.my.isValidAddress(addressOrPrivateKey)
+          if wallet.my.wallet.importLegacyAddress(addressOrPrivateKey, '', secondPassword)
+            successCallback()
+          else
+            errorCallback({addressPresentInWallet: true})
 
-          return needsBip38 (bipPassphrase, correct, wrong)->
-            wallet.my.parseBIP38toECKey(
-              privKey
-              bipPassphrase
-              (key) -> correctCallback(key, correct)
-              wrong
-              errorCallback
-            )
-
-        key = wallet.my.privateKeyStringToKey(privKey, format)
-        address = key.pub.getAddress().toString()
-
-        if wallet.my.wallet.containsLegacyAddress(address)
-          return errorCallback({addressPresentInWallet: true})
-
-        wallet.my.wallet.importLegacyAddress(key, '', secondPassword)
-        successCallback()
-
-      else if wallet.my.isValidAddress(addressOrPrivateKey)
-        address = addressOrPrivateKey
-
-        if wallet.my.wallet.containsLegacyAddress(address)
-          return errorCallback({addressPresentInWallet: true})
-
-        wallet.my.wallet.importLegacyAddress(address, '', secondPassword, true)
-        successCallback()
+        else
+          errorCallback("format not supported")
 
     wallet.askForSecondPasswordIfNeeded()
       .then proceed
