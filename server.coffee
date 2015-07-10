@@ -206,16 +206,22 @@ if process.env.BETA? && parseInt(process.env.BETA)
         if isNumber
           process.env.PERCENT_REQUESTED = percent
         response.json { success: Boolean(isNumber) }
+else
+  app.get "/", (request, response) ->
+    if dist
+      response.render "index.html"
+    else
+      response.render "app/index.jade"
+      
+# /verify-email?token=$token sends a request to blockchain.info and redirects to login
+app.get "/verify-email", (request, response) ->
+  r.get 'https://blockchain.info/wallet' + request.originalUrl
+  response.cookie 'email-verified', true
+  response.redirect '/'
 
-  # /verify-email?token=$token sends a request to blockchain.info and redirects to login
-  app.get "/verify-email", (request, response) ->
-    r.get 'https://blockchain.info/wallet' + request.originalUrl
-    response.cookie 'email-verified', true
-    response.redirect '/'
-
-  # /authorize-approve?token=$token sends a request to blockchain.info and redirects to login
-  app.get "/authorize-approve", (request, response) ->
-    response.send """
+# /authorize-approve?token=$token sends a request to blockchain.info and redirects to login
+app.get "/authorize-approve", (request, response) ->
+  response.send """
 <!doctype html>
 <html>
   <head>
@@ -235,37 +241,30 @@ if process.env.BETA? && parseInt(process.env.BETA)
   </head>
 </html>
 """
-  # pass the feedback post to jira
-  app.post "/feedback", (request, response) ->
-    jira = 'https://blockchain.atlassian.net/rest/collectors/1.0/template/feedback/e6ce4d72'
-    r.post { url: jira, form: request.body }, (err, httpResponse, body) ->
-      response.json { success: !(err?) }
+# pass the feedback post to jira
+app.post "/feedback", (request, response) ->
+  jira = 'https://blockchain.atlassian.net/rest/collectors/1.0/template/feedback/e6ce4d72'
+  r.post { url: jira, form: request.body }, (err, httpResponse, body) ->
+    response.json { success: !(err?) }
 
-  # /unsubscribe?token=$token sends a request to blockchain.info and redirects to login
-  app.get "/unsubscribe", (request, response) ->
-    r.get 'https://blockchain.info/wallet' + request.originalUrl
-    response.redirect '/'
+# /unsubscribe?token=$token sends a request to blockchain.info and redirects to login
+app.get "/unsubscribe", (request, response) ->
+  r.get 'https://blockchain.info/wallet' + request.originalUrl
+  response.redirect '/'
 
-  # *.blockchain.info/guid fills in the guid on the login page
-  app.get /^\/.{8}-.{4}-.{4}-.{4}-.{12}$/, (request, response) ->
-    response.cookie 'uid', '"' + request.path.split(path.sep)[1] + '"'
-    response.redirect '/'
+# *.blockchain.info/guid fills in the guid on the login page
+app.get /^\/.{8}-.{4}-.{4}-.{4}-.{12}$/, (request, response) ->
+  response.cookie 'uid', '"' + request.path.split(path.sep)[1] + '"'
+  response.redirect '/'
 
-  # *.blockchain.info/key-{key} brings the user to the register page and fills in the key
-  app.get /^\/key-.{8}$/, (request, response) ->
-    response.cookie 'key', '"' + request.path.split(path.sep)[1].split('-')[1] + '"'
-    response.redirect '/'
+# *.blockchain.info/key-{key} brings the user to the register page and fills in the key
+app.get /^\/key-.{8}$/, (request, response) ->
+  response.cookie 'key', '"' + request.path.split(path.sep)[1].split('-')[1] + '"'
+  response.redirect '/'
 
-  # TODO Better 404 page
-  app.use (req, res) ->
-    res.send '<center><h1>404 Not Found</h1></center>'
-
-else
-  app.get "/", (request, response) ->
-    if dist
-      response.render "index.html"
-    else
-      response.render "app/index.jade"
+# TODO Better 404 page
+app.use (req, res) ->
+  res.send '<center><h1>404 Not Found</h1></center>'
       
 app.listen port, ->
   console.log "Listening on " + port
