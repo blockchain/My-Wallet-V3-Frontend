@@ -183,7 +183,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     betaCheckFinished = () ->
       $window.root = "https://blockchain.info/"
-            
+
       wallet.my.login(
         uid,
         password,
@@ -865,22 +865,18 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       continueCallback = () ->
         $translate("FIRST_ACCOUNT_NAME").then (translation) ->
 
-          needsSecondPasswordCallback = (continueCallback) ->
-            cancelCallback = () ->
-            $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback, true
+          cancel = () -> return
+            # wallet.displayError("Unable to upgrade your wallet. Please try again.")
+            # wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
 
-          success = () ->
+          proceed = (password) ->
+            wallet.my.wallet.newHDWallet(translation, password)
             wallet.status.didUpgradeToHd = true
-            # might not be necessary (if hd-wallet-Set is called)
             wallet.accounts = wallet.my.wallet.hdwallet.accounts
             wallet.updateHDaddresses()
             wallet.my.getHistoryAndParseMultiAddressJSON()
 
-          error = () ->
-            wallet.displayError("Unable to upgrade your wallet. Please try again.")
-            wallet.my.upgradeToHDWallet(translation, needsSecondPasswordCallback, success, error)
-
-          wallet.my.upgradeToHDWallet(translation, needsSecondPasswordCallback, success, error)
+          wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
 
       $timeout(()->
         $rootScope.$broadcast "needsUpgradeToHD", continueCallback
