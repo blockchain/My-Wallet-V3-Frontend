@@ -18,6 +18,7 @@ You also need Sass (use `sudo` if you're not using a [Ruby version manager](http
 gem install sass
 ```
 
+```sh
 git clone https://github.com/blockchain/My-Wallet-HD-Frontend.git 
 cd My-Wallet-HD-Frontend
 npm install
@@ -182,3 +183,9 @@ index.html should be cached using If-Modified-Since or etag. All other files con
 * `dev` : Current development with latest changes
 * `staging` : QA stage before going live
 * `master` : Current live version
+
+## Security
+
+Security issues can be reported to us in the following venues:
+* Email: security@blockchain.info
+* Bug Bounty: https://www.crowdcurity.com/blockchain-info
