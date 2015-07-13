@@ -24,6 +24,23 @@
   background: white;
   margin-left: 280px;
   border-bottom: 1px solid #ddd;
+  padding: 0 30px;
+  height: 100px;
+  .balance {
+    cursor: pointer;
+    h1 {
+      font-size: 2.5em;
+      font-weight: 600;
+    }
+    p {
+      margin-top: 0px;
+      float: right;
+      font-size: 1.3em;
+    }
+    img.spinner {
+      height: 11px;
+    }
+  }
 }
 
 .main-container {
@@ -59,6 +76,7 @@
     width: 100%;
     position: relative;
     margin-left: 0;
+    height: 80px;
   }
   .transactions {
     top: 0;
@@ -69,3 +87,13 @@
     width: 100%;
   }
 }
+
+@media (max-width: 992px) {
+  .top-view .balance h1 { font-size: 2em; }
+}
+
+@media (max-width: 768px) {
+  .top-view .balance h1 { font-size: 1.25em; }
+  .top-view .balance p { font-size: .9em; }
+}
+
