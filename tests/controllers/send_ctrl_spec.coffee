@@ -64,6 +64,7 @@ describe "SendCtrl", ->
   )
 
   it "should have access to address book",  inject(() ->
+    pending()
     expect(scope.addressBook).toBeDefined()
     expect(scope.addressBook["17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq"]).toBe("John")
 

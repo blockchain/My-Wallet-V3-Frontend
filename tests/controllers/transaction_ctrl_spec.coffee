@@ -31,6 +31,7 @@ describe "TransactionCtrl", ->
   )
 
   it "should have access to address book",  inject(() ->
+    pending()
     expect(scope.addressBook).toBeDefined()
   )
 
