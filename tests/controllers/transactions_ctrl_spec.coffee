@@ -14,6 +14,8 @@ describe "TransactionsCtrl", ->
         $scope: scope,
         $stateParams: {}
       
+      scope.transactions = Wallet.transactions
+
       return
 
     return
@@ -22,7 +24,6 @@ describe "TransactionsCtrl", ->
     pending()
     expect(scope.addressBook).toBeDefined()
     expect(scope.addressBook["17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq"]).toBe("John")
-    
   )
 
   it "should be able to fetch more transactions", inject((Wallet) ->
@@ -40,5 +41,18 @@ describe "TransactionsCtrl", ->
     # expect(Wallet.transactions.length).toBe(before + 1)
   )
 
+  it "should have 4 transaction types", inject(() ->
+    expect(scope.filterTypes.length).toEqual(4)
+  )
     
+  it "can filter by transaction type", inject((Wallet) ->
+    spyOn(scope, "setFilterType")
+    scope.setFilterType(3)
+    expect(scope.setFilterType).toHaveBeenCalled()
+  )
     
+  it "can filter by search", inject((Wallet) ->
+    spyOn(scope, "filterSearch")
+    scope.filterSearch(1, "test")
+    expect(scope.filterSearch).toHaveBeenCalled()
+  )
