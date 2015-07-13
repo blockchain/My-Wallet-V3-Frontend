@@ -10,10 +10,9 @@ walletApp.controller "ShowPrivateKeyCtrl", ($scope, $log, Wallet, $modalInstance
   $scope.tryContinue = () ->
     Wallet.askForSecondPasswordIfNeeded()
       .then (secondPassword) ->
-        if secondPassword?
-          cipher = Wallet.my.wallet.getSecondPasswordCipher(secondPassword)
-          addressObj.decrypt(cipher)
-        $scope.privKey = addressObj.priv
+        $scope.privKey = Wallet.my.wallet.getPrivateKeyForAddress(
+          addressObj, secondPassword
+        )
         $scope.accessAllowed = true
       .catch (error) ->
         $scope.incorrectSecondPassword = true
