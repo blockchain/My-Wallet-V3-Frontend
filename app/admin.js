@@ -126,8 +126,10 @@ admin.controller('ActivateKeysCtrl', function ($scope, InterfaceHelper, load) {
     InterfaceHelper.callApi('/activate-all', {min:min||null,max:max||null})
       .success(function (res) {
         load();
-        $scope.errors = res.error;
-        if (res.data) {
+        if (typeof res.error === 'object') {
+          $scope.errors = res.error;
+        }
+        if (typeof res.data === 'object') {
           $scope.numKeys = res.data.count;
           $scope.numEmails = res.data.successful;
         }
