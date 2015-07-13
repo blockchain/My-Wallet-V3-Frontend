@@ -61,13 +61,6 @@ describe "walletServices", () ->
       expect(ngAudio.load).toHaveBeenCalled()
     )
     
-    it "should update the account balance upon a new transaction", inject((MyWallet, Wallet) ->
-      before = Wallet.accounts[1].balance
-      MyWallet.mockShouldReceiveNewTransaction()
-      expect(Wallet.accounts[1].balance).toBeGreaterThan(before)
-      
-    )
-    
   describe "alerts()", ->    
     beforeEach ->
       Wallet.login("test", "test")  
