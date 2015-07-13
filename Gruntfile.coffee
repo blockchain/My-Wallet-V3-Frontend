@@ -1,5 +1,5 @@
 module.exports = (grunt) ->
-  
+
   grunt.initConfig
     pkg: grunt.file.readJSON("package.json")
     clean: {
@@ -12,14 +12,14 @@ module.exports = (grunt) ->
       options:
         banner: "/*! <%= pkg.name %> <%= grunt.template.today(\"yyyy-mm-dd\") %> */\n"
         mangle: false
-        
+
       application_dependencies:
         src: "build/application-dependencies.js"
         dest: "build/application-dependencies.min.js"
         options: {
           mangle: false
         }
-        
+
     preprocess:
       html:
         options: {
@@ -77,7 +77,7 @@ module.exports = (grunt) ->
         ]
 
         dest: "build/application-dependencies.js"
-                
+
       application: # All components should first be minimized. Only trusted sources should be imported as minified..
         src: [
           'assets/js/my-wallet/dist/my-wallet.min.js'
@@ -91,18 +91,20 @@ module.exports = (grunt) ->
           'build/bower_components/angular-numeraljs/dist/angular-numeraljs.js'
           'build/application-dependencies.min.js'
         ]
-        
+
         dest: "dist/application.min.js"
-        
+
       beta:
         src: [
           "build/bower_components/jquery/dist/jquery.js"
+          "build/bower_components/angular/angular.min.js"
+          "build/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"
           "build/bower_components/bootstrap/dist/js/bootstrap.min.js"
           "app/betaAdminClient.js"
         ]
         dest: "dist/beta-admin.js"
-        
-      application_debug: 
+
+      application_debug:
         src: [
           'build/mywallet.js'
           'bower_components/angular/angular.js'
@@ -125,9 +127,9 @@ module.exports = (grunt) ->
           'bower_components/international-phone-number/releases/international-phone-number.min.js'
           'build/application-dependencies.min.js'
         ]
-        
+
         dest: "dist/application.min.js"
-        
+
     coffee:
       coffee_to_js:
         options:
@@ -150,7 +152,7 @@ module.exports = (grunt) ->
           ext: '.css'
         }]
       options:
-        loadPath: ["bower_components/bootstrap-sass/assets/stylesheets"] 
+        loadPath: ["bower_components/bootstrap-sass/assets/stylesheets"]
 
     concat_css: {
       app: {
@@ -181,8 +183,8 @@ module.exports = (grunt) ->
     },
 
     html2js: {
-      options: 
-        jade: 
+      options:
+        jade:
           doctype: "html"
         base: "app"
       main: {
@@ -216,7 +218,7 @@ module.exports = (grunt) ->
       tr: {src: [ "locales/tr-*.json" ], dest: "build/locales/tr.json"}
       vi: {src: [ "locales/vi-*.json" ], dest: "build/locales/vi.json"}
       "zh-cn": {src: [ "locales/zh-cn-*.json" ], dest: "build/locales/zh-cn.json"}
-          
+
     copy:
       main:
         files: [
@@ -240,57 +242,57 @@ module.exports = (grunt) ->
           {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/bc-icons", expand: true}
           {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/roboto", expand: true}
           {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/themify", expand: true}
-          
+
         ]
       beta:
         files: [
           {src: ["beta/betaAdminServer.js"], dest: "dist/", cwd: "app", expand: true}
           {src: ["beta/package.json"], dest: "dist/", cwd: "app", expand: true}
         ]
-      
+
       beta_index:
         src: "build/index.html"
         dest: "build/index-beta.html"
-        
+
       images:
         files: [
           {src: ["*"], dest: "build/img", cwd: "img", expand: true }
         ]
-                
-    watch: 
+
+    watch:
       jade:
         files: ['app/partials/**/*.jade', 'app/templates/**/*.jade']
         tasks: ['html2js']
-        options: 
+        options:
           spawn: false
 
-      css: 
+      css:
         files: ['assets/css/**/*.scss']
         tasks: ['sass', 'copy:css', 'copy:fonts']
-        options: 
+        options:
           spawn: false
 
-      js: 
+      js:
         files: ['assets/js/**/*.js.coffee']
         tasks: ['compile']
-        options: 
-          spawn: false     
-          
-      locales:   
-        files: ['locales/*.json']
-        tasks: ['merge-json']
-        options: 
+        options:
           spawn: false
 
-    jade: 
+      locales:
+        files: ['locales/*.json']
+        tasks: ['merge-json']
+        options:
+          spawn: false
+
+    jade:
       html:
         options:
           client: false
         files:
           "build/admin.html": "app/admin.jade"
           "build/index.html": "app/index.jade"
-          
-    
+
+
     rename:
       assets: # Renames all images, fonts, etc and updates application.min.js, application.css and admin.html with their new names.
         options:
@@ -306,17 +308,17 @@ module.exports = (grunt) ->
             i = 0
             while i < befores.length
               tuples.push [befores[i],afters[i]]
-              i++      
-                          
-            tuples.sort((a,b) -> 
+              i++
+
+            tuples.sort((a,b) ->
               if a[0].length != b[0].length
                 return a[0].length < b[0].length
               return a < b
-            )              
-            
+            )
+
             befores = tuples.map((t)->t[0])
             afters = tuples.map((t)->t[1])
-            
+
             publicdir = require("fs").realpathSync("dist")
             path = require("path")
             for referring_file_path in ["dist/application.min.js", "dist/beta-admin.js", "dist/application.css", "dist/beta-admin.css", "dist/admin.html", "dist/index.html", "dist/index-beta.html"]
@@ -330,20 +332,20 @@ module.exports = (grunt) ->
                 after = path.relative(publicdir, afters[i])
                 contents = contents.split("build/" + before).join(after)
                 contents = contents.split(before).join(after)
-                
+
                 i++
               grunt.file.write referring_file_path, contents
             return
-    
-        files: 
+
+        files:
           src: [
             'dist/img/*'
-            'dist/fonts/*.*'            
+            'dist/fonts/*.*'
             'dist/fonts/bootstrap/*'
             'dist/locales/*'
             'dist/beep.wav'
           ]
-    
+
       html: # Renames application/beta.min.js/css and updates index/admin.html
         options:
           skipIfHashed: true
@@ -355,7 +357,7 @@ module.exports = (grunt) ->
           callback: (befores, afters) ->
             publicdir = require("fs").realpathSync("dist")
             path = require("path")
-            
+
             for referring_file_path in ["dist/index.html", "dist/index-beta.html", "dist/admin.html"]
               contents = grunt.file.read(referring_file_path)
               before = undefined
@@ -369,46 +371,46 @@ module.exports = (grunt) ->
 
                 i++
               grunt.file.write referring_file_path, contents
-  
-        files: 
+
+        files:
           src: [
             'dist/application.min.js'
             'dist/application.css'
             'dist/beta-admin.js'
             'dist/beta-admin.css'
           ]
-        
+
     shell:
       deploy_static_to_dev:
-        command: () -> 
+        command: () ->
           'rsync -rz --delete dist hd-dev@server:'
 
       deploy_server_to_dev:
-        command: () -> 
+        command: () ->
           'rsync -rz --delete server.coffee hd-dev@server:'
 
       deploy_beta_to_dev:
-        command: () -> 
+        command: () ->
           'rsync -rz --delete node_modules/hd-beta hd-dev@server:node_modules/'
 
       deploy_static_to_staging:
-        command: () -> 
+        command: () ->
           'rsync -rz --delete dist hd-staging@server:'
 
       deploy_server_to_staging:
-        command: () -> 
+        command: () ->
           'rsync -rz --delete server.coffee hd-staging@server:'
 
       deploy_beta_to_staging:
-        command: () -> 
+        command: () ->
           'rsync -rz --delete node_modules/hd-beta hd-staging@server:node_modules/'
 
       deploy_static_to_alpha:
-        command: () -> 
+        command: () ->
           'rsync -rz --delete dist hd-alpha@server:'
 
       deploy_server_to_alpha:
-        command: () -> 
+        command: () ->
           'rsync -rz --delete server.coffee hd-alpha@server:'
 
       deploy_beta_to_alpha:
@@ -427,8 +429,8 @@ module.exports = (grunt) ->
         command: () ->
           'ssh hd-alpha@server "./start.sh"'
 
-      check_dependencies: 
-        command: () -> 
+      check_dependencies:
+        command: () ->
           'mkdir -p build && ruby assets/js/my-wallet/check-dependencies.rb'
 
       skip_check_dependencies:
@@ -460,7 +462,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-autoprefixer')
   grunt.loadNpmTasks('grunt-merge-json')
 
-  grunt.registerTask "compile", ["coffee"]  
+  grunt.registerTask "compile", ["coffee"]
 
   grunt.registerTask "build", [
     "html2js"
@@ -477,12 +479,12 @@ module.exports = (grunt) ->
     "build"
     "watch"
   ]
-  
+
   grunt.registerTask "dist_beta", [
     "concat:beta"
-    "concat_css:beta"    
+    "concat_css:beta"
   ]
-    
+
   # Default task(s).
   grunt.registerTask "dist", [
     "clean"
@@ -505,11 +507,11 @@ module.exports = (grunt) ->
     "preprocess"
     "copy:main"
     "copy:beta"
-    "dist_beta" # We don't check beta dependencies against a whitelist 
+    "dist_beta" # We don't check beta dependencies against a whitelist
     "rename:assets"
     "rename:html"
   ]
-  
+
   grunt.registerTask "dist_unsafe", [
     "clean"
     "compile"
@@ -533,7 +535,7 @@ module.exports = (grunt) ->
     "rename:assets"
     "rename:html"
   ]
-  
+
   grunt.registerTask "dist_debug", [
     "clean"
     "compile"
@@ -557,7 +559,7 @@ module.exports = (grunt) ->
     "rename:assets"
     "rename:html"
   ]
-  
+
   grunt.registerTask "deploy_static_to_dev", [
     "dist"
     "shell:deploy_static_to_dev"
