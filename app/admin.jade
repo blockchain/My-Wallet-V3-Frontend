@@ -183,7 +183,9 @@ html(ng-app="AdminInterface" lang='en')
             </div>
             <div class="form-group">
               <label class="col-xs-4 control-label">Percent Requested</label>
-              <div class="col-xs-6"><input class="form-control" ng-model="percent" name="percent" type="number" required /></div>
+              <div class="col-xs-6">
+                <input class="form-control" ng-model="percent" name="percent" type="number" min="0" max="100" required />
+              </div>
             </div>
             <div class="form-group">
               <div class="col-xs-3 col-xs-offset-4">
