@@ -1,4 +1,4 @@
-describe "walletServices", () ->
+ddescribe "walletServices", () ->
   Wallet = undefined
   MyWallet = undefined
   mockObserver = undefined  
@@ -311,7 +311,21 @@ describe "walletServices", () ->
   describe "addAddressOrPrivateKey()", ->
     beforeEach ->
       errors = {}
-      Wallet.login("test", "test")
+      
+      Wallet.my.wallet.importLegacyAddress = (privateKey, getPassword, getBip38Password, successCallback, alreadyImportedCallback, errorCallback) ->
+        if privateKey == "BIP38 key"
+          getBip38Password((password)->
+            if password == "5678"
+              successCallback("some address")
+            else 
+              console.log "Wrong password!"
+          )
+        else    
+          address = privateKey.replace("private_key_for_","")
+          MyWalletStore.addLegacyAddress(address, privateKey, 200000000)
+          successCallback(address)
+          
+        return {then: () ->}
       
     it "should recoginize an address as such", ->
       # TODO: use a spy to make sure this gets called
@@ -377,21 +391,21 @@ describe "walletServices", () ->
       
       Wallet.addAddressOrPrivateKey("invalid address", null, success, error)
       
-    it "should ask for BIP 38 password if needed", ->
+    it "should ask for BIP 38 password if needed", inject(($rootScope) ->
       callbacks = {
         success: () ->
-          
-        needsBip38: (callback) ->
-          callback("5678")
+        error: () ->
+        needsBip38: () ->
       }
      
-      spyOn(callbacks, "needsBip38").and.callThrough()
-      spyOn(callbacks, "success").and.callThrough()
+      spyOn(callbacks, "needsBip38")
     
-      Wallet.addAddressOrPrivateKey("BIP38 key", callbacks.needsBip38, callbacks.success, null)
+      Wallet.addAddressOrPrivateKey("BIP38 key", callbacks.needsBip38, callbacks.success, callbacks.error)
+      
+      $rootScope.$digest()
      
       expect(callbacks.needsBip38).toHaveBeenCalled()
-      expect(callbacks.success).toHaveBeenCalled()
+    )
       
   describe "displayReceivedBitcoin()", ->
     it "should display an alert", ->
