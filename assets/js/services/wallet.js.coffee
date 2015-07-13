@@ -612,23 +612,19 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       .then proceed
       .catch cancelCallback
 
-  wallet.importWithMnemonic = (mnemonic, passphrase, successCallback, errorCallback) ->
-    needsSecondPasswordCallback = (continueCallback) ->
-      cancelCallback = () ->
-      $rootScope.$broadcast "requireSecondPassword", continueCallback, cancelCallback
-
-    wallet.accounts.splice(0, wallet.accounts.length)
-    wallet.transactions.splice(0, wallet.transactions.length)
-
-    success = () ->
+  wallet.importWithMnemonic = (mnemonic, bip39pass, successCallback, errorCallback) ->
+    cancel  = () -> return
+    proceed = (password) ->
+      wallet.accounts.splice(0, wallet.accounts.length)
+      wallet.transactions.splice(0, wallet.transactions.length)
+      wallet.my.wallet.restoreHDWallet(mnemonic, bip39pass, password)
+      wallet.my.wallet.hdwallet.accounts.forEach(wallet.accounts.push(a))
+      wallet.my.getHistoryAndParseMultiAddressJSON()
       wallet.updateTransactions()
       wallet.updateHDaddresses()
-
       successCallback()
 
-    $timeout((->
-      wallet.my.recoverMyWalletHDWalletFromMnemonic(mnemonic, passphrase, needsSecondPasswordCallback, success, errorCallback)
-    ), 100)
+    wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
 
   wallet.getDefaultAccountIndex = () ->
     if wallet.my.wallet.isUpgradedToHD then wallet.my.wallet.hdwallet.defaultAccountIndex else 0
