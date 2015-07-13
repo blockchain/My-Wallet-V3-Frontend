@@ -805,12 +805,12 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         if candidate.hash == tx.hash
           match = true
           if !candidate.note?
-            candidate.note = wallet.my.wallet.getNote(tx.hash) # In case a note was just set
+            candidate.note = wallet.store.getNote(tx.hash) # In case a note was just set
           break
 
       if !match
         transaction = angular.copy(tx)
-        transaction.note = wallet.my.wallet.getNote(transaction.hash)
+        transaction.note = wallet.store.getNote(transaction.hash)
 
         wallet.transactions.push transaction
     wallet.status.didLoadTransactions = true
