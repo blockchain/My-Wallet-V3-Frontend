@@ -14,9 +14,7 @@ describe "walletServices", () ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       MyBlockchainSettings = $injector.get("MyBlockchainSettings")
-            
-      spyOn(MyWallet,"login").and.callThrough()
-          
+                      
       spyOn(Wallet,"monitor").and.callThrough()
       
       mockObserver = {
@@ -238,6 +236,14 @@ describe "walletServices", () ->
     return
     
   describe "currency conversion", ->    
+    beforeEach ->
+      Wallet.api.get_ticker = (success, fail) ->
+          success({
+            EUR: {"last": 250, symbol: "€"}
+            USD: {"last": 300, symbol: "$"}
+          })
+
+      Wallet.fetchExchangeRate()
       
     it "should know the exchange rate in satoshi per unit of fiat", inject((Wallet) ->
       expect(Wallet.conversions.EUR.conversion).toBe(400000)
