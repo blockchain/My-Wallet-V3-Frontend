@@ -517,7 +517,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     return amount
 
-  wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bipPassphrase, successCallback, errorCallback) ->    
+  wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bipPassphrase, successCallback, errorCallback) ->
     proceed = (secondPassword='') ->
       wallet.my.wallet.importLegacyAddress(
         addressOrPrivateKey, secondPassword, bipPassphrase
@@ -744,10 +744,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
 
   wallet.deleteLegacyAddress = (address) ->
-    wallet.store.deleteLegacyAddress(address.address)
-    idx = wallet.legacyAddresses.indexOf(address)
-    wallet.legacyAddresses.splice(idx,1)
+    wallet.my.wallet.deleteLegacyAddress(address)
+    wallet.updateLegacyAddresses()
 
+  wallet.updateLegacyAddresses = () ->
+    wallet.legacyAddresses = wallet.my.wallet.keys
 
   ##################################
   #        Private (other)         #
