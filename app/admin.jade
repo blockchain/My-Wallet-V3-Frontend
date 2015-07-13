@@ -138,6 +138,24 @@ html(ng-app="AdminInterface" lang='en')
             <div class="col-xs-8"><input class="form-control" ng-model="fields.guid" name="guid" type="text" placeholder="(optional)"></div> 
           </div>
           <div class="form-group">
+            <label class="col-xs-2 control-label">iOS</label>
+            <div class="col-xs-4">
+              <div class="form-control"><input type="checkbox" ng-model="fields.ios" name="iosReq" disabled><label>&nbsp;Requested</label></div>
+            </div>
+            <div class="col-xs-4">
+              <div class="form-control"><input type="checkbox" ng-model="fields.ios_sent" name="iosSent" ng-disabled="fields.ios_sent || !fields.ios"><label>&nbsp;Invitation Sent</label></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2 control-label">Android</label>
+            <div class="col-xs-4">
+              <div class="form-control"><input type="checkbox" ng-model="fields.android" name="androidReq" disabled><label>&nbsp;Requested</label></div>
+            </div>
+            <div class="col-xs-4">
+              <div class="form-control"><input type="checkbox" ng-model="fields.android_sent" name="androidSent" ng-disabled="fields.android_sent || !fields.android"><label>&nbsp;Invitation Sent</label></div>
+            </div>
+          </div>
+          <div class="form-group">
             <div class="col-xs-2 col-xs-offset-2">
               <button class="btn" ng-disabled="editForm.$invalid" ng-class="(fields.activated) ? 'btn-default' : 'btn-danger'" type="submit">
                 {{ (fields.activated) ? 'Update' : 'Activate' }}

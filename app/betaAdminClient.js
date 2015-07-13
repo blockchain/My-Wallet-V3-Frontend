@@ -107,7 +107,9 @@ admin.controller('EditKeyCtrl', function ($scope, $modalInstance, InterfaceHelpe
   $scope.endpoint = ($scope.fields.activated) ? '/update-key' : '/activate-key';
   $scope.submitEdit = function () {
     var selection = { rowid: entry.rowid };
-    InterfaceHelper.callApi($scope.endpoint, {selection: selection, update: $scope.fields})
+    var update = InterfaceHelper.compareProperties($scope.fields, entry);
+    update.activated = true;
+    InterfaceHelper.callApi($scope.endpoint, {selection: selection, update: update})
       .success(function () {
         load();
         $modalInstance.dismiss();
@@ -140,6 +142,7 @@ admin.factory('InterfaceHelper', function ($http, $httpParamSerializerJQLike) {
   var helper = {};
   var rootUrl = '/admin/api';
   helper.error = function (response) {
+    if (!response || !response.error) return;
     console.error(response.error)
   };
   helper.callApi = function (endpoint, data) {
@@ -150,6 +153,13 @@ admin.factory('InterfaceHelper', function ($http, $httpParamSerializerJQLike) {
   };
   helper.getRootUrl = function () {
     return rootUrl;
+  };
+  helper.compareProperties = function (o1, o2) {
+    var object = {};
+    for (p in o1) {
+      if (o1[p] !== o2[p]) object[p] = o1[p];
+    }
+    return object;
   };
   return helper;
 });
