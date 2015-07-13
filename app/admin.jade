@@ -201,8 +201,8 @@ html(ng-app="AdminInterface" lang='en')
       <div class="modal-header">
         <h3>Activate Multiple</h3>
       </div>
-      <div class="modal-body">
-        <div ng-show="step == 0">
+      <div class="modal-body" ng-switch="step">
+        <div ng-switch-when="0">
           <form class="form-horizontal" name="activationForm" ng-submit="activate(min, max)" novalidate>
             <div class="form-group">
               <label class="col-xs-3 control-label">Min id</label>
@@ -219,11 +219,11 @@ html(ng-app="AdminInterface" lang='en')
             </div>
           </form>
         </div>
-        <div ng-show="step == 1">
+        <div ng-switch-when="1">
           <p>Please wait...</p>
           <p>This process may take several minutes to complete</p>
         </div>
-        <div ng-show="step == 2">
+        <div ng-switch-when="2">
           <div class="col-xs-offset-3">
             <p>{{numKeys}} keys have been activated</p>
             <p>{{numEmails}} emails were sent</p>
