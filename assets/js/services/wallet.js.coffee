@@ -183,7 +183,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     betaCheckFinished = () ->
       $window.root = "https://blockchain.info/"
-
+      
       wallet.my.login(
         uid,
         password,
@@ -871,7 +871,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
             wallet.accounts = wallet.my.wallet.hdwallet.accounts
             wallet.updateHDaddresses()
             wallet.my.getHistoryAndParseMultiAddressJSON()
-
+            
           wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
 
       $timeout(()->

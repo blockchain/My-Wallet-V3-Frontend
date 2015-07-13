@@ -130,71 +130,11 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.getHDWalletPassphraseString = (getPassword, success, error) ->
     success("banana big me hungry very must eat now")
-    
-  myWallet.login = (uid, password, two_factor_code, success, needs_2fa, wrong_2fa) ->
-    if wallet = localStorageService.get("mockWallets")[uid]
-      myWallet.uid = uid
-      MyWalletStore.sendEvent("did_set_guid")
-      
-      if wallet.two_factor
-        if two_factor_code
-          if two_factor_code != wallet.two_factor_code
-            wrong_2fa()
-        else
-          needs_2fa(wallet.two_factor)
-          return
-      
-      unless password && password == wallet.password
-        monitorFunc({type: "error", message: "Wrong password", code: 0});
-        return
-      
-      MyWalletStore.mockSetPassword(password)
-    
-    
-      success()
-      MyWalletStore.sendEvent("on_wallet_decrypt_finish")
-      return
-
-    else
-      $log.error "Wallet not found"
-      MyWalletStore.sendEvent("wallet not found")
                 
   myWallet.getHistoryAndParseMultiAddressJSON = () ->
     this.refresh()
     MyWalletStore.sendEvent("did_multiaddr")
     MyWalletStore.sendEvent("hd_wallet_set")
-      
-  myWallet.createNewWallet = (email, pwd, firstAccount, language, currency, success, fail) ->
-    uid = String(Math.floor((Math.random() * 100000000) + 1))
-    
-    if mockRules.shouldFailToCreateWallet
-      fail({message: "Mock asked to fail"})
-      return
-    
-    wallets = localStorageService.get("mockWallets")
-    if wallets[uid]
-      fail({message: "Wallet already exists"})
-    else
-      wallets[uid] = {
-        password: pwd
-        accounts: [
-          {label: firstAccount, archived: false, balance: 0, receive_addresses: []}
-        ]
-        transactions: []
-        language: language
-        currency: currency
-      }
-      localStorageService.set("mockWallets", wallets)
-      success(uid)
-  
-  myWallet.logout = () ->
-    MyWalletStore.sendEvent("logging_out")
-    myWallet.uid = undefined
-    myWallet.password = undefined
-    MyWalletStore.setTransactions([])
-    accounts = []
-    if !(karma?) || !karma
-      window.location = ""
        
   myWallet.getLanguage = () ->
     return language
@@ -215,9 +155,6 @@ walletServices.factory "MyWallet", ($window, $timeout, $log, localStorageService
     
   myWallet.setLabelForAccount = (idx, label) ->
     accounts[idx].label = label
-        
-  myWallet.upgradeToHDWallet = (firstAccountName, needsPassword, success, error) ->
-    success()
     
   myWallet.sweepLegacyAddressToAccount = (fromAddress, toAccountIndex, observer) ->
     accounts[toAccountIndex].balance = MyWalletStore.getLegacyAddressBalance(fromAddress)
