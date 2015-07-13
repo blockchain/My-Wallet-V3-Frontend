@@ -1,4 +1,4 @@
-ddescribe "SettingsAddressesCtrl", ->
+describe "SettingsAddressesCtrl", ->
   scope = undefined
   Wallet = undefined
   
