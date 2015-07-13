@@ -27,7 +27,6 @@ describe "SettingsWalletCtrl", ->
     
   describe "language", ->   
     beforeEach ->
-      Wallet.login("test", "test")   
       scope.$digest()  
     
     it "should be set on load", inject(() ->
@@ -65,7 +64,6 @@ describe "SettingsWalletCtrl", ->
     
   describe "currency", ->   
     beforeEach ->
-      Wallet.login("test", "test")  
       scope.$digest()
             
     it "should be set on load", inject((Wallet) ->

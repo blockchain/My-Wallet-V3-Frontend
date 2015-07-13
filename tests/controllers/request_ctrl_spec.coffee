@@ -14,8 +14,6 @@ describe "RequestCtrl", ->
 
       MyWallet = $injector.get("MyWallet")
 
-      Wallet.login("test", "test")
-
       scope = $rootScope.$new()
 
       $controller "RequestCtrl",

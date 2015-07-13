@@ -104,7 +104,7 @@ describe "AppCtrl", ->
       
       Wallet.goal.claim = {code: "abcd", balance: 100000}
       
-      Wallet.login("test", "test")  
+      # Wallet.login("test", "test")
       
       $rootScope.$digest()    
       

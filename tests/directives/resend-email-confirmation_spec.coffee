@@ -12,8 +12,6 @@ describe "Resend Email Confirmation", ->
     $compile = _$compile_
     $rootScope = _$rootScope_
 
-    Wallet.login("test", "test")
-
     return
   )
 

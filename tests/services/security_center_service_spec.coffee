@@ -21,7 +21,6 @@ describe "securityCenterServices", () ->
       
       mockObserver = {needs2FA: (() ->)}
       
-      Wallet.login("test", "test")
       
       Wallet.user.isEmailVerified = false
       Wallet.status.didConfirmRecoveryPhrase = false

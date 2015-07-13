@@ -48,7 +48,6 @@ describe "walletServices", () ->
   describe "login()", ->
     beforeEach ->
       spyOn(Wallet.my, "login").and.callThrough()
-      Wallet.login("test", "test")  
     
     it "should fetch and decrypt the wallet", inject((Wallet) ->
       expect(Wallet.my.login).toHaveBeenCalled()
@@ -136,10 +135,7 @@ describe "walletServices", () ->
     )
   
 
-  describe "logout()", ->     
-    beforeEach ->
-      Wallet.login("test", "test")  
-      
+  describe "logout()", ->           
     it "should update the status", inject((Wallet) ->
       expect(Wallet.status.isLoggedIn).toBe(true)
       
@@ -153,7 +149,6 @@ describe "walletServices", () ->
     
   describe "isSyncrhonizedWithServer()", ->         
     beforeEach ->
-      Wallet.login("test", "test")  
        
     it "should be in sync after first load", inject((Wallet) ->      
       expect(Wallet.isSynchronizedWithServer()).toBe(true)

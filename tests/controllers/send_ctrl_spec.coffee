@@ -20,8 +20,6 @@ describe "SendCtrl", ->
           }
       }
 
-      Wallet.login("test", "test")
-
       scope = $rootScope.$new()
 
       $controller "SendCtrl",

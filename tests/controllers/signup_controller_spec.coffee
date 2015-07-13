@@ -182,7 +182,6 @@ describe "SignupCtrl", ->
       
         Wallet = $injector.get("Wallet")      
       
-        Wallet.login("test-unverified", "test") 
         scope.didLoad() 
       
     it "should be logged in", inject((Wallet) ->

@@ -18,9 +18,7 @@ describe "walletServices", () ->
       spyOn(Wallet,"monitor").and.callThrough()
       
       mockObserver = {needs2FA: (() ->)}
-      
-      Wallet.login("test", "test")
-      
+            
       return
 
     return

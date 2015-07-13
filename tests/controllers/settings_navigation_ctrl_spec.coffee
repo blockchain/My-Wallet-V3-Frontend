@@ -7,9 +7,7 @@ describe "SettingsNavigationCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
-      
-      Wallet.login("test", "test")  
-      
+            
       scope = $rootScope.$new()
             
       $controller "SettingsNavigationCtrl",

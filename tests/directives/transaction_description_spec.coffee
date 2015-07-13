@@ -19,7 +19,6 @@ describe "Transaction Description Directive", ->
 
 
     Wallet = $injector.get("Wallet")
-    Wallet.login("test", "test")
 
     MyWallet = $injector.get("MyWallet")
 

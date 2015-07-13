@@ -18,8 +18,6 @@ describe "walletServices", () ->
     return
     
   describe "createAccount()", ->      
-    beforeEach ->
-      Wallet.login("test", "test")  
       
     it "should call generateNewKey()", inject((Wallet, MyWallet) ->      
       spyOn(MyWallet,"createAccount")

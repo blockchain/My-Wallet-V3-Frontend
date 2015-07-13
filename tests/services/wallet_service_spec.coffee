@@ -29,8 +29,6 @@ describe "walletServices", () ->
     return
         
   describe "transactions", ->           
-    beforeEach ->
-      Wallet.login("test", "test")  
        
     it "should listen for on_tx and on_block", inject((Wallet, MyWallet) ->
             
@@ -62,8 +60,6 @@ describe "walletServices", () ->
     )
     
   describe "alerts()", ->    
-    beforeEach ->
-      Wallet.login("test", "test")  
       
     it "should should remove alert after some time", inject((Wallet, $timeout) ->   
       Wallet.displaySuccess("Victory")
@@ -77,8 +73,6 @@ describe "walletServices", () ->
     
     
   describe "language", ->    
-    beforeEach ->
-      Wallet.login("test", "test")  
       
     it "should be set after loading", inject((Wallet) ->
       expect(Wallet.settings.language).toEqual({code: "en", name: "English"})
@@ -97,8 +91,6 @@ describe "walletServices", () ->
     
     
   describe "currency", ->    
-    beforeEach ->
-      Wallet.login("test", "test")  
       
     it "should be set after loading", inject((Wallet) ->
       expect(Wallet.settings.currency.code).toEqual("USD")
@@ -119,8 +111,6 @@ describe "walletServices", () ->
     return
 
   describe "conversions", ->
-    beforeEach ->
-      Wallet.login("test", "test")
 
     describe "convertCurrency", ->
 
@@ -173,8 +163,6 @@ describe "walletServices", () ->
         expect(result).toBe(1)
     
   describe "email", ->    
-    beforeEach ->
-      Wallet.login("test", "test")  
       
     it "should be set after loading", inject((Wallet) ->
       expect(Wallet.user.email).toEqual("steve@me.com")
@@ -191,8 +179,6 @@ describe "walletServices", () ->
     return
     
   describe "mobile", ->    
-    beforeEach ->
-      Wallet.login("test", "test")  
       
     it "should be set after loading", inject((Wallet) ->
       expect(Wallet.user.mobile.number).toEqual("12345678")
@@ -222,8 +208,6 @@ describe "walletServices", () ->
     return
   
   describe "password", ->    
-    beforeEach ->
-      Wallet.login("test", "test")  
       
     it "can be checked", inject((Wallet, MyWallet, MyWalletStore) ->
       expect(MyWalletStore.isCorrectMainPassword("test")).toBe(true)
@@ -239,8 +223,6 @@ describe "walletServices", () ->
     return
     
   describe "password hint", ->    
-    beforeEach ->
-      Wallet.login("test", "test")  
       
     it "should be set after loading", inject((Wallet) ->
       expect(Wallet.user.passwordHint).toEqual("Same as username")
@@ -256,8 +238,6 @@ describe "walletServices", () ->
     return
     
   describe "currency conversion", ->    
-    beforeEach ->
-      Wallet.login("test", "test")  
       
     it "should know the exchange rate in satoshi per unit of fiat", inject((Wallet) ->
       expect(Wallet.conversions.EUR.conversion).toBe(400000)
