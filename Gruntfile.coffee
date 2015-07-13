@@ -100,7 +100,7 @@ module.exports = (grunt) ->
           "build/bower_components/angular/angular.min.js"
           "build/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"
           "build/bower_components/bootstrap/dist/js/bootstrap.min.js"
-          "app/betaAdminClient.js"
+          "app/admin.js"
         ]
         dest: "dist/beta-admin.js"
 
