@@ -1,4 +1,4 @@
-describe "SettingsAddressesCtrl", ->
+ddescribe "SettingsAddressesCtrl", ->
   scope = undefined
   Wallet = undefined
   
@@ -10,10 +10,9 @@ describe "SettingsAddressesCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
       
-      Wallet.login("test", "test")  
-      
+      Wallet.legacyAddresses = [{archived: false},{archived: true}]
+            
       scope = $rootScope.$new()
             
       $controller "SettingsAddressesCtrl",
@@ -32,22 +31,22 @@ describe "SettingsAddressesCtrl", ->
      
     it "can be archived", ->
       address = scope.legacyAddresses[0]
-      expect(address.active).toBe(true)
+      expect(address.archived).toBe(false)
       scope.archive(address)
-      expect(address.active).toBe(false)
+      expect(address.archived).toBe(true)
       
     it "can be unarchived", ->
-      address = scope.legacyAddresses[3]
-      expect(address.active).toBe(false)
+      address = scope.legacyAddresses[1]
+      expect(address.archived).toBe(true)
       scope.unarchive(address)
-      expect(address.active).toBe(true)
+      expect(address.archived).toBe(false)
       
     it "can be deleted", inject((Wallet) ->
       spyOn(window, 'confirm').and.callFake(() ->
         return true
       )
       
-      address = scope.legacyAddresses[3]
+      address = scope.legacyAddresses[1]
       before = scope.legacyAddresses.length
       
       spyOn(Wallet, "deleteLegacyAddress").and.callThrough()
