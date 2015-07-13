@@ -181,3 +181,10 @@ $select-fg: #686868;
   border: 1px solid #ccc;
   padding: 1em;
 }
+
+//override pre from bootstrap
+pre {
+  word-break: normal;
+  word-wrap: normal;
+  white-space: pre-line;
+}
