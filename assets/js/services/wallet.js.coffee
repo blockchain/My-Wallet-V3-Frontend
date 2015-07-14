@@ -114,15 +114,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.setLanguage($filter("getByProperty")("code", result.language, wallet.languages))
 
         # Get currencies:
-
         wallet.settings.currency = ($filter("getByProperty")("code", result.currency, wallet.currencies))
-
         wallet.settings.btcCurrency = ($filter("getByProperty")("serverCode", result.btc_currency, wallet.btcCurrencies))
-
         wallet.settings.displayCurrency = wallet.settings.btcCurrency
-
-        wallet.settings.feePolicy = wallet.store.getFeePolicy()
-
+        wallet.settings.feePolicy = wallet.my.wallet.fee_policy
         wallet.settings.blockTOR = !!result.block_tor_ips
 
         # Fetch transactions:
@@ -183,7 +178,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     betaCheckFinished = () ->
       $window.root = "https://blockchain.info/"
-      
+
       wallet.my.login(
         uid,
         password,
@@ -805,12 +800,12 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         if candidate.hash == tx.hash
           match = true
           if !candidate.note?
-            candidate.note = wallet.store.getNote(tx.hash) # In case a note was just set
+            candidate.note = wallet.my.wallet.getNote(tx.hash) # In case a note was just set
           break
 
       if !match
         transaction = angular.copy(tx)
-        transaction.note = wallet.store.getNote(transaction.hash)
+        transaction.note = wallet.my.wallet.getNote(transaction.hash)
 
         wallet.transactions.push transaction
     wallet.status.didLoadTransactions = true
@@ -830,7 +825,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
       if !match
         transaction = angular.copy(tx)
-        transaction.note = wallet.store.getNote(transaction.hash)
+        transaction.note = wallet.my.wallet.getNote(transaction.hash)
         wallet.transactions.push transaction
 
   ####################
@@ -871,7 +866,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
             wallet.accounts = wallet.my.wallet.hdwallet.accounts
             wallet.updateHDaddresses()
             wallet.my.getHistoryAndParseMultiAddressJSON()
-            
+
           wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
 
       $timeout(()->
@@ -1234,7 +1229,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     )
 
   wallet.getTotalBalanceForActiveLegacyAddresses = () ->
-    return wallet.store.getTotalBalanceForActiveLegacyAddresses()
+    return wallet.my.wallet.balanceActiveLegacy
 
   wallet.setDefaultAccount = (account) ->
     wallet.my.wallet.hdwallet.defaultAccountIndex = account.index
