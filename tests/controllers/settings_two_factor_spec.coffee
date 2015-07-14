@@ -77,7 +77,7 @@ describe "TwoFactorCtrl", ->
           scope.fields.yubiKeyCode = '123456'
           scope.pairWithApp('yubiKey')
           expect(scope.settings.needs2FA).toBe(true)
-          expect(scope.settings.twoFactorMethod).toBe(3)
+          expect(scope.settings.twoFactorMethod).toBe(1)
           expect(scope.step).toBe('success')
 
         it "should not pair if code is invalid", () ->
@@ -116,9 +116,9 @@ describe "TwoFactorCtrl", ->
 
     beforeEach ->
       angular.mock.inject ($injector) ->
-      
-        Wallet = $injector.get("Wallet")      
-      
+
+        Wallet = $injector.get("Wallet")
+
         Wallet.settings.twoFactorMethod = 5
         Wallet.settings.needs2FA = true
 

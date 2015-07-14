@@ -60,8 +60,8 @@
               )
                 span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
             span.input-group-btn.mls(ng-if="browserWithCamera")
-              button#qr.button(type="button", ng-click="cameraOn($index)")
-                img(src="img/qr.png", alt="QR")
+              button#qr(type="button", ng-click="cameraOn($index)")
+                img(src="img/qr-code.png", alt="QR")
           .has-error
             span.help-block(ng-show="sendForm['destinations' + $index].$error.required && sendForm['amounts' + $index].$touched") Destination cannot be empty
             span.help-block(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress")
