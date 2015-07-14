@@ -58,9 +58,9 @@ html(ng-app="AdminInterface" lang='en')
           select.form-control(ng-model="search.filter" ng-options="f for f in filters" required)
           button.btn.btn-default(ng-disabled="searchForm.$invalid" type="submit")
             span(class="glyphicon glyphicon-arrow-right")
-      .form-group.col-xs-6(ng-show="walletCount > 0")
+      .form-group.col-xs-6.ng-cloak
         label {{ walletCount }} Wallets Created
-      .table-div(ng-show="tableData.length > 0")
+      .table-div.ng-cloak
         table.table.table-hover.table-condensed
           tr
             th.pointer(ng-repeat="th in headers" ng-click="sort(th)") {{ th }}
