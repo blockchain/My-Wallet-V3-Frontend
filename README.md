@@ -36,7 +36,7 @@ grunt build
 
 cd back into the root of the directory
 ```sh
-cd ~/path/to/My-Wall-HD-Frontend
+cd ~/path/to/My-Wallet-HD-Frontend
 ```
 
 Grunt compiles the view templates and CSS. Keep it running:
