@@ -57,9 +57,11 @@ walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
             scope.bcAsyncForm.$setPristine()
           scope.status.saving = false
           scope.status.edit = false
+          scope.$apply()
 
         error = () ->
           scope.status.saving = false
+          scope.$apply()
 
         scope.onSave(scope.form.newValue, success, error)
 

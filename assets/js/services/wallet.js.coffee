@@ -75,7 +75,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       # todo: jaume: implement pbkdf2 iterations out of walletstore in mywallet
       wallet.settings.pbkdf2 = wallet.my.wallet.pbkdf2_iterations;
       # todo: jaume: implement logout time in mywallet
-      wallet.settings.logoutTimeMinutes = wallet.store.getLogoutTime() / 60000
+      wallet.settings.logoutTimeMinutes = wallet.my.wallet.logoutTime / 60000
 
       if wallet.my.wallet.isUpgradedToHD and not wallet.status.didInitializeHD
         wallet.status.didInitializeHD = true
@@ -183,7 +183,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     betaCheckFinished = () ->
       $window.root = "https://blockchain.info/"
-      
+
       wallet.my.login(
         uid,
         password,
@@ -871,7 +871,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
             wallet.accounts = wallet.my.wallet.hdwallet.accounts
             wallet.updateHDaddresses()
             wallet.my.getHistoryAndParseMultiAddressJSON()
-            
+
           wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
 
       $timeout(()->
@@ -958,9 +958,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.setLogoutTime = (minutes, success, error) ->
     wallet.store.setLogoutTime(minutes * 60000)
+    wallet.my.wallet.logoutTime = minutes * 60000
     wallet.settings.logoutTimeMinutes = minutes
-    # wallet.my.backupWalletDelayed()
-    success()
+    wallet.my.syncWallet(success, error)
 
   wallet.getLanguages = () ->
     # Get and sort languages:
