@@ -2,44 +2,37 @@ describe "securityCenterServices", () ->
   Wallet = undefined
   SecurityCenter = undefined
   rootScope = undefined
-  
+
   beforeEach angular.mock.module("walletApp")
-  
+
   beforeEach ->
     angular.mock.inject ($injector, localStorageService, _$rootScope_) ->
       localStorageService.remove("mockWallets")
-      
+
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
       SecurityCenter = $injector.get("SecurityCenter")
       rootScope = _$rootScope_
-      
-            
-      spyOn(MyWallet,"login").and.callThrough()
-          
+
       spyOn(Wallet,"monitor").and.callThrough()
-      
-      mockObserver = {needs2FA: (() ->)}
-      
-      
+
       Wallet.user.isEmailVerified = false
       Wallet.status.didConfirmRecoveryPhrase = false
       Wallet.user.passwordHint = ''
       Wallet.settings.needs2FA = false
       Wallet.user.isMobileVerified = 0
       Wallet.settings.blockTOR = false
-      
+
       rootScope.$digest()
-      
+
       return
 
-    return  
-    
-  describe "level", ->   
-      
+    return
+
+  describe "level", ->
+
     it "should start at 0", ->
-      expect(SecurityCenter.security.level).toBe(0)    
-    
+      expect(SecurityCenter.security.level).toBe(0)
+
     it "should increase if email has been verified", ->
       Wallet.user.isEmailVerified = true
       rootScope.$digest()
