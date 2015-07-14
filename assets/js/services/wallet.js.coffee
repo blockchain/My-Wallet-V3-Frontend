@@ -955,7 +955,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.store.setLogoutTime(minutes * 60000)
     wallet.my.wallet.logoutTime = minutes * 60000
     wallet.settings.logoutTimeMinutes = minutes
-    wallet.my.syncWallet(success, error)
+    success()
 
   wallet.getLanguages = () ->
     # Get and sort languages:
