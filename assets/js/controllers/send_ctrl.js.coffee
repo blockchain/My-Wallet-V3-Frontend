@@ -63,7 +63,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
     # $scope.transaction.destinations[i] = destination
     $scope.refreshDestinations(paymentRequest.address, i)
-    
+
     $scope.transaction.amounts[i] = paymentRequest.amount || 0
     $scope.transaction.note = paymentRequest.message || ''
 
@@ -237,6 +237,19 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       return unless $scope.sendForm?
       $scope.sendForm['destinations' + index].$setValidity('isNotEqual', !match)
 
+  $scope.formatOrigin = (origin) ->
+    formatted = {
+      label: origin.label || origin.address
+      index: origin.index
+      address: origin.address
+      balance: origin.balance
+      archived: origin.archived
+      active: origin.active
+    }
+    formatted.type = if origin.index? then 'Accounts' else 'Imported Addresses'
+    formatted.isWatchOnly = origin.isWatchOnly if !origin.index?
+    return formatted
+
   #################################
   #           Private             #
   #################################
@@ -259,27 +272,19 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         defaultAccountIndex = Wallet.my.wallet.hdwallet.defaultAccountIndex
 
         for account in $scope.accounts
-          item = {}
-          item.type = "Accounts"
-          item.label = account.label
-          item.index = account.index
-          item.balance = account.balance
-          unless item.index? && account.archived
-            if item.index == defaultAccountIndex
-              $scope.transaction.from = item
-            $scope.origins.push item
-            $scope.destinationsBase.push angular.copy(item) # https://github.com/angular-ui/ui-select/issues/656
+          account = $scope.formatOrigin(account)
+          unless account.index? && account.archived
+            if account.index == defaultAccountIndex
+              $scope.transaction.from = account
+            $scope.origins.push account
+            $scope.destinationsBase.push angular.copy(account) # https://github.com/angular-ui/ui-select/issues/656
 
         for address in $scope.legacyAddresses
+          address = $scope.formatOrigin(address)
           if address.active
-            item = {}
-            item.type = "Imported Addresses"
-            item.label = address.label || address.address
-            item.address = address.address
-            item.balance = address.balance
-            $scope.destinationsBase.push item
-            unless address.isWatchOnlyLegacyAddress
-              $scope.origins.push angular.copy(item)
+            $scope.destinationsBase.push address
+            unless address.isWatchOnly
+              $scope.origins.push angular.copy(address)
 
         $scope.destinationsBase.push({address: "", label: "", type: "External"})
         $scope.destinations.push $scope.destinationsBase
