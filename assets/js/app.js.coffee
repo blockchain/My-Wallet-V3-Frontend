@@ -108,16 +108,21 @@ modules = [
 ]
 
 walletApp = angular.module("walletApp", modules)
-  
+
 walletApp.config ($numeraljsConfigProvider, $modalProvider, uiSelectConfig) ->
   $numeraljsConfigProvider.setFormat('btc', '0,0.00 BTC')
-  
+
   uiSelectConfig.theme = 'bootstrap'
-  
+
   # Pending: https://github.com/angular-ui/bootstrap/issues/3647
   $modalProvider.options.animation = false;
-  
+
 
 # Danger! Use for debugging only:
 # walletApp.config ($sceProvider) ->
 #   $sceProvider.enabled(false);
+
+walletApp.run ($rootScope) ->
+  $rootScope.$safeApply = (scope) ->
+    if !scope.$$phase && !$rootScope.$$phase
+      scope.$apply(done)
