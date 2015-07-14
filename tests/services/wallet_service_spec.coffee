@@ -21,39 +21,39 @@ describe "walletServices", () ->
         needs2FA: (() ->), 
         success: (() ->), 
         error: (() ->)}
+        
+      Wallet.my.login = (uid, password, two_factor_code, didLogin) ->
+        didLogin()
+      
+      Wallet.my.wallet = 
+        isUpgradedToHD: true
+        hdwallet:
+          isMnemonicVerified: true
+          accounts: []
+        keys: []
+          
+      Wallet.my.getHistoryAndParseMultiAddressJSON = () ->
+        
+      Wallet.api.get_ticker = (success, fail) ->
+        success({
+          EUR: {"last": 250, symbol: "€"}
+          USD: {"last": 300, symbol: "$"}
+        })
       
       return
 
     return
         
   describe "transactions", ->           
-       
-    it "should listen for on_tx and on_block", inject((Wallet, MyWallet) ->
-            
-      MyWallet.mockShouldReceiveNewTransaction()
-            
-      expect(Wallet.  monitor).toHaveBeenCalled()
-      
-      MyWallet.mockShouldReceiveNewBlock()
-      
-      expect(Wallet.  monitor).toHaveBeenCalled()
-      
-      return
-    )
     
-    it "should obtain the new transaction", inject((Wallet, MyWallet) ->
-      before = Wallet.transactions.length
-      
-      MyWallet.mockShouldReceiveNewTransaction()
-      
-      expect(Wallet.transactions.length).toBe(before + 1)
-      
-      return
-    )
-    
-    it "should beep on new transaction",  inject((MyWallet, Wallet, $timeout, ngAudio) ->
+    it "should beep on new transaction",  inject((Wallet, $timeout, ngAudio) ->
       spyOn(ngAudio, "load").and.callThrough()
-      MyWallet.mockShouldReceiveNewTransaction()
+      
+      spyOn(Wallet, "updateTransactions").and.callFake(() ->
+        Wallet.transactions.push {}
+      )
+      
+      Wallet.monitor("on_tx")
       expect(ngAudio.load).toHaveBeenCalled()
     )
     
@@ -73,6 +73,9 @@ describe "walletServices", () ->
   describe "language", ->    
       
     it "should be set after loading", inject((Wallet) ->
+      
+      Wallet.login()
+      
       expect(Wallet.settings.language).toEqual({code: "en", name: "English"})
     )
       
@@ -91,11 +94,13 @@ describe "walletServices", () ->
   describe "currency", ->    
       
     it "should be set after loading", inject((Wallet) ->
+      Wallet.login()
       expect(Wallet.settings.currency.code).toEqual("USD")
     )
     
     
     it "conversion should be set on load", inject((Wallet) ->
+      Wallet.login()
       expect(Wallet.conversions["USD"].conversion).toBeGreaterThan(0)
     )
       
@@ -109,6 +114,15 @@ describe "walletServices", () ->
     return
 
   describe "conversions", ->
+    beforeEach ->
+      Wallet.conversions = 
+        USD: {conversion: parseInt(numeral(100000000).divide(numeral(300)).format("1"))}
+        EUR: {conversion: parseInt(numeral(100000000).divide(numeral(250)).format("1"))}
+        
+        
+      Wallet.currencies = [{code: "USD"}, {code: "EUR"}]
+      Wallet.btcCurrencies = [{code: "BTC", conversion: 100000000}, {code: "mBTC", conversion: 100000}]
+      
 
     describe "convertCurrency", ->
 
@@ -237,12 +251,6 @@ describe "walletServices", () ->
     
   describe "currency conversion", ->    
     beforeEach ->
-      Wallet.api.get_ticker = (success, fail) ->
-          success({
-            EUR: {"last": 250, symbol: "€"}
-            USD: {"last": 300, symbol: "$"}
-          })
-
       Wallet.fetchExchangeRate()
       
     it "should know the exchange rate in satoshi per unit of fiat", inject((Wallet) ->
