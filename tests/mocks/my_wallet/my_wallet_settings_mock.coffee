@@ -3,21 +3,7 @@ angular.module("myBlockchainSettingsServices", []).factory "MyBlockchainSettings
     mobile = "+31 12345678"
     language = "en"
     
-    {
-      get_account_info: (success, error) ->
-        success({
-          email: email
-          email_verified: 1
-          sms_number: mobile
-          sms_verified: 0
-          password_hint1: "Same as username"
-          language: language
-          currency: "USD"
-          btc_currency: "BTC"
-          block_tor_ips: 0
-          my_ip: "123.456.789.012"
-        })
-        
+    {   
       update_password_hint1: (hint, success, error) ->
         if hint.split('').some((c) -> c.charCodeAt(0) > 255)
           error(101)
