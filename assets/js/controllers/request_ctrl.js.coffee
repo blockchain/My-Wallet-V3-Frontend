@@ -20,20 +20,20 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
   $scope.fields = {to: null, amount: "0", currency: Wallet.settings.currency, label: ""}
 
   for account in $scope.accounts
-    item = account
-    item.type = "Accounts"
+    if account.index? && account.active
+      acct = angular.copy(account)
+      acct.type = "Accounts"
+      $scope.destinations.push acct
 
-    unless item.index? && !item.active
-      $scope.destinations.push item
-
-    if destination == account
-      $scope.fields.to = item
+      if destination? && destination.index? && destination.index == acct.index
+        $scope.fields.to = acct
 
   for address in $scope.legacyAddresses
     if address.active
-      item = address
-      item.type = "Imported Addresses"
-      $scope.destinations.push item
+      addr = angular.copy(address)
+      addr.type = "Imported Addresses"
+      addr.label = addr.label || addr.address
+      $scope.destinations.push addr
 
   $scope.determineLabel = (origin) ->
     label = origin.label || origin.address
@@ -58,6 +58,8 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
     if !$scope.fields.to? && $scope.accounts.length > 0
       if $stateParams.accountIndex == "accounts" || !$stateParams.accountIndex? # The latter is for Jasmine
         # Nothing to do, just use the default index
+      else if $stateParams.accountIndex == "imported" || !$stateParams.accountIndex?
+        # Use default index
       else
         idx = parseInt($stateParams.accountIndex)
       $scope.fields.to = $scope.accounts[idx]

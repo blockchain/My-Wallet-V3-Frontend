@@ -1,6 +1,5 @@
 describe "walletServices", () ->
   Wallet = undefined
-  MyWallet = undefined
   mockObserver = undefined  
   errors = undefined
   MyBlockchainSettings = undefined
@@ -12,7 +11,6 @@ describe "walletServices", () ->
       localStorageService.remove("mockWallets")
       
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
       MyBlockchainSettings = $injector.get("MyBlockchainSettings")
                       
       spyOn(Wallet,"monitor").and.callThrough()
@@ -38,6 +36,20 @@ describe "walletServices", () ->
         success({
           EUR: {"last": 250, symbol: "€"}
           USD: {"last": 300, symbol: "$"}
+        })
+        
+      Wallet.settings_api.get_account_info = (success, error) ->
+        success({
+          email: "steve@me.com"
+          email_verified: 1
+          sms_number: "+31 12345678"
+          sms_verified: 0
+          password_hint1: "Same as username"
+          language: "en"
+          currency: "USD"
+          btc_currency: "BTC"
+          block_tor_ips: 0
+          my_ip: "123.456.789.012"
         })
       
       return
@@ -79,8 +91,12 @@ describe "walletServices", () ->
       expect(Wallet.settings.language).toEqual({code: "en", name: "English"})
     )
       
-    it "should switch language", inject((Wallet, MyWallet) ->
-      spyOn(MyBlockchainSettings, "change_language").and.callThrough()
+    it "should switch language", inject((Wallet) ->
+      Wallet.settings_api.change_language = (language, success, error) ->
+        success()
+        
+      spyOn(Wallet.settings_api, "change_language").and.callThrough()
+      
       Wallet.changeLanguage(Wallet.languages[0])
       expect(MyBlockchainSettings.change_language).toHaveBeenCalled()
       expect(MyBlockchainSettings.change_language.calls.argsFor(0)[0]).toBe("de")
@@ -104,8 +120,10 @@ describe "walletServices", () ->
       expect(Wallet.conversions["USD"].conversion).toBeGreaterThan(0)
     )
       
-    it "can be switched", inject((Wallet, MyWallet) ->
-      spyOn(MyBlockchainSettings, "change_local_currency").and.callThrough()
+    it "can be switched", inject((Wallet) ->
+      Wallet.settings_api.change_local_currency = (newCurrency) ->
+        
+      spyOn(Wallet.settings_api, "change_local_currency").and.callThrough()
       Wallet.changeCurrency(Wallet.currencies[1])
       expect(MyBlockchainSettings.change_local_currency).toHaveBeenCalledWith("EUR")
       expect(Wallet.settings.currency.code).toBe("EUR")
@@ -177,11 +195,14 @@ describe "walletServices", () ->
   describe "email", ->    
       
     it "should be set after loading", inject((Wallet) ->
+      Wallet.login()
       expect(Wallet.user.email).toEqual("steve@me.com")
     )
       
-    it "can be changed", inject((Wallet, MyWallet) ->
-      spyOn(MyBlockchainSettings, "change_email").and.callThrough()
+    it "can be changed", inject((Wallet) ->
+      Wallet.settings_api.change_email = (newVal, success, error) -> success()
+      
+      spyOn(Wallet.settings_api, "change_email").and.callThrough()
       Wallet.changeEmail("other@me.com", mockObserver.success, mockObserver.error)
       expect(MyBlockchainSettings.change_email).toHaveBeenCalled()
       expect(Wallet.user.email).toBe("other@me.com")
@@ -193,20 +214,27 @@ describe "walletServices", () ->
   describe "mobile", ->    
       
     it "should be set after loading", inject((Wallet) ->
+      Wallet.login()
       expect(Wallet.user.mobile.number).toEqual("12345678")
     )
       
-    it "should allow change", inject((Wallet, MyWallet) ->
-      spyOn(MyBlockchainSettings, "changeMobileNumber").and.callThrough()
+    it "should allow change", inject((Wallet) ->
+      Wallet.settings_api.changeMobileNumber = (newVal, success, error) ->
+        success()
+        
+      spyOn(Wallet.settings_api, "changeMobileNumber").and.callThrough()
       newNumber = {country: "+31", number: "0100000000"}
       Wallet.changeMobile(newNumber, (()->),(()->))
-      expect(MyBlockchainSettings.changeMobileNumber).toHaveBeenCalled()
+      expect(Wallet.settings_api.changeMobileNumber).toHaveBeenCalled()
       expect(Wallet.user.mobile).toBe(newNumber)
       expect(Wallet.user.isMobileVerified).toBe(false)
     )
     
-    it "can be verified", inject((Wallet, MyWallet) ->
-      spyOn(MyBlockchainSettings, "verifyMobile").and.callThrough()
+    it "can be verified", inject((Wallet) ->
+      Wallet.settings_api.verifyMobile = (code, success, error) ->
+        success()
+      
+      spyOn(Wallet.settings_api, "verifyMobile").and.callThrough()
 
       Wallet.verifyMobile("12345", (()->),(()->))
       
@@ -221,11 +249,7 @@ describe "walletServices", () ->
   
   describe "password", ->    
       
-    it "can be checked", inject((Wallet, MyWallet, MyWalletStore) ->
-      expect(MyWalletStore.isCorrectMainPassword("test")).toBe(true)
-    )
-      
-    it "can be changed", inject((Wallet, MyWallet, MyWalletStore) ->
+    it "can be changed", inject((Wallet, MyWalletStore) ->
       spyOn(MyWalletStore, "changePassword").and.callThrough()
       Wallet.changePassword("newpassword")
       expect(MyWalletStore.changePassword).toHaveBeenCalled()
@@ -237,11 +261,18 @@ describe "walletServices", () ->
   describe "password hint", ->    
       
     it "should be set after loading", inject((Wallet) ->
+      Wallet.login()
       expect(Wallet.user.passwordHint).toEqual("Same as username")
     )
 
-    it "can be changed", inject((Wallet, MyWallet) ->
-      spyOn(MyBlockchainSettings, "update_password_hint1").and.callThrough()
+    it "can be changed", inject((Wallet) ->
+      Wallet.settings_api.update_password_hint1 = (hint, success, error) ->
+        if hint.split('').some((c) -> c.charCodeAt(0) > 255)
+          error(101)
+        else
+          success()
+      
+      spyOn(Wallet.settings_api, "update_password_hint1").and.callThrough()
       Wallet.changePasswordHint("Better hint", mockObserver.success, mockObserver.error)
       expect(MyBlockchainSettings.update_password_hint1).toHaveBeenCalled()
       expect(Wallet.user.passwordHint).toBe("Better hint")
@@ -279,7 +310,7 @@ describe "walletServices", () ->
       return
     )
     
-    it "should return the sum of all accounts", inject((Wallet, MyWallet) ->
+    it "should return the sum of all accounts", inject((Wallet) ->
       Wallet.my.wallet.hdwallet.balanceActiveAccounts = 3
       expect(Wallet.total("accounts")).toBeGreaterThan(0)
       expect(Wallet.total("accounts")).toBe(Wallet.accounts[0].balance + Wallet.accounts[1].balance)
@@ -287,7 +318,7 @@ describe "walletServices", () ->
       return
     )
     
-    it "should return the sum of all legacy addresses", inject((Wallet, MyWallet, MyWalletStore) ->
+    it "should return the sum of all legacy addresses", inject((Wallet, MyWalletStore) ->
       Wallet.my.wallet.balanceActiveLegacy = 1
       
       expect(Wallet.total("imported")).toBeGreaterThan(0)
@@ -430,27 +461,38 @@ describe "walletServices", () ->
         expect(Wallet.displayReceivedBitcoin).not.toHaveBeenCalled()
         
   describe "fetchMoreTransactions()", ->
+    beforeEach -> 
+      Wallet.my.fetchMoreTransactionsForAccount = () ->
+      Wallet.my.fetchMoreTransactionsForAccounts = () ->
+      Wallet.my.fetchMoreTransactionsForLegacyAddresses = (success, error, didFetchOldestTransaction) ->
+        if success? 
+          success([])
+        
     it "should call the right method for individual accounts", ->
-      spyOn(MyWallet, "fetchMoreTransactionsForAccount")
+      spyOn(Wallet.my, "fetchMoreTransactionsForAccount")
       Wallet.fetchMoreTransactions(0)
-      expect(MyWallet.fetchMoreTransactionsForAccount).toHaveBeenCalled()
+      expect(Wallet.my.fetchMoreTransactionsForAccount).toHaveBeenCalled()
     
     it "should call the right method for all accounts combined", ->
-      spyOn(MyWallet, "fetchMoreTransactionsForAccounts")
+      spyOn(Wallet.my, "fetchMoreTransactionsForAccounts")
       Wallet.fetchMoreTransactions("accounts")      
-      expect(MyWallet.fetchMoreTransactionsForAccounts).toHaveBeenCalled()
+      expect(Wallet.my.fetchMoreTransactionsForAccounts).toHaveBeenCalled()
     
     it "should call the right method for imported addresses", ->
-      spyOn(MyWallet, "fetchMoreTransactionsForLegacyAddresses")
+      spyOn(Wallet.my, "fetchMoreTransactionsForLegacyAddresses").and.callFake((success, error, didFetchOldestTransaction) ->
+        didFetchOldestTransaction()
+      )
       Wallet.fetchMoreTransactions("imported")    
-      expect(MyWallet.fetchMoreTransactionsForLegacyAddresses).toHaveBeenCalled()   
+      expect(Wallet.my.fetchMoreTransactionsForLegacyAddresses).toHaveBeenCalled()   
       
     it "should the caller know if there are no more transactions", ->
       observer = 
         allTransactionsLoadedCallback: () -> 
-          
-      MyWallet.mockShouldFetchOldestTransaction()
-          
+      
+      Wallet.my.fetchMoreTransactionsForLegacyAddresses = (success, error, didFetchOldestTransaction) ->
+        didFetchOldestTransaction()
+      
+                    
       spyOn(observer, "allTransactionsLoadedCallback")
       Wallet.fetchMoreTransactions("imported", (()->), (()->), observer.allTransactionsLoadedCallback)    
     
@@ -458,7 +500,7 @@ describe "walletServices", () ->
       
     it "should call appendTransactions()", ->
       spyOn(Wallet, "appendTransactions")
-      Wallet.fetchMoreTransactions(0, (()->), (()->), (()->))
+      Wallet.fetchMoreTransactions("imported", (()->), (()->), (()->))
       expect(Wallet.appendTransactions).toHaveBeenCalled()
       
   describe "appendTransactions()", ->
