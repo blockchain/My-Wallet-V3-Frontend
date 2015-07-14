@@ -269,12 +269,14 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     if $scope.status.didLoadBalances
       if $scope.origins.length == 0
 
-        defaultAccountIndex = Wallet.my.wallet.hdwallet.defaultAccountIndex
+        idx = Wallet.my.wallet.hdwallet.defaultAccountIndex
+        unless isNaN($stateParams.accountIndex)
+          idx = parseInt($stateParams.accountIndex)
 
         for account in $scope.accounts
           account = $scope.formatOrigin(account)
           unless account.index? && account.archived
-            if account.index == defaultAccountIndex
+            if account.index == idx
               $scope.transaction.from = account
             $scope.origins.push account
             $scope.destinationsBase.push angular.copy(account) # https://github.com/angular-ui/ui-select/issues/656
