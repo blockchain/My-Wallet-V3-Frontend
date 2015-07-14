@@ -1,8 +1,7 @@
 describe "walletServices", () ->
-  Wallet = undefined
-  MyWallet = undefined
   mockObserver = undefined  
   errors = undefined
+  Wallet = undefined
   
   beforeEach angular.mock.module("walletApp")
   
@@ -11,10 +10,9 @@ describe "walletServices", () ->
       localStorageService.remove("mockWallets")
       
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
-            
-      spyOn(MyWallet,"login").and.callThrough()
-          
+      
+      Wallet.accounts = [{index: 0}]
+                      
       spyOn(Wallet,"monitor").and.callThrough()
       
       mockObserver = {needs2FA: (() ->)}
@@ -24,5 +22,12 @@ describe "walletServices", () ->
     return
 
   describe "redeemFromEmailOrMobile",  ->
+    beforeEach ->
+      Wallet.my.redeemFromEmailOrMobile = () ->
+    
     it "should add funds to the correct account", ->
+      spyOn(Wallet.my, "redeemFromEmailOrMobile")
+      
       Wallet.redeemFromEmailOrMobile(Wallet.accounts[0], "abcd", (()->), (()->))
+      
+      expect(Wallet.my.redeemFromEmailOrMobile.calls.argsFor(0)[0]).toBe(0)
