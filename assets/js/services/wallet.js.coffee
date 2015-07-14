@@ -953,7 +953,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.setLogoutTime = (minutes, success, error) ->
     wallet.store.setLogoutTime(minutes * 60000)
-    wallet.my.wallet.logoutTime = minutes * 60000
     wallet.settings.logoutTimeMinutes = minutes
     success()
 
