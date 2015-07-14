@@ -20,6 +20,7 @@
 @import 'components/ribbons';
 @import 'components/bitcoin-addresses';
 @import 'components/button-groups';
+@import 'components/filter-bar';
 @import 'components/forms';
 @import 'components/helpers';
 @import 'components/modals';
@@ -51,6 +52,7 @@ html,body {
 
 .invisible { visibility: hidden; opacity: 0; }
 
+.height-100 { height: 100%; }
 .width-100 { width: 100%; }
 .width-50 { width: 50%; }
 .width-75 { width: 75%; }
@@ -71,12 +73,6 @@ html,body {
   width: 100%;
   margin: 0;
 }
-.col-centered {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
 a.back {
  h4{
   background: url("/img/back.png") no-repeat left center;
@@ -96,18 +92,6 @@ a.back {
 
 .text-center{
  text-align: center;
-}
-.clearfix {
-  *zoom: 1;
-  &:before,
-  &:after {
-    display: table;
-    content: "";
-    line-height: 0;
-  }
-  &:after {
-    clear: both;
-  }
 }
 .form-ctrl{
   padding: 15px 0;
@@ -159,6 +143,7 @@ padding-left: 15px;
 //TODO rip this out once we have a real dashboard
 
 .dashboard {
+  padding: 20px 30px;
   h1 {
     font-weight: 300;
     font-size: 2em;
@@ -185,12 +170,4 @@ padding-left: 15px;
     max-width: 300px;
   }
 }
-
-//override pre from bootstrap
-pre {
-  word-break: normal;
-  word-wrap: normal;
-  white-space: pre-line;
-}
-
 //QR Code image icon graciously drawn by Rabee Balakrishnan

@@ -1,4 +1,4 @@
-.flex-center.flex-between#top(ng-show="status.isLoggedIn")
+.flex-center.flex-between.height-100(ng-show="status.isLoggedIn")
   .button-group.flex
     a.flex-center.flex-justify.mrm(ng-click="request()")
       i.bc-icon-receive
@@ -6,7 +6,7 @@
     a.flex-center.flex-justify(ng-click="send()")
       i.bc-icon-send
       span(translate="SEND")
-  .balance.flex-column.flex-align-end.right-align(ng-click="toggleDisplayCurrency()")
+  .balance.flex-column.flex-align-end.right-align.pointer(ng-click="toggleDisplayCurrency()")
     span(ng-show="getTotal(accountIndex) == null")
       h3
         img(ng-show="balance == null" src="img/spinner.gif") 
