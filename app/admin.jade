@@ -13,7 +13,7 @@ html(ng-app="AdminInterface" lang='en')
     link(rel='stylesheet', href='../build/css/blockchain.css')
     link(rel='stylesheet', href='../build/css/navigation.css')
     
-    script(src='../app/betaAdminClient.js')
+    script(src='../app/admin.js')
     <!-- @endif -->
         
     <!-- @if PRODUCTION !>
@@ -138,6 +138,24 @@ html(ng-app="AdminInterface" lang='en')
             <div class="col-xs-8"><input class="form-control" ng-model="fields.guid" name="guid" type="text" placeholder="(optional)"></div> 
           </div>
           <div class="form-group">
+            <label class="col-xs-2 control-label">iOS</label>
+            <div class="col-xs-4">
+              <div class="form-control"><input type="checkbox" ng-model="fields.ios" name="iosReq" disabled><label>&nbsp;Requested</label></div>
+            </div>
+            <div class="col-xs-4">
+              <div class="form-control"><input type="checkbox" ng-model="fields.ios_sent" name="iosSent" ng-disabled="fields.ios_sent || !fields.ios"><label>&nbsp;Invitation Sent</label></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2 control-label">Android</label>
+            <div class="col-xs-4">
+              <div class="form-control"><input type="checkbox" ng-model="fields.android" name="androidReq" disabled><label>&nbsp;Requested</label></div>
+            </div>
+            <div class="col-xs-4">
+              <div class="form-control"><input type="checkbox" ng-model="fields.android_sent" name="androidSent" ng-disabled="fields.android_sent || !fields.android"><label>&nbsp;Invitation Sent</label></div>
+            </div>
+          </div>
+          <div class="form-group">
             <div class="col-xs-2 col-xs-offset-2">
               <button class="btn" ng-disabled="editForm.$invalid" ng-class="(fields.activated) ? 'btn-default' : 'btn-danger'" type="submit">
                 {{ (fields.activated) ? 'Update' : 'Activate' }}
@@ -165,7 +183,9 @@ html(ng-app="AdminInterface" lang='en')
             </div>
             <div class="form-group">
               <label class="col-xs-4 control-label">Percent Requested</label>
-              <div class="col-xs-6"><input class="form-control" ng-model="percent" name="percent" type="number" required /></div>
+              <div class="col-xs-6">
+                <input class="form-control" ng-model="percent" name="percent" type="number" min="0" max="100" required />
+              </div>
             </div>
             <div class="form-group">
               <div class="col-xs-3 col-xs-offset-4">
@@ -181,9 +201,8 @@ html(ng-app="AdminInterface" lang='en')
       <div class="modal-header">
         <h3>Activate Multiple</h3>
       </div>
-      <div class="modal-body">
-        <!-- 0 -->
-        <div ng-show="step == 0">
+      <div class="modal-body" ng-switch="step">
+        <div ng-switch-when="0">
           <form class="form-horizontal" name="activationForm" ng-submit="activate(min, max)" novalidate>
             <div class="form-group">
               <label class="col-xs-3 control-label">Min id</label>
@@ -200,19 +219,17 @@ html(ng-app="AdminInterface" lang='en')
             </div>
           </form>
         </div>
-        <!-- 1 -->
-        <div ng-show="step == 1">
+        <div ng-switch-when="1">
           <p>Please wait...</p>
           <p>This process may take several minutes to complete</p>
         </div>
-        <!-- 2 -->
-        <div ng-show="step == 2">
+        <div ng-switch-when="2">
           <div class="col-xs-offset-3">
             <p>{{numKeys}} keys have been activated</p>
             <p>{{numEmails}} emails were sent</p>
             <span class="text-danger" ng-show="errors.length > 0">
               <p>{{errors.length}} emails failed to send!</p>
-              <p ng-repeat="err in errors">
+              <p ng-repeat="err in errors track by $index">
                 Send failed ({{err.key}}, {{err.email}}): {{err.message}}
               </p>
             <span>
