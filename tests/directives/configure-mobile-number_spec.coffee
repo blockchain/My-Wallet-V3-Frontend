@@ -11,6 +11,8 @@ describe "Change Mobile Number Directive", ->
     
     $compile = _$compile_
     $rootScope = _$rootScope_
+    
+    Wallet.user = {mobile: {number: "12345678"}}
             
     return
   )
