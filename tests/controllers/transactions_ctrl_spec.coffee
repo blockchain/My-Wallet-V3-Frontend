@@ -1,27 +1,28 @@
 describe "TransactionsCtrl", ->
   scope = undefined
-  
+
   beforeEach angular.mock.module("walletApp")
-  
+
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
-            
+
+      Wallet.login("test", "test")  
+
       scope = $rootScope.$new()
-            
+
       $controller "TransactionsCtrl",
         $scope: scope,
         $stateParams: {}
-      
+
       scope.transactions = Wallet.transactions
 
       return
 
     return
-    
+
   it "should have access to address book",  inject(() ->
-    pending()
     expect(scope.addressBook).toBeDefined()
     expect(scope.addressBook["17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq"]).toBe("John")
   )
@@ -44,13 +45,13 @@ describe "TransactionsCtrl", ->
   it "should have 4 transaction types", inject(() ->
     expect(scope.filterTypes.length).toEqual(4)
   )
-    
+
   it "can filter by transaction type", inject((Wallet) ->
     spyOn(scope, "setFilterType")
     scope.setFilterType(3)
     expect(scope.setFilterType).toHaveBeenCalled()
   )
-    
+
   it "can filter by search", inject((Wallet) ->
     spyOn(scope, "filterSearch")
     scope.filterSearch(1, "test")
