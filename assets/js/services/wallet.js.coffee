@@ -749,7 +749,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   #        Private (other)         #
   ##################################
 
-  # wallet.updateAccounts = () ->
+  wallet.updateAccounts = () ->
+    wallet.accounts = wallet.my.wallet.hdwallet.accounts
+
   # wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts.some((a) -> a.active and a.balance)
 
   # Update (labelled) HD addresses:
