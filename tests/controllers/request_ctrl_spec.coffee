@@ -1,4 +1,5 @@
 describe "RequestCtrl", ->
+
   scope = undefined
   modalInstance =
     close: ->
@@ -11,8 +12,30 @@ describe "RequestCtrl", ->
       localStorageService.remove("mockWallets")
 
       Wallet = $injector.get("Wallet")
-
       MyWallet = $injector.get("MyWallet")
+
+      MyWallet.wallet = {
+        isUpgradedToHD: true
+        keys: [
+          { address: '1asdf', active: true }, { address: '1asdf', active: false }
+        ]
+        hdwallet: {
+          accounts: [{ index: 0, active: true }, { index: 0, active: false }]
+          defaultAccountIndex: 0
+        }
+      }
+
+      Wallet.settings = {
+        currency: Wallet.currencies[0]
+        btcCurrency: Wallet.btcCurrencies[0]
+      }
+
+      Wallet.conversions = {
+        EUR: { conversion: 400000 }
+      }
+
+      Wallet.updateLegacyAddresses()
+      Wallet.updateAccounts()
 
       scope = $rootScope.$new()
 
@@ -36,7 +59,6 @@ describe "RequestCtrl", ->
       scope.$apply()
 
       return
-
 
     return
 
@@ -94,22 +116,20 @@ describe "RequestCtrl", ->
     )
 
     it "should show a payment request address when legacy address is selected", inject(()->
-      scope.fields.to = scope.destinations[scope.accounts.length] # The first legacy address
-
+      scope.fields.to = scope.legacyAddresses[0]
       scope.$digest()
-
       expect(scope.paymentRequestAddress).toBe(scope.fields.to.address)
     )
 
     it "should show a payment URL when legacy address is selected", ->
-      scope.fields.to = scope.destinations[scope.accounts.length] # The first legacy address
+      scope.fields.to = scope.legacyAddresses[0]
       scope.$digest()
       expect(scope.paymentRequestURL).toBeDefined()
       expect(scope.paymentRequestURL).toContain("bitcoin:")
 
 
     it "should show a payment URL with amount when legacy address is selected and amount > 0", ->
-      scope.fields.to = scope.destinations[scope.accounts.length] # The first legacy address
+      scope.fields.to = scope.legacyAddresses[0]
       scope.$digest()
       scope.fields.currency = scope.currencies[0]
       scope.fields.amount = "0.1"
@@ -118,7 +138,7 @@ describe "RequestCtrl", ->
       expect(scope.paymentRequestURL).toContain("amount=0.1")
 
     it "should not have amount argument in URL if amount is zero, null or empty", ->
-      scope.fields.to = scope.destinations[scope.accounts.length] # The first legacy address
+      scope.fields.to = scope.legacyAddresses[0]
       scope.fields.amount = "0"
       scope.$digest()
       expect(scope.paymentRequestURL).toBeDefined()
