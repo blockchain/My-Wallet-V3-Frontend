@@ -1,4 +1,4 @@
-describe "ShowPrivateKeyCtrl", ->
+ddescribe "ShowPrivateKeyCtrl", ->
 
   Wallet = null
   scope = undefined
@@ -13,6 +13,11 @@ describe "ShowPrivateKeyCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
 
       Wallet = $injector.get('Wallet')
+      
+      Wallet.my = 
+        wallet: {
+          getPrivateKeyForAddress: (()-> "private key")
+        }
 
       scope = $rootScope.$new()
 
@@ -49,11 +54,14 @@ describe "ShowPrivateKeyCtrl", ->
     beforeEach ->
       scope.needsSecondPassword = true
       Wallet.my.isCorrectSecondPassword = (-> false)
+      Wallet.my.wallet = 
+        isDoubleEncrypted: false
 
     it "should allow access if there is no second password", () ->
       scope.needsSecondPassword = false
       expect(scope.accessAllowed).toBe(false)
       scope.tryContinue()
+      scope.$digest()
       expect(scope.accessAllowed).toBe(true)
 
     it "should check to see if the second password is correct", inject((Wallet) ->
