@@ -1,4 +1,5 @@
 describe "AccountFormCtrl", ->
+  Wallet = undefined
   scope = undefined
 
   modalInstance =
@@ -8,10 +9,26 @@ describe "AccountFormCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
+    angular.mock.inject ($injector) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
 
+      Wallet.accounts = [{label: 'Savings'}, {label: 'Party Money'}]
+
+      Wallet.askForSecondPasswordIfNeeded = () ->
+        return {
+          then: (fn) -> fn(); return { catch: (-> ) }
+        }
+
+      MyWallet.getHistoryAndParseMultiAddressJSON = (-> )
+
+      MyWallet.wallet = {
+        isDoubleEncrypted: false
+        newAccount: (label) -> { label: label }
+      }
+
+  beforeEach ->
+    angular.mock.inject ($rootScope, $controller, $compile) ->
       scope = $rootScope.$new()
 
       $controller "AccountFormCtrl",
@@ -31,7 +48,6 @@ describe "AccountFormCtrl", ->
       scope.$digest()
 
       return
-
     return
 
   describe "creation", ->
