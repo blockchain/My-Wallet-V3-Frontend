@@ -63,6 +63,7 @@ describe "ShowPrivateKeyCtrl", ->
       scope.$digest()
       expect(Wallet.my.wallet.getPrivateKeyForAddress).toHaveBeenCalledWith(addressObj, undefined)
       expect(scope.accessAllowed).toBe(true)
+      expect(scope.incorrectSecondPassword).toBe(false)
 
     it "should not continue if second password is incorrect", inject((Wallet) ->
       expect(scope.accessAllowed).toBe(false)
@@ -72,6 +73,7 @@ describe "ShowPrivateKeyCtrl", ->
       scope.$digest()
       expect(Wallet.my.wallet.getPrivateKeyForAddress).not.toHaveBeenCalled()
       expect(scope.accessAllowed).toBe(false)
+      expect(scope.incorrectSecondPassword).toBe(true)
     )
 
     it "should continue if second password is correct", inject((Wallet) ->
@@ -82,4 +84,5 @@ describe "ShowPrivateKeyCtrl", ->
       scope.$digest()
       expect(Wallet.my.wallet.getPrivateKeyForAddress).toHaveBeenCalledWith(addressObj, 'password123')
       expect(scope.accessAllowed).toBe(true)
+      expect(scope.incorrectSecondPassword).toBe(false)
     )
