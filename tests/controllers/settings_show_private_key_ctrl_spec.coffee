@@ -21,12 +21,6 @@ describe "ShowPrivateKeyCtrl", ->
         getPrivateKeyForAddress: (-> )
       }
 
-      Wallet.askForSecondPasswordIfNeeded = () ->
-        {
-          then: (fn) -> fn('pass') unless enterInvalid; this
-          catch: (fn) -> fn('invalid') if enterInvalid; this
-        }
-
       scope = $rootScope.$new()
 
       addressObj = {
