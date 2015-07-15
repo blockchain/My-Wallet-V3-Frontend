@@ -30,8 +30,7 @@ walletApp.controller "ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalI
     valid = true
 
     for word in $scope.words
-      word.error = word.value.toLowerCase() != word.actual
-      if word.error
+      if word.error = word.value.toLowerCase() != word.actual
         valid = false
 
     if valid
@@ -41,15 +40,13 @@ walletApp.controller "ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalI
   success = (mnemonic) ->
     $scope.recoveryPhrase = mnemonic
     $scope.setRandomWords(mnemonic)
-    
+
   error = (error) ->
     $translate(error).then (translation) ->
       Wallet.displayError(translation)
     $modalInstance.dismiss ""
-    
+
   cancel = () ->
     $modalInstance.dismiss ""
 
   Wallet.getMnemonic(success, error, cancel)
-  
-    

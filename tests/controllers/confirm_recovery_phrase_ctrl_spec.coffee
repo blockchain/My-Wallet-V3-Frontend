@@ -11,6 +11,13 @@ describe "ConfirmRecoveryPhraseCtrl", ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
 
+      MyWallet.wallet = {
+        isDoubleEncrypted: false
+      }
+
+      Wallet.getMnemonic = (success) ->
+        success('a b c d e f g h i j k l')
+
       scope = $rootScope.$new()
 
       $controller "ConfirmRecoveryPhraseCtrl",
