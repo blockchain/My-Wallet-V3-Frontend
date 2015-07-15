@@ -1,4 +1,4 @@
-ddescribe "WalletNavigationCtrl", ->
+describe "WalletNavigationCtrl", ->
   scope = undefined
 
   modal =
