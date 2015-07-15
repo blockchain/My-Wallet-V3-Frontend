@@ -612,7 +612,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.accounts.splice(0, wallet.accounts.length)
       wallet.transactions.splice(0, wallet.transactions.length)
       wallet.my.wallet.restoreHDWallet(mnemonic, bip39pass, password)
-      wallet.my.wallet.hdwallet.accounts.forEach(wallet.accounts.push(a))
+      wallet.my.wallet.hdwallet.accounts.forEach((a)->wallet.accounts.push(a))
       wallet.my.getHistoryAndParseMultiAddressJSON()
       wallet.updateTransactions()
       wallet.updateHDaddresses()
