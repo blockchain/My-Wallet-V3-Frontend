@@ -11,6 +11,10 @@ describe "TOR Directive", ->
     
     $compile = _$compile_
     $rootScope = _$rootScope_
+    
+    Wallet.settings_api = 
+      update_tor_ip_block: (value, success, error) ->
+        success()
             
     return
   )
