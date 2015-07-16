@@ -1,5 +1,8 @@
-.row
-  .col-xs-12.col-sm-12.col-md-12.col-lg-4
-    span.action(ng-class="{incoming_tx: transaction.result > 0, outgoing_tx: transaction.result < 0, local_tx: transaction.intraWallet}", translate="{{ action }}")
-  .hidden-xs.hidden-sm.col-md-12.col-lg-8
-    span.destination.hidden-sm.hidden-xs(translate="{{ address }}")
+.flex-column
+  .flex-center.pbm
+    .flex-column.feed-info
+      span.timestamp.pbm
+        date {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
+      span.action(ng-class="{incoming_tx: transaction.result > 0, outgoing_tx: transaction.result < 0, local_tx: transaction.intraWallet}", translate="{{ action }}")
+    .hidden-xs.hidden-sm.destination
+      span.hidden-sm.hidden-xs(translate="{{ address }}")

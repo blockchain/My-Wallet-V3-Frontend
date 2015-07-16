@@ -19,20 +19,18 @@
         p.em-400(translate="DESCRIBE_TRANSACTIONS")
       h3.em-100.text-center.mid-grey.emptystate(translate="HIT_RECEIVE", ng-click="request()")
       h3.em-100.text-center.mid-grey.emptystate(translate="HIT_SEND", ng-click="send()")
-    .row.transaction(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")
-      .info.clearfix(ng-click="showTransaction(transaction)")
-        .col-xs-6.col-sm-6.col-md-3
-          span 
-            date {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
-        .col-xs-6.col-sm-6.col-md-9
+    .flex-center.transaction(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")
+      .ti-arrow-circle-right.h4.ccc.pointer.mrl.prl(ng-click="")
+      .flex-1.flex-center
+        .info(ng-click="showTransaction(transaction)")
           span(ng-show="transaction.confirmations == 0 && transaction.from.externalAddresses")
             i(translate="UNCONFIRMED_WARNING")
-      .type.col-xs-6.col-sm-9(ng-click="showTransaction(transaction)")
-        span 
-          transaction-description(transaction="transaction", ng-if="canDisplayDescriptions")
-      .amount.col-xs-6.col-sm-3
-        span 
-          amount(transaction="transaction")
+        .type.flex-1.pointer(ng-click="showTransaction(transaction)")
+          span 
+            transaction-description(transaction="transaction" ng-if="canDisplayDescriptions")
+        .amount.flex-1
+          span 
+            amount(transaction="transaction")
     .row
       .col-xs-5
       .col-xs-2

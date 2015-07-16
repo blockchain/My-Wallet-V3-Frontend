@@ -4,80 +4,67 @@
     top: 48px;
   }
   a.date { padding-top: 10px; }
-
-  h3.emptystate b{
-  color: rgb(108, 108, 108);
-  font-weight: 500;
+  h3.emptystate b {
+    color: rgb(108, 108, 108);
+    font-weight: 500;
     &:hover{cursor: pointer;}
   }
-
   .transaction {
     border-bottom: 1pt solid $light-grey;
     padding: 15px 30px;
-    &:hover {
-      background: $hover-blue;
+    &:hover { background: $hover-blue; }
+    .timestamp{
+      font-size: 9pt;
+      color: rgb(190, 190, 190);
+      font-style: italic;
     }
-    div.info{
-    padding: 5px 0;
-    font-size: 9pt;
-    color: rgb(190, 190, 190);
-    font-style: italic;
-      &:hover{cursor: pointer;}
-    }
-
-    div.type{
+    .type {
       padding-bottom: 10px;
       padding-top: 10px;
-       &:hover{cursor: pointer;}
-      span.action{
-        font-weight: 500;
-        font-size: 1.3em;
-      }
-      span.action.incoming_tx{
-      color: #85B45B;
-      }
-      span.action.outgoing_tx{
-       color: #E27E82;
-      }
-      span.action.local_tx{
-       color: #5BACD0;
-      }
-
-      span.destination{
+    }
+    .feed-info {
+      width: 120px;
+    }
+    .action {
+      font-weight: 500;
+      font-size: 1.3em;
+    }
+    .action.incoming_tx{
+    color: #85B45B;
+    }
+    .action.outgoing_tx{
+     color: #E27E82;
+    }
+    .action.local_tx{
+     color: #5BACD0;
+    }
+    .destination{
       display: block;
-      padding: 5px 0;
       font-size: 1.2em;
       font-weight: 400;
       color: #B2B2B2;
-      }
+      margin-left: 3em;
     }
-
-    div.amount{
-     padding-bottom: 5px;
-     padding-top: 5px;
-
+    .amount {
+      padding-bottom: 5px;
+      padding-top: 5px;
       button.amount{
-      font-size: 1.2em;
-      font-weight: normal;
-      min-width: 175px;
-      float: right;
-
+        font-size: 1.2em;
+        font-weight: normal;
+        min-width: 175px;
+        float: right;
       }
-
     }
-
   }
-  .col-xs-2 {
-    cursor: pointer;
-  }
-  .description{
+  .description {
     color: #828181;
-    cursor: pointer;
   }
-
+  .feed-details {
+    border-top: 1px solid $eee;
+  }
 }
 
-.transaction-card{
+.transaction-card {
   background-color: $light-grey-alt;
   border: 1px solid $eee;
   border-radius: 5px;
