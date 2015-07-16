@@ -1,23 +1,27 @@
 doctype
-html(lang='en')
+html(ng-app="AdminInterface" lang='en')
   head
     meta(charset='utf-8')
     title Beta Admin
     
     <!-- @if !PRODUCTION -->
     script(src='../bower_components/jquery/dist/jquery.js')
+    script(src='../bower_components/angular/angular.js')
     script(src="../bower_components/bootstrap/dist/js/bootstrap.min.js")
+    script(src='../bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
 
     link(rel='stylesheet', href='../build/css/blockchain.css')
     link(rel='stylesheet', href='../build/css/navigation.css')
+    
+    script(src='../app/admin.js')
     <!-- @endif -->
         
     <!-- @if PRODUCTION !>
     link(rel='stylesheet', href='../beta-admin.css')
     script(src='../beta-admin.js')
     <!-- @endif -->
-    
-  body.overflow-scroll
+
+  body.overflow-scroll(ng-controller="AdminCtrl")
     .navbar.navbar-default.navbar-inverse.navbar-unauth(role='navigation')
       .container-fluid
         .navbar-header
@@ -37,194 +41,198 @@ html(lang='en')
               a(href="/") Merchant
             li.item
               a(href="/") Support
-
+    
     div.container.login-form
       h1 HD Beta Admin Interface
       .form-group.col-xs-6
         form.form-inline
-          button.btn.btn-default(type="button" data-toggle="modal" data-target="#key-modal") + New Key
-          button.btn.btn-default(type="button" data-toggle="modal" data-target="#capture-modal") Capture Page
-          button.btn.btn-default(type="button" data-toggle="modal" data-target="#activation-modal")
+          button.btn.btn-default(ng-click="openModal('assignKeyModal.html', 'AssignKeyCtrl')") + New Key
+          button.btn.btn-default(ng-click="openModal('capturePageModal.html', 'CapturePageCtrl')") Capture Page
+          button.btn.btn-default(ng-click="openModal('activationModal.html', 'ActivateKeysCtrl')")
             span.glyphicon.glyphicon-flash
             span &nbsp;Activate Keys
-          button#get-csv-button.btn.btn-default(type="button") CSV
+          button.btn.btn-default(ng-click="retrieveCSV()") CSV
       .form-group.col-xs-6
-        form#search-form.form-inline.pull-right
-          input#search-input.form-control(type="text" placeholder="Search")
-          select#search-dropdown.form-control
-            option name
-            option email
-            option key
-            option guid
-          button#search.btn.btn-default(type="submit")
+        form.form-inline.pull-right(name="searchForm" ng-submit="load()" novalidate)
+          input.form-control(ng-model="search.text" type="text" placeholder="Search" required)
+          select.form-control(ng-model="search.filter" ng-options="f for f in filters" required)
+          button.btn.btn-default(ng-disabled="searchForm.$invalid" type="submit")
             span(class="glyphicon glyphicon-arrow-right")
-      .form-group.col-xs-6
-        label
-          span#wallets-created
-          | &nbsp;Wallets Created
-      .table-div
-        table#key-table.table.table-hover.table-condensed
+      .form-group.col-xs-6.ng-cloak
+        label {{ walletCount }} Wallets Created
+      .table-div.ng-cloak
+        table.table.table-hover.table-condensed
+          tr
+            th.pointer(ng-repeat="th in headers" ng-click="sort(th)") {{ th }}
+            th edit
+            th revoke
+          tr(ng-repeat="item in tableData")
+            td {{ item.rowid }}
+            td {{ item.key }}
+            td {{ item.name }}
+            td {{ item.email }}
+            td {{ getDateFromTime(item.lastseen) }}
+            td {{ item.guid }}
+            td {{ (item.activated) ? 'Activated' : 'Pending' }}
+            td
+              a(ng-click="openModal('editModal.html', 'EditKeyCtrl', item)") edit
+            td
+              a(ng-click="revokeKey(item.rowid)") revoke
 
-    div#key-modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="keyModal" aria-hidden="true")
-      div.modal-dialog
-        div.modal-content
-          div.modal-header
-            button.close(type="button" data-dismiss="modal" aria-label="Close")
-              span(aria-hidden="true") &times;
-            h3 Assign New Key
-          div.modal-body
-            form#key-form.form-horizontal
-              .form-group
-                label.col-xs-2.control-label Name
-                .col-xs-8
-                  input#name-input.form-control(type="text")
-              .form-group
-                label.col-xs-2.control-label Email
-                .col-xs-8
-                  input#email-input.form-control(type="text")
-              .form-group
-                label.col-xs-2.control-label Existing Guid
-                .col-xs-8
-                  input#guid-input.form-control(type="text" placeholder="(optional)")
-              .form-group
-                .col-xs-2.col-xs-offset-2
-                  input#key-button.btn.btn-default(type="submit" value="Assign")
+    // Assign new key modal
+    script(type="text/ng-template" id="assignKeyModal.html").
+      <div class="modal-header">
+        <h3>Assign New Key</h3>
+      </div>
+      <div class="modal-body">
+        <form name="assignForm" ng-submit="assignKey(fields.name, fields.email, fields.guid)" novalidate>
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label class="col-xs-2 control-label">Name</label>
+              <div class="col-xs-8">
+                <input class="form-control" ng-model="fields.name" name="name" type="text" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-xs-2 control-label">Email</label>
+              <div class="col-xs-8">
+                <input class="form-control" ng-model="fields.email" name="email" type="email" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-xs-2 control-label">Existing Guid</label>
+              <div class="col-xs-8">
+                <input class="form-control" ng-model="fields.guid" type="text" placeholder="(optional)">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-xs-2 col-xs-offset-2">
+                <button class="btn btn-default" name="submit" type="submit" ng-disabled="assignForm.$invalid">Assign</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
 
-    div#edit-modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true")
-      div.modal-dialog
-        div.modal-content
-          div.modal-header
-            button.close(type="button" data-dismiss="modal" aria-label="Close")
-              span(aria-hidden="true") &times;
-            h3 Edit Entry
-          div.modal-body
-            form#edit-form.form-horizontal
-              .form-group
-                label.col-xs-2.control-label Key
-                .col-xs-8
-                  input#edit-key-input.form-control(type="text" disabled)
-              .form-group
-                label.col-xs-2.control-label Name
-                .col-xs-8
-                  input#edit-name-input.form-control(type="text" placeholder="(optional)")
-              .form-group
-                label.col-xs-2.control-label Email
-                .col-xs-8
-                  input#edit-email-input.form-control(type="text" placeholder="(optional)")
-              .form-group
-                label.col-xs-2.control-label Guid
-                .col-xs-8
-                  input#edit-guid-input.form-control(type="text" placeholder="(optional)")
-              .form-group
-                .col-xs-2.col-xs-offset-2
-                  input#edit-button.btn.btn-default(type="submit" value="Update")
+    // Edit/Activate key modal
+    script(type="text/ng-template" id="editModal.html").
+      <div class="modal-header">
+        <h3>Edit Entry</h3>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" name="editForm" ng-submit="submitEdit()" novalidate>
+          <div class="form-group">
+            <label class="col-xs-2 control-label">Key</label>
+            <div class="col-xs-8"><input class="form-control" ng-model="fields.key" name="key" type="text" disabled></div> 
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2 control-label">Name</label>
+            <div class="col-xs-8"><input class="form-control" ng-model="fields.name" name="name" type="text" placeholder="(optional)"></div> 
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2 control-label">Email</label>
+            <div class="col-xs-8"><input class="form-control" ng-model="fields.email" name="email" type="email" placeholder="(optional)"></div> 
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2 control-label">Guid</label>
+            <div class="col-xs-8"><input class="form-control" ng-model="fields.guid" name="guid" type="text" placeholder="(optional)"></div> 
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2 control-label">iOS</label>
+            <div class="col-xs-4">
+              <div class="form-control"><input type="checkbox" ng-model="fields.ios" name="iosReq" disabled><label>&nbsp;Requested</label></div>
+            </div>
+            <div class="col-xs-4">
+              <div class="form-control"><input type="checkbox" ng-model="fields.ios_sent" name="iosSent" ng-disabled="fields.ios_sent || !fields.ios"><label>&nbsp;Invitation Sent</label></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2 control-label">Android</label>
+            <div class="col-xs-4">
+              <div class="form-control"><input type="checkbox" ng-model="fields.android" name="androidReq" disabled><label>&nbsp;Requested</label></div>
+            </div>
+            <div class="col-xs-4">
+              <div class="form-control"><input type="checkbox" ng-model="fields.android_sent" name="androidSent" ng-disabled="fields.android_sent || !fields.android"><label>&nbsp;Invitation Sent</label></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2 col-xs-offset-2">
+              <button class="btn" ng-disabled="editForm.$invalid" ng-class="(fields.activated) ? 'btn-default' : 'btn-danger'" type="submit">
+                {{ (fields.activated) ? 'Update' : 'Activate' }}
+              </button>
+            </div> 
+          </div>
+        </form>
+      </div>
 
-    div#activate-modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="activateModal" aria-hidden="true")
-      div.modal-dialog
-        div.modal-content
-          div.modal-header
-            button.close(type="button" data-dismiss="modal" aria-label="Close")
-              span(aria-hidden="true") &times;
-            h3 Activate
-          div.modal-body
-            form#activate-form.form-horizontal
-              .form-group
-                label.col-xs-2.control-label Email
-                .col-xs-8
-                  input#activate-email-input.form-control(type="text" disabled)
-              .form-group
-                label.col-xs-2.control-label Name
-                .col-xs-8
-                  input#activate-name-input.form-control(type="text" placeholder="(optional)")
-              .form-group
-                .col-xs-2.col-xs-offset-2
-                  input#activate-button.btn.btn-default(type="submit" value="Activate")
+    // Capture page settings modal
+    script(type="text/ng-template" id="capturePageModal.html").
+      <div class="modal-header">
+        <h3>Capture Page Settings</h3>
+      </div>
+      <div class="modal-body">
+        <form name="captureForm" ng-submit="setPercent(percent)" novalidate>
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label class="col-xs-4 control-label">Current</label>
+              <div class="col-xs-6">
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped active" style="width: {{percentRequested}}%">{{percentRequested}}%</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-xs-4 control-label">Percent Requested</label>
+              <div class="col-xs-6">
+                <input class="form-control" ng-model="percent" name="percent" type="number" min="0" max="100" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-xs-3 col-xs-offset-4">
+                <button class="btn btn-default" ng-disabled="captureForm.$invalid" type="submit">Set</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
 
-    div#capture-modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="captureModal" aria-hidden="true")
-      div.modal-dialog
-        div.modal-content
-          div.modal-header
-            button.close(type="button" data-dismiss="modal" aria-label="Close")
-              span(aria-hidden="true") &times;
-            h3 Capture Page Settings
-          div.modal-body
-            form#capture-form.form-horizontal
-              .form-group
-                label.col-xs-4.control-label Current
-                .col-xs-6
-                  .progress
-                    .progress-bar.progress-bar-striped.active(style="width: 0%") 0%
-              .form-group
-                label.col-xs-4.control-label Percent Requested
-                .col-xs-6
-                  input#capture-percent-input.form-control(type="text")
-              .form-group
-                .col-xs-3.col-xs-offset-4
-                  input#capture-button.btn.btn-default(type="submit" value="Set")
-
-    div#activation-modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="activationModal" aria-hidden="true")
-      div.modal-dialog
-        div.modal-content
-          div.modal-header
-            button.close(type="button" data-dismiss="modal" aria-label="Close")
-              span(aria-hidden="true") &times;
-            h3 Activate Multiple
-          div.modal-body(style="min-height:220px;")
-            .activation.activation-step-1
-              form#activation-form.form-horizontal
-                .form-group
-                  label.col-xs-3.control-label Min id
-                  .col-xs-6
-                    input#activation-min-input.form-control(type="text")
-                .form-group
-                  label.col-xs-3.control-label Max id
-                  .col-xs-6
-                    input#activation-max-input.form-control(type="text")
-                .form-group
-                  .col-xs-3.col-xs-offset-3
-                    input#activation-button.btn.btn-danger(type="submit" value="Activate")
-              span 
-                i Note: Min id and Max id will default to 0 and 100,000, respectively, if left blank. Leaving both blank results in every pending request being activated.
-            .activation.activation-step-2.hidden
-              p Please wait...
-              p This process may take several minutes to complete
-            .activation.activation-step-3.hidden
-              form.form-horizontal
-                label.col-xs-offset-3
-                  span#activation-count
-                  span &nbsp;keys have been activated
-                label.col-xs-offset-3
-                  span#activation-success
-                  span &nbsp;notification emails were sent
-                span#activation-errors.text-danger.hidden
-                .col-xs-3.col-xs-offset-4
-                  input#activation-button-close.btn.btn-default(type="button" value="Close")
-
-
-    //-div#capture-modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="captureModal" aria-hidden="true")
-      div.modal-dialog
-        div.modal-content
-          div.modal-header
-            button.close(type="button" data-dismiss="modal" aria-label="Close")
-              span(aria-hidden="true") &times;
-            h3 Assign New Cap
-          div.modal-body
-            form#capture-form.form-horizontal
-              .form-group
-                label.col-xs-2.control-label Name
-                .col-xs-8
-                  input#name-input.form-control(type="text")
-              .form-group
-                label.col-xs-2.control-label Email
-                .col-xs-8
-                  input#email-input.form-control(type="text")
-              .form-group
-                label.col-xs-2.control-label Existing Guid
-                .col-xs-8
-                  input#guid-input.form-control(type="text" placeholder="(optional)")
-              .form-group
-                .col-xs-2.col-xs-offset-2
-                  input#capture-button.btn.btn-default(type="submit" value="Assign")
-    <!-- @if !PRODUCTION -->
-    script(src='../app/betaAdminClient.js')
-    <!-- @endif -->
+    // Activate many keys modal
+    script(type="text/ng-template" id="activationModal.html").
+      <div class="modal-header">
+        <h3>Activate Multiple</h3>
+      </div>
+      <div class="modal-body" ng-switch="step">
+        <div ng-switch-when="0">
+          <form class="form-horizontal" name="activationForm" ng-submit="activate(min, max)" novalidate>
+            <div class="form-group">
+              <label class="col-xs-3 control-label">Min id</label>
+              <div class="col-xs-3"><input class="form-control" ng-model="min" name="min" type="number"></div>
+            </div>
+            <div class="form-group">
+              <label class="col-xs-3 control-label">Max id</label>
+              <div class="col-xs-3"><input class="form-control" ng-model="max" name="max" type="number"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-xs-3 col-xs-offset-3">
+                <button class="btn btn-danger" ng-disabled="activationForm.$invalid" type="submit">Activate</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div ng-switch-when="1">
+          <p>Please wait...</p>
+          <p>This process may take several minutes to complete</p>
+        </div>
+        <div ng-switch-when="2">
+          <div class="col-xs-offset-3">
+            <p>{{numKeys}} keys have been activated</p>
+            <p>{{numEmails}} emails were sent</p>
+            <span class="text-danger" ng-show="errors.length > 0">
+              <p>{{errors.length}} emails failed to send!</p>
+              <p ng-repeat="err in errors track by $index">
+                Send failed ({{err.key}}, {{err.email}}): {{err.message}}
+              </p>
+            <span>
+          </div>
+        </div>
+      </div>

@@ -1,5 +1,5 @@
 {
-  "ignore" : ["grunt", "jasmine-core", "jquery", "istanbul", "esprima", "typeforce", "angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize", "angular-translate-loader-static-files", "bootstrap-sass", "bootstrap", "bc-qr-reader", "angular-ui-select"],
+  "ignore" : ["grunt", "jasmine-core", "jquery", "istanbul", "esprima", "typeforce", "angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize", "bootstrap-sass", "bootstrap", "bc-qr-reader", "angular-ui-select"],
   "angular-ui-router" : {
     "version": "0.2.13",
     "commits" : ["c3d543aae43d4600512520a0d70723ac31f2cb62"],
@@ -26,13 +26,13 @@
     "repo" : "baumandm/angular-numeraljs"
   },
   "angular-translate" : {
-    "version": "2.6.1",
-    "commits" : ["6dd0ce6459b271498c05b7e9a9f0e78f9c008c74"],
+    "version": "2.7.2",
+    "commits" : ["2c1fe7efab11bc735b307e4c929386161b43995c"],
     "repo" : "angular-translate/bower-angular-translate"
   },
   "angular-translate-loader-static-files" : {
-    "version": "2.6.1",
-    "commits" : ["310b86f60d63dc3d72064d6f600b62bc847cc8ab"],
+    "version": "2.7.2",
+    "commits" : ["8e5bdd5d978fd307a9740f5e7026d41433cbe420"],
     "repo" : "angular-translate/bower-angular-translate-loader-static-files"
   },
   "angular-inview" : {

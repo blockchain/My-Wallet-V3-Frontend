@@ -79,6 +79,7 @@ $select-fg: #686868;
   #qr {
     border: none;
     outline: none;
+    background-color: white;
   }
 }
 
@@ -179,4 +180,12 @@ $select-fg: #686868;
   background: white;
   border: 1px solid #ccc;
   padding: 1em;
+  box-shadow: 0 2px 10px 0 #DDDDDD;
+}
+
+//override pre from bootstrap
+pre {
+  word-break: normal;
+  word-wrap: normal;
+  white-space: pre-line;
 }

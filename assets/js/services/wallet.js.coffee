@@ -1292,7 +1292,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       code
       ()->
         wallet.settings.needs2FA = true
-        wallet.settings.twoFactorMethod = 3
+        wallet.settings.twoFactorMethod = 1
         successCallback()
         wallet.applyIfNeeded()
       (error)->
