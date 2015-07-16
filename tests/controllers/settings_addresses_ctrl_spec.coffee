@@ -12,6 +12,11 @@ describe "SettingsAddressesCtrl", ->
       Wallet = $injector.get("Wallet")
       
       Wallet.legacyAddresses = [{archived: false},{archived: true}]
+      
+      Wallet.my = 
+        wallet:
+          deleteLegacyAddress: () ->
+          keys: [{archived: false}]
             
       scope = $rootScope.$new()
             
@@ -19,6 +24,7 @@ describe "SettingsAddressesCtrl", ->
         $scope: scope,
         $stateParams: {}
         $modal: modal
+        Wallet: Wallet
       
       return
       
@@ -53,7 +59,10 @@ describe "SettingsAddressesCtrl", ->
       
       scope.delete(address)
       expect(Wallet.deleteLegacyAddress).toHaveBeenCalled()
+            
       expect(scope.legacyAddresses.length).toBe(before - 1)
+      
+      
     )
     
   describe "importAddress()", ->
