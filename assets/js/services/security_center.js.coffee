@@ -18,7 +18,7 @@ angular.module("securityCenter", []).factory "SecurityCenter", ($log, Wallet, $r
   #   () -> status.legacyAddressBalancesLoaded,
   #   () ->
   #     if legacyAddresses.length == 0 && status.legacyAddressBalancesLoaded == true
-  #       for address in filterFilter(filterFilter(unfilteredLegacyAddresses, {active: true, isWatchOnlyLegacyAddress: false}), greaterThan('balance', 50000))
+  #       for address in filterFilter(filterFilter(unfilteredLegacyAddresses, {archived: false, isWatchOnlyLegacyAddress: false}), greaterThan('balance', 50000))
   #         legacyAddresses.push address
   #     updateLevel()
   # )

@@ -4,7 +4,7 @@ walletApp.controller "SettingsWalletNavigationCtrl", ($scope, Wallet, $modal, fi
   $scope.display = {archived: false}
 
   $scope.numberOfActiveAccounts = () ->
-    return filterFilter(Wallet.accounts, {active: true}).length
+    return filterFilter(Wallet.accounts, {archived: false}).length
 
   $scope.newAccount = () ->
     Wallet.clearAlerts()

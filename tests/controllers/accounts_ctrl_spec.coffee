@@ -13,9 +13,9 @@ describe "WalletNavigationCtrl", ->
 
       MyWallet.wallet = {
         balanceActiveLegacy: 100000000
-        keys: [{ active: true }, { active: false }]
+        keys: [{ archived: false }, { archived: true }]
         hdwallet: {
-          accounts: [{ active: true }, { active: true }, { active: false }]
+          accounts: [{ archived: false }, { archived: false }, { archived: true }]
         }
       }
 

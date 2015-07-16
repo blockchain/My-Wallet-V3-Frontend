@@ -19,7 +19,7 @@ walletApp.controller "SettingsSecurityCenterCtrl", ($scope, Wallet, SecurityCent
 
   $scope.$watchCollection "status.legacyAddressBalancesLoaded", ->
     if $scope.legacyAddresses.length == 0 && $scope.status.legacyAddressBalancesLoaded
-      for address in filterFilter(filterFilter($scope.unfilteredLegacyAddresses, {active: true, isWatchOnlyLegacyAddress: false}), $scope.greaterThan('balance', 50000))
+      for address in filterFilter(filterFilter($scope.unfilteredLegacyAddresses, {archived: false, isWatchOnlyLegacyAddress: false}), $scope.greaterThan('balance', 50000))
         $scope.legacyAddresses.push address
 
   $scope.transactions = Wallet.transactions
