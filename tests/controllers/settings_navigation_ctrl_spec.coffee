@@ -6,7 +6,7 @@ describe "SettingsNavigationCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
+      Wallet.status = {isLoggedIn: true}  
             
       scope = $rootScope.$new()
             
@@ -20,7 +20,7 @@ describe "SettingsNavigationCtrl", ->
 
     return
 
-  it "specs should be logged in by default",  inject((Wallet, $state) ->
+  it "should have access to login status",  inject((Wallet, $state) ->
     expect(scope.status.isLoggedIn).toBe(true)
     return
   )
