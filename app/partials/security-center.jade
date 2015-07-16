@@ -69,7 +69,7 @@
           .flex-center
             .form-group.width-50.flex-column(ng-class="{'has-error': !validate()}")
               p(translate="CHANGE_PASSWORD_HINT_SECURITY_CENTER")
-              input.form-control.mtm(on-enter="save()" type="{{ type }}", ng-model="form.newValue", ng-focus="focus()", placeholder="{{ placeholder }}" ng-change="onChange()")
+              input.form-control.mtm(on-enter="save()" type="{{ type }}" ng-model="form.newValue" ng-focus="focus()" placeholder="{{ placeholder }}" ng-change="onChange()" maxlength="255")
               span.help-block {{ errorMessage }}  
             .width-50.mll.pll
               button.button-success.button-lg(ng-click="save()",ng-disabled="!validate() || form.newValue == ngModel",ui-ladda="{{ status.saving }}", ladda-translate="SAVE", data-style="expand-left")
