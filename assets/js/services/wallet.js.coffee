@@ -1247,7 +1247,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.settings.secondPassword = false
       successCallback()
     error = () ->
-      wallet.displayError("Second password can not be unset. Contact support.")
+      wallet.displayError("Second password cannot be unset. Contact support.")
       errorCallback();
     cancel = errorCallback
     proceed = (password) -> wallet.my.wallet.decrypt(password, success, error)
@@ -1262,7 +1262,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.settings.secondPassword = true
       successCallback()
     error = () ->
-      wallet.displayError("Second password can not be set. Contact support.")
+      wallet.displayError("Second password cannot be set. Contact support.")
     wallet.my.wallet.encrypt(password, success, error)
 
 
