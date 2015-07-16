@@ -1,6 +1,7 @@
 .filter-bar {
   position: fixed;
   width: calc(100% - 280px);
+  left: 280px;
   top: 170px;
   height: 50px;
   background: $light-grey-alt;
