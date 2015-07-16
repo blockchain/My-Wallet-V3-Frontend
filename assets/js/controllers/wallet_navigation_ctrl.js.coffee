@@ -5,10 +5,10 @@ walletApp.controller "WalletNavigationCtrl", ($scope, Wallet, SecurityCenter, $s
   $scope.security = SecurityCenter.security
     
   $scope.numberOfActiveLegacyAddresses = () -> 
-    return filterFilter(Wallet.legacyAddresses, {active: true}).length
+    return filterFilter(Wallet.legacyAddresses, {archived: false}).length
 
   $scope.numberOfActiveAccounts = () -> 
-    return filterFilter(Wallet.accounts, {active: true}).length
+    return filterFilter(Wallet.accounts, {archived: false}).length
 
   $scope.getMainAccountId = () ->
     account = 'accounts'

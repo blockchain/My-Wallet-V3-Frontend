@@ -28,10 +28,10 @@ describe "walletServices", () ->
           isUpgradedToHD: true
           hdwallet:
             isMnemonicVerified: true
-            accounts: [{balance: 1},{balance: 2}]
+            accounts: [{balance: 1, archived: false},{balance: 2, archived: false}]
           newAccount: () ->
               
-          keys: [{address: "some_legacy_address", label: "Old"}, {address: "some_legacy_address_without_label", label: "some_legacy_address_without_label"}]
+          keys: [{address: "some_legacy_address", label: "Old", archived: false}, {address: "some_legacy_address_without_label", label: "some_legacy_address_without_label", archived: false}]
         
         createNewWallet: (email, pwd, firstAccount, language, currency, success, fail) ->
           success()

@@ -17,10 +17,10 @@ describe "RequestCtrl", ->
       MyWallet.wallet = {
         isUpgradedToHD: true
         keys: [
-          { address: '1asdf', active: true }, { address: '1asdf', active: false }
+          { address: '1asdf', archived: false }, { address: '1asdf', archived: true }
         ]
         hdwallet: {
-          accounts: [{ index: 0, active: true }, { index: 0, active: false }]
+          accounts: [{ index: 0, archived: true }, { index: 0, archived: false }, { index: 0, archived: true }]
           defaultAccountIndex: 0
         }
       }
@@ -71,13 +71,13 @@ describe "RequestCtrl", ->
       # Make sure there's an archived account in the mocks:
       match = false
       for account in scope.accounts
-        match = true if !account.active
+        match = true if account.archived
 
-      expect(match).toBe(true, "No archived account in mocks")
+      expect(match).toBe(true, "Archived account missing in mocks")
 
       # Test that this archived account is not included in origins:
       for destination in scope.destinations
-        expect(destination.active).not.toBe(false, "Archived account in destinations")
+        expect(destination.archived).toBe(false, "Archived account in destinations")
     )
 
   describe "when requesting for a legacy address", ->

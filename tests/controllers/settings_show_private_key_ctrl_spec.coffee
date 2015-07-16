@@ -24,7 +24,7 @@ describe "ShowPrivateKeyCtrl", ->
       scope = $rootScope.$new()
 
       addressObj = {
-        active: true
+        archived: false
         address: 'some_legacy_address'
         balance: 10000000
         label: 'Old'

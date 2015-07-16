@@ -757,7 +757,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   # Update (labelled) HD addresses:
   wallet.updateHDaddresses = () ->
     for account in wallet.accounts
-      continue if !account.active
+      continue unless account.archived
       labeledAddresses = account.receivingAddressesLabels
 
       for address in labeledAddresses

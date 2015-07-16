@@ -11,7 +11,16 @@ describe "SendCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
+      
+      accounts = [{label: "Checking", index: 0, archived: false, balance: 1},{label: "Savings", index: 1, archived: false, balance: 1}, {label: "Something", index: 2, archived: true}]
+      
+      Wallet.accounts = accounts
+    
+      Wallet.my = 
+        wallet:
+          hdwallet: {}
+
+      Wallet.status = {isLoggedIn: true, didLoadBalances: true}
 
       ngAudio = {
         load: (file) ->
@@ -86,13 +95,13 @@ describe "SendCtrl", ->
       # Make sure there's an archived account in the mocks:
       match = false
       for account in scope.accounts
-        match = true if !account.active
+        match = true if account.archived
 
       expect(match).toBe(true, "No archived account in mocks")
 
       # Test that this archived account is not included in origins:
       for origin in scope.origins
-        expect(origin.active).not.toBe(false, "Archived account in origins")
+        expect(origin.archived).toBe(false, "Archived account in origins")
     )
 
   describe "destinations", ->
@@ -104,13 +113,13 @@ describe "SendCtrl", ->
       # Make sure there's an archived account in the mocks:
       match = false
       for account in scope.accounts
-        match = true if !account.active
+        match = true if account.archived
 
       expect(match).toBe(true, "No archived account in mocks")
 
       # Test that this archived account is not included in origins:
       for destination in scope.destinations[0]
-        expect(destination.active).not.toBe(false, "Archived account in destinations")
+        expect(destination.archived).not.toBe(true, "Archived account in destinations")
     )
 
   describe "transaction", ->

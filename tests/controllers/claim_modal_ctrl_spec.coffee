@@ -18,7 +18,7 @@ describe "ClaimModalCtrl", ->
         isUpgradedToHD: true
         hdwallet: {
           defaultAccountIndex: 0
-          accounts: [{ index: 0, active: true }]
+          accounts: [{ index: 0, archived: false }]
         }
       }
 

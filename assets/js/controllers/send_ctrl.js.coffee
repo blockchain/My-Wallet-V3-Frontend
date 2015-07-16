@@ -116,7 +116,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     $scope.transaction.destinations.splice(index, 1)
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () ->
-    return filterFilter(Wallet.accounts, {active: true}).length + filterFilter(Wallet.legacyAddresses, {active: true}).length
+    return filterFilter(Wallet.accounts, {archived: false}).length + filterFilter(Wallet.legacyAddresses, {archived: false}).length
 
   $scope.send = () ->
     unless $scope.sending
@@ -244,7 +244,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       address: origin.address
       balance: origin.balance
       archived: origin.archived
-      active: origin.active
     }
     formatted.type = if origin.index? then 'Accounts' else 'Imported Addresses'
     formatted.isWatchOnly = origin.isWatchOnly if !origin.index?
@@ -283,7 +282,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
         for address in $scope.legacyAddresses
           address = $scope.formatOrigin(address)
-          if address.active
+          if !address.archived
             $scope.destinationsBase.push address
             unless address.isWatchOnly
               $scope.origins.push angular.copy(address)

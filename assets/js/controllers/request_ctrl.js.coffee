@@ -20,7 +20,7 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
   $scope.fields = {to: null, amount: "0", currency: Wallet.settings.currency, label: ""}
 
   for account in $scope.accounts
-    if account.index? && account.active
+    if account.index? && !account.archived
       acct = angular.copy(account)
       acct.type = "Accounts"
       $scope.destinations.push acct
@@ -29,7 +29,7 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
         $scope.fields.to = acct
 
   for address in $scope.legacyAddresses
-    if address.active
+    if !address.archived
       addr = angular.copy(address)
       addr.type = "Imported Addresses"
       addr.label = addr.label || addr.address
@@ -47,7 +47,7 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
     $modalInstance.dismiss ""
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () ->
-    return filterFilter(Wallet.accounts, {active: true}).length + filterFilter(Wallet.legacyAddresses, {active: true}).length
+    return filterFilter(Wallet.accounts, {archived: false}).length + filterFilter(Wallet.legacyAddresses, {archived: false}).length
 
   #################################
   #           Private             #
