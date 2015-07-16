@@ -6,7 +6,13 @@ describe "RecoveryCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
+      
+      Wallet.my = 
+        wallet:
+          isDoubleEncrypted: true
+          
+      Wallet.getMnemonic = (success) ->
+        success("banana big me hungry very must eat now")
             
       scope = $rootScope.$new()
             
@@ -31,7 +37,7 @@ describe "RecoveryCtrl", ->
       
     it "can be shown", ->
       scope.toggleRecoveryPhrase()
-      expect(scope.showRecoveryPhrase).toBe(true)      
+      expect(scope.showRecoveryPhrase).toBe(true)
     
     it "should not be available is 2nd password is enabled", inject((Wallet) ->
       pending()
