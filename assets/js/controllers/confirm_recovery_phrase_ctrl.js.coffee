@@ -10,12 +10,21 @@ walletApp.controller "ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalI
   ]
 
   $scope.setRandomWords = (recoveryPhrase) ->
-    words = recoveryPhrase.split(' ')
-    for word in $scope.words
-      randIndex = $scope.getRandInRange(0, words.length - 1)
-      randWord = words.splice(randIndex, 1).toString()
+    currentWordIndex = 0
+    while currentWordIndex < 4
+      randIndex = $scope.getRandInRange(0, 11)
+      randWord = recoveryPhrase.split(' ').splice(randIndex, 1).toString()
+
+      continue if $scope.hasWordBeenUsed(randIndex + 1)
+
+      word = $scope.words[currentWordIndex++]
       word.actual = randWord
-      word.index = recoveryPhrase.split(' ').indexOf(randWord) + 1
+      word.index = randIndex + 1
+
+  $scope.hasWordBeenUsed = (index) ->
+    for word in $scope.words
+      return true if word.index == index
+    return false
 
   $scope.getRandInRange = (min, max) ->
     return Math.floor(Math.random() * (max - min + 1) + min)
