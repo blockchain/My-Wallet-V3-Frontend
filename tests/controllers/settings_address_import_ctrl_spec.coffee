@@ -11,7 +11,11 @@ describe "AddressImportCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
+      
+      Wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bip38passphrase, success, error) ->
+        success({address: "valid_import_address"})
+        
+      Wallet.accounts = [{index: 0}]
 
       scope = $rootScope.$new()
 
@@ -44,22 +48,28 @@ describe "AddressImportCtrl", ->
 
   describe "enter address or private key", ->
 
-    it "should go to step 2 when user clicks validate", ->
+    it "should go to step 2 when user clicks validate", inject(($timeout) ->
       scope.fields.addressOrPrivateKey = "valid_import_address"
       expect(scope.step).toBe(1)
       scope.import()
+      $timeout.flush()
       expect(scope.step).toBe(2)
+    )
 
   describe "validate and add", ->
-    it "should add the address if no errors are present", ->
+    it "should add the address if no errors are present", inject(($timeout) ->
       scope.fields.addressOrPrivateKey = "valid_import_address"
       scope.import()
+      $timeout.flush()
       expect(scope.address.address).toBe("valid_import_address")
+    )
 
-    it "should show the balance", ->
+    it "should show the balance", inject(($timeout) ->
       scope.fields.addressOrPrivateKey = "valid_import_address"
       scope.import()
+      $timeout.flush()
       expect(scope.address.balance).not.toBe(0)
+    )
 
     it "should go to step 3 when user clicks transfer", ->
       scope.goToTransfer()
