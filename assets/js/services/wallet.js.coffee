@@ -304,9 +304,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     ri = account.receiveIndex;
     account.setLabelForReceivingAddress(ri, "");
 
-    wallet.updateHDaddresses()
     address = account.receivingAddressesLabels.slice(-1)[0]
     address.address = account.receiveAddressAtIndex(address.index)
+    wallet.updateHDaddresses()
     successCallback(address)
 
   wallet.fetchMoreTransactions = (where, successCallback, errorCallback, allTransactionsLoadedCallback) ->
@@ -717,10 +717,15 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.archive = (address_or_account) ->
     address_or_account.archived = true
-    return
+    address_or_account.active = false
+    wallet.updateLegacyAddresses()
+    wallet.updateHDaddresses()
 
   wallet.unarchive = (address_or_account) ->
     address_or_account.archived = false
+    address_or_account.active = true
+    wallet.updateLegacyAddresses()
+    wallet.updateHDaddresses()
     # TODO :: REVIEW unarchiving process
     # success = (txs) ->
     #   address_or_account.active = true
@@ -756,8 +761,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   # Update (labelled) HD addresses:
   wallet.updateHDaddresses = () ->
+    wallet.hdAddresses = wallet.hdAddresses.filter (address) ->
+      address.active && !address.archived
+
     for account in wallet.accounts
-      continue unless account.archived
+      continue unless account.active
       labeledAddresses = account.receivingAddressesLabels
 
       for address in labeledAddresses
