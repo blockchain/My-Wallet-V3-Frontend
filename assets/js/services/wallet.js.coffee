@@ -61,7 +61,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       if wallet.my.wallet.isUpgradedToHD
         wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.hdwallet.isMnemonicVerified
 
-      wallet.uid = uid
+      wallet.user.uid = uid
 
       # I (jaume) should use address book directly from the wallet object, not copy it
       # for address, label of wallet.store.getAddressBook()
@@ -907,7 +907,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.transactions.pop()
       while wallet.paymentRequests.length > 0
         wallet.paymentRequests.pop()
-      wallet.uid = ""
+      wallet.user.uid = ""
       wallet.password = ""
       # $state.go("wallet.common.dashboard")
     else if event == "ws_on_close" || event == "ws_on_open"
