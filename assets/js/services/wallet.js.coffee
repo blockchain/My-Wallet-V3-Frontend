@@ -1068,7 +1068,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.applyIfNeeded = () ->
     if MyWallet.mockShouldReceiveNewTransaction == undefined
-      $rootScope.$safeApply($rootScope)
+      $rootScope.$safeApply()
 
   wallet.changePasswordHint = (hint, successCallback, errorCallback) ->
     wallet.settings_api.update_password_hint1(hint,(()->
