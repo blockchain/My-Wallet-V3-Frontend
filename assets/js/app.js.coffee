@@ -125,4 +125,4 @@ walletApp.config ($numeraljsConfigProvider, $modalProvider, uiSelectConfig) ->
 walletApp.run ($rootScope) ->
   $rootScope.$safeApply = (scope) ->
     if !scope.$$phase && !$rootScope.$$phase
-      scope.$apply(done)
+      scope.$apply()
