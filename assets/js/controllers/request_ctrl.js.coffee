@@ -28,7 +28,7 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
       if destination? && destination.index? && destination.index == acct.index
         $scope.fields.to = acct
 
-  for address in $scope.legacyAddresses
+  for address in $scope.legacyAddresses()
     if !address.archived
       addr = angular.copy(address)
       addr.type = "Imported Addresses"
@@ -47,7 +47,7 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
     $modalInstance.dismiss ""
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () ->
-    return filterFilter(Wallet.accounts, {archived: false}).length + filterFilter(Wallet.legacyAddresses, {archived: false}).length
+    return filterFilter(Wallet.accounts, {archived: false}).length + filterFilter(Wallet.legacyAddresses(), {archived: false}).length
 
   #################################
   #           Private             #

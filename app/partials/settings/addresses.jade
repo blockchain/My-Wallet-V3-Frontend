@@ -67,7 +67,7 @@ p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archive
         th
         th
         th
-      tr(ng-repeat="address in legacyAddresses | filter:{archived: false} | filter:searchTextLegacy")
+      tr(ng-repeat="address in legacyAddresses() | filter:{archived: false} | filter:searchTextLegacy")
         td
           a(ng-bind-html="address.address | highlight:searchTextLegacy", ui-sref="wallet.common.settings.address({address: address.address})")
           span.label.label-warning(ng-show="address.isWatchOnly", translate="WATCH_ONLY")
@@ -100,7 +100,7 @@ p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archive
         th(translate="BALANCE")
         th
           th
-      tr(ng-repeat="address in legacyAddresses | filter:{archived: true} | filter:searchTextArchived")
+      tr(ng-repeat="address in legacyAddresses() | filter:{archived: true} | filter:searchTextArchived")
         td(ng-bind-html="address.address | highlight:searchTextArchived")
         td(ng-bind-html="address.label | highlight:searchTextArchived")
         td

@@ -32,7 +32,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.conversions = {}
 
   wallet.accounts     = []
-  wallet.legacyAddresses = []
   # wallet.addressBook  = {}
   wallet.paymentRequests = []
   wallet.alerts = []
@@ -82,8 +81,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         for account in wallet.my.wallet.hdwallet.accounts
           wallet.accounts.push(account)
 
-      for key in wallet.my.wallet.keys
-        wallet.legacyAddresses.push key
+      wallet.legacyAddresses = () -> 
+        wallet.my.wallet.keys
 
       wallet.updateHDaddresses()
 
@@ -514,13 +513,13 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bipPassphrase, successCallback, errorCallback) ->
     success = (address) ->
-      wallet.applyIfNeeded()
-      console.log address
       successCallback(address)
+      wallet.applyIfNeeded()
+      
       
     error = (message) ->
-      wallet.applyIfNeeded()
       errorCallback(message)
+      wallet.applyIfNeeded()
     
     proceed = (secondPassword='') ->
       wallet.my.wallet.importLegacyAddress(
@@ -728,13 +727,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.archive = (address_or_account) ->
     address_or_account.archived = true
     address_or_account.active = false
-    wallet.updateLegacyAddresses()
     wallet.updateHDaddresses()
 
   wallet.unarchive = (address_or_account) ->
     address_or_account.archived = false
     address_or_account.active = true
-    wallet.updateLegacyAddresses()
     wallet.updateHDaddresses()
     # TODO :: REVIEW unarchiving process
     # success = (txs) ->
@@ -755,10 +752,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.deleteLegacyAddress = (address) ->
     wallet.my.wallet.deleteLegacyAddress(address)
-    wallet.updateLegacyAddresses()
-
-  wallet.updateLegacyAddresses = () ->
-    wallet.legacyAddresses = wallet.my.wallet.keys
 
   ##################################
   #        Private (other)         #
@@ -866,7 +859,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.beep()
         if wallet.transactions[numberOfTransactions - 1].result > 0 && !wallet.transactions[[numberOfTransactions - 1]].intraWallet
           wallet.displayReceivedBitcoin()
-        # wallet.updateLegacyAddresses()
     else if event == "error_restoring_wallet"
       # wallet.applyIfNeeded()
       return
@@ -897,12 +889,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
-      # wallet.updateLegacyAddresses()
       wallet.status.didLoadBalances = true if wallet.my.wallet.isUpgradedToHD
       wallet.applyIfNeeded()
     else if event == "did_update_legacy_address_balance"
       console.log "did_update_legacy_address_balance"
-      # wallet.updateLegacyAddresses()
       wallet.applyIfNeeded()
 
     else if event == "wallet not found" # Only works in the mock atm
@@ -1043,8 +1033,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           # convert to: units of satoshi per unit of fiat
           wallet.conversions[code] = {symbol: info.symbol, conversion: parseInt(numeral(100000000).divide(numeral(info["last"])).format("1"))}
 
-        # if wallet.status.isLoggedIn
-        #   wallet.updateLegacyAddresses()
         wallet.applyIfNeeded()
 
       fail = (error) ->
@@ -1292,7 +1280,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.refresh = () ->
     wallet.my.refresh()
-    # wallet.updateLegacyAddresses()
     wallet.updateTransactions()
 
   wallet.isMock = wallet.my.mockShouldFailToSend != undefined

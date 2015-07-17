@@ -40,7 +40,7 @@ walletApp.controller "AddressCtrl", ($scope, Wallet, $log, $state, $stateParams,
   
   $scope.$watchCollection "accounts + hdAddresses", () ->
     # Is it a legacy address?
-    address = $filter("getByProperty")("address", $stateParams.address, Wallet.legacyAddresses)
+    address = $filter("getByProperty")("address", $stateParams.address, Wallet.legacyAddresses())
     
     # Or an HD address?
     if !address?

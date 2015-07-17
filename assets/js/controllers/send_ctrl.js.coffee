@@ -280,7 +280,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
             $scope.origins.push account
             $scope.destinationsBase.push angular.copy(account) # https://github.com/angular-ui/ui-select/issues/656
 
-        for address in $scope.legacyAddresses
+        for address in $scope.legacyAddresses()
           address = $scope.formatOrigin(address)
           if !address.archived
             $scope.destinationsBase.push address
