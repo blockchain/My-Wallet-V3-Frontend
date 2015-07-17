@@ -11,10 +11,11 @@ walletApp.controller "WalletNavigationCtrl", ($scope, Wallet, SecurityCenter, $s
     return filterFilter(Wallet.accounts, {archived: false}).length
 
   $scope.getMainAccountId = () ->
-    account = 'accounts'
-    if $scope.numberOfActiveAccounts() <= 1
-      account = Wallet.getDefaultAccountIndex()
-    return account
+    return unless $scope.status.isLoggedIn
+      account = 'accounts'
+      if $scope.numberOfActiveAccounts() <= 1
+        account = Wallet.getDefaultAccountIndex()
+      return account
 
   $scope.selectedAccountIndex = $stateParams.accountIndex
 

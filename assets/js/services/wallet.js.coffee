@@ -621,6 +621,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
 
   wallet.getDefaultAccountIndex = () ->
+    return unless wallet.my.wallet?
     if wallet.my.wallet.isUpgradedToHD then wallet.my.wallet.hdwallet.defaultAccountIndex else 0
 
 
@@ -794,6 +795,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           }
 
   wallet.total = (accountIndex) ->
+    return unless wallet.my.wallet?
     switch accountIndex
       when "accounts", undefined, null
         if wallet.my.wallet.isUpgradedToHD then wallet.my.wallet.hdwallet.balanceActiveAccounts else null
@@ -1238,6 +1240,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     )
 
   wallet.getTotalBalanceForActiveLegacyAddresses = () ->
+    return unless wallet.my.wallet?
     return wallet.my.wallet.balanceActiveLegacy
 
   wallet.setDefaultAccount = (account) ->
