@@ -210,9 +210,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     else
       betaCheckFinished()
-      
 
-  wallet.legacyAddresses = () -> 
+
+  wallet.legacyAddresses = () ->
     wallet.my.wallet.keys
 
   wallet.resendTwoFactorSms = (uid, successCallback, errorCallback) ->
@@ -516,12 +516,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     success = (address) ->
       successCallback(address)
       wallet.applyIfNeeded()
-      
-      
+
     error = (message) ->
       errorCallback(message)
       wallet.applyIfNeeded()
-    
+
     proceed = (secondPassword='') ->
       wallet.my.wallet.importLegacyAddress(
         addressOrPrivateKey, secondPassword, bipPassphrase
