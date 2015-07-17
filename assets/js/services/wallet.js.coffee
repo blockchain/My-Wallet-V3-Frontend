@@ -81,9 +81,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         for account in wallet.my.wallet.hdwallet.accounts
           wallet.accounts.push(account)
 
-      wallet.legacyAddresses = () -> 
-        wallet.my.wallet.keys
-
       wallet.updateHDaddresses()
 
       # Get email address, etc
@@ -213,6 +210,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     else
       betaCheckFinished()
+      
+
+  wallet.legacyAddresses = () -> 
+    wallet.my.wallet.keys
 
   wallet.resendTwoFactorSms = (uid, successCallback, errorCallback) ->
     success = () ->

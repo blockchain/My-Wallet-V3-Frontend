@@ -16,6 +16,10 @@ describe "AddressImportCtrl", ->
         success({address: "valid_import_address"})
         
       Wallet.accounts = [{index: 0}]
+      
+      Wallet.my = 
+        wallet:
+          keys: []
 
       scope = $rootScope.$new()
 
@@ -77,7 +81,7 @@ describe "AddressImportCtrl", ->
 
   describe "transfer", ->
     beforeEach ->
-      scope.address = Wallet.legacyAddresses[0]
+      scope.address = Wallet.legacyAddresses()[0]
 
     it "should have access to accounts", ->
       expect(scope.accounts).toBeDefined()

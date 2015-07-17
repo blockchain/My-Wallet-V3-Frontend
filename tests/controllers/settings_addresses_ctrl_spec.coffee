@@ -11,12 +11,18 @@ describe "SettingsAddressesCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
       
-      Wallet.legacyAddresses = [{archived: false},{archived: true}]
+      [{archived: false}]
+      
+      legacyAddresses = [{archived: false},{archived: true}]
+      
+      Wallet.legacyAddresses = () ->
+        legacyAddresses
       
       Wallet.my = 
         wallet:
           deleteLegacyAddress: () ->
-          keys: [{archived: false}]
+            legacyAddresses.pop()
+          keys: legacyAddresses
             
       scope = $rootScope.$new()
             
@@ -33,16 +39,16 @@ describe "SettingsAddressesCtrl", ->
     
   describe "legacy addresses", ->
     it "should be listed", ->
-      expect(scope.legacyAddresses.length).toBeGreaterThan(0)
+      expect(scope.legacyAddresses().length).toBeGreaterThan(0)
      
     it "can be archived", ->
-      address = scope.legacyAddresses[0]
+      address = scope.legacyAddresses()[0]
       expect(address.archived).toBe(false)
       scope.archive(address)
       expect(address.archived).toBe(true)
       
     it "can be unarchived", ->
-      address = scope.legacyAddresses[1]
+      address = scope.legacyAddresses()[1]
       expect(address.archived).toBe(true)
       scope.unarchive(address)
       expect(address.archived).toBe(false)
@@ -52,15 +58,15 @@ describe "SettingsAddressesCtrl", ->
         return true
       )
       
-      address = scope.legacyAddresses[1]
-      before = scope.legacyAddresses.length
+      address = scope.legacyAddresses()[1]
+      before = scope.legacyAddresses().length
       
       spyOn(Wallet, "deleteLegacyAddress").and.callThrough()
       
       scope.delete(address)
       expect(Wallet.deleteLegacyAddress).toHaveBeenCalled()
             
-      expect(scope.legacyAddresses.length).toBe(before - 1)
+      expect(scope.legacyAddresses().length).toBe(before - 1)
       
       
     )

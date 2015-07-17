@@ -19,7 +19,6 @@ describe "WalletNavigationCtrl", ->
         }
       }
 
-      Wallet.updateLegacyAddresses()
       Wallet.updateAccounts()
 
       scope = $rootScope.$new()
@@ -59,6 +58,7 @@ describe "WalletNavigationCtrl", ->
   )
 
   it "should know the main account index when there are multiple accounts", inject(() ->
+    scope.status.isLoggedIn = true
     expect(scope.getMainAccountId()).toBe('accounts')
   )
 

@@ -51,7 +51,6 @@ describe "SendCtrl", ->
 
       Wallet.send = (-> )
 
-      Wallet.updateLegacyAddresses()
       Wallet.updateAccounts()
 
       scope = $rootScope.$new()
@@ -92,7 +91,7 @@ describe "SendCtrl", ->
   describe "initialization", ->
 
     it "should load legacyAddresses", ->
-      expect(scope.legacyAddresses.length).toBeGreaterThan(0)
+      expect(scope.legacyAddresses().length).toBeGreaterThan(0)
 
     it "should load accounts", ->
       expect(scope.accounts.length).toBeGreaterThan(0)
@@ -333,7 +332,7 @@ describe "SendCtrl", ->
     beforeEach ->
       scope.transaction =
         from: scope.accounts[0]
-        destinations: scope.legacyAddresses
+        destinations: scope.legacyAddresses()
         amounts: [100, 200, 300]
         fee: 50
         note: 'this_is_a_note'
@@ -350,7 +349,7 @@ describe "SendCtrl", ->
       spyOn(Wallet, 'send')
       scope.send()
       expect(Wallet.send).toHaveBeenCalledWith(
-        scope.accounts[0], scope.legacyAddresses,
+        scope.accounts[0], scope.legacyAddresses(),
         [100, 200, 300], 50, undefined
       )
     )
@@ -410,7 +409,7 @@ describe "SendCtrl", ->
 
     it "should show imported address transactions", inject(($state) ->
       spyOn($state, 'go')
-      scope.transaction.from = scope.legacyAddresses[0]
+      scope.transaction.from = scope.legacyAddresses()[0]
       scope.send()
       expect($state.go).toHaveBeenCalledWith('wallet.common.transactions', { accountIndex: 'imported' })
     )
@@ -450,7 +449,7 @@ describe "SendCtrl", ->
   describe "resetSendForm", ->
 
     beforeEach ->
-      scope.transaction.from = scope.legacyAddresses[1]
+      scope.transaction.from = scope.legacyAddresses()[1]
       scope.transaction.destinations = [scope.accounts[1]]
       scope.transaction.amounts = [1111]
       scope.transaction.fee = 9000
@@ -518,7 +517,7 @@ describe "SendCtrl", ->
       expect(scope.toLabel).toBeUndefined()
 
     it "should set the label to an address", ->
-      scope.transaction.destinations[0] = scope.legacyAddresses[0]
+      scope.transaction.destinations[0] = scope.legacyAddresses()[0]
       scope.updateToLabel()
       expect(scope.toLabel).toEqual('some_label')
 
@@ -529,7 +528,7 @@ describe "SendCtrl", ->
 
     it "should set the label when advanced", ->
       scope.advanced = true
-      scope.transaction.destinations = scope.legacyAddresses
+      scope.transaction.destinations = scope.legacyAddresses()
       scope.updateToLabel()
       expect(scope.toLabel).toEqual('3 Recipients')
 
@@ -589,7 +588,7 @@ describe "SendCtrl", ->
       scope.transaction.destinations = [scope.accounts[0], scope.accounts[1]]
 
     it "should recognize when all destinations are valid", ->
-      scope.transaction.from = scope.legacyAddresses[0]
+      scope.transaction.from = scope.legacyAddresses()[0]
       scope.checkForSameDestination()
       expect(hasErr 'destinations0', 'isNotEqual').toBeUndefined()
       expect(hasErr 'destinations1', 'isNotEqual').toBeUndefined()

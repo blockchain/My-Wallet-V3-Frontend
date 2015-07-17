@@ -86,14 +86,14 @@ describe "walletServices", () ->
     )
     
     it "should get a list of legacy addresses", inject((Wallet) ->
-      expect(Wallet.legacyAddresses.length).toEqual(2)
+      expect(Wallet.legacyAddresses().length).toEqual(2)
 
       return
     )
     
     it "should use address as label if no label is given", inject((Wallet) ->
-      expect(Wallet.legacyAddresses[0].label).toEqual("Old")
-      expect(Wallet.legacyAddresses[1].label).toEqual("some_legacy_address_without_label")
+      expect(Wallet.legacyAddresses()[0].label).toEqual("Old")
+      expect(Wallet.legacyAddresses()[1].label).toEqual("some_legacy_address_without_label")
 
       return
     )

@@ -45,7 +45,7 @@ describe "walletServices", () ->
   describe "address label", ->
     it "can be set for a legacy address", ->
       pending()
-      address = Wallet.legacyAddresses[0]
+      address = Wallet.legacyAddresses()[0]
       spyOn(Wallet.store, "setLegacyAddressLabel")
       Wallet.changeAddressLabel(address, "New Label", (()->))
       expect(Wallet.store.setLegacyAddressLabel).toHaveBeenCalled()

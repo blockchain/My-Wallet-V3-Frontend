@@ -34,7 +34,6 @@ describe "RequestCtrl", ->
         EUR: { conversion: 400000 }
       }
 
-      Wallet.updateLegacyAddresses()
       Wallet.updateAccounts()
 
       scope = $rootScope.$new()
@@ -93,7 +92,7 @@ describe "RequestCtrl", ->
 
     it "should have access to legacy addresses",  inject(() ->
       expect(scope.legacyAddresses).toBeDefined()
-      expect(scope.legacyAddresses.length).toBeGreaterThan(0)
+      expect(scope.legacyAddresses().length).toBeGreaterThan(0)
     )
 
     it "should combine accounts and active legacy addresses in destinations", ->
@@ -116,20 +115,20 @@ describe "RequestCtrl", ->
     )
 
     it "should show a payment request address when legacy address is selected", inject(()->
-      scope.fields.to = scope.legacyAddresses[0]
+      scope.fields.to = scope.legacyAddresses()[0]
       scope.$digest()
       expect(scope.paymentRequestAddress).toBe(scope.fields.to.address)
     )
 
     it "should show a payment URL when legacy address is selected", ->
-      scope.fields.to = scope.legacyAddresses[0]
+      scope.fields.to = scope.legacyAddresses()[0]
       scope.$digest()
       expect(scope.paymentRequestURL).toBeDefined()
       expect(scope.paymentRequestURL).toContain("bitcoin:")
 
 
     it "should show a payment URL with amount when legacy address is selected and amount > 0", ->
-      scope.fields.to = scope.legacyAddresses[0]
+      scope.fields.to = scope.legacyAddresses()[0]
       scope.$digest()
       scope.fields.currency = scope.currencies[0]
       scope.fields.amount = "0.1"
@@ -138,7 +137,7 @@ describe "RequestCtrl", ->
       expect(scope.paymentRequestURL).toContain("amount=0.1")
 
     it "should not have amount argument in URL if amount is zero, null or empty", ->
-      scope.fields.to = scope.legacyAddresses[0]
+      scope.fields.to = scope.legacyAddresses()[0]
       scope.fields.amount = "0"
       scope.$digest()
       expect(scope.paymentRequestURL).toBeDefined()

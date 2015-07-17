@@ -23,7 +23,6 @@ describe "AddressCtrl", ->
 
       Wallet.changeAddressLabel = (-> )
 
-      Wallet.updateLegacyAddresses()
       Wallet.updateAccounts()
       Wallet.updateHDaddresses()
 

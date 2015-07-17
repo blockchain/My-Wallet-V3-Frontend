@@ -9,10 +9,11 @@ describe "TransactionCtrl", ->
 
       Wallet.accounts = [{balance: 0, label: "Savings", index: 0}]
       
-      Wallet.legacyAddresses = [
-        {address: "some_legacy_address", label: "Old"}, 
-        {address: "some_legacy_address_without_label", label: null}
-      ]
+      Wallet.legacyAddresses = () ->
+        [
+          {address: "some_legacy_address", label: "Old"}, 
+          {address: "some_legacy_address_without_label", label: null}
+        ]
       
       Wallet.transactions = [{
         hash: "aaaa", 

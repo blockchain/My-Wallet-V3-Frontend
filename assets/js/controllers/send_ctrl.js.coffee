@@ -116,7 +116,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     $scope.transaction.destinations.splice(index, 1)
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () ->
-    return filterFilter(Wallet.accounts, {archived: false}).length + filterFilter(Wallet.legacyAddresses, {archived: false}).length
+    return filterFilter(Wallet.accounts, {archived: false}).length + filterFilter(Wallet.legacyAddresses(), {archived: false}).length
 
   $scope.send = () ->
     unless $scope.sending
