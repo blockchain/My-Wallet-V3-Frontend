@@ -3,7 +3,7 @@ walletApp.directive('verifyEmail', ($translate, Wallet) ->
     restrict: "E"
     replace: 'true'
     scope: {
-      buttonClass: '@'
+      _buttonClass: '@buttonClass'
     }
     templateUrl: 'templates/verify-email.jade'
     link: (scope, elem, attrs) ->
@@ -12,8 +12,7 @@ walletApp.directive('verifyEmail', ($translate, Wallet) ->
       scope.errors =
           emailVerificationCode: null
 
-      unless scope.buttonClass?
-        scope.buttonClass = 'button-primary'
+      scope.buttonClass = scope._buttonClass || 'button-primary'
 
       scope.verifyEmail = (code) ->
         error = () ->

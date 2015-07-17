@@ -3,12 +3,11 @@ walletApp.directive('confirmRecoveryPhrase', ($translate, Wallet, $modal) ->
     restrict: "E"
     replace: 'true'
     scope: {
-      buttonClass: '@'
+      _buttonClass: '@buttonClass'
     }
     templateUrl: 'templates/confirm-recovery-phrase.jade'
     link: (scope, elem, attrs) ->
-      unless scope.buttonClass?
-        scope.buttonClass = 'button-primary'
+      scope.buttonClass = scope._buttonClass || 'button-primary'
 
       scope.status = Wallet.status
 

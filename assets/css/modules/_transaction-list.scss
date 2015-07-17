@@ -1,18 +1,19 @@
 #transactions {
-  a.date {
-    padding-top: 10px;
-
+  .transaction-feed {
+    position: relative;
+    top: 48px;
   }
-  
+  a.date { padding-top: 10px; }
+
   h3.emptystate b{
   color: rgb(108, 108, 108);
   font-weight: 500;
     &:hover{cursor: pointer;}
   }
-  
-  .row.transaction {
+
+  .transaction {
     border-bottom: 1pt solid $light-grey;
-    padding: 15px 0;
+    padding: 15px 30px;
     &:hover {
       background: $hover-blue;
     }
@@ -49,7 +50,6 @@
       font-weight: 400;
       color: #B2B2B2;
       }
-
     }
 
     div.amount{
@@ -346,5 +346,6 @@ a.date,p.date {
   }
   .transaction-card {
     button.amount { font-size: .75em; }
+    .helper { display: none; }
   }
 }

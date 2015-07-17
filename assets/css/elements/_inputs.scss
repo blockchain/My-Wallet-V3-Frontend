@@ -11,3 +11,6 @@ input[type="radio"] {
 input::-ms-clear {
   display: none;
 }
+
+//Mozilla hide input spinners
+input[type=number] {-moz-appearance: textfield;}
