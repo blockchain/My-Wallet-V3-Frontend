@@ -7,7 +7,7 @@
     li.scroll-parent.header(ui-sref-active="current")
       a(ui-sref="wallet.common.transactions({accountIndex: getMainAccountId() })")
         i.ti-layout-list-post
-        span(translate="MY_TRANSACTIONS")
+        span(translate="MY_TRANSACTIONS") 
       ul.scroll.aside-list.pas(ng-show="selectedAccountIndex != 'imported' && showOrHide()", ng-click="hideMenu()")
         li.mvs(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd || numberOfActiveAccounts() <= 1")
           a.pas(translate="ALL_ACCOUNTS")

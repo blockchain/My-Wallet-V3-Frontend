@@ -630,7 +630,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
 
   wallet.getDefaultAccountIndex = () ->
-    return unless wallet.my.wallet?
+    return 0 unless wallet.my.wallet?
     if wallet.my.wallet.isUpgradedToHD then wallet.my.wallet.hdwallet.defaultAccountIndex else 0
 
 
