@@ -90,6 +90,8 @@ walletApp.controller "AddressImportCtrl", ($scope, $log, Wallet, $modalInstance,
   $scope.processURLfromQR = (url) ->
     $scope.fields.addressOrPrivateKey = $scope.parseBitcoinUrl(url)
     $scope.cameraOff()
+    valid = $scope.isValidAddressOrPrivateKey($scope.fields.addressOrPrivateKey)
+    $scope.importForm.privateKey.$setValidity('isValid', valid)
 
   $scope.parseBitcoinUrl = (url) ->
     url = url.split('bitcoin:')
