@@ -513,14 +513,23 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return amount
 
   wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bipPassphrase, successCallback, errorCallback) ->
+    success = (address) ->
+      wallet.applyIfNeeded()
+      console.log address
+      successCallback(address)
+      
+    error = (message) ->
+      wallet.applyIfNeeded()
+      errorCallback(message)
+    
     proceed = (secondPassword='') ->
       wallet.my.wallet.importLegacyAddress(
         addressOrPrivateKey, secondPassword, bipPassphrase
-      ).then(successCallback, errorCallback)
+      ).then(success, error)
 
     wallet.askForSecondPasswordIfNeeded()
       .then proceed
-      .catch errorCallback
+      .catch
 
   wallet.transaction = (successCallback, errorCallback) ->
 
