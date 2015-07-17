@@ -963,10 +963,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   # Notes and tags #
   ##################
   wallet.setNote = (tx, text) ->
-    wallet.store.setNote(tx.hash, text)
+    wallet.my.wallet.setNote(tx.hash, text)
 
   wallet.deleteNote = (tx) ->
-    wallet.store.deleteNote(tx.hash)
+    wallet.my.wallet.deleteNote(tx.hash)
 
   ############
   # Settings #
