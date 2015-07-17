@@ -19,6 +19,7 @@ describe "SendCtrl", ->
       Wallet = $injector.get("Wallet")
 
       MyWallet.wallet =
+        setNote: (-> )
         keys: [
           { address: 'some_address', archived: false, isWatchOnly: false, label: 'some_label' }
           { address: 'watch_address', archived: false, isWatchOnly: true }
@@ -414,11 +415,13 @@ describe "SendCtrl", ->
       expect($state.go).toHaveBeenCalledWith('wallet.common.transactions', { accountIndex: 'imported' })
     )
 
-    it "should set a note if there is one", inject((Wallet) ->
-      spyOn(Wallet, 'setNote')
+    it "should set a note if there is one", inject((Wallet, MyWallet) ->
+      spyOn(Wallet, 'setNote').and.callThrough()
+      spyOn(MyWallet.wallet, 'setNote')
       scope.transaction.note = 'this_is_a_note'
       scope.send()
       expect(Wallet.setNote).toHaveBeenCalledWith({ hash: undefined }, 'this_is_a_note')
+      expect(MyWallet.wallet.setNote).toHaveBeenCalledWith(undefined, 'this_is_a_note')
     )
 
     it "should not set a note if there is not one", inject((Wallet) ->
