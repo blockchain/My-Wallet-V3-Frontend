@@ -25,8 +25,8 @@ h5.well.headliner.hidden-xs(translate="MY_ADDRESSES_EXPLAIN_TEMP")
         td.hidden-xs(ng-bind-html="address.account.label | highlight:searchText")
  
 .flex.mtl
-  button.button-default.mrl(translate="IMPORTED_ADDRESSES", ng-click="toggleDisplayImported()", ng-class="{active : display.imported}")
-  button.button-default(translate="ARCHIVED_ADDRESSES", ng-click="toggleDisplayArchived()", ng-class="{active : display.archived}")
+  button.button-default.mrl(translate="IMPORTED_ADDRESSES" ng-click="toggleDisplayImported()" ng-class="{active : display.imported}")
+  button.button-default(translate="ARCHIVED_ADDRESSES" ng-click="toggleDisplayArchived()" ng-class="{active : display.archived}")
 
 p.mtl.hidden-xs(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
 p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")

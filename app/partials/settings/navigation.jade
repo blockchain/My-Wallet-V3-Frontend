@@ -1,8 +1,8 @@
 ul.aside.settings-nav
   a.plm(ng-click="goHome()")
     i.ti-arrow-left.mrs
-    | Go Back
-  li.settings-nav-header.current.phl.pvm.mbn.mtl Settings
+    span(translate="GO_BACK")
+  li.settings-nav-header.current.phl.pvm.mbn.mtl(translate="SETTINGS")
   ul.aside-list.pas(ng-click="hideMenu()")
     li.header(ui-sref-active="active")
       a(ui-sref="wallet.common.settings.wallet", translate="WALLET_SETTINGS")
