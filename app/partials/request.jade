@@ -4,7 +4,7 @@
     h3(translate="RECEIVE_BITCOIN")
   h5(translate="RECEIVE_BITCOIN_MESSAGE")
 .modal-body
-  form.form-horizontal(role="form" name="requestForm" novalidate)
+  form.form-horizontal.ph-form(role="form" name="requestForm" novalidate)
     .form-group(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': fields.to.isWatchOnlyLegacyAddress}")
       label.col-sm-3.control-label(translate="RECEIVE_TO")
       .col-sm-9

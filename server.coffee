@@ -20,7 +20,7 @@ try
   env(__dirname + '/.env');
 catch e
   console.log("You may optionally create a .env file to configure the server.");
-  
+
 port = process.env.PORT or 8080
 
 dist = process.env.DIST? && parseInt(process.env.DIST)
@@ -39,10 +39,10 @@ app.configure ->
     else
       res.setHeader('Cache-Control', 'public, max-age=0, no-cache');
     next()
-    
-  app.use app.router  
+
+  app.use app.router
   app.engine "html", require("ejs").renderFile
-    
+
   if dist
     console.log("Production mode: single javascript file, cached");
     app.set "views", __dirname + "/dist"
@@ -54,29 +54,29 @@ app.configure ->
     app.use express.methodOverride()
     app.set "views", __dirname
     app.use express.static(__dirname)
-  
+
   app.use express.errorHandler(
     dumpExceptions: true
     showStack: true
   )
-  
+
   return
 
 if process.env.BETA? && parseInt(process.env.BETA)
   console.log("Enabling beta invite system")
 
   hdBeta = require('hd-beta')(__dirname + '/' + process.env.BETA_DATABASE_PATH)
-  
+
   # beta key public
 
   app.get "/", (request, response) ->
     if dist && process.env.BETA?
       response.render "index-beta.html"
     else if dist
-      response.render "index.html"  
+      response.render "index.html"
     else
       response.render "app/index.jade"
-      
+
   app.get "/percent_requested", (request, response) ->
     response.setHeader 'Access-Control-Allow-Origin', (process.env.BLOCKCHAIN || 'http://blockchain.com')
     response.json { width: (process.env.PERCENT_REQUESTED || 60) }
@@ -108,7 +108,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
             response.json {verified : false, error: {message: "Invite key already used. Please login instead."}}
       else
         response.json {verified : false, error: {message: "Invite key not found"}}
-    
+
   app.post "/check_guid_for_beta_key", (request, response) ->
     hdBeta.isGuidAssociatedWithBetaKey request.body.guid, (err, verified) ->
       if err
@@ -117,7 +117,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
         response.json {verified : true}
       else
         response.json {verified : false, error: {message: "This wallet is not associated with a beta invite key. Please create a new wallet first."}}
-        
+
   app.post "/set_guid_for_beta_key", (request, response) ->
     hdBeta.doesKeyExistWithoutGUID request.body.key, (err, unclaimed, email) ->
       if err
@@ -135,12 +135,24 @@ if process.env.BETA? && parseInt(process.env.BETA)
       else
         response.json {success : true}
 
+  app.post '/whitelist_guid', (request, response) ->
+    if !request.body?
+      response.json { error: 'no request body' }
+    else if request.body.secret != process.env.WHITELIST_SECRET
+      response.json { error: 'incorrect secret' }
+    else if !request.body.guid?
+      response.json { error: 'missing request body guid parameter' }
+    else
+      name = request.body.name || 'Mobile Tester'
+      hdBeta.assignKey name, request.body.email, request.body.guid, (err, key) ->
+        response.json { error: err, key: key }
+
   # beta key admin
 
   app.get "/admin/?", (request, response, next) ->
     credentials = auth(request)
-    
-    if (!credentials || credentials.name != 'blockchain' || credentials.pass != process.env.ADMIN_PASSWORD) 
+
+    if (!credentials || credentials.name != 'blockchain' || credentials.pass != process.env.ADMIN_PASSWORD)
       response.writeHead(401, {
         'WWW-Authenticate': 'Basic realm="blockchain-beta-admin"'
       })
@@ -149,12 +161,12 @@ if process.env.BETA? && parseInt(process.env.BETA)
       if dist
         response.render "admin.html"
       else
-        response.render "app/admin.jade"      
+        response.render "app/admin.jade"
 
   app.get "/admin/api/:method", (request, response, next) ->
     credentials = auth(request)
-    
-    if (!credentials || credentials.name != 'blockchain' || credentials.pass != process.env.ADMIN_PASSWORD) 
+
+    if (!credentials || credentials.name != 'blockchain' || credentials.pass != process.env.ADMIN_PASSWORD)
       response.writeHead(401, {
         'WWW-Authenticate': 'Basic realm="blockchain-beta-admin"'
       })
@@ -212,7 +224,7 @@ else
       response.render "index.html"
     else
       response.render "app/index.jade"
-      
+
 # /verify-email?token=$token sends a request to blockchain.info and redirects to login
 app.get "/verify-email", (request, response) ->
   r.get 'https://blockchain.info/wallet' + request.originalUrl
@@ -227,9 +239,9 @@ app.get "/authorize-approve", (request, response) ->
   <head>
     <meta charset="utf-8">
     <title>Verifying authorization request</title>
-    <script> 
+    <script>
       var xmlHttp = new XMLHttpRequest();
-      // The redirect should be done in the callback, but currently the callback doesn't get called because the authorize-approve page makes an ajax request to /wallet over http which is blocked 
+      // The redirect should be done in the callback, but currently the callback doesn't get called because the authorize-approve page makes an ajax request to /wallet over http which is blocked
       // xmlHttp.onload = function () {
       //   window.location.replace("/");
       // };
@@ -265,7 +277,7 @@ app.get /^\/key-.{8}$/, (request, response) ->
 # TODO Better 404 page
 app.use (req, res) ->
   res.send '<center><h1>404 Not Found</h1></center>'
-      
+
 app.listen port, ->
   console.log "Listening on " + port
   return
