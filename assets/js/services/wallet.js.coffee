@@ -817,9 +817,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       continueCallback = () ->
         $translate("FIRST_ACCOUNT_NAME").then (translation) ->
 
-          cancel = () -> return
-            # wallet.displayError("Unable to upgrade your wallet. Please try again.")
-            # wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
+          cancel = () -> 
+            # Keep trying, user cannot use the wallet without upgrading.
+            wallet.displayError("Unable to upgrade your wallet. Please try again.")
+            wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
 
           proceed = (password) ->
             wallet.my.wallet.newHDWallet(translation, password)
