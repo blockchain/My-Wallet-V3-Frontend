@@ -189,3 +189,10 @@ pre {
   word-wrap: normal;
   white-space: pre-line;
 }
+
+//override pre from bootstrap
+pre {
+  word-break: normal;
+  word-wrap: normal;
+  white-space: pre-line;
+}

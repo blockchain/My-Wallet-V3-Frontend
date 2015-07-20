@@ -13,14 +13,14 @@ walletApp.controller "DashboardCtrl", ($scope, Wallet, $log, $modal) ->
     receiveAddress = Wallet.getReceivingAddressForAccount(defaultAcctIdx)
     $scope.setPaymentRequestURL(receiveAddress)
 
-  $scope.$watch 'accounts', $scope.updatePaymentInfo, true
+  $scope.$watchCollection 'accounts', $scope.updatePaymentInfo
 
   if $scope.status.firstTime
     modalInstance = $modal.open(
       templateUrl: "partials/first-login-modal.jade"
       controller: "FirstTimeCtrl"
       resolve:
-        firstTime: -> 
+        firstTime: ->
           Wallet.status.firstTime = false
       windowClass: "bc-modal rocket-modal"
     )

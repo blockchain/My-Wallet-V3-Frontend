@@ -1,7 +1,9 @@
 describe "ShowPrivateKeyCtrl", ->
 
-  Wallet = null
+  Wallet = undefined
   scope = undefined
+  addressObj = undefined
+  askForSecondPassword = undefined
 
   modalInstance =
     close: ->
@@ -12,28 +14,28 @@ describe "ShowPrivateKeyCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
 
+      MyWallet = $injector.get('MyWallet')
       Wallet = $injector.get('Wallet')
-      Wallet.login('test', 'test')
+
+      MyWallet.wallet = {
+        getPrivateKeyForAddress: (-> )
+      }
 
       scope = $rootScope.$new()
+
+      addressObj = {
+        archived: false
+        address: 'some_legacy_address'
+        balance: 10000000
+        label: 'Old'
+      }
 
       $controller "ShowPrivateKeyCtrl",
         $scope: scope,
         $modalInstance: modalInstance
-        addressObj: {
-          active: true
-          address: 'some_legacy_address'
-          balance: 10000000
-          isWatchOnlyLegacyAddress: false
-          label: 'Old'
-          legacy: true
-        }
+        addressObj: addressObj
 
       scope.$digest()
-
-      return
-
-    return
 
   it "should have scope variables defined", () ->
     expect(scope.address).toBeDefined()
@@ -48,44 +50,39 @@ describe "ShowPrivateKeyCtrl", ->
   describe "tryContinue", ->
 
     beforeEach ->
-      scope.needsSecondPassword = true
-      Wallet.my.isCorrectSecondPassword = (-> false)
+      angular.mock.inject ($q) ->
+        askForSecondPassword = $q.defer()
+        spyOn(Wallet, 'askForSecondPasswordIfNeeded').and.returnValue(askForSecondPassword.promise)
+        spyOn(Wallet.my.wallet, 'getPrivateKeyForAddress')
 
     it "should allow access if there is no second password", () ->
-      scope.needsSecondPassword = false
       expect(scope.accessAllowed).toBe(false)
       scope.tryContinue()
+      expect(Wallet.askForSecondPasswordIfNeeded).toHaveBeenCalled()
+      askForSecondPassword.resolve()
+      scope.$digest()
+      expect(Wallet.my.wallet.getPrivateKeyForAddress).toHaveBeenCalledWith(addressObj, undefined)
       expect(scope.accessAllowed).toBe(true)
-
-    it "should check to see if the second password is correct", inject((Wallet) ->
-      spyOn(Wallet.my, 'isCorrectSecondPassword')
-      scope.needsSecondPassword = true
-      scope.tryContinue()
-      expect(Wallet.my.isCorrectSecondPassword).toHaveBeenCalled()
-    )
+      expect(scope.incorrectSecondPassword).toBe(false)
 
     it "should not continue if second password is incorrect", inject((Wallet) ->
       expect(scope.accessAllowed).toBe(false)
       scope.tryContinue()
+      expect(Wallet.askForSecondPasswordIfNeeded).toHaveBeenCalled()
+      askForSecondPassword.reject()
+      scope.$digest()
+      expect(Wallet.my.wallet.getPrivateKeyForAddress).not.toHaveBeenCalled()
       expect(scope.accessAllowed).toBe(false)
       expect(scope.incorrectSecondPassword).toBe(true)
     )
 
     it "should continue if second password is correct", inject((Wallet) ->
-      Wallet.my.isCorrectSecondPassword = (-> true)
       expect(scope.accessAllowed).toBe(false)
       scope.tryContinue()
+      expect(Wallet.askForSecondPasswordIfNeeded).toHaveBeenCalled()
+      askForSecondPassword.resolve('password123')
+      scope.$digest()
+      expect(Wallet.my.wallet.getPrivateKeyForAddress).toHaveBeenCalledWith(addressObj, 'password123')
       expect(scope.accessAllowed).toBe(true)
       expect(scope.incorrectSecondPassword).toBe(false)
-    )
-
-  describe "checkForSecondPassword", () ->
-
-    it "should be called on initialization", () ->
-      expect(scope.needsSecondPassword).toBeDefined()
-
-    it "should return true if there is a second password", inject((Wallet) ->
-      Wallet.my.isCorrectSecondPassword = (-> false)
-      scope.needsSecondPassword = scope.checkForSecondPassword()
-      expect(scope.needsSecondPassword).toBe(true)
     )

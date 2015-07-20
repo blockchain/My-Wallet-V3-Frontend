@@ -23,10 +23,7 @@ describe "walletServices", () ->
 
     return
     
-  describe "send()", ->   
-    beforeEach ->
-      Wallet.login("test", "test")  
-      
+  describe "send()", ->         
       return
      
     # it "should call the right functions", inject((Wallet, MyWallet, MyWalletSpender) ->

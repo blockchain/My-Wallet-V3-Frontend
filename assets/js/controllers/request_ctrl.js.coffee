@@ -20,20 +20,20 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
   $scope.fields = {to: null, amount: "0", currency: Wallet.settings.currency, label: ""}
 
   for account in $scope.accounts
-    item = angular.copy(account)
-    item.type = "Accounts"
+    if account.index? && !account.archived
+      acct = angular.copy(account)
+      acct.type = "Accounts"
+      $scope.destinations.push acct
 
-    unless item.index? && !item.active
-      $scope.destinations.push item
+      if destination? && destination.index? && destination.index == acct.index
+        $scope.fields.to = acct
 
-    if destination == account
-      $scope.fields.to = item
-
-  for address in $scope.legacyAddresses
-    if address.active
-      item = angular.copy(address)
-      item.type = "Imported Addresses"
-      $scope.destinations.push item    
+  for address in $scope.legacyAddresses()
+    if !address.archived
+      addr = angular.copy(address)
+      addr.type = "Imported Addresses"
+      addr.label = addr.label || addr.address
+      $scope.destinations.push addr
 
   $scope.determineLabel = (origin) ->
     label = origin.label || origin.address
@@ -47,7 +47,7 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
     $modalInstance.dismiss ""
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () ->
-    return filterFilter(Wallet.accounts, {active: true}).length + filterFilter(Wallet.legacyAddresses, {active: true}).length
+    return filterFilter(Wallet.accounts, {archived: false}).length + filterFilter(Wallet.legacyAddresses(), {archived: false}).length
 
   #################################
   #           Private             #
@@ -58,6 +58,8 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
     if !$scope.fields.to? && $scope.accounts.length > 0
       if $stateParams.accountIndex == "accounts" || !$stateParams.accountIndex? # The latter is for Jasmine
         # Nothing to do, just use the default index
+      else if $stateParams.accountIndex == "imported" || !$stateParams.accountIndex?
+        # Use default index
       else
         idx = parseInt($stateParams.accountIndex)
       $scope.fields.to = $scope.accounts[idx]

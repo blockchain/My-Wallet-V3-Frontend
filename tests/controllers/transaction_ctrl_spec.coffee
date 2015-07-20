@@ -6,9 +6,22 @@ describe "TransactionCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
 
-      Wallet.login("test", "test")
+      Wallet.accounts = [{balance: 0, label: "Savings", index: 0}]
+      
+      Wallet.legacyAddresses = () ->
+        [
+          {address: "some_legacy_address", label: "Old"}, 
+          {address: "some_legacy_address_without_label", label: null}
+        ]
+      
+      Wallet.transactions = [{
+        hash: "aaaa", 
+        from: {account: null, externalAddresses: {addressWithLargestOutput: "1D2YzLr5qvrwMSm8onYbns5BLJ9jwzPHcQ"}}
+        to: {account: null}
+      }]
+      
+      spyOn(Wallet, "getAddressBookLabel").and.returnValue(null)
 
       scope = $rootScope.$new()
 
@@ -31,6 +44,7 @@ describe "TransactionCtrl", ->
   )
 
   it "should have access to address book",  inject(() ->
+    pending()
     expect(scope.addressBook).toBeDefined()
   )
 

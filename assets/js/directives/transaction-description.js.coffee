@@ -36,7 +36,7 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
           scope.address = Wallet.accounts[parseInt(scope.transaction.to.account.index)].label
           scope.other_address = Wallet.accounts[parseInt(scope.transaction.from.account.index)].label
         else
-          if to_name = Wallet.addressBook[to_address]
+          if to_name = Wallet.getAddressBookLabel(to_address)
             scope.address = to_name
           else
             scope.address = to_address
@@ -46,7 +46,7 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
           scope.action = "SENT_BITCOIN_TO"
           scope.other_address = Wallet.accounts[parseInt(scope.transaction.from.account.index)].label || from_address
           if scope.transaction.to.externalAddresses?
-            if to_name = Wallet.addressBook[to_address]
+            if to_name = Wallet.getAddressBookLabel(to_address)
               scope.address = to_name
             else
               scope.address = to_address
@@ -57,7 +57,7 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
         else
           scope.action = "RECEIVED_BITCOIN_FROM"
           scope.other_address = Wallet.accounts[parseInt(scope.transaction.to.account.index)].label
-          if from_name = Wallet.addressBook[from_address]
+          if from_name = Wallet.getAddressBookLabel(to_address)
             scope.address = from_name
           else
             scope.address = from_address
