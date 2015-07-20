@@ -46,8 +46,8 @@ div(ng-show="hdAddresses.length > 0")
           //-   a.btn.btn-xs.btn-warning(ng-show="request.paid != 0 && request.amount != 0 && request.amount != request.paid && !request.complete", ng-click="accept(request)") Accept
 
 .flex.mtl
-  button.button-primary.mrl(translate="IMPORTED_ADDRESSES", ng-click="toggleDisplayImported()")
-  button.button-primary(translate="ARCHIVED_ADDRESSES", ng-click="toggleDisplayArchived()")
+  button.button-default.mrl(translate="IMPORTED_ADDRESSES", ng-click="toggleDisplayImported()" ng-class="{active : display.imported}")
+  button.button-default(translate="ARCHIVED_ADDRESSES", ng-click="toggleDisplayArchived()" ng-class="{active : display.archived}")
 
 p.mtl.hidden-xs(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
 p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
