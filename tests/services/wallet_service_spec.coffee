@@ -334,20 +334,24 @@ describe "walletServices", () ->
     beforeEach ->
       errors = {}
 
-      Wallet.my.wallet.importLegacyAddress = (privateKey, getPassword, getBip38Password, successCallback, alreadyImportedCallback, errorCallback) ->
-        if privateKey == "BIP38 key"
-          getBip38Password((password)->
-            if password == "5678"
-              successCallback("some address")
-            else
-              console.log "Wrong password!"
-          )
+      Wallet.my.wallet.importLegacyAddress = (privateKey, label, getPassword, bip38Password) ->
+        if privateKey == "BIP38 key"          
+          if bip38Password == "5678"
+            return {
+              then: (success) -> success("some address")
+            }
+          else
+            return {
+              then: (success, error) -> error("needsBip38")
+            }
         else
           address = privateKey.replace("private_key_for_","")
           MyWalletStore.addLegacyAddress(address, privateKey, 200000000)
-          successCallback(address)
+          return {
+            then: (success) -> success("address")
+          }
 
-        return {then: () ->}
+        return 
 
     it "should recoginize an address as such", ->
       # TODO: use a spy to make sure this gets called
@@ -417,16 +421,15 @@ describe "walletServices", () ->
       callbacks = {
         success: () ->
         error: () ->
-        needsBip38: () ->
       }
 
-      spyOn(callbacks, "needsBip38")
+      spyOn(callbacks, "error")
 
-      Wallet.addAddressOrPrivateKey("BIP38 key", callbacks.needsBip38, callbacks.success, callbacks.error)
+      Wallet.addAddressOrPrivateKey("BIP38 key", "", callbacks.success, callbacks.error)
 
       $rootScope.$digest()
 
-      expect(callbacks.needsBip38).toHaveBeenCalled()
+      expect(callbacks.error).toHaveBeenCalledWith("needsBip38")
     )
 
   describe "displayReceivedBitcoin()", ->
