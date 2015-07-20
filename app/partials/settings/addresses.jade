@@ -1,50 +1,29 @@
 h5.well.headliner.hidden-xs(translate="MY_ADDRESSES_EXPLAIN_TEMP")
 
-div(ng-show="hdAddresses.length == 0")
-  img(src="img/spinner.gif")
-div(ng-show="hdAddresses.length > 0")
-  .form-ctrl.flex-between.flex-center
-    .flex-1.mrl
-      input.filter(type="text", ng-model="searchText").form-control
-    .btn-group(dropdown is-open="display.account_dropdown_open")
-      button.btn.btn-info.dropdown-toggle.btn-bci(dropdown-toggle type="button", data-toggle="dropdown", aria-expanded="false")
-        span(translate="NEW_ADDRESS")
-        span.caret
-      ul.dropdown-menu(role="menu")
-        li(ng-repeat="account in accounts | filter:{archived: false}")
-          a(ng-click="addAddressForAccount(account)") {{ account.label }}
-  .row
-    .col-xs-12.table-container
-      table.responsive
-        tr
-          th(translate="ADDRESS")
-          th.hidden-xs(translate="LABEL")
-          th.hidden-xs(translate="ACCOUNT")
-          //- th(translate="REQUESTED_AMOUNT")
-          //- th
-          //- th
-        //- tr(ng-repeat="request in requests | filter:{canceled:false, complete:false} | filter:searchText")
-        tr(ng-repeat="address in hdAddresses  | filter:searchText | orderBy:['account.index', 'index']")
-          td
-            a(ng-bind-html="address.address | highlight:searchText", ui-sref="wallet.common.settings.address({address: address.address})")
-          td.hidden-xs(ng-bind-html="address.label | highlight:searchText")
-          td.hidden-xs(ng-bind-html="address.accountLabel | highlight:searchText")
-
-          //- td.amount
-          //-   fiat(btc="request.amount", ng-show="request.amount > 0")
-          //-   span.label.label-success(ng-show="request.amount > 0 && request.complete", translate="REQUEST_PAID")
-          //-   span(ng-show="request.paid != 0 && request.amount != 0 && request.amount != request.paid && !request.complete")
-          //-     span.label.label-warning(ng-show="request.amount > request.paid", translate="INSUFFICIENT")
-          //-     span.label.label-warning(ng-show="request.amount < request.paid", translate="TOO_MUCH")
-          //-     br
-          //-     span(translate="RECEIVED_X", translate-values="{amount: request.amount / 100000000, paid: request.paid / 100000000}")
-          //- td
-            //- a(ng-click="open(request)", translate="DETAILS")
-            //- a(ui-sref="wallet.common.settings.address({address: address.address})", translate="DETAILS")
-          //- td
-          //-   a.btn.btn-xs.btn-info(ng-hide="request.complete || request.paid > 0", ng-click="clear(request)") Clear
-          //-   a.btn.btn-xs.btn-warning(ng-show="request.paid != 0 && request.amount != 0 && request.amount != request.paid && !request.complete", ng-click="accept(request)") Accept
-
+.form-ctrl.flex-between.flex-center
+  .flex-1.mrl
+    input.filter(type="text", ng-model="searchText").form-control
+  .btn-group(dropdown is-open="display.account_dropdown_open")
+    button.btn.btn-info.dropdown-toggle.btn-bci(dropdown-toggle type="button", data-toggle="dropdown", aria-expanded="false")
+      span(translate="NEW_ADDRESS")
+      span.caret
+    ul.dropdown-menu(role="menu")
+      li(ng-repeat="account in accounts | filter:{archived: false}")
+        a(ng-click="addAddressForAccount(account)") {{ account.label }}
+.row
+  .col-xs-12.table-container
+    table.responsive
+      tr
+        th(translate="ADDRESS")
+        th.hidden-xs(translate="LABEL")
+        th.hidden-xs(translate="ACCOUNT")
+      tr(ng-repeat="address in hdAddresses()") 
+        // | filter:searchText | orderBy:['address.account.index', 'index']")
+        td
+          a(ng-bind-html="address.address | highlight:searchText", ui-sref="wallet.common.settings.hd_address({account: address.account.index, index: address.index})")
+        td.hidden-xs(ng-bind-html="address.label | highlight:searchText")
+        td.hidden-xs(ng-bind-html="address.account.label | highlight:searchText")
+ 
 .flex.mtl
   button.button-default.mrl(translate="IMPORTED_ADDRESSES", ng-click="toggleDisplayImported()", ng-class="{active : display.imported}")
   button.button-default(translate="ARCHIVED_ADDRESSES", ng-click="toggleDisplayArchived()", ng-class="{active : display.archived}")

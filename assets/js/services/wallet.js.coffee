@@ -44,7 +44,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.languages = []
   wallet.currencies = []
   wallet.btcCurrencies = [{ serverCode: 'BTC', code: 'BTC', conversion: 100000000 }, { serverCode: 'MBC', code: 'mBTC', conversion: 100000 }, { serverCode: 'UBC', code: 'bits', conversion: 100 }]
-  wallet.hdAddresses = []
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8'
 
   wallet.store.setAPICode(wallet.api_code)
@@ -80,8 +79,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.status.didInitializeHD = true
         for account in wallet.my.wallet.hdwallet.accounts
           wallet.accounts.push(account)
-
-      wallet.updateHDaddresses()
 
       # Get email address, etc
       # console.log "Getting info..."
@@ -214,6 +211,21 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.legacyAddresses = () ->
     wallet.my.wallet.keys
+    
+  hdAddresses = null
+  
+  wallet.hdAddresses = (refresh=false) ->
+    return hdAddresses if hdAddresses? && !refresh
+    
+    hdAddresses = [].concat.apply [], wallet.accounts.map((account) ->
+      account.receivingAddressesLabels.map((address) -> {
+        account: account
+        index: address.index
+        label: address.label
+        address: account.receiveAddressAtIndex(address.index)
+      })
+    )
+    return hdAddresses
 
   wallet.resendTwoFactorSms = (uid, successCallback, errorCallback) ->
     success = () ->
@@ -296,18 +308,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     successCallback()
 
   wallet.addAddressForAccount = (account, successCallback, errorCallback) ->
-    ri = undefined
-    if account.receivingAddressesLabels.length is 0
-      ri = account.receiveIndex
-      account.setLabelForReceivingAddress(ri, "");
-
-    ri = account.receiveIndex;
-    account.setLabelForReceivingAddress(ri, "");
-
-    address = account.receivingAddressesLabels.slice(-1)[0]
-    address.address = account.receiveAddressAtIndex(address.index)
-    wallet.updateHDaddresses()
-    successCallback(address)
+    index = account.receiveIndex + 1
+    account.setLabelForReceivingAddress(index, "")
+    successCallback(index)
 
   wallet.fetchMoreTransactions = (where, successCallback, errorCallback, allTransactionsLoadedCallback) ->
     success = (res) ->
@@ -331,16 +334,14 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     else
       wallet.my.fetchMoreTransactionsForAccount(parseInt(where), success, error, allTransactionsLoaded)
 
-  wallet.changeAddressLabel = (address, label, successCallback, errorCallback) ->
-    if address.accountIndex? # HD Address
-      account = wallet.my.wallet.hdwallet.accounts[address.accountIndex]
-      account.setLabelForReceivingAddress(address.index, label);
-      wallet.updateHDaddresses()
-      successCallback()
-
-    else # Legacy address
-      address.label = label
-      successCallback()
+  wallet.changeLegacyAddressLabel = (address, label, successCallback, errorCallback) ->
+    address.label = label
+    successCallback()
+      
+  wallet.changeHDAddressLabel = (account, index, label, successCallback, errorCallback) ->
+    account.setLabelForReceivingAddress(index, label)
+    wallet.hdAddresses(true)
+    successCallback()
 
   wallet.logout = () ->
     wallet.didLogoutByChoice = true
@@ -623,7 +624,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.my.wallet.hdwallet.accounts.forEach((a)->wallet.accounts.push(a))
       wallet.my.getHistoryAndParseMultiAddressJSON()
       wallet.updateTransactions()
-      wallet.updateHDaddresses()
       successCallback()
 
     wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
@@ -727,12 +727,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.archive = (address_or_account) ->
     address_or_account.archived = true
     address_or_account.active = false
-    wallet.updateHDaddresses()
 
   wallet.unarchive = (address_or_account) ->
     address_or_account.archived = false
     address_or_account.active = true
-    wallet.updateHDaddresses()
 
   wallet.deleteLegacyAddress = (address) ->
     wallet.my.wallet.deleteLegacyAddress(address)
@@ -745,40 +743,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.accounts = wallet.my.wallet.hdwallet.accounts
 
   # wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts.some((a) -> a.active and a.balance)
-
-  # Update (labelled) HD addresses:
-  wallet.updateHDaddresses = () ->
-    wallet.hdAddresses = wallet.hdAddresses.filter (address) ->
-      address.active && !address.archived
-
-    for account in wallet.accounts
-      continue unless account.active
-      labeledAddresses = account.receivingAddressesLabels
-
-      for address in labeledAddresses
-        address.address = account.receiveAddressAtIndex(address.index);
-        hdAddress = $filter("getByProperty")("address", address.address, wallet.hdAddresses)
-        if hdAddress == null
-          wallet.hdAddresses.push {
-            index: address.index
-            address: address.address
-            label: address.label
-            accountLabel: account.label
-            accountIndex: account.index
-          }
-        else
-          hdAddress.label = address.label
-
-      if labeledAddresses.length == 0
-        address = account.receiveAddress;
-        if $filter("getByProperty")("address", address, wallet.hdAddresses) == null
-          wallet.hdAddresses.push {
-            index: account.receiveIndex
-            address: address
-            label: null # The last receiving address never has a label
-            accountLabel: account.label
-            accountIndex: account.index
-          }
 
   wallet.total = (accountIndex) ->
     return unless wallet.my.wallet?
@@ -861,7 +825,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
             wallet.my.wallet.newHDWallet(translation, password)
             wallet.status.didUpgradeToHd = true
             wallet.accounts = wallet.my.wallet.hdwallet.accounts
-            wallet.updateHDaddresses()
             wallet.my.getHistoryAndParseMultiAddressJSON()
 
           wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)

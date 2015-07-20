@@ -1,8 +1,10 @@
 walletApp.controller "SettingsAddressesCtrl", ($scope, Wallet, $translate, $modal, $state) ->
   $scope.legacyAddresses = Wallet.legacyAddresses
-  $scope.accounts = Wallet.accounts
   $scope.display = {archived: false, account_dropdown_open: false}
-
+  $scope.accounts = Wallet.accounts
+    
+  $scope.hdAddresses = Wallet.hdAddresses
+  
   $scope.toggleDisplayImported = () ->
     $scope.display.imported = !$scope.display.imported
     $scope.display.archived = false
@@ -13,12 +15,10 @@ walletApp.controller "SettingsAddressesCtrl", ($scope, Wallet, $translate, $moda
 
   $scope.settings = Wallet.settings
 
-  $scope.hdAddresses = Wallet.hdAddresses
-
   $scope.addAddressForAccount = (account) ->
 
-    success = (address) ->
-      $state.go "wallet.common.settings.address", {address: address.address}
+    success = (index) ->
+      $state.go "wallet.common.settings.hd_address", {account: account.index, index: index}
 
     error = () ->
 

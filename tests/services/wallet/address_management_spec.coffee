@@ -51,9 +51,8 @@ describe "walletServices", () ->
       expect(Wallet.store.setLegacyAddressLabel).toHaveBeenCalled()
     
     it "can be set for an HD address", ->
-      address = {accountIndex: 0}
       spyOn(account, "setLabelForReceivingAddress")
-      Wallet.changeAddressLabel(address, "New Label", (()->))
+      Wallet.changeHDAddressLabel(account, 0, "New Label", (()->))
       expect(account.setLabelForReceivingAddress).toHaveBeenCalled()     
        
     it "each account should have at least one address without a label", ->

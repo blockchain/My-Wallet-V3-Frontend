@@ -24,7 +24,6 @@ describe "AddressCtrl", ->
       Wallet.changeAddressLabel = (-> )
 
       Wallet.updateAccounts()
-      Wallet.updateHDaddresses()
 
       scope = $rootScope.$new()
 
@@ -42,7 +41,7 @@ describe "AddressCtrl", ->
   )
 
   it "should change the address",  inject((Wallet) ->
-    spyOn(Wallet, "changeAddressLabel").and.callThrough()
-    scope.changeLabel("New Label")
-    expect(Wallet.changeAddressLabel).toHaveBeenCalled()
+    spyOn(Wallet, "changeLegacyAddressLabel").and.callThrough()
+    scope.changeLabel("New Label", (()->))
+    expect(Wallet.changeLegacyAddressLabel).toHaveBeenCalled()
   )

@@ -63,6 +63,7 @@ modules = [
   "partials/settings/accounts.jade"
   "partials/settings/addresses.jade"
   "partials/settings/address.jade"
+  "partials/settings/hd_address.jade"
   "partials/settings/advanced.jade"
   "partials/settings/change-password.jade"
   "partials/settings/import-address.jade"
