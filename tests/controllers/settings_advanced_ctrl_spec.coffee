@@ -7,10 +7,9 @@ describe "SettingsAdvancedCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
-      
-      Wallet.login("test", "test")  
-      
+
+      Wallet.settings = {rememberTwoFactor: true}
+            
       scope = $rootScope.$new()
             
       $controller "SettingsAdvancedCtrl",

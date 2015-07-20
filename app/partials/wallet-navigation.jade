@@ -7,14 +7,14 @@
     li.scroll-parent.header(ui-sref-active="current")
       a(ui-sref="wallet.common.transactions({accountIndex: getMainAccountId() })")
         i.ti-layout-list-post
-        span(translate="MY_TRANSACTIONS")
+        span(translate="MY_TRANSACTIONS") 
       ul.scroll.aside-list.pas(ng-show="selectedAccountIndex != 'imported' && showOrHide()", ng-click="hideMenu()")
         li.mvs(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd || numberOfActiveAccounts() <= 1")
           a.pas(translate="ALL_ACCOUNTS")
             span
               fiat-or-btc(btc="total()")    
         li(ng-repeat="account in accounts" ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''" ui-sref="wallet.common.transactions({accountIndex: account.index.toString()})")
-          a.flex-between.pas(ng-if="account.active")
+          a.flex-between.pas(ng-if="!account.archived")
             span.prs {{ account.label }}
             span
               fiat-or-btc(btc="account.balance")

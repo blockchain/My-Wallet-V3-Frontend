@@ -19,7 +19,7 @@ walletStoreServices.factory "MyWalletStore", () ->
   feePolicy = 0
 
 
-  legacyAddresses = {}
+  legacyAddresses = () -> []
 
   {
     isSynchronizedWithServer: () ->

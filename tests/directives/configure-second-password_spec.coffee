@@ -12,8 +12,6 @@ describe "Configure Second Password", ->
     $compile = _$compile_
     $rootScope = _$rootScope_
 
-    Wallet.login("test", "test")
-
     return
   )
 

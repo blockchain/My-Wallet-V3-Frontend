@@ -14,6 +14,7 @@ walletApp.controller "SetSecondPasswordCtrl", ($scope, $log, Wallet, $modalInsta
     return if $scope.busy || !$scope.isValid
 
     $scope.busy = true
+    $scope.$root.$safeApply($scope)
 
     success = () ->
       $scope.busy = false
@@ -21,7 +22,7 @@ walletApp.controller "SetSecondPasswordCtrl", ($scope, $log, Wallet, $modalInsta
 
     $timeout((->
       Wallet.setSecondPassword($scope.fields.password, success)
-    ), 100)
+    ), 500)
 
   $scope.$watch "fields.confirmation", (newVal) ->
     if newVal?

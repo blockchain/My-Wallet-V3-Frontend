@@ -19,8 +19,6 @@ describe 'bcAsyncInput Directive', ->
 
   beforeEach inject((_$compile_, $rootScope, Wallet) ->
 
-    Wallet.login('test', 'test')
-
     $compile = _$compile_
 
     scope = $rootScope.$new()

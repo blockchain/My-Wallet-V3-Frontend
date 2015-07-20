@@ -13,9 +13,12 @@ describe "ChangePasswordCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
-
-      Wallet.login("test", "test")
+      
+      Wallet.user = {uid: "12345678-1234-1234-1234-1234567890ab"}
+      
+      spyOn(Wallet, "isCorrectMainPassword").and.callFake((pwd) ->
+        return pwd != "wrong"
+      )
 
       scope = $rootScope.$new()
 
@@ -109,7 +112,7 @@ describe "ChangePasswordCtrl", ->
         expect(scope.passwordForm.password.$error.maxlength).toBe(true)
 
       it "should display an error if the new password is the users guid", ->
-        scope.passwordForm.password.$setViewValue('test')
+        scope.passwordForm.password.$setViewValue("12345678-1234-1234-1234-1234567890ab")
         expect(scope.passwordForm.password.$error.isValid).toBe(true)
 
       it "should be valid if all requirements are met", ->

@@ -39,8 +39,7 @@ walletApp.controller "ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalI
     valid = true
 
     for word in $scope.words
-      word.error = word.value.toLowerCase() != word.actual
-      if word.error
+      if word.error = word.value.toLowerCase() != word.actual
         valid = false
 
     if valid

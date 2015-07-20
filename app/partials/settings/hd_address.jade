@@ -1,0 +1,29 @@
+.row
+  .col-xs-12
+    a.back(ng-click="back()")
+      h2.back(translate="ADDRESS_DETAILS")
+
+div(ng-hide="address.address")
+  img(src="img/spinner.gif")
+div(ng-show="address.address")
+  .row
+    .col-xs-12.col-md-6
+      fields.form-horizontal(role="form",name="form",novalidate)
+        .form-group
+          label.col-sm-3.control-label(translate="ADDRESS")
+          .col-sm-9
+            p.form-control-static.long-input
+              | {{ address.address }}  
+        .form-group(ng-show="address.account")
+          label.col-sm-3.control-label(translate="ACCOUNT")
+          .col-sm-9
+            p.form-control-static
+              | {{ address.account.label }}
+        .form-group(ng-class="{'has-error': errors.label}")
+          label.col-sm-3.control-label(translate="LABEL")
+          .col-sm-9(ng-if="address")
+            bc-async-input(inline ng-model="address.label" on-save="changeLabel" is-required)
+            span.help-block {{ errors.label }}
+        
+    .col-xs-12.col-md-6.text-center
+      qr(text="url" size="140", ng-if="url != null")

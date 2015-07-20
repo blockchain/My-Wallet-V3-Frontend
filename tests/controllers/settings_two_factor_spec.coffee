@@ -11,10 +11,28 @@ describe "TwoFactorCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
 
-      Wallet.login("test", "test")
-
-      Wallet.settings.twoFactorMethod = null
-      Wallet.settings.needs2FA = false
+      Wallet.settings = 
+        twoFactorMethod: null
+        needs2FA: false
+        googleAuthenticatorSecret: null
+      
+      Wallet.settings_api = 
+        unsetTwoFactor: (success) ->
+          success()
+        setTwoFactorGoogleAuthenticator: (success) ->
+          success("secret")
+        setTwoFactorYubiKey: (code, success, error) ->
+          if code == "wrong"
+            error()
+          else
+            success()
+        setTwoFactorSMS: (success) ->
+          success()
+        confirmTwoFactorGoogleAuthenticator: (code, success, error) ->
+          if code == "wrong"
+            error()
+          else
+            success()
 
       scope = $rootScope.$new()
 
@@ -86,7 +104,7 @@ describe "TwoFactorCtrl", ->
           expect(scope.setTwoFactorYubiKey).not.toHaveBeenCalled()
 
         it "should not pair if code is wrong", () ->
-          scope.fields.yubiKeyCode = '123457'
+          scope.fields.yubiKeyCode = 'wrong'
           scope.pairWithApp('yubiKey')
           expect(scope.settings.needs2FA).toBe(false)
           expect(scope.step).toBe('pair')
@@ -107,7 +125,7 @@ describe "TwoFactorCtrl", ->
           expect(scope.confirmTwoFactorGoogleAuthenticator).not.toHaveBeenCalled()
 
         it "should not pair if code is wrong", () ->
-          scope.fields.authenticatorCode = '123457'
+          scope.fields.authenticatorCode = 'wrong'
           scope.pairWithApp('authenticator')
           expect(scope.settings.needs2FA).toBe(false)
           expect(scope.step).toBe('pair')

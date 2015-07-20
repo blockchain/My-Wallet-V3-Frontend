@@ -17,6 +17,9 @@ describe "walletServices", () ->
     return
 
   describe "parsePaymentRequest()", ->
+    beforeEach ->
+      Wallet.my.isValidAddress = (url) -> 
+        return true
 
     it "should recognise bitcoin://", inject((Wallet) ->
       result = Wallet.parsePaymentRequest("http://")

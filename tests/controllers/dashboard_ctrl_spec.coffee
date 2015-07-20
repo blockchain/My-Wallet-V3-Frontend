@@ -9,10 +9,7 @@ describe "DashboardCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
-      
-      Wallet.login("test", "test")  
-      
+      MyWallet = $injector.get("MyWallet")      
       
       scope = $rootScope.$new()
             

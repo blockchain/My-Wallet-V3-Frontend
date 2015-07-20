@@ -7,7 +7,7 @@ walletApp.controller "ChangePasswordCtrl", ($scope, $log, Wallet, $modalInstance
 
   $scope.isCorrectMainPassword = Wallet.isCorrectMainPassword
 
-  $scope.uid = Wallet.uid
+  $scope.uid = Wallet.user.uid
 
   $scope.changePassword = () ->
     return unless $scope.passwordForm.$valid
@@ -17,6 +17,7 @@ walletApp.controller "ChangePasswordCtrl", ($scope, $log, Wallet, $modalInstance
       $scope.status.waiting = false
       $scope.errors.unsuccessful = err
     $scope.status.waiting = true
+    $scope.$root.$safeApply($scope)
     Wallet.changePassword($scope.fields.password, success, error)
 
   $scope.close = () ->

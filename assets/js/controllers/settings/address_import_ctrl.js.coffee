@@ -7,8 +7,6 @@ walletApp.controller "AddressImportCtrl", ($scope, $log, Wallet, $modalInstance,
   $scope.step = 1
   $scope.BIP38 = false
 
-  $scope.verifyBIP38Passphrase = undefined
-
   $scope.status =
     busy: false
     sweeping: false
@@ -30,29 +28,8 @@ walletApp.controller "AddressImportCtrl", ($scope, $log, Wallet, $modalInstance,
   $scope.import = () ->
     $scope.status.busy = true
 
-    if $scope.BIP38
-      correct = () ->
-        $scope.status.busy = false
-        $scope.step = 2
-
-      wrong = () ->
-        $scope.status.busy = false
-        $scope.importForm.bipPassphrase.$setValidity('wrong', false)
-
-      $timeout (->
-        $scope.verifyBIP38Passphrase($scope.fields.bip38passphrase, correct, wrong)
-      ), 100
-
-    else
-      $scope.attemptImport()
-
-  $scope.attemptImport = () ->
     addressOrPrivateKey = $scope.fields.addressOrPrivateKey.trim()
-
-    needsBip38 = (callback) ->
-      $scope.status.busy = false
-      $scope.BIP38 = true
-      $scope.verifyBIP38Passphrase = callback
+    bip38passphrase = $scope.fields.bip38passphrase.trim()
 
     success = (address) ->
       $scope.status.busy = false
@@ -60,12 +37,22 @@ walletApp.controller "AddressImportCtrl", ($scope, $log, Wallet, $modalInstance,
       $scope.step = 2
 
     error = (err, address=null) ->
-      if err? && err.addressPresentInWallet
-        $scope.importForm.privateKey.$setValidity('present', false)
       $scope.status.busy = false
-      $scope.address = address
+      return unless err?
 
-    Wallet.addAddressOrPrivateKey(addressOrPrivateKey, needsBip38, success, error)
+      switch err
+        when 'presentInWallet'
+          $scope.importForm.privateKey.$setValidity('present', false)
+        when 'wrongBipPass'
+          $scope.importForm.bipPassphrase.$setValidity('wrong', false)
+        when 'needsBip38'
+          $scope.BIP38 = true
+
+    $timeout () ->
+      Wallet.addAddressOrPrivateKey(
+        addressOrPrivateKey, bip38passphrase, success, error
+      )
+    , 250
 
   # Transfer funds
 

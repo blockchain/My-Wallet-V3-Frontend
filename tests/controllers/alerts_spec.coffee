@@ -8,8 +8,6 @@ describe "AlertsCtrl", ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
 
-      Wallet.login("test", "test") 
-
       scope = $rootScope.$new()
 
       $controller "AlertsCtrl",

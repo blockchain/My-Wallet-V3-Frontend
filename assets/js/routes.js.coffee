@@ -237,6 +237,15 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
+  .state("wallet.common.settings.hd_address",
+    url: "/:account/addresses/:index"
+    views: {
+      settings: {
+        templateUrl: "partials/settings/hd_address.jade"
+        controller: "HDAddressCtrl"
+      }
+    }
+  )
   .state("wallet.common.settings.wallet-recovery",
     url: "/wallet-recovery"
     views: {
