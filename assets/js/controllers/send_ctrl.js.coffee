@@ -111,64 +111,46 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     return filterFilter(Wallet.accounts, {archived: false}).length + filterFilter(Wallet.legacyAddresses(), {archived: false}).length
 
   $scope.send = () ->
-    unless $scope.sending
-      $scope.sending = true
+    return if $scope.sending
 
-      if $scope.transaction.publicNote
-        publicNote = $scope.transaction.note
-        if publicNote == ""
-          publicNote = null
+    $scope.sending = true
+    Wallet.clearAlerts()
 
-      transactionDidFailWithError = (message) ->
-        if message
-          $translate(message).then (translation) ->
-            Wallet.displayError(translation)
-        $scope.sending = false
+    # Set public note, if any
+    if $scope.transaction.publicNote
+      publicNote = $scope.transaction.note || null
 
-      transactionDidFinish = (tx_hash) ->
-        if not $scope.transaction.publicNote
-          # Save private note, if any:
-          note = $scope.transaction.note.trim()
-          if note != ""
-            Wallet.setNote({hash: tx_hash}, note)
+    transactionDidFailWithError = (message) ->
+      $scope.sending = false
+      $translate(message).then((t) -> Wallet.displayError(t)) if message
 
-        $scope.sending = false
+    transactionDidFinish = (tx_hash) ->
+      $scope.sending = false
+      $modalInstance.close ""
+      Wallet.beep()
 
-        Wallet.beep()
+      # Set the private note
+      note = $scope.transaction.note.trim()
+      if !$scope.transaction.publicNote && note != ""
+        Wallet.setNote({hash: tx_hash}, note)
 
-        $modalInstance.close ""
-        # Switch to the from account transactions view, unless "all accounts" are visible.
-        if $scope.transaction.from.index?
-          if $state.current.name != "wallet.common.transactions" || ($state.params.accountIndex? && $state.params.accountIndex != "accounts")
-            $state.go("wallet.common.transactions", {accountIndex: $scope.transaction.from.index })
-        else
-          $state.go("wallet.common.transactions", {accountIndex: "imported" })
+      # Switch to the from account transactions view, unless "all accounts" are visible.
+      index = $scope.transaction.from.index
+      index = 'imported' unless index?
 
-        $translate("SUCCESS").then (titleTranslation) ->
-          $translate("BITCOIN_SENT").then (messageTranslation) ->
+      unless $state.current.name == "wallet.common.transactions" || $stateParams.accountIndex == "accounts"
+        $state.go("wallet.common.transactions", { accountIndex: index })
 
-            modalInstance = $modal.open(
-              templateUrl: "partials/modal-notification.jade"
-              controller: "ModalNotificationCtrl"
-              windowClass: "notification-modal"
-              resolve:
-                notification: ->
-                  {
-                    type: 'sent-bitcoin'
-                    icon: 'bc-icon-send'
-                    heading: titleTranslation
-                    msg: messageTranslation
-                  }
-            ).opened.then () ->
-              Wallet.store.resetLogoutTimeout()
+      # Show success notification
+      $translate(['SUCCESS', 'BITCOIN_SENT']).then (translations) ->
+        $scope.$emit 'showNotification',
+          type: 'sent-bitcoin'
+          icon: 'bc-icon-send'
+          heading: translations.SUCCESS
+          msg: translations.BITCOIN_SENT
 
-      Wallet.clearAlerts()
-
-      transaction = Wallet.transaction(transactionDidFinish, transactionDidFailWithError)
-
-      transaction.send($scope.transaction.from, $scope.transaction.destinations, $scope.transaction.amounts, parseInt($scope.transaction.fee), publicNote)
-
-      return
+    transaction = Wallet.transaction(transactionDidFinish, transactionDidFailWithError)
+    transaction.send($scope.transaction.from, $scope.transaction.destinations, $scope.transaction.amounts, parseInt($scope.transaction.fee), publicNote)
 
   $scope.closeAlert = (alert) ->
     Wallet.closeAlert(alert)

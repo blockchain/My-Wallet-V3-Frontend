@@ -123,6 +123,14 @@ walletApp.config ($numeraljsConfigProvider, $modalProvider, uiSelectConfig) ->
 # walletApp.config ($sceProvider) ->
 #   $sceProvider.enabled(false);
 
-walletApp.run ($rootScope) ->
+walletApp.run ($rootScope, $modal, Wallet) ->
   $rootScope.$safeApply = (scope=$rootScope) ->
     scope.$apply() unless scope.$$phase || $rootScope.$$phase
+
+  $rootScope.$on "showNotification", (_, notification) ->
+    $modal.open(
+      templateUrl: "partials/modal-notification.jade"
+      controller: "ModalNotificationCtrl"
+      windowClass: "notification-modal"
+      resolve: { notification: -> notification }
+    ).opened.then () -> Wallet.store.resetLogoutTimeout()
