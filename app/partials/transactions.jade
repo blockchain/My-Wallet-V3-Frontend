@@ -19,18 +19,20 @@
         p.em-400(translate="DESCRIBE_TRANSACTIONS")
       h3.em-100.text-center.mid-grey.emptystate(translate="HIT_RECEIVE", ng-click="request()")
       h3.em-100.text-center.mid-grey.emptystate(translate="HIT_SEND", ng-click="send()")
-    .flex-center.transaction(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")
-      .ti-arrow-circle-right.h4.ccc.pointer.mrl.prl(ng-click="")
-      .flex-1.flex-center
+    .transaction(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")
+      .tx-toggle.hidden-xs.hidden-sm(ng-click="toggleTransaction(transaction)")
+        i.ti-arrow-circle-right.h4.ccc.pointer.mrl.prl(ng-show="!transaction.toggled")
+        i.ti-arrow-circle-down.h4.dark-grey.pointer.mrl.prl(ng-show="transaction.toggled")
+      .tx-details
         .info(ng-click="showTransaction(transaction)")
           span(ng-show="transaction.confirmations == 0 && transaction.from.externalAddresses")
             i(translate="UNCONFIRMED_WARNING")
-        .type.flex-1.pointer(ng-click="showTransaction(transaction)")
+        .type.pointer(ng-click="showTransaction(transaction)")
           span 
             transaction-description(transaction="transaction" ng-if="canDisplayDescriptions")
-        .amount.flex-1
-          span 
-            amount(transaction="transaction")
+      .amount
+        span 
+          amount(transaction="transaction")
     .row
       .col-xs-5
       .col-xs-2

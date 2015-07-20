@@ -29,6 +29,9 @@ walletApp.controller "TransactionsCtrl", ($scope, Wallet, MyWallet, $log, $state
 
   $scope.selectedAccountIndex = $stateParams.accountIndex
 
+  $scope.toggleTransaction = (transaction) ->
+    transaction.toggled = !transaction.toggled
+
   #################################
   #           Private             #
   #################################

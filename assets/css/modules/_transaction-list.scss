@@ -7,6 +7,7 @@
   .transaction {
     border-bottom: 1pt solid $light-grey;
     padding: 15px 30px;
+    position: relative;
     &:hover { background: $hover-blue; }
     .timestamp{
       font-size: 9pt;
@@ -35,19 +36,28 @@
     }
     .destination{
       display: block;
-      font-size: 1.2em;
       font-weight: 400;
       color: #B2B2B2;
-      margin-left: 3em;
     }
     .amount {
       padding: 10px 0;
+      position: absolute;
+      right: 10px;
+      top: 15px;
       button.amount{
         font-size: 1.2em;
         font-weight: normal;
         min-width: 175px;
         float: right;
       }
+    }
+    .tx-toggle {
+      position: absolute;
+      top: 50px;
+      transform: translateY(-50%);
+    }
+    .tx-details {
+      margin-left: 3em;
     }
   }
   .description {
@@ -320,6 +330,9 @@ a.date,p.date {
 @media (max-width: 620px) {
   #transactions {
     top: 0;
+    .transaction {
+      .tx-details { margin-left: 0; }
+    }
   }
   .tx-bci-link {
     font-size: 0.4em;
