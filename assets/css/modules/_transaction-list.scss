@@ -1,14 +1,9 @@
 #transactions {
   .transaction-feed {
     position: relative;
-    top: 48px;
+    top: 50px;
   }
   a.date { padding-top: 10px; }
-  h3.emptystate b {
-    color: rgb(108, 108, 108);
-    font-weight: 500;
-    &:hover{cursor: pointer;}
-  }
   .transaction {
     border-bottom: 1pt solid $light-grey;
     padding: 15px 30px;
@@ -46,8 +41,7 @@
       margin-left: 3em;
     }
     .amount {
-      padding-bottom: 5px;
-      padding-top: 5px;
+      padding: 10px 0;
       button.amount{
         font-size: 1.2em;
         font-weight: normal;
