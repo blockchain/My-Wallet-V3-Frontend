@@ -523,7 +523,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     proceed = (secondPassword='') ->
       wallet.my.wallet.importLegacyAddress(
-        addressOrPrivateKey, secondPassword, bipPassphrase
+        addressOrPrivateKey, "", secondPassword, bipPassphrase
       ).then(success, error)
 
     wallet.askForSecondPasswordIfNeeded()
