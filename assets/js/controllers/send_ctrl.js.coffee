@@ -7,7 +7,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.origins = []
   $scope.destinations = []
-  $scope.destinationsBase = []
 
   $scope.originsLoaded = false
   $scope.cameraIsOn = false
@@ -16,8 +15,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.amountIsValid = true
 
   $scope.alerts = Wallet.alerts
-
-  $scope.isOpen = {currencies: false}
 
   $scope.fiatCurrency = Wallet.settings.currency
   $scope.btcCurrency = Wallet.settings.btcCurrency
@@ -103,13 +100,10 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       $scope.$broadcast('ResetSearch' + i)
 
   $scope.addDestination = () ->
-    originalDestinations = angular.copy($scope.destinations[0])
-    $scope.destinations.push(originalDestinations)
     $scope.transaction.amounts.push(null)
     $scope.transaction.destinations.push(null)
 
   $scope.removeDestination = (index) ->
-    $scope.destinations.splice(index, 1)
     $scope.transaction.amounts.splice(index, 1)
     $scope.transaction.destinations.splice(index, 1)
 
@@ -199,8 +193,8 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         $scope.toLabel += " Account"
 
   $scope.refreshDestinations = (query, i) ->
-    return if $scope.destinations[i].length == 0
-    last = $scope.destinations[i].slice(-1)[0]
+    return if $scope.destinations.length == 0
+    last = $scope.destinations.slice(-1)[0]
     unless !query?
        last.address = query
        last.label = query
@@ -210,7 +204,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     if $scope.transaction.destinations[i] == null || $scope.transaction.destinations[i].type != "External"
       # Select the external account if it's the only match; otherwise when the user moves away from the field
       # the address will be forgotten. This is only an issue if the user selects an account first and then starts typing.
-      for destination in $scope.destinations[i]
+      for destination in $scope.destinations
         return if destination.type != "External" && destination.label.indexOf(query) != -1
       $scope.transaction.destinations[i] = last
 
@@ -276,17 +270,16 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
             if account.index == idx
               $scope.transaction.from = account
             $scope.origins.push account
-            $scope.destinationsBase.push angular.copy(account) # https://github.com/angular-ui/ui-select/issues/656
+            $scope.destinations.push angular.copy(account) # https://github.com/angular-ui/ui-select/issues/656
 
         for address in $scope.legacyAddresses()
           address = $scope.formatOrigin(address)
           if !address.archived
-            $scope.destinationsBase.push address
+            $scope.destinations.push address
             unless address.isWatchOnly
               $scope.origins.push angular.copy(address)
 
-        $scope.destinationsBase.push({address: "", label: "", type: "External"})
-        $scope.destinations.push $scope.destinationsBase
+        $scope.destinations.push({address: "", label: "", type: "External"})
         $scope.originsLoaded = true
 
         if paymentRequest.address? && paymentRequest.address != ''
