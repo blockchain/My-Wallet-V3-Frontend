@@ -4,5 +4,12 @@
       span.timestamp.pbm
         date {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
       span.action(ng-class="{incoming_tx: transaction.result > 0, outgoing_tx: transaction.result < 0, local_tx: transaction.intraWallet}", translate="{{ action }}")
-    .hidden-xs.hidden-sm.destination
-      span.hidden-sm.hidden-xs(translate="{{ address }}")
+    .hidden-xs.hidden-sm.destination.flex-column
+      .flex
+        span.type-sm(ng-show="transaction.result > 0 && !transaction.intraWallet") from:
+        span.type-sm(ng-show="transaction.result  < 0 || transaction.intraWallet") to:
+        span.hidden-sm.hidden-xs.mll(translate="{{ address }}")
+      .flex
+        span.type-sm(ng-show="transaction.result > 0 && !transaction.intraWallet") to:
+        span.type-sm(ng-show="transaction.result  < 0 || transaction.intraWallet") from:
+        span.hidden-sm.hidden-xs.mll(translate="{{ other_address }}")
