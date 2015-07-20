@@ -294,7 +294,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         if paymentRequest.address? && paymentRequest.address != ''
           $scope.applyPaymentRequest(paymentRequest, 0)
         else if paymentRequest.toAccount?
-          $scope.transaction.destinations[0] = paymentRequest.toAccount
+          $scope.transaction.destinations[0] = $scope.formatOrigin(paymentRequest.toAccount)
           $scope.transaction.from = paymentRequest.fromAddress
         else if paymentRequest.fromAccount?
           $scope.transaction.from = paymentRequest.fromAccount
