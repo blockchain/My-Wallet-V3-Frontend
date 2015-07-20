@@ -39,12 +39,10 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     origin.label || origin.address
 
   $scope.getFilter = (search, accounts=true) ->
-    filter =
+    {
       label: search
-      type: "!External"
-    if !accounts
-      filter.type = 'Imported'
-    return filter
+      type: if accounts then '!External' else 'Imported'
+    }
 
   $scope.hasZeroBalance = (origin) ->
     return origin.balance == 0.0

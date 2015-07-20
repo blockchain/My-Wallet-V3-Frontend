@@ -665,6 +665,10 @@ describe "SendCtrl", ->
 
   describe "getFilter", ->
 
+    it "should always set the filter label to the search string", ->
+      expect(scope.getFilter('search_1').label).toEqual('search_1')
+      expect(scope.getFilter('search_2', false).label).toEqual('search_2')
+
     it "should return type '!External' when accounts=true", ->
       expect(scope.getFilter('').type).toEqual('!External')
 
