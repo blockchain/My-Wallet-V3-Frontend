@@ -1,15 +1,21 @@
 .flex-column
   .flex-center.pbm
-    .flex-column.feed-info
+    .flex-column.col-md-2.col-sm-12.col-xs-12
       span.timestamp.pbm
         date {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
       span.action(ng-class="{incoming_tx: transaction.result > 0, outgoing_tx: transaction.result < 0, local_tx: transaction.intraWallet}", translate="{{ action }}")
-    .hidden-xs.hidden-sm.destination.flex-column
-      .flex
-        span.type-sm(ng-show="transaction.result > 0 && !transaction.intraWallet") from:
-        span.type-sm(ng-show="transaction.result  < 0 || transaction.intraWallet") to:
-        span.hidden-sm.hidden-xs.mll(translate="{{ address }}")
-      .flex
-        span.type-sm(ng-show="transaction.result > 0 && !transaction.intraWallet") to:
-        span.type-sm(ng-show="transaction.result  < 0 || transaction.intraWallet") from:
-        span.hidden-sm.hidden-xs.mll(translate="{{ other_address }}")
+    .hidden-xs.hidden-sm.destination.col-md-10
+      .flex.row
+        span.col-md-1(ng-show="transaction.result > 0 && !transaction.intraWallet", translate="FROM:")
+        span.col-md-1(ng-show="transaction.result  < 0 || transaction.intraWallet", translate="TO:")
+        span.hidden-sm.hidden-xs.col-md-11(translate="{{ address }}")
+  .flex-center.border-top.ptm.hidden-xs.hidden-sm(ng-show="transaction.toggled")
+    .col-md-2
+    .col-md-10.destination
+      .flex.row
+        span.col-md-1(ng-show="transaction.result > 0 && !transaction.intraWallet", translate="TO:")
+        span.col-md-1(ng-show="transaction.result  < 0 || transaction.intraWallet", translate="FROM:")
+        span.hidden-sm.hidden-xs.col-md-11(translate="{{ other_address }}")
+      .flex.row.mtm
+        span.col-md-1(translate="NOTE:")
+        span.hidden-sm.hidden-xs.col-md-11(translate="{{ transaction.note }}")

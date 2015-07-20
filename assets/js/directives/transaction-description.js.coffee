@@ -56,7 +56,7 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
             scope.address = scope.transaction.to.mobile.number
         else
           scope.action = "RECEIVED_BITCOIN_FROM"
-          scope.other_address = Wallet.addressBook[to_address]
+          scope.other_address = Wallet.accounts[parseInt(scope.transaction.to.account.index)].label
           if from_name = Wallet.addressBook[from_address]
             scope.address = from_name
           else
