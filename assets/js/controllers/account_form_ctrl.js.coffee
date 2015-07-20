@@ -23,23 +23,12 @@ walletApp.controller "AccountFormCtrl", ($scope, Wallet, $modalInstance, $log, $
       $scope.status.busy = false
       $modalInstance.dismiss ""
 
-      $translate("SUCCESS").then (titleTranslation) ->
-        $translate("ACCOUNT_CREATED").then (messageTranslation) ->
-
-          modalInstance = $modal.open(
-            templateUrl: "partials/modal-notification.jade"
-            controller: "ModalNotificationCtrl"
-            windowClass: "notification-modal"
-            resolve:
-              notification: ->
-                {
-                  type: 'created-account'
-                  icon: 'ti-layout-list-post'
-                  heading: titleTranslation
-                  msg: messageTranslation
-                }
-          ).opened.then () ->
-            Wallet.store.resetLogoutTimeout()
+      $translate(['SUCCESS', 'ACCOUNT_CREATED']).then (translations) ->
+        $scope.$emit 'showNotification',
+          type: 'created-account'
+          icon: 'ti-layout-list-post'
+          heading: translations.SUCCESS
+          msg: translations.ACCOUNT_CREATED
 
     error = () ->
       $scope.status.busy = false

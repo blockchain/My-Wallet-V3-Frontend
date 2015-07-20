@@ -95,22 +95,12 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
           )
 
         if Wallet.goal.auth
-          $translate("AUTHORIZED").then (titleTranslation) ->
-            $translate("AUTHORIZED_MESSAGE").then (messageTranslation) ->
-              modalInstance = $modal.open(
-                templateUrl: "partials/modal-notification.jade"
-                controller: "ModalNotificationCtrl"
-                windowClass: "notification-modal"
-                resolve:
-                  notification: ->
-                    {
-                      type: 'authorization-verified'
-                      icon: 'ti-check'
-                      heading: titleTranslation
-                      msg: messageTranslation
-                    }
-              )
-
+          $translate(['AUTHORIZED', 'AUTHORIZED_MESSAGE']).then (translations) ->
+            $scope.$emit 'showNotification',
+              type: 'authorization-verified'
+              icon: 'ti-check'
+              heading: translations.AUTHORIZED
+              msg: translations.AUTHORIZED_MESSAGE
 
     # Goals which don't necessarily require a login:
     if Wallet.goal.verifyEmail?

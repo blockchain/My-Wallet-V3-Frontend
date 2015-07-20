@@ -58,21 +58,13 @@ walletApp.controller "LoginCtrl", ($scope, $rootScope, $log, $http, Wallet, $coo
 
   if $cookieStore.get('email-verified')
     $cookieStore.remove 'email-verified'
-    $translate("SUCCESS").then (titleTranslation) ->
-      $translate("EMAIL_VERIFIED_SUCCESS").then (messageTranslation) ->
-        modalInstance = $modal.open(
-          templateUrl: "partials/modal-notification.jade"
-          controller: "ModalNotificationCtrl"
-          windowClass: "notification-modal"
-          resolve:
-            notification: ->
-              {
-                type: 'verified-email'
-                icon: 'ti-email'
-                heading: titleTranslation
-                msg: messageTranslation
-              }
-          )
+
+    $translate(['SUCCESS', 'EMAIL_VERIFIED_SUCCESS']).then (translations) ->
+      $scope.$emit 'showNotification',
+        type: 'verified-email'
+        icon: 'ti-email'
+        heading: translations.SUCCESS
+        msg: translations.EMAIL_VERIFIED_SUCCESS
 
   $scope.twoFactorCode = ""
   $scope.busy = false

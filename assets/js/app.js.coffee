@@ -123,7 +123,7 @@ walletApp.config ($numeraljsConfigProvider, $modalProvider, uiSelectConfig) ->
 # walletApp.config ($sceProvider) ->
 #   $sceProvider.enabled(false);
 
-walletApp.run ($rootScope, $modal, Wallet) ->
+walletApp.run ($rootScope, $modal) ->
   $rootScope.$safeApply = (scope=$rootScope) ->
     scope.$apply() unless scope.$$phase || $rootScope.$$phase
 
@@ -133,4 +133,4 @@ walletApp.run ($rootScope, $modal, Wallet) ->
       controller: "ModalNotificationCtrl"
       windowClass: "notification-modal"
       resolve: { notification: -> notification }
-    ).opened.then () -> Wallet.store.resetLogoutTimeout()
+    )
