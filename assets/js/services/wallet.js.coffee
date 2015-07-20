@@ -733,22 +733,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     address_or_account.archived = false
     address_or_account.active = true
     wallet.updateHDaddresses()
-    # TODO :: REVIEW unarchiving process
-    # success = (txs) ->
-    #   address_or_account.active = true
-    #
-    #   if txs?
-    #     wallet.appendTransactions(txs, false) # Re-insert tx with latest account info
-    #
-    #   wallet.applyIfNeeded() # Unarchive involves an async operation
-    #
-    # if address_or_account.address?
-    #   wallet.store.unArchiveLegacyAddr(address_or_account.address)
-    #   success()
-    # else
-    #   wallet.my.unarchiveAccount(address_or_account.index, success)
-    return
-
 
   wallet.deleteLegacyAddress = (address) ->
     wallet.my.wallet.deleteLegacyAddress(address)
