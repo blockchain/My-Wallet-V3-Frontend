@@ -46,9 +46,11 @@ div(ng-show="hdAddresses.length > 0")
           //-   a.btn.btn-xs.btn-warning(ng-show="request.paid != 0 && request.amount != 0 && request.amount != request.paid && !request.complete", ng-click="accept(request)") Accept
 
 .flex.mtl
-  button.button-primary.mrl(translate="IMPORTED_ADDRESSES", ng-click="toggleDisplayImported()")
+  button.button-default.mrl(translate="IMPORTED_ADDRESSES", ng-click="toggleDisplayImported()", ng-class="{active : display.imported}")
+  button.button-default(translate="ARCHIVED_ADDRESSES", ng-click="toggleDisplayArchived()", ng-class="{active : display.archived}")
 
 p.mtl.hidden-xs(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.imported")
+p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
 
 .flex-between.flex-center.form-ctrl(ng-show="display.imported")
   .flex-1.mrl
@@ -85,16 +87,10 @@ p.mtl.hidden-xs(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.importe
         td
           a(translate="YOUR_PRIVATE_KEY", ng-hide="address.isWatchOnly", ng-click="showPrivKey(address)")
 
-.flex.mtl(ng-show="display.imported")
-  button.button-primary(translate="ARCHIVED_ADDRESSES", ng-click="toggleDisplayArchived()")
-  
-p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived && display.imported")
-
-
-.row.form-ctrl(ng-show="display.archived && display.imported")
+.row.form-ctrl(ng-show="display.archived")
   .col-xs-12.col-lg-6
     input.filter(type="text", ng-model="searchTextArchived").form-control
-.row(ng-show="display.archived && display.imported")
+.row(ng-show="display.archived")
   .col-xs-12.table-container
     table.responsive
       tr
