@@ -3,6 +3,10 @@
     position: relative;
     top: 50px;
   }
+  .ui-select-highlight {
+   background: #D3E7D5;
+   font-weight: 400;
+  }
   a.date { padding-top: 10px; }
   .transaction {
     border-bottom: 1pt solid $light-grey;
