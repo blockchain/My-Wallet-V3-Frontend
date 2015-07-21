@@ -55,3 +55,9 @@ describe "TransactionsCtrl", ->
     scope.filterSearch(1, "test")
     expect(scope.filterSearch).toHaveBeenCalled()
   )
+
+  it "can toggle a transaction's details", inject((Wallet) ->
+    spyOn(scope, "toggleTransaction")
+    scope.toggleTransaction(scope.transactions[0])
+    expect(scope.toggleTransaction).toHaveBeenCalled()
+  )
