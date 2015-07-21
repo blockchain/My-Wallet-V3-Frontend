@@ -57,24 +57,18 @@ walletApp.controller "TransactionsCtrl", ($scope, Wallet, MyWallet, $log, $state
 
   $scope.filterSearch = (tx, search) ->
     return true if search == '' || !search?
-    $scope.filterTo(tx, search) || $scope.filterFrom(tx, search)
+    $scope.filterTx(tx.to, search) || $scope.filterTx(tx.from, search)
 
-  $scope.filterTo = (tx, search) ->
-    if tx.to.account? && tx.to.account.index?
-      text = Wallet.accounts[tx.to.account.index].label
-    else if tx.to.legacyAddresses?
-      text = JSON.stringify(tx.to.legacyAddresses.map((ad) -> ad.address))
-    else if tx.to.externalAddresses?
-      text = JSON.stringify(tx.to.externalAddresses.map((ad) -> ad.address))
-    return text.toLowerCase().search(search.toLowerCase()) > -1
-
-  $scope.filterFrom = (tx, search) ->
-    if tx.from.account? && tx.from.account.index?
-      text = Wallet.accounts[tx.from.account.index].label
-    else if tx.from.legacyAddresses?
-      text = JSON.stringify(tx.from.legacyAddresses.map((ad) -> ad.address))
-    else if tx.from.externalAddresses?
-      text = tx.from.externalAddresses.addressWithLargestOutput
+  $scope.filterTx = (tx, search) ->
+    if tx.account? && tx.account.index?
+      text = Wallet.accounts[tx.account.index].label
+    else if tx.legacyAddresses?
+      text = JSON.stringify(tx.legacyAddresses.map((ad) -> ad.address))
+    else if tx.externalAddresses?
+      text = tx.externalAddresses.addressWithLargestOutput || JSON.stringify(tx.externalAddresses.map((ad) -> ad.address))
+    else
+      return false
+    text = text.join(',') if text? && text.join?
     return text.toLowerCase().search(search.toLowerCase()) > -1
 
   $scope.filterByType = (tx) ->
