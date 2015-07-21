@@ -10,7 +10,6 @@
     position: relative;
     &:hover { background: $hover-blue; }
     .timestamp{
-      font-size: 9pt;
       color: rgb(190, 190, 190);
       font-style: italic;
     }
@@ -36,8 +35,6 @@
     }
     .destination{
       display: block;
-      font-weight: 400;
-      color: #B2B2B2;
     }
     .amount {
       padding: 10px 0;
