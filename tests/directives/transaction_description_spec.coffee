@@ -18,7 +18,6 @@ describe "Transaction Description Directive", ->
 
 
     Wallet = $injector.get("Wallet")
-<<<<<<< HEAD
 
     Wallet.my = 
       wallet:
@@ -26,15 +25,6 @@ describe "Transaction Description Directive", ->
 
     Wallet.accounts = [{index: 0, label: "Savings"}, { index: 1, label: "Spending"}]
 
-=======
-    
-    Wallet.my = 
-      wallet:
-        getAddressBookLabel: () -> null
-    
-    Wallet.accounts = [{}, {}]
-    
->>>>>>> dev
     $rootScope.transaction = {
             hash: "tx_hash", confirmations: 13, intraWallet: null,
             from: {account: {index: 0, amount: 300000000}, legacyAddresses: null, externalAddresses: null},

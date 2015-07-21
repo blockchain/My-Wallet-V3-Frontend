@@ -577,17 +577,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, success, error, {}, needsSecondPassword)
         wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
     }
-<<<<<<< HEAD
-
-
-
-
-=======
-
-
-
-
->>>>>>> dev
 
   wallet.redeemFromEmailOrMobile = (account, claim, successCallback, error) ->
     success = () ->
@@ -624,14 +613,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       .then proceed
       .catch cancelCallback
 
-<<<<<<< HEAD
-  wallet.importWithMnemonic = (mnemonic, bip39pass, successCallback, errorCallback) ->
-    cancel  = () -> return
-=======
   wallet.importWithMnemonic = (mnemonic, bip39pass, successCallback, errorCallback, cancelCallback) ->
     cancel  = () ->
       cancelCallback()
->>>>>>> dev
     proceed = (password) ->
       wallet.accounts.splice(0, wallet.accounts.length)
       wallet.transactions.splice(0, wallet.transactions.length)
@@ -747,10 +731,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.unarchive = (address_or_account) ->
     address_or_account.archived = false
     address_or_account.active = true
-<<<<<<< HEAD
-=======
     wallet.hdAddresses(true)
->>>>>>> dev
 
   wallet.deleteLegacyAddress = (address) ->
     wallet.my.wallet.deleteLegacyAddress(address)
@@ -837,11 +818,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       continueCallback = () ->
         $translate("FIRST_ACCOUNT_NAME").then (translation) ->
 
-<<<<<<< HEAD
-          cancel = () -> 
-=======
           cancel = () ->
->>>>>>> dev
             # Keep trying, user cannot use the wallet without upgrading.
             wallet.displayError("Unable to upgrade your wallet. Please try again.")
             wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
