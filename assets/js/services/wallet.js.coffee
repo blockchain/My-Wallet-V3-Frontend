@@ -217,7 +217,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.hdAddresses = (refresh=false) ->
     return hdAddresses if hdAddresses? && !refresh
 
-    hdAddresses = [].concat.apply [], wallet.accounts.map((account) ->
+    hdAddresses = [].concat.apply [], wallet.accounts.filter((account) ->
+      !account.archived
+    ).map((account) ->
       account.receivingAddressesLabels.map((address) -> {
         account: account
         index: address.index
@@ -617,8 +619,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       .then proceed
       .catch cancelCallback
 
-  wallet.importWithMnemonic = (mnemonic, bip39pass, successCallback, errorCallback) ->
-    cancel  = () -> return
+  wallet.importWithMnemonic = (mnemonic, bip39pass, successCallback, errorCallback, cancelCallback) ->
+    cancel  = () -> 
+      cancelCallback()
     proceed = (password) ->
       wallet.accounts.splice(0, wallet.accounts.length)
       wallet.transactions.splice(0, wallet.transactions.length)
@@ -729,10 +732,12 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.archive = (address_or_account) ->
     address_or_account.archived = true
     address_or_account.active = false
+    wallet.hdAddresses(true)
 
   wallet.unarchive = (address_or_account) ->
     address_or_account.archived = false
     address_or_account.active = true
+    wallet.hdAddresses(true)
 
   wallet.deleteLegacyAddress = (address) ->
     wallet.my.wallet.deleteLegacyAddress(address)
