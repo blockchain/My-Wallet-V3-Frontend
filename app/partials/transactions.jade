@@ -24,9 +24,6 @@
         i.ti-arrow-circle-right.h4.ccc.pointer.mrl.prl(ng-show="!transaction.toggled")
         i.ti-arrow-circle-down.h4.dark-grey.pointer.mrl.prl(ng-show="transaction.toggled")
       .tx-details
-        .info(ng-click="showTransaction(transaction)")
-          span(ng-show="transaction.confirmations == 0 && transaction.from.externalAddresses")
-            i(translate="UNCONFIRMED_WARNING")
         .type.pointer(ng-click="showTransaction(transaction)")
           span 
             transaction-description(transaction="transaction" ng-if="canDisplayDescriptions")

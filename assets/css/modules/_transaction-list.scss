@@ -35,12 +35,13 @@
     }
     .destination{
       display: block;
+      font-size: 1.1em;
     }
     .amount {
       padding: 10px 0;
       position: absolute;
       right: 10px;
-      top: 15px;
+      top: 18px;
       button.amount{
         font-size: 1.2em;
         font-weight: normal;
@@ -50,7 +51,7 @@
     }
     .tx-toggle {
       position: absolute;
-      top: 50px;
+      top: 62.5px;
       transform: translateY(-50%);
     }
     .tx-details {

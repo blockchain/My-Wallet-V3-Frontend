@@ -1,5 +1,5 @@
 .flex-column
-  .flex-center.pbl
+  .flex-align-end.flex-end.pbl
     .flex-column.col-md-2.col-sm-12.col-xs-12
       span.timestamp.pbm.type-sm
         date {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
@@ -16,6 +16,8 @@
         span.col-md-1(ng-show="transaction.result > 0 && !transaction.intraWallet", translate="TO:")
         span.col-md-1(ng-show="transaction.result  < 0 || transaction.intraWallet", translate="FROM:")
         span.hidden-sm.hidden-xs.col-md-11(translate="{{ other_address }}")
-      .flex.row.mtm
+      .flex.row.mtm(ng-show="transaction.note")
         span.col-md-1(translate="NOTE:")
         span.hidden-sm.hidden-xs.col-md-11(translate="{{ transaction.note }}")
+      .flex.row.mtm.timestamp(ng-show="transaction.confirmations == 0 && transaction.from.externalAddresses")
+        span.col-md-12(translate="UNCONFIRMED_WARNING")
