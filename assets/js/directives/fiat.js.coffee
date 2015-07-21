@@ -15,12 +15,12 @@ walletApp.directive('fiat', (Wallet , $compile) ->
       scope.conversions = Wallet.conversions
 
       scope.$watchCollection "conversions", (newVal) ->
-        updateFiat()
+        scope.updateFiat()
 
       scope.$watch "settings.currency.code + btc + currency", () ->
-        updateFiat()
+        scope.updateFiat()
 
-      updateFiat = () ->
+      scope.updateFiat = () ->
         # Reset scope.fiat
         scope.fiat = { currencySymbol: null, amount: null }
 
