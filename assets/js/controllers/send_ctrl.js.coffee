@@ -206,7 +206,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     transaction = $scope.transaction
     transaction.destinations.forEach (dest, index) ->
       match = false
-      $timeout (-> $scope.checkForSameDestination()), 0 unless dest?
       match = dest.label == transaction.from.label if dest?
       return unless $scope.sendForm?
       $scope.sendForm['destinations' + index].$setValidity('isNotEqual', !match)

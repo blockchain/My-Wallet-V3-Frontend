@@ -211,13 +211,15 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.legacyAddresses = () ->
     wallet.my.wallet.keys
-    
+
   hdAddresses = null
-  
+
   wallet.hdAddresses = (refresh=false) ->
     return hdAddresses if hdAddresses? && !refresh
-    
-    hdAddresses = [].concat.apply [], wallet.accounts.map((account) ->
+
+    hdAddresses = [].concat.apply [], wallet.accounts.filter((account) ->
+      !account.archived
+    ).map((account) ->
       account.receivingAddressesLabels.map((address) -> {
         account: account
         index: address.index
@@ -337,7 +339,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.changeLegacyAddressLabel = (address, label, successCallback, errorCallback) ->
     address.label = label
     successCallback()
-      
+
   wallet.changeHDAddressLabel = (account, index, label, successCallback, errorCallback) ->
     account.setLabelForReceivingAddress(index, label)
     wallet.hdAddresses(true)
@@ -473,7 +475,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     if wallet.isBitCurrency(currency)
       return parseFloat(numeral(amount).divide(currency.conversion).format("0.[00000000]"))
     else if wallet.conversions[currency.code]?
-      return parseFloat(numeral(amount).divide(wallet.conversions[currency.code].conversion).format("0.[00]"))
+      return parseFloat((Math.floor((parseInt(amount) / wallet.conversions[currency.code].conversion) * 100) / 100).toFixed(2))
     else
       return null
 
@@ -575,10 +577,17 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, success, error, {}, needsSecondPassword)
         wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
     }
+<<<<<<< HEAD
 
 
 
 
+=======
+
+
+
+
+>>>>>>> dev
 
   wallet.redeemFromEmailOrMobile = (account, claim, successCallback, error) ->
     success = () ->
@@ -615,8 +624,14 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       .then proceed
       .catch cancelCallback
 
+<<<<<<< HEAD
   wallet.importWithMnemonic = (mnemonic, bip39pass, successCallback, errorCallback) ->
     cancel  = () -> return
+=======
+  wallet.importWithMnemonic = (mnemonic, bip39pass, successCallback, errorCallback, cancelCallback) ->
+    cancel  = () ->
+      cancelCallback()
+>>>>>>> dev
     proceed = (password) ->
       wallet.accounts.splice(0, wallet.accounts.length)
       wallet.transactions.splice(0, wallet.transactions.length)
@@ -727,10 +742,15 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.archive = (address_or_account) ->
     address_or_account.archived = true
     address_or_account.active = false
+    wallet.hdAddresses(true)
 
   wallet.unarchive = (address_or_account) ->
     address_or_account.archived = false
     address_or_account.active = true
+<<<<<<< HEAD
+=======
+    wallet.hdAddresses(true)
+>>>>>>> dev
 
   wallet.deleteLegacyAddress = (address) ->
     wallet.my.wallet.deleteLegacyAddress(address)
@@ -817,7 +837,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       continueCallback = () ->
         $translate("FIRST_ACCOUNT_NAME").then (translation) ->
 
+<<<<<<< HEAD
           cancel = () -> 
+=======
+          cancel = () ->
+>>>>>>> dev
             # Keep trying, user cannot use the wallet without upgrading.
             wallet.displayError("Unable to upgrade your wallet. Please try again.")
             wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
