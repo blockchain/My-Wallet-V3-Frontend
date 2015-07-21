@@ -8,16 +8,16 @@
       .flex.row
         span.col-md-1(ng-show="transaction.result > 0 && !transaction.intraWallet", translate="FROM:")
         span.col-md-1(ng-show="transaction.result  < 0 || transaction.intraWallet", translate="TO:")
-        span.hidden-sm.hidden-xs.col-md-11(translate="{{ address }}")
+        span.hidden-sm.hidden-xs.col-md-11(ng-bind-html="address | highlight:search")
   .flex-center.border-top.ptl.hidden-xs.hidden-sm.dark-grey(ng-show="transaction.toggled")
     .col-md-2
     .col-md-10.destination.em-400
       .flex.row
         span.col-md-1(ng-show="transaction.result > 0 && !transaction.intraWallet", translate="TO:")
         span.col-md-1(ng-show="transaction.result  < 0 || transaction.intraWallet", translate="FROM:")
-        span.hidden-sm.hidden-xs.col-md-11(translate="{{ other_address }}")
+        span.hidden-sm.hidden-xs.col-md-11(ng-bind-html="other_address | highlight:search")
       .flex.row.mtm(ng-show="transaction.note")
         span.col-md-1(translate="NOTE:")
-        span.hidden-sm.hidden-xs.col-md-11(translate="{{ transaction.note }}")
+        span.hidden-sm.hidden-xs.col-md-11 {{ transaction.note }}
       .flex.row.mtm.timestamp(ng-show="transaction.confirmations == 0 && transaction.from.externalAddresses")
         span.col-md-12(translate="UNCONFIRMED_WARNING")

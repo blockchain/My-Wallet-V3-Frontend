@@ -4,6 +4,7 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
     replace: 'false'
     scope: {
       transaction: '='
+      search: '=highlight'
     }
     templateUrl: 'templates/transaction-description.jade'
     link: (scope, elem, attrs) ->

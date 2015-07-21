@@ -26,7 +26,7 @@
       .tx-details
         .type.pointer(ng-click="showTransaction(transaction)")
           span 
-            transaction-description(transaction="transaction" ng-if="canDisplayDescriptions")
+            transaction-description(transaction="transaction" highlight="searchText" ng-if="canDisplayDescriptions")
       .amount
         span 
           amount(transaction="transaction")
