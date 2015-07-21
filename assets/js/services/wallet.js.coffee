@@ -475,11 +475,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     if wallet.isBitCurrency(currency)
       return parseFloat(numeral(amount).divide(currency.conversion).format("0.[00000000]"))
     else if wallet.conversions[currency.code]?
-      return wallet.formatAsFiat(parseInt(amount) / wallet.conversions[currency.code].conversion)
+      return parseFloat((Math.floor((parseInt(amount) / wallet.conversions[currency.code].conversion) * 100) / 100).toFixed(2))
     else
       return null
-
-  wallet.formatAsFiat = (amount) -> (Math.floor(amount * 100) / 100).toFixed(2)
 
   wallet.toggleDisplayCurrency = () ->
     if wallet.isBitCurrency(wallet.settings.displayCurrency)
@@ -620,7 +618,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       .catch cancelCallback
 
   wallet.importWithMnemonic = (mnemonic, bip39pass, successCallback, errorCallback, cancelCallback) ->
-    cancel  = () -> 
+    cancel  = () ->
       cancelCallback()
     proceed = (password) ->
       wallet.accounts.splice(0, wallet.accounts.length)
