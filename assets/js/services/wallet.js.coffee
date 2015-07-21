@@ -615,8 +615,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       .then proceed
       .catch cancelCallback
 
-  wallet.importWithMnemonic = (mnemonic, bip39pass, successCallback, errorCallback) ->
-    cancel  = () -> return
+  wallet.importWithMnemonic = (mnemonic, bip39pass, successCallback, errorCallback, cancelCallback) ->
+    cancel  = () -> 
+      cancelCallback()
     proceed = (password) ->
       wallet.accounts.splice(0, wallet.accounts.length)
       wallet.transactions.splice(0, wallet.transactions.length)
