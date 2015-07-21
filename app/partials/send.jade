@@ -20,7 +20,7 @@
       .flex-column.form-group(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
         label.mbm
           span(translate="FROM:")
-        div(ng-class="{'has-error': (sendForm.from.$invalid && sendForm.destinations0.$touched) || (!amountIsValid && sendForm.amounts0.$touched)}")
+        div(ng-class="{'has-error': (sendForm.from.$invalid && sendForm.destinations0.$touched) || (!amountIsValid && (sendForm.amounts0.$touched || sendForm.amountsFiat0.$touched))}")
           p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")
           span(ng-show="originsLoaded")
@@ -30,7 +30,7 @@
               ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)")
                 span(ng-class="{zerobalance: hasZeroBalance(origin)}")
                   label-origin(origin='origin' fee='transaction.fee' highlight="$select.search")
-          span.help-block(translate="INSUFFICIENT" ng-show="!amountIsValid && sendForm.amounts0.$touched")
+          span.help-block(translate="INSUFFICIENT" ng-show="!amountIsValid && (sendForm.amounts0.$touched || sendForm.amountsFiat0.$touched)")
           span.help-block(ng-show="sendForm.from.$invalid && sendForm.destinations0.$touched") Must select an account to send from
       //- Advanced Send
       .flex-column.form-group.bc-modal-fade.mvl.advanced-recipient
@@ -75,7 +75,7 @@
             .mrl.flex-1
               .flex-center
                 span.mrm {{ fiatCurrency.code }}:
-                input.form-control(type="number" ng-model="transaction.amounts[$index]" name="" transform-currency="fiatCurrency" ng-change="validateAmounts()" min="0.01" required)
+                input.form-control(type="number" ng-model="transaction.amounts[$index]" name="{{'amountsFiat' + $index}}" transform-currency="fiatCurrency" ng-change="validateAmounts()" min="0.01" required)
             a.mlm.button-danger.type-sm.button-sm(ng-click="removeDestination($index)" ng-hide="$first && $last")
               i.ti-close.mrm
               span(translate="REMOVE")
