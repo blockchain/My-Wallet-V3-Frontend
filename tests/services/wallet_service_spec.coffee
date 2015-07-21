@@ -186,7 +186,7 @@ describe "walletServices", () ->
       it "should convert from satoshi to fiat", () ->
         currency = Wallet.currencies[0]
         result = Wallet.convertFromSatoshi(Wallet.conversions[currency.code].conversion, currency)
-        expect(result).toBe(1)
+        expect(result).toBe('1.00')
 
       it "should convert from satoshi to bit currency", () ->
         currency = Wallet.btcCurrencies[0]
@@ -335,7 +335,7 @@ describe "walletServices", () ->
       errors = {}
 
       Wallet.my.wallet.importLegacyAddress = (privateKey, label, getPassword, bip38Password) ->
-        if privateKey == "BIP38 key"          
+        if privateKey == "BIP38 key"
           if bip38Password == "5678"
             return {
               then: (success) -> success("some address")
@@ -351,7 +351,7 @@ describe "walletServices", () ->
             then: (success) -> success("address")
           }
 
-        return 
+        return
 
     it "should recoginize an address as such", ->
       # TODO: use a spy to make sure this gets called

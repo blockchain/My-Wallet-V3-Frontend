@@ -211,12 +211,12 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.legacyAddresses = () ->
     wallet.my.wallet.keys
-    
+
   hdAddresses = null
-  
+
   wallet.hdAddresses = (refresh=false) ->
     return hdAddresses if hdAddresses? && !refresh
-    
+
     hdAddresses = [].concat.apply [], wallet.accounts.map((account) ->
       account.receivingAddressesLabels.map((address) -> {
         account: account
@@ -337,7 +337,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.changeLegacyAddressLabel = (address, label, successCallback, errorCallback) ->
     address.label = label
     successCallback()
-      
+
   wallet.changeHDAddressLabel = (account, index, label, successCallback, errorCallback) ->
     account.setLabelForReceivingAddress(index, label)
     wallet.hdAddresses(true)
@@ -473,9 +473,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     if wallet.isBitCurrency(currency)
       return parseFloat(numeral(amount).divide(currency.conversion).format("0.[00000000]"))
     else if wallet.conversions[currency.code]?
-      return parseFloat(numeral(amount).divide(wallet.conversions[currency.code].conversion).format("0.[00]"))
+      return wallet.formatAsFiat(parseInt(amount) / wallet.conversions[currency.code].conversion)
     else
       return null
+
+  wallet.formatAsFiat = (amount) -> (Math.floor(amount * 100) / 100).toFixed(2)
 
   wallet.toggleDisplayCurrency = () ->
     if wallet.isBitCurrency(wallet.settings.displayCurrency)
@@ -817,7 +819,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       continueCallback = () ->
         $translate("FIRST_ACCOUNT_NAME").then (translation) ->
 
-          cancel = () -> 
+          cancel = () ->
             # Keep trying, user cannot use the wallet without upgrading.
             wallet.displayError("Unable to upgrade your wallet. Please try again.")
             wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
