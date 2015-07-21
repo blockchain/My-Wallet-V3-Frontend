@@ -186,7 +186,7 @@ describe "walletServices", () ->
       it "should convert from satoshi to fiat", () ->
         currency = Wallet.currencies[0]
         result = Wallet.convertFromSatoshi(Wallet.conversions[currency.code].conversion, currency)
-        expect(result).toBe('1.00')
+        expect(result).toBe(1)
 
       it "should convert from satoshi to bit currency", () ->
         currency = Wallet.btcCurrencies[0]

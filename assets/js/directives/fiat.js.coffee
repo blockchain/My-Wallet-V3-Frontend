@@ -42,11 +42,9 @@ walletApp.directive('fiat', (Wallet , $compile) ->
         # Set the amount
         if scope.date?
           Wallet.getFiatAtTime(btc, scope.date, currency.code).then (fiat) ->
-            amount = fiat
+            scope.fiat.amount = fiat.toFixed(2)
         else
-          amount = Wallet.convertFromSatoshi(btc, currency)
-
-        scope.fiat.amount = amount.toFixed(2)
+          scope.fiat.amount = Wallet.convertFromSatoshi(btc, currency).toFixed(2)
 
   }
 )

@@ -95,13 +95,13 @@ describe "Fiat Directive", ->
         expect(isoScope.fiat.amount).toEqual('10.00')
 
       it "should get fiat at time if a date is present", ->
-        spyOn(Wallet, 'getFiatAtTime').and.returnValue({ then: (-> ) })
+        spyOn(Wallet, 'getFiatAtTime').and.returnValue({ then: (cb) -> cb(8) })
         isoScope.date = true
         isoScope.updateFiat()
         expect(Wallet.getFiatAtTime).toHaveBeenCalled()
 
       it "should not get fiat at time if a date is not present", ->
-        spyOn(Wallet, 'convertFromSatoshi')
+        spyOn(Wallet, 'convertFromSatoshi').and.returnValue(10)
         isoScope.updateFiat()
         expect(Wallet.convertFromSatoshi).toHaveBeenCalled()
 
