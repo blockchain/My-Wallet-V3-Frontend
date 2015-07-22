@@ -1,4 +1,4 @@
-walletApp.controller "SettingsAddressesCtrl", ($scope, Wallet, $translate, $modal, $state) ->
+walletApp.controller "SettingsAddressesCtrl", ($scope, Wallet, $translate, $modal, $state, addressOrNameMatchFilter) ->
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.display = {archived: false, account_dropdown_open: false}
   $scope.accounts = Wallet.accounts

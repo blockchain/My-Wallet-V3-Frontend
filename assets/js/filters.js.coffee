@@ -48,3 +48,13 @@ angular.module("walletFilters", [])
         j++
       i++
     null
+    
+.filter "addressOrNameMatch", ->
+  (addresses, q) ->
+    return addresses if !q? or q == ""
+    result = []
+    for address in addresses
+      if (address.label? && address.label.toLowerCase().indexOf(q.toLowerCase()) > -1) or address.address.toLowerCase().indexOf(q.toLowerCase()) > -1
+        result.push address
+    result
+    
