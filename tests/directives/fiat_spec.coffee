@@ -94,6 +94,11 @@ describe "Fiat Directive", ->
         isoScope.updateFiat()
         expect(isoScope.fiat.amount).toEqual('10.00')
 
+      it "should set the amount correctly when btc is 0", ->
+        isoScope.btc = 0
+        isoScope.updateFiat()
+        expect(isoScope.fiat.amount).toEqual('0.00')
+
       it "should get fiat at time if a date is present", ->
         spyOn(Wallet, 'getFiatAtTime').and.returnValue({ then: (cb) -> cb(8) })
         isoScope.date = true

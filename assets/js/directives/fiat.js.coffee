@@ -24,14 +24,17 @@ walletApp.directive('fiat', (Wallet , $compile) ->
         # Reset scope.fiat
         scope.fiat = { currencySymbol: null, amount: null }
 
-        # Check that a btc (satoshi) amount and a currency are accessable
-        btc = scope.btc || null
+        # Check that a currency is accessable
         currency = scope.currency || scope.settings.currency || null
-        return unless currency && currency.code && btc
+        return unless currency && currency.code
 
         # Check that there is a valid conversion
         conversion = scope.conversions[currency.code] || null
         return unless conversion && conversion.conversion > 0
+
+        # Check that a btc (satoshi) amount is available
+        btc = scope.btc
+        return unless btc != null && !isNaN(scope.btc)
 
         # Absolute value if needed
         btc *= -1 if attrs.abs? && btc < 0
