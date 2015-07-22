@@ -570,10 +570,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
     }
 
-
-
-
-
   wallet.redeemFromEmailOrMobile = (account, claim, successCallback, error) ->
     success = () ->
       wallet.updateTransactions()

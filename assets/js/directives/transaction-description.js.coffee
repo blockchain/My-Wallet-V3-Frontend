@@ -4,6 +4,7 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
     replace: 'false'
     scope: {
       transaction: '='
+      search: '=highlight'
     }
     templateUrl: 'templates/transaction-description.jade'
     link: (scope, elem, attrs) ->
@@ -39,6 +40,7 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
             scope.address = to_name
           else
             scope.address = to_address
+            scope.other_address = from_address
       else
         if scope.transaction.result < 0
           scope.action = "SENT_BITCOIN_TO"
@@ -57,5 +59,17 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
             scope.address = from_name
           else
             scope.address = from_address
+
+      if scope.transaction.intraWallet || scope.transaction.result < 0
+        if scope.transaction.from.account?
+          scope.other_address = Wallet.accounts()[parseInt(scope.transaction.from.account.index)].label
+        else
+          scope.other_address = from_address
+      else
+        if scope.transaction.to.account?
+          scope.other_address = Wallet.accounts()[parseInt(scope.transaction.to.account.index)].label
+        else
+          scope.other_address = to_address
+
   }
 )

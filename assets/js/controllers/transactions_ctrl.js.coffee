@@ -29,6 +29,9 @@ walletApp.controller "TransactionsCtrl", ($scope, Wallet, MyWallet, $log, $state
 
   $scope.selectedAccountIndex = $stateParams.accountIndex
 
+  $scope.toggleTransaction = (transaction) ->
+    transaction.toggled = !transaction.toggled
+
   #################################
   #           Private             #
   #################################
@@ -69,7 +72,6 @@ walletApp.controller "TransactionsCtrl", ($scope, Wallet, MyWallet, $log, $state
     else
       return false
     text = text.join(',') if text? && text.join?
-
     return text.toLowerCase().search(search.toLowerCase()) > -1
 
   $scope.filterByType = (tx) ->

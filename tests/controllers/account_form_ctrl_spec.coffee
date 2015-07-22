@@ -14,8 +14,6 @@ describe "AccountFormCtrl", ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       
-      
-
       Wallet.accounts = () -> accounts
 
       Wallet.askForSecondPasswordIfNeeded = () ->
@@ -27,6 +25,7 @@ describe "AccountFormCtrl", ->
 
       MyWallet.wallet = {
         isDoubleEncrypted: false
+
         newAccount: (label) -> 
           accounts.push { label: label }
           return

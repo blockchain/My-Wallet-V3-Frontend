@@ -9,6 +9,7 @@ describe "SettingsWalletNavigationCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
+
       Wallet.accounts = () -> [{},{}]
 
       scope = $rootScope.$new()

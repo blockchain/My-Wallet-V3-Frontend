@@ -10,7 +10,7 @@ describe "walletServices", () ->
       localStorageService.remove("mockWallets")
       
       Wallet = $injector.get("Wallet")
-      
+
       Wallet.accounts = () -> [{index: 0}]
                       
       spyOn(Wallet,"monitor").and.callThrough()
@@ -27,7 +27,7 @@ describe "walletServices", () ->
     
     it "should add funds to the correct account", ->
       spyOn(Wallet.my, "redeemFromEmailOrMobile")
-      
+
       Wallet.redeemFromEmailOrMobile(Wallet.accounts()[0], "abcd", (()->), (()->))
       
       expect(Wallet.my.redeemFromEmailOrMobile.calls.argsFor(0)[0]).toBe(0)

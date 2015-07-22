@@ -30,6 +30,7 @@ $default: #3F3F3F;
 $success: #8CCA6A;
 $eee: #EEEEEE;
 $ccc: #CCCCCC;
+$aaa: #AAAAAA;
 
 //Security Badge Colors
 $security-red: #E47F7F;
@@ -62,6 +63,7 @@ $security-green: #3CC476;
 @include color('security-yellow', $security-yellow);
 @include color('security-green', $security-green);
 @include color('ccc', $ccc);
+@include color('aaa', $aaa);
 @include color('success', $success);
 @include color('bright-green', $bright-green);
 
