@@ -8,7 +8,7 @@ walletApp.controller "WalletNavigationCtrl", ($scope, Wallet, SecurityCenter, $s
     return filterFilter(Wallet.legacyAddresses(), {archived: false}).length
 
   $scope.numberOfActiveAccounts = () -> 
-    return filterFilter(Wallet.accounts, {archived: false}).length
+    return filterFilter(Wallet.accounts(), {archived: false}).length
 
   $scope.getMainAccountId = () ->
     return 0 unless $scope.status.isLoggedIn

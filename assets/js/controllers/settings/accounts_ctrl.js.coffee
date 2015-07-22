@@ -4,7 +4,7 @@ walletApp.controller "SettingsWalletNavigationCtrl", ($scope, Wallet, $modal, fi
   $scope.display = {archived: false}
 
   $scope.numberOfActiveAccounts = () ->
-    return filterFilter(Wallet.accounts, {archived: false}).length
+    return filterFilter(Wallet.accounts(), {archived: false}).length
 
   $scope.newAccount = () ->
     Wallet.clearAlerts()
@@ -56,7 +56,7 @@ walletApp.controller "SettingsWalletNavigationCtrl", ($scope, Wallet, $modal, fi
       controller: "SendCtrl"
       resolve:
         paymentRequest: ->
-          {fromAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()], amount: 0}
+          {fromAccount: Wallet.accounts()[Wallet.getDefaultAccountIndex()], amount: 0}
       windowClass: "bc-modal"
     )
     if modalInstance?

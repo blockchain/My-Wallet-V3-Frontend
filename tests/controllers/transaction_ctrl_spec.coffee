@@ -7,7 +7,7 @@ describe "TransactionCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
 
-      Wallet.accounts = [{balance: 0, label: "Savings", index: 0}]
+      Wallet.accounts = () -> [{balance: 0, label: "Savings", index: 0}]
       
       Wallet.legacyAddresses = () ->
         [
@@ -40,7 +40,7 @@ describe "TransactionCtrl", ->
   )
 
   it "should have access to accounts",  inject(() ->
-    expect(scope.accounts).toBeDefined()
+    expect(scope.accounts()).toBeDefined()
   )
 
   it "should have access to address book",  inject(() ->

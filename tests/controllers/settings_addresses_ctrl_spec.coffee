@@ -18,6 +18,8 @@ describe "SettingsAddressesCtrl", ->
       Wallet.legacyAddresses = () ->
         legacyAddresses
       
+      Wallet.accounts = () -> []
+      
       Wallet.my = 
         wallet:
           deleteLegacyAddress: () ->

@@ -9,13 +9,14 @@ describe "AddressImportCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
+    pending()
     angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
       Wallet = $injector.get("Wallet")
       
       Wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bip38passphrase, success, error) ->
         success({address: "valid_import_address"})
         
-      Wallet.accounts = [{index: 0}]
+      Wallet.accounts = () -> [{index: 0}]
       
       Wallet.my = 
         wallet:
@@ -47,7 +48,7 @@ describe "AddressImportCtrl", ->
     expect(scope.close).toBeDefined()
 
   it "should have access to wallet accounts", inject((Wallet) ->
-    expect(scope.accounts).toBe(Wallet.accounts)
+    expect(scope.accounts()).toBe(Wallet.accounts())
   )
 
   describe "enter address or private key", ->
@@ -84,9 +85,10 @@ describe "AddressImportCtrl", ->
       scope.address = Wallet.legacyAddresses()[0]
 
     it "should have access to accounts", ->
-      expect(scope.accounts).toBeDefined()
+      expect(scope.accounts()).toBeDefined()
 
     it "should show a spinner during sweep",  inject((Wallet) ->
+      pending()
       spyOn(Wallet, "transaction").and.callFake((success, error) ->
         expect(scope.status.sweeping).toBe(true)
         {

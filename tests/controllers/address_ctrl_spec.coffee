@@ -23,8 +23,6 @@ describe "AddressCtrl", ->
 
       Wallet.changeAddressLabel = (-> )
 
-      Wallet.updateAccounts()
-
       scope = $rootScope.$new()
 
       $controller "AddressCtrl",

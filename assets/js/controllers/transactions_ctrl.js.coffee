@@ -35,8 +35,8 @@ walletApp.controller "TransactionsCtrl", ($scope, Wallet, MyWallet, $log, $state
 
 
 
-  $scope.$watchCollection "accounts", (newValue) ->
-    if $scope.accounts.length > 0
+  $scope.$watchCollection "accounts()", (newValue) ->
+    if $scope.accounts().length > 0
       $scope.canDisplayDescriptions = true
 
 
@@ -61,7 +61,7 @@ walletApp.controller "TransactionsCtrl", ($scope, Wallet, MyWallet, $log, $state
 
   $scope.filterTx = (tx, search) ->
     if tx.account? && tx.account.index?
-      text = Wallet.accounts[tx.account.index].label
+      text = Wallet.accounts()[tx.account.index].label
     else if tx.legacyAddresses?
       text = JSON.stringify(tx.legacyAddresses.map((ad) -> ad.address))
     else if tx.externalAddresses?
@@ -69,6 +69,7 @@ walletApp.controller "TransactionsCtrl", ($scope, Wallet, MyWallet, $log, $state
     else
       return false
     text = text.join(',') if text? && text.join?
+
     return text.toLowerCase().search(search.toLowerCase()) > -1
 
   $scope.filterByType = (tx) ->

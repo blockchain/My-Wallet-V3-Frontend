@@ -37,7 +37,7 @@ walletApp.controller "HDAddressCtrl", ($scope, Wallet, $log, $state, $stateParam
     $scope.status    = Wallet.status
     $scope.settings = Wallet.settings
   
-  $scope.$watchCollection "accounts", () ->    
+  $scope.$watchCollection "accounts()", () ->    
     hdAddresses = Wallet.hdAddresses(true)
     for hdAddress in hdAddresses
       if hdAddress.account.index == parseInt($stateParams.account) && hdAddress.index == parseInt($stateParams.index)

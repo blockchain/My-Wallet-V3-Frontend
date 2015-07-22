@@ -51,8 +51,6 @@ describe "SendCtrl", ->
 
       Wallet.send = (-> )
 
-      Wallet.updateAccounts()
-
       scope = $rootScope.$new()
 
       $controller "SendCtrl",
@@ -94,7 +92,7 @@ describe "SendCtrl", ->
       expect(scope.legacyAddresses().length).toBeGreaterThan(0)
 
     it "should load accounts", ->
-      expect(scope.accounts.length).toBeGreaterThan(0)
+      expect(scope.accounts().length).toBeGreaterThan(0)
 
     it "should load addressBook", ->
       # TODO: Make the address book work, then wite tests
@@ -330,7 +328,7 @@ describe "SendCtrl", ->
 
     beforeEach ->
       scope.transaction =
-        from: scope.accounts[0]
+        from: scope.accounts()[0]
         destinations: scope.legacyAddresses()
         amounts: [100, 200, 300]
         fee: 50
@@ -348,7 +346,7 @@ describe "SendCtrl", ->
       spyOn(Wallet, 'send')
       scope.send()
       expect(Wallet.send).toHaveBeenCalledWith(
-        scope.accounts[0], scope.legacyAddresses(),
+        scope.accounts()[0], scope.legacyAddresses(),
         [100, 200, 300], 50, undefined
       )
     )
@@ -356,8 +354,8 @@ describe "SendCtrl", ->
   describe "after send", ->
 
     beforeEach ->
-      scope.transaction.from = scope.accounts[1]
-      scope.transaction.destinations[0] = scope.accounts[0]
+      scope.transaction.from = scope.accounts()[1]
+      scope.transaction.destinations[0] = scope.accounts()[0]
       scope.transaction.amounts[0] = 420
       scope.transaction.fee = 10
 
@@ -449,7 +447,7 @@ describe "SendCtrl", ->
 
     beforeEach ->
       scope.transaction.from = scope.legacyAddresses()[1]
-      scope.transaction.destinations = [scope.accounts[1]]
+      scope.transaction.destinations = [scope.accounts()[1]]
       scope.transaction.amounts = [1111]
       scope.transaction.fee = 9000
 
@@ -461,7 +459,7 @@ describe "SendCtrl", ->
 
     it "should set transaction from field to default account", ->
       scope.resetSendForm()
-      expect(scope.transaction.from).toEqual(scope.accounts[0])
+      expect(scope.transaction.from).toEqual(scope.accounts()[0])
 
   describe "numberOfActiveAccountsAndLegacyAddresses", ->
 
@@ -521,7 +519,7 @@ describe "SendCtrl", ->
       expect(scope.toLabel).toEqual('some_label')
 
     it "should set the label to an account", ->
-      scope.transaction.destinations[0] = scope.accounts[0]
+      scope.transaction.destinations[0] = scope.accounts()[0]
       scope.updateToLabel()
       expect(scope.toLabel).toEqual('Checking Account')
 
@@ -584,7 +582,7 @@ describe "SendCtrl", ->
   describe "checkForSameDestination", ->
 
     beforeEach ->
-      scope.transaction.destinations = [scope.accounts[0], scope.accounts[1]]
+      scope.transaction.destinations = [scope.accounts()[0], scope.accounts()[1]]
 
     it "should recognize when all destinations are valid", ->
       scope.transaction.from = scope.legacyAddresses()[0]
@@ -593,7 +591,7 @@ describe "SendCtrl", ->
       expect(hasErr 'destinations1', 'isNotEqual').toBeUndefined()
 
     it "should recognize when two destinations match", ->
-      scope.transaction.from = scope.accounts[1]
+      scope.transaction.from = scope.accounts()[1]
       scope.checkForSameDestination()
       expect(hasErr 'destinations0', 'isNotEqual').toBeUndefined()
       expect(hasErr 'destinations1', 'isNotEqual').toBe(true)

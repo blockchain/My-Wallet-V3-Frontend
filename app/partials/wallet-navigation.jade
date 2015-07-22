@@ -13,7 +13,7 @@
           a.pas(translate="ALL_ACCOUNTS")
             span
               fiat-or-btc(btc="total()")    
-        li(ng-repeat="account in accounts" ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''" ui-sref="wallet.common.transactions({accountIndex: account.index.toString()})")
+        li(ng-repeat="account in accounts()" ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''" ui-sref="wallet.common.transactions({accountIndex: account.index.toString()})")
           a.flex-between.pas(ng-if="!account.archived")
             span.prs {{ account.label }}
             span

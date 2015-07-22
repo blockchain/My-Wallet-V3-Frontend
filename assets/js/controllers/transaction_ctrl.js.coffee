@@ -24,9 +24,9 @@ walletApp.controller "TransactionCtrl", ($scope, Wallet, $log, $stateParams, $fi
 
     $scope.$watch "transaction.hash + accounts", () ->
       tx = $scope.transaction
-      if tx? && tx.hash && $scope.accounts.length > 0
+      if tx? && tx.hash && $scope.accounts().length > 0
         if tx.from.account?
-          $scope.from = $scope.accounts[tx.from.account.index].label
+          $scope.from = $scope.accounts()[tx.from.account.index].label
         else
           if tx.from.legacyAddresses? && tx.from.legacyAddresses.length > 0
             address = $filter("getByProperty")("address", tx.from.legacyAddresses[0].address, Wallet.legacyAddresses())
@@ -44,7 +44,7 @@ walletApp.controller "TransactionCtrl", ($scope, Wallet, $log, $stateParams, $fi
         # $scope.destinations.push {"address": "mi addfdsf", "amount": 1234324}
 
         if tx.to.account?
-          accountLabel = $scope.accounts[tx.to.account.index].label
+          accountLabel = $scope.accounts()[tx.to.account.index].label
           $scope.destinations.push {"address": accountLabel, "amount": ""}
         else
           convert = (y) -> " [" + $filter("btc")(y) + "]"

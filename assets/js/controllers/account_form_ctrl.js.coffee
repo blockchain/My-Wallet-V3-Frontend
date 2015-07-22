@@ -51,6 +51,6 @@ walletApp.controller "AccountFormCtrl", ($scope, Wallet, $modalInstance, $log, $
     Wallet.renameAccount(account, $scope.fields.name, success, error)
 
   $scope.isNameUnused = (name) ->
-    for acct in $scope.accounts
+    for acct in $scope.accounts()
       return false if acct.label == name
     return true

@@ -94,7 +94,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.resetSendForm = () ->
     $scope.transaction = angular.copy($scope.transactionTemplate)
-    $scope.transaction.from = Wallet.accounts[Wallet.my.wallet.hdwallet.defaultAccountIndex]
+    $scope.transaction.from = Wallet.accounts()[Wallet.my.wallet.hdwallet.defaultAccountIndex]
 
     for i in [0..($scope.destinations.length - 1)]
       $scope.$broadcast('ResetSearch' + i)
@@ -108,7 +108,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     $scope.transaction.destinations.splice(index, 1)
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () ->
-    return filterFilter(Wallet.accounts, {archived: false}).length + filterFilter(Wallet.legacyAddresses(), {archived: false}).length
+    return filterFilter(Wallet.accounts(), {archived: false}).length + filterFilter(Wallet.legacyAddresses(), {archived: false}).length
 
   $scope.send = () ->
     return if $scope.sending
@@ -245,7 +245,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         unless isNaN($stateParams.accountIndex)
           idx = parseInt($stateParams.accountIndex)
 
-        for account in $scope.accounts
+        for account in $scope.accounts()
           account = $scope.formatOrigin(account)
           unless account.index? && account.archived
             if account.index == idx

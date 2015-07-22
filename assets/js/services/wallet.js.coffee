@@ -31,7 +31,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.conversions = {}
 
-  wallet.accounts     = []
   # wallet.addressBook  = {}
   wallet.paymentRequests = []
   wallet.alerts = []
@@ -65,10 +64,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       # for address, label of wallet.store.getAddressBook()
       #   wallet.addressBook[address] = label
 
-      # if wallet.my.wallet.isUpgradedToHD
-      #   # probably not need if hdwallet_is_set
-      #   wallet.updateAccounts()
-
       wallet.settings.secondPassword = wallet.my.wallet.isDoubleEncrypted
       # todo: jaume: implement pbkdf2 iterations out of walletstore in mywallet
       wallet.settings.pbkdf2 = wallet.my.wallet.pbkdf2_iterations;
@@ -77,8 +72,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
       if wallet.my.wallet.isUpgradedToHD and not wallet.status.didInitializeHD
         wallet.status.didInitializeHD = true
-        for account in wallet.my.wallet.hdwallet.accounts
-          wallet.accounts.push(account)
 
       # Get email address, etc
       # console.log "Getting info..."
@@ -217,7 +210,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.hdAddresses = (refresh=false) ->
     return hdAddresses if hdAddresses? && !refresh
 
-    hdAddresses = [].concat.apply [], wallet.accounts.filter((account) ->
+    hdAddresses = [].concat.apply [], wallet.accounts().filter((account) ->
       !account.archived
     ).map((account) ->
       account.receivingAddressesLabels.map((address) -> {
@@ -300,7 +293,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.createAccount = (label, successCallback, errorCallback, cancelCallback) ->
     proceed = (password) ->
       newAccount = wallet.my.wallet.newAccount(label, password)
-      wallet.accounts.push(newAccount)
       wallet.my.getHistoryAndParseMultiAddressJSON()
       successCallback && successCallback()
     wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
@@ -621,10 +613,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     cancel  = () ->
       cancelCallback()
     proceed = (password) ->
-      wallet.accounts.splice(0, wallet.accounts.length)
+      wallet.accounts().splice(0, wallet.accounts().length)
       wallet.transactions.splice(0, wallet.transactions.length)
       wallet.my.wallet.restoreHDWallet(mnemonic, bip39pass, password)
-      wallet.my.wallet.hdwallet.accounts.forEach((a)->wallet.accounts.push(a))
       wallet.my.getHistoryAndParseMultiAddressJSON()
       wallet.updateTransactions()
       successCallback()
@@ -744,10 +735,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   #        Private (other)         #
   ##################################
 
-  wallet.updateAccounts = () ->
-    wallet.accounts = wallet.my.wallet.hdwallet.accounts
+  wallet.accounts = () ->
+    wallet.my.wallet.hdwallet.accounts
 
-  # wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts.length > 0 && wallet.accounts.some((a) -> a.active and a.balance)
+  # wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts().length > 0 && wallet.accounts().some((a) -> a.active and a.balance)
 
   wallet.total = (accountIndex) ->
     return unless wallet.my.wallet?
@@ -757,7 +748,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       when "imported"
         wallet.my.wallet.balanceActiveLegacy
       else
-        account = wallet.accounts[parseInt(accountIndex)]
+        account = wallet.accounts()[parseInt(accountIndex)]
         if account == null then null else account.balance
 
   wallet.updateTransactions = () ->
@@ -863,8 +854,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           wallet.applyIfNeeded()
 
       wallet.status.isLoggedIn = false
-      while wallet.accounts.length > 0
-        wallet.accounts.pop()
       while wallet.transactions.length > 0
         wallet.transactions.pop()
       while wallet.paymentRequests.length > 0

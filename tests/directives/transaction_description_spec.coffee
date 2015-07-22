@@ -23,7 +23,7 @@ describe "Transaction Description Directive", ->
       wallet:
         getAddressBookLabel: () -> null
     
-    Wallet.accounts = [{}, {}]
+    Wallet.accounts = () -> [{}, {}]
     
     $rootScope.transaction = {
             hash: "tx_hash", confirmations: 13, intraWallet: null,

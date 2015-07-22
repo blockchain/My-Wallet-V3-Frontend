@@ -9,6 +9,8 @@ walletApp.controller "DashboardCtrl", ($scope, Wallet, $log, $modal) ->
       $scope.paymentRequestURL += "?amount=" + numeral(amount).divide(100000000)
 
   $scope.updatePaymentInfo = () ->
+    console.log("updatePaymentInfo...")
+    console.log $scope.accounts()
     defaultAcctIdx = Wallet.getDefaultAccountIndex()
     receiveAddress = Wallet.getReceivingAddressForAccount(defaultAcctIdx)
     $scope.setPaymentRequestURL(receiveAddress)

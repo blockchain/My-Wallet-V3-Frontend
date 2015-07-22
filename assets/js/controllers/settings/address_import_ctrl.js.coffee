@@ -17,8 +17,8 @@ walletApp.controller "AddressImportCtrl", ($scope, $log, Wallet, $modalInstance,
     bip38passphrase: ''
     account: null
 
-  $scope.$watchCollection "accounts", (newValue) ->
-    $scope.fields.account = Wallet.accounts[0]
+  $scope.$watchCollection "accounts()", (newValue) ->
+    $scope.fields.account = Wallet.accounts()[0]
 
   $scope.isValidAddressOrPrivateKey = (val) ->
     Wallet.my.isValidAddress(val) || Wallet.my.isValidPrivateKey(val)

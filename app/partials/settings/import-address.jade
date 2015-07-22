@@ -64,7 +64,7 @@
       .col-sm-7
         ui-select(ng-model="fields.account")
           ui-select-match {{ $select.selected.label }}
-          ui-select-choices(repeat="account in accounts | filter: $select.search") 
+          ui-select-choices(repeat="account in accounts() | filter: $select.search") 
             span(ng-bind-html="account.label | highlight: $select.search")
     .form-group
       label.col-sm-3.control-label

@@ -19,8 +19,6 @@ describe "WalletNavigationCtrl", ->
         }
       }
 
-      Wallet.updateAccounts()
-
       scope = $rootScope.$new()
 
       $controller "WalletNavigationCtrl",

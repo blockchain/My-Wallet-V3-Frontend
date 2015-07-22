@@ -19,7 +19,7 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
 
   $scope.fields = {to: null, amount: "0", currency: Wallet.settings.currency, label: ""}
 
-  for account in $scope.accounts
+  for account in $scope.accounts()
     if account.index? && !account.archived
       acct = angular.copy(account)
       acct.type = "Accounts"
@@ -47,7 +47,7 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
     $modalInstance.dismiss ""
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () ->
-    return filterFilter(Wallet.accounts, {archived: false}).length + filterFilter(Wallet.legacyAddresses(), {archived: false}).length
+    return filterFilter(Wallet.accounts(), {archived: false}).length + filterFilter(Wallet.legacyAddresses(), {archived: false}).length
 
   #################################
   #           Private             #
@@ -55,14 +55,14 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
 
   $scope.$watchCollection "destinations", () ->
     idx = Wallet.getDefaultAccountIndex()
-    if !$scope.fields.to? && $scope.accounts.length > 0
+    if !$scope.fields.to? && $scope.accounts().length > 0
       if $stateParams.accountIndex == "accounts" || !$stateParams.accountIndex? # The latter is for Jasmine
         # Nothing to do, just use the default index
       else if $stateParams.accountIndex == "imported" || !$stateParams.accountIndex?
         # Use default index
       else
         idx = parseInt($stateParams.accountIndex)
-      $scope.fields.to = $scope.accounts[idx]
+      $scope.fields.to = $scope.accounts()[idx]
 
   $scope.$watch "fields.to.index + fields.to.address + status.didInitializeHD", () ->
     amount = $scope.parseAmount()

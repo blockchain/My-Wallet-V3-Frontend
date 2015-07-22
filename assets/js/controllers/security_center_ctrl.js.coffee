@@ -22,7 +22,7 @@ walletApp.controller "SettingsSecurityCenterCtrl", ($scope, Wallet, SecurityCent
       controller: "SendCtrl"
       resolve:
         paymentRequest: -> 
-          {fromAddress: address, amount: 0, toAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()]}
+          {fromAddress: address, amount: 0, toAccount: Wallet.accounts()[Wallet.getDefaultAccountIndex()]}
     ).opened.then () ->
       Wallet.store.resetLogoutTimeout()
     

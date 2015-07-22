@@ -18,6 +18,7 @@ describe "walletServices", () ->
       
       account = {
         setLabelForReceivingAddress: () ->
+        receivingAddressesLabels: []
       }
       
       Wallet.my.wallet = 

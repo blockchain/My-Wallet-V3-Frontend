@@ -79,8 +79,8 @@ describe "walletServices", () ->
     
     
     it "should get a list of accounts", inject((Wallet) ->
-      expect(Wallet.accounts.length).toBeGreaterThan(1)
-      expect(Wallet.accounts[0].balance).toBeGreaterThan(0)
+      expect(Wallet.accounts().length).toBeGreaterThan(1)
+      expect(Wallet.accounts()[0].balance).toBeGreaterThan(0)
 
       return
     )

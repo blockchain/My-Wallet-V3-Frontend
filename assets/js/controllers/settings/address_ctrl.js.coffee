@@ -37,7 +37,7 @@ walletApp.controller "AddressCtrl", ($scope, Wallet, $log, $state, $stateParams,
     $scope.status    = Wallet.status
     $scope.settings = Wallet.settings
   
-  $scope.$watchCollection "accounts", () ->
+  $scope.$watchCollection "accounts()", () ->
     # Is it a legacy address?
     address = $filter("getByProperty")("address", $stateParams.address, Wallet.legacyAddresses())
     

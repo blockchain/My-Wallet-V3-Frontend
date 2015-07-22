@@ -57,7 +57,7 @@ walletApp.controller "SettingsAddressesCtrl", ($scope, Wallet, $translate, $moda
       windowClass: "bc-modal"
       resolve:
         paymentRequest: ->
-          {fromAddress: address, amount: 0, toAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()]}
+          {fromAddress: address, amount: 0, toAccount: Wallet.accounts()[Wallet.getDefaultAccountIndex()]}
     )
     if modalInstance?
       modalInstance.opened.then () ->

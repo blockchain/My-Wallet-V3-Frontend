@@ -149,7 +149,7 @@ walletApp.controller "LoginCtrl", ($scope, $rootScope, $log, $http, Wallet, $coo
       $state.go("register")
 
   $scope.numberOfActiveAccounts = () ->
-    return filterFilter(Wallet.accounts, {archived: false}).length
+    return filterFilter(Wallet.accounts(), {archived: false}).length
 
   $scope.$watch "status.isLoggedIn", (newValue) ->
     if newValue

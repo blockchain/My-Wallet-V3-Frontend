@@ -22,8 +22,6 @@ describe "ClaimModalCtrl", ->
         }
       }
 
-      Wallet.updateAccounts()
-
       scope = $rootScope.$new()
 
       balancePromise = {
@@ -44,7 +42,7 @@ describe "ClaimModalCtrl", ->
     return
 
   it "should list accounts", ->
-    expect(scope.accounts.length).toBeGreaterThan(0)
+    expect(scope.accounts().length).toBeGreaterThan(0)
 
   it "should fetch the redeem balance", ->
     expect(scope.balance).toBe(100000)
@@ -53,6 +51,6 @@ describe "ClaimModalCtrl", ->
     spyOn(Wallet, "redeemFromEmailOrMobile")
     scope.redeem()
     expect(Wallet.redeemFromEmailOrMobile).toHaveBeenCalled()
-    expect(Wallet.redeemFromEmailOrMobile.calls.argsFor(0)[0]).toEqual(scope.accounts[0])
+    expect(Wallet.redeemFromEmailOrMobile.calls.argsFor(0)[0]).toEqual(scope.accounts()[0])
     expect(Wallet.redeemFromEmailOrMobile.calls.argsFor(0)[1]).toEqual("abcd")
   )

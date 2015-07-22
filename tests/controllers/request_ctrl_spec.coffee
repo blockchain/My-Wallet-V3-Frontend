@@ -34,8 +34,6 @@ describe "RequestCtrl", ->
         EUR: { conversion: 400000 }
       }
 
-      Wallet.updateAccounts()
-
       scope = $rootScope.$new()
 
       $controller "RequestCtrl",
@@ -69,7 +67,7 @@ describe "RequestCtrl", ->
     it "should not include archived accounts",  inject((Wallet) ->
       # Make sure there's an archived account in the mocks:
       match = false
-      for account in scope.accounts
+      for account in scope.accounts()
         match = true if account.archived
 
       expect(match).toBe(true, "Archived account missing in mocks")

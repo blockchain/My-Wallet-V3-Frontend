@@ -11,7 +11,7 @@ walletApp.controller "NavigationCtrl", ($scope, Wallet, SecurityCenter, $transla
       $state.go("wallet.common.transactions", {accountIndex:Wallet.getDefaultAccountIndex()})
 
   $scope.numberOfActiveAccounts = () -> 
-    return filterFilter(Wallet.accounts, {archived: false}).length
+    return filterFilter(Wallet.accounts(), {archived: false}).length
   
   $scope.isTransactionState = () ->
     return $state.current.name == "wallet.common.transactions" || $state.current.name == "wallet.common.transaction"
