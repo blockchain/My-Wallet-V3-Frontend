@@ -5,7 +5,7 @@
   h4.em-300(translate="DASHBOARD_FEEDBACK_TITLE")
   p(translate="DASHBOARD_FEEDBACK")
 
-.flex-column.flex-1.pal.dashboard
+.flex-column.flex-1.pal.dashboard(ng-show="status.didUpgradeToHd")
   .flex-center
     h4.mtn.em-300.mbn(translate="YOUR_BITCOIN_ADDRESS_IS")
     helper-button(content="DASHBOARD_ADDRESS" placement='top')
