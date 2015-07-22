@@ -613,7 +613,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     cancel  = () ->
       cancelCallback()
     proceed = (password) ->
-      wallet.accounts().splice(0, wallet.accounts().length)
       wallet.transactions.splice(0, wallet.transactions.length)
       wallet.my.wallet.restoreHDWallet(mnemonic, bip39pass, password)
       wallet.my.getHistoryAndParseMultiAddressJSON()
@@ -736,7 +735,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   ##################################
 
   wallet.accounts = () ->
-    wallet.my.wallet.hdwallet.accounts
+    if wallet.my.wallet.hdwallet?
+      return wallet.my.wallet.hdwallet.accounts
+    else
+      return []
 
   # wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts().length > 0 && wallet.accounts().some((a) -> a.active and a.balance)
 
@@ -821,7 +823,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           proceed = (password) ->
             wallet.my.wallet.newHDWallet(translation, password)
             wallet.status.didUpgradeToHd = true
-            wallet.accounts = wallet.my.wallet.hdwallet.accounts
             wallet.my.getHistoryAndParseMultiAddressJSON()
 
           wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
