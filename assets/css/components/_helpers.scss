@@ -26,3 +26,7 @@
   border-radius: 7px !important;
   z-index: 1000 !important; // modals have z-index 1050
 }
+
+@media (max-width: 620px) {
+  .helper { display: none; }
+}
