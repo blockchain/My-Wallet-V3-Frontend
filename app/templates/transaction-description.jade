@@ -3,7 +3,9 @@
     .flex-column.col-md-3.col-sm-12.col-xs-12
       span.timestamp.pbm.type-sm
         date {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
-      span.action(ng-class="{incoming_tx: transaction.result > 0, outgoing_tx: transaction.result < 0, local_tx: transaction.intraWallet}", translate="{{ action }}")
+      .flex-center
+        span.action(ng-class="{incoming_tx: transaction.result > 0, outgoing_tx: transaction.result < 0, local_tx: transaction.intraWallet}", translate="{{ action }}")
+        i.ti-notepad.aaa.plm(ng-show="transaction.note")
     .hidden-xs.hidden-sm.destination.em-400.col-md-8(ng-class="transaction.toggled ? 'dark-grey' : 'aaa'")
       .flex.row
         span.col-md-1(ng-show="transaction.result > 0 && !transaction.intraWallet", translate="FROM_LC")
