@@ -71,5 +71,12 @@ walletApp.directive('transactionDescription', ($translate, $rootScope, Wallet, $
         else
           scope.other_address = to_address
 
+      scope.$watch 'search', (search) ->
+        return unless search?
+        s = search.toLowerCase()
+        searchInAddress = scope.address.toLowerCase().search(s) > -1
+        searchInOther = scope.other_address.toLowerCase().search(s) > -1
+        scope.transaction.toggled = !searchInAddress && searchInOther
+
   }
 )
