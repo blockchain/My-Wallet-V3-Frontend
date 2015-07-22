@@ -13,7 +13,7 @@ describe "AccountFormCtrl", ->
     angular.mock.inject ($injector) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
-      
+
       Wallet.accounts = () -> accounts
 
       Wallet.askForSecondPasswordIfNeeded = () ->
@@ -26,7 +26,7 @@ describe "AccountFormCtrl", ->
       MyWallet.wallet = {
         isDoubleEncrypted: false
 
-        newAccount: (label) -> 
+        newAccount: (label) ->
           accounts.push { label: label }
           return
       }
@@ -53,6 +53,8 @@ describe "AccountFormCtrl", ->
 
       return
     return
+
+  beforeEach -> accounts.splice(2); accounts[0].label = 'Savings'
 
   describe "creation", ->
 
@@ -113,6 +115,5 @@ describe "AccountFormCtrl", ->
       expect(scope.accountForm.$valid).toBe(false)
 
     it "should not create an account with an existing account name", ->
-      pending()
       expect(scope.isNameUnused 'Savings').toBe(false)
       expect(scope.isNameUnused 'New Account').toBe(true)
