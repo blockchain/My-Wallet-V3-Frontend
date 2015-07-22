@@ -823,6 +823,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           proceed = (password) ->
             wallet.my.wallet.newHDWallet(translation, password)
             wallet.status.didUpgradeToHd = true
+            wallet.status.didInitializeHD = true
             wallet.my.getHistoryAndParseMultiAddressJSON()
 
           wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)

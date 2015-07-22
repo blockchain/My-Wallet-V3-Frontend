@@ -1,6 +1,7 @@
 walletApp.controller "DashboardCtrl", ($scope, Wallet, $log, $modal) ->
   $scope.accounts = Wallet.accounts
   $scope.status = Wallet.status
+  $scope.paymentRequestAddress = null
 
   $scope.setPaymentRequestURL = (address, amount) ->
     $scope.paymentRequestAddress = address
