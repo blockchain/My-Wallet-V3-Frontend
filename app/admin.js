@@ -115,7 +115,7 @@ admin.controller('EditKeyCtrl', function ($scope, $modalInstance, InterfaceHelpe
         $modalInstance.dismiss();
       });
   };
-  $scope.resendText = 'Resend Confirmation Email'
+  $scope.resendText = 'Resend Activation Email'
   $scope.resending = false;
   $scope.resendActivationEmail = function () {
     $scope.resending = true; $scope.resendText = 'Sending...';
