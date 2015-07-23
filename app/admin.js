@@ -144,6 +144,13 @@ admin.controller('ActivateKeysCtrl', function ($scope, InterfaceHelper, load) {
       });
     $scope.step = 1;
   };
+  $scope.resendText = 'Resend Activation Emails'
+  $scope.resending = false;
+  $scope.resend = function (min, max) {
+    $scope.resending = true; $scope.resendText = 'Sending...';
+    InterfaceHelper.callApi('/resend-many', {min:min||null,max:max||null})
+      .success(function(){ $scope.resendText = 'Sent!'; });
+  };
 });
 
 // Helper Service
