@@ -69,7 +69,6 @@ modules = [
   "partials/settings/import-address.jade"
   "partials/settings/mobile.jade"
   "partials/settings/my-details.jade"
-  "partials/settings/navigation.jade"
   "partials/settings/set-second-password.jade"
   "partials/settings/settings.jade"
   "partials/settings/show-private-key.jade"

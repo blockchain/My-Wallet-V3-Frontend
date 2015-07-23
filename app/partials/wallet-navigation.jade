@@ -4,11 +4,11 @@
       a(ui-sref="wallet.common.dashboard")
         i.ti-home
         span(translate="HOME")
-    li.scroll-parent.header(ui-sref-active="current")
+    li.scroll-parent.header.scroll-hidden(ui-sref-active="current")
       a(ui-sref="wallet.common.transactions({accountIndex: getMainAccountId() })")
         i.ti-layout-list-post
         span(translate="MY_TRANSACTIONS") 
-      ul.scroll.aside-list.pas(ng-show="selectedAccountIndex != 'imported' && showOrHide()", ng-click="hideMenu()")
+      ul.scroll.aside-list.pas(ng-show="selectedAccountIndex != 'imported' && showOrHide('transactions')", ng-click="hideMenu()")
         li.mvs(ng-class="selectedAccountIndex == 'accounts' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex:'accounts'})", ng-hide="!status.didUpgradeToHd || numberOfActiveAccounts() <= 1")
           a.pas(translate="ALL_ACCOUNTS")
             span
@@ -18,7 +18,7 @@
             span.prs {{ account.label }}
             span
               fiat-or-btc(btc="account.balance")
-      li.action-bar(ng-show="selectedAccountIndex != 'imported' && showOrHide()")
+      li.action-bar(ng-show="selectedAccountIndex != 'imported' && showOrHide('transactions')")
         a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
     li.header(ng-show="numberOfActiveLegacyAddresses() > 0" ng-class="{current:selectedAccountIndex == 'imported'}")
       a(ui-sref="wallet.common.transactions({accountIndex:'imported'})")
@@ -39,10 +39,25 @@
         span(translate="SECURITY")
         .progress-bar-wrapper.mlm(ng-hide="security.level == 6")
           .bar(ng-class="'level-' + security.level")
-    li.header.mbm(ui-sref-active="current")
-      a(ui-sref="wallet.common.settings.wallet")
+    li.scroll-parent.header.mbm(ui-sref-active="current")
+      a(ui-sref="wallet.common.settings")
         i.ti-settings
         span(translate="SETTINGS")
+      ul.scroll.aside-list.pas(ng-show="showOrHide('settings')" ng-click="hideMenu()")
+        li.mvm(ui-sref-active="active")
+          a.pas(ui-sref="wallet.common.settings.wallet", translate="WALLET_SETTINGS")
+        li.mvm(ui-sref-active="active")
+          a.pas(ui-sref="wallet.common.settings.my-details", translate="MY_DETAILS")
+        li.mvm(ui-sref-active="active")
+          a.pas(ui-sref="wallet.common.settings.addresses", translate="MY_ADDRESSES")
+        li.mvm(ui-sref-active="active")
+          a.pas(ui-sref="wallet.common.settings.accounts", translate="MY_ACCOUNTS")
+        li.mvm(ui-sref-active="active")
+          a.pas(ui-sref="wallet.common.settings.wallet-recovery", translate="WALLET_RECOVERY")
+        li.mvm(ui-sref-active="active")
+          a.pas(ui-sref="wallet.common.settings.advanced", translate="ADVANCED")
+        li.mvm(ui-sref-active="active")
+          a.pas(ui-sref="wallet.common.settings.mobile", translate="MOBILE")
     li.header.mbm(ui-sref-active="current", ng-click="hideMenu()")
       a(ui-sref="wallet.common.support")
         i.ti-headphone
