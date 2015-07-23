@@ -115,7 +115,7 @@ admin.controller('EditKeyCtrl', function ($scope, $modalInstance, InterfaceHelpe
         $modalInstance.dismiss();
       });
   };
-  $scope.resendText = 'Resend Activation Email'
+  $scope.resendText = 'Resend Invitation Email'
   $scope.resending = false;
   $scope.resendActivationEmail = function () {
     $scope.resending = true; $scope.resendText = 'Sending...';
@@ -144,7 +144,7 @@ admin.controller('ActivateKeysCtrl', function ($scope, InterfaceHelper, load) {
       });
     $scope.step = 1;
   };
-  $scope.resendText = 'Resend Activation Emails'
+  $scope.resendText = 'Resend Invitation Emails'
   $scope.resending = false;
   $scope.resend = function (min, max) {
     $scope.resending = true; $scope.resendText = 'Sending...';
