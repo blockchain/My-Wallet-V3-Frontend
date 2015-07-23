@@ -5,16 +5,10 @@
     div(ng-hide="accessAllowed")
       .col-sm-10.col-sm-offset-1
         p(translate="PRIVATE_KEY_WARNING")
-      .col-sm-10.col-sm-offset-1(ng-show="needsSecondPassword")
-        label(translate="SECOND_PASSWORD")
-        span : 
-        input(type="password", ng-model="secondPasswordInput", autofocus)
-      .col-sm-10.col-sm-offset-1(ng-show="incorrectSecondPassword")
-        label.wrong-password(translate="INCORRECT_PASSWORD")
     div(ng-show="accessAllowed")
       .row
         .col-sm-4.col-xs-offset-4.col-md-3.col-lg-offset-1
-          qr(text="privKey", size=120, correction-level="'M'")
+          qr(text="privKey" size=120 correction-level="'M'")
         .col-sm-12.col-md-8
           p
             label(translate="ADDRESS")
@@ -27,4 +21,4 @@
             span : {{ privKey }}
 .modal-footer
   button.btn.btn-info(ng-click="close()", translate="CLOSE")
-  button.btn.btn-primary(ng-hide="accessAllowed", ng-click="tryContinue()", translate="CONTINUE")
+  button.btn.btn-primary(ng-hide="accessAllowed" ng-click="tryContinue()" translate="CONTINUE")

@@ -4,194 +4,100 @@
  *s,m,l,n,a = small(.3125em),medium(.625em),large(1.25em),none(0),auto
  */
 
-.ptn, .pvn, .pan {
-  padding-top: 0;
-}
+.ptn, .pvn, .pan { padding-top: 0; }
 
-.pts, .pvs, .pas {
-  padding-top: 0.3125em;
-}
+.pts, .pvs, .pas { padding-top: 0.3125em; }
 
-.ptm, .pvm, .pam {
-  padding-top: 0.625em;
-}
+.ptm, .pvm, .pam { padding-top: 0.625em; }
 
-.ptl, .pvl, .pal {
-  padding-top: 1.25em;
-}
+.ptl, .pvl, .pal { padding-top: 1.25em; }
 
-.ptml, .pvml, .paml {
-  padding-top: 1.3125em;
-}
+.ptml, .pvml, .paml { padding-top: 1.3125em; }
 
-.ptvl, .pvvl, .pavl {
-  padding-top: 6.25em;
-}
+.ptvl, .pvvl, .pavl { padding-top: 3em; }
 
-.prn, .phn, .pan {
-  padding-right: 0;
-}
+.prn, .phn, .pan { padding-right: 0; }
 
-.prs, .phs, .pas {
-  padding-right: 0.3125em;
-}
+.prs, .phs, .pas { padding-right: 0.3125em; }
 
-.prm, .phm, .pam {
-  padding-right: 0.625em;
-}
+.prm, .phm, .pam { padding-right: 0.625em; }
 
-.prml, .phml, .paml {
-  padding-right: 1.3125em;
-}
+.prml, .phml, .paml { padding-right: 1.3125em; }
 
-.prvl, .phvl, .pavl {
-  padding-right: 6.25em;
-}
+.prvl, .phvl, .pavl { padding-right: 3em; }
 
-.prl, .phl, .pal {
-  padding-right: 1.25em;
-}
+.prl, .phl, .pal { padding-right: 1.25em; }
 
-.pbn, .pvn, .pan {
-  padding-bottom: 0;
-}
+.pbn, .pvn, .pan { padding-bottom: 0; }
 
-.pbs, .pvs, .pas {
-  padding-bottom: 0.3125em;
-}
+.pbs, .pvs, .pas { padding-bottom: 0.3125em; }
 
-.pbm, .pvm, .pam {
-  padding-bottom: 0.625em;
-}
+.pbm, .pvm, .pam { padding-bottom: 0.625em; }
 
-.pbml, .pvml, .paml {
-  padding-bottom: 1.3125em;
-}
+.pbml, .pvml, .paml { padding-bottom: 1.3125em; }
 
-.pbvl, .pvvl, .pavl {
-  padding-bottom: 6.25em;
-}
+.pbvl, .pvvl, .pavl { padding-bottom: 3em; }
 
-.pbl, .pvl, .pal {
-  padding-bottom: 1.25em;
-}
+.pbl, .pvl, .pal { padding-bottom: 1.25em; }
 
-.pln, .phn, .pan {
-  padding-left: 0;
-}
+.pln, .phn, .pan { padding-left: 0; }
 
-.pls, .phs, .pas {
-  padding-left: 0.3125em;
-}
+.pls, .phs, .pas { padding-left: 0.3125em; }
 
-.plm, .phm, .pam {
-  padding-left: 0.625em;
-}
+.plm, .phm, .pam { padding-left: 0.625em; }
 
-.plml, .phml, .paml {
-  padding-left: 1.3125em;
-}
+.plml, .phml, .paml { padding-left: 1.3125em; }
 
-.plvl, .phvl, .pavl {
-  padding-left: 6.25em;
-}
+.plvl, .phvl, .pavl { padding-left: 3em; }
 
-.pll, .phl, .pal {
-  padding-left: 1.25em;
-}
+.pll, .phl, .pal { padding-left: 1.25em; }
 
-.mtn, .mvn, .man {
-  margin-top: 0;
-}
+.mtn, .mvn, .man { margin-top: 0; }
 
-.mts, .mvs, .mas {
-  margin-top: 0.3125em;
-}
+.mts, .mvs, .mas { margin-top: 0.3125em; }
 
-.mtm, .mvm, .mam {
-  margin-top: 0.625em;
-}
+.mtm, .mvm, .mam { margin-top: 0.625em; }
 
-.mtml, .mvml, .maml {
-  margin-top: 1.3125em;
-}
+.mtml, .mvml, .maml { margin-top: 1.3125em; }
 
-.mtvl, .mvvl, .mavl {
-  margin-top: 6.25em;
-}
+.mtvl, .mvvl, .mavl { margin-top: 3em; }
 
-.mtl, .mvl, .mal {
-  margin-top: 1.25em;
-}
+.mtl, .mvl, .mal { margin-top: 1.25em; }
 
-.mrn, .mhn, .man {
-  margin-right: 0;
-}
+.mrn, .mhn, .man { margin-right: 0; }
 
-.mrs, .mhs, .mas {
-  margin-right: 0.3125em;
-}
+.mrs, .mhs, .mas { margin-right: 0.3125em; }
 
-.mrm, .mhm, .mam {
-  margin-right: 0.625em;
-}
+.mrm, .mhm, .mam { margin-right: 0.625em; }
 
-.mrml, .mhml, .maml {
-  margin-right: 1.3125em;
-}
+.mrml, .mhml, .maml { margin-right: 1.3125em; }
 
-.mrvl, .mhvl, .mavl {
-  margin-right: 6.25em;
-}
+.mrvl, .mhvl, .mavl { margin-right: 3em; }
 
-.mrl, .mhl, .mal {
-  margin-right: 1.25em;
-}
+.mrl, .mhl, .mal { margin-right: 1.25em; }
 
-.mbn, .mvn, .man {
-  margin-bottom: 0;
-}
+.mbn, .mvn, .man { margin-bottom: 0; }
 
-.mbs, .mvs, .mas {
-  margin-bottom: 0.3125em;
-}
+.mbs, .mvs, .mas { margin-bottom: 0.3125em; }
 
-.mbm, .mvm, .mam {
-  margin-bottom: 0.625em;
-}
+.mbm, .mvm, .mam { margin-bottom: 0.625em; }
 
-.mbml, .mvml, .maml {
-  margin-bottom: 1.3125em;
-}
+.mbml, .mvml, .maml { margin-bottom: 1.3125em; }
 
-.mbvl, .mvvl, .mavl {
-  margin-bottom: 6.25em;
-}
+.mbvl, .mvvl, .mavl { margin-bottom: 3em; }
 
-.mbl, .mvl, .mal {
-  margin-bottom: 1.25em;
-}
+.mbl, .mvl, .mal { margin-bottom: 1.25em; }
 
-.mln, .mhn, .man {
-  margin-left: 0;
-}
+.mln, .mhn, .man { margin-left: 0; }
 
-.mls, .mhs, .mas {
-  margin-left: 0.3125em;
-}
+.mls, .mhs, .mas { margin-left: 0.3125em; }
 
-.mlm, .mhm, .mam {
-  margin-left: 0.625em;
-}
+.mlm, .mhm, .mam { margin-left: 0.625em; }
 
-.mlml, .mhml, .maml {
-  margin-left: 1.3125em;
-}
+.mlml, .mhml, .maml { margin-left: 1.3125em; }
 
-.mlvl, .mhvl, .mavl {
-  margin-left: 6.25em;
-}
+.mlvl, .mhvl, .mavl { margin-left: 3em; }
 
-.mll, .mhl, .mal {
-  margin-left: 1.25em;
-}
+.mll, .mhl, .mal { margin-left: 1.25em; }
+
+.ph-form { padding: 0 2em; }

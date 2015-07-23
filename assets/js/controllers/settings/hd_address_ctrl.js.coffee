@@ -1,7 +1,7 @@
-walletApp.controller "AddressCtrl", ($scope, Wallet, $log, $state, $stateParams, $filter, $translate) ->
+walletApp.controller "HDAddressCtrl", ($scope, Wallet, $log, $state, $stateParams, $filter, $translate) ->
   $scope.address = {address: null}
   $scope.accounts = Wallet.accounts
-  $scope.show = {watchOnly: false, editLabel: false}
+  $scope.show = {editLabel: false}
   $scope.errors = {label: null}
   $scope.newLabel = null
   
@@ -26,7 +26,7 @@ walletApp.controller "AddressCtrl", ($scope, Wallet, $log, $state, $stateParams,
         $scope.errors.label = translation
       errorCallback()
     
-    Wallet.changeLegacyAddressLabel($scope.address, label, success, error)
+    Wallet.changeHDAddressLabel($scope.address.account, $scope.address.index, label, success, error)
     
   #################################
   #           Private             #
@@ -37,12 +37,11 @@ walletApp.controller "AddressCtrl", ($scope, Wallet, $log, $state, $stateParams,
     $scope.status    = Wallet.status
     $scope.settings = Wallet.settings
   
-  $scope.$watchCollection "accounts()", () ->
-    # Is it a legacy address?
-    address = $filter("getByProperty")("address", $stateParams.address, Wallet.legacyAddresses())
-    
-    $scope.address = address
-    $scope.newLabel = address.label
+  $scope.$watchCollection "accounts()", () ->    
+    hdAddresses = Wallet.hdAddresses(true)
+    for hdAddress in hdAddresses
+      if hdAddress.account.index == parseInt($stateParams.account) && hdAddress.index == parseInt($stateParams.index)
+        $scope.address = hdAddress
           
   # First load:      
   $scope.didLoad()

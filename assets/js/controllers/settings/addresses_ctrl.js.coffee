@@ -1,8 +1,10 @@
-walletApp.controller "SettingsAddressesCtrl", ($scope, Wallet, $translate, $modal, $state) ->
+walletApp.controller "SettingsAddressesCtrl", ($scope, Wallet, $translate, $modal, $state, addressOrNameMatchFilter) ->
   $scope.legacyAddresses = Wallet.legacyAddresses
+  $scope.display = {archived: false, account_dropdown_open: false}
   $scope.accounts = Wallet.accounts
-  $scope.display = {archived: false, account_dropdown_open: false}  
-
+    
+  $scope.hdAddresses = Wallet.hdAddresses
+  
   $scope.toggleDisplayImported = () ->
     $scope.display.imported = !$scope.display.imported
     $scope.display.archived = false
@@ -10,34 +12,33 @@ walletApp.controller "SettingsAddressesCtrl", ($scope, Wallet, $translate, $moda
   $scope.toggleDisplayArchived = () ->
     $scope.display.archived = !$scope.display.archived
     $scope.display.imported = false
-  
+
   $scope.settings = Wallet.settings
-  
-  $scope.hdAddresses = Wallet.hdAddresses
-  
+
   $scope.addAddressForAccount = (account) ->
-    
-    success = (address) ->
-      $state.go "wallet.common.settings.address", {address: address.address}
-      
+
+    success = (index) ->
+      $state.go "wallet.common.settings.hd_address", {account: account.index, index: index}
+
     error = () ->
-      
+
     Wallet.addAddressForAccount(account, success, error)
-  
+
   $scope.clear = (request) ->
     Wallet.cancelPaymentRequest(request.account, request.address)
-    
+
   $scope.archive = (address) ->
     Wallet.archive(address)
-    
+
   $scope.unarchive = (address) ->
     Wallet.unarchive(address)
-    
+
   $scope.delete = (address) ->
-    $translate("LOSE_ACCESS").then (translation) ->    
+    $translate("LOSE_ACCESS").then (translation) ->
       if confirm translation
         Wallet.deleteLegacyAddress(address)
-        
+        $scope.legacyAddresses = Wallet.legacyAddresses
+
   $scope.importAddress = () ->
     Wallet.clearAlerts()
     modalInstance = $modal.open(
@@ -48,15 +49,15 @@ walletApp.controller "SettingsAddressesCtrl", ($scope, Wallet, $translate, $moda
     if modalInstance?
       modalInstance.opened.then () ->
         Wallet.store.resetLogoutTimeout()
-    
+
   $scope.transfer = (address) ->
     modalInstance = $modal.open(
       templateUrl: "partials/send.jade"
       controller: "SendCtrl"
       windowClass: "bc-modal"
       resolve:
-        paymentRequest: -> 
-          {fromAddress: address, amount: 0, toAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()]}
+        paymentRequest: ->
+          {fromAddress: address, amount: 0, toAccount: Wallet.accounts()[Wallet.getDefaultAccountIndex()]}
     )
     if modalInstance?
       modalInstance.opened.then () ->
@@ -78,9 +79,9 @@ walletApp.controller "SettingsAddressesCtrl", ($scope, Wallet, $translate, $moda
   #################################
   #           Private             #
   #################################
-  
+
   $scope.didLoad = () ->
     $scope.requests = Wallet.paymentRequests
-    
-  # First load:      
+
+  # First load:
   $scope.didLoad()

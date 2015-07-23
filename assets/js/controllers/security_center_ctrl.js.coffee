@@ -4,10 +4,7 @@ walletApp.controller "SettingsSecurityCenterCtrl", ($scope, Wallet, SecurityCent
   $scope.settings = Wallet.settings
   $scope.user = Wallet.user
   $scope.status = Wallet.status
-      
-  $scope.legacyAddresses = []
-  $scope.unfilteredLegacyAddresses = Wallet.legacyAddresses
-  
+        
   $scope.display = {action: null, editingEmail: false}
 
   $scope.mobileNumber = {step: 1}
@@ -17,11 +14,6 @@ walletApp.controller "SettingsSecurityCenterCtrl", ($scope, Wallet, SecurityCent
       if item[prop] > val
         true
 
-  $scope.$watchCollection "status.legacyAddressBalancesLoaded", ->
-    if $scope.legacyAddresses.length == 0 && $scope.status.legacyAddressBalancesLoaded
-      for address in filterFilter(filterFilter($scope.unfilteredLegacyAddresses, {active: true, isWatchOnlyLegacyAddress: false}), $scope.greaterThan('balance', 50000))
-        $scope.legacyAddresses.push address
-
   $scope.transactions = Wallet.transactions
           
   $scope.transfer = (address) ->
@@ -30,7 +22,7 @@ walletApp.controller "SettingsSecurityCenterCtrl", ($scope, Wallet, SecurityCent
       controller: "SendCtrl"
       resolve:
         paymentRequest: -> 
-          {fromAddress: address, amount: 0, toAccount: Wallet.accounts[Wallet.getDefaultAccountIndex()]}
+          {fromAddress: address, amount: 0, toAccount: Wallet.accounts()[Wallet.getDefaultAccountIndex()]}
     ).opened.then () ->
       Wallet.store.resetLogoutTimeout()
     

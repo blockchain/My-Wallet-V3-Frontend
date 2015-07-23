@@ -5,7 +5,7 @@ walletApp.controller "SettingsMyDetailsCtrl", ($scope, Wallet, $modal, $filter, 
   $scope.errors = {}
 
   $scope.mobileNumber = {step: 0}
-  $scope.uid = Wallet.uid
+  $scope.uid = Wallet.user.uid
 
   $scope.changeEmail = (email, success, error) ->
     Wallet.changeEmail(email, success, error)

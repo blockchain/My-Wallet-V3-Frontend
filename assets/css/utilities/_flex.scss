@@ -40,6 +40,9 @@
 .flex-important {
   display: flex !important;
 }
+.flex-wrap {
+  flex-wrap: wrap;
+}
 
 @for $i from 1 through 12 {
   .flex-#{$i} {

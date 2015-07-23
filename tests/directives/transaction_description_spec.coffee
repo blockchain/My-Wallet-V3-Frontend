@@ -4,7 +4,6 @@ describe "Transaction Description Directive", ->
   element = undefined
   isoScope = undefined
   Wallet = undefined
-  MyWallet = undefined
   html = undefined
 
   beforeEach module("walletApp")
@@ -19,10 +18,13 @@ describe "Transaction Description Directive", ->
 
 
     Wallet = $injector.get("Wallet")
-    Wallet.login("test", "test")
-
-    MyWallet = $injector.get("MyWallet")
-
+    
+    Wallet.my = 
+      wallet:
+        getAddressBookLabel: () -> null
+    
+    Wallet.accounts = () -> [{index: 0, label: "Savings"}, { index: 1, label: "Spending"}]
+    
     $rootScope.transaction = {
             hash: "tx_hash", confirmations: 13, intraWallet: null,
             from: {account: {index: 0, amount: 300000000}, legacyAddresses: null, externalAddresses: null},
@@ -51,6 +53,18 @@ describe "Transaction Description Directive", ->
     $rootScope.$digest()
 
     expect(element.html()).toContain 'translate="MOVED_BITCOIN_TO"'
+
+  it "should determine the other address for inter wallet transactions", ->
+    $rootScope.transaction.intraWallet = true
+
+    element = $compile(html)($rootScope)
+    $rootScope.$digest()
+    isoScope = element.isolateScope()
+
+    expect(isoScope.other_address).toBe("Savings")
+
+  it "should determine the other address for received transactions", ->
+    expect(isoScope.other_address).toBe("Spending")
 
   it "should recognize sending from imported address", ->
     isoScope.transaction.to.account = null
@@ -81,28 +95,29 @@ describe "Transaction Description Directive", ->
 
   describe "send to email", ->
     beforeEach ->
-      isoScope.transaction.to_account = null
-      isoScope.transaction.to_addresses.push "temp_address"
-
-      MyWallet.paidTo = {"tx_hash": {"email":"somebody@blockchain.com","mobile":null,"redeemedAt":null,"address":"temp_address"}}
-
+      isoScope.transaction.to.account = null
+      isoScope.transaction.to.email = {"email":"somebody@blockchain.com"}
+      isoScope.result = -100000000
+      
       element = $compile(html)($rootScope)
       $rootScope.$digest()
 
+    it "should be known", ->
+      pending()
+      expect(isoScope.address).toEqual("somebody@blockchain.com")
+
     it "should be shown", ->
       pending()
-
       expect(element.html()).toContain 'somebody@blockchain.com'
 
     it "should show if not redeemed", ->
       pending()
-
       expect(element.html()).toContain 'translate="NOT_REDEEMED_YET"'
 
     it "should show redeemed date", ->
       pending()
 
-      MyWallet.paidTo.redeemedAt = 1416832288
+      # MyWallet.paidTo.redeemedAt = 1416832288
 
       element = $compile(html)($rootScope)
       $rootScope.$digest()
@@ -113,7 +128,3 @@ describe "Transaction Description Directive", ->
   describe "send to mobile", ->
     it "pending...", ->
       pending()
-
-  return
-
-

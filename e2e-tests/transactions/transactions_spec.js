@@ -65,14 +65,14 @@ describe('transactions-page', function() {
 
         // Validate all account names
         browser.findElement(by.css('[translate="ALL_ACCOUNTS"]'));
-        util.shouldContainCSS('[ng-repeat="account in accounts"]', account1Name);
-        util.shouldContainCSS('[ng-repeat="account in accounts"]', account2Name);
-        util.shouldContainCSS('[ng-repeat="account in accounts"]', account3Name);
-        util.shouldContainCSS('[ng-repeat="account in accounts"]', account4Name);
+        util.shouldContainCSS('[ng-repeat="account in accounts()"]', account1Name);
+        util.shouldContainCSS('[ng-repeat="account in accounts()"]', account2Name);
+        util.shouldContainCSS('[ng-repeat="account in accounts()"]', account3Name);
+        util.shouldContainCSS('[ng-repeat="account in accounts()"]', account4Name);
 
         // Validate two account balances
-        util.shouldContainCSS('[ng-repeat="account in accounts"]', account1TransValue);
-        util.shouldContainCSS('[ng-repeat="account in accounts"]', account3TransValue);
+        util.shouldContainCSS('[ng-repeat="account in accounts()"]', account1TransValue);
+        util.shouldContainCSS('[ng-repeat="account in accounts()"]', account3TransValue);
 
     });
 
@@ -82,7 +82,7 @@ describe('transactions-page', function() {
         browser.findElement(by.css('[translate="MY_TRANSACTIONS"]')).click();
 
         // Click on 4th account and validate value and date
-        browser.element.all(by.repeater('account in accounts')).get(3).click();
+        browser.element.all(by.repeater('account in accounts()')).get(3).click();
         util.shouldContainCSS(account3TransLocationPage, account3TransValue);
         util.shouldContainCSS('date', account3TransDate);
 
@@ -94,7 +94,7 @@ describe('transactions-page', function() {
         browser.findElement(by.css('[translate="MY_TRANSACTIONS"]')).click();
 
         // Click on 4th account and validate value and date
-        browser.element.all(by.repeater('account in accounts')).get(3).click()
+        browser.element.all(by.repeater('account in accounts()')).get(3).click()
         util.shouldContainCSS(account3TransLocationPage, account3TransValue);
         browser.findElement(by.cssContainingText('date', account3TransDate)).click();
 
@@ -116,7 +116,7 @@ describe('transactions-page', function() {
         browser.findElement(by.css('[translate="MY_TRANSACTIONS"]')).click();
 
         // Click on 4th account in list and view transaction details
-        browser.element.all(by.repeater('account in accounts')).get(3).click();
+        browser.element.all(by.repeater('account in accounts()')).get(3).click();
         browser.element.all(by.repeater("transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")).get(0).click();
 
         // Return to account details and validate Request/Send buttons
@@ -132,7 +132,7 @@ describe('transactions-page', function() {
         browser.findElement(by.css('[translate="MY_TRANSACTIONS"]')).click();
 
         // Click on account 'DONT EDIT 1' and validate transaction date
-        browser.element.all(by.repeater('account in accounts')).get(1).click();
+        browser.element.all(by.repeater('account in accounts()')).get(1).click();
         util.shouldContainCSS('date.ng-binding', account1TransDate);
 
         // Validate  address labels within account details
@@ -148,7 +148,7 @@ describe('transactions-page', function() {
         browser.findElement(by.css('[translate="MY_TRANSACTIONS"]')).click();
 
         // Click on account 'DONT EDIT 1' and validate transaction date
-        browser.element.all(by.repeater('account in accounts')).get(1).click();
+        browser.element.all(by.repeater('account in accounts()')).get(1).click();
         browser.findElement(by.css('[translate="SEND"]')).click();
 
         // Validate Send modal details

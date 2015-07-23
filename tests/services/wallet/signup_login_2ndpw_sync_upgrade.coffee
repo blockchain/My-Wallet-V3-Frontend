@@ -1,20 +1,55 @@
 describe "walletServices", () ->
   Wallet = undefined
-  MyWallet = undefined
   errors = undefined
   callbacks = undefined
   
   beforeEach angular.mock.module("walletApp")
   
   beforeEach ->
-    angular.mock.inject ($injector, localStorageService) ->
-      localStorageService.remove("mockWallets")
+    angular.mock.inject ($injector) ->
       
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
+      
+      Wallet.my = {
+        login: (uid, password, two_factor_code, success, needs_2fa, wrong_2fa) -> 
+          if uid == "test-2FA"
+            if two_factor_code?
+              success()
+            else
+              needs_2fa(4)
+          else
+            success()
             
-      spyOn(MyWallet,"fetchWalletJson").and.callThrough()
+  
+        logout: () ->
+         Wallet.monitor("logging_out")
           
+        wallet:
+          isUpgradedToHD: true
+          hdwallet:
+            isMnemonicVerified: true
+            accounts: [{balance: 1, archived: false},{balance: 2, archived: false}]
+          newAccount: () ->
+              
+          keys: [{address: "some_legacy_address", label: "Old", archived: false}, {address: "some_legacy_address_without_label", label: "some_legacy_address_without_label", archived: false}]
+        
+        createNewWallet: (email, pwd, firstAccount, language, currency, success, fail) ->
+          success()
+                  
+        getHistoryAndParseMultiAddressJSON: () ->
+      }
+      
+      Wallet.settings_api.get_account_info = (success, error) ->
+        success({
+          language: "en"
+          currency: "USD"
+          my_ip: "123.456.789.012"
+        })
+        
+      Wallet.api.get_ticker = (success, fail) ->
+        success({
+        })
+                      
       spyOn(Wallet,"monitor").and.callThrough()
             
       return
@@ -23,50 +58,51 @@ describe "walletServices", () ->
     
   describe "login()", ->
     beforeEach ->
-      Wallet.login("test", "test")  
+      spyOn(Wallet.my, "login").and.callThrough()
+      Wallet.login()
     
-    it "should fetch and decrypt the wallet", inject((Wallet, MyWallet) ->
-      expect(MyWallet.fetchWalletJson).toHaveBeenCalled()
+    it "should fetch and decrypt the wallet", inject((Wallet) ->
+      expect(Wallet.my.login).toHaveBeenCalled()
       
       return
     )
     
-    it "should update the status", inject((Wallet, MyWallet) ->
+    it "should update the status", inject((Wallet) ->
       expect(Wallet.status.isLoggedIn).toBe(true)
       return
     )
     
-    it "should get the currency", inject((Wallet, MyWallet) ->
+    it "should get the currency", inject((Wallet) ->
       expect(Wallet.settings.currency.code).toEqual "USD"
       return
     )
     
     
-    it "should get a list of accounts", inject((Wallet, MyWallet) ->
-      expect(Wallet.accounts.length).toBeGreaterThan(1)
-      expect(Wallet.accounts[0].balance).toBeGreaterThan(0)
+    it "should get a list of accounts", inject((Wallet) ->
+      expect(Wallet.accounts().length).toBeGreaterThan(1)
+      expect(Wallet.accounts()[0].balance).toBeGreaterThan(0)
 
       return
     )
     
-    it "should get a list of legacy addresses", inject((Wallet, MyWallet) ->
-      expect(Wallet.legacyAddresses.length).toEqual(5)
+    it "should get a list of legacy addresses", inject((Wallet) ->
+      expect(Wallet.legacyAddresses().length).toEqual(2)
 
       return
     )
     
-    it "should use address as label if no label is given", inject((Wallet, MyWallet) ->
-      expect(Wallet.legacyAddresses[0].label).toEqual("Old")
-      expect(Wallet.legacyAddresses[2].label).toEqual("some_legacy_address_without_label")
+    it "should use address as label if no label is given", inject((Wallet) ->
+      expect(Wallet.legacyAddresses()[0].label).toEqual("Old")
+      expect(Wallet.legacyAddresses()[1].label).toEqual("some_legacy_address_without_label")
 
       return
     )
     
-    it "should get a list of languages", inject((Wallet, MyWallet) ->
+    it "should get a list of languages", inject((Wallet) ->
       expect(Wallet.languages.length).toBeGreaterThan(1)
     )
     
-    it "should get a list of currencies", inject((Wallet, MyWallet) ->
+    it "should get a list of currencies", inject((Wallet) ->
       expect(Wallet.currencies.length).toBeGreaterThan(1)
     )
     
@@ -101,9 +137,16 @@ describe "walletServices", () ->
     
   describe "2FA settings", ->    
     it "can be disabled", inject((Wallet) ->
+      Wallet.settings_api.unsetTwoFactor = (success) ->
+        success()
+      
+      spyOn(Wallet.settings_api, "unsetTwoFactor").and.callThrough()
+      
       Wallet.login("test-2FA", "test", null, (() ->), (()->), (()->))
       
       Wallet.disableSecondFactor()
+      
+      expect(Wallet.settings_api.unsetTwoFactor).toHaveBeenCalled()
       expect(Wallet.settings.needs2FA).toBe(false)
       expect(Wallet.settings.twoFactorMethod).toBe(null)
       
@@ -111,15 +154,11 @@ describe "walletServices", () ->
     )
   
 
-  describe "logout()", ->     
-    beforeEach ->
-      Wallet.login("test", "test")  
-      
-    it "should update the status", inject((Wallet, MyWallet) ->
-      expect(Wallet.status.isLoggedIn).toBe(true)
-      
+  describe "logout()", ->           
+    it "should call MyWallet.logout", inject((Wallet) ->      
+      spyOn(Wallet.my, "logout")
       Wallet.logout()
-      expect(Wallet.status.isLoggedIn).toBe(false)
+      expect(Wallet.my.logout).toHaveBeenCalled()
       
       return
     )
@@ -128,23 +167,11 @@ describe "walletServices", () ->
     
   describe "isSyncrhonizedWithServer()", ->         
     beforeEach ->
-      Wallet.login("test", "test")  
        
     it "should be in sync after first load", inject((Wallet) ->      
       expect(Wallet.isSynchronizedWithServer()).toBe(true)
       return
     )
-    
-    it "should not be in sync while new account is saved", inject((Wallet, $timeout) ->     
-      Wallet.createAccount("Some name", (()->))
-      expect(Wallet.isSynchronizedWithServer()).toBe(false)
-      $timeout.flush()
-      
-      expect(Wallet.isSynchronizedWithServer()).toBe(true)
-      return
-    )
-    
-    return
     
   describe "second password", ->
     # Enable, disable, prompt
@@ -153,6 +180,10 @@ describe "walletServices", () ->
   
   
   describe "HD upgrade", ->
+    beforeEach ->
+      Wallet.my.wallet.upgradeToHDWallet = () ->
+      Wallet.my.wallet.newHDWallet = () ->
+      
     it "should prompt the user if upgrade to HD is needed", inject(($rootScope, $timeout) ->
       
       spyOn($rootScope, '$broadcast').and.callThrough()
@@ -164,23 +195,6 @@ describe "walletServices", () ->
       expect($rootScope.$broadcast).toHaveBeenCalled()
       expect($rootScope.$broadcast.calls.argsFor(0)[0]).toEqual("needsUpgradeToHD")
     )
-      
-    it "should proceed with upgrade if user agrees", inject(($rootScope, MyWallet, $timeout) ->
-      spyOn($rootScope, '$broadcast').and.callFake (message, callback) ->
-        if message == "needsUpgradeToHD"
-          callback()
-      
-      spyOn(MyWallet, "upgradeToHDWallet")
-      
-      Wallet.monitor("hd_wallets_does_not_exist")
-      
-      $timeout.flush()
-      
-      expect(MyWallet.upgradeToHDWallet).toHaveBeenCalled()
-    )
-    
-    it "should ask for 2nd password if needed", ->
-      pending()
       
   describe "signup", ->
 
