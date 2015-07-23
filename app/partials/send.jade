@@ -53,7 +53,7 @@
             )
               ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
               ui-select-choices(
-                repeat="destination in destinations | filter: getFilter($select.search, !advanced)" 
+                repeat="destination in destinations[$index] | filter: getFilter($select.search, !advanced)" 
                 group-by="'type'" 
                 refresh="refreshDestinations($select.search, $index)" 
                 refresh-delay="0"

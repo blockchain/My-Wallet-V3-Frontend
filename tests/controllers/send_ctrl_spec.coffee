@@ -176,21 +176,22 @@ describe "SendCtrl", ->
 
     it "should load", ->
       expect(scope.destinations.length).toBeGreaterThan(0)
+      expect(scope.destinations[0].length).toBeGreaterThan(0)
 
     it "should include accounts",  ->
-      hasAccount = scope.destinations.some (dest) -> dest.index?
+      hasAccount = scope.destinations[0].some (dest) -> dest.index?
       expect(hasAccount).toBe(true)
 
     it "should include addresses",  ->
-      hasAddress = scope.destinations.some (dest) -> dest.address?
+      hasAddress = scope.destinations[0].some (dest) -> dest.address?
       expect(hasAddress).toBe(true)
 
     it "should include watch-only addresses",  ->
-      hasWatchOnly = scope.destinations.some (dest) -> dest.isWatchOnly
+      hasWatchOnly = scope.destinations[0].some (dest) -> dest.isWatchOnly
       expect(hasWatchOnly).toBe(true)
 
     it "should not include archived accounts", ->
-      hasArchived = scope.destinations.some (dest) -> dest.archived
+      hasArchived = scope.destinations[0].some (dest) -> dest.archived
       expect(hasArchived).toBe(false)
 
   describe "payment request", ->
@@ -535,7 +536,7 @@ describe "SendCtrl", ->
 
     it "should not refresh if there are no destinations", ->
       spyOn(scope, 'updateToLabel')
-      scope.destinations = []
+      scope.destinations[0] = []
       scope.refreshDestinations('', 0)
       expect(scope.updateToLabel).not.toHaveBeenCalled()
 
