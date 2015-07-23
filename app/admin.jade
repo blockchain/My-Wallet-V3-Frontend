@@ -156,9 +156,12 @@ html(ng-app="AdminInterface" lang='en')
             </div>
           </div>
           <div class="form-group">
-            <div class="col-xs-2 col-xs-offset-2">
+            <div class="col-xs-5 col-xs-offset-2">
               <button class="btn" ng-disabled="editForm.$invalid" ng-class="(fields.activated) ? 'btn-default' : 'btn-danger'" type="submit">
                 {{ (fields.activated) ? 'Update' : 'Activate' }}
+              </button>
+              <button class="btn btn-default mlm" ng-show="fields.activated" ng-click="resendActivationEmail()" ng-disabled="resending" type="button">
+                {{ resendText }}
               </button>
             </div> 
           </div>

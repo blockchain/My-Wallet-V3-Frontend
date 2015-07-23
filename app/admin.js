@@ -115,6 +115,13 @@ admin.controller('EditKeyCtrl', function ($scope, $modalInstance, InterfaceHelpe
         $modalInstance.dismiss();
       });
   };
+  $scope.resendText = 'Resend Confirmation Email'
+  $scope.resending = false;
+  $scope.resendActivationEmail = function () {
+    $scope.resending = true; $scope.resendText = 'Sending...';
+    InterfaceHelper.callApi('/resend-activation', {key: $scope.fields.key})
+      .success(function(){ $scope.resendText = 'Sent!'; });
+  };
 });
 
 admin.controller('ActivateKeysCtrl', function ($scope, InterfaceHelper, load) {
