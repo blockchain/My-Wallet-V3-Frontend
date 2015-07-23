@@ -17,8 +17,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.alerts = Wallet.alerts
 
-  $scope.isOpen = {currencies: false}
-
   $scope.fiatCurrency = Wallet.settings.currency
   $scope.btcCurrency = Wallet.settings.btcCurrency
 
