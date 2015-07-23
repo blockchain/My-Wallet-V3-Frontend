@@ -1,6 +1,8 @@
 describe "AddressImportCtrl", ->
   scope = undefined
   Wallet = undefined
+  
+  accounts = [{index: 0, label: "Spending", archived: false}]
 
   modalInstance =
     close: ->
@@ -9,14 +11,13 @@ describe "AddressImportCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    pending()
     angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
       Wallet = $injector.get("Wallet")
       
       Wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bip38passphrase, success, error) ->
         success({address: "valid_import_address"})
         
-      Wallet.accounts = () -> [{index: 0}]
+      Wallet.accounts = () -> accounts
       
       Wallet.my = 
         wallet:
@@ -48,7 +49,7 @@ describe "AddressImportCtrl", ->
     expect(scope.close).toBeDefined()
 
   it "should have access to wallet accounts", inject((Wallet) ->
-    expect(scope.accounts()).toBe(Wallet.accounts())
+    expect(scope.accounts()).toEqual(Wallet.accounts())
   )
 
   describe "enter address or private key", ->
