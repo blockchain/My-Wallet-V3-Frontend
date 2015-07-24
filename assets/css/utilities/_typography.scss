@@ -20,6 +20,15 @@
   display: block;
 }
 
+.no-select {
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+}
+
 $multiplier: 100;
 
 @for $i from 1 through 9 {
