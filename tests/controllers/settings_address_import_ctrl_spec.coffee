@@ -1,6 +1,8 @@
 describe "AddressImportCtrl", ->
   scope = undefined
   Wallet = undefined
+  
+  accounts = [{index: 0, label: "Spending", archived: false}]
 
   modalInstance =
     close: ->
@@ -11,9 +13,15 @@ describe "AddressImportCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
-
-      Wallet.login("test", "test")
+      
+      Wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bip38passphrase, success, error) ->
+        success({address: "valid_import_address"})
+        
+      Wallet.accounts = () -> accounts
+      
+      Wallet.my = 
+        wallet:
+          keys: []
 
       scope = $rootScope.$new()
 
@@ -41,27 +49,33 @@ describe "AddressImportCtrl", ->
     expect(scope.close).toBeDefined()
 
   it "should have access to wallet accounts", inject((Wallet) ->
-    expect(scope.accounts).toBe(Wallet.accounts)
+    expect(scope.accounts()).toEqual(Wallet.accounts())
   )
 
   describe "enter address or private key", ->
 
-    it "should go to step 2 when user clicks validate", ->
+    it "should go to step 2 when user clicks validate", inject(($timeout) ->
       scope.fields.addressOrPrivateKey = "valid_import_address"
       expect(scope.step).toBe(1)
       scope.import()
+      $timeout.flush()
       expect(scope.step).toBe(2)
+    )
 
   describe "validate and add", ->
-    it "should add the address if no errors are present", ->
+    it "should add the address if no errors are present", inject(($timeout) ->
       scope.fields.addressOrPrivateKey = "valid_import_address"
       scope.import()
+      $timeout.flush()
       expect(scope.address.address).toBe("valid_import_address")
+    )
 
-    it "should show the balance", ->
+    it "should show the balance", inject(($timeout) ->
       scope.fields.addressOrPrivateKey = "valid_import_address"
       scope.import()
+      $timeout.flush()
       expect(scope.address.balance).not.toBe(0)
+    )
 
     it "should go to step 3 when user clicks transfer", ->
       scope.goToTransfer()
@@ -69,12 +83,13 @@ describe "AddressImportCtrl", ->
 
   describe "transfer", ->
     beforeEach ->
-      scope.address = Wallet.legacyAddresses[0]
+      scope.address = Wallet.legacyAddresses()[0]
 
     it "should have access to accounts", ->
-      expect(scope.accounts).toBeDefined()
+      expect(scope.accounts()).toBeDefined()
 
     it "should show a spinner during sweep",  inject((Wallet) ->
+      pending()
       spyOn(Wallet, "transaction").and.callFake((success, error) ->
         expect(scope.status.sweeping).toBe(true)
         {

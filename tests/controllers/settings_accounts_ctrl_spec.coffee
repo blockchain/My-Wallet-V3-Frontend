@@ -9,9 +9,8 @@ describe "SettingsWalletNavigationCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
 
-      Wallet.login("test", "test")
+      Wallet.accounts = () -> [{},{}]
 
       scope = $rootScope.$new()
 
@@ -31,11 +30,11 @@ describe "SettingsWalletNavigationCtrl", ->
   )
 
   it "should list accounts",  inject(() ->
-    expect(scope.accounts.length).toBeGreaterThan(1)
+    expect(scope.accounts().length).toBeGreaterThan(1)
   )
 
   it "should open modal to edit an account",  inject(() ->
-    account = scope.accounts[0]
+    account = scope.accounts()[0]
     spyOn(modal, "open")
     scope.editAccount(account)
     expect(modal.open).toHaveBeenCalled()
@@ -43,7 +42,7 @@ describe "SettingsWalletNavigationCtrl", ->
 
   it "should show a bitcoin address", inject((Wallet) ->
     spyOn(modal, "open")
-    account = Wallet.accounts[1]
+    account = Wallet.accounts()[1]
 
     scope.showAddress(account)
 

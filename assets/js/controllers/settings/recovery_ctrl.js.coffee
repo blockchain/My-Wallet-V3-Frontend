@@ -37,10 +37,13 @@ walletApp.controller "RecoveryCtrl", ($scope, Wallet, $state, $translate) ->
     error = (message) ->
       $scope.importing = false
       Wallet.displayError(message)
+      
+    cancel = () ->
+      $scope.importing = false
 
     if confirm("You will lose all your bitcoins! Are you sure?")
       $scope.importing = true
-      Wallet.importWithMnemonic($scope.mnemonic, $scope.passphrase, success, error)
+      Wallet.importWithMnemonic($scope.mnemonic, $scope.passphrase, success, error, cancel)
 
     return
 

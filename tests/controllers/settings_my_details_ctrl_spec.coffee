@@ -14,10 +14,15 @@ describe "SettingsMyDetailsCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
-      
-      Wallet.login("test", "test")  
-      
+      Wallet.user = {email: "steve@me.com"}
+      Wallet.settings_api = 
+        change_email: (email, success, error) -> success()
+        update_password_hint1: (hint, success, error) -> 
+          if hint == "आपकी पसंदीदा"
+            error(101)
+          else
+            success()
+            
       scope = $rootScope.$new()
             
       $controller "SettingsMyDetailsCtrl",

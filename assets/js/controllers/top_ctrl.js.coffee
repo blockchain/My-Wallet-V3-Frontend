@@ -2,12 +2,8 @@ walletApp.controller "TopCtrl", ($scope, Wallet, $stateParams) ->
   $scope.settings = Wallet.settings
   $scope.isBitCurrency = Wallet.isBitCurrency
   $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency
-  
 
-
-  $scope.getTotal = (index) ->
-    return null if $scope.total(index) == null
-    return $scope.total(index)
+  $scope.getTotal = (index) -> $scope.total(index)
 
   #################################
   #           Private             #

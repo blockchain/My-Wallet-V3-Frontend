@@ -17,8 +17,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.alerts = Wallet.alerts
 
-  $scope.isOpen = {currencies: false}
-
   $scope.fiatCurrency = Wallet.settings.currency
   $scope.btcCurrency = Wallet.settings.btcCurrency
 
@@ -39,12 +37,10 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     origin.label || origin.address
 
   $scope.getFilter = (search, accounts=true) ->
-    filter =
+    {
       label: search
-      type: "!External"
-    if !accounts
-      filter.type = 'Imported'
-    return filter
+      type: if accounts then '!External' else 'Imported'
+    }
 
   $scope.hasZeroBalance = (origin) ->
     return origin.balance == 0.0
@@ -63,13 +59,13 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
     # $scope.transaction.destinations[i] = destination
     $scope.refreshDestinations(paymentRequest.address, i)
-    
+
     $scope.transaction.amounts[i] = paymentRequest.amount || 0
     $scope.transaction.note = paymentRequest.message || ''
 
     $scope.validateAmounts()
     $scope.updateToLabel()
-    
+
   $scope.processURLfromQR = (url) ->
     paymentRequest = Wallet.parsePaymentRequest(url)
 
@@ -99,8 +95,8 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.resetSendForm = () ->
     $scope.transaction = angular.copy($scope.transactionTemplate)
-    $scope.transaction.from = Wallet.accounts[Wallet.getDefaultAccountIndex()]
-    
+    $scope.transaction.from = Wallet.accounts()[Wallet.my.wallet.hdwallet.defaultAccountIndex]
+
     for i in [0..($scope.destinations.length - 1)]
       $scope.$broadcast('ResetSearch' + i)
 
@@ -116,67 +112,49 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     $scope.transaction.destinations.splice(index, 1)
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () ->
-    return filterFilter(Wallet.accounts, {active: true}).length + filterFilter(Wallet.legacyAddresses, {active: true}).length
+    return filterFilter(Wallet.accounts(), {archived: false}).length + filterFilter(Wallet.legacyAddresses(), {archived: false}).length
 
   $scope.send = () ->
-    unless $scope.sending
-      $scope.sending = true
+    return if $scope.sending
 
-      if $scope.transaction.publicNote
-        publicNote = $scope.transaction.note
-        if publicNote == ""
-          publicNote = null
+    $scope.sending = true
+    Wallet.clearAlerts()
 
-      transactionDidFailWithError = (message) ->
-        if message
-          $translate(message).then (translation) ->
-            Wallet.displayError(translation)
-        $scope.sending = false
+    # Set public note, if any
+    if $scope.transaction.publicNote
+      publicNote = $scope.transaction.note || null
 
-      transactionDidFinish = (tx_hash) ->
-        if not $scope.transaction.publicNote
-          # Save private note, if any:
-          note = $scope.transaction.note.trim()
-          if note != ""
-            Wallet.setNote({hash: tx_hash}, note)
+    transactionDidFailWithError = (message) ->
+      $scope.sending = false
+      $translate(message).then((t) -> Wallet.displayError(t)) if message
 
-        $scope.sending = false
+    transactionDidFinish = (tx_hash) ->
+      $scope.sending = false
+      $modalInstance.close ""
+      Wallet.beep()
 
-        Wallet.beep()
+      # Set the private note
+      note = $scope.transaction.note.trim()
+      if !$scope.transaction.publicNote && note != ""
+        Wallet.setNote({hash: tx_hash}, note)
 
-        $modalInstance.close ""
-        # Switch to the from account transactions view, unless "all accounts" are visible.
-        if $scope.transaction.from.index?
-          if $state.current.name != "wallet.common.transactions" || ($state.params.accountIndex? && $state.params.accountIndex != "accounts")
-            $state.go("wallet.common.transactions", {accountIndex: $scope.transaction.from.index })
-        else
-          $state.go("wallet.common.transactions", {accountIndex: "imported" })
+      # Switch to the from account transactions view, unless "all accounts" are visible.
+      index = $scope.transaction.from.index
+      index = 'imported' unless index?
 
-        $translate("SUCCESS").then (titleTranslation) ->
-          $translate("BITCOIN_SENT").then (messageTranslation) ->
+      unless $state.current.name == "wallet.common.transactions" || $stateParams.accountIndex == "accounts"
+        $state.go("wallet.common.transactions", { accountIndex: index })
 
-            modalInstance = $modal.open(
-              templateUrl: "partials/modal-notification.jade"
-              controller: "ModalNotificationCtrl"
-              windowClass: "notification-modal"
-              resolve:
-                notification: ->
-                  {
-                    type: 'sent-bitcoin'
-                    icon: 'bc-icon-send'
-                    heading: titleTranslation
-                    msg: messageTranslation
-                  }
-            ).opened.then () ->
-              Wallet.store.resetLogoutTimeout()
+      # Show success notification
+      $translate(['SUCCESS', 'BITCOIN_SENT']).then (translations) ->
+        $scope.$emit 'showNotification',
+          type: 'sent-bitcoin'
+          icon: 'bc-icon-send'
+          heading: translations.SUCCESS
+          msg: translations.BITCOIN_SENT
 
-      Wallet.clearAlerts()
-
-      transaction = Wallet.transaction(transactionDidFinish, transactionDidFailWithError)
-
-      transaction.send($scope.transaction.from, $scope.transaction.destinations, $scope.transaction.amounts, parseInt($scope.transaction.fee), publicNote)
-
-      return
+    transaction = Wallet.transaction(transactionDidFinish, transactionDidFailWithError)
+    transaction.send($scope.transaction.from, $scope.transaction.destinations, $scope.transaction.amounts, parseInt($scope.transaction.fee), publicNote)
 
   $scope.closeAlert = (alert) ->
     Wallet.closeAlert(alert)
@@ -232,10 +210,21 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     transaction = $scope.transaction
     transaction.destinations.forEach (dest, index) ->
       match = false
-      $timeout (-> $scope.checkForSameDestination()), 0 unless dest?
       match = dest.label == transaction.from.label if dest?
       return unless $scope.sendForm?
       $scope.sendForm['destinations' + index].$setValidity('isNotEqual', !match)
+
+  $scope.formatOrigin = (origin) ->
+    formatted = {
+      label: origin.label || origin.address
+      index: origin.index
+      address: origin.address
+      balance: origin.balance
+      archived: origin.archived
+    }
+    formatted.type = if origin.index? then 'Accounts' else 'Imported Addresses'
+    formatted.isWatchOnly = origin.isWatchOnly if !origin.index?
+    return formatted
 
   #################################
   #           Private             #
@@ -252,28 +241,28 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       $scope.updateToLabel()
   , true
 
-  $scope.$watch "status.didLoadBalances + status.legacyAddressBalancesLoaded", ->
-    if $scope.status.didLoadBalances && $scope.status.legacyAddressBalancesLoaded
+  $scope.$watch "status.didLoadBalances", ->
+    if $scope.status.didLoadBalances
       if $scope.origins.length == 0
 
-        defaultAccountIndex = Wallet.getDefaultAccountIndex()
+        idx = Wallet.my.wallet.hdwallet.defaultAccountIndex
+        unless isNaN($stateParams.accountIndex)
+          idx = parseInt($stateParams.accountIndex)
 
-        for account in $scope.accounts
-          item = angular.copy(account)
-          item.type = "Accounts"
-          unless item.index? && !item.active
-            if item.index == defaultAccountIndex
-              $scope.transaction.from = item
-            $scope.origins.push item
-            $scope.destinationsBase.push angular.copy(item) # https://github.com/angular-ui/ui-select/issues/656
+        for account in $scope.accounts()
+          account = $scope.formatOrigin(account)
+          unless account.index? && account.archived
+            if account.index == idx
+              $scope.transaction.from = account
+            $scope.origins.push account
+            $scope.destinationsBase.push angular.copy(account) # https://github.com/angular-ui/ui-select/issues/656
 
-        for address in $scope.legacyAddresses
-          if address.active
-            item = angular.copy(address)
-            item.type = "Imported Addresses"
-            $scope.destinationsBase.push item
-            unless address.isWatchOnlyLegacyAddress
-              $scope.origins.push angular.copy(item)
+        for address in $scope.legacyAddresses()
+          address = $scope.formatOrigin(address)
+          if !address.archived
+            $scope.destinationsBase.push address
+            unless address.isWatchOnly
+              $scope.origins.push angular.copy(address)
 
         $scope.destinationsBase.push({address: "", label: "", type: "External"})
         $scope.destinations.push $scope.destinationsBase
@@ -282,7 +271,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         if paymentRequest.address? && paymentRequest.address != ''
           $scope.applyPaymentRequest(paymentRequest, 0)
         else if paymentRequest.toAccount?
-          $scope.transaction.destinations[0] = paymentRequest.toAccount
+          $scope.transaction.destinations[0] = $scope.formatOrigin(paymentRequest.toAccount)
           $scope.transaction.from = paymentRequest.fromAddress
         else if paymentRequest.fromAccount?
           $scope.transaction.from = paymentRequest.fromAccount

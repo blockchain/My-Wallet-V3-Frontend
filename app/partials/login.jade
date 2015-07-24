@@ -29,11 +29,20 @@
     .login-box
       header
         hgroup(ng-hide="status.enterkey")
-          h1(translate="WELCOME_BACK")
-          p(translate="LOGIN_BELOW")
+          .flex-between.flex-center.flex-wrap
+            h2.em-300.mtn(translate="WELCOME_BACK")
+            span.register.mbm
+              span(translate="OR")
+              | 
+              a(ng-click="prepareRegister()")
+                span(ng-show="beta")
+                  span(translate="CLICK_HERE_TO_CREATE_WALLET_ALPHA_KEY")| 
+                span(ng-hide="beta")
+                  span(translate="CLICK_HERE_TO_CREATE_WALLET")
+          p.em-300(translate="LOGIN_BELOW")
         hgroup(ng-show="status.enterkey")
-          h1(translate="CREATE_A_WALLET")
-          p(translate="ALPHA_KEY_EXPLAIN")
+          h2.em-300.mtn(translate="CREATE_A_WALLET")
+          p.em-300(translate="ALPHA_KEY_EXPLAIN")
     
       form.form-horizontal.clearfix(role="form" ng-hide="status.enterkey")
         .form-group(ng-class="{'has-error': errors.uid}")
@@ -60,24 +69,17 @@
             p.form-control-static(ng-show="settings.twoFactorMethod == 5")
               img(ng-show="resending" src="img/spinner.gif")
               a(ng-click="resend()", ng-show="!resending", translate="RESEND") 
-        .form-group.bttn
-          div.bttn-container
-            button#login.btn.btn-primary.btn-login(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="LOGIN", ng-disabled="!isValid")
-          span.register
-            a(ng-click="prepareRegister()")
-              span(ng-show="beta")
-                span(translate="CLICK_HERE_TO_CREATE_WALLET_ALPHA_KEY")| 
-              span(ng-hide="beta")
-                span(translate="CLICK_HERE_TO_CREATE_WALLET")
+        .mtl.flex-center.flex-end
+          button#login.button-primary(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="LOGIN", ng-disabled="!isValid")
 
       form.form-horizontal.clearfix(role="form", ng-show="status.enterkey")
         .form-group(ng-show="beta")
           label.control-label(for="beta_key", translate="ALPHA_INVITE_KEY")
           div
             input#beta_key.form-control(type="text", name="beta_key" ng-model="key", ng-disabled="busy || disableLogin")
-        .form-group.bttn
-          div.bttn-container
-            button.btn.btn-primary.btn-login(ng-click="register()",translate="CREATE_WALLET", ng-disabled="key == null || key == '' ")
-            span.register
+        .form-group
+          .flex-center.flex-end
+            span.register.mrm
               a(ng-click="status.enterkey = !status.enterkey")
                 span(translate="GO_BACK")
+            button.button-primary(ng-click="register()",translate="CREATE_WALLET", ng-disabled="key == null || key == '' ")

@@ -36,7 +36,9 @@ ul.aside {
     > a {
       color: #737373;
       padding: .4em .8em;
+      display: -webkit-flex;
       display: flex;
+      -webkit-align-items: center;
       align-items: center;
       i { margin-right: .55em; line-height: 0; font-size: 1.3em; }
     }

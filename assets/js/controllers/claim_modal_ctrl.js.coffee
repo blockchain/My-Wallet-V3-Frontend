@@ -2,8 +2,8 @@ walletApp.controller "ClaimModalCtrl", ($scope, Wallet, $translate, $modalInstan
   $scope.accounts = Wallet.accounts
   $scope.fields = {to:  null}
   
-  $scope.$watchCollection "accounts", ->
-    $scope.fields.to = Wallet.accounts[Wallet.getDefaultAccountIndex()]
+  $scope.$watchCollection "accounts()", ->
+    $scope.fields.to = Wallet.accounts()[Wallet.getDefaultAccountIndex()]
   
   $scope.balance = null
   

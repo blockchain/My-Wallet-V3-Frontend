@@ -6,9 +6,6 @@ describe "TransactionsCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
-
-      Wallet.login("test", "test")  
 
       scope = $rootScope.$new()
 
@@ -23,6 +20,7 @@ describe "TransactionsCtrl", ->
     return
 
   it "should have access to address book",  inject(() ->
+    pending()
     expect(scope.addressBook).toBeDefined()
     expect(scope.addressBook["17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq"]).toBe("John")
   )
@@ -56,4 +54,10 @@ describe "TransactionsCtrl", ->
     spyOn(scope, "filterSearch")
     scope.filterSearch(1, "test")
     expect(scope.filterSearch).toHaveBeenCalled()
+  )
+
+  it "can toggle a transaction's details", inject((Wallet) ->
+    spyOn(scope, "toggleTransaction")
+    scope.toggleTransaction(scope.transactions[0])
+    expect(scope.toggleTransaction).toHaveBeenCalled()
   )

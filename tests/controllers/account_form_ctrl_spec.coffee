@@ -1,5 +1,7 @@
 describe "AccountFormCtrl", ->
+  Wallet = undefined
   scope = undefined
+  accounts = [{label: 'Savings'}, {label: 'Party Money'}]
 
   modalInstance =
     close: ->
@@ -8,19 +10,36 @@ describe "AccountFormCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
+    angular.mock.inject ($injector) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
 
-      Wallet.login("test", "test")
+      Wallet.accounts = () -> accounts
 
+      Wallet.askForSecondPasswordIfNeeded = () ->
+        return {
+          then: (fn) -> fn(); return { catch: (-> ) }
+        }
+
+      MyWallet.getHistoryAndParseMultiAddressJSON = (-> )
+
+      MyWallet.wallet = {
+        isDoubleEncrypted: false
+
+        newAccount: (label) ->
+          accounts.push { label: label }
+          return
+      }
+
+  beforeEach ->
+    angular.mock.inject ($rootScope, $controller, $compile) ->
       scope = $rootScope.$new()
 
       $controller "AccountFormCtrl",
         $scope: scope
         $stateParams: {}
         $modalInstance: modalInstance
-        account: Wallet.accounts[0]
+        account: Wallet.accounts()[0]
 
       element = angular.element(
         '<form role="form" name="accountForm" novalidate>' +
@@ -33,8 +52,9 @@ describe "AccountFormCtrl", ->
       scope.$digest()
 
       return
-
     return
+
+  beforeEach -> accounts.splice(2); accounts[0].label = 'Savings'
 
   describe "creation", ->
 
@@ -42,14 +62,14 @@ describe "AccountFormCtrl", ->
       scope.fields.name = 'New Account'
 
     it "should be created", inject((Wallet) ->
-      before = Wallet.accounts.length
+      before = Wallet.accounts().length
       scope.createAccount()
-      expect(Wallet.accounts.length).toBe(before + 1)
+      expect(Wallet.accounts().length).toBe(before + 1)
     )
 
     it "should have a name", inject((Wallet) ->
         scope.createAccount()
-        expect(Wallet.accounts[Wallet.accounts.length - 1].label).toBe("New Account")
+        expect(Wallet.accounts()[Wallet.accounts().length - 1].label).toBe("New Account")
     )
 
     it "should show a confirmation modal", inject(($modal)->
@@ -67,7 +87,7 @@ describe "AccountFormCtrl", ->
     it "should save the new name",  inject((Wallet) ->
       scope.fields.name = "New Name"
       scope.updateAccount()
-      expect(Wallet.accounts[0].label).toBe("New Name")
+      expect(Wallet.accounts()[0].label).toBe("New Name")
     )
 
   describe "validate", ->

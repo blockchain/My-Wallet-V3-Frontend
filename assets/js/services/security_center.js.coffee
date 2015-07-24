@@ -1,43 +1,42 @@
-angular.module("securityCenter", []).factory "SecurityCenter", ($log, Wallet, $rootScope, filterFilter) -> 
+angular.module("securityCenter", []).factory "SecurityCenter", ($log, Wallet, $rootScope, filterFilter) ->
   settings = Wallet.settings
   user = Wallet.user
   status = Wallet.status
   # transactions = Wallet.transactions
   # legacyAddresses = []
   # unfilteredLegacyAddresses = Wallet.legacyAddresses
-  
+
   service = {
     security: {
       level: null
     }
   }
 
-  # Legacy addresses are no longer considered for the security level  
+  # Legacy addresses are no longer considered for the security level
   # # Check for any level:
   # $rootScope.$watch(
   #   () -> status.legacyAddressBalancesLoaded,
   #   () ->
   #     if legacyAddresses.length == 0 && status.legacyAddressBalancesLoaded == true
-  #       for address in filterFilter(filterFilter(unfilteredLegacyAddresses, {active: true, isWatchOnlyLegacyAddress: false}), greaterThan('balance', 50000))
+  #       for address in filterFilter(filterFilter(unfilteredLegacyAddresses, {archived: false, isWatchOnlyLegacyAddress: false}), greaterThan('balance', 50000))
   #         legacyAddresses.push address
   #     updateLevel()
   # )
- 
-  
+
   # Check for when it should update the security level:
   $rootScope.$watch(
-    () -> user.isEmailVerified + status.didConfirmRecoveryPhrase + user.passwordHint + settings.needs2FA + user.isMobileVerified + settings.blockTOR,
-    () -> 
+    () -> status.didConfirmRecoveryPhrase + user.passwordHint + settings.needs2FA + user.isMobileVerified + settings.blockTOR + user.isEmailVerified,
+    () ->
       updateLevel()
   )
-  
+
   # # Check for upgrade to level 3 (transactions that might sweep legacy addresses)
   # $rootScope.$watchCollection(
   #   () -> transactions,
   #   () ->
   #     updateLevel()
   # )
-  
+
   # greaterThan = (prop, val) ->
   #   (item) ->
   #     if item[prop] > val
@@ -57,7 +56,7 @@ angular.module("securityCenter", []).factory "SecurityCenter", ($log, Wallet, $r
       user.isMobileVerified
       settings.blockTOR
     ]
-        
+
     securityLevel = 0
 
     for objective in securityObjectives
@@ -65,5 +64,5 @@ angular.module("securityCenter", []).factory "SecurityCenter", ($log, Wallet, $r
         securityLevel++
 
     service.security.level = securityLevel;
-  
+
   return service
