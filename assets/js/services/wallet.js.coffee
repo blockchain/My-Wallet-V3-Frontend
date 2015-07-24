@@ -507,7 +507,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     return amount
 
-  wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bipPassphrase, successCallback, errorCallback) ->
+  wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bipPassphrase, successCallback, errorCallback, cancel) ->
     success = (address) ->
       successCallback(address)
       wallet.applyIfNeeded()
@@ -522,8 +522,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       ).then(success, error)
 
     wallet.askForSecondPasswordIfNeeded()
-      .then proceed
-      .catch
+      .then proceed, cancel
 
   wallet.transaction = (successCallback, errorCallback) ->
 
