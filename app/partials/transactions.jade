@@ -19,7 +19,7 @@
         p.em-400(translate="DESCRIBE_TRANSACTIONS")
       h3.em-100.text-center.mid-grey.emptystate(translate="HIT_RECEIVE", ng-click="request()")
       h3.em-100.text-center.mid-grey.emptystate(translate="HIT_SEND", ng-click="send()")
-    .transaction(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")
+    .transaction.no-select(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")
       .tx-toggle.hidden-xs.hidden-sm(ng-click="toggleTransaction(transaction)")
         i.ti-arrow-circle-right.h4.ccc.pointer.mrl.prl(ng-show="!transaction.toggled")
         i.ti-arrow-circle-down.h4.dark-grey.pointer.mrl.prl(ng-show="transaction.toggled")
