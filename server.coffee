@@ -86,9 +86,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
     userEmail = request.query.email
     if (parseInt(process.env.PERCENT_REQUESTED) != 100)
       if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(userEmail))
-        ios = if request.query.ios == 'true' || request.query.android == true then true else false
-        android = if request.query.android == 'true' || request.query.android == true then true else false
-        hdBeta.attemptToRequestKey userEmail, { ios: ios, android: android }, (err) ->
+        hdBeta.attemptToRequestKey userEmail, {ios: request.query.ios || false, android: request.query.android || false}, (err) ->
           if !err
             response.json { message: 'Successfully submitted request', success: true }
           else
