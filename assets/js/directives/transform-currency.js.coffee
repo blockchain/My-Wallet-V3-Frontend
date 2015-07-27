@@ -10,24 +10,29 @@ walletApp.directive('transformCurrency', (Wallet) ->
       return unless scope.transformCurrency?
       return unless scope.transformCurrency.code?
 
-      # Attempt to import restrictions from json attribute
-      try
-        restrict = angular.fromJson(attrs.restrict)
-      catch error
-        console.error 'Invalid JSON in "restrict" attribute'
+      restrict = {}
 
       # Restriction imposing functions
       restrictions = {
         max: (input, max) ->
-          if input > max then max else input
+          if input > parseInt(max) then parseInt(max) else input
 
         decimals: (input, decimals) ->
-          formatted = parseFloat(input.toFixed(decimals))
+          places = Math.pow(10, decimals)
+          formatted = Math.floor(input * places) / places
           if formatted != input then formatted else input
 
-        negative: (input, negative) ->
-          if !negative then Math.abs(input) else input
+        negative: (input, restrict) ->
+          if restrict then Math.abs(input) else input
+
+        maxlength: (input, length) ->
+          parseFloat(input.toString().slice(0, parseInt(length)))
       }
+
+      # Load restrictions from view
+      for r,m of restrictions
+        camelCase = 'restrict' + r.charAt(0).toUpperCase() + r.slice(1)
+        restrict[r] = JSON.parse(attrs[camelCase]) if attrs[camelCase]?
 
       # View parser
       scope.parseToModel = (viewValue) ->

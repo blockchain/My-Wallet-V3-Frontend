@@ -76,10 +76,12 @@
                   ng-model="transaction.amounts[$index]"
                   name="{{'amounts' + $index}}"
                   transform-currency="btcCurrency"
-                  restrict='{ "decimals": {{ allowedDecimals(btcCurrency) }}, "negative": false }'
-                  ng-change="validateAmounts()"
+                  restrict-decimals="{{ allowedDecimals(btcCurrency) }}"
+                  restrict-negative="true"
+                  restrict-max="{{ getBtcCap() }}"
                   min="1"
                   max="2100000000000000"
+                  ng-change="validateAmounts()"
                   required
                 )
             .mrl.flex-1
@@ -90,10 +92,12 @@
                   ng-model="transaction.amounts[$index]"
                   name="{{'amountsFiat' + $index}}"
                   transform-currency="fiatCurrency"
-                  restrict='{ "decimals": 2, "negative": false }'
-                  ng-change="validateAmounts()"
+                  restrict-decimals="2"
+                  restrict-negative="true"
+                  restrict-max="{{ getFiatCap() }}"
                   min="1"
                   max="2100000000000000"
+                  ng-change="validateAmounts()"
                   required
                 )
             a.mlm.button-danger.type-sm.button-sm(ng-click="removeDestination($index)" ng-hide="$first && $last")
