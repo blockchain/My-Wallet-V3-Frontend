@@ -50,14 +50,14 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     $translate("CAMERA_PERMISSION_DENIED").then (translation) ->
       Wallet.displayWarning(translation)
 
-# TODO: what is supposed to do that with multiple accounts
   $scope.applyPaymentRequest = (paymentRequest, i) ->
+    $scope.processingPaymentRequest = true
+    
     destination =
       address: paymentRequest.address || ""
       label: paymentRequest.address || ""
       type: "External"
 
-    # $scope.transaction.destinations[i] = destination
     $scope.refreshDestinations(paymentRequest.address, i)
 
     $scope.transaction.amounts[i] = paymentRequest.amount || 0
@@ -65,6 +65,14 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
     $scope.validateAmounts()
     $scope.updateToLabel()
+    
+    # Hack, see: https://blockchain.atlassian.net/browse/WEBHD-269
+    $scope.$$postDigest(()->
+      $timeout(()->
+        $scope.processingPaymentRequest = false
+      , 3000)
+    )
+    
 
   $scope.processURLfromQR = (url) ->
     paymentRequest = Wallet.parsePaymentRequest(url)
@@ -179,14 +187,22 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         $scope.toLabel += " Account"
 
   $scope.refreshDestinations = (query, i) ->
+    
+    return if query == "" && $scope.processingPaymentRequest
+      
     return if $scope.destinations[i].length == 0
+    
+    $scope.updateToLabel()
+
+    $scope.addExternalLabelIfNeeded(query, i)
+
+      
+  $scope.addExternalLabelIfNeeded = (query, i) ->
     last = $scope.destinations[i].slice(-1)[0]
     unless !query?
        last.address = query
        last.label = query
-
-    $scope.updateToLabel()
-
+       
     if $scope.transaction.destinations[i] == null || $scope.transaction.destinations[i].type != "External"
       # Select the external account if it's the only match; otherwise when the user moves away from the field
       # the address will be forgotten. This is only an issue if the user selects an account first and then starts typing.
