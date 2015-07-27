@@ -167,6 +167,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
       wallet.my.login(
         uid,
+        null, # sharedKey
         password,
         two_factor_code,
         didLogin,
