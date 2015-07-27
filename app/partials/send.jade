@@ -71,11 +71,31 @@
             .mrl.flex-1
               .flex-center
                 span.mrm {{ btcCurrency.code }}:
-                input.form-control(type="number" ng-model="transaction.amounts[$index]" name="{{'amounts' + $index}}" transform-currency="btcCurrency" ng-change="validateAmounts()" min="0.00000001" required)
+                input.form-control(
+                  type="number"
+                  ng-model="transaction.amounts[$index]"
+                  name="{{'amounts' + $index}}"
+                  transform-currency="btcCurrency"
+                  restrict='{ "decimals": {{ allowedDecimals(btcCurrency) }}, "negative": false }'
+                  ng-change="validateAmounts()"
+                  min="1"
+                  max="2100000000000000"
+                  required
+                )
             .mrl.flex-1
               .flex-center
                 span.mrm {{ fiatCurrency.code }}:
-                input.form-control(type="number" ng-model="transaction.amounts[$index]" name="{{'amountsFiat' + $index}}" transform-currency="fiatCurrency" ng-change="validateAmounts()" min="0.01" required)
+                input.form-control(
+                  type="number"
+                  ng-model="transaction.amounts[$index]"
+                  name="{{'amountsFiat' + $index}}"
+                  transform-currency="fiatCurrency"
+                  restrict='{ "decimals": 2, "negative": false }'
+                  ng-change="validateAmounts()"
+                  min="1"
+                  max="2100000000000000"
+                  required
+                )
             a.mlm.button-danger.type-sm.button-sm(ng-click="removeDestination($index)" ng-hide="$first && $last")
               i.ti-close.mrm
               span(translate="REMOVE")
