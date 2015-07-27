@@ -154,7 +154,7 @@
   "PENDING" : "Pending",
   "COMPLETE" : "Complete",
   "TRANSACTION_COMPLETE" : "Transaction Complete",
-  "OVERVIEW" : "Overview",
+  "OVERVIEW" : "Overview:",
   "TAGS" : "Tags",
   "NOTE" : "Note",
   "MAKE_PUBLIC" : "Make Public",
