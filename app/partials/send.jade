@@ -40,7 +40,7 @@
         .flex-column.prl(ng-class="{'advanced-recipient-row': advanced}" ng-repeat="item in transaction.destinations track by $index")
           p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")
-          div(ng-show="originsLoaded" ng-class="{'input-group': browserWithCamera, 'has-error': sendForm['destinations' + $index].$invalid && sendForm['amounts' + $index].$touched}")
+          div(ng-show="originsLoaded" ng-class="{'input-group': browserWithCamera, 'has-error': sendForm['destinations' + $index].$invalid && (sendForm['amounts' + $index].$touched || sendForm['amountsFiat' + $index].$touched)}")
             ui-select(
               ng-model="transaction.destinations[$index]" 
               name="{{'destinations' + $index}}" 
@@ -63,11 +63,10 @@
               button#qr(type="button", ng-click="cameraOn($index)")
                 img(src="img/qr-code.png", alt="QR")
           .has-error
-            span.help-block(ng-show="sendForm['destinations' + $index].$error.required && sendForm['amounts' + $index].$touched") Destination cannot be empty
             span.help-block(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress")
             span.help-block(translate="SAME_DESTINATION" ng-show="sendForm['destinations' + $index].$error.isNotEqual")
           //- Amount
-          div.flex-center.recipient-currency.mtl(ng-class="{'has-error': sendForm['amounts' + $index].$invalid && sendForm['amounts' + $index].$touched}")
+          div.flex-center.recipient-currency.mtl(ng-class="{'has-error': sendForm['amounts' + $index].$invalid && (sendForm['amounts' + $index].$touched || sendForm['amountsFiat' + $index].$touched)}")
             .mrl.flex-1
               .flex-center
                 span.mrm {{ btcCurrency.code }}:
@@ -103,8 +102,6 @@
             a.mlm.button-danger.type-sm.button-sm(ng-click="removeDestination($index)" ng-hide="$first && $last")
               i.ti-close.mrm
               span(translate="REMOVE")
-          .has-error
-            span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="sendForm['amounts' + $index].$invalid && sendForm['amounts' + $index].$touched")
         label.mbm.flex-between(ng-show="advanced")
           a.flex-center.type-sm.button-sm.button-default(ng-click="addDestination()")
             i.ti-plus.mrm
