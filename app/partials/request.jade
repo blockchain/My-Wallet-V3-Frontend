@@ -16,18 +16,27 @@
     .form-group(ng-class="{'has-error': requestForm.amount.$error.isValidAmount && requestForm.amount.$touched}")
       label.col-sm-3.control-label(translate="AMOUNT")
       .col-sm-3.mbl
-        input.form-control(name="amount" type="text" ng-model="fields.amount" ng-disabled="paymentRequest && paymentRequest.paid > 0" is-valid-amount currency="fields.currency")
-        span.help-block(ng-show="requestForm.amount.$error.isValidAmount && requestForm.amount.$touched" translate="ENTER_VALID_AMOUNT")
-      .col-sm-4
-        ui-select(ng-model="fields.currency")
-          ui-select-match {{ $select.selected.code }}
-          ui-select-choices(repeat="currency in currencies | filter: $select.search" group-by="'type'")
-            span(ng-bind-html="currency.code | highlight: $select.search")   
-      .col-sm-2
-        p.form-control-static
-          fiat(currency="settings.currency", btc="paymentRequestAmount",  ng-show="isBitCurrency(fields.currency)")
-          span(ng-hide="isBitCurrency(fields.currency)") {{ paymentRequestAmount | toBitCurrency:settings.btcCurrency }}
-      
+        span {{ settings.btcCurrency.code }}:
+        input.form-control(
+          type="number"
+          ng-model="fields.amount"
+          name="amount"
+          transform-currency="settings.btcCurrency"
+          restrict-negative="true"
+          min="1"
+          max="2100000000000000"
+        )
+      .col-sm-3
+        span {{ settings.currency.code }}:
+        input.form-control(
+          type="number"
+          ng-model="fields.amount"
+          name="amountFiat"
+          transform-currency="settings.currency"
+          restrict-negative="true"
+          min="1"
+          max="2100000000000000"
+        )
     //- .form-group
     //-   label.col-sm-3.control-label(translate="DESCRIPTION")
     //-   .col-sm-9
