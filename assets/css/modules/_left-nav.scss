@@ -103,10 +103,11 @@ ul.aside {
 }
 
 .scroll-parent{
-  .scroll{
+  .scroll-accounts{
     max-height: 150px;
     overflow-x: auto;
   }
+  .scroll-settings{ max-height: 190px; }
 }
 .scroll-hidden {
   ::-webkit-scrollbar {
@@ -165,7 +166,7 @@ li.action-bar{
   }
 }
 
-@media (max-height: 670px) {
+@media (max-height: 680px) {
   .adverts {
     display: none;
   }
