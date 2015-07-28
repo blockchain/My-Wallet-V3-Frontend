@@ -29,7 +29,7 @@ walletApp.directive('singleClickSelect', ($window) ->
       action = (newVal, oldVal) ->
         scope.highlighted = false if newVal != oldVal
 
-      address = -> scope.paymentRequestAddress.toString()
+      address = -> elem[0].textContent.toString()
 
       scope.$watch address, action
 
