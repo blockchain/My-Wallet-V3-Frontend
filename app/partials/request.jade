@@ -54,10 +54,10 @@
           img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
           span(ng-show="status.didInitializeHD" single-click-select)
             | {{ paymentRequestAddress }}
-        p.black.mtm.flex-center.center-align(ng-class="{ 'hidden' : !highlighted }" ng-hide="browserCanExecCommand")
+        p.black.mtm.flex-center.center-align(ng-show="!browserCanExecCommand || browserCanExecCommand && !highlighted")
           i.ti-mouse-alt.mrs
           span(translate="COPY_ADDRESS")
-        p.success.mtm.flex-center.center-align(ng-class="{ 'hidden' : !highlighted }" ng-show="browserCanExecCommand")
+        p.success.mtm.flex-center.center-align(ng-show="browserCanExecCommand && highlighted")
           i.ti-check.mrs
           span Successfully copied to your clipboard!
 .modal-footer.flex-end.pal
