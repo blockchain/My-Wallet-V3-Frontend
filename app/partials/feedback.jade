@@ -5,7 +5,7 @@
       | Success!
     h2 Thank you for your feedback
   div(ng-hide="formStage >= 2")
-    form.bc-form.pal(ng-submit="setFormSubmitted()" name="feedbackForm")
+    form.bc-form.pal(ng-submit="setFormSubmitted()" name="feedbackForm" autocomplete="off" id="feedback-search-form")
       .bc-form-header
         h1 Tell us what you think!
       label.mbl What's your overall impression of the wallet?
