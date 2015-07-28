@@ -1198,7 +1198,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.displayError("Second password cannot be unset. Contact support.")
       errorCallback();
     cancel = errorCallback
-    proceed = (password) -> wallet.my.wallet.decrypt(password, success, error)
+    decrypting = () -> console.log("Decrypting...")
+    syncing = () -> console.log("Syncing...")
+    proceed = (password) -> wallet.my.wallet.decrypt(password, success, error, decrypting, syncing)
     wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
 
   wallet.validateSecondPassword = (password) ->
@@ -1211,7 +1213,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       successCallback()
     error = () ->
       wallet.displayError("Second password cannot be set. Contact support.")
-    wallet.my.wallet.encrypt(password, success, error)
+    encrypting = () -> console.log("Encrypting...")
+    syncing = () -> console.log("Syncing...")
+    wallet.my.wallet.encrypt(password, success, error, encrypting, syncing)
 
 
   ########################################
