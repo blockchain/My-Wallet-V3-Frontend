@@ -1,4 +1,4 @@
-walletApp.directive('virtualKeyboard', ($document) ->
+walletApp.directive('virtualKeyboard', ($document, $window) ->
   {
     restrict: "E"
     replace: 'true'
@@ -31,10 +31,13 @@ walletApp.directive('virtualKeyboard', ($document) ->
         ngModel.$setViewValue(ngModel.$viewValue + key)
 
       scope.backspaceEventHandler = (event) ->
+        selection = $window.getSelection().toString()
         if event.which == 8
           event.preventDefault()
-          ngModel.$setViewValue(ngModel.$viewValue.slice(0, -1))
-
+          if selection != ''
+            ngModel.$setViewValue('')
+          else
+            ngModel.$setViewValue(ngModel.$viewValue.slice(0, -1))
       $document.bind 'keydown keypress', scope.backspaceEventHandler
 
       scope.$on '$destroy', () ->
