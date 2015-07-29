@@ -9,6 +9,7 @@ angular.module("securityCenter", []).factory "SecurityCenter", ($log, Wallet, $r
   service = {
     security: {
       level: null
+      score: null
     }
   }
 
@@ -63,6 +64,7 @@ angular.module("securityCenter", []).factory "SecurityCenter", ($log, Wallet, $r
       if objective
         securityLevel++
 
-    service.security.level = securityLevel;
+    service.security.level = securityLevel
+    service.security.score = securityLevel / securityObjectives.length
 
   return service

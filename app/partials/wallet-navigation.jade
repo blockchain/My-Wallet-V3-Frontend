@@ -1,5 +1,6 @@
 .left-navigation(ng-show="status.isLoggedIn")
   ul.aside
+    contextual-message
     li.header(ui-sref-active="current", ng-click="hideMenu()")
       a(ui-sref="wallet.common.dashboard")
         i.ti-home
