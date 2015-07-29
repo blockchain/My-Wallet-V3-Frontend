@@ -80,8 +80,7 @@ describe "RequestCtrl", ->
   describe "when requesting for a legacy address", ->
 
     it "should select the users currency by default", inject((Wallet)->
-      expect(Wallet.settings.currency.code).toBe("USD")
-      expect(scope.fields.currency.code).toBe "USD"
+      expect(scope.settings.currency.code).toBe("USD")
     )
 
     it "should have a bit currency", inject((Wallet)->
@@ -127,9 +126,7 @@ describe "RequestCtrl", ->
 
     it "should show a payment URL with amount when legacy address is selected and amount > 0", ->
       scope.fields.to = scope.legacyAddresses()[0]
-      scope.$digest()
-      scope.fields.currency = scope.currencies[0]
-      scope.fields.amount = "0.1"
+      scope.fields.amount = 10000000
       scope.$digest()
       expect(scope.paymentRequestURL).toBeDefined()
       expect(scope.paymentRequestURL).toContain("amount=0.1")
@@ -148,12 +145,6 @@ describe "RequestCtrl", ->
       scope.fields.amount = ""
       scope.$digest()
       expect(scope.paymentRequestURL).not.toContain("amount=")
-
-    it "should show the amount in BTC", ->
-      expect(scope.currencies[4].code).toBe("EUR")
-      scope.fields.currency = scope.currencies[4]
-      scope.$digest()
-      expect(scope.paymentRequestAmount).toBe(400000)
 
   describe "form validation", ->
 
