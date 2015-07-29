@@ -1,2 +1,3 @@
-.contextual-message(ng-click="putMsgInConsole()")
-  h1.hidden HELLO, THIS IS A TEST MSG!
+.contextual-message(ng-hide="!message || dismissed" ng-click="putMsgInConsole()")
+  h1(translate="{{::message}}")
+  p(ng-click="dismissMessage(messageIndex + 1)") Dismiss
