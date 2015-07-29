@@ -10,38 +10,38 @@ walletApp.directive('transformCurrency', (Wallet) ->
       return unless scope.transformCurrency?
       return unless scope.transformCurrency.code?
 
-      restrict = {}
-
-      # Restriction imposing functions
+      # Restrictions, updated based on currency type
       restrictions = {
+        max: Wallet.convertFromSatoshi(21e14, scope.transformCurrency)
+        decimals: ((c) ->
+          return 8 if c.code == 'BTC'
+          return 6 if c.code == 'mBTC'
+          return 4 if c.code == 'bits'
+          return 2
+        )(scope.transformCurrency)
+        negative: false
+      }
+
+      # Modifiers for imposing restrictions on viewValue
+      modifiers = {
         max: (input, max) ->
           if input > parseInt(max) then parseInt(max) else input
 
         decimals: (input, decimals) ->
           places = Math.pow(10, decimals)
-          formatted = Math.floor(input * places) / places
-          if formatted != input then formatted else input
+          return Math.floor(input * places) / places
 
-        negative: (input, restrict) ->
-          if restrict then Math.abs(input) else input
-
-        maxlength: (input, length) ->
-          parseFloat(input.toString().slice(0, parseInt(length)))
+        negative: (input, allow) ->
+          if allow then input else Math.abs(input)
       }
-
-      # Load restrictions from view
-      for r,m of restrictions
-        camelCase = 'restrict' + r.charAt(0).toUpperCase() + r.slice(1)
-        restrict[r] = JSON.parse(attrs[camelCase]) if attrs[camelCase]?
 
       # View parser
       scope.parseToModel = (viewValue) ->
         modifiedInput = viewValue
 
-        for key,modifier of restrictions
+        for key,mod of modifiers
           break if modifiedInput == null
-          if restrict[key] != undefined
-            modifiedInput = modifier(modifiedInput, restrict[key])
+          modifiedInput = mod(modifiedInput, restrictions[key])
 
         if modifiedInput != viewValue
           ctrl.$setViewValue(modifiedInput)
@@ -55,5 +55,6 @@ walletApp.directive('transformCurrency', (Wallet) ->
 
       ctrl.$parsers.push scope.parseToModel
       ctrl.$formatters.push scope.formatToView
+
   }
 )
