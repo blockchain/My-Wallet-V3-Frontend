@@ -27,30 +27,8 @@ walletApp.controller "SignupCtrl", ($scope, $rootScope, $log, Wallet, $modalInst
 
   $scope.didLoad()
 
-  $scope.import = () ->
-    $scope.currentStep = 3
-
-  $scope.performImport = () ->
-    success = () ->
-      $scope.currentStep = 4
-      $scope.working = false
-      Wallet.displaySuccess("Successfully imported seed")
-
-    error = (message) ->
-      $scope.working = false
-      Wallet.displayError(message)
-
-    $scope.working = true
-
-    Wallet.importWithMnemonic($scope.fields.mnemonic, $scope.fields.bip39phrase, success, error)
-
-    return
-
   $scope.showAgreement = () ->
     Wallet.status.shouldShowAgreement = true
-
-  $scope.skipImport = () ->
-    $scope.currentStep = 4
 
   $scope.close = () ->
     Wallet.clearAlerts()
