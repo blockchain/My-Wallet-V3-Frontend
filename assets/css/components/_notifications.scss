@@ -15,12 +15,29 @@
   }
 }
 
-.contextual-message {
+.message {
+  position: absolute;
+  right: 0px;
+  top: 135px;
+  z-index: 1200;
+}
+
+.message-beacon {
   width: 20px;
   height: 20px;
-  position: absolute;
   z-index: 1200; //keep this the highest on the z-axis
   border-radius: 100%;
   background: $send-red;
   animation: pulse 3s linear infinite;
+}
+.message-contextual {
+  width: 250px;
+  border-radius: 5px;
+  border: 1px solid $aaa;
+  position: absolute;
+  z-index: 1199;
+  text-transform: none !important;
+  //scoped CSS (refactor)
+  a.button-success-alt { color: white; }
+  a.aaa { color: $aaa; }
 }

@@ -499,6 +499,10 @@
   "ALL" : "All",
   "FROM_LC" : "from:",
   "TO_LC" : "to:",
-  "NOTE_LC" : "note:"
+  "NOTE_LC" : "note:",
+  "SECURE_WALLET_MSG_1" : "We’re thrilled you’re using your bitcoin wallet! But it looks like you’re still not as secure as you could be. Securing your wallet can help keep funds safe.",
+  "SECURE_WALLET_MSG_2" : "Don't forget to secure your wallet - take advantage of our Security Center and keep your funds safe",
+  "NO_THANKS" : "No Thanks",
+  "SECURE_WALLET" : "Secure Wallet"
 
 }
