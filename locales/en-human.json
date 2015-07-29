@@ -389,6 +389,8 @@
   "ACCOUNT_CREATED" : "You've successfully created an account",
   "BITCOIN_SENT" : "You've successfully sent bitcoin",
   "NO_TRANSACTIONS_YET" : "Your Transactions",
+  "SORRY_ZERO_TXS" : "Sorry, we couldn't find any transactions!",
+  "PLEASE_TRY_AGAIN" : "Please try different filtering criteria or drop us a line by <b class='pointer blue em-500'>Contacting Support</b>",
   "DESCRIBE_TRANSACTIONS" : "Transactions occur when you receive and send bitcoin.",
   "HIT_RECEIVE" : "Click <b class='pointer black em-500'><i class='bc-icon-receive'></i> Receive </b> to deposit bitcoin into your wallet.",
   "HIT_SEND" : "Click <b class='pointer black em-500'><i class='bc-icon-send'></i> Send </b> to instantly send bitcoin anywhere in the world!",
