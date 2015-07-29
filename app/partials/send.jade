@@ -138,11 +138,11 @@
   //- Step 2 (confirmation)
   div.overview(ng-show="confirmationStep")
     .flex-column
-      .flex-column.control-group.mbl
-        .flex-1.flex-center.mbm
+      .flex-column.mbl
+        .flex-center.mbm
           label.mbn.flex-1.mrm(translate="FROM:")
           h5.mvn.flex-10.ccc.em-300.long-input {{ transaction.from.label || transaction.from.address }}
-        .flex-1.flex-center
+        .flex-center
           label.mbn.flex-1.mrm(translate="TO:")
           h5.btcaddr.mvn.flex-10.ccc.em-300.long-input(ng-hide="advanced") {{ toLabel }}
           h5.mvn.flex-10.ccc.em-300(ng-show="advanced", translate="MULTIPLE_ADDRESSES")
