@@ -228,6 +228,9 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     transactionTotal = $scope.getTransactionTotal(true)
     $scope.amountIsValid = available - transactionTotal >= 0
 
+  $scope.allAmountsAboveZero = () ->
+    $scope.transaction.amounts.every (amt) -> amt > 0
+
   $scope.checkForSameDestination = () ->
     transaction = $scope.transaction
     transaction.destinations.forEach (dest, index) ->
