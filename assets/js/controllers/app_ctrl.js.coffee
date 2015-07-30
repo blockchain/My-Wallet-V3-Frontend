@@ -140,7 +140,12 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
           insist
         defer: ->
           defer
-
+    )
+    
+    modalInstance.result.then(
+      () ->,
+      () ->
+        defer.reject()
     )
 
   $scope.$on "needsUpgradeToHD", (notification, continueCallback) ->

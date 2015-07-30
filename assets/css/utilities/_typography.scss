@@ -20,6 +20,10 @@
   display: block;
 }
 
+.no-select {
+  user-select: none;
+}
+
 $multiplier: 100;
 
 @for $i from 1 through 9 {

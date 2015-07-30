@@ -1,6 +1,6 @@
 .bc-modal {
   .modal-content { background: $light-grey-alt; box-shadow: 0 5px 1px rgba(0, 0, 0, 0.6); }
-  .modal-dialog { width: 45vw; }
+  .modal-dialog { width: 55vw; }
   .modal-body {
     background: white;
     min-height: 100px;
@@ -247,8 +247,9 @@
 @media (max-width: 768px) {
   .bc-modal {
     .modal-dialog {
-      width: 100%; /* fallback for browsers without support for vw */
-      width: 100vw;
+      width: 95%; /* fallback for browsers without support for vw */
+      width: 95vw;
+      margin: 5vw 2vw;
     }
   }
 }

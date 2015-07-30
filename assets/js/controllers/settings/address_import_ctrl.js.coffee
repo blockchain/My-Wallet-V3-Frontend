@@ -48,9 +48,11 @@ walletApp.controller "AddressImportCtrl", ($scope, $log, Wallet, $modalInstance,
         when 'needsBip38'
           $scope.BIP38 = true
 
+    cancel = () -> $scope.status.busy = false
+
     $timeout () ->
       Wallet.addAddressOrPrivateKey(
-        addressOrPrivateKey, bip38passphrase, success, error
+        addressOrPrivateKey, bip38passphrase, success, error, cancel
       )
     , 250
 

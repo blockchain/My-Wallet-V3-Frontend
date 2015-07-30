@@ -22,8 +22,9 @@ walletApp.controller "WalletNavigationCtrl", ($scope, Wallet, SecurityCenter, $s
   $scope.showImported = () ->
     $scope.selectedAccountIndex == 'imported' && $state.current.name == 'wallet.common.transactions'
 
-  $scope.showOrHide = () ->
-    return $state.current.url == '/:accountIndex/transactions/'
+
+  $scope.showOrHide = (path) ->
+    return $location.url().indexOf(path) != -1
 
   $scope.newAccount = () ->
     Wallet.clearAlerts()

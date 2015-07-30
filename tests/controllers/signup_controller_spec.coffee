@@ -40,12 +40,6 @@ describe "SignupCtrl", ->
 
     return
 
-  it "should performImport", inject((Wallet) ->
-    spyOn(Wallet, "importWithMnemonic")
-    scope.performImport()
-    expect(Wallet.importWithMnemonic).toHaveBeenCalled()
-  )
-
   it "should close", inject((Wallet) ->
     spyOn(Wallet, "clearAlerts")
     scope.close()

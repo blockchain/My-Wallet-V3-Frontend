@@ -177,7 +177,7 @@ module.exports = (grunt) ->
       options: {
         browsers: ['last 2 versions']
       }
-      no_dest: {
+      no_dest_multiple: {
         src: 'build/css/*.css'
       }
     },

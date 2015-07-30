@@ -67,6 +67,12 @@ if process.env.BETA? && parseInt(process.env.BETA)
 
   hdBeta = require('hd-beta')(__dirname + '/' + process.env.BETA_DATABASE_PATH)
 
+  origins = (process.env.BLOCKCHAIN || '').split(' ')
+  setHeaderForOrigin = (req, res, origins) ->
+    for o in origins
+      if req.headers.origin? && req.headers.origin.indexOf(o) > -1
+        res.setHeader 'Access-Control-Allow-Origin', req.headers.origin
+
   # beta key public
 
   app.get "/", (request, response) ->
@@ -78,15 +84,17 @@ if process.env.BETA? && parseInt(process.env.BETA)
       response.render "app/index.jade"
 
   app.get "/percent_requested", (request, response) ->
-    response.setHeader 'Access-Control-Allow-Origin', (process.env.BLOCKCHAIN || 'http://blockchain.com')
+    setHeaderForOrigin request, response, origins
     response.json { width: (process.env.PERCENT_REQUESTED || 60) }
 
   app.get "/request_beta_key", (request, response) ->
-    response.setHeader 'Access-Control-Allow-Origin', (process.env.BLOCKCHAIN || 'http://blockchain.com')
+    setHeaderForOrigin request, response, origins
     userEmail = request.query.email
     if (parseInt(process.env.PERCENT_REQUESTED) != 100)
       if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(userEmail))
-        hdBeta.attemptToRequestKey userEmail, {ios: request.query.ios || false, android: request.query.android || false}, (err) ->
+        ios = if request.query.ios == 'true' || request.query.ios == true then true else false
+        android = if request.query.android == 'true' || request.query.android == true then true else false
+        hdBeta.attemptToRequestKey userEmail, { ios: ios, android: android }, (err) ->
           if !err
             response.json { message: 'Successfully submitted request', success: true }
           else
@@ -200,6 +208,15 @@ if process.env.BETA? && parseInt(process.env.BETA)
       else if request.params.method == 'activate-all'
         range = [request.query.min || 0, request.query.max || 100000]
         hdBeta.activateAll range, (err, data) ->
+          response.json { error: err, data: data }
+
+      else if request.params.method == 'resend-activation'
+        hdBeta.resendActivationEmail request.query.key, (err) ->
+          response.json { error: err }
+
+      else if request.params.method == 'resend-many'
+        range = [request.query.min || 0, request.query.max || 100000]
+        hdBeta.resendMany range, (err, data) ->
           response.json { error: err, data: data }
 
       else if request.params.method == 'wallets-created'

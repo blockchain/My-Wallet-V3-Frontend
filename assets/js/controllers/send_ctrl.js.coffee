@@ -25,7 +25,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.transactionTemplate = {
     from: null,
     destinations: [null],
-    amounts: [null],
+    amounts: [0],
     fee: 10000
     note: ""
     publicNote: false
@@ -42,6 +42,12 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       type: if accounts then '!External' else 'Imported'
     }
 
+  $scope.getBtcCap = () ->
+    Wallet.convertFromSatoshi(2100000000000000, $scope.btcCurrency)
+
+  $scope.getFiatCap = () ->
+    Wallet.convertFromSatoshi(2100000000000000, $scope.fiatCurrency)
+
   $scope.hasZeroBalance = (origin) ->
     return origin.balance == 0.0
 
@@ -50,14 +56,14 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     $translate("CAMERA_PERMISSION_DENIED").then (translation) ->
       Wallet.displayWarning(translation)
 
-# TODO: what is supposed to do that with multiple accounts
   $scope.applyPaymentRequest = (paymentRequest, i) ->
+    $scope.processingPaymentRequest = true
+
     destination =
       address: paymentRequest.address || ""
       label: paymentRequest.address || ""
       type: "External"
 
-    # $scope.transaction.destinations[i] = destination
     $scope.refreshDestinations(paymentRequest.address, i)
 
     $scope.transaction.amounts[i] = paymentRequest.amount || 0
@@ -65,6 +71,14 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
     $scope.validateAmounts()
     $scope.updateToLabel()
+
+    # Hack, see: https://blockchain.atlassian.net/browse/WEBHD-269
+    $scope.$$postDigest(()->
+      $timeout(()->
+        $scope.processingPaymentRequest = false
+      , 3000)
+    )
+
 
   $scope.processURLfromQR = (url) ->
     paymentRequest = Wallet.parsePaymentRequest(url)
@@ -103,7 +117,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.addDestination = () ->
     originalDestinations = angular.copy($scope.destinations[0])
     $scope.destinations.push(originalDestinations)
-    $scope.transaction.amounts.push(null)
+    $scope.transaction.amounts.push(0)
     $scope.transaction.destinations.push(null)
 
   $scope.removeDestination = (index) ->
@@ -179,13 +193,21 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         $scope.toLabel += " Account"
 
   $scope.refreshDestinations = (query, i) ->
+
+    return if query == "" && $scope.processingPaymentRequest
+
     return if $scope.destinations[i].length == 0
+
+    $scope.updateToLabel()
+
+    $scope.addExternalLabelIfNeeded(query, i)
+
+
+  $scope.addExternalLabelIfNeeded = (query, i) ->
     last = $scope.destinations[i].slice(-1)[0]
     unless !query?
        last.address = query
        last.label = query
-
-    $scope.updateToLabel()
 
     if $scope.transaction.destinations[i] == null || $scope.transaction.destinations[i].type != "External"
       # Select the external account if it's the only match; otherwise when the user moves away from the field
@@ -205,6 +227,9 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     available = $scope.transaction.from.balance
     transactionTotal = $scope.getTransactionTotal(true)
     $scope.amountIsValid = available - transactionTotal >= 0
+
+  $scope.allAmountsAboveZero = () ->
+    $scope.transaction.amounts.every (amt) -> amt > 0
 
   $scope.checkForSameDestination = () ->
     transaction = $scope.transaction

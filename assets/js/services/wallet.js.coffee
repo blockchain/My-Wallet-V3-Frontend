@@ -167,6 +167,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
       wallet.my.login(
         uid,
+        null, # sharedKey
         password,
         two_factor_code,
         didLogin,
@@ -455,9 +456,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return null unless amount?
     return null unless currency?
     if wallet.isBitCurrency(currency)
-      return parseInt(numeral(amount).multiply(currency.conversion).format("0"))
+      return Math.floor(amount * currency.conversion)
     else if wallet.conversions[currency.code]?
-      return parseInt(numeral(amount).multiply(wallet.conversions[currency.code].conversion).format("0"))
+      return Math.floor(amount * wallet.conversions[currency.code].conversion)
     else
       return null
 
@@ -465,9 +466,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return null unless amount?
     return null unless currency?
     if wallet.isBitCurrency(currency)
-      return parseFloat(numeral(amount).divide(currency.conversion).format("0.[00000000]"))
+      return (amount / currency.conversion)
     else if wallet.conversions[currency.code]?
-      return parseFloat((Math.floor((parseInt(amount) / wallet.conversions[currency.code].conversion) * 100) / 100).toFixed(2))
+      return (amount / wallet.conversions[currency.code].conversion)
     else
       return null
 
@@ -507,7 +508,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     return amount
 
-  wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bipPassphrase, successCallback, errorCallback) ->
+  wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bipPassphrase, successCallback, errorCallback, cancel) ->
     success = (address) ->
       successCallback(address)
       wallet.applyIfNeeded()
@@ -522,8 +523,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       ).then(success, error)
 
     wallet.askForSecondPasswordIfNeeded()
-      .then proceed
-      .catch
+      .then proceed, cancel
 
   wallet.transaction = (successCallback, errorCallback) ->
 
@@ -815,12 +815,18 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
             # Keep trying, user cannot use the wallet without upgrading.
             wallet.displayError("Unable to upgrade your wallet. Please try again.")
             wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
-
-          proceed = (password) ->
-            wallet.my.wallet.newHDWallet(translation, password)
+          # if success after upgrade
+          success = () ->
             wallet.status.didUpgradeToHd = true
             wallet.status.didInitializeHD = true
             wallet.my.getHistoryAndParseMultiAddressJSON()
+          # if failure saving upgrade
+          error = () ->
+            wallet.store.enableLogout()
+            wallet.store.setIsSynchronizedWithServer(true);
+            $window.location.reload()
+          proceed = (password) ->
+            wallet.my.wallet.newHDWallet(translation, password, success, error)
 
           wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
 
@@ -1198,7 +1204,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.displayError("Second password cannot be unset. Contact support.")
       errorCallback();
     cancel = errorCallback
-    proceed = (password) -> wallet.my.wallet.decrypt(password, success, error)
+    decrypting = () -> console.log("Decrypting...")
+    syncing = () -> console.log("Syncing...")
+    proceed = (password) -> wallet.my.wallet.decrypt(password, success, error, decrypting, syncing)
     wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
 
   wallet.validateSecondPassword = (password) ->
@@ -1211,7 +1219,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       successCallback()
     error = () ->
       wallet.displayError("Second password cannot be set. Contact support.")
-    wallet.my.wallet.encrypt(password, success, error)
+    encrypting = () -> console.log("Encrypting...")
+    syncing = () -> console.log("Syncing...")
+    wallet.my.wallet.encrypt(password, success, error, encrypting, syncing)
 
 
   ########################################

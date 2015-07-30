@@ -32,11 +32,11 @@ walletApp.controller "TransactionsCtrl", ($scope, Wallet, MyWallet, $log, $state
   $scope.toggleTransaction = (transaction) ->
     transaction.toggled = !transaction.toggled
 
+  $scope.getTotal = (i) -> $scope.total(i)
+
   #################################
   #           Private             #
   #################################
-
-
 
   $scope.$watchCollection "accounts()", (newValue) ->
     if $scope.accounts().length > 0
@@ -49,6 +49,7 @@ walletApp.controller "TransactionsCtrl", ($scope, Wallet, MyWallet, $log, $state
     $scope.status    = Wallet.status
     $scope.settings = Wallet.settings
     $scope.totals = Wallet.totals
+    $scope.total = Wallet.total
     $scope.accountIndex = $stateParams.accountIndex
     $scope.accounts = Wallet.accounts
     $scope.canDisplayDescriptions = false # Don't try to show descriptions for before accounts have been loaded

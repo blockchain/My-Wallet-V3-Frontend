@@ -29,6 +29,7 @@ walletApp.directive('verifyEmail', ($translate, Wallet) ->
 
         success = () ->
           scope.status.busy = false
+          scope.code = ''
 
         Wallet.verifyEmail(code, success, error)
 

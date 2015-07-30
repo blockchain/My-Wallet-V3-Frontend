@@ -36,6 +36,7 @@
   "RECEIVE_BITCOIN" : "Receive",
   "RECEIVE_TO" : "Receive To:",
   "AMOUNT" : "Amount",
+  "AMOUNT:" : "Amount:",
   "PAID" : "Paid:",
   "BITCOIN_ADDRESS" : "Bitcoin Address",
   "CANCEL" : "Cancel",
@@ -154,7 +155,7 @@
   "PENDING" : "Pending",
   "COMPLETE" : "Complete",
   "TRANSACTION_COMPLETE" : "Transaction Complete",
-  "OVERVIEW" : "Overview",
+  "OVERVIEW" : "Overview:",
   "TAGS" : "Tags",
   "NOTE" : "Note",
   "MAKE_PUBLIC" : "Make Public",
@@ -388,6 +389,8 @@
   "ACCOUNT_CREATED" : "You've successfully created an account",
   "BITCOIN_SENT" : "You've successfully sent bitcoin",
   "NO_TRANSACTIONS_YET" : "Your Transactions",
+  "SORRY_ZERO_TXS" : "Sorry, we couldn't find any transactions!",
+  "PLEASE_TRY_AGAIN" : "Please try different filtering criteria or drop us a line by <b class='pointer blue em-500'>Contacting Support</b>",
   "DESCRIBE_TRANSACTIONS" : "Transactions occur when you receive and send bitcoin.",
   "HIT_RECEIVE" : "Click <b class='pointer black em-500'><i class='bc-icon-receive'></i> Receive </b> to deposit bitcoin into your wallet.",
   "HIT_SEND" : "Click <b class='pointer black em-500'><i class='bc-icon-send'></i> Send </b> to instantly send bitcoin anywhere in the world!",
@@ -499,6 +502,10 @@
   "ALL" : "All",
   "FROM_LC" : "from:",
   "TO_LC" : "to:",
-  "NOTE_LC" : "note:"
+  "NOTE_LC" : "note:",
+  "SECURE_WALLET_MSG_1" : "We’re thrilled you’re using your bitcoin wallet! But it looks like you’re still not as secure as you could be. Securing your wallet can help keep funds safe.",
+  "SECURE_WALLET_MSG_2" : "Don't forget to secure your wallet - take advantage of our Security Center and keep your funds safe",
+  "NO_THANKS" : "No Thanks",
+  "SECURE_WALLET" : "Secure Wallet"
 
 }
