@@ -11,7 +11,7 @@
       input(type="text" placeholder="Search by Account name or Address" ng-model="searchText")
       i.ti-search
   .transaction-feed
-    .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || (transactions | filter:transactionFilter).length > 0 || selectedAccountIndex == 'imported'")
+    .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || getTotal(accountIndex) > 0 || selectedAccountIndex == 'imported'")
       .flex-column.mbl.border-bottom.black
         .flex-center.flex-justify
           i.ti-layout-list-post.h3.mrm
@@ -19,7 +19,11 @@
         p.em-400(translate="DESCRIBE_TRANSACTIONS")
       h3.em-100.text-center.mid-grey.emptystate(translate="HIT_RECEIVE", ng-click="request()")
       h3.em-100.text-center.mid-grey.emptystate(translate="HIT_SEND", ng-click="send()")
-    .transaction(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")
+    .flex-center.flex-justify.flex-column.mtl(ng-show="(transactions | filter:transactionFilter).length == 0 && getTotal(accountIndex) > 0")
+      i.ti-search.h1.mrm
+      h3.em-100.mbl(translate="SORRY_ZERO_TXS")
+      p.em-400(translate="PLEASE_TRY_AGAIN", ui-sref="wallet.common.support")
+    .transaction.no-select(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")
       .tx-toggle.hidden-xs.hidden-sm(ng-click="toggleTransaction(transaction)")
         i.ti-arrow-circle-right.h4.ccc.pointer.mrl.prl(ng-show="!transaction.toggled")
         i.ti-arrow-circle-down.h4.dark-grey.pointer.mrl.prl(ng-show="transaction.toggled")
@@ -33,7 +37,7 @@
     .row
       .col-xs-5
       .col-xs-2
-        p(align="center", ng-hide= "loading || allTransactionsLoaded")
+        p(align="center", ng-hide= "loading || allTransactionsLoaded || (transactions | filter:transactionFilter).length == 0")
           a(in-view="nextPage()", ng-click="nextPage()") Load more...
     .row(ng-show="loading").mtm
        .col-xs-5

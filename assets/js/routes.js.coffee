@@ -10,6 +10,8 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     else
       $location = "/dashboard"
   )
+
+  $urlRouterProvider.when('/settings', '/settings/wallet')
   
   top =  {
     templateUrl: "partials/top.jade"
@@ -174,9 +176,9 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     views: {
       top: top,
       left: {
-        templateUrl: "partials/settings/navigation.jade"
-        controller: "SettingsNavigationCtrl"
-      }
+        templateUrl: "partials/wallet-navigation.jade"
+        controller: "WalletNavigationCtrl"
+      },
       right: {
         controller: "SettingsCtrl"
         templateUrl: "partials/settings/settings.jade"

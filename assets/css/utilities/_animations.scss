@@ -241,3 +241,22 @@
 .bc-modal-fade.ng-hide-remove.ng-hide-remove-active {
   opacity: 1;
 }
+
+
+///////////////////////////////////////////
+/////////                    //////////////
+////****** MESSAGE ANIMATIONs ******* /////
+////////                    ///////////////
+//////////////////////////////////////////
+
+$pulse-color-1: #E47F7F;
+$pulse-color-2: #E8A1A1;
+$pulse-color-3: #F0D3D4;
+
+@keyframes pulse {
+  0% { box-shadow: none;}
+  25% { box-shadow: 0 0 0 6px $pulse-color-2; }
+  50% { box-shadow: 0 0 0 12px $pulse-color-3; }
+  75% { box-shadow: 0 0 0 6px $pulse-color-2; }
+  100% { box-shadow: none;}
+}

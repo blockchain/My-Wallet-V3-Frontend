@@ -10,13 +10,54 @@ walletApp.directive('transformCurrency', (Wallet) ->
       return unless scope.transformCurrency?
       return unless scope.transformCurrency.code?
 
-      scope.parseToModel = (viewValue) ->
-        return Wallet.convertToSatoshi(viewValue, scope.transformCurrency)
+      # Restrictions, updated based on currency type
+      restrictions = {
+        max: Wallet.convertFromSatoshi(21e14, scope.transformCurrency)
+        decimals: ((c) ->
+          return 8 if c.code == 'BTC'
+          return 6 if c.code == 'mBTC'
+          return 4 if c.code == 'bits'
+          return 2
+        )(scope.transformCurrency)
+        negative: false
+      }
 
+      # Modifiers for imposing restrictions on viewValue
+      modifiers = {
+        max: (input, max) ->
+          if input > parseInt(max) then parseInt(max) else input
+
+        decimals: (input, decimals) ->
+          split = input.toString().split('.')
+          if split[1]?
+            split[1] = split[1].slice(0, decimals)
+          return parseFloat(split.join('.'))
+
+        negative: (input, allow) ->
+          if allow then input else Math.abs(input)
+      }
+
+      # View parser
+      scope.parseToModel = (viewValue) ->
+        modifiedInput = viewValue
+
+        for key,mod of modifiers
+          break if modifiedInput == null
+          modifiedInput = mod(modifiedInput, restrictions[key])
+
+        if modifiedInput != viewValue
+          ctrl.$setViewValue(modifiedInput)
+          ctrl.$render()
+
+        return Wallet.convertToSatoshi(modifiedInput, scope.transformCurrency)
+
+      # Model formatter
       scope.formatToView = (modelValue) ->
-        return Wallet.convertFromSatoshi(modelValue, scope.transformCurrency)
+        fiat = Wallet.convertFromSatoshi(modelValue, scope.transformCurrency)
+        return parseFloat((fiat || 0).toFixed(restrictions.decimals))
 
       ctrl.$parsers.push scope.parseToModel
       ctrl.$formatters.push scope.formatToView
+
   }
 )

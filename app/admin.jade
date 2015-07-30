@@ -156,9 +156,12 @@ html(ng-app="AdminInterface" lang='en')
             </div>
           </div>
           <div class="form-group">
-            <div class="col-xs-2 col-xs-offset-2">
+            <div class="col-xs-5 col-xs-offset-2">
               <button class="btn" ng-disabled="editForm.$invalid" ng-class="(fields.activated) ? 'btn-default' : 'btn-danger'" type="submit">
                 {{ (fields.activated) ? 'Update' : 'Activate' }}
+              </button>
+              <button class="btn btn-default mlm" ng-show="fields.activated" ng-click="resendActivationEmail()" ng-disabled="resending" type="button">
+                {{ resendText }}
               </button>
             </div> 
           </div>
@@ -204,17 +207,21 @@ html(ng-app="AdminInterface" lang='en')
       <div class="modal-body" ng-switch="step">
         <div ng-switch-when="0">
           <form class="form-horizontal" name="activationForm" ng-submit="activate(min, max)" novalidate>
-            <div class="form-group">
+            <div class="form-group" ng-hide="resending">
               <label class="col-xs-3 control-label">Min id</label>
               <div class="col-xs-3"><input class="form-control" ng-model="min" name="min" type="number"></div>
             </div>
-            <div class="form-group">
+            <div class="form-group" ng-hide="resending">
               <label class="col-xs-3 control-label">Max id</label>
               <div class="col-xs-3"><input class="form-control" ng-model="max" name="max" type="number"></div>
             </div>
             <div class="form-group">
-              <div class="col-xs-3 col-xs-offset-3">
-                <button class="btn btn-danger" ng-disabled="activationForm.$invalid" type="submit">Activate</button>
+              <div class="col-xs-9 col-xs-offset-3">
+                <button class="btn btn-danger mrm" ng-disabled="activationForm.$invalid" ng-hide="resending" type="submit">Activate</button>
+                <button class="btn btn-default" ng-click="resend(min, max)" ng-disabled="resending" type="button">{{resendText}}</button>
+              </div>
+              <div class="col-xs-12 mtl">
+                <p>Note: the "Resend Activation Emails" button will send out invite emails to all users in the database who <b>are activated and have no guid</b> (meaning they have not created a wallet) within the specified range.</p>
               </div>
             </div>
           </form>

@@ -210,6 +210,15 @@ if process.env.BETA? && parseInt(process.env.BETA)
         hdBeta.activateAll range, (err, data) ->
           response.json { error: err, data: data }
 
+      else if request.params.method == 'resend-activation'
+        hdBeta.resendActivationEmail request.query.key, (err) ->
+          response.json { error: err }
+
+      else if request.params.method == 'resend-many'
+        range = [request.query.min || 0, request.query.max || 100000]
+        hdBeta.resendMany range, (err, data) ->
+          response.json { error: err, data: data }
+
       else if request.params.method == 'wallets-created'
         hdBeta.fetchNumWalletsCreated (err, count) ->
           response.json { error: err, count: count }

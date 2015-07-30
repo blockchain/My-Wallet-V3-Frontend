@@ -115,6 +115,13 @@ admin.controller('EditKeyCtrl', function ($scope, $modalInstance, InterfaceHelpe
         $modalInstance.dismiss();
       });
   };
+  $scope.resendText = 'Resend Invitation Email'
+  $scope.resending = false;
+  $scope.resendActivationEmail = function () {
+    $scope.resending = true; $scope.resendText = 'Sending...';
+    InterfaceHelper.callApi('/resend-activation', {key: $scope.fields.key})
+      .success(function(){ $scope.resendText = 'Sent!'; });
+  };
 });
 
 admin.controller('ActivateKeysCtrl', function ($scope, InterfaceHelper, load) {
@@ -136,6 +143,13 @@ admin.controller('ActivateKeysCtrl', function ($scope, InterfaceHelper, load) {
         $scope.step = 2;
       });
     $scope.step = 1;
+  };
+  $scope.resendText = 'Resend Invitation Emails'
+  $scope.resending = false;
+  $scope.resend = function (min, max) {
+    $scope.resending = true; $scope.resendText = 'Sending...';
+    InterfaceHelper.callApi('/resend-many', {min:min||null,max:max||null})
+      .success(function(){ $scope.resendText = 'Sent!'; });
   };
 });
 

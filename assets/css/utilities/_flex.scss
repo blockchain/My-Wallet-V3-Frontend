@@ -1,6 +1,4 @@
 %flex {
-  display: -moz-box-flex;
-  display: -webkit-flex;
   display: flex;
 }
 .flex, .flex-end, .flex-between, .flex-start, .flex-column, .flex-center {
@@ -8,34 +6,27 @@
 }
 .flex-between {
   justify-content: space-between;
-  -webkit-justify-content: space-between;
 }
 
 .flex-align-end {
   align-items: flex-end;
-  -webkit-align-items: flex-end;
 }
 .flex-end {
   justify-content: flex-end;
-  -webkit-justify-content: flex-end;
 }
 
 .flex-start {
   justify-content: flex-start;
-  -webkit-justify-content: flex-start;
 }
 
 .flex-column {
   flex-direction: column;
-  -webkit-flex-direction: column;
 }
 .flex-center {
   align-items: center;
-  -webkit-align-items: center;
 }
 .flex-justify {
   justify-content: center;
-  -webkit-justify-content: center;
 }
 .flex-important {
   display: flex !important;
@@ -46,11 +37,6 @@
 
 @for $i from 1 through 12 {
   .flex-#{$i} {
-    -webkit-box-flex: $i;
-    -moz-box-flex: $i;
-    -webkit-flex: $i;
-    -ms-flex: $i;
-    flex: $i;
     flex: $i;
   }
 }

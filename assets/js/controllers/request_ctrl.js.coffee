@@ -1,24 +1,17 @@
 walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, destination, $translate, $stateParams, filterFilter) ->
-  $scope.accounts = Wallet.accounts
-  $scope.legacyAddresses = Wallet.legacyAddresses
-  $scope.destinations = []
-  $scope.receiveAddress = null
   $scope.status = Wallet.status
   $scope.settings = Wallet.settings
+
+  $scope.accounts = Wallet.accounts
+  $scope.legacyAddresses = Wallet.legacyAddresses
+
   $scope.isBitCurrency = Wallet.isBitCurrency
 
-  $scope.currencies = angular.copy(Wallet.currencies)
-  $scope.btcCurrencies = angular.copy(Wallet.btcCurrencies).reverse()
+  $scope.destinations = []
+  $scope.receiveAddress = null
+  $scope.fields = {to: null, amount: 0, label: ""}
 
-  for currency in $scope.currencies
-    currency.type = "Fiat"
-
-  for btcCurrency in $scope.btcCurrencies
-    btcCurrency.type = "Crypto"
-    $scope.currencies.unshift btcCurrency
-
-  $scope.fields = {to: null, amount: "0", currency: Wallet.settings.currency, label: ""}
-
+  # Adds active accounts to the destinations array
   for account in $scope.accounts()
     if account.index? && !account.archived
       acct = angular.copy(account)
@@ -28,6 +21,7 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
       if destination? && destination.index? && destination.index == acct.index
         $scope.fields.to = acct
 
+  # Adds active legacy addresses to the destinations array
   for address in $scope.legacyAddresses()
     if !address.archived
       addr = angular.copy(address)
@@ -36,8 +30,8 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
       $scope.destinations.push addr
 
   $scope.determineLabel = (origin) ->
-    label = origin.label || origin.address
-    return label
+    return unless origin?
+    origin.label || origin.address
 
   $scope.closeAlert = (alert) ->
     Wallet.closeAlert(alert)
@@ -47,7 +41,9 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
     $modalInstance.dismiss ""
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () ->
-    return filterFilter(Wallet.accounts(), {archived: false}).length + filterFilter(Wallet.legacyAddresses(), {archived: false}).length
+    activeAccounts = filterFilter(Wallet.accounts(), {archived: false})
+    activeAddresses = filterFilter(Wallet.legacyAddresses(), {archived: false})
+    return activeAccounts.length + activeAddresses.length
 
   #################################
   #           Private             #
@@ -65,35 +61,22 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
       $scope.fields.to = $scope.accounts()[idx]
 
   $scope.$watch "fields.to.index + fields.to.address + status.didInitializeHD", () ->
-    amount = $scope.parseAmount()
-
     if $scope.fields.to? && $scope.fields.to.address?
-      $scope.setPaymentRequestURL($scope.fields.to.address, amount)
+      $scope.setPaymentRequestURL($scope.fields.to.address, $scope.fields.amount)
     else if $scope.fields.label == "" && $scope.status.didInitializeHD
       idx = $scope.fields.to.index
       $scope.receiveAddress = Wallet.getReceivingAddressForAccount(idx)
-      $scope.setPaymentRequestURL($scope.receiveAddress, amount)
-
-  $scope.parseAmount = () ->
-    if $scope.fields.currency == undefined
-      return 0
-    else if $scope.isBitCurrency($scope.fields.currency)
-      return parseInt(numeral($scope.fields.amount).multiply($scope.fields.currency.conversion).format("0"))
-    else
-      return Wallet.fiatToSatoshi($scope.fields.amount, $scope.fields.currency.code)
+      $scope.setPaymentRequestURL($scope.receiveAddress, $scope.fields.amount)
 
   $scope.$watch "fields.amount + fields.currency.code + fields.label", (oldValue, newValue) ->
-    amount = $scope.parseAmount()
-    $scope.paymentRequestAmount = amount
-
-    if $scope.fields.to?
+    if $scope.fields.to? && $scope.fields.amount
       if $scope.fields.to.address?
-        $scope.setPaymentRequestURL($scope.fields.to.address, amount)
-      else if $scope.requestForm.$valid
-        $scope.setPaymentRequestURL($scope.receiveAddress, amount)
+        $scope.setPaymentRequestURL($scope.fields.to.address, $scope.fields.amount)
+      else if $scope.receiveAddress?
+        $scope.setPaymentRequestURL($scope.receiveAddress, $scope.fields.amount)
 
   $scope.setPaymentRequestURL = (address, amount) ->
     $scope.paymentRequestAddress = address
     $scope.paymentRequestURL = "bitcoin:" + address
     if amount > 0
-      $scope.paymentRequestURL += "?amount=" + numeral(amount).divide(100000000)
+      $scope.paymentRequestURL += "?amount=" + parseFloat(amount / 100000000)

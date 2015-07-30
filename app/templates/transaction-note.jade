@@ -7,7 +7,7 @@ span.note
       .input-group-btn
         button.btn.btn-danger.btn-small(ng-click="deleteNote()", ng-show="transaction.note")
           span.glyphicon.glyphicon-trash
-      input(type="text", ng-model="transaction.draftNote").form-control
+      input(type="text" ng-model="transaction.draftNote" maxlength="255").form-control
     button.button-muted(ng-click="cancelEditNote()", translate="CANCEL_EDIT_NOTE")
     button.button-primary.button-sm(ng-click="saveNote()", translate="SAVE_NOTE", ng-hide="transaction.note")
     button.button-primary.button-sm(ng-click="saveNote()", translate="UPDATE_NOTE", ng-show="transaction.note")

@@ -20,7 +20,7 @@ describe "walletServices", () ->
         success: (() ->),
         error: (() ->)}
 
-      Wallet.my.login = (uid, password, two_factor_code, didLogin) ->
+      Wallet.my.login = (uid, sharedKey, password, two_factor_code, didLogin) ->
         didLogin()
 
       Wallet.my.wallet =
