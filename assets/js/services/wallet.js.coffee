@@ -456,9 +456,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return null unless amount?
     return null unless currency?
     if wallet.isBitCurrency(currency)
-      return parseInt(numeral(amount).multiply(currency.conversion).format("0"))
+      return Math.floor(amount * currency.conversion)
     else if wallet.conversions[currency.code]?
-      return parseInt(numeral(amount).multiply(wallet.conversions[currency.code].conversion).format("0"))
+      return Math.floor(amount * wallet.conversions[currency.code].conversion)
     else
       return null
 
@@ -466,9 +466,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return null unless amount?
     return null unless currency?
     if wallet.isBitCurrency(currency)
-      return parseFloat(numeral(amount).divide(currency.conversion).format("0.[00000000]"))
+      return (amount / currency.conversion)
     else if wallet.conversions[currency.code]?
-      return parseFloat((Math.floor((parseInt(amount) / wallet.conversions[currency.code].conversion) * 100) / 100).toFixed(2))
+      return (amount / wallet.conversions[currency.code].conversion)
     else
       return null
 

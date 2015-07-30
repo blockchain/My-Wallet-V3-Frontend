@@ -28,8 +28,10 @@ walletApp.directive('transformCurrency', (Wallet) ->
           if input > parseInt(max) then parseInt(max) else input
 
         decimals: (input, decimals) ->
-          places = Math.pow(10, decimals)
-          return Math.floor(input * places) / places
+          split = input.toString().split('.')
+          if split[1]?
+            split[1] = split[1].slice(0, decimals)
+          return parseFloat(split.join('.'))
 
         negative: (input, allow) ->
           if allow then input else Math.abs(input)
@@ -51,7 +53,8 @@ walletApp.directive('transformCurrency', (Wallet) ->
 
       # Model formatter
       scope.formatToView = (modelValue) ->
-        return Wallet.convertFromSatoshi(modelValue, scope.transformCurrency)
+        fiat = Wallet.convertFromSatoshi(modelValue, scope.transformCurrency)
+        return parseFloat((fiat || 0).toFixed(restrictions.decimals))
 
       ctrl.$parsers.push scope.parseToModel
       ctrl.$formatters.push scope.formatToView
