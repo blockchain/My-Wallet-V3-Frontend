@@ -60,7 +60,7 @@ describe "SendCtrl", ->
       return
 
     return
-    
+
   describe "", ->
     beforeEach ->
       angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
@@ -143,7 +143,7 @@ describe "SendCtrl", ->
 
       it "should have a single, null amount field", ->
         expect(scope.transactionTemplate.amounts.length).toEqual(1)
-        expect(scope.transactionTemplate.amounts[0]).toBeNull()
+        expect(scope.transactionTemplate.amounts[0]).toEqual(0)
 
       it "should have a fee set to 10,000", ->
         expect(scope.transactionTemplate.fee).toEqual(10000)
@@ -459,7 +459,7 @@ describe "SendCtrl", ->
       it "should set transaction to equal the template", ->
         scope.resetSendForm()
         expect(scope.transaction.destinations).toEqual([null])
-        expect(scope.transaction.amounts).toEqual([null])
+        expect(scope.transaction.amounts).toEqual([0])
         expect(scope.transaction.fee).toEqual(10000)
 
       it "should set transaction from field to default account", ->
@@ -676,7 +676,7 @@ describe "SendCtrl", ->
 
       it "should return type 'Imported' when accounts=false", ->
         expect(scope.getFilter('', false).type).toEqual('Imported')
-        
+
   describe "with a payment request", ->
     beforeEach ->
       angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
@@ -685,7 +685,7 @@ describe "SendCtrl", ->
           $stateParams: {},
           $modalInstance: modalInstance
           paymentRequest: {address: "valid_address", amount: 1000000}
-          
+
         spyOn(scope, 'addExternalLabelIfNeeded').and.callThrough()
 
         element = angular.element(
@@ -700,9 +700,9 @@ describe "SendCtrl", ->
 
         $compile(element)(scope)
         scope.$apply()
-    
+
     it "addExternalLabelIfNeeded should be called", ->
       expect(scope.addExternalLabelIfNeeded).toHaveBeenCalled()
-    
+
     it "should check that the destination has a valid address", ->
       expect(hasErr 'destinations0', 'isValidAddress').not.toBeDefined()

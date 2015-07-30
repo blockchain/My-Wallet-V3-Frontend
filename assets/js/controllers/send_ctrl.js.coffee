@@ -25,7 +25,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.transactionTemplate = {
     from: null,
     destinations: [null],
-    amounts: [null],
+    amounts: [0],
     fee: 10000
     note: ""
     publicNote: false
@@ -117,7 +117,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.addDestination = () ->
     originalDestinations = angular.copy($scope.destinations[0])
     $scope.destinations.push(originalDestinations)
-    $scope.transaction.amounts.push(null)
+    $scope.transaction.amounts.push(0)
     $scope.transaction.destinations.push(null)
 
   $scope.removeDestination = (index) ->
