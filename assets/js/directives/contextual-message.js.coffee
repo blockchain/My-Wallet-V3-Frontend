@@ -1,4 +1,4 @@
-walletApp.directive('contextualMessage', ($cookies, Wallet, SecurityCenter) ->
+walletApp.directive('contextualMessage', ($cookies, $window, Wallet, SecurityCenter) ->
   {
     restrict: "E"
     replace: true
@@ -39,6 +39,19 @@ walletApp.directive('contextualMessage', ($cookies, Wallet, SecurityCenter) ->
           unwatch()
           idx = if scope.msgCookie? then scope.msgCookie.index else 0
           scope.showMessage(idx)
+
+      #dynamically position beacon
+      elem.css('top', 135)
+      n = elem.parent()[0]
+      h = n.offsetHeight
+      s = n.children[5]
+      o = -> s.offsetTop
+      w = -> $window.location.hash
+
+      a = (newVal) ->
+        elem.css('top', o) if newVal.indexOf('transactions') != -1
+
+      scope.$watch w, a
 
   }
 )
