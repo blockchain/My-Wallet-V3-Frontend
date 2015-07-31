@@ -19,7 +19,7 @@ describe "Contextual message directive", ->
   )
 
   beforeEach ->
-    element = $compile("<contextual-message></contextual-message>")($rootScope)
+    element = $compile("<div style='height: 100px;'><contextual-message></contextual-message></div>")($rootScope)
     $rootScope.$digest()
     scope.$apply()
 
