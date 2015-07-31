@@ -15,9 +15,9 @@
         span.help-block(ng-show="fields.to.isWatchOnlyLegacyAddress") Your wallet does not have the private key for this address. Without the private key you will not have access to the bitcoins sent to this address. Make sure you have this private key somewhere else!
     .form-group.flex-center.mvl(ng-class="{'has-error': requestForm.amount.$error.isValidAmount && requestForm.amount.$touched}")
       label.flex-2.prm(translate="AMOUNT:")
-      .flex-4.flex-center.prl
+      .flex-4.flex-center.prl.border-bottom
         span {{ settings.btcCurrency.code }}:
-        input.form-control(
+        input.form-control.no-border(
           type="number"
           ng-model="fields.amount"
           name="amount"
@@ -25,9 +25,10 @@
           min="1"
           max="2100000000000000"
         )
-      .flex-4.flex-center
+      i.ti-arrows-horizontal.h4.aaa.prm
+      .flex-4.flex-center.border-bottom
         span {{ settings.currency.code }}:
-        input.form-control(
+        input.form-control.no-border(
           type="number"
           ng-model="fields.amount"
           name="amountFiat"
