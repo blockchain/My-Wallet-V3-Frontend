@@ -1,11 +1,11 @@
 .dyk
   .flex-between.flex-center
     h4.aaa.em-400(translate="DYK")
-    .pill.flex-center(ng-class="dyk.type.toLowerCase()") {{ dyk.type | translate }}
+    .pill.em-400.em-alt.flex-center(ng-class="dyk.type.toLowerCase()") {{ dyk.type | translate }}
   .widget
     .flex-center.mbm
       i.title.aaa(ng-class="dyk.icon")
-      p.h3.em-300.mll(ng-class="dyk.type.toLowerCase()") {{ dyk.title | translate }}
+      p.h3.em-300.mll.center-align(ng-class="dyk.type.toLowerCase()") {{ dyk.title | translate }}
     p.center-align.type-h6.lh-lg
       | {{ dyk.text | translate }}
       a.mls(href="{{ dyk.link }}") {{ dyk.linkText | translate }}

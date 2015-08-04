@@ -1,4 +1,4 @@
-.flex.flex-justify
+.flex.flex-justify.mtvl
   .flex-center.flex-column.mtl(ng-show="formStage == 2")
     h1.success.flex-center
       i.ti-check.prm
@@ -7,7 +7,7 @@
   div(ng-hide="formStage >= 2")
     form.bc-form.pal(ng-submit="setFormSubmitted()" name="feedbackForm" autocomplete="off" id="feedback-search-form")
       .bc-form-header
-        h1 Tell us what you think!
+        h1.em-300 Tell us what you think!
       label.mbl What's your overall impression of the wallet?
       .flex.flex-between.bc-radio-group
         .flex-column.flex-center

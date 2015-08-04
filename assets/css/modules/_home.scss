@@ -9,6 +9,7 @@
   &.feature { background: $blue; }
   &.partner { background: $partner }
   &.educational { background: $educational }
+  &:hover { color: white; }
 }
 
 .widget {
