@@ -1,20 +1,12 @@
 .flex.dashboard.pal.flex-column
-  h2.em-300.mtn(translate="DASHBOARD_WELCOME_TITLE")
-  p.bc-well.mvm.bg-white.blue(translate="DASHBOARD_WELCOME")
-
-  h4.em-300(translate="DASHBOARD_FEEDBACK_TITLE")
-  p(translate="DASHBOARD_FEEDBACK")
-
-.flex-column.flex-1.pal.dashboard(ng-show="status.didUpgradeToHd")
-  .flex-center
-    h4.mtn.em-300.mbn(translate="YOUR_BITCOIN_ADDRESS_IS")
-    helper-button(content="DASHBOARD_ADDRESS" placement='top')
-  .mtl(ng-if="paymentRequestURL")
-    p.form-control-static(ng-hide="status.didInitializeHD")
-      img(src="img/spinner.gif")  
-    .flex.flex-column(ng-show="status.didInitializeHD")
-      qr(text="paymentRequestURL", size=120, correction-level="'M'")
-      p.form-control-static.bitcoin-address.mtl
-        img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
-        span(ng-show="status.didInitializeHD")
-          | {{ paymentRequestAddress }}  
+  h4 Be your own bank.
+  .row
+    .col-xs-6
+      h4 Most Recent Activity
+    .col-xs-6
+      h4 Value Over Time
+  .row
+    .col-xs-6
+      h4 Did You Know
+    .col-xs-6  
+      h4 Balance By Account
