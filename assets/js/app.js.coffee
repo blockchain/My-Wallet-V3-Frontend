@@ -8,6 +8,7 @@ modules = [
   "walletFilters"
   "walletServices"
   "securityCenter"
+  "didYouKnow"
   "adverts"
   "ui.router"
   "ui.bootstrap"
