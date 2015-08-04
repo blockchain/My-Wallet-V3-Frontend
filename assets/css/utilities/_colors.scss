@@ -20,6 +20,7 @@ $dark-grey: #737373;
 $border-grey: #6d6d6d;
 
 //Did You Know
+$feature: #039BD3;
 $educational: #54C29F;
 $partner: #E02771;
 
@@ -60,6 +61,9 @@ $security-green: #3CC476;
 @include color('aaa', $aaa);
 @include color('success', $success);
 @include color('bright-green', $bright-green);
+@include color('feature', $feature);
+@include color('educational', $educational);
+@include color('partner', $partner);
 
 //Background Mixin
 @mixin bg-color($name, $color) {

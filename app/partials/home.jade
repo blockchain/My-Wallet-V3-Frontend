@@ -11,6 +11,6 @@
         h4.aaa.em-400(translate="BALANCE_BY_ACCOUNT")
         //change this to == 1 once actual chart.js is added
         .widget.flex-center.flex-justify(ng-class="{ 'empty pos-rel' : accounts().length > 1 }")
-          button.button-success.button-sm(ng-click="newAccount()" translate="NEW_ACCOUNT")
+          button.button-primary.button-sm(ng-click="newAccount()" translate="NEW_ACCOUNT")
           h4.width-75.center-align(translate="HOME_NEW_ACCOUNT_MSG")
           .chart(ng-class="{ 'faded' : accounts().length > 1 }")
