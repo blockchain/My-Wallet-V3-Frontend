@@ -5,9 +5,11 @@
       .section
         h4.aaa.em-400 Most Recent Activity
         .activity-feed
+          .latest-tx(ng-repeat="tx in transactions | limitTo:5")
+            transaction-description(transaction="tx")
     .col-md-6
       .section
-        did-you-know
+        did-you-know(dyk="getRandDyk()")
       //- .section
         //- .chart-container.balance-chart
           //- //- .overlay(ng-show="accounts().length == 1")
