@@ -864,7 +864,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.paymentRequests.pop()
       wallet.user.uid = ""
       wallet.password = ""
-      # $state.go("wallet.common.dashboard")
+      # $state.go("wallet.common.home")
     else if event == "ws_on_close" || event == "ws_on_open"
       # Do nothing
     else if event.type != undefined
