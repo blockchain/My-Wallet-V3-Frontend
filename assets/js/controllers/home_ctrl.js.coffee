@@ -3,8 +3,6 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
   $scope.status = Wallet.status
   $scope.transactions = []
 
-  $scope.dykSelected = false
-
   $scope.accountLabels = () ->
     $scope.accounts().map (account) -> account.label
 
@@ -12,7 +10,6 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
     $scope.accounts().map (account) -> account.balance
 
   $scope.getRandDyk = () ->
-    $scope.dykSelected = true
     $scope.dyks[$scope.getRandInRange(0, $scope.dyks.length - 1)]
 
   $scope.getRandInRange = (min, max) ->
