@@ -38,7 +38,7 @@ modules = [
   "partials/account-form.jade"
   "partials/alerts.jade"
   "partials/claim.jade"
-  "partials/dashboard.jade"
+  "partials/home.jade"
   "partials/support.jade"
   "partials/feedback.jade"
   "partials/first-login-modal.jade"
