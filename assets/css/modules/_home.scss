@@ -1,16 +1,21 @@
-#home {
-  .chart-container {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    .overlay, .chart {
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-    .overlay {
-      background-color: rgba(100, 100, 100, 0.2);;
-      z-index: 10;
-    }
-  }
+.home {
+}
+
+.section {
+  height: 275px;
+}
+
+.pill {
+  height: 20px;
+  color: white;
+  padding: .5em 1em;
+  border-radius: 8px;
+  &.feature { background: $blue; }
+  &.partner { background: $partner }
+  &.educational { background: $educational }
+}
+
+.widget {
+  padding: 1em;
+  border: 1px solid #eee;
 }

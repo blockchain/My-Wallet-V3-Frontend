@@ -1,27 +1,27 @@
-#home
-  .flex.pal.flex-column
-    h4 Be your own bank.
-    .row
-      .col-xs-6
-        h4 Most Recent Activity
-      .col-xs-6
-        h4 Value Over Time
-        .chart-container.balance-chart
+.home.pal
+  h2.em-300 Be your own bank.
+  .flex.flex-wrap
+    .col-md-6
+      .section
+        h4.aaa.em-400 Most Recent Activity
+        .activity-feed
+    .col-md-6
+      .section
+        did-you-know
+      //- .section
+        //- .chart-container.balance-chart
+          //- //- .overlay(ng-show="accounts().length == 1")
+          //- .overlay
+            //- h3 No balance found!
+            //- h6 We'll start tracking value after receiving bitcoin to your wallet
+          //- .chart
+            //- p chart
+      .section.mtvl
+        h4.aaa.em-400 Balance By Account
+        .widget
           //- .overlay(ng-show="accounts().length == 1")
           .overlay
-            h3 No balance found!
-            h6 We'll start tracking value after receiving bitcoin to your wallet
-          .chart
-            p chart
-    .row
-      .col-xs-6
-        h4 Did You Know
-      .col-xs-6  
-        h4 Balance By Account
-        .chart-container.doughnut-chart
-          //- .overlay(ng-show="accounts().length == 1")
-          .overlay
-            button.btn.btn-success(ng-click="newAccount()") Add Account +
+            button.button-success(ng-click="newAccount()") Add Account +
             h4 Did you know you can separate your wallet into multiple accounts to help organize your funds?
           .chart
             p chart

@@ -85,6 +85,7 @@ modules = [
   "templates/network-fee-picker.jade"
   "templates/helper-button.jade"
   "templates/helper-popover.jade"
+  "templates/did-you-know.jade"
   "templates/contextual-message.jade"
   "templates/completed-level.jade"
   "templates/completed-level-tooltip.jade"
