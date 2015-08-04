@@ -510,6 +510,7 @@
   "HOME_NEW_ACCOUNT_MSG" : "Did you know you can separate your wallet into multiple accounts to help organize your funds?",
   "MOST_RECENT_ACTIVITY" : "Most Recent Activity",
   "BALANCE_BY_ACCOUNT" : "Balance By Account",
-  "BYOB" : "Be Your Own Bank."
+  "BYOB" : "Be Your Own Bank.",
+  "DYK" : "Did You Know"
 
 }

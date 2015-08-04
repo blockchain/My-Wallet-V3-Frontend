@@ -1,4 +1,4 @@
-walletApp.controller "HomeCtrl", ($scope, Wallet, $modal) ->
+walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
   $scope.accounts = Wallet.accounts
   $scope.status = Wallet.status
   $scope.transactions = []
@@ -47,7 +47,17 @@ walletApp.controller "HomeCtrl", ($scope, Wallet, $modal) ->
     {
       title: 'You can send Custom Fees?'
       type: 'Feature'
-      text: 'When the bitcoin network is experiencing a lot of traffic, you can ensure that your transactions go through by enabling higher fees with our Custom Send feature. Higher fees allow miners to confirm your transactions faster - giving you peace of mind that your transactions go through.'
-      link: '#'
+      text: 'When the bitcoin network is experiencing a lot of traffic, you can ensure that your transactions go through by enabling higher fees with our Advanced Send feature. Just click on the Advanced Send toggle in our Send screen to get started!'
+      icon: 'ti-signal'
+      linkText: ''
+      link: ''
+    },
+    {
+      title: 'Passwords are not stored or shared with us?'
+      type: 'Feature'
+      text: 'This means only you know the password you used for your wallet, but your funds can still be recovered with the 12-word recovery phrase. Find out how and more by visiting our'
+      icon: 'ti-lock'
+      linkText: 'Security Center'
+      link: '/#/security-center'
     }
   ]

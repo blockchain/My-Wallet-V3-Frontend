@@ -1,11 +1,11 @@
 .dyk
   .flex-between.flex-center
-    h4.aaa.em-400 Did You Know
+    h4.aaa.em-400(translate="DYK")
     .pill.flex-center(ng-class="dyk.type.toLowerCase()") {{ dyk.type | translate }}
   .widget
     .flex-center.mbm
-      i.title.ti-signal.aaa
+      i.title.aaa(ng-class="dyk.icon")
       p.h3.em-300.blue.mll {{ dyk.title | translate }}
-    p.center-align.type-h6
+    p.center-align.type-h6.lh-lg
       | {{ dyk.text | translate }}
-      a.mlm(href="{{ dyk.link }}") Learn More!
+      a.mls(href="{{ dyk.link }}") {{ dyk.linkText | translate }}
