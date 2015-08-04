@@ -77,6 +77,7 @@ modules = [
   "partials/settings/two-factor.jade"
   "partials/confirm-recovery-phrase-modal.jade"
   "partials/wallet.jade"
+  "templates/activity-feed.jade"
   "templates/amount.jade"
   "templates/fiat-or-btc.jade"
   "templates/virtual-keyboard.jade"

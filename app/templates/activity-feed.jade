@@ -1,0 +1,25 @@
+.activity-feed
+  h4.aaa.em-400(translate="MOST_RECENT_ACTIVITY")
+  ul.af.pln
+    li.af-item.flex-center
+      .af-marker
+        i.ti-layout-list-post
+      .af-info.flex-center.width-100
+        h5.af-type Transaction
+        p.af-date.mll.flex-1 3 days ago
+        p.af-log Received .20 BTC
+    li.af-item.flex-center
+      .af-marker
+        i.ti-layout-list-post
+      .af-info.flex-center.width-100
+        h5.af-type Transaction
+        p.af-date.mll.flex-1 5 days ago
+        p.af-log Sent .20 BTC
+    //leave for psuedo empty-state
+    li.af-item.flex-center(ng-class="")
+      .af-marker
+        i.ti-layout-list-post
+      .af-info.flex-center.width-100
+        h5.af-type Transaction
+        p.af-date.mll.flex-1 5 days ago
+        p.af-log Sent .20 BTC

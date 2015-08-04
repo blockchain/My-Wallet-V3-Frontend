@@ -1,14 +1,10 @@
-.home {
-}
-
 .section {
   height: 250px;
 }
 
 .pill {
-  height: 20px;
   color: white;
-  padding: .5em 1em;
+  padding: .2em 1em;
   border-radius: 8px;
   &.feature { background: $blue; }
   &.partner { background: $partner }

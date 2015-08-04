@@ -1,13 +1,10 @@
 .home.pal
-  h2.em-300(translate="BYOB")
+  h5.em-700.em-alt.mbvl(translate="BYOB")
   .flex.flex-wrap
-    .col-md-6.pln
+    .col-md-6.col-xs-12.pln
       .section
-        h4.aaa.em-400(translate="MOST_RECENT_ACTIVITY")
-        .activity-feed
-          .latest-tx(ng-repeat="tx in transactions | limitTo:5")
-            transaction-description(transaction="tx")
-    .col-md-6
+        activity-feed
+    .col-md-6.col-xs-12
       .section
         did-you-know(dyk="getRandDyk()")
       .section.mtvl

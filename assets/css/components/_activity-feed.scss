@@ -1,0 +1,30 @@
+.activity-feed {
+  h5,p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.af-item {
+  height: 75px;
+  border-left: 1px solid #eee;
+  margin-left: 15px;
+}
+
+.af-info {
+  border: 1px solid #eee;
+  padding: .8em;
+}
+
+.af-marker {
+  position: relative;
+  right: 15px;
+  i {
+    border-radius: 100%;
+    background-color: #ECECEC;
+    padding: 8px;
+  }
+  &:after {
+    content: '';
+  }
+}
