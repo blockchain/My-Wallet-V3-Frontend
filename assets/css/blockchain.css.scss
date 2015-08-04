@@ -64,10 +64,8 @@ html,body {
 .display-block { display: block; }
 
 .pointer { cursor: pointer; }
-
-.row {
-  vertical-align: bottom;
-}
+.pos-rel { position: relative; }
+.row { vertical-align: bottom; }
 .row.spacing {
   height: 20px;
   background: transparent;
@@ -93,9 +91,6 @@ a.back {
  overflow-x: auto;
 }
 
-.text-center{
- text-align: center;
-}
 .form-ctrl{
   padding: 15px 0;
     .btn-bci{

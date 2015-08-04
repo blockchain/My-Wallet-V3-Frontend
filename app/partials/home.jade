@@ -1,29 +1,19 @@
 .home.pal
-  h2.em-300 Be your own bank.
+  h2.em-300(translate="BYOB")
   .flex.flex-wrap
-    .col-md-6
+    .col-md-6.pln
       .section
-        h4.aaa.em-400 Most Recent Activity
+        h4.aaa.em-400(translate="MOST_RECENT_ACTIVITY")
         .activity-feed
           .latest-tx(ng-repeat="tx in transactions | limitTo:5")
             transaction-description(transaction="tx")
     .col-md-6
       .section
         did-you-know(dyk="getRandDyk()")
-      //- .section
-        //- .chart-container.balance-chart
-          //- //- .overlay(ng-show="accounts().length == 1")
-          //- .overlay
-            //- h3 No balance found!
-            //- h6 We'll start tracking value after receiving bitcoin to your wallet
-          //- .chart
-            //- p chart
       .section.mtvl
-        h4.aaa.em-400 Balance By Account
-        .widget
-          //- .overlay(ng-show="accounts().length == 1")
-          .overlay
-            button.button-success(ng-click="newAccount()") Add Account +
-            h4 Did you know you can separate your wallet into multiple accounts to help organize your funds?
-          .chart
-            p chart
+        h4.aaa.em-400(translate="BALANCE_BY_ACCOUNT")
+        //change this to == 1 once actual chart.js is added
+        .widget.flex-center.flex-justify(ng-class="{ 'empty pos-rel' : accounts().length > 1 }")
+          button.button-success.button-sm(ng-click="newAccount()" translate="NEW_ACCOUNT")
+          h4.width-75.center-align(translate="HOME_NEW_ACCOUNT_MSG")
+          .chart(ng-class="{ 'faded' : accounts().length > 1 }")

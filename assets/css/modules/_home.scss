@@ -2,7 +2,7 @@
 }
 
 .section {
-  height: 275px;
+  height: 250px;
 }
 
 .pill {
@@ -18,4 +18,27 @@
 .widget {
   padding: 1em;
   border: 1px solid #eee;
+  height: 100%;
+  &.empty {
+    background: #F3F3F3;
+  }
+  .button-success {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+  }
+  h4 { z-index: 10; }
+}
+
+//temporary until actual chart.js implementation
+.chart {
+  position: absolute;
+  top: 20px;
+  left: 30%;
+  &.faded {
+    width: 200px;
+    height: 200px;
+    border: 30px solid #E7E7E7;
+    border-radius: 100%;
+  }
 }
