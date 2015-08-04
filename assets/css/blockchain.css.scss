@@ -28,6 +28,7 @@
 @import 'components/virtual-keyboard';
 
 //import modules
+@import 'modules/dashboard';
 @import 'modules/header';
 @import 'modules/layout';
 @import 'modules/left-nav';
@@ -168,21 +169,5 @@ padding-left: 15px;
   pre {
     -webkit-user-select: none;
     user-select: none;
-  }
-}
-
-
-//TODO rip this out once we have a real dashboard
-.dashboard {
-  padding: 20px 30px;
-  ul{
-    list-style-type: square;
-    font-size: 1.2em;
-  }
-  .form-control-static img {
-    max-width: 40px;
-  }
-  p.form-control-static.bitcoin-address {
-    max-width: 300px;
   }
 }

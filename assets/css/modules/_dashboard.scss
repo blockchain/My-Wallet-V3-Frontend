@@ -1,0 +1,16 @@
+#dashboard {
+  .chart-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    .overlay, .chart {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .overlay {
+      background-color: rgba(100, 100, 100, 0.2);;
+      z-index: 10;
+    }
+  }
+}
