@@ -121,7 +121,7 @@ walletApp.config ($numeraljsConfigProvider, $modalProvider, uiSelectConfig) ->
 # walletApp.config ($sceProvider) ->
 #   $sceProvider.enabled(false);
 
-walletApp.run ($rootScope, $modal) ->
+walletApp.run ($rootScope, $modal, $cookies) ->
   $rootScope.$safeApply = (scope=$rootScope) ->
     scope.$apply() unless scope.$$phase || $rootScope.$$phase
 
@@ -132,3 +132,9 @@ walletApp.run ($rootScope, $modal) ->
       windowClass: "notification-modal"
       resolve: { notification: -> notification }
     )
+
+  $rootScope.$on "saveActivityUpdate", (_, type, data) ->
+    activityObj = ($cookies.getObject('activity') || [])
+    activityObj.unshift({ type: type, data: data, time: Date.now() })
+    activityObj.pop() if activityObj.length > 10
+    $cookies.putObject('activity', activityObj)
