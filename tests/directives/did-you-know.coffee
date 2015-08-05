@@ -1,4 +1,4 @@
-describe "Contextual message directive", ->
+describe "Did You Know directive", ->
   $compile = undefined
   $rootScope = undefined
   element = undefined
