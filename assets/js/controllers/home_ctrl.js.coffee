@@ -10,7 +10,7 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
     $scope.accounts().map (account) -> account.balance
 
   $scope.updateDoughnutChart = () ->
-    $scope.accounts().map((account) -> 
+    $scope.accounts().map ((account) -> 
       if account.balance?
         return account.balance
     )
@@ -22,7 +22,6 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
     $scope.transactions = Wallet.transactions if didLoad
 
   $scope.$watchCollection 'accounts()', () ->
-    $scope.updatePaymentInfo()
     $scope.data = $scope.updateDoughnutChart()
     if $scope.data.length < 3
       $scope.data.push 0

@@ -29,9 +29,6 @@
 
 //temporary until actual chart.js implementation
 .chart {
-  position: absolute;
-  top: 20px;
-  left: 30%;
   &.faded {
     width: 200px;
     height: 200px;

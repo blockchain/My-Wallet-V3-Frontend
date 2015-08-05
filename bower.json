@@ -28,7 +28,8 @@
     "bootstrap-sass": "3.3.*",
     "bootstrap": "~3.3.4",
     "chartjs": "~1.0.2",
-    "angular-chart.js": "~0.7.2"
+    "angular-chart.js": "~0.7.2",
+    "Chart.js": "~1.0.2"
   },
   "devDependencies": {
     "angular-local-storage": "~0.1.5"
