@@ -1,7 +1,12 @@
 walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
   $scope.accounts = Wallet.accounts
   $scope.status = Wallet.status
+
   $scope.transactions = []
+  $scope.chartData = { balances: [], labels: [] }
+
+  # (2) NOT WORKING AS OF YET...TODO:LABELS
+  $scope.options = { showTooltips: true }
 
   $scope.accountLabels = () ->
     $scope.accounts().map (account) -> account.label
@@ -10,22 +15,21 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
     $scope.accounts().map (account) -> account.balance
 
   $scope.updateDoughnutChart = () ->
-    $scope.accounts().map ((account) -> 
-      if account.balance?
-        return account.balance
-    )
-
-  $scope.options = showTooltips : true # (2) NOT WORKING AS OF YET...TODO:LABELS
+    $scope.chartData.balances = $scope.accountBalances()
+    $scope.chartData.labels = $scope.accountLabels()
 
   # Watchers
   $scope.$watch 'status.didLoadTransactions', (didLoad) ->
-    $scope.transactions = Wallet.transactions if didLoad
+    return unless didLoad
+    $scope.transactions = Wallet.transactions
 
-  $scope.$watchCollection 'accounts()', () ->
-    $scope.data = $scope.updateDoughnutChart()
-    if $scope.data.length < 3
-      $scope.data.push 0
-    return
+  $scope.$watch 'status.didLoadBalances', (didLoad) ->
+    return unless didLoad
+    $scope.updateDoughnutChart()
+
+  $scope.$watchCollection 'accounts()', (accounts) ->
+    return unless accounts.length > 0
+    $scope.updateDoughnutChart()
 
   # Modals
   $scope.newAccount = () ->

@@ -13,4 +13,8 @@
         .widget.flex-center.flex-justify(ng-class="{ 'empty pos-rel' : accounts().length == 1 }")
           button.button-primary.button-sm(ng-click="newAccount()" ng-hide="accounts().length > 1" translate="NEW_ACCOUNT")
           h4.width-75.center-align(translate="HOME_NEW_ACCOUNT_MSG" ng-hide="accounts().length > 1")
-          canvas(id="doughnutChart" data="data" class="chart chart-doughnut" labels="labels" options = "options")
+          canvas#doughnutChart.chart.chart-doughnut(
+            data="chartData.balances"
+            labels="chartData.labels"
+            options="options"
+          )
