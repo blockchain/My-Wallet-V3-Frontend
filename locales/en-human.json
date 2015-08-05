@@ -30,6 +30,7 @@
   "CLOSE": "Close",
   "DASHBOARD": "Dashboard",
   "TRANSACTIONS" : "Transactions",
+  "TRANSACTION" : "Transaction",
   "REQUEST" : "Receive",
   "SEND" : "Send",
   "PENDING_PAYMENTS" : "Pending Payments",
