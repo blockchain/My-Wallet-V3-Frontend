@@ -1,4 +1,4 @@
-describe "HomeCtrl", ->
+ddescribe "HomeCtrl", ->
   scope = undefined
 
   modal =
@@ -16,6 +16,8 @@ describe "HomeCtrl", ->
           accounts: [
             { label: "Checking", index: 0, archived: false, balance: 100 }
             { label: "Savings", index: 1, archived: false, balance: 175 }
+            { label: "Spending", index: 2, archived: false, balance: 0 }
+            { label: "Spending", index: 3, archived: true, balance: 50 }
           ]
 
       Wallet.status =
@@ -35,7 +37,7 @@ describe "HomeCtrl", ->
   describe "on load", ->
 
     it "should have access to wallet accounts", ->
-      expect(scope.accounts().length).toEqual(2)
+      expect(scope.accounts().length).toEqual(4)
 
     it "should have access to wallet status", ->
       expect(scope.status).toBeDefined()
@@ -45,11 +47,8 @@ describe "HomeCtrl", ->
 
   describe "account functions", ->
 
-    it "should get account labels", ->
-      expect(scope.accountLabels()).toEqual(['Checking', 'Savings'])
-
-    it "should get account balances", ->
-      expect(scope.accountBalances()).toEqual([100, 175])
+    it "should get account data", ->
+      expect(scope.accountData().length).toEqual(2)
 
   describe "newAccount()", ->
 

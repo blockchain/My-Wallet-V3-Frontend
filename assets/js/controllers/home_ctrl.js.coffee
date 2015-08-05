@@ -19,11 +19,11 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
     amount = Wallet.convertFromSatoshi(amount, currency)
     Wallet.formatCurrencyForView(amount, currency)
 
-  $scope.hasBalance = (account) ->
-    account.balance > 0
+  $scope.accountFilter = (account) ->
+    account.balance > 0 && !account.archived
 
   $scope.accountData = () ->
-    $scope.accounts().filter($scope.hasBalance)
+    $scope.accounts().filter($scope.accountFilter)
       .map (a) ->
         x: a.label
         y: [a.balance]
