@@ -1,4 +1,4 @@
-walletApp.directive('activityFeed', ($cookies) ->
+walletApp.directive('activityFeed', ($cookies, $translate) ->
   {
     restrict: "E"
     replace: true
@@ -6,5 +6,9 @@ walletApp.directive('activityFeed', ($cookies) ->
     scope: {}
     link: (scope, elem, attrs) ->
       scope.activities = ($cookies.getObject('activity') || [])
+
+      scope.translateParts = (str) ->
+        str.split(' ').map($translate.instant).join(' ')
+
   }
 )
