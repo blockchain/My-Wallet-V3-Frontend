@@ -134,8 +134,8 @@ walletApp.run ($rootScope, $modal, $cookies) ->
       resolve: { notification: -> notification }
     )
 
-  $rootScope.$on "saveActivityUpdate", (_, type, data) ->
+  $rootScope.$on "saveActivityUpdate", (_, type, msg) ->
     activityObj = ($cookies.getObject('activity') || [])
-    activityObj.unshift({ type: type, data: data, time: Date.now() })
+    activityObj.unshift({ type: type, msg: msg, t: Date.now() })
     activityObj.pop() if activityObj.length > 10
     $cookies.putObject('activity', activityObj)
