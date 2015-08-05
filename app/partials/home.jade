@@ -14,3 +14,4 @@
           button.button-primary.button-sm(ng-click="newAccount()" translate="NEW_ACCOUNT")
           h4.width-75.center-align(translate="HOME_NEW_ACCOUNT_MSG")
           .chart(ng-class="{ 'faded' : accounts().length > 1 }")
+            canvas(id="doughnutChart" data="data" class="chart chart-doughnut" labels="labels" options = "options")

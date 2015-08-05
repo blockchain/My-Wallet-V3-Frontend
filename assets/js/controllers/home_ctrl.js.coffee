@@ -9,9 +9,24 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
   $scope.accountBalances = () ->
     $scope.accounts().map (account) -> account.balance
 
+  $scope.updateDoughnutChart = () ->
+    $scope.accounts().map((account) -> 
+      if account.balance?
+        return account.balance
+    )
+
+  $scope.options = showTooltips : true # (2) NOT WORKING AS OF YET...TODO:LABELS
+
   # Watchers
   $scope.$watch 'status.didLoadTransactions', (didLoad) ->
     $scope.transactions = Wallet.transactions if didLoad
+
+  $scope.$watchCollection 'accounts()', () ->
+    $scope.updatePaymentInfo()
+    $scope.data = $scope.updateDoughnutChart()
+    if $scope.data.length < 3
+      $scope.data.push 0
+    return
 
   # Modals
   $scope.newAccount = () ->

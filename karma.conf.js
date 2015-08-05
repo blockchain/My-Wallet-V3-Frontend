@@ -29,6 +29,8 @@ module.exports = function(config){
       'tests/**/*.js',
       'app/templates/*.jade',
       'bower_components/angular-password-entropy/password-entropy.js',
+      'bower_components/chartjs/Chart.js',
+      'bower_components/angular-chart.js/angular-chart.js'
     ],
 
     autoWatch : true,
