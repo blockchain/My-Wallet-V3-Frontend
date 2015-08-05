@@ -69,8 +69,10 @@
   "WALLET_NOT_FOUND" : "Wallet not found",
   "YOU" : "You",
   "RECEIVED_BITCOIN_FROM" : "Received",
+  "RECEIVED" : "Received",
   "SENT" : "Sent",
   "MOVED_BITCOIN_TO" : "Transferred",
+  "TRANSFERRED" : "Transferred",
   "ADVANCED" : "Advanced",
   "ADVANCED_EXPLAIN" : "These settings are for advanced users and should only be modified if you know what you are doing.",
   "SEND_TO_PLACEHOLDER" : "Bitcoin address, email or mobile number",
@@ -512,6 +514,8 @@
   "MOST_RECENT_ACTIVITY" : "Most Recent Activity",
   "BALANCE_BY_ACCOUNT" : "Balance By Account",
   "BYOB" : "Be Your Own Bank.",
-  "DYK" : "Did You Know"
+  "DYK" : "Did You Know",
+  "INC_SCORE" : "Security score increased to",
+  "DEC_SCORE" : "Security score decreased to"
 
 }
