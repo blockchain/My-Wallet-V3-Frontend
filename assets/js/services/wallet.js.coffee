@@ -472,6 +472,17 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     else
       return null
 
+  # Takes a satoshi amount and converts it to a given currency
+  # while formatting it to how it should look when displayed
+  wallet.formatCurrencyForView = (amount, currency) ->
+    return unless amount && currency && currency.code
+    code = currency.code
+    amount = amount.toFixed(8) if code == 'BTC'
+    amount = amount.toFixed(6) if code == 'mBTC'
+    amount = amount.toFixed(4) if code == 'bits'
+    amount = amount.toFixed(2) if !wallet.isBitCurrency(currency)
+    return parseFloat(amount) + ' ' + code
+
   wallet.toggleDisplayCurrency = () ->
     if wallet.isBitCurrency(wallet.settings.displayCurrency)
       wallet.settings.displayCurrency = wallet.settings.currency
