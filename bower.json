@@ -28,13 +28,14 @@
     "bootstrap-sass": "3.3.*",
     "bootstrap": "~3.3.4",
     "Chart.js": "abhisharma2/Chart.js#master",
-    "angular-chart.js": "~0.7.2"
+    "angular-chart.js": "abhisharma2/angular-chart.js#master"
   },
   "devDependencies": {
     "angular-local-storage": "~0.1.5"
   },
   "resolutions": {
     "angular": "1.4.*",
-    "Chart.js": "master"
+    "Chart.js": "master",
+    "angular-chart.js": "master"
   }
 }
