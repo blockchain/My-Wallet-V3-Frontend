@@ -1,6 +1,6 @@
 walletApp.controller "TransactionsCtrl", ($scope, Wallet, MyWallet, $log, $stateParams, $timeout, $state) ->
 
-  $scope.filterTypes = ['ALL', 'SENT_BITCOIN_TO', 'RECEIVED_BITCOIN_FROM', 'MOVED_BITCOIN_TO']
+  $scope.filterTypes = ['ALL', 'SENT', 'RECEIVED_BITCOIN_FROM', 'MOVED_BITCOIN_TO']
 
   $scope.setFilterType = (type) ->
     $scope.filterBy = $scope.filterTypes[type]

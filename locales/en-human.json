@@ -69,7 +69,7 @@
   "WALLET_NOT_FOUND" : "Wallet not found",
   "YOU" : "You",
   "RECEIVED_BITCOIN_FROM" : "Received",
-  "SENT_BITCOIN_TO" : "Sent",
+  "SENT" : "Sent",
   "MOVED_BITCOIN_TO" : "Transferred",
   "ADVANCED" : "Advanced",
   "ADVANCED_EXPLAIN" : "These settings are for advanced users and should only be modified if you know what you are doing.",
