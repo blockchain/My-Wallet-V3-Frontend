@@ -13,4 +13,8 @@
         .widget.flex-center.flex-justify(ng-class="{ 'empty pos-rel' : accounts().length == 1 }")
           button.button-primary.button-sm(ng-click="newAccount()" ng-hide="accounts().length > 1" translate="NEW_ACCOUNT")
           h4.width-75.center-align(translate="HOME_NEW_ACCOUNT_MSG" ng-hide="accounts().length > 1")
-          #chart.chart(ac-chart="'pie'" ac-data="chartData" ac-config="config")
+          #chart.chart(
+            ac-chart="'pie'"
+            ac-data="pieChartData"
+            ac-config="pieChartConfig"
+          )

@@ -1,27 +1,12 @@
 walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
   $scope.accounts = Wallet.accounts
   $scope.status = Wallet.status
+  $scope.settings = Wallet.settings
   $scope.transactions = []
 
-  $scope.chartData = {
-    series: []
-    data: []
-  }
+  $scope.pieChartData = { data: [] }
 
-  $scope.accountLabels = () ->
-    # $scope.accounts().map (account) -> account.label
-    # Needs to follow the below format
-    return ["Label1", "Label2", "Label3"]
-  $scope.accountData = () ->
-    # $scope.accounts().map (account) -> account.balance
-    # Needs to follow the below format
-    return [{ x: "Label1", y: [10]}, { x: "Label2", y: [20]}, { x: "Label3", y: [30]}]
-
-  $scope.updateDoughnutChart = () ->
-    $scope.chartData.data = $scope.accountData()
-    $scope.chartData.series = $scope.accountLabels()
-
-  $scope.config = {
+  $scope.pieChartConfig = {
     colors: ['RGB(102, 209, 233)', 'RGB(107, 158, 232)', 'RGB(212, 238, 249)']
     legend: {
       display: true,
@@ -29,20 +14,41 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
     }
   }
 
-  console.log($scope.chartData)
+  $scope.convertToDisplay = (amount) ->
+    currency = $scope.settings.displayCurrency
+    amount = Wallet.convertFromSatoshi(amount, currency)
+    Wallet.formatCurrencyForView(amount, currency)
+
+  $scope.hasBalance = (account) ->
+    account.balance > 0
+
+  $scope.accountData = () ->
+    $scope.accounts().filter($scope.hasBalance)
+      .map (a) ->
+        x: a.label
+        y: [a.balance]
+        tooltip: $scope.convertToDisplay(a.balance)
+
+  $scope.updatePieChartData = () ->
+    $scope.pieChartData.data = $scope.accountData()
 
   # Watchers
-  $scope.$watch 'status.didLoadTransactions', (didLoad) ->
+  loadedTxs = $scope.$watch 'status.didLoadTransactions', (didLoad) ->
     return unless didLoad
     $scope.transactions = Wallet.transactions
+    loadedTxs()
 
-  $scope.$watch 'status.didLoadBalances', (didLoad) ->
+  loadedBalances = $scope.$watch 'status.didLoadBalances', (didLoad) ->
     return unless didLoad
-    $scope.updateDoughnutChart()
+    $scope.updatePieChartData()
+    loadedBalances()
+
+  $scope.$watch 'settings.displayCurrency', ->
+    $scope.updatePieChartData()
 
   $scope.$watchCollection 'accounts()', (accounts) ->
-    return unless accounts.length > 0
-    $scope.updateDoughnutChart()
+    return unless accounts.length > 0 && $scope.status.didLoadBalances
+    $scope.updatePieChartData()
 
   # Modals
   $scope.newAccount = () ->
