@@ -2,6 +2,7 @@ angular.module("securityCenter", []).factory "SecurityCenter", ($log, Wallet, $r
   settings = Wallet.settings
   user = Wallet.user
   status = Wallet.status
+  hasLoaded = false
   # transactions = Wallet.transactions
   # legacyAddresses = []
   # unfilteredLegacyAddresses = Wallet.legacyAddresses
@@ -66,5 +67,17 @@ angular.module("securityCenter", []).factory "SecurityCenter", ($log, Wallet, $r
 
     service.security.level = securityLevel
     service.security.score = securityLevel / securityObjectives.length
+
+    securityPercent = Math.floor(service.security.score * 100) + '%'
+
+    # Update the activity list if the level has changed
+    if hasLoaded
+      if securityLevel > service.security.level
+        $rootScope.$emit('saveActivityUpdate', 'SECURITY', 'INC_SCORE ' + securityPercent)
+      else if securityLevel < service.security.level
+        $rootScope.$emit('saveActivityUpdate', 'SECURITY', 'DEC_SCORE ' + securityPercent)
+
+    if status.didLoadSettings
+      hasLoaded = true
 
   return service
