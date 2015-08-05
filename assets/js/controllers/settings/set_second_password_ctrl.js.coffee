@@ -19,6 +19,7 @@ walletApp.controller "SetSecondPasswordCtrl", ($scope, $log, Wallet, $modalInsta
     success = () ->
       $scope.busy = false
       $modalInstance.dismiss ""
+      $scope.$emit('saveActivityUpdate', 'SETTINGS', 'SET_SECOND_PASSWORD')
 
     $timeout((->
       Wallet.setSecondPassword($scope.fields.password, success)

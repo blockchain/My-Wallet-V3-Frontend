@@ -80,6 +80,7 @@ walletApp.controller "SettingsAdvancedCtrl", ($scope, Wallet, $modal, $translate
 
     success = () ->
       $scope.processToggleRememberTwoFactor = false
+      $scope.$emit('saveActivityUpdate', 'SETTINGS', 'ENABLE_REMEMBER_2FA')
 
     error = () ->
       $scope.processToggleRememberTwoFactor = false
@@ -91,6 +92,7 @@ walletApp.controller "SettingsAdvancedCtrl", ($scope, Wallet, $modal, $translate
 
     success = () ->
       $scope.processToggleRememberTwoFactor = false
+      $scope.$emit('saveActivityUpdate', 'SETTINGS', 'DISABLE_REMEMBER_2FA')
 
     error = () ->
       $scope.processToggleRememberTwoFactor = false
