@@ -135,6 +135,11 @@ walletApp.run ($rootScope, $modal, $cookies) ->
       resolve: { notification: -> notification }
     )
 
+  # Listens for activity updates and saves them to the 'activity' cookie
+  # param type: translation string to express the type of activity
+  # param msg: message to be displayed for activity, can take translation
+  #   strings as well as angular bindings (even w/ filters)
+  #   example: "SENT {{20000|convert}}" will render to "Sent 0.0002 BTC"
   $rootScope.$on "saveActivityUpdate", (_, type, msg) ->
     activityObj = ($cookies.getObject('activity') || [])
     activityObj.unshift({ type: type, msg: msg, t: Date.now() })
