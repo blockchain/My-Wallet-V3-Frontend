@@ -140,3 +140,4 @@ walletApp.run ($rootScope, $modal, $cookies) ->
     activityObj.unshift({ type: type, msg: msg, t: Date.now() })
     activityObj.pop() if activityObj.length > 10
     $cookies.putObject('activity', activityObj)
+    $rootScope.$broadcast('updateActivityList')

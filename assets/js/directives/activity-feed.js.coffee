@@ -10,5 +10,8 @@ walletApp.directive('activityFeed', ($cookies, $translate) ->
       scope.translateParts = (str) ->
         str.split(' ').map($translate.instant).join(' ')
 
+      scope.$on 'updateActivityList', ->
+        scope.activities = ($cookies.getObject('activity') || [])
+
   }
 )
