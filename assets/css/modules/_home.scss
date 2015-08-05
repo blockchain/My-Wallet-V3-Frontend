@@ -1,6 +1,5 @@
-.section {
-  height: 250px;
-}
+.section { height: 250px; }
+.section-graph { height: 350px; }
 
 .pill {
   color: white;
@@ -27,12 +26,17 @@
   h4 { z-index: 10; }
 }
 
-//temporary until actual chart.js implementation
 .chart {
+  height: 300px;
+  width: 300px;
+  position: relative;
+  left: 45px;
   &.faded {
-    width: 200px;
-    height: 200px;
     border: 30px solid #E7E7E7;
     border-radius: 100%;
   }
+}
+// give some breathing room for the svg legend
+.ac-legend td {
+  padding: 0 5px;
 }

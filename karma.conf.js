@@ -29,8 +29,8 @@ module.exports = function(config){
       'tests/**/*.js',
       'app/templates/*.jade',
       'bower_components/angular-password-entropy/password-entropy.js',
-      'bower_components/Chart.js/Chart.js',
-      'bower_components/angular-chart.js/angular-chart.js'
+      'bower_components/d3/d3.js',
+      'bower_components/angular-charts/dist/angular-charts.js'
     ],
 
     autoWatch : true,
@@ -38,7 +38,7 @@ module.exports = function(config){
     preprocessors: {
       '**/*.jade': ['ng-jade2js'],
       'assets/js/controllers/**/*.js.coffee' : ['coverage'],
-      'assets/js/filters.js.coffee' : ['coverage'], 
+      'assets/js/filters.js.coffee' : ['coverage'],
       'assets/js/services/*.js.coffee' : ['coverage'],
       'assets/js/directives/*.js.coffee' : ['coverage'],
       'assets/js/wrappers/*.js.coffee': ['coffee'],
@@ -58,7 +58,7 @@ module.exports = function(config){
         return path.replace(/\.coffee$/, '.js');
       }
     },
-    
+
     ngJade2JsPreprocessor: {
       stripPrefix: 'app/',
       prependPrefix: '',
@@ -105,7 +105,7 @@ module.exports = function(config){
       outputFile: 'test_out/unit.xml',
       suite: 'unit'
     },
-    
+
     reporters: ['progress','osx', 'coverage'],
 
     coverageReporter: {

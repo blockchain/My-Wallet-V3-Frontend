@@ -27,15 +27,13 @@
     "bc-qr-reader": "0.1.*",
     "bootstrap-sass": "3.3.*",
     "bootstrap": "~3.3.4",
-    "Chart.js": "abhisharma2/Chart.js#master",
-    "angular-chart.js": "abhisharma2/angular-chart.js#master"
+    "angular-charts": "abhisharma2/angular-charts#master"
   },
   "devDependencies": {
-    "angular-local-storage": "~0.1.5"
+    "angular-local-storage": "~0.1.5",
+    "angular-charts": "abhisharma2/angular-charts#master"
   },
   "resolutions": {
-    "angular": "1.4.*",
-    "Chart.js": "master",
-    "angular-chart.js": "master"
+    "angular": "1.4.*"
   }
 }

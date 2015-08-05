@@ -7,14 +7,10 @@
     .col-md-6.col-xs-12
       .section
         did-you-know
-      .section.mtvl
+      .section.section-graph.mtvl
         h4.aaa.em-400(translate="BALANCE_BY_ACCOUNT")
         //change this to == 1 once actual chart.js is added
         .widget.flex-center.flex-justify(ng-class="{ 'empty pos-rel' : accounts().length == 1 }")
           button.button-primary.button-sm(ng-click="newAccount()" ng-hide="accounts().length > 1" translate="NEW_ACCOUNT")
           h4.width-75.center-align(translate="HOME_NEW_ACCOUNT_MSG" ng-hide="accounts().length > 1")
-          canvas#doughnutChart.chart.chart-doughnut(
-            data="chartData.balances"
-            labels="chartData.labels"
-            options="options"
-          )
+          #chart.chart(ac-chart="'pie'" ac-data="chartData" ac-config="config")
