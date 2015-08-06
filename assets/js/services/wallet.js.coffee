@@ -295,7 +295,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.saveActivity = () ->
     # TYPES: ['transactions', 'security', 'settings', 'accounts']
     $rootScope.$broadcast('updateActivityFeed')
-    console.log "Should save activity"
+    # console.log "Should save activity"
 
   wallet.createAccount = (label, successCallback, errorCallback, cancelCallback) ->
     proceed = (password) ->
