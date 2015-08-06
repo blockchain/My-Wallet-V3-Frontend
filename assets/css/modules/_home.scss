@@ -1,13 +1,19 @@
 .section { max-height: 350px; }
 
 .pill {
-  color: white;
-  padding: .2em 1em;
   border-radius: 8px;
-  &.feature { background: $blue; }
-  &.partner { background: $partner }
-  &.educational { background: $educational }
-  &:hover { color: white; }
+  &.feature {
+    color: $blue;
+    &:hover { color: $blue; }
+  }
+  &.partner {
+  color: $partner;
+    &:hover { color: $partner; }
+  }
+  &.educational {
+    color: $educational;
+    &:hover { color: $educational; }
+  }
 }
 
 .widget {

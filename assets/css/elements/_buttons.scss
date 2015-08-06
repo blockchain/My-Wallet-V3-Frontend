@@ -92,3 +92,11 @@ button[disabled] {
   border: none;
 }
 .button-default { border: 1px solid #e0e0e0; }
+
+.button-gradient {
+  background: linear-gradient(#F3F3F3, #F0F0F0);
+  color: $black;
+  border: RGB(240, 240, 240);
+  border-radius: 5px;
+  z-index: 11;
+}

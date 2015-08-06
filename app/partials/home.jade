@@ -1,5 +1,5 @@
-.home.pal
-  h5.em-700.em-alt.mbvl(translate="BYOB")
+.home.pal.mtm
+  h4.em-alt.blue.mbl.mtn(translate="BYOB")
   .flex.flex-wrap
     .col-md-6.col-sm-12.col-xs-12.pln
       activity-feed
@@ -7,9 +7,9 @@
       .section
         did-you-know
       .section.section-graph.mtl
-        h4.aaa.em-400.mbl(translate="BALANCE_BY_ACCOUNT")
-        .widget.flex-center.flex-justify(ng-class="{ 'empty pos-rel' : accounts().length == 1 || getTotal() == 0 }")
-          button.button-primary.button-sm(ng-click="newAccount()" ng-hide="accounts().length > 1" translate="NEW_ACCOUNT")
+        h5.aaa.em-400.mbl(translate="BALANCE_BY_ACCOUNT")
+        .widget.flex-center.flex-justify.pos-rel(ng-class="{ 'empty' : accounts().length == 1 || getTotal() == 0 }")
+          button.button-sm(ng-click="newAccount()" ng-class="accounts().length > 1 ? 'button-gradient' : 'button-primary'" translate="NEW_ACCOUNT")
           h4.width-75.center-align(translate="HOME_NEW_ACCOUNT_MSG" ng-hide="accounts().length > 1")
           h4.width-75.center-align(ng-show="accounts().length > 1 && getTotal() == 0" translate="ALT_EMPTY_MSG")
           .pos-abs-chart(ng-hide="accounts().length > 1")

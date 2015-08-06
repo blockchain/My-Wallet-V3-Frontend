@@ -18,7 +18,7 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
       position: 'right'
       htmlEnabled: true
     }
-    waitForHeightAndWidth: false
+    waitForHeightAndWidth: true
   }
 
   $scope.convertToDisplay = (amount) ->
