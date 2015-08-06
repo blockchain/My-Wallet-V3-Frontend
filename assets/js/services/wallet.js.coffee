@@ -727,21 +727,21 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.archive = (address_or_account) ->
     name = address_or_account.label || address_or_account.address
-    $rootScope.$emit('saveActivityUpdate', 'MY_ACCOUNTS', 'ARCHIVE ' + name)
+    $rootScope.$emit('saveActivityUpdate', 'MY_ACCOUNTS', 'ARCHIVED ' + name)
     address_or_account.archived = true
     address_or_account.active = false
     wallet.hdAddresses(true)
 
   wallet.unarchive = (address_or_account) ->
     name = address_or_account.label || address_or_account.address
-    $rootScope.$emit('saveActivityUpdate', 'MY_ACCOUNTS', 'UNARCHIVE ' + name)
+    $rootScope.$emit('saveActivityUpdate', 'MY_ACCOUNTS', 'UNARCHIVED ' + name)
     address_or_account.archived = false
     address_or_account.active = true
     wallet.hdAddresses(true)
 
   wallet.deleteLegacyAddress = (address) ->
     name = address.label || address.address
-    $rootScope.$emit('saveActivityUpdate', 'MY_ACCOUNTS', 'DELETE ' + name)
+    $rootScope.$emit('saveActivityUpdate', 'MY_ACCOUNTS', 'DELETED ' + name)
     wallet.my.wallet.deleteLegacyAddress(address)
 
   ##################################
