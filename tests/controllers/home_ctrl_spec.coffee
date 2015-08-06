@@ -1,4 +1,4 @@
-ddescribe "HomeCtrl", ->
+describe "HomeCtrl", ->
   scope = undefined
 
   modal =
