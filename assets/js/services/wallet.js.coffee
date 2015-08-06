@@ -770,7 +770,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         if account == null then null else account.balance
 
   wallet.updateTransactions = () ->
-    for tx in wallet.store.getAllTransactions()
+    for tx in wallet.store.getAllTransactions().reverse()
       match = false
       for candidate in wallet.transactions
         if candidate.hash == tx.hash
@@ -783,7 +783,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         transaction = angular.copy(tx)
         transaction.note = wallet.my.wallet.getNote(transaction.hash)
 
-        wallet.transactions.push transaction
+        wallet.transactions.unshift transaction
     wallet.status.didLoadTransactions = true
 
   wallet.appendTransactions = (transactions, override) ->
