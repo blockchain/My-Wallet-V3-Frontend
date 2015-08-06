@@ -8,14 +8,17 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
   $scope.pieChartData = { data: [] }
 
   $scope.pieChartConfig = {
-    colors: ['RGB(102, 209, 233)', 'RGB(107, 158, 232)', 'RGB(212, 238, 249)', 
-      'RGB(88, 185, 87)', 'RGB(242, 174, 67)', 'RGB(78, 195, 158)', 'RGB(224, 39, 113)',
-      'RGB(102, 209, 233)', 'RGB(248, 142, 85)', 'RGB(133, 180, 90)'
+    colors: [ 'RGB(96, 178, 224)','RGB(238, 107, 93)', 'RGB(74, 198, 171)', 'RGB(244, 189, 57)',
+    'RGB(66, 165, 219)', 'RGB(38, 188, 157)', 'RGB(244, 199, 88)', 'RGB(234, 81, 62)'
     ]
+    innerRadius: 50
+    labels: false
     legend: {
       display: true,
       position: 'right'
+      htmlEnabled: true
     }
+    waitForHeightAndWidth: false
   }
 
   $scope.convertToDisplay = (amount) ->

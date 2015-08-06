@@ -42,7 +42,7 @@
 }
 
 .chart {
-  height: 275px;
+  height: 250px;
   width: 445px;
   position: relative;
 }
@@ -53,4 +53,16 @@
 .angular-charts-template table {
   position: absolute;
   right: 0;
+  top: 0;
+  float: none;
+  max-width: none;
+}
+
+.angular-charts-template .ac-chart {
+  float: none;
+  width: 100%;
+}
+
+.pie-chart-label {
+  fill: #aaa;
 }
