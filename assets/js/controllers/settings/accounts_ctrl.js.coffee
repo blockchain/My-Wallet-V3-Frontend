@@ -48,6 +48,7 @@ walletApp.controller "SettingsWalletNavigationCtrl", ($scope, Wallet, $modal, fi
 
   $scope.makeDefault = (account) ->
     Wallet.setDefaultAccount(account)
+    $scope.$emit('saveActivityUpdate', 'MY_ACCOUNTS', 'CHANGE_DEFAULT (' + account.label + ')')
 
 
   $scope.transfer = () ->

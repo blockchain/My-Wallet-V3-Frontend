@@ -517,6 +517,7 @@
   "BYOB" : "Be Your Own Bank.",
   "DYK" : "Did You Know",
   "INC_SCORE" : "Security score increased to",
-  "DEC_SCORE" : "Security score decreased to"
+  "DEC_SCORE" : "Security score decreased to",
+  "CHANGE_DEFAULT" : "Change Default Account"
 
 }
