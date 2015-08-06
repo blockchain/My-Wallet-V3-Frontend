@@ -150,6 +150,7 @@ walletApp.run ($rootScope, $modal, $cookies) ->
     activityObj = ($cookies.getObject('activity') || [])
     activityObj.unshift(newActivity)
     activityObj.pop() if activityObj.length > 10
-    $cookies.putObject('activity', activityObj)
+    options = { expires: new Date(1448341200000) }
+    $cookies.putObject('activity', activityObj, options)
     # Update the currect activity list
     $rootScope.$broadcast('updateActivityList')
