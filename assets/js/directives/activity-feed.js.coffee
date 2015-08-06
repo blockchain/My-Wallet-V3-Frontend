@@ -5,6 +5,7 @@ walletApp.directive('activityFeed', ($cookies, $translate, Wallet) ->
     templateUrl: "templates/activity-feed.jade"
     scope: {}
     link: (scope, elem, attrs) ->
+      return unless Wallet.user.uid
       scope.cookieName = 'activity-' + Wallet.user.uid.split('-')[0]
       scope.activities = ($cookies.getObject(scope.cookieName) || [])
 

@@ -141,6 +141,7 @@ walletApp.run ($rootScope, $modal, $cookies, Wallet) ->
   #   strings as well as angular bindings (even w/ filters)
   #   example: "SENT {{20000|convert}}" will render to "Sent 0.0002 BTC"
   $rootScope.$on "saveActivityUpdate", (_, type, msg) ->
+    return unless Wallet.user.uid
     cookieName = 'activity-' + Wallet.user.uid.split('-')[0]
     # Build new activity object
     newActivity = { type: type, msg: msg, t: Date.now(), icon: 'ti-layout-list-post' }
