@@ -34,3 +34,10 @@
     content: '';
   }
 }
+
+.af-log {
+  max-width: 210px;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
