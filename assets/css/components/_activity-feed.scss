@@ -4,11 +4,16 @@
     margin-bottom: 0;
   }
 }
-
 .af-item {
   height: 75px;
   border-left: 1px solid #eee;
   margin-left: 15px;
+  &.af-fade {
+    opacity: 0.5;
+  }
+}
+.af-empty-state {
+  max-height: 400px; //calc this later
 }
 
 .af-info {
@@ -19,6 +24,7 @@
 .af-marker {
   position: relative;
   right: 15px;
+  top: 13px;
   i {
     border-radius: 100%;
     background-color: #ECECEC;

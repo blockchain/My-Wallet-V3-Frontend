@@ -1,5 +1,4 @@
-.section { height: 250px; }
-.section-graph { height: 350px; }
+.section { max-height: 350px; }
 
 .pill {
   color: white;
@@ -17,6 +16,7 @@
   height: 100%;
   &.empty {
     background: #F3F3F3;
+    height: 275px;
   }
   .button-sm {
     position: absolute;
@@ -26,17 +26,32 @@
   h4 { z-index: 10; }
 }
 
-.chart {
-  height: 300px;
-  width: 300px;
-  position: relative;
-  left: 45px;
-  &.faded {
-    border: 30px solid #E7E7E7;
-    border-radius: 100%;
-  }
+//hack absolute positioning center
+.pos-abs-chart {
+  position: absolute;
+  left: 50%;
+  top: 15%;
 }
-// give some breathing room for the svg legend
+.empty-state-chart {
+  height: 200px;
+  width: 200px;
+  border: 30px solid #E7E7E7;
+  border-radius: 100%;
+  position: relative;
+  left: -50%;
+}
+
+.chart {
+  height: 250px;
+  width: 250px;
+  position: relative;
+  left: 35px;
+}
+// overrides for chart. temporary
 .ac-legend td {
   padding: 0 5px;
+}
+.angular-charts-template table {
+  position: absolute;
+  right: 0;
 }

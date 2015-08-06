@@ -1,20 +1,21 @@
 .home.pal
   h5.em-700.em-alt.mbvl(translate="BYOB")
   .flex.flex-wrap
-    .col-md-6.col-xs-12.pln
-      .section
-        activity-feed
-    .col-md-6.col-xs-12
+    .col-md-6.col-sm-12.col-xs-12.pln
+      activity-feed
+    .col-md-6.col-sm-12.col-xs-12
       .section
         did-you-know
-      .section.section-graph.mtvl
-        h4.aaa.em-400(translate="BALANCE_BY_ACCOUNT")
-        //change this to == 1 once actual chart.js is added
+      .section.section-graph.mtl
+        h4.aaa.em-400.mbl(translate="BALANCE_BY_ACCOUNT")
         .widget.flex-center.flex-justify(ng-class="{ 'empty pos-rel' : accounts().length == 1 }")
           button.button-primary.button-sm(ng-click="newAccount()" ng-hide="accounts().length > 1" translate="NEW_ACCOUNT")
           h4.width-75.center-align(translate="HOME_NEW_ACCOUNT_MSG" ng-hide="accounts().length > 1")
+          .pos-abs-chart(ng-hide="accounts().length > 1")
+            .empty-state-chart
           #chart.chart(
             ac-chart="'pie'"
             ac-data="pieChartData"
             ac-config="pieChartConfig"
+            ng-show="accounts().length > 1"
           )
