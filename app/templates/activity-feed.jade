@@ -9,6 +9,27 @@
         p.af-date.mll.flex-1 {{ activity.t | date:'mediumDate' }}
         p.af-log.flex-2.right-align {{ translateParts(activity.msg) }}
     //psuedo empty-state
+    li.af-item.flex-align-start(ng-show="activities.length == 0")
+      .af-marker
+        i.ti-settings
+      .af-info.flex-center.width-100
+        h5.af-type(translate="ACTIVITY_1")
+        p.af-date.mll.flex-1
+        p.af-log.flex-2.right-align Wallet Setting Changed
+    li.af-item.flex-align-start(ng-show="activities.length == 0")
+      .af-marker
+        i.ti-lock
+      .af-info.flex-center.width-100
+        h5.af-type(translate="ACTIVITY_2")
+        p.af-date.mll.flex-1
+        p.af-log.flex-2.right-align Security Score Increased!
+    li.af-item.flex-align-start.af-fade(ng-show="activities.length == 0")
+      .af-marker
+        i.ti-settings
+      .af-info.flex-center.width-100
+        h5.af-type(translate="ACTIVITY_3")
+        p.af-date.mll.flex-1 
+        p.af-log.flex-2.right-align Wallet Setting Changed
     li.flex-center.flex-justify.flex-column.af-empty-state.width-100.pal(ng-show="activities.length < 6")
       i.ti-split-v.h1.pbl
       h3.em-300.center-align(translate="ACTIVITY_EMPTY")

@@ -537,6 +537,9 @@
   "DYK5": "Our wallet balances are reflected in bitcoin, but we do show a dollar estimation based on the current market price. The amount of bitcoins will stay the same regardless of market fluctuations in price.",
   "DYK5_TITLE": "Bitcoin's value is constantly changing?",
   "GIVE_FEEDBACK": "Give Us Your Feedback.",
-  "WALLET_RECOVERY": "Wallet Recovery"
+  "WALLET_RECOVERY": "Wallet Recovery",
+  "ACTIVITY_1": "Activity 1",
+  "ACTIVITY_2": "Activity 2",
+  "ACTIVITY_3": "Activity 3"
 
 }
