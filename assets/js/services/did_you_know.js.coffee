@@ -15,7 +15,7 @@ angular.module("didYouKnow", []).factory "DidYouKnow", ($log, $rootScope, $trans
         type: $translate.instant('FEATURE')
         text: $translate.instant('DYK2')
         icon: 'ti-lock'
-        linkText: $translate.instant('SECURITY_CENTER')
+        linkText: $translate.instant('WALLET_RECOVERY')
         link: '/#/settings/wallet-recovery'
       },
       {

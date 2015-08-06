@@ -6,7 +6,7 @@
         i(ng-class="activity.icon")
       .af-info.flex-center.width-100
         h5.af-type(translate="{{ activity.type }}")
-        p.af-date.mll.flex-1 {{ activity.t | date:'MMMM d' }}
+        p.af-date.mll.flex-1 {{ activity.t | date:'mediumDate' }}
         p.af-log.flex-2.right-align {{ translateParts(activity.msg) }}
     //psuedo empty-state
     li.flex-center.flex-justify.flex-column.af-empty-state.width-100.pal(ng-show="activities.length < 6")
