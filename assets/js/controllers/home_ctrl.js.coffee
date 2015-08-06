@@ -2,6 +2,7 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
   $scope.accounts = Wallet.accounts
   $scope.status = Wallet.status
   $scope.settings = Wallet.settings
+  $scope.total = Wallet.total.bind(null,'accounts')
   $scope.transactions = []
 
   $scope.pieChartData = { data: [] }
