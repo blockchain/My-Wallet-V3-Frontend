@@ -15,7 +15,7 @@ walletApp.directive('configureSecondPassword', ($translate, Wallet, $modal) ->
 
         success = () ->
           scope.busy = false
-          $scope.$emit('saveActivityUpdate', 'SETTINGS', 'REMOVE_SECOND_PASSWORD')
+          scope.$emit('saveActivityUpdate', 'SETTINGS', 'REMOVE_SECOND_PASSWORD')
 
         error = () ->
           scope.busy = false
