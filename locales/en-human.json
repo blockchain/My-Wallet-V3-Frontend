@@ -521,7 +521,7 @@
   "DYK" : "Did You Know",
   "INC_SCORE" : "Security score increased to",
   "DEC_SCORE" : "Security score decreased to",
-  "CHANGE_DEFAULT" : "Change Default Account",
+  "CHANGE_DEFAULT" : "Changed Default Account",
   "ACTIVITY_EMPTY": "You'll see your Activity Feed grow the more you interact with your wallet!"
 
 }
