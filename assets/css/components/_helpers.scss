@@ -24,7 +24,7 @@
 .popover {
   box-shadow: 0 3px 8px 0px rgba(158, 158, 158, 0.65) !important;
   border-radius: 7px !important;
-  z-index: 1000 !important; // modals have z-index 1050
+  z-index: 1049; // keep below Bootstrap modals (1050)
 }
 
 @media (max-width: 620px) {

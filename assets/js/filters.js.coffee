@@ -1,7 +1,7 @@
 "use strict"
 
 angular.module("walletFilters", [])
-      
+
 .filter "toBitCurrency", ->
   (input, btcCurrency, hideCurrency) ->
     if input? && !isNaN(input) && btcCurrency? && btcCurrency.code? && btcCurrency.conversion?
@@ -12,7 +12,7 @@ angular.module("walletFilters", [])
 
 .filter "btc", ->
   (input,hideCurrency) ->
-    if input? && !isNaN(input) 
+    if input? && !isNaN(input)
      numeral(input).divide(100000000).format("0.[00000000]") + (if hideCurrency then "" else " BTC")
     else
       ""
@@ -42,19 +42,19 @@ angular.module("walletFilters", [])
     while i < len
       subCollection = collection[i][propertyName]
       j = 0
-      len2 = subCollection.length 
+      len2 = subCollection.length
       while j < len2
         return collection[i]  if collection[i][propertyName][j] == propertyValue
         j++
       i++
     null
-    
+
 .filter "addressOrNameMatch", ->
   (addresses, q) ->
     return addresses if !q? or q == ""
-    result = []
-    for address in addresses
-      if (address.label? && address.label.toLowerCase().indexOf(q.toLowerCase()) > -1) or address.address.toLowerCase().indexOf(q.toLowerCase()) > -1
-        result.push address
-    result
-    
+    q = q.toLowerCase()
+    addresses.filter (addr) ->
+      keep = addr.account? && addr.account.label.toLowerCase().indexOf(q) > -1
+      keep = keep || addr.label? && addr.label.toLowerCase().indexOf(q) > -1
+      keep = keep || addr.address.toLowerCase().indexOf(q) > -1
+      return keep

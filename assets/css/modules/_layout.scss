@@ -66,7 +66,7 @@
 @media (max-width: 768px) {
   .left-nav {
     left: -280px;
-    z-index: 10;
+    z-index: 2;
     transition: all .3s ease-in-out;
   }
   .left-nav.toggled {

@@ -14,12 +14,20 @@ describe "Contextual message directive", ->
 
     Wallet = $injector.get("Wallet")
     SecurityCenter = $injector.get("SecurityCenter")
+    MyWallet = $injector.get("MyWallet")
 
+    MyWallet.wallet = {
+      balanceActiveLegacy: 100000000
+      keys: [{ archived: false }, { archived: true }]
+      hdwallet: {
+        accounts: [{ archived: false }, { archived: false }, { archived: true }]
+      }
+    }
     return
   )
 
   beforeEach ->
-    element = $compile("<contextual-message></contextual-message>")($rootScope)
+    element = $compile("<div style='height: 100px;'><contextual-message></contextual-message></div>")($rootScope)
     $rootScope.$digest()
     scope.$apply()
 
