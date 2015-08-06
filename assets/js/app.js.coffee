@@ -142,8 +142,7 @@ walletApp.run ($rootScope, $modal, $cookies) ->
   #   example: "SENT {{20000|convert}}" will render to "Sent 0.0002 BTC"
   $rootScope.$on "saveActivityUpdate", (_, type, msg) ->
     # Build new activity object
-    newActivity = { type: type, msg: msg, t: Date.now() }
-    newActivity.icon = 'ti-layout-list-post' if type == 'TRANSACTION'
+    newActivity = { type: type, msg: msg, t: Date.now(), icon: 'ti-layout-list-post' }
     newActivity.icon = 'ti-settings' if type == 'SETTINGS'
     newActivity.icon = 'ti-lock' if type == 'SECURITY'
     newActivity.icon = 'ti-wallet' if type == 'MY_ACCOUNTS'
