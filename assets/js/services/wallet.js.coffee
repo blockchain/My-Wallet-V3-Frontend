@@ -292,6 +292,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       defer.resolve(null)
     return defer.promise
 
+  wallet.saveActivity = () ->
+    # TYPES: ['transactions', 'security', 'settings', 'accounts']
+    $rootScope.$broadcast('updateActivityFeed')
+    console.log "Should save activity"
+
   wallet.createAccount = (label, successCallback, errorCallback, cancelCallback) ->
     proceed = (password) ->
       newAccount = wallet.my.wallet.newAccount(label, password)
@@ -726,22 +731,19 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return wallet.my.isValidAddress(address)
 
   wallet.archive = (address_or_account) ->
-    name = address_or_account.label || address_or_account.address
-    $rootScope.$emit('saveActivityUpdate', 'MY_ACCOUNTS', 'ARCHIVED ' + name)
+    wallet.saveActivity(3)
     address_or_account.archived = true
     address_or_account.active = false
     wallet.hdAddresses(true)
 
   wallet.unarchive = (address_or_account) ->
-    name = address_or_account.label || address_or_account.address
-    $rootScope.$emit('saveActivityUpdate', 'MY_ACCOUNTS', 'UNARCHIVED ' + name)
+    wallet.saveActivity(3)
     address_or_account.archived = false
     address_or_account.active = true
     wallet.hdAddresses(true)
 
   wallet.deleteLegacyAddress = (address) ->
-    name = address.label || address.address
-    $rootScope.$emit('saveActivityUpdate', 'MY_ACCOUNTS', 'DELETED ' + name)
+    wallet.saveActivity(3)
     wallet.my.wallet.deleteLegacyAddress(address)
 
   ##################################
@@ -820,7 +822,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         if wallet.transactions[numberOfTransactions - 1].result > 0 && !wallet.transactions[[numberOfTransactions - 1]].intraWallet
           wallet.displayReceivedBitcoin()
           amountReceived = wallet.transactions[wallet.transactions.length - 1].result
-          $rootScope.$emit('saveActivityUpdate', 'TRANSACTION', 'RECEIVED {{' + amountReceived + '|convert}}')
+          wallet.saveActivity(0)
     else if event == "error_restoring_wallet"
       # wallet.applyIfNeeded()
       return
@@ -1146,7 +1148,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.settings_api.toggleSave2FA(true, success, error)
 
   wallet.handleBitcoinLinks = () ->
-    $rootScope.$emit('saveActivityUpdate', 'SETTINGS', 'HANDLE_BITCOIN_LINKS')
+    wallet.saveActivity(2)
     $window.navigator.registerProtocolHandler('bitcoin', window.location.origin + '/#/open/%s', "Blockchain")
 
   wallet.enableBlockTOR = () ->
@@ -1170,7 +1172,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.enableApiAccess = () ->
     wallet.settings_api.update_API_access(true, ()->
       wallet.settings.apiAccess = true
-      $rootScope.$emit('saveActivityUpdate', 'SETTINGS', 'ENABLE_API_ACCESS')
+      wallet.saveActivity(2)
       wallet.applyIfNeeded()
     ,()->
       console.log "Failed"
@@ -1180,7 +1182,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.disableApiAccess = () ->
     wallet.settings_api.update_API_access(false, ()->
       wallet.settings.apiAccess = false
-      $rootScope.$emit('saveActivityUpdate', 'SETTINGS', 'DISABLE_API_ACCESS')
+      wallet.saveActivity(2)
       wallet.applyIfNeeded()
     ,()->
       console.log "Failed"
@@ -1190,7 +1192,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.enableRestrictToWhiteListedIPs = () ->
     wallet.settings_api.update_IP_lock_on(true, ()->
       wallet.settings.restrictToWhitelist = true
-      $rootScope.$emit('saveActivityUpdate', 'SETTINGS', 'ENABLE_IP_WHITELIST_RESTRICT')
+      wallet.saveActivity(2)
       wallet.applyIfNeeded()
     ,()->
       console.log "Failed"
@@ -1200,7 +1202,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.disableRestrictToWhiteListedIPs = () ->
     wallet.settings_api.update_IP_lock_on(false, ()->
       wallet.settings.restrictToWhitelist = false
-      $rootScope.$emit('saveActivityUpdate', 'SETTINGS', 'DISABLE_IP_WHITELIST_RESTRICT')
+      wallet.saveActivity(2)
       wallet.applyIfNeeded()
     ,()->
       console.log "Failed"

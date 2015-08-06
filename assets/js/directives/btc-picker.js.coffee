@@ -12,7 +12,7 @@ walletApp.directive('btcPicker', ($translate, Wallet) ->
 
       scope.didSelect = (item, model) ->
         scope.currency = item
-        scope.$emit('saveActivityUpdate', 'SETTINGS', 'BITCOIN_CURRENCY (' + item.code + ')')
+        Wallet.saveActivity(2)
         if Wallet.isBitCurrency(scope.displayCurrency)
           scope.displayCurrency = item
   }

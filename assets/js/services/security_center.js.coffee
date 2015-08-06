@@ -71,9 +71,9 @@ angular.module("securityCenter", []).factory "SecurityCenter", ($log, Wallet, $r
     # Update the activity list if the level has changed
     if hasLoaded
       if securityLevel > service.security.level
-        $rootScope.$emit('saveActivityUpdate', 'SECURITY', 'INC_SCORE ' + securityPercent)
+        Wallet.saveActivity(1)
       else if securityLevel < service.security.level
-        $rootScope.$emit('saveActivityUpdate', 'SECURITY', 'DEC_SCORE ' + securityPercent)
+        Wallet.saveActivity(1)
 
     if status.didLoadSettings
       hasLoaded = true

@@ -48,7 +48,7 @@ walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
           scope.status.busy = false
           scope.onSuccess()
           scope.user.internationalMobileNumber = formattedNumber
-          scope.$emit('saveActivityUpdate', 'SETTINGS', 'CHANGE_MOBILE_NUMBER')
+          Wallet.saveActivity(2)
 
         error = (error) ->
           scope.status.busy = false

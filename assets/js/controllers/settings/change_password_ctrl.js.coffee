@@ -13,7 +13,7 @@ walletApp.controller "ChangePasswordCtrl", ($scope, $log, Wallet, $modalInstance
     return unless $scope.passwordForm.$valid
     success = () ->
       $modalInstance.dismiss ""
-      $scope.$emit('saveActivityUpdate', 'SETTINGS', 'CHANGE_PASSWORD')
+      Wallet.saveActivity(2)
     error = (err) ->
       $scope.status.waiting = false
       $scope.errors.unsuccessful = err

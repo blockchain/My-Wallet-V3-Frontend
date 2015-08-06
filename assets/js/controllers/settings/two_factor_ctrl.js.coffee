@@ -37,7 +37,7 @@ walletApp.controller "TwoFactorCtrl", ($scope, Wallet, $modalInstance, $translat
     return unless $scope.settings.needs2FA
     Wallet.disableSecondFactor()
     $scope.goToStep('disabled')
-    $scope.$emit('saveActivityUpdate', 'SETTINGS', 'DISABLED TWO_FACTOR')
+    Wallet.saveActivity(2)
 
   $scope.setTwoFactorSMS = () ->
     if $scope.user.isMobileVerified
@@ -108,6 +108,6 @@ walletApp.controller "TwoFactorCtrl", ($scope, Wallet, $modalInstance, $translat
     return unless $scope.isStep('loading')
     if newVal > 0
       $scope.goToStep('success')
-      $scope.$emit('saveActivityUpdate', 'SETTINGS', 'ENABLED TWO_FACTOR')
+      Wallet.saveActivity(2)
     else
       $scope.goToStep('disabled')

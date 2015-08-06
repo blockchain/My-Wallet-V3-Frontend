@@ -160,11 +160,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         $state.go("wallet.common.transactions", { accountIndex: index })
 
       # Update the activity feed
-      total = '{{' + $scope.getTransactionTotal(false) + '|convert}}'
-      if transaction.type == 'External'
-        $scope.$emit('saveActivityUpdate', 'TRANSACTION', 'SENT ' + total)
-      else
-        $scope.$emit('saveActivityUpdate', 'TRANSACTION', 'TRANSFERRED ' + total)
+      Wallet.saveActivity(0)
 
       # Show success notification
       $translate(['SUCCESS', 'BITCOIN_SENT']).then (translations) ->

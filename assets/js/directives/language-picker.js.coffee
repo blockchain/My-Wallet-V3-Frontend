@@ -11,6 +11,6 @@ walletApp.directive('languagePicker', ($translate, Wallet) ->
 
       scope.didSelect = (item, model) ->
         scope.language = item
-        scope.$emit('saveActivityUpdate', 'SETTINGS', 'LANGUAGE (' + item.name + ')')
+        Wallet.saveActivity(2)
   }
 )

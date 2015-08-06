@@ -123,7 +123,7 @@ walletApp.config ($numeraljsConfigProvider, $modalProvider, uiSelectConfig) ->
 # walletApp.config ($sceProvider) ->
 #   $sceProvider.enabled(false);
 
-walletApp.run ($rootScope, $modal, $cookies, Wallet) ->
+walletApp.run ($rootScope, $modal) ->
   $rootScope.$safeApply = (scope=$rootScope) ->
     scope.$apply() unless scope.$$phase || $rootScope.$$phase
 
@@ -134,25 +134,3 @@ walletApp.run ($rootScope, $modal, $cookies, Wallet) ->
       windowClass: "notification-modal"
       resolve: { notification: -> notification }
     )
-
-  # Listens for activity updates and saves them to the 'activity' cookie
-  # param type: translation string to express the type of activity
-  # param msg: message to be displayed for activity, can take translation
-  #   strings as well as angular bindings (even w/ filters)
-  #   example: "SENT {{20000|convert}}" will render to "Sent 0.0002 BTC"
-  $rootScope.$on "saveActivityUpdate", (_, type, msg) ->
-    return unless Wallet.user.uid
-    cookieName = 'activity-' + Wallet.user.uid.split('-')[0]
-    # Build new activity object
-    newActivity = { type: type, msg: msg, t: Date.now(), icon: 'ti-layout-list-post' }
-    newActivity.icon = 'ti-settings' if type == 'SETTINGS'
-    newActivity.icon = 'ti-lock' if type == 'SECURITY'
-    newActivity.icon = 'ti-wallet' if type == 'MY_ACCOUNTS'
-    # Replace the old cookie, adding new activity to it
-    activityObj = ($cookies.getObject(cookieName) || [])
-    activityObj.unshift(newActivity)
-    activityObj.splice(8)
-    options = { expires: new Date(1448341200000) }
-    $cookies.putObject(cookieName, activityObj, options)
-    # Update the currect activity list
-    $rootScope.$broadcast('updateActivityList')
