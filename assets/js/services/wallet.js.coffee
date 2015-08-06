@@ -1146,6 +1146,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.settings_api.toggleSave2FA(true, success, error)
 
   wallet.handleBitcoinLinks = () ->
+    $rootScope.$emit('saveActivityUpdate', 'SETTINGS', 'HANDLE_BITCOIN_LINKS')
     $window.navigator.registerProtocolHandler('bitcoin', window.location.origin + '/#/open/%s', "Blockchain")
 
   wallet.enableBlockTOR = () ->
