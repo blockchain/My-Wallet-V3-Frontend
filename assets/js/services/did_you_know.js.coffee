@@ -1,4 +1,4 @@
-angular.module("didYouKnow", []).factory "DidYouKnow", ($log, $rootScope) ->
+angular.module("didYouKnow", []).factory "DidYouKnow", ($log, $rootScope, $translate) ->
 
   service = {
     dyks: [

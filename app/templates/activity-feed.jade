@@ -3,7 +3,7 @@
   ul.af.pln
     li.af-item.flex-align-start(ng-class="{ 'af-fade' : $last }" ng-repeat="activity in activities | limitTo: 10")
       .af-marker
-        i.ti-layout-list-post
+        i(ng-class="activity.icon")
       .af-info.flex-center.width-100
         h5.af-type(translate="{{ activity.type }}")
         p.af-date.mll.flex-1 {{ activity.t | date:'MMMM d' }}
@@ -11,4 +11,4 @@
     //psuedo empty-state
     li.flex-center.flex-justify.flex-column.af-empty-state.width-100.pal(ng-show="activities.length < 6")
       i.ti-split-v.h1.pbl
-      h3.em-300.center-align You'll see your Activity Feed grow the more you interact with your wallet!
+      h3.em-300.center-align(translate="ACTIVITY_EMPTY")
