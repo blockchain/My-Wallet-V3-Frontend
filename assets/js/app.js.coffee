@@ -141,8 +141,16 @@ walletApp.run ($rootScope, $modal, $cookies) ->
   #   strings as well as angular bindings (even w/ filters)
   #   example: "SENT {{20000|convert}}" will render to "Sent 0.0002 BTC"
   $rootScope.$on "saveActivityUpdate", (_, type, msg) ->
+    # Build new activity object
+    newActivity = { type: type, msg: msg, t: Date.now() }
+    newActivity.icon = 'ti-layout-list-post' if type == 'TRANSACTION'
+    newActivity.icon = 'ti-settings' if type == 'SETTINGS'
+    newActivity.icon = 'ti-lock' if type == 'SECURITY'
+    newActivity.icon = 'ti-wallet' if type == 'MY_ACCOUNTS'
+    # Replace the old cookie, adding new activity to it
     activityObj = ($cookies.getObject('activity') || [])
-    activityObj.unshift({ type: type, msg: msg, t: Date.now() })
+    activityObj.unshift(newActivity)
     activityObj.pop() if activityObj.length > 10
     $cookies.putObject('activity', activityObj)
+    # Update the currect activity list
     $rootScope.$broadcast('updateActivityList')
