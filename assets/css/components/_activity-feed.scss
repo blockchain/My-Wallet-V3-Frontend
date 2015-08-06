@@ -13,7 +13,10 @@
   }
 }
 .af-empty-state {
-  max-height: 400px; //calc this later
+  height: 100%;
+  background: linear-gradient(rgba(247, 247, 247, 0.45), rgba(247, 247, 247, 1));
+  position: absolute;
+  top: 0;
 }
 
 .af-info {
@@ -21,6 +24,10 @@
   padding: .8em;
 }
 
+.af-date {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .af-marker {
   position: relative;
   right: 15px;

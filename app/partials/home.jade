@@ -1,8 +1,11 @@
 .home.pal.mtm
   h4.em-alt.blue.mbl.mtn(translate="BYOB")
   .flex.flex-wrap
-    .col-md-6.col-sm-12.col-xs-12.pln
+    .col-md-6.col-sm-12.col-xs-12.pos-rel.pln
       activity-feed
+      .flex-center.flex-justify.flex-column.af-empty-state.pal(ng-show="empty")
+        i.ti-split-v.h1.pbs
+        h3.em-400.center-align.width-50(translate="ACTIVITY_EMPTY")
     .col-md-6.col-sm-12.col-xs-12
       .section
         did-you-know

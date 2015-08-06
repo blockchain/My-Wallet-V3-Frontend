@@ -3,6 +3,7 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
   $scope.status = Wallet.status
   $scope.settings = Wallet.settings
   $scope.getTotal = () -> Wallet.total('accounts')
+  $scope.empty = false
   $scope.transactions = []
 
   $scope.pieChartData = { data: [] }
@@ -11,7 +12,7 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
     colors: [ 'RGB(96, 178, 224)','RGB(238, 107, 93)', 'RGB(74, 198, 171)', 'RGB(244, 189, 57)',
     'RGB(66, 165, 219)', 'RGB(38, 188, 157)', 'RGB(244, 199, 88)', 'RGB(234, 81, 62)'
     ]
-    innerRadius: 50
+    innerRadius: 60
     labels: false
     legend: {
       display: true,

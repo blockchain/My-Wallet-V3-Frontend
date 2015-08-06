@@ -8,9 +8,9 @@
       .af-marker
         i(ng-class="activity.icon")
       .af-info.flex-center.width-100
-        p.h5.af-type(translate="{{ activity.title }}")
-        p.af-date.mll.flex-1 {{ activity.time | date:'mediumDate' }}
-        p.af-log.right-align(translate="{{ activity.message }}")
+        p.h5.af-type.flex-1(translate="{{ activity.title }}")
+        p.af-date.mll.flex-1.hidden-xs {{ activity.time | date:'mediumDate' }}
+        p.af-log.right-align.flex-2(translate="{{ activity.message }}")
         span(ng-show="activity.type == 0") &nbsp;{{ activity.result | convert }}
     //psuedo empty-state
     li.af-item.flex-align-start(ng-show="activities.length == 0")
@@ -34,6 +34,3 @@
         p.h5.af-type(translate="ACTIVITY_3")
         p.af-date.mll.flex-1 
         p.af-log.flex-2.right-align Wallet Setting Changed
-    li.flex-center.flex-justify.flex-column.af-empty-state.width-100.pal(ng-show="activities.length < 6")
-      i.ti-split-v.h1.pbl
-      h3.em-300.center-align(translate="ACTIVITY_EMPTY")
