@@ -13,10 +13,10 @@ angular.module("didYouKnow", []).factory "DidYouKnow", ($log, $rootScope, $trans
       {
         title: 'Passwords are not stored or shared with us?'
         type: 'Feature'
-        text: 'This means only you know the password you used for your wallet, but your funds can still be recovered with the 12-word recovery phrase. Find out how and more by visiting our'
+        text: 'This means only you know the password you used for your wallet, but your funds can still be recovered with the 12-word recovery phrase. Find out how and more by visiting your'
         icon: 'ti-lock'
-        linkText: 'Security Center'
-        link: '/#/security-center'
+        linkText: 'Wallet Recovery Settings'
+        link: '/#/settings/wallet-recovery'
       },
       {
         title: 'What transaction fees are for?'
