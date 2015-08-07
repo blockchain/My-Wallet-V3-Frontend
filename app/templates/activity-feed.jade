@@ -2,7 +2,10 @@
   .activity-feed
     h5.mtn.aaa.em-400.mbl.af-header(translate="MOST_RECENT_ACTIVITY")
     ul.af.pln
-      li.af-item.flex-align-start(ng-repeat="activity in activities | limitTo: 8")
+      li.af-item.flex-align-start(
+        ng-class="{ 'af-fade' : $last && activities.length >= 8 }"
+        ng-repeat="activity in activities | limitTo: 8"
+        )
         .af-marker
           i(ng-class="activity.icon")
         .af-info.flex-center.width-100
