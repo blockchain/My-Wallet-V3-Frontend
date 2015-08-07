@@ -1,3 +1,47 @@
+//login page
+div.login-form {
+  background: white;
+  box-shadow: 0px 0px 8px 0px rgba(211, 211, 211, 0.32);
+  border: 1px solid white;
+  form {
+    margin: 0 auto;
+    padding: 30px;
+  }
+}
+
+.login-pg {
+  background-color: #049BD4;
+  height: calc(100% + 50px); //offset margin from bootstrap
+}
+
+.login-box {
+  background-color: white;
+  padding: 10px 50px 50px;
+  margin-bottom: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 10px;
+  border: 1px solid white;
+  box-shadow: 0px 0px 20px -8px black;
+  header {
+    padding: 15px 0 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgb(240, 236, 236);
+  }
+  .form-horizontal .form-group {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .help-block .info {
+    color: #C9C9C9;
+    &:hover {
+      color: #A3A0A0;
+    }
+  }
+}
+
+//signup process
+
 .signup {
   position:fixed;
   background: #049BD4;
@@ -106,7 +150,7 @@
   position: fixed;
   height: 100%;
   width: 100%;
-  z-index: 10000;
+  z-index: 1051; //greater than Bootstrap modal (1050)
   top: 0;
   left: 0;
   .alpha-agreement-container {
@@ -154,3 +198,4 @@
   }
   .signup .modal-body { padding: 0 15px; }
 }
+

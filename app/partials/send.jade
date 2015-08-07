@@ -28,7 +28,7 @@
               ui-select-match
                 label-origin(origin="$select.selected" fee="transaction.fee")
               ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)")
-                span(ng-class="{zerobalance: hasZeroBalance(origin)}")
+                span(ng-class="{aaa: hasZeroBalance(origin)}")
                   label-origin(origin='origin' fee='transaction.fee' highlight="$select.search")
           span.help-block(translate="INSUFFICIENT" ng-show="!amountIsValid && (sendForm.amounts0.$touched || sendForm.amountsFiat0.$touched)")
           span.help-block(ng-show="sendForm.from.$invalid && sendForm.destinations0.$touched") Must select an account to send from
@@ -68,9 +68,9 @@
           //- Amount
           div.flex-center.recipient-currency.mtl(ng-class="{'has-error': sendForm['amounts' + $index].$invalid && (sendForm['amounts' + $index].$touched || sendForm['amountsFiat' + $index].$touched)}")
             .mrl.flex-1
-              .flex-center
+              .flex-center.border-bottom
                 span.mrm {{ btcCurrency.code }}:
-                input.form-control(
+                input.form-control.no-border(
                   type="number"
                   ng-model="transaction.amounts[$index]"
                   name="{{'amounts' + $index}}"
@@ -80,10 +80,11 @@
                   ng-change="validateAmounts()"
                   required
                 )
-            .mrl.flex-1
-              .flex-center
+            i.ti-arrows-horizontal.h4.aaa.prm
+            .flex-1
+              .flex-center.border-bottom
                 span.mrm {{ fiatCurrency.code }}:
-                input.form-control(
+                input.form-control.no-border(
                   type="number"
                   ng-model="transaction.amounts[$index]"
                   name="{{'amountsFiat' + $index}}"
@@ -118,9 +119,9 @@
               span(translate="GENEROUS")
           .fee-custom
             .mrl.flex-1
-              .flex-center
+              .flex-center.border-bottom
                 span.mrm {{ btcCurrency.code }}:
-                input.form-control(type="number" name="fee" ng-model="transaction.fee" min="0" ng-change="validateAmounts()" required transform-currency="settings.btcCurrency" placeholder="Enter your fee here")
+                input.form-control.no-border(type="number" name="fee" ng-model="transaction.fee" min="0" ng-change="validateAmounts()" required transform-currency="settings.btcCurrency" placeholder="Enter your fee here")
               span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$touched")
       //- QR Scanner
       .flex-column.form-group(ng-hide="!cameraIsOn")

@@ -29,6 +29,12 @@ walletApp.controller "RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
       addr.label = addr.label || addr.address
       $scope.destinations.push addr
 
+  $scope.getFilter = (search, accounts=true) ->
+    {
+      label: search
+      type: if accounts then '!External' else 'Imported'
+    }
+
   $scope.determineLabel = (origin) ->
     return unless origin?
     origin.label || origin.address

@@ -41,8 +41,8 @@
     "repo" : "thenikso/angular-inview"
   },
   "angular-password-entropy" : {
-    "version": "0.1.3",
-    "commits" : ["15c7ae1182a1a6c2881b0e3b03b4bb46a65a8077"],
+    "version": "0.1.4",
+    "commits" : ["939ab5f06a5a3c09cd4dc39a19a312468b8c11cb"],
     "repo" : "pernas/angular-password-entropy"
   },
   "international-phone-number" : {

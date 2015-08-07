@@ -1,6 +1,6 @@
 .bc-modal {
   .modal-content { background: $light-grey-alt; box-shadow: 0 5px 1px rgba(0, 0, 0, 0.6); }
-  .modal-dialog { width: 55vw; }
+  .modal-dialog { width: 50vw; }
   .modal-body {
     background: white;
     min-height: 100px;
@@ -43,7 +43,9 @@
       border-color: none;
       box-shadow: none
     }
+    &.no-border { border-bottom: none; }
   }
+  .has-error .border-bottom { border-color: #a94442 !important; }
   label {
     font-weight: 400;
     color: darken($ccc, 45%);
@@ -88,7 +90,7 @@
           border-radius: 3px;
           min-width: 100px;
           font-size: 13px;
-          z-index: 10000;
+          z-index: 1050;
         }
       }
     }
@@ -210,10 +212,6 @@
       padding: 3px 10px;
     }
   }
-  .has-error .form-control {
-    border-color: #a94442 !important;
-  }
-
   //Specific to the 2FA modal
   .two-fa-image { width: 40px; }
   .phone-image { width: 85px; }
