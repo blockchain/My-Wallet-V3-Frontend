@@ -522,7 +522,9 @@
   "INC_SCORE" : "Security score increased to",
   "DEC_SCORE" : "Security score decreased to",
   "CHANGE_DEFAULT" : "Changed Default Account",
-  "ACTIVITY_EMPTY": "You'll see your Activity Feed grow the more you interact with your wallet!",
+  "ACTIVITY_EMPTY": "Welcome to your Activity Feed",
+  "ACTIVITY_EMPTY_MSG": "Here we'll give you a snapshot of recent transactions + important activites surrounding your wallet. Get a head start by sharing your address to receive bitcoins into your wallet",
+  "RECEIVE_BTC": "Start Receiving Bitcoins",
   "FEATURE": "Feature",
   "PARTNER": "Partner",
   "EDUCATIONAL": "Educational",
@@ -538,13 +540,14 @@
   "DYK5_TITLE": "Bitcoin's value is constantly changing?",
   "GIVE_FEEDBACK": "Give Us Your Feedback.",
   "WALLET_RECOVERY": "Wallet Recovery",
-  "ACTIVITY_1": "Activity 1",
-  "ACTIVITY_2": "Activity 2",
-  "ACTIVITY_3": "Activity 3",
-  "ALT_EMPTY_MSG": "You don't have any bitcoin yet! Once you receive some bitcoins, we'll chart your account balances here.",
   "LOGGING" : "Activity Logging",
   "LOGGING_EXPLAIN" : "Record wallet activity and display it in your activity feed.",
   "ENABLE_LOGGING" : "Enable Logging",
-  "DISABLE_LOGGING" : "Disable Logging"
+  "DISABLE_LOGGING" : "Disable Logging",
+  "ACTIVITY_1": "Accounts",
+  "ACTIVITY_1_DESC": "Created My Bitcoin Wallet",
+  "ACTIVITY_2_DESC": "Set password",
+  "ACTIVITY_3_DESC": "Created wallet!",
+  "ALT_EMPTY_MSG": "You don't have any bitcoin yet! Once you receive some bitcoins, we'll chart your account balances here."
 
 }
