@@ -12,7 +12,7 @@ walletServices.factory 'Activity', ($rootScope, Wallet) ->
     str[0].toUpperCase() + str.substr(1)
 
   helpers.timeSort = (x, y) ->
-    x.time < y.time
+    y.time - x.time
 
   helpers.hasTime = (x) ->
     x.time? && x.time > 0
@@ -35,12 +35,12 @@ walletServices.factory 'Activity', ($rootScope, Wallet) ->
     return a
 
   activity.combineAll = () ->
-    activity.activities = activity.transactions
-      .concat(activity.logs)
-      .filter(helpers.hasTime)
-      .sort(helpers.timeSort)
-      .slice(0, activity.limit)
-    $rootScope.$safeApply()
+    $rootScope.$safeApply null, () ->
+      activity.activities = activity.transactions
+        .concat(activity.logs)
+        .filter(helpers.hasTime)
+        .sort(helpers.timeSort)
+        .slice(0, activity.limit)
 
   activity.updateTxActivities = () ->
     activity.transactions = Wallet.transactions

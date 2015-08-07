@@ -829,9 +829,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       numberOfTransactions = wallet.transactions.length
       if numberOfTransactions > before
         wallet.beep()
-        if wallet.transactions[numberOfTransactions - 1].result > 0 && !wallet.transactions[[numberOfTransactions - 1]].intraWallet
+        if wallet.transactions[0].result > 0 && !wallet.transactions[0].intraWallet
           wallet.displayReceivedBitcoin()
-          amountReceived = wallet.transactions[wallet.transactions.length - 1].result
           wallet.saveActivity(0)
     else if event == "error_restoring_wallet"
       # wallet.applyIfNeeded()
