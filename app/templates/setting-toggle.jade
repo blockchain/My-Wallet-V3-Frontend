@@ -1,0 +1,6 @@
+.setting-result
+  h2.status.incomplete.hidden-xs.hidden-sm(ng-hide="value" translate="DISABLED")
+  h2.status.complete.hidden-xs.hidden-sm(ng-show="value" translate="ENABLED")
+  .mtl
+    a.button-primary(ng-click="toggle()" translate="{{enableTitle}}" ng-hide="value")
+    a.button-primary(ng-click="toggle()" translate="{{disableTitle}}" ng-show="value")

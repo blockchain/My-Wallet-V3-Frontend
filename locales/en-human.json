@@ -541,6 +541,10 @@
   "ACTIVITY_1": "Activity 1",
   "ACTIVITY_2": "Activity 2",
   "ACTIVITY_3": "Activity 3",
-  "ALT_EMPTY_MSG": "You don't have any bitcoin yet! Once you receive some bitcoins, we'll chart your account balances here."
+  "ALT_EMPTY_MSG": "You don't have any bitcoin yet! Once you receive some bitcoins, we'll chart your account balances here.",
+  "LOGGING" : "Activity Logging",
+  "LOGGING_EXPLAIN" : "Record wallet activity and display it in your activity feed.",
+  "ENABLE_LOGGING" : "Enable Logging",
+  "DISABLE_LOGGING" : "Disable Logging"
 
 }

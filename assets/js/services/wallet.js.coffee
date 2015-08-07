@@ -1179,19 +1179,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.applyIfNeeded()
     )
 
-  wallet.enableApiAccess = () ->
-    wallet.settings_api.update_API_access(true, ()->
-      wallet.settings.apiAccess = true
-      wallet.saveActivity(2)
-      wallet.applyIfNeeded()
-    ,()->
-      console.log "Failed"
-      wallet.applyIfNeeded()
-    )
-
-  wallet.disableApiAccess = () ->
-    wallet.settings_api.update_API_access(false, ()->
-      wallet.settings.apiAccess = false
+  wallet.setApiAccess = (flag) ->
+    wallet.settings_api.update_API_access(flag, ()->
+      wallet.settings.apiAccess = flag
       wallet.saveActivity(2)
       wallet.applyIfNeeded()
     ,()->

@@ -98,7 +98,7 @@ modules = [
   "templates/confirm-recovery-phrase.jade"
   "templates/configure-second-password.jade"
   "templates/tor.jade"
-  "templates/api-access.jade"
+  "templates/setting-toggle.jade"
   "templates/ip-whitelist-restrict.jade"
   "templates/bc-async-input.jade"
   "templates/verify-email.jade"

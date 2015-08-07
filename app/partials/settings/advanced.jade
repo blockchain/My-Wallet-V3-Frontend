@@ -58,10 +58,25 @@ form.form-horizontal(role="form",name="form",novalidate)
     .col-sm-12.col-md-6
       label(translate="API_ACCESS")
       p.explain.hidden-xs.hidden-sm(translate="API_ACCESS_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result
-      h2.status.incomplete.hidden-xs.hidden-sm(ng-hide="settings.apiAccess", translate="DISABLED")
-      h2.status.complete.hidden-xs.hidden-sm(ng-show="settings.apiAccess", translate="ENABLED")
-      api-access
+    .col-sm-12.col-md-6
+      setting-toggle(
+        value="settings.apiAccess"
+        toggle="toggleApiAccess()"
+        enable-title="ENABLE_API_ACCESS"
+        disable-title="DISABLE_API_ACCESS"
+      )
+
+  .form-group
+    .col-sm-12.col-md-6
+      label(translate="LOGGING")
+      p.explain.hidden-xs.hidden-sm(translate="LOGGING_EXPLAIN")    
+    .col-sm-12.col-md-6
+      setting-toggle(
+        value="settings.loggingLevel"
+        toggle="toggleLogging()"
+        enable-title="ENABLE_LOGGING"
+        disable-title="DISABLE_LOGGING"
+      )
 
   .form-group
     .col-sm-12.col-md-6
