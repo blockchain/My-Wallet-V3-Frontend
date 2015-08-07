@@ -23,7 +23,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet = {
     goal: {auth: false},
     status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadSettings: false, didLoadTransactions: false, didLoadBalances: false, didConfirmRecoveryPhrase: false},
-    settings: {currency: null,  displayCurrency: null, language: null, btcCurrency: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null, ipWhitelist: null, apiAccess: null, restrictToWhitelist: null},
+    settings: {currency: null,  displayCurrency: null, language: null, btcCurrency: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null, ipWhitelist: null, apiAccess: null, restrictToWhitelist: null, loggingLevel: null},
     user: {current_ip: null, email: null, mobile: null, passwordHint: ""}
   }
 
@@ -84,6 +84,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.settings.rememberTwoFactor = !result.never_save_auth_type
         wallet.settings.needs2FA = result.auth_type != 0
         wallet.settings.twoFactorMethod = result.auth_type
+        wallet.settings.loggingLevel = result.logging_level
         wallet.user.email = result.email
         wallet.user.current_ip = result.my_ip
         wallet.status.currentCountryDialCode = result.dial_code
@@ -420,6 +421,15 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       successCallback()
       # wallet.applyIfNeeded()
     wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
+
+  wallet.setLoggingLevel = (level) ->
+    wallet.settings_api.updateLoggingLevel(level, () ->
+      wallet.settings.loggingLevel = level
+      wallet.applyIfNeeded()
+    , () ->
+      wallet.displayError('Failed to update logging level')
+      wallet.applyIfNeeded()
+    )
 
   ####################
   #   Transactions   #
