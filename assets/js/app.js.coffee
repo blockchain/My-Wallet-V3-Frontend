@@ -124,8 +124,9 @@ walletApp.config ($numeraljsConfigProvider, $modalProvider, uiSelectConfig) ->
 #   $sceProvider.enabled(false);
 
 walletApp.run ($rootScope, $modal) ->
-  $rootScope.$safeApply = (scope=$rootScope) ->
-    scope.$apply() unless scope.$$phase || $rootScope.$$phase
+  $rootScope.$safeApply = (scope=$rootScope, before) ->
+    before = before || (-> )
+    scope.$apply(before) unless scope.$$phase || $rootScope.$$phase
 
   $rootScope.$on "showNotification", (_, notification) ->
     $modal.open(
