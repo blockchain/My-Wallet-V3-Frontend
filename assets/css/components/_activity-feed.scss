@@ -3,7 +3,7 @@
   height: 75px;
   border-left: 1px solid #eee;
   margin-left: 15px;
-  &.af-fade {
+  &:last-child {
     opacity: 0.5;
   }
 }
