@@ -1019,6 +1019,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
       wallet.api.get_ticker(success, fail)
 
+  wallet.getActivityLogs = (success) ->
+    wallet.settings_api.getActivityLogs success, () ->
+      console.log "Failed to load activity logs"
+
   wallet.isEmailVerified = () ->
     wallet.my.isEmailVerified
 
