@@ -1,9 +1,4 @@
-.activity-feed {
-  p {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-}
+.af-header { margin-bottom: 19px; }
 .af-item {
   height: 75px;
   border-left: 1px solid #eee;
@@ -18,12 +13,10 @@
   position: absolute;
   top: 0;
 }
-
 .af-info {
   border: 1px solid #eee;
   padding: .8em;
 }
-
 .af-date {
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -41,7 +34,6 @@
     content: '';
   }
 }
-
 .af-log {
   max-width: 210px;
   overflow-x: hidden;

@@ -94,9 +94,9 @@ button[disabled] {
 .button-default { border: 1px solid #e0e0e0; }
 
 .button-gradient {
-  background: linear-gradient(#F3F3F3, #F0F0F0);
+  background: linear-gradient(#F6F6F6, #E2E2E2);
   color: $black;
-  border: RGB(240, 240, 240);
+  border: #D3D3D3;
   border-radius: 5px;
   z-index: 11;
 }

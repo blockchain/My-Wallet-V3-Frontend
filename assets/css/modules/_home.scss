@@ -1,7 +1,6 @@
 .section { max-height: 350px; }
 
 .pill {
-  border-radius: 8px;
   &.feature {
     color: $blue;
     &:hover { color: $blue; }
@@ -19,7 +18,6 @@
 .widget {
   padding: 1em;
   border: 1px solid #eee;
-  height: 100%;
   &.empty {
     background: RGBA(247, 247, 247, 1);
     height: 275px;
@@ -46,29 +44,14 @@
   position: relative;
   left: -50%;
 }
-
 .chart {
-  height: 250px;
-  width: 445px;
+  height: 225px;
+  width: 425px;
   position: relative;
 }
-// overrides for chart. temporary
-.ac-legend td {
-  padding: 0 5px;
-}
-.angular-charts-template table {
-  position: absolute;
-  right: 0;
-  top: 0;
-  float: none;
-  max-width: none;
-}
+// overrides for angular-chart(s)
+.ac-legend td { padding: 2px 5px; }
 
-.angular-charts-template .ac-chart {
-  float: none;
-  width: 100%;
-}
-
-.pie-chart-label {
-  fill: #aaa;
+@media (max-width: 478px) {
+  .ac-legend td { font-size: .8em; }
 }

@@ -64,6 +64,9 @@ $security-green: #3CC476;
 @include color('feature', $feature);
 @include color('educational', $educational);
 @include color('partner', $partner);
+@include color('transferred', $transfer-blue);
+@include color('sent', $send-red);
+@include color('received', $receive-green);
 
 //Background Mixin
 @mixin bg-color($name, $color) {
