@@ -9,6 +9,7 @@ modules = [
   "walletServices"
   "securityCenter"
   "didYouKnow"
+  "activity"
   "adverts"
   "ui.router"
   "ui.bootstrap"

@@ -1,4 +1,4 @@
-walletServices.factory 'Activity', ($rootScope, Wallet) ->
+angular.module('activity', []).factory 'Activity', ($rootScope, Wallet) ->
 
   activity  = { activities: [], transactions: [], logs: [], limit: 8 }
   helpers   = {}
