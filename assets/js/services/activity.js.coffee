@@ -59,4 +59,8 @@ angular.module('activity', []).factory 'Activity', ($rootScope, Wallet) ->
     activity.updateTxActivities()
     activity.updateLogActivities()
 
+  $rootScope.$on 'updateActivityFeed', ->
+    activity.updateAllActivities()
+
+  activity.updateLogActivities()
   return activity
