@@ -7,8 +7,8 @@ exports.config = {
     specs: ['**/*_spec.js'],
 
     suites: {
-        trans: '**/*_spec.js',
-        global: '**/*_spec.js',
+        trans: '**/transactions/*_spec.js',
+        global: '**/global/*_spec.js',
         settings: '**/settings/*_spec.js',
         securityCenter: '**/security-center/*_spec.js'
     },
@@ -17,8 +17,8 @@ exports.config = {
         login: {
             uidfake:    'c5825g04-8ke3-25r1-p103-3g000wr4-123',
             pwweak:     'asdf',
-            pwregular:  'asdf!@#$',
-            pwnormal:   'asdf!@#$asdf',
+            pwregular:  'asdfgh123456',
+            pwnormal:   'asdf!@#$',
             email:      'example@example.com',
             nums:       '1234567890',
             chars:      '$^*%(^*#$&@',

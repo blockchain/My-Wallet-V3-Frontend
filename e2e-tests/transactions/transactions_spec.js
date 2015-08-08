@@ -95,18 +95,22 @@ describe('transactions-page', function() {
 
         // Click on 4th account and validate value and date
         browser.element.all(by.repeater('account in accounts()')).get(3).click()
+        browser.sleep(500); // Resolves test from failing intermittently
         util.shouldContainCSS(account3TransLocationPage, account3TransValue);
         browser.findElement(by.cssContainingText('date', account3TransDate)).click();
 
         // Validate transaction details page
+        browser.sleep(500); // Required for next steps to pass in Chrome
+        browser.findElement(by.css('[translate="BACK_TO_FEED"]'));
+        browser.findElement(by.css('[translate="TRANSACTION_DETAILS"]'));
+        browser.findElement(by.css('[translate="FROM"]'));
+        browser.findElement(by.css('[translate="TO"]'));
+        browser.findElement(by.css('[translate="NOTES"]'));
         browser.findElement(by.css('[translate="TRANSACTION_COMPLETE"]'));
-
-        // TODO use translations and validate more items
-        util.shouldContainCSS('p', 'Value at Send');
-        browser.sleep(200); // Required for next step to pass in Chrome
-        expect(element(by.cssContainingText('[btc="transaction.result"]', '$0.10')).isPresent()).toBe(true);
-        util.shouldContainCSS('.tx-value', 'Value now');
-        util.shouldContainCSS('a', 'Verify On Blockchain.info');
+        browser.findElement(by.css('[translate="VALUE_AT_SEND"]'));
+        util.shouldContainCSS('[btc="transaction.result"]', '$0.10');
+        browser.findElement(by.css('[translate="VALUE_NOW"]'));
+        browser.findElement(by.css('[translate="VERIFY_ON_BCI"]'));
 
     });
 
@@ -133,12 +137,13 @@ describe('transactions-page', function() {
 
         // Click on account 'DONT EDIT 1' and validate transaction date
         browser.element.all(by.repeater('account in accounts()')).get(1).click();
+        browser.sleep(500);
         util.shouldContainCSS('date.ng-binding', account1TransDate);
 
         // Validate  address labels within account details
-        browser.findElement(by.css('[translate="1FV6M8WSJLRKECvGzXwVZyfRgdVHxZmjrX"]'));
-        browser.findElement(by.css('[translate="1DPrsgPctXtgN1GQcshPJhwEYr7xykWpVJ"]'));
-        browser.findElement(by.css('[translate="1H5Me956D9N39tbq8hFBJiBc6dJbRaAmxe"]'));
+        util.shouldContainCSS('.ng-binding', '1FV6M8WSJLRKECvGzXwVZyfRgdVHxZmjrX');
+        util.shouldContainCSS('.ng-binding', '1DPrsgPctXtgN1GQcshPJhwEYr7xykWpVJ');
+        util.shouldContainCSS('.ng-binding', '1H5Me956D9N39tbq8hFBJiBc6dJbRaAmxe');
 
     });
 
@@ -153,7 +158,7 @@ describe('transactions-page', function() {
 
         // Validate Send modal details
         browser.findElement(by.css('[translate="FROM:"]'));
-        util.shouldContainCSS('span.ng-binding.ng-scope', account1Name + ' (' + account1TransValueTx + ')');
+        util.shouldContainCSS('span.ng-binding.ng-scope', account1TransValueTx);
 
         // Close Send modal, wait for and click Request button
         browser.findElement(by.css('[ng-click="close()"]')).click();
@@ -167,7 +172,7 @@ describe('transactions-page', function() {
 
     });
 
-    it('should filter by transcation type', function() {
+    it('should filter by transaction type', function() {
 
       util.navigateTo("MY_TRANSACTIONS");
       element.all(by.css('.filter-bar')).all(by.css('[translate="SENT_BITCOIN_TO"]')).click();

@@ -14,7 +14,6 @@ describe('login-page', function() {
     var emailField = element(by.model('fields.email'));
 
     // These are log in buttons
-    //var createWalletButton = browser.findElement(by.css('[ng-click="register()"]'));
     var loginButton = element(by.id('login'));
 
     // Clear log in test fields
@@ -163,7 +162,7 @@ describe('login-page', function() {
 
         // Submit and validate error messaging
         loginButton.click();
-        browser.sleep(1000);
+        browser.sleep(3000);
         util.shouldContainCSS('.help-block', 'Error Decrypting Wallet. Please check your password is correct.');
 
     });
