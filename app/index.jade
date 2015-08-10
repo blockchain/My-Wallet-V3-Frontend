@@ -11,6 +11,7 @@ head
   title Blockchain Wallet HD
   <!-- @if !PRODUCTION -->
   link(rel="stylesheet", href="bower_components/angular-ui-select/dist/select.css")
+  link(rel="stylesheet", href="bower_components/angular-charts/src/styles.css")
   script(src='bower_components/jquery/dist/jquery.js')
   script(src='bower_components/angular/angular.js')
   script(src='bower_components/angular-sanitize/angular-sanitize.js')
@@ -27,6 +28,8 @@ head
   script(src='bower_components/angular-numeraljs/dist/angular-numeraljs.js')    
   script(src='bower_components/angular-translate/angular-translate.js')
   script(src='bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js')
+  script(src='bower_components/d3/d3.js')
+  script(src='bower_components/angular-charts/dist/angular-charts.js')
   
   // Not used a.t.m. and they depend on jQuery:
   // script(src='bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js')    
@@ -74,7 +77,7 @@ head
   script(src='build/js/controllers/claim_ctrl.js')
   script(src='build/js/controllers/claim_modal_ctrl.js')
   script(src='build/js/controllers/confirm_recovery_phrase_ctrl.js')
-  script(src='build/js/controllers/dashboard_ctrl.js')
+  script(src='build/js/controllers/home_ctrl.js')
   script(src='build/js/controllers/feedback_ctrl.js')
   script(src='build/js/controllers/first_time_ctrl.js')
   script(src='build/js/controllers/login_ctrl.js')
@@ -111,9 +114,10 @@ head
   script(src='build/js/filters.js')
   script(src='build/js/routes.js')
   
+  script(src='build/js/directives/activity-feed.js')
   script(src='build/js/directives/adverts.js')
   script(src='build/js/directives/amount.js')
-  script(src='build/js/directives/api-access.js')
+  script(src='build/js/directives/setting-toggle.js')
   script(src='build/js/directives/bc-async-input.js')
   script(src='build/js/directives/btc.js')
   script(src='build/js/directives/completed-level.js')
@@ -123,6 +127,7 @@ head
   script(src='build/js/directives/configure-second-password.js')
   script(src='build/js/directives/confirm-recovery-phrase.js')
   script(src='build/js/directives/currency-picker.js')
+  script(src='build/js/directives/did-you-know.js')
   script(src='build/js/directives/fiat-or-btc.js')
   script(src='build/js/directives/fiat.js')
   script(src='build/js/directives/helper-button.js')
@@ -154,6 +159,8 @@ head
   script(src='build/js/services/security_center.js')
   script(src='build/js/services/adverts.js')
   script(src='build/js/services/bc_translate_static_files_loader.js')
+  script(src='build/js/services/did_you_know.js')
+  script(src='build/js/services/activity.js')
   
   script(src='build/js/templates.js')
       

@@ -58,6 +58,7 @@ walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
           scope.status.saving = false
           scope.status.edit = false
           scope.$root.$safeApply(scope)
+          Wallet.saveActivity(2)
 
         error = () ->
           scope.status.saving = false

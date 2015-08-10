@@ -1,0 +1,57 @@
+.section { max-height: 350px; }
+
+.pill {
+  &.feature {
+    color: $blue;
+    &:hover { color: $blue; }
+  }
+  &.partner {
+  color: $partner;
+    &:hover { color: $partner; }
+  }
+  &.educational {
+    color: $educational;
+    &:hover { color: $educational; }
+  }
+}
+
+.widget {
+  padding: 1em;
+  border: 1px solid #eee;
+  &.empty {
+    background: RGBA(247, 247, 247, 1);
+    height: 275px;
+  }
+  .button-sm {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+  }
+  h5 { z-index: 10; }
+}
+
+//hack absolute positioning center
+.pos-abs-chart {
+  position: absolute;
+  left: 50%;
+  top: 15%;
+}
+.empty-state-chart {
+  height: 200px;
+  width: 200px;
+  border: 30px solid #E7E7E7;
+  border-radius: 100%;
+  position: relative;
+  left: -50%;
+}
+.chart {
+  height: 225px;
+  width: 425px;
+  position: relative;
+}
+// overrides for angular-chart(s)
+.ac-legend td { padding: 2px 5px; }
+
+@media (max-width: 478px) {
+  .ac-legend td { font-size: .8em; }
+}

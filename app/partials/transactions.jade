@@ -17,8 +17,8 @@
           i.ti-layout-list-post.h3.mrm
           h3.em-100(translate="NO_TRANSACTIONS_YET")
         p.em-400(translate="DESCRIBE_TRANSACTIONS")
-      h3.em-100.text-center.mid-grey.emptystate(translate="HIT_RECEIVE", ng-click="request()")
-      h3.em-100.text-center.mid-grey.emptystate(translate="HIT_SEND", ng-click="send()")
+      h3.em-100.center-align.mid-grey.emptystate(translate="HIT_RECEIVE", ng-click="request()")
+      h3.em-100.center-align.mid-grey.emptystate(translate="HIT_SEND", ng-click="send()")
     .flex-center.flex-justify.flex-column.mtl(ng-show="(transactions | filter:transactionFilter).length == 0 && getTotal(accountIndex) > 0")
       i.ti-search.h1.mrm
       h3.em-100.mbl(translate="SORRY_ZERO_TXS")

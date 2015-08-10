@@ -13,9 +13,11 @@ walletApp.directive('tor', ($translate, Wallet) ->
 
       scope.enableBlockTOR = () ->
         Wallet.enableBlockTOR()
+        Wallet.saveActivity(2)
 
       scope.disableBlockTOR = () ->
         Wallet.disableBlockTOR()
+        Wallet.saveActivity(2)
 
   }
 )

@@ -48,7 +48,7 @@ walletApp.controller "SettingsWalletNavigationCtrl", ($scope, Wallet, $modal, fi
 
   $scope.makeDefault = (account) ->
     Wallet.setDefaultAccount(account)
-
+    Wallet.saveActivity(3)
 
   $scope.transfer = () ->
     modalInstance = $modal.open(

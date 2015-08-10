@@ -75,11 +75,19 @@ walletApp.controller "SettingsAdvancedCtrl", ($scope, Wallet, $modal, $translate
 
     Wallet.setIPWhitelist(list, success, error)
 
+  $scope.toggleApiAccess = () ->
+    Wallet.setApiAccess(!$scope.settings.apiAccess)
+
+  $scope.toggleLogging = () ->
+    level = if $scope.settings.loggingLevel == 0 then 1 else 0
+    Wallet.setLoggingLevel(level)
+
   $scope.enableRememberTwoFactor = () ->
     $scope.processToggleRememberTwoFactor = true
 
     success = () ->
       $scope.processToggleRememberTwoFactor = false
+      Wallet.saveActivity(2)
 
     error = () ->
       $scope.processToggleRememberTwoFactor = false
@@ -91,6 +99,7 @@ walletApp.controller "SettingsAdvancedCtrl", ($scope, Wallet, $modal, $translate
 
     success = () ->
       $scope.processToggleRememberTwoFactor = false
+      Wallet.saveActivity(2)
 
     error = () ->
       $scope.processToggleRememberTwoFactor = false

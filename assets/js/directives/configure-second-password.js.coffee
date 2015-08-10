@@ -15,6 +15,7 @@ walletApp.directive('configureSecondPassword', ($translate, Wallet, $modal) ->
 
         success = () ->
           scope.busy = false
+          Wallet.saveActivity(2)
 
         error = () ->
           scope.busy = false

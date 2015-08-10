@@ -8,6 +8,8 @@ modules = [
   "walletFilters"
   "walletServices"
   "securityCenter"
+  "didYouKnow"
+  "activity"
   "adverts"
   "ui.router"
   "ui.bootstrap"
@@ -34,11 +36,12 @@ modules = [
   "passwordEntropy"
   "internationalPhoneNumber"
   "webcam"
+  "angularCharts"
   # TODO: have grunt generate the list of partials and templates
   "partials/account-form.jade"
   "partials/alerts.jade"
   "partials/claim.jade"
-  "partials/dashboard.jade"
+  "partials/home.jade"
   "partials/support.jade"
   "partials/feedback.jade"
   "partials/first-login-modal.jade"
@@ -77,6 +80,7 @@ modules = [
   "partials/settings/two-factor.jade"
   "partials/confirm-recovery-phrase-modal.jade"
   "partials/wallet.jade"
+  "templates/activity-feed.jade"
   "templates/amount.jade"
   "templates/fiat-or-btc.jade"
   "templates/virtual-keyboard.jade"
@@ -85,6 +89,7 @@ modules = [
   "templates/network-fee-picker.jade"
   "templates/helper-button.jade"
   "templates/helper-popover.jade"
+  "templates/did-you-know.jade"
   "templates/contextual-message.jade"
   "templates/completed-level.jade"
   "templates/completed-level-tooltip.jade"
@@ -94,7 +99,7 @@ modules = [
   "templates/confirm-recovery-phrase.jade"
   "templates/configure-second-password.jade"
   "templates/tor.jade"
-  "templates/api-access.jade"
+  "templates/setting-toggle.jade"
   "templates/ip-whitelist-restrict.jade"
   "templates/bc-async-input.jade"
   "templates/verify-email.jade"
@@ -120,8 +125,9 @@ walletApp.config ($numeraljsConfigProvider, $modalProvider, uiSelectConfig) ->
 #   $sceProvider.enabled(false);
 
 walletApp.run ($rootScope, $modal) ->
-  $rootScope.$safeApply = (scope=$rootScope) ->
-    scope.$apply() unless scope.$$phase || $rootScope.$$phase
+  $rootScope.$safeApply = (scope=$rootScope, before) ->
+    before = before || (-> )
+    scope.$apply(before) unless scope.$$phase || $rootScope.$$phase
 
   $rootScope.$on "showNotification", (_, notification) ->
     $modal.open(

@@ -170,7 +170,7 @@ describe('transactions-page', function() {
     it('should filter by transcation type', function() {
 
       util.navigateTo("MY_TRANSACTIONS");
-      element.all(by.css('.filter-bar')).all(by.css('[translate="SENT_BITCOIN_TO"]')).click();
+      element.all(by.css('.filter-bar')).all(by.css('[translate="SENT"]')).click();
       browser.sleep(1000);
       expect(element.all(by.css('.transaction-feed')).all(by.css('[translate="RECEIVED_BITCOIN_FROM"]')).count()).toEqual(0);
 

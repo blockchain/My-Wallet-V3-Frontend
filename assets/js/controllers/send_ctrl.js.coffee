@@ -159,6 +159,9 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       unless $state.current.name == "wallet.common.transactions" || $stateParams.accountIndex == "accounts"
         $state.go("wallet.common.transactions", { accountIndex: index })
 
+      # Update the activity feed
+      Wallet.saveActivity(0)
+
       # Show success notification
       $translate(['SUCCESS', 'BITCOIN_SENT']).then (translations) ->
         $scope.$emit 'showNotification',

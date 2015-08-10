@@ -74,6 +74,8 @@ module.exports = (grunt) ->
           'build/bower_components/intl-tel-input/lib/libphonenumber/build/utils.js'
           'build/bower_components/international-phone-number/releases/international-phone-number.js'
           'build/bower_components/browserdetection/src/browser-detection.js'
+          'build/bower_components/d3/d3.js'
+          'bower_components/angular-charts/dist/angular-charts.js'
         ]
 
         dest: "build/application-dependencies.js"
@@ -125,6 +127,8 @@ module.exports = (grunt) ->
           "bower_components/jquery/dist/jquery.js"
           'bower_components/intl-tel-input/build/js/intlTelInput.min.js'
           'bower_components/international-phone-number/releases/international-phone-number.min.js'
+          'bower_components/d3/d3.js'
+          'bower_components/angular-charts/dist/angular-charts.js'
           'build/application-dependencies.min.js'
         ]
 
