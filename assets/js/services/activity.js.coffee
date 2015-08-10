@@ -35,12 +35,12 @@ angular.module('activity', []).factory 'Activity', ($rootScope, Wallet) ->
     return a
 
   activity.combineAll = () ->
-    $rootScope.$safeApply null, () ->
-      activity.activities = activity.transactions
-        .concat(activity.logs)
-        .filter(helpers.hasTime)
-        .sort(helpers.timeSort)
-        .slice(0, activity.limit)
+    activity.activities = activity.transactions
+      .concat(activity.logs)
+      .filter(helpers.hasTime)
+      .sort(helpers.timeSort)
+      .slice(0, activity.limit)
+    $rootScope.$safeApply()
 
   activity.updateTxActivities = () ->
     activity.transactions = Wallet.transactions
