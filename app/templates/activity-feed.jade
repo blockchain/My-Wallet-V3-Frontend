@@ -36,7 +36,7 @@
           p.mvn.h5.af-type(translate="SETTINGS")
           p.mvn.af-date.mll.flex-1 
           p.mvn.af-log.flex-2.right-align(translate="ACTIVITY_3_DESC")
-    .flex-center.flex-justify.flex-column.af-empty-state.pal(ng-show="activities.length == 0" ng-hide="loading")
+    .flex-center.flex-justify.flex-column.af-empty-state.pal(ng-hide="loading || activities.length > 0")
       h2.em-400.center-align.shadow.mbm(translate="ACTIVITY_EMPTY")
       h5.em-300.center-align.width-75(translate="ACTIVITY_EMPTY_MSG")
       button.button-primary.mtl(ng-click="request()" translate="RECEIVE_BTC")
