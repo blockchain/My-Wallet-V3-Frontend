@@ -1,7 +1,7 @@
-span.note
+span.note.em-300
   i.ti-notepad(ng-show="transaction.note && !editNote")
   a(ng-click="startEditNote()", ng-hide="transaction.note || editNote", translate="ADD_NOTE").add-note
-  a(ng-hide="editNote", ng-click="startEditNote()") {{ transaction.note }}
+  .ccc.pointer.break-word(ng-hide="editNote", ng-click="startEditNote()") {{ transaction.note }}
   div(ng-show="editNote")
     .input-group
       .input-group-btn

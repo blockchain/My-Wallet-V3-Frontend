@@ -14,6 +14,9 @@
 .center-align { text-align: center; }
 .lh-lg { line-height: 2; }
 .shadow { text-shadow: 0 1px 1px #ccc; }
+.em-alt { text-transform: uppercase; }
+.no-select { user-select: none; }
+.break-word { word-break: break-word; }
 
 .text-overflow-hidden, .ui-select-match-text {
   text-overflow: ellipsis;
@@ -23,10 +26,6 @@
   display: block;
 }
 
-.no-select {
-  user-select: none;
-}
-
 $multiplier: 100;
 
 @for $i from 1 through 9 {
@@ -34,5 +33,3 @@ $multiplier: 100;
     font-weight: $i * $multiplier;
   }
 }
-
-.em-alt { text-transform: uppercase; }

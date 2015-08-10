@@ -1,4 +1,4 @@
-walletApp.directive('contextualMessage', ($cookies, $window, Wallet, SecurityCenter) ->
+walletApp.directive('contextualMessage', ($cookies, $window, Wallet, SecurityCenter, filterFilter) ->
   {
     restrict: "E"
     replace: true
@@ -41,12 +41,12 @@ walletApp.directive('contextualMessage', ($cookies, $window, Wallet, SecurityCen
           scope.showMessage(idx)
 
       #dynamically position beacon
-      elem.css('top', 135)
       n = elem.parent()[0]
       h = n.offsetHeight
       s = n.children[5]
       o = -> s.offsetTop
       w = -> $window.location.hash
+      if filterFilter(Wallet.legacyAddresses(), {archived: false}).length > 0 then elem.css('top', 135) else elem.css('top', 95)
 
       a = (newVal) ->
         elem.css('top', o) if newVal.indexOf('transactions') != -1
