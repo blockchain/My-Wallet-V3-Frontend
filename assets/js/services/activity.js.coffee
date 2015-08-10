@@ -49,10 +49,14 @@ angular.module('activity', []).factory 'Activity', ($rootScope, Wallet) ->
     activity.combineAll()
 
   activity.updateLogActivities = () ->
-    Wallet.getActivityLogs (logs) ->
-      activity.logs = logs.results
-        .slice(0, activity.limit)
-        .map activity.factory.bind(null, 4)
+    if Wallet.settings.loggingLevel > 0
+      Wallet.getActivityLogs (logs) ->
+        activity.logs = logs.results
+          .slice(0, activity.limit)
+          .map activity.factory.bind(null, 4)
+        activity.combineAll()
+    else
+      activity.logs = []
       activity.combineAll()
 
   activity.updateAllActivities = () ->
@@ -62,5 +66,4 @@ angular.module('activity', []).factory 'Activity', ($rootScope, Wallet) ->
   $rootScope.$on 'updateActivityFeed', ->
     activity.updateAllActivities()
 
-  activity.updateLogActivities()
   return activity
