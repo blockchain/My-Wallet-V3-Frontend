@@ -86,7 +86,6 @@ modules = [
   "templates/virtual-keyboard.jade"
   "templates/currency-picker.jade"
   "templates/language-picker.jade"
-  "templates/network-fee-picker.jade"
   "templates/helper-button.jade"
   "templates/helper-popover.jade"
   "templates/did-you-know.jade"

@@ -18,14 +18,6 @@ form.form-horizontal(role="form",name="form",novalidate)
       p.explain.hidden-xs(translate="BITCOIN_CURRENCY_EXPLAIN")
     .col-sm-12.col-md-6.setting-result
       btc-picker(currency="settings.btcCurrency" display-currency="settings.displayCurrency")
-  // Depends on bootstrap-slider which has been disabled
-  //- .form-group
-  //-   .col-sm-4
-  //-     label(translate="NETWORK_FEE")
-  //-     br
-  //-     p(translate="NETWORK_FEE_EXPLAIN")
-  //-   .col-sm-6
-  //-     network-fee-picker
   .form-group(ng-show="browserCanHandleBitcoinLinks")
     .col-sm-12.col-md-6
       label(translate="HANDLE_BITCOIN_LINKS")
