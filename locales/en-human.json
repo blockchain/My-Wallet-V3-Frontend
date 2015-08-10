@@ -541,6 +541,7 @@
   "GIVE_FEEDBACK": "Give Us Your Feedback.",
   "WALLET_RECOVERY": "Wallet Recovery",
   "LOGGING" : "Activity Logging",
+  "LOG" : "Log",
   "LOGGING_EXPLAIN" : "Record wallet activity and display it in your activity feed.",
   "ENABLE_LOGGING" : "Enable Logging",
   "DISABLE_LOGGING" : "Disable Logging",

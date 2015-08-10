@@ -28,7 +28,7 @@ angular.module('activity', []).factory 'Activity', ($rootScope, Wallet) ->
         a.message = helpers.getTxMessage(obj)
         a.result  = Math.abs(obj.result)
       when 4
-        a.title   = 'LOGGING'
+        a.title   = 'LOG'
         a.icon    = 'ti-settings'
         a.time    = obj.time
         a.message = helpers.capitalize(obj.action)
