@@ -2,7 +2,7 @@
   "UID": "Wallet ID",
   "PASSWORD": "Password",
   "LOGIN": "Login",
-  "CREATE_WALLET": "Create wallet",
+  "CREATE_WALLET": "Create Wallet",
   "MY_ACCOUNTS": "Accounts",
   "NEW_ACCOUNT": "Add Account +",
   "MY_TRANSACTIONS": "Transactions",
@@ -417,7 +417,7 @@
   "ALPHA_INVITE_KEY" :"Alpha Invite Key",
   "FIND_GUID_EXPLAIN" : "Find the login link in your email, e.g. <i>blockchain.info/wallet/1111-222-333...</i> The series of numbers and dashes at the end of the link is your Login ID.",
   "WELCOME_BACK" : "Welcome back",
-  "LOGIN_BELOW" : "Login to your wallet below",
+  "LOGIN_BELOW" : "Sign in to your wallet below",
   "CREATE_A_WALLET" : "Create A Wallet",
   "ALPHA_KEY_EXPLAIN" : "Enter the Alpha Key you received by email to access our private Alpha",
   "HOME" : "Home",
@@ -549,6 +549,8 @@
   "ACTIVITY_1_DESC": "Created My Bitcoin Wallet",
   "ACTIVITY_2_DESC": "Set password",
   "ACTIVITY_3_DESC": "Created wallet!",
-  "ALT_EMPTY_MSG": "You don't have any bitcoin yet! Once you receive some bitcoins, we'll chart your account balances here."
+  "ALT_EMPTY_MSG": "You don't have any bitcoin yet! Once you receive some bitcoins, we'll chart your account balances here.",
+  "SIGNIN": "Sign in",
+  "SIGNOUT": "Sign out"
 
 }
