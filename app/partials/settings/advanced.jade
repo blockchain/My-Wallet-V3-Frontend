@@ -35,6 +35,13 @@ form.form-horizontal(role="form",name="form",novalidate)
 
   .form-group
     .col-sm-12.col-md-6
+      label(translate="CUSTOM_FEE")
+      p.explain.hidden-xs.hidden-sm(translate="CUSTOM_FEE_EXPLAIN")
+    .col-sm-12.col-md-6.setting-result
+      bc-async-input(ng-model="settings.feePolicy" validator="validateFee" is-required on-save="changeFeePolicy" transform="btc" action-title="'CHANGE_CUSTOM_FEE' | translate")
+
+  .form-group
+    .col-sm-12.col-md-6
       label(translate="PBKDF2_ITERATIONS")
       p.explain.hidden-xs.hidden-sm(translate="PBKDF2_ITERATIONS_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result

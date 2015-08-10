@@ -998,9 +998,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       errorCallback()
     )
 
-  wallet.setFeePolicy = (policy) ->
-    wallet.store.setFeePolicy(policy)
-    wallet.settings.feePolicy = policy
+  wallet.setFeePolicy = (fee) ->
+    wallet.my.wallet.fee_policy = fee
+    wallet.settings.feePolicy = fee
 
   wallet.fetchExchangeRate = () ->
       # Exchange rate is loaded asynchronously:
