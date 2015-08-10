@@ -425,6 +425,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.setLoggingLevel = (level) ->
     wallet.settings_api.updateLoggingLevel(level, () ->
       wallet.settings.loggingLevel = level
+      wallet.saveActivity(4)
       wallet.applyIfNeeded()
     , () ->
       wallet.displayError('Failed to update logging level')
