@@ -2,6 +2,7 @@ walletApp.controller "AddressImportCtrl", ($scope, $log, Wallet, $modalInstance,
 
   $scope.settings = Wallet.settings
   $scope.accounts = Wallet.accounts
+  $scope.alerts = Wallet.alerts
   $scope.address = null
 
   $scope.step = 1
@@ -69,8 +70,16 @@ walletApp.controller "AddressImportCtrl", ($scope, $log, Wallet, $modalInstance,
     error = (error) ->
       $scope.status.sweeping = false
       Wallet.displayError(error)
+      $scope.$root.$safeApply($scope)
 
-    Wallet.transaction(success, error).sweep($scope.address, $scope.fields.account.index)
+    spender = new Wallet.spender()
+    transferTx = spender.addressSweep($scope.address).toAccount($scope.fields.account.index)
+
+    Wallet.askForSecondPasswordIfNeeded()
+      .then (passphrase) ->
+        transferTx.publish(passphrase).then(success).catch(error)
+      .catch () ->
+        $scope.status.sweeping = false
 
   # Misc functions
 
