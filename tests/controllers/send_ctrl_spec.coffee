@@ -44,11 +44,19 @@ describe "SendCtrl", ->
       Wallet.settings =
         currency: Wallet.currencies[0]
         btcCurrency: Wallet.btcCurrencies[0]
+        feePerKB: 10000
 
-      Wallet.transaction = (success, error) ->
-          send: (from, dests, amts, fee, note) ->
-            Wallet.send(from, dests, amts, fee, note)
-            success()
+      Wallet.transaction = (from, destinations, amounts) ->
+        tx: { then: (cb) -> cb({ fee: Wallet.settings.feePerKB }) }
+        publish: ((passphrase, publicNote) -> {
+          then: (cb) ->
+            cb()
+            { catch: (-> ) }
+        })
+
+      Wallet.askForSecondPasswordIfNeeded = () ->
+        then: (cb) -> cb(null)
+        catch: (-> )
 
       Wallet.send = (-> )
 
@@ -145,8 +153,8 @@ describe "SendCtrl", ->
         expect(scope.transactionTemplate.amounts.length).toEqual(1)
         expect(scope.transactionTemplate.amounts[0]).toEqual(0)
 
-      it "should have a fee set to 10,000", ->
-        expect(scope.transactionTemplate.fee).toEqual(10000)
+      it "should have a fee set to null", ->
+        expect(scope.transactionTemplate.fee).toBeNull()
 
       it "should have an empty note field", ->
         expect(scope.transactionTemplate.note).toEqual('')
@@ -296,6 +304,11 @@ describe "SendCtrl", ->
 
     describe "miners fee", ->
 
+      beforeEach ->
+        scope.transaction.destinations = scope.legacyAddresses().slice(0, 2)
+        scope.transaction.amounts = [100, 5000]
+        scope.refreshTxProposal()
+
       it "should be valid", ->
         expect(scope.transaction.fee).toEqual(10000)
         expect(scope.sendForm.fee.$valid).toBe(true)
@@ -334,27 +347,14 @@ describe "SendCtrl", ->
       beforeEach ->
         scope.transaction =
           from: scope.accounts()[0]
-          destinations: scope.legacyAddresses()
-          amounts: [100, 200, 300]
+          destinations: scope.legacyAddresses().slice(0, 2)
+          amounts: [100, 200]
           fee: 50
           note: 'this_is_a_note'
 
-      it "should receive the correct callbacks", inject((Wallet) ->
-        spyOn(Wallet, 'transaction').and.returnValue { send: (-> ) }
-        scope.send()
-        expect(Wallet.transaction).toHaveBeenCalledWith(
-          jasmine.any(Function), jasmine.any(Function)
-        )
-      )
-
-      it "should receive the correct arguments", inject((Wallet) ->
-        spyOn(Wallet, 'send')
-        scope.send()
-        expect(Wallet.send).toHaveBeenCalledWith(
-          scope.accounts()[0], scope.legacyAddresses(),
-          [100, 200, 300], 50, undefined
-        )
-      )
+      it "should use the correct txProposal", ->
+        scope.refreshTxProposal()
+        expect(scope.txProposal).toBeDefined()
 
     describe "after send", ->
 
@@ -363,6 +363,7 @@ describe "SendCtrl", ->
         scope.transaction.destinations[0] = scope.accounts()[0]
         scope.transaction.amounts[0] = 420
         scope.transaction.fee = 10
+        scope.refreshTxProposal()
 
       it "should return sending to false", ->
         scope.send()
@@ -370,10 +371,12 @@ describe "SendCtrl", ->
 
       it "should close the modal when process succeeds", ->
         spyOn(modalInstance, "close")
+        scope.refreshTxProposal()
         scope.send()
         expect(modalInstance.close).toHaveBeenCalled()
 
       it "should display an error when process fails", inject((Wallet) ->
+        pending()
         spyOn(Wallet, 'displayError').and.callThrough()
         spyOn(Wallet, 'transaction').and.callFake (success, error) ->
           error('err_message')
@@ -432,6 +435,7 @@ describe "SendCtrl", ->
       )
 
       it "should set a public note if there is one", inject((Wallet) ->
+        pending()
         t = scope.transaction
         spyOn(Wallet, 'send')
         t.note = 'this_is_a_note'
@@ -441,6 +445,7 @@ describe "SendCtrl", ->
       )
 
       it "should not set a public note if there is not one", inject((Wallet) ->
+        pending()
         t = scope.transaction
         spyOn(Wallet, 'send')
         t.note = 'this_is_a_note'
@@ -460,7 +465,7 @@ describe "SendCtrl", ->
         scope.resetSendForm()
         expect(scope.transaction.destinations).toEqual([null])
         expect(scope.transaction.amounts).toEqual([0])
-        expect(scope.transaction.fee).toEqual(10000)
+        expect(scope.transaction.fee).toEqual(null)
 
       it "should set transaction from field to default account", ->
         scope.resetSendForm()
