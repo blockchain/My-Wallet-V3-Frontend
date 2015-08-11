@@ -51,8 +51,8 @@ walletApp.controller "SettingsAdvancedCtrl", ($scope, Wallet, $modal, $translate
 
     return true
 
-  $scope.changeFeePolicy = (fee, successCallback) ->
-    Wallet.setFeePolicy(fee)
+  $scope.changeFeePerKB = (fee, successCallback) ->
+    Wallet.setFeePerKB(fee)
     successCallback()
 
   $scope.changePbkdf2 = (n, successCallback, errorCallback) ->

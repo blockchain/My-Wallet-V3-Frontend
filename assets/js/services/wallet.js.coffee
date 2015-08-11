@@ -23,7 +23,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet = {
     goal: {auth: false},
     status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadSettings: false, didLoadTransactions: false, didLoadBalances: false, didConfirmRecoveryPhrase: false},
-    settings: {currency: null,  displayCurrency: null, language: null, btcCurrency: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null, ipWhitelist: null, apiAccess: null, restrictToWhitelist: null, loggingLevel: null},
+    settings: {currency: null,  displayCurrency: null, language: null, btcCurrency: null, needs2FA: null, twoFactorMethod: null, feePerKB: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null, ipWhitelist: null, apiAccess: null, restrictToWhitelist: null, loggingLevel: null},
     user: {current_ip: null, email: null, mobile: null, passwordHint: ""}
   }
 
@@ -104,7 +104,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.settings.currency = ($filter("getByProperty")("code", result.currency, wallet.currencies))
         wallet.settings.btcCurrency = ($filter("getByProperty")("serverCode", result.btc_currency, wallet.btcCurrencies))
         wallet.settings.displayCurrency = wallet.settings.btcCurrency
-        wallet.settings.feePolicy = wallet.my.wallet.fee_policy
+        wallet.settings.feePerKB = wallet.my.wallet.fee_per_kb
         wallet.settings.blockTOR = !!result.block_tor_ips
         wallet.status.didLoadSettings = true
 
@@ -998,9 +998,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       errorCallback()
     )
 
-  wallet.setFeePolicy = (fee) ->
-    wallet.my.wallet.fee_policy = fee
-    wallet.settings.feePolicy = fee
+  wallet.setFeePerKB = (fee) ->
+    wallet.my.wallet.fee_per_kb = fee
+    wallet.settings.feePerKB = fee
 
   wallet.fetchExchangeRate = () ->
       # Exchange rate is loaded asynchronously:
