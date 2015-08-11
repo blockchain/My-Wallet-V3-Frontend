@@ -3,6 +3,7 @@ angular.module("didYouKnow", []).factory "DidYouKnow", ($log, $rootScope, $trans
   service = {
     dyks: [
       {
+        id: 1
         title: $translate.instant('DYK1_TITLE')
         type: $translate.instant('FEATURE')
         text: $translate.instant('DYK1')
@@ -11,6 +12,7 @@ angular.module("didYouKnow", []).factory "DidYouKnow", ($log, $rootScope, $trans
         link: ''
       },
       {
+        id: 2
         title: $translate.instant('DYK2_TITLE')
         type: $translate.instant('FEATURE')
         text: $translate.instant('DYK2')
@@ -19,6 +21,7 @@ angular.module("didYouKnow", []).factory "DidYouKnow", ($log, $rootScope, $trans
         link: '/#/settings/wallet-recovery'
       },
       {
+        id: 3
         title: $translate.instant('DYK3_TITLE')
         type: $translate.instant('EDUCATIONAL')
         text: $translate.instant('DYK3')
@@ -27,6 +30,7 @@ angular.module("didYouKnow", []).factory "DidYouKnow", ($log, $rootScope, $trans
         link: ''
       },
       {
+        id: 4
         title: $translate.instant('DYK4_TITLE')
         type: $translate.instant('FEATURE')
         text: $translate.instant('DYK4')
@@ -35,6 +39,7 @@ angular.module("didYouKnow", []).factory "DidYouKnow", ($log, $rootScope, $trans
         link: '/#/feedback'
       },
       {
+        id: 5
         title: $translate.instant('DYK5_TITLE')
         type: $translate.instant('EDUCATIONAL')
         text: $translate.instant('DYK5')

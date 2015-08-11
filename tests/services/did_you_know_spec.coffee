@@ -21,3 +21,5 @@ describe "didYouKnowServices", () ->
     it "should provide localized titles", ->
       expect(DIY.dyks.length).toBeGreaterThan(0)
       expect(DIY.dyks[0].title).toEqual("DYK1_TITLE")
+    it "should have an id attached to it", ->
+      expect(DIY.dyks[3].id).toBeDefined()
