@@ -568,51 +568,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     from.toAddress(destinations, amounts, fee)
 
-  # wallet.transaction = (successCallback, errorCallback) ->
-  #
-  #   success = (tx_hash) ->
-  #       successCallback(tx_hash) # Allow caller to set a note before refreshing transactions
-  #       wallet.updateTransactions() # This is also called by on_tx, but the note might not be set yet
-  #       wallet.applyIfNeeded()
-  #
-  #   error = (e) ->
-  #     if e? && e.message != undefined
-  #       errorCallback(e.message)
-  #     else if e != null && e != undefined
-  #       errorCallback(e)
-  #     else
-  #       errorCallback("Unknown error")
-  #     wallet.applyIfNeeded()
-  #
-  #   cancelCallback = () -> errorCallback()
-  #
-  #   {
-  #     send: (from, destinations, amounts, fee, publicNote) ->
-  #       proceed = (password) ->
-          # destinations = destinations.map (dest) ->
-          #   return dest.address unless dest.type == 'Accounts'
-          #   return wallet.my.wallet.hdwallet.accounts[dest.index].receiveAddress
-  #         spender = wallet.spender(publicNote, success, error, {}, password)
-  #         if from.address?
-  #           spendFrom = spender.fromAddress(from.address, 1000, fee)
-  #         else if from.index?
-  #           spendFrom = spender.fromAccount(from.index, 1000, fee)
-  #         spendFrom.toAddresses(destinations, amounts)
-  #       wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
-  #
-  #     sweep: (fromAddress, toAccountIndex) ->
-  #       proceed = (password) ->
-  #         spender = wallet.spender(null, success, error, {}, password)
-  #         spender.addressSweep(fromAddress.address).toAccount(toAccountIndex)
-  #       wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
-  #
-  #     sendToEmail: (fromAccountIndex, email, amount, currency) ->
-  #       proceed = (password) ->
-  #         amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
-  #         wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, success, error, {}, needsSecondPassword)
-  #       wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
-  #   }
-
   wallet.redeemFromEmailOrMobile = (account, claim, successCallback, error) ->
     success = () ->
       wallet.updateTransactions()
