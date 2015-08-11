@@ -31,7 +31,7 @@ h5.well.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
             a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="isDefault(account)")
 
 .mtl
-  button.button-primary(translate="ARCHIVED_ACCOUNTS", ng-click="display.archived = !display.archived")
+  button.button-default(translate="ARCHIVED_ACCOUNTS", ng-click="display.archived = !display.archived" ng-class="{active : display.archived}")
   p.mtm.hidden-xs(translate="ARCHIVED_ACCOUNTS_EXPLAIN", ng-show="display.archived")
 
 .row(ng-show="display.archived")

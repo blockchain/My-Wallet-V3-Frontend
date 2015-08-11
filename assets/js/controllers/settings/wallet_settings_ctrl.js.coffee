@@ -3,6 +3,7 @@ walletApp.controller "SettingsWalletCtrl", ($scope, Wallet, $translate, $window)
   $scope.languages = Wallet.languages
   $scope.currencies = Wallet.currencies
   $scope.btcCurrencies = Wallet.btcCurrencies
+  $scope.uid = Wallet.user.uid
       
   $scope.$watch "settings.language", (newVal, oldVal) ->
     if oldVal? && newVal isnt oldVal

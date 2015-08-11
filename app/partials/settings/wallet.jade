@@ -2,6 +2,12 @@ h5.well.headliner.hidden-xs(translate="WALLET_SETTINGS_EXPLAIN")
 form.form-horizontal(role="form",name="form",novalidate)  
   .form-group
     .col-sm-12.col-md-6
+      label(translate="UID")
+      p.explain.hidden-xs(translate="UID_EXPLAIN")    
+    .col-sm-12.col-md-6.setting-result.flex-column
+      label(ng-bind="uid")
+  .form-group
+    .col-sm-12.col-md-6
       label(translate="LANGUAGE")
       p.explain.hidden-xs(translate="LANGUAGE_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
