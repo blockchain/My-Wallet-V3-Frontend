@@ -1,5 +1,7 @@
 .section { max-height: 350px; }
 
+.home { padding: 10px 5px 0 30px; }
+
 .pill {
   &.feature {
     color: $blue;
@@ -51,6 +53,10 @@
 }
 // overrides for angular-chart(s)
 .ac-legend td { padding: 2px 5px; }
+
+@media (min-width: 990px) and (max-width: 1072px) {
+  .ac-legend td { font-size: .8em; }
+}
 
 @media (max-width: 478px) {
   .ac-legend td { font-size: .8em; }
