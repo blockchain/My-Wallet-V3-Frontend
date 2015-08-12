@@ -113,11 +113,12 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.resetSendForm = () ->
     $scope.transaction = angular.copy($scope.transactionTemplate)
     $scope.transaction.from = Wallet.accounts()[Wallet.my.wallet.hdwallet.defaultAccountIndex]
+    $scope.transaction.customFee = Wallet.settings.feePerKB
 
     for i in [0..($scope.destinations.length - 1)]
       $scope.$broadcast('ResetSearch' + i)
 
-    $scope.refreshTxProposal(true)
+    $scope.refreshTxProposal()
 
   $scope.addDestination = () ->
     originalDestinations = angular.copy($scope.destinations[0])
@@ -260,7 +261,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     formatted.isWatchOnly = origin.isWatchOnly if !origin.index?
     return formatted
 
-  $scope.refreshTxProposal = (recommendCustom=false) ->
+  $scope.refreshTxProposal = (recommendCustom=true) ->
     tx = $scope.transaction
     fee = if recommendCustom then null else tx.customFee
     return unless tx.from && tx.destinations.every((i) -> i?) && tx.amounts.every((i) -> i?)
@@ -283,7 +284,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         valid = Wallet.isValidAddress(dest.address)
         $scope.sendForm['destinations' + index].$setValidity('isValidAddress', valid)
       $scope.updateToLabel()
-    $scope.refreshTxProposal(true)
+    $scope.refreshTxProposal()
   , true
 
   $scope.$watch "status.didLoadBalances", ->
@@ -326,7 +327,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.goToConfirmation = () ->
     $scope.confirmationStep = true
-    $scope.refreshTxProposal()
+    $scope.refreshTxProposal(!$scope.advanced)
 
   $scope.backToForm = () ->
     $scope.confirmationStep = false
@@ -337,7 +338,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.advancedSend = () ->
     $scope.advanced = true
     $scope.transaction.customFee = $scope.transaction.fee
-    $scope.refreshTxProposal(true)
+    $scope.refreshTxProposal()
 
   $scope.regularSend = () ->
     $scope.transaction.customFee = null
