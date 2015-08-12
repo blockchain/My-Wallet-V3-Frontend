@@ -35,6 +35,13 @@ form.form-horizontal(role="form",name="form",novalidate)
 
   .form-group
     .col-sm-12.col-md-6
+      label(translate="FEE_PER_KB")
+      p.explain.hidden-xs.hidden-sm(translate="FEE_PER_KB_EXPLAIN")
+    .col-sm-12.col-md-6.setting-result
+      bc-async-input(ng-model="settings.feePerKB" validator="validateFee" is-required on-save="changeFeePerKB" transform="btc" action-title="'CHANGE_FEE_PER_KB' | translate")
+
+  .form-group
+    .col-sm-12.col-md-6
       label(translate="PBKDF2_ITERATIONS")
       p.explain.hidden-xs.hidden-sm(translate="PBKDF2_ITERATIONS_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result

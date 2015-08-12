@@ -23,7 +23,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet = {
     goal: {auth: false},
     status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadSettings: false, didLoadTransactions: false, didLoadBalances: false, didConfirmRecoveryPhrase: false},
-    settings: {currency: null,  displayCurrency: null, language: null, btcCurrency: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null, ipWhitelist: null, apiAccess: null, restrictToWhitelist: null, loggingLevel: null},
+    settings: {currency: null,  displayCurrency: null, language: null, btcCurrency: null, needs2FA: null, twoFactorMethod: null, feePerKB: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null, ipWhitelist: null, apiAccess: null, restrictToWhitelist: null, loggingLevel: null},
     user: {current_ip: null, email: null, mobile: null, passwordHint: ""}
   }
 
@@ -104,7 +104,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.settings.currency = ($filter("getByProperty")("code", result.currency, wallet.currencies))
         wallet.settings.btcCurrency = ($filter("getByProperty")("serverCode", result.btc_currency, wallet.btcCurrencies))
         wallet.settings.displayCurrency = wallet.settings.btcCurrency
-        wallet.settings.feePolicy = wallet.my.wallet.fee_policy
+        wallet.settings.feePerKB = wallet.my.wallet.fee_per_kb
         wallet.settings.blockTOR = !!result.block_tor_ips
         wallet.status.didLoadSettings = true
 
@@ -553,50 +553,20 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.askForSecondPasswordIfNeeded()
       .then proceed, cancel
 
-  wallet.transaction = (successCallback, errorCallback) ->
+  wallet.transaction = (from, destinations, amounts, fee) ->
 
-    success = (tx_hash) ->
-        successCallback(tx_hash) # Allow caller to set a note before refreshing transactions
-        wallet.updateTransactions() # This is also called by on_tx, but the note might not be set yet
-        wallet.applyIfNeeded()
+    destinations = destinations.map (dest) ->
+      return dest.address unless dest.type == 'Accounts'
+      return wallet.my.wallet.hdwallet.accounts[dest.index].receiveAddress
 
-    error = (e) ->
-      if e? && e.message != undefined
-        errorCallback(e.message)
-      else if e != null && e != undefined
-        errorCallback(e)
-      else
-        errorCallback("Unknown error")
-      wallet.applyIfNeeded()
+    spender = new wallet.spender()
 
-    cancelCallback = () -> errorCallback()
+    if from.index?
+      from = spender.fromAccount(from.index)
+    else
+      from = spender.fromAddress(from.address)
 
-    {
-      send: (from, destinations, amounts, fee, publicNote) ->
-        proceed = (password) ->
-          destinations = destinations.map (dest) ->
-            return dest.address unless dest.type == 'Accounts'
-            return wallet.my.wallet.hdwallet.accounts[dest.index].receiveAddress
-          spender = wallet.spender(publicNote, success, error, {}, password)
-          if from.address?
-            spendFrom = spender.fromAddress(from.address, 1000, fee)
-          else if from.index?
-            spendFrom = spender.fromAccount(from.index, 1000, fee)
-          spendFrom.toAddresses(destinations, amounts)
-        wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
-
-      sweep: (fromAddress, toAccountIndex) ->
-        proceed = (password) ->
-          spender = wallet.spender(null, success, error, {}, password)
-          spender.addressSweep(fromAddress.address).toAccount(toAccountIndex)
-        wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
-
-      sendToEmail: (fromAccountIndex, email, amount, currency) ->
-        proceed = (password) ->
-          amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
-          wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, success, error, {}, needsSecondPassword)
-        wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
-    }
+    from.toAddress(destinations, amounts, fee)
 
   wallet.redeemFromEmailOrMobile = (account, claim, successCallback, error) ->
     success = () ->
@@ -998,9 +968,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       errorCallback()
     )
 
-  wallet.setFeePolicy = (policy) ->
-    wallet.store.setFeePolicy(policy)
-    wallet.settings.feePolicy = policy
+  wallet.setFeePerKB = (fee) ->
+    wallet.my.wallet.fee_per_kb = fee
+    wallet.settings.feePerKB = fee
 
   wallet.fetchExchangeRate = () ->
       # Exchange rate is loaded asynchronously:

@@ -16,7 +16,7 @@ walletStoreServices.factory "MyWalletStore", () ->
       "1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq": "Alice"
   }
 
-  feePolicy = 0
+  feePerKB = 10000
 
 
   legacyAddresses = () -> []
@@ -31,11 +31,11 @@ walletStoreServices.factory "MyWalletStore", () ->
     sendEvent: (event) ->
       eventListener(event)
 
-    getFeePolicy: () ->
-      return feePolicy
+    getFeePerKB: () ->
+      return feePerKB
 
-    setFeePolicy: (policy) ->
-      feePolicy = policy
+    setFeePerKB: (fee) ->
+      feePerKB = fee
       return
 
     getMultiAccountSetting: () ->

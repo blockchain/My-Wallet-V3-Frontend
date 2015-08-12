@@ -1,8 +1,12 @@
 walletApp.controller "SettingsAdvancedCtrl", ($scope, Wallet, $modal, $translate) ->
   $scope.settings = Wallet.settings
+  $scope.btc = Wallet.btcCurrencies[0]
   $scope.processToggleRememberTwoFactor = null
   $scope.errors =
     ipWhitelist: null
+
+  $scope.validateFee = (candidate) ->
+    !isNaN(candidate) && parseInt(candidate) > 0
 
   $scope.validatePbkdf2 = (candidate) ->
     n = parseInt(candidate)
@@ -47,6 +51,9 @@ walletApp.controller "SettingsAdvancedCtrl", ($scope, Wallet, $modal, $translate
 
     return true
 
+  $scope.changeFeePerKB = (fee, successCallback) ->
+    Wallet.setFeePerKB(fee)
+    successCallback()
 
   $scope.changePbkdf2 = (n, successCallback, errorCallback) ->
     success = () ->

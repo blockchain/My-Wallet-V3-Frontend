@@ -552,6 +552,9 @@
   "ACTIVITY_2_DESC": "Set password",
   "ACTIVITY_3_DESC": "Created wallet!",
   "ALT_EMPTY_MSG": "You don't have any bitcoin yet! Once you receive some bitcoins, we'll chart your account balances here.",
+  "FEE_PER_KB" : "Fee Per KB",
+  "FEE_PER_KB_EXPLAIN" : "When the network is stressed, including a higher fee per kb will ensure faster transaction confirmations.",
+  "CHANGE_FEE_PER_KB" : "Change Fee Per KB",
   "SIGNIN": "Sign in",
   "SIGNOUT": "Sign out"
 
