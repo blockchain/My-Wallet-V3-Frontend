@@ -5,6 +5,10 @@ describe "SendCtrl", ->
   Wallet = undefined
   scope = undefined
 
+  askForSecondPassword = undefined
+  transactionPromiseMock = undefined
+  publishPromiseMock = undefined
+
   modalInstance =
     close: ->
     dismiss: ->
@@ -15,7 +19,7 @@ describe "SendCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
+    angular.mock.inject ($injector, $rootScope, $controller, $compile, $q) ->
       MyWallet = $injector.get("MyWallet")
       Wallet = $injector.get("Wallet")
 
@@ -46,19 +50,17 @@ describe "SendCtrl", ->
         btcCurrency: Wallet.btcCurrencies[0]
         feePerKB: 10000
 
-      Wallet.transaction = (from, destinations, amounts) ->
-        tx: { then: (cb) -> cb({ fee: Wallet.settings.feePerKB }) }
-        publish: ((passphrase, publicNote) -> {
-          then: (cb) ->
-            cb()
-            { catch: (-> ) }
-        })
-
-      Wallet.askForSecondPasswordIfNeeded = () ->
-        then: (cb) -> cb(null)
-        catch: (-> )
-
       Wallet.send = (-> )
+
+      askForSecondPassword = $q.defer()
+      Wallet.askForSecondPasswordIfNeeded = () ->
+        askForSecondPassword.promise
+
+      transactionPromiseMock = $q.defer()
+      publishPromiseMock = $q.defer()
+      Wallet.transaction = (from, destinations, amounts, fee) ->
+        tx: transactionPromiseMock.promise
+        publish: () -> publishPromiseMock.promise
 
       scope = $rootScope.$new()
 
@@ -365,93 +367,112 @@ describe "SendCtrl", ->
         scope.transaction.fee = 10
         scope.refreshTxProposal()
 
-      it "should return sending to false", ->
-        scope.send()
-        expect(scope.sending).toBe(false)
+      describe "failure", ->
 
-      it "should close the modal when process succeeds", ->
-        spyOn(modalInstance, "close")
-        scope.refreshTxProposal()
-        scope.send()
-        expect(modalInstance.close).toHaveBeenCalled()
+        beforeEach ->
+          askForSecondPassword.resolve()
+          publishPromiseMock.reject('err_message')
 
-      it "should display an error when process fails", inject((Wallet) ->
-        pending()
-        spyOn(Wallet, 'displayError').and.callThrough()
-        spyOn(Wallet, 'transaction').and.callFake (success, error) ->
-          error('err_message')
-          { send: (-> ) }
-        expect(scope.alerts.length).toEqual(0)
-        scope.send()
-        expect(scope.alerts.length).toEqual(1)
-        expect(Wallet.displayError).toHaveBeenCalledWith('err_message')
-      )
+        it "should display an error when process fails", inject((Wallet) ->
+          spyOn(Wallet, 'displayError').and.callThrough()
+          expect(scope.alerts.length).toEqual(0)
+          scope.send()
+          scope.$digest()
+          expect(scope.alerts.length).toEqual(1)
+          expect(Wallet.displayError).toHaveBeenCalledWith('err_message')
+        )
 
-      it "should play \"The Beep\"", inject((Wallet) ->
-        spyOn(Wallet, 'beep')
-        scope.send()
-        expect(Wallet.beep).toHaveBeenCalled()
-      )
+      describe "success", ->
 
-      it "should clear alerts", inject((Wallet) ->
+        beforeEach ->
+          askForSecondPassword.resolve()
+          publishPromiseMock.resolve()
+
+        it "should return sending to false", ->
+          scope.send()
+          scope.$digest()
+          expect(scope.sending).toBe(false)
+
+        it "should close the modal", ->
+          spyOn(modalInstance, "close")
+          scope.refreshTxProposal()
+          scope.send()
+          scope.$digest()
+          expect(modalInstance.close).toHaveBeenCalled()
+
+        it "should play \"The Beep\"", inject((Wallet) ->
+          spyOn(Wallet, 'beep')
+          scope.send()
+          scope.$digest()
+          expect(Wallet.beep).toHaveBeenCalled()
+        )
+
+        it "should clear alerts", inject((Wallet) ->
           spyOn(Wallet, 'clearAlerts')
           scope.send()
+          scope.$digest()
           expect(Wallet.clearAlerts).toHaveBeenCalled()
-      )
+        )
 
-      it "should show a confirmation modal", inject(($modal)->
-        spyOn($modal, "open").and.callThrough()
-        scope.send()
-        expect($modal.open).toHaveBeenCalled()
-        expect($modal.open.calls.argsFor(0)[0].windowClass).toEqual("notification-modal")
-      )
+        it "should show a confirmation modal", inject(($modal)->
+          spyOn($modal, "open").and.callThrough()
+          scope.send()
+          scope.$digest()
+          expect($modal.open).toHaveBeenCalled()
+          expect($modal.open.calls.argsFor(0)[0].windowClass).toEqual("notification-modal")
+        )
 
-      it "should show account transactions", inject(($state) ->
-        spyOn($state, 'go')
-        scope.send()
-        expect($state.go).toHaveBeenCalledWith('wallet.common.transactions', { accountIndex: 1 })
-      )
+        it "should show account transactions", inject(($state) ->
+          spyOn($state, 'go')
+          scope.send()
+          scope.$digest()
+          expect($state.go).toHaveBeenCalledWith('wallet.common.transactions', { accountIndex: 1 })
+        )
 
-      it "should show imported address transactions", inject(($state) ->
-        spyOn($state, 'go')
-        scope.transaction.from = scope.legacyAddresses()[0]
-        scope.send()
-        expect($state.go).toHaveBeenCalledWith('wallet.common.transactions', { accountIndex: 'imported' })
-      )
+        it "should show imported address transactions", inject(($state) ->
+          spyOn($state, 'go')
+          scope.transaction.from = scope.legacyAddresses()[0]
+          scope.send()
+          scope.$digest()
+          expect($state.go).toHaveBeenCalledWith('wallet.common.transactions', { accountIndex: 'imported' })
+        )
 
-      it "should set a note if there is one", inject((Wallet, MyWallet) ->
-        spyOn(Wallet, 'setNote').and.callThrough()
-        spyOn(MyWallet.wallet, 'setNote')
-        scope.transaction.note = 'this_is_a_note'
-        scope.send()
-        expect(Wallet.setNote).toHaveBeenCalledWith({ hash: undefined }, 'this_is_a_note')
-        expect(MyWallet.wallet.setNote).toHaveBeenCalledWith(undefined, 'this_is_a_note')
-      )
+        it "should set a note if there is one", inject((Wallet, MyWallet) ->
+          spyOn(Wallet, 'setNote').and.callThrough()
+          spyOn(MyWallet.wallet, 'setNote')
+          scope.transaction.note = 'this_is_a_note'
+          scope.send()
+          scope.$digest()
+          expect(Wallet.setNote).toHaveBeenCalledWith({ hash: undefined }, 'this_is_a_note')
+          expect(MyWallet.wallet.setNote).toHaveBeenCalledWith(undefined, 'this_is_a_note')
+        )
 
-      it "should not set a note if there is not one", inject((Wallet) ->
-        spyOn(Wallet, 'setNote')
-        scope.send()
-        expect(Wallet.setNote).not.toHaveBeenCalled()
-      )
+        it "should not set a note if there is not one", inject((Wallet) ->
+          spyOn(Wallet, 'setNote')
+          scope.send()
+          expect(Wallet.setNote).not.toHaveBeenCalled()
+        )
 
-      it "should set a public note if there is one", inject((Wallet) ->
-        pending()
-        t = scope.transaction
-        spyOn(Wallet, 'send')
-        t.note = 'this_is_a_note'
-        t.publicNote = true
-        scope.send()
-        expect(Wallet.send).toHaveBeenCalledWith(t.from, t.destinations, t.amounts, t.fee, 'this_is_a_note')
-      )
+        it "should set a public note if there is one", inject((Wallet) ->
+          # TODO: figure out how to test this using promises
+          pending()
+          t = scope.transaction
+          t.note = 'this_is_a_note'
+          t.publicNote = true
+          scope.send()
+          scope.$digest()
+          # expect().toHaveBeenCalledWith()
+        )
 
-      it "should not set a public note if there is not one", inject((Wallet) ->
-        pending()
-        t = scope.transaction
-        spyOn(Wallet, 'send')
-        t.note = 'this_is_a_note'
-        scope.send()
-        expect(Wallet.send).toHaveBeenCalledWith(t.from, t.destinations, t.amounts, t.fee, undefined)
-      )
+        it "should not set a public note if there is not one", inject((Wallet) ->
+          # TODO: figure out how to test this using promises
+          pending()
+          t = scope.transaction
+          t.note = 'this_is_a_note'
+          scope.send()
+          scope.$digest()
+          # expect().toHaveBeenCalledWith()
+        )
 
     describe "resetSendForm", ->
 
