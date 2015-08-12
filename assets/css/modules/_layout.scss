@@ -1,6 +1,6 @@
 .left-nav {
   position: absolute;
-  width: 280px;
+  width: 270px;
   height: 100%;
   padding: 15px;
   top: 65px;
@@ -19,10 +19,10 @@
 }
 .top-view {
   position: fixed;
-  width: calc(100% - 280px);
+  width: calc(100% - 270px);
   z-index: 1;
   background: white;
-  margin-left: 280px;
+  margin-left: 270px;
   border-bottom: 1px solid #ddd;
   padding: 0 30px;
   height: 100px;
@@ -46,11 +46,11 @@
 .main-container {
   background: white;
   position: relative;
-  left: 280px;
+  left: 270px;
   top: 100px;
   overflow-y: scroll;
   overflow-x: hidden;
-  width: calc(100% - 280px);
+  width: calc(100% - 270px);
   height: calc(100% - 170px); // make viewport smaller for overflow-y to work
 }
 
@@ -65,7 +65,7 @@
 
 @media (max-width: 768px) {
   .left-nav {
-    left: -280px;
+    left: -270px;
     z-index: 2;
     transition: all .3s ease-in-out;
   }

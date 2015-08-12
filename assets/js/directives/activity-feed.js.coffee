@@ -6,12 +6,15 @@ walletApp.directive('activityFeed', ($http, Wallet, Activity) ->
     link: (scope, elem, attrs) ->
       scope.status = Wallet.status
       scope.activities = Activity.activities
+      scope.loading = true
 
       scope.$watch (-> Activity.activities), (activities) ->
         scope.activities = activities
 
       scope.$watch 'status.didLoadTransactions', (didLoad) ->
-        Activity.updateTxActivities() if didLoad
+        if didLoad
+          Activity.updateTxActivities()
+          scope.loading = false
 
       scope.$watch 'status.didLoadSettings', (didLoad) ->
         Activity.updateLogActivities() if didLoad

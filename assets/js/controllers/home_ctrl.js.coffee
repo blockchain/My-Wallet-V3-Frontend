@@ -9,8 +9,8 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
   $scope.pieChartData = { data: [] }
 
   $scope.pieChartConfig = {
-    colors: [ 'RGB(96, 178, 224)','RGB(238, 107, 93)', 'RGB(74, 198, 171)', 'RGB(244, 189, 57)',
-    'RGB(66, 165, 219)', 'RGB(38, 188, 157)', 'RGB(244, 199, 88)', 'RGB(234, 81, 62)'
+    colors: [ 'RGB(96, 178, 224)','RGB(223, 39, 22)', 'RGB(74, 198, 171)', 'RGB(244, 189, 57)',
+    'RGB(131, 40, 229)', 'RGB(255, 127, 0)', 'RGB(199, 202, 208)'
     ]
     innerRadius: 40
     labels: false

@@ -70,7 +70,7 @@
               img(ng-show="resending" src="img/spinner.gif")
               a(ng-click="resend()", ng-show="!resending", translate="RESEND") 
         .mtl.flex-center.flex-end
-          button#login.button-primary(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="LOGIN", ng-disabled="!isValid")
+          button.button-primary(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="SIGNIN", ng-disabled="!isValid")
 
       form.form-horizontal.clearfix(role="form", ng-show="status.enterkey")
         .form-group(ng-show="beta")

@@ -40,3 +40,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+@media (min-width: 990px) and (max-width: 1175px) {
+  .af-date { display: none; }
+}
