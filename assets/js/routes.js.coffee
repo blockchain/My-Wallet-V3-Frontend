@@ -1,28 +1,28 @@
 walletApp.config ($stateProvider, $urlRouterProvider) ->
 
   $urlRouterProvider.otherwise("/")
-  
+
   $urlRouterProvider.otherwise(($injector, $location) ->
     Wallet = $injector.get("Wallet")
 
     if Wallet.status.isLoggedIn == false
       $location = "/login"
     else
-      $location = "/dashboard"
+      $location = "/home"
   )
 
   $urlRouterProvider.when('/settings', '/settings/wallet')
-  
+
   top =  {
     templateUrl: "partials/top.jade"
     controller: "TopCtrl"
   }
-    
-  walletNav = { 
+
+  walletNav = {
     templateUrl: "partials/wallet-navigation.jade"
     controller: "WalletNavigationCtrl"
   }
-  
+
   commonViews = {
     navigation:  {
       templateUrl: "partials/navigation.jade"
@@ -36,7 +36,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       templateUrl: "partials/common.jade"
     }
   }
-  
+
   transactionsViews = {
     top: top,
     left: walletNav,
@@ -82,19 +82,19 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  
+
   # Use the same layout as the transactions screen, once signup is complete
-  .state("register.finish", 
+  .state("register.finish",
     url: "/register/finish"
     views: commonViews
   )
   .state("register.finish.show",
     views: transactionsViews
   )
-  
-  
-  $stateProvider.state("wallet.common.dashboard",
-    url: "/dashboard"
+
+
+  $stateProvider.state("wallet.common.home",
+    url: "/home"
     views: {
       top : top,
       left: {
@@ -102,8 +102,8 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
         controller: "WalletNavigationCtrl"
       },
       right: {
-        templateUrl: "partials/dashboard.jade"
-        controller: "DashboardCtrl"
+        templateUrl: "partials/home.jade"
+        controller: "HomeCtrl"
       }
     }
   )
@@ -117,7 +117,7 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       },
       right: {
         templateUrl: "partials/support.jade"
-        controller: ($scope, $log, $state) -> 
+        controller: ($scope, $log, $state) ->
           $scope.state = $state
       }
     }
@@ -314,4 +314,3 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
     onEnter: ($stateParams, $state, Wallet, $translate) ->
       Wallet.goal.verifyEmail = $stateParams.code
   )
-  

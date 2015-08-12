@@ -22,8 +22,8 @@ walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletSpender, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) ->
   wallet = {
     goal: {auth: false},
-    status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadTransactions: false, didLoadBalances: false, didConfirmRecoveryPhrase: false},
-    settings: {currency: null,  displayCurrency: null, language: null, btcCurrency: null, needs2FA: null, twoFactorMethod: null, feePolicy: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null, ipWhitelist: null, apiAccess: null, restrictToWhitelist: null},
+    status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadSettings: false, didLoadTransactions: false, didLoadBalances: false, didConfirmRecoveryPhrase: false},
+    settings: {currency: null,  displayCurrency: null, language: null, btcCurrency: null, needs2FA: null, twoFactorMethod: null, feePerKB: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null, ipWhitelist: null, apiAccess: null, restrictToWhitelist: null, loggingLevel: null},
     user: {current_ip: null, email: null, mobile: null, passwordHint: ""}
   }
 
@@ -84,6 +84,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.settings.rememberTwoFactor = !result.never_save_auth_type
         wallet.settings.needs2FA = result.auth_type != 0
         wallet.settings.twoFactorMethod = result.auth_type
+        wallet.settings.loggingLevel = result.logging_level
         wallet.user.email = result.email
         wallet.user.current_ip = result.my_ip
         wallet.status.currentCountryDialCode = result.dial_code
@@ -103,8 +104,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.settings.currency = ($filter("getByProperty")("code", result.currency, wallet.currencies))
         wallet.settings.btcCurrency = ($filter("getByProperty")("serverCode", result.btc_currency, wallet.btcCurrencies))
         wallet.settings.displayCurrency = wallet.settings.btcCurrency
-        wallet.settings.feePolicy = wallet.my.wallet.fee_policy
+        wallet.settings.feePerKB = wallet.my.wallet.fee_per_kb
         wallet.settings.blockTOR = !!result.block_tor_ips
+        wallet.status.didLoadSettings = true
 
         # Fetch transactions:
         if wallet.my.wallet.isUpgradedToHD
@@ -291,6 +293,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       defer.resolve(null)
     return defer.promise
 
+  wallet.saveActivity = () ->
+    # TYPES: ['transactions', 'security', 'settings', 'accounts']
+    $rootScope.$broadcast('updateActivityFeed')
+    # console.log "Should save activity"
+
   wallet.createAccount = (label, successCallback, errorCallback, cancelCallback) ->
     proceed = (password) ->
       newAccount = wallet.my.wallet.newAccount(label, password)
@@ -415,6 +422,16 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       # wallet.applyIfNeeded()
     wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
 
+  wallet.setLoggingLevel = (level) ->
+    wallet.settings_api.updateLoggingLevel(level, () ->
+      wallet.settings.loggingLevel = level
+      wallet.saveActivity(4)
+      wallet.applyIfNeeded()
+    , () ->
+      wallet.displayError('Failed to update logging level')
+      wallet.applyIfNeeded()
+    )
+
   ####################
   #   Transactions   #
   ####################
@@ -472,6 +489,17 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     else
       return null
 
+  # Takes a satoshi amount and converts it to a given currency
+  # while formatting it to how it should look when displayed
+  wallet.formatCurrencyForView = (amount, currency) ->
+    return unless amount && currency && currency.code
+    code = currency.code
+    amount = amount.toFixed(8) if code == 'BTC'
+    amount = amount.toFixed(6) if code == 'mBTC'
+    amount = amount.toFixed(4) if code == 'bits'
+    amount = amount.toFixed(2) if !wallet.isBitCurrency(currency)
+    return parseFloat(amount) + ' ' + code
+
   wallet.toggleDisplayCurrency = () ->
     if wallet.isBitCurrency(wallet.settings.displayCurrency)
       wallet.settings.displayCurrency = wallet.settings.currency
@@ -525,50 +553,20 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.askForSecondPasswordIfNeeded()
       .then proceed, cancel
 
-  wallet.transaction = (successCallback, errorCallback) ->
+  wallet.transaction = (from, destinations, amounts, fee) ->
 
-    success = (tx_hash) ->
-        successCallback(tx_hash) # Allow caller to set a note before refreshing transactions
-        wallet.updateTransactions() # This is also called by on_tx, but the note might not be set yet
-        wallet.applyIfNeeded()
+    destinations = destinations.map (dest) ->
+      return dest.address unless dest.type == 'Accounts'
+      return wallet.my.wallet.hdwallet.accounts[dest.index].receiveAddress
 
-    error = (e) ->
-      if e? && e.message != undefined
-        errorCallback(e.message)
-      else if e != null && e != undefined
-        errorCallback(e)
-      else
-        errorCallback("Unknown error")
-      wallet.applyIfNeeded()
+    spender = new wallet.spender()
 
-    cancelCallback = () -> errorCallback()
+    if from.index?
+      from = spender.fromAccount(from.index)
+    else
+      from = spender.fromAddress(from.address)
 
-    {
-      send: (from, destinations, amounts, fee, publicNote) ->
-        proceed = (password) ->
-          destinations = destinations.map (dest) ->
-            return dest.address unless dest.type == 'Accounts'
-            return wallet.my.wallet.hdwallet.accounts[dest.index].receiveAddress
-          spender = wallet.spender(publicNote, success, error, {}, password)
-          if from.address?
-            spendFrom = spender.fromAddress(from.address, 1000, fee)
-          else if from.index?
-            spendFrom = spender.fromAccount(from.index, 1000, fee)
-          spendFrom.toAddresses(destinations, amounts)
-        wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
-
-      sweep: (fromAddress, toAccountIndex) ->
-        proceed = (password) ->
-          spender = wallet.spender(null, success, error, {}, password)
-          spender.addressSweep(fromAddress.address).toAccount(toAccountIndex)
-        wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
-
-      sendToEmail: (fromAccountIndex, email, amount, currency) ->
-        proceed = (password) ->
-          amount = wallet.checkAndGetTransactionAmount(amount, currency, success, error)
-          wallet.my.sendToEmail(fromAccountIndex, amount, 10000, email, success, error, {}, needsSecondPassword)
-        wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
-    }
+    from.toAddress(destinations, amounts, fee)
 
   wallet.redeemFromEmailOrMobile = (account, claim, successCallback, error) ->
     success = () ->
@@ -714,16 +712,19 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return wallet.my.isValidAddress(address)
 
   wallet.archive = (address_or_account) ->
+    wallet.saveActivity(3)
     address_or_account.archived = true
     address_or_account.active = false
     wallet.hdAddresses(true)
 
   wallet.unarchive = (address_or_account) ->
+    wallet.saveActivity(3)
     address_or_account.archived = false
     address_or_account.active = true
     wallet.hdAddresses(true)
 
   wallet.deleteLegacyAddress = (address) ->
+    wallet.saveActivity(3)
     wallet.my.wallet.deleteLegacyAddress(address)
 
   ##################################
@@ -750,7 +751,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         if account == null then null else account.balance
 
   wallet.updateTransactions = () ->
-    for tx in wallet.store.getAllTransactions()
+    for tx in wallet.store.getAllTransactions().reverse()
       match = false
       for candidate in wallet.transactions
         if candidate.hash == tx.hash
@@ -763,7 +764,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         transaction = angular.copy(tx)
         transaction.note = wallet.my.wallet.getNote(transaction.hash)
 
-        wallet.transactions.push transaction
+        wallet.transactions.unshift transaction
     wallet.status.didLoadTransactions = true
 
   wallet.appendTransactions = (transactions, override) ->
@@ -799,8 +800,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       numberOfTransactions = wallet.transactions.length
       if numberOfTransactions > before
         wallet.beep()
-        if wallet.transactions[numberOfTransactions - 1].result > 0 && !wallet.transactions[[numberOfTransactions - 1]].intraWallet
+        if wallet.transactions[0].result > 0 && !wallet.transactions[0].intraWallet
           wallet.displayReceivedBitcoin()
+          wallet.saveActivity(0)
     else if event == "error_restoring_wallet"
       # wallet.applyIfNeeded()
       return
@@ -864,7 +866,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         wallet.paymentRequests.pop()
       wallet.user.uid = ""
       wallet.password = ""
-      # $state.go("wallet.common.dashboard")
+      # $state.go("wallet.common.home")
     else if event == "ws_on_close" || event == "ws_on_open"
       # Do nothing
     else if event.type != undefined
@@ -966,9 +968,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       errorCallback()
     )
 
-  wallet.setFeePolicy = (policy) ->
-    wallet.store.setFeePolicy(policy)
-    wallet.settings.feePolicy = policy
+  wallet.setFeePerKB = (fee) ->
+    wallet.my.wallet.fee_per_kb = fee
+    wallet.settings.feePerKB = fee
 
   wallet.fetchExchangeRate = () ->
       # Exchange rate is loaded asynchronously:
@@ -986,6 +988,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         console.log(error)
 
       wallet.api.get_ticker(success, fail)
+
+  wallet.getActivityLogs = (success) ->
+    wallet.settings_api.getActivityLogs success, () ->
+      console.log "Failed to load activity logs"
 
   wallet.isEmailVerified = () ->
     wallet.my.isEmailVerified
@@ -1126,6 +1132,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.settings_api.toggleSave2FA(true, success, error)
 
   wallet.handleBitcoinLinks = () ->
+    wallet.saveActivity(2)
     $window.navigator.registerProtocolHandler('bitcoin', window.location.origin + '/#/open/%s', "Blockchain")
 
   wallet.enableBlockTOR = () ->
@@ -1146,18 +1153,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.applyIfNeeded()
     )
 
-  wallet.enableApiAccess = () ->
-    wallet.settings_api.update_API_access(true, ()->
-      wallet.settings.apiAccess = true
-      wallet.applyIfNeeded()
-    ,()->
-      console.log "Failed"
-      wallet.applyIfNeeded()
-    )
-
-  wallet.disableApiAccess = () ->
-    wallet.settings_api.update_API_access(false, ()->
-      wallet.settings.apiAccess = false
+  wallet.setApiAccess = (flag) ->
+    wallet.settings_api.update_API_access(flag, ()->
+      wallet.settings.apiAccess = flag
+      wallet.saveActivity(2)
       wallet.applyIfNeeded()
     ,()->
       console.log "Failed"
@@ -1167,6 +1166,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.enableRestrictToWhiteListedIPs = () ->
     wallet.settings_api.update_IP_lock_on(true, ()->
       wallet.settings.restrictToWhitelist = true
+      wallet.saveActivity(2)
       wallet.applyIfNeeded()
     ,()->
       console.log "Failed"
@@ -1176,6 +1176,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.disableRestrictToWhiteListedIPs = () ->
     wallet.settings_api.update_IP_lock_on(false, ()->
       wallet.settings.restrictToWhitelist = false
+      wallet.saveActivity(2)
       wallet.applyIfNeeded()
     ,()->
       console.log "Failed"

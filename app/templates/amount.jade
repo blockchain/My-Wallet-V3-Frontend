@@ -1,4 +1,4 @@
 span.amountTotal(ng-class="{unconfirmed: transaction.confirmations < 3}")
-  button.amount(ng-class="{'intra-wallet':transaction.intraWallet, 'received':transaction.result > 0 && !transaction.intraWallet, 'spent':transaction.result < 0 && !transaction.intraWallet}" ng-click="toggle()")
+  button.em-400.amount(ng-class="{'intra-wallet':transaction.intraWallet, 'received':transaction.result > 0 && !transaction.intraWallet, 'spent':transaction.result < 0 && !transaction.intraWallet}" ng-click="toggle()")
     fiat(btc="transaction.result" ng-hide="isBitCurrency(settings.displayCurrency)" abs)
     span(ng-show="isBitCurrency(settings.displayCurrency)") {{ absolute(transaction.result) | toBitCurrency:settings.btcCurrency }}

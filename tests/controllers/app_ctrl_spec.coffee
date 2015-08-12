@@ -34,7 +34,7 @@ describe "AppCtrl", ->
   it "should redirect to login if not logged in",  inject((Wallet, $state) ->
     expect(scope.status.isLoggedIn).toBe(false)
     spyOn($state, "go")
-    scope.$broadcast("$stateChangeSuccess", {name: "dashboard"})
+    scope.$broadcast("$stateChangeSuccess", {name: "home"})
     expect($state.go).toHaveBeenCalledWith("login.show")
   )
 
@@ -42,7 +42,7 @@ describe "AppCtrl", ->
     Wallet.status.isLoggedIn = true
     expect(scope.status.isLoggedIn).toBe(true)
     spyOn($state, "go")
-    scope.$broadcast("$stateChangeSuccess", {name: "dashboard"})
+    scope.$broadcast("$stateChangeSuccess", {name: "home"})
     expect($state.go).not.toHaveBeenCalled()
 
   )

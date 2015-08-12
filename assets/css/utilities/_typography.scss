@@ -6,11 +6,17 @@
 .type-h3 { font-size: 1.8em; }
 .type-h2 { font-size: 2.2em; }
 .type-h1 { font-size: 2.6em; }
+.title { font-size: 3.5em; }
 .underline { text-decoration: underline; }
 .pointer { cursor: pointer; }
 .right-align { text-align: right; }
 .left-align { text-align: left; }
 .center-align { text-align: center; }
+.lh-lg { line-height: 2; }
+.shadow { text-shadow: 0 1px 1px #ccc; }
+.em-alt { text-transform: uppercase; }
+.no-select { user-select: none; }
+.break-word { word-break: break-word; }
 
 .text-overflow-hidden, .ui-select-match-text {
   text-overflow: ellipsis;
@@ -20,10 +26,6 @@
   display: block;
 }
 
-.no-select {
-  user-select: none;
-}
-
 $multiplier: 100;
 
 @for $i from 1 through 9 {
@@ -31,5 +33,3 @@ $multiplier: 100;
     font-weight: $i * $multiplier;
   }
 }
-
-.em-alt { text-transform: uppercase; }

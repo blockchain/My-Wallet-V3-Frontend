@@ -33,7 +33,7 @@ walletApp.controller "SignupCtrl", ($scope, $rootScope, $log, Wallet, $modalInst
   $scope.close = () ->
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
-    $state.go("wallet.common.dashboard")
+    $state.go("wallet.common.home")
 
   $scope.tryNextStep = () ->
     if $scope.isValid[0]

@@ -25,11 +25,11 @@ walletApp.directive('contextualMessage', ($cookies, $window, Wallet, SecurityCen
         })
 
       scope.shouldShow = () ->
-        balance = Wallet.convertFromSatoshi(Wallet.total('accounts'), Wallet.settings.btcCurrency)
+        balance = Wallet.total('accounts')
         security = SecurityCenter.security.score
         isTime = if scope.msgCookie? then Date.now() > scope.msgCookie.when else true
 
-        balance > 0.2 && security < 0.5 && isTime
+        balance > 2000000 && security < 0.5 && isTime
 
       scope.revealMsg = ()->
         scope.reveal = true

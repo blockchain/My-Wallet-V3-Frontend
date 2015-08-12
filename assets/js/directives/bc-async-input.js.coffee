@@ -14,6 +14,7 @@ walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
       errorMessage: '='
       _buttonClass: '@buttonClass'
       maxLength: '@'
+      transform: '='
     }
     transclude: true
     templateUrl: (elem, attrs) ->
@@ -58,6 +59,7 @@ walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
           scope.status.saving = false
           scope.status.edit = false
           scope.$root.$safeApply(scope)
+          Wallet.saveActivity(2)
 
         error = () ->
           scope.status.saving = false

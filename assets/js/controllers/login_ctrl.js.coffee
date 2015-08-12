@@ -154,7 +154,7 @@ walletApp.controller "LoginCtrl", ($scope, $rootScope, $log, $http, Wallet, $coo
   $scope.$watch "status.isLoggedIn", (newValue) ->
     if newValue
       $scope.busy = false
-      $state.go("wallet.common.dashboard")
+      $state.go("wallet.common.home")
 
   $scope.$watch "uid + password + twoFactor", () ->
     $scope.errors.uid = null

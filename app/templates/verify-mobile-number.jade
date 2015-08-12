@@ -1,5 +1,5 @@
 div(ng-class="fullWidth ? 'width-100 flex-center' : 'flex-3'")
-  form(ng-class="{'flex': fullWidth}" name="verifyMobileForm" role="form" ng-submit="verifyMobile(code)" novalidate)
+  form(ng-class="{'flex width-100': fullWidth}" name="verifyMobileForm" role="form" ng-submit="verifyMobile(code)" novalidate)
     .flex-1
       p(ng-class="fullWidth ? 'prl pbl' : ''", translate="LINK_MOBILE_EXPLAIN")
       .form-group(ng-class="{'has-error': errors.verify}")

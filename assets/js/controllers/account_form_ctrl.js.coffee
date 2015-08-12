@@ -22,6 +22,7 @@ walletApp.controller "AccountFormCtrl", ($scope, Wallet, $modalInstance, $log, $
     success = () ->
       $scope.status.busy = false
       $modalInstance.dismiss ""
+      Wallet.saveActivity(3)
 
       $translate(['SUCCESS', 'ACCOUNT_CREATED']).then (translations) ->
         $scope.$emit 'showNotification',
@@ -44,6 +45,7 @@ walletApp.controller "AccountFormCtrl", ($scope, Wallet, $modalInstance, $log, $
     success = () ->
       $scope.status.busy = false
       $modalInstance.dismiss ""
+      Wallet.saveActivity(3)
 
     error = () ->
       $scope.status.busy = false

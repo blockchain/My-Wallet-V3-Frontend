@@ -19,11 +19,10 @@ $mid-grey-alt: #9F9F9F;
 $dark-grey: #737373;
 $border-grey: #6d6d6d;
 
-//Social Colors
-$twitter: #29C5F6;
-$google: #DD332C;
-$facebook: #3B5998;
-$linkedin: #006DC0;
+//Did You Know
+$feature: #039BD3;
+$educational: #54C29F;
+$partner: #E02771;
 
 //Button colors
 $default: #3F3F3F;
@@ -54,10 +53,6 @@ $security-green: #3CC476;
 @include color('light-grey', $light-grey);
 @include color('mid-grey', $mid-grey);
 @include color('mid-grey-alt', $mid-grey-alt);
-@include color('twitter', $twitter);
-@include color('google', $google);
-@include color('facebook', $facebook);
-@include color('linkedin', $linkedin);
 @include color('receive-green', $receive-green);
 @include color('security-red', $security-red);
 @include color('security-yellow', $security-yellow);
@@ -66,6 +61,12 @@ $security-green: #3CC476;
 @include color('aaa', $aaa);
 @include color('success', $success);
 @include color('bright-green', $bright-green);
+@include color('feature', $feature);
+@include color('educational', $educational);
+@include color('partner', $partner);
+@include color('transferred', $transfer-blue);
+@include color('sent', $send-red);
+@include color('received', $receive-green);
 
 //Background Mixin
 @mixin bg-color($name, $color) {
