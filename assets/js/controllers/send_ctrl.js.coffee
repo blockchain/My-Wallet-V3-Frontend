@@ -117,7 +117,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     for i in [0..($scope.destinations.length - 1)]
       $scope.$broadcast('ResetSearch' + i)
 
-    $scope.refreshTxProposal()
+    $scope.refreshTxProposal(true)
 
   $scope.addDestination = () ->
     originalDestinations = angular.copy($scope.destinations[0])
@@ -230,12 +230,12 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       (parseInt previous + parseInt current) || 0
     , parseInt(fee)
 
-  $scope.validateAmounts = () ->
+  $scope.validateAmounts = (recommendCustom=true) ->
     return unless $scope.transaction.from?
     available = $scope.transaction.from.balance
     transactionTotal = $scope.getTransactionTotal(true)
     $scope.amountIsValid = available - transactionTotal >= 0
-    $scope.refreshTxProposal()
+    $scope.refreshTxProposal(recommendCustom)
 
   $scope.allAmountsAboveZero = () ->
     $scope.transaction.amounts.every (amt) -> amt > 0
@@ -260,13 +260,14 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     formatted.isWatchOnly = origin.isWatchOnly if !origin.index?
     return formatted
 
-  $scope.refreshTxProposal = () ->
+  $scope.refreshTxProposal = (recommendCustom=false) ->
     tx = $scope.transaction
-    fee = tx.customFee
+    fee = if recommendCustom then null else tx.customFee
     return unless tx.from && tx.destinations.every((i) -> i?) && tx.amounts.every((i) -> i?)
     $scope.txProposal = Wallet.transaction(tx.from, tx.destinations, tx.amounts, fee)
     $scope.txProposal.tx.then (_tx) ->
       $scope.transaction.fee = _tx.fee
+      $scope.transaction.customFee = _tx.fee if recommendCustom
       $scope.$root.$safeApply($scope)
 
   #################################
@@ -282,6 +283,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         valid = Wallet.isValidAddress(dest.address)
         $scope.sendForm['destinations' + index].$setValidity('isValidAddress', valid)
       $scope.updateToLabel()
+    $scope.refreshTxProposal(true)
   , true
 
   $scope.$watch "status.didLoadBalances", ->
@@ -335,7 +337,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.advancedSend = () ->
     $scope.advanced = true
     $scope.transaction.customFee = $scope.transaction.fee
-    $scope.refreshTxProposal()
+    $scope.refreshTxProposal(true)
 
   $scope.regularSend = () ->
     $scope.transaction.customFee = null
