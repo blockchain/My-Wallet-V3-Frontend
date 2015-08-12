@@ -69,17 +69,15 @@ walletApp.controller "AddressImportCtrl", ($scope, $log, Wallet, $modalInstance,
 
     error = (error) ->
       $scope.status.sweeping = false
-      Wallet.displayError(error)
+      Wallet.displayError(error) if error && typeof error == 'string'
       $scope.$root.$safeApply($scope)
 
     spender = new Wallet.spender()
     transferTx = spender.addressSweep($scope.address).toAccount($scope.fields.account.index)
+    publish = transferTx.publish.bind(transferTx)
 
     Wallet.askForSecondPasswordIfNeeded()
-      .then (passphrase) ->
-        transferTx.publish(passphrase).then(success).catch(error)
-      .catch () ->
-        $scope.status.sweeping = false
+      .then(publish).then(success).catch(error)
 
   # Misc functions
 
