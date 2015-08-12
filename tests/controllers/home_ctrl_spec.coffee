@@ -17,7 +17,7 @@ describe "HomeCtrl", ->
             { label: "Checking", index: 0, archived: false, balance: 100 }
             { label: "Savings", index: 1, archived: false, balance: 175 }
             { label: "Spending", index: 2, archived: false, balance: 0 }
-            { label: "Spending", index: 3, archived: true, balance: 50 }
+            { label: "Partay", index: 3, archived: true, balance: 50 }
           ]
 
       Wallet.status =
@@ -48,7 +48,7 @@ describe "HomeCtrl", ->
   describe "account functions", ->
 
     it "should get account data", ->
-      expect(scope.accountData().length).toEqual(2)
+      expect(scope.accountData(4).length).toEqual(2)
 
   describe "newAccount()", ->
 
