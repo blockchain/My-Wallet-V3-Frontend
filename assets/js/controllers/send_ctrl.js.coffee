@@ -211,7 +211,6 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     $scope.updateToLabel()
     $scope.addExternalLabelIfNeeded(query, i)
 
-
   $scope.addExternalLabelIfNeeded = (query, i) ->
     last = $scope.destinations[i].slice(-1)[0]
     unless !query?
@@ -264,7 +263,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.refreshTxProposal = () ->
     tx = $scope.transaction
     fee = tx.customFee
-    return unless tx.from && tx.destinations[0] && tx.amounts[0]
+    return unless tx.from && tx.destinations.every((i) -> i?) && tx.amounts.every((i) -> i?)
     $scope.txProposal = Wallet.transaction(tx.from, tx.destinations, tx.amounts, fee)
     $scope.txProposal.tx.then (_tx) ->
       $scope.transaction.fee = _tx.fee
