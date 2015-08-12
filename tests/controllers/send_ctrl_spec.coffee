@@ -153,8 +153,8 @@ describe "SendCtrl", ->
         expect(scope.transactionTemplate.amounts.length).toEqual(1)
         expect(scope.transactionTemplate.amounts[0]).toEqual(0)
 
-      it "should have a fee set to null", ->
-        expect(scope.transactionTemplate.fee).toBeNull()
+      it "should have a fee set to the feePerKB setting", ->
+        expect(scope.transactionTemplate.fee).toEqual(Wallet.settings.feePerKB)
 
       it "should have an empty note field", ->
         expect(scope.transactionTemplate.note).toEqual('')
@@ -465,7 +465,7 @@ describe "SendCtrl", ->
         scope.resetSendForm()
         expect(scope.transaction.destinations).toEqual([null])
         expect(scope.transaction.amounts).toEqual([0])
-        expect(scope.transaction.fee).toEqual(null)
+        expect(scope.transaction.fee).toEqual(Wallet.settings.feePerKB)
 
       it "should set transaction from field to default account", ->
         scope.resetSendForm()
