@@ -22,6 +22,7 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
     waitForHeightAndWidth: true
   }
 
+  # accountData helper functions
   $scope.convertToDisplay = (amount) ->
     currency = $scope.settings.displayCurrency
     amount = Wallet.convertFromSatoshi(amount, currency)
@@ -30,15 +31,35 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
   $scope.accountFilter = (account) ->
     account.balance > 0 && !account.archived
 
-  $scope.accountData = () ->
-    $scope.accounts().filter($scope.accountFilter)
-      .map (a) ->
-        x: a.label
-        y: [a.balance]
-        tooltip: $scope.convertToDisplay(a.balance)
+  $scope.accountSort = (account0, account1) ->
+    account1.balance - account0.balance
 
+  $scope.chartDataFormat = (account) ->
+    x: account.label
+    y: [account.balance]
+    tooltip: $scope.convertToDisplay(account.balance)
+
+  $scope.sumReduceAccounts = (prev, current) ->
+    balance: prev.balance + current.balance
+    label: 'Other'
+
+  # Retrieves account data and formats it for the chart
+  $scope.accountData = (numAccounts) ->
+    accounts = $scope.accounts()
+      .filter($scope.accountFilter)
+      .sort($scope.accountSort)
+
+    largestAccounts = accounts.slice(0, numAccounts)
+
+    otherAccounts = accounts.slice(numAccounts)
+      .reduce($scope.sumReduceAccounts, { balance: 0 })
+
+    largestAccounts.push(otherAccounts) unless otherAccounts.balance == 0
+    largestAccounts.map($scope.chartDataFormat)
+
+  # Call when chart needs to be updated
   $scope.updatePieChartData = () ->
-    $scope.pieChartData.data = $scope.accountData()
+    $scope.pieChartData.data = $scope.accountData(4)
 
   # Watchers
   loadedTxs = $scope.$watch 'status.didLoadTransactions', (didLoad) ->
