@@ -1,0 +1,46 @@
+.af-header { margin-bottom: 19px; }
+.af-item {
+  height: 75px;
+  border-left: 1px solid #eee;
+  margin-left: 15px;
+  &:last-child, &.af-fade {
+    opacity: 0.5;
+  }
+}
+.af-empty-state {
+  height: 100%;
+  background: linear-gradient(rgba(247, 247, 247, 0.45), rgba(247, 247, 247, 1));
+  position: absolute;
+  top: 0;
+}
+.af-info {
+  border: 1px solid #eee;
+  padding: .8em;
+}
+.af-date {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.af-marker {
+  position: relative;
+  right: 15px;
+  top: 13px;
+  i {
+    border-radius: 100%;
+    background-color: #ECECEC;
+    padding: 8px;
+  }
+  &:after {
+    content: '';
+  }
+}
+.af-log {
+  max-width: 210px;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (min-width: 990px) and (max-width: 1175px) {
+  .af-date { display: none; }
+}

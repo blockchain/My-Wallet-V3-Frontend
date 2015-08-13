@@ -1,0 +1,13 @@
+.dyk
+  .flex-between.flex-center.mbl
+    h5.mvn.aaa.em-400(translate="DYK")
+    .pill.em-400.em-alt.flex-center(ng-class="dyk.type.toLowerCase()") 
+      | #
+      | {{ dyk.type | translate }}
+  .widget
+    .flex-center.mbm
+      i.title.aaa(ng-class="dyk.icon")
+      p.h3.em-300.mll.center-align(ng-class="dyk.type.toLowerCase()") {{ dyk.title | translate }}
+    p.center-align.type-h6.lh-lg
+      | {{ dyk.text | translate }}
+      a.mls(href="{{ dyk.link }}") {{ dyk.linkText | translate }}

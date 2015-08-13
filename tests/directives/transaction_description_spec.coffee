@@ -18,13 +18,13 @@ describe "Transaction Description Directive", ->
 
 
     Wallet = $injector.get("Wallet")
-    
-    Wallet.my = 
+
+    Wallet.my =
       wallet:
         getAddressBookLabel: () -> null
-    
+
     Wallet.accounts = () -> [{index: 0, label: "Savings"}, { index: 1, label: "Spending"}]
-    
+
     $rootScope.transaction = {
             hash: "tx_hash", confirmations: 13, intraWallet: null,
             from: {account: {index: 0, amount: 300000000}, legacyAddresses: null, externalAddresses: null},
@@ -77,7 +77,7 @@ describe "Transaction Description Directive", ->
     $rootScope.$digest()
 
     expect(element.html()).not.toContain 'translate="MOVED_BITCOIN_TO"'
-    expect(element.html()).toContain 'translate="SENT_BITCOIN_TO"'
+    expect(element.html()).toContain 'translate="SENT"'
 
   it "should recognize receiving to imported address", ->
    isoScope.transaction.to.account = null
@@ -98,7 +98,7 @@ describe "Transaction Description Directive", ->
       isoScope.transaction.to.account = null
       isoScope.transaction.to.email = {"email":"somebody@blockchain.com"}
       isoScope.result = -100000000
-      
+
       element = $compile(html)($rootScope)
       $rootScope.$digest()
 

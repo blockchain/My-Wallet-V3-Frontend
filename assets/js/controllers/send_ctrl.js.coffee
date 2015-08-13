@@ -22,11 +22,14 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.isBitCurrency = Wallet.isBitCurrency
 
+  $scope.txProposal = null
+
   $scope.transactionTemplate = {
     from: null,
     destinations: [null],
     amounts: [0],
-    fee: 10000
+    fee: Wallet.settings.feePerKB
+    customFee: null
     note: ""
     publicNote: false
   }
@@ -110,9 +113,12 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.resetSendForm = () ->
     $scope.transaction = angular.copy($scope.transactionTemplate)
     $scope.transaction.from = Wallet.accounts()[Wallet.my.wallet.hdwallet.defaultAccountIndex]
+    $scope.transaction.customFee = Wallet.settings.feePerKB
 
     for i in [0..($scope.destinations.length - 1)]
       $scope.$broadcast('ResetSearch' + i)
+
+    $scope.refreshTxProposal()
 
   $scope.addDestination = () ->
     originalDestinations = angular.copy($scope.destinations[0])
@@ -159,6 +165,9 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       unless $state.current.name == "wallet.common.transactions" || $stateParams.accountIndex == "accounts"
         $state.go("wallet.common.transactions", { accountIndex: index })
 
+      # Update the activity feed
+      Wallet.saveActivity(0)
+
       # Show success notification
       $translate(['SUCCESS', 'BITCOIN_SENT']).then (translations) ->
         $scope.$emit 'showNotification',
@@ -167,8 +176,13 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
           heading: translations.SUCCESS
           msg: translations.BITCOIN_SENT
 
-    transaction = Wallet.transaction(transactionDidFinish, transactionDidFailWithError)
-    transaction.send($scope.transaction.from, $scope.transaction.destinations, $scope.transaction.amounts, parseInt($scope.transaction.fee), publicNote)
+    if !$scope.txProposal
+      return transactionDidFailWithError('Could not complete transaction')
+
+    Wallet.askForSecondPasswordIfNeeded().then (passphrase) ->
+      $scope.txProposal.publish(passphrase, publicNote)
+        .then(transactionDidFinish)
+        .catch(transactionDidFailWithError)
 
   $scope.closeAlert = (alert) ->
     Wallet.closeAlert(alert)
@@ -193,15 +207,10 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         $scope.toLabel += " Account"
 
   $scope.refreshDestinations = (query, i) ->
-
     return if query == "" && $scope.processingPaymentRequest
-
     return if $scope.destinations[i].length == 0
-
     $scope.updateToLabel()
-
     $scope.addExternalLabelIfNeeded(query, i)
-
 
   $scope.addExternalLabelIfNeeded = (query, i) ->
     last = $scope.destinations[i].slice(-1)[0]
@@ -222,11 +231,12 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       (parseInt previous + parseInt current) || 0
     , parseInt(fee)
 
-  $scope.validateAmounts = () ->
+  $scope.validateAmounts = (recommendCustom=true) ->
     return unless $scope.transaction.from?
     available = $scope.transaction.from.balance
     transactionTotal = $scope.getTransactionTotal(true)
     $scope.amountIsValid = available - transactionTotal >= 0
+    $scope.refreshTxProposal(recommendCustom)
 
   $scope.allAmountsAboveZero = () ->
     $scope.transaction.amounts.every (amt) -> amt > 0
@@ -251,6 +261,16 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     formatted.isWatchOnly = origin.isWatchOnly if !origin.index?
     return formatted
 
+  $scope.refreshTxProposal = (recommendCustom=true) ->
+    tx = $scope.transaction
+    fee = if recommendCustom then null else tx.customFee
+    return unless tx.from && tx.destinations.every((i) -> i?) && tx.amounts.every((i) -> i?)
+    $scope.txProposal = Wallet.transaction(tx.from, tx.destinations, tx.amounts, fee)
+    $scope.txProposal.tx.then (_tx) ->
+      $scope.transaction.fee = _tx.fee
+      $scope.transaction.customFee = _tx.fee if recommendCustom
+      $scope.$root.$safeApply($scope)
+
   #################################
   #           Private             #
   #################################
@@ -264,6 +284,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         valid = Wallet.isValidAddress(dest.address)
         $scope.sendForm['destinations' + index].$setValidity('isValidAddress', valid)
       $scope.updateToLabel()
+    $scope.refreshTxProposal()
   , true
 
   $scope.$watch "status.didLoadBalances", ->
@@ -306,6 +327,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.goToConfirmation = () ->
     $scope.confirmationStep = true
+    $scope.refreshTxProposal(!$scope.advanced)
 
   $scope.backToForm = () ->
     $scope.confirmationStep = false
@@ -315,9 +337,12 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.advancedSend = () ->
     $scope.advanced = true
+    $scope.transaction.customFee = $scope.transaction.fee
+    $scope.refreshTxProposal()
 
   $scope.regularSend = () ->
-    $scope.transaction.fee = $scope.transactionTemplate.fee
+    $scope.transaction.customFee = null
     $scope.transaction.destinations.splice(1)
     $scope.transaction.amounts.splice(1)
     $scope.advanced = false
+    $scope.refreshTxProposal()

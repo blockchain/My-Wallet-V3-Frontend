@@ -2,7 +2,7 @@
   ul.aside
     contextual-message
     li.header(ui-sref-active="current", ng-click="hideMenu()")
-      a(ui-sref="wallet.common.dashboard")
+      a(ui-sref="wallet.common.home")
         i.ti-home
         span(translate="HOME")
     li.scroll-parent.header.scroll-hidden(ui-sref-active="current")
@@ -46,7 +46,7 @@
         span(translate="SETTINGS")
       ul.scroll-settings.aside-list.pas(ng-show="showOrHide('settings')" ng-click="hideMenu()")
         li.mts.mbm(ui-sref-active="active")
-          a.pas(ui-sref="wallet.common.settings.wallet", translate="WALLET_SETTINGS")
+          a.pas(ui-sref="wallet.common.settings.wallet", translate="MY_WALLET")
         li.mvm(ui-sref-active="active")
           a.pas(ui-sref="wallet.common.settings.my-details", translate="MY_DETAILS")
         li.mvm(ui-sref-active="active")
@@ -56,9 +56,9 @@
         li.mvm(ui-sref-active="active")
           a.pas(ui-sref="wallet.common.settings.wallet-recovery", translate="WALLET_RECOVERY")
         li.mvm(ui-sref-active="active")
-          a.pas(ui-sref="wallet.common.settings.advanced", translate="ADVANCED")
+          a.pas(ui-sref="wallet.common.settings.mobile", translate="PAIR_MOBILE")
         li.mvm(ui-sref-active="active")
-          a.pas(ui-sref="wallet.common.settings.mobile", translate="MOBILE")
+          a.pas(ui-sref="wallet.common.settings.advanced", translate="ADVANCED")
     li.header.mbm(ui-sref-active="current", ng-click="hideMenu()")
       a(ui-sref="wallet.common.support")
         i.ti-headphone

@@ -35,6 +35,13 @@ form.form-horizontal(role="form",name="form",novalidate)
 
   .form-group
     .col-sm-12.col-md-6
+      label(translate="FEE_PER_KB")
+      p.explain.hidden-xs.hidden-sm(translate="FEE_PER_KB_EXPLAIN")
+    .col-sm-12.col-md-6.setting-result
+      bc-async-input(ng-model="settings.feePerKB" validator="validateFee" is-required on-save="changeFeePerKB" transform="btc" action-title="'CHANGE_FEE_PER_KB' | translate")
+
+  .form-group
+    .col-sm-12.col-md-6
       label(translate="PBKDF2_ITERATIONS")
       p.explain.hidden-xs.hidden-sm(translate="PBKDF2_ITERATIONS_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
@@ -58,10 +65,25 @@ form.form-horizontal(role="form",name="form",novalidate)
     .col-sm-12.col-md-6
       label(translate="API_ACCESS")
       p.explain.hidden-xs.hidden-sm(translate="API_ACCESS_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result
-      h2.status.incomplete.hidden-xs.hidden-sm(ng-hide="settings.apiAccess", translate="DISABLED")
-      h2.status.complete.hidden-xs.hidden-sm(ng-show="settings.apiAccess", translate="ENABLED")
-      api-access
+    .col-sm-12.col-md-6
+      setting-toggle(
+        value="settings.apiAccess"
+        toggle="toggleApiAccess()"
+        enable-title="ENABLE_API_ACCESS"
+        disable-title="DISABLE_API_ACCESS"
+      )
+
+  .form-group
+    .col-sm-12.col-md-6
+      label(translate="LOGGING")
+      p.explain.hidden-xs.hidden-sm(translate="LOGGING_EXPLAIN")    
+    .col-sm-12.col-md-6
+      setting-toggle(
+        value="settings.loggingLevel"
+        toggle="toggleLogging()"
+        enable-title="ENABLE_LOGGING"
+        disable-title="DISABLE_LOGGING"
+      )
 
   .form-group
     .col-sm-12.col-md-6

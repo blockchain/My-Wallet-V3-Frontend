@@ -46,7 +46,7 @@
               name="{{'destinations' + $index}}" 
               is-not-equal="{{transaction.from.label}}" 
               property="label" 
-              ng-change="updateToLabel()" 
+              ng-change="updateToLabel(); refreshTxProposal()" 
               reset-search-input="false"
               reset-search-input-on="{{ 'ResetSearch' + $index }}"
               required
@@ -104,24 +104,12 @@
         div.mbm.flex-center
           label.mbn(translate="MINERS_FEE")
           helper-button(content="ADVANCED_SEND_STEP_1")
-        p.ccc(translate="MINERS_FEE_EXPLAIN")
         .miners-fee-selection
-          .fee-choices
-            label
-              input(type="radio" ng-model="transaction.fee" value="5000" name="miners-fee" ng-change="validateAmounts()")
-              span(translate="FRUGAL")
-            label
-              input(type="radio" ng-model="transaction.fee" value="10000" name="miners-fee" ng-change="validateAmounts()")
-              span(translate="NORMAL")
-              span.success.mls.type-xs(translate="RECOMMENDED")
-            label
-              input(type="radio" ng-model="transaction.fee" value="100000" name="miners-fee" ng-change="validateAmounts()")
-              span(translate="GENEROUS")
           .fee-custom
             .mrl.flex-1
               .flex-center.border-bottom
                 span.mrm {{ btcCurrency.code }}:
-                input.form-control.no-border(type="number" name="fee" ng-model="transaction.fee" min="0" ng-change="validateAmounts()" required transform-currency="settings.btcCurrency" placeholder="Enter your fee here")
+                input.form-control.no-border(type="number" name="fee" ng-model="transaction.customFee" min="0" ng-change="validateAmounts(false)" required transform-currency="settings.btcCurrency" placeholder="Enter your fee here")
               span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$touched")
       //- QR Scanner
       .flex-column.form-group(ng-hide="!cameraIsOn")
