@@ -59,7 +59,7 @@ p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archive
         //- td
           //- a(ui-sref="wallet.common.settings.address({address: address.address})", translate="DETAILS")
         td
-          a(ng-show="address.balance > 0" translate="TRANSFER" ng-click="transfer(address)")
+          a(ng-hide="address.balance == 0 || address.isWatchOnly" translate="TRANSFER" ng-click="transfer(address)")
         td
           a(translate="ARCHIVE", ng-click="archive(address)")
         td
