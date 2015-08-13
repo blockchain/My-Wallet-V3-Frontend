@@ -54,7 +54,10 @@ walletApp.directive('transformCurrency', (Wallet) ->
       # Model formatter
       scope.formatToView = (modelValue) ->
         fiat = Wallet.convertFromSatoshi(modelValue, scope.transformCurrency)
-        return parseFloat((fiat || 0).toFixed(restrictions.decimals))
+        factor = Math.pow(10, restrictions.decimals)
+        formatted = (Math.floor(fiat * factor) / factor)
+          .toFixed(restrictions.decimals)
+        parseFloat(formatted)
 
       ctrl.$parsers.push scope.parseToModel
       ctrl.$formatters.push scope.formatToView

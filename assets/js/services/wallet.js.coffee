@@ -473,9 +473,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     return null unless amount?
     return null unless currency?
     if wallet.isBitCurrency(currency)
-      return Math.floor(amount * currency.conversion)
+      return Math.round(amount * currency.conversion)
     else if wallet.conversions[currency.code]?
-      return Math.floor(amount * wallet.conversions[currency.code].conversion)
+      return Math.ceil(amount * wallet.conversions[currency.code].conversion)
     else
       return null
 
