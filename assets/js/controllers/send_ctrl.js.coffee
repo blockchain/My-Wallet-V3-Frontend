@@ -144,11 +144,11 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     if $scope.transaction.publicNote
       publicNote = $scope.transaction.note || null
 
-    transactionDidFailWithError = (message) ->
+    transactionFailed = (message) ->
       $scope.sending = false
       $translate(message).then((t) -> Wallet.displayError(t)) if message
 
-    transactionDidFinish = (tx_hash) ->
+    transactionSucceeded = (tx_hash) ->
       $scope.sending = false
       $modalInstance.close ""
       Wallet.beep()
@@ -177,12 +177,14 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
           msg: translations.BITCOIN_SENT
 
     if !$scope.txProposal
-      return transactionDidFailWithError('Could not complete transaction')
+      return transactionFailed('Could not complete transaction')
 
-    Wallet.askForSecondPasswordIfNeeded().then (passphrase) ->
+    publish = (passphrase) ->
       $scope.txProposal.publish(passphrase, publicNote)
-        .then(transactionDidFinish)
-        .catch(transactionDidFailWithError)
+
+    Wallet.askForSecondPasswordIfNeeded()
+      .then(publish).then(transactionSucceeded)
+      .catch(transactionFailed)
 
   $scope.closeAlert = (alert) ->
     Wallet.closeAlert(alert)
