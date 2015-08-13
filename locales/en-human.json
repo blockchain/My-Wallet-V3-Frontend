@@ -489,7 +489,7 @@
   "TRANSACTION_DETAIL_STATUS" : "Your transaction has been submitted to the bitcoin network and is waiting for miners to validate the transaction. A transaction is considered to be confirmed when there are 3 network confirmations.",
   "SEND_BITOIN_STEP2A" : "A small transaction fee provides an incentive for the miners to validate your transaction quickly.",
   "SEND_BITOIN_STEP2B" : "Add a note to remind yourself of what this transaction relates to. This note will be private and only seen by you, unless you select the Make Public option. If a note is public, anyone viewing the transaction on Blockchain will be able to read your note.",
-  "ADVANCED_SEND_STEP_1" : "A normal miners fee is recommended for most transactions. If a frugal fee is a selected, be advised it may take several days for your transaction to be confirmed.",
+  "ADVANCED_SEND_STEP_1" : "A normal miners fee is recommended for most transactions. You can override this recommendation but be advised that lower fees may take several days to confirm.",
   "MANUAL_NEW_ADDRESS" : "Manually create a new address to share with a specific contact. As it is advised to use one address per transaction, applying a label can help remind you what this address is for. For example, 'Repayment for lunch.'",
   "DASHBOARD_WELCOME_TITLE" : "Welcome to the Alpha of our new wallet experience!",
   "DASHBOARD_WELCOME" : "We have launched our new wallet and are excited to introduce all of the great features we’ve added.  It boasts a brand new Security Center, improved account management, revamped algorithms, and a shiny interface.  Go ahead and get exploring!",
