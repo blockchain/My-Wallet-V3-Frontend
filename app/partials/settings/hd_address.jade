@@ -25,5 +25,5 @@ div(ng-show="address.address")
             bc-async-input(inline ng-model="address.label" on-save="changeLabel" is-required)
             span.help-block {{ errors.label }}
         
-    .col-xs-12.col-md-6.text-center
+    .col-xs-12.col-md-6.center-align
       qr(text="url" size="140", ng-if="url != null")

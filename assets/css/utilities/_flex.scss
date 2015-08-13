@@ -1,7 +1,7 @@
 %flex {
   display: flex;
 }
-.flex, .flex-end, .flex-between, .flex-start, .flex-column, .flex-center {
+.flex, .flex-end, .flex-between, .flex-start, .flex-column, .flex-center, .flex-align-start, .flex-align-end {
   @extend %flex;
 }
 .flex-between {
@@ -11,6 +11,11 @@
 .flex-align-end {
   align-items: flex-end;
 }
+
+.flex-align-start {
+  align-items: flex-start;
+}
+
 .flex-end {
   justify-content: flex-end;
 }

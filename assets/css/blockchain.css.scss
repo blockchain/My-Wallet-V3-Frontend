@@ -16,6 +16,7 @@
 @import 'elements/textareas';
 
 //import components
+@import 'components/activity-feed';
 @import 'components/alerts';
 @import 'components/bitcoin-addresses';
 @import 'components/button-groups';
@@ -29,6 +30,7 @@
 
 //import modules
 @import 'modules/header';
+@import 'modules/home';
 @import 'modules/layout';
 @import 'modules/left-nav';
 @import 'modules/send-receive';
@@ -63,10 +65,8 @@ html,body {
 .display-block { display: block; }
 
 .pointer { cursor: pointer; }
-
-.row {
-  vertical-align: bottom;
-}
+.pos-rel { position: relative; }
+.row { vertical-align: bottom; }
 .row.spacing {
   height: 20px;
   background: transparent;
@@ -92,9 +92,6 @@ a.back {
  overflow-x: auto;
 }
 
-.text-center{
- text-align: center;
-}
 .form-ctrl{
   padding: 15px 0;
     .btn-bci{
@@ -168,21 +165,5 @@ padding-left: 15px;
   pre {
     -webkit-user-select: none;
     user-select: none;
-  }
-}
-
-
-//TODO rip this out once we have a real dashboard
-.dashboard {
-  padding: 20px 30px;
-  ul{
-    list-style-type: square;
-    font-size: 1.2em;
-  }
-  .form-control-static img {
-    max-width: 40px;
-  }
-  p.form-control-static.bitcoin-address {
-    max-width: 300px;
   }
 }

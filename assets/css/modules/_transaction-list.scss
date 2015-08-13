@@ -1,4 +1,4 @@
-#transactions {
+.transactions {
   .transaction-feed {
     position: relative;
     top: 50px;
@@ -47,9 +47,8 @@
       right: 10px;
       top: 18px;
       button.amount{
-        font-size: 1.2em;
-        font-weight: normal;
-        min-width: 175px;
+        font-size: 1.1em;
+        min-width: 125px;
         float: right;
       }
     }
@@ -130,160 +129,30 @@
 }
 
 button.amount {
-  margin-top: 0px;
-  margin-left: 5px;
   padding: 10px 20px;
   border: none;
-  background: none;
-  font-weight: bold;
   color: white;
   border-radius: 5px;
   outline: none;
 }
 
-
-
-button.intra-wallet  {
-  background: #5BACD0;
-  background-size: 80px 24px;
-}
-
-button.spent {
-  background: #E27E82;
-  background-size: 80px 24px;
-}
-
-button.received {
-  background: #85B45B;
-  background-size: 80px 24px;
-
-  span.glyphicon {
-    padding-left: 10px;
-  }
-}
-
-.unconfirmed {
-  button {
-    opacity: 0.5;
-  }
-}
-
-#transaction-details {
-  h2 {
-    color: #57AACA;
-    font-size: 17px;
-  }
-
-  .status {
-    color: gray;
-    font-size: 10px;
-
-    span.short {
-      font-weight: bold;
-      margin-left: 3px;
+button {
+  &.intra-wallet  { background: #5BACD0; }
+  &.spent { background: #E27E82; }
+  &.received {
+    background: #85B45B;
+    span.glyphicon {
+      padding-left: 10px;
     }
   }
-
-  .to-from-amount-box {
-    background-color: #F7FAFB;
-    border: 1px solid #ECEDEC;
-    padding: 20px;
-    color: #939393;
-
-    .row {
-      background-color: transparent;
-    }
-
-    table {
-      td {
-        padding-top: 5px;
-        padding-bottom: 10px;
-        padding-right: 20px;
-      }
-    }
-  }
-
-  button.amount {
-    width: 100%;
-  }
-
-  .right {
-    float: right;
-  }
-
-  .blockchain {
-    .btn {
-      background: #1A75BC;
-      color: white;
-      border-radius: 0;
-    }
-    margin-top: 80px;
-    width: 100%;
-    text-align: center;
-
-  }
-
-  .notes-tags {
-    border-right: 1px solid #E1E1E1;
-  }
-
-  h3, h4 {
-    color: #565E64;
-  }
-
-  h3 {
-    font-size: 15px;
-  }
-
-  h4 {
-    font-size: 14px;
-    font-weight: normal;
-    text-transform: uppercase;
-    margin-top: 20px;
-    margin-bottom: 10px;
-  }
-
-  .note {
-    font-size: 1em;
-    margin-top: 10px;
-    display: block;
-  }
-
-  .value-at-tx {
-    font-size: 25px;
-    font-weight: bold;
-  }
-
-  .value-now {
-    font-size: 25px;
-    font-weight: bold;
-    color: #B3B3B3;
-  }
 }
+.unconfirmed { opacity: 0.5; }
 
-.note {
-  color: #aeaeae;
-  //  font-weight: lighter;
-  font-weight: 300;
-  img {
-    height: 15px;
-    padding-right: 5px;
-  }
-  a {
-    color: #CCCCCC;
-  }
+.note { color: #aeaeae; }
 
-.btn-note{
-  margin: 5px;
-}
+a.date,p.date { color: #adc0c9; }
 
-}
-
-a.date,p.date {
-  color: #adc0c9;
-}
-
-.amountTotal{float: none;}
+.amountTotal{ float: none;}
 
 .from, .to{
   padding: 5px 0;
@@ -311,7 +180,7 @@ a.date,p.date {
 }
 
 @media (min-width: 768px){
-  #transaction-details{
+  .transaction-details {
     .status{text-align: right;}
   }
 }
@@ -323,14 +192,14 @@ a.date,p.date {
       width: 100%;
     }
   }
-  #transactions .row.transaction div.amount button.amount {
+  .transactions .row.transaction div.amount button.amount {
     min-width: 121px;
     font-size: .8em;
   }
 }
 
 @media (max-width: 620px) {
-  #transactions {
+  .transactions {
     top: 0;
     .transaction {
       .tx-details { margin-left: 0; }

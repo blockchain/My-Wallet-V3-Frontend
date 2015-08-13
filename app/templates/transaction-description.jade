@@ -21,7 +21,7 @@
         span.hidden-sm.hidden-xs.col-md-11(ng-bind-html="other_address | highlight:search")
       .flex.row.mtm(ng-show="transaction.note")
         span.col-md-1(translate="NOTE_LC")
-        span.hidden-sm.hidden-xs.col-md-11 {{ transaction.note }}
+        span.break-word.hidden-sm.hidden-xs.col-md-11 {{ transaction.note }}
       .flex.row.mtm.timestamp(ng-show="transaction.confirmations == 0 && transaction.from.externalAddresses")
         span.col-md-12(translate="UNCONFIRMED_WARNING")
     .col-md-1
