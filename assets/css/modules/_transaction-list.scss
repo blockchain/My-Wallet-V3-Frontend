@@ -137,12 +137,15 @@ button.amount {
 }
 
 button {
-  &.intra-wallet  { background: #5BACD0; }
-  &.spent { background: #E27E82; }
+  &.intra-wallet  { background: $transfer-blue; }
+  &.spent { background: $send-red; }
   &.received {
-    background: #85B45B;
+    background: $receive-green;
     span.glyphicon {
       padding-left: 10px;
+    }
+    &:hover {
+      color:white;
     }
   }
 }
