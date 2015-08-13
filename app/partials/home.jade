@@ -6,7 +6,7 @@
       .section
         did-you-know
       .section.mtvl
-        .charts
+        .charts.mbl
           h5.aaa.em-400.mbl(translate="BALANCE_BY_ACCOUNT")
           .widget.flex-center.flex-justify.pos-rel(ng-class="{ 'empty' : accounts().length == 1 || getTotal() == 0 }")
             button.button-sm.em-500(ng-click="newAccount()" ng-class="accounts().length > 1 ? 'button-gradient' : 'button-primary'" translate="NEW_ACCOUNT")
