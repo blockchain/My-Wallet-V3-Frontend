@@ -41,7 +41,7 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
 
   $scope.sumReduceAccounts = (prev, current) ->
     balance: prev.balance + current.balance
-    label: 'Other'
+    label: 'Remaining Accounts'
 
   # Retrieves account data and formats it for the chart
   $scope.accountData = (numAccounts) ->
