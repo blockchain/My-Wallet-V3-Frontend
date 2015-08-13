@@ -32,6 +32,7 @@ module.exports = {
 
         // Open Profile drop down menu, click Logout, and dismiss alert
         element.all(by.css('[ng-click="logout()"]')).first().click();
+        browser.sleep(200);
         browser.switchTo().alert().accept();
 
     },
@@ -39,7 +40,7 @@ module.exports = {
     validateHome: function () {
 
         // Validate account homepage details
-        browser.sleep(2000); // Required wait for Request and Send button validation
+        browser.sleep(3000); // Required wait for Request and Send button validation
         browser.findElement(by.css('[translate="REQUEST"]'));
         browser.findElement(by.css('[translate="SEND"]'));
         browser.findElement(by.css('.bc-well'));
@@ -103,8 +104,8 @@ module.exports = {
 
     },
 
-    scrollTo: function (selector, text) {
-        var filter = browser.findElement(by.cssContainingText(selector, text));
+    scrollTo: function (selector) {
+        var filter = browser.findElement(by.css(selector));
         var scrollIntoView = function () {
             arguments[0].scrollIntoView();
         };
