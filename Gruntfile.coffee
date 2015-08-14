@@ -526,6 +526,7 @@ module.exports = (grunt) ->
     "dist_beta" # We don't check beta dependencies against a whitelist
     "rename:assets"
     "rename:html"
+    "git_changelog"
   ]
 
   grunt.registerTask "dist_unsafe", [
