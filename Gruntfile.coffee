@@ -449,6 +449,17 @@ module.exports = (grunt) ->
         command: () ->
            'cp bower.json build/ && cd build && bower install'
 
+    git_changelog:
+      default:
+        options:
+          file: 'Changelog.md',
+          app_name : 'Blockchain HD Frontend',
+          # logo : 'https://raw.githubusercontent.com/blockchain/My-Wallet-HD-Frontend/changelog/assets/icons/png/logo.png',
+          intro : 'Recent changes'
+          grep_commits: '^fix|^feat|^docs|^refactor|^chore|BREAKING'
+          tag: 'v1.2.0'
+          repo_url: 'https://github.com/blockchain/My-Wallet-HD-Frontend'
+
   # Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks "grunt-contrib-uglify"
   grunt.loadNpmTasks('grunt-contrib-concat')
@@ -465,6 +476,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-preprocess')
   grunt.loadNpmTasks('grunt-autoprefixer')
   grunt.loadNpmTasks('grunt-merge-json')
+  grunt.loadNpmTasks('git-changelog')
 
   grunt.registerTask "compile", ["coffee"]
 
