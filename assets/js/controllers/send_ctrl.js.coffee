@@ -220,11 +220,18 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
        last.address = query
        last.label = query
 
-    if $scope.transaction.destinations[i] == null || $scope.transaction.destinations[i].type != "External"
+    if !$scope.transaction.destinations[i]? || $scope.transaction.destinations[i].type != "External"
       # Select the external account if it's the only match; otherwise when the user moves away from the field
       # the address will be forgotten. This is only an issue if the user selects an account first and then starts typing.
       for destination in $scope.destinations[i]
-        return if destination.type != "External" && destination.label.indexOf(query) != -1
+        if destination.type != "External" && (destination.label.indexOf(query) != -1 || (destination.address && destination.address.indexOf(query) != -1))
+          if destination.address && destination.address.indexOf(query) != -1
+            # We assume that someone copy-pasted an already imported or HD address, rather than typed it,
+            # so resetting the search & selecting the address:
+            console.log "Reset!"
+            # $scope.$broadcast('ResetSearch' + i)
+            $scope.transaction.destinations[i] = destination
+          return
       $scope.transaction.destinations[i] = last
 
   $scope.getTransactionTotal = (includeFee) ->
