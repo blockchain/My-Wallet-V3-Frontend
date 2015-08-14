@@ -34,8 +34,8 @@ walletApp.controller "LoginCtrl", ($scope, $rootScope, $log, $http, Wallet, $coo
         Wallet.displayError(translation, true)
       $scope.disableLogin = true
   else if browserDetection().browser == "safari"
-    if browserDetection().version < 3
-      $translate("MINIMUM_BROWSER", {browser: "Safari", requiredVersion: 3, userVersion: browserDetection().version}).then (translation) ->
+    if browserDetection().version < 6
+      $translate("MINIMUM_BROWSER", {browser: "Safari", requiredVersion: 6, userVersion: browserDetection().version}).then (translation) ->
         Wallet.displayError(translation, true)
       $scope.disableLogin = true
   else if browserDetection().browser == "opera"
