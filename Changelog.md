@@ -16,7 +16,9 @@ _Recent changes_
 
 ## Chore
 
-- **changelog:** configured git-changelog
+- **changelog:**
+  - add to grunt dist task
+  - configured git-changelog
 
 
 
