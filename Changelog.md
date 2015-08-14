@@ -8,6 +8,12 @@ _Recent changes_
 
 ---
 
+## Bug Fixes
+
+- **Send:** pasted watch only address sticks
+  ([017735b5](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/017735b5a059c665ee893185641363daa4ea13e4))
+
+
 ## Features
 
 - **browser:** drop support for Safari 3, 4 & 5
