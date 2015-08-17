@@ -4,21 +4,6 @@ walletApp.controller "NavigationCtrl", ($scope, Wallet, SecurityCenter, $transla
   $scope.security = SecurityCenter.security
   $scope.settings = Wallet.settings
   
-  $scope.visitTransactions = () ->
-    if $scope.numberOfActiveAccounts() > 1
-      $state.go("wallet.common.transactions", {accountIndex:'accounts'})
-    else
-      $state.go("wallet.common.transactions", {accountIndex:Wallet.getDefaultAccountIndex()})
-
-  $scope.numberOfActiveAccounts = () -> 
-    return filterFilter(Wallet.accounts(), {archived: false}).length
-  
-  $scope.isTransactionState = () ->
-    return $state.current.name == "wallet.common.transactions" || $state.current.name == "wallet.common.transaction"
-
-  $scope.isSecurityState = () ->
-    return $state.current.name == "wallet.common.settings.security-center" 
-  
   $scope.logout = () ->  
     if !Wallet.isSynchronizedWithServer() 
       if confirm "There are changes still being saved. Are you sure you wish to logout?"
