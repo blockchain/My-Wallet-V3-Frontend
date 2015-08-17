@@ -33,7 +33,7 @@ walletApp.controller "WalletNavigationCtrl", ($scope, Wallet, SecurityCenter, $s
       controller: "AccountFormCtrl"
       resolve:
         account: -> undefined
-      windowClass: "bc-modal"
+      windowClass: "bc-modal small"
     )
     if modalInstance?
       modalInstance.opened.then () ->

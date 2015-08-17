@@ -5,16 +5,16 @@
   h3(translate="RENAME_ACCOUNT", ng-show="status.edit") 
 .modal-body
   form(role="form" name="accountForm" novalidate)
-    .form-group.flex.flex-justify(ng-class="{'has-error': accountForm.$invalid && accountForm.$dirty}")
-      label.col-sm-4.control-label(translate="ACCOUNT_NAME")
-      .col-sm-8
+    .form-group.flex-column.flex-justify(ng-class="{'has-error': accountForm.$invalid && accountForm.$dirty}")
+      label.control-label(translate="ACCOUNT_NAME")
+      div
         input.form-control(type="text" name="new" ng-model="fields.name" is-valid="isNameUnused(fields.name)" maxlength="17" required autofocus)
         span.help-block(translate="INCORRECT_PASSWORD" ng-show="accountForm.new.$error.incorrectPassword")
         span.help-block(translate="ACCOUNT_NAME_TAKEN" ng-show="accountForm.new.$error.isValid")
     span(ng-show="!status.edit")
 .modal-footer.pal.flex-end.flex-center
-  button.button-muted.mrm(ng-click="close()", translate="CLOSE", ng-hide="status.busy")
+  button.button-muted.button-lg.mrm(ng-click="close()", translate="CLOSE", ng-hide="status.busy")
   span(ng-if="!status.edit")
-    button.button-primary(ui-ladda="{{ status.busy }}" ng-click="createAccount()" ladda-translate="CREATE_ACCOUNT" ng-disabled="accountForm.new.$error.required || accountForm.new.$error.isValid || accountForm.$pristine" data-style="expand-left")
+    button.button-primary.button-lg(ui-ladda="{{ status.busy }}" ng-click="createAccount()" ladda-translate="CREATE_ACCOUNT" ng-disabled="accountForm.new.$error.required || accountForm.new.$error.isValid || accountForm.$pristine" data-style="expand-left")
   span(ng-if="status.edit")
-    button.button-primary(ui-ladda="{{ status.busy }}" ng-click="updateAccount()" ladda-translate="RENAME" ng-disabled="accountForm.$invalid || accountForm.$pristine" data-style="expand-left")
+    button.button-primary.button-lg(ui-ladda="{{ status.busy }}" ng-click="updateAccount()" ladda-translate="RENAME" ng-disabled="accountForm.$invalid || accountForm.$pristine" data-style="expand-left")

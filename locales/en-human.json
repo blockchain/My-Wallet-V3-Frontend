@@ -155,14 +155,14 @@
   "RESEND_EMAIL" : "Resend email",
   "CREATE_NEW_ACCOUNT" : "Create New Account",
   "CREATE_ACCOUNT" : "Create Account",
-  "ACCOUNT_NAME" : "Account Name",
+  "ACCOUNT_NAME" : "Account Name:",
   "PAYMENT_REQUESTS" : "Payment Requests",
   "PENDING" : "Pending",
   "COMPLETE" : "Complete",
   "TRANSACTION_COMPLETE" : "Transaction Complete",
   "OVERVIEW" : "Overview:",
   "TAGS" : "Tags",
-  "NOTE" : "Note",
+  "NOTE" : "Note:",
   "MAKE_PUBLIC" : "Make Public",
   "FROM" : "From",
   "FROM:" : "From:",
@@ -556,6 +556,8 @@
   "FEE_PER_KB_EXPLAIN" : "When the network is stressed, including a higher fee per kb will ensure faster transaction confirmations.",
   "CHANGE_FEE_PER_KB" : "Change Fee Per KB",
   "SIGNIN": "Sign in",
-  "SIGNOUT": "Sign out"
+  "SIGNOUT": "Sign out",
+  "EDIT_NOTE": "Edit",
+  "DELETE_NOTE": "Delete"
 
 }

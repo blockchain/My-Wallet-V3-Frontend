@@ -59,5 +59,5 @@ describe "HomeCtrl", ->
         templateUrl: 'partials/account-form.jade'
         controller: 'AccountFormCtrl'
         resolve: jasmine.any(Object)
-        windowClass: 'bc-modal'
+        windowClass: 'bc-modal small'
       )

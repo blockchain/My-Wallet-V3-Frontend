@@ -1,3 +1,10 @@
 textarea {
   resize: none;
 }
+
+.textarea {
+  min-height: 100px;
+  border: 1px solid $ccc;
+  border-radius: 5px;
+  padding: 5px;
+}

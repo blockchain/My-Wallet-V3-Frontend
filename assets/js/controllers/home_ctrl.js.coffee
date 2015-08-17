@@ -86,7 +86,7 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
       controller: "AccountFormCtrl"
       resolve:
         account: -> undefined
-      windowClass: "bc-modal"
+      windowClass: "bc-modal small"
     )
 
   if $scope.status.firstTime

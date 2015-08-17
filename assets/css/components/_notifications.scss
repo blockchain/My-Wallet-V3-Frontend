@@ -1,6 +1,10 @@
 .notification-modal {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
   .modal-dialog {
     width: 40vw;
+    margin-top: 0 !important;
   }
   .modal-content {
     box-shadow: 0 5px 1px rgba(0, 0, 0, 0.6);
