@@ -4,18 +4,18 @@
       background: #EBEBEB;
     }
   }
-  span.ti-angle-down { font-weight: 900; font-size: 1.5em; }
+  span.ti-angle-down { font-weight: 900; font-size: 1.5em; position: relative; top: 1px; }
   .navbar-toggle {  padding: 0; }
 }
 
 #wallet-nav-toggle {
   span.ti-menu, span.ti-close {
     display: none;
-    font-size: 24px;
+    font-size: 23px;
     line-height: 0;
     padding: 0px 20px;
     position: relative;
-    top: 20px;
+    top: 18px;
   }
   @media (max-width: 768px) {
     span.ti-menu {

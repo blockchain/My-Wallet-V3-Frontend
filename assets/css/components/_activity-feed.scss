@@ -45,3 +45,7 @@
 @media (min-width: 990px) and (max-width: 1175px) {
   .af-date { display: none; }
 }
+
+@media (max-width: 620px) {
+  .af-log span { display: none; }
+}

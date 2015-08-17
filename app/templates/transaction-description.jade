@@ -10,7 +10,7 @@
       .flex.row
         span.col-md-1(ng-show="transaction.result > 0 && !transaction.intraWallet", translate="FROM_LC")
         span.col-md-1(ng-show="transaction.result  < 0 || transaction.intraWallet", translate="TO_LC")
-        span.hidden-sm.hidden-xs.col-md-11(ng-bind-html="address | highlight:search")
+        span.hidden-sm.hidden-xs.col-md-11.mlm(ng-bind-html="address | highlight:search")
     .hidden-xs.hidden-sm.col-md-1
   .flex-center.border-top.ptl.hidden-xs.hidden-sm.dark-grey(ng-show="transaction.toggled")
     .col-md-3
@@ -18,10 +18,10 @@
       .flex.row
         span.col-md-1(ng-show="transaction.result > 0 && !transaction.intraWallet", translate="TO_LC")
         span.col-md-1(ng-show="transaction.result  < 0 || transaction.intraWallet", translate="FROM_LC")
-        span.hidden-sm.hidden-xs.col-md-11(ng-bind-html="other_address | highlight:search")
+        span.hidden-sm.hidden-xs.col-md-11.mlm(ng-bind-html="other_address | highlight:search")
       .flex.row.mtm(ng-show="transaction.note")
         span.col-md-1(translate="NOTE_LC")
-        span.break-word.hidden-sm.hidden-xs.col-md-11 {{ transaction.note }}
+        span.break-word.hidden-sm.hidden-xs.col-md-11.mlm {{ transaction.note }}
       .flex.row.mtm.timestamp(ng-show="transaction.confirmations == 0 && transaction.from.externalAddresses")
         span.col-md-12(translate="UNCONFIRMED_WARNING")
     .col-md-1
