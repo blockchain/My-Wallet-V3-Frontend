@@ -29,7 +29,7 @@ walletApp.directive('contextualMessage', ($cookies, $window, Wallet, SecurityCen
         security = SecurityCenter.security.score
         isTime = if scope.msgCookie? then Date.now() > scope.msgCookie.when else true
 
-        balance > 2000000 && security < 0.5 && isTime
+        balance > 20000000 && security < 0.5 && isTime
 
       scope.revealMsg = ()->
         scope.reveal = true
