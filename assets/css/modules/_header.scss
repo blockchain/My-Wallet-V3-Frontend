@@ -129,13 +129,16 @@ ul.navbar-right{
 
 img#logo {
   height: 40px;
-  margin-top: -10px;
 }
 
 .navbar-header{
   .navbar-brand{
     padding: 0;
-    padding-top: 15px;
+    padding-top: 5px;
+  }
+  &:before, &:after {
+    content: none;
+    display: block;
   }
 }
 
