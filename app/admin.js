@@ -16,6 +16,20 @@ admin.controller('AdminCtrl', function ($rootScope, $scope, $http, $modal, Inter
     return (time) ? new Date(time).toDateString() : 'Never';
   };
 
+  $scope.displayIOSStatus = function (item) {
+    if (item.ios_sent) return 'Sent';
+    if (item.ios_approved) return 'Approved';
+    if (item.ios) return 'Requested';
+    return 'Not Requested';
+  };
+
+  $scope.displayAndroidStatus = function (item) {
+    if (item.android_sent) return 'Sent';
+    if (item.android_approved) return 'Approved';
+    if (item.android) return 'Requested';
+    return 'Not Requested';
+  };
+
   $scope.sort = function (header) {
     if ($scope.search.sort === header) {
       $scope.search.order = ($scope.search.order === 'A') ? 'Z' : 'A';
@@ -104,12 +118,12 @@ admin.controller('CapturePageCtrl', function ($scope, getPercent, setPercent) {
 
 admin.controller('EditKeyCtrl', function ($scope, $modalInstance, InterfaceHelper, load, entry) {
   $scope.fields = angular.copy(entry);
-  $scope.endpoint = ($scope.fields.activated) ? '/update-key' : '/activate-key';
-  $scope.submitEdit = function () {
+  $scope.submitEdit = function (doActivate) {
+    var endpoint = (doActivate) ? '/activate-key' : '/update-key';
     var selection = { rowid: entry.rowid };
     var update = InterfaceHelper.compareProperties($scope.fields, entry);
-    update.activated = true;
-    InterfaceHelper.callApi($scope.endpoint, {selection: selection, update: update})
+    update.activated = doActivate;
+    InterfaceHelper.callApi(endpoint, {selection: selection, update: update})
       .success(function () {
         load();
         $modalInstance.dismiss();
