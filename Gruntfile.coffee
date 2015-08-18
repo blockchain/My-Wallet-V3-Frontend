@@ -123,7 +123,6 @@ module.exports = (grunt) ->
           'bower_components/angular-numeraljs/dist/angular-numeraljs.min.js'
           'bower_components/angular-translate/angular-translate.min.js'
           'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js'
-          # 'bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js'
           "bower_components/jquery/dist/jquery.js"
           'bower_components/intl-tel-input/build/js/intlTelInput.min.js'
           'bower_components/international-phone-number/releases/international-phone-number.min.js'
@@ -162,7 +161,6 @@ module.exports = (grunt) ->
       app: {
         src: [
           "build/bower_components/angular-ui-select/dist/select.min.css"
-          # "build/bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css"
           "build/css/blockchain.css" # Needs to be loaded first
           "build/css/**/*.css"
         ],
