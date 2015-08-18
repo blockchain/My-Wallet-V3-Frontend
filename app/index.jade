@@ -170,7 +170,7 @@ head
   
   <!-- @if PRODUCTION !>
   link(rel='stylesheet', href='application.css')
-  script(src='application.min.js')
+  script(src='application.min.js')  
   <!-- @endif -->
   
   script.
@@ -184,3 +184,8 @@ head
     }
 
 body(ng-controller="AppCtrl", ui-view="body")
+  noscript
+      img(src="/img/logo-bw.png" style="display:flex; justify-content: center;  margin:auto; align-items:center; margin-top:15%; text-align:center;")
+      div.h3(style="display:flex; justify-content: center; padding-top:10px; margin:auto; align-items:center;  text-align:center;").
+        Please enable JavaScript to use Blockchain.
+
