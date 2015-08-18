@@ -2,12 +2,12 @@
   h4.em-alt.blue.mbl.mtm(translate="BYOB")
   .flex.flex-wrap
     activity-feed
-    .col-md-6.col-sm-12.col-xs-12
+    .col-md-6.col-sm-12.col-xs-12.col-home
       .section
         did-you-know
-      .section.mtvl
-        .charts.mbl.hidden-xs
-          h5.aaa.em-400.mbl(translate="BALANCE_BY_ACCOUNT")
+      .section
+        .charts.hidden-xs.pos-rel
+          h5.aaa.em-400.mbl(ng-class="{'mts' : transactions.length > 0 }" translate="BALANCE_BY_ACCOUNT")
           .widget.flex-center.flex-justify.pos-rel(ng-class="{ 'empty' : accounts().length == 1 || getTotal() == 0 }")
             button.button-sm.em-500(ng-click="newAccount()" ng-class="accounts().length > 1 ? 'button-gradient' : 'button-primary'" translate="NEW_ACCOUNT")
             h5.width-75.center-align.em-300(translate="HOME_NEW_ACCOUNT_MSG" ng-hide="accounts().length > 1")

@@ -1,8 +1,8 @@
-.section { max-height: 350px; }
-
 .home { padding: 10px 15px 0 30px; }
+.col-home { height: 635px; }
+.section { height: 50%; }
 
-.pill {
+.hashtag {
   &.feature {
     color: $blue;
     &:hover { color: $blue; }

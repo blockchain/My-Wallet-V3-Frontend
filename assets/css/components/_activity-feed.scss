@@ -1,6 +1,6 @@
 .af-header { margin-bottom: 19px; }
 .af-item {
-  height: 75px;
+  height: calc(635px/8);
   border-left: 1px solid #eee;
   margin-left: 15px;
   &:last-child, &.af-fade {
