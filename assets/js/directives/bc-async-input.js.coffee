@@ -54,6 +54,7 @@ walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
         scope.status.saving = true
 
         success = () ->
+          scope.ngModel = scope.form.newValue # Otherwise cancel will undo this
           unless attrs.custom?
             scope.bcAsyncForm.$setPristine()
           scope.status.saving = false
@@ -68,9 +69,10 @@ walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
         scope.onSave(scope.form.newValue, success, error)
 
       scope.cancel = () ->
-        scope.bcAsyncForm.$setPristine()
         scope.status.edit = false
+        scope.bcAsyncForm.input.$rollbackViewValue()
         scope.form.newValue = scope.ngModel
+        scope.bcAsyncForm.$setPristine()
 
       transclude(scope, (clone, scope) ->
         if attrs.custom?
