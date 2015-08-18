@@ -3,7 +3,7 @@ walletApp.controller "TopCtrl", ($scope, Wallet, $stateParams) ->
   $scope.isBitCurrency = Wallet.isBitCurrency
   $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency
 
-  $scope.getTotal = (index) -> $scope.total(index)
+  $scope.getTotal = (index) -> Wallet.total(index)
 
   #################################
   #           Private             #
@@ -11,7 +11,6 @@ walletApp.controller "TopCtrl", ($scope, Wallet, $stateParams) ->
 
   $scope.didLoad = () ->
     $scope.status = Wallet.status
-    $scope.total = Wallet.total
 
     $scope.accountIndex = $stateParams.accountIndex
 
