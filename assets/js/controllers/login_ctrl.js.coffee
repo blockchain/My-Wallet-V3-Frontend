@@ -127,8 +127,7 @@ walletApp.controller "LoginCtrl", ($scope, $rootScope, $log, $http, Wallet, $coo
   $scope.register = () ->
     betaCheckFinished = (key, email) ->
       $rootScope.beta = {key: $scope.key, email: email}
-
-      $state.go("register")
+      $state.go("signup")
 
     $cookieStore.remove 'key'
     # If BETA=1 is set in .env then in index.html/jade $rootScope.beta is set.
@@ -144,9 +143,8 @@ walletApp.controller "LoginCtrl", ($scope, $rootScope, $log, $http, Wallet, $coo
             Wallet.displayError(data.error.message)
       ).error () ->
         Wallet.displayError("Unable to verify your invite code.")
-
     else
-      $state.go("register")
+      $state.go("signup")
 
   $scope.numberOfActiveAccounts = () ->
     return filterFilter(Wallet.accounts(), {archived: false}).length
