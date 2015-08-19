@@ -35,31 +35,7 @@ div.login-form {
       color: #A3A0A0;
     }
   }
-}
-
-//signup process
-
-.agreement {
-  input{
-    color: white;
-    box-shadow: none;
-    padding: inherit;
-    background: transparent;
-    border: none;
-    height: 35px;
-    float: left;
-    width: 20px;
-    margin-right: 10px;
-    &:focus {
-      outline: none;
-      border: none;
-      box-shadow: none;
-    }
-  }
-  label {
-    padding: 11px 0;
-    display: block;
-  }
+  input[type='checkbox'] { margin: 0; }
 }
 
 @media (max-width: 620px) {

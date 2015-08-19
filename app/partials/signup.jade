@@ -16,7 +16,7 @@
         div(ng-switch="currentStep")
           div(ng-switch-when="1")
             .security-red.mbl.em-400.flex-center
-              i.ti-hand-stop.mrm.h3
+              i.ti-hand-stop.mrm.h3.mvn
               span(translate="ALPHA_WARNING")
 
             .form-group(ng-class="{'has-error': errors.email, 'has-success': success.email}")
@@ -37,12 +37,12 @@
                 input.form-control(type="password",ng-model="fields.confirmation",on-enter="tryNextStep()",autofocus,ng-blur="validate()", ng-focus="errors.confirmation = null")
                 span.help-block 
                   p {{ errors.confirmation }}
-            .form-group.agreement
-              .col-sm-12
-                input.form-control#agreement_accept(ng-model="fields.acceptedAgreement" type="checkbox" name="agreement_accept" ng-change="validate()")
-                label(for="agreement_accept")
-                  | I have read and agree to the 
-                  a.underline(ng-click="showAgreement()") Alpha Program Participation Agreement
+            .form-group.flex-center.mtm
+              .col-sm-4
+                input#agreement_accept.pull-right(ng-model="fields.acceptedAgreement" type="checkbox" name="agreement_accept" ng-change="validate()")
+              label.em-300.col-sm-8
+                | I have read and agree to the 
+                a.em-500(ng-click="showAgreement()") Alpha Program Participation Agreement
 
           div(ng-switch-when="2")
             .form-group(ng-class="{'has-error': errors.emailVerificationCode}")
@@ -52,11 +52,11 @@
                 span.help-block 
                   p {{ errors.emailVerificationCode }}
 
-      .flex-center.flex-end.mbl
-        button.button-primary(ng-click="nextStep()",ng-disabled="!form.$valid || !isValid[0] || !fields.acceptedAgreement", translate="CONTINUE", ng-show="currentStep == 1 && !working")  
-        img(ng-show="working" src="img/spinner.gif")     
-        button.button-default.btn-signup.mrl(ui-ladda="{{ resendingEmailCode }}", ng-click="resendEmail()", ladda-translate="RESEND_EMAIL", ng-show="currentStep == 2", data-style="expand-left")        
-        button.button-success.btn-signup(ng-click="nextStep()", translate="GO_VERIFY_EMAIL", ng-show="currentStep == 2")
-      .col-xs-12.border-top.ptm.mtm.flex-center(ng-show= "currentStep == 2")
-        h4.em-300(translate="EMAIL_WHY")
-        helper-button(content="EMAIL_WHY_EXPLAIN" placement="bottom")
+        .flex-center.flex-end.mbl
+          button.button-primary(ng-click="nextStep()",ng-disabled="!form.$valid || !isValid[0] || !fields.acceptedAgreement", translate="CONTINUE", ng-show="currentStep == 1 && !working")  
+          img(ng-show="working" src="img/spinner.gif")     
+          button.button-default.btn-signup.mrl(ui-ladda="{{ resendingEmailCode }}", ng-click="resendEmail()", ladda-translate="RESEND_EMAIL", ng-show="currentStep == 2", data-style="expand-left")        
+          button.button-success.btn-signup(ng-click="nextStep()", translate="GO_VERIFY_EMAIL", ng-show="currentStep == 2")
+        .col-xs-12.border-top.ptm.mtm.flex-center(ng-show= "currentStep == 2")
+          h4.em-300(translate="EMAIL_WHY")
+          helper-button(content="EMAIL_WHY_EXPLAIN" placement="bottom")
