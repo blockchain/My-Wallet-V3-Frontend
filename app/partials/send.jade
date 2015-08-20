@@ -125,8 +125,7 @@
           h5.mvn.flex-10.aaa.em-300.long-input {{ transaction.from.label || transaction.from.address }}
         .flex-center
           label.mbn.flex-1.mrm(translate="TO:")
-          h5.btcaddr.mvn.flex-10.aaa.em-300.long-input(ng-hide="advanced") {{ toLabel }}
-          h5.mvn.flex-10.aaa.em-300(ng-show="advanced", translate="MULTIPLE_ADDRESSES")
+          h5.btcaddr.mvn.flex-10.aaa.em-300.long-input {{ toLabel }}
       .flex.flex-wrap.ptm
         .total-amounts.aaa.mbm
           .flex-center.pbl

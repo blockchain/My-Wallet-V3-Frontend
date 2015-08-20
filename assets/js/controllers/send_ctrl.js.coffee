@@ -201,7 +201,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.updateToLabel = () ->
     return unless $scope.transaction.destinations[0]?
-    if $scope.advanced
+    if $scope.advanced && $scope.transaction.destinations.length > 1
       $scope.toLabel = $scope.transaction.destinations.length + ' Recipients'
     else
       $scope.toLabel = $scope.transaction.destinations[0].label
