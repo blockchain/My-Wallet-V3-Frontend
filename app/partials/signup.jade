@@ -1,59 +1,62 @@
-#signup.overflow-scroll
-  .modal-header
-    h3(translate="NEW_ACCT_WELCOME", ng-show="currentStep == 1")
-    h3(translate="CONFIRM_EMAIL", ng-show="currentStep == 2")
-    p(translate="CONFIRM_EMAIL_EXPLAIN" translate-values='{ email: fields.email}', ng-show="currentStep == 2")  
-  .modal-body
-    form.form-horizontal(role="form",name="form",novalidate)
-      div(ng-switch="currentStep")
-        div(ng-switch-when="1")
-          .alpha-warning.clearfix
-            span
-              i.ti-hand-stop
-              | Welcome! Please note, this is an Alpha of a new product. Please do not test this wallet with more funds than you are willing to lose.
-              
-          .form-group(ng-class="{'has-error': errors.email, 'has-success': success.email}")
-            label.col-sm-4.control-label(translate="EMAIL")
-            .col-sm-6
-              input.form-control(type="email",ng-model="fields.email",autofocus,ng-blur="validate()", ng-focus="errors.email = null", ng-disabled="beta")
-              span.help-block 
-                p {{ errors.email }}
-          .form-group(ng-class="{'has-error': errors.password, 'has-success': success.password}")
-            label.col-sm-4.control-label(translate="NEW_PASSWORD")
-            .col-sm-6
-              input.form-control(type="password", name="password",ng-model="fields.password",autofocus,ng-blur="validate()", ng-focus="errors.password = null", ng-maxlength="255", min-entropy="25" required)
-              password-entropy(password="fields.password").help-block  
-              span.help-block {{ errors.password }}
-          .form-group(ng-class="{'has-error': errors.confirmation, 'has-success': success.confirmation}")
-            label.col-sm-4.control-label(translate="CONFIRM_PASSWORD")
-            .col-sm-6
-              input.form-control(type="password",ng-model="fields.confirmation",on-enter="tryNextStep()",autofocus,ng-blur="validate()", ng-focus="errors.confirmation = null")
-              span.help-block 
-                p {{ errors.confirmation }}
-          .form-group.agreement
+.login-pg.overflow-scroll
+  .navbar.navbar-default.navbar-inverse.navbar-unauth.bc-header
+    .container-fluid
+      .navbar-header.flex-between
+        a.navbar-brand
+          img#logo(src="img/logo-updated.png",alt="Blockchain")
+  .flex-center.flex-justify.flex-column
+    .flex.flex-justify(ui-view="alerts")
+    .login-box.mhs
+      header
+        h2.em-300(translate="NEW_ACCT_WELCOME", ng-show="currentStep == 1")
+        h3.em-300(translate="CONFIRM_EMAIL", ng-show="currentStep == 2")
+        p(translate="CONFIRM_EMAIL_EXPLAIN" translate-values='{ email: fields.email}', ng-show="currentStep == 2")  
+
+      form.form-horizontal(role="form",name="form",novalidate)
+        div(ng-switch="currentStep")
+          div(ng-switch-when="1")
+            .security-red.mbl.em-400.flex-center
+              i.ti-hand-stop.mrm.h3.mvn
+              span(translate="ALPHA_WARNING")
+
+            .form-group(ng-class="{'has-error': errors.email, 'has-success': success.email}")
+              label.col-sm-4.control-label(translate="EMAIL")
+              .col-sm-8
+                input.form-control(type="email",ng-model="fields.email",autofocus,ng-blur="validate()", ng-focus="errors.email = null", ng-disabled="beta")
+                span.help-block 
+                  p {{ errors.email }}
+            .form-group(ng-class="{'has-error': errors.password, 'has-success': success.password}")
+              label.col-sm-4.control-label(translate="NEW_PASSWORD")
+              .col-sm-8
+                input.form-control(type="password", name="password",ng-model="fields.password",autofocus,ng-blur="validate()", ng-focus="errors.password = null", ng-maxlength="255", min-entropy="25" required)
+                password-entropy(password="fields.password").help-block  
+                span.help-block {{ errors.password }}
+            .form-group(ng-class="{'has-error': errors.confirmation, 'has-success': success.confirmation}")
+              label.col-sm-4.control-label(translate="CONFIRM_PASSWORD")
+              .col-sm-8
+                input.form-control(type="password",ng-model="fields.confirmation",on-enter="tryNextStep()",autofocus,ng-blur="validate()", ng-focus="errors.confirmation = null")
+                span.help-block 
+                  p {{ errors.confirmation }}
+            .form-group.flex-center.mtm
               .col-sm-4
-              .col-sm-6
-                  input.form-control#agreement_accept(ng-model="fields.acceptedAgreement" type="checkbox" name="agreement_accept" ng-change="validate()")
-                  label(for="agreement_accept")
-                    | I have read and agree to the 
-                    a.white.underline(ng-click="showAgreement()") Alpha Program Participation Agreement
+                input#agreement_accept.pull-right(ng-model="fields.acceptedAgreement" type="checkbox" name="agreement_accept" ng-change="validate()")
+              label.em-300.col-sm-8
+                | I have read and agree to the 
+                a.em-500(ng-click="showAgreement()") Alpha Program Participation Agreement
 
-        div(ng-switch-when="2")
-          .form-group(ng-class="{'has-error': errors.emailVerificationCode}")
-            label.col-sm-4.control-label(translate="EMAIL_VERIFICATION_CODE")
-            .col-sm-6
-              input.form-control(type="text",ng-model="fields.emailVerificationCode",autofocus,ng-blur="validate()",on-enter="nextStep()")
-              span.help-block 
-                p {{ errors.emailVerificationCode }}
+          div(ng-switch-when="2")
+            .form-group(ng-class="{'has-error': errors.emailVerificationCode}")
+              label.col-sm-4.control-label(translate="EMAIL_VERIFICATION_CODE")
+              .col-sm-8.prn
+                input.form-control(type="text",ng-model="fields.emailVerificationCode",autofocus,ng-blur="validate()",on-enter="nextStep()")
+                span.help-block 
+                  p {{ errors.emailVerificationCode }}
 
-  .modal-footer
-    .row
-      .col.xs-12
-        button.btn.btn-primary.btn-signup(ng-click="nextStep()",ng-disabled="!form.$valid || !isValid[0] || !fields.acceptedAgreement", translate="CONTINUE", ng-show="currentStep == 1 && !working")  
-        img(ng-show="working" src="img/spinner.gif")     
-        button.btn.btn-primary.btn-signup.btn-resend(ui-ladda="{{ resendingEmailCode }}", ng-click="resendEmail()", ladda-translate="RESEND_EMAIL", ng-show="currentStep == 2", data-style="expand-left")        
-        button.button-success.btn-signup(ng-click="nextStep()", translate="GO_VERIFY_EMAIL", ng-show="currentStep == 2")
-
-        .why.col-xs-12(ng-show= "currentStep == 2")
-          h4(translate="EMAIL_WHY")
-          p.explanation(translate="EMAIL_WHY_EXPLAIN")  
+        .flex-center.flex-end.mbl
+          button.button-primary(ng-click="nextStep()",ng-disabled="!form.$valid || !isValid[0] || !fields.acceptedAgreement", translate="CONTINUE", ng-show="currentStep == 1 && !working")  
+          img(ng-show="working" src="img/spinner.gif")     
+          button.button-default.btn-signup.mrl(ui-ladda="{{ resendingEmailCode }}", ng-click="resendEmail()", ladda-translate="RESEND_EMAIL", ng-show="currentStep == 2", data-style="expand-left")        
+          button.button-success.btn-signup(ng-click="nextStep()", translate="GO_VERIFY_EMAIL", ng-show="currentStep == 2")
+        .col-xs-12.border-top.ptm.mtm.flex-center(ng-show= "currentStep == 2")
+          h4.em-300(translate="EMAIL_WHY")
+          helper-button(content="EMAIL_WHY_EXPLAIN" placement="bottom")

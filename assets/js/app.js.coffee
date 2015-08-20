@@ -39,6 +39,7 @@ modules = [
   # TODO: have grunt generate the list of partials and templates
   "partials/account-form.jade"
   "partials/alerts.jade"
+  "partials/alpha-agreement.jade"
   "partials/claim.jade"
   "partials/home.jade"
   "partials/support.jade"
@@ -51,7 +52,6 @@ modules = [
   "partials/second-password.jade"
   "partials/send.jade"
   "partials/signup.jade"
-  "partials/register.jade"
   "partials/top.jade"
   "partials/transaction.jade"
   "partials/transactions.jade"

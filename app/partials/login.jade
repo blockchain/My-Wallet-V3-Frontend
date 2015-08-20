@@ -1,14 +1,12 @@
 .login-pg.overflow-scroll
-  .navbar.navbar-default.navbar-inverse.navbar-unauth(role='navigation')
+  .navbar.navbar-default.navbar-inverse.navbar-unauth.bc-header(role='navigation')
     .container-fluid
-      .navbar-header
-        button.navbar-toggle(type="button", ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
-          span.sr-only Toggle navigation
-          span.icon-bar
-          span.icon-bar
-          span.icon-bar
+      .navbar-header.flex-between
         a.navbar-brand(ng-click="visitTransactions()") 
           img#logo(src="img/logo-updated.png",alt="Blockchain")
+        button.navbar-toggle(type="button", ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
+          span.sr-only Toggle navigation
+          span.ti-menu.h4.white
       .navbar-collapse.collapse(ng-class="{'in' : !navCollapsed}", ng-click="navCollapsed=true")
         ul.nav.navbar-nav.navbar-right
           li.item
@@ -24,15 +22,15 @@
           li.item
             a(href="https://blockchain.zendesk.com/", translate="SUPPORT")          
 
-  .container-fluid.login
+  .flex-center.flex-justify.flex-column
     .flex.flex-justify(ui-view="alerts")
-    .login-box
+    .login-box.mhs
       header
         hgroup(ng-hide="status.enterkey")
           .flex-between.flex-center.flex-wrap
             h2.em-300.mtn(translate="WELCOME_BACK")
             span.register.mbm
-              span(translate="OR")
+              span(translate="OR" ng-show="!beta")
               | 
               a(ng-click="prepareRegister()")
                 span(ng-show="beta")
@@ -50,7 +48,7 @@
           div
             input#UID_input.form-control(type="text", ng-model="uid", ng-disabled="busy || disableLogin" name="UID_input" focus-when="!uidAvailable")
             span.help-block {{ errors.uid }}
-            span.help-block.info(translate="FIND_GUID_EXPLAIN")
+            span.help-block.info.hidden-xs(translate="FIND_GUID_EXPLAIN")
         .form-group(ng-class="{'has-error': errors.password}")
           label.control-label(translate="PASSWORD", for="pass_input")
           div
@@ -78,7 +76,7 @@
           div
             input#beta_key.form-control(type="text", name="beta_key" ng-model="key", ng-disabled="busy || disableLogin")
         .form-group
-          .flex-center.flex-end
+          .flex-center.flex-end.mtm
             span.register.mrm
               a(ng-click="status.enterkey = !status.enterkey")
                 span(translate="GO_BACK")

@@ -1,10 +1,16 @@
-walletApp.controller "SignupCtrl", ($scope, $rootScope, $log, Wallet, $modalInstance, $translate, $cookieStore, $filter, $state, $http) ->
+walletApp.controller "SignupCtrl", ($scope, $rootScope, $log, Wallet, $modal, $translate, $cookieStore, $filter, $state, $http) ->
   $scope.currentStep = 1
   $scope.working = false
   $scope.languages = Wallet.languages
   $scope.currencies = Wallet.currencies
   $scope.alerts = Wallet.alerts
   $scope.resendingEmailCode = false
+  $scope.status = Wallet.status
+
+  $scope.$watch "status.isLoggedIn", (newValue) ->
+    if newValue
+      $scope.busy = false
+      $state.go("signup.finish.show")
 
   $scope.isValid = [true, true, false, false]
 
@@ -15,7 +21,7 @@ walletApp.controller "SignupCtrl", ($scope, $rootScope, $log, Wallet, $modalInst
 
   currency_guess =  $filter("getByProperty")("code", "USD", Wallet.currencies)
 
-  $scope.fields = {email: "", password: "", confirmation: "", language: language_guess, currency: currency_guess, mnemonic: "", bip39phrase: "", emailVerificationCode: ""}
+  $scope.fields = {email: "", password: "", confirmation: "", language: language_guess, currency: currency_guess, mnemonic: "", bip39phrase: "", emailVerificationCode: "", acceptedAgreement: false}
   $scope.errors = {emailVerificationCode: null}
 
   $scope.didLoad = () ->
@@ -28,11 +34,14 @@ walletApp.controller "SignupCtrl", ($scope, $rootScope, $log, Wallet, $modalInst
   $scope.didLoad()
 
   $scope.showAgreement = () ->
-    Wallet.status.shouldShowAgreement = true
+    modalInstance = $modal.open(
+      templateUrl: "partials/alpha-agreement.jade"
+      controller: 'SignupCtrl',
+      windowClass: "bc-modal terms-modal"
+    )
 
   $scope.close = () ->
     Wallet.clearAlerts()
-    $modalInstance.dismiss ""
     $state.go("wallet.common.home")
 
   $scope.tryNextStep = () ->

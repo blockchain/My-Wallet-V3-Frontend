@@ -73,22 +73,21 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  .state("register",
-    url: "/register"
+  .state("signup",
     views: {
       body: {
-        templateUrl: "partials/register.jade"
-        controller: "RegistrationCtrl"
+        templateUrl: "partials/signup.jade"
+        controller: "SignupCtrl"
       }
     }
   )
 
   # Use the same layout as the transactions screen, once signup is complete
-  .state("register.finish",
-    url: "/register/finish"
+  .state("signup.finish",
+    url: "/signup/finish"
     views: commonViews
   )
-  .state("register.finish.show",
+  .state("signup.finish.show",
     views: transactionsViews
   )
 

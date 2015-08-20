@@ -16,12 +16,9 @@ div.login-form {
 
 .login-box {
   background-color: white;
-  padding: 10px 50px 50px;
-  margin-bottom: 20px;
-  max-width: 600px;
-  margin: 0 auto;
+  padding: 10px 50px 25px;
+  max-width: 550px;
   border-radius: 10px;
-  border: 1px solid white;
   box-shadow: 0px 0px 20px -8px black;
   header {
     padding: 15px 0 10px;
@@ -38,164 +35,15 @@ div.login-form {
       color: #A3A0A0;
     }
   }
-}
-
-//signup process
-
-.signup {
-  position:fixed;
-  background: #049BD4;
-  .modal-lg {
-    width: 100%;
-    bottom: 0;
-    top: 0;
-  }
-  .modal-header {
-    border: none;
-    text-align: center;
-    padding: 30px;
-    background: white;
-      h3 {
-        font-weight: 200;
-        color: #049BD4;
-        font-size: 3em;
-      }
-    p {color:#999;}
-  }
-  .modal-content {
-    border: none;
-    background-color: #049BD4;
-    color: white;
-    border-radius: 0;
-    height: 100%;
-    box-shadow: none;
-    label {
-      font-size: 1.1em;
-      font-weight: 400;
-      color: #fff;
-    }
-    .help-block {
-      color: white;
-      p {padding: 1px;}
-    }
-    .why {
-      border-top: 1px solid rgba(255, 255, 255, 0.26);
-      text-align: left;
-      padding: 20px 50px 50px;
-      margin-top: 25px;
-      h4 {
-        color: #FFFFFF;
-        font-weight: 400;
-        display: block;
-        font-size: 1.3em;
-      }
-      p {
-      color: #fff;
-      display: block;
-      font-weight: 200;
-      font-size: 1.1em;
-      }
-    }
-  }
-  .modal-footer {
-    text-align: center;
-    border: none;
-    a {
-      color: white !important;
-    }
-    form {
-      background-color: #1972B6;
-    }
-    .btn-signup {
-      border: none;
-      font-size: 1.5em;
-      font-weight: 300;
-      padding: 10px 50px;
-    }
-  }
-  .btn-resend {
-    background: none!important;
-  }
-  .form-control {
-    height: auto;
-  }
-}
-
-.modal.signup {
-  display: block;
-  position: fixed;
-  .modal-lg{
-    width: 100%;
-    position: relative;
-    top: 0;
-    bottom: 0;
-    height: 100%;
-    margin: 0;
-    transform: none;
-  }
-}
-
-.alpha-warning {
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  padding: 10px;
-  font-size: 1.2em;
-  background-color: #CA3E3E;
-  font-weight: 300;
-  margin: 0 160px 35px;
-  i {font-size: 3em;float: left;padding: 0 10px 0 0;}
-}
-
-.alpha-agreement {
-  background: rgba(10,10,10,.5);
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  z-index: 1051; //greater than Bootstrap modal (1050)
-  top: 0;
-  left: 0;
-  .alpha-agreement-container {
-    overflow-y: scroll;
-    border-radius: 5px;
-    border: 1px solid #eee;
-    margin: 5em;
-    background: white;
-    height: 85%
-  }
-}
-.agreement {
-  input{
-    color: white;
-    box-shadow: none;
-    padding: inherit;
-    background: transparent;
-    border: none;
-    height: 35px;
-    float: left;
-    width: 20px;
-    margin-right: 10px;
-    &:focus {
-      outline: none;
-      border: none;
-      box-shadow: none;
-    }
-  }
-  label {
-    padding: 11px 0;
-    display: block;
-  }
+  input[type='checkbox'] { margin: 0; }
 }
 
 @media (max-width: 620px) {
-  .alpha-warning {
-    margin: 0;
-    margin-bottom: 10px;
+  .login-box {
+    padding: 10px 25px 25px;
+    margin-bottom: 100px; //so you can scroll
+    header h2 { font-size: 18px; margin-top: 0; margin-bottom: 5px; }
+    .navbar { margin-bottom: 0; }
+    .form-group { margin-bottom: 0; }
   }
-  .signup .modal-footer { background: #049BD4; }
-  .alpha-agreement .alpha-agreement-container {
-    margin: 0;
-    margin-top: 1em;
-    width: 100%;
-  }
-  .signup .modal-body { padding: 0 15px; }
 }
-
