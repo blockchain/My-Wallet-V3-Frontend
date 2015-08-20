@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   .modal-content { background: $light-grey-alt; box-shadow: 0 5px 1px rgba(0, 0, 0, 0.6); }
-  .modal-dialog { width: 50vw; margin-top: 0 !important }
+  .modal-dialog { width: 50vw; margin: 0 !important }
   &.small { .modal-dialog { width: 40vw; } }
   .modal-body {
     background: white;
