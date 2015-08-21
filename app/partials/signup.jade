@@ -58,5 +58,5 @@
           button.button-default.btn-signup.mrl(ui-ladda="{{ resendingEmailCode }}", ng-click="resendEmail()", ladda-translate="RESEND_EMAIL", ng-show="currentStep == 2", data-style="expand-left")        
           button.button-success.btn-signup(ng-click="nextStep()", translate="GO_VERIFY_EMAIL", ng-show="currentStep == 2")
         .col-xs-12.border-top.ptm.mtm.flex-center(ng-show= "currentStep == 2")
-          h4.em-300(translate="EMAIL_WHY")
-          helper-button(content="EMAIL_WHY_EXPLAIN" placement="bottom")
+          h4.em-300.hidden-xs(translate="EMAIL_WHY")
+          helper-button(content="EMAIL_WHY_EXPLAIN")

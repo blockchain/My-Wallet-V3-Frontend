@@ -3,12 +3,16 @@
   animation: fade-in-down .5s;
   margin-top: 1vw;
 }
+.alert-in-app {
+  position: absolute;
+  top: 2px;
+  right: 12px;
+  z-index: 1049;
+}
 .alert-received-bitcoin {
+  @extend .alert-in-app;
   background: white;
   padding: 20px;
-  position: absolute;
-  right: 12px;
-  top: 12px;
   font-size: 1.2em;
   text-align: center;
   color: $success;
@@ -20,4 +24,8 @@
     right: -11px !important;
     color: grey;
   }
+}
+
+@media (max-width: 620px) {
+  .alert { width: 95vw; }
 }

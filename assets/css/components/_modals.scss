@@ -120,14 +120,8 @@
       }
     }
   }
-
-  .hide {
-    display: none !important;
-  }
-
-  .hidden {
-    opacity: 0;
-  }
+  .hide { display: none !important; }
+  .hidden { opacity: 0; }
   .to-field, .public-note {
     position: relative;
     label {
@@ -152,10 +146,6 @@
       background: #efefef;
     }
   }
-  .scale {
-    -webkit-animation: scale .6s linear 0s 1;
-    animation: scale .6s linear 0s 1;
-  }
   .conversion {
     border-bottom: 1px solid $eee;
     padding-bottom: 5px;
@@ -168,7 +158,6 @@
   ::-webkit-input-placeholder {
     color: $ccc;
   }
-
   .advanced-recipient-row {
     margin-bottom: 10px;
     position: relative;
@@ -195,6 +184,7 @@
     width: 228px;
     height: 430px;
   }
+  .advanced-send-scroll { max-height: 400px; overflow-y: scroll; }
 }
 
 .rocket-modal {
@@ -216,7 +206,7 @@
 }
 
 @media (max-width: 768px) {
-  .bc-modal {
+  .bc-modal, .bc-modal.small {
     .modal-dialog {
       width: 95%; /* fallback for browsers without support for vw */
       width: 95vw;
@@ -224,9 +214,19 @@
     }
     .total-amounts { width: 100%; }
   }
+  .rocket-modal {
+    .modal-body { padding: 1em; }
+    .rocket-gif { height: 325px; }
+    .rocket-text {
+      padding-right: 1em;
+      p { font-size: 12px; }
+      h3 { font-size: 18px; }
+      .button-success { font-size: 12px; padding: .5em; }
+    }
+  }
 }
 @media (min-width: 769px) and (max-width: 992px) {
-  .bc-modal {
+  .bc-modal, .bc-modal.small {
     .modal-dialog {
       width: 60vw;
     }

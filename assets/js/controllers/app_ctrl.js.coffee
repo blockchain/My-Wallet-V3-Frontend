@@ -95,6 +95,7 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
           )
 
         if Wallet.goal.auth
+          Wallet.clearAlerts()
           $translate(['AUTHORIZED', 'AUTHORIZED_MESSAGE']).then (translations) ->
             $scope.$emit 'showNotification',
               type: 'authorization-verified'
