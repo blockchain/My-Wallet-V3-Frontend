@@ -1,4 +1,5 @@
 .bc-header {
+  z-index: 1030;
   .dropdown-menu > li {
     &:hover {
       background: #EBEBEB;
@@ -29,58 +30,20 @@
   border-color: $blue;
 }
 
-.navbar-inverse .navbar-toggle {
-  border: none;
-}
+.navbar-inverse .navbar-toggle { border: none; }
 
-.navbar-inverse .navbar-nav > li > a {
-  color: white;
-}
+.navbar-inverse .navbar-nav > li > a { color: white; }
 
 .navbar-inverse {
   background-color: #049bd4;
   border:none;
   border-radius: 0px;
-
+  z-index: 1030;
   .navbar-brand {
       color: white;
   }
-
-
-  .container-fluid{
-    padding: 10px 30px;
-  }
-
-  ul.mainNav{display: none;}
-
+  .container-fluid { padding: 10px 30px; }
   .navbar-nav {
-    li.security-center{
-    float: right;
-      p{
-      float: right;
-      margin: 5px 0px 0 5px;
-      font-weight: bold;
-      color: #fff;
-      letter-spacing: 0.05em;
-      }
-
-    }
-
-    li.account-details{
-    p{
-      float: right;
-      margin: 5px 0px 0 5px;
-      font-weight: bold;
-      color: #fff;
-      letter-spacing: 0.05em;
-    }
-    }
-
-    img#account-toggle {
-      height: 3px;
-      padding-left: 5px;
-    }
-
     li > a:hover {
       background-color: transparent;
     }
@@ -97,25 +60,28 @@
       }
 
     }
-
     li.open{
-    a{background-color: transparent;}
+      a {background-color: transparent;}
     }
-
     // The dropdown on the top right:
     .dropdown-menu a {
       color: $black;
       text-transform: none;
     }
-
   }
 
+}
+
+@media (max-width: 620px) {
+  .navbar-inverse {
+    .container-fluid { padding: 10px 15px; }
+  }
 }
 
 ul.navbar-right{
   li.active{background:#10ace5; border-radius: 5px; }
   li.open{
-      background:#10ace5;
+      background: #10ace5;
       border-radius: 3px;
       a{background-color: transparent;
         &:hover{background-color: transparent!important;}
@@ -126,9 +92,14 @@ ul.navbar-right{
 
 img#logo {
   height: 40px;
+  margin-top: 5px;
 }
 
-.navbar-header{
+@media (max-width: 620px) {
+  img#logo { height: 25px; margin-top: 0; }
+}
+
+.navbar-header {
   .navbar-brand{
     padding: 0;
     padding-top: 5px;
@@ -139,24 +110,15 @@ img#logo {
   }
 }
 
-.navbar-collapse{
+.navbar-collapse {
   border: none;
   box-shadow: none;
-}
-
-ul.sub-dropdown{
-  li{
-    a{padding: 10px;}
-  }
-  li.active{
-    a{border-bottom: none;}
-  }
 }
 
 
 @media (min-width: 768px){
   .navbar-collapse{
-    display: block!important;
+    display: block !important;
   }
   ul.navbar-nav{
     .container-fluid{
@@ -169,14 +131,5 @@ ul.sub-dropdown{
       color: #d3edfb;
      }
    }
-  }
-  .navbar-unauth {
-    ul.navbar-right{
-      li.item{
-        a{
-         padding: 15px 25px;
-        }
-      }
-    }
   }
 }
