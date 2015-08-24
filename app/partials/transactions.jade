@@ -19,7 +19,7 @@
         p.em-400(translate="DESCRIBE_TRANSACTIONS")
       h3.em-100.center-align.mid-grey.emptystate(translate="HIT_RECEIVE", ng-click="request()")
       h3.em-100.center-align.mid-grey.emptystate(translate="HIT_SEND", ng-click="send()")
-    .flex-center.flex-justify.flex-column.mtl(ng-show="(transactions | filter:transactionFilter).length == 0 && getTotal(accountIndex) > 0")
+    .flex-center.flex-justify.flex-column.mtl(ng-show="(transactions | filter:transactionFilter).length == 0 && getTotal(accountIndex) > 0 && loading == 'false'")
       i.ti-search.h1.mrm
       h3.em-100.mbl(translate="SORRY_ZERO_TXS")
       p.em-400(translate="PLEASE_TRY_AGAIN", ui-sref="wallet.common.support")

@@ -1,5 +1,4 @@
 walletApp.controller "TransactionsCtrl", ($scope, Wallet, MyWallet, $log, $stateParams, $timeout, $state) ->
-
   $scope.filterTypes = ['ALL', 'SENT', 'RECEIVED_BITCOIN_FROM', 'MOVED_BITCOIN_TO']
 
   $scope.setFilterType = (type) ->
@@ -33,6 +32,10 @@ walletApp.controller "TransactionsCtrl", ($scope, Wallet, MyWallet, $log, $state
     transaction.toggled = !transaction.toggled
 
   $scope.getTotal = (i) -> $scope.total(i)
+
+  $scope.$watch 'selectedAccountIndex', (newVal) ->
+    if newVal != 'accounts'
+      $scope.nextPage()
 
   #################################
   #           Private             #
