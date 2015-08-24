@@ -155,12 +155,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       two_factor_code = null
 
     authorizationProvided = () ->
-      wallet.clearAlerts()
       wallet.goal.auth = true
       wallet.applyIfNeeded()
 
     authorizationRequired = (callback) ->
-      callback(authorizationProvided)
+      callback(authorizationProvided())
       wallet.displayWarning("Please check your email to approve this login attempt.", true)
       wallet.applyIfNeeded()
 
