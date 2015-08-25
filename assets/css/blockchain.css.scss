@@ -90,19 +90,10 @@ a.back {
 
 .form-ctrl {
   padding: 15px 0;
-  .btn-bci{
-    margin: 6px 0px 0 5px;
-  }
   input{
-    border: 1px solid #CCC;
+    border: 1px solid $border-grey;
     border-radius: 5px;
     padding: 3px;
-  }
-  input.filter {
-    background-image:url('/img/spyglass.png');
-    background-repeat: no-repeat;
-    background-position: 98% center;
-    background-size: 20px;
   }
 }
 
@@ -146,3 +137,4 @@ a.back {
     user-select: none;
   }
 }
+.z-10 { z-index: 10; }

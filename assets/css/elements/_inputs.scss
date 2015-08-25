@@ -14,3 +14,10 @@ input::-ms-clear {
 
 //Mozilla hide input spinners
 input[type=number] {-moz-appearance: textfield;}
+
+input.filter {
+  background-image:url('/img/spyglass.png');
+  background-repeat: no-repeat;
+  background-position: 98% center;
+  background-size: 20px;
+}

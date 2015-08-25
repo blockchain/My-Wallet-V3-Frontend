@@ -2,9 +2,10 @@ h5.well.headliner.hidden-xs(translate="WALLET_RECOVERY_EXPLAIN")
 form.form-horizontal(role="form" name="recoveryForm" novalidate)  
   .form-group
     .col-sm-12.col-md-6
-      label(translate="MY_RECOVERY_PHRASE")
-      span.label.label-danger.hidden-xs.hidden-sm(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
-      span.label.label-success.hidden-sm.hidden-xs(translate="VERIFIED", ng-show="status.didConfirmRecoveryPhrase")
+      .flex-center.mbm
+        label.mbn(translate="MY_RECOVERY_PHRASE")
+        span.label.label-danger(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
+        span.label.label-success(translate="VERIFIED", ng-show="status.didConfirmRecoveryPhrase")
       p.explain.hidden-xs.hidden-sm(translate="RECOVERY_PHRASE_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       confirm-recovery-phrase

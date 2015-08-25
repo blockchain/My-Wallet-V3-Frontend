@@ -2,9 +2,10 @@ h5.well.headliner.hidden-xs(translate="MY_DETAILS_EXPLAIN")
 form.form-horizontal(role="form",name="form",novalidate)  
   .form-group
     .col-sm-12.col-md-6
-      label(translate="EMAIL_ADDRESS")
-      span.label.label-warning.hidden-sm.hidden-xs(translate="UNVERIFIED", ng-show="!user.isEmailVerified")
-      span.label.label-success.hidden-sm.hidden-xs(translate="VERIFIED", ng-show="user.isEmailVerified")
+      .flex-center.mbm
+        label.mbn(translate="EMAIL_ADDRESS")
+        span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isEmailVerified")
+        span.label.label-success(translate="VERIFIED", ng-show="user.isEmailVerified")
       p.explain.hidden-xs(translate="EMAIL_ADDRESS_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result.flex-column
       bc-async-input(type="email" is-required ng-model="user.email" on-save="changeEmail" action-title="'CHANGE_EMAIL_ADDRESS' | translate" autofocus)
@@ -12,9 +13,10 @@ form.form-horizontal(role="form",name="form",novalidate)
       resend-email-confirmation.mtl
   .form-group
     .col-sm-12.col-md-6
-      label(translate="MOBILE_NUMBER")
-      span.label.label-warning.hidden-sm.hidden-xs(translate="UNVERIFIED", ng-show="!user.isMobileVerified")
-      span.label.label-success.hidden-sm.hidden-xs(translate="VERIFIED", ng-show="user.isMobileVerified")
+      .flex-center.mbm
+        label.mbn(translate="MOBILE_NUMBER")
+        span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isMobileVerified")
+        span.label.label-success(translate="VERIFIED", ng-show="user.isMobileVerified")
       p.explain.hidden-xs(translate="MOBILE_NUMBER_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       div(ng-show="mobileNumber.step == 0")
@@ -25,24 +27,29 @@ form.form-horizontal(role="form",name="form",novalidate)
       verify-mobile-number(on-success="mobileNumber.step = 0" ng-show="mobileNumber.step == 2")
   .form-group
     .col-sm-12.col-md-6
-      label(translate="ENABLE_TWO_STEP")
-      span.label.label-warning.hidden-sm.hidden-xs(translate="DISABLED", ng-show="!settings.needs2FA")
-      span.label.label-success.hidden-sm.hidden-xs(translate="ENABLED", ng-show="settings.needs2FA")
+      .flex-center.mbm
+        label.mbn(translate="ENABLE_TWO_STEP")
+        span.label.label-warning(translate="DISABLED", ng-show="!settings.needs2FA")
+        span.label.label-success(translate="ENABLED", ng-show="settings.needs2FA")
       p.explain.hidden-xs(translate="SC_CONFIGURE_2FA")    
     .col-sm-12.col-md-6.setting-result
       a.button-primary(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA" ng-hide="settings.needs2FA")
       a.button-primary(ng-click="changeTwoFactor()" translate="DISABLE" ng-show="settings.needs2FA")
   .form-group
     .col-sm-12.col-md-6
-      label(translate="WALLET_PASSWORD")
+      .flex-center.mbm
+        label.mbn(translate="WALLET_PASSWORD")
+        span.label.label-success(translate="PASSWORD_SET")
       p.explain.hidden-xs(translate="WALLET_PASSWORD_EXPLAIN")
     .col-sm-12.col-md-6.setting-result
-      h2.status.complete.hidden-sm.hidden-xs.mbm(translate="PASSWORD_SET")
       a.button-primary(ng-click="changePassword()", translate="CHANGE_PASSWORD")
   .form-group(ng-class="{'has-error':errors.passwordHint}")
     .col-sm-12.col-md-6
-      label(translate="PASSWORD_HINT")
-      p.explain.hidden-sm.hidden-xs(translate="PASSWORD_HINT_EXPLAIN")    
+      .flex-center.mbm
+        label.mbn(translate="PASSWORD_HINT")
+        span.label.label-warning(translate="NOT_STORED", ng-show="!user.passwordHint")
+        span.label.label-success(translate="HINT_STORED", ng-show="user.passwordHint")
+      p.explain(translate="PASSWORD_HINT_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       bc-async-input(ng-model="user.passwordHint" on-save="changePasswordHint" on-change="clearErrors" max-length="255" action-title="'CHANGE_PASSWORD_HINT' | translate")
     .help-block

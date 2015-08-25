@@ -1,7 +1,7 @@
 h5.well.headliner(translate="PAIRING_CODE_EXPLAIN")
 
-a(ng-click="showPairingCode()", translate="SHOW_PAIRING_CODE", ng-hide="display.pairingCode")
-a(ng-click="hidePairingCode()", translate="HIDE_PAIRING_CODE", ng-show="display.pairingCode")
+a.button-primary(ng-click="showPairingCode()", translate="SHOW_PAIRING_CODE", ng-hide="display.pairingCode")
+a.button-default(ng-click="hidePairingCode()", translate="HIDE_PAIRING_CODE", ng-show="display.pairingCode")
 
 div.qr
   img(ng-show="loading" src="img/spinner.gif")
