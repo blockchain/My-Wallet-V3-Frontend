@@ -9,7 +9,7 @@
         .charts.hidden-xs.pos-rel
           h5.aaa.em-400.mbl(ng-class="{'mts' : transactions.length > 0 }" translate="BALANCE_BY_ACCOUNT")
           .widget.flex-center.flex-justify.pos-rel(ng-class="{ 'empty' : accounts().length == 1 || getTotal() == 0 }")
-            button.button-sm.em-500(ng-click="newAccount()" ng-class="accounts().length > 1 ? 'button-gradient' : 'button-primary'" translate="NEW_ACCOUNT")
+            button.button-sm.z-10.em-500(ng-click="newAccount()" ng-class="accounts().length > 1 ? 'button-default' : 'button-primary'" translate="NEW_ACCOUNT")
             h5.width-75.center-align.em-300(translate="HOME_NEW_ACCOUNT_MSG" ng-hide="accounts().length > 1")
             h5.width-75.center-align.em-300(ng-show="accounts().length > 1 && getTotal() == 0" translate="ALT_EMPTY_MSG")
             .pos-abs-chart(ng-hide="accounts().length > 1")
