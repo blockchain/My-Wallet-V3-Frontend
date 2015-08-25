@@ -73,14 +73,6 @@ describe "AppCtrl", ->
       expect($modal.open).toHaveBeenCalled()
     )
 
-
-    it "should proceed if user agrees", inject(($modal, $q) ->
-      spyOn($modal, 'open').and.returnValue(mockModalInstance)
-      scope.$broadcast("needsUpgradeToHD", callbacks.proceed)
-      mockModalInstance.close()
-      expect(callbacks.proceed).toHaveBeenCalled()
-    )
-
   describe "redeem from email", ->
     it "should proceed after login", inject((Wallet, $rootScope, $timeout, $modal) ->
 

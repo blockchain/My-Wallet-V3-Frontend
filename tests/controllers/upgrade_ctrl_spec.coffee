@@ -1,5 +1,7 @@
 describe "UpgradeCtrl", ->
   scope = undefined
+  Wallet = undefined
+
   modalInstance =
     close: ->
     dismiss: ->
@@ -9,7 +11,6 @@ describe "UpgradeCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
 
       scope = $rootScope.$new()
 
@@ -22,9 +23,11 @@ describe "UpgradeCtrl", ->
 
     return
 
-  it "covers close", ->
-    scope.close()
-    return
+  it "should proceed if user agrees", inject(() ->
+    spyOn(Wallet, "upgrade")
+    scope.upgrade()
+    expect(Wallet.upgrade).toHaveBeenCalled()
+  )
 
   it "covers cancel", ->
     scope.cancel()
