@@ -3,7 +3,7 @@ walletApp.directive "uiLadda",  ($timeout, $compile, $translate) ->
   return {
     restrict: "A"
     replace: false
-    template: '<span class="ladda-label" translate="{{ translation }}"></span><span class="ladda-spinner" style="margin:-8px;"><img src="img/ladda-spinner.gif"></img></span>'
+    template: '<span class="ladda-label" translate="{{ translation }}"></span><span class="ladda-spinner" style="margin:-8px;"><div class="spinner"></div></span>'
     link: (scope, element, attrs) ->
       element.addClass("ladda-button")
       element.attr("ladda", attrs["uiLadda"])
