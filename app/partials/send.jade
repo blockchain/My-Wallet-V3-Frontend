@@ -158,7 +158,7 @@
               label.mbn(translate="NOTE")
               helper-button(content="SEND_BITOIN_STEP2B")
                 |:
-            textarea(rows="4" ng-model="transaction.note" name="note" ng-maxlength="512")
+            textarea.pas(rows="4" ng-model="transaction.note" name="note" ng-maxlength="512")
             .flex-center.mtm
               input.mrs(type="checkbox" ng-model="transaction.publicNote" name="public")
               | &nbsp;
