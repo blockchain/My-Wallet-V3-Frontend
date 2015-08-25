@@ -304,6 +304,7 @@
   "SET_PASSWORD" : "Set Password",
   "UPGRADE_WALLET" : "Upgrade Your Wallet",
   "UPGRADE_WALLET_EXPLAIN" : "We would like to upgrade your wallet so you can use our new and improved website. Once updated, there is no way back. If for some reason you still need to use the old blockchain.info, please press Cancel to be taken back to the old version.",
+  "NEED_SECOND_PASSWORD_FOR_UPGRADE" : "Your second password is required to upgrade the wallet.",
   "PROCEED" : "Proceed",
   "PBKDF2_ITERATIONS" : "PBKDF2 Iterations",
   "PBKDF2_ITERATIONS_SECOND_PASSWORD" : "Second Password PBKDF2 Iterations",

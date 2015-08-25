@@ -2,7 +2,9 @@
   i.h3.mrm.ti-alert
   h3(translate="UPGRADE_WALLET")        
 .modal-body
+  alert(type="danger", close="insist = false", ng-show="insist")
+    span(translate="NEED_SECOND_PASSWORD_FOR_UPGRADE")
   p(translate="UPGRADE_WALLET_EXPLAIN")
 .modal-footer.pal.flex-end
-  button.button-muted.mrm(ng-click="cancel()", translate="CANCEL")
-  button.button-danger(ng-click="close()" ng-disabled="waiting" translate="PROCEED")
+  button.button-muted.mrm(ng-click="cancel()", translate="CANCEL", ng-disabled="busy")
+  button.button-danger(ui-ladda="{{ busy }}", ng-click="upgrade()" ng-disabled="waiting", ladda-translate="PROCEED", data-style="expand-left")

@@ -203,6 +203,27 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     else
       betaCheckFinished()
 
+  wallet.upgrade = (successCallback, cancelSecondPasswordCallback) ->
+    # if success after upgrade
+    success = () ->
+      wallet.status.didUpgradeToHd = true
+      wallet.status.didInitializeHD = true
+      wallet.my.getHistoryAndParseMultiAddressJSON()
+      successCallback()
+      wallet.applyIfNeeded()
+    # if failure saving upgrade
+    error = () ->
+      wallet.store.enableLogout()
+      wallet.store.setIsSynchronizedWithServer(true);
+      $window.location.reload()
+
+    proceed = (password) ->
+      $translate("FIRST_ACCOUNT_NAME").then (translation) ->
+        wallet.my.wallet.newHDWallet(translation, password, success, error)
+
+    wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelSecondPasswordCallback)
+
+
 
   wallet.legacyAddresses = () ->
     wallet.my.wallet.keys
@@ -809,30 +830,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     else if event == "on_wallet_decrypt_finish" # Non-HD part is decrypted
     else if event == "hd_wallets_does_not_exist"
       wallet.status.didUpgradeToHd = false
-      continueCallback = () ->
-        $translate("FIRST_ACCOUNT_NAME").then (translation) ->
-
-          cancel = () ->
-            # Keep trying, user cannot use the wallet without upgrading.
-            wallet.displayError("Unable to upgrade your wallet. Please try again.")
-            wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
-          # if success after upgrade
-          success = () ->
-            wallet.status.didUpgradeToHd = true
-            wallet.status.didInitializeHD = true
-            wallet.my.getHistoryAndParseMultiAddressJSON()
-          # if failure saving upgrade
-          error = () ->
-            wallet.store.enableLogout()
-            wallet.store.setIsSynchronizedWithServer(true);
-            $window.location.reload()
-          proceed = (password) ->
-            wallet.my.wallet.newHDWallet(translation, password, success, error)
-
-          wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
-
       $timeout(()->
-        $rootScope.$broadcast "needsUpgradeToHD", continueCallback
+        $rootScope.$broadcast "needsUpgradeToHD"
         , 1000
       )
 
