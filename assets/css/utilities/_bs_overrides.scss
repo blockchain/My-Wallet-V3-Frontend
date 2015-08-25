@@ -86,7 +86,7 @@ $select-fg: #686868;
 .ui-select-bootstrap > .ui-select-choices {
   border-radius: 0;
   background: $select-bg;
-  border: 1px solid #E9E9E9; //you'll want to add this color in your sassy way
+  border: 1px solid $eee; //you'll want to add this color in your sassy way
   -webkit-box-shadow: 0px 5px 10px -6px black;
   box-shadow: 0px 5px 10px -6px black;
 }
@@ -132,17 +132,16 @@ $select-fg: #686868;
 }
 
 //A better .well class
-.well{
+.well {
   min-height: 20px;
   padding: 20px;
   margin-bottom: 20px;
-  background-color: #F7F7F7;
-  border: 1px solid #ECECEC;
+  background-color: $light-blue;
+  border: 1px solid $border-grey;
   border-radius: 5px;
   line-height: 2em;
   font-size: 1.2em;
   font-weight: 400;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
 //override BS modal-footer alignment craziness

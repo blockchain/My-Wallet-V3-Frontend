@@ -1,7 +1,7 @@
 //class should be applied on elements that have a focus state
 .helper {
-  color: $border-grey;
-  border: 1px solid $border-grey;
+  color: $mid-grey;
+  border: 1px solid $mid-grey;
   border-radius: 100%;
   background-color: white;
   width: 20px;
@@ -14,7 +14,7 @@
     outline: none;
   }
   &.active {
-    background: $blue-alt;
+    background: $blue;
     color: white;
     border: none;
   }

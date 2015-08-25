@@ -75,7 +75,7 @@
     }
 
     td, th {
-      border: 1px solid #E6E6E6;
+      border: 1px solid $border-grey;
       padding: 10px;
 
       .btc {
@@ -83,8 +83,7 @@
       }
 
       .fiat {
-        color: #9E9E9E;
-        font-style: italic;
+        color: $dark-grey;
         font-size: 80%;
         display: block;
       }
@@ -94,11 +93,11 @@
   form.form-horizontal{
   .form-group{
      margin: 0!important;
-   border-bottom: 1px solid #EFEFEF;
+   border-bottom: 1px solid $grey;
    padding: 20px 0;
 
      &:hover{
-      background: rgb(237, 246, 252);
+      background: $hover-blue;
      }
 
      label{
@@ -108,7 +107,7 @@
      }
 
      p.explain{
-    color: #9D9D9D;
+    color: $mid-grey;
     line-height: 1.6em;
     font-size: 10pt;
      }
@@ -118,32 +117,6 @@
        clear: both;
      }
     }
-  }
-}
-
-.left-view{
-  ul.nav{
-    padding: 20px;
-    background: #ffffff;
-
-    li{
-    a{
-    color: #adadad;
-    font-size: 110%;
-      &:hover{
-       background-color: #fff;
-         color: #75B0D3;
-      }
-    }
-    }
-
-    li.active{
-    a{
-     background: none;
-     color: #75B0D3;
-    }
-    }
-
   }
 }
 

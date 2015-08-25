@@ -10,7 +10,7 @@ div.login-form {
 }
 
 .login-pg {
-  background-color: #049BD4;
+  background-color: $blue;
   height: calc(100% + 50px); //offset margin from bootstrap
 }
 
@@ -30,9 +30,9 @@ div.login-form {
     margin-right: auto;
   }
   .help-block .info {
-    color: #C9C9C9;
+    color: $mid-grey;
     &:hover {
-      color: #A3A0A0;
+      color: $dark-grey;
     }
   }
   input[type='checkbox'] { margin: 0; }
