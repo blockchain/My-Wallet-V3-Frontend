@@ -1,3 +1,5 @@
+.wallet-container { height: 100%; }
+
 .left-nav {
   position: absolute;
   width: 270px;
@@ -26,6 +28,7 @@
   border-bottom: 1px solid #ddd;
   padding: 0 30px;
   height: 100px;
+  top: 65px;
   .balance {
     cursor: pointer;
     h1 {
@@ -54,10 +57,6 @@
   height: calc(100% - 170px); // make viewport smaller for overflow-y to work
 }
 
-.wallet-container {
-  height: 100%;
-}
-
 .overflow-scroll {
   overflow-y: scroll !important;
   height: 100%;
@@ -68,19 +67,17 @@
     left: -270px;
     z-index: 2;
     transition: all .3s ease-in-out;
+    top: 50px;
   }
-  .left-nav.toggled {
-    left: 0;
-  }
+  .left-nav.toggled { left: 0; }
   .top-view {
     width: 100%;
     position: relative;
     margin-left: 0;
     height: 80px;
+    top: 0px;
   }
-  .transactions {
-    top: 0;
-  }
+  .transactions { top: 0; }
   .main-container {
     left: 0;
     top: 0;

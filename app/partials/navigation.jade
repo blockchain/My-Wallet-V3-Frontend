@@ -1,12 +1,12 @@
-.navbar.navbar-default.navbar-fixed-top.navbar-inverse.bc-header(role='navigation')
+.bc-header(role='navigation')
   .container-fluid
-    .navbar-header.flex-between
-      .flex
+    .navbar-header.flex-between.flex-center
+      .flex-center
         a#wallet-nav-toggle(title="Wallet Navigation Menu", ng-click="toggleMenu()")
           span.ti-menu.white
         a(ui-sref="wallet.common.home") 
           img#logo(src="img/logo-updated.png",alt="Blockchain")
-      button.navbar-toggle(type="button", ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
+      button.navbar-toggle.mvn(type="button", ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
         span.sr-only Toggle navigation
         span.ti-angle-down.white
     .navbar-collapse.collapse(ng-class="{'in' : !navCollapsed}", ng-click="navCollapsed=true")
