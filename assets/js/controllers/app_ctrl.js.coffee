@@ -142,22 +142,19 @@ walletApp.controller "AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
         defer: ->
           defer
     )
-    
+
     modalInstance.result.then(
       () ->,
       () ->
         defer.reject()
     )
 
-  $scope.$on "needsUpgradeToHD", (notification, continueCallback) ->
+  $scope.$on "needsUpgradeToHD", (notification) ->
     modalInstance = $modal.open(
       templateUrl: "partials/upgrade.jade"
       controller: "UpgradeCtrl",
       backdrop: "static" # Undismissable
       windowClass: "bc-modal"
-    )
-    modalInstance.result.then(() ->
-      continueCallback()
     )
 
   $scope.back = () ->
