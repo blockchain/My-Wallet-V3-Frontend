@@ -1,24 +1,7 @@
 .left-navigation {
-  color: #c9c9c9;
-  width: initial;
   height: 100%;
   @extend .flex-between;
   flex-direction: column;
-  -webkit-flex-direction: column;
-  a {
-    color: #c9c9c9;
-    cursor: pointer;
-  }
-}
-.sidebox{
-  header{
-    padding: 0px 15px 5px;
-    border-bottom: 1px solid #E8E8E8;
-    h3{
-      font-size: 1.25em;
-      color: #636363;
-    }
-  }
 }
 ul.aside {
   list-style: none;
@@ -57,7 +40,7 @@ ul.aside {
     }
     li.active{
       a{
-        color: #049BD4;
+        color: $blue;
         font-weight: 500;
         &:focus {
           text-decoration: none;
@@ -120,7 +103,7 @@ ul.aside {
   }
   ::-webkit-scrollbar-thumb {
     background: #fff;
-    border: 0px none #d4d4d4;
+    border: 0px none $border-grey;
     border-radius: 100px;
   }
   ::-webkit-scrollbar-thumb:hover {
@@ -130,7 +113,7 @@ ul.aside {
     background: #606060;
   }
   ::-webkit-scrollbar-track {
-    background: #ffffff;
+    background: white;
     border: 0px none #ff5a28;
     border-radius: 100px;
   }
@@ -147,17 +130,17 @@ ul.aside {
 
 
 li.action-bar{
-  background: #fff;
+  background: white;
   margin: -10px 0 5px;
   padding: 5px 15px;
-  box-shadow: 0px -2px 13px -9px black;
+  box-shadow: 0px -2px 13px -9px $black;
   border-top: 1px solid white;
   z-index: 1;
   position: relative;
 }
 .settings-nav { margin-top: 10px; }
 .settings-nav-header {
-  background: #EBEBEB;
+  background: $light-grey;
 }
 
 @media (max-width: 768px) {

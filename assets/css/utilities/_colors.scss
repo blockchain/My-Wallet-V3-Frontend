@@ -1,23 +1,28 @@
-$blue: #039BD3;
-$blue-alt: #049bd4;
-$hover-blue: #edf6fc;
-$black: #4B4D4E;
-$dark-blue: #0079A6;
-$deep-blue: #005380;
-$text: #6C6C6C;
-
-//HD Wallet Colors
-$transfer-blue: #5bacd0;
+//Blockchain Pillar Colors
+$blue: #1b8ac7;
 $send-red: #e27e82;
 $receive-green: #85b45b;
-$bright-green:  #3CC476 !important; //override Security Center nested css selectors
-$light-grey: #eaeff4;
-$light-grey-alt: #F5F7F9;
+$transfer-blue: #5bacd0;
+$pending-red: #ffbcbd;
+
+//Blockchain Blue Tints
+$hover-blue: #edf6fc;
+$light-blue: #F5F7F9;
+$light-blue-2: #eaeff4;
+$tertiary-blue: #D0E0E8;
+$dark-blue: #1476ab;
+$deep-blue: #005380;
+
+//Blockchain Text
+$black: #4B4D4E;
+$text: #6C6C6C;
+
+//Blockchain Greys
+$light-grey: #f7f7f7;
 $grey: #EEEEEE;
 $mid-grey: #b0b0b0;
-$mid-grey-alt: #9F9F9F;
-$dark-grey: #737373;
-$border-grey: #6d6d6d;
+$dark-grey: #757575;
+$border-grey: #ddd;
 
 //Did You Know
 $feature: #039BD3;
@@ -35,6 +40,7 @@ $aaa: #AAAAAA;
 $security-red: #E47F7F;
 $security-yellow: #FCCC65;
 $security-green: #3CC476;
+$bright-green:  #3CC476 !important; //override Security Center nested css selectors
 
 //Color Mixin
 @mixin color($name, $color) {
@@ -49,10 +55,10 @@ $security-green: #3CC476;
 @include color('dark-blue', $dark-blue);
 @include color('deep-blue', $deep-blue);
 @include color('black', $black);
-@include color('dark-grey', $dark-grey);
+@include color('grey', $light-grey);
 @include color('light-grey', $light-grey);
 @include color('mid-grey', $mid-grey);
-@include color('mid-grey-alt', $mid-grey-alt);
+@include color('dark-grey', $dark-grey);
 @include color('receive-green', $receive-green);
 @include color('security-red', $security-red);
 @include color('security-yellow', $security-yellow);
@@ -79,6 +85,6 @@ $security-green: #3CC476;
 @include bg-color('black', $black);
 @include bg-color('dark-grey', $dark-grey);
 @include bg-color('light-grey', $light-grey);
-@include bg-color('light-grey-alt', $light-grey-alt);
+@include bg-color('light-blue', $light-blue);
 @include bg-color('mid-grey', $mid-grey);
 @include bg-color('success', $success);

@@ -1,6 +1,6 @@
 .message.pointer(ng-hide="!message || dismissed")
   .message-beacon(ng-click="revealMsg()")
-  .message-contextual.bg-light-grey-alt.pal(ng-show="reveal")
+  .message-contextual.bg-light-blue.pal(ng-show="reveal")
     p.mbl.black.center-align(translate="{{::message}}")
     .flex-center.flex-between
       a.aaa(ng-click="dismissMessage(messageIndex + 1)", translate="NO_THANKS")

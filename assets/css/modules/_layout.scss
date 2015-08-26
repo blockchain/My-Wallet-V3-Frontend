@@ -6,8 +6,8 @@
   height: 100%;
   padding: 15px;
   top: 65px;
-  background: $light-grey-alt;
-  border-right: 1px solid #ddd;
+  background: $light-blue;
+  border-right: 1px solid $border-grey;
   .active-accounts{
     margin-bottom: 30px;
   }
@@ -15,8 +15,8 @@
     margin-bottom: 30px;
   }
   .side-box {
-    background-color: #FDFDFD;
-    border: 1px solid rgb(229, 229, 229);
+    background-color: $light-grey;
+    border: 1px solid $grey;
   }
 }
 .top-view {
@@ -25,7 +25,7 @@
   z-index: 1;
   background: white;
   margin-left: 270px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid $border-grey;
   padding: 0 30px;
   height: 100px;
   top: 65px;
@@ -50,7 +50,7 @@
   background: white;
   position: relative;
   left: 270px;
-  top: 100px;
+  top: 90px;
   overflow-y: scroll;
   overflow-x: hidden;
   width: calc(100% - 270px);

@@ -1,26 +1,24 @@
 h5.well.headliner.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
   
-.row.form-ctrl
-  .col-xs-12
-    .col-lg-6
-      input.filter.form-control(type="text" ng-model="searchText")
-    .hidden-xs.col-lg-6(align="right")
-      a.btn.btn-info.btn-bci(ng-click="newAccount()", translate="CREATE_NEW_ACCOUNT")
-      a.btn.btn-info.btn-bci(ng-click="transfer(address)" translate="TRANSFER_BETWEEN_ACCOUNTS" ng-show="numberOfActiveAccounts() > 1") (transfer)
+.row.pvl.flex-center
+  .col-lg-6
+    input.filter.form-control(type="text" ng-model="searchText")
+  .hidden-xs.col-lg-6(align="right")
+    a.button-primary.mrm(ng-click="newAccount()", translate="CREATE_NEW_ACCOUNT")
+    a.button-default(ng-click="transfer(address)" translate="TRANSFER_BETWEEN_ACCOUNTS" ng-show="numberOfActiveAccounts() > 1") (transfer)
 .row
   .col-xs-12
-    div.account-container.clearfix(ng-repeat="account in accounts() | filter:{archived: false, label: searchText}")
-      header
-        hgroup.clearfix
-          div.col-xs-6
-            h2
-              span(ng-bind-html="account.label | highlight:searchText")
-              span.label.label-primary(translate="DEFAULT", ng-show="isDefault(account)")
-          div.col-xs-6.balance
-            h3.btc(ng-show="account.balance != null") {{ account.balance | toBitCurrency:settings.btcCurrency }}
-            h3.fiat(btc="account.balance", ng-show="account.balance != null")
-      div.actions.col-xs-12
-        ul
+    .account-container.pam.mvm.clearfix(ng-repeat="account in accounts() | filter:{archived: false, label: searchText}")
+      .clearfix.flex-center.border-bottom.pbl
+        .col-xs-6
+          h2
+            span(ng-bind-html="account.label | highlight:searchText")
+            span.label.label-primary(translate="DEFAULT", ng-show="isDefault(account)")
+        .col-xs-6.right-align
+          p.man(ng-show="account.balance != null") {{ account.balance | toBitCurrency:settings.btcCurrency }}
+          p.man(btc="account.balance", ng-show="account.balance != null")
+      .col-xs-12.mtm
+        ul.man.pan
           li
             a(translate="RENAME",          ng-click="editAccount(account)")
           li

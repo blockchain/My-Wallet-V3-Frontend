@@ -13,6 +13,7 @@
 @import 'elements/buttons';
 @import 'elements/inputs';
 @import 'elements/links';
+@import 'elements/tables';
 @import 'elements/textareas';
 
 //import components
@@ -73,10 +74,7 @@ html,body {
   height: 20px;
   background: transparent;
 }
-.modal-dialog{
-  width: 100%;
-  margin: 0;
-}
+
 a.back {
  h4{
   background: url("/img/back.png") no-repeat left center;
@@ -87,58 +85,28 @@ a.back {
   text-decoration: none;
   }
 }
+
 .long-input{overflow-wrap:break-word; }
 
-.table-container{
- display: block;
- overflow-x: auto;
-}
-
-.form-ctrl{
+.form-ctrl {
   padding: 15px 0;
-    .btn-bci{
-      margin: 6px 0px 0 5px;
-    }
-    input{
-    border: 1px solid #CCC;
+  input{
+    border: 1px solid $border-grey;
     border-radius: 5px;
     padding: 3px;
-    }
-    input.filter{
-    background-image:url('/img/spyglass.png');
-    background-repeat: no-repeat;
-    background-position: 98% center;
-    background-size: 20px;
-    }
   }
-
-
-table.responsive{
-  a{overflow-wrap: break-word;}
 }
 
 .container-fluid {
-padding-right: 5px;
-padding-left: 5px;
-}
-// this is naughty, and I need to put these styles in the appropriate places.
-
-@media (min-width: 768px){
-.tx-row .left-view{padding: 0 15px;}
-.tx-row .right-view {
-background-color: #FFFFFF;
+  padding-right: 5px;
+  padding-left: 5px;
 }
 
-.container-fluid {
-padding-right: 15px;
-padding-left: 15px;
-}
-
-.modal-dialog{
-  width: 70%;
-  margin: 10px auto;
-}
-
+@media (min-width: 768px) {
+  .container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
 }
 
 #qr-canvas { display: none; }
@@ -169,3 +137,4 @@ padding-left: 15px;
     user-select: none;
   }
 }
+.z-10 { z-index: 10; }

@@ -1,45 +1,20 @@
 #settings {
   padding: 15px 30px;
-  .label{
-    font-size: 85%;
+  .label {
     font-weight: normal;
     margin-left: 10px;
   }
   .label-warning {
-    background-color: #EA7E7E;
+    background-color: $security-red;
   }
-  label-success {
-    background-color: #84BB84;
-  }
-  .settings-list{
-    list-style: none;
-    text-align: left;
-    background: #F9F9F9;
-    padding: 20px;
-    border: 1px solid #F0F0F0;
+  .label-success {
+    background-color: $security-green;
   }
   .qr{
     padding: 20px 0;
   }
-  .header-with-label {
-    h2, label {
-      display: inline;
-    }
-    margin-bottom: 20px;
-  }
-  h2.status.incomplete {
-    color: #C89898;
-  }
-  h2{
+  h2 {
     font-size: 12pt;
-  }
-  p.headliner{
-    font-size: 115%;
-    color: #999;
-    line-height: 1.7em;
-    border-bottom: 1px solid #EAEAEA;
-    padding: 0 0 15px 0;
-    margin: 0 0 20px 0;
   }
   .right {
     a {
@@ -75,7 +50,7 @@
     }
 
     td, th {
-      border: 1px solid #E6E6E6;
+      border: 1px solid $border-grey;
       padding: 10px;
 
       .btc {
@@ -83,8 +58,7 @@
       }
 
       .fiat {
-        color: #9E9E9E;
-        font-style: italic;
+        color: $dark-grey;
         font-size: 80%;
         display: block;
       }
@@ -94,11 +68,11 @@
   form.form-horizontal{
   .form-group{
      margin: 0!important;
-   border-bottom: 1px solid #EFEFEF;
+   border-bottom: 1px solid $grey;
    padding: 20px 0;
 
      &:hover{
-      background: rgb(237, 246, 252);
+      background: $hover-blue;
      }
 
      label{
@@ -108,7 +82,7 @@
      }
 
      p.explain{
-    color: #9D9D9D;
+    color: $mid-grey;
     line-height: 1.6em;
     font-size: 10pt;
      }
@@ -121,96 +95,36 @@
   }
 }
 
-.left-view{
-  ul.nav{
-    padding: 20px;
-    background: #ffffff;
-
-    li{
-    a{
-    color: #adadad;
-    font-size: 110%;
-      &:hover{
-       background-color: #fff;
-         color: #75B0D3;
-      }
-    }
-    }
-
-    li.active{
-    a{
-     background: none;
-     color: #75B0D3;
-    }
-    }
-
-  }
-}
-
-.title{
-  h2{
-  margin: 0 0 15px 0;
-  }
+.title {
+  h2 { margin: 0 0 15px 0; }
   p{
    font-size: 120%;
    color: #AEAEAE;
   }
-
 }
 
 .setting-result {
   p { margin-top: 15px; }
 }
 
-
-.btn-group{
-  button{float: none;}
-}
 .inneredit{padding: 10px 15px 0;}
 
-.account-container{
-  border: 1px solid #EFEFEF;
-  padding: 5px;
-  margin: 10px 0 10px 0;
-  .label-primary{background-color: #7CA6CB;color: #fff;}
-    header{
-      border-bottom: 1px solid rgb(229, 229, 229);
-      padding: 0 0 5px 0;
-      margin: 0 0 15px 0;
-        h2{
-          background: url('/img/my-accounts-icon.png') no-repeat 0 0;
-          padding: 5px 0px 5px 40px;
-          background-size: 35px;
-          margin-bottom: 10px;
-          margin-top: 10px;
-            span{font-size: 13pt;word-break: break-word;color: #686868;margin-bottom: 10px;}
-            span.label{font-size: 10pt!important;}
-          }
-        h3.fiat{
-          font-size: 10pt;
-          font-style: italic;
-          color: #ccc;
-          margin: 0;
-          padding: 0;
-        }
-         h3.btc{
-          font-size: 12pt;
-          font-style: italic;
-          color: rgb(160, 160, 160);
-        }
-        .balance{
-          text-align: right;
-        }
-    }
-    ul{
-      margin: 0;
-      padding: 0;
-        list-style: none;
-        li{
-          padding: 2px 0;
-        }
-    }
-
+.account-container {
+  border: 1px solid $grey;
+  .label-primary {background-color: $blue; color: white;}
+  h2 {
+    background: url('/img/my-accounts-icon.png') no-repeat 0 0;
+    padding: 5px 0px 5px 40px;
+    background-size: 35px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    span{font-size: 13pt;word-break: break-word; color: #686868;margin-bottom: 10px;}
+    span.label{font-size: 10pt!important;}
+  }
+  ul {
+    list-style: none;
+    li { padding: 2px 0; }
+  }
 }
 
 .intl-tel-input { margin-bottom: 10px; }
@@ -222,11 +136,7 @@
   h2.status {
     margin: 0px 0px 15px;
   }
-  .btn-group{
-    button{float: left;}
-  }
 }
 @media (max-width: 991px) {
   .setting-result { margin-top: 10px; }
 }
-

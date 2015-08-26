@@ -3,34 +3,37 @@ h5.well.headliner.hidden-xs(translate="ADVANCED_EXPLAIN")
 form.form-horizontal(role="form",name="form",novalidate)  
   .form-group
     .col-sm-12.col-md-6
-      label(translate="WALLET_SECOND_PASSWORD")
+      .flex-center.mbm
+        label.mbn(translate="WALLET_SECOND_PASSWORD")
+        span.label.label-warning(ng-hide="settings.secondPassword", translate="DISABLED")    
+        span.label.label-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
       p.explain.hidden-xs.hidden-sm(translate="WALLET_SECOND_PASSWORD_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
-      h2.status.incomplete.hidden-xs.hidden-sm.mbm(ng-hide="settings.secondPassword", translate="DISABLED")    
-      h2.status.complete.hidden-xs.hidden-sm.mbm(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
       configure-second-password
 
   .form-group
     .col-sm-12.col-md-6
-      label(translate="REMEMBER_2FA")
+      .flex-center.mbm
+        label.mbn(translate="REMEMBER_2FA")
+        span.label.label-warning(ng-hide="settings.rememberTwoFactor", translate="DISABLED")
+        span.label.label-success(ng-show="settings.rememberTwoFactor", translate="ENABLED")
       p.explain.hidden-xs.hidden-sm(translate="REMEMBER_2FA_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       div(ng-show="processToggleRememberTwoFactor")
         img(src="img/spinner.gif")
       div(ng-hide="processToggleRememberTwoFactor")
-        h2.status.incomplete.hidden-xs.hidden-sm(ng-hide="settings.rememberTwoFactor", translate="DISABLED")
-        h2.status.complete.hidden-xs.hidden-sm(ng-show="settings.rememberTwoFactor", translate="ENABLED")
       .mtl
         a.button-primary(ng-click="enableRememberTwoFactor()", translate="ENABLE_REMEMBER_2FA", ng-hide="settings.rememberTwoFactor")
         a.button-primary(ng-click="disableRememberTwoFactor()", translate="DISABLE_REMEMBER_2FA", ng-show="settings.rememberTwoFactor")
 
   .form-group
     .col-sm-12.col-md-6
-      label(translate="BLOCK_TOR")
+      .flex-center.mbm
+        label(translate="BLOCK_TOR")
+        span.label.label-warning(ng-hide="settings.blockTOR", translate="DISABLED")
+        span.label.label-success(ng-show="settings.blockTOR", translate="ENABLED")
       p.explain.hidden-xs.hidden-sm(translate="BLOCK_TOR_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
-      h2.status.incomplete.hidden-xs.hidden-sm(ng-hide="settings.blockTOR", translate="DISABLED")
-      h2.status.complete.hidden-xs.hidden-sm(ng-show="settings.blockTOR", translate="ENABLED")
       tor
 
   .form-group
@@ -63,7 +66,10 @@ form.form-horizontal(role="form",name="form",novalidate)
 
   .form-group
     .col-sm-12.col-md-6
-      label(translate="API_ACCESS")
+      .flex-center.mbm
+        label.mbn(translate="API_ACCESS")
+        span.label.label-warning(ng-hide="settings.apiAccess" translate="DISABLED")
+        span.label.label-success(ng-show="settings.apiAccess" translate="ENABLED")
       p.explain.hidden-xs.hidden-sm(translate="API_ACCESS_EXPLAIN")    
     .col-sm-12.col-md-6
       setting-toggle(
@@ -75,7 +81,10 @@ form.form-horizontal(role="form",name="form",novalidate)
 
   .form-group
     .col-sm-12.col-md-6
-      label(translate="LOGGING")
+      .flex-center.mbm
+        label.mbn(translate="LOGGING")
+        span.label.label-warning(ng-hide="settings.loggingLevel" translate="DISABLED")
+        span.label.label-success(ng-show="settings.loggingLevel" translate="ENABLED")
       p.explain.hidden-xs.hidden-sm(translate="LOGGING_EXPLAIN")    
     .col-sm-12.col-md-6
       setting-toggle(
@@ -87,9 +96,10 @@ form.form-horizontal(role="form",name="form",novalidate)
 
   .form-group
     .col-sm-12.col-md-6
-      label(translate="IP_WHITELIST_RESTRICT")
+      .flex-center.mbm
+        label.mbn(translate="IP_WHITELIST_RESTRICT")
+        span.label.label-warning(ng-hide="settings.restrictToWhitelist", translate="DISABLED")
+        span.label.label-success(ng-show="settings.restrictToWhitelist", translate="ENABLED")
       p.explain.hidden-xs.hidden-sm(translate="IP_WHITELIST_RESTRICT_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
-      h2.status.incomplete.hidden-xs.hidden-sm(ng-hide="settings.restrictToWhitelist", translate="DISABLED")
-      h2.status.complete.hidden-xs.hidden-sm(ng-show="settings.restrictToWhitelist", translate="ENABLED")
       ip-whitelist-restrict

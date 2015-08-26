@@ -476,6 +476,7 @@
   "MOBILE_LINKED" : "Mobile Linked",
   "SCAN_QR_CODE" : "Scan your QR code:",
   "HINT_STORED" : "Hint Stored",
+  "NOT_STORED" : "Not Stored",
   "PHRASE_BACKED" : "Phrase Backed",
   "EMAIL_VERIFIED" : "Email Verified",
   "LAUNCHED" : "We've launched!",

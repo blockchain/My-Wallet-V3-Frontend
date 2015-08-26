@@ -3,10 +3,6 @@
     position: relative;
     top: 50px;
   }
-  .ui-select-highlight {
-   background: #D3E7D5;
-   font-weight: 400;
-  }
   a.date { padding-top: 10px; }
   .transaction {
     border-bottom: 1pt solid $light-grey;
@@ -29,13 +25,13 @@
       font-size: 1.3em;
     }
     .action.incoming_tx{
-    color: #85B45B;
+      color: $receive-green;
     }
     .action.outgoing_tx{
-     color: #E27E82;
+     color: $send-red;
     }
     .action.local_tx{
-     color: #5BACD0;
+     color: $transfer-blue;
     }
     .destination{
       display: block;
@@ -62,7 +58,7 @@
     }
   }
   .description {
-    color: #828181;
+    color: $dark-grey;
   }
   .feed-details {
     border-top: 1px solid $eee;
@@ -70,7 +66,7 @@
 }
 
 .transaction-card {
-  background-color: $light-grey-alt;
+  background-color: $light-blue;
   border: 1px solid $eee;
   border-radius: 5px;
   padding: 20px;
@@ -78,7 +74,7 @@
   margin: 10px auto;
   font-size: 1.1em;
   .tx-date{
-    border-bottom: 1px solid #DCDCDC;
+    border-bottom: 1px solid $border-grey;
     padding: 0 0px 15px 0;
     margin-bottom: 15px;
     color: #6C6C6C;
@@ -91,7 +87,6 @@
     p{
       margin: 0 10px 0px 0;
       font-weight: 600;
-      color: #777777;
     }
     strong{
       display: inline;
@@ -100,7 +95,7 @@
     }
   }
   .tx-sidebar{
-    border-left: 1px solid #DCDCDC;
+    border-left: 1px solid $border-grey;
   }
   .tx-status{
     font-weight: 600;
@@ -110,7 +105,7 @@
   .tx-notes{
     margin-top: 25px;
     padding-top: 25px;
-    border-top: 1px solid #E5E5E5;
+    border-top: 1px solid $grey;
     i{margin-right: 5px;}
 
   }
@@ -120,7 +115,7 @@
   .tx-value{
     text-align: center;
     margin-bottom: 10px;
-    p{font-size: .9em; margin: 0; color: darkgrey;}
+    p{font-size: .9em; margin: 0; }
     span{font-weight: bold; font-size: 1.3em;}
 
   }
@@ -151,9 +146,9 @@ button {
 }
 .unconfirmed { opacity: 0.5; }
 
-.note { color: #aeaeae; }
+.note { color: $black; }
 
-a.date,p.date { color: #adc0c9; }
+a.date,p.date { color: $black; }
 
 .amountTotal{ float: none;}
 

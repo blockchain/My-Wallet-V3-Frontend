@@ -19,7 +19,7 @@
 
 .widget {
   padding: 1em;
-  border: 1px solid #eee;
+  border: 1px solid $grey;
   &.empty {
     background: RGBA(247, 247, 247, 1);
     height: 275px;
@@ -41,7 +41,7 @@
 .empty-state-chart {
   height: 200px;
   width: 200px;
-  border: 30px solid #E7E7E7;
+  border: 30px solid $grey;
   border-radius: 100%;
   position: relative;
   left: -50%;
