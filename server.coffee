@@ -273,7 +273,8 @@ app.get "/authorize-approve", (request, response) ->
 # pass the feedback post to jira
 app.post "/feedback", (request, response) ->
   jira = 'https://blockchain.atlassian.net/rest/collectors/1.0/template/feedback/e6ce4d72'
-  r.post { url: jira, form: request.body }, (err, httpResponse, body) ->
+  headers = { 'X-Atlassian-Token' : 'nocheck' }
+  r.post { url: jira, headers: headers, form: request.body }, (err, httpResponse, body) ->
     response.json { success: !(err?) }
 
 # /unsubscribe?token=$token sends a request to blockchain.info and redirects to login
