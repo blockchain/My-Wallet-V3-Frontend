@@ -69,6 +69,7 @@ html,body {
 
 .pointer { cursor: pointer; }
 .pos-rel { position: relative; }
+.pos-abs { position: absolute; }
 .row { vertical-align: bottom; }
 .row.spacing {
   height: 20px;
@@ -117,13 +118,6 @@ a.back {
     width: 20px;
   }
   border-left: none;
-}
-
-.show-key-body {
-  min-height: 10em;
-  .wrong-password {
-    color: #ED5565;
-  }
 }
 
 #verify-recovery {
