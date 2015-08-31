@@ -1,6 +1,9 @@
 .home { padding: 10px 15px 0 30px; }
-.col-home { height: 635px; }
-.section { height: 50%; }
+.col-home { 
+  height: 635px; 
+  &:first-of-type { margin-bottom: 35px; }
+}
+.section { &:last-of-type { margin-bottom: 5px } }
 
 .hashtag {
   &.feature {
@@ -20,6 +23,7 @@
 .widget {
   padding: 1em;
   border: 1px solid $grey;
+  min-height: 250px;
   &.empty {
     background: RGBA(247, 247, 247, 1);
     height: 275px;
