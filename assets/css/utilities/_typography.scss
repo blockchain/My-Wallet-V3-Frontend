@@ -17,6 +17,7 @@
 .em-alt { text-transform: uppercase; }
 .no-select { user-select: none; }
 .break-word { word-break: break-word; }
+.text { font-size: 14px; } //use pixels to normalize with Bootstrap
 
 .text-overflow-hidden, .ui-select-match-text {
   text-overflow: ellipsis;
