@@ -3,6 +3,7 @@
   @extend .flex-between;
   flex-direction: column;
 }
+
 ul.aside {
   list-style: none;
   padding: 0;
@@ -52,6 +53,7 @@ ul.aside {
     }
   }
 }
+
 .wallet-footer {
   position: relative;
   bottom: calc(0% + 7%);
@@ -85,6 +87,10 @@ ul.aside {
   }
 }
 
+@media (max-width: 620px) {
+  .wallet-footer { bottom: 0; }
+}
+
 .scroll-parent{
   .scroll-accounts{
     max-height: 150px;
@@ -92,6 +98,14 @@ ul.aside {
   }
   .scroll-settings{ max-height: 190px; }
 }
+
+@media (max-width: 620px) {
+  .scroll-parent {
+    .scroll-settings { max-height: 100px; overflow-y: scroll }
+    .scroll-accounts { max-height: 100px; }
+  }
+}
+
 .scroll-hidden {
   ::-webkit-scrollbar {
     width: 8px;

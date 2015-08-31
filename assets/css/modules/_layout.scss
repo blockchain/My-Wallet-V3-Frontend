@@ -65,9 +65,9 @@
 @media (max-width: 768px) {
   .left-nav {
     left: -270px;
-    z-index: 2;
+    z-index: 1051; //just above Bootstrap
     transition: all .3s ease-in-out;
-    top: 50px;
+    top: 0px;
   }
   .left-nav.toggled { left: 0; }
   .top-view {
