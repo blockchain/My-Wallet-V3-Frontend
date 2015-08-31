@@ -163,6 +163,8 @@
   "OVERVIEW" : "Overview:",
   "TAGS" : "Tags",
   "NOTE" : "Note:",
+  "CREATE" : "Create:",
+  "CREATE_ALT" : "Create",
   "MAKE_PUBLIC" : "Make Public",
   "FROM" : "From",
   "FROM:" : "From:",

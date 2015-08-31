@@ -8,8 +8,9 @@ h5.well.headliner.hidden-xs(translate="MY_ADDRESSES_EXPLAIN_TEMP")
     ul.dropdown-menu(role="menu")
       li(ng-repeat="account in accounts() | filter:{archived: false}")
         a(ng-click="addAddressForAccount(account)") {{ account.label }}
-  .flex-1
-    input.filter(type="text", ng-model="searchText").form-control
+  .flex-1.width-100.filter-search-alt.pos-rel
+    input(type="text", ng-model="searchText")
+    i.ti-search.pos-abs
 .row
   .col-xs-12.table-container
     table.responsive
@@ -31,9 +32,10 @@ p.mtl.hidden-xs(translate="IMPORTED_ADDRESSES_EXPLAIN", ng-show="display.importe
 p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
 
 .flex-between.flex-center.form-ctrl(ng-show="display.imported")
-  .flex-1.mrl
-    input.filter(type="text", ng-model="searchTextLegacy").form-control
-  a.btn.btn-info(ng-click="importAddress()", translate="IMPORT_ADDRESS")
+  .flex-1.mrl.filter-search-alt.width-100.pos-rel
+    input(type="text", ng-model="searchTextLegacy")
+    i.ti-search.pos-abs
+  a.button-default(ng-click="importAddress()", translate="IMPORT_ADDRESS")
 
 .row(ng-show="display.imported")
   .col-xs-12.table-container
@@ -66,8 +68,10 @@ p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archive
           a(translate="YOUR_PRIVATE_KEY", ng-hide="address.isWatchOnly", ng-click="showPrivKey(address)")
 
 .row.form-ctrl(ng-show="display.archived")
-  .col-xs-12.col-lg-6
-    input.filter(type="text", ng-model="searchTextArchived").form-control
+  .col-xs-12
+    .filter-search-alt.pos-rel.width-100
+      input(type="text", ng-model="searchTextArchived")
+      i.ti-search.pos-abs
 .row(ng-show="display.archived")
   .col-xs-12.table-container
     table.responsive
