@@ -2,7 +2,7 @@ h5.well.headliner.hidden-xs(translate="MY_ADDRESSES_EXPLAIN_TEMP")
 
 .form-ctrl.flex-between.flex-center
   .mrl(dropdown is-open="display.account_dropdown_open")
-    button.button-primary.dropdown-toggle(dropdown-toggle type="button", data-toggle="dropdown", aria-expanded="false")
+    button.button-primary.dropdown-toggle(dropdown-toggle type="button", data-toggle="dropdown", aria-expanded="false", ng-disabled="!status.didInitializeHD")
       span.prs(translate="NEW_ADDRESS")
       span.caret
     ul.dropdown-menu(role="menu")
