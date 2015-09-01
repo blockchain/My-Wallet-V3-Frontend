@@ -9,8 +9,6 @@
     .login-box.mhs
       header
         h2.em-300(translate="NEW_ACCT_WELCOME", ng-show="currentStep == 1")
-        h3.em-300(translate="CONFIRM_EMAIL", ng-show="currentStep == 2")
-        p(translate="CONFIRM_EMAIL_EXPLAIN" translate-values='{ email: fields.email}', ng-show="currentStep == 2")  
 
       form.form-horizontal(role="form",name="form",novalidate)
         div(ng-switch="currentStep")
@@ -44,19 +42,6 @@
                 | I have read and agree to the 
                 a.em-500(ng-click="showAgreement()") Alpha Program Participation Agreement
 
-          div(ng-switch-when="2")
-            .form-group(ng-class="{'has-error': errors.emailVerificationCode}")
-              label.col-sm-4.control-label(translate="EMAIL_VERIFICATION_CODE")
-              .col-sm-8.prn
-                input.form-control(type="text",ng-model="fields.emailVerificationCode",autofocus,ng-blur="validate()",on-enter="nextStep()")
-                span.help-block 
-                  p {{ errors.emailVerificationCode }}
-
         .flex-center.flex-end.mbl
           button.button-primary(ng-click="nextStep()",ng-disabled="!form.$valid || !isValid[0] || !fields.acceptedAgreement", translate="CONTINUE", ng-show="currentStep == 1 && !working")  
-          img(ng-show="working" src="img/spinner.gif")     
-          button.button-default.btn-signup.mrl(ui-ladda="{{ resendingEmailCode }}", ng-click="resendEmail()", ladda-translate="RESEND_EMAIL", ng-show="currentStep == 2", data-style="expand-left")        
-          button.button-success.btn-signup(ng-click="nextStep()", translate="GO_VERIFY_EMAIL", ng-show="currentStep == 2")
-        .col-xs-12.border-top.ptm.mtm.flex-center(ng-show= "currentStep == 2")
-          h4.em-300.hidden-xs(translate="EMAIL_WHY")
-          helper-button(content="EMAIL_WHY_EXPLAIN")
+          img(ng-show="working" src="img/spinner.gif")

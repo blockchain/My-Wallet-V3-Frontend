@@ -46,12 +46,6 @@ describe "SignupCtrl", ->
     expect(Wallet.clearAlerts).toHaveBeenCalled()
   )
 
-  it "should resendEmailConfirmations", inject((Wallet) ->
-    spyOn(Wallet, "resendEmailConfirmation")
-    scope.resendEmail()
-    expect(Wallet.resendEmailConfirmation).toHaveBeenCalled()
-  )
-
   describe "first step", ->
     it "should be step 1", ->
       expect(scope.currentStep).toBe(1)
