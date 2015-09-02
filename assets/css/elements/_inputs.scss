@@ -1,11 +1,12 @@
-input[type="radio"] {
-  margin-right: 5px;
-}
+input[type="radio"] { margin-right: 5px; }
 
 //IE hack to remove 'x'
-input::-ms-clear {
-  display: none;
-}
+input::-ms-clear { display: none; }
 
-//Mozilla hide input spinners
+//Hide input spinners
 input[type=number] {-moz-appearance: textfield;}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
