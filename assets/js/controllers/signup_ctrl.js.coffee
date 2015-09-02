@@ -4,7 +4,6 @@ walletApp.controller "SignupCtrl", ($scope, $rootScope, $log, Wallet, $modal, $t
   $scope.languages = Wallet.languages
   $scope.currencies = Wallet.currencies
   $scope.alerts = Wallet.alerts
-  $scope.resendingEmailCode = false
   $scope.status = Wallet.status
 
   $scope.$watch "status.isLoggedIn", (newValue) ->
@@ -12,7 +11,7 @@ walletApp.controller "SignupCtrl", ($scope, $rootScope, $log, Wallet, $modal, $t
       $scope.busy = false
       $state.go("signup.finish.show")
 
-  $scope.isValid = [true, true, false, false]
+  $scope.isValid = [true, true]
 
   language_guess = $filter("getByProperty")("code", $translate.use(), Wallet.languages)
 
@@ -21,13 +20,9 @@ walletApp.controller "SignupCtrl", ($scope, $rootScope, $log, Wallet, $modal, $t
 
   currency_guess =  $filter("getByProperty")("code", "USD", Wallet.currencies)
 
-  $scope.fields = {email: "", password: "", confirmation: "", language: language_guess, currency: currency_guess, mnemonic: "", bip39phrase: "", emailVerificationCode: "", acceptedAgreement: false}
-  $scope.errors = {emailVerificationCode: null}
+  $scope.fields = {email: "", password: "", confirmation: "", language: language_guess, currency: currency_guess, acceptedAgreement: false}
 
   $scope.didLoad = () ->
-    if Wallet.status.isLoggedIn && !Wallet.status.didVerifyEmail
-      $scope.currentStep = 4
-
      if $scope.beta
        $scope.fields.email = $scope.beta.email
 
@@ -58,29 +53,12 @@ walletApp.controller "SignupCtrl", ($scope, $rootScope, $log, Wallet, $modal, $t
           $scope.working = false
           if uid?
             $cookieStore.put("uid", uid)
-          # if $scope.savePassword
-          #   $cookieStore.put("password", $scope.password)
+          if $scope.savePassword # For dev purposes, set SAVE_PASSWORD=1 in .env
+            $cookieStore.put("password", $scope.fields.password)
           $scope.currentStep++
+          $scope.close ""
         )
-      else
-        if $scope.currentStep == 1
-          $scope.currentStep++
-        else if $scope.currentStep == 2
-          $scope.errors.emailVerificationCode = null
 
-          success = () ->
-            $scope.close ""
-
-          error = () ->
-            $translate("EMAIL_VERIFICATION_FAILED").then (translation) ->
-              $scope.errors.emailVerificationCode = translation
-
-          Wallet.verifyEmail($scope.fields.emailVerificationCode, success, error)
-
-    else
-      # console.log "Form step not valid"
-      # console.log $scope.currentStep
-      # console.log $scope.fields
 
   $scope.createWallet = (successCallback) ->
     Wallet.create($scope.fields.password, $scope.fields.email, $scope.fields.language, $scope.fields.currency, (uid)->
@@ -95,17 +73,6 @@ walletApp.controller "SignupCtrl", ($scope, $rootScope, $log, Wallet, $modal, $t
       successCallback(uid)
     )
 
-  $scope.resendEmail = () ->
-    $scope.resendingEmailCode = true
-
-    success = () ->
-      $scope.resendingEmailCode = false
-
-    error = () ->
-      Wallet.displayError("Unable to resend confirmation email")
-      $scope.resendingEmailCode = false
-
-    Wallet.resendEmailConfirmation(success, error)
 
   $scope.$watch "fields.confirmation", (newVal) ->
     if newVal? && $scope.fields.password != ""
@@ -116,8 +83,6 @@ walletApp.controller "SignupCtrl", ($scope, $rootScope, $log, Wallet, $modal, $t
 
     $scope.isValid[0] = true
     $scope.isValid[1] = true
-    $scope.isValid[3] = true
-
 
     $scope.errors = {email: null, password: null, confirmation: null}
     $scope.success = {email: false, password: false, confirmation: false}
@@ -157,9 +122,6 @@ walletApp.controller "SignupCtrl", ($scope, $rootScope, $log, Wallet, $modal, $t
     if !$scope.fields.acceptedAgreement
       $scope.isValid[0] = false
 
-    if $scope.fields.emailVerificationCode == ""
-      $scope.isValid[3] = false
-
   $scope.validate()
 
   $scope.$watch "fields.language", (newVal, oldVal) ->
@@ -172,9 +134,6 @@ walletApp.controller "SignupCtrl", ($scope, $rootScope, $log, Wallet, $modal, $t
     # Update in wallet...
     if newVal?
       Wallet.changeCurrency(newVal)
-
-  $scope.$watch "fields.mnemonic", (newValue) ->
-    $scope.isValid[2] = Wallet.isValidBIP39Mnemonic($scope.fields.mnemonic)
 
   $scope.$on 'signed_agreement', () ->
     $scope.fields.acceptedAgreement = true
