@@ -48,6 +48,7 @@ module.exports = (grunt) ->
 
       application_dependencies:
         src: [
+          'build/js/browser-polyfill.js' # Babel polyfill
           'build/js/wrappers/*.js' # Wrappers around MyWallet, MyWalletStore, etc
           'build/js/app.js' # Needs to be included before controllers
           'build/js/services/*.js'
@@ -205,6 +206,12 @@ module.exports = (grunt) ->
           {src: ["**/*"], dest: "dist/fonts", cwd: "build/fonts", expand: true}
         ]
 
+      js:
+        files: [
+          {src: ["browser-polyfill.js"], dest: "build/js/", cwd: "node_modules/grunt-babel/node_modules/babel-core", expand: true}
+        ]
+
+
       css:
         files: [
           {src: ["intlTelInput.css"], dest: "build/css", cwd: "bower_components/intl-tel-input/build/css", expand: true }
@@ -247,6 +254,12 @@ module.exports = (grunt) ->
         options:
           spawn: false
 
+      es6:
+        files: ['assets/js/controllers/**/*.js','assets/js/services/**/*.js','assets/js/directives/**/*.js','assets/js/wrappers/**/*.js','assets/js/*.js']
+        tasks: ['babel:build']
+        options:
+          spawn: false
+
       js:
         files: ['assets/js/**/*.js.coffee']
         tasks: ['compile']
@@ -267,6 +280,17 @@ module.exports = (grunt) ->
           "build/admin.html": "app/admin.jade"
           "build/index.html": "app/index.jade"
 
+    babel:
+      options:
+        sourceMap: true
+      build:
+        files: [{
+          expand: true,
+          cwd: 'assets/js',
+          src: ['controllers/**/*.js','services/**/*.js','directives/**/*.js','wrappers/**/*.js','*.js'],
+          dest: 'build/js',
+          ext: '.js'
+        }]
 
     rename:
       assets: # Renames all images, fonts, etc and updates application.min.js, application.css and admin.html with their new names.
@@ -448,13 +472,16 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-autoprefixer')
   grunt.loadNpmTasks('grunt-merge-json')
   grunt.loadNpmTasks('git-changelog')
+  grunt.loadNpmTasks('grunt-babel')
 
   grunt.registerTask "compile", ["coffee"]
 
   grunt.registerTask "build", [
     "html2js"
     "compile"
+    "babel:build"
     "sass"
+    "copy:js"
     "copy:css"
     "copy:fonts"
     "autoprefixer"
