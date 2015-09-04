@@ -106,33 +106,6 @@ module.exports = (grunt) ->
         ]
         dest: "dist/beta-admin.js"
 
-      application_debug:
-        src: [
-          'build/mywallet.js'
-          'bower_components/angular/angular.js'
-          'bower_components/angular-sanitize/angular-sanitize.js'
-          'bower_components/angular-cookies/angular-cookies.min.js'
-          'bower_components/angular-animate/angular-animate.min.js'
-          'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
-          'bower_components/angular-ui-router/release/angular-ui-router.min.js'
-          'bower_components/angular-ui-select/dist/select.min.js'
-          'bower_components/qrcode/lib/qrcode.min.js'
-          'bower_components/angular-qr/angular-qr.min.js'
-          'bower_components/angular-local-storage/dist/angular-local-storage.min.js'
-          'bower_components/numeral/min/numeral.min.js'
-          'bower_components/angular-numeraljs/dist/angular-numeraljs.min.js'
-          'bower_components/angular-translate/angular-translate.min.js'
-          'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js'
-          "bower_components/jquery/dist/jquery.js"
-          'bower_components/intl-tel-input/build/js/intlTelInput.min.js'
-          'bower_components/international-phone-number/releases/international-phone-number.min.js'
-          'bower_components/d3/d3.js'
-          'bower_components/angular-charts/dist/angular-charts.js'
-          'build/application-dependencies.min.js'
-        ]
-
-        dest: "dist/application.min.js"
-
     coffee:
       coffee_to_js:
         options:
@@ -502,19 +475,13 @@ module.exports = (grunt) ->
   # Default task(s).
   grunt.registerTask "dist", [
     "clean"
-    "compile"
-    "html2js"
-    "merge-json"
+    "build"
     "shell:check_dependencies"
     "shell:npm_install_dependencies"
     "shell:bower_install_dependencies"
     "concat:application_dependencies"
     "uglify:application_dependencies"
     "concat:application"
-    "sass"
-    "copy:css" # CSS files not processed with sass
-    "copy:fonts"
-    "autoprefixer"
     "concat_css:app"
     "jade"
     "copy:beta_index"
@@ -529,42 +496,12 @@ module.exports = (grunt) ->
 
   grunt.registerTask "dist_unsafe", [
     "clean"
-    "compile"
-    "html2js"
-    "merge-json"
+    "build"
     "shell:skip_check_dependencies"
     "concat:application_dependencies"
     "uglify:application_dependencies"
     "concat:application"
-    "sass"
-    "copy:css" # CSS files not processed with sass
-    "copy:fonts"
     "concat_css:app"
-    # "autoprefixer"
-    "jade"
-    "copy:beta_index"
-    "preprocess"
-    "copy:main"
-    "copy:beta"
-    "dist_beta"
-    "rename:assets"
-    "rename:html"
-  ]
-
-  grunt.registerTask "dist_debug", [
-    "clean"
-    "compile"
-    "html2js"
-    "merge-json"
-    "concat:application_dependencies"
-    "uglify:application_dependencies"
-    "concat:mywallet"
-    "concat:application_debug"
-    "sass"
-    "copy:css" # CSS files not processed with sass
-    "copy:fonts"
-    "concat_css:app"
-    "autoprefixer"
     "jade"
     "copy:beta_index"
     "preprocess"
