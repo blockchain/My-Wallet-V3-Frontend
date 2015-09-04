@@ -18,9 +18,12 @@ walletApp.controller "UpgradeCtrl", ($scope, Wallet, $modalInstance, $log, $wind
     $scope.busy = true
     Wallet.upgrade(success, secondPasswordCancelled)
 
+  $scope.goToBlockchain = () ->
+    $window.location = "https://blockchain.info/"
+
   $scope.cancel = () ->
     $scope.busy = false
-    $window.location = "https://blockchain.info/"
+    $scope.goToBlockchain()
 
   $timeout ->
     $scope.waiting = false

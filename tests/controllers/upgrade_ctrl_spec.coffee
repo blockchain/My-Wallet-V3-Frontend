@@ -30,5 +30,7 @@ describe "UpgradeCtrl", ->
   )
 
   it "covers cancel", ->
+    spyOn(scope, 'goToBlockchain')
     scope.cancel()
-    return
+    expect(scope.goToBlockchain).toHaveBeenCalled()
+
