@@ -1,7 +1,11 @@
-module.exports = function(config){
-  config.set({
+module.exports = function(karma){
+  var configuration = {
 
     basePath : './',
+
+    // logLevel: config.LOG_DISABLE,
+
+    exclude: ['assets/js/my_wallet/'],
 
     files : [
       'bower_components/angular/angular.js',
@@ -18,14 +22,21 @@ module.exports = function(config){
       'bower_components/numeral/numeral.js',
       'bower_components/angular-numeraljs/dist/angular-numeraljs.js',
       'bower_components/angular-inview/angular-inview.js',
+      'build/js/browser-polyfill.js',
       'assets/js/app.js.coffee',
       'build/js/templates.js',
       'assets/js/controllers/**/*.js.coffee',
+      'assets/js/controllers/**/*.js',
       'assets/js/filters.js.coffee',
       'assets/js/services/*.js.coffee',
       'assets/js/directives/*.js.coffee',
       'assets/js/wrappers/*.js.coffee',
-      'tests/**/*.coffee',
+      'tests/mocks/**/*.coffee',
+      'tests/*.coffee',
+      'tests/controllers/**/*.coffee',
+      'tests/directives/*.coffee',
+      'tests/filters/*.coffee',
+      'tests/services/**/*.coffee',
       'tests/**/*.js',
       'app/templates/*.jade',
       'bower_components/angular-password-entropy/password-entropy.js',
@@ -37,15 +48,19 @@ module.exports = function(config){
 
     preprocessors: {
       '**/*.jade': ['ng-jade2js'],
-      'assets/js/controllers/**/*.js.coffee' : ['coverage'],
-      'assets/js/filters.js.coffee' : ['coverage'],
-      'assets/js/services/*.js.coffee' : ['coverage'],
-      'assets/js/directives/*.js.coffee' : ['coverage'],
+      'assets/js/controllers/**/*.js.coffee' : ['coffee', 'coverage'],
+      'assets/js/controllers/**/*.js' : ['coverage'],
+      'assets/js/filters.js.coffee' : ['coffee','coverage'],
+      'assets/js/services/*.js.coffee' : ['coffee','coverage'],
+      'assets/js/services/*.js' : ['babel'],
+      'assets/js/directives/*.js.coffee' : ['coffee','coverage'],
+      'assets/js/directives/*.js' : ['babel'],
       'assets/js/wrappers/*.js.coffee': ['coffee'],
       'assets/js/my_wallet.js.coffee': ['coffee'],
       'assets/js/routes.js.coffee' : ['coffee'],
       'assets/js/app.js.coffee' : ['coffee'],
-      'tests/**/*.coffee' : ['coffee']
+      'tests/**/*.coffee' : ['coffee'],
+      'tests/**/*.js' : ['babel']
     },
     coffeePreprocessor: {
       // options passed to the coffee compiler
@@ -56,6 +71,17 @@ module.exports = function(config){
       // transforming the filenames
       transformPath: function(path) {
         return path.replace(/\.coffee$/, '.js');
+      }
+    },
+    babelPreprocessor: {
+      options: {
+        sourceMap: 'inline'
+      },
+      filename: function (file) {
+        return file.originalPath.replace(/\.js$/, '.es5.js');
+      },
+      sourceFileName: function (file) {
+        return file.originalPath;
       }
     },
 
@@ -90,17 +116,6 @@ module.exports = function(config){
 
     browsers : ['PhantomJS'],
 
-    plugins : [
-      'karma-jade-preprocessor',
-      'karma-coffee-preprocessor',
-      'karma-phantomjs-launcher',
-      'karma-jasmine',
-      'karma-junit-reporter',
-      'karma-osx-reporter',
-      'karma-ng-jade2js-preprocessor',
-      'karma-coverage'
-    ],
-
     junitReporter : {
       outputFile: 'test_out/unit.xml',
       suite: 'unit'
@@ -111,8 +126,21 @@ module.exports = function(config){
     coverageReporter: {
       type : 'html',
       dir : 'coverage/',
-      subdir: '.'
+      subdir: '.',
+
+      instrumenters: { isparta : require('isparta') },
+
+      instrumenter: {
+          '**/*.js': 'isparta'
+      }
     }
 
-  });
+
+
+  }
+
+  if(process.env.TRAVIS) {
+  }
+
+  karma.set(configuration);
 };

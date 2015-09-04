@@ -24,6 +24,8 @@ describe "HomeCtrl", ->
         isLoggedIn: true
         didLoadBalances: true
 
+      Wallet.total = () -> 1
+
       scope = $rootScope.$new()
 
       $controller "HomeCtrl",
@@ -61,3 +63,7 @@ describe "HomeCtrl", ->
         resolve: jasmine.any(Object)
         windowClass: 'bc-modal small'
       )
+
+  describe "getTotal()", ->
+    it "should return total", ->
+      expect(scope.getTotal()).toEqual(1)
