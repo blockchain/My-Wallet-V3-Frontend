@@ -588,12 +588,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     from.toAddress(destinations, amounts, fee)
 
-  wallet.redeemFromEmailOrMobile = (account, claim, successCallback, error) ->
-    success = () ->
-      wallet.updateTransactions()
-      successCallback()
-
-    wallet.my.redeemFromEmailOrMobile(account.index, claim, success, error)
+  wallet.redeemFromEmailOrMobile = (account, claim) ->
+    spender = new wallet.spender()
+    spender.fromPrivateKey(claim.code).toAccount(account)
 
   wallet.fetchBalanceForRedeemCode = (code) ->
     defer = $q.defer();

@@ -12,7 +12,10 @@ describe "walletServices", () ->
       Wallet = $injector.get("Wallet")
 
       Wallet.accounts = () -> [{index: 0}]
-                      
+
+      Wallet.spender = () ->
+        fromPrivateKey: () ->
+
       spyOn(Wallet,"monitor").and.callThrough()
       
       mockObserver = {needs2FA: (() ->)}
@@ -23,11 +26,15 @@ describe "walletServices", () ->
 
   describe "redeemFromEmailOrMobile",  ->
     beforeEach ->
-      Wallet.my.redeemFromEmailOrMobile = () ->
-    
-    it "should add funds to the correct account", ->
-      spyOn(Wallet.my, "redeemFromEmailOrMobile")
+      spyOn(Wallet, "spender")
 
-      Wallet.redeemFromEmailOrMobile(Wallet.accounts()[0], "abcd", (()->), (()->))
-      
-      expect(Wallet.my.redeemFromEmailOrMobile.calls.argsFor(0)[0]).toBe(0)
+    it "should create a spender object", ->
+      pending()
+
+      Wallet.redeemFromEmailOrMobile(Wallet.accounts()[1], "abcd", (()->), (()->))
+      expect(Wallet.spender).toHaveBeenCalled()
+
+
+    it "should pass the desired index to the spender", ->
+      pending()
+      #   Wallet.redeemFromEmailOrMobile(Wallet.accounts()[1], "abcd", (()->), (()->))
