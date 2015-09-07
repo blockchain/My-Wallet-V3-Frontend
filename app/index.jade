@@ -167,6 +167,9 @@ head
   script(src='application.min.js')  
   <!-- @endif -->
   
+  //- Whitelist by copying script from browser and putting it in a file 
+  //- (including the last new line) and then run:
+  //- cat script | openssl dgst -sha256 -binary | openssl enc -base64
   script.
     if(browserDetection().browser === "ie" && browserDetection().version < 11) {
       if ( confirm("Your browser is out of date! It looks like you're using an old version of Internet Explorer. For the best Blockchain experience, please update your browser or hit cancel to return to our homepage.") ) {
@@ -182,4 +185,3 @@ body(ng-controller="AppCtrl", ui-view="body")
       img(src="/img/logo-bw.png" style="margin-bottom: 3em;")
       h3(style="").
         Please enable JavaScript to use the Blockchain Wallet
-
