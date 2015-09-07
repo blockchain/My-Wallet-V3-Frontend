@@ -6,20 +6,16 @@ walletApp.controller "SettingsAdvancedCtrl", ($scope, Wallet, $modal, $translate
     ipWhitelist: null
 
   $scope.validateFee = (candidate) ->
-    !isNaN(candidate) && parseInt(candidate) > 0
+    n = parseInt(candidate)
+    !isNaN(candidate) && n > 0 && n <= 1000000
 
   $scope.validatePbkdf2 = (candidate) ->
     n = parseInt(candidate)
-    return false if isNaN(candidate)
-    return false if n < 1
-    return false if n > 20000
-    return true
+    !isNaN(candidate) && n >= 1 && n <= 20000
 
   $scope.validateLogoutTime = (candidate) ->
     n = parseInt(candidate)
-    return false if isNaN(candidate) || n > 1440
-    return false unless n >= 1
-    return true
+    !isNaN(candidate) && n >= 1 && n <= 1440
 
   $scope.validateIpWhitelist = (candidates) ->
     $scope.errors.ipWhitelist = null
