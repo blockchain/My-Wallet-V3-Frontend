@@ -232,6 +232,7 @@
   "ADD_SECOND_PASSWORD" : "Add a Second Password To Your Wallet",
   "ENABLE_SECOND_PASSWORD" : "enable second password",
   "DISABLE_SECOND_PASSWORD" : "disable second password",
+  "SECOND_PASSWORD_CANCEL": "Your second password is required to send bitcoin. Please try again",
   "REMEMBER_2FA" : "Remember Two Factor Login",
   "REMEMBER_2FA_EXPLAIN" : "Your browser will be remembered for a short period of time, allowing you to login again without having to re-authenticate. Disable this to require full authentication every time you login. This will not affect your current browser until you delete all cookies.",
   "ENABLE_REMEMBER_2FA" : "Enable convenient login",

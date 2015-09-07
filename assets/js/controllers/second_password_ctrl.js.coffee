@@ -7,7 +7,7 @@ walletApp.controller "SecondPasswordCtrl", ($scope, $log, Wallet, $modalInstance
   $scope.secondPassword = ""
 
   $scope.cancel = () ->
-    defer.reject("Cancel pressed")
+    defer.reject($translate.instant('SECOND_PASSWORD_CANCEL'))
     Wallet.clearAlerts()
     $modalInstance.dismiss ""
 
