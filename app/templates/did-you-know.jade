@@ -1,6 +1,6 @@
 .dyk
   .flex-between.flex-center.mbl
-    h5.mvn.aaa.em-400(translate="DYK")
+    h5.mvn.type-h5.em-400(translate="DYK")
     .hashtag.em-400.em-alt.flex-center(ng-class="dyk.type.toLowerCase()") 
       | #
       | {{ dyk.type }}
@@ -8,6 +8,6 @@
     .flex-center.mbm
       i.title.aaa(ng-class="dyk.icon")
       p.h3.em-300.mll(ng-class="dyk.type.toLowerCase()") {{ dyk.title }}
-    p.text.em-300.lh-lg
+    p.text.em-300.line-height
       | {{ dyk.text }}
       a.mls(href="{{ dyk.link }}") {{ dyk.linkText }}

@@ -1,23 +1,23 @@
-h5.well.headliner.hidden-xs(translate="ADVANCED_EXPLAIN")
+h5.well.type-h5.em-400.hidden-xs(translate="ADVANCED_EXPLAIN")
 
 form.form-horizontal(role="form",name="form",novalidate)  
   .form-group
     .col-sm-12.col-md-6
       .flex-center.mbm
-        label.mbn(translate="WALLET_SECOND_PASSWORD")
+        label.type-h5.em-400.mbn(translate="WALLET_SECOND_PASSWORD")
         span.label.label-warning(ng-hide="settings.secondPassword", translate="DISABLED")    
         span.label.label-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
-      p.explain.hidden-xs.hidden-sm(translate="WALLET_SECOND_PASSWORD_EXPLAIN")    
+      p.em-300.text.line-height.hidden-xs.hidden-sm(translate="WALLET_SECOND_PASSWORD_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       configure-second-password
 
   .form-group
     .col-sm-12.col-md-6
       .flex-center.mbm
-        label.mbn(translate="REMEMBER_2FA")
+        label.type-h5.em-400.mbn(translate="REMEMBER_2FA")
         span.label.label-warning(ng-hide="settings.rememberTwoFactor", translate="DISABLED")
         span.label.label-success(ng-show="settings.rememberTwoFactor", translate="ENABLED")
-      p.explain.hidden-xs.hidden-sm(translate="REMEMBER_2FA_EXPLAIN")    
+      p.em-300.text.line-height.hidden-xs.hidden-sm(translate="REMEMBER_2FA_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       div(ng-show="processToggleRememberTwoFactor")
         img(src="img/spinner.gif")
@@ -29,48 +29,48 @@ form.form-horizontal(role="form",name="form",novalidate)
   .form-group
     .col-sm-12.col-md-6
       .flex-center.mbm
-        label(translate="BLOCK_TOR")
+        label.type-h5.em-400(translate="BLOCK_TOR")
         span.label.label-warning(ng-hide="settings.blockTOR", translate="DISABLED")
         span.label.label-success(ng-show="settings.blockTOR", translate="ENABLED")
-      p.explain.hidden-xs.hidden-sm(translate="BLOCK_TOR_EXPLAIN")    
+      p.em-300.text.line-height.hidden-xs.hidden-sm(translate="BLOCK_TOR_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       tor
 
   .form-group
     .col-sm-12.col-md-6
-      label(translate="FEE_PER_KB")
-      p.explain.hidden-xs.hidden-sm(translate="FEE_PER_KB_EXPLAIN")
+      label.type-h5.em-400(translate="FEE_PER_KB")
+      p.em-300.text.line-height.hidden-xs.hidden-sm(translate="FEE_PER_KB_EXPLAIN")
     .col-sm-12.col-md-6.setting-result
       bc-async-input(ng-model="settings.feePerKB" validator="validateFee" is-required on-save="changeFeePerKB" transform="btc" action-title="'CHANGE_FEE_PER_KB' | translate")
 
   .form-group
     .col-sm-12.col-md-6
-      label(translate="PBKDF2_ITERATIONS")
-      p.explain.hidden-xs.hidden-sm(translate="PBKDF2_ITERATIONS_EXPLAIN")    
+      label.type-h5.em-400(translate="PBKDF2_ITERATIONS")
+      p.em-300.text.line-height.hidden-xs.hidden-sm(translate="PBKDF2_ITERATIONS_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       bc-async-input(ng-model="settings.pbkdf2" validator="validatePbkdf2" is-required on-save="changePbkdf2" action-title="'CHANGE_PBKDF2' | translate")
 
   .form-group
     .col-sm-12.col-md-6
-      label(translate="AUTO_LOGOUT")
-      p.explain.hidden-sm.hidden-xs(translate="AUTO_LOGOUT_EXPLAIN") 
+      label.type-h5.em-400(translate="AUTO_LOGOUT")
+      p.em-300.text.line-height.hidden-sm.hidden-xs(translate="AUTO_LOGOUT_EXPLAIN") 
     .col-sm-12.col-md-6.setting-result
       bc-async-input(ng-model="settings.logoutTimeMinutes" validator="validateLogoutTime" is-required on-save="changeLogoutTime" action-title="'CHANGE_AUTO_LOGOUT' | translate")
 
   .form-group(ng-class="{'has-error': errors.ipWhitelist}")
     .col-sm-12.col-md-6
-      label(translate="IP_WHITELIST")
-      p.explain.hidden-xs.hidden-sm(translate="IP_WHITELIST_EXPLAIN")    
+      label.type-h5.em-400(translate="IP_WHITELIST")
+      p.em-300.text.line-height.hidden-xs.hidden-sm(translate="IP_WHITELIST_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       bc-async-input.long-input(ng-model="settings.ipWhitelist", validator="validateIpWhitelist", on-save="changeIpWhitelist", action-title="'CHANGE_IP_WHITELIST' | translate", error-message="errors.ipWhitelist")
 
   .form-group
     .col-sm-12.col-md-6
       .flex-center.mbm
-        label.mbn(translate="API_ACCESS")
+        label.type-h5.em-400.mbn(translate="API_ACCESS")
         span.label.label-warning(ng-hide="settings.apiAccess" translate="DISABLED")
         span.label.label-success(ng-show="settings.apiAccess" translate="ENABLED")
-      p.explain.hidden-xs.hidden-sm(translate="API_ACCESS_EXPLAIN")    
+      p.em-300.text.line-height.hidden-xs.hidden-sm(translate="API_ACCESS_EXPLAIN")    
     .col-sm-12.col-md-6
       setting-toggle(
         value="settings.apiAccess"
@@ -82,10 +82,10 @@ form.form-horizontal(role="form",name="form",novalidate)
   .form-group
     .col-sm-12.col-md-6
       .flex-center.mbm
-        label.mbn(translate="LOGGING")
+        label.type-h5.em-400.mbn(translate="LOGGING")
         span.label.label-warning(ng-hide="settings.loggingLevel" translate="DISABLED")
         span.label.label-success(ng-show="settings.loggingLevel" translate="ENABLED")
-      p.explain.hidden-xs.hidden-sm(translate="LOGGING_EXPLAIN")    
+      p.em-300.text.line-height.hidden-xs.hidden-sm(translate="LOGGING_EXPLAIN")    
     .col-sm-12.col-md-6
       setting-toggle(
         value="settings.loggingLevel"
@@ -97,9 +97,9 @@ form.form-horizontal(role="form",name="form",novalidate)
   .form-group
     .col-sm-12.col-md-6
       .flex-center.mbm
-        label.mbn(translate="IP_WHITELIST_RESTRICT")
+        label.type-h5.em-400.mbn(translate="IP_WHITELIST_RESTRICT")
         span.label.label-warning(ng-hide="settings.restrictToWhitelist", translate="DISABLED")
         span.label.label-success(ng-show="settings.restrictToWhitelist", translate="ENABLED")
-      p.explain.hidden-xs.hidden-sm(translate="IP_WHITELIST_RESTRICT_EXPLAIN")    
+      p.em-300.text.line-height.hidden-xs.hidden-sm(translate="IP_WHITELIST_RESTRICT_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       ip-whitelist-restrict

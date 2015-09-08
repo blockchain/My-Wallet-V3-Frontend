@@ -1,16 +1,16 @@
-h5.well.headliner.hidden-xs(translate="WALLET_RECOVERY_EXPLAIN")
+h5.well.type-h5.em-400.hidden-xs(translate="WALLET_RECOVERY_EXPLAIN")
 form.form-horizontal(role="form" name="recoveryForm" novalidate)  
   .form-group
     .col-sm-12.col-md-6
       .flex-center.mbm
-        label.mbn(translate="MY_RECOVERY_PHRASE")
+        label.type-h5.em-400.mbn(translate="MY_RECOVERY_PHRASE")
         span.label.label-danger(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
         span.label.label-success(translate="VERIFIED", ng-show="status.didConfirmRecoveryPhrase")
-      p.explain.hidden-xs.hidden-sm(translate="RECOVERY_PHRASE_EXPLAIN")    
+      p.text.line-height.em-300.hidden-xs.hidden-sm(translate="RECOVERY_PHRASE_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       confirm-recovery-phrase
-      a.recovery.button-muted(ng-click="toggleRecoveryPhrase()", ng-hide="showRecoveryPhrase", translate="SHOW_RECOVERY_PHRASE")
-      a.recovery.button-muted(ng-click="toggleRecoveryPhrase()", ng-show="showRecoveryPhrase", translate="HIDE_RECOVERY_PHRASE")
+      a.button-muted(ng-click="toggleRecoveryPhrase()", ng-hide="showRecoveryPhrase", translate="SHOW_RECOVERY_PHRASE")
+      a.button-muted(ng-click="toggleRecoveryPhrase()", ng-show="showRecoveryPhrase", translate="HIDE_RECOVERY_PHRASE")
 
     .row
       .col-xs-12
@@ -19,8 +19,8 @@ form.form-horizontal(role="form" name="recoveryForm" novalidate)
         
   .form-group
     .col-sm-12.col-md-6
-      label(translate="IMPORT_RECOVERY_PHRASE")
-      p.explain.hidden-xs.hidden-sm(translate="IMPORT_RECOVERY_PHRASE_EXPLAIN")    
+      label.type-h5.em-400(translate="IMPORT_RECOVERY_PHRASE")
+      p.text.line-height.em-300.hidden-xs.hidden-sm(translate="IMPORT_RECOVERY_PHRASE_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       p
         a.button-primary(ng-click="importRecoveryPhrase()",translate="IMPORT_RECOVERY_PHRASE", ng-hide="editMnemonic")
