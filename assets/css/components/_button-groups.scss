@@ -4,13 +4,11 @@
     margin-right: .25em;
   }
   button, a {
-    padding: .25em .8em;
-    background: #FEFEFE;
+    padding: .25em;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
-    font-weight: 300;
-    font-size: 1.4em;
-    min-width: 115px;
+    font-size: 1.2em;
+    min-width: 100px;
     transition: all .2s ease-in-out;
     color: $text;
     &:hover {
