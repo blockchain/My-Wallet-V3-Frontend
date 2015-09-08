@@ -121,3 +121,20 @@ html,body {
   }
 }
 .z-10 { z-index: 10; }
+
+noscript {
+  display:flex;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items:center;
+  height: 100%;
+  width: 100%;
+
+  img {
+    margin-bottom: 3em;
+  }
+}
