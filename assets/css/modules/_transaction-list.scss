@@ -69,55 +69,15 @@
   background-color: $light-blue;
   border: 1px solid $eee;
   border-radius: 5px;
-  padding: 20px;
-  max-width: 780px;
-  margin: 10px auto;
+  min-width: 50vw;
   font-size: 1.1em;
-  .tx-date{
-    border-bottom: 1px solid $border-grey;
-    padding: 0 0px 15px 0;
-    margin-bottom: 15px;
-    color: #6C6C6C;
-    font-size: 1.1em;
-  }
-  .tx-details{
-    div{
-      margin-bottom: 20px;
-    }
-    p{
-      margin: 0 10px 0px 0;
-      font-weight: 600;
-    }
-    strong{
-      display: inline;
-      font-weight: 400;
-      word-break: break-all;
-    }
-  }
-  .tx-sidebar{
-    border-left: 1px solid $border-grey;
-  }
   .tx-status{
     font-weight: 600;
     color: rgb(4, 155, 212);
     padding: 15px 0px;
   }
-  .tx-notes{
-    margin-top: 25px;
-    padding-top: 25px;
-    border-top: 1px solid $grey;
-    i{margin-right: 5px;}
-
-  }
   .tx-amount{
     span{float: none;}
-  }
-  .tx-value{
-    text-align: center;
-    margin-bottom: 10px;
-    p{font-size: .9em; margin: 0; }
-    span{font-weight: bold; font-size: 1.3em;}
-
   }
   button.amount{padding: 10px;height: auto;width: 100%;}
   span.you{opacity: .5; font-style: italic;padding-right: 5px;}
@@ -186,6 +146,7 @@ a.date,p.date { color: $black; }
 @media(max-width: 767px) {
   .transaction-card {
     top: 0;
+    margin: 10px;
     .tx-sidebar, .tx-details {
       width: 100%;
     }

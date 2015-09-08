@@ -12,6 +12,7 @@
 //import elements
 @import 'elements/buttons';
 @import 'elements/inputs';
+@import 'elements/labels';
 @import 'elements/links';
 @import 'elements/tables';
 @import 'elements/textareas';
@@ -76,18 +77,6 @@ html,body {
   background: transparent;
 }
 
-a.back {
- h4{
-  background: url("/img/back.png") no-repeat left center;
-  background-size: 10px;
-  padding: 0 20px;
- }
- &:hover{
-  text-decoration: none;
-  }
-}
-
-.long-input{overflow-wrap:break-word; }
 
 .form-ctrl {
   padding: 15px 0;

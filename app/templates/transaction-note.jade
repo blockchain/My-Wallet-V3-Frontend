@@ -1,6 +1,6 @@
 span.note.em-300
-  .flex.mtm(ng-hide="editNote")
-    i.ti-notepad
+  .flex.mvl(ng-hide="editNote")
+    i.ti-notepad.mrm
     .ccc.pointer.break-word {{ transaction.note }}
   button.button-primary.button-sm.mrm(ng-click="startEditNote()", ng-hide="transaction.note || editNote", translate="ADD_NOTE")
   button.button-default.button-sm.mrm(ng-hide="editNote || !transaction.note", ng-click="startEditNote()" translate="EDIT_NOTE")

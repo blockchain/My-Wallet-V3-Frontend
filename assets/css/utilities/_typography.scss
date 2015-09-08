@@ -1,23 +1,20 @@
 .type-xs { font-size: .75em; }
 .type-sm { font-size: .9em; }
-.type-h6 { font-size: 1.1em; }
-.type-h5 { font-size: 1.3em; }
+.type-h5 { font-size: 1.2em; }
 .type-h4 { font-size: 1.5em; }
-.type-h3 { font-size: 1.8em; }
-.type-h2 { font-size: 2.2em; }
-.type-h1 { font-size: 2.6em; }
 .title { font-size: 3.5em; }
 .underline { text-decoration: underline; }
 .pointer { cursor: pointer; }
 .right-align { text-align: right; }
 .left-align { text-align: left; }
 .center-align { text-align: center; }
-.lh-lg { line-height: 1.75; }
+.line-height { line-height: 1.75; }
 .shadow { text-shadow: 0 1px 1px #ccc; }
 .em-alt { text-transform: uppercase; }
 .no-select { user-select: none; }
 .break-word { word-break: break-word; }
-.text { font-size: 14px; } //use pixels to normalize with Bootstrap
+.long-input { overflow-wrap: break-word; }
+.text { font-size: 14px; } //use pixels to normalize with Bootstrap instead of em's
 
 .text-overflow-hidden, .ui-select-match-text {
   text-overflow: ellipsis;
