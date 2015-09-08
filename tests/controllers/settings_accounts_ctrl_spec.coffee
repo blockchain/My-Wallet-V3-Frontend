@@ -50,6 +50,13 @@ describe "SettingsWalletNavigationCtrl", ->
 
   )
 
+  it "should open modal to reveal the xpub",  inject(() ->
+    account = scope.accounts()[0]
+    spyOn(modal, "open")
+    scope.revealXpub(account)
+    expect(modal.open).toHaveBeenCalled()
+  )
+
   it "should open modal to transfer funds",  inject(() ->
     spyOn(modal, "open")
     scope.transfer()

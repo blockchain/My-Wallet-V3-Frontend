@@ -151,6 +151,8 @@
   "CREATE_NEW_ACCOUNT" : "Create New Account",
   "CREATE_ACCOUNT" : "Create Account",
   "ACCOUNT_NAME" : "Account Name:",
+  "REVEAL_XPUB" : "Reveal Xpub",
+  "ACCOUNT_XPUB_MODAL_TITLE" : "Account Xpub",
   "PAYMENT_REQUESTS" : "Payment Requests",
   "PENDING" : "Pending",
   "COMPLETE" : "Complete",

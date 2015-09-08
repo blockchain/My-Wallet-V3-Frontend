@@ -1,0 +1,10 @@
+.modal-header
+  h3(translate="ACCOUNT_XPUB_MODAL_TITLE") 
+.modal-body
+  form(role="form" name="accountForm" novalidate)
+    .form-group.flex-column.flex-justify(ng-class="{'has-error': accountForm.$invalid && accountForm.$dirty}")
+      label.control-label Xpub
+      p.form-control-static
+        {{ xpub }}
+.modal-footer.pal.flex-end.flex-center
+  button.button-muted.button-lg.mrm(ng-click="close()", translate="CLOSE")
