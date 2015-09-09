@@ -94,3 +94,9 @@
   .top-view .balance p { font-size: .9em; }
 }
 
+@media (max-width:480px) {
+  .main-container {
+    background: transparent;
+    height: calc(100% - 120px);
+  }
+}
