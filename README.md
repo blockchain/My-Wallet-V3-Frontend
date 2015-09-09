@@ -1,6 +1,6 @@
-# MyWallet HD Frontend [![Build Status](https://travis-ci.org/blockchain/My-Wallet-HD-Frontend.png?branch=master)](https://travis-ci.org/blockchain/My-Wallet-HD-Frontend)
+# MyWallet V3 Frontend [![Build Status](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend.png?branch=master)](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend)
 
-An AngularJS bitcoin web wallet powered by [My-Wallet-HD](https://github.com/blockchain/My-Wallet-HD).
+An AngularJS bitcoin web wallet powered by [My-Wallet-V3](https://github.com/blockchain/My-Wallet-V3).
 
 ## Running Locally
 
@@ -19,16 +19,16 @@ gem install sass
 ```
 
 ```sh
-git clone https://github.com/blockchain/My-Wallet-HD-Frontend.git 
-cd My-Wallet-HD-Frontend
+git clone https://github.com/blockchain/My-Wallet-V3-Frontend.git 
+cd My-Wallet-V3-Frontend
 npm install
 ```
 
-Include My-Wallet-HD (which is shared between the web and iOs app):
+Include My-Wallet-V3 (which is shared between the web and iOs app):
 
 ```sh
 cd assets/js
-git clone https://github.com/blockchain/My-Wallet-HD.git my-wallet
+git clone https://github.com/blockchain/My-Wallet-V3.git my-wallet
 cd my-wallet
 npm install
 grunt build
@@ -36,7 +36,7 @@ grunt build
 
 cd back into the root of the directory
 ```sh
-cd ~/path/to/My-Wallet-HD-Frontend
+cd ~/path/to/My-Wallet-V3-Frontend
 ```
 
 Grunt compiles the view templates and CSS. Keep it running:
@@ -149,7 +149,7 @@ Not supported by the server yet.
 
 ## Deploy
 
-First create a minified javascript file for the MyWalletHD component:
+First create a minified javascript file for the MyWalletV3 component:
 
     cd assets/js/my-wallet
     grunt dist
