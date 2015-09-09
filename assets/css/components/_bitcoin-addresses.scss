@@ -4,10 +4,9 @@ label.black {
   font-weight: bold;
 }
 
-p.form-control-static.bitcoin-address {
+p.form-control-static.bitcoin-address, .xpub {
   background-color: #F5F7F9;
   padding: 10px;
-  text-align: center;
   font-family: "Courier New", monospace;
   font-size: 10pt;
   color: $black;

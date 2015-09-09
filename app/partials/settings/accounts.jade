@@ -27,6 +27,8 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
           li
             a(translate="BITCOIN_ADDRESS", ng-click="showAddress(account)")
           li
+            a(translate="REVEAL_XPUB",      ng-click="revealXpub(account)")
+          li
             a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="isDefault(account)")
 
 .mtl

@@ -45,6 +45,18 @@ walletApp.controller "SettingsWalletNavigationCtrl", ($scope, Wallet, $modal, fi
       modalInstance.opened.then () ->
         Wallet.store.resetLogoutTimeout()
 
+  $scope.revealXpub = (account) ->
+
+    modalInstance = $modal.open(
+      templateUrl: "partials/reveal-xpub.jade"
+      controller: "RevealXpubCtrl"
+      resolve:
+        account: -> account
+      windowClass: "bc-modal"
+    )
+    if modalInstance?
+      modalInstance.opened.then () ->
+        Wallet.store.resetLogoutTimeout()
 
   $scope.makeDefault = (account) ->
     Wallet.setDefaultAccount(account)
