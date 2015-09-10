@@ -839,6 +839,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.updateTransactions()
       wallet.status.didLoadBalances = true if wallet.my.wallet.isUpgradedToHD
       wallet.applyIfNeeded()
+    else if event == "did_load_balance_history"
+      wallet.status.didLoadBalanceHistory = true if wallet.my.wallet.isUpgradedToHD
+      wallet.applyIfNeeded()
     else if event == "did_update_legacy_address_balance"
       console.log "did_update_legacy_address_balance"
       wallet.applyIfNeeded()
