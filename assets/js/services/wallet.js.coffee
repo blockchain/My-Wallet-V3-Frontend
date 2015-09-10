@@ -758,6 +758,12 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     else
       return []
 
+  wallet.balanceHistory = () ->
+    if wallet.my.wallet.hdwallet?
+      return wallet.my.wallet.hdwallet.balanceHistory
+    else
+      return []
+
   # wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts().length > 0 && wallet.accounts().some((a) -> a.active and a.balance)
 
   wallet.total = (accountIndex) ->
