@@ -22,6 +22,16 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
     waitForHeightAndWidth: true
   }
 
+  $scope.lineChartData = { series: [''], data: [] }
+
+  $scope.lineChartConfig = {
+    colors: [ 'RGB(96, 178, 224)' ]
+    labels: false
+    waitForHeightAndWidth: true
+    isAnimate: true
+    xAxisMaxTicks: 5
+  }
+
   # accountData helper functions
   $scope.convertToDisplay = (amount) ->
     currency = $scope.settings.displayCurrency
