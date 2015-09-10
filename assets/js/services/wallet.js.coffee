@@ -111,6 +111,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         # Fetch transactions:
         if wallet.my.wallet.isUpgradedToHD
           wallet.my.getHistoryAndParseMultiAddressJSON()
+          wallet.my.getBalanceHistory()
 
         wallet.applyIfNeeded()
       )
