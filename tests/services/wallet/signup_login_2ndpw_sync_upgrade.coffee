@@ -37,6 +37,8 @@ describe "walletServices", () ->
           success()
 
         getHistoryAndParseMultiAddressJSON: () ->
+
+        getBalanceHistory: () ->
       }
 
       Wallet.settings_api.get_account_info = (success, error) ->
