@@ -26,7 +26,6 @@ walletApp.controller("ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalI
   ];
 
   $scope.setRandomWords = recoveryPhrase => {
-    let word;
     let currentWordIndex = 0;
     let results = [];
     while (currentWordIndex < 4) {
@@ -35,11 +34,10 @@ walletApp.controller("ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalI
       if ($scope.hasWordBeenUsed(randIndex + 1)) {
         continue;
       }
-      word = $scope.words[currentWordIndex++];
+      let word = $scope.words[currentWordIndex++];
       word.actual = randWord;
-      results.push(word.index = randIndex + 1);
+      word.index = randIndex + 1;
     }
-    results;
   };
 
   $scope.hasWordBeenUsed = index => {
@@ -47,9 +45,8 @@ walletApp.controller("ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalI
   }
 
 
-  $scope.getRandInRange = (min, max) => {
-    Math.floor(Math.random() * (max - min + 1) + min);
-  };
+  $scope.getRandInRange = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+  
 
   $scope.close = () => {
     $modalInstance.dismiss("");
