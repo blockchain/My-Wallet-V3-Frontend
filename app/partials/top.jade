@@ -1,22 +1,28 @@
 .flex-center.flex-between.height-100(ng-show="status.isLoggedIn")
-  .button-group.flex
-    a.flex-center.flex-justify.mrm(ng-click="request()")
-      i.bc-icon-receive
-      span(translate="REQUEST")
-    a.flex-center.flex-justify(ng-click="send()")
-      i.bc-icon-send
-      span(translate="SEND")
-  .balance.flex-column.flex-align-end.right-align.pointer(ng-click="toggleDisplayCurrency()", ng-show="status.didUpgradeToHd")
+  .flex-column
+    .flex-baseline.heavy
+      h1.mtn.my-wallet My Wallet
+      p.mtn.mlm.type-h4.em-300
+        | Be your own bank.
+        span.type-xs.mls.align-offset.pos-rel &reg;
+    .button-group.flex
+      a.em-300.flex-center.flex-justify.mrm(ng-click="request()")
+        i.bc-icon-receive
+        span(translate="REQUEST")
+      a.em-300.flex-center.flex-justify(ng-click="send()")
+        i.bc-icon-send
+        span(translate="SEND")
+  .heavy.pointer.flex-column.flex-align-end.right-align.pointer(ng-click="toggleDisplayCurrency()", ng-show="status.didUpgradeToHd")
     span(ng-show="getTotal(accountIndex) == null")
       h3
         img(ng-show="balance == null" src="img/spinner.gif") 
     span(ng-show="getTotal(accountIndex) != null")
       span(ng-hide="isBitCurrency(settings.displayCurrency)")
-        h1
+        h1.mtn.em-600.pos-rel
           fiat(btc="getTotal(accountIndex)")
       span(ng-show="isBitCurrency(settings.displayCurrency)")
-        h1 {{ getTotal(accountIndex) | toBitCurrency:settings.btcCurrency }}
-      p
+        h1.mtn.em-600.pos-rel {{ getTotal(accountIndex) | toBitCurrency:settings.btcCurrency }}
+      p.mvn.type-h4.em-300.align-offset.pos-rel
         fiat(btc="getTotal(accountIndex)", ng-show="isBitCurrency(settings.displayCurrency)")
         span(ng-hide="isBitCurrency(settings.displayCurrency)")
           span {{ getTotal(accountIndex) | toBitCurrency:settings.btcCurrency }}

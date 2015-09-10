@@ -27,30 +27,22 @@
   margin-left: 270px;
   border-bottom: 1px solid $border-grey;
   padding: 0 30px;
-  height: 100px;
+  height: 130px;
   top: 65px;
-  .balance {
-    cursor: pointer;
-    h1 {
-      font-size: 2.5em;
-      font-weight: 600;
-    }
-    p {
-      margin-top: 0px;
-      float: right;
-      font-size: 1.3em;
-    }
+  .heavy {
+    h1 { font-size: 2.3em; }
     img.spinner {
       height: 11px;
     }
   }
+  .align-offset { top: -6px; }
 }
 
 .main-container {
   background: white;
   position: relative;
   left: 270px;
-  top: 90px;
+  top: 120px;
   overflow-y: scroll;
   overflow-x: hidden;
   width: calc(100% - 270px);
@@ -74,7 +66,7 @@
     width: 100%;
     position: relative;
     margin-left: 0;
-    height: 80px;
+    height: 95px;
     top: 0px;
   }
   .transactions { top: 0; }
@@ -86,11 +78,14 @@
 }
 
 @media (max-width: 992px) {
-  .top-view .balance h1 { font-size: 2em; }
+  .top-view .heavy h1 { font-size: 1.75em; }
+  .top-view .heavy p { font-size: 1em; }
 }
 
 @media (max-width: 768px) {
-  .top-view .balance h1 { font-size: 1.25em; }
-  .top-view .balance p { font-size: .9em; }
+  .top-view .my-wallet { display: none; }
+  .top-view .heavy h1 { font-size: 1.25em; }
+  .top-view .heavy p { font-size: .9em; }
+  .top-view .heavy .em-600 { top: -6px; }
 }
 
