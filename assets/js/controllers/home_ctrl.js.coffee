@@ -1,5 +1,6 @@
 walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
   $scope.accounts = Wallet.accounts
+  $scope.balanceHistory = Wallet.balanceHistory
   $scope.status = Wallet.status
   $scope.settings = Wallet.settings
   $scope.getTotal = () -> Wallet.total('accounts')
