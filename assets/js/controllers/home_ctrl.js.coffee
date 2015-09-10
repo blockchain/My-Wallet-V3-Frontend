@@ -128,6 +128,9 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
   $scope.updatePieChartData = () ->
     $scope.pieChartData.data = $scope.accountData(4)
 
+  $scope.updateLineChartData = () ->
+    $scope.lineChartData.data = $scope.balanceHistoryData()
+
   # Watchers
   loadedTxs = $scope.$watch 'status.didLoadTransactions', (didLoad) ->
     return unless didLoad
