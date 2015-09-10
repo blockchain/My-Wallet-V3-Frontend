@@ -142,6 +142,11 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
     $scope.updatePieChartData()
     loadedBalances()
 
+  loadedBalanceHistory = $scope.$watch 'status.didLoadBalanceHistory', (didLoad) ->
+    return unless didLoad
+    $scope.updateLineChartData()
+    loadedBalanceHistory()
+
   $scope.$watch 'settings.displayCurrency', ->
     $scope.updatePieChartData()
 
