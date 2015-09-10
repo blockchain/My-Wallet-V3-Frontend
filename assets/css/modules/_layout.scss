@@ -89,3 +89,9 @@
   .top-view .heavy .em-600 { top: -6px; }
 }
 
+@media (max-width:480px) {
+  .main-container {
+    background: transparent;
+    height: calc(100% - 120px);
+  }
+}
