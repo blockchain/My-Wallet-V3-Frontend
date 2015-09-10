@@ -54,6 +54,15 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
     y: [account.balance]
     tooltip: $scope.convertToDisplay(account.balance)
 
+  $scope.balanceHistoryDataFormat = (entry) ->
+    currency = $scope.settings.displayCurrency
+    amount = Wallet.convertFromSatoshi(entry.balance, currency)
+    return {
+      x: entry.date
+      y: [amount]
+      tooltip: $scope.convertToDisplay(entry.balance)
+    }
+
   $scope.sumReduceAccounts = (prev, current) ->
     balance: prev.balance + current.balance
     label: 'Remaining Accounts'
