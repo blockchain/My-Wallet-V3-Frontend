@@ -1,33 +1,28 @@
 .payment-url {
   @extend .flex;
-  .receive-code { flex: 2; }
-  .receive-address { flex: 3; }
 }
-
+.receive-code canvas { margin-right: 2em; padding-right: 2em; }
 @media (max-width: 668px) {
   .payment-url {
     flex-direction: column;
     align-items: center;
-    -webkit-align-items: center;
   }
-  .receive-code, .receive-address { flex: 0; }
+  .receive-address { margin-top: 1em; }
+  .receive-code canvas { margin-right: 0; padding-right: 0; }
 }
 
 .miners-fee-selection {
   display: flex;
   align-items: center;
-  -webkit-align-items: center;
   .fee-choices, .fee-custom { @extend .flex; }
   .fee-choices {
     flex-direction: column;
-    -webkit-flex-direction: column;
     border-right: 1px solid $grey;
     margin-right: 30px;
     padding-right: 20px;
   }
   .fee-custom {
     align-items: center;
-    -webkit-align-items: center;
   }
   label { font-size: small; }
   .form-control { width: auto; }
@@ -37,12 +32,10 @@
   .miners-fee-selection {
     flex-direction: column;
     align-items: initial;
-    -webkit-align-items: initial;
     span.success { display: block; }
     label { margin-right: 15px; }
     .fee-choices {
       flex-direction: row;
-      -webkit-flex-direction: row;
       margin-bottom: 10px;
       margin-right: 0;
       border-right: none;
