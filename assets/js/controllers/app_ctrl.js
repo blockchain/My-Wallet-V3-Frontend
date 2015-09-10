@@ -23,9 +23,7 @@ walletApp.controller("AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
     modalInstance = $modal.open({
       templateUrl: "partials/request.jade",
       controller: "RequestCtrl",
-      resolve: {
-        destination: () => {null;}
-      },
+      resolve: {destination: () => null},
       windowClass: "bc-modal"
     });
     if (modalInstance != null) {
@@ -40,12 +38,10 @@ walletApp.controller("AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
       templateUrl: "partials/send.jade",
       controller: "SendCtrl",
       resolve: {
-        paymentRequest: () => {
-          return {
-            address: "",
-            amount: ""
-          };
-        }
+        paymentRequest: () => ({
+          address: "",
+          amount: ""
+        })
       },
       windowClass: "bc-modal"
     });
@@ -92,9 +88,7 @@ walletApp.controller("AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
             templateUrl: "partials/send.jade",
             controller: "SendCtrl",
             resolve: {
-              paymentRequest: () => {
-                Wallet.goal.send;
-              }
+              paymentRequest: () => Wallet.goal.send
             },
             windowClass: "bc-modal"
           });
@@ -105,9 +99,7 @@ walletApp.controller("AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
             templateUrl: "partials/claim.jade",
             controller: "ClaimModalCtrl",
             resolve: {
-              claim: () => {
-                Wallet.goal.claim;
-              }
+              claim: () => Wallet.goal.claim
             },
             windowClass: "bc-modal"
           });
@@ -163,12 +155,8 @@ walletApp.controller("AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
       controller: "SecondPasswordCtrl",
       backdrop: insist ? "static" : null,
       resolve: {
-        insist: () => {
-          insist;
-        },
-        defer: () => {
-          defer;
-        }
+        insist: () => insist,
+        defer: () => defer
       }
     });
     modalInstance.result.then(() => {}, () => { defer.reject();});
