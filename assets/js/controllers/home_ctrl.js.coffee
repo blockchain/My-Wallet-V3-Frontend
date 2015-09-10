@@ -29,6 +29,10 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
     labels: false
     waitForHeightAndWidth: true
     isAnimate: true
+    legend: {
+      display: false
+      position: 'right'
+    }
     xAxisMaxTicks: 5
   }
 
