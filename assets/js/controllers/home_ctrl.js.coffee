@@ -81,6 +81,49 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
     largestAccounts.push(otherAccounts) unless otherAccounts.balance == 0
     largestAccounts.map($scope.chartDataFormat)
 
+  $scope.balanceHistoryData = () ->
+    history = Wallet.balanceHistory()
+
+    history.sort (a, b) ->
+      if a.timestamp > b.timestamp
+        return 1
+      else if a.timestamp < b.timestamp
+        return -1
+      else
+        return 0
+
+    # TODO: Internationalize this
+    month = [
+      "Jan"
+      "Feb"
+      "Mar"
+      "Apr"
+      "May"
+      "Jun"
+      "Jul"
+      "Aug"
+      "Sep"
+      "Oct"
+      "Nov"
+      "Dec"
+    ]
+
+    # Loop through history and only display the last balance for each day
+    seenDates = []
+    consolidatedHistory = []
+
+    for entry in history
+      date = new Date(entry.timestamp)
+      entry.date = (month[date.getMonth()] + ' ' + date.getDate())
+
+      if entry.date in seenDates
+        consolidatedHistory[consolidatedHistory.length - 1] = entry
+      else
+        seenDates.push entry.date
+        consolidatedHistory.push entry
+
+    consolidatedHistory.map($scope.balanceHistoryDataFormat)
+
   # Call when chart needs to be updated
   $scope.updatePieChartData = () ->
     $scope.pieChartData.data = $scope.accountData(4)
