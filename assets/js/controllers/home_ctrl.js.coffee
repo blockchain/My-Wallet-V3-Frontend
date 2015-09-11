@@ -97,7 +97,7 @@ walletApp.controller "HomeCtrl", ($q, $scope, $window, Wallet, $modal) ->
     largestAccounts.push(otherAccounts) unless otherAccounts.balance == 0
     largestAccounts.map($scope.chartDataFormat)
 
-  $scope.balanceHistoryData = () ->
+  $scope.balanceHistoryData = (forceBTC = false) ->
     history = Wallet.balanceHistory()
 
     history.sort (a, b) ->
