@@ -24,7 +24,7 @@ walletApp.controller "HomeCtrl", ($q, $scope, $window, Wallet, $modal) ->
     waitForHeightAndWidth: true
   }
 
-  $scope.lineChartData = { series: [''], data: [] }
+  $scope.lineChartData = {}
 
   $scope.lineChartConfig = {
     colors: [ 'RGB(96, 178, 224)' ]
@@ -150,7 +150,7 @@ walletApp.controller "HomeCtrl", ($q, $scope, $window, Wallet, $modal) ->
 
   $scope.updateLineChartData = () ->
     $scope.balanceHistoryData().then (data) ->
-      $scope.lineChartData.data = data
+      $scope.lineChartData = { series: [''], data: data }
 
   # Watchers
   loadedTxs = $scope.$watch 'status.didLoadTransactions', (didLoad) ->
