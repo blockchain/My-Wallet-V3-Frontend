@@ -152,6 +152,9 @@ walletApp.controller "HomeCtrl", ($q, $scope, $window, Wallet, $modal) ->
   $scope.updateLineChartData = () ->
     $scope.balanceHistoryData().then (data) ->
       $scope.lineChartData = { series: [''], data: data }
+    , (error) ->
+      $scope.balanceHistoryData(true).then (data) ->
+        $scope.lineChartData = { series: [''], data: data }
 
   # Watchers
   loadedTxs = $scope.$watch 'status.didLoadTransactions', (didLoad) ->
