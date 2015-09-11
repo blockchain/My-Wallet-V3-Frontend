@@ -3,6 +3,7 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
   $scope.balanceHistory = Wallet.balanceHistory
   $scope.status = Wallet.status
   $scope.settings = Wallet.settings
+  $scope.conversions = Wallet.conversions
   $scope.getTotal = () -> Wallet.total('accounts')
   $scope.empty = false
   $scope.transactions = []
