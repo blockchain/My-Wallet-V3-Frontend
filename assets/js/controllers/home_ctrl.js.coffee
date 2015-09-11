@@ -55,20 +55,21 @@ walletApp.controller "HomeCtrl", ($q, $scope, $window, Wallet, $modal) ->
     y: [account.balance]
     tooltip: $scope.convertToDisplay(account.balance)
 
-  $scope.balanceHistoryDataFormat = (entry) ->
-    currency = $scope.settings.currency
-    if currency and currency.code
-      # Check that there is a valid conversion
-      conversion = $scope.conversions[currency.code]
-      if conversion and conversion.conversion > 0
-        return $q (resolve, reject) ->
-          Wallet.getFiatAtTime(entry.balance, entry.timestamp, currency.code).then(resolve, reject)
-        .then (amount) ->
-          return {
-            x: entry.date
-            y: [parseFloat(amount)]
-            tooltip: conversion.symbol + amount
-          }
+  $scope.balanceHistoryDataFormat = (entry, forceBTC) ->
+    unless forceBTC
+      currency = $scope.settings.currency
+      if currency and currency.code
+        # Check that there is a valid conversion
+        conversion = $scope.conversions[currency.code]
+        if conversion and conversion.conversion > 0
+          return $q (resolve, reject) ->
+            Wallet.getFiatAtTime(entry.balance, entry.timestamp, currency.code).then(resolve, reject)
+          .then (amount) ->
+            return {
+              x: entry.date
+              y: [parseFloat(amount)]
+              tooltip: conversion.symbol + amount
+            }
 
     currency = $scope.settings.displayCurrency
     amount = Wallet.convertFromSatoshi(entry.balance, currency)
