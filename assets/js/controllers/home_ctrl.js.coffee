@@ -141,7 +141,7 @@ walletApp.controller "HomeCtrl", ($q, $scope, $window, Wallet, $modal) ->
     promises = []
 
     for entry in consolidatedHistory
-      promises.push $scope.balanceHistoryDataFormat(entry)
+      promises.push $scope.balanceHistoryDataFormat(entry, forceBTC)
 
     return $q.all(promises)
 
