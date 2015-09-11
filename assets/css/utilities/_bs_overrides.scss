@@ -133,15 +133,12 @@ $select-fg: #686868;
 
 //A better .well class
 .well {
-  min-height: 20px;
   padding: 20px;
   margin-bottom: 20px;
   background-color: $light-blue;
   border: 1px solid $border-grey;
   border-radius: 5px;
   line-height: 2em;
-  font-size: 1.2em;
-  font-weight: 400;
 }
 
 //override BS modal-footer alignment craziness

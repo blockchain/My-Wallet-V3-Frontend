@@ -1,48 +1,23 @@
 %flex {
   display: flex;
 }
-.flex, .flex-end, .flex-between, .flex-start, .flex-column, .flex-center, .flex-align-start, .flex-align-end {
+.flex, .flex-end, .flex-between, .flex-start, .flex-column, .flex-center, .flex-align-start, .flex-align-end, .flex-baseline {
   @extend %flex;
 }
-.flex-between {
-  justify-content: space-between;
-}
-
-.flex-align-end {
-  align-items: flex-end;
-}
-
-.flex-align-start {
-  align-items: flex-start;
-}
-
-.flex-end {
-  justify-content: flex-end;
-}
-
-.flex-start {
-  justify-content: flex-start;
-}
-
-.flex-column {
-  flex-direction: column;
-}
-.flex-center {
-  align-items: center;
-}
-.flex-justify {
-  justify-content: center;
-}
-.flex-important {
-  display: flex !important;
-}
-.flex-wrap {
-  flex-wrap: wrap;
-}
+.flex-between { justify-content: space-between; }
+.flex-align-end { align-items: flex-end; }
+.flex-align-start { align-items: flex-start; }
+.flex-end { justify-content: flex-end; }
+.flex-start { justify-content: flex-start; }
+.flex-column { flex-direction: column; }
+.flex-center { align-items: center; }
+.flex-justify { justify-content: center; }
+.flex-baseline { align-items: baseline; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-important { display: flex !important; }
 
 @for $i from 1 through 12 {
   .flex-#{$i} {
     flex: $i;
   }
 }
-

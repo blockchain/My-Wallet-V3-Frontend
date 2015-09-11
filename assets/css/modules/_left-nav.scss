@@ -87,7 +87,7 @@ ul.aside {
   }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 768px) {
   .wallet-footer { bottom: 0; }
 }
 
@@ -166,5 +166,18 @@ li.action-bar{
 @media (max-height: 680px) {
   .adverts {
     display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  ul.aside  {
+    li.header, a.new-acct {
+      font-size: .75em;
+    }
+  }
+  .wallet-footer { margin: 0; }
+  .terms-policy {
+    float:right;
+    font-size: .75em;
   }
 }

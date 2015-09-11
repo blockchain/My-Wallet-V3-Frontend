@@ -26,7 +26,10 @@ describe "Transaction Description Directive", ->
     Wallet.accounts = () -> [{index: 0, label: "Savings"}, { index: 1, label: "Spending"}]
 
     $rootScope.transaction = {
-            hash: "tx_hash", confirmations: 13, intraWallet: null,
+            hash: "tx_hash",
+            confirmations: 13,
+            intraWallet: null,
+            txTime: 1441400781,
             from: {account: {index: 0, amount: 300000000}, legacyAddresses: null, externalAddresses: null},
             to: {account: {index: 1, amount: 300000000}, legacyAddresses: null, externalAddresses: null}
           }

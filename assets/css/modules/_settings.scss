@@ -1,25 +1,14 @@
-#settings {
+.settings {
   padding: 15px 30px;
   .label {
     font-weight: normal;
     margin-left: 10px;
   }
-  .label-warning {
-    background-color: $security-red;
+  .label-warning { background-color: $security-red;
   }
-  .label-success {
-    background-color: $security-green;
-  }
-  .qr{
-    padding: 20px 0;
-  }
+  .label-success { background-color: $security-green; }
   h2 {
     font-size: 12pt;
-  }
-  .right {
-    a {
-      text-transform: lowercase;
-    }
   }
   .edit-mobile {
     button.ui-select-match {
@@ -35,71 +24,24 @@
   pre.recovery{
     padding: 15px;
     margin: 15px;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
     user-select: none;
   }
   table {
-    width: 100%;
-
     th {
-      background-color: #F2F2F2;
+      background-color: $light-grey;
     }
-
     td, th {
       border: 1px solid $border-grey;
       padding: 10px;
-
-      .btc {
-        color: #545454;
-      }
-
-      .fiat {
-        color: $dark-grey;
-        font-size: 80%;
-        display: block;
-      }
-
     }
   }
-  form.form-horizontal{
-  .form-group{
-     margin: 0!important;
-   border-bottom: 1px solid $grey;
-   padding: 20px 0;
-
-     &:hover{
-      background: $hover-blue;
-     }
-
-     label{
-    color: #838383;
-    font-size: 125%;
-    font-weight: 400;
-     }
-
-     p.explain{
-    color: $mid-grey;
-    line-height: 1.6em;
-    font-size: 10pt;
-     }
-
-     p.settingtext {
-       font-size: 8pt;
-       clear: both;
-     }
+  form.form-horizontal {
+    .form-group {
+      margin: 0!important;
+      border-bottom: 1px solid $grey;
+      padding: 20px 0;
+      &:hover { background: $hover-blue; }
     }
-  }
-}
-
-.title {
-  h2 { margin: 0 0 15px 0; }
-  p{
-   font-size: 120%;
-   color: #AEAEAE;
   }
 }
 
@@ -107,7 +49,7 @@
   p { margin-top: 15px; }
 }
 
-.inneredit{padding: 10px 15px 0;}
+.inneredit { padding: 10px 15px 0;}
 
 .account-container {
   border: 1px solid $grey;
@@ -118,7 +60,7 @@
     background-size: 35px;
     margin-bottom: 10px;
     margin-top: 10px;
-    span{font-size: 13pt;word-break: break-word; color: #686868;margin-bottom: 10px;}
+    span {font-size: 13pt;word-break: break-word; color: #686868;margin-bottom: 10px;}
     span.label{font-size: 10pt!important;}
   }
   ul {

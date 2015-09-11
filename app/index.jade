@@ -67,6 +67,7 @@ head
   script(src='build/js/translations.js')
   
   script(src='build/js/controllers/account_form_ctrl.js')
+  script(src='build/js/controllers/reveal_xpub_ctrl.js')
   script(src='build/js/controllers/alerts_ctrl.js')
   script(src='build/js/controllers/app_ctrl.js')
   script(src='build/js/controllers/claim_ctrl.js')
@@ -164,9 +165,12 @@ head
   
   <!-- @if PRODUCTION !>
   link(rel='stylesheet', href='application.css')
-  script(src='application.min.js')
+  script(src='application.min.js')  
   <!-- @endif -->
   
+  //- Whitelist by copying script from browser and putting it in a file 
+  //- (including the last new line) and then run:
+  //- cat script | openssl dgst -sha256 -binary | openssl enc -base64
   script.
     if(browserDetection().browser === "ie" && browserDetection().version < 11) {
       if ( confirm("Your browser is out of date! It looks like you're using an old version of Internet Explorer. For the best Blockchain experience, please update your browser or hit cancel to return to our homepage.") ) {
@@ -178,3 +182,6 @@ head
     }
 
 body(ng-controller="AppCtrl", ui-view="body")
+  noscript
+    img(src="/img/logo-bw.png")
+    h3 Please enable JavaScript to use the Blockchain Wallet

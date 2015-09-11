@@ -7,34 +7,33 @@ describe "Did You Know directive", ->
 
   beforeEach module("walletApp")
   beforeEach(module("templates/did-you-know.jade"))
-  beforeEach module("walletServices")
 
   beforeEach ->
-
     translateMock =
       instant: (string) ->
         string
-
     module(($provide) ->
       $provide.value("$translate",translateMock)
       return
     )
+    inject ($injector) ->
+      DidYouKnow = $injector.get("DidYouKnow")
 
-  beforeEach inject((_$compile_, _$rootScope_, $injector) ->
+  beforeEach inject((_$compile_, _$rootScope_) ->
     $compile = _$compile_
     $rootScope = _$rootScope_
     scope = $rootScope.$new()
-    DidYouKnow = $injector.get("DidYouKnow")
     return
   )
 
   beforeEach ->
-    element = $compile("<div><did-you-know></did-you-know></div>")($rootScope)
+    element = $compile("<did-you-know></did-you-know>")($rootScope)
     $rootScope.$digest()
     scope.$apply()
 
   it "can randomize", ->
-    pending()
+    expect(scope.getRandInRange).toBeDefined()
 
-  it "fetches a random Did You Know", -> 
-    pending()
+  it "fetches a random DidYouKnow with defined attributes", ->
+    expect(scope.dyk.id).toBeDefined()
+    expect(scope.dyk.icon).toBeTruthy()

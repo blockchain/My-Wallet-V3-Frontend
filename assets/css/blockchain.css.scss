@@ -12,6 +12,7 @@
 //import elements
 @import 'elements/buttons';
 @import 'elements/inputs';
+@import 'elements/labels';
 @import 'elements/links';
 @import 'elements/tables';
 @import 'elements/textareas';
@@ -76,18 +77,6 @@ html,body {
   background: transparent;
 }
 
-a.back {
- h4{
-  background: url("/img/back.png") no-repeat left center;
-  background-size: 10px;
-  padding: 0 20px;
- }
- &:hover{
-  text-decoration: none;
-  }
-}
-
-.long-input{overflow-wrap:break-word; }
 
 .form-ctrl {
   padding: 15px 0;
@@ -132,3 +121,20 @@ a.back {
   }
 }
 .z-10 { z-index: 10; }
+
+noscript {
+  display:flex;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items:center;
+  height: 100%;
+  width: 100%;
+
+  img {
+    margin-bottom: 3em;
+  }
+}

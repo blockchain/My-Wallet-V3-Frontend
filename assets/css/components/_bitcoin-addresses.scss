@@ -1,21 +1,13 @@
-label.black {
-  color: black;
-  font-size: 10pt;
-  font-weight: bold;
-}
-
-p.form-control-static.bitcoin-address {
+p.form-control-static.bitcoin-address, .xpub {
   background-color: #F5F7F9;
   padding: 10px;
-  text-align: center;
   font-family: "Courier New", monospace;
   font-size: 10pt;
   color: $black;
   word-break: break-all;
-
   span{
-	overflow-wrap: break-word;
-	line-height: 1.9em;
+    overflow-wrap: break-word;
+    line-height: 1.9em;
   }
 }
 

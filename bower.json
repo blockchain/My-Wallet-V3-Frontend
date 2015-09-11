@@ -14,7 +14,7 @@
     "angular-bootstrap": "0.13.*",
     "angular-cookies": "1.4.*",
     "angular-audio": "1.6.*",
-    "angular-ui-select": "sjors/ui-select#reset-search-input-on-dist",
+    "angular-ui-select": "sjors/ui-select#csp-and-reset-search",
     "angular-sanitize": "1.4.*",
     "angular-qr": "0.2.*",
     "angular-numeraljs": "1.1.*",
