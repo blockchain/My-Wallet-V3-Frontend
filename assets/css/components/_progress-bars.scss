@@ -2,26 +2,19 @@
   background: $security-green;
   border-radius: 10px !important;
 }
-
-.level-3, .level-4, .level-5 {
-  background: $security-yellow;
+.level-3, .level-4, .level-5 { background: $security-yellow; }
+.level-0, .level-1, .level-2 { background: $security-red; }
+.level-0 { width: 5%; }
+[class^='level-'], [class*=' level-']{
+  height: 100%;
+  transition: width .3s ease-in-out;
 }
-
-.level-1, .level-2 {
-  background: $security-red;
-}
-
-@for $i from 0 through 6 {
+@for $i from 1 through 6 {
   .level-#{$i} {
     width: calc(#{$i}/6 * 100%);
-    height: 100%;
-    transition: width .3s ease-in-out;
   }
 }
-
-.bar {
-  border-radius: 10px 0 0 10px;
-}
+.bar { border-radius: 10px 0 0 10px; }
 
 .progress-bar-wrapper {
   border-radius: 10px;
