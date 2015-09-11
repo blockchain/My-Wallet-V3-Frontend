@@ -1,4 +1,4 @@
-walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
+walletApp.controller "HomeCtrl", ($q, $scope, $window, Wallet, $modal) ->
   $scope.accounts = Wallet.accounts
   $scope.balanceHistory = Wallet.balanceHistory
   $scope.status = Wallet.status
