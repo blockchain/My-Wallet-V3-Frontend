@@ -73,7 +73,7 @@ walletApp.controller "HomeCtrl", ($q, $scope, $window, Wallet, $modal) ->
 
     currency = $scope.settings.displayCurrency
     amount = Wallet.convertFromSatoshi(entry.balance, currency)
-    return $q({
+    return $q.when({
       x: entry.date
       y: [amount]
       tooltip: $scope.convertToDisplay(entry.balance)
