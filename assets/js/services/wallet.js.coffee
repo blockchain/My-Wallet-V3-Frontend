@@ -694,30 +694,36 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       if alert?
         $timeout.cancel(alert.timer)
 
-  wallet.displayInfo = (message, keep=false) ->
-    wallet.displayAlert {type: "info", msg: message}, keep
+  wallet.displayInfo = (message, keep, context) ->
+    wallet.displayAlert {type: "info", msg: message}, keep, context
 
-  wallet.displaySuccess = (message, keep=false) ->
-    wallet.displayAlert {type: "success", msg: message}, keep
+  wallet.displaySuccess = (message, keep, context) ->
+    wallet.displayAlert {type: "success", msg: message}, keep, context
 
-  wallet.displayWarning = (message, keep=false) ->
-    wallet.displayAlert  {msg: message}, keep
+  wallet.displayWarning = (message, keep, context) ->
+    wallet.displayAlert  {msg: message}, keep, context
 
-  wallet.displayError = (message, keep=false) ->
-    wallet.displayAlert {type: "danger", msg: message}, keep
+  wallet.displayError = (message, keep, context) ->
+    wallet.displayAlert {type: "danger", msg: message}, keep, context
 
   wallet.displayReceivedBitcoin = () ->
     $translate("JUST_RECEIVED_BITCOIN").then (translation) ->
       wallet.displayAlert {type: "received-bitcoin", msg: translation}
 
-  wallet.displayAlert = (alert, keep=false) ->
+  wallet.displayAlert = (alert, keep=false, context) ->
+    if context == undefined
+      context = wallet.alerts
+
+    if keep == undefined
+      keep = false
+
     if !keep
       wallet.lastAlertId++
       alert.timer = $timeout((->
-        wallet.alerts.splice(wallet.alerts.indexOf(alert))
+        context.splice(context.indexOf(alert))
       ), 7000)
 
-    wallet.alerts.push(alert)
+    context.push(alert)
 
   wallet.isSynchronizedWithServer = () ->
     return wallet.store.isSynchronizedWithServer()
