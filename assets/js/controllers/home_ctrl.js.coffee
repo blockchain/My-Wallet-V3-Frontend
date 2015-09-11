@@ -1,7 +1,9 @@
-walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
+walletApp.controller "HomeCtrl", ($q, $scope, $window, Wallet, $modal) ->
   $scope.accounts = Wallet.accounts
+  $scope.balanceHistory = Wallet.balanceHistory
   $scope.status = Wallet.status
   $scope.settings = Wallet.settings
+  $scope.conversions = Wallet.conversions
   $scope.getTotal = () -> Wallet.total('accounts')
   $scope.empty = false
   $scope.transactions = []
@@ -22,6 +24,20 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
     waitForHeightAndWidth: true
   }
 
+  $scope.lineChartData = {}
+
+  $scope.lineChartConfig = {
+    colors: [ 'RGB(96, 178, 224)' ]
+    labels: false
+    waitForHeightAndWidth: true
+    isAnimate: true
+    legend: {
+      display: false
+      position: 'right'
+    }
+    xAxisMaxTicks: 5
+  }
+
   # accountData helper functions
   $scope.convertToDisplay = (amount) ->
     currency = $scope.settings.displayCurrency
@@ -38,6 +54,30 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
     x: account.label
     y: [account.balance]
     tooltip: $scope.convertToDisplay(account.balance)
+
+  $scope.balanceHistoryDataFormat = (entry, forceBTC) ->
+    unless forceBTC
+      currency = $scope.settings.currency
+      if currency and currency.code
+        # Check that there is a valid conversion
+        conversion = $scope.conversions[currency.code]
+        if conversion and conversion.conversion > 0
+          return $q (resolve, reject) ->
+            Wallet.getFiatAtTime(entry.balance, entry.timestamp, currency.code).then(resolve, reject)
+          .then (amount) ->
+            return {
+              x: entry.date
+              y: [parseFloat(amount)]
+              tooltip: conversion.symbol + amount
+            }
+
+    currency = $scope.settings.displayCurrency
+    amount = Wallet.convertFromSatoshi(entry.balance, currency)
+    return $q.when({
+      x: entry.date
+      y: [amount]
+      tooltip: $scope.convertToDisplay(entry.balance)
+    })
 
   $scope.sumReduceAccounts = (prev, current) ->
     balance: prev.balance + current.balance
@@ -57,9 +97,64 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
     largestAccounts.push(otherAccounts) unless otherAccounts.balance == 0
     largestAccounts.map($scope.chartDataFormat)
 
+  $scope.balanceHistoryData = (forceBTC = false) ->
+    history = Wallet.balanceHistory()
+
+    history.sort (a, b) ->
+      if a.timestamp > b.timestamp
+        return 1
+      else if a.timestamp < b.timestamp
+        return -1
+      else
+        return 0
+
+    # TODO: Internationalize this
+    month = [
+      "Jan"
+      "Feb"
+      "Mar"
+      "Apr"
+      "May"
+      "Jun"
+      "Jul"
+      "Aug"
+      "Sep"
+      "Oct"
+      "Nov"
+      "Dec"
+    ]
+
+    # Loop through history and only display the last balance for each day
+    seenDates = []
+    consolidatedHistory = []
+
+    for entry in history
+      date = new Date(entry.timestamp)
+      entry.date = (month[date.getMonth()] + ' ' + date.getDate())
+
+      if entry.date in seenDates
+        consolidatedHistory[consolidatedHistory.length - 1] = entry
+      else
+        seenDates.push entry.date
+        consolidatedHistory.push entry
+
+    promises = []
+
+    for entry in consolidatedHistory
+      promises.push $scope.balanceHistoryDataFormat(entry, forceBTC)
+
+    return $q.all(promises)
+
   # Call when chart needs to be updated
   $scope.updatePieChartData = () ->
     $scope.pieChartData.data = $scope.accountData(4)
+
+  $scope.updateLineChartData = () ->
+    $scope.balanceHistoryData().then (data) ->
+      $scope.lineChartData = { series: [''], data: data }
+    , (error) ->
+      $scope.balanceHistoryData(true).then (data) ->
+        $scope.lineChartData = { series: [''], data: data }
 
   # Watchers
   loadedTxs = $scope.$watch 'status.didLoadTransactions', (didLoad) ->
@@ -71,6 +166,11 @@ walletApp.controller "HomeCtrl", ($scope, $window, Wallet, $modal) ->
     return unless didLoad
     $scope.updatePieChartData()
     loadedBalances()
+
+  loadedBalanceHistory = $scope.$watch 'status.didLoadBalanceHistory', (didLoad) ->
+    return unless didLoad
+    $scope.updateLineChartData()
+    loadedBalanceHistory()
 
   $scope.$watch 'settings.displayCurrency', ->
     $scope.updatePieChartData()

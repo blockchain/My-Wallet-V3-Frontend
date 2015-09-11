@@ -19,3 +19,13 @@
               ac-config="pieChartConfig"
               ng-show="accounts().length > 1 && getTotal() > 0"
             )
+      .section
+        .charts.pos-rel
+          h5.aaa.em-400.mbl(translate="BALANCE_OVER_TIME")
+          .widget.flex-center.flex-justify.pos-rel(ng-class="{ 'empty' : !balanceHistory().length}")
+            #balance-history-chart.chart(
+              ac-chart="'line'"
+              ac-data="lineChartData"
+              ac-config="lineChartConfig"
+              ng-show="balanceHistory().length > 1"
+            )

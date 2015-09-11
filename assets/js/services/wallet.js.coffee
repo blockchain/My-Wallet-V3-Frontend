@@ -22,7 +22,7 @@ walletServices = angular.module("walletServices", [])
 walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletSpender, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) ->
   wallet = {
     goal: {auth: false},
-    status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadSettings: false, didLoadTransactions: false, didLoadBalances: false, didConfirmRecoveryPhrase: false},
+    status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadSettings: false, didLoadTransactions: false, didLoadBalances: false, didConfirmRecoveryPhrase: false, didLoadBalanceHistory: false},
     settings: {currency: null,  displayCurrency: null, language: null, btcCurrency: null, needs2FA: null, twoFactorMethod: null, feePerKB: null, handleBitcoinLinks: false, blockTOR: null, rememberTwoFactor: null, secondPassword: null, ipWhitelist: null, apiAccess: null, restrictToWhitelist: null, loggingLevel: null},
     user: {current_ip: null, email: null, mobile: null, passwordHint: ""}
   }
@@ -111,6 +111,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         # Fetch transactions:
         if wallet.my.wallet.isUpgradedToHD
           wallet.my.getHistoryAndParseMultiAddressJSON()
+          wallet.my.getBalanceHistory()
 
         wallet.applyIfNeeded()
       )
@@ -757,6 +758,12 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     else
       return []
 
+  wallet.balanceHistory = () ->
+    if wallet.my.wallet.hdwallet?
+      return wallet.my.wallet.hdwallet.balanceHistory
+    else
+      return []
+
   # wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts().length > 0 && wallet.accounts().some((a) -> a.active and a.balance)
 
   wallet.total = (accountIndex) ->
@@ -838,6 +845,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     else if event == "did_multiaddr" # Transactions loaded
       wallet.updateTransactions()
       wallet.status.didLoadBalances = true if wallet.my.wallet.isUpgradedToHD
+      wallet.applyIfNeeded()
+    else if event == "did_load_balance_history"
+      wallet.status.didLoadBalanceHistory = true if wallet.my.wallet.isUpgradedToHD
       wallet.applyIfNeeded()
     else if event == "did_update_legacy_address_balance"
       console.log "did_update_legacy_address_balance"
