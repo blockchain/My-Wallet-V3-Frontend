@@ -131,29 +131,7 @@ $select-fg: #686868;
 .ui-select-toggle{height: 34px;}
 }
 
-//A better .well class
-.well {
-  padding: 20px;
-  margin-bottom: 20px;
-  background-color: $light-blue;
-  border: 1px solid $border-grey;
-  border-radius: 5px;
-  line-height: 2em;
-}
-
-//override BS modal-footer alignment craziness
-.modal-footer {
-  &:after, &:before {
-    content: none;
-    display: none;
-  }
-}
-
-.modal.in .modal-dialog {
-  transform: none;
-  transition: all .3s ease-in-out;
-}
-
+//form errors in modals
 .has-error .form-control, .has-error .form-contorl:focus {
   border-color: #a94442 !important;
   -webkit-box-shadow: none !important;

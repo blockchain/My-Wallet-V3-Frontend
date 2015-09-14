@@ -5,18 +5,18 @@
   h5(translate="RECEIVE_BITCOIN_MESSAGE")
 .modal-body
   form.form-horizontal.ph-form(role="form" name="requestForm" novalidate)
-    .form-group.flex-center.pbm.width-100(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': fields.to.isWatchOnlyLegacyAddress}")
-      label.flex-2.prm(translate="RECEIVE_TO")
-      .flex-8
+    .form-group.row.pbm(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': fields.to.isWatchOnlyLegacyAddress}")
+      label.col-sm-3.col-xs-12(translate="RECEIVE_TO")
+      .col-sm-9.col-xs-12
         ui-select(ng-model="fields.to" ng-disabled="paymentRequest.amount > 0 || paymentRequest.label")
           ui-select-match {{ $select.selected.label + ($select.selected.isWatchOnlyLegacyAddress ? ' (Watch Only)' : '') }}
           ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'") 
             span(ng-bind-html="(determineLabel(destination) | highlight: $select.search) + (destination.isWatchOnlyLegacyAddress ? ' <i>(Watch Only)</i>' : '')")
         span.help-block(ng-show="fields.to.isWatchOnlyLegacyAddress") Your wallet does not have the private key for this address. Without the private key you will not have access to the bitcoins sent to this address. Make sure you have this private key somewhere else!
-    .form-group.flex-center.mvl.width-100(ng-class="{'has-error': requestForm.amount.$error.isValidAmount && requestForm.amount.$touched}")
-      label.flex-2.prm(translate="AMOUNT:")
-      .flex-8.flex-center.flex-between
-        .flex-center.prl.border-bottom.flex-2
+    .form-group.mvl.row(ng-class="{'has-error': requestForm.amount.$error.isValidAmount && requestForm.amount.$touched}")
+      label.col-sm-3.col-xs-12(translate="AMOUNT:")
+      .col-sm-9.col-xs-12
+        .flex-center.prl.border-bottom.col-xs-5
           span {{ settings.btcCurrency.code }}:
           input.form-control.no-border(
             type="number"
@@ -26,8 +26,8 @@
             min="1"
             max="2100000000000000"
           )
-        i.ti-arrows-horizontal.h4.aaa.flex-1.center-align
-        .flex-center.border-bottom.flex-2
+        i.ti-arrows-horizontal.h4.aaa.col-xs-2.center-align
+        .flex-center.border-bottom.col-xs-5
           span {{ settings.currency.code }}:
           input.form-control.no-border(
             type="number"
@@ -37,26 +37,19 @@
             min="1"
             max="2100000000000000"
           )
-    //- .form-group
-    //-   label.col-sm-3.control-label(translate="DESCRIPTION")
-    //-   .col-sm-9
-    //-     input.form-control(type="text",ng-model="fields.label")
-    //-     span.help-block(translate="OPTIONAL")
-    div
-      hr
-    .form-group(ng-show="paymentRequest && paymentRequest.paid > 0 && paymentRequest.paid != fields.amount")
+    .form-group.row(ng-show="paymentRequest && paymentRequest.paid > 0 && paymentRequest.paid != fields.amount")
       label.col-sm-3.control-label(translate="PAID")
       .col-sm-9
         p.form-control-static
           | {{ paymentRequest.paid / 100000000.0 }}  
-    .payment-url.pam(ng-if="paymentRequestURL")
-      .receive-code
+    .payment-url.ptm.row(ng-if="paymentRequestURL")
+      .receive-code.col-md-3.col-sm-4.mrs
         p(ng-hide="status.didInitializeHD")
           img(src="img/spinner.gif")  
         span(ng-show="status.didInitializeHD")
           qr(text="paymentRequestURL", size=120, correction-level="'M'")
-      .phs.flex-column.receive-address.width-100
-        label.hidden-xs.type-h5.em-400
+      .flex-column.receive-address.col-md-9.col-sm-8
+        p.hidden-xs.type-h5.em-400.black.mbs
           span(translate="BITCOIN_ADDRESS")
           span :
         p.form-control-static.bitcoin-address

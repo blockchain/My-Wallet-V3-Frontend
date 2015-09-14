@@ -71,6 +71,16 @@
 
 .intl-tel-input { margin-bottom: 10px; }
 
+//A better .well class
+.well {
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: $light-blue;
+  border: 1px solid $border-grey;
+  border-radius: 5px;
+  line-height: 2em;
+}
+
 @media (min-width: 992px){
   .setting-result {
     text-align: right;
