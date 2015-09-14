@@ -4,7 +4,7 @@ walletApp.controller("AccountFormCtrl", ($scope, Wallet, $modalInstance, $log, $
   $scope.fields = {
     name: ''
   };
- 
+
   $scope.status = {
     edit: false,
     busy: null
@@ -51,7 +51,7 @@ walletApp.controller("AccountFormCtrl", ($scope, Wallet, $modalInstance, $log, $
     };
 
     const error = () => {$scope.status.busy = false;}
-    
+
     Wallet.renameAccount(account, $scope.fields.name, success, error);
   };
 

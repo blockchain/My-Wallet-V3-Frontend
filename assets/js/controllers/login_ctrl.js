@@ -106,9 +106,7 @@ walletApp.controller("LoginCtrl", ($scope, $rootScope, $log, $http, Wallet, $coo
     $scope.password = $cookieStore.get("password");
   }
   $scope.login = () => {
-    if ($scope.busy) {
-      
-    }
+    if ($scope.busy) return;
     $scope.busy = true;
     Wallet.clearAlerts();
     const error = (field, message) => {
@@ -133,10 +131,10 @@ walletApp.controller("LoginCtrl", ($scope, $rootScope, $log, $http, Wallet, $coo
     } else {
       Wallet.login($scope.uid, $scope.password, null, needs2FA, success, error);
     }
-    if (($scope.uid != null) && $scope.uid !== "") {
+    if ($scope.uid != null && $scope.uid !== "") {
       $cookieStore.put("uid", $scope.uid);
     }
-    if ($scope.savePassword && ($scope.password != null) && $scope.password !== "") {
+    if ($scope.savePassword && $scope.password != null && $scope.password !== "") {
       $cookieStore.put("password", $scope.password);
     }
   };
@@ -206,15 +204,14 @@ walletApp.controller("LoginCtrl", ($scope, $rootScope, $log, $http, Wallet, $coo
   });
 
   $scope.$watch("uid + password + twoFactor", () => {
-    let isValid;
+    let isValid = null;
     $scope.errors.uid = null;
     $scope.errors.password = null;
     $scope.errors.twoFactor = null;
-    isValid = null;
-    if (($scope.uid == null) || $scope.uid === "") {
+    if ($scope.uid == null || $scope.uid === "") {
       isValid = false;
     }
-    if (($scope.password == null) || $scope.password === "") {
+    if ($scope.password == null || $scope.password === "") {
       isValid = false;
     }
     if ($scope.settings.needs2FA && $scope.twoFactorCode === "") {

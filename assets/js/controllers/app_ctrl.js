@@ -18,9 +18,8 @@ walletApp.controller("AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
   $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia) !== void 0;
 
   $scope.request = () => {
-    let modalInstance;
     Wallet.clearAlerts();
-    modalInstance = $modal.open({
+    let modalInstance = $modal.open({
       templateUrl: "partials/request.jade",
       controller: "RequestCtrl",
       resolve: {destination: () => null},
@@ -32,9 +31,8 @@ walletApp.controller("AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
   };
 
   $scope.send = () => {
-    let modalInstance;
     Wallet.clearAlerts();
-    modalInstance = $modal.open({
+    let modalInstance = $modal.open({
       templateUrl: "partials/send.jade",
       controller: "SendCtrl",
       resolve: {
@@ -75,7 +73,6 @@ walletApp.controller("AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
   });
 
   $scope.checkGoals = () => {
-    let modalInstance;
     if ($scope.status.isLoggedIn) {
       if (!((Wallet.settings.currency != null) && (Wallet.settings.btcCurrency != null))) {
         return $timeout((() => {
@@ -95,7 +92,7 @@ walletApp.controller("AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
           Wallet.goal.send = void 0;
         }
         if (Wallet.goal.claim != null) {
-          modalInstance = $modal.open({
+          let modalInstance = $modal.open({
             templateUrl: "partials/claim.jade",
             controller: "ClaimModalCtrl",
             resolve: {

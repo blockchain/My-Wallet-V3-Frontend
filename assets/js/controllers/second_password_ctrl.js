@@ -11,8 +11,7 @@ walletApp.controller("SecondPasswordCtrl", ($scope, $log, Wallet, $modalInstance
   };
 
   $scope.submit = () => {
-    if ($scope.busy) {
-    }
+    if ($scope.busy) return;
     $scope.busy = true;
     Wallet.clearAlerts();
     if (Wallet.validateSecondPassword($scope.secondPassword)) {
@@ -26,5 +25,5 @@ walletApp.controller("SecondPasswordCtrl", ($scope, $log, Wallet, $modalInstance
       });
     }
   };
-  
+
 });

@@ -12,13 +12,7 @@ walletApp.controller("SettingsSecurityCenterCtrl", ($scope, Wallet, SecurityCent
     step: 1
   };
 
-  $scope.greaterThan = (prop, val) => {
-    item => {
-      if (item[prop] > val) {
-        true;
-      }
-    };
-  };
+  $scope.greaterThan = (prop, val) => item => item[prop] > val;
 
   $scope.transfer = address => {
     $modal.open({

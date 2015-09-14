@@ -1,4 +1,5 @@
 walletApp.controller("HomeCtrl", ($scope, $window, Wallet, $modal) => {
+  const ACCOUNTS_IN_CHART = 4;
   $scope.accounts = Wallet.accounts;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
@@ -22,15 +23,18 @@ walletApp.controller("HomeCtrl", ($scope, $window, Wallet, $modal) => {
   };
 
   $scope.convertToDisplay = amount => {
-    let currency;
-    currency = $scope.settings.displayCurrency;
+    let currency = $scope.settings.displayCurrency;
     amount = Wallet.convertFromSatoshi(amount, currency);
     return Wallet.formatCurrencyForView(amount, currency);
   };
 
-  $scope.accountFilter = account => account.balance > 0 && !account.archived;
+  $scope.accountFilter = account => {
+    return account.balance > 0 && !account.archived;
+  };
 
-  $scope.accountSort = (account0, account1) => account1.balance - account0.balance;
+  $scope.accountSort = (account0, account1) => {
+    return account1.balance - account0.balance;
+  };
 
   $scope.chartDataFormat = account => ({
       x: account.label,
@@ -57,32 +61,24 @@ walletApp.controller("HomeCtrl", ($scope, $window, Wallet, $modal) => {
   };
 
   $scope.updatePieChartData = () => {
-    $scope.pieChartData.data = $scope.accountData(4);
+    $scope.pieChartData.data = $scope.accountData(ACCOUNTS_IN_CHART);
   };
 
   $scope.$watch('status.didLoadTransactions', didLoad => {
-    if (!didLoad) {
-      return;
-    }
+    if (!didLoad) return;
     $scope.transactions = Wallet.transactions;
   });
 
   const loadedBalances = $scope.$watch('status.didLoadBalances', didLoad => {
-    if (!didLoad) {
-      return;
-    }
+    if (!didLoad) return;
     $scope.updatePieChartData();
     loadedBalances(); // Remove watcher after first time
   });
 
-  $scope.$watch('settings.displayCurrency', () => {
-    $scope.updatePieChartData();
-  });
+  $scope.$watch('settings.displayCurrency', $scope.updatePieChartData);
 
   $scope.$watchCollection('accounts()', accounts => {
-    if (!(accounts.length > 0 && $scope.status.didLoadBalances)) {
-      return;
-    }
+    if (accounts.length === 0 || !$scope.status.didLoadBalances) return;
     $scope.updatePieChartData();
   });
 

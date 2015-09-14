@@ -14,7 +14,7 @@ walletApp.controller("RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
   };
 
   for(const account of $scope.accounts()) {
-    if ((account.index != null) && !account.archived) {
+    if (account.index != null && !account.archived) {
       let acct = angular.copy(account);
       acct.type = "Accounts";
       $scope.destinations.push(acct);
@@ -33,20 +33,13 @@ walletApp.controller("RequestCtrl", ($scope, Wallet, $modalInstance, $log, desti
     }
   }
 
-  $scope.getFilter = (search, accounts) => {
-    if (accounts == null) {
-      accounts = true;
-    }
-    return {
-      label: search,
-      type: accounts ? '!External' : 'Imported'
-    };
-  };
+  $scope.getFilter = (search, accounts=true) => ({
+    label: search,
+    type: accounts ? '!External' : 'Imported'
+  });
 
   $scope.determineLabel = origin => {
-    if (origin == null) {
-      return;
-    }
+    if (origin == null) return;
     return origin.label || origin.address;
   };
 

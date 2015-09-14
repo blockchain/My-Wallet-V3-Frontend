@@ -41,12 +41,12 @@ walletApp.controller("ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalI
   };
 
   $scope.hasWordBeenUsed = index => {
-    return ($scope.words.some(e => e.index === index));
-  }
+    return $scope.words.some(e => e.index === index);
+  };
 
-
-  $scope.getRandInRange = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
-  
+  $scope.getRandInRange = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  };
 
   $scope.close = () => {
     $modalInstance.dismiss("");
@@ -58,13 +58,9 @@ walletApp.controller("ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalI
 
   $scope.verify = () => {
     let valid = true;
-    let ref = $scope.words;
-
-    for (let i = 0, len = ref.length; i < len; i++) {
-      let word = ref[i];
-      if (word.error = word.value.toLowerCase() !== word.actual) {
-        valid = false;
-      }
+    for (let word of $scope.words) {
+      word.error = word.value.toLowerCase() !== word.actual;
+      if (word.error) valid = false;
     }
     if (valid) {
       Wallet.confirmRecoveryPhrase();

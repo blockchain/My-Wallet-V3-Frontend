@@ -29,9 +29,7 @@ walletApp.controller("SignupCtrl", ($scope, $rootScope, $log, Wallet, $modal, $t
   };
 
   $scope.didLoad = () => {
-    if ($scope.beta) {
-      $scope.fields.email = $scope.beta.email;
-    }
+    if ($scope.beta) $scope.fields.email = $scope.beta.email;
   };
 
   $scope.didLoad();
@@ -50,9 +48,7 @@ walletApp.controller("SignupCtrl", ($scope, $rootScope, $log, Wallet, $modal, $t
   };
 
   $scope.tryNextStep = () => {
-    if ($scope.isValid[0]) {
-      $scope.nextStep();
-    }
+    if ($scope.isValid[0]) $scope.nextStep();
   };
 
   $scope.nextStep = () => {

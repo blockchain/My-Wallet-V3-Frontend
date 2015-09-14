@@ -11,11 +11,7 @@ walletApp.controller("FeedbackCtrl", ($scope, $log, $state, $http) => {
         'email': $scope.email
       };
       $http.post('/feedback', form).success(data => {
-        if (data.success) {
-          return $scope.formStage = 2;
-        } else {
-          return $scope.formStage = 3;
-        }
+        $scope.formStage = (data.success) ? 2 : 3;
       }).error(() => {
         $scope.formStage = 3;
       });
