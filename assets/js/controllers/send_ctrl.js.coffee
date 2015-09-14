@@ -45,6 +45,10 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       type: if accounts then '!External' else 'Imported'
     }
 
+  $scope.filterDestinations = (destinationsIdx, showAccounts=true) ->
+    $scope.destinations[destinationsIdx].filter (dest) ->
+      showAccounts || dest.type != 'Accounts'
+
   $scope.getBtcCap = () ->
     Wallet.convertFromSatoshi(2100000000000000, $scope.btcCurrency)
 
