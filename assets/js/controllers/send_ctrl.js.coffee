@@ -15,7 +15,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.sending = false # Sending in progress
   $scope.amountIsValid = true
 
-  $scope.alerts = Wallet.alerts
+  $scope.alerts = []
 
   $scope.fiatCurrency = Wallet.settings.currency
   $scope.btcCurrency = Wallet.settings.btcCurrency
@@ -45,6 +45,10 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       type: if accounts then '!External' else 'Imported'
     }
 
+  $scope.filterDestinations = (destinationsIdx, showAccounts=true) ->
+    $scope.destinations[destinationsIdx].filter (dest) ->
+      showAccounts || dest.type != 'Accounts'
+
   $scope.getBtcCap = () ->
     Wallet.convertFromSatoshi(2100000000000000, $scope.btcCurrency)
 
@@ -57,7 +61,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.onError = (error) ->
     # This never gets called...
     $translate("CAMERA_PERMISSION_DENIED").then (translation) ->
-      Wallet.displayWarning(translation)
+      Wallet.displayWarning(translation, false, $scope.alerts)
 
   $scope.applyPaymentRequest = (paymentRequest, i) ->
     $scope.processingPaymentRequest = true
@@ -91,7 +95,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       $scope.cameraOff()
     else
       $translate("QR_CODE_NOT_BITCOIN").then (translation) ->
-        Wallet.displayWarning(translation)
+        Wallet.displayWarning(translation, false, $scope.alerts)
 
       $log.error "Not a bitcoin QR code:" + url
 
@@ -146,7 +150,7 @@ walletApp.controller "SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
     transactionFailed = (message) ->
       $scope.sending = false
-      $translate(message).then((t) -> Wallet.displayError(t)) if message
+      $translate(message).then((t) -> Wallet.displayError(t, false, $scope.alerts)) if message
 
     transactionSucceeded = (tx_hash) ->
       $scope.sending = false
