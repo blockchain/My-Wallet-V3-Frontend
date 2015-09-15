@@ -35,7 +35,6 @@ modules = [
   "passwordEntropy"
   "internationalPhoneNumber"
   "webcam"
-  "angularCharts"
   # TODO: have grunt generate the list of partials and templates
   "partials/account-form.jade"
   "partials/reveal-xpub.jade"
