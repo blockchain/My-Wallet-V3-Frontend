@@ -111,6 +111,9 @@
   .btn-block + .btn-block {
     margin-left: 0;
   }
+  &:after, &:before {
+    content: none;
+  }
 }
 
 // Measure scrollbar width for padding body during modal show/hide
@@ -331,6 +334,10 @@
     height: 430px;
   }
   .advanced-send-scroll { max-height: 400px; overflow-y: scroll; }
+
+  [name='sendForm'], [name='requestForm']  {
+    label { text-align: right; }
+  }
 }
 
 .rocket-modal {
@@ -359,6 +366,9 @@
       margin: 5vw 2vw;
     }
     .total-amounts { width: 100%; }
+    [name='sendForm'], [name='requestForm']  {
+      label { text-align: left; }
+    }
   }
   .rocket-modal {
     .modal-body { padding: 1em; }

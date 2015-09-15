@@ -17,10 +17,10 @@
   div(ng-hide="confirmationStep")
     form.ph-form(role="form",name="sendForm",novalidate)
       //- From
-      .flex-column.form-group(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
-        label.mbm
+      .form-group.row(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
+        label.col-sm-2.col-xs-12
           span(translate="FROM:")
-        div(ng-class="{'has-error': (sendForm.from.$invalid && sendForm.destinations0.$touched) || (!amountIsValid && (sendForm.amounts0.$touched || sendForm.amountsFiat0.$touched))}")
+        .col-sm-10.col-xs-12(ng-class="{'has-error': (sendForm.from.$invalid && sendForm.destinations0.$touched) || (!amountIsValid && (sendForm.amounts0.$touched || sendForm.amountsFiat0.$touched))}")
           p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")
           span(ng-show="originsLoaded")
@@ -33,74 +33,74 @@
           span.help-block(translate="INSUFFICIENT" ng-show="!amountIsValid && (sendForm.amounts0.$touched || sendForm.amountsFiat0.$touched)")
           span.help-block(ng-show="sendForm.from.$invalid && sendForm.destinations0.$touched") Must select an account to send from
       //- Advanced Send
-      .flex-column.form-group.bc-modal-fade.mvl.advanced-recipient
+      .form-group.bc-modal-fade.mvl.advanced-recipient.row
         //- To
-        label.mbm.flex-between
+        label.col-sm-2.col-xs-12
           span(translate="TO:")
-        .flex-column.prl(ng-class="{'advanced-recipient-row': advanced}" ng-repeat="item in transaction.destinations track by $index")
-          p.form-control-static(ng-hide="originsLoaded")
-            img(src="img/spinner.gif")
-          div(ng-show="originsLoaded" ng-class="{'input-group': browserWithCamera, 'has-error': sendForm['destinations' + $index].$invalid && (sendForm['amounts' + $index].$touched || sendForm['amountsFiat' + $index].$touched)}")
-            ui-select(
-              ng-model="transaction.destinations[$index]" 
-              name="{{'destinations' + $index}}" 
-              is-not-equal="{{transaction.from.label}}" 
-              property="label" 
-              ng-change="updateToLabel(); refreshTxProposal()" 
-              reset-search-input="false"
-              reset-search-input-on="{{ 'ResetSearch' + $index }}"
-              required
-            )
-              ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
-              ui-select-choices(
-                repeat="destination in destinations[$index] | filter: getFilter($select.search, !advanced)" 
-                group-by="'type'" 
-                refresh="refreshDestinations($select.search, $index)" 
-                refresh-delay="0"
+        .col-sm-10.col-xs-12
+          .flex-column(ng-class="{'advanced-recipient-row': advanced}" ng-repeat="item in transaction.destinations track by $index")
+            p.form-control-static(ng-hide="originsLoaded")
+              img(src="img/spinner.gif")
+            div(ng-show="originsLoaded" ng-class="{'input-group': browserWithCamera, 'has-error': sendForm['destinations' + $index].$invalid && (sendForm['amounts' + $index].$touched || sendForm['amountsFiat' + $index].$touched)}")
+              ui-select(
+                ng-model="transaction.destinations[$index]" 
+                name="{{'destinations' + $index}}" 
+                is-not-equal="{{transaction.from.label}}" 
+                property="label" 
+                ng-change="updateToLabel(); refreshTxProposal()" 
+                reset-search-input="false"
+                reset-search-input-on="{{ 'ResetSearch' + $index }}"
+                required
               )
-                span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
-            span.input-group-btn.mls(ng-if="browserWithCamera")
-              button#qr(type="button", ng-click="cameraOn($index)")
-                img(src="img/qr-code.png", alt="QR")
-          .has-error
-            span.help-block(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress")
-            span.help-block(translate="SAME_DESTINATION" ng-show="sendForm['destinations' + $index].$error.isNotEqual")
-          //- Amount
-          div.flex-center.recipient-currency.mtl(ng-class="{'has-error': sendForm['amounts' + $index].$invalid && (sendForm['amounts' + $index].$touched || sendForm['amountsFiat' + $index].$touched)}")
-            .mrl.flex-1
-              .flex-center.border-bottom
-                span.mrm {{ btcCurrency.code }}:
-                input.form-control.no-border(
-                  type="number"
-                  ng-model="transaction.amounts[$index]"
-                  name="{{'amounts' + $index}}"
-                  transform-currency="btcCurrency"
-                  min="1"
-                  max="2100000000000000"
-                  ng-change="validateAmounts()"
-                  required
+                ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
+                ui-select-choices(
+                  repeat="destination in filterDestinations($index, !advanced)"
+                  group-by="'type'" 
+                  refresh="refreshDestinations($select.search, $index)" 
+                  refresh-delay="0"
                 )
-            i.ti-arrows-horizontal.h4.aaa.prm
-            .flex-1
-              .flex-center.border-bottom
-                span.mrm {{ fiatCurrency.code }}:
-                input.form-control.no-border(
-                  type="number"
-                  ng-model="transaction.amounts[$index]"
-                  name="{{'amountsFiat' + $index}}"
-                  transform-currency="fiatCurrency"
-                  ng-change="validateAmounts()"
-                  required
-                )
-            a.mlm.button-danger.type-sm.button-sm(ng-click="removeDestination($index)" ng-hide="$first && $last")
-              i.ti-close.mrm
-              span(translate="REMOVE")
-        label.mbm.flex-between(ng-show="advanced")
-          a.flex-center.type-sm.button-sm.button-default(ng-click="addDestination()")
+                  span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
+              span.input-group-btn.mls(ng-if="browserWithCamera")
+                button#qr(type="button", ng-click="cameraOn($index)")
+                  img(src="img/qr-code.png", alt="QR")
+            .has-error
+              span.help-block(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress")
+              span.help-block(translate="SAME_DESTINATION" ng-show="sendForm['destinations' + $index].$error.isNotEqual")
+            //- Amount
+            div.flex-center.recipient-currency.mtl(ng-class="{'has-error': sendForm['amounts' + $index].$invalid && (sendForm['amounts' + $index].$touched || sendForm['amountsFiat' + $index].$touched)}")
+              .mrl.flex-1
+                .flex-center.border-bottom
+                  span.mrm {{ btcCurrency.code }}:
+                  input.form-control.no-border(
+                    type="number"
+                    ng-model="transaction.amounts[$index]"
+                    name="{{'amounts' + $index}}"
+                    transform-currency="btcCurrency"
+                    min="1"
+                    max="2100000000000000"
+                    ng-change="validateAmounts()"
+                    required
+                  )
+              i.ti-arrows-horizontal.h4.aaa.prm
+              .flex-1
+                .flex-center.border-bottom
+                  span.mrm {{ fiatCurrency.code }}:
+                  input.form-control.no-border(
+                    type="number"
+                    ng-model="transaction.amounts[$index]"
+                    name="{{'amountsFiat' + $index}}"
+                    transform-currency="fiatCurrency"
+                    ng-change="validateAmounts()"
+                    required
+                  )
+              a.mlm.button-danger.type-sm.button-sm(ng-click="removeDestination($index)" ng-hide="$first && $last")
+                i.ti-close.mrm.type-xs
+                span(translate="REMOVE")
+          a.flex-center.flex-justify.button-default(ng-click="addDestination()" ng-show="advanced")
             i.ti-plus.mrm
             span(translate="ADD_ANOTHER_RECIPIENT")
       //- Fee
-      .flex-column.form-group.bc-modal-fade(ng-class="{'has-error': sendForm.fee.$invalid && sendForm.fee.$touched}" ng-show="advanced")
+      .flex-column.form-group.bc-modal-fade.col-sm-offset-2.col-sm-10.mtm(ng-class="{'has-error': sendForm.fee.$invalid && sendForm.fee.$touched}" ng-show="advanced")
         div.mbm.flex-center
           label.mbn(translate="MINERS_FEE")
           helper-button(content="ADVANCED_SEND_STEP_1")

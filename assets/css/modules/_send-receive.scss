@@ -2,7 +2,7 @@
   @extend .flex;
 }
 .receive-code canvas { margin-right: 2em; padding-right: 2em; }
-@media (max-width: 668px) {
+@media (max-width: 768px) {
   .payment-url {
     flex-direction: column;
     align-items: center;

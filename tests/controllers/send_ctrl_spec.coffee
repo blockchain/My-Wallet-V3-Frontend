@@ -379,7 +379,8 @@ describe "SendCtrl", ->
           scope.send()
           scope.$digest()
           expect(scope.alerts.length).toEqual(1)
-          expect(Wallet.displayError).toHaveBeenCalledWith('err_message')
+          expect(Wallet.displayError).toHaveBeenCalled()
+          expect(Wallet.displayError.calls.argsFor(0)[0]).toEqual('err_message')
         )
 
       describe "success", ->
