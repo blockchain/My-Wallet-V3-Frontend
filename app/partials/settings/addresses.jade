@@ -54,12 +54,8 @@ p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archive
         td(ng-bind-html="address.label | highlight:searchTextLegacy")
         td
           span(ng-show="address.balance != null")
-            span.btc {{ address.balance | toBitCurrency:settings.btcCurrency }}
-            fiat.fiat(btc="address.balance")
-          //- span(us-spinner="{radius:6, width:6, length: 6}" spinner-key="{{ address.address }}" spinner-start-active="true" ng-show="address.balance == null")
+            fiat-or-btc(btc="address.balance")
           img(ng-show="address.balance == null" src="img/spinner.gif")
-        //- td
-          //- a(ui-sref="wallet.common.settings.address({address: address.address})", translate="DETAILS")
         td
           a(ng-hide="address.balance == 0 || address.isWatchOnly" translate="TRANSFER" ng-click="transfer(address)")
         td
