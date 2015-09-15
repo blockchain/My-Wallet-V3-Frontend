@@ -11,6 +11,7 @@ modules = [
   "didYouKnow"
   "activity"
   "adverts"
+  "send"
   "ui.router"
   "ui.bootstrap"
   "ngCookies"
@@ -22,6 +23,7 @@ modules = [
   "myWalletSpenderServices"
   "myBlockchainApiServices"
   "myBlockchainSettingsServices"
+  "myWalletPaymentServices"
 
   "ui.select"
   "ngAudio"
