@@ -1,26 +1,35 @@
 describe "ClaimModalCtrl", ->
 
   scope = undefined
+  redeemDeferred = undefined
   modalInstance =
     close: ->
     dismiss: ->
 
+  Wallet = undefined
+
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, localStorageService, $rootScope, $controller) ->
+    angular.mock.inject ($injector, localStorageService, $rootScope, $controller, $q) ->
       localStorageService.remove("mockWallets")
 
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
 
-      MyWallet.wallet = {
-        isUpgradedToHD: true
-        hdwallet: {
-          defaultAccountIndex: 0
-          accounts: [{ index: 0, archived: false }]
+      spyOn(Wallet, "redeemFromEmailOrMobile").and.callFake(() ->
+        {
+          publish: () ->
+            $q (resolve, reject) ->
+              resolve()
         }
-      }
+      )
+
+      Wallet.my =
+        wallet: 
+          isUpgradedToHD: true
+          hdwallet:
+            defaultAccountIndex: 0
+            accounts: [{ index: 0, archived: false }]
 
       scope = $rootScope.$new()
 
@@ -47,10 +56,9 @@ describe "ClaimModalCtrl", ->
   it "should fetch the redeem balance", ->
     expect(scope.balance).toBe(100000)
 
-  it "should let the user redeem", inject((Wallet)->
-    spyOn(Wallet, "redeemFromEmailOrMobile")
+  it "should beep on success", inject((Wallet)->
+    spyOn(Wallet, 'beep')
     scope.redeem()
-    expect(Wallet.redeemFromEmailOrMobile).toHaveBeenCalled()
-    expect(Wallet.redeemFromEmailOrMobile.calls.argsFor(0)[0]).toEqual(scope.accounts()[0])
-    expect(Wallet.redeemFromEmailOrMobile.calls.argsFor(0)[1]).toEqual("abcd")
+    scope.$digest()
+    expect(Wallet.beep).toHaveBeenCalled()
   )

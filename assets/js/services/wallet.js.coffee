@@ -588,12 +588,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     from.toAddress(destinations, amounts, fee)
 
-  wallet.redeemFromEmailOrMobile = (account, claim, successCallback, error) ->
-    success = () ->
-      wallet.updateTransactions()
-      successCallback()
-
-    wallet.my.redeemFromEmailOrMobile(account.index, claim, success, error)
+  wallet.redeemFromEmailOrMobile = (account, code, amounts, fee ) ->
+    spender = new wallet.spender()
+    spender.fromPrivateKey(code).toAccount(account.index, amounts, fee)
 
   wallet.fetchBalanceForRedeemCode = (code) ->
     defer = $q.defer();
@@ -682,6 +679,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   ###################
   #      Other      #
   ###################
+  wallet.lastAlertId = 0
 
   wallet.closeAlert = (alert) ->
     $timeout.cancel(alert.timer)
@@ -693,27 +691,30 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       if alert?
         $timeout.cancel(alert.timer)
 
-  wallet.displayInfo = (message, keep, context) ->
-    wallet.displayAlert {type: "info", msg: message}, keep, context
+  wallet.displayInfo = (message, keep=false) ->
+    wallet.displayAlert {type: "info", msg: message}, keep
 
-  wallet.displaySuccess = (message, keep, context) ->
-    wallet.displayAlert {type: "success", msg: message}, keep, context
+  wallet.displaySuccess = (message, keep=false) ->
+    wallet.displayAlert {type: "success", msg: message}, keep
 
-  wallet.displayWarning = (message, keep, context) ->
-    wallet.displayAlert  {msg: message}, keep, context
+  wallet.displayWarning = (message, keep=false) ->
+    wallet.displayAlert  {msg: message}, keep
 
-  wallet.displayError = (message, keep, context) ->
-    wallet.displayAlert {type: "danger", msg: message}, keep, context
+  wallet.displayError = (message, keep=false) ->
+    wallet.displayAlert {type: "danger", msg: message}, keep
 
   wallet.displayReceivedBitcoin = () ->
     $translate("JUST_RECEIVED_BITCOIN").then (translation) ->
       wallet.displayAlert {type: "received-bitcoin", msg: translation}
 
-  wallet.displayAlert = (alert, keep=false, context=wallet.alerts) ->
+  wallet.displayAlert = (alert, keep=false) ->
     if !keep
-      alertIndex = context.indexOf(alert)
-      alert.timer = $timeout (-> context.splice(alertIndex)), 7000
-    context.push(alert)
+      wallet.lastAlertId++
+      alert.timer = $timeout((->
+        wallet.alerts.splice(wallet.alerts.indexOf(alert))
+      ), 7000)
+
+    wallet.alerts.push(alert)
 
   wallet.isSynchronizedWithServer = () ->
     return wallet.store.isSynchronizedWithServer()
