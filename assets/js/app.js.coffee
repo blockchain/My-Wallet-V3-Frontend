@@ -11,7 +11,6 @@ modules = [
   "didYouKnow"
   "activity"
   "adverts"
-  "send"
   "ui.router"
   "ui.bootstrap"
   "ngCookies"
