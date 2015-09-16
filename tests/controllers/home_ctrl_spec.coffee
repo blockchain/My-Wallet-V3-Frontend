@@ -39,7 +39,7 @@ describe "HomeCtrl", ->
   describe "on load", ->
 
     it "should have access to wallet accounts", ->
-      pending()
+      expect(scope.activeAccounts.length).toBeGreaterThan(0)
 
     it "should have access to wallet status", ->
       expect(scope.status).toBeDefined()
