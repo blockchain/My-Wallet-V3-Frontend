@@ -557,6 +557,7 @@
   "SIGNOUT": "Sign out",
   "EDIT_NOTE": "Edit",
   "DELETE_NOTE": "Delete",
-  "ALPHA_WARNING": "Please note, this is an Alpha of a new product. Please do not test this wallet with more funds than you are willing to lose."
+  "ALPHA_WARNING": "Please note, this is an Alpha of a new product. Please do not test this wallet with more funds than you are willing to lose.",
+  "XPUB_WARNING": "You should only give this Public Key to those you trust. With this information, they may be able to keep track of your payments, and may be able to disrupt your access to your wallet."
 
 }
