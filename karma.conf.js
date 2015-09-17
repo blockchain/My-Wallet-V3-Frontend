@@ -40,8 +40,6 @@ module.exports = function(karma){
       'tests/**/*.js',
       'app/templates/*.jade',
       'bower_components/angular-password-entropy/password-entropy.js',
-      'bower_components/d3/d3.js',
-      'bower_components/angular-charts/dist/angular-charts.js'
     ],
 
     autoWatch : true,

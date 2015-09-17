@@ -39,30 +39,13 @@ describe "HomeCtrl", ->
   describe "on load", ->
 
     it "should have access to wallet accounts", ->
-      expect(scope.accounts().length).toEqual(4)
+      expect(scope.activeAccounts.length).toBeGreaterThan(0)
 
     it "should have access to wallet status", ->
       expect(scope.status).toBeDefined()
 
     it "should have access to wallet transactions", ->
       expect(scope.transactions).toBeDefined()
-
-  describe "account functions", ->
-
-    it "should get account data", ->
-      expect(scope.accountData(4).length).toEqual(2)
-
-  describe "newAccount()", ->
-
-    it "should open the new account modal", ->
-      spyOn(modal, 'open')
-      scope.newAccount()
-      expect(modal.open).toHaveBeenCalledWith(
-        templateUrl: 'partials/account-form.jade'
-        controller: 'AccountFormCtrl'
-        resolve: jasmine.any(Object)
-        windowClass: 'bc-modal small'
-      )
 
   describe "getTotal()", ->
     it "should return total", ->

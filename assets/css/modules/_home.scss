@@ -1,6 +1,5 @@
-.home { padding: 10px 15px 0 30px; }
-.col-home { 
-  height: 635px; 
+.home { padding: 10px 15px 0 30px; margin-bottom: 2em; }
+.col-home {
   &:first-of-type { margin-bottom: 35px; }
 }
 .section { &:last-of-type { margin-bottom: 5px } }
@@ -36,32 +35,12 @@
   h5 { z-index: 10; }
 }
 
-//hack absolute positioning center
-.pos-abs-chart {
-  position: absolute;
-  left: 50%;
-  top: 15%;
-}
-.empty-state-chart {
-  height: 200px;
-  width: 200px;
-  border: 30px solid $grey;
-  border-radius: 100%;
-  position: relative;
-  left: -50%;
-}
-.chart {
-  height: 225px;
-  width: 425px;
-  position: relative;
-}
-// overrides for angular-chart(s)
-.ac-legend td { padding: 2px 5px; }
-
-@media (min-width: 990px) and (max-width: 1072px) {
-  .ac-legend td { font-size: .8em; }
-}
-
-@media (max-width: 478px) {
-  .ac-legend td { font-size: .8em; }
+.account-balances {
+  li {
+    padding: .6em 0;
+    font-size: 14px;
+    &:first-of-type {
+      border-top: 1px solid $eee;
+    }
+  }
 }
