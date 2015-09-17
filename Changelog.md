@@ -2,7 +2,7 @@ __Blockchain HD Frontend__
 
 _Recent changes_
 
-#   (2015-09-10)
+#   (2015-09-17)
 
 
 
@@ -10,6 +10,8 @@ _Recent changes_
 
 ## Bug Fixes
 
+- **Addresses:** show either fiat or btc but not both in Address view
+  ([39fc0f80](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/39fc0f80515099dab98028d832cde85c21176777))
 - **CSP:**
   - switch to ui-select fork to avoid unsafe-inline
   ([b366db87](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/b366db8709559e7cb5950a6d20b002d3dc841f52))
@@ -20,6 +22,8 @@ _Recent changes_
 - **Send:** pasted watch only address sticks
   ([017735b5](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/017735b5a059c665ee893185641363daa4ea13e4))
 - **UI:**
+  - give setting views breathing room at bottom
+  ([dfaa96d8](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/dfaa96d80e7eb935f50acf0bea94ce8ee545a4e6))
   - receive modal input widths auto sizing issues
   ([a6123cf7](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/a6123cf7602a660a51b0a19218175bc8797ec84e))
   - hide input spinners on -webkit, change class name on bc-async-input (padding only necessary)
@@ -38,12 +42,16 @@ _Recent changes_
   ([94bb3a6c](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/94bb3a6cef9c4ef7e8f210bb427a499d41b5496b))
 - **addresses:** prevent user from generating HD address after upgrade before sync is complete
   ([86e8cd8c](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/86e8cd8c17ecfd05d28bfe0f19f9d507ad984587))
+- **alerts:** Modals have their own alert contexts
+  ([1f12b51b](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/1f12b51b67c05114ffcf71bf73421a7c4fc03b63))
 - **bc-async-input:** cancel after submit no longer undoes the previous change
   ([4d38ad77](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/4d38ad77f20e6f2cae32b1fc002b6aba61d253cd))
 - **contextualMessage:** add missing 0 to balance check
   ([120e947b](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/120e947b1b13ae97ce6f3fd24ec5bbc188a0858a))
 - **copy:** swap out from/to
   ([2b7d728b](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/2b7d728b4c4b197201e712cb4e252b0291ee5f1b))
+- **dyk:** translate strings in view rather than in service
+  ([db5f06c3](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/db5f06c3d10557b4a5054dc24cbf71ff7452e3d0))
 - **empty-state:** remove unnecessary check which was causing it not to appear correctly
   ([b654f796](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/b654f796729aea088e359399b398d4bec4b4a1eb))
 - **inline-styles:** remove inline style from directive template
@@ -59,6 +67,8 @@ _Recent changes_
   ([768c2c92](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/768c2c92f34cc7d8fb7a7e8738ce4efc8762c32e))
 - **send:** to label displays correctly depending on the destinations
   ([c53ad049](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/c53ad049eb337e0f242257c29d2b1210e19dcb99))
+- **sendCtrl:** fixes ui-select dropdown after pasting
+  ([62b01308](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/62b013080ce1caba1caf303c9019efe348a983a6))
 - **transactions-feed:** watch the account index and fetch more tx's for that account, update test suite with mocked up MyWallet
   ([5ede55fa](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/5ede55fa3bf2d9879c94decf61abea2105a3044e))
 - **translateMock:** Add .instant to mock
@@ -78,7 +88,10 @@ _Recent changes_
   ([4e5b06f0](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/4e5b06f0feb570e2e5a4dd0554db58a589748d4a))
 - **Accounts:** reveal account xpub
   ([114e5d1f](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/114e5d1fd60073659f52145096625ed645d1a1d7))
-- **UI:** make wallet navigation on mobile take up entire height of screen, shift toggle menu to right hand side
+- **UI:**
+  - inline to rows in modals, right align labels
+  ([1723c432](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/1723c432979d23dd1d5c1a53900d317c7ba54779))
+  - make wallet navigation on mobile take up entire height of screen, shift toggle menu to right hand side
   ([a6c369a0](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/a6c369a0f4a2174855db21bf9161142d5bcae64a))
 - **browser:** drop support for Safari 3, 4 & 5
   ([97c26809](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/97c2680916b84735e461e9412eaefafa095c09f2))
@@ -91,6 +104,8 @@ _Recent changes_
   ([ecabaad2](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/ecabaad2c0e71a738d00c0845ca49bc4137e4356))
 - **no script:** cross browser CSS to center the msg
   ([7d9fcd5a](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/7d9fcd5ad7c6b57581bcc43124fab4a4132ea664))
+- **security-center:** set default score > 0 for new wallet creation
+  ([a4cc21d9](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/a4cc21d9d61311a83ede809f093e5a60c5731372))
 - **signup:** remove email verification step
   ([32df37c9](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/32df37c9f6fa7b115beba0489f6fa7dd2db8e058))
 - **xpub:** touch up modal UI
@@ -101,6 +116,7 @@ _Recent changes_
 
 - delete unused navigation_ctrl methods
 - **CSP:** unsafe-inline CSS
+- **DidYouKnow:** move tests to pending until better translateFilter is created to test directive
 - **TopCtrl:** simplified reference to Wallet.total
 - **UI:**
   - use utility classes, normalize typography
@@ -126,7 +142,26 @@ _Recent changes_
 - **changelog:**
   - add to grunt dist task
   - configured git-changelog
+- **css:** bring in Bootstrap modal CSS into app so we have more control
 - **did-you-know:** add test coverage to the directive, rm un-necessary translate filter in jade file
+- **es6:**
+  - fixed and converted function returns in ConfirmRecoverPhraseCtrl
+  - fixed return statements in modalInstance resolve segments
+  - converted FirstTimeCtrl
+  - converted SecondPasswordCtrl
+  - converted LoginCtrl
+  - converted SignupCtrl
+  - converted ModalNotificationCtrl
+  - converted NavigationCtrl
+  - converted OpenLinkCtrl
+  - converted SecurityCenterCtrl
+  - converted AppCtrl
+  - converted FeedbackCtrl
+  - converted ConfirmRecoverPhraseCtrl
+  - converted ClaimCtrl
+  - converted AccountFormCtrl
+  - Added support and converted some controllers
+  - converted TopCtrl
 - **grunt:** reuse build task and remove debug tasks
 
 
