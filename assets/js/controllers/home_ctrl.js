@@ -1,10 +1,10 @@
-walletApp.controller("HomeCtrl", ($scope, $window, Wallet, $modal) => {
+walletApp.controller("HomeCtrl", ($scope, Wallet, $modal) => {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.getTotal = () => Wallet.total('accounts');
   $scope.legacyTotal = () => Wallet.getTotalBalanceForActiveLegacyAddresses();
   $scope.transactions = [];
-  $scope.activeAccounts = Wallet.accounts().filter(a => { return !(a.archived); })
+  $scope.activeAccounts = Wallet.accounts().filter(a => !a.archived)
 
   $scope.$watch('status.didLoadTransactions', didLoad => {
     if (!didLoad) return;
