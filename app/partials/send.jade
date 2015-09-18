@@ -112,9 +112,9 @@
                 input.form-control.no-border(type="number" name="fee" ng-model="transaction.customFee" min="0" ng-change="validateAmounts(false)" required transform-currency="settings.btcCurrency" placeholder="Enter your fee here")
               span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$touched")
       //- QR Scanner
-      .flex-column.form-group(ng-hide="!cameraIsOn")
-        label.flex-1(translate="QR")
-        .flex-1
+      .form-group.row(ng-hide="!cameraIsOn")
+        label.col-sm-2.col-xs-12(translate="QR")
+        .col-sm-10.col-xs-12
           bc-qr-reader(active="cameraRequested", on-result="processURLfromQR" on-error="onError" camera-status="cameraIsOn")
   //- Step 2 (confirmation)
   div.overview(ng-show="confirmationStep")
