@@ -1,7 +1,8 @@
 .row
-  .col-xs-12
-    a.back(ng-click="back()")
-      h4.back(translate="ADDRESS_DETAILS")
+  .col-xs-12.mbl
+    a.flex-center.text.em-400.blue(ng-click="back()")
+      i.ti-arrow-left.mrm
+        span(translate="ADDRESS_DETAILS")
 
 div(ng-hide="address.address")
   img(src="img/spinner.gif")
