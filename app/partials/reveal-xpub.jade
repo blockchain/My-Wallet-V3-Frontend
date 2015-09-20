@@ -1,9 +1,12 @@
 .modal-header
   h3(translate="ACCOUNT_XPUB_MODAL_TITLE") 
 .modal-body
-  form(role="form" name="accountForm" novalidate)
-    .form-group.flex-column.flex-justify(ng-class="{'has-error': accountForm.$invalid && accountForm.$dirty}")
-      label.type-h5.em-400 Xpub:
-      p.xpub.break-word {{ xpub }}
+  .flex-column(ng-show="!showXpub")
+    p.security-red.em-500.em-alt(translate="WARNING")
+    p.text(translate="XPUB_WARNING")
+  .form-group.flex-column.flex-justify(ng-show="showXpub")
+    p.text.em-500.em-alt Xpub:
+    p.xpub.break-word {{ xpub }}
 .modal-footer.pal.flex-end.flex-center
-  button.button-muted.button-lg.mrm(ng-click="close()", translate="CLOSE")
+  button.button-muted.mrm(ng-class="{'button-lg' : showXpub}" ng-click="close()", translate="CLOSE")
+  button.button-primary.button-md(ng-click="continue()", translate="CONTINUE" ng-hide="showXpub")
