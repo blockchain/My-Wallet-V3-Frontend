@@ -49,16 +49,9 @@ walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     });
   };
 
-  $scope.getBtcCap = () => {
-    Wallet.convertFromSatoshi(2100000000000000, $scope.btcCurrency);
-  };
-  $scope.getFiatCap = () => {
-    return Wallet.convertFromSatoshi(2100000000000000, $scope.fiatCurrency);
-  };
-
   $scope.onError = (error) => {
-    return $translate("CAMERA_PERMISSION_DENIED").then(translation => {
-      return Wallet.displayWarning(translation, false, $scope.alerts);
+    $translate("CAMERA_PERMISSION_DENIED").then(translation => {
+      Wallet.displayWarning(translation, false, $scope.alerts);
     });
   };
 
