@@ -1,0 +1,405 @@
+walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $modal) => {
+  $scope.legacyAddresses = Wallet.legacyAddresses;
+  $scope.accounts = Wallet.accounts;
+  $scope.addressBook = Wallet.addressBook;
+
+  $scope.status = Wallet.status;
+  $scope.settings = Wallet.settings;
+  $scope.alerts = [];
+
+  $scope.origins = [];
+  $scope.destinations = [];
+  $scope.destinationsBase = [];
+  $scope.originsLoaded = false;
+
+  $scope.cameraIsOn = false;
+  $scope.sending = false;
+  $scope.amountIsValid = true;
+  $scope.confirmationStep = false;
+  $scope.advanced = false;
+
+  $scope.fiatCurrency = Wallet.settings.currency;
+  $scope.btcCurrency = Wallet.settings.btcCurrency;
+  $scope.isBitCurrency = Wallet.isBitCurrency;
+
+  $scope.transactionTemplate = {
+    from: null,
+    destinations: [null],
+    amounts: [0],
+    fee: Wallet.settings.feePerKB,
+    customFee: null,
+    note: "",
+    publicNote: false
+  };
+
+  $scope.txProposal = null;
+  $scope.transaction = angular.copy($scope.transactionTemplate);
+
+  $scope.determineLabel = (origin) => origin.label || origin.address;
+  $scope.hasZeroBalance = (origin) => origin.balance === 0.0;
+
+  $scope.getFilter = (search, accounts=true) => ({
+    label: search,
+    type: accounts ? '!External' : 'Imported'
+  });
+
+  $scope.filterDestinations = (destinationsIdx, showAccounts=true) => {
+    return $scope.destinations[destinationsIdx].filter(dest => {
+      return showAccounts || dest.type !== 'Accounts';
+    });
+  };
+
+  $scope.getBtcCap = () => {
+    Wallet.convertFromSatoshi(2100000000000000, $scope.btcCurrency);
+  };
+  $scope.getFiatCap = () => {
+    return Wallet.convertFromSatoshi(2100000000000000, $scope.fiatCurrency);
+  };
+
+  $scope.onError = (error) => {
+    return $translate("CAMERA_PERMISSION_DENIED").then(translation => {
+      return Wallet.displayWarning(translation, false, $scope.alerts);
+    });
+  };
+
+  $scope.applyPaymentRequest = (paymentRequest, i) => {
+    $scope.processingPaymentRequest = true;
+    let destination = {
+      address: paymentRequest.address || "",
+      label: paymentRequest.address || "",
+      type: "External"
+    };
+    $scope.refreshDestinations(paymentRequest.address, i);
+    $scope.transaction.amounts[i] = paymentRequest.amount || 0;
+    $scope.transaction.note = paymentRequest.message || '';
+    $scope.validateAmounts();
+    $scope.updateToLabel();
+    $scope.$$postDigest(() => {
+      $timeout(() => {
+        $scope.processingPaymentRequest = false;
+      }, 3000);
+    });
+  };
+
+  $scope.processURLfromQR = (url) => {
+    paymentRequest = Wallet.parsePaymentRequest(url);
+    if (paymentRequest.isValid) {
+      $scope.applyPaymentRequest(paymentRequest, $scope.qrIndex);
+      $scope.cameraOff();
+    } else {
+      $translate("QR_CODE_NOT_BITCOIN").then(translation => {
+        Wallet.displayWarning(translation, false, $scope.alerts);
+      });
+      $log.error("Not a bitcoin QR code:" + url);
+    }
+  };
+
+  $scope.cameraOn = (index=0) => {
+    $scope.$broadcast('ResetSearch' + index);
+    $scope.cameraRequested = true;
+    $scope.qrIndex = index;
+  };
+
+  $scope.cameraOff = () => {
+    $scope.cameraIsOn = false;
+    $scope.cameraRequested = false;
+    $scope.qrIndex = null;
+  };
+
+  $scope.close = () => {
+    Wallet.clearAlerts();
+    $modalInstance.dismiss("");
+  };
+
+  $scope.resetSendForm = () => {
+    $scope.transaction = angular.copy($scope.transactionTemplate);
+    $scope.transaction.from = Wallet.accounts()[Wallet.my.wallet.hdwallet.defaultAccountIndex];
+    $scope.transaction.customFee = Wallet.settings.feePerKB;
+    for (let i = 0; i < $scope.destinations.length; i++) {
+      $scope.$broadcast('ResetSearch' + i);
+    }
+    $scope.refreshTxProposal();
+  };
+
+  $scope.addDestination = () => {
+    let originalDestinations = angular.copy($scope.destinations[0]);
+    $scope.destinations.push(originalDestinations);
+    $scope.transaction.amounts.push(0);
+    $scope.transaction.destinations.push(null);
+  };
+
+  $scope.removeDestination = (index) => {
+    $scope.destinations.splice(index, 1);
+    $scope.transaction.amounts.splice(index, 1);
+    $scope.transaction.destinations.splice(index, 1);
+  };
+
+  $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
+    let numAccts = Wallet.accounts().filter(a => !a.archived).length;
+    let numAddrs = Wallet.legacyAddresses().filter(a => !a.archived).length;
+    return numAccts + numAddrs;
+  };
+
+  $scope.send = () => {
+    if ($scope.sending) return;
+    $scope.sending = true;
+
+    Wallet.clearAlerts();
+
+    if ($scope.transaction.publicNote) {
+      var publicNote = $scope.transaction.note || null;
+    }
+
+    const transactionFailed = (message) => {
+      $scope.sending = false;
+      if (message) {
+        $translate(message).then(t => {
+          Wallet.displayError(t, false, $scope.alerts);
+        });
+      }
+    };
+
+    const transactionSucceeded = (tx_hash) => {
+      $scope.sending = false;
+      $modalInstance.close("");
+      Wallet.beep();
+
+      let note = $scope.transaction.note.trim();
+
+      if (!$scope.transaction.publicNote && note !== "") {
+        Wallet.setNote({ hash: tx_hash }, note);
+      }
+
+      let index = $scope.transaction.from.index || 'imported';
+
+      if (!($state.current.name === "wallet.common.transactions" || $stateParams.accountIndex === "accounts")) {
+        $state.go("wallet.common.transactions", {
+          accountIndex: index
+        });
+      }
+
+      Wallet.saveActivity(0);
+
+      $translate(['SUCCESS', 'BITCOIN_SENT']).then(translations => {
+        $scope.$emit('showNotification', {
+          type: 'sent-bitcoin',
+          icon: 'bc-icon-send',
+          heading: translations.SUCCESS,
+          msg: translations.BITCOIN_SENT
+        });
+      });
+
+    };
+
+    if (!$scope.txProposal) transactionFailed('Could not complete transaction');
+
+    const publish = (passphrase) => {
+      return $scope.txProposal.publish(passphrase, publicNote);
+    };
+
+    Wallet.askForSecondPasswordIfNeeded().then(publish)
+      .then(transactionSucceeded).catch(transactionFailed);
+  };
+
+  $scope.closeAlert = (alert) => {
+    Wallet.closeAlert(alert);
+  };
+
+  $scope.allowedDecimals = (currency) => {
+    if (Wallet.isBitCurrency(currency)) {
+      if (currency.code === 'BTC') return 8;
+      if (currency.code === 'mBTC') return 6;
+      if (currency.code === 'bits') return 4;
+    }
+    return 2;
+  };
+
+  $scope.decimalPlaces = (number) => {
+    return (number.toString().split('.')[1] || []).length;
+  };
+
+  $scope.updateToLabel = () => {
+    if ($scope.transaction.destinations[0] == null) return;
+
+    if ($scope.advanced && $scope.transaction.destinations.length > 1) {
+      $scope.toLabel = $scope.transaction.destinations.length + ' Recipients';
+    } else {
+      $scope.toLabel = $scope.transaction.destinations[0].label;
+      if ($scope.transaction.destinations[0].index != null) {
+        $scope.toLabel += " Account";
+      }
+    }
+  };
+
+  $scope.refreshDestinations = (query, i) => {
+    if (query === "" && $scope.processingPaymentRequest) return;
+    if ($scope.destinations[i].length === 0) return;
+
+    $scope.updateToLabel();
+    $scope.addExternalLabelIfNeeded(query, i);
+  };
+
+  $scope.addExternalLabelIfNeeded = function(query, idx) {
+    let last = $scope.destinations[idx].slice(-1)[0];
+    if (query != null) {
+      last.address = query;
+      last.label = query;
+    }
+    if ($scope.transaction.destinations[idx] == null || $scope.transaction.destinations[idx].type !== "External") {
+      let destinations = $scope.destinations[idx];
+      for (let i = 0; i < destinations.length; i++) {
+        let destination = destinations[i];
+        if (destination.type !== "External" && (destination.label.indexOf(query) !== -1 || (destination.address && destination.address.indexOf(query) !== -1))) {
+          if (destination.address && destination.address.indexOf(query) !== -1) {
+            console.log("Reset!");
+            $scope.transaction.destinations[idx] = destination;
+          }
+          return;
+        }
+      }
+      return $scope.transaction.destinations[idx] = last;
+    }
+  };
+
+  $scope.getTransactionTotal = (includeFee) => {
+    let fee = includeFee ? $scope.transaction.fee : 0;
+    return $scope.transaction.amounts.reduce((previous, current) => {
+      return (parseInt(previous) + parseInt(current)) || 0;
+    }, parseInt(fee));
+  };
+
+  $scope.validateAmounts = (recommendCustom) => {
+    if (recommendCustom == null) recommendCustom = true;
+    if ($scope.transaction.from == null) return;
+    let available = $scope.transaction.from.balance;
+    let transactionTotal = $scope.getTransactionTotal(true);
+    $scope.amountIsValid = available - transactionTotal >= 0;
+    $scope.refreshTxProposal(recommendCustom);
+  };
+
+  $scope.allAmountsAboveZero = () => {
+    return $scope.transaction.amounts.every(amt => amt > 0);
+  };
+
+  $scope.checkForSameDestination = () => {
+    const transaction = $scope.transaction;
+    return transaction.destinations.forEach((dest, index) => {
+      let match = false;
+      if (dest != null) {
+        match = dest.label === transaction.from.label;
+      }
+      if ($scope.sendForm == null) return;
+      $scope.sendForm['destinations' + index].$setValidity('isNotEqual', !match);
+    });
+  };
+
+  $scope.formatOrigin = (origin) => {
+    const formatted = {
+      label: origin.label || origin.address,
+      index: origin.index,
+      address: origin.address,
+      balance: origin.balance,
+      archived: origin.archived
+    };
+    formatted.type = origin.index != null ? 'Accounts' : 'Imported Addresses';
+    if (origin.index == null) formatted.isWatchOnly = origin.isWatchOnly;
+    return formatted;
+  };
+
+  $scope.refreshTxProposal = (recommendCustom=true) => {
+    let tx = $scope.transaction;
+    let fee = recommendCustom ? null : tx.customFee;
+    let destsDefined = tx.destinations.every(i => i != null);
+    let amtsDefined = tx.amounts.every(i => i != null);
+    if (!(tx.from && destsDefined && amtsDefined)) return;
+    $scope.txProposal = Wallet.transaction(tx.from, tx.destinations, tx.amounts, fee);
+    $scope.txProposal.tx.then(_tx => {
+      $scope.transaction.fee = _tx.fee;
+      if (recommendCustom) $scope.transaction.customFee = _tx.fee;
+      $scope.$root.$safeApply($scope);
+    });
+  };
+
+  $scope.$watch("transaction.destinations", (destinations) => {
+    destinations.forEach((dest, index) => {
+      if (dest == null) return;
+      if (dest.type === 'Accounts' || (dest.index != null)) {
+        $scope.sendForm['destinations' + index].$setValidity('isValidAddress', true);
+      } else {
+        let valid = Wallet.isValidAddress(dest.address);
+        $scope.sendForm['destinations' + index].$setValidity('isValidAddress', valid);
+      }
+      $scope.updateToLabel();
+    });
+    $scope.refreshTxProposal();
+  }, true);
+
+  $scope.$watch("status.didLoadBalances", () => {
+    if ($scope.status.didLoadBalances) {
+      if ($scope.origins.length === 0) {
+        let idx = Wallet.my.wallet.hdwallet.defaultAccountIndex;
+        if (!isNaN($stateParams.accountIndex)) {
+          idx = parseInt($stateParams.accountIndex);
+        }
+        for (let account of $scope.accounts()) {
+          account = $scope.formatOrigin(account);
+          if (!((account.index != null) && account.archived)) {
+            if (account.index === idx) {
+              $scope.transaction.from = account;
+            }
+            $scope.origins.push(account);
+            $scope.destinationsBase.push(angular.copy(account));
+          }
+        }
+        for (let address of $scope.legacyAddresses()) {
+          address = $scope.formatOrigin(address);
+          if (!address.archived) {
+            $scope.destinationsBase.push(address);
+            if (!address.isWatchOnly) {
+              $scope.origins.push(angular.copy(address));
+            }
+          }
+        }
+        $scope.destinationsBase.push({
+          address: "",
+          label: "",
+          type: "External"
+        });
+        $scope.destinations.push($scope.destinationsBase);
+        $scope.originsLoaded = true;
+        if ((paymentRequest.address != null) && paymentRequest.address !== '') {
+          $scope.applyPaymentRequest(paymentRequest, 0);
+        } else if (paymentRequest.toAccount != null) {
+          $scope.transaction.destinations[0] = $scope.formatOrigin(paymentRequest.toAccount);
+          $scope.transaction.from = paymentRequest.fromAddress;
+        } else if (paymentRequest.fromAccount != null) {
+          $scope.transaction.from = paymentRequest.fromAccount;
+        }
+      }
+    }
+  });
+
+  $scope.goToConfirmation = () => {
+    $scope.confirmationStep = true;
+    $scope.refreshTxProposal(!$scope.advanced);
+  };
+
+  $scope.backToForm = () => {
+    $scope.confirmationStep = false;
+  };
+
+  $scope.advancedSend = () => {
+    $scope.advanced = true;
+    $scope.transaction.customFee = $scope.transaction.fee;
+    $scope.refreshTxProposal();
+  };
+
+  $scope.regularSend = () => {
+    $scope.transaction.customFee = null;
+    $scope.transaction.destinations.splice(1);
+    $scope.transaction.amounts.splice(1);
+    $scope.advanced = false;
+    $scope.refreshTxProposal();
+  };
+
+});
