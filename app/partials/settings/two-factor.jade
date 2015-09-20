@@ -12,7 +12,7 @@
   div(ng-show="isStep('disabled')")
     h4(translate="2FA_DISABLED")
   div(ng-show="isStep('enable')")
-    .flex-center.row.pal
+    .flex.flex-align-end.row.pal
       .flex-column.col-xs-6.flex-center.border-right(ng-click="authWithPhone()")
         img.phone-image.mbl.pointer(src="img/phone.png")
         a(translate="USE_MOBILE")
