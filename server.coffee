@@ -69,7 +69,7 @@ app.configure ->
 if process.env.BETA? && parseInt(process.env.BETA)
   console.log("Enabling beta invite system")
 
-  hdBeta = require('hd-beta')(__dirname + '/' + process.env.BETA_DATABASE_PATH)
+  v3Beta = require('my-wallet-v3-beta-module')(__dirname + '/' + process.env.BETA_DATABASE_PATH)
 
   origins = (process.env.BLOCKCHAIN || '').split(' ')
   setHeaderForOrigin = (req, res, origins) ->
@@ -98,7 +98,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
       if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(userEmail))
         ios = if request.query.ios == 'true' || request.query.ios == true then true else false
         android = if request.query.android == 'true' || request.query.android == true then true else false
-        hdBeta.attemptToRequestKey userEmail, { ios: ios, android: android }, (err) ->
+        v3Beta.attemptToRequestKey userEmail, { ios: ios, android: android }, (err) ->
           if !err
             response.json { message: 'Successfully submitted request', success: true }
           else
@@ -109,11 +109,11 @@ if process.env.BETA? && parseInt(process.env.BETA)
       response.json { message: 'Beta key request limit reached', success: false }
 
   app.post "/check_beta_key_unused", (request, response) ->
-    hdBeta.verifyKey request.body.key, (err, verified) ->
+    v3Beta.verifyKey request.body.key, (err, verified) ->
       if err
         response.json {verified : false, error: {message: err}}
       else if verified
-        hdBeta.doesKeyExistWithoutGUID request.body.key, (err, verified, email) ->
+        v3Beta.doesKeyExistWithoutGUID request.body.key, (err, verified, email) ->
           if verified
             response.json {verified : true, email: email}
           else
@@ -122,7 +122,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
         response.json {verified : false, error: {message: "Invite key not found"}}
 
   app.post "/check_guid_for_beta_key", (request, response) ->
-    hdBeta.isGuidAssociatedWithBetaKey request.body.guid, (err, verified) ->
+    v3Beta.isGuidAssociatedWithBetaKey request.body.guid, (err, verified) ->
       if err
         response.json {verified : false, error: {message: "There was a problem verifying your invite key. Please try again later.", err }}
       else if verified
@@ -131,17 +131,17 @@ if process.env.BETA? && parseInt(process.env.BETA)
         response.json {verified : false, error: {message: "This wallet is not associated with a beta invite key. Please create a new wallet first."}}
 
   app.post "/set_guid_for_beta_key", (request, response) ->
-    hdBeta.doesKeyExistWithoutGUID request.body.key, (err, unclaimed, email) ->
+    v3Beta.doesKeyExistWithoutGUID request.body.key, (err, unclaimed, email) ->
       if err
         response.json {success : false, error: {message: err}}
       else if unclaimed
-        hdBeta.setGuid request.body.key, request.body.guid, () ->
+        v3Beta.setGuid request.body.key, request.body.guid, () ->
           response.json {success : true}
       else
         response.json {success : false}
 
   app.post "/verify_wallet_created", (request, response) ->
-    hdBeta.newWalletCreated request.body.key, (err) ->
+    v3Beta.newWalletCreated request.body.key, (err) ->
       if err
         response.json {success : false, error: {message: err}}
       else
@@ -156,7 +156,7 @@ if process.env.BETA? && parseInt(process.env.BETA)
       response.json { error: 'missing request body guid parameter' }
     else
       name = request.body.name || 'Mobile Tester'
-      hdBeta.assignKey name, request.body.email, request.body.guid, (err, key) ->
+      v3Beta.assignKey name, request.body.email, request.body.guid, (err, key) ->
         response.json { error: err, key: key }
 
   # beta key admin
@@ -186,49 +186,49 @@ if process.env.BETA? && parseInt(process.env.BETA)
     else
       # get-all-keys depricated
       if request.params.method == 'get-all-keys'
-        hdBeta.getKeys (err, data) ->
+        v3Beta.getKeys (err, data) ->
           response.send JSON.stringify data
 
       else if request.params.method == 'get-sorted-keys'
-        hdBeta.getKeys request.query, (err, data) ->
+        v3Beta.getKeys request.query, (err, data) ->
           response.json { error: err, data: data }
 
       else if request.params.method == 'assign-key'
-        hdBeta.assignKey request.query.name, request.query.email, request.query.guid, (err, key) ->
+        v3Beta.assignKey request.query.name, request.query.email, request.query.guid, (err, key) ->
           response.json { error: err, key: key }
 
       else if request.params.method == 'delete-key'
-        hdBeta.deleteKey request.query, (err) ->
+        v3Beta.deleteKey request.query, (err) ->
           response.json { error: err }
 
       else if request.params.method == 'update-key'
-        hdBeta.updateKey request.query.selection, request.query.update, (err) ->
+        v3Beta.updateKey request.query.selection, request.query.update, (err) ->
           response.json { error: err }
 
       else if request.params.method == 'activate-key'
-        hdBeta.activateKey request.query.selection, request.query.update, (err) ->
+        v3Beta.activateKey request.query.selection, request.query.update, (err) ->
           response.json { error: err }
 
       else if request.params.method == 'activate-all'
         range = [request.query.min || 0, request.query.max || 100000]
-        hdBeta.activateAll range, (err, data) ->
+        v3Beta.activateAll range, (err, data) ->
           response.json { error: err, data: data }
 
       else if request.params.method == 'resend-activation'
-        hdBeta.resendActivationEmail request.query.key, (err) ->
+        v3Beta.resendActivationEmail request.query.key, (err) ->
           response.json { error: err }
 
       else if request.params.method == 'resend-many'
         range = [request.query.min || 0, request.query.max || 100000]
-        hdBeta.resendMany range, (err, data) ->
+        v3Beta.resendMany range, (err, data) ->
           response.json { error: err, data: data }
 
       else if request.params.method == 'wallets-created'
-        hdBeta.fetchNumWalletsCreated (err, count) ->
+        v3Beta.fetchNumWalletsCreated (err, count) ->
           response.json { error: err, count: count }
 
       else if request.params.method == 'get-csv'
-        hdBeta.fetchCSV {}, (err, csv) ->
+        v3Beta.fetchCSV {}, (err, csv) ->
           fs.writeFileSync 'tmp.csv', csv
           response.download 'tmp.csv', 'emails.csv', () ->
             fs.unlink 'tmp.csv'
