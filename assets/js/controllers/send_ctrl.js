@@ -134,12 +134,14 @@ walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.send = () => {
     if ($scope.sending) return;
+
     $scope.sending = true;
+    $scope.transaction.note = $scope.transaction.note.trim();
 
     Wallet.clearAlerts();
 
     if ($scope.transaction.publicNote) {
-      var publicNote = $scope.transaction.note || null;
+      $scope.payment.note($scope.transaction.note);
     }
 
     const transactionFailed = (message) => {
@@ -156,8 +158,7 @@ walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       $modalInstance.close("");
       Wallet.beep();
 
-      let note = $scope.transaction.note.trim();
-
+      let note = $scope.transaction.note;
       if (!$scope.transaction.publicNote && note !== "") {
         Wallet.setNote({ hash: tx_hash }, note);
       }
