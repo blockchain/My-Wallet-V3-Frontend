@@ -6,8 +6,6 @@ describe "SendCtrl", ->
   scope = undefined
 
   askForSecondPassword = undefined
-  transactionPromiseMock = undefined
-  publishPromiseMock = undefined
 
   modalInstance =
     close: ->
@@ -22,6 +20,7 @@ describe "SendCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile, $q) ->
       MyWallet = $injector.get("MyWallet")
       Wallet = $injector.get("Wallet")
+      MyWalletPayment = $injector.get("MyWalletPayment")
 
       MyWallet.wallet =
         setNote: (-> )
@@ -50,17 +49,11 @@ describe "SendCtrl", ->
         btcCurrency: Wallet.btcCurrencies[0]
         feePerKB: 10000
 
-      Wallet.send = (-> )
+      Wallet.payment = MyWalletPayment
 
       askForSecondPassword = $q.defer()
       Wallet.askForSecondPasswordIfNeeded = () ->
         askForSecondPassword.promise
-
-      transactionPromiseMock = $q.defer()
-      publishPromiseMock = $q.defer()
-      Wallet.transaction = (from, destinations, amounts, fee) ->
-        tx: transactionPromiseMock.promise
-        publish: () -> publishPromiseMock.promise
 
       scope = $rootScope.$new()
 
@@ -309,7 +302,6 @@ describe "SendCtrl", ->
       beforeEach ->
         scope.transaction.destinations = scope.legacyAddresses().slice(0, 2)
         scope.transaction.amounts = [100, 5000]
-        scope.refreshTxProposal()
 
       it "should be valid", ->
         expect(scope.transaction.fee).toEqual(10000)
@@ -354,10 +346,6 @@ describe "SendCtrl", ->
           fee: 50
           note: 'this_is_a_note'
 
-      it "should use the correct txProposal", ->
-        scope.refreshTxProposal()
-        expect(scope.txProposal).toBeDefined()
-
     describe "after send", ->
 
       beforeEach ->
@@ -365,13 +353,12 @@ describe "SendCtrl", ->
         scope.transaction.destinations[0] = scope.accounts()[0]
         scope.transaction.amounts[0] = 420
         scope.transaction.fee = 10
-        scope.refreshTxProposal()
 
       describe "failure", ->
 
         beforeEach ->
+          scope.payment = new Wallet.payment(true)
           askForSecondPassword.resolve()
-          publishPromiseMock.reject('err_message')
 
         it "should display an error when process fails", inject((Wallet) ->
           spyOn(Wallet, 'displayError').and.callThrough()
@@ -387,7 +374,6 @@ describe "SendCtrl", ->
 
         beforeEach ->
           askForSecondPassword.resolve()
-          publishPromiseMock.resolve()
 
         it "should return sending to false", ->
           scope.send()
@@ -396,7 +382,6 @@ describe "SendCtrl", ->
 
         it "should close the modal", ->
           spyOn(modalInstance, "close")
-          scope.refreshTxProposal()
           scope.send()
           scope.$digest()
           expect(modalInstance.close).toHaveBeenCalled()
@@ -444,8 +429,8 @@ describe "SendCtrl", ->
           scope.transaction.note = 'this_is_a_note'
           scope.send()
           scope.$digest()
-          expect(Wallet.setNote).toHaveBeenCalledWith({ hash: undefined }, 'this_is_a_note')
-          expect(MyWallet.wallet.setNote).toHaveBeenCalledWith(undefined, 'this_is_a_note')
+          expect(Wallet.setNote).toHaveBeenCalledWith({ hash: 'tx-hash' }, 'this_is_a_note')
+          expect(MyWallet.wallet.setNote).toHaveBeenCalledWith('tx-hash', 'this_is_a_note')
         )
 
         it "should not set a note if there is not one", inject((Wallet) ->

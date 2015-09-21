@@ -24,7 +24,11 @@
           p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")
           span(ng-show="originsLoaded")
-            ui-select(ng-model="transaction.from" name="from" ng-change="validateAmounts(); checkForSameDestination()" required)
+            ui-select(
+              ng-model="transaction.from"
+              name="from"
+              ng-change="validateAmounts(); checkForSameDestination(); setPaymentFrom()"
+              required)
               ui-select-match
                 label-origin(origin="$select.selected" fee="transaction.fee")
               ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)")
@@ -47,7 +51,7 @@
                 name="{{'destinations' + $index}}" 
                 is-not-equal="{{transaction.from.label}}" 
                 property="label" 
-                ng-change="updateToLabel(); refreshTxProposal()" 
+                ng-change="updateToLabel(); refreshTxProposal(); setPaymentTo()" 
                 reset-search-input="false"
                 reset-search-input-on="{{ 'ResetSearch' + $index }}"
                 required
@@ -78,7 +82,7 @@
                     transform-currency="btcCurrency"
                     min="1"
                     max="2100000000000000"
-                    ng-change="validateAmounts()"
+                    ng-change="validateAmounts(); setPaymentAmount()"
                     required
                   )
               i.ti-arrows-horizontal.h4.aaa.prm
@@ -109,7 +113,15 @@
             .mrl.flex-1
               .flex-center.border-bottom
                 span.mrm {{ btcCurrency.code }}:
-                input.form-control.no-border(type="number" name="fee" ng-model="transaction.customFee" min="0" ng-change="validateAmounts(false)" required transform-currency="settings.btcCurrency" placeholder="Enter your fee here")
+                input.form-control.no-border(
+                  type="number"
+                  name="fee"
+                  ng-model="transaction.customFee"
+                  min="0"
+                  ng-change="validateAmounts(false); setPaymentFee()"
+                  required
+                  transform-currency="settings.btcCurrency"
+                  placeholder="Enter your fee here")
               span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$touched")
       //- QR Scanner
       .form-group.row(ng-hide="!cameraIsOn")
