@@ -558,6 +558,20 @@
   "EDIT_NOTE": "Edit",
   "DELETE_NOTE": "Delete",
   "ALPHA_WARNING": "Please note, this is an Alpha of a new product. Please do not test this wallet with more funds than you are willing to lose.",
-  "XPUB_WARNING": "You should only give this Public Key to those you trust. With this information, they may be able to keep track of your payments, and may be able to disrupt your access to your wallet."
-
+  "XPUB_WARNING": "You should only give this Public Key to those you trust. With this information, they may be able to keep track of your payments, and may be able to disrupt your access to your wallet.",
+  "LOST_WALLET_ID": "I've lost my Wallet ID",
+  "LOST_WALLET_PWD": "I've lost my Wallet Password",
+  "LOST_2FA": "I've lost my 2FA Device",
+  "LOST_ID_DESC": "Email me a reminder to my verified email address",
+  "LOST_PWD_DESC": "Recovery your funds with your 12 word recovery passphrase",
+  "LOST_2FA_DESC": "Contact support to help regain access to your wall",
+  "REMIND_ME": "Remind Me",
+  "RECOVER_FUNDS": "Recover Funds",
+  "STEP_2_RECOVER": "Step 2 of 2: Create a new wallet",
+  "STEP_1_RECOVER": "Step 1 of 2: Enter 12 word passphrase",
+  "RECOVER_BTC_LOST": "Recover bitcoins from your lost wallet",
+  "YOUR_REC_PASS": "Your Recovery Passphrase",
+  "YOUR_REC_PASS_EXPLAIN": "Enter your 12 recovery words with spaces to recover your funds & transactions",
+  "RESTORE_SUCCESSFUL": "Restore Successful",
+  "REDIRECTING": "We're redirecting you to your wallet now!"
 }

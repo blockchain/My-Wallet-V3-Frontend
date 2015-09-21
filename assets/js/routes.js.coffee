@@ -81,7 +81,15 @@ walletApp.config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-
+  .state("recover",
+    url: "/recover"
+    views: {
+      body: {
+        templateUrl: "partials/recover-funds.jade"
+        controller: "RecoverFundsCtrl"
+      }
+    }
+  )
   # Use the same layout as the transactions screen, once signup is complete
   .state("signup.finish",
     url: "/signup/finish"

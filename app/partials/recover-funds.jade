@@ -15,6 +15,16 @@
           p(translate="RECOVER_BTC_LOST")
       form.form-horizontal(name="recoveryForm")
         div(ng-switch-when="1")
+          .form-group(ng-class="{'has-error': recoveryForm.mnemonic.$error.isValid && recoveryForm.mnemonic.$touched}")
+            label(translate="YOUR_REC_PASS")
+            p(translate="YOUR_REC_PASS_EXPLAIN")
+            input.form-control(
+              type="text"
+              name="mnemonic"
+              ng-model="fields.mnemonic"
+              is-valid="isValidMnemonic(fields.mnemonic)"
+              required)
+        div(ng-switch-when="2")
           .form-group(ng-class="{'has-error': recoveryForm.email.$error.email && recoveryForm.email.$touched}")
             label.em-500(translate="EMAIL")
             input.form-control(
@@ -47,16 +57,6 @@
               required)
             span.help-block 
               p {{ errors.confirmation }}
-        div(ng-switch-when="2")
-          .form-group(ng-class="{'has-error': recoveryForm.mnemonic.$error.isValid && recoveryForm.mnemonic.$touched}")
-            label(translate="YOUR_REC_PASS")
-            p(translate="YOUR_REC_PASS_EXPLAIN")
-            input.form-control(
-              type="text"
-              name="mnemonic"
-              ng-model="fields.mnemonic"
-              is-valid="isValidMnemonic(fields.mnemonic)"
-              required)
         .flex-center.flex-end.mvl
           img(ng-show="working" src="img/spinner.gif")
           button.button-primary(

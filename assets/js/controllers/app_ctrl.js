@@ -52,7 +52,7 @@ walletApp.controller("AppCtrl", ($scope, Wallet, $state, $rootScope, $location, 
   };
 
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) => {
-    if (toState.name !== "login.show" && toState.name !== "login" && toState.name !== "signup" && toState.name !== "open" && toState.name !== "verify-email" && toState.name !== "verify-email-with-guid" && $scope.status.isLoggedIn === false) {
+    if (toState.name !== "login.show" && toState.name !== "login" && toState.name !== "recover" && toState.name !== "signup" && toState.name !== "open" && toState.name !== "verify-email" && toState.name !== "verify-email-with-guid" && $scope.status.isLoggedIn === false) {
       $state.go("login.show");
     }
     if (Wallet.status.isLoggedIn && (Wallet.store.resetLogoutTimeout != null)) {

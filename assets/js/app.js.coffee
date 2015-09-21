@@ -59,6 +59,7 @@ modules = [
   "partials/wallet-navigation.jade"
   "partials/common.jade"
   "partials/modal-notification.jade"
+  "partials/recover-funds.jade"
   "partials/privacy-policy.jade"
   "partials/terms-of-service.jade"
   "partials/security-center.jade"
