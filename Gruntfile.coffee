@@ -388,7 +388,7 @@ module.exports = (grunt) ->
 
       deploy_beta_to_dev:
         command: () ->
-          'rsync -rz --delete node_modules/hd-beta hd-dev@server:node_modules/'
+          'rsync -rz --delete node_modules/my-wallet-v3-beta-module hd-dev@server:node_modules/'
 
       deploy_static_to_staging:
         command: () ->
@@ -400,7 +400,7 @@ module.exports = (grunt) ->
 
       deploy_beta_to_staging:
         command: () ->
-          'rsync -rz --delete node_modules/hd-beta hd-staging@server:node_modules/'
+          'rsync -rz --delete node_modules/my-wallet-v3-beta-module-staging@server:node_modules/'
 
       deploy_static_to_alpha:
         command: () ->
@@ -412,7 +412,7 @@ module.exports = (grunt) ->
 
       deploy_beta_to_alpha:
         command: () ->
-          'rsync -rz --delete node_modules/hd-beta hd-alpha@server:node_modules/'
+          'rsync -rz --delete node_modules/my-wallet-v3-beta-module hd-alpha@server:node_modules/'
 
       deploy_start_dev:
         command: () ->
