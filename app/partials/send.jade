@@ -51,7 +51,7 @@
                 name="{{'destinations' + $index}}" 
                 is-not-equal="{{transaction.from.label}}" 
                 property="label" 
-                ng-change="updateToLabel(); refreshTxProposal(); setPaymentTo()" 
+                ng-change="updateToLabel(); refreshTxProposal()"
                 reset-search-input="false"
                 reset-search-input-on="{{ 'ResetSearch' + $index }}"
                 required
@@ -94,7 +94,7 @@
                     ng-model="transaction.amounts[$index]"
                     name="{{'amountsFiat' + $index}}"
                     transform-currency="fiatCurrency"
-                    ng-change="validateAmounts()"
+                    ng-change="validateAmounts(); setPaymentAmount()"
                     required
                   )
               a.mlm.button-danger.type-sm.button-sm(ng-click="removeDestination($index)" ng-hide="$first && $last")

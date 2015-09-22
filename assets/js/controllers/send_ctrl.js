@@ -306,6 +306,7 @@ walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         $scope.sendForm['destinations' + index].$setValidity('isValidAddress', valid);
       }
       $scope.updateToLabel();
+      $scope.setPaymentTo();
     });
   }, true);
 
