@@ -10,6 +10,11 @@ walletApp.controller("LoginCtrl", ($scope, $rootScope, $log, $http, Wallet, $coo
     twoFactor: null
   };
   $scope.uidAvailable = $cookieStore.get('uid') != null;
+  $scope.user = Wallet.user;
+
+  $scope.toggleHelp = () => {
+    $scope.status.needsHelp = !($scope.status.needsHelp);
+  };
 
   //   Browser compatibility warnings:
   // * Secure random number generator: https://developer.mozilla.org/en-US/docs/Web/API/RandomSource/getRandomValues

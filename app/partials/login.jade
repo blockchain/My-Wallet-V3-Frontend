@@ -20,19 +20,19 @@
           li.item
             a.pam(href="http://blockchain.com/our-products/blockchain-merchant/", translate="MERCHANT")
           li.item
-            a.pam(href="https://blockchain.zendesk.com/", translate="SUPPORT")          
+            a.pam(href="https://blockchain.zendesk.com/", translate="SUPPORT")
 
   .flex-center.flex-justify.flex-column
     .flex.flex-justify(ui-view="alerts")
     .login-box.mhs
       header
-        hgroup(ng-hide="status.enterkey")
+        hgroup(ng-hide="status.enterkey || status.needsHelp")
           .flex-between.flex-center.flex-wrap
             h2.em-300.mtn(translate="WELCOME_BACK")
             span.register.mbm
               span(translate="OR" ng-show="!beta")
               | 
-              a(ng-click="prepareRegister()")
+              a.em-300(ng-click="prepareRegister()")
                 span(ng-show="beta")
                   span(translate="CLICK_HERE_TO_CREATE_WALLET_ALPHA_KEY")| 
                 span(ng-hide="beta")
@@ -41,21 +41,21 @@
         hgroup(ng-show="status.enterkey")
           h2.em-300.mtn(translate="CREATE_A_WALLET")
           p.em-300(translate="ALPHA_KEY_EXPLAIN")
-    
-      form.form-horizontal.clearfix(role="form" ng-hide="status.enterkey")
+      //GUID & Password fields
+      form.form-horizontal.clearfix(role="form" ng-hide="status.enterkey || status.needsHelp")
         .form-group(ng-class="{'has-error': errors.uid}")
-          label.control-label(translate="UID", for="UID_input")
+          label.em-500(translate="UID", for="UID_input")
           div
             input#UID_input.form-control(type="text", ng-model="uid", ng-disabled="busy || disableLogin" name="UID_input" focus-when="!uidAvailable")
             span.help-block {{ errors.uid }}
             span.help-block.info.hidden-xs(translate="FIND_GUID_EXPLAIN")
         .form-group(ng-class="{'has-error': errors.password}")
-          label.control-label(translate="PASSWORD", for="pass_input")
+          label.em-500(translate="PASSWORD", for="pass_input")
           div
             input#pass_input.form-control(type="password", name="pass_input" ng-model="password", ng-disabled="busy || disableLogin" focus-when="uidAvailable")
             span.help-block {{ errors.password }}  
         .form-group(ng-show="settings.needs2FA", ng-class="{'has-error': errors.twoFactor || settings.twoFactorMethod == 3}")
-          label.control-label
+          label.em-500
               span(translate="YUBI_CODE", ng-show="settings.twoFactorMethod == 1")
               span(translate="EMAIL_CODE", ng-show="settings.twoFactorMethod == 2")
               span(translate="2FA_NOT_SUPPORTED", ng-show="settings.twoFactorMethod == 3")
@@ -68,16 +68,36 @@
               img(ng-show="resending" src="img/spinner.gif")
               a(ng-click="resend()", ng-show="!resending", translate="RESEND") 
         .mtl.flex-center.flex-end
-          button.button-primary.button-nowrap(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="SIGNIN", ng-disabled="!isValid")
-
+          button.button-primary(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="SIGNIN", ng-disabled="!isValid")
+      //Wallet Recovery
+      .ptl.flex-column(ng-hide="status.needsHelp || status.enterkey")
+        .em-300.flex-end.mbm Having some trouble?
+          span.pointer.blue.mls(ng-click="toggleHelp()") View Options
+      .flex-column(ng-show="status.needsHelp")
+        ul.pln
+          li.border-bottom-light.pvm.flex-between.flex-center
+            .flex-column.flex-2.prm
+              h5.blue.em-300(translate="LOST_WALLET_PWD")
+              p.em-400(translate="LOST_PWD_DESC")
+            .flex-1.flex-end
+              a.button-default.button-nowrap(translate="RECOVER_FUNDS" ui-sref="recover")
+          li.border-bottom-light.pvm.flex-between.flex-center
+            .flex-column.flex-2.prm
+              h5.blue.em-300(translate="LOST_2FA")
+              p.em-400(translate="LOST_2FA_DESC")
+            .flex-1.flex-end
+              a.button-default.button-nowrap(translate="CONTACT_SUPPORT" href="https://blockchain.zendesk.com/anonymous_requests/new" target="_blank")
+        .flex-end
+          a.button-muted.mtm(ng-click="toggleHelp()")
+            span(translate="GO_BACK")
       form.form-horizontal.clearfix(role="form", ng-show="status.enterkey")
         .form-group(ng-show="beta")
-          label.control-label(for="beta_key", translate="ALPHA_INVITE_KEY")
+          label.em-500(for="beta_key", translate="ALPHA_INVITE_KEY")
           div
             input#beta_key.form-control(type="text", name="beta_key" ng-model="key", ng-disabled="busy || disableLogin")
         .form-group
           .flex-center.flex-end.mtm
             span.register.mrm
-              a(ng-click="status.enterkey = !status.enterkey")
+              a.button-muted.mrm(ng-click="status.enterkey = !status.enterkey")
                 span(translate="GO_BACK")
             button.button-primary(ng-click="register()",translate="CREATE_WALLET", ng-disabled="key == null || key == '' ")

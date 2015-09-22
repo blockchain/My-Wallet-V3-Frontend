@@ -1,0 +1,80 @@
+.login-pg.overflow-scroll
+  .navbar.navbar-default.navbar-inverse.navbar-unauth.bc-header
+    .container-fluid
+      .navbar-header.flex-between
+        a.navbar-brand(ng-href="#/")
+          img#logo.pll(src="img/logo-updated.png" alt="Blockchain")
+  .flex-center.flex-justify.flex-column(ng-switch="currentStep")
+    .flex.flex-justify(ui-view="alerts")
+    .login-box.mhs.pos-rel
+      p.type-xs.em-500.step.pos-abs(ng-switch-when="1" translate="STEP_1_RECOVER")
+      p.type-xs.em-500.step.pos-abs(ng-switch-when="2" translate="STEP_2_RECOVER")
+      header.flex-center.flex-between
+        .flex-column
+          h2.em-300.mtn(translate="RECOVER_FUNDS")
+          p(translate="RECOVER_BTC_LOST")
+      form.form-horizontal(name="recoveryForm")
+        div(ng-switch-when="1")
+          .form-group(ng-class="{'has-error': recoveryForm.mnemonic.$error.isValid && recoveryForm.mnemonic.$touched}")
+            label(translate="YOUR_REC_PASS")
+            p(translate="YOUR_REC_PASS_EXPLAIN")
+            input.form-control(
+              type="text"
+              name="mnemonic"
+              ng-model="fields.mnemonic"
+              is-valid="isValidMnemonic(fields.mnemonic)"
+              required)
+        div(ng-switch-when="2")
+          .form-group(ng-class="{'has-error': recoveryForm.email.$error.email && recoveryForm.email.$touched}")
+            label.em-500(translate="EMAIL")
+            input.form-control(
+              type="email"
+              name="email"
+              ng-model="fields.email"
+              autofocus
+              required)
+            span.help-block 
+              p {{ errors.email }}
+          .form-group(ng-class="{'has-error': recoveryForm.password.$error.minEntropy && recoveryForm.password.$touched}")
+            label.em-500(translate="NEW_PASSWORD")
+            input.form-control(
+              type="password"
+              name="password"
+              ng-model="fields.password"
+              ng-change="fields.confirmation = ''"
+              ng-maxlength="255"
+              min-entropy="25"
+              required)
+            password-entropy.help-block(password="fields.password")
+            span.help-block {{ errors.password }}
+          .form-group(ng-class="{'has-error': recoveryForm.confirmation.$error.isValid && recoveryForm.confirmation.$touched}")
+            label.em-500(translate="CONFIRM_PASSWORD")
+            input.form-control(
+              type="password"
+              name="confirmation"
+              ng-model="fields.confirmation"
+              is-valid="fields.confirmation === fields.password"
+              required)
+            span.help-block 
+              p {{ errors.confirmation }}
+        .flex-center.flex-end.mvl
+          img(ng-show="working" src="img/spinner.gif")
+          button.button-primary(
+            ng-switch-when="1"
+            ng-click="nextStep()"
+            ng-disabled="!recoveryForm.$valid"
+            translate="CONTINUE")
+          button.button-muted.mrm(
+            ng-switch-when="2"
+            ng-click="goBack()"
+            translate="GO_BACK")
+          button.button-success(
+            ng-switch-when="2"
+            ng-click="performImport()"
+            ng-disabled="!recoveryForm.$valid || working"
+            translate="RECOVER_FUNDS")
+      .flex-center.flex-justify.flex-column(ng-switch-when="3")
+        .level-complete.flex-center.flex-justify
+          i.ti-check.bright-green
+        h4.em-300.mtl(translate="RESTORE_SUCCESSFUL")
+        p.em-300(translate="REDIRECTING")

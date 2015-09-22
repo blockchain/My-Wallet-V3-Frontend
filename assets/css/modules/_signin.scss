@@ -17,7 +17,7 @@ div.login-form {
 .login-box {
   background-color: white;
   padding: 10px 50px 25px;
-  max-width: 550px;
+  width: 550px;
   border-radius: 10px;
   box-shadow: 0px 0px 20px -8px black;
   header {
@@ -36,12 +36,15 @@ div.login-form {
     }
   }
   input[type='checkbox'] { margin: 0; }
+  .step { right: 20px; top: 10px; }
 }
 
 @media (max-width: 620px) {
   .login-box {
     padding: 10px 25px 25px;
     margin-bottom: 100px; //so you can scroll
+    min-width: 0;
+    width: 95%;
     header h2 { font-size: 18px; margin-top: 0; margin-bottom: 5px; }
     .navbar { margin-bottom: 0; }
     .form-group { margin-bottom: 0; }
