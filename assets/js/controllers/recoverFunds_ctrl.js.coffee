@@ -29,6 +29,7 @@ walletApp.controller 'RecoverFundsCtrl', ($scope, $rootScope, $state, $timeout, 
       , 4000)
 
     error = (message) ->
+      $scope.working = false
       Wallet.displayError(message)
 
     Wallet.my.recoverFromMnemonic(
