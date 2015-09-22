@@ -380,7 +380,7 @@ walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.setPaymentTo = () => {
     let destinations = $scope.transaction.destinations;
-    if (!destinations[0]) return;
+    if (!destinations.every(d => d != null)) return;
     if (destinations[0].index != null) {
       destinations = destinations[0].index;
     } else {
