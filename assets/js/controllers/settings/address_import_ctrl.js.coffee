@@ -66,18 +66,30 @@ walletApp.controller "AddressImportCtrl", ($scope, $log, Wallet, $modalInstance,
       $scope.status.sweeping = false
       $modalInstance.dismiss ""
       $state.go("wallet.common.transactions", {accountIndex: $scope.fields.account.index})
+      $translate(['SUCCESS', 'BITCOIN_SENT']).then (translations) ->
+        $scope.$emit 'showNotification',
+          type: 'sent-bitcoin',
+          icon: 'bc-icon-send',
+          heading: translations.SUCCESS,
+          msg: translations.BITCOIN_SENT
 
     error = (error) ->
       $scope.status.sweeping = false
       Wallet.displayError(error) if error && typeof error == 'string'
       $scope.$root.$safeApply($scope)
 
-    spender = new Wallet.spender()
-    transferTx = spender.addressSweep($scope.address).toAccount($scope.fields.account.index)
-    publish = transferTx.publish.bind(transferTx)
+    payment = new Wallet.payment()
+    payment
+      .from($scope.fields.address)
+      .to($scope.fields.account.index)
+      .sweep()
+      .build()
+
+    signAndPublish = (passphrase) ->
+      payment.sign(passphrase).publish().payment
 
     Wallet.askForSecondPasswordIfNeeded()
-      .then(publish).then(success).catch(error)
+      .then(signAndPublish).then(success).catch(error)
 
   # Misc functions
 
