@@ -1,4 +1,4 @@
-walletApp.directive('didYouKnow', (DidYouKnow) ->
+angular.module('walletApp').directive('didYouKnow', (DidYouKnow) ->
   {
     restrict: "E"
     replace: true

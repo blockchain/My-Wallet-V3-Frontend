@@ -1,4 +1,4 @@
-walletApp.directive('isNotEqual', (Wallet) ->
+angular.module('walletApp').directive('isNotEqual', (Wallet) ->
   {
     restrict: 'A'
     require: 'ngModel'

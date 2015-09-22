@@ -1,4 +1,4 @@
-walletApp.directive('labelOrigin', (Wallet) ->
+angular.module('walletApp').directive('labelOrigin', (Wallet) ->
   {
     restrict: "E"
     replace: true

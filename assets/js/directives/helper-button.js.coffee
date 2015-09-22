@@ -1,4 +1,4 @@
-walletApp.directive('helperButton', ($translate) ->
+angular.module('walletApp').directive('helperButton', ($translate) ->
   {
     restrict: "E"
     replace: true
@@ -18,7 +18,7 @@ walletApp.directive('helperButton', ($translate) ->
         templateUrl: 'templates/helper-popover.jade'
         placement: scope.placement || 'right'
 
-      scope.toggleActive = ()-> 
+      scope.toggleActive = ()->
         scope.isActive = !scope.isActive
 
   }

@@ -1,4 +1,4 @@
-walletApp.directive('verifyEmail', ($translate, Wallet) ->
+angular.module('walletApp').directive('verifyEmail', ($translate, Wallet) ->
   {
     restrict: "E"
     replace: 'true'

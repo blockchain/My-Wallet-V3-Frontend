@@ -1,4 +1,4 @@
-walletApp.controller 'RecoverFundsCtrl', ($scope, $rootScope, $state, $timeout, Wallet) ->
+angular.module('walletApp').controller 'RecoverFundsCtrl', ($scope, $rootScope, $state, $timeout, Wallet) ->
   $scope.currentStep = 1
   $scope.fields = {
     email: '',

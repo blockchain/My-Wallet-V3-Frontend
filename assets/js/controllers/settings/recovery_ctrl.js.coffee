@@ -1,4 +1,4 @@
-walletApp.controller "RecoveryCtrl", ($scope, Wallet, $state, $translate) ->
+angular.module('walletApp').controller "RecoveryCtrl", ($scope, Wallet, $state, $translate) ->
   $scope.recoveryPhrase = null
   $scope.recoveryPassphrase = null
   $scope.showRecoveryPhrase = false
@@ -13,9 +13,9 @@ walletApp.controller "RecoveryCtrl", ($scope, Wallet, $state, $translate) ->
         $scope.recoveryPhrase = mnemonic
         $scope.recoveryPassphrase = passphrase
         $scope.showRecoveryPhrase = true
-        
+
       error = (message) ->
-        
+
       Wallet.getMnemonic(success, error)
     else
       $scope.recoveryPhrase = null
@@ -37,7 +37,7 @@ walletApp.controller "RecoveryCtrl", ($scope, Wallet, $state, $translate) ->
     error = (message) ->
       $scope.importing = false
       Wallet.displayError(message)
-      
+
     cancel = () ->
       $scope.importing = false
 

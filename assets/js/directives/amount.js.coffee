@@ -1,4 +1,4 @@
-walletApp.directive('amount', (Wallet) ->
+angular.module('walletApp').directive('amount', (Wallet) ->
   {
     restrict: "E"
     replace: 'false'

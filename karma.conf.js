@@ -23,7 +23,7 @@ module.exports = function(karma){
       'bower_components/angular-numeraljs/dist/angular-numeraljs.js',
       'bower_components/angular-inview/angular-inview.js',
       'build/js/browser-polyfill.js',
-      'assets/js/app.js.coffee',
+      'assets/js/app.js',
       'build/js/templates.js',
       'assets/js/controllers/**/*.js.coffee',
       'assets/js/controllers/**/*.js',
@@ -56,7 +56,7 @@ module.exports = function(karma){
       'assets/js/wrappers/*.js.coffee': ['coffee'],
       'assets/js/my_wallet.js.coffee': ['coffee'],
       'assets/js/routes.js.coffee' : ['coffee'],
-      'assets/js/app.js.coffee' : ['coffee'],
+      'assets/js/app.js' : ['babel'],
       'tests/**/*.coffee' : ['coffee'],
       'tests/**/*.js' : ['babel']
     },

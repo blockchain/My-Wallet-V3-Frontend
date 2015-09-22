@@ -1,4 +1,4 @@
-walletApp.directive('isValidAsync', ($q, Wallet) ->
+angular.module('walletApp').directive('isValidAsync', ($q, Wallet) ->
   {
     restrict: 'A'
     require: 'ngModel'

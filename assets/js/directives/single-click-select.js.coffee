@@ -1,4 +1,4 @@
-walletApp.directive('singleClickSelect', ($window) ->
+angular.module('walletApp').directive('singleClickSelect', ($window) ->
   {
     restrict: "A"
     link: (scope, elem, attrs) ->

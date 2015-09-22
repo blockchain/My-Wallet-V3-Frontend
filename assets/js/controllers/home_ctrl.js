@@ -1,4 +1,4 @@
-walletApp.controller("HomeCtrl", ($scope, Wallet, $modal) => {
+angular.module('walletApp').controller("HomeCtrl", ($scope, Wallet, $modal) => {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.getTotal = () => Wallet.total('accounts');

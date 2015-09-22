@@ -1,4 +1,4 @@
-walletApp.controller "UpgradeCtrl", ($scope, Wallet, $modalInstance, $log, $window, $translate, $timeout) ->
+angular.module('walletApp').controller "UpgradeCtrl", ($scope, Wallet, $modalInstance, $log, $window, $translate, $timeout) ->
 
   $scope.waiting = true
   $scope.busy = false

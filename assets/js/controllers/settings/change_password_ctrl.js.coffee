@@ -1,4 +1,4 @@
-walletApp.controller "ChangePasswordCtrl", ($scope, $log, Wallet, $modalInstance, $translate) ->
+angular.module('walletApp').controller "ChangePasswordCtrl", ($scope, $log, Wallet, $modalInstance, $translate) ->
 
   $scope.fields = {currentPassword: "", password: "", confirmation: ""}
 

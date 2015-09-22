@@ -1,4 +1,4 @@
-walletApp.controller "SettingsAdvancedCtrl", ($scope, Wallet, $modal, $translate) ->
+angular.module('walletApp').controller "SettingsAdvancedCtrl", ($scope, Wallet, $modal, $translate) ->
   $scope.settings = Wallet.settings
   $scope.btc = Wallet.btcCurrencies[0]
   $scope.processToggleRememberTwoFactor = null

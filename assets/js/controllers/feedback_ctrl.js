@@ -1,4 +1,4 @@
-walletApp.controller("FeedbackCtrl", ($scope, $log, $state, $http) => {
+angular.module('walletApp').controller("FeedbackCtrl", ($scope, $log, $state, $http) => {
   $scope.state = $state;
   $scope.formStage = 0;
   $scope.setFormSubmitted = () => {

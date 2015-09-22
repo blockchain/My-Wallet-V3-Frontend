@@ -1,4 +1,4 @@
-walletApp.directive('contextualMessage', ($cookies, $window, Wallet, SecurityCenter, filterFilter) ->
+angular.module('walletApp').directive('contextualMessage', ($cookies, $window, Wallet, SecurityCenter, filterFilter) ->
   {
     restrict: "E"
     replace: true

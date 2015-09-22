@@ -1,4 +1,4 @@
-walletApp.directive('focusWhen', ($timeout) ->
+angular.module('walletApp').directive('focusWhen', ($timeout) ->
   {
     restrict: 'A'
     link: (scope, elem, attrs, ctrl) ->

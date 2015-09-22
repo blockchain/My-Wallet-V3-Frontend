@@ -1,4 +1,4 @@
-walletApp.controller("OpenLinkController", ($scope, Wallet, $translate, $stateParams, $state) => {
+angular.module('walletApp').controller("OpenLinkController", ($scope, Wallet, $translate, $stateParams, $state) => {
   const paymentRequest = Wallet.parsePaymentRequest($stateParams.uri);
   Wallet.goal.send = paymentRequest;
   if (!Wallet.status.isLoggedIn) {

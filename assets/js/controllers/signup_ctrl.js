@@ -1,4 +1,4 @@
-walletApp.controller("SignupCtrl", ($scope, $rootScope, $log, Wallet, $modal, $translate, $cookieStore, $filter, $state, $http) => {
+angular.module('walletApp').controller("SignupCtrl", ($scope, $rootScope, $log, Wallet, $modal, $translate, $cookieStore, $filter, $state, $http) => {
   $scope.currentStep = 1;
   $scope.working = false;
   $scope.languages = Wallet.languages;

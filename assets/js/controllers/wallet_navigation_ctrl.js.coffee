@@ -1,13 +1,13 @@
-walletApp.controller "WalletNavigationCtrl", ($scope, Wallet, SecurityCenter, $state, $stateParams, $modal, filterFilter, $location) ->
+angular.module('walletApp').controller "WalletNavigationCtrl", ($scope, Wallet, SecurityCenter, $state, $stateParams, $modal, filterFilter, $location) ->
   $scope.status    = Wallet.status
   $scope.total = Wallet.total
   $scope.settings = Wallet.settings
   $scope.security = SecurityCenter.security
-    
-  $scope.numberOfActiveLegacyAddresses = () -> 
+
+  $scope.numberOfActiveLegacyAddresses = () ->
     return filterFilter(Wallet.legacyAddresses(), {archived: false}).length
 
-  $scope.numberOfActiveAccounts = () -> 
+  $scope.numberOfActiveAccounts = () ->
     return filterFilter(Wallet.accounts(), {archived: false}).length
 
   $scope.getMainAccountId = () ->
@@ -38,7 +38,7 @@ walletApp.controller "WalletNavigationCtrl", ($scope, Wallet, SecurityCenter, $s
     if modalInstance?
       modalInstance.opened.then () ->
         Wallet.store.resetLogoutTimeout()
-    
+
   $scope.legacyTotal = () ->
     return Wallet.getTotalBalanceForActiveLegacyAddresses()
 
@@ -55,9 +55,9 @@ walletApp.controller "WalletNavigationCtrl", ($scope, Wallet, SecurityCenter, $s
   #################################
   #           Private             #
   #################################
-  
+
   $scope.didLoad = () ->
     $scope.accounts = Wallet.accounts
 
-  # First load:      
+  # First load:
   $scope.didLoad()

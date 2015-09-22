@@ -1,8 +1,8 @@
-walletApp.directive('completedLevel', ($translate) ->
+angular.module('walletApp').directive('completedLevel', ($translate) ->
   {
     restrict: "E"
     replace: true
-    scope: { 
+    scope: {
       content: '@'
       img: '@'
       message: '@'

@@ -1,4 +1,4 @@
-walletApp.directive('configureMobileNumber', ($translate, Wallet, $filter) ->
+angular.module('walletApp').directive('configureMobileNumber', ($translate, Wallet, $filter) ->
   {
     restrict: "E"
     replace: true

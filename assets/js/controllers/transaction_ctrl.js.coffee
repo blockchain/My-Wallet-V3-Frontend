@@ -1,4 +1,4 @@
-walletApp.controller "TransactionCtrl", ($scope, Wallet, $log, $stateParams, $filter, $cookieStore, $sce) ->
+angular.module('walletApp').controller "TransactionCtrl", ($scope, Wallet, $log, $stateParams, $filter, $cookieStore, $sce) ->
   #################################
   #           Private             #
   #################################

@@ -1,4 +1,4 @@
-walletApp.directive('transformCurrency', (Wallet) ->
+angular.module('walletApp').directive('transformCurrency', (Wallet) ->
   {
     restrict: 'A'
     require: 'ngModel'

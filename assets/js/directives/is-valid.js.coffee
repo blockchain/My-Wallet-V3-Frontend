@@ -1,4 +1,4 @@
-walletApp.directive('isValid', (Wallet) ->
+angular.module('walletApp').directive('isValid', (Wallet) ->
   {
     restrict: 'A'
     require: 'ngModel'
