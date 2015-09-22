@@ -134,36 +134,41 @@ admin.controller('EditKeyCtrl', function ($scope, $modalInstance, InterfaceHelpe
   $scope.resendActivationEmail = function () {
     $scope.resending = true; $scope.resendText = 'Sending...';
     InterfaceHelper.callApi('/resend-activation', {key: $scope.fields.key})
-      .success(function(){ $scope.resendText = 'Sent!'; });
+      .success(function(res){
+        if (res.error) console.error(res.error);
+        $scope.resendText = res.error ? 'Error' : 'Sent!';
+      });
   };
 });
 
 admin.controller('ActivateKeysCtrl', function ($scope, InterfaceHelper, load) {
   $scope.step = 0;
-  $scope.numKeys = 0;
-  $scope.numEmails = 0;
-  $scope.errors = [];
+  $scope.numKeys = $scope.numEmails = 0;
   $scope.activate = function (min, max) {
+    $scope.step = 1;
     InterfaceHelper.callApi('/activate-all', {min:min||null,max:max||null})
       .success(function (res) {
         load();
-        if (typeof res.error === 'object') {
-          $scope.errors = res.error;
-        }
+        if (res.error) $scope.error = res.error;
         if (typeof res.data === 'object') {
           $scope.numKeys = res.data.count;
           $scope.numEmails = res.data.successful;
         }
         $scope.step = 2;
       });
-    $scope.step = 1;
   };
   $scope.resendText = 'Resend Invitation Emails'
-  $scope.resending = false;
   $scope.resend = function (min, max) {
-    $scope.resending = true; $scope.resendText = 'Sending...';
+    $scope.step = 1;
     InterfaceHelper.callApi('/resend-many', {min:min||null,max:max||null})
-      .success(function(){ $scope.resendText = 'Sent!'; });
+      .success(function(res){
+        if (res.error) $scope.error = res.error;
+        if (typeof res.data === 'object') {
+          $scope.numKeys = res.data.count;
+          $scope.numEmails = res.data.successful;
+        }
+        $scope.step = 3;
+      });
   };
 });
 

@@ -206,8 +206,8 @@ if process.env.BETA? && parseInt(process.env.BETA)
           response.json { error: err }
 
       else if request.params.method == 'activate-key'
-        v3Beta.activateKey request.query.selection, request.query.update, (err) ->
-          response.json { error: err }
+        v3Beta.activateKey request.query.selection, request.query.update, (err, data) ->
+          response.json { error: err, data: data }
 
       else if request.params.method == 'activate-all'
         range = [request.query.min || 0, request.query.max || 100000]
@@ -215,8 +215,8 @@ if process.env.BETA? && parseInt(process.env.BETA)
           response.json { error: err, data: data }
 
       else if request.params.method == 'resend-activation'
-        v3Beta.resendActivationEmail request.query.key, (err) ->
-          response.json { error: err }
+        v3Beta.resendActivationEmail request.query.key, (err, data) ->
+          response.json { error: err, data: data }
 
       else if request.params.method == 'resend-many'
         range = [request.query.min || 0, request.query.max || 100000]

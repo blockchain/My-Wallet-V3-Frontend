@@ -43,7 +43,7 @@ html(ng-app="AdminInterface" lang='en')
               a(href="/") Support
     
     div.container.login-form
-      h1 HD Beta Admin Interface
+      h1 V3 Beta Admin Interface
       .form-group.col-xs-6
         form.form-inline
           button.btn.btn-default(ng-click="openModal('assignKeyModal.html', 'AssignKeyCtrl')") + New Key
@@ -220,18 +220,18 @@ html(ng-app="AdminInterface" lang='en')
       <div class="modal-body" ng-switch="step">
         <div ng-switch-when="0">
           <form class="form-horizontal" name="activationForm" ng-submit="activate(min, max)" novalidate>
-            <div class="form-group" ng-hide="resending">
+            <div class="form-group">
               <label class="col-xs-3 control-label">Min id</label>
               <div class="col-xs-3"><input class="form-control" ng-model="min" name="min" type="number"></div>
             </div>
-            <div class="form-group" ng-hide="resending">
+            <div class="form-group">
               <label class="col-xs-3 control-label">Max id</label>
               <div class="col-xs-3"><input class="form-control" ng-model="max" name="max" type="number"></div>
             </div>
             <div class="form-group">
               <div class="col-xs-9 col-xs-offset-3">
-                <button class="btn btn-danger mrm" ng-disabled="activationForm.$invalid" ng-hide="resending" type="submit">Activate</button>
-                <button class="btn btn-default" ng-click="resend(min, max)" ng-disabled="resending" type="button">{{resendText}}</button>
+                <button class="btn btn-danger mrm" ng-disabled="activationForm.$invalid" type="submit">Activate</button>
+                <button class="btn btn-default" ng-click="resend(min, max)" type="button">{{resendText}}</button>
               </div>
               <div class="col-xs-12 mtl">
                 <p>Note: the "Resend Activation Emails" button will send out invite emails to all users in the database who <b>are activated and have no guid</b> (meaning they have not created a wallet) within the specified range.</p>
@@ -247,11 +247,17 @@ html(ng-app="AdminInterface" lang='en')
           <div class="col-xs-offset-3">
             <p>{{numKeys}} keys have been activated</p>
             <p>{{numEmails}} emails were sent</p>
-            <span class="text-danger" ng-show="errors.length > 0">
-              <p>{{errors.length}} emails failed to send!</p>
-              <p ng-repeat="err in errors track by $index">
-                Send failed ({{err.key}}, {{err.email}}): {{err.message}}
-              </p>
+            <span class="text-danger" ng-show="error">
+              <p>Error: {{error}}</p>
+            <span>
+          </div>
+        </div>
+        <div ng-switch-when="3">
+          <div class="col-xs-offset-3">
+            <p>{{numKeys}} emails attempted to send</p>
+            <p>{{numEmails}} emails were sent</p>
+            <span class="text-danger" ng-show="error">
+              <p>Error: {{error}}</p>
             <span>
           </div>
         </div>
