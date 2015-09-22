@@ -1,5 +1,5 @@
-walletStoreServices = angular.module("myWalletPaymentServices", [])
-walletStoreServices.factory "MyWalletPayment", ($q) ->
+walletPaymentServices = angular.module("myWalletPaymentServices", [])
+walletPaymentServices.factory "MyWalletPayment", ($q) ->
   (shouldReject) ->
     deferred = $q.defer()
     if shouldReject
