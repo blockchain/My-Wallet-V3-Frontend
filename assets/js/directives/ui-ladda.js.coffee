@@ -1,4 +1,4 @@
-walletApp.directive "uiLadda",  ($timeout, $compile, $translate) ->
+angular.module('walletApp').directive "uiLadda",  ($timeout, $compile, $translate) ->
   # angular-ladda doesn't work nicely with ui-bootstrap
   return {
     restrict: "A"
@@ -10,16 +10,16 @@ walletApp.directive "uiLadda",  ($timeout, $compile, $translate) ->
 
       element.removeAttr("ui-ladda")
       element.removeAttr("ng-click") # Prevent action from being called twice
-      
+
       $compile(element)(scope)
-      
+
       scope.translation = null
-            
+
       $translate(element.attr("ladda-translate")).then (translation) ->
         scope.translation = translation
-      
+
       attrs.$observe "uiLadda", (newVal) ->
-        if newVal? 
+        if newVal?
           if scope.$eval(newVal)
             element.attr("data-loading", true)
             element.attr("disabled", true)

@@ -1,4 +1,4 @@
-walletApp.controller("RequestCtrl", ($scope, Wallet, $modalInstance, $log, destination, $translate, $stateParams, filterFilter) => {;
+angular.module('walletApp').controller("RequestCtrl", ($scope, Wallet, $modalInstance, $log, destination, $translate, $stateParams, filterFilter) => {;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;

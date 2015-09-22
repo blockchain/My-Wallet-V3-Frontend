@@ -1,4 +1,4 @@
-walletApp.controller "RevealXpubCtrl", ($scope, Wallet, $modalInstance, $log, $translate, account, $modal) ->
+angular.module('walletApp').controller "RevealXpubCtrl", ($scope, Wallet, $modalInstance, $log, $translate, account, $modal) ->
   $scope.accounts = Wallet.accounts
   $scope.showXpub = false
   $scope.xpub = account.extendedPublicKey

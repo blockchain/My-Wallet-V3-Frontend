@@ -1,4 +1,4 @@
-walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $modal) => {
+angular.module('walletApp').controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $modal) => {
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.accounts = Wallet.accounts;
   $scope.addressBook = Wallet.addressBook;

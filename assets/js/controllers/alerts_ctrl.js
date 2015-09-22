@@ -1,4 +1,4 @@
-walletApp.controller("AlertsCtrl", ($scope, Wallet) => {
+angular.module('walletApp').controller("AlertsCtrl", ($scope, Wallet) => {
   $scope.alerts = Wallet.alerts;
 
   $scope.closeAlert = alert => {

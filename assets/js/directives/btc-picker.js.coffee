@@ -1,4 +1,4 @@
-walletApp.directive('btcPicker', ($translate, Wallet) ->
+angular.module('walletApp').directive('btcPicker', ($translate, Wallet) ->
   {
     restrict: "E"
     replace: 'false'

@@ -1,4 +1,4 @@
-walletApp.directive('transactionStatus', ($translate, $rootScope, Wallet, $compile, $sce) ->
+angular.module('walletApp').directive('transactionStatus', ($translate, $rootScope, Wallet, $compile, $sce) ->
   {
     restrict: "E"
     replace: 'false'

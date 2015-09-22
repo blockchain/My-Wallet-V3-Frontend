@@ -1,4 +1,4 @@
-walletApp.controller("SecondPasswordCtrl", ($scope, $log, Wallet, $modalInstance, $translate, insist, defer) => {
+angular.module('walletApp').controller("SecondPasswordCtrl", ($scope, $log, Wallet, $modalInstance, $translate, insist, defer) => {
   $scope.insist = insist ? true : false;
   $scope.alerts = [];
   $scope.busy = false;

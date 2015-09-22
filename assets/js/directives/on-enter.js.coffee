@@ -1,4 +1,4 @@
-walletApp.directive('onEnter', () ->
+angular.module('walletApp').directive('onEnter', () ->
   {
     restrict: 'A'
     link: (scope, elem, attrs) ->

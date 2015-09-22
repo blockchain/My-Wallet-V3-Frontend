@@ -1,4 +1,4 @@
-walletApp.directive('transactionNote', ($translate, $rootScope, Wallet) ->
+angular.module('walletApp').directive('transactionNote', ($translate, $rootScope, Wallet) ->
   {
     restrict: "E"
     replace: 'false'
@@ -21,16 +21,16 @@ walletApp.directive('transactionNote', ($translate, $rootScope, Wallet) ->
       scope.deleteNote = () ->
         scope.transaction.note = null
         scope.editNote = false
-        
+
       scope.$watch "transaction.note", (newVal, oldVal) ->
         if scope.transaction?
           scope.transaction.draftNote = ""
-        
+
         if (!newVal? || newVal == "") && oldVal? && oldVal != ""
           Wallet.deleteNote(scope.transaction)
-          
+
         if newVal?
           if newVal != oldVal && newVal != ""
             Wallet.setNote(scope.transaction, scope.transaction.note)
-  } 
+  }
 )

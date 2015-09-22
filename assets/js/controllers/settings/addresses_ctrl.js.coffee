@@ -1,10 +1,10 @@
-walletApp.controller "SettingsAddressesCtrl", ($scope, Wallet, $translate, $modal, $state, addressOrNameMatchFilter) ->
+angular.module('walletApp').controller "SettingsAddressesCtrl", ($scope, Wallet, $translate, $modal, $state, addressOrNameMatchFilter) ->
   $scope.legacyAddresses = Wallet.legacyAddresses
   $scope.display = {archived: false, account_dropdown_open: false}
   $scope.accounts = Wallet.accounts
-    
+
   $scope.hdAddresses = Wallet.hdAddresses
-  
+
   $scope.toggleDisplayImported = () ->
     $scope.display.imported = !$scope.display.imported
     $scope.display.archived = false

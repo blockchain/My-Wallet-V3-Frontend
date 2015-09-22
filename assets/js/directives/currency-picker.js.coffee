@@ -1,4 +1,4 @@
-walletApp.directive('currencyPicker', ($translate, Wallet) ->
+angular.module('walletApp').directive('currencyPicker', ($translate, Wallet) ->
   {
     restrict: "E"
     replace: 'false'

@@ -1,4 +1,4 @@
-walletApp.directive('configureSecondPassword', ($translate, Wallet, $modal) ->
+angular.module('walletApp').directive('configureSecondPassword', ($translate, Wallet, $modal) ->
   {
     restrict: "E"
     replace: 'true'

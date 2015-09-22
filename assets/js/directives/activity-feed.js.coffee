@@ -1,4 +1,4 @@
-walletApp.directive('activityFeed', ($http, Wallet, Activity) ->
+angular.module('walletApp').directive('activityFeed', ($http, Wallet, Activity) ->
   {
     restrict: "E"
     replace: true

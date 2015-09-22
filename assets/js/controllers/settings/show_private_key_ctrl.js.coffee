@@ -1,4 +1,4 @@
-walletApp.controller "ShowPrivateKeyCtrl", ($scope, $log, Wallet, $modalInstance, $timeout, $translate, addressObj) ->
+angular.module('walletApp').controller "ShowPrivateKeyCtrl", ($scope, $log, Wallet, $modalInstance, $timeout, $translate, addressObj) ->
   $scope.settings = Wallet.settings
   $scope.accessAllowed = false
 

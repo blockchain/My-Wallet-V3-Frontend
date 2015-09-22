@@ -1,4 +1,4 @@
-walletApp.directive('bcAsyncInput', ($timeout, Wallet) ->
+angular.module('walletApp').directive('bcAsyncInput', ($timeout, Wallet) ->
   {
     restrict: "E"
     replace: true

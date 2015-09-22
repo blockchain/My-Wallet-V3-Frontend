@@ -1,4 +1,4 @@
-walletApp.controller("AccountFormCtrl", ($scope, Wallet, $modalInstance, $log, $translate, account, $modal) => {
+angular.module('walletApp').controller("AccountFormCtrl", ($scope, Wallet, $modalInstance, $log, $translate, account, $modal) => {
   $scope.accounts = Wallet.accounts;
 
   $scope.fields = {

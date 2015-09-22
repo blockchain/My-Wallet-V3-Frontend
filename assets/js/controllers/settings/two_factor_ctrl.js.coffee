@@ -1,4 +1,4 @@
-walletApp.controller "TwoFactorCtrl", ($scope, Wallet, $modalInstance, $translate, $timeout) ->
+angular.module('walletApp').controller "TwoFactorCtrl", ($scope, Wallet, $modalInstance, $translate, $timeout) ->
 
   $scope.settings = Wallet.settings
   $scope.user = Wallet.user

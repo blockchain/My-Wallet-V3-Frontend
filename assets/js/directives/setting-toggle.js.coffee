@@ -1,4 +1,4 @@
-walletApp.directive('settingToggle', ($translate, Wallet) ->
+angular.module('walletApp').directive('settingToggle', ($translate, Wallet) ->
   {
     restrict: "E"
     replace: 'true'

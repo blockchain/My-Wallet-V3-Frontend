@@ -1,4 +1,4 @@
-walletApp.directive('scrollToTop', ($window) ->
+angular.module('walletApp').directive('scrollToTop', ($window) ->
   {
     restrict: "A"
     link: (scope, elem, attrs) ->

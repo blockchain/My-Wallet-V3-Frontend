@@ -1,4 +1,4 @@
-walletApp.directive('fiatOrBtc', (Wallet) ->
+angular.module('walletApp').directive('fiatOrBtc', (Wallet) ->
   {
     restrict: "E"
     replace: 'false'

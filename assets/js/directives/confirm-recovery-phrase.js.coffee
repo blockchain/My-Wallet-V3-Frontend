@@ -1,4 +1,4 @@
-walletApp.directive('confirmRecoveryPhrase', ($translate, Wallet, $modal) ->
+angular.module('walletApp').directive('confirmRecoveryPhrase', ($translate, Wallet, $modal) ->
   {
     restrict: "E"
     replace: 'true'

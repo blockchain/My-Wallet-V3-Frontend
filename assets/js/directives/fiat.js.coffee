@@ -1,4 +1,4 @@
-walletApp.directive('fiat', (Wallet , $compile) ->
+angular.module('walletApp').directive('fiat', (Wallet , $compile) ->
   {
     restrict: "E"
     replace: 'true'

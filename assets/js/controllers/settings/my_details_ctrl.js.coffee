@@ -1,4 +1,4 @@
-walletApp.controller "SettingsMyDetailsCtrl", ($scope, Wallet, $modal, $filter, $translate) ->
+angular.module('walletApp').controller "SettingsMyDetailsCtrl", ($scope, Wallet, $modal, $filter, $translate) ->
   $scope.edit = {email: false, password: false, passwordHint: false}
   $scope.user = Wallet.user
   $scope.settings = Wallet.settings

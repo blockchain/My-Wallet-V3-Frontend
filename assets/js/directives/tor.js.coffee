@@ -1,4 +1,4 @@
-walletApp.directive('tor', ($translate, Wallet) ->
+angular.module('walletApp').directive('tor', ($translate, Wallet) ->
   {
     restrict: "E"
     replace: 'true'

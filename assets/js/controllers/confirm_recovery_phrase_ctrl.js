@@ -1,4 +1,4 @@
-walletApp.controller("ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalInstance, $translate) => {
+angular.module('walletApp').controller("ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalInstance, $translate) => {
   $scope.step = 1;
   $scope.recoveryPhrase = null;
   $scope.words = [

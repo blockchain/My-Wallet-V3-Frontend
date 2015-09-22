@@ -1,4 +1,4 @@
-walletApp.controller("TopCtrl", ($scope, Wallet, $stateParams) => {
+angular.module('walletApp').controller("TopCtrl", ($scope, Wallet, $stateParams) => {
   $scope.settings = Wallet.settings;
   $scope.isBitCurrency = Wallet.isBitCurrency;
   $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency;

@@ -1,4 +1,4 @@
-walletApp.controller("ClaimCtrl", ($scope, Wallet, $translate, $stateParams, $state) => {
+angular.module('walletApp').controller("ClaimCtrl", ($scope, Wallet, $translate, $stateParams, $state) => {
   const balance = Wallet.fetchBalanceForRedeemCode($stateParams.code);
   Wallet.goal.claim = {code: $stateParams.code, balance: balance};
   if (!Wallet.status.isLoggedIn) {

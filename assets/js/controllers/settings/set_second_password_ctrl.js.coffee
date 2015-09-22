@@ -1,4 +1,4 @@
-walletApp.controller "SetSecondPasswordCtrl", ($scope, $log, Wallet, $modalInstance, $translate, $timeout) ->
+angular.module('walletApp').controller "SetSecondPasswordCtrl", ($scope, $log, Wallet, $modalInstance, $translate, $timeout) ->
 
   $scope.isValid = false
 
