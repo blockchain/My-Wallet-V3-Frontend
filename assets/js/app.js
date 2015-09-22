@@ -19,7 +19,7 @@ const modules = [
   // TODO get rid of these wrappers and modify the original files to work with injection?
   'myWalletServices',
   'myWalletStoreServices',
-  'myWalletSpenderServices',
+  'myWalletPaymentServices',
   'myBlockchainApiServices',
   'myBlockchainSettingsServices',
 
