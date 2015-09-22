@@ -352,6 +352,8 @@ walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         }
       }
       $scope.setPaymentFrom();
+      $scope.setPaymentTo();
+      $scope.setPaymentAmount();
     }
   });
 
