@@ -111,7 +111,7 @@ const modules = [
   'templates/label-origin.jade'
 ];
 
-angular.module('walletApp', modules)
+var walletApp = angular.module('walletApp', modules)
 .config(($numeraljsConfigProvider, $modalProvider, uiSelectConfig) => {
   $numeraljsConfigProvider.setFormat('btc', '0,0.00 BTC');
   uiSelectConfig.theme = 'bootstrap';

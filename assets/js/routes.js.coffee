@@ -1,4 +1,4 @@
-walletApp.config ($stateProvider, $urlRouterProvider) ->
+angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
 
   $urlRouterProvider.otherwise("/")
 
