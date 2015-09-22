@@ -32,7 +32,7 @@ walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     publicNote: false
   };
 
-  $scope.txProposal = null;
+  $scope.payment = new Wallet.payment();
   $scope.transaction = angular.copy($scope.transactionTemplate);
 
   $scope.determineLabel = (origin) => origin.label || origin.address;
@@ -111,7 +111,6 @@ walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     for (let i = 0; i < $scope.destinations.length; i++) {
       $scope.$broadcast('ResetSearch' + i);
     }
-    $scope.refreshTxProposal();
   };
 
   $scope.addDestination = () => {
@@ -135,12 +134,14 @@ walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
   $scope.send = () => {
     if ($scope.sending) return;
+
     $scope.sending = true;
+    $scope.transaction.note = $scope.transaction.note.trim();
 
     Wallet.clearAlerts();
 
     if ($scope.transaction.publicNote) {
-      var publicNote = $scope.transaction.note || null;
+      $scope.payment.note($scope.transaction.note);
     }
 
     const transactionFailed = (message) => {
@@ -157,8 +158,7 @@ walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
       $modalInstance.close("");
       Wallet.beep();
 
-      let note = $scope.transaction.note.trim();
-
+      let note = $scope.transaction.note;
       if (!$scope.transaction.publicNote && note !== "") {
         Wallet.setNote({ hash: tx_hash }, note);
       }
@@ -184,13 +184,11 @@ walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
 
     };
 
-    if (!$scope.txProposal) transactionFailed('Could not complete transaction');
-
-    const publish = (passphrase) => {
-      return $scope.txProposal.publish(passphrase, publicNote);
+    const signAndPublish = (passphrase) => {
+      return $scope.payment.sign(passphrase).publish().payment;
     };
 
-    Wallet.askForSecondPasswordIfNeeded().then(publish)
+    Wallet.askForSecondPasswordIfNeeded().then(signAndPublish)
       .then(transactionSucceeded).catch(transactionFailed);
   };
 
@@ -267,7 +265,6 @@ walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     let available = $scope.transaction.from.balance;
     let transactionTotal = $scope.getTransactionTotal(true);
     $scope.amountIsValid = available - transactionTotal >= 0;
-    $scope.refreshTxProposal(recommendCustom);
   };
 
   $scope.allAmountsAboveZero = () => {
@@ -299,20 +296,6 @@ walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     return formatted;
   };
 
-  $scope.refreshTxProposal = (recommendCustom=true) => {
-    let tx = $scope.transaction;
-    let fee = recommendCustom ? null : tx.customFee;
-    let destsDefined = tx.destinations.every(i => i != null);
-    let amtsDefined = tx.amounts.every(i => i != null);
-    if (!(tx.from && destsDefined && amtsDefined)) return;
-    $scope.txProposal = Wallet.transaction(tx.from, tx.destinations, tx.amounts, fee);
-    $scope.txProposal.tx.then(_tx => {
-      $scope.transaction.fee = _tx.fee;
-      if (recommendCustom) $scope.transaction.customFee = _tx.fee;
-      $scope.$root.$safeApply($scope);
-    });
-  };
-
   $scope.$watch("transaction.destinations", (destinations) => {
     destinations.forEach((dest, index) => {
       if (dest == null) return;
@@ -323,8 +306,8 @@ walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
         $scope.sendForm['destinations' + index].$setValidity('isValidAddress', valid);
       }
       $scope.updateToLabel();
+      $scope.setPaymentTo();
     });
-    $scope.refreshTxProposal();
   }, true);
 
   $scope.$watch("status.didLoadBalances", () => {
@@ -369,12 +352,57 @@ walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
           $scope.transaction.from = paymentRequest.fromAccount;
         }
       }
+      $scope.setPaymentFrom();
+      $scope.setPaymentTo();
+      $scope.setPaymentAmount();
     }
   });
 
+  $scope.handleTxUpdate = (tx) => {
+    if (tx.fee != null && tx.fee !== $scope.transaction.fee) {
+      $scope.transaction.fee = tx.fee;
+      $scope.$root.$safeApply($scope);
+    }
+  };
+
+  $scope.buildTx = () => {
+    $scope.payment.build()
+      .sideEffect($scope.handleTxUpdate);
+  };
+
+  $scope.setPaymentFrom = () => {
+    let txFrom = $scope.transaction.from;
+    if (!txFrom) return;
+    let origin = (txFrom.index == null) ? txFrom.address : txFrom.index;
+    $scope.payment.from(origin);
+    $scope.buildTx();
+  };
+
+  $scope.setPaymentTo = () => {
+    let destinations = $scope.transaction.destinations;
+    if (!destinations.every(d => d != null)) return;
+    if (destinations[0].index != null) {
+      destinations = destinations[0].index;
+    } else {
+      destinations = destinations.map(d => d.address);
+    }
+    $scope.payment.to(destinations);
+    $scope.buildTx();
+  };
+
+  $scope.setPaymentAmount = () => {
+    $scope.payment.amount($scope.transaction.amounts)
+    $scope.buildTx();
+  };
+
+  $scope.setPaymentFee = () => {
+    let fee = ($scope.advanced) ? $scope.transaction.customFee : null;
+    $scope.payment.fee(fee);
+    $scope.buildTx();
+  };
+
   $scope.goToConfirmation = () => {
     $scope.confirmationStep = true;
-    $scope.refreshTxProposal(!$scope.advanced);
   };
 
   $scope.backToForm = () => {
@@ -384,7 +412,9 @@ walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
   $scope.advancedSend = () => {
     $scope.advanced = true;
     $scope.transaction.customFee = $scope.transaction.fee;
-    $scope.refreshTxProposal();
+    if ($scope.transaction.destinations[0] && $scope.transaction.destinations[0].index != null) {
+      $scope.transaction.destinations[0] = null;
+    }
   };
 
   $scope.regularSend = () => {
@@ -392,7 +422,7 @@ walletApp.controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout
     $scope.transaction.destinations.splice(1);
     $scope.transaction.amounts.splice(1);
     $scope.advanced = false;
-    $scope.refreshTxProposal();
+    $scope.setPaymentFee();
   };
 
 });

@@ -19,7 +19,7 @@ playSound = (id) ->
 ##################################
 
 walletServices = angular.module("walletServices", [])
-walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletSpender, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) ->
+walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) ->
   wallet = {
     goal: {auth: false},
     status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadSettings: false, didLoadTransactions: false, didLoadBalances: false, didConfirmRecoveryPhrase: false},
@@ -37,7 +37,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.my = MyWallet
   wallet.settings_api = MyBlockchainSettings
   wallet.store = MyWalletStore
-  wallet.spender = MyWalletSpender
+  wallet.payment = MyWalletPayment
   wallet.api = MyBlockchainApi
   wallet.transactions = []
   wallet.languages = []
@@ -572,21 +572,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     wallet.askForSecondPasswordIfNeeded()
       .then proceed, cancel
-
-  wallet.transaction = (from, destinations, amounts, fee) ->
-
-    destinations = destinations.map (dest) ->
-      return dest.address unless dest.type == 'Accounts'
-      return wallet.my.wallet.hdwallet.accounts[dest.index].receiveAddress
-
-    spender = new wallet.spender()
-
-    if from.index?
-      from = spender.fromAccount(from.index)
-    else
-      from = spender.fromAddress(from.address)
-
-    from.toAddress(destinations, amounts, fee)
 
   wallet.redeemFromEmailOrMobile = (account, claim, successCallback, error) ->
     success = () ->
