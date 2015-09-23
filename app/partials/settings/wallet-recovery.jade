@@ -17,7 +17,7 @@ form.form-horizontal(role="form" name="recoveryForm" novalidate)
         pre.recovery(ng-show="showRecoveryPhrase", ng-cut="doNotCopyPaste($event)" ng-copy="doNotCopyPaste($event)") {{ recoveryPhrase }}
         pre.recovery(ng-show="showRecoveryPhrase && recoveryPassphrase", ng-cut="doNotCopyPaste($event)" ng-copy="doNotCopyPaste($event)") {{ recoveryPassphrase }}
         
-  .form-group
+  .form-group(feature-flag="walletRecovery" feature-flag-hide)
     .col-sm-12.col-md-6
       label.type-h5.em-400(translate="IMPORT_RECOVERY_PHRASE")
       p.text.line-height.em-300.hidden-xs.hidden-sm(translate="IMPORT_RECOVERY_PHRASE_EXPLAIN")    
