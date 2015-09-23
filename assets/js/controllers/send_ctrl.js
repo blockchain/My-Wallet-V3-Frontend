@@ -415,6 +415,7 @@ angular.module('walletApp').controller("SendCtrl", ($scope, $log, Wallet, $modal
     if ($scope.transaction.destinations[0] && $scope.transaction.destinations[0].index != null) {
       $scope.transaction.destinations[0] = null;
     }
+    $scope.setPaymentFee();
   };
 
   $scope.regularSend = () => {
