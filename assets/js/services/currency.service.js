@@ -2,14 +2,15 @@
 
 angular
   .module('walletServices')
-  .factory('currency', currency);
+  .factory('Currency', Currency);
 
-function currency(Wallet) {
+function Currency() {
 
   const SATOSHI = 100000000;
+  const CONVERSIONS = {};
 
   var service = {
-    toggleDisplayCurrency: toggleDisplayCurrency,
+    updateConversion: updateConversion,
     isBitCurrency: isBitCurrency,
     decimalPlacesForCurrency: decimalPlacesForCurrency,
     convertToSatoshi: convertToSatoshi,
@@ -21,10 +22,8 @@ function currency(Wallet) {
 
   //////////////////////////////////////////////////////////////////////////////
 
-  function toggleDisplayCurrency() {
-    let isDisplayBit = isBitCurrency(Wallet.settings.displayCurrency);
-    Wallet.settings.displayCurrency = isDisplayBit ?
-      Wallet.settings.currency : Wallet.settings.btcCurrency;
+  function updateConversion(code, data) {
+    CONVERSIONS[code] = data;
   }
 
   function isBitCurrency(currency) {
@@ -42,8 +41,8 @@ function currency(Wallet) {
     if (amount == null || currency == null) return null;
     if (isBitCurrency(currency)) {
       return Math.round(amount * currency.conversion);
-    } else if (Wallet.conversions[currency.code] != null) {
-      return Math.ceil(amount * Wallet.conversions[currency.code].conversion);
+    } else if (CONVERSIONS[currency.code] != null) {
+      return Math.ceil(amount * CONVERSIONS[currency.code].conversion);
     } else {
       return null;
     }
@@ -53,8 +52,10 @@ function currency(Wallet) {
     if (amount == null || currency == null) return null;
     if (isBitCurrency(currency)) {
       return amount / currency.conversion;
+    } else if (CONVERSIONS[currency.code] != null) {
+      return amount / CONVERSIONS[currency.code].conversion;
     } else {
-      return amount / Wallet.conversions[currency.code].conversion;
+      return null;
     }
   }
 
