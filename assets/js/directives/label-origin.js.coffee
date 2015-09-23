@@ -14,8 +14,10 @@ angular.module('walletApp').directive('labelOrigin', (Wallet) ->
       scope.isBitCurrency = Wallet.isBitCurrency
 
       scope.determineAvailableBalance = (balance) ->
-        return unless balance? && scope.fee?
-        final = parseInt(balance) - parseInt(scope.fee)
+        return unless balance?
+        final = parseInt(balance)
+        if scope.fee
+          final -= parseInt(scope.fee)
         return if final < 0 then 0 else final
 
       scope.determineLabel = (origin) ->

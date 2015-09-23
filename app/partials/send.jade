@@ -30,10 +30,10 @@
               ng-change="validateAmounts(); checkForSameDestination(); setPaymentFrom()"
               required)
               ui-select-match
-                label-origin(origin="$select.selected" fee="transaction.fee")
+                label-origin(origin="$select.selected")
               ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)")
                 span(ng-class="{aaa: hasZeroBalance(origin)}")
-                  label-origin(origin='origin' fee='transaction.fee' highlight="$select.search")
+                  label-origin(origin='origin' highlight="$select.search")
           span.help-block(translate="INSUFFICIENT" ng-show="!amountIsValid && (sendForm.amounts0.$touched || sendForm.amountsFiat0.$touched)")
           span.help-block(ng-show="sendForm.from.$invalid && sendForm.destinations0.$touched") Must select an account to send from
       //- Advanced Send
