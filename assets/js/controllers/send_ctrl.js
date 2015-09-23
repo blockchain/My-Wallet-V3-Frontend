@@ -253,14 +253,14 @@ angular.module('walletApp').controller("SendCtrl", ($scope, $log, Wallet, $modal
   };
 
   $scope.getTransactionTotal = (includeFee) => {
-    let fee = includeFee ? $scope.transaction.fee : 0;
-    return $scope.transaction.amounts.reduce((previous, current) => {
+    let tx = $scope.transaction;
+    let fee = includeFee ? (tx.customFee || tx.fee) : 0;
+    return tx.amounts.reduce((previous, current) => {
       return (parseInt(previous) + parseInt(current)) || 0;
     }, parseInt(fee));
   };
 
-  $scope.validateAmounts = (recommendCustom) => {
-    if (recommendCustom == null) recommendCustom = true;
+  $scope.validateAmounts = () => {
     if ($scope.transaction.from == null) return;
     let available = $scope.transaction.from.balance;
     let transactionTotal = $scope.getTransactionTotal(true);
@@ -415,6 +415,7 @@ angular.module('walletApp').controller("SendCtrl", ($scope, $log, Wallet, $modal
     if ($scope.transaction.destinations[0] && $scope.transaction.destinations[0].index != null) {
       $scope.transaction.destinations[0] = null;
     }
+    $scope.setPaymentFee();
   };
 
   $scope.regularSend = () => {
