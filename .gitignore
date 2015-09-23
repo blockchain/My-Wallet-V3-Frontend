@@ -20,6 +20,7 @@ bower_components
 betakeys.MDF
 e2e-tests/ignore.js
 .settings
+features.json
 
 # Generated files
 .idea

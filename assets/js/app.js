@@ -35,6 +35,7 @@ const modules = [
   'passwordEntropy',
   'internationalPhoneNumber',
   'webcam',
+  'feature-flags',
   // TODO: have grunt generate the list of partials and templates
   'partials/account-form.jade',
   'partials/reveal-xpub.jade',
@@ -112,12 +113,20 @@ const modules = [
 ];
 
 var walletApp = angular.module('walletApp', modules)
-.config(($numeraljsConfigProvider, $modalProvider, uiSelectConfig) => {
+  .config(configApp)
+  .run(configFeatureFlag)
+  .run(rootScopeInit);
+
+function configApp($numeraljsConfigProvider, $modalProvider, uiSelectConfig) {
   $numeraljsConfigProvider.setFormat('btc', '0,0.00 BTC');
   uiSelectConfig.theme = 'bootstrap';
-})
-.run(($rootScope, $modal) => {
+}
 
+function configFeatureFlag($http, featureFlags) {
+  featureFlags.set($http.get('/features.json'));
+}
+
+function rootScopeInit($rootScope, $modal) {
   $rootScope.$safeApply = (scope=$rootScope, before) => {
     before = before;
     if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
@@ -131,5 +140,4 @@ var walletApp = angular.module('walletApp', modules)
       resolve: { notification: () => notification }
     });
   });
-
-});
+}
