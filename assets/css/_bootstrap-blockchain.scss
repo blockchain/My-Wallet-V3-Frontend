@@ -4,8 +4,6 @@
 
 // Reset and dependencies
 @import "bootstrap/normalize";
-@import "bootstrap/print";
-@import "bootstrap/glyphicons";
 
 // Core CSS
 @import "bootstrap/scaffolding";
@@ -19,24 +17,18 @@
 // Components
 @import "bootstrap/component-animations";
 @import "bootstrap/dropdowns";
-@import "bootstrap/button-groups";
 @import "bootstrap/input-groups";
 @import "bootstrap/navs";
 @import "bootstrap/navbar";
-@import "bootstrap/pager";
 @import "bootstrap/labels";
-@import "bootstrap/badges";
 @import "bootstrap/alerts";
 @import "bootstrap/progress-bars";
 @import "bootstrap/media";
-@import "bootstrap/list-group";
-@import "bootstrap/responsive-embed";
 @import "bootstrap/close";
 
 // Components w/ JavaScript
 @import "bootstrap/tooltip";
 @import "bootstrap/popovers";
-@import "bootstrap/carousel";
 
 // Utility classes
 @import "bootstrap/utilities";
