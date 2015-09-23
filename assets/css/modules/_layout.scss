@@ -1,11 +1,14 @@
-.wallet-container { height: 100%; }
+.wallet-container { 
+  height: 100%;
+  position: relative;
+  top: 0;
+}
 
 .left-nav {
   position: absolute;
   width: 270px;
   height: 100%;
   padding: 15px;
-  top: 65px;
   background: $light-blue;
   border-right: 1px solid $border-grey;
   .active-accounts{
@@ -27,8 +30,7 @@
   margin-left: 270px;
   border-bottom: 1px solid $border-grey;
   padding: 0 30px;
-  height: 130px;
-  top: 65px;
+  height: 115px;
   .heavy {
     h1 { font-size: 2.3em; }
     img.spinner {
@@ -42,7 +44,7 @@
   background: white;
   position: relative;
   left: 270px;
-  top: 120px;
+  top: 110px;
   overflow-y: scroll;
   overflow-x: hidden;
   width: calc(100% - 270px);
@@ -86,12 +88,12 @@
   .top-view .my-wallet { display: none; }
   .top-view .heavy h1 { font-size: 1.25em; }
   .top-view .heavy p { font-size: .9em; }
-  .top-view .heavy .em-600 { top: -6px; }
+  .top-view .heavy { top: -6px; }
 }
 
 @media (max-width:480px) {
   .main-container {
     background: transparent;
-    height: calc(100% - 120px);
+    height: calc(100% - 110px);
   }
 }
