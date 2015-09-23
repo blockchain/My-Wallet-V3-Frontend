@@ -151,6 +151,7 @@ angular.module('walletApp').controller("AppCtrl", ($scope, Wallet, $state, $root
       templateUrl: "partials/second-password.jade",
       controller: "SecondPasswordCtrl",
       backdrop: insist ? "static" : null,
+      windowClass: "bc-modal",
       resolve: {
         insist: () => insist,
         defer: () => defer
