@@ -9,7 +9,7 @@ describe "SettingsMyDetailsCtrl", ->
     success: (() ->), 
     error: (() ->)}
   
-  beforeEach angular.mock.module("walletApp")
+  
   
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->

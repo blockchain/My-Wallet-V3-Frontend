@@ -7,8 +7,6 @@ describe "AccountFormCtrl", ->
     close: ->
     dismiss: ->
 
-  beforeEach angular.mock.module("walletApp")
-
   beforeEach ->
     angular.mock.inject ($injector) ->
       Wallet = $injector.get("Wallet")

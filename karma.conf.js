@@ -22,6 +22,7 @@ module.exports = function(karma){
       'bower_components/numeral/numeral.js',
       'bower_components/angular-numeraljs/dist/angular-numeraljs.js',
       'bower_components/angular-inview/angular-inview.js',
+      'bower_components/angular-feature-flags/dist/featureFlags.js',
       'build/js/browser-polyfill.js',
       'assets/js/app.js',
       'build/js/templates.js',

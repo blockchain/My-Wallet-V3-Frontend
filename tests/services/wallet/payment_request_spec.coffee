@@ -4,7 +4,7 @@ describe "walletServices", () ->
   mockObserver = undefined
   errors = undefined
 
-  beforeEach angular.mock.module("walletApp")
+  
 
   beforeEach ->
     angular.mock.inject ($injector, localStorageService) ->

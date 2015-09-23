@@ -1,18 +1,13 @@
 describe "didYouKnowServices", () ->
   DIY = undefined
 
-  beforeEach angular.mock.module("walletApp")
+
 
   beforeEach ->
 
     translateMock =
       instant: (string) ->
         string
-
-    module(($provide) ->
-      $provide.value("$translate",translateMock)
-      return
-    )
 
     angular.mock.inject ($injector) ->
       DIY = $injector.get("DidYouKnow")

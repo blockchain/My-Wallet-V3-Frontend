@@ -4,9 +4,6 @@ describe "Configure Second Password", ->
   element = undefined
   isoScope = undefined
 
-  beforeEach module("walletApp")
-  beforeEach module("templates/configure-second-password.jade")
-
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
 
     $compile = _$compile_

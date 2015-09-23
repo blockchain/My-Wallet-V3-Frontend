@@ -4,10 +4,7 @@ describe "toBitCurrencyFilter", ->
   Wallet = null
   btcCurrencies = null
 
-  beforeEach angular.mock.module("walletApp")
-
   beforeEach ->
-    module('walletFilters')
     inject (_$filter_) ->
       $filter = _$filter_
 

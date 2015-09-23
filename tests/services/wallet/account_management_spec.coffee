@@ -4,7 +4,7 @@ describe "walletServices", () ->
 
   accounts = [{label: 'Savings'}, {label: 'Party Money'}]
 
-  beforeEach angular.mock.module("walletApp")
+  
 
   beforeEach ->
     angular.mock.inject ($injector, $q, localStorageService) ->

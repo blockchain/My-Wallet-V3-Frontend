@@ -5,8 +5,6 @@ describe "ModalNotificationCtrl", ->
     close: ->
     dismiss: ->
 
-  beforeEach angular.mock.module("walletApp")
-
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
 
@@ -31,7 +29,7 @@ describe "ModalNotificationCtrl", ->
   it "should display the notification", ->
     expect(scope.notification.msg).toEqual("Message")
     return
-    
+
   it "should be dismissed", ->
     spyOn(modalInstance, "close")
     scope.ok()

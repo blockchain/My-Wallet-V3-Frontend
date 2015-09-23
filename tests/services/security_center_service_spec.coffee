@@ -3,7 +3,7 @@ describe "securityCenterServices", () ->
   SecurityCenter = undefined
   rootScope = undefined
 
-  beforeEach angular.mock.module("walletApp")
+  
 
   beforeEach ->
     angular.mock.inject ($injector, localStorageService, _$rootScope_) ->

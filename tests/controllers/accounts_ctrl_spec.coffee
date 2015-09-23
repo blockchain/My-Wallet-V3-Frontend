@@ -4,8 +4,6 @@ describe "WalletNavigationCtrl", ->
   modal =
     open: ->
 
-  beforeEach angular.mock.module("walletApp")
-
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")

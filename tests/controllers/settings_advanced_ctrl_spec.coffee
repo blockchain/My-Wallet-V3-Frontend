@@ -2,7 +2,7 @@ describe "SettingsAdvancedCtrl", ->
   scope = undefined
   Wallet = undefined
     
-  beforeEach angular.mock.module("walletApp")
+  
   
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->

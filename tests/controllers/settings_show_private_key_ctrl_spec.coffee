@@ -9,7 +9,7 @@ describe "ShowPrivateKeyCtrl", ->
     close: ->
     dismiss: ->
 
-  beforeEach angular.mock.module("walletApp")
+  
 
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->

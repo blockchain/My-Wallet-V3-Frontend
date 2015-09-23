@@ -5,7 +5,7 @@ describe "SettingsAddressesCtrl", ->
   modal =
     open: ->
   
-  beforeEach angular.mock.module("walletApp")
+  
   
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->

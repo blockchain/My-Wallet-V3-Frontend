@@ -3,7 +3,6 @@ describe "getByPropertyNestedFilter", ->
   $filter = null
 
   beforeEach ->
-    module('walletFilters')
     inject (_$filter_) ->
       $filter = _$filter_
 

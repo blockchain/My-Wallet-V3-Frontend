@@ -5,8 +5,6 @@ describe "VirtualKeyboard", ->
   isoScope = undefined
   mockKeyPress = undefined
 
-  beforeEach module("walletApp")
-
   beforeEach ->
     inject ($rootScope, $compile, $injector) ->
 

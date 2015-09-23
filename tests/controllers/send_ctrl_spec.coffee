@@ -14,8 +14,6 @@ describe "SendCtrl", ->
   hasErr = (input, err) ->
     scope.sendForm[input].$error[err]
 
-  beforeEach angular.mock.module("walletApp")
-
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile, $q) ->
       MyWallet = $injector.get("MyWallet")

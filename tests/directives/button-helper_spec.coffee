@@ -3,18 +3,15 @@ describe "Helper Text Directive", ->
   $rootScope = undefined
   element = undefined
   isoScope = undefined
-  
-  beforeEach module("walletApp")
-  beforeEach(module('templates/helper-button.jade'))
-  
+
   beforeEach inject((_$compile_, _$rootScope_) ->
-    
+
     $compile = _$compile_
     $rootScope = _$rootScope_
-    
+
     return
   )
-  
+
   beforeEach ->
     element = $compile("<helper-button></helper-button>")($rootScope)
     $rootScope.$digest()
@@ -24,12 +21,11 @@ describe "Helper Text Directive", ->
   it "has an initial status", ->
     expect(isoScope.isActive).toBe(false)
 
-  it "can toggle status", -> 
+  it "can toggle status", ->
     spyOn(isoScope, "toggleActive").and.callThrough()
     isoScope.toggleActive()
     expect(isoScope.toggleActive).toHaveBeenCalled()
     expect(isoScope.isActive).toBe(true)
 
-  it "has a templateUrl", -> 
+  it "has a templateUrl", ->
     expect(isoScope.helperText.templateUrl).toBeTruthy()
-

@@ -5,7 +5,7 @@ describe "RequestCtrl", ->
     close: ->
     dismiss: ->
 
-  beforeEach angular.mock.module("walletApp")
+  
 
   beforeEach ->
     angular.mock.inject ($injector, localStorageService, $controller, $rootScope, $compile) ->
