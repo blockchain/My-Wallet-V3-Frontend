@@ -118,7 +118,7 @@
                   name="fee"
                   ng-model="transaction.customFee"
                   min="0"
-                  ng-change="validateAmounts(false); setPaymentFee()"
+                  ng-change="validateAmounts(); setPaymentFee()"
                   required
                   transform-currency="settings.btcCurrency"
                   placeholder="Enter your fee here")
