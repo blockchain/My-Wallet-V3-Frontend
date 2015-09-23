@@ -1,4 +1,4 @@
-angular.module('walletApp').directive('labelOrigin', (Wallet) ->
+angular.module('walletApp').directive('labelOrigin', (Wallet, Currency) ->
   {
     restrict: "E"
     replace: true
@@ -11,7 +11,7 @@ angular.module('walletApp').directive('labelOrigin', (Wallet) ->
     link: (scope, elem, attrs) ->
 
       scope.settings = Wallet.settings
-      scope.isBitCurrency = Wallet.isBitCurrency
+      scope.isBitCurrency = Currency.isBitCurrency
 
       scope.determineAvailableBalance = (balance) ->
         return unless balance? && scope.fee?

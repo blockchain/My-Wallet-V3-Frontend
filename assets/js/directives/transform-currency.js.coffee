@@ -1,4 +1,4 @@
-angular.module('walletApp').directive('transformCurrency', (Wallet) ->
+angular.module('walletApp').directive('transformCurrency', (Wallet, Currency) ->
   {
     restrict: 'A'
     require: 'ngModel'
@@ -12,13 +12,8 @@ angular.module('walletApp').directive('transformCurrency', (Wallet) ->
 
       # Restrictions, updated based on currency type
       restrictions = {
-        max: Wallet.convertFromSatoshi(21e14, scope.transformCurrency)
-        decimals: ((c) ->
-          return 8 if c.code == 'BTC'
-          return 6 if c.code == 'mBTC'
-          return 4 if c.code == 'bits'
-          return 2
-        )(scope.transformCurrency)
+        max: Currency.convertFromSatoshi(21e14, scope.transformCurrency)
+        decimals: Currency.decimalPlacesForCurrency(scope.transformCurrency)
         negative: false
       }
 
@@ -49,11 +44,11 @@ angular.module('walletApp').directive('transformCurrency', (Wallet) ->
           ctrl.$setViewValue(modifiedInput)
           ctrl.$render()
 
-        return Wallet.convertToSatoshi(modifiedInput, scope.transformCurrency)
+        return Currency.convertToSatoshi(modifiedInput, scope.transformCurrency)
 
       # Model formatter
       scope.formatToView = (modelValue) ->
-        fiat = Wallet.convertFromSatoshi(modelValue, scope.transformCurrency)
+        fiat = Currency.convertFromSatoshi(modelValue, scope.transformCurrency)
         factor = Math.pow(10, restrictions.decimals)
         formatted = (Math.floor(fiat * factor) / factor)
           .toFixed(restrictions.decimals)

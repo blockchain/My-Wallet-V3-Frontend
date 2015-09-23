@@ -1,4 +1,4 @@
-angular.module('walletApp').directive('fiatOrBtc', (Wallet) ->
+angular.module('walletApp').directive('fiatOrBtc', (Wallet, Currency) ->
   {
     restrict: "E"
     replace: 'false'
@@ -9,7 +9,7 @@ angular.module('walletApp').directive('fiatOrBtc', (Wallet) ->
     link: (scope, elem, attrs) ->
       scope.settings = Wallet.settings
       scope.currency = scope.settings.displayCurrency
-      scope.isBitCurrency = Wallet.isBitCurrency
+      scope.isBitCurrency = Currency.isBitCurrency
 
       scope.updateDisplay = () ->
         scope.currency = Wallet.settings.displayCurrency

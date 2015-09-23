@@ -142,57 +142,6 @@ describe "walletServices", () ->
       Wallet.currencies = [{code: "USD"}, {code: "EUR"}]
       Wallet.btcCurrencies = [{code: "BTC", conversion: 100000000}, {code: "mBTC", conversion: 100000}]
 
-
-    describe "convertCurrency", ->
-
-      it "should not convert a null amount", () ->
-        result = Wallet.convertCurrency(null, Wallet.btcCurrencies[0], Wallet.btcCurrencies[1])
-        expect(result).toBe(null)
-
-      it "should convert from fiat to bit currency", () ->
-        result = Wallet.convertCurrency(300, Wallet.currencies[0], Wallet.btcCurrencies[0])
-        expect(result).toBe(0.999999)
-
-      it "should convert from bit currency to fiat", () ->
-        result = Wallet.convertCurrency(1, Wallet.btcCurrencies[0], Wallet.currencies[0])
-        expect(result).toBe(300)
-
-    describe "convertToSatoshi", ->
-
-      it "should not convert a null amount", () ->
-        expect(Wallet.convertToSatoshi(null, Wallet.currencies[0])).toBe(null)
-
-      it "should not convert from a null currency", () ->
-        expect(Wallet.convertToSatoshi(9000, null)).toBe(null)
-
-      it "should convert from fiat to satoshi", () ->
-        currency = Wallet.currencies[0]
-        result = Wallet.convertToSatoshi(1, currency)
-        expect(result).toBe(Wallet.conversions[currency.code].conversion)
-
-      it "should convert from bit currency to satoshi", () ->
-        currency = Wallet.btcCurrencies[0]
-        result = Wallet.convertToSatoshi(1, currency)
-        expect(result).toBe(currency.conversion)
-
-    describe "convertFromSatoshi", ->
-
-      it "should not convert a null amount", () ->
-        expect(Wallet.convertFromSatoshi(null, Wallet.currencies[0])).toBe(null)
-
-      it "should not convert from a null currency", () ->
-        expect(Wallet.convertFromSatoshi(9000, null)).toBe(null)
-
-      it "should convert from satoshi to fiat", () ->
-        currency = Wallet.currencies[0]
-        result = Wallet.convertFromSatoshi(Wallet.conversions[currency.code].conversion, currency)
-        expect(result).toBe(1)
-
-      it "should convert from satoshi to bit currency", () ->
-        currency = Wallet.btcCurrencies[0]
-        result = Wallet.convertFromSatoshi(100000000, currency)
-        expect(result).toBe(1)
-
   describe "email", ->
 
     it "should be set after loading", inject((Wallet) ->
@@ -287,14 +236,6 @@ describe "walletServices", () ->
 
     it "should know the exchange rate in satoshi per unit of fiat", inject((Wallet) ->
       expect(Wallet.conversions.EUR.conversion).toBe(400000)
-    )
-
-    it "should calculate BTC from fiat amount and currency", inject((Wallet) ->
-      expect(Wallet.fiatToSatoshi("2", "EUR")).toBe(800000)
-    )
-
-    it "should calculate fiat from BTC", inject((Wallet) ->
-      expect(Wallet.BTCtoFiat("0.1", "EUR")).toBe("25.00")
     )
 
     return
@@ -532,17 +473,3 @@ describe "walletServices", () ->
       Wallet.appendTransactions([transaction2], true)
 
       expect(Wallet.transactions.pop().result).toBe(transaction2.result)
-
-  describe "toggleDisplayCurrency()", ->
-
-    it "should toggle from btc to fiat", inject((Wallet) ->
-      Wallet.settings.displayCurrency = Wallet.settings.btcCurrency
-      Wallet.toggleDisplayCurrency()
-      expect(Wallet.settings.displayCurrency).toBe(Wallet.settings.currency)
-    )
-
-    it "should toggle from fiat to btc", inject((Wallet) ->
-      Wallet.settings.displayCurrency = Wallet.settings.currency
-      Wallet.toggleDisplayCurrency()
-      expect(Wallet.settings.displayCurrency).toBe(Wallet.settings.currency)
-    )

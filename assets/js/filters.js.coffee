@@ -19,11 +19,11 @@ angular.module("walletFilters", [])
 
 # converts a satoshi amount into the current display currency
 # name is purposfully not very descriptive to save memory in cookie storage
-.filter "convert", ["Wallet", (Wallet) ->
+.filter "convert", ["Wallet", "Currency", (Wallet, Currency) ->
   (amount) ->
-    currency = Wallet.settings.displayCurrency
-    conversion = Wallet.convertFromSatoshi(amount, currency)
-    Wallet.formatCurrencyForView(conversion, currency)
+    displayCurrency = Wallet.settings.displayCurrency
+    conversion = Currency.convertFromSatoshi(amount, displayCurrency)
+    Currency.formatCurrencyForView(conversion, displayCurrency)
 ]
 
 #

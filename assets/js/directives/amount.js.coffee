@@ -1,4 +1,4 @@
-angular.module('walletApp').directive('amount', (Wallet) ->
+angular.module('walletApp').directive('amount', (Wallet, Currency) ->
   {
     restrict: "E"
     replace: 'false'
@@ -9,7 +9,7 @@ angular.module('walletApp').directive('amount', (Wallet) ->
     link: (scope, elem, attrs) ->
       scope.settings = Wallet.settings
 
-      scope.isBitCurrency = Wallet.isBitCurrency
+      scope.isBitCurrency = Currency.isBitCurrency
       scope.toggle = Wallet.toggleDisplayCurrency
 
       scope.absolute = (value) -> Math.abs(value)

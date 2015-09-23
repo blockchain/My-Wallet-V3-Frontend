@@ -504,25 +504,6 @@ describe "SendCtrl", ->
         expect(scope.alerts.length).toBe(1)
       )
 
-    describe "decimal places", ->
-
-      it "should return the correct number for fiat currency", ->
-        expect(scope.allowedDecimals(Wallet.currencies[0])).toEqual(2)
-
-      it "should return the correct number for BTC", ->
-        expect(scope.allowedDecimals(Wallet.btcCurrencies[0])).toEqual(8)
-
-      it "should return the correct number for mBTC", ->
-        expect(scope.allowedDecimals(Wallet.btcCurrencies[1])).toEqual(6)
-
-      it "should return the correct number for bits", ->
-        expect(scope.allowedDecimals(Wallet.btcCurrencies[2])).toEqual(4)
-
-      it "should read number of decimal places correctly", ->
-        expect(scope.decimalPlaces(1)).toEqual(0)
-        expect(scope.decimalPlaces(1.11)).toEqual(2)
-        expect(scope.decimalPlaces(1.11111)).toEqual(5)
-
     describe "updateToLabel", ->
 
       it "should return if the destinations have not been loaded", ->
