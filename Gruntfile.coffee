@@ -400,7 +400,7 @@ module.exports = (grunt) ->
 
       deploy_beta_to_staging:
         command: () ->
-          'rsync -rz --delete node_modules/my-wallet-v3-beta-module-staging@server:node_modules/'
+          'rsync -rz --delete node_modules/my-wallet-v3-beta-module hd-staging@server:node_modules/'
 
       deploy_static_to_alpha:
         command: () ->
