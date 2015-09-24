@@ -2,7 +2,7 @@
   position: fixed;
   width: calc(100% - 270px);
   left: 270px;
-  top: 195px;
+  top: 185px;
   height: 50px;
   background: $light-blue;
   padding: 0 30px;
@@ -71,7 +71,7 @@
 @media (max-width: 768px) {
   .filter-bar {
     width: 100%;
-    top: 160px;
+    top: 150px;
     left: 0;
     border-top: 1px solid $eee
   }

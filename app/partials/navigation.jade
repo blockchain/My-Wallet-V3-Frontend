@@ -9,7 +9,7 @@
           img#logo(src="img/logo-updated.png",alt="Blockchain")
       a#wallet-nav-toggle(title="Wallet Navigation Menu", ng-click="toggleMenu()")
         span.ti-menu.white
-    .navbar-collapse.collapse(ng-class="{'in' : !navCollapsed}", ng-click="navCollapsed=true")
+    .navbar-collapse.collapse(ng-class="{'in bg-blue' : !navCollapsed}", ng-click="navCollapsed=true")
       ul.nav.navbar-nav.navbar-right(ng-show="status.isLoggedIn")
         li.item.mrl(ng-show="settings.btcCurrency")
           a.flex-important.flex-column(ng-click="openBCmarkets()")
