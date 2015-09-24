@@ -215,7 +215,7 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
     views: {
       settings: {
         templateUrl: "partials/settings/accounts.jade"
-        controller: "SettingsWalletNavigationCtrl"
+        controller: "SettingsAccountsController"
       }
     }
   )
