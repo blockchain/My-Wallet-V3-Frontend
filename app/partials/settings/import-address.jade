@@ -12,7 +12,7 @@
           span(ng-show="importForm.privateKey.$error.present")
             span(translate="ALREADY_IN_WALLET")
             |: 
-            b {{ address.address }}
+            b {{::address.address}}
         textarea(
           rows="3"
           ng-model="fields.addressOrPrivateKey"
@@ -44,7 +44,7 @@
       span(translate="ADDRESS_VALID", ng-show="address.isWatchOnly")
       span(translate="ADDRESS_FOR_PRIVATE_KEY", ng-hide="address.isWatchOnly")
       |: 
-      b {{ address.address }}
+      b {{::address.address}}
     p
       span(translate="BALANCE_FOR_ADDRESS")
       |: 

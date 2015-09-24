@@ -6,7 +6,7 @@
     p.text(translate="XPUB_WARNING")
   .form-group.flex-column.flex-justify(ng-show="showXpub")
     p.text.em-500.em-alt Xpub:
-    p.xpub.break-word {{ xpub }}
+    p.xpub.break-word {{::xpub}}
 .modal-footer.pal.flex-end.flex-center
   button.button-muted.mrm(ng-class="{'button-lg' : showXpub}" ng-click="close()", translate="CLOSE")
   button.button-primary.button-md(ng-click="continue()", translate="CONTINUE" ng-hide="showXpub")

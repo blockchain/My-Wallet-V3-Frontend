@@ -7,20 +7,20 @@
     .transaction-card.flex-column.flex.pal
       .border-bottom-light.pbm.mbm
         span.em-500.prm(translate="TRANSACTION_DETAILS" ng-class="{incoming_tx: transaction.result > 0, outgoing_tx: transaction.result < 0, local_tx: transaction.intraWallet}")
-        span {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
+        span {{::transaction.txTime * 1000 | date:'MMMM d @ hh:mm a'}}
       .flex
         .tx-details.pal.flex-3
           .tx-sender
             label(translate="FROM:")
-            p.text.mbs {{ from }}
+            p.text.mbs {{::from}}
           .tx-receiver
             label(translate="TO:")
             ul.pln.flex-column.flex.type-sm
               li.flex-center.mbm(ng-repeat="destination in destinations")
                 span.text-overflow-hidden.flex-1.flex.text
-                  | {{ destination.address }}
-                  span.plm {{ destination.you }}
-                span.plm.center-align.text {{ destination.amount }}
+                  | {{::destination.address}}
+                  span.plm {{::destination.you}}
+                span.plm.center-align.text {{::destination.amount}}
           .mtm.ptm.border-top
             label(translate="NOTE_LC")
             transaction-note(transaction="transaction")
@@ -40,4 +40,4 @@
              span(translate="VERIFY_ON_BCI")
     .transaction-card.clearfix(ng-if="transaction.publicNote")
       strong(translate="PUBLIC_NOTE")
-      p.mtl {{ transaction.publicNote }}
+      p.mtl {{::transaction.publicNote}}

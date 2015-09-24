@@ -13,7 +13,7 @@
     span(translate="OF_2")
 .modal-body#send(ng-class="{ 'advanced-send-scroll' : advanced }")
   alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)")
-    | {{alert.msg}}
+    | {{::alert.msg}}
   div(ng-hide="confirmationStep")
     form.ph-form(role="form",name="sendForm",novalidate)
       //- From
@@ -146,22 +146,19 @@
           table.width-100
             tr
               td(translate="AMOUNT")
-              td
-                {{ getTransactionTotal() | toBitCurrency:btcCurrency:false }}
+              td {{getTransactionTotal() | toBitCurrency:btcCurrency:false}}
               td
                 fiat(btc="getTransactionTotal()")
             tr
               td(translate="MINERS_FEE")
                 | :
-              td
-                {{ transaction.fee | toBitCurrency:btcCurrency:false }}
+              td {{::transaction.fee | toBitCurrency:btcCurrency:false}}
               td
                 fiat(btc="transaction.fee")
             tr.blue
               td(translate="TOTAL")
                 | :
-              td
-                {{ getTransactionTotal(true) | toBitCurrency:btcCurrency:false }}
+              td {{getTransactionTotal(true) | toBitCurrency:btcCurrency:false}}
               td
                 fiat(btc="getTransactionTotal(true)")
         form(name="noteForm" novalidate)

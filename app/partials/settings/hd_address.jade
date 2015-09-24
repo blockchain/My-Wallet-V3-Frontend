@@ -14,17 +14,17 @@ div(ng-show="address.address")
           label.col-sm-3.control-label(translate="ADDRESS")
           .col-sm-9
             p.form-control-static.long-input
-              | {{ address.address }}  
+              | {{::address.address}}
         .form-group(ng-show="address.account")
           label.col-sm-3.control-label(translate="ACCOUNT")
           .col-sm-9
             p.form-control-static
-              | {{ address.account.label }}
+              | {{::address.account.label}}
         .form-group(ng-class="{'has-error': errors.label}")
           label.col-sm-3.control-label(translate="LABEL")
           .col-sm-9(ng-if="address")
             bc-async-input(inline ng-model="address.label" on-save="changeLabel" is-required)
-            span.help-block {{ errors.label }}
+            span.help-block {{errors.label}}
         
     .col-xs-12.col-md-6.center-align
       qr(text="url" size="140", ng-if="url != null")
