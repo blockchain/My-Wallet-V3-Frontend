@@ -365,6 +365,14 @@ angular.module('walletApp').controller("SendCtrl", ($scope, $log, Wallet, $modal
     }
   };
 
+  $scope.setAllAndBuild = () => {
+    $scope.setPaymentFrom();
+    $scope.setPaymentTo();
+    $scope.setPaymentAmount();
+    $scope.setPaymentFee();
+    $scope.buildTx();
+  };
+
   $scope.buildTx = () => {
     $scope.payment.build()
       .sideEffect($scope.handleTxUpdate);
