@@ -1,7 +1,6 @@
-.wallet-container { 
+.wallet-container {
   height: 100%;
   position: relative;
-  top: 0;
 }
 
 .left-nav {
@@ -23,7 +22,7 @@
   }
 }
 .top-view {
-  position: fixed;
+  position: absolute;
   width: calc(100% - 270px);
   z-index: 1;
   background: white;
@@ -44,7 +43,7 @@
   background: white;
   position: relative;
   left: 270px;
-  top: 110px;
+  top: 115px;
   overflow-y: scroll;
   overflow-x: hidden;
   width: calc(100% - 270px);

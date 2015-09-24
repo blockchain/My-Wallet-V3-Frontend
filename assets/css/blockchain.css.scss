@@ -52,8 +52,7 @@ html,body {
   font-family: 'Roboto', 'Helvetica', sans-serif !important;
   height: 100%;
   width: 100%;
-  overflow: hidden;
-  position: fixed;
+  position: fixed; //need this for scrolling on safari mobile
 }
 
 .hide { display: none; }
@@ -65,7 +64,7 @@ html,body {
 .width-50 { width: 50%; }
 .width-75 { width: 75%; }
 
-//Because <span>'s are evil
+//Because span's are evil
 .display-block { display: block; }
 
 .pointer { cursor: pointer; }
@@ -77,10 +76,9 @@ html,body {
   background: transparent;
 }
 
-
 .form-ctrl {
   padding: 15px 0;
-  input{
+  input {
     border: 1px solid $border-grey;
     border-radius: 5px;
     padding: 3px;
