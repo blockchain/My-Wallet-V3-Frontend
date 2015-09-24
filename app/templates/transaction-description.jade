@@ -2,7 +2,7 @@
   .flex-align-end.flex-end.pbl
     .flex-column.col-md-3.col-sm-12.col-xs-12
       span.timestamp.pbm.type-sm
-        date {{ transaction.txTime * 1000 | date:'MMMM d @ hh:mm a' }}
+        date {{::transaction.txTime * 1000 | date:'MMMM d @ hh:mm a'}}
       .flex-center
         span.action(ng-class="{incoming_tx: transaction.result > 0, outgoing_tx: transaction.result < 0, local_tx: transaction.intraWallet}", translate="{{ action }}")
         i.ti-notepad.aaa.plm(ng-show="transaction.note")
@@ -21,7 +21,7 @@
         span.hidden-sm.hidden-xs.col-md-11.mlm(ng-bind-html="other_address | highlight:search")
       .flex.row.mtm(ng-show="transaction.note")
         span.text.col-md-1(translate="NOTE_LC")
-        span.break-word.hidden-sm.hidden-xs.col-md-11.mlm {{ transaction.note }}
+        span.break-word.hidden-sm.hidden-xs.col-md-11.mlm {{::transaction.note }}
       .flex.row.mtm.timestamp(ng-show="transaction.confirmations == 0 && transaction.from.externalAddresses")
         span.text.col-md-12(translate="UNCONFIRMED_WARNING")
     .col-md-1

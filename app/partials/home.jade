@@ -6,7 +6,7 @@
         h5.mtn.type-h5.em-400.mbl Account Balances
         ul.pln.account-balances
           li.flex-between.border-bottom-light(ng-repeat="account in activeAccounts")
-            span.em-500 {{account.label}}
+            span.em-500 {{::account.label}}
             fiat-or-btc(btc="account.balance")
           //- li.flex-between.border-bottom-thick.tertiary-blue(ng-show="legacyTotal() > 0")
             //- span.em-400 Imported Addresses
