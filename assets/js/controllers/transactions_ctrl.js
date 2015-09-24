@@ -1,4 +1,8 @@
-angular.module('walletApp').controller("TransactionsCtrl", ($scope, Wallet, MyWallet, $log, $stateParams, $timeout, $state) => {
+angular
+  .module('walletApp')
+  .controller("TransactionsCtrl", TransactionsCtrl);
+
+function TransactionsCtrl($scope, Wallet, MyWallet, $log, $stateParams, $timeout, $state) {
   $scope.filterTypes = ['ALL', 'SENT', 'RECEIVED_BITCOIN_FROM', 'MOVED_BITCOIN_TO'];
   $scope.setFilterType = type => {
     $scope.filterBy = $scope.filterTypes[type];
@@ -116,4 +120,4 @@ angular.module('walletApp').controller("TransactionsCtrl", ($scope, Wallet, MyWa
   });
 
   $scope.didLoad();
-});
+}

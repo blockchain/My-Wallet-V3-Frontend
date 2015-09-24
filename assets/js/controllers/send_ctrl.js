@@ -1,4 +1,8 @@
-angular.module('walletApp').controller("SendCtrl", ($scope, $log, Wallet, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $modal) => {
+angular
+  .module('walletApp')
+  .controller("SendCtrl", SendCtrl);
+
+function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $modal) {
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.accounts = Wallet.accounts;
   $scope.addressBook = Wallet.addressBook;
@@ -230,7 +234,7 @@ angular.module('walletApp').controller("SendCtrl", ($scope, $log, Wallet, $modal
     $scope.addExternalLabelIfNeeded(query, i);
   };
 
-  $scope.addExternalLabelIfNeeded = function(query, idx) {
+  $scope.addExternalLabelIfNeeded = (query, idx) => {
     let last = $scope.destinations[idx].slice(-1)[0];
     if (query != null) {
       last.address = query;
@@ -434,4 +438,4 @@ angular.module('walletApp').controller("SendCtrl", ($scope, $log, Wallet, $modal
     $scope.setPaymentFee();
   };
 
-});
+}

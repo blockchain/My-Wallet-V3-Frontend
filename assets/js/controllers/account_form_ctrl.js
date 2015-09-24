@@ -1,4 +1,8 @@
-angular.module('walletApp').controller("AccountFormCtrl", ($scope, Wallet, $modalInstance, $log, $translate, account, $modal) => {
+angular
+  .module('walletApp')
+  .controller("AccountFormCtrl", AccountFormCtrl);
+
+function AccountFormCtrl($scope, Wallet, $modalInstance, $log, $translate, account, $modal) {
   $scope.accounts = Wallet.accounts;
 
   $scope.fields = {
@@ -58,4 +62,4 @@ angular.module('walletApp').controller("AccountFormCtrl", ($scope, Wallet, $moda
   $scope.isNameUnused = name => {
     return !($scope.accounts().some(e => e.label === name));
   };
-});
+}

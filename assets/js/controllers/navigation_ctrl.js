@@ -1,4 +1,8 @@
-angular.module('walletApp').controller("NavigationCtrl", ($scope, Wallet, SecurityCenter, $translate, $cookieStore, $state, filterFilter, $interval) => {
+angular
+  .module('walletApp')
+  .controller("NavigationCtrl", NavigationCtrl);
+
+function NavigationCtrl($scope, Wallet, SecurityCenter, $translate, $cookieStore, $state, filterFilter, $interval) {
   $scope.status = Wallet.status;
   $scope.security = SecurityCenter.security;
   $scope.settings = Wallet.settings;
@@ -49,4 +53,4 @@ angular.module('walletApp').controller("NavigationCtrl", ($scope, Wallet, Securi
       Wallet.fetchExchangeRate();
     }
   }), intervalTime);
-});
+}

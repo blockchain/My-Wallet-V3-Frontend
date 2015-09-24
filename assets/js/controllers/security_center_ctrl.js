@@ -1,4 +1,8 @@
-angular.module('walletApp').controller("SettingsSecurityCenterCtrl", ($scope, Wallet, SecurityCenter, filterFilter, $modal) => {
+angular
+  .module('walletApp')
+  .controller("SettingsSecurityCenterCtrl", SettingsSecurityCenterCtrl);
+
+function SettingsSecurityCenterCtrl($scope, Wallet, SecurityCenter, filterFilter, $modal) {
   $scope.security = SecurityCenter.security;
   $scope.settings = Wallet.settings;
   $scope.user = Wallet.user;
@@ -111,4 +115,4 @@ angular.module('walletApp').controller("SettingsSecurityCenterCtrl", ($scope, Wa
       $scope.toggle('blocktor');
     }
   };
-});
+}

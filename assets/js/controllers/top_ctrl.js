@@ -1,4 +1,8 @@
-angular.module('walletApp').controller("TopCtrl", ($scope, Wallet, $stateParams) => {
+angular
+  .module('walletApp')
+  .controller("TopCtrl", TopCtrl);
+
+function TopCtrl($scope, Wallet, $stateParams) {
   $scope.settings = Wallet.settings;
   $scope.isBitCurrency = Wallet.isBitCurrency;
   $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency;
@@ -6,4 +10,4 @@ angular.module('walletApp').controller("TopCtrl", ($scope, Wallet, $stateParams)
   $scope.accountIndex = $stateParams.accountIndex;
 
   $scope.getTotal = (index) => Wallet.total(index);
-});
+}
