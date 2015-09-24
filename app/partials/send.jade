@@ -152,7 +152,7 @@
             tr
               td(translate="MINERS_FEE")
                 | :
-              td {{::transaction.fee | toBitCurrency:btcCurrency:false}}
+              td {{ transaction.fee | toBitCurrency:btcCurrency:false}}
               td
                 fiat(btc="transaction.fee")
             tr.blue

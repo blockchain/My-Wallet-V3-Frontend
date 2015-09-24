@@ -69,15 +69,15 @@ html(ng-app="AdminInterface" lang='en')
             th edit
             th revoke
           tr(ng-repeat="item in tableData")
-            td {{::item.rowid }}
-            td {{::item.key }}
-            td {{::item.name }}
-            td {{::item.email }}
-            td {{::getDateFromTime(item.lastseen) }}
-            td {{::item.guid }}
-            td {{::(item.activated) ? 'Activated' : 'Pending' }}
-            td {{::displayIOSStatus(item) }}
-            td {{::displayAndroidStatus(item) }}
+            td {{ item.rowid }}
+            td {{ item.key }}
+            td {{ item.name }}
+            td {{ item.email }}
+            td {{ getDateFromTime(item.lastseen) }}
+            td {{ item.guid }}
+            td {{ (item.activated) ? 'Activated' : 'Pending' }}
+            td {{ displayIOSStatus(item) }}
+            td {{ displayAndroidStatus(item) }}
             td
               a(ng-click="openModal('editModal.html', 'EditKeyCtrl', item)") edit
             td
