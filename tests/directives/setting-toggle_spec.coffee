@@ -5,7 +5,6 @@ describe "Setting Toggle", ->
   isoScope = undefined
 
   beforeEach module("walletApp")
-  beforeEach module("templates/setting-toggle.jade")
 
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
 

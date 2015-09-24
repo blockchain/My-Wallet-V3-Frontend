@@ -5,7 +5,6 @@ describe "Verify Email", ->
   isoScope = undefined
 
   beforeEach module("walletApp")
-  beforeEach module("templates/verify-email.jade")
 
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
 

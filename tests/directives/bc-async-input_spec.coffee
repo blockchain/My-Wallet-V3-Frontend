@@ -15,7 +15,6 @@ describe 'bcAsyncInput Directive', ->
     return isoScope
 
   beforeEach module('walletApp')
-  beforeEach module('templates/bc-async-input.jade')
 
   beforeEach inject((_$compile_, $rootScope, Wallet) ->
 

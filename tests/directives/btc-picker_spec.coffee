@@ -5,7 +5,6 @@ describe "BTC Currency Picker", ->
   isoScope = undefined
 
   beforeEach module("walletApp")
-  beforeEach module("templates/btc-picker.jade")
 
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
 

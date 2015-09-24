@@ -6,7 +6,6 @@ describe "Did You Know directive", ->
   DidYouKnow = undefined
 
   beforeEach module("walletApp")
-  beforeEach(module("templates/did-you-know.jade"))
 
   beforeEach inject((_$compile_, _$rootScope_, $injector) ->
     $compile = _$compile_
