@@ -1,4 +1,8 @@
-angular.module('walletApp').controller("RequestCtrl", ($scope, Wallet, $modalInstance, $log, destination, $translate, $stateParams, filterFilter) => {;
+angular
+  .module('walletApp')
+  .controller("RequestCtrl", RequestCtrl);
+
+function RequestCtrl($scope, Wallet, $modalInstance, $log, destination, $translate, $stateParams, filterFilter) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -103,4 +107,4 @@ angular.module('walletApp').controller("RequestCtrl", ($scope, Wallet, $modalIns
       $scope.paymentRequestURL += `?amount=${ parseFloat(amount / 100000000) }`;
     }
   };
-});
+}

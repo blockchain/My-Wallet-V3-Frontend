@@ -1,4 +1,8 @@
-angular.module('walletApp').controller("HomeCtrl", ($scope, Wallet, $modal) => {
+angular
+  .module('walletApp')
+  .controller("HomeCtrl", HomeCtrl);
+
+function HomeCtrl($scope, Wallet, $modal) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.getTotal = () => Wallet.total('accounts');
@@ -23,4 +27,4 @@ angular.module('walletApp').controller("HomeCtrl", ($scope, Wallet, $modal) => {
       windowClass: "bc-modal rocket-modal"
     });
   }
-});
+}

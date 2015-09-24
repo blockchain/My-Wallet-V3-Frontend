@@ -1,4 +1,8 @@
-angular.module('walletApp').controller("AppCtrl", ($scope, Wallet, $state, $rootScope, $location, $cookieStore, $timeout, $modal, $window, $translate) => {
+angular
+  .module('walletApp')
+  .controller("AppCtrl", AppCtrl);
+
+function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $timeout, $modal, $window, $translate) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $rootScope.isMock = Wallet.isMock;
@@ -170,4 +174,4 @@ angular.module('walletApp').controller("AppCtrl", ($scope, Wallet, $state, $root
   });
 
   $scope.back = () => {$window.history.back()};
-});
+}

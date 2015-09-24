@@ -1,4 +1,8 @@
-angular.module('walletApp').controller("SignupCtrl", ($scope, $rootScope, $log, Wallet, $modal, $translate, $cookieStore, $filter, $state, $http) => {
+angular
+  .module('walletApp')
+  .controller("SignupCtrl", SignupCtrl);
+
+function SignupCtrl($scope, $rootScope, $log, Wallet, $modal, $translate, $cookieStore, $filter, $state, $http) {
   $scope.currentStep = 1;
   $scope.working = false;
   $scope.languages = Wallet.languages;
@@ -174,4 +178,4 @@ angular.module('walletApp').controller("SignupCtrl", ($scope, $rootScope, $log, 
   $scope.$on('signed_agreement', () => {
     $scope.fields.acceptedAgreement = true;
   });
-});
+}

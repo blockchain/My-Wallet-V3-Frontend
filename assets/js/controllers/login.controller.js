@@ -1,4 +1,8 @@
-angular.module('walletApp').controller("LoginCtrl", ($scope, $rootScope, $log, $http, Wallet, $cookieStore, $modal, $state, $timeout, $translate, filterFilter) => {
+angular
+  .module('walletApp')
+  .controller("LoginCtrl", LoginCtrl);
+
+function LoginCtrl($scope, $rootScope, $log, $http, Wallet, $cookieStore, $modal, $state, $timeout, $translate, filterFilter) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.disableLogin = null;
@@ -227,4 +231,4 @@ angular.module('walletApp').controller("LoginCtrl", ($scope, $rootScope, $log, $
     }
     $scope.isValid = isValid;
   });
-});
+}

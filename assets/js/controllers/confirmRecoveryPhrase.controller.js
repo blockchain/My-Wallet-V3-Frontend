@@ -1,4 +1,8 @@
-angular.module('walletApp').controller("ConfirmRecoveryPhraseCtrl", ($scope, $log, Wallet, $modalInstance, $translate) => {
+angular
+  .module('walletApp')
+  .controller("ConfirmRecoveryPhraseCtrl", ConfirmRecoveryPhraseCtrl);
+
+function ConfirmRecoveryPhraseCtrl($scope, $log, Wallet, $modalInstance, $translate) {
   $scope.step = 1;
   $scope.recoveryPhrase = null;
   $scope.words = [
@@ -85,4 +89,4 @@ angular.module('walletApp').controller("ConfirmRecoveryPhraseCtrl", ($scope, $lo
   };
 
   Wallet.getMnemonic(success, error, cancel);
-});
+}
