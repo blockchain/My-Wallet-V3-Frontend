@@ -1,4 +1,4 @@
-describe "SettingsWalletNavigationCtrl", ->
+describe "SettingsAccountsController", ->
   scope = undefined
 
   modal =
@@ -14,7 +14,7 @@ describe "SettingsWalletNavigationCtrl", ->
 
       scope = $rootScope.$new()
 
-      $controller "SettingsWalletNavigationCtrl",
+      $controller "SettingsAccountsController",
         $scope: scope,
         $stateParams: {}
         $modal: modal

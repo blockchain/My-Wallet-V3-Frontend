@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller("SettingsWalletNavigationCtrl", SettingsWalletNavigationCtrl);
+  .controller("SettingsAccountsController", SettingsAccountsController);
 
-function SettingsWalletNavigationCtrl($scope, Wallet, $modal, filterFilter) {
+function SettingsAccountsController($scope, Wallet, $modal, filterFilter) {
   $scope.accounts = Wallet.accounts;
   $scope.display = {
     archived: false
