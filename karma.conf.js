@@ -25,7 +25,6 @@ module.exports = function(karma){
       'build/js/browser-polyfill.js',
       'assets/js/app.js',
       'build/js/templates.js',
-      'assets/js/controllers/**/*.js.coffee',
       'assets/js/controllers/**/*.js',
       'assets/js/filters.js.coffee',
       'assets/js/services/*.js.coffee',
