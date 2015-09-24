@@ -5,7 +5,6 @@ describe "Confirm Recovery Phrase", ->
   isoScope = undefined
 
   beforeEach module("walletApp")
-  beforeEach module("templates/confirm-recovery-phrase.jade")
 
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
 

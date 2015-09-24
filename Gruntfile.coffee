@@ -161,6 +161,7 @@ module.exports = (grunt) ->
         jade:
           doctype: "html"
         base: "app"
+        singleModule: true
       main: {
         src: ["app/partials/notifications/*.jade", "app/partials/settings/*.jade", "app/partials/*.jade", "app/templates/*.jade"],
         dest: 'build/js/templates.js'

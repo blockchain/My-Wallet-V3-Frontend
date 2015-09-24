@@ -5,7 +5,6 @@ describe "Language Picker", ->
   isoScope = undefined
 
   beforeEach module("walletApp")
-  beforeEach module("templates/language-picker.jade")
 
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
 

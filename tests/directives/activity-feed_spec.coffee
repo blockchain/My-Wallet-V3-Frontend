@@ -5,7 +5,6 @@ describe "Activity Feed directive", ->
   scope = undefined
 
   beforeEach module("walletApp")
-  beforeEach(module("templates/activity-feed.jade"))
 
   beforeEach inject((_$compile_, _$rootScope_, $injector) ->
     $compile = _$compile_
@@ -33,10 +32,10 @@ describe "Activity Feed directive", ->
     $rootScope.$digest()
     scope.$apply()
 
-  it "has an initial loading state of true", -> 
+  it "has an initial loading state of true", ->
     expect(scope.loading).toBe(true)
 
-  it "has no loading state once transactions have loaded", -> 
+  it "has no loading state once transactions have loaded", ->
     # need to stub out the Activity service
     pending()
     scope.status.didLoadTransactions = true

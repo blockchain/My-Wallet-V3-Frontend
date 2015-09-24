@@ -5,7 +5,6 @@ describe "IP Whitelist Restrict", ->
   isoScope = undefined
 
   beforeEach module("walletApp")
-  beforeEach module("templates/ip-whitelist-restrict.jade")
 
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
 
