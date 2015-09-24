@@ -153,14 +153,14 @@ angular.module('walletApp').controller("SendCtrl", ($scope, $log, Wallet, $modal
       }
     };
 
-    const transactionSucceeded = (tx_hash) => {
+    const transactionSucceeded = (tx) => {
       $scope.sending = false;
       $modalInstance.close("");
       Wallet.beep();
 
       let note = $scope.transaction.note;
       if (!$scope.transaction.publicNote && note !== "") {
-        Wallet.setNote({ hash: tx_hash }, note);
+        Wallet.setNote({ hash: tx.txid }, note);
       }
 
       let index = $scope.transaction.from.index || 'imported';

@@ -1,11 +1,16 @@
 walletPaymentServices = angular.module("myWalletPaymentServices", [])
 walletPaymentServices.factory "MyWalletPayment", ($q) ->
   (shouldReject) ->
+
+    tx = {
+      txid: 'tx-hash'
+    }
+
     deferred = $q.defer()
     if shouldReject
       deferred.reject('err_message')
     else
-      deferred.resolve('tx-hash')
+      deferred.resolve(tx)
 
     this.payment = deferred.promise
     this.from = (addr) -> this
