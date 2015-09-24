@@ -1,4 +1,4 @@
-angular.module('walletApp').directive('fiat', (Wallet , $compile) ->
+angular.module('walletApp').directive('fiat', (Wallet, Currency, $compile) ->
   {
     restrict: "E"
     replace: 'true'
@@ -17,7 +17,7 @@ angular.module('walletApp').directive('fiat', (Wallet , $compile) ->
       scope.$watchCollection "conversions", (newVal) ->
         scope.updateFiat()
 
-      scope.$watch "settings.currency.code + btc + currency", () ->
+      scope.$watch "settings.currency.code + btc + currency.code", () ->
         scope.updateFiat()
 
       scope.updateFiat = () ->
@@ -47,7 +47,7 @@ angular.module('walletApp').directive('fiat', (Wallet , $compile) ->
           Wallet.getFiatAtTime(btc, scope.date, currency.code).then (fiat) ->
             scope.fiat.amount = fiat
         else
-          fiat =  Wallet.convertFromSatoshi(btc, currency)
+          fiat = Currency.convertFromSatoshi(btc, currency)
           scope.fiat.amount = (Math.floor(fiat * 100) / 100).toFixed(2)
 
   }

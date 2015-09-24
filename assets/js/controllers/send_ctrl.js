@@ -20,7 +20,6 @@ angular.module('walletApp').controller("SendCtrl", ($scope, $log, Wallet, $modal
 
   $scope.fiatCurrency = Wallet.settings.currency;
   $scope.btcCurrency = Wallet.settings.btcCurrency;
-  $scope.isBitCurrency = Wallet.isBitCurrency;
 
   $scope.transactionTemplate = {
     from: null,
@@ -194,19 +193,6 @@ angular.module('walletApp').controller("SendCtrl", ($scope, $log, Wallet, $modal
 
   $scope.closeAlert = (alert) => {
     Wallet.closeAlert(alert);
-  };
-
-  $scope.allowedDecimals = (currency) => {
-    if (Wallet.isBitCurrency(currency)) {
-      if (currency.code === 'BTC') return 8;
-      if (currency.code === 'mBTC') return 6;
-      if (currency.code === 'bits') return 4;
-    }
-    return 2;
-  };
-
-  $scope.decimalPlaces = (number) => {
-    return (number.toString().split('.')[1] || []).length;
   };
 
   $scope.updateToLabel = () => {

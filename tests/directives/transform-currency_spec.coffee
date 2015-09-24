@@ -10,6 +10,10 @@ describe "Transform-Currency Directive", ->
     inject ($rootScope, $compile, $injector) ->
 
       Wallet = $injector.get("Wallet")
+      Currency = $injector.get('Currency')
+
+      Currency.updateConversion('USD', { conversion: 1000, symbol: '$' })
+      Currency.updateConversion('EUR', { conversion: 1500, symbol: 'e' })
 
       Wallet.conversions = {
         USD: { conversion: 1000, symbol: '$' }
@@ -19,7 +23,7 @@ describe "Transform-Currency Directive", ->
       scope.amount = 100
       scope.currency = Wallet.currencies[0]
 
-      template = '<input ng-model="amount" transform-currency="currency"></fiat>'
+      template = '<input ng-model="amount" transform-currency="currency"></input>'
       element = $compile(template)(scope)
       scope.$digest()
 

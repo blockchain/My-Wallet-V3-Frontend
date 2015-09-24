@@ -10,6 +10,7 @@ describe "Fiat Directive", ->
     inject ($rootScope, $compile, $injector) ->
 
       Wallet = $injector.get("Wallet")
+      Currency = $injector.get('Currency')
 
       Wallet.settings = {
         currency: Wallet.currencies[0]
@@ -20,11 +21,14 @@ describe "Fiat Directive", ->
         EUR: { conversion: 1500, symbol: 'e' }
       }
 
+      Currency.updateConversion('USD', { conversion: 1000, symbol: '$' })
+      Currency.updateConversion('EUR', { conversion: 1500, symbol: 'e' })
+
       scope = $rootScope.$new()
       scope.btc = 10000
       scope.currency = Wallet.currencies[0]
 
-      template = '<fiat btc="btc"></fiat>'
+      template = '<fiat btc="btc" currency="currency"></fiat>'
       element = $compile(template)(scope)
       scope.$digest()
 
@@ -90,7 +94,7 @@ describe "Fiat Directive", ->
         isoScope.updateFiat()
         expect(isoScope.fiat.currencySymbol).toEqual('$')
 
-      it "should set the amount correctly", ->
+      it "should set the amount correctly", inject (Currency) ->
         isoScope.updateFiat()
         expect(isoScope.fiat.amount).toEqual('10.00')
 
@@ -105,10 +109,10 @@ describe "Fiat Directive", ->
         isoScope.updateFiat()
         expect(Wallet.getFiatAtTime).toHaveBeenCalled()
 
-      it "should not get fiat at time if a date is not present", ->
-        spyOn(Wallet, 'convertFromSatoshi').and.returnValue(10)
+      it "should not get fiat at time if a date is not present", inject (Currency) ->
+        spyOn(Currency, 'convertFromSatoshi').and.returnValue(10)
         isoScope.updateFiat()
-        expect(Wallet.convertFromSatoshi).toHaveBeenCalled()
+        expect(Currency.convertFromSatoshi).toHaveBeenCalled()
 
       it "should not set the absolute value if not needed", ->
         isoScope.btc = -10000

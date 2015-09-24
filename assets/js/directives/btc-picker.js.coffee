@@ -1,4 +1,4 @@
-angular.module('walletApp').directive('btcPicker', ($translate, Wallet) ->
+angular.module('walletApp').directive('btcPicker', ($translate, Wallet, Currency) ->
   {
     restrict: "E"
     replace: 'false'
@@ -13,7 +13,7 @@ angular.module('walletApp').directive('btcPicker', ($translate, Wallet) ->
       scope.didSelect = (item, model) ->
         scope.currency = item
         Wallet.saveActivity(2)
-        if Wallet.isBitCurrency(scope.displayCurrency)
+        if Currency.isBitCurrency(scope.displayCurrency)
           scope.displayCurrency = item
   }
 )

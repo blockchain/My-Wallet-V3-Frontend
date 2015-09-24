@@ -19,7 +19,7 @@ playSound = (id) ->
 ##################################
 
 walletServices = angular.module("walletServices", [])
-walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q) ->
+walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q, Currency) ->
   wallet = {
     goal: {auth: false},
     status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadSettings: false, didLoadTransactions: false, didLoadBalances: false, didConfirmRecoveryPhrase: false},
@@ -463,68 +463,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   # Spend BTC #
   #############
 
-  # Converts units of fiat to BTC (not Satoshi)
-  wallet.fiatToSatoshi = (amount, currency) ->
-    return null if currency == "BTC"
-    return null unless amount?
-    return null unless wallet.conversions[currency]?
-    return parseInt(numeral(amount).multiply(wallet.conversions[currency].conversion).format("0"))
-
-  # amount in BTC, returns formatted amount in fiat
-  wallet.BTCtoFiat = (amount, currency) ->
-    return null if currency == "BTC"
-    return null unless amount?
-    return null unless wallet.conversions[currency]?
-    return numeral(100000000).multiply(amount).divide(wallet.conversions[currency].conversion).format("0.00")
-
-  wallet.isBitCurrency = (currency) ->
-    return null unless currency?
-    return ['BTC', 'mBTC', 'bits'].indexOf(currency.code) > -1
-
-  wallet.convertCurrency = (amount, currency1, currency2) ->
-    return null unless amount?
-    return null unless (wallet.conversions[currency1.code]? || wallet.conversions[currency2.code]?)
-    if wallet.isBitCurrency(currency1)
-      return parseFloat(numeral(currency1.conversion).multiply(amount).divide(wallet.conversions[currency2.code].conversion).format("0.00"))
-    else
-      return parseFloat(numeral(amount).multiply(wallet.conversions[currency1.code].conversion).divide(currency2.conversion).format("0.00000000"))
-
-  wallet.convertToSatoshi = (amount, currency) ->
-    return null unless amount?
-    return null unless currency?
-    if wallet.isBitCurrency(currency)
-      return Math.round(amount * currency.conversion)
-    else if wallet.conversions[currency.code]?
-      return Math.ceil(amount * wallet.conversions[currency.code].conversion)
-    else
-      return null
-
-  wallet.convertFromSatoshi = (amount, currency) ->
-    return null unless amount?
-    return null unless currency?
-    if wallet.isBitCurrency(currency)
-      return (amount / currency.conversion)
-    else if wallet.conversions[currency.code]?
-      return (amount / wallet.conversions[currency.code].conversion)
-    else
-      return null
-
-  # Takes a satoshi amount and converts it to a given currency
-  # while formatting it to how it should look when displayed
-  wallet.formatCurrencyForView = (amount, currency) ->
-    return unless amount && currency && currency.code
-    code = currency.code
-    amount = amount.toFixed(8) if code == 'BTC'
-    amount = amount.toFixed(6) if code == 'mBTC'
-    amount = amount.toFixed(4) if code == 'bits'
-    amount = amount.toFixed(2) if !wallet.isBitCurrency(currency)
-    return parseFloat(amount) + ' ' + code
-
   wallet.toggleDisplayCurrency = () ->
-    if wallet.isBitCurrency(wallet.settings.displayCurrency)
-      wallet.settings.displayCurrency = wallet.settings.currency
-    else
-      wallet.settings.displayCurrency = wallet.settings.btcCurrency
+    isDisplayBit = Currency.isBitCurrency(wallet.settings.displayCurrency)
+    wallet.settings.displayCurrency = if isDisplayBit then wallet.settings.currency else wallet.settings.btcCurrency
 
   wallet.getFiatAtTime = (amount, time, currency) ->
     defer = $q.defer()
@@ -546,15 +487,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.api.getFiatAtTime(time * 1000, amount, currency.toLowerCase(), success, error)
 
     return defer.promise
-
-  wallet.checkAndGetTransactionAmount = (amount, currency, success, error) ->
-    amount = wallet.convertToSatoshi(amount, currency)
-
-    if !success? || !error?
-      console.error "Success and error callbacks are required"
-      return
-
-    return amount
 
   wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bipPassphrase, successCallback, errorCallback, cancel) ->
     success = (address) ->
@@ -649,7 +581,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           value = item.split('=')[1]
 
           if key == 'amount'
-            result.amount = wallet.convertToSatoshi(parseFloat(value), wallet.btcCurrencies[0])
+            result.amount = Currency.convertToSatoshi(parseFloat(value), wallet.btcCurrencies[0])
           else if result[key] != undefined
             result[key] = value
 
@@ -959,6 +891,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           # result: units of fiat per BTC
           # convert to: units of satoshi per unit of fiat
           wallet.conversions[code] = {symbol: info.symbol, conversion: parseInt(numeral(100000000).divide(numeral(info["last"])).format("1"))}
+          Currency.updateConversion(code, wallet.conversions[code])
 
         wallet.applyIfNeeded()
 
