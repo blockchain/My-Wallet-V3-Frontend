@@ -70,7 +70,7 @@
         .mtl.flex-center.flex-end
           button.button-primary(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="SIGNIN", ng-disabled="!isValid")
       //Wallet Recovery
-      .ptl.flex-column(ng-hide="status.needsHelp || status.enterkey")
+      .ptl.flex-column(feature-flag="walletRecovery" ng-hide="status.needsHelp || status.enterkey")
         .em-300.flex-end.mbm Having some trouble?
           span.pointer.blue.mls(ng-click="toggleHelp()") View Options
       .flex-column(ng-show="status.needsHelp")

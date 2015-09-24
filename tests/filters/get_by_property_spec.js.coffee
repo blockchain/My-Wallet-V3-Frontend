@@ -9,7 +9,6 @@ describe "getByPropertyFilter", ->
   ]
 
   beforeEach ->
-    module('walletFilters')
     inject (_$filter_) ->
       $filter = _$filter_
 

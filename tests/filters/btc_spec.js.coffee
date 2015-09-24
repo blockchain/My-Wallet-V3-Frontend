@@ -3,11 +3,10 @@ describe "btcFilter", ->
   $filter = null
 
   beforeEach ->
-    module('walletFilters')
     inject (_$filter_) ->
       $filter = _$filter_
 
-  it "should convert from satoshi", () -> 
+  it "should convert from satoshi", () ->
     btc = $filter('btc')
     expect(btc(100000000)).toBe('1 BTC')
 

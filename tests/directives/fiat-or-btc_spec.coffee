@@ -4,14 +4,11 @@ describe "Amount", ->
   element = undefined
   isoScope = undefined
 
-  beforeEach module("walletApp")
-  beforeEach module("templates/amount.jade")
-
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
 
     $compile = _$compile_
     $rootScope = _$rootScope_
-    
+
     return
   )
 
@@ -20,7 +17,7 @@ describe "Amount", ->
     $rootScope.$digest()
     isoScope = element.isolateScope()
     isoScope.$digest()
-  
+
   it "should not show Fiat if BTC is set as display currency", inject((Wallet) ->
     Wallet.settings.displayCurrency = {code: "BTC"}
     isoScope.updateDisplay()

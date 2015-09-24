@@ -4,9 +4,6 @@ describe "Scroll To Top Directive", ->
   $scope = undefined
   element = undefined
 
-  beforeEach module("walletApp")
-  beforeEach(module('partials/common.jade'))
-
   beforeEach inject((_$compile_, _$rootScope_) ->
 
     $compile = _$compile_

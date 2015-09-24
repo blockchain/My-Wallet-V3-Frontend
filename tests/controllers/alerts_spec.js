@@ -1,8 +1,6 @@
 describe("AlertsCtrl", () => {
   var scope;
-  
-  beforeEach(angular.mock.module("walletApp"));
-  
+
   beforeEach(() => {
     angular.mock.inject(($injector, $rootScope, $controller) => {
       var Wallet = $injector.get("Wallet");
@@ -13,7 +11,7 @@ describe("AlertsCtrl", () => {
       });
     });
   });
-  
+
   it("should have access to wallet alerts", inject(() => {
     expect(scope.alerts).toBeDefined();
   }));

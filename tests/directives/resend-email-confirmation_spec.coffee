@@ -4,9 +4,6 @@ describe "Resend Email Confirmation", ->
   element = undefined
   isoScope = undefined
 
-  beforeEach module("walletApp")
-  beforeEach module("templates/resend-email-confirmation.jade")
-
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
 
     $compile = _$compile_

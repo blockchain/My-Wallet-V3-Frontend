@@ -5,9 +5,6 @@ describe "Did You Know directive", ->
   scope = undefined
   DidYouKnow = undefined
 
-  beforeEach module("walletApp")
-  beforeEach(module("templates/did-you-know.jade"))
-
   beforeEach inject((_$compile_, _$rootScope_, $injector) ->
     $compile = _$compile_
     $rootScope = _$rootScope_

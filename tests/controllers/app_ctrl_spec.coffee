@@ -3,8 +3,6 @@ describe "AppCtrl", ->
   callbacks = undefined
   mockModalInstance = undefined
 
-  beforeEach angular.mock.module("walletApp")
-
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")

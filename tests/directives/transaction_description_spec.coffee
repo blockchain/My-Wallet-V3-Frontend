@@ -6,9 +6,6 @@ describe "Transaction Description Directive", ->
   Wallet = undefined
   html = undefined
 
-  beforeEach module("walletApp")
-  beforeEach(module('templates/transaction-description.html'))
-
   beforeEach inject((_$compile_, _$rootScope_, $injector) ->
 
 

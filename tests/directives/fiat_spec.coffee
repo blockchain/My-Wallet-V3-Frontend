@@ -4,8 +4,6 @@ describe "Fiat Directive", ->
   scope = undefined
   isoScope = undefined
 
-  beforeEach module("walletApp")
-
   beforeEach ->
     inject ($rootScope, $compile, $injector) ->
 

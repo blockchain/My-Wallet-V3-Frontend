@@ -4,9 +4,6 @@ describe "Contextual message directive", ->
   element = undefined
   scope = undefined
 
-  beforeEach module("walletApp")
-  beforeEach(module("templates/contextual-message.jade"))
-
   beforeEach inject((_$compile_, _$rootScope_, $injector) ->
     $compile = _$compile_
     $rootScope = _$rootScope_
@@ -31,17 +28,17 @@ describe "Contextual message directive", ->
     $rootScope.$digest()
     scope.$apply()
 
-  it "has a 2 preset messages", -> 
+  it "has a 2 preset messages", ->
     expect(scope.presets.length).toEqual(2)
 
-  it "originally does not reveal a msg", -> 
+  it "originally does not reveal a msg", ->
     expect(scope.reveal).toBe(false)
 
-  it "should be able to reveal the message", -> 
+  it "should be able to reveal the message", ->
     spyOn(scope, "revealMsg").and.callThrough()
     scope.revealMsg()
     expect(scope.reveal).toBe(true)
 
-  it "should show msg if there's more than .2BTC and a bad security center score", -> 
+  it "should show msg if there's more than .2BTC and a bad security center score", ->
     pending()
     expect(element.html()).toContain 'translate="NO_THANKS"'

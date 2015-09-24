@@ -3,7 +3,7 @@ describe "walletServices", () ->
   errors = undefined
   callbacks = undefined
 
-  beforeEach angular.mock.module("walletApp")
+  
 
   beforeEach ->
     angular.mock.inject ($injector) ->

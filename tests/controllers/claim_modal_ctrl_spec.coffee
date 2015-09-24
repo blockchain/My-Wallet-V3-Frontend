@@ -5,8 +5,6 @@ describe "ClaimModalCtrl", ->
     close: ->
     dismiss: ->
 
-  beforeEach angular.mock.module("walletApp")
-
   beforeEach ->
     angular.mock.inject ($injector, localStorageService, $rootScope, $controller) ->
       localStorageService.remove("mockWallets")

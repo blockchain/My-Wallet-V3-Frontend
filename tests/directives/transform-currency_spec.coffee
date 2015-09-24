@@ -4,8 +4,6 @@ describe "Transform-Currency Directive", ->
   isoScope = undefined
   element = undefined
 
-  beforeEach module("walletApp")
-
   beforeEach ->
     inject ($rootScope, $compile, $injector) ->
 

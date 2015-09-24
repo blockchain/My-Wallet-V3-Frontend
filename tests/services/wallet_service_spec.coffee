@@ -4,8 +4,6 @@ describe "walletServices", () ->
   errors = undefined
   MyBlockchainSettings = undefined
 
-  beforeEach angular.mock.module("walletApp")
-
   beforeEach ->
     angular.mock.inject ($injector, localStorageService) ->
       localStorageService.remove("mockWallets")
