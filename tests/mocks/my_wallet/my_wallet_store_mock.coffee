@@ -1,5 +1,4 @@
-walletStoreServices = angular.module("myWalletStoreServices", [])
-walletStoreServices.factory "MyWalletStore", () ->
+angular.module('walletApp.core').factory 'MyWalletStore', () ->
   transactions = [];
   notes = {}
 

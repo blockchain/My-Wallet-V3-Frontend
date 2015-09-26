@@ -5,6 +5,8 @@ window.theFormatter = (val) => {
 };
 
 const modules = [
+  'walletApp.core',
+
   'walletFilters',
   'walletServices',
   'securityCenter',
@@ -15,13 +17,6 @@ const modules = [
   'ui.bootstrap',
   'ngCookies',
   'ngAnimate',
-
-  // TODO get rid of these wrappers and modify the original files to work with injection?
-  'myWalletServices',
-  'myWalletStoreServices',
-  'myWalletPaymentServices',
-  'myBlockchainApiServices',
-  'myBlockchainSettingsServices',
 
   'ui.select',
   'ngAudio',

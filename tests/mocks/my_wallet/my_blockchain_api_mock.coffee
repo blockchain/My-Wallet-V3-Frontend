@@ -1,3 +1,3 @@
-angular.module("myBlockchainApiServices", []).factory "MyBlockchainApi", () ->
+angular.module('walletApp.core').factory 'MyBlockchainApi', () ->
     {
     }

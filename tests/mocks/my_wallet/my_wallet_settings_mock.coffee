@@ -1,3 +1,3 @@
-angular.module("myBlockchainSettingsServices", []).factory "MyBlockchainSettings", () ->
+angular.module('walletApp.core').factory 'MyBlockchainSettings', () ->
   {
   }
