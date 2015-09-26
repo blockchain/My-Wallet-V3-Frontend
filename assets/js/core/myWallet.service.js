@@ -1,5 +1,3 @@
-'use strict';
-
 angular
   .module('walletApp.core')
   .factory('MyWallet', MyWallet);
