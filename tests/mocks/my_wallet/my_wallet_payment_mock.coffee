@@ -1,5 +1,4 @@
-walletPaymentServices = angular.module("myWalletPaymentServices", [])
-walletPaymentServices.factory "MyWalletPayment", ($q) ->
+angular.module('walletApp.core').factory 'MyWalletPayment', ($q) ->
   (shouldReject) ->
 
     tx = {

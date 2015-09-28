@@ -49,7 +49,7 @@ module.exports = (grunt) ->
       application_dependencies:
         src: [
           'build/js/browser-polyfill.js' # Babel polyfill
-          'build/js/wrappers/*.js' # Wrappers around MyWallet, MyWalletStore, etc
+          'build/js/core/*.js' # Wrappers around MyWallet, MyWalletStore, etc
           'build/js/app.js' # Needs to be included before controllers
           'build/js/services/*.js'
           'build/js/controllers/*.js'
@@ -113,7 +113,7 @@ module.exports = (grunt) ->
         expand: true
         flatten: false
         cwd: "assets/js"
-        src: ["*.js.coffee", "wrappers/**/*.js.coffee", "controllers/**/*.js.coffee", "directives/**/*.js.coffee", "services/**/*.js.coffee"]
+        src: ["*.js.coffee", "core/**/*.js.coffee", "controllers/**/*.js.coffee", "directives/**/*.js.coffee", "services/**/*.js.coffee"]
         dest: 'build/js'
         ext: ".js"
 
@@ -254,7 +254,7 @@ module.exports = (grunt) ->
           spawn: false
 
       es6:
-        files: ['assets/js/controllers/**/*.js','assets/js/services/**/*.js','assets/js/directives/**/*.js','assets/js/wrappers/**/*.js','assets/js/*.js']
+        files: ['assets/js/controllers/**/*.js','assets/js/services/**/*.js','assets/js/directives/**/*.js','assets/js/core/**/*.js','assets/js/*.js']
         tasks: ['babel:build']
         options:
           spawn: false
@@ -286,7 +286,7 @@ module.exports = (grunt) ->
         files: [{
           expand: true,
           cwd: 'assets/js',
-          src: ['controllers/**/*.js','services/**/*.js','directives/**/*.js','wrappers/**/*.js','*.js'],
+          src: ['controllers/**/*.js','services/**/*.js','directives/**/*.js','core/**/*.js','*.js'],
           dest: 'build/js',
           ext: '.js'
         }]
