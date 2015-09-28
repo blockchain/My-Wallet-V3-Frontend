@@ -49,6 +49,9 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
 
   $scope.filterDestinations = (destinationsIdx, showAccounts=true) => {
     return $scope.destinations[destinationsIdx].filter(dest => {
+      if (dest.type == "External" && dest.address == "") {
+        return false;
+      }
       return showAccounts || dest.type !== 'Accounts';
     });
   };
