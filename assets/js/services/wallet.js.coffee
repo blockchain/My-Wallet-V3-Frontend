@@ -611,14 +611,20 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.importWithMnemonic = (mnemonic, bip39pass, successCallback, errorCallback, cancelCallback) ->
     cancel  = () ->
       cancelCallback()
-    proceed = (password) ->
+    restore = (password) ->
+      console.log("restoring...")
       wallet.transactions.splice(0, wallet.transactions.length)
       wallet.my.wallet.restoreHDWallet(mnemonic, bip39pass, password)
+    update = () ->
+      console.log("updating...")
       wallet.my.getHistoryAndParseMultiAddressJSON()
       wallet.updateTransactions()
       successCallback()
 
-    wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel)
+    wallet.askForSecondPasswordIfNeeded()
+      .then(restore)
+      .then(update)
+      .catch(cancel)
 
   wallet.getDefaultAccountIndex = () ->
     return 0 unless wallet.my.wallet?
