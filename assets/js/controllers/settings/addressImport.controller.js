@@ -50,10 +50,12 @@ function AddressImportCtrl($scope, $log, Wallet, $modalInstance, $translate, $st
         case 'wrongBipPass':
           $scope.importForm.bipPassphrase.$setValidity('wrong', false);
           break;
-        case 'needsBip38':
-          $scope.BIP38 = true;
-          break;
       }
+    };
+
+    const needsBipPassphrase = (proceed) => {
+      $scope.BIP38 = true;
+      $scope.proceedWithBip38 = proceed;
     };
 
     const cancel = () => {
@@ -61,9 +63,13 @@ function AddressImportCtrl($scope, $log, Wallet, $modalInstance, $translate, $st
     };
 
     $timeout(() => {
-      Wallet.addAddressOrPrivateKey(
-        addressOrPrivateKey, bip38passphrase, success, error, cancel
-      );
+      if(!$scope.BIP38) {
+        Wallet.addAddressOrPrivateKey(
+          addressOrPrivateKey, needsBipPassphrase, success, error, cancel
+        );
+      } else {
+        $scope.proceedWithBip38(bip38passphrase);
+      }
     }, 250);
   };
 

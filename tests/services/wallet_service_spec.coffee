@@ -421,15 +421,17 @@ describe "walletServices", () ->
       callbacks = {
         success: () ->
         error: () ->
+        needsBip38: () ->
       }
 
       spyOn(callbacks, "error")
+      spyOn(callbacks, "needsBip38")
 
-      Wallet.addAddressOrPrivateKey("BIP38 key", "", callbacks.success, callbacks.error)
+      Wallet.addAddressOrPrivateKey("BIP38 key", callbacks.needsBip38, callbacks.success, callbacks.error)
 
       $rootScope.$digest()
 
-      expect(callbacks.error).toHaveBeenCalledWith("needsBip38")
+      expect(callbacks.needsBip38).toHaveBeenCalled()
     )
 
   describe "displayReceivedBitcoin()", ->
