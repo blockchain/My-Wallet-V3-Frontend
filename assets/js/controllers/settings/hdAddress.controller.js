@@ -35,7 +35,7 @@ function HDAddressCtrl($scope, Wallet, $log, $state, $stateParams, $filter, $tra
       errorCallback();
     };
 
-    Wallet.changeHDAddressLabel($scope.address.account, $scope.address.index, label, success, error);
+    Wallet.changeHDAddressLabel($scope.account, $scope.addressIndex, label, success, error);
   };
 
   $scope.didLoad = () => {
@@ -45,18 +45,19 @@ function HDAddressCtrl($scope, Wallet, $log, $state, $stateParams, $filter, $tra
   };
 
   $scope.$watchCollection("accounts()", () => {
-    let hdAddresses = Wallet.hdAddresses(true);
-    for (let hdAddress of hdAddresses) {
-      if (hdAddress.account.index === parseInt($stateParams.account) && hdAddress.index === parseInt($stateParams.index)) {
-        $scope.address = hdAddress;
-      }
-    }
-  });
+    const accountIndex = parseInt($stateParams.account);
+    const addressIndex = parseInt($stateParams.index);
+    $scope.addressIndex = addressIndex;
+    const account = Wallet.accounts()[accountIndex];
+    $scope.account = account;
+    const address = account.receiveAddressAtIndex(addressIndex);
 
-  $scope.$watch("address.address", (newValue) => {
-    if (newValue != null) {
-      $scope.url = 'bitcoin://' + newValue;
-    }
+    $scope.url = 'bitcoin://' + address;
+
+    $scope.address  = {
+      address: account.receiveAddressAtIndex(addressIndex),
+      label:   account.getLabelForReceivingAddress(addressIndex)
+    };
   });
 
   $scope.didLoad();

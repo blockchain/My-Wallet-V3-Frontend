@@ -330,9 +330,12 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     successCallback()
 
   wallet.addAddressForAccount = (account, successCallback, errorCallback) ->
-    index = account.receiveIndex + 1
-    account.setLabelForReceivingAddress(index, "")
-    successCallback(index)
+    receiveIndex = account.receiveIndex
+    console.log(receiveIndex)
+    account.setLabelForReceivingAddress(receiveIndex, "")
+    successCallback(receiveIndex)
+    # Refresh list of hd addresses:
+    wallet.hdAddresses(true)
 
   wallet.fetchMoreTransactions = (where, successCallback, errorCallback, allTransactionsLoadedCallback) ->
     success = (res) ->
