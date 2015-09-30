@@ -5,8 +5,8 @@ angular
 function HomeCtrl($scope, Wallet, $modal) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
-  $scope.getTotal = () => Wallet.total('accounts');
-  $scope.legacyTotal = () => Wallet.getTotalBalanceForActiveLegacyAddresses();
+  $scope.getTotal = () => Wallet.total();
+  $scope.getLegacyTotal = () => Wallet.total('imported');
   $scope.transactions = [];
   $scope.activeAccounts = Wallet.accounts().filter(a => !a.archived)
 
