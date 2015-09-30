@@ -35,7 +35,7 @@ function ClaimModalCtrl($scope, Wallet, $translate, $modalInstance, claim) {
       .build();
 
     const signAndPublish = (secondPassword) => {
-      $scope.payment.sign(secondPassword).publish().payment;
+      return $scope.payment.sign(secondPassword).publish().payment;
     };
 
     Wallet.askForSecondPasswordIfNeeded()
