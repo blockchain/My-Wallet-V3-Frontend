@@ -3,6 +3,7 @@ angular
   .controller("FeedbackCtrl", FeedbackCtrl);
 
 function FeedbackCtrl($scope, $log, $state, $http) {
+  $scope.rating = 'MEH';
   $scope.state = $state;
   $scope.formStage = 0;
   $scope.setFormSubmitted = () => {

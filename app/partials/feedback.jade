@@ -5,43 +5,47 @@
       | Success!
     h2 Thank you for your feedback
   div(ng-hide="formStage >= 2")
-    form.bc-form.pal(ng-submit="setFormSubmitted()" name="feedbackForm" autocomplete="off" id="feedback-search-form")
+    form.bc-form.pal(ng-submit="setFormSubmitted()" name="feedbackForm" autocomplete="off")
       .bc-form-header
         h2.mtn.em-400.type-h5 Tell us what you think!
       label.mbl What's your overall impression of the wallet?
+        span.security-red &nbsp;*
       .flex.flex-between.bc-radio-group
         .flex-column.flex-center
-          label.mbs(for="rating-awesome")
+          label.mbs
             span Awesome!
-          input(ng-model="rating" type="radio" name="rating" id="rating-awesome" value="AWESOME" ng-required="!rating")
+          input(ng-model="rating" type="radio" name="rating" value="AWESOME" required)
         .flex-column.flex-center
-          label.mbs(for="rating-good")
+          label.mbs
             span Good
-          input(ng-model="rating" type="radio" name="rating" id="rating-good" value="GOOD" ng-required="!rating")
+          input(ng-model="rating" type="radio" name="rating" value="GOOD" required)
         .flex-column.flex-center
-          label.mbs(for="rating-meh")
+          label.mbs
             span Meh, it's ok
-          input(ng-model="rating" type="radio" name="rating" id="rating-meh" value="MEH" ng-required="!rating")
+          input(ng-model="rating" type="radio" name="rating" value="MEH" required)
         .flex-column.flex-center
-          label.mbs(for="rating-bad")
+          label.mbs
             span Bad
-          input(ng-model="rating" type="radio" name="rating" id="rating-bad" value="BAD" ng-required="!rating")
+          input(ng-model="rating" type="radio" name="rating" value="BAD" required)
         .flex-column.flex-center
-          label.mbs(for="rating-horrible")
+          label.mbs
             span Horrible
-          input(ng-model="rating" type="radio" name="rating" id="rating-horrible" value="HORRIBLE" ng-required="!rating")
+          input(ng-model="rating" type="radio" name="rating" value="HORRIBLE" required)
       .flex-column.mtl
-        label(for="description-good") What did you like?
-        textarea.plm(ng-model="descriptionGood" rows="3" id="description-good" name="description-good")
+        label What did you like?
+          span.security-red &nbsp;*
+        textarea.plm(ng-model="descriptionGood" rows="3" name="description-good" required)
       .flex-column.mtl
-        label(for="description-bad") What can we improve on?
-        textarea.plm(ng-model="descriptionBad" rows="3" id="description-bad" name="description-bad")
+        label What can we improve on?
+          span.security-red &nbsp;*
+        textarea.plm(ng-model="descriptionBad" rows="3" name="description-bad" required)
       .flex.flex-between.mvl
         .flex-column.flex-1.prl
-          label(for="fullname") Name
-          input.plm(ng-model="fullname" type="text" name="fullname" id="fullname")
+          label Name
+          input.plm(ng-model="fullname" type="text" name="fullname")
         .flex-column.flex-1.mll
-          label(for="email") Email
-          input.plm(ng-model="email" type="text" name="email" id="email")
+          label Email
+          input.plm(ng-model="email" type="email" name="email")
       .flex-center.flex-justify.ptl
-        input.button-success(ng-class="{disabled: formStage == 1}" type="submit" value="Submit")
+        button.button-success(type="submit" ng-disabled="feedbackForm.$invalid")
+          | Submit
