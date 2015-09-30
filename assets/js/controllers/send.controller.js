@@ -393,12 +393,25 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
     $scope.setPaymentTo();
     $scope.setPaymentAmount();
     $scope.setPaymentFee();
-    $scope.buildTx();
+    angular.copy($scope.payment)
+      .buildbeta()
+      .then($scope.buildTx)
+      .catch(response => {
+        let msg = response.error.message || response.error;
+        $scope.backToForm();
+        Wallet.displayError(msg, false, $scope.alerts);
+        $scope.$root.$safeApply($scope);
+      });
   };
 
   $scope.buildTx = () => {
-    $scope.payment.build()
-      .sideEffect($scope.handleTxUpdate);
+    let valid = !$scope.sendForm.$invalid &&
+                $scope.sendForm.$dirty &&
+                $scope.amountIsValid;
+    if (valid) {
+      $scope.payment.build()
+        .sideEffect($scope.handleTxUpdate);
+    }
   };
 
   $scope.setPaymentFrom = () => {
