@@ -1,9 +1,5 @@
 'use strict';
 
-window.theFormatter = (val) => {
-  return 'Nonsense';
-};
-
 const modules = [
   'walletApp.core',
 
