@@ -28,16 +28,18 @@ function ClaimModalCtrl($scope, Wallet, $translate, $modalInstance, claim) {
     };
     $scope.redeeming = true;
 
-    const signAndPublish = (secondPassword) => {
-      $scope.payment.from(claim.code)
-        .to($scope.fields.to.index)
-        .sweep()
-        .build()
-        .sign(secondPassword)
-        .publish()
-    }
+    $scope.payment
+      .from(claim.code)
+      .to($scope.fields.to.index)
+      .sweep()
+      .build();
 
-    Wallet.askForSecondPasswordIfNeeded().then(signAndPublish)
+    const signAndPublish = (secondPassword) => {
+      $scope.payment.sign(secondPassword).publish().payment;
+    };
+
+    Wallet.askForSecondPasswordIfNeeded()
+      .then(signAndPublish)
       .then(success).catch(error);
   };
 
