@@ -266,7 +266,7 @@ app.get "/authorize-approve", (request, response) ->
       // xmlHttp.onload = function () {
       //   window.location.replace("/");
       // };
-      xmlHttp.open("GET", "https://blockchain.info/wallet#{request.originalUrl}", true);
+      xmlHttp.open("GET", "https://blockchain.info/wallet" + encodeURIComponent(request.originalUrl), true);
       xmlHttp.send();
 
       setTimeout(function() { window.location.replace("/"); }, 500);
