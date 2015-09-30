@@ -49,8 +49,9 @@ module.exports = (grunt) ->
       application_dependencies:
         src: [
           'build/js/browser-polyfill.js' # Babel polyfill
-          'build/js/core/*.js' # Wrappers around MyWallet, MyWalletStore, etc
+          'build/js/core/core.js'
           'build/js/app.js' # Needs to be included before controllers
+          'build/js/core/*!(core).js'
           'build/js/services/*.js'
           'build/js/controllers/*.js'
           'build/js/controllers/settings/*.js'
@@ -113,7 +114,7 @@ module.exports = (grunt) ->
         expand: true
         flatten: false
         cwd: "assets/js"
-        src: ["*.js.coffee", "core/**/*.js.coffee", "controllers/**/*.js.coffee", "directives/**/*.js.coffee", "services/**/*.js.coffee"]
+        src: ["*.js.coffee", "directives/**/*.js.coffee", "services/**/*.js.coffee"]
         dest: 'build/js'
         ext: ".js"
 
