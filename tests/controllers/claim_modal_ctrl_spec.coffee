@@ -5,10 +5,12 @@ describe "ClaimModalCtrl", ->
     close: ->
     dismiss: ->
 
+  askForSecondPassword = undefined
+
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, localStorageService, $rootScope, $controller) ->
+    angular.mock.inject ($injector, localStorageService, $rootScope, $controller, $q) ->
       localStorageService.remove("mockWallets")
 
       Wallet = $injector.get("Wallet")
@@ -37,6 +39,27 @@ describe "ClaimModalCtrl", ->
 
       scope.$digest()
 
+      scope.payment = {
+        from: (addr) -> {
+          to: (dest) -> {
+            sweep: () -> {
+              build: () -> {
+                sign: () -> {
+                  publish: () -> {
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      askForSecondPassword = $q.defer()
+      Wallet.askForSecondPasswordIfNeeded = () ->
+        askForSecondPassword.promise
+
+      askForSecondPassword.resolve()
+
       return
 
     return
@@ -48,9 +71,8 @@ describe "ClaimModalCtrl", ->
     expect(scope.balance).toBe(100000)
 
   it "should let the user redeem", inject((Wallet)->
-    spyOn(Wallet, "redeemFromEmailOrMobile")
+    spyOn(scope.payment, "from").and.callThrough()
     scope.redeem()
-    expect(Wallet.redeemFromEmailOrMobile).toHaveBeenCalled()
-    expect(Wallet.redeemFromEmailOrMobile.calls.argsFor(0)[0]).toEqual(scope.accounts()[0])
-    expect(Wallet.redeemFromEmailOrMobile.calls.argsFor(0)[1]).toEqual("abcd")
+    scope.$digest()
+    expect(scope.payment.from).toHaveBeenCalledWith("abcd")
   )
