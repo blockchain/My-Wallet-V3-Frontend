@@ -125,6 +125,12 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
     $scope.transaction = angular.copy($scope.transactionTemplate);
     $scope.transaction.from = Wallet.accounts()[Wallet.my.wallet.hdwallet.defaultAccountIndex];
     $scope.transaction.customFee = Wallet.settings.feePerKB;
+
+    // Remove error messages:
+    $scope.validateAmounts();
+    $scope.sendForm.$setPristine();
+    $scope.sendForm.$setUntouched();
+
     for (let i = 0; i < $scope.destinations.length; i++) {
       $scope.$broadcast('ResetSearch' + i);
     }
