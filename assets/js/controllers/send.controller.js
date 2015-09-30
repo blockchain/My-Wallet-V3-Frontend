@@ -47,9 +47,19 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
     type: accounts ? '!External' : 'Imported'
   });
 
-  $scope.filterDestinations = (destinationsIdx, showAccounts=true) => {
+  $scope.filterDestinations = (destinationsIdx, showAccounts, query) => {
     return $scope.destinations[destinationsIdx].filter(dest => {
       if (dest.type == "External" && dest.address == "") {
+        return false;
+      }
+      if (!!dest.address && dest.address != "") {
+        // If it's an address, match either address or label
+        if(!dest.address.toLowerCase().includes(query.toLowerCase()) & !dest.label.toLowerCase().includes(query.toLowerCase())) {
+          return false;
+        }
+      }
+      // If it's an account, only match the label
+      if (!!dest.label && dest.label != "" && !dest.label.toLowerCase().includes(query.toLowerCase())) {
         return false;
       }
       return showAccounts || dest.type !== 'Accounts';
