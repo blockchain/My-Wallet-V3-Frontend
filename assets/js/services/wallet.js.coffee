@@ -747,15 +747,15 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     else
       return []
 
-  # wallet.status.didLoadBalances = true if wallet.accounts? && wallet.accounts().length > 0 && wallet.accounts().some((a) -> a.active and a.balance)
-
   wallet.total = (accountIndex) ->
     return unless wallet.my.wallet?
     switch accountIndex
-      when "accounts", undefined, null
+      when "accounts"
         if wallet.my.wallet.isUpgradedToHD then wallet.my.wallet.hdwallet.balanceActiveAccounts else null
       when "imported"
         wallet.my.wallet.balanceActiveLegacy
+      when undefined
+        wallet.total('accounts') + wallet.total('imported')
       else
         account = wallet.accounts()[parseInt(accountIndex)]
         if account == null then null else account.balance
