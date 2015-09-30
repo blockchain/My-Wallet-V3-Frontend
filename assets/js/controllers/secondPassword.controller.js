@@ -10,14 +10,14 @@ function SecondPasswordCtrl($scope, $log, Wallet, $modalInstance, $translate, in
 
   $scope.cancel = () => {
     defer.reject($translate.instant('SECOND_PASSWORD_CANCEL'));
-    Wallet.clearAlerts();
+    Wallet.clearAlerts($scope.alerts);
     $modalInstance.dismiss("");
   };
 
   $scope.submit = () => {
     if ($scope.busy) return;
     $scope.busy = true;
-    Wallet.clearAlerts();
+    Wallet.clearAlerts($scope.alerts);
     if (Wallet.validateSecondPassword($scope.secondPassword)) {
       $scope.busy = false;
       defer.resolve($scope.secondPassword);
