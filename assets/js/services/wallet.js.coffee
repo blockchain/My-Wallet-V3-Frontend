@@ -681,9 +681,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     $timeout.cancel(alert.timer)
     wallet.alerts.splice(wallet.alerts.indexOf(alert))
 
-  wallet.clearAlerts = () ->
-    for alert in wallet.alerts
-      wallet.alerts.pop(alert)
+  wallet.clearAlerts = (context=wallet.alerts) ->
+    for alert in context
+      context.pop(alert)
       if alert?
         $timeout.cancel(alert.timer)
 
