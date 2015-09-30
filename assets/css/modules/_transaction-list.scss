@@ -127,6 +127,10 @@ a.date,p.date { color: $black; }
   }
 }
 
+.tx-bci-link {
+  min-width: -webkit-min-content;
+}
+
 @media (min-width: 992px){
   .amountTotal{float: right;}
 }
