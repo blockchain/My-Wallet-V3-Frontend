@@ -3,19 +3,11 @@ angular
   .controller("HomeCtrl", HomeCtrl);
 
 function HomeCtrl($scope, Wallet, $modal) {
-  $scope.status = Wallet.status;
-  $scope.settings = Wallet.settings;
   $scope.getTotal = () => Wallet.total();
   $scope.getLegacyTotal = () => Wallet.total('imported');
-  $scope.transactions = [];
   $scope.activeAccounts = Wallet.accounts().filter(a => !a.archived)
 
-  $scope.$watch('status.didLoadTransactions', didLoad => {
-    if (!didLoad) return;
-    $scope.transactions = Wallet.transactions;
-  });
-
-  if ($scope.status.firstTime) {
+  if (Wallet.status.firstTime) {
     $modal.open({
       templateUrl: "partials/first-login-modal.jade",
       controller: "FirstTimeCtrl",

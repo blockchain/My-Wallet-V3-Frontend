@@ -41,12 +41,6 @@ describe "HomeCtrl", ->
     it "should have access to wallet accounts", ->
       expect(scope.activeAccounts.length).toBeGreaterThan(0)
 
-    it "should have access to wallet status", ->
-      expect(scope.status).toBeDefined()
-
-    it "should have access to wallet transactions", ->
-      expect(scope.transactions).toBeDefined()
-
   describe "getTotal()", ->
     it "should return total", ->
       expect(scope.getTotal()).toEqual(1)
