@@ -15,6 +15,7 @@ describe "ClaimModalCtrl", ->
 
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
+      MyWalletPayment = $injector.get("MyWalletPayment")
 
       MyWallet.wallet = {
         isUpgradedToHD: true
@@ -23,6 +24,8 @@ describe "ClaimModalCtrl", ->
           accounts: [{ index: 0, archived: false }]
         }
       }
+
+      Wallet.payment = MyWalletPayment
 
       scope = $rootScope.$new()
 
@@ -38,21 +41,6 @@ describe "ClaimModalCtrl", ->
         claim: {code: "abcd", balance: balancePromise}
 
       scope.$digest()
-
-      scope.payment = {
-        from: (addr) -> {
-          to: (dest) -> {
-            sweep: () -> {
-              build: () -> {
-                sign: () -> {
-                  publish: () -> {
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
 
       askForSecondPassword = $q.defer()
       Wallet.askForSecondPasswordIfNeeded = () ->
