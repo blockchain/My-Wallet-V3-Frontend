@@ -2,7 +2,7 @@ __Blockchain HD Frontend__
 
 _Recent changes_
 
-#   (2015-09-24)
+#   (2015-10-01)
 
 
 
@@ -10,6 +10,8 @@ _Recent changes_
 
 ## Bug Fixes
 
+- **Address:** use current receive index for new address
+  ([26eac016](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/26eac0162ae5cd2dbbf3d5c13d21efa9c8cd867d))
 - **Addresses:** show either fiat or btc but not both in Address view
   ([39fc0f80](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/39fc0f80515099dab98028d832cde85c21176777))
 - **CSP:**
@@ -19,8 +21,25 @@ _Recent changes_
   ([aebd8d45](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/aebd8d45e4756b25715f5c4883970032b8914b55))
   - added media-src: blob: for Chrome 45.
   ([f465acd9](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f465acd9415484232de88ad625fcd47068253fc6))
-- **Send:** pasted watch only address sticks
+- **Chrome:** prevent overflow of 'Verify on bc.i'
+  ([7f213b20](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/7f213b201cbddbb54b31658923f342e532270bba))
+- **IE:** take out overflow hidden from body, use normal doc flow to layout stuff
+  ([d8d9b4f3](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/d8d9b4f34dc892dff91650abfdbc099f21bc6432))
+- **Import:** only ask 2nd password once for BIP38
+  ([404958b5](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/404958b546e035ceb17aa76e409f4dec5351f308))
+- **Receive:** redeem from email/sms
+  ([dd8857d7](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/dd8857d76bb5c709f392a674913ad0663adcee39))
+- **Send:**
+  - remove error messages on reset
+  ([ab671f1f](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/ab671f1f53bab93a365efdda38ae87d1b207c3d4))
+  - press enter does the right thing
+  ([4ddbffee](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/4ddbffee818d1546868ab644cdff1df903b8eeb3))
+  - hide 'External' before user is typing.
+  ([2a5f6eff](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/2a5f6effad125527a6f8531d646408ab11db8ac1))
+  - pasted watch only address sticks
   ([017735b5](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/017735b5a059c665ee893185641363daa4ea13e4))
+- **Transaction:** Don't show historical value for the first hour to prevent confusion.
+  ([2fe2e0b9](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/2fe2e0b92081bdfe3c76ee14311b799e1282d6ff))
 - **UI:**
   - don't wrap on login button, hide hand icon on small devices
   ([c46f62eb](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/c46f62ebe739db80dd45c79fb70d6964ecf22637))
@@ -52,14 +71,28 @@ _Recent changes_
   ([5098145b](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/5098145bac3fe58c1de4a5b614e0df303189cd95))
   - rm .form-group class from directive
   ([94bb3a6c](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/94bb3a6cef9c4ef7e8f210bb427a499d41b5496b))
-- **addresses:** prevent user from generating HD address after upgrade before sync is complete
+- **addresses:**
+  - outdent span from icon
+  ([e48a1dd6](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/e48a1dd68ad10edbd7e57d89dd4d1cccc539be6d))
+  - prevent user from generating HD address after upgrade before sync is complete
   ([86e8cd8c](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/86e8cd8c17ecfd05d28bfe0f19f9d507ad984587))
 - **admin:** show results of activating in modal
   ([d81ebb1d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/d81ebb1d3cc2309fcea44eba479f345ffc3db8b8))
-- **alerts:** Modals have their own alert contexts
+- **alerts:**
+  - specify alert clearing context in second password modal
+  ([fff1110d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/fff1110da90fd1ab1d62baefa1b17d4621936767))
+  - allow specifying a context for clearing alerts
+  ([cf0f8d0b](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/cf0f8d0bff11351e1c1934a2505bd939a99fb12d))
+  - Modals have their own alert contexts
   ([1f12b51b](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/1f12b51b67c05114ffcf71bf73421a7c4fc03b63))
+- **balance:** do not include watch only in legacy address balance
+  ([54ac52bb](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/54ac52bbcb36f5719622919cc39772c6c5104f2d))
+- **balances:** show address plus account balance when index is not given
+  ([db0899f1](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/db0899f13e6aaefd8938b4014753c10163e6e14b))
 - **bc-async-input:** cancel after submit no longer undoes the previous change
   ([4d38ad77](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/4d38ad77f20e6f2cae32b1fc002b6aba61d253cd))
+- **claim:** add missing return
+  ([dbb2834c](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/dbb2834c92114e4cefc3591cccc895170135c297))
 - **contextualMessage:** add missing 0 to balance check
   ([120e947b](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/120e947b1b13ae97ce6f3fd24ec5bbc188a0858a))
 - **copy:** swap out from/to
@@ -68,12 +101,22 @@ _Recent changes_
   ([db5f06c3](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/db5f06c3d10557b4a5054dc24cbf71ff7452e3d0))
 - **empty-state:** remove unnecessary check which was causing it not to appear correctly
   ([b654f796](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/b654f796729aea088e359399b398d4bec4b4a1eb))
+- **feedback:** validation, highlight required fields
+  ([b010f20c](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/b010f20c29562c15124519357970ef7ccccb654d))
+- **home:** show imported address balance in accounts table
+  ([4c6a3cba](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/4c6a3cba2ed4f0ac13f59e190b7a98de4a28ad0f))
+- **import:** set busy to false on needsBipPassphrase
+  ([ee3a5611](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/ee3a5611d24475d9a1d4a69d7b2b4a1e75f36bf0))
+- **index:** fix typo
+  ([1067b2b1](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/1067b2b175fff3f9baa64a853970c2daeeb9b2cf))
 - **inline-styles:** remove inline style from directive template
   ([a6367f29](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/a6367f29ceb031fff409b9a45c923d46cd86ff46))
 - **mobile-safari:** change header css so icons align nicely, remove unnecessary padding and margin + old css
   ([0a6d1b04](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/0a6d1b04a18677a1c3210a0f733f536eb927e223))
 - **mock:** typo in payment mock
   ([26ff983a](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/26ff983af6f81b520266c929e98eed87c99cc9f7))
+- **performance:** remove unneeded one-way binds
+  ([13b0b98c](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/13b0b98c9e3e294bbe87b6eff71a8b8ab3b8bcbd))
 - **recovery:** set working to false on error
   ([2e32e2e2](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/2e32e2e236a96e5518b1d42f60bc8cd48235db8a))
 - **responsiveUI:**
@@ -84,6 +127,10 @@ _Recent changes_
 - **secondPasswordCtrl:** Change second password cancel message
   ([768c2c92](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/768c2c92f34cc7d8fb7a7e8738ce4efc8762c32e))
 - **send:**
+  - only buildTx when necessary, check for build errors when going to confirmation step
+  ([784f7caa](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/784f7caa9dfaab882bd1f34b9e82ac03fc592a9a))
+  - set private note correctly
+  ([ad5250fa](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/ad5250fa4e27f3ad870959a1cc276bc337533f77))
   - make sure all fields are set and rebuild payment before trying to send
   ([84ca8dae](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/84ca8dae66e52d3723180fece9ca93ef751fcb66))
   - force payment fee when changing to advanced send
@@ -105,6 +152,8 @@ _Recent changes_
   ([6d61aef7](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/6d61aef7c6eb57854b12667f8cbf92cd556f4e89))
   - fixes ui-select dropdown after pasting
   ([62b01308](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/62b013080ce1caba1caf303c9019efe348a983a6))
+- **tasks:** include core correctly when building for dist
+  ([e297018e](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/e297018e6a33e1b4af17410ba82b9304913bcf98))
 - **transactions-feed:** watch the account index and fetch more tx's for that account, update test suite with mocked up MyWallet
   ([5ede55fa](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/5ede55fa3bf2d9879c94decf61abea2105a3044e))
 - **translateMock:** Add .instant to mock
@@ -187,12 +236,26 @@ _Recent changes_
 - **app:**
   - replace remaining walletApp uses
   - use angular module lookup rather than global app variable
+- **claim:** clean redeem function code
+- **controllers:**
+  - rename controller files
+  - use proper controller conventions
 - **importAddress:** replace wallet-spender with payment.js
+- **karma:**
+  - only look for controllers in the controller directory
+  - remove coffee controllers from files
+- **layout:** use a more conventional positioning method
+- **performance:** one-way data bind when we can
 - **sendCtrl:** implement payment.js module
 - **signin:** move out of modals for sign up, get rid of registration ctrl & test
 - **signup:**
   - more cleanup inside signup markup + css, rm reference to registration ctrl
   - move register html into signup, controller refactored, delete unused css
+- **templates:** move all templates into a single module
+- **wrappers:**
+  - remove use strict statements
+  - move core module up in karma conf
+  - move myWallet wrappers into core module
 
 
 ## Chore
@@ -201,13 +264,39 @@ _Recent changes_
 - **CSP:** provide script hash for browser detection
 - **README:** change HD references to V3
 - **Travis:** fix NodeJS version at 0.12
+- **accounts.controller:** rename controller
+- **addressCtrl:** rename to address.controller
 - **app:** use correct reference to Spender
+- **app.module:** remove nonsense function
 - **changelog:**
   - add to grunt dist task
   - configured git-changelog
+- **cleaning:** remove commented out code
 - **css:** bring in Bootstrap modal CSS into app so we have more control
 - **did-you-know:** add test coverage to the directive, rm un-necessary translate filter in jade file
 - **es6:**
+  - convert wallet_navigation controller
+  - convert upgrade controller
+  - convert transaction controller
+  - convert reveal_xpub controller
+  - convert recoverFunds controller
+  - convert claim_modal controller
+  - point script srcs in index to new settings controller names
+  - wallet_settings_ctrl to es6
+  - two_factor_ctrl to es6
+  - convert show_private_key_ctrl to es6
+  - convert settings_ctrl to es6
+  - convert set_second_password_ctrl to es6
+  - convert recovery_ctrl to es6
+  - convert my_details_ctrl to es6
+  - convert mobile_ctrl to es6
+  - convert hd_address_ctrl to es6
+  - convert change_password_ctrl to es6
+  - convert advanced_ctrl to es6
+  - convert addresses_ctrl to es6
+  - convert addressImport controller to es6
+  - convert address_ctrl.js to es6
+  - convert accounts_ctrl to es6
   - Send Controller
   - fixed and converted function returns in ConfirmRecoverPhraseCtrl
   - fixed return statements in modalInstance resolve segments
@@ -227,10 +316,13 @@ _Recent changes_
   - Added support and converted some controllers
   - converted TopCtrl
 - **grunt:** reuse build task and remove debug tasks
+- **header:** make dropdown explicitly have a background color
+- **home:** remove unnecessary code
 - **homeCtrl:** make es6 code more concise
 - **readme:** remove Spender part of README
 - **sendCtrl:** Remove unused scope functions
 - **spender:** remove MyWalletSpender from frontend
+- **test:** use payment mock in claim spec
 - **walletRecovery:** hide wallet recovery option
 
 
