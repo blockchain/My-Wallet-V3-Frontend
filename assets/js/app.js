@@ -26,11 +26,12 @@ const modules = [
   'passwordEntropy',
   'internationalPhoneNumber',
   'webcam',
+  'bcQrReader',
 
   'templates-main'
 ];
 
-var walletApp = angular.module('walletApp', modules)
+angular.module('walletApp', modules)
 .config(($numeraljsConfigProvider, $modalProvider, uiSelectConfig) => {
   $numeraljsConfigProvider.setFormat('btc', '0,0.00 BTC');
   uiSelectConfig.theme = 'bootstrap';

@@ -24,7 +24,7 @@
     "angular-password-entropy": "0.1.*",
     "international-phone-number": "0.0.7",
     "browserdetection": "0.3.*",
-    "bc-qr-reader": "0.1.*",
+    "bc-qr-reader": "0.2.*",
     "bootstrap-sass": "3.3.*",
     "bootstrap": "~3.3.4"
   },
