@@ -26,6 +26,7 @@ const modules = [
   'passwordEntropy',
   'internationalPhoneNumber',
   'webcam',
+  'bcQrReader',
 
   'templates-main'
 ];
