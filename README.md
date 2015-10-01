@@ -1,6 +1,8 @@
 # MyWallet V3 Frontend [![Build Status](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend.png?branch=master)](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend)
 
-An AngularJS bitcoin web wallet powered by [My-Wallet-V3](https://github.com/blockchain/My-Wallet-V3).
+An AngularJS bitcoin web wallet powered by [My-Wallet-V3](https://github.com/blockchain/My-Wallet-V3). 
+
+This is the new and improved wallet. You can see it at [alpha.blockchain.info](https://alpha.blockchain.info/). For the original wallet at [blockchain.info](https://blockchain.info/) please see [this repository](https://github.com/blockchain/My-Wallet) or [contact support](http://blockchain.zendesk.com/).
 
 ## Running Locally
 
