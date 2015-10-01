@@ -104,6 +104,6 @@ function SettingsAccountsController($scope, Wallet, $modal, filterFilter) {
 
   $scope.archive = (account) => { Wallet.archive(account) };
   $scope.unarchive = (account) => { Wallet.unarchive(account) };
-  $scope.isDefault = (account) => { Wallet.isDefaultAccount(account) };
+  $scope.isDefault = (account) => Wallet.isDefaultAccount(account);
 
 }
