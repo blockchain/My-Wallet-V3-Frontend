@@ -16,7 +16,7 @@ describe "Contextual message directive", ->
     MyWallet = $injector.get("MyWallet")
 
     MyWallet.wallet = {
-      balanceActiveLegacy: 100000000
+      balanceSpendableActiveLegacy: 100000000
       keys: [{ archived: false }, { archived: true }]
       hdwallet: {
         accounts: [{ archived: false }, { archived: false }, { archived: true }]
