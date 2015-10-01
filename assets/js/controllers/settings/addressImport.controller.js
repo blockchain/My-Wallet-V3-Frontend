@@ -39,10 +39,8 @@ function AddressImportCtrl($scope, $log, Wallet, $modalInstance, $translate, $st
       $scope.step = 2;
     };
 
-    const error = (err, address) => {
+    const error = (err) => {
       $scope.status.busy = false;
-      if (address == null) address = null;
-      if (err == null) return;
       switch (err) {
         case 'presentInWallet':
           $scope.importForm.privateKey.$setValidity('present', false);
@@ -54,6 +52,7 @@ function AddressImportCtrl($scope, $log, Wallet, $modalInstance, $translate, $st
     };
 
     const needsBipPassphrase = (proceed) => {
+      $scope.status.busy = false;
       $scope.BIP38 = true;
       $scope.proceedWithBip38 = proceed;
     };
