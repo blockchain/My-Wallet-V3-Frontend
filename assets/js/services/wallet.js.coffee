@@ -759,7 +759,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       when "accounts"
         if wallet.my.wallet.isUpgradedToHD then wallet.my.wallet.hdwallet.balanceActiveAccounts else null
       when "imported"
-        wallet.my.wallet.balanceActiveLegacy
+        wallet.my.wallet.balanceSpendableActiveLegacy
       when undefined
         wallet.total('accounts') + wallet.total('imported')
       else
@@ -1179,7 +1179,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.getTotalBalanceForActiveLegacyAddresses = () ->
     return unless wallet.my.wallet?
-    return wallet.my.wallet.balanceActiveLegacy
+    return wallet.my.wallet.balanceSpendableActiveLegacy
 
   wallet.setDefaultAccount = (account) ->
     wallet.my.wallet.hdwallet.defaultAccountIndex = account.index
