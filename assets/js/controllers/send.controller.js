@@ -47,7 +47,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
     type: accounts ? '!External' : 'Imported'
   });
 
-  $scope.filterDestinations = (destinationsIdx, showAccounts, query) => {
+  $scope.filterDestinations = (destinationsIdx, query) => {
     return $scope.destinations[destinationsIdx].filter(dest => {
       if (dest.type == "External" && dest.address == "") {
         return false;
@@ -62,7 +62,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
       if (!!dest.label && dest.label != "" && !dest.label.toLowerCase().includes(query.toLowerCase())) {
         return false;
       }
-      return showAccounts || dest.type !== 'Accounts';
+      return true;
     });
   };
 
@@ -424,12 +424,8 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
 
   $scope.setPaymentTo = () => {
     let destinations = $scope.transaction.destinations;
-    if (!destinations.every(d => d != null)) return;
-    if (destinations[0].index != null) {
-      destinations = destinations[0].index;
-    } else {
-      destinations = destinations.map(d => d.address);
-    }
+    if (destinations.some(d => d == null)) return;
+    destinations = destinations.map(d => d.index || d.address);
     $scope.payment.to(destinations);
     $scope.buildTx();
   };
@@ -456,9 +452,6 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
   $scope.advancedSend = () => {
     $scope.advanced = true;
     $scope.transaction.customFee = $scope.transaction.fee;
-    if ($scope.transaction.destinations[0] && $scope.transaction.destinations[0].index != null) {
-      $scope.transaction.destinations[0] = null;
-    }
     $scope.setPaymentFee();
   };
 
