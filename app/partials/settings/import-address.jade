@@ -33,7 +33,8 @@
           ng-change="importForm.bipPassphrase.$setValidity('wrong', true)"
         )
         div(ng-show="importForm.bipPassphrase.$dirty")
-          span.help-block(translate="INCORRECT_PASSWORD" ng-show="importForm.bipPassphrase.$error.wrong")
+          span.help-block(translate="INCORRECT_PASSWORD" ng-show="importForm.bipPassphrase.$error.wrong")        
+      p(ng-show="BIP38 && status.busy", translate="TAKES_A_WHILE")
       .pal.flex-center.flex-column(ng-hide="!status.cameraIsOn")
         label(translate="SCAN_QR_CODE")
         bc-qr-reader(active="cameraRequested" on-result="processURLfromQR" on-error="onError" camera-status="status.cameraIsOn")

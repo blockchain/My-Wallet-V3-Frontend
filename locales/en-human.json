@@ -573,5 +573,6 @@
   "YOUR_REC_PASS": "Your Recovery Passphrase",
   "YOUR_REC_PASS_EXPLAIN": "Enter your 12 recovery words with spaces to recover your funds & transactions",
   "RESTORE_SUCCESSFUL": "Restore Successful",
-  "REDIRECTING": "We're redirecting you to your wallet now!"
+  "REDIRECTING": "We're redirecting you to your wallet now!",
+  "TAKES_A_WHILE": "This may take a while. If your browser asks if you want to cancel the script, please press continue."
 }
