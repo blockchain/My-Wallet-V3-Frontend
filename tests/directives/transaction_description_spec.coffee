@@ -30,7 +30,7 @@ describe "Transaction Description Directive", ->
             intraWallet: null,
             txTime: 1441400781,
             from: {account: {index: 0, amount: 300000000}, legacyAddresses: null, externalAddresses: null},
-            to: {account: {index: 1, amount: 300000000}, legacyAddresses: null, externalAddresses: null}
+            to: {accounts: [{index: 1, amount: 300000000}], legacyAddresses: null, externalAddresses: null}
           }
 
     return
@@ -69,7 +69,7 @@ describe "Transaction Description Directive", ->
     expect(isoScope.other_address).toBe("Spending")
 
   it "should recognize sending from imported address", ->
-    isoScope.transaction.to.account = null
+    isoScope.transaction.to.accounts = []
     isoScope.transaction.from.account = null
     isoScope.transaction.from.legacyAddresses = {addressWithLargestOutput: "some_legacy_address", amount: 100000000}
     isoScope.transaction.to.externalAddresses = [{address: "1abcd", amount: 100000000}]
@@ -82,7 +82,7 @@ describe "Transaction Description Directive", ->
     expect(element.html()).toContain 'translate="SENT"'
 
   it "should recognize receiving to imported address", ->
-   isoScope.transaction.to.account = null
+   isoScope.transaction.to.accounts = []
    isoScope.transaction.from.account = null
    isoScope.transaction.to.legacyAddresses = {addressWithLargestOutput: "some_legacy_address", amount: 100000000}
    isoScope.transaction.from.externalAddresses = {addressWithLargestOutput: "1abcd", amount: 100000000}
@@ -97,7 +97,7 @@ describe "Transaction Description Directive", ->
 
   describe "send to email", ->
     beforeEach ->
-      isoScope.transaction.to.account = null
+      isoScope.transaction.to.accounts = []
       isoScope.transaction.to.email = {"email":"somebody@blockchain.com"}
       isoScope.result = -100000000
 

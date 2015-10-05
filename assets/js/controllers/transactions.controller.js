@@ -107,12 +107,15 @@ function TransactionsCtrl($scope, Wallet, MyWallet, $log, $stateParams, $timeout
 
   $scope.filterByLocation = item => {
     if ($stateParams.accountIndex === "accounts") {
-      return (item.to.account != null) || (item.from.account != null);
+      return (item.to.accounts.length > 0) || (item.from.account != null);
     }
     if ($stateParams.accountIndex === "imported") {
       return (item.to.legacyAddresses && item.to.legacyAddresses.length) || (item.from.legacyAddresses && item.from.legacyAddresses.length);
     }
-    return ((item.to.account != null) && item.to.account.index === parseInt($stateParams.accountIndex)) || ((item.from.account != null) && item.from.account.index === parseInt($stateParams.accountIndex));
+    return (
+      (item.to.accounts.length > 0 && item.to.accounts.some((account) => account.index === parseInt($stateParams.accountIndex))) 
+      || ((item.from.account != null) && item.from.account.index === parseInt($stateParams.accountIndex))
+    );
   };
 
   $scope.$watch("status.didLoadTransactions", newValue => {

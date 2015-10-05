@@ -41,47 +41,45 @@ function TransactionCtrl($scope, Wallet, $log, $stateParams, $filter, $cookieSto
         }
 
         $scope.destinations = [];
-        if (tx.to.account != null) {
-          let accountLabel = $scope.accounts()[tx.to.account.index].label;
-          return $scope.destinations.push({
-            'address': accountLabel,
-            'amount': ''
-          });
-        } else {
 
-          const convert = (y) => (' [' + $filter('btc')(y) + ']');
-          const label = (a) => {
-            let address = $filter('getByProperty')('address', a, Wallet.legacyAddresses());
-            if ((address.label != null) && address.label !== address.address) {
-              return address.label;
-            } else {
-              return address.address;
-            }
-          };
-          const adBook = (a) => {
-            let name = Wallet.getAddressBookLabel(a);
-            return name ? name : a;
-          };
-          const makeLegacyRow = (a) => ({
-            'address': label(a.address),
-            'amount': convert(a.amount),
-            'you': '(you) '
-          });
-          const makeExternalRow = (a) => ({
-            'address': adBook(a.address),
-            'amount': convert(a.amount),
-            'you': ''
-          });
+        const convert = (y) => (' [' + $filter('btc')(y) + ']');
 
-          let l = tx.to.legacyAddresses || [];
-          let e = tx.to.externalAddresses || [];
-
-          $scope.destinations = l.map(makeLegacyRow).concat(e.map(makeExternalRow));
-
-          if ($scope.destinations.length === 1) {
-            $scope.destinations[0].amount = '';
+        const label = (a) => {
+          let address = $filter('getByProperty')('address', a, Wallet.legacyAddresses());
+          if ((address.label != null) && address.label !== address.address) {
+            return address.label;
+          } else {
+            return address.address;
           }
+        };
+        const adBook = (a) => {
+          let name = Wallet.getAddressBookLabel(a);
+          return name ? name : a;
+        };
+        const makeAccountRow = (a) => ({
+          'address': $scope.accounts()[a.index].label,
+          'amount': convert(a.amount),
+          'you': '(you) '
+        });
+        const makeLegacyRow = (a) => ({
+          'address': label(a.address),
+          'amount': convert(a.amount),
+          'you': '(you) '
+        });
+        const makeExternalRow = (a) => ({
+          'address': adBook(a.address),
+          'amount': convert(a.amount),
+          'you': ''
+        });
 
+        let a = tx.to.accounts;
+        let l = tx.to.legacyAddresses || [];
+        let e = tx.to.externalAddresses || [];
+
+        $scope.destinations = a.map(makeAccountRow).concat(l.map(makeLegacyRow)).concat(e.map(makeExternalRow));
+
+        if ($scope.destinations.length === 1) {
+          $scope.destinations[0].amount = '';
         }
       }
     });

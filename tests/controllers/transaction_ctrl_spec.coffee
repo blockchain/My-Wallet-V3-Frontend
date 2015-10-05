@@ -8,19 +8,19 @@ describe "TransactionCtrl", ->
       Wallet = $injector.get("Wallet")
 
       Wallet.accounts = () -> [{balance: 0, label: "Savings", index: 0}]
-      
+
       Wallet.legacyAddresses = () ->
         [
-          {address: "some_legacy_address", label: "Old"}, 
+          {address: "some_legacy_address", label: "Old"},
           {address: "some_legacy_address_without_label", label: null}
         ]
-      
+
       Wallet.transactions = [{
-        hash: "aaaa", 
+        hash: "aaaa",
         from: {account: null, externalAddresses: {addressWithLargestOutput: "1D2YzLr5qvrwMSm8onYbns5BLJ9jwzPHcQ"}}
-        to: {account: null}
+        to: {accounts: []}
       }]
-      
+
       spyOn(Wallet, "getAddressBookLabel").and.returnValue(null)
 
       scope = $rootScope.$new()
@@ -63,7 +63,7 @@ describe "TransactionCtrl", ->
           legacyAddresses: [{address: "some_legacy_address"}]
 
         to:
-          account: null
+          accounts: []
           legacyAddresses: []
           external:
             addressWithLargestOutput: "abc"
@@ -81,7 +81,7 @@ describe "TransactionCtrl", ->
           legacyAddresses: [{address: "some_legacy_address_without_label"}]
 
         to:
-          account: null
+          accounts: []
           legacyAddresses: []
           external:
             addressWithLargestOutput: "abc"
@@ -98,7 +98,7 @@ describe "TransactionCtrl", ->
             index: 0
           legacyAddresses: []
         to:
-          account: null
+          accounts: []
           legacyAddresses: []
           external:
             addressWithLargestOutput: "abc"
@@ -118,7 +118,7 @@ describe "TransactionCtrl", ->
           external:
             addressWithLargestOutput: "abc"
         to:
-          account: null
+          accounts: []
           legacyAddresses: [{address: "some_legacy_address"}]
 
       scope.$digest()
@@ -134,7 +134,7 @@ describe "TransactionCtrl", ->
           external:
             addressWithLargestOutput: "abc"
         to:
-          account: null
+          accounts: []
           legacyAddresses: [{address: "some_legacy_address_without_label"}]
 
 
@@ -151,7 +151,7 @@ describe "TransactionCtrl", ->
           external:
             addressWithLargestOutput: "abc"
         to:
-          account: null
+          accounts: []
           externalAddresses: [
             {address: "external address 1", amount: 50000},
             {address: "external address 2", amount: 70000}
@@ -171,8 +171,12 @@ describe "TransactionCtrl", ->
           external:
             addressWithLargestOutput: "abc"
         to:
-          account:
-            index: 0
+          accounts:[
+            {
+              index: 0
+              label: "Primary"
+            }
+          ]
           legacyAddresses: []
 
       scope.$digest()

@@ -33,8 +33,8 @@ angular.module('walletApp').directive('transactionDescription', ($translate, $ro
 
       if scope.transaction.intraWallet
         scope.action = "MOVED_BITCOIN_TO"
-        if scope.transaction.to.account?
-          scope.address = Wallet.accounts()[parseInt(scope.transaction.to.account.index)].label
+        if scope.transaction.to.accounts.length > 0
+          scope.address = scope.transaction.to.accounts.map((account) => Wallet.accounts()[account.index].label).join(", ")
         else
           if to_name = Wallet.getAddressBookLabel(to_address)
             scope.address = to_name
@@ -66,8 +66,8 @@ angular.module('walletApp').directive('transactionDescription', ($translate, $ro
         else
           scope.other_address = from_address
       else
-        if scope.transaction.to.account?
-          scope.other_address = Wallet.accounts()[parseInt(scope.transaction.to.account.index)].label
+        if scope.transaction.to.accounts.length > 0
+          scope.other_address = Wallet.accounts()[parseInt(scope.transaction.to.accounts[0].index)].label
         else
           scope.other_address = to_address
 
