@@ -54,3 +54,13 @@ describe "Transform-Currency Directive", ->
       scope.$digest()
       expect(scope.amount).toEqual(200)
       expect(element.val()).toEqual('0.2')
+
+    it "should leave null alone", ->
+      scope.amount = null
+      scope.$digest()
+      expect(element.val()).toEqual('')
+
+    it "should leave empty alone", ->
+      scope.amount = ""
+      scope.$digest()
+      expect(element.val()).toEqual('')

@@ -13,7 +13,7 @@ function RequestCtrl($scope, Wallet, $modalInstance, $log, destination, $transla
 
   $scope.fields = {
     to: null,
-    amount: 0,
+    amount: null,
     label: ""
   };
 

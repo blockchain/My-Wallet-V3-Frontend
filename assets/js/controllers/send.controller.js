@@ -3,6 +3,7 @@ angular
   .controller("SendCtrl", SendCtrl);
 
 function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $modal) {
+
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.accounts = Wallet.accounts;
   $scope.addressBook = Wallet.addressBook;
@@ -29,7 +30,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
   $scope.transactionTemplate = {
     from: null,
     destinations: [null],
-    amounts: [0],
+    amounts: [null],
     fee: Wallet.settings.feePerKB,
     customFee: null,
     note: "",
@@ -80,7 +81,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
       type: "External"
     };
     $scope.refreshDestinations(paymentRequest.address, i);
-    $scope.transaction.amounts[i] = paymentRequest.amount || 0;
+    $scope.transaction.amounts[i] = paymentRequest.amount;
     $scope.transaction.note = paymentRequest.message || '';
     $scope.validateAmounts();
     $scope.updateToLabel();
@@ -139,7 +140,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
   $scope.addDestination = () => {
     let originalDestinations = angular.copy($scope.destinations[0]);
     $scope.destinations.push(originalDestinations);
-    $scope.transaction.amounts.push(0);
+    $scope.transaction.amounts.push(null);
     $scope.transaction.destinations.push(null);
   };
 
@@ -409,6 +410,8 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
                 $scope.sendForm.$dirty &&
                 $scope.amountIsValid;
     if (valid) {
+      console.log("Build tx")
+
       $scope.payment.build()
         .sideEffect($scope.handleTxUpdate);
     }
