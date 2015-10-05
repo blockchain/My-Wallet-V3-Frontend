@@ -59,6 +59,12 @@ angular.module('walletApp').directive('configureMobileNumber', ($translate, Wall
         Wallet.changeMobile(mobile, success, error)
 
       scope.validateMobileNumber = () ->
+        if scope.fields.newMobile? && Wallet.user.internationalMobileNumber?
+          oldDigits = Wallet.user.internationalMobileNumber.replace(/[+ -]/g,"")
+          newDigits = scope.fields.newMobile.replace(/[+ -]/g,"")
+
+          return false if oldDigits == newDigits
+
         return intlTelInputUtils.isValidNumber("+" + scope.fields.newMobile)
 
   }
