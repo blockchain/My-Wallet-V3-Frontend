@@ -33,12 +33,6 @@ describe "walletServices", () ->
 
       Wallet.my.getHistoryAndParseMultiAddressJSON = () ->
 
-      Wallet.api.get_ticker = (success, fail) ->
-        success({
-          EUR: {"last": 250, symbol: "€"}
-          USD: {"last": 300, symbol: "$"}
-        })
-
       Wallet.settings_api.get_account_info = (success, error) ->
         success({
           email: "steve@me.com"

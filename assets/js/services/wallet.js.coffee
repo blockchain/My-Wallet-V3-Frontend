@@ -546,7 +546,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     else
       # The currency argument in the API is case sensitive.
       # Time argument in milliseconds
-      wallet.api.getFiatAtTime(time * 1000, amount, currency.toLowerCase(), success, error)
+      wallet.api.getFiatAtTime(time * 1000, amount, currency.toLowerCase()).then(success).catch(error)
 
     return defer.promise
 
@@ -981,7 +981,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         console.log("Failed to load ticker:")
         console.log(error)
 
-      wallet.api.get_ticker(success, fail)
+      wallet.api.getTicker().then(success).catch(fail)
 
   wallet.getActivityLogs = (success) ->
     wallet.settings_api.getActivityLogs success, () ->

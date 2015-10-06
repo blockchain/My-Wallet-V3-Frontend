@@ -3,5 +3,5 @@ angular
   .factory('MyBlockchainApi', MyBlockchainApi);
 
 function MyBlockchainApi() {
-  return Blockchain.BlockchainAPI;
+  return Blockchain.API;
 }
