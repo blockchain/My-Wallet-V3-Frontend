@@ -5,13 +5,13 @@ describe "Change Mobile Number Directive", ->
   isoScope = undefined
 
   beforeEach module("walletApp")
-  
+
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
 
     $compile = _$compile_
     $rootScope = _$rootScope_
 
-    Wallet.user = {mobile: {number: "12345678"}}
+    Wallet.user = {mobile: {number: "12345678", country: "31"}}
 
     return
   )
@@ -47,6 +47,16 @@ describe "Change Mobile Number Directive", ->
 
   it "should validate proposed number", ->
     isoScope.fields.newMobile = "31"
+    expect(isoScope.validateMobileNumber()).toBe(false)
+    return
+
+  it "should validate proposed number", ->
+    isoScope.fields.newMobile = "31 8888 8888"
+    expect(isoScope.validateMobileNumber()).toBe(true)
+    return
+
+  it "should not allow reusing the previous number", ->
+    isoScope.fields.newMobile = "31 1234 5678"
     expect(isoScope.validateMobileNumber()).toBe(false)
     return
 
