@@ -53,6 +53,7 @@ angular.module('walletApp').directive('transformCurrency', (Wallet) ->
 
       # Model formatter
       scope.formatToView = (modelValue) ->
+        return null if modelValue == null || modelValue == ""
         fiat = Wallet.convertFromSatoshi(modelValue, scope.transformCurrency)
         factor = Math.pow(10, restrictions.decimals)
         formatted = (Math.floor(fiat * factor) / factor)
