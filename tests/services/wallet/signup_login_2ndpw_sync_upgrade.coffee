@@ -46,10 +46,11 @@ describe "walletServices", () ->
           my_ip: "123.456.789.012"
         })
 
-      Wallet.api.get_ticker = (success, fail) ->
-        success({
-        })
-
+      Wallet.api.getTicker = () ->
+        return {
+          then: (success) -> success({})
+          catch: (fail) -> fail("error")
+        }
       spyOn(Wallet,"monitor").and.callThrough()
 
       return
