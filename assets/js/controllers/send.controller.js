@@ -32,7 +32,6 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
     destinations: [null],
     amounts: [null],
     fee: Wallet.settings.feePerKB,
-    customFee: null,
     note: "",
     publicNote: false
   };
@@ -125,12 +124,13 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
   $scope.resetSendForm = () => {
     $scope.transaction = angular.copy($scope.transactionTemplate);
     $scope.transaction.from = Wallet.accounts()[Wallet.my.wallet.hdwallet.defaultAccountIndex];
-    $scope.transaction.customFee = Wallet.settings.feePerKB;
 
     // Remove error messages:
     $scope.validateAmounts();
     $scope.sendForm.$setPristine();
     $scope.sendForm.$setUntouched();
+
+    $scope.setPaymentFee();
 
     for (let i = 0; i < $scope.destinations.length; i++) {
       $scope.$broadcast('ResetSearch' + i);
@@ -278,7 +278,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
 
   $scope.getTransactionTotal = (includeFee) => {
     let tx = $scope.transaction;
-    let fee = includeFee ? (tx.customFee || tx.fee) : 0;
+    let fee = includeFee ? tx.fee : 0;
     return tx.amounts.reduce((previous, current) => {
       return (parseInt(previous) + parseInt(current)) || 0;
     }, parseInt(fee));
@@ -428,7 +428,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
   $scope.setPaymentTo = () => {
     let destinations = $scope.transaction.destinations;
     if (destinations.some(d => d == null)) return;
-    destinations = destinations.map(d => d.index || d.address);
+    destinations = destinations.map(d => d.type === 'Accounts' ? d.index : d.address);
     $scope.payment.to(destinations);
     $scope.buildTx();
   };
@@ -439,7 +439,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
   };
 
   $scope.setPaymentFee = () => {
-    let fee = ($scope.advanced) ? $scope.transaction.customFee : null;
+    let fee = ($scope.advanced) ? $scope.transaction.fee : null;
     $scope.payment.fee(fee);
     $scope.buildTx();
   };
@@ -454,12 +454,10 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
 
   $scope.advancedSend = () => {
     $scope.advanced = true;
-    $scope.transaction.customFee = $scope.transaction.fee;
     $scope.setPaymentFee();
   };
 
   $scope.regularSend = () => {
-    $scope.transaction.customFee = null;
     $scope.transaction.destinations.splice(1);
     $scope.transaction.amounts.splice(1);
     $scope.advanced = false;
