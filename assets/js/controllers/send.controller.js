@@ -428,7 +428,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
   $scope.setPaymentTo = () => {
     let destinations = $scope.transaction.destinations;
     if (destinations.some(d => d == null)) return;
-    destinations = destinations.map(d => d.index || d.address);
+    destinations = destinations.map(d => d.type === 'Accounts' ? d.index : d.address);
     $scope.payment.to(destinations);
     $scope.buildTx();
   };
