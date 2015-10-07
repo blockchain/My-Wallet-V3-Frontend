@@ -57,10 +57,16 @@ angular.module('walletApp').directive('bcAsyncInput', ($timeout, Wallet) ->
           scope.ngModel = scope.form.newValue # Otherwise cancel will undo this
           unless attrs.custom?
             scope.bcAsyncForm.$setPristine()
-          scope.status.saving = false
-          scope.status.edit = false
+
           scope.$root.$safeApply(scope)
           Wallet.saveActivity(2)
+
+          # Fixes issue: hit enter after changing PBKDF2 iterations when 2nd
+          # password is enabled.
+          scope.$evalAsync(()->
+            scope.status.saving = false
+            scope.status.edit = false
+          )
 
         error = () ->
           scope.status.saving = false
