@@ -26,7 +26,8 @@
     "browserdetection": "0.3.*",
     "bc-qr-reader": "0.2.*",
     "bootstrap-sass": "3.3.*",
-    "bootstrap": "~3.3.4"
+    "bootstrap": "~3.3.4",
+    "blockchain-wallet": "3.0.*"
   },
   "devDependencies": {
     "angular-local-storage": "~0.1.5"

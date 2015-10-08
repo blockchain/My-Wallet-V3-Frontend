@@ -82,7 +82,7 @@ module.exports = (grunt) ->
 
       application: # All components should first be minimized. Only trusted sources should be imported as minified..
         src: [
-          'assets/js/my-wallet/dist/my-wallet.min.js'
+          'bower_components/blockchain-wallet/dist/my-wallet.min.js'
           "build/bower_components/jquery/dist/jquery.js" # Duplicate; also included in my-wallet a.t.m. Minified version causes problems.
           'build/bower_components/angular/angular.min.js'
           'build/bower_components/angular-sanitize/angular-sanitize.min.js'
@@ -430,7 +430,7 @@ module.exports = (grunt) ->
 
       check_dependencies:
         command: () ->
-          'mkdir -p build && ruby assets/js/my-wallet/check-dependencies.rb'
+          'mkdir -p build && ruby ./check-dependencies.rb'
 
       skip_check_dependencies:
         command: () ->
