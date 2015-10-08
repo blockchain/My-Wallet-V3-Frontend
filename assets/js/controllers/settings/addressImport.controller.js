@@ -140,8 +140,7 @@ function AddressImportCtrl($scope, $log, Wallet, $modalInstance, $translate, $st
   };
 
   $scope.parseBitcoinUrl = (url) => {
-    url = url.split('bitcoin:');
-    return url[url.length - 1];
+    return url.replace('bitcoin:', '').replace(/\//g, '');
   };
 
   $scope.close = () => {

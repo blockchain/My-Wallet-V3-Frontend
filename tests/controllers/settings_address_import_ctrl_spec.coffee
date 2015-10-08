@@ -106,3 +106,13 @@ describe "AddressImportCtrl", ->
       expect(scope.status.sweeping).toBe(false)
 
     )
+  
+  describe "parseBitcoinUrl()", ->
+    it "should work with prefix", ->
+      expect(scope.parseBitcoinUrl("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")).toBe("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")
+      
+    it "should work without slashes", ->
+      expect(scope.parseBitcoinUrl("bitcoin:1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")).toBe("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")
+      
+    it "should work with slashes", ->
+      expect(scope.parseBitcoinUrl("bitcoin://1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")).toBe("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")
