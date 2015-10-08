@@ -2,7 +2,7 @@ __Blockchain HD Frontend__
 
 _Recent changes_
 
-#   (2015-10-01)
+#   (2015-10-08)
 
 
 
@@ -10,10 +10,19 @@ _Recent changes_
 
 ## Bug Fixes
 
-- **Address:** use current receive index for new address
+- **Accounts:** show default account
+  ([3b305a7d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/3b305a7d7a92e377da29c9f0220fbae79ddeec09))
+- **Address:**
+  - show back arrow on imported address page
+  ([94801fa4](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/94801fa4e40abe05f6fdf5d0832bf4612cb3ca05))
+  - no longer allow sweep imported address to archived account
+  ([e72a2772](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/e72a2772f31cc6f825ee9e47e8890d273925f75f))
+  - use current receive index for new address
   ([26eac016](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/26eac0162ae5cd2dbbf3d5c13d21efa9c8cd867d))
 - **Addresses:** show either fiat or btc but not both in Address view
   ([39fc0f80](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/39fc0f80515099dab98028d832cde85c21176777))
+- **BIP38:** warn user that this may take a while
+  ([54c70aac](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/54c70aac11289442d4c3ad91d0b45c1d35b7bdd2))
 - **CSP:**
   - switch to ui-select fork to avoid unsafe-inline
   ([b366db87](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/b366db8709559e7cb5950a6d20b002d3dc841f52))
@@ -25,8 +34,13 @@ _Recent changes_
   ([7f213b20](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/7f213b201cbddbb54b31658923f342e532270bba))
 - **IE:** take out overflow hidden from body, use normal doc flow to layout stuff
   ([d8d9b4f3](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/d8d9b4f34dc892dff91650abfdbc099f21bc6432))
-- **Import:** only ask 2nd password once for BIP38
+- **Import:**
+  - QR scan didn't work
+  ([f3a3305f](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f3a3305fbec0b63f1a4be73455ea1fc83d8d5b0e))
+  - only ask 2nd password once for BIP38
   ([404958b5](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/404958b546e035ceb17aa76e409f4dec5351f308))
+- **PBKDF2:** close field after entering 2nd pwd
+  ([931450fb](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/931450fb5bb7b8ffe2b2224ca77ba3123f109da1))
 - **Receive:** redeem from email/sms
   ([dd8857d7](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/dd8857d76bb5c709f392a674913ad0663adcee39))
 - **Send:**
@@ -38,8 +52,14 @@ _Recent changes_
   ([2a5f6eff](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/2a5f6effad125527a6f8531d646408ab11db8ac1))
   - pasted watch only address sticks
   ([017735b5](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/017735b5a059c665ee893185641363daa4ea13e4))
+- **Send/Receive:** show placeholder 0
+  ([25bec560](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/25bec56049212134e97286998c5fa92afafbc7d0))
+- **Settings:** check that mobile number actually changed
+  ([30d72c9a](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/30d72c9ae5c2beff25ebac84b08d49bddec2474b))
 - **Transaction:** Don't show historical value for the first hour to prevent confusion.
   ([2fe2e0b9](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/2fe2e0b92081bdfe3c76ee14311b799e1282d6ff))
+- **Transactions:** support displaying txs with multiple to accounts
+  ([b9cfd11c](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/b9cfd11cd23bf4e84c248cae3080870228b11e17))
 - **UI:**
   - don't wrap on login button, hide hand icon on small devices
   ([c46f62eb](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/c46f62ebe739db80dd45c79fb70d6964ecf22637))
@@ -76,7 +96,10 @@ _Recent changes_
   ([e48a1dd6](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/e48a1dd68ad10edbd7e57d89dd4d1cccc539be6d))
   - prevent user from generating HD address after upgrade before sync is complete
   ([86e8cd8c](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/86e8cd8c17ecfd05d28bfe0f19f9d507ad984587))
-- **admin:** show results of activating in modal
+- **admin:**
+  - add scroll class to admin html element
+  ([d3ae1333](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/d3ae13331cc24f6d4ae05b50d7c3643aa5d56130))
+  - show results of activating in modal
   ([d81ebb1d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/d81ebb1d3cc2309fcea44eba479f345ffc3db8b8))
 - **alerts:**
   - specify alert clearing context in second password modal
@@ -127,6 +150,8 @@ _Recent changes_
 - **secondPasswordCtrl:** Change second password cancel message
   ([768c2c92](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/768c2c92f34cc7d8fb7a7e8738ce4efc8762c32e))
 - **send:**
+  - map destinations properly
+  ([7e45432f](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/7e45432f545250db882eb61993250408ef32091a))
   - only buildTx when necessary, check for build errors when going to confirmation step
   ([784f7caa](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/784f7caa9dfaab882bd1f34b9e82ac03fc592a9a))
   - set private note correctly
@@ -204,6 +229,8 @@ _Recent changes_
   ([4693eee7](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/4693eee7f74d89118d3b02cae34a32bf16aea612))
 - **security-center:** set default score > 0 for new wallet creation
   ([a4cc21d9](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/a4cc21d9d61311a83ede809f093e5a60c5731372))
+- **send:** allow sending to multiple accounts
+  ([289d2ad2](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/289d2ad24d729d99adee6f24fdf8326589966504))
 - **signup:** remove email verification step
   ([32df37c9](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/32df37c9f6fa7b115beba0489f6fa7dd2db8e058))
 - **walletRecovery:** add styles, ux, & references to new files
@@ -220,6 +247,7 @@ _Recent changes_
 - **Charts:** remove references of angular-charts and its dependencies
 - **DidYouKnow:** move tests to pending until better translateFilter is created to test directive
 - **Performance:** remove unused Bootstrap CSS modules
+- **QR:** bump QR reader version
 - **SecondPassword:** add bc-modal css class to center modal
 - **TopCtrl:** simplified reference to Wallet.total
 - **UI:**
@@ -246,6 +274,7 @@ _Recent changes_
   - remove coffee controllers from files
 - **layout:** use a more conventional positioning method
 - **performance:** one-way data bind when we can
+- **send:** remove tx.customFee, only use tx.fee
 - **sendCtrl:** implement payment.js module
 - **signin:** move out of modals for sign up, get rid of registration ctrl & test
 - **signup:**
@@ -262,11 +291,16 @@ _Recent changes_
 
 - delete unused jade file
 - **CSP:** provide script hash for browser detection
-- **README:** change HD references to V3
+- **README:**
+  - clarify that this is not the same wallet as blockchain.info
+  - change HD references to V3
 - **Travis:** fix NodeJS version at 0.12
+- **Whitelist:** update angular-ui-router
 - **accounts.controller:** rename controller
 - **addressCtrl:** rename to address.controller
-- **app:** use correct reference to Spender
+- **app:**
+  - remove walletApp global variable
+  - use correct reference to Spender
 - **app.module:** remove nonsense function
 - **changelog:**
   - add to grunt dist task
@@ -319,6 +353,7 @@ _Recent changes_
 - **header:** make dropdown explicitly have a background color
 - **home:** remove unnecessary code
 - **homeCtrl:** make es6 code more concise
+- **mocks:** BlockchainApi service mock
 - **readme:** remove Spender part of README
 - **sendCtrl:** Remove unused scope functions
 - **spender:** remove MyWalletSpender from frontend
