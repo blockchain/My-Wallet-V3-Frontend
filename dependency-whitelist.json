@@ -1,5 +1,5 @@
 {
-  "ignore" : ["grunt", "jasmine-core", "jquery", "istanbul", "esprima", "typeforce", "angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize", "bootstrap-sass", "bootstrap", "bc-qr-reader", "angular-ui-select", "d3", "angular-charts"],
+  "ignore" : ["grunt", "jasmine-core", "jquery", "istanbul", "esprima", "typeforce", "angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize", "bootstrap-sass", "bootstrap", "bc-qr-reader", "angular-ui-select", "d3", "angular-charts", "blockchain-wallet"],
   "angular-ui-router" : {
     "version": "0.2.15",
     "commits" : ["805e69bae319e922e4d3265b7ef565058aaff850"],
