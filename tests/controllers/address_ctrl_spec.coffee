@@ -2,9 +2,6 @@ describe "AddressCtrl", ->
   scope = undefined
   Wallet = undefined
 
-  modal =
-    open: ->
-
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
@@ -28,7 +25,6 @@ describe "AddressCtrl", ->
       $controller "AddressCtrl",
         $scope: scope,
         $stateParams: {address: "some_legacy_address"}
-        $modal: modal
 
     scope.$digest()
 

@@ -2,9 +2,6 @@ describe "SettingsAddressesCtrl", ->
   scope = undefined
   Wallet = undefined
   
-  modal =
-    open: ->
-  
   beforeEach angular.mock.module("walletApp")
   
   beforeEach ->
@@ -31,7 +28,6 @@ describe "SettingsAddressesCtrl", ->
       $controller "SettingsAddressesCtrl",
         $scope: scope,
         $stateParams: {}
-        $modal: modal
         Wallet: Wallet
       
       return
@@ -75,9 +71,9 @@ describe "SettingsAddressesCtrl", ->
     
   describe "importAddress()", ->
     it "should open a modal",  inject(($modal) ->
-      spyOn(modal, "open")
+      spyOn($modal, "open")
       scope.importAddress()
-      expect(modal.open).toHaveBeenCalled()
+      expect($modal.open).toHaveBeenCalled()
     )
 
   describe "toggling import addresses", ->
@@ -94,3 +90,11 @@ describe "SettingsAddressesCtrl", ->
       scope.toggleDisplayArchived()
       expect(scope.toggleDisplayArchived).toHaveBeenCalled()
       expect(scope.display.archived).toBe(true)
+      
+
+  describe "signMessage()", ->
+    it "should open a modal",  inject(($modal) ->
+      spyOn($modal, "open")
+      scope.signMessage()
+      expect($modal.open).toHaveBeenCalled()
+    )

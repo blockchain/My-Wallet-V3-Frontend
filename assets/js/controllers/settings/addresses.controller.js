@@ -85,6 +85,18 @@ function SettingsAddressesCtrl($scope, Wallet, $translate, $modal, $state, addre
     }
   };
 
+  $scope.signMessage = () => {
+    Wallet.clearAlerts();
+
+    $modal.open({
+      templateUrl: "partials/signMessage.jade",
+      controller: "SignMessageCtrl",
+      windowClass: "blockchain-modal"
+    });
+
+  }
+
+
   $scope.showPrivKey = (address) => {
     let modalInstance = $modal.open({
       templateUrl: "partials/settings/show-private-key.jade",

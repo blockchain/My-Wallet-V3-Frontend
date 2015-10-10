@@ -574,5 +574,10 @@
   "YOUR_REC_PASS_EXPLAIN": "Enter your 12 recovery words with spaces to recover your funds & transactions",
   "RESTORE_SUCCESSFUL": "Restore Successful",
   "REDIRECTING": "We're redirecting you to your wallet now!",
-  "TAKES_A_WHILE": "This may take a while. If your browser asks if you want to cancel the script, please press continue."
+  "TAKES_A_WHILE": "This may take a while. If your browser asks if you want to cancel the script, please press continue.",
+  "SIGN_MESSAGE"  : "Sign a message",
+  "SIGN_MESSAGE_EXPLAIN_LINK"  : "to prove you own an address",
+  "SIGN_MESSAGE_EXPLAIN"  : "By signing a message, you can prove that you own this address.",
+  "MESSAGE" : "Message",
+  "SIGNED_MESSAGE" : "Signed message"
 }

@@ -38,6 +38,12 @@ p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archive
   a.button-default(ng-click="importAddress()", translate="IMPORT_ADDRESS")
 
 .row(ng-show="display.imported")
+   .col-xs-12
+     p
+       a(TRANSLATE="SIGN_MESSAGE", ng-click="signMessage()")
+       span  
+       span(TRANSLATE="SIGN_MESSAGE_EXPLAIN_LINK")
+.row(ng-show="display.imported")
   .col-xs-12.table-container
     table.responsive.width-100
       tr

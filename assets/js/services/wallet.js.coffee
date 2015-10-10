@@ -337,6 +337,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     # Refresh list of hd addresses:
     wallet.hdAddresses(true)
 
+  wallet.signMessage = (address, message, successCallback) ->
+    successCallback(wallet.my.wallet.signMessage(address.address, message))
+
   wallet.fetchMoreTransactions = (where, successCallback, errorCallback, allTransactionsLoadedCallback) ->
     success = (res) ->
       wallet.appendTransactions(res)
