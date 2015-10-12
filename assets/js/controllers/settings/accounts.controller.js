@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SettingsAccountsController", SettingsAccountsController);
 
-function SettingsAccountsController($scope, Wallet, $modal, filterFilter) {
+function SettingsAccountsController($scope, Wallet, $uibModal, filterFilter) {
   $scope.accounts = Wallet.accounts;
   $scope.display = {
     archived: false
@@ -14,7 +14,7 @@ function SettingsAccountsController($scope, Wallet, $modal, filterFilter) {
 
   $scope.newAccount = () => {
     Wallet.clearAlerts();
-    let modalInstance = $modal.open({
+    let modalInstance = $uibModal.open({
       templateUrl: "partials/account-form.jade",
       controller: "AccountFormCtrl",
       resolve: {
@@ -31,7 +31,7 @@ function SettingsAccountsController($scope, Wallet, $modal, filterFilter) {
 
   $scope.editAccount = (account) => {
     Wallet.clearAlerts();
-    let modalInstance = $modal.open({
+    let modalInstance = $uibModal.open({
       templateUrl: "partials/account-form.jade",
       controller: "AccountFormCtrl",
       resolve: {
@@ -47,7 +47,7 @@ function SettingsAccountsController($scope, Wallet, $modal, filterFilter) {
   };
 
   $scope.showAddress = (account) => {
-    let modalInstance = $modal.open({
+    let modalInstance = $uibModal.open({
       templateUrl: "partials/request.jade",
       controller: "RequestCtrl",
       resolve: {
@@ -63,7 +63,7 @@ function SettingsAccountsController($scope, Wallet, $modal, filterFilter) {
   };
 
   $scope.revealXpub = (account) => {
-    let modalInstance = $modal.open({
+    let modalInstance = $uibModal.open({
       templateUrl: "partials/reveal-xpub.jade",
       controller: "RevealXpubCtrl",
       resolve: {
@@ -84,7 +84,7 @@ function SettingsAccountsController($scope, Wallet, $modal, filterFilter) {
   };
 
   $scope.transfer = () => {
-    let modalInstance = $modal.open({
+    let modalInstance = $uibModal.open({
       templateUrl: "partials/send.jade",
       controller: "SendCtrl",
       resolve: {

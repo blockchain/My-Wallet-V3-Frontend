@@ -17,7 +17,7 @@ describe "SettingsAccountsController", ->
       $controller "SettingsAccountsController",
         $scope: scope,
         $stateParams: {}
-        $modal: modal
+        $uibModal: modal
 
       return
 

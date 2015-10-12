@@ -24,7 +24,7 @@ describe "WalletNavigationCtrl", ->
       $controller "WalletNavigationCtrl",
         $scope: scope,
         $stateParams: {}
-        $modal: modal
+        $uibModal: modal
 
       return
 

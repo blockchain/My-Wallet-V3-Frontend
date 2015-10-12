@@ -18,7 +18,7 @@ describe "LoginCtrl", ->
      $controller "LoginCtrl",
        $scope: scope,
        $stateParams: {}
-       $modal: modal
+       $uibModal: modal
   
      return
 

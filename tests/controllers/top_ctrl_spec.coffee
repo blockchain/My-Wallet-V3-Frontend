@@ -17,7 +17,7 @@ describe "TopCtrl", ->
       $controller "TopCtrl",
         $scope: scope,
         $stateParams: {},
-        $modal: modal
+        $uibModal: modal
 
       return
 

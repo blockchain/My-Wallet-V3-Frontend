@@ -36,7 +36,7 @@ angular.module('walletApp', modules)
   $numeraljsConfigProvider.setFormat('btc', '0,0.00 BTC');
   uiSelectConfig.theme = 'bootstrap';
 })
-.run(($rootScope, $modal) => {
+.run(($rootScope, $uibModal) => {
 
   $rootScope.$safeApply = (scope=$rootScope, before) => {
     before = before;
@@ -44,7 +44,7 @@ angular.module('walletApp', modules)
   };
 
   $rootScope.$on('showNotification', (_, notification) => {
-    $modal.open({
+    $uibModal.open({
       templateUrl: 'partials/modal-notification.jade',
       controller: 'ModalNotificationCtrl',
       windowClass: 'notification-modal',

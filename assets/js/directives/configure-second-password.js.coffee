@@ -1,4 +1,4 @@
-angular.module('walletApp').directive('configureSecondPassword', ($translate, Wallet, $modal) ->
+angular.module('walletApp').directive('configureSecondPassword', ($translate, Wallet, $uibModal) ->
   {
     restrict: "E"
     replace: 'true'
@@ -23,7 +23,7 @@ angular.module('walletApp').directive('configureSecondPassword', ($translate, Wa
         Wallet.removeSecondPassword(success, error)
 
       scope.setSecondPassword = () ->
-        modalInstance = $modal.open(
+        modalInstance = $uibModal.open(
           templateUrl: "partials/settings/set-second-password.jade"
           controller: "SetSecondPasswordCtrl"
           windowClass: "bc-modal"

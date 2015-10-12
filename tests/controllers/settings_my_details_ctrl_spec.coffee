@@ -28,7 +28,7 @@ describe "SettingsMyDetailsCtrl", ->
       $controller "SettingsMyDetailsCtrl",
         $scope: scope,
         $stateParams: {},
-        $modal: modal
+        $uibModal: modal
         
       scope.$digest()
       
@@ -64,7 +64,7 @@ describe "SettingsMyDetailsCtrl", ->
     return
     
   describe "password", ->   
-    it "can be changed through modal", inject(($modal) ->
+    it "can be changed through modal", inject(($uibModal) ->
       spyOn(modal, "open")
       scope.changePassword()
       expect(modal.open).toHaveBeenCalled()

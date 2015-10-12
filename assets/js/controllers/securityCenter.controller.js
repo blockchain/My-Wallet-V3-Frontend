@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SettingsSecurityCenterCtrl", SettingsSecurityCenterCtrl);
 
-function SettingsSecurityCenterCtrl($scope, Wallet, SecurityCenter, filterFilter, $modal) {
+function SettingsSecurityCenterCtrl($scope, Wallet, SecurityCenter, filterFilter, $uibModal) {
   $scope.security = SecurityCenter.security;
   $scope.settings = Wallet.settings;
   $scope.user = Wallet.user;
@@ -19,7 +19,7 @@ function SettingsSecurityCenterCtrl($scope, Wallet, SecurityCenter, filterFilter
   $scope.greaterThan = (prop, val) => item => item[prop] > val;
 
   $scope.transfer = address => {
-    $modal.open({
+    $uibModal.open({
       templateUrl: "partials/send.jade",
       controller: "SendCtrl",
       resolve: {
@@ -87,7 +87,7 @@ function SettingsSecurityCenterCtrl($scope, Wallet, SecurityCenter, filterFilter
   });
 
   $scope.changeTwoFactor = () => {
-    const modalInstance = $modal.open({
+    const modalInstance = $uibModal.open({
       templateUrl: "partials/settings/two-factor.jade",
       controller: "TwoFactorCtrl",
       windowClass: "bc-modal"

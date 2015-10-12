@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('WalletNavigationCtrl', WalletNavigationCtrl);
 
-function WalletNavigationCtrl($scope, Wallet, SecurityCenter, $state, $stateParams, $modal, filterFilter, $location) {
+function WalletNavigationCtrl($scope, Wallet, SecurityCenter, $state, $stateParams, $uibModal, filterFilter, $location) {
   $scope.status = Wallet.status;
   $scope.total = Wallet.total;
   $scope.settings = Wallet.settings;
@@ -39,7 +39,7 @@ function WalletNavigationCtrl($scope, Wallet, SecurityCenter, $state, $statePara
 
   $scope.newAccount = () => {
     Wallet.clearAlerts();
-    let modalInstance = $modal.open({
+    let modalInstance = $uibModal.open({
       templateUrl: 'partials/account-form.jade',
       controller: 'AccountFormCtrl',
       resolve: {
@@ -59,14 +59,14 @@ function WalletNavigationCtrl($scope, Wallet, SecurityCenter, $state, $statePara
   };
 
   $scope.termsOfService = () => {
-    let modalInstance = $modal.open({
+    let modalInstance = $uibModal.open({
       templateUrl: 'partials/terms-of-service.jade',
       windowClass: 'bc-modal terms-modal'
     });
   };
 
   $scope.privacyPolicy = () => {
-    let modalInstance = $modal.open({
+    let modalInstance = $uibModal.open({
       templateUrl: 'partials/privacy-policy.jade',
       windowClass: 'bc-modal terms-modal'
     });

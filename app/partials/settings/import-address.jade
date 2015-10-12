@@ -1,7 +1,7 @@
 .modal-header
   h3(translate="IMPORT_BITCOIN_ADDRESS")
 .modal-body
-  alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)")
+  uib-alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)")
     | {{alert.msg}}
   div(ng-show="step==1")
     form(role="form" name="importForm" novalidate)
