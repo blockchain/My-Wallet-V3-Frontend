@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SettingsAdvancedCtrl", SettingsAdvancedCtrl);
 
-function SettingsAdvancedCtrl($scope, Wallet, $modal, $translate) {
+function SettingsAdvancedCtrl($scope, Wallet, $uibModal, $translate) {
   $scope.settings = Wallet.settings;
   $scope.btc = Wallet.btcCurrencies[0];
   $scope.processToggleRememberTwoFactor = null;

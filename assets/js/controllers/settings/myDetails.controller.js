@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SettingsMyDetailsCtrl", SettingsMyDetailsCtrl);
 
-function SettingsMyDetailsCtrl($scope, Wallet, $modal, $filter, $translate) {
+function SettingsMyDetailsCtrl($scope, Wallet, $uibModal, $filter, $translate) {
   $scope.user = Wallet.user;
   $scope.settings = Wallet.settings;
 
@@ -38,7 +38,7 @@ function SettingsMyDetailsCtrl($scope, Wallet, $modal, $filter, $translate) {
   };
 
   $scope.changePassword = () => {
-    let modalInstance = $modal.open({
+    let modalInstance = $uibModal.open({
       templateUrl: "partials/settings/change-password.jade",
       controller: "ChangePasswordCtrl",
       windowClass: "bc-modal"
@@ -51,7 +51,7 @@ function SettingsMyDetailsCtrl($scope, Wallet, $modal, $filter, $translate) {
   };
 
   $scope.changeTwoFactor = () => {
-    let modalInstance = $modal.open({
+    let modalInstance = $uibModal.open({
       templateUrl: "partials/settings/two-factor.jade",
       controller: "TwoFactorCtrl",
       windowClass: "bc-modal"

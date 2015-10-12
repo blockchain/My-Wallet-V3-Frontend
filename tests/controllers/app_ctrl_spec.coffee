@@ -47,16 +47,16 @@ describe "AppCtrl", ->
 
   )
 
-  it "should open a popup to send",  inject(($modal) ->
-    spyOn($modal, "open")
+  it "should open a popup to send",  inject(($uibModal) ->
+    spyOn($uibModal, "open")
     scope.send()
-    expect($modal.open).toHaveBeenCalled()
+    expect($uibModal.open).toHaveBeenCalled()
   )
 
-  it "should open a popup to request",  inject(($modal) ->
-    spyOn($modal, "open")
+  it "should open a popup to request",  inject(($uibModal) ->
+    spyOn($uibModal, "open")
     scope.request()
-    expect($modal.open).toHaveBeenCalled()
+    expect($uibModal.open).toHaveBeenCalled()
   )
 
   describe "HD upgrade", ->
@@ -67,16 +67,16 @@ describe "AppCtrl", ->
       }
       spyOn(callbacks, "proceed")
 
-    it "should show modal if HD upgrade is needed", inject(($modal) ->
-      spyOn($modal, "open").and.callThrough()
+    it "should show modal if HD upgrade is needed", inject(($uibModal) ->
+      spyOn($uibModal, "open").and.callThrough()
       scope.$broadcast("needsUpgradeToHD", callbacks.proceed)
-      expect($modal.open).toHaveBeenCalled()
+      expect($uibModal.open).toHaveBeenCalled()
     )
 
   describe "redeem from email", ->
-    it "should proceed after login", inject((Wallet, $rootScope, $timeout, $modal) ->
+    it "should proceed after login", inject((Wallet, $rootScope, $timeout, $uibModal) ->
 
-      spyOn($modal, 'open').and.returnValue(mockModalInstance)
+      spyOn($uibModal, 'open').and.returnValue(mockModalInstance)
 
       # Fulfill necessary conditions befor goal can be checked
       Wallet.status.isLoggedIn = true
@@ -86,5 +86,5 @@ describe "AppCtrl", ->
       $rootScope.$digest()
       $timeout.flush() # Modal won't open otherwise
 
-      expect($modal.open).toHaveBeenCalled()
+      expect($uibModal.open).toHaveBeenCalled()
     )

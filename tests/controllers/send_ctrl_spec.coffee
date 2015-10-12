@@ -400,12 +400,12 @@ describe "SendCtrl", ->
           expect(Wallet.clearAlerts).toHaveBeenCalled()
         )
 
-        it "should show a confirmation modal", inject(($modal)->
-          spyOn($modal, "open").and.callThrough()
+        it "should show a confirmation modal", inject(($uibModal)->
+          spyOn($uibModal, "open").and.callThrough()
           scope.send()
           scope.$digest()
-          expect($modal.open).toHaveBeenCalled()
-          expect($modal.open.calls.argsFor(0)[0].windowClass).toEqual("notification-modal")
+          expect($uibModal.open).toHaveBeenCalled()
+          expect($uibModal.open.calls.argsFor(0)[0].windowClass).toEqual("notification-modal")
         )
 
         it "should show account transactions", inject(($state) ->

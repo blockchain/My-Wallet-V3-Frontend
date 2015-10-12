@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SignupCtrl", SignupCtrl);
 
-function SignupCtrl($scope, $rootScope, $log, Wallet, $modal, $translate, $cookieStore, $filter, $state, $http) {
+function SignupCtrl($scope, $rootScope, $log, Wallet, $uibModal, $translate, $cookieStore, $filter, $state, $http) {
   $scope.currentStep = 1;
   $scope.working = false;
   $scope.languages = Wallet.languages;
@@ -39,7 +39,7 @@ function SignupCtrl($scope, $rootScope, $log, Wallet, $modal, $translate, $cooki
   $scope.didLoad();
 
   $scope.showAgreement = () => {
-    const modalInstance = $modal.open({
+    const modalInstance = $uibModal.open({
       templateUrl: "partials/alpha-agreement.jade",
       controller: 'SignupCtrl',
       windowClass: "bc-modal terms-modal"

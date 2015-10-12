@@ -30,7 +30,7 @@ describe "HomeCtrl", ->
 
       $controller "HomeCtrl",
         $scope: scope,
-        $modal: modal
+        $uibModal: modal
 
       return
 

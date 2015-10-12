@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SettingsAddressesCtrl", SettingsAddressesCtrl);
 
-function SettingsAddressesCtrl($scope, Wallet, $translate, $modal, $state, addressOrNameMatchFilter) {
+function SettingsAddressesCtrl($scope, Wallet, $translate, $uibModal, $state, addressOrNameMatchFilter) {
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.display = {
     archived: false,
@@ -53,7 +53,7 @@ function SettingsAddressesCtrl($scope, Wallet, $translate, $modal, $state, addre
 
   $scope.importAddress = () => {
     Wallet.clearAlerts();
-    let modalInstance = $modal.open({
+    let modalInstance = $uibModal.open({
       templateUrl: "partials/settings/import-address.jade",
       controller: "AddressImportCtrl",
       windowClass: "bc-modal"
@@ -66,7 +66,7 @@ function SettingsAddressesCtrl($scope, Wallet, $translate, $modal, $state, addre
   };
 
   $scope.transfer = (address) => {
-    let modalInstance = $modal.open({
+    let modalInstance = $uibModal.open({
       templateUrl: "partials/send.jade",
       controller: "SendCtrl",
       windowClass: "bc-modal",
@@ -86,7 +86,7 @@ function SettingsAddressesCtrl($scope, Wallet, $translate, $modal, $state, addre
   };
 
   $scope.showPrivKey = (address) => {
-    let modalInstance = $modal.open({
+    let modalInstance = $uibModal.open({
       templateUrl: "partials/settings/show-private-key.jade",
       controller: "ShowPrivateKeyCtrl",
       windowClass: "bc-modal",

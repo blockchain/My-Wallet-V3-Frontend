@@ -31,7 +31,7 @@ describe "SettingsAddressesCtrl", ->
       $controller "SettingsAddressesCtrl",
         $scope: scope,
         $stateParams: {}
-        $modal: modal
+        $uibModal: modal
         Wallet: Wallet
       
       return
@@ -74,7 +74,7 @@ describe "SettingsAddressesCtrl", ->
     )
     
   describe "importAddress()", ->
-    it "should open a modal",  inject(($modal) ->
+    it "should open a modal",  inject(($uibModal) ->
       spyOn(modal, "open")
       scope.importAddress()
       expect(modal.open).toHaveBeenCalled()

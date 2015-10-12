@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("AppCtrl", AppCtrl);
 
-function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $timeout, $modal, $window, $translate) {
+function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $timeout, $uibModal, $window, $translate) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $rootScope.isMock = Wallet.isMock;
@@ -23,7 +23,7 @@ function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $t
 
   $scope.request = () => {
     Wallet.clearAlerts();
-    let modalInstance = $modal.open({
+    let modalInstance = $uibModal.open({
       templateUrl: "partials/request.jade",
       controller: "RequestCtrl",
       resolve: {destination: () => null},
@@ -36,7 +36,7 @@ function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $t
 
   $scope.send = () => {
     Wallet.clearAlerts();
-    let modalInstance = $modal.open({
+    let modalInstance = $uibModal.open({
       templateUrl: "partials/send.jade",
       controller: "SendCtrl",
       resolve: {
@@ -85,7 +85,7 @@ function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $t
       }
       if (Wallet.goal != null) {
         if (Wallet.goal.send != null) {
-          $modal.open({
+          $uibModal.open({
             templateUrl: "partials/send.jade",
             controller: "SendCtrl",
             resolve: {
@@ -96,7 +96,7 @@ function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $t
           Wallet.goal.send = void 0;
         }
         if (Wallet.goal.claim != null) {
-          let modalInstance = $modal.open({
+          let modalInstance = $uibModal.open({
             templateUrl: "partials/claim.jade",
             controller: "ClaimModalCtrl",
             resolve: {
@@ -151,7 +151,7 @@ function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $t
   };
 
   $scope.$on("requireSecondPassword", (notification, defer, insist) => {
-    const modalInstance = $modal.open({
+    const modalInstance = $uibModal.open({
       templateUrl: "partials/second-password.jade",
       controller: "SecondPasswordCtrl",
       backdrop: insist ? "static" : null,
@@ -165,7 +165,7 @@ function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $t
   });
 
   $scope.$on("needsUpgradeToHD", notification => {
-    const modalInstance = $modal.open({
+    const modalInstance = $uibModal.open({
       templateUrl: "partials/upgrade.jade",
       controller: "UpgradeCtrl",
       backdrop: "static",

@@ -1,4 +1,4 @@
-angular.module('walletApp').directive('confirmRecoveryPhrase', ($translate, Wallet, $modal) ->
+angular.module('walletApp').directive('confirmRecoveryPhrase', ($translate, Wallet, $uibModal) ->
   {
     restrict: "E"
     replace: 'true'
@@ -12,7 +12,7 @@ angular.module('walletApp').directive('confirmRecoveryPhrase', ($translate, Wall
       scope.status = Wallet.status
 
       scope.confirmRecoveryPhrase = () ->
-        modalInstance = $modal.open(
+        modalInstance = $uibModal.open(
           templateUrl: "partials/confirm-recovery-phrase-modal.jade"
           controller: "ConfirmRecoveryPhraseCtrl"
           windowClass: "bc-modal"

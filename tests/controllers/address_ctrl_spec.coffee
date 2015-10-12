@@ -28,7 +28,7 @@ describe "AddressCtrl", ->
       $controller "AddressCtrl",
         $scope: scope,
         $stateParams: {address: "some_legacy_address"}
-        $modal: modal
+        $uibModal: modal
 
     scope.$digest()
 
