@@ -1,9 +1,0 @@
-h5.well.type-h5.em-400(translate="PAIRING_CODE_EXPLAIN")
-
-a.button-primary(ng-click="showPairingCode()", translate="SHOW_PAIRING_CODE", ng-hide="display.pairingCode")
-a.button-default(ng-click="hidePairingCode()", translate="HIDE_PAIRING_CODE", ng-show="display.pairingCode")
-
-.qr.ptl.mtl
-  img(ng-show="loading" src="img/spinner.gif")
-  span(ng-show="display.pairingCode")
-    qr(text="pairingCode", size=250)

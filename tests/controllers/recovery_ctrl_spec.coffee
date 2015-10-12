@@ -38,7 +38,3 @@ describe "RecoveryCtrl", ->
     it "can be shown", ->
       scope.toggleRecoveryPhrase()
       expect(scope.showRecoveryPhrase).toBe(true)
-    
-    it "should not be available is 2nd password is enabled", inject((Wallet) ->
-      pending()
-    )

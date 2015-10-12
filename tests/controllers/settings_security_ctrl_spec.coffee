@@ -1,6 +1,13 @@
-describe "SettingsAdvancedCtrl", ->
+describe "SettingsSecurityCtrl", ->
   scope = undefined
   Wallet = undefined
+    
+  modal =
+    open: ->
+      
+  mockObserver = {
+    success: (() ->), 
+    error: (() ->)}
     
   beforeEach angular.mock.module("walletApp")
   
@@ -9,12 +16,20 @@ describe "SettingsAdvancedCtrl", ->
       Wallet = $injector.get("Wallet")
 
       Wallet.settings = {rememberTwoFactor: true}
+      
+      Wallet.settings_api = 
+        update_password_hint1: (hint, success, error) -> 
+          if hint == "आपकी पसंदीदा"
+            error(101)
+          else
+            success()
             
       scope = $rootScope.$new()
             
-      $controller "SettingsAdvancedCtrl",
+      $controller "SettingsSecurityCtrl",
         $scope: scope,
         $stateParams: {},
+        $uibModal: modal
         
       scope.$digest()
       
@@ -24,6 +39,13 @@ describe "SettingsAdvancedCtrl", ->
 
   it "should have access to wallet settings", inject((Wallet) ->
     expect(scope.settings).toBe(Wallet.settings)
+    return
+  )
+  
+  it "does toggle recovery phrase", inject((Wallet) ->
+    spyOn(Wallet, "getMnemonic")
+    scope.toggleRecoveryPhrase()
+    expect(Wallet.getMnemonic).toHaveBeenCalled()
     return
   )
 
@@ -43,14 +65,60 @@ describe "SettingsAdvancedCtrl", ->
       return
     )
 
-  describe "logout time", ->
+  describe "remember 2FA", ->
 
-    it "should be a valid time", () ->
-      expect(scope.validateLogoutTime(-42)).toBe(false)
-      expect(scope.validateLogoutTime(0.6)).toBe(false)
-      expect(scope.validateLogoutTime('x')).toBe(false)
-      expect(scope.validateLogoutTime(5.5)).toBe(true)
+    it "has an initial status", ->
+      expect(scope.settings.rememberTwoFactor).toBe(true)
+      return
+    
+    it "can be enabled", inject((Wallet) ->
+      spyOn(Wallet, "enableRememberTwoFactor")
+      scope.enableRememberTwoFactor()
+      expect(Wallet.enableRememberTwoFactor).toHaveBeenCalled()
 
+      return
+    )
+    
+    it "can be disabled", inject((Wallet) ->
+      spyOn(Wallet, "disableRememberTwoFactor")
+      scope.disableRememberTwoFactor()
+      expect(Wallet.disableRememberTwoFactor).toHaveBeenCalled()
+
+      return
+    )
+    
+  describe "password", ->   
+    it "can be changed through modal", inject(($uibModal) ->
+      spyOn(modal, "open")
+      scope.changePassword()
+      expect(modal.open).toHaveBeenCalled()
+    )
+
+    return
+  
+  describe "password hint", ->   
+  
+    it "should let user change it", inject((Wallet) ->
+      spyOn(Wallet, "changePasswordHint")
+      scope.edit.passwordHint = false
+
+      scope.changePasswordHint("Other hint", mockObserver.success, mockObserver.error)
+
+          
+      expect(Wallet.changePasswordHint).toHaveBeenCalled()
+      
+      return
+    )
+
+    it "should not change to an improper value", inject((Wallet) ->
+      scope.edit.passwordHint = false
+      expect(scope.errors.passwordHint).not.toBeDefined()
+
+      scope.changePasswordHint("आपकी पसंदीदा", mockObserver.success, mockObserver.error)
+      expect(scope.errors.passwordHint).toBeDefined()
+      
+      return
+    )
   describe "whitelist", ->
 
     describe "whitelist validation", ->
@@ -75,7 +143,7 @@ describe "SettingsAdvancedCtrl", ->
 
       it "should return true, no errors", ->
         expect(scope.validateIpWhitelist('1.2.3.4')).toBe(true)
-        
+      
       it "should allow an empty list", ->
         expect(scope.validateIpWhitelist('')).toBe(true)
 
@@ -85,28 +153,6 @@ describe "SettingsAdvancedCtrl", ->
       scope.changeIpWhitelist([])
       expect(Wallet.setIPWhitelist).toHaveBeenCalled()
       expect(Wallet.displayError).not.toHaveBeenCalled()
-
-      return
-    )
-
-  describe "remember 2FA", ->
-
-    it "has an initial status", ->
-      expect(scope.settings.rememberTwoFactor).toBe(true)
-      return
-    
-    it "can be enabled", inject((Wallet) ->
-      spyOn(Wallet, "enableRememberTwoFactor")
-      scope.enableRememberTwoFactor()
-      expect(Wallet.enableRememberTwoFactor).toHaveBeenCalled()
-
-      return
-    )
-    
-    it "can be disabled", inject((Wallet) ->
-      spyOn(Wallet, "disableRememberTwoFactor")
-      scope.disableRememberTwoFactor()
-      expect(Wallet.disableRememberTwoFactor).toHaveBeenCalled()
 
       return
     )

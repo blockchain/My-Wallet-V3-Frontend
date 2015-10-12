@@ -1,8 +1,10 @@
 angular
   .module('walletApp')
-  .controller("MobileCtrl", MobileCtrl);
+  .controller("SettingsInfoCtrl", SettingsInfoCtrl);
 
-function MobileCtrl($scope, Wallet) {
+function SettingsInfoCtrl($scope, Wallet, $translate, $window) {
+  $scope.uid = Wallet.user.uid;
+  
   $scope.display = {
     pairingCode: false
   };
@@ -26,5 +28,4 @@ function MobileCtrl($scope, Wallet) {
     $scope.loading = true;
     Wallet.makePairingCode(success, error);
   };
-
 }

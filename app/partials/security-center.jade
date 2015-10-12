@@ -54,21 +54,21 @@
               resend-email-confirmation
               span(translate="OR")
             span
-              a(ng-click="beginEditEmail()", translate="CHANGE_EMAIL_ADDRESS")
+              a(ng-click="beginEditEmail()", translate="CHANGE")
 
       .flex-center(ng-show="display.action == 'email' && display.editingEmail")       
         p(translate="YOUR_EMAIL_ADDRESS")
-        bc-async-input.width-100.pll(inline button-class="button-success button-lg" type="email" is-required placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE_EMAIL_ADDRESS' | translate", autofocus)
+        bc-async-input.width-100.pll(inline button-class="button-success button-lg" type="email" is-required placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-save="changeEmail", action-title="'CHANGE' | translate", autofocus)
       .flex-center(ng-show="display.action == 'securityphrase'")        
         p.flex-1.prl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
         .flex-1.mll.backup-phrase-actions
-          confirm-recovery-phrase(button-class="button-success button-lg")
+          confirm-recovery-phrase(button-class="button-success button-lg", ng-hide="status.didConfirmRecoveryPhrase")
 
       div(ng-show="display.action == 'passwordhint'")       
-        bc-async-input(custom inline placeholder="'CHANGE_PASSWORD_HINT' | translate" ng-model="user.passwordHint" on-save="changePasswordHint" action-title="'CHANGE_PASSWORD_HINT' | translate")
+        bc-async-input(custom inline placeholder="'CHANGE' | translate" ng-model="user.passwordHint" on-save="changePasswordHint" action-title="'CHANGE' | translate")
           .flex-center
             .form-group.width-50.flex-column(ng-class="{'has-error': !validate()}")
-              p(translate="CHANGE_PASSWORD_HINT_SECURITY_CENTER")
+              p(translate="CHANGE")
               input.form-control.mtm(on-enter="save()" type="{{ type }}" ng-model="form.newValue" ng-focus="focus()" placeholder="{{ placeholder }}" ng-change="onChange()" maxlength="255")
               span.help-block {{::errorMessage}}
             .width-50.mll.pll

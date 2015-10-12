@@ -3,8 +3,8 @@ angular
   .controller("SettingsCtrl", SettingsCtrl);
 
 function SettingsCtrl($scope, Wallet, $cookieStore, $state) {
-  if ($state.current.name === "settings") {
-    $state.go("settings.my-details");
+  if ($state.current.name === "wallet.common.settings") {
+    $state.go("wallet.common.settings.info");
   }
 
   $scope.didLoad = () => {

@@ -1,0 +1,21 @@
+h5.well.em-400.type-h5.hidden-xs(translate="WALLET_INFO_EXPLAIN")
+form.form-horizontal(role="form",name="form",novalidate)  
+  .form-group
+    .col-sm-12.col-md-6
+      label.em-400.type-h5(translate="UID")
+      p.text.em-300.line-height.hidden-xs(translate="UID_EXPLAIN")    
+    .col-sm-12.col-md-6.setting-result.flex-column
+      label.em-400.type-h5(ng-bind="uid")
+
+  .form-group
+    .col-sm-12.col-md-6
+      label.em-400.type-h5(translate="PAIRING_CODE")
+      p.text.em-300.line-height.hidden-xs(translate="PAIRING_CODE_EXPLAIN")    
+    .col-sm-12.col-md-6.setting-result
+      a.button-primary(ng-click="showPairingCode()", ng-hide="display.pairingCode", translate="SHOW_PAIRING_CODE")
+      a.button-primary(ng-click="hidePairingCode()", ng-show="display.pairingCode", translate="HIDE_PAIRING_CODE")
+      
+      .qr.ptl.mtl
+        img(ng-show="loading" src="img/spinner.gif")
+        span(ng-show="display.pairingCode")
+          qr(text="pairingCode", size=250)

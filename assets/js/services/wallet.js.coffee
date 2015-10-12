@@ -1146,17 +1146,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       console.log "Failed"
       wallet.applyIfNeeded()
     )
-
-  wallet.setApiAccess = (flag) ->
-    wallet.settings_api.update_API_access(flag, ()->
-      wallet.settings.apiAccess = flag
-      wallet.saveActivity(2)
-      wallet.applyIfNeeded()
-    ,()->
-      console.log "Failed"
-      wallet.applyIfNeeded()
-    )
-
+    
   wallet.enableRestrictToWhiteListedIPs = () ->
     wallet.settings_api.update_IP_lock_on(true, ()->
       wallet.settings.restrictToWhitelist = true

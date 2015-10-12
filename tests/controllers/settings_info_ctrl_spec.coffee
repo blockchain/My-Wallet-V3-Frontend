@@ -1,4 +1,4 @@
-describe "MobileCtrl", ->
+describe "SettingsInfoCtrl", ->
   scope = undefined
   Wallet = undefined
 
@@ -9,9 +9,11 @@ describe "MobileCtrl", ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
 
+      Wallet.status.isLoggedIn = true
+
       scope = $rootScope.$new()
 
-      $controller "MobileCtrl",
+      $controller "SettingsInfoCtrl",
         $scope: scope,
         $stateParams: {},
 
@@ -20,7 +22,7 @@ describe "MobileCtrl", ->
       return
 
     return
-
+    
   it "should show pairing code", inject((Wallet) ->
     spyOn(Wallet, "makePairingCode")
     spyOn(Wallet, "displayError")
