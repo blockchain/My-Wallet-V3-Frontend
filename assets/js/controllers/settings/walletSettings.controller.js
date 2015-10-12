@@ -13,9 +13,7 @@ function SettingsWalletCtrl($scope, Wallet, $translate, $window) {
     Wallet.handleBitcoinLinks();
   };
 
-  $scope.canHandleBitcoinLinks = () => {
-    return $window.navigator.registerProtocolHandler != null;
-  };
+  $scope.canHandleBitcoinLinks = () => $window.navigator.registerProtocolHandler != null;
 
   $scope.$watch("settings.language", (newVal, oldVal) => {
     if ((oldVal != null) && newVal !== oldVal) {

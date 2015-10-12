@@ -207,7 +207,7 @@
   "HANDLE_BITCOIN_LINKS" : "Handle Bitcoin Links",
   "HANDLE_BITCOIN_LINKS_EXPLAIN" : "Enable this to allow your Blockchain Wallet to handle bitcoin payment links in the web browser. This will make your experience more convenient when transacting online.",
   "SET_HANDLE_BITCOIN_LINKS" : "Enable",
-  "HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN" : "We can't detect whether or not handling of bitcoin links has been enabled.",
+  "HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN" : "We can't detect whether or not handling of bitcoin links has been enabled. If it has already been enabled, nothing will happen.",
   "ACCOUNT_MANAGEMENT" : "Account Management",
   "ACCOUNT_MANAGEMENT_EXPLAIN" : "Your Blockchain Wallet can create separate accounts within your single wallet. You may find this feature useful when you would like to separate your funds between a savings account and a spending account, or between a personal account and a business account.",
   "BALANCE" : "Balance",
