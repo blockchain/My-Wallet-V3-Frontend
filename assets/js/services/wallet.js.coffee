@@ -1126,8 +1126,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.settings_api.toggleSave2FA(true, success, error)
 
   wallet.handleBitcoinLinks = () ->
-    wallet.saveActivity(2)
-    $window.navigator.registerProtocolHandler('bitcoin', window.location.origin + '/#/open/%s', "Blockchain")
+    wallet.saveActivity(2)    
+    $window.navigator.registerProtocolHandler('bitcoin', $window.location.origin + '/#/open/%s', "Blockchain")
 
   wallet.enableBlockTOR = () ->
     wallet.settings_api.update_tor_ip_block(1, ()->
