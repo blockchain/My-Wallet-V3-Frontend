@@ -40,6 +40,15 @@ npm start
 Visit [local.blockchain.com:8080](http://local.blockchain.com:8080/).  Do not use `localhost:8080`. You will need to modify your "hosts" file (`/etc/hosts` on OSX and most UNIX systems) because this is no longer registered at the DNS level for application security reasons. Add this line to `/etc/hosts`:
 
     127.0.0.1   local.blockchain.com
+    
+## Developing My-Wallet-V3
+
+If you are making changes to [My-Wallet-V3](https://github.com/blockchain/My-Wallet-V3) that you want to try out in the frontend, create a symlink:
+
+```sh
+rm My-Wallet-V3-Frontend/bower_components/blockchain-wallet/dist/my-wallet.js
+ln -s ../../../../My-Wallet-V3/dist/my-wallet.js My-Wallet-V3-Frontend/bower_components/blockchain-wallet/dist/my-wallet.js
+```
 
 ## Use Beta Invites Locally
 
