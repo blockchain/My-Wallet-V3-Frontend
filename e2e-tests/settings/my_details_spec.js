@@ -18,10 +18,10 @@ describe('my-details-page', function() {
         browser.findElement(by.css('[translate="WALLET_SETTINGS_EXPLAIN"]'));
 
         // Navigate to My Details and validate page
-        browser.findElement(by.css('[translate="MY_DETAILS"]')).click();
+        browser.findElement(by.css('[translate="PREFERENCES"]')).click();
 
         // Click is to bring focus to scrollable portion of page
-        browser.findElement(by.css('[translate="MY_DETAILS_EXPLAIN"]')).click();
+        browser.findElement(by.css('[translate="PREFERENCES_EXPLAIN"]')).click();
 
     });
 
@@ -51,8 +51,8 @@ describe('my-details-page', function() {
         // Scroll to password hint section
         util.scrollTo(passwordHintCSS);
 
-        // Click Change Password Button
-        browser.findElement(by.css('[translate="CHANGE_PASSWORD"]')).click();
+        // Click Change Button
+        browser.findElement(by.css('[translate="CHANGE"]')).click();
 
         // Validate modal open
         browser.findElement(by.css('.modal-content'));

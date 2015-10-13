@@ -192,21 +192,30 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  .state("wallet.common.settings.my-details",
-    url: "/my-details"
+  .state("wallet.common.settings.info",
+    url: "/info"
     views: {
       settings: {
-        templateUrl: "partials/settings/my-details.jade"
-        controller: "SettingsMyDetailsCtrl"
+        templateUrl: "partials/settings/info.jade"
+        controller: "SettingsInfoCtrl"
       }
     }
   )
-  .state("wallet.common.settings.wallet",
-    url: "/wallet"
+  .state("wallet.common.settings.preferences",
+    url: "/preferences"
     views: {
       settings: {
-        templateUrl: "partials/settings/wallet.jade"
-        controller: "SettingsWalletCtrl"
+        templateUrl: "partials/settings/preferences.jade"
+        controller: "SettingsPreferencesCtrl"
+      }
+    }
+  )
+  .state("wallet.common.settings.security",
+    url: "/security"
+    views: {
+      settings: {
+        templateUrl: "partials/settings/security.jade"
+        controller: "SettingsSecurityCtrl"
       }
     }
   )
@@ -216,15 +225,6 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
       settings: {
         templateUrl: "partials/settings/accounts.jade"
         controller: "SettingsAccountsController"
-      }
-    }
-  )
-  .state("wallet.common.settings.mobile",
-    url: "/mobile"
-    views: {
-      settings: {
-        templateUrl: "partials/settings/mobile.jade"
-        controller: "MobileCtrl"
       }
     }
   )
@@ -255,25 +255,6 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  .state("wallet.common.settings.wallet-recovery",
-    url: "/wallet-recovery"
-    views: {
-      settings: {
-        templateUrl: "partials/settings/wallet-recovery.jade"
-        controller: "RecoveryCtrl"
-      }
-    }
-  )
-  .state("wallet.common.settings.advanced",
-    url: "/advanced"
-    views: {
-      settings: {
-        templateUrl: "partials/settings/advanced.jade"
-        controller: "SettingsAdvancedCtrl"
-      }
-    }
-  )
-
   $stateProvider.state("wallet.common.open",
     url: "/open/{uri:.*}"
 

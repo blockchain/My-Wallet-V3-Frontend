@@ -1,0 +1,64 @@
+h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
+form.form-horizontal(role="form",name="form",novalidate)  
+  .form-group
+    .col-sm-12.col-md-6
+      .flex-center.mbm
+        label.em-400.type-h5.mbn(translate="EMAIL_ADDRESS")
+        span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isEmailVerified")
+        span.label.label-success(translate="VERIFIED", ng-show="user.isEmailVerified")
+      p.text.line-height.em-300.hidden-xs(translate="EMAIL_ADDRESS_EXPLAIN")    
+    .col-sm-12.col-md-6.setting-result.flex-column
+      bc-async-input(type="email" is-required ng-model="user.email" on-save="changeEmail" action-title="'CHANGE' | translate" autofocus)
+      verify-email
+      resend-email-confirmation.mtl
+  .form-group
+    .col-sm-12.col-md-6
+      .flex-center.mbm
+        label.em-400.type-h5.mbn(translate="MOBILE_NUMBER")
+        span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isMobileVerified")
+        span.label.label-success(translate="VERIFIED", ng-show="user.isMobileVerified")
+      p.text.line-height.em-300.hidden-xs(translate="MOBILE_NUMBER_EXPLAIN")    
+    .col-sm-12.col-md-6.setting-result
+      div(ng-show="mobileNumber.step == 0")
+        h2.status.complete.hidden-xs.long-input {{::user.internationalMobileNumber}}
+        br
+        a.button-primary(ng-click="mobileNumber.step = 1", translate="CHANGE")
+      configure-mobile-number(on-success="mobileNumber.step = 2" on-cancel="mobileNumber.step = 0" ng-show="mobileNumber.step == 1")
+      verify-mobile-number(on-success="mobileNumber.step = 0" ng-show="mobileNumber.step == 2")
+  .form-group
+    .col-sm-12.col-md-6
+      label.em-400.type-h5(translate="LANGUAGE")
+      p.text.em-300.line-height.hidden-xs(translate="LANGUAGE_EXPLAIN")    
+    .col-sm-12.col-md-6.setting-result
+      language-picker(language="settings.language")
+  .form-group
+    .col-sm-12.col-md-6
+      label.em-400.type-h5(translate="CURRENCY")
+      p.text.em-300.line-height.hidden-xs(translate="CURRENCY_EXPLAIN")    
+    .col-sm-12.col-md-6.setting-result
+      currency-picker(currency="settings.currency" display-currency="settings.displayCurrency")
+  .form-group
+    .col-sm-12.col-md-6
+      label.em-400.type-h5(translate="BITCOIN_CURRENCY")
+      p.text.em-300.line-height.hidden-xs(translate="BITCOIN_CURRENCY_EXPLAIN")
+    .col-sm-12.col-md-6.setting-result
+      btc-picker(currency="settings.btcCurrency" display-currency="settings.displayCurrency")
+  .form-group
+    .col-sm-12.col-md-6
+      label.type-h5.em-400(translate="FEE_PER_KB")
+      p.em-300.text.line-height.hidden-xs.hidden-sm(translate="FEE_PER_KB_EXPLAIN")
+    .col-sm-12.col-md-6.setting-result
+      bc-async-input(ng-model="settings.feePerKB" validator="validateFee" is-required on-save="changeFeePerKB" transform="btc" action-title="'CHANGE' | translate")
+  .form-group(ng-show="browserCanHandleBitcoinLinks")
+    .col-sm-12.col-md-6
+      label.em-400.type-h5(translate="HANDLE_BITCOIN_LINKS")
+      p.text.em-300.line-height.hidden-xs(translate="HANDLE_BITCOIN_LINKS_EXPLAIN")    
+    .col-sm-12.col-md-6.setting-result
+      a.button-primary(ng-click="setHandleBitcoinLinks()", translate="SET_HANDLE_BITCOIN_LINKS", ng-hide="settings.handleBitcoinLinks")
+      p.settingtext.mtl(translate="HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN")
+  .form-group
+    .col-sm-12.col-md-6
+      label.type-h5.em-400(translate="AUTO_LOGOUT")
+      p.em-300.text.line-height.hidden-sm.hidden-xs(translate="AUTO_LOGOUT_EXPLAIN") 
+    .col-sm-12.col-md-6.setting-result
+      bc-async-input(ng-model="settings.logoutTimeMinutes" validator="validateLogoutTime" is-required on-save="changeLogoutTime" action-title="'CHANGE' | translate")

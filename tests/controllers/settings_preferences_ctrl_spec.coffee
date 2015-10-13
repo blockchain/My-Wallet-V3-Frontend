@@ -1,16 +1,28 @@
-describe "SettingsWalletCtrl", ->
+describe "SettingsPreferencesCtrl", ->
   scope = undefined
   Wallet = undefined
-
+  
+  modal =
+    open: ->
+      
+  mockObserver = {
+    success: (() ->), 
+    error: (() ->)}
+  
   beforeEach angular.mock.module("walletApp")
-
+  
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
-
+      
       Wallet.status.isLoggedIn = true
-
+      
+      Wallet.user = {email: "steve@me.com"}
+      
+      Wallet.settings_api = 
+        change_email: (email, success, error) -> success()
+            
       Wallet.settings.languages = [
         {code: "en", name: "English"}
         {code: "fr", name: "French"}
@@ -30,19 +42,47 @@ describe "SettingsWalletCtrl", ->
       spyOn(Wallet, "setLanguage").and.callThrough()
       spyOn(Wallet, "changeLanguage").and.callThrough()
       spyOn(Wallet, "changeCurrency").and.callThrough()
-
+            
       scope = $rootScope.$new()
-
-      $controller "SettingsWalletCtrl",
+            
+      $controller "SettingsPreferencesCtrl",
         $scope: scope,
         $stateParams: {},
-
+        $uibModal: modal
+        
       scope.$digest()
-
+      
       return
 
     return
+    
+  describe "email", ->   
+    it "should be set on load", inject((Wallet) ->
+      expect(scope.user.email).toEqual("steve@me.com")
+    )
+    
+    it "should not spontaniously save", inject((Wallet) ->
+      spyOn(Wallet, "changeEmail")
+      expect(Wallet.changeEmail).not.toHaveBeenCalled()
+      
+      return
+    )
+  
+    it "should let user change their email", inject((Wallet) ->
+      spyOn(Wallet, "changeEmail").and.callThrough()
 
+      scope.changeEmail("other@me.com", mockObserver.success, mockObserver.error)
+      
+      scope.$digest()
+    
+      expect(Wallet.changeEmail).toHaveBeenCalledWith("other@me.com", mockObserver.success, mockObserver.error)
+      expect(scope.user.email).toBe("other@me.com")
+      
+      return
+    )
+    
+    return
+    
   describe "language", ->
     beforeEach ->
       scope.$digest()
@@ -97,3 +137,11 @@ describe "SettingsWalletCtrl", ->
       scope.setHandleBitcoinLinks()
       expect(Wallet.handleBitcoinLinks).toHaveBeenCalled()
     )
+  
+  describe "logout time", ->
+
+    it "should be a valid time", () ->
+      expect(scope.validateLogoutTime(-42)).toBe(false)
+      expect(scope.validateLogoutTime(0.6)).toBe(false)
+      expect(scope.validateLogoutTime('x')).toBe(false)
+      expect(scope.validateLogoutTime(5.5)).toBe(true)
