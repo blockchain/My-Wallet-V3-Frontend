@@ -287,9 +287,8 @@ module.exports = (grunt) ->
         files: [{
           expand: true,
           cwd: 'assets/js',
-          src: ['controllers/**/*.js','services/**/*.js','directives/**/*.js','core/**/*.js','*.js'],
+          src: ['**/*.controller.js','services/**/*.js','directives/**/*.js','core/**/*.js','*.js'],
           dest: 'build/js',
-          ext: '.js'
         }]
 
     rename:
