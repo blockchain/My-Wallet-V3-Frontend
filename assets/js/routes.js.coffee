@@ -129,6 +129,20 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
+  $stateProvider.state("wallet.common.feedback",
+    url: "/feedback"
+    views: {
+      top : top,
+      left: {
+        templateUrl: "partials/wallet-navigation.jade"
+        controller: "WalletNavigationCtrl"
+      },
+      right: {
+        templateUrl: "partials/feedback.jade"
+        controller: "FeedbackCtrl"
+      }
+    }
+  )
   $stateProvider.state("wallet.common.security-center",
     url: "/security-center"
     views: {
@@ -160,6 +174,20 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
       right: {
         templateUrl: "partials/transaction.jade"
         controller: "TransactionCtrl"
+      }
+    }
+  )
+  $stateProvider.state("wallet.common.settings",
+    url: "/settings"
+    views: {
+      top: top,
+      left: {
+        templateUrl: "partials/wallet-navigation.jade"
+        controller: "WalletNavigationCtrl"
+      },
+      right: {
+        controller: "SettingsCtrl"
+        templateUrl: "partials/settings/settings.jade"
       }
     }
   )
