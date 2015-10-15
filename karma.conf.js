@@ -26,7 +26,7 @@ module.exports = function(karma){
       'assets/js/app.js',
       'assets/js/core/core.module.js',
       'build/js/templates.js',
-      'assets/js/controllers/**/*.controller.js',
+      'assets/js/**/*.controller.js',
       'assets/js/filters.js.coffee',
       'assets/js/services/*.js.coffee',
       'assets/js/services/**/*.service.js',
@@ -48,8 +48,7 @@ module.exports = function(karma){
     preprocessors: {
       '**/*.jade': ['ng-jade2js'],
       'assets/js/core/core.module.js': ['babel'],
-      'assets/js/controllers/**/*.js.coffee' : ['coffee', 'coverage'],
-      'assets/js/controllers/**/*.js' : ['coverage'],
+      'assets/js/**/*.controller.js' : ['babel'],
       'assets/js/filters.js.coffee' : ['coffee','coverage'],
       'assets/js/services/*.js.coffee' : ['coffee','coverage'],
       'assets/js/services/*.service.js' : ['babel'],

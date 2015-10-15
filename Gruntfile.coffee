@@ -287,7 +287,7 @@ module.exports = (grunt) ->
         files: [{
           expand: true,
           cwd: 'assets/js',
-          src: ['**/*.controller.js','services/**/*.js','directives/**/*.js','core/**/*.js','*.js'],
+          src: ['**/*.module.js', '**/*.routes.js','**/*.controller.js','services/**/*.js','directives/**/*.js','core/**/*.js','*.js'],
           dest: 'build/js',
         }]
 
