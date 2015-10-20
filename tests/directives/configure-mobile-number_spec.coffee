@@ -13,6 +13,9 @@ describe "Change Mobile Number Directive", ->
 
     Wallet.user = {mobile: {number: "12345678", country: "31"}}
 
+    # bc-mobile-number formats the number:
+    Wallet.user.internationalMobileNumber = "+31 12345678"
+
     return
   )
 
@@ -22,11 +25,12 @@ describe "Change Mobile Number Directive", ->
     isoScope = element.isolateScope()
     isoScope.$digest()
 
+    # bc-mobile-number formats the number:
+    isoScope.fields.newMobile = "+31 12345678"
+
+
   it "should have text", ->
     expect(element.html()).toContain "SAVE"
-
-  it "should have the current phone number in its scope", ->
-    expect(isoScope.user.mobile.number).toBe("12345678")
 
   it "should not spontaniously save", inject((Wallet) ->
     spyOn(Wallet, "changeMobile")
@@ -45,19 +49,9 @@ describe "Change Mobile Number Directive", ->
     return
   )
 
-  it "should validate proposed number", ->
-    isoScope.fields.newMobile = "31"
-    expect(isoScope.validateMobileNumber()).toBe(false)
-    return
-
-  it "should validate proposed number", ->
-    isoScope.fields.newMobile = "31 8888 8888"
-    expect(isoScope.validateMobileNumber()).toBe(true)
-    return
-
   it "should not allow reusing the previous number", ->
-    isoScope.fields.newMobile = "31 1234 5678"
-    expect(isoScope.validateMobileNumber()).toBe(false)
+    isoScope.fields.newMobile = "+31 12345678"
+    expect(isoScope.numberChanged()).toBe(false)
     return
 
   return

@@ -7,9 +7,31 @@
   padding-bottom:15px;
 }
 
-.edit-mobile .btn-info{
-  margin: 5px;
+.security-center-ui {
+  .edit-mobile {
+    .btn-info{
+      margin: 5px;
+    }
+
+    // Our custom CSS causes layout issues for bc-phone-number:
+    .caret {
+      padding-left: 0px !important;
+      margin-left: 0px;
+      margin-right: -3px;
+    }
+
+    button.dropdown-toggle {
+      border: none;
+      background-color: white !important;
+
+    }
+
+    // .btn-default:active, .btn-default.active, .open > .btn-default.dropdown-toggle {
+    //   background-color: white;
+    // }
+  }
 }
+
 .btn-verify {
   margin: 3px 0 0 -20px
 }

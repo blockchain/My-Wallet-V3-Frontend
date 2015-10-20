@@ -29,11 +29,13 @@ dist = process.env.DIST? && parseInt(process.env.DIST)
 app.configure ->
   app.use (req, res, next) ->
     if req.url == "/"
-      # Inline style hashes, in case we want to remove unsafe-inline:
-      # 'sha256-vv5i1tRAGZ/gOQeRpI3CEWtvnCpu5FCixlD2ZPu7h84=' : angular-charts
-      # 'sha256-47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU=' : angular-charts
-      # lots... : jQuery
-      res.setHeader "content-security-policy", "img-src 'self' data:; style-src 'self' 'unsafe-inline'; child-src 'none'; script-src 'self' 'sha256-mBeSvdVuQxRa2pGoL8lzKX14b2vKgssqQoW36iRlU9g=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='; connect-src 'self' *.blockchain.info *.blockchain.com wss://*.blockchain.info https://blockchain.info https://api.sharedcoin.com; object-src 'none'; media-src 'self' data: mediastream: blob:; font-src 'self'"
+      # Inline style hashes, to avoid unsafe-inline:
+      # 'sha256-vv5i1tRA...' : angular-charts
+      # 'sha256-47DEQpj8...' : angular-charts
+      #  ui-select: https://github.com/angular-ui/ui-select/blob/master/dist/select.js
+      # 'sha256-4IfJmohi...' : 
+
+      res.setHeader "content-security-policy", "img-src 'self' data:; style-src 'self' 'sha256-vv5i1tRAGZ/gOQeRpI3CEWtvnCpu5FCixlD2ZPu7h84=' 'sha256-47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU='; child-src 'none'; script-src 'self' 'sha256-mBeSvdVuQxRa2pGoL8lzKX14b2vKgssqQoW36iRlU9g=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='; connect-src 'self' *.blockchain.info *.blockchain.com wss://*.blockchain.info https://blockchain.info https://api.sharedcoin.com; object-src 'none'; media-src 'self' data: mediastream: blob:; font-src 'self'"
       res.setHeader "X-Frame-Options", "SAMEORIGIN"
     if req.url.indexOf("beta_key")
       # Don't cache these

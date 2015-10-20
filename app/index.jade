@@ -11,7 +11,6 @@ head
   title Blockchain Wallet HD
   <!-- @if !PRODUCTION -->
   link(rel="stylesheet", href="bower_components/angular-ui-select/dist/select.css")
-  script(src='bower_components/jquery/dist/jquery.js')
   script(src='bower_components/angular/angular.js')
   script(src='bower_components/angular-sanitize/angular-sanitize.js')
   script(src='bower_components/angular-cookies/angular-cookies.js')
@@ -29,13 +28,14 @@ head
   script(src='bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js')
  
   script(src='bower_components/angular-inview/angular-inview.js')
-  script(src='bower_components/angular-password-entropy/password-entropy.js')
+  script(src='bower_components/angular-password-entropy/password-entropy.js')  
   
-  // Depends on jQuery: 
-  // https://github.com/mareczek/international-phone-number/issues/44
-  script(src='bower_components/intl-tel-input/build/js/intlTelInput.js')
-  script(src='bower_components/intl-tel-input/lib/libphonenumber/build/utils.js')
-  script(src='bower_components/international-phone-number/releases/international-phone-number.js')
+  script(                src='bower_components/digits-trie/dist/digits-trie.js')
+  link(rel='stylesheet' href='bower_components/bc-css-flags/dist/css/bc-css-flags.css')
+  script(                src='bower_components/google-libphonenumber/dist/browser/libphonenumber.js')
+  script(                src='bower_components/bc-countries/dist/bc-countries.js')
+  script(                src='bower_components/bc-phone-number/dist/js/bc-phone-number.js')
+  link(rel='stylesheet' href='bower_components/bc-phone-number/dist/css/bc-phone-number.css')
   
   
   script(src='bower_components/browserdetection/src/browser-detection.js')
@@ -50,7 +50,6 @@ head
   link(rel='stylesheet', href='build/css/blockchain.css')
   link(rel='stylesheet', href='build/css/fonts.css')
   link(rel='stylesheet', href='build/css/angular-csp.css')
-  link(rel='stylesheet', href='build/css/intlTelInput.css')
   
   // Blockchain MyWallet javascript (must be called before 'app')
   script(src='bower_components/blockchain-wallet/dist/my-wallet.js')
