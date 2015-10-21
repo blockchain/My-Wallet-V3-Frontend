@@ -74,8 +74,13 @@ form.form-horizontal(role="form",name="form",novalidate)
         a.button-primary(ng-click="enableRememberTwoFactor()", translate="ENABLE", ng-hide="settings.rememberTwoFactor")
         a.button-primary(ng-click="disableRememberTwoFactor()", translate="DISABLE", ng-show="settings.rememberTwoFactor")
 
-h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_ADVANCED_EXPLAIN")
-form.form-horizontal(role="form",name="form",novalidate)    
+.mtl
+  button.button-default(translate="ADVANCED_SETTINGS", ng-click="toggleAdvanced()" ng-class="{active : display.advanced}")
+
+h5.well.type-h5.em-400.hidden-xs(ng-show="display.advanced")
+  span(translate="SECURITY_ADVANCED_EXPLAIN")
+    
+form.form-horizontal(role="form",name="form",novalidate, ng-show="display.advanced")
   .form-group
     .col-sm-12.col-md-6
       .flex-center.mbm
