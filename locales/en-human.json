@@ -91,6 +91,7 @@
   "WALLET_RECOVERY" : "Wallet Recovery",
   "WALLET_RECOVERY_EXPLAIN" : "Your Blockchain wallet never communicates your password to our servers. This means we don’t know what your password is and  cannot reset it if you forget it. Your wallet can be recovered and your funds kept safely in your control if you write down your 12-word Recovery Phrase and keep it safe. By writing down and storing your 12-word Recovery Phrase, your wallet can be recovered and your funds kept in your control.",
   "ADD_WALLET_RECOVERY" : "Backup Security Phrase",
+  "PRINT_RECOVERY_SHEET" : "Print Recovery Sheet",
   "INVALID_RECOVERY" : "Invalid recovery phrase",
   "ARE_YOU_SURE_LOGOUT" : "Are you sure you wish to logout?",
   "LANGUAGE_EXPLAIN" : "Set your preferred language.",

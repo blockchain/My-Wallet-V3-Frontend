@@ -25,6 +25,9 @@
         .form-group(ng-class="{'has-error': word.error}")
           p(translate="{{'WORD_' + word.index}}")
           input.form-control(type="text" ng-model="word.value")
+  
+  div(ng-show="step==1")
+    a.btn.btn-info(href="img/recovery.pdf", translate="PRINT_RECOVERY_SHEET", target="_blank")
 
   div(ng-show="step==2")
 
