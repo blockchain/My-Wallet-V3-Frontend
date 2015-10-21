@@ -11,6 +11,8 @@ angular.module('walletApp').directive('helperButton', ($translate) ->
     link: (scope, elem, attrs) ->
       scope.isActive = false
 
+      scope.warning = attrs.warning?
+
       $translate(scope.content).then (translation) ->
         scope.content = translation
 
