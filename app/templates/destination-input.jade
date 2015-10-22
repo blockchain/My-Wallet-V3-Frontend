@@ -8,6 +8,7 @@
         | {{ model.label }}
     input.form-control(
       type="text"
+      tabindex="1"
       autocomplete="off"
       ng-model="model.address"
       ng-hide="model.type === 'Accounts'")
