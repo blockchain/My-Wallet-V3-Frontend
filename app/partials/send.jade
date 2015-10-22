@@ -45,30 +45,15 @@
           .flex-column(ng-class="{'advanced-recipient-row': advanced}" ng-repeat="item in transaction.destinations track by $index")
             p.form-control-static(ng-hide="originsLoaded")
               img(src="img/spinner.gif")
-            div(ng-show="originsLoaded" ng-class="{'input-group': browserWithCamera, 'has-error': sendForm['destinations' + $index].$invalid && (sendForm['amounts' + $index].$touched || sendForm['amountsFiat' + $index].$touched)}")
-              ui-select(
-                ng-model="transaction.destinations[$index]" 
-                name="{{'destinations' + $index}}" 
-                is-not-equal="{{transaction.from.label}}" 
-                property="label" 
-                ng-change="updateToLabel(); refreshTxProposal()"
-                reset-search-input="false"
-                reset-search-input-on="{{ 'ResetSearch' + $index }}"
-                required
-              )
-                ui-select-match(placeholder="Paste, scan or select address") {{ $select.selected.label }}
-                ui-select-choices(
-                  repeat="destination in filterDestinations($index, $select.search)"
-                  group-by="'type'" 
-                  refresh="refreshDestinations($select.search, $index)" 
-                  refresh-delay="0"
-                )
-                  span(ng-bind-html="determineLabel(destination) | highlight: $select.search")
-              span.input-group-btn.mls(ng-if="browserWithCamera")
-                button#qr(type="button", ng-click="cameraOn($index)")
-                  img(src="img/qr-code.png", alt="QR")
+            div(ng-show="originsLoaded" ng-class="{'has-error': sendForm['destinations' + $index].$invalid && sendForm['destinations' + $index].$touched}")
+              destination-input(
+                name="{{ 'destinations' + $index }}"
+                ng-model="transaction.destinations[$index]"
+                ng-model-options="{ updateOn: 'blur' }"
+                ng-change="updateToLabel(); checkForSameDestination(); refreshTxProposal()"
+                on-request-qr="cameraOn($index)")
             .has-error
-              span.help-block(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress")
+              span.help-block(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress && sendForm['destinations' + $index].$touched")
               span.help-block(translate="SAME_DESTINATION" ng-show="sendForm['destinations' + $index].$error.isNotEqual")
             //- Amount
             div.flex-center.recipient-currency.mtl(ng-class="{'has-error': sendForm['amounts' + $index].$invalid && (sendForm['amounts' + $index].$touched || sendForm['amountsFiat' + $index].$touched)}")
@@ -79,6 +64,7 @@
                     type="number"
                     ng-model="transaction.amounts[$index]"
                     name="{{'amounts' + $index}}"
+                    tabindex="1"
                     transform-currency="btcCurrency"
                     placeholder="0"
                     min="1"
@@ -94,6 +80,7 @@
                     type="number"
                     ng-model="transaction.amounts[$index]"
                     name="{{'amountsFiat' + $index}}"
+                    tabindex="1"
                     transform-currency="fiatCurrency"
                     placeholder="0"
                     ng-change="validateAmounts(); setPaymentAmount()"
@@ -118,6 +105,7 @@
                 input.form-control.no-border(
                   type="number"
                   name="fee"
+                  tabindex="1"
                   ng-model="transaction.fee"
                   min="0"
                   ng-change="validateAmounts(); setPaymentFee()"
@@ -185,5 +173,5 @@
     button.button-muted.mrm(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
     button.button-muted.mrm(ng-click="backToForm()", translate="BACK", ng-show="confirmationStep")
     button.button-muted.bc-modal-fade.mrm(ng-show="advanced && !confirmationStep", translate="RESET_FORM", ng-click="resetSendForm()")
-    button.button-success.button-lg(ng-click="setAllAndBuild(); goToConfirmation()" ng-disabled="sendForm.$invalid || !amountIsValid || !allAmountsAboveZero()" translate="NEXT_STEP" ng-hide="confirmationStep")
+    button.button-success.button-lg(tabindex="1" ng-click="setAllAndBuild(); goToConfirmation()" ng-disabled="sendForm.$invalid || !amountIsValid || !allAmountsAboveZero()" translate="NEXT_STEP" ng-hide="confirmationStep")
     button.button-success.button-lg(ui-ladda="{{ sending }}" ng-click="send()" ng-disabled="noteForm.$invalid || !amountIsValid" data-style="expand-left" ladda-translate="SEND" ng-show="confirmationStep")

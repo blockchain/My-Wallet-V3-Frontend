@@ -546,16 +546,6 @@ describe "SendCtrl", ->
         scope.updateToLabel()
         expect(scope.toLabel).toEqual('3 Recipients')
 
-    describe "refreshDestinations", ->
-
-      # TODO: Not entirely sure what needs to be tested here
-
-      it "should not refresh if there are no destinations", ->
-        spyOn(scope, 'updateToLabel')
-        scope.destinations[0] = []
-        scope.refreshDestinations('', 0)
-        expect(scope.updateToLabel).not.toHaveBeenCalled()
-
     describe "getTransactionTotal", ->
 
       beforeEach ->
@@ -698,8 +688,6 @@ describe "SendCtrl", ->
           $modalInstance: modalInstance
           paymentRequest: {address: "valid_address", amount: 1000000}
 
-        spyOn(scope, 'addExternalLabelIfNeeded').and.callThrough()
-
         element = angular.element(
           '<form role="form" name="sendForm" novalidate>' +
           '<input type="text" name="from" ng-model="transaction.from" required />' +
@@ -712,9 +700,6 @@ describe "SendCtrl", ->
 
         $compile(element)(scope)
         scope.$apply()
-
-    it "addExternalLabelIfNeeded should be called", ->
-      expect(scope.addExternalLabelIfNeeded).toHaveBeenCalled()
 
     it "should check that the destination has a valid address", ->
       expect(hasErr 'destinations0', 'isValidAddress').not.toBeDefined()

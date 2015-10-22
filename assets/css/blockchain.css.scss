@@ -32,6 +32,7 @@
 @import 'components/virtual-keyboard';
 
 //import modules
+@import 'modules/destination-input';
 @import 'modules/header';
 @import 'modules/home';
 @import 'modules/layout';
@@ -98,14 +99,6 @@ html,body {
 }
 
 #qr-canvas { display: none; }
-
-#qr {
-  img {
-    height: 20px;
-    width: 20px;
-  }
-  border-left: none;
-}
 
 #verify-recovery {
   img {

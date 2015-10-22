@@ -79,7 +79,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
       label: paymentRequest.address || "",
       type: "External"
     };
-    $scope.refreshDestinations(paymentRequest.address, i);
+    $scope.transaction.destinations[i] = destination;
     $scope.transaction.amounts[i] = paymentRequest.amount;
     $scope.transaction.note = paymentRequest.message || '';
     $scope.validateAmounts();
@@ -243,36 +243,6 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
       if ($scope.transaction.destinations[0].index != null) {
         $scope.toLabel += " Account";
       }
-    }
-  };
-
-  $scope.refreshDestinations = (query, i) => {
-    if (query === "" && $scope.processingPaymentRequest) return;
-    if ($scope.destinations[i].length === 0) return;
-
-    $scope.updateToLabel();
-    $scope.addExternalLabelIfNeeded(query, i);
-  };
-
-  $scope.addExternalLabelIfNeeded = (query, idx) => {
-    let last = $scope.destinations[idx].slice(-1)[0];
-    if (query != null) {
-      last.address = query;
-      last.label = query;
-    }
-    if ($scope.transaction.destinations[idx] == null || $scope.transaction.destinations[idx].type !== "External") {
-      let destinations = $scope.destinations[idx];
-      for (let i = 0; i < destinations.length; i++) {
-        let destination = destinations[i];
-        if (destination.type !== "External" && (destination.label.indexOf(query) !== -1 || (destination.address && destination.address.indexOf(query) !== -1))) {
-          if (destination.address && destination.address.indexOf(query) !== -1) {
-            console.log("Reset!");
-            $scope.transaction.destinations[idx] = destination;
-          }
-          return;
-        }
-      }
-      return $scope.transaction.destinations[idx] = last;
     }
   };
 
