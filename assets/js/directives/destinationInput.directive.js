@@ -52,5 +52,19 @@ function destinationInput($rootScope, $timeout, Wallet) {
     }
 
     scope.$watch('model', scope.change);
+
+    // onBlur is triggered when the modal appears for some reason:
+    let firstBlur = true;
+    scope.onBlur = () => {
+      if(firstBlur) {
+        firstBlur = false;
+        return;
+      }
+      ctrl.$setTouched();
+    }
+
+    scope.onFocus = () => {
+      ctrl.$setUntouched();
+    }
   }
 }

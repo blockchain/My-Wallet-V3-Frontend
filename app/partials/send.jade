@@ -45,7 +45,7 @@
           .flex-column(ng-class="{'advanced-recipient-row': advanced}" ng-repeat="item in transaction.destinations track by $index")
             p.form-control-static(ng-hide="originsLoaded")
               img(src="img/spinner.gif")
-            div(ng-show="originsLoaded" ng-class="{'has-error': sendForm['destinations' + $index].$invalid && (sendForm['amounts' + $index].$touched || sendForm['amountsFiat' + $index].$touched)}")
+            div(ng-show="originsLoaded" ng-class="{'has-error': sendForm['destinations' + $index].$invalid && sendForm['destinations' + $index].$touched}")
               destination-input(
                 name="{{ 'destinations' + $index }}"
                 ng-model="transaction.destinations[$index]"
@@ -53,7 +53,7 @@
                 ng-change="updateToLabel(); checkForSameDestination(); refreshTxProposal()"
                 on-request-qr="cameraOn($index)")
             .has-error
-              span.help-block(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress && (sendForm['amounts' + $index].$touched || sendForm['amountsFiat' + $index].$touched)")
+              span.help-block(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress && sendForm['destinations' + $index].$touched")
               span.help-block(translate="SAME_DESTINATION" ng-show="sendForm['destinations' + $index].$error.isNotEqual")
             //- Amount
             div.flex-center.recipient-currency.mtl(ng-class="{'has-error': sendForm['amounts' + $index].$invalid && (sendForm['amounts' + $index].$touched || sendForm['amountsFiat' + $index].$touched)}")

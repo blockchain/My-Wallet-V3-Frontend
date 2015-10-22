@@ -11,7 +11,10 @@
       tabindex="1"
       autocomplete="off"
       ng-model="model.address"
-      ng-hide="model.type === 'Accounts'")
+      ng-hide="model.type === 'Accounts'"
+      ng-blur="onBlur()"
+      ng-focus="onFocus()"
+    )
     .input-group-btn(uib-dropdown)
       button#qr.btn.btn-default(
         type="button"
