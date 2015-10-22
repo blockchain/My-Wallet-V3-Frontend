@@ -1,0 +1,26 @@
+.destination-input
+  .input-group
+    button.form-control(
+      type="button"
+      ng-show="model.type === 'Accounts'"
+      ng-click="clearModel()")
+      span.pull-left
+        | {{ model.label }}
+    input.form-control(
+      type="text"
+      autocomplete="off"
+      ng-model="model.address"
+      ng-hide="model.type === 'Accounts'")
+    .input-group-btn(uib-dropdown)
+      button#qr.btn.btn-default(
+        type="button"
+        ng-if="browserWithCamera"
+        ng-click="onRequestQr()")
+        img(src="img/qr-code.png" alt="QR")
+      button.btn.btn-default(type="button" uib-dropdown-toggle)
+        span.caret
+        span.sr-only Toggle Dropdown
+      ul.uib-dropdown-menu.dropdown-menu-right
+        li(ng-repeat="account in accounts")
+          a(ng-click="setModel(account)" ng-disabled="true")
+            | {{ account.label }}
