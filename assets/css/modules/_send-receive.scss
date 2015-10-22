@@ -1,6 +1,13 @@
 .payment-url {
   @extend .flex;
 }
+
+.modal-body#send {
+  input {
+    height: 33px;
+  }
+}
+
 .receive-code canvas { margin-right: 2em; padding-right: 2em; }
 @media (max-width: 768px) {
   .payment-url {
