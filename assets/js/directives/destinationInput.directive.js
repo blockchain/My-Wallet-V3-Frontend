@@ -39,7 +39,6 @@ function destinationInput($rootScope, $timeout, Wallet) {
     scope.clearModel = () => {
       scope.model = format({}, 'External');
       scope.model.address = '';
-      scope.focusInput();
       $timeout(scope.change);
     };
 
@@ -47,24 +46,15 @@ function destinationInput($rootScope, $timeout, Wallet) {
       $timeout(() => elem.find('input')[0].focus(), 50);
     };
 
-    if (!scope.model) {
-      scope.clearModel();
-    }
-
-    scope.$watch('model', scope.change);
-
-    // onBlur is triggered when the modal appears for some reason:
-    let firstBlur = true;
     scope.onBlur = () => {
-      if(firstBlur) {
-        firstBlur = false;
-        return;
-      }
       ctrl.$setTouched();
-    }
+    };
 
     scope.onFocus = () => {
       ctrl.$setUntouched();
-    }
+    };
+
+    if (!scope.model) scope.clearModel();
+    scope.$watch('model', scope.change);
   }
 }

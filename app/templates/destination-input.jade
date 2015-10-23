@@ -3,7 +3,7 @@
     button.form-control(
       type="button"
       ng-show="model.type === 'Accounts'"
-      ng-click="clearModel()")
+      ng-click="clearModel(); focusInput();")
       span.pull-left
         | {{ model.label }}
     input.form-control(
