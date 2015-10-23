@@ -56,8 +56,8 @@
     "repo" : "sub2home/browser-detection"
   },
   "bc-phone-number" : {
-    "version": "5.0.5",
-    "commits" : ["0555ad01fa321e9847cc82bf63eca0fad1d6b270"],
+    "version": "5.0.6",
+    "commits" : ["0aa99e8d4d05378c5fc4b3a487dc58a5480526fb"],
     "repo" : "Ahimta/bc-phone-number"
   }
 }
