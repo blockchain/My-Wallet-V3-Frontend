@@ -221,6 +221,18 @@
   opacity: 0;
 }
 
+// ui-select
+
+.ui-select-match.ng-hide-add, .ui-select-match.ng-hide-remove {
+  display: block !important;
+}
+.ui-select-match.ng-hide-add.ng-hide-add-active {
+  display: none !important
+}
+.ui-select-match.ng-hide-remove.ng-hide-remove-active {
+  display: none !important
+}
+
 
 
 ///////////////////////////////////////////

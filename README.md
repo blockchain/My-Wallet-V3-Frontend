@@ -23,7 +23,7 @@ gem install sass
 ```sh
 git clone https://github.com/blockchain/My-Wallet-V3-Frontend.git
 cd My-Wallet-V3-Frontend
-npm install
+npm install && bower install
 ```
 
 Grunt compiles the view templates and CSS. Keep it running:
