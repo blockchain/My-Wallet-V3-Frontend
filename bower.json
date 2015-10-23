@@ -10,7 +10,6 @@
     "angular-mocks": "1.4.*",
     "angular-animate": "1.4.*",
     "angular-ui-router": "0.2.*",
-    "jquery": "2.1.*",
     "angular-bootstrap": "0.14.*",
     "angular-cookies": "1.4.*",
     "angular-audio": "1.6.*",
@@ -22,12 +21,12 @@
     "angular-translate-loader-static-files": "2.7.*",
     "angular-inview": "1.5.0",
     "angular-password-entropy": "0.1.*",
-    "international-phone-number": "0.0.7",
     "browserdetection": "0.3.*",
     "bc-qr-reader": "0.2.*",
     "bootstrap-sass": "3.3.*",
     "bootstrap": "~3.3.4",
-    "blockchain-wallet": "3.1.*"
+    "blockchain-wallet": "3.1.*",
+    "bc-phone-number": "5.0.*"
   },
   "devDependencies": {
     "angular-local-storage": "~0.1.5"

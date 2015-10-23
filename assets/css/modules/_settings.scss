@@ -12,14 +12,14 @@
     font-size: 12pt;
   }
   .edit-mobile {
-    button.ui-select-match {
-      width: 75px;
+    // Our custom CSS causes layout issues for bc-phone-number:
+    .form-control {
+      height: 33px !important;
     }
-    input.ui-select-search {
-      width: 150px;
-    }
-    li {
-      text-align: left; // Country dropdown
+    .caret {
+      padding-left: 0px !important;
+      margin-left: 0px;
+      margin-right: -3px
     }
   }
   pre.recovery{

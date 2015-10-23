@@ -1,13 +1,12 @@
 .edit-mobile(ng-class="{'offset-flag': fullWidth}")
   form(ng-class="{'width-100 flex' : fullWidth}" role="form" name="mobileForm" ng-submit="changeMobile()")
-    input.form-control(
-      type="text" international-phone-number 
-      ng-model="fields.newMobile" 
-      default-country="{{ mobileDefaultCountry }}" 
-      preferred-countries="us,ca,gb,au" 
-      skip-util-script-download auto-placeholder="false" 
+    bc-phone-number(
+      ng-model='fields.newMobile' 
+      default-country='{{ mobileDefaultCountry }}' 
+      preferred-countries='us ca gb au' 
       ng-disabled="status.busy"
-      ng-class"{'prl' : fullWidth}"
+      ng-class="{'prl' : fullWidth}"
+      name="mobile"
     )
     br(ng-if="!fullWidth")
     div(ng-class="{'flex-1': fullWidth, 'mll': fullWidth}")
@@ -15,7 +14,7 @@
         type="submit"
         ng-class="buttonLg ? 'button-success button-lg' : 'button-primary'" 
         ui-ladda="{{ status.busy }}"
-        ng-disabled="!validateMobileNumber()" 
+        ng-disabled="mobileForm.mobile.$invalid || !numberChanged()" 
         ladda-translate="SAVE" 
         data-style="expand-left"
       )

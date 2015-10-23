@@ -72,9 +72,10 @@ module.exports = (grunt) ->
           'build/bower_components/angular-ui-router/release/angular-ui-router.js'
           'build/bower_components/angular-translate/angular-translate.js'
           'build/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js'
-          'build/bower_components/intl-tel-input/build/js/intlTelInput.js'
-          'build/bower_components/intl-tel-input/lib/libphonenumber/build/utils.js'
-          'build/bower_components/international-phone-number/releases/international-phone-number.js'
+          'build/bower_components/digits-trie/dist/digits-trie.js'
+          'build/bower_components/google-libphonenumber/dist/browser/libphonenumber.js'
+          'build/bower_components/bc-countries/dist/bc-countries.js'
+          'build/bower_components/bc-phone-number/dist/js/bc-phone-number.js'
           'build/bower_components/browserdetection/src/browser-detection.js'
         ]
 
@@ -134,6 +135,8 @@ module.exports = (grunt) ->
       app: {
         src: [
           "build/bower_components/angular-ui-select/dist/select.min.css"
+          "build/bower_components/bc-css-flags/dist/css/bc-css-flags.css"
+          "build/bower_components/bc-phone-number/dist/css/bc-phone-number.css"
           "build/css/blockchain.css" # Needs to be loaded first
           "build/css/**/*.css"
         ],
@@ -201,7 +204,7 @@ module.exports = (grunt) ->
           {src: ["beep.wav"], dest: "dist/"}
           {src: ["index.html", "index-beta.html"], dest: "dist/", cwd: "build", expand: true}
           {src: ["admin.html"], dest: "dist/", cwd: "build", expand: true}
-          {src: ["img/*"], dest: "dist/", expand: true}
+          {src: ["img/*"], dest: "dist/", cwd: "build", expand: true}
           {src: ["locales/*"], dest: "dist/", cwd: "build", expand: true}
           {src: ["**/*"], dest: "dist/fonts", cwd: "build/fonts", expand: true}
         ]
@@ -239,6 +242,7 @@ module.exports = (grunt) ->
       images:
         files: [
           {src: ["*"], dest: "build/img", cwd: "img", expand: true }
+          {src: ["*"], dest: "build/img", cwd: "bower_components/bc-css-flags/dist/img", expand: true}
         ]
 
     watch:

@@ -24,9 +24,10 @@ const modules = [
   'bcTranslateStaticFilesLoader',
   'angular-inview',
   'passwordEntropy',
-  'internationalPhoneNumber',
   'webcam',
   'bcQrReader',
+  
+  'bcPhoneNumber',
 
   'templates-main'
 ];

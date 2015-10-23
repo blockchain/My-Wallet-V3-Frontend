@@ -1,4 +1,4 @@
-angular.module('walletApp').directive('configureMobileNumber', ($translate, Wallet, $filter) ->
+angular.module('walletApp').directive('configureMobileNumber', ($translate, Wallet, $filter, $timeout) ->
   {
     restrict: "E"
     replace: true
@@ -8,7 +8,6 @@ angular.module('walletApp').directive('configureMobileNumber', ($translate, Wall
     }
     templateUrl: 'templates/configure-mobile-number.jade'
     link: (scope, elem, attrs) ->
-      scope.user = Wallet.user
       scope.mobileDefaultCountry = null
 
       scope.status = {busy: false}
@@ -20,52 +19,32 @@ angular.module('walletApp').directive('configureMobileNumber', ($translate, Wall
       if attrs.fullWidth?
         scope.fullWidth = true
 
-      scope.watchMobileNumberOnce = scope.$watch "user.mobile.number + user.mobile.country", (newValue) ->
-        return unless scope.user.mobile?
+      scope.fields.newMobile = Wallet.user.internationalMobileNumber
 
-        scope.user.internationalMobileNumber = intlTelInputUtils.formatNumber(Wallet.internationalPhoneNumber(scope.user.mobile))
-
-        scope.noMobile = scope.user.internationalMobileNumber == "+1"
-        scope.fields.newMobile = scope.user.internationalMobileNumber
-
-        if scope.noMobile
-          scope.mobileDefaultCountry = Wallet.status.currentCountryCode
-          scope.fields.newMobile = "+" + Wallet.status.currentCountryDialCode
-
-        # Without killing this watcher, the input field will have a function in
-        # it after you save a new number once.
-        scope.watchMobileNumberOnce()
+      scope.numberChanged = () ->
+        scope.fields.newMobile != Wallet.user.internationalMobileNumber
 
       scope.cancel = () ->
+        # This doesn't update the form
+        scope.fields.newMobile = Wallet.user.internationalMobileNumber
+
         scope.onCancel()
 
       scope.changeMobile = () ->
         scope.status.busy = true
 
-        formattedNumber = intlTelInputUtils.formatNumber("+" + scope.fields.newMobile)
-
         success = () ->
           scope.status.busy = false
           scope.onSuccess()
-          scope.user.internationalMobileNumber = formattedNumber
+          Wallet.user.internationalMobileNumber = scope.fields.newMobile
           Wallet.saveActivity(2)
 
         error = (error) ->
           scope.status.busy = false
 
-        country = formattedNumber.split(" ")[0]
-        number = formattedNumber.split(" ").slice(1).join("")
+        country = scope.fields.newMobile.split(" ")[0]
+        number = scope.fields.newMobile.split(" ").slice(1).join("")
         mobile = {country: country, number: number}
         Wallet.changeMobile(mobile, success, error)
-
-      scope.validateMobileNumber = () ->
-        if scope.fields.newMobile? && Wallet.user.internationalMobileNumber?
-          oldDigits = Wallet.user.internationalMobileNumber.replace(/[+ -]/g,"")
-          newDigits = scope.fields.newMobile.replace(/[+ -]/g,"")
-
-          return false if oldDigits == newDigits
-
-        return intlTelInputUtils.isValidNumber("+" + scope.fields.newMobile)
-
   }
 )
