@@ -8,16 +8,23 @@ function SettingsSecurityCtrl($scope, Wallet, $uibModal, $translate) {
   $scope.processToggleRememberTwoFactor = null;
   $scope.isValidMnemonic = Wallet.isValidBIP39Mnemonic;
 
+  $scope.display = {advanced: false}
+
   $scope.recoveryPhrase = null;
   $scope.recoveryPassphrase = null;
   $scope.showRecoveryPhrase = false;
   $scope.editMnemonic = false;
-  
+  $scope.advanced = false;
+
+  $scope.toggleAdvanced = () => {
+    $scope.display.advanced = !$scope.display.advanced;
+  }
+
   $scope.edit = {
     password: false,
     passwordHint: false
   };
-  
+
   $scope.errors = {
     ipWhitelist: null
   };
@@ -64,7 +71,7 @@ function SettingsSecurityCtrl($scope, Wallet, $uibModal, $translate) {
     }
     return true;
   };
-  
+
   $scope.changeIpWhitelist = (list, success, errorCallback) => {
     const error = () => {
       Wallet.displayError("Failed to update IP whitelist");
@@ -115,7 +122,7 @@ function SettingsSecurityCtrl($scope, Wallet, $uibModal, $translate) {
     };
     Wallet.disableRememberTwoFactor(success, error);
   };
-  
+
   $scope.toggleRecoveryPhrase = () => {
     if (!$scope.showRecoveryPhrase) {
       const success = (mnemonic, passphrase) => {
@@ -138,7 +145,7 @@ function SettingsSecurityCtrl($scope, Wallet, $uibModal, $translate) {
       Wallet.displayWarning(translation);
     });
   };
-  
+
   $scope.changePasswordHint = (hint, successCallback, errorCallback) => {
     const success = () => {
       $scope.clearErrors();
