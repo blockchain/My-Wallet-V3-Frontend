@@ -28,20 +28,23 @@ form.form-horizontal(role="form",name="form",novalidate)
   .form-group
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="LANGUAGE")
-      p.text.em-300.line-height.hidden-xs(translate="LANGUAGE_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result
+      p.text.em-300.line-height.hidden-xs(translate="LANGUAGE_EXPLAIN")   
+    .col-sm-6.col-md-3
+    .col-sm-6.col-md-3.setting-result
       language-picker(language="settings.language")
   .form-group
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="CURRENCY")
       p.text.em-300.line-height.hidden-xs(translate="CURRENCY_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result
+    .col-sm-6.col-md-3
+    .col-sm-6.col-md-3.setting-result
       currency-picker(currency="settings.currency" display-currency="settings.displayCurrency")
   .form-group
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="BITCOIN_CURRENCY")
       p.text.em-300.line-height.hidden-xs(translate="BITCOIN_CURRENCY_EXPLAIN")
-    .col-sm-12.col-md-6.setting-result
+    .col-sm-6.col-md-3
+    .col-sm-6.col-md-3.setting-result
       btc-picker(currency="settings.btcCurrency" display-currency="settings.displayCurrency")
   .form-group
     .col-sm-12.col-md-6
@@ -53,7 +56,8 @@ form.form-horizontal(role="form",name="form",novalidate)
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="HANDLE_BITCOIN_LINKS")
       p.text.em-300.line-height.hidden-xs(translate="HANDLE_BITCOIN_LINKS_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result
+    .col-sm-6.col-md-3
+    .col-sm-6.col-md-3.setting-result
       a.button-primary(ng-click="setHandleBitcoinLinks()", translate="SET_HANDLE_BITCOIN_LINKS", ng-hide="settings.handleBitcoinLinks")
       p.settingtext.mtl(translate="HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN")
   .form-group
