@@ -25,7 +25,7 @@ function WalletNavigationCtrl($scope, Wallet, SecurityCenter, $state, $statePara
   $scope.getMainAccountId = () => {
     if (!$scope.status.isLoggedIn) return 0;
     return ($scope.numberOfActiveAccounts() <= 1) ?
-      Wallet.getDefaultAccountIndex() : 'accounts';
+      Wallet.getDefaultAccountIndex() : '';
   };
 
   $scope.showImported = () => {
@@ -54,9 +54,7 @@ function WalletNavigationCtrl($scope, Wallet, SecurityCenter, $state, $statePara
     }
   };
 
-  $scope.legacyTotal = () => {
-    return Wallet.getTotalBalanceForActiveLegacyAddresses();
-  };
+  $scope.getLegacyTotal = () => Wallet.total('imported');
 
   $scope.termsOfService = () => {
     let modalInstance = $uibModal.open({

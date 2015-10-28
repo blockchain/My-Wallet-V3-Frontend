@@ -35,9 +35,10 @@ describe "walletServices", () ->
 
         createNewWallet: (email, pwd, firstAccount, language, currency, success, fail) ->
           success()
-
-        getHistoryAndParseMultiAddressJSON: () ->
       }
+
+      Wallet.my.fetchMoreTransactionsForAll = (success,error,allTransactionsLoaded) ->
+        success()
 
       Wallet.settings_api.get_account_info = (success, error) ->
         success({

@@ -38,6 +38,9 @@ ul.aside {
     .btn {  min-width: 110px; }
     a{
       color: #878787;
+      &.imported-addresses{
+        color: $mid-grey;
+      }
     }
     li.active{
       a{

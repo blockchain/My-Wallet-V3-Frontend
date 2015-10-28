@@ -20,7 +20,8 @@ describe "walletServices", () ->
 
       Wallet.accounts = () -> accounts
 
-      MyWallet.getHistoryAndParseMultiAddressJSON = (-> )
+      Wallet.my.fetchMoreTransactionsForAll = (success,error,allTransactionsLoaded) ->
+        success()
 
       MyWallet.wallet = {
         isDoubleEncrypted: false

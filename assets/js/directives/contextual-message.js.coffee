@@ -25,7 +25,7 @@ angular.module('walletApp').directive('contextualMessage', ($cookies, $window, W
         })
 
       scope.shouldShow = () ->
-        balance = Wallet.total('accounts')
+        balance = Wallet.total('')
         security = SecurityCenter.security.score
         isTime = if scope.msgCookie? then Date.now() > scope.msgCookie.when else true
 

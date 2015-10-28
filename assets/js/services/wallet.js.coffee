@@ -111,7 +111,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
         # Fetch transactions:
         if wallet.my.wallet.isUpgradedToHD
-          wallet.my.getHistoryAndParseMultiAddressJSON()
+          didFetchTransactions = () ->
+            wallet.status.didLoadBalances = true
+            wallet.updateTransactions()
+
+          wallet.fetchMoreTransactions("", didFetchTransactions, (() ->), (() ->))
 
         wallet.applyIfNeeded()
       )
@@ -209,7 +213,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     success = () ->
       wallet.status.didUpgradeToHd = true
       wallet.status.didInitializeHD = true
-      wallet.my.getHistoryAndParseMultiAddressJSON()
+      wallet.fetchMoreTransactions("", (() -> wallet.updateTransactions()), (() ->), (() ->))
       successCallback()
       wallet.applyIfNeeded()
     # if failure saving upgrade
@@ -322,7 +326,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.createAccount = (label, successCallback, errorCallback, cancelCallback) ->
     proceed = (password) ->
       newAccount = wallet.my.wallet.newAccount(label, password)
-      wallet.my.getHistoryAndParseMultiAddressJSON()
+      wallet.fetchMoreTransactions("", (() -> wallet.updateTransactions()), (() ->), (() ->))
       successCallback && successCallback()
     wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
 
@@ -353,8 +357,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       allTransactionsLoadedCallback() if allTransactionsLoadedCallback?
       wallet.applyIfNeeded()
 
-    if where == "accounts"
-      wallet.my.fetchMoreTransactionsForAccounts(success, error, allTransactionsLoaded)
+    if where == ""
+      wallet.my.fetchMoreTransactionsForAll(success, error, allTransactionsLoaded)
     else if where == "imported"
       wallet.my.fetchMoreTransactionsForLegacyAddresses(success, error, allTransactionsLoaded)
     else
@@ -627,8 +631,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.my.wallet.restoreHDWallet(mnemonic, bip39pass, password)
     update = () ->
       console.log("updating...")
-      wallet.my.getHistoryAndParseMultiAddressJSON()
-      wallet.updateTransactions()
+      wallet.fetchMoreTransactions("", (() -> wallet.updateTransactions()), (() ->), (() ->))
       successCallback()
 
     wallet.askForSecondPasswordIfNeeded()
@@ -757,12 +760,12 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.total = (accountIndex) ->
     return unless wallet.my.wallet?
     switch accountIndex
-      when "accounts"
-        if wallet.my.wallet.isUpgradedToHD then wallet.my.wallet.hdwallet.balanceActiveAccounts else null
+      when ""
+        if wallet.my.wallet.isUpgradedToHD then wallet.my.wallet.hdwallet.balanceActiveAccounts + wallet.my.wallet.balanceSpendableActiveLegacy else wallet.my.wallet.balanceSpendableActiveLegacy
       when "imported"
         wallet.my.wallet.balanceSpendableActiveLegacy
       when undefined
-        wallet.total('accounts') + wallet.total('imported')
+        if wallet.my.wallet.isUpgradedToHD then wallet.my.wallet.hdwallet.balanceActiveAccounts + wallet.my.wallet.balanceSpendableActiveLegacy else wallet.my.wallet.balanceSpendableActiveLegacy
       else
         account = wallet.accounts()[parseInt(accountIndex)]
         if account == null then null else account.balance
@@ -831,15 +834,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
         $rootScope.$broadcast "needsUpgradeToHD"
         , 1000
       )
-
-    else if event == "did_multiaddr" # Transactions loaded
-      wallet.updateTransactions()
-      wallet.status.didLoadBalances = true if wallet.my.wallet.isUpgradedToHD
-      wallet.applyIfNeeded()
-    else if event == "did_update_legacy_address_balance"
-      console.log "did_update_legacy_address_balance"
-      wallet.applyIfNeeded()
-
     else if event == "wallet not found" # Only works in the mock atm
       $translate("WALLET_NOT_FOUND").then (translation) ->
         wallet.displayError(translation)

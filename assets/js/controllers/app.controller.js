@@ -132,7 +132,7 @@ function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $t
       const success = message => {
         Wallet.user.isEmailVerified = true;
         $state.go("wallet.common.transactions", {
-          accountIndex: "accounts"
+          accountIndex: ""
         });
         $translate("EMAIL_VERIFIED").then( translation => {
           Wallet.displaySuccess(translation);

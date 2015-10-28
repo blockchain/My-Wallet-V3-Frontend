@@ -69,7 +69,7 @@ function RequestCtrl($scope, Wallet, $modalInstance, $log, destination, $transla
   $scope.$watchCollection("destinations", () => {
     let idx = Wallet.getDefaultAccountIndex();
     if (($scope.fields.to == null) && $scope.accounts().length > 0) {
-      if ($stateParams.accountIndex === "accounts" || ($stateParams.accountIndex == null)) {
+      if ($stateParams.accountIndex === "" || ($stateParams.accountIndex == null)) {
 
       } else if ($stateParams.accountIndex === "imported" || ($stateParams.accountIndex == null)) {
 

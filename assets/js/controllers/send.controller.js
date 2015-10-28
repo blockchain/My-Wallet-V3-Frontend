@@ -189,7 +189,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
 
       let index = $scope.transaction.from.index || 'imported';
 
-      if (!($state.current.name === "wallet.common.transactions" || $stateParams.accountIndex === "accounts")) {
+      if (!($state.current.name === "wallet.common.transactions" || $stateParams.accountIndex === "")) {
         $state.go("wallet.common.transactions", {
           accountIndex: index
         });

@@ -36,12 +36,6 @@ describe "WalletNavigationCtrl", ->
     expect(modal.open).toHaveBeenCalled()
   )
 
-  it "should show the total balance of legacy address",  inject((Wallet) ->
-    spyOn(Wallet, "getTotalBalanceForActiveLegacyAddresses").and.callThrough()
-    expect(scope.legacyTotal()).toBe(100000000)
-    expect(Wallet.getTotalBalanceForActiveLegacyAddresses).toHaveBeenCalled()
-  )
-
   it "should know the number of active legacy addresses", inject((Wallet) ->
     expect(scope.numberOfActiveLegacyAddresses()).toBe(1)
   )
@@ -57,7 +51,7 @@ describe "WalletNavigationCtrl", ->
 
   it "should know the main account index when there are multiple accounts", inject(() ->
     scope.status.isLoggedIn = true
-    expect(scope.getMainAccountId()).toBe('accounts')
+    expect(scope.getMainAccountId()).toBe('')
   )
 
   it "should show imported addresses based on state", inject(() ->
