@@ -93,3 +93,11 @@ button[disabled] {
 }
 .button-default { border: 1px solid #e0e0e0; }
 .button-nowrap { white-space: nowrap; }
+
+.btn-inverse {
+  background: #454545;
+  color: white;
+  &:hover {
+    color: darken(#454545, 70%);
+  }
+}
