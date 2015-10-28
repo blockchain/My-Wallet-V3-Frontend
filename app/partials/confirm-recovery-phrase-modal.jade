@@ -32,7 +32,17 @@
     .row
       .col-xs-3(ng-repeat="word in recoveryPhrase.slice(offset, offset + 4)")
         p.center
-          b {{ offset + $index + 1 }}. {{ word }}
+          b
+            {{ offset + $index + 1 }}. {{ word }}
+    .row
+      .col-xs-12
+        p.center
+          a.btn.button-muted(ng-click="previousWords()", ng-hide="offset == 0")
+            i.ti-arrow-left.prm
+            span(translate="PREVIOUS")
+          a.btn.btn-inverse(ng-click="nextWords()", ng-hide="offset >= 8")
+            span(translate="NEXT_4_WORDS").prm
+            i.ti-arrow-right
     
   span(ng-show="step==2")
     p.blue
@@ -62,12 +72,8 @@
 .modal-footer.pal.flex-end
   button.button-muted.mrm(  ng-click="close()", translate="CLOSE", ng-show="step==0")
   button.button-primary.mrm(ng-click="close()", translate="CLOSE", ng-show="step==3")
-  button.button-muted.mrm(  ng-click="previousStep()", translate="BACK", ng-show="(step == 1 && offset == 0) || step == 2")
+  button.button-muted.mrm(  ng-click="previousStep()", translate="BACK", ng-show="step > 0 && step < 3")
 
   button.button-primary(ng-click="goToShow()",translate="NEXT_STEP", ng-show="step==0")
-  
-  button.button-muted.mrm(ng-click="previousWords()",translate="BACK", ng-show="step==1 && (offset == 4 || offset == 8)")
-  button.button-primary.mrm(ng-click="nextWords()",translate="NEXT_4_WORDS",     ng-show="step==1 && (offset == 0 || offset == 4)")
-  
-  button.button-primary(ng-click="goToVerify()",translate="FINAL_STEP", ng-show="step==1 && offset == 8", ng-disabled="!lastWordGroup")
+  button.button-primary(ng-click="goToVerify()",translate="FINAL_STEP", ng-show="step==1", ng-disabled="!lastWordGroup")
   button.button-primary(ng-click="verify()",translate="FINISH", ng-show="step==2", ng-disabled="hasEmptyWords()")
