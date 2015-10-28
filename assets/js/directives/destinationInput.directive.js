@@ -46,11 +46,15 @@ function destinationInput($rootScope, $timeout, Wallet) {
       $timeout(() => elem.find('input')[0].focus(), t || 50);
     };
 
-    scope.onBlur = () => {
-      ctrl.$setTouched();
+    let blurTime;
+    scope.blur = () => {
+      blurTime = $timeout(() => {
+        ctrl.$setTouched();
+      }, 250);
     };
 
-    scope.onFocus = () => {
+    scope.focus = () => {
+      $timeout.cancel(blurTime);
       ctrl.$setUntouched();
     };
 
