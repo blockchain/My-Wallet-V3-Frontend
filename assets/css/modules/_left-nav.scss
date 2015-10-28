@@ -2,6 +2,10 @@
   height: 100%;
   @extend .flex-between;
   flex-direction: column;
+
+  a.imported-addresses {
+    color: #BBBBBB !important;
+  }
 }
 
 ul.aside {

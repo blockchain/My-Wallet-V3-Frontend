@@ -3,7 +3,7 @@ angular
   .controller("HomeCtrl", HomeCtrl);
 
 function HomeCtrl($scope, Wallet, $uibModal) {
-  $scope.getTotal = () => Wallet.total();
+  $scope.getTotal = () => Wallet.total('');
   $scope.getLegacyTotal = () => Wallet.total('imported');
   $scope.activeAccounts = Wallet.accounts().filter(a => !a.archived)
 

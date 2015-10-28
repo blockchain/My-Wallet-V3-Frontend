@@ -31,7 +31,8 @@ describe "walletServices", () ->
         keys: []
         getNote: (-> )
 
-      Wallet.my.getHistoryAndParseMultiAddressJSON = () ->
+      Wallet.my.fetchMoreTransactionsForAll = (success,error,allTransactionsLoaded) ->
+        success()
 
       Wallet.settings_api.get_account_info = (success, error) ->
         success({
@@ -305,10 +306,12 @@ describe "walletServices", () ->
       return
     )
 
-    it "should return the sum of all accounts", inject((Wallet) ->
+    it "should return the sum of all accounts and addresses", inject((Wallet) ->
       Wallet.my.wallet.hdwallet.balanceActiveAccounts = 3
-      expect(Wallet.total("accounts")).toBeGreaterThan(0)
-      expect(Wallet.total("accounts")).toBe(Wallet.accounts()[0].balance + Wallet.accounts()[1].balance)
+      Wallet.my.wallet.balanceSpendableActiveLegacy = 1
+
+      expect(Wallet.total("")).toBeGreaterThan(0)
+      expect(Wallet.total("")).toBe(Wallet.accounts()[0].balance + Wallet.accounts()[1].balance + 1)
 
       return
     )
@@ -463,7 +466,7 @@ describe "walletServices", () ->
   describe "fetchMoreTransactions()", ->
     beforeEach ->
       Wallet.my.fetchMoreTransactionsForAccount = () ->
-      Wallet.my.fetchMoreTransactionsForAccounts = () ->
+      Wallet.my.fetchMoreTransactionsForAll = () ->
       Wallet.my.fetchMoreTransactionsForLegacyAddresses = (success, error, didFetchOldestTransaction) ->
         if success?
           success([])
@@ -474,9 +477,9 @@ describe "walletServices", () ->
       expect(Wallet.my.fetchMoreTransactionsForAccount).toHaveBeenCalled()
 
     it "should call the right method for all accounts combined", ->
-      spyOn(Wallet.my, "fetchMoreTransactionsForAccounts")
-      Wallet.fetchMoreTransactions("accounts")
-      expect(Wallet.my.fetchMoreTransactionsForAccounts).toHaveBeenCalled()
+      spyOn(Wallet.my, "fetchMoreTransactionsForAll")
+      Wallet.fetchMoreTransactions("")
+      expect(Wallet.my.fetchMoreTransactionsForAll).toHaveBeenCalled()
 
     it "should call the right method for imported addresses", ->
       spyOn(Wallet.my, "fetchMoreTransactionsForLegacyAddresses").and.callFake((success, error, didFetchOldestTransaction) ->

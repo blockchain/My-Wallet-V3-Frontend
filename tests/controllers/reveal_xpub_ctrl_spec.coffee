@@ -21,7 +21,8 @@ describe "RevealXpubCtrl", ->
           then: (fn) -> fn(); return { catch: (-> ) }
         }
 
-      MyWallet.getHistoryAndParseMultiAddressJSON = (-> )
+      Wallet.my.fetchMoreTransactionsForAll = (success,error,allTransactionsLoaded) ->
+        success()
 
       MyWallet.wallet = {
         isDoubleEncrypted: false

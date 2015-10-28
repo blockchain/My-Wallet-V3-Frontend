@@ -37,7 +37,7 @@ function RecoveryCtrl($scope, Wallet, $state, $translate) {
       $scope.editMnemonic = false;
       $scope.mnemonic = null;
       $state.go("wallet.common.transactions", {
-        accountIndex: "accounts"
+        accountIndex: ""
       });
       Wallet.displaySuccess("Successfully imported seed");
     };

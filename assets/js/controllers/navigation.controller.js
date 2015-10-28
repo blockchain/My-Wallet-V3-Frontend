@@ -40,7 +40,7 @@ function NavigationCtrl($scope, Wallet, SecurityCenter, $translate, $cookieStore
 //      $cookieStore.remove("uid") // Pending a "Forget Me feature"
 
         $state.go("wallet.common.transactions", {
-          accountIndex: "accounts"
+          accountIndex: ""
         });
         Wallet.logout();  // Refreshes the browser, so won't return
       }
