@@ -24,7 +24,9 @@
       button.btn.btn-default(type="button" uib-dropdown-toggle)
         span.caret
         span.sr-only Toggle Dropdown
-      ul.uib-dropdown-menu.dropdown-menu-right
+      ul.uib-dropdown-menu.dropdown-menu-right.dropdown
+        li.dropdown-header
+          | Accounts
         li(ng-repeat="account in accounts")
           a(ng-click="setModel(account)" ng-disabled="true")
             | {{ account.label }}

@@ -11,4 +11,17 @@
     border-radius: 5px 0px 0px 5px !important;
   }
   .btn-default { border-color: $grey; }
+  .dropdown {
+    border-radius: 0px;
+    padding: 0px 0px 5px 0px;
+    .dropdown-header {
+      background-color: #f4f4f4;
+      border-bottom: 1px solid #e4e4e4;
+      color: #686868;
+      font-size: 14px;
+      font-weight: 500;
+      padding-bottom: 5.6px;
+      padding-top: 5.6px;
+    }
+  }
 }
