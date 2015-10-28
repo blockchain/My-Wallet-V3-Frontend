@@ -1,5 +1,5 @@
 .destination-input
-  .input-group
+  .input-group(ng-click="focus()")
     button.form-control(
       type="button"
       ng-show="model.type === 'Accounts'"
@@ -10,10 +10,10 @@
       type="text"
       tabindex="1"
       autocomplete="off"
+      placeholder="Paste or scan an address or select an account"
       ng-model="model.address"
       ng-hide="model.type === 'Accounts'"
-      ng-blur="onBlur()"
-      ng-focus="onFocus()"
+      ng-blur="blur()"
     )
     .input-group-btn(uib-dropdown)
       button#qr.btn.btn-default(
@@ -24,7 +24,9 @@
       button.btn.btn-default(type="button" uib-dropdown-toggle)
         span.caret
         span.sr-only Toggle Dropdown
-      ul.uib-dropdown-menu.dropdown-menu-right
+      ul.uib-dropdown-menu.dropdown-menu-right.drop-menu
+        li.dropdown-header
+          | Accounts
         li(ng-repeat="account in accounts")
           a(ng-click="setModel(account)" ng-disabled="true")
             | {{ account.label }}

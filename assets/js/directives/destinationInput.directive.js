@@ -42,19 +42,24 @@ function destinationInput($rootScope, $timeout, Wallet) {
       $timeout(scope.change);
     };
 
-    scope.focusInput = () => {
-      $timeout(() => elem.find('input')[0].focus(), 50);
+    scope.focusInput = (t) => {
+      $timeout(() => elem.find('input')[0].focus(), t || 50);
     };
 
-    scope.onBlur = () => {
-      ctrl.$setTouched();
+    let blurTime;
+    scope.blur = () => {
+      blurTime = $timeout(() => {
+        ctrl.$setTouched();
+      }, 250);
     };
 
-    scope.onFocus = () => {
+    scope.focus = () => {
+      $timeout.cancel(blurTime);
       ctrl.$setUntouched();
     };
 
     if (!scope.model) scope.clearModel();
+    scope.focusInput(250);
     scope.$watch('model', scope.change);
   }
 }
