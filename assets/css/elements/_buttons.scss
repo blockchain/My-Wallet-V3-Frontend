@@ -98,6 +98,9 @@ button[disabled] {
   background: #454545;
   color: white;
   &:hover {
-    color: darken(#454545, 70%);
+    color: darken(white, 20%) !important;
+  }
+  &:visited {
+    color: white;
   }
 }
