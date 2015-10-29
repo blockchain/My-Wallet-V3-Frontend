@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("RequestCtrl", RequestCtrl);
 
-function RequestCtrl($scope, Wallet, $modalInstance, $log, destination, $translate, $stateParams, filterFilter) {
+function RequestCtrl($scope, Wallet, $modalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -10,6 +10,7 @@ function RequestCtrl($scope, Wallet, $modalInstance, $log, destination, $transla
   $scope.isBitCurrency = Wallet.isBitCurrency;
   $scope.destinations = [];
   $scope.receiveAddress = null;
+  $scope.advanced = false;
 
   $scope.fields = {
     to: null,
@@ -51,9 +52,34 @@ function RequestCtrl($scope, Wallet, $modalInstance, $log, destination, $transla
     Wallet.closeAlert(alert);
   };
 
-  $scope.close = () => {
+  $scope.advancedReceive = () => {
+    $scope.advanced = true;
+  }
+
+  $scope.regularReceive = () => {
+    $scope.advanced = false;
+    $scope.fields.label = "";
+  }
+
+  $scope.done = () => {
     Wallet.clearAlerts();
-    $modalInstance.dismiss("");
+
+    if($scope.fields.label == "") {
+        $modalInstance.dismiss("");
+    } else {
+
+      const success = () => {
+        $modalInstance.dismiss("");
+      };
+
+      const error = (error) => {
+        $scope.requestForm.label.$error.characters = true;
+      };
+
+      let idx = $scope.fields.to.index;
+      Wallet.changeHDAddressLabel($scope.fields.to, Wallet.getReceivingAddressIndexForAccount(idx), $scope.fields.label, success, error);
+    };
+
   };
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
@@ -86,6 +112,7 @@ function RequestCtrl($scope, Wallet, $modalInstance, $log, destination, $transla
     } else if ($scope.fields.label === "" && $scope.status.didInitializeHD) {
       let idx = $scope.fields.to.index;
       $scope.receiveAddress = Wallet.getReceivingAddressForAccount(idx);
+
       $scope.setPaymentRequestURL($scope.receiveAddress, $scope.fields.amount);
     }
   });

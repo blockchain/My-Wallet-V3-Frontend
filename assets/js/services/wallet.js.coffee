@@ -367,6 +367,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.changeLegacyAddressLabel = (address, label, successCallback, errorCallback) ->
     address.label = label
     successCallback()
+    return
 
   wallet.changeHDAddressLabel = (account, index, label, successCallback, errorCallback) ->
     account.setLabelForReceivingAddress(index, label)
@@ -646,6 +647,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.getReceivingAddressForAccount = (idx) ->
     if wallet.my.wallet.isUpgradedToHD then wallet.my.wallet.hdwallet.accounts[idx].receiveAddress else ""
+
+  wallet.getReceivingAddressIndexForAccount = (idx) ->
+    if wallet.my.wallet.isUpgradedToHD then wallet.my.wallet.hdwallet.accounts[idx].receiveIndex else null
+
 
   ###################
   # URL: bitcoin:// #
