@@ -43,6 +43,8 @@
 @import 'modules/signin';
 @import 'modules/transaction-list';
 @import 'modules/two-factor';
+@import 'modules/confirm-recovery-phrase';
+
 
 //override bootstrap
 @import 'utilities/bs_overrides';

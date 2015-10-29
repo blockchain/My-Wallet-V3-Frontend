@@ -29,7 +29,8 @@ describe "ConfirmRecoveryPhraseCtrl", ->
 
     return
 
-  it "should get mnemonic", inject((Wallet) ->
+  it "should get mnemonic at 2nd step", inject((Wallet) ->
+    scope.goToShow()
     expect(scope.recoveryPhrase).not.toBe(null)
     return
   )

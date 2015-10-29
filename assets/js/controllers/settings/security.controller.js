@@ -6,15 +6,8 @@ function SettingsSecurityCtrl($scope, Wallet, $uibModal, $translate) {
   $scope.settings = Wallet.settings;
   $scope.btc = Wallet.btcCurrencies[0];
   $scope.processToggleRememberTwoFactor = null;
-  $scope.isValidMnemonic = Wallet.isValidBIP39Mnemonic;
 
   $scope.display = {advanced: false}
-
-  $scope.recoveryPhrase = null;
-  $scope.recoveryPassphrase = null;
-  $scope.showRecoveryPhrase = false;
-  $scope.editMnemonic = false;
-  $scope.advanced = false;
 
   $scope.toggleAdvanced = () => {
     $scope.display.advanced = !$scope.display.advanced;
@@ -121,29 +114,6 @@ function SettingsSecurityCtrl($scope, Wallet, $uibModal, $translate) {
       $scope.processToggleRememberTwoFactor = false;
     };
     Wallet.disableRememberTwoFactor(success, error);
-  };
-
-  $scope.toggleRecoveryPhrase = () => {
-    if (!$scope.showRecoveryPhrase) {
-      const success = (mnemonic, passphrase) => {
-        $scope.recoveryPhrase = mnemonic;
-        $scope.recoveryPassphrase = passphrase;
-        $scope.showRecoveryPhrase = true;
-      };
-      const error = (message) => {};
-      Wallet.getMnemonic(success, error);
-    } else {
-      $scope.recoveryPhrase = null;
-      $scope.recoveryPassphrase = null;
-      $scope.showRecoveryPhrase = false;
-    }
-  };
-
-  $scope.doNotCopyPaste = (event) => {
-    event.preventDefault();
-    $translate("DO_NOT_COPY_PASTE").then((translation) => {
-      Wallet.displayWarning(translation);
-    });
   };
 
   $scope.changePasswordHint = (hint, successCallback, errorCallback) => {

@@ -1,38 +1,38 @@
 describe "SettingsSecurityCtrl", ->
   scope = undefined
   Wallet = undefined
-    
+
   modal =
     open: ->
-      
+
   mockObserver = {
-    success: (() ->), 
+    success: (() ->),
     error: (() ->)}
-    
+
   beforeEach angular.mock.module("walletApp")
-  
+
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
 
       Wallet.settings = {rememberTwoFactor: true}
-      
-      Wallet.settings_api = 
-        update_password_hint1: (hint, success, error) -> 
+
+      Wallet.settings_api =
+        update_password_hint1: (hint, success, error) ->
           if hint == "आपकी पसंदीदा"
             error(101)
           else
             success()
-            
+
       scope = $rootScope.$new()
-            
+
       $controller "SettingsSecurityCtrl",
         $scope: scope,
         $stateParams: {},
         $uibModal: modal
-        
+
       scope.$digest()
-      
+
       return
 
     return
@@ -42,13 +42,6 @@ describe "SettingsSecurityCtrl", ->
     return
   )
   
-  it "does toggle recovery phrase", inject((Wallet) ->
-    spyOn(Wallet, "getMnemonic")
-    scope.toggleRecoveryPhrase()
-    expect(Wallet.getMnemonic).toHaveBeenCalled()
-    return
-  )
-
   describe "pbkdf2", ->
 
     it "should be valid Pbkdf2", ->
@@ -70,7 +63,7 @@ describe "SettingsSecurityCtrl", ->
     it "has an initial status", ->
       expect(scope.settings.rememberTwoFactor).toBe(true)
       return
-    
+
     it "can be enabled", inject((Wallet) ->
       spyOn(Wallet, "enableRememberTwoFactor")
       scope.enableRememberTwoFactor()
@@ -78,7 +71,7 @@ describe "SettingsSecurityCtrl", ->
 
       return
     )
-    
+
     it "can be disabled", inject((Wallet) ->
       spyOn(Wallet, "disableRememberTwoFactor")
       scope.disableRememberTwoFactor()
@@ -86,8 +79,8 @@ describe "SettingsSecurityCtrl", ->
 
       return
     )
-    
-  describe "password", ->   
+
+  describe "password", ->
     it "can be changed through modal", inject(($uibModal) ->
       spyOn(modal, "open")
       scope.changePassword()
@@ -95,18 +88,18 @@ describe "SettingsSecurityCtrl", ->
     )
 
     return
-  
-  describe "password hint", ->   
-  
+
+  describe "password hint", ->
+
     it "should let user change it", inject((Wallet) ->
       spyOn(Wallet, "changePasswordHint")
       scope.edit.passwordHint = false
 
       scope.changePasswordHint("Other hint", mockObserver.success, mockObserver.error)
 
-          
+
       expect(Wallet.changePasswordHint).toHaveBeenCalled()
-      
+
       return
     )
 
@@ -116,7 +109,7 @@ describe "SettingsSecurityCtrl", ->
 
       scope.changePasswordHint("आपकी पसंदीदा", mockObserver.success, mockObserver.error)
       expect(scope.errors.passwordHint).toBeDefined()
-      
+
       return
     )
   describe "whitelist", ->
@@ -143,7 +136,7 @@ describe "SettingsSecurityCtrl", ->
 
       it "should return true, no errors", ->
         expect(scope.validateIpWhitelist('1.2.3.4')).toBe(true)
-      
+
       it "should allow an empty list", ->
         expect(scope.validateIpWhitelist('')).toBe(true)
 

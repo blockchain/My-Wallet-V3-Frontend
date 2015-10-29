@@ -10,13 +10,6 @@ form.form-horizontal(role="form",name="form",novalidate)
       p.text.line-height.em-300.hidden-xs.hidden-sm(translate="RECOVERY_PHRASE_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       confirm-recovery-phrase
-      a.button-primary(ng-click="toggleRecoveryPhrase()", ng-hide="showRecoveryPhrase", translate="SHOW_RECOVERY_PHRASE")
-      a.button-primary(ng-click="toggleRecoveryPhrase()", ng-show="showRecoveryPhrase", translate="HIDE_RECOVERY_PHRASE")
-
-    .row
-      .col-xs-12
-        pre.recovery(ng-show="showRecoveryPhrase", ng-cut="doNotCopyPaste($event)" ng-copy="doNotCopyPaste($event)") {{ recoveryPhrase }}
-        pre.recovery(ng-show="showRecoveryPhrase && recoveryPassphrase", ng-cut="doNotCopyPaste($event)" ng-copy="doNotCopyPaste($event)") {{ recoveryPassphrase }}
 
   .form-group
     .col-sm-12.col-md-6

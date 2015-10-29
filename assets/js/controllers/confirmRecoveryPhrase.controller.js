@@ -3,8 +3,12 @@ angular
   .controller("ConfirmRecoveryPhraseCtrl", ConfirmRecoveryPhraseCtrl);
 
 function ConfirmRecoveryPhraseCtrl($scope, $log, Wallet, $modalInstance, $translate) {
-  $scope.step = 1;
+  $scope.step = 0;
+  $scope.offset = 0;
   $scope.recoveryPhrase = null;
+
+  $scope.lastWordGroup = false;
+
   $scope.words = [
     {
       value: '',
@@ -60,6 +64,58 @@ function ConfirmRecoveryPhraseCtrl($scope, $log, Wallet, $modalInstance, $transl
     $scope.step = 2;
   };
 
+  $scope.goToShow= () => {
+    $scope.step = 1;
+    
+    if($scope.mnemonic == null) {
+      const success = mnemonic => {
+        $scope.recoveryPhrase = mnemonic.split(" ");
+        $scope.setRandomWords(mnemonic);
+      };
+
+      const error = error => {
+        $translate(error).then( translation => {
+          Wallet.displayError(translation);
+        });
+        $modalInstance.dismiss("");
+      };
+
+      const cancel = () => {
+        $modalInstance.dismiss("");
+      };
+
+      Wallet.getMnemonic(success, error, cancel);
+    }
+  };
+
+  $scope.hasEmptyWords = () => $scope.words.some((word) => word.value === "");
+
+  $scope.nextWords = () => {
+    if($scope.offset >= 8) {
+      return;
+    }
+
+    $scope.offset += 4
+
+    if($scope.offset == 8) {
+      $scope.lastWordGroup = true;
+    }
+  }
+
+  $scope.previousWords = () => {
+    if($scope.offset <= 0) {
+      return;
+    }
+
+    $scope.offset -= 4
+
+    $scope.lastWordGroup = false;
+  }
+
+  $scope.previousStep = () => {
+    $scope.step -= 1;
+  }
+
   $scope.verify = () => {
     let valid = true;
     for (let word of $scope.words) {
@@ -71,22 +127,4 @@ function ConfirmRecoveryPhraseCtrl($scope, $log, Wallet, $modalInstance, $transl
       $scope.step = 3;
     }
   };
-
-  const success = mnemonic => {
-    $scope.recoveryPhrase = mnemonic;
-    $scope.setRandomWords(mnemonic);
-  };
-
-  const error = error => {
-    $translate(error).then( translation => {
-      Wallet.displayError(translation);
-    });
-    $modalInstance.dismiss("");
-  };
-
-  const cancel = () => {
-    $modalInstance.dismiss("");
-  };
-
-  Wallet.getMnemonic(success, error, cancel);
 }
