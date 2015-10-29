@@ -25,7 +25,7 @@
             span
               fiat-or-btc(btc="getLegacyTotal()")
           
-      li.action-bar(ng-show="selectedAccountIndex != 'imported' && showOrHide('transactions')")
+      li.action-bar(ng-show="showOrHide('transactions')")
         a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
 
     li.header.mbm(ui-sref-active="current",  ng-click="hideMenu()")
