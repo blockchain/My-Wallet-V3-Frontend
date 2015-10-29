@@ -344,6 +344,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.fetchMoreTransactions = (where, successCallback, errorCallback, allTransactionsLoadedCallback) ->
     success = (res) ->
+      wallet.my.wallet.getHistory()
       wallet.appendTransactions(res)
       # wallet.updateTransactions()
       successCallback()
