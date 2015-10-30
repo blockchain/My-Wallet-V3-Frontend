@@ -30,7 +30,8 @@ describe "walletServices", () ->
             isMnemonicVerified: true
             accounts: [{balance: 1, archived: false},{balance: 2, archived: false}]
           newAccount: () ->
-
+          getHistory: () ->
+            then: () ->
           keys: [{address: "some_legacy_address", label: "Old", archived: false}, {address: "some_legacy_address_without_label", label: "some_legacy_address_without_label", archived: false}]
 
         createNewWallet: (email, pwd, firstAccount, language, currency, success, fail) ->

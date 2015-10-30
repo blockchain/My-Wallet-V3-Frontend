@@ -30,6 +30,8 @@ describe "walletServices", () ->
           accounts: []
         keys: []
         getNote: (-> )
+        getHistory: () ->
+          then: () ->
 
       Wallet.my.fetchMoreTransactionsForAll = (success,error,allTransactionsLoaded) ->
         success()

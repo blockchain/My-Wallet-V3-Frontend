@@ -115,7 +115,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
             wallet.status.didLoadBalances = true
             wallet.updateTransactions()
 
-          wallet.fetchMoreTransactions("", didFetchTransactions, (() ->), (() ->))
+          wallet.my.wallet.getHistory().then(didFetchTransactions)
 
         wallet.applyIfNeeded()
       )
@@ -213,7 +213,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     success = () ->
       wallet.status.didUpgradeToHd = true
       wallet.status.didInitializeHD = true
-      wallet.fetchMoreTransactions("", (() -> wallet.updateTransactions()), (() ->), (() ->))
+      wallet.my.wallet.getHistory().then(wallet.updateTransactions)
       successCallback()
       wallet.applyIfNeeded()
     # if failure saving upgrade
@@ -326,7 +326,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.createAccount = (label, successCallback, errorCallback, cancelCallback) ->
     proceed = (password) ->
       newAccount = wallet.my.wallet.newAccount(label, password)
-      wallet.fetchMoreTransactions("", (() -> wallet.updateTransactions()), (() ->), (() ->))
+      wallet.my.wallet.getHistory().then(wallet.updateTransactions)
       successCallback && successCallback()
     wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancelCallback)
 
@@ -345,7 +345,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.fetchMoreTransactions = (where, successCallback, errorCallback, allTransactionsLoadedCallback) ->
     success = (res) ->
       wallet.appendTransactions(res)
-      # wallet.updateTransactions()
       successCallback()
       wallet.applyIfNeeded()
 
@@ -631,7 +630,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.my.wallet.restoreHDWallet(mnemonic, bip39pass, password)
     update = () ->
       console.log("updating...")
-      wallet.fetchMoreTransactions("", (() -> wallet.updateTransactions()), (() ->), (() ->))
+      wallet.my.wallet.getHistory().then(wallet.updateTransactions)
       successCallback()
 
     wallet.askForSecondPasswordIfNeeded()
@@ -786,6 +785,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
         wallet.transactions.unshift transaction
     wallet.status.didLoadTransactions = true
+    wallet.applyIfNeeded()
 
   wallet.appendTransactions = (transactions, override) ->
     if not transactions? or not wallet.transactions?

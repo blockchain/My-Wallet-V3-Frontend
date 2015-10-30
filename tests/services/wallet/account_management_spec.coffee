@@ -26,6 +26,8 @@ describe "walletServices", () ->
       MyWallet.wallet = {
         isDoubleEncrypted: false
         newAccount: (label) -> accounts.push({ label: label })
+        getHistory: () ->
+          then: () ->
       }
 
       return

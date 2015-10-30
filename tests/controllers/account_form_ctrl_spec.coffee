@@ -30,6 +30,9 @@ describe "AccountFormCtrl", ->
         newAccount: (label) ->
           accounts.push { label: label }
           return
+
+        getHistory: () ->
+          then: () ->
       }
 
   beforeEach ->
