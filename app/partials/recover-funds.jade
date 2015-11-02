@@ -13,7 +13,7 @@
         .flex-column
           h2.em-300.mtn(translate="RECOVER_FUNDS")
           p(translate="RECOVER_BTC_LOST")
-      form.form-horizontal(name="recoveryForm")
+      form.form-horizontal(name="recoveryForm" autocomplete="off" novalidate)
         div(ng-switch-when="1")
           .form-group(ng-class="{'has-error': recoveryForm.mnemonic.$error.isValid && recoveryForm.mnemonic.$touched}")
             label(translate="YOUR_REC_PASS")

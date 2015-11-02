@@ -137,6 +137,7 @@
   "IMPORT_RECOVERY_PHRASE" : "Import Recovery Phrase",
   "IMPORT_RECOVERY_PHRASE_EXPLAIN" : "If you have a 12-word Recovery Phrase, you may enter it to restore your wallet and funds. Recovery Phrases provided by other wallet providers may be used here if they follow accepted HD wallet standards.",
   "CONFIRM_RECOVERY_PHRASE" : "Backup Phrase",
+  "RECOVERY_ERROR": "Unable to import now, please try again.",
   "SETUP_WALLET" : "Please Setup Your  Wallet",
   "WALLET_GREETING_SETUP" : "Welcome To Your New Wallet!",
   "NEXT_STEP" : "Next Step",
