@@ -4,35 +4,44 @@ An AngularJS bitcoin web wallet powered by [My-Wallet-V3](https://github.com/blo
 
 This is the new and improved wallet. You can see it at [alpha.blockchain.info](https://alpha.blockchain.info/). For the original wallet at [blockchain.info](https://blockchain.info/) please see [this repository](https://github.com/blockchain/My-Wallet) or [contact support](http://blockchain.zendesk.com/).
 
-## Running Locally
+## Setup
 
-Make sure you have [Node.js](http://nodejs.org/) installed. You also need to install the [Java JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (not to be confused with SDK).
+Make sure you have [Node.js](http://nodejs.org/) installed.
 
 Some NodeJS components need to be installed system wide:
-
 ```sh
-npm install -g grunt-cli coffee-script http-server bower
+npm install -g grunt-cli coffee-script http-server
 ```
 
 You also need Sass (use `sudo` if you're not using a [Ruby version manager](https://rvm.io)):
-
 ```sh
 gem install sass
 ```
 
+Install dependencies:
 ```sh
-git clone https://github.com/blockchain/My-Wallet-V3-Frontend.git
-cd My-Wallet-V3-Frontend
-npm install && bower install
+npm install
 ```
 
-Grunt compiles the view templates and CSS. Keep it running:
+## Build
 
+Grunt watches and compiles the Jade view templates and CSS. Keep it running:
 ```sh
 grunt
 ```
 
-Run the server:
+## Test
+
+To run test and monitor for changes:
+```sh
+npm test
+```
+
+A coverage report is generated after you run the test for the first time. Just open `coverage/index.html` in your browser.
+
+## Run
+
+Run local http server:
 ```sh
 npm start
 ```
@@ -44,7 +53,6 @@ Visit [local.blockchain.com:8080](http://local.blockchain.com:8080/).  Do not us
 ## Developing My-Wallet-V3
 
 If you are making changes to [My-Wallet-V3](https://github.com/blockchain/My-Wallet-V3) that you want to try out in the frontend, create a symlink:
-
 ```sh
 rm My-Wallet-V3-Frontend/bower_components/blockchain-wallet/dist/my-wallet.js
 ln -s ../../../../My-Wallet-V3/dist/my-wallet.js My-Wallet-V3-Frontend/bower_components/blockchain-wallet/dist/my-wallet.js
@@ -59,7 +67,7 @@ To enable the beta invite functionality, create a file called `.env` and add the
 
 Copy the database file template (`betakeys.MDF` is ignored by git):
 ```sh
-cp betakeys-template.MDF betakeys.MDF  
+cp betakeys-template.MDF betakeys.MDF
 ```
 
 You should see a number of example users at:
@@ -82,19 +90,7 @@ If you enable "handle bitcoin links" in your wallet settings, you can open bitco
 
     bitcoin:?address=1FeerpCgswvGRLVKme759C96DUBtf7SvA2?amount=0.01
 
-## Test
-
-You may need to install PhantomJS seperately. On a Mac:
-
-    brew install phantomjs
-
-To run test and monitor for changes:
-
-    npm test
-
-A coverage report is generated after you run the test for the first time. Just open `coverage/index.html` in your browser.
-
-##UI Tests
+## UI Tests
 
 Protractor UI tests are currently running on https://dev.blockchain.info/ or http://local.blockchain.com. Choose instance in util.js. File with login credentials (ignore.js) will be distributed separately and placed in the `e2e-tests` folder.
 
@@ -119,12 +115,8 @@ To test specific files
 
     protractor config.js --specs [folder-name]/[file_name]_spec.js
 
-## Development
-Grunt keeps an eye on things in the background. In particular it compiles the Jade files whenever you change them. So make sure it's running:
-
-    grunt
-
 ## Contribute
+
 Did you know you can [sign your commits](https://git-scm.com/book/tr/v2/Git-Tools-Signing-Your-Work) using a PGP key?
 
 ## Testnet
@@ -145,16 +137,11 @@ If you don't care about securely downloading dependencies and want to avoid usin
 
 You can test the resulting files by setting `DIST=1` in `.env` and restarting the server.
 
-index.html should be cached using If-Modified-Since or etag. All other files contain a hash of their content and should be cached forever.
-
-## Git branches
-
-* `master` : Current development with latest changes
-* `staging` : QA stage before going live
-* `alpha` : Current live version
+`index.html` should be cached using `If-Modified-Since` or `etag`. All other files contain a hash of their content and should be cached forever.
 
 ## Security
 
 Security issues can be reported to us in the following venues:
-* Email: security@blockchain.info
-* Bug Bounty: https://www.crowdcurity.com/blockchain-info
+
+ * Email: security@blockchain.info
+ * Bug Bounty: https://www.crowdcurity.com/blockchain-info
