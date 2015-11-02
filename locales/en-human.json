@@ -1,4 +1,6 @@
 {
+  "ADVANCED_RECEIVE" : "Advaned Receive",
+  "REGULAR_RECEIVE" : "Regular Receive",
   "UID": "Wallet ID",
   "PASSWORD": "Password",
   "LOGIN": "Login",
@@ -222,6 +224,7 @@
   "IMPORTED_ADDRESSES_EXPLAIN" : "You may import existing bitcoin addresses by scanning or entering the associated Private Key. <b>WARNING:</b> When restoring your wallet with your Recovery Phrase, bitcoin addresses you have imported will not be restored. You must re-add them to your wallet by scanning the appropriate Private Key. We recommend that you transfer any funds on the imported address/es into an address created by your wallet.",
   "ADDRESS" : "Address",
   "LABEL" : "Label",
+  "LABEL_ADDRESS:" : "Label:",
   "DETAILS" : "Details",
   "TRANSFER" : "Transfer",
   "TRANSFER_BETWEEN_ACCOUNTS" : "Transfer Between Accounts",
@@ -338,6 +341,7 @@
   "WRITE_DOWN" : "Write down your recovery phrase on a piece of paper",
   "DO_NOT_PRINT" : "do not print or save it on your computer",
   "DONE_THIS" : "I've done this",
+  "DONE" : "Done",
   "VERIFY_WRITE_DOWN" : "Verify you have written down your Recovery Phrase",
   "ENTER_WORDS" : "enter the appropriate word into the text boxes below to prove you have written down your phrase",
   "WORD_1" : "First Word",
