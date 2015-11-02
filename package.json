@@ -39,7 +39,6 @@
     "grunt-rename-assets": "0.0.1",
     "grunt-shell": "^1.1.1",
     "grunt-surround": "^0.1.0",
-    "http-server": "^0.6.1",
     "isparta": "^3.0.4",
     "istanbul": "^0.3.19",
     "jade": "*",

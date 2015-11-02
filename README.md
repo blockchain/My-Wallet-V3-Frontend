@@ -10,7 +10,7 @@ Make sure you have [Node.js](http://nodejs.org/) installed.
 
 Some NodeJS components need to be installed system wide:
 ```sh
-npm install -g grunt-cli coffee-script http-server
+npm install -g grunt-cli coffee-script
 ```
 
 You also need Sass (use `sudo` if you're not using a [Ruby version manager](https://rvm.io)):
