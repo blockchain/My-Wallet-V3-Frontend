@@ -233,22 +233,22 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.legacyAddresses = () ->
     wallet.my.wallet.keys
 
-  hdAddresses = null
 
-  wallet.hdAddresses = (refresh=false) ->
-    return hdAddresses if hdAddresses? && !refresh
+  hdAddresses = {}
+  wallet.hdAddresses = (accountIdx) ->
 
-    hdAddresses = [].concat.apply [], wallet.accounts().filter((account) ->
-      !account.archived
-    ).map((account) ->
-      account.receivingAddressesLabels.map((address) -> {
-        account: account
-        index: address.index
-        label: address.label
-        address: account.receiveAddressAtIndex(address.index)
-      })
-    )
-    return hdAddresses
+    (refresh=false) ->
+      if refresh || !hdAddresses[accountIdx]?
+        account = wallet.accounts()[accountIdx]
+
+        hdAddresses[accountIdx] = account.receivingAddressesLabels.map((address) ->
+          index: address.index
+          label: address.label
+          address: account.receiveAddressAtIndex(address.index)
+          account: account
+        )
+
+      hdAddresses[accountIdx]
 
   wallet.resendTwoFactorSms = (uid, successCallback, errorCallback) ->
     success = () ->
@@ -334,14 +334,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     account.label = name
     successCallback()
 
-  wallet.addAddressForAccount = (account, successCallback, errorCallback) ->
-    receiveIndex = account.receiveIndex
-    console.log(receiveIndex)
-    account.setLabelForReceivingAddress(receiveIndex, "")
-    successCallback(receiveIndex)
-    # Refresh list of hd addresses:
-    wallet.hdAddresses(true)
-
   wallet.fetchMoreTransactions = (where, successCallback, errorCallback, allTransactionsLoadedCallback) ->
     success = (res) ->
       wallet.appendTransactions(res)
@@ -366,11 +358,24 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.changeLegacyAddressLabel = (address, label, successCallback, errorCallback) ->
     address.label = label
     successCallback()
+    return
 
-  wallet.changeHDAddressLabel = (account, index, label, successCallback, errorCallback) ->
-    account.setLabelForReceivingAddress(index, label)
-    wallet.hdAddresses(true)
-    successCallback()
+  wallet.changeHDAddressLabel = (accountIdx, index, label, successCallback, errorCallback) ->
+    success = () ->
+      wallet.hdAddresses(accountIdx)(true)
+      successCallback()
+      wallet.applyIfNeeded()
+
+
+    error = (msg) ->
+      errorCallback(msg)
+      wallet.applyIfNeeded()
+
+    account = wallet.accounts()[parseInt(accountIdx)]
+
+    account.setLabelForReceivingAddress(index, label).then(success).catch(error)
+
+    return
 
   wallet.logout = () ->
     wallet.didLogoutByChoice = true
@@ -646,6 +651,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.getReceivingAddressForAccount = (idx) ->
     if wallet.my.wallet.isUpgradedToHD then wallet.my.wallet.hdwallet.accounts[idx].receiveAddress else ""
 
+  wallet.getReceivingAddressIndexForAccount = (idx) ->
+    if wallet.my.wallet.isUpgradedToHD then wallet.my.wallet.hdwallet.accounts[idx].receiveIndex else null
+
+
   ###################
   # URL: bitcoin:// #
   ###################
@@ -734,13 +743,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
     wallet.saveActivity(3)
     address_or_account.archived = true
     address_or_account.active = false
-    wallet.hdAddresses(true)
 
   wallet.unarchive = (address_or_account) ->
     wallet.saveActivity(3)
     address_or_account.archived = false
     address_or_account.active = true
-    wallet.hdAddresses(true)
 
   wallet.deleteLegacyAddress = (address) ->
     wallet.saveActivity(3)

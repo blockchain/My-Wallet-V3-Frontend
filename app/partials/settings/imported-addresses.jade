@@ -1,0 +1,77 @@
+.row
+  .col-xs-12.mbl
+    a.flex-center.text.em-400.blue(ng-click="back()")
+      i.ti-arrow-left.mrm
+      span(translate="BACK")
+        
+.flex-between.flex-center.form-ctrl
+  .flex-1.mrl.filter-search-alt.width-100.pos-rel
+    input(type="text", ng-model="searchTextLegacy")
+    i.ti-search.pos-abs
+  a.button-default(ng-click="importAddress()", translate="IMPORT_ADDRESS")
+
+h2(translate="SPENDABLE_ADDRESSES")
+
+.row
+  .col-xs-12.table-container
+    table.responsive.width-100
+      tr
+        th(translate="ADDRESS")
+        th(translate="LABEL")
+        th(translate="BALANCE")
+        th
+        th
+        th
+      tr(
+        imported-address="address", 
+        search-text="searchTextLegacy",
+        ng-repeat="address in legacyAddresses() | filter:{archived: false, isWatchOnly: false} | addressOrNameMatch:searchTextLegacy"
+      )
+
+h2(translate="WATCH_ONLY_ADDRESSES")
+
+.row
+  .col-xs-12.table-container
+    table.responsive.width-100
+      tr
+        th(translate="ADDRESS")
+        th(translate="LABEL")
+        th(translate="BALANCE")
+        th
+      tr(
+        watch-only-address="address",
+        search-text="searchTextLegacy",
+        ng-repeat="address in legacyAddresses() | filter:{archived: false, isWatchOnly: true} | addressOrNameMatch:searchTextLegacy"
+      )
+
+.flex.mtl
+  button.button-default(translate="ARCHIVED_ADDRESSES" ng-click="toggleDisplayArchived()" ng-class="{active : display.archived}")
+
+p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
+
+.row.form-ctrl(ng-show="display.archived")
+  .col-xs-12
+    .filter-search-alt.pos-rel.width-100
+      input(type="text", ng-model="searchTextArchived")
+      i.ti-search.pos-abs
+.row(ng-show="display.archived")
+  .col-xs-12.table-container
+    table.responsive.width-100
+      tr
+        th(translate="ADDRESS")
+        th(translate="LABEL")
+        //- th(translate="BALANCE")
+        th
+          th
+      tr(ng-repeat="address in legacyAddresses() | filter:{archived: true} | addressOrNameMatch:searchTextArchived")
+        td(ng-bind-html="address.address | highlight:searchTextArchived")
+        td(ng-bind-html="address.label | highlight:searchTextArchived")
+        //- td
+        //-   span(ng-show="address.balance != null")
+        //-     span.btc {{ address.balance | toBitCurrency:settings.btcCurrency }}
+        //-     fiat.fiat(btc="address.balance")
+        //-   img(ng-show="address.balance == null" src="img/spinner.gif")
+        td
+          a(translate="UNARCHIVE", ng-click="unarchive(address)")
+        td
+          a(translate="DELETE", ng-click="delete(address)")

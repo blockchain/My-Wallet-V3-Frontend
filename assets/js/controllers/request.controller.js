@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("RequestCtrl", RequestCtrl);
 
-function RequestCtrl($scope, Wallet, $modalInstance, $log, destination, $translate, $stateParams, filterFilter) {
+function RequestCtrl($scope, Wallet, $modalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -10,6 +10,7 @@ function RequestCtrl($scope, Wallet, $modalInstance, $log, destination, $transla
   $scope.isBitCurrency = Wallet.isBitCurrency;
   $scope.destinations = [];
   $scope.receiveAddress = null;
+  $scope.advanced = false;
 
   $scope.fields = {
     to: null,
@@ -34,6 +35,9 @@ function RequestCtrl($scope, Wallet, $modalInstance, $log, destination, $transla
       addr.type = "Imported Addresses";
       addr.label = addr.label || addr.address;
       $scope.destinations.push(addr);
+      if ((destination != null) && (destination.address != null) && destination.address === addr.address) {
+        $scope.fields.to = addr;
+      }
     }
   }
 
@@ -51,9 +55,39 @@ function RequestCtrl($scope, Wallet, $modalInstance, $log, destination, $transla
     Wallet.closeAlert(alert);
   };
 
-  $scope.close = () => {
+  $scope.advancedReceive = () => {
+    $scope.advanced = true;
+  }
+
+  $scope.regularReceive = () => {
+    $scope.advanced = false;
+    $scope.fields.label = "";
+  }
+
+  $scope.done = () => {
     Wallet.clearAlerts();
-    $modalInstance.dismiss("");
+
+    if($scope.fields.label == "" || $scope.fields.to.index == undefined) {
+        $modalInstance.dismiss("");
+    } else {
+
+      const success = () => {
+        $modalInstance.dismiss("");
+      };
+
+      const error = (error) => {
+        if(error === "NOT_ALPHANUMERIC") {
+          $scope.requestForm.label.$error.characters = true;
+        } else if (error === "GAP") {
+          $scope.requestForm.label.$error.gap = true;
+        }
+        $scope.requestForm.label.$valid = false;
+      };
+
+      let idx = $scope.fields.to.index;
+      Wallet.changeHDAddressLabel($scope.fields.to.index, Wallet.getReceivingAddressIndexForAccount(idx), $scope.fields.label, success, error);
+    };
+
   };
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
@@ -83,9 +117,11 @@ function RequestCtrl($scope, Wallet, $modalInstance, $log, destination, $transla
   $scope.$watch("fields.to.index + fields.to.address + status.didInitializeHD", () => {
     if (($scope.fields.to != null) && ($scope.fields.to.address != null)) {
       $scope.setPaymentRequestURL($scope.fields.to.address, $scope.fields.amount);
+      $scope.advanced = false;
     } else if ($scope.fields.label === "" && $scope.status.didInitializeHD) {
       let idx = $scope.fields.to.index;
       $scope.receiveAddress = Wallet.getReceivingAddressForAccount(idx);
+
       $scope.setPaymentRequestURL($scope.receiveAddress, $scope.fields.amount);
     }
   });

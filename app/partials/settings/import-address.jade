@@ -79,6 +79,7 @@
             fiat(btc="address.balance")
 
 .modal-footer.pal.flex-end
+  button.button-muted.mrm(ng-click="close()", translate="CANCEL", ng-show="step == 1 && !status.busy")
   button.btn.btn-info(ng-click="cameraOn()" ng-show="step == 1" ng-disabled="status.busy" ng-if="browserWithCamera" translate="QR")
   button.btn.btn-primary(ui-ladda="{{ status.busy }}" ng-show="step == 1" ng-click="import()" ng-disabled="importForm.$invalid && !importForm.bipPassphrase.$error.wrong" ladda-translate="VALIDATE" data-style="expand-left")
   button.btn.btn-info(ng-show="step == 2", ng-click="close()", translate="CLOSE")

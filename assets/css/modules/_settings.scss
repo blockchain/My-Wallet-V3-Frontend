@@ -68,6 +68,9 @@
     list-style: none;
     li { padding: 2px 0; }
   }
+  &.imported-addresses{
+    color: $mid-grey;
+  }
 }
 
 .intl-tel-input { margin-bottom: 10px; }

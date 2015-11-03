@@ -47,10 +47,8 @@
           a.pas(ui-sref="wallet.common.settings.preferences", translate="PREFERENCES")
         li.mvm(ui-sref-active="active")
           a.pas(ui-sref="wallet.common.settings.security", translate="SECURITY")
-        li.mvm(ui-sref-active="active")
-          a.pas(ui-sref="wallet.common.settings.addresses", translate="MY_ADDRESSES")
-        li.mvm(ui-sref-active="active")
-          a.pas(ui-sref="wallet.common.settings.accounts", translate="MY_ACCOUNTS")
+        li.mvm(ng-class="{active: accountsRoute()}")
+          a.pas(ui-sref="wallet.common.settings.accounts_index", translate="ACCOUNTS")
     li.header.mbm(ui-sref-active="current", ng-click="hideMenu()")
       a(ui-sref="wallet.common.support")
         i.ti-headphone

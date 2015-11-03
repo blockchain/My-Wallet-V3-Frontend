@@ -10,27 +10,39 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
 .row
   .col-xs-12
     .account-container.pam.mvm.clearfix(ng-repeat="account in accounts() | filter:{archived: false, label: searchText}")
-      .clearfix.flex-center.border-bottom.pbl
+      .clearfix.flex-center.pbl
         .col-xs-6
           h2
-            span(ng-bind-html="account.label | highlight:searchText")
-            span.label.label-primary(translate="DEFAULT", ng-show="isDefault(account)")
+            span(ng-bind-html="account.label | highlight:searchText").prm              
+            a(translate="EDIT_ACCOUNT_NAME",          ng-click="editAccount(account)")
+
         .col-xs-6.right-align
           p.man(ng-show="account.balance != null") {{ account.balance | toBitCurrency:settings.btcCurrency }}
           p.man(btc="account.balance", ng-show="account.balance != null")
-      .col-xs-12.mtm
-        ul.man.pan
-          li
-            a(translate="RENAME",          ng-click="editAccount(account)")
-          li
-            a(translate="MAKE_DEFAULT", ng-hide="isDefault(account)", ng-click="makeDefault(account)")            
-          li
-            a(translate="BITCOIN_ADDRESS", ng-click="showAddress(account)")
-          li
-            a(translate="REVEAL_XPUB",      ng-click="revealXpub(account)")
-          li
-            a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="isDefault(account)")
-
+      .col-md-2.col-xs-4.mtm
+        span.label.label-primary(translate="DEFAULT", ng-show="isDefault(account)")
+        a(translate="MAKE_DEFAULT", ng-click="makeDefault(account)", ng-hide="isDefault(account)")            
+      .col-md-2.col-xs-4.mtm
+        a(translate="REVEAL_XPUB",      ng-click="revealXpub(account)")
+      .col-md-2.col-xs-4.mtm
+        a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="isDefault(account)")
+      .col-md-6.col-xs-12.right-align
+        a(ui-sref="wallet.common.settings.accounts_addresses({account: account.index})")
+          span(translate="MANAGE_ADDRESSES").prm
+          i.ti-arrow-right
+.row
+  .col-xs-12
+    .account-container.pam.mvm.clearfix.imported-addresses
+      .clearfix.flex-center.pbl
+        .col-xs-6
+          h2(translate="IMPORTED_ADDRESSES")
+        .col-xs-6.right-align
+          p.man {{ getLegacyTotal() | toBitCurrency:settings.btcCurrency }}
+          p.man(btc="getLegacyTotal()")
+      .col-md-12.col-xs-12.right-align
+        a(ui-sref="wallet.common.settings.imported_addresses")
+          span(translate="MANAGE_ADDRESSES").prm
+          i.ti-arrow-right
 .mtl
   button.button-default(translate="ARCHIVED_ACCOUNTS", ng-click="display.archived = !display.archived" ng-class="{active : display.archived}")
   p.mtm.hidden-xs(translate="ARCHIVED_ACCOUNTS_EXPLAIN", ng-show="display.archived")

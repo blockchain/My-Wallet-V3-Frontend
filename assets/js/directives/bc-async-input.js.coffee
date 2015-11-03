@@ -7,6 +7,7 @@ angular.module('walletApp').directive('bcAsyncInput', ($timeout, Wallet) ->
       ngModel: '='
       validator: '='
       onSave: '='
+      onCancel: '='
       onChange: '='
       actionTitle: '='
       placeholder: '='
@@ -33,6 +34,10 @@ angular.module('walletApp').directive('bcAsyncInput', ($timeout, Wallet) ->
       scope.status =
         edit: false
         saving: false
+
+
+      if attrs.editing?
+        scope.status.edit = true
 
       scope.form =
         newValue: scope.ngModel
@@ -65,7 +70,8 @@ angular.module('walletApp').directive('bcAsyncInput', ($timeout, Wallet) ->
           # password is enabled.
           scope.$evalAsync(()->
             scope.status.saving = false
-            scope.status.edit = false
+            unless attrs.editing?
+              scope.status.edit = false
           )
 
         error = () ->
@@ -73,12 +79,16 @@ angular.module('walletApp').directive('bcAsyncInput', ($timeout, Wallet) ->
           scope.$root.$safeApply(scope)
 
         scope.onSave(scope.form.newValue, success, error)
+        return
 
       scope.cancel = () ->
-        scope.status.edit = false
+        unless attrs.editing?
+          scope.status.edit = false
         scope.bcAsyncForm.input.$rollbackViewValue()
         scope.form.newValue = scope.ngModel
         scope.bcAsyncForm.$setPristine()
+        scope.onCancel() if scope.onCancel?
+        return
 
       transclude(scope, (clone, scope) ->
         if attrs.custom?

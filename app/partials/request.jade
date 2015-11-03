@@ -64,5 +64,22 @@
         p.success.mtm.flex-center(ng-show="browserCanExecCommand && highlighted")
           i.ti-check.mrs
           span Successfully copied to your clipboard!
-.modal-footer.flex-end.pal
-  button.button-success.button-lg(ng-click="close()", translate="GOT_IT")  
+    .form-group.mvl.row(ng-class="{'has-error': !requestForm.label.$valid}", ng-show="advanced && fields.to.index != undefined")
+      label.col-sm-3.col-xs-12(translate="LABEL_ADDRESS:")
+      .col-sm-9.col-xs-12
+        .flex-center.prl.border-bottom
+          input.form-control.no-border(
+            type="text"
+            ng-model="fields.label"
+            name="label"
+          )
+        span.help-block(ng-show="requestForm.label.$error.characters", translate="INVALID_CHARACTERS_FOR_LABEL") 
+        span.help-block(ng-show="requestForm.label.$error.gap", translate="LABEL_ERROR_BIP_44_GAP") 
+
+ LABEL_ERROR_BIP_44_GAP
+.modal-footer.flex-between.flex-center.pal
+  .flex-center
+    a.dark-grey(ng-hide="advanced || fields.to.index == undefined", ng-click="advancedReceive()", translate="ADVANCED_RECEIVE")
+    a.dark-grey(ng-show="advanced", ng-click="regularReceive()", translate="REGULAR_RECEIVE")
+  .flex-center.flex-end
+    button.button-success.button-lg(ng-click="done()", translate="DONE")  
