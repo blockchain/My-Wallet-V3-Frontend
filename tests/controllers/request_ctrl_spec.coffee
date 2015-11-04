@@ -107,7 +107,7 @@ describe "RequestCtrl", ->
 
     it "should close", inject((Wallet) ->
       spyOn(Wallet, "clearAlerts")
-      scope.close()
+      scope.done()
       expect(Wallet.clearAlerts).toHaveBeenCalled()
     )
 

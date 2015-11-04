@@ -33,6 +33,12 @@ function WalletNavigationCtrl($scope, Wallet, SecurityCenter, $state, $statePara
             $state.current.name === 'wallet.common.transactions');
   };
 
+  $scope.accountsRoute = () => [
+    'wallet.common.settings.accounts_index',
+    'wallet.common.settings.accounts_addresses',
+    'wallet.common.settings.imported_addresses',
+  ].indexOf($state.current.name) > -1
+
   $scope.showOrHide = (path) => {
     return $location.url().indexOf(path) !== -1;
   };

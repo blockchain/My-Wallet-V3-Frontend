@@ -6,3 +6,23 @@
 table.responsive{
   a {overflow-wrap: break-word;}
 }
+
+th.expand {
+  width: 99%;
+}
+
+th.shrink {
+  white-space: nowrap;
+}
+
+td.expand {
+  width: 99%;
+}
+
+td.shrink {
+  white-space: nowrap;
+}
+
+td .float-right {
+  float: right;
+}

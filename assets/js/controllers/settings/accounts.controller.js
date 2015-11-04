@@ -12,6 +12,8 @@ function SettingsAccountsController($scope, Wallet, $uibModal, filterFilter) {
     return Wallet.accounts().filter(a => !a.archived).length
   };
 
+  $scope.getLegacyTotal = () => Wallet.total('imported');
+
   $scope.newAccount = () => {
     Wallet.clearAlerts();
     let modalInstance = $uibModal.open({

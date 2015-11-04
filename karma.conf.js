@@ -31,6 +31,7 @@ module.exports = function(karma){
       'assets/js/services/*.js.coffee',
       'assets/js/services/**/*.service.js',
       'assets/js/directives/*.js.coffee',
+      'assets/js/directives/*.js',
       'assets/js/core/*.js',
       'tests/mocks/**/*.coffee',
       'tests/*.coffee',

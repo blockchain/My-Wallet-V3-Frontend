@@ -219,7 +219,7 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  .state("wallet.common.settings.accounts",
+  .state("wallet.common.settings.accounts_index",
     url: "/accounts"
     views: {
       settings: {
@@ -228,8 +228,8 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  .state("wallet.common.settings.addresses",
-    url: "/addresses"
+  .state("wallet.common.settings.accounts_addresses",
+    url: "/:account/addresses"
     views: {
       settings: {
         templateUrl: "partials/settings/addresses.jade"
@@ -237,21 +237,12 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-  .state("wallet.common.settings.address",
-    url: "/addresses/:address"
+  .state("wallet.common.settings.imported_addresses",
+    url: "/imported-addresses"
     views: {
       settings: {
-        templateUrl: "partials/settings/address.jade"
-        controller: "AddressCtrl"
-      }
-    }
-  )
-  .state("wallet.common.settings.hd_address",
-    url: "/:account/addresses/:index"
-    views: {
-      settings: {
-        templateUrl: "partials/settings/hd_address.jade"
-        controller: "HDAddressCtrl"
+        templateUrl: "partials/settings/imported-addresses.jade"
+        controller: "SettingsImportedAddressesCtrl"
       }
     }
   )

@@ -1,46 +1,49 @@
 describe "walletServices", () ->
   Wallet = undefined
-  
-  mockObserver = undefined  
+
+  mockObserver = undefined
   errors = undefined
-  
+
   account = undefined
-  
+
   beforeEach angular.mock.module("walletApp")
-  
+
   beforeEach ->
     angular.mock.inject ($injector, localStorageService) ->
       localStorageService.remove("mockWallets")
-      
+
       Wallet = $injector.get("Wallet")
       Wallet.addressBook = {"17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq" : "John"}
       Wallet.legacyAddresses = [{label: "Old Label"}]
-      
+
       account = {
+        index: 0
         setLabelForReceivingAddress: () ->
+          then: () ->
+            catch: () ->
         receivingAddressesLabels: []
       }
-      
-      Wallet.my.wallet = 
+
+      Wallet.my.wallet =
         hdwallet:
           accounts:
             [
               account
             ]
-                
+
       spyOn(Wallet,"monitor").and.callThrough()
-      
+
       mockObserver = {needs2FA: (() ->)}
-            
+
       return
 
     return
-  describe "addressBook()", ->          
-    it "should find John", inject((Wallet) ->      
+  describe "addressBook()", ->
+    it "should find John", inject((Wallet) ->
       expect(Wallet.addressBook["17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq"]).toBe("John")
       return
     )
-    
+
     return
 
   describe "address label", ->
@@ -50,12 +53,11 @@ describe "walletServices", () ->
       spyOn(Wallet.store, "setLegacyAddressLabel")
       Wallet.changeAddressLabel(address, "New Label", (()->))
       expect(Wallet.store.setLegacyAddressLabel).toHaveBeenCalled()
-    
+
     it "can be set for an HD address", ->
-      spyOn(account, "setLabelForReceivingAddress")
-      Wallet.changeHDAddressLabel(account, 0, "New Label", (()->))
-      expect(account.setLabelForReceivingAddress).toHaveBeenCalled()     
-       
+      spyOn(account, "setLabelForReceivingAddress").and.callThrough()
+      Wallet.changeHDAddressLabel(account.index, 0, "New Label", (()->), (()->))
+      expect(account.setLabelForReceivingAddress).toHaveBeenCalled()
+
     it "each account should have at least one address without a label", ->
       pending()
-          
