@@ -68,10 +68,7 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
     .state('public.login',
       url: '/login'
       views: {
-        alerts: {
-          templateUrl: "partials/alerts.jade"
-          controller: "AlertsCtrl"
-        }
+        alerts: commonViews.alerts
         contents: {
           templateUrl: "partials/login.jade"
           controller: "LoginCtrl"
@@ -81,6 +78,7 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
     .state('public.signup',
       url: '/signup'
       views: {
+        alerts: commonViews.alerts
         contents: {
           templateUrl: 'partials/signup.jade'
           controller: 'SignupCtrl'
@@ -90,6 +88,7 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
     .state('public.help',
       url: '/help'
       views: {
+        alerts: commonViews.alerts
         contents: {
           templateUrl: 'partials/help.jade'
         }
@@ -98,6 +97,7 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
     .state('public.recover',
       url: '/recover',
       views: {
+        alerts: commonViews.alerts
         contents: {
           templateUrl: 'partials/recover-funds.jade'
           controller: 'RecoverFundsCtrl'
