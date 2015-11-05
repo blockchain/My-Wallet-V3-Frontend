@@ -56,40 +56,54 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
   .state("wallet.common",
     views: commonViews
   )
-  .state("login",
-    views: {
-      body: {
-        templateUrl: "partials/login.jade"
-        controller: "LoginCtrl"
+
+  $stateProvider
+    .state('public',
+      views: {
+        body: {
+          templateUrl: "partials/public.jade"
+        }
       }
-    }
-  )
-  .state("login.show",
-    url: "/login"
-    views: {
-      alerts: {
-        templateUrl: "partials/alerts.jade"
-        controller: "AlertsCtrl"
+    )
+    .state('public.login',
+      url: '/login'
+      views: {
+        alerts: {
+          templateUrl: "partials/alerts.jade"
+          controller: "AlertsCtrl"
+        }
+        contents: {
+          templateUrl: "partials/login.jade"
+          controller: "LoginCtrl"
+        }
       }
-    }
-  )
-  .state("signup",
-    views: {
-      body: {
-        templateUrl: "partials/signup.jade"
-        controller: "SignupCtrl"
+    )
+    .state('public.signup',
+      url: '/signup'
+      views: {
+        contents: {
+          templateUrl: 'partials/signup.jade'
+          controller: 'SignupCtrl'
+        }
       }
-    }
-  )
-  .state("recover",
-    url: "/recover"
-    views: {
-      body: {
-        templateUrl: "partials/recover-funds.jade"
-        controller: "RecoverFundsCtrl"
+    )
+    .state('public.help',
+      url: '/help'
+      views: {
+        contents: {
+          templateUrl: 'partials/help.jade'
+        }
       }
-    }
-  )
+    )
+    .state('public.recover',
+      url: '/recover',
+      views: {
+        contents: {
+          templateUrl: 'partials/recover-funds.jade'
+          controller: 'RecoverFundsCtrl'
+        }
+      }
+    )
   # Use the same layout as the transactions screen, once signup is complete
   .state("signup.finish",
     url: "/signup/finish"

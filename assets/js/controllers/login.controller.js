@@ -16,10 +16,6 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, $cookieStore, $uibMo
   $scope.uidAvailable = $cookieStore.get('uid') != null;
   $scope.user = Wallet.user;
 
-  $scope.toggleHelp = () => {
-    $scope.status.needsHelp = !($scope.status.needsHelp);
-  };
-
   //   Browser compatibility warnings:
   // * Secure random number generator: https://developer.mozilla.org/en-US/docs/Web/API/RandomSource/getRandomValues
   // * AngularJS support (?)
@@ -175,7 +171,7 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, $cookieStore, $uibMo
         key: $scope.key,
         email: email
       };
-      $state.go("signup");
+      $state.go("public.signup");
     };
     $cookieStore.remove('key');
   // If BETA=1 is set in .env then in index.html/jade $rootScope.beta is set.
@@ -196,7 +192,7 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, $cookieStore, $uibMo
         Wallet.displayError("Unable to verify your invite code.");
       });
     } else {
-      $state.go("signup");
+      $state.go("public.signup");
     }
   };
 
