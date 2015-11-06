@@ -157,43 +157,8 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookieStore
     }
   };
 
-  $scope.prepareRegister = () => {
-    if ($rootScope.beta) {
-      $scope.status.enterkey = !$scope.status.enterkey;
-    } else {
-      $scope.register();
-    }
-  };
-
   $scope.register = () => {
-    const betaCheckFinished = (key, email) => {
-      $rootScope.beta = {
-        key: $scope.key,
-        email: email
-      };
-      $state.go("public.signup");
-    };
-    $cookieStore.remove('key');
-  // If BETA=1 is set in .env then in index.html/jade $rootScope.beta is set.
-  // The following checks are not ideal as they can be bypassed with some creative Javascript commands.
-    if ($rootScope.beta) {
-  // Check if there is an invite code associated with
-      $http.post("/check_beta_key_unused", {
-        key: $scope.key
-      }).success((data) => {
-        if (data.verified) {
-          betaCheckFinished(data.key, data.email);
-        } else {
-          if (data.error && data.error.message) {
-            Alerts.displayError(data.error.message);
-          }
-        }
-      }).error(() => {
-        Alerts.displayError("Unable to verify your invite code.");
-      });
-    } else {
-      $state.go("public.signup");
-    }
+    $state.go("public.signup");
   };
 
   $scope.numberOfActiveAccounts = () => {

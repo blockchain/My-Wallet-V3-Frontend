@@ -122,8 +122,6 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
   .state("signup.finish.show",
     views: transactionsViews
   )
-
-
   $stateProvider.state("wallet.common.home",
     url: "/home"
     views: {
