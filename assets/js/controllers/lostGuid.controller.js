@@ -4,30 +4,36 @@ angular
 
 function LostGuidCtrl($scope, $http, $translate, Wallet) {
   $scope.currentStep = 1;
-  $scope.captchaSrc = 'https://blockchain.info/kaptcha.jpg?timestamp=';
   $scope.fields = {
     email: '',
-    captcha: '',
+    captcha: ''
   };
+
   $scope.refreshCaptcha = () => {
     let time = new Date().getTime();
     $scope.captchaSrc = `https://blockchain.info/kaptcha.jpg?timestamp=${time}`;
+    $scope.fields.captcha = '';
   };
+
   $scope.sendReminder = () => {
     $scope.working = true;
     let success = (res) => {
-      console.log(res.data);
       $scope.working = false;
       $scope.currentStep = 2;
     };
-    let error = (err) => {
-      console.log(err);
+    let error = (res) => {
       $scope.working = false;
-      $scope.captchaError = true;
       $scope.refreshCaptcha();
-      $translate('CAPTCHA_INCORRECT').then(translation => {
-        Wallet.displayError(translation);
-      });
+      switch (res.data.initial_error) {
+        case 'Captcha Code Incorrect':
+          Wallet.displayError($translate.instant('CAPTCHA_INCORRECT'));
+          break;
+        case 'Quota Exceeded':
+          Wallet.displayError($translate.instant('QUOTA_EXCEEDED'));
+          break;
+        default:
+          Wallet.displayError($translate.instant('UNKNOWN_ERROR'));
+      }
     };
     let httpOptions = {
       url     : 'https://blockchain.info/wallet/recover-wallet',
@@ -41,4 +47,11 @@ function LostGuidCtrl($scope, $http, $translate, Wallet) {
     };
     $http(httpOptions).then(success).catch(error);
   };
+
+  // Set SID cookie by requesting headers
+  $http({
+    url: 'https://blockchain.info/wallet/login',
+    method: 'HEAD',
+    withCredentials: true
+  }).then($scope.refreshCaptcha);
 }
