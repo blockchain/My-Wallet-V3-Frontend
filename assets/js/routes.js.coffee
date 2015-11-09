@@ -104,6 +104,16 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
         }
       }
     )
+    .state('public.reminder',
+      url: '/reminder'
+      views: {
+        alerts: commonViews.alerts
+        contents: {
+          templateUrl: 'partials/lost-guid.jade'
+          controller: 'LostGuidCtrl'
+        }
+      }
+    )
   # Use the same layout as the transactions screen, once signup is complete
   .state("signup.finish",
     url: "/signup/finish"
