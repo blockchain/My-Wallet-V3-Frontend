@@ -15,7 +15,7 @@
       .form-group(ng-class="{'has-error': captchaError}")
         label(translate="CAPTCHA")
         p(translate="CAPTCHA_EXPAIN")
-        img.mbl(src="https://blockchain.info/kaptcha.jpg?timestamp=")
+        img.mbl(ng-src="{{captchaSrc}}")
         input.form-control(
           type="text"
           name="captcha"

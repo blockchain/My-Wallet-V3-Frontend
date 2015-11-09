@@ -4,9 +4,14 @@ angular
 
 function LostGuidCtrl($scope, $http, $translate, Wallet) {
   $scope.currentStep = 1;
+  $scope.captchaSrc = 'https://blockchain.info/kaptcha.jpg?timestamp=';
   $scope.fields = {
     email: '',
     captcha: '',
+  };
+  $scope.refreshCaptcha = () => {
+    let time = new Date().getTime();
+    $scope.captchaSrc = `https://blockchain.info/kaptcha.jpg?timestamp=${time}`;
   };
   $scope.sendReminder = () => {
     $scope.working = true;
@@ -19,6 +24,7 @@ function LostGuidCtrl($scope, $http, $translate, Wallet) {
       console.log(err);
       $scope.working = false;
       $scope.captchaError = true;
+      $scope.refreshCaptcha();
       $translate('CAPTCHA_INCORRECT').then(translation => {
         Wallet.displayError(translation);
       });
