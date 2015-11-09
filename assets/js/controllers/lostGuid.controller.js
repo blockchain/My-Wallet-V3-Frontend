@@ -36,7 +36,8 @@ function LostGuidCtrl($scope, $http, $translate, Wallet) {
         param1  : $scope.fields.email,
         kaptcha : $scope.fields.captcha,
         format  : 'json'
-      }
+      },
+      withCredentials: true
     };
     $http(httpOptions).then(success).catch(error);
   };
