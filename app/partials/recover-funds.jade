@@ -51,16 +51,25 @@
           p {{ errors.confirmation }}
     .flex-center.flex-end.mvl
       img(ng-show="working" src="img/spinner.gif")
+      button.button-muted.mrm(
+        type="button"
+        ng-switch-when="1"
+        ng-disabled="working"
+        ui-sref="public.help"
+        translate="GO_BACK")
       button.button-primary(
+        type="submit"
         ng-switch-when="1"
         ng-click="nextStep()"
         ng-disabled="!recoveryForm.$valid"
         translate="CONTINUE")
       button.button-muted.mrm(
+        type="button"
         ng-switch-when="2"
         ng-click="goBack()"
         translate="GO_BACK")
       button.button-success(
+        type="submit"
         ng-switch-when="2"
         ng-click="performImport()"
         ng-disabled="!recoveryForm.$valid || working"
