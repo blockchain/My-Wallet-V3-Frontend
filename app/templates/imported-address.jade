@@ -7,7 +7,7 @@ tr
       .col-sm-12
         bc-async-input(inline ng-model="address.label" on-save="changeLabel" on-cancel="cancelEdit" is-required editing)
           span.help-block(ng-show="errors.label") {{::errors.label}}  
-    p.float-right(ng-hide="status.edit")
+    span.float-right(ng-hide="status.edit")
       a(ng-click="status.edit=1")
         i.ti-pencil.prm   
   td.shrink
@@ -17,6 +17,6 @@ tr
   td.shrink
     a(ng-hide="address.balance == 0" translate="TRANSFER" ng-click="transfer(address)")
   td.shrink
-    a(translate="ARCHIVE", ng-click="archive(address)")
-  td.shrink
     a(translate="YOUR_PRIVATE_KEY", ng-hide="address.isWatchOnly", ng-click="showPrivKey(address)")
+  td.shrink
+    a(translate="ARCHIVE", ng-click="archive(address)")

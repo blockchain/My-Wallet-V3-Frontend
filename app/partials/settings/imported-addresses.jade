@@ -4,11 +4,13 @@
       i.ti-arrow-left.mrm
       span(translate="BACK")
         
-.flex-between.flex-center.form-ctrl
-  .flex-1.mrl.filter-search-alt.width-100.pos-rel
-    input(type="text", ng-model="searchTextLegacy")
-    i.ti-search.pos-abs
-  a.button-default(ng-click="importAddress()", translate="IMPORT_ADDRESS")
+.row
+  .col-xs-12.col-md-6
+    a.button-primary(ng-click="importAddress()", translate="IMPORT_ADDRESS")
+  .col-xs-12.col-md-6
+    .flex-1.mrl.filter-search-alt.width-100.pos-rel
+      input(type="text", ng-model="searchTextLegacy")
+      i.ti-search.pos-abs
 
 h2(translate="SPENDABLE_ADDRESSES")
 

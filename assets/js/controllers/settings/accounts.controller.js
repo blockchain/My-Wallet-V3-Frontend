@@ -48,22 +48,6 @@ function SettingsAccountsController($scope, Wallet, $uibModal, filterFilter) {
     }
   };
 
-  $scope.showAddress = (account) => {
-    let modalInstance = $uibModal.open({
-      templateUrl: "partials/request.jade",
-      controller: "RequestCtrl",
-      resolve: {
-        destination: () => account
-      },
-      windowClass: "bc-modal"
-    });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
-    }
-  };
-
   $scope.revealXpub = (account) => {
     let modalInstance = $uibModal.open({
       templateUrl: "partials/reveal-xpub.jade",

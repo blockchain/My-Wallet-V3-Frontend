@@ -1,31 +1,31 @@
 h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
   
 .row.pvl
-  .col-xs-12.flex-center
+  .col-xs-6.flex-center
+    a.button-primary.mrm.hidden-xs.button-nowrap(ng-click="newAccount()" translate="CREATE_ACCOUNT")
+    a.button-default.hidden-xs.button-nowrap(ng-click="transfer(address)"  ng-show="numberOfActiveAccounts() > 1" translate="TRANSFER") (transfer)
+  .col-xs-6.flex-center
     .filter-search-alt.width-100.pos-rel.mrm
       input(type="text" ng-model="searchText")
       i.ti-search.pos-abs
-    a.button-primary.mrm.hidden-xs.button-nowrap(ng-click="newAccount()" translate="CREATE_ALT")
-    a.button-default.hidden-xs.button-nowrap(ng-click="transfer(address)"  ng-show="numberOfActiveAccounts() > 1" translate="TRANSFER") (transfer)
 .row
   .col-xs-12
     .account-container.pam.mvm.clearfix(ng-repeat="account in accounts() | filter:{archived: false, label: searchText}")
       .clearfix.flex-center.pbl
-        .col-xs-6
+        .col-xs-12
           h2
-            span(ng-bind-html="account.label | highlight:searchText").prm              
-            a(translate="EDIT_ACCOUNT_NAME",          ng-click="editAccount(account)")
-
-        .col-xs-6.right-align
-          p.man(ng-show="account.balance != null") {{ account.balance | toBitCurrency:settings.btcCurrency }}
-          p.man(btc="account.balance", ng-show="account.balance != null")
-      .col-md-2.col-xs-4.mtm
-        span.label.label-primary(translate="DEFAULT", ng-show="isDefault(account)")
-        a(translate="MAKE_DEFAULT", ng-click="makeDefault(account)", ng-hide="isDefault(account)")            
+            span(ng-bind-html="account.label | highlight:searchText")
+            span.man(ng-show="account.balance != null").prm
+              |  ({{ account.balance | toBitCurrency:settings.btcCurrency }})
+            a(ng-click="editAccount(account)")
+              i.ti-pencil.prm
+            span.label.label-primary(translate="DEFAULT", ng-show="isDefault(account)")
+            button.btn.btn-default.btn-xs(translate="MAKE_DEFAULT", ng-click="makeDefault(account)", ng-hide="isDefault(account)")            
       .col-md-2.col-xs-4.mtm
         a(translate="REVEAL_XPUB",      ng-click="revealXpub(account)")
       .col-md-2.col-xs-4.mtm
         a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="isDefault(account)")
+      .col-md-2.col-xs-4.mtm
       .col-md-6.col-xs-12.right-align
         a(ui-sref="wallet.common.settings.accounts_addresses({account: account.index})")
           span(translate="MANAGE_ADDRESSES").prm

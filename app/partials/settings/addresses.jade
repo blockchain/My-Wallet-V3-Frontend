@@ -6,10 +6,16 @@
 
 h5.well.type-h5.em-400.hidden-xs(translate="MY_ADDRESSES_EXPLAIN_TEMP")
 
-.form-ctrl.flex-between.flex-center
-  .flex-1.width-100.filter-search-alt.pos-rel
-    input(type="text", ng-model="searchText")
-    i.ti-search.pos-abs
+.row
+  .col-xs-12.col-md-6
+    a.button-primary(ng-click="createAddress()", translate="CREATE_ADDRESS")
+  .col-xs-12.col-md-6
+    .flex-1.width-100.filter-search-alt.pos-rel
+      input(type="text", ng-model="searchText")
+      i.ti-search.pos-abs
+
+h2(translate="HD_ADDRESSES_FOR_ACCOUNT", translate-values="{account: account.label}")    
+     
 .row
   .col-xs-12.table-container
     table.responsive.width-100

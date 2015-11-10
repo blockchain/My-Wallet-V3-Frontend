@@ -9,5 +9,9 @@ function SettingsAddressesCtrl($scope, Wallet, addressOrNameMatchFilter, $stateP
   $scope.hdAddresses = Wallet.hdAddresses($stateParams.account)
 
   $scope.settings = Wallet.settings;
-  $scope.account = $stateParams.account;
+  $scope.account = Wallet.accounts()[parseInt($stateParams.account)];
+
+  $scope.createAddress = () => {
+    $scope.showAddress($scope.account);
+  }
 }

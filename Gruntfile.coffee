@@ -454,7 +454,7 @@ module.exports = (grunt) ->
           app_name : 'Blockchain HD Frontend',
           # logo : 'https://raw.githubusercontent.com/blockchain/My-Wallet-HD-Frontend/changelog/assets/icons/png/logo.png',
           intro : 'Recent changes'
-          grep_commits: '^fix|^feat|^docs|^dep|^refactor|^chore|BREAKING'
+          grep_commits: '^fix|^feat|^ui|^docs|^dep|^refactor|^chore|BREAKING'
           tag: '1.2.0'
           repo_url: 'https://github.com/blockchain/My-Wallet-HD-Frontend'
 

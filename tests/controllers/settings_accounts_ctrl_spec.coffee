@@ -40,16 +40,6 @@ describe "SettingsAccountsController", ->
     expect(modal.open).toHaveBeenCalled()
   )
 
-  it "should show a bitcoin address", inject((Wallet) ->
-    spyOn(modal, "open")
-    account = Wallet.accounts()[1]
-
-    scope.showAddress(account)
-
-    expect(modal.open).toHaveBeenCalled()
-
-  )
-
   it "should open modal to reveal the xpub",  inject(() ->
     account = scope.accounts()[0]
     spyOn(modal, "open")

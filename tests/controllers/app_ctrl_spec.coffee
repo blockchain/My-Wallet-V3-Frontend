@@ -10,6 +10,8 @@ describe "AppCtrl", ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
 
+      Wallet.accounts = () -> [{},{}]
+
       mockModalInstance =
         result: then: (confirmCallback, cancelCallback) ->
           #Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
@@ -57,6 +59,16 @@ describe "AppCtrl", ->
     spyOn($uibModal, "open")
     scope.request()
     expect($uibModal.open).toHaveBeenCalled()
+  )
+
+  it "should show a bitcoin address", inject((Wallet, $uibModal) ->
+    spyOn($uibModal, "open")
+    account = Wallet.accounts()[1]
+
+    scope.showAddress(account)
+
+    expect($uibModal.open).toHaveBeenCalled()
+
   )
 
   describe "HD upgrade", ->

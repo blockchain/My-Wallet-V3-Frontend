@@ -6,10 +6,10 @@ tr
       .col-sm-12
         bc-async-input(inline ng-model="address.label" on-save="changeLabel" on-cancel="cancelEdit" is-required editing)
         span.help-block(ng-show="errors.label") {{::errors.label}}
-    p(ng-hide="status.edit").float-right
+    span(ng-hide="status.edit").float-right
       a(ng-click="status.edit=1")
         i.ti-pencil.prm        
   td.shrink
-    p(ng-hide="status.edit")
+    span(ng-hide="status.edit")
       a(ng-click="removeLabel()")
         i.ti-trash.prm
