@@ -29,7 +29,7 @@ function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wall
         console.error(err);
       };
       $timeout(() => {
-        $state.go('login.show');
+        $state.go('public.login');
         Wallet.login(
           wallet.guid, wallet.password, null, null, loginSuccess, loginError
         );

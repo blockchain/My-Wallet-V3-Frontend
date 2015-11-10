@@ -56,8 +56,9 @@ function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $t
   };
 
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) => {
-    if (toState.name !== "login.show" && toState.name !== "login" && toState.name !== "recover" && toState.name !== "signup" && toState.name !== "open" && toState.name !== "verify-email" && toState.name !== "verify-email-with-guid" && $scope.status.isLoggedIn === false) {
-      $state.go("login.show");
+    let loggedOutStates = ['public', 'public.login', 'public.recover', 'public.reminder', 'public.signup', 'public.help', 'open', 'verify-email', 'verify-email-with-guid'];
+    if (loggedOutStates.every(s => toState.name !== s) && $scope.status.isLoggedIn === false) {
+      $state.go("public.login");
     }
     if (Wallet.status.isLoggedIn && (Wallet.store.resetLogoutTimeout != null)) {
       Wallet.store.resetLogoutTimeout();
@@ -126,7 +127,7 @@ function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $t
         $translate("PLEASE_LOGIN_FIRST").then( translation => {
           Wallet.displayInfo(translation, true);
         });
-        $state.go("login.show");
+        $state.go("public.login");
         return;
       }
       const success = message => {
