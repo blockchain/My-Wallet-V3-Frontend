@@ -48,6 +48,17 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
             translate="MANAGE_ADDRESSES"
           )
 
+.row(ng-show="addressBookPresent")
+  .col-xs-12        
+    table.accounts-container.imported-addresses
+      tr.responsive.width-100
+        td.expand
+          span.account-label(translate="ADDRESS_BOOK")
+        td.shrink        
+          button.btn.btn-default(
+            ui-sref="wallet.common.settings.address_book"
+            translate="MANAGE_ADDRESS_BOOK"
+          )
 .row
   .col-xs-12
     .mtl
