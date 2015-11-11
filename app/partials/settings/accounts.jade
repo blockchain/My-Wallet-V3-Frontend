@@ -8,52 +8,59 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
     .filter-search-alt.width-100.pos-rel.mrm
       input(type="text" ng-model="searchText")
       i.ti-search.pos-abs
+        .row
+          .col-xs-12.table-container
+            
 .row
   .col-xs-12
-    .account-container.pam.mvm.clearfix(ng-repeat="account in accounts() | filter:{archived: false, label: searchText}")
-      .clearfix.flex-center.pbl
-        .col-xs-12
-          h2
-            span(ng-bind-html="account.label | highlight:searchText")
-            span.man(ng-show="account.balance != null").prm
-              |  ({{ account.balance | toBitCurrency:settings.btcCurrency }})
-            a(ng-click="editAccount(account)")
-              i.ti-pencil.prm
-            span.label.label-primary(translate="DEFAULT", ng-show="isDefault(account)")
-            button.btn.btn-default.btn-xs(translate="MAKE_DEFAULT", ng-click="makeDefault(account)", ng-hide="isDefault(account)")            
-      .col-md-2.col-xs-4.mtm
-        a(translate="REVEAL_XPUB",      ng-click="revealXpub(account)")
-      .col-md-2.col-xs-4.mtm
-        a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="isDefault(account)")
-      .col-md-2.col-xs-4.mtm
-      .col-md-6.col-xs-12.right-align
-        a(ui-sref="wallet.common.settings.accounts_addresses({account: account.index})")
-          span(translate="MANAGE_ADDRESSES").prm
-          i.ti-arrow-right
+    table.accounts-container
+      tr.responsive.width-100(
+        ng-repeat="account in accounts() | filter:{archived: false, label: searchText}"
+      )
+        td.expand
+          span.account-label(ng-bind-html="account.label | highlight:searchText")
+          span.man(ng-show="account.balance != null").prm
+            |  ({{ account.balance | toBitCurrency:settings.btcCurrency }})
+          a(ng-click="editAccount(account)")
+            i.ti-pencil.prm
+          span.label.label-primary(translate="DEFAULT", ng-show="isDefault(account)")
+          button.btn.btn-default.btn-xs(translate="MAKE_DEFAULT", ng-click="makeDefault(account)", ng-hide="isDefault(account)")            
+        td.shrink
+          a(translate="REVEAL_XPUB",      ng-click="revealXpub(account)")
+        td.shrink
+          a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="isDefault(account)")
+        td.shrink
+          button.btn.btn-default(
+            ui-sref="wallet.common.settings.accounts_addresses({account: account.index})"
+            translate="MANAGE_ADDRESSES"
+          )
+          
 .row
-  .col-xs-12
-    .account-container.pam.mvm.clearfix.imported-addresses
-      .clearfix.flex-center.pbl
-        .col-xs-6
-          h2(translate="IMPORTED_ADDRESSES")
-        .col-xs-6.right-align
-          p.man {{ getLegacyTotal() | toBitCurrency:settings.btcCurrency }}
-          p.man(btc="getLegacyTotal()")
-      .col-md-12.col-xs-12.right-align
-        a(ui-sref="wallet.common.settings.imported_addresses")
-          span(translate="MANAGE_ADDRESSES").prm
-          i.ti-arrow-right
-.mtl
-  button.button-default(translate="ARCHIVED_ACCOUNTS", ng-click="display.archived = !display.archived" ng-class="{active : display.archived}")
-  p.mtm.hidden-xs(translate="ARCHIVED_ACCOUNTS_EXPLAIN", ng-show="display.archived")
+  .col-xs-12        
+    table.accounts-container.imported-addresses
+      tr.responsive.width-100
+        td.expand
+          span.account-label(translate="IMPORTED_ADDRESSES")
+          span  ({{ getLegacyTotal() | toBitCurrency:settings.btcCurrency }})
+        td.shrink        
+          button.btn.btn-default(
+            ui-sref="wallet.common.settings.imported_addresses"
+            translate="MANAGE_ADDRESSES"
+          )
 
-.row(ng-show="display.archived")
-  .col-xs-12.table-container
-    table.responsive.width-100
-      tr
-        th(translate="ACCOUNT_NAME")
-        th
-      tr(ng-repeat="account in accounts() | filter:{archived: true, label: searchText}")
-        td(ng-bind-html="account.label | highlight:searchText")
-        td
-          a(translate="UNARCHIVE",          ng-click="unarchive(account)")
+.row
+  .col-xs-12
+    .mtl
+      button.button-default(translate="ARCHIVED_ACCOUNTS", ng-click="display.archived = !display.archived" ng-class="{active : display.archived}")
+      p.mtm.hidden-xs(translate="ARCHIVED_ACCOUNTS_EXPLAIN", ng-show="display.archived")
+
+    .row(ng-show="display.archived")
+      .col-xs-12.table-container
+        table.responsive.width-100
+          tr
+            th(translate="ACCOUNT_NAME")
+            th
+          tr(ng-repeat="account in accounts() | filter:{archived: true, label: searchText}")
+            td(ng-bind-html="account.label | highlight:searchText")
+            td
+              a(translate="UNARCHIVE",          ng-click="unarchive(account)")

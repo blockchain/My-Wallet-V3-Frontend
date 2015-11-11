@@ -8,7 +8,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="MY_ADDRESSES_EXPLAIN_TEMP")
 
 .row
   .col-xs-12.col-md-6
-    a.button-primary(ng-click="createAddress()", translate="CREATE_ADDRESS")
+    button.btn.button-primary.btn-sm(role="button", ng-click="createAddress()", translate="CREATE_ADDRESS")
   .col-xs-12.col-md-6
     .flex-1.width-100.filter-search-alt.pos-rel
       input(type="text", ng-model="searchText")
