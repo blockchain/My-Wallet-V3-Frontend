@@ -44,6 +44,7 @@
   "AMOUNT:" : "Amount:",
   "PAID" : "Paid:",
   "BITCOIN_ADDRESS" : "Bitcoin Address",
+  "DEFAULT_NEW_ADDRESS_LABEL" : "New Address",
   "CANCEL" : "Cancel",
   "SAVE" : "Save",
   "ACCEPT" : "Accept",

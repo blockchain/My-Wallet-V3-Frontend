@@ -23,4 +23,8 @@ h2(translate="HD_ADDRESSES_FOR_ACCOUNT", translate-values="{account: account.lab
         th.shrink(translate="ADDRESS")
         th.expand(translate="LABEL")
         th.shrink
-      tr(hd-address="address" search-text="searchText" ng-repeat="address in hdAddresses() | addressOrNameMatch:searchText | orderBy:['index']") 
+      tr(
+        hd-address="address" 
+        search-text="searchText" 
+        ng-repeat="address in hdAddresses() track by address.index | addressOrNameMatch:searchText | orderBy:['index']"
+      ).address-animate 
