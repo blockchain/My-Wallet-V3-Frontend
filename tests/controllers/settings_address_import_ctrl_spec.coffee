@@ -1,7 +1,7 @@
 describe "AddressImportCtrl", ->
   scope = undefined
   Wallet = undefined
-  
+
   accounts = [{index: 0, label: "Spending", archived: false}]
 
   modalInstance =
@@ -13,13 +13,13 @@ describe "AddressImportCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
       Wallet = $injector.get("Wallet")
-      
+
       Wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bip38passphrase, success, error) ->
         success({address: "valid_import_address"})
-        
+
       Wallet.accounts = () -> accounts
-      
-      Wallet.my = 
+
+      Wallet.my =
         wallet:
           keys: []
 
@@ -29,6 +29,7 @@ describe "AddressImportCtrl", ->
         $scope: scope,
         $stateParams: {},
         $modalInstance: modalInstance
+        address: null
 
       element = angular.element(
         '<form role="form" name="importForm" novalidate>' +
@@ -106,13 +107,13 @@ describe "AddressImportCtrl", ->
       expect(scope.status.sweeping).toBe(false)
 
     )
-  
+
   describe "parseBitcoinUrl()", ->
     it "should work with prefix", ->
       expect(scope.parseBitcoinUrl("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")).toBe("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")
-      
+
     it "should work without slashes", ->
       expect(scope.parseBitcoinUrl("bitcoin:1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")).toBe("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")
-      
+
     it "should work with slashes", ->
       expect(scope.parseBitcoinUrl("bitcoin://1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")).toBe("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")

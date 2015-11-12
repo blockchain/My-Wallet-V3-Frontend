@@ -51,17 +51,13 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
         scope.status.edit = false;
       };
 
-      scope.transfer = (address) => {
+      scope.transfer = () => {
         let modalInstance = $uibModal.open({
-          templateUrl: "partials/send.jade",
-          controller: "SendCtrl",
+          templateUrl: "partials/settings/import-address.jade",
+          controller: "AddressImportCtrl",
           windowClass: "bc-modal",
           resolve: {
-            paymentRequest: () => ({
-              fromAddress: address,
-              amount: 0,
-              toAccount: Wallet.accounts()[Wallet.getDefaultAccountIndex()]
-            })
+            address: () => scope.address
           }
         });
         if (modalInstance != null) {

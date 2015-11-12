@@ -30,7 +30,11 @@ function SettingsImportedAddressesCtrl($scope, Wallet, Alerts, $translate, $uibM
     let modalInstance = $uibModal.open({
       templateUrl: "partials/settings/import-address.jade",
       controller: "AddressImportCtrl",
-      windowClass: "bc-modal"
+      windowClass: "bc-modal",
+      backdrop: "static",
+      resolve: {
+        address: () => null
+      }
     });
     if (modalInstance != null) {
       modalInstance.opened.then(() => {

@@ -2,12 +2,12 @@ angular
   .module('walletApp')
   .controller("AddressImportCtrl", AddressImportCtrl);
 
-function AddressImportCtrl($scope, $log, Wallet, Alerts, $modalInstance, $translate, $state, $timeout) {
+function AddressImportCtrl($scope, $log, Wallet, Alerts, $modalInstance, $translate, $state, $timeout, address) {
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
   $scope.alerts = Alerts.alerts;
-  $scope.address = null;
-  $scope.step = 1;
+  $scope.address = address;
+  $scope.step = address ? 3 : 1;
   $scope.BIP38 = false;
   $scope.status = {
     busy: false,
@@ -144,7 +144,15 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $modalInstance, $transl
   };
 
   $scope.close = () => {
-    $modalInstance.dismiss("");
+    if($scope.step == 2 && $scope.address.balance > 0 && !$scope.address.isWatchOnly) {
+      $translate('CONFIRM_NOT_SWEEP').then((translation) => {
+        if(confirm(translation)) {
+          $modalInstance.dismiss("");
+        }
+      });
+    } else {
+      $modalInstance.dismiss("");
+    }
   };
 
 }
