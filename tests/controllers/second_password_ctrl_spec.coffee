@@ -33,10 +33,10 @@ describe "SecondPasswordCtrl", ->
 
     return
 
-  it "should clear alerts", inject((Wallet) ->
-    spyOn(Wallet, "clearAlerts")
+  it "should clear alerts", inject((Alerts) ->
+    spyOn(Alerts, "clear")
     scope.cancel()
-    expect(Wallet.clearAlerts).toHaveBeenCalled()
+    expect(Alerts.clear).toHaveBeenCalled()
   )
 
   it "should close the modal when password is correct", ->

@@ -1,5 +1,6 @@
 describe "walletServices", () ->
   Wallet = undefined
+  Alerts = undefined
   mockObserver = undefined
   errors = undefined
   MyBlockchainSettings = undefined
@@ -12,6 +13,7 @@ describe "walletServices", () ->
 
       Wallet = $injector.get("Wallet")
       MyBlockchainSettings = $injector.get("MyBlockchainSettings")
+      Alerts = $injector.get('Alerts')
 
       spyOn(Wallet,"monitor").and.callThrough()
 
@@ -66,19 +68,6 @@ describe "walletServices", () ->
       Wallet.monitor("on_tx")
       expect(ngAudio.load).toHaveBeenCalled()
     )
-
-  describe "alerts()", ->
-
-    it "should should remove alert after some time", inject((Wallet, $timeout) ->
-      Wallet.displaySuccess("Victory")
-      expect(Wallet.alerts.length).toBe(1)
-      $timeout.flush()
-      expect(Wallet.alerts.length).toBe(0)
-
-
-    )
-    return
-
 
   describe "language", ->
 
@@ -433,37 +422,31 @@ describe "walletServices", () ->
       expect(callbacks.needsBip38).toHaveBeenCalled()
     )
 
-  describe "displayReceivedBitcoin()", ->
-    it "should display an alert", ->
-      spyOn(Wallet, "displayAlert")
-      Wallet.displayReceivedBitcoin()
-      expect(Wallet.displayAlert).toHaveBeenCalled()
-
   describe "notifications", ->
     describe "on_tx", ->
       beforeEach ->
-        spyOn(Wallet, "displayReceivedBitcoin")
+        spyOn(Alerts, "displayReceivedBitcoin")
 
       it "should display a message if the user received bitcoin", ->
         spyOn(Wallet, "updateTransactions").and.callFake () ->
           Wallet.transactions.push {result: 1}
 
         Wallet.monitor("on_tx")
-        expect(Wallet.displayReceivedBitcoin).toHaveBeenCalled()
+        expect(Alerts.displayReceivedBitcoin).toHaveBeenCalled()
 
       it "should not display a message if the user spent bitcoin", ->
         spyOn(Wallet, "updateTransactions").and.callFake () ->
           Wallet.transactions.push {result: -1}
 
         Wallet.monitor("on_tx")
-        expect(Wallet.displayReceivedBitcoin).not.toHaveBeenCalled()
+        expect(Alerts.displayReceivedBitcoin).not.toHaveBeenCalled()
 
       it "should not display a message if the user moved bitcoin between accounts", ->
         spyOn(Wallet, "updateTransactions").and.callFake () ->
           Wallet.transactions.push {result: 1, intraWallet: true}
 
         Wallet.monitor("on_tx")
-        expect(Wallet.displayReceivedBitcoin).not.toHaveBeenCalled()
+        expect(Alerts.displayReceivedBitcoin).not.toHaveBeenCalled()
 
   describe "fetchMoreTransactions()", ->
     beforeEach ->

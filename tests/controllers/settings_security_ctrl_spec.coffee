@@ -41,19 +41,19 @@ describe "SettingsSecurityCtrl", ->
     expect(scope.settings).toBe(Wallet.settings)
     return
   )
-  
+
   describe "pbkdf2", ->
 
     it "should be valid Pbkdf2", ->
       expect(scope.validatePbkdf2(1)).toBe(true)
       expect(scope.validatePbkdf2(0)).toBe(false)
 
-    it "can set Pbkdf2", inject((Wallet) ->
+    it "can set Pbkdf2", inject((Wallet, Alerts) ->
       spyOn(Wallet, "setPbkdf2Iterations")
-      spyOn(Wallet, "displayError")
+      spyOn(Alerts, "displayError")
       scope.changePbkdf2(10)
       expect(Wallet.setPbkdf2Iterations).toHaveBeenCalled()
-      expect(Wallet.displayError).not.toHaveBeenCalled()
+      expect(Alerts.displayError).not.toHaveBeenCalled()
 
       return
     )
@@ -140,12 +140,12 @@ describe "SettingsSecurityCtrl", ->
       it "should allow an empty list", ->
         expect(scope.validateIpWhitelist('')).toBe(true)
 
-    it "can change IP whitelist", inject((Wallet) ->
+    it "can change IP whitelist", inject((Wallet, Alerts) ->
       spyOn(Wallet, "setIPWhitelist")
-      spyOn(Wallet, "displayError")
+      spyOn(Alerts, "displayError")
       scope.changeIpWhitelist([])
       expect(Wallet.setIPWhitelist).toHaveBeenCalled()
-      expect(Wallet.displayError).not.toHaveBeenCalled()
+      expect(Alerts.displayError).not.toHaveBeenCalled()
 
       return
     )

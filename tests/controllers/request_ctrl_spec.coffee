@@ -105,10 +105,10 @@ describe "RequestCtrl", ->
       expect(foundAccount).toBe(true)
       expect(foundLegacyAddress).toBe(true)
 
-    it "should close", inject((Wallet) ->
-      spyOn(Wallet, "clearAlerts")
+    it "should close", inject((Alerts) ->
+      spyOn(Alerts, "clear")
       scope.done()
-      expect(Wallet.clearAlerts).toHaveBeenCalled()
+      expect(Alerts.clear).toHaveBeenCalled()
     )
 
     it "should show a payment request address when legacy address is selected", inject(()->

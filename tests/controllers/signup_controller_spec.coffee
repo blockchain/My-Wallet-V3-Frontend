@@ -40,10 +40,10 @@ describe "SignupCtrl", ->
 
     return
 
-  it "should close", inject((Wallet) ->
-    spyOn(Wallet, "clearAlerts")
+  it "should close", inject((Alerts) ->
+    spyOn(Alerts, "clear")
     scope.close()
-    expect(Wallet.clearAlerts).toHaveBeenCalled()
+    expect(Alerts.clear).toHaveBeenCalled()
   )
 
   describe "first step", ->

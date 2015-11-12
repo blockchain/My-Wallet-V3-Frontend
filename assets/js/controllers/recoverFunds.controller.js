@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('RecoverFundsCtrl', RecoverFundsCtrl);
 
-function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wallet) {
+function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wallet, Alerts) {
   $scope.isValidMnemonic = Wallet.isValidBIP39Mnemonic;
   $scope.currentStep = 1;
   $scope.fields = {
@@ -23,7 +23,7 @@ function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wall
       $rootScope.$safeApply();
 
       const loginSuccess = () => {
-        Wallet.displaySuccess('Successfully recovered wallet!');
+        Alerts.displaySuccess('Successfully recovered wallet!');
       };
       const loginError = (err) => {
         console.error(err);
@@ -39,7 +39,7 @@ function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wall
     const error = (err) => {
       $scope.working = false;
       let message = err || $translate.instant('RECOVERY_ERROR');
-      Wallet.displayError(message);
+      Alerts.displayError(message);
     };
 
     Wallet.my.recoverFromMnemonic(

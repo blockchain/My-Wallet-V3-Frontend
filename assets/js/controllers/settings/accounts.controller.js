@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SettingsAccountsController", SettingsAccountsController);
 
-function SettingsAccountsController($scope, Wallet, $uibModal, filterFilter) {
+function SettingsAccountsController($scope, Wallet, Alerts, $uibModal, filterFilter) {
   $scope.accounts = Wallet.accounts;
   $scope.display = {
     archived: false
@@ -15,7 +15,7 @@ function SettingsAccountsController($scope, Wallet, $uibModal, filterFilter) {
   $scope.getLegacyTotal = () => Wallet.total('imported');
 
   $scope.newAccount = () => {
-    Wallet.clearAlerts();
+    Alerts.clear();
     let modalInstance = $uibModal.open({
       templateUrl: "partials/account-form.jade",
       controller: "AccountFormCtrl",
@@ -32,7 +32,7 @@ function SettingsAccountsController($scope, Wallet, $uibModal, filterFilter) {
   };
 
   $scope.editAccount = (account) => {
-    Wallet.clearAlerts();
+    Alerts.clear();
     let modalInstance = $uibModal.open({
       templateUrl: "partials/account-form.jade",
       controller: "AccountFormCtrl",

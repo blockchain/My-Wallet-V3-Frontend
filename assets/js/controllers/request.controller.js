@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("RequestCtrl", RequestCtrl);
 
-function RequestCtrl($scope, Wallet, $modalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter) {
+function RequestCtrl($scope, Wallet, Alerts, $modalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -52,7 +52,7 @@ function RequestCtrl($scope, Wallet, $modalInstance, $log, destination, $transla
   };
 
   $scope.closeAlert = alert => {
-    Wallet.closeAlert(alert);
+    Alerts.close(alert);
   };
 
   $scope.advancedReceive = () => {
@@ -65,7 +65,7 @@ function RequestCtrl($scope, Wallet, $modalInstance, $log, destination, $transla
   }
 
   $scope.done = () => {
-    Wallet.clearAlerts();
+    Alerts.clear();
 
     if($scope.fields.label == "" || $scope.fields.to.index == undefined) {
         $modalInstance.dismiss("");

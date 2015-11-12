@@ -22,15 +22,15 @@ describe "SettingsInfoCtrl", ->
       return
 
     return
-    
-  it "should show pairing code", inject((Wallet) ->
+
+  it "should show pairing code", inject((Wallet, Alerts) ->
     spyOn(Wallet, "makePairingCode")
-    spyOn(Wallet, "displayError")
+    spyOn(Alerts, "displayError")
 
     scope.showPairingCode()
 
     expect(Wallet.makePairingCode).toHaveBeenCalled()
-    expect(Wallet.displayError).not.toHaveBeenCalled()
+    expect(Alerts.displayError).not.toHaveBeenCalled()
 
     return
   )

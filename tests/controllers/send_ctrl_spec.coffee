@@ -111,9 +111,6 @@ describe "SendCtrl", ->
       it "should load wallet settings", ->
         expect(scope.settings).toBeDefined()
 
-      it "should load wallet alerts", ->
-        expect(scope.alerts).toEqual(Wallet.alerts)
-
       it "should know the users fiat currency", ->
         expect(scope.fiatCurrency.code).toEqual('USD')
 
@@ -360,14 +357,14 @@ describe "SendCtrl", ->
           scope.payment = new Wallet.payment(true)
           askForSecondPassword.resolve()
 
-        it "should display an error when process fails", inject((Wallet) ->
-          spyOn(Wallet, 'displayError').and.callThrough()
+        it "should display an error when process fails", inject((Alerts) ->
+          spyOn(Alerts, 'displayError').and.callThrough()
           expect(scope.alerts.length).toEqual(0)
           scope.send()
           scope.$digest()
           expect(scope.alerts.length).toEqual(1)
-          expect(Wallet.displayError).toHaveBeenCalled()
-          expect(Wallet.displayError.calls.argsFor(0)[0]).toEqual('err_message')
+          expect(Alerts.displayError).toHaveBeenCalled()
+          expect(Alerts.displayError.calls.argsFor(0)[0]).toEqual('err_message')
         )
 
       describe "success", ->
@@ -393,11 +390,11 @@ describe "SendCtrl", ->
           expect(Wallet.beep).toHaveBeenCalled()
         )
 
-        it "should clear alerts", inject((Wallet) ->
-          spyOn(Wallet, 'clearAlerts')
+        it "should clear alerts", inject((Alerts) ->
+          spyOn(Alerts, 'clear')
           scope.send()
           scope.$digest()
-          expect(Wallet.clearAlerts).toHaveBeenCalled()
+          expect(Alerts.clear).toHaveBeenCalled()
         )
 
         it "should show a confirmation modal", inject(($uibModal)->

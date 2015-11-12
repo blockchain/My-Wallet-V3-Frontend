@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("ConfirmRecoveryPhraseCtrl", ConfirmRecoveryPhraseCtrl);
 
-function ConfirmRecoveryPhraseCtrl($scope, $log, Wallet, $modalInstance, $translate) {
+function ConfirmRecoveryPhraseCtrl($scope, $log, Wallet, Alerts, $modalInstance, $translate) {
   $scope.step = 0;
   $scope.offset = 0;
   $scope.recoveryPhrase = null;
@@ -66,7 +66,7 @@ function ConfirmRecoveryPhraseCtrl($scope, $log, Wallet, $modalInstance, $transl
 
   $scope.goToShow= () => {
     $scope.step = 1;
-    
+
     if($scope.mnemonic == null) {
       const success = mnemonic => {
         $scope.recoveryPhrase = mnemonic.split(" ");
@@ -75,7 +75,7 @@ function ConfirmRecoveryPhraseCtrl($scope, $log, Wallet, $modalInstance, $transl
 
       const error = error => {
         $translate(error).then( translation => {
-          Wallet.displayError(translation);
+          Alerts.displayError(translation);
         });
         $modalInstance.dismiss("");
       };

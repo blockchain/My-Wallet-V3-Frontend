@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .controller("SettingsInfoCtrl", SettingsInfoCtrl);
 
-function SettingsInfoCtrl($scope, Wallet, $translate, $window) {
+function SettingsInfoCtrl($scope, Wallet, Alerts, $translate, $window) {
   $scope.uid = Wallet.user.uid;
-  
+
   $scope.display = {
     pairingCode: false
   };
@@ -22,7 +22,7 @@ function SettingsInfoCtrl($scope, Wallet, $translate, $window) {
       $scope.display.pairingCode = true;
     };
     const error = () => {
-      Wallet.displayError("Failed to load pairing code.");
+      Alerts.displayError("Failed to load pairing code.");
       $scope.loading = false;
     };
     $scope.loading = true;

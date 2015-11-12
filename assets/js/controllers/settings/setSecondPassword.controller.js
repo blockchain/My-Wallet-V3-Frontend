@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SetSecondPasswordCtrl", SetSecondPasswordCtrl);
 
-function SetSecondPasswordCtrl($scope, $log, Wallet, $modalInstance, $translate, $timeout) {
+function SetSecondPasswordCtrl($scope, $log, Wallet, Alerts, $modalInstance, $translate, $timeout) {
   $scope.isValid = false;
   $scope.busy = null;
   $scope.fields = {
@@ -11,7 +11,7 @@ function SetSecondPasswordCtrl($scope, $log, Wallet, $modalInstance, $translate,
   };
 
   $scope.close = () => {
-    Wallet.clearAlerts();
+    Alerts.clear();
     $modalInstance.dismiss("");
   };
 

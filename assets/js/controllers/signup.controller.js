@@ -2,12 +2,12 @@ angular
   .module('walletApp')
   .controller("SignupCtrl", SignupCtrl);
 
-function SignupCtrl($scope, $rootScope, $log, Wallet, $uibModal, $translate, $cookieStore, $filter, $state, $http) {
+function SignupCtrl($scope, $rootScope, $log, Wallet, Alerts, $uibModal, $translate, $cookieStore, $filter, $state, $http) {
   $scope.currentStep = 1;
   $scope.working = false;
   $scope.languages = Wallet.languages;
   $scope.currencies = Wallet.currencies;
-  $scope.alerts = Wallet.alerts;
+  $scope.alerts = Alerts.alerts;
   $scope.status = Wallet.status;
 
   $scope.$watch("status.isLoggedIn", newValue => {
@@ -47,7 +47,7 @@ function SignupCtrl($scope, $rootScope, $log, Wallet, $uibModal, $translate, $co
   };
 
   $scope.close = () => {
-    Wallet.clearAlerts();
+    Alerts.clear();
     $state.go("wallet.common.home");
   };
 

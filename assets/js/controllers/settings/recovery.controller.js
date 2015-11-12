@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("RecoveryCtrl", RecoveryCtrl);
 
-function RecoveryCtrl($scope, Wallet, $state, $translate) {
+function RecoveryCtrl($scope, Wallet, Alerts, $state, $translate) {
   $scope.status = Wallet.status;
   $scope.isValidMnemonic = Wallet.isValidBIP39Mnemonic;
 
@@ -39,12 +39,12 @@ function RecoveryCtrl($scope, Wallet, $state, $translate) {
       $state.go("wallet.common.transactions", {
         accountIndex: ""
       });
-      Wallet.displaySuccess("Successfully imported seed");
+      Alerts.displaySuccess("Successfully imported seed");
     };
 
     const error = (message) => {
       $scope.importing = false;
-      Wallet.displayError(message);
+      Alerts.displayError(message);
     };
 
     const cancel = () => {
@@ -60,7 +60,7 @@ function RecoveryCtrl($scope, Wallet, $state, $translate) {
   $scope.doNotCopyPaste = (event) => {
     event.preventDefault();
     $translate("DO_NOT_COPY_PASTE").then((translation) => {
-      Wallet.displayWarning(translation);
+      Alerts.displayWarning(translation);
     });
   };
 

@@ -2,10 +2,10 @@ angular
   .module('walletApp')
   .controller("AddressImportCtrl", AddressImportCtrl);
 
-function AddressImportCtrl($scope, $log, Wallet, $modalInstance, $translate, $state, $timeout) {
+function AddressImportCtrl($scope, $log, Wallet, Alerts, $modalInstance, $translate, $state, $timeout) {
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
-  $scope.alerts = Wallet.alerts;
+  $scope.alerts = Alerts.alerts;
   $scope.address = null;
   $scope.step = 1;
   $scope.BIP38 = false;
@@ -94,7 +94,7 @@ function AddressImportCtrl($scope, $log, Wallet, $modalInstance, $translate, $st
     const error = (error) => {
       $scope.status.sweeping = false;
       if (error && typeof error === 'string') {
-        Wallet.displayError(error);
+        Alerts.displayError(error);
       }
       $scope.$root.$safeApply($scope);
     };
@@ -119,7 +119,7 @@ function AddressImportCtrl($scope, $log, Wallet, $modalInstance, $translate, $st
 
   $scope.onError = (error) => {
     $translate("CAMERA_PERMISSION_DENIED").then(function(translation) {
-      Wallet.displayWarning(translation);
+      Alerts.displayWarning(translation);
     });
   };
 
