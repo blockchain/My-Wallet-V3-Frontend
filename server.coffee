@@ -89,39 +89,19 @@ if process.env.BETA? && parseInt(process.env.BETA)
     else
       response.render "app/index.jade"
 
-  app.get "/percent_requested", (request, response) ->
-    setHeaderForOrigin request, response, origins
-    response.json { width: (process.env.PERCENT_REQUESTED || 60) }
-
-  app.get "/request_beta_key", (request, response) ->
-    setHeaderForOrigin request, response, origins
-    userEmail = request.query.email
-    if (parseInt(process.env.PERCENT_REQUESTED) != 100)
-      if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(userEmail))
-        ios = if request.query.ios == 'true' || request.query.ios == true then true else false
-        android = if request.query.android == 'true' || request.query.android == true then true else false
-        v3Beta.attemptToRequestKey userEmail, { ios: ios, android: android }, (err) ->
-          if !err
-            response.json { message: 'Successfully submitted request', success: true }
-          else
-            response.json { message: err, success: false }
-      else
-        response.json { message: 'Invalid email address', success: false }
-    else
-      response.json { message: 'Beta key request limit reached', success: false }
-
-  app.post "/check_beta_key_unused", (request, response) ->
-    v3Beta.verifyKey request.body.key, (err, verified) ->
+  app.post "/check_beta", (request, response) ->
+    v3Beta.verifyLimit (err, open) ->
       if err
-        response.json {verified : false, error: {message: err}}
-      else if verified
-        v3Beta.doesKeyExistWithoutGUID request.body.key, (err, verified, email) ->
-          if verified
-            response.json {verified : true, email: email}
-          else
-            response.json {verified : false, error: {message: "Invite key already used. Please login instead."}}
+        response.json {open : false, error: {message: err}}
       else
-        response.json {verified : false, error: {message: "Invite key not found"}}
+        response.json {open : open}
+
+  app.post "/verify_wallet_created", (request, response) ->
+    v3Beta.verifyLimit (err, open) ->
+      if err
+        response.json {success : false, error: {message: err}}
+      else
+        response.json {success : open}
 
   app.post "/check_guid_for_beta_key", (request, response) ->
     v3Beta.isGuidAssociatedWithBetaKey request.body.guid, (err, verified) ->
@@ -130,24 +110,15 @@ if process.env.BETA? && parseInt(process.env.BETA)
       else if verified
         response.json {verified : true}
       else
-        response.json {verified : false, error: {message: "This wallet is not associated with a beta invite key. Please create a new wallet first."}}
+        response.json {verified : false, error: {message: "Please create a new Alpha wallet first."}}
 
   app.post "/set_guid_for_beta_key", (request, response) ->
-    v3Beta.doesKeyExistWithoutGUID request.body.key, (err, unclaimed, email) ->
+    v3Beta.verifyLimit (err, open) ->
       if err
         response.json {success : false, error: {message: err}}
-      else if unclaimed
-        v3Beta.setGuid request.body.key, request.body.guid, () ->
+      else
+        v3Beta.assignKey "", "", request.body.guid, () ->
           response.json {success : true}
-      else
-        response.json {success : false}
-
-  app.post "/verify_wallet_created", (request, response) ->
-    v3Beta.newWalletCreated request.body.key, (err) ->
-      if err
-        response.json {success : false, error: {message: err}}
-      else
-        response.json {success : true}
 
   app.post '/whitelist_guid', (request, response) ->
     if !request.body?
