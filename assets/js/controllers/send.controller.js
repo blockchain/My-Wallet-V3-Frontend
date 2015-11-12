@@ -234,15 +234,14 @@ function SendCtrl($scope, $log, Wallet, Alerts, $modalInstance, $timeout, $state
   };
 
   $scope.updateToLabel = () => {
-    if ($scope.transaction.destinations[0] == null) return;
-
-    if ($scope.advanced && $scope.transaction.destinations.length > 1) {
-      $scope.toLabel = $scope.transaction.destinations.length + ' Recipients';
+    let destinations = $scope.transaction.destinations.filter(d => d != null);
+    if (destinations.length === 0) return;
+    if ($scope.advanced && destinations.length > 1) {
+      $scope.toLabel = destinations.length + ' Recipients';
     } else {
-      $scope.toLabel = $scope.transaction.destinations[0].label;
-      if ($scope.transaction.destinations[0].index != null) {
-        $scope.toLabel += " Account";
-      }
+      let dest = destinations[0];
+      $scope.toLabel = dest.index == null ?
+        dest.label || dest.address : `${dest.label} Account`;
     }
   };
 
