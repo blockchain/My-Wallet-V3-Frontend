@@ -207,7 +207,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, Alerts, MyWall
     success = () ->
       wallet.status.didUpgradeToHd = true
       wallet.status.didInitializeHD = true
-      wallet.my.wallet.getHistory().then(wallet.updateTransactions)
+      wallet.my.wallet.getHistory().then(() ->
+        wallet.status.didLoadBalances = true
+        wallet.updateTransactions()
+      )
       successCallback()
       wallet.applyIfNeeded()
     # if failure saving upgrade
