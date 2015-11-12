@@ -53,6 +53,7 @@ function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wall
 
   $scope.nextStep = () => {
     $scope.currentStep++;
+    $scope.fields.confirmation = ""
   };
 
   $scope.goBack = () => {
