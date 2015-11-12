@@ -289,6 +289,8 @@ _Recent changes_
   ([21619ffe](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/21619ffeefad0441992073d1a04dec6740c3fbec))
   - better recovery phrase backup workflow
   ([924d7e45](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/924d7e45c46f88e4581aa071503e21e7d64c7a2b))
+- **Register:** drop invite keys, allow up to N users to register
+  ([bd51ed78](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/bd51ed78c2d3e571d194d9ae2c7f6e8cd34f7f54))
 - **SecondPassword:** add warning button
   ([73b30e90](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/73b30e903590dc073421b25f2460a92d6137e97e))
 - **Settings:**
