@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("ChangePasswordCtrl", ChangePasswordCtrl);
 
-function ChangePasswordCtrl($scope, $log, Wallet, $modalInstance, $translate) {
+function ChangePasswordCtrl($scope, $log, Wallet, Alerts, $modalInstance, $translate) {
   $scope.isCorrectMainPassword = Wallet.isCorrectMainPassword;
   $scope.uid = Wallet.user.uid;
 
@@ -33,7 +33,7 @@ function ChangePasswordCtrl($scope, $log, Wallet, $modalInstance, $translate) {
   };
 
   $scope.close = () => {
-    Wallet.clearAlerts();
+    Alerts.clear();
     $modalInstance.dismiss("");
   };
 

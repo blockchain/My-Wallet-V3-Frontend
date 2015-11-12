@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SettingsImportedAddressesCtrl", SettingsImportedAddressesCtrl);
 
-function SettingsImportedAddressesCtrl($scope, Wallet, $translate, $uibModal) {
+function SettingsImportedAddressesCtrl($scope, Wallet, Alerts, $translate, $uibModal) {
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.display = {
     archived: false,
@@ -26,7 +26,7 @@ function SettingsImportedAddressesCtrl($scope, Wallet, $translate, $uibModal) {
   };
 
   $scope.importAddress = () => {
-    Wallet.clearAlerts();
+    Alerts.clear();
     let modalInstance = $uibModal.open({
       templateUrl: "partials/settings/import-address.jade",
       controller: "AddressImportCtrl",

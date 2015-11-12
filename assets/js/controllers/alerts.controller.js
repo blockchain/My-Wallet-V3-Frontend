@@ -2,10 +2,7 @@ angular
   .module('walletApp')
   .controller("AlertsCtrl", AlertsCtrl);
 
-function AlertsCtrl($scope, Wallet) {
-  $scope.alerts = Wallet.alerts;
-
-  $scope.closeAlert = alert => {
-    Wallet.closeAlert(alert);
-  };
+function AlertsCtrl($scope, Alerts) {
+  $scope.alerts = Alerts.alerts;
+  $scope.closeAlert = Alerts.close;
 }

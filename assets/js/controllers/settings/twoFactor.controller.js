@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("TwoFactorCtrl", TwoFactorCtrl);
 
-function TwoFactorCtrl($scope, Wallet, $modalInstance, $translate, $timeout) {
+function TwoFactorCtrl($scope, Wallet, Alerts, $modalInstance, $translate, $timeout) {
   $scope.settings = Wallet.settings;
   $scope.user = Wallet.user;
 
@@ -23,7 +23,7 @@ function TwoFactorCtrl($scope, Wallet, $modalInstance, $translate, $timeout) {
   $scope.alerts = [];
 
   $scope.closeAlert = (alert) => {
-    $scope.alerts.splice($scope.alerts.indexOf(alert));
+    Alerts.close(alert, $scope.alerts);
   };
 
   $scope.displayConfirmationError = () => {
@@ -128,7 +128,7 @@ function TwoFactorCtrl($scope, Wallet, $modalInstance, $translate, $timeout) {
   };
 
   $scope.close = () => {
-    Wallet.clearAlerts();
+    Alerts.clear();
     $modalInstance.dismiss("");
   };
 

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SettingsPreferencesCtrl", SettingsPreferencesCtrl);
 
-function SettingsPreferencesCtrl($scope, Wallet, $uibModal, $filter, $translate, $window) {
+function SettingsPreferencesCtrl($scope, Wallet, Alerts, $uibModal, $filter, $translate, $window) {
   $scope.user = Wallet.user;
   $scope.settings = Wallet.settings;
   $scope.languages = Wallet.languages;
@@ -21,7 +21,7 @@ function SettingsPreferencesCtrl($scope, Wallet, $uibModal, $filter, $translate,
   $scope.changeEmail = (email, success, error) => {
     Wallet.changeEmail(email, success, error);
   };
-  
+
   $scope.setHandleBitcoinLinks = () => {
     Wallet.handleBitcoinLinks();
   };
@@ -52,17 +52,17 @@ function SettingsPreferencesCtrl($scope, Wallet, $uibModal, $filter, $translate,
 
   $scope.changeLogoutTime = (m, success, errorCallback) => {
     const error = () => {
-      Wallet.displayError("Failed to update auto logout time");
+      Alerts.displayError("Failed to update auto logout time");
       errorCallback();
     };
     Wallet.setLogoutTime(m, success, error);
   };
-  
+
   $scope.validateFee = (candidate) => {
     let n = parseInt(candidate);
     return !isNaN(candidate) && n > 0 && n <= 1000000;
   };
-  
+
   $scope.validateLogoutTime = (candidate) => {
     let n = parseInt(candidate);
     return !isNaN(candidate) && n >= 1 && n <= 1440;

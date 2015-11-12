@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("AppCtrl", AppCtrl);
 
-function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $timeout, $uibModal, $window, $translate) {
+function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $location, $cookieStore, $timeout, $uibModal, $window, $translate) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $rootScope.isMock = Wallet.isMock;
@@ -22,7 +22,7 @@ function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $t
   $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia) !== void 0;
 
   $scope.request = () => {
-    Wallet.clearAlerts();
+    Alerts.clear();
     let modalInstance = $uibModal.open({
       templateUrl: "partials/request.jade",
       controller: "RequestCtrl",
@@ -51,7 +51,7 @@ function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $t
   };
 
   $scope.send = () => {
-    Wallet.clearAlerts();
+    Alerts.clear();
     let modalInstance = $uibModal.open({
       templateUrl: "partials/send.jade",
       controller: "SendCtrl",
@@ -126,7 +126,7 @@ function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $t
           });
         }
         if (Wallet.goal.auth) {
-          Wallet.clearAlerts();
+          Alerts.clear();
           $translate(['AUTHORIZED', 'AUTHORIZED_MESSAGE']).then( translations => {
             $scope.$emit('showNotification', {
               type: 'authorization-verified',
@@ -141,7 +141,7 @@ function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $t
     if (Wallet.goal.verifyEmail != null) {
       if (!Wallet.status.isLoggedIn) {
         $translate("PLEASE_LOGIN_FIRST").then( translation => {
-          Wallet.displayInfo(translation, true);
+          Alerts.displayInfo(translation, true);
         });
         $state.go("public.login");
         return;
@@ -152,14 +152,14 @@ function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $t
           accountIndex: ""
         });
         $translate("EMAIL_VERIFIED").then( translation => {
-          Wallet.displaySuccess(translation);
+          Alerts.displaySuccess(translation);
         });
       };
       const error = error => {
         $state.go("/");
         console.log(error);
         $translate("EMAIL_VERIFICATION_FAILED").then( translation => {
-          Wallet.displayError(translation);
+          Alerts.displayError(translation);
         });
       };
       Wallet.verifyEmail(Wallet.goal.verifyEmail, success, error);

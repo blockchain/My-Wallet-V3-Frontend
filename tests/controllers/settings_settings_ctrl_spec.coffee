@@ -21,10 +21,10 @@ describe "SettingsCtrl", ->
 
     return
 
-  it "should load", inject((Wallet) ->
-    spyOn(Wallet, "clearAlerts")
+  it "should load", inject((Wallet, Alerts) ->
+    spyOn(Alerts, "clear")
     scope.didLoad()
-    expect(Wallet.clearAlerts).toHaveBeenCalled()
+    expect(Alerts.clear).toHaveBeenCalled()
     expect(scope.status).toBe(Wallet.status)
     return
   )

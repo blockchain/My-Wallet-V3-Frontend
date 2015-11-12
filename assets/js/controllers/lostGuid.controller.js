@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('LostGuidCtrl', LostGuidCtrl);
 
-function LostGuidCtrl($scope, $http, $translate, Wallet) {
+function LostGuidCtrl($scope, $http, $translate, Wallet, Alerts) {
   $scope.currentStep = 1;
   $scope.fields = {
     email: '',
@@ -26,13 +26,13 @@ function LostGuidCtrl($scope, $http, $translate, Wallet) {
       $scope.refreshCaptcha();
       switch (res.data.initial_error) {
         case 'Captcha Code Incorrect':
-          Wallet.displayError($translate.instant('CAPTCHA_INCORRECT'));
+          Alerts.displayError($translate.instant('CAPTCHA_INCORRECT'));
           break;
         case 'Quota Exceeded':
-          Wallet.displayError($translate.instant('QUOTA_EXCEEDED'));
+          Alerts.displayError($translate.instant('QUOTA_EXCEEDED'));
           break;
         default:
-          Wallet.displayError($translate.instant('UNKNOWN_ERROR'));
+          Alerts.displayError($translate.instant('UNKNOWN_ERROR'));
       }
     };
     let httpOptions = {

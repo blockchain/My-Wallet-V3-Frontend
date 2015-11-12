@@ -13,9 +13,9 @@ describe "ChangePasswordCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
       Wallet = $injector.get("Wallet")
-      
+
       Wallet.user = {uid: "12345678-1234-1234-1234-1234567890ab"}
-      
+
       spyOn(Wallet, "isCorrectMainPassword").and.callFake((pwd) ->
         return pwd != "wrong"
       )
@@ -43,10 +43,10 @@ describe "ChangePasswordCtrl", ->
 
     return
 
-  it "should be able to close", inject((Wallet) ->
-    spyOn(Wallet, "clearAlerts")
+  it "should be able to close", inject((Alerts) ->
+    spyOn(Alerts, "clear")
     scope.close()
-    expect(Wallet.clearAlerts).toHaveBeenCalled()
+    expect(Alerts.clear).toHaveBeenCalled()
   )
 
   it "should get model values from the form", (() ->

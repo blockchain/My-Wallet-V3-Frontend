@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SettingsSecurityCtrl", SettingsSecurityCtrl);
 
-function SettingsSecurityCtrl($scope, Wallet, $uibModal, $translate) {
+function SettingsSecurityCtrl($scope, Wallet, Alerts, $uibModal, $translate) {
   $scope.settings = Wallet.settings;
   $scope.btc = Wallet.btcCurrencies[0];
   $scope.processToggleRememberTwoFactor = null;
@@ -67,7 +67,7 @@ function SettingsSecurityCtrl($scope, Wallet, $uibModal, $translate) {
 
   $scope.changeIpWhitelist = (list, success, errorCallback) => {
     const error = () => {
-      Wallet.displayError("Failed to update IP whitelist");
+      Alerts.displayError("Failed to update IP whitelist");
       errorCallback();
     };
     Wallet.setIPWhitelist(list, success, error);
@@ -81,7 +81,7 @@ function SettingsSecurityCtrl($scope, Wallet, $uibModal, $translate) {
 
   $scope.changePbkdf2 = (n, successCallback, errorCallback) => {
     const error = () => {
-      Wallet.displayError("Failed to update PBKDF2 iterations");
+      Alerts.displayError("Failed to update PBKDF2 iterations");
       errorCallback();
     };
     Wallet.setPbkdf2Iterations(n, successCallback, error, errorCallback);

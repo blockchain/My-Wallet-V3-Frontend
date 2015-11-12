@@ -19,7 +19,7 @@ playSound = (id) ->
 ##################################
 
 walletServices = angular.module("walletServices", [])
-walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q, bcPhoneNumber) ->
+walletServices.factory "Wallet", ($log, $http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q, bcPhoneNumber) ->
   wallet = {
     goal: {auth: false},
     status: {isLoggedIn: false, didUpgradeToHd: null, didInitializeHD: false, didLoadSettings: false, didLoadTransactions: false, didLoadBalances: false, didConfirmRecoveryPhrase: false},
@@ -33,7 +33,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   # wallet.addressBook  = {}
   wallet.paymentRequests = []
-  wallet.alerts = []
   wallet.my = MyWallet
   wallet.settings_api = MyBlockchainSettings
   wallet.store = MyWalletStore
@@ -126,7 +125,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.applyIfNeeded()
 
     needsTwoFactorCode = (method) ->
-      wallet.displayWarning("Please enter your 2FA code")
+      Alerts.displayWarning("Please enter your 2FA code")
       wallet.settings.needs2FA = true
       # 2: Email
       # 3: Yubikey
@@ -149,7 +148,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       else if error.indexOf("password") > -1 # Brittle
          errorCallback("password", error)
       else
-        wallet.displayError(error, true)
+        Alerts.displayError(error, true)
         errorCallback()
 
       wallet.applyIfNeeded()
@@ -165,7 +164,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
     authorizationRequired = (callback) ->
       callback(authorizationProvided())
-      wallet.displayWarning("Please check your email to approve this login attempt.", true)
+      Alerts.displayWarning("Please check your email to approve this login attempt.", true)
       wallet.applyIfNeeded()
 
     betaCheckFinished = () ->
@@ -199,10 +198,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
           betaCheckFinished()
         else
           if(data.error && data.error.message)
-            wallet.displayError(data.error.message)
+            Alerts.displayError(data.error.message)
           errorCallback()
       ).error () ->
-        wallet.displayError("Unable to verify your wallet UID.")
+        Alerts.displayError("Unable to verify your wallet UID.")
         errorCallback()
 
     else
@@ -258,14 +257,14 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.resendTwoFactorSms = (uid, successCallback, errorCallback) ->
     success = () ->
       $translate("RESENT_2FA_SMS").then (translation) ->
-        wallet.displaySuccess(translation)
+        Alerts.displaySuccess(translation)
 
       successCallback()
       wallet.applyIfNeeded()
 
     error = (e) ->
       $translate("RESENT_2FA_SMS_FAILED").then (translation) ->
-        wallet.displayError(translation)
+        Alerts.displayError(translation)
       errorCallback()
       wallet.applyIfNeeded()
 
@@ -273,7 +272,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.create = (password, email, currency, language, success_callback) ->
     success = (uid) ->
-      wallet.displaySuccess("Wallet created with identifier: " + uid, true)
+      Alerts.displaySuccess("Wallet created with identifier: " + uid, true)
       wallet.status.firstTime = true
 
       loginSuccess = () ->
@@ -281,7 +280,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
       loginError = (error) ->
         console.log(error)
-        wallet.displayError("Unable to login to new wallet")
+        Alerts.displayError("Unable to login to new wallet")
 
       # Associate the UID with the beta key:
       if $rootScope.beta
@@ -291,17 +290,17 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
             wallet.login(uid, password, null, null, loginSuccess, loginError)
           else
             if(data.error && data.error.message)
-              Wallet.displayError(data.error.message)
+              Alerts.displayError(data.error.message)
         ).error () ->
-          Wallet.displayWarning("Unable to associate your new wallet with your invite code. Please try to login using your UID " + uid + " or register again.", true)
+          Alerts.displayWarning("Unable to associate your new wallet with your invite code. Please try to login using your UID " + uid + " or register again.", true)
       else
         wallet.login(uid, password, null, null, loginSuccess, loginError)
 
     error = (error) ->
       if error.message != undefined
-        wallet.displayError(error.message)
+        Alerts.displayError(error.message)
       else
-        wallet.displayError(error)
+        Alerts.displayError(error)
 
     currency_code = "USD"
     language_code = "en"
@@ -412,11 +411,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   wallet.changePassword = (newPassword, successCallback, errorCallback) ->
     wallet.store.changePassword(newPassword, (()->
       $translate("CHANGE_PASSWORD_SUCCESS").then (translation) ->
-        wallet.displaySuccess(translation)
+        Alerts.displaySuccess(translation)
         successCallback(translation)
     ),() ->
       $translate("CHANGE_PASSWORD_FAILED").then (translation) ->
-        wallet.displayError(translation)
+        Alerts.displayError(translation)
         errorCallback(translation)
     )
 
@@ -465,7 +464,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.saveActivity(4)
       wallet.applyIfNeeded()
     , () ->
-      wallet.displayError('Failed to update logging level')
+      Alerts.displayError('Failed to update logging level')
       wallet.applyIfNeeded()
     )
 
@@ -700,38 +699,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
   #      Other      #
   ###################
 
-  wallet.closeAlert = (alert) ->
-    $timeout.cancel(alert.timer)
-    wallet.alerts.splice(wallet.alerts.indexOf(alert))
-
-  wallet.clearAlerts = (context=wallet.alerts) ->
-    for alert in context
-      context.pop(alert)
-      if alert?
-        $timeout.cancel(alert.timer)
-
-  wallet.displayInfo = (message, keep, context) ->
-    wallet.displayAlert {type: "info", msg: message}, keep, context
-
-  wallet.displaySuccess = (message, keep, context) ->
-    wallet.displayAlert {type: "success", msg: message}, keep, context
-
-  wallet.displayWarning = (message, keep, context) ->
-    wallet.displayAlert  {msg: message}, keep, context
-
-  wallet.displayError = (message, keep, context) ->
-    wallet.displayAlert {type: "danger", msg: message}, keep, context
-
-  wallet.displayReceivedBitcoin = () ->
-    $translate("JUST_RECEIVED_BITCOIN").then (translation) ->
-      wallet.displayAlert {type: "received-bitcoin", msg: translation}
-
-  wallet.displayAlert = (alert, keep=false, context=wallet.alerts) ->
-    if !keep
-      alertIndex = context.indexOf(alert)
-      alert.timer = $timeout (-> context.splice(alertIndex)), 7000
-    context.push(alert)
-
   wallet.isSynchronizedWithServer = () ->
     return wallet.store.isSynchronizedWithServer()
 
@@ -833,7 +800,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       if numberOfTransactions > before
         wallet.beep()
         if wallet.transactions[0].result > 0 && !wallet.transactions[0].intraWallet
-          wallet.displayReceivedBitcoin()
+          Alerts.displayReceivedBitcoin()
           wallet.saveActivity(0)
     else if event == "error_restoring_wallet"
       # wallet.applyIfNeeded()
@@ -848,7 +815,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       )
     else if event == "wallet not found" # Only works in the mock atm
       $translate("WALLET_NOT_FOUND").then (translation) ->
-        wallet.displayError(translation)
+        Alerts.displayError(translation)
     else if event == "ticker_updated" || event == "did_set_latest_block"
       wallet.applyIfNeeded()
     else if event == "logging_out"
@@ -872,14 +839,14 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       # Do nothing
     else if event.type != undefined
       if event.type == "error"
-        wallet.displayError(event.msg)
+        Alerts.displayError(event.msg)
         # console.log event
         wallet.applyIfNeeded()
       else if event.type == "success"
-        wallet.displaySuccess(event.msg)
+        Alerts.displaySuccess(event.msg)
         wallet.applyIfNeeded()
       else if event.type == "notice"
-        wallet.displayWarning(event.msg)
+        Alerts.displayWarning(event.msg)
         wallet.applyIfNeeded()
       else
         # console.log event
@@ -890,12 +857,12 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   message = $cookieStore.get("alert-warning")
   if message != undefined && message != null
-    wallet.displayWarning(message, true)
+    Alerts.displayWarning(message, true)
     $cookieStore.remove("alert-warning")
 
   message = $cookieStore.get("alert-success")
   if message != undefined && message != null
-    wallet.displaySuccess(message)
+    Alerts.displaySuccess(message)
     $cookieStore.remove("alert-success")
 
   ##################
@@ -963,7 +930,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.applyIfNeeded()
     ), ()->
       $translate("CHANGE_EMAIL_FAILED").then (translation) ->
-        wallet.displayError(translation)
+        Alerts.displayError(translation)
         wallet.applyIfNeeded()
 
       errorCallback()
@@ -1010,7 +977,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
       wallet.applyIfNeeded()
     ), ()->
       $translate("CHANGE_MOBILE_FAILED").then (translation) ->
-        wallet.displayError(translation)
+        Alerts.displayError(translation)
       errorCallback()
       wallet.applyIfNeeded()
     )
@@ -1189,11 +1156,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.removeSecondPassword = (successCallback, errorCallback) ->
     success = () ->
-      wallet.displaySuccess("Second password has been removed.")
+      Alerts.displaySuccess("Second password has been removed.")
       wallet.settings.secondPassword = false
       successCallback()
     error = () ->
-      wallet.displayError("Second password cannot be unset. Contact support.")
+      Alerts.displayError("Second password cannot be unset. Contact support.")
       errorCallback();
     cancel = errorCallback
     decrypting = () -> console.log("Decrypting...")
@@ -1206,11 +1173,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
   wallet.setSecondPassword = (password, successCallback) ->
     success = () ->
-      wallet.displaySuccess("Second password set.")
+      Alerts.displaySuccess("Second password set.")
       wallet.settings.secondPassword = true
       successCallback()
     error = () ->
-      wallet.displayError("Second password cannot be set. Contact support.")
+      Alerts.displayError("Second password cannot be set. Contact support.")
     encrypting = () -> console.log("Encrypting...")
     syncing = () -> console.log("Syncing...")
     wallet.my.wallet.encrypt(password, success, error, encrypting, syncing)

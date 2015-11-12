@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SendCtrl", SendCtrl);
 
-function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal) {
+function SendCtrl($scope, $log, Wallet, Alerts, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal) {
 
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.accounts = Wallet.accounts;
@@ -68,7 +68,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
 
   $scope.onError = (error) => {
     $translate("CAMERA_PERMISSION_DENIED").then(translation => {
-      Wallet.displayWarning(translation, false, $scope.alerts);
+      Alerts.displayWarning(translation, false, $scope.alerts);
     });
   };
 
@@ -98,7 +98,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
       $scope.cameraOff();
     } else {
       $translate("QR_CODE_NOT_BITCOIN").then(translation => {
-        Wallet.displayWarning(translation, false, $scope.alerts);
+        Alerts.displayWarning(translation, false, $scope.alerts);
       });
       $log.error("Not a bitcoin QR code:" + url);
     }
@@ -117,7 +117,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
   };
 
   $scope.close = () => {
-    Wallet.clearAlerts();
+    Alerts.clear($scope.alerts);
     $modalInstance.dismiss("");
   };
 
@@ -162,7 +162,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
     $scope.sending = true;
     $scope.transaction.note = $scope.transaction.note.trim();
 
-    Wallet.clearAlerts();
+    Alerts.clear($scope.alerts);
 
     if ($scope.transaction.publicNote) {
       $scope.payment.note($scope.transaction.note);
@@ -172,7 +172,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
       $scope.sending = false;
       if (message) {
         $translate(message).then(t => {
-          Wallet.displayError(t, false, $scope.alerts);
+          Alerts.displayError(t, false, $scope.alerts);
         });
       }
     };
@@ -217,7 +217,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
   };
 
   $scope.closeAlert = (alert) => {
-    Wallet.closeAlert(alert);
+    Alerts.close(alert);
   };
 
   $scope.allowedDecimals = (currency) => {
@@ -370,7 +370,7 @@ function SendCtrl($scope, $log, Wallet, $modalInstance, $timeout, $state, $filte
       .catch(response => {
         let msg = response.error.message || response.error;
         $scope.backToForm();
-        Wallet.displayError(msg, false, $scope.alerts);
+        Alerts.displayError(msg, false, $scope.alerts);
         $scope.$root.$safeApply($scope);
       });
   };

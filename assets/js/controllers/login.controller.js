@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("LoginCtrl", LoginCtrl);
 
-function LoginCtrl($scope, $rootScope, $log, $http, Wallet, $cookieStore, $uibModal, $state, $timeout, $translate, filterFilter) {
+function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookieStore, $uibModal, $state, $timeout, $translate, filterFilter) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.disableLogin = null;
@@ -27,12 +27,12 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, $cookieStore, $uibMo
         requiredVersion: 11,
         userVersion: browserDetection().version
       }).then(translation => {
-        Wallet.displayError(translation, true);
+        Alerts.displayError(translation, true);
       });
       $scope.disableLogin = true;
     } else {
       $translate("WARN_AGAINST_IE").then(translation => {
-        Wallet.displayWarning(translation, true);
+        Alerts.displayWarning(translation, true);
       });
     }
   } else if (browserDetection().browser === "chrome") {
@@ -42,7 +42,7 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, $cookieStore, $uibMo
         requiredVersion: 11,
         userVersion: browserDetection().version
       }).then(translation => {
-        Wallet.displayError(translation, true);
+        Alerts.displayError(translation, true);
       });
       $scope.disableLogin = true;
     }
@@ -53,7 +53,7 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, $cookieStore, $uibMo
         requiredVersion: 21,
         userVersion: browserDetection().version
       }).then(translation => {
-        Wallet.displayError(translation, true);
+        Alerts.displayError(translation, true);
       });
       $scope.disableLogin = true;
     }
@@ -64,7 +64,7 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, $cookieStore, $uibMo
         requiredVersion: 6,
         userVersion: browserDetection().version
       }).then(translation => {
-        Wallet.displayError(translation, true);
+        Alerts.displayError(translation, true);
       });
       $scope.disableLogin = true;
     }
@@ -75,14 +75,14 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, $cookieStore, $uibMo
         requiredVersion: 15,
         userVersion: browserDetection().version
       }).then(translation => {
-        Wallet.displayError(translation, true);
+        Alerts.displayError(translation, true);
       });
       $scope.disableLogin = true;
     }
   } else {
   // Warn against unknown browser. Tell user to pay attention to random number generator and CORS protection.
     $translate("UNKNOWN_BROWSER").then(translation => {
-      Wallet.displayWarning(translation, true);
+      Alerts.displayWarning(translation, true);
     });
   }
   if (Wallet.guid != null) {
@@ -113,7 +113,7 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, $cookieStore, $uibMo
   $scope.login = () => {
     if ($scope.busy) return;
     $scope.busy = true;
-    Wallet.clearAlerts();
+    Alerts.clear();
     const error = (field, message) => {
       $scope.busy = false;
       if (field === "uid") {
@@ -185,11 +185,11 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, $cookieStore, $uibMo
           betaCheckFinished(data.key, data.email);
         } else {
           if (data.error && data.error.message) {
-            Wallet.displayError(data.error.message);
+            Alerts.displayError(data.error.message);
           }
         }
       }).error(() => {
-        Wallet.displayError("Unable to verify your invite code.");
+        Alerts.displayError("Unable to verify your invite code.");
       });
     } else {
       $state.go("public.signup");
