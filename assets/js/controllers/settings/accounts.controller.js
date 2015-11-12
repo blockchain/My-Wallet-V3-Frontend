@@ -8,6 +8,8 @@ function SettingsAccountsController($scope, Wallet, Alerts, $uibModal, filterFil
     archived: false
   };
 
+  $scope.addressBookPresent = Wallet.addressBook().length;
+
   $scope.numberOfActiveAccounts = () => {
     return Wallet.accounts().filter(a => !a.archived).length
   };

@@ -31,7 +31,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, Alerts, MyWall
 
   wallet.conversions = {}
 
-  # wallet.addressBook  = {}
   wallet.paymentRequests = []
   wallet.my = MyWallet
   wallet.settings_api = MyBlockchainSettings
@@ -58,10 +57,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, Alerts, MyWall
         wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.hdwallet.isMnemonicVerified
 
       wallet.user.uid = uid
-
-      # I (jaume) should use address book directly from the wallet object, not copy it
-      # for address, label of wallet.store.getAddressBook()
-      #   wallet.addressBook[address] = label
 
       wallet.settings.secondPassword = wallet.my.wallet.isDoubleEncrypted
       # todo: jaume: implement pbkdf2 iterations out of walletstore in mywallet
@@ -326,6 +321,20 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, Alerts, MyWall
     # TYPES: ['transactions', 'security', 'settings', 'accounts']
     $rootScope.$broadcast('updateActivityFeed')
     # console.log "Should save activity"
+
+  addressBook = undefined
+  wallet.addressBook = (refresh) ->
+    myAddressBook = wallet.my.wallet.addressBook
+    if addressBook == undefined || refresh
+      addressBook = Object.keys(myAddressBook).map(
+        (key) -> { address: key, label: myAddressBook[key] }
+      );
+
+    return addressBook
+
+  wallet.removeAddressBookEntry = (address) ->
+    wallet.my.wallet.removeAddressBookEntry(address.address)
+    wallet.addressBook(true)
 
   wallet.createAccount = (label, successCallback, errorCallback, cancelCallback) ->
     proceed = (password) ->

@@ -11,6 +11,9 @@ describe "SettingsAccountsController", ->
       Wallet = $injector.get("Wallet")
 
       Wallet.accounts = () -> [{},{}]
+      Wallet.my.wallet = {
+        addressBook: {}
+      }
 
       scope = $rootScope.$new()
 

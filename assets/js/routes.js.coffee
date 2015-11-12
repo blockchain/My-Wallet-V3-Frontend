@@ -270,6 +270,15 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
+  .state("wallet.common.settings.address_book",
+    url: "/address-book"
+    views: {
+      settings: {
+        templateUrl: "partials/settings/address-book.jade"
+        controller: "SettingsAddressBookCtrl"
+      }
+    }
+  )
   $stateProvider.state("wallet.common.open",
     url: "/open/{uri:.*}"
 
