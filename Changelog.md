@@ -2,7 +2,7 @@ __Blockchain HD Frontend__
 
 _Recent changes_
 
-#   (2015-11-05)
+#   (2015-11-12)
 
 
 
@@ -10,7 +10,10 @@ _Recent changes_
 
 ## Bug Fixes
 
-- **Accounts:** show default account
+- **Accounts:**
+  - show error if user generates more than 20 unused addresses
+  ([0e8035ef](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/0e8035ef42ce86fb6998b67bb09d5a2f08596f21))
+  - show default account
   ([3b305a7d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/3b305a7d7a92e377da29c9f0220fbae79ddeec09))
 - **Address:**
   - fixed import from QR code
@@ -34,6 +37,8 @@ _Recent changes_
   ([f465acd9](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f465acd9415484232de88ad625fcd47068253fc6))
 - **Chrome:** prevent overflow of 'Verify on bc.i'
   ([7f213b20](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/7f213b201cbddbb54b31658923f342e532270bba))
+- **Deploy:** insist on https for images from blockchain.info
+  ([29c79666](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/29c796669b0a8b469bc9523834df7dca41187a85))
 - **IE:** take out overflow hidden from body, use normal doc flow to layout stuff
   ([d8d9b4f3](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/d8d9b4f34dc892dff91650abfdbc099f21bc6432))
 - **Import:**
@@ -48,11 +53,15 @@ _Recent changes_
 - **Receive:** redeem from email/sms
   ([dd8857d7](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/dd8857d76bb5c709f392a674913ad0663adcee39))
 - **Recovery:**
+  - reset pwd confirmation if user presses Go Back
+  ([3afc1594](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/3afc15945c154b65f97dfc0e1fc9014c53412863))
   - better contrast for dark button on hover
   ([5b53754c](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/5b53754cf5d7ea61f3831e8987d636caa502ee78))
   - new PDF
   ([5157b33b](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/5157b33b9f312698b37580477455d03b0c7fd137))
 - **Send:**
+  - no more endless spinner after upgrade
+  ([600e1a3f](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/600e1a3f29b17a108cf089b4427b40ebe4bc16f3))
   - Validate to field on blur.
   ([255c5e24](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/255c5e2476015ac3deb794adb41c152f1ee6d0fd))
   - adjust height of input field
@@ -121,6 +130,8 @@ _Recent changes_
   - show results of activating in modal
   ([d81ebb1d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/d81ebb1d3cc2309fcea44eba479f345ffc3db8b8))
 - **alerts:**
+  - add alerts view to public routes
+  ([8eb309c5](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/8eb309c5cbdbe1d39f5558e1a121e0a95a95a8b6))
   - specify alert clearing context in second password modal
   ([fff1110d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/fff1110da90fd1ab1d62baefa1b17d4621936767))
   - allow specifying a context for clearing alerts
@@ -139,6 +150,8 @@ _Recent changes_
   ([120e947b](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/120e947b1b13ae97ce6f3fd24ec5bbc188a0858a))
 - **copy:** swap out from/to
   ([2b7d728b](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/2b7d728b4c4b197201e712cb4e252b0291ee5f1b))
+- **csp:** allow loading images from blockchain.info
+  ([1f442997](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/1f442997037a74c579efc8e4bf724c06f6e2b118))
 - **dyk:** translate strings in view rather than in service
   ([db5f06c3](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/db5f06c3d10557b4a5054dc24cbf71ff7452e3d0))
 - **empty-state:** remove unnecessary check which was causing it not to appear correctly
@@ -173,6 +186,13 @@ _Recent changes_
   ([216438d9](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/216438d9289d683f9503926f56b234a702cbfcf3))
   - set working to false on error
   ([2e32e2e2](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/2e32e2e236a96e5518b1d42f60bc8cd48235db8a))
+- **reminder:**
+  - edit reminder text
+  ([734a1fcc](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/734a1fccc1945464adff66dc9d814c8c9c31db6b))
+  - send request with credentials
+  ([495cbaa3](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/495cbaa3c0d4d3610b15930b53370f978c3cffaf))
+  - refresh captcha after incorrect attempt
+  ([8fc86256](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/8fc86256af7a0738bb73d5fa6d4c0dacb55c5c4a))
 - **responsiveUI:**
   - use flex on header, position fix body viewport
   ([ff635ec6](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/ff635ec6882715cdf3ba3a6932f870ceeb427b73))
@@ -181,6 +201,8 @@ _Recent changes_
 - **secondPasswordCtrl:** Change second password cancel message
   ([768c2c92](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/768c2c92f34cc7d8fb7a7e8738ce4efc8762c32e))
 - **send:**
+  - fix missing 'to' label in send confirmation
+  ([65ca580a](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/65ca580aaf77cc0436579ad35bd35ea10ae4b625))
   - remove extra dropdown padding
   ([24df172e](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/24df172e04bb60536818ee371927027201a2eeff))
   - solve issues with blurring
@@ -240,11 +262,15 @@ _Recent changes_
 
 - **<noscript>:** Tell user to enable JavaScript
   ([4e5b06f0](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/4e5b06f0feb570e2e5a4dd0554db58a589748d4a))
+- **Account:** New Address adds address with default label, row animation.
+  ([f9d868b3](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f9d868b3ec2e21e6d4f9d54c370f8b0a72e4890c))
 - **Accounts:**
   - merge account and address screens, advanced receive
   ([9729fe15](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/9729fe157c2905eed5b70b24d06a6ffcf65a0471))
   - reveal account xpub
   ([114e5d1f](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/114e5d1fd60073659f52145096625ed645d1a1d7))
+- **AddressBook:** list and delete entries
+  ([ad1a99c9](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/ad1a99c93807c01f6de06aa2ba3facc0070d03d9))
 - **Backup:** printable recovery sheet and improved workflow
   ([0c23e158](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/0c23e158aeb65a15fa90b7d3fdb0e2edc418e493))
 - **Home:**
@@ -254,6 +280,8 @@ _Recent changes_
   ([969467f1](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/969467f1178d336d02529a9e3c3626de8d50c4c2))
   - add tabular account balance data, rm related tests
   ([8df1e934](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/8df1e934f30e8b93acc19936ee6978ac66cdd6fd))
+- **ImportedAddress:** improved import and sweep flow
+  ([c6ac7d2f](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/c6ac7d2f29660caf4418590cdeb3255d16b48c9c))
 - **Links:** clarify handle bitcoin links UX
   ([b2d8ca75](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/b2d8ca7557ea0541a0cee815f2f027bef0112619))
 - **Recovery:**
@@ -291,10 +319,17 @@ _Recent changes_
 - **payment:** create wrapper for wallet-payment.js
   ([529f9ed4](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/529f9ed4cf1e751f20c8c253af4ca3574509789b))
 - **recovery:**
+  - add Go Back button
+  ([f534539f](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f534539f12275de81f9753a4e10ff86d144b803b))
   - add wallet recovery from login screen
   ([d9ab7ee0](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/d9ab7ee06332a431cc969966c16738bd453c05fa))
   - Recover funds markup and controller
   ([4693eee7](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/4693eee7f74d89118d3b02cae34a32bf16aea612))
+- **reminder:**
+  - set SID if necessary, better error handling
+  ([6be0742b](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/6be0742b529e072915897f6c3a8a09996c2757ed))
+  - add wallet id reminder to login help page
+  ([83cbfa2c](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/83cbfa2c0bfed8a2bfe8bc8658aebdf2d66c14bd))
 - **security-center:** set default score > 0 for new wallet creation
   ([a4cc21d9](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/a4cc21d9d61311a83ede809f093e5a60c5731372))
 - **send:**
@@ -334,6 +369,7 @@ _Recent changes_
   - align cols to baseline in home, less clunky first-time modal
   - update note ux, center modals, redo send confirm screen, update ladda spinner
 - **advancedSettings:** Clean up validation functions, make sure fee-per-kb cannot exceed 0.01 btc
+- **alerts:** move alerts to dedicated service
 - **app:**
   - replace remaining walletApp uses
   - use angular module lookup rather than global app variable
@@ -346,6 +382,7 @@ _Recent changes_
   - only look for controllers in the controller directory
   - remove coffee controllers from files
 - **layout:** use a more conventional positioning method
+- **login:** clean up routing for login screen
 - **performance:** one-way data bind when we can
 - **send:**
   - clean destination-input link code
