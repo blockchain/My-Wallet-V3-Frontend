@@ -244,10 +244,14 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, Alerts, MyWall
 
       hdAddresses[accountIdx]
 
-  wallet.addAddressForAccount = (account) ->
-    $translate("DEFAULT_NEW_ADDRESS_LABEL").then (translation) ->
-      account.setLabelForReceivingAddress(account.receiveIndex, translation)
+  wallet.addAddressForAccount = (account, successCallback, errorCallback) ->
+    success = () ->
       wallet.hdAddresses(account.index)(true)
+      successCallback()
+
+    $translate("DEFAULT_NEW_ADDRESS_LABEL").then (translation) ->
+      account.setLabelForReceivingAddress(account.receiveIndex, translation).then(success).catch(errorCallback)
+
 
   wallet.resendTwoFactorSms = (uid, successCallback, errorCallback) ->
     success = () ->
