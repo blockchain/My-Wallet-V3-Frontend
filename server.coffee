@@ -35,7 +35,7 @@ app.configure ->
       #  ui-select: https://github.com/angular-ui/ui-select/blob/master/dist/select.js
       # 'sha256-4IfJmohi...' :
 
-      res.setHeader "content-security-policy", "img-src 'self' blockchain.info data:; style-src 'self' 'sha256-vv5i1tRAGZ/gOQeRpI3CEWtvnCpu5FCixlD2ZPu7h84=' 'sha256-47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU='; child-src 'none'; script-src 'self' 'sha256-mBeSvdVuQxRa2pGoL8lzKX14b2vKgssqQoW36iRlU9g=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='; connect-src 'self' *.blockchain.info *.blockchain.com wss://*.blockchain.info https://blockchain.info https://api.sharedcoin.com; object-src 'none'; media-src 'self' data: mediastream: blob:; font-src 'self'"
+      res.setHeader "content-security-policy", "img-src 'self' https://blockchain.info data:; style-src 'self' 'sha256-vv5i1tRAGZ/gOQeRpI3CEWtvnCpu5FCixlD2ZPu7h84=' 'sha256-47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU='; child-src 'none'; script-src 'self' 'sha256-mBeSvdVuQxRa2pGoL8lzKX14b2vKgssqQoW36iRlU9g=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='; connect-src 'self' *.blockchain.info *.blockchain.com wss://*.blockchain.info https://blockchain.info https://api.sharedcoin.com; object-src 'none'; media-src 'self' data: mediastream: blob:; font-src 'self'"
       res.setHeader "X-Frame-Options", "SAMEORIGIN"
     if req.url.indexOf("beta_key")
       # Don't cache these
