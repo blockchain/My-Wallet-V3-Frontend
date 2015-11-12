@@ -250,6 +250,11 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, MyWallet, MyBl
 
       hdAddresses[accountIdx]
 
+  wallet.addAddressForAccount = (account) ->
+    $translate("DEFAULT_NEW_ADDRESS_LABEL").then (translation) ->
+      account.setLabelForReceivingAddress(account.receiveIndex, translation)
+      wallet.hdAddresses(account.index)(true)
+
   wallet.resendTwoFactorSms = (uid, successCallback, errorCallback) ->
     success = () ->
       $translate("RESENT_2FA_SMS").then (translation) ->

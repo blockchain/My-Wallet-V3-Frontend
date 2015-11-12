@@ -6,10 +6,16 @@
 
 h5.well.type-h5.em-400.hidden-xs(translate="MY_ADDRESSES_EXPLAIN_TEMP")
 
-.form-ctrl.flex-between.flex-center
-  .flex-1.width-100.filter-search-alt.pos-rel
-    input(type="text", ng-model="searchText")
-    i.ti-search.pos-abs
+.row
+  .col-xs-12.col-md-6
+    button.btn.button-primary.btn-sm(role="button", ng-click="createAddress()", translate="CREATE_ADDRESS")
+  .col-xs-12.col-md-6
+    .flex-1.width-100.filter-search-alt.pos-rel
+      input(type="text", ng-model="searchText")
+      i.ti-search.pos-abs
+
+h2(translate="HD_ADDRESSES_FOR_ACCOUNT", translate-values="{account: account.label}")    
+     
 .row
   .col-xs-12.table-container
     table.responsive.width-100
@@ -17,4 +23,8 @@ h5.well.type-h5.em-400.hidden-xs(translate="MY_ADDRESSES_EXPLAIN_TEMP")
         th.shrink(translate="ADDRESS")
         th.expand(translate="LABEL")
         th.shrink
-      tr(hd-address="address" search-text="searchText" ng-repeat="address in hdAddresses() | addressOrNameMatch:searchText | orderBy:['index']") 
+      tr(
+        hd-address="address" 
+        search-text="searchText" 
+        ng-repeat="address in hdAddresses() track by address.index | addressOrNameMatch:searchText | orderBy:['index']"
+      ).address-animate 

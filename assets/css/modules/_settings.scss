@@ -52,25 +52,30 @@
 
 .inneredit { padding: 10px 15px 0;}
 
-.account-container {
-  border: 1px solid $grey;
+table.accounts-container {
+
+  tr {
+    height: 66px;
+  }
+
+  td {
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid $grey;
+    border-bottom: 1px solid $grey;
+  }
+
+  .account-label {
+    font-size: 12pt;
+    font-weight: 500;
+  }
+
   .label-primary {background-color: $blue; color: white;}
-  h2 {
-    background: url('/img/my-accounts-icon.png') no-repeat 0 0;
-    padding: 5px 0px 5px 40px;
-    background-size: 35px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    span {font-size: 13pt;word-break: break-word; color: #686868;margin-bottom: 10px;}
-    span.label{font-size: 10pt!important;}
-  }
-  ul {
-    list-style: none;
-    li { padding: 2px 0; }
-  }
+
   &.imported-addresses{
     color: $mid-grey;
   }
+
 }
 
 .intl-tel-input { margin-bottom: 10px; }

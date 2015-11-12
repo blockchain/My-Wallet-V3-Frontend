@@ -34,6 +34,22 @@ function AppCtrl($scope, Wallet, $state, $rootScope, $location, $cookieStore, $t
     }
   };
 
+  $scope.showAddress = (account) => {
+    let modalInstance = $uibModal.open({
+      templateUrl: "partials/request.jade",
+      controller: "RequestCtrl",
+      resolve: {
+        destination: () => account
+      },
+      windowClass: "bc-modal"
+    });
+    if (modalInstance != null) {
+      modalInstance.opened.then(() => {
+        Wallet.store.resetLogoutTimeout();
+      });
+    }
+  };
+
   $scope.send = () => {
     Wallet.clearAlerts();
     let modalInstance = $uibModal.open({
