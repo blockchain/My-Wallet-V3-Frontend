@@ -455,7 +455,6 @@ module.exports = (grunt) ->
           # logo : 'https://raw.githubusercontent.com/blockchain/My-Wallet-HD-Frontend/changelog/assets/icons/png/logo.png',
           intro : 'Recent changes'
           grep_commits: '^fix|^feat|^ui|^docs|^dep|^refactor|^chore|BREAKING'
-          tag: '1.2.0'
           repo_url: 'https://github.com/blockchain/My-Wallet-HD-Frontend'
 
   # Load the plugin that provides the "uglify" task.
