@@ -82,6 +82,10 @@ if process.env.BETA? && parseInt(process.env.BETA)
   # beta key public
 
   app.get "/", (request, response) ->
+    ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress
+    if process.env.IP_WHITELIST && process.env.IP_WHITELIST.split(" ").indexOf(ip.split(", ")[0]) == -1
+      console.log ip
+      response.status(403).send("I'm sorry Dave, I can't let you do that.")
     if dist && process.env.BETA?
       response.render "index-beta.html"
     else if dist
