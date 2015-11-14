@@ -286,7 +286,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, Alerts, MyWall
 
       # Associate the UID with the beta key:
       if $rootScope.beta
-        $http.post("/set_guid_for_beta_key", {key: $rootScope.beta.key, guid: uid}
+        $http.post("/register_guid", {guid: uid, email: email}
         ).success((data) ->
           if(data.success)
             wallet.login(uid, password, null, null, loginSuccess, loginError)

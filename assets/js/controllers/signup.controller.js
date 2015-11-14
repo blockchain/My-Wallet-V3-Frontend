@@ -94,12 +94,6 @@ function SignupCtrl($scope, $rootScope, $log, Wallet, Alerts, $uibModal, $transl
   $scope.createWallet = successCallback => {
     Wallet.create($scope.fields.password, $scope.fields.email, $scope.fields.language, $scope.fields.currency, uid => {
       $cookieStore.put("uid", uid);
-      $http.post('verify_wallet_created', {
-      }).success( data => {
-        if ((data.error != null) && (data.error.message != null)) {
-          console.warn('There was an issue verifying wallet creation');
-        }
-      });
       successCallback(uid);
     });
   };

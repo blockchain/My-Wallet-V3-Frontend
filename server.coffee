@@ -116,13 +116,14 @@ if process.env.BETA? && parseInt(process.env.BETA)
       else
         response.json {verified : false, error: {message: "Please create a new Alpha wallet first."}}
 
-  app.post "/set_guid_for_beta_key", (request, response) ->
+  app.post "/register_guid", (request, response) ->
     v3Beta.verifyLimit (err, open) ->
       if err
         response.json {success : false, error: {message: err}}
       else
-        v3Beta.assignKey "", "", request.body.guid, () ->
-          response.json {success : true}
+        v3Beta.assignKey "", request.body.email, request.body.guid, (key) ->
+          v3Beta.newWalletCreated key, () ->
+            response.json {success : true}
 
   app.post '/whitelist_guid', (request, response) ->
     if !request.body?
