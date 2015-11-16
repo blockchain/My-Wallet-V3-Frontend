@@ -251,6 +251,7 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, Alerts, MyWall
     success = () ->
       wallet.hdAddresses(account.index)(true)
       successCallback()
+      wallet.applyIfNeeded()
 
     $translate("DEFAULT_NEW_ADDRESS_LABEL").then (translation) ->
       account.setLabelForReceivingAddress(account.receiveIndex, translation).then(success).catch(errorCallback)
