@@ -90,6 +90,11 @@ function RequestCtrl($scope, Wallet, Alerts, $modalInstance, $log, destination, 
 
   };
 
+  $scope.cancel = () => {
+    Alerts.clear();
+    $modalInstance.dismiss("");
+  }
+
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
     const activeAccounts = filterFilter(Wallet.accounts(), {
       archived: false

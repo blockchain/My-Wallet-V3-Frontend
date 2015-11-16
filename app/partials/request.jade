@@ -82,4 +82,5 @@
     a.dark-grey(ng-hide="advanced || fields.to.index == undefined", ng-click="advancedReceive()", translate="ADVANCED_RECEIVE")
     a.dark-grey(ng-show="advanced", ng-click="regularReceive()", translate="REGULAR_RECEIVE")
   .flex-center.flex-end
+    button.button-muted.mrm(ng-click="cancel()", translate="CANCEL", ng-show="advanced && fields.label != ''")
     button.button-success.button-lg(ng-click="done()", translate="DONE")  
