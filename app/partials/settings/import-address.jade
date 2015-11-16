@@ -7,23 +7,25 @@
   div(ng-show="step==1")
     form(role="form" name="importForm" novalidate)
       p(translate="IMPORT_BITCOIN_ADDRESS_EXPLAIN")
-      .form-group(ng-class="{'has-error': importForm.$invalid }")
+      .form-group(ng-class="{'has-error': importForm.privateKey.$invalid && fields.addressOrPrivateKey != '' }")
         label.control-label(for="address")
-          span(translate="INPUT_NOT_RECOGNIZED" ng-show="importForm.privateKey.$error.isValid")
-          span(ng-show="importForm.privateKey.$error.present")
-            span(translate="ALREADY_IN_WALLET")
-            |: 
-            b {{::address.address}}
-        textarea(
-          rows="3"
+        input.form-control(
           ng-model="fields.addressOrPrivateKey"
           ng-disabled="BIP38"
           name="privateKey"
           is-valid="isValidAddressOrPrivateKey(fields.addressOrPrivateKey)"
-          ng-change="importForm.privateKey.$setValidity('present', true)"
-          required
+          ng-change="importForm.privateKey.$setValidity('present', true); importForm.privateKey.$setValidity('check', true);"
+          autocomplete="off"
           autofocus
         )
+        span.help-block
+          span(translate="INPUT_NOT_RECOGNIZED" ng-show="importForm.privateKey.$error.isValid && fields.addressOrPrivateKey != ''")
+          span(ng-show="importForm.privateKey.$error.check", translate="CHECK_PRIVATE_KEY")
+          span(ng-show="importForm.privateKey.$error.present")
+            span(translate="ALREADY_IN_WALLET")
+            |: 
+            b {{::address.address}}
+
       .form-group(ng-class="{'has-error': importForm.bipPassphrase.$invalid && importForm.bipPassphrase.$dirty}" ng-show="BIP38")
         label.control-label Password for private key
         input.form-control(
@@ -34,7 +36,8 @@
           ng-change="importForm.bipPassphrase.$setValidity('wrong', true)"
         )
         div(ng-show="importForm.bipPassphrase.$dirty")
-          span.help-block(translate="INCORRECT_PASSWORD" ng-show="importForm.bipPassphrase.$error.wrong")        
+          span.help-block(translate="INCORRECT_PASSWORD" ng-show="importForm.bipPassphrase.$error.wrong") 
+       
       p(ng-show="BIP38 && status.busy", translate="TAKES_A_WHILE")
       .pal.flex-center.flex-column(ng-hide="!status.cameraIsOn")
         label(translate="SCAN_QR_CODE")

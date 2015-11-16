@@ -41,12 +41,19 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $modalInstance, $transl
 
     const error = (err) => {
       $scope.status.busy = false;
+
       switch (err) {
         case 'presentInWallet':
           $scope.importForm.privateKey.$setValidity('present', false);
           break;
         case 'wrongBipPass':
           $scope.importForm.bipPassphrase.$setValidity('wrong', false);
+          break;
+        case 'importError':
+          $scope.importForm.privateKey.$setValidity('check', false);
+          $scope.step = 1;
+          $scope.BIP38 = false;
+          $scope.proceedWithBip38 = undefined;
           break;
       }
     };

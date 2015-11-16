@@ -6,6 +6,18 @@
   input {
     height: 33px;
   }
+  textarea {
+    border-radius: 3px;
+    border: 1px solid #EEEEEE;
+    height: 60px;
+    width: 300px;
+    &:focus {
+      outline: none;
+    }
+    resize: none;
+    padding: 5px;
+
+  }
 }
 
 .receive-code canvas { margin-right: 2em; padding-right: 2em; }
