@@ -89,6 +89,8 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, Alerts, MyWall
           wallet.user.mobile = {country: "+" + result.dial_code, number: ""}
           wallet.user.internationalMobileNumber = "+" + result.dial_code
 
+        wallet.settings.notifications = result.notifications_type && result.notifications_type.length > 0 && result.notifications_type.indexOf(1) > -1 && result.notifications_on > 0
+
         wallet.user.isEmailVerified = result.email_verified
         wallet.user.isMobileVerified = result.sms_verified
         wallet.user.passwordHint = result.password_hint1 # Field not present if not entered
@@ -953,6 +955,28 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, Alerts, MyWall
 
       errorCallback()
     )
+
+  wallet.enableNotifications = () ->
+    success = () ->
+      wallet.settings.notifications = true
+      wallet.applyIfNeeded()
+
+    error = () ->
+      Alerts.displayError("Failed to enable notifications");
+      wallet.applyIfNeeded()
+
+    wallet.my.wallet.enableNotifications(success, error)
+
+  wallet.disableNotifications = () ->
+    success = () ->
+      wallet.settings.notifications = false
+      wallet.applyIfNeeded()
+
+    error = () ->
+      Alerts.displayError("Failed to disable notifications");
+      wallet.applyIfNeeded()
+
+    wallet.my.wallet.disableNotifications(success, error)
 
   wallet.setFeePerKB = (fee) ->
     wallet.my.wallet.fee_per_kb = fee

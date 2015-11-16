@@ -22,6 +22,14 @@ function SettingsPreferencesCtrl($scope, Wallet, Alerts, $uibModal, $filter, $tr
     Wallet.changeEmail(email, success, error);
   };
 
+  $scope.enableNotifications = () => {
+    Wallet.enableNotifications();
+  }
+
+  $scope.disableNotifications = () => {
+    Wallet.disableNotifications();
+  }
+
   $scope.setHandleBitcoinLinks = () => {
     Wallet.handleBitcoinLinks();
   };

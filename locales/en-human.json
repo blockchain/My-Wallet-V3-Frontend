@@ -220,8 +220,7 @@
   "BALANCE" : "Balance",
   "MAKE_DEFAULT" : "Make default",
   "RENAME" : "Rename",
-  "MY_ADDRESSES_EXPLAIN" :      "Your Blockchain Wallet contains an unlimited collection of bitcoin addresses that you can use to receive funds from anybody, globally. Your wallet will automatically manage your bitcoin addresses for you. The addresses below are the subset of addresses that are labeled or enabled for notifications.",
-  "MY_ADDRESSES_EXPLAIN_TEMP" : "Your Blockchain Wallet contains an unlimited collection of bitcoin addresses that you can use to receive funds from anybody, globally. Your wallet will automatically manage your bitcoin addresses for you. The addresses below are the subset of addresses that are labeled.",
+  "MY_ADDRESSES_EXPLAIN" : "Your Blockchain Wallet contains an unlimited collection of bitcoin addresses that you can use to receive funds from anybody, globally. Your wallet will automatically manage your bitcoin addresses for you. The addresses below are the subset of addresses that are labeled.",
   "NEW_ADDRESS" : "New Address",
   "IMPORT_ADDRESS" : "Import Address",
   "IMPORTED_ADDRESSES_EXPLAIN" : "You may import existing bitcoin addresses by scanning or entering the associated Private Key. <b>WARNING:</b> When restoring your wallet with your Recovery Phrase, bitcoin addresses you have imported will not be restored. You must re-add them to your wallet by scanning the appropriate Private Key. We recommend that you transfer any funds on the imported address/es into an address created by your wallet.",
@@ -594,5 +593,8 @@
   "YOUR_REC_PASS_EXPLAIN": "Enter your 12 recovery words with spaces to recover your funds & transactions",
   "RESTORE_SUCCESSFUL": "Restore Successful",
   "REDIRECTING": "We're redirecting you to your wallet now!",
-  "TAKES_A_WHILE": "This may take a while. If your browser asks if you want to cancel the script, please press continue."
+  "TAKES_A_WHILE": "This may take a while. If your browser asks if you want to cancel the script, please press continue.",
+  "NOTIFICATIONS" : "Notifications",
+  "NOTIFICATIONS_EXPLAIN" : "Enable notifications to receive an email whenever you receive bitcoins. Only labeled addresses in your accounts and imported addresses are eligible to trigger notifications.",
+  "VERIFY_EMAIL_FIRST" : "Please verify your email address first."
 }
