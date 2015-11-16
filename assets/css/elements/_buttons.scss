@@ -22,6 +22,9 @@ button[disabled] {
 }
 
 @mixin button($name, $background:white, $color:white, $max-width:none) {
+  .btn:focus {
+    color: $color;
+  }
   @if $name == $false {
     .button {
       @extend %button-base;
