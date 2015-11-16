@@ -448,14 +448,6 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, Alerts, MyWall
 
     wallet.settings_api.update_IP_lock(ips, success, error)
 
-  wallet.verifyEmail = (code, successCallback, errorCallback) ->
-    success = () ->
-      wallet.user.isEmailVerified = true
-      successCallback()
-      wallet.applyIfNeeded()
-
-    wallet.settings_api.verifyEmail(code, success, errorCallback)
-
   wallet.resendEmailConfirmation = (successCallback, errorCallback) ->
     success = () ->
       successCallback()

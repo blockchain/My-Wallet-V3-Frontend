@@ -9,8 +9,7 @@ form.form-horizontal(role="form",name="form",novalidate)
       p.text.line-height.em-300.hidden-xs(translate="EMAIL_ADDRESS_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result.flex-column
       bc-async-input(type="email" is-required ng-model="user.email" on-save="changeEmail" action-title="'CHANGE' | translate" autofocus)
-      verify-email
-      resend-email-confirmation.mtl
+      resend-email-confirmation.mtl(ng-hide="user.isEmailVerified")
   .form-group
     .col-sm-12.col-md-6
       .flex-center.mbm
