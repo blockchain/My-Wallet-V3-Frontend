@@ -17,7 +17,7 @@ describe('my-addresses-page', function() {
 
         // Navigate to Wallet Settings and validate page
         browser.findElement(by.css('[translate="MY_ADDRESSES"]')).click();
-        browser.findElement(by.css('[translate="MY_ADDRESSES_EXPLAIN_TEMP"]'));
+        browser.findElement(by.css('[translate="MY_ADDRESSES_EXPLAIN"]'));
 
     });
 

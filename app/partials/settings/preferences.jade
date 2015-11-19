@@ -52,6 +52,17 @@ form.form-horizontal(role="form",name="form",novalidate)
       p.em-300.text.line-height.hidden-xs.hidden-sm(translate="FEE_PER_KB_EXPLAIN")
     .col-sm-12.col-md-6.setting-result
       bc-async-input(ng-model="settings.feePerKB" validator="validateFee" is-required on-save="changeFeePerKB" transform="btc" action-title="'CHANGE' | translate")
+  .form-group
+    .col-sm-12.col-md-6
+      label.em-400.type-h5(translate="NOTIFICATIONS")
+      span.label.label-warning(translate="DISABLED", ng-show="!settings.notifications")
+      span.label.label-success(translate="ENABLED", ng-show="settings.notifications")
+      p.text.em-300.line-height.hidden-xs(translate="NOTIFICATIONS_EXPLAIN")    
+    .col-sm-6.col-md-3
+    .col-sm-6.col-md-3.setting-result
+      button.button-primary(ng-click="enableNotifications()",  translate="ENABLE",  ng-hide="settings.notifications", ng-disabled="!user.isEmailVerified")
+      button.button-primary(ng-click="disableNotifications()", translate="DISABLE", ng-show="settings.notifications")
+      p.settingtext.mtl(translate="VERIFY_EMAIL_FIRST", ng-show="!settings.notifications && !user.isEmailVerified")
   .form-group(ng-show="browserCanHandleBitcoinLinks")
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="HANDLE_BITCOIN_LINKS")
