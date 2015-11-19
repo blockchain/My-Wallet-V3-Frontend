@@ -152,7 +152,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, $modalInstance, $timeout, $state
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
     let numAccts = Wallet.accounts().filter(a => !a.archived).length;
-    let numAddrs = Wallet.legacyAddresses().filter(a => !a.archived).length;
+    let numAddrs = Wallet.legacyAddresses().filter(a => !a.archived && !a.isWatchOnly).length;
     return numAccts + numAddrs;
   };
 
