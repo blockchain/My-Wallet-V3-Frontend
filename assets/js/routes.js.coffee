@@ -299,28 +299,3 @@ angular.module('walletApp').config ($stateProvider, $urlRouterProvider) ->
       }
     }
   )
-
-  $stateProvider.state("verify-email-with-guid",
-    url: "/verify-email/:code/:guid"
-    onEnter: ($stateParams, $state, Wallet, $translate) ->
-      # If the link target blockchain-...uid... was preserved and we are logged in on another tab,
-      # then we are in the wrong process and there's no way to switch to the correct tab.
-      # If however the target was not preserved, there's still a chance the user is logged in on
-      # another tab. We try to get them there and close the current tab. Unfortunately there's no
-      # way of knowing without trying, so we may end up needlessly opening a new tab and closing this one.
-
-      if !Wallet.status.isLoggedIn && window.name != "blockchain-" + $stateParams.guid
-        Wallet.guid = $stateParams.guid
-        href = "http://local.blockchain.com:8080/#/verify-email/" + $stateParams.code
-        target= "blockchain-" + $stateParams.guid
-        if window.open(href, target)
-          window.close()
-
-      Wallet.goal.verifyEmail = $stateParams.code
-  )
-
-  $stateProvider.state("verify-email",
-    url: "/verify-email/:code"
-    onEnter: ($stateParams, $state, Wallet, $translate) ->
-      Wallet.goal.verifyEmail = $stateParams.code
-  )

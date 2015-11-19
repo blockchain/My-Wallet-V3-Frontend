@@ -72,7 +72,7 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $location, $cookieS
   };
 
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) => {
-    let loggedOutStates = ['public', 'public.login', 'public.recover', 'public.reminder', 'public.signup', 'public.help', 'open', 'verify-email', 'verify-email-with-guid'];
+    let loggedOutStates = ['public', 'public.login', 'public.recover', 'public.reminder', 'public.signup', 'public.help', 'open'];
     if (loggedOutStates.every(s => toState.name !== s) && $scope.status.isLoggedIn === false) {
       $state.go("public.login");
     }
@@ -137,33 +137,6 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $location, $cookieS
           });
         }
       }
-    }
-    if (Wallet.goal.verifyEmail != null) {
-      if (!Wallet.status.isLoggedIn) {
-        $translate("PLEASE_LOGIN_FIRST").then( translation => {
-          Alerts.displayInfo(translation, true);
-        });
-        $state.go("public.login");
-        return;
-      }
-      const success = message => {
-        Wallet.user.isEmailVerified = true;
-        $state.go("wallet.common.transactions", {
-          accountIndex: ""
-        });
-        $translate("EMAIL_VERIFIED").then( translation => {
-          Alerts.displaySuccess(translation);
-        });
-      };
-      const error = error => {
-        $state.go("/");
-        console.log(error);
-        $translate("EMAIL_VERIFICATION_FAILED").then( translation => {
-          Alerts.displayError(translation);
-        });
-      };
-      Wallet.verifyEmail(Wallet.goal.verifyEmail, success, error);
-      Wallet.goal.verifyEmail = void 0;
     }
   };
 

@@ -344,7 +344,7 @@
   "ADD_VERIFY_EMAIL" : "Verify Email",
   "VERIFY_EMAIL" : "Verify your email address",
   "VERIFY_EMAIL_EXPLAIN" : "Whenever you use a different browser or computer, we'll send you a verification email to make sure it's you.",
-  "RESEND_EMAIL_VERIFICATION" : "Re-send Email",
+  "RESEND_EMAIL_VERIFICATION" : "Resend Verification Email",
   "SWEEP" : "Sweep",
   "SWEEP_LEGACY" : "Move funds away from imported addresses",
   "SWEEP_LEGACY_EXPLAIN" : "Your recovery phrase does not apply to imported addresses. Therefor we recommend that you transfer fund from imported addresses to one of your accounts.",
