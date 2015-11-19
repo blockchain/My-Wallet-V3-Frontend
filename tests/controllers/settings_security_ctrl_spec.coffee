@@ -17,6 +17,8 @@ describe "SettingsSecurityCtrl", ->
 
       Wallet.settings = {rememberTwoFactor: true}
 
+      Wallet.user = {passwordHint: "Open sesame"}
+
       Wallet.settings_api =
         update_password_hint1: (hint, success, error) ->
           if hint == "आपकी पसंदीदा"
@@ -39,6 +41,11 @@ describe "SettingsSecurityCtrl", ->
 
   it "should have access to wallet settings", inject((Wallet) ->
     expect(scope.settings).toBe(Wallet.settings)
+    return
+  )
+
+  it "should have access to user object", inject((Wallet) ->
+    expect(scope.user).toBe(Wallet.user)
     return
   )
 

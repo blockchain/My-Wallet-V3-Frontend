@@ -4,6 +4,8 @@ angular
 
 function SettingsSecurityCtrl($scope, Wallet, Alerts, $uibModal, $translate) {
   $scope.settings = Wallet.settings;
+  $scope.user = Wallet.user;
+
   $scope.btc = Wallet.btcCurrencies[0];
   $scope.processToggleRememberTwoFactor = null;
 
