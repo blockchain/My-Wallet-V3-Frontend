@@ -56,7 +56,7 @@
                 ng-change="updateToLabel(); checkForSameDestination(); refreshTxProposal()"
                 on-request-qr="cameraOn($index)")
             .has-error
-              span.help-block(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress && sendForm['destinations' + $index].$touched")
+              span.help-block(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress && sendForm['destinations' + $index].$touched && transaction.destinations[$index].address !== ''")
               span.help-block(translate="SAME_DESTINATION" ng-show="sendForm['destinations' + $index].$error.isNotEqual")
             //- Amount
             div.flex-center.recipient-currency.mtl(ng-class="{'has-error': sendForm['amounts' + $index].$invalid && (sendForm['amounts' + $index].$touched || sendForm['amountsFiat' + $index].$touched)}")
