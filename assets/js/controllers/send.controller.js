@@ -187,7 +187,10 @@ function SendCtrl($scope, $log, Wallet, Alerts, $modalInstance, $timeout, $state
         Wallet.setNote({ hash: tx.txid }, note);
       }
 
-      let index = $scope.transaction.from.index || 'imported';
+      let index = $scope.transaction.from.index;
+      if(index === null || index == undefined)  {
+        index = 'imported';
+      }
 
       if (!($state.current.name === "wallet.common.transactions" || $stateParams.accountIndex === "")) {
         $state.go("wallet.common.transactions", {
