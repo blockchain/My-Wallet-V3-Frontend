@@ -15,7 +15,7 @@
       .col-sm-9
         ui-select(ng-model="fields.to")
           ui-select-match {{ $select.selected.label }}
-          ui-select-choices(repeat="account in accounts() | filter: $select.search" group-by="'type'") 
+          ui-select-choices(repeat="account in accounts() | filter:{archived: false, label: $select.search}" group-by="'type'") 
             span(ng-bind-html="(account.label | highlight: $select.search)")  
 .modal-footer
   button.btn.btn-primary(ng-click="redeem()", translate="REDEEM", ng-hide="redeeming") 
