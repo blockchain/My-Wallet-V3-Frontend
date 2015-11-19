@@ -17,29 +17,32 @@
   div(ng-hide="confirmationStep")
     form.ph-form(role="form",name="sendForm",novalidate)
       //- From
-      .form-group.row(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
-        label.col-sm-2.col-xs-12
+      .form-group.row
+        label.pts.col-sm-2.col-xs-12
           span(translate="FROM:")
         .col-sm-10.col-xs-12(ng-class="{'has-error': (sendForm.from.$invalid && sendForm.destinations0.$touched) || (!amountIsValid && (sendForm.amounts0.$touched || sendForm.amountsFiat0.$touched))}")
-          p.form-control-static(ng-hide="originsLoaded")
-            img(src="img/spinner.gif")
-          span(ng-show="originsLoaded")
-            ui-select(
-              ng-model="transaction.from"
-              name="from"
-              ng-change="validateAmounts(); checkForSameDestination(); setPaymentFrom()"
-              required)
-              ui-select-match
-                label-origin(origin="$select.selected")
-              ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)")
-                span(ng-class="{aaa: hasZeroBalance(origin)}")
-                  label-origin(origin='origin' highlight="$select.search")
+          .form-control(ng-show="numberOfActiveAccountsAndLegacyAddresses() <= 1")
+            | My Bitcoin Wallet
+          div(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
+            p.form-control-static(ng-hide="originsLoaded")
+              img(src="img/spinner.gif")
+            span(ng-show="originsLoaded")
+              ui-select(
+                ng-model="transaction.from"
+                name="from"
+                ng-change="validateAmounts(); checkForSameDestination(); setPaymentFrom()"
+                required)
+                ui-select-match
+                  label-origin(origin="$select.selected")
+                ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)")
+                  span(ng-class="{aaa: hasZeroBalance(origin)}")
+                    label-origin(origin='origin' highlight="$select.search")
           span.help-block(translate="INSUFFICIENT" ng-show="!amountIsValid && (sendForm.amounts0.$touched || sendForm.amountsFiat0.$touched)")
           span.help-block(ng-show="sendForm.from.$invalid && sendForm.destinations0.$touched") Must select an account to send from
       //- Advanced Send
       .form-group.bc-modal-fade.mvl.advanced-recipient.row
         //- To
-        label.col-sm-2.col-xs-12
+        label.pts.col-sm-2.col-xs-12
           span(translate="TO:")
         .col-sm-10.col-xs-12
           .flex-column(ng-class="{'advanced-recipient-row': advanced}" ng-repeat="item in transaction.destinations track by $index")
