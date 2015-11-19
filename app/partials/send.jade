@@ -22,7 +22,7 @@
           span(translate="FROM:")
         .col-sm-10.col-xs-12(ng-class="{'has-error': (sendForm.from.$invalid && sendForm.destinations0.$touched) || (!amountIsValid && (sendForm.amounts0.$touched || sendForm.amountsFiat0.$touched))}")
           .form-control(ng-show="numberOfActiveAccountsAndLegacyAddresses() <= 1")
-            | {{ transaction.from.label }}
+            label-origin(origin="transaction.from")
           div(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
             p.form-control-static(ng-hide="originsLoaded")
               img(src="img/spinner.gif")
