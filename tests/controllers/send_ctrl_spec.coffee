@@ -479,7 +479,7 @@ describe "SendCtrl", ->
 
       it "should return the correct amount", ->
         amount = scope.numberOfActiveAccountsAndLegacyAddresses()
-        expect(amount).toEqual(4)
+        expect(amount).toEqual(3)
 
     describe "hasZeroBalance", ->
 
