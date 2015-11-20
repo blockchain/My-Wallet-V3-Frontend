@@ -9,6 +9,13 @@ angular.module("pascalprecht.translate").provider "$translate", ->
   $get: () ->
     $translate = (template, params) ->
       promise = {}
+
+      if template instanceof Array
+        template = template.reduce (acc, next) ->
+          acc[next] = next
+          return acc
+        , {}
+
       promise.then = (callback) ->
         callback(template)
 
