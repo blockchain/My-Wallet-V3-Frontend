@@ -7,7 +7,7 @@ admin.controller('AdminCtrl', function ($rootScope, $scope, $http, $modal, Inter
 
   // Declare scope variables
   $scope.tableData = [];
-  $scope.headers = ['rowid', 'key', 'name', 'email', 'lastseen', 'guid', 'status'];
+  $scope.headers = ['rowid', 'key', 'name', 'email', 'lastseen', 'email opened','link followed', 'guid', 'status'];
   $scope.filters = ['name', 'email', 'key', 'guid'];
   $scope.search = { text: '', filter: '', sort: 'rowid', order: 'A' };
 

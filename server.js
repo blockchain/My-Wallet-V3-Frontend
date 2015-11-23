@@ -94,6 +94,20 @@ if (beta) {
     }
   });
 
+  app.get(/^\/key-.{8}$/, function (req, res) {
+    var key = req.path.split(path.sep)[1].split('-')[1];
+    v3Beta.emailLinkFollowed({key:key});
+    res.cookie('key', '"' + key + '"');
+    res.redirect('/');
+  });
+
+  // *.blockchain.info/logo-key-{key} redirects to image on Amazon
+  app.get(/^\/logo-key-.{8}\.png$/, function (req, res) {
+    var key = req.path.split(path.sep)[1].split('-')[2].split(".")[0];
+    v3Beta.emailOpened({key:key});
+    res.redirect('https://s3.amazonaws.com/blockchainwallet/bc-logo-family.png');
+  });
+
   app.post('/check_beta', function (req, res) {
     v3Beta.verifyLimit(function (err, open) {
       if (err) res.json({ open: false, error: {message: err} });
@@ -319,11 +333,6 @@ app.get('/unsubscribe', function (req, res) {
 
 app.get(/^\/.{8}-.{4}-.{4}-.{4}-.{12}$/, function (req, res) {
   res.cookie('uid', '"' + req.path.split(path.sep)[1] + '"');
-  res.redirect('/');
-});
-
-app.get(/^\/key-.{8}$/, function (req, res) {
-  res.cookie('key', '"' + req.path.split(path.sep)[1].split('-')[1] + '"');
   res.redirect('/');
 });
 

@@ -74,6 +74,8 @@ html.overflow-scroll(ng-app="AdminInterface" lang='en')
             td {{ item.name }}
             td {{ item.email }}
             td {{ getDateFromTime(item.lastseen) }}
+            td {{ getDateFromTime(item.email_opened_at) }}
+            td {{ getDateFromTime(item.email_link_followed_at) }}
             td {{ item.guid }}
             td {{ (item.activated) ? 'Activated' : 'Pending' }}
             td {{ displayIOSStatus(item) }}
