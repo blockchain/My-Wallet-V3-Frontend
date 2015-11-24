@@ -78,17 +78,14 @@ if (dist) {
 if (beta) {
   // Beta system enabled
   console.log('Enabling beta invite system');
-  var v3Beta = require('my-wallet-v3-beta-module')(path.join(__dirname, process.env.BETA_DATABASE_PATH));
-
+  var v3Beta = require('my-wallet-v3-beta-module')(path.join(__dirname, process.env.BETA_DATABASE_PATH || ''));
   app.get('/', function (req, res) {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     if (whitelist.indexOf(ip.split(', ')[0]) < 0) {
       console.log(ip);
       res.status(403).send('I\'m sorry Dave, I can\'t let you do that.');
-    } else if (dist && beta) {
-      res.render('index-beta.html');
     } else if (dist) {
-      res.render('index.html');
+      res.render('index-beta.html');
     } else {
       res.render('app/index.jade');
     }
@@ -102,8 +99,8 @@ if (beta) {
   });
 
   // *.blockchain.info/logo-key-{key} redirects to image on Amazon
-  app.get(/^\/logo-key-.{8}\.png$/, function (req, res) {
-    var key = req.path.split(path.sep)[1].split('-')[2].split(".")[0];
+  app.get(/^\/key-logo-.{8}$/, function (req, res) {
+    var key = req.path.split(path.sep)[1].split('-')[2];
     v3Beta.emailOpened({key:key});
     res.redirect('https://s3.amazonaws.com/blockchainwallet/bc-logo-family.png');
   });
@@ -221,9 +218,26 @@ if (beta) {
           });
         });
         break;
+      case 'remind-email':
+        v3Beta.remindEmail(req.query.key, function (err, data) {
+          res.json({
+            error: err,
+            data: data
+          });
+        });
+        break;
       case 'activate-all':
         var range = [req.query.min || 0, req.query.max || 100000];
         v3Beta.activateAll(range, function (err, data) {
+          res.json({
+            error: err,
+            data: data
+          });
+        });
+        break;
+      case 'remind-all':
+        var range = [req.query.min || 0, req.query.max || 100000];
+        v3Beta.remindAll(range, function (err, data) {
           res.json({
             error: err,
             data: data
@@ -281,6 +295,7 @@ if (beta) {
 } else {
   // Beta system disabled
   app.get('/', function (req, res) {
+    console.log("Beta system disabled!!!");
     var index = dist ? 'index.html' : 'app/index.jade';
     res.render(index);
   });

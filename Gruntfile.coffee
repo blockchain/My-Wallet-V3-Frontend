@@ -389,7 +389,7 @@ module.exports = (grunt) ->
 
       deploy_server_to_dev:
         command: () ->
-          'rsync -rz --delete server.coffee hd-dev@server:'
+          'rsync -rz --delete server.js hd-dev@server:'
 
       deploy_beta_to_dev:
         command: () ->
@@ -401,7 +401,7 @@ module.exports = (grunt) ->
 
       deploy_server_to_staging:
         command: () ->
-          'rsync -rz --delete server.coffee hd-staging@server:'
+          'rsync -rz --delete server.js hd-staging@server:'
 
       deploy_beta_to_staging:
         command: () ->
@@ -413,7 +413,7 @@ module.exports = (grunt) ->
 
       deploy_server_to_alpha:
         command: () ->
-          'rsync -rz --delete server.coffee hd-alpha@server:'
+          'rsync -rz --delete server.js hd-alpha@server:'
 
       deploy_beta_to_alpha:
         command: () ->
