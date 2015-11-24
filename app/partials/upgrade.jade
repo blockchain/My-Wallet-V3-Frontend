@@ -7,4 +7,4 @@
   p(translate="UPGRADE_WALLET_EXPLAIN")
 .modal-footer.pal.flex-end
   button.button-muted.mrm(ng-click="cancel()", translate="CANCEL", ng-disabled="busy")
-  button.button-danger(ui-ladda="{{ busy }}", ng-click="upgrade()" ng-disabled="waiting", ladda-translate="PROCEED", data-style="expand-left")
+  button.button-danger(ui-ladda="busy", ng-click="upgrade()" ng-disabled="waiting", ladda-translate="PROCEED", data-style="expand-left")

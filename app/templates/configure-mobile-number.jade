@@ -13,7 +13,7 @@
       button(
         type="submit"
         ng-class="buttonLg ? 'button-success button-lg' : 'button-primary'" 
-        ui-ladda="{{ status.busy }}"
+        ui-ladda="status.busy"
         ng-disabled="mobileForm.mobile.$invalid || !numberChanged()" 
         ladda-translate="SAVE" 
         data-style="expand-left"
