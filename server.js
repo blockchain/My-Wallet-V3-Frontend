@@ -49,6 +49,20 @@ app.use(function (req, res, next) {
     ]).join('; ');
     res.setHeader('content-security-policy', cspHeader);
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+
+    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    if (whitelist != '' && whitelist.indexOf(ip.split(', ')[0]) < 0) {
+      console.log(ip);
+      res.status(403).send('I\'m sorry Dave, I can\'t let you do that.');
+    } else if (dist && beta) {
+      res.render('index-beta.html');
+    } else if (dist) {
+      res.render('index.html');
+    } else {
+      res.render('app/index.jade');
+    }
+    return;
+
   }
   if (req.url.indexOf('beta_key')) {
     res.setHeader('Cache-Control', 'public, max-age=0, no-cache');
@@ -64,7 +78,6 @@ if (dist) {
   console.log('Production mode: single javascript file, cached');
   app.engine('html', ejs.renderFile);
   app.use(express.static('dist'));
-  app.set('view engine', 'html');
   app.set('views', path.join(__dirname, 'dist'));
 } else {
   console.log('Development mode: multiple javascript files, not cached');
@@ -79,17 +92,6 @@ if (beta) {
   // Beta system enabled
   console.log('Enabling beta invite system');
   var v3Beta = require('my-wallet-v3-beta-module')(path.join(__dirname, process.env.BETA_DATABASE_PATH || ''));
-  app.get('/', function (req, res) {
-    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    if (whitelist.indexOf(ip.split(', ')[0]) < 0) {
-      console.log(ip);
-      res.status(403).send('I\'m sorry Dave, I can\'t let you do that.');
-    } else if (dist) {
-      res.render('index-beta.html');
-    } else {
-      res.render('app/index.jade');
-    }
-  });
 
   app.get(/^\/key-.{8}$/, function (req, res) {
     var key = req.path.split(path.sep)[1].split('-')[1];
@@ -291,13 +293,6 @@ if (beta) {
           success: false
         });
     }
-  });
-} else {
-  // Beta system disabled
-  app.get('/', function (req, res) {
-    console.log("Beta system disabled!!!");
-    var index = dist ? 'index.html' : 'app/index.jade';
-    res.render(index);
   });
 }
 
