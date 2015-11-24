@@ -108,6 +108,9 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, Alerts, MyWall
         # Fetch transactions:
         if wallet.my.wallet.isUpgradedToHD
           didFetchTransactions = () ->
+            console.log("%cStop!", "color:white; background:red; font-size: 16pt");
+            console.log("%cThis browser feature is intended for developers. If someone told you to copy-paste something here, it is a scam and will give them access to your money!", "font-size: 14pt");
+
             wallet.status.didLoadBalances = true
             wallet.updateTransactions()
 
