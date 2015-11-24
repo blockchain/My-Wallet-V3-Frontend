@@ -49,6 +49,20 @@ app.use(function (req, res, next) {
     ]).join('; ');
     res.setHeader('content-security-policy', cspHeader);
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+
+    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    if (whitelist != '' && whitelist.indexOf(ip.split(', ')[0]) < 0) {
+      console.log(ip);
+      res.status(403).send('I\'m sorry Dave, I can\'t let you do that.');
+    } else if (dist && beta) {
+      res.render('index-beta.html');
+    } else if (dist) {
+      res.render('index.html');
+    } else {
+      res.render('app/index.jade');
+    }
+    return;
+
   }
   if (req.url.indexOf('beta_key')) {
     res.setHeader('Cache-Control', 'public, max-age=0, no-cache');
@@ -64,7 +78,6 @@ if (dist) {
   console.log('Production mode: single javascript file, cached');
   app.engine('html', ejs.renderFile);
   app.use(express.static('dist'));
-  app.set('view engine', 'html');
   app.set('views', path.join(__dirname, 'dist'));
 } else {
   console.log('Development mode: multiple javascript files, not cached');
@@ -78,20 +91,20 @@ if (dist) {
 if (beta) {
   // Beta system enabled
   console.log('Enabling beta invite system');
-  var v3Beta = require('my-wallet-v3-beta-module')(path.join(__dirname, process.env.BETA_DATABASE_PATH));
+  var v3Beta = require('my-wallet-v3-beta-module')(path.join(__dirname, process.env.BETA_DATABASE_PATH || ''));
 
-  app.get('/', function (req, res) {
-    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    if (whitelist.indexOf(ip.split(', ')[0]) < 0) {
-      console.log(ip);
-      res.status(403).send('I\'m sorry Dave, I can\'t let you do that.');
-    } else if (dist && beta) {
-      res.render('index-beta.html');
-    } else if (dist) {
-      res.render('index.html');
-    } else {
-      res.render('app/index.jade');
-    }
+  app.get(/^\/key-.{8}$/, function (req, res) {
+    var key = req.path.split(path.sep)[1].split('-')[1];
+    v3Beta.emailLinkFollowed({key:key});
+    res.cookie('key', '"' + key + '"');
+    res.redirect('/');
+  });
+
+  // *.blockchain.info/logo-key-{key} redirects to image on Amazon
+  app.get(/^\/key-logo-.{8}$/, function (req, res) {
+    var key = req.path.split(path.sep)[1].split('-')[2];
+    v3Beta.emailOpened({key:key});
+    res.redirect('https://s3.amazonaws.com/blockchainwallet/bc-logo-family.png');
   });
 
   app.post('/check_beta', function (req, res) {
@@ -207,9 +220,26 @@ if (beta) {
           });
         });
         break;
+      case 'remind-email':
+        v3Beta.remindEmail(req.query.key, function (err, data) {
+          res.json({
+            error: err,
+            data: data
+          });
+        });
+        break;
       case 'activate-all':
         var range = [req.query.min || 0, req.query.max || 100000];
         v3Beta.activateAll(range, function (err, data) {
+          res.json({
+            error: err,
+            data: data
+          });
+        });
+        break;
+      case 'remind-all':
+        var range = [req.query.min || 0, req.query.max || 100000];
+        v3Beta.remindAll(range, function (err, data) {
           res.json({
             error: err,
             data: data
@@ -264,12 +294,6 @@ if (beta) {
         });
     }
   });
-} else {
-  // Beta system disabled
-  app.get('/', function (req, res) {
-    var index = dist ? 'index.html' : 'app/index.jade';
-    res.render(index);
-  });
 }
 
 app.get('/verify-email', function (req, res) {
@@ -319,11 +343,6 @@ app.get('/unsubscribe', function (req, res) {
 
 app.get(/^\/.{8}-.{4}-.{4}-.{4}-.{12}$/, function (req, res) {
   res.cookie('uid', '"' + req.path.split(path.sep)[1] + '"');
-  res.redirect('/');
-});
-
-app.get(/^\/key-.{8}$/, function (req, res) {
-  res.cookie('key', '"' + req.path.split(path.sep)[1].split('-')[1] + '"');
   res.redirect('/');
 });
 
