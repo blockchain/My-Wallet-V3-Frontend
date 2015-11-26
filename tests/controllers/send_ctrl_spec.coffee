@@ -651,7 +651,6 @@ describe "SendCtrl", ->
       it "should turn on", ->
         spyOn(scope, '$broadcast')
         scope.cameraOn(1)
-        expect(scope.$broadcast).toHaveBeenCalledWith('ResetSearch1')
         expect(scope.cameraRequested).toBe(true)
         expect(scope.qrIndex).toEqual(1)
 

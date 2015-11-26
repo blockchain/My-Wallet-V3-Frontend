@@ -105,7 +105,6 @@ function SendCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $timeout, $st
   };
 
   $scope.cameraOn = (index=0) => {
-    $scope.$broadcast('ResetSearch' + index);
     $scope.cameraRequested = true;
     $scope.qrIndex = index;
   };
@@ -131,10 +130,6 @@ function SendCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $timeout, $st
     $scope.sendForm.$setUntouched();
 
     $scope.setPaymentFee();
-
-    for (let i = 0; i < $scope.destinations.length; i++) {
-      $scope.$broadcast('ResetSearch' + i);
-    }
   };
 
   $scope.addDestination = () => {
