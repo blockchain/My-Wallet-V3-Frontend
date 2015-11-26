@@ -16,6 +16,10 @@ function SettingsSecurityCenterCtrl($scope, Wallet, SecurityCenter, filterFilter
     step: 1
   };
 
+  if(Wallet.user.internationalMobileNumber.length > 4 && !Wallet.user.isMobileVerified) {
+    $scope.mobileNumber.step = 2;
+  }
+
   $scope.greaterThan = (prop, val) => item => item[prop] > val;
 
   $scope.transfer = address => {

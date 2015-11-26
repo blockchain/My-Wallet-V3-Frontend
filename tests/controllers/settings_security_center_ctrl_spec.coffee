@@ -7,7 +7,10 @@ describe "SettingsSecurityCenterCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
+
+      Wallet.user = {
+        internationalMobileNumber: "+1234567890"
+      }
 
       scope = $rootScope.$new()
 
