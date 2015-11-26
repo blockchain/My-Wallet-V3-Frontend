@@ -14,8 +14,8 @@ h5.well.type-h5.em-400.hidden-xs(translate="MY_ADDRESSES_EXPLAIN")
       input(type="text", ng-model="searchText")
       i.ti-search.pos-abs
 
-h2(translate="HD_ADDRESSES_FOR_ACCOUNT", translate-values="{account: account.label}")    
-     
+h2(translate="HD_ADDRESSES_FOR_ACCOUNT", translate-values="{account: account.label}")
+
 .row
   .col-xs-12.table-container
     table.responsive.width-100
@@ -26,5 +26,6 @@ h2(translate="HD_ADDRESSES_FOR_ACCOUNT", translate-values="{account: account.lab
       tr(
         hd-address="address" 
         search-text="searchText" 
-        ng-repeat="address in hdAddresses() track by address.index | addressOrNameMatch:searchText | orderBy:['index']"
-      ).address-animate 
+        ng-repeat="address in hdAddresses() | addressOrNameMatch:searchText | orderBy:'-index' track by address.index"
+        ng-class="{'address-animate': !searchText}"
+      )
