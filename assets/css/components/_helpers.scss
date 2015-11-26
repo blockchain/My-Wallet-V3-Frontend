@@ -27,6 +27,7 @@
   box-shadow: 0 3px 8px 0px rgba(158, 158, 158, 0.65) !important;
   border-radius: 7px !important;
   z-index: 1049; // keep below Bootstrap modals (1050)
+  display: block; // Firefox bug(?)
 }
 
 @media (max-width: 620px) {
