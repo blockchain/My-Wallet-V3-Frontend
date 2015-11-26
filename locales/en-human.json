@@ -568,6 +568,8 @@
   "ALT_EMPTY_MSG": "You don't have any bitcoin yet! Once you receive some bitcoins, we'll chart your account balances here.",
   "FEE_PER_KB" : "Fee Per KB",
   "FEE_PER_KB_EXPLAIN" : "When the network is stressed, including a higher fee per kb will ensure faster transaction confirmations.",
+  "FEE_PER_KB_MORE_THAN_ZERO" : "Must be more than zero",
+  "FEE_PER_KB_NO_MORE_THAN" : "Must be less than {{ max }}",
   "SIGNIN": "Sign in",
   "SIGNOUT": "Sign out",
   "EDIT_NOTE": "Edit",

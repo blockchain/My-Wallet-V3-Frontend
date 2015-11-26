@@ -973,9 +973,10 @@ walletServices.factory "Wallet", ($log, $http, $window, $timeout, Alerts, MyWall
 
     wallet.my.wallet.disableNotifications(success, error)
 
-  wallet.setFeePerKB = (fee) ->
+  wallet.setFeePerKB = (fee, successCallback, errorCallback) ->
     wallet.my.wallet.fee_per_kb = fee
     wallet.settings.feePerKB = fee
+    successCallback()
 
   wallet.fetchExchangeRate = () ->
       # Exchange rate is loaded asynchronously:

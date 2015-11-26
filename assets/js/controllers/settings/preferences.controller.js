@@ -68,7 +68,21 @@ function SettingsPreferencesCtrl($scope, Wallet, Alerts, $uibModal, $filter, $tr
 
   $scope.validateFee = (candidate) => {
     let n = parseInt(candidate);
-    return !isNaN(candidate) && n > 0 && n <= 1000000;
+    if(!isNaN(candidate) && n > 0 && n <= 1000000) {
+      $scope.errors.feePerKB = null;
+      return true;
+    } else {
+      if(n == 0) {
+        $translate("FEE_PER_KB_MORE_THAN_ZERO").then((translation) => {
+          $scope.errors.feePerKB = translation;
+        });
+      } else if (n > 1000000) {
+        $translate("FEE_PER_KB_NO_MORE_THAN", {max: 0.01}).then((translation) => {
+          $scope.errors.feePerKB = translation;
+        });
+      }
+      return false;
+    }
   };
 
   $scope.validateLogoutTime = (candidate) => {
@@ -76,9 +90,12 @@ function SettingsPreferencesCtrl($scope, Wallet, Alerts, $uibModal, $filter, $tr
     return !isNaN(candidate) && n >= 1 && n <= 1440;
   };
 
-  $scope.changeFeePerKB = (fee, successCallback) => {
-    Wallet.setFeePerKB(fee);
-    successCallback();
+  $scope.cancelChangeFeePErKB = () => {
+    $scope.errors.feePerKB = null;
+  }
+
+  $scope.changeFeePerKB = (fee, successCallback, errorCallback) => {
+    Wallet.setFeePerKB(fee, successCallback, errorCallback);
   };
 
   $scope.clearErrors = () => {
