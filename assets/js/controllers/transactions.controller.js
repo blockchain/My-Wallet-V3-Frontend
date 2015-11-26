@@ -80,6 +80,8 @@ function TransactionsCtrl($scope, Wallet, MyWallet, $log, $stateParams, $timeout
     let text;
     if ((tx.account != null) && (tx.account.index != null)) {
       text = Wallet.accounts()[tx.account.index].label;
+    } else if (tx.accounts != undefined) {
+      text = JSON.stringify(tx.accounts.map((a) => Wallet.accounts()[a.index].label));
     } else if (tx.legacyAddresses != null) {
       text = JSON.stringify(tx.legacyAddresses.map((ad) => ad.address));
     } else if (tx.externalAddresses != null) {
