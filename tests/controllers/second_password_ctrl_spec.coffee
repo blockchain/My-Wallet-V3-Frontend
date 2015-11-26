@@ -23,7 +23,7 @@ describe "SecondPasswordCtrl", ->
       $controller "SecondPasswordCtrl",
         $scope: scope,
         $stateParams: {},
-        $modalInstance: modalInstance,
+        $uibModalInstance: modalInstance,
         insist: false
         defer: $q.defer()
 

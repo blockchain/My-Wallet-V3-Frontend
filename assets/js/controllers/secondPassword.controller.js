@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SecondPasswordCtrl", SecondPasswordCtrl);
 
-function SecondPasswordCtrl($scope, $log, Wallet, Alerts, $modalInstance, $translate, insist, defer) {
+function SecondPasswordCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $translate, insist, defer) {
   $scope.insist = insist ? true : false;
   $scope.alerts = [];
   $scope.busy = false;
@@ -11,7 +11,7 @@ function SecondPasswordCtrl($scope, $log, Wallet, Alerts, $modalInstance, $trans
   $scope.cancel = () => {
     defer.reject($translate.instant('SECOND_PASSWORD_CANCEL'));
     Alerts.clear($scope.alerts);
-    $modalInstance.dismiss("");
+    $uibModalInstance.dismiss("");
   };
 
   $scope.submit = () => {
@@ -21,7 +21,7 @@ function SecondPasswordCtrl($scope, $log, Wallet, Alerts, $modalInstance, $trans
     if (Wallet.validateSecondPassword($scope.secondPassword)) {
       $scope.busy = false;
       defer.resolve($scope.secondPassword);
-      $modalInstance.close("");
+      $uibModalInstance.close("");
     } else {
       $scope.busy = false;
       $translate("SECOND_PASSWORD_INCORRECT").then(translation => {

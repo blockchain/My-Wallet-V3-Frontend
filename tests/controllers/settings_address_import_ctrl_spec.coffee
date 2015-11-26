@@ -28,7 +28,7 @@ describe "AddressImportCtrl", ->
       $controller "AddressImportCtrl",
         $scope: scope,
         $stateParams: {},
-        $modalInstance: modalInstance
+        $uibModalInstance: modalInstance
         address: null
 
       element = angular.element(

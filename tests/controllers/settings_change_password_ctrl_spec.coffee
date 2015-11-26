@@ -25,7 +25,7 @@ describe "ChangePasswordCtrl", ->
       $controller "ChangePasswordCtrl",
         $scope: scope,
         $stateParams: {},
-        $modalInstance: modalInstance
+        $uibModalInstance: modalInstance
 
       element = angular.element(
         '<form role="form" name="passwordForm" novalidate>' +

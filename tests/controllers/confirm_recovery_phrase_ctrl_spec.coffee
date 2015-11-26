@@ -23,7 +23,7 @@ describe "ConfirmRecoveryPhraseCtrl", ->
       $controller "ConfirmRecoveryPhraseCtrl",
         $scope: scope,
         $stateParams: {},
-        $modalInstance: modalInstance
+        $uibModalInstance: modalInstance
 
       return
 

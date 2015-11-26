@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('ShowPrivateKeyCtrl', ShowPrivateKeyCtrl);
 
-function ShowPrivateKeyCtrl($scope, $log, Wallet, Alerts, $modalInstance, $timeout, $translate, addressObj) {
+function ShowPrivateKeyCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $timeout, $translate, addressObj) {
   $scope.settings = Wallet.settings;
   $scope.accessAllowed = false;
   $scope.address = addressObj.address;
@@ -18,7 +18,7 @@ function ShowPrivateKeyCtrl($scope, $log, Wallet, Alerts, $modalInstance, $timeo
 
   $scope.close = () => {
     Alerts.clear();
-    $modalInstance.dismiss('');
+    $uibModalInstance.dismiss('');
   };
 
 }

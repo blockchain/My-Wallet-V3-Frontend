@@ -36,7 +36,7 @@ describe "RevealXpubCtrl", ->
       $controller "RevealXpubCtrl",
         $scope: scope
         $stateParams: {}
-        $modalInstance: modalInstance
+        $uibModalInstance: modalInstance
         account: Wallet.accounts()[0]
 
       return

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("AccountFormCtrl", AccountFormCtrl);
 
-function AccountFormCtrl($scope, Wallet, $modalInstance, $log, $translate, account, $modal) {
+function AccountFormCtrl($scope, Wallet, $uibModalInstance, $log, $translate, account, $modal) {
   $scope.accounts = Wallet.accounts;
 
   $scope.fields = {
@@ -19,7 +19,7 @@ function AccountFormCtrl($scope, Wallet, $modalInstance, $log, $translate, accou
     $scope.status.edit = true;
   }
 
-  $scope.close = () => {$modalInstance.dismiss("")};
+  $scope.close = () => {$uibModalInstance.dismiss("")};
 
   $scope.createAccount = () => {
 
@@ -27,7 +27,7 @@ function AccountFormCtrl($scope, Wallet, $modalInstance, $log, $translate, accou
 
     const success = () => {
       $scope.status.busy = false;
-      $modalInstance.dismiss("");
+      $uibModalInstance.dismiss("");
       Wallet.saveActivity(3);
       $translate(['SUCCESS', 'ACCOUNT_CREATED']).then(translations => {
         $scope.$emit('showNotification', {
@@ -50,7 +50,7 @@ function AccountFormCtrl($scope, Wallet, $modalInstance, $log, $translate, accou
     $scope.status.busy = true;
     const success = () => {
       $scope.status.busy = false;
-      $modalInstance.dismiss("");
+      $uibModalInstance.dismiss("");
       Wallet.saveActivity(3);
     };
 

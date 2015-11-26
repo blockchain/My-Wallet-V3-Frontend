@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("ClaimModalCtrl", ClaimModalCtrl);
 
-function ClaimModalCtrl($scope, Wallet, $translate, $modalInstance, claim) {
+function ClaimModalCtrl($scope, Wallet, $translate, $uibModalInstance, claim) {
   $scope.accounts = Wallet.accounts;
   $scope.fields = {
     to: null
@@ -19,7 +19,7 @@ function ClaimModalCtrl($scope, Wallet, $translate, $modalInstance, claim) {
   $scope.redeem = () => {
     const success = () => {
       $scope.redeeming = false;
-      $modalInstance.dismiss("");
+      $uibModalInstance.dismiss("");
     };
     const error = (e) => {
       console.log(e);

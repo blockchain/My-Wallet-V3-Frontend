@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SendCtrl", SendCtrl);
 
-function SendCtrl($scope, $log, Wallet, Alerts, $modalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal) {
+function SendCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal) {
 
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.accounts = Wallet.accounts;
@@ -118,7 +118,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, $modalInstance, $timeout, $state
 
   $scope.close = () => {
     Alerts.clear($scope.alerts);
-    $modalInstance.dismiss("");
+    $uibModalInstance.dismiss("");
   };
 
   $scope.resetSendForm = () => {
@@ -179,7 +179,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, $modalInstance, $timeout, $state
 
     const transactionSucceeded = (tx) => {
       $scope.sending = false;
-      $modalInstance.close("");
+      $uibModalInstance.close("");
       Wallet.beep();
 
       let note = $scope.transaction.note;

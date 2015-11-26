@@ -17,7 +17,7 @@ describe "UpgradeCtrl", ->
       $controller "UpgradeCtrl",
         $scope: scope,
         $stateParams: {},
-        $modalInstance: modalInstance
+        $uibModalInstance: modalInstance
 
       return
 

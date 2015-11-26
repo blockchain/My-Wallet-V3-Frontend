@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("ConfirmRecoveryPhraseCtrl", ConfirmRecoveryPhraseCtrl);
 
-function ConfirmRecoveryPhraseCtrl($scope, $log, Wallet, Alerts, $modalInstance, $translate) {
+function ConfirmRecoveryPhraseCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $translate) {
   $scope.step = 0;
   $scope.offset = 0;
   $scope.recoveryPhrase = null;
@@ -57,7 +57,7 @@ function ConfirmRecoveryPhraseCtrl($scope, $log, Wallet, Alerts, $modalInstance,
   };
 
   $scope.close = () => {
-    $modalInstance.dismiss("");
+    $uibModalInstance.dismiss("");
   };
 
   $scope.goToVerify = () => {
@@ -77,11 +77,11 @@ function ConfirmRecoveryPhraseCtrl($scope, $log, Wallet, Alerts, $modalInstance,
         $translate(error).then( translation => {
           Alerts.displayError(translation);
         });
-        $modalInstance.dismiss("");
+        $uibModalInstance.dismiss("");
       };
 
       const cancel = () => {
-        $modalInstance.dismiss("");
+        $uibModalInstance.dismiss("");
       };
 
       Wallet.getMnemonic(success, error, cancel);

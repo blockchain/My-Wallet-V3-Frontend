@@ -101,13 +101,13 @@ admin.controller('AdminCtrl', function ($rootScope, $scope, $http, $modal, Inter
 });
 
 // Modal Controllers
-admin.controller('AssignKeyCtrl', function ($scope, $modalInstance, InterfaceHelper, load) {
+admin.controller('AssignKeyCtrl', function ($scope, $uibModalInstance, InterfaceHelper, load) {
   $scope.fields = { name: '', email: '', guid: '' };
   $scope.assignKey = function (name, email, guid) {
     if (guid === '') guid = null;
     InterfaceHelper.callApi('/assign-key', {name:name,email:email,guid:guid})
       .success(load);
-    $modalInstance.dismiss();
+    $uibModalInstance.dismiss();
   };
 });
 
@@ -116,7 +116,7 @@ admin.controller('CapturePageCtrl', function ($scope, getPercent, setPercent) {
   getPercent();
 });
 
-admin.controller('EditKeyCtrl', function ($scope, $modalInstance, InterfaceHelper, load, entry) {
+admin.controller('EditKeyCtrl', function ($scope, $uibModalInstance, InterfaceHelper, load, entry) {
   $scope.fields = angular.copy(entry);
   $scope.submitEdit = function (doActivate) {
     var endpoint = (doActivate) ? '/activate-key' : '/update-key';
@@ -126,7 +126,7 @@ admin.controller('EditKeyCtrl', function ($scope, $modalInstance, InterfaceHelpe
     InterfaceHelper.callApi(endpoint, {selection: selection, update: update})
       .success(function () {
         load();
-        $modalInstance.dismiss();
+        $uibModalInstance.dismiss();
       });
   };
   $scope.resendText = 'Resend Invitation Email'

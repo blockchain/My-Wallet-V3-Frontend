@@ -32,7 +32,7 @@ describe "ShowPrivateKeyCtrl", ->
 
       $controller "ShowPrivateKeyCtrl",
         $scope: scope,
-        $modalInstance: modalInstance
+        $uibModalInstance: modalInstance
         addressObj: addressObj
 
       scope.$digest()

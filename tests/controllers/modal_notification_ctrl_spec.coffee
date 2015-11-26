@@ -14,7 +14,7 @@ describe "ModalNotificationCtrl", ->
 
       $controller "ModalNotificationCtrl",
         $scope: scope,
-        $modalInstance: modalInstance
+        $uibModalInstance: modalInstance
         notification: {
           type: ''
           icon: ''

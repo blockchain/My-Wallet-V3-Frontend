@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("RequestCtrl", RequestCtrl);
 
-function RequestCtrl($scope, Wallet, Alerts, $modalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter) {
+function RequestCtrl($scope, Wallet, Alerts, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -68,11 +68,11 @@ function RequestCtrl($scope, Wallet, Alerts, $modalInstance, $log, destination, 
     Alerts.clear();
 
     if($scope.fields.label == "" || $scope.fields.to.index == undefined) {
-        $modalInstance.dismiss("");
+        $uibModalInstance.dismiss("");
     } else {
 
       const success = () => {
-        $modalInstance.dismiss("");
+        $uibModalInstance.dismiss("");
       };
 
       const error = (error) => {
@@ -92,7 +92,7 @@ function RequestCtrl($scope, Wallet, Alerts, $modalInstance, $log, destination, 
 
   $scope.cancel = () => {
     Alerts.clear();
-    $modalInstance.dismiss("");
+    $uibModalInstance.dismiss("");
   }
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {

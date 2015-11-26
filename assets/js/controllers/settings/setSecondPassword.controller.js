@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SetSecondPasswordCtrl", SetSecondPasswordCtrl);
 
-function SetSecondPasswordCtrl($scope, $log, Wallet, Alerts, $modalInstance, $translate, $timeout) {
+function SetSecondPasswordCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $translate, $timeout) {
   $scope.isValid = false;
   $scope.busy = null;
   $scope.fields = {
@@ -12,7 +12,7 @@ function SetSecondPasswordCtrl($scope, $log, Wallet, Alerts, $modalInstance, $tr
 
   $scope.close = () => {
     Alerts.clear();
-    $modalInstance.dismiss("");
+    $uibModalInstance.dismiss("");
   };
 
   $scope.setPassword = () => {
@@ -22,7 +22,7 @@ function SetSecondPasswordCtrl($scope, $log, Wallet, Alerts, $modalInstance, $tr
 
     const success = () => {
       $scope.busy = false;
-      $modalInstance.dismiss("");
+      $uibModalInstance.dismiss("");
       Wallet.saveActivity(2);
     };
 

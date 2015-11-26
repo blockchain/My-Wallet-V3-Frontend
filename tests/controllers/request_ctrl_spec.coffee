@@ -39,7 +39,7 @@ describe "RequestCtrl", ->
       $controller "RequestCtrl",
         $scope: scope,
         $stateParams: {},
-        $modalInstance: modalInstance
+        $uibModalInstance: modalInstance
         destination: undefined
 
       element = angular.element(

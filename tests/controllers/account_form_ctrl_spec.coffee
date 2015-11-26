@@ -42,7 +42,7 @@ describe "AccountFormCtrl", ->
       $controller "AccountFormCtrl",
         $scope: scope
         $stateParams: {}
-        $modalInstance: modalInstance
+        $uibModalInstance: modalInstance
         account: Wallet.accounts()[0]
 
       element = angular.element(

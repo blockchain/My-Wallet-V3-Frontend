@@ -26,7 +26,7 @@ describe "SignupCtrl", ->
       $controller "SignupCtrl",
         $scope: scope,
         $stateParams: {},
-        $modalInstance: modalInstance
+        $uibModalInstance: modalInstance
 
       scope.isValid = [false, false]
       scope.fields.email = "a@b.com"

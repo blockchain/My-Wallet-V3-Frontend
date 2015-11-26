@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("TwoFactorCtrl", TwoFactorCtrl);
 
-function TwoFactorCtrl($scope, Wallet, Alerts, $modalInstance, $translate, $timeout) {
+function TwoFactorCtrl($scope, Wallet, Alerts, $uibModalInstance, $translate, $timeout) {
   $scope.settings = Wallet.settings;
   $scope.user = Wallet.user;
 
@@ -129,7 +129,7 @@ function TwoFactorCtrl($scope, Wallet, Alerts, $modalInstance, $translate, $time
 
   $scope.close = () => {
     Alerts.clear();
-    $modalInstance.dismiss("");
+    $uibModalInstance.dismiss("");
   };
 
   $scope.$watch('user.isMobileVerified', (newVal, oldVal) => {

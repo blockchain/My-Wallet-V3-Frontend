@@ -70,7 +70,7 @@ describe "SendCtrl", ->
         $controller "SendCtrl",
           $scope: scope,
           $stateParams: {},
-          $modalInstance: modalInstance
+          $uibModalInstance: modalInstance
           paymentRequest: {address: "", amount: ""}
 
         element = angular.element(
@@ -682,7 +682,7 @@ describe "SendCtrl", ->
         $controller "SendCtrl",
           $scope: scope,
           $stateParams: {},
-          $modalInstance: modalInstance
+          $uibModalInstance: modalInstance
           paymentRequest: {address: "valid_address", amount: 1000000}
 
         element = angular.element(

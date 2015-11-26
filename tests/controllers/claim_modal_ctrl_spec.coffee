@@ -37,7 +37,7 @@ describe "ClaimModalCtrl", ->
       $controller "ClaimModalCtrl",
         $scope: scope,
         $stateParams: {},
-        $modalInstance: modalInstance
+        $uibModalInstance: modalInstance
         claim: {code: "abcd", balance: balancePromise}
 
       scope.$digest()

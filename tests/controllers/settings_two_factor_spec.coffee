@@ -38,7 +38,7 @@ describe "TwoFactorCtrl", ->
 
       $controller "TwoFactorCtrl",
         $scope: scope,
-        $modalInstance: modalInstance
+        $uibModalInstance: modalInstance
 
       scope.$apply()
 

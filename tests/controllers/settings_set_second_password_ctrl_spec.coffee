@@ -16,7 +16,7 @@ describe "SetSecondPasswordCtrl", ->
       $controller "SetSecondPasswordCtrl",
         $scope: scope,
         $stateParams: {},
-        $modalInstance: modalInstance
+        $uibModalInstance: modalInstance
 
       scope.$digest()
 
