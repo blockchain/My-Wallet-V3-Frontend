@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('TransactionCtrl', TransactionCtrl);
 
-function TransactionCtrl($scope, Wallet, $log, $stateParams, $filter, $cookieStore, $sce) {
+function TransactionCtrl($scope, Wallet, $log, $state, $stateParams, $filter, $cookieStore, $sce) {
   $scope.addressBook = Wallet.addressBook;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
@@ -82,4 +82,8 @@ function TransactionCtrl($scope, Wallet, $log, $stateParams, $filter, $cookieSto
       }
     }
   });
+
+  $scope.backToTransactions = () => {
+    $state.go("wallet.common.transactions", {accountIndex: $stateParams.accountIndex})
+  }
 }
