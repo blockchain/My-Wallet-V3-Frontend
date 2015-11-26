@@ -113,6 +113,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $timeout, $st
     $scope.cameraIsOn = false;
     $scope.cameraRequested = false;
     $scope.qrIndex = null;
+    $scope.$broadcast("STOP_WEBCAM");
   };
 
   $scope.close = () => {

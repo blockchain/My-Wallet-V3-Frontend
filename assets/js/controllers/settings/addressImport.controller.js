@@ -137,6 +137,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
   $scope.cameraOff = () => {
     $scope.status.cameraIsOn = false;
     $scope.cameraRequested = false;
+    $scope.$broadcast("STOP_WEBCAM");
   };
 
   $scope.processURLfromQR = (url) => {
