@@ -2,6 +2,8 @@
   i.h3.mrm.ti-alert
   h3(translate="UPGRADE_WALLET")        
 .modal-body
+  uib-alert(type="danger", ng-show="settings.apiAccess")
+    span(translate="UPGRADE_DISABLES_API_ACCESS")
   uib-alert(type="danger", close="insist = false", ng-show="insist")
     span(translate="NEED_SECOND_PASSWORD_FOR_UPGRADE")
   p(translate="UPGRADE_WALLET_EXPLAIN")
