@@ -58,7 +58,7 @@ module.exports = function(karma){
       'assets/js/directives/*.js' : ['babel'],
       'assets/js/core/*.js': ['babel'],
       'assets/js/my_wallet.js.coffee': ['coffee'],
-      'assets/js/routes.js.coffee' : ['coffee'],
+      'assets/js/routes.js' : ['babel'],
       'assets/js/app.js' : ['babel'],
       'tests/**/*.coffee' : ['coffee'],
       'tests/**/*.js' : ['babel']
