@@ -55,4 +55,4 @@
     p(translate="2FA_ERROR")
 .modal-footer.pal.flex-end
   button.button-muted.mrm(ng-click="close()" translate="CLOSE")
-  button.button-success(ui-ladda="{{ status.loading }}" data-style="expand-left" ng-show="isStep('pair')" ng-disabled="!validateCode(pairWith)" ng-click="pairWithApp(pairWith)" ladda-translate="ENABLE_2FA")
+  button.button-success(ui-ladda="status.loading" data-style="expand-left" ng-show="isStep('pair')" ng-disabled="!validateCode(pairWith)" ng-click="pairWithApp(pairWith)" ladda-translate="ENABLE_2FA")

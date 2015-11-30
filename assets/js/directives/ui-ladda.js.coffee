@@ -3,6 +3,10 @@ angular.module('walletApp').directive "uiLadda",  ($timeout, $compile, $translat
   return {
     restrict: "A"
     replace: false
+    scope: {
+      laddaTranslate: "@"
+      uiLadda: "="
+    }
     template: '<span class="ladda-label" translate="{{ translation }}"></span><span class="ladda-spinner"><div class="spinner"></div></span>'
     link: (scope, element, attrs) ->
       element.addClass("ladda-button")
@@ -15,15 +19,14 @@ angular.module('walletApp').directive "uiLadda",  ($timeout, $compile, $translat
 
       scope.translation = null
 
-      $translate(element.attr("ladda-translate")).then (translation) ->
-        scope.translation = translation
+      $translate(scope.laddaTranslate).then (translation) ->
+        scope.translation = translation;
 
-      attrs.$observe "uiLadda", (newVal) ->
-        if newVal?
-          if scope.$eval(newVal)
-            element.attr("data-loading", true)
-            element.attr("disabled", true)
-          else
-            element.removeAttr("data-loading")
-            element.removeAttr("disabled")
+      scope.$watch "uiLadda", (newVal) ->
+        if newVal
+          element.attr("data-loading", true)
+          element.attr("disabled", true)
+        else
+          element.removeAttr("data-loading")
+          element.removeAttr("disabled")
   }

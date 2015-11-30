@@ -36,7 +36,7 @@ div
           img(ng-show="resending" src="img/spinner.gif")
           a(ng-click="resend()", ng-show="!resending", translate="RESEND") 
     .mtl.flex-center.flex-end
-      button.button-primary(ui-ladda="{{ busy }}", ng-click="login()", data-style="expand-left", ladda-translate="SIGNIN", ng-disabled="!isValid")
+      button.button-primary(ui-ladda="busy", ng-click="login()", data-style="expand-left", ladda-translate="SIGNIN", ng-disabled="!isValid")
   //Wallet Recovery
   .ptl.flex-column
     .em-300.flex-end.mbm Having some trouble?
