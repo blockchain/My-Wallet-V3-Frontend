@@ -6,7 +6,7 @@
 .modal-body
   form.form-horizontal.ph-form(role="form" name="requestForm" novalidate)
     .form-group.row.pbm(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': fields.to.isWatchOnlyLegacyAddress}")
-      label.col-sm-3.col-xs-12(translate="RECEIVE_TO")
+      label.pts.col-sm-3.col-xs-12(translate="RECEIVE_TO")
       .col-sm-9.col-xs-12
         ui-select(ng-model="fields.to" ng-disabled="paymentRequest.amount > 0 || paymentRequest.label")
           ui-select-match {{ $select.selected.label + ($select.selected.isWatchOnlyLegacyAddress ? ' (Watch Only)' : '') }}
@@ -14,7 +14,7 @@
             span(ng-bind-html="(determineLabel(destination) | highlight: $select.search) + (destination.isWatchOnlyLegacyAddress ? ' <i>(Watch Only)</i>' : '')")
         span.help-block(ng-show="fields.to.isWatchOnlyLegacyAddress") Your wallet does not have the private key for this address. Without the private key you will not have access to the bitcoins sent to this address. Make sure you have this private key somewhere else!
     .form-group.mvl.row(ng-class="{'has-error': requestForm.amount.$error.isValidAmount && requestForm.amount.$touched}")
-      label.col-sm-3.col-xs-12(translate="AMOUNT:")
+      label.pts.col-sm-3.col-xs-12(translate="AMOUNT:")
       .col-sm-9.col-xs-12
         .flex-center.prl.border-bottom.col-xs-5
           span {{ settings.btcCurrency.code }}:
@@ -65,7 +65,7 @@
           i.ti-check.mrs
           span Successfully copied to your clipboard!
     .form-group.mvl.row(ng-class="{'has-error': !requestForm.label.$valid}", ng-show="advanced && fields.to.index != undefined")
-      label.col-sm-3.col-xs-12(translate="LABEL_ADDRESS:")
+      label.pts.col-sm-3.col-xs-12(translate="LABEL_ADDRESS:")
       .col-sm-9.col-xs-12
         .flex-center.prl.border-bottom
           input.form-control.no-border(
