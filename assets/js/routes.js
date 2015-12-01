@@ -298,7 +298,7 @@ function AppRouter($stateProvider, $urlRouterProvider) {
       views: {
         settings: {
           templateUrl: 'partials/settings/address-book.jade',
-          controller: 'SettingsAddressbookCtrl'
+          controller: 'SettingsAddressBookCtrl'
         }
       }
     });
