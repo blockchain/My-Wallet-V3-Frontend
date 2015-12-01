@@ -220,23 +220,23 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
 
     // If BETA=1 is set in .env then in index.html/jade $rootScope.beta is set.
     if ($rootScope.beta) {
-      return $http.post('/check_guid_for_beta_key', {
+      $http.post('/check_guid_for_beta_key', {
         guid: uid
       }).success(function (data) {
         if (data.verified) {
-          return betaCheckFinished();
+          betaCheckFinished();
         } else {
           if (data.error && data.error.message) {
             Alerts.displayError(data.error.message);
           }
-          return errorCallback();
+          errorCallback();
         }
       }).error(function () {
         Alerts.displayError('Unable to verify your wallet UID.');
-        return errorCallback();
+        errorCallback();
       });
     } else {
-      return betaCheckFinished();
+      betaCheckFinished();
     }
   };
 
@@ -246,7 +246,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
       wallet.status.didInitializeHD = true;
       wallet.my.wallet.getHistory().then(function () {
         wallet.status.didLoadBalances = true;
-        return wallet.updateTransactions();
+        wallet.updateTransactions();
       });
       successCallback();
       wallet.applyIfNeeded();
