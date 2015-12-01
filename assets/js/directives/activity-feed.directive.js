@@ -19,9 +19,7 @@ function activityFeed($http, Wallet, Activity) {
     scope.activities = Activity.activities;
     scope.loading = true;
 
-    scope.$watch((function () {
-      Activity.activities;
-    }), function (activities) {
+    scope.$watch(() => Activity.activities, (activities) => {
       scope.activities = activities;
     });
 
