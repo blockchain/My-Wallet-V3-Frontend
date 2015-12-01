@@ -7,6 +7,9 @@
       p(translate="RECOVER_BTC_LOST")
   form.ptl.form-horizontal(name="recoveryForm" autocomplete="off" novalidate)
     div(ng-switch-when="1")
+      .security-red.mbl.em-400.flex-center
+        i.ti-hand-stop.mrm.h3.mvn.hidden-xs
+        span(translate="RECOVER_FUNDS_WARNING")
       .form-group(ng-class="{'has-error': recoveryForm.mnemonic.$error.isValid && recoveryForm.mnemonic.$touched}")
         label(translate="YOUR_REC_PASS")
         p(translate="YOUR_REC_PASS_EXPLAIN")
