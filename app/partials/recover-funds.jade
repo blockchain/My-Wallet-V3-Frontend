@@ -71,7 +71,7 @@
       button.button-success(
         type="submit"
         ng-switch-when="2"
-        ng-click="performImport()"
+        ng-click="recover()"
         ng-disabled="!recoveryForm.$valid || working"
         translate="RECOVER_FUNDS")
   .flex-center.flex-justify.flex-column(ng-switch-when="3")
