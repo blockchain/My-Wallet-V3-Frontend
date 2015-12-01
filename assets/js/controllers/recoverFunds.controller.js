@@ -13,27 +13,27 @@ function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wall
     bip39phrase: ''
   };
 
-  $scope.performImport = () => {
+  $scope.recover = () => {
     $scope.working = true;
 
-    const success = (wallet) => {
-      $rootScope.beta = false;
-      $scope.working = false;
-      $scope.nextStep();
-      $rootScope.$safeApply();
+    const success = (uid) => {
 
-      const loginSuccess = () => {
-        Alerts.displaySuccess('Successfully recovered wallet!');
-      };
-      const loginError = (err) => {
-        console.error(err);
-      };
-      $timeout(() => {
-        $state.go('public.login');
-        Wallet.login(
-          wallet.guid, wallet.password, null, null, loginSuccess, loginError
-        );
-      }, 4000);
+      const didLoginFinished = () => {
+        $rootScope.beta = false;
+        $scope.working = false;
+        $scope.nextStep();
+
+        $rootScope.$safeApply();
+
+        $timeout(() => {
+          $state.go("wallet.common.home");
+          Alerts.displaySuccess('Successfully recovered wallet!');
+        }, 4000);
+
+      }
+
+      Wallet.didLogin(uid, didLoginFinished);
+
     };
 
     const error = (err) => {
@@ -42,18 +42,19 @@ function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wall
       Alerts.displayError(message);
     };
 
-    Wallet.my.recoverFromMnemonic(
+    Wallet.my.recoverResetPasswordAndLogin(
+      $scope.fields.mnemonic,
+      "", // BIP 39 password not yet supported in UI
       $scope.fields.email,
       $scope.fields.password,
-      $scope.fields.mnemonic,
-      $scope.fields.bip39phrase,
-      success, error
+      success,
+      error
     );
   };
 
   $scope.nextStep = () => {
     $scope.currentStep++;
-    $scope.fields.confirmation = ""
+    $scope.fields.confirmation = "";
   };
 
   $scope.goBack = () => {
