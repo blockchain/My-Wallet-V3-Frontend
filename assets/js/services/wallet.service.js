@@ -2,11 +2,6 @@
 
 // MyWallet hacks
 
-// Avoid lazy loading (complicates asset management)
-function loadScript(src, success, error) {
-  return success();
-}
-
 // Don't allow it to play sound
 function playSound(id) {}
 
