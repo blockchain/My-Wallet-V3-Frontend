@@ -38,20 +38,6 @@ describe "walletServices", () ->
       Wallet.my.fetchMoreTransactionsForAll = (success,error,allTransactionsLoaded) ->
         success()
 
-      Wallet.settings_api.get_account_info = (success, error) ->
-        success({
-          email: "steve@me.com"
-          email_verified: 1
-          sms_number: "+31 12345678"
-          sms_verified: 0
-          password_hint1: "Same as username"
-          language: "en"
-          currency: "USD"
-          btc_currency: "BTC"
-          block_tor_ips: 0
-          my_ip: "123.456.789.012"
-        })
-
       return
 
     return
@@ -529,4 +515,66 @@ describe "walletServices", () ->
       Wallet.settings.displayCurrency = Wallet.settings.currency
       Wallet.toggleDisplayCurrency()
       expect(Wallet.settings.displayCurrency).toBe(Wallet.settings.currency)
+    )
+
+  describe "Two factor settings", ->
+
+    it "should disable 2FA", inject((Wallet) ->
+      Wallet.settings.needs2FA = true
+      Wallet.disableSecondFactor()
+      expect(Wallet.settings.needs2FA).toEqual(false)
+      expect(Wallet.settings.twoFactorMethod).toEqual(null)
+    )
+
+    it "should set two factor as SMS", inject((Wallet) ->
+      Wallet.settings.needs2FA = false
+      Wallet.setTwoFactorSMS()
+      expect(Wallet.settings.needs2FA).toEqual(true)
+      expect(Wallet.settings.twoFactorMethod).toEqual(5)
+    )
+
+    it "should set two factor as Email", inject((Wallet) ->
+      Wallet.settings.needs2FA = false
+      Wallet.setTwoFactorEmail()
+      expect(Wallet.settings.needs2FA).toEqual(true)
+      expect(Wallet.settings.twoFactorMethod).toEqual(2)
+    )
+
+    it "should set two factor as Yubikey", inject((Wallet) ->
+      Wallet.settings.needs2FA = false
+      Wallet.setTwoFactorYubiKey('yubikey_code', (() -> ))
+      expect(Wallet.settings.needs2FA).toEqual(true)
+      expect(Wallet.settings.twoFactorMethod).toEqual(1)
+    )
+
+    it "should set Google Authenticator secret", inject((Wallet) ->
+      Wallet.setTwoFactorGoogleAuthenticator()
+      expect(Wallet.settings.googleAuthenticatorSecret).toEqual('secret_sauce')
+    )
+
+    it "should confirm two factor as Google Authenticator with correct code", inject((Wallet) ->
+      Wallet.settings.needs2FA = false
+      Wallet.confirmTwoFactorGoogleAuthenticator('secret_sauce', (() -> ))
+      expect(Wallet.settings.needs2FA).toEqual(true)
+      expect(Wallet.settings.twoFactorMethod).toEqual(4)
+      expect(Wallet.settings.googleAuthenticatorSecret).toEqual(null)
+    )
+
+    it "should not confirm two factor as Google Authenticator with incorrect code", inject((Wallet) ->
+      Wallet.settings.needs2FA = false
+      Wallet.confirmTwoFactorGoogleAuthenticator('wrong', null, (() -> ))
+      expect(Wallet.settings.needs2FA).toEqual(false)
+      expect(Wallet.settings.twoFactorMethod).toEqual(null)
+    )
+
+    it "should enable rememberTwoFactor", inject((Wallet) ->
+      Wallet.settings.rememberTwoFactor = false
+      Wallet.enableRememberTwoFactor((() -> ))
+      expect(Wallet.settings.rememberTwoFactor).toEqual(true)
+    )
+
+    it "should disable rememberTwoFactor", inject((Wallet) ->
+      Wallet.settings.rememberTwoFactor = true
+      Wallet.disableRememberTwoFactor((() -> ))
+      expect(Wallet.settings.rememberTwoFactor).toEqual(false)
     )

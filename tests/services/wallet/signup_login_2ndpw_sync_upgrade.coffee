@@ -41,13 +41,6 @@ describe "walletServices", () ->
       Wallet.my.fetchMoreTransactionsForAll = (success,error,allTransactionsLoaded) ->
         success()
 
-      Wallet.settings_api.get_account_info = (success, error) ->
-        success({
-          language: "en"
-          currency: "USD"
-          my_ip: "123.456.789.012"
-        })
-
       spyOn(Wallet,"monitor").and.callThrough()
 
       return
