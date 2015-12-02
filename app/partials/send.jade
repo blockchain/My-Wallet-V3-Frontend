@@ -48,7 +48,7 @@
           .flex-column(ng-class="{'advanced-recipient-row': advanced}" ng-repeat="item in transaction.destinations track by $index")
             p.form-control-static(ng-hide="originsLoaded")
               img(src="img/spinner.gif")
-            div(ng-show="originsLoaded" ng-class="{'has-error': sendForm['destinations' + $index].$invalid && sendForm['destinations' + $index].$touched}")
+            div(ng-show="originsLoaded" ng-class="{'has-error': sendForm['destinations' + $index].$invalid && sendForm['destinations' + $index].$touched && transaction.destinations[$index].address !== ''}")
               destination-input(
                 name="{{ 'destinations' + $index }}"
                 ng-model="transaction.destinations[$index]"
