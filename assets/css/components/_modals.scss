@@ -143,7 +143,7 @@
   display: flex !important;
   justify-content: center;
   align-items: center;
-  .modal-content { background: $light-blue; box-shadow: 0 5px 1px rgba(0, 0, 0, 0.6); }
+  .modal-content { background: $light-blue; }
   .modal-dialog { width: 50vw; margin: 0 !important }
   &.small { .modal-dialog { width: 40vw; } }
   .modal-body {
