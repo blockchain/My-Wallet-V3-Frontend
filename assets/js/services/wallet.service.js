@@ -9,9 +9,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', '$rootScope', 'ngAudio', '$cookieStore', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber'];
+Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', '$rootScope', 'ngAudio', '$cookieStore', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber'];
 
-function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q, bcPhoneNumber) {
+function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q, bcPhoneNumber) {
   const wallet = {
     goal: {
       auth: false
@@ -57,6 +57,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   wallet.settings_api = MyBlockchainSettings;
   wallet.store = MyWalletStore;
   wallet.api = MyBlockchainApi;
+  wallet.payment = MyWalletPayment;
   wallet.transactions = [];
   wallet.languages = [];
   wallet.currencies = [];
