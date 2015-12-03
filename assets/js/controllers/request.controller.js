@@ -119,33 +119,36 @@ function RequestCtrl($scope, Wallet, Alerts, $uibModalInstance, $log, destinatio
     }
   });
 
-  $scope.$watch("fields.to.index + fields.to.address + status.didInitializeHD", () => {
+  $scope.paymentRequestAddress = () => {
+    if(!$scope.status.didInitializeHD) {
+      return null;
+    }
+
     if (($scope.fields.to != null) && ($scope.fields.to.address != null)) {
-      $scope.setPaymentRequestURL($scope.fields.to.address, $scope.fields.amount);
       $scope.advanced = false;
+      return $scope.fields.to.address;
     } else if ($scope.fields.label === "" && $scope.status.didInitializeHD) {
       let idx = $scope.fields.to.index;
-      $scope.receiveAddress = Wallet.getReceivingAddressForAccount(idx);
-
-      $scope.setPaymentRequestURL($scope.receiveAddress, $scope.fields.amount);
+      return Wallet.getReceivingAddressForAccount(idx);
     }
-  });
+  }
 
-  $scope.$watch("fields.amount + fields.currency.code + fields.label", (oldValue, newValue) => {
-    if (($scope.fields.to != null) && $scope.fields.amount) {
-      if ($scope.fields.to.address != null) {
-        $scope.setPaymentRequestURL($scope.fields.to.address, $scope.fields.amount);
-      } else if ($scope.receiveAddress != null) {
-        $scope.setPaymentRequestURL($scope.receiveAddress, $scope.fields.amount);
-      }
+  $scope.paymentRequestURL = () => {
+    if($scope.paymentRequestAddress() == null) {
+      return null;
     }
-  });
+
+    let url = `bitcoin:${ $scope.paymentRequestAddress() }`;
+
+    if ($scope.fields.amount > 0) {
+      url += `?amount=${ parseFloat($scope.fields.amount / 100000000) }`;
+    }
+
+    return url;
+  }
+
 
   $scope.setPaymentRequestURL = (address, amount) => {
-    $scope.paymentRequestAddress = address;
-    $scope.paymentRequestURL = `bitcoin:${ address }`;
-    if (amount > 0) {
-      $scope.paymentRequestURL += `?amount=${ parseFloat(amount / 100000000) }`;
-    }
+
   };
 }

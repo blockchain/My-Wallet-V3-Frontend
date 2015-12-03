@@ -23,11 +23,16 @@ describe "RequestCtrl", ->
           accounts: [{ index: 0, archived: true }, { index: 0, archived: false }, { index: 0, archived: true }]
           defaultAccountIndex: 0
         }
+
       }
 
       Wallet.settings = {
         currency: Wallet.currencies[0]
         btcCurrency: Wallet.btcCurrencies[0]
+      }
+
+      Wallet.status = {
+        didInitializeHD: true
       }
 
       Wallet.conversions = {
@@ -114,37 +119,37 @@ describe "RequestCtrl", ->
     it "should show a payment request address when legacy address is selected", inject(()->
       scope.fields.to = scope.legacyAddresses()[0]
       scope.$digest()
-      expect(scope.paymentRequestAddress).toBe(scope.fields.to.address)
+      expect(scope.paymentRequestAddress()).toBe(scope.fields.to.address)
     )
 
     it "should show a payment URL when legacy address is selected", ->
       scope.fields.to = scope.legacyAddresses()[0]
       scope.$digest()
-      expect(scope.paymentRequestURL).toBeDefined()
-      expect(scope.paymentRequestURL).toContain("bitcoin:")
+      expect(scope.paymentRequestURL()).toBeDefined()
+      expect(scope.paymentRequestURL()).toContain("bitcoin:")
 
 
     it "should show a payment URL with amount when legacy address is selected and amount > 0", ->
       scope.fields.to = scope.legacyAddresses()[0]
       scope.fields.amount = 10000000
       scope.$digest()
-      expect(scope.paymentRequestURL).toBeDefined()
-      expect(scope.paymentRequestURL).toContain("amount=0.1")
+      expect(scope.paymentRequestURL()).toBeDefined()
+      expect(scope.paymentRequestURL()).toContain("amount=0.1")
 
     it "should not have amount argument in URL if amount is zero, null or empty", ->
       scope.fields.to = scope.legacyAddresses()[0]
       scope.fields.amount = "0"
       scope.$digest()
-      expect(scope.paymentRequestURL).toBeDefined()
-      expect(scope.paymentRequestURL).not.toContain("amount=")
+      expect(scope.paymentRequestURL()).toBeDefined()
+      expect(scope.paymentRequestURL()).not.toContain("amount=")
 
       scope.fields.amount = null
       scope.$digest()
-      expect(scope.paymentRequestURL).not.toContain("amount=")
+      expect(scope.paymentRequestURL()).not.toContain("amount=")
 
       scope.fields.amount = ""
       scope.$digest()
-      expect(scope.paymentRequestURL).not.toContain("amount=")
+      expect(scope.paymentRequestURL()).not.toContain("amount=")
 
   describe "form validation", ->
 

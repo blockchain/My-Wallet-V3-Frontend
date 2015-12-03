@@ -44,12 +44,12 @@
       .col-sm-9
         p.form-control-static
           | {{ paymentRequest.paid / 100000000.0 }}  
-    .payment-url.ptm.row(ng-if="paymentRequestURL")
+    .payment-url.ptm.row(ng-if="paymentRequestURL()")
       .receive-code.col-md-3.col-sm-4.mrs
         p(ng-hide="status.didInitializeHD")
           img(src="img/spinner.gif")  
         span(ng-show="status.didInitializeHD")
-          qr(text="paymentRequestURL", size=120, correction-level="'M'")
+          qr(text="paymentRequestURL()", size=120, correction-level="'M'")
       .flex-column.receive-address.col-md-9.col-sm-8
         p.hidden-xs.type-h5.em-400.black.mbs
           span(translate="BITCOIN_ADDRESS")
@@ -57,7 +57,7 @@
         p.form-control-static.bitcoin-address
           img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
           span(ng-show="status.didInitializeHD" single-click-select)
-            | {{ paymentRequestAddress }}
+            | {{ paymentRequestAddress() }}
         p.black.mtm.flex-center(ng-show="!browserCanExecCommand || browserCanExecCommand && !highlighted")
           i.ti-mouse-alt.mrs
           span(translate="COPY_ADDRESS")
