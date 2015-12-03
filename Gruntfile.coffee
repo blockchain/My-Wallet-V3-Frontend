@@ -447,6 +447,10 @@ module.exports = (grunt) ->
         command: () ->
            'cp bower.json build/ && cd build && bower install'
 
+      check_translations:
+        command: () ->
+          'ruby check_translations.rb'
+
     git_changelog:
       default:
         options:
@@ -611,6 +615,10 @@ module.exports = (grunt) ->
     "shell:deploy_beta_to_alpha"
     "shell:deploy_server_to_alpha"
     "shell:deploy_start_alpha"
+  ]
+
+  grunt.registerTask "check_translations", [
+    "shell:check_translations"
   ]
 
   return
