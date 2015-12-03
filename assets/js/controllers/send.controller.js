@@ -288,6 +288,18 @@ function SendCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $timeout, $st
     return formatted;
   };
 
+  $scope.hasAmountError = (index) => {
+    let field = $scope.sendForm['amounts' + index];
+    let fieldFiat = $scope.sendForm['amountsFiat' + index];
+    return ((!field ? false : field.$touched || fieldFiat.$touched) || index == null) && field.$invalid;
+  };
+
+  $scope.hasInsufficientError = (index) => {
+    let field = $scope.sendForm['amounts' + index];
+    let fieldFiat = $scope.sendForm['amountsFiat' + index];
+    return ((!field ? false : field.$touched || fieldFiat.$touched) || index == null) && !$scope.amountIsValid;
+  };
+
   $scope.$watch("transaction.destinations", (destinations) => {
     destinations.forEach((dest, index) => {
       if (dest == null) return;

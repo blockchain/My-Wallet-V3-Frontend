@@ -343,6 +343,8 @@
   "RESET_FORM" : "Reset Form",
   "REGULAR_SEND" : "Regular Send",
   "MINERS_FEE" : "Miner's Fee",
+  "MINERS_FEE_EXPLAIN" : "Select from a predetermined list or enter a custom amount",
+  "TOTAL_AVAILABLE": "Total available",
   "GO_BACK" : "Go Back",
   "CLICK_HERE_TO_CREATE_WALLET" : "create a wallet",
   "RESEND" : "Resend",
