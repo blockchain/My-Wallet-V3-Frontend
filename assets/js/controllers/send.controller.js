@@ -305,13 +305,12 @@ function SendCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $timeout, $st
   $scope.$watch("status.didLoadBalances", () => {
     if ($scope.status.didLoadBalances) {
       if ($scope.origins.length === 0) {
-        let idx = Wallet.my.wallet.hdwallet.defaultAccountIndex;
-        if (!isNaN($stateParams.accountIndex)) {
-          idx = parseInt($stateParams.accountIndex);
-        }
+        let defaultIdx = Wallet.my.wallet.hdwallet.defaultAccountIndex;
+        let selectedIdx = parseInt($stateParams.accountIndex);
+        let idx = isNaN(selectedIdx) ? defaultIdx : selectedIdx;
         for (let account of $scope.accounts()) {
           account = $scope.formatOrigin(account);
-          if (!((account.index != null) && account.archived)) {
+          if (account.index != null && !account.archived) {
             if (account.index === idx) {
               $scope.transaction.from = account;
             }
