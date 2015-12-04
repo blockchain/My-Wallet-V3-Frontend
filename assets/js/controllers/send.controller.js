@@ -29,6 +29,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $timeout, $st
 
   $scope.transactionTemplate = {
     from: null,
+    sweepAmount: null,
     destinations: [null],
     amounts: [null],
     fee: Wallet.settings.feePerKB,
@@ -254,8 +255,8 @@ function SendCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $timeout, $st
 
   $scope.validateAmounts = () => {
     if ($scope.transaction.from == null) return;
-    let available = $scope.transaction.from.balance;
-    let transactionTotal = $scope.getTransactionTotal(true);
+    let available = $scope.getAvailableBalance();
+    let transactionTotal = $scope.getTransactionTotal();
     $scope.amountIsValid = available - transactionTotal >= 0;
   };
 
@@ -298,6 +299,14 @@ function SendCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $timeout, $st
     let field = $scope.sendForm['amounts' + index];
     let fieldFiat = $scope.sendForm['amountsFiat' + index];
     return ((!field ? false : field.$touched || fieldFiat.$touched) || index == null) && !$scope.amountIsValid;
+  };
+
+  $scope.getAvailableBalance = () => {
+    let tx = $scope.transaction;
+    if (!tx.from) return 0;
+    let availableBal = tx.from.balance - tx.fee;
+    let maxAvailable = $scope.advanced ? availableBal : tx.sweepAmount;
+    return maxAvailable || availableBal;
   };
 
   $scope.$watch("transaction.destinations", (destinations) => {
@@ -364,6 +373,10 @@ function SendCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $timeout, $st
   $scope.handleTxUpdate = (tx) => {
     if (tx.fee != null && tx.fee !== $scope.transaction.fee) {
       $scope.transaction.fee = tx.fee;
+      $scope.$root.$safeApply($scope);
+    }
+    if (tx.sweepAmount != null && tx.sweepAmount !== $scope.transaction.sweepAmount) {
+      $scope.transaction.sweepAmount = tx.sweepAmount;
       $scope.$root.$safeApply($scope);
     }
   };
