@@ -25,21 +25,10 @@ module.exports = (grunt) ->
         options: {
           context : {
             PRODUCTION: true
-            BETA: false
           }
         },
         expand: true
         src: ['build/index.html']
-        dest: ''
-      beta:
-        options: {
-          context : {
-            PRODUCTION: true
-            BETA: true
-          }
-        },
-        expand: true
-        src: ['build/admin.html', 'build/index-beta.html']
         dest: ''
 
     concat:
@@ -96,16 +85,6 @@ module.exports = (grunt) ->
 
         dest: "dist/application.min.js"
 
-      beta:
-        src: [
-          "build/bower_components/jquery/dist/jquery.js"
-          "build/bower_components/angular/angular.min.js"
-          "build/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"
-          "build/bower_components/bootstrap/dist/js/bootstrap.min.js"
-          "app/admin.js"
-        ]
-        dest: "dist/beta-admin.js"
-
     coffee:
       coffee_to_js:
         options:
@@ -140,14 +119,7 @@ module.exports = (grunt) ->
           "build/css/**/*.css"
         ],
         dest: "dist/application.css"
-      },
-      beta: {
-        src: [
-          "build/css/blockchain.css"
-          "build/css/navigation.css"
-        ],
-        dest: "dist/beta-admin.css"
-      },
+      }
     },
 
     autoprefixer: {
@@ -201,8 +173,7 @@ module.exports = (grunt) ->
       main:
         files: [
           {src: ["beep.wav"], dest: "dist/"}
-          {src: ["index.html", "index-beta.html"], dest: "dist/", cwd: "build", expand: true}
-          {src: ["admin.html"], dest: "dist/", cwd: "build", expand: true}
+          {src: ["index.html"], dest: "dist/", cwd: "build", expand: true}
           {src: ["img/*"], dest: "dist/", cwd: "build", expand: true}
           {src: ["locales/*"], dest: "dist/", cwd: "build", expand: true}
           {src: ["**/*"], dest: "dist/fonts", cwd: "build/fonts", expand: true}
@@ -228,15 +199,6 @@ module.exports = (grunt) ->
           {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/themify", expand: true}
 
         ]
-      beta:
-        files: [
-          {src: ["beta/betaAdminServer.js"], dest: "dist/", cwd: "app", expand: true}
-          {src: ["beta/package.json"], dest: "dist/", cwd: "app", expand: true}
-        ]
-
-      beta_index:
-        src: "build/index.html"
-        dest: "build/index-beta.html"
 
       images:
         files: [
@@ -280,7 +242,6 @@ module.exports = (grunt) ->
         options:
           client: false
         files:
-          "build/admin.html": "app/admin.jade"
           "build/index.html": "app/index.jade"
 
     babel:
@@ -295,7 +256,7 @@ module.exports = (grunt) ->
         }]
 
     rename:
-      assets: # Renames all images, fonts, etc and updates application.min.js, application.css and admin.html with their new names.
+      assets: # Renames all images, fonts, etc and updates application.min.js and application.css with their new names.
         options:
           skipIfHashed: true
           startSymbol: "{{"
@@ -322,7 +283,7 @@ module.exports = (grunt) ->
 
             publicdir = require("fs").realpathSync("dist")
             path = require("path")
-            for referring_file_path in ["dist/application.min.js", "dist/beta-admin.js", "dist/application.css", "dist/beta-admin.css", "dist/admin.html", "dist/index.html", "dist/index-beta.html"]
+            for referring_file_path in ["dist/application.min.js", "dist/application.css", "dist/index.html"]
               contents = grunt.file.read(referring_file_path)
               before = undefined
               after = undefined
@@ -347,7 +308,7 @@ module.exports = (grunt) ->
             'dist/beep.wav'
           ]
 
-      html: # Renames application/beta.min.js/css and updates index/admin.html
+      html: # Renames application.min.js/css and updates index.html
         options:
           skipIfHashed: true
           startSymbol: "{{"
@@ -359,7 +320,7 @@ module.exports = (grunt) ->
             publicdir = require("fs").realpathSync("dist")
             path = require("path")
 
-            for referring_file_path in ["dist/index.html", "dist/index-beta.html", "dist/admin.html"]
+            for referring_file_path in ["dist/index.html"]
               contents = grunt.file.read(referring_file_path)
               before = undefined
               after = undefined
@@ -377,8 +338,6 @@ module.exports = (grunt) ->
           src: [
             'dist/application.min.js'
             'dist/application.css'
-            'dist/beta-admin.js'
-            'dist/beta-admin.css'
           ]
 
     shell:
@@ -390,10 +349,6 @@ module.exports = (grunt) ->
         command: () ->
           'rsync -rz --delete server.js hd-dev@server:'
 
-      deploy_beta_to_dev:
-        command: () ->
-          'rsync -rz --delete node_modules/my-wallet-v3-beta-module hd-dev@server:node_modules/'
-
       deploy_static_to_staging:
         command: () ->
           'rsync -rz --delete dist hd-staging@server:'
@@ -401,22 +356,6 @@ module.exports = (grunt) ->
       deploy_server_to_staging:
         command: () ->
           'rsync -rz --delete server.js hd-staging@server:'
-
-      deploy_beta_to_staging:
-        command: () ->
-          'rsync -rz --delete node_modules/my-wallet-v3-beta-module hd-staging@server:node_modules/'
-
-      deploy_static_to_alpha:
-        command: () ->
-          'rsync -rz --delete dist hd-alpha@server:'
-
-      deploy_server_to_alpha:
-        command: () ->
-          'rsync -rz --delete server.js hd-alpha@server:'
-
-      deploy_beta_to_alpha:
-        command: () ->
-          'rsync -rz --delete node_modules/my-wallet-v3-beta-module hd-alpha@server:node_modules/'
 
       deploy_start_dev:
         command: () ->
@@ -513,11 +452,6 @@ module.exports = (grunt) ->
     "watch"
   ]
 
-  grunt.registerTask "dist_beta", [
-    "concat:beta"
-    "concat_css:beta"
-  ]
-
   # Default task(s).
   grunt.registerTask "dist", [
     "clean"
@@ -531,11 +465,8 @@ module.exports = (grunt) ->
     "concat:application"
     "concat_css:app"
     "jade"
-    "copy:beta_index"
     "preprocess"
     "copy:main"
-    "copy:beta"
-    "dist_beta" # We don't check beta dependencies against a whitelist
     "rename:assets"
     "rename:html"
     "git_changelog"
@@ -550,11 +481,8 @@ module.exports = (grunt) ->
     "concat:application"
     "concat_css:app"
     "jade"
-    "copy:beta_index"
     "preprocess"
     "copy:main"
-    "copy:beta"
-    "dist_beta"
     "rename:assets"
     "rename:html"
   ]
@@ -570,15 +498,9 @@ module.exports = (grunt) ->
     "shell:deploy_start_dev"
   ]
 
-  grunt.registerTask "deploy_beta_to_dev", [
-    "shell:deploy_beta_to_dev"
-    "shell:deploy_start_dev"
-  ]
-
   grunt.registerTask "deploy_to_dev", [
     "dist"
     "shell:deploy_static_to_dev"
-    "shell:deploy_beta_to_dev"
     "shell:deploy_server_to_dev"
     "shell:deploy_start_dev"
   ]
@@ -594,41 +516,11 @@ module.exports = (grunt) ->
     "shell:deploy_start_staging"
   ]
 
-  grunt.registerTask "deploy_beta_to_staging", [
-    "shell:deploy_beta_to_staging"
-    "shell:deploy_start_staging"
-  ]
-
   grunt.registerTask "deploy_to_staging", [
     "dist"
     "shell:deploy_static_to_staging"
-    "shell:deploy_beta_to_staging"
     "shell:deploy_server_to_staging"
     "shell:deploy_start_staging"
-  ]
-
-  grunt.registerTask "deploy_static_to_alpha", [
-    "dist"
-    "shell:deploy_static_to_alpha"
-    "shell:deploy_start_alpha"
-  ]
-
-  grunt.registerTask "deploy_server_to_alpha", [
-    "shell:deploy_server_to_alpha"
-    "shell:deploy_start_alpha"
-  ]
-
-  grunt.registerTask "deploy_beta_to_alpha", [
-    "shell:deploy_beta_to_alpha"
-    "shell:deploy_start_alpha"
-  ]
-
-  grunt.registerTask "deploy_to_alpha", [
-    "dist"
-    "shell:deploy_static_to_alpha"
-    "shell:deploy_beta_to_alpha"
-    "shell:deploy_server_to_alpha"
-    "shell:deploy_start_alpha"
   ]
 
   grunt.registerTask "check_translations", [
