@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("RequestCtrl", RequestCtrl);
 
-function RequestCtrl($scope, Wallet, Alerts, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter) {
+function RequestCtrl($scope, Wallet, Alerts, $uibModalInstance, $log, destination, focus, $translate, $stateParams, filterFilter, $filter) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -11,6 +11,7 @@ function RequestCtrl($scope, Wallet, Alerts, $uibModalInstance, $log, destinatio
   $scope.destinations = [];
   $scope.receiveAddress = null;
   $scope.advanced = false;
+  $scope.focus = focus;
 
   $scope.fields = {
     to: null,

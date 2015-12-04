@@ -2,12 +2,14 @@
   .flex-center
     img(src="img/arrow-down.png")
     h3(translate="RECEIVE_BITCOIN")
-  h5(translate="RECEIVE_BITCOIN_MESSAGE")
+  h5(translate="RECEIVE_BITCOIN_MESSAGE", ng-hide="focus")
 .modal-body
   form.form-horizontal.ph-form(role="form" name="requestForm" novalidate)
     .form-group.row.pbm(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': fields.to.isWatchOnlyLegacyAddress}")
       label.pts.col-sm-3.col-xs-12(translate="RECEIVE_TO")
-      .col-sm-9.col-xs-12
+      .col-sm-9.col-xs-12(ng-show="focus")
+        p.form-control-static {{ fields.to.label }}
+      .col-sm-9.col-xs-12(ng-hide="focus")
         ui-select(ng-model="fields.to" ng-disabled="paymentRequest.amount > 0 || paymentRequest.label")
           ui-select-match {{ $select.selected.label + ($select.selected.isWatchOnlyLegacyAddress ? ' (Watch Only)' : '') }}
           ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'") 

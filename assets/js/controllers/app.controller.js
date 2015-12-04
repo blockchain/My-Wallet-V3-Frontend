@@ -26,27 +26,14 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $location, $cookieS
     let modalInstance = $uibModal.open({
       templateUrl: "partials/request.jade",
       controller: "RequestCtrl",
-      resolve: {destination: () => null},
-      windowClass: "bc-modal"
-    });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => Wallet.store.resetLogoutTimeout());
-    }
-  };
-
-  $scope.showAddress = (account) => {
-    let modalInstance = $uibModal.open({
-      templateUrl: "partials/request.jade",
-      controller: "RequestCtrl",
       resolve: {
-        destination: () => account
+        destination: () => null,
+        focus: () => false
       },
       windowClass: "bc-modal"
     });
     if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
+      modalInstance.opened.then(() => Wallet.store.resetLogoutTimeout());
     }
   };
 

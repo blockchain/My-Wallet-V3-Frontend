@@ -61,16 +61,6 @@ describe "AppCtrl", ->
     expect($uibModal.open).toHaveBeenCalled()
   )
 
-  it "should show a bitcoin address", inject((Wallet, $uibModal) ->
-    spyOn($uibModal, "open")
-    account = Wallet.accounts()[1]
-
-    scope.showAddress(account)
-
-    expect($uibModal.open).toHaveBeenCalled()
-
-  )
-
   describe "HD upgrade", ->
     beforeEach ->
       callbacks =  {

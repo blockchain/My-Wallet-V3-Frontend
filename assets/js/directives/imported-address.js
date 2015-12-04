@@ -16,7 +16,8 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
           templateUrl: "partials/request.jade",
           controller: "RequestCtrl",
           resolve: {
-            destination: () => scope.address
+            destination: () => scope.address,
+            focus: () => true
           },
           windowClass: "bc-modal"
         });
