@@ -178,45 +178,22 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
       wallet.applyIfNeeded();
     };
 
-    let betaCheckFinished = () => {
-      $window.root = 'https://blockchain.info/';
-      wallet.my.login(
-        uid,
-        null, // sharedKey
-        password,
-        two_factor_code,
-        didLogin,
-        needsTwoFactorCode,
-        wrongTwoFactorCode,
-        authorizationRequired,
-        loginError,
-        () => {}, // fetchSuccess
-        () => {}, // decryptSucces
-        () => {} // buildHDSucces
-      );
-      currency.fetchExchangeRate();
-    };
-
-    // If BETA=1 is set in .env then in index.html/jade $rootScope.beta is set.
-    if ($rootScope.beta) {
-      $http.post('/check_guid_for_beta_key', {
-        guid: uid
-      }).success((data) => {
-        if (data.verified) {
-          betaCheckFinished();
-        } else {
-          if (data.error && data.error.message) {
-            Alerts.displayError(data.error.message);
-          }
-          errorCallback();
-        }
-      }).error(() => {
-        Alerts.displayError('Unable to verify your wallet UID.');
-        errorCallback();
-      });
-    } else {
-      betaCheckFinished();
-    }
+    $window.root = 'https://blockchain.info/';
+    wallet.my.login(
+      uid,
+      null, // sharedKey
+      password,
+      two_factor_code,
+      didLogin,
+      needsTwoFactorCode,
+      wrongTwoFactorCode,
+      authorizationRequired,
+      loginError,
+      () => {}, // fetchSuccess
+      () => {}, // decryptSucces
+      () => {} // buildHDSucces
+    );
+    currency.fetchExchangeRate();
   };
 
   wallet.upgrade = (successCallback, cancelSecondPasswordCallback) => {
@@ -308,24 +285,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
         Alerts.displayError('Unable to login to new wallet');
       };
 
-      if ($rootScope.beta) {
-        $http.post('/register_guid', {
-          guid: uid,
-          email: email
-        }).success((data) => {
-          if (data.success) {
-            wallet.login(uid, password, null, null, loginSuccess, loginError);
-          } else {
-            if (data.error && data.error.message) {
-              Alerts.displayError(data.error.message);
-            }
-          }
-        }).error(() => {
-          Alerts.displayWarning('Unable to associate your new wallet with your invite code. Please try to login using your UID ' + uid + ' or register again.', true);
-        });
-      } else {
-        wallet.login(uid, password, null, null, loginSuccess, loginError);
-      }
+      wallet.login(uid, password, null, null, loginSuccess, loginError);
     };
 
     let error = (error) => {

@@ -1,12 +1,7 @@
 div
   header
     h2.em-300(translate="NEW_ACCT_WELCOME", ng-show="currentStep == 1")
-  form.form-horizontal(ng-show="betaCheckError")
-    .form-group
-      p
-      p
-      p {{ betaCheckError }}
-  form.form-horizontal(role="form",name="form",novalidate, ng-show="betaCheckSuccess")
+  form.form-horizontal(role="form",name="form",novalidate)
     div(ng-switch="currentStep")
       div(ng-switch-when="1")
         .security-red.mbl.em-400.flex-center
