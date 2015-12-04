@@ -2,7 +2,7 @@ __Blockchain HD Frontend__
 
 _Recent changes_
 
-#   (2015-11-26)
+#   (2015-12-04)
 
 
 
@@ -10,42 +10,63 @@ _Recent changes_
 
 ## Bug Fixes
 
-- **Addresses:** reverse order and fix search
-  ([d8f69d27](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/d8f69d27837687f875b124196c54e55c02a236db))
-- **Camera:** explicitly turn off webcam (Chrome 47)
-  ([c50abc60](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/c50abc603062d1e979cbcc9a1c3eeb16048ec0a8))
-- **Deploy:** beta vs. non-beta and IP whitelist in production
-  ([d1cf01be](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/d1cf01bec6c571255716bd8e0b52f4b4a26f2b2a))
-- **Settings:** allow user to verify phone number at later stage
-  ([b9b9802f](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/b9b9802f47b367984183cf9ae04a53f48ff54125))
-- **Transactions:**
-  - also filter to account names
-  ([876c08e5](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/876c08e578de6ad9fc10e699ddb6b9e5dfdef3e2))
-  - navigate back to all txs instead of home from tx
-  ([f86bb481](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f86bb481ff9c771a077a5d22716e01518a292b55))
+- **Camera:** turn off camera after use in Chrome 47
+  ([fc0f7d3e](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/fc0f7d3ea9c820cdcbafe072cdbc898b25cc0a59))
+- **Login:** don't promise to fill in UID if we don't have it
+  ([bf5718a6](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/bf5718a6c496463486312fcb6c955608255c3081))
+- **Send:**
+  - show default account when oppening modal from 'All Transactions'
+  ([1a9a56c7](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/1a9a56c7ef23fb8190291c705290962e144350d4))
+  - do not validate empty 'to' field
+  ([e039541a](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/e039541a081d7aa47ab6173e64959883694d592e))
+- **dyk:** fix dyk link, more useful translation strings
+  ([7047923f](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/7047923f3c85fb2e0ce4729b3f5c27b3aacd008c))
+- **index:** load wallet service
+  ([b2116631](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/b2116631c6ddf414b24ef10ec2207f55293e39fe))
+- **modal:** remove black bar from beneath modals
+  ([c90462ec](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/c90462ec39f505b9b9b6b78ab9a16cf93a4209ab))
+- **receive:** vertically align labels
+  ([fea311f9](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/fea311f95d1ccc03a4d783e02b94ba8ef154ba59))
+- **routes:** use correct controller for address book
+  ([6f9ad52b](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/6f9ad52ba7c9ded1ae096f3a72f0ccc4543ced14))
+- **tests:** coverage for service js files
+  ([109fd04d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/109fd04db164976492080ef65a91055a8c083e74))
+- **uiLadda:** has its own scope
+  ([6bfe9814](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/6bfe9814b8d6281de9981603b10aedeb540de837))
+- **wallet:** add MyWalletPayment as a property of Wallet
+  ([3ed881d6](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/3ed881d619d37ce62352ddacd1bb16ffc9482faa))
 
 
 ## Features
 
-- **Alpha:** track email open and link follows.
-  ([038c27de](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/038c27de682fd5dbdee147bb8240d8816b685d97))
-- **Deploy:** use js instead of coffee, added reminder functions
-  ([40d917d3](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/40d917d335cb2620340580264d10827a802d32d2))
-- **Security:** warn against self XSS
-  ([3275f679](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/3275f6795076ec1cbae3dc5082106340bf9e6955))
-- **Upgrade:** warn that upgrade disables API access
-  ([143c645f](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/143c645f179959c8c0542ac919d2e81d28682391))
-- **security:** more specific password hint errors
-  ([159fea6d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/159fea6d89383c48e68a37b7998482355d886397))
+- **Receive:** show new receive address after receiving
+  ([94b03e9d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/94b03e9ddeb30fd34bb56175f539e0bc6e931d14))
+- **Send:** 'total available' validation message
+  ([f8509bd3](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f8509bd3fe660c56136e623ac3c3dfa8914a4db2))
+- **recovery:** add warning to wallet recovery page
+  ([35dec7f5](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/35dec7f56845ac7118244790d3aac4e92727c59e))
 
 
 ## Refactor
 
-- **Helper:** popover-template deprecated
-- **Modals:**  deprecated
-- **Send:** resetSearch is unused code
-- **Transaction:** no need for didLoad()
-- **server:** convert server.coffee to js, upgrade to express 4
+- **Wallet:**
+  - remove legacy loadScript function
+  - remove unnecessary return statements
+  - convert wallet.js.coffee to wallet.service.js
+- **activity-feed:**
+  - change watch syntax
+  - convert activity-feed.directive to js
+- **address-book-entry:** change name, clean code
+- **adverts:** convert adverts directive to js
+- **amount:** convert amount directive to js
+- **filters:** convert filters to js
+- **routes:** convert routes to js
+- **translations:** convert translations config to js
+
+
+## Test
+
+- **Wallet:** add tests for 2FA functions
 
 
 
