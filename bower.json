@@ -24,7 +24,6 @@
     "browserdetection": "0.3.*",
     "bc-qr-reader": "blockchain/bc-qr-reader#chrome47",
     "bootstrap-sass": "3.3.*",
-    "bootstrap": "~3.3.4",
     "blockchain-wallet": "3.2.*",
     "bc-phone-number": "5.0.*"
   },

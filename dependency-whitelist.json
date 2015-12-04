@@ -1,5 +1,9 @@
 {
-  "ignore" : ["grunt", "jasmine-core", "jquery", "istanbul", "esprima", "typeforce", "angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize", "bootstrap-sass", "bootstrap", "bc-qr-reader", "angular-ui-select", "d3", "angular-charts", "blockchain-wallet"],
+  "ignore" : [
+    "angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize",
+    "bootstrap-sass",
+    "angular-ui-select", "bc-qr-reader", "bc-phone-number", "blockchain-wallet"
+  ],
   "angular-ui-router" : {
     "version": "0.2.15",
     "commits" : ["805e69bae319e922e4d3265b7ef565058aaff850"],
@@ -45,19 +49,9 @@
     "commits" : ["939ab5f06a5a3c09cd4dc39a19a312468b8c11cb"],
     "repo" : "pernas/angular-password-entropy"
   },
-  "international-phone-number" : {
-    "version": "0.0.7",
-    "commits" : ["6c23f83221d1d6fe976925d4d8b14944104a931a"],
-    "repo" : "mareczek/international-phone-number"
-  },
   "browserdetection" : {
     "version": "0.3.3",
     "commits" : ["97f9718f8811e0a058c5296d69a879de7754ad91"],
     "repo" : "sub2home/browser-detection"
-  },
-  "bc-phone-number" : {
-    "version": "5.0.6",
-    "commits" : ["0aa99e8d4d05378c5fc4b3a487dc58a5480526fb"],
-    "repo" : "Ahimta/bc-phone-number"
   }
 }
