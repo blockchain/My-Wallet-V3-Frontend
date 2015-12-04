@@ -1056,7 +1056,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   };
 
   wallet.getCurrency = function () {
-    wallet.my.getCurrency();
+    return wallet.my.getCurrency();
   };
 
   wallet.setLanguage = function (language) {
@@ -1148,12 +1148,12 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   };
 
   wallet.isEmailVerified = function () {
-    wallet.my.isEmailVerified;
+    return wallet.my.isEmailVerified;
   };
 
   wallet.internationalPhoneNumber = function (mobile) {
     if (mobile == null) return null;
-    mobile.country + ' ' + mobile.number.replace(/^0*/, '');
+    return mobile.country + ' ' + mobile.number.replace(/^0*/, '');
   };
 
   wallet.changeMobile = function (mobile, successCallback, errorCallback) {
@@ -1202,7 +1202,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   };
 
   wallet.isMobileVerified = function () {
-    wallet.my.isMobileVerified;
+    return wallet.my.isMobileVerified;
   };
 
   wallet.disableSecondFactor = function () {
