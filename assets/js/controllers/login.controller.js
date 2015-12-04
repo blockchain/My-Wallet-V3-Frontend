@@ -95,12 +95,12 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookieStore
   }
   if ($cookieStore.get('email-verified')) {
     $cookieStore.remove('email-verified');
-    $translate(['SUCCESS', 'EMAIL_VERIFIED_SUCCESS']).then(translations => {
+    $translate(['SUCCESS', 'EMAIL_VERIFIED_SUCCESS', 'EMAIL_VERIFIED_SUCCESS_NO_UID']).then(translations => {
       $scope.$emit('showNotification', {
         type: 'verified-email',
         icon: 'ti-email',
         heading: translations.SUCCESS,
-        msg: translations.EMAIL_VERIFIED_SUCCESS
+        msg: $scope.uidAvailable ? translations.EMAIL_VERIFIED_SUCCESS : translations.EMAIL_VERIFIED_SUCCESS_NO_UID
       });
     });
   }
