@@ -8,9 +8,7 @@ describe "RequestCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, localStorageService, $controller, $rootScope, $compile) ->
-      localStorageService.remove("mockWallets")
-
+    angular.mock.inject ($injector, $controller, $rootScope, $compile) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
 

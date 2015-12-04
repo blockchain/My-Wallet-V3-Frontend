@@ -7,9 +7,7 @@ describe "walletServices", () ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $q, localStorageService) ->
-      localStorageService.remove("mockWallets")
-
+    angular.mock.inject ($injector, $q) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
 

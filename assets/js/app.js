@@ -18,7 +18,6 @@ const modules = [
   'ngAudio',
   'ngSanitize',
   'ja.qr',
-  'LocalStorageModule',
   'ngNumeraljs',
   'pascalprecht.translate',
   'bcTranslateStaticFilesLoader',
@@ -26,7 +25,7 @@ const modules = [
   'passwordEntropy',
   'webcam',
   'bcQrReader',
-  
+
   'bcPhoneNumber',
 
   'templates-main'

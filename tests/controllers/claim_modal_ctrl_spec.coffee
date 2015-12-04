@@ -10,9 +10,7 @@ describe "ClaimModalCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, localStorageService, $rootScope, $controller, $q) ->
-      localStorageService.remove("mockWallets")
-
+    angular.mock.inject ($injector, $rootScope, $controller, $q) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       MyWalletPayment = $injector.get("MyWalletPayment")

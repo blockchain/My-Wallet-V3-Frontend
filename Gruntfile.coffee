@@ -68,7 +68,6 @@ module.exports = (grunt) ->
           'build/bower_components/qrcode/lib/qrcode.js'
           'build/bower_components/angular-qr/src/angular-qr.js'
           'build/bower_components/angular-ui-select/dist/select.js'
-          'build/bower_components/angular-local-storage/dist/angular-local-storage.js'
           'build/bower_components/angular-ui-router/release/angular-ui-router.js'
           'build/bower_components/angular-translate/angular-translate.js'
           'build/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js'

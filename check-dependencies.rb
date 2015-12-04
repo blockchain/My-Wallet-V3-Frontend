@@ -227,7 +227,6 @@ if package["name"] == "angular-blockchain-wallet"
   output.delete("ignore")
   output.delete("license")
   output.delete("keywords")
-  # output.delete("devDependencies") # TODO don't load LocalStorageModule in production
 
   deps = bower["dependencies"]
 

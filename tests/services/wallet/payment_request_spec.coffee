@@ -7,9 +7,7 @@ describe "walletServices", () ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, localStorageService) ->
-      localStorageService.remove("mockWallets")
-
+    angular.mock.inject ($injector) ->
       Wallet = $injector.get("Wallet")
 
       return
@@ -18,7 +16,7 @@ describe "walletServices", () ->
 
   describe "parsePaymentRequest()", ->
     beforeEach ->
-      Wallet.my.isValidAddress = (url) -> 
+      Wallet.my.isValidAddress = (url) ->
         return true
 
     it "should recognise bitcoin://", inject((Wallet) ->

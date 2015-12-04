@@ -9,9 +9,7 @@ describe "walletServices", () ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, localStorageService) ->
-      localStorageService.remove("mockWallets")
-
+    angular.mock.inject ($injector) ->
       Wallet = $injector.get("Wallet")
       Wallet.addressBook = {"17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq" : "John"}
       Wallet.legacyAddresses = [{label: "Old Label"}]

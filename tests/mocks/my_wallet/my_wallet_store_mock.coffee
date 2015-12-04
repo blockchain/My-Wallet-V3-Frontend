@@ -72,9 +72,6 @@ angular.module('walletApp.core').factory 'MyWalletStore', () ->
 
     changePassword: (newPassword) ->
       password = newPassword
-      # wallets = localStorageService.get("mockWallets")
-      # wallets[myWallet.uid].password = newPassword
-      # localStorageService.set("mockWallets", wallets)
 
     getAllTransactions: (idx) ->
       res = []

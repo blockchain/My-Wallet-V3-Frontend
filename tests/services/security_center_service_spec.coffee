@@ -6,9 +6,7 @@ describe "securityCenterServices", () ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, localStorageService, _$rootScope_) ->
-      localStorageService.remove("mockWallets")
-
+    angular.mock.inject ($injector, _$rootScope_) ->
       Wallet = $injector.get("Wallet")
       SecurityCenter = $injector.get("SecurityCenter")
       rootScope = _$rootScope_

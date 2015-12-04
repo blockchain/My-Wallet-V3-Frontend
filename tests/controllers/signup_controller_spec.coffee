@@ -7,9 +7,7 @@ describe "SignupCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, localStorageService, $rootScope, $controller) ->
-      localStorageService.remove("mockWallets")
-
+    angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
 

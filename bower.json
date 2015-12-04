@@ -29,7 +29,6 @@
     "bc-phone-number": "5.0.*"
   },
   "devDependencies": {
-    "angular-local-storage": "~0.1.5"
   },
   "resolutions": {
     "angular": "1.4.*"
