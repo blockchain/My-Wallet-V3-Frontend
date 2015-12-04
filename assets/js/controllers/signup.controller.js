@@ -32,28 +32,6 @@ function SignupCtrl($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModa
     acceptedAgreement: false
   };
 
-  $scope.betaCheckSuccess = false;
-
-
-  // If BETA=1 is set in .env then in index.html/jade $rootScope.beta is set.
-  // The following checks are not ideal as they can be bypassed with some creative Javascript commands.
-  if ($rootScope.beta) {
-    // Check if we allow signups at the moment:
-    $http.post("/check_beta", {}).success((data) => {
-      if (data.open) {
-        $scope.betaCheckSuccess = true;
-      } else {
-        if (data.error && data.error.message) {
-          $scope.betaCheckError = data.error.message;
-        }
-      }
-    }).error(() => {
-      $scope.betaCheckError = "There is a problem with our alpha wallet access control system, please try again later.";
-    });
-  } else {
-    $scope.betaCheckSuccess = true;
-  }
-
   $scope.showAgreement = () => {
     const modalInstance = $uibModal.open({
       templateUrl: "partials/alpha-agreement.jade",

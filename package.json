@@ -4,16 +4,11 @@
   "version": "0.0.0",
   "description": "AngularJS front-end to My-Wallet-V3.",
   "dependencies": {
-    "basic-auth": "^1.0.3",
-    "body-parser": "^1.14.1",
-    "compression": "^1.6.0",
-    "errorhandler": "^1.4.2",
-    "express": "^4.13.3",
-    "method-override": "^2.3.5",
-    "morgan": "^1.6.1",
-    "request": "^2.55.0"
   },
   "devDependencies": {
+    "errorhandler": "^1.4.2",
+    "express": "^4.13.3",
+    "request": "^2.55.0",
     "bower": "^1.3.1",
     "chalk": "^0.5.1",
     "coffee-script": "^1.9.1",
@@ -85,7 +80,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/blockchain/My-Wallet-HD-Frontend"
+    "url": "https://github.com/blockchain/My-Wallet-V3-Frontend"
   },
   "keywords": [
     "blockchain"

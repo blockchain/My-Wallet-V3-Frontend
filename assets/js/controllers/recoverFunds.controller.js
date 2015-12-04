@@ -17,7 +17,6 @@ function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wall
     $scope.working = true;
 
     const success = (wallet) => {
-      $rootScope.beta = false;
       $scope.working = false;
       $scope.nextStep();
       $rootScope.$safeApply();
