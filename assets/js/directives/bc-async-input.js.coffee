@@ -45,7 +45,9 @@ angular.module('walletApp').directive('bcAsyncInput', ($timeout, Wallet) ->
       scope.edit = () ->
         # finds and focuses on the text input field
         # a brief timeout is necessary before trying to focus
-        $timeout (-> elem.find('input').focus()), 50
+        $timeout (() ->
+          elem.find('input')[0].focus()
+        ), 50
         scope.status.edit = 1
 
       scope.focus = () ->
