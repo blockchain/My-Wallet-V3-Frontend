@@ -6,27 +6,24 @@ angular.module('walletApp').directive "uiLadda",  ($timeout, $compile, $translat
     scope: {
       laddaTranslate: "@"
       uiLadda: "="
+      disabled: "=uiDisabled"
     }
-    template: '<span class="ladda-label" translate="{{ translation }}"></span><span class="ladda-spinner"><div class="spinner"></div></span>'
+    templateUrl: () -> 'templates/ui-ladda.jade'
     link: (scope, element, attrs) ->
       element.addClass("ladda-button")
-      element.attr("ladda", attrs["uiLadda"])
-
-      element.removeAttr("ui-ladda")
       element.removeAttr("ng-click") # Prevent action from being called twice
-
-      $compile(element)(scope)
 
       scope.translation = null
 
       $translate(scope.laddaTranslate).then (translation) ->
         scope.translation = translation;
 
-      scope.$watch "uiLadda", (newVal) ->
+      scope.$watch "uiLadda + disabled", (newVal) ->
         if newVal
           element.attr("data-loading", true)
           element.attr("disabled", true)
         else
           element.removeAttr("data-loading")
-          element.removeAttr("disabled")
+          if scope.disabled
+            element.removeAttr("disabled")
   }
