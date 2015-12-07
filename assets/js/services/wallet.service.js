@@ -693,7 +693,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
       .then(proceed, cancel);
   };
 
-  wallet.fetchBalanceForRedeemCode = function (code) {
+  wallet.fetchBalanceForRedeemCode = (code) => {
     let defer = $q.defer();
 
     let success = function (balance) {
@@ -706,7 +706,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
       defer.reject();
     };
     wallet.my.getBalanceForRedeemCode(code, success, error);
-    defer.promise;
+    return defer.promise;
   };
 
   wallet.getAddressBookLabel = function (address) {
