@@ -9,15 +9,12 @@ describe "Transform-Currency Directive", ->
   beforeEach ->
     inject ($rootScope, $compile, $injector) ->
 
-      Wallet = $injector.get("Wallet")
-
-      Wallet.conversions = {
-        USD: { conversion: 1000, symbol: '$' }
-      }
+      currency = $injector.get('currency')
+      currency.conversions.USD = { conversion: 1000, symbol: '$' }
 
       scope = $rootScope.$new()
       scope.amount = 100
-      scope.currency = Wallet.currencies[0]
+      scope.currency = currency.currencies[0]
 
       template = '<input ng-model="amount" transform-currency="currency"></fiat>'
       element = $compile(template)(scope)

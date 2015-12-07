@@ -9,9 +9,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', '$rootScope', 'ngAudio', '$cookieStore', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages'];
+Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', '$rootScope', 'ngAudio', '$cookieStore', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
 
-function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q, bcPhoneNumber, languages) {
+function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency) {
   const wallet = {
     goal: {
       auth: false
@@ -59,22 +59,6 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   wallet.api = MyBlockchainApi;
   wallet.payment = MyWalletPayment;
   wallet.transactions = [];
-  wallet.currencies = [];
-  wallet.btcCurrencies = [
-    {
-      serverCode: 'BTC',
-      code: 'BTC',
-      conversion: 100000000
-    }, {
-      serverCode: 'MBC',
-      code: 'mBTC',
-      conversion: 100000
-    }, {
-      serverCode: 'UBC',
-      code: 'bits',
-      conversion: 100
-    }
-  ];
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
   wallet.store.setAPICode(wallet.api_code);
@@ -123,8 +107,8 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
         wallet.user.isMobileVerified = result.sms_verified;
         wallet.user.passwordHint = result.password_hint1;
         wallet.setLanguage($filter('getByProperty')('code', result.language, languages));
-        wallet.settings.currency = $filter('getByProperty')('code', result.currency, wallet.currencies);
-        wallet.settings.btcCurrency = $filter('getByProperty')('serverCode', result.btc_currency, wallet.btcCurrencies);
+        wallet.settings.currency = $filter('getByProperty')('code', result.currency, currency.currencies);
+        wallet.settings.btcCurrency = $filter('getByProperty')('serverCode', result.btc_currency, currency.bitCurrencies);
         wallet.settings.displayCurrency = wallet.settings.btcCurrency;
         wallet.settings.feePerKB = wallet.my.wallet.fee_per_kb;
         wallet.settings.blockTOR = !!result.block_tor_ips;
@@ -210,7 +194,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
         () => {}, // decryptSucces
         () => {} // buildHDSucces
       );
-      wallet.fetchExchangeRate();
+      currency.fetchExchangeRate();
     };
 
     // If BETA=1 is set in .env then in index.html/jade $rootScope.beta is set.
@@ -556,100 +540,16 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   wallet.recommendedTransactionFee = (origin, amount) =>
     wallet.my.getBaseFee();
 
-  wallet.fiatToSatoshi = (amount, currency) => {
-    if (currency === 'BTC' || amount == null ||
-        wallet.conversions[currency] == null) return null;
-    return parseInt(numeral(amount).multiply(wallet.conversions[currency].conversion).format('0'));
-  };
-
-  wallet.BTCtoFiat = (amount, currency) => {
-    if (currency === 'BTC' || amount == null ||
-        wallet.conversions[currency] == null) return null;
-    return numeral(100000000).multiply(amount).divide(wallet.conversions[currency].conversion).format('0.00');
-  };
-
-  wallet.isBitCurrency = (currency) => {
-    if (currency == null) return null;
-    return ['BTC', 'mBTC', 'bits'].indexOf(currency.code) > -1;
-  };
-
-  wallet.convertCurrency = (amount, currency1, currency2) => {
-    if (amount == null ||
-        !(wallet.conversions[currency1.code] == null ||
-        wallet.conversions[currency2.code] == null)) return null;
-    if (wallet.isBitCurrency(currency1)) {
-      return parseFloat(numeral(currency1.conversion).multiply(amount).divide(wallet.conversions[currency2.code].conversion).format('0.00'));
-    } else {
-      return parseFloat(numeral(amount).multiply(wallet.conversions[currency1.code].conversion).divide(currency2.conversion).format('0.00000000'));
-    }
-  };
-
-  wallet.convertToSatoshi = (amount, currency) => {
-    if (amount == null || currency == null) return null;
-    if (wallet.isBitCurrency(currency)) {
-      return Math.round(amount * currency.conversion);
-    } else if (wallet.conversions[currency.code] != null) {
-      return Math.ceil(amount * wallet.conversions[currency.code].conversion);
-    } else {
-      return null;
-    }
-  };
-
-  wallet.convertFromSatoshi = (amount, currency) => {
-    if (amount == null || currency == null) return null;
-    if (wallet.isBitCurrency(currency)) {
-      return amount / currency.conversion;
-    } else if (wallet.conversions[currency.code] != null) {
-      return amount / wallet.conversions[currency.code].conversion;
-    } else {
-      return null;
-    }
-  };
-
-  // Takes a satoshi amount and converts it to a given currency
-  // while formatting it to how it should look when displayed
-  wallet.formatCurrencyForView = (amount, currency) => {
-    if (!(amount && currency && currency.code)) return;
-    let code = currency.code;
-    if (code === 'BTC') amount = amount.toFixed(8);
-    if (code === 'mBTC') amount = amount.toFixed(6);
-    if (code === 'bits') amount = amount.toFixed(4);
-    if (!wallet.isBitCurrency(currency)) amount = amount.toFixed(2);
-    return parseFloat(amount) + ' ' + code;
-  };
-
   wallet.toggleDisplayCurrency = () => {
-    if (wallet.isBitCurrency(wallet.settings.displayCurrency)) {
+    if (currency.isBitCurrency(wallet.settings.displayCurrency)) {
       wallet.settings.displayCurrency = wallet.settings.currency;
     } else {
       wallet.settings.displayCurrency = wallet.settings.btcCurrency;
     }
   };
 
-  wallet.getFiatAtTime = (amount, time, currency) => {
-    let defer = $q.defer();
-    let key = amount + currency + time;
-
-    let success = (fiat) => {
-      wallet.fiatHistoricalConversionCache[key] = fiat;
-      defer.resolve(numeral(fiat).format('0.00'));
-    };
-
-    let error = (reason) => {
-      return defer.reject(reason);
-    };
-
-    if (wallet.fiatHistoricalConversionCache[key]) {
-      success(wallet.fiatHistoricalConversionCache[key]);
-    } else {
-      wallet.api.getFiatAtTime(time * 1000, amount, currency.toLowerCase()).then(success).catch(error);
-    }
-
-    return defer.promise;
-  };
-
   wallet.checkAndGetTransactionAmount = (amount, currency, success, error) => {
-    amount = wallet.convertToSatoshi(amount, currency);
+    amount = currency.convertToSatoshi(amount, currency);
     if (success == null || error == null) {
       console.error('Success and error callbacks are required');
       return;
@@ -781,7 +681,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
           key = item.split('=')[0];
           value = item.split('=')[1];
           if (key === 'amount') {
-            result.amount = wallet.convertToSatoshi(parseFloat(value), wallet.btcCurrencies[0]);
+            result.amount = currency.convertToSatoshi(parseFloat(value), currency.bitCurrencies[0]);
           } else if (result[key] !== void 0) {
             result[key] = value;
           }
@@ -1010,20 +910,6 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     success();
   };
 
-  wallet.getCurrencies = () => {
-    let results = [];
-    let currencies = wallet.store.getCurrencies();
-    for (let code in currencies) {
-      let name = currencies[code];
-      let currency = {
-        code: code,
-        name: name
-      };
-      results.push(wallet.currencies.push(currency));
-    }
-    return results;
-  };
-
   wallet.getCurrency = () => wallet.my.getCurrency();
 
   wallet.setLanguage = (language) => {
@@ -1088,24 +974,6 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     wallet.my.wallet.fee_per_kb = fee;
     wallet.settings.feePerKB = fee;
     successCallback();
-  };
-
-  wallet.fetchExchangeRate = () => {
-    let success = (result) => {
-      for (let code in result) {
-        let info = result[code];
-        wallet.conversions[code] = {
-          symbol: info.symbol,
-          conversion: parseInt(numeral(100000000).divide(numeral(info['last'])).format('1'))
-        };
-      }
-      wallet.applyIfNeeded();
-    };
-    let fail = (error) => {
-      console.log('Failed to load ticker:');
-      console.log(error);
-    };
-    wallet.api.getTicker().then(success).catch(fail);
   };
 
   wallet.getActivityLogs = (success) => {
@@ -1377,7 +1245,6 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   };
 
   wallet.isMock = wallet.my.mockShouldFailToSend !== void 0;
-  wallet.getCurrencies();
 
   return wallet;
 }

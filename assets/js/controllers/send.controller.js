@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SendCtrl", SendCtrl);
 
-function SendCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal) {
+function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal) {
 
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.accounts = Wallet.accounts;
@@ -25,7 +25,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $timeout, $st
 
   $scope.fiatCurrency = Wallet.settings.currency;
   $scope.btcCurrency = Wallet.settings.btcCurrency;
-  $scope.isBitCurrency = Wallet.isBitCurrency;
+  $scope.isBitCurrency = currency.isBitCurrency;
 
   $scope.transactionTemplate = {
     from: null,
@@ -218,19 +218,6 @@ function SendCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $timeout, $st
 
   $scope.closeAlert = (alert) => {
     Alerts.close(alert);
-  };
-
-  $scope.allowedDecimals = (currency) => {
-    if (Wallet.isBitCurrency(currency)) {
-      if (currency.code === 'BTC') return 8;
-      if (currency.code === 'mBTC') return 6;
-      if (currency.code === 'bits') return 4;
-    }
-    return 2;
-  };
-
-  $scope.decimalPlaces = (number) => {
-    return (number.toString().split('.')[1] || []).length;
   };
 
   $scope.updateToLabel = () => {
