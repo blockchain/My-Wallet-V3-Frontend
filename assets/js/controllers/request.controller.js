@@ -128,7 +128,7 @@ function RequestCtrl($scope, Wallet, Alerts, $uibModalInstance, $log, destinatio
     if (($scope.fields.to != null) && ($scope.fields.to.address != null)) {
       $scope.advanced = false;
       return $scope.fields.to.address;
-    } else if ($scope.fields.label === "" && $scope.status.didInitializeHD) {
+    } else if ($scope.status.didInitializeHD) {
       let idx = $scope.fields.to.index;
       return Wallet.getReceivingAddressForAccount(idx);
     }
