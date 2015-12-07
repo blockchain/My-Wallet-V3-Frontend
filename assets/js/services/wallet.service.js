@@ -490,9 +490,8 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     wallet.status.didConfirmRecoveryPhrase = true;
   };
 
-  wallet.isCorrectMainPassword = function (candidate) {
+  wallet.isCorrectMainPassword = (candidate) =>
     wallet.store.isCorrectMainPassword(candidate);
-  };
 
   wallet.isCorrectSecondPassword = function (candidate) {
     wallet.my.wallet.validateSecondPassword(candidate);
