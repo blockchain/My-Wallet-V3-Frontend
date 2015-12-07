@@ -9,9 +9,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', '$rootScope', 'ngAudio', '$cookieStore', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber'];
+Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', '$rootScope', 'ngAudio', '$cookieStore', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages'];
 
-function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q, bcPhoneNumber) {
+function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q, bcPhoneNumber, languages) {
   const wallet = {
     goal: {
       auth: false
@@ -59,7 +59,6 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   wallet.api = MyBlockchainApi;
   wallet.payment = MyWalletPayment;
   wallet.transactions = [];
-  wallet.languages = [];
   wallet.currencies = [];
   wallet.btcCurrencies = [
     {
@@ -123,7 +122,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
         wallet.user.isEmailVerified = result.email_verified;
         wallet.user.isMobileVerified = result.sms_verified;
         wallet.user.passwordHint = result.password_hint1;
-        wallet.setLanguage($filter('getByProperty')('code', result.language, wallet.languages));
+        wallet.setLanguage($filter('getByProperty')('code', result.language, languages));
         wallet.settings.currency = $filter('getByProperty')('code', result.currency, wallet.currencies);
         wallet.settings.btcCurrency = $filter('getByProperty')('serverCode', result.btc_currency, wallet.btcCurrencies);
         wallet.settings.displayCurrency = wallet.settings.btcCurrency;
@@ -1011,26 +1010,6 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     success();
   };
 
-  wallet.getLanguages = () => {
-    let tempLanguages = [];
-    let languages = wallet.store.getLanguages();
-    for (let code in languages) {
-      let name = languages[code];
-      let language = {
-        code: code,
-        name: name
-      };
-      tempLanguages.push(language);
-    }
-    tempLanguages = $filter('orderBy')(tempLanguages, 'name');
-    let results = [];
-    for (let i = 0, len = tempLanguages.length; i < len; i++) {
-      let language = tempLanguages[i];
-      results.push(wallet.languages.push(language));
-    }
-    return results;
-  };
-
   wallet.getCurrencies = () => {
     let results = [];
     let currencies = wallet.store.getCurrencies();
@@ -1398,7 +1377,6 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   };
 
   wallet.isMock = wallet.my.mockShouldFailToSend !== void 0;
-  wallet.getLanguages();
   wallet.getCurrencies();
 
   return wallet;

@@ -6,12 +6,9 @@ describe "Language Picker", ->
 
   beforeEach module("walletApp")
 
-  beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
-
+  beforeEach inject((_$compile_, _$rootScope_) ->
     $compile = _$compile_
     $rootScope = _$rootScope_
-
-    return
   )
 
   beforeEach ->
@@ -20,12 +17,10 @@ describe "Language Picker", ->
     isoScope = element.isolateScope()
     isoScope.$digest()
 
-  it "should have wallet languages", inject((Wallet) ->
-    expect(isoScope.languages).toBe(Wallet.languages)
-    return
+  it "should have wallet languages", inject((languages) ->
+    expect(isoScope.languages).toBe(languages)
   )
 
   it "should select language", ->
     isoScope.didSelect("a_language")
     expect(isoScope.language).toBe("a_language")
-    return

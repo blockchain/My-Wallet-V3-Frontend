@@ -62,16 +62,16 @@ describe "walletServices", () ->
       expect(Wallet.settings.language).toEqual({code: "en", name: "English"})
     )
 
-    it "should switch language", inject((Wallet) ->
+    it "should switch language", inject((Wallet, languages) ->
       Wallet.settings_api.change_language = (language, success, error) ->
         success()
 
       spyOn(Wallet.settings_api, "change_language").and.callThrough()
 
-      Wallet.changeLanguage(Wallet.languages[0])
+      Wallet.changeLanguage(languages[0])
       expect(MyBlockchainSettings.change_language).toHaveBeenCalled()
-      expect(MyBlockchainSettings.change_language.calls.argsFor(0)[0]).toBe("de")
-      expect(Wallet.settings.language.code).toBe("de")
+      expect(MyBlockchainSettings.change_language.calls.argsFor(0)[0]).toBe("bg")
+      expect(Wallet.settings.language.code).toBe("bg")
 
     )
 
