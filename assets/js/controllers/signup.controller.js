@@ -2,11 +2,11 @@ angular
   .module('walletApp')
   .controller("SignupCtrl", SignupCtrl);
 
-function SignupCtrl($scope, $rootScope, $log, Wallet, Alerts, $uibModal, $translate, $cookieStore, $filter, $state, $http, languages) {
+function SignupCtrl($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal, $translate, $cookieStore, $filter, $state, $http, languages) {
   $scope.currentStep = 1;
   $scope.working = false;
   $scope.languages = languages;
-  $scope.currencies = Wallet.currencies;
+  $scope.currencies = currency.currencies;
   $scope.alerts = Alerts.alerts;
   $scope.status = Wallet.status;
 
@@ -22,7 +22,7 @@ function SignupCtrl($scope, $rootScope, $log, Wallet, Alerts, $uibModal, $transl
   if (language_guess == null) {
     language_guess = $filter("getByProperty")("code", "en", languages);
   }
-  const currency_guess = $filter("getByProperty")("code", "USD", Wallet.currencies);
+  const currency_guess = $filter("getByProperty")("code", "USD", currency.currencies);
   $scope.fields = {
     email: "",
     password: "",

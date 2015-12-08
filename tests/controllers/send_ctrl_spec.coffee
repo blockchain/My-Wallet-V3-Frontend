@@ -21,6 +21,7 @@ describe "SendCtrl", ->
       MyWallet = $injector.get("MyWallet")
       Wallet = $injector.get("Wallet")
       MyWalletPayment = $injector.get("MyWalletPayment")
+      currency = $injector.get('currency')
 
       MyWallet.wallet =
         setNote: (-> )
@@ -45,8 +46,8 @@ describe "SendCtrl", ->
         didLoadBalances: true
 
       Wallet.settings =
-        currency: Wallet.currencies[0]
-        btcCurrency: Wallet.btcCurrencies[0]
+        currency: currency.currencies[0]
+        btcCurrency: currency.bitCurrencies[0]
         feePerKB: 10000
 
       Wallet.payment = MyWalletPayment
@@ -500,25 +501,6 @@ describe "SendCtrl", ->
         scope.processURLfromQR("http://www.google.com")
         expect(scope.alerts.length).toBe(1)
       )
-
-    describe "decimal places", ->
-
-      it "should return the correct number for fiat currency", ->
-        expect(scope.allowedDecimals(Wallet.currencies[0])).toEqual(2)
-
-      it "should return the correct number for BTC", ->
-        expect(scope.allowedDecimals(Wallet.btcCurrencies[0])).toEqual(8)
-
-      it "should return the correct number for mBTC", ->
-        expect(scope.allowedDecimals(Wallet.btcCurrencies[1])).toEqual(6)
-
-      it "should return the correct number for bits", ->
-        expect(scope.allowedDecimals(Wallet.btcCurrencies[2])).toEqual(4)
-
-      it "should read number of decimal places correctly", ->
-        expect(scope.decimalPlaces(1)).toEqual(0)
-        expect(scope.decimalPlaces(1.11)).toEqual(2)
-        expect(scope.decimalPlaces(1.11111)).toEqual(5)
 
     describe "updateToLabel", ->
 

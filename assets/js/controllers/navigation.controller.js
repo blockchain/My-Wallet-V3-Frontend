@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("NavigationCtrl", NavigationCtrl);
 
-function NavigationCtrl($scope, Wallet, SecurityCenter, $translate, $cookieStore, $state, filterFilter, $interval) {
+function NavigationCtrl($scope, Wallet, currency, SecurityCenter, $translate, $cookieStore, $state, filterFilter, $interval) {
   $scope.status = Wallet.status;
   $scope.security = SecurityCenter.security;
   $scope.settings = Wallet.settings;
@@ -50,7 +50,7 @@ function NavigationCtrl($scope, Wallet, SecurityCenter, $translate, $cookieStore
   const intervalTime = 15 * 60 * 1000;
   $interval((() => {
     if (Wallet.status.isLoggedIn) {
-      Wallet.fetchExchangeRate();
+      currency.fetchExchangeRate();
     }
   }), intervalTime);
 }
