@@ -1,20 +1,19 @@
 describe "btcFilter", ->
 
-  $filter = null
+  beforeEach(module('walletApp'))
+  beforeEach(module('walletFilters'))
 
-  beforeEach ->
-    module('walletFilters')
-    inject (_$filter_) ->
-      $filter = _$filter_
-
-  it "should convert from satoshi", () -> 
+  it "should convert from satoshi", inject(($filter) ->
     btc = $filter('btc')
     expect(btc(100000000)).toBe('1 BTC')
+  )
 
-  it "should hide the currency name", () ->
+  it "should hide the currency name", inject(($filter) ->
     btc = $filter('btc')
     expect(btc(100000000, true)).toBe('1')
+  )
 
-  it "should not convert if currency is null", () ->
+  it "should not convert if currency is null", inject(($filter) ->
     btc = $filter('btc')
     expect(btc()).toBe('')
+  )

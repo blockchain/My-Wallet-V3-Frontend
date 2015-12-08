@@ -9,21 +9,25 @@ angular
   .filter('getByPropertyNested', getByPropertyNestedFilter)
   .filter('addressOrNameMatch', addressOrNameMatchFilter);
 
-function toBitCurrencyFilter() {
+toBitCurrencyFilter.$inject = ['currency'];
+function toBitCurrencyFilter(currency) {
   return function (input, btcCurrency, hideCurrency) {
-    if (input != null && !isNaN(input) && btcCurrency != null && btcCurrency.code != null && btcCurrency.conversion != null) {
-      let format = '0.[' + btcCurrency.conversion.toString().substr(1) + ']';
-      return numeral(input).divide(btcCurrency.conversion).format(format) + (hideCurrency ? '' : ' ' + btcCurrency.code);
+    if (input != null && !isNaN(input) && btcCurrency != null) {
+      let amount = currency.convertFromSatoshi(input, btcCurrency);
+      return currency.formatCurrencyForView(amount, btcCurrency, !hideCurrency);
     } else {
       return '';
     }
   };
 }
 
-function btcFilter() {
+btcFilter.$inject = ['currency'];
+function btcFilter(currency) {
   return function (input, hideCurrency) {
     if (input != null && !isNaN(input)) {
-      return numeral(input).divide(100000000).format('0.[00000000]') + (hideCurrency ? '' : ' BTC');
+      let BTC = currency.bitCurrencies[0];
+      let amount = currency.convertFromSatoshi(input, BTC);
+      return currency.formatCurrencyForView(amount, BTC, !hideCurrency);
     } else {
       return '';
     }
