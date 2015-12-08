@@ -18,8 +18,6 @@ module.exports = function(karma){
       'bower_components/angular-audio/app/angular.audio.js',
       'bower_components/qrcode/lib/qrcode.min.js',
       'bower_components/angular-qr/angular-qr.min.js',
-      'bower_components/numeral/numeral.js',
-      'bower_components/angular-numeraljs/dist/angular-numeraljs.js',
       'bower_components/angular-inview/angular-inview.js',
       'build/js/browser-polyfill.js',
       'assets/js/app.js',

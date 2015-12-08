@@ -41,7 +41,7 @@ function TransactionCtrl($scope, Wallet, $log, $state, $stateParams, $filter, $c
 
       $scope.destinations = [];
 
-      const convert = (y) => (' [' + $filter('btc')(y) + ']');
+      const convert = (y) => (' [' + $filter('convert')(y) + ']');
 
       const label = (a) => {
         let address = $filter('getByProperty')('address', a, Wallet.legacyAddresses());

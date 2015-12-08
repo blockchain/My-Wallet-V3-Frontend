@@ -16,7 +16,6 @@
     "angular-ui-select": "sjors/ui-select#csp-and-reset-search",
     "angular-sanitize": "1.4.*",
     "angular-qr": "0.2.*",
-    "angular-numeraljs": "1.1.*",
     "angular-translate": "2.7.*",
     "angular-translate-loader-static-files": "2.7.*",
     "angular-inview": "1.5.0",

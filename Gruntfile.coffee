@@ -89,8 +89,6 @@ module.exports = (grunt) ->
           'build/bower_components/angular-cookies/angular-cookies.min.js'
           'build/bower_components/angular-animate/angular-animate.min.js'
           'build/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
-          'build/bower_components/numeral/min/numeral.min.js'
-          'build/bower_components/angular-numeraljs/dist/angular-numeraljs.js'
           'build/application-dependencies.min.js'
         ]
 

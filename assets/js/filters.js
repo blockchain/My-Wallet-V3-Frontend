@@ -3,27 +3,17 @@
 angular
   .module('walletFilters', [])
   .filter('toBitCurrency', toBitCurrencyFilter)
-  .filter('btc', btcFilter)
   .filter('convert', convertFilter)
   .filter('getByProperty', getByPropertyFilter)
   .filter('getByPropertyNested', getByPropertyNestedFilter)
   .filter('addressOrNameMatch', addressOrNameMatchFilter);
 
-function toBitCurrencyFilter() {
+toBitCurrencyFilter.$inject = ['currency'];
+function toBitCurrencyFilter(currency) {
   return function (input, btcCurrency, hideCurrency) {
-    if (input != null && !isNaN(input) && btcCurrency != null && btcCurrency.code != null && btcCurrency.conversion != null) {
-      let format = '0.[' + btcCurrency.conversion.toString().substr(1) + ']';
-      return numeral(input).divide(btcCurrency.conversion).format(format) + (hideCurrency ? '' : ' ' + btcCurrency.code);
-    } else {
-      return '';
-    }
-  };
-}
-
-function btcFilter() {
-  return function (input, hideCurrency) {
-    if (input != null && !isNaN(input)) {
-      return numeral(input).divide(100000000).format('0.[00000000]') + (hideCurrency ? '' : ' BTC');
+    if (input != null && !isNaN(input) && btcCurrency != null) {
+      let amount = currency.convertFromSatoshi(input, btcCurrency);
+      return currency.formatCurrencyForView(amount, btcCurrency, !hideCurrency);
     } else {
       return '';
     }
@@ -33,7 +23,7 @@ function btcFilter() {
 convertFilter.$inject = ['Wallet', 'currency'];
 function convertFilter(Wallet, currency) {
   return function (amount) {
-    let curr = Wallet.settings.displayCurrency;
+    let curr = Wallet.settings.displayCurrency || currency.bitCurrencies[0];
     let conversion = currency.convertFromSatoshi(amount, curr);
     return currency.formatCurrencyForView(conversion, curr);
   };
