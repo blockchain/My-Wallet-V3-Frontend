@@ -127,7 +127,7 @@ if (beta) {
         res.json({
           verified: false,
           error: {
-            message: 'There was a problem verifying your invite key. Please try again later.',
+            message: 'There was a problem verifying your access permission. Please try again later.',
             err: err
           }
         });
