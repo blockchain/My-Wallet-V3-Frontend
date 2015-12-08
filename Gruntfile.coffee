@@ -44,7 +44,9 @@ module.exports = (grunt) ->
 
     concat:
       options:
+        banner: "(function(){"
         separator: ";"
+        footer: "})();"
 
       application_dependencies:
         src: [
