@@ -7,7 +7,7 @@
       .col-sm-9
         p.form-control-static
           span(ng-show="balance != null")
-            span.btc {{ balance | btc }}
+            span.btc {{ balance | convert }}
             fiat.fiat(btc="balance") 
           img(ng-show="balance == null" src="img/spinner.gif")
     .form-group

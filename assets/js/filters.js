@@ -3,7 +3,6 @@
 angular
   .module('walletFilters', [])
   .filter('toBitCurrency', toBitCurrencyFilter)
-  .filter('btc', btcFilter)
   .filter('convert', convertFilter)
   .filter('getByProperty', getByPropertyFilter)
   .filter('getByPropertyNested', getByPropertyNestedFilter)
@@ -15,19 +14,6 @@ function toBitCurrencyFilter(currency) {
     if (input != null && !isNaN(input) && btcCurrency != null) {
       let amount = currency.convertFromSatoshi(input, btcCurrency);
       return currency.formatCurrencyForView(amount, btcCurrency, !hideCurrency);
-    } else {
-      return '';
-    }
-  };
-}
-
-btcFilter.$inject = ['currency'];
-function btcFilter(currency) {
-  return function (input, hideCurrency) {
-    if (input != null && !isNaN(input)) {
-      let BTC = currency.bitCurrencies[0];
-      let amount = currency.convertFromSatoshi(input, BTC);
-      return currency.formatCurrencyForView(amount, BTC, !hideCurrency);
     } else {
       return '';
     }
