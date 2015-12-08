@@ -6,7 +6,7 @@ angular.module('walletApp').directive "uiLadda",  ($timeout, $compile, $translat
     scope: {
       laddaTranslate: "@"
       uiLadda: "="
-      disabled: "=uiDisabled"
+      disabled: "=ngDisabled"
     }
     templateUrl: () -> 'templates/ui-ladda.jade'
     link: (scope, element, attrs) ->
@@ -19,11 +19,11 @@ angular.module('walletApp').directive "uiLadda",  ($timeout, $compile, $translat
         scope.translation = translation;
 
       scope.$watch "uiLadda + disabled", (newVal) ->
-        if newVal
+        if scope.uiLadda
           element.attr("data-loading", true)
           element.attr("disabled", true)
         else
           element.removeAttr("data-loading")
-          if scope.disabled
+          if !scope.disabled
             element.removeAttr("disabled")
   }
