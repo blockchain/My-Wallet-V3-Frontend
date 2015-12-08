@@ -23,7 +23,7 @@ function toBitCurrencyFilter(currency) {
 convertFilter.$inject = ['Wallet', 'currency'];
 function convertFilter(Wallet, currency) {
   return function (amount) {
-    let curr = Wallet.settings.displayCurrency;
+    let curr = Wallet.settings.displayCurrency || currency.bitCurrencies[0];
     let conversion = currency.convertFromSatoshi(amount, curr);
     return currency.formatCurrencyForView(conversion, curr);
   };
