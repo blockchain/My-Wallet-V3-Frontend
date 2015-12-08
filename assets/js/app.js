@@ -18,7 +18,6 @@ const modules = [
   'ngAudio',
   'ngSanitize',
   'ja.qr',
-  'ngNumeraljs',
   'pascalprecht.translate',
   'bcTranslateStaticFilesLoader',
   'angular-inview',
@@ -32,8 +31,7 @@ const modules = [
 ];
 
 angular.module('walletApp', modules)
-.config(($numeraljsConfigProvider, $modalProvider, uiSelectConfig) => {
-  $numeraljsConfigProvider.setFormat('btc', '0,0.00 BTC');
+.config(($modalProvider, uiSelectConfig) => {
   uiSelectConfig.theme = 'bootstrap';
 })
 .run(($rootScope, $uibModal) => {

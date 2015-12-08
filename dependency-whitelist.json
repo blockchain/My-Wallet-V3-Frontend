@@ -24,11 +24,6 @@
     "commits" : ["1134e40510ab773d45cc26a066ef6c787a96011a"],
     "repo" : "janantala/angular-qr"
   },
-  "angular-numeraljs" : {
-    "version": "1.1.6",
-    "commits" : ["0ca4f1a9db849ea24ad22becd0cc923e2a47ec9d"],
-    "repo" : "baumandm/angular-numeraljs"
-  },
   "angular-translate" : {
     "version": "2.7.2",
     "commits" : ["2c1fe7efab11bc735b307e4c929386161b43995c"],
