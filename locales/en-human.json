@@ -472,7 +472,7 @@
   "LOST_WALLET_PWD": "I've lost my Wallet Password",
   "LOST_2FA": "I've lost my 2FA Device",
   "LOST_ID_DESC": "Email me a reminder with my Wallet ID to my verified email address",
-  "LOST_PWD_DESC": "Recovery your funds with your 12 word recovery passphrase",
+  "LOST_PWD_DESC": "Recover your funds with your 12 word recovery passphrase",
   "LOST_2FA_DESC": "Contact support to help regain access to your wallet",
   "REMIND_ME": "Remind Me",
   "REMIND_ME_HELP": "Lost your Wallet Identifier? We'll send it to you via your verified email.",
