@@ -2,12 +2,12 @@ angular
   .module('walletApp')
   .controller("RequestCtrl", RequestCtrl);
 
-function RequestCtrl($scope, Wallet, Alerts, $uibModalInstance, $log, destination, focus, $translate, $stateParams, filterFilter, $filter) {
+function RequestCtrl($scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, $translate, $stateParams, filterFilter, $filter) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
   $scope.legacyAddresses = Wallet.legacyAddresses;
-  $scope.isBitCurrency = Wallet.isBitCurrency;
+  $scope.isBitCurrency = currency.isBitCurrency;
   $scope.destinations = [];
   $scope.receiveAddress = null;
   $scope.advanced = false;

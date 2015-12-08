@@ -2,10 +2,10 @@ angular
   .module('walletApp.core')
   .factory('MyBlockchainApi', ($q) -> {
     getTicker: () ->
-      then: (s) ->
-        s({
-          EUR: {"last": 250, symbol: "€"}
-          USD: {"last": 300, symbol: "$"}
-        })
-        { catch: () -> }
+      result =
+        EUR: {"last": 250, symbol: "€"}
+        USD: {"last": 300, symbol: "$"}
+      $q.resolve(result)
+    getFiatAtTime: (time, amount, currency) ->
+      $q.resolve(amount.toFixed(2))
   })

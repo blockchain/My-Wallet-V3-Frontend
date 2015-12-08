@@ -7,11 +7,8 @@ describe "BTC Currency Picker", ->
   beforeEach module("walletApp")
 
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
-
     $compile = _$compile_
     $rootScope = _$rootScope_
-
-    return
   )
 
   beforeEach ->
@@ -20,27 +17,23 @@ describe "BTC Currency Picker", ->
     isoScope = element.isolateScope()
     isoScope.$digest()
 
-  it "should have wallet btc currencies", inject((Wallet) ->
-    expect(isoScope.currencies).toBe(Wallet.btcCurrencies)
-    return
+  it "should have wallet btc currencies", inject((currency) ->
+    expect(isoScope.currencies).toBe(currency.bitCurrencies)
   )
 
-  it "should select currency", inject((Wallet) ->
+  it "should select currency", inject(() ->
     isoScope.didSelect(isoScope.currencies[1])
     expect(isoScope.currency).toBe(isoScope.currencies[1])
-    return
   )
 
-  it "should update the diplay currency if necessary", inject((Wallet) ->
+  it "should update the diplay currency if necessary", inject(() ->
     isoScope.displayCurrency = isoScope.currencies[0]
     isoScope.didSelect(isoScope.currencies[1])
     expect(isoScope.displayCurrency).toBe(isoScope.currencies[1])
-    return
   )
 
-  it "should not update the diplay currency if not necessary", inject((Wallet) ->
-    isoScope.displayCurrency = Wallet.currencies[0]
+  it "should not update the diplay currency if not necessary", inject((currency) ->
+    isoScope.displayCurrency = currency.currencies[0]
     isoScope.didSelect(isoScope.currencies[1])
-    expect(isoScope.displayCurrency).toBe(Wallet.currencies[0])
-    return
+    expect(isoScope.displayCurrency).toBe(currency.currencies[0])
   )

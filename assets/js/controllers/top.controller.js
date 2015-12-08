@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .controller("TopCtrl", TopCtrl);
 
-function TopCtrl($scope, Wallet, $stateParams) {
+function TopCtrl($scope, $stateParams, Wallet, currency) {
   $scope.settings = Wallet.settings;
-  $scope.isBitCurrency = Wallet.isBitCurrency;
+  $scope.isBitCurrency = currency.isBitCurrency;
   $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency;
   $scope.status = Wallet.status;
   $scope.accountIndex = $stateParams.accountIndex;

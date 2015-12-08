@@ -13,8 +13,8 @@ describe "toBitCurrencyFilter", ->
 
   beforeEach ->
     angular.mock.inject ($injector) ->
-      Wallet = $injector.get("Wallet")
-      btcCurrencies = Wallet.btcCurrencies
+      currency = $injector.get("currency")
+      btcCurrencies = currency.bitCurrencies
 
   it "should convert from satoshi to BTC", () ->
     toBitCurrency = $filter('toBitCurrency')

@@ -62,16 +62,16 @@ describe "walletServices", () ->
       expect(Wallet.settings.language).toEqual({code: "en", name: "English"})
     )
 
-    it "should switch language", inject((Wallet) ->
+    it "should switch language", inject((Wallet, languages) ->
       Wallet.settings_api.change_language = (language, success, error) ->
         success()
 
       spyOn(Wallet.settings_api, "change_language").and.callThrough()
 
-      Wallet.changeLanguage(Wallet.languages[0])
+      Wallet.changeLanguage(languages[0])
       expect(MyBlockchainSettings.change_language).toHaveBeenCalled()
-      expect(MyBlockchainSettings.change_language.calls.argsFor(0)[0]).toBe("de")
-      expect(Wallet.settings.language.code).toBe("de")
+      expect(MyBlockchainSettings.change_language.calls.argsFor(0)[0]).toBe("bg")
+      expect(Wallet.settings.language.code).toBe("bg")
 
     )
 
@@ -85,83 +85,22 @@ describe "walletServices", () ->
       expect(Wallet.settings.currency.code).toEqual("USD")
     )
 
-
-    it "conversion should be set on load", inject((Wallet) ->
+    it "conversion should be set on load", inject((Wallet, currency) ->
+      spyOn(currency, 'fetchExchangeRate')
       Wallet.login()
-      expect(Wallet.conversions["USD"].conversion).toBeGreaterThan(0)
+      expect(currency.fetchExchangeRate).toHaveBeenCalled()
     )
 
-    it "can be switched", inject((Wallet) ->
+    it "can be switched", inject((Wallet, currency) ->
       Wallet.settings_api.change_local_currency = (newCurrency) ->
 
       spyOn(Wallet.settings_api, "change_local_currency").and.callThrough()
-      Wallet.changeCurrency(Wallet.currencies[1])
+      Wallet.changeCurrency(currency.currencies[1])
       expect(MyBlockchainSettings.change_local_currency).toHaveBeenCalledWith("EUR")
       expect(Wallet.settings.currency.code).toBe("EUR")
     )
 
     return
-
-  describe "conversions", ->
-    beforeEach ->
-      Wallet.conversions =
-        USD: {conversion: parseInt(numeral(100000000).divide(numeral(300)).format("1"))}
-        EUR: {conversion: parseInt(numeral(100000000).divide(numeral(250)).format("1"))}
-
-
-      Wallet.currencies = [{code: "USD"}, {code: "EUR"}]
-      Wallet.btcCurrencies = [{code: "BTC", conversion: 100000000}, {code: "mBTC", conversion: 100000}]
-
-
-    describe "convertCurrency", ->
-
-      it "should not convert a null amount", () ->
-        result = Wallet.convertCurrency(null, Wallet.btcCurrencies[0], Wallet.btcCurrencies[1])
-        expect(result).toBe(null)
-
-      it "should convert from fiat to bit currency", () ->
-        result = Wallet.convertCurrency(300, Wallet.currencies[0], Wallet.btcCurrencies[0])
-        expect(result).toBe(0.999999)
-
-      it "should convert from bit currency to fiat", () ->
-        result = Wallet.convertCurrency(1, Wallet.btcCurrencies[0], Wallet.currencies[0])
-        expect(result).toBe(300)
-
-    describe "convertToSatoshi", ->
-
-      it "should not convert a null amount", () ->
-        expect(Wallet.convertToSatoshi(null, Wallet.currencies[0])).toBe(null)
-
-      it "should not convert from a null currency", () ->
-        expect(Wallet.convertToSatoshi(9000, null)).toBe(null)
-
-      it "should convert from fiat to satoshi", () ->
-        currency = Wallet.currencies[0]
-        result = Wallet.convertToSatoshi(1, currency)
-        expect(result).toBe(Wallet.conversions[currency.code].conversion)
-
-      it "should convert from bit currency to satoshi", () ->
-        currency = Wallet.btcCurrencies[0]
-        result = Wallet.convertToSatoshi(1, currency)
-        expect(result).toBe(currency.conversion)
-
-    describe "convertFromSatoshi", ->
-
-      it "should not convert a null amount", () ->
-        expect(Wallet.convertFromSatoshi(null, Wallet.currencies[0])).toBe(null)
-
-      it "should not convert from a null currency", () ->
-        expect(Wallet.convertFromSatoshi(9000, null)).toBe(null)
-
-      it "should convert from satoshi to fiat", () ->
-        currency = Wallet.currencies[0]
-        result = Wallet.convertFromSatoshi(Wallet.conversions[currency.code].conversion, currency)
-        expect(result).toBe(1)
-
-      it "should convert from satoshi to bit currency", () ->
-        currency = Wallet.btcCurrencies[0]
-        result = Wallet.convertFromSatoshi(100000000, currency)
-        expect(result).toBe(1)
 
   describe "email", ->
 
@@ -247,24 +186,6 @@ describe "walletServices", () ->
       Wallet.changePasswordHint("Better hint", mockObserver.success, mockObserver.error)
       expect(MyBlockchainSettings.update_password_hint1).toHaveBeenCalled()
       expect(Wallet.user.passwordHint).toBe("Better hint")
-    )
-
-    return
-
-  describe "currency conversion", ->
-    beforeEach ->
-      Wallet.fetchExchangeRate()
-
-    it "should know the exchange rate in satoshi per unit of fiat", inject((Wallet) ->
-      expect(Wallet.conversions.EUR.conversion).toBe(400000)
-    )
-
-    it "should calculate BTC from fiat amount and currency", inject((Wallet) ->
-      expect(Wallet.fiatToSatoshi("2", "EUR")).toBe(800000)
-    )
-
-    it "should calculate fiat from BTC", inject((Wallet) ->
-      expect(Wallet.BTCtoFiat("0.1", "EUR")).toBe("25.00")
     )
 
     return

@@ -2,11 +2,11 @@ angular
   .module('walletApp')
   .controller("SettingsSecurityCtrl", SettingsSecurityCtrl);
 
-function SettingsSecurityCtrl($scope, Wallet, Alerts, $uibModal, $translate) {
+function SettingsSecurityCtrl($scope, Wallet, Alerts, currency, $uibModal, $translate) {
   $scope.settings = Wallet.settings;
   $scope.user = Wallet.user;
 
-  $scope.btc = Wallet.btcCurrencies[0];
+  $scope.btc = currency.bitCurrencies[0];
   $scope.processToggleRememberTwoFactor = null;
 
   $scope.display = {advanced: false}

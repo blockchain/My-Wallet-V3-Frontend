@@ -30,12 +30,12 @@ function btcFilter() {
   };
 }
 
-convertFilter.$inject = ['Wallet'];
-function convertFilter(Wallet) {
+convertFilter.$inject = ['Wallet', 'currency'];
+function convertFilter(Wallet, currency) {
   return function (amount) {
-    let currency = Wallet.settings.displayCurrency;
-    let conversion = Wallet.convertFromSatoshi(amount, currency);
-    return Wallet.formatCurrencyForView(conversion, currency);
+    let curr = Wallet.settings.displayCurrency;
+    let conversion = currency.convertFromSatoshi(amount, curr);
+    return currency.formatCurrencyForView(conversion, curr);
   };
 }
 

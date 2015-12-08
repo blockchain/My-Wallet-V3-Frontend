@@ -10,19 +10,18 @@ describe "Fiat Directive", ->
     inject ($rootScope, $compile, $injector) ->
 
       Wallet = $injector.get("Wallet")
+      currency = $injector.get('currency')
 
       Wallet.settings = {
-        currency: Wallet.currencies[0]
+        currency: currency.currencies[0]
       }
 
-      Wallet.conversions = {
-        USD: { conversion: 1000, symbol: '$' }
-        EUR: { conversion: 1500, symbol: 'e' }
-      }
+      currency.conversions.USD = { conversion: 1000, symbol: '$' }
+      currency.conversions.EUR = { conversion: 1500, symbol: 'e' }
 
       scope = $rootScope.$new()
       scope.btc = 10000
-      scope.currency = Wallet.currencies[0]
+      scope.currency = currency.currencies[0]
 
       template = '<fiat btc="btc"></fiat>'
       element = $compile(template)(scope)
@@ -36,8 +35,9 @@ describe "Fiat Directive", ->
     it "should have access to wallet settings", ->
       expect(isoScope.settings).toEqual(Wallet.settings)
 
-    it "should have access to wallet conversions", ->
-      expect(isoScope.conversions).toEqual(Wallet.conversions)
+    it "should have access to currency conversions", inject((currency) ->
+      expect(isoScope.conversions).toEqual(currency.conversions)
+    )
 
   describe "watchers", ->
 
@@ -58,8 +58,9 @@ describe "Fiat Directive", ->
     it "should watch the btc amount", ->
       isoScope.btc = 20000
 
-    it "should watch the currency", ->
-      isoScope.currency = Wallet.currencies[1]
+    it "should watch the currency", inject((currency) ->
+      isoScope.currency = currency.currencies[1]
+    )
 
   describe "updateFiat", ->
 
@@ -99,16 +100,18 @@ describe "Fiat Directive", ->
         isoScope.updateFiat()
         expect(isoScope.fiat.amount).toEqual('0.00')
 
-      it "should get fiat at time if a date is present", ->
-        spyOn(Wallet, 'getFiatAtTime').and.returnValue({ then: (cb) -> cb(8) })
+      it "should get fiat at time if a date is present", inject((currency) ->
+        spyOn(currency, 'getFiatAtTime').and.returnValue({ then: (cb) -> cb(8) })
         isoScope.date = true
         isoScope.updateFiat()
-        expect(Wallet.getFiatAtTime).toHaveBeenCalled()
+        expect(currency.getFiatAtTime).toHaveBeenCalled()
+      )
 
-      it "should not get fiat at time if a date is not present", ->
-        spyOn(Wallet, 'convertFromSatoshi').and.returnValue(10)
+      it "should not get fiat at time if a date is not present", inject((currency) ->
+        spyOn(currency, 'convertFromSatoshi').and.returnValue(10)
         isoScope.updateFiat()
-        expect(Wallet.convertFromSatoshi).toHaveBeenCalled()
+        expect(currency.convertFromSatoshi).toHaveBeenCalled()
+      )
 
       it "should not set the absolute value if not needed", ->
         isoScope.btc = -10000

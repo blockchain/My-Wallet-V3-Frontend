@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .directive('amount', amount);
 
-amount.$inject = ['Wallet'];
+amount.$inject = ['Wallet', 'currency'];
 
-function amount(Wallet) {
+function amount(Wallet, currency) {
   const directive = {
     restrict: 'E',
     replace: 'false',
@@ -19,7 +19,7 @@ function amount(Wallet) {
 
   function link(scope, elem, attrs) {
     scope.settings = Wallet.settings;
-    scope.isBitCurrency = Wallet.isBitCurrency;
+    scope.isBitCurrency = currency.isBitCurrency;
     scope.toggle = Wallet.toggleDisplayCurrency;
     scope.absolute = (value) => Math.abs(value);
   }

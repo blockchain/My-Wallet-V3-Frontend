@@ -1,4 +1,4 @@
-angular.module('walletApp').directive('btcPicker', ($translate, Wallet) ->
+angular.module('walletApp').directive('btcPicker', ($translate, Wallet, currency) ->
   {
     restrict: "E"
     replace: 'false'
@@ -8,12 +8,12 @@ angular.module('walletApp').directive('btcPicker', ($translate, Wallet) ->
     }
     templateUrl: 'templates/btc-picker.jade'
     link: (scope, elem, attrs) ->
-      scope.currencies = Wallet.btcCurrencies
+      scope.currencies = currency.bitCurrencies
 
       scope.didSelect = (item, model) ->
         scope.currency = item
         Wallet.saveActivity(2)
-        if Wallet.isBitCurrency(scope.displayCurrency)
+        if currency.isBitCurrency(scope.displayCurrency)
           scope.displayCurrency = item
   }
 )

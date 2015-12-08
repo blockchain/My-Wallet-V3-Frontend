@@ -11,6 +11,7 @@ describe "RequestCtrl", ->
     angular.mock.inject ($injector, $controller, $rootScope, $compile) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
+      currency = $injector.get('currency')
 
       MyWallet.wallet = {
         isUpgradedToHD: true
@@ -25,17 +26,15 @@ describe "RequestCtrl", ->
       }
 
       Wallet.settings = {
-        currency: Wallet.currencies[0]
-        btcCurrency: Wallet.btcCurrencies[0]
+        currency: currency.currencies[0]
+        btcCurrency: currency.bitCurrencies[0]
       }
 
       Wallet.status = {
         didInitializeHD: true
       }
 
-      Wallet.conversions = {
-        EUR: { conversion: 400000 }
-      }
+      currency.conversions.EUR = { conversion: 400000 }
 
       scope = $rootScope.$new()
 

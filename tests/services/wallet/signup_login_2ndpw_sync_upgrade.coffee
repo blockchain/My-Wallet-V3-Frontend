@@ -89,14 +89,6 @@ describe "walletServices", () ->
       return
     )
 
-    it "should get a list of languages", inject((Wallet) ->
-      expect(Wallet.languages.length).toBeGreaterThan(1)
-    )
-
-    it "should get a list of currencies", inject((Wallet) ->
-      expect(Wallet.currencies.length).toBeGreaterThan(1)
-    )
-
     it "should know the current IP", inject((Wallet) ->
       expect(Wallet.user.current_ip).toBeDefined()
     )
