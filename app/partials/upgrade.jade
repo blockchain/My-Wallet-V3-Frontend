@@ -1,12 +1,20 @@
 .modal-header.flex-center
-  i.h3.mrm.ti-alert
   h3(translate="UPGRADE_WALLET")        
-.modal-body
+.modal-body.upgrade-modal
   uib-alert(type="danger", ng-show="settings.apiAccess")
     span(translate="UPGRADE_DISABLES_API_ACCESS")
   uib-alert(type="danger", close="insist = false", ng-show="insist")
     span(translate="NEED_SECOND_PASSWORD_FOR_UPGRADE")
-  p(translate="UPGRADE_WALLET_EXPLAIN")
+  p(translate="UPGRADE_WELCOME")
+  p(translate="UPGRADE_EASY")
+  ul
+    li(translate="UPGRADE_NEW_DESIGN")
+    li(translate="UPGRADE_SECURITY_CENTER")
+    li(translate="UPGRADE_PRIVACY")
+    li(translate="UPGRADE_BACKUP")
+    li(translate="UPGRADE_FUND_MANAGEMENT")
+  p(translate="UPGRADE_LIMITATIONS")
+    
 .modal-footer.pal.flex-end
   button.button-muted.mrm(ng-click="cancel()", translate="CANCEL", ng-disabled="busy")
-  button.button-danger(ui-ladda="busy", ng-click="upgrade()" ng-disabled="waiting", ladda-translate="PROCEED", data-style="expand-left")
+  button.button-success(ui-ladda="busy", ng-click="upgrade()" ng-disabled="waiting", ladda-translate="UPGRADE_NOW", data-style="expand-left")
