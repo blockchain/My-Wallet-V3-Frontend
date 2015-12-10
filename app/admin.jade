@@ -42,7 +42,7 @@ html.overflow-scroll(ng-app="AdminInterface" lang='en')
             li.item
               a(href="/") Support
     
-    div.container.login-form
+    div.container.login-form.mbl
       h1 V3 Beta Admin Interface
       .form-group.col-xs-6
         form.form-inline
@@ -84,6 +84,11 @@ html.overflow-scroll(ng-app="AdminInterface" lang='en')
               a(ng-click="openModal('editModal.html', 'EditKeyCtrl', item)") edit
             td
               a(ng-click="revokeKey(item.rowid)") revoke
+        .flex.flex-justify.pal
+          button.btn.btn-primary.mrl(ng-click="load(-1)")
+            | Prev Page
+          button.btn.btn-primary.mll(ng-click="load(1)")
+            | Next Page
 
     // Assign new key modal
     script(type="text/ng-template" id="assignKeyModal.html").
