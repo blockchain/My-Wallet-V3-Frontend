@@ -1,9 +1,6 @@
-# This script ensures that all dependencies (NPM and Bower) are checked against a whitelist of commits.
+# This script ensures that all Bower dependencies are checked against a whitelist of commits.
 # Only non-minified source if checked, so always make sure to minify dependencies yourself. Development
 # tools - and perhaps some very large common libraties - are skipped in these checks.
-
-# npm-shrinkwrap.json should be present (e.g. generated with Grunt or
-# "npm shrinkwrap"). This contains the list of all (sub) dependencies.
 
 # Ruby is needed as well as the following gems:
 # gem install json
@@ -57,20 +54,24 @@ def set_dep(requested_version, whitelisted_repo_key, sha)
 end
 
 def check_commits!(deps, whitelist, output_deps, type)
-
   deps.keys.each do |key|
     if whitelist["ignore"].include? key # Skip check
-      unless ["angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize", "angular-translate-loader-static-files","bootstrap-sass"].include? key   # Skip package altoghether
-        output_deps.delete(key)
-      end
+      # unless ["angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize", "angular-translate-loader-static-files","bootstrap-sass"].include? key   # Skip package altoghether
+      #   output_deps.delete(key)
+      # end
       next
     end
 
     dep = deps[key]
-    if whitelist[key]
-      # puts key
+
+    if whitelist["pgp-signed"].include?(key)
+      # The following pakcages are not checked against a commit whistelist,
+      # but rather they need to be signed by someone with the right GPG key.
+      # This is checked in a later Grunt task
+      next
+    elsif whitelist[key]
       # For Bower it expects a version formatted like "1.2.3" or "1.2.x". It will use the highest match exact version.
-      requested_version = type == :npm ? dep['version'] : dep
+      requested_version = dep
 
       requested_version = requested_version.split("#").last # e.g. "pernas/angular-password-entropy#0.1.3" -> "0.1.3"
 
@@ -114,12 +115,7 @@ def check_commits!(deps, whitelist, output_deps, type)
       if !tag.nil?
         # Check if tagged commit matches whitelist commit (this or earlier version)
         if whitelist[key]["commits"].include?(tag["commit"]["sha"])
-          if type == :npm
-            output_deps[key] = {"version" => "#{ whitelist[key]["repo"] }##{ tag["commit"]["sha"] }"}
-          else
-            output_deps[key] = set_dep(type == :npm ? dep['version'] : dep, whitelist[key]["repo"], tag["commit"]["sha"])
-          end
-
+          output_deps[key] = set_dep(dep, whitelist[key]["repo"], tag["commit"]["sha"])
         else
           puts "Error: v#{ dep['version'] } of #{ key } does not match the whitelist."
           @failed = true
@@ -145,20 +141,11 @@ def check_commits!(deps, whitelist, output_deps, type)
         end
 
         if !commit.nil?
-          if type == :npm
-            output_deps[key] = {"version" => "#{ whitelist[key]["repo"] }##{ commit["sha"] }"}
-          else
-            output_deps[key] = set_dep(type == :npm ? dep['version'] : dep, whitelist[key]["repo"], commit["sha"])
-          end
+          output_deps[key] = set_dep(dep, whitelist[key]["repo"], commit["sha"])
         else
           throw "Error: no Github commit #{ whitelist[key]["commits"].first } of #{ key }."
           next
         end
-      end
-
-      if type == :npm && deps[key]["dependencies"]
-        output_deps[key]["dependencies"] = {}
-        check_commits!(deps[key]["dependencies"], whitelist, output_deps[key]["dependencies"], type)
       end
     else
       puts "#{key} not whitelisted!"
@@ -170,52 +157,6 @@ end
 package = JSON.parse(File.read('package.json'))
 
 #########
-# NPM   #
-#########
-if package["name"] == "My-Wallet-HD" # Only My-Wallet-HD uses NPM
-
-  shrinkwrap = JSON.parse(File.read('npm-shrinkwrap.json'))
-  deps = shrinkwrap["dependencies"]
-
-  output = JSON.parse(File.read('npm-shrinkwrap.json')) # More reliable than cloning
-  output_deps = output["dependencies"]
-
-  check_commits!(deps, whitelist, output_deps, :npm)
-
-  # TODO: shrinkwrap each subdependency and/or disallow packages to install dependencies themselves?
-
-  File.write("build/npm-shrinkwrap.json", JSON.pretty_generate(output))
-
-
-
-  output = package.dup
-
-  # output["dependencies"] = {}
-
-  # Remove unessential dev dependencies:
-  output["devDependencies"].keys.each do |devDep|
-    output["devDependencies"].delete(devDep) unless ["grunt-contrib-clean", "grunt-contrib-concat", "grunt-surround", "grunt-contrib-coffee"].include?(devDep)
-  end
-
-  output.delete("author")
-  output.delete("contributors")
-  output.delete("homepage")
-  output.delete("bugs")
-  output.delete("license")
-  output.delete("repository")
-  output["scripts"].delete("test")
-  if package["name"] == "My-Wallet-HD"
-    output["scripts"]["postinstall"] = "cd node_modules/sjcl && ./configure --with-sha1 && make && cd -"
-  elsif package["name"] == "angular-blockchain-wallet"
-    output["scripts"].delete("postinstall")
-  else
-    abort("Package renamed? " + package["name"])
-  end
-
-  File.write("build/package.json", JSON.pretty_generate(output))
-end
-
-#########
 # Bower #
 #########
 # Only used by the frontend
@@ -225,6 +166,8 @@ if package["name"] == "angular-blockchain-wallet"
   output.delete("authors")
   output.delete("main")
   output.delete("ignore")
+  output.delete("pgp-signed")
+  output.delete("pgp-keys")
   output.delete("license")
   output.delete("keywords")
 

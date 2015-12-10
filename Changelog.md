@@ -2,7 +2,7 @@ __Blockchain HD Frontend__
 
 _Recent changes_
 
-#   (2015-12-04)
+#   (2015-12-10)
 
 
 
@@ -10,63 +10,47 @@ _Recent changes_
 
 ## Bug Fixes
 
-- **Camera:** turn off camera after use in Chrome 47
-  ([fc0f7d3e](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/fc0f7d3ea9c820cdcbafe072cdbc898b25cc0a59))
-- **Login:** don't promise to fill in UID if we don't have it
-  ([bf5718a6](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/bf5718a6c496463486312fcb6c955608255c3081))
-- **Send:**
-  - show default account when oppening modal from 'All Transactions'
-  ([1a9a56c7](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/1a9a56c7ef23fb8190291c705290962e144350d4))
-  - do not validate empty 'to' field
-  ([e039541a](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/e039541a081d7aa47ab6173e64959883694d592e))
-- **dyk:** fix dyk link, more useful translation strings
-  ([7047923f](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/7047923f3c85fb2e0ce4729b3f5c27b3aacd008c))
-- **index:** load wallet service
-  ([b2116631](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/b2116631c6ddf414b24ef10ec2207f55293e39fe))
-- **modal:** remove black bar from beneath modals
-  ([c90462ec](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/c90462ec39f505b9b9b6b78ab9a16cf93a4209ab))
-- **receive:** vertically align labels
-  ([fea311f9](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/fea311f95d1ccc03a4d783e02b94ba8ef154ba59))
-- **routes:** use correct controller for address book
-  ([6f9ad52b](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/6f9ad52ba7c9ded1ae096f3a72f0ccc4543ced14))
-- **tests:** coverage for service js files
-  ([109fd04d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/109fd04db164976492080ef65a91055a8c083e74))
-- **uiLadda:** has its own scope
-  ([6bfe9814](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/6bfe9814b8d6281de9981603b10aedeb540de837))
-- **wallet:** add MyWalletPayment as a property of Wallet
-  ([3ed881d6](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/3ed881d619d37ce62352ddacd1bb16ffc9482faa))
-
-
-## Features
-
-- **Receive:** show new receive address after receiving
-  ([94b03e9d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/94b03e9ddeb30fd34bb56175f539e0bc6e931d14))
-- **Send:** 'total available' validation message
-  ([f8509bd3](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f8509bd3fe660c56136e623ac3c3dfa8914a4db2))
-- **recovery:** add warning to wallet recovery page
-  ([35dec7f5](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/35dec7f56845ac7118244790d3aac4e92727c59e))
+- **Deploy:** better error message if check_guid fails
+  ([a5540517](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/a55405176ca63a008967037049a695ea6289b950))
+- **Forms:**
+  - correct mistake in #220
+  ([ff16fb92](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/ff16fb92613be7dfd90c3695265f78a3278c10ee))
+  - fix initial focus and validation
+  ([a9a68550](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/a9a685504aa2d0f523abbf0e8127d9356864480f))
+- **Receive:** don't hide QR code when entering address
+  ([7c28110e](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/7c28110e77545015260cb3356c5ffb8ecddf5814))
+- **Redeem:** fix getting balance for claim code
+  ([9faade16](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/9faade1691f725a67f2f9df005c997ce87eb2f52))
+- **Send:** smarter method for computing available balance
+  ([1a255123](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/1a2551239f84e56db4af6a715503719baaf92acf))
+- **Settings:** current password wasn't validating when changing password
+  ([cc51dcc6](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/cc51dcc6fd8d4777c148d92942ea71258222c064))
+- **Wallet:** add missing return statements
+  ([e20e5539](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/e20e553930173b26970f7ef82a6f18629526f122))
+- **filter:** use convert filter in transaction ctrl, default conversion to BTC
+  ([60550aac](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/60550aac58f6dbf1133b559f9f81099b0e807a15))
+- **tasks:** wrap dist min file in iife
+  ([f4fec6ac](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f4fec6accaed4aa2e68b7b767c21a8474d8606dd))
 
 
 ## Refactor
 
-- **Wallet:**
-  - remove legacy loadScript function
-  - remove unnecessary return statements
-  - convert wallet.js.coffee to wallet.service.js
-- **activity-feed:**
-  - change watch syntax
-  - convert activity-feed.directive to js
-- **address-book-entry:** change name, clean code
-- **adverts:** convert adverts directive to js
-- **amount:** convert amount directive to js
-- **filters:** convert filters to js
-- **routes:** convert routes to js
-- **translations:** convert translations config to js
+- **Currency:** create separate service for currency data and functions
+- **Dependencies:** remove unused bower dependency and clean up whitelist
+- **Languages:** add service for wallet languages
+- **Tests:** remove unused local-storage dependency
+- **WalletService:** use arrow notation and restore missing return statements
+- **btc:** remove unused directive (btc)
+- **filters:** remove unused filter (btcFilter)
+- **numeral:**
+  - remove numeraljs from app
+  - remove numeraljs from filters, replace with currency functions
 
 
 ## Test
 
-- **Wallet:** add tests for 2FA functions
+- **Languages:** add languages service test spec
+- **filter:** add test spec for convert filter
 
 
 

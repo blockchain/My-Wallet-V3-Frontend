@@ -450,6 +450,11 @@ module.exports = (grunt) ->
         command: () ->
           'ruby check_translations.rb'
 
+      check_pgp_signatures:
+        command: () ->
+          'ruby ./check_pgp_signatures.rb'
+
+
     git_changelog:
       default:
         options:
@@ -511,6 +516,7 @@ module.exports = (grunt) ->
     "shell:check_dependencies"
     "shell:npm_install_dependencies"
     "shell:bower_install_dependencies"
+    "shell:check_pgp_signatures"
     "concat:application_dependencies"
     "uglify:application_dependencies"
     "concat:application"

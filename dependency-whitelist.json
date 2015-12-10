@@ -2,8 +2,15 @@
   "ignore" : [
     "angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize",
     "bootstrap-sass",
-    "angular-ui-select", "bc-qr-reader", "bc-phone-number", "blockchain-wallet"
+    "angular-ui-select", "bc-qr-reader", "bc-phone-number"
   ],
+  "pgp-signed" : [
+    "blockchain-wallet"
+  ],
+  "pgp-keys" : {
+    "CC301009": "Sjors",
+    "36E3D143": "Jaume"
+  },
   "angular-ui-router" : {
     "version": "0.2.15",
     "commits" : ["805e69bae319e922e4d3265b7ef565058aaff850"],
