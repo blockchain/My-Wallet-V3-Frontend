@@ -500,7 +500,7 @@
   "RESTORE_SUCCESSFUL": "Restore Successful",
   "REDIRECTING": "We're redirecting you to your wallet now!",
   "TAKES_A_WHILE": "This may take a while. If your browser asks if you want to cancel the script, please press continue.",
-  "NOTIFICATIONS" : "Notifications",
+  "NOTIFICATIONS" : "Email Notifications",
   "NOTIFICATIONS_EXPLAIN" : "Enable notifications to receive an email whenever you receive bitcoins. Only labeled addresses in your accounts and imported addresses are eligible to trigger notifications.",
   "VERIFY_EMAIL_FIRST" : "Please verify your email address first."
 }

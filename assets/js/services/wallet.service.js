@@ -102,7 +102,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
           };
           wallet.user.internationalMobileNumber = '+' + result.dial_code;
         }
-        wallet.settings.notifications = result.notifications_type && result.notifications_type.length > 0 && result.notifications_type.indexOf(1) > -1 && result.notifications_on > 0;
+        wallet.settings.notifications = result.notifications_type && result.notifications_type.length > 0 && result.notifications_type.indexOf(1) > -1 && (result.notifications_on == 0 || result.notifications_on == 2);
         wallet.user.isEmailVerified = result.email_verified;
         wallet.user.isMobileVerified = result.sms_verified;
         wallet.user.passwordHint = result.password_hint1;
