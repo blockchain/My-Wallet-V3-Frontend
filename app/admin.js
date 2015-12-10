@@ -9,7 +9,8 @@ admin.controller('AdminCtrl', function ($rootScope, $scope, $http, $modal, Inter
   $scope.tableData = [];
   $scope.headers = ['rowid', 'key', 'name', 'email', 'lastseen', 'email opened','link followed', 'guid', 'status'];
   $scope.filters = ['name', 'email', 'key', 'guid'];
-  $scope.search = { text: '', filter: '', sort: 'rowid', order: 'A' };
+  $scope.search = { text: '', filter: '', sort: 'rowid', order: 'Z' };
+  $scope.offset = 0;
 
   // Convert timestamp to readable
   $scope.getDateFromTime = function (time) {
@@ -69,13 +70,16 @@ admin.controller('AdminCtrl', function ($rootScope, $scope, $http, $modal, Inter
     location.assign(InterfaceHelper.getRootUrl() + '/get-csv');
   };
 
-  $scope.load = function () {
+  $scope.load = function (offset) {
     var filter = {};
+    $scope.offset = $scope.offset + (offset|0);
+    if ($scope.offset < 0) $scope.offset = 0;
     filter[$scope.search.filter] = $scope.search.text;
     InterfaceHelper.callApi('/get-sorted-keys', {
       sort: $scope.search.sort,
       order: $scope.search.order,
-      filter: filter
+      filter: filter,
+      offset: 100 * $scope.offset
     }).success(function (response) {
       $scope.tableData = response.data;
     });
