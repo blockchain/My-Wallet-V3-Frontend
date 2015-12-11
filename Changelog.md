@@ -17,6 +17,8 @@ _Recent changes_
   ([ff16fb92](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/ff16fb92613be7dfd90c3695265f78a3278c10ee))
   - fix initial focus and validation
   ([a9a68550](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/a9a685504aa2d0f523abbf0e8127d9356864480f))
+- **Notifications:** if legacy used send & receive, consider that Enabled.
+  ([99ebfc73](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/99ebfc73413e2a8006eb50def6ddc95d060334f1))
 - **Receive:** don't hide QR code when entering address
   ([7c28110e](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/7c28110e77545015260cb3356c5ffb8ecddf5814))
 - **Redeem:** fix getting balance for claim code
@@ -31,6 +33,12 @@ _Recent changes_
   ([60550aac](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/60550aac58f6dbf1133b559f9f81099b0e807a15))
 - **tasks:** wrap dist min file in iife
   ([f4fec6ac](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f4fec6accaed4aa2e68b7b767c21a8474d8606dd))
+
+
+## Features
+
+- **admin:** add pagination to prevent slow page load
+  ([9b33c91b](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/9b33c91b4adb03ec7c454dc98a5ca7205e2bb9a3))
 
 
 ## Refactor
