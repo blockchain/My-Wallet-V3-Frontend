@@ -465,7 +465,15 @@ module.exports = (grunt) ->
           grep_commits: '^fix|^feat|^ui|^copy|^docs|^dep|^refactor|^chore|^test|BREAKING'
           repo_url: 'https://github.com/blockchain/My-Wallet-HD-Frontend'
 
-  # Load the plugin that provides the "uglify" task.
+    coveralls:
+      options:
+        debug: true
+        coverageDir: 'coverage-lcov'
+        dryRun: false
+        force: true
+        recursive: true
+
+
   grunt.loadNpmTasks "grunt-contrib-uglify"
   grunt.loadNpmTasks('grunt-contrib-concat')
   grunt.loadNpmTasks('grunt-contrib-coffee')
@@ -483,6 +491,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-merge-json')
   grunt.loadNpmTasks('git-changelog')
   grunt.loadNpmTasks('grunt-babel')
+  grunt.loadNpmTasks('grunt-karma-coveralls')
 
   grunt.registerTask "compile", ["coffee"]
 

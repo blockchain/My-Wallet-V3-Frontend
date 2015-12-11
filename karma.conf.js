@@ -120,8 +120,11 @@ module.exports = function(karma){
     reporters: ['progress','osx', 'coverage'],
 
     coverageReporter: {
-      type : 'html',
-      dir : 'coverage/',
+      reporters: [
+        { type : 'html', dir : 'coverage/'},
+        { type : 'lcov', dir : 'coverage-lcov/'}
+      ],
+
       subdir: '.',
 
       instrumenters: { isparta : require('isparta') },

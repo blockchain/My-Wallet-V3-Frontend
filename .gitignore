@@ -27,6 +27,7 @@ e2e-tests/ignore.js
 .sass-cache
 build
 coverage
+coverage-lcov
 dist
 
 # External modules
