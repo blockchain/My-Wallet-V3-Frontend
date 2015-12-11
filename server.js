@@ -1,10 +1,7 @@
 'use strict';
 
 var express         = require('express')
-  , compression     = require('compression')
-  , errorhandler    = require('errorhandler')
   , ejs             = require('ejs')
-  , request         = require('request')
   , path            = require('path')
 
 loadEnv('.env');
@@ -16,15 +13,6 @@ var port      = process.env.PORT || 8080
 
 // App configuration
 var app = express();
-
-app.use(compression({
-  threshold: 512
-}));
-
-app.use(errorhandler({
-  dumpExceptions: true,
-  showStack: true
-}));
 
 app.use(function (req, res, next) {
   if (req.url === '/') {
@@ -72,44 +60,6 @@ if (dist) {
   app.set('view engine', 'jade');
   app.set('views', __dirname);
 }
-
-app.get('/verify-email', function (req, res) {
-  request.get('https://blockchain.info/wallet' + req.originalUrl);
-  res.cookie('email-verified', true);
-  res.redirect('/');
-});
-
-app.get('/authorize-approve', function (req, res) {
-  var approveHTML = '\
-    <!doctype html>\n\
-    <html>\n\
-      <head>\n\
-      <meta charset="utf-8">\n\
-      <title>Verifying authorization request</title>\n\
-        <script>\n\
-          var xmlHttp = new XMLHttpRequest();\n\
-          // The redirect should be done in the callback, but currently the callback doesn\'t get called because the authorize-approve page makes an ajax request to /wallet over http which is blocked\n\
-          // xmlHttp.onload = function () {\n\
-          //   window.location.replace("/");\n\
-          // };\n\
-          xmlHttp.open("GET", "https://blockchain.info/wallet' + req.originalUrl + '", true);\n\
-          xmlHttp.send();\n\
-          setTimeout(function() { window.location.replace("/"); }, 500);\n\
-        </script>\n\
-      </head>\n\
-    </html>';
-  res.send(approveHTML);
-});
-
-app.get('/unsubscribe', function (req, res) {
-  request.get('https://blockchain.info/wallet' + req.originalUrl);
-  res.redirect('/');
-});
-
-app.get(/^\/.{8}-.{4}-.{4}-.{4}-.{12}$/, function (req, res) {
-  res.cookie('uid', '"' + req.path.split(path.sep)[1] + '"');
-  res.redirect('/');
-});
 
 app.use(function (req, res) {
   res.send('<center><h1>404 Not Found</h1></center>');
