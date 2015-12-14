@@ -9,6 +9,8 @@ keys = whitelist["pgp-keys"]
 for package in packages
   bower = JSON.parse(File.read("build/bower_components/#{ package }/.bower.json"))
   version = bower["version"]
+  puts version
+  puts bower["_resolution"]
   `cd build && rm -rf #{ package } && git clone #{ bower["repository"]["url"] } #{ package }`
   command = "git verify-tag #{ bower["_resolution"]["tag"] } 2>&1"
   puts command
