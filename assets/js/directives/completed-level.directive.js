@@ -1,0 +1,35 @@
+
+angular
+  .module('walletApp')
+  .directive('completedLevel', completedLevel);
+
+completedLevel.$inject = ['$translate'];
+
+function completedLevel($translate) {
+  const directive = {
+    restrict: 'E',
+    replace: true,
+    scope: {
+      content: '@',
+      img: '@',
+      message: '@',
+      placement: '@'
+    },
+    templateUrl: 'templates/completed-level.jade',
+    link: link
+  };
+  return directive;
+
+  function link(scope, elem, attrs) {
+    $translate(scope.content).then((translation) => {
+      scope.content = translation;
+    });
+    $translate(scope.message).then((translation) => {
+      scope.message = translation;
+    });
+    scope.tooltip = {
+      templateUrl: 'templates/completed-level-tooltip.jade',
+      placement: scope.placement || 'top'
+    };
+  }
+}

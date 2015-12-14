@@ -23,14 +23,14 @@ function activityFeed($http, Wallet, Activity) {
       scope.activities = activities;
     });
 
-    scope.$watch('status.didLoadTransactions', function (didLoad) {
+    scope.$watch('status.didLoadTransactions', (didLoad) => {
       if (didLoad) {
         Activity.updateTxActivities();
         scope.loading = false;
       }
     });
 
-    scope.$watch('status.didLoadSettings', function (didLoad) {
+    scope.$watch('status.didLoadSettings', (didLoad) => {
       if (didLoad) Activity.updateLogActivities();
     });
   }
