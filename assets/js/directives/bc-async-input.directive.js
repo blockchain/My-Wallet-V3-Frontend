@@ -1,4 +1,3 @@
-
 angular
   .module('walletApp')
   .directive('bcAsyncInput', bcAsyncInput);
@@ -52,40 +51,39 @@ function bcAsyncInput($timeout, Wallet) {
       newValue: scope.ngModel
     };
 
-    scope.edit = function () {
+    scope.edit = () => {
       // finds and focuses on the text input field
       // a brief timeout is necessary before trying to focus
-      $timeout((function () {
+      $timeout((() => {
         elem.find('input')[0].focus();
       }), 50);
-      return scope.status.edit = 1;
-    };
-
-    scope.focus = function () {
       scope.status.edit = 1;
     };
 
-    scope.validate = function () {
-      return scope.validator ? scope.validator(scope.form.newValue) : true;
+    scope.focus = () => {
+      scope.status.edit = 1;
     };
 
-    scope.save = function () {
+    scope.validate = () =>
+      scope.validator ? scope.validator(scope.form.newValue) : true;
+
+    scope.save = () => {
       scope.status.saving = true;
 
-      let success = function () {
+      let success = () => {
         scope.ngModel = scope.form.newValue;
         if (!attrs.custom) scope.bcAsyncForm.$setPristine();
 
         // Fixes issue: hit enter after changing PBKDF2 iterations
         // when 2nd password is enabled
-        scope.$evalAsync(function () {
+        scope.$evalAsync(() => {
           scope.status.saving = false;
           if (!attrs.editing) scope.status.edit = false;
         });
         scope.$root.$safeApply(scope);
       };
 
-      let error = function () {
+      let error = () => {
         scope.status.saving = false;
         scope.$root.$safeApply(scope);
       };
@@ -93,7 +91,7 @@ function bcAsyncInput($timeout, Wallet) {
       scope.onSave(scope.form.newValue, success, error);
     };
 
-    scope.cancel = function () {
+    scope.cancel = () => {
       if (!attrs.editing) scope.status.edit = false;
       scope.bcAsyncForm.input.$rollbackViewValue();
       scope.form.newValue = scope.ngModel;
@@ -101,7 +99,7 @@ function bcAsyncInput($timeout, Wallet) {
       scope.onCancel && scope.onCancel();
     };
 
-    transclude(scope, function (clone, scope) {
+    transclude(scope, (clone, scope) => {
       if (attrs.custom) elem.empty().append(clone);
     });
   }

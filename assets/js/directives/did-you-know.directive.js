@@ -15,9 +15,9 @@ function didYouKnow(DidYouKnow) {
   return directive;
 
   function link(scope, elem, attrs) {
-    scope.getRandInRange = (min, max) => {
-      return Math.floor(Math.random() * (max - min + 1) + min);
-    };
+    scope.getRandInRange = (min, max) =>
+      Math.floor(Math.random() * (max - min + 1) + min);
+
     let randDYKIndex = scope.getRandInRange(0, DidYouKnow.dyks.length - 1);
     scope.dyk = DidYouKnow.dyks[randDYKIndex];
   }

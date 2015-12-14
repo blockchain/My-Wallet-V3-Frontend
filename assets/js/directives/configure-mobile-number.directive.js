@@ -29,9 +29,8 @@ function configureMobileNumber(Wallet) {
 
     scope.fields.newMobile = Wallet.user.internationalMobileNumber;
 
-    scope.numberChanged = () => {
-      return scope.fields.newMobile !== Wallet.user.internationalMobileNumber;
-    };
+    scope.numberChanged = () =>
+      scope.fields.newMobile !== Wallet.user.internationalMobileNumber;
 
     scope.cancel = () => {
       scope.fields.newMobile = Wallet.user.internationalMobileNumber;

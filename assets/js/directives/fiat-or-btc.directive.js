@@ -22,7 +22,10 @@ function fiatOrBtc(Wallet, currency) {
     scope.currency = scope.settings.displayCurrency;
     scope.isBitCurrency = currency.isBitCurrency;
 
-    scope.updateDisplay = () => scope.currency = Wallet.settings.displayCurrency;
+    scope.updateDisplay = () => {
+      scope.currency = Wallet.settings.displayCurrency;
+    }
+    
     scope.$watch('settings.displayCurrency', scope.updateDisplay);
   }
 }
