@@ -15,7 +15,7 @@ function FeedbackCtrl($scope, $log, $state, $http) {
         'fullname': $scope.fullname,
         'email': $scope.email
       };
-      $http.post('https://blockchain.info/v3-feedback', form).success(data => {
+      $http.post('/feedback', form).success(data => {
         $scope.formStage = (data.success) ? 2 : 3;
       }).error(() => {
         $scope.formStage = 3;
