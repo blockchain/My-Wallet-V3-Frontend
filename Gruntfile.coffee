@@ -83,7 +83,7 @@ module.exports = (grunt) ->
           'build/application-dependencies.min.js'
         ]
 
-        dest: "dist/application.min.js"
+        dest: "dist/js/application.min.js"
 
     coffee:
       coffee_to_js:
@@ -118,7 +118,7 @@ module.exports = (grunt) ->
           "build/css/blockchain.css" # Needs to be loaded first
           "build/css/**/*.css"
         ],
-        dest: "dist/application.css"
+        dest: "dist/css/application.css"
       }
     },
 
@@ -283,7 +283,7 @@ module.exports = (grunt) ->
 
             publicdir = require("fs").realpathSync("dist")
             path = require("path")
-            for referring_file_path in ["dist/application.min.js", "dist/application.css", "dist/index.html"]
+            for referring_file_path in ["dist/js/application.min.js", "dist/css/application.css", "dist/index.html"]
               contents = grunt.file.read(referring_file_path)
               before = undefined
               after = undefined
@@ -336,8 +336,8 @@ module.exports = (grunt) ->
 
         files:
           src: [
-            'dist/application.min.js'
-            'dist/application.css'
+            'dist/js/application.min.js'
+            'dist/css/application.css'
           ]
 
     shell:
