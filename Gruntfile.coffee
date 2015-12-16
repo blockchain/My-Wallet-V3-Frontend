@@ -341,6 +341,10 @@ module.exports = (grunt) ->
           ]
 
     shell:
+      clean_bower_and_npm_cache:
+        command: () ->
+          'bower cache clean && npm cache clean'
+
       deploy_static_to_dev:
         command: () ->
           'rsync -rz --delete dist hd-dev@server:'
@@ -454,6 +458,7 @@ module.exports = (grunt) ->
 
   # Default task(s).
   grunt.registerTask "dist", [
+    "shell:clean_bower_and_npm_cache"
     "clean"
     "build"
     "shell:check_dependencies"
@@ -473,6 +478,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask "dist_unsafe", [
+    "shell:clean_bower_and_npm_cache"
     "clean"
     "build"
     "shell:skip_check_dependencies"
