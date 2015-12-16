@@ -8,7 +8,11 @@
         translate="{{ f }}"
       )
     .filter-search
-      input(type="text" placeholder="{{ 'SEARCH' | translate }}" ng-model="searchText")
+      input(
+        type="text"
+        placeholder="{{::'SEARCH' | translate}}"
+        ng-model="searchText"
+        ng-model-options="{debounce: 500}")
       i.ti-search
   .transaction-feed
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || getTotal(accountIndex) > 0 || (transactions | filter:transactionFilter).length > 0 || selectedAccountIndex == 'imported'")
@@ -23,8 +27,8 @@
       i.ti-search.h1.mrm
       h3.em-100.mbl(translate="SORRY_ZERO_TXS")
       p.em-400(translate="PLEASE_TRY_AGAIN", ui-sref="wallet.common.support")
-    .transaction.no-select(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime'")
-      .tx-toggle.hidden-xs.hidden-sm(ng-click="toggleTransaction(transaction)")
+    .transaction.no-select(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime' track by $index")
+      .tx-toggle.hidden-xs.hidden-sm(ng-click="transaction.toggled = !transaction.toggled")
         i.ti-arrow-circle-right.h4.ccc.pointer.mrl.prl(ng-show="!transaction.toggled")
         i.ti-arrow-circle-down.h4.dark-grey.pointer.mrl.prl(ng-show="transaction.toggled")
       .tx-details
@@ -37,7 +41,7 @@
     .row
       .col-xs-5
       .col-xs-2
-        p(align="center", ng-hide="loading || allTransactionsLoaded || (transactions | filter:transactionFilter).length == 0")
+        p(align="center", ng-hide="loading || allTxsLoaded || (transactions | filter:transactionFilter).length == 0")
           a(in-view="nextPage()", ng-click="nextPage()") Load more...
     .row(ng-show="loading").mtm
        .col-xs-5

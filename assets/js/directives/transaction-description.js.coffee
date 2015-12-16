@@ -3,80 +3,53 @@ angular.module('walletApp').directive('transactionDescription', ($translate, $ro
     restrict: "E"
     replace: 'false'
     scope: {
-      transaction: '='
+      tx: '=transaction'
       search: '=highlight'
     }
     templateUrl: 'templates/transaction-description.jade'
     link: (scope, elem, attrs) ->
-      phrase = undefined
-      from = undefined
-      to = undefined
 
-      to_address = null
-      from_address = null
+      scope.getAction = (txType) ->
+        switch txType
+          when 'sent'
+            return 'SENT'
+          when 'received'
+            return 'RECEIVED_BITCOIN_FROM'
+          when 'transfer'
+            return 'MOVED_BITCOIN_TO'
 
-      scope.tooltip = null
+      formatLabel = (coins, keepChange) ->
+        used = {}
+        coins
+          .filter((coin) -> !coin.change || keepChange)
+          .map((coin) -> coin.label || coin.address)
+          .filter((label) ->
+            didUse = used[label] == true
+            used[label] = true
+            return !didUse
+          ).join(', ')
 
-      if scope.transaction.from.legacyAddresses? && scope.transaction.from.legacyAddresses.length
-        from_address = scope.transaction.from.legacyAddresses[0].address
-
-      if scope.transaction.from.externalAddresses?
-        from_address = scope.transaction.from.externalAddresses.addressWithLargestOutput
-
-      if scope.transaction.to.legacyAddresses? && scope.transaction.to.legacyAddresses.length
-        to_address = scope.transaction.to.legacyAddresses[0].address
-
-      if scope.transaction.to.externalAddresses?
-        # to_address = scope.transaction.to.externalAddresses.addressWithLargestOutput
-        to_address = scope.transaction.to.externalAddresses[0].address
-      address = null
-
-      if scope.transaction.intraWallet
-        scope.action = "MOVED_BITCOIN_TO"
-        if scope.transaction.to.accounts.length > 0
-          scope.address = scope.transaction.to.accounts.map((account) => Wallet.accounts()[account.index].label).join(", ")
+      scope.getPrimaryLabel = (tx) ->
+        if tx.txType == 'sent'
+          return formatLabel(tx.processedOutputs)
         else
-          if to_name = Wallet.getAddressBookLabel(to_address)
-            scope.address = to_name
-          else
-            scope.address = to_address
-            scope.other_address = from_address
-      else
-        if scope.transaction.result < 0
-          scope.action = "SENT"
-          if scope.transaction.to.externalAddresses?
-            if to_name = Wallet.getAddressBookLabel(to_address)
-              scope.address = to_name
-            else
-              scope.address = to_address
-          else if scope.transaction.to.email?
-            scope.address = scope.transaction.to.email.email
-          else if scope.transaction.to.mobile?
-            scope.address = scope.transaction.to.mobile.number
-        else
-          scope.action = "RECEIVED_BITCOIN_FROM"
-          if from_name = Wallet.getAddressBookLabel(to_address)
-            scope.address = from_name
-          else
-            scope.address = from_address
+          return formatLabel(tx.processedInputs, true)
 
-      if scope.transaction.intraWallet || scope.transaction.result < 0
-        if scope.transaction.from.account?
-          scope.other_address = Wallet.accounts()[parseInt(scope.transaction.from.account.index)].label
+      scope.getSecondaryLabel = (tx) ->
+        if tx.txType == 'sent'
+          return formatLabel(tx.processedInputs, true)
         else
-          scope.other_address = from_address
-      else
-        if scope.transaction.to.accounts.length > 0
-          scope.other_address = Wallet.accounts()[parseInt(scope.transaction.to.accounts[0].index)].label
-        else
-          scope.other_address = to_address
+          return formatLabel(tx.processedOutputs)
+
+      scope.primaryLabel = scope.getPrimaryLabel(scope.tx)
+      scope.secondaryLabel = scope.getSecondaryLabel(scope.tx)
 
       scope.$watch 'search', (search) ->
         return unless search?
         s = search.toLowerCase()
-        searchInAddress = scope.address.toLowerCase().search(s) > -1
-        searchInOther = scope.other_address.toLowerCase().search(s) > -1
-        scope.transaction.toggled = !searchInAddress && searchInOther
+        searchInAddress = scope.primaryLabel.toLowerCase().search(s) > -1
+        searchInOther = scope.secondaryLabel.toLowerCase().search(s) > -1
+        scope.tx.toggled = !searchInAddress && searchInOther
 
   }
 )
