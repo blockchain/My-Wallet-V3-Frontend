@@ -4,7 +4,7 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON("package.json")
     clean: {
       build: ["build"]
-      dist: ["dist"]
+      dist: ["dist", "bower_components", "node_modules"]
       test: ["coverage"]
       sass: [".sass-cache"]
     }
@@ -73,8 +73,7 @@ module.exports = (grunt) ->
 
       application: # All components should first be minimized. Only trusted sources should be imported as minified..
         src: [
-          'bower_components/blockchain-wallet/dist/my-wallet.min.js'
-          "build/bower_components/jquery/dist/jquery.js" # Duplicate; also included in my-wallet a.t.m. Minified version causes problems.
+          'build/bower_components/blockchain-wallet/dist/my-wallet.min.js'
           'build/bower_components/angular/angular.min.js'
           'build/bower_components/angular-sanitize/angular-sanitize.min.js'
           'build/bower_components/angular-cookies/angular-cookies.min.js'
@@ -187,7 +186,6 @@ module.exports = (grunt) ->
 
       css:
         files: [
-          {src: ["intlTelInput.css"], dest: "build/css", cwd: "bower_components/intl-tel-input/build/css", expand: true }
           {src: ["font-awesome.min.css"], dest: "build/css", cwd: "bower_components/fontawesome/css", expand: true }
           {src: ["*.css"], dest: "build/css", cwd: "assets/css", expand: true }
         ]
@@ -383,7 +381,7 @@ module.exports = (grunt) ->
 
       npm_install_dependencies:
         command: () ->
-           'cd build && npm install'
+           'npm install'
 
       bower_install_dependencies:
         command: () ->
@@ -460,6 +458,7 @@ module.exports = (grunt) ->
   grunt.registerTask "dist", [
     "shell:clean_bower_and_npm_cache"
     "clean"
+    "shell:npm_install_dependencies"
     "build"
     "shell:check_dependencies"
     "shell:npm_install_dependencies"
@@ -480,6 +479,7 @@ module.exports = (grunt) ->
   grunt.registerTask "dist_unsafe", [
     "shell:clean_bower_and_npm_cache"
     "clean"
+    "shell:npm_install_dependencies"
     "build"
     "shell:skip_check_dependencies"
     "concat:application_dependencies"
