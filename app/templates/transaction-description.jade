@@ -2,7 +2,7 @@
   .flex-align-end.flex-end.pbl
     .flex-column.col-md-3.col-sm-12.col-xs-12
       span.timestamp.pbm.type-sm
-        date {{::tx.time * 1000 | date:'MMMM d @ hh:mm a'}}
+        date {{ tx.time * 1000 | date:'MMMM d @ hh:mm a' }}
       .flex-center
         span.action(
           ng-class="{\
@@ -35,7 +35,7 @@
           ng-bind-html="getSecondaryLabel(tx) | escapeHtml | highlight:search")
       .flex.row.mtm(ng-show="tx.note")
         span.text.col-md-1(translate="NOTE_LC")
-        span.break-word.hidden-sm.hidden-xs.col-md-11.mlm {{::tx.note }}
+        span.break-word.hidden-sm.hidden-xs.col-md-11.mlm {{ tx.note }}
       .flex.row.mtm.timestamp(
         ng-show="tx.confirmations === 0")
         span.text.col-md-12(translate="UNCONFIRMED_WARNING")

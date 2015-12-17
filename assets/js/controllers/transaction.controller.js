@@ -20,7 +20,7 @@ function TransactionCtrl($scope, $state, $stateParams, $filter, Wallet, MyWallet
     return label || a.label || a.address;
   };
 
-  $scope.back = () => {
+  $scope.backToTransactions = () => {
     $state.go('wallet.common.transactions', { accountIndex: index });
   };
 }

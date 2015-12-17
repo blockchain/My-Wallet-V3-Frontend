@@ -5,6 +5,8 @@ angular
 Activity.$inject = ['$rootScope', 'Wallet'];
 
 function Activity($rootScope, Wallet) {
+  const txList = Wallet.my.wallet.txList;
+
   const activity = {
     activities: [],
     transactions: [],
@@ -16,6 +18,7 @@ function Activity($rootScope, Wallet) {
   };
 
   $rootScope.$on('updateActivityFeed', activity.updateAllActivities);
+  txList.subscribe(updateTxActivities);
   return activity;
 
   function updateAllActivities() {
@@ -24,7 +27,7 @@ function Activity($rootScope, Wallet) {
   }
 
   function updateTxActivities() {
-    activity.transactions = Wallet.transactions
+    activity.transactions = txList.transactions()
       .slice(0, activity.limit)
       .map(factory.bind(null, 0));
     combineAll();
@@ -54,15 +57,13 @@ function Activity($rootScope, Wallet) {
   }
 
   function factory(type, obj) {
-    let a = {
-      type: type
-    };
+    let a = { type: type };
     switch (type) {
       case 0:
         a.title = 'TRANSACTION';
         a.icon = 'ti-layout-list-post';
-        a.time = obj.txTime * 1000;
-        a.message = getTxMessage(obj);
+        a.time = obj.time * 1000;
+        a.message = obj.txType.toUpperCase();
         a.result = Math.abs(obj.result);
         break;
       case 4:
@@ -72,12 +73,6 @@ function Activity($rootScope, Wallet) {
         a.message = capitalize(obj.action);
     }
     return a;
-  }
-
-  function getTxMessage(tx) {
-    if (tx.intraWallet) return 'TRANSFERRED';
-    else if (tx.result < 0) return 'SENT';
-    else return 'RECEIVED';
   }
 
   function capitalize(str) {

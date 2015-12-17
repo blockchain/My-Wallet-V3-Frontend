@@ -23,11 +23,8 @@ function activityFeed($http, Wallet, Activity) {
       scope.activities = activities;
     });
 
-    scope.$watch('status.didLoadTransactions', (didLoad) => {
-      if (didLoad) {
-        Activity.updateTxActivities();
-        scope.loading = false;
-      }
+    scope.$watch(() => Activity.transactions, (txs) => {
+      if (txs.length > 0) scope.loading = false;
     });
 
     scope.$watch('status.didLoadSettings', (didLoad) => {

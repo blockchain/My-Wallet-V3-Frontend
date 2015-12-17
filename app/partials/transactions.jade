@@ -27,7 +27,7 @@
       i.ti-search.h1.mrm
       h3.em-100.mbl(translate="SORRY_ZERO_TXS")
       p.em-400(translate="PLEASE_TRY_AGAIN", ui-sref="wallet.common.support")
-    .transaction.no-select(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-txTime' track by $index")
+    .transaction.no-select(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-time' track by $index")
       .tx-toggle.hidden-xs.hidden-sm(ng-click="transaction.toggled = !transaction.toggled")
         i.ti-arrow-circle-right.h4.ccc.pointer.mrl.prl(ng-show="!transaction.toggled")
         i.ti-arrow-circle-down.h4.dark-grey.pointer.mrl.prl(ng-show="transaction.toggled")

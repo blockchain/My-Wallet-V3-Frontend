@@ -87,7 +87,6 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   }
 
   wallet.payment = MyWalletPayment;
-  wallet.transactions = [];
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
   wallet.store.setAPICode(wallet.api_code);
@@ -146,10 +145,12 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
           let didFetchTransactions = () => {
             console.log('%cStop!', 'color:white; background:red; font-size: 16pt');
             console.log('%cThis browser feature is intended for developers. If someone told you to copy-paste something here, it is a scam and will give them access to your money!', 'font-size: 14pt');
+            wallet.status.didLoadTransactions = true;
             wallet.status.didLoadBalances = true;
-            wallet.updateTransactions();
           };
-          wallet.my.wallet.getHistory().then(didFetchTransactions);
+          wallet.my.wallet.getHistory()
+            .then(() => wallet.my.wallet.txList.fetchTxs())
+            .then(didFetchTransactions);
         }
         $rootScope.$safeApply();
       });
@@ -234,7 +235,6 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       wallet.status.didInitializeHD = true;
       wallet.my.wallet.getHistory().then(() => {
         wallet.status.didLoadBalances = true;
-        wallet.updateTransactions();
       });
       successCallback();
       $rootScope.$safeApply();
@@ -365,7 +365,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   wallet.createAccount = (label, successCallback, errorCallback, cancelCallback) => {
     let proceed = (password) => {
       let newAccount = wallet.my.wallet.newAccount(label, password);
-      wallet.my.wallet.getHistory().then(wallet.updateTransactions);
+      wallet.my.wallet.txList.fetchTxs();
       successCallback && successCallback();
     };
     wallet.askForSecondPasswordIfNeeded()
@@ -375,32 +375,6 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   wallet.renameAccount = (account, name, successCallback, errorCallback) => {
     account.label = name;
     successCallback();
-  };
-
-  wallet.fetchMoreTransactions = (where, successCallback, errorCallback, allTransactionsLoadedCallback) => {
-    let success = (res) => {
-      wallet.appendTransactions(res);
-      successCallback();
-      $rootScope.$safeApply();
-    };
-
-    let error = () => {
-      errorCallback();
-      $rootScope.$safeApply();
-    };
-
-    let allTransactionsLoaded = () => {
-      allTransactionsLoadedCallback && allTransactionsLoadedCallback();
-      $rootScope.$safeApply();
-    };
-
-    if (where === '') {
-      wallet.my.fetchMoreTransactionsForAll(success, error, allTransactionsLoaded);
-    } else if (where === 'imported') {
-      wallet.my.fetchMoreTransactionsForLegacyAddresses(success, error, allTransactionsLoaded);
-    } else {
-      wallet.my.fetchMoreTransactionsForAccount(parseInt(where), success, error, allTransactionsLoaded);
-    }
   };
 
   wallet.changeLegacyAddressLabel = (address, label, successCallback, errorCallback) => {
@@ -600,13 +574,12 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
 
     let restore = (password) => {
       console.log('restoring...');
-      wallet.transactions.splice(0, wallet.transactions.length);
       wallet.my.wallet.restoreHDWallet(mnemonic, bip39pass, password);
     };
 
     let update = () => {
       console.log('updating...');
-      wallet.my.wallet.getHistory().then(wallet.updateTransactions);
+      wallet.my.wallet.txList.fetchTxs();
       successCallback();
     };
 
@@ -744,73 +717,21 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     }
   };
 
-  wallet.updateTransactions = () => {
-    for (let tx of wallet.store.getAllTransactions().reverse()) {
-      let match = false;
-      for (let candidate of wallet.transactions) {
-        if (candidate.hash === tx.hash) {
-          match = true;
-          if (candidate.note == null) {
-            candidate.note = wallet.my.wallet.getNote(tx.hash);
-          }
-          break;
-        }
-      }
-      if (!match) {
-        let transaction = angular.copy(tx);
-        transaction.note = wallet.my.wallet.getNote(transaction.hash);
-        wallet.transactions.unshift(transaction);
-      }
-    }
-    wallet.status.didLoadTransactions = true;
-    $rootScope.$safeApply();
-  };
-
-  wallet.appendTransactions = (transactions, override) => {
-    if (transactions == null || wallet.transactions == null) return;
-    let results = [];
-    for (let tx of transactions) {
-      let match = false;
-      for (let candidate of wallet.transactions) {
-        if (candidate.hash === tx.hash) {
-          if (override) {
-            wallet.transactions.splice(wallet.transactions.splice(candidate));
-          } else {
-            match = true;
-          }
-          break;
-        }
-      }
-      if (!match) {
-        let transaction = angular.copy(tx);
-        transaction.note = wallet.my.wallet.getNote(transaction.hash);
-        results.push(wallet.transactions.push(transaction));
-      } else {
-        results.push(void 0);
-      }
-    }
-    return results;
-  };
-
   wallet.beep = () => {
     let sound = ngAudio.load('beep.wav');
     sound.play();
   };
 
   wallet.monitor = (event, data) => {
-    if (event === 'on_tx' || event === 'on_block') {
-      let before = wallet.transactions.length;
-      wallet.updateTransactions();
-      let numberOfTransactions = wallet.transactions.length;
-      if (numberOfTransactions > before) {
-        wallet.beep();
-        if (wallet.transactions[0].result > 0 && !wallet.transactions[0].intraWallet) {
-          $translate('JUST_RECEIVED_BITCOIN').then((translation) => {
-            Alerts.displayReceivedBitcoin(translation);
-          });
-          wallet.saveActivity(0);
-        }
+    if (event === 'on_tx') {
+      wallet.beep();
+      let tx = wallet.txList.transactions()[0];
+      if (tx.result > 0 && !tx.intraWallet) {
+        $translate('JUST_RECEIVED_BITCOIN').then((translation) => {
+          Alerts.displayReceivedBitcoin(translation);
+        });
       }
+    } else if (event === 'on_block') {
     } else if (event === 'error_restoring_wallet') {
     } else if (event === 'did_set_guid') {
     } else if (event === 'on_wallet_decrypt_finish') {
@@ -837,9 +758,6 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
         });
       }
       wallet.status.isLoggedIn = false;
-      while (wallet.transactions.length > 0) {
-        wallet.transactions.pop();
-      }
       while (wallet.paymentRequests.length > 0) {
         wallet.paymentRequests.pop();
       }
@@ -1218,7 +1136,6 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
 
   wallet.refresh = () => {
     wallet.my.refresh();
-    wallet.updateTransactions();
   };
 
   wallet.isMock = wallet.my.mockShouldFailToSend !== void 0;
