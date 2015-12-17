@@ -59,9 +59,9 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $location, $cookieS
   };
 
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) => {
-    let loggedOutStates = ['public', 'public.login', 'public.recover', 'public.reminder', 'public.signup', 'public.help', 'open'];
+    let loggedOutStates = ['public', 'public.login-no-uid', 'public.login-uid', 'public.recover', 'public.reminder', 'public.signup', 'public.help', 'open', 'wallet.common.verify-email'];
     if (loggedOutStates.every(s => toState.name !== s) && $scope.status.isLoggedIn === false) {
-      $state.go("public.login");
+      $state.go("public.login-no-uid");
     }
     if (Wallet.status.isLoggedIn && (Wallet.store.resetLogoutTimeout != null)) {
       Wallet.store.resetLogoutTimeout();

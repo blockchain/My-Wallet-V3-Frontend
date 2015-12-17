@@ -70,8 +70,18 @@ function AppRouter($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('public.login', {
+    .state('public.login-no-uid', {
       url: '/login',
+      views: {
+        alerts: commonViews.alerts,
+        contents: {
+          templateUrl: 'partials/login.jade',
+          controller: 'LoginCtrl'
+        }
+      }
+    })
+    .state('public.login-uid', {
+      url: '/login/:uid',
       views: {
         alerts: commonViews.alerts,
         contents: {
@@ -220,6 +230,16 @@ function AppRouter($stateProvider, $urlRouterProvider) {
         left: walletNav,
         right: {
           controller: 'ClaimCtrl'
+        }
+      }
+    })
+    .state('wallet.common.verify-email', {
+      url: '/verify-email/{token:.*}',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          controller: 'VerifyEmailCtrl'
         }
       }
     })

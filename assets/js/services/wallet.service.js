@@ -9,9 +9,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', '$rootScope', 'ngAudio', '$cookieStore', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
+Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletTokenEndpoints', '$rootScope', 'ngAudio', '$cookieStore', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
 
-function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency) {
+function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletTokenEndpoints, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency) {
   const wallet = {
     goal: {
       auth: false
@@ -58,6 +58,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   wallet.store = MyWalletStore;
   wallet.api = MyBlockchainApi;
   wallet.payment = MyWalletPayment;
+  wallet.tokenEndpoints = MyWalletTokenEndpoints;
   wallet.transactions = [];
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
@@ -1196,6 +1197,22 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     };
     wallet.my.wallet.encrypt(password, success, error, encrypting, syncing);
   };
+
+  wallet.verifyEmail = (token, successCallback, errorCallback) => {
+    const success = (result) => {
+      // TODO: process result in My-Wallet-V3
+
+      wallet.user.isEmailVerified = true;
+      successCallback(result.guid);
+      wallet.applyIfNeeded();
+    }
+
+    const error = (message) => {
+      errorCallback(message);
+    }
+
+    wallet.tokenEndpoints.verifyEmail(token, success, error);
+  }
 
   // Testing: only works on mock MyWallet
 
