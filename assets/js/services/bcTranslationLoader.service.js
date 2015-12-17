@@ -16,7 +16,7 @@ function BCTranslateStaticFilesLoader($http, $q, $translateStaticFilesLoader) {
     pt: 'build/locales/pt.json',
     bg: 'build/locales/bg.json',
     fr: 'build/locales/fr.json',
-    'zh-cn': 'build/locales/zh-cn.json',
+    zh_CN: 'build/locales/zh-cn.json',
     hu: 'build/locales/hu.json',
     sl: 'build/locales/sl.json',
     id: 'build/locales/id.json',
@@ -36,22 +36,22 @@ function BCTranslateStaticFilesLoader($http, $q, $translateStaticFilesLoader) {
     tr: 'build/locales/tr.json'
   };
 
-  return function(options) {
-    if (map[options.key]) {
-      let mapped = map[options.key];
-      let deferred = $q.defer();
-      $http(angular.extend({
-        url: mapped,
-        method: 'GET',
-        params: ''
-      }, options.$http)).success(function(data) {
-        deferred.resolve(data);
-      }).error(function(data) {
+  return function (options) {
+    let mapped = map[options.key] || map['en'];
+    let deferred = $q.defer();
+
+    let httpOptions = angular.extend({
+      url: mapped,
+      method: 'GET',
+      params: ''
+    }, options.$http);
+
+    $http(httpOptions)
+      .success(deferred.resolve)
+      .error(function (data) {
         deferred.reject(options.key);
       });
-      return deferred.promise;
-    } else {
-      return console.log('Don\'t know which language file to fetch');
-    }
+
+    return deferred.promise;
   };
 }
