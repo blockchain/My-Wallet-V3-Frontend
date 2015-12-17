@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("LoginCtrl", LoginCtrl);
 
-function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookieStore, $uibModal, $state, $timeout, $translate, filterFilter) {
+function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookieStore, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.disableLogin = null;
@@ -13,7 +13,7 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookieStore
     password: null,
     twoFactor: null
   };
-  $scope.uidAvailable = $cookieStore.get('uid') != null;
+  $scope.uidAvailable = $cookieStore.get('uid') != null || $stateParams.uid;
   $scope.user = Wallet.user;
 
   //   Browser compatibility warnings:
@@ -88,7 +88,7 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookieStore
   if (Wallet.guid != null) {
     $scope.uid = Wallet.guid;
   } else {
-    $scope.uid = $cookieStore.get("uid");
+    $scope.uid = $stateParams.uid || $cookieStore.get("uid");
   }
   if ($scope.key != null) {
     $scope.status.enterkey = true;
@@ -99,8 +99,8 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookieStore
       $scope.$emit('showNotification', {
         type: 'verified-email',
         icon: 'ti-email',
-        heading: translations.SUCCESS,
-        msg: $scope.uidAvailable ? translations.EMAIL_VERIFIED_SUCCESS : translations.EMAIL_VERIFIED_SUCCESS_NO_UID
+        heading: translations.SUCCESS
+        // msg: $scope.uidAvailable ? translations.EMAIL_VERIFIED_SUCCESS : translations.EMAIL_VERIFIED_SUCCESS_NO_UID
       });
     });
   }

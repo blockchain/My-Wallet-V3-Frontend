@@ -23,7 +23,7 @@ describe "ClaimCtrl", ->
    return
 
   it "should redirect to login",  inject(($state) ->
-    expect($state.go).toHaveBeenCalledWith("public.login")
+    expect($state.go).toHaveBeenCalledWith("public.login-no-uid")
   )
 
   it "should store the goal", inject((Wallet) ->

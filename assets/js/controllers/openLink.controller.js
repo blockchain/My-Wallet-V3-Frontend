@@ -9,6 +9,6 @@ function OpenLinkController($scope, Wallet, $translate, $stateParams, $state, Al
     $translate("PLEASE_LOGIN_FIRST").then(translation => {
       Alerts.displayInfo(translation, true);
     });
-    $state.go("public.login");
+    $state.go("public.login-no-uid");
   }
 }
