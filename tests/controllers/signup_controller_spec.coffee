@@ -7,7 +7,7 @@ describe "SignupCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller) ->
+    angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
       Wallet = $injector.get("Wallet")
 
       Wallet.login = (uid, pass, code, twoFactor, success, error) -> success()
@@ -25,7 +25,18 @@ describe "SignupCtrl", ->
         $stateParams: {},
         $uibModalInstance: modalInstance
 
-      scope.validate()
+      element = angular.element(
+        '<form role="form" name="signupForm" novalidate>' +
+          '<input type="email"    name="email"          ng-model="fields.email"         required />' +
+          '<input type="password" name="password"       ng-model="fields.password"      min-entropy="25" ng-maxlength="255" required />' +
+          '<input type="password" name="confirmation"   ng-model="fields.confirmation"  is-valid="fields.confirmation == fields.password" required />' +
+          '<input type="checkbox" name="agreement"      ng-model="fields.acceptedAgreement" required />' +
+        '</form>'
+      )
+      scope.model = { fields: { email: '', password: '', confirmation: '', acceptedAgreement: false } }
+      $compile(element)(scope)
+
+      scope.$digest()
 
       return
 
@@ -43,82 +54,61 @@ describe "SignupCtrl", ->
     expect(scope.fields.confirmation).toBeDefined()
     expect(scope.fields.acceptedAgreement).toBe(false)
 
+  it "should not register when invalid", ->
+    spyOn(scope, 'createWallet')
+    scope.signupForm.password.$setViewValue('')
+    scope.$digest()
+
+    scope.signup()
+    expect(scope.createWallet).not.toHaveBeenCalled()
+
   describe "password", ->
+
     beforeEach ->
-      scope.fields.acceptedAgreement = true
-      scope.fields.email = "a@b.com"
+      form = scope.signupForm
+      form.email.$setViewValue('a@b.com')
+      form.agreement.$setViewValue(true)
+      scope.$digest()
 
-    it "should not display an error if password confirmation matches", ->
-      scope.fields.password = "testing"
-      scope.fields.confirmation = "testing"
+    it "should not have an error if password confirmation matches", ->
+      scope.signupForm.password.$setViewValue('testing')
+      scope.signupForm.confirmation.$setViewValue('testing')
+      scope.$digest()
+      expect(scope.signupForm.confirmation.$valid).toBe(true)
 
-      scope.validate()
-
-      expect(scope.isValid).toBe(true)
-      expect(scope.errors.confirmation).toBeNull()
-
-    it "should not display an error if password is still empty", ->
-      scope.fields.password = ""
-      scope.validate()
-      expect(scope.isValid).toBe(false)
-      expect(scope.errors.password).toBeNull()
-
-    it "should not display an error if password confirmation is still empty", ->
-      scope.fields.password = "testing"
-      scope.fields.confirmation = ""
-
-      scope.validate()
-
-      expect(scope.isValid).toBe(false)
-      expect(scope.errors.confirmation).toBeNull()
-
-    it "should display an error if password confirmation does not match", ->
-      scope.fields.password = "testing"
-      scope.fields.confirmation = "wrong"
-
-      scope.validate()
-
-      expect(scope.isValid).toBe(false)
-      expect(scope.errors.confirmation).not.toBeNull()
+    it "should have an error if password confirmation does not match", ->
+      scope.signupForm.password.$setViewValue('testing')
+      scope.signupForm.confirmation.$setViewValue('wrong')
+      scope.$digest()
+      expect(scope.signupForm.confirmation.$valid).toBe(false)
 
   describe "agreement", ->
+
     beforeEach ->
-      scope.fields.email = "a@b.com"
-      scope.fields.password = "1234"
-      scope.fields.confirmation = "1234"
+      form = scope.signupForm
+      form.email.$setViewValue('a@b.com')
+      form.password.$setViewValue('my_password12345')
+      form.confirmation.$setViewValue('my_password12345')
+      scope.$digest()
 
     it "should not be signed by default", ->
       expect(scope.fields.acceptedAgreement).toBe(false)
 
     it "should be signed by the user to register", ->
-      expect(scope.isValid).toBe(false)
-      scope.fields.acceptedAgreement = true
-
-      scope.validate()
-      expect(scope.isValid).toBe(true)
-
-  it "should not register when invalid", ->
-    scope.fields.password = "" # invalid
-    scope.validate()
-    spyOn(scope, "signup")
-    scope.trySignup()
-    expect(scope.signup).not.toHaveBeenCalled()
+      expect(scope.signupForm.$valid).toBe(false)
+      scope.signupForm.agreement.$setViewValue(true)
+      scope.$digest()
+      expect(scope.signupForm.$valid).toBe(true)
 
   describe "signup()", ->
-    shouldBeValid = true
+
     beforeEach ->
-      spyOn(scope, "validate").and.callFake(() ->
-        scope.isValid = shouldBeValid # Side-effect
-        shouldBeValid
-      )
-
-
-    it "should validate once more", ->
-      scope.signup()
-      expect(scope.validate).toHaveBeenCalled()
-
-      # Check the test is configured correctly:
-      expect(scope.isValid).toBe(true)
+      form = scope.signupForm
+      form.email.$setViewValue('a@b.com')
+      form.password.$setViewValue('my_password12345')
+      form.confirmation.$setViewValue('my_password12345')
+      form.agreement.$setViewValue(true)
+      scope.$digest()
 
     it "should call createWallet()", ->
       spyOn(scope, "createWallet")
@@ -127,11 +117,12 @@ describe "SignupCtrl", ->
 
     it "should not call createWallet() if validation failed", ->
       spyOn(scope, "createWallet")
-      shouldBeValid = false
+
+      scope.signupForm.password.$setViewValue('weak')
+      scope.$digest()
+
       scope.signup()
       expect(scope.createWallet).not.toHaveBeenCalled()
-      shouldBeValid = true # Sorry...
-
 
     it "should create a new wallet", inject((Wallet) ->
       spyOn(Wallet, 'create')
@@ -139,28 +130,28 @@ describe "SignupCtrl", ->
       expect(Wallet.create).toHaveBeenCalled()
     )
 
-    it "should add uid to cookieStore", inject(($cookieStore) ->
-      spyOn($cookieStore, 'put')
+    it "should add uid to cookies", inject(($cookies) ->
+      spyOn($cookies, 'put')
       scope.signup()
-      expect($cookieStore.put).toHaveBeenCalledWith('uid', "new_guid")
+      expect($cookies.put).toHaveBeenCalledWith('uid', "new_guid")
     )
 
-    it "should add password to cookieStore in dev mode", inject(($cookieStore) ->
-      spyOn($cookieStore, 'put')
+    it "should add password to cookies in dev mode", inject(($cookies) ->
+      spyOn($cookies, 'put')
       scope.savePassword = true
       scope.fields.password = "testing"
 
       scope.signup()
-      expect($cookieStore.put).toHaveBeenCalledWith('password', "testing")
+      expect($cookies.put).toHaveBeenCalledWith('password', "testing")
     )
 
-    it "should not add password to cookieStore in production mode", inject(($cookieStore) ->
-      spyOn($cookieStore, 'put')
+    it "should not add password to cookies in production mode", inject(($cookies) ->
+      spyOn($cookies, 'put')
       scope.savePassword = false
       scope.fields.password = "testing"
 
       scope.signup()
-      expect($cookieStore.put).not.toHaveBeenCalledWith('password', "testing")
+      expect($cookies.put).not.toHaveBeenCalledWith('password', "testing")
     )
 
   describe "language", ->
