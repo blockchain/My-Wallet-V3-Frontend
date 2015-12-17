@@ -292,8 +292,9 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     let tx = $scope.transaction;
     if (!tx.from) return 0;
     let availableBal = tx.from.balance - tx.fee;
-    let maxAvailable = $scope.advanced ? availableBal : tx.sweepAmount;
-    return maxAvailable || availableBal;
+    let maxAvailable = ($scope.advanced ? availableBal : tx.sweepAmount) || availableBal;
+    if (maxAvailable < 0) maxAvailable = 0;
+    return maxAvailable;
   };
 
   $scope.$watch("transaction.destinations", (destinations) => {
