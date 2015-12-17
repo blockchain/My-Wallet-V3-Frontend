@@ -9,9 +9,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletTokenEndpoints', '$rootScope', 'ngAudio', '$cookieStore', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
+Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletTokenEndpoints', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
 
-function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletTokenEndpoints, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency) {
+function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletTokenEndpoints, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency) {
   const wallet = {
     goal: {
       auth: false
@@ -814,11 +814,11 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     } else if (event === 'logging_out') {
       if (wallet.didLogoutByChoice) {
         $translate('LOGGED_OUT').then((translation) => {
-          $cookieStore.put('alert-success', translation);
+          $cookies.put('alert-success', translation);
         });
       } else {
         $translate('LOGGED_OUT_AUTOMATICALLY').then((translation) => {
-          $cookieStore.put('alert-warning', translation);
+          $cookies.put('alert-warning', translation);
           wallet.applyIfNeeded();
         });
       }
@@ -852,15 +852,15 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     wallet.monitor(event, data);
   });
 
-  let message = $cookieStore.get('alert-warning');
+  let message = $cookies.get('alert-warning');
   if (message !== void 0 && message !== null) {
     Alerts.displayWarning(message, true);
-    $cookieStore.remove('alert-warning');
+    $cookies.remove('alert-warning');
   }
-  message = $cookieStore.get('alert-success');
+  message = $cookies.get('alert-success');
   if (message !== void 0 && message !== null) {
     Alerts.displaySuccess(message);
-    $cookieStore.remove('alert-success');
+    $cookies.remove('alert-success');
   }
 
   wallet.setNote = (tx, text) => {

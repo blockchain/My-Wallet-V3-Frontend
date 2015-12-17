@@ -2,18 +2,18 @@ angular
   .module('walletApp')
   .controller("LoginCtrl", LoginCtrl);
 
-function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookieStore, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter) {
+function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookies, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.disableLogin = null;
   $scope.status.enterkey = false;
-  $scope.key = $cookieStore.get("key");
+  $scope.key = $cookies.get("key");
   $scope.errors = {
     uid: null,
     password: null,
     twoFactor: null
   };
-  $scope.uidAvailable = $cookieStore.get('uid') != null || $stateParams.uid;
+  $scope.uidAvailable = $cookies.get('uid') != null || $stateParams.uid;
   $scope.user = Wallet.user;
 
   //   Browser compatibility warnings:
@@ -88,7 +88,7 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookieStore
   if (Wallet.guid != null) {
     $scope.uid = Wallet.guid;
   } else {
-    $scope.uid = $stateParams.uid || $cookieStore.get("uid");
+    $scope.uid = $stateParams.uid || $cookies.get("uid");
   }
   if ($scope.key != null) {
     $scope.status.enterkey = true;
@@ -96,8 +96,8 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookieStore
   $scope.twoFactorCode = "";
   $scope.busy = false;
   $scope.isValid = false;
-  if (!!$cookieStore.get("password")) {
-    $scope.password = $cookieStore.get("password");
+  if (!!$cookies.get("password")) {
+    $scope.password = $cookies.get("password");
   }
   $scope.login = () => {
     if ($scope.busy) return;
@@ -126,10 +126,10 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookieStore
       Wallet.login($scope.uid, $scope.password, null, needs2FA, success, error);
     }
     if ($scope.uid != null && $scope.uid !== "") {
-      $cookieStore.put("uid", $scope.uid);
+      $cookies.put("uid", $scope.uid);
     }
     if ($scope.savePassword && $scope.password != null && $scope.password !== "") {
-      $cookieStore.put("password", $scope.password);
+      $cookies.put("password", $scope.password);
     }
   };
 
