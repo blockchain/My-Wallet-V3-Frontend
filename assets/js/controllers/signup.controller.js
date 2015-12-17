@@ -2,7 +2,9 @@ angular
   .module('walletApp')
   .controller("SignupCtrl", SignupCtrl);
 
-function SignupCtrl($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal, $translate, $cookieStore, $filter, $state, $http, languages) {
+SignupCtrl.$inject = ['$scope', '$state', '$cookies', '$filter', '$translate', '$uibModal', 'Wallet', 'Alerts', 'currency', 'languages'];
+
+function SignupCtrl($scope, $state, $cookies, $filter, $translate, $uibModal, Wallet, Alerts, currency, languages) {
   $scope.working = false;
   $scope.alerts = Alerts.alerts;
   $scope.status = Wallet.status;
@@ -14,7 +16,6 @@ function SignupCtrl($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModa
     }
   });
 
-  $scope.isValid = true;
   let language_guess = $filter("getByProperty")("code", $translate.use(), languages);
   if (language_guess == null) {
     $scope.language_guess = $filter("getByProperty")("code", "en", languages);
@@ -31,9 +32,10 @@ function SignupCtrl($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModa
   $scope.showAgreement = () => {
     const modalInstance = $uibModal.open({
       templateUrl: "partials/alpha-agreement.jade",
-      controller: 'SignupCtrl',
+      controller: function () {},
       windowClass: "bc-modal terms-modal"
     });
+    modalInstance.result.then(() => $scope.fields.acceptedAgreement = true);
   };
 
   $scope.close = () => {
@@ -41,21 +43,16 @@ function SignupCtrl($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModa
     $state.go("wallet.common.home");
   };
 
-  $scope.trySignup = () => {
-    if ($scope.isValid) $scope.signup();
-  };
-
   $scope.signup = () => {
-    $scope.validate();
-    if ($scope.isValid) {
+    if ($scope.signupForm.$valid) {
       $scope.working = true;
-      $scope.createWallet( uid => {
+      $scope.createWallet((uid) => {
         $scope.working = false;
         if (uid != null) {
-          $cookieStore.put("uid", uid);
+          $cookies.put("uid", uid);
         }
         if ($scope.savePassword) {
-          $cookieStore.put("password", $scope.fields.password);
+          $cookies.put("password", $scope.fields.password);
         }
         $scope.close("");
       });
@@ -63,93 +60,19 @@ function SignupCtrl($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModa
   };
 
   $scope.createWallet = successCallback => {
-    Wallet.create($scope.fields.password, $scope.fields.email, $scope.fields.language, $scope.fields.currency, uid => {
+    Wallet.create($scope.fields.password, $scope.fields.email, $scope.fields.language, $scope.fields.currency, (uid) => {
       successCallback(uid);
     });
   };
 
-  $scope.$watch("fields.confirmation", newVal => {
-    if ((newVal != null) && $scope.fields.password !== "") {
-      $scope.validate(false);
-    }
-  });
-
-  $scope.validate = visual => {
-    if (visual == null) {
-      visual = true;
-    }
-    $scope.isValid = true;
-    $scope.errors = {
-      email: null,
-      password: null,
-      confirmation: null
-    };
-    $scope.success = {
-      email: false,
-      password: false,
-      confirmation: false
-    };
-    if ($scope.fields.email === "") {
-      $scope.isValid = false;
-      $translate("EMAIL_ADDRESS_REQUIRED").then( translation => {
-        $scope.errors.email = translation;
-      });
-    } else if ($scope.form && $scope.form.$error.email) {
-      $scope.isValid = false;
-      $translate("EMAIL_ADDRESS_INVALID").then( translation => {
-        $scope.errors.email = translation;
-      });
-    } else {
-      $scope.success.email = true;
-    }
-    if ($scope.form && $scope.form.$error) {
-      if ($scope.form.$error.minEntropy) {
-        $scope.isValid = false;
-        $translate("TOO_WEAK").then( translation => {
-          $scope.errors.password = translation;
-        });
-      }
-      if ($scope.form.$error.maxlength) {
-        $scope.isValid = false;
-        $translate("TOO_LONG").then( translation => {
-          $scope.errors.password = translation;
-        });
-      }
-    }
-    if ($scope.fields.confirmation === "") {
-      $scope.isValid = false;
-    } else {
-      if ($scope.fields.confirmation === $scope.fields.password) {
-        $scope.success.confirmation = true;
-      } else {
-        $scope.isValid = false;
-        if (visual) {
-          $translate("NO_MATCH").then( translation => {
-            $scope.errors.confirmation = translation;
-          });
-        }
-      }
-    }
-    if (!$scope.fields.acceptedAgreement) {
-      $scope.isValid = false;
-    }
-  };
-  $scope.validate();
-
   $scope.$watch("language_guess", (newVal, oldVal) => {
-    if (newVal != null) {
+    if (newVal) {
       $translate.use(newVal.code);
       Wallet.changeLanguage(newVal);
     }
   });
 
   $scope.$watch("currency_guess", (newVal, oldVal) => {
-    if (newVal != null) {
-      Wallet.changeCurrency(newVal);
-    }
-  });
-
-  $scope.$on('signed_agreement', () => {
-    $scope.fields.acceptedAgreement = true;
+    if (newVal) Wallet.changeCurrency(newVal);
   });
 }
