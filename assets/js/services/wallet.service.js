@@ -1200,7 +1200,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
       successCallback();
     };
     let error = () => {
-      Alerts.displayError('Second password cannot be unset. Contact support.');
+      $translate('SECOND_PASSWORD_REMOVE_ERR').then(Alerts.displayError);
       errorCallback();
     };
     let cancel = errorCallback;
