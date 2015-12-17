@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("AppCtrl", AppCtrl);
 
-function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $location, $cookieStore, $timeout, $uibModal, $window, $translate) {
+function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $location, $timeout, $uibModal, $window, $translate) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $rootScope.isMock = Wallet.isMock;
