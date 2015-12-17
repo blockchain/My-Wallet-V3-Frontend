@@ -83,12 +83,12 @@ describe('currency', () => {
 
     it('should give "mBTC" the right places', inject((currency) => {
       let decimals = currency.decimalPlacesForCurrency(currency.bitCurrencies[1]);
-      expect(decimals).toEqual(6);
+      expect(decimals).toEqual(5);
     }));
 
     it('should give "bits" the right places', inject((currency) => {
       let decimals = currency.decimalPlacesForCurrency(currency.bitCurrencies[2]);
-      expect(decimals).toEqual(4);
+      expect(decimals).toEqual(2);
     }));
 
     it('should give fiat the right places', inject((currency) => {
@@ -153,7 +153,7 @@ describe('currency', () => {
 
   describe('formatCurrencyForView()', () => {
     let amount = 0.123456789;
-    let viewValues = ['0.12345679 BTC', '0.123457 mBTC', '0.1235 bits'];
+    let viewValues = ['0.12345679 BTC', '0.12346 mBTC', '0.12 bits'];
 
     for (let i in viewValues) {
       it(`should format btc currency ${i}`, inject((Wallet, currency) => {
