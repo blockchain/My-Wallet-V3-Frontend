@@ -56,7 +56,13 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   wallet.my = MyWallet;
   wallet.settings_api = MyBlockchainSettings;
   wallet.store = MyWalletStore;
+
   wallet.api = MyBlockchainApi;
+  const customRootURL = $rootScope.rootURL;
+  if(customRootURL) {
+    wallet.api.setRootURL(customRootURL);
+  }
+
   wallet.payment = MyWalletPayment;
   wallet.tokenEndpoints = MyWalletTokenEndpoints;
   wallet.transactions = [];
