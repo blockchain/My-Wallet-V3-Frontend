@@ -129,6 +129,16 @@ function AppRouter($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('public.authorize-approve', {
+      url: '/authorize-approve/{token:.*}',
+      views: {
+        alerts: commonViews.alerts,
+        contents: {
+          templateUrl: 'partials/authorize-approve.jade',
+          controller: 'AuthorizeApproveCtrl'
+        }
+      }
+    })
     .state('signup.finish', {
       url: '/signup/finish',
       views: commonViews
@@ -250,16 +260,6 @@ function AppRouter($stateProvider, $urlRouterProvider) {
         left: walletNav,
         right: {
           controller: 'UnsubscribeCtrl'
-        }
-      }
-    })
-    .state('wallet.common.authorize-approve', {
-      url: '/authorize-approve/{token:.*}',
-      views: {
-        top: top,
-        left: walletNav,
-        right: {
-          controller: 'AuthorizeApproveCtrl'
         }
       }
     })

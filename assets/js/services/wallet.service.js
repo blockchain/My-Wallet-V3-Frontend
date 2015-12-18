@@ -1214,6 +1214,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     const error = (message) => {
       console.log(message);
       errorCallback(message);
+      wallet.applyIfNeeded();
     }
 
     wallet.tokenEndpoints.verifyEmail(token, success, error);
@@ -1228,12 +1229,13 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     const error = (message) => {
       console.log(message);
       errorCallback(message);
+      wallet.applyIfNeeded();
     }
 
     wallet.tokenEndpoints.unsubscribe(token, success, error);
   }
 
-  wallet.authorizeApprove = (token, successCallback, errorCallback) => {
+  wallet.authorizeApprove = (token, successCallback, differentBrowserCallback, differentBrowserApproved, errorCallback) => {
     const success = (guid) => {
       successCallback(guid);
       wallet.applyIfNeeded();
@@ -1242,9 +1244,15 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     const error = (message) => {
       console.log(message);
       errorCallback(message);
+      wallet.applyIfNeeded();
     }
 
-    wallet.tokenEndpoints.authorizeApprove(token, success, error);
+    const differentBrowser = (details) => {
+      differentBrowserCallback(details);
+      wallet.applyIfNeeded();
+    }
+
+    wallet.tokenEndpoints.authorizeApprove(token, success, differentBrowser, differentBrowserApproved, error);
   }
 
   // Testing: only works on mock MyWallet
