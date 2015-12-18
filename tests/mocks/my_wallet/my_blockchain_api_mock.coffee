@@ -8,4 +8,5 @@ angular
       $q.resolve(result)
     getFiatAtTime: (time, amount, currency) ->
       $q.resolve(amount.toFixed(2))
+    setRootURL: () ->
   })
