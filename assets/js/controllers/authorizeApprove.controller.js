@@ -4,6 +4,10 @@ angular
 
 function AuthorizeApproveCtrl($window, $scope, Wallet, $stateParams, $state, Alerts, $translate) {
   const success = (uid) => {
+    $scope.checkingToken = false;
+    $scope.busyApproving = false;
+    $scope.busyRejecting = false;
+
 
     $window.close(); // This is sometimes ignored, hence the code below:
 
@@ -20,14 +24,46 @@ function AuthorizeApproveCtrl($window, $scope, Wallet, $stateParams, $state, Ale
         });
       });
     }
-
-
   }
 
   const error = (message) => {
+    $scope.checkingToken = false;
+    $scope.busyApproving = false;
+    $scope.busyRejecting = false;
+
     $state.go("public.login-no-uid");
     Alerts.displayError(message, true);
   }
 
-  Wallet.authorizeApprove($stateParams.token, success, error)
+  const differentBrowser = (details) => {
+    $scope.checkingToken = false;
+
+    $scope.differentBrowser = true;
+    $scope.details = details;
+  }
+
+  $scope.checkingToken = true;
+
+  Wallet.authorizeApprove($stateParams.token, success, differentBrowser, null, error);
+
+  $scope.approve = () => {
+    $scope.busyApproving = true;
+    Wallet.authorizeApprove($stateParams.token, success, () => {}, true, error);
+  }
+
+  $scope.reject = () => {
+    $scope.busyRejecting = true;
+
+    const rejected = () => {
+      $scope.busyRejecting = false;
+
+      $translate('AUTHORIZE_REJECT_SUCCESS').then(translation => {
+        $state.go("public.login-no-uid").then(() => {
+          Alerts.displaySuccess(translation)
+        });
+      });
+    };
+
+    Wallet.authorizeApprove($stateParams.token, rejected, () => {}, false, error);
+  }
 }

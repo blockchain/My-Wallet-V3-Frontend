@@ -505,5 +505,16 @@
   "NOTIFICATIONS_EXPLAIN" : "Enable notifications to receive an email whenever you receive bitcoins. Only labeled addresses in your accounts and imported addresses are eligible to trigger notifications.",
   "VERIFY_EMAIL_FIRST" : "Please verify your email address first.",
   "UNSUBSCRIBE_SUCCESS" : "We have removed your email address (and phone number) from our systems.",
-  "AUTHORIZE_APPROVE_SUCCESS" : "Login approved! Please return to your previous browser / tab to see your wallet."
+  "AUTHORIZE_APPROVE_SUCCESS" : "Login approved! Please return to your previous browser / tab to see your wallet.",
+  "AUTHORIZE_APPROVE_OTHER_BROWSER" : "Login attempt from other browser",
+  "AUTHORIZE_APPROVE_OTHER_BROWSER_EXPLAIN" : "Someone, hopefully you, is attempting to login to your wallet from a different browser.",
+  "AUTHORIZE_APPROVE_REQUESTING_DEVICE" : "Requesting device",
+  "AUTHORIZE_APPROVE_THIS_DEVICE" : "This device",
+  "ACCEPT" : "Accept",
+  "REJECT" : "Reject",
+  "BROWSER" : "Browser",
+  "IP_ADDRESS" : "IP Address",
+  "COUNTRY_OF_ORIGIN" : "Country Of Origin",
+  "AUTHORIZE_REJECT_SUCCESS" : "Login attempt rejected! Please contact support if this was not you.",
+  "CHECKING_LOGIN_ATTEMPT" : "Checking login attempt"
 }
