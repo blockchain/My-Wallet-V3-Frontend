@@ -243,6 +243,16 @@ function AppRouter($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('wallet.common.unsubscribe', {
+      url: '/unsubscribe/{token:.*}',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          controller: 'UnsubscribeCtrl'
+        }
+      }
+    })
     .state('wallet.common.settings', {
       url: '/settings',
       views: {
