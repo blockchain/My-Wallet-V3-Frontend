@@ -23,6 +23,12 @@ Install dependencies:
 npm install
 ```
 
+Create a file called `.env` in the root of the project. Put the following in it:
+
+```
+ROOT_URL=https://blockchain.info/
+```
+
 ## Build
 
 Grunt watches and compiles the Jade view templates and CSS. Keep it running:
@@ -98,8 +104,6 @@ If you don't care about securely downloading dependencies and want to avoid usin
 You can test the resulting files by setting `DIST=1` in `.env` and restarting the server.
 
 `index.html` should be cached using `If-Modified-Since` or `etag`. All other files contain a hash of their content and should be cached forever.
-
-If you're using a different backend from `https://blockchain.info/` (e.g. for development), set `ROOT_URL` in `.env`.
 
 ## Security
 
