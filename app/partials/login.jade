@@ -10,7 +10,7 @@ div
             span(translate="CLICK_HERE_TO_CREATE_WALLET")
       p.em-300(translate="LOGIN_BELOW")
   //GUID & Password fields
-  form.ptl.form-horizontal.clearfix(role="form")
+  form.ptl.form-horizontal.clearfix(role="form" autocomplete="off" novalidate)
     .form-group(ng-class="{'has-error': errors.uid}")
       label.em-500(translate="UID", for="UID_input")
       div

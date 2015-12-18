@@ -114,7 +114,7 @@ function currency($q, MyBlockchainApi) {
 
   function decimalPlacesForCurrency(currency) {
     if (currency == null) return null;
-    let decimalPlaces = ({ 'BTC': 8, 'mBTC': 6, 'bits': 4 })[currency.code];
+    let decimalPlaces = ({ 'BTC': 8, 'mBTC': 5, 'bits': 2 })[currency.code];
     return decimalPlaces || 2;
   }
 
