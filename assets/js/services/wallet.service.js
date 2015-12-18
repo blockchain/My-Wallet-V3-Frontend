@@ -1219,6 +1219,20 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     wallet.tokenEndpoints.verifyEmail(token, success, error);
   }
 
+  wallet.unsubscribe = (token, successCallback, errorCallback) => {
+    const success = (guid) => {
+      successCallback(guid);
+      wallet.applyIfNeeded();
+    }
+
+    const error = (message) => {
+      console.log(message);
+      errorCallback(message);
+    }
+
+    wallet.tokenEndpoints.unsubscribe(token, success, error);
+  }
+
   // Testing: only works on mock MyWallet
 
   wallet.refresh = () => {
