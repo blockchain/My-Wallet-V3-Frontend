@@ -61,6 +61,8 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   const customRootURL = $rootScope.rootURL;
   if(customRootURL) {
     wallet.api.setRootURL(customRootURL);
+  } else {
+    wallet.api.setRootURL("/");
   }
 
   wallet.payment = MyWalletPayment;
