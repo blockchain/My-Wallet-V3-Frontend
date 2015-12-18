@@ -1205,15 +1205,14 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   };
 
   wallet.verifyEmail = (token, successCallback, errorCallback) => {
-    const success = (result) => {
-      // TODO: process result in My-Wallet-V3
-
+    const success = (guid) => {
       wallet.user.isEmailVerified = true;
-      successCallback(result.guid);
+      successCallback(guid);
       wallet.applyIfNeeded();
     }
 
     const error = (message) => {
+      console.log(message);
       errorCallback(message);
     }
 
