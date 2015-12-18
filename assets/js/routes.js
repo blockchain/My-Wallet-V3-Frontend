@@ -253,6 +253,16 @@ function AppRouter($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('wallet.common.authorize-approve', {
+      url: '/authorize-approve/{token:.*}',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          controller: 'AuthorizeApproveCtrl'
+        }
+      }
+    })
     .state('wallet.common.settings', {
       url: '/settings',
       views: {
