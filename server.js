@@ -10,6 +10,7 @@ var port      = process.env.PORT || 8080
   , dist      = parseInt(process.env.DIST) === 1
   , origins   = (process.env.BLOCKCHAIN || '').split(' ')
   , whitelist = (process.env.IP_WHITELIST || '').split(' ')
+  , rootURL   = process.env.ROOT_URL || 'https://blockchain.info/'
 
 // App configuration
 var app = express();
@@ -17,11 +18,11 @@ var app = express();
 app.use(function (req, res, next) {
   if (req.url === '/') {
     var cspHeader = ([
-      "img-src 'self' blockchain.info data:",
+      "img-src 'self' " + rootURL + " data:",
       "style-src 'self' 'sha256-vv5i1tRAGZ/gOQeRpI3CEWtvnCpu5FCixlD2ZPu7h84=' 'sha256-47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU='",
       "child-src 'none'",
       "script-src 'self' 'sha256-mBeSvdVuQxRa2pGoL8lzKX14b2vKgssqQoW36iRlU9g=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='",
-      "connect-src 'self' http://mats.blockchain.com:8080 wss://*.blockchain.info https://blockchain.info",
+      "connect-src 'self' " + rootURL + " wss://*.blockchain.info",
       "object-src 'none'",
       "media-src 'self' data: mediastream: blob:",
       "font-src 'self'", ''
