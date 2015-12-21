@@ -10,7 +10,7 @@
       type="text"
       tabindex="1"
       autocomplete="off"
-      placeholder="Paste or scan an address or select an account"
+      placeholder="Paste or scan an address or select a destination"
       ng-model="model.address"
       ng-hide="model.type === 'Accounts'"
       ng-blur="blur()"
@@ -29,8 +29,6 @@
         span.caret
         span.sr-only Toggle Dropdown
       ul.uib-dropdown-menu.dropdown-menu-right.drop-menu
-        li.dropdown-header
-          | Accounts
         li(ng-repeat="account in accounts")
           a(ng-click="setModel(account)" ng-disabled="true")
             | {{ account.label }}

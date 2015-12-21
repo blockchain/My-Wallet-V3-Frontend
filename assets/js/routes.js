@@ -307,7 +307,7 @@ function AppRouter($stateProvider, $urlRouterProvider) {
       }
     })
     .state('wallet.common.settings.accounts_index', {
-      url: '/accounts',
+      url: '/addresses',
       views: {
         settings: {
           templateUrl: 'partials/settings/accounts.jade',
