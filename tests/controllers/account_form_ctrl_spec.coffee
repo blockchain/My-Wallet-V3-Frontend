@@ -76,13 +76,6 @@ describe "AccountFormCtrl", ->
         expect(Wallet.accounts()[Wallet.accounts().length - 1].label).toBe("New Account")
     )
 
-    it "should show a confirmation modal", inject(($uibModal)->
-      spyOn($uibModal, "open").and.callThrough()
-      scope.createAccount()
-      expect($uibModal.open).toHaveBeenCalled()
-      expect($uibModal.open.calls.argsFor(0)[0].windowClass).toEqual("notification-modal")
-    )
-
   describe "rename", ->
 
     it "original name should be shown", ->
