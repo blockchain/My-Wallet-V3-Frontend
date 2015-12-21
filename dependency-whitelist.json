@@ -43,8 +43,8 @@
     "repo" : "angular-translate/bower-angular-translate-loader-static-files"
   },
   "angular-inview" : {
-    "version": "1.5.0",
-    "commits" : ["a4a3ce66181979a34a004d996982199f5bf69d32"],
+    "version": "1.5.6",
+    "commits" : ["96cb2f24b62849632ffdcb62cbb679de594d7629"],
     "repo" : "thenikso/angular-inview"
   },
   "angular-password-entropy" : {
