@@ -29,14 +29,6 @@ function AccountFormCtrl($scope, Wallet, $uibModalInstance, $log, $translate, ac
       $scope.status.busy = false;
       $uibModalInstance.dismiss("");
       Wallet.saveActivity(3);
-      $translate(['SUCCESS', 'ACCOUNT_CREATED']).then(translations => {
-        $scope.$emit('showNotification', {
-          type: 'created-account',
-          icon: 'ti-layout-list-post',
-          heading: translations.SUCCESS,
-          msg: translations.ACCOUNT_CREATED
-        });
-      });
     };
 
     const error = () => {$scope.status.busy = false;}

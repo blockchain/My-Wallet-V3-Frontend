@@ -517,7 +517,7 @@ describe "SendCtrl", ->
       it "should set the label to an account", ->
         scope.transaction.destinations[0] = scope.accounts()[0]
         scope.updateToLabel()
-        expect(scope.toLabel).toEqual('Checking Account')
+        expect(scope.toLabel).toEqual('Checking')
 
       it "should set the label when advanced", ->
         scope.advanced = true
