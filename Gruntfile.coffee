@@ -405,6 +405,8 @@ module.exports = (grunt) ->
           intro : 'Recent changes'
           grep_commits: '^fix|^feat|^ui|^copy|^docs|^dep|^refactor|^chore|^test|^dev|BREAKING'
           repo_url: 'https://github.com/blockchain/My-Wallet-HD-Frontend'
+          branch_name: 'beta'
+          tag: '1.2.17'
 
     coveralls:
       options:
