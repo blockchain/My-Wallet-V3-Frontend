@@ -416,6 +416,15 @@ module.exports = (grunt) ->
         force: true
         recursive: true
 
+    replace:
+      root_url:
+        src: ['build/js/services/wallet.service.js'],
+        overwrite: true,
+        replacements: [{
+          from: 'setRootURL("/")'
+          to: () =>
+            'setRootURL("' + @rootUrl + '")'
+        }]
 
   grunt.loadNpmTasks "grunt-contrib-uglify"
   grunt.loadNpmTasks('grunt-contrib-concat')
@@ -435,6 +444,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('git-changelog')
   grunt.loadNpmTasks('grunt-babel')
   grunt.loadNpmTasks('grunt-karma-coveralls')
+  grunt.loadNpmTasks('grunt-text-replace')
 
   grunt.registerTask "compile", ["coffee"]
 
@@ -457,43 +467,69 @@ module.exports = (grunt) ->
   ]
 
   # Default task(s).
-  grunt.registerTask "dist", [
-    "shell:clean_bower_and_npm_cache"
-    "clean"
-    "shell:npm_install_dependencies"
-    "build"
-    "shell:check_dependencies"
-    "shell:npm_install_dependencies"
-    "shell:bower_install_dependencies"
-    "shell:check_pgp_signatures"
-    "concat:application_dependencies"
-    "uglify:application_dependencies"
-    "concat:application"
-    "concat_css:app"
-    "jade"
-    "preprocess"
-    "copy:main"
-    "rename:assets"
-    "rename:html"
-    "git_changelog"
-  ]
+  grunt.registerTask "dist", (rootUrl) =>
+    grunt.task.run [
+      "shell:clean_bower_and_npm_cache"
+      "clean"
+      "shell:npm_install_dependencies"
+      "build"
+    ]
 
-  grunt.registerTask "dist_unsafe", [
-    "shell:clean_bower_and_npm_cache"
-    "clean"
-    "shell:npm_install_dependencies"
-    "build"
-    "shell:skip_check_dependencies"
-    "concat:application_dependencies"
-    "uglify:application_dependencies"
-    "concat:application"
-    "concat_css:app"
-    "jade"
-    "preprocess"
-    "copy:main"
-    "rename:assets"
-    "rename:html"
-  ]
+    if rootUrl
+      @rootUrl = rootUrl
+
+      console.log("Custom root URL: " + @rootUrl)
+
+      grunt.task.run [
+        "replace:root_url"
+      ]
+
+    grunt.task.run [
+      "shell:check_dependencies"
+      "shell:npm_install_dependencies"
+      "shell:bower_install_dependencies"
+      "shell:check_pgp_signatures"
+      "concat:application_dependencies"
+      "uglify:application_dependencies"
+      "concat:application"
+      "concat_css:app"
+      "jade"
+      "preprocess"
+      "copy:main"
+      "rename:assets"
+      "rename:html"
+      "git_changelog"
+    ]
+
+  grunt.registerTask "dist_unsafe", (rootUrl) =>
+    grunt.task.run [
+      "shell:clean_bower_and_npm_cache"
+      "clean"
+      "shell:npm_install_dependencies"
+      "build"
+    ]
+
+    if rootUrl
+      @rootUrl = rootUrl
+
+      console.log("Custom root URL: " + @rootUrl)
+
+      grunt.task.run [
+        "replace:root_url"
+      ]
+
+    grunt.task.run [
+      "shell:skip_check_dependencies"
+      "concat:application_dependencies"
+      "uglify:application_dependencies"
+      "concat:application"
+      "concat_css:app"
+      "jade"
+      "preprocess"
+      "copy:main"
+      "rename:assets"
+      "rename:html"
+    ]
 
   grunt.registerTask "deploy_static_to_dev", [
     "dist"
