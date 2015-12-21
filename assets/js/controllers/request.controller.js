@@ -22,7 +22,7 @@ function RequestCtrl($scope, Wallet, Alerts, currency, $uibModalInstance, $log, 
   for(const account of $scope.accounts()) {
     if (account.index != null && !account.archived) {
       let acct = angular.copy(account);
-      acct.type = "";
+      acct.type = "Accounts";
       $scope.destinations.push(acct);
       if ((destination != null) && (destination.index != null) && destination.index === acct.index) {
         $scope.fields.to = acct;
