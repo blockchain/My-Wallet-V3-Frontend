@@ -14,9 +14,7 @@
             label(translate="FROM:")
             p.text.mbs {{::from}}
           .tx-receiver
-            label
-              span(translate="TO")
-              |:  
+            label(translate="TO:")
             ul.pln.flex-column.flex.type-sm
               li.flex-center.mbm(ng-repeat="destination in destinations")
                 span.text-overflow-hidden.flex-1.flex.text
