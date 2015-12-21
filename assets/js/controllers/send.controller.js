@@ -228,7 +228,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     } else {
       let dest = destinations[0];
       $scope.toLabel = dest.index == null ?
-        dest.label || dest.address : `${dest.label}`;
+        dest.label || dest.address : `${dest.label} Account`;
     }
   };
 
@@ -271,7 +271,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       balance: origin.balance,
       archived: origin.archived
     };
-    formatted.type = origin.index != null ? '' : 'Imported Addresses';
+    formatted.type = origin.index != null ? 'Accounts' : 'Imported Addresses';
     if (origin.index == null) formatted.isWatchOnly = origin.isWatchOnly;
     return formatted;
   };
