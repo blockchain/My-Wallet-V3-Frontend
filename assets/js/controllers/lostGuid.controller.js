@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('LostGuidCtrl', LostGuidCtrl);
 
-function LostGuidCtrl($scope, $http, $translate, Wallet, Alerts) {
+function LostGuidCtrl($scope, $rootScope, $http, $translate, Wallet, Alerts) {
   $scope.currentStep = 1;
   $scope.fields = {
     email: '',
@@ -11,7 +11,7 @@ function LostGuidCtrl($scope, $http, $translate, Wallet, Alerts) {
 
   $scope.refreshCaptcha = () => {
     let time = new Date().getTime();
-    $scope.captchaSrc = `https://blockchain.info/kaptcha.jpg?timestamp=${time}`;
+    $scope.captchaSrc = $rootScope.rootURL + `kaptcha.jpg?timestamp=${time}`;
     $scope.fields.captcha = '';
   };
 
@@ -36,7 +36,7 @@ function LostGuidCtrl($scope, $http, $translate, Wallet, Alerts) {
       }
     };
     let httpOptions = {
-      url     : 'https://blockchain.info/wallet/recover-wallet',
+      url     : $rootScope.rootURL + 'wallet/recover-wallet',
       method  : 'GET',
       params  : {
         param1  : $scope.fields.email,
@@ -50,7 +50,7 @@ function LostGuidCtrl($scope, $http, $translate, Wallet, Alerts) {
 
   // Set SID cookie by requesting headers
   $http({
-    url: 'https://blockchain.info/wallet/login',
+    url: $rootScope.rootURL + 'wallet/login',
     method: 'HEAD',
     withCredentials: true
   }).then($scope.refreshCaptcha);
