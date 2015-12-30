@@ -64,6 +64,9 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   } else {
     wallet.api.setRootURL("/");
   }
+  if($rootScope.rootURL === undefined) {
+    $rootScope.rootURL = "/";
+  }
 
   wallet.payment = MyWalletPayment;
   wallet.tokenEndpoints = MyWalletTokenEndpoints;
