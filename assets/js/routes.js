@@ -129,6 +129,16 @@ function AppRouter($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('public.reset-two-factor', {
+      url: '/reset-2fa',
+      views: {
+        alerts: commonViews.alerts,
+        contents: {
+          templateUrl: 'partials/reset-two-factor.jade',
+          controller: 'ResetTwoFactorCtrl'
+        }
+      }
+    })
     .state('public.authorize-approve', {
       url: '/authorize-approve/{token:.*}',
       views: {

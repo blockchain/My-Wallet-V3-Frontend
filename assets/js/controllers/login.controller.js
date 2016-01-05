@@ -6,14 +6,16 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookies, $u
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.disableLogin = null;
-  $scope.status.enterkey = false;
-  $scope.key = $cookies.get("key");
   $scope.errors = {
     uid: null,
     password: null,
     twoFactor: null
   };
-  $scope.uidAvailable = $cookies.get('uid') != null || $stateParams.uid;
+
+  $scope.uid = $stateParams.uid || Wallet.guid || $rootScope.loginFormUID;
+
+  $scope.uidAvailable = !!$scope.uid
+
   $scope.user = Wallet.user;
 
   //   Browser compatibility warnings:
@@ -85,14 +87,6 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookies, $u
       Alerts.displayWarning(translation, true);
     });
   }
-  if (Wallet.guid != null) {
-    $scope.uid = Wallet.guid;
-  } else {
-    $scope.uid = $stateParams.uid || $cookies.get("uid");
-  }
-  if ($scope.key != null) {
-    $scope.status.enterkey = true;
-  }
   $scope.twoFactorCode = "";
   $scope.busy = false;
   $scope.isValid = false;
@@ -163,6 +157,7 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookies, $u
   });
 
   $scope.$watch("uid + password + twoFactor", () => {
+    $rootScope.loginFormUID = $scope.uid;
     let isValid = null;
     $scope.errors.uid = null;
     $scope.errors.password = null;

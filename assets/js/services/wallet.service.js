@@ -307,6 +307,32 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     };
     wallet.my.recoverGuid(email, captcha, success, error);
   };
+
+  wallet.requestTwoFactorReset = (guid, email, new_email, secret, message, captcha, successCallback, errorCallback) => {
+    Alerts.clear()
+    let success = (message) => {
+      Alerts.displaySuccess(message);
+      successCallback();
+      wallet.applyIfNeeded();
+    };
+    let error = (error) => {
+      switch (error) {
+        case 'Captcha Code Incorrect':
+          Alerts.displayError($translate.instant('CAPTCHA_INCORRECT'), true);
+          break;
+        case 'Quota Exceeded':
+          Alerts.displayError($translate.instant('QUOTA_EXCEEDED'), true);
+          break;
+        default:
+          Alerts.displayError(error, true);
+      }
+
+      errorCallback();
+      wallet.applyIfNeeded();
+    };
+    wallet.my.requestTwoFactorReset(guid, email, new_email, secret, message, captcha, success, error);
+  };
+
   wallet.create = (password, email, currency, language, success_callback) => {
     let success = (uid) => {
       Alerts.displaySuccess('Wallet created with identifier: ' + uid, true);
