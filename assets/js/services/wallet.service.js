@@ -58,14 +58,18 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   wallet.store = MyWalletStore;
 
   wallet.api = MyBlockchainApi;
-  const customRootURL = $rootScope.rootURL;
-  if(customRootURL) {
-    wallet.api.setRootURL(customRootURL);
-  } else {
-    wallet.api.setRootURL("/");
-  }
-  if($rootScope.rootURL === undefined) {
-    $rootScope.rootURL = "/";
+
+  // If customRootURL is set by index.jade:
+  //                    Grunt can replace this:
+  const customRootURL = $rootScope.rootURL || "/";
+  wallet.api.setRootURL(customRootURL);
+  // If customRootURL is set by Grunt:
+  $rootScope.rootURL = customRootURL;
+
+  //                         Grunt can replace this:
+  const customWebSocketURL = $rootScope.webSocketURL;
+  if(customWebSocketURL) {
+    wallet.my.ws.setURL(customWebSocketURL);
   }
 
   wallet.payment = MyWalletPayment;

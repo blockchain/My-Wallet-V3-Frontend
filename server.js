@@ -11,6 +11,7 @@ var port      = process.env.PORT || 8080
   , origins   = (process.env.BLOCKCHAIN || '').split(' ')
   , whitelist = (process.env.IP_WHITELIST || '').split(' ')
   , rootURL   = process.env.ROOT_URL || 'https://blockchain.info/'
+  , webSocketURL = process.env.WEBSOCKET_URL || false
 
 // App configuration
 var app = express();
@@ -22,7 +23,7 @@ app.use(function (req, res, next) {
       "style-src 'self' 'sha256-vv5i1tRAGZ/gOQeRpI3CEWtvnCpu5FCixlD2ZPu7h84=' 'sha256-47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU='",
       "child-src 'none'",
       "script-src 'self' 'sha256-mBeSvdVuQxRa2pGoL8lzKX14b2vKgssqQoW36iRlU9g=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='",
-      "connect-src 'self' " + rootURL + " wss://*.blockchain.info",
+      "connect-src 'self' " + rootURL + " " + (webSocketURL || "wss://*.blockchain.info"),
       "object-src 'none'",
       "media-src 'self' data: mediastream: blob:",
       "font-src 'self'", ''

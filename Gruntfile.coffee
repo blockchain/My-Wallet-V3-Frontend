@@ -421,9 +421,17 @@ module.exports = (grunt) ->
         src: ['build/js/services/wallet.service.js'],
         overwrite: true,
         replacements: [{
-          from: 'setRootURL("/")'
+          from: 'customRootURL = $rootScope.rootURL'
           to: () =>
-            'setRootURL("' + @rootUrl + '")'
+            'customRootURL = $rootScope.rootURL = "https://' + @rootUrl + '/"'
+        }]
+      web_socket_url:
+        src: ['build/js/services/wallet.service.js'],
+        overwrite: true,
+        replacements: [{
+          from: 'customWebSocketURL = $rootScope.webSocketURL'
+          to: () =>
+            'customWebSocketURL = "wss://' + @rootUrl + '/inv"'
         }]
 
   grunt.loadNpmTasks "grunt-contrib-uglify"
@@ -467,7 +475,7 @@ module.exports = (grunt) ->
   ]
 
   # Default task(s).
-  grunt.registerTask "dist", (rootUrl) =>
+  grunt.registerTask "dist", (rootUrl, port) =>
     grunt.task.run [
       "shell:clean_bower_and_npm_cache"
       "clean"
@@ -478,10 +486,14 @@ module.exports = (grunt) ->
     if rootUrl
       @rootUrl = rootUrl
 
+      if port
+        @rootUrl += ":" + port
+
       console.log("Custom root URL: " + @rootUrl)
 
       grunt.task.run [
         "replace:root_url"
+        "replace:web_socket_url"
       ]
 
     grunt.task.run [
@@ -501,7 +513,7 @@ module.exports = (grunt) ->
       "git_changelog"
     ]
 
-  grunt.registerTask "dist_unsafe", (rootUrl) =>
+  grunt.registerTask "dist_unsafe", (rootUrl, port) =>
     grunt.task.run [
       "shell:clean_bower_and_npm_cache"
       "clean"
@@ -512,10 +524,14 @@ module.exports = (grunt) ->
     if rootUrl
       @rootUrl = rootUrl
 
+      if port
+        @rootUrl += ":" + port
+
       console.log("Custom root URL: " + @rootUrl)
 
       grunt.task.run [
         "replace:root_url"
+        "replace:web_socket_url"
       ]
 
     grunt.task.run [

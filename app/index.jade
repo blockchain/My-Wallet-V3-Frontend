@@ -1,5 +1,5 @@
 doctype
-<!-- @if !PRODUCTION --><html lang='en' ng-app='walletApp' ng-init="savePassword=#{ process.env.SAVE_PASSWORD || false }; rootURL='#{ process.env.ROOT_URL }';" ng-csp><!-- @endif -->
+<!-- @if !PRODUCTION --><html lang='en' ng-app='walletApp' ng-init="savePassword=#{ process.env.SAVE_PASSWORD || false }; rootURL='#{ process.env.ROOT_URL }'; webSocketURL='#{ process.env.WEBSOCKET_URL }';" ng-csp><!-- @endif -->
 <!-- @if PRODUCTION !><html lang='en' ng-app='walletApp' ng-csp><!-- @endif -->
 head
   meta(charset='utf-8')
