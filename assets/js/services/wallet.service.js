@@ -333,6 +333,21 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     wallet.my.requestTwoFactorReset(guid, email, new_email, secret, message, captcha, success, error);
   };
 
+  wallet.resetTwoFactorToken = (token, successCallback, errorCallback) => {
+    const success = (obj) => {
+      successCallback(obj);
+      wallet.applyIfNeeded();
+    }
+
+    const error = (message) => {
+      console.log(message);
+      errorCallback(message);
+      wallet.applyIfNeeded();
+    }
+
+    wallet.tokenEndpoints.resetTwoFactor(token, success, error);
+  }
+
   wallet.create = (password, email, currency, language, success_callback) => {
     let success = (uid) => {
       Alerts.displaySuccess('Wallet created with identifier: ' + uid, true);

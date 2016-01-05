@@ -149,6 +149,16 @@ function AppRouter($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('public.reset-two-factor-token', {
+      url: '/reset-two-factor/{token:.*}',
+      views: {
+        alerts: commonViews.alerts,
+        contents: {
+          templateUrl: 'partials/reset-two-factor-token.jade',
+          controller: 'ResetTwoFactorTokenCtrl'
+        }
+      }
+    })
     .state('signup.finish', {
       url: '/signup/finish',
       views: commonViews
