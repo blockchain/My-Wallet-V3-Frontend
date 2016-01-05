@@ -24,28 +24,12 @@ function LostGuidCtrl($scope, $rootScope, $http, $translate, Wallet, Alerts) {
     let error = (res) => {
       $scope.working = false;
       $scope.refreshCaptcha();
-      switch (res.data.initial_error) {
-        case 'Captcha Code Incorrect':
-          Alerts.displayError($translate.instant('CAPTCHA_INCORRECT'));
-          break;
-        case 'Quota Exceeded':
-          Alerts.displayError($translate.instant('QUOTA_EXCEEDED'));
-          break;
-        default:
-          Alerts.displayError($translate.instant('UNKNOWN_ERROR'));
-      }
     };
-    let httpOptions = {
-      url     : $rootScope.rootURL + 'wallet/recover-wallet',
-      method  : 'GET',
-      params  : {
-        param1  : $scope.fields.email,
-        kaptcha : $scope.fields.captcha,
-        format  : 'json'
-      },
-      withCredentials: true
-    };
-    $http(httpOptions).then(success).catch(error);
+
+    $scope.remindForm.$setPristine();
+    $scope.remindForm.$setUntouched();
+
+    Wallet.recoverGuid($scope.fields.email, $scope.fields.captcha, success, error)
   };
 
   // Set SID cookie by requesting headers
