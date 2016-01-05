@@ -9,7 +9,7 @@ div
     novalidate)
     .security-red.mbl.mtl.em-400.flex-center
       i.ti-hand-stop.mrm.h3.mvn.hidden-xs
-      span(translate="ALPHA_WARNING")
+      span(translate="USER_AGREEMENT_WARNING")
     .form-group(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
       label.col-sm-4.control-label(translate="EMAIL")
       .col-sm-8
@@ -56,7 +56,7 @@ div
           required)
       label.em-300.col-sm-8
         | I have read and agree to the 
-        a.em-500(ng-click="showAgreement()") Alpha Program Participation Agreement
+        a.em-500(ng-click="showAgreement()", translate="USER_AGREEMENT") 
     .flex-center.flex-end.mbl
       button.button-primary(
         type="submit"

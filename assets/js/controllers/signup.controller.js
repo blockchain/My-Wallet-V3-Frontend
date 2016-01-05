@@ -31,7 +31,7 @@ function SignupCtrl($scope, $state, $cookies, $filter, $translate, $uibModal, Wa
 
   $scope.showAgreement = () => {
     const modalInstance = $uibModal.open({
-      templateUrl: "partials/alpha-agreement.jade",
+      templateUrl: "partials/user-agreement.jade",
       controller: function () {},
       windowClass: "bc-modal terms-modal"
     });
