@@ -4,8 +4,6 @@ angular
 
 function VerifyEmailCtrl($scope, Wallet, $stateParams, $state, Alerts, $translate, $rootScope) {
   const success = (uid) => {
-    uid = null;
-
     if(uid) {
       $translate(['SUCCESS', 'EMAIL_VERIFIED_SUCCESS']).then(translations => {
         $state.go("public.login-uid", {uid: uid}).then(() =>{
