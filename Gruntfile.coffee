@@ -1,3 +1,6 @@
+fs = require("fs")
+path = require("path")
+
 module.exports = (grunt) ->
 
   grunt.initConfig
@@ -263,33 +266,29 @@ module.exports = (grunt) ->
           format: "{{basename}}-{{hash}}.{{ext}}"
 
           callback: (befores, afters) ->
+            publicdir = fs.realpathSync("dist")
+
             # Start with the longest file names, so e.g. some-font.woff2 is renamed before some-font.woff.
             tuples = new Array
             i = 0
             while i < befores.length
-              tuples.push [befores[i],afters[i]]
+              tuples.push [path.relative(publicdir, befores[i]),path.relative(publicdir, afters[i])]
               i++
 
-            tuples.sort((a,b) ->
-              if a[0].length != b[0].length
-                return a[0].length < b[0].length
-              return a < b
-            )
+            tuples.sort((a,b) -> b[0].length - a[0].length)
 
-            befores = tuples.map((t)->t[0])
-            afters = tuples.map((t)->t[1])
+            ordered_befores = tuples.map((t)->t[0])
+            ordered_afters  = tuples.map((t)->t[1])
 
-            publicdir = require("fs").realpathSync("dist")
-            path = require("path")
             for referring_file_path in ["dist/js/application.min.js", "dist/css/application.css", "dist/index.html"]
               contents = grunt.file.read(referring_file_path)
               before = undefined
               after = undefined
               i = 0
 
-              while i < befores.length
-                before = path.relative(publicdir, befores[i])
-                after = path.relative(publicdir, afters[i])
+              while i < ordered_befores.length
+                before = ordered_befores[i]
+                after  = ordered_afters[i]
                 contents = contents.split("build/" + before).join(after)
                 contents = contents.split(before).join(after)
 
@@ -315,8 +314,7 @@ module.exports = (grunt) ->
           format: "{{basename}}-{{hash}}.{{ext}}"
 
           callback: (befores, afters) ->
-            publicdir = require("fs").realpathSync("dist")
-            path = require("path")
+            publicdir = fs.realpathSync("dist")
 
             for referring_file_path in ["dist/index.html"]
               contents = grunt.file.read(referring_file_path)
