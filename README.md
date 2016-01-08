@@ -26,7 +26,7 @@ npm install
 Create a file called `.env` in the root of the project. Put the following in it:
 
 ```
-ROOT_URL=https://blockchain.info/
+ROOT_URL=https://blockchain.info
 ```
 
 ## Build
