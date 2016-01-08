@@ -343,9 +343,8 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
       wallet.applyIfNeeded();
     }
 
-    const error = (message) => {
-      console.log(message);
-      errorCallback(message);
+    const error = (e) => {
+      errorCallback(e.error);
       wallet.applyIfNeeded();
     }
 
@@ -1279,15 +1278,15 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   };
 
   wallet.verifyEmail = (token, successCallback, errorCallback) => {
-    const success = (guid) => {
+    const success = (res) => {
       wallet.user.isEmailVerified = true;
-      successCallback(guid);
+      successCallback(res.guid);
       wallet.applyIfNeeded();
     }
 
-    const error = (message) => {
-      console.log(message);
-      errorCallback(message);
+    const error = (res) => {
+      console.log(res.error);
+      errorCallback(res.error);
       wallet.applyIfNeeded();
     }
 
@@ -1295,14 +1294,14 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   }
 
   wallet.unsubscribe = (token, successCallback, errorCallback) => {
-    const success = (guid) => {
-      successCallback(guid);
+    const success = (res) => {
+      successCallback(res.guid);
       wallet.applyIfNeeded();
     }
 
-    const error = (message) => {
-      console.log(message);
-      errorCallback(message);
+    const error = (res) => {
+      console.log(res.error);
+      errorCallback(res.error);
       wallet.applyIfNeeded();
     }
 
@@ -1310,14 +1309,14 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   }
 
   wallet.authorizeApprove = (token, successCallback, differentBrowserCallback, differentBrowserApproved, errorCallback) => {
-    const success = (guid) => {
-      successCallback(guid);
+    const success = (res) => {
+      successCallback(res.guid);
       wallet.applyIfNeeded();
     }
 
-    const error = (message) => {
-      console.log(message);
-      errorCallback(message);
+    const error = (res) => {
+      console.log(res.error);
+      errorCallback(res.error);
       wallet.applyIfNeeded();
     }
 
