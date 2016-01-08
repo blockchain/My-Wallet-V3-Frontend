@@ -22,7 +22,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
         ng-repeat="account in accounts() | filter:{label: searchText}"
       )
         td.expand
-          span.account-label {{ account.label | highlight:searchText }}
+          span.account-label(ng-bind-html="account.label | highlight:searchText")
           span.man(ng-show="!account.archived && account.balance != null").prm
             |  ({{ account.balance | toBitCurrency:settings.btcCurrency }})
           span.man(ng-show="account.archived", translate="ACCOUNT_IS_ARCHIVED").prm
