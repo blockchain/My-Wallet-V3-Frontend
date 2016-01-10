@@ -32,8 +32,7 @@
     .row
       .col-xs-3(ng-repeat="word in recoveryPhrase.slice(offset, offset + 4)")
         p.center
-          b
-            {{ offset + $index + 1 }}. {{ word }}
+          b {{ offset + $index + 1 }}. {{ word }}
     .row
       .col-xs-12
         p.center
