@@ -36,5 +36,5 @@ function VerifyEmailCtrl($scope, Wallet, $stateParams, $state, Alerts, $translat
     Alerts.displayError(message, true);
   }
 
-  Wallet.verifyEmail($stateParams.token, success, error)
+  Wallet.verifyEmail($stateParams.token).then(success).catch(error);
 }

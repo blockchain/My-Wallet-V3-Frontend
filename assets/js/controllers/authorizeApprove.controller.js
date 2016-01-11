@@ -44,11 +44,15 @@ function AuthorizeApproveCtrl($window, $scope, Wallet, $stateParams, $state, Ale
 
   $scope.checkingToken = true;
 
-  Wallet.authorizeApprove($stateParams.token, success, differentBrowser, null, error);
+  Wallet.authorizeApprove($stateParams.token, differentBrowser, null)
+    .then(success)
+    .catch(error);
 
   $scope.approve = () => {
     $scope.busyApproving = true;
-    Wallet.authorizeApprove($stateParams.token, success, () => {}, true, error);
+    Wallet.authorizeApprove($stateParams.token, () => {}, true)
+      .then(success)
+      .catch(error);
   }
 
   $scope.reject = () => {
@@ -64,6 +68,8 @@ function AuthorizeApproveCtrl($window, $scope, Wallet, $stateParams, $state, Ale
       });
     };
 
-    Wallet.authorizeApprove($stateParams.token, rejected, () => {}, false, error);
+    Wallet.authorizeApprove($stateParams.token, () => {}, false)
+      .then(rejected)
+      .catch(error);
   }
 }

@@ -62,14 +62,14 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   // If customRootURL is set by index.jade:
   //                    Grunt can replace this:
   const customRootURL = $rootScope.rootURL || "/";
-  wallet.api.setRootURL(customRootURL);
+  wallet.api.ROOT_URL=customRootURL;
   // If customRootURL is set by Grunt:
   $rootScope.rootURL = customRootURL;
 
   //                         Grunt can replace this:
   const customWebSocketURL = $rootScope.webSocketURL;
   if(customWebSocketURL) {
-    wallet.my.ws.setURL(customWebSocketURL);
+    wallet.my.ws.wsUrl=customWebSocketURL;
   }
 
   wallet.payment = MyWalletPayment;
@@ -287,10 +287,11 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     wallet.my.resendTwoFactorSms(uid, success, error);
   };
 
-  wallet.recoverGuid = (email, captcha, successCallback, errorCallback) => {
+  wallet.recoverGuid = (email, captcha) => {
+    let defer = $q.defer()
     let success = (message) => {
       Alerts.displaySuccess(message);
-      successCallback();
+      defer.resolve();
       wallet.applyIfNeeded();
     };
     let error = (error) => {
@@ -306,17 +307,20 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
           Alerts.displayError($translate.instant('UNKNOWN_ERROR'));
       }
 
-      errorCallback();
+      defer.reject();
       wallet.applyIfNeeded();
     };
-    wallet.my.recoverGuid(email, captcha, success, error);
+    wallet.my.recoverGuid(email, captcha).then(success).catch(error);
+    return defer.promise;
   };
 
-  wallet.requestTwoFactorReset = (guid, email, new_email, secret, message, captcha, successCallback, errorCallback) => {
+  wallet.requestTwoFactorReset = (guid, email, new_email, secret, message, captcha) => {
+    let defer = $q.defer()
+
     Alerts.clear()
     let success = (message) => {
       Alerts.displaySuccess(message);
-      successCallback();
+      defer.resolve();
       wallet.applyIfNeeded();
     };
     let error = (error) => {
@@ -331,24 +335,34 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
           Alerts.displayError(error, true);
       }
 
-      errorCallback();
+      defer.reject();
       wallet.applyIfNeeded();
     };
-    wallet.my.requestTwoFactorReset(guid, email, new_email, secret, message, captcha, success, error);
+    wallet.my.requestTwoFactorReset(guid, email, new_email, secret, message, captcha)
+      .then(success)
+      .catch(error);
+
+    return defer.promise;
   };
 
-  wallet.resetTwoFactorToken = (token, successCallback, errorCallback) => {
+  wallet.resetTwoFactorToken = (token) => {
+    let defer = $q.defer()
+
     const success = (obj) => {
-      successCallback(obj);
+      defer.resolve(obj);
       wallet.applyIfNeeded();
     }
 
     const error = (e) => {
-      errorCallback(e.error);
+      defer.reject(e.error);
       wallet.applyIfNeeded();
     }
 
-    wallet.tokenEndpoints.resetTwoFactor(token, success, error);
+    wallet.tokenEndpoints.resetTwoFactor(token)
+      .then(success)
+      .catch(error);
+
+    return defer.promise;
   }
 
   wallet.create = (password, email, currency, language, success_callback) => {
@@ -1277,46 +1291,58 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     wallet.my.wallet.encrypt(password, success, error, encrypting, syncing);
   };
 
-  wallet.verifyEmail = (token, successCallback, errorCallback) => {
+  wallet.verifyEmail = (token) => {
+    let defer = $q.defer();
+
     const success = (res) => {
       wallet.user.isEmailVerified = true;
-      successCallback(res.guid);
+      defer.resolve(res.guid);
       wallet.applyIfNeeded();
     }
 
     const error = (res) => {
       console.log(res.error);
-      errorCallback(res.error);
+      defer.reject(res.error);
       wallet.applyIfNeeded();
     }
 
-    wallet.tokenEndpoints.verifyEmail(token, success, error);
+    wallet.tokenEndpoints.verifyEmail(token)
+      .then(success)
+      .catch(error);
+
+    return defer.promise;
   }
 
-  wallet.unsubscribe = (token, successCallback, errorCallback) => {
+  wallet.unsubscribe = (token) => {
+    let defer = $q.defer();
+
     const success = (res) => {
-      successCallback(res.guid);
+      defer.resolve(res.guid);
       wallet.applyIfNeeded();
     }
 
     const error = (res) => {
       console.log(res.error);
-      errorCallback(res.error);
+      defer.reject(res.error);
       wallet.applyIfNeeded();
     }
 
-    wallet.tokenEndpoints.unsubscribe(token, success, error);
+    wallet.tokenEndpoints.unsubscribe(token).then(success).catch(error);
+
+    return defer.promise;
   }
 
-  wallet.authorizeApprove = (token, successCallback, differentBrowserCallback, differentBrowserApproved, errorCallback) => {
+  wallet.authorizeApprove = (token, differentBrowserCallback, differentBrowserApproved) => {
+    let defer = $q.defer()
+
     const success = (res) => {
-      successCallback(res.guid);
+      defer.resolve(res.guid);
       wallet.applyIfNeeded();
     }
 
     const error = (res) => {
       console.log(res.error);
-      errorCallback(res.error);
+      defer.reject(res.error);
       wallet.applyIfNeeded();
     }
 
@@ -1325,7 +1351,11 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
       wallet.applyIfNeeded();
     }
 
-    wallet.tokenEndpoints.authorizeApprove(token, success, differentBrowser, differentBrowserApproved, error);
+    wallet.tokenEndpoints.authorizeApprove(token, differentBrowser, differentBrowserApproved)
+      .then(success)
+      .catch(error);
+
+    return defer.promise;
   }
 
   // Testing: only works on mock MyWallet

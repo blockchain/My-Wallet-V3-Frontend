@@ -29,7 +29,7 @@ function LostGuidCtrl($scope, $rootScope, $http, $translate, Wallet, Alerts) {
     $scope.remindForm.$setPristine();
     $scope.remindForm.$setUntouched();
 
-    Wallet.recoverGuid($scope.fields.email, $scope.fields.captcha, success, error)
+    Wallet.recoverGuid($scope.fields.email, $scope.fields.captcha).then(success).catch(error);
   };
 
   // Set SID cookie by requesting headers

@@ -27,5 +27,5 @@ function UnsubscribeCtrl($scope, Wallet, $stateParams, $state, Alerts, $translat
     Alerts.displayError(message, true);
   }
 
-  Wallet.unsubscribe($stateParams.token, success, error)
+  Wallet.unsubscribe($stateParams.token).then(success).catch(error);
 }

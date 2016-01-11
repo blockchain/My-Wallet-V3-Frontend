@@ -2,7 +2,7 @@ __Blockchain HD Frontend__
 
 _Recent changes_
 
-#   (2015-12-21)
+#   (2016-01-11)
 
 
 
@@ -10,55 +10,90 @@ _Recent changes_
 
 ## Bug Fixes
 
+- **Accounts:** revert accidental change in 433de77b4a
+  ([f149f45c](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f149f45c962d0c285f775d9917d5bf40eacca783))
+- **Adverts:** set .rootURL to '/' by default
+  ([ba77aa9f](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/ba77aa9ff930e268b1fba50fc25b27f0d21c3599))
+- **Currency:** correct decimal places for bits and mBTC
+  ([e5d3c6c4](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/e5d3c6c4f2cb2b377b54b259be6561d129f6da18))
 - **Deploy:**
+  - fix filename for .woff2 fonts
+  ([c785d759](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/c785d759ac1f72f8314bd2acb8cfe93e3cc9c3dd))
   - ROOT_URL now required for dev, defaults to / in production
-  ([93dd3c2d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/93dd3c2df8dcf7127c0e98e927d9fda734a54e09))
+  ([465c694a](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/465c694af5082dc61667659141cffd23184a3314))
   - dmore aggresive cleaning in dist task
-  ([32ef6349](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/32ef6349804aacadc57c1c1ea61b5ec34e450396))
+  ([fa1d4906](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/fa1d4906ba7d9198eff28527b691116848851a29))
   - clean bower and npm cache in dist task
-  ([38be7640](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/38be7640dea9e3dbda21a2526c6814f953ed627f))
+  ([f6349813](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f6349813fa6f433a903362d3fbdf37e5f3245dfb))
   - move CSS and JS to /js so that relative font path works
-  ([bef9a15e](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/bef9a15ea18120da85e9c694abafb421e3134f40))
+  ([a0e377e0](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/a0e377e0db41614e086eea4ad4d3c294bbfa0496))
 - **Feedback:**
   - missing controller file
-  ([41b74a85](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/41b74a858117489b1ffbf93ed916af824cb8a9d3))
+  ([950f3824](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/950f3824946f3f2ce231098345058d51c6e63612))
   - use new endpoint
-  ([7857e2b2](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/7857e2b2542cabf01baa12511c1372d7e62127fc))
+  ([46348250](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/463482500c01c104e59256505568b61f95c1574f))
+- **Login:** disable browser validation and autocomplete
+  ([c0ecd11d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/c0ecd11da6262a42662cc79e18f0f83648424184))
+- **LostGuid:** use .rootURL
+  ([9d5df846](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/9d5df8467a8b5354f9785a73dfcbae0686f654a1))
+- **Recover:** fix redirect after recovery
+  ([f22ca557](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f22ca557376f8f0b6bca94b42831c45abab243b4))
 - **Signup:** improved validation
-  ([fb9966fa](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/fb9966face09ae4037c5ae0f8d2645e069fba7bc))
+  ([4baac6ea](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/4baac6ea6b2699861ba3dad8b08ee09ec31878c2))
+- **Sponsors:** use .rootURL
+  ([f94175e0](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f94175e045ac90f3b5f46e4b553e8f9b6055609d))
+- **VerifyEmail:** guid in token was ignored
+  ([76fcf8e2](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/76fcf8e230150d99868934804c7a10789eac381c))
+- **bcAsyncInput:** spinner remained after save, blockchain/My-Wallet-V3-Frontend@867850dbdbb276
+  ([1443b338](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/1443b338119628f36e0b8640127883a6239e9fea))
 
 
 ## Features
 
 - remove beta invite system
-  ([788b8aa5](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/788b8aa503aca65b20819a730531b2b7b9062b07))
+  ([a2b4d07c](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/a2b4d07c7059e4667d96674458e8e336cc3f06ed))
+- **2FA:** process reset 2FA email link
+  ([118c884b](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/118c884bfdff0ef5de7dc9882f6810c7c2709455))
+- **Deploy:** pass backend URL to grunt dist
+  ([eae05c42](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/eae05c42b0db8e838619285c63220e840ced0720))
 - **Login:**
   - new browser approval - different browser
-  ([c3195ad6](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/c3195ad6e3b99830cfb71b4c5eef39a40be2b0fc))
+  ([d53490d1](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/d53490d140265861218fc1f208869c1929cb39af))
   - new browser approval - assuming user is in the same browser
-  ([4ad6e26c](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/4ad6e26cd9e91056589e53e97a856d17dbbb8dc5))
+  ([58fc7d26](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/58fc7d26166367abb846cb33057c8df5cedc3fb5))
+- **Recovery:** use download attribute for nicer file name and to prevent in-browser viewing
+  ([1d35f29d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/1d35f29da815dbfcfd73aea6a14db6793a4c2b33))
 - **Release:** use beta version of my-wallet-v3 bower
-  ([0d828172](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/0d82817246118dd6d7488388154e341f556fae40))
+  ([85fbbd2d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/85fbbd2d908a4fa1a7e29e5e3f20032e02e8b026))
+- **Reset2FA:** form to reset two step verification
+  ([18ba4615](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/18ba4615c78516c837c7cfede8820f41751e9531))
 - **Routes:**
   - show modal after verifying email
-  ([d1a8991d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/d1a8991df43236d29dbab783716eecbb3ecf447d))
+  ([4d1bdfaa](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/4d1bdfaaf19be2e8486ae578ba76dd849be76aa9))
   - login and verify email routes and endpoint support
-  ([ff315a76](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/ff315a76844d6f2ee5c079227bdb5b1230f76c07))
+  ([206d60b5](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/206d60b51c58e07bbc43a41db46816112cfcfebb))
 - **Unsubscribe:** unsubscribe route
-  ([9ea51ccb](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/9ea51ccb2c74d57bc658f338c62a24ef93eb45a3))
+  ([632db4c6](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/632db4c634ac6b2792cc0f27310740b2c73ed8e4))
 
 
 ## Refactor
 
 - **Cookies:** replace references to deprecated  with
 - **Dependencies:** removed unused npm dependencies. Removed unmaintained E2E tests.
+- **RecoverGuid:** move functionality out of controller
 - **Signup:** cleaned up controller and improved tests
+- **WalletTokenEndpoints:** slightly modified result
 
 
 ## Test
 
 - fixed
 - **Mocks:** added MyWalletTokenEndpoints mock
+
+
+## Chore
+
+- **Changelog:** update for beta branch
 
 
 

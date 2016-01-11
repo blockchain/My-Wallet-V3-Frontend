@@ -41,8 +41,7 @@ function ResetTwoFactorCtrl($scope, $rootScope, $http, $translate, Wallet, Alert
       $scope.fields.secret,
       $scope.fields.message,
       $scope.fields.captcha,
-      success,
-      error)
+    ).then(success).catch(error);
   };
 
   // Set SID cookie by requesting headers
