@@ -9,9 +9,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletTokenEndpoints', 'MyWalletNetwork','$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
+Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
 
-function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletTokenEndpoints, MyWalletNetwork, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency) {
+function Wallet(   $http,   $window,   $timeout,   Alerts,   MyWallet,   MyBlockchainApi,   MyBlockchainSettings,   MyWalletStore,   MyWalletPayment,   $rootScope,   ngAudio,   $cookies,   $translate,   $filter,   $state,   $q,   bcPhoneNumber,   languages,   currency) {
   const wallet = {
     goal: {
       auth: false
@@ -79,8 +79,6 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   }
 
   wallet.payment = MyWalletPayment;
-  wallet.tokenEndpoints = MyWalletTokenEndpoints;
-  wallet.network = MyWalletNetwork;
   wallet.transactions = [];
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
@@ -279,98 +277,6 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
         .then(success).catch(errorCallback);
     });
   };
-
-  wallet.resendTwoFactorSms = (uid, successCallback, errorCallback) => {
-    let success = () => {
-      $translate('RESENT_2FA_SMS').then(Alerts.displaySuccess);
-      successCallback();
-      $rootScope.$safeApply();
-    };
-    let error = (e) => {
-      $translate('RESENT_2FA_SMS_FAILED').then(Alerts.displayError);
-      errorCallback();
-      $rootScope.$safeApply();
-    };
-    wallet.network.resendTwoFactorSms(uid).then(success).catch(error);
-  };
-
-  wallet.recoverGuid = (email, captcha) => {
-    let defer = $q.defer()
-    let success = (message) => {
-      Alerts.displaySuccess(message);
-      defer.resolve();
-      $rootScope.$safeApply();
-    };
-    let error = (error) => {
-
-      switch (error) {
-        case 'Captcha Code Incorrect':
-          Alerts.displayError($translate.instant('CAPTCHA_INCORRECT'));
-          break;
-        case 'Quota Exceeded':
-          Alerts.displayError($translate.instant('QUOTA_EXCEEDED'));
-          break;
-        default:
-          Alerts.displayError($translate.instant('UNKNOWN_ERROR'));
-      }
-
-      defer.reject();
-      $rootScope.$safeApply();
-    };
-    wallet.network.recoverGuid(email, captcha).then(success).catch(error);
-    return defer.promise;
-  };
-
-  wallet.requestTwoFactorReset = (guid, email, new_email, secret, message, captcha) => {
-    let defer = $q.defer()
-
-    Alerts.clear()
-    let success = (message) => {
-      Alerts.displaySuccess(message);
-      defer.resolve();
-      $rootScope.$safeApply();
-    };
-    let error = (error) => {
-      switch (error) {
-        case 'Captcha Code Incorrect':
-          Alerts.displayError($translate.instant('CAPTCHA_INCORRECT'), true);
-          break;
-        case 'Quota Exceeded':
-          Alerts.displayError($translate.instant('QUOTA_EXCEEDED'), true);
-          break;
-        default:
-          Alerts.displayError(error, true);
-      }
-
-      defer.reject();
-      $rootScope.$safeApply();
-    };
-    wallet.network.requestTwoFactorReset(guid, email, new_email, secret, message, captcha)
-      .then(success)
-      .catch(error);
-
-    return defer.promise;
-  };
-
-  wallet.resetTwoFactorToken = (token) => {
-    let defer = $q.defer()
-
-    const success = (obj) => {
-      defer.resolve(obj);
-      $rootScope.$safeApply();
-    }
-
-    const error = (e) => {
-      defer.reject(e.error);
-      $rootScope.$safeApply();
-    }
-
-    wallet.tokenEndpoints.resetTwoFactor(token)
-      .then(success)
-      .catch(error);
-
-    return defer.promise;
-  }
 
   wallet.create = (password, email, currency, language, success_callback) => {
     let success = (uid) => {
@@ -1292,73 +1198,6 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     };
     wallet.my.wallet.encrypt(password, success, error, encrypting, syncing);
   };
-
-  wallet.verifyEmail = (token) => {
-    let defer = $q.defer();
-
-    const success = (res) => {
-      wallet.user.isEmailVerified = true;
-      defer.resolve(res.guid);
-      $rootScope.$safeApply();
-    }
-
-    const error = (res) => {
-      console.log(res.error);
-      defer.reject(res.error);
-      $rootScope.$safeApply();
-    }
-
-    wallet.tokenEndpoints.verifyEmail(token)
-      .then(success)
-      .catch(error);
-
-    return defer.promise;
-  }
-
-  wallet.unsubscribe = (token) => {
-    let defer = $q.defer();
-
-    const success = (res) => {
-      defer.resolve(res.guid);
-      $rootScope.$safeApply();
-    }
-
-    const error = (res) => {
-      console.log(res.error);
-      defer.reject(res.error);
-      $rootScope.$safeApply();
-    }
-
-    wallet.tokenEndpoints.unsubscribe(token).then(success).catch(error);
-
-    return defer.promise;
-  }
-
-  wallet.authorizeApprove = (token, differentBrowserCallback, differentBrowserApproved) => {
-    let defer = $q.defer()
-
-    const success = (res) => {
-      defer.resolve(res.guid);
-      $rootScope.$safeApply();
-    }
-
-    const error = (res) => {
-      console.log(res.error);
-      defer.reject(res.error);
-      $rootScope.$safeApply();
-    }
-
-    const differentBrowser = (details) => {
-      differentBrowserCallback(details);
-      $rootScope.$safeApply();
-    }
-
-    wallet.tokenEndpoints.authorizeApprove(token, differentBrowser, differentBrowserApproved)
-      .then(success)
-      .catch(error);
-
-    return defer.promise;
-  }
 
   // Testing: only works on mock MyWallet
 

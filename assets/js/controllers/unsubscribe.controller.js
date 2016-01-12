@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("UnsubscribeCtrl", UnsubscribeCtrl);
 
-function UnsubscribeCtrl($scope, Wallet, $stateParams, $state, Alerts, $translate) {
+function UnsubscribeCtrl($scope, WalletNetwork, $stateParams, $state, Alerts, $translate) {
   const success = (uid) => {
 
     if(uid) {
@@ -27,5 +27,5 @@ function UnsubscribeCtrl($scope, Wallet, $stateParams, $state, Alerts, $translat
     Alerts.displayError(message, true);
   }
 
-  Wallet.unsubscribe($stateParams.token).then(success).catch(error);
+  WalletNetwork.unsubscribe($stateParams.token).then(success).catch(error);
 }

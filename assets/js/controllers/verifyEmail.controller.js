@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("VerifyEmailCtrl", VerifyEmailCtrl);
 
-function VerifyEmailCtrl($scope, Wallet, $stateParams, $state, Alerts, $translate, $rootScope) {
+function VerifyEmailCtrl($scope, WalletNetwork, $stateParams, $state, Alerts, $translate, $rootScope) {
   const success = (uid) => {
     if(uid) {
       $translate(['SUCCESS', 'EMAIL_VERIFIED_SUCCESS']).then(translations => {
@@ -36,5 +36,5 @@ function VerifyEmailCtrl($scope, Wallet, $stateParams, $state, Alerts, $translat
     Alerts.displayError(message, true);
   }
 
-  Wallet.verifyEmail($stateParams.token).then(success).catch(error);
+  WalletNetwork.verifyEmail($stateParams.token).then(success).catch(error);
 }

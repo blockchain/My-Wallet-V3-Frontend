@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("LoginCtrl", LoginCtrl);
 
-function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookies, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter) {
+function LoginCtrl($scope, $rootScope, $log, $http, Wallet, WalletNetwork, Alerts, $cookies, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.disableLogin = null;
@@ -136,7 +136,7 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookies, $u
       const error = () => {
         $scope.resending = false;
       };
-      Wallet.resendTwoFactorSms($scope.uid, success, error);
+      WalletNetwork.resendTwoFactorSms($scope.uid).then(success).catch(error);
     }
   };
 
