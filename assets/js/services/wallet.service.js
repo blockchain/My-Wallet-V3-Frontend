@@ -9,9 +9,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletTokenEndpoints', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
+Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletTokenEndpoints', 'MyWalletNetwork','$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
 
-function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletTokenEndpoints, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency) {
+function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletTokenEndpoints, MyWalletNetwork, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency) {
   const wallet = {
     goal: {
       auth: false
@@ -80,6 +80,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
 
   wallet.payment = MyWalletPayment;
   wallet.tokenEndpoints = MyWalletTokenEndpoints;
+  wallet.network = MyWalletNetwork;
   wallet.transactions = [];
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
@@ -290,7 +291,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
       errorCallback();
       $rootScope.$safeApply();
     };
-    wallet.my.resendTwoFactorSms(uid, success, error);
+    wallet.network.resendTwoFactorSms(uid).then(success).catch(error);
   };
 
   wallet.recoverGuid = (email, captcha) => {
@@ -316,7 +317,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
       defer.reject();
       $rootScope.$safeApply();
     };
-    wallet.my.recoverGuid(email, captcha).then(success).catch(error);
+    wallet.network.recoverGuid(email, captcha).then(success).catch(error);
     return defer.promise;
   };
 
@@ -344,7 +345,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
       defer.reject();
       $rootScope.$safeApply();
     };
-    wallet.my.requestTwoFactorReset(guid, email, new_email, secret, message, captcha)
+    wallet.network.requestTwoFactorReset(guid, email, new_email, secret, message, captcha)
       .then(success)
       .catch(error);
 
