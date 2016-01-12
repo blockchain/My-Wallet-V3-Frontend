@@ -341,34 +341,6 @@ module.exports = (grunt) ->
         command: () ->
           'bower cache clean && npm cache clean'
 
-      deploy_static_to_dev:
-        command: () ->
-          'rsync -rz --delete dist hd-dev@server:'
-
-      deploy_server_to_dev:
-        command: () ->
-          'rsync -rz --delete server.js hd-dev@server:'
-
-      deploy_static_to_staging:
-        command: () ->
-          'rsync -rz --delete dist hd-staging@server:'
-
-      deploy_server_to_staging:
-        command: () ->
-          'rsync -rz --delete server.js hd-staging@server:'
-
-      deploy_start_dev:
-        command: () ->
-          'ssh hd-dev@server "./start.sh"'
-
-      deploy_start_staging:
-        command: () ->
-          'ssh hd-staging@server "./start.sh"'
-
-      deploy_start_alpha:
-        command: () ->
-          'ssh hd-alpha@server "./start.sh"'
-
       check_dependencies:
         command: () ->
           'mkdir -p build && ruby ./check-dependencies.rb'
@@ -544,42 +516,6 @@ module.exports = (grunt) ->
       "rename:assets"
       "rename:html"
     ]
-
-  grunt.registerTask "deploy_static_to_dev", [
-    "dist"
-    "shell:deploy_static_to_dev"
-    "shell:deploy_start_dev"
-  ]
-
-  grunt.registerTask "deploy_server_to_dev", [
-    "shell:deploy_server_to_dev"
-    "shell:deploy_start_dev"
-  ]
-
-  grunt.registerTask "deploy_to_dev", [
-    "dist"
-    "shell:deploy_static_to_dev"
-    "shell:deploy_server_to_dev"
-    "shell:deploy_start_dev"
-  ]
-
-  grunt.registerTask "deploy_static_to_staging", [
-    "dist"
-    "shell:deploy_static_to_staging"
-    "shell:deploy_start_staging"
-  ]
-
-  grunt.registerTask "deploy_server_to_staging", [
-    "shell:deploy_server_to_staging"
-    "shell:deploy_start_staging"
-  ]
-
-  grunt.registerTask "deploy_to_staging", [
-    "dist"
-    "shell:deploy_static_to_staging"
-    "shell:deploy_server_to_staging"
-    "shell:deploy_start_staging"
-  ]
 
   grunt.registerTask "check_translations", [
     "shell:check_translations"
