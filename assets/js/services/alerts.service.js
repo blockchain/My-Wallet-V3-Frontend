@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .factory('Alerts', Alerts);
 
-Alerts.$inject = ['$timeout'];
+Alerts.$inject = ['$timeout', '$rootScope'];
 
-function Alerts($timeout) {
+function Alerts($timeout, $rootScope) {
   const service = {
     alerts          : [],
     close           : close,
@@ -13,7 +13,8 @@ function Alerts($timeout) {
     displaySuccess  : display.bind(null, 'success'),
     displayWarning  : display.bind(null, ''),
     displayError    : display.bind(null, 'danger'),
-    displayReceivedBitcoin : display.bind(null, 'received-bitcoin')
+    displayReceivedBitcoin : display.bind(null, 'received-bitcoin'),
+    displayVerifiedEmail : displayVerifiedEmail
   };
 
   function close(alert, context=service.alerts) {
@@ -32,6 +33,15 @@ function Alerts($timeout) {
     let alert = { type: type, msg: message };
     if (!keep) alert.timer = $timeout(() => close(alert), 7000);
     context.push(alert);
+  }
+
+  function displayVerifiedEmail() {
+    $rootScope.$emit('showNotification', {
+      type: 'verified-email',
+      icon: 'ti-email',
+      heading: translations.SUCCESS,
+      msg: translations.EMAIL_VERIFIED_SUCCESS
+    });
   }
 
   return service;

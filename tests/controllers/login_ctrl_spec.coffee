@@ -2,7 +2,7 @@ describe "LoginCtrl", ->
   scope = undefined
 
   modal =
-   open: (args) ->  
+   open: (args) ->
      result:
        then: ->
 
@@ -11,37 +11,54 @@ describe "LoginCtrl", ->
   beforeEach ->
    angular.mock.inject ($injector, $rootScope, $controller) ->
      Wallet = $injector.get("Wallet")
-     MyWallet = $injector.get("MyWallet")    
-  
+     WalletNetwork = $injector.get("WalletNetwork")
+
+     spyOn(WalletNetwork, "resendTwoFactorSms").and.callFake(()->
+       {
+         then: (callback) ->
+           callback()
+           {
+             catch: (callback) ->
+               if false
+                 callback()
+                 {
+                 }
+         }
+       }
+     )
+
+     MyWallet = $injector.get("MyWallet")
+
      scope = $rootScope.$new()
-        
+
      $controller "LoginCtrl",
        $scope: scope,
        $stateParams: {}
        $uibModal: modal
-  
+
      return
 
    return
-   
+
   it "should login",  inject((Wallet) ->
     scope.uid = "user"
     scope.password = "pass"
-        
+
     spyOn(Wallet, "login")
-    
+
     scope.login()
-    
+
     return
   )
 
-  it "should resend two factor sms", inject((Wallet) ->
+  it "should resend two factor sms", inject((Wallet, WalletNetwork) ->
     Wallet.settings.twoFactorMethod = 5
-    
-    spyOn(Wallet, "resendTwoFactorSms")
+    scope.uid = "user"
 
     scope.resend()
 
-    expect(Wallet.resendTwoFactorSms).toHaveBeenCalled()
+    expect(WalletNetwork.resendTwoFactorSms).toHaveBeenCalled()
+    expect(WalletNetwork.resendTwoFactorSms).toHaveBeenCalledWith("user")
+
     return
   )
