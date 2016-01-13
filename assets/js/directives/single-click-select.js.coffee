@@ -24,6 +24,7 @@ angular.module('walletApp').directive('singleClickSelect', ($window) ->
 
       elem.bind('click', ->
         scope.select()
+        scope.$digest()
       )
 
       action = (newVal, oldVal) ->
