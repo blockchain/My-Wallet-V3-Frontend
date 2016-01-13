@@ -21,10 +21,10 @@ angular.module('walletApp').directive('singleClickSelect', ($window) ->
 
         if scope.browserCanExecCommand
           $window.document.execCommand('copy')
+          scope.$digest()
 
       elem.bind('click', ->
         scope.select()
-        scope.$digest()
       )
 
       action = (newVal, oldVal) ->
