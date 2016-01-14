@@ -14,7 +14,7 @@
 .modal-body#send(ng-class="{ 'advanced-send-scroll' : advanced, 'confirmation': confirmationStep }")
   uib-alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)")
     | {{::alert.msg}}
-  div.advanced-send(ng-hide="confirmationStep")
+  div(ng-hide="confirmationStep")
     form.ph-form(role="form",name="sendForm",novalidate)
       //- From
       .form-group.row(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")

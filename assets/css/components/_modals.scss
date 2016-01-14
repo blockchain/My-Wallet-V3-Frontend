@@ -317,13 +317,17 @@
     height: 430px;
   }
   .advanced-send-scroll { 
-    max-height: 400px;
-    min-height: 400px;
-    overflow-y: scroll; 
-    &.confirmation {
+    padding: 0px;
+    > div {
+      max-height: 400px;
+      min-height: 400px;
       overflow: visible;
-      .advanced-send {
-        display: none;
+      padding: 15px 0;
+      &:first-child {
+        overflow-y: scroll;
+      }
+      &:last-child {
+        padding: 15px 2em;
       }
     }
   }
