@@ -55,14 +55,18 @@
   }
   section.level {
     margin-bottom: 30px;
-    @media (min-width: 768px) {
+    @media (min-width: 769px) {
       .level-badge {
         height: auto;
-        padding-bottom: 20px;
       }
       &.level_one {
         .level-badge {
           width: 33.333%;
+          &:last-child {
+            &.active {
+              border-right: 0px;
+            }
+          }
         }
       }
     }
@@ -78,15 +82,22 @@
   .level-badge {
     width: 22%;
     position: relative;
+    padding-bottom: 20px;
     transition: all .3s ease-in-out;
     &.active {
       background-color: white;
       border-bottom: none;
       font-weight: bold;
       border-top: none;
-      border-right: 1px solid rgb(234, 234, 234);
-      border-left: 1px solid rgb(234, 234, 234);
-      box-shadow: 0px 4px 8px -1px rgba(243, 243, 243, 1) inset;
+      box-shadow: 0px 0px 8px 4px rgba(243, 243, 243, 1) inset;
+      @media (min-width: 769px) {
+        border-right: 1px solid rgb(234, 234, 234);
+        border-left: 1px solid rgb(234, 234, 234);
+        box-shadow: 0px 4px 8px -1px rgba(243, 243, 243, 1) inset;
+        &:nth-child(2) {
+          border-left: 0px;
+        }
+      }
       &:after {
         content: '';
         width: 100%;
