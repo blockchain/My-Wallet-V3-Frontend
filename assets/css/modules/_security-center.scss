@@ -55,6 +55,17 @@
   }
   section.level {
     margin-bottom: 30px;
+    @media (min-width: 768px) {
+      .level-badge {
+        height: auto;
+        padding-bottom: 20px;
+      }
+      &.level_one {
+        .level-badge {
+          width: 33.333%;
+        }
+      }
+    }
   }
   header {
     margin-bottom: 20px;
@@ -62,8 +73,9 @@
   ul {
     background-color: #fdfdfd;
     border: 1px solid #eaeaea;
+    border-bottom: 0px;
+    overflow: hidden;
     list-style: none;
-    height: 160px;
   }
   .level-badge {
     width: 22%;
@@ -77,8 +89,9 @@
       display: block;
       text-align: center;
       width: 100%;
-      height: 160px;
       padding: 20px 15px 30px 15px;
+      padding-bottom: 200px;
+      margin-bottom: -200px;
       cursor: pointer;
       img {
         width: 75px;
@@ -111,6 +124,7 @@
   .level-header {
     border-right: 1px solid #ebebeb;
     padding: 30px 35px;
+    height: auto;
     img {
       width: 85px;
     }
