@@ -316,7 +316,17 @@
     width: 228px;
     height: 430px;
   }
-  .advanced-send-scroll { max-height: 400px; overflow-y: scroll; }
+  .advanced-send-scroll { 
+    max-height: 400px;
+    min-height: 400px;
+    overflow-y: scroll; 
+    &.confirmation {
+      overflow: visible;
+      .advanced-send {
+        display: none;
+      }
+    }
+  }
 
   [name='sendForm'], [name='requestForm']  {
     label { text-align: right; }
