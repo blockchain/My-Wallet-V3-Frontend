@@ -1,7 +1,6 @@
 doctype
-<!-- @if !PRODUCTION --><html lang='en' ng-app='walletApp' ng-init="savePassword=#{ process.env.SAVE_PASSWORD || false }; beta=#{ process.env.BETA || false }" ng-csp><!-- @endif -->
-<!-- @if PRODUCTION && !BETA !><html lang='en' ng-app='walletApp' ng-init='beta=0' ng-csp><!-- @endif -->
-<!-- @if PRODUCTION && BETA !><html lang='en' ng-app='walletApp' ng-init='beta=1' ng-csp><!-- @endif -->
+<!-- @if !PRODUCTION --><html lang='en' ng-app='walletApp' ng-init="savePassword=#{ process.env.SAVE_PASSWORD || false }; rootURL='#{ process.env.ROOT_URL }/'; webSocketURL='#{ process.env.WEBSOCKET_URL }';" ng-csp><!-- @endif -->
+<!-- @if PRODUCTION !><html lang='en' ng-app='walletApp' ng-csp><!-- @endif -->
 head
   meta(charset='utf-8')
   meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1") 
@@ -56,6 +55,7 @@ head
   script(src='build/js/core/store.service.js')
   script(src='build/js/core/myWallet.service.js')
   script(src='build/js/core/payment.service.js')
+  script(src='build/js/core/walletTokenEndpoints.service.js')
   
   script(src='build/js/browser-polyfill.js')
   script(src='build/js/app.js')
@@ -69,7 +69,6 @@ head
   script(src='build/js/controllers/claimModal.controller.js')
   script(src='build/js/controllers/confirmRecoveryPhrase.controller.js')
   script(src='build/js/controllers/home.controller.js')
-  script(src='build/js/controllers/feedback.controller.js')
   script(src='build/js/controllers/firstTime.controller.js')
   script(src='build/js/controllers/login.controller.js')
   script(src='build/js/controllers/navigation.controller.js')
@@ -86,7 +85,13 @@ head
   script(src='build/js/controllers/modalNotification.controller.js')
   script(src='build/js/controllers/recoverFunds.controller.js')
   script(src='build/js/controllers/lostGuid.controller.js')
+  script(src='build/js/controllers/ResetTwoFactor.controller.js')
+  script(src='build/js/controllers/feedback.controller.js')
   script(src='build/js/controllers/walletNavigation.controller.js')
+  script(src='build/js/controllers/verifyEmail.controller.js')
+  script(src='build/js/controllers/unsubscribe.controller.js')
+  script(src='build/js/controllers/authorizeApprove.controller.js')
+  script(src='build/js/controllers/resetTwoFactorToken.controller.js')
   script(src='build/js/controllers/settings/settings.controller.js')
   script(src='build/js/controllers/settings/info.controller.js')
   script(src='build/js/controllers/settings/preferences.controller.js')
@@ -165,8 +170,8 @@ head
   <!-- @endif -->
   
   <!-- @if PRODUCTION !>
-  link(rel='stylesheet', href='application.css')
-  script(src='application.min.js')  
+  link(rel='stylesheet', href='css/application.css')
+  script(src='js/application.min.js')  
   <!-- @endif -->
   
   //- Whitelist by copying script from browser and putting it in a file 

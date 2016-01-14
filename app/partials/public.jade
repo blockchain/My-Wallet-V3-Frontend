@@ -2,7 +2,7 @@
   .navbar.navbar-default.navbar-inverse.bc-header(role='navigation')
     .container-fluid
       .navbar-header.flex-between
-        a.navbar-brand(ng-click="visitTransactions()") 
+        a.navbar-brand(ui-sref="wallet.common.home") 
           img#logo.pll(src="img/logo-updated.png",alt="Blockchain")
         button.navbar-toggle(type="button", ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
           span.sr-only Toggle navigation
@@ -10,17 +10,18 @@
       .navbar-collapse.collapse(ng-class="{'in bg-blue' : !navCollapsed}", ng-click="navCollapsed=true")
         ul.nav.navbar-nav.navbar-right
           li.item
-            a.pam(href="https://www.blockchain.com", translate="HOME")
+            a.pam(href="https://www.blockchain.info", translate="EXPLORER")
           li.item
-            a.pam(href="https://blockchain.com/about", translate="ABOUT")
+            a.pam(href="https://www.blockchain.info/charts", translate="CHARTS")
+          li.item
+            a.pam(href="https://www.blockchain.info/api", translate="API")
           li.item.active
             a.pam(href="#", translate="WALLET")
           li.item
-            a.pam(href="https://www.blockchain.info", translate="EXPLORER")
-          li.item
-            a.pam(href="http://blockchain.com/our-products/blockchain-merchant/", translate="MERCHANT")
+            a.pam(href="https://blockchain.com/about", translate="ABOUT")
           li.item
             a.pam(href="https://blockchain.zendesk.com/", translate="SUPPORT")
+          
   .flex-center.flex-justify.flex-column
     .flex.flex-justify(ui-view="alerts")
     .login-box.mhs(ui-view="contents")

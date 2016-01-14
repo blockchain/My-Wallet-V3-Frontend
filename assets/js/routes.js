@@ -70,8 +70,18 @@ function AppRouter($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('public.login', {
+    .state('public.login-no-uid', {
       url: '/login',
+      views: {
+        alerts: commonViews.alerts,
+        contents: {
+          templateUrl: 'partials/login.jade',
+          controller: 'LoginCtrl'
+        }
+      }
+    })
+    .state('public.login-uid', {
+      url: '/login/:uid',
       views: {
         alerts: commonViews.alerts,
         contents: {
@@ -116,6 +126,36 @@ function AppRouter($stateProvider, $urlRouterProvider) {
         contents: {
           templateUrl: 'partials/lost-guid.jade',
           controller: 'LostGuidCtrl'
+        }
+      }
+    })
+    .state('public.reset-two-factor', {
+      url: '/reset-2fa',
+      views: {
+        alerts: commonViews.alerts,
+        contents: {
+          templateUrl: 'partials/reset-two-factor.jade',
+          controller: 'ResetTwoFactorCtrl'
+        }
+      }
+    })
+    .state('public.authorize-approve', {
+      url: '/authorize-approve/{token:.*}',
+      views: {
+        alerts: commonViews.alerts,
+        contents: {
+          templateUrl: 'partials/authorize-approve.jade',
+          controller: 'AuthorizeApproveCtrl'
+        }
+      }
+    })
+    .state('public.reset-two-factor-token', {
+      url: '/reset-two-factor/{token:.*}',
+      views: {
+        alerts: commonViews.alerts,
+        contents: {
+          templateUrl: 'partials/reset-two-factor-token.jade',
+          controller: 'ResetTwoFactorTokenCtrl'
         }
       }
     })
@@ -223,6 +263,26 @@ function AppRouter($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('wallet.common.verify-email', {
+      url: '/verify-email/{token:.*}',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          controller: 'VerifyEmailCtrl'
+        }
+      }
+    })
+    .state('wallet.common.unsubscribe', {
+      url: '/unsubscribe/{token:.*}',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          controller: 'UnsubscribeCtrl'
+        }
+      }
+    })
     .state('wallet.common.settings', {
       url: '/settings',
       views: {
@@ -267,7 +327,7 @@ function AppRouter($stateProvider, $urlRouterProvider) {
       }
     })
     .state('wallet.common.settings.accounts_index', {
-      url: '/accounts',
+      url: '/addresses',
       views: {
         settings: {
           templateUrl: 'partials/settings/accounts.jade',

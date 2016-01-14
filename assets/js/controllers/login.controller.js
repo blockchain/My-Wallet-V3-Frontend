@@ -2,18 +2,20 @@ angular
   .module('walletApp')
   .controller("LoginCtrl", LoginCtrl);
 
-function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookieStore, $uibModal, $state, $timeout, $translate, filterFilter) {
+function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookies, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.disableLogin = null;
-  $scope.status.enterkey = false;
-  $scope.key = $cookieStore.get("key");
   $scope.errors = {
     uid: null,
     password: null,
     twoFactor: null
   };
-  $scope.uidAvailable = $cookieStore.get('uid') != null;
+
+  $scope.uid = $stateParams.uid || Wallet.guid || $rootScope.loginFormUID;
+
+  $scope.uidAvailable = !!$scope.uid
+
   $scope.user = Wallet.user;
 
   //   Browser compatibility warnings:
@@ -85,30 +87,11 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookieStore
       Alerts.displayWarning(translation, true);
     });
   }
-  if (Wallet.guid != null) {
-    $scope.uid = Wallet.guid;
-  } else {
-    $scope.uid = $cookieStore.get("uid");
-  }
-  if ($scope.key != null) {
-    $scope.status.enterkey = true;
-  }
-  if ($cookieStore.get('email-verified')) {
-    $cookieStore.remove('email-verified');
-    $translate(['SUCCESS', 'EMAIL_VERIFIED_SUCCESS', 'EMAIL_VERIFIED_SUCCESS_NO_UID']).then(translations => {
-      $scope.$emit('showNotification', {
-        type: 'verified-email',
-        icon: 'ti-email',
-        heading: translations.SUCCESS,
-        msg: $scope.uidAvailable ? translations.EMAIL_VERIFIED_SUCCESS : translations.EMAIL_VERIFIED_SUCCESS_NO_UID
-      });
-    });
-  }
   $scope.twoFactorCode = "";
   $scope.busy = false;
   $scope.isValid = false;
-  if (!!$cookieStore.get("password")) {
-    $scope.password = $cookieStore.get("password");
+  if (!!$cookies.get("password")) {
+    $scope.password = $cookies.get("password");
   }
   $scope.login = () => {
     if ($scope.busy) return;
@@ -137,10 +120,10 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookieStore
       Wallet.login($scope.uid, $scope.password, null, needs2FA, success, error);
     }
     if ($scope.uid != null && $scope.uid !== "") {
-      $cookieStore.put("uid", $scope.uid);
+      $cookies.put("uid", $scope.uid);
     }
     if ($scope.savePassword && $scope.password != null && $scope.password !== "") {
-      $cookieStore.put("password", $scope.password);
+      $cookies.put("password", $scope.password);
     }
   };
 
@@ -174,6 +157,7 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, Alerts, $cookieStore
   });
 
   $scope.$watch("uid + password + twoFactor", () => {
+    $rootScope.loginFormUID = $scope.uid;
     let isValid = null;
     $scope.errors.uid = null;
     $scope.errors.password = null;

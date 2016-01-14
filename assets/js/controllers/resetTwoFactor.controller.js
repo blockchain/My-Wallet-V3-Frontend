@@ -1,11 +1,16 @@
 angular
   .module('walletApp')
-  .controller('LostGuidCtrl', LostGuidCtrl);
+  .controller('ResetTwoFactorCtrl', ResetTwoFactorCtrl);
 
-function LostGuidCtrl($scope, $rootScope, $http, $translate, Wallet, Alerts) {
+function ResetTwoFactorCtrl($scope, $rootScope, $http, $translate, Wallet, Alerts) {
+
   $scope.currentStep = 1;
   $scope.fields = {
+    uid: $rootScope.loginFormUID,
     email: '',
+    newEmail: '',
+    secret: '',
+    message: '',
     captcha: ''
   };
 
@@ -15,21 +20,29 @@ function LostGuidCtrl($scope, $rootScope, $http, $translate, Wallet, Alerts) {
     $scope.fields.captcha = '';
   };
 
-  $scope.sendReminder = () => {
+  $scope.resetTwoFactor = () => {
     $scope.working = true;
     let success = (res) => {
       $scope.working = false;
       $scope.currentStep = 2;
     };
-    let error = (res) => {
+    let error = (e) => {
       $scope.working = false;
       $scope.refreshCaptcha();
     };
 
-    $scope.remindForm.$setPristine();
-    $scope.remindForm.$setUntouched();
+    $scope.form.$setPristine();
+    $scope.form.$setUntouched();
 
-    Wallet.recoverGuid($scope.fields.email, $scope.fields.captcha, success, error)
+    Wallet.requestTwoFactorReset(
+      $scope.fields.uid,
+      $scope.fields.email,
+      $scope.fields.newEmail,
+      $scope.fields.secret,
+      $scope.fields.message,
+      $scope.fields.captcha,
+      success,
+      error)
   };
 
   // Set SID cookie by requesting headers

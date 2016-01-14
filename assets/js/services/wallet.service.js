@@ -9,9 +9,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', '$rootScope', 'ngAudio', '$cookieStore', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
+Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletTokenEndpoints', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
 
-function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency) {
+function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletTokenEndpoints, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency) {
   const wallet = {
     goal: {
       auth: false
@@ -56,8 +56,24 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   wallet.my = MyWallet;
   wallet.settings_api = MyBlockchainSettings;
   wallet.store = MyWalletStore;
+
   wallet.api = MyBlockchainApi;
+
+  // If customRootURL is set by index.jade:
+  //                    Grunt can replace this:
+  const customRootURL = $rootScope.rootURL || "/";
+  wallet.api.setRootURL(customRootURL);
+  // If customRootURL is set by Grunt:
+  $rootScope.rootURL = customRootURL;
+
+  //                         Grunt can replace this:
+  const customWebSocketURL = $rootScope.webSocketURL;
+  if(customWebSocketURL) {
+    wallet.my.ws.setURL(customWebSocketURL);
+  }
+
   wallet.payment = MyWalletPayment;
+  wallet.tokenEndpoints = MyWalletTokenEndpoints;
   wallet.transactions = [];
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
@@ -178,45 +194,22 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
       wallet.applyIfNeeded();
     };
 
-    let betaCheckFinished = () => {
-      $window.root = 'https://blockchain.info/';
-      wallet.my.login(
-        uid,
-        null, // sharedKey
-        password,
-        two_factor_code,
-        didLogin,
-        needsTwoFactorCode,
-        wrongTwoFactorCode,
-        authorizationRequired,
-        loginError,
-        () => {}, // fetchSuccess
-        () => {}, // decryptSucces
-        () => {} // buildHDSucces
-      );
-      currency.fetchExchangeRate();
-    };
-
-    // If BETA=1 is set in .env then in index.html/jade $rootScope.beta is set.
-    if ($rootScope.beta) {
-      $http.post('/check_guid_for_beta_key', {
-        guid: uid
-      }).success((data) => {
-        if (data.verified) {
-          betaCheckFinished();
-        } else {
-          if (data.error && data.error.message) {
-            Alerts.displayError(data.error.message);
-          }
-          errorCallback();
-        }
-      }).error(() => {
-        Alerts.displayError('Unable to verify your wallet UID.');
-        errorCallback();
-      });
-    } else {
-      betaCheckFinished();
-    }
+    $window.root = 'https://blockchain.info/';
+    wallet.my.login(
+      uid,
+      null, // sharedKey
+      password,
+      two_factor_code,
+      didLogin,
+      needsTwoFactorCode,
+      wrongTwoFactorCode,
+      authorizationRequired,
+      loginError,
+      () => {}, // fetchSuccess
+      () => {}, // decryptSucces
+      () => {} // buildHDSucces
+    );
+    currency.fetchExchangeRate();
   };
 
   wallet.upgrade = (successCallback, cancelSecondPasswordCallback) => {
@@ -294,6 +287,70 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     wallet.my.resendTwoFactorSms(uid, success, error);
   };
 
+  wallet.recoverGuid = (email, captcha, successCallback, errorCallback) => {
+    let success = (message) => {
+      Alerts.displaySuccess(message);
+      successCallback();
+      wallet.applyIfNeeded();
+    };
+    let error = (error) => {
+
+      switch (error) {
+        case 'Captcha Code Incorrect':
+          Alerts.displayError($translate.instant('CAPTCHA_INCORRECT'));
+          break;
+        case 'Quota Exceeded':
+          Alerts.displayError($translate.instant('QUOTA_EXCEEDED'));
+          break;
+        default:
+          Alerts.displayError($translate.instant('UNKNOWN_ERROR'));
+      }
+
+      errorCallback();
+      wallet.applyIfNeeded();
+    };
+    wallet.my.recoverGuid(email, captcha, success, error);
+  };
+
+  wallet.requestTwoFactorReset = (guid, email, new_email, secret, message, captcha, successCallback, errorCallback) => {
+    Alerts.clear()
+    let success = (message) => {
+      Alerts.displaySuccess(message);
+      successCallback();
+      wallet.applyIfNeeded();
+    };
+    let error = (error) => {
+      switch (error) {
+        case 'Captcha Code Incorrect':
+          Alerts.displayError($translate.instant('CAPTCHA_INCORRECT'), true);
+          break;
+        case 'Quota Exceeded':
+          Alerts.displayError($translate.instant('QUOTA_EXCEEDED'), true);
+          break;
+        default:
+          Alerts.displayError(error, true);
+      }
+
+      errorCallback();
+      wallet.applyIfNeeded();
+    };
+    wallet.my.requestTwoFactorReset(guid, email, new_email, secret, message, captcha, success, error);
+  };
+
+  wallet.resetTwoFactorToken = (token, successCallback, errorCallback) => {
+    const success = (obj) => {
+      successCallback(obj);
+      wallet.applyIfNeeded();
+    }
+
+    const error = (e) => {
+      errorCallback(e.error);
+      wallet.applyIfNeeded();
+    }
+
+    wallet.tokenEndpoints.resetTwoFactor(token, success, error);
+  }
+
   wallet.create = (password, email, currency, language, success_callback) => {
     let success = (uid) => {
       Alerts.displaySuccess('Wallet created with identifier: ' + uid, true);
@@ -308,24 +365,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
         Alerts.displayError('Unable to login to new wallet');
       };
 
-      if ($rootScope.beta) {
-        $http.post('/register_guid', {
-          guid: uid,
-          email: email
-        }).success((data) => {
-          if (data.success) {
-            wallet.login(uid, password, null, null, loginSuccess, loginError);
-          } else {
-            if (data.error && data.error.message) {
-              Alerts.displayError(data.error.message);
-            }
-          }
-        }).error(() => {
-          Alerts.displayWarning('Unable to associate your new wallet with your invite code. Please try to login using your UID ' + uid + ' or register again.', true);
-        });
-      } else {
-        wallet.login(uid, password, null, null, loginSuccess, loginError);
-      }
+      wallet.login(uid, password, null, null, loginSuccess, loginError);
     };
 
     let error = (error) => {
@@ -847,11 +887,11 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     } else if (event === 'logging_out') {
       if (wallet.didLogoutByChoice) {
         $translate('LOGGED_OUT').then((translation) => {
-          $cookieStore.put('alert-success', translation);
+          $cookies.put('alert-success', translation);
         });
       } else {
         $translate('LOGGED_OUT_AUTOMATICALLY').then((translation) => {
-          $cookieStore.put('alert-warning', translation);
+          $cookies.put('alert-warning', translation);
           wallet.applyIfNeeded();
         });
       }
@@ -885,15 +925,15 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     wallet.monitor(event, data);
   });
 
-  let message = $cookieStore.get('alert-warning');
+  let message = $cookies.get('alert-warning');
   if (message !== void 0 && message !== null) {
     Alerts.displayWarning(message, true);
-    $cookieStore.remove('alert-warning');
+    $cookies.remove('alert-warning');
   }
-  message = $cookieStore.get('alert-success');
+  message = $cookies.get('alert-success');
   if (message !== void 0 && message !== null) {
     Alerts.displaySuccess(message);
-    $cookieStore.remove('alert-success');
+    $cookies.remove('alert-success');
   }
 
   wallet.setNote = (tx, text) => {
@@ -1236,6 +1276,57 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     };
     wallet.my.wallet.encrypt(password, success, error, encrypting, syncing);
   };
+
+  wallet.verifyEmail = (token, successCallback, errorCallback) => {
+    const success = (res) => {
+      wallet.user.isEmailVerified = true;
+      successCallback(res.guid);
+      wallet.applyIfNeeded();
+    }
+
+    const error = (res) => {
+      console.log(res.error);
+      errorCallback(res.error);
+      wallet.applyIfNeeded();
+    }
+
+    wallet.tokenEndpoints.verifyEmail(token, success, error);
+  }
+
+  wallet.unsubscribe = (token, successCallback, errorCallback) => {
+    const success = (res) => {
+      successCallback(res.guid);
+      wallet.applyIfNeeded();
+    }
+
+    const error = (res) => {
+      console.log(res.error);
+      errorCallback(res.error);
+      wallet.applyIfNeeded();
+    }
+
+    wallet.tokenEndpoints.unsubscribe(token, success, error);
+  }
+
+  wallet.authorizeApprove = (token, successCallback, differentBrowserCallback, differentBrowserApproved, errorCallback) => {
+    const success = (res) => {
+      successCallback(res.guid);
+      wallet.applyIfNeeded();
+    }
+
+    const error = (res) => {
+      console.log(res.error);
+      errorCallback(res.error);
+      wallet.applyIfNeeded();
+    }
+
+    const differentBrowser = (details) => {
+      differentBrowserCallback(details);
+      wallet.applyIfNeeded();
+    }
+
+    wallet.tokenEndpoints.authorizeApprove(token, success, differentBrowser, differentBrowserApproved, error);
+  }
 
   // Testing: only works on mock MyWallet
 
