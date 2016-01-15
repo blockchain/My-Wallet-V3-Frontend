@@ -149,8 +149,10 @@
   }
   .badge-panel {
     border: 1px solid rgb(234, 234, 234);
+    position: relative;
     border-top: none;
     padding: 30px;
+    z-index: 10;
     input {
       border: none;
       border-bottom: 1px solid #DBDBDB;
