@@ -328,7 +328,6 @@
   "JUST_RECEIVED_BITCOIN" : "You've just received Bitcoin!",
   "SUCCESS" : "Success!",
   "COPY_SUCCESS": "Successfully copied to your clipboard!",
-  "ACCOUNT_CREATED" : "You've successfully created an account",
   "BITCOIN_SENT" : "You've successfully sent bitcoin",
   "NO_TRANSACTIONS_YET" : "Your Transactions",
   "SORRY_ZERO_TXS" : "Sorry, we couldn't find any transactions!",
