@@ -395,6 +395,14 @@ module.exports = (grunt) ->
           to: () =>
             'customRootURL = $rootScope.rootURL = "https://' + @rootUrl + '/"'
         }]
+      root_path:
+        src: ['build/js/services/wallet.service.js'],
+        overwrite: true,
+        replacements: [{
+          from: 'customRootPath = $rootScope.rootPath'
+          to: () =>
+            'customRootPath = $rootScope.rootPath = "' + @rootPath + '/"'
+        }]
       web_socket_url:
         src: ['build/js/services/wallet.service.js'],
         overwrite: true,
@@ -445,7 +453,7 @@ module.exports = (grunt) ->
   ]
 
   # Default task(s).
-  grunt.registerTask "dist", (rootUrl, port) =>
+  grunt.registerTask "dist", (rootUrl, port, rootPath) =>
     grunt.task.run [
       "shell:clean_bower_and_npm_cache"
       "clean"
@@ -459,11 +467,21 @@ module.exports = (grunt) ->
       if port
         @rootUrl += ":" + port
 
+
       console.log("Custom root URL: " + @rootUrl)
 
       grunt.task.run [
         "replace:root_url"
         "replace:web_socket_url"
+      ]
+
+    if rootPath
+      @rootPath = rootPath
+
+      console.log("Custom root path: " + @rootPath)
+
+      grunt.task.run [
+        "replace:root_path"
       ]
 
     grunt.task.run [
@@ -483,7 +501,7 @@ module.exports = (grunt) ->
       "git_changelog"
     ]
 
-  grunt.registerTask "dist_unsafe", (rootUrl, port) =>
+  grunt.registerTask "dist_unsafe", (rootUrl, port, rootPath) =>
     grunt.task.run [
       "shell:clean_bower_and_npm_cache"
       "clean"
@@ -503,6 +521,15 @@ module.exports = (grunt) ->
         "replace:root_url"
         "replace:web_socket_url"
       ]
+
+      if rootPath
+        @rootPath = rootPath
+
+        console.log("Custom root path: " + @rootPath)
+
+        grunt.task.run [
+          "replace:root_path"
+        ]
 
     grunt.task.run [
       "shell:skip_check_dependencies"

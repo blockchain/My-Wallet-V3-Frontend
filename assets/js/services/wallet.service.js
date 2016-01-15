@@ -59,12 +59,18 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
 
   wallet.api = MyBlockchainApi;
 
-  // If customRootURL is set by index.jade:
+  // If a custom rootURL is set by index.jade:
   //                    Grunt can replace this:
   const customRootURL = $rootScope.rootURL || "/";
   wallet.api.ROOT_URL=customRootURL;
   // If customRootURL is set by Grunt:
   $rootScope.rootURL = customRootURL;
+
+  // If a custom root path is set by index.jade:
+  //                    Grunt can replace this:
+  const customRootPath = $rootScope.rootPath || "";
+  // If customRootPath is set by Grunt:
+  $rootScope.rootPath = customRootPath;
 
   //                         Grunt can replace this:
   const customWebSocketURL = $rootScope.webSocketURL;
@@ -1181,7 +1187,8 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
 
   wallet.handleBitcoinLinks = () => {
     wallet.saveActivity(2);
-    $window.navigator.registerProtocolHandler('bitcoin', $window.location.origin + '/#/open/%s', 'Blockchain');
+    const uri = $window.location.origin + "/" + $rootScope.rootPath + '#/open/%s';
+    $window.navigator.registerProtocolHandler('bitcoin', uri, 'Blockchain');
   };
 
   wallet.enableBlockTOR = () => {
