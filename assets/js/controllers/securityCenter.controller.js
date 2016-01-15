@@ -67,11 +67,7 @@ function SettingsSecurityCenterCtrl($scope, Wallet, SecurityCenter, filterFilter
   $scope.changePasswordHint = (hint, success, error) => {
     Wallet.changePasswordHint(hint, success, error);
   };
-
-  $scope.cancelNumber = () => {
-    $scope.toggle('mobilenumber');
-  }
-
+  
   $scope.$watchCollection("user", (newValue, oldValue) => {
     if (!($scope.display.action === "mobilenumber" && !$scope.user.isMobileVerified)) {
       $scope.nextAction();
