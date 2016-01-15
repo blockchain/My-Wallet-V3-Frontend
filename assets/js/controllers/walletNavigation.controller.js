@@ -64,10 +64,11 @@ function WalletNavigationCtrl($scope, Wallet, Alerts, SecurityCenter, $state, $s
 
   $scope.termsOfService = () => {
     let modalInstance = $uibModal.open({
-      templateUrl: 'partials/terms-of-service.jade',
-      windowClass: 'bc-modal terms-modal'
+      templateUrl: "partials/user-agreement.jade",
+      controller: function () {},
+      windowClass: "bc-modal terms-modal"
     });
-  };
+  }
 
   $scope.privacyPolicy = () => {
     let modalInstance = $uibModal.open({

@@ -18,12 +18,12 @@
     "angular-qr": "0.2.*",
     "angular-translate": "2.7.*",
     "angular-translate-loader-static-files": "2.7.*",
-    "angular-inview": "1.5.0",
+    "angular-inview": "1.5.*",
     "angular-password-entropy": "0.1.*",
     "browserdetection": "0.3.*",
     "bc-qr-reader": "0.2.*",
     "bootstrap-sass": "3.3.*",
-    "blockchain-wallet": "3.3.*",
+    "blockchain-wallet": "3.5.*",
     "bc-phone-number": "5.0.*"
   },
   "devDependencies": {

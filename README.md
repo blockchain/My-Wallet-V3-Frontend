@@ -1,6 +1,6 @@
 # MyWallet V3 Frontend [![Build Status](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend.png?branch=master)](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend) [![Coverage Status](https://coveralls.io/repos/blockchain/My-Wallet-V3-Frontend/badge.svg?branch=master&service=github)](https://coveralls.io/github/blockchain/My-Wallet-V3-Frontend?branch=master)
 
-An AngularJS bitcoin web wallet powered by [My-Wallet-V3](https://github.com/blockchain/My-Wallet-V3). 
+An AngularJS bitcoin web wallet powered by [My-Wallet-V3](https://github.com/blockchain/My-Wallet-V3).
 
 This is the new and improved wallet. You can see it at [alpha.blockchain.info](https://alpha.blockchain.info/). For the original wallet at [blockchain.info](https://blockchain.info/) please see [this repository](https://github.com/blockchain/My-Wallet) or [contact support](http://blockchain.zendesk.com/).
 
@@ -21,6 +21,12 @@ gem install sass
 Install dependencies:
 ```sh
 npm install
+```
+
+Create a file called `.env` in the root of the project. Put the following in it:
+
+```
+ROOT_URL=https://blockchain.info
 ```
 
 ## Build
@@ -49,7 +55,7 @@ npm start
 Visit [local.blockchain.com:8080](http://local.blockchain.com:8080/).  Do not use `localhost:8080`. You will need to modify your "hosts" file (`/etc/hosts` on OSX and most UNIX systems) because this is no longer registered at the DNS level for application security reasons. Add this line to `/etc/hosts`:
 
     127.0.0.1   local.blockchain.com
-    
+
 ## Developing My-Wallet-V3
 
 If you are making changes to [My-Wallet-V3](https://github.com/blockchain/My-Wallet-V3) that you want to try out in the frontend, create a symlink:
@@ -57,21 +63,6 @@ If you are making changes to [My-Wallet-V3](https://github.com/blockchain/My-Wal
 rm My-Wallet-V3-Frontend/bower_components/blockchain-wallet/dist/my-wallet.js
 ln -s ../../../../My-Wallet-V3/dist/my-wallet.js My-Wallet-V3-Frontend/bower_components/blockchain-wallet/dist/my-wallet.js
 ```
-
-## Use Beta Invites Locally
-
-To enable the beta invite functionality, create a file called `.env` and add the following to it:
-`INVITE=1`
-`BETA_DATABASE_PATH=betakeys.MDF`
-`ADMIN_PASSWORD=...`
-
-Copy the database file template (`betakeys.MDF` is ignored by git):
-```sh
-cp betakeys-template.MDF betakeys.MDF
-```
-
-You should see a number of example users at:
-http://local.blockchain.com:8080/betaadmin/
 
 ## Usage
 
@@ -89,31 +80,6 @@ To reclaim funds from an email take code at the of link and add it to `#/claim`,
 If you enable "handle bitcoin links" in your wallet settings, you can open bitcoin URI's like this one:
 
     bitcoin:?address=1FeerpCgswvGRLVKme759C96DUBtf7SvA2?amount=0.01
-
-## UI Tests
-
-Protractor UI tests are currently running on https://dev.blockchain.info/ or http://local.blockchain.com. Choose instance in util.js. File with login credentials (ignore.js) will be distributed separately and placed in the `e2e-tests` folder.
-
-Install Protractor globally:
-
-    npm install -g protractor
-
-This installs both protractor and webdriver-manager. Update webdriver-manager:
-
-    webdriver-manager update
-
-Start up a server:
-
-    webdriver-manager start
-
-Open a new Terminal tab, navigate to the e2e test folder, and begin the tests:
-
-    cd e2e-tests/
-    protractor config.js
-
-To test specific files
-
-    protractor config.js --specs [folder-name]/[file_name]_spec.js
 
 ## Contribute
 

@@ -9,9 +9,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', '$rootScope', 'ngAudio', '$cookieStore', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
+Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletTokenEndpoints', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
 
-function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, $rootScope, ngAudio, $cookieStore, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency) {
+function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletTokenEndpoints, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency) {
   const wallet = {
     goal: {
       auth: false
@@ -56,8 +56,30 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   wallet.my = MyWallet;
   wallet.settings_api = MyBlockchainSettings;
   wallet.store = MyWalletStore;
+
   wallet.api = MyBlockchainApi;
+
+  // If a custom rootURL is set by index.jade:
+  //                    Grunt can replace this:
+  const customRootURL = $rootScope.rootURL || "/";
+  wallet.api.ROOT_URL=customRootURL;
+  // If customRootURL is set by Grunt:
+  $rootScope.rootURL = customRootURL;
+
+  // If a custom root path is set by index.jade:
+  //                    Grunt can replace this:
+  const customRootPath = $rootScope.rootPath || "";
+  // If customRootPath is set by Grunt:
+  $rootScope.rootPath = customRootPath;
+
+  //                         Grunt can replace this:
+  const customWebSocketURL = $rootScope.webSocketURL;
+  if(customWebSocketURL) {
+    wallet.my.ws.wsUrl=customWebSocketURL;
+  }
+
   wallet.payment = MyWalletPayment;
+  wallet.tokenEndpoints = MyWalletTokenEndpoints;
   wallet.transactions = [];
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
@@ -122,12 +144,12 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
           };
           wallet.my.wallet.getHistory().then(didFetchTransactions);
         }
-        wallet.applyIfNeeded();
+        $rootScope.$safeApply();
       });
       if (successCallback != null) {
         successCallback();
       }
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
     let needsTwoFactorCode = (method) => {
@@ -141,12 +163,12 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
       needsTwoFactorCallback();
 
       wallet.settings.twoFactorMethod = method;
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
     let wrongTwoFactorCode = (message) => {
       errorCallback('twoFactor', message);
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
     let loginError = (error) => {
@@ -159,7 +181,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
         Alerts.displayError(error, true);
         errorCallback();
       }
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
     if (two_factor_code != null && two_factor_code !== '') {
       wallet.settings.needs2FA = true;
@@ -169,54 +191,31 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
 
     let authorizationProvided = () => {
       wallet.goal.auth = true;
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
     let authorizationRequired = (callback) => {
       callback(authorizationProvided());
       Alerts.displayWarning('Please check your email to approve this login attempt.', true);
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
-    let betaCheckFinished = () => {
-      $window.root = 'https://blockchain.info/';
-      wallet.my.login(
-        uid,
-        null, // sharedKey
-        password,
-        two_factor_code,
-        didLogin,
-        needsTwoFactorCode,
-        wrongTwoFactorCode,
-        authorizationRequired,
-        loginError,
-        () => {}, // fetchSuccess
-        () => {}, // decryptSucces
-        () => {} // buildHDSucces
-      );
-      currency.fetchExchangeRate();
-    };
-
-    // If BETA=1 is set in .env then in index.html/jade $rootScope.beta is set.
-    if ($rootScope.beta) {
-      $http.post('/check_guid_for_beta_key', {
-        guid: uid
-      }).success((data) => {
-        if (data.verified) {
-          betaCheckFinished();
-        } else {
-          if (data.error && data.error.message) {
-            Alerts.displayError(data.error.message);
-          }
-          errorCallback();
-        }
-      }).error(() => {
-        Alerts.displayError('Unable to verify your wallet UID.');
-        errorCallback();
-      });
-    } else {
-      betaCheckFinished();
-    }
+    $window.root = 'https://blockchain.info/';
+    wallet.my.login(
+      uid,
+      null, // sharedKey
+      password,
+      two_factor_code,
+      didLogin,
+      needsTwoFactorCode,
+      wrongTwoFactorCode,
+      authorizationRequired,
+      loginError,
+      () => {}, // fetchSuccess
+      () => {}, // decryptSucces
+      () => {} // buildHDSucces
+    );
+    currency.fetchExchangeRate();
   };
 
   wallet.upgrade = (successCallback, cancelSecondPasswordCallback) => {
@@ -228,7 +227,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
         wallet.updateTransactions();
       });
       successCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
     let error = () => {
@@ -272,7 +271,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     let success = () => {
       wallet.hdAddresses(account.index)(true);
       successCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
     $translate('DEFAULT_NEW_ADDRESS_LABEL').then((translation) => {
       account.setLabelForReceivingAddress(account.receiveIndex, translation)
@@ -284,15 +283,93 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     let success = () => {
       $translate('RESENT_2FA_SMS').then(Alerts.displaySuccess);
       successCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
     let error = (e) => {
       $translate('RESENT_2FA_SMS_FAILED').then(Alerts.displayError);
       errorCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
     wallet.my.resendTwoFactorSms(uid, success, error);
   };
+
+  wallet.recoverGuid = (email, captcha) => {
+    let defer = $q.defer()
+    let success = (message) => {
+      Alerts.displaySuccess(message);
+      defer.resolve();
+      $rootScope.$safeApply();
+    };
+    let error = (error) => {
+
+      switch (error) {
+        case 'Captcha Code Incorrect':
+          Alerts.displayError($translate.instant('CAPTCHA_INCORRECT'));
+          break;
+        case 'Quota Exceeded':
+          Alerts.displayError($translate.instant('QUOTA_EXCEEDED'));
+          break;
+        default:
+          Alerts.displayError($translate.instant('UNKNOWN_ERROR'));
+      }
+
+      defer.reject();
+      $rootScope.$safeApply();
+    };
+    wallet.my.recoverGuid(email, captcha).then(success).catch(error);
+    return defer.promise;
+  };
+
+  wallet.requestTwoFactorReset = (guid, email, new_email, secret, message, captcha) => {
+    let defer = $q.defer()
+
+    Alerts.clear()
+    let success = (message) => {
+      Alerts.displaySuccess(message);
+      defer.resolve();
+      $rootScope.$safeApply();
+    };
+    let error = (error) => {
+      switch (error) {
+        case 'Captcha Code Incorrect':
+          Alerts.displayError($translate.instant('CAPTCHA_INCORRECT'), true);
+          break;
+        case 'Quota Exceeded':
+          Alerts.displayError($translate.instant('QUOTA_EXCEEDED'), true);
+          break;
+        default:
+          Alerts.displayError(error, true);
+      }
+
+      defer.reject();
+      $rootScope.$safeApply();
+    };
+    wallet.my.requestTwoFactorReset(guid, email, new_email, secret, message, captcha)
+      .then(success)
+      .catch(error);
+
+    return defer.promise;
+  };
+
+  wallet.resetTwoFactorToken = (token) => {
+    let defer = $q.defer()
+
+    const success = (obj) => {
+      defer.resolve(obj);
+      $rootScope.$safeApply();
+    }
+
+    const error = (e) => {
+      defer.reject(e.error);
+      $rootScope.$safeApply();
+    }
+
+    wallet.tokenEndpoints.resetTwoFactor(token)
+      .then(success)
+      .catch(error);
+
+    return defer.promise;
+  }
 
   wallet.create = (password, email, currency, language, success_callback) => {
     let success = (uid) => {
@@ -308,24 +385,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
         Alerts.displayError('Unable to login to new wallet');
       };
 
-      if ($rootScope.beta) {
-        $http.post('/register_guid', {
-          guid: uid,
-          email: email
-        }).success((data) => {
-          if (data.success) {
-            wallet.login(uid, password, null, null, loginSuccess, loginError);
-          } else {
-            if (data.error && data.error.message) {
-              Alerts.displayError(data.error.message);
-            }
-          }
-        }).error(() => {
-          Alerts.displayWarning('Unable to associate your new wallet with your invite code. Please try to login using your UID ' + uid + ' or register again.', true);
-        });
-      } else {
-        wallet.login(uid, password, null, null, loginSuccess, loginError);
-      }
+      wallet.login(uid, password, null, null, loginSuccess, loginError);
     };
 
     let error = (error) => {
@@ -403,17 +463,17 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     let success = (res) => {
       wallet.appendTransactions(res);
       successCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
     let error = () => {
       errorCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
     let allTransactionsLoaded = () => {
       allTransactionsLoadedCallback && allTransactionsLoadedCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
     if (where === '') {
@@ -434,12 +494,12 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     let success = () => {
       wallet.hdAddresses(accountIdx)(true);
       successCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
     let error = (msg) => {
       errorCallback(msg);
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
     let account = wallet.accounts()[parseInt(accountIdx)];
@@ -456,12 +516,12 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   wallet.makePairingCode = (successCallback, errorCallback) => {
     let success = (code) => {
       successCallback(code);
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
     let error = () => {
       errorCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
     wallet.my.makePairingCode(success, error);
@@ -493,12 +553,12 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     let success = () => {
       wallet.settings.ipWhitelist = ips;
       successCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
     let error = () => {
       errorCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
     wallet.settings_api.update_IP_lock(ips, success, error);
@@ -507,12 +567,12 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   wallet.resendEmailConfirmation = (successCallback, errorCallback) => {
     let success = () => {
       successCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
     let error = () => {
       errorCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
     wallet.settings_api.resendEmailConfirmation(wallet.user.email, success, error);
@@ -530,10 +590,10 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     wallet.settings_api.updateLoggingLevel(level, () => {
       wallet.settings.loggingLevel = level;
       wallet.saveActivity(4);
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     }, () => {
       Alerts.displayError('Failed to update logging level');
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     });
   };
 
@@ -560,7 +620,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   wallet.addAddressOrPrivateKey = (addressOrPrivateKey, needsBipPassphraseCallback, successCallback, errorCallback, cancel) => {
     let success = (address) => {
       successCallback(address);
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
 
     let proceed = (secondPassword='') => {
@@ -570,7 +630,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
         } else {
           errorCallback(message);
         }
-        wallet.applyIfNeeded();
+        $rootScope.$safeApply();
       };
 
       let proceedWithBip38 = (bipPassphrase) => {
@@ -782,7 +842,7 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
       }
     }
     wallet.status.didLoadTransactions = true;
-    wallet.applyIfNeeded();
+    $rootScope.$safeApply();
   };
 
   wallet.appendTransactions = (transactions, override) => {
@@ -843,16 +903,16 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
         Alerts.displayError(translation);
       });
     } else if (event === 'ticker_updated' || event === 'did_set_latest_block') {
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     } else if (event === 'logging_out') {
       if (wallet.didLogoutByChoice) {
         $translate('LOGGED_OUT').then((translation) => {
-          $cookieStore.put('alert-success', translation);
+          $cookies.put('alert-success', translation);
         });
       } else {
         $translate('LOGGED_OUT_AUTOMATICALLY').then((translation) => {
-          $cookieStore.put('alert-warning', translation);
-          wallet.applyIfNeeded();
+          $cookies.put('alert-warning', translation);
+          $rootScope.$safeApply();
         });
       }
       wallet.status.isLoggedIn = false;
@@ -868,13 +928,13 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     } else if (event.type !== void 0) {
       if (event.type === 'error') {
         Alerts.displayError(event.msg);
-        wallet.applyIfNeeded();
+        $rootScope.$safeApply();
       } else if (event.type === 'success') {
         Alerts.displaySuccess(event.msg);
-        wallet.applyIfNeeded();
+        $rootScope.$safeApply();
       } else if (event.type === 'notice') {
         Alerts.displayWarning(event.msg);
-        wallet.applyIfNeeded();
+        $rootScope.$safeApply();
       } else {
       }
     } else {
@@ -885,15 +945,15 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     wallet.monitor(event, data);
   });
 
-  let message = $cookieStore.get('alert-warning');
+  let message = $cookies.get('alert-warning');
   if (message !== void 0 && message !== null) {
     Alerts.displayWarning(message, true);
-    $cookieStore.remove('alert-warning');
+    $cookies.remove('alert-warning');
   }
-  message = $cookieStore.get('alert-success');
+  message = $cookies.get('alert-success');
   if (message !== void 0 && message !== null) {
     Alerts.displaySuccess(message);
-    $cookieStore.remove('alert-success');
+    $cookies.remove('alert-success');
   }
 
   wallet.setNote = (tx, text) => {
@@ -937,11 +997,11 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
       wallet.user.email = email;
       wallet.user.isEmailVerified = false;
       successCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     }), () => {
       $translate('CHANGE_EMAIL_FAILED').then((translation) => {
         Alerts.displayError(translation);
-        wallet.applyIfNeeded();
+        $rootScope.$safeApply();
       });
       errorCallback();
     });
@@ -949,11 +1009,11 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   wallet.enableNotifications = () => {
     let success = () => {
       wallet.settings.notifications = true;
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
     let error = () => {
       Alerts.displayError('Failed to enable notifications');
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
     wallet.my.wallet.enableNotifications(success, error);
   };
@@ -961,11 +1021,11 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
   wallet.disableNotifications = () => {
     let success = () => {
       wallet.settings.notifications = false;
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
     let error = () => {
       Alerts.displayError('Failed to disable notifications');
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
     wallet.my.wallet.disableNotifications(success, error);
   };
@@ -994,13 +1054,13 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
       wallet.user.mobile = mobile;
       wallet.user.isMobileVerified = false;
       successCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     }), () => {
       $translate('CHANGE_MOBILE_FAILED').then((translation) => {
         Alerts.displayError(translation);
       });
       errorCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     });
   };
 
@@ -1008,29 +1068,23 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     wallet.settings_api.verifyMobile(code, (() => {
       wallet.user.isMobileVerified = true;
       successCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     }), () => {
       $translate('VERIFY_MOBILE_FAILED').then((translation) => {
         errorCallback(translation);
       });
-      wallet.applyIfNeeded();
-    });
-  };
-
-  wallet.applyIfNeeded = () => {
-    if (MyWallet.mockShouldReceiveNewTransaction === void 0) {
       $rootScope.$safeApply();
-    }
+    });
   };
 
   wallet.changePasswordHint = (hint, successCallback, errorCallback) => {
     wallet.settings_api.update_password_hint1(hint, (() => {
       wallet.user.passwordHint = hint;
       successCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     }), (err) => {
       errorCallback(err);
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     });
   };
 
@@ -1040,10 +1094,10 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     wallet.settings_api.unsetTwoFactor(() => {
       wallet.settings.needs2FA = false;
       wallet.settings.twoFactorMethod = null;
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     }, () => {
       console.log('Failed');
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     });
   };
 
@@ -1051,10 +1105,10 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     wallet.settings_api.setTwoFactorSMS(() => {
       wallet.settings.needs2FA = true;
       wallet.settings.twoFactorMethod = 5;
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     }, () => {
       console.log('Failed');
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     });
   };
 
@@ -1062,10 +1116,10 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     wallet.settings_api.setTwoFactorEmail(() => {
       wallet.settings.needs2FA = true;
       wallet.settings.twoFactorMethod = 2;
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     }, () => {
       console.log('Failed');
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     });
   };
 
@@ -1074,21 +1128,21 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
       wallet.settings.needs2FA = true;
       wallet.settings.twoFactorMethod = 1;
       successCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     }, (error) => {
       console.log(error);
       errorCallback(error);
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     });
   };
 
   wallet.setTwoFactorGoogleAuthenticator = () => {
     wallet.settings_api.setTwoFactorGoogleAuthenticator((secret) => {
       wallet.settings.googleAuthenticatorSecret = secret;
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     }, () => {
       console.log('Failed');
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     });
   };
 
@@ -1098,10 +1152,10 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
       wallet.settings.twoFactorMethod = 4;
       wallet.settings.googleAuthenticatorSecret = null;
       successCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     }, () => {
       errorCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     });
   };
 
@@ -1109,11 +1163,11 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     let success = () => {
       wallet.settings.rememberTwoFactor = true;
       successCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
     let error = () => {
       errorCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
     wallet.settings_api.toggleSave2FA(false, success, error);
   };
@@ -1122,37 +1176,38 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     let success = () => {
       wallet.settings.rememberTwoFactor = false;
       successCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
     let error = () => {
       errorCallback();
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     };
     wallet.settings_api.toggleSave2FA(true, success, error);
   };
 
   wallet.handleBitcoinLinks = () => {
     wallet.saveActivity(2);
-    $window.navigator.registerProtocolHandler('bitcoin', $window.location.origin + '/#/open/%s', 'Blockchain');
+    const uri = $window.location.origin + "/" + $rootScope.rootPath + '#/open/%s';
+    $window.navigator.registerProtocolHandler('bitcoin', uri, 'Blockchain');
   };
 
   wallet.enableBlockTOR = () => {
     wallet.settings_api.update_tor_ip_block(1, () => {
       wallet.settings.blockTOR = true;
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     }, () => {
       console.log('Failed');
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     });
   };
 
   wallet.disableBlockTOR = () => {
     wallet.settings_api.update_tor_ip_block(0, () => {
       wallet.settings.blockTOR = false;
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     }, () => {
       console.log('Failed');
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     });
   };
 
@@ -1160,10 +1215,10 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     wallet.settings_api.update_IP_lock_on(true, () => {
       wallet.settings.restrictToWhitelist = true;
       wallet.saveActivity(2);
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     }, () => {
       console.log('Failed');
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     });
   };
 
@@ -1171,10 +1226,10 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     wallet.settings_api.update_IP_lock_on(false, () => {
       wallet.settings.restrictToWhitelist = false;
       wallet.saveActivity(2);
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     }, () => {
       console.log('Failed');
-      wallet.applyIfNeeded();
+      $rootScope.$safeApply();
     });
   };
 
@@ -1236,6 +1291,73 @@ function Wallet($http, $window, $timeout, Alerts, MyWallet, MyBlockchainApi, MyB
     };
     wallet.my.wallet.encrypt(password, success, error, encrypting, syncing);
   };
+
+  wallet.verifyEmail = (token) => {
+    let defer = $q.defer();
+
+    const success = (res) => {
+      wallet.user.isEmailVerified = true;
+      defer.resolve(res.guid);
+      $rootScope.$safeApply();
+    }
+
+    const error = (res) => {
+      console.log(res.error);
+      defer.reject(res.error);
+      $rootScope.$safeApply();
+    }
+
+    wallet.tokenEndpoints.verifyEmail(token)
+      .then(success)
+      .catch(error);
+
+    return defer.promise;
+  }
+
+  wallet.unsubscribe = (token) => {
+    let defer = $q.defer();
+
+    const success = (res) => {
+      defer.resolve(res.guid);
+      $rootScope.$safeApply();
+    }
+
+    const error = (res) => {
+      console.log(res.error);
+      defer.reject(res.error);
+      $rootScope.$safeApply();
+    }
+
+    wallet.tokenEndpoints.unsubscribe(token).then(success).catch(error);
+
+    return defer.promise;
+  }
+
+  wallet.authorizeApprove = (token, differentBrowserCallback, differentBrowserApproved) => {
+    let defer = $q.defer()
+
+    const success = (res) => {
+      defer.resolve(res.guid);
+      $rootScope.$safeApply();
+    }
+
+    const error = (res) => {
+      console.log(res.error);
+      defer.reject(res.error);
+      $rootScope.$safeApply();
+    }
+
+    const differentBrowser = (details) => {
+      differentBrowserCallback(details);
+      $rootScope.$safeApply();
+    }
+
+    wallet.tokenEndpoints.authorizeApprove(token, differentBrowser, differentBrowserApproved)
+      .then(success)
+      .catch(error);
+
+    return defer.promise;
+  }
 
   // Testing: only works on mock MyWallet
 
