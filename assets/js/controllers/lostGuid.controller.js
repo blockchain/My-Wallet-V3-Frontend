@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('LostGuidCtrl', LostGuidCtrl);
 
-function LostGuidCtrl($scope, $rootScope, $http, $translate, Wallet, Alerts) {
+function LostGuidCtrl($scope, $rootScope, $http, $translate, WalletNetwork, Alerts) {
   $scope.currentStep = 1;
   $scope.fields = {
     email: '',
@@ -29,7 +29,7 @@ function LostGuidCtrl($scope, $rootScope, $http, $translate, Wallet, Alerts) {
     $scope.remindForm.$setPristine();
     $scope.remindForm.$setUntouched();
 
-    Wallet.recoverGuid($scope.fields.email, $scope.fields.captcha).then(success).catch(error);
+    WalletNetwork.recoverGuid($scope.fields.email, $scope.fields.captcha).then(success).catch(error);
   };
 
   // Set SID cookie by requesting headers
