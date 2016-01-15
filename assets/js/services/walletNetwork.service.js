@@ -79,7 +79,7 @@ function WalletNetwork(MyWalletTokenEndpoints, MyWalletNetwork, $q, $rootScope, 
     let defer = $q.defer()
 
     const success = (res) => {
-      defer.resolve(res.guid);
+      defer.resolve(res);
       $rootScope.$safeApply();
     }
 
