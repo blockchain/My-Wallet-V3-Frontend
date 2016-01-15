@@ -502,10 +502,9 @@ module.exports = (grunt) ->
     ]
 
   grunt.registerTask "dist_unsafe", (rootUrl, port, rootPath) =>
+    console.warn "Do not deploy this to production."
+    console.warn "Make sure your bower_components and node_modules are up to date"
     grunt.task.run [
-      "shell:clean_bower_and_npm_cache"
-      "clean"
-      "shell:npm_install_dependencies"
       "build"
     ]
 
