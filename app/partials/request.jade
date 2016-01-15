@@ -65,7 +65,7 @@
           span(translate="COPY_ADDRESS")
         p.success.mtm.flex-center(ng-show="browserCanExecCommand && highlighted")
           i.ti-check.mrs
-          span Successfully copied to your clipboard!
+          span(translate="COPY_SUCCESS")
     .form-group.mvl.row(ng-class="{'has-error': !requestForm.label.$valid}", ng-show="advanced && fields.to.index != undefined")
       label.pts.col-sm-3.col-xs-12(translate="LABEL_ADDRESS:")
       .col-sm-9.col-xs-12
