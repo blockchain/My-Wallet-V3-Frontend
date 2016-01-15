@@ -6,8 +6,8 @@
     ul.flex.flex-start.pln.mbn
       li.level-header.bg-light-blue.flex-center.flex-justify
         img(src="img/security-icon-1.png")
-      li.level-badge(ng-class="{'badge-active': user.isEmailVerified}")
-        a(ng-click="user.isEmailVerified || toggle('email')", ng-class="{'active' : display.action == 'email' }")
+      li.level-badge(ng-click="user.isEmailVerified || toggle('email')", ng-class="{'active' : display.action == 'email', 'badge-active': user.isEmailVerified}")
+        a
           .level-incomplete-container(ng-hide="user.isEmailVerified")
             .flex-center.flex-column
               img(src="img/badge-verifyemail.png")
@@ -18,8 +18,8 @@
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="user.isEmailVerified" placement="bottom" content="EMAIL_ADDRESS_TOOLTIP" img="img/badge-verifyemail.png" message="EMAIL_VERIFIED")
-      li.level-badge(ng-class="{'badge-active': status.didConfirmRecoveryPhrase}")
-        a(ng-click="status.didConfirmRecoveryPhrase || toggle('securityphrase')", ng-class="{'active' : display.action == 'securityphrase' }")
+      li.level-badge(ng-click="status.didConfirmRecoveryPhrase || toggle('securityphrase')", ng-class="{'active' : display.action == 'securityphrase', 'badge-active': status.didConfirmRecoveryPhrase }")
+        a
           .level-incomplete-container(ng-hide="status.didConfirmRecoveryPhrase")
             .flex-center.flex-column
               img(src="img/badge-securityphrase.png")
@@ -30,8 +30,8 @@
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="status.didConfirmRecoveryPhrase" placement="bottom" content="RECOVERY_PHRASE_TOOLTIP" img="img/badge-securityphrase.png" message="PHRASE_BACKED")
-      li.level-badge(ng-class="{'badge-active': user.passwordHint}")
-        a(ng-click="user.passwordHint || toggle('passwordhint')", ng-class="{'active' : display.action == 'passwordhint' }")
+      li.level-badge(ng-click="user.passwordHint || toggle('passwordhint')", ng-class="{'active' : display.action == 'passwordhint', 'badge-active': user.passwordHint }")
+        a
           .level-incomplete-container(ng-hide="user.passwordHint")
             .flex-center.flex-column
               img(src="img/badge-passwordhint.png")
@@ -82,8 +82,8 @@
     ul.flex.flex-start.pln.mbn
       li.level-header.bg-light-blue.flex-center.flex-justify
         img(src="img/security-icon-2.png")
-      li.level-badge(ng-class="{'badge-active': user.isMobileVerified}")
-        a(ng-click="user.isMobileVerified || toggle('mobilenumber')", ng-class="{'active' : display.action == 'mobilenumber' }")
+      li.level-badge(ng-click="user.isMobileVerified || toggle('mobilenumber')", ng-class="{'active' : display.action == 'mobilenumber', 'badge-active': user.isMobileVerified }")
+        a
           .level-incomplete-container(ng-hide="user.isMobileVerified")
             .flex-center.flex-column
               img(src="img/badge-addmobile.png")
@@ -94,8 +94,8 @@
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="user.isMobileVerified" content="MOBILE_NUMBER_TOOLTIP" img="img/badge-addmobile.png" message="MOBILE_LINKED")
-      li.level-badge(ng-class="{'badge-active': settings.needs2FA}")
-        a(ng-click="settings.needs2FA || toggle('twofactor')", ng-class="{'active' : display.action == 'twofactor' }")
+      li.level-badge(ng-click="settings.needs2FA || toggle('twofactor')", ng-class="{'active' : display.action == 'twofactor', 'badge-active': settings.needs2FA }")
+        a
           .level-incomplete-container(ng-hide="settings.needs2FA")
             .flex-column.flex-center
               img(src="img/badge-add2FA.png")
@@ -125,8 +125,8 @@
     ul.flex.flex-start.pln.mbn
       li.level-header.bg-light-blue.flex-center.flex-justify
         img(src="img/security-icon-3.png")
-      li.level-badge(ng-class="{'badge-active': settings.blockTOR}")
-        a(ng-click="settings.blockTOR || toggle('blocktor')", ng-class="{'active' : display.action == 'blocktor' }")
+      li.level-badge(ng-click="settings.blockTOR || toggle('blocktor')", ng-class="{'active' : display.action == 'blocktor', 'badge-active': settings.blockTOR }")
+        a
           .level-incomplete-container(ng-hide="settings.blockTOR")
             .flex-column.flex-center
               img(src="img/badge-blockTOR.png")
