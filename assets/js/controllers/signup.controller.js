@@ -69,6 +69,13 @@ function SignupCtrl($scope, $state, $cookies, $filter, $translate, $uibModal, Wa
     });
   };
 
+  $uibModal.open({
+    templateUrl: "partials/upgrade.jade",
+    controller: "UpgradeCtrl",
+    backdrop: "static",
+    windowClass: "bc-modal"
+  });
+
   $scope.$watch("language_guess", (newVal, oldVal) => {
     if (newVal) {
       $translate.use(newVal.code);
