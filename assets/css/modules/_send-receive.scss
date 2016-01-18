@@ -4,7 +4,12 @@
 
 .modal-body#send {
   input {
-    height: 33px;
+    height: 34px;
+  }
+  .send-from-dropdown {
+    .dropdown-header {
+      display: none;
+    }
   }
   textarea {
     border-radius: 3px;
