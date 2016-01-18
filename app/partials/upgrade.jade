@@ -3,14 +3,21 @@
 .modal-body.upgrade-modal
   uib-alert(type="danger", close="insist = false", ng-show="insist")
     span(translate="NEED_SECOND_PASSWORD_FOR_UPGRADE")
-  p(translate="UPGRADE_WELCOME")
-  p(translate="UPGRADE_EASY")
-  ul
-    li(translate="UPGRADE_NEW_DESIGN")
-    li(translate="UPGRADE_SECURITY_CENTER")
-    li(translate="UPGRADE_PRIVACY")
-    li(translate="UPGRADE_BACKUP")
-    li(translate="UPGRADE_FUND_MANAGEMENT")
+  uib-carousel(no-wrap="true")
+    uib-slide
+      img(src="assets/icons/png/blue-logo.png").logo
+      p(translate="UPGRADE_WELCOME")
+      p(translate="UPGRADE_EASY")
+    uib-slide
+      li(translate="UPGRADE_NEW_DESIGN")
+    uib-slide
+      li(translate="UPGRADE_SECURITY_CENTER")
+    uib-slide
+      li(translate="UPGRADE_PRIVACY")
+    uib-slide
+      li(translate="UPGRADE_BACKUP")
+    uib-slide
+      li(translate="UPGRADE_FUND_MANAGEMENT")
   p
     span(translate="UPGRADE_LIMITATIONS")
     span  
