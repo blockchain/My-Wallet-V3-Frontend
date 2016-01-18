@@ -1,7 +1,62 @@
 .upgrade-modal {
-  li:before
-  {
-      content: '✔';
-      margin-right: .25em;
+  .carousel {
+    .carousel-inner {
+      .item {
+        min-height: 270px;
+        margin-bottom: 30px;
+        @include transition(transform $slow);
+        > div {
+          top: 50%;
+          left: 50%;
+          position: absolute;
+          transform: translate(-50%, -50%);
+          li {
+            list-style-type: none;
+          }
+          .subtext {
+            color: $mid-grey;
+          }
+        }
+        .logo {
+          margin: 0 auto;
+          max-height: 130px;
+          margin-bottom: 25px;
+        }
+        &.first {
+          .logo {
+            max-height: 100px;
+          }
+        }
+      }
+    }
+    .carousel-control {
+      background-image: none;
+      &.left, &.right {
+        display: none;
+      }
+    }
+  }
+  .carousel-indicators {
+    bottom: 0px;
+    margin-bottom: 0px;
+    > li {
+      margin: 4px;
+      border: 1px solid $blue;
+      background-color: white;
+      @include transition(background-color $slow);
+      &.active {
+        margin: 4px;
+        width: 10px;
+        height: 10px;
+        background-color: $blue;
+      }
+    }
+  }
+  .footnote {
+    margin-top: 20px;
+    margin-bottom: 0px;
+    &:before {
+      content: '*';
+    }
   }
 }
