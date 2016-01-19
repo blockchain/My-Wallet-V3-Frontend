@@ -65,7 +65,7 @@
           confirm-recovery-phrase(button-class="button-success button-lg", ng-hide="status.didConfirmRecoveryPhrase")
 
       div(ng-show="display.action == 'passwordhint'")       
-        bc-async-input(custom inline placeholder="'CHANGE' | translate" ng-model="user.passwordHint" on-save="changePasswordHint" action-title="'CHANGE' | translate")
+        bc-async-input(custom inline placeholder="'ADD_PASSWORD_HINT' | translate" ng-model="user.passwordHint" on-save="changePasswordHint" action-title="'CHANGE' | translate")
           .flex-center
             .form-group.width-50.flex-column(ng-class="{'has-error': !validate()}")
               p(translate="CHANGE")
