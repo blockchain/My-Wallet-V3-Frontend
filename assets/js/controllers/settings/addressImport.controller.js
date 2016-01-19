@@ -30,6 +30,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
 
   $scope.import = () => {
     $scope.status.busy = true;
+    $scope.$safeApply();
     let addressOrPrivateKey = $scope.fields.addressOrPrivateKey.trim();
     let bip38passphrase = $scope.fields.bip38passphrase.trim();
 
@@ -37,14 +38,17 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
       $scope.status.busy = false;
       $scope.address = address;
       $scope.step = 2;
+      $scope.$safeApply();
     };
 
     const error = (err) => {
       $scope.status.busy = false;
+      $scope.$safeApply();
 
       switch (err) {
         case 'presentInWallet':
           $scope.importForm.privateKey.$setValidity('present', false);
+          $scope.BIP38 = false;
           break;
         case 'wrongBipPass':
           $scope.importForm.bipPassphrase.$setValidity('wrong', false);
@@ -60,12 +64,13 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
 
     const needsBipPassphrase = (proceed) => {
       $scope.status.busy = false;
-      $scope.BIP38 = true;
       $scope.proceedWithBip38 = proceed;
+      $timeout(() => { $scope.BIP38 = true; });
     };
 
     const cancel = () => {
       $scope.status.busy = false;
+      $scope.$safeApply();
     };
 
     $timeout(() => {
