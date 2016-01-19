@@ -163,8 +163,13 @@
     top: 20px;
     display: block !important;
     @include transform-center-horizontal;
+    &.ng-hide {
+      opacity: 0;
+      z-index: 1;
+    }
   }
 
+  // step 1
   .level-incomplete-container {
     top: 0px;
     opacity: 1;
@@ -175,30 +180,24 @@
       -webkit-transform: translate3d(-80%, 0, 0);
       transform: translate3d(-80%, 0, 0);
     }
-    &.ng-hide {
-      opacity: 0;
-      z-index: 1;
-    }
   }
 
+  // step 2
   .level-complete-animation {
     z-index: 2;
     opacity: 0;
-    @include transition(opacity .2s .8s);
+    @include transition(opacity .2s .6s);
     &.ng-hide-remove.ng-hide-remove-active {
       opacity: 1;
     }
   }
 
+  // step 3
   .level-complete-container {
-    @include transition(opacity .4s 1.6s);
+    @include transition(all .4s 1.6s);
     height: auto !important;
     opacity: 1;
     z-index: 3;
-    &.ng-hide {
-      z-index: 1;
-      opacity: 0;
-    }
   }
 }
 
