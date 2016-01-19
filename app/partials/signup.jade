@@ -7,9 +7,6 @@ div
     ng-submit="signup()"
     autocomplete="off"
     novalidate)
-    .security-red.mbl.mtl.em-400.flex-center
-      i.ti-hand-stop.mrm.h3.mvn.hidden-xs
-      span(translate="USER_AGREEMENT_WARNING")
     .form-group(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
       label.col-sm-4.control-label(translate="EMAIL")
       .col-sm-8
