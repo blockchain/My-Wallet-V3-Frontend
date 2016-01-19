@@ -28,7 +28,7 @@
               ng-model="transaction.from"
               name="from"
               ng-change="validateAmounts(); checkForSameDestination(); setPaymentFrom()"
-              required)
+              required).send-from-dropdown
               ui-select-match
                 label-origin(origin="$select.selected")
               ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)")

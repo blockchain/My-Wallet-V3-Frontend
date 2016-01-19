@@ -30,5 +30,5 @@
         span.sr-only Toggle Dropdown
       ul.uib-dropdown-menu.dropdown-menu-right.drop-menu
         li(ng-repeat="account in accounts")
-          a(ng-click="setModel(account)" ng-disabled="true")
+          a(ng-click="setModel(account)" ng-disabled="account.index === model.index")
             | {{ account.label }}
