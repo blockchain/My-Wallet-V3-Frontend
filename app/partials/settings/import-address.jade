@@ -15,6 +15,7 @@
           name="privateKey"
           is-valid="isValidAddressOrPrivateKey(fields.addressOrPrivateKey)"
           ng-change="importForm.privateKey.$setValidity('present', true); importForm.privateKey.$setValidity('check', true);"
+          required
           autocomplete="off"
           autofocus
         )
