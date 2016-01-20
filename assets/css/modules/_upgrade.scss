@@ -25,13 +25,15 @@
           margin-bottom: 15px;
           border: 1px solid $border-grey;
         }
+        // customization because the copy is longer (unsupported features in upgrade)
         &:last-child {
           li {
+            max-width: 525px;
             font-size: 1em;
+            margin: 0 auto;
           }
           .logo {
             border: 0px;
-            // to offset font size difference
             max-height: 242px;
           }
         }
