@@ -7,15 +7,8 @@ function ResetTwoFactorTokenCtrl($scope, WalletNetwork, $stateParams, $state, Al
 
     $scope.checkingToken = false
 
-    $translate(['SUCCESS']).then(translations => {
-      $state.go("public.login-uid", {uid: obj.guid}).then(() =>{
-        $rootScope.$emit('showNotification', {
-          type: 'verified-email',
-          icon: 'ti-email',
-          heading: translations.SUCCESS,
-          msg: obj.message
-        });
-      });
+    $state.go("public.login-uid", {uid: obj.guid}).then(() =>{
+      Alerts.displayResetTwoFactor(obj.message)
     });
   }
 

@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .factory('Alerts', Alerts);
 
-Alerts.$inject = ['$timeout', '$rootScope'];
+Alerts.$inject = ['$timeout', '$rootScope', '$translate'];
 
-function Alerts($timeout, $rootScope) {
+function Alerts($timeout, $rootScope, $translate) {
   const service = {
     alerts          : [],
     close           : close,
@@ -14,7 +14,8 @@ function Alerts($timeout, $rootScope) {
     displayWarning  : display.bind(null, ''),
     displayError    : display.bind(null, 'danger'),
     displayReceivedBitcoin : display.bind(null, 'received-bitcoin'),
-    displayVerifiedEmail : displayVerifiedEmail
+    displayVerifiedEmail : displayVerifiedEmail,
+    displayResetTwoFactor : displayResetTwoFactor
   };
 
   function close(alert, context=service.alerts) {
@@ -36,11 +37,24 @@ function Alerts($timeout, $rootScope) {
   }
 
   function displayVerifiedEmail() {
-    $rootScope.$emit('showNotification', {
-      type: 'verified-email',
-      icon: 'ti-email',
-      heading: translations.SUCCESS,
-      msg: translations.EMAIL_VERIFIED_SUCCESS
+    $translate(['SUCCESS', 'EMAIL_VERIFIED_SUCCESS']).then(translations => {
+      $rootScope.$emit('showNotification', {
+        type: 'verified-email',
+        icon: 'ti-email',
+        heading: translations.SUCCESS,
+        msg: translations.EMAIL_VERIFIED_SUCCESS
+      });
+    });
+  }
+
+  function displayResetTwoFactor(message) {
+    $translate(['SUCCESS']).then(translations => {
+      $rootScope.$emit('showNotification', {
+        type: 'verified-email',
+        icon: 'ti-email',
+        heading: translations.SUCCESS,
+        msg: message
+      });
     });
   }
 
