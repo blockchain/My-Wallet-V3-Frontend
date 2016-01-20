@@ -1,38 +1,57 @@
 .upgrade-modal {
+  .header {
+    margin: 0 auto;
+    max-width: 500px;
+    text-align: center;
+    p {
+      margin: 0;
+      &.subtext {
+        color: $mid-grey;
+      }
+    }
+  }
   .carousel {
+    margin-top: 10px;
     .carousel-inner {
       .item {
-        min-height: 270px;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
         @include transition(transform $slow);
-        > div {
-          top: 50%;
-          left: 50%;
-          position: absolute;
-          transform: translate(-50%, -50%);
-          li {
-            list-style-type: none;
-          }
-          .subtext {
-            color: $mid-grey;
-          }
+        li {
+          list-style-type: none;
         }
         .logo {
           margin: 0 auto;
-          max-height: 130px;
-          margin-bottom: 25px;
+          max-height: 250px;
+          margin-bottom: 15px;
+          border: 1px solid $border-grey;
         }
-        &.first {
+        &:last-child {
+          li {
+            font-size: 1em;
+          }
           .logo {
-            max-height: 100px;
+            border: 0px;
+            // to offset font size difference
+            max-height: 242px;
           }
         }
       }
     }
     .carousel-control {
+      top: -80px;
       background-image: none;
-      &.left, &.right {
+      &.left {
         display: none;
+      }
+      &.right {
+        > span {
+          text-shadow: none;
+          &:before {
+            color: $blue;
+            content: '\e649';
+            font-family: 'ThemifyIcons';
+          }
+        }
       }
     }
   }
@@ -50,13 +69,6 @@
         height: 10px;
         background-color: $blue;
       }
-    }
-  }
-  .footnote {
-    margin-top: 20px;
-    margin-bottom: 0px;
-    &:before {
-      content: '*';
     }
   }
 }
