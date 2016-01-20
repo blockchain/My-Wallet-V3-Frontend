@@ -3,12 +3,11 @@
 .modal-body.upgrade-modal
   uib-alert(type="danger", close="insist = false", ng-show="insist")
     span(translate="NEED_SECOND_PASSWORD_FOR_UPGRADE")
-  uib-carousel(no-wrap="true", interval="2500", no-pause="true")
-    uib-slide.first
-      div
-        img(src="assets/icons/png/blue-logo.png").logo
-        p(translate="UPGRADE_WELCOME").type-h4
-        p(translate="UPGRADE_EASY").subtext
+  div.header
+    p(translate="UPGRADE_WELCOME").type-h4
+    p(translate="UPGRADE_EASY").subtext
+    p(translate="UPGRADE_BETTER").subtext
+  uib-carousel(no-wrap="true")
     uib-slide
       div
         img(src="assets/icons/png/new-design.png").logo
@@ -29,10 +28,11 @@
       div
         img(src="assets/icons/png/fund-management.png").logo
         li(translate="UPGRADE_FUND_MANAGEMENT").type-h4
-  p.footnote
-    span(translate="UPGRADE_LIMITATIONS").type-sm
-    span  
-      b(translate="UPGRADE_DISABLES_API_ACCESS", ng-show="settings.apiAccess")
+    uib-slide
+      div
+        img(src="assets/icons/png/watch-only-shared-coin.png").logo
+        li(translate="UPGRADE_LIMITATIONS").type-h4
+          b(translate="UPGRADE_DISABLES_API_ACCESS", ng-show="settings.apiAccess").type-h4
 .modal-footer.pal.flex-end
   button.button-muted.mrm(ng-click="cancel()", translate="CANCEL", ng-disabled="busy")
   button.button-success(ui-ladda="busy", ng-click="upgrade()" ng-disabled="waiting", ladda-translate="UPGRADE_NOW", data-style="expand-left")
