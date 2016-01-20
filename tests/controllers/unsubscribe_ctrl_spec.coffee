@@ -1,4 +1,4 @@
-ddescribe "UnsubscribeController", ->
+describe "UnsubscribeController", ->
   scope = undefined
 
   beforeEach angular.mock.module("walletApp")

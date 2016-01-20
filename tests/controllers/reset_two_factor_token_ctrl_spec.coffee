@@ -1,4 +1,4 @@
-ddescribe "ResetTwoFactorTokenController", ->
+describe "ResetTwoFactorTokenController", ->
   scope = undefined
 
   beforeEach angular.mock.module("walletApp")
