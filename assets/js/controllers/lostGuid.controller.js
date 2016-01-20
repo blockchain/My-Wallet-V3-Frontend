@@ -26,8 +26,8 @@ function LostGuidCtrl($scope, $rootScope, $http, $translate, WalletNetwork, Aler
       $scope.refreshCaptcha();
     };
 
-    $scope.remindForm.$setPristine();
-    $scope.remindForm.$setUntouched();
+    $scope.form.$setPristine();
+    $scope.form.$setUntouched();
 
     WalletNetwork.recoverGuid($scope.fields.email, $scope.fields.captcha).then(success).catch(error);
   };
@@ -37,5 +37,7 @@ function LostGuidCtrl($scope, $rootScope, $http, $translate, WalletNetwork, Aler
     url: $rootScope.rootURL + 'wallet/login',
     method: 'HEAD',
     withCredentials: true
-  }).then($scope.refreshCaptcha);
+  }).then(() => {
+    $scope.refreshCaptcha();
+  });
 }

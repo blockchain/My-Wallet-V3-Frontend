@@ -3,16 +3,16 @@
     .flex-column
       h2.em-300.mtn(translate="REMIND_ME")
       p(translate="REMIND_ME_HELP")
-  form.ptl.form-horizontal(name="remindForm" autocomplete="off" novalidate)
+  form.ptl.form-horizontal(name="form" autocomplete="off" novalidate)
     div(ng-switch-when="1")
-      .form-group(ng-class="{'has-error': remindForm.email.$invalid && remindForm.email.$touched}")
+      .form-group(ng-class="{'has-error': form.email.$invalid && form.email.$touched}")
         label(translate="EMAIL")
         input.form-control(
           type="email"
           name="email"
           ng-model="fields.email"
           required)
-      .form-group(ng-class="{'has-error': remindForm.captcha.$invalid && remindForm.captcha.$touched}")
+      .form-group(ng-class="{'has-error': form.captcha.$invalid && form.captcha.$touched}")
         label(translate="CAPTCHA")
         p(translate="CAPTCHA_EXPAIN")
         img.mbl(ng-src="{{captchaSrc}}")
@@ -31,7 +31,7 @@
       button.button-success(
         type="submit"
         ng-click="sendReminder()"
-        ng-disabled="!remindForm.$valid || working"
+        ng-disabled="!form.$valid || working"
         translate="CONTINUE")
   .flex-center.flex-justify.flex-column(ng-switch-when="2")
     .level-complete.flex-center.flex-justify
