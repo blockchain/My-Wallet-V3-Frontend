@@ -49,5 +49,7 @@ function ResetTwoFactorCtrl($scope, $rootScope, $http, $translate, WalletNetwork
     url: $rootScope.rootURL + 'wallet/login',
     method: 'HEAD',
     withCredentials: true
-  }).then($scope.refreshCaptcha);
+  }).then(() => {
+    $scope.refreshCaptcha();
+  });
 }
