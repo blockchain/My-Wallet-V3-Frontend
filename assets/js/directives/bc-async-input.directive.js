@@ -68,6 +68,7 @@ function bcAsyncInput($timeout, Wallet) {
       scope.validator ? scope.validator(scope.form.newValue) : true;
 
     scope.save = () => {
+      if (!scope.validate()) return;
       scope.status.saving = true;
 
       let success = () => {
