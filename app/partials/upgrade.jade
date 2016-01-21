@@ -1,13 +1,10 @@
 .modal-header.flex-center
-  h3(translate="UPGRADE_WALLET")        
+  h3(translate="UPGRADE_WALLET")
+  helper-button(content="UPGRADE_EASY")
 .modal-body.upgrade-modal
   uib-alert(type="danger", close="insist = false", ng-show="insist")
     span(translate="NEED_SECOND_PASSWORD_FOR_UPGRADE")
-  div.header
-    p(translate="UPGRADE_WELCOME").type-h4
-    p(translate="UPGRADE_EASY").subtext
-    p(translate="UPGRADE_BETTER").subtext
-  uib-carousel(no-wrap="true")
+  uib-carousel(no-wrap="true", interval="3000")
     uib-slide
       div
         img(src="assets/icons/png/new-design.png").logo
@@ -16,10 +13,6 @@
       div
         img(src="assets/icons/png/security-upgrade.png").logo
       li(translate="UPGRADE_SECURITY_CENTER").type-h4
-    uib-slide
-      div
-        img(src="assets/icons/png/privacy.png").logo
-      li(translate="UPGRADE_PRIVACY").type-h4
     uib-slide
       div
         img(src="assets/icons/png/backup.png").logo

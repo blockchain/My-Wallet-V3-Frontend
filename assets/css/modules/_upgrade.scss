@@ -1,15 +1,9 @@
-.upgrade-modal {
-  .header {
-    margin: 0 auto;
-    max-width: 500px;
-    text-align: center;
-    p {
-      margin: 0;
-      &.subtext {
-        color: $mid-grey;
-      }
-    }
+.modal-header {
+  h3 {
+    margin-top: 10px;
   }
+}
+.upgrade-modal {
   .carousel {
     margin-top: 10px;
     .carousel-inner {
