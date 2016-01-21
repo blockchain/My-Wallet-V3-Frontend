@@ -38,12 +38,8 @@ describe "AuthorizeApproveController", ->
       expect(WalletTokenEndpoints.authorizeApprove.calls.argsFor(0)[0]).toEqual("token")
     )
 
-    it "should redirect to the login page", inject(($state)->
-      expect($state.go).toHaveBeenCalledWith("public.login-uid", { uid : '1234' })
-    )
-
-    it "should display a success message", inject((Alerts) ->
-      expect(Alerts.displaySuccess).toHaveBeenCalled()
+    it "should show success", inject(($state)->
+      expect(scope.success).toBeTruthy()
     )
 
   describe "with other browser", ->

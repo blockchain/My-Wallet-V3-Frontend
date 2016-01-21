@@ -3,7 +3,10 @@ angular
   .controller("AuthorizeApproveCtrl", AuthorizeApproveCtrl);
 
 function AuthorizeApproveCtrl($window, $scope, WalletTokenEndpoints, $stateParams, $state, Alerts, $translate, $rootScope) {
+  $scope.success = false
+
   const success = (res) => {
+
     $scope.checkingToken = false;
     $scope.busyApproving = false;
     $scope.busyRejecting = false;
@@ -11,13 +14,8 @@ function AuthorizeApproveCtrl($window, $scope, WalletTokenEndpoints, $stateParam
     // If differentBrowser is called, success will be null:
     if (res.success == null) return;
 
-    $window.close(); // This is sometimes ignored, hence the code below:
+    $scope.success = true
 
-    $translate('AUTHORIZE_APPROVE_SUCCESS').then(translation => {
-      $state.go("public.login-uid", {uid: res.guid}).then(() => {
-        Alerts.displaySuccess(translation)
-      });
-    });
     $rootScope.$safeApply();
   }
 
