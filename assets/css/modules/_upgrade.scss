@@ -2,6 +2,11 @@
   h3 {
     margin-top: 10px;
   }
+  .popover-content {
+    p {
+      margin-bottom: 0px;
+    }
+  }
 }
 .upgrade-modal {
   .carousel {
@@ -27,11 +32,12 @@
         }
         li {
           list-style-type: none;
+          margin-bottom: 15px;
         }
         .logo {
           margin: 0 auto;
           max-height: 250px;
-          margin-bottom: 15px;
+          margin-bottom: 10px;
           border: 1px solid $light-grey;
           border-radius: 4px 4px 0px 0px;
           border-top: 16px solid $light-grey;
@@ -45,6 +51,7 @@
             max-width: 525px;
             font-size: 1em;
             margin: 0 auto;
+            margin-bottom: 15px;
           }
           .logo {
             border: 0px;
