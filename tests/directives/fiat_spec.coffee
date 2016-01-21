@@ -63,11 +63,14 @@ describe "Fiat Directive", ->
     )
 
   describe "updateFiat", ->
+    beforeEach ->
+      isoScope.fiat = { currencySymbol: '$', amount: 100 }
+      isoScope.$root = {
+        # Travis sometimes breaks with the real thing.
+        $safeApply: () ->
+      }
 
     describe "(fail)", ->
-
-      beforeEach ->
-        isoScope.fiat = { currencySymbol: '$', amount: 100 }
 
       afterEach ->
         isoScope.updateFiat()
