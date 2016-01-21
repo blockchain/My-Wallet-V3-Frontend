@@ -5,11 +5,11 @@ describe "UnsubscribeController", ->
 
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
-      MyWalletTokenEndpoints = $injector.get("MyWalletTokenEndpoints")
+      WalletTokenEndpoints = $injector.get("WalletTokenEndpoints")
       $state = $injector.get("$state") # This is a mock
       Alerts = $injector.get("Alerts")
 
-      spyOn(MyWalletTokenEndpoints, "unsubscribe").and.callThrough()
+      spyOn(WalletTokenEndpoints, "unsubscribe").and.callThrough()
 
       spyOn($state, "go").and.callThrough()
 
@@ -30,12 +30,12 @@ describe "UnsubscribeController", ->
           $scope: scope,
           $stateParams: {token: "token"}
 
-    it "should show call MyWalletTokenEndpoints.unsubscribe()", inject((MyWalletTokenEndpoints) ->
-      expect(MyWalletTokenEndpoints.unsubscribe).toHaveBeenCalled()
+    it "should show call WalletTokenEndpoints.unsubscribe()", inject((WalletTokenEndpoints) ->
+      expect(WalletTokenEndpoints.unsubscribe).toHaveBeenCalled()
     )
 
-    it "should pass the token parameter along", inject((MyWalletTokenEndpoints) ->
-      expect(MyWalletTokenEndpoints.unsubscribe).toHaveBeenCalledWith("token")
+    it "should pass the token parameter along", inject((WalletTokenEndpoints) ->
+      expect(WalletTokenEndpoints.unsubscribe).toHaveBeenCalledWith("token")
     )
 
     it "should redirect to the login page", inject(($state)->

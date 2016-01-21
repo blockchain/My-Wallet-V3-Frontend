@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("UnsubscribeCtrl", UnsubscribeCtrl);
 
-function UnsubscribeCtrl($scope, $rootScope, MyWalletTokenEndpoints, $stateParams, $state, Alerts, $translate) {
+function UnsubscribeCtrl($scope, $rootScope, WalletTokenEndpoints, $stateParams, $state, Alerts, $translate) {
   Alerts.clear()
 
   const success = (res) => {
@@ -22,5 +22,5 @@ function UnsubscribeCtrl($scope, $rootScope, MyWalletTokenEndpoints, $stateParam
     $rootScope.$safeApply();
   }
 
-  MyWalletTokenEndpoints.unsubscribe($stateParams.token).then(success).catch(error);
+  WalletTokenEndpoints.unsubscribe($stateParams.token).then(success).catch(error);
 }

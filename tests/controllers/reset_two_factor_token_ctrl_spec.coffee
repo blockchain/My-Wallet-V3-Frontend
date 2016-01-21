@@ -5,11 +5,11 @@ describe "ResetTwoFactorTokenController", ->
 
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
-      MyWalletTokenEndpoints = $injector.get("MyWalletTokenEndpoints")
+      WalletTokenEndpoints = $injector.get("WalletTokenEndpoints")
       $state = $injector.get("$state") # This is a mock
       Alerts = $injector.get("Alerts")
 
-      spyOn(MyWalletTokenEndpoints, "resetTwoFactor").and.callThrough()
+      spyOn(WalletTokenEndpoints, "resetTwoFactor").and.callThrough()
       spyOn($state, "go").and.callThrough()
 
       spyOn(Alerts, "displayError").and.callFake(() ->)
@@ -29,12 +29,12 @@ describe "ResetTwoFactorTokenController", ->
           $scope: scope,
           $stateParams: {token: "token"}
 
-    it "should show call MyWalletTokenEndpoints.resetTwoFactor)", inject((MyWalletTokenEndpoints) ->
-      expect(MyWalletTokenEndpoints.resetTwoFactor).toHaveBeenCalled()
+    it "should show call WalletTokenEndpoints.resetTwoFactor)", inject((WalletTokenEndpoints) ->
+      expect(WalletTokenEndpoints.resetTwoFactor).toHaveBeenCalled()
     )
 
-    it "should pass the token parameter along", inject((MyWalletTokenEndpoints) ->
-      expect(MyWalletTokenEndpoints.resetTwoFactor).toHaveBeenCalledWith("token")
+    it "should pass the token parameter along", inject((WalletTokenEndpoints) ->
+      expect(WalletTokenEndpoints.resetTwoFactor).toHaveBeenCalledWith("token")
     )
 
     it "should redirect to the login page", inject(($state)->

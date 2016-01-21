@@ -5,11 +5,11 @@ describe "AuthorizeApproveController", ->
 
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
-      MyWalletTokenEndpoints = $injector.get("MyWalletTokenEndpoints")
+      WalletTokenEndpoints = $injector.get("WalletTokenEndpoints")
       $state = $injector.get("$state") # This is a mock
       Alerts = $injector.get("Alerts")
 
-      spyOn(MyWalletTokenEndpoints, "authorizeApprove").and.callThrough()
+      spyOn(WalletTokenEndpoints, "authorizeApprove").and.callThrough()
 
       spyOn($state, "go").and.callThrough()
 
@@ -30,12 +30,12 @@ describe "AuthorizeApproveController", ->
           $scope: scope,
           $stateParams: {token: "token"}
 
-    it "should show call MyWalletTokenEndpoints.authorizeApprove()", inject((MyWalletTokenEndpoints) ->
-      expect(MyWalletTokenEndpoints.authorizeApprove).toHaveBeenCalled()
+    it "should show call WalletTokenEndpoints.authorizeApprove()", inject((WalletTokenEndpoints) ->
+      expect(WalletTokenEndpoints.authorizeApprove).toHaveBeenCalled()
     )
 
-    it "should pass the token parameter along", inject((MyWalletTokenEndpoints) ->
-      expect(MyWalletTokenEndpoints.authorizeApprove.calls.argsFor(0)[0]).toEqual("token")
+    it "should pass the token parameter along", inject((WalletTokenEndpoints) ->
+      expect(WalletTokenEndpoints.authorizeApprove.calls.argsFor(0)[0]).toEqual("token")
     )
 
     it "should redirect to the login page", inject(($state)->

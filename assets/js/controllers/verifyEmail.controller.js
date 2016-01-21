@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("VerifyEmailCtrl", VerifyEmailCtrl);
 
-function VerifyEmailCtrl($scope, MyWalletTokenEndpoints, $stateParams, $state, Alerts, $translate, $rootScope) {
+function VerifyEmailCtrl($scope, WalletTokenEndpoints, $stateParams, $state, Alerts, $translate, $rootScope) {
   const success = (res) => {
     $state.go("public.login-uid", {uid: res.guid}).then(() =>{
       Alerts.displayVerifiedEmail()
@@ -16,5 +16,5 @@ function VerifyEmailCtrl($scope, MyWalletTokenEndpoints, $stateParams, $state, A
     $rootScope.$safeApply();
   }
 
-  MyWalletTokenEndpoints.verifyEmail($stateParams.token).then(success).catch(error);
+  WalletTokenEndpoints.verifyEmail($stateParams.token).then(success).catch(error);
 }

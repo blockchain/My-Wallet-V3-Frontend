@@ -1,4 +1,4 @@
-angular.module('walletApp.core').factory 'MyWalletTokenEndpoints', () ->
+angular.module('walletApp.core').factory 'WalletTokenEndpoints', () ->
     verifyEmail: (token)->
       {
         then: (callback) ->

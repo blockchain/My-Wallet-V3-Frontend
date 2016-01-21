@@ -1,7 +1,7 @@
 angular
   .module('walletApp.core')
-  .factory('MyWalletTokenEndpoints', MyWalletTokenEndpoints);
+  .factory('WalletTokenEndpoints', WalletTokenEndpoints);
 
-function MyWalletTokenEndpoints() {
+function WalletTokenEndpoints() {
   return Blockchain.WalletTokenEndpoints
 }

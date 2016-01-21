@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("AuthorizeApproveCtrl", AuthorizeApproveCtrl);
 
-function AuthorizeApproveCtrl($window, $scope, MyWalletTokenEndpoints, $stateParams, $state, Alerts, $translate, $rootScope) {
+function AuthorizeApproveCtrl($window, $scope, WalletTokenEndpoints, $stateParams, $state, Alerts, $translate, $rootScope) {
   const success = (res) => {
     $scope.checkingToken = false;
     $scope.busyApproving = false;
@@ -41,13 +41,13 @@ function AuthorizeApproveCtrl($window, $scope, MyWalletTokenEndpoints, $statePar
 
   $scope.checkingToken = true;
 
-  MyWalletTokenEndpoints.authorizeApprove($stateParams.token, differentBrowser, null)
+  WalletTokenEndpoints.authorizeApprove($stateParams.token, differentBrowser, null)
     .then(success)
     .catch(error);
 
   $scope.approve = () => {
     $scope.busyApproving = true;
-    MyWalletTokenEndpoints.authorizeApprove($stateParams.token, () => {}, true)
+    WalletTokenEndpoints.authorizeApprove($stateParams.token, () => {}, true)
       .then(success)
       .catch(error);
   }
@@ -65,7 +65,7 @@ function AuthorizeApproveCtrl($window, $scope, MyWalletTokenEndpoints, $statePar
       });
     };
 
-    MyWalletTokenEndpoints.authorizeApprove($stateParams.token, () => {}, false)
+    WalletTokenEndpoints.authorizeApprove($stateParams.token, () => {}, false)
       .then(rejected)
       .catch(error);
   }
