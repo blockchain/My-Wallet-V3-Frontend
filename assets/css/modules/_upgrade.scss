@@ -16,6 +16,21 @@
       .item {
         margin-bottom: 40px;
         @include transition(transform $slow);
+        > div {
+          display: inline-block;
+          position: relative;
+          &:before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #fdb0ad;
+            box-shadow: 12px 0 0 #fdeaa2, 24px 0 0 #d7edb4;
+          }
+        }
         li {
           list-style-type: none;
         }
@@ -23,10 +38,15 @@
           margin: 0 auto;
           max-height: 250px;
           margin-bottom: 15px;
-          border: 1px solid $border-grey;
+          border: 1px solid $light-grey;
+          border-radius: 4px 4px 0px 0px;
+          border-top: 16px solid $light-grey;
         }
         // customization because the copy is longer (unsupported features in upgrade)
         &:last-child {
+          > div:before {
+            display: none;
+          }
           li {
             max-width: 525px;
             font-size: 1em;
