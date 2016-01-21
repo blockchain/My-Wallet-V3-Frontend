@@ -148,66 +148,57 @@
 ////////                        ////////
 ////////////////////////////////////////
 
-@-webkit-keyframes image-fade {
-  0% {
-    opacity: .3;
+@mixin transform-center-horizontal {
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  position: absolute;
+  width: 100%;
+  left: 50%;
+}
+
+.security-center-ui {
+  .level-incomplete-container,
+  .level-complete-animation, 
+  .level-complete-container {
+    top: 20px;
+    display: block !important;
+    @include transform-center-horizontal;
+    &.ng-hide {
+      opacity: 0;
+      z-index: 1;
+    }
   }
-  100% {
+
+  // step 1
+  .level-incomplete-container {
+    top: 0px;
+    opacity: 1;
+    z-index: 3;
+    position: relative;
+    @include transition(opacity .4s, transform .4s);
+    &.ng-hide-add-active {
+      -webkit-transform: translate3d(-80%, 0, 0);
+      transform: translate3d(-80%, 0, 0);
+    }
+  }
+
+  // step 2
+  .level-complete-animation {
+    z-index: 2;
     opacity: 0;
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
+    @include transition(opacity .2s .6s);
+    &.ng-hide-remove.ng-hide-remove-active {
+      opacity: 1;
+    }
   }
-}
 
-@keyframes image-fade {
-  0% {
-    opacity: .5;
+  // step 3
+  .level-complete-container {
+    @include transition(all .4s 1.6s);
+    height: auto !important;
+    opacity: 1;
+    z-index: 3;
   }
-  100% {
-    opacity: 0;
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-  }
-}
-
-.level-incomplete-container.ng-hide-add {
-  -webkit-filter: grayscale(100%);
-  filter: grayscale(100%);
-  display: block !important;
-  -webkit-transition: all .5s linear !important;
-  transition: all .5s linear !important;
-}
-
-.level-incomplete-container.ng-hide-add.ng-hide-add-active {
-  -webkit-animation: image-fade 1s ease-in-out;
-  animation: image-fade 1s ease-in-out;
-  -webkit-animation-iteration-count: 1;
-  animation-iteration-count: 1;
-}
-// level complete animation
-.level-complete-animation {
-  display: none !important;
-}
-.level-complete-animation.ng-hide-remove {
-  opacity: 0;
-  display: block !important;
-  -webkit-transition: all 2s linear .9s !important;
-  transition: all 2s linear .9s !important;
-}
-.level-complete-animation.ng-hide-remove.ng-hide-remove-active {
-  opacity: 1;
-}
-
-
-// after animation done, bring back full image
-.level-complete-container.ng-hide-remove {
-  opacity: 0;
-  display: block !important;
-  -webkit-transition: opacity .5s linear 3.2s !important;
-  transition: opacity .5s linear 3.2s !important;
-}
-.level-complete-container.ng-hide-remove.ng-hide-remove-active {
-  opacity: 1;
 }
 
 // progress bar animation

@@ -55,20 +55,8 @@
   }
   section.level {
     margin-bottom: 30px;
-    @media (min-width: 769px) {
-      .level-badge {
-        height: auto;
-      }
-      &.level_one {
-        .level-badge {
-          width: 33.333%;
-          &:last-child {
-            &.active {
-              border-right: 0px;
-            }
-          }
-        }
-      }
+    .level-badge {
+      height: auto;
     }
   }
   header {
