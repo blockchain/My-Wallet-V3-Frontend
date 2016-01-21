@@ -374,9 +374,12 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     $scope.setPaymentTo();
     $scope.setPaymentAmount();
     $scope.setPaymentFee();
-    angular.copy($scope.payment)
-      .buildbeta()
-      .then($scope.buildTx)
+
+    $scope.payment.buildbeta()
+      .then((p) => {
+        $scope.buildTx();
+        return p;
+      })
       .catch(response => {
         let msg = response.error.message || response.error;
         $scope.backToForm();
