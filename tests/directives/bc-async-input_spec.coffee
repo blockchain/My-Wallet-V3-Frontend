@@ -115,3 +115,26 @@ describe 'bcAsyncInput Directive', ->
     it 'should return true if the view is equal to the model', ->
       isoScope.bcAsyncForm.input.$setViewValue('oldValue')
       expect(isoScope.bcAsyncForm.$valid).toBe(false)
+
+  describe 'cancel', ->
+
+    beforeEach ->
+      isoScope.bcAsyncForm.input.$setViewValue('newValue')
+      isoScope.cancel()
+
+    it 'should not save if cancelled', ->
+      expect(isoScope.form.newValue).toBe('oldValue')
+
+    it 'should be pristine', ->
+      expect(isoScope.bcAsyncForm.$pristine).toBe(true)
+
+  # describe 'save', ->
+
+  #   beforeEach ->
+  #     isoScope.onSave = () -> {}
+
+  #   it 'should validate when save() is called', ->
+  #     isoScope.save()
+  #     spyOn(isoScope, 'validate').and.callThrough()
+  #     expect(isoScope.validate).toHaveBeenCalled()
+
