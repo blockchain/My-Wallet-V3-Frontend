@@ -128,13 +128,18 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, WalletNetwork, Alert
   };
 
   $scope.resend = () => {
+    Alerts.clear()
     if (Wallet.settings.twoFactorMethod === 5) {
       $scope.resending = true;
-      const success = () => {
+      const success = (res) => {
         $scope.resending = false;
+        $translate('RESENT_2FA_SMS').then(Alerts.displaySuccess);
+        $rootScope.$safeApply();
       };
-      const error = () => {
+      const error = (res) => {
+        $translate('RESENT_2FA_SMS_FAILED').then(Alerts.displayError);
         $scope.resending = false;
+        $rootScope.$safeApply();
       };
       WalletNetwork.resendTwoFactorSms($scope.uid).then(success).catch(error);
     }

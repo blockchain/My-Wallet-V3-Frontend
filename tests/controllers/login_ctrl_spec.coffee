@@ -13,19 +13,7 @@ describe "LoginCtrl", ->
      Wallet = $injector.get("Wallet")
      WalletNetwork = $injector.get("WalletNetwork")
 
-     spyOn(WalletNetwork, "resendTwoFactorSms").and.callFake(()->
-       {
-         then: (callback) ->
-           callback()
-           {
-             catch: (callback) ->
-               if false
-                 callback()
-                 {
-                 }
-         }
-       }
-     )
+     spyOn(WalletNetwork, "resendTwoFactorSms").and.callThrough()
 
      MyWallet = $injector.get("MyWallet")
 

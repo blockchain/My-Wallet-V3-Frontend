@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("AuthorizeApproveCtrl", AuthorizeApproveCtrl);
 
-function AuthorizeApproveCtrl($window, $scope, WalletNetwork, $stateParams, $state, Alerts, $translate) {
+function AuthorizeApproveCtrl($window, $scope, MyWalletTokenEndpoints, $stateParams, $state, Alerts, $translate, $rootScope) {
   const success = (res) => {
     $scope.checkingToken = false;
     $scope.busyApproving = false;
@@ -18,16 +18,17 @@ function AuthorizeApproveCtrl($window, $scope, WalletNetwork, $stateParams, $sta
         Alerts.displaySuccess(translation)
       });
     });
-
+    $rootScope.$safeApply();
   }
 
-  const error = (message) => {
+  const error = (res) => {
     $scope.checkingToken = false;
     $scope.busyApproving = false;
     $scope.busyRejecting = false;
 
     $state.go("public.login-no-uid");
-    Alerts.displayError(message, true);
+    Alerts.displayError(res.error, true);
+    $rootScope.$safeApply();
   }
 
   const differentBrowser = (details) => {
@@ -35,17 +36,18 @@ function AuthorizeApproveCtrl($window, $scope, WalletNetwork, $stateParams, $sta
 
     $scope.differentBrowser = true;
     $scope.details = details;
+    $rootScope.$safeApply();
   }
 
   $scope.checkingToken = true;
 
-  WalletNetwork.authorizeApprove($stateParams.token, differentBrowser, null)
+  MyWalletTokenEndpoints.authorizeApprove($stateParams.token, differentBrowser, null)
     .then(success)
     .catch(error);
 
   $scope.approve = () => {
     $scope.busyApproving = true;
-    WalletNetwork.authorizeApprove($stateParams.token, () => {}, true)
+    MyWalletTokenEndpoints.authorizeApprove($stateParams.token, () => {}, true)
       .then(success)
       .catch(error);
   }
@@ -63,7 +65,7 @@ function AuthorizeApproveCtrl($window, $scope, WalletNetwork, $stateParams, $sta
       });
     };
 
-    WalletNetwork.authorizeApprove($stateParams.token, () => {}, false)
+    MyWalletTokenEndpoints.authorizeApprove($stateParams.token, () => {}, false)
       .then(rejected)
       .catch(error);
   }

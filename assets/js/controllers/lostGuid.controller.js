@@ -17,13 +17,29 @@ function LostGuidCtrl($scope, $rootScope, $http, $translate, WalletNetwork, Aler
 
   $scope.sendReminder = () => {
     $scope.working = true;
-    let success = (res) => {
+    let success = (message) => {
       $scope.working = false;
       $scope.currentStep = 2;
+      Alerts.displaySuccess(message);
+      $rootScope.$safeApply();
+
     };
-    let error = (res) => {
+    let error = (error) => {
       $scope.working = false;
+
+      switch (error) {
+        case 'Captcha Code Incorrect':
+          Alerts.displayError($translate.instant('CAPTCHA_INCORRECT'));
+          break;
+        case 'Quota Exceeded':
+          Alerts.displayError($translate.instant('QUOTA_EXCEEDED'));
+          break;
+        default:
+          Alerts.displayError($translate.instant('UNKNOWN_ERROR'));
+      }
+
       $scope.refreshCaptcha();
+      $rootScope.$safeApply();
     };
 
     $scope.form.$setPristine();

@@ -5,24 +5,11 @@ describe "VerifyEmailController", ->
 
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
-      WalletNetwork = $injector.get("WalletNetwork")
+      MyWalletTokenEndpoints = $injector.get("MyWalletTokenEndpoints")
       $state = $injector.get("$state") # This is a mock
       Alerts = $injector.get("Alerts")
 
-      spyOn(WalletNetwork, "verifyEmail").and.callFake((token)->
-        {
-          then: (callback) ->
-            if token == "token"
-              callback("1234")
-            {
-              catch: (callback) ->
-                if token == "wrong-token"
-                  callback()
-                {
-                }
-          }
-        }
-      )
+      spyOn(MyWalletTokenEndpoints, "verifyEmail").and.callThrough()
 
       spyOn($state, "go").and.callThrough()
 
@@ -43,12 +30,12 @@ describe "VerifyEmailController", ->
           $scope: scope,
           $stateParams: {token: "token"}
 
-    it "should show call WalletNetwork.verifyEmail()", inject((WalletNetwork) ->
-      expect(WalletNetwork.verifyEmail).toHaveBeenCalled()
+    it "should show call MyWalletTokenEndpoints.verifyEmail()", inject((MyWalletTokenEndpoints) ->
+      expect(MyWalletTokenEndpoints.verifyEmail).toHaveBeenCalled()
     )
 
-    it "should pass the token parameter along", inject((WalletNetwork) ->
-      expect(WalletNetwork.verifyEmail).toHaveBeenCalledWith("token")
+    it "should pass the token parameter along", inject((MyWalletTokenEndpoints) ->
+      expect(MyWalletTokenEndpoints.verifyEmail).toHaveBeenCalledWith("token")
     )
 
     it "should redirect to the login page", inject(($state)->

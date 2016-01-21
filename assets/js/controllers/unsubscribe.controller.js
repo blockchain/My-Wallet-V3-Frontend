@@ -2,30 +2,25 @@ angular
   .module('walletApp')
   .controller("UnsubscribeCtrl", UnsubscribeCtrl);
 
-function UnsubscribeCtrl($scope, WalletNetwork, $stateParams, $state, Alerts, $translate) {
-  const success = (uid) => {
+function UnsubscribeCtrl($scope, $rootScope, MyWalletTokenEndpoints, $stateParams, $state, Alerts, $translate) {
+  Alerts.clear()
 
-    if(uid) {
-      $translate('UNSUBSCRIBE_SUCCESS').then(translation => {
-        $state.go("public.login-uid", {uid: uid}).then(() => {
-          Alerts.displaySuccess(translation)
-        });
+  const success = (res) => {
+    $translate('UNSUBSCRIBE_SUCCESS').then(translation => {
+      $state.go("public.login-uid", {uid: res.guid}).then(() => {
+        Alerts.displaySuccess(translation)
       });
-    } else {
-      $translate('UNSUBSCRIBE_SUCCESS').then(translation => {
-        $state.go("public.login-no-uid").then(() => {
-          Alerts.displaySuccess(translation)
-        });
-      });
-    }
+    });
 
-
+    $rootScope.$safeApply();
   }
 
-  const error = (message) => {
-    $state.go("public.login-no-uid");
-    Alerts.displayError(message, true);
+  const error = (res) => {
+    $state.go("public.login-no-uid").then(() => {
+      Alerts.displayError(res.error, true);
+    });
+    $rootScope.$safeApply();
   }
 
-  WalletNetwork.unsubscribe($stateParams.token).then(success).catch(error);
+  MyWalletTokenEndpoints.unsubscribe($stateParams.token).then(success).catch(error);
 }

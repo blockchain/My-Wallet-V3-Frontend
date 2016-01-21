@@ -1,7 +1,7 @@
 angular
   .module('walletApp.core')
-  .factory('MyWalletNetwork', MyWalletNetwork);
+  .factory('WalletNetwork', WalletNetwork);
 
-function MyWalletNetwork() {
+function WalletNetwork() {
   return Blockchain.WalletNetwork
 }

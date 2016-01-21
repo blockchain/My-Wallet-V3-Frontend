@@ -21,14 +21,33 @@ function ResetTwoFactorCtrl($scope, $rootScope, $http, $translate, WalletNetwork
   };
 
   $scope.resetTwoFactor = () => {
+    Alerts.clear()
+
     $scope.working = true;
-    let success = (res) => {
+    let success = (message) => {
+      Alerts.clear()
+      Alerts.displaySuccess(message);
+
       $scope.working = false;
       $scope.currentStep = 2;
+      $rootScope.$safeApply();
     };
-    let error = (e) => {
+    let error = (error) => {
       $scope.working = false;
       $scope.refreshCaptcha();
+
+      switch (error) {
+        case 'Captcha Code Incorrect':
+          Alerts.displayError($translate.instant('CAPTCHA_INCORRECT'), true);
+          break;
+        case 'Quota Exceeded':
+          Alerts.displayError($translate.instant('QUOTA_EXCEEDED'), true);
+          break;
+        default:
+          Alerts.displayError(error, true);
+      }
+
+      $rootScope.$safeApply();
     };
 
     $scope.form.$setPristine();
