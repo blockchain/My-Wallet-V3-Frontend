@@ -165,7 +165,13 @@
     @include transform-center-horizontal;
     &.ng-hide {
       opacity: 0;
-      z-index: 1;
+    }
+  }
+
+  .level-complete-animation,
+  .level-complete-container {
+    &.ng-hide {
+      z-index: -1;
     }
   }
 

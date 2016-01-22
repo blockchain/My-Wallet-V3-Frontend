@@ -9,7 +9,7 @@
       li.level-badge(ng-click="user.isEmailVerified || toggle('email')", ng-class="{'active' : display.action == 'email', 'badge-active': user.isEmailVerified}")
         a
           .level-incomplete-container(ng-hide="user.isEmailVerified")
-            .flex-center.flex-column
+            .flex-center.flex-justify
               img(src="img/badge-verifyemail.png")
             p(translate="ADD_VERIFY_EMAIL")
           .level-complete-animation.flex-center.flex-column(ng-show="user.isEmailVerified")
@@ -21,7 +21,7 @@
       li.level-badge(ng-click="status.didConfirmRecoveryPhrase || toggle('securityphrase')", ng-class="{'active' : display.action == 'securityphrase', 'badge-active': status.didConfirmRecoveryPhrase }")
         a
           .level-incomplete-container(ng-hide="status.didConfirmRecoveryPhrase")
-            .flex-center.flex-column
+            .flex-center.flex-justify
               img(src="img/badge-securityphrase.png")
             p(translate="ADD_WALLET_RECOVERY")
           .level-complete-animation.flex-center.flex-column(ng-show="status.didConfirmRecoveryPhrase")
@@ -33,7 +33,7 @@
       li.level-badge(ng-click="user.passwordHint || toggle('passwordhint')", ng-class="{'active' : display.action == 'passwordhint', 'badge-active': user.passwordHint }")
         a
           .level-incomplete-container(ng-hide="user.passwordHint")
-            .flex-center.flex-column
+            .flex-center.flex-justify
               img(src="img/badge-passwordhint.png")
             p(translate="ADD_PASSWORD_HINT")
           .level-complete-animation.flex-center.flex-column(ng-show="user.passwordHint")
@@ -85,7 +85,7 @@
       li.level-badge(ng-click="user.isMobileVerified || toggle('mobilenumber')", ng-class="{'active' : display.action == 'mobilenumber', 'badge-active': user.isMobileVerified }")
         a
           .level-incomplete-container(ng-hide="user.isMobileVerified")
-            .flex-center.flex-column
+            .flex-center.flex-justify
               img(src="img/badge-addmobile.png")
             p(TRANSLATE="ADD_MOBILE_NUMBER")
           .level-complete-animation.flex-center.flex-column(ng-show="user.isMobileVerified")
@@ -97,7 +97,7 @@
       li.level-badge(ng-click="settings.needs2FA || toggle('twofactor')", ng-class="{'active' : display.action == 'twofactor', 'badge-active': settings.needs2FA }")
         a
           .level-incomplete-container(ng-hide="settings.needs2FA")
-            .flex-column.flex-center
+            .flex-center.flex-justify
               img(src="img/badge-add2FA.png")
             p(translate="ENABLE_TWO_STEP")
           .level-complete-animation.flex-center.flex-column(ng-show="settings.needs2FA")
@@ -128,7 +128,7 @@
       li.level-badge(ng-click="settings.blockTOR || toggle('blocktor')", ng-class="{'active' : display.action == 'blocktor', 'badge-active': settings.blockTOR }")
         a
           .level-incomplete-container(ng-hide="settings.blockTOR")
-            .flex-column.flex-center
+            .flex-center.flex-justify
               img(src="img/badge-blockTOR.png")
             p(TRANSLATE="ADD_BLOCK_TOR")
           .level-complete-animation.flex-center.flex-column(ng-show="settings.blockTOR")
