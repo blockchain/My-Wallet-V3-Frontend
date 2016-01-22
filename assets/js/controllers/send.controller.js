@@ -197,13 +197,8 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
       Wallet.saveActivity(0);
 
-      $translate(['SUCCESS', 'BITCOIN_SENT']).then(translations => {
-        $scope.$emit('showNotification', {
-          type: 'sent-bitcoin',
-          icon: 'bc-icon-send',
-          heading: translations.SUCCESS,
-          msg: translations.BITCOIN_SENT
-        });
+      $translate('BITCOIN_SENT').then(translation => {
+        Alerts.displayReceivedBitcoin(translation);
       });
 
     };
