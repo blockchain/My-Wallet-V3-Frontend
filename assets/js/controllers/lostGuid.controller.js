@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('LostGuidCtrl', LostGuidCtrl);
 
-function LostGuidCtrl($scope, $http, $translate, Wallet, Alerts) {
+function LostGuidCtrl($scope, $rootScope, $http, $translate, WalletNetwork, Alerts) {
   $scope.currentStep = 1;
   $scope.fields = {
     email: '',
@@ -11,20 +11,23 @@ function LostGuidCtrl($scope, $http, $translate, Wallet, Alerts) {
 
   $scope.refreshCaptcha = () => {
     let time = new Date().getTime();
-    $scope.captchaSrc = `https://blockchain.info/kaptcha.jpg?timestamp=${time}`;
+    $scope.captchaSrc = $rootScope.rootURL + `kaptcha.jpg?timestamp=${time}`;
     $scope.fields.captcha = '';
   };
 
   $scope.sendReminder = () => {
     $scope.working = true;
-    let success = (res) => {
+    let success = (message) => {
       $scope.working = false;
       $scope.currentStep = 2;
+      Alerts.displaySuccess(message);
+      $rootScope.$safeApply();
+
     };
-    let error = (res) => {
+    let error = (error) => {
       $scope.working = false;
-      $scope.refreshCaptcha();
-      switch (res.data.initial_error) {
+
+      switch (error) {
         case 'Captcha Code Incorrect':
           Alerts.displayError($translate.instant('CAPTCHA_INCORRECT'));
           break;
@@ -34,24 +37,23 @@ function LostGuidCtrl($scope, $http, $translate, Wallet, Alerts) {
         default:
           Alerts.displayError($translate.instant('UNKNOWN_ERROR'));
       }
+
+      $scope.refreshCaptcha();
+      $rootScope.$safeApply();
     };
-    let httpOptions = {
-      url     : 'https://blockchain.info/wallet/recover-wallet',
-      method  : 'GET',
-      params  : {
-        param1  : $scope.fields.email,
-        kaptcha : $scope.fields.captcha,
-        format  : 'json'
-      },
-      withCredentials: true
-    };
-    $http(httpOptions).then(success).catch(error);
+
+    $scope.form.$setPristine();
+    $scope.form.$setUntouched();
+
+    WalletNetwork.recoverGuid($scope.fields.email, $scope.fields.captcha).then(success).catch(error);
   };
 
   // Set SID cookie by requesting headers
   $http({
-    url: 'https://blockchain.info/wallet/login',
+    url: $rootScope.rootURL + 'wallet/login',
     method: 'HEAD',
     withCredentials: true
-  }).then($scope.refreshCaptcha);
+  }).then(() => {
+    $scope.refreshCaptcha();
+  });
 }

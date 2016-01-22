@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("NavigationCtrl", NavigationCtrl);
 
-function NavigationCtrl($scope, Wallet, currency, SecurityCenter, $translate, $cookieStore, $state, filterFilter, $interval) {
+function NavigationCtrl($scope, Wallet, currency, SecurityCenter, $translate, $cookies, $state, filterFilter, $interval) {
   $scope.status = Wallet.status;
   $scope.security = SecurityCenter.security;
   $scope.settings = Wallet.settings;
@@ -36,8 +36,8 @@ function NavigationCtrl($scope, Wallet, currency, SecurityCenter, $translate, $c
       if (confirm(translation)) {
         $scope.uid = null;
         $scope.password = null;
-        $cookieStore.remove("password");
-//      $cookieStore.remove("uid") // Pending a "Forget Me feature"
+        $cookies.remove("password");
+//      $cookies.remove("uid") // Pending a "Forget Me feature"
 
         $state.go("wallet.common.transactions", {
           accountIndex: ""

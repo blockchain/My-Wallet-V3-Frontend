@@ -112,11 +112,6 @@ module.exports = function(karma){
 
     browsers : ['PhantomJS'],
 
-    junitReporter : {
-      outputFile: 'test_out/unit.xml',
-      suite: 'unit'
-    },
-
     reporters: ['progress','osx', 'coverage'],
 
     coverageReporter: {

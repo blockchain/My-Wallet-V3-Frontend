@@ -2,9 +2,9 @@ angular
   .module('adverts', [])
   .factory('Adverts', Adverts);
 
-Adverts.$inject = ['$http'];
+Adverts.$inject = ['$http', '$rootScope'];
 
-function Adverts($http) {
+function Adverts($http, $rootScope) {
   const service = {
     ads       : [],
     didFetch  : false,
@@ -21,7 +21,7 @@ function Adverts($http) {
   }
 
   function fetch() {
-    let advertsFeed = 'https://blockchain.info/adverts_feed?wallet_version=3';
+    let advertsFeed = $rootScope.rootURL + 'adverts_feed?wallet_version=3';
     $http.get(advertsFeed)
       .success(data => {
         let adverts = data.partners.home_buttons.splice(0);

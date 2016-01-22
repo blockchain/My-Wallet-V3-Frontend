@@ -25,13 +25,31 @@ div.login-form {
     border-bottom: 1px solid rgb(240, 236, 236);
   }
   .form-horizontal .form-group {
+    margin-top: 15px;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto; 
+  }
+  .progress {
+    margin-bottom: 5px;
+    > div {
+      font-size: 10px;
+      padding-left: 10px;
+      text-transform: uppercase;
+    }
   }
   .help-block .info {
     color: $mid-grey;
     &:hover {
       color: $dark-grey;
+    }
+  }
+  .help-block {
+    margin-bottom: 0px;
+    p {
+      margin: 0;
+    }
+    & + .help-block {
+      margin-top: 5px;
     }
   }
   input[type='checkbox'] { margin: 0; }

@@ -47,7 +47,7 @@ describe "RequestCtrl", ->
 
       element = angular.element(
         '<form role="form" name="requestForm" novalidate>' +
-        '<input type="text" name="amount"   ng-model="fields.amount"    is-valid-amount currency="{{fields.currency}}" />' +
+        '<input type="text" name="amount"   ng-model="fields.amount"  currency="{{fields.currency}}" />' +
         '</form>'
       )
       scope.model = { fields: {to: null, amount: '0', currency: Wallet.settings.currency, label: ""} }
@@ -148,23 +148,3 @@ describe "RequestCtrl", ->
       scope.fields.amount = ""
       scope.$digest()
       expect(scope.paymentRequestURL()).not.toContain("amount=")
-
-  describe "form validation", ->
-
-    it "should not be valid if 'amount' is not a number", () ->
-      scope.requestForm.amount.$setViewValue('asdf')
-      expect(scope.requestForm.$valid).toBe(false)
-
-    it "should not be valid if 'amount' is negative", () ->
-      scope.requestForm.amount.$setViewValue(-69)
-      expect(scope.requestForm.$valid).toBe(false)
-
-    it "should not be valid if 'amount' has too many decimal places (btc)", () ->
-      scope.requestForm.amount.$setViewValue('0.000000001')
-      scope.fields.currency = {code: 'BTC'}
-      expect(scope.requestForm.$valid).toBe(false)
-
-    it "should not be valid if 'amount' has too many decimal places (fiat)", () ->
-      scope.requestForm.amount.$setViewValue('0.001')
-      scope.fields.currency = {code: 'USD'}
-      expect(scope.requestForm.$valid).toBe(false)
