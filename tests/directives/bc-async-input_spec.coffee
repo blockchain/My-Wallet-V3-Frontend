@@ -12,6 +12,8 @@ describe 'bcAsyncInput Directive', ->
     isoScope = element.isolateScope()
     isoScope.$digest()
 
+    isoScope.$root = { $safeApply: () -> }
+
     return isoScope
 
   beforeEach module('walletApp')
