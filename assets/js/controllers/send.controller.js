@@ -198,7 +198,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       Wallet.saveActivity(0);
 
       $translate('BITCOIN_SENT').then(translation => {
-        Alerts.displayReceivedBitcoin(translation);
+        Alerts.displaySentBitcoin(translation);
       });
 
     };
