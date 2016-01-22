@@ -14,7 +14,7 @@ function Alerts($timeout, $rootScope, $translate) {
     displayWarning  : display.bind(null, ''),
     displayError    : display.bind(null, 'danger'),
     displayReceivedBitcoin : display.bind(null, 'received-bitcoin'),
-    displaySentBitcoin: display.bind(null, 'sent-bitcoin')
+    displaySentBitcoin: display.bind(null, 'sent-bitcoin'),
     displayVerifiedEmail : displayVerifiedEmail,
     displayResetTwoFactor : displayResetTwoFactor
   };
