@@ -128,13 +128,13 @@ describe 'bcAsyncInput Directive', ->
     it 'should be pristine', ->
       expect(isoScope.bcAsyncForm.$pristine).toBe(true)
 
-  # describe 'save', ->
+  describe 'save', ->
 
-  #   beforeEach ->
-  #     isoScope.onSave = () -> {}
+    beforeEach ->
+      isoScope.onSave = (newValue, success, error) ->
+        success()
 
-  #   it 'should validate when save() is called', ->
-  #     isoScope.save()
-  #     spyOn(isoScope, 'validate').and.callThrough()
-  #     expect(isoScope.validate).toHaveBeenCalled()
-
+    it 'should validate when save() is called', ->
+      spyOn(isoScope, 'validate').and.callThrough()
+      isoScope.save()
+      expect(isoScope.validate).toHaveBeenCalled()
