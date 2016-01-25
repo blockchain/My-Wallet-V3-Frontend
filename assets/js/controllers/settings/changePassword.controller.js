@@ -14,6 +14,12 @@ function ChangePasswordCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tr
   $scope.errors = {};
   $scope.status = {};
 
+  $scope.isUserEmail = (candidate) => {
+    return ('string' === typeof candidate &&
+            candidate.length &&
+            candidate === Wallet.user.email);
+  };
+
   $scope.changePassword = () => {
     if (!$scope.passwordForm.$valid) return;
 
