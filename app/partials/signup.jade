@@ -16,9 +16,10 @@ div
           ng-model="fields.email"
           required
           autofocus)
-        span.help-block(ng-show="signupForm.email.$touched")
-          p(ng-show="signupForm.email.$error.required" translate="EMAIL_ADDRESS_REQUIRED")
-          p(ng-show="signupForm.email.$error.email" translate="EMAIL_ADDRESS_INVALID")
+        span.help-block
+          div(ng-show="signupForm.email.$touched")
+            p(ng-show="signupForm.email.$error.required" translate="EMAIL_ADDRESS_REQUIRED")
+            p(ng-show="signupForm.email.$error.email" translate="EMAIL_ADDRESS_INVALID")
     .form-group(ng-class="{'has-error': signupForm.password.$invalid && signupForm.password.$touched}")
       label.col-sm-4.control-label(translate="NEW_PASSWORD")
       .col-sm-8
@@ -28,11 +29,13 @@ div
           ng-model="fields.password"
           ng-maxlength="255"
           min-entropy="25"
+          ng-change="fields.confirmation = ''"
           required)
         password-entropy.help-block(password="fields.password")
-        span.help-block(ng-show="signupForm.password.$touched")
-          p(ng-show="signupForm.password.$error.minEntropy && fields.password != undefined" translate="TOO_WEAK")
-          p(ng-show="signupForm.password.$error.maxlength" translate="TOO_LONG")
+        span.help-block
+          div(ng-show="signupForm.password.$touched")
+            p(ng-show="signupForm.password.$error.minEntropy && fields.password != undefined" translate="TOO_WEAK")
+            p(ng-show="signupForm.password.$error.maxlength" translate="TOO_LONG")
     .form-group(ng-class="{'has-error': signupForm.confirmation.$invalid && signupForm.confirmation.$touched}")
       label.col-sm-4.control-label(translate="CONFIRM_PASSWORD")
       .col-sm-8
@@ -42,8 +45,9 @@ div
           ng-model="fields.confirmation"
           is-valid="fields.confirmation == fields.password"
           required)
-        span.help-block(ng-show="signupForm.confirmation.$touched")
-          p(ng-show="signupForm.confirmation.$error.isValid" translate="NO_MATCH")
+        span.help-block
+          div(ng-show="signupForm.confirmation.$touched")
+            p(ng-show="signupForm.confirmation.$error.isValid" translate="NO_MATCH")
     .form-group.flex-center.mtm
       .col-sm-4
         input#agreement_accept.pull-right(
