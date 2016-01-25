@@ -5,8 +5,7 @@
     font-weight: normal;
     margin-left: 10px;
   }
-  .label-warning { background-color: $security-red;
-  }
+  .label-warning { background-color: $security-red; }
   .label-success { background-color: $security-green; }
   h2 {
     font-size: 12pt;
@@ -36,6 +35,7 @@
       padding: 10px;
     }
   }
+  // Preferences
   form.form-horizontal {
     .form-group {
       margin: 0!important;
@@ -48,6 +48,28 @@
       @media(max-width: 992px) {
         .setting-result {
           clear: left;
+        }
+      }
+    }
+  }
+  // Accounts & Addresses
+  @media (max-width: 768px) {
+    .accounts-container {
+      width: 100%;
+      tr {
+        height: auto;
+        display: block;
+        position: relative;
+        td {
+          border: 0px;
+          display: block;
+          button { 
+            display: block;
+            margin-top: 10px;
+          }
+          &:first-child {
+            border-top: 1px solid $grey;
+          }
         }
       }
     }

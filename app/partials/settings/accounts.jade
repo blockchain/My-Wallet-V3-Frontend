@@ -2,7 +2,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
   
 .row.pvl
   .col-xs-6.flex-center
-    button.btn.button-primary.mrm.hidden-xs.button-nowrap(ng-click="newAccount()" translate="CREATE_ACCOUNT")
+    button.btn.button-primary.mrm.button-nowrap(ng-click="newAccount()" translate="CREATE_ACCOUNT")
     a.button-default.hidden-xs.button-nowrap.mrm(
       ng-click="transfer(address)"  
       ng-show="numberOfActiveAccounts() > 1" 
@@ -32,8 +32,8 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
           button.btn.btn-default.btn-xs(translate="MAKE_DEFAULT", ng-click="makeDefault(account)", ng-hide="account.archived || isDefault(account)")            
         td.shrink
           a(translate="REVEAL_XPUB",      ng-click="revealXpub(account)", ng-hide="account.archived")
-        td.shrink
-          a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="account.archived || isDefault(account)")
+        td.shrink(ng-hide="account.archived || isDefault(account)")
+          a(translate="ARCHIVE",          ng-click="archive(account)")
           a(translate="UNARCHIVE",        ng-click="unarchive(account)", ng-show="account.archived")
         td.shrink
           button.btn.btn-default(
