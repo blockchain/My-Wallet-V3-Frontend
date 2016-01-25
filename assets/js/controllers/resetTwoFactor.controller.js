@@ -63,12 +63,5 @@ function ResetTwoFactorCtrl($scope, $rootScope, $http, $translate, WalletNetwork
     ).then(success).catch(error);
   };
 
-  // Set SID cookie by requesting headers
-  $http({
-    url: $rootScope.rootURL + 'wallet/login',
-    method: 'HEAD',
-    withCredentials: true
-  }).then(() => {
-    $scope.refreshCaptcha();
-  });
+  $scope.refreshCaptcha();
 }

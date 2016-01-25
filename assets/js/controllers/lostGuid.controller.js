@@ -48,12 +48,5 @@ function LostGuidCtrl($scope, $rootScope, $http, $translate, WalletNetwork, Aler
     WalletNetwork.recoverGuid($scope.fields.email, $scope.fields.captcha).then(success).catch(error);
   };
 
-  // Set SID cookie by requesting headers
-  $http({
-    url: $rootScope.rootURL + 'wallet/login',
-    method: 'HEAD',
-    withCredentials: true
-  }).then(() => {
-    $scope.refreshCaptcha();
-  });
+  $scope.refreshCaptcha();
 }
