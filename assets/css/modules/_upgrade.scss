@@ -18,6 +18,10 @@
         > div {
           display: inline-block;
           position: relative;
+          max-width: 100%;
+          @media (max-width: 768px) {
+            max-width: 80%;
+          }
           &:before {
             content: '';
             position: absolute;
@@ -36,6 +40,7 @@
         }
         .logo {
           margin: 0 auto;
+          max-width: 100%;
           max-height: 250px;
           margin-bottom: 10px;
           border: 1px solid $light-grey;
@@ -54,6 +59,12 @@
             color: $blue;
             content: '\e649';
             font-family: 'ThemifyIcons';
+          }
+        }
+        @media (max-width: 758px) {
+          > span {
+            left: 0;
+            right: 0;
           }
         }
       }
