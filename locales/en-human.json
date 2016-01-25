@@ -368,7 +368,7 @@
   "LEVEL_3" : "Level 3",
   "LEVEL_3_TITLE" : "Advanced Security Options to harden your wallet",
   "TWO_STEP_EXPLAIN" : "Protect your wallet from unauthorized access by enabling 2-Step Verification. You can choose to use a free app or your mobile phone number to secure your wallet.",
-  "ENABLE_2FA_ENTER_MOBILE" : "User your mobile phone to receive a one-time-password after a login attempt. Add your mobile phone number below to continue",
+  "ENABLE_2FA_ENTER_MOBILE" : "Use your mobile phone to receive a one-time-password after a login attempt. Add your mobile phone number below to continue.",
   "USE_AUTH_YUBIKEY" : "Use Google Authenticator or Yubikey",
   "USE_MOBILE" : "Use your mobile phone number",
   "SCAN_QR_CODE_GA" : "Scan this QR code with your Google Authenticator app on your mobile phone. Once scanned you will be presented with a random 6 digit number. Enter that number below to finish the setup process.",
