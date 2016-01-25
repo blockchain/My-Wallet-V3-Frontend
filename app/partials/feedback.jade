@@ -1,10 +1,10 @@
-.flex.flex-justify.mtl
+.flex.flex-justify.mtl.feedback
   .flex-center.flex-column.mtl(ng-show="formStage == 2")
     h1.success.flex-center
       i.ti-check.prm
       | Success!
-    h2(translate="FEEDBACK_THANKS")
-     a(href="http://www.surveygizmo.com/s3/2271145/c67c5c2b6b11")SurveyGizmo
+    h2.thanks(translate="FEEDBACK_THANKS")
+      a(href="http://www.surveygizmo.com/s3/2271145/c67c5c2b6b11") SurveyGizmo
   div(ng-hide="formStage >= 2")
     form.bc-form.pal(ng-submit="setFormSubmitted()" name="feedbackForm" autocomplete="off")
       .bc-form-header
