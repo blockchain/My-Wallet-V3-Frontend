@@ -10,6 +10,7 @@
   font-weight: 500;
   margin-left: 5px;
   margin-right: 5px;
+  position: relative;
   &:focus {
     outline: none;
   }
@@ -17,6 +18,18 @@
     background: $blue;
     color: white;
     border: none;
+  }
+  .close-helper {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    &:before {
+      color: white;
+      font-size: 9px;
+      content: "\e646";
+      font-family: 'ThemifyIcons';
+    }
   }
 }
 
