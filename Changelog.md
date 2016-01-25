@@ -2,7 +2,7 @@ __Blockchain HD Frontend__
 
 _Recent changes_
 
-#   (2016-01-11)
+#   (2016-01-25)
 
 
 
@@ -10,90 +10,80 @@ _Recent changes_
 
 ## Bug Fixes
 
-- **Accounts:** revert accidental change in 433de77b4a
-  ([f149f45c](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f149f45c962d0c285f775d9917d5bf40eacca783))
-- **Adverts:** set .rootURL to '/' by default
-  ([ba77aa9f](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/ba77aa9ff930e268b1fba50fc25b27f0d21c3599))
-- **Currency:** correct decimal places for bits and mBTC
-  ([e5d3c6c4](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/e5d3c6c4f2cb2b377b54b259be6561d129f6da18))
-- **Deploy:**
-  - fix filename for .woff2 fonts
-  ([c785d759](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/c785d759ac1f72f8314bd2acb8cfe93e3cc9c3dd))
-  - ROOT_URL now required for dev, defaults to / in production
-  ([465c694a](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/465c694af5082dc61667659141cffd23184a3314))
-  - dmore aggresive cleaning in dist task
-  ([fa1d4906](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/fa1d4906ba7d9198eff28527b691116848851a29))
-  - clean bower and npm cache in dist task
-  ([f6349813](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f6349813fa6f433a903362d3fbdf37e5f3245dfb))
-  - move CSS and JS to /js so that relative font path works
-  ([a0e377e0](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/a0e377e0db41614e086eea4ad4d3c294bbfa0496))
-- **Feedback:**
-  - missing controller file
-  ([950f3824](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/950f3824946f3f2ce231098345058d51c6e63612))
-  - use new endpoint
-  ([46348250](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/463482500c01c104e59256505568b61f95c1574f))
-- **Login:** disable browser validation and autocomplete
-  ([c0ecd11d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/c0ecd11da6262a42662cc79e18f0f83648424184))
-- **LostGuid:** use .rootURL
-  ([9d5df846](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/9d5df8467a8b5354f9785a73dfcbae0686f654a1))
-- **Recover:** fix redirect after recovery
-  ([f22ca557](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f22ca557376f8f0b6bca94b42831c45abab243b4))
-- **Signup:** improved validation
-  ([4baac6ea](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/4baac6ea6b2699861ba3dad8b08ee09ec31878c2))
-- **Sponsors:** use .rootURL
-  ([f94175e0](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/f94175e045ac90f3b5f46e4b553e8f9b6055609d))
-- **VerifyEmail:** guid in token was ignored
-  ([76fcf8e2](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/76fcf8e230150d99868934804c7a10789eac381c))
-- **bcAsyncInput:** spinner remained after save, blockchain/My-Wallet-V3-Frontend@867850dbdbb276
-  ([1443b338](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/1443b338119628f36e0b8640127883a6239e9fea))
+- **Accounts:** delete extra table header in spendable addresses
+  ([2f364c9d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/2f364c9d52652dd94c407ac825ec1f3a4f96895c))
+- **Alerts:**
+  - call displaySentBitcoin instead of receive
+  ([e7ed97a4](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/e7ed97a46e2728d18d7ca6163831f14e9ccdda11))
+  - missing comma
+  ([8a8aa9c7](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/8a8aa9c7c1efdbfd0f7901d047319f61f58ff179))
+- **Captcha:** cookie is now set by server, captcha won't work in local dev
+  ([944c9c68](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/944c9c68cb1ef0b1356a3eee555866eb387edbfc))
+- **Feedback:** show error message if submit fails
+  ([886f6544](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/886f6544ea53e4cc5ffafdce127d0bfdae2374a7))
+- **IE:** don't repeat warning
+  ([47634563](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/476345639487e9056fc4ac55c163206cdc1221fb))
+- **Locales:** change UID to Wallet ID
+  ([58182f31](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/58182f31f018f3bcc3d3464f95850becfa5dcbb4))
+- **Login:** use localized string and don't repeat check email message
+  ([62efa9f9](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/62efa9f976ec5336ea8d87faf8f7701df959e386))
+- **Translations:** support Chinese both as browser language and as custom setting
+  ([35b56beb](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/35b56bebd531e682cdfe8e16e9bf97405bd2fb01))
+- **WalletUpgrade:**
+  - deleted line in home scss
+  ([1ff1e701](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/1ff1e701464fb049e19353522cd17085d6d5f520))
+  - take the upgrade dialogue out of signup controller since it was there for development only
+  ([8d9af710](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/8d9af71098c64d4d61c8f3a769d6afcc515ef891))
+- **bcAsyncInput:** add safeApply to isoscope root object
+  ([65b08919](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/65b08919f583923abc93504b9bd352af5b73b973))
+- **signup:** reset password confirmation when new password is edited
+  ([2b9cf7ed](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/2b9cf7ed1e72d406bbcff37b6f592c9af13d65e1))
 
 
 ## Features
 
-- remove beta invite system
-  ([a2b4d07c](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/a2b4d07c7059e4667d96674458e8e336cc3f06ed))
-- **2FA:** process reset 2FA email link
-  ([118c884b](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/118c884bfdff0ef5de7dc9882f6810c7c2709455))
-- **Deploy:** pass backend URL to grunt dist
-  ([eae05c42](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/eae05c42b0db8e838619285c63220e840ced0720))
-- **Login:**
-  - new browser approval - different browser
-  ([d53490d1](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/d53490d140265861218fc1f208869c1929cb39af))
-  - new browser approval - assuming user is in the same browser
-  ([58fc7d26](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/58fc7d26166367abb846cb33057c8df5cedc3fb5))
-- **Recovery:** use download attribute for nicer file name and to prevent in-browser viewing
-  ([1d35f29d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/1d35f29da815dbfcfd73aea6a14db6793a4c2b33))
-- **Release:** use beta version of my-wallet-v3 bower
-  ([85fbbd2d](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/85fbbd2d908a4fa1a7e29e5e3f20032e02e8b026))
-- **Reset2FA:** form to reset two step verification
-  ([18ba4615](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/18ba4615c78516c837c7cfede8820f41751e9531))
-- **Routes:**
-  - show modal after verifying email
-  ([4d1bdfaa](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/4d1bdfaaf19be2e8486ae578ba76dd849be76aa9))
-  - login and verify email routes and endpoint support
-  ([206d60b5](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/206d60b51c58e07bbc43a41db46816112cfcfebb))
-- **Unsubscribe:** unsubscribe route
-  ([632db4c6](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/632db4c634ac6b2792cc0f27310740b2c73ed8e4))
+- **WalletUpgrade:**
+  - add dummy desktop app border to preview images
+  ([79c070a5](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/79c070a5fa60480acfd80d99cd8ce576c986b949))
+  - take out pause on hover and just let the slider slide
+  ([388c98f2](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/388c98f2aea7680dba3ddc8304c82d12012daa5b))
+  - separate the new features into slides and add icons
+  ([e842da95](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/e842da95476cad27904f15ad6449394c0b2374ad))
+  - use a uib slider for more friendly upgrade dialogue
+  ([6f14c527](https://github.com/blockchain/My-Wallet-HD-Frontend/commit/6f14c5275b41a301255e5d4b97f707912e41634d))
 
 
 ## Refactor
 
-- **Cookies:** replace references to deprecated  with
-- **Dependencies:** removed unused npm dependencies. Removed unmaintained E2E tests.
-- **RecoverGuid:** move functionality out of controller
-- **Signup:** cleaned up controller and improved tests
-- **WalletTokenEndpoints:** slightly modified result
+- **DeCoffee:**
+  - convert is-valid directive to es6
+  - convert is-not-equal directive to es6
+  - convert ip-whitelist-restrict directive to es6
+  - convert helper-button directive to es6
+  - convert contextual-messaging directive to es6
+- **HdAddress:** change name to include 'directive'
+- **ImportedAddress:** change name to include 'directive'
+- **IsNotNull:** remove unused directive: is-not-null
+- **IsValidAmount:** get rid of unused directive: is-valid-amount
+- **IsValidAsync:** get rid of unused directive: is-valid-async
 
 
 ## Test
 
-- fixed
-- **Mocks:** added MyWalletTokenEndpoints mock
+- **FeedbackCtrl:**
+  - fixed broken test and added more
+  - add tests
+- **FiatDirective:** set isoScope.fiat for all cases, to please Travis
+- **FirstTimeCtrl:** add tests
+- **SendCtrl:** test for an alert call instead of modal open
+- **bcAsyncInput:**
+  - add tests for cancel and save
+  - set spy before calling save()
 
 
 ## Chore
 
-- **Changelog:** update for beta branch
+- **Changelog:** 1.3.1
 
 
 
