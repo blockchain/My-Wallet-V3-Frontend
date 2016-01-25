@@ -308,6 +308,7 @@
   "EMAIL_ADDRESS_INVALID" : "Invalid",
   "EMAIL_CONFIRMATION_SENT" : "Sent",
   "PLEASE_CHECK_EMAIL" : "We have sent an email to {{ email }}. Please open the email and follow the instructions to complete your wallet setup.",
+  "CHECK_EMAIL_VERIFY_BROWSER" : "Please check your email to approve this login attempt.",
   "SAME_DESTINATION" : "Cannot send to self",
   "ACCOUNT_IS_ARCHIVED" : " (Archived)",
   "RESENT_2FA_SMS" : "Verification SMS has been sent again.",

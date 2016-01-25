@@ -195,7 +195,10 @@ function Wallet(   $http,   $window,   $timeout,   Alerts,   MyWallet,   MyBlock
 
     let authorizationRequired = (callback) => {
       callback(authorizationProvided());
-      Alerts.displayWarning('Please check your email to approve this login attempt.', true);
+      Alerts.clear();
+      $translate("CHECK_EMAIL_VERIFY_BROWSER").then(translation => {
+        Alerts.displayWarning(translation, true);
+      });
       $rootScope.$safeApply();
     };
 
