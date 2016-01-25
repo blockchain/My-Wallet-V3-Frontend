@@ -15,8 +15,9 @@ ul.aside {
   li.header{
     font-size: 1em;
     font-weight: 400;
-    text-transform: uppercase;
     margin:0 0 10px 0;
+    position: relative;
+    text-transform: uppercase;
     > a {
       color: #737373;
       padding: .4em .8em;
