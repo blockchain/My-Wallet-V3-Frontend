@@ -197,13 +197,8 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
       Wallet.saveActivity(0);
 
-      $translate(['SUCCESS', 'BITCOIN_SENT']).then(translations => {
-        $scope.$emit('showNotification', {
-          type: 'sent-bitcoin',
-          icon: 'bc-icon-send',
-          heading: translations.SUCCESS,
-          msg: translations.BITCOIN_SENT
-        });
+      $translate('BITCOIN_SENT').then(translation => {
+        Alerts.displaySentBitcoin(translation);
       });
 
     };
@@ -228,7 +223,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     } else {
       let dest = destinations[0];
       $scope.toLabel = dest.index == null ?
-        dest.label || dest.address : `${dest.label} Account`;
+        dest.label || dest.address : `${dest.label}`;
     }
   };
 
@@ -271,7 +266,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       balance: origin.balance,
       archived: origin.archived
     };
-    formatted.type = origin.index != null ? 'Accounts' : 'Imported Addresses';
+    formatted.type = origin.index != null ? '' : 'Imported Addresses';
     if (origin.index == null) formatted.isWatchOnly = origin.isWatchOnly;
     return formatted;
   };
@@ -374,9 +369,12 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     $scope.setPaymentTo();
     $scope.setPaymentAmount();
     $scope.setPaymentFee();
-    angular.copy($scope.payment)
-      .buildbeta()
-      .then($scope.buildTx)
+
+    $scope.payment.buildbeta()
+      .then((p) => {
+        $scope.buildTx();
+        return p;
+      })
       .catch(response => {
         let msg = response.error.message || response.error;
         $scope.backToForm();

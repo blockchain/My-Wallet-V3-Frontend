@@ -398,12 +398,11 @@ describe "SendCtrl", ->
           expect(Alerts.clear).toHaveBeenCalled()
         )
 
-        it "should show a confirmation modal", inject(($uibModal)->
-          spyOn($uibModal, "open").and.callThrough()
+        it "should show a confirmation alert", inject((Alerts) ->
+          spyOn(Alerts, "displaySentBitcoin").and.callThrough()
           scope.send()
           scope.$digest()
-          expect($uibModal.open).toHaveBeenCalled()
-          expect($uibModal.open.calls.argsFor(0)[0].windowClass).toEqual("notification-modal")
+          expect(Alerts.displaySentBitcoin).toHaveBeenCalled()
         )
 
         it "should show account transactions", inject(($state) ->
@@ -517,7 +516,7 @@ describe "SendCtrl", ->
       it "should set the label to an account", ->
         scope.transaction.destinations[0] = scope.accounts()[0]
         scope.updateToLabel()
-        expect(scope.toLabel).toEqual('Checking Account')
+        expect(scope.toLabel).toEqual('Checking')
 
       it "should set the label when advanced", ->
         scope.advanced = true

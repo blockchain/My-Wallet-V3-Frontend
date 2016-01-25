@@ -3,8 +3,8 @@ require 'open-uri'
 
 puts "Don't forget to run 'grunt dist' or 'grunt dist_unsafe' first..."
 
-js_file = Dir.entries("dist").keep_if{|entry| entry.include?("application-") && entry.include?(".js") }
-js = File.read("dist/" + js_file[0])
+js_file = Dir.entries("dist/js").keep_if{|entry| entry.include?("application-") }
+js = File.read("dist/js/" + js_file[0])
 
 orphaned = false
 for key, string in JSON.parse(File.read('locales/en-human.json'))

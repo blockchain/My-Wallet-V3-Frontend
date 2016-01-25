@@ -6,37 +6,37 @@
     ul.flex.flex-start.pln.mbn
       li.level-header.bg-light-blue.flex-center.flex-justify
         img(src="img/security-icon-1.png")
-      li.level-badge(ng-class="{'badge-active': user.isEmailVerified}")
-        a(ng-click="user.isEmailVerified || toggle('email')", ng-class="{'active' : display.action == 'email' }")
+      li.level-badge(ng-click="user.isEmailVerified || toggle('email')", ng-class="{'active' : display.action == 'email', 'badge-active': user.isEmailVerified}")
+        a
           .level-incomplete-container(ng-hide="user.isEmailVerified")
-            .flex-center.flex-column
+            .flex-center.flex-justify
               img(src="img/badge-verifyemail.png")
             p(translate="ADD_VERIFY_EMAIL")
-          .level-complete-animation.flex-center.flex-colum(ng-show="user.isEmailVerified")
+          .level-complete-animation.flex-center.flex-column(ng-show="user.isEmailVerified")
             .flex-center.flex-column
               .level-complete.flex-center.flex-justify
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="user.isEmailVerified" placement="bottom" content="EMAIL_ADDRESS_TOOLTIP" img="img/badge-verifyemail.png" message="EMAIL_VERIFIED")
-      li.level-badge(ng-class="{'badge-active': status.didConfirmRecoveryPhrase}")
-        a(ng-click="status.didConfirmRecoveryPhrase || toggle('securityphrase')", ng-class="{'active' : display.action == 'securityphrase' }")
+      li.level-badge(ng-click="status.didConfirmRecoveryPhrase || toggle('securityphrase')", ng-class="{'active' : display.action == 'securityphrase', 'badge-active': status.didConfirmRecoveryPhrase }")
+        a
           .level-incomplete-container(ng-hide="status.didConfirmRecoveryPhrase")
-            .flex-center.flex-column
+            .flex-center.flex-justify
               img(src="img/badge-securityphrase.png")
             p(translate="ADD_WALLET_RECOVERY")
-          .level-complete-animation.flex-center.flex-colum(ng-show="status.didConfirmRecoveryPhrase")
+          .level-complete-animation.flex-center.flex-column(ng-show="status.didConfirmRecoveryPhrase")
             .flex-center.flex-column
               .level-complete.flex-center.flex-justify
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="status.didConfirmRecoveryPhrase" placement="bottom" content="RECOVERY_PHRASE_TOOLTIP" img="img/badge-securityphrase.png" message="PHRASE_BACKED")
-      li.level-badge(ng-class="{'badge-active': user.passwordHint}")
-        a(ng-click="user.passwordHint || toggle('passwordhint')", ng-class="{'active' : display.action == 'passwordhint' }")
+      li.level-badge(ng-click="user.passwordHint || toggle('passwordhint')", ng-class="{'active' : display.action == 'passwordhint', 'badge-active': user.passwordHint }")
+        a
           .level-incomplete-container(ng-hide="user.passwordHint")
-            .flex-center.flex-column
+            .flex-center.flex-justify
               img(src="img/badge-passwordhint.png")
             p(translate="ADD_PASSWORD_HINT")
-          .level-complete-animation.flex-center.flex-colum(ng-show="user.passwordHint")
+          .level-complete-animation.flex-center.flex-column(ng-show="user.passwordHint")
             .flex-center.flex-column
               .level-complete.flex-center.flex-justify
                 i.ti-check.bright-green
@@ -65,7 +65,7 @@
           confirm-recovery-phrase(button-class="button-success button-lg", ng-hide="status.didConfirmRecoveryPhrase")
 
       div(ng-show="display.action == 'passwordhint'")       
-        bc-async-input(custom inline placeholder="'CHANGE' | translate" ng-model="user.passwordHint" on-save="changePasswordHint" action-title="'CHANGE' | translate")
+        bc-async-input(custom inline placeholder="'ADD_PASSWORD_HINT' | translate" ng-model="user.passwordHint" on-save="changePasswordHint" action-title="'CHANGE' | translate")
           .flex-center
             .form-group.width-50.flex-column(ng-class="{'has-error': !validate()}")
               p(translate="CHANGE")
@@ -82,25 +82,25 @@
     ul.flex.flex-start.pln.mbn
       li.level-header.bg-light-blue.flex-center.flex-justify
         img(src="img/security-icon-2.png")
-      li.level-badge(ng-class="{'badge-active': user.isMobileVerified}")
-        a(ng-click="user.isMobileVerified || toggle('mobilenumber')", ng-class="{'active' : display.action == 'mobilenumber' }")
+      li.level-badge(ng-click="user.isMobileVerified || toggle('mobilenumber')", ng-class="{'active' : display.action == 'mobilenumber', 'badge-active': user.isMobileVerified }")
+        a
           .level-incomplete-container(ng-hide="user.isMobileVerified")
-            .flex-center.flex-column
+            .flex-center.flex-justify
               img(src="img/badge-addmobile.png")
             p(TRANSLATE="ADD_MOBILE_NUMBER")
-          .level-complete-animation.flex-center.flex-colum(ng-show="user.isMobileVerified")
+          .level-complete-animation.flex-center.flex-column(ng-show="user.isMobileVerified")
             .flex-center.flex-column
               .level-complete.flex-center.flex-justify
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="user.isMobileVerified" content="MOBILE_NUMBER_TOOLTIP" img="img/badge-addmobile.png" message="MOBILE_LINKED")
-      li.level-badge(ng-class="{'badge-active': settings.needs2FA}")
-        a(ng-click="settings.needs2FA || toggle('twofactor')", ng-class="{'active' : display.action == 'twofactor' }")
+      li.level-badge(ng-click="settings.needs2FA || toggle('twofactor')", ng-class="{'active' : display.action == 'twofactor', 'badge-active': settings.needs2FA }")
+        a
           .level-incomplete-container(ng-hide="settings.needs2FA")
-            .flex-column.flex-center
+            .flex-center.flex-justify
               img(src="img/badge-add2FA.png")
             p(translate="ENABLE_TWO_STEP")
-          .level-complete-animation.flex-center.flex-colum(ng-show="settings.needs2FA")
+          .level-complete-animation.flex-center.flex-column(ng-show="settings.needs2FA")
             .flex-center.flex-column
               .level-complete.flex-center.flex-justify
                 i.ti-check.bright-green
@@ -109,7 +109,7 @@
 
     .badge-panel(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
       div(ng-show="display.action == 'mobilenumber'")
-        configure-mobile-number(on-success="mobileNumber.step = 2" on-cancel="mobileNumber.step = 0" ng-show="mobileNumber.step == 1" button-lg full-width)          
+        configure-mobile-number(on-success="mobileNumber.step = 2" on-cancel="mobileNumber.step = 1; toggle('mobilenumber');" ng-show="mobileNumber.step == 1" button-lg full-width)          
         div(ng-show="mobileNumber.step == 2")
           h2.status.complete.hidden-xs.long-input
           verify-mobile-number(on-success="mobileNumber.step = 0" button-lg full-width)
@@ -125,13 +125,13 @@
     ul.flex.flex-start.pln.mbn
       li.level-header.bg-light-blue.flex-center.flex-justify
         img(src="img/security-icon-3.png")
-      li.level-badge(ng-class="{'badge-active': settings.blockTOR}")
-        a(ng-click="settings.blockTOR || toggle('blocktor')", ng-class="{'active' : display.action == 'blocktor' }")
+      li.level-badge(ng-click="settings.blockTOR || toggle('blocktor')", ng-class="{'active' : display.action == 'blocktor', 'badge-active': settings.blockTOR }")
+        a
           .level-incomplete-container(ng-hide="settings.blockTOR")
-            .flex-column.flex-center
+            .flex-center.flex-justify
               img(src="img/badge-blockTOR.png")
             p(TRANSLATE="ADD_BLOCK_TOR")
-          .level-complete-animation.flex-center.flex-colum(ng-show="settings.blockTOR")
+          .level-complete-animation.flex-center.flex-column(ng-show="settings.blockTOR")
             .flex-center.flex-column
               .level-complete.flex-center.flex-justify
                 i.ti-check.bright-green

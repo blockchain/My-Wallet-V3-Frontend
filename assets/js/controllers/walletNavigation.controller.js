@@ -62,19 +62,16 @@ function WalletNavigationCtrl($scope, Wallet, Alerts, SecurityCenter, $state, $s
 
   $scope.getLegacyTotal = () => Wallet.total('imported');
 
-  $scope.termsOfService = () => {
-    let modalInstance = $uibModal.open({
-      templateUrl: 'partials/terms-of-service.jade',
-      windowClass: 'bc-modal terms-modal'
-    });
-  };
-
   $scope.privacyPolicy = () => {
     let modalInstance = $uibModal.open({
       templateUrl: 'partials/privacy-policy.jade',
       windowClass: 'bc-modal terms-modal'
     });
   };
+
+  $scope.termsOfService = () => {
+    window.open("https://blockchain.info/terms_of_service", "_blank");  
+  }
 
   $scope.didLoad = () => {
     $scope.accounts = Wallet.accounts;

@@ -2,10 +2,11 @@ angular
   .module('walletApp')
   .controller("AppCtrl", AppCtrl);
 
-function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $location, $cookieStore, $timeout, $uibModal, $window, $translate) {
+function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location, $timeout, $uibModal, $window, $translate) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $rootScope.isMock = Wallet.isMock;
+  $rootScope.loginFormUID = $cookies.get("uid"); // Last entered in login form
   $scope.goal = Wallet.goal;
   $scope.menu = {
     isCollapsed: false
@@ -59,9 +60,9 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $location, $cookieS
   };
 
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) => {
-    let loggedOutStates = ['public', 'public.login', 'public.recover', 'public.reminder', 'public.signup', 'public.help', 'open'];
+    let loggedOutStates = ['public', 'public.login-no-uid', 'public.login-uid', 'public.reset-two-factor', 'public.recover', 'public.reminder', 'public.signup', 'public.help', 'open', 'wallet.common.verify-email', 'wallet.common.unsubscribe', 'public.authorize-approve', 'public.reset-two-factor-token'];
     if (loggedOutStates.every(s => toState.name !== s) && $scope.status.isLoggedIn === false) {
-      $state.go("public.login");
+      $state.go("public.login-no-uid");
     }
     if (Wallet.status.isLoggedIn && (Wallet.store.resetLogoutTimeout != null)) {
       Wallet.store.resetLogoutTimeout();

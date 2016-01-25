@@ -21,6 +21,7 @@ angular.module('walletApp').directive('singleClickSelect', ($window) ->
 
         if scope.browserCanExecCommand
           $window.document.execCommand('copy')
+          scope.$safeApply()
 
       elem.bind('click', ->
         scope.select()

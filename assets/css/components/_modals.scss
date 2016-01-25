@@ -313,10 +313,23 @@
   //Specific to the first login modal
   .rocket-gif {
     border-radius: 5px;
-    width: 228px;
     height: 430px;
   }
-  .advanced-send-scroll { max-height: 400px; overflow-y: scroll; }
+  .advanced-send-scroll { 
+    padding: 0px;
+    > div {
+      max-height: 400px;
+      min-height: 400px;
+      overflow: visible;
+      padding: 15px 0;
+      &:first-child {
+        overflow-y: scroll;
+      }
+      &:last-child {
+        padding: 15px 2em;
+      }
+    }
+  }
 
   [name='sendForm'], [name='requestForm']  {
     label { text-align: right; }

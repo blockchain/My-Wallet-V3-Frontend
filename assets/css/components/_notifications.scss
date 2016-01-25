@@ -6,8 +6,21 @@
     width: 40vw;
     margin-top: 0 !important;
   }
-  .modal-content {
-    box-shadow: 0 5px 1px rgba(0, 0, 0, 0.6);
+  .modal-body {
+    &.bg-success {
+      height: 60px;
+      border-radius: 0 0 6px 6px;
+    }
+  }
+  .modal-header {
+    .success {
+      i, h3 {
+        margin: 0;
+      }
+      h3 {
+        margin-left: 10px;
+      }
+    }
   }
 }
 

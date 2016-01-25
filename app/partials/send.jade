@@ -11,7 +11,7 @@
     span(translate="STEP")
     span {{ confirmationStep ? 2 : 1 }}
     span(translate="OF_2")
-.modal-body#send(ng-class="{ 'advanced-send-scroll' : advanced }")
+.modal-body#send(ng-class="{ 'advanced-send-scroll' : advanced, 'confirmation': confirmationStep }")
   uib-alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)")
     | {{::alert.msg}}
   div(ng-hide="confirmationStep")
@@ -28,18 +28,19 @@
               ng-model="transaction.from"
               name="from"
               ng-change="validateAmounts(); checkForSameDestination(); setPaymentFrom()"
-              required)
+              required).send-from-dropdown
               ui-select-match
                 label-origin(origin="$select.selected")
               ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)")
                 span(ng-class="{aaa: hasZeroBalance(origin)}")
                   label-origin(origin='origin' highlight="$select.search")
-          span.help-block(ng-show="sendForm.from.$invalid && sendForm.destinations0.$touched") Must select an account to send from
+          span.help-block(ng-show="sendForm.from.$invalid && sendForm.destinations0.$touched", translate="MUST_SELECT_ORIGIN") 
       //- Advanced Send
       .form-group.bc-modal-fade.mvl.advanced-recipient.row
         //- To
         label.pts.col-sm-2.col-xs-12
-          span(translate="TO:")
+          span(translate="TO")
+          |:
         .col-sm-10.col-xs-12
           .flex-column(ng-class="{'advanced-recipient-row': advanced}" ng-repeat="item in transaction.destinations track by $index")
             p.form-control-static(ng-hide="originsLoaded")

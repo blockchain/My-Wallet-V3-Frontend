@@ -12,6 +12,8 @@ describe 'bcAsyncInput Directive', ->
     isoScope = element.isolateScope()
     isoScope.$digest()
 
+    isoScope.$root = { $safeApply: () -> }
+
     return isoScope
 
   beforeEach module('walletApp')
@@ -115,3 +117,26 @@ describe 'bcAsyncInput Directive', ->
     it 'should return true if the view is equal to the model', ->
       isoScope.bcAsyncForm.input.$setViewValue('oldValue')
       expect(isoScope.bcAsyncForm.$valid).toBe(false)
+
+  describe 'cancel', ->
+
+    beforeEach ->
+      isoScope.bcAsyncForm.input.$setViewValue('newValue')
+      isoScope.cancel()
+
+    it 'should not save if cancelled', ->
+      expect(isoScope.form.newValue).toBe('oldValue')
+
+    it 'should be pristine', ->
+      expect(isoScope.bcAsyncForm.$pristine).toBe(true)
+
+  describe 'save', ->
+
+    beforeEach ->
+      isoScope.onSave = (newValue, success, error) ->
+        success()
+
+    it 'should validate when save() is called', ->
+      spyOn(isoScope, 'validate').and.callThrough()
+      isoScope.save()
+      expect(isoScope.validate).toHaveBeenCalled()

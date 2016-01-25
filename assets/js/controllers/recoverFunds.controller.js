@@ -17,7 +17,6 @@ function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wall
     $scope.working = true;
 
     const success = (wallet) => {
-      $rootScope.beta = false;
       $scope.working = false;
       $scope.nextStep();
       $rootScope.$safeApply();
@@ -29,7 +28,7 @@ function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wall
         console.error(err);
       };
       $timeout(() => {
-        $state.go('public.login');
+        $state.go('public.login-uid', {uid: wallet.guid});
         Wallet.login(
           wallet.guid, wallet.password, null, null, loginSuccess, loginError
         );

@@ -5,18 +5,23 @@ angular.module("ui.router", ["ng"]).run [
 ]
 
 angular.module("ui.router").provider "$state", ->
-    
+
   $get: () ->
     $state = {current: "somewhere"}
-              
-    $state.go = (destination) -> 
-      return
-    
+
+    $state.go = (destination) ->
+      {
+        then: (callback) ->
+          callback()
+          {
+          }
+      }
+
     return $state
-    
+
 angular.module("ui.router").provider "$stateParams", ->
-    
+
   $get: () ->
     $stateParams = {}
-    
-    return $stateParams 
+
+    return $stateParams
