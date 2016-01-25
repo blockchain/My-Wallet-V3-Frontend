@@ -34,6 +34,7 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, WalletNetwork, Alert
       $scope.disableLogin = true;
     } else {
       $translate("WARN_AGAINST_IE").then(translation => {
+        Alerts.clear();
         Alerts.displayWarning(translation, true);
       });
     }
