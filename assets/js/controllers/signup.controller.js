@@ -16,7 +16,11 @@ function SignupCtrl($scope, $state, $cookies, $filter, $translate, $uibModal, Wa
     }
   });
 
-  let language_guess = $filter("getByProperty")("code", $translate.use(), languages);
+  let language_code = $translate.use();
+  if(language_code == "zh_CN") {
+    language_code = "zh-cn";
+  }
+  let language_guess = $filter("getByProperty")("code", language_code, languages);
   if (language_guess == null) {
     $scope.language_guess = $filter("getByProperty")("code", "en", languages);
   }

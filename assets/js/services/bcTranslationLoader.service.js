@@ -17,6 +17,7 @@ function BCTranslateStaticFilesLoader($http, $q, $translateStaticFilesLoader) {
     bg: 'build/locales/bg.json',
     fr: 'build/locales/fr.json',
     zh_CN: 'build/locales/zh-cn.json',
+    "zh-cn": 'build/locales/zh-cn.json',
     hu: 'build/locales/hu.json',
     sl: 'build/locales/sl.json',
     id: 'build/locales/id.json',
