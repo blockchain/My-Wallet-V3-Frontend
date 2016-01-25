@@ -11,6 +11,7 @@
   "MY_TRANSACTIONS": "Transactions",
   "ALL": "All",
   "SEND_FEEDBACK": "Send Feedback",
+  "FEEDBACK_SUBMIT_FAILED" : "Something went wrong, please try again.",
   "BACK": "Back",
   "CONTACT_SUPPORT": "Contact Support",
   "SETTINGS": "Settings",
