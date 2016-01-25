@@ -1,6 +1,5 @@
 .left-navigation(ng-show="status.isLoggedIn")
   ul.aside
-    contextual-message
     li.header(ui-sref-active="current", ng-click="hideMenu()")
       a(ui-sref="wallet.common.home")
         i.ti-home
@@ -29,6 +28,7 @@
         a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
 
     li.header.mbm(ui-sref-active="current",  ng-click="hideMenu()")
+      contextual-message
       a(ui-sref="wallet.common.security-center")
         i.bc-icon-security.security-red(ng-show="security.level <= 2")
         i.bc-icon-security.security-yellow(ng-show="security.level > 2 && security.level < 6")
