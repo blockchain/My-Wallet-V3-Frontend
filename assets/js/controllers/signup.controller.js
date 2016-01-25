@@ -33,15 +33,6 @@ function SignupCtrl($scope, $state, $cookies, $filter, $translate, $uibModal, Wa
     acceptedAgreement: false
   };
 
-  $scope.showAgreement = () => {
-    const modalInstance = $uibModal.open({
-      templateUrl: "partials/user-agreement.jade",
-      controller: function () {},
-      windowClass: "bc-modal terms-modal"
-    });
-    modalInstance.result.then(() => $scope.fields.acceptedAgreement = true);
-  };
-
   $scope.close = () => {
     Alerts.clear();
     $state.go("wallet.common.home");
