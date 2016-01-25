@@ -161,12 +161,17 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
     Alerts.clear($scope.alerts);
 
-    if ($scope.transaction.publicNote) {
-      $scope.payment.note($scope.transaction.note);
-    }
+    var note = $scope.transaction.publicNote ? $scope.transaction.note : null;
+    $scope.payment.note(note);
+
+    let paymentCheckpoint;
+    const setCheckpoint = (payment) => {
+      paymentCheckpoint = payment;
+    };
 
     const transactionFailed = (message) => {
       $scope.sending = false;
+      $scope.payment = new Wallet.payment(paymentCheckpoint).build();
       if (message) {
         $translate(message).then(t => {
           Alerts.displayError(t, false, $scope.alerts);
@@ -204,7 +209,8 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     };
 
     const signAndPublish = (passphrase) => {
-      return $scope.payment.sign(passphrase).publish().payment;
+      return $scope.payment.sideEffect(setCheckpoint)
+        .sign(passphrase).publish().payment;
     };
 
     Wallet.askForSecondPasswordIfNeeded().then(signAndPublish)
