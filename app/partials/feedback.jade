@@ -10,13 +10,13 @@
   div(ng-hide="formStage >= 2")
     form.bc-form.pal(ng-submit="setFormSubmitted()" name="feedbackForm" autocomplete="off")
       .bc-form-header
-        h2.mtn.em-400.type-h5(translate="FEEDBACK_TELL_US")!
-      label.mbl(translate="FEEDBACK_OVERALL")?
+        h2.mtn.em-400.type-h5(translate="FEEDBACK_TELL_US")
+      label.mbl(translate="FEEDBACK_OVERALL")
         span.security-red &nbsp;*
       .flex.flex-between.bc-radio-group
         .flex-column.flex-center
           label.mbs
-            span(translate="FEEDBACK_AWESOME")!
+            span(translate="FEEDBACK_AWESOME")
           input(ng-model="rating" type="radio" name="rating" value="AWESOME" required)
         .flex-column.flex-center
           label.mbs
