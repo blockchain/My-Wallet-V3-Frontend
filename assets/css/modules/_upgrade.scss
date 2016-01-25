@@ -42,31 +42,12 @@
           border-radius: 4px 4px 0px 0px;
           border-top: 16px solid $light-grey;
         }
-        // customization because the copy is longer (unsupported features in upgrade)
-        &:last-child {
-          > div:before {
-            display: none;
-          }
-          li {
-            max-width: 525px;
-            font-size: 1em;
-            margin: 0 auto;
-            margin-bottom: 15px;
-          }
-          .logo {
-            border: 0px;
-            max-height: 242px;
-          }
-        }
       }
     }
     .carousel-control {
       top: -80px;
       background-image: none;
-      &.left {
-        display: none;
-      }
-      &.right {
+      &.right, &.left {
         > span {
           text-shadow: none;
           &:before {
@@ -75,6 +56,9 @@
             font-family: 'ThemifyIcons';
           }
         }
+      }
+      &.left > span:before {
+        content: '\e64a';
       }
     }
   }
@@ -92,6 +76,13 @@
         height: 10px;
         background-color: $blue;
       }
+    }
+  }
+  .footnote {
+     margin-top: 20px;
+     margin-bottom: 0px;
+    &:before {
+      content: '* ';
     }
   }
 }

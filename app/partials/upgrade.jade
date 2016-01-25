@@ -21,11 +21,10 @@
       li(translate="UPGRADE_FUND_MANAGEMENT").type-h4
       div
         img(src="assets/icons/png/fund-management.png").logo
-    uib-slide
-      li(translate="UPGRADE_LIMITATIONS").type-h4
-      b(translate="UPGRADE_DISABLES_API_ACCESS", ng-show="settings.apiAccess").type-h4
-      div
-        img(src="assets/icons/png/watch-only-shared-coin.png").logo
+  p.footnote
+    span(translate="UPGRADE_LIMITATIONS").type-sm
+    span
+      b(translate="UPGRADE_DISABLES_API_ACCESS", ng-show="settings.apiAccess")
 .modal-footer.pal.flex-end
   button.button-muted.mrm(ng-click="cancel()", translate="CANCEL", ng-disabled="busy")
   button.button-success(ui-ladda="busy", ng-click="upgrade()" ng-disabled="waiting", ladda-translate="UPGRADE_NOW", data-style="expand-left")
