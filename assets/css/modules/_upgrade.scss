@@ -79,10 +79,15 @@
     }
   }
   .footnote {
-     margin-top: 20px;
-     margin-bottom: 0px;
+    margin-top: 20px;
+    margin-bottom: 0px;
     &:before {
-      content: '* ';
+      top: 1px;
+      color: $send-red;
+      content: "\e620";
+      margin-right: 5px;
+      position: relative;
+      font-family: 'ThemifyIcons';
     }
   }
 }
