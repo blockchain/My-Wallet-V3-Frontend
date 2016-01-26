@@ -33,9 +33,15 @@
 }
 
 .message {
+  top: 50%;
+  right: -15px;
   position: absolute;
-  right: 0px;
+  transform: translateY(-50%); 
+  -webkit-transform: translateY(-50%); // ensure centering
   z-index: 1049; //above everything except modals (1050)
+  @media (max-width: 768px) {
+    right: 5px;
+  }
 }
 
 .message-beacon {
