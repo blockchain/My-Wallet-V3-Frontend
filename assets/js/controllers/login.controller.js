@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("LoginCtrl", LoginCtrl);
 
-function LoginCtrl($scope, $rootScope, $log, $http, Wallet, WalletNetwork, Alerts, $cookies, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter) {
+function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNetwork, Alerts, $cookies, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.disableLogin = null;
@@ -114,6 +114,10 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, WalletNetwork, Alert
     };
     const success = () => {
       $scope.busy = false;
+      if ($scope.autoReload && $cookies.get('reload.url')) {
+        $location.url($cookies.get('reload.url'));
+        $cookies.remove('reload.url');
+      }
     };
     if ($scope.settings.needs2FA) {
       Wallet.login($scope.uid, $scope.password, $scope.twoFactorCode, (() => {}), success, error);
@@ -123,10 +127,14 @@ function LoginCtrl($scope, $rootScope, $log, $http, Wallet, WalletNetwork, Alert
     if ($scope.uid != null && $scope.uid !== "") {
       $cookies.put("uid", $scope.uid);
     }
-    if ($scope.savePassword && $scope.password != null && $scope.password !== "") {
+    if (($scope.savePassword || $scope.autoReload) && $scope.password != null && $scope.password !== "") {
       $cookies.put("password", $scope.password);
     }
   };
+
+  if ($scope.autoReload && $scope.password) {
+    $scope.login();
+  }
 
   $scope.resend = () => {
     Alerts.clear()

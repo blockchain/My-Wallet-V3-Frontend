@@ -9,9 +9,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
 
-function Wallet(   $http,   $window,   $timeout,   Alerts,   MyWallet,   MyBlockchainApi,   MyBlockchainSettings,   MyWalletStore,   MyWalletPayment,   $rootScope,   ngAudio,   $cookies,   $translate,   $filter,   $state,   $q,   bcPhoneNumber,   languages,   currency) {
+function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet,   MyBlockchainApi,   MyBlockchainSettings,   MyWalletStore,   MyWalletPayment,   $rootScope,   ngAudio,   $cookies,   $translate,   $filter,   $state,   $q,   bcPhoneNumber,   languages,   currency) {
   const wallet = {
     goal: {
       auth: false
@@ -674,6 +674,9 @@ function Wallet(   $http,   $window,   $timeout,   Alerts,   MyWallet,   MyBlock
     if (!wallet.isSynchronizedWithServer() && wallet.my.wallet.isEncryptionConsistent) {
       event.preventDefault();
       return 'There are unsaved changes. Are you sure?';
+    }
+    if ($rootScope.autoReload) {
+      $cookies.put('reload.url', $location.url());
     }
   };
 
