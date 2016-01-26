@@ -54,12 +54,15 @@
         position: relative;
         td {
           border: 0px;
+          padding: 0px;
           display: block;
+          margin: 10px 0;
           button { 
             display: block;
             margin-top: 10px;
           }
           &:first-child {
+            padding-top: 10px;
             border-top: 1px solid $grey;
           }
         }
