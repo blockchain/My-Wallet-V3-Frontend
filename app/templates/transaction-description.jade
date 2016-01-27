@@ -8,16 +8,16 @@
         i.ti-notepad.aaa.plm(ng-show="transaction.note")
     .hidden-xs.hidden-sm.destination.em-400.col-md-8(ng-class="transaction.toggled ? 'dark-grey' : 'aaa'")
       .flex.row
-        span.text.col-md-1(ng-show="transaction.result > 0 && !transaction.intraWallet", translate="FROM:")
-        span.text.col-md-1(ng-show="transaction.result  < 0 || transaction.intraWallet", translate="TO:")
+        span.text.col-md-1(ng-show="transaction.result > 0 && !transaction.intraWallet") {{ 'FROM' | translate }}:
+        span.text.col-md-1(ng-show="transaction.result  < 0 || transaction.intraWallet") {{ 'TO' | translate }}:
         span.hidden-sm.hidden-xs.col-md-11.mlm(ng-bind-html="address | highlight:search")
     .hidden-xs.hidden-sm.col-md-1
   .flex-center.border-top.ptl.hidden-xs.hidden-sm.dark-grey(ng-show="transaction.toggled")
     .col-md-3
     .col-md-8.destination.em-400
       .flex.row
-        span.text.col-md-1(ng-show="transaction.result > 0 && !transaction.intraWallet", translate="TO:")
-        span.text.col-md-1(ng-show="transaction.result  < 0 || transaction.intraWallet", translate="FROM:")
+        span.text.col-md-1(ng-show="transaction.result > 0 && !transaction.intraWallet") {{ 'TO' | translate }}:
+        span.text.col-md-1(ng-show="transaction.result  < 0 || transaction.intraWallet") {{ 'FROM' | translate }}:
         span.hidden-sm.hidden-xs.col-md-11.mlm(ng-bind-html="other_address | highlight:search")
       .flex.row.mtm(ng-show="transaction.note")
         span.text.col-md-1(translate="NOTE_LC")
