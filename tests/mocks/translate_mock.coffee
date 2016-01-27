@@ -31,3 +31,8 @@ angular.module("pascalprecht.translate").provider "$translate", ->
       template
 
     return $translate
+
+translateFilterFactory = () ->
+  (input) -> input
+
+angular.module("pascalprecht.translate").filter('translate', translateFilterFactory)
