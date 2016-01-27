@@ -1,6 +1,7 @@
 div
   div(ng-hide="status.edit || inline")
     h2.status.complete.hidden-xs.long-input(ng-if="!transform") {{ ngModel }}
+      span(ng-if="unit") &nbsp;{{ unit }}
     h2.status.complete.hidden-xs.long-input(ng-if="transform") {{ ngModel | toBitCurrency:transform }}
     button.button-primary(ng-click="edit()") {{ actionTitle }}
   form(role="form" name="bcAsyncForm" ng-submit="save()" novalidate)

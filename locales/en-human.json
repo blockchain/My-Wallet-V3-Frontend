@@ -97,6 +97,7 @@
   "TOO_SHORT" : "Too short",
   "NO_MATCH" : "Does not match",
   "CANT_USE_GUID" : "You cannot use a guid as your password",
+  "CANT_USE_EMAIL" : "You cannot use your email as your password",
   "ADD_PASSWORD_HINT" : "Create Password Hint",
   "PASSWORD_HINT" : "Password Hint",
   "PASSWORD_HINT_EXPLAIN" : "Your Blockchain Wallet never communicates your password to our servers. This means we have no idea what your password is and we cannot reset it if you forget it. Create a memorable password hint that we can send to your verified email address in case you forget your password.",

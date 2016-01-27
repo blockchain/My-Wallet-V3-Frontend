@@ -77,4 +77,4 @@ form.form-horizontal(role="form",name="form",novalidate)
       label.type-h5.em-400(translate="AUTO_LOGOUT")
       p.em-300.text.line-height.hidden-sm.hidden-xs(translate="AUTO_LOGOUT_EXPLAIN") 
     .col-sm-12.col-md-6.setting-result
-      bc-async-input(ng-model="settings.logoutTimeMinutes" validator="validateLogoutTime" is-required on-save="changeLogoutTime" action-title="'CHANGE' | translate")
+      bc-async-input(ng-model="settings.logoutTimeMinutes" validator="validateLogoutTime" is-required on-save="changeLogoutTime" action-title="'CHANGE' | translate" unit="minutes")

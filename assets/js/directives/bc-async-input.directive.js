@@ -17,6 +17,7 @@ function bcAsyncInput($timeout, Wallet) {
       onChange: '=',
       actionTitle: '=',
       placeholder: '=',
+      unit: '@',
       _type: '@type',
       errorMessage: '=',
       _buttonClass: '@buttonClass',
