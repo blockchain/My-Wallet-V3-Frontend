@@ -70,7 +70,7 @@ You can open any wallet registered with your email address. It will ask you to u
 
 After login, you'll see a list of accounts. There will be delay before transactions and the correct balances show up. If something goes wrong during the login process, error messages appear in the console.
 
-To automatically login after every page refresh, create a file `.env` and add `SAVE_PASSWORD=1` to it.
+To automatically login and go back to where you last were in the app after every page refresh, create a file `.env` and add `AUTO_RELOAD=1` to it.
 
 To reclaim funds from an email take code at the of link and add it to `#/claim`, e.g.:
 

@@ -127,7 +127,7 @@ function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNet
     if ($scope.uid != null && $scope.uid !== "") {
       $cookies.put("uid", $scope.uid);
     }
-    if (($scope.savePassword || $scope.autoReload) && $scope.password != null && $scope.password !== "") {
+    if ($scope.autoReload && $scope.password != null && $scope.password !== "") {
       $cookies.put("password", $scope.password);
     }
   };
