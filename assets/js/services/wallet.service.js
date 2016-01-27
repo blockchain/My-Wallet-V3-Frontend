@@ -879,6 +879,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
 
   wallet.setNote = (tx, text) => {
     wallet.my.wallet.setNote(tx.hash, text);
+    $rootScope.$safeApply();
   };
 
   wallet.deleteNote = (tx) => {
