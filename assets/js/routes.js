@@ -32,10 +32,6 @@ function AppRouter($stateProvider, $urlRouterProvider) {
       templateUrl: 'partials/navigation.jade',
       controller: 'NavigationCtrl'
     },
-    alerts: {
-      templateUrl: 'partials/alerts.jade',
-      controller: 'AlertsCtrl'
-    },
     common: {
       templateUrl: 'partials/common.jade'
     }
@@ -73,7 +69,6 @@ function AppRouter($stateProvider, $urlRouterProvider) {
     .state('public.login-no-uid', {
       url: '/login',
       views: {
-        alerts: commonViews.alerts,
         contents: {
           templateUrl: 'partials/login.jade',
           controller: 'LoginCtrl'
@@ -83,7 +78,6 @@ function AppRouter($stateProvider, $urlRouterProvider) {
     .state('public.login-uid', {
       url: '/login/:uid',
       views: {
-        alerts: commonViews.alerts,
         contents: {
           templateUrl: 'partials/login.jade',
           controller: 'LoginCtrl'
@@ -93,7 +87,6 @@ function AppRouter($stateProvider, $urlRouterProvider) {
     .state('public.signup', {
       url: '/signup',
       views: {
-        alerts: commonViews.alerts,
         contents: {
           templateUrl: 'partials/signup.jade',
           controller: 'SignupCtrl'
@@ -103,7 +96,6 @@ function AppRouter($stateProvider, $urlRouterProvider) {
     .state('public.help', {
       url: '/help',
       views: {
-        alerts: commonViews.alerts,
         contents: {
           templateUrl: 'partials/help.jade'
         }
@@ -112,7 +104,6 @@ function AppRouter($stateProvider, $urlRouterProvider) {
     .state('public.recover', {
       url: '/recover',
       views: {
-        alerts: commonViews.alerts,
         contents: {
           templateUrl: 'partials/recover-funds.jade',
           controller: 'RecoverFundsCtrl'
@@ -122,7 +113,6 @@ function AppRouter($stateProvider, $urlRouterProvider) {
     .state('public.reminder', {
       url: '/reminder',
       views: {
-        alerts: commonViews.alerts,
         contents: {
           templateUrl: 'partials/lost-guid.jade',
           controller: 'LostGuidCtrl'
@@ -132,7 +122,6 @@ function AppRouter($stateProvider, $urlRouterProvider) {
     .state('public.reset-two-factor', {
       url: '/reset-2fa',
       views: {
-        alerts: commonViews.alerts,
         contents: {
           templateUrl: 'partials/reset-two-factor.jade',
           controller: 'ResetTwoFactorCtrl'
@@ -142,7 +131,6 @@ function AppRouter($stateProvider, $urlRouterProvider) {
     .state('public.authorize-approve', {
       url: '/authorize-approve/{token:.*}',
       views: {
-        alerts: commonViews.alerts,
         contents: {
           templateUrl: 'partials/authorize-approve.jade',
           controller: 'AuthorizeApproveCtrl'
@@ -152,7 +140,6 @@ function AppRouter($stateProvider, $urlRouterProvider) {
     .state('public.reset-two-factor-token', {
       url: '/reset-two-factor/{token:.*}',
       views: {
-        alerts: commonViews.alerts,
         contents: {
           templateUrl: 'partials/reset-two-factor-token.jade',
           controller: 'ResetTwoFactorTokenCtrl'

@@ -2,8 +2,7 @@
   h3(translate="IMPORT_BITCOIN_ADDRESS", ng-show="step < 2 || address.isWatchOnly || address.balance == 0 || address.balance == null")
   h3(translate="IMPORT_BITCOIN_ADDRESS_SWEEP", ng-show="step >= 2 && !address.isWatchOnly && address.balance > 0")
 .modal-body
-  uib-alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert(alert)")
-    | {{alert.msg}}
+  alerts(context="alerts")
   div(ng-show="step==1")
     form(role="form" name="importForm" novalidate)
       p(translate="IMPORT_BITCOIN_ADDRESS_EXPLAIN")
