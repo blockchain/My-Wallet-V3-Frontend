@@ -12,19 +12,53 @@ describe "Did You Know directive", ->
     $rootScope = _$rootScope_
     scope = $rootScope.$new()
     DidYouKnow = $injector.get("DidYouKnow")
+
     return
   )
 
-  beforeEach ->
-    element = $compile("<did-you-know></did-you-know>")($rootScope)
-    $rootScope.$digest()
-    scope.$apply()
+  describe "without link", ->
 
-  it "can randomize", ->
-    pending()
-    # expect(scope.getRandInRange).toBeDefined()
+    beforeEach ->
 
-  it "fetches a random DidYouKnow with defined attributes", ->
-    pending()
-    # expect(scope.dyk.id).toBeDefined()
-    # expect(scope.dyk.icon).toBeTruthy()
+      spyOn(DidYouKnow, "getRandom").and.returnValue {
+        id: 1,
+        title: 'DYK_RECOVERY_TITLE',
+        type: 'FEATURE',
+        text: 'DYK_RECOVERY',
+        icon: 'ti-lock',
+      }
+
+      element = $compile("<did-you-know></did-you-know>")($rootScope)
+
+
+      $rootScope.$digest()
+      scope.$apply()
+
+    it "should render something", ->
+      expect(element.html()).not.toEqual("")
+
+    it "should get a random DIY", ->
+      expect(DidYouKnow.getRandom).toHaveBeenCalled()
+
+    it "should not render a link", ->
+      expect(element.html()).not.toContain("<a")
+
+  describe "with link", ->
+    beforeEach ->
+
+      spyOn(DidYouKnow, "getRandom").and.returnValue {
+        id: 1,
+        title: 'DYK_RECOVERY_TITLE',
+        type: 'FEATURE',
+        text: 'DYK_RECOVERY',
+        icon: 'ti-lock',
+        linkText: 'SECURITY',
+        state: 'wallet.common.settings.security'
+      }
+
+      element = $compile("<did-you-know></did-you-know>")($rootScope)
+      $rootScope.$digest()
+      scope.$apply()
+
+    it "should render a link", ->
+      expect(element.html()).toContain("<a")
