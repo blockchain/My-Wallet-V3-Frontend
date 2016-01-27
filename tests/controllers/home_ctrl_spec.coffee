@@ -19,6 +19,9 @@ describe "HomeCtrl", ->
             { label: "Spending", index: 2, archived: false, balance: 0 }
             { label: "Partay", index: 3, archived: true, balance: 50 }
           ]
+        keys: [
+          { label: 'Imported', archived: false, balance: 10 }
+        ]
 
       Wallet.status =
         isLoggedIn: true
