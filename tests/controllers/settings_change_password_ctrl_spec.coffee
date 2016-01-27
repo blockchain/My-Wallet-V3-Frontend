@@ -14,10 +14,13 @@ describe "ChangePasswordCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
       Wallet = $injector.get("Wallet")
 
-      Wallet.user = {uid: "12345678-1234-1234-1234-1234567890ab"}
+      Wallet.user = {
+        uid: "12345678-1234-1234-1234-1234567890ab",
+        email: "user@blockchain.com"
+      }
 
       spyOn(Wallet, "isCorrectMainPassword").and.callFake((pwd) ->
-        return pwd != "wrong"
+        return pwd == "test"
       )
 
       scope = $rootScope.$new()
@@ -30,7 +33,7 @@ describe "ChangePasswordCtrl", ->
       element = angular.element(
         '<form role="form" name="passwordForm" novalidate>' +
         '<input type="password" name="currentPassword"    ng-model="fields.currentPassword"   is-valid="isCorrectMainPassword(fields.currentPassword)"      required />' +
-        '<input type="password" name="password"           ng-model="fields.password"          is-valid="fields.password != uid"                             min-entropy="25" ng-maxlength="255" required />' +
+        '<input type="password" name="password"           ng-model="fields.password"          is-valid="fields.password != uid  && !isUserEmail(fields.password) && !isCorrectMainPassword(fields.password)"  min-entropy="25" ng-maxlength="255" required />' +
         '<input type="password" name="confirmation"       ng-model="fields.confirmation"      is-valid="fields.confirmation == fields.password"             required />' +
         '</form>'
       )
@@ -113,6 +116,14 @@ describe "ChangePasswordCtrl", ->
 
       it "should display an error if the new password is the users guid", ->
         scope.passwordForm.password.$setViewValue("12345678-1234-1234-1234-1234567890ab")
+        expect(scope.passwordForm.password.$error.isValid).toBe(true)
+
+      it "should display an error if the new password is the users email", ->
+        scope.passwordForm.password.$setViewValue("user@blockchain.com")
+        expect(scope.passwordForm.password.$error.isValid).toBe(true)
+
+      it "should display an error if the new password is the users current password", ->
+        scope.passwordForm.password.$setViewValue("test")
         expect(scope.passwordForm.password.$error.isValid).toBe(true)
 
       it "should be valid if all requirements are met", ->
