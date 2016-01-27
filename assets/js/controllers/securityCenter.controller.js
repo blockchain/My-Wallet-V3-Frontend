@@ -64,9 +64,14 @@ function SettingsSecurityCenterCtrl($scope, Wallet, SecurityCenter, filterFilter
     $scope.display.editingEmail = false;
   };
 
+
   $scope.changePasswordHint = (hint, success, error) => {
     Wallet.changePasswordHint(hint, success, error);
   };
+
+  $scope.cancelEditPasswordHint = () => {
+    $scope.display.action = null;
+  }
   
   $scope.$watchCollection("user", (newValue, oldValue) => {
     if (!($scope.display.action === "mobilenumber" && !$scope.user.isMobileVerified)) {
