@@ -384,6 +384,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       .catch(response => {
         let msg = response.error.message || response.error;
         $scope.backToForm();
+        Alerts.clear($scope.alerts);
         Alerts.displayError(msg, false, $scope.alerts);
         $scope.$root.$safeApply($scope);
         return response.payment;

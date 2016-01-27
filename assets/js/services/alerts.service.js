@@ -33,7 +33,8 @@ function Alerts($timeout, $rootScope, $translate) {
 
   function display(type, message, keep=false, context=service.alerts) {
     let alert = { type: type, msg: message };
-    if (!keep) alert.timer = $timeout(() => close(alert), 7000);
+    alert.close = close.bind(null, alert, context);
+    if (!keep) alert.timer = $timeout(() => alert.close(), 7000);
     context.push(alert);
   }
 
