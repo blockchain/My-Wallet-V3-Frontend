@@ -1,5 +1,5 @@
 div
-  span(ng-bind-html="determineLabel(origin) | highlight:highlight")
+  span(ng-bind-html="determineLabel(origin) | escapeHtml | highlight:highlight")
   span(ng-hide="isNaN(origin.balance)")
     span &ensp;(
     span(ng-switch="isBitCurrency(settings.displayCurrency)")

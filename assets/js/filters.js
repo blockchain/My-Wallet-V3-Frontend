@@ -4,6 +4,7 @@ angular
   .module('walletFilters', [])
   .filter('toBitCurrency', toBitCurrencyFilter)
   .filter('convert', convertFilter)
+  .filter('escapeHtml', escapeHtmlFilter)
   .filter('getByProperty', getByPropertyFilter)
   .filter('getByPropertyNested', getByPropertyNestedFilter)
   .filter('addressOrNameMatch', addressOrNameMatchFilter);
@@ -26,6 +27,20 @@ function convertFilter(Wallet, currency) {
     let curr = Wallet.settings.displayCurrency || currency.bitCurrencies[0];
     let conversion = currency.convertFromSatoshi(amount, curr);
     return currency.formatCurrencyForView(conversion, curr);
+  };
+}
+
+function escapeHtmlFilter() {
+  var escapeHtml = function (html) {
+    return html
+      .replace(/&/g, '&amp;')
+      .replace(/'/g, '&apos;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  };
+  return function (html) {
+    return 'string' === typeof html ? escapeHtml(html) : html;
   };
 }
 
