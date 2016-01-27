@@ -45,3 +45,35 @@
     min-width: 40vw;
   }
 }
+
+.settings {
+  form[name="bcAsyncForm"] {
+    > div {
+      padding-top: 0px;
+      padding-bottom: 0px;
+      input {
+        width: 100%;
+        border: 0px;
+        outline: 0px;
+        padding: 0px;
+        height: auto;
+        font-size: 12pt;
+        font-weight: 500;
+        line-height: 1.1;
+        border-radius: 0px;
+        margin-bottom: 5px;
+        display: inline-block;
+        background: transparent;
+        box-shadow: none !important;
+        border-bottom: 1px solid $black;
+        @include transition(width 0.1s);
+        @media (min-width: 768px) {
+          width: 50%;
+        }
+      }
+    }
+    button.button-muted {
+      outline: 0px !important;
+    }
+  }
+}
