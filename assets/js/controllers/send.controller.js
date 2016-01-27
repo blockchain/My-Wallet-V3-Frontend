@@ -386,6 +386,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
         $scope.backToForm();
         Alerts.displayError(msg, false, $scope.alerts);
         $scope.$root.$safeApply($scope);
+        return response.payment;
       });
   };
 
