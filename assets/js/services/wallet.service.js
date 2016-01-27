@@ -78,6 +78,14 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     wallet.my.ws.wsUrl=customWebSocketURL;
   }
 
+  // These are set by grunt dist:
+  const versionFrontend = null;
+  const versionMyWallet = null;
+
+  if(versionFrontend) {
+    console.log("My-Wallet-V3 Frontend", versionFrontend, "and My-Wallet-V3 version", versionMyWallet);
+  }
+
   wallet.payment = MyWalletPayment;
   wallet.transactions = [];
 

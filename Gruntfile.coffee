@@ -1,5 +1,6 @@
 fs = require("fs")
 path = require("path")
+require 'shelljs/global'
 
 module.exports = (grunt) ->
 
@@ -365,7 +366,6 @@ module.exports = (grunt) ->
         command: () ->
           'ruby ./check_pgp_signatures.rb'
 
-
     git_changelog:
       default:
         options:
@@ -410,6 +410,24 @@ module.exports = (grunt) ->
           to: () =>
             'customWebSocketURL = "wss://' + @rootUrl + '/inv"'
         }]
+      version_frontend:
+        src: ['build/js/services/wallet.service.js'],
+        overwrite: true,
+        replacements: [{
+          from: 'versionFrontend = null'
+          to: () =>
+            'versionFrontend = "' + @versionFrontend + '"'
+        }]
+
+      version_my_wallet:
+        src: ['build/js/services/wallet.service.js'],
+        overwrite: true,
+        replacements: [{
+          from: 'versionMyWallet = null'
+          to: () =>
+            version = exec('cat build/bower_components/blockchain-wallet/.bower.json | grep \'version\": \' | grep -o \'\\d.\\d\.\\d*\'').output
+            'versionMyWallet = "' + version + '"'
+        }]
 
   grunt.loadNpmTasks "grunt-contrib-uglify"
   grunt.loadNpmTasks('grunt-contrib-concat')
@@ -452,13 +470,15 @@ module.exports = (grunt) ->
   ]
 
   # Default task(s).
-  grunt.registerTask "dist", (rootUrl, port, rootPath) =>
+  grunt.registerTask "dist", (rootUrl, port, rootPath, versionFrontend) =>
     grunt.task.run [
       "shell:clean_bower_and_npm_cache"
       "clean"
       "shell:npm_install_dependencies"
       "build"
     ]
+
+    @versionFrontend = versionFrontend
 
     if rootUrl
       @rootUrl = rootUrl
@@ -484,9 +504,11 @@ module.exports = (grunt) ->
       ]
 
     grunt.task.run [
+      "replace:version_frontend"
       "shell:check_dependencies"
       "shell:npm_install_dependencies"
       "shell:bower_install_dependencies"
+      "replace:version_my_wallet"
       "shell:check_pgp_signatures"
       "concat:application_dependencies"
       "uglify:application_dependencies"
@@ -500,12 +522,14 @@ module.exports = (grunt) ->
       "git_changelog"
     ]
 
-  grunt.registerTask "dist_unsafe", (rootUrl, port, rootPath) =>
+  grunt.registerTask "dist_unsafe", (rootUrl, port, rootPath, versionFrontend) =>
     console.warn "Do not deploy this to production."
     console.warn "Make sure your bower_components and node_modules are up to date"
     grunt.task.run [
       "build"
     ]
+
+    @versionFrontend = versionFrontend
 
     if rootUrl
       @rootUrl = rootUrl
@@ -530,7 +554,9 @@ module.exports = (grunt) ->
         ]
 
     grunt.task.run [
+      "replace:version_frontend"
       "shell:skip_check_dependencies"
+      "replace:version_my_wallet"
       "concat:application_dependencies"
       "uglify:application_dependencies"
       "concat:application"
