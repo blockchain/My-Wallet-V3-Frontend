@@ -138,7 +138,7 @@ describe "SignupCtrl", ->
 
     it "should add password to cookies in dev mode", inject(($cookies) ->
       spyOn($cookies, 'put')
-      scope.savePassword = true
+      scope.autoReload = true
       scope.fields.password = "testing"
 
       scope.signup()
@@ -147,7 +147,7 @@ describe "SignupCtrl", ->
 
     it "should not add password to cookies in production mode", inject(($cookies) ->
       spyOn($cookies, 'put')
-      scope.savePassword = false
+      scope.autoReload = false
       scope.fields.password = "testing"
 
       scope.signup()

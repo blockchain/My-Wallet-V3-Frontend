@@ -46,7 +46,7 @@ function SignupCtrl($scope, $state, $cookies, $filter, $translate, $uibModal, Wa
         if (uid != null) {
           $cookies.put("uid", uid);
         }
-        if ($scope.savePassword) {
+        if ($scope.autoReload) {
           $cookies.put("password", $scope.fields.password);
         }
         $scope.close("");
