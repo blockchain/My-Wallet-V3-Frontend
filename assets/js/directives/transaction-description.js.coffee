@@ -8,7 +8,7 @@ angular.module('walletApp').directive('transactionDescription', ($translate, $ro
     }
     templateUrl: 'templates/transaction-description.jade'
     link: (scope, elem, attrs) ->
-
+      
       scope.getAction = (txType) ->
         switch txType
           when 'sent'
