@@ -10,12 +10,13 @@
       .security-red.mbl.em-400.flex-center
         i.ti-hand-stop.mrm.h3.mvn.hidden-xs
         span(translate="RECOVER_FUNDS_WARNING")
-      .form-group(ng-class="{'has-error': recoveryForm.mnemonic.$error.isValid && recoveryForm.mnemonic.$touched}")
+      .form-group(ng-class="{'has-error': recoveryForm.mnemonic.$error.isValid && isValidMnemonicLength}")
         label(translate="YOUR_REC_PASS")
         p(translate="YOUR_REC_PASS_EXPLAIN")
         input.form-control(
           type="text"
           name="mnemonic"
+          ng-keyup="getMnemonicLength()"
           ng-model="fields.mnemonic"
           is-valid="isValidMnemonic(fields.mnemonic)"
           required)
