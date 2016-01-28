@@ -1,20 +1,22 @@
 .edit-mobile(ng-class="{'offset-flag': fullWidth}")
   form(ng-class="{'width-100 flex' : fullWidth}" role="form" name="mobileForm" ng-submit="changeMobile()")
-    bc-phone-number(
-      ng-model='fields.newMobile' 
-      default-country='{{ mobileDefaultCountry }}' 
-      preferred-countries='us ca gb au' 
-      ng-disabled="status.busy"
-      ng-class="{'prl' : fullWidth}"
-      name="mobile"
-    )
+    span(ng-hide="status.disableChangeBecause2FA()")
+      bc-phone-number(
+        ng-model='fields.newMobile' 
+        default-country='{{ mobileDefaultCountry }}' 
+        preferred-countries='us ca gb au' 
+        ng-disabled="status.busy || status.disableChangeBecause2FA()"
+        ng-class="{'prl' : fullWidth}"
+        name="mobile"
+      )
+    span.help-block(ng-show="status.disableChangeBecause2FA()", translate="MOBILE_NUMBER_CHANGE_DISABLED_BECAUSE_SMS_2FA")
     br(ng-if="!fullWidth")
     div(ng-class="{'flex-1': fullWidth, 'mll': fullWidth}")
       button(
         type="submit"
         ng-class="buttonLg ? 'button-success button-lg' : 'button-primary'" 
         ui-ladda="status.busy"
-        ng-disabled="mobileForm.mobile.$invalid || !numberChanged()" 
+        ng-disabled="mobileForm.mobile.$invalid || !numberChanged() || status.disableChangeBecause2FA()" 
         ladda-translate="SAVE" 
         data-style="expand-left"
       )

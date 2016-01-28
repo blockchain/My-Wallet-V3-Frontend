@@ -19,9 +19,12 @@ function configureMobileNumber(Wallet) {
   return directive;
 
   function link(scope, elem, attrs) {
-    scope.mobileDefaultCountry = null;
+    scope.status = {
+      busy: false,
+      disableChangeBecause2FA: () =>
+        Wallet.settings.twoFactorMethod == 5
+    };
 
-    scope.status = { busy: false };
     scope.fields = { newMobile: null };
 
     if (attrs.buttonLg) scope.buttonLg = true;
