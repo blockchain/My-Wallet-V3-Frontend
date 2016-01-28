@@ -12,22 +12,23 @@ describe "Change Mobile Number Directive", ->
     $rootScope = _$rootScope_
 
     Wallet.user = {mobile: {number: "12345678", country: "31"}}
+    Wallet.settings = {}
 
     # bc-mobile-number formats the number:
     Wallet.user.internationalMobileNumber = "+31 12345678"
+
+    element = $compile("<configure-mobile-number></configure-mobile-number>")($rootScope)
 
     return
   )
 
   beforeEach ->
-    element = $compile("<configure-mobile-number></configure-mobile-number>")($rootScope)
     $rootScope.$digest()
     isoScope = element.isolateScope()
     isoScope.$digest()
 
     # bc-mobile-number formats the number:
     isoScope.fields.newMobile = "+31 12345678"
-
 
   it "should have text", ->
     expect(element.html()).toContain "SAVE"
@@ -53,5 +54,19 @@ describe "Change Mobile Number Directive", ->
     isoScope.fields.newMobile = "+31 12345678"
     expect(isoScope.numberChanged()).toBe(false)
     return
+
+  it "should allow change", inject((Wallet) ->
+    expect(isoScope.status.disableChangeBecause2FA()).toBeFalsy()
+  )
+
+
+  describe "when SMS 2FA is enabled", ->
+    beforeEach inject((Wallet) ->
+      Wallet.settings.twoFactorMethod = 5
+    )
+
+    it "should not allow change", inject((Wallet) ->
+      expect(isoScope.status.disableChangeBecause2FA()).toBeTruthy()
+    )
 
   return
