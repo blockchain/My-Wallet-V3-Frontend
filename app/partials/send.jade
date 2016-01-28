@@ -18,7 +18,8 @@
       //- From
       .form-group.row(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
         label.pts.col-sm-2.col-xs-12
-          span(translate="FROM:")
+          span(translate="FROM")
+          |:
         .col-sm-10.col-xs-12(ng-class="{'has-error': (sendForm.from.$invalid && sendForm.destinations0.$touched) }")
           p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")
@@ -126,10 +127,14 @@
     .flex-column
       .flex-column.mbl
         .flex-center.mbm
-          label.mbn.flex-1.mrm(translate="FROM:")
+          label.mbn.flex-1.mrm
+            span(translate="FROM")
+            |:
           h5.mvn.flex-10.aaa.em-300.long-input {{ transaction.from.label || transaction.from.address }}
         .flex-center
-          label.mbn.flex-1.mrm(translate="TO:")
+          label.mbn.flex-1.mrm
+            span(translate="TO")
+            |:
           h5.btcaddr.mvn.flex-10.aaa.em-300.long-input {{ toLabel }}
       .flex.flex-wrap.ptm
         .total-amounts.aaa.mbm
