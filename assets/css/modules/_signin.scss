@@ -20,6 +20,8 @@ div.login-form {
   width: 550px;
   border-radius: 10px;
   box-shadow: 0px 0px 20px -8px black;
+  max-height: 600px;
+  overflow: scroll;
   header {
     padding: 15px 0 10px;
     border-bottom: 1px solid rgb(240, 236, 236);
