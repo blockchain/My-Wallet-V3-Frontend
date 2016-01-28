@@ -32,7 +32,15 @@
 
 .navbar-inverse .navbar-toggle { border: none; }
 
-.navbar-inverse .navbar-nav > li > a { color: white; }
+.navbar-inverse .navbar-nav > li > a { 
+  color: white; 
+  > span {
+    display: inline-block;
+  }
+  > i {
+    float: right;
+  }
+}
 
 .navbar-inverse {
   background-color: $blue;
