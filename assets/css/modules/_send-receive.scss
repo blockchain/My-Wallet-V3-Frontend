@@ -3,9 +3,12 @@
 }
 
 .modal-body#send {
-  input {
-    height: 34px;
+  .destination-input {
+    input, button {
+      height: 34px;
+    }
   }
+
   .send-from-dropdown {
     .dropdown-header {
       display: none;

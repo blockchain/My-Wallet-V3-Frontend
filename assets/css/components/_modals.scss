@@ -320,7 +320,7 @@
     > div {
       max-height: 400px;
       min-height: 400px;
-      overflow: visible;
+      overflow: scroll;
       padding: 15px 0;
       &:first-child {
         overflow-y: scroll;
