@@ -24,7 +24,7 @@ function UpgradeCtrl($scope, Wallet, $uibModalInstance, $log, $window, $translat
   };
 
   $scope.goToBlockchain = () => {
-    $window.location = 'https://blockchain.info/';
+    $window.location = 'https://blockchain.info/wallet/login';
   };
 
   $scope.cancel = () => {
