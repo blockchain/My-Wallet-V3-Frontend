@@ -133,6 +133,7 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
       templateUrl: "partials/second-password.jade",
       controller: "SecondPasswordCtrl",
       backdrop: insist ? "static" : null,
+      keyboard: insist,
       windowClass: "bc-modal",
       resolve: {
         insist: () => insist,
@@ -147,7 +148,8 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
       templateUrl: "partials/upgrade.jade",
       controller: "UpgradeCtrl",
       backdrop: "static",
-      windowClass: "bc-modal"
+      windowClass: "bc-modal",
+      keyboard: false
     });
   });
 
