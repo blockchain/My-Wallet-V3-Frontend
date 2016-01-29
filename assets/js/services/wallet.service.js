@@ -1139,7 +1139,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       wallet.saveActivity(2);
       $rootScope.$safeApply();
     }, () => {
-      console.log('Failed');
+      $translate('ERR_ENABLE_IP_RESTRICT').then(Alerts.displayError);
       $rootScope.$safeApply();
     });
   };
