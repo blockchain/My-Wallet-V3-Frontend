@@ -10,7 +10,7 @@
       .flex.row
         span.text.col-md-1(ng-show="transaction.result > 0 && !transaction.intraWallet") {{ 'FROM' | translate }}:
         span.text.col-md-1(ng-show="transaction.result  < 0 || transaction.intraWallet") {{ 'TO' | translate }}:
-        span.hidden-sm.hidden-xs.col-md-11.mlm(ng-bind-html="address | highlight:search")
+        span.hidden-sm.hidden-xs.col-md-11.mlm(ng-bind-html="address | escapeHtml | highlight:search")
     .hidden-xs.hidden-sm.col-md-1
   .flex-center.border-top.ptl.hidden-xs.hidden-sm.dark-grey(ng-show="transaction.toggled")
     .col-md-3
@@ -18,7 +18,7 @@
       .flex.row
         span.text.col-md-1(ng-show="transaction.result > 0 && !transaction.intraWallet") {{ 'TO' | translate }}:
         span.text.col-md-1(ng-show="transaction.result  < 0 || transaction.intraWallet") {{ 'FROM' | translate }}:
-        span.hidden-sm.hidden-xs.col-md-11.mlm(ng-bind-html="other_address | highlight:search")
+        span.hidden-sm.hidden-xs.col-md-11.mlm(ng-bind-html="other_address | escapeHtml | highlight:search")
       .flex.row.mtm(ng-show="transaction.note")
         span.text.col-md-1(translate="NOTE_LC")
         span.break-word.hidden-sm.hidden-xs.col-md-11.mlm {{::transaction.note }}
