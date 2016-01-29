@@ -77,3 +77,12 @@
     }
   }
 }
+
+form[name="signupForm"] {
+  .accept-checkbox {
+    padding-right: 0px;
+  }
+  .accept-label {
+    margin-bottom: 0px;
+  }
+}
