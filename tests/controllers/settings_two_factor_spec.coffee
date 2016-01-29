@@ -11,6 +11,10 @@ describe "TwoFactorCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
 
+      Wallet.user = {
+        internationalMobileNumber: "+1234567890"
+      }
+
       Wallet.settings = 
         twoFactorMethod: null
         needs2FA: false
@@ -71,6 +75,9 @@ describe "TwoFactorCtrl", ->
       it "should try to configure mobile if needed", () ->
         scope.authWithPhone()
         expect(scope.step).toBe('configure_mobile')
+
+      it "should skip phone number input if phone number is saved", ->
+        expect(scope.mobileNumber.step).toBe(2)
 
       it "should set 2FA to SMS if mobile is verified", () ->
         scope.user.isMobileVerified = true
