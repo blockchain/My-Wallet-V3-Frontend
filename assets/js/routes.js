@@ -12,7 +12,7 @@ function AppRouter($stateProvider, $urlRouterProvider) {
 
   $urlRouterProvider.otherwise(function ($injector, $location) {
     let Wallet = $injector.get('Wallet');
-    return Wallet.status.isLoggedIn ? '/home' : '/login';
+    return Wallet.status.isLoggedIn ? '/home' : '/';
   });
 
   $urlRouterProvider.when('/settings', '/settings/wallet');
@@ -57,6 +57,19 @@ function AppRouter($stateProvider, $urlRouterProvider) {
     .state('wallet.common', {
       views: commonViews
     });
+
+  $stateProvider
+    .state('welcome', {
+      url: '/',
+      views: {
+        body: {
+          templateUrl: 'partials/wallet-welcome.jade'
+        }
+      },
+      contents: {
+        top: top
+      }
+    })
 
   $stateProvider
     .state('public', {
