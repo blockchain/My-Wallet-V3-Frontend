@@ -1,0 +1,14 @@
+.welcome-page {
+  overflow: scroll;
+  .features {
+    li {
+      margin-left: 20px;
+    }
+  }
+  .scroll-in-view {
+    min-height: 1000px;
+    img {
+      max-width: 720px;
+    }
+  }
+}

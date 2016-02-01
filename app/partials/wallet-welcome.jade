@@ -1,4 +1,4 @@
-.welcome-page
+.welcome-page.overflow-scroll
   .navbar.navbar-default.navbar-inverse.bc-header(role='navigation')
     .container-fluid
       .navbar-header.flex-between
@@ -21,3 +21,12 @@
             a.pam(href="https://blockchain.com/about", translate="ABOUT")
           li.item
             a.pam(href="https://blockchain.zendesk.com/", translate="SUPPORT")
+  .intro
+    .flex-justify.flex-center.flex-column
+      h2 It's Here
+      h1 The New Blockchain Wallet
+      ul.flex-row.features
+        li Safer
+        li Faster
+        li Stronger
+  scroll-in-view(img="new-wallet-hero.png")
