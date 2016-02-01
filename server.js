@@ -64,7 +64,7 @@ if (dist) {
 }
 
 app.use(function (req, res) {
-  res.send(404,'<center><h1>404 Not Found</h1></center>');
+  res.status(404).send('<center><h1>404 Not Found</h1></center>');
 });
 
 app.listen(port, function () {
