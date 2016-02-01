@@ -2,7 +2,7 @@
   "ignore" : [
     "angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize",
     "bootstrap-sass",
-    "angular-ui-select", "bc-phone-number"
+    "bc-phone-number"
   ],
   "pgp-signed" : [
     "blockchain-wallet",
@@ -23,8 +23,8 @@
     "repo" : "danielstern/ngAudio"
   },
   "angular-ui-select" : {
-    "version": "0.12.0",
-    "commits" : ["2d1422d109dc1cd64213271e59506b14f74d356f"],
+    "version": "0.14.2",
+    "commits" : ["85401e081c4e048b7a32bde0ee513ab1dbdecf9b"],
     "repo" : "angular-ui/ui-select"
   },
   "angular-qr" : {
