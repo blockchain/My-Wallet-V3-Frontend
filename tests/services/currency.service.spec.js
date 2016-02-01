@@ -153,14 +153,21 @@ describe('currency', () => {
 
   describe('formatCurrencyForView()', () => {
     let amount = 0.123456789;
-    let viewValues = ['0.12345679 BTC', '0.12346 mBTC', '0.12 bits'];
 
-    for (let i in viewValues) {
-      it(`should format btc currency ${i}`, inject((Wallet, currency) => {
-        let formatted = currency.formatCurrencyForView(amount, currency.bitCurrencies[i]);
-        expect(formatted).toEqual(viewValues[i]);
-      }));
-    }
+    it('should format BTC', inject((Wallet, currency) => {
+      let formatted = currency.formatCurrencyForView(amount, currency.bitCurrencies[0]);
+      expect(formatted).toEqual('0.12345679 BTC');
+    }));
+
+    it('should format mBTC', inject((Wallet, currency) => {
+      let formatted = currency.formatCurrencyForView(amount, currency.bitCurrencies[1]);
+      expect(formatted).toEqual('0.12346 mBTC');
+    }));
+
+    it('should format bits', inject((Wallet, currency) => {
+      let formatted = currency.formatCurrencyForView(amount, currency.bitCurrencies[2]);
+      expect(formatted).toEqual('0.12 bits');
+    }));
 
     it('should not format a null amount', inject((Wallet, currency) => {
       let formatted = currency.formatCurrencyForView(null, currency.currencies[0]);

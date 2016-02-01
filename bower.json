@@ -13,7 +13,7 @@
     "angular-bootstrap": "0.14.*",
     "angular-cookies": "1.4.*",
     "angular-audio": "1.6.*",
-    "angular-ui-select": "sjors/ui-select#csp-and-reset-search",
+    "angular-ui-select": "0.14.*",
     "angular-sanitize": "1.4.*",
     "angular-qr": "0.2.*",
     "angular-translate": "2.7.*",
