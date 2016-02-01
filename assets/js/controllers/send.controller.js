@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SendCtrl", SendCtrl);
 
-function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal) {
+function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal, format) {
 
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.accounts = Wallet.accounts;
@@ -264,19 +264,6 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     });
   };
 
-  $scope.formatOrigin = (origin) => {
-    const formatted = {
-      label: origin.label || origin.address,
-      index: origin.index,
-      address: origin.address,
-      balance: origin.balance,
-      archived: origin.archived
-    };
-    formatted.type = origin.index != null ? '' : 'Imported Addresses';
-    if (origin.index == null) formatted.isWatchOnly = origin.isWatchOnly;
-    return formatted;
-  };
-
   $scope.hasAmountError = (index) => {
     let field = $scope.sendForm['amounts' + index];
     let fieldFiat = $scope.sendForm['amountsFiat' + index];
@@ -319,7 +306,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
         let selectedIdx = parseInt($stateParams.accountIndex);
         let idx = isNaN(selectedIdx) ? defaultIdx : selectedIdx;
         for (let account of $scope.accounts()) {
-          account = $scope.formatOrigin(account);
+          account = format.origin(account);
           if (account.index != null && !account.archived) {
             if (account.index === idx) {
               $scope.transaction.from = account;
@@ -329,7 +316,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
           }
         }
         for (let address of $scope.legacyAddresses()) {
-          address = $scope.formatOrigin(address);
+          address = format.origin(address);
           if (!address.archived) {
             $scope.destinationsBase.push(address);
             if (!address.isWatchOnly) {
@@ -347,7 +334,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
         if ((paymentRequest.address != null) && paymentRequest.address !== '') {
           $scope.applyPaymentRequest(paymentRequest, 0);
         } else if (paymentRequest.toAccount != null) {
-          $scope.transaction.destinations[0] = $scope.formatOrigin(paymentRequest.toAccount);
+          $scope.transaction.destinations[0] = format.origin(paymentRequest.toAccount);
           $scope.transaction.from = paymentRequest.fromAddress;
         } else if (paymentRequest.fromAccount != null) {
           $scope.transaction.from = paymentRequest.fromAccount;

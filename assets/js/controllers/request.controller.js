@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("RequestCtrl", RequestCtrl);
 
-function RequestCtrl($scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, $translate, $stateParams, filterFilter, $filter) {
+function RequestCtrl($scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, $translate, $stateParams, filterFilter, $filter, format) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -19,23 +19,21 @@ function RequestCtrl($scope, Wallet, Alerts, currency, $uibModalInstance, $log, 
     label: ""
   };
 
-  for(const account of $scope.accounts()) {
+  for(let account of $scope.accounts()) {
     if (account.index != null && !account.archived) {
-      let acct = angular.copy(account);
-      acct.type = "";
-      $scope.destinations.push(acct);
+      account = format.destination(account);
+      $scope.destinations.push(angular.copy(account));
       if ((destination != null) && (destination.index != null) && destination.index === acct.index) {
         $scope.fields.to = acct;
       }
     }
   };
 
-  for (const address of $scope.legacyAddresses()) {
+  for (let address of $scope.legacyAddresses()) {
+    address = format.destination(address);
+
     if (!address.archived) {
-      const addr = angular.copy(address);
-      addr.type = "Imported Addresses";
-      addr.label = addr.label || addr.address;
-      $scope.destinations.push(addr);
+      $scope.destinations.push(angular.copy(address));
       if ((destination != null) && (destination.address != null) && destination.address === addr.address) {
         $scope.fields.to = addr;
       }
