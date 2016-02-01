@@ -22,6 +22,7 @@ e2e-tests/ignore.js
 .settings
 
 # Generated files
+Changelog.md
 .idea
 *.log
 .sass-cache
