@@ -1,2 +1,3 @@
 div
-  p.type-sm.black {{::content}}
+  p.type-sm.black {{::content | translate}}
+    a(href="{{::link}}" target="_blank") {{::linktext | translate}}
