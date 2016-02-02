@@ -18,25 +18,18 @@ function scrollInView($window) {
   function link(scope, elem, attrs) {
     scope.img = attrs['img']
 
-    angular.element($window).bind('scroll', function() {
-      console.log('here');
+    let itemTop = elem[0].getBoundingClientRect().top;
 
-      scope.$apply()
-    })
+    scope.scroll = () => {
+      let windowBottom = $window.pageYOffset + $window.innerHeight;
+
+      if ( windowBottom > itemTop ) {
+        scope.isActive = true
+        console.log(scope.isActive)
+      }
+    }
+
+    angular.element($window).bind('scroll', scope.scroll)
+    scope.scroll()
   }
 }
-
-// app = angular.module('myApp', []);
-// app.directive("scroll", function ($window) {
-//     return function(scope, element, attrs) {
-//         angular.element($window).bind("scroll", function() {
-//              if (this.pageYOffset >= 100) {
-//                  element.addClass('min');
-//                  console.log('Scrolled below header.');
-//              } else {
-//                  element.removeClass('min');
-//                  console.log('Header is in view.');
-//              }
-//         });
-//     };
-// });
