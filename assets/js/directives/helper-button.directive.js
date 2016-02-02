@@ -12,7 +12,9 @@ function helperButton($translate) {
     scope: {
       content: '@',
       url: '@',
-      placement: '@'
+      placement: '@',
+      link: '@',
+      linktext: '@'
     },
     templateUrl: "templates/helper-button.jade",
     link: link
@@ -22,10 +24,6 @@ function helperButton($translate) {
   function link(scope, elem, attrs) {
     scope.isActive = false;
     scope.warning = attrs.warning != null;
-
-    $translate(scope.content).then((translation) => {
-      scope.content = translation;
-    });
 
     scope.helperText = {
       templateUrl: 'templates/helper-popover.jade',

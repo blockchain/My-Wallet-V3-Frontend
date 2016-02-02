@@ -55,7 +55,7 @@
       .flex-column.receive-address.col-md-9.col-sm-8
         p.hidden-xs.type-h5.em-400.black.mbs
           span(translate="BITCOIN_ADDRESS")
-          span :
+          helper-button(content="GENERATED_ADDRESS" link="https://blockchain.zendesk.com/hc/en-us/articles/207528856-Sending-and-receiving" linktext="LEARN_MORE" )
         p.form-control-static.bitcoin-address
           img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
           span(ng-show="status.didInitializeHD" single-click-select)

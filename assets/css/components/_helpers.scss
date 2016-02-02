@@ -15,9 +15,9 @@
     outline: none;
   }
   &.active {
+    border: 1px solid transparent;
     background: $blue;
     color: white;
-    border: none;
   }
   .close-helper {
     top: 50%;
