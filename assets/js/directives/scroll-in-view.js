@@ -21,7 +21,8 @@ function scrollInView($window, $timeout) {
     scope.shadow = attrs['shadow']
     scope.transactions = attrs['transactions']
 
-    $timeout(() => {
+    angular.element(document).ready(() => {
+
       let itemTop = elem[0].getBoundingClientRect().top;
 
       scope.scroll = () => {
@@ -37,6 +38,7 @@ function scrollInView($window, $timeout) {
 
       angular.element($window).bind('scroll', scope.scroll)
       scope.scroll()
-    }, 0);
+    });
+
   }
 }

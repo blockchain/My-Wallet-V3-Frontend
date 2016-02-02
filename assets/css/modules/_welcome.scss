@@ -1,3 +1,5 @@
+$baby-blue: #edf6fd;
+
 @mixin delay($from, $to, $divisor) {
   @for $i from $from through $to {
     &:nth-child(#{$i}) { @include transition-delay(#{$i/$divisor}s); }
@@ -21,14 +23,11 @@
     max-width: 500px;
     margin: 100px auto;
     text-align: center;
-  }
-  .features {
-    padding: 0px;
-    li {
-      margin-left: 20px;
-      &:first-child {
-        margin-left: 0px;
-        list-style: none;
+    a {
+      font-weight: 400;
+      color: $steel;
+      &:hover {
+        color: $blue;
       }
     }
   }
@@ -81,11 +80,11 @@
           left: 255px;
         }
         &:nth-child(3) {
-          top: 148px;
+          top: 149px;
           left: 215px;
         }
         &:nth-child(4) {
-          top: 170px;
+          top: 172px;
           left: 175px;
         }
         &:nth-child(5) {
@@ -105,7 +104,101 @@
         @include delay(1, 6, 10);
         position: absolute;
         width: 31%;
-        top: 20px;
+        top: 50px;
+      }
+    }
+  }
+}
+
+.squares {
+  > div {
+    position: relative;
+    overflow: hidden;
+    img {
+      width: 100%;
+    }
+    .background {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-size: cover;
+      background-position: center center;
+    }
+    .donut {
+      transform: translate(-50%,-50%);
+      @include transition(all 1s);
+      box-sizing: content-box;
+      background: transparent;
+      border-radius: 100%;
+      position: absolute;
+      height: 65%;
+      width: 65%;
+      left: 50%;
+      top: 45%;
+      border: 500px solid $baby-blue;
+    }
+    p:last-child {
+      @include transition(opacity $slow);
+      transform: translateX(-50%);
+      position: absolute;
+      text-align: center;
+      color: $pale-grey;
+      max-width: 200px;
+      min-height: 10%;
+      bottom: 2%;
+      left: 50%;
+      @media (min-width: 768px) {
+        bottom: 5%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      &:nth-child(2), &:nth-child(4) {
+        .donut {
+          border: 500px solid $steel;
+        }
+      }
+    }
+    @media (min-width: 768px) {
+      float: left;
+      width: 50%;
+      &:nth-child(2), &:nth-child(3) {
+        .donut {
+          border: 500px solid $steel;
+        }
+      }
+    }
+    &:nth-child(1) {
+     .background {
+        background-image: url('../img/security-upgrade-welcome.png');
+     } 
+    }
+    &:nth-child(2) {
+      .background {
+        background-image: url('../img/recover-welcome.png'); 
+      }
+    }
+    &:nth-child(3) {
+      .background {
+        background-image: url('../img/new-design-welcome.png');
+      } 
+    }
+    &:nth-child(4) {
+      .background {
+        background-image: url('../img/fund-management-welcome.png'); 
+      }
+    }
+    &:hover {
+      .donut {
+        border-radius: 0%;
+        height: 101%;
+        width: 101%;
+        top: 50%;
+      }
+      p {
+        opacity: 0;
       }
     }
   }
