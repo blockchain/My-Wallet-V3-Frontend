@@ -3,13 +3,14 @@ angular
   .module('walletApp')
   .directive('scrollInView', scrollInView);
 
-scrollInView.$inject = ['$window'];
+scrollInView.$inject = ['$window', '$timeout'];
 
-function scrollInView($window) {
+function scrollInView($window, $timeout) {
   const directive = {
     restrict: 'E',
-    replace: true,
     templateUrl: 'templates/scroll-in-view.jade',
+    scope: {},
+    img: '@',
     link: link
   };
 
@@ -17,19 +18,25 @@ function scrollInView($window) {
 
   function link(scope, elem, attrs) {
     scope.img = attrs['img']
+    scope.shadow = attrs['shadow']
+    scope.transactions = attrs['transactions']
 
-    let itemTop = elem[0].getBoundingClientRect().top;
+    $timeout(() => {
+      let itemTop = elem[0].getBoundingClientRect().top;
 
-    scope.scroll = () => {
-      let windowBottom = $window.pageYOffset + $window.innerHeight;
+      scope.scroll = () => {
+        let windowBottom = $window.pageYOffset + $window.innerHeight;
 
-      if ( windowBottom > itemTop ) {
-        scope.isActive = true
-        console.log(scope.isActive)
+        if ( windowBottom > itemTop ) {
+          scope.isActive = true;
+        } else {
+          scope.isActive = false;
+        }
+        scope.$apply()
       }
-    }
 
-    angular.element($window).bind('scroll', scope.scroll)
-    scope.scroll()
+      angular.element($window).bind('scroll', scope.scroll)
+      scope.scroll()
+    }, 0);
   }
 }

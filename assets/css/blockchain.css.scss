@@ -58,6 +58,12 @@ html,body {
   height: 100%;
   width: 100%;
   position: fixed; //need this for scrolling on safari mobile
+  &.not-fixed {
+    position: relative;
+    body {
+      position: relative;
+    }
+  }
 }
 
 .hide { display: none; }

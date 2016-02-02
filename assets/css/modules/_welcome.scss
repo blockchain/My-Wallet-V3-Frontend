@@ -1,5 +1,10 @@
+@mixin delay($from, $to, $divisor) {
+  @for $i from $from through $to {
+    &:nth-child(#{$i}) { @include transition-delay(#{$i/$divisor}s); }
+  }  
+}
+
 .welcome-page {
-  overflow: scroll;
   .intro {
     margin: 80px auto;
     h1, h4 {
@@ -9,6 +14,13 @@
     h4 {
       text-transform: uppercase;
     }
+  }
+  h3 {
+    color: $blue;
+    line-height: 1.4;
+    max-width: 500px;
+    margin: 100px auto;
+    text-align: center;
   }
   .features {
     padding: 0px;
@@ -27,31 +39,73 @@
       top: 40px;
     .image-container {
       position: relative;
-      &:before {
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        content: '';
-        position: absolute;
-        transition: all 1s;
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
-                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
-      }
       img {
         max-width: 720px;
+      }
+      &.shadow {
+        &:before {
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          content: '';
+          position: absolute;
+          transition: all 1s;
+          box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+                    0 1px 5px 0 rgba(0, 0, 0, 0.12),
+                    0 3px 1px -2px rgba(0, 0, 0, 0.2);
+        }
       }
     }
     &.active {
       opacity: 1;
       top: 0px;
       .image-container {
-        &:before {
-          box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
-                            0  6px 30px 5px rgba(0, 0, 0, 0.12),
-                            0  8px 10px -5px rgba(0, 0, 0, 0.4);
+        &.shadow {
+          &:before {
+            box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+                              0  6px 30px 5px rgba(0, 0, 0, 0.12),
+                              0  8px 10px -5px rgba(0, 0, 0, 0.4);
+          }
         }
+      }
+    }
+    &.active {
+      .tx {
+        &:nth-child(1) {
+          top: 105px;
+          left: 290px;
+        }
+        &:nth-child(2) {
+          top: 128px;
+          left: 255px;
+        }
+        &:nth-child(3) {
+          top: 148px;
+          left: 215px;
+        }
+        &:nth-child(4) {
+          top: 170px;
+          left: 175px;
+        }
+        &:nth-child(5) {
+          top: 195px;
+          left: 137px;
+        }
+        &:nth-child(6) {
+          top: 216px;
+          left: 95px;
+        }
+      }
+    }
+    .txs {
+      position: static;
+      .tx {
+        @include transition(top 1s);
+        @include delay(1, 6, 10);
+        position: absolute;
+        width: 31%;
+        top: 20px;
       }
     }
   }

@@ -34,7 +34,10 @@ angular.module('walletApp', modules)
 .config(($modalProvider, uiSelectConfig) => {
   uiSelectConfig.theme = 'bootstrap';
 })
-.run(($rootScope, $uibModal) => {
+.run(($rootScope, $uibModal, $state) => {
+  if ( !$state.current.name ) {
+    $rootScope.outOfApp = true;
+  }
 
   $rootScope.$safeApply = (scope=$rootScope, before) => {
     before = before;
