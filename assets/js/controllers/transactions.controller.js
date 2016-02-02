@@ -11,7 +11,7 @@ function TransactionsCtrl($scope, Wallet, MyWallet, $timeout, $stateParams, $sta
 
   $scope.getTotal     = Wallet.total;
 
-  $scope.loading      = true;
+  $scope.loading      = false;
   $scope.allTxsLoaded = false;
   $scope.canDisplayDescriptions = false;
 

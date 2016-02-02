@@ -13,7 +13,7 @@
           .tx-sender
             label(translate="FROM")
             |:
-            p.text.mbs {{::from}}
+            p.text.mbs {{::input.label}}
           .tx-receiver
             label
               span(translate="TO")
@@ -21,8 +21,9 @@
             ul.pln.flex-column.flex.type-sm
               li.flex-center.mbm(ng-repeat="destination in destinations")
                 span.text-overflow-hidden.flex-1.flex.text
-                  | {{::getLabel(destination)}}
-                span.plm.center-align.text {{ destination.amount | convert }}
+                  | {{::destination.label}}
+                span.plm.center-align.text(ng-hide="destinations.length <= 1")
+                  fiat-or-btc(btc="destination.amount")
           .mtm.ptm.border-top
             label(translate="NOTE_LC")
             transaction-note(transaction="transaction")

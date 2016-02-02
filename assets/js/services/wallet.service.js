@@ -717,6 +717,22 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     }
   };
 
+  wallet.formatTransactionCoins = (tx) => {
+    let input = tx.processedInputs
+      .filter(i => !i.change)[0] || tx.processedInputs[0];
+    let outputs = tx.processedOutputs
+      .filter(o => !o.change && o.address !== input.address);
+
+    let setLabel = (io) => (
+      io.label = io.label || wallet.my.wallet.getAddressBookLabel(io.address) || io.address
+    );
+
+    setLabel(input);
+    outputs.forEach(setLabel);
+
+    return { input: input, outputs: outputs };
+  };
+
   wallet.beep = () => {
     let sound = ngAudio.load('beep.wav');
     sound.play();

@@ -18,31 +18,24 @@ angular.module('walletApp').directive('transactionDescription', ($translate, $ro
           when 'transfer'
             return 'MOVED_BITCOIN_TO'
 
-      formatLabel = (coins, keepChange) ->
-        used = {}
-        coins
-          .filter((coin) -> !coin.change || keepChange)
-          .map((coin) -> coin.label || coin.address)
-          .filter((label) ->
-            didUse = used[label] == true
-            used[label] = true
-            return !didUse
-          ).join(', ')
+      scope.getLabels = (tx) ->
+        return if !tx or !tx.processedInputs or !tx.processedOutputs
+        formatted = Wallet.formatTransactionCoins(tx)
 
-      scope.getPrimaryLabel = (tx) ->
+        outputsLabel = formatted.outputs[0].label
+        if formatted.outputs.length > 1
+          outputsLabel = $translate.instant('RECIPIENTS', { n: formatted.outputs.length })
+
         if tx.txType == 'sent'
-          return formatLabel(tx.processedOutputs)
+          return {
+            primary: scope.primaryLabel = outputsLabel
+            secondary: scope.secondaryLabel = formatted.input.label
+          }
         else
-          return formatLabel(tx.processedInputs, true)
-
-      scope.getSecondaryLabel = (tx) ->
-        if tx.txType == 'sent'
-          return formatLabel(tx.processedInputs, true)
-        else
-          return formatLabel(tx.processedOutputs)
-
-      scope.primaryLabel = scope.getPrimaryLabel(scope.tx)
-      scope.secondaryLabel = scope.getSecondaryLabel(scope.tx)
+          return {
+            primary: scope.primaryLabel = formatted.input.label
+            secondary: scope.secondaryLabel = outputsLabel
+          }
 
       scope.$watch 'search', (search) ->
         return unless search?

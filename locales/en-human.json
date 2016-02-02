@@ -366,6 +366,7 @@
   "MERCHANT" : "Merchant",
   "SUPPORT" : "Support",
   "ADD_ANOTHER_RECIPIENT" : "Add Recipient",
+  "RECIPIENTS": "{{ n }} Recipients",
   "REMOVE" : "Remove",
   "RECOVERY_PHRASE_SECURITY_CENTER" : "Write down your Recovery Phrase and keep it somewhere very safe and secure. Your Recovery Phrase allows you or anyone else with access to it, to restore your wallet and access your funds if you forget your password, or if our service is unavailable. ",
   "LEVEL_1" : "Level 1",
