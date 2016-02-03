@@ -59,7 +59,6 @@
   .scroll-in-view {
       transition: all 1s;
       position: relative;
-      overflow: hidden;
       opacity: 0;
       top: 40px;
     .image-container {
@@ -137,7 +136,7 @@
   .blocket {
     .scroll-in-view {
       &.active {
-        @include transition-delay(1s);
+        @include transition-delay(.5s);
       }
     }
     .image-container {
@@ -145,11 +144,20 @@
       margin: 0 auto;
       width: 720px;
       img {
-        top: -30px;
+        top: -70px;
         left: 150px;
-        width: 50px;
+        width: 100px;
         position: absolute;
+        @media (max-width: 768px) {
+          top: -30px;
+          width: 50px;
+        }
       }
+    }
+  }
+  .ios {
+    .scroll-in-view {
+      overflow: hidden; 
     }
   }
   .android {
@@ -175,7 +183,7 @@
         }
       }
     }
-    @media (max-width: 786px) {
+    @media (max-width: 768px) {
       .flex-row {
         flex-direction: column !important;
       }
