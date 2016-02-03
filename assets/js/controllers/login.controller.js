@@ -11,8 +11,6 @@ function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNet
     password: null,
     twoFactor: null
   };
-  debugger
-
 
   $scope.uid = $stateParams.uid || Wallet.guid || $rootScope.loginFormUID;
 

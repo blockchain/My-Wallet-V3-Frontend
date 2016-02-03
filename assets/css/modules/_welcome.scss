@@ -16,6 +16,24 @@ $baby-blue: #edf6fd;
     h4 {
       text-transform: uppercase;
     }
+    button {
+      margin: 20px 5px 0px 5px;
+      text-transform: uppercase;
+      background: transparent;
+      min-width: 100px;
+      min-height: 40px;
+      color: $blue;
+      font-weight: 400;
+      border-radius: 5px;
+      border: 1px solid $pale-grey;
+      @include transition(background $slow);
+      &:hover {
+        background: $baby-blue;
+      }
+    }
+  }
+  img {
+    max-width: 100%;
   }
   h3 {
     color: $blue;
@@ -108,9 +126,13 @@ $baby-blue: #edf6fd;
       }
     }
   }
+  img.footer-hero {
+    width: 100%;
+  }
 }
 
 .squares {
+  @extend .clearfix;
   > div {
     position: relative;
     overflow: hidden;
