@@ -107,6 +107,16 @@ $fast: 0.2s;
   animation-name: fade-in-down;
 }
 
+////////////////
+/////Delay//////
+////////////////
+
+@mixin delay($from, $to, $divisor) {
+  @for $i from $from through $to {
+    &:nth-child(#{$i}) { @include transition-delay(#{$i/$divisor}s); }
+  }  
+}
+
 ////////////////////////////////////
 /////Zooming in out animations//////
 ////////////////////////////////////

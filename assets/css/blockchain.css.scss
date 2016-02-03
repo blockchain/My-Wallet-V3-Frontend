@@ -50,6 +50,10 @@
 //override bootstrap
 @import 'utilities/bs_overrides';
 
+* {
+  outline: none;
+}
+
 html,body {
   font-size: small;
   background-color: #fff;

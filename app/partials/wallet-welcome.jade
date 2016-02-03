@@ -32,8 +32,10 @@
       .flex-justify.flex-center.flex-row
         button Login
         button Sign Up
-  scroll-in-view(img="new-wallet-hero.png" shadow="true")
-  h3 The most advanced Blockchain wallet experience. Now even more so.
+  .welcome-wrapper
+    scroll-in-view(img="new-wallet-hero.png" shadow="true")  
+  scroll-in-view.blocket(img="blocket.png")
+  h3 The most advanced Blockchain wallet experience is here, now even more so.
   scroll-in-view(img="ios-feature.png", transactions="true")
   h3.type-h5
     a(href="").type-h5 iOs &bull;
@@ -49,7 +51,7 @@
       img(src="img/square.png")
       div.background
       div.donut
-      p.type-h4 Simplified backup and recovery
+      p.type-h4 Simplified back-up and recovery
     div
       img(src="img/square.png")
       div.background
@@ -60,4 +62,10 @@
       div.background
       div.donut
       p.type-h4 Customized fund management
+  .welcome-wrapper.android
+    .flex-row.flex-justify.flex-center
+      scroll-in-view.col-md-6(img="android-feature.jpg")
+      .flex-column
+        h2 Sending and receiving Bitcoin has never been so easy
+        h3 We've taken our time to build and test the most user-friendly interface for our wallet.
   img.footer-hero(src="img/footer-hero.jpg")
