@@ -1,6 +1,9 @@
 .welcome-page {
   .intro {
     margin: 80px auto;
+    @media (max-width: 768px) {
+      margin: 40px auto;
+    }
     h1, h4, h3 {
       color: $blue;
       margin-top: 0px;
@@ -42,6 +45,9 @@
     max-width: 500px;
     margin: 100px auto;
     text-align: center;
+    @media (max-width: 768px) {
+      margin: 50px auto;
+    }
     a {
       font-weight: 400;
       color: $steel;
@@ -53,6 +59,7 @@
   .scroll-in-view {
       transition: all 1s;
       position: relative;
+      overflow: hidden;
       opacity: 0;
       top: 40px;
     .image-container {
@@ -147,10 +154,17 @@
   }
   .android {
     margin: 60px auto;
+    @media (max-width: 768px) {
+      margin: 40px auto;
+    }
     h2, h3 {
       margin: 0px;
       color: $blue;
       text-align: left;
+      line-height: 35px;
+    }
+    h3 {
+      font-weight: 400;
     }
     > div {
       > div {
@@ -159,14 +173,20 @@
           margin-top: 5px;
           color: $pale-grey;
         }
-        h2, h3 {
-          line-height: 35px;
-        }
       }
     }
     @media (max-width: 786px) {
       .flex-row {
         flex-direction: column !important;
+      }
+      h2, h3 {
+        line-height: 28px;
+      }
+      h2 {
+        font-size: 24px;
+      }
+      h3 {
+        font-size: 18px;
       }
     }
   }
