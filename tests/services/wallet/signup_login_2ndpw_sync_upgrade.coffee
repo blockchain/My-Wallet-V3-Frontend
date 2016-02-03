@@ -6,7 +6,7 @@ describe "walletServices", () ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector) ->
+    angular.mock.inject ($injector, $q) ->
 
       Wallet = $injector.get("Wallet")
 
@@ -32,6 +32,11 @@ describe "walletServices", () ->
           newAccount: () ->
           getHistory: () ->
             then: () ->
+              then: () ->
+          txList:
+            transactions: () ->
+              [{ result: 1, txType: 'received' }]
+            fetchTxs: () ->
           keys: [{address: "some_legacy_address", label: "Old", archived: false}, {address: "some_legacy_address_without_label", label: "some_legacy_address_without_label", archived: false}]
 
         createNewWallet: (email, pwd, firstAccount, language, currency, success, fail) ->

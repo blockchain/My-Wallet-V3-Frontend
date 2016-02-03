@@ -33,6 +33,10 @@ describe "AccountFormCtrl", ->
 
         getHistory: () ->
           then: () ->
+            then: () ->
+
+        txList:
+          fetchTxs: () ->
       }
 
   beforeEach ->

@@ -12,16 +12,17 @@ describe "Activity Feed directive", ->
     scope = $rootScope.$new()
 
     Wallet = $injector.get("Wallet")
-    Activity = $injector.get("Activity")
     MyWallet = $injector.get("MyWallet")
 
     MyWallet.wallet = {
-      hdwallet: {
+      hdwallet:
         accounts: [{ archived: false }, { archived: false }, { archived: true }]
-      }
       status: {didLoadTransactions: false}
+      txList:
+        subscribe: () -> (() ->)
     }
 
+    Activity = $injector.get("Activity")
     Activity.activity  = { activities: [], transactions: [], logs: [], limit: 8 }
 
     return

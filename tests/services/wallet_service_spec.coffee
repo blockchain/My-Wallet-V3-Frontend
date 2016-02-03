@@ -8,7 +8,7 @@ describe "walletServices", () ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector) ->
+    angular.mock.inject ($injector, $q) ->
       Wallet = $injector.get("Wallet")
       MyBlockchainSettings = $injector.get("MyBlockchainSettings")
       Alerts = $injector.get('Alerts')
@@ -32,9 +32,11 @@ describe "walletServices", () ->
         getNote: (-> )
         getHistory: () ->
           then: () ->
-
-      Wallet.my.fetchMoreTransactionsForAll = (success,error,allTransactionsLoaded) ->
-        success()
+            then: () ->
+        txList:
+          transactions: () ->
+            [{ result: 1, txType: 'received' }]
+          fetchTxs: () ->
 
       return
 
@@ -44,10 +46,6 @@ describe "walletServices", () ->
 
     it "should beep on new transaction",  inject((Wallet, $timeout, ngAudio) ->
       spyOn(ngAudio, "load").and.callThrough()
-
-      spyOn(Wallet, "updateTransactions").and.callFake(() ->
-        Wallet.transactions.push {}
-      )
 
       Wallet.monitor("on_tx")
       expect(ngAudio.load).toHaveBeenCalled()
@@ -333,94 +331,25 @@ describe "walletServices", () ->
         spyOn(Alerts, "displayReceivedBitcoin")
 
       it "should display a message if the user received bitcoin", ->
-        spyOn(Wallet, "updateTransactions").and.callFake () ->
-          Wallet.transactions.push {result: 1}
+        spyOn(Wallet.my.wallet.txList, 'transactions').and.callFake () ->
+          [{ result: 1, txType: 'received' }]
 
         Wallet.monitor("on_tx")
         expect(Alerts.displayReceivedBitcoin).toHaveBeenCalled()
 
       it "should not display a message if the user spent bitcoin", ->
-        spyOn(Wallet, "updateTransactions").and.callFake () ->
-          Wallet.transactions.push {result: -1}
+        spyOn(Wallet.my.wallet.txList, 'transactions').and.callFake () ->
+          [{ result: -1, txType: 'sent' }]
 
         Wallet.monitor("on_tx")
         expect(Alerts.displayReceivedBitcoin).not.toHaveBeenCalled()
 
       it "should not display a message if the user moved bitcoin between accounts", ->
-        spyOn(Wallet, "updateTransactions").and.callFake () ->
-          Wallet.transactions.push {result: 1, intraWallet: true}
+        spyOn(Wallet.my.wallet.txList, 'transactions').and.callFake () ->
+          [{ result: 0, txType: 'transferred' }]
 
         Wallet.monitor("on_tx")
         expect(Alerts.displayReceivedBitcoin).not.toHaveBeenCalled()
-
-  describe "fetchMoreTransactions()", ->
-    beforeEach ->
-      Wallet.my.fetchMoreTransactionsForAccount = () ->
-      Wallet.my.fetchMoreTransactionsForAll = () ->
-      Wallet.my.fetchMoreTransactionsForLegacyAddresses = (success, error, didFetchOldestTransaction) ->
-        if success?
-          success([])
-
-    it "should call the right method for individual accounts", ->
-      spyOn(Wallet.my, "fetchMoreTransactionsForAccount")
-      Wallet.fetchMoreTransactions(0)
-      expect(Wallet.my.fetchMoreTransactionsForAccount).toHaveBeenCalled()
-
-    it "should call the right method for all accounts combined", ->
-      spyOn(Wallet.my, "fetchMoreTransactionsForAll")
-      Wallet.fetchMoreTransactions("")
-      expect(Wallet.my.fetchMoreTransactionsForAll).toHaveBeenCalled()
-
-    it "should call the right method for imported addresses", ->
-      spyOn(Wallet.my, "fetchMoreTransactionsForLegacyAddresses").and.callFake((success, error, didFetchOldestTransaction) ->
-        didFetchOldestTransaction()
-      )
-      Wallet.fetchMoreTransactions("imported")
-      expect(Wallet.my.fetchMoreTransactionsForLegacyAddresses).toHaveBeenCalled()
-
-    it "should the caller know if there are no more transactions", ->
-      observer =
-        allTransactionsLoadedCallback: () ->
-
-      Wallet.my.fetchMoreTransactionsForLegacyAddresses = (success, error, didFetchOldestTransaction) ->
-        didFetchOldestTransaction()
-
-
-      spyOn(observer, "allTransactionsLoadedCallback")
-      Wallet.fetchMoreTransactions("imported", (()->), (()->), observer.allTransactionsLoadedCallback)
-
-      expect(observer.allTransactionsLoadedCallback).toHaveBeenCalled()
-
-    it "should call appendTransactions()", ->
-      spyOn(Wallet, "appendTransactions")
-      Wallet.fetchMoreTransactions("imported", (()->), (()->), (()->))
-      expect(Wallet.appendTransactions).toHaveBeenCalled()
-
-  describe "appendTransactions()", ->
-    it "should add a new transaction", ->
-      transaction1 = {hash: "123456890"}
-      Wallet.appendTransactions([transaction1])
-      expect(Wallet.transactions.pop().hash).toBe(transaction1.hash)
-
-    it "should ignore a known transaction", ->
-      transaction1 = {hash: "123456890", result: 0}
-      transaction2 = {hash: "123456890", result: 1}
-
-      Wallet.appendTransactions([transaction1])
-      Wallet.appendTransactions([transaction2]) # Same hash: should be ignored
-
-      lastTx = Wallet.transactions.pop()
-      expect(lastTx.result).not.toBe(transaction2.result)
-      expect(lastTx.result).toBe(transaction1.result)
-
-    it "should update an existing transaction if override flag is set", ->
-      transaction1 = {hash: "123456890", result: 0}
-      transaction2 = {hash: "123456890", result: 1}
-
-      Wallet.appendTransactions([transaction1])
-      Wallet.appendTransactions([transaction2], true)
-
-      expect(Wallet.transactions.pop().result).toBe(transaction2.result)
 
   describe "toggleDisplayCurrency()", ->
 

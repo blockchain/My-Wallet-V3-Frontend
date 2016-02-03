@@ -724,7 +724,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       .filter(o => !o.change && o.address !== input.address);
 
     let setLabel = (io) => (
-      io.label = io.label || wallet.my.wallet.getAddressBookLabel(io.address) || io.address
+      io.label = io.label || wallet.getAddressBookLabel(io.address) || io.address
     );
 
     setLabel(input);
@@ -741,8 +741,8 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   wallet.monitor = (event, data) => {
     if (event === 'on_tx') {
       wallet.beep();
-      let tx = wallet.txList.transactions()[0];
-      if (tx.result > 0 && !tx.intraWallet) {
+      let tx = wallet.my.wallet.txList.transactions()[0];
+      if (tx.result > 0 && tx.txType === 'received') {
         $translate('JUST_RECEIVED_BITCOIN').then((translation) => {
           Alerts.displayReceivedBitcoin(translation);
         });
