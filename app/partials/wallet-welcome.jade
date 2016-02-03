@@ -30,8 +30,8 @@
         span.type-h5 Friendlier / 
         span.type-h5 Easier
       .flex-justify.flex-center.flex-row
-        button Login
-        button Sign Up
+        button(ui-sref="public.login-no-uid") Login
+        button(ui-sref="public.signup") Sign Up
   .welcome-wrapper
     scroll-in-view(img="new-wallet-hero.png" shadow="true")  
   scroll-in-view.blocket(img="blocket.png")
@@ -46,22 +46,22 @@
       img(src="img/square.png")
       div.background
       div.donut
-      p.type-h4 Robust security center
-    div
-      img(src="img/square.png")
-      div.background
-      div.donut
-      p.type-h4 Simplified back-up and recovery
-    div
-      img(src="img/square.png")
-      div.background
-      div.donut
       p.type-h4 Revamped design and user experience
     div
       img(src="img/square.png")
       div.background
       div.donut
       p.type-h4 Customized fund management
+    div
+      img(src="img/square.png")
+      div.background
+      div.donut
+      p.type-h4 Robust security center
+    div
+      img(src="img/square.png")
+      div.background
+      div.donut
+      p.type-h4 Simplified back-up and recovery
   .welcome-wrapper.android
     .flex-row.flex-justify.flex-center
       scroll-in-view.col-md-6(img="android-feature.jpg")

@@ -165,8 +165,8 @@
       }
     }
     @media (max-width: 786px) {
-      > div {
-        flex-direction: none;
+      .flex-row {
+        flex-direction: column !important;
       }
     }
   }
@@ -240,23 +240,23 @@
       }
     }
     &:nth-child(1) {
-     .background {
-        background-image: url('../img/security-upgrade-welcome.png');
-     } 
+      .background {
+        background-image: url('../img/new-design-welcome.png');
+      }
     }
     &:nth-child(2) {
       .background {
-        background-image: url('../img/recover-welcome.png'); 
+        background-image: url('../img/fund-management-welcome.png'); 
       }
     }
     &:nth-child(3) {
       .background {
-        background-image: url('../img/new-design-welcome.png');
+         background-image: url('../img/security-upgrade-welcome.png');
       } 
     }
     &:nth-child(4) {
       .background {
-        background-image: url('../img/fund-management-welcome.png'); 
+        background-image: url('../img/recover-welcome.png'); 
       }
     }
     &:hover {
