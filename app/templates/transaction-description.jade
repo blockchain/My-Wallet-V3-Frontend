@@ -10,8 +10,9 @@
             outgoing_tx : tx.txType === 'sent',\
             local_tx    : tx.txType === 'transfer'\
           }"
-          translate="{{ getAction(tx.txType) }}")
-        i.ti-notepad.aaa.plm(ng-show="tx.note")
+          translate="{{ getAction(tx.txType) }}").prm
+        i.ti-notepad.aaa.plm(ng-show="tx.note").prm
+        span.label.label-default(translate="WATCH_ONLY", ng-show="((tx.txType === 'received' || tx.txType === 'transfer') && tx.toWatchOnly) ||  (tx.txType === 'sent' && tx.fromWatchOnly)")
     .hidden-xs.hidden-sm.destination.em-400.col-md-8(
       ng-class="tx.toggled ? 'dark-grey' : 'aaa'")
       .flex.row
