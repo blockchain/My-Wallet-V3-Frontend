@@ -34,8 +34,8 @@ function RequestCtrl($scope, Wallet, Alerts, currency, $uibModalInstance, $log, 
 
     if (!address.archived) {
       $scope.destinations.push(angular.copy(address));
-      if ((destination != null) && (destination.address != null) && destination.address === addr.address) {
-        $scope.fields.to = addr;
+      if ((destination != null) && (destination.address != null) && destination.address === address.address) {
+        $scope.fields.to = address;
       }
     }
   }
