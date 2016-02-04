@@ -147,6 +147,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
             console.log('%cThis browser feature is intended for developers. If someone told you to copy-paste something here, it is a scam and will give them access to your money!', 'font-size: 14pt');
             wallet.status.didLoadTransactions = true;
             wallet.status.didLoadBalances = true;
+            $rootScope.$safeApply();
           };
           wallet.my.wallet.getHistory()
             .then(() => wallet.my.wallet.txList.fetchTxs())
