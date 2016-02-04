@@ -67,6 +67,7 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
     if (Wallet.status.isLoggedIn && (Wallet.store.resetLogoutTimeout != null)) {
       Wallet.store.resetLogoutTimeout();
     }
+    $rootScope.outOfApp = toState.name === 'welcome';
   });
 
   $scope.$watch("status.isLoggedIn", () => {
