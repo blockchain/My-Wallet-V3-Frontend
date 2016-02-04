@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SendCtrl", SendCtrl);
 
-function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal, format) {
+function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal, format, MyWalletHelpers) {
 
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.accounts = Wallet.accounts;
@@ -202,9 +202,16 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
       Wallet.saveActivity(0);
 
-      $translate('BITCOIN_SENT').then(translation => {
+      let message = 'BITCOIN_SENT';
+
+      if(MyWalletHelpers.tor()) {
+        message = 'BITCOIN_SENT_TOR';
+      }
+
+      $translate(message).then(translation => {
         Alerts.displaySentBitcoin(translation);
       });
+
 
     };
 

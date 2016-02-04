@@ -22,6 +22,7 @@ describe "SendCtrl", ->
       Wallet = $injector.get("Wallet")
       MyWalletPayment = $injector.get("MyWalletPayment")
       currency = $injector.get('currency')
+      MyWalletHelpers = $injector.get("MyWalletHelpers")
 
       MyWallet.wallet =
         setNote: (-> )
@@ -402,7 +403,15 @@ describe "SendCtrl", ->
           spyOn(Alerts, "displaySentBitcoin").and.callThrough()
           scope.send()
           scope.$digest()
-          expect(Alerts.displaySentBitcoin).toHaveBeenCalled()
+          expect(Alerts.displaySentBitcoin).toHaveBeenCalledWith("BITCOIN_SENT")
+        )
+
+        it "should tell the user to refresh with TOR", inject((Alerts, MyWalletHelpers) ->
+          MyWalletHelpers.tor = () -> true
+          spyOn(Alerts, "displaySentBitcoin").and.callThrough()
+          scope.send()
+          scope.$digest()
+          expect(Alerts.displaySentBitcoin).toHaveBeenCalledWith("BITCOIN_SENT_TOR")
         )
 
         it "should show account transactions", inject(($state) ->
