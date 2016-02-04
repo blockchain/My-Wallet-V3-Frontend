@@ -21,8 +21,9 @@ angular.module('walletApp').directive('transactionDescription', ($translate, $ro
       scope.getLabels = (tx) ->
         return if !tx or !tx.processedInputs or !tx.processedOutputs
         formatted = Wallet.formatTransactionCoins(tx)
-
-        outputsLabel = formatted.outputs[0].label
+        outputsLabel = ""
+        if formatted.outputs && formatted.outputs.length > 0
+          outputsLabel = formatted.outputs[0].label
         if formatted.outputs.length > 1
           outputsLabel = $translate.instant('RECIPIENTS', { n: formatted.outputs.length })
 
