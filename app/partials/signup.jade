@@ -49,13 +49,13 @@ div
           div(ng-show="signupForm.confirmation.$touched")
             p(ng-show="signupForm.confirmation.$error.isValid" translate="NO_MATCH")
     .form-group.flex-center.mtm
-      .col-sm-4
+      .col-sm-4.accept-checkbox
         input#agreement_accept.pull-right(
           name="agreement"
           type="checkbox"
           ng-model="fields.acceptedAgreement"
           required)
-      label.em-300.col-sm-8
+      label.em-300.col-sm-8.accept-label
         | I have read and agree to the 
         a(href="https://blockchain.info/terms_of_service", translate="TERMS_OF_SERVICE", target="_blank")
     .flex-center.flex-end.mbl

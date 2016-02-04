@@ -8,7 +8,7 @@
     .flex-center.mbm
       i.title.aaa(ng-class="dyk.icon")
       p.h3.em-300.mll(ng-class="dyk.type.toLowerCase()") {{ dyk.title | translate }}
-    p.text.em-300.line-height
+    p.text.em-300
       | {{ dyk.text | translate }}
       span(ng-if="dyk.state")
         a.mls(ui-sref="{{ dyk.state }}") {{ dyk.linkText | translate }}

@@ -1,4 +1,5 @@
 .edit-mobile(ng-class="{'offset-flag': fullWidth}")
+  p(translate="ENABLE_2FA_ENTER_MOBILE")
   form(ng-class="{'width-100 flex' : fullWidth}" role="form" name="mobileForm" ng-submit="changeMobile()")
     span(ng-hide="status.disableChangeBecause2FA()")
       bc-phone-number(
@@ -18,7 +19,6 @@
         ui-ladda="status.busy"
         ng-disabled="mobileForm.mobile.$invalid || !numberChanged() || status.disableChangeBecause2FA()" 
         ladda-translate="SAVE" 
-        data-style="expand-left"
       )
       button.button-muted.btn-small(
         type="button"

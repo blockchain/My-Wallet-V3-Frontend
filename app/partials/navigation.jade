@@ -12,8 +12,8 @@
     .navbar-collapse.collapse(ng-class="{'in bg-blue' : !navCollapsed}", ng-click="navCollapsed=true")
       ul.nav.navbar-nav.navbar-right(ng-show="status.isLoggedIn")
         li.item.mrl(ng-show="settings.btcCurrency")
-          a.flex-important.flex-column(ng-click="openBCmarkets()")
-            span.type-sm
+          a(ng-click="openBCmarkets()")
+            span
               | 1 {{ settings.btcCurrency.code }} =&nbsp;
               fiat(btc="settings.btcCurrency.conversion")
         li.dropdown.item.hidden-xs(uib-dropdown)

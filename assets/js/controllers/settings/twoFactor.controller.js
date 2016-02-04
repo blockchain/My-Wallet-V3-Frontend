@@ -18,6 +18,10 @@ function TwoFactorCtrl($scope, Wallet, Alerts, $uibModalInstance, $translate, $t
     step: 1
   };
 
+  if (Wallet.user.internationalMobileNumber.length > 4 && !Wallet.user.isMobileVerified) {
+    $scope.mobileNumber.step = 2;
+  }
+
   $scope.errors = {};
   $scope.status = {};
   $scope.alerts = [];
@@ -106,6 +110,7 @@ function TwoFactorCtrl($scope, Wallet, Alerts, $uibModalInstance, $translate, $t
 
   $scope.goToStep = (step) => {
     if (steps.indexOf(step) < 0) return;
+    $scope.$root.$safeApply($scope);
     $scope.step = step;
   };
 

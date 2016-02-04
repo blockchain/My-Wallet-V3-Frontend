@@ -50,6 +50,10 @@ function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wall
     );
   };
 
+  $scope.getMnemonicLength = () => {
+    $scope.isValidMnemonicLength = $scope.fields.mnemonic.split(' ').length === 12
+  }
+
   $scope.nextStep = () => {
     $scope.currentStep++;
     $scope.fields.confirmation = ""

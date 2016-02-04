@@ -10,12 +10,13 @@
       .security-red.mbl.em-400.flex-center
         i.ti-hand-stop.mrm.h3.mvn.hidden-xs
         span(translate="RECOVER_FUNDS_WARNING")
-      .form-group(ng-class="{'has-error': recoveryForm.mnemonic.$error.isValid && recoveryForm.mnemonic.$touched}")
+      .form-group(ng-class="{'has-error': recoveryForm.mnemonic.$error.isValid && isValidMnemonicLength}")
         label(translate="YOUR_REC_PASS")
         p(translate="YOUR_REC_PASS_EXPLAIN")
         input.form-control(
           type="text"
           name="mnemonic"
+          ng-keyup="getMnemonicLength()"
           ng-model="fields.mnemonic"
           is-valid="isValidMnemonic(fields.mnemonic)"
           required)
@@ -29,7 +30,10 @@
           autofocus
           required)
         span.help-block 
-          p {{ errors.email }}
+          span.help-block
+            div(ng-show="recoveryForm.email.$touched")
+              p(ng-show="recoveryForm.email.$error.required" translate="EMAIL_ADDRESS_REQUIRED")
+              p(ng-show="recoveryForm.email.$error.email" translate="EMAIL_ADDRESS_INVALID")
       .form-group(ng-class="{'has-error': recoveryForm.password.$error.minEntropy && recoveryForm.password.$touched}")
         label.em-500(translate="NEW_PASSWORD")
         input.form-control(
@@ -41,7 +45,10 @@
           min-entropy="25"
           required)
         password-entropy.help-block(password="fields.password")
-        span.help-block {{ errors.password }}
+        span.help-block
+          div(ng-show="recoveryForm.password.$touched")
+            p(ng-show="recoveryForm.password.$error.minEntropy && fields.password != undefined" translate="TOO_WEAK")
+            p(ng-show="recoveryForm.password.$error.maxlength" translate="TOO_LONG")
       .form-group(ng-class="{'has-error': recoveryForm.confirmation.$error.isValid && recoveryForm.confirmation.$touched}")
         label.em-500(translate="CONFIRM_PASSWORD")
         input.form-control(
@@ -51,7 +58,8 @@
           is-valid="fields.confirmation === fields.password"
           required)
         span.help-block 
-          p {{ errors.confirmation }}
+          div(ng-show="recoveryForm.confirmation.$touched")
+            p(ng-show="recoveryForm.confirmation.$error.isValid" translate="NO_MATCH")
     .flex-center.flex-end.mvl
       img(ng-show="working" src="img/spinner.gif")
       div(ng-switch-when="1")
