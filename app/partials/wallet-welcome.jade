@@ -1,71 +1,53 @@
 .welcome-page
-  .navbar.navbar-default.navbar-inverse.bc-header(role='navigation')
-    .container-fluid
-      .navbar-header.flex-between
-        a(ui-sref="wallet.common.home") 
-          img#logo(src="img/logo-updated.png",alt="Blockchain")
-        button.navbar-toggle(type="button", ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
-          span.sr-only Toggle navigation
-          span.ti-menu.h4.white
-      .navbar-collapse.collapse(ng-class="{'in bg-blue' : !navCollapsed}", ng-click="navCollapsed=true")
-        ul.nav.navbar-nav.navbar-right
-          li.item
-            a.pam(href="https://www.blockchain.info", translate="EXPLORER")
-          li.item
-            a.pam(href="https://www.blockchain.info/charts", translate="CHARTS")
-          li.item
-            a.pam(href="https://www.blockchain.info/api", translate="API")
-          li.item.active
-            a.pam(href="#", translate="WALLET")
-          li.item
-            a.pam(href="https://blockchain.com/about", translate="ABOUT")
-          li.item
-            a.pam(href="https://blockchain.zendesk.com/", translate="SUPPORT")
+  public-header
   .intro
     .flex-justify.flex-center.flex-column
       h4 It's Here
       h1 The New Blockchain Wallet
       div
-        span.type-h5 Safer / 
-        span.type-h5 Friendlier / 
-        span.type-h5 Easier
+        span.type-h5(translate="SAFER")
+        span.type-h5  / 
+        span.type-h5(translate="FRIENDLIER")
+        span.type-h5  / 
+        span.type-h5(translate="EASIER")
       .flex-justify.flex-center.flex-row
-        button(ui-sref="public.login-no-uid") Login
-        button(ui-sref="public.signup") Sign Up
+        button(ui-sref="public.login-no-uid" translate="LOGIN")
+        button(ui-sref="public.signup" translate="SIGN_UP")
   .welcome-wrapper
     scroll-in-view(img="img/new-wallet-hero.png" shadow="true")  
   scroll-in-view.blocket(img="img/blocket.png")
-  h3 The most advanced Blockchain wallet experience is here, now even more so.
+  h3(translate="MOST_ADVANCED")
   scroll-in-view.ios(img="img/ios-feature.png", transactions="true")
   h3.type-h5
     a(href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309?mt=8" target="_blank").type-h5 iOS &bull;
     a(href="https://play.google.com/store/apps/details?id=piuk.blockchain.android&hl=en" target="_blank").type-h5  Android &bull;
-    a(ui-sref="public.login-no-uid").type-h5  Web
+    a(ui-sref="public.login-no-uid" translate="WEB").type-h5  
   div.squares
     div
       img(src="img/square.png")
       div.background
       div.donut
-      p.type-h4 Revamped design and user experience
+      p.type-h4(translate="UPGRADE_SECURITY_CENTER")
     div
       img(src="img/square.png")
       div.background
       div.donut
-      p.type-h4 Customized fund management
+      p.type-h4(translate="UPGRADE_BACKUP")
     div
       img(src="img/square.png")
       div.background
       div.donut
-      p.type-h4 Robust security center
+      p.type-h4(translate="REVAMPED")
     div
       img(src="img/square.png")
       div.background
       div.donut
-      p.type-h4 Simplified back-up and recovery
+      p.type-h4(translate="UPGRADE_FUND_MANAGEMENT")
   .welcome-wrapper.android
     .flex-row.flex-justify.flex-center
       scroll-in-view.col-md-6(img="img/android-feature.jpg")
       .flex-column
-        h2 Sending and receiving Bitcoin has never been so easy
-        h3 We've taken our time to build and test the most user-friendly interface for our wallet.
-  img.footer-hero(src="img/footer-hero.jpg")
+        h2(translate="SENDING")
+        h3(translate="BUILD_TEST")
+  a(ui-sref="public.login-no-uid")
+    img.footer-hero(src="img/footer-hero.jpg")
