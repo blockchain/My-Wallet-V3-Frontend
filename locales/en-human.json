@@ -550,5 +550,16 @@
   "SEARCH" : "Search",
   "BALANCES" : "Balances",
   "MUST_SELECT_ORIGIN" : "Must select where to send from",
-  "ERR_ENABLE_IP_RESTRICT" : "You must add at least one IP address to the whitelist to enable Login IP Restriction"
+  "ERR_ENABLE_IP_RESTRICT" : "You must add at least one IP address to the whitelist to enable Login IP Restriction",
+  "ITS_HERE": "It's Here",
+  "NEW_WALLET": "The New Blockchain Wallet",
+  "SAFER": "Safer",
+  "FRIENDLIER": "Friendlier",
+  "EASIER": "Easier",
+  "SIGN_UP": "Sign Up",
+  "MOST_ADVANCED": "The most advanced Blockchain wallet experience, now even more so.",
+  "WEB": "Web",
+  "REVAMPED": "Revamped design and user experience",
+  "SENDING": "Sending and receiving Bitcoin has never been so easy",
+  "BUILD_TEST": "We've taken our time to build and test the most user-friendly interface for our wallet."
 }

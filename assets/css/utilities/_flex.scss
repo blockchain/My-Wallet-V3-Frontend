@@ -1,7 +1,7 @@
 %flex {
   display: flex;
 }
-.flex, .flex-end, .flex-between, .flex-start, .flex-column, .flex-center, .flex-align-start, .flex-align-end, .flex-baseline {
+.flex, .flex-end, .flex-between, .flex-start, .flex-column, .flex-center, .flex-align-start, .flex-align-end, .flex-baseline, .flex-row {
   @extend %flex;
 }
 .flex-between { justify-content: space-between; }
@@ -15,6 +15,7 @@
 .flex-baseline { align-items: baseline; }
 .flex-wrap { flex-wrap: wrap; }
 .flex-important { display: flex !important; }
+.flex-row { flex-direction: row; }
 
 @for $i from 1 through 12 {
   .flex-#{$i} {

@@ -45,9 +45,14 @@
 @import 'modules/two-factor';
 @import 'modules/confirm-recovery-phrase';
 @import 'modules/upgrade';
+@import 'modules/welcome';
 
 //override bootstrap
 @import 'utilities/bs_overrides';
+
+* {
+  outline: none;
+}
 
 html,body {
   font-size: small;
@@ -57,6 +62,12 @@ html,body {
   height: 100%;
   width: 100%;
   position: fixed; //need this for scrolling on safari mobile
+  &.not-fixed {
+    position: relative;
+    body {
+      position: relative;
+    }
+  }
 }
 
 .hide { display: none; }
