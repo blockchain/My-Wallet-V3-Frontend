@@ -211,7 +211,6 @@
   "ADVANCED_OPTIONS":"Geavanceerde opties",
   "SIGN_MESSAGE_EXPLAIN":"Bewijzen dat hij eigenaar van een adres door de ondertekening van een bericht van dit adres",
   "SIGN_MESSAGE":"Sign Message",
-  "WATCH_ONLY":"Horloge alleen",
   "DISPLAY_QR":"QR-Code weergeven",
   "WATCH_ONLY_EXPLAIN":"U zal niet zitten kundig voor toegang tot alle fondsen verzenden naar dit adres zonder de persoonlijke sleutel. Ga verder met de nodige voorzichtigheid.",
   "WARNING":"Waarschuwing",
