@@ -1,5 +1,6 @@
 describe "TransactionCtrl", ->
   scope = undefined
+  stateMock = undefined
 
   beforeEach angular.mock.module("walletApp")
 
@@ -15,171 +16,43 @@ describe "TransactionCtrl", ->
           {address: "some_legacy_address_without_label", label: null}
         ]
 
-      Wallet.transactions = [{
-        hash: "aaaa",
-        from: {account: null, externalAddresses: {addressWithLargestOutput: "1D2YzLr5qvrwMSm8onYbns5BLJ9jwzPHcQ"}}
-        to: {accounts: []}
-      }]
+      Wallet.my.wallet =
+        txList:
+          transactions: () -> [
+            {
+              hash: 'aaaa',
+              processedInputs: [{ change: false, address: 'Old' }],
+              processedOutputs: [{ change: false, address: 'Savings' }, { change: true, address: '1asdf' }]
+            }
+          ]
+          transaction: () ->
+            Wallet.my.wallet.txList.transactions()[0]
 
       spyOn(Wallet, "getAddressBookLabel").and.returnValue(null)
+
+      stateMock =
+        go: () ->
 
       scope = $rootScope.$new()
 
       $controller "TransactionCtrl",
         $scope: scope,
+        $state: stateMock,
         $stateParams: {hash: "aaaa"}
 
       scope.$digest()
 
-      return
-
-    return
-
-  it "should have access to transactions",  inject(() ->
-    expect(scope.transactions).toBeDefined()
-  )
-
-  it "should have access to accounts",  inject(() ->
-    expect(scope.accounts()).toBeDefined()
-  )
-
-  it "should have access to address book",  inject(() ->
-    pending()
-    expect(scope.addressBook).toBeDefined()
-  )
-
   it "should show the correct transaction", ->
     expect(scope.transaction.hash).toBe("aaaa")
 
-  describe "from", ->
-    it "should show the from address", ->
-      expect(scope.from).toBe("1D2YzLr5qvrwMSm8onYbns5BLJ9jwzPHcQ")
+  it "should be able to go back", ->
+    spyOn(stateMock, 'go')
+    scope.backToTransactions()
+    expect(stateMock.go).toHaveBeenCalled()
 
-    it "should recognize a labelled wallet address", ->
-      scope.transaction =
-        hash: "123"
-        from:
-          account: null
-          legacyAddresses: [{address: "some_legacy_address"}]
+  it "should get the formatted input", ->
+    expect(scope.input.label).toEqual('Old')
 
-        to:
-          accounts: []
-          legacyAddresses: []
-          external:
-            addressWithLargestOutput: "abc"
-
-
-      scope.$digest()
-
-      expect(scope.from).toContain("Old")
-
-    it "should add 'you' to an unlabelled wallet address", ->
-      scope.transaction =
-        hash: "123"
-        from:
-          account: null
-          legacyAddresses: [{address: "some_legacy_address_without_label"}]
-
-        to:
-          accounts: []
-          legacyAddresses: []
-          external:
-            addressWithLargestOutput: "abc"
-
-      scope.$digest()
-
-      expect(scope.from).toContain("you")
-
-    it "should show the account", inject((Wallet) ->
-      scope.transaction =
-        hash: "123"
-        from:
-          account:
-            index: 0
-          legacyAddresses: []
-        to:
-          accounts: []
-          legacyAddresses: []
-          external:
-            addressWithLargestOutput: "abc"
-
-      scope.$digest()
-
-      expect(scope.from).toBe("Savings")
-    )
-
-  describe "to", ->
-    it "should recognize a labelled wallet address", ->
-      scope.transaction =
-        hash: "123"
-        from:
-          account: null
-          legacyAddresses: []
-          external:
-            addressWithLargestOutput: "abc"
-        to:
-          accounts: []
-          legacyAddresses: [{address: "some_legacy_address"}]
-
-      scope.$digest()
-
-      expect(scope.destinations[0].address).toContain("Old")
-
-    it "should add 'you' to an unlabelled wallet address", ->
-      scope.transaction =
-        hash: "123"
-        from:
-          account: null
-          legacyAddresses: []
-          external:
-            addressWithLargestOutput: "abc"
-        to:
-          accounts: []
-          legacyAddresses: [{address: "some_legacy_address_without_label"}]
-
-
-      scope.$digest()
-
-      expect(scope.destinations[0].you).toContain("you")
-
-    it "should create a multiline with both 'to' addresses and each amount", ->
-      scope.transaction =
-        hash: "123"
-        from:
-          account: null
-          legacyAddresses: []
-          external:
-            addressWithLargestOutput: "abc"
-        to:
-          accounts: []
-          externalAddresses: [
-            {address: "external address 1", amount: 50000},
-            {address: "external address 2", amount: 70000}
-          ]
-      scope.$digest()
-      expect(scope.destinations[0].amount).toContain("0.0005 BTC")
-      expect(scope.destinations[1].amount).toContain("0.0007 BTC")
-      expect(scope.destinations[0].address).toContain("address 1")
-      expect(scope.destinations[1].address).toContain("address 2")
-
-    it "should show the account", inject((Wallet) ->
-      scope.transaction =
-        hash: "123"
-        from:
-          account: null
-          legacyAddresses: []
-          external:
-            addressWithLargestOutput: "abc"
-        to:
-          accounts:[
-            {
-              index: 0
-              label: "Primary"
-            }
-          ]
-          legacyAddresses: []
-
-      scope.$digest()
-
-      expect(scope.destinations[0].address).toBe("Savings")
-    )
+  it "should get the formatted destinations", ->
+    expect(scope.destinations.length).toEqual(1)
+    expect(scope.destinations[0].label).toEqual('Savings')

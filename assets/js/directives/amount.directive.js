@@ -8,9 +8,9 @@ amount.$inject = ['Wallet', 'currency'];
 function amount(Wallet, currency) {
   const directive = {
     restrict: 'E',
-    replace: 'false',
+    replace: false,
     scope: {
-      transaction: '=transaction'
+      tx: '=transaction'
     },
     templateUrl: 'templates/amount.jade',
     link: link

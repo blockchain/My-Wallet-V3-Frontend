@@ -2,9 +2,11 @@ angular
   .module('activity', [])
   .factory('Activity', Activity);
 
-Activity.$inject = ['$rootScope', 'Wallet'];
+Activity.$inject = ['$rootScope', '$timeout', 'Wallet', 'MyWallet'];
 
-function Activity($rootScope, Wallet) {
+function Activity($rootScope, $timeout, Wallet, MyWallet) {
+  var txSub;
+
   const activity = {
     activities: [],
     transactions: [],
@@ -15,8 +17,17 @@ function Activity($rootScope, Wallet) {
     updateAllActivities: updateAllActivities
   };
 
+  setTxSub();
   $rootScope.$on('updateActivityFeed', activity.updateAllActivities);
   return activity;
+
+  // Wait for wallet to be defined before subscribing to tx updates
+  function setTxSub() {
+    let w = MyWallet.wallet;
+    if (txSub) { return; }
+    else if (w) { txSub = w.txList.subscribe(updateTxActivities); }
+    else { $timeout(setTxSub, 250); }
+  }
 
   function updateAllActivities() {
     activity.updateTxActivities();
@@ -24,7 +35,7 @@ function Activity($rootScope, Wallet) {
   }
 
   function updateTxActivities() {
-    activity.transactions = Wallet.transactions
+    activity.transactions = MyWallet.wallet.txList.transactions()
       .slice(0, activity.limit)
       .map(factory.bind(null, 0));
     combineAll();
@@ -54,15 +65,13 @@ function Activity($rootScope, Wallet) {
   }
 
   function factory(type, obj) {
-    let a = {
-      type: type
-    };
+    let a = { type: type };
     switch (type) {
       case 0:
         a.title = 'TRANSACTION';
         a.icon = 'ti-layout-list-post';
-        a.time = obj.txTime * 1000;
-        a.message = getTxMessage(obj);
+        a.time = obj.time * 1000;
+        a.message = obj.txType.toUpperCase();
         a.result = Math.abs(obj.result);
         break;
       case 4:
@@ -72,12 +81,6 @@ function Activity($rootScope, Wallet) {
         a.message = capitalize(obj.action);
     }
     return a;
-  }
-
-  function getTxMessage(tx) {
-    if (tx.intraWallet) return 'TRANSFERRED';
-    else if (tx.result < 0) return 'SENT';
-    else return 'RECEIVED';
   }
 
   function capitalize(str) {

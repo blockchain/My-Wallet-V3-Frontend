@@ -4,7 +4,7 @@ describe "TransactionsCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller) ->
+    angular.mock.inject ($injector, $rootScope, $controller, $q) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
 
@@ -16,6 +16,12 @@ describe "TransactionsCtrl", ->
             { label: "Spending", index: 2, archived: false, balance: 0 }
             { label: "Partay", index: 3, archived: true, balance: 50 }
           ]
+        txList:
+          subscribe: () -> (() -> )
+          transactions: () ->
+            [{ result: 1, txType: 'received' }]
+          fetchTxs: () ->
+            $q.resolve(1)
 
       Wallet.status =
         isLoggedIn: true
@@ -41,19 +47,13 @@ describe "TransactionsCtrl", ->
     )
 
     it "should be able to fetch more transactions", inject((Wallet) ->
-      spyOn(Wallet, "fetchMoreTransactions")
+      spyOn(Wallet.my.wallet.txList, "fetchTxs").and.callThrough()
       scope.nextPage()
-      expect(Wallet.fetchMoreTransactions).toHaveBeenCalled()
+      expect(Wallet.my.wallet.txList.fetchTxs).toHaveBeenCalled()
     )
 
     it "should receive a new transaction from mock after 3 seconds on account 1",  ->
       pending() # Not sure how to test this with stateParams
-
-    it "should fetch more transcations when a new account is selected", ->
-      spyOn(scope, "nextPage")
-      scope.selectedAcountIndex = 2
-      scope.$digest()
-      expect(scope.nextPage).toHaveBeenCalled()
 
     it "should have 4 transaction types", ->
       expect(scope.filterTypes.length).toEqual(4)
@@ -67,8 +67,3 @@ describe "TransactionsCtrl", ->
       spyOn(scope, "filterSearch")
       scope.filterSearch(1, "test")
       expect(scope.filterSearch).toHaveBeenCalled()
-
-    it "can toggle a transaction's details", ->
-      spyOn(scope, "toggleTransaction")
-      scope.toggleTransaction(scope.transactions[0])
-      expect(scope.toggleTransaction).toHaveBeenCalled()

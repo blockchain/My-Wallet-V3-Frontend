@@ -24,10 +24,7 @@ function activityFeed($http, Wallet, Activity) {
     });
 
     scope.$watch('status.didLoadTransactions', (didLoad) => {
-      if (didLoad) {
-        Activity.updateTxActivities();
-        scope.loading = false;
-      }
+      if (didLoad) scope.loading = false;
     });
 
     scope.$watch('status.didLoadSettings', (didLoad) => {

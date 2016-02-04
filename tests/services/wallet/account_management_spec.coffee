@@ -26,6 +26,11 @@ describe "walletServices", () ->
         newAccount: (label) -> accounts.push({ label: label })
         getHistory: () ->
           then: () ->
+            then: () ->
+        txList:
+          transactions: () ->
+            [{ result: 1, txType: 'received' }]
+          fetchTxs: () ->
       }
 
       return

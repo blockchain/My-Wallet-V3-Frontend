@@ -7,7 +7,6 @@ function SettingsSecurityCenterCtrl($scope, Wallet, SecurityCenter, filterFilter
   $scope.settings = Wallet.settings;
   $scope.user = Wallet.user;
   $scope.status = Wallet.status;
-  $scope.transactions = Wallet.transactions;
   $scope.display = {
     action: null,
     editingEmail: false
