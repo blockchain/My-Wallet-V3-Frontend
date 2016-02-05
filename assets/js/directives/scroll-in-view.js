@@ -23,21 +23,24 @@ function scrollInView($window, $timeout) {
 
     angular.element(document).ready(() => {
 
-      let itemTop = elem[0].getBoundingClientRect().top;
+      $timeout(() => {
+        let itemTop = elem[0].getBoundingClientRect().top;
+        console.log(itemTop)
 
-      scope.scroll = () => {
-        let windowBottom = $window.pageYOffset + $window.innerHeight;
+        scope.scroll = () => {
+          let windowBottom = $window.pageYOffset + $window.innerHeight;
 
-        if ( windowBottom > itemTop ) {
-          scope.isActive = true;
-        } else {
-          scope.isActive = false;
+          if ( windowBottom > itemTop ) {
+            scope.isActive = true;
+          } else {
+            scope.isActive = false;
+          }
+          scope.$apply()
         }
-        scope.$apply()
-      }
 
-      angular.element($window).bind('scroll', scope.scroll)
-      scope.scroll()
+        angular.element($window).bind('scroll', scope.scroll)
+        scope.scroll()
+      }, 10);
     });
 
   }
