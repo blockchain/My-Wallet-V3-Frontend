@@ -96,36 +96,38 @@
     }
     &.active {
       .tx {
+        @include transition(top 1s);
         &:nth-child(1) {
           top: 105px;
-          left: 290px;
+          left: 310px;
         }
         &:nth-child(2) {
-          top: 128px;
-          left: 255px;
+          top: 125px;
+          left: 271px;
         }
         &:nth-child(3) {
-          top: 149px;
-          left: 215px;
+          top: 150px;
+          left: 227px;
         }
         &:nth-child(4) {
           top: 172px;
-          left: 175px;
+          left: 187px;
         }
         &:nth-child(5) {
           top: 195px;
-          left: 137px;
+          left: 148px;
         }
         &:nth-child(6) {
-          top: 216px;
-          left: 95px;
+          top: 215px;
+          left: 120px;
+          width: 30%;
         }
       }
     }
     .txs {
       position: static;
       .tx {
-        @include transition(top 1s);
+        transform: trnaslateZ(0px);
         @include delay(1, 6, 10);
         position: absolute;
         width: 31%;
