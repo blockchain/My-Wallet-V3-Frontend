@@ -113,7 +113,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
 
     let payment = new Wallet.payment();
     payment
-      .from($scope.fields.address)
+      .from($scope.address.address)
       .to($scope.fields.account.index)
       .sweep().build();
 
