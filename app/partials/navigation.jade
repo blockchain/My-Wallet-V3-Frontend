@@ -5,15 +5,15 @@
         button.navbar-toggle.mvn(type="button", ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
           span.sr-only Toggle navigation
           span.ti-angle-down.white
-        a(ui-sref="wallet.common.home") 
+        a.navbar-brand(ui-sref="wallet.common.home") 
           img#logo(src="img/logo-updated.png",alt="Blockchain")
       a#wallet-nav-toggle(title="Wallet Navigation Menu", ng-click="toggleMenu()")
         span.ti-menu.white
     .navbar-collapse.collapse(ng-class="{'in bg-blue' : !navCollapsed}", ng-click="navCollapsed=true")
       ul.nav.navbar-nav.navbar-right(ng-show="status.isLoggedIn")
-        li.item.mrl(ng-show="settings.btcCurrency")
-          a(ng-click="openBCmarkets()")
-            span
+        li.item(ng-show="settings.btcCurrency")
+          a.flex-important.flex-column(ng-click="openBCmarkets()")
+            span.type-sm
               | 1 {{ settings.btcCurrency.code }} =&nbsp;
               fiat(btc="settings.btcCurrency.conversion")
         li.dropdown.item.hidden-xs(uib-dropdown)
@@ -22,23 +22,23 @@
             i.ti-angle-down.mlm
           ul.uib-dropdown-menu(role='menu')
             li
-              a(href="https://www.blockchain.info/wallet/bitcoin-faq", target="_blank", translate="WHATS_BITCOIN")
-            li
-              a(href="https://www.blockchain.info/", target="_blank", translate="BLOCKCHAIN_INFO")
+              a(href="https://www.blockchain.info/", target="_blank", translate="HOME")
             li
               a(href="https://www.blockchain.info/charts", target="_blank",translate="CHARTS")
+            li
+              a(href="https://www.blockchain.info/stats", target="_blank",translate="STATS")
             li
               a(href="https://markets.blockchain.info/", target="_blank", translate="MARKETS")
             li
               a(href="https://www.blockchain.info/api", target="_blank", translate="API")
         li.item.visible-xs
-          a(href="https://www.blockchain.info/wallet/bitcoin-faq", target="_blank",translate="WHATS_BITCOIN")
-        li.item.visible-xs
-          a(href="https://www.blockchain.info/", target="_blank",translate="BLOCKCHAIN_INFO")
-        li.item.visible-xs
-          a(href="https://www.blockchain.info/api",target="_blank", translate="API")
+          a(href="https://www.blockchain.info/", target="_blank", translate="HOME")
         li.item.visible-xs
           a(href="https://www.blockchain.info/charts", target="_blank",translate="CHARTS")
+        li.item.visible-xs
+          a(href="https://www.blockchain.info/stats", target="_blank",translate="STATS")
+        li.item.visible-xs
+          a(href="https://www.blockchain.info/api",target="_blank", translate="API")
         li.item.visible-xs
           a(href="https://markets.blockchain.info/", target="_blank",translate="MARKETS")
         li.item
