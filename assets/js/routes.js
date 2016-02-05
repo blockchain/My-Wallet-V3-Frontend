@@ -8,11 +8,9 @@ AppRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 function AppRouter($stateProvider, $urlRouterProvider) {
 
-  $urlRouterProvider.otherwise('/');
-
   $urlRouterProvider.otherwise(function ($injector, $location) {
     let Wallet = $injector.get('Wallet');
-    return Wallet.status.isLoggedIn ? '/home' : '/login';
+    return Wallet.status.isLoggedIn ? '/home' : '/';
   });
 
   $urlRouterProvider.when('/settings', '/settings/wallet');
