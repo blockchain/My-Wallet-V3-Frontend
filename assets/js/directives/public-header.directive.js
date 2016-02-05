@@ -3,13 +3,19 @@ angular
   .module('walletApp')
   .directive('publicHeader', publicHeader);
 
-function publicHeader() {
+publicHeader.$inject = ['$rootScope']
+
+function publicHeader($rootScope) {
   const directive = {
     restrict: "E",
     replace: true,
     templateUrl: 'templates/public-header.jade',
     scope: {},
-    link: function() {}
+    link: link
   };
   return directive;
+
+  function link(scope, elem, attrs) {
+    scope.rootURL = $rootScope.rootURL;
+  }
 }
