@@ -31,7 +31,7 @@ const modules = [
 ];
 
 angular.module('walletApp', modules)
-.config(($modalProvider, uiSelectConfig) => {
+.config(($uibModalProvider, uiSelectConfig) => {
   uiSelectConfig.theme = 'bootstrap';
 })
 .run(($rootScope, $uibModal, $state) => {

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("AccountFormCtrl", AccountFormCtrl);
 
-function AccountFormCtrl($scope, Wallet, $uibModalInstance, $log, $translate, account, $modal) {
+function AccountFormCtrl($scope, Wallet, $uibModalInstance, $log, $translate, account) {
   $scope.accounts = Wallet.accounts;
 
   $scope.fields = {
