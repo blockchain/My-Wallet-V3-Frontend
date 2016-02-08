@@ -1,4 +1,4 @@
-button.helper(uib-popover-template="helperText.templateUrl" uib-popover-placement="{{::helperText.placement}}" ng-click="toggleActive()" ng-class="{ 'active' : isActive } ")
-  span(ng-show="!isActive && !warning") ?
-  span(ng-show="!isActive && warning") !
-  span(ng-show="isActive", class="close-helper")
+button.helper(uib-popover-template="helperText.templateUrl" popover-trigger="outsideClick" uib-popover-placement="{{::helperText.placement}}" popover-is-open="popoverIsOpen" ng-class="{active: popoverIsOpen}" ng-click="popoverIsOpen = !popoverIsOpen")
+  span(ng-show="!popoverIsOpen && !warning") ?
+  span(ng-show="!popoverIsOpen && warning") !
+  span(ng-show="popoverIsOpen", class="close-helper")

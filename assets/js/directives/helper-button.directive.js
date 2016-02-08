@@ -22,7 +22,6 @@ function helperButton($translate) {
   return directive;
 
   function link(scope, elem, attrs) {
-    scope.isActive = false;
     scope.warning = attrs.warning != null;
 
     scope.helperText = {
@@ -30,7 +29,5 @@ function helperButton($translate) {
       placement: scope.placement || 'right'
     };
 
-    scope.toggleActive = () =>
-      scope.isActive = !scope.isActive;
   }
 }
