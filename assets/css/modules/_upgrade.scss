@@ -15,7 +15,7 @@
         > div {
           display: inline-block;
           position: relative;
-          max-width: 100%;
+          max-width: 85%;
           @media (max-width: 768px) {
             max-width: 80%;
           }
@@ -47,6 +47,7 @@
       }
     }
     .carousel-control {
+      width: 5%;
       top: -80px;
       background-image: none;
       &.right, &.left {
