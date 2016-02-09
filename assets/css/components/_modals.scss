@@ -384,3 +384,18 @@
     }
   }
 }
+
+.modal-backdrop.fade {
+  @include transition(opacity $fast);
+}
+
+.modal-content {
+  opacity: 1;
+  @include transition(opacity $fast);
+}
+.ng-enter {
+  .modal-content {
+    @include transition(opacity 0s);
+    opacity: 0;
+  }
+}
