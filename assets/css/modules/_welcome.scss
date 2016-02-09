@@ -160,6 +160,11 @@
   .ios {
     .scroll-in-view {
       overflow: hidden; 
+      .image-container {
+        @media (max-width: 768px) {
+          min-width: 720px;
+        }
+      }
     }
   }
   .android {
