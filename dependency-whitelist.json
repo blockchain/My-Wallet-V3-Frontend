@@ -1,12 +1,12 @@
 {
   "ignore" : [
     "angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize",
-    "bootstrap-sass",
-    "bc-phone-number"
+    "bootstrap-sass"
   ],
   "pgp-signed" : [
     "blockchain-wallet",
-    "bc-qr-reader"
+    "bc-qr-reader",
+    "bc-phone-number"
   ],
   "pgp-keys" : {
     "CC301009": "Sjors",
