@@ -228,7 +228,9 @@
       background-position: center center;
     }
     .donut {
-      transform: translate(-50%,-50%);
+      transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
       @include transition(all 1s);
       box-sizing: content-box;
       background: transparent;
