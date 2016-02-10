@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("RequestCtrl", RequestCtrl);
 
-function RequestCtrl($scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, hasLegacyAddress, $translate, $stateParams, filterFilter, $filter, format) {
+function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, hasLegacyAddress, $translate, $stateParams, filterFilter, $filter, format) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
