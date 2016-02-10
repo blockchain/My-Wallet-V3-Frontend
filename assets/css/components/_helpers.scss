@@ -24,6 +24,8 @@
     left: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
     &:before {
       color: white;
       font-size: 9px;
