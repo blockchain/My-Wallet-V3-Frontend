@@ -35,6 +35,12 @@
   border-color: $blue;
 }
 
+.container-fluid {
+  .navbar-header {
+    margin: 0;
+  }
+}
+
 .navbar-inverse .navbar-toggle { border: none; }
 
 .navbar-inverse .navbar-nav > li > a { 
@@ -42,12 +48,20 @@
   padding: 10px 15px 10px;
 }
 
+.navbar-left {
+  @media (min-width: 768px) {
+    margin-left: 50px;
+  }
+}
+
 .navbar-inverse {
   background-color: $blue;
   border:none;
-  height: 60px;
   border-radius: 0px;
   z-index: 1030;
+  @media (min-width: 768px) {
+    height: 60px;
+  }
   .navbar-brand {
     color: white;
     margin-left: 0px !important;
@@ -123,6 +137,9 @@ img#logo {
   }
   .navbar-brand {
     line-height: 60px;
+    @media (max-width: 768px) {
+      line-height: 50px;
+    }
     img {
       display: inline-block;
     }

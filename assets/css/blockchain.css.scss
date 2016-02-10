@@ -70,6 +70,11 @@ html,body {
   }
 }
 
+.container-max-width {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .hide { display: none; }
 
 .invisible { visibility: hidden; opacity: 0; }
