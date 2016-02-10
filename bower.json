@@ -10,7 +10,7 @@
     "angular-mocks": "1.4.*",
     "angular-animate": "1.4.*",
     "angular-ui-router": "0.2.*",
-    "angular-bootstrap": "0.14.*",
+    "angular-bootstrap": "1.1.*",
     "angular-cookies": "1.4.*",
     "angular-audio": "1.6.*",
     "angular-ui-select": "0.14.*",
@@ -26,9 +26,9 @@
     "blockchain-wallet": "3.7.*",
     "bc-phone-number": "5.0.*"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "resolutions": {
-    "angular": "1.4.*"
+    "angular": "1.4.*",
+    "angular-bootstrap": "1.1.*"
   }
 }

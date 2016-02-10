@@ -20,14 +20,5 @@ describe "Helper Text Directive", ->
     isoScope = element.isolateScope()
     isoScope.$digest()
 
-  it "has an initial status", ->
-    expect(isoScope.isActive).toBe(false)
-
-  it "can toggle status", ->
-    spyOn(isoScope, "toggleActive").and.callThrough()
-    isoScope.toggleActive()
-    expect(isoScope.toggleActive).toHaveBeenCalled()
-    expect(isoScope.isActive).toBe(true)
-
   it "has a templateUrl", ->
     expect(isoScope.helperText.templateUrl).toBeTruthy()
