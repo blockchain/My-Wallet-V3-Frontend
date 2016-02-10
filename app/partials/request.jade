@@ -2,7 +2,10 @@
   .flex-center
     img(src="img/arrow-down.png")
     h3(translate="RECEIVE_BITCOIN")
-  h5(translate="RECEIVE_BITCOIN_MESSAGE", ng-hide="focus")
+  h5(translate="RECEIVE_BITCOIN_MESSAGE", ng-hide="focus || hasLegacyAddress")
+  .flex-row.flex-center(ng-show="hasLegacyAddress").legacy-msg 
+    h5(translate="RECEIVE_BITCOIN_MESSAGE_LEGACY_1")
+    a(translate="CLICK_HERE" ng-click="close()")
 .modal-body
   form.form-horizontal.ph-form(role="form" name="requestForm" novalidate)
     .form-group.row.pbm(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': fields.to.isWatchOnlyLegacyAddress}")
@@ -11,7 +14,7 @@
         p.form-control-static {{ fields.to.label }}
       .col-sm-9.col-xs-12(ng-hide="focus")
         ui-select(ng-model="fields.to" ng-disabled="paymentRequest.amount > 0 || paymentRequest.label")
-          ui-select-match {{ $select.selected.label + ($select.selected.isWatchOnlyLegacyAddress ? ' (Watch Only)' : '') }}
+          ui-select-match {{ $select.selected.label || $select.selected.address + ($select.selected.isWatchOnlyLegacyAddress ? ' (Watch Only)' : '') }}
           ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'") 
             span(ng-bind-html="(determineLabel(destination) | escapeHtml | highlight: $select.search) + (destination.isWatchOnlyLegacyAddress ? ' <i>(Watch Only)</i>' : '')")
         span.help-block(ng-show="fields.to.isWatchOnlyLegacyAddress") Your wallet does not have the private key for this address. Without the private key you will not have access to the bitcoins sent to this address. Make sure you have this private key somewhere else!
@@ -54,8 +57,9 @@
           qr(text="paymentRequestURL()", size=120, correction-level="'M'")
       .flex-column.receive-address.col-md-9.col-sm-8
         p.hidden-xs.type-h5.em-400.black.mbs
-          span(translate="BITCOIN_ADDRESS")
-          helper-button(content="GENERATED_ADDRESS" link="https://blockchain.zendesk.com/hc/en-us/articles/207528856-Sending-and-receiving" linktext="LEARN_MORE" )
+          span(translate="BITCOIN_ADDRESS" ng-hide="hasLegacyAddress")
+          span(translate="YOUR_ADDRESS" ng-show="hasLegacyAddress") :
+          helper-button(content="GENERATED_ADDRESS" ng-hide="hasLegacyAddress" link="https://blockchain.zendesk.com/hc/en-us/articles/207528856-Sending-and-receiving" linktext="LEARN_MORE" )
         p.form-control-static.bitcoin-address
           img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
           span(ng-show="status.didInitializeHD" single-click-select)

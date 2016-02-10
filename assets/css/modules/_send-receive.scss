@@ -38,6 +38,13 @@
   .receive-code canvas { margin-right: 0; padding-right: 0; }
 }
 
+.legacy-msg {
+  > a {
+    font-size: 14px;
+    margin-left: 2px;
+  }
+}
+
 .miners-fee-selection {
   display: flex;
   align-items: center;
