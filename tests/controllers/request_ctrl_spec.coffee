@@ -41,9 +41,11 @@ describe "RequestCtrl", ->
       $controller "RequestCtrl",
         $scope: scope,
         $stateParams: {},
-        $uibModalInstance: modalInstance
-        destination: undefined
-        focus: false
+        $uibModalInstance: modalInstance,
+        destination: undefined,
+        focus: false,
+        hasLegacyAddress: false
+
 
       element = angular.element(
         '<form role="form" name="requestForm" novalidate>' +

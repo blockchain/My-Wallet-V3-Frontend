@@ -9,10 +9,18 @@ describe "TopCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
+      MyWallet = $injector.get("MyWallet")
 
       Wallet.status = {isLoggedIn: true}
 
       scope = $rootScope.$new()
+
+      MyWallet.wallet = {
+        isUpgradedToHD: true
+        keys: [
+          { address: '1asdf', archived: false }, { address: '1asdf', archived: true }
+        ]
+      }
 
       $controller "TopCtrl",
         $scope: scope,
@@ -26,6 +34,9 @@ describe "TopCtrl", ->
   it "should have access to login status",  inject(() ->
     expect(scope.status.isLoggedIn).toBe(true)
   )
+
+  it "should have access to legacy addresses", ->
+    expect(scope.hasLegacyAddress).toBe(true)
 
   it "should have access to total balance",  inject((Wallet) ->
     Wallet.total = () -> 1

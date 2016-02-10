@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("RequestCtrl", RequestCtrl);
 
-function RequestCtrl($scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, $translate, $stateParams, filterFilter, $filter, format) {
+function RequestCtrl($scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, hasLegacyAddress, $translate, $stateParams, filterFilter, $filter, format) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -12,6 +12,8 @@ function RequestCtrl($scope, Wallet, Alerts, currency, $uibModalInstance, $log, 
   $scope.receiveAddress = null;
   $scope.advanced = false;
   $scope.focus = focus;
+
+  $scope.hasLegacyAddress = hasLegacyAddress;
 
   $scope.fields = {
     to: null,
@@ -106,6 +108,9 @@ function RequestCtrl($scope, Wallet, Alerts, currency, $uibModalInstance, $log, 
 
   $scope.$watchCollection("destinations", () => {
     let idx = Wallet.getDefaultAccountIndex();
+    if ($scope.hasLegacyAddress) {
+      return $scope.fields.to = $scope.legacyAddresses()[0]
+    }
     if (($scope.fields.to == null) && $scope.accounts().length > 0) {
       if ($stateParams.accountIndex === "" || ($stateParams.accountIndex == null)) {
 
@@ -130,6 +135,7 @@ function RequestCtrl($scope, Wallet, Alerts, currency, $uibModalInstance, $log, 
       let idx = $scope.fields.to.index;
       return Wallet.getReceivingAddressForAccount(idx);
     }
+
   }
 
   $scope.paymentRequestURL = () => {

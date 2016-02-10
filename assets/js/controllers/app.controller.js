@@ -22,14 +22,15 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
 
   $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia) !== void 0;
 
-  $scope.request = () => {
+  $scope.request = (hasLegacyAddress) => {
     Alerts.clear();
     let modalInstance = $uibModal.open({
       templateUrl: "partials/request.jade",
       controller: "RequestCtrl",
       resolve: {
         destination: () => null,
-        focus: () => false
+        focus: () => false,
+        hasLegacyAddress: () => hasLegacyAddress
       },
       windowClass: "bc-modal"
     });

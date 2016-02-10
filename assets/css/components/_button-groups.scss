@@ -3,6 +3,10 @@
     transition: all .2s ease-in-out;
     margin-right: .25em;
   }
+  > span.request {
+    cursor:  pointer;
+    align-self: center;
+  }
   button, a {
     padding: .25em;
     border: 1px solid #e0e0e0;
