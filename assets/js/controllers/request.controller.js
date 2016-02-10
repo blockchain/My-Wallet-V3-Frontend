@@ -96,6 +96,11 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
     $uibModalInstance.dismiss("");
   }
 
+  $scope.close = () => {
+    $scope.cancel();
+    $rootScope.$broadcast('enableRequestBeacon')
+  }
+
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
     const activeAccounts = filterFilter(Wallet.accounts(), {
       archived: false

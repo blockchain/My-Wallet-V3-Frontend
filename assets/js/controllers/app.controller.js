@@ -24,6 +24,7 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
 
   $scope.request = (hasLegacyAddress) => {
     Alerts.clear();
+    $scope.requestBeacon = false;
     let modalInstance = $uibModal.open({
       templateUrl: "partials/request.jade",
       controller: "RequestCtrl",
@@ -69,6 +70,7 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
       Wallet.store.resetLogoutTimeout();
     }
     $rootScope.outOfApp = toState.name === 'welcome';
+    $scope.requestBeacon = false;
   });
 
   $scope.$watch("status.isLoggedIn", () => {
@@ -129,6 +131,10 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
       }
     }
   };
+
+  $scope.$on('enableRequestBeacon', () => {
+    $scope.requestBeacon = true;
+  });
 
   $scope.$on("requireSecondPassword", (notification, defer, insist) => {
     const modalInstance = $uibModal.open({

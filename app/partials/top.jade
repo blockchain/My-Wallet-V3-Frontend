@@ -10,6 +10,7 @@
         i.bc-icon-send
         span(translate="SEND")
       a.em-300.flex-center.flex-justify.mrm(ng-click="request()")
+        div.message-beacon.green(ng-show="requestBeacon")
         i.bc-icon-receive
         span(translate="REQUEST")
       span.request(ng-click="request(true)" translate="YOUR_ADDRESS" ng-show="hasLegacyAddress")

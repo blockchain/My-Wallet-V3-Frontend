@@ -50,7 +50,11 @@
   z-index: 1049; //keep this the highest on the z-axis
   border-radius: 100%;
   background: $send-red;
-  animation: pulse 3s linear infinite;
+  animation: pulse-alert 3s linear infinite;
+  &.green {
+    background: $receive-green;
+    animation: pulse-success 3s linear infinite;
+  }
 }
 .message-contextual {
   width: 250px;
