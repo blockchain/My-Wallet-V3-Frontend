@@ -273,14 +273,11 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
   $scope.hasAmountError = (index) => {
     let field = $scope.sendForm['amounts' + index];
-    let fieldFiat = $scope.sendForm['amountsFiat' + index];
-    return ((!field ? false : field.$touched || fieldFiat.$touched) || index == null) && field.$invalid;
+    return field.$invalid && !field.$untouched;
   };
 
   $scope.hasInsufficientError = (index) => {
-    let field = $scope.sendForm['amounts' + index];
-    let fieldFiat = $scope.sendForm['amountsFiat' + index];
-    return ((!field ? false : field.$touched || fieldFiat.$touched) || index == null) && !$scope.amountIsValid;
+    return !$scope.amountIsValid;
   };
 
   $scope.getAvailableBalance = () => {
