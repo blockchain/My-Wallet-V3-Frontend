@@ -12,6 +12,16 @@ div.login-form {
 .login-pg {
   background-color: $blue;
   height: calc(100% + 50px); //offset margin from bootstrap
+  .navbar {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+  }
+}
+
+.login-box-container {
+  margin-top: -100px;
 }
 
 .login-box {
