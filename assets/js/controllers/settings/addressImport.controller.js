@@ -107,6 +107,11 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
       $scope.status.sweeping = false;
       if (error && typeof error === 'string') {
         Alerts.displayError(error);
+      } else {
+        console.log(error);
+        $translate("SWEEP_FAILED").then((translation) => {
+          Alerts.displayError(translation);
+        });
       }
       $scope.$root.$safeApply($scope);
     };
