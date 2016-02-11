@@ -137,7 +137,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
 
   $scope.onError = (error) => {
     $translate("CAMERA_PERMISSION_DENIED").then(function(translation) {
-      Alerts.displayWarning(translation);
+      Alerts.displayWarning(translation, false, $scope.alerts);
     });
   };
 

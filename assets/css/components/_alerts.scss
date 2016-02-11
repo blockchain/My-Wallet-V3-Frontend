@@ -11,7 +11,7 @@
 .alert-in-app {
   top: 2px;
   right: 12px;
-  z-index: 1049;
+  z-index: 1051;
   position: fixed;
 }
 .alert-received-bitcoin, .alert-sent-bitcoin {
@@ -38,9 +38,11 @@
 // bootstrap alert overrides
 .alert {
   width: auto;
+  max-width: 300px;
+  position: relative;
 }
 
-.alert-warning {
+.alert-warning, .alert-danger {
   border: 0px;
   @extend .shadow-1;
 }

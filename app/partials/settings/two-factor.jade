@@ -4,7 +4,6 @@
     h3.mvn(translate="ENABLE_TWO_STEP")
     helper-button(content="TWO_STEP_EXPLAIN")
 .modal-body.two-factor-modal
-  alerts(context="alerts")
   div(ng-show="isStep('disable')")
     h5(translate="CONFIRM_DISABLE_2FA")
     button.button-danger(translate="DISABLE" ng-click="disableTwoFactor()")

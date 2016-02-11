@@ -24,7 +24,7 @@ function TwoFactorCtrl($scope, Wallet, Alerts, $uibModalInstance, $translate, $t
 
   $scope.errors = {};
   $scope.status = {};
-  $scope.alerts = [];
+  $scope.alerts = Alerts.alerts;
 
   $scope.closeAlert = (alert) => {
     Alerts.close(alert, $scope.alerts);
@@ -33,14 +33,7 @@ function TwoFactorCtrl($scope, Wallet, Alerts, $uibModalInstance, $translate, $t
   $scope.displayConfirmationError = () => {
     if ($scope.alerts.length !== 0) return;
     $translate('2FA_INVALID').then(translation => {
-      let alert = {
-        type: 'danger',
-        msg: translation
-      };
-      alert.timer = $timeout(() => {
-        $scope.alerts.splice($scope.alerts.indexOf(alert));
-      }, 7000);
-      $scope.alerts.push(alert);
+      Alerts.displayError(translation, false, $scope.alerts)
     });
   };
 

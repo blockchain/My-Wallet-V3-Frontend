@@ -4,7 +4,7 @@ angular
 
 function SecondPasswordCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $translate, insist, defer) {
   $scope.insist = insist ? true : false;
-  $scope.alerts = [];
+  $scope.alerts = Alerts.alerts;
   $scope.busy = false;
   $scope.secondPassword = "";
 
