@@ -24,7 +24,7 @@ function TwoFactorCtrl($scope, Wallet, Alerts, $uibModalInstance, $translate, $t
 
   $scope.errors = {};
   $scope.status = {};
-  $scope.alerts = Alerts.alerts;
+  $scope.alerts = [];
 
   $scope.closeAlert = (alert) => {
     Alerts.close(alert, $scope.alerts);

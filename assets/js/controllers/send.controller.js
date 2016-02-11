@@ -69,7 +69,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
   $scope.onError = (error) => {
     $translate("CAMERA_PERMISSION_DENIED").then(translation => {
-      Alerts.displayWarning(translation, false);
+      Alerts.displayWarning(translation, false, $scope.alerts);
     });
   };
 
