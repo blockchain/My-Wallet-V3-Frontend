@@ -17,7 +17,8 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
           controller: "RequestCtrl",
           resolve: {
             destination: () => scope.address,
-            focus: () => true
+            focus: () => true,
+            hasLegacyAddress: () => null
           },
           windowClass: "bc-modal"
         });
