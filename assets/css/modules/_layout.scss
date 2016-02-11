@@ -58,7 +58,7 @@
 @media (max-width: 768px) {
   .left-nav {
     left: -270px;
-    z-index: 1051; //just above Bootstrap
+    z-index: 2; //just enough to be visible
     transition: all .3s ease-in-out;
     top: 0px;
   }
