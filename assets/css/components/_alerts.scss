@@ -1,7 +1,12 @@
 .alert {
   width: 40vw;
-  animation: fade-in-down .5s;
   margin-top: 1vw;
+  animation: fade-in-down .5s;
+  -webkit-animation: fade-in-down .5s;
+  &.ng-leave-active {
+    animation: fade-out-up .5s;
+    -webkit-animation: fade-out-up .5s;
+  }
 }
 .alert-in-app {
   position: absolute;
