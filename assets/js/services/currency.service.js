@@ -145,7 +145,7 @@ function currency($q, MyBlockchainApi) {
     let decimalPlaces = decimalPlacesForCurrency(currency);
     let code = showCode ? (' ' + currency.code) : '';
     amount = amount.toFixed(decimalPlaces);
-    if (isBitCurrency(currency)) amount = parseFloat(amount).toString();
+    if (isBitCurrency(currency)) amount = amount.replace(/\.?0+$/, '');
     return amount + code;
   }
 

@@ -1,0 +1,24 @@
+.modal-header.flex-row.flex-center
+  div(ng-hide="surge")
+    h3(ng-show="currentFee < suggestedFee" translate="LOW_FEE_WARN")
+    h3(ng-show="currentFee > suggestedFee" translate="HIGH_FEE_WARN")
+  div(ng-show="surge")
+    h3(translate="SURGE_WARN")
+  helper-button(content="DYNAMIC_FEE_HELP" linktext="LEARN_MORE" link="https://en.bitcoin.it/wiki/Transaction_fees")
+.modal-body
+  .col-sm-12(ng-hide="surge")
+    p(ng-show="currentFee < suggestedFee" translate="LOW_FEE_EXPLAIN" translate-values="{ fee: currentFee, suggested: suggestedFee }")
+    p(ng-show="currentFee > suggestedFee" translate="HIGH_FEE_EXPLAIN" translate-values="{ fee: currentFee, suggested: suggestedFee }")
+  .col-sm-12(ng-show="surge")
+    p(translate="SURGE_EXPLAIN" translate-values="{ suggested: suggestedFee }")
+.modal-footer
+  button.button-muted.mrm(
+    translate="GO_BACK" ng-click="cancel()")
+  button.button-muted.mrm(
+    translate="CONTINUE_CURRENT_FEE" ng-hide="surge" ng-click="useCurrent()")
+  button.button-primary(
+    translate="RAISE_TO" translate-values="{ suggested: suggestedFee }" ng-show="currentFee < suggestedFee && !surge" ng-click="useSuggested()")
+  button.button-primary(
+    translate="LOWER_TO" translate-values="{ suggested: suggestedFee }" ng-show="currentFee > suggestedFee && !surge" ng-click="useSuggested()")
+  button.button-primary(
+    translate="CONTINUE_WITH" translate-values="{ suggested: suggestedFee }" ng-show="surge" ng-click="useSuggested()")
