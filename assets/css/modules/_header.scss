@@ -35,6 +35,12 @@
   border-color: $blue;
 }
 
+.navbar {
+  .container-fluid {
+    padding-left: 10px;
+  }
+}
+
 .container-fluid {
   .navbar-header {
     margin: 0;
