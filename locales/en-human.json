@@ -362,7 +362,7 @@
   "RESET_FORM" : "Reset Form",
   "REGULAR_SEND" : "Regular Send",
   "TX_FEE" : "Transaction Fee",
-  "TX_FEE_HELP": "Transaction fees impact how quickly the Bitcoin mining network will confirm your transactions, and depend on the current network conditions. We recommend the fee below for most transactions.",
+  "TX_FEE_HELP": "Transaction fees impact how quickly the Bitcoin mining network will confirm your transactions, and depend on the current network conditions. We recommend the fee below for this transaction at this time.",
   "TOTAL_AVAILABLE": "Total available",
   "GO_BACK" : "Go Back",
   "CLICK_HERE_TO_CREATE_WALLET" : "create a wallet",
@@ -575,6 +575,8 @@
   "YOUR_ADDRESS": "Your Bitcoin Address",
   "SWEEP_FAILED" : "Unable to transfer funds",
   "YOU_WILL_LOSE": "You will lose all your bitcoins! Are you sure?",
+  "SURGE_WARN": "Unusually High Fee Recommended",
+  "SURGE_EXPLAIN": "The Bitcoin network is under a higher load than usual. <b>To avoid any delays in confirmation, we recommend an unusually high transaction fee of {{ suggested | convert }}.</b>",
   "HIGH_FEE_WARN": "High Fee Not Necessary",
   "HIGH_FEE_EXPLAIN": "You specified an unusually high transaction fee of {{ fee | convert }}. <b>Even if you lower the fee to {{ suggested | convert }}, you can expect the transaction to confirm as quickly as possible.",
   "LOW_FEE_WARN": "Low Custom Fee Not Recommended",
@@ -582,5 +584,6 @@
   "DYNAMIC_FEE_HELP": "Transaction fees are required by the Bitcoin mining network for most transactions. Changing the transaction fee is only recommended for advanced users.",
   "CONTINUE_CURRENT_FEE": "Continue with current fee",
   "RAISE_TO": "Raise to {{ suggested | convert }}",
-  "LOWER_TO": "Lower to {{ suggested | convert }}"
+  "LOWER_TO": "Lower to {{ suggested | convert }}",
+  "CONTINUE_WITH": "Continue with {{ suggested | convert }}"
 }
