@@ -33,12 +33,12 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     sweepAmount: null,
     destinations: [null],
     amounts: [null],
-    fee: Wallet.my.wallet.fee_per_kb,
+    fee: 10000,
     note: "",
     publicNote: false
   };
 
-  $scope.payment = new Wallet.payment({ feePerKb: Wallet.my.wallet.fee_per_kb });
+  $scope.payment = new Wallet.payment({ feePerKb: 30000 });
   $scope.transaction = angular.copy($scope.transactionTemplate);
 
   let dynamicFeeVectorP = $http
@@ -48,6 +48,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   dynamicFeeVectorP.then(estimate => {
     $scope.surgeWarning = estimate[2].surge;
     $scope.payment.feePerKb(estimate[2].fee);
+    $scope.dynamicFeeAvailable = true;
     $scope.setPaymentFrom();
   });
 
@@ -489,6 +490,11 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
         $scope.useSuggested = () => $uibModalInstance.close($scope.suggestedFee);
       }
     });
+
+    if (!$scope.dynamicFeeAvailable) {
+      console.log('Dynamic fee service unavailable');
+      return $q.resolve(currentFee);
+    }
 
     return dynamicFeeVectorP.then(estimate => {
       let high = guessAbsoluteFee(tx.sizeEstimate, estimate[0].fee);
