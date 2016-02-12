@@ -4,6 +4,7 @@ describe "SendCtrl", ->
   ngAudio = undefined
   Wallet = undefined
   scope = undefined
+  $httpBackend = undefined
 
   askForSecondPassword = undefined
 
@@ -23,6 +24,16 @@ describe "SendCtrl", ->
       MyWalletPayment = $injector.get("MyWalletPayment")
       currency = $injector.get('currency')
       MyWalletHelpers = $injector.get("MyWalletHelpers")
+      $httpBackend = $injector.get('$httpBackend')
+
+      feeEstimates = [
+        { fee: 60000, surge: false }, { fee: 50000, surge: false },
+        { fee: 40000, surge: false }, { fee: 30000, surge: false },
+        { fee: 20000, surge: false }, { fee: 10000, surge: false }
+      ]
+
+      $httpBackend.when('GET', 'http://service-dynamic-fee.dev.blockchain.co.uk/fees')
+        .respond({ estimate: feeEstimates })
 
       MyWallet.wallet =
         setNote: (-> )
@@ -66,6 +77,14 @@ describe "SendCtrl", ->
 
     return
 
+  beforeEach ->
+    $httpBackend.expectGET('http://service-dynamic-fee.dev.blockchain.co.uk/fees')
+
+  afterEach ->
+    $httpBackend.flush()
+    $httpBackend.verifyNoOutstandingExpectation()
+    $httpBackend.verifyNoOutstandingRequest()
+
   describe "", ->
     beforeEach ->
       angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
@@ -81,6 +100,8 @@ describe "SendCtrl", ->
           '<input type="text" name="destinations0" ng-model="transaction.destinations[0]" required />' +
           '<input type="number" name="amounts0" ng-model="transaction.amounts[0]" ng-change="validateAmounts()" min="1" required />' +
           '<input type="text" name="destinations1" ng-model="transaction.destinations[1]" required />' +
+          '<input type="number" name="amounts1" ng-model="transaction.amounts[1]" ng-change="validateAmounts()" min="1" required />' +
+          '<input type="text" name="destinations2" ng-model="transaction.destinations[2]" required />' +
           '<input type="number" name="amounts1" ng-model="transaction.amounts[1]" ng-change="validateAmounts()" min="1" required />' +
           '<input type="number" name="fee" ng-model="transaction.fee" ng-change="validateAmounts()" min="0" required />' +
           '<textarea rows="4" name="note" ng-model="transaction.note" ng-maxlength="512"></textarea>' +
@@ -356,7 +377,7 @@ describe "SendCtrl", ->
       describe "failure", ->
 
         beforeEach ->
-          scope.payment = new Wallet.payment(true)
+          scope.payment = new Wallet.payment({}, true)
           askForSecondPassword.resolve()
 
         it "should display an error when process fails", inject((Alerts) ->
@@ -592,10 +613,11 @@ describe "SendCtrl", ->
 
     describe "modal navigation", ->
 
-      it "should be able to go to confirmation step", ->
-        expect(scope.confirmationStep).toBeFalsy()
+      it "should build the payment before going to confirmation step", inject(($q) ->
+        spyOn(scope, 'setAllAndBuild').and.callFake(() -> $q.resolve())
         scope.goToConfirmation()
-        expect(scope.confirmationStep).toBeTruthy()
+        expect(scope.setAllAndBuild).toHaveBeenCalled()
+      )
 
       it "should be able to go back from confirmation step", ->
         scope.confirmationStep = true

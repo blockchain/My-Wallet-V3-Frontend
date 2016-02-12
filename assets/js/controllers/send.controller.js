@@ -431,10 +431,10 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   $scope.goToConfirmation = () => {
     $scope.building = true;
 
-    setAllAndBuild()
-      .then(checkFee)
+    $scope.setAllAndBuild()
+      .then($scope.checkFee)
       .then(fee => $scope.transaction.fee = fee)
-      .then(setAllAndBuild)
+      .then($scope.setAllAndBuild)
       .then(() => $scope.confirmationStep = true)
       .catch(errorMsg => {
         $scope.backToForm();
@@ -447,7 +447,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       .finally(() => $scope.building = false);
   };
 
-  function setAllAndBuild() {
+  $scope.setAllAndBuild = () => {
     $scope.setPaymentFrom();
     $scope.setPaymentTo();
     $scope.setPaymentAmount();
@@ -465,9 +465,9 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
           return r.payment;
         });
     });
-  }
+  };
 
-  function checkFee(tx) {
+  $scope.checkFee = (tx) => {
     let goAdvanced = () => $scope.advancedSend();
     let guessAbsoluteFee = (size, feePerKb) => feePerKb * (size / 1000);
 
@@ -515,6 +515,6 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       }
       return currentFee;
     });
-  }
+  };
 
 }
