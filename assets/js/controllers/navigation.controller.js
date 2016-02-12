@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("NavigationCtrl", NavigationCtrl);
 
-function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $translate, $cookies, $state, filterFilter, $interval, $timeout) {
+function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $translate, $cookies, $state, filterFilter, $interval, $timeout, $uibModal) {
   $scope.status = Wallet.status;
   $scope.security = SecurityCenter.security;
   $scope.settings = Wallet.settings;
@@ -33,7 +33,12 @@ function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $t
 
   $scope.doLogout = () => {
     $translate("ARE_YOU_SURE_LOGOUT").then( translation => {
-      if (confirm(translation)) {
+      $uibModal.open({
+        templateUrl: 'partials/modal-confirm.jade',
+        controller: 'ModalConfirmCtrl',
+        windowClass: 'bc-modal confirm',
+        resolve: { translation: () => translation }
+      }).result.then(() => {
         $scope.uid = null;
         $scope.password = null;
         $cookies.remove("password");
@@ -43,7 +48,7 @@ function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $t
           accountIndex: ""
         });
         Wallet.logout();  // Refreshes the browser, so won't return
-      }
+      });
     });
   };
 

@@ -31,8 +31,13 @@ function Alerts($timeout, $rootScope, $translate) {
     }
   }
 
+  function isDuplicate(context=service.alerts, nextAlert) {
+    return context.some(alert => alert.msg === nextAlert.msg);
+  }
+
   function display(type, message, keep=false, context=service.alerts) {
     let alert = { type: type, msg: message };
+    if (isDuplicate(context, alert)) return;
     alert.close = close.bind(null, alert, context);
     if (!keep) alert.timer = $timeout(() => alert.close(), 7000);
     context.push(alert);
