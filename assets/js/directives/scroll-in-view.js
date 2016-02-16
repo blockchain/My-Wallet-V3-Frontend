@@ -25,7 +25,6 @@ function scrollInView($window, $timeout) {
 
       $timeout(() => {
         let itemTop = elem[0].getBoundingClientRect().top;
-        console.log(itemTop)
 
         scope.scroll = () => {
           let windowBottom = $window.pageYOffset + $window.innerHeight;
