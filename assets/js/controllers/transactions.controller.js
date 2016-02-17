@@ -35,7 +35,7 @@ function TransactionsCtrl($rootScope, $scope, Wallet, MyWallet, $timeout, $state
     });
   };
 
-  $scope.$on('refreshTxs', () => {
+  $scope.$on('refresh', () => {
     fetchTxs(true)
   });
 

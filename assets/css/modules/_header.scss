@@ -79,6 +79,19 @@
     > li {
       margin-left: 2px;
       padding-top: 10px;
+      a {
+        &.refresh {
+          &:after {
+            font-size: 11px;
+            content: '\e619';
+            margin-left: 10px;
+            display: inline-block;
+            transform: rotate(0deg);
+            font-family: 'ThemifyIcons';
+            transition: transform 2s;
+          }
+        }
+      }
     }
     > li > a:hover {
       background-color: transparent;

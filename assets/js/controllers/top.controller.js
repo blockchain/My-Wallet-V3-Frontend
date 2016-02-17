@@ -9,7 +9,7 @@ function TopCtrl($scope, $stateParams, Wallet, currency) {
   $scope.status = Wallet.status;
   $scope.accountIndex = $stateParams.accountIndex;
 
-  $scope.getTotal = (index) => Wallet.total(index);
+  $scope.getTotal = (index) => Wallet.total(index, true);
   $scope.hasLegacyAddress = Wallet.legacyAddresses().length > 0;
 
 }

@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .directive('fiat', fiat);
 
-fiat.$inject = ['Wallet', 'currency'];
+fiat.$inject = ['$rootScope', 'Wallet', 'currency'];
 
-function fiat(Wallet, currency) {
+function fiat($rootScope, Wallet, currency) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -53,5 +53,6 @@ function fiat(Wallet, currency) {
 
     scope.$watchCollection('conversions', () => scope.updateFiat());
     scope.$watch('settings.currency.code + btc + currency', () => scope.updateFiat());
+    $rootScope.$on('refresh', () => scope.updateFiat());
   }
 }

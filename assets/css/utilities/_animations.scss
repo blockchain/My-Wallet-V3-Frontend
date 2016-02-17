@@ -25,8 +25,23 @@ $fast: 0.2s;
   100% { transform: scale(1); }
 }
 
+@-webkit-keyframes rotate {
+  10% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(-360deg); }
+}
+@keyframes rotate {
+  10% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
+
 .scale {
   animation: scale .4s;
+}
+
+.rotating {
+  &:after {
+    animation: rotate .5s linear;
+  }
 }
 
 //speed up fade in animation
