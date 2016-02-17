@@ -236,6 +236,8 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       wallet.status.didInitializeHD = true;
       wallet.my.wallet.getHistory().then(() => {
         wallet.status.didLoadBalances = true;
+        // Montitored by e.g. acticity feed:
+        wallet.status.didLoadTransactions = true;
       });
       successCallback();
       $rootScope.$safeApply();
