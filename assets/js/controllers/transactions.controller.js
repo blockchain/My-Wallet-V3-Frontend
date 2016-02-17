@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("TransactionsCtrl", TransactionsCtrl);
 
-function TransactionsCtrl($scope, Wallet, MyWallet, $timeout, $stateParams, $state) {
+function TransactionsCtrl($scope, Wallet, MyWallet, $timeout, $stateParams, $state, $rootScope) {
   $scope.addressBook  = Wallet.addressBook;
   $scope.status       = Wallet.status;
   $scope.settings     = Wallet.settings;
@@ -50,6 +50,7 @@ function TransactionsCtrl($scope, Wallet, MyWallet, $timeout, $stateParams, $sta
 
   let setTxs = () =>
     $scope.transactions = txList.transactions(accountIndex);
+    $rootScope.$safeApply()
 
   let unsub = txList.subscribe(setTxs);
   $scope.$on('$destroy', unsub);

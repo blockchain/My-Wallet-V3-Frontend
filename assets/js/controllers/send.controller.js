@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SendCtrl", SendCtrl);
 
-function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal, format, MyWalletHelpers) {
+function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal, format, MyWalletHelpers, $rootScope) {
 
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.accounts = Wallet.accounts;
@@ -188,7 +188,6 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       if (!$scope.transaction.publicNote && note !== "") {
         Wallet.setNote({ hash: tx.txid }, note);
       }
-
       let index = $scope.transaction.from.index;
       if(index === null || index == undefined)  {
         index = 'imported';
@@ -204,6 +203,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
       let message = 'BITCOIN_SENT';
 
+
       if(MyWalletHelpers.tor()) {
         message = 'BITCOIN_SENT_TOR';
       }
@@ -212,7 +212,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
         Alerts.displaySentBitcoin(translation);
       });
 
-
+      $rootScope.$safeApply();
     };
 
     const signAndPublish = (passphrase) => {
