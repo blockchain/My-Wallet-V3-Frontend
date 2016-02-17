@@ -86,9 +86,9 @@
             content: '\e619';
             margin-left: 10px;
             display: inline-block;
-            transform: rotate(0deg);
+            // transform: rotate(0deg);
             font-family: 'ThemifyIcons';
-            transition: transform 2s;
+            // transition: transform .5s;
           }
         }
       }
