@@ -32,7 +32,7 @@
             li
               a(href="{{rootURL}}api", translate="API" target="_blank")
         li.item.visible-xs
-          a(href="{{rootURL}}",, translate="HOME" target="_blank")
+          a(href="{{rootURL}}", translate="HOME" target="_blank")
         li.item.visible-xs
           a(href="{{rootURL}}charts", translate="CHARTS" target="_blank")
         li.item.visible-xs
@@ -41,6 +41,8 @@
           a(href="{{rootURL}}api", translate="API" target="_blank")
         li.item.visible-xs
           a(href="https://markets.blockchain.info/", translate="MARKETS" target="_blank")
+        li.item.refresh
+          a(ng-click="refresh()", translate="REFRESH")
         li.item
           a(ng-click="logout()", translate="SIGNOUT")
     // /.nav-collapse

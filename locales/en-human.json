@@ -485,6 +485,7 @@
   "FEE_PER_KB_NO_MORE_THAN" : "Must be less than {{ max }}",
   "SIGNIN": "Sign in",
   "SIGNOUT": "Sign out",
+  "REFRESH": "Refresh",
   "EDIT_NOTE": "Edit",
   "DELETE_NOTE": "Delete",
   "TERMS_OF_SERVICE" : "Terms of Service",

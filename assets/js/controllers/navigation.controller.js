@@ -2,10 +2,14 @@ angular
   .module('walletApp')
   .controller("NavigationCtrl", NavigationCtrl);
 
-function NavigationCtrl($scope, Wallet, currency, SecurityCenter, $translate, $cookies, $state, filterFilter, $interval) {
+function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $translate, $cookies, $state, filterFilter, $interval) {
   $scope.status = Wallet.status;
   $scope.security = SecurityCenter.security;
   $scope.settings = Wallet.settings;
+
+  $scope.refresh = () => {
+    $rootScope.$broadcast('refreshTxs');
+  }
 
   $scope.logout = () => {
     if (!Wallet.isSynchronizedWithServer()) {
