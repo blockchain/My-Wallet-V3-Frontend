@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("TransactionsCtrl", TransactionsCtrl);
 
-function TransactionsCtrl($rootScope, $scope, Wallet, MyWallet, $timeout, $stateParams, $state) {
+function TransactionsCtrl($scope, Wallet, MyWallet, $timeout, $stateParams, $state, $rootScope) {
   $scope.addressBook  = Wallet.addressBook;
   $scope.status       = Wallet.status;
   $scope.settings     = Wallet.settings;
@@ -21,7 +21,6 @@ function TransactionsCtrl($rootScope, $scope, Wallet, MyWallet, $timeout, $state
 
   let fetchTxs = () => {
     $scope.loading = true;
-    let amt = txList.transactions().length;
     txList.fetchTxs().then((numFetched) => {
       $timeout(() => {
         $scope.allTxsLoaded = numFetched < txList.loadNumber;
