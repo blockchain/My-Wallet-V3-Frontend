@@ -7,9 +7,13 @@ function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $t
   $scope.security = SecurityCenter.security;
   $scope.settings = Wallet.settings;
 
+  let wallet = {};
+  wallet.my = MyWallet.wallet;
+
   $scope.refresh = () => {
     $scope.refreshing = true;
-    $q.all([Wallet.my.wallet.getHistory(), currency.fetchExchangeRate(), MyWallet.wallet.txList.fetchTxs(50, true)])
+    let amt = wallet.my.txList.transactions().length;
+    $q.all([Wallet.my.wallet.getHistory(), currency.fetchExchangeRate(), wallet.my.txList.fetchTxs(amt, true)])
       .catch(() => console.log('error refreshing'))
       .finally(() => {
         $rootScope.$broadcast('refresh');
