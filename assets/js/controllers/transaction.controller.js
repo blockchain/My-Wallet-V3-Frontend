@@ -7,6 +7,7 @@ function TransactionCtrl($scope, $state, $stateParams, $filter, Wallet, MyWallet
   let index   = $stateParams.accountIndex;
 
   $scope.transaction = txList.transaction($stateParams.hash);
+  $scope.transaction.toggled = false;
 
   let formatted = Wallet.formatTransactionCoins($scope.transaction);
   $scope.input = formatted.input;

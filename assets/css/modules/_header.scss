@@ -79,6 +79,16 @@
     > li {
       margin-left: 2px;
       padding-top: 10px;
+      a {
+        &.refresh {
+          img {
+            display: inline-block;
+            margin-bottom: 3px;
+            margin-top: 2px;
+            height: 15px;
+          }
+        }
+      }
     }
     > li > a:hover {
       background-color: transparent;
