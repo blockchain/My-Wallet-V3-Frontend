@@ -9,14 +9,14 @@
     .navbar-collapse.collapse(ng-class="{'in bg-blue' : !navCollapsed}", ng-click="navCollapsed=true")
       ul.nav.navbar-nav.navbar-left
         li.item
-          a.pam(href="{{rootURL}}", translate="HOME" target="_blank")
+          a.pam(href="{{rootURL}}", translate="HOME")
         li.item
-          a.pam(href="{{rootURL}}charts", translate="CHARTS" target="_blank")
+          a.pam(href="{{rootURL}}charts", translate="CHARTS")
         li.item
-          a.pam(href="{{rootURL}}stats", translate="STATS" target="_blank")
+          a.pam(href="{{rootURL}}stats", translate="STATS")
         li.item
-          a.pam(href="https://markets.blockchain.info", translate="MARKETS" target="_blank")
+          a.pam(href="https://markets.blockchain.info", translate="MARKETS")
         li.item
-          a.pam(href="{{rootURL}}api", translate="API" target="_blank")
+          a.pam(href="{{rootURL}}api", translate="API")
         li.item.active
           a.pam(href="#", translate="WALLET")

@@ -34,7 +34,7 @@ angular.module('walletApp', modules)
 .config(($uibModalProvider, uiSelectConfig) => {
   uiSelectConfig.theme = 'bootstrap';
 })
-.run(($rootScope, $uibModal, $state, MyWallet, $q, currency) => {
+.run(($rootScope, $uibModal, $state, MyWallet, $q, currency, $timeout) => {
 
   $rootScope.$safeApply = (scope=$rootScope, before) => {
     before = before;

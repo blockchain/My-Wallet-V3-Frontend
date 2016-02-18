@@ -188,7 +188,7 @@
       border-color: none;
       box-shadow: none
     }
-    &.no-border { border-bottom: none; }
+    &.no-border { border-bottom: 0px; }
   }
   .has-error .border-bottom { border-color: #a94442 !important; }
   label {

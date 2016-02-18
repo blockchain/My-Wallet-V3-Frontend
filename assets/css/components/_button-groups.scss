@@ -6,6 +6,10 @@
   > span.request {
     cursor:  pointer;
     align-self: center;
+    @include transition(color $fast);
+    &:hover {
+      color: $blue;
+    }
   }
   button, a {
     padding: .25em;
