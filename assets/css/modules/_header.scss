@@ -81,14 +81,11 @@
       padding-top: 10px;
       a {
         &.refresh {
-          &:after {
-            font-size: 11px;
-            content: '\e619';
-            margin-left: 10px;
+          img {
             display: inline-block;
-            // transform: rotate(0deg);
-            font-family: 'ThemifyIcons';
-            // transition: transform .5s;
+            margin-bottom: 3px;
+            margin-top: 2px;
+            height: 15px;
           }
         }
       }

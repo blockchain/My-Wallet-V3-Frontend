@@ -27,11 +27,11 @@ $fast: 0.2s;
 
 @-webkit-keyframes rotate {
   10% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(-360deg); }
+  100% { -webkit-transform: rotate(360deg); }
 }
 @keyframes rotate {
   10% { transform: rotate(0deg); }
-  100% { transform: rotate(-360deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .scale {
@@ -39,7 +39,7 @@ $fast: 0.2s;
 }
 
 .rotating {
-  &:after {
+  img {
     animation: rotate .5s linear;
   }
 }
