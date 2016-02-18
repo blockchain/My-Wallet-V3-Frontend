@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("AddressImportCtrl", AddressImportCtrl);
 
-function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $translate, $state, $timeout, address) {
+function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $translate, $state, $timeout, address, $rootScope) {
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
   $scope.alerts = Alerts.alerts;
@@ -101,6 +101,10 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
           msg: translations.BITCOIN_SENT
         });
       });
+      $timeout(() => {
+        // In case the web socket fails:
+        $rootScope.refresh();
+      }, 3000);
     };
 
     const error = (error) => {

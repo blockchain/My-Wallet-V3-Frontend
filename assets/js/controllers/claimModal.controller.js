@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("ClaimModalCtrl", ClaimModalCtrl);
 
-function ClaimModalCtrl($scope, Wallet, $translate, $uibModalInstance, claim) {
+function ClaimModalCtrl($scope, Wallet, $translate, $uibModalInstance, claim, $rootScope, $timeout) {
   $scope.accounts = Wallet.accounts;
   $scope.fields = {
     to: null
@@ -20,6 +20,12 @@ function ClaimModalCtrl($scope, Wallet, $translate, $uibModalInstance, claim) {
     const success = () => {
       $scope.redeeming = false;
       $uibModalInstance.dismiss("");
+      $timeout(() => {
+        // In case the web socket fails:
+        $rootScope.refresh();
+      }, 3000);
+
+      $rootScope.$safeApply()
     };
     const error = (e) => {
       console.log(e);

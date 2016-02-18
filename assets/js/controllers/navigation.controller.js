@@ -2,24 +2,10 @@ angular
   .module('walletApp')
   .controller("NavigationCtrl", NavigationCtrl);
 
-function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $translate, $cookies, $state, filterFilter, $interval, $timeout, $q, MyWallet) {
+function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $translate, $cookies, $state, filterFilter, $interval, $timeout) {
   $scope.status = Wallet.status;
   $scope.security = SecurityCenter.security;
   $scope.settings = Wallet.settings;
-
-  let wallet = {};
-  wallet.my = MyWallet.wallet;
-
-  $scope.refresh = () => {
-    $scope.refreshing = true;
-    let amt = wallet.my.txList.transactions().length;
-    $q.all([Wallet.my.wallet.getHistory(), currency.fetchExchangeRate(), wallet.my.txList.fetchTxs(amt, true)])
-      .catch(() => console.log('error refreshing'))
-      .finally(() => {
-        $rootScope.$broadcast('refresh');
-        $timeout(() => $scope.refreshing = false, 500);
-      });
-  }
 
   $scope.logout = () => {
     if (!Wallet.isSynchronizedWithServer()) {

@@ -180,6 +180,10 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     };
 
     const transactionSucceeded = (tx) => {
+      $timeout(() => {
+        // In case the web socket fails:
+        $rootScope.refresh();
+      }, 3000);
       $scope.sending = false;
       $uibModalInstance.close("");
       Wallet.beep();
