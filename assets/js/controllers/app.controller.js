@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("AppCtrl", AppCtrl);
 
-function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location, $timeout, $uibModal, $window, $translate) {
+function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location, $timeout, $uibModal, $window, $translate, $uibModalStack) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $rootScope.isMock = Wallet.isMock;
@@ -71,6 +71,8 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
     }
     $rootScope.outOfApp = toState.name === 'welcome';
     $scope.requestBeacon = false;
+
+    $uibModalStack.dismissAll();
   });
 
   $scope.$watch("status.isLoggedIn", () => {
