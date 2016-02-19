@@ -42,7 +42,7 @@
       .col-xs-5
       .col-xs-2
         p(align="center", ng-hide="loading || allTxsLoaded || (transactions | filter:transactionFilter).length == 0")
-          a(in-view="nextPage()", ng-click="nextPage()") Load more...
+          a(in-view="nextPage()", ng-click="nextPage()")
     .row(ng-show="loading").mtm.loading
        .col-xs-5
        .col-xs-2

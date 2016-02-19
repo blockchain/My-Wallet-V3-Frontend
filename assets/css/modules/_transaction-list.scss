@@ -2,7 +2,8 @@
   .transaction-feed {
     position: relative;
     top: 50px;
-    .loading {
+    .loading .col-xs-2 {
+      text-align: center;
       margin-bottom: 10px;
     }
   }
