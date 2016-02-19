@@ -47,7 +47,7 @@
   overflow-y: scroll;
   overflow-x: hidden;
   width: calc(100% - 270px);
-  height: calc(100% - 170px); // make viewport smaller for overflow-y to work
+  height: calc(100% - 175px); // make viewport smaller for overflow-y to work
 }
 
 .overflow-scroll {

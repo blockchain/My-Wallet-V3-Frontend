@@ -9,11 +9,15 @@
     }
   }
 
+  form[name="noteForm"] {
+    width: 50%;
+  }
+
   textarea {
     border-radius: 3px;
     border: 1px solid #EEEEEE;
     height: 60px;
-    width: 300px;
+    width: 100%;
     &:focus {
       outline: none;
     }
