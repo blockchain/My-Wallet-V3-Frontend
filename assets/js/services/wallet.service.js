@@ -149,9 +149,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
             wallet.status.didLoadBalances = true;
             $rootScope.$safeApply();
           };
-          wallet.my.wallet.getHistory()
-            .then(() => wallet.my.wallet.txList.fetchTxs())
-            .then(didFetchTransactions);
+          wallet.my.wallet.getHistory().then(didFetchTransactions);
         }
         $rootScope.$safeApply();
       });
@@ -368,7 +366,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   wallet.createAccount = (label, successCallback, errorCallback, cancelCallback) => {
     let proceed = (password) => {
       let newAccount = wallet.my.wallet.newAccount(label, password);
-      wallet.my.wallet.txList.fetchTxs();
+      wallet.my.wallet.getHistory();
       successCallback && successCallback();
     };
     wallet.askForSecondPasswordIfNeeded()
@@ -582,8 +580,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
 
     let update = () => {
       console.log('updating...');
-      wallet.my.wallet.txList.fetchTxs();
-      successCallback();
+      wallet.my.wallet.getHistory().then(successCallback);
     };
 
     wallet.askForSecondPasswordIfNeeded()
@@ -743,12 +740,11 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
 
   wallet.monitor = (event, data) => {
     if (event === 'on_tx') {
-      wallet.beep();
+      $rootScope.cancelRefresh();
       let tx = wallet.my.wallet.txList.transactions()[0];
       if (tx.result > 0 && tx.txType === 'received') {
-        $translate('JUST_RECEIVED_BITCOIN').then((translation) => {
-          Alerts.displayReceivedBitcoin(translation);
-        });
+        wallet.beep();
+        $translate('JUST_RECEIVED_BITCOIN').then(Alerts.displayReceivedBitcoin);
       }
     } else if (event === 'on_block') {
     } else if (event === 'error_restoring_wallet') {
