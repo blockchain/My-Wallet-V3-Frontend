@@ -20,8 +20,8 @@ describe "TransactionsCtrl", ->
           subscribe: () -> (() -> )
           transactions: () ->
             [{ result: 1, txType: 'received' }]
-          fetchTxs: () ->
-            $q.resolve(1)
+        fetchTransactions: () ->
+          $q.resolve(1)
 
       Wallet.status =
         isLoggedIn: true
@@ -47,9 +47,9 @@ describe "TransactionsCtrl", ->
     )
 
     it "should be able to fetch more transactions", inject((Wallet) ->
-      spyOn(Wallet.my.wallet.txList, "fetchTxs").and.callThrough()
+      spyOn(Wallet.my.wallet, "fetchTransactions").and.callThrough()
       scope.nextPage()
-      expect(Wallet.my.wallet.txList.fetchTxs).toHaveBeenCalled()
+      expect(Wallet.my.wallet.fetchTransactions).toHaveBeenCalled()
     )
 
     it "should receive a new transaction from mock after 3 seconds on account 1",  ->

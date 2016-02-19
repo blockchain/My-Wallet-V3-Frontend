@@ -90,6 +90,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
     const success = () => {
       $scope.status.sweeping = false;
       $uibModalInstance.dismiss("");
+      $rootScope.scheduleRefresh();
       $state.go("wallet.common.transactions", {
         accountIndex: $scope.fields.account.index
       });
@@ -101,10 +102,6 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
           msg: translations.BITCOIN_SENT
         });
       });
-      $timeout(() => {
-        // In case the web socket fails:
-        $rootScope.refresh();
-      }, 3000);
     };
 
     const error = (error) => {

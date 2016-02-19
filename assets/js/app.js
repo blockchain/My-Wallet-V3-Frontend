@@ -41,11 +41,18 @@ angular.module('walletApp', modules)
     if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
   };
 
-  $rootScope.refresh = () => {
+  $rootScope.scheduleRefresh = () => {
+    $rootScope.cancelRefresh();
+    $rootScope.refreshTimeout = $timeout($rootScope.refresh, 3000);
+  };
 
+  $rootScope.cancelRefresh = () => {
+    $timeout.cancel($rootScope.refreshTimeout);
+  };
+
+  $rootScope.refresh = () => {
     $rootScope.refreshing = true;
-    let amt = MyWallet.wallet.txList.transactions().length;
-    $q.all([MyWallet.wallet.getHistory(), currency.fetchExchangeRate(), MyWallet.wallet.txList.fetchTxs(amt, true)])
+    $q.all([ MyWallet.wallet.getHistory(), currency.fetchExchangeRate() ])
       .catch(() => console.log('error refreshing'))
       .finally(() => {
         $rootScope.$broadcast('refresh');

@@ -21,7 +21,7 @@ function TransactionsCtrl($scope, Wallet, MyWallet, $timeout, $stateParams, $sta
 
   let fetchTxs = () => {
     $scope.loading = true;
-    txList.fetchTxs().then((numFetched) => {
+    MyWallet.wallet.fetchTransactions().then((numFetched) => {
       $timeout(() => {
         $scope.allTxsLoaded = numFetched < txList.loadNumber;
         $scope.loading = false;
@@ -48,9 +48,12 @@ function TransactionsCtrl($scope, Wallet, MyWallet, $timeout, $stateParams, $sta
     $scope.canDisplayDescriptions = $scope.accounts().length > 0;
   });
 
-  let setTxs = () =>
-    $scope.transactions = txList.transactions(accountIndex);
+  let setTxs = () => {
+    let newTxs = txList.transactions(accountIndex);
+    if ($scope.transactions.length > newTxs.length) $scope.allTxsLoaded = false;
+    $scope.transactions = newTxs;
     $rootScope.$safeApply()
+  };
 
   let unsub = txList.subscribe(setTxs);
   $scope.$on('$destroy', unsub);
