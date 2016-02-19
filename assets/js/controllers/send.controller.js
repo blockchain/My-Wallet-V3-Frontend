@@ -172,11 +172,10 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     const transactionFailed = (message) => {
       $scope.sending = false;
       $scope.payment = new Wallet.payment(paymentCheckpoint).build();
-      if (message) {
-        $translate(message).then(t => {
-          Alerts.displayError(t, false, $scope.alerts);
-        });
-      }
+      let msgText = 'string' === typeof message ? message : 'SEND_FAILED';
+      $translate(msgText).then(t => {
+        Alerts.displayError(t, false, $scope.alerts);
+      });
     };
 
     const transactionSucceeded = (tx) => {

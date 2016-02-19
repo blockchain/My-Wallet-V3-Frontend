@@ -351,6 +351,7 @@
   "AUTHORIZED" : "Authorized!",
   "AUTHORIZED_MESSAGE" : "You have authorized this login attempt.",
   "ADVANCED_SEND" : "Advanced Send",
+  "SEND_FAILED": "Send failed, please come back later to try again",
   "RESET_FORM" : "Reset Form",
   "REGULAR_SEND" : "Regular Send",
   "MINERS_FEE" : "Miner's Fee",
