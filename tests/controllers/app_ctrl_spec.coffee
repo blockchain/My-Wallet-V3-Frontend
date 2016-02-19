@@ -49,6 +49,12 @@ describe "AppCtrl", ->
 
   )
 
+  it "should dismiss all modals on state change", inject(($state, $uibModalStack) ->
+    spyOn($uibModalStack, "dismissAll")
+    scope.$broadcast("$stateChangeSuccess", {name: "home"})
+    expect($uibModalStack.dismissAll).toHaveBeenCalled()
+  )
+
   it "should open a popup to send",  inject(($uibModal) ->
     spyOn($uibModal, "open")
     scope.send()
