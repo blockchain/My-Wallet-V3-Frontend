@@ -398,7 +398,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     let txFrom = $scope.transaction.from;
     if (!txFrom) return;
     let origin = (txFrom.index == null) ? txFrom.address : txFrom.index;
-    $scope.payment.from(origin);
+    $scope.payment.from(origin).sideEffect($scope.handleTxUpdate);
     $scope.buildTx();
   };
 
