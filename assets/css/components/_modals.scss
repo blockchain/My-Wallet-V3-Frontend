@@ -140,9 +140,9 @@
 // Blockchain Modal Overrides
 // --------------------------------------------------
 .bc-modal {
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
+  @extend .flex-important;
+  @extend .flex-justify;
+  @extend .flex-center;
   .modal-content { background: $light-blue; }
   .modal-dialog { width: 55vw; margin: 0 !important }
   &.small { .modal-dialog { width: 40vw; } }
@@ -361,7 +361,6 @@
       width: 95vw;
       margin: 5vw 2vw;
     }
-    .total-amounts { width: 100%; }
     [name='sendForm'], [name='requestForm']  {
       label { text-align: left; }
     }
@@ -382,6 +381,11 @@
     .modal-dialog {
       width: 60vw;
     }
+  }
+}
+@media (max-width: 620px) {
+  .bc-modal, .bc-modal.small {
+    .total-amounts { width: 100%; }
   }
 }
 

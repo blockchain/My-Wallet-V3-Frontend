@@ -2,6 +2,10 @@
   .transaction-feed {
     position: relative;
     top: 50px;
+    .loading .col-xs-2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
   }
   a.date { padding-top: 10px; }
   .transaction {

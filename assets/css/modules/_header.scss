@@ -103,11 +103,9 @@
     li.active {
      a {
         background-color: #0face5;
-        border-radius: 5px;
       }
       a:hover {
         background-color: #0face5;
-        border-radius: 5px;
       }
       a:focus, a:active {
         background-color: transparent;
@@ -117,7 +115,6 @@
     > li {
       a:hover {
         background-color: #0face5;
-        border-radius: 5px;
       }
       a:focus, a:active {
         background-color: transparent;

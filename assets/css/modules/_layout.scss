@@ -47,7 +47,7 @@
   overflow-y: scroll;
   overflow-x: hidden;
   width: calc(100% - 270px);
-  height: calc(100% - 170px); // make viewport smaller for overflow-y to work
+  height: calc(100% - 175px); // make viewport smaller for overflow-y to work
 }
 
 .overflow-scroll {
@@ -58,7 +58,7 @@
 @media (max-width: 768px) {
   .left-nav {
     left: -270px;
-    z-index: 2; //just enough to be visible
+    z-index: 11; //just enough to be visible
     transition: all .3s ease-in-out;
     top: 0px;
   }
@@ -93,6 +93,6 @@
 @media (max-width:480px) {
   .main-container {
     background: transparent;
-    height: calc(100% - 110px);
+    height: calc(100% - 145px);
   }
 }

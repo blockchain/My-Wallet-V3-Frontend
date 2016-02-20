@@ -24,6 +24,12 @@ div.login-form {
   margin-top: -100px;
 }
 
+@media (max-height: 700px) {
+  .login-box-container {
+    margin-top: 0px;
+  }
+}
+
 .login-box {
   background-color: white;
   padding: 10px 50px 25px;
@@ -71,7 +77,6 @@ div.login-form {
 @media (max-width: 620px) {
   .login-box {
     padding: 10px 25px 25px;
-    margin-bottom: 100px; //so you can scroll
     min-width: 0;
     width: 95%;
     header h2 { font-size: 18px; margin-top: 0; margin-bottom: 5px; }
