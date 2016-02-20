@@ -172,11 +172,10 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     const transactionFailed = (message) => {
       $scope.sending = false;
       $scope.payment = new Wallet.payment(paymentCheckpoint).build();
-      if (message) {
-        $translate(message).then(t => {
-          Alerts.displayError(t, false, $scope.alerts);
-        });
-      }
+      let msgText = 'string' === typeof message ? message : 'SEND_FAILED';
+      $translate(msgText).then(t => {
+        Alerts.displayError(t, false, $scope.alerts);
+      });
     };
 
     const transactionSucceeded = (tx) => {
@@ -399,7 +398,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     let txFrom = $scope.transaction.from;
     if (!txFrom) return;
     let origin = (txFrom.index == null) ? txFrom.address : txFrom.index;
-    $scope.payment.from(origin);
+    $scope.payment.from(origin).sideEffect($scope.handleTxUpdate);
     $scope.buildTx();
   };
 
