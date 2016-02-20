@@ -58,10 +58,10 @@ describe "NavigationCtrl", ->
     spyOn($state, "go")
     spyOn($uibModal, 'open').and.returnValue(mockModalInstance)
 
-    $uibModal.dismiss('cancel');
+    scope.doLogout()
+    scope.logoutModal.close()
 
     scope.logout()
-
     expect(Wallet.logout).toHaveBeenCalled()
     expect(scope.status.isLoggedIn).toBe(false)
   )
