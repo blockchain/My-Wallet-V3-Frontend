@@ -1,10 +1,17 @@
-.flex.flex-justify.mtl
-  .bc-form.pal
-    .bc-form-header
-      h5.mtn.em-400.type-h5 Contact Support!
-      label.mbl.text.em-300 Running into problems? Don't worry, our support team is here to help.
-    .bc-empty-state.flex-justify.flex-center.mtl
+.modal-header.flex-column.bc-modal-header
+  h3(translate="CONTACT_SUPPORT")
+  h5(translate="HERE_TO_HELP")
+.modal-body
+  .flex-row.flex-around
+    .bc-empty-state.flex-justify.flex-center.flex-column.mtl
+      i.blue.ti-help
+      .flex.flex-justify.ptl.mtl
+        a.button-success(href="https://blockchain.zendesk.com/hc/en-us/categories/201149143--NEW-Beta-Wallet-FAQ" target="_blank")
+          | FAQ
+    .bc-empty-state.flex-justify.flex-center.flex-column.mtl
       i.blue.bc-icon-helpdesk
-    .flex.flex-justify.ptl.mtl
-      a.button-success(href="https://blockchain.zendesk.com/anonymous_requests/new" target="_blank")
-        | Send us a ticket
+      .flex.flex-justify.ptl.mtl
+        a.button-success(href="https://blockchain.zendesk.com/anonymous_requests/new" target="_blank" translate="TICKET")
+  
+.modal-footer
+  button.button-muted.mrm(ng-click="$dismiss()", translate="CLOSE")

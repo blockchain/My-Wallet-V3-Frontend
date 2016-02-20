@@ -180,22 +180,6 @@ function AppRouter($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('wallet.common.support', {
-      url: '/contact-support',
-      views: {
-        top: top,
-        left: {
-          templateUrl: 'partials/wallet-navigation.jade',
-          controller: 'WalletNavigationCtrl'
-        },
-        right: {
-          templateUrl: 'partials/support.jade',
-          controller: function($scope, $log, $state) {
-            return $scope.state = $state;
-          }
-        }
-      }
-    })
     .state('wallet.common.feedback', {
       url: '/feedback',
       views: {
