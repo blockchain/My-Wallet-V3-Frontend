@@ -2,16 +2,16 @@ angular
   .module('walletApp')
   .controller("NavigationCtrl", NavigationCtrl);
 
-function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $translate, $cookies, $state, filterFilter, $interval, $timeout) {
+function NavigationCtrl($rootScope, $scope, Wallet, Confirm, currency, SecurityCenter, $translate, $cookies, $state, filterFilter, $interval, $timeout, $uibModal) {
   $scope.status = Wallet.status;
   $scope.security = SecurityCenter.security;
   $scope.settings = Wallet.settings;
 
   $scope.logout = () => {
     if (!Wallet.isSynchronizedWithServer()) {
-      if (confirm("There are changes still being saved. Are you sure you wish to logout?")) {
-        $scope.doLogout();
-      }
+      $translate("CHANGES_BEING_SAVED").then( translation => {
+        Confirm.open(translation).result.then(() => { $scope.doLogout() });
+      })
     } else {
       $scope.doLogout();
     }
@@ -33,7 +33,10 @@ function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $t
 
   $scope.doLogout = () => {
     $translate("ARE_YOU_SURE_LOGOUT").then( translation => {
-      if (confirm(translation)) {
+
+      $scope.logoutModal = Confirm.open(translation)
+
+      $scope.logoutModal.result.then(() => {
         $scope.uid = null;
         $scope.password = null;
         $cookies.remove("password");
@@ -43,7 +46,7 @@ function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $t
           accountIndex: ""
         });
         Wallet.logout();  // Refreshes the browser, so won't return
-      }
+      });
     });
   };
 

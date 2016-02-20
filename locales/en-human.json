@@ -29,6 +29,7 @@
   "LOGOUT": "Logout",
   "LOGGED_OUT" : "Logged out",
   "LOGGED_OUT_AUTOMATICALLY" : "Logged out automatically",
+  "CHANGES_BEING_SAVED": "There are changes still being saved. Are you sure you wish to logout?",
   "AUTO_LOGOUT" : "Auto Logout",
   "AUTO_LOGOUT_EXPLAIN" : "After a certain period of inactivity, you will be automatically logged out of your wallet.",
   "CLOSE": "Close",
