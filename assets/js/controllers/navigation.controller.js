@@ -35,9 +35,11 @@ function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $t
     $translate("ARE_YOU_SURE_LOGOUT").then( translation => {
       $uibModal.open({
         templateUrl: 'partials/modal-confirm.jade',
-        controller: 'ModalConfirmCtrl',
         windowClass: 'bc-modal confirm',
-        resolve: { translation: () => translation }
+        resolve: { translation: () => translation },
+        controller: function ModalConfirmCtrl($scope, translation) {
+          $scope.translation = translation
+        }
       }).result.then(() => {
         $scope.uid = null;
         $scope.password = null;

@@ -1,5 +1,6 @@
 describe "NavigationCtrl", ->
   scope = undefined
+  mockModalInstance = undefined
 
   beforeEach angular.mock.module("walletApp")
 
@@ -11,6 +12,21 @@ describe "NavigationCtrl", ->
       Wallet.status = {
         isLoggedIn: true
       }
+
+      mockModalInstance =
+        result: then: (confirmCallback, cancelCallback) ->
+          #Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
+          @confirmCallBack = confirmCallback
+          @cancelCallback = cancelCallback
+          return
+        close: (item) ->
+          #The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
+          @result.confirmCallBack item
+          return
+        dismiss: (type) ->
+          #The user clicked cancel on the modal dialog, call the stored cancel callback
+          @result.cancelCallback type
+          return
 
       MyWallet.logout = () ->
         Wallet.status.isLoggedIn = false
@@ -37,10 +53,12 @@ describe "NavigationCtrl", ->
     expect(scope.status.isLoggedIn).toBe(true)
   )
 
-  it "should logout",  inject((Wallet, $stateParams, $state) ->
+  it "should logout",  inject((Wallet, $stateParams, $state, $uibModal) ->
     spyOn(Wallet, "logout").and.callThrough()
     spyOn($state, "go")
-    spyOn(window, 'confirm').and.returnValue(true)
+    spyOn($uibModal, 'open').and.returnValue(mockModalInstance)
+
+    $uibModal.dismiss('cancel');
 
     scope.logout()
 

@@ -47,9 +47,9 @@ $fast: 0.2s;
 //speed up fade in animation
 
 .fade {
-  -webkit-transition: opacity 0.05s linear;
-  -o-transition: opacity 0.05s linear;
-  transition: opacity 0.05s linear;
+  -webkit-transition: opacity $fast linear;
+  -o-transition: opacity $fast linear;
+  transition: opacity $fast linear;
 }
 
 ///////////////////////////////////
@@ -92,8 +92,8 @@ $fast: 0.2s;
 @-webkit-keyframes fade-in-down {
   0% {
     opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
+    -webkit-transform: translate3d(0, -50%, 0);
+    transform: translate3d(0, -50%, 0);
   }
 
   100% {
@@ -106,8 +106,8 @@ $fast: 0.2s;
 @keyframes fade-in-down {
   0% {
     opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
+    -webkit-transform: translate3d(0, -50%, 0);
+    transform: translate3d(0, -50%, 0);
   }
 
   100% {
@@ -126,8 +126,8 @@ $fast: 0.2s;
 
   100% {
     opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
+    -webkit-transform: translate3d(0, -30%, 0);
+    transform: translate3d(0, -30%, 0);
   }
 }
 
@@ -140,8 +140,8 @@ $fast: 0.2s;
 
   100% {
     opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
+    -webkit-transform: translate3d(0, -30%, 0);
+    transform: translate3d(0, -30%, 0);
   }
 }
 

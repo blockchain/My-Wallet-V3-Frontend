@@ -1,6 +1,7 @@
 .alert {
   width: 40vw;
   margin-top: 1vw;
+  border-radius: 0px;
   animation: fade-in-down .5s;
   -webkit-animation: fade-in-down .5s;
   &.ng-leave-active {

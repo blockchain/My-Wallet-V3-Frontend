@@ -165,6 +165,9 @@
   &.small { .modal-dialog { width: 40vw; } }
   &.confirm { 
     align-items: flex-start;
+    .modal-body {
+      border-radius: 5px 5px 0px 0px;
+    }
     .modal-dialog { 
       width: auto; 
     } 
