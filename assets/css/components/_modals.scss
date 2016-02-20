@@ -146,7 +146,11 @@
   .modal-content { background: $light-blue; }
   .modal-dialog { width: 55vw; margin: 0 !important }
   &.small { .modal-dialog { width: 40vw; } }
-  &.auto { .modal-dialog { width: auto; } }
+  &.auto { 
+    @media (min-width: 768px) {
+      .modal-dialog { width: auto; } 
+    }
+  }
   .modal-body {
     background: white;
     min-height: 100px;
