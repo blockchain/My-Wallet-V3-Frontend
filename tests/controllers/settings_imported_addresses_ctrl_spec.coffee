@@ -1,6 +1,7 @@
 describe "SettingsImportedAddressesCtrl", ->
   scope = undefined
   Wallet = undefined
+  mockModalInstance = undefined
 
   modal =
     open: ->
@@ -22,6 +23,21 @@ describe "SettingsImportedAddressesCtrl", ->
             legacyAddresses.pop()
           keys: legacyAddresses
 
+      mockModalInstance =
+        result: then: (confirmCallback, cancelCallback) ->
+          #Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
+          @confirmCallBack = confirmCallback
+          @cancelCallback = cancelCallback
+          return
+        close: (item) ->
+          #The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
+          @result.confirmCallBack item
+          return
+        dismiss: (type) ->
+          #The user clicked cancel on the modal dialog, call the stored cancel callback
+          @result.cancelCallback type
+          return
+
       scope = $rootScope.$new()
 
       $controller "SettingsImportedAddressesCtrl",
@@ -41,22 +57,18 @@ describe "SettingsImportedAddressesCtrl", ->
       scope.unarchive(address)
       expect(address.archived).toBe(false)
 
-    it "can be deleted", inject((Wallet) ->
-      spyOn(window, 'confirm').and.callFake(() ->
-        return true
-      )
-
+    it "can be deleted", inject((Wallet, $uibModal) ->
+      spyOn($uibModal, 'open').and.returnValue(mockModalInstance)
       address = scope.legacyAddresses()[1]
       before = scope.legacyAddresses().length
 
       spyOn(Wallet, "deleteLegacyAddress").and.callThrough()
 
       scope.delete(address)
+      scope.deleteModal.close();
       expect(Wallet.deleteLegacyAddress).toHaveBeenCalled()
 
       expect(scope.legacyAddresses().length).toBe(before - 1)
-
-
     )
 
   describe "importAddress()", ->
