@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("AddressImportCtrl", AddressImportCtrl);
 
-function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $translate, $state, $timeout, address, $rootScope) {
+function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $translate, $state, $timeout, address, $rootScope, Confirm) {
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
   $scope.alerts = [];
@@ -165,9 +165,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
   $scope.close = () => {
     if($scope.step == 2 && $scope.address.balance > 0 && !$scope.address.isWatchOnly) {
       $translate('CONFIRM_NOT_SWEEP').then((translation) => {
-        if(confirm(translation)) {
-          $uibModalInstance.dismiss("");
-        }
+        Confirm.open(translation).result.then(() => { $uibModalInstance.dismiss("") });
       });
     } else {
       $uibModalInstance.dismiss("");

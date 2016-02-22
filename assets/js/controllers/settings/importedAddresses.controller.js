@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SettingsImportedAddressesCtrl", SettingsImportedAddressesCtrl);
 
-function SettingsImportedAddressesCtrl($scope, Wallet, Alerts, $translate, $uibModal) {
+function SettingsImportedAddressesCtrl($scope, Wallet, Alerts, $translate, $uibModal, Confirm) {
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.display = {
     archived: false,
@@ -18,10 +18,11 @@ function SettingsImportedAddressesCtrl($scope, Wallet, Alerts, $translate, $uibM
 
   $scope.delete = (address) => {
     $translate("LOSE_ACCESS").then((translation) => {
-      if (confirm(translation)) {
+      $scope.deleteModal = Confirm.open(translation);
+      $scope.deleteModal.result.then(() => {
         Wallet.deleteLegacyAddress(address);
         $scope.legacyAddresses = Wallet.legacyAddresses;
-      }
+      });
     });
   };
 
