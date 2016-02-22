@@ -4,3 +4,5 @@
     .flex.flex-justify
       alerts
     .login-box.mhs(ui-view="contents")
+  .versions(ng-show="versionFrontend && versionMyWallet")
+    span {{ versionFrontend }} (MyWallet v{{ versionMyWallet }})

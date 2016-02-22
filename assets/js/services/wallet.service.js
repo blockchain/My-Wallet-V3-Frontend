@@ -79,11 +79,14 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   }
 
   // These are set by grunt dist:
-  const versionFrontend = null;
-  const versionMyWallet = null;
+  $rootScope.versionFrontend = null;
+  $rootScope.versionMyWallet = null;
 
-  if(versionFrontend) {
-    console.log("My-Wallet-V3 Frontend", versionFrontend, "and My-Wallet-V3 version", versionMyWallet);
+  if ($rootScope.versionFrontend) {
+    console.log(
+      'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s',
+      $rootScope.versionFrontend, $rootScope.versionMyWallet
+    );
   }
 
   wallet.payment = MyWalletPayment;
