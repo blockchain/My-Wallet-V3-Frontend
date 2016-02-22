@@ -181,7 +181,7 @@ describe "walletServices", () ->
       $timeout.flush()
 
       expect($rootScope.$broadcast).toHaveBeenCalled()
-      expect($rootScope.$broadcast.calls.argsFor(0)[0]).toEqual("needsUpgradeToHD")
+      expect($rootScope.$broadcast.calls.argsFor(2)[0]).toEqual("needsUpgradeToHD")
     )
 
   describe "signup", ->
