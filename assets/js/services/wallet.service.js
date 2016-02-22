@@ -798,6 +798,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       }
     } else {
     }
+    $rootScope.$safeApply();
   };
 
   wallet.store.addEventListener((event, data) => {
