@@ -9,6 +9,8 @@ function Alerts($timeout, $rootScope, $translate) {
     alerts          : [],
     close           : close,
     clear           : clear,
+    display         : display,
+    isDuplicate     : isDuplicate,
     displayInfo     : display.bind(null, 'info'),
     displaySuccess  : display.bind(null, 'success'),
     displayWarning  : display.bind(null, ''),
