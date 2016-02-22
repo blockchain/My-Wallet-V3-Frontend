@@ -132,6 +132,13 @@ html,body {
 }
 .z-10 { z-index: 10; }
 
+.versions {
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  color: white;
+}
+
 noscript {
   display:flex;
   display: -webkit-flex;
