@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('WalletNavigationCtrl', WalletNavigationCtrl);
 
-function WalletNavigationCtrl($scope, Wallet, Alerts, SecurityCenter, $state, $stateParams, $uibModal, filterFilter, $location) {
+function WalletNavigationCtrl($rootScope, $scope, Wallet, Alerts, SecurityCenter, $state, $stateParams, $uibModal, filterFilter, $location) {
   $scope.status = Wallet.status;
   $scope.total = Wallet.total;
   $scope.settings = Wallet.settings;
@@ -76,6 +76,13 @@ function WalletNavigationCtrl($scope, Wallet, Alerts, SecurityCenter, $state, $s
   $scope.didLoad = () => {
     $scope.accounts = Wallet.accounts;
   };
+
+  $rootScope.supportModal = () => {
+    let modalInstance = $uibModal.open({
+      templateUrl: 'partials/support.jade',
+      windowClass: 'bc-modal auto'
+    })
+  }
 
   $scope.didLoad();
 
