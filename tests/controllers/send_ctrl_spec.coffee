@@ -32,7 +32,7 @@ describe "SendCtrl", ->
         { fee: 20000, surge: false }, { fee: 10000, surge: false }
       ]
 
-      $httpBackend.when('GET', 'http://service-dynamic-fee.dev.blockchain.co.uk/fees')
+      $httpBackend.when('GET', 'http://service-dynamic-fee.prod.blockchain.co.uk/fees')
         .respond({ estimate: feeEstimates })
 
       MyWallet.wallet =
@@ -78,7 +78,7 @@ describe "SendCtrl", ->
     return
 
   beforeEach ->
-    $httpBackend.expectGET('http://service-dynamic-fee.dev.blockchain.co.uk/fees')
+    $httpBackend.expectGET('http://service-dynamic-fee.prod.blockchain.co.uk/fees')
 
   afterEach ->
     $httpBackend.flush()
