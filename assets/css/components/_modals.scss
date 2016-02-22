@@ -25,6 +25,11 @@
   }
   &.in .modal-dialog { transform: scale(1) }
   &.confirm {
+    max-width: 35vw;
+    margin: 0 auto;
+    @media (max-width: 768px) {
+      max-width: 85vw;
+    }
     .modal-dialog {
       transition: all 0.3s linear;
     }
