@@ -1,0 +1,27 @@
+.shadow-1 {
+  position: relative;
+  &:before, &:after {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    content: "";
+    left: 0;
+    top: 0;
+  }
+  &:before {
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+  }
+  &:after {
+    box-shadow: none;
+  }
+}
+
+.shadow-2 {
+  @extend .shadow-1;
+  &:before {
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3)
+  }
+  &:after {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+  }
+}

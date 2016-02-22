@@ -1,7 +1,13 @@
 .alert {
   width: 40vw;
-  animation: fade-in-down .5s;
   margin-top: 1vw;
+  border-radius: 0px;
+  animation: fade-in-down .5s;
+  -webkit-animation: fade-in-down .5s;
+  &.ng-leave-active {
+    animation: fade-out-up .5s;
+    -webkit-animation: fade-out-up .5s;
+  }
 }
 .alert-in-app {
   top: 2px;
@@ -29,4 +35,25 @@
 
 @media (max-width: 620px) {
   .alert { width: 95vw; }
+}
+
+// bootstrap alert overrides
+.alert {
+  top: 0;
+  left: 0;
+  width: 100%;
+  position: absolute;
+}
+
+.alert-warning, .alert-danger {
+  border: 0px;
+  @extend .shadow-1;
+}
+
+.alert-dismissable .close, .alert-dismissible .close {
+  top: 5px;
+  right: 5px;
+  z-index: 1;
+  color: inherit;
+  position: absolute;
 }
