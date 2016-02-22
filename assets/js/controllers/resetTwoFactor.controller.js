@@ -21,7 +21,6 @@ function ResetTwoFactorCtrl($scope, $rootScope, $http, $translate, WalletNetwork
   };
 
   $scope.resetTwoFactor = () => {
-    Alerts.clear()
 
     $scope.working = true;
     let success = (message) => {
