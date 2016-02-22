@@ -5,7 +5,7 @@ angular
 function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $translate, $state, $timeout, address, $rootScope) {
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
-  $scope.alerts = Alerts.alerts;
+  $scope.alerts = [];
   $scope.address = address;
   $scope.step = address ? 3 : 1;
   $scope.BIP38 = false;
@@ -107,11 +107,11 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
     const error = (error) => {
       $scope.status.sweeping = false;
       if (error && typeof error === 'string') {
-        Alerts.displayError(error);
+        Alerts.displayError(error, false, $scope.alerts);
       } else {
         console.log(error);
         $translate("SWEEP_FAILED").then((translation) => {
-          Alerts.displayError(translation);
+          Alerts.displayError(translation, false, $scope.alerts);
         });
       }
       $scope.$root.$safeApply($scope);
@@ -137,7 +137,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
 
   $scope.onError = (error) => {
     $translate("CAMERA_PERMISSION_DENIED").then(function(translation) {
-      Alerts.displayWarning(translation);
+      Alerts.displayWarning(translation, false, $scope.alerts);
     });
   };
 
