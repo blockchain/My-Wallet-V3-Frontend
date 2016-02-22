@@ -493,9 +493,6 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     });
   };
 
-  wallet.recommendedTransactionFee = (origin, amount) =>
-    wallet.my.getBaseFee();
-
   wallet.toggleDisplayCurrency = () => {
     if (currency.isBitCurrency(wallet.settings.displayCurrency)) {
       wallet.settings.displayCurrency = wallet.settings.currency;
