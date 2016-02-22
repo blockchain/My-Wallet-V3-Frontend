@@ -189,35 +189,62 @@ describe "walletServices", () ->
     return
 
   describe "total()", ->
-    beforeEach ->
-      Wallet.accounts = () -> [{balance: 1}, {balance: 2}]
+    describe "for an account", ->
 
-    it "should return the balance for each account", inject((Wallet) ->
-      expect(Wallet.total(0)).toBeGreaterThan(0)
-      expect(Wallet.total(0)).toBe(Wallet.accounts()[0].balance)
-      expect(Wallet.total(1)).toBe(Wallet.accounts()[1].balance)
+      it "should return the balance", inject((Wallet) ->
+        Wallet.accounts = () -> [{balance: 1}, {balance: 2}]
 
-      return
-    )
+        expect(Wallet.total(0)).toBeGreaterThan(0)
+        expect(Wallet.total(0)).toBe(1)
+        expect(Wallet.total(1)).toBe(2)
 
-    it "should return the sum of all accounts and addresses", inject((Wallet) ->
-      Wallet.my.wallet.hdwallet.balanceActiveAccounts = 3
-      Wallet.my.wallet.balanceSpendableActiveLegacy = 1
+        return
+      )
 
-      expect(Wallet.total("")).toBeGreaterThan(0)
-      expect(Wallet.total("")).toBe(Wallet.accounts()[0].balance + Wallet.accounts()[1].balance + 1)
+      it "should return null if balance unknown", inject((Wallet) ->
+        Wallet.accounts = () -> [{balance: null}]
 
-      return
-    )
+        expect(Wallet.total(0)).toEqual(null)
+        return
+      )
 
-    it "should return the sum of all legacy addresses", inject((Wallet, MyWalletStore) ->
-      Wallet.my.wallet.balanceSpendableActiveLegacy = 1
+    describe "for all", ->
+      it "should return the sum of all accounts and addresses", inject((Wallet) ->
 
-      expect(Wallet.total("imported")).toBeGreaterThan(0)
-      expect(Wallet.total("imported")).toBe(1)
+        Wallet.my.wallet.hdwallet.balanceActiveAccounts = 3
+        Wallet.my.wallet.balanceSpendableActiveLegacy = 1
 
-      return
-    )
+        expect(Wallet.total("")).toBeGreaterThan(0)
+        expect(Wallet.total("")).toBe(4)
+
+        return
+      )
+
+      # This ensures a spinner shows during load
+      it "should return null if either accounts or addresses are unknown", inject((Wallet) ->
+
+        Wallet.my.wallet.hdwallet.balanceActiveAccounts = null
+        Wallet.my.wallet.balanceSpendableActiveLegacy = 1
+
+        expect(Wallet.total("")).toBe(null)
+
+        Wallet.my.wallet.hdwallet.balanceActiveAccounts = 1
+        Wallet.my.wallet.balanceSpendableActiveLegacy = null
+
+        expect(Wallet.total("")).toBe(null)
+
+        return
+      )
+
+    describe "for imported addresses", ->
+      it "should return the sum of all legacy addresses", inject((Wallet, MyWalletStore) ->
+        Wallet.my.wallet.balanceSpendableActiveLegacy = 1
+
+        expect(Wallet.total("imported")).toBeGreaterThan(0)
+        expect(Wallet.total("imported")).toBe(1)
+
+        return
+      )
 
     return
 

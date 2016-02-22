@@ -693,6 +693,8 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     switch (accountIndex) {
       case '':
         if (wallet.my.wallet.isUpgradedToHD) {
+          if(wallet.my.wallet.balanceSpendableActiveLegacy == null || wallet.my.wallet.hdwallet.balanceActiveAccounts == null)
+           return null;
           return wallet.my.wallet.hdwallet.balanceActiveAccounts + wallet.my.wallet.balanceSpendableActiveLegacy;
         } else {
           return wallet.my.wallet.balanceSpendableActiveLegacy;
@@ -702,6 +704,9 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
         return wallet.my.wallet.balanceSpendableActiveLegacy;
       case void 0:
         if (wallet.my.wallet.isUpgradedToHD) {
+          if(wallet.my.wallet.hdwallet.balanceActiveAccounts == null || wallet.my.wallet.balanceSpendableActiveLegacy == null)
+           return null;
+
           return wallet.my.wallet.hdwallet.balanceActiveAccounts + wallet.my.wallet.balanceSpendableActiveLegacy;
         } else {
           return wallet.my.wallet.balanceSpendableActiveLegacy;
