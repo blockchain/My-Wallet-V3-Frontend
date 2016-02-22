@@ -24,6 +24,23 @@
     transition: transform 0.15s linear;
   }
   &.in .modal-dialog { transform: scale(1) }
+  &.confirm {
+    .modal-dialog {
+      transition: all 0.3s linear;
+    }
+    &.fade .modal-dialog {
+      -webkit-transform: translate(0,-25%);
+      -ms-transform: translate(0,-25%);
+      -o-transform: translate(0,-25%);
+      transform: translate(0,-25%);
+    } 
+    &.in .modal-dialog {
+      -webkit-transform: translate(0,10%);
+      -ms-transform: translate(0,10%);
+      -o-transform: translate(0,10%);
+      transform: translate(0,10%);
+    }
+  }
 }
 
 // Shell div to position the modal with bottom padding
@@ -149,6 +166,15 @@
   &.auto { 
     @media (min-width: 768px) {
       .modal-dialog { width: auto; } 
+    }
+  }
+  &.confirm { 
+    align-items: flex-start;
+    .modal-dialog { 
+      width: auto; 
+    } 
+    .modal-body {
+      min-height: 0px;
     }
   }
   .modal-body {
