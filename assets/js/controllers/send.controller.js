@@ -42,12 +42,12 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   $scope.transaction = angular.copy($scope.transactionTemplate);
 
   let dynamicFeeVectorP = $http
-    .get('http://service-dynamic-fee.dev.blockchain.co.uk/fees')
+    .get('http://service-dynamic-fee.prod.blockchain.co.uk/fees')
     .then(response => response.data.estimate);
 
   dynamicFeeVectorP.then(estimate => {
-    $scope.surgeWarning = estimate[2].surge;
-    $scope.payment.feePerKb(estimate[2].fee);
+    $scope.surgeWarning = estimate[1].surge;
+    $scope.payment.feePerKb(estimate[1].fee);
     $scope.dynamicFeeAvailable = true;
     $scope.setPaymentFrom();
   });
@@ -473,6 +473,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
     let surge = $scope.surgeWarning && !$scope.advanced;
     let currentFee = $scope.transaction.fee;
+    let minimumFee = 5000;
     let suggestedFee;
 
     let showFeeWarning = $uibModal.open.bind($uibModal, {
@@ -481,7 +482,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       controller: function DynamicFeeController($scope, $uibModalInstance) {
         $scope.surge = surge;
         $scope.currentFee = currentFee;
-        $scope.suggestedFee = Math.floor(suggestedFee);
+        $scope.suggestedFee = suggestedFee < minimumFee ? minimumFee : Math.floor(suggestedFee);
         $scope.cancel = () => {
           $uibModalInstance.dismiss('cancelled');
           if (surge) goAdvanced();
@@ -498,8 +499,9 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
     return dynamicFeeVectorP.then(estimate => {
       let high = guessAbsoluteFee(tx.sizeEstimate, estimate[0].fee);
-      let mid = guessAbsoluteFee(tx.sizeEstimate, estimate[2].fee);
+      let mid = guessAbsoluteFee(tx.sizeEstimate, estimate[1].fee);
       let low = guessAbsoluteFee(tx.sizeEstimate, estimate[5].fee);
+      console.log('Fees (high: %d, mid: %d, low: %d)', high, mid, low);
 
       if (currentFee > high) {
         suggestedFee = high;
