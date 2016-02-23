@@ -92,7 +92,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   wallet.payment = MyWalletPayment;
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
-  wallet.store.setAPICode(wallet.api_code);
+  //wallet.store.setAPICode(wallet.api_code);
 
   wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) => {
     let didLogin = () => {
