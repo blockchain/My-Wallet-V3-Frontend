@@ -2,14 +2,15 @@ angular
   .module('walletApp')
   .factory('Alerts', Alerts);
 
-Alerts.$inject = ['$timeout', '$rootScope', '$translate'];
+Alerts.$inject = ['$timeout', '$rootScope', '$translate', '$uibModal'];
 
-function Alerts($timeout, $rootScope, $translate) {
+function Alerts($timeout, $rootScope, $translate, $uibModal) {
   const service = {
     alerts          : [],
     close           : close,
     clear           : clear,
     display         : display,
+    confirm         : confirm,
     isDuplicate     : isDuplicate,
     displayInfo     : display.bind(null, 'info'),
     displaySuccess  : display.bind(null, 'success'),
@@ -65,6 +66,17 @@ function Alerts($timeout, $rootScope, $translate) {
         msg: message
       });
     });
+  }
+
+  function confirm(translation) {
+    return $uibModal.open({
+      templateUrl: 'partials/modal-confirm.jade',
+      windowClass: 'bc-modal confirm',
+      resolve: { translation: () => translation },
+      controller: function ModalConfirmCtrl($scope, translation) {
+        $scope.translation = translation;
+      }
+    })
   }
 
   return service;
