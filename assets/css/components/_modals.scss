@@ -33,6 +33,14 @@
     .modal-dialog {
       transition: all 0.3s linear;
     }
+    .modal-body {
+      border-radius: 5px 5px 0px 0px;
+    }
+    .modal-footer {
+      border-radius: 0px 0px 5px 5px;
+      background-color: #fff;
+      padding: 10px;
+    }
     &.fade .modal-dialog {
       -webkit-transform: translate(0,-25%);
       -ms-transform: translate(0,-25%);
