@@ -1,4 +1,4 @@
-angular.module('walletApp').directive('hdAddress', (Wallet, $translate, Confirm) => {
+angular.module('walletApp').directive('hdAddress', (Wallet, $translate, Alerts) => {
   return {
     restrict: "A",
     replace: true,
@@ -16,7 +16,7 @@ angular.module('walletApp').directive('hdAddress', (Wallet, $translate, Confirm)
 
       scope.removeLabel = () => {
         $translate("CONFIRM_REMOVE_LABEL").then( translation => {
-          Confirm.open(translation).result.then(() => {
+          Alerts.confirm(translation).result.then(() => {
             scope.address.account.removeLabelForReceivingAddress(addressIndex);
             Wallet.hdAddresses(accountIndex)(true);
           })

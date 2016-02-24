@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .directive('addressBookEntry', addressBookEntry);
 
-addressBookEntry.$inject = ['Wallet', '$translate', 'Confirm'];
+addressBookEntry.$inject = ['Wallet', '$translate', 'Alerts'];
 
-function addressBookEntry(Wallet, $translate, Confirm) {
+function addressBookEntry(Wallet, $translate, Alerts) {
   const directive = {
     restrict: "A",
     replace: true,
@@ -21,7 +21,7 @@ function addressBookEntry(Wallet, $translate, Confirm) {
   function link(scope, elem, attrs, ctrl) {
     scope.delete = () => {
       $translate("CONFIRM_DELETE_ADDRESS_BOOK_ENTRY", {address: scope.address.address}).then((translation) => {
-        Confirm.open(translation).result.then(() => { Wallet.removeAddressBookEntry(scope.address); })
+        Alerts.confirm(translation).result.then(() => { Wallet.removeAddressBookEntry(scope.address); })
       });
     };
   }

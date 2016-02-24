@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("NavigationCtrl", NavigationCtrl);
 
-function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $translate, $cookies, $state, filterFilter, $interval, $timeout, $uibModal, Confirm) {
+function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $translate, $cookies, $state, filterFilter, $interval, $timeout, $uibModal, Alerts) {
   $scope.status = Wallet.status;
   $scope.security = SecurityCenter.security;
   $scope.settings = Wallet.settings;
@@ -10,7 +10,7 @@ function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $t
   $scope.logout = () => {
     if (!Wallet.isSynchronizedWithServer()) {
       $translate("CHANGES_BEING_SAVED").then( translation => {
-        Confirm.open(translation).result.then(() => { $scope.doLogout() });
+        Alerts.confirm(translation).result.then(() => { $scope.doLogout() });
       });
     } else {
       $scope.doLogout();
@@ -33,7 +33,7 @@ function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $t
 
   $scope.doLogout = () => {
     $translate("ARE_YOU_SURE_LOGOUT").then( translation => {
-      $scope.logoutModal = Confirm.open(translation)
+      $scope.logoutModal = Alerts.confirm(translation)
 
       $scope.logoutModal.result.then(() => {
         $scope.uid = null;
