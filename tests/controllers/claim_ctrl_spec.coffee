@@ -4,11 +4,11 @@ describe "ClaimCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-   angular.mock.inject ($injector, $rootScope, $controller, $state) ->
+   angular.mock.inject ($injector, $rootScope, $controller, $state, $q) ->
      Wallet = $injector.get("Wallet")
-     MyWallet = $injector.get("MyWallet")
+     MyBlockchainApi = $injector.get("MyBlockchainApi")
 
-     MyWallet.getBalanceForRedeemCode = (code, success, error) -> success()
+     MyBlockchainApi.getBalanceForRedeemCode = (code) -> $q.resolve(10000)
 
      scope = $rootScope.$new()
 

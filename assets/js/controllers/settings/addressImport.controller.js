@@ -25,7 +25,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
   });
 
   $scope.isValidAddressOrPrivateKey = (val) => {
-    return Wallet.my.isValidAddress(val) || Wallet.my.isValidPrivateKey(val);
+    return Wallet.isValidAddress(val) || Wallet.isValidPrivateKey(val);
   };
 
   $scope.import = () => {
