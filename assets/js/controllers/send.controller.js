@@ -364,8 +364,9 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   });
 
   $scope.handleTxUpdate = (tx) => {
-    if (tx.fee != null && tx.fee !== $scope.transaction.fee) {
-      $scope.transaction.fee = tx.fee;
+    if (tx.fee != null) {
+      $scope.transaction.fee = tx.forcedFee ? tx.forcedFee : tx.fee;
+      $scope.validateAmounts();
       $scope.$root.$safeApply($scope);
     }
     if (tx.sweepAmount != null && tx.sweepAmount !== $scope.transaction.sweepAmount) {
@@ -404,7 +405,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
   $scope.setPaymentAmount = () => {
     $scope.payment.amount($scope.transaction.amounts)
-    $scope.buildTx();
+    $scope.setPaymentFee();
   };
 
   $scope.setPaymentFee = () => {
@@ -472,9 +473,15 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     let goAdvanced = () => $scope.advancedSend();
     let guessAbsoluteFee = (size, feePerKb) => feePerKb * (size / 1000);
 
+    let suggestFee = (fee) => {
+      $scope.transaction.fee = fee;
+      $scope.setPaymentFee();
+    };
+
     let surge = $scope.surgeWarning && !$scope.advanced;
     let currentFee = $scope.transaction.fee;
     let minimumFee = 5000;
+    let highestFeePossible = $scope.transaction.from.balance - $scope.transaction.amounts.reduce((a, b) => a + b, 0);
     let suggestedFee;
 
     let showFeeWarning = $uibModal.open.bind($uibModal, {
@@ -483,13 +490,21 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       controller: function DynamicFeeController($scope, $uibModalInstance) {
         $scope.surge = surge;
         $scope.currentFee = currentFee;
-        $scope.suggestedFee = Math.floor(suggestedFee);
+        $scope.suggestedFee = Math.round(suggestedFee);
+        $scope.balanceOverflow = suggestedFee > highestFeePossible;
         $scope.cancel = () => {
           $uibModalInstance.dismiss('cancelled');
           if (surge) goAdvanced();
         };
         $scope.useCurrent = () => $uibModalInstance.close(currentFee);
-        $scope.useSuggested = () => $uibModalInstance.close($scope.suggestedFee);
+        $scope.useSuggested = () => {
+          if ($scope.balanceOverflow) {
+            $scope.cancel();
+            suggestFee($scope.suggestedFee);
+          } else {
+            $uibModalInstance.close($scope.suggestedFee);
+          }
+        };
       }
     });
 
@@ -505,11 +520,11 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       low = low < minimumFee ? minimumFee : low;
       console.log('Fees (high: %d, mid: %d, low: %d)', high, mid, low);
 
-      if (currentFee > high) {
+      if (currentFee > Math.round(high)) {
         suggestedFee = high;
         return showFeeWarning().result;
       }
-      else if (currentFee < low) {
+      else if (currentFee < Math.round(low)) {
         suggestedFee = low;
         return showFeeWarning().result;
       }
