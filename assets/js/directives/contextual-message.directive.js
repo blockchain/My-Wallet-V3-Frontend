@@ -42,8 +42,9 @@ function contextualMessage($cookies, $window, Wallet, SecurityCenter, filterFilt
       let didBackup     = Wallet.status.didConfirmRecoveryPhrase;
       let has2FA        = Wallet.settings.needs2FA;
       let verifiedEmail = Wallet.user.isEmailVerified;
+      let isSecure      = didBackup && (has2FA || verifiedEmail);
 
-      return isTime && hasBalance && !didBackup && !(has2FA || verifiedEmail);
+      return isTime && hasBalance && !isSecure;
     };
 
     scope.revealMsg = () =>
