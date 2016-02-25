@@ -35,6 +35,33 @@
       padding: 10px;
     }
   }
+  .fake-addresses {
+    overflow: hidden;
+    position: relative;
+    table {
+      -webkit-filter: blur(1px);
+      th, td {
+        -webkit-filter: blur(2px);
+      }
+    }
+    .empty-msg {
+      top: 0;
+      left: 15px;
+      z-index: 1;
+      position: absolute;
+      width: calc(100% - 30px);
+    }
+    &:after {
+      left: 15px;
+      content: '';
+      width: 100%;
+      height: 100%;
+      opacity: 0.6;
+      position: absolute;
+      width: calc(100% - 30px);
+      background-color: #f7f7f7;
+    }
+  }
   // Preferences
   form.form-horizontal {
     .form-group {
