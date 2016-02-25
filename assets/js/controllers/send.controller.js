@@ -41,8 +41,9 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   $scope.payment = new Wallet.payment({ feePerKb: 30000 });
   $scope.transaction = angular.copy($scope.transactionTemplate);
 
+  let dynamicFeeService = 'https://api.blockchain.info/fees';
   let dynamicFeeVectorP = $http
-    .get('http://service-dynamic-fee.prod.blockchain.co.uk/fees')
+    .get(dynamicFeeService)
     .then(response => response.data.estimate);
 
   dynamicFeeVectorP.then(estimate => {
@@ -482,7 +483,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       controller: function DynamicFeeController($scope, $uibModalInstance) {
         $scope.surge = surge;
         $scope.currentFee = currentFee;
-        $scope.suggestedFee = suggestedFee < minimumFee ? minimumFee : Math.floor(suggestedFee);
+        $scope.suggestedFee = Math.floor(suggestedFee);
         $scope.cancel = () => {
           $uibModalInstance.dismiss('cancelled');
           if (surge) goAdvanced();
@@ -501,6 +502,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       let high = guessAbsoluteFee(tx.sizeEstimate, estimate[0].fee);
       let mid = guessAbsoluteFee(tx.sizeEstimate, estimate[1].fee);
       let low = guessAbsoluteFee(tx.sizeEstimate, estimate[5].fee);
+      low = low < minimumFee ? minimumFee : low;
       console.log('Fees (high: %d, mid: %d, low: %d)', high, mid, low);
 
       if (currentFee > high) {
