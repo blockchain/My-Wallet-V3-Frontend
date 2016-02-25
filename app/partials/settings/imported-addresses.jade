@@ -15,7 +15,7 @@
 h2(translate="SPENDABLE_ADDRESSES")
 
 .row
-  .col-xs-12
+  .col-xs-12(ng-show="spendable().length")
     table.responsive.width-100.account-container
       tr
         th(translate="ADDRESS")
@@ -29,10 +29,12 @@ h2(translate="SPENDABLE_ADDRESSES")
         ng-repeat="address in legacyAddresses() | filter:{archived: false, isWatchOnly: false} | addressOrNameMatch:searchTextLegacy"
       )
 
+  fake-addresses(ng-show="!spendable().length" trigger="importAddress")
+
 h2(translate="WATCH_ONLY_ADDRESSES")
 
 .row
-  .col-xs-12.table-container
+  .col-xs-12.table-container(ng-show="watchOnly().length")
     table.responsive.width-100
       tr
         th(translate="ADDRESS")
@@ -45,6 +47,8 @@ h2(translate="WATCH_ONLY_ADDRESSES")
         ng-repeat="address in legacyAddresses() | filter:{archived: false, isWatchOnly: true} | addressOrNameMatch:searchTextLegacy"
       )
 
+  fake-addresses(ng-show="!watchOnly().length" trigger="importAddress")
+
 .flex.mtl
   button.button-default(translate="ARCHIVED_ADDRESSES" ng-click="toggleDisplayArchived()" ng-class="{active : display.archived}")
 
@@ -56,7 +60,7 @@ p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archive
       input(type="text", ng-model="searchTextArchived")
       i.ti-search.pos-abs
 .row(ng-show="display.archived")
-  .col-xs-12.table-container
+  .col-xs-12.table-container(ng-show="archived().length")
     table.responsive.width-100
       tr
         th(translate="ADDRESS")
@@ -76,3 +80,4 @@ p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archive
           a(translate="UNARCHIVE", ng-click="unarchive(address)")
         td
           a(translate="DELETE", ng-click="delete(address)")
+  fake-addresses(ng-show="!archived().length" trigger="importAddress")
