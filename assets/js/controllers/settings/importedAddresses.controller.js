@@ -17,12 +17,9 @@ function SettingsImportedAddressesCtrl($scope, Wallet, Alerts, $translate, $uibM
   $scope.unarchive = (address) => { Wallet.unarchive(address) };
 
   $scope.delete = (address) => {
-    $translate("LOSE_ACCESS").then((translation) => {
-      $scope.deleteModal = Alerts.confirm(translation);
-      $scope.deleteModal.result.then(() => {
-        Wallet.deleteLegacyAddress(address);
-        $scope.legacyAddresses = Wallet.legacyAddresses;
-      });
+    Alerts.confirm('LOSE_ACCESS').then(() => {
+      Wallet.deleteLegacyAddress(address);
+      $scope.legacyAddresses = Wallet.legacyAddresses;
     });
   };
 

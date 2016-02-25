@@ -2,16 +2,14 @@ angular
   .module('walletApp')
   .controller("NavigationCtrl", NavigationCtrl);
 
-function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $translate, $cookies, $state, filterFilter, $interval, $timeout, $uibModal, Alerts) {
+function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $translate, $cookies, $state, filterFilter, $interval, $timeout, Alerts) {
   $scope.status = Wallet.status;
   $scope.security = SecurityCenter.security;
   $scope.settings = Wallet.settings;
 
   $scope.logout = () => {
     if (!Wallet.isSynchronizedWithServer()) {
-      $translate("CHANGES_BEING_SAVED").then( translation => {
-        Alerts.confirm(translation).result.then($scope.doLogout);
-      });
+      Alerts.confirm('CHANGES_BEING_SAVED').then($scope.doLogout);
     } else {
       $scope.doLogout();
     }
@@ -32,20 +30,16 @@ function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $t
 //  #################################
 
   $scope.doLogout = () => {
-    $translate("ARE_YOU_SURE_LOGOUT").then( translation => {
-      $scope.logoutModal = Alerts.confirm(translation)
-
-      $scope.logoutModal.result.then(() => {
-        $scope.uid = null;
-        $scope.password = null;
-        $cookies.remove("password");
+    Alerts.confirm('ARE_YOU_SURE_LOGOUT').then(() => {
+      $scope.uid = null;
+      $scope.password = null;
+      $cookies.remove("password");
 //      $cookies.remove("uid") // Pending a "Forget Me feature"
 
-        $state.go("wallet.common.transactions", {
-          accountIndex: ""
-        });
-        Wallet.logout();  // Refreshes the browser, so won't return
+      $state.go("wallet.common.transactions", {
+        accountIndex: ""
       });
+      Wallet.logout();  // Refreshes the browser, so won't return
     });
   };
 

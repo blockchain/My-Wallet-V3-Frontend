@@ -15,11 +15,9 @@ angular.module('walletApp').directive('hdAddress', (Wallet, $translate, Alerts) 
       scope.status = {edit: false};
 
       scope.removeLabel = () => {
-        $translate("CONFIRM_REMOVE_LABEL").then( translation => {
-          Alerts.confirm(translation).result.then(() => {
-            scope.address.account.removeLabelForReceivingAddress(addressIndex);
-            Wallet.hdAddresses(accountIndex)(true);
-          })
+        Alerts.confirm('CONFIRM_REMOVE_LABEL').then(() => {
+          scope.address.account.removeLabelForReceivingAddress(addressIndex);
+          Wallet.hdAddresses(accountIndex)(true);
         });
       };
 

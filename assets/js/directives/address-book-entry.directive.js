@@ -20,9 +20,8 @@ function addressBookEntry(Wallet, $translate, Alerts) {
 
   function link(scope, elem, attrs, ctrl) {
     scope.delete = () => {
-      $translate("CONFIRM_DELETE_ADDRESS_BOOK_ENTRY", {address: scope.address.address}).then((translation) => {
-        Alerts.confirm(translation).result.then(Wallet.removeAddressBookEntry.bind(scope, scope.address))
-      });
+      Alerts.confirm('CONFIRM_DELETE_ADDRESS_BOOK_ENTRY', { address: scope.address.address })
+        .then(() => Wallet.removeAddressBookEntry(scope.address));
     };
   }
 }
