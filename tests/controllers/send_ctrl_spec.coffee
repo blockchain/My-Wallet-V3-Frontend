@@ -39,7 +39,7 @@ describe "SendCtrl", ->
             { label: "Something", index: 2, archived: true }
           ]
 
-      MyWallet.isValidAddress = (address) ->
+      Wallet.isValidAddress = (address) ->
         address == 'valid_address'
 
       Wallet.status =

@@ -9,9 +9,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
 
-function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet,   MyBlockchainApi,   MyBlockchainSettings,   MyWalletStore,   MyWalletPayment,   $rootScope,   ngAudio,   $cookies,   $translate,   $filter,   $state,   $q,   bcPhoneNumber,   languages,   currency) {
+function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet,   MyBlockchainApi,   MyBlockchainSettings,   MyWalletStore,   MyWalletPayment,  MyWalletHelpers,   $rootScope,   ngAudio,   $cookies,   $translate,   $filter,   $state,   $q,   bcPhoneNumber,   languages,   currency) {
   const wallet = {
     goal: {
       auth: false
@@ -92,7 +92,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   wallet.payment = MyWalletPayment;
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
-  //wallet.store.setAPICode(wallet.api_code);
+  MyBlockchainApi.API_CODE = wallet.api_code;
 
   wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) => {
     let didLogin = () => {
@@ -541,19 +541,12 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
 
   wallet.fetchBalanceForRedeemCode = (code) => {
-    let defer = $q.defer();
-
-    let success = (balance) => {
-      defer.resolve(balance);
-    };
-
-    let error = (error) => {
-      console.log('Could not retrieve balance');
+    let logError = (error) => {
       console.log(error);
-      defer.reject();
+      throw 'Could not retrieve balance';
     };
-    wallet.my.getBalanceForRedeemCode(code, success, error);
-    return defer.promise;
+    return MyBlockchainApi.getBalanceForRedeemCode(code)
+      .catch(logError);
   };
 
   wallet.getAddressBookLabel = (address) =>
@@ -640,7 +633,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       } else {
         result.address = withoutPrefix;
       }
-    } else if (wallet.my.isValidAddress(url)) {
+    } else if (wallet.isValidAddress(url)) {
       result.address = url;
     } else {
       result.isValid = false;
@@ -661,7 +654,8 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     }
   };
 
-  wallet.isValidAddress = (address) => wallet.my.isValidAddress(address)
+  wallet.isValidAddress = (address) => MyWalletHelpers.isBitcoinAddress(address)
+  wallet.isValidPrivateKey = (priv) => MyWalletHelpers.isValidPrivateKey(priv)
 
   wallet.archive = (address_or_account) => {
     wallet.saveActivity(3);
@@ -1107,7 +1101,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     wallet.my.wallet.hdwallet.defaultAccountIndex === account.index;
 
   wallet.isValidBIP39Mnemonic = (mnemonic) =>
-    wallet.my.isValidateBIP39Mnemonic(mnemonic);
+    MyWalletHelpers.isValidBIP39Mnemonic(mnemonic);
 
   wallet.removeSecondPassword = (successCallback, errorCallback) => {
     let success = () => {
