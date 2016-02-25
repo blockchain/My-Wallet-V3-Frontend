@@ -5,6 +5,7 @@ describe "SendCtrl", ->
   Wallet = undefined
   scope = undefined
   $httpBackend = undefined
+  $uibModal = undefined
 
   askForSecondPassword = undefined
 
@@ -25,6 +26,7 @@ describe "SendCtrl", ->
       currency = $injector.get('currency')
       MyWalletHelpers = $injector.get("MyWalletHelpers")
       $httpBackend = $injector.get('$httpBackend')
+      $uibModal = $injector.get('$uibModal')
 
       feeEstimates = [
         { fee: 60000, surge: false }, { fee: 50000, surge: false },
@@ -32,7 +34,7 @@ describe "SendCtrl", ->
         { fee: 20000, surge: false }, { fee: 10000, surge: false }
       ]
 
-      $httpBackend.when('GET', 'http://service-dynamic-fee.prod.blockchain.co.uk/fees')
+      $httpBackend.when('GET', 'https://api.blockchain.info/fees')
         .respond({ estimate: feeEstimates })
 
       MyWallet.wallet =
@@ -78,7 +80,7 @@ describe "SendCtrl", ->
     return
 
   beforeEach ->
-    $httpBackend.expectGET('http://service-dynamic-fee.prod.blockchain.co.uk/fees')
+    $httpBackend.expectGET('https://api.blockchain.info/fees')
 
   afterEach ->
     $httpBackend.flush()
@@ -348,6 +350,45 @@ describe "SendCtrl", ->
         scope.transaction.fee = 'nah_tho'
         scope.$apply()
         expect(hasErr 'fee', 'number').toBe(true)
+
+    describe 'dynamic fee', ->
+      avgSize = 500
+      lgSize = 2000
+
+      lowFee = 4999
+      midFee = 25000
+      highFee = 30001
+      lgSizeFee = 100000
+
+      beforeEach ->
+        spyOn($uibModal, 'open').and.callThrough()
+        scope.dynamicFeeAvailable = true
+
+      it 'should warn when the tx fee is low', ->
+        scope.transaction.fee = lowFee
+        scope.checkFee({ sizeEstimate: avgSize }).then ->
+          expect($uibModal.open).toHaveBeenCalled()
+
+      it 'should warn when the tx fee is high', ->
+        scope.transaction.fee = highFee
+        scope.checkFee({ sizeEstimate: avgSize }).then ->
+          expect($uibModal.open).toHaveBeenCalled()
+
+      it 'should not warn when the tx fee is normal', ->
+        scope.transaction.fee = midFee
+        scope.checkFee({ sizeEstimate: avgSize }).then ->
+          expect($uibModal.open).not.toHaveBeenCalled()
+
+      it 'should take tx size into account when deciding to show warning', ->
+        scope.transaction.fee = lgSizeFee
+        scope.checkFee({ sizeEstimate: lgSize }).then ->
+          expect($uibModal.open).not.toHaveBeenCalled()
+
+      it 'should warn when there is a surge', ->
+        scope.transaction.fee = midFee
+        scope.surgeWarning = true
+        scope.checkFee({ sizeEstimate: avgSize }).then ->
+          expect($uibModal.open).toHaveBeenCalled()
 
     describe "note", ->
 
