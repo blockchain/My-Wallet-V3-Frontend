@@ -1,4 +1,4 @@
-angular.module('walletApp').directive('watchOnlyAddress', (Wallet, $translate) => {
+angular.module('walletApp').directive('watchOnlyAddress', (Wallet, $translate, Alerts) => {
   return {
     restrict: "A",
     replace: true,
@@ -34,11 +34,8 @@ angular.module('walletApp').directive('watchOnlyAddress', (Wallet, $translate) =
       };
 
       scope.delete = () => {
-        $translate("CONFIRM_DELETE_WATCH_ONLY_ADDRESS").then((translation) => {
-          if (confirm(translation)) {
-            Wallet.deleteLegacyAddress(scope.address);
-          }
-        });
+        Alerts.confirm('CONFIRM_DELETE_WATCH_ONLY_ADDRESS')
+          .then(() => Wallet.deleteLegacyAddress(scope.address));
       };
 
     }

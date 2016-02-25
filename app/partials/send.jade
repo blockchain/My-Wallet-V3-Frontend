@@ -12,7 +12,8 @@
     span {{ confirmationStep ? 2 : 1 }}
     span(translate="OF_2")
 .modal-body#send(ng-class="{ 'advanced-send-scroll' : advanced, 'confirmation': confirmationStep }")
-  alerts(context="alerts")
+  .alert-in-app
+    alerts(context="alerts")
   div(ng-hide="confirmationStep")
     form.ph-form(role="form",name="sendForm",novalidate)
       //- From

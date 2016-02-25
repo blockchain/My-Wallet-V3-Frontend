@@ -10,6 +10,10 @@ describe "SettingsImportedAddressesCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
+      Alerts = $injector.get("Alerts")
+
+      Alerts.confirm = () ->
+        then: (f) -> f(true)
 
       legacyAddresses = [{archived: false},{archived: true}]
 
@@ -41,11 +45,7 @@ describe "SettingsImportedAddressesCtrl", ->
       scope.unarchive(address)
       expect(address.archived).toBe(false)
 
-    it "can be deleted", inject((Wallet) ->
-      spyOn(window, 'confirm').and.callFake(() ->
-        return true
-      )
-
+    it "can be deleted", inject((Wallet, $uibModal) ->
       address = scope.legacyAddresses()[1]
       before = scope.legacyAddresses().length
 
@@ -55,8 +55,6 @@ describe "SettingsImportedAddressesCtrl", ->
       expect(Wallet.deleteLegacyAddress).toHaveBeenCalled()
 
       expect(scope.legacyAddresses().length).toBe(before - 1)
-
-
     )
 
   describe "importAddress()", ->

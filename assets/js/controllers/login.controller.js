@@ -34,7 +34,6 @@ function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNet
       $scope.disableLogin = true;
     } else {
       $translate("WARN_AGAINST_IE").then(translation => {
-        Alerts.clear();
         Alerts.displayWarning(translation, true);
       });
     }
@@ -137,7 +136,6 @@ function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNet
   }
 
   $scope.resend = () => {
-    Alerts.clear()
     if (Wallet.settings.twoFactorMethod === 5) {
       $scope.resending = true;
       const success = (res) => {

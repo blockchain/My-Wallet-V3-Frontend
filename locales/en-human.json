@@ -33,6 +33,7 @@
   "LOGGED_OUT_AUTOMATICALLY" : "Logged out automatically",
   "AUTO_LOGOUT" : "Auto Logout",
   "AUTO_LOGOUT_EXPLAIN" : "After a certain period of inactivity, you will be automatically logged out of your wallet.",
+  "CHANGES_BEING_SAVED": "There are changes still being saved. Are you sure you wish to logout?",
   "CLOSE": "Close",
   "TRANSACTIONS" : "Transactions",
   "TRANSACTION" : "Transaction",
@@ -568,5 +569,6 @@
   "SENDING": "Sending and receiving Bitcoin has never been so easy",
   "BUILD_TEST": "We've taken our time to build and test the most user-friendly interface for our wallet.",
   "YOUR_ADDRESS": "Your Bitcoin Address",
-  "SWEEP_FAILED" : "Unable to transfer funds"
+  "SWEEP_FAILED" : "Unable to transfer funds",
+  "YOU_WILL_LOSE": "You will lose all your bitcoins! Are you sure?"
 }

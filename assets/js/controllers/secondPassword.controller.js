@@ -17,7 +17,6 @@ function SecondPasswordCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tr
   $scope.submit = () => {
     if ($scope.busy) return;
     $scope.busy = true;
-    Alerts.clear($scope.alerts);
     if (Wallet.validateSecondPassword($scope.secondPassword)) {
       $scope.busy = false;
       defer.resolve($scope.secondPassword);

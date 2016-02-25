@@ -2,13 +2,16 @@ angular
   .module('walletApp')
   .factory('Alerts', Alerts);
 
-Alerts.$inject = ['$timeout', '$rootScope', '$translate'];
+Alerts.$inject = ['$timeout', '$rootScope', '$translate', '$uibModal'];
 
-function Alerts($timeout, $rootScope, $translate) {
+function Alerts($timeout, $rootScope, $translate, $uibModal) {
   const service = {
     alerts          : [],
     close           : close,
     clear           : clear,
+    display         : display,
+    confirm         : confirm,
+    isDuplicate     : isDuplicate,
     displayInfo     : display.bind(null, 'info'),
     displaySuccess  : display.bind(null, 'success'),
     displayWarning  : display.bind(null, ''),
@@ -31,8 +34,13 @@ function Alerts($timeout, $rootScope, $translate) {
     }
   }
 
+  function isDuplicate(context=service.alerts, nextAlert) {
+    return context.some(alert => alert.msg === nextAlert.msg);
+  }
+
   function display(type, message, keep=false, context=service.alerts) {
     let alert = { type: type, msg: message };
+    if (isDuplicate(context, alert)) return;
     alert.close = close.bind(null, alert, context);
     if (!keep) alert.timer = $timeout(() => alert.close(), 7000);
     context.push(alert);
@@ -58,6 +66,17 @@ function Alerts($timeout, $rootScope, $translate) {
         msg: message
       });
     });
+  }
+
+  function confirm(message, values={}) {
+    return $uibModal.open({
+      templateUrl: 'partials/modal-confirm.jade',
+      windowClass: 'bc-modal confirm',
+      controller: function ($scope) {
+        $scope.message = message;
+        $scope.values = values;
+      }
+    }).result;
   }
 
   return service;

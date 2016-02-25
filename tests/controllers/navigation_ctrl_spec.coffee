@@ -7,6 +7,12 @@ describe "NavigationCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
+      Alerts = $injector.get("Alerts")
+
+      Alerts.confirm = (msg) ->
+        then: (f) ->
+          if msg != 'CHANGES_BEING_SAVED'
+            f(true)
 
       Wallet.status = {
         isLoggedIn: true
@@ -37,10 +43,9 @@ describe "NavigationCtrl", ->
     expect(scope.status.isLoggedIn).toBe(true)
   )
 
-  it "should logout",  inject((Wallet, $stateParams, $state) ->
+  it "should logout",  inject((Wallet, $stateParams, $state, $uibModal) ->
     spyOn(Wallet, "logout").and.callThrough()
     spyOn($state, "go")
-    spyOn(window, 'confirm').and.returnValue(true)
 
     scope.logout()
 
