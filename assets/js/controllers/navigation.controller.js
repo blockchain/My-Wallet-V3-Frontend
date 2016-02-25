@@ -10,7 +10,7 @@ function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $t
   $scope.logout = () => {
     if (!Wallet.isSynchronizedWithServer()) {
       $translate("CHANGES_BEING_SAVED").then( translation => {
-        Alerts.confirm(translation).result.then(() => { $scope.doLogout() });
+        Alerts.confirm(translation).result.then($scope.doLogout);
       });
     } else {
       $scope.doLogout();
