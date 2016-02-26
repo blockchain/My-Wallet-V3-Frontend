@@ -410,6 +410,14 @@ module.exports = (grunt) ->
           to: () =>
             'customWebSocketURL = "wss://' + @rootUrl + '/inv"'
         }]
+      fee_service_domain:
+        src: ['build/js/services/wallet.service.js'],
+        overwrite: true,
+        replacements: [{
+          from: 'customFeeServiceDomain = $rootScope.feeServiceDomain'
+          to: () =>
+            'customFeeServiceDomain = "https://' + @feeServiceDomain + '"'
+        }]
       version_frontend:
         src: ['build/js/services/wallet.service.js'],
         overwrite: true,
@@ -426,7 +434,7 @@ module.exports = (grunt) ->
           from: 'versionMyWallet = null'
           to: () =>
             version = exec('cat build/bower_components/blockchain-wallet/.bower.json | grep \'version\": \' | grep -o \'\\d.\\d\.\\d*\'').output
-            'versionMyWallet = "' + version + '"'
+            'versionMyWallet = "' + version.replace("\n", "") + '"'
         }]
 
   grunt.loadNpmTasks "grunt-contrib-uglify"
@@ -470,7 +478,7 @@ module.exports = (grunt) ->
   ]
 
   # Default task(s).
-  grunt.registerTask "dist", (rootUrl, port, rootPath, versionFrontend) =>
+  grunt.registerTask "dist", (rootUrl, port, rootPath, feeServiceDomain, versionFrontend) =>
     grunt.task.run [
       "shell:clean_bower_and_npm_cache"
       "clean"
@@ -503,6 +511,14 @@ module.exports = (grunt) ->
         "replace:root_path"
       ]
 
+    if feeServiceDomain
+      @feeServiceDomain = feeServiceDomain
+      console.log("Custom dynamic fee domain: " + @feeServiceDomain)
+
+      grunt.task.run [
+        "replace:fee_service_domain"
+      ]
+
     grunt.task.run [
       "replace:version_frontend"
       "shell:check_dependencies"
@@ -522,7 +538,7 @@ module.exports = (grunt) ->
       "git_changelog"
     ]
 
-  grunt.registerTask "dist_unsafe", (rootUrl, port, rootPath, versionFrontend) =>
+  grunt.registerTask "dist_unsafe", (rootUrl, port, rootPath, feeServiceDomain, versionFrontend) =>
     console.warn "Do not deploy this to production."
     console.warn "Make sure your bower_components and node_modules are up to date"
     grunt.task.run [
@@ -552,6 +568,14 @@ module.exports = (grunt) ->
         grunt.task.run [
           "replace:root_path"
         ]
+
+    if feeServiceDomain
+      @feeServiceDomain = feeServiceDomain
+      console.log("Custom dynamic fee domain: " + @feeServiceDomain)
+
+      grunt.task.run [
+        "replace:fee_service_domain"
+      ]
 
     grunt.task.run [
       "replace:version_frontend"
