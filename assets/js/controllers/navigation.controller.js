@@ -9,7 +9,7 @@ function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $t
 
   $scope.logout = () => {
     if (!Wallet.isSynchronizedWithServer()) {
-      Alerts.confirm('CHANGES_BEING_SAVED').then($scope.doLogout);
+      Alerts.confirm('CHANGES_BEING_SAVED', {}, 'top').then($scope.doLogout);
     } else {
       $scope.doLogout();
     }
@@ -30,7 +30,7 @@ function NavigationCtrl($rootScope, $scope, Wallet, currency, SecurityCenter, $t
 //  #################################
 
   $scope.doLogout = () => {
-    Alerts.confirm('ARE_YOU_SURE_LOGOUT').then(() => {
+    Alerts.confirm('ARE_YOU_SURE_LOGOUT', {}, 'top').then(() => {
       $scope.uid = null;
       $scope.password = null;
       $cookies.remove("password");

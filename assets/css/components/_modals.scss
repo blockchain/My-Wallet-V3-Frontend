@@ -182,7 +182,10 @@
     }
   }
   &.confirm { 
-    align-items: flex-start;
+    @extend .flex-center;
+    &.top {
+      @extend .flex-align-start;
+    }
     .modal-dialog { 
       width: auto; 
     } 
