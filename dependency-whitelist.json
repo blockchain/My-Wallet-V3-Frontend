@@ -13,8 +13,8 @@
     "36E3D143": "Jaume"
   },
   "angular-ui-router" : {
-    "version": "0.2.17",
-    "commits" : ["87f10dfc9c4b0420ae6128bb46499deb75f3e705"],
+    "version": "0.2.18",
+    "commits" : ["ec6ca36b625e578e59e631b3c9e786a6ac70678c"],
     "repo" : "angular-ui/ui-router"
   },
   "angular-audio" : {
@@ -24,7 +24,7 @@
   },
   "angular-ui-select" : {
     "version": "0.14.2",
-    "commits" : ["85401e081c4e048b7a32bde0ee513ab1dbdecf9b"],
+    "commits" : ["3b1496cb73103c593ab54c1fd04f4d69bc7ed8f1"],
     "repo" : "angular-ui/ui-select"
   },
   "angular-qr" : {
