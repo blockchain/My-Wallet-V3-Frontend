@@ -68,10 +68,10 @@ function Alerts($timeout, $rootScope, $translate, $uibModal) {
     });
   }
 
-  function confirm(message, values={}) {
+  function confirm(message, values={}, modalClass='') {
     return $uibModal.open({
       templateUrl: 'partials/modal-confirm.jade',
-      windowClass: 'bc-modal confirm',
+      windowClass: 'bc-modal confirm ' + modalClass,
       controller: function ($scope) {
         $scope.message = message;
         $scope.values = values;
