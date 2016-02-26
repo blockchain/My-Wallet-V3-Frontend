@@ -23,7 +23,7 @@
     "repo" : "danielstern/ngAudio"
   },
   "angular-ui-select" : {
-    "version": "0.14.2",
+    "version": "0.14.9",
     "commits" : ["3b1496cb73103c593ab54c1fd04f4d69bc7ed8f1"],
     "repo" : "angular-ui/ui-select"
   },
