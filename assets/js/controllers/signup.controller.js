@@ -20,12 +20,27 @@ function SignupCtrl($scope, $state, $cookies, $filter, $translate, $uibModal, Wa
   if(language_code == "zh_CN") {
     language_code = "zh-cn";
   }
+
   let language_guess = $filter("getByProperty")("code", language_code, languages);
   if (language_guess == null) {
-    $scope.language_guess = $filter("getByProperty")("code", "en", languages);
+    language_guess = $filter("getByProperty")("code", "en", languages);
   }
-  $scope.currency_guess = $filter("getByProperty")("code", "USD", currency.currencies);
 
+  var cur = "USD";
+
+  switch(language_guess.code) {
+    case 'zh-cn':
+      cur = "CNY";
+      break;
+    case 'nl':
+      cur = "EUR";
+      break;
+    default:
+  }
+
+  $scope.language_guess = language_guess;
+
+  $scope.currency_guess = $filter("getByProperty")("code", cur, currency.currencies);
   $scope.fields = {
     email: "",
     password: "",
@@ -55,7 +70,7 @@ function SignupCtrl($scope, $state, $cookies, $filter, $translate, $uibModal, Wa
   };
 
   $scope.createWallet = successCallback => {
-    Wallet.create($scope.fields.password, $scope.fields.email, $scope.fields.language, $scope.fields.currency, (uid) => {
+    Wallet.create($scope.fields.password, $scope.fields.email, $scope.currency_guess, $scope.language_guess, (uid) => {
       successCallback(uid);
     });
   };
