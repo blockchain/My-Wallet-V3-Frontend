@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SendCtrl", SendCtrl);
 
-function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal, format, MyWalletHelpers, $rootScope) {
+function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal, format, MyWalletHelpers, $rootScope, $q, $http) {
 
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.accounts = Wallet.accounts;
@@ -22,6 +22,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   $scope.amountIsValid = true;
   $scope.confirmationStep = false;
   $scope.advanced = false;
+  $scope.building = false;
 
   $scope.fiatCurrency = Wallet.settings.currency;
   $scope.btcCurrency = Wallet.settings.btcCurrency;
@@ -32,13 +33,25 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     sweepAmount: null,
     destinations: [null],
     amounts: [null],
-    fee: Wallet.settings.feePerKB,
+    fee: 10000,
     note: "",
     publicNote: false
   };
 
-  $scope.payment = new Wallet.payment();
+  $scope.payment = new Wallet.payment({ feePerKb: 30000 });
   $scope.transaction = angular.copy($scope.transactionTemplate);
+
+  let dynamicFeeService = $rootScope.feeServiceDomain + '/fees';
+  let dynamicFeeVectorP = $http
+    .get(dynamicFeeService)
+    .then(response => response.data.estimate);
+
+  dynamicFeeVectorP.then(estimate => {
+    $scope.surgeWarning = estimate[1].surge;
+    $scope.payment.feePerKb(estimate[1].fee);
+    $scope.dynamicFeeAvailable = true;
+    $scope.setPaymentFrom();
+  });
 
   $scope.determineLabel = (origin) => origin.label || origin.address;
   $scope.hasZeroBalance = (origin) => origin.balance === 0.0;
@@ -286,7 +299,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     let availableBal = tx.from.balance - tx.fee;
     let maxAvailable = ($scope.advanced ? availableBal : tx.sweepAmount) || availableBal;
     if (maxAvailable < 0) maxAvailable = 0;
-    return maxAvailable;
+    return isNaN(maxAvailable) ? tx.from.balance : maxAvailable;
   };
 
   $scope.$watch("transaction.destinations", (destinations) => {
@@ -351,35 +364,15 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   });
 
   $scope.handleTxUpdate = (tx) => {
-    if (tx.fee != null && tx.fee !== $scope.transaction.fee) {
-      $scope.transaction.fee = tx.fee;
+    if (tx.fee != null) {
+      $scope.transaction.fee = tx.forcedFee ? tx.forcedFee : tx.fee;
+      $scope.validateAmounts();
       $scope.$root.$safeApply($scope);
     }
     if (tx.sweepAmount != null && tx.sweepAmount !== $scope.transaction.sweepAmount) {
       $scope.transaction.sweepAmount = tx.sweepAmount;
       $scope.$root.$safeApply($scope);
     }
-  };
-
-  $scope.setAllAndBuild = () => {
-    $scope.setPaymentFrom();
-    $scope.setPaymentTo();
-    $scope.setPaymentAmount();
-    $scope.setPaymentFee();
-
-    $scope.payment.buildbeta()
-      .then((p) => {
-        $scope.buildTx();
-        return p;
-      })
-      .catch(response => {
-        let msg = response.error.message || response.error;
-        $scope.backToForm();
-        Alerts.clear($scope.alerts);
-        Alerts.displayError(msg, false, $scope.alerts);
-        $scope.$root.$safeApply($scope);
-        return response.payment;
-      });
   };
 
   $scope.buildTx = () => {
@@ -412,17 +405,13 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
   $scope.setPaymentAmount = () => {
     $scope.payment.amount($scope.transaction.amounts)
-    $scope.buildTx();
+    $scope.setPaymentFee();
   };
 
   $scope.setPaymentFee = () => {
     let fee = ($scope.advanced) ? $scope.transaction.fee : null;
     $scope.payment.fee(fee);
     $scope.buildTx();
-  };
-
-  $scope.goToConfirmation = () => {
-    $scope.confirmationStep = true;
   };
 
   $scope.backToForm = () => {
@@ -439,6 +428,112 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     $scope.transaction.amounts.splice(1);
     $scope.advanced = false;
     $scope.setPaymentFee();
+  };
+
+  $scope.goToConfirmation = () => {
+    $scope.building = true;
+
+    $scope.setAllAndBuild()
+      .then($scope.checkFee)
+      .then(fee => $scope.transaction.fee = fee)
+      .then($scope.setAllAndBuild)
+      .then(() => $scope.confirmationStep = true)
+      .catch(errorMsg => {
+        $scope.backToForm();
+        Alerts.clear($scope.alerts);
+        if (['cancelled', 'backdrop click', 'escape key press'].indexOf(errorMsg) === -1) {
+          Alerts.displayError(errorMsg, false, $scope.alerts);
+        }
+        $scope.$root.$safeApply($scope);
+      })
+      .finally(() => $scope.building = false);
+  };
+
+  $scope.setAllAndBuild = () => {
+    $scope.setPaymentFrom();
+    $scope.setPaymentTo();
+    $scope.setPaymentAmount();
+    $scope.setPaymentFee();
+
+    return $q((resolve, reject) => {
+      $scope.payment.buildbeta()
+        .then((p) => {
+          $scope.buildTx();
+          resolve(p.transaction);
+          return p;
+        })
+        .catch((r) => {
+          reject(r.error.message || r.error);
+          return r.payment;
+        });
+    });
+  };
+
+  $scope.checkFee = (tx) => {
+    let goAdvanced = () => $scope.advancedSend();
+    let guessAbsoluteFee = (size, feePerKb) => feePerKb * (size / 1000);
+
+    let suggestFee = (fee) => {
+      $scope.transaction.fee = fee;
+      $scope.setPaymentFee();
+    };
+
+    let surge = $scope.surgeWarning && !$scope.advanced;
+    let currentFee = $scope.transaction.fee;
+    let minimumFee = 5000;
+    let highestFeePossible = $scope.transaction.from.balance - $scope.transaction.amounts.reduce((a, b) => a + b, 0);
+    let suggestedFee;
+
+    let showFeeWarning = $uibModal.open.bind($uibModal, {
+      templateUrl: 'partials/dynamic-fee.jade',
+      windowClass: 'bc-modal',
+      controller: function DynamicFeeController($scope, $uibModalInstance) {
+        $scope.surge = surge;
+        $scope.currentFee = currentFee;
+        $scope.suggestedFee = Math.round(suggestedFee);
+        $scope.balanceOverflow = suggestedFee > highestFeePossible;
+        $scope.cancel = () => {
+          $uibModalInstance.dismiss('cancelled');
+          if (surge) goAdvanced();
+        };
+        $scope.useCurrent = () => $uibModalInstance.close(currentFee);
+        $scope.useSuggested = () => {
+          if ($scope.balanceOverflow) {
+            $scope.cancel();
+            suggestFee($scope.suggestedFee);
+          } else {
+            $uibModalInstance.close($scope.suggestedFee);
+          }
+        };
+      }
+    });
+
+    if (!$scope.dynamicFeeAvailable) {
+      console.log('Dynamic fee service unavailable');
+      return $q.resolve(currentFee);
+    }
+
+    return dynamicFeeVectorP.then(estimate => {
+      let high = guessAbsoluteFee(tx.sizeEstimate, estimate[0].fee);
+      let mid = guessAbsoluteFee(tx.sizeEstimate, estimate[1].fee);
+      let low = guessAbsoluteFee(tx.sizeEstimate, estimate[5].fee);
+      low = low < minimumFee ? minimumFee : low;
+      console.log('Fees (high: %d, mid: %d, low: %d)', high, mid, low);
+
+      if (currentFee > Math.round(high)) {
+        suggestedFee = high;
+        return showFeeWarning().result;
+      }
+      else if (currentFee < Math.round(low)) {
+        suggestedFee = low;
+        return showFeeWarning().result;
+      }
+      else if (surge) {
+        suggestedFee = mid;
+        return showFeeWarning().result;
+      }
+      return currentFee;
+    });
   };
 
 }

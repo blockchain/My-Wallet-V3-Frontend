@@ -100,8 +100,8 @@
       //- Fee
       .flex-column.form-group.bc-modal-fade.col-sm-offset-2.col-sm-10.mtm(ng-class="{'has-error': sendForm.fee.$invalid && sendForm.fee.$touched}" ng-show="advanced")
         div.mbm.flex-center
-          label.mbn(translate="MINERS_FEE")
-          helper-button(content="ADVANCED_SEND_STEP_1")
+          label.mbn(translate="TX_FEE")
+          helper-button(content="TX_FEE_HELP")
         .miners-fee-selection
           .fee-custom
             .mrl.flex-1
@@ -149,7 +149,7 @@
               td
                 fiat(btc="getTransactionTotal()")
             tr
-              td(translate="MINERS_FEE")
+              td(translate="TX_FEE")
                 | :
               td {{ transaction.fee | toBitCurrency:btcCurrency:false}}
               td
@@ -178,9 +178,31 @@
     a.dark-grey(ng-hide="advanced || confirmationStep", ng-click="advancedSend()", translate="ADVANCED_SEND")
     a.dark-grey(ng-show="advanced && !confirmationStep", ng-click="regularSend()", translate="REGULAR_SEND")
   .flex-center.flex-end.send-actions
-    button.button-muted-off.mrm(ng-click="cameraOff()", ng-show="cameraIsOn", translate="CAMERA_OFF")
-    button.button-muted.mrm(ng-click="close()", translate="CANCEL", ng-hide="confirmationStep")
-    button.button-muted.mrm(ng-click="backToForm()", translate="BACK", ng-show="confirmationStep")
-    button.button-muted.bc-modal-fade.mrm(ng-show="advanced && !confirmationStep", translate="RESET_FORM", ng-click="resetSendForm()")
-    button.button-success.button-lg(tabindex="1" ng-click="setAllAndBuild(); goToConfirmation()" ng-disabled="sendForm.$invalid || !amountIsValid || !allAmountsAboveZero()" translate="NEXT_STEP" ng-hide="confirmationStep")
-    button.button-success.button-lg(ui-ladda="sending" ng-click="send()" ng-disabled="noteForm.$invalid || !amountIsValid" data-style="expand-left" ladda-translate="SEND" ng-show="confirmationStep")
+    button.button-muted-off.mrm(
+      ng-click="cameraOff()" ng-show="cameraIsOn" translate="CAMERA_OFF")
+
+    button.button-muted.mrm(
+      ng-click="close()" translate="CANCEL" ng-hide="confirmationStep")
+
+    button.button-muted.mrm(
+      ng-click="backToForm()" translate="BACK" ng-show="confirmationStep")
+
+    button.button-muted.bc-modal-fade.mrm(
+      ng-show="advanced && !confirmationStep" translate="RESET_FORM" ng-click="resetSendForm()")
+
+    button.button-success.button-lg(
+      ladda-translate="NEXT_STEP"
+      ui-ladda="building"
+      ng-click="goToConfirmation()"
+      tabindex="1"
+      ng-disabled="sendForm.$invalid || !amountIsValid || !allAmountsAboveZero()"
+      data-style="expand-left"
+      ng-hide="confirmationStep")
+
+    button.button-success.button-lg(
+      ladda-translate="SEND"
+      ui-ladda="sending"
+      ng-click="send()"
+      ng-disabled="noteForm.$invalid || !amountIsValid"
+      data-style="expand-left"
+      ng-show="confirmationStep")

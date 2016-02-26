@@ -46,13 +46,6 @@ form.form-horizontal(role="form",name="form",novalidate)
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
       btc-picker(currency="settings.btcCurrency" display-currency="settings.displayCurrency")
-  .form-group(ng-class="{'has-error': errors.feePerKB}")
-    .col-sm-12.col-md-6
-      label.type-h5.em-400(translate="FEE_PER_KB")
-      p.em-300.text.line-height.hidden-xs.hidden-sm(translate="FEE_PER_KB_EXPLAIN")
-    .col-sm-12.col-md-6.setting-result
-      bc-async-input(ng-model="settings.feePerKB" validator="validateFee" is-required on-save="changeFeePerKB" on-cancel="cancelChangeFeePErKB" transform="btc" action-title="'CHANGE' | translate")
-      span.help-block.has-error {{ errors.feePerKB }}
   .form-group
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="NOTIFICATIONS")

@@ -1,5 +1,5 @@
 angular.module('walletApp.core').factory 'MyWalletPayment', ($q) ->
-  (shouldReject) ->
+  (_, shouldReject) ->
 
     tx = {
       txid: 'tx-hash'
@@ -16,9 +16,11 @@ angular.module('walletApp.core').factory 'MyWalletPayment', ($q) ->
     this.to = (dest) -> this
     this.amount = (amount) -> this
     this.fee = (fee) -> this
+    this.feePerKb = (feePerKb) -> this
     this.note = (note) -> this
     this.sweep = () -> this
     this.build = () -> this
+    this.buildbeta = () -> $q.resolve()
     this.sideEffect = () -> this
     this.sign = (pass) -> this
     this.publish = () -> this

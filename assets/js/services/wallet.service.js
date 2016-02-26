@@ -78,6 +78,11 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     wallet.my.ws.wsUrl=customWebSocketURL;
   }
 
+  // If a custom feeServiceDomain is set by index.jade:
+  //                             Grunt can replace this:
+  const customFeeServiceDomain = $rootScope.feeServiceDomain || "https://api.blockchain.info";
+  $rootScope.feeServiceDomain = customFeeServiceDomain;
+
   // These are set by grunt dist:
   $rootScope.versionFrontend = null;
   $rootScope.versionMyWallet = null;

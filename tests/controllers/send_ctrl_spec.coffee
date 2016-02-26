@@ -4,6 +4,8 @@ describe "SendCtrl", ->
   ngAudio = undefined
   Wallet = undefined
   scope = undefined
+  $httpBackend = undefined
+  $uibModal = undefined
 
   askForSecondPassword = undefined
 
@@ -23,6 +25,17 @@ describe "SendCtrl", ->
       MyWalletPayment = $injector.get("MyWalletPayment")
       currency = $injector.get('currency')
       MyWalletHelpers = $injector.get("MyWalletHelpers")
+      $httpBackend = $injector.get('$httpBackend')
+      $uibModal = $injector.get('$uibModal')
+
+      feeEstimates = [
+        { fee: 60000, surge: false }, { fee: 50000, surge: false },
+        { fee: 40000, surge: false }, { fee: 30000, surge: false },
+        { fee: 20000, surge: false }, { fee: 10000, surge: false }
+      ]
+
+      $httpBackend.when('GET', 'https://api.blockchain.info/fees')
+        .respond({ estimate: feeEstimates })
 
       MyWallet.wallet =
         setNote: (-> )
@@ -66,6 +79,14 @@ describe "SendCtrl", ->
 
     return
 
+  beforeEach ->
+    $httpBackend.expectGET('https://api.blockchain.info/fees')
+
+  afterEach ->
+    $httpBackend.flush()
+    $httpBackend.verifyNoOutstandingExpectation()
+    $httpBackend.verifyNoOutstandingRequest()
+
   describe "", ->
     beforeEach ->
       angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
@@ -81,6 +102,8 @@ describe "SendCtrl", ->
           '<input type="text" name="destinations0" ng-model="transaction.destinations[0]" required />' +
           '<input type="number" name="amounts0" ng-model="transaction.amounts[0]" ng-change="validateAmounts()" min="1" required />' +
           '<input type="text" name="destinations1" ng-model="transaction.destinations[1]" required />' +
+          '<input type="number" name="amounts1" ng-model="transaction.amounts[1]" ng-change="validateAmounts()" min="1" required />' +
+          '<input type="text" name="destinations2" ng-model="transaction.destinations[2]" required />' +
           '<input type="number" name="amounts1" ng-model="transaction.amounts[1]" ng-change="validateAmounts()" min="1" required />' +
           '<input type="number" name="fee" ng-model="transaction.fee" ng-change="validateAmounts()" min="0" required />' +
           '<textarea rows="4" name="note" ng-model="transaction.note" ng-maxlength="512"></textarea>' +
@@ -328,6 +351,45 @@ describe "SendCtrl", ->
         scope.$apply()
         expect(hasErr 'fee', 'number').toBe(true)
 
+    describe 'dynamic fee', ->
+      avgSize = 500
+      lgSize = 2000
+
+      lowFee = 4999
+      midFee = 25000
+      highFee = 30001
+      lgSizeFee = 100000
+
+      beforeEach ->
+        spyOn($uibModal, 'open').and.callThrough()
+        scope.dynamicFeeAvailable = true
+
+      it 'should warn when the tx fee is low', ->
+        scope.transaction.fee = lowFee
+        scope.checkFee({ sizeEstimate: avgSize }).then ->
+          expect($uibModal.open).toHaveBeenCalled()
+
+      it 'should warn when the tx fee is high', ->
+        scope.transaction.fee = highFee
+        scope.checkFee({ sizeEstimate: avgSize }).then ->
+          expect($uibModal.open).toHaveBeenCalled()
+
+      it 'should not warn when the tx fee is normal', ->
+        scope.transaction.fee = midFee
+        scope.checkFee({ sizeEstimate: avgSize }).then ->
+          expect($uibModal.open).not.toHaveBeenCalled()
+
+      it 'should take tx size into account when deciding to show warning', ->
+        scope.transaction.fee = lgSizeFee
+        scope.checkFee({ sizeEstimate: lgSize }).then ->
+          expect($uibModal.open).not.toHaveBeenCalled()
+
+      it 'should warn when there is a surge', ->
+        scope.transaction.fee = midFee
+        scope.surgeWarning = true
+        scope.checkFee({ sizeEstimate: avgSize }).then ->
+          expect($uibModal.open).toHaveBeenCalled()
+
     describe "note", ->
 
       it "should not be valid after 512 characters", ->
@@ -356,7 +418,7 @@ describe "SendCtrl", ->
       describe "failure", ->
 
         beforeEach ->
-          scope.payment = new Wallet.payment(true)
+          scope.payment = new Wallet.payment({}, true)
           askForSecondPassword.resolve()
 
         it "should display an error when process fails", inject((Alerts) ->
@@ -592,10 +654,11 @@ describe "SendCtrl", ->
 
     describe "modal navigation", ->
 
-      it "should be able to go to confirmation step", ->
-        expect(scope.confirmationStep).toBeFalsy()
+      it "should build the payment before going to confirmation step", inject(($q) ->
+        spyOn(scope, 'setAllAndBuild').and.callFake(() -> $q.resolve())
         scope.goToConfirmation()
-        expect(scope.confirmationStep).toBeTruthy()
+        expect(scope.setAllAndBuild).toHaveBeenCalled()
+      )
 
       it "should be able to go back from confirmation step", ->
         scope.confirmationStep = true
