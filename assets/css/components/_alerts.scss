@@ -15,6 +15,9 @@
   z-index: 1051;
   position: fixed;
   min-width: 300px;
+  overflow: initial !important;
+  max-height: initial !important;
+  min-height: initial !important;
 }
 .alert-received-bitcoin, .alert-sent-bitcoin {
   @extend .alert-in-app;
