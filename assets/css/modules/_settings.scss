@@ -141,32 +141,44 @@ table.accounts-container {
 .accounts-container {
   position: relative;
   > .list {
-    @include transition(width $slow);
     position: relative;
     z-index: 10;
-    width: 100%;
-    &.active {
-      width: 40%;
-      tr { height: 40px; }
-      td:first-child {
-        > span, > a, > button { display: none; }
-        > span:first-child { display: block; }
-      }
-    }
   }
   > .account {
-    @include transition(opacity 0s);
-    position: absolute;
-    opacity: 0;
-    width: 60%;
-    right: 0;
+    @include transition(right $slow);
+    background-color: $white;
+    overflow: scroll;
+    position: fixed;
+    z-index: 10001;
+    padding: 25px;
+    height: 100%;
+    right: -65%;
+    width: 50%;
     top: 0;
     .well {
       margin-top: 0px;
     }
     &.active {
-      opacity: 1;
-      @include transition(opacity $slow $slow);
+      right: 15px;
+    }
+  }
+}
+
+.settings {
+  .overlay {
+    @include transition(left 0s $slow, opacity $slow);
+    background-color: #000;
+    position: fixed;
+    left: -10000px;
+    z-index: 10000;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    top: 0;
+    &.active {
+      left: 0px;
+      opacity: 0.2;
+      @include transition(left 0s, opacity $slow);
     }
   }
 }

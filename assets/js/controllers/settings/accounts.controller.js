@@ -16,14 +16,23 @@ function SettingsAccountsController($scope, Wallet, Alerts, $uibModal, filterFil
 
   $scope.getLegacyTotal = () => Wallet.total('imported');
 
-  $scope.open = (account) => {
-    if (account.opened) {$scope.managingAccount; return;}
+  $scope.toggleAccount = (account) => {
+    if (account.opened) { 
+      $scope.resetAccount()
+      return; 
+    }
 
-    Wallet.accounts().forEach(a => a.opened = false)  
+    Wallet.accounts().forEach(a => a.opened = false)
     account.opened = true;
     $scope.managingAccount = true;
     $scope.updateAccount(account.index)
 
+  }
+
+  $scope.resetAccount = () => {
+    let account = Wallet.accounts().filter(a => a.opened)[0]
+    $scope.managingAccount = false;
+    account.opened = false;
   }
 
   $scope.newAccount = () => {

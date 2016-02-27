@@ -41,7 +41,7 @@ div.accounts-container
             td.shrink
               //- ui-sref="wallet.common.settings.accounts_addresses({account: account.index})"
               button.btn.btn-default(
-                ng-click="open(account)"
+                ng-click="toggleAccount(account)"
                 translate="MANAGE_ADDRESSES"
                 ng-hide="account.archived"
               )
@@ -69,6 +69,12 @@ div.accounts-container
         ng-show="addressBookPresent"
       )
 
+      .row
+        .col-xs-12.mbl
+          a.flex-center.text.em-400.blue(ng-click="resetAccount()")
+            i.ti-arrow-left.mrm
+            span(translate="BACK")
+
       h5.well.type-h5.em-400.hidden-xs(translate="MY_ADDRESSES_EXPLAIN")
 
       .row
@@ -94,3 +100,5 @@ div.accounts-container
               ng-repeat="address in hdAddresses() | addressOrNameMatch:searchText | orderBy:'-index' track by address.index"
               ng-class="{'address-animate': !searchText}"
             )
+
+.overlay(ng-class="{active: managingAccount}" ng-click="resetAccount()")
