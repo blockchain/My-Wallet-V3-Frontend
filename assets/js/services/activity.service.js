@@ -12,6 +12,8 @@ function Activity($rootScope, $timeout, Wallet, MyWallet) {
     transactions: [],
     logs: [],
     limit: 8,
+    timeSort: timeSort,
+    capitalize: capitalize,
     updateTxActivities: updateTxActivities,
     updateLogActivities: updateLogActivities,
     updateAllActivities: updateAllActivities
