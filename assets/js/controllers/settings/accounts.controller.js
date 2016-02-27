@@ -16,6 +16,11 @@ function SettingsAccountsController($scope, Wallet, Alerts, $uibModal, filterFil
 
   $scope.getLegacyTotal = () => Wallet.total('imported');
 
+  $scope.managing = (account) => { 
+    $scope.managingAccount = true 
+    $scope.updateAccount(account.index)
+  }
+
   $scope.newAccount = () => {
     Alerts.clear();
     let modalInstance = $uibModal.open({
@@ -93,5 +98,24 @@ function SettingsAccountsController($scope, Wallet, Alerts, $uibModal, filterFil
   $scope.archive = (account) => { Wallet.archive(account) };
   $scope.unarchive = (account) => { Wallet.unarchive(account) };
   $scope.isDefault = (account) => Wallet.isDefaultAccount(account);
+
+  // addresses
+  $scope.updateAccount = (idx) => {
+    $scope.edit = {address: {}};
+    $scope.errors = {label: {}};
+
+    $scope.hdAddresses = Wallet.hdAddresses(idx)
+
+    $scope.settings = Wallet.settings;
+    $scope.account = Wallet.accounts()[parseInt(idx)];
+
+    $scope.createAddress = () => {
+      Wallet.addAddressForAccount($scope.account, (() => {}), (e) => {
+        $translate("LABEL_ERROR_BIP_44_GAP").then((translation) => {
+          Alerts.displayError(translation);
+        });
+      });
+    }
+  }
 
 }

@@ -116,11 +116,11 @@ table.accounts-container {
 //A better .well class
 .well {
   padding: 20px;
+  font-size: 14px;
+  line-height: 1.3em;
   margin-bottom: 20px;
-  background-color: $light-blue;
-  border: 1px solid $border-grey;
-  border-radius: 5px;
-  line-height: 2em;
+  background-color: $pale-yellow;
+  border-left: 10px solid $security-yellow;
 }
 
 @media (min-width: 992px){
