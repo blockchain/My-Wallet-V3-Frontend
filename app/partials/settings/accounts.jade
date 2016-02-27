@@ -1,5 +1,5 @@
 div.accounts-container
-  div(ng-class="{active: managingAccount}")
+  div(ng-class="{active: managingAccount}").list
     h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
       
     .row.pvl
@@ -22,6 +22,7 @@ div.accounts-container
         table.accounts-container
           tr.responsive.width-100(
             ng-repeat="account in accounts() | filter:{label: searchText}"
+            ng-class="{active: account.opened}"
           )
             td.expand
               span.account-label(ng-bind-html="account.label | escapeHtml | highlight:searchText")
@@ -40,7 +41,7 @@ div.accounts-container
             td.shrink
               //- ui-sref="wallet.common.settings.accounts_addresses({account: account.index})"
               button.btn.btn-default(
-                ng-click="managing(account)"
+                ng-click="open(account)"
                 translate="MANAGE_ADDRESSES"
                 ng-hide="account.archived"
               )
@@ -60,19 +61,13 @@ div.accounts-container
     .row.spacing
     .row.spacing
 
-  .row.account
+  .row.account(ng-class="{active: managingAccount}")
     .col-xs-12
       a.button-default(
         ui-sref="wallet.common.settings.address_book"
         translate="MANAGE_ADDRESS_BOOK"
         ng-show="addressBookPresent"
       )
-
-      .row
-        .col-xs-12.mbl
-          a.flex-center.text.em-400.blue(ng-click="back()")
-            i.ti-arrow-left.mrm
-            span(translate="BACK")
 
       h5.well.type-h5.em-400.hidden-xs(translate="MY_ADDRESSES_EXPLAIN")
 

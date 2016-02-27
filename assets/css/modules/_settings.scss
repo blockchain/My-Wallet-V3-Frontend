@@ -86,9 +86,11 @@
 .inneredit { padding: 10px 15px 0;}
 
 table.accounts-container {
-
   tr {
     height: 66px;
+    &.active {
+      background-color: $light-blue;
+    }
   }
 
   td {
@@ -133,4 +135,38 @@ table.accounts-container {
 }
 @media (max-width: 991px) {
   .setting-result { margin-top: 10px; }
+}
+
+// accounts
+.accounts-container {
+  position: relative;
+  > .list {
+    @include transition(width $slow);
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    &.active {
+      width: 40%;
+      tr { height: 40px; }
+      td:first-child {
+        > span, > a, > button { display: none; }
+        > span:first-child { display: block; }
+      }
+    }
+  }
+  > .account {
+    @include transition(opacity 0s);
+    position: absolute;
+    opacity: 0;
+    width: 60%;
+    right: 0;
+    top: 0;
+    .well {
+      margin-top: 0px;
+    }
+    &.active {
+      opacity: 1;
+      @include transition(opacity $slow $slow);
+    }
+  }
 }
