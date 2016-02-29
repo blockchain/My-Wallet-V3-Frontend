@@ -488,13 +488,13 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       $scope.confirmationTime = (blockIdx + 1) * 10
       $scope.blockQueue = (blockIdx + 1)
 
-      if (closestBlock === fees[5]) {
-        $scope.confirmationWarning = true;
-        $scope.confirmationTime = 60
-        $scope.blockQueue = 6
-      }
-
-      $rootScope.$safeApply()
+      $timeout(() => {
+        if (closestBlock === fees[5]) {
+          $scope.confirmationWarning = true;
+          $scope.confirmationTime = 60
+          $scope.blockQueue = 6
+        }
+      })
     })
   }
 
