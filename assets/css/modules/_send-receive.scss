@@ -67,7 +67,7 @@
   }
   label { font-size: small; }
   .form-control { width: auto; }
-  .help-block {
+  & ~ .help-block {
     &.friendly {
       color: $blue;
       &.has-error {
