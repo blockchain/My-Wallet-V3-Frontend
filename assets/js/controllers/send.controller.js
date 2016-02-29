@@ -449,12 +449,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       .finally(() => $scope.building = false);
   };
 
-  $scope.setAllAndBuild = () => {
-    $scope.setPaymentFrom();
-    $scope.setPaymentTo();
-    $scope.setPaymentAmount();
-    $scope.setPaymentFee();
-
+  $scope.buildPayment = () => {
     return $q((resolve, reject) => {
       $scope.payment.buildbeta()
         .then((p) => {
@@ -467,11 +462,43 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
           return r.payment;
         });
     });
+  }
+
+  $scope.setAllAndBuild = () => {
+    $scope.setPaymentFrom();
+    $scope.setPaymentTo();
+    $scope.setPaymentAmount();
+    $scope.setPaymentFee();
+
+    return $scope.buildPayment();
   };
+
+  $scope.guessAbsoluteFee = (size, feePerKb) => feePerKb * (size / 1000);
+
+  $scope.getClosestBlock = (tx) => {
+    $scope.confirmationWarning = false;
+
+    dynamicFeeVectorP.then(estimate => {
+      let fee = $scope.transaction.fee
+      let fees = estimate.map((e) => { return $scope.guessAbsoluteFee(tx.sizeEstimate, e.fee) });
+      let closestBlock = fees.reduce((x,y) => { return Math.abs(x-fee) < Math.abs(y-fee) ? x : y });
+      let blockIdx = fees.indexOf(closestBlock);
+
+      $scope.confirmationTime = (blockIdx + 1) * 10
+      $scope.blockQueue = (blockIdx + 1)
+
+      if (closestBlock === fees[5]) {
+        $scope.confirmationWarning = true;
+        $scope.confirmationTime = 60
+        $scope.blockQueue = 6
+      }
+
+      $rootScope.$safeApply()
+    })
+  }
 
   $scope.checkFee = (tx) => {
     let goAdvanced = () => $scope.advancedSend();
-    let guessAbsoluteFee = (size, feePerKb) => feePerKb * (size / 1000);
 
     let suggestFee = (fee) => {
       $scope.transaction.fee = fee;
@@ -514,9 +541,9 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     }
 
     return dynamicFeeVectorP.then(estimate => {
-      let high = guessAbsoluteFee(tx.sizeEstimate, estimate[0].fee);
-      let mid = guessAbsoluteFee(tx.sizeEstimate, estimate[1].fee);
-      let low = guessAbsoluteFee(tx.sizeEstimate, estimate[5].fee);
+      let high = $scope.guessAbsoluteFee(tx.sizeEstimate, estimate[0].fee);
+      let mid = $scope.guessAbsoluteFee(tx.sizeEstimate, estimate[1].fee);
+      let low = $scope.guessAbsoluteFee(tx.sizeEstimate, estimate[5].fee);
       low = low < minimumFee ? minimumFee : low;
       console.log('Fees (high: %d, mid: %d, low: %d)', high, mid, low);
 
