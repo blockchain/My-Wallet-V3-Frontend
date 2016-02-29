@@ -24,36 +24,6 @@
     transition: transform 0.15s linear;
   }
   &.in .modal-dialog { transform: scale(1) }
-  &.confirm {
-    max-width: 35vw;
-    margin: 0 auto;
-    @media (max-width: 768px) {
-      max-width: 85vw;
-    }
-    .modal-dialog {
-      transition: all 0.3s linear;
-    }
-    .modal-body {
-      border-radius: 5px 5px 0px 0px;
-    }
-    .modal-footer {
-      border-radius: 0px 0px 5px 5px;
-      background-color: #fff;
-      padding: 10px;
-    }
-    &.fade .modal-dialog {
-      -webkit-transform: translate(0,-25%);
-      -ms-transform: translate(0,-25%);
-      -o-transform: translate(0,-25%);
-      transform: translate(0,-25%);
-    } 
-    &.in .modal-dialog {
-      -webkit-transform: translate(0,10%);
-      -ms-transform: translate(0,10%);
-      -o-transform: translate(0,10%);
-      transform: translate(0,10%);
-    }
-  }
 }
 
 // Shell div to position the modal with bottom padding
@@ -181,18 +151,6 @@
       .modal-dialog { width: auto; } 
     }
   }
-  &.confirm { 
-    @extend .flex-center;
-    &.top {
-      @extend .flex-align-start;
-    }
-    .modal-dialog { 
-      width: auto; 
-    } 
-    .modal-body {
-      min-height: 0px;
-    }
-  }
   .modal-body {
     background: white;
     min-height: 100px;
@@ -237,11 +195,7 @@
     }
     &.no-border { border-bottom: 0px; }
   }
-  .has-error .border-bottom { 
-    z-index: 10;
-    position: relative;
-    border-color: #a94442 !important;
-  }
+  .has-error .border-bottom { border-color: #a94442 !important; }
   label {
     font-weight: 400;
     color: darken($ccc, 45%);
@@ -378,6 +332,10 @@
       }
       &:last-child {
         padding: 15px 2em;
+      }
+      &.overview {
+        min-height: initial;
+        max-height: initial;
       }
     }
   }
