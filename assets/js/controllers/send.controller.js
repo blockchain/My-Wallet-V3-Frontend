@@ -486,7 +486,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
     let showFeeWarning = $uibModal.open.bind($uibModal, {
       templateUrl: 'partials/dynamic-fee.jade',
-      windowClass: 'bc-modal',
+      windowClass: 'bc-modal medium',
       controller: function DynamicFeeController($scope, $uibModalInstance) {
         $scope.surge = surge;
         $scope.currentFee = currentFee;
