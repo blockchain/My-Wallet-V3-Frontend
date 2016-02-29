@@ -118,10 +118,11 @@
                   transform-currency="settings.btcCurrency"
                   placeholder="Enter your fee here")
               span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$touched")
-              span.help-block.friendly(translate="ESTIMATED_TX_TIME" 
-                                       translate-values="{ confirmationTime: confirmationTime, blockQueue: blockQueue }"
-                                       ng-show="!sendForm.$invalid && !hasInsufficientError(0) && confirmationTime && blockQueue"
-                                       ng-class="{'has-error': confirmationWarning}")
+              span.help-block.friendly(ng-show="!sendForm.$invalid && !hasInsufficientError(0) && confirmationTime && blockQueue" ng-class="{'has-error': confirmationWarning}")
+                span(translate="ESTIMATED_TX_TIME" translate-values="{ confirmationTime: confirmationTime, blockQueue: blockQueue }")
+                |  
+                ng-pluralize(count="blockQueue" when="{'1': 'block', 'other': 'blocks'}")
+                span ).
       //- QR Scanner
       .form-group.row(ng-hide="!cameraIsOn")
         label.col-sm-2.col-xs-12(translate="QR")
