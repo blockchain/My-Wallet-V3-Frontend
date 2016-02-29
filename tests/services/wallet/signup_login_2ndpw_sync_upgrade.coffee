@@ -11,9 +11,9 @@ describe "walletServices", () ->
       Wallet = $injector.get("Wallet")
 
       Wallet.my = {
-        login: (uid, sharedKey, password, two_factor_code, success, needs_2fa, wrong_2fa) ->
+        login: (uid, sharedKey, password, two_factor, success, needs_2fa, wrong_2fa) ->
           if uid == "test-2FA"
-            if two_factor_code?
+            if two_factor && two_factor.code?
               success()
             else
               needs_2fa(4)
@@ -116,6 +116,7 @@ describe "walletServices", () ->
     )
 
     it "should login with  2FA code", inject((Wallet) ->
+      Wallet.settings.twoFactorMethod = 4
       Wallet.login("test-2FA", "test", "1234567", (() ->), (()->), (()->))
       expect(Wallet.status.isLoggedIn).toBe(true)
     )
