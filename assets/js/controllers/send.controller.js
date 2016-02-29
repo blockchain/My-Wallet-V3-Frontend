@@ -366,6 +366,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   $scope.handleTxUpdate = (tx) => {
     if (tx.fee != null) {
       $scope.transaction.fee = tx.forcedFee ? tx.forcedFee : tx.fee;
+      $scope.getClosestBlock(tx);
       $scope.validateAmounts();
       $scope.$root.$safeApply($scope);
     }
@@ -480,7 +481,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
     dynamicFeeVectorP.then(estimate => {
       let fee = $scope.transaction.fee
-      let fees = estimate.map((e) => { return $scope.guessAbsoluteFee(tx.sizeEstimate, e.fee) });
+      let fees = estimate.map((e) => { return $scope.guessAbsoluteFee(tx.transaction.sizeEstimate, e.fee) });
       let closestBlock = fees.reduce((x,y) => { return Math.abs(x-fee) < Math.abs(y-fee) ? x : y });
       let blockIdx = fees.indexOf(closestBlock);
 
