@@ -384,6 +384,10 @@
       &:last-child {
         padding: 15px 2em;
       }
+      &.overview {
+        min-height: initial;
+        max-height: initial;
+      }
     }
   }
 

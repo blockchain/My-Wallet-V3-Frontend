@@ -120,7 +120,7 @@
               span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$touched")
               span.help-block.friendly(translate="ESTIMATED_TX_TIME" 
                                        translate-values="{ confirmationTime: confirmationTime, blockQueue: blockQueue }"
-                                       ng-show="sendForm.fee.$dirty && !sendForm.$invalid && !hasInsufficientError(0)"
+                                       ng-show="sendForm.fee.$dirty && !sendForm.$invalid && !hasInsufficientError(0) && confirmationTime && blockQueue"
                                        ng-class="{'has-error': confirmationWarning}")
       //- QR Scanner
       .form-group.row(ng-hide="!cameraIsOn")
