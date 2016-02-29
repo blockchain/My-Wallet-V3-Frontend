@@ -405,7 +405,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
   $scope.setPaymentAmount = () => {
     $scope.payment.amount($scope.transaction.amounts)
-    $scope.setPaymentFee();
+    $scope.buildTx();
   };
 
   $scope.setPaymentFee = () => {
