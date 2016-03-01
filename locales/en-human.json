@@ -590,5 +590,6 @@
   "LOWER_TO": "Lower to {{ suggested | convert }}",
   "CONTINUE_WITH": "Continue with {{ suggested | convert }}",
   "BLOCK": "block",
-  "BLOCKS": "blocks"
+  "BLOCKS": "blocks",
+  "SMALL_FEE_WARNING": "Your transaction is so small that it may never be confirmed."
 }
