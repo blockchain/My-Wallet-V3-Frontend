@@ -588,5 +588,7 @@
   "CONTINUE_CURRENT_FEE": "Continue with current fee",
   "RAISE_TO": "Raise to {{ suggested | convert }}",
   "LOWER_TO": "Lower to {{ suggested | convert }}",
-  "CONTINUE_WITH": "Continue with {{ suggested | convert }}"
+  "CONTINUE_WITH": "Continue with {{ suggested | convert }}",
+  "BLOCK": "block",
+  "BLOCKS": "blocks"
 }

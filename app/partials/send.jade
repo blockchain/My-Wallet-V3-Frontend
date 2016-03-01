@@ -121,7 +121,9 @@
         span.help-block.friendly(ng-show="!sendForm.$invalid && !hasInsufficientError(0) && confirmationTime && blockQueue" ng-class="{'has-error': confirmationWarning}")
           span(translate="ESTIMATED_TX_TIME" translate-values="{ confirmationTime: confirmationTime, blockQueue: blockQueue }")
           |  
-          ng-pluralize(count="blockQueue" when="{'1': 'block', 'other': 'blocks'}")
+          ng-pluralize(count="blockQueue" 
+                       ng-init="block='BLOCK'; blocks='BLOCKS'"
+                       when="{'1': '{{block | translate}}', 'other': '{{blocks | translate}}' }")
           span ).
       //- QR Scanner
       .form-group.row(ng-hide="!cameraIsOn")
