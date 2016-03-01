@@ -67,6 +67,14 @@
   }
   label { font-size: small; }
   .form-control { width: auto; }
+  & ~ .help-block {
+    &.friendly {
+      color: $blue;
+      &.has-error {
+        color: $state-danger-text;
+      }
+    }
+  }
 }
 
 @media (max-width: 668px) {

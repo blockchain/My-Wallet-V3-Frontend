@@ -185,7 +185,10 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     const transactionFailed = (message) => {
       $scope.sending = false;
       $scope.payment = new Wallet.payment(paymentCheckpoint).build();
+
       let msgText = 'string' === typeof message ? message : 'SEND_FAILED';
+      if (msgText.indexOf('Fee is too low') > -1) msgText = 'LOW_FEE_ERROR';
+
       $translate(msgText).then(t => {
         Alerts.displayError(t, false, $scope.alerts);
       });
@@ -366,6 +369,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   $scope.handleTxUpdate = (tx) => {
     if (tx.fee != null) {
       $scope.transaction.fee = tx.forcedFee ? tx.forcedFee : tx.fee;
+      $scope.getClosestBlock(tx);
       $scope.validateAmounts();
       $scope.$root.$safeApply($scope);
     }
@@ -405,7 +409,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
   $scope.setPaymentAmount = () => {
     $scope.payment.amount($scope.transaction.amounts)
-    $scope.setPaymentFee();
+    $scope.buildTx();
   };
 
   $scope.setPaymentFee = () => {
@@ -449,12 +453,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       .finally(() => $scope.building = false);
   };
 
-  $scope.setAllAndBuild = () => {
-    $scope.setPaymentFrom();
-    $scope.setPaymentTo();
-    $scope.setPaymentAmount();
-    $scope.setPaymentFee();
-
+  $scope.buildPayment = () => {
     return $q((resolve, reject) => {
       $scope.payment.buildbeta()
         .then((p) => {
@@ -467,11 +466,43 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
           return r.payment;
         });
     });
+  }
+
+  $scope.setAllAndBuild = () => {
+    $scope.setPaymentFrom();
+    $scope.setPaymentTo();
+    $scope.setPaymentAmount();
+    $scope.setPaymentFee();
+
+    return $scope.buildPayment();
   };
+
+  $scope.guessAbsoluteFee = (size, feePerKb) => feePerKb * (size / 1000);
+
+  $scope.getClosestBlock = (tx) => {
+    dynamicFeeVectorP.then(estimate => {
+      let fee = $scope.transaction.fee
+      let fees = estimate.map((e) => { return $scope.guessAbsoluteFee(tx.transaction.sizeEstimate, e.fee) });
+      let closestBlock = fees.reduce((x,y) => { return Math.abs(x-fee) < Math.abs(y-fee) ? x : y });
+      let blockIdx = fees.indexOf(closestBlock);
+
+      $timeout(() => {
+        if (closestBlock === fees[5] && fee < fees[5]) {
+          $scope.confirmationWarning = true;
+          blockIdx = 5;
+        } else {
+          $scope.confirmationWarning = false;
+        }
+
+        $scope.confirmationTime = (blockIdx + 1) * 10
+        $scope.blockQueue = (blockIdx + 1)
+      }, 10)
+
+    })
+  }
 
   $scope.checkFee = (tx) => {
     let goAdvanced = () => $scope.advancedSend();
-    let guessAbsoluteFee = (size, feePerKb) => feePerKb * (size / 1000);
 
     let suggestFee = (fee) => {
       $scope.transaction.fee = fee;
@@ -486,7 +517,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
     let showFeeWarning = $uibModal.open.bind($uibModal, {
       templateUrl: 'partials/dynamic-fee.jade',
-      windowClass: 'bc-modal',
+      windowClass: 'bc-modal medium',
       controller: function DynamicFeeController($scope, $uibModalInstance) {
         $scope.surge = surge;
         $scope.currentFee = currentFee;
@@ -514,9 +545,9 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     }
 
     return dynamicFeeVectorP.then(estimate => {
-      let high = guessAbsoluteFee(tx.sizeEstimate, estimate[0].fee);
-      let mid = guessAbsoluteFee(tx.sizeEstimate, estimate[1].fee);
-      let low = guessAbsoluteFee(tx.sizeEstimate, estimate[5].fee);
+      let high = $scope.guessAbsoluteFee(tx.sizeEstimate, estimate[0].fee);
+      let mid = $scope.guessAbsoluteFee(tx.sizeEstimate, estimate[1].fee);
+      let low = $scope.guessAbsoluteFee(tx.sizeEstimate, estimate[5].fee);
       low = low < minimumFee ? minimumFee : low;
       console.log('Fees (high: %d, mid: %d, low: %d)', high, mid, low);
 

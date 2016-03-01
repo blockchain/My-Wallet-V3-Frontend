@@ -390,6 +390,17 @@ describe "SendCtrl", ->
         scope.checkFee({ sizeEstimate: avgSize }).then ->
           expect($uibModal.open).toHaveBeenCalled()
 
+      it 'should display block queue information', ->
+        tx = {}
+        tx.fee = 1000
+        tx.transaction = {}
+        tx.transaction.sizeEstimate = 220
+        spyOn(scope, "getClosestBlock").and.callThrough()
+
+        scope.handleTxUpdate(tx);
+
+        expect(scope.getClosestBlock).toHaveBeenCalled()
+
     describe "note", ->
 
       it "should not be valid after 512 characters", ->

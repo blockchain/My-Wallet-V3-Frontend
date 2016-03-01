@@ -181,6 +181,11 @@
       .modal-dialog { width: auto; } 
     }
   }
+  &.medium {
+    @media (min-width: 768px) {
+      .modal-dialog { width: 45vw; } 
+    }
+  }
   &.confirm { 
     @extend .flex-center;
     &.top {
@@ -378,6 +383,10 @@
       }
       &:last-child {
         padding: 15px 2em;
+      }
+      &.overview {
+        min-height: initial;
+        max-height: initial;
       }
     }
   }
