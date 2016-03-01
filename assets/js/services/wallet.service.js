@@ -219,11 +219,20 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     };
 
     $window.root = 'https://blockchain.info/';
+
+    var two_factor = null;
+    if(wallet.settings.twoFactorMethod) {
+      two_factor = {
+        type: wallet.settings.twoFactorMethod,
+        code: two_factor_code
+      }
+    }
+
     wallet.my.login(
       uid,
       null, // sharedKey
       password,
-      two_factor_code,
+      two_factor,
       didLogin,
       needsTwoFactorCode,
       wrongTwoFactorCode,
