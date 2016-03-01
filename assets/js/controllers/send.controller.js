@@ -424,7 +424,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
   $scope.advancedSend = () => {
     $scope.advanced = true;
-    $scope.setPaymentFee();
+    $scope.buildTx();
   };
 
   $scope.regularSend = () => {
