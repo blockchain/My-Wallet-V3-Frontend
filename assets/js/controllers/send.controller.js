@@ -480,24 +480,24 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   $scope.guessAbsoluteFee = (size, feePerKb) => feePerKb * (size / 1000);
 
   $scope.getClosestBlock = (tx) => {
-    $scope.confirmationWarning = false;
-
     dynamicFeeVectorP.then(estimate => {
       let fee = $scope.transaction.fee
       let fees = estimate.map((e) => { return $scope.guessAbsoluteFee(tx.transaction.sizeEstimate, e.fee) });
       let closestBlock = fees.reduce((x,y) => { return Math.abs(x-fee) < Math.abs(y-fee) ? x : y });
       let blockIdx = fees.indexOf(closestBlock);
 
-      $scope.confirmationTime = (blockIdx + 1) * 10
-      $scope.blockQueue = (blockIdx + 1)
-
       $timeout(() => {
-        if (closestBlock === fees[5]) {
+        if (closestBlock === fees[5] && fee < fees[5]) {
           $scope.confirmationWarning = true;
-          $scope.confirmationTime = 60
-          $scope.blockQueue = 6
+          blockIdx = 5;
+        } else {
+          $scope.confirmationWarning = false;
         }
-      })
+
+        $scope.confirmationTime = (blockIdx + 1) * 10
+        $scope.blockQueue = (blockIdx + 1)
+      }, 10)
+
     })
   }
 
