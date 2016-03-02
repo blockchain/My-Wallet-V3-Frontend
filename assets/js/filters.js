@@ -23,10 +23,15 @@ function toBitCurrencyFilter(currency) {
 
 convertFilter.$inject = ['Wallet', 'currency'];
 function convertFilter(Wallet, currency) {
-  return function (amount, useDisplayCurrency=true) {
-    let bitcoin = currency.bitCurrencies[0];
+  return function (amount, useDisplayCurrency=true, useBtcSettings, swap) {
+    let fiatSettings = Wallet.settings.currency;
+    let btcSettings = Wallet.settings.btcCurrency;
+
+    let bitcoin = useBtcSettings ? btcSettings : currency.bitCurrencies[0];
     let displayCurrency = Wallet.settings.displayCurrency || bitcoin;
     let curr = useDisplayCurrency ? displayCurrency : bitcoin;
+    if (swap) { curr = currency.isBitCurrency(curr) ? fiatSettings : btcSettings }
+
     let conversion = currency.convertFromSatoshi(amount, curr);
     return currency.formatCurrencyForView(conversion, curr);
   };
