@@ -88,18 +88,6 @@ module.exports = (grunt) ->
 
         dest: "dist/js/application.min.js"
 
-    coffee:
-      coffee_to_js:
-        options:
-          bare: true
-          sourceMap: false
-        expand: true
-        flatten: false
-        cwd: "assets/js"
-        src: ["*.js.coffee", "directives/**/*.js.coffee", "services/**/*.js.coffee"]
-        dest: 'build/js'
-        ext: ".js"
-
     sass:
       build:
         files: [{
@@ -224,12 +212,6 @@ module.exports = (grunt) ->
       es6:
         files: ['assets/js/controllers/**/*.js','assets/js/services/**/*.js','assets/js/directives/**/*.js','assets/js/core/**/*.js','assets/js/*.js']
         tasks: ['babel:build']
-        options:
-          spawn: false
-
-      js:
-        files: ['assets/js/**/*.js.coffee']
-        tasks: ['compile']
         options:
           spawn: false
 
@@ -439,7 +421,6 @@ module.exports = (grunt) ->
 
   grunt.loadNpmTasks "grunt-contrib-uglify"
   grunt.loadNpmTasks('grunt-contrib-concat')
-  grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-contrib-sass')
@@ -457,11 +438,8 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-karma-coveralls')
   grunt.loadNpmTasks('grunt-text-replace')
 
-  grunt.registerTask "compile", ["coffee"]
-
   grunt.registerTask "build", [
     "html2js"
-    "compile"
     "babel:build"
     "sass"
     "copy:js"
