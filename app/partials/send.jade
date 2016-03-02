@@ -98,7 +98,7 @@
             i.ti-plus.mrm
             span(translate="ADD_ANOTHER_RECIPIENT")
       //- Fee
-      .flex-column.form-group.bc-modal-fade.col-sm-offset-2.col-sm-10.mtm(ng-class="{'has-error': blockIdx >= 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}" ng-show="advanced")
+      .flex-column.form-group.bc-modal-fade.col-sm-offset-2.col-sm-10.mtm(ng-class="{'has-error': blockIdx > 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}" ng-show="advanced")
         div.mbm.flex-center
           label.mbn(translate="TX_FEE")
           helper-button(content="TX_FEE_HELP")
@@ -118,15 +118,15 @@
                   transform-currency="settings.btcCurrency"
                   placeholder="Enter your fee here")
         span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$dirty")
-        span.help-block.friendly(ng-show="!sendForm.$invalid && !hasInsufficientError(0) && confirmationTime && blockQueue" ng-class="{'has-error': blockIdx >= 6}")
-          span(ng-show="blockIdx <= 5")
-            span(translate="ESTIMATED_TX_TIME" translate-values="{ confirmationTime: confirmationTime, blockQueue: blockQueue }")
+        span.help-block.friendly(ng-show="!sendForm.$invalid && !hasInsufficientError(0)")
+          span(ng-show="blockIdx <= 6")
+            span(translate="ESTIMATED_TX_TIME" translate-values="{ confirmationTime: blockIdx*10, blockQueue: blockIdx }")
             |  
-            ng-pluralize(count="blockQueue" 
+            ng-pluralize(count="blockIdx" 
                          ng-init="block='BLOCK'; blocks='BLOCKS'"
                          when="{'1': '{{block | translate}}', 'other': '{{blocks | translate}}' }")
             span ).
-          span(translate="SMALL_FEE_WARNING" ng-show="blockIdx >= 6")
+          span.has-error(ng-show="blockIdx > 6" translate="SMALL_FEE_WARNING")
       //- QR Scanner 
       .form-group.row(ng-hide="!cameraIsOn")
         label.col-sm-2.col-xs-12(translate="QR")
