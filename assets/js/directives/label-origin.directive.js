@@ -23,7 +23,7 @@ function labelOrigin(Wallet, currency) {
     scope.determineAvailableBalance = (balance) => {
       if (balance == null) return;
 
-      finalBalance = parseInt(balance);
+      let finalBalance = parseInt(balance);
       if (scope.fee) finalBalance -= parseInt(scope.fee);
 
       return finalBalance < 0 ? 0 : finalBalance;
