@@ -68,6 +68,8 @@
       position: relative;
       img {
         max-width: 720px;
+        transform: translateZ(0px);
+        -webkit-transform: translateZ(0px);
       }
       &.shadow {
         &:before {
@@ -130,7 +132,8 @@
     .txs {
       position: static;
       .tx {
-        transform: trnaslateZ(0px);
+        -webkit-transform: translateZ(0px);
+        transform: translateZ(0px);
         @include delay(1, 6, 10);
         position: absolute;
         width: 31%;
