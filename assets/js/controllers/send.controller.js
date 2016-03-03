@@ -300,7 +300,8 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     let tx = $scope.transaction;
     if (!tx.from) return 0;
     let availableBal = tx.from.balance - tx.fee;
-    let maxAvailable = ($scope.advanced ? availableBal : tx.sweepAmount) || availableBal;
+    let maxAvailable = tx.sweepAmount || availableBal;
+    if ($scope.advanced && !isNaN(tx.sweepFee)) maxAvailable += (tx.sweepFee - tx.fee);
     if (maxAvailable < 0) maxAvailable = 0;
     return isNaN(maxAvailable) ? tx.from.balance : maxAvailable;
   };
@@ -378,6 +379,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     }
     if (tx.sweepAmount != null && tx.sweepAmount !== $scope.transaction.sweepAmount) {
       $scope.transaction.sweepAmount = tx.sweepAmount;
+      $scope.transaction.sweepFee = tx.sweepFee;
       $scope.$root.$safeApply($scope);
     }
   };
