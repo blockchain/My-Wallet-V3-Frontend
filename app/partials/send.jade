@@ -92,7 +92,8 @@
                 span(translate="REMOVE")
           .has-error
             span.help-block(ng-show="hasInsufficientError(0)")
-              span(translate="TOTAL_AVAILABLE")
+              span(translate="TOTAL_AVAILABLE" ng-show="!advanced")
+              span(translate="TOTAL_AVAILABLE_MINUS_FEE" ng-show="advanced")
               | : {{ getAvailableBalance() | convert:false }}
           a.flex-center.flex-justify.button-default(ng-click="addDestination()" ng-show="advanced")
             i.ti-plus.mrm

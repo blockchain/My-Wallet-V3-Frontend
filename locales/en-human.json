@@ -364,6 +364,7 @@
   "TX_FEE" : "Transaction Fee",
   "TX_FEE_HELP": "Transaction fees impact how quickly the Bitcoin mining network will confirm your transactions, and depend on the current network conditions. We recommend the fee below for this transaction at this time.",
   "TOTAL_AVAILABLE": "Total available",
+  "TOTAL_AVAILABLE_MINUS_FEE": "Total available minus fee",
   "ENTER_VALID_AMOUNT": "Please enter a valid amount",
   "ESTIMATED_TX_TIME": "Estimated confirmation time: ~{{ confirmationTime }} minutes ({{ blockQueue }}",
   "GO_BACK" : "Go Back",
