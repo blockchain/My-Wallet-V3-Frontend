@@ -8,7 +8,7 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON("package.json")
     clean: {
       build: ["build"]
-      dist: ["dist", "bower_components", "node_modules"]
+      dist: ["dist"]
       test: ["coverage"]
       sass: [".sass-cache"]
     }
@@ -338,15 +338,11 @@ module.exports = (grunt) ->
           ]
 
     shell:
-      clean_bower_and_npm_cache:
-        command: () ->
-          'bower cache clean && npm cache clean'
-
-      check_dependencies:
+      check_bower_dependencies:
         command: () ->
           'mkdir -p build && ruby ./check-dependencies.rb'
 
-      skip_check_dependencies:
+      copy_node_modules_and_bower_components_to_build:
         command: () ->
           'cp -r node_modules build && cp -r bower_components build'
 
@@ -365,6 +361,26 @@ module.exports = (grunt) ->
       check_pgp_signatures:
         command: () ->
           'ruby ./check_pgp_signatures.rb'
+
+      shrinkwrap:
+        command: (version) ->
+          "rm -f npm-shrinkwrap-*.json && npm shrinkwrap --dev && mv npm-shrinkwrap.json npm-shrinkwrap-#{ version }.json"
+
+      use_shrinkwrap:
+        command: (version) ->
+          "mv npm-shrinkwrap-#{ version }.json npm-shrinkwrap.json"
+
+      commit_and_push_release:
+        command: (newVersion) ->
+          "git add npm-shrinkwrap-#{ newVersion }.json && git commit -a -m 'Release #{ newVersion }' && git push"
+
+      tag_release:
+        command: (newVersion, message) ->
+          "git tag -a -s #{ newVersion } -m '#{ message }' && git push --tags"
+
+      test_once:
+        command: () ->
+          './node_modules/karma/bin/karma start karma.conf.js --single-run'
 
     git_changelog:
       default:
@@ -477,11 +493,59 @@ module.exports = (grunt) ->
     "watch"
   ]
 
-  # Default task(s).
-  grunt.registerTask "dist", (rootUrl, port, rootPath, feeServiceDomain, versionFrontend) =>
+  grunt.registerTask "release", (versionFrontend) =>
+    if versionFrontend == undefined || versionFrontend[0] != "v"
+      console.log "Missing version or version is missing 'v'"
+      exit(1)
+
     grunt.task.run [
-      "shell:clean_bower_and_npm_cache"
       "clean"
+      "build"
+      "shell:test_once"
+      "shell:npm_install_dependencies"
+      "shell:shrinkwrap:#{ versionFrontend }"
+
+      # This check also takes place during deploy:
+      "shell:check_bower_dependencies"
+      "shell:copy_node_modules_and_bower_components_to_build"
+      "shell:check_pgp_signatures"
+
+      # TODO: freeze exact Bower versions
+
+      # Uglify, rename, etc just to make sure that works:
+      "concat:application_dependencies"
+      "uglify:application_dependencies"
+      "concat:application"
+      "concat_css:app"
+      "jade"
+      "preprocess"
+      "copy:main"
+      "rename:assets"
+      "rename:html"
+
+      # Generate changelog
+      "git_changelog"
+
+      # Commit shrinkwrap and tag release:
+      "shell:commit_and_push_release:#{ versionFrontend }"
+      "shell:tag_release:#{ versionFrontend }:#{ versionFrontend }"
+      "release_done:#{ versionFrontend }"
+    ]
+
+  grunt.registerTask "release_done", (versionFrontend) =>
+    console.log "Release done. Please copy Changelog.md over to Github release notes:"
+    console.log "https://github.com/blockchain/My-Wallet-V3-Frontend/releases/edit/#{ version }"
+
+
+
+  grunt.registerTask "deploy", (versionFrontend, rootUrl, rootPath, feeServiceDomain) =>
+    if versionFrontend == undefined || versionFrontend[0] != "v"
+      console.log "Missing version or version is missing 'v'"
+      exit(1)
+
+    grunt.task.run [
+      "clean"
+      "shell:use_shrinkwrap:#{ versionFrontend }"
       "shell:npm_install_dependencies"
       "build"
     ]
@@ -490,10 +554,6 @@ module.exports = (grunt) ->
 
     if rootUrl
       @rootUrl = rootUrl
-
-      if port
-        @rootUrl += ":" + port
-
 
       console.log("Custom root URL: " + @rootUrl)
 
@@ -521,11 +581,13 @@ module.exports = (grunt) ->
 
     grunt.task.run [
       "replace:version_frontend"
-      "shell:check_dependencies"
-      "shell:npm_install_dependencies"
+
+      # TODO: freeze commit hashes during release task
+      "shell:check_bower_dependencies"
       "shell:bower_install_dependencies"
-      "replace:version_my_wallet"
       "shell:check_pgp_signatures"
+
+      "replace:version_my_wallet"
       "concat:application_dependencies"
       "uglify:application_dependencies"
       "concat:application"
@@ -535,7 +597,6 @@ module.exports = (grunt) ->
       "copy:main"
       "rename:assets"
       "rename:html"
-      "git_changelog"
     ]
 
   grunt.registerTask "dist_unsafe", (rootUrl, port, rootPath, feeServiceDomain, versionFrontend) =>
@@ -579,7 +640,7 @@ module.exports = (grunt) ->
 
     grunt.task.run [
       "replace:version_frontend"
-      "shell:skip_check_dependencies"
+      "shell:copy_node_modules_and_bower_components_to_build"
       "replace:version_my_wallet"
       "concat:application_dependencies"
       "uglify:application_dependencies"
