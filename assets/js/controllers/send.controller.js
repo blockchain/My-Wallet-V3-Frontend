@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SendCtrl", SendCtrl);
 
-function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal, format, MyWalletHelpers, $rootScope, $q, $http) {
+function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal, format, MyWalletHelpers, $rootScope, $q, $http, fees) {
 
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.accounts = Wallet.accounts;
@@ -369,9 +369,12 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   $scope.handleTxUpdate = (tx) => {
     if (tx.fee != null) {
       $scope.transaction.fee = tx.forcedFee ? tx.forcedFee : tx.fee;
-      $scope.getClosestBlock(tx);
       $scope.validateAmounts();
-      $scope.$root.$safeApply($scope);
+      $scope.$safeApply();
+
+      dynamicFeeVectorP.then(estimates => { $timeout(() => {
+        $scope.blockIdx = fees.getClosestBlock($scope.transaction.fee, tx.transaction.sizeEstimate, estimates);
+      })});
     }
     if (tx.sweepAmount != null && tx.sweepAmount !== $scope.transaction.sweepAmount) {
       $scope.transaction.sweepAmount = tx.sweepAmount;
@@ -477,28 +480,6 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     return $scope.buildPayment();
   };
 
-  $scope.guessAbsoluteFee = (size, feePerKb) => feePerKb * (size / 1000);
-
-  $scope.getClosestBlock = (tx) => {
-    dynamicFeeVectorP.then(estimate => {
-      $timeout(() => {
-        let fee = Math.floor($scope.transaction.fee)
-        let fees = estimate.map((e) => { return $scope.guessAbsoluteFee(tx.transaction.sizeEstimate, e.fee) });
-        let closestBlock = fees.reduce((x,y) => { return x-fee > y-fee && fee >= Math.floor(x) ? x : y });
-        
-        let low = Math.floor(fees[5])
-        if ( fee === low ) {
-          $scope.blockIdx = 6
-        } else if ( fee < low) {
-          $scope.blockIdx = 7
-        } else {
-          $scope.blockIdx = fees.indexOf(closestBlock) + 1
-        }
-      })
-
-    })
-  }
-
   $scope.checkFee = (tx) => {
     let goAdvanced = () => $scope.advancedSend();
 
@@ -543,9 +524,9 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     }
 
     return dynamicFeeVectorP.then(estimate => {
-      let high = $scope.guessAbsoluteFee(tx.sizeEstimate, estimate[0].fee);
-      let mid = $scope.guessAbsoluteFee(tx.sizeEstimate, estimate[1].fee);
-      let low = $scope.guessAbsoluteFee(tx.sizeEstimate, estimate[5].fee);
+      let high = fees.guessAbsoluteFee(tx.sizeEstimate, estimate[0].fee);
+      let mid = fees.guessAbsoluteFee(tx.sizeEstimate, estimate[1].fee);
+      let low = fees.guessAbsoluteFee(tx.sizeEstimate, estimate[5].fee);
       low = low < minimumFee ? minimumFee : low;
       console.log('Fees (high: %d, mid: %d, low: %d)', high, mid, low);
 
