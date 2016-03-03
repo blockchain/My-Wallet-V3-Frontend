@@ -342,9 +342,13 @@ module.exports = (grunt) ->
         command: () ->
           'mkdir -p build && ruby ./check-dependencies.rb'
 
-      copy_node_modules_and_bower_components_to_build:
+      copy_node_modules_to_build:
         command: () ->
-          'cp -r node_modules build && cp -r bower_components build'
+          'cp -r node_modules build'
+
+      copy_bower_components_to_build:
+        command: () ->
+          'cp -r bower_components build'
 
       npm_install_dependencies:
         command: () ->
@@ -352,7 +356,7 @@ module.exports = (grunt) ->
 
       bower_install_dependencies:
         command: () ->
-           'cp bower.json build/ && cd build && bower install'
+           'cd build && bower install'
 
       check_translations:
         command: () ->
@@ -368,11 +372,24 @@ module.exports = (grunt) ->
 
       use_shrinkwrap:
         command: (version) ->
-          "mv npm-shrinkwrap-#{ version }.json npm-shrinkwrap.json"
+          "cp npm-shrinkwrap-#{ version }.json npm-shrinkwrap.json"
+
+      freeze_bower:
+        command: (version) ->
+          "rm -f bower-*.json && cp build/bower.json bower-#{ version }.json"
+
+      use_frozen_bower:
+        command: (version) ->
+          "cp bower-#{ version }.json build/bower.json"
 
       commit_and_push_release:
         command: (newVersion) ->
-          "git add npm-shrinkwrap-#{ newVersion }.json && git commit -a -m 'Release #{ newVersion }' && git push"
+          [
+              "git add npm-shrinkwrap-#{ newVersion }.json"
+              "git add bower-#{ newVersion }.json"
+              "git commit -m 'Release #{ newVersion }'"
+              "git push"
+          ].join(" && ")
 
       tag_release:
         command: (newVersion, message) ->
@@ -505,12 +522,12 @@ module.exports = (grunt) ->
       "shell:npm_install_dependencies"
       "shell:shrinkwrap:#{ versionFrontend }"
 
-      # This check also takes place during deploy:
+      "shell:bower_update"
       "shell:check_bower_dependencies"
-      "shell:copy_node_modules_and_bower_components_to_build"
+      "shell:copy_node_modules_to_build"
+      "shell:bower_install_dependencies"
       "shell:check_pgp_signatures"
-
-      # TODO: freeze exact Bower versions
+      "shell:freeze_bower:#{ versionFrontend }"
 
       # Uglify, rename, etc just to make sure that works:
       "concat:application_dependencies"
@@ -534,7 +551,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask "release_done", (versionFrontend) =>
     console.log "Release done. Please copy Changelog.md over to Github release notes:"
-    console.log "https://github.com/blockchain/My-Wallet-V3-Frontend/releases/edit/#{ version }"
+    console.log "https://github.com/blockchain/My-Wallet-V3-Frontend/releases/edit/#{ versionFrontend }"
 
 
 
@@ -582,10 +599,8 @@ module.exports = (grunt) ->
     grunt.task.run [
       "replace:version_frontend"
 
-      # TODO: freeze commit hashes during release task
-      "shell:check_bower_dependencies"
+      "shell:use_frozen_bower"
       "shell:bower_install_dependencies"
-      "shell:check_pgp_signatures"
 
       "replace:version_my_wallet"
       "concat:application_dependencies"
@@ -599,20 +614,17 @@ module.exports = (grunt) ->
       "rename:html"
     ]
 
-  grunt.registerTask "dist_unsafe", (rootUrl, port, rootPath, feeServiceDomain, versionFrontend) =>
+  grunt.registerTask "dist_unsafe", (rootUrl, rootPath, feeServiceDomain) =>
     console.warn "Do not deploy this to production."
     console.warn "Make sure your bower_components and node_modules are up to date"
     grunt.task.run [
       "build"
     ]
 
-    @versionFrontend = versionFrontend
+    @versionFrontend = "Unsafe"
 
     if rootUrl
       @rootUrl = rootUrl
-
-      if port
-        @rootUrl += ":" + port
 
       console.log("Custom root URL: " + @rootUrl)
 
@@ -640,7 +652,8 @@ module.exports = (grunt) ->
 
     grunt.task.run [
       "replace:version_frontend"
-      "shell:copy_node_modules_and_bower_components_to_build"
+      "shell:copy_node_modules_to_build"
+      "shell:copy_bower_components_to_build"
       "replace:version_my_wallet"
       "concat:application_dependencies"
       "uglify:application_dependencies"

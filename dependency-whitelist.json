@@ -1,7 +1,10 @@
 {
   "ignore" : [
-    "angular", "angular-mocks", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize",
+    "angular", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize",
     "bootstrap-sass"
+  ],
+  "skip" : [
+    "angular-mocks"
   ],
   "pgp-signed" : [
     "blockchain-wallet",
@@ -11,6 +14,33 @@
   "pgp-keys" : {
     "CC301009": "Sjors",
     "36E3D143": "Jaume"
+  },
+  "angular": {
+    "repo": "angular/bower-angular"
+  },
+  "angular-animate": {
+    "repo": "angular/bower-angular-animate"
+  },
+  "angular-bootstrap": {
+    "repo": "angular-ui/bootstrap-bower"
+  },
+  "angular-cookies": {
+    "repo": "angular/bower-angular-cookies"
+  },
+  "angular-sanitize": {
+    "repo": "angular/bower-angular-sanitize"
+  },
+  "bootstrap-sass": {
+    "repo": "twbs/bootstrap-sass"
+  },
+  "bc-qr-reader" : {
+    "repo": "blockchain/bc-qr-reader"
+  },
+  "bc-phone-number" : {
+    "repo": "blockchain/bc-phone-number"
+  },
+  "blockchain-wallet" : {
+    "repo": "blockchain/my-wallet-v3-bower"
   },
   "angular-ui-router" : {
     "version": "0.2.18",
