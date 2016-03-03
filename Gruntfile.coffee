@@ -370,6 +370,10 @@ module.exports = (grunt) ->
         command: (version) ->
           "cp npm-shrinkwrap-#{ version }.json npm-shrinkwrap.json"
 
+      bower_update:
+        command: () ->
+          "bower update"
+
       freeze_bower:
         command: (version) ->
           "rm -f bower-*.json && cp build/bower.json bower-#{ version }.json"
