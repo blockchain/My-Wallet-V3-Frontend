@@ -1,9 +1,10 @@
-span.amountTotal(ng-class="{ unconfirmed: tx.confirmations < 3 }")
+span.amountTotal
   button.em-400.amount(
     ng-class="{\
       'intra-wallet': tx.txType === 'transfer',\
       'received'    : tx.txType === 'received',\
-      'spent'       : tx.txType === 'sent'\
+      'spent'       : tx.txType === 'sent',\
+      'unconfirmed' : tx.confirmations < 3 \
     }"
     ng-click="toggle()")
     fiat(btc="tx.amount" ng-hide="isBitCurrency(settings.displayCurrency)" abs)
