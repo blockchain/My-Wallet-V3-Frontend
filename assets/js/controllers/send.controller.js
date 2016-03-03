@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("SendCtrl", SendCtrl);
 
-function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal, format, MyWalletHelpers, $rootScope, $q, $http) {
+function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal, format, MyWalletHelpers, $rootScope, $q, $http, fees) {
 
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.accounts = Wallet.accounts;
@@ -300,7 +300,8 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     let tx = $scope.transaction;
     if (!tx.from) return 0;
     let availableBal = tx.from.balance - tx.fee;
-    let maxAvailable = ($scope.advanced ? availableBal : tx.sweepAmount) || availableBal;
+    let maxAvailable = tx.sweepAmount || availableBal;
+    if ($scope.advanced && !isNaN(tx.sweepFee)) maxAvailable += (tx.sweepFee - tx.fee);
     if (maxAvailable < 0) maxAvailable = 0;
     return isNaN(maxAvailable) ? tx.from.balance : maxAvailable;
   };
@@ -369,12 +370,16 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   $scope.handleTxUpdate = (tx) => {
     if (tx.fee != null) {
       $scope.transaction.fee = tx.forcedFee ? tx.forcedFee : tx.fee;
-      $scope.getClosestBlock(tx);
       $scope.validateAmounts();
-      $scope.$root.$safeApply($scope);
+      $scope.$safeApply();
+
+      dynamicFeeVectorP.then(estimates => { $timeout(() => {
+        $scope.blockIdx = fees.getClosestBlock($scope.transaction.fee, tx.transaction.sizeEstimate, estimates);
+      })});
     }
     if (tx.sweepAmount != null && tx.sweepAmount !== $scope.transaction.sweepAmount) {
       $scope.transaction.sweepAmount = tx.sweepAmount;
+      $scope.transaction.sweepFee = tx.sweepFee;
       $scope.$root.$safeApply($scope);
     }
   };
@@ -424,7 +429,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
   $scope.advancedSend = () => {
     $scope.advanced = true;
-    $scope.setPaymentFee();
+    $scope.buildTx();
   };
 
   $scope.regularSend = () => {
@@ -477,30 +482,6 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     return $scope.buildPayment();
   };
 
-  $scope.guessAbsoluteFee = (size, feePerKb) => feePerKb * (size / 1000);
-
-  $scope.getClosestBlock = (tx) => {
-    dynamicFeeVectorP.then(estimate => {
-      let fee = $scope.transaction.fee
-      let fees = estimate.map((e) => { return $scope.guessAbsoluteFee(tx.transaction.sizeEstimate, e.fee) });
-      let closestBlock = fees.reduce((x,y) => { return Math.abs(x-fee) < Math.abs(y-fee) ? x : y });
-      let blockIdx = fees.indexOf(closestBlock);
-
-      $timeout(() => {
-        if (closestBlock === fees[5] && fee < fees[5]) {
-          $scope.confirmationWarning = true;
-          blockIdx = 5;
-        } else {
-          $scope.confirmationWarning = false;
-        }
-
-        $scope.confirmationTime = (blockIdx + 1) * 10
-        $scope.blockQueue = (blockIdx + 1)
-      }, 10)
-
-    })
-  }
-
   $scope.checkFee = (tx) => {
     let goAdvanced = () => $scope.advancedSend();
 
@@ -521,7 +502,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       controller: function DynamicFeeController($scope, $uibModalInstance) {
         $scope.surge = surge;
         $scope.currentFee = currentFee;
-        $scope.suggestedFee = Math.round(suggestedFee);
+        $scope.suggestedFee = suggestedFee;
         $scope.balanceOverflow = suggestedFee > highestFeePossible;
         $scope.cancel = () => {
           $uibModalInstance.dismiss('cancelled');
@@ -545,17 +526,17 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     }
 
     return dynamicFeeVectorP.then(estimate => {
-      let high = $scope.guessAbsoluteFee(tx.sizeEstimate, estimate[0].fee);
-      let mid = $scope.guessAbsoluteFee(tx.sizeEstimate, estimate[1].fee);
-      let low = $scope.guessAbsoluteFee(tx.sizeEstimate, estimate[5].fee);
+      let high = fees.guessAbsoluteFee(tx.sizeEstimate, estimate[0].fee);
+      let mid = fees.guessAbsoluteFee(tx.sizeEstimate, estimate[1].fee);
+      let low = fees.guessAbsoluteFee(tx.sizeEstimate, estimate[5].fee);
       low = low < minimumFee ? minimumFee : low;
       console.log('Fees (high: %d, mid: %d, low: %d)', high, mid, low);
 
-      if (currentFee > Math.round(high)) {
+      if (currentFee > high) {
         suggestedFee = high;
         return showFeeWarning().result;
       }
-      else if (currentFee < Math.round(low)) {
+      else if (currentFee < low) {
         suggestedFee = low;
         return showFeeWarning().result;
       }

@@ -70,9 +70,9 @@
   & ~ .help-block {
     &.friendly {
       color: $blue;
-      &.has-error {
-        color: $state-danger-text;
-      }
+    }
+    .has-error {
+      color: $state-danger-text;
     }
   }
 }
@@ -112,5 +112,8 @@
         display: none;
       }
     }
+  }
+  & + .modal-footer {
+    clear: left;
   }
 }
