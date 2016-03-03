@@ -11,10 +11,10 @@
     span(translate="STEP")
     span {{ confirmationStep ? 2 : 1 }}
     span(translate="OF_2")
-.modal-body#send(ng-class="{ 'advanced-send-scroll' : advanced, 'confirmation': confirmationStep }")
+.modal-body#send(ng-class="{ 'advanced-container': advanced && !confirmationStep, 'confirmation': confirmationStep }")
   .alert-in-app
     alerts(context="alerts")
-  div(ng-hide="confirmationStep")
+  div(ng-hide="confirmationStep" ng-class="{ 'advanced': advanced }")
     form.ph-form(role="form",name="sendForm",novalidate)
       //- From
       .form-group.row(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
