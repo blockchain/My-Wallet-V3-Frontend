@@ -594,8 +594,10 @@ module.exports = (grunt) ->
     grunt.task.run [
       "replace:version_frontend"
 
-      "shell:use_frozen_bower"
+      "shell:use_frozen_bower:#{ versionFrontend }"
       "shell:bower_install_dependencies"
+      # Faster, buy unsafe:
+      # "shell:copy_bower_components_to_build"
 
       "replace:version_my_wallet"
       "concat:application_dependencies"
