@@ -342,10 +342,6 @@ module.exports = (grunt) ->
         command: () ->
           'mkdir -p build && ruby ./check-dependencies.rb'
 
-      copy_node_modules_to_build:
-        command: () ->
-          'cp -r node_modules build'
-
       copy_bower_components_to_build:
         command: () ->
           'cp -r bower_components build'
@@ -524,7 +520,6 @@ module.exports = (grunt) ->
 
       "shell:bower_update"
       "shell:check_bower_dependencies"
-      "shell:copy_node_modules_to_build"
       "shell:bower_install_dependencies"
       "shell:check_pgp_signatures"
       "shell:freeze_bower:#{ versionFrontend }"
@@ -652,7 +647,6 @@ module.exports = (grunt) ->
 
     grunt.task.run [
       "replace:version_frontend"
-      "shell:copy_node_modules_to_build"
       "shell:copy_bower_components_to_build"
       "replace:version_my_wallet"
       "concat:application_dependencies"
