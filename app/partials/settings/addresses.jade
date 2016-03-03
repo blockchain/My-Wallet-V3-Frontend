@@ -17,7 +17,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="MY_ADDRESSES_EXPLAIN")
 h2(translate="HD_ADDRESSES_FOR_ACCOUNT", translate-values="{account: account.label}")
 
 .row
-  .col-xs-12.table-container
+  .col-xs-12.table-container(ng-show="hdAddresses().length")
     table.responsive.width-100
       tr
         th.shrink(translate="ADDRESS")
@@ -29,3 +29,4 @@ h2(translate="HD_ADDRESSES_FOR_ACCOUNT", translate-values="{account: account.lab
         ng-repeat="address in hdAddresses() | addressOrNameMatch:searchText | orderBy:'-index' track by address.index"
         ng-class="{'address-animate': !searchText}"
       )
+fake-addresses(ng-show="!hdAddresses().length" trigger="createAddress")

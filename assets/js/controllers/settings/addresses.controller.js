@@ -18,4 +18,6 @@ function SettingsAddressesCtrl($scope, Wallet, Alerts, addressOrNameMatchFilter,
       });
     });
   }
+
+  $scope.$on('createAddress', $scope.createAddress)
 }

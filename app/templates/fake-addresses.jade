@@ -1,0 +1,17 @@
+.col-xs-12.fake-addresses.flex-center.flex-justify
+  table.responsive.width-100
+    tr
+      th(translate="ADDRESS")
+      th(translate="LABEL")
+      th(translate="BALANCE")
+      th
+    tr(
+      watch-only-address="address", 
+      search-text="searchTextLegacy",
+      ng-repeat="address in addresses"
+    )
+
+  .flex-center.flex-column.empty-msg
+    i.ti-search.h1.mrm
+    h3.em-100(translate="SORRY_ZERO_ADDRESSES")
+    p.em-400(translate="PLEASE_TRY_AGAIN_ADDRESSES" ng-click="triggerModal()")

@@ -40,4 +40,16 @@ function SettingsImportedAddressesCtrl($scope, Wallet, Alerts, $translate, $uibM
       });
     }
   };
+
+  $scope.archived = () => { 
+    return $scope.legacyAddresses().filter(a => a.archived)
+  }
+  $scope.watchOnly = () => { 
+    return $scope.legacyAddresses().filter(a => a.isWatchOnly) 
+  }
+  $scope.spendable = () => { 
+    return $scope.legacyAddresses().filter(a => !a.archived && !a.isWatchOnly) 
+  }
+
+  $scope.$on('importAddress', $scope.importAddress);
 }
