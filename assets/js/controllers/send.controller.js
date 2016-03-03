@@ -502,7 +502,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       controller: function DynamicFeeController($scope, $uibModalInstance) {
         $scope.surge = surge;
         $scope.currentFee = currentFee;
-        $scope.suggestedFee = Math.floor(suggestedFee);
+        $scope.suggestedFee = suggestedFee;
         $scope.balanceOverflow = suggestedFee > highestFeePossible;
         $scope.cancel = () => {
           $uibModalInstance.dismiss('cancelled');
@@ -532,11 +532,11 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       low = low < minimumFee ? minimumFee : low;
       console.log('Fees (high: %d, mid: %d, low: %d)', high, mid, low);
 
-      if (currentFee > Math.floor(high)) {
+      if (currentFee > high) {
         suggestedFee = high;
         return showFeeWarning().result;
       }
-      else if (currentFee < Math.floor(low)) {
+      else if (currentFee < low) {
         suggestedFee = low;
         return showFeeWarning().result;
       }

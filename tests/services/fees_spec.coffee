@@ -14,6 +14,10 @@ describe 'fees service', () ->
       result = fees.guessAbsoluteFee(226, 10000)
       expect(result).toBe(2260)
 
+    it 'should round partial satoshi values up', ->
+      result = fees.guessAbsoluteFee(226.01, 10000)
+      expect(result).toBe(2261)
+
   describe 'getClosestBlock', ->
 
     feeEstimates = [
