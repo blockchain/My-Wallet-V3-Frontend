@@ -103,6 +103,9 @@ output.delete("pgp-keys")
 output.delete("license")
 output.delete("keywords")
 
+output["ignoredDependencies"] = ["angular", "angular-translate"]
+output["resolutions"]["angular-translate"] = whitelist["angular-translate"]["commits"][0]
+
 deps = bower["dependencies"]
 
 check_commits!(deps, whitelist, output["dependencies"], :bower)
