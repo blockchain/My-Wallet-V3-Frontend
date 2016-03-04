@@ -21,26 +21,22 @@ function scrollInView($window, $timeout) {
     scope.shadow = attrs['shadow']
     scope.transactions = attrs['transactions']
 
-    angular.element(document).ready(() => {
-
+    scope.initScroll = () => {
       $timeout(() => {
+        let windowBottom = $window.pageYOffset + $window.innerHeight;
         let itemTop = elem[0].getBoundingClientRect().top;
-
-        scope.scroll = () => {
-          let windowBottom = $window.pageYOffset + $window.innerHeight;
-
-          if ( windowBottom > itemTop ) {
-            scope.isActive = true;
-          } else {
-            scope.isActive = false;
-          }
-          scope.$apply()
-        }
-
-        angular.element($window).bind('scroll', scope.scroll)
-        scope.scroll()
+        scope.onScroll(windowBottom, itemTop)
       }, 10);
-    });
+    }
+
+    scope.onScroll = (bottom, top) => {
+      if ( bottom > top ) scope.isActive = true
+      else scope.isActive = false;
+      scope.$apply()
+    }
+
+    angular.element(document).ready(scope.initScroll)
+    angular.element($window).bind('scroll', scope.initScroll)
 
   }
 }
