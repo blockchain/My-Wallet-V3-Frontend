@@ -466,8 +466,8 @@ module.exports = (grunt) ->
         replacements: [{
           from: 'versionMyWallet = null'
           to: () =>
-            version = exec('cat build/bower_components/blockchain-wallet/.bower.json | grep \'version\": \' | grep -o \'\\d.\\d\.\\d*\'').output
-            'versionMyWallet = "' + version.replace("\n", "") + '"'
+            version = exec('cat build/bower_components/blockchain-wallet/bower.json | grep \'version\": \' | grep -o \'\\d\\+.\\d\\+.\\d\\+\'').output
+            'versionMyWallet = "v' + version.replace("\n", "") + '"'
         }]
 
   grunt.loadNpmTasks "grunt-contrib-uglify"
