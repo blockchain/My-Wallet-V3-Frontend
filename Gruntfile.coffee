@@ -346,9 +346,9 @@ module.exports = (grunt) ->
         command: () ->
           'cp -r bower_components build'
 
-      npm_install_dependencies:
+      npm_update_dependencies:
         command: () ->
-           'npm install'
+           'npm update'
 
       bower_install_dependencies:
         command: () ->
@@ -519,7 +519,7 @@ module.exports = (grunt) ->
       "clean"
       "build"
       "shell:test_once"
-      "shell:npm_install_dependencies"
+      "shell:npm_update_dependencies"
       "shell:shrinkwrap:#{ versionFrontend }"
 
       "shell:bower_update"
@@ -562,7 +562,7 @@ module.exports = (grunt) ->
     grunt.task.run [
       "clean"
       "shell:use_shrinkwrap:#{ versionFrontend }"
-      "shell:npm_install_dependencies"
+      "shell:npm_update_dependencies"
       "build"
     ]
 
