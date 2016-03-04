@@ -364,7 +364,7 @@ module.exports = (grunt) ->
 
       shrinkwrap:
         command: (version) ->
-          "rm -f npm-shrinkwrap-*.json && npm shrinkwrap --dev && mv npm-shrinkwrap.json npm-shrinkwrap-#{ version }.json"
+          "git rm --ignore-unmatch npm-shrinkwrap-*.json && npm shrinkwrap --dev && mv npm-shrinkwrap.json npm-shrinkwrap-#{ version }.json"
 
       use_shrinkwrap:
         command: (version) ->
