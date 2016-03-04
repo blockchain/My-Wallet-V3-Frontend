@@ -467,7 +467,7 @@ module.exports = (grunt) ->
           from: 'versionMyWallet = null'
           to: () =>
             version = exec('cat build/bower_components/blockchain-wallet/bower.json | grep \'version\": \' | grep -o \'\\d\\+.\\d\\+.\\d\\+\'').output
-            'versionMyWallet = "v' + version.replace("\n", "") + '"'
+            'versionMyWallet = "' + version.replace("\n", "") + '"'
         }]
 
   grunt.loadNpmTasks "grunt-contrib-uglify"
