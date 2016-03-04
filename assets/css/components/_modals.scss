@@ -371,22 +371,14 @@
     border-radius: 5px;
     height: 430px;
   }
-  .advanced-send-scroll { 
-    padding: 0px;
-    > div {
+  #send {
+    &.advanced-container {
+      padding: 0px;
+    }
+    .advanced { 
       max-height: 400px;
-      overflow: scroll;
-      padding: 15px 0;
-      &:first-child {
-        overflow-y: scroll;
-      }
-      &:last-child {
-        padding: 15px 2em;
-      }
-      &.overview {
-        min-height: initial;
-        max-height: initial;
-      }
+      overflow: auto;
+      padding: 15px;
     }
   }
 
