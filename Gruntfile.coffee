@@ -376,7 +376,7 @@ module.exports = (grunt) ->
 
       freeze_bower:
         command: (version) ->
-          "rm -f bower-*.json && cp build/bower.json bower-#{ version }.json"
+          "git rm --ignore-unmatch bower-*.json && cp build/bower.json bower-#{ version }.json"
 
       use_frozen_bower:
         command: (version) ->
