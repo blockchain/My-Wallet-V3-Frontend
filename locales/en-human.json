@@ -575,6 +575,7 @@
   "REVAMPED": "Revamped design and user experience",
   "SENDING": "Sending and receiving Bitcoin has never been so easy",
   "BUILD_TEST": "We've taken our time to build and test the most user-friendly interface for our wallet.",
+  "SETTING_SELECT_ERR": "Failed to change setting to {{ setting }}",
   "YOUR_ADDRESS": "Your Bitcoin Address",
   "SWEEP_FAILED" : "Unable to transfer funds",
   "YOU_WILL_LOSE": "You will lose all your bitcoins! Are you sure?",

@@ -31,21 +31,21 @@ form.form-horizontal(role="form",name="form",novalidate)
       p.text.em-300.line-height.hidden-xs(translate="LANGUAGE_EXPLAIN")   
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
-      language-picker(language="settings.language")
+      async-select(selected="settings.language" range="languages" display-prop="name" on-change="changeLanguage")
   .form-group
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="CURRENCY")
       p.text.em-300.line-height.hidden-xs(translate="CURRENCY_EXPLAIN")    
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
-      currency-picker(currency="settings.currency" display-currency="settings.displayCurrency")
+      async-select(selected="settings.currency" range="currencies" display-prop="name" display-optional="code" on-change="changeCurrency")
   .form-group
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="BITCOIN_CURRENCY")
       p.text.em-300.line-height.hidden-xs(translate="BITCOIN_CURRENCY_EXPLAIN")
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
-      btc-picker(currency="settings.btcCurrency" display-currency="settings.displayCurrency")
+      async-select(selected="settings.btcCurrency" range="btcCurrencies" display-prop="code" display-optional="btcValue" on-change="changeBTCCurrency")
   .form-group
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="NOTIFICATIONS")

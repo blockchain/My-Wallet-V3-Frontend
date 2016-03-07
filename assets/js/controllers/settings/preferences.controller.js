@@ -10,6 +10,10 @@ function SettingsPreferencesCtrl($scope, Wallet, Alerts, currency, $uibModal, $f
   $scope.btcCurrencies = currency.bitCurrencies;
   $scope.btc = currency.bitCurrencies[0];
 
+  $scope.changeLanguage = Wallet.changeLanguage;
+  $scope.changeCurrency = Wallet.changeCurrency;
+  $scope.changeBTCCurrency = Wallet.changeBTCCurrency;
+
   $scope.edit = {
     email: false,
   };
@@ -37,24 +41,6 @@ function SettingsPreferencesCtrl($scope, Wallet, Alerts, currency, $uibModal, $f
   $scope.canHandleBitcoinLinks = () => {
     return $window.navigator.registerProtocolHandler != null;
   };
-
-  $scope.$watch("settings.language", (newVal, oldVal) => {
-    if ((oldVal != null) && newVal !== oldVal) {
-      Wallet.changeLanguage(newVal);
-    }
-  });
-
-  $scope.$watch("settings.currency", (newVal, oldVal) => {
-    if ((oldVal != null) && newVal !== oldVal) {
-      Wallet.changeCurrency(newVal);
-    }
-  });
-
-  $scope.$watch("settings.btcCurrency", (newVal, oldVal) => {
-    if ((oldVal != null) && newVal !== oldVal) {
-      Wallet.changeBTCCurrency(newVal);
-    }
-  });
 
   $scope.browserCanHandleBitcoinLinks = $scope.canHandleBitcoinLinks()
 

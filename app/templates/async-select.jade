@@ -1,0 +1,7 @@
+div
+  ui-select(ng-model="selected" on-select="didSelect($item)")
+    ui-select-match
+      span {{ displayItem($select.selected, false) }}
+      img.mll(src="img/spinner.gif" ng-show="changing")
+    ui-select-choices(repeat="i in range | filter:$select.search track by $index") 
+      span(ng-bind-html="displayItem(i, true) | highlight: $select.search")

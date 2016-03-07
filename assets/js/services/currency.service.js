@@ -39,15 +39,18 @@ function currency($q, MyBlockchainApi) {
     {
       serverCode: 'BTC',
       code: 'BTC',
-      conversion: 100000000
+      conversion: 100000000,
+      btcValue: '1 BTC'
     }, {
       serverCode: 'MBC',
       code: 'mBTC',
-      conversion: 100000
+      conversion: 100000,
+      btcValue: '0.001 BTC'
     }, {
       serverCode: 'UBC',
       code: 'bits',
-      conversion: 100
+      conversion: 100,
+      btcValue: '0.000001 BTC'
     }
   ];
 
