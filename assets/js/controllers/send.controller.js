@@ -269,6 +269,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     if (!tx.from) return 0;
     let availableBal = tx.from.balance - tx.fee;
     let maxAvailable = tx.sweepAmount || availableBal;
+    console.log(tx.sweepFee)
     if ($scope.advanced && !isNaN(tx.sweepFee)) maxAvailable += (tx.sweepFee - tx.fee);
     if (maxAvailable < 0) maxAvailable = 0;
     return isNaN(maxAvailable) ? tx.from.balance : maxAvailable;
