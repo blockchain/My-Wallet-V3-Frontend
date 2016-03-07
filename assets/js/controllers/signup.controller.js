@@ -32,6 +32,9 @@ function SignupCtrl($scope, $state, $cookies, $filter, $translate, $uibModal, Wa
     case 'zh-cn':
       cur = "CNY";
       break;
+    case 'ca':
+      cur = "EUR";
+      break;
     case 'nl':
       cur = "EUR";
       break;

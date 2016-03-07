@@ -170,7 +170,7 @@ module.exports = (grunt) ->
       th: {src: [ "locales/th-*.json" ], dest: "build/locales/th.json"}
       tr: {src: [ "locales/tr-*.json" ], dest: "build/locales/tr.json"}
       vi: {src: [ "locales/vi-*.json" ], dest: "build/locales/vi.json"}
-      "zh-cn": {src: [ "locales/zh-cn-*.json" ], dest: "build/locales/zh-cn.json"}
+      ca: {src: [ "locales/ca-*.json" ], dest: "build/locales/ca.json"}
 
     copy:
       main:

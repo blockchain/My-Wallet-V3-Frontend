@@ -5,7 +5,7 @@ describe('languages', () => {
   beforeEach(angular.mock.module('walletApp'));
 
   it('should load the language codes', inject((languages) => {
-    expect(languages.length).toEqual(25);
+    expect(languages.length).toEqual(26);
   }));
 
   it('should sort languages from A to Z by name', inject((languages) => {

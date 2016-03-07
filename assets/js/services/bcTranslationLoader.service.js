@@ -34,7 +34,8 @@ function BCTranslateStaticFilesLoader($http, $q, $translateStaticFilesLoader) {
     da: 'build/locales/da.json',
     ro: 'build/locales/ro.json',
     nl: 'build/locales/nl.json',
-    tr: 'build/locales/tr.json'
+    tr: 'build/locales/tr.json',
+    ca: 'build/locales/ca.json'
   };
 
   return function (options) {

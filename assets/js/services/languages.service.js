@@ -32,7 +32,8 @@ function languages() {
     'da': 'Danish',
     'ro': 'Romanian',
     'nl': 'Dutch',
-    'tr': 'Turkish'
+    'tr': 'Turkish',
+    'ca': 'Catalan'
   };
 
   const service = formatLanguages(languageCodes);
