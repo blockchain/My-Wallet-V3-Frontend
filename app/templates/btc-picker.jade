@@ -1,5 +1,0 @@
-div
-  ui-select(ng-model="currency" on-select="didSelect($item, $model)")
-    ui-select-match {{ $select.selected.code }}
-    ui-select-choices(repeat="currency.code as cur in currencies | filter:$select.search") 
-      span(ng-bind-html="cur.code + ' (' + (cur.conversion / 100000000.0) + ' BTC)' | highlight: $select.search")
