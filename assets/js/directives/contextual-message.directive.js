@@ -37,10 +37,14 @@ function contextualMessage($cookies, $window, Wallet, SecurityCenter, filterFilt
     };
 
     scope.shouldShow = () => {
-      let balance   = Wallet.total('');
-      let security  = SecurityCenter.security.score;
-      let isTime    = scope.msgCookie ? Date.now() > scope.msgCookie.when : true;
-      return balance > 20000000 && security < 0.5 && isTime;
+      let isTime = scope.msgCookie ? Date.now() > scope.msgCookie.when : true;
+      let hasBalance    = Wallet.total('') > 0;
+      let didBackup     = Wallet.status.didConfirmRecoveryPhrase;
+      let has2FA        = Wallet.settings.needs2FA;
+      let verifiedEmail = Wallet.user.isEmailVerified;
+      let isSecure      = didBackup && (has2FA || verifiedEmail);
+
+      return isTime && hasBalance && !isSecure;
     };
 
     scope.revealMsg = () =>
