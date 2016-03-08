@@ -21,10 +21,12 @@ function qrScan($rootScope, $timeout, $translate, Wallet, Alerts) {
 
     scope.onCameraResult = (result) => {
       scope.scanComplete = true;
-      let paymentRequest = Wallet.parsePaymentRequest(result);
 
-      scope.scanSuccess = paymentRequest.isValid;
-      if (scope.scanSuccess && scope.onScan) scope.onScan(paymentRequest);
+      scope.scanSuccess = Wallet.isValidAddress(Wallet.parsePaymentRequest(result).address) ||
+                          Wallet.isValidPrivateKey(result) ||
+                          Wallet.isValidAddress(result)
+
+      if (scope.scanSuccess && scope.onScan) scope.onScan(result);
 
       $timeout(() => scope.cameraOn = false, 1250);
       $timeout(() => scope.scanComplete = false, 1500);

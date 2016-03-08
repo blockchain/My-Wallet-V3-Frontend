@@ -3,9 +3,13 @@ describe 'qr-scan directive', ->
 
   beforeEach module('walletApp')
 
-  beforeEach inject((_$compile_, _$rootScope_) ->
+  beforeEach inject((_$compile_, _$rootScope_, $injector) ->
     $compile = _$compile_
     $rootScope = _$rootScope_
+    Wallet = $injector.get('Wallet')
+
+    Wallet.isValidAddress = () -> true
+    Wallet.isValidPrivateKey = () -> true
 
     $rootScope.onScan = jasmine.createSpy()
 
@@ -28,14 +32,13 @@ describe 'qr-scan directive', ->
 
   it 'should call onScan with the payment request', ->
     isoScope.onCameraResult('bitcoin:1JryFnzBdE8YRu6nDzZTZtyw9Sy4RbeABL')
-    expect(isoScope.onScan).toHaveBeenCalledWith(jasmine.objectContaining({
-      address: '1JryFnzBdE8YRu6nDzZTZtyw9Sy4RbeABL', isValid: true
-    }))
+    expect(isoScope.onScan).toHaveBeenCalledWith('bitcoin:1JryFnzBdE8YRu6nDzZTZtyw9Sy4RbeABL')
     expect(isoScope.scanComplete).toEqual(true)
     expect(isoScope.scanSuccess).toEqual(true)
 
   it 'should not call onScan when there is a scan error', inject((Wallet) ->
     Wallet.isValidAddress = () -> false
+    Wallet.isValidPrivateKey = () -> false
     isoScope.onCameraResult('notbitcoin:asdfasdfasdf')
     expect(isoScope.onScan).not.toHaveBeenCalled()
     expect(isoScope.scanComplete).toEqual(true)

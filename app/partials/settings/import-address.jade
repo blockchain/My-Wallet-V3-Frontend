@@ -88,7 +88,7 @@
 .modal-footer.pal.flex-end
   button.button-muted.mrm(ng-click="close()", translate="CANCEL", ng-show="(step == 1 || step == 3) && !status.busy")
   span(ng-if="step == 1")
-    button.btn.btn-info(ng-click="cameraOn()" ng-disabled="status.busy" ng-if="browserWithCamera" translate="QR")
+    qr-scan(on-scan="onAddressScan")
     button.btn.btn-primary(ui-ladda="status.busy" ng-click="import()" ng-disabled="importForm.$invalid" ladda-translate="IMPORT" data-style="expand-left")
   button.btn.btn-info(ng-show="step == 2", ng-click="close()", translate="CLOSE")
   button.btn.btn-primary(ng-show="step == 2 && !address.isWatchOnly && address.balance > 0" ng-click="goToTransfer()" translate="SWEEP")

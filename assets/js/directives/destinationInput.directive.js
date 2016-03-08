@@ -31,7 +31,8 @@ function destinationInput($rootScope, $timeout, Wallet) {
       type      : type
     });
 
-    scope.onAddressScan = (address) => {
+    scope.onAddressScan = (result) => {
+      let address = Wallet.parsePaymentRequest(result)
       scope.model = format(address, 'External');
       $timeout(scope.change);
     };
