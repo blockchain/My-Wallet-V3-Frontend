@@ -15,7 +15,7 @@ describe "Verify Mobile Number Directive", ->
   )
 
   beforeEach ->
-    element = $compile("<verify-mobile-number></verify-mobile-number>")($rootScope)
+    element = $compile("<verify-mobile-number button-lg full-width></verify-mobile-number>")($rootScope)
     $rootScope.$digest()
     isoScope = element.isolateScope()
     isoScope.$digest()
@@ -32,5 +32,7 @@ describe "Verify Mobile Number Directive", ->
 
     return
   )
+
+
 
   return

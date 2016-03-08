@@ -23,14 +23,25 @@ describe "UpgradeCtrl", ->
 
     return
 
-  it "should proceed if user agrees", inject(() ->
+  it "should set waiting to false after timeout", inject(($timeout) ->
+    $timeout.flush()
+    expect(scope.waiting).toBeFalsy()
+  )
+
+  it "should proceed if user agrees", ->
     spyOn(Wallet, "upgrade")
+
     scope.upgrade()
     expect(Wallet.upgrade).toHaveBeenCalled()
-  )
 
   it "covers cancel", ->
     spyOn(scope, 'goToBlockchain')
     scope.cancel()
     expect(scope.goToBlockchain).toHaveBeenCalled()
 
+  describe "goToBlockchain function", ->
+
+    it "sets a window location", inject(($window) ->
+      scope.goToBlockchain()
+      expect($window.location).toBeDefined()
+    )

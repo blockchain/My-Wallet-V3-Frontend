@@ -46,9 +46,10 @@ describe "TransactionsCtrl", ->
       expect(scope.addressBook["17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq"]).toBe("John")
     )
 
-    it "should be able to fetch more transactions", inject((Wallet) ->
+    it "should be able to fetch more transactions", inject((Wallet, $timeout) ->
       spyOn(Wallet.my.wallet, "fetchTransactions").and.callThrough()
       scope.nextPage()
+      $timeout.flush()
       expect(Wallet.my.wallet.fetchTransactions).toHaveBeenCalled()
     )
 
@@ -67,3 +68,32 @@ describe "TransactionsCtrl", ->
       spyOn(scope, "filterSearch")
       scope.filterSearch(1, "test")
       expect(scope.filterSearch).toHaveBeenCalled()
+
+    it "can show a transaction", ->
+      scope.showTransaction({ result: 1, txType: 'received' })
+
+    describe "filterByType", ->
+
+      it "should fitler by sent", ->
+        tx = {}
+        tx.txType = 'sent'
+        scope.filterBy = 'SENT'
+
+        result = scope.filterByType(tx)
+        expect(result).toBe(true)
+
+      it "should fitler by received", ->
+        tx = {}
+        tx.txType = 'received'
+        scope.filterBy = 'RECEIVED_BITCOIN_FROM'
+
+        result = scope.filterByType(tx)
+        expect(result).toBe(true)
+
+      it "should filter by transferred", ->
+        tx = {}
+        tx.txType = 'transfer'
+        scope.filterBy = 'MOVED_BITCOIN_TO'
+
+        result = scope.filterByType(tx)
+        expect(result).toBe(true)

@@ -3,9 +3,7 @@ angular
   .module('walletApp')
   .directive('focusWhen', focusWhen);
 
-focusWhen.$inject = ['$timeout'];
-
-function focusWhen($timeout) {
+function focusWhen() {
   return {
     restrict: 'A',
     link: link
