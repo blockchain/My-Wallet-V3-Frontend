@@ -89,12 +89,12 @@ describe "walletServices", () ->
       expect(currency.fetchExchangeRate).toHaveBeenCalled()
     )
 
-    it "can be switched", inject((Wallet, currency) ->
-      Wallet.settings_api.change_local_currency = (newCurrency) ->
+    it "can be switched", inject(($rootScope, Wallet, currency) ->
+      Wallet.settings_api.change_local_currency = (newCurrency, f) -> f()
 
       spyOn(Wallet.settings_api, "change_local_currency").and.callThrough()
       Wallet.changeCurrency(currency.currencies[1])
-      expect(MyBlockchainSettings.change_local_currency).toHaveBeenCalledWith("EUR")
+      expect(MyBlockchainSettings.change_local_currency).toHaveBeenCalledWith("EUR", jasmine.any(Function), jasmine.any(Function))
       expect(Wallet.settings.currency.code).toBe("EUR")
     )
 

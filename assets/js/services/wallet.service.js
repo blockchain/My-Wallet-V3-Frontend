@@ -846,20 +846,29 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     wallet.settings.language = language;
   };
 
-  wallet.changeLanguage = (language) => {
-    wallet.settings_api.change_language(language.code, (() => {}));
-    wallet.setLanguage(language);
-  };
+  wallet.changeLanguage = (language) => $q((resolve, reject) => {
+    wallet.settings_api.change_language(language.code, () => {
+      wallet.setLanguage(language);
+      resolve(true);
+    }, reject);
+  });
 
-  wallet.changeCurrency = (currency) => {
-    wallet.settings_api.change_local_currency(currency.code);
-    wallet.settings.currency = currency;
-  };
+  wallet.changeCurrency = (curr) => $q((resolve, reject) => {
+    wallet.settings_api.change_local_currency(curr.code, () => {
+      wallet.settings.currency = curr;
+      if (!currency.isBitCurrency(wallet.settings.displayCurrency)) {
+        wallet.settings.displayCurrency = curr;
+      }
+      resolve(true);
+    }, reject);
+  });
 
-  wallet.changeBTCCurrency = (btcCurrency) => {
-    wallet.settings_api.change_btc_currency(btcCurrency.serverCode);
-    wallet.settings.btcCurrency = btcCurrency;
-  };
+  wallet.changeBTCCurrency = (btcCurrency) => $q((resolve, reject) => {
+    wallet.settings_api.change_btc_currency(btcCurrency.serverCode, () => {
+      wallet.settings.btcCurrency = btcCurrency;
+      resolve(true);
+    }, reject);
+  });
 
   wallet.changeEmail = (email, successCallback, errorCallback) => {
     wallet.settings_api.change_email(email, (() => {
