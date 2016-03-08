@@ -14,7 +14,7 @@
           .af-log.flex-center.flex-3.flex-end
             p.mvn(ng-class="activity.message.toLowerCase()" translate="{{::activity.message}}")
             span.pls(ng-show="activity.type == 0")
-              fiat-or-btc(btc="activity.result")
+              fiat-or-btc(btc="activity.amount")
       //psuedo empty-state
       li.af-item.flex-align-start(ng-hide="loading || activities.length > 7")
         .af-marker

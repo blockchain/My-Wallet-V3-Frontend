@@ -14,6 +14,7 @@ function Activity($rootScope, $timeout, Wallet, MyWallet) {
     limit: 8,
     timeSort: timeSort,
     capitalize: capitalize,
+    factory: factory,
     updateTxActivities: updateTxActivities,
     updateLogActivities: updateLogActivities,
     updateAllActivities: updateAllActivities
@@ -74,7 +75,7 @@ function Activity($rootScope, $timeout, Wallet, MyWallet) {
         a.icon = 'ti-layout-list-post';
         a.time = obj.time * 1000;
         a.message = obj.txType.toUpperCase();
-        a.result = Math.abs(obj.result);
+        a.amount = Math.abs(obj.amount);
         break;
       case 4:
         a.title = 'LOG';
