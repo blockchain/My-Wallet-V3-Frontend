@@ -21,7 +21,7 @@
     "browserdetection": "sub2home/browser-detection#97f9718f8811e0a058c5296d69a879de7754ad91",
     "bc-qr-reader": "blockchain/bc-qr-reader#9bf726c2577327631d8b58ddff44351056b27b40",
     "bootstrap-sass": "twbs/bootstrap-sass#446b41a5af0f20f139a6d33ded2a62101c3bd5a1",
-    "blockchain-wallet": "blockchain/my-wallet-v3-bower#ddff62e3a854768fe16d370b6ef9b87014749600",
+    "blockchain-wallet": "blockchain/my-wallet-v3-bower#285d1de58576ac65d65878c9ae5f5bbbc805a935",
     "bc-phone-number": "blockchain/bc-phone-number#0d395319fafabe4842aba1ea2595ee8d2636cfdc"
   },
   "devDependencies": {
