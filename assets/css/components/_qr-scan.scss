@@ -1,0 +1,19 @@
+
+.qr-scan-button {
+  img {
+    height: 18px;
+    width: 18px;
+  }
+}
+
+.qr-scan-popover {
+  height: 150px;
+  .qr-result {
+    padding-top: 40px;
+    i { font-size: 2.5em; }
+  }
+  video {
+    width: 100%;
+    height: 100%;
+  }
+}

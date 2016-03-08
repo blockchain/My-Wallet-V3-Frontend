@@ -1,0 +1,14 @@
+.qr-scan-popover
+  bc-qr-reader(
+    ng-hide="scanComplete"
+    on-result="onCameraResult"
+    on-error="onCameraError"
+    active="cameraOn"
+    camera-status="cameraOn")
+  .qr-result(ng-show="scanComplete")
+    .flex-center.flex-justify.flex-column(ng-show="scanSuccess")
+      i.ti-check.bright-green
+      span.bright-green(translate="SCAN_SUCCESS")
+    .flex-center.flex-justify.flex-column(ng-hide="scanSuccess")
+      i.ti-close.security-red
+      span.security-red(translate="SCAN_FAILED")

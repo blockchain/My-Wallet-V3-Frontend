@@ -10,7 +10,6 @@ function destinationInput($rootScope, $timeout, Wallet) {
     require: 'ngModel',
     scope: {
       model: '=ngModel',
-      onRequestQr: '&',
       change: '&ngChange'
     },
     templateUrl: 'templates/destination-input.jade',
@@ -23,22 +22,27 @@ function destinationInput($rootScope, $timeout, Wallet) {
     scope.accounts = Wallet.accounts().filter(a => a.active);
 
     let format = (a, type) => ({
-      label     : a.label,
+      label     : a.label || a.address || '',
+      address   : a.address || '',
+      index     : a.index,
       balance   : a.balance,
       active    : a.active,
       archived  : a.archived,
       type      : type
     });
 
+    scope.onAddressScan = (address) => {
+      scope.model = format(address, 'External');
+      $timeout(scope.change);
+    };
+
     scope.setModel = (a) => {
       scope.model = format(a, 'Accounts');
-      scope.model.index = a.index;
       $timeout(scope.change);
     };
 
     scope.clearModel = () => {
       scope.model = format({}, 'External');
-      scope.model.address = '';
       $timeout(scope.change);
     };
 

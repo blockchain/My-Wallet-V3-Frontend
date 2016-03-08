@@ -17,7 +17,6 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   $scope.destinationsBase = [];
   $scope.originsLoaded = false;
 
-  $scope.cameraIsOn = false;
   $scope.sending = false;
   $scope.amountIsValid = true;
   $scope.confirmationStep = false;
@@ -109,25 +108,12 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     paymentRequest = Wallet.parsePaymentRequest(url);
     if (paymentRequest.isValid) {
       $scope.applyPaymentRequest(paymentRequest, $scope.qrIndex);
-      $scope.cameraOff();
     } else {
       $translate("QR_CODE_NOT_BITCOIN").then(translation => {
         Alerts.displayWarning(translation, false, $scope.alerts);
       });
       $log.error("Not a bitcoin QR code:" + url);
     }
-  };
-
-  $scope.cameraOn = (index=0) => {
-    $scope.cameraRequested = true;
-    $scope.qrIndex = index;
-  };
-
-  $scope.cameraOff = () => {
-    $scope.cameraIsOn = false;
-    $scope.cameraRequested = false;
-    $scope.qrIndex = null;
-    $scope.$broadcast("STOP_WEBCAM");
   };
 
   $scope.close = () => {

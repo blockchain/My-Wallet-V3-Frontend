@@ -51,8 +51,7 @@
                 name="{{ 'destinations' + $index }}"
                 ng-model="transaction.destinations[$index]"
                 ng-model-options="{ updateOn: 'blur' }"
-                ng-change="updateToLabel(); checkForSameDestination(); refreshTxProposal()"
-                on-request-qr="cameraOn($index)")
+                ng-change="updateToLabel(); checkForSameDestination(); refreshTxProposal()")
             .has-error
               span.help-block(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress && sendForm['destinations' + $index].$touched && transaction.destinations[$index].address !== ''")
               span.help-block(translate="SAME_DESTINATION" ng-show="sendForm['destinations' + $index].$error.isNotEqual")
@@ -128,11 +127,6 @@
                          when="{'1': '{{block | translate}}', 'other': '{{blocks | translate}}' }")
             span ).
           span.has-error(ng-show="blockIdx > 6" translate="SMALL_FEE_WARNING")
-      //- QR Scanner 
-      .form-group.row(ng-hide="!cameraIsOn")
-        label.col-sm-2.col-xs-12(translate="QR")
-        .col-sm-10.col-xs-12
-          bc-qr-reader(active="cameraRequested", on-result="processURLfromQR" on-error="onError" camera-status="cameraIsOn")
   //- Step 2 (confirmation)
   div.overview(ng-show="confirmationStep")
     .flex-column
@@ -188,9 +182,6 @@
     a.dark-grey(ng-hide="advanced || confirmationStep", ng-click="advancedSend()", translate="ADVANCED_SEND")
     a.dark-grey(ng-show="advanced && !confirmationStep", ng-click="regularSend()", translate="REGULAR_SEND")
   .flex-center.flex-end.send-actions
-    button.button-muted-off.mrm(
-      ng-click="cameraOff()" ng-show="cameraIsOn" translate="CAMERA_OFF")
-
     button.button-muted.mrm(
       ng-click="close()" translate="CANCEL" ng-hide="confirmationStep")
 

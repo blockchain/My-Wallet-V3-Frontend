@@ -142,9 +142,6 @@ describe "SendCtrl", ->
       it "should know the users btc currency", ->
         expect(scope.btcCurrency.code).toEqual('BTC')
 
-      it "should know that the camera is not on", ->
-        expect(scope.cameraIsOn).toBe(false)
-
       it "should not be sending", ->
         expect(scope.sending).toBe(false)
 
@@ -698,23 +695,6 @@ describe "SendCtrl", ->
         scope.removeDestination(0)
         expect(scope.transaction.destinations.length).toBe(1)
         expect(scope.transaction.amounts.length).toBe(1)
-
-    describe "camera", ->
-
-      it "should turn on", ->
-        spyOn(scope, '$broadcast')
-        scope.cameraOn(1)
-        expect(scope.cameraRequested).toBe(true)
-        expect(scope.qrIndex).toEqual(1)
-
-      it "should turn off", ->
-        scope.cameraIsOn = true
-        scope.cameraRequested = true
-        scope.qrIndex = 1
-        scope.cameraOff()
-        expect(scope.cameraIsOn).toBe(false)
-        expect(scope.cameraRequested).toBe(false)
-        expect(scope.qrIndex).toBeNull()
 
     describe "getFilter", ->
 
