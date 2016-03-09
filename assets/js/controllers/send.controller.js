@@ -447,7 +447,13 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       .then(fee => $scope.transaction.fee = fee)
       .then($scope.setAllAndBuild)
       .then(() => $scope.confirmationStep = true)
-      .catch(errorMsg => {
+      .catch(error => {
+        let errorMsg;
+        if(error.error) {
+          errorMsg = $translate.instant(error.error, error);
+        } else {
+          errorMsg = error;
+        }
         $scope.backToForm();
         Alerts.clear($scope.alerts);
         if (['cancelled', 'backdrop click', 'escape key press'].indexOf(errorMsg) === -1) {
