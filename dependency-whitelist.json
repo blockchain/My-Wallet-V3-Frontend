@@ -13,7 +13,8 @@
   ],
   "pgp-keys" : {
     "CC301009": "Sjors",
-    "36E3D143": "Jaume"
+    "36E3D143": "Jaume",
+    "08DFA964": "Mark"
   },
   "angular": {
     "repo": "angular/bower-angular"
