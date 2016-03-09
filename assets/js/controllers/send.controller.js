@@ -104,17 +104,13 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     });
   };
 
-  $scope.processURLfromQR = (url) => {
-    paymentRequest = Wallet.parsePaymentRequest(url);
-    if (paymentRequest.isValid) {
-      $scope.applyPaymentRequest(paymentRequest, $scope.qrIndex);
-    } else {
-      $translate("QR_CODE_NOT_BITCOIN").then(translation => {
-        Alerts.displayWarning(translation, false, $scope.alerts);
-      });
-      $log.error("Not a bitcoin QR code:" + url);
-    }
+  $scope.processURLfromQR = (e, result) => {
+    paymentRequest = Wallet.parsePaymentRequest(result.url);
+    $scope.applyPaymentRequest(paymentRequest, $scope.qrIndex);
   };
+
+  $scope.setQRIndex = (i) => { $scope.qrIndex = i; }
+  $rootScope.$on('qr-scan-success', $scope.processURLfromQR);
 
   $scope.close = () => {
     Alerts.clear($scope.alerts);

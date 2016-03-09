@@ -554,19 +554,22 @@ describe "SendCtrl", ->
       it "should determine if balance is zero", ->
         expect(scope.hasZeroBalance({balance: 0})).toBe(true)
 
+    describe "setQRIndex", ->
+      it "should set a qrIndex", ->
+        expect(scope.qrIndex).toBeUndefined()
+        scope.setQRIndex(1)
+        expect(scope.qrIndex).toBe(1)
+
     describe "processURLfromQR", ->
 
       it "should process a succesfully scanned QR code", inject((Wallet) ->
         scope.qrIndex = 0
-        scope.processURLfromQR("bitcoin://abcdefgh?amount=0.001")
+        scope.e = 'event'
+        scope.result = {}
+        scope.result.url = 'bitcoin://abcdefgh?amount=0.001'
+        scope.processURLfromQR(scope.e, scope.result)
         expect(scope.transaction.amounts[0]).toBe(100000)
         expect(scope.transaction.destinations[0].address).toBe("abcdefgh")
-      )
-
-      it "should warn user if QR code is not recognized", inject((Wallet) ->
-        expect(scope.alerts.length).toBe(0)
-        scope.processURLfromQR("http://www.google.com")
-        expect(scope.alerts.length).toBe(1)
       )
 
     describe "updateToLabel", ->
