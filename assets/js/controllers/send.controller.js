@@ -41,7 +41,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   $scope.payment = new Wallet.payment({ feePerKb: 30000 });
   $scope.transaction = angular.copy($scope.transactionTemplate);
 
-  let dynamicFeeService = $rootScope.feeServiceDomain + '/fees';
+  let dynamicFeeService = $rootScope.apiDomain + '/fees';
   let dynamicFeeVectorP = $http
     .get(dynamicFeeService)
     .then(response => response.data.estimate);

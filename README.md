@@ -29,6 +29,15 @@ Create a file called `.env` in the root of the project. Put the following in it:
 ROOT_URL=https://blockchain.info
 ```
 
+Optionally you can add:
+
+```
+AUTO_RELOAD=1
+ROOT_PATH=wallet-beta/
+WEBSOCKET_URL=wss://blockchain.info/inv
+API_DOMAIN=https://api.blockchain.info
+```
+
 ## Build
 
 Grunt watches and compiles the Jade view templates and CSS. Keep it running:
@@ -88,22 +97,6 @@ Did you know you can [sign your commits](https://git-scm.com/book/tr/v2/Git-Tool
 ## Testnet
 
 Not supported by the server yet.
-
-## Deploy
-
-Create a static HTML/JS/CSS distribution package in `dist`.
-
-    grunt dist
-
-If you get 403 error from Github (because you exceeded their rate limit), create a [personal access token](https://github.com/settings/tokens). Only select `public_repo` from the list.
-
-    GITHUB_USER=... GITHUB_TOKEN=... grunt dist
-
-If you don't care about securely downloading dependencies and want to avoid using your Github credentials, use `grunt dist_unsafe` instead.
-
-You can test the resulting files by setting `DIST=1` in `.env` and restarting the server.
-
-`index.html` should be cached using `If-Modified-Since` or `etag`. All other files contain a hash of their content and should be cached forever.
 
 ## Security
 

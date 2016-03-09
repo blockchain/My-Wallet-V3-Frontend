@@ -12,7 +12,7 @@ var port      = process.env.PORT || 8080
   , whitelist = (process.env.IP_WHITELIST || '').split(' ')
   , rootURL   = process.env.ROOT_URL || 'https://blockchain.info/'
   , webSocketURL = process.env.WEBSOCKET_URL || false
-  , feeServiceDomain = process.env.FEE_SERVICE_DOMAIN
+  , apiDomain = process.env.API_DOMAIN
 
 // App configuration
 var app = express();
@@ -24,7 +24,7 @@ app.use(function (req, res, next) {
       "style-src 'self' 'sha256-vv5i1tRAGZ/gOQeRpI3CEWtvnCpu5FCixlD2ZPu7h84=' 'sha256-47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU='",
       "child-src 'none'",
       "script-src 'self' 'sha256-mBeSvdVuQxRa2pGoL8lzKX14b2vKgssqQoW36iRlU9g=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='",
-      "connect-src 'self' " + rootURL + " " + (webSocketURL || "wss://*.blockchain.info") + " https://api.blockchain.info" + (feeServiceDomain && feeServiceDomain.indexOf("api.blockchain.info") == -1 ? " " + feeServiceDomain : ""),
+      "connect-src 'self' " + rootURL + " " + (webSocketURL || "wss://*.blockchain.info") + " " + (apiDomain ||  "https://api.blockchain.info"),
       "object-src 'none'",
       "media-src 'self' data: mediastream: blob:",
       "font-src 'self'", ''
