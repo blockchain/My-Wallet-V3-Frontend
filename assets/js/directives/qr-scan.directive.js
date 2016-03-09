@@ -30,7 +30,7 @@ function qrScan($rootScope, $timeout, $translate, Wallet, Alerts) {
 
       if (scope.scanSuccess && scope.onScan) {
         scope.onScan(result);
-        $rootScope.$broadcast('qr-scan-success', {url: result});
+        $timeout(() => { $rootScope.$broadcast('qr-scan-success', {url: result}) })
       }
 
       $timeout(() => scope.cameraOn = false, 1250);
