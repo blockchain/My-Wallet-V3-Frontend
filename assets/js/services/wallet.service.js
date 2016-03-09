@@ -9,9 +9,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
 
-function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet,   MyBlockchainApi,   MyBlockchainSettings,   MyWalletStore,   MyWalletPayment,  MyWalletHelpers,   $rootScope,   ngAudio,   $cookies,   $translate,   $filter,   $state,   $q,   bcPhoneNumber,   languages,   currency) {
+function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet,   MyBlockchainApi, MyBlockchainRng,  MyBlockchainSettings,   MyWalletStore,   MyWalletPayment,  MyWalletHelpers,   $rootScope,   ngAudio,   $cookies,   $translate,   $filter,   $state,   $q,   bcPhoneNumber,   languages,   currency) {
   const wallet = {
     goal: {
       auth: false
@@ -58,6 +58,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   wallet.store = MyWalletStore;
 
   wallet.api = MyBlockchainApi;
+  wallet.rng = MyBlockchainRng;
 
   // If a custom rootURL is set by index.jade:
   //                    Grunt can replace this:
@@ -78,10 +79,13 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     wallet.my.ws.wsUrl=customWebSocketURL;
   }
 
-  // If a custom feeServiceDomain is set by index.jade:
+  // If a custom apiDomain is set by index.jade:
   //                             Grunt can replace this:
-  const customFeeServiceDomain = $rootScope.feeServiceDomain || "https://api.blockchain.info";
-  $rootScope.feeServiceDomain = customFeeServiceDomain;
+  const customApiDomain = $rootScope.apiDomain || "https://api.blockchain.info";
+  $rootScope.apiDomain = customApiDomain;
+  if(customApiDomain) {
+    wallet.rng.URL=customApiDomain + "/v2/randombytes";
+  }
 
   // These are set by grunt dist:
   $rootScope.versionFrontend = null;

@@ -1,5 +1,5 @@
 doctype
-<!-- @if !PRODUCTION --><html lang='en' ng-app='walletApp' ng-init="autoReload=#{ process.env.AUTO_RELOAD || false }; rootURL='#{ process.env.ROOT_URL }/'; rootPath='#{ process.env.ROOT_PATH }'; webSocketURL='#{ process.env.WEBSOCKET_URL }'; feeServiceDomain='#{ process.env.FEE_SERVICE_DOMAIN }';" ng-csp ng-class="{'not-fixed': outOfApp}"><!-- @endif -->
+<!-- @if !PRODUCTION --><html lang='en' ng-app='walletApp' ng-init="autoReload=#{ process.env.AUTO_RELOAD || false }; rootURL='#{ process.env.ROOT_URL }/'; rootPath='#{ process.env.ROOT_PATH }'; webSocketURL='#{ process.env.WEBSOCKET_URL }'; apiDomain='#{ process.env.API_DOMAIN }';" ng-csp ng-class="{'not-fixed': outOfApp}"><!-- @endif -->
 <!-- @if PRODUCTION !><html lang='en' ng-app='walletApp' ng-csp ng-class="{'not-fixed': outOfApp}"><!-- @endif -->
 head
   meta(charset='utf-8')
@@ -51,6 +51,7 @@ head
   script(src='bower_components/blockchain-wallet/dist/my-wallet.js')
   script(src='build/js/core/core.module.js')
   script(src='build/js/core/api.service.js')
+  script(src='build/js/core/rng.service.js')
   script(src='build/js/core/settings.service.js')
   script(src='build/js/core/store.service.js')
   script(src='build/js/core/myWallet.service.js')

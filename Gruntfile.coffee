@@ -425,13 +425,13 @@ module.exports = (grunt) ->
           to: () =>
             'customWebSocketURL = "wss://' + @rootUrl + '/inv"'
         }]
-      fee_service_domain:
+      api_domain:
         src: ['build/js/services/wallet.service.js'],
         overwrite: true,
         replacements: [{
-          from: 'customFeeServiceDomain = $rootScope.feeServiceDomain'
+          from: 'customApiDomain = $rootScope.apiDomain'
           to: () =>
-            'customFeeServiceDomain = "https://' + @feeServiceDomain + '"'
+            'customApiDomain = "https://' + @apiDomain + '"'
         }]
       version_frontend:
         src: ['build/js/services/wallet.service.js'],
@@ -532,7 +532,7 @@ module.exports = (grunt) ->
 
 
 
-  grunt.registerTask "deploy", (versionFrontend, rootUrl, rootPath, feeServiceDomain) =>
+  grunt.registerTask "deploy", (versionFrontend, rootUrl, rootPath, apiDomain) =>
     if versionFrontend == undefined || versionFrontend[0] != "v"
       console.log "Missing version or version is missing 'v'"
       exit(1)
@@ -565,12 +565,12 @@ module.exports = (grunt) ->
         "replace:root_path"
       ]
 
-    if feeServiceDomain
-      @feeServiceDomain = feeServiceDomain
-      console.log("Custom dynamic fee domain: " + @feeServiceDomain)
+    if apiDomain
+      @apiDomain = apiDomain
+      console.log("Custom API domain: " + @apiDomain)
 
       grunt.task.run [
-        "replace:fee_service_domain"
+        "replace:api_domain"
       ]
 
     grunt.task.run [
@@ -593,7 +593,7 @@ module.exports = (grunt) ->
       "rename:html"
     ]
 
-  grunt.registerTask "dist_unsafe", (rootUrl, rootPath, feeServiceDomain) =>
+  grunt.registerTask "dist_unsafe", (rootUrl, rootPath, apiDomain) =>
     console.warn "Do not deploy this to production."
     console.warn "Make sure your bower_components and node_modules are up to date"
     grunt.task.run [
@@ -621,12 +621,12 @@ module.exports = (grunt) ->
           "replace:root_path"
         ]
 
-    if feeServiceDomain
-      @feeServiceDomain = feeServiceDomain
-      console.log("Custom dynamic fee domain: " + @feeServiceDomain)
+    if apiDomain
+      @apiDomain = apiDomain
+      console.log("Custom API domain: " + @apiDomain)
 
       grunt.task.run [
-        "replace:fee_service_domain"
+        "replace:api_domain"
       ]
 
     grunt.task.run [
