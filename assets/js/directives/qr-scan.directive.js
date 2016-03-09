@@ -26,9 +26,10 @@ function qrScan($rootScope, $timeout, $translate, Wallet, Alerts) {
                           Wallet.isValidPrivateKey(result) ||
                           Wallet.isValidAddress(result)
 
+      $rootScope.$safeApply();
+
       if (scope.scanSuccess && scope.onScan) {
         scope.onScan(result);
-        $rootScope.$safeApply();
         $rootScope.$broadcast('qr-scan-success', {url: result});
       }
 

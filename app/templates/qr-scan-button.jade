@@ -2,9 +2,10 @@ button.qr-scan-button.btn.btn-default(
   type="button"
   ng-disabled="!browserWithCamera"
   uib-popover-template="popoverTemplate"
-  uib-popover-placement="top"
   popover-trigger="outsideClick"
   popover-is-open="cameraOn"
   popover-append-to-body="true"
+  popover-class="qr-popover"
   ng-click="cameraOn = true")
   img(src="img/qr-code.png" alt="QR")
+
