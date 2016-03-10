@@ -86,7 +86,6 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   };
 
   $scope.applyPaymentRequest = (paymentRequest, i) => {
-    $scope.processingPaymentRequest = true;
     let destination = {
       address: paymentRequest.address || "",
       label: paymentRequest.address || "",
@@ -97,20 +96,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     $scope.transaction.note = paymentRequest.message || '';
     $scope.validateAmounts();
     $scope.updateToLabel();
-    $scope.$$postDigest(() => {
-      $timeout(() => {
-        $scope.processingPaymentRequest = false;
-      }, 3000);
-    });
   };
-
-  $scope.processURLfromQR = (e, result) => {
-    paymentRequest = Wallet.parsePaymentRequest(result.url);
-    $scope.applyPaymentRequest(paymentRequest, $scope.qrIndex);
-  };
-
-  $scope.setQRIndex = (i) => { $scope.qrIndex = i; }
-  $rootScope.$on('qr-scan-success', $scope.processURLfromQR);
 
   $scope.close = () => {
     Alerts.clear($scope.alerts);

@@ -32,3 +32,11 @@ describe "Destination Input directive", ->
     $timeout.flush()
     expect(isoScope.change).toHaveBeenCalled()
   )
+
+  it "should trigger onPaymentRequest", inject(($timeout) ->
+    spyOn(isoScope, "onPaymentRequest")
+    result = 'bitcoin:1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX'
+    isoScope.onAddressScan(result)
+    $timeout.flush()
+    expect(isoScope.onPaymentRequest).toHaveBeenCalled()
+  )

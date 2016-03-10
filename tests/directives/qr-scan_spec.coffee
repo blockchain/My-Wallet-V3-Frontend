@@ -31,6 +31,7 @@ describe 'qr-scan directive', ->
   )
 
   it 'should call onScan with the payment request', ->
+    isoScope.cameraOn = true
     isoScope.onCameraResult('bitcoin:1JryFnzBdE8YRu6nDzZTZtyw9Sy4RbeABL')
     expect(isoScope.onScan).toHaveBeenCalledWith('bitcoin:1JryFnzBdE8YRu6nDzZTZtyw9Sy4RbeABL')
     expect(isoScope.scanComplete).toEqual(true)

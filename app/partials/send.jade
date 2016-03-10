@@ -51,7 +51,8 @@
                 name="{{ 'destinations' + $index }}"
                 ng-model="transaction.destinations[$index]"
                 ng-model-options="{ updateOn: 'blur' }"
-                ng-change="updateToLabel(); checkForSameDestination(); setQRIndex($index)")
+                ng-change="updateToLabel(); checkForSameDestination();"
+                on-payment-request="applyPaymentRequest(request, $index)")
             .has-error
               span.help-block(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress && sendForm['destinations' + $index].$touched && transaction.destinations[$index].address !== ''")
               span.help-block(translate="SAME_DESTINATION" ng-show="sendForm['destinations' + $index].$error.isNotEqual")

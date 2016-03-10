@@ -10,7 +10,8 @@ function destinationInput($rootScope, $timeout, Wallet) {
     require: 'ngModel',
     scope: {
       model: '=ngModel',
-      change: '&ngChange'
+      change: '&ngChange',
+      onPaymentRequest: '&onPaymentRequest'
     },
     templateUrl: 'templates/destination-input.jade',
     link: link
@@ -34,6 +35,8 @@ function destinationInput($rootScope, $timeout, Wallet) {
     scope.onAddressScan = (result) => {
       let address = Wallet.parsePaymentRequest(result)
       scope.model = format(address, 'External');
+
+      $timeout(scope.onPaymentRequest({request: address}))
       $timeout(scope.change);
     };
 
