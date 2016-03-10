@@ -86,9 +86,11 @@
 .inneredit { padding: 10px 15px 0;}
 
 table.accounts-container {
-
   tr {
     height: 66px;
+    &.active {
+      background-color: $light-blue;
+    }
   }
 
   td {
@@ -116,11 +118,11 @@ table.accounts-container {
 //A better .well class
 .well {
   padding: 20px;
+  font-size: 14px;
+  line-height: 1.3em;
   margin-bottom: 20px;
-  background-color: $light-blue;
-  border: 1px solid $border-grey;
-  border-radius: 5px;
-  line-height: 2em;
+  background-color: $pale-yellow;
+  border-left: 10px solid $security-yellow;
 }
 
 @media (min-width: 992px){
@@ -133,4 +135,50 @@ table.accounts-container {
 }
 @media (max-width: 991px) {
   .setting-result { margin-top: 10px; }
+}
+
+// accounts
+.accounts-container {
+  position: relative;
+  > .list {
+    position: relative;
+    z-index: 10;
+  }
+  > .account {
+    @include transition(right $slow);
+    background-color: $white;
+    overflow: scroll;
+    position: fixed;
+    z-index: 10001;
+    padding: 25px;
+    height: 100%;
+    right: -65%;
+    width: 50%;
+    top: 0;
+    .well {
+      margin-top: 0px;
+    }
+    &.active {
+      right: 15px;
+    }
+  }
+}
+
+.settings {
+  .overlay {
+    @include transition(left 0s $slow, opacity $slow);
+    background-color: #000;
+    position: fixed;
+    left: -10000px;
+    z-index: 10000;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    top: 0;
+    &.active {
+      left: 0px;
+      opacity: 0.2;
+      @include transition(left 0s, opacity $slow);
+    }
+  }
 }

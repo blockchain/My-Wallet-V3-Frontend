@@ -317,15 +317,6 @@ function AppRouter($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('wallet.common.settings.accounts_addresses', {
-      url: '/:account/addresses',
-      views: {
-        settings: {
-          templateUrl: 'partials/settings/addresses.jade',
-          controller: 'SettingsAddressesCtrl'
-        }
-      }
-    })
     .state('wallet.common.settings.imported_addresses', {
       url: '/imported-addresses',
       views: {
