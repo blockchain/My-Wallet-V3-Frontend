@@ -14,7 +14,9 @@ describe "Destination Input directive", ->
     Wallet = $injector.get('Wallet')
 
     Wallet.my.wallet =
-      hdwallet = () ->
+      hdwallet:
+        accounts: [{ active: true }]
+      keys: [{ active: false }, { active: true, isWatchOnly: true }]
 
     return
   )
@@ -40,3 +42,6 @@ describe "Destination Input directive", ->
     $timeout.flush()
     expect(isoScope.onPaymentRequest).toHaveBeenCalled()
   )
+
+  it "should hide the dropdown when there is one account and no active addresses", ->
+    expect(isoScope.dropdownHidden).toEqual(true)

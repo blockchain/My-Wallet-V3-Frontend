@@ -18,10 +18,10 @@
     .input-group-btn(uib-dropdown)
       qr-scan(
         on-scan="onAddressScan"
-        ng-class="{ 'border-rounded-right': accounts.length <= 1 }")
+        ng-class="{ 'border-rounded-right': dropdownHidden }")
       button.btn.btn-default(
         type="button"
-        ng-show="accounts.length > 1"
+        ng-hide="dropdownHidden"
         uib-dropdown-toggle)
         span.caret
         span.sr-only Toggle Dropdown
