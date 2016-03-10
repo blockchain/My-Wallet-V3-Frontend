@@ -142,9 +142,6 @@ describe "SendCtrl", ->
       it "should know the users btc currency", ->
         expect(scope.btcCurrency.code).toEqual('BTC')
 
-      it "should know that the camera is not on", ->
-        expect(scope.cameraIsOn).toBe(false)
-
       it "should not be sending", ->
         expect(scope.sending).toBe(false)
 
@@ -557,19 +554,13 @@ describe "SendCtrl", ->
       it "should determine if balance is zero", ->
         expect(scope.hasZeroBalance({balance: 0})).toBe(true)
 
-    describe "processURLfromQR", ->
+    describe "applyPaymentRequest", ->
 
-      it "should process a succesfully scanned QR code", inject((Wallet) ->
-        scope.qrIndex = 0
-        scope.processURLfromQR("bitcoin://abcdefgh?amount=0.001")
+      it "should succesfully apply a payment request", inject((Wallet) ->
+        scope.result = Wallet.parsePaymentRequest('bitcoin://abcdefgh?amount=0.001')
+        scope.applyPaymentRequest(scope.result, 0)
         expect(scope.transaction.amounts[0]).toBe(100000)
         expect(scope.transaction.destinations[0].address).toBe("abcdefgh")
-      )
-
-      it "should warn user if QR code is not recognized", inject((Wallet) ->
-        expect(scope.alerts.length).toBe(0)
-        scope.processURLfromQR("http://www.google.com")
-        expect(scope.alerts.length).toBe(1)
       )
 
     describe "updateToLabel", ->
@@ -698,23 +689,6 @@ describe "SendCtrl", ->
         scope.removeDestination(0)
         expect(scope.transaction.destinations.length).toBe(1)
         expect(scope.transaction.amounts.length).toBe(1)
-
-    describe "camera", ->
-
-      it "should turn on", ->
-        spyOn(scope, '$broadcast')
-        scope.cameraOn(1)
-        expect(scope.cameraRequested).toBe(true)
-        expect(scope.qrIndex).toEqual(1)
-
-      it "should turn off", ->
-        scope.cameraIsOn = true
-        scope.cameraRequested = true
-        scope.qrIndex = 1
-        scope.cameraOff()
-        expect(scope.cameraIsOn).toBe(false)
-        expect(scope.cameraRequested).toBe(false)
-        expect(scope.qrIndex).toBeNull()
 
     describe "getFilter", ->
 

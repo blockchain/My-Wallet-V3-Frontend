@@ -16,12 +16,9 @@
       ng-blur="blur()"
     )
     .input-group-btn(uib-dropdown)
-      button#qr.btn.btn-default(
-        type="button"
-        ng-disabled="!browserWithCamera"
-        ng-class="{ 'border-rounded-right': accounts.length <= 1 }"
-        ng-click="onRequestQr()")
-        img(src="img/qr-code.png" alt="QR")
+      qr-scan(
+        on-scan="onAddressScan"
+        ng-class="{ 'border-rounded-right': accounts.length <= 1 }")
       button.btn.btn-default(
         type="button"
         ng-show="accounts.length > 1"

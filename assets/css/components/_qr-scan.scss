@@ -1,0 +1,41 @@
+
+.qr-scan-button {
+  img {
+    height: 18px;
+    width: 18px;
+  }
+}
+
+.qr-popover {
+  border-radius: 0px !important;
+  border: 0px;
+  .popover-content {
+    padding: 0px;
+    &:before {
+      top: 50%;
+      left: 50%;
+      content: '';
+      width: 140px;
+      height: 140px;
+      display: block;
+      position: absolute;
+      border: 2px dashed $grey;
+      transform: translate(-50%, -50%);
+    }
+  }
+  .qr-scan-popover {
+    height: 164px;
+    overflow: hidden;
+    .qr-result {
+      width: 100%;
+      height: 100%;
+      background: white;
+      position: absolute;
+      i { font-size: 2.5em; }
+    }
+    video {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

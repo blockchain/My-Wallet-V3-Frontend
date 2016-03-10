@@ -151,7 +151,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
     $scope.$broadcast("STOP_WEBCAM");
   };
 
-  $scope.processURLfromQR = (url) => {
+  $scope.onAddressScan = (url) => {
     $scope.fields.addressOrPrivateKey = $scope.parseBitcoinUrl(url);
     $scope.cameraOff();
     let valid = $scope.isValidAddressOrPrivateKey($scope.fields.addressOrPrivateKey);
