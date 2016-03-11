@@ -1,6 +1,7 @@
 describe "SettingsInfoCtrl", ->
   scope = undefined
   Wallet = undefined
+  pairingCode = undefined
 
   beforeEach angular.mock.module("walletApp")
 
@@ -10,6 +11,11 @@ describe "SettingsInfoCtrl", ->
       MyWallet = $injector.get("MyWallet")
 
       Wallet.status.isLoggedIn = true
+      Wallet.makePairingCode = (success, error) ->
+        if scope.pairingCode
+          success()
+        else
+          error()
 
       scope = $rootScope.$new()
 
@@ -23,17 +29,26 @@ describe "SettingsInfoCtrl", ->
 
     return
 
-  it "should show pairing code", inject((Wallet, Alerts) ->
-    spyOn(Wallet, "makePairingCode")
-    spyOn(Alerts, "displayError")
+  describe "show pairing code", ->
+    it "should show pairing code if valid", ->
+      success = () ->
+      error = () ->
 
-    scope.showPairingCode()
+      scope.pairingCode = 'code'
+      scope.showPairingCode()
+      Wallet.makePairingCode(success, error)
+      expect(scope.display.pairingCode).toBe(true)
 
-    expect(Wallet.makePairingCode).toHaveBeenCalled()
-    expect(Alerts.displayError).not.toHaveBeenCalled()
+    it "should show an error when failed", inject((Alerts) ->
+      success = () ->
+      error = () ->
+      spyOn(Alerts, "displayError")
 
-    return
-  )
+      scope.showPairingCode()
+      Wallet.makePairingCode(success, error)
+      expect(Alerts.displayError).toHaveBeenCalled()
+    )
+
 
   it "can hide pairing code", ->
     scope.hidePairingCode()
