@@ -16,7 +16,7 @@ $baby-blue: #edf6fd;
 
 //Blockchain Text
 $black: #4B4D4E;
-$text: #6C6C6C;
+$text: #5f5f5f;
 
 //Blockchain Greys
 $light-grey: #f7f7f7;
@@ -25,6 +25,7 @@ $mid-grey: #b0b0b0;
 $dark-grey: #757575;
 $border-grey: #ddd;
 $pale-grey: #bababa;
+$basic-grey: #757575;
 $steel: #6c6c6c;
 
 //Did You Know
@@ -61,6 +62,7 @@ $bright-green:  #3CC476 !important; //override Security Center nested css select
 @include color('grey', $light-grey);
 @include color('light-grey', $light-grey);
 @include color('mid-grey', $mid-grey);
+@include color('basic-grey', $basic-grey);
 @include color('dark-grey', $dark-grey);
 @include color('receive-green', $receive-green);
 @include color('security-red', $security-red);
