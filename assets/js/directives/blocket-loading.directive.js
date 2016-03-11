@@ -16,13 +16,15 @@ function blocketLoading($rootScope, $timeout) {
 
   function link(scope, elem, attrs) {
     // give it a sec
-    scope.loading = true;
-    $timeout(() => { scope.waiting = true; }, 500)
+    $timeout(() => {
+      scope.loading = true; 
+      scope.waiting = true;
+    }, 500)
 
     // doc is ready, time for liftoff
     scope.docIsReady = () => {
       // if wait was not long enough just hide
-      if (!scope.waiting) {scope.waiting = true; return;}
+      if (!scope.waiting) {scope.hide = true; return;}
 
       scope.liftoff = true
       $timeout(() => { scope.orbit = true }, 1000)
