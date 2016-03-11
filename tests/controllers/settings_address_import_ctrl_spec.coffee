@@ -14,8 +14,13 @@ describe "AddressImportCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
       Wallet = $injector.get("Wallet")
 
-      Wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bip38passphrase, success, error) ->
-        success({address: "valid_import_address"})
+      Wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bip38passphrase, success, error, cancel) ->
+        if addressOrPrivateKey
+          success({address: "valid_import_address"})
+        else
+          error('presentInWallet')
+          error('wrongBipPass')
+          error('importError')
 
       Wallet.accounts = () -> accounts
 
@@ -78,6 +83,27 @@ describe "AddressImportCtrl", ->
       expect(scope.address.balance).not.toBe(0)
     )
 
+    describe "error", ->
+
+      beforeEach ->
+        scope.success = () ->
+        scope.cancel = () ->
+        scope.error = () ->
+
+      it "should handle an error", inject(($timeout) ->
+        spyOn(scope, "error")
+        scope.import()
+        $timeout.flush()
+        Wallet.addAddressOrPrivateKey('', false, scope.success, scope.error, scope.cancel);
+        expect(scope.error).toHaveBeenCalled()
+      )
+
+      it "should set validity based on error message", ->
+        scope.error = (error) -> error
+        Wallet.addAddressOrPrivateKey('presentInWallet', false, scope.success, scope.error, scope.cancel);
+        expect(scope.importForm.privateKey.$valid).toBe(false)
+
+
     it "should go to step 3 when user clicks transfer", ->
       scope.goToTransfer()
       expect(scope.step).toBe(3)
@@ -117,3 +143,4 @@ describe "AddressImportCtrl", ->
 
     it "should work with slashes", ->
       expect(scope.parseBitcoinUrl("bitcoin://1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")).toBe("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")
+
