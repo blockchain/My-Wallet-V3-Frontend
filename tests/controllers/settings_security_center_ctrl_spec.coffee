@@ -12,7 +12,17 @@ describe "SettingsSecurityCenterCtrl", ->
         internationalMobileNumber: "+1234567890"
       }
 
+      Wallet.changeEmail = (email, success, error) ->
+        success()
+
+      Wallet.changePasswordHint = (hint, success, error) ->
+        if hint
+          success()
+
       scope = $rootScope.$new()
+
+      scope.success = () -> true
+      scope.error = () -> true
 
       $controller "SettingsSecurityCenterCtrl",
         $scope: scope,
@@ -53,3 +63,54 @@ describe "SettingsSecurityCenterCtrl", ->
   it "should close the password hint field", ->
     scope.cancelEditPasswordHint()
     expect(scope.display.action).toBe(null)
+
+  describe "changeEmail", ->
+
+    it "can change an email", ->
+      scope.changeEmail('phil@blockchain.com', scope.success, scope.error)
+
+  describe "changePasswordHint", ->
+
+    it "can change password hints", ->
+      spyOn(Wallet, "changePasswordHint")
+      scope.changePasswordHint('phil', scope.success, scope.error)
+      expect(Wallet.changePasswordHint).toHaveBeenCalled()
+
+  describe "nextAction", ->
+
+    it "should toggle actions", ->
+      scope.user.isEmailVerified = true
+      scope.status.didConfirmRecoveryPhrase = false
+      
+      scope.nextAction()
+      expect(scope.display.action).toBe('securityphrase')
+      
+      scope.status.didConfirmRecoveryPhrase = true
+      scope.user.passwordHint = false
+      
+      scope.nextAction()
+      expect(scope.display.action).toBe('passwordhint')
+
+      scope.status.didConfirmRecoveryPhrase = true
+      scope.user.passwordHint = true
+      scope.user.isMobileVerified = false
+
+      scope.nextAction()
+      expect(scope.display.action).toBe('mobilenumber')
+
+      scope.status.didConfirmRecoveryPhrase = true
+      scope.user.passwordHint = true
+      scope.user.isMobileVerified = true
+      scope.settings.needs2FA = false
+
+      scope.nextAction()
+      expect(scope.display.action).toBe('twofactor')      
+
+      scope.status.didConfirmRecoveryPhrase = true
+      scope.user.passwordHint = true
+      scope.user.isMobileVerified = true
+      scope.settings.needs2FA = true
+      scope.settings.blockTOR = false
+
+      scope.nextAction()
+      expect(scope.display.action).toBe('blocktor')            
