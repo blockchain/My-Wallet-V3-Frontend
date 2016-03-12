@@ -24,9 +24,9 @@
     verify-mobile-number(on-success="mobileNumber.step = 0" ng-show="mobileNumber.step == 2")
   .row.clearfix.pal(ng-show="isStep('pair')")
     .col-xs-6.flex-justify.flex
-      a(ng-click="pairWith = 'authenticator'", ng-class="{'ccc' : pairWith == 'yubiKey'}") Google Authenticator
+      a(ng-click="pairWith = 'authenticator'", ng-class="{'basic-grey' : pairWith == 'yubiKey'}") Google Authenticator
     .col-xs-6.flex-justify.flex
-      a(ng-click="pairWith = 'yubiKey'", ng-class="{'ccc' : pairWith == 'authenticator'}") YubiKey
+      a(ng-click="pairWith = 'yubiKey'", ng-class="{'basic-grey' : pairWith == 'authenticator'}") YubiKey
     .col-xs-12.mtl(ng-show="pairWith == 'authenticator'")
       img(ng-hide="settings.googleAuthenticatorSecret" src="img/spinner.gif")
       .form-group.flex-between(ng-if="settings.googleAuthenticatorSecret" ng-class="{'has-error': errors.authenticatorCode}")

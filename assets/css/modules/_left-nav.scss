@@ -19,7 +19,7 @@ ul.aside {
     position: relative;
     text-transform: uppercase;
     > a {
-      color: #737373;
+      color: $basic-grey;
       padding: .4em .8em;
       display: -webkit-flex;
       display: flex;
@@ -38,7 +38,7 @@ ul.aside {
     text-transform: none;
     .btn {  min-width: 110px; }
     a{
-      color: #878787;
+      color: $basic-grey;
       &.imported-addresses{
         color: $mid-grey;
       }

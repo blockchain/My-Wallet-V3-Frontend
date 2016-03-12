@@ -9,12 +9,11 @@
   }
   a.date { padding-top: 10px; }
   .transaction {
-    border-bottom: 1pt solid $light-grey;
+    border-bottom: 1pt solid $eee;
     padding: 15px 30px;
     position: relative;
     &:hover { background: $hover-blue; }
     .timestamp{
-      color: rgb(190, 190, 190);
       font-style: italic;
     }
     .type {

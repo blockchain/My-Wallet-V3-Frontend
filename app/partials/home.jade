@@ -8,10 +8,10 @@
           li.flex-between.border-bottom-light(ng-repeat="account in activeAccounts")
             span.em-500 {{::account.label}}
             fiat-or-btc(btc="account.balance")
-          li.flex-between.border-bottom-thick.tertiary-blue(ng-show="activeAddresses.length > 0")
+          li.flex-between.border-bottom-thick.transfer(ng-show="activeAddresses.length > 0")
             span.em-400 Imported Addresses
             fiat-or-btc(btc="getLegacyTotal()")
-          li.flex-between.border-bottom-light.mid-grey.em-500
+          li.flex-between.border-bottom-light.basic-grey.em-500
             span Total
             fiat-or-btc(btc="getTotal()")
       .section.mtvl

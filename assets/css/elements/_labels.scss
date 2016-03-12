@@ -8,3 +8,11 @@ label {
     color: #fff;
   }
 }
+
+.label {
+  padding: .3em .6em .3em .6em;
+}
+
+.label-default {
+  background-color: $basic-grey;
+}

@@ -1,7 +1,7 @@
 .flex-column
   .flex-align-end.flex-end.pbl
     .flex-column.col-md-3.col-sm-12.col-xs-12
-      span.timestamp.pbm.type-sm
+      span.timestamp.pbm.type-sm.basic-grey
         date {{ tx.time * 1000 | date:'MMMM d @ hh:mm a' }}
       .flex-center
         span.action(
@@ -14,7 +14,7 @@
         i.ti-notepad.aaa.plm(ng-show="tx.note").prm
         span.label.label-default(translate="WATCH_ONLY", ng-show="((tx.txType === 'received' || tx.txType === 'transfer') && tx.toWatchOnly) ||  (tx.txType === 'sent' && tx.fromWatchOnly)")
     .hidden-xs.hidden-sm.destination.em-400.col-md-8(
-      ng-class="tx.toggled ? 'dark-grey' : 'aaa'")
+      ng-class="tx.toggled ? 'dark-grey' : 'basic-grey'")
       .flex.row
         span.text.col-md-1(
           ng-show="tx.txType === 'transfer' || tx.txType === 'received'") {{::'FROM' | translate}}:
@@ -37,7 +37,7 @@
       .flex.row.mtm(ng-show="tx.note")
         span.text.col-md-1(translate="NOTE_LC")
         span.break-word.hidden-sm.hidden-xs.col-md-11.mlm {{ tx.note }}
-      .flex.row.mtm.timestamp(
+      .flex.row.mtm.timestamp.aaa(
         ng-show="tx.confirmations === 0")
         span.text.col-md-12(translate="UNCONFIRMED_WARNING")
     .col-md-1
