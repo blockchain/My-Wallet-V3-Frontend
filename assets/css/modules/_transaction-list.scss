@@ -84,6 +84,12 @@
   }
   button.amount{padding: 10px;height: auto;width: 100%;}
   span.you{opacity: .5; font-style: italic;padding-right: 5px;}
+  .tx-sender, .tx-receiver {
+    label {
+      vertical-align: top;
+      & + ul { display: inline-block; }
+    }
+  }
 }
 
 button.amount {

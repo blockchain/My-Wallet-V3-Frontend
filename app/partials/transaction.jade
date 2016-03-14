@@ -13,13 +13,13 @@
           .tx-sender
             label(translate="FROM")
             |:
-            p.text.mbs {{::input.label}}
+            span.text.mbs.mls {{::input.label}}
           .tx-receiver
             label
               span(translate="TO")
               |:  
-            ul.pln.flex-column.flex.type-sm
-              li.flex-center.mbm(ng-repeat="destination in destinations")
+            ul.pln.flex-column.flex.type-sm.mls
+              li.flex-center(ng-repeat="destination in destinations")
                 span.text-overflow-hidden.flex-1.flex.text
                   | {{::destination.label}}
                 span.plm.center-align.text(ng-hide="destinations.length <= 1")
