@@ -21,7 +21,13 @@ app.use(function (req, res, next) {
   if (req.url === '/') {
     var cspHeader = ([
       "img-src 'self' " + rootURL + " data:",
-      "style-src 'self' 'sha256-vv5i1tRAGZ/gOQeRpI3CEWtvnCpu5FCixlD2ZPu7h84=' 'sha256-47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU='",
+      // echo -n "outline: 0;" | openssl dgst -sha256 -binary | base64
+      // "outline: 0;"        : ud+9... from ui-select
+      // "margin-right: 10px" : 4If ... from ui-select
+      // The above won't work in Chrome due to: https://bugs.chromium.org/p/chromium/issues/detail?id=571234
+      // Safari throws the same error, but without suggesting an hash to whitelist.
+      // Firefox appears to just allow unsafe-inline CSS
+      "style-src 'self' 'uD+9kGdg1SXQagzGsu2+gAKYXqLRT/E07bh4OhgXN8Y=' '4IfJmohiqxpxzt6KnJiLmxBD72c3jkRoQ+8K5HT5K8o='",
       "child-src 'none'",
       "script-src 'self' 'sha256-mBeSvdVuQxRa2pGoL8lzKX14b2vKgssqQoW36iRlU9g=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='",
       "connect-src 'self' " + rootURL + " " + (webSocketURL || "wss://*.blockchain.info") + " " + (apiDomain ||  "https://api.blockchain.info"),
