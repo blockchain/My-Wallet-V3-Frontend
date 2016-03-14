@@ -25,8 +25,21 @@ div.login-form {
 }
 
 @media (max-height: 700px) {
+  html, body {
+    position: relative;
+  }
+  .login-pg {
+    height: 100%;
+    display: block !important;
+    .navbar {
+      position: relative;
+    }
+  }
   .login-box-container {
     margin-top: 0px;
+  }
+  .login-box {
+    max-height: none !important;
   }
 }
 
