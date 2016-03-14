@@ -179,6 +179,7 @@ module.exports = (grunt) ->
       css:
         files: [
           {src: ["font-awesome.min.css"], dest: "build/css", cwd: "bower_components/fontawesome/css", expand: true }
+          {src: ["ui-bootstrap-csp.css"], dest: "build/css", cwd: "bower_components/angular-bootstrap", expand: true }
           {src: ["*.css"], dest: "build/css", cwd: "assets/css", expand: true }
         ]
       fonts:
