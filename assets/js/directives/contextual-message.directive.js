@@ -65,11 +65,6 @@ function contextualMessage($cookies, $window, Wallet, SecurityCenter, filterFilt
     let o = () => s.offsetTop;
     let w = () => $window.location.hash;
 
-    if(Wallet.status.isLoggedIn) {
-      let activeAddressCount = filterFilter(Wallet.legacyAddresses(), {archived: false}).length;
-      elem.css('top', activeAddressCount > 0 ? 135 : 95);
-    }
-
     let a = (newVal) => {
       if (newVal.indexOf('transactions') !== -1) elem.css('top', o);
     };
