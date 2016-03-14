@@ -4,9 +4,17 @@ angular
 
 function HomeCtrl($scope, Wallet, $uibModal) {
   $scope.getTotal = () => Wallet.total('');
+
   $scope.getLegacyTotal = () => Wallet.total('imported');
-  $scope.activeAddresses = Wallet.legacyAddresses().filter(a => !a.archived);
-  $scope.activeAccounts = Wallet.accounts().filter(a => !a.archived);
+  
+  $scope.hasLegacyAddresses = () => {
+    if(Wallet.status.isLoggedIn) {
+      return Wallet.legacyAddresses().filter(a => !a.archived).length > 0;
+    } else {
+      return null;
+    }
+  }
+  $scope.activeAccounts = () => Wallet.accounts().filter(a => !a.archived);
 
   if (Wallet.status.firstTime) {
     $uibModal.open({
