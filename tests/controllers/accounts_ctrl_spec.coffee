@@ -1,6 +1,8 @@
 describe "WalletNavigationCtrl", ->
   scope = undefined
 
+  Wallet = undefined
+
   modal =
     open: ->
 
@@ -38,9 +40,15 @@ describe "WalletNavigationCtrl", ->
     expect(modal.open).toHaveBeenCalled()
   )
 
-  it "should know the number of active legacy addresses", inject((Wallet) ->
-    expect(scope.numberOfActiveLegacyAddresses()).toBe(1)
-  )
+  describe "numberOfActiveLegacyAddresses()", ->
+    it "should know the number", inject((Wallet) ->
+      expect(scope.numberOfActiveLegacyAddresses()).toBe(1)
+    )
+
+    it "should be null when not logged in", inject((Wallet), ->
+      Wallet.status.isLoggedIn = false
+      expect(scope.numberOfActiveLegacyAddresses()).toBe(null)
+    )
 
   it "should know the number of active acounts", inject(() ->
     expect(scope.numberOfActiveAccounts()).toBe(2)

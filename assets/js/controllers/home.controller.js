@@ -6,7 +6,7 @@ function HomeCtrl($scope, Wallet, $uibModal) {
   $scope.getTotal = () => Wallet.total('');
 
   $scope.getLegacyTotal = () => Wallet.total('imported');
-  
+
   $scope.hasLegacyAddresses = () => {
     if(Wallet.status.isLoggedIn) {
       return Wallet.legacyAddresses().filter(a => !a.archived).length > 0;
@@ -14,7 +14,13 @@ function HomeCtrl($scope, Wallet, $uibModal) {
       return null;
     }
   }
-  $scope.activeAccounts = () => Wallet.accounts().filter(a => !a.archived);
+  $scope.activeAccounts = () => {
+    if(Wallet.status.isLoggedIn) {
+      return Wallet.accounts().filter(a => !a.archived);
+    } else {
+      return null;
+    }
+  }
 
   if (Wallet.status.firstTime) {
     $uibModal.open({

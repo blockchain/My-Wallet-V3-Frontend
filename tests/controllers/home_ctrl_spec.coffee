@@ -41,10 +41,15 @@ describe "HomeCtrl", ->
 
     return
 
-  describe "on load", ->
-
-    it "should have access to wallet accounts", ->
+  describe "activeAccounts()", ->
+    it "should know the number", inject((Wallet) ->
       expect(scope.activeAccounts().length).toBeGreaterThan(0)
+    )
+
+    it "should be null when not logged in", inject((Wallet), ->
+      Wallet.status.isLoggedIn = false
+      expect(scope.activeAccounts()).toBe(null)
+    )
 
   describe "getTotal()", ->
     it "should return total", ->

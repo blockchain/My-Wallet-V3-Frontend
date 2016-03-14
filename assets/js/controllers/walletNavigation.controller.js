@@ -11,6 +11,8 @@ function WalletNavigationCtrl($rootScope, $scope, Wallet, Alerts, SecurityCenter
   $scope.selectedAccountIndex = $stateParams.accountIndex;
 
   $scope.numberOfActiveLegacyAddresses = () => {
+    if(!Wallet.status.isLoggedIn) return null;
+
     return filterFilter(Wallet.legacyAddresses(), {
       archived: false
     }).length;
@@ -70,7 +72,7 @@ function WalletNavigationCtrl($rootScope, $scope, Wallet, Alerts, SecurityCenter
   };
 
   $scope.termsOfService = () => {
-    window.open("https://blockchain.info/terms_of_service", "_blank");  
+    window.open("https://blockchain.info/terms_of_service", "_blank");
   }
 
   $scope.didLoad = () => {
