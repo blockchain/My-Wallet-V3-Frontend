@@ -155,8 +155,13 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
         wallet.status.didLoadSettings = true;
         if (wallet.my.wallet.isUpgradedToHD) {
           let didFetchTransactions = () => {
-            console.log('%cStop!', 'color:white; background:red; font-size: 16pt');
-            console.log('%cThis browser feature is intended for developers. If someone told you to copy-paste something here, it is a scam and will give them access to your money!', 'font-size: 14pt');
+            if ( browserDetection().browser === "ie" ) {
+              console.warn('Stop!');
+              console.warn('This browser feature is intended for developers. If someone told you to copy-paste something here, it is a scam and will give them access to your money!');
+            } else {
+              console.log('%cStop!', 'color:white; background:red; font-size: 16pt');
+              console.log('%cThis browser feature is intended for developers. If someone told you to copy-paste something here, it is a scam and will give them access to your money!', 'font-size: 14pt');
+            }
             wallet.status.didLoadTransactions = true;
             wallet.status.didLoadBalances = true;
             $rootScope.$safeApply();
