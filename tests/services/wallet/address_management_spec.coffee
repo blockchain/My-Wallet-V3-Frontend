@@ -29,6 +29,8 @@ describe "walletServices", () ->
               account
             ]
 
+      Wallet.status.isLoggedIn = true
+
       spyOn(Wallet,"monitor").and.callThrough()
 
       mockObserver = {needs2FA: (() ->)}

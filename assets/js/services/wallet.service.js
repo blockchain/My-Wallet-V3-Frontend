@@ -699,6 +699,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
 
   wallet.accounts = () => {
+    if (!wallet.status.isLoggedIn) return null;
     if (wallet.my.wallet.hdwallet != null) {
       return wallet.my.wallet.hdwallet.accounts;
     } else {

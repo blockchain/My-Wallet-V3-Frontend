@@ -471,3 +471,14 @@ describe "walletServices", () ->
     it "should be null if not logged in", ->
       Wallet.status.isLoggedIn = false
       expect(Wallet.legacyAddresses()).toBe(null)
+
+  describe "accounts()", ->
+    beforeEach ->
+      Wallet.status.isLoggedIn = true
+
+    it "should return an array of accounts", ->
+      expect(Wallet.accounts()).toEqual([])
+
+    it "should be null if not logged in", ->
+      Wallet.status.isLoggedIn = false
+      expect(Wallet.accounts()).toBe(null)
