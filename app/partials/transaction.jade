@@ -27,6 +27,10 @@
           .mtm.ptm.border-top
             label(translate="NOTE_LC")
             transaction-note(transaction="transaction")
+          .mtm.ptm.border-top(ng-if="transaction.publicNote")
+            label(translate="PUBLIC_NOTE")
+            | :
+            p.mtl {{::transaction.publicNote}}
         .border-left.pal.flex-1
           .tx-amount
             amount(transaction="transaction" btc)
@@ -41,6 +45,3 @@
           .tx-bci-link.button-default.button-sm
             a.black(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank")
              span(translate="VERIFY_ON_BCI")
-    .transaction-card.clearfix(ng-if="transaction.publicNote")
-      strong(translate="PUBLIC_NOTE")
-      p.mtl {{::transaction.publicNote}}
