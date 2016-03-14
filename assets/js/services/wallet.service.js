@@ -701,7 +701,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
 
   wallet.total = (accountIndex) => {
-    if (wallet.my.wallet == null) return;
+    if (wallet.my.wallet == null || !wallet.status.isLoggedIn) return null;
     switch (accountIndex) {
       case '':
         if (wallet.my.wallet.isUpgradedToHD) {
