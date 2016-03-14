@@ -8,7 +8,7 @@
       .border-bottom-light.pbm.mbm
         span.em-500.prm(translate="TRANSACTION_DETAILS" ng-class="{incoming_tx: transaction.result > 0, outgoing_tx: transaction.result < 0, local_tx: transaction.intraWallet}")
         span {{::transaction.time * 1000 | date:'MMMM d @ hh:mm a'}}
-      .flex
+      .flex.details-container
         .tx-details.pal.flex-3
           .tx-sender
             label(translate="FROM")

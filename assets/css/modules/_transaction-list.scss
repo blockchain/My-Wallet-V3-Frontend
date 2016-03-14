@@ -85,9 +85,64 @@
   button.amount{padding: 10px;height: auto;width: 100%;}
   span.you{opacity: .5; font-style: italic;padding-right: 5px;}
   .tx-sender, .tx-receiver {
+    @media (max-width: 620px) {
+      overflow: hidden;
+      label + ul, &.tx-sender span {
+        width: calc(100% - 10px);
+        text-overflow: ellipsis;
+        display: inline-block;
+      }
+    }
     label {
       vertical-align: top;
-      & + ul { display: inline-block; }
+      & + ul { 
+        display: inline-block; 
+      }
+    }
+  }
+  @media (max-width: 620px) {
+    .details-container {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+    }
+    .tx-details {
+      padding: 0px;
+    }
+    .border-left {
+      border-top: 1px solid $eee;
+      -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+      margin-top: 0.625em;
+      flex-wrap: wrap;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      border-left: 0px;
+      padding: 15px 0px;
+      > div {
+        width: 50%;
+        margin-bottom: 5px;
+        .success {
+          h6 {
+            text-align: center;
+          }
+          i {
+            margin-right: 3px;
+          }
+        }
+      }
+      .tx-status {
+        padding: 0px 15px;
+      }
+      .tx-bci-link {
+        margin-top: 10px;
+        font-size: 0.9em;
+        width: 100%;
+      }
     }
   }
 }
