@@ -22,71 +22,46 @@ function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNet
   // * Secure random number generator: https://developer.mozilla.org/en-US/docs/Web/API/RandomSource/getRandomValues
   // * AngularJS support (?)
 
-  if (browserDetection().browser === "ie") {
-    if (browserDetection().version < 11) {
-      $translate("MINIMUM_BROWSER", {
-        browser: "Internet Explorer",
-        requiredVersion: 11,
-        userVersion: browserDetection().version
-      }).then(translation => {
-        Alerts.displayError(translation, true);
-      });
-      $scope.disableLogin = true;
+  const browsers = {
+    'ie': {
+      browser: "Internet Explorer",
+      requiredVersion: 11
+    },
+    'chrome': {
+      browser: "Chrome",
+      requiredVersion: 11
+    },
+    'firefox': {
+      browser: "Firefox",
+      requiredVersion: 21
+    },
+    'safari': {
+      browser: "Safari",
+      requiredVersion: 6
+    },
+    'opera': {
+      browser: "Opera",
+      requiredVersion: 15
+    }
+  };
+
+  $scope.displayBrowserWarning = (code) => {
+    let browser = browsers[code];
+    if (browser) {
+      browser.userVersion = browserDetection().version;
+      if (browser.userVersion < browser.requiredVersion) {
+        $scope.disableLogin = true;
+        $translate("MINIMUM_BROWSER", browser).then(Alerts.displayError);
+      } else if (code === 'ie') {
+        $translate("WARN_AGAINST_IE").then(Alerts.displayWarning);
+      }
     } else {
-      $translate("WARN_AGAINST_IE").then(translation => {
-        Alerts.displayWarning(translation, true);
-      });
+      $translate("UNKNOWN_BROWSER").then(Alerts.displayWarning);
     }
-  } else if (browserDetection().browser === "chrome") {
-    if (browserDetection().version < 11) {
-      $translate("MINIMUM_BROWSER", {
-        browser: "Chrome",
-        requiredVersion: 11,
-        userVersion: browserDetection().version
-      }).then(translation => {
-        Alerts.displayError(translation, true);
-      });
-      $scope.disableLogin = true;
-    }
-  } else if (browserDetection().browser === "firefox") {
-    if (browserDetection().version < 21) {
-      $translate("MINIMUM_BROWSER", {
-        browser: "Firefox",
-        requiredVersion: 21,
-        userVersion: browserDetection().version
-      }).then(translation => {
-        Alerts.displayError(translation, true);
-      });
-      $scope.disableLogin = true;
-    }
-  } else if (browserDetection().browser === "safari") {
-    if (browserDetection().version < 6) {
-      $translate("MINIMUM_BROWSER", {
-        browser: "Safari",
-        requiredVersion: 6,
-        userVersion: browserDetection().version
-      }).then(translation => {
-        Alerts.displayError(translation, true);
-      });
-      $scope.disableLogin = true;
-    }
-  } else if (browserDetection().browser === "opera") {
-    if (browserDetection().version < 15) {
-      $translate("MINIMUM_BROWSER", {
-        browser: "Opera",
-        requiredVersion: 15,
-        userVersion: browserDetection().version
-      }).then(translation => {
-        Alerts.displayError(translation, true);
-      });
-      $scope.disableLogin = true;
-    }
-  } else {
-  // Warn against unknown browser. Tell user to pay attention to random number generator and CORS protection.
-    $translate("UNKNOWN_BROWSER").then(translation => {
-      Alerts.displayWarning(translation, true);
-    });
-  }
+  };
+
+  $scope.displayBrowserWarning(browserDetection().browser);
+
   $scope.twoFactorCode = "";
   $scope.busy = false;
   $scope.isValid = false;
