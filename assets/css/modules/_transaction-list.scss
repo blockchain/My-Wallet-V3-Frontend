@@ -74,6 +74,9 @@
   border-radius: 5px;
   min-width: 50vw;
   font-size: 1.1em;
+  @media (max-width: 992px) {
+    width: 95%;
+  }
   .tx-status{
     font-weight: 600;
     color: rgb(4, 155, 212);
@@ -85,10 +88,10 @@
   button.amount{padding: 10px;height: auto;width: 100%;}
   span.you{opacity: .5; font-style: italic;padding-right: 5px;}
   .tx-sender, .tx-receiver {
-    @media (max-width: 620px) {
+    @media (max-width: 992px) {
       overflow: hidden;
       label + ul, &.tx-sender span {
-        width: calc(100% - 10px);
+        width: calc(100% - 50px);
         text-overflow: ellipsis;
         display: inline-block;
       }
