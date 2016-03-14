@@ -1,5 +1,5 @@
 .col-md-6.col-sm-12.col-xs-12.pos-rel.pln.col-home
-  .activity-feed
+  .activity-feed(ng-if="status.isLoggedIn")
     h5.mtn.em-400.type-h5.mbl.af-header(translate="MOST_RECENT_ACTIVITY")
     ul.af.pln
       li.af-item.flex-align-start(

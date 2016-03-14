@@ -1,4 +1,4 @@
-ul.aside-list.pln.pas.mtm
+ul.aside-list.pln.pas.mtm(ng-show="ads && ads.length > 0")
   li.ad(ng-repeat="ad in ads")
     a.flex-between.flex-center.mbs(ng-click="visit(ad)")
       button.btn(ng-click="visit(ad)", ng-class="[ ad.button_class ]")

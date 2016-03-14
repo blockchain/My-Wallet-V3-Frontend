@@ -1,4 +1,4 @@
-.left-navigation(ng-show="status.isLoggedIn")
+.left-navigation(ng-if="status.isLoggedIn")
   ul.aside
     li.header(ui-sref-active="current", ng-click="hideMenu()")
       a(ui-sref="wallet.common.home")
