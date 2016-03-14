@@ -24,6 +24,9 @@ describe "Contextual message directive", ->
         accounts: [{ archived: false }, { archived: false }, { archived: true }]
       }
     }
+
+    Wallet.status.isLoggedIn = true
+
     return
   )
 

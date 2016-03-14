@@ -18,6 +18,8 @@ describe "Destination Input directive", ->
         accounts: [{ active: true }]
       keys: [{ active: false }, { active: true, isWatchOnly: true }]
 
+    Wallet.status.isLoggedIn = true
+
     return
   )
 

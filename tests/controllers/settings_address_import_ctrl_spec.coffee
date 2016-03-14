@@ -28,6 +28,10 @@ describe "AddressImportCtrl", ->
         wallet:
           keys: []
 
+      Wallet.status = {
+        isLoggedIn: true
+      }
+
       scope = $rootScope.$new()
 
       $controller "AddressImportCtrl",
@@ -143,4 +147,3 @@ describe "AddressImportCtrl", ->
 
     it "should work with slashes", ->
       expect(scope.parseBitcoinUrl("bitcoin://1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")).toBe("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")
-

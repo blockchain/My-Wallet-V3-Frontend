@@ -32,6 +32,7 @@ describe "RequestCtrl", ->
 
       Wallet.status = {
         didInitializeHD: true
+        isLoggedIn: true
       }
 
       currency.conversions.EUR = { conversion: 400000 }

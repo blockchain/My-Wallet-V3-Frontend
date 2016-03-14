@@ -460,3 +460,14 @@ describe "walletServices", () ->
       Wallet.disableRememberTwoFactor((() -> ))
       expect(Wallet.settings.rememberTwoFactor).toEqual(false)
     )
+
+  describe "legacyAddresses()", ->
+    beforeEach ->
+      Wallet.status.isLoggedIn = true
+
+    it "should return an array of legacy addresses", ->
+      expect(Wallet.legacyAddresses()).toEqual([])
+
+    it "should be null if not logged in", ->
+      Wallet.status.isLoggedIn = false
+      expect(Wallet.legacyAddresses()).toBe(null)

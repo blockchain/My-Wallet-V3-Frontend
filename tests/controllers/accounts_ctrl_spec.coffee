@@ -19,6 +19,8 @@ describe "WalletNavigationCtrl", ->
         }
       }
 
+      Wallet.status.isLoggedIn = true
+
       scope = $rootScope.$new()
 
       $controller "WalletNavigationCtrl",

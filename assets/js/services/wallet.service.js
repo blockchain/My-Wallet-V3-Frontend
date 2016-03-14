@@ -277,7 +277,13 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       .then(proceed).catch(cancelSecondPasswordCallback);
   };
 
-  wallet.legacyAddresses = () => wallet.my.wallet.keys;
+  wallet.legacyAddresses = () => {
+    if(wallet.status.isLoggedIn) {
+      return wallet.my.wallet.keys
+    } else {
+      return null;
+    }
+  }
 
   let hdAddresses = {};
   wallet.hdAddresses = (accountIdx) => {
