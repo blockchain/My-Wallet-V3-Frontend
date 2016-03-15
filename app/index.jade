@@ -177,9 +177,21 @@ head
   
   <!-- @if PRODUCTION !>
   link(rel='stylesheet', href='css/application.css')
+  <!-- @endif -->
+
+body(ng-controller="AppCtrl", ui-view="body")
+  #blocket-loading
+    div
+      img.full(src="/img/blocket-full-4847e61888d2d3c9f33f14840f92783d1c91dea2.png")
+      img(src="/img/blocket-no-boosters-c3f2a027ddfdbbce8eba8fc5da84c65d89d14fbc.png")
+  noscript
+    img(src="/img/logo-bw.png")
+    h3 Please enable JavaScript to use the Blockchain Wallet
+
+  <!-- @if PRODUCTION !>
   script(src='js/application.min.js')  
   <!-- @endif -->
-  
+
   //- Whitelist by copying script from browser and putting it in a file 
   //- (including the last new line) and then run:
   //- cat script | openssl dgst -sha256 -binary | openssl enc -base64
@@ -192,8 +204,3 @@ head
         window.location = "https://blockchain.info/";
       }
     }
-
-body(ng-controller="AppCtrl", ui-view="body")
-  noscript
-    img(src="/img/logo-bw.png")
-    h3 Please enable JavaScript to use the Blockchain Wallet

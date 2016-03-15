@@ -321,9 +321,9 @@
   z-index: 10000;
   height: 100%;
   width: 100%;
-  opacity: 0;
-  top: -100%;
+  opacity: 1;
   left: 0;
+  top: 0;
   &.loading {
     top: 0;
     opacity: 1;
