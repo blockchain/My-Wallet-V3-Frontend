@@ -180,10 +180,14 @@ head
   <!-- @endif -->
 
 body(ng-controller="AppCtrl", ui-view="body")
-  #blocket-loading
+  
+  <!-- @if PRODUCTION !>
+  #blocket-loading.active
     div
       img.full(src="/img/blocket-full-4847e61888d2d3c9f33f14840f92783d1c91dea2.png")
       img(src="/img/blocket-no-boosters-c3f2a027ddfdbbce8eba8fc5da84c65d89d14fbc.png")
+  <!-- @endif -->  
+
   noscript
     img(src="/img/logo-bw.png")
     h3 Please enable JavaScript to use the Blockchain Wallet
