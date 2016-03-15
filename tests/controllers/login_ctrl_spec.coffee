@@ -1,5 +1,6 @@
 describe "LoginCtrl", ->
   scope = undefined
+  Alerts = undefined
 
   modal =
    open: (args) ->
@@ -12,6 +13,7 @@ describe "LoginCtrl", ->
    angular.mock.inject ($injector, $rootScope, $controller) ->
      Wallet = $injector.get("Wallet")
      WalletNetwork = $injector.get("WalletNetwork")
+     Alerts = $injector.get("Alerts")
 
      spyOn(WalletNetwork, "resendTwoFactorSms").and.callThrough()
 
@@ -24,10 +26,6 @@ describe "LoginCtrl", ->
        $stateParams: {}
        $uibModal: modal
 
-     return
-
-   return
-
   it "should login",  inject((Wallet) ->
     scope.uid = "user"
     scope.password = "pass"
@@ -35,8 +33,6 @@ describe "LoginCtrl", ->
     spyOn(Wallet, "login")
 
     scope.login()
-
-    return
   )
 
   it "should resend two factor sms", inject((Wallet, WalletNetwork) ->
@@ -47,6 +43,28 @@ describe "LoginCtrl", ->
 
     expect(WalletNetwork.resendTwoFactorSms).toHaveBeenCalled()
     expect(WalletNetwork.resendTwoFactorSms).toHaveBeenCalledWith("user")
-
-    return
   )
+
+  describe "browser detection", ->
+
+    beforeEach ->
+      spyOn(Alerts, 'displayError')
+      spyOn(Alerts, 'displayWarning')
+
+    it "should warn against an unknown browser", ->
+      scope.displayBrowserWarning('netscape')
+      expect(Alerts.displayWarning).toHaveBeenCalledWith('UNKNOWN_BROWSER')
+
+    it "should warn against IE", ->
+      scope.displayBrowserWarning('ie')
+      expect(Alerts.displayWarning).toHaveBeenCalledWith('WARN_AGAINST_IE')
+
+    it "should show an error when below minimum version", ->
+      scope.displayBrowserWarning('firefox')
+      expect(scope.disableLogin).toBe(true)
+      expect(Alerts.displayError).toHaveBeenCalledWith('MINIMUM_BROWSER')
+
+    it "should not show an error when above minimum version", ->
+      scope.displayBrowserWarning('chrome')
+      expect(scope.disableLogin).toBe(null)
+      expect(Alerts.displayError).not.toHaveBeenCalled()
