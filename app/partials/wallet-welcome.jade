@@ -54,30 +54,54 @@
                   img(src="img/legacy-video-placeholder-TEMP.png")
   //- END TEMP
 
-  .intro
-    .flex-justify.flex-center.flex-column
-      h4 It's Here
-      h1 The New Blockchain Wallet
-      div
-        span.type-h5(translate="SAFER")
-        span.type-h5  / 
-        span.type-h5(translate="FRIENDLIER")
-        span.type-h5  / 
-        span.type-h5(translate="EASIER")
-      .flex-justify.flex-center.flex-row
-        button(ui-sref="public.login-no-uid" translate="LOGIN")
-        button(ui-sref="public.signup" translate="SIGN_UP")
-  .welcome-wrapper
-    scroll-in-view(img="img/new-wallet-hero.jpg" shadow="true")  
-  scroll-in-view.blocket(img="img/blocket.png")
-  h3(translate="MOST_ADVANCED")
-  scroll-in-view.ios(img="img/ios-feature.png", transactions="true")
-  h3.type-h5
-    a(href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309?mt=8" target="_blank").type-h5 iOS
-    span &nbsp;&bull;
-    a(href="https://play.google.com/store/apps/details?id=piuk.blockchain.android&hl=en" target="_blank").type-h5  Android
-    span &nbsp;&bull;&nbsp;
-    a(ui-sref="public.login-no-uid" translate="WEB").type-h5  
+  .welcome-nav.flex-row.flex-between
+    .flex-center.flex-column.flex-justify
+      h3.thin(translate="I'm New To Bitcoin")
+      h4(translate="Why Use Bitcoin?")
+    .flex-center.flex-column.flex-justify
+      h3.thin(translate="I'm New To Bitcoin")
+      h4(translate="Why Use Bitcoin?")
+
+  .split.flex-row
+    .left
+      .welcome-wrapper
+        scroll-in-view(img="img/new-wallet-hero.jpg" shadow="true")  
+      scroll-in-view.blocket(img="img/blocket.png")
+      scroll-in-view.ios(img="img/ios-feature.png", transactions="true")
+    .right
+      uib-accordion(close-others="oneAtATime")
+        uib-accordion-group(heading="EASE OF USE")
+          h4(translate="Send and Receive bitcoin with ease")
+          p(translate="Loved by Users. Praised by Geeks. Recognized by the Press. We make using Bitcoin safe, simple, and fun. You can instantly transact with anyone in the world.")
+        uib-accordion-group(heading="EASE OF USE")
+          h4(translate="Send and Receive bitcoin with ease")
+          p(translate="Loved by Users. Praised by Geeks. Recognized by the Press. We make using Bitcoin safe, simple, and fun. You can instantly transact with anyone in the world.")
+        uib-accordion-group(heading="EASE OF USE")
+          h4(translate="Send and Receive bitcoin with ease")
+          p(translate="Loved by Users. Praised by Geeks. Recognized by the Press. We make using Bitcoin safe, simple, and fun. You can instantly transact with anyone in the world.")
+      div.apps
+        h3.black(translate="One wallet for all your devices")
+        a(href="")
+          img(src="img/app-store-badge.svg")
+        a.mlm(href="")
+          img(src="img/google-play-badge.png")
+  div.publications.flex-center.flex-around
+    a
+      img(src="img/logo-wsj.svg")
+    a
+      img.mid(src="img/logo-bloomberg.svg")
+    a
+      img(src="img/logo-nytimes.svg")
+    a
+      img.small(src="img/logo-techcrunch.svg")
+    a
+      img(src="img/logo-telegraph.svg")
+  .new-user.container-max-width.flex-justify.flex-center
+    .col-md-4
+      h3.thin(translate="New To Bitcoin?")
+      h4(translate="Why use it? What can you do with it? What is it?")
+      p(translate="At Blockchain we're dedicated to building the open future of money. We spend countless hours working on refining our technology to make Bitcoin easy to use for all, safe and secure.")
+    video.col-md-6(src="img/blockchain-ad.mp4" type="video/mp4" controls)
   div.squares
     div
       img(src="img/square.png")

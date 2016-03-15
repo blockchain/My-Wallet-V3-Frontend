@@ -1,31 +1,26 @@
 .welcome-page {
-  .intro {
-    margin: 80px auto;
-    @media (max-width: 768px) {
-      margin: 40px auto;
-    }
-    h1, h4, h3 {
-      color: $blue;
-      margin-top: 0px;
-      text-align: center;
-    }
-    h4 {
-      text-transform: uppercase;
-    }
-    button {
-      margin: 20px 5px 0px 5px;
-      text-transform: uppercase;
-      background: transparent;
-      min-width: 100px;
-      min-height: 40px;
-      color: $blue;
-      font-weight: 400;
-      border-radius: 5px;
-      border: 1px solid $pale-grey;
-      @include transition(background $slow);
-      &:hover {
-        background: #ebebeb;
-      }
+  img {
+    max-width: 100%;
+  }
+  h3.thin, .panel .accordion-toggle span {
+    color: $blue;
+    display: block;
+    font-size: 18px;
+    font-weight: 300;
+    margin: 0px 0px 5px 0px;
+    text-transform: uppercase;
+  }
+  h4 {
+    margin: 0px;
+    color: $blue;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .welcome-nav {
+    > div {
+      background: $light-grey;
+      height: 80px;
+      width: 49.8%;
     }
   }
   .welcome-wrapper {
@@ -36,27 +31,76 @@
       }
     }
   }
-  img {
-    max-width: 100%;
-  }
-  > h3 {
-    color: $blue;
-    line-height: 1.4;
-    max-width: 500px;
-    margin: 100px auto;
-    text-align: center;
-    @media (max-width: 768px) {
-      margin: 50px auto;
-    }
-    a {
-      font-weight: 400;
-      color: $steel;
-      &:hover {
-        color: $blue;
+  .split {
+    margin-top: 100px;
+    @media (min-width: 769px) {
+      .left {
+        width: 60%;
+      }
+      .right {
+        width: 40%;
+      }
+      .panel-group {
+        .panel {
+          z-index: 1;
+          max-width: 250px;
+          position: relative;
+          @media (max-width: 992px) {
+            margin: 0 auto;
+          }
+          h3, h4 {
+            margin: 0px;
+          }
+          h4 {
+            line-height: 1.4;
+          }
+          p {
+            line-height: 1.8;
+            margin: 30px 0px 60px 0px;
+          }
+        }
+        .panel-collapse {
+          height: 100% !important;
+          display: block !important;
+        }
       }
     }
-    span {
-      color: $steel;
+    @media (max-width: 768px) {
+      display: block !important;
+    }
+    .apps {
+      img {
+        max-width: 135px;
+      }
+    }
+  }
+  .publications {
+    background: $light-grey;
+    margin: 100px auto;
+    min-height: 200px;
+    img {
+      height: 100px;
+      width: 200px;
+      &.small {
+        width: 70px;
+      }
+      &.mid {
+        width: 100px;
+      }
+    }
+    @media (max-width: 768px) {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+    }
+  }
+  .new-user {
+    margin-bottom: 100px;
+    p {
+      line-height: 1.8;
+      margin: 30px 0px 60px 0px;
     }
   }
   .scroll-in-view {
@@ -65,8 +109,10 @@
       opacity: 0;
       top: 40px;
     .image-container {
+      max-width: 80%;
       position: relative;
       img {
+        width: 100%;
         max-width: 720px;
         transform: translateZ(0px);
         -webkit-transform: translateZ(0px);
@@ -98,8 +144,6 @@
           }
         }
       }
-    }
-    &.active {
       .tx {
         @include transition(top 1s);
         &:nth-child(1) {
@@ -165,11 +209,11 @@
   }
   .ios {
     .scroll-in-view {
-      overflow: hidden; 
+      margin-top: 150px;
+      overflow: visible; 
       .image-container {
-        @media (max-width: 768px) {
-          min-width: 720px;
-        }
+        max-width: 720px;
+        min-width: 720px;
       }
     }
   }
