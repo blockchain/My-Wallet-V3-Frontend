@@ -15,6 +15,8 @@ describe "SettingsAccountsController", ->
         addressBook: {}
       }
 
+      Wallet.status.isLoggedIn = true
+
       scope = $rootScope.$new()
 
       $controller "SettingsAccountsController",

@@ -24,6 +24,9 @@ describe "Contextual message directive", ->
         accounts: [{ archived: false }, { archived: false }, { archived: true }]
       }
     }
+
+    Wallet.status.isLoggedIn = true
+
     return
   )
 
@@ -35,7 +38,7 @@ describe "Contextual message directive", ->
     Wallet.status.needs2FA = false
     Wallet.user.isEmailVerified = false
 
-    element = $compile("<div style='height: 100px;'><contextual-message></contextual-message></div>")(scope)
+    element = $compile("<div><contextual-message></contextual-message></div>")(scope)
     scope.$apply()
 
   it "has a 2 preset messages", ->

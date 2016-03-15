@@ -17,7 +17,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
             
 .row
   .col-xs-12
-    table.accounts-container
+    table.accounts-container(ng-if="status.isLoggedIn")
       tr.responsive.width-100(
         ng-repeat="account in accounts() | filter:{label: searchText}"
       )

@@ -189,6 +189,13 @@ describe "walletServices", () ->
     return
 
   describe "total()", ->
+    beforeEach ->
+      Wallet.status.isLoggedIn = true
+
+    it "should return null if not logged in", ->
+      Wallet.status.isLoggedIn = false
+      expect(Wallet.total(0)).toEqual(null)
+
     describe "for an account", ->
 
       it "should return the balance", inject((Wallet) ->
@@ -453,3 +460,25 @@ describe "walletServices", () ->
       Wallet.disableRememberTwoFactor((() -> ))
       expect(Wallet.settings.rememberTwoFactor).toEqual(false)
     )
+
+  describe "legacyAddresses()", ->
+    beforeEach ->
+      Wallet.status.isLoggedIn = true
+
+    it "should return an array of legacy addresses", ->
+      expect(Wallet.legacyAddresses()).toEqual([])
+
+    it "should be null if not logged in", ->
+      Wallet.status.isLoggedIn = false
+      expect(Wallet.legacyAddresses()).toBe(null)
+
+  describe "accounts()", ->
+    beforeEach ->
+      Wallet.status.isLoggedIn = true
+
+    it "should return an array of accounts", ->
+      expect(Wallet.accounts()).toEqual([])
+
+    it "should be null if not logged in", ->
+      Wallet.status.isLoggedIn = false
+      expect(Wallet.accounts()).toBe(null)

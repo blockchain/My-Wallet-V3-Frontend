@@ -277,7 +277,13 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       .then(proceed).catch(cancelSecondPasswordCallback);
   };
 
-  wallet.legacyAddresses = () => wallet.my.wallet.keys;
+  wallet.legacyAddresses = () => {
+    if(wallet.status.isLoggedIn) {
+      return wallet.my.wallet.keys
+    } else {
+      return null;
+    }
+  }
 
   let hdAddresses = {};
   wallet.hdAddresses = (accountIdx) => {
@@ -693,6 +699,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
 
   wallet.accounts = () => {
+    if (!wallet.status.isLoggedIn) return null;
     if (wallet.my.wallet.hdwallet != null) {
       return wallet.my.wallet.hdwallet.accounts;
     } else {
@@ -701,7 +708,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
 
   wallet.total = (accountIndex) => {
-    if (wallet.my.wallet == null) return;
+    if (wallet.my.wallet == null || !wallet.status.isLoggedIn) return null;
     switch (accountIndex) {
       case '':
         if (wallet.my.wallet.isUpgradedToHD) {

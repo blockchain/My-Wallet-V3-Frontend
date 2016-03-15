@@ -13,7 +13,7 @@
         div.message-beacon.green(ng-show="requestBeacon")
         i.bc-icon-receive
         span(translate="REQUEST")
-      span.request(ng-click="request(true)" translate="YOUR_ADDRESS" ng-show="hasLegacyAddress")
+      span.request(ng-click="request(true)" translate="YOUR_ADDRESS" ng-show="hasLegacyAddress()")
   .heavy.pointer.flex-column.flex-align-end.right-align.pointer(ng-click="toggleDisplayCurrency()", ng-show="status.didUpgradeToHd")
     span(ng-show="getTotal(accountIndex) == null")
       h3
