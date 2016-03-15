@@ -75,7 +75,7 @@ function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNet
     const error = (field, message) => {
       $scope.busy = false;
       if (field === "uid") {
-        $scope.errors.uid = message;
+        $scope.errors.uid = 'UNKNOWN_IDENTIFIER';
       } else if (field === "password") {
         $scope.errors.password = message;
       } else if (field === "twoFactor") {

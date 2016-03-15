@@ -373,6 +373,7 @@
   "CLICK_HERE_TO_CREATE_WALLET" : "create a wallet",
   "RESEND" : "Resend",
   "FIND_GUID_EXPLAIN" : "Find the login link in your email, e.g. <i>blockchain.info/wallet/1111-222-333...</i> The series of numbers and dashes at the end of the link is your Login ID.",
+  "UNKNOWN_IDENTIFIER" : "Unknown wallet identifier. <span class='underline pointer'>Click here</span> if you need a reminder.",
   "WELCOME_BACK" : "Welcome back",
   "LOGIN_BELOW" : "Sign in to your wallet below",
   "HOME" : "Home",
