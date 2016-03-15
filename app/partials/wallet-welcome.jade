@@ -1,5 +1,30 @@
 .welcome-page
   public-header
+  .quickstart.legacy
+        #intro-header.container
+          .row-fluid
+            .span4.col.hidden-phone
+              h6 New Users
+              p
+                | Creating a new bitcoin wallet takes literally a few seconds. You will be able to send and receive payments immediately.
+            .span4.col
+              h6 Existing Users
+              p If you have previously created a My Wallet account click below to login.
+            .span4.col.hidden-phone
+              h6 Help And Support
+              p
+                | Please consult the FAQ for commonly asked questions. For any problems with the site, please contact us.
+          .row-fluid
+            .span4.col.hidden-phone
+              p
+                a.btn.btn-primary(href='/wallet/new') Start A New Wallet
+            .span4.col
+              p
+                a.btn.btn-primary(href='/wallet/login') Login Now
+            .span4.col.hidden-phone
+              p
+                a.btn.btn-info(href='/wallet/support-pages') Support Pages
+
   .intro
     .flex-justify.flex-center.flex-column
       h4 It's Here
