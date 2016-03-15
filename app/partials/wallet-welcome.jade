@@ -1,29 +1,58 @@
 .welcome-page
   public-header
-  .quickstart.legacy
-        #intro-header.container
-          .row-fluid
-            .span4.col.hidden-phone
-              h6 New Users
+  //- TEMP
+  .legacy
+    .quickstart
+      #intro-header.container
+        .row-fluid
+          .span4.col.hidden-phone
+            h6 New Users
+            p
+              | Creating a new bitcoin wallet takes literally a few seconds. You will be able to send and receive payments immediately.
+          .span4.col
+            h6 Existing Users
+            p If you have previously created a My Wallet account click below to login.
+          .span4.col.hidden-phone
+            h6 Help And Support
+            p
+              | Please consult the FAQ for commonly asked questions. For any problems with the site, please contact us.
+        .row-fluid
+          .span4.col.hidden-phone
+            p
+              a.btn.btn-primary(ui-sref="public.signup") Start A New Wallet
+          .span4.col
+            p
+              a.btn.btn-primary(ui-sref="public.login-no-uid") Login Now
+          .span4.col.hidden-phone
+            p
+              a.btn.btn-info(href='https://blockchain.zendesk.com' target="_blank") Support Pages
+  .legacy
+    .container
+      .page-header
+        h1
+          | My Wallet 
+          small Be Your Own Bank®.
+          span.hidden-phone.small-pull-right
+            | Confused? Read the 
+            a(href='https://blockchain.zendesk.com' target="_blank") Beginners FAQ
+            |  - 
+            a(href='https://blockchain.info/wallet/how-it-works') How It Works
+  .legacy
+    .container
+      .row-fluid
+            .span6
               p
-                | Creating a new bitcoin wallet takes literally a few seconds. You will be able to send and receive payments immediately.
-            .span4.col
-              h6 Existing Users
-              p If you have previously created a My Wallet account click below to login.
-            .span4.col.hidden-phone
-              h6 Help And Support
+                img(src='/img/blockchain-legacy-rubiks-TEMP.png').img-inline
+                | My Wallet is a free online bitcoin wallet, which you can use to make worldwide payments for free. We make paying with bitcoins easy and secure available anywhere on your phone or desktop.
               p
-                | Please consult the FAQ for commonly asked questions. For any problems with the site, please contact us.
-          .row-fluid
-            .span4.col.hidden-phone
+                | We are not a bank; you retain complete ownership of your Money. We cannot view your balance, see your transactions or make payments on your behalf.
+              p(align='center')
+                a.btn.btn-success(ui-sref="public.signup") Create My Free Wallet
+            .span6
               p
-                a.btn.btn-primary(href='/wallet/new') Start A New Wallet
-            .span4.col
-              p
-                a.btn.btn-primary(href='/wallet/login') Login Now
-            .span4.col.hidden-phone
-              p
-                a.btn.btn-info(href='/wallet/support-pages') Support Pages
+                a#youtube-preview(href='https://www.youtube.com/watch?v=Um63OQz3bjo' target="_blank")
+                  img(src="img/legacy-video-placeholder-TEMP.png")
+  //- END TEMP
 
   .intro
     .flex-justify.flex-center.flex-column

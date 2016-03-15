@@ -14,6 +14,15 @@
 
 .legacy {
    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+
+   .container {
+      min-width: 300px;
+      width: auto;
+      max-width: 1180px;
+      padding-left: 10px;
+      padding-right: 10px;
+   }
+
    .quickstart {
       background-color: #f5f5f5;
       background-repeat: repeat-x;
@@ -31,9 +40,34 @@
 
       .col {
          padding: 5px;
+         padding-top: 10px;
          text-align: center;
          border-left: 1px solid #eee;
          box-shadow: inset 1px 0 0 #f9f9f9;
       }
+   }
+
+   .small-pull-right {
+      float:right;
+      font-size:13px;
+      font-weight:normal;
+   }
+
+   .img-inline {
+      display:inline;
+      float:left;
+      padding:5px;
+   }
+
+   .span6 {
+      .btn-success {
+         margin: 5px auto;
+      }
+   }
+}
+
+.welcome-page {
+   .navbar {
+      margin-bottom: 0px;
    }
 }
