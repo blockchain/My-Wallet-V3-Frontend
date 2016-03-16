@@ -18,11 +18,11 @@
         p
           label(translate="YOUR_PRIVATE_KEY") 
           span : {{ privKeys[format] }}
-        .form-group.row
-          label.pts.col-lg-4.col-md-12
+        .flex-row.flex-center
+          label.prs
             span(translate="PK_FORMAT")
             |:
-          .col-lg-8.col-md-12
+          .flex-2
             ui-select(ng-model="$parent.format")
               ui-select-match
                 span {{ $select.selected }}
