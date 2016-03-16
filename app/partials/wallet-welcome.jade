@@ -54,12 +54,12 @@ blocket-loading
   //- END TEMP
 
   .welcome-nav.flex-row.flex-between
-    .flex-center.flex-column.flex-justify
-      h3.thin(translate="I'm New To Bitcoin")
-      h4(translate="Why Use Bitcoin?")
-    .flex-center.flex-column.flex-justify
-      h3.thin(translate="I'm New To Bitcoin")
-      h4(translate="Why Use Bitcoin?")
+    .flex-center.flex-column.flex-justify(ng-click="scroll('newUser')")
+      h3.thin(translate="NEW_TO_BITCOIN")
+      h4(translate="WHY_USE")
+    .flex-center.flex-column.flex-justify(ng-click="scroll('experiencedUser')")
+      h3.thin(translate="EXPERIENCED_USER")
+      h4(translate="WHY_USE_BLOCKCHAIN")
 
   .split.flex-row
     .left
@@ -95,7 +95,7 @@ blocket-loading
       img.small(src="img/logo-techcrunch.svg")
     a(uib-popover="Here" popover-trigger="mouseenter" popover-class="clean-popover" href="https://www.google.com" target="_blank")
       img(src="img/logo-telegraph.svg")
-  .new-user.container-max-width.flex-justify.flex-center
+  #newUser.container-max-width.flex-justify.flex-center
     .col-md-4
       h3.thin(translate="New To Bitcoin?")
       h4(translate="Why use it? What can you do with it? What is it?")
@@ -122,7 +122,7 @@ blocket-loading
       div.background
       div.donut
       p.type-h4(translate="UPGRADE_FUND_MANAGEMENT")
-  .container-max-width.android
+  #experiencedUser.container-max-width
     .flex-row.flex-top.flex-between
       scroll-in-view.flex-1(img="img/android-feature.jpg")
       ul.flex-1

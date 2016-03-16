@@ -618,5 +618,9 @@
   "CONVERSION_RATES": "20+ currency conversion rates",
   "LANGUAGES_FEAT": "25+ languages",
   "SECOND_PASSWORD_PROTECTION": "Second password protection",
-  "LOGIN_IP_RESTRICTION": "Login IP restriction"
+  "LOGIN_IP_RESTRICTION": "Login IP restriction",
+  "NEW_TO_BITCOIN": "I'm new to bitcoin",
+  "WHY_USE": "Why use Bitcoin?",
+  "EXPERIENCED_USER": "Experienced bitcoin user",
+  "WHY_USE_BLOCKCHAIN": "Why use Blockchain?"
 }

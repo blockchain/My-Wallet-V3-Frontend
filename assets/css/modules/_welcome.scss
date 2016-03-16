@@ -19,6 +19,7 @@
   .welcome-nav {
     > div {
       background: $light-grey;
+      cursor: pointer;
       height: 80px;
       width: 49.8%;
     }
@@ -76,7 +77,7 @@
   }
   .publications {
     background: $light-grey;
-    margin: 100px auto;
+    margin-top: 100px;
     position: relative;
     min-height: 200px;
     img {
@@ -103,8 +104,8 @@
       }
     }
   }
-  .new-user {
-    margin-bottom: 100px;
+  #newUser {
+    padding: 100px 0;
     p {
       line-height: 1.8;
       margin: 30px 0px 60px 0px;
@@ -224,11 +225,11 @@
       }
     }
   }
-  .android {
+  #experiencedUser {
     font-size: 14px;
-    margin: 60px auto;
+    padding: 60px 0;
     @media (max-width: 768px) {
-      margin: 40px auto;
+      padding: 40px 0;
     }
     h2, h3 {
       margin: 0px;
