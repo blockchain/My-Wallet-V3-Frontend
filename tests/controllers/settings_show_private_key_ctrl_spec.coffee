@@ -15,11 +15,15 @@ describe "ShowPrivateKeyCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
 
       MyWallet = $injector.get('MyWallet')
+      MyWalletHelpers = $injector.get('MyWalletHelpers')
       Wallet = $injector.get('Wallet')
 
       MyWallet.wallet = {
         getPrivateKeyForAddress: (-> )
       }
+
+      MyWalletHelpers.detectPrivateKeyFormat = () -> 'base58'
+      MyWalletHelpers.privateKeyStringToKey = () -> { toWIF: (->) }
 
       scope = $rootScope.$new()
 
@@ -40,7 +44,6 @@ describe "ShowPrivateKeyCtrl", ->
   it "should have scope variables defined", () ->
     expect(scope.address).toBeDefined()
     expect(scope.balance).toBeDefined()
-    expect(scope.privKey).toBeDefined()
 
   it "should be dismissed", ->
     spyOn(modalInstance, "dismiss")

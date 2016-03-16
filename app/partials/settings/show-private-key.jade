@@ -7,17 +7,27 @@
   div(ng-show="accessAllowed")
     .row
       .col-sm-4.col-md-3
-        qr(text="privKey" size=120 correction-level="'M'")
+        qr(text="privKeys[format]" size="120" correction-level="'M'")
       .col-sm-12.col-md-8
         p
           label(translate="ADDRESS")
           span : {{ address }}
         p
           label(translate="BALANCE")
-          span : {{ balance | toBitCurrency:settings.btcCurrency }}
+          span : {{ balance | convert }}
         p
           label(translate="YOUR_PRIVATE_KEY") 
-          span : {{ privKey }}
+          span : {{ privKeys[format] }}
+        .form-group.row
+          label.pts.col-lg-4.col-md-12
+            span(translate="PK_FORMAT")
+            |:
+          .col-lg-8.col-md-12
+            ui-select(ng-model="$parent.format")
+              ui-select-match
+                span {{ $select.selected }}
+              ui-select-choices(repeat="fmt in formats")
+                span {{ fmt }}
 .modal-footer
   button.button-default.mrm(ng-click="close()", translate="CLOSE")
   button.button-primary(ng-hide="accessAllowed" ng-click="tryContinue()" translate="CONTINUE")
