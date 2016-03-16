@@ -368,7 +368,7 @@
   z-index: 10000;
   height: 100%;
   width: 100%;
-  opacity: 0;
+  opacity: 1;
   left: 0;
   top: 0;
   &.active {
@@ -380,7 +380,6 @@
     top: 0;
     opacity: 1;
     overflow: hidden;
-    @include transition(opacity 0s, top 0s);
   }
   > div {
     -webkit-transform: translate(-50%, -50%);
@@ -417,6 +416,8 @@
       transition:        opacity 0.8s, transform 0.5s;
     }
     &.orbit {
+      top: -100%;
+      @include transition(top 0.3s 0.5s);
       > div {
         transform: translate(-50%, -300%);
         @include transition(transform 0.5s);
