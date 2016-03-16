@@ -601,5 +601,22 @@
   "NO_UNSPENT_OUTPUTS" : "Missing coins to spend",
   "BELOW_DUST_THRESHOLD" : "{{ amount  }} must be above dust threshold ({{ threshold }} Satoshis)",
   "STRANGE_SCRIPT" : "Strange Script",
-  "CANNOT_DECODE_OUTPUT_ADDRESS" : "Unable to decode output address from transaction hash {{ tx_hash }}"
+  "CANNOT_DECODE_OUTPUT_ADDRESS" : "Unable to decode output address from transaction hash {{ tx_hash }}",
+  "HD_ARCH": "Hierarchical deterministic address architecture:",
+  "PRIVACY_IN_MIND": "We have your privacy in mind which is why we use HD addresses to avoid address reuse for increased privacy.",
+  "SECURITY_AUDITS": "Successful security audits by world-class researchers:",
+  "AES_ENCRYPTION": "Blockchain.info uses industry standard AES encryption to protect your wallet from thieves and hackers.",
+  "CLIENT_SIDE": "Client side encryption:",
+  "CLIENT_SIDE_ENCRYPTION": "The amazing part is the encryption is all done within your browser, before it is saved on our servers, so not even we have access to your account. This puts our users firmly in control of their funds.",
+  "OPEN_SOURCE": "Open source:",
+  "OPEN_SOURCE_DES": "All code related to the wallet service is open source.",
+  "DYN_TX_FEE_ADJ": "Dynamic transaction fee adjustmets:",
+  "DYN_TX_FEE_ADJ_DES": "We take care of adjusting the fees for you, based on the current network conditions. And as always, you're in control: custom fees.",
+  "INTEROP": "Interoperability:",
+  "INTEROP_DES": "It's easy to transition to another service if you choose to.",
+  "OTHER_FEATURES": "Other features:",
+  "CONVERSION_RATES": "20+ currency conversion rates",
+  "LANGUAGES_FEAT": "25+ languages",
+  "SECOND_PASSWORD_PROTECTION": "Second password protection",
+  "LOGIN_IP_RESTRICTION": "Login IP restriction"
 }

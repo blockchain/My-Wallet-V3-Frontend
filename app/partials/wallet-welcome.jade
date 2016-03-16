@@ -50,9 +50,7 @@ blocket-loading
               p(align='center')
                 a.btn.btn-success(ui-sref="public.signup") Create My Free Wallet
             .span6
-              p
-                a#youtube-preview(href='https://www.youtube.com/watch?v=Um63OQz3bjo' target="_blank")
-                  img(src="img/legacy-video-placeholder-TEMP.png")
+              video-container(img="img/legacy-video-placeholder-TEMP.png" video="img/legacy-what-is-bitcoin-TEMP.mp4")
   //- END TEMP
 
   .welcome-nav.flex-row.flex-between
@@ -102,7 +100,7 @@ blocket-loading
       h3.thin(translate="New To Bitcoin?")
       h4(translate="Why use it? What can you do with it? What is it?")
       p(translate="At Blockchain we're dedicated to building the open future of money. We spend countless hours working on refining our technology to make Bitcoin easy to use for all, safe and secure.")
-    video.col-md-6(src="img/blockchain-ad.mp4" type="video/mp4" controls)
+    video-container.col-md-6(img="img/blockchain-ad-placeholder.jpg" video="img/blockchain-ad.mp4")
   div.squares
     div
       img(src="img/square.png")
@@ -124,11 +122,42 @@ blocket-loading
       div.background
       div.donut
       p.type-h4(translate="UPGRADE_FUND_MANAGEMENT")
-  .welcome-wrapper.android
-    .flex-row.flex-justify.flex-center
-      scroll-in-view.col-md-6(img="img/android-feature.jpg")
-      .flex-column
-        h2(translate="SENDING")
-        h3(translate="BUILD_TEST")
+  .container-max-width.android
+    .flex-row.flex-top.flex-between
+      scroll-in-view.flex-1(img="img/android-feature.jpg")
+      ul.flex-1
+        li
+          span.heavy(translate="HD_ARCH") 
+          |  
+          span(translate="PRIVACY_IN_MIND")
+        li
+          span.heavy(translate="SECURITY_AUDITS")
+          |  
+          span(translate="AES_ENCRYPTION")
+        li
+          span.heavy(translate="CLIENT_SIDE")
+          |  
+          span(translate="CLIENT_SIDE_ENCRYPTION")
+      ul.flex-1
+        li
+          span.heavy(translate="OPEN_SOURCE") 
+          |  
+          span(translate="OPEN_SOURCE_DES")
+        li
+          span.heavy(translate="DYN_TX_FEE_ADJ")
+          |  
+          span(translate="DYN_TX_FEE_ADJ_DES")
+        li
+          span.heavy(translate="INTEROP")
+          |  
+          span(translate="INTEROP_DES")
+        li
+          span.heavy(translate="OTHER_FEATURES")
+          |  
+          p(translate="CONVERSION_RATES")
+          p(translate="LANGUAGES_FEAT")
+          p(translate="WATCH_ONLY")
+          p(translate="SECOND_PASSWORD_PROTECTION")
+          p(translate="LOGIN_IP_RESTRICTION")
   a(ui-sref="public.login-no-uid")
     img.footer-hero(src="img/footer-hero.jpg")

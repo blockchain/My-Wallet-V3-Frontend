@@ -193,7 +193,7 @@
     }
   }
   .blocket {
-    .scroll-in-view {
+    &.scroll-in-view {
       &.active {
         @include transition-delay(.5s);
       }
@@ -215,7 +215,7 @@
     }
   }
   .ios {
-    .scroll-in-view {
+    &.scroll-in-view {
       margin-top: 150px;
       overflow: visible; 
       .image-container {
@@ -225,6 +225,7 @@
     }
   }
   .android {
+    font-size: 14px;
     margin: 60px auto;
     @media (max-width: 768px) {
       margin: 40px auto;
@@ -237,6 +238,21 @@
     }
     h3 {
       font-weight: 400;
+    }
+    ul {
+      padding: 0px;
+      max-width: 300px;
+      li {
+        list-style: none;
+        line-height: 1.8;
+        margin-bottom: 30px;
+        span.heavy {
+          font-weight: 600;
+        }
+        p {
+          line-height: 1.2;
+        }
+      }
     }
     > div {
       > div {
@@ -414,11 +430,33 @@
     }
     &.orbit {
       top: -100%;
-      @include transition(top 0.3s 0.5s);
+      @include transition(top 0.3s 0.2s);
       > div {
         transform: translate(-50%, -500%);
         @include transition(transform 0.5s);
       }
     }
   }
+}
+
+// should probably move this to a component
+.video-container {
+  position: relative;
+  img {
+    z-index: 1;
+    opacity: 1;
+    position: relative;
+    @include transition(opacity $slow);
+    &.transparent {
+      opacity: 0;
+    }
+  }
+  video {
+    position: absolute;
+    padding: 0px;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+  } 
 }
