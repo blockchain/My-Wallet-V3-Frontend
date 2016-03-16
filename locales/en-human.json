@@ -576,7 +576,7 @@
   "SIGN_UP": "Sign Up",
   "MOST_ADVANCED": "The most advanced Blockchain wallet experience, now even more so.",
   "WEB": "Web",
-  "REVAMPED": "Revamped design and user experience",
+  "FUN_AND_INSIGHTFUL": "Fun and insightful bitcoin news and facts",
   "SENDING": "Sending and receiving Bitcoin has never been so easy",
   "BUILD_TEST": "We've taken our time to build and test the most user-friendly interface for our wallet.",
   "SETTING_SELECT_ERR": "Failed to change setting to {{ setting }}",
@@ -622,5 +622,6 @@
   "NEW_TO_BITCOIN": "I'm new to bitcoin",
   "WHY_USE": "Why use Bitcoin?",
   "EXPERIENCED_USER": "Experienced bitcoin user",
-  "WHY_USE_BLOCKCHAIN": "Why use Blockchain?"
+  "WHY_USE_BLOCKCHAIN": "Why use Blockchain?",
+  "ACTIVITY_FEED": "Organized activity feed"
 }
