@@ -65,7 +65,6 @@ head
   script(src='build/js/browser-polyfill.js')
   script(src='build/js/app.js')
   script(src='build/js/translations.js')
-  script(src='build/js/directives/blocket-loading.directive.js')
   
   script(src='build/js/controllers/accountForm.controller.js')
   script(src='build/js/controllers/revealXpub.controller.js')
@@ -155,6 +154,7 @@ head
   script(src='build/js/directives/public-header.directive.js')
   script(src='build/js/directives/async-select.directive.js')
   script(src='build/js/directives/qr-scan.directive.js')
+  script(src='build/js/directives/blocket-loading.directive.js')
   
   script(src='build/js/services/wallet.service.js')
   script(src='build/js/services/securityCenter.service.js')
@@ -181,8 +181,9 @@ head
 
 body(ng-controller="AppCtrl", ui-view="body")
   
+  //- This does not depend on Angular and will show as soon as the images are done loading.
   <!-- @if PRODUCTION !>
-  #blocket-loading.active
+  .blocket-loading
     div
       img.full(src="/img/blocket-full-4847e61888d2d3c9f33f14840f92783d1c91dea2.png")
       img(src="/img/blocket-no-boosters-c3f2a027ddfdbbce8eba8fc5da84c65d89d14fbc.png")
@@ -192,6 +193,7 @@ body(ng-controller="AppCtrl", ui-view="body")
     img(src="/img/logo-bw.png")
     h3 Please enable JavaScript to use the Blockchain Wallet
 
+  //- Load application.min.js in the body async.
   <!-- @if PRODUCTION !>
   script(src='js/application.min.js')  
   <!-- @endif -->

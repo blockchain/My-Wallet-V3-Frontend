@@ -20,24 +20,9 @@ describe "Blocket loading directive", ->
     isoScope = element.isolateScope()
     isoScope.$digest()
 
-  it "should wait at least 500ms before revealing itself", inject(($timeout) ->
+  it "should engage liftoff", inject(($timeout) ->
+    isoScope.docIsReady()
     $timeout.flush()
-    expect(isoScope.timeout).toBe(true)
-    expect(isoScope.windowLoading).toBe(true)
+    expect(isoScope.liftoff).toBe(true)
+    expect(isoScope.orbiting).toBe(true)
   )
-
-  describe "docIsReady", ->
-
-    it "should return if wait time isnt long enough", ->
-      isoScope.docIsReady()
-      expect(isoScope.liftoff).toBe(undefined)
-      expect(isoScope.hide).toBe(true)
-
-    it "should engage liftoff if wait is too long", inject(($timeout) ->
-      isoScope.timeout = true
-      isoScope.docIsReady()
-      $timeout.flush()
-      expect(isoScope.liftoff).toBe(true)
-      expect(isoScope.orbiting).toBe(true)
-      expect(isoScope.windowLoading).toBe(false)
-    )

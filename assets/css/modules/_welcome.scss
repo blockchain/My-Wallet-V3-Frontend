@@ -361,7 +361,7 @@
   }
 }
 
-#blocket-loading {
+.blocket-loading {
   @include transition(top 0.7s 0.3s, opacity 0s 1s);
   background-color: $blue;
   position: fixed;
@@ -371,16 +371,6 @@
   opacity: 1;
   left: 0;
   top: 0;
-  &.active {
-    @include transition(top 0s, opacity 1s);
-    opacity: 1;
-    top: 0;
-  }
-  &.loading {
-    top: 0;
-    opacity: 1;
-    overflow: hidden;
-  }
   > div {
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
@@ -419,7 +409,7 @@
       top: -100%;
       @include transition(top 0.3s 0.5s);
       > div {
-        transform: translate(-50%, -300%);
+        transform: translate(-50%, -500%);
         @include transition(transform 0.5s);
       }
     }
