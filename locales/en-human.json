@@ -623,5 +623,14 @@
   "WHY_USE": "Why use Bitcoin?",
   "EXPERIENCED_USER": "Experienced bitcoin user",
   "WHY_USE_BLOCKCHAIN": "Why use Blockchain?",
-  "ACTIVITY_FEED": "Organized activity feed"
+  "ACTIVITY_FEED": "Organized activity feed",
+  "NEW_USER": "New to bitcoin?",
+  "WHY_BITCOIN": "Why use it? What can you do with it? What is it?",
+  "BLOCKCHAIN_MISSION": "Bitcoin is great if you need to send money overseas or want to buy something online. There are hundreds of thousands of merchants that accept Bitcoin around the world, and because the fees are so low, you can often get great discounts when you choose to pay with Bitcoin instead of your credit card.",
+  "SEND_AND_RECEIVE": "Send and Receive bitcoin with ease",
+  "LOVED_BY_ALL": "Loved by Users. Praised by Geeks. Recognized by the Press. We make using Bitcoin safe, simple, and fun. You can instantly transact with anyone in the world.",
+  "IN_CONTROL": "You stay in control",
+  "ACCESS_TO_BITCOINS": "With Blockchain, you are the only one who has access to your bitcoins. Your wallet can never be seized or blocked.",
+  "PROTECTING_FUNDS": "Protecting your funds from unauthorized access",
+  "STATE_OF_THE_ART_SEC": "A state of the art Security Center to help protect your funds from unauthorized access. We'll help you secure your wallet with a ste-by-step guide. Advanced Two Factor Authentication keeps the bad guys out via Google Authenticator, SMS, or Yubikey."
 }
