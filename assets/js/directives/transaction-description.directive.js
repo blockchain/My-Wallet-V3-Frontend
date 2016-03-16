@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .directive('transactionDescription', transactionDescription);
 
-function transactionDescription($translate, $rootScope, Wallet, $compile, $sce) {
+function transactionDescription($translate, Wallet) {
   const directive = {
     restrict: 'E',
     replace: false,
@@ -17,13 +17,24 @@ function transactionDescription($translate, $rootScope, Wallet, $compile, $sce) 
   return directive;
 
   function link(scope, elem, attrs) {
-    scope.getAction = (txType) => {
+    scope.getTxDirection = (txType) => {
       if (txType === 'sent')      return 'SENT';
       if (txType === 'received')  return 'RECEIVED_BITCOIN_FROM';
       if (txType === 'transfer')  return 'MOVED_BITCOIN_TO';
     };
 
-    scope.getLabels = (tx) => {
+    scope.getTxClass = (txType) => {
+      if (txType === 'sent')      return 'outgoing_tx';
+      if (txType === 'received')  return 'incoming_tx';
+      if (txType === 'transfer')  return 'local_tx';
+    };
+
+    scope.getTxWatchOnly = (tx) => {
+      return ((tx.txType === 'received' || tx.txType === 'transfer') && tx.toWatchOnly) ||
+              (tx.txType === 'sent' && tx.fromWatchOnly);
+    };
+
+    scope.getTxLabels = (tx) => {
       if (!tx || !tx.processedInputs || !tx.processedOutputs) return;
 
       let formatted = Wallet.formatTransactionCoins(tx);
@@ -44,6 +55,11 @@ function transactionDescription($translate, $rootScope, Wallet, $compile, $sce) 
         secondary: scope.secondaryLabel = outputsLabel
       });
     };
+
+    scope.txDirection = scope.getTxDirection(scope.tx.txType);
+    scope.txClass = scope.getTxClass(scope.tx.txType);
+    scope.txWatchOnly = scope.getTxWatchOnly(scope.tx);
+    scope.txLabels = scope.getTxLabels(scope.tx);
 
     scope.$watch('search', (search) => {
       if (search == null) return;

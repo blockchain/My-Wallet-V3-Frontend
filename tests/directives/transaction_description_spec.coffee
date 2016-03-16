@@ -42,8 +42,27 @@ describe "Transaction Description Directive", ->
     $rootScope.$digest()
     isoScope = element.isolateScope()
 
-  it "should include incoming_tx class", ->
-    expect(element.html()).toContain 'incoming_tx'
+  describe "getTxDirection", ->
+
+    it "should have correct translation when sent", ->
+      expect(isoScope.getTxDirection('sent')).toEqual('SENT')
+
+    it "should have correct translation when received", ->
+      expect(isoScope.getTxDirection('received')).toEqual('RECEIVED_BITCOIN_FROM')
+
+    it "should have correct translation when transferred", ->
+      expect(isoScope.getTxDirection('transfer')).toEqual('MOVED_BITCOIN_TO')
+
+  describe "getTxClass", ->
+
+    it "should return outgoing_tx class when sent", ->
+      expect(isoScope.getTxClass('sent')).toEqual('outgoing_tx')
+
+    it "should return incoming_tx class when received", ->
+      expect(isoScope.getTxClass('received')).toEqual('incoming_tx')
+
+    it "should return local_tx class when transferred", ->
+      expect(isoScope.getTxClass('transfer')).toEqual('local_tx')
 
   it "should have the transaction in its scope", ->
     expect(isoScope.tx.hash).toBe("tx_hash")
