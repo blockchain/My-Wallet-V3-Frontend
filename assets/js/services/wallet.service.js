@@ -81,10 +81,10 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
 
   // If a custom apiDomain is set by index.jade:
   //                             Grunt can replace this:
-  const customApiDomain = $rootScope.apiDomain || "https://api.blockchain.info";
+  const customApiDomain = $rootScope.apiDomain || "https://api.blockchain.info/";
   $rootScope.apiDomain = customApiDomain;
   if(customApiDomain) {
-    wallet.rng.URL=customApiDomain + "/v2/randombytes";
+    wallet.api.API_ROOT_URL=customApiDomain;
   }
 
   // These are set by grunt dist:
