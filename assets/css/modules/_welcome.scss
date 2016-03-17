@@ -282,7 +282,7 @@
   }
   .carousel {
     .carousel-inner {
-      min-height: 270px;
+      min-height: 335px;
       position: relative;
       .item {
         top: 0;
@@ -309,25 +309,49 @@
             -webkit-transition: opacity $slow, transform $slow !important;
           }
         }
-      }
-      p {
-        @media (min-width: 799px) {
-          max-width: 600px;
-        }
-        font-size: 24px;
-        position: relative;
-        font-family: 'Serif';
-        &:before {
-          top: -5px;
-          left: -35px;
-          content: '';
-          width: 35px;
-          height: 35px;
-          display: block;
-          position: absolute;
-          background-size: contain;
-          background-repeat: no-repeat;
-          background-image: url("../img/quote-icon.svg");
+        > div {
+          position: relative;
+          @media (min-width: 799px) {
+            max-width: 600px;
+            margin: 0 auto;
+          }
+          img {
+            display: block;
+            max-height: 40px;
+            margin: 20px auto;
+          }
+          p {
+            font-size: 24px;
+            position: relative;
+            font-family: 'Serif';
+            &:before {
+              top: -5px;
+              left: -35px;
+              content: '';
+              width: 25px;
+              height: 25px;
+              display: block;
+              position: absolute;
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-image: url("../img/quote-icon.svg");
+            }
+          }
+          span {
+            font-style: italic;
+            position: absolute;
+            font-size: 14px;
+            color: $text;
+            right: -50px;
+            bottom: 0px;
+            &:before {
+              content: '-'
+            }
+            a {
+              color: $text;
+              text-decoration: underline;
+            }
+          }
         }
       }
     }

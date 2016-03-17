@@ -84,21 +84,6 @@ blocket-loading
           img(src="img/app-store-badge.svg")
         a.mlm(href="")
           img(src="img/google-play-badge.png")
-  div.publications.flex-center.flex-around
-    a(uib-popover="...bitcoin...could allow billions of people currently excluded from banking systems to directly send and receive money electronically." popover-trigger="click" popover-class="clean-popover" href="http://on.wsj.com/1u5CFZF" target="_blank")
-      img(src="img/logo-wsj.svg")
-
-    a(uib-popover="Blank" popover-trigger="mouseenter" popover-class="clean-popover" href="http://bloom.bg/1uA5txr" target="_blank")
-      img.mid(src="img/logo-bloomberg.svg")
-
-    a(uib-popover="Blockchain is far and away an early leader in Bitcoin. They’re actually enabling the entire ecosystem." popover-trigger="mouseenter" popover-class="clean-popover" href="http://nyti.ms/1sfHj9b" target="_blank")
-      img(src="img/logo-nytimes.svg")
-
-    a(uib-popover="At a larger scale, as Blockchain is developing the most popular wallet apps in the world, it has the opportunity to improve how transactions are handled" popover-trigger="mouseenter" popover-class="clean-popover" href="http://techcrunch.com/2014/07/19/blockchain-releases-new-android-wallet-app-to-put-bitcoin-into-everyones-hands/" target="_blank")
-      img.small(src="img/logo-techcrunch.svg")
-
-    a(uib-popover='"Consumers are being offered much greater control and freedom with their money…" [Richard] Branson, founder of Virgin Group Ltd., said.' popover-trigger="mouseenter" popover-class="clean-popover" href="http://bit.ly/1sdIEzZ" target="_blank")
-      img(src="img/logo-telegraph.svg")
   #newUser.container-max-width.flex-justify.flex-center
     .col-md-4
       h3.thin(translate="NEW_TO_BITCOIN")
@@ -163,17 +148,51 @@ blocket-loading
           p(translate="WATCH_ONLY")
           p(translate="SECOND_PASSWORD_PROTECTION")
           p(translate="LOGIN_IP_RESTRICTION")
-  uib-carousel(active="active")
+  uib-carousel(active="active" interval="5000")
     h4(translate="Loved by Users. Praised by Geeks. Recognized by the Press.")
     uib-slide(index="0")
-      p(translate="I definitely see why you guys are raved about by the Bitcoin community! Thanks again!")
+      div
+        p(translate="I definitely see why you guys are raved about by the Bitcoin community! Thanks again!")
+        span.author Anonymous Wallet User
     uib-slide(index="1")
-      p(translate="You are very fast, reliable and [provide] honest service. Big thank you.")
+      div
+        img(src="img/logo-wsj.svg")
+        p(translate="...bitcoin...could allow billions of people currently excluded from banking systems to directly send and receive money electronically.")
+        span.author
+          a(href="http://on.wsj.com/1u5CFZF" target="_blank") The Wall Street Journal
     uib-slide(index="2")
-      p(translate="Really digging the newest Blockchain wallet, especially the added security.")
+      div
+        p(translate="You are very fast, reliable and [provide] honest service. Big thank you.")
+        span.author Anonymous Wallet User
     uib-slide(index="3")
-      p(translate="New @blockchain mobile Bitcoin wallet makes it really simple to send or ask for btc over social media, message apps, e-mail")
+      div
+        img(src="img/logo-nytimes.svg")
+        p(translate="Blockchain is far and away an early leader in Bitcoin. They’re actually enabling the entire ecosystem.")
+        span.author
+          a(href="http://nyti.ms/1sfHj9b" target="_blank") The New York Times            
     uib-slide(index="4")
-      p(translate="It's super slick and is easy to use. Would definitely recommend!!")
+      div
+        p(translate="Really digging the newest Blockchain wallet, especially the added security.")
+        span.author Anonymous Wallet User
+    uib-slide(index="5")
+      div
+        img(src="img/logo-techcrunch.svg")
+        p(translate="At a larger scale, as Blockchain is developing the most popular wallet apps in the world, it has the opportunity to improve how transactions are handled.")
+        span.author
+          a(href="http://techcrunch.com/2014/07/19/blockchain-releases-new-android-wallet-app-to-put-bitcoin-into-everyones-hands/" target="_blank") Tech Crunch
+    uib-slide(index="6")
+      div
+        p(translate="New @blockchain mobile Bitcoin wallet makes it really simple to send or ask for btc over social media, message apps, e-mail")
+        span.author Anonymous Wallet User
+    uib-slide(index="7")
+      div
+        img(src="img/logo-telegraph.svg")
+        p(translate="'Consumers are being offered much greater control and freedom with their money…' [Richard] Branson, founder of Virgin Group Ltd., said.")
+        span.author
+          a(href="http://bit.ly/1sdIEzZ" target="_blank") The Telegraph
+    uib-slide(index="8")
+      div
+        p(translate="It's super slick and is easy to use. Would definitely recommend!!")
+        span.author Anonymous Wallet User
   a(ui-sref="public.login-no-uid")
     img.footer-hero(src="img/footer-hero.jpg")
