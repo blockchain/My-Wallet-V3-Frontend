@@ -14,6 +14,7 @@ function TransactionsCtrl($scope, Wallet, MyWallet, $timeout, $stateParams, $sta
   $scope.loading      = false;
   $scope.allTxsLoaded = false;
   $scope.canDisplayDescriptions = false;
+  $scope.txLimit      = 10;
 
   let accountIndex    = $stateParams.accountIndex;
   let txList          = MyWallet.wallet.txList;
@@ -34,7 +35,8 @@ function TransactionsCtrl($scope, Wallet, MyWallet, $timeout, $stateParams, $sta
   if ($scope.transactions.length === 0) fetchTxs();
 
   $scope.nextPage = () => {
-    if (!$scope.allTxsLoaded && !$scope.loading) fetchTxs();
+    if ($scope.txLimit < $scope.transactions.length) $scope.txLimit += 5;
+    else if (!$scope.allTxsLoaded && !$scope.loading) fetchTxs();
   };
 
   $scope.showTransaction = (transaction) => {
@@ -72,7 +74,7 @@ function TransactionsCtrl($scope, Wallet, MyWallet, $timeout, $stateParams, $sta
   };
 
   $scope.filterSearch = (tx, search) => {
-    if (search === '' || (search == null)) return true;
+    if (!search) return true;
     return ($scope.filterTx(tx.processedInputs, search) ||
             $scope.filterTx(tx.processedOutputs, search));
   };
