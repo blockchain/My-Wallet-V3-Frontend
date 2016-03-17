@@ -15,11 +15,15 @@ describe "ShowPrivateKeyCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
 
       MyWallet = $injector.get('MyWallet')
+      MyWalletHelpers = $injector.get('MyWalletHelpers')
       Wallet = $injector.get('Wallet')
 
       MyWallet.wallet = {
-        getPrivateKeyForAddress: (-> )
+        getPrivateKeyForAddress: -> 'pk.bs58'
       }
+
+      MyWalletHelpers.detectPrivateKeyFormat = () -> 'base58'
+      MyWalletHelpers.privateKeyStringToKey = () -> { toWIF: -> 'pk.wif' }
 
       scope = $rootScope.$new()
 
@@ -40,7 +44,10 @@ describe "ShowPrivateKeyCtrl", ->
   it "should have scope variables defined", () ->
     expect(scope.address).toBeDefined()
     expect(scope.balance).toBeDefined()
-    expect(scope.privKey).toBeDefined()
+
+  it "should have initial private key format data", ->
+    expect(scope.format).toEqual('WIF')
+    expect(scope.formats).toEqual(['WIF', 'Base58'])
 
   it "should be dismissed", ->
     spyOn(modalInstance, "dismiss")
@@ -53,7 +60,7 @@ describe "ShowPrivateKeyCtrl", ->
       angular.mock.inject ($q) ->
         askForSecondPassword = $q.defer()
         spyOn(Wallet, 'askForSecondPasswordIfNeeded').and.returnValue(askForSecondPassword.promise)
-        spyOn(Wallet.my.wallet, 'getPrivateKeyForAddress')
+        spyOn(Wallet.my.wallet, 'getPrivateKeyForAddress').and.callThrough()
 
     it "should allow access if there is no second password", () ->
       expect(scope.accessAllowed).toBe(false)
@@ -83,3 +90,10 @@ describe "ShowPrivateKeyCtrl", ->
       expect(Wallet.my.wallet.getPrivateKeyForAddress).toHaveBeenCalledWith(addressObj, 'password123')
       expect(scope.accessAllowed).toBe(true)
     )
+
+    it "should set the bs58 and wif private keys", ->
+      scope.tryContinue()
+      askForSecondPassword.resolve()
+      scope.$digest()
+      expect(scope.privKeys.Base58).toBe('pk.bs58')
+      expect(scope.privKeys.WIF).toBe('pk.wif')
