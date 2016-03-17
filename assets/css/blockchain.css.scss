@@ -9,8 +9,6 @@
 @import 'utilities/typography';
 @import 'utilities/borders';
 @import 'utilities/shadows';
-// TEMP
-@import 'utilities/legacy';
 
 //import elements
 @import 'elements/buttons';
@@ -53,6 +51,9 @@
 
 //override bootstrap
 @import 'utilities/bs_overrides';
+
+// TEMP
+@import 'utilities/legacy';
 
 * {
   outline: none;
