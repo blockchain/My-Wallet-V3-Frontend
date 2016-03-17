@@ -609,7 +609,7 @@
   "CLIENT_SIDE": "Client side encryption:",
   "CLIENT_SIDE_ENCRYPTION": "The amazing part is the encryption is all done within your browser, before it is saved on our servers, so not even we have access to your account. This puts our users firmly in control of their funds.",
   "OPEN_SOURCE": "Open source:",
-  "OPEN_SOURCE_DES": "All code related to the wallet service is open source.",
+  "OPEN_SOURCE_DES": "All code related to the wallet service is open source. <a target='_blank' href='https://github.com/blockchain/My-Wallet-V3-Frontend'>Contribute here!</a>",
   "DYN_TX_FEE_ADJ": "Dynamic transaction fee adjustmets:",
   "DYN_TX_FEE_ADJ_DES": "We take care of adjusting the fees for you, based on the current network conditions. And as always, you're in control: custom fees.",
   "INTEROP": "Interoperability:",

@@ -75,7 +75,7 @@
       }
     }
   }
-  .publications {
+  .publications, .carousel .carousel-inner {
     background: $light-grey;
     margin-top: 100px;
     position: relative;
@@ -90,7 +90,8 @@
       }
     }
     .popover-content {
-      font-family: 'Serif';
+      font-family: 'Sans-Serif';
+      padding-left: 20px;
       font-style: italic;
     }
     @media (max-width: 768px) {
@@ -279,6 +280,79 @@
       }
     }
   }
+  .carousel {
+    .carousel-inner {
+      min-height: 270px;
+      position: relative;
+      .item {
+        top: 0;
+        left: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        transform: scale(.8);
+        @extend .flex-center;
+        @extend .flex-justify;
+        @include transition(opacity .1s $slow, transform .1s $slow);
+        &.active {
+          opacity: 1;
+          z-index: 10;
+          transform: scale(1);
+          @include transition(opacity $slow, transform $slow);
+          &.ng-animate {
+            opacity: 0;
+            transform: scale(1.2);
+            transition: opacity $slow, transform $slow !important;
+            -ms-transition: opacity $slow, transform $slow !important;
+            -moz-transition: opacity $slow, transform $slow !important;
+            -webkit-transition: opacity $slow, transform $slow !important;
+          }
+        }
+      }
+      p {
+        @media (min-width: 799px) {
+          max-width: 600px;
+        }
+        font-size: 24px;
+        position: relative;
+        font-family: 'Serif';
+        &:before {
+          top: -5px;
+          left: -35px;
+          content: '';
+          width: 35px;
+          height: 35px;
+          display: block;
+          position: absolute;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-image: url("../img/quote-icon.svg");
+        }
+      }
+    }
+    h4 {
+      transform: translateX(-50%);
+      position: absolute;
+      font-size: 24px;
+      left: 50%;
+      top: 35px;
+    }
+    .carousel-indicators {
+      li {
+        margin: 0px 3px !important;
+        height: 16px !important;
+        width: 16px !important;
+        background: $mid-grey;
+        &.active {
+          background: $dark-grey;
+        }
+      }
+    }
+    .carousel-control {
+      display: none;
+    }
+  }
   img.footer-hero {
     width: 100%;
   }
@@ -388,6 +462,7 @@
 .blocket-loading {
   @include transition(top 0.7s 0.3s, opacity 0s 1s);
   background-color: $blue;
+  overflow: hidden;
   position: fixed;
   z-index: 10000;
   height: 100%;
