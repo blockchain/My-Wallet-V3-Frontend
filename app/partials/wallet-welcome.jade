@@ -78,12 +78,14 @@ blocket-loading
         uib-accordion-group(heading="HIGH SECURITY")
           h4(translate="PROTECTING_FUNDS")
           p(translate="STATE_OF_THE_ART_SEC")
-      div.apps
-        h3.black(translate="One wallet for all your devices")
-        a(href="")
-          img(src="img/app-store-badge.svg")
-        a.mlm(href="")
-          img(src="img/google-play-badge.png")
+        uib-accordion-group(heading="CROSS DEVICE COMPATIBLE")
+          .flex-around.flex-row.mtl
+            a.flex-1(href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309" target="_blank")
+              img(src="img/logo-apple.svg")
+            a.flex-1(href="https://play.google.com/store/apps/details?id=piuk.blockchain.android" target="_blank")
+              img(src="img/logo-android.svg")
+            a.flex-1(ui-sref="public.login-no-uid")
+              img(src="img/logo-www.jpg")
   #newUser.container-max-width.flex-justify.flex-center
     .col-md-4
       h3.thin(translate="NEW_TO_BITCOIN")

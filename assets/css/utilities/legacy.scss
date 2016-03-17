@@ -63,6 +63,9 @@
       .btn-success {
          margin: 5px auto;
       }
+      @media (max-width: 768px) {
+         width: 100% !important;
+      }
    }
 }
 

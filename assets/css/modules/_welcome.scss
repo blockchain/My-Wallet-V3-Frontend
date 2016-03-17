@@ -23,6 +23,13 @@
       height: 80px;
       width: 49.8%;
     }
+    @media (max-width: 768px) {
+      display: block !important;
+      > div {
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
   }
   .welcome-wrapper {
     @media (max-width: 768px) {
@@ -34,6 +41,13 @@
   }
   .split {
     margin-top: 100px;
+    .right {
+      .flex-around {
+        img {
+          height: 35px;
+        }
+      }
+    }
     @media (min-width: 769px) {
       .left {
         width: 60%;
@@ -46,9 +60,6 @@
           z-index: 1;
           max-width: 250px;
           position: relative;
-          @media (max-width: 992px) {
-            margin: 0 auto;
-          }
           h3, h4 {
             margin: 0px;
           }
@@ -56,6 +67,7 @@
             line-height: 1.4;
           }
           p {
+            font-size: 14px;
             line-height: 1.8;
             margin: 30px 0px 60px 0px;
           }
@@ -68,6 +80,25 @@
     }
     @media (max-width: 768px) {
       display: block !important;
+      .panel-group {
+        .panel {
+          @media (max-width: 992px) {
+            margin: 10px 20px;
+            text-align: center;
+            border-bottom: 1px solid $light-grey;
+            h4 {
+              margin-bottom: 5px;
+            }
+            span {
+              margin-bottom: 10px;
+            }
+            .flex-around {
+              margin-top: 0px !important;
+              margin-bottom: 10px;
+            }
+          }
+        }
+      }
     }
     .apps {
       img {
@@ -75,39 +106,14 @@
       }
     }
   }
-  .publications, .carousel .carousel-inner {
-    background: $light-grey;
-    margin-top: 100px;
-    position: relative;
-    min-height: 200px;
-    img {
-      width: 200px;
-      &.small {
-        width: 70px;
-      }
-      &.mid {
-        width: 100px;
-      }
-    }
-    .popover-content {
-      font-family: 'Sans-Serif';
-      padding-left: 20px;
-      font-style: italic;
-    }
-    @media (max-width: 768px) {
-      -webkit-box-orient: vertical;
-      -webkit-box-direction: normal;
-      -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-      flex-direction: column;
-      img {
-        height: 100px;
-      }
-    }
-  }
   #newUser {
     padding: 100px 0;
+    @media (max-width: 768px) {
+      padding: 40px 0;
+      display: block !important;
+    }
     p {
+      font-size: 14px;
       line-height: 1.8;
       margin: 30px 0px 60px 0px;
     }
@@ -219,19 +225,19 @@
   .ios {
     &.scroll-in-view {
       margin-top: 150px;
-      overflow: visible; 
+      overflow: visible;
       .image-container {
         max-width: 720px;
         min-width: 720px;
+      }
+      @media (max-width: 768px) {
+        overflow: hidden;
       }
     }
   }
   #experiencedUser {
     font-size: 14px;
     padding: 60px 0;
-    @media (max-width: 768px) {
-      padding: 40px 0;
-    }
     h2, h3 {
       margin: 0px;
       color: $blue;
@@ -244,6 +250,7 @@
     ul {
       padding: 0px;
       max-width: 300px;
+      padding-left: 15px;
       li {
         list-style: none;
         line-height: 1.8;
@@ -259,6 +266,10 @@
     > div {
       > div {
         max-width: 440px;
+        @media (max-width: 768px) {
+          max-width: 260px;
+          margin: 0 auto;
+        }
         h3 {
           margin-top: 5px;
           color: $pale-grey;
@@ -266,7 +277,16 @@
       }
     }
     @media (max-width: 768px) {
+      padding: 40px 0 0 0;
+      ul {
+        max-width: initial;
+        padding: 0 15px;
+      }
       .flex-row {
+        -webkit-box-orient: vertical !important;
+        -webkit-box-direction: normal !important;
+        -webkit-flex-direction: column !important;
+        -ms-flex-direction: column !important;
         flex-direction: column !important;
       }
       h2, h3 {
@@ -282,8 +302,14 @@
   }
   .carousel {
     .carousel-inner {
+      margin-top: 40px;
       min-height: 335px;
       position: relative;
+      background: $light-grey;
+      @media (max-width: 768px) {
+        margin-top: 20px;
+        min-height: 300px;
+      }
       .item {
         top: 0;
         left: 0;
@@ -310,14 +336,16 @@
           }
         }
         > div {
+          padding: 0 15px;
           position: relative;
           @media (min-width: 799px) {
             max-width: 600px;
+            padding: initial;
             margin: 0 auto;
           }
           img {
             display: block;
-            max-height: 40px;
+            max-height: 30px;
             margin: 20px auto;
           }
           p {
@@ -352,15 +380,42 @@
               text-decoration: underline;
             }
           }
+          @media (max-width: 992px) {
+            img {
+              max-height: 20px;
+            }
+            p {
+              font-size: 18px;
+              &:before {
+                top: -30px;
+                left: 0;
+              }
+            }
+            span {
+              right: 20px;
+              bottom: -20px;
+            }
+          }
         }
       }
     }
     h4 {
+      -webkit-transform: translateX(-50%);
       transform: translateX(-50%);
+      text-align: center;
       position: absolute;
       font-size: 24px;
       left: 50%;
       top: 35px;
+      @media (max-width: 768px) {
+        left: 0;
+        top: 20px;
+        width: 100%;
+        font-size: 18px;
+        text-align: center;
+        transform: translateX(0);
+        -webkit-transform: translateX(0);
+      }
     }
     .carousel-indicators {
       li {
@@ -368,6 +423,10 @@
         height: 16px !important;
         width: 16px !important;
         background: $mid-grey;
+        @media (max-width: 768px) {
+          height: 12px !important;
+          width: 12px !important;
+        }
         &.active {
           background: $dark-grey;
         }
