@@ -34,10 +34,10 @@
             transaction-status(transaction="transaction")
           .center-align.mbm(ng-show="settings.currency.code == 'USD' && transaction.confirmations > 5")
             p.mbn(translate="VALUE_AT_SEND")
-            fiat.em-600(btc="transaction.result" abs date="transaction.time")
+            fiat.em-600(btc="transaction.amount" abs date="transaction.time")
           .center-align.mbm
             p.mbn(translate="VALUE_NOW")
-            fiat.em-600(btc="transaction.result" abs)
+            fiat.em-600(btc="transaction.amount" abs)
           .tx-bci-link.button-default.button-sm
             a.black(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank")
              span(translate="VERIFY_ON_BCI")
