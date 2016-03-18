@@ -184,12 +184,10 @@ head
 body(ng-controller="AppCtrl", ui-view="body")
   
   //- This does not depend on Angular and will show as soon as the images are done loading.
-  <!-- @if PRODUCTION !>
   .blocket-loading
     div
-      img.full(src="/img/blocket-full-4847e61888d2d3c9f33f14840f92783d1c91dea2.png")
-      img(src="/img/blocket-no-boosters-c3f2a027ddfdbbce8eba8fc5da84c65d89d14fbc.png")
-  <!-- @endif -->  
+      img.full(src="/img/blocket-full.png")
+      img(src="/img/blocket-no-boosters.png")
 
   noscript
     img(src="/img/logo-bw.png")
