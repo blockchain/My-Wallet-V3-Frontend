@@ -3,14 +3,14 @@ angular
   .controller("WelcomeCtrl", WelcomeCtrl);
 
 function WelcomeCtrl($scope, $window, $timeout) {
-  let scrollTo = (element, to, duration) => {
+  $scope.scrollTo = (element, to, duration) => {
       let start = element.scrollTop,
           change = to - start,
           increment = 20;
 
       let animateScroll = (elapsedTime) => {        
           elapsedTime += increment;
-          let position = easeInOut(elapsedTime, start, change, duration);                        
+          let position = $scope.easeInOut(elapsedTime, start, change, duration);                        
           element.scrollTop = position; 
           if (elapsedTime < duration) {
               $timeout(() => {
@@ -22,7 +22,7 @@ function WelcomeCtrl($scope, $window, $timeout) {
       animateScroll(0);
   }
 
-  let easeInOut = (currentTime, start, change, duration) => {
+  $scope.easeInOut = (currentTime, start, change, duration) => {
       currentTime /= duration / 2;
       if (currentTime < 1) {
           return change / 2 * currentTime * currentTime + start;
@@ -35,10 +35,10 @@ function WelcomeCtrl($scope, $window, $timeout) {
     let top = 0;
     if (userType === 'newUser') {
       top = angular.element(newUser)[0].offsetTop;
-    } else {
+    } else if (userType === 'experiencedUser') {
       top = angular.element(experiencedUser)[0].offsetTop;
     }
-    scrollTo(document.body, top, 500)
+    $scope.scrollTo(document.body, top, 500)
   }
 
 }
