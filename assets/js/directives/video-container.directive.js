@@ -10,7 +10,7 @@ function videoContainer($window, $timeout) {
     restrict: 'E',
     templateUrl: 'templates/video-container.jade',
     replace: true,
-    scope: true,
+    scope: {},
     link: link
   };
 
@@ -24,11 +24,10 @@ function videoContainer($window, $timeout) {
     scope.toggle = () => { scope.playing = scope.playing ? false : true; }
 
     scope.$watch('playing', (newVal, oldVal) => {
-      if (newVal) {
-        scope.videoElem.play()
-      } else {
-        scope.videoElem.pause()
-      }
+      if ( !scope.videoElem.play && !scope.videoElem.pause ) { return }
+
+      if (newVal) { scope.videoElem.play()
+      } else { scope.videoElem.pause() }
     }, true)
   }
 }
