@@ -9,7 +9,34 @@ head
   link(rel="icon" type="image/vnd.microsoft.icon" href="img/favicon.ico")
   title Blockchain Wallet
   <!-- @if !PRODUCTION -->
-  link(rel="stylesheet", href="bower_components/angular-ui-select/dist/select.css")
+  link(rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css")
+  link(rel='stylesheet' href='bower_components/bc-css-flags/dist/css/bc-css-flags.css')
+  link(rel='stylesheet' href='bower_components/bc-phone-number/dist/css/bc-phone-number.css')  
+  link(rel='stylesheet' href='build/css/ladda.css')
+  link(rel='stylesheet' href='build/css/blockchain.css')
+  link(rel='stylesheet' href='build/css/fonts.css')
+  link(rel='stylesheet' href='build/css/angular-csp.css')
+  link(rel='stylesheet' href='build/css/ui-bootstrap-csp.css')  
+  <!-- @endif -->
+  
+  <!-- @if PRODUCTION !>
+  link(rel='stylesheet', href='css/application.css')
+  <!-- @endif -->
+
+body(ng-controller="AppCtrl", ui-view="body")
+  
+  //- This does not depend on Angular and will show as soon as the images are done loading.
+  .blocket-loading
+    div
+      img.full(src="/img/blocket-full.png")
+      img(src="/img/blocket-no-boosters.png")
+
+  noscript
+    img(src="/img/logo-bw.png")
+    h3 Please enable JavaScript to use the Blockchain Wallet
+
+  //- Load javascript in the body async.
+  <!-- @if !PRODUCTION -->
   script(src='bower_components/angular/angular.js')
   script(src='bower_components/angular-sanitize/angular-sanitize.js')
   script(src='bower_components/angular-cookies/angular-cookies.js')
@@ -26,30 +53,14 @@ head
   script(src='bower_components/angular-inview/angular-inview.js')
   script(src='bower_components/angular-password-entropy/password-entropy.js')  
   
-  script(                src='bower_components/digits-trie/dist/digits-trie.js')
-  link(rel='stylesheet' href='bower_components/bc-css-flags/dist/css/bc-css-flags.css')
-  script(                src='bower_components/google-libphonenumber/dist/browser/libphonenumber.js')
-  script(                src='bower_components/bc-countries/dist/bc-countries.js')
-  script(                src='bower_components/bc-phone-number/dist/js/bc-phone-number.js')
-  link(rel='stylesheet' href='bower_components/bc-phone-number/dist/css/bc-phone-number.css')
-  
+  script(src='bower_components/digits-trie/dist/digits-trie.js')
+  script(src='bower_components/google-libphonenumber/dist/browser/libphonenumber.js')
+  script(src='bower_components/bc-countries/dist/bc-countries.js')
+  script(src='bower_components/bc-phone-number/dist/js/bc-phone-number.js')  
   
   script(src='bower_components/browserdetection/src/browser-detection.js')
   
-  // angular-ladda doesn't play nicely with ui-bootstrap
-  // script(src="bower_components/ladda/js/spin.js")
-  // script(src="bower_components/ladda/js/ladda.js")
-  // script(src="bower_components/angular-ladda/dist/angular-ladda.js")
-  
-  //- link(rel="stylesheet", href="bower_components/ladda/dist/ladda-themeless.css")
-  link(rel='stylesheet', href='build/css/ladda.css')
-  link(rel='stylesheet', href='build/css/blockchain.css')
-  link(rel='stylesheet', href='build/css/fonts.css')
-  link(rel='stylesheet', href='build/css/angular-csp.css')
-  link(rel='stylesheet', href='build/css/ui-bootstrap-csp.css')
-
-  
-  // Blockchain MyWallet javascript (must be called before 'app')
+  //- Blockchain MyWallet javascript (must be called before 'app')
   script(src='bower_components/blockchain-wallet/dist/my-wallet.js')
   script(src='build/js/core/core.module.js')
   script(src='build/js/core/api.service.js')
@@ -174,26 +185,8 @@ head
       
   script(src='bower_components/webcam-directive/app/scripts/webcam.js')
   script(src='bower_components/bc-qr-reader/dist/bc-qr-reader.js')
-  
   <!-- @endif -->
   
-  <!-- @if PRODUCTION !>
-  link(rel='stylesheet', href='css/application.css')
-  <!-- @endif -->
-
-body(ng-controller="AppCtrl", ui-view="body")
-  
-  //- This does not depend on Angular and will show as soon as the images are done loading.
-  .blocket-loading
-    div
-      img.full(src="/img/blocket-full.png")
-      img(src="/img/blocket-no-boosters.png")
-
-  noscript
-    img(src="/img/logo-bw.png")
-    h3 Please enable JavaScript to use the Blockchain Wallet
-
-  //- Load application.min.js in the body async.
   <!-- @if PRODUCTION !>
   script(src='js/application.min.js')  
   <!-- @endif -->

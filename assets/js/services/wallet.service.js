@@ -60,43 +60,44 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   wallet.api = MyBlockchainApi;
   wallet.rng = MyBlockchainRng;
 
-  // If a custom rootURL is set by index.jade:
-  //                    Grunt can replace this:
-  const customRootURL = $rootScope.rootURL || "/";
-  wallet.api.ROOT_URL=customRootURL;
-  // If customRootURL is set by Grunt:
-  $rootScope.rootURL = customRootURL;
+  $rootScope.$watch("rootURL", () => {
+    // If a custom rootURL is set by index.jade:
+    //                    Grunt can replace this:
+    const customRootURL = $rootScope.rootURL || "/";
+    wallet.api.ROOT_URL=customRootURL;
+    // If customRootURL is set by Grunt:
+    $rootScope.rootURL = customRootURL;
 
-  // If a custom root path is set by index.jade:
-  //                    Grunt can replace this:
-  const customRootPath = $rootScope.rootPath || "";
-  // If customRootPath is set by Grunt:
-  $rootScope.rootPath = customRootPath;
+    // If a custom root path is set by index.jade:
+    //                    Grunt can replace this:
+    const customRootPath = $rootScope.rootPath || "";
+    // If customRootPath is set by Grunt:
+    $rootScope.rootPath = customRootPath;
 
-  //                         Grunt can replace this:
-  const customWebSocketURL = $rootScope.webSocketURL;
-  if(customWebSocketURL) {
-    wallet.my.ws.wsUrl=customWebSocketURL;
-  }
+    //                         Grunt can replace this:
+    const customWebSocketURL = $rootScope.webSocketURL;
+    if(customWebSocketURL) {
+      wallet.my.ws.wsUrl=customWebSocketURL;
+    }
 
-  // If a custom apiDomain is set by index.jade:
-  //                             Grunt can replace this:
-  const customApiDomain = $rootScope.apiDomain || "https://api.blockchain.info";
-  $rootScope.apiDomain = customApiDomain;
-  if(customApiDomain) {
-    wallet.rng.URL=customApiDomain + "/v2/randombytes";
-  }
+    // If a custom apiDomain is set by index.jade:
+    //                             Grunt can replace this:
+    const customApiDomain = $rootScope.apiDomain || "https://api.blockchain.info";
+    $rootScope.apiDomain = customApiDomain;
+    if(customApiDomain) {
+      wallet.rng.URL=customApiDomain + "/v2/randombytes";
+    }
 
-  // These are set by grunt dist:
-  $rootScope.versionFrontend = null;
-  $rootScope.versionMyWallet = null;
+    // These are set by grunt dist:
+    $rootScope.versionFrontend = null;
+    $rootScope.versionMyWallet = null;
 
-  if ($rootScope.versionFrontend) {
     console.log(
-      'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s',
-      $rootScope.versionFrontend, $rootScope.versionMyWallet
+      'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s, connecting to %s',
+      $rootScope.versionFrontend, $rootScope.versionMyWallet, $rootScope.rootURL
     );
-  }
+
+  });
 
   wallet.payment = MyWalletPayment;
 
