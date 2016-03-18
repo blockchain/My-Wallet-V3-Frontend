@@ -5,30 +5,29 @@
   "homepage": "https://blockchain.com/",
   "private": true,
   "dependencies": {
-    "angular": "angular/bower-angular#a69eba562dc18df13f27ca0274c90ee26c29004e",
-    "angular-animate": "angular/bower-angular-animate#e65bd633210be321fa62fa3acdc2c7fe7c814184",
+    "angular": "angular/bower-angular#57f5cd80e00507766e01ca75a8b42c0456219666",
+    "angular-animate": "angular/bower-angular-animate#c6575375d3dae35c98b5ad384978612fe33ee8e2",
     "angular-ui-router": "angular-ui/ui-router#ec6ca36b625e578e59e631b3c9e786a6ac70678c",
-    "angular-bootstrap": "angular-ui/bootstrap-bower#c1020d8d72283c87fba5766a193f38e0727d7674",
-    "angular-cookies": "angular/bower-angular-cookies#cf2e23660fbbc0d9e74eaa8a535b42ae58b70805",
+    "angular-bootstrap": "angular-ui/bootstrap-bower#2237dad0dddf0f021ee9a07921a194cdbca8d011",
+    "angular-cookies": "angular/bower-angular-cookies#840353b6f95fb0ebeb93655593c93e8a41dd1324",
     "angular-audio": "danielstern/ngAudio#e67ab71574e09759b5fce058ea042bbe3ad7d98d",
     "angular-ui-select": "angular-ui/ui-select#3b1496cb73103c593ab54c1fd04f4d69bc7ed8f1",
-    "angular-sanitize": "angular/bower-angular-sanitize#698bf7b7801e3a901df670b929b50fca1eefbe4d",
+    "angular-sanitize": "angular/bower-angular-sanitize#f0eb3486d1dbda959a450237e8271c914ba99b6a",
     "angular-qr": "janantala/angular-qr#1134e40510ab773d45cc26a066ef6c787a96011a",
     "angular-translate": "angular-translate/bower-angular-translate#2c1fe7efab11bc735b307e4c929386161b43995c",
     "angular-translate-loader-static-files": "angular-translate/bower-angular-translate-loader-static-files#8e5bdd5d978fd307a9740f5e7026d41433cbe420",
-    "angular-inview": "thenikso/angular-inview#96cb2f24b62849632ffdcb62cbb679de594d7629",
+    "angular-inview": "thenikso/angular-inview#36112b2877056dda606dea2add72a3c851297447",
     "angular-password-entropy": "pernas/angular-password-entropy#939ab5f06a5a3c09cd4dc39a19a312468b8c11cb",
     "browserdetection": "sub2home/browser-detection#97f9718f8811e0a058c5296d69a879de7754ad91",
     "bc-qr-reader": "blockchain/bc-qr-reader#9bf726c2577327631d8b58ddff44351056b27b40",
     "bootstrap-sass": "twbs/bootstrap-sass#446b41a5af0f20f139a6d33ded2a62101c3bd5a1",
-    "blockchain-wallet": "blockchain/my-wallet-v3-bower#59c6c8686c765030a77e30c273e680565cd315d3",
+    "blockchain-wallet": "blockchain/my-wallet-v3-bower#c7374f6f7bdfc3b6f3d5c8718b219825f4ceb734",
     "bc-phone-number": "blockchain/bc-phone-number#0d395319fafabe4842aba1ea2595ee8d2636cfdc"
   },
   "devDependencies": {
   },
   "resolutions": {
     "angular": "1.4.*",
-    "angular-bootstrap": "1.1.*",
     "angular-translate": "2c1fe7efab11bc735b307e4c929386161b43995c"
   },
   "ignoredDependencies": [
