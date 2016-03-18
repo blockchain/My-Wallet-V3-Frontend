@@ -1,9 +1,11 @@
-module.exports = function(karma){
+module.exports = function(config){
   var configuration = {
 
     basePath : './',
 
-    // logLevel: config.LOG_DISABLE,
+    logLevel: config.LOG_WARN,
+
+    client: { captureConsole: false },
 
     exclude: ['assets/js/my_wallet/'],
 
@@ -26,7 +28,6 @@ module.exports = function(karma){
       'assets/js/controllers/**/*.controller.js',
       'assets/js/filters.js',
       'assets/js/services/**/*.service.js',
-      'assets/js/directives/*.js.coffee',
       'assets/js/directives/*.js',
       'assets/js/core/*.js',
       'tests/mocks/**/*.coffee',
@@ -136,5 +137,5 @@ module.exports = function(karma){
   if(process.env.TRAVIS) {
   }
 
-  karma.set(configuration);
+  config.set(configuration);
 };

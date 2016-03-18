@@ -27,6 +27,8 @@ describe "SendCtrl", ->
       MyWalletHelpers = $injector.get("MyWalletHelpers")
       $httpBackend = $injector.get('$httpBackend')
       $uibModal = $injector.get('$uibModal')
+      $rootScope.$digest()
+      # $rootScope.apiDomain = "https://api.blockchain.info/"
 
       feeEstimates = [
         { fee: 60000, surge: false }, { fee: 50000, surge: false },

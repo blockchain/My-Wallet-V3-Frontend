@@ -92,11 +92,10 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     $rootScope.versionFrontend = null;
     $rootScope.versionMyWallet = null;
 
-    console.log(
+    console.info(
       'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s, connecting to %s',
       $rootScope.versionFrontend, $rootScope.versionMyWallet, $rootScope.rootURL
     );
-
   });
 
   wallet.payment = MyWalletPayment;
