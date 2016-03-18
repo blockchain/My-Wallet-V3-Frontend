@@ -1,0 +1,60 @@
+.video-container {
+  cursor: pointer;
+  position: relative;
+  &:before, &:after {
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    opacity: 0;
+    content: '';
+    width: 80px;
+    height: 80px;
+    display: block;
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+  }
+  &:before {
+    opacity: 1;
+    background-image: url('../img/play.svg');
+    @include transition(opacity 0.5s, transform 0.5s);
+  }
+  &:after {
+    width: 20px;
+    height: 20px;
+    background-image: url('../img/pause.svg');
+    @include transition(opacity 0.2s, transform 0.5s);
+  }
+  &.playing {
+    &:before {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1.2);
+      -webkit-transform: translate(-50%, -50%) scale(1.2);
+    }
+    &:hover {
+      &:after {
+        opacity: 1;
+      }
+    }
+  }
+  img {
+    z-index: 1;
+    opacity: 1;
+    position: relative;
+    @include transition(opacity $slow);
+    &.transparent {
+      opacity: 0;
+    }
+  }
+  video {
+    position: absolute;
+    padding: 0px;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+  } 
+}
