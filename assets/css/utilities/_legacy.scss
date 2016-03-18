@@ -15,6 +15,12 @@
 .legacy {
    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
 
+   .hidden-phone {
+      @media (max-width: 768px) {
+         display: none !important;
+      }
+   }
+
    .container {
       width: auto;
       min-width: 300px;
@@ -65,6 +71,18 @@
       }
       @media (max-width: 768px) {
          width: 100% !important;
+      }
+   }
+
+   @media (max-width: 768px) {
+      .hidden-phone {
+         display: none !important;
+      }
+      .span-6, .span4 {
+         width: 100% !important;
+      }
+      .quickstart .col {
+         border-left: 0px;
       }
    }
 }
