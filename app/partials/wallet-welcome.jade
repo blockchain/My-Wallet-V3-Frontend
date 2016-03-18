@@ -1,29 +1,97 @@
+blocket-loading
 .welcome-page
   public-header
-  .intro
-    .flex-justify.flex-center.flex-column
-      h4 It's Here
-      h1 The New Blockchain Wallet
-      div
-        span.type-h5(translate="SAFER")
-        span.type-h5  / 
-        span.type-h5(translate="FRIENDLIER")
-        span.type-h5  / 
-        span.type-h5(translate="EASIER")
-      .flex-justify.flex-center.flex-row
-        button(ui-sref="public.login-no-uid" translate="LOGIN")
-        button(ui-sref="public.signup" translate="SIGN_UP")
-  .welcome-wrapper
-    scroll-in-view(img="img/new-wallet-hero.png" shadow="true")  
-  scroll-in-view.blocket(img="img/blocket.png")
-  h3(translate="MOST_ADVANCED")
-  scroll-in-view.ios(img="img/ios-feature.png", transactions="true")
-  h3.type-h5
-    a(href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309?mt=8" target="_blank").type-h5 iOS
-    span &nbsp;&bull;
-    a(href="https://play.google.com/store/apps/details?id=piuk.blockchain.android&hl=en" target="_blank").type-h5  Android
-    span &nbsp;&bull;&nbsp;
-    a(ui-sref="public.login-no-uid" translate="WEB").type-h5  
+  //- TEMP
+  .legacy
+    .quickstart
+      #intro-header.container
+        .row-fluid
+          .span4.col.hidden-phone
+            h6 New Users
+            p
+              | Creating a new bitcoin wallet takes literally a few seconds. You will be able to send and receive payments immediately.
+          .span4.col
+            h6 Existing Users
+            p If you have previously created a My Wallet account click below to login.
+          .span4.col.hidden-phone
+            h6 Help And Support
+            p
+              | Please consult the FAQ for commonly asked questions. For any problems with the site, please contact us.
+        .row-fluid
+          .span4.col.hidden-phone
+            p
+              a.btn.btn-primary(ui-sref="public.signup") Start A New Wallet
+          .span4.col
+            p
+              a.btn.btn-primary(ui-sref="public.login-no-uid") Login Now
+          .span4.col.hidden-phone
+            p
+              a.btn.btn-info(href='https://blockchain.zendesk.com' target="_blank") Support Pages
+  .legacy
+    .container
+      .page-header
+        h1
+          | My Wallet 
+          small Be Your Own Bank®.
+          span.hidden-phone.small-pull-right
+            | Confused? Read the 
+            a(href='https://blockchain.zendesk.com' target="_blank") Beginners FAQ
+            |  - 
+            a(href='https://blockchain.info/wallet/how-it-works') How It Works
+  .legacy
+    .container
+      .row-fluid
+            .span6
+              p
+                img(src='/img/blockchain-legacy-rubiks-TEMP.png').img-inline
+                | My Wallet is a free online bitcoin wallet, which you can use to make worldwide payments for free. We make paying with bitcoins easy and secure available anywhere on your phone or desktop.
+              p
+                | We are not a bank; you retain complete ownership of your Money. We cannot view your balance, see your transactions or make payments on your behalf.
+              p(align='center')
+                a.btn.btn-success(ui-sref="public.signup") Create My Free Wallet
+            .span6.center.mbl
+              video-container(img="img/legacy-video-placeholder-TEMP.jpg" video="img/legacy-what-is-bitcoin-TEMP.mp4")
+  //- END TEMP
+
+  .welcome-nav.flex-row.flex-between
+    .flex-center.flex-column.flex-justify(ng-click="scroll('newUser')")
+      h3.thin(translate="NEW_TO_BITCOIN")
+      h4(translate="WHY_USE")
+    .flex-center.flex-column.flex-justify(ng-click="scroll('experiencedUser')")
+      h3.thin(translate="EXPERIENCED_USER")
+      h4(translate="WHY_USE_BLOCKCHAIN")
+
+  .split.flex-row
+    .left
+      .welcome-wrapper
+        scroll-in-view(img="img/new-wallet-hero.jpg" shadow="true")  
+      scroll-in-view.blocket(img="img/blocket.png")
+      scroll-in-view.ios(img="img/ios-feature.jpg", transactions="true")
+    .right
+      uib-accordion(close-others="oneAtATime")
+        uib-accordion-group(heading="EASE OF USE")
+          h4(translate="SEND_AND_RECEIVE")
+          p(translate="LOVED_BY_ALL")
+        uib-accordion-group(heading="PEACE OF MIND")
+          h4(translate="IN_CONTROL")
+          p(translate="ACCESS_TO_BITCOINS")
+        uib-accordion-group(heading="HIGH SECURITY")
+          h4(translate="PROTECTING_FUNDS")
+          p(translate="STATE_OF_THE_ART_SEC")
+        uib-accordion-group(heading="CROSS DEVICE COMPATIBLE")
+          .flex-around.flex-row.mtl
+            a.flex-1(href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309" target="_blank")
+              img(src="img/logo-apple.svg")
+            a.flex-1(href="https://play.google.com/store/apps/details?id=piuk.blockchain.android" target="_blank")
+              img(src="img/logo-android.svg")
+            a.flex-1(ui-sref="public.login-no-uid")
+              img(src="img/logo-www.jpg")
+  #newUser.container-max-width.flex-justify.flex-center
+    .col-md-4
+      h3.thin(translate="NEW_TO_BITCOIN")
+      h4(translate="WHY_BITCOIN")
+      p(translate="BLOCKCHAIN_MISSION")
+    video-container.col-md-6(img="img/blockchain-ad-placeholder.jpg" video="img/blockchain-ad.mp4")
   div.squares
     div
       img(src="img/square.png")
@@ -39,17 +107,94 @@
       img(src="img/square.png")
       div.background
       div.donut
-      p.type-h4(translate="REVAMPED")
+      p.type-h4(translate="FUN_AND_INSIGHTFUL")
     div
       img(src="img/square.png")
       div.background
       div.donut
-      p.type-h4(translate="UPGRADE_FUND_MANAGEMENT")
-  .welcome-wrapper.android
-    .flex-row.flex-justify.flex-center
-      scroll-in-view.col-md-6(img="img/android-feature.jpg")
-      .flex-column
-        h2(translate="SENDING")
-        h3(translate="BUILD_TEST")
+      p.type-h4(translate="ACTIVITY_FEED")
+  #experiencedUser.container-max-width
+    .flex-row.flex-top.flex-between
+      scroll-in-view.flex-1(img="img/android-feature.jpg")
+      ul.flex-1
+        li
+          span.heavy(translate="HD_ARCH") 
+          |  
+          span(translate="PRIVACY_IN_MIND")
+        li
+          span.heavy(translate="SECURITY_AUDITS")
+          |  
+          span(translate="AES_ENCRYPTION")
+        li
+          span.heavy(translate="CLIENT_SIDE")
+          |  
+          span(translate="CLIENT_SIDE_ENCRYPTION")
+      ul.flex-1
+        li
+          span.heavy(translate="OPEN_SOURCE") 
+          |  
+          span(translate="OPEN_SOURCE_DES")
+        li
+          span.heavy(translate="DYN_TX_FEE_ADJ")
+          |  
+          span(translate="DYN_TX_FEE_ADJ_DES")
+        li
+          span.heavy(translate="INTEROP")
+          |  
+          span(translate="INTEROP_DES")
+        li
+          span.heavy(translate="OTHER_FEATURES")
+          |  
+          p(translate="CONVERSION_RATES")
+          p(translate="LANGUAGES_FEAT")
+          p(translate="WATCH_ONLY")
+          p(translate="SECOND_PASSWORD_PROTECTION")
+          p(translate="LOGIN_IP_RESTRICTION")
+  uib-carousel(active="active" interval="5000")
+    h4(translate="Loved by Users. Praised by Geeks. Recognized by the Press.")
+    uib-slide(index="0")
+      div
+        p(translate="I definitely see why you guys are raved about by the Bitcoin community! Thanks again!")
+        span.author Anonymous Wallet User
+    uib-slide(index="1")
+      div
+        img(src="img/logo-wsj.svg")
+        p(translate="...bitcoin...could allow billions of people currently excluded from banking systems to directly send and receive money electronically.")
+        span.author
+          a(href="http://on.wsj.com/1u5CFZF" target="_blank") The Wall Street Journal
+    uib-slide(index="2")
+      div
+        p(translate="You are very fast, reliable and [provide] honest service. Big thank you.")
+        span.author Anonymous Wallet User
+    uib-slide(index="3")
+      div
+        img(src="img/logo-nytimes.svg")
+        p(translate="Blockchain is far and away an early leader in Bitcoin. They’re actually enabling the entire ecosystem.")
+        span.author
+          a(href="http://nyti.ms/1sfHj9b" target="_blank") The New York Times            
+    uib-slide(index="4")
+      div
+        p(translate="Really digging the newest Blockchain wallet, especially the added security.")
+        span.author Anonymous Wallet User
+    uib-slide(index="5")
+      div
+        img(src="img/logo-techcrunch.svg")
+        p(translate="At a larger scale, as Blockchain is developing the most popular wallet apps in the world, it has the opportunity to improve how transactions are handled.")
+        span.author
+          a(href="http://techcrunch.com/2014/07/19/blockchain-releases-new-android-wallet-app-to-put-bitcoin-into-everyones-hands/" target="_blank") Tech Crunch
+    uib-slide(index="6")
+      div
+        p(translate="New @blockchain mobile Bitcoin wallet makes it really simple to send or ask for btc over social media, message apps, e-mail")
+        span.author Anonymous Wallet User
+    uib-slide(index="7")
+      div
+        img(src="img/logo-telegraph.svg")
+        p(translate="'Consumers are being offered much greater control and freedom with their money…' [Richard] Branson, founder of Virgin Group Ltd., said.")
+        span.author
+          a(href="http://bit.ly/1sdIEzZ" target="_blank") The Telegraph
+    uib-slide(index="8")
+      div
+        p(translate="It's super slick and is easy to use. Would definitely recommend!!")
+        span.author Anonymous Wallet User
   a(ui-sref="public.login-no-uid")
     img.footer-hero(src="img/footer-hero.jpg")

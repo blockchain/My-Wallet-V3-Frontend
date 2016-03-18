@@ -369,3 +369,25 @@ $pulse-color-2: #accc8f;
     background-color: #FFFFE0;
   }
 }
+
+///////////////////////////////////////////
+/////////                    //////////////
+////////***Opacity Toggle *** /////////////
+////////                    ///////////////
+//////////////////////////////////////////
+
+@-webkit-keyframes opacity-change {
+  0%   { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@-moz-keyframes opacity-change {
+  0%   { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes opacity-change {
+  0%   { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}

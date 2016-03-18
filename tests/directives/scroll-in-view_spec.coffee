@@ -15,7 +15,7 @@ describe "Scroll in View Directive", ->
   )
 
   beforeEach ->
-    element = $compile("<scroll-in-view img='img/new-wallet-hero.png'></scroll-in-view>")($rootScope)
+    element = $compile("<scroll-in-view img='img/new-wallet-hero.jpg'></scroll-in-view>")($rootScope)
     $rootScope.$digest()
     isoScope = element.isolateScope()
     isoScope.$digest()

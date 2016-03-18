@@ -32,6 +32,7 @@ $select-fg: #686868;
     }
     > span {
       border: 1px solid $eee !important;
+
       color: $black !important;
       border-radius: 5px !important;
       box-shadow: none;
@@ -148,4 +149,13 @@ pre {
   word-break: normal;
   word-wrap: normal;
   white-space: pre-line;
+}
+
+//angular popovers
+.clean-popover {
+  border-radius: 0px !important;
+  border: 0px !important;
+  .popover-content {
+    padding: 5px 5px 7px 5px;
+  }
 }

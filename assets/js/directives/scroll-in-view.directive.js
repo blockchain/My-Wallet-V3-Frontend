@@ -9,6 +9,7 @@ function scrollInView($window, $timeout) {
   const directive = {
     restrict: 'E',
     templateUrl: 'templates/scroll-in-view.jade',
+    replace: true,
     scope: {},
     img: '@',
     link: link
