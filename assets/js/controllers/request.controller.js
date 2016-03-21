@@ -47,11 +47,6 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
     type: accounts ? '!External' : 'Imported'
   });
 
-  $scope.determineLabel = origin => {
-    if (origin == null) return;
-    return origin.label || origin.address;
-  };
-
   $scope.closeAlert = alert => {
     Alerts.close(alert);
   };
