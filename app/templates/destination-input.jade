@@ -5,7 +5,7 @@
       ng-show="model.type === 'Accounts'"
       ng-click="clearModel(); focusInput();")
       span.pull-left
-        | {{ model.label }}
+        label-origin(origin="model")
     input.form-control(
       type="text"
       tabindex="1"
@@ -28,4 +28,4 @@
       ul.uib-dropdown-menu.dropdown-menu-right.dropdown-menu
         li(ng-repeat="account in accounts")
           a(ng-click="setModel(account)" ng-disabled="account.index === model.index")
-            | {{ account.label }}
+            label-origin(origin="::account")
