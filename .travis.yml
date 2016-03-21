@@ -15,11 +15,16 @@ notifications:
 before_deploy:
   - export RELEASE_JS_FILE=$(ls dist/js/application-*.min.js)
   - echo "deploying $RELEASE_PKG_FILE to GitHub releases"
+  - npm shrinkwrap --dev
+  - zip -r bower_resolution.zip bower_components/*/.bower.json
 deploy:
   provider: releases
   api_key:
     secure: E+nnNRUHhKUHpbxE6itpphwI0JyvKkrl/Npr6dXk6RrtudRLolPYxJWrpit7msVOGsdPP8/dQztJq2YJQvVDrjiu19DjiXr4lsLyK8JshenOObbCEawLBC3ZVHMi2wyekg2JIrXdWDdi3heY0bwjmV0udAvAWbu/533NCKLjOSa3M+jKoVenmh9MCz2D7Z21u8BQ4714CrhM16DrSdP58RCEBsQQmK34BUCNfpUl75t7qLkERhCKtkjNSmX1ruT6nkA5UE6oPdUlFehUuo7lAjhe20E4gjEWOiyu9qeUG7qZM8oW4+dOICqGoJ7GhcGZSkL0zarFexKODcjtcG5o1H1hwwcC4zLytB9aHn8IfkUfkI6lH+GER1HNc2nlDwcpnodL3fwuL+/TZcun0ZBrB2KRgDtsvA9CswmrpSnnGIccT79LhhNimhX5nfgdmzQSwOVtx7QmCQDUGrfktlqouWWxcC5OaHYgiZgh+qcK1Js7+SSCimWbKM0jvKBLDGOWELDSbsdZNugCIoLrGvTw4Q/4HZ90CsJV603Z/FdlrC2iHDxAvOcCK6Oa7Ut7aBDPBCUJKEE1mx/g6+KRm7MycZMlxjpnL3bn7a8TmvxVvQ42D5TFJcJq4hz4QNk6CWGvAnS/Lbcuh1HEBg/ND+X8JFYLL0e0zPJhPol1+BQEr38=
-  file: "${RELEASE_JS_FILE}"
+  file:
+  - "${RELEASE_JS_FILE}"
+  - npm-shrinkwrap.json
+  - bower_resolution.zip
   on:
     repo: blockchain/My-Wallet-V3-Frontend
     tags: true
