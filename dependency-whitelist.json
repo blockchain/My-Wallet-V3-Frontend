@@ -1,11 +1,4 @@
 {
-  "ignore" : [
-    "angular", "angular-animate", "angular-bootstrap", "angular-cookies", "angular-sanitize",
-    "bootstrap-sass"
-  ],
-  "skip" : [
-    "angular-mocks"
-  ],
   "pgp-signed" : [
     "blockchain-wallet",
     "bc-qr-reader",
@@ -15,77 +8,5 @@
     "CC301009": "Sjors",
     "36E3D143": "Jaume",
     "08DFA964": "Mark"
-  },
-  "angular": {
-    "repo": "angular/bower-angular"
-  },
-  "angular-animate": {
-    "repo": "angular/bower-angular-animate"
-  },
-  "angular-bootstrap": {
-    "repo": "angular-ui/bootstrap-bower"
-  },
-  "angular-cookies": {
-    "repo": "angular/bower-angular-cookies"
-  },
-  "angular-sanitize": {
-    "repo": "angular/bower-angular-sanitize"
-  },
-  "bootstrap-sass": {
-    "repo": "twbs/bootstrap-sass"
-  },
-  "bc-qr-reader" : {
-    "repo": "blockchain/bc-qr-reader"
-  },
-  "bc-phone-number" : {
-    "repo": "blockchain/bc-phone-number"
-  },
-  "blockchain-wallet" : {
-    "repo": "blockchain/my-wallet-v3-bower"
-  },
-  "angular-ui-router" : {
-    "version": "0.2.18",
-    "commits" : ["ec6ca36b625e578e59e631b3c9e786a6ac70678c"],
-    "repo" : "angular-ui/ui-router"
-  },
-  "angular-audio" : {
-    "version": "1.6.2",
-    "commits" : ["e67ab71574e09759b5fce058ea042bbe3ad7d98d"],
-    "repo" : "danielstern/ngAudio"
-  },
-  "angular-ui-select" : {
-    "version": "0.14.9",
-    "commits" : ["3b1496cb73103c593ab54c1fd04f4d69bc7ed8f1"],
-    "repo" : "angular-ui/ui-select"
-  },
-  "angular-qr" : {
-    "version": "0.2.0",
-    "commits" : ["1134e40510ab773d45cc26a066ef6c787a96011a"],
-    "repo" : "janantala/angular-qr"
-  },
-  "angular-translate" : {
-    "version": "2.7.2",
-    "commits" : ["2c1fe7efab11bc735b307e4c929386161b43995c"],
-    "repo" : "angular-translate/bower-angular-translate"
-  },
-  "angular-translate-loader-static-files" : {
-    "version": "2.7.2",
-    "commits" : ["8e5bdd5d978fd307a9740f5e7026d41433cbe420"],
-    "repo" : "angular-translate/bower-angular-translate-loader-static-files"
-  },
-  "angular-inview" : {
-    "version": "1.5.6",
-    "commits" : ["96cb2f24b62849632ffdcb62cbb679de594d7629"],
-    "repo" : "thenikso/angular-inview"
-  },
-  "angular-password-entropy" : {
-    "version": "0.1.4",
-    "commits" : ["939ab5f06a5a3c09cd4dc39a19a312468b8c11cb"],
-    "repo" : "pernas/angular-password-entropy"
-  },
-  "browserdetection" : {
-    "version": "0.3.3",
-    "commits" : ["97f9718f8811e0a058c5296d69a879de7754ad91"],
-    "repo" : "sub2home/browser-detection"
   }
 }
