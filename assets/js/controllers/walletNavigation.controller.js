@@ -71,10 +71,6 @@ function WalletNavigationCtrl($rootScope, $scope, Wallet, Alerts, SecurityCenter
     });
   };
 
-  $scope.termsOfService = () => {
-    window.open("https://blockchain.info/terms_of_service", "_blank");
-  }
-
   $scope.didLoad = () => {
     $scope.accounts = Wallet.accounts;
   };

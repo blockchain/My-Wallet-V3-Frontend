@@ -63,7 +63,8 @@
       adverts
     li.terms-policy
       ul.flex-center.aside.em-300.type-sm
-        li.pointer.mrm(ng-click="termsOfService()", translate="TOS")
+        li.pointer.mrm
+          a.text-color(href="https://blockchain.info/Resources/TermsofServicePolicy.pdf", translate="TOS" target="_blank")
         li.mrm.type-xs
           i.ti-control-record
         li.pointer(ng-click="privacyPolicy()", translate="PRIVACY")
