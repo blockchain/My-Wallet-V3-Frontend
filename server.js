@@ -32,7 +32,7 @@ app.use(function (req, res, next) {
       "script-src 'self' 'sha256-mBeSvdVuQxRa2pGoL8lzKX14b2vKgssqQoW36iRlU9g=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='",
       "connect-src 'self' " + rootURL + " " + (webSocketURL || "wss://*.blockchain.info") + " " + (apiDomain ||  "https://api.blockchain.info"),
       "object-src 'none'",
-      "media-src 'self' data: mediastream: blob:",
+      "media-src 'self' https://dl.dropboxusercontent.com/s/9qir4ihsyk2wn8d/blockchain-ad.mp4 https://dl.dropboxusercontent.com/s/irml3dze4i2q0ga/legacy-what-is-bitcoin-TEMP.mp4 data: mediastream: blob:",
       "font-src 'self'", ''
     ]).join('; ');
     res.setHeader('content-security-policy', cspHeader);
