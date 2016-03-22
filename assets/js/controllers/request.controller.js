@@ -109,7 +109,10 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
   $scope.$watchCollection("destinations", () => {
     let idx = Wallet.getDefaultAccountIndex();
     if ($scope.hasLegacyAddress) {
-      return $scope.fields.to = $scope.legacyAddresses()[0]
+      debugger;
+      return $scope.fields.to = filterFilter(Wallet.legacyAddresses(), {
+        archived: false,
+      }).reverse()[0]
     }
     if (($scope.fields.to == null) && $scope.accounts().length > 0) {
       if ($stateParams.accountIndex === "" || ($stateParams.accountIndex == null)) {
