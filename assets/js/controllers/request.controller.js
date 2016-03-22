@@ -109,7 +109,6 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
   $scope.$watchCollection("destinations", () => {
     let idx = Wallet.getDefaultAccountIndex();
     if ($scope.hasLegacyAddress) {
-      debugger;
       return $scope.fields.to = filterFilter(Wallet.legacyAddresses(), {
         archived: false,
       }).reverse()[0]
