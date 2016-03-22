@@ -632,5 +632,7 @@
   "IN_CONTROL": "You stay in control",
   "ACCESS_TO_BITCOINS": "With Blockchain, you are the only one who has access to your bitcoins. Your wallet can never be seized or blocked.",
   "PROTECTING_FUNDS": "Protecting your funds from unauthorized access",
-  "STATE_OF_THE_ART_SEC": "A state of the art Security Center to help protect your funds from unauthorized access. We'll help you secure your wallet with a ste-by-step guide. Advanced Two Factor Authentication keeps the bad guys out via Google Authenticator, SMS, or Yubikey."
+  "STATE_OF_THE_ART_SEC": "A state of the art Security Center to help protect your funds from unauthorized access. We'll help you secure your wallet with a ste-by-step guide. Advanced Two Factor Authentication keeps the bad guys out via Google Authenticator, SMS, or Yubikey.",
+  "YES_IM_SURE": "Yes I'm Sure.",
+  "OK": "OK"
 }

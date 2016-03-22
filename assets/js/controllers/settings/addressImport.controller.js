@@ -164,7 +164,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
 
   $scope.close = () => {
     if ($scope.step == 2 && $scope.address.balance > 0 && !$scope.address.isWatchOnly) {
-      Alerts.confirm('CONFIRM_NOT_SWEEP').then($uibModalInstance.dismiss);
+      Alerts.confirm('CONFIRM_NOT_SWEEP', {}, '', 'YES_IM_SURE').then($uibModalInstance.dismiss);
     } else {
       $uibModalInstance.dismiss("");
     }

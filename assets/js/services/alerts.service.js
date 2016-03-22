@@ -68,13 +68,14 @@ function Alerts($timeout, $rootScope, $translate, $uibModal) {
     });
   }
 
-  function confirm(message, values={}, modalClass='') {
+  function confirm(message, values={}, modalClass='', close="OK") {
     return $uibModal.open({
       templateUrl: 'partials/modal-confirm.jade',
       windowClass: 'bc-modal confirm ' + modalClass,
       controller: function ($scope) {
         $scope.message = message;
         $scope.values = values;
+        $scope.close = close;
       }
     }).result;
   }
