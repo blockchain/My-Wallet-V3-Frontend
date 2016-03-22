@@ -229,13 +229,18 @@ $fast: 0.2s;
     @include transform-center-horizontal;
     &.ng-hide {
       opacity: 0;
+      &:not(.ng-animate) {
+        @include transition(opacity 0s);
+      }
     }
   }
 
   .level-complete-animation,
   .level-complete-container {
     &.ng-hide {
+      opacity: 0;
       z-index: -1;
+      @include transition(opacity 0s);
     }
   }
 
