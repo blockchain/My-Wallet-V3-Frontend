@@ -45,8 +45,7 @@
     "karma-osx-reporter": "^0.1.0",
     "karma-phantomjs-launcher": "^0.1.4",
     "node-env-file": "^0.1.4",
-    "shelljs": "^0.3.0",
-    "left-pad": "git://github.com/azer/left-pad.git#bff80e3ef0db0bfaba7698606c4f623433d14355"
+    "shelljs": "^0.3.0"
   },
   "scripts": {
     "postinstall": "node_modules/bower/bin/bower install",
