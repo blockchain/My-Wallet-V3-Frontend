@@ -8,18 +8,18 @@
       .border-bottom-light.pbm.mbm
         span.em-500.prm(translate="TRANSACTION_DETAILS" ng-class="{incoming_tx: transaction.result > 0, outgoing_tx: transaction.result < 0, local_tx: transaction.intraWallet}")
         span {{::transaction.time * 1000 | date:'MMMM d @ hh:mm a'}}
-      .flex
+      .flex.details-container
         .tx-details.pal.flex-3
           .tx-sender
             label(translate="FROM")
             |:
-            p.text.mbs {{::input.label}}
+            span.text.mbs.mls {{::input.label}}
           .tx-receiver
             label
               span(translate="TO")
               |:  
-            ul.pln.flex-column.flex.type-sm
-              li.flex-center.mbm(ng-repeat="destination in destinations")
+            ul.pln.flex-column.flex.type-sm.mls
+              li.flex-center(ng-repeat="destination in destinations")
                 span.text-overflow-hidden.flex-1.flex.text
                   | {{::destination.label}}
                 span.plm.center-align.text(ng-hide="destinations.length <= 1")
@@ -27,6 +27,10 @@
           .mtm.ptm.border-top
             label(translate="NOTE_LC")
             transaction-note(transaction="transaction")
+          .mtm.ptm.border-top(ng-if="transaction.publicNote")
+            label(translate="PUBLIC_NOTE")
+            | :
+            p.mtl {{::transaction.publicNote}}
         .border-left.pal.flex-1
           .tx-amount
             amount(transaction="transaction" btc)
@@ -41,6 +45,3 @@
           .tx-bci-link.button-default.button-sm
             a.black(ng-href="http://www.blockchain.info/tx/{{ transaction.hash }}", target="_blank")
              span(translate="VERIFY_ON_BCI")
-    .transaction-card.clearfix(ng-if="transaction.publicNote")
-      strong(translate="PUBLIC_NOTE")
-      p.mtl {{::transaction.publicNote}}

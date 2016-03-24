@@ -476,7 +476,7 @@
   "DYK_BTC_VALUE": "Our wallet balances are reflected in bitcoin, but we do show a dollar estimation based on the current market price. The amount of bitcoins will stay the same regardless of market fluctuations in price.",
   "DYK_BTC_VALUE_TITLE": "Bitcoin's value is constantly changing",
   "GIVE_FEEDBACK": "Give Us Your Feedback.",
-  "FEEDBACK_THANKS": "Thank you or your feedback! We'd be happy to get more in-depth feedback from you via",
+  "FEEDBACK_THANKS": "Thank you for your feedback! We'd be happy to get more in-depth feedback from you via",
   "FEEDBACK_AWESOME": "Awesome!",
   "FEEDBACK_GOOD": "Good",
   "FEEDBACK_MEH": "Meh, it's ok",
@@ -632,5 +632,7 @@
   "IN_CONTROL": "You stay in control",
   "ACCESS_TO_BITCOINS": "With Blockchain, you are the only one who has access to your bitcoins. Your wallet can never be seized or blocked.",
   "PROTECTING_FUNDS": "Protecting your funds from unauthorized access",
-  "STATE_OF_THE_ART_SEC": "A state of the art Security Center to help protect your funds from unauthorized access. We'll help you secure your wallet with a ste-by-step guide. Advanced Two Factor Authentication keeps the bad guys out via Google Authenticator, SMS, or Yubikey."
+  "STATE_OF_THE_ART_SEC": "A state of the art Security Center to help protect your funds from unauthorized access. We'll help you secure your wallet with a ste-by-step guide. Advanced Two Factor Authentication keeps the bad guys out via Google Authenticator, SMS, or Yubikey.",
+  "DONT_SWEEP": "Don't Sweep",
+  "OK": "OK"
 }

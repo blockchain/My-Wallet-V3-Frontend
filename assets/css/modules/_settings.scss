@@ -126,6 +126,10 @@ table.accounts-container {
 @media (min-width: 992px){
   .setting-result {
     text-align: right;
+    float: right;
+    @media (max-width: 1200px) {
+      min-width: 33.333%;
+    }
   }
   h2.status {
     margin: 0px 0px 15px;

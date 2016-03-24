@@ -1,21 +1,23 @@
 describe "Scroll in View Directive", ->
   $compile = undefined
   $rootScope = undefined
+  $sce = undefined
   element = undefined
   isoScope = undefined
 
   beforeEach module("walletApp")
   
-  beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
+  beforeEach inject((_$compile_, _$rootScope_, _$sce_, Wallet) ->
 
     $compile = _$compile_
     $rootScope = _$rootScope_
+    $sce = _$sce_
 
     return
   )
 
   beforeEach ->
-    element = $compile("<video-container img='img/blockchain-ad-placeholder.jpg' video='img/blockchain-ad.mp4'></video-container>")($rootScope)
+    element = $compile("<video-container img='img/blockchain-ad-placeholder.jpg' video='my.video.mp4'></video-container>")($rootScope)
     $rootScope.$digest()
     isoScope = element.isolateScope()
     isoScope.$digest()
@@ -31,3 +33,7 @@ describe "Scroll in View Directive", ->
     isoScope.toggle()
     expect(isoScope.playing).toBe(true)
 
+  it "should trust the video src", ->
+    spyOn(isoScope, "trust")
+    isoScope.$digest()
+    expect(isoScope.trust).toHaveBeenCalled()
