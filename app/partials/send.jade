@@ -25,11 +25,11 @@
           p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")
           span(ng-show="originsLoaded")
-            ui-select(
+            ui-select.send-from-dropdown(
               ng-model="transaction.from"
               name="from"
-              ng-change="validateAmounts(); checkForSameDestination(); setPaymentFrom()"
-              required).send-from-dropdown
+              ng-change="checkForSameDestination(); setPaymentFrom()"
+              required)
               ui-select-match
                 label-origin(origin="$select.selected")
               ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)")
@@ -51,13 +51,14 @@
                 name="{{ 'destinations' + $index }}"
                 ng-model="transaction.destinations[$index]"
                 ng-model-options="{ updateOn: 'blur' }"
-                ng-change="updateToLabel(); checkForSameDestination();"
-                on-payment-request="applyPaymentRequest(request, $index)")
+                ng-change="checkForSameDestination()"
+                on-payment-request="applyPaymentRequest(request, $index)"
+                required)
             .has-error
               span.help-block(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress && sendForm['destinations' + $index].$touched && transaction.destinations[$index].address !== ''")
               span.help-block(translate="SAME_DESTINATION" ng-show="sendForm['destinations' + $index].$error.isNotEqual")
             //- Amount
-            div.flex-center.recipient-currency.mtl(ng-class="{'has-error': hasAmountError($index) || hasInsufficientError($index) }")
+            div.flex-center.recipient-currency.mtl(ng-class="{'has-error': hasAmountError($index)}")
               .mrl.flex-1
                 .flex-center.border-bottom
                   span.mrm {{ btcCurrency.code }}:
@@ -70,7 +71,7 @@
                     placeholder="0"
                     min="1"
                     max="2100000000000000"
-                    ng-change="validateAmounts(); setPaymentAmount()"
+                    ng-change="setPaymentAmount()"
                     required
                   )
               i.ti-arrows-horizontal.h4.aaa.prm
@@ -86,22 +87,22 @@
                     placeholder="0"
                     min="1"
                     max="2100000000000000"
-                    ng-change="validateAmounts(); setPaymentAmount()"
+                    ng-change="setPaymentAmount()"
                     required
                   )
               a.mlm.button-danger.type-sm.button-sm(ng-click="removeDestination($index)" ng-hide="$first && $last")
                 i.ti-close.mrm.type-xs
                 span(translate="REMOVE")
           .has-error
-            span.help-block(ng-show="hasInsufficientError(0)")
+            span.help-block(ng-show="getTransactionTotal() > transaction.maxAvailable")
               span(translate="TOTAL_AVAILABLE" ng-show="!advanced")
               span(translate="TOTAL_AVAILABLE_MINUS_FEE" ng-show="advanced")
-              | : {{ getAvailableBalance() | convert:false:true }}
+              | : {{ transaction.maxAvailable | convert:false:true }}
           a.flex-center.flex-justify.button-default(ng-click="addDestination()" ng-show="advanced")
             i.ti-plus.mrm
             span(translate="ADD_ANOTHER_RECIPIENT")
       //- Fee
-      .flex-column.form-group.bc-modal-fade.col-sm-offset-2.col-sm-10.mtm(ng-class="{'has-error': blockIdx > 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}" ng-show="advanced")
+      .flex-column.form-group.bc-modal-fade.col-sm-offset-2.col-sm-10.mtm(ng-class="{'has-error': transaction.blockIdx > 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}" ng-show="advanced")
         div.mbm.flex-center
           label.mbn(translate="TX_FEE")
           helper-button(content="TX_FEE_HELP")
@@ -116,20 +117,20 @@
                   tabindex="1"
                   ng-model="transaction.fee"
                   min="1"
-                  ng-change="validateAmounts(); setPaymentFee();"
+                  ng-change="setPaymentFee()"
                   required
                   transform-currency="settings.btcCurrency"
                   placeholder="Enter your fee here")
         span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$dirty")
-        span.help-block.friendly(ng-show="!sendForm.$invalid && !hasInsufficientError(0)")
-          span(ng-show="blockIdx <= 6")
-            span(translate="ESTIMATED_TX_TIME" translate-values="{ confirmationTime: blockIdx*10, blockQueue: blockIdx }")
+        span.help-block.friendly(ng-show="!sendForm.$invalid && amountsAreValid()")
+          span(ng-show="transaction.blockIdx <= 6 && transaction.blockIdx >= 1")
+            span(translate="ESTIMATED_TX_TIME" translate-values="{ confirmationTime: transaction.blockIdx*10, blockQueue: transaction.blockIdx }")
             |  
-            ng-pluralize(count="blockIdx" 
+            ng-pluralize(count="transaction.blockIdx" 
                          ng-init="block='BLOCK'; blocks='BLOCKS'"
                          when="{'1': '{{block | translate}}', 'other': '{{blocks | translate}}' }")
             span ).
-          span.has-error(ng-show="blockIdx > 6" translate="SMALL_FEE_WARNING")
+          span.has-error(ng-show="transaction.blockIdx > 6" translate="SMALL_FEE_WARNING")
   //- Step 2 (confirmation)
   div.overview(ng-show="confirmationStep")
     .flex-column
@@ -143,7 +144,7 @@
           label.mbn.flex-1.mrm
             span(translate="TO")
             |:
-          h5.btcaddr.mvn.flex-10.aaa.em-300.long-input {{ toLabel }}
+          h5.btcaddr.mvn.flex-10.aaa.em-300.long-input(ng-if="confirmationStep") {{:: getToLabel() }}
       .flex.flex-wrap.ptm
         .total-amounts.aaa.mbm
           .flex-center.pbl
@@ -199,7 +200,7 @@
       ui-ladda="building"
       ng-click="goToConfirmation()"
       tabindex="1"
-      ng-disabled="sendForm.$invalid || !amountIsValid || !allAmountsAboveZero()"
+      ng-disabled="sendForm.$invalid || !amountsAreValid()"
       data-style="expand-left"
       ng-hide="confirmationStep")
 
@@ -207,6 +208,6 @@
       ladda-translate="SEND"
       ui-ladda="sending"
       ng-click="send()"
-      ng-disabled="noteForm.$invalid || !amountIsValid"
+      ng-disabled="noteForm.$invalid"
       data-style="expand-left"
       ng-show="confirmationStep")

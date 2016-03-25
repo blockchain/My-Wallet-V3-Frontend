@@ -20,8 +20,8 @@ angular.module('walletApp.core').factory 'MyWalletPayment', ($q) ->
     this.note = (note) -> this
     this.sweep = () -> this
     this.build = () -> this
-    this.buildbeta = () -> $q.resolve()
     this.sideEffect = () -> this
     this.sign = (pass) -> this
     this.publish = () -> this
+    this.on = (e, f) -> this
     this
