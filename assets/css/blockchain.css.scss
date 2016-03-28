@@ -57,7 +57,7 @@
 @import 'utilities/legacy';
 
 * {
-  outline: none;
+  outline: none !important;
 }
 
 html,body {

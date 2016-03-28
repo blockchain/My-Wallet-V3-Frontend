@@ -57,7 +57,9 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
 
   $scope.regularReceive = () => {
     $scope.advanced = false;
+
     $scope.fields.label = "";
+    $scope.fields.amount = null;
   }
 
   $scope.done = () => {
@@ -150,12 +152,10 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
     if ($scope.fields.amount > 0) {
       url += `?amount=${ parseFloat($scope.fields.amount / 100000000) }`;
     }
+    if ($scope.fields.label.length) {
+      url += `?message=${ $scope.fields.label.split(' ').join('+') }`;
+    }
 
     return url;
   }
-
-
-  $scope.setPaymentRequestURL = (address, amount) => {
-
-  };
 }

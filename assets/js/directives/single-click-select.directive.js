@@ -31,6 +31,7 @@ function singleClickSelect($window) {
 
       if ($window.getSelection().toString() !== '') {
         scope.highlighted = true;
+        elem.addClass('highlighted')
       }
       if (scope.browserCanExecCommand) {
         $window.document.execCommand('copy');

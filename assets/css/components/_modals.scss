@@ -10,15 +10,21 @@
 // Container that the modal scrolls within
 .modal {
   display: none;
-  overflow: hidden;
   position: fixed;
+  overflow: hidden;
   top: 0;
+  left: 0;
   right: 0;
   bottom: 0;
-  left: 0;
   z-index: $zindex-modal;
   -webkit-overflow-scrolling: touch;
   outline: 0;
+  @media (max-width: 768px) {
+    top: 20px;
+    overflow: auto;
+    position: absolute;
+    display: block !important;
+  }
   &.fade .modal-dialog {
     transform: scale(.8);
     transition: transform 0.15s linear;
@@ -177,8 +183,19 @@
   @extend .flex-justify;
   @extend .flex-center;
   .modal-content { background: $light-blue; }
-  .modal-dialog { width: 55vw; margin: 0 !important }
+  .modal-dialog { width: 55vw; margin: 0 auto !important }
   &.small { .modal-dialog { width: 40vw; } }
+  &.large {
+    .modal-dialog {
+      width: 60vw;
+    }
+    @media (max-width: 1052px) {
+      .modal-dialog { width: 65vw; }
+    }
+    @media (max-width: 992px) {
+      .modal-dialog { width: 85vw; }
+    }
+  }
   &.auto { 
     @media (min-width: 768px) {
       .modal-dialog { width: auto; } 
