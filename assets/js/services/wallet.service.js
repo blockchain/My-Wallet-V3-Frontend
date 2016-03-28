@@ -99,8 +99,10 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
   MyBlockchainApi.API_CODE = wallet.api_code;
 
-  wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) => {
-    let didLogin = () => {
+  wallet.login = (sessionToken, uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) => {
+    let didLogin = (result) => {
+      let guid = result.guid;
+      let sessionToken = result.sessionToken;
       wallet.status.isLoggedIn = true;
       wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
       if (wallet.my.wallet.isUpgradedToHD) {
@@ -167,12 +169,12 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
         $rootScope.$safeApply();
       });
       if (successCallback != null) {
-        successCallback();
+        successCallback(guid, sessionToken);
       }
       $rootScope.$safeApply();
     };
 
-    let needsTwoFactorCode = (method) => {
+    let needsTwoFactorCode = (sessionToken, method) => {
       Alerts.displayWarning('Please enter your 2FA code');
       wallet.settings.needs2FA = true;
       // 2: Email
@@ -180,7 +182,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       // 4: Google Authenticator
       // 5: SMS
 
-      needsTwoFactorCallback();
+      needsTwoFactorCallback(sessionToken, method);
 
       wallet.settings.twoFactorMethod = method;
       $rootScope.$safeApply();
@@ -193,16 +195,17 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
 
     let loginError = (error) => {
       console.log(error);
-      if (error.indexOf('Unknown Wallet Identifier') > -1) {
+      if (error.length && error.indexOf('Unknown Wallet Identifier') > -1) {
         errorCallback('uid', error);
-      } else if (error.indexOf('password') > -1) {
+      } else if (error.length && error.indexOf('password') > -1) {
         errorCallback('password', error);
       } else {
-        Alerts.displayError(error, true);
+        Alerts.displayError(error.message || error, true);
         errorCallback();
       }
       $rootScope.$safeApply();
     };
+
     if (two_factor_code != null && two_factor_code !== '') {
       wallet.settings.needs2FA = true;
     } else {
@@ -230,18 +233,18 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
 
     wallet.my.login(
       uid,
-      null, // sharedKey
       password,
-      two_factor,
-      didLogin,
-      needsTwoFactorCode,
-      wrongTwoFactorCode,
-      authorizationRequired,
-      loginError,
-      () => {}, // fetchSuccess
-      () => {}, // decryptSucces
-      () => {} // buildHDSucces
-    );
+      {
+        twoFactor: two_factor,
+        sessionToken: sessionToken
+      },
+      {
+        needsTwoFactorCode: needsTwoFactorCode,
+        wrongTwoFactorCode: wrongTwoFactorCode,
+        authorizationRequired: authorizationRequired
+      }
+    ).then(didLogin).catch(loginError);
+
     currency.fetchExchangeRate();
   };
 
@@ -317,8 +320,8 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       Alerts.displaySuccess('Wallet created with identifier: ' + uid, true);
       wallet.status.firstTime = true;
 
-      let loginSuccess = () => {
-        success_callback(uid);
+      let loginSuccess = (guid, sessionToken) => {
+        success_callback(uid, sessionToken);
       };
 
       let loginError = (error) => {
@@ -326,7 +329,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
         Alerts.displayError('Unable to login to new wallet');
       };
 
-      wallet.login(uid, password, null, null, loginSuccess, loginError);
+      wallet.login(null, uid, password, null, null, loginSuccess, loginError);
     };
 
     let error = (error) => {
@@ -422,10 +425,11 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       .then(success).catch(error);
   };
 
-  wallet.logout = () => {
+  wallet.logout = (sessionToken) => {
     wallet.didLogoutByChoice = true;
     $window.name = 'blockchain';
-    wallet.my.logout(true);
+    $cookies.remove('session');
+    wallet.my.logout(sessionToken, true);
   };
 
   wallet.makePairingCode = (successCallback, errorCallback) => {
@@ -1041,6 +1045,8 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   wallet.disableRememberTwoFactor = (successCallback, errorCallback) => {
     let success = () => {
       wallet.settings.rememberTwoFactor = false;
+      // This takes effect immedidately:
+      $cookies.remove('session');
       successCallback();
       $rootScope.$safeApply();
     };

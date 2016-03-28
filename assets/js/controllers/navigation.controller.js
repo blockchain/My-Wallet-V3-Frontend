@@ -34,12 +34,14 @@ function NavigationCtrl ($rootScope, $scope, Wallet, currency, SecurityCenter, $
       $scope.uid = null;
       $scope.password = null;
       $cookies.remove('password');
-//      $cookies.remove('uid') // Pending a 'Forget Me feature'
+      let sessionToken = $cookies.get('session');
+      $cookies.remove('session');
+//      $cookies.remove("uid") // Pending a "Forget Me feature"
 
       $state.go('wallet.common.transactions', {
         accountIndex: ''
       });
-      Wallet.logout();  // Refreshes the browser, so won't return
+      Wallet.logout(sessionToken);  // Refreshes the browser, so won't return
     });
   };
 

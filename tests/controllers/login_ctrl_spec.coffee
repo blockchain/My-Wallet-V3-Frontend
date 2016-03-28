@@ -45,10 +45,11 @@ describe "LoginCtrl", ->
 
   it "should resend two factor sms", inject((Wallet, WalletNetwork) ->
     Wallet.settings.twoFactorMethod = 5
+    scope.sessionToken = "token"
     scope.uid = "user"
 
     scope.resend()
 
     expect(WalletNetwork.resendTwoFactorSms).toHaveBeenCalled()
-    expect(WalletNetwork.resendTwoFactorSms).toHaveBeenCalledWith("user")
+    expect(WalletNetwork.resendTwoFactorSms).toHaveBeenCalledWith("user", "token")
   )

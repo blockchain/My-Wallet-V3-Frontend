@@ -20,8 +20,13 @@ describe "walletServices", () ->
         success: (() ->),
         error: (() ->)}
 
-      Wallet.my.login = (uid, sharedKey, password, two_factor_code, didLogin) ->
-        didLogin()
+      Wallet.my.login = (uid, password, credentials, callbacks) ->
+        then: (cb) ->
+          cb({guid: "1234", sessionToken: "token"})
+          {
+            catch: () ->
+          }
+
 
       Wallet.my.wallet =
         isUpgradedToHD: true

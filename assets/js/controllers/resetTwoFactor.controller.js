@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('ResetTwoFactorCtrl', ResetTwoFactorCtrl);
 
-function ResetTwoFactorCtrl ($scope, $rootScope, $http, $translate, WalletNetwork, Alerts) {
+function ResetTwoFactorCtrl ($scope, $rootScope, $http, $translate, WalletNetwork, Alerts, $sce) {
   $scope.currentStep = 1;
   $scope.fields = {
     email: '',
@@ -17,9 +17,14 @@ function ResetTwoFactorCtrl ($scope, $rootScope, $http, $translate, WalletNetwor
   });
 
   $scope.refreshCaptcha = () => {
-    let time = new Date().getTime();
-    $scope.captchaSrc = $rootScope.rootURL + `kaptcha.jpg?timestamp=${time}`;
-    $scope.fields.captcha = '';
+    WalletNetwork.getCaptchaImage().then((data) => {
+      let url = URL.createObjectURL(data.image);
+      $sce.trustAsResourceUrl(url);
+      $scope.captchaSrc = url;
+      $scope.sessionToken = data.sessionToken;
+      $scope.fields.captcha = '';
+      $rootScope.$safeApply();
+    });
   };
 
   $scope.resetTwoFactor = () => {
@@ -54,6 +59,7 @@ function ResetTwoFactorCtrl ($scope, $rootScope, $http, $translate, WalletNetwor
     $scope.form.$setUntouched();
 
     WalletNetwork.requestTwoFactorReset(
+      $scope.sessionToken,
       $scope.fields.uid,
       $scope.fields.email,
       $scope.fields.newEmail,

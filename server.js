@@ -21,7 +21,7 @@ rootApp.use('/wallet', app);
 app.use(function (req, res, next) {
   if (req.url === '/') {
     var cspHeader = ([
-      "img-src 'self' " + rootURL + ' data:',
+      "img-src 'self' " + rootURL + ' data: blob:',
       // echo -n "outline: 0;" | openssl dgst -sha256 -binary | base64
       // "outline: 0;"        : ud+9... from ui-select
       // "margin-right: 10px" : 4If ... from ui-select

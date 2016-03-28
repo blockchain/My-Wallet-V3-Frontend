@@ -49,6 +49,9 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
   if ($cookies.get('password')) {
     $scope.password = $cookies.get('password');
   }
+  if ($cookies.get('session')) {
+    $scope.sessionToken = $cookies.get('session');
+  }
   $scope.login = () => {
     if ($scope.busy) return;
     $scope.busy = true;
@@ -66,21 +69,28 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
         $scope.didEnterCorrect2FA = true;
       }
     };
-    const needs2FA = () => {
+    const needs2FA = (sessionToken) => {
+      $cookies.put('session', sessionToken);
       $scope.busy = false;
       $scope.didAsk2FA = true;
+      $scope.sessionToken = sessionToken;
     };
-    const success = () => {
+    const success = (guid, sessionToken) => {
+      $cookies.put('session', sessionToken);
       $scope.busy = false;
       if ($scope.autoReload && $cookies.get('reload.url')) {
         $location.url($cookies.get('reload.url'));
         $cookies.remove('reload.url');
       }
     };
+    if ($scope.uid !== $cookies.get('uid')) {
+      // Don't reuse the session token for a different wallet.
+      $scope.sessionToken = null;
+    }
     if ($scope.settings.needs2FA) {
-      Wallet.login($scope.uid, $scope.password, $scope.twoFactorCode, () => {}, success, error);
+      Wallet.login($scope.sessionToken, $scope.uid, $scope.password, $scope.twoFactorCode, () => {}, success, error);
     } else {
-      Wallet.login($scope.uid, $scope.password, null, needs2FA, success, error);
+      Wallet.login($scope.sessionToken, $scope.uid, $scope.password, null, needs2FA, success, error);
     }
     if ($scope.uid != null && $scope.uid !== '') {
       $cookies.put('uid', $scope.uid);
@@ -107,7 +117,7 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
         $scope.resending = false;
         $rootScope.$safeApply();
       };
-      WalletNetwork.resendTwoFactorSms($scope.uid).then(success).catch(error);
+      WalletNetwork.resendTwoFactorSms($scope.uid, $scope.sessionToken).then(success).catch(error);
     }
   };
 
