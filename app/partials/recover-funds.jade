@@ -76,6 +76,7 @@
       div(ng-switch-when="2")
         button.button-muted.mrm(
           type="button"
+          ng-disabled="working"
           ng-click="goBack()"
           translate="GO_BACK")
         button.button-success(
