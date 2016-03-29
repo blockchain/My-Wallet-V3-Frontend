@@ -27,6 +27,8 @@ describe "AddressImportCtrl", ->
       Wallet.my =
         wallet:
           keys: []
+          hdwallet:
+            defaultAccountIndex: 0
 
       Wallet.status = {
         isLoggedIn: true

@@ -21,7 +21,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
   };
 
   $scope.$watchCollection("accounts()", (newValue) => {
-    $scope.fields.account = Wallet.accounts()[0];
+    $scope.fields.account = Wallet.accounts()[Wallet.my.wallet.hdwallet.defaultAccountIndex];
   });
 
   $scope.isValidAddressOrPrivateKey = (val) => {
