@@ -365,28 +365,28 @@ describe "SendCtrl", ->
 
       it 'should warn when the tx fee is low', ->
         scope.transaction.fee = lowFee
-        scope.checkFee({ sizeEstimate: avgSize }).then ->
+        scope.checkFee({ sizeEstimate: avgSize, estimateSizeForAmount: () -> avgSize }).then ->
           expect($uibModal.open).toHaveBeenCalled()
 
       it 'should warn when the tx fee is high', ->
         scope.transaction.fee = highFee
-        scope.checkFee({ sizeEstimate: avgSize }).then ->
+        scope.checkFee({ sizeEstimate: avgSize, estimateSizeForAmount: () -> avgSize }).then ->
           expect($uibModal.open).toHaveBeenCalled()
 
       it 'should not warn when the tx fee is normal', ->
         scope.transaction.fee = midFee
-        scope.checkFee({ sizeEstimate: avgSize }).then ->
+        scope.checkFee({ sizeEstimate: avgSize, estimateSizeForAmount: () -> avgSize }).then ->
           expect($uibModal.open).not.toHaveBeenCalled()
 
       it 'should take tx size into account when deciding to show warning', ->
         scope.transaction.fee = lgSizeFee
-        scope.checkFee({ sizeEstimate: lgSize }).then ->
+        scope.checkFee({ sizeEstimate: lgSize, estimateSizeForAmount: () -> avgSize }).then ->
           expect($uibModal.open).not.toHaveBeenCalled()
 
       it 'should warn when there is a surge', ->
         scope.transaction.fee = midFee
         scope.surgeWarning = true
-        scope.checkFee({ sizeEstimate: avgSize }).then ->
+        scope.checkFee({ sizeEstimate: avgSize, estimateSizeForAmount: () -> avgSize }).then ->
           expect($uibModal.open).toHaveBeenCalled()
 
     describe "note", ->

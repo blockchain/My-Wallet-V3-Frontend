@@ -468,7 +468,8 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     let surge = $scope.surgeWarning && !$scope.advanced;
     let currentFee = $scope.transaction.fee;
     let minimumFee = 5000;
-    let highestFeePossible = $scope.transaction.from.balance - $scope.transaction.amounts.reduce((a, b) => a + b, 0);
+    let transactionValue = $scope.transaction.amounts.reduce((a, b) => a + b, 0);
+    let highestFeePossible = $scope.transaction.from.balance - transactionValue;
     let suggestedFee;
 
     let showFeeWarning = $uibModal.open.bind($uibModal, {
@@ -501,9 +502,18 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     }
 
     return dynamicFeeVectorP.then(estimate => {
+      let lastSize = 0;
+      let maxSize = tx.sizeEstimate;
+
+      while (lastSize < maxSize) {
+        lastSize = maxSize;
+        let lowfee = fees.guessAbsoluteFee(maxSize, estimate[5].fee);
+        maxSize = tx.estimateSizeForAmount(transactionValue + lowfee);
+      }
+
       let high = fees.guessAbsoluteFee(tx.sizeEstimate, estimate[0].fee);
       let mid = fees.guessAbsoluteFee(tx.sizeEstimate, estimate[1].fee);
-      let low = fees.guessAbsoluteFee(tx.sizeEstimate, estimate[5].fee);
+      let low = fees.guessAbsoluteFee(maxSize, estimate[5].fee);
       low = low < minimumFee ? minimumFee : low;
       console.log('Fees (high: %d, mid: %d, low: %d)', high, mid, low);
 
