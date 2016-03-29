@@ -54,35 +54,35 @@ module.exports = (grunt) ->
           'build/js/filters.js'
           'build/js/routes.js'
           'build/js/translations.js'
-          'build/bower_components/angular-audio/app/angular.audio.js'
-          'build/bower_components/angular-inview/angular-inview.js'
+          'bower_components/angular-audio/app/angular.audio.js'
+          'bower_components/angular-inview/angular-inview.js'
           'build/js/templates.js'
-          'build/bower_components/webcam-directive/app/scripts/webcam.js'
-          'build/bower_components/bc-qr-reader/dist/bc-qr-reader.js'
-          'build/bower_components/angular-password-entropy/password-entropy.js'
-          'build/bower_components/qrcode/lib/qrcode.js'
-          'build/bower_components/angular-qr/src/angular-qr.js'
-          'build/bower_components/angular-ui-select/dist/select.js'
-          'build/bower_components/angular-ui-router/release/angular-ui-router.js'
-          'build/bower_components/angular-translate/angular-translate.js'
-          'build/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js'
-          'build/bower_components/digits-trie/dist/digits-trie.js'
-          'build/bower_components/google-libphonenumber/dist/browser/libphonenumber.js'
-          'build/bower_components/bc-countries/dist/bc-countries.js'
-          'build/bower_components/bc-phone-number/dist/js/bc-phone-number.js'
-          'build/bower_components/browserdetection/src/browser-detection.js'
+          'bower_components/webcam-directive/app/scripts/webcam.js'
+          'bower_components/bc-qr-reader/dist/bc-qr-reader.js'
+          'bower_components/angular-password-entropy/password-entropy.js'
+          'bower_components/qrcode/lib/qrcode.js'
+          'bower_components/angular-qr/src/angular-qr.js'
+          'bower_components/angular-ui-select/dist/select.js'
+          'bower_components/angular-ui-router/release/angular-ui-router.js'
+          'bower_components/angular-translate/angular-translate.js'
+          'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js'
+          'bower_components/digits-trie/dist/digits-trie.js'
+          'bower_components/google-libphonenumber/dist/browser/libphonenumber.js'
+          'bower_components/bc-countries/dist/bc-countries.js'
+          'bower_components/bc-phone-number/dist/js/bc-phone-number.js'
+          'bower_components/browserdetection/src/browser-detection.js'
         ]
 
         dest: "build/application-dependencies.js"
 
       application: # All components should first be minimized. Only trusted sources should be imported as minified..
         src: [
-          'build/bower_components/blockchain-wallet/dist/my-wallet.min.js'
-          'build/bower_components/angular/angular.min.js'
-          'build/bower_components/angular-sanitize/angular-sanitize.min.js'
-          'build/bower_components/angular-cookies/angular-cookies.min.js'
-          'build/bower_components/angular-animate/angular-animate.min.js'
-          'build/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
+          'bower_components/blockchain-wallet/dist/my-wallet.min.js'
+          'bower_components/angular/angular.min.js'
+          'bower_components/angular-sanitize/angular-sanitize.min.js'
+          'bower_components/angular-cookies/angular-cookies.min.js'
+          'bower_components/angular-animate/angular-animate.min.js'
+          'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
           'build/application-dependencies.min.js'
         ]
 
@@ -103,9 +103,9 @@ module.exports = (grunt) ->
     concat_css: {
       app: {
         src: [
-          "build/bower_components/angular-ui-select/dist/select.min.css"
-          "build/bower_components/bc-css-flags/dist/css/bc-css-flags.css"
-          "build/bower_components/bc-phone-number/dist/css/bc-phone-number.css"
+          "bower_components/angular-ui-select/dist/select.min.css"
+          "bower_components/bc-css-flags/dist/css/bc-css-flags.css"
+          "bower_components/bc-phone-number/dist/css/bc-phone-number.css"
           "build/css/blockchain.css" # Needs to be loaded first
           "build/css/**/*.css"
         ],
@@ -324,66 +324,13 @@ module.exports = (grunt) ->
           ]
 
     shell:
-      check_bower_dependencies:
-        command: () ->
-          'mkdir -p build && ruby ./check-dependencies.rb'
-
-      copy_bower_components_to_build:
-        command: () ->
-          'cp -r bower_components build'
-
-      npm_update_dependencies:
-        command: () ->
-           'npm update'
-
-      bower_install_dependencies:
-        command: () ->
-           'cd build && bower install'
-
       check_translations:
         command: () ->
           'ruby check_translations.rb'
 
-      check_pgp_signatures:
-        command: () ->
-          'ruby ./check_pgp_signatures.rb'
-
-      shrinkwrap:
-        command: (version) ->
-          "git rm --ignore-unmatch npm-shrinkwrap-*.json && npm shrinkwrap --dev && mv npm-shrinkwrap.json npm-shrinkwrap-#{ version }.json"
-
-      use_shrinkwrap:
-        command: (version) ->
-          "cp npm-shrinkwrap-#{ version }.json npm-shrinkwrap.json"
-
-      bower_update:
-        command: () ->
-          "bower update"
-
-      freeze_bower:
-        command: (version) ->
-          "git rm --ignore-unmatch bower-*.json && cp build/bower.json bower-#{ version }.json"
-
-      use_frozen_bower:
-        command: (version) ->
-          "cp bower-#{ version }.json build/bower.json"
-
-      commit_and_push_release:
-        command: (newVersion) ->
-          [
-              "git add npm-shrinkwrap-#{ newVersion }.json"
-              "git add bower-#{ newVersion }.json"
-              "git commit -m 'Release #{ newVersion }'"
-              "git push"
-          ].join(" && ")
-
       tag_release:
         command: (newVersion, message) ->
           "git tag -a -s #{ newVersion } -m '#{ message }' && git push --tags"
-
-      test_once:
-        command: () ->
-          './node_modules/karma/bin/karma start karma.conf.js --single-run'
 
     git_changelog:
       default:
@@ -452,7 +399,7 @@ module.exports = (grunt) ->
         replacements: [{
           from: 'versionMyWallet = null'
           to: () =>
-            version = exec('cat build/bower_components/blockchain-wallet/bower.json | grep \'version\": \' | grep -o \'\\d\\+.\\d\\+.\\d\\+\'').output
+            version = exec('cat bower_components/blockchain-wallet/bower.json | grep \'version\": \' | grep -o \'\\d\\+.\\d\\+.\\d\\+\'').output
             'versionMyWallet = "' + version.replace("\n", "") + '"'
         }]
 
@@ -492,73 +439,28 @@ module.exports = (grunt) ->
     "watch"
   ]
 
-  grunt.registerTask "release", (versionFrontend) =>
-    if versionFrontend == undefined || versionFrontend[0] != "v"
-      console.log "Missing version or version is missing 'v'"
+  # Make sure npm and bower dependencies are up to date
+  # Run clean, test and build first
+  grunt.registerTask "dist", (versionFrontend, rootUrl, rootPath, apiDomain) =>
+    if !versionFrontend
+      versionFrontend = "intermediate"
+    else if versionFrontend[0] != "v"
+      console.log "Version is missing 'v'"
       exit(1)
-
-    grunt.task.run [
-      "clean"
-      "build"
-      "shell:test_once"
-      "shell:npm_update_dependencies"
-      "shell:shrinkwrap:#{ versionFrontend }"
-
-      "shell:bower_update"
-      "shell:check_bower_dependencies"
-      "shell:bower_install_dependencies"
-      "shell:check_pgp_signatures"
-      "shell:freeze_bower:#{ versionFrontend }"
-
-      # Uglify, rename, etc just to make sure that works:
-      "concat:application_dependencies"
-      "uglify:application_dependencies"
-      "concat:application"
-      "concat_css:app"
-      "jade"
-      "preprocess"
-      "copy:main"
-      "rename:assets"
-      "rename:html"
-
-      # Generate changelog
-      "git_changelog"
-
-      # Commit shrinkwrap and tag release:
-      "shell:commit_and_push_release:#{ versionFrontend }"
-      "shell:tag_release:#{ versionFrontend }:#{ versionFrontend }"
-      "release_done:#{ versionFrontend }"
-    ]
-
-  grunt.registerTask "release_done", (versionFrontend) =>
-    console.log "Release done. Please copy Changelog.md over to Github release notes:"
-    console.log "https://github.com/blockchain/My-Wallet-V3-Frontend/releases/edit/#{ versionFrontend }"
-
-
-
-  grunt.registerTask "deploy", (versionFrontend, rootUrl, rootPath, apiDomain) =>
-    if versionFrontend == undefined || versionFrontend[0] != "v"
-      console.log "Missing version or version is missing 'v'"
-      exit(1)
-
-    grunt.task.run [
-      "clean"
-      "shell:use_shrinkwrap:#{ versionFrontend }"
-      "shell:npm_update_dependencies"
-      "build"
-    ]
 
     @versionFrontend = versionFrontend
 
-    if rootUrl
-      @rootUrl = rootUrl
+    if !rootUrl
+      rootUrl = "blockchain.info"
 
-      console.log("Custom root URL: " + @rootUrl)
+    @rootUrl = rootUrl
 
-      grunt.task.run [
-        "replace:root_url"
-        "replace:web_socket_url"
-      ]
+    console.log("Root URL: " + @rootUrl)
+
+    grunt.task.run [
+      "replace:root_url"
+      "replace:web_socket_url"
+    ]
 
     if rootPath
       @rootPath = rootPath
@@ -579,12 +481,6 @@ module.exports = (grunt) ->
 
     grunt.task.run [
       "replace:version_frontend"
-
-      "shell:use_frozen_bower:#{ versionFrontend }"
-      "shell:bower_install_dependencies"
-      # Faster, buy unsafe:
-      # "shell:copy_bower_components_to_build"
-
       "replace:version_my_wallet"
       "concat:application_dependencies"
       "uglify:application_dependencies"
@@ -597,56 +493,21 @@ module.exports = (grunt) ->
       "rename:html"
     ]
 
-  grunt.registerTask "dist_unsafe", (rootUrl, rootPath, apiDomain) =>
-    console.warn "Do not deploy this to production."
-    console.warn "Make sure your bower_components and node_modules are up to date"
-    grunt.task.run [
-      "build"
-    ]
-
-    @versionFrontend = "Unsafe"
-
-    if rootUrl
-      @rootUrl = rootUrl
-
-      console.log("Custom root URL: " + @rootUrl)
-
-      grunt.task.run [
-        "replace:root_url"
-        "replace:web_socket_url"
-      ]
-
-      if rootPath
-        @rootPath = rootPath
-
-        console.log("Custom root path: " + @rootPath)
-
-        grunt.task.run [
-          "replace:root_path"
-        ]
-
-    if apiDomain
-      @apiDomain = apiDomain
-      console.log("Custom API domain: " + @apiDomain)
-
-      grunt.task.run [
-        "replace:api_domain"
-      ]
+  # Run dist first
+  grunt.registerTask "release", (versionFrontend) =>
+    if versionFrontend == undefined || versionFrontend[0] != "v"
+      console.log "Missing version or version is missing 'v'"
+      exit(1)
 
     grunt.task.run [
-      "replace:version_frontend"
-      "shell:copy_bower_components_to_build"
-      "replace:version_my_wallet"
-      "concat:application_dependencies"
-      "uglify:application_dependencies"
-      "concat:application"
-      "concat_css:app"
-      "jade"
-      "preprocess"
-      "copy:main"
-      "rename:assets"
-      "rename:html"
+      "git_changelog"
+      "shell:tag_release:#{ versionFrontend }:#{ versionFrontend }"
+      "release_done:#{ versionFrontend }"
     ]
+
+  grunt.registerTask "release_done", (versionFrontend) =>
+    console.log "Release done. Please copy Changelog.md over to Github release notes:"
+    console.log "https://github.com/blockchain/My-Wallet-V3-Frontend/releases/edit/#{ versionFrontend }"
 
   grunt.registerTask "check_translations", [
     "shell:check_translations"
