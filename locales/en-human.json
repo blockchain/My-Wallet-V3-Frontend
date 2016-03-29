@@ -1,5 +1,5 @@
 {
-  "ADVANCED_RECEIVE" : "Advanced Receive",
+  "CUSTOMIZE" : "Customize",
   "REGULAR_RECEIVE" : "Regular Receive",
   "UID": "Wallet ID",
   "PASSWORD": "Password",
@@ -192,7 +192,6 @@
   "ADDRESS" : "Address",
   "LABEL" : "Label",
   "CONFIRM_REMOVE_LABEL" : "You will not be able to see or label this address again, but you can still safely receive funds on it.",
-  "LABEL_ADDRESS:" : "Label:",
   "DETAILS" : "Details",
   "TRANSFER" : "Transfer",
   "ARCHIVE" : "Archive",
@@ -634,5 +633,8 @@
   "PROTECTING_FUNDS": "Protecting your funds from unauthorized access",
   "STATE_OF_THE_ART_SEC": "A state of the art Security Center to help protect your funds from unauthorized access. We'll help you secure your wallet with a ste-by-step guide. Advanced Two Factor Authentication keeps the bad guys out via Google Authenticator, SMS, or Yubikey.",
   "DONT_SWEEP": "Don't Sweep",
-  "OK": "OK"
+  "OK": "OK",
+  "DESCRIPTION:": "Description:",
+  "COPY_HELPER": "Copy this address and share it with your sender via email, text, or carrier pigeon.",
+  "QR_HELPER": "Share this QR code with your sender."
 }

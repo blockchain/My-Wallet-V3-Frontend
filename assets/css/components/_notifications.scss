@@ -58,12 +58,23 @@
 }
 .message-contextual {
   width: 250px;
-  border-radius: 5px;
-  border: 1px solid $aaa;
-  position: absolute;
   z-index: 1048;
+  position: absolute;
+  border: 1px solid $aaa;
+  background-color: $light-blue;
+  border-radius: 0px !important;
   text-transform: none !important;
   //scoped CSS (refactor)
   a.button-success-alt { color: white; }
   a.aaa { color: $aaa; }
+}
+
+// popover and contextual-message overrides
+.message-contextual {
+  .arrow {
+    border-bottom-color: rgba(0, 0, 0, 0.6) !important;
+    &:after {
+      border-top-color: $light-blue !important;
+    }
+  }
 }

@@ -1,7 +1,7 @@
 .message.pointer(ng-hide="!message || dismissed")
   .message-beacon(ng-click="revealMsg()")
-  .message-contextual.bg-light-blue.pal(ng-show="reveal")
+  .message-contextual.pal(ng-show="reveal")
     p.mbl.black.center-align(translate="{{::message}}")
-    .flex-center.flex-between
+    .flex-center.flex-around
       a.aaa(ng-click="dismissMessage(messageIndex + 1)", translate="NO_THANKS")
       a.button-success-alt(ng-click="dismissMessage(messageIndex + 1)" ui-sref="wallet.common.security-center" translate="SECURE_WALLET") 

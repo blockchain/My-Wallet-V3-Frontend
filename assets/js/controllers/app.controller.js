@@ -27,13 +27,13 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
     $scope.requestBeacon = false;
     let modalInstance = $uibModal.open({
       templateUrl: "partials/request.jade",
+      windowClass: "bc-modal large",
       controller: "RequestCtrl",
       resolve: {
         destination: () => null,
         focus: () => false,
         hasLegacyAddress: () => hasLegacyAddress
-      },
-      windowClass: "bc-modal"
+      }
     });
     if (modalInstance != null) {
       modalInstance.opened.then(() => Wallet.store.resetLogoutTimeout());
