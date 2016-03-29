@@ -3,7 +3,7 @@ all: clean node_modules test pgp dist
 node_modules:
 	npm install
 
-build:
+build: node_modules
 	grunt build
 
 test: build
