@@ -882,6 +882,9 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   wallet.changeBTCCurrency = (btcCurrency) => $q((resolve, reject) => {
     wallet.settings_api.change_btc_currency(btcCurrency.serverCode, () => {
       wallet.settings.btcCurrency = btcCurrency;
+      if (currency.isBitCurrency(wallet.settings.displayCurrency)) {
+        wallet.settings.displayCurrency = btcCurrency;
+      }
       resolve(true);
     }, reject);
   });
