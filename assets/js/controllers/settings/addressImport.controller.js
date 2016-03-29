@@ -121,7 +121,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
     payment
       .from($scope.address.address)
       .to($scope.fields.account.index)
-      .sweep().build();
+      .useAll().build();
 
     const signAndPublish = (passphrase) => {
       return payment.sign(passphrase).publish().payment;
