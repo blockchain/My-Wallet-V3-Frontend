@@ -598,7 +598,7 @@
   "BLOCKS": "blocks",
   "SMALL_FEE_WARNING": "Your fee is so small that your transaction may never be confirmed.",
   "NO_UNSPENT_OUTPUTS" : "Missing coins to spend",
-  "BELOW_DUST_THRESHOLD" : "{{ amount  }} must be above dust threshold ({{ threshold }} Satoshis)",
+  "BELOW_DUST_THRESHOLD" : "One of your amounts is below the required minimum of {{ threshold }} satoshis",
   "STRANGE_SCRIPT" : "Strange Script",
   "CANNOT_DECODE_OUTPUT_ADDRESS" : "Unable to decode output address from transaction hash {{ tx_hash }}",
   "HD_ARCH": "Hierarchical deterministic address architecture:",
