@@ -41,6 +41,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   $scope.payment.on('update', data => {
     let tx = $scope.transaction;
     tx.fee = $scope.advanced && $scope.sendForm.fee.$dirty ? tx.fee : data.finalFee;
+    if (tx.fee === 0) tx.fee = data.sweepFees[$scope.defaultBlockInclusion];
     tx.maxAvailable = $scope.advanced ? data.balance - tx.fee : data.sweepAmount;
     if (tx.maxAvailable < 0) tx.maxAvailable = 0;
     tx.surge = data.fees.estimate[$scope.defaultBlockInclusion].surge;
