@@ -1,83 +1,28 @@
 angular
   .module('walletApp')
-  .controller("SetSecondPasswordCtrl", SetSecondPasswordCtrl);
+  .controller('SetSecondPasswordCtrl', SetSecondPasswordCtrl);
 
-function SetSecondPasswordCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $translate, $timeout) {
-  $scope.isValid = false;
+function SetSecondPasswordCtrl($scope, $timeout, $uibModalInstance, Wallet) {
   $scope.busy = null;
   $scope.fields = {
-    password: "",
-    confirmation: ""
+    password: '',
+    confirmation: ''
   };
 
-  $scope.close = () => {
-    Alerts.clear();
-    $uibModalInstance.dismiss("");
-  };
+  $scope.close = () => $uibModalInstance.dismiss('');
 
   $scope.setPassword = () => {
-    if ($scope.busy || !$scope.isValid) return;
+    if ($scope.busy || $scope.form.$invalid) return;
     $scope.busy = true;
-    $scope.$root.$safeApply($scope);
+    $scope.$safeApply();
 
     const success = () => {
       $scope.busy = false;
-      $uibModalInstance.dismiss("");
-      Wallet.saveActivity(2);
+      $uibModalInstance.dismiss('');
     };
 
     $timeout(() => {
       Wallet.setSecondPassword($scope.fields.password, success);
     }, 500);
   };
-
-  $scope.$watch("fields.confirmation", (newVal) => {
-    if (newVal != null) $scope.validate(false);
-  });
-
-  $scope.validate = (visual) => {
-    if (visual == null) visual = true;
-    let isValid = true;
-    $scope.errors = {
-      password: null,
-      confirmation: null
-    };
-    $scope.success = {
-      password: false,
-      confirmation: false
-    };
-
-    if ($scope.fields.password === "") {
-      isValid = false;
-    } else {
-      if ($scope.fields.password.length > 3) {
-        $scope.success.password = true;
-      } else {
-        isValid = false;
-        if (visual) {
-          $translate("TOO_SHORT").then((translation) => {
-            $scope.errors.password = translation;
-          });
-        }
-      }
-    }
-    if ($scope.fields.confirmation === "") {
-      isValid = false;
-    } else {
-      if ($scope.fields.confirmation === $scope.fields.password) {
-        $scope.success.confirmation = true;
-      } else {
-        isValid = false;
-        if (visual) {
-          $translate("NO_MATCH").then((translation) => {
-            $scope.errors.confirmation = translation;
-          });
-        }
-      }
-    }
-    $scope.isValid = isValid;
-  };
-
-  $scope.validate();
-
 }
