@@ -108,6 +108,7 @@
   "CANT_USE_EMAIL" : "You can't use your email as your password",
   "CANT_USE_HINT" : "You can't use your password hint as your password",
   "CANT_USE_CURRENT" : "You can't use your current password as your new password",
+  "CANT_USE_MAIN" : "You can't use your main password",
   "ADD_PASSWORD_HINT" : "Create Password Hint",
   "PASSWORD_HINT" : "Password Hint",
   "PASSWORD_HINT_EXPLAIN" : "Your Blockchain Wallet never communicates your password to our servers. This means we have no idea what your password is and we cannot reset it if you forget it. Create a memorable password hint that we can send to your verified email address in case you forget your password.",

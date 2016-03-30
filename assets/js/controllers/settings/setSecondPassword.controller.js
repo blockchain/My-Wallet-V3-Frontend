@@ -11,6 +11,8 @@ function SetSecondPasswordCtrl($scope, $timeout, $uibModalInstance, Wallet) {
 
   $scope.close = () => $uibModalInstance.dismiss('');
 
+  $scope.isMainPassword = Wallet.isCorrectMainPassword;
+
   $scope.isPasswordHint = (candidate) => {
     return Wallet.user.passwordHint && candidate === Wallet.user.passwordHint;
   };

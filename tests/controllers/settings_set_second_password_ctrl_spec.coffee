@@ -11,6 +11,7 @@ describe "SetSecondPasswordCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile, $templateCache) ->
       Wallet = $injector.get("Wallet")
       Wallet.user.passwordHint = "passhint"
+      Wallet.isCorrectMainPassword = (pw) -> pw == 'mainpw'
 
       scope = $rootScope.$new()
       template = $templateCache.get('partials/settings/set-second-password.jade')
@@ -46,6 +47,11 @@ describe "SetSecondPasswordCtrl", ->
 
     it "should not be valid if the password is the password hint", ->
       scope.form.password.$setViewValue('passhint')
+      expect(scope.form.password.$valid).toEqual(false)
+      expect(scope.form.password.$error.isValid).toEqual(true)
+
+    it "should not be valid if the password is the main password", ->
+      scope.form.password.$setViewValue('mainpw')
       expect(scope.form.password.$valid).toEqual(false)
       expect(scope.form.password.$error.isValid).toEqual(true)
 
