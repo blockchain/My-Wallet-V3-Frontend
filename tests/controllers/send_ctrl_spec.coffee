@@ -186,6 +186,62 @@ describe "SendCtrl", ->
         scope.applyPaymentRequest(scope.paymentRequest, 0)
         expect(scope.transaction.note).toEqual('hi')
 
+    describe "on update", ->
+      data =
+        finalFee: 2
+        sweepFees: [1,2,3,4,5,6]
+        balance: 5
+        sweepAmount: 2.5
+        fees: { estimate: [{ surge: true },{},{},{},{},{}] }
+        confEstimation: 2
+        absoluteFeeBounds: [2,4,6,8,10,12]
+
+      it "should set the surge warning", ->
+        scope.defaultBlockInclusion = 0
+        scope.payment.triggerUpdate(data)
+        expect(scope.transaction.surge).toEqual(true)
+
+      it "should set the blockIdx to the confEstimation", ->
+        scope.payment.triggerUpdate(data)
+        expect(scope.transaction.blockIdx).toEqual(data.confEstimation)
+
+      it "should set the fee bounds", ->
+        scope.payment.triggerUpdate(data)
+        expect(scope.transaction.feeBounds).toEqual(data.absoluteFeeBounds)
+
+      it "should set the sweep fees", ->
+        scope.payment.triggerUpdate(data)
+        expect(scope.transaction.sweepFees).toEqual(data.sweepFees)
+
+      describe "fee", ->
+
+        it "should be set to finalFee in regular send", ->
+          scope.payment.triggerUpdate(data)
+          expect(scope.transaction.fee).toEqual(2)
+
+        it "should be set to finalFee in advanced send", ->
+          scope.advanced = true
+          scope.payment.triggerUpdate(data)
+          expect(scope.transaction.fee).toEqual(2)
+
+        it "should not change if fee field was touched in advanced send", ->
+          scope.advanced = true
+          scope.transaction.fee = 3
+          scope.sendForm.fee.$setDirty()
+          scope.payment.triggerUpdate(data)
+          expect(scope.transaction.fee).toEqual(3)
+
+      describe "maxAvailable", ->
+
+        it "should be set to the sweepAmount", ->
+          scope.payment.triggerUpdate(data)
+          expect(scope.transaction.maxAvailable).toEqual(2.5)
+
+        it "should be set to the balance minus the fee in advanced send", ->
+          scope.advanced = true
+          scope.payment.triggerUpdate(data)
+          expect(scope.transaction.maxAvailable).toEqual(3)
+
     describe "from", ->
 
       it "should be invalid if null", ->
@@ -551,6 +607,23 @@ describe "SendCtrl", ->
         total = scope.getTransactionTotal(true)
         expect(total).toEqual(750)
 
+    describe "amountsAreValid", ->
+
+      beforeEach ->
+        scope.transaction.amounts = [10, 20]
+        scope.transaction.maxAvailable = 40
+
+      it "should be true when all conditions are met", ->
+        expect(scope.amountsAreValid()).toEqual(true)
+
+      it "should be false when any amounts are null", ->
+        scope.transaction.amounts[0] = null
+        expect(scope.amountsAreValid()).toEqual(false)
+
+      it "should be false when amounts exceed the available balance", ->
+        scope.transaction.maxAvailable = 29
+        expect(scope.amountsAreValid()).toEqual(false)
+
     describe "checkForSameDestination", ->
 
       beforeEach ->
@@ -567,6 +640,15 @@ describe "SendCtrl", ->
         scope.checkForSameDestination()
         expect(hasErr 'destinations0', 'isNotEqual').toBeUndefined()
         expect(hasErr 'destinations1', 'isNotEqual').toBe(true)
+
+    describe "hasAmountError", ->
+
+      it "should be true when all conditions are met", ->
+        field = scope.sendForm.amounts0
+        expect(field.$invalid).toEqual(true)
+        field.$setTouched()
+        spyOn(scope, 'amountsAreValid').and.returnValue(false)
+        expect(scope.hasAmountError(0)).toEqual(true)
 
     describe "modal navigation", ->
 
@@ -629,6 +711,15 @@ describe "SendCtrl", ->
 
       it "should return type 'Imported' when accounts=false", ->
         expect(scope.getFilter('', false).type).toEqual('Imported')
+
+    describe "finalBuild", ->
+
+      it "should resolve with the payment transaction", (done) ->
+        scope.finalBuild().then((tx) ->
+          expect(tx).toEqual('tx')
+          done()
+        )
+        scope.$digest()
 
   describe "with a payment request", ->
     beforeEach ->
