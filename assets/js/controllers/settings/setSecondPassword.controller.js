@@ -11,6 +11,10 @@ function SetSecondPasswordCtrl($scope, $timeout, $uibModalInstance, Wallet) {
 
   $scope.close = () => $uibModalInstance.dismiss('');
 
+  $scope.isPasswordHint = (candidate) => {
+    return Wallet.user.passwordHint && candidate === Wallet.user.passwordHint;
+  };
+
   $scope.setPassword = () => {
     if ($scope.busy || $scope.form.$invalid) return;
     $scope.busy = true;
