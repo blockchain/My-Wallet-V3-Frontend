@@ -8,55 +8,57 @@ describe "SetSecondPasswordCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller) ->
+    angular.mock.inject ($injector, $rootScope, $controller, $compile, $templateCache) ->
       Wallet = $injector.get("Wallet")
+      Wallet.user.passwordHint = "passhint"
 
       scope = $rootScope.$new()
+      template = $templateCache.get('partials/settings/set-second-password.jade')
 
       $controller "SetSecondPasswordCtrl",
         $scope: scope,
-        $stateParams: {},
         $uibModalInstance: modalInstance
 
+      scope.model = { fields: {} }
+      $compile(template)(scope)
       scope.$digest()
 
-      return
-
-    return
-
-  it "should close", inject((Alerts) ->
-    spyOn(Alerts, "clear")
+  it "should close", ->
+    spyOn(modalInstance, "dismiss")
     scope.close()
-    expect(Alerts.clear).toHaveBeenCalled()
-  )
+    expect(modalInstance.dismiss).toHaveBeenCalledWith('')
 
-  it "cover setSecondPassword if scope is valid and not busy", ->
-    scope.isValid = true
-    scope.busy = false
-    scope.setPassword()
+  describe "password", ->
 
-  it "should validate if the password is longer than 3 chars", ->
-    scope.fields.password = 'helloworld'
-    scope.validate()
-    expect(scope.success.password).toBe(true)
+    it "should be valid if the password is ok", ->
+      scope.form.password.$setViewValue('validpw')
+      expect(scope.form.password.$valid).toEqual(true)
 
-  it "should not validate if the password is shorter than 3 chars", ->
-    scope.fields.password = 'he'
-    scope.validate()
-    expect(scope.success.password).toBe(false)
+    it "should reset the confirmations field when changed", ->
+      scope.form.confirmation.$setViewValue('conf')
+      scope.form.password.$setViewValue('validpw')
+      expect(scope.fields.confirmation).toEqual('')
 
-  it "should validate if the confirmation is the same as the password", ->
-    scope.fields.password = 'helloworld'
-    scope.fields.confirmation = 'helloworld'
+    it "should not be valid if the password is too short", ->
+      scope.form.password.$setViewValue('asd')
+      expect(scope.form.password.$valid).toEqual(false)
+      expect(scope.form.password.$error.minlength).toEqual(true)
 
-    scope.validate()
+    it "should not be valid if the password is the password hint", ->
+      scope.form.password.$setViewValue('passhint')
+      expect(scope.form.password.$valid).toEqual(false)
+      expect(scope.form.password.$error.isValid).toEqual(true)
 
-    expect(scope.success.confirmation).toBe(true)
+  describe "confirmation", ->
 
-  it "should not validate if the confirmation is different than the password", ->
-    scope.fields.password = 'helloworld'
-    scope.fields.confirmation = 'helloworl'
+    beforeEach ->
+      scope.form.password.$setViewValue('validpw')
 
-    scope.validate()
+    it "should be valid if the confirmation is the same as the password", ->
+      scope.form.confirmation.$setViewValue('validpw')
+      expect(scope.form.confirmation.$valid).toEqual(true)
 
-    expect(scope.success.confirmation).toBe(false)
+    it "should not be valid if the confirmation is different than the password", ->
+      scope.form.confirmation.$setViewValue('differentpw')
+      expect(scope.form.confirmation.$valid).toEqual(false)
+      expect(scope.form.confirmation.$error.isValid).toEqual(true)
