@@ -20,8 +20,10 @@ angular.module('walletApp.core').factory 'MyWalletPayment', ($q) ->
     this.note = (note) -> this
     this.sweep = () -> this
     this.build = () -> this
-    this.buildbeta = () -> $q.resolve()
+    this.then = (cb) -> cb({ transaction: 'tx' }); this
+    this.catch = () -> this
     this.sideEffect = () -> this
     this.sign = (pass) -> this
     this.publish = () -> this
+    this.on = (e, f) -> this.triggerUpdate = f; this
     this
