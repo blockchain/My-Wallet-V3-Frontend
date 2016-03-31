@@ -11,7 +11,7 @@ describe "AddressImportCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
+    angular.mock.inject ($injector, $rootScope, $controller, $compile, $templateCache) ->
       Wallet = $injector.get("Wallet")
 
       Wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bip38passphrase, success, error, cancel) ->
@@ -35,6 +35,7 @@ describe "AddressImportCtrl", ->
       }
 
       scope = $rootScope.$new()
+      template = $templateCache.get('partials/settings/import-address.jade')
 
       $controller "AddressImportCtrl",
         $scope: scope,
@@ -42,14 +43,8 @@ describe "AddressImportCtrl", ->
         $uibModalInstance: modalInstance
         address: null
 
-      element = angular.element(
-        '<form role="form" name="importForm" novalidate>' +
-        '<input type="textarea" name="privateKey"       ng-model="fields.addressOrPrivateKey"   is-valid="isValidAddressOrPrivateKey(fields.addressOrPrivateKey)"     ng-disabled="BIP38"    ng-change="importForm.privateKey.$setValidity(\'present\', true)"   required />' +
-        '<input type="password" name="bipPassphrase"    ng-model="fields.bip38passphrase"       ng-change="importForm.bipPassphrase.$setValidity(\'wrong\', true)"      ng-required="BIP38" />' +
-        '</form>'
-      )
       scope.model = { fields: {} }
-      $compile(element)(scope)
+      $compile(template)(scope)
 
       scope.$digest()
 

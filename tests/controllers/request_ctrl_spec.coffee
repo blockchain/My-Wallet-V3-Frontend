@@ -8,7 +8,7 @@ describe "RequestCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $controller, $rootScope, $compile) ->
+    angular.mock.inject ($injector, $controller, $rootScope, $compile, $templateCache) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       currency = $injector.get('currency')
@@ -38,6 +38,7 @@ describe "RequestCtrl", ->
       currency.conversions.EUR = { conversion: 400000 }
 
       scope = $rootScope.$new()
+      template = $templateCache.get('partials/request.jade')
 
       $controller "RequestCtrl",
         $scope: scope,
@@ -47,14 +48,8 @@ describe "RequestCtrl", ->
         focus: false,
         hasLegacyAddress: false
 
-
-      element = angular.element(
-        '<form role="form" name="requestForm" novalidate>' +
-        '<input type="text" name="amount"   ng-model="fields.amount"  currency="{{fields.currency}}" />' +
-        '</form>'
-      )
       scope.model = { fields: {to: null, amount: '0', currency: Wallet.settings.currency, label: ""} }
-      $compile(element)(scope)
+      $compile(template)(scope)
 
       scope.$digest()
 
