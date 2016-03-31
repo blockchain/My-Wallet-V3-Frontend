@@ -1,9 +1,10 @@
+.alert-in-app
+  uib-alert(type="danger", close="insist = false", ng-show="insist")
+    span(translate="NEED_SECOND_PASSWORD_FOR_UPGRADE")
 .modal-header.flex-center.upgrade-header
   h3(translate="UPGRADE_WALLET")
   helper-button(content="UPGRADE_EASY")
 .modal-body.upgrade-modal
-  uib-alert(type="danger", close="insist = false", ng-show="insist")
-    span(translate="NEED_SECOND_PASSWORD_FOR_UPGRADE")
   uib-carousel(no-wrap="true", interval="3000" active="active")
     uib-slide(index="0")
       li(translate="UPGRADE_NEW_DESIGN").type-h4

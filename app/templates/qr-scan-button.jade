@@ -6,6 +6,8 @@ button.qr-scan-button.btn.btn-default(
   popover-is-open="cameraOn"
   popover-append-to-body="true"
   popover-class="qr-popover"
-  ng-click="cameraOn = true")
-  img(src="img/qr-code.png" alt="QR")
-
+  ng-click="loader(); cameraOn = true;")
+  img(src="img/qr-code.png" alt="QR" ng-hide="loading")
+  div.ladda-button(ng-show="loading")
+    span.ladda-spinner
+      div.spinner
