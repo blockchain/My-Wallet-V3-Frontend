@@ -23,7 +23,7 @@
     "browserdetection": "0.3.*",
     "bc-qr-reader": "0.2.*",
     "bootstrap-sass": "3.3.*",
-    "blockchain-wallet": "3.12.*",
+    "blockchain-wallet": "3.13.*",
     "bc-phone-number": "5.0.*"
   },
   "devDependencies": {},
