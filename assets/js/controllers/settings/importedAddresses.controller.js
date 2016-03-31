@@ -4,10 +4,10 @@ angular
 
 function SettingsImportedAddressesCtrl($scope, Wallet, Alerts, $translate, $uibModal) {
   $scope.legacyAddresses = Wallet.legacyAddresses;
-  $scope.display = {
-    archived: false,
-  };
+  $scope.display = { archived: false };
   $scope.settings = Wallet.settings;
+
+  $scope.activeSpendableAddresses = () => Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly);
 
   $scope.toggleDisplayArchived = () => {
     $scope.display.archived = !$scope.display.archived;
@@ -33,6 +33,15 @@ function SettingsImportedAddressesCtrl($scope, Wallet, Alerts, $translate, $uibM
       resolve: {
         address: () => null
       }
+    });
+  };
+
+  $scope.sweepAll = () => {
+    $uibModal.open({
+      templateUrl: "partials/settings/sweep-all.jade",
+      controller: "SweepAllController",
+      windowClass: "bc-modal",
+      backdrop: "static"
     });
   };
 }

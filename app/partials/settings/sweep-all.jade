@@ -1,0 +1,18 @@
+.modal-header
+  h3(translate="SWEEP_ALL")
+  .alert-in-app
+    alerts(context="alerts")
+.modal-body
+  .flex-column(ng-show="!sweeping && ncompleted === 0")
+    p.security-red.em-500.em-alt(translate="WARNING")
+    p.text(translate="SWEEP_WARNING")
+  div(ng-show="sweeping")
+    label(translate="SWEEPING")
+    span : {{ addresses[ncompleted].address }}
+  div(ng-show="ncompleted === ntotal")
+    label(translate="SWEEP_DONE")
+  uib-progressbar(ng-show="sweeping || ncompleted > 0" value="ncompleted" max="ntotal")
+.modal-footer.pal.flex-end
+  button.button-muted.mrm(ng-click="$dismiss('cancelled')" ng-show="!sweeping && ncompleted === 0" translate="CANCEL")
+  button.btn.btn-primary(ng-hide="ncompleted === ntotal" ui-ladda="sweeping" ng-click="sweepAll()" data-style="expand-left" ladda-translate="SWEEP_ALL")
+  button.btn.btn-primary(ng-show="ncompleted === ntotal" ng-click="$close(true)" translate="DONE")
