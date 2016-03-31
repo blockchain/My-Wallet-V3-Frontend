@@ -11,7 +11,7 @@
     span(translate="STEP")
     span {{ confirmationStep ? 2 : 1 }}
     span(translate="OF_2")
-.modal-body#send(ng-class="{ 'advanced-container': advanced && !confirmationStep, 'confirmation': confirmationStep }")
+.modal-body#send(ng-class="{ 'advanced-container': advanced && !confirmationStep, 'confirmation': confirmationStep, 'small': numberOfActiveAccountsAndLegacyAddresses() <= 1 }")
   .alert-in-app
     alerts(context="alerts")
   .fade(ng-hide="confirmationStep" ng-class="{ 'advanced': advanced }")
@@ -116,7 +116,8 @@
                   name="fee"
                   tabindex="1"
                   ng-model="transaction.fee"
-                  min="1"
+                  min="0"
+                  step="any"
                   ng-change="setPaymentFee()"
                   required
                   transform-currency="settings.btcCurrency"

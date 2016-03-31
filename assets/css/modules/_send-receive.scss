@@ -1,14 +1,21 @@
 // SEND
 
 #send {
-  .fade {
-    @media (max-width: 768px) {
+  @media (max-width: 768px) {
+    .fade {
       opacity: 1 !important;
-    }
-    @media (min-width: 769px) {
+    } 
+  }
+  @media (min-width: 769px) {
+    .fade {
       opacity: 1;
-      overflow: scroll;
+      overflow: auto;
       @include bc-ng-animate('advanced', 'height', '180px', '345px');
+    }
+    &.small {
+      .fade {
+        @include bc-ng-animate('advanced', 'height', '145px', '290px');
+      }
     }
   }
 
@@ -93,7 +100,10 @@
   @media (min-width: 769px) {
     opacity: 1;
     overflow: hidden;
-    @include bc-ng-animate('advanced', 'height', '255px', '386px');
+    @include bc-ng-animate('advanced', 'height', '255px', '385px');
+    &.small {
+      @include bc-ng-animate('advanced', 'height', '205px', '325px');
+    }
   }
 
   .row {

@@ -52,3 +52,14 @@ describe 'qr-scan directive', ->
     expect(isoScope.cameraOn).toEqual(false)
     expect(isoScope.scanComplete).toEqual(false)
   )
+
+  it 'should call a fake loader if the cameras toggling from off to on', inject(($timeout) ->
+    isoScope.cameraOn = true
+    isoScope.loader()
+    expect(isoScope.loading).toBeFalsy()
+    isoScope.cameraOn = false
+    isoScope.loader()
+    expect(isoScope.loading).toBeTruthy()
+    $timeout.flush()
+    expect(isoScope.loading).toBeFalsy()
+  )

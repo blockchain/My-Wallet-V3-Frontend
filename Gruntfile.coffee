@@ -285,7 +285,8 @@ module.exports = (grunt) ->
 
         files:
           src: [
-            'dist/img/*'
+            'dist/img/*.*'
+            'dist/img/favicon/*'
             'dist/fonts/*.*'
             'dist/fonts/bootstrap/*'
             'dist/locales/*'

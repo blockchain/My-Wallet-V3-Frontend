@@ -8,17 +8,21 @@ $fast: 0.2s;
 @mixin bc-ng-animate($class, $attr, $initial, $active) {
   #{$attr}: #{$initial};
   @include transition(#{$attr} $slow, opacity $slow !important);
+  &.#{$class} {
+    #{$attr}: auto;
+    #{$attr}: initial;
+    @include transition(0s !important);
+  }
   &.#{$class}-add,
-  &.#{$class}-remove {
+  &.#{$class}-remove,
+  &.#{$class}.#{$class}-add,
+  &.#{$class}.#{$class}-remove {
     opacity: 0;
     #{$attr}: #{$active} !important;
     @include transition(#{$attr} $slow, opacity 0s !important);
     &.#{$class}-remove-active.#{$class}-remove {
       #{$attr}: #{$initial} !important;
     }
-  }
-  &.#{$class} {
-    #{$attr}: initial;
   }
 }
 

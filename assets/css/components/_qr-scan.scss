@@ -1,14 +1,35 @@
 
 .qr-scan-button {
-  img {
+  img,
+  .ladda-button,
+  .ladda-button .ladda-spinner {
     height: 18px;
     width: 18px;
+  }
+  .ladda-spinner {
+    opacity: 1;
+    .spinner {
+      background: black;
+      background: -moz-linear-gradient(left, black 10%, rgba(255, 255, 255, 0) 42%);
+      background: -webkit-linear-gradient(left, black 10%, rgba(255, 255, 255, 0) 42%);
+      background: -o-linear-gradient(left, black 10%, rgba(255, 255, 255, 0) 42%);
+      background: -ms-linear-gradient(left, black 10%, rgba(255, 255, 255, 0) 42%);
+      background: linear-gradient(to right, black 0%, rgba(255, 255, 255, 0) 50%);
+    }
   }
 }
 
 .qr-popover {
   border-radius: 0px !important;
   border: 0px;
+  &.fade {
+    opacity: 0;
+    @include transition(opacity 0s);
+    &.in {
+      opacity: 1;
+      @include transition(opacity $slow 1s);
+    }
+  }
   .popover-content {
     padding: 0px;
     &:before {

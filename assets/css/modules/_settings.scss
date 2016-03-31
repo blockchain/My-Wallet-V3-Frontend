@@ -138,3 +138,35 @@ table.accounts-container {
 @media (max-width: 991px) {
   .setting-result { margin-top: 10px; }
 }
+
+.settings {
+  td.hd-label {
+    height: 44px;
+    > span {
+      display: inline-block;
+      border-bottom: 1px solid transparent;
+    }
+    form[name="bcAsyncForm"] {
+      > div {
+        @extend .flex-row;
+        @extend .flex-center;
+        @extend .flex-between;
+        > div:first-child {
+          @extend .flex-1;
+        }
+        input {
+          font-weight: normal;
+          margin-bottom: 1px;
+          font-size: small;
+          display: block;
+        }
+        button {
+          padding: 0px;
+        }
+        button.button-primary {
+          padding: 2px 4px;
+        }
+      }
+    }
+  }
+}

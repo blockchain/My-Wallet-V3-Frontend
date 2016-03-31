@@ -23,7 +23,10 @@
 @include declare-font-face('roboto', 'Roboto', 'Roboto-Black', 900);
 
 
-[class^="bc-icon-"], [class*=" bc-icon-"] {
+[class^="bc-icon-"],
+[class*=" bc-icon-"],
+[class^="ti-"],
+[class*=" ti-"]  {
   font-family: 'BlockchainFontIcons';
   speak: none;
   font-style: normal;
@@ -38,15 +41,6 @@
 
 [class^="ti-"], [class*=" ti-"] {
   font-family: 'ThemifyIcons';
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-
-  /* better font rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 ////////////////////////////////

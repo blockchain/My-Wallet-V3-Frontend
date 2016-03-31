@@ -19,6 +19,13 @@ function qrScan($rootScope, $timeout, $translate, Wallet, Alerts) {
     scope.popoverTemplate = 'templates/qr-scan-popover.jade';
     scope.browserWithCamera = $rootScope.browserWithCamera;
 
+    scope.loader = () => {
+      if (scope.cameraOn) return;
+
+      scope.loading = true;
+      $timeout(() => { scope.loading = false }, 1000)
+    };
+
     scope.onCameraResult = (result) => {
       scope.scanComplete = true;
 
