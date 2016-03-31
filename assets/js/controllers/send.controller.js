@@ -152,7 +152,10 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
     const transactionFailed = (message) => {
       $scope.sending = false;
-      $scope.payment = new Wallet.payment(paymentCheckpoint).build();
+
+      if (paymentCheckpoint) {
+        $scope.payment = new Wallet.payment(paymentCheckpoint).build();
+      }
 
       let msgText = 'string' === typeof message ? message : 'SEND_FAILED';
       if (msgText.indexOf('Fee is too low') > -1) msgText = 'LOW_FEE_ERROR';
