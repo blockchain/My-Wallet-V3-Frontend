@@ -37,10 +37,10 @@ function ResetTwoFactorCtrl($scope, $rootScope, $http, $translate, WalletNetwork
 
       switch (error) {
         case 'Captcha Code Incorrect':
-          Alerts.displayError($translate.instant('CAPTCHA_INCORRECT'), true);
+          Alerts.displayError('CAPTCHA_INCORRECT', true);
           break;
         case 'Quota Exceeded':
-          Alerts.displayError($translate.instant('QUOTA_EXCEEDED'), true);
+          Alerts.displayError('QUOTA_EXCEEDED', true);
           break;
         default:
           Alerts.displayError(error, true);

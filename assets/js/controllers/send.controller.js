@@ -122,7 +122,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       let msgText = 'string' === typeof message ? message : 'SEND_FAILED';
       if (msgText.indexOf('Fee is too low') > -1) msgText = 'LOW_FEE_ERROR';
 
-      $translate(msgText).then(t => Alerts.displayError(t, false, $scope.alerts));
+      Alerts.displayError(msgText, false, $scope.alerts);
     };
 
     const transactionSucceeded = (tx) => {
@@ -144,7 +144,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       }
 
       let message = MyWalletHelpers.tor() ? 'BITCOIN_SENT_TOR' : 'BITCOIN_SENT';
-      $translate(message).then(Alerts.displaySentBitcoin);
+      Alerts.displaySentBitcoin(message);
       $scope.$safeApply();
     };
 

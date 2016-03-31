@@ -55,12 +55,7 @@ function AuthorizeApproveCtrl($window, $scope, WalletTokenEndpoints, $stateParam
 
     const rejected = () => {
       $scope.busyRejecting = false;
-
-      $translate('AUTHORIZE_REJECT_SUCCESS').then(translation => {
-        $state.go("public.login-no-uid").then(() => {
-          Alerts.displaySuccess(translation)
-        });
-      });
+      $state.go("public.login-no-uid").then(() => Alerts.displaySuccess('AUTHORIZE_REJECT_SUCCESS'));
     };
 
     WalletTokenEndpoints.authorizeApprove($stateParams.token, () => {}, false)

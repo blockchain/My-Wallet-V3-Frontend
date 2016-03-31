@@ -13,9 +13,7 @@ function SettingsAddressesCtrl($scope, Wallet, Alerts, addressOrNameMatchFilter,
 
   $scope.createAddress = () => {
     Wallet.addAddressForAccount($scope.account, (() => {}), (e) => {
-      $translate("LABEL_ERROR_BIP_44_GAP").then((translation) => {
-        Alerts.displayError(translation);
-      });
+      Alerts.displayError('LABEL_ERROR_BIP_44_GAP');
     });
   }
 }

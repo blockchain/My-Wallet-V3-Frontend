@@ -74,9 +74,7 @@ function ConfirmRecoveryPhraseCtrl($scope, $log, Wallet, Alerts, $uibModalInstan
       };
 
       const error = error => {
-        $translate(error).then( translation => {
-          Alerts.displayError(translation);
-        });
+        Alerts.displayError(error);
         $uibModalInstance.dismiss("");
       };
 

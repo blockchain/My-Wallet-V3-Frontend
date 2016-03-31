@@ -7,9 +7,7 @@ function FeedbackCtrl($scope, $log, $state, $http, Alerts, $translate) {
   $scope.state = $state;
   $scope.formStage = 0;
 
-  $scope.failed = () => {
-    Alerts.displayError($translate.instant("FEEDBACK_SUBMIT_FAILED"));
-  }
+  $scope.failed = () => Alerts.displayError('FEEDBACK_SUBMIT_FAILED');
 
   $scope.setFormSubmitted = () => {
     if ($scope.formStage === 0) {

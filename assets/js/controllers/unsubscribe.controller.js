@@ -6,12 +6,9 @@ function UnsubscribeCtrl($scope, $rootScope, WalletTokenEndpoints, $stateParams,
   Alerts.clear()
 
   const success = (res) => {
-    $translate('UNSUBSCRIBE_SUCCESS').then(translation => {
-      $state.go("public.login-uid", {uid: res.guid}).then(() => {
-        Alerts.displaySuccess(translation)
-      });
+    $state.go("public.login-uid", {uid: res.guid}).then(() => {
+      Alerts.displaySuccess('UNSUBSCRIBE_SUCCESS')
     });
-
     $rootScope.$safeApply();
   }
 

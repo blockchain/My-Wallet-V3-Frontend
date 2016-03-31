@@ -29,13 +29,13 @@ function LostGuidCtrl($scope, $rootScope, $http, $translate, WalletNetwork, Aler
 
       switch (error) {
         case 'Captcha Code Incorrect':
-          Alerts.displayError($translate.instant('CAPTCHA_INCORRECT'));
+          Alerts.displayError('CAPTCHA_INCORRECT');
           break;
         case 'Quota Exceeded':
-          Alerts.displayError($translate.instant('QUOTA_EXCEEDED'));
+          Alerts.displayError('QUOTA_EXCEEDED');
           break;
         default:
-          Alerts.displayError($translate.instant('UNKNOWN_ERROR'));
+          Alerts.displayError('UNKNOWN_ERROR');
       }
 
       $scope.refreshCaptcha();

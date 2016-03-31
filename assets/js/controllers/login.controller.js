@@ -53,10 +53,10 @@ function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNet
         $scope.disableLogin = true;
         $translate("MINIMUM_BROWSER", browser).then(Alerts.displayError);
       } else if (code === 'ie') {
-        $translate("WARN_AGAINST_IE").then(Alerts.displayWarning);
+        Alerts.displayWarning('WARN_AGAINST_IE');
       }
     } else {
-      $translate("UNKNOWN_BROWSER").then(Alerts.displayWarning);
+      Alerts.displayWarning('UNKNOWN_BROWSER');
     }
   };
 
@@ -115,11 +115,11 @@ function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNet
       $scope.resending = true;
       const success = (res) => {
         $scope.resending = false;
-        $translate('RESENT_2FA_SMS').then(Alerts.displaySuccess);
+        Alerts.displaySuccess('RESENT_2FA_SMS');
         $rootScope.$safeApply();
       };
       const error = (res) => {
-        $translate('RESENT_2FA_SMS_FAILED').then(Alerts.displayError);
+        Alerts.displayError('RESENT_2FA_SMS_FAILED');
         $scope.resending = false;
         $rootScope.$safeApply();
       };
