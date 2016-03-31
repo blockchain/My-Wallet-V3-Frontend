@@ -11,7 +11,7 @@ describe "ChangePasswordCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
+    angular.mock.inject ($injector, $rootScope, $controller, $compile, $templateCache) ->
       Wallet = $injector.get("Wallet")
 
       Wallet.user = {
@@ -24,21 +24,15 @@ describe "ChangePasswordCtrl", ->
       )
 
       scope = $rootScope.$new()
+      template = $templateCache.get('partials/settings/change-password.jade')
 
       $controller "ChangePasswordCtrl",
         $scope: scope,
         $stateParams: {},
         $uibModalInstance: modalInstance
 
-      element = angular.element(
-        '<form role="form" name="passwordForm" novalidate>' +
-        '<input type="password" name="currentPassword"    ng-model="fields.currentPassword"   is-valid="isCorrectMainPassword(fields.currentPassword)"      required />' +
-        '<input type="password" name="password"           ng-model="fields.password"          is-valid="fields.password != uid  && !isUserEmail(fields.password) && !isCorrectMainPassword(fields.password)"  min-entropy="25" ng-maxlength="255" required />' +
-        '<input type="password" name="confirmation"       ng-model="fields.confirmation"      is-valid="fields.confirmation == fields.password"             required />' +
-        '</form>'
-      )
       scope.model = { fields: {} }
-      $compile(element)(scope)
+      $compile(template)(scope)
 
       scope.$digest()
 

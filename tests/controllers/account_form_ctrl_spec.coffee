@@ -40,8 +40,9 @@ describe "AccountFormCtrl", ->
       }
 
   beforeEach ->
-    angular.mock.inject ($rootScope, $controller, $compile) ->
+    angular.mock.inject ($rootScope, $controller, $compile, $templateCache) ->
       scope = $rootScope.$new()
+      template = $templateCache.get('partials/account-form.jade')
 
       $controller "AccountFormCtrl",
         $scope: scope
@@ -49,13 +50,8 @@ describe "AccountFormCtrl", ->
         $uibModalInstance: modalInstance
         account: Wallet.accounts()[0]
 
-      element = angular.element(
-        '<form role="form" name="accountForm" novalidate>' +
-        '<input type="text" name="new" ng-model="fields.name" is-valid="validate(fields.name)" maxlength="17" required />' +
-        '</form>'
-      )
       scope.model = { fields: { name: '' } }
-      $compile(element)(scope)
+      $compile(template)(scope)
 
       scope.$digest()
 

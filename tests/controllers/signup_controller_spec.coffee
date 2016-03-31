@@ -7,7 +7,7 @@ describe "SignupCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
+    angular.mock.inject ($injector, $rootScope, $controller, $compile, $templateCache) ->
       Wallet = $injector.get("Wallet")
 
       Wallet.login = (uid, pass, code, twoFactor, success, error) -> success()
@@ -17,24 +17,16 @@ describe "SignupCtrl", ->
         change_local_currency: () ->
       Wallet.changeCurrency = () ->
 
-
       scope = $rootScope.$new()
+      template = $templateCache.get('partials/signup.jade')
 
       $controller "SignupCtrl",
         $scope: scope,
         $stateParams: {},
         $uibModalInstance: modalInstance
 
-      element = angular.element(
-        '<form role="form" name="signupForm" novalidate>' +
-          '<input type="email"    name="email"          ng-model="fields.email"         required />' +
-          '<input type="password" name="password"       ng-model="fields.password"      min-entropy="25" ng-maxlength="255" required />' +
-          '<input type="password" name="confirmation"   ng-model="fields.confirmation"  is-valid="fields.confirmation == fields.password" required />' +
-          '<input type="checkbox" name="agreement"      ng-model="fields.acceptedAgreement" required />' +
-        '</form>'
-      )
       scope.model = { fields: { email: '', password: '', confirmation: '', acceptedAgreement: false } }
-      $compile(element)(scope)
+      $compile(template)(scope)
 
       scope.$digest()
 
