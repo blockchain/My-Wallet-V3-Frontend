@@ -392,7 +392,7 @@ module.exports = (grunt) ->
         replacements: [{
           from: 'versionMyWallet = null'
           to: () =>
-            version = exec('cat bower_components/blockchain-wallet/bower.json | grep \'version\": \' | grep -o \'\\d\\+.\\d\\+.\\d\\+\'').output
+            version = exec('./my_wallet_bower_version.rb').output
             'versionMyWallet = "' + version.replace("\n", "") + '"'
         }]
 
