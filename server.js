@@ -15,7 +15,10 @@ var port      = process.env.PORT || 8080
   , apiDomain = process.env.API_DOMAIN
 
 // App configuration
+var rootApp = express();
 var app = express();
+
+rootApp.use("/wallet-beta", app);
 
 app.use(function (req, res, next) {
   if (req.url === '/') {
@@ -58,6 +61,16 @@ app.use(function (req, res, next) {
   next();
 });
 
+rootApp.use(function (req, res, next) {
+  if (req.url === '/') {
+    res.redirect('wallet-beta/');
+  } else if (req.url === '/wallet-beta') {
+    res.redirect('wallet-beta/');
+  } else {
+    next();
+  }
+});
+
 if (dist) {
   console.log('Production mode: single javascript file, cached');
   app.engine('html', ejs.renderFile);
@@ -70,11 +83,15 @@ if (dist) {
   app.set('views', __dirname);
 }
 
+rootApp.use(function (req, res) {
+  res.status(404).send('<center><h1>404 Not Found</h1></center>');
+});
+
 app.use(function (req, res) {
   res.status(404).send('<center><h1>404 Not Found</h1></center>');
 });
 
-app.listen(port, function () {
+rootApp.listen(port, function () {
   console.log('Listening on %d', port);
 });
 

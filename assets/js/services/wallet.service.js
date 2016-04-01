@@ -68,11 +68,13 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     // If customRootURL is set by Grunt:
     $rootScope.rootURL = customRootURL;
 
-    // If a custom root path is set by index.jade:
-    //                    Grunt can replace this:
-    const customRootPath = $rootScope.rootPath || "";
-    // If customRootPath is set by Grunt:
-    $rootScope.rootPath = customRootPath;
+
+    const absUrl = $location.absUrl();
+    const path   = $location.path();
+    if(absUrl && path && path.length) {
+      // e.g. https://blockchain.info/wallet-beta/#
+      $rootScope.rootPath =  $location.absUrl().slice(0, -$location.path().length);
+    }
 
     //                         Grunt can replace this:
     const customWebSocketURL = $rootScope.webSocketURL;
@@ -1070,7 +1072,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
 
   wallet.handleBitcoinLinks = () => {
     wallet.saveActivity(2);
-    const uri = $window.location.origin + "/" + $rootScope.rootPath + '#/open/%s';
+    const uri = $rootScope.rootPath + '/open/%s';
     $window.navigator.registerProtocolHandler('bitcoin', uri, 'Blockchain');
   };
 

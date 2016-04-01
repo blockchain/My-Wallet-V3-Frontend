@@ -361,14 +361,6 @@ module.exports = (grunt) ->
           to: () =>
             'customRootURL = $rootScope.rootURL = "https://' + @rootUrl + '/"'
         }]
-      root_path:
-        src: ['build/js/services/wallet.service.js'],
-        overwrite: true,
-        replacements: [{
-          from: 'customRootPath = $rootScope.rootPath'
-          to: () =>
-            'customRootPath = $rootScope.rootPath = "' + @rootPath + '/"'
-        }]
       web_socket_url:
         src: ['build/js/services/wallet.service.js'],
         overwrite: true,
@@ -442,7 +434,7 @@ module.exports = (grunt) ->
 
   # Make sure npm and bower dependencies are up to date
   # Run clean, test and build first
-  grunt.registerTask "dist", (versionFrontend, rootUrl, rootPath, apiDomain) =>
+  grunt.registerTask "dist", (versionFrontend, rootUrl, apiDomain) =>
     if !versionFrontend
       versionFrontend = "intermediate"
     else if versionFrontend[0] != "v"
@@ -462,15 +454,6 @@ module.exports = (grunt) ->
       "replace:root_url"
       "replace:web_socket_url"
     ]
-
-    if rootPath
-      @rootPath = rootPath
-
-      console.log("Custom root path: " + @rootPath)
-
-      grunt.task.run [
-        "replace:root_path"
-      ]
 
     if apiDomain
       @apiDomain = apiDomain

@@ -33,7 +33,6 @@ Optionally you can add:
 
 ```
 AUTO_RELOAD=1
-ROOT_PATH=wallet-beta/
 WEBSOCKET_URL=wss://blockchain.info/inv
 API_DOMAIN=https://api.blockchain.info
 ```
