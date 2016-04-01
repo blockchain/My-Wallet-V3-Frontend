@@ -4,12 +4,14 @@ angular
 
 function SweepAllController($scope, $q, $timeout, $translate, Wallet, Alerts) {
   $scope.alerts = [];
-  $scope.defaultIdx = Wallet.my.wallet.hdwallet.defaultAccountIndex;
+  $scope.settings = Wallet.settings;
+  $scope.defaultAccount = Wallet.my.wallet.hdwallet.defaultAccount;
   $scope.addresses = Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly);
 
   $scope.sweeping = false;
   $scope.ncompleted = 0;
   $scope.ntotal = $scope.addresses.length;
+  $scope.succeeded = [];
   $scope.failed = [];
 
   $scope.sweepAll = () => Wallet.askForSecondPasswordIfNeeded().then(pw => {
@@ -18,16 +20,15 @@ function SweepAllController($scope, $q, $timeout, $translate, Wallet, Alerts) {
       console.log('sweeping:', a.address);
 
       let payment = new Wallet.payment();
-      payment.to($scope.defaultIdx).from(a.address).useAll();
+      payment.to($scope.defaultAccount.index).from(a.address).useAll();
 
       return payment.build().sign(pw).publish().payment
-        .then(() => a.active = false)
-        .catch(() => $scope.failed.push(a.address))
+        .then(() => { a.active = false; $scope.succeeded.push(a); })
+        .catch(() => $scope.failed.push(a))
         .then(() => $scope.ncompleted++);
 
     }), $q.resolve()).then(() => {
       $scope.sweeping = false;
-      if ($scope.failed.length) $translate('SWEEP_FAIL').then(t => Alerts.displayWarning(t, false, $scope.alerts));
     });
   });
 }
