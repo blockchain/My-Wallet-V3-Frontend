@@ -225,8 +225,6 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       $rootScope.$safeApply();
     };
 
-    $window.root = 'https://blockchain.info/';
-
     var two_factor = null;
     if(wallet.settings.twoFactorMethod) {
       two_factor = {
