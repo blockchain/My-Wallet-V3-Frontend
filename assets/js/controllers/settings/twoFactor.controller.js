@@ -31,10 +31,7 @@ function TwoFactorCtrl($scope, Wallet, Alerts, $uibModalInstance, $translate, $t
   };
 
   $scope.displayConfirmationError = () => {
-    if ($scope.alerts.length !== 0) return;
-    $translate('2FA_INVALID').then(translation => {
-      Alerts.displayError(translation, false, $scope.alerts)
-    });
+    Alerts.displayError('2FA_INVALID', false, $scope.alerts);
   };
 
   $scope.validateCode = (pairWith) => {

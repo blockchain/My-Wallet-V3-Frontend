@@ -43,7 +43,7 @@ function qrScan($rootScope, $timeout, $translate, Wallet, Alerts) {
 
     scope.onCameraError = () => {
       scope.cameraOn = false;
-      $translate('CAMERA_PERMISSION_DENIED').then(Alerts.displayWarning);
+      Alerts.displayWarning('CAMERA_PERMISSION_DENIED');
     };
   }
 }

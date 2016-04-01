@@ -37,8 +37,7 @@ function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wall
 
     const error = (err) => {
       $scope.working = false;
-      let message = err || $translate.instant('RECOVERY_ERROR');
-      Alerts.displayError(message);
+      Alerts.displayError(err || 'RECOVERY_ERROR');
     };
 
     Wallet.my.recoverFromMnemonic(

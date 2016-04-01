@@ -110,9 +110,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
         Alerts.displayError(error, false, $scope.alerts);
       } else {
         console.log(error);
-        $translate("SWEEP_FAILED").then((translation) => {
-          Alerts.displayError(translation, false, $scope.alerts);
-        });
+        Alerts.displayError('SWEEP_FAILED', false, $scope.alerts);
       }
       $scope.$root.$safeApply($scope);
     };
@@ -136,9 +134,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
   };
 
   $scope.onError = (error) => {
-    $translate("CAMERA_PERMISSION_DENIED").then(function(translation) {
-      Alerts.displayWarning(translation, false, $scope.alerts);
-    });
+    Alerts.displayWarning('CAMERA_PERMISSION_DENIED', false, $scope.alerts);
   };
 
   $scope.cameraOn = () => {

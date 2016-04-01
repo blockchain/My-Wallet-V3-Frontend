@@ -221,9 +221,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     let authorizationRequired = (callback) => {
       callback(authorizationProvided());
       Alerts.clear();
-      $translate("CHECK_EMAIL_VERIFY_BROWSER").then(translation => {
-        Alerts.displayWarning(translation, true);
-      });
+      Alerts.displayWarning('CHECK_EMAIL_VERIFY_BROWSER', true);
       $rootScope.$safeApply();
     };
 
@@ -462,15 +460,11 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
 
   wallet.changePassword = (newPassword, successCallback, errorCallback) => {
     wallet.store.changePassword(newPassword, (() => {
-      $translate('CHANGE_PASSWORD_SUCCESS').then((translation) => {
-        Alerts.displaySuccess(translation);
-        successCallback(translation);
-      });
+      Alerts.displaySuccess('CHANGE_PASSWORD_SUCCESS');
+      successCallback(translation);
     }), () => {
-      $translate('CHANGE_PASSWORD_FAILED').then((translation) => {
-        Alerts.displayError(translation);
-        errorCallback(translation);
-      });
+      Alerts.displayError('CHANGE_PASSWORD_FAILED');
+      errorCallback(translation);
     });
   };
 
@@ -773,7 +767,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       let tx = wallet.my.wallet.txList.transactions()[0];
       if (tx.result > 0 && tx.txType === 'received') {
         wallet.beep();
-        $translate('JUST_RECEIVED_BITCOIN').then(Alerts.displayReceivedBitcoin);
+        Alerts.displayReceivedBitcoin('JUST_RECEIVED_BITCOIN');
       }
     } else if (event === 'on_block') {
     } else if (event === 'error_restoring_wallet') {
@@ -785,9 +779,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
         $rootScope.$broadcast('needsUpgradeToHD', 1000);
       });
     } else if (event === 'wallet not found') {
-      $translate('WALLET_NOT_FOUND').then((translation) => {
-        Alerts.displayError(translation);
-      });
+      Alerts.displayError('WALLET_NOT_FOUND');
     } else if (event === 'ticker_updated' || event === 'did_set_latest_block') {
       $rootScope.$safeApply();
     } else if (event === 'logging_out') {
@@ -896,10 +888,8 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       successCallback();
       $rootScope.$safeApply();
     }), () => {
-      $translate('CHANGE_EMAIL_FAILED').then((translation) => {
-        Alerts.displayError(translation);
-        $rootScope.$safeApply();
-      });
+      Alerts.displayError('CHANGE_EMAIL_FAILED');
+      $rootScope.$safeApply();
       errorCallback();
     });
   };
@@ -953,9 +943,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       successCallback();
       $rootScope.$safeApply();
     }), () => {
-      $translate('CHANGE_MOBILE_FAILED').then((translation) => {
-        Alerts.displayError(translation);
-      });
+      Alerts.displayError('CHANGE_MOBILE_FAILED');
       errorCallback();
       $rootScope.$safeApply();
     });
@@ -1114,7 +1102,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       wallet.saveActivity(2);
       $rootScope.$safeApply();
     }, () => {
-      $translate('ERR_ENABLE_IP_RESTRICT').then(Alerts.displayError);
+      Alerts.displayError('ERR_ENABLE_IP_RESTRICT');
       $rootScope.$safeApply();
     });
   };
@@ -1152,7 +1140,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       successCallback();
     };
     let error = () => {
-      $translate('SECOND_PASSWORD_REMOVE_ERR').then(Alerts.displayError);
+      Alerts.displayError('SECOND_PASSWORD_REMOVE_ERR');
       errorCallback();
     };
     let cancel = errorCallback;

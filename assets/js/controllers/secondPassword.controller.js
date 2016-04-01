@@ -23,9 +23,7 @@ function SecondPasswordCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tr
       $uibModalInstance.close("");
     } else {
       $scope.busy = false;
-      $translate("SECOND_PASSWORD_INCORRECT").then(translation => {
-        Alerts.displayError(translation, false, $scope.alerts);
-      });
+      Alerts.displayError('SECOND_PASSWORD_INCORRECT', false, $scope.alerts);
     }
   };
 

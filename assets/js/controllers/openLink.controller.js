@@ -6,9 +6,7 @@ function OpenLinkController($scope, Wallet, $translate, $stateParams, $state, Al
   const paymentRequest = Wallet.parsePaymentRequest($stateParams.uri);
   Wallet.goal.send = paymentRequest;
   if (!Wallet.status.isLoggedIn) {
-    $translate("PLEASE_LOGIN_FIRST").then(translation => {
-      Alerts.displayInfo(translation, true);
-    });
+    Alerts.displayInfo('PLEASE_LOGIN_FIRST', true);
     $state.go("public.login-no-uid");
   }
 }

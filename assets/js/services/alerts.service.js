@@ -39,7 +39,7 @@ function Alerts($timeout, $rootScope, $translate, $uibModal) {
   }
 
   function display(type, message, keep=false, context=service.alerts) {
-    let alert = { type: type, msg: message };
+    let alert = { type: type, msg: $translate.instant(message) };
     if (isDuplicate(context, alert)) return;
     alert.close = close.bind(null, alert, context);
     if (!keep) alert.timer = $timeout(() => alert.close(), 7000);
