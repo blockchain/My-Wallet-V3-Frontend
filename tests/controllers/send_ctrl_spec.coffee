@@ -354,6 +354,7 @@ describe "SendCtrl", ->
         scope.transaction.feeBounds = [30000, 25000, 20000, 15000, 10000, 5000]
 
       it 'should warn when the tx fee is low', (done) ->
+        scope.advanced = true
         scope.transaction.fee = lowFee
         scope.transaction.size = avgSize
         scope.checkFee().then(() ->
@@ -363,6 +364,7 @@ describe "SendCtrl", ->
         scope.$digest()
 
       it 'should warn when the tx fee is high', (done) ->
+        scope.advanced = true
         scope.transaction.fee = highFee
         scope.transaction.size = avgSize
         scope.checkFee().then(() ->

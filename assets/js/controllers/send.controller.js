@@ -325,9 +325,9 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     let low = tx.feeBounds[5] || tx.sweepFees[5];
     console.log(`Fees { high: ${high}, mid: ${mid}, low: ${low} }`);
 
-    if (tx.fee > high) {
+    if (tx.fee > high && $scope.advanced) {
       return showFeeWarning(high).then(commitFee);
-    } else if (tx.fee < low) {
+    } else if (tx.fee < low && $scope.advanced) {
       return showFeeWarning(low).then(commitFee);
     } else if (surge) {
       return showFeeWarning(mid).then(commitFee);
