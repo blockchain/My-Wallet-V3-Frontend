@@ -97,8 +97,6 @@ module.exports = (grunt) ->
           dest: 'build/css',
           ext: '.css'
         }]
-      options:
-        loadPath: ["bower_components/bootstrap-sass/assets/stylesheets"]
 
     concat_css: {
       app: {
@@ -400,7 +398,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-concat')
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-contrib-clean')
-  grunt.loadNpmTasks('grunt-contrib-sass')
+  grunt.loadNpmTasks('grunt-sass')
   grunt.loadNpmTasks('grunt-contrib-jade')
   grunt.loadNpmTasks('grunt-concat-css')
   grunt.loadNpmTasks('grunt-html2js')
