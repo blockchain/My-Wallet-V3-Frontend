@@ -18,6 +18,7 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
   $scope.fiatCurrency = Wallet.settings.currency;
   $scope.btcCurrency = Wallet.settings.btcCurrency;
   $scope.isBitCurrency = currency.isBitCurrency;
+  $scope.isValidPrivateKey = Wallet.isValidPrivateKey;
 
   $scope.defaultBlockInclusion = 1;
 
@@ -110,7 +111,7 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
     let numAccts = Wallet.accounts().filter(a => !a.archived).length;
-    let numAddrs = Wallet.legacyAddresses().filter(a => !a.archived && !a.isWatchOnly).length;
+    let numAddrs = Wallet.legacyAddresses().filter(a => !a.archived).length;
     return numAccts + numAddrs;
   };
 
@@ -219,7 +220,7 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     let idx = isNaN(selectedIdx) ? defaultIdx : selectedIdx;
 
     let accounts = Wallet.accounts().filter(a => !a.archived && a.index != null);
-    let addresses = Wallet.legacyAddresses().filter(a => !a.archived && !a.isWatchOnly);
+    let addresses = Wallet.legacyAddresses().filter(a => !a.archived);
 
     $scope.origins = accounts.concat(addresses).map(format.origin);
 
@@ -244,11 +245,18 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     unwatchDidLoad();
   });
 
+  $scope.setPrivateKey = (priv) => {
+    $scope.transaction.priv = priv;
+    $scope.setPaymentFrom();
+  };
+
   $scope.setPaymentFrom = () => {
-    let txFrom = $scope.transaction.from;
-    if (!txFrom) return;
-    let origin = txFrom.index == null ? txFrom.address : txFrom.index;
-    let fee = $scope.advanced ? $scope.transaction.fee : undefined;
+    let tx = $scope.transaction;
+    if (!tx.from) return;
+    let origin = tx.from.isWatchOnly ?
+      (Wallet.isValidPrivateKey(tx.priv) ? tx.priv : tx.from.address):
+      (tx.from.index == null ? tx.from.address : tx.from.index);
+    let fee = $scope.advanced ? tx.fee : undefined;
     $scope.payment.from(origin, fee);
   };
 
@@ -301,11 +309,28 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
       $scope.$safeApply();
     };
 
-    $scope.checkFee()
+    $scope.checkPriv()
+      .then($scope.checkFee)
       .then($scope.finalBuild)
       .then(() => $scope.confirmationStep = true)
       .catch(handleNextStepError)
       .finally(() => $scope.building = false);
+  };
+
+  $scope.checkPriv = (bip38pw) => {
+    let tx = $scope.transaction;
+    if (!tx.from.isWatchOnly) return $q.resolve();
+    return $q.resolve(MyWalletHelpers.privateKeyCorrespondsToAddress(tx.from.address, tx.priv, bip38pw))
+      .then(priv => {
+        if (priv == null) throw 'PRIV_NO_MATCH';
+        else $scope.payment.from(priv);
+      })
+      .catch(e => {
+        if (e === 'needsBip38') return Alerts.prompt('NEED_BIP38', { type: 'password' }).then($scope.checkPriv);
+        else if (e === 'wrongBipPass') throw 'INCORRECT_PASSWORD';
+        else if (e !== 'PRIV_NO_MATCH') throw 'BIP38_ERROR';
+        else throw e;
+      });
   };
 
   $scope.checkFee = () => {
