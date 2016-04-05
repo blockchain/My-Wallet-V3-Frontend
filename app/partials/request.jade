@@ -8,7 +8,7 @@
     a(translate="CLICK_HERE" ng-click="close()")
 #receive.fade.modal-body(ng-class="{'advanced': advanced, 'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1}")
   form.form-horizontal.ph-form(role="form" name="requestForm" novalidate)
-    .form-group.row.pbm.flex-justify(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': fields.to.isWatchOnlyLegacyAddress}")
+    .form-group.row.pbm.flex-justify(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': fields.to.isWatchOnly}")
       label.flex-end.pts(translate="RECEIVE_TO")
       .flex-center.flex-justify.auto(ng-show="focus")
         span.type-lbl {{ fields.to.label }}
@@ -16,9 +16,10 @@
         ui-select(ng-model="fields.to" ng-disabled="paymentRequest.amount > 0 || paymentRequest.label")
           ui-select-match(placeholder="{{'SEARCH' | translate}}...")
             label-origin(origin="$select.selected")
-          ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'") 
+          ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'")
             label-origin(origin="destination" highlight="$select.search")
-        span.help-block(ng-show="fields.to.isWatchOnlyLegacyAddress") Your wallet does not have the private key for this address. Without the private key you will not have access to the bitcoins sent to this address. Make sure you have this private key somewhere else!
+        span.help-block(ng-show="fields.to.isWatchOnly" translate="WATCH_ONLY_REQUEST_WARN")
+
     .form-group.row(ng-show="paymentRequest && paymentRequest.paid > 0 && paymentRequest.paid != fields.amount")
       label.col-sm-3.control-label(translate="PAID")
       .flex-1
