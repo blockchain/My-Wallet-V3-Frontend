@@ -18,7 +18,7 @@ describe('format', () => {
         address : undefined,
         balance : 1,
         archived : false,
-        type : ''
+        type : 'Accounts'
       });
     }));
 

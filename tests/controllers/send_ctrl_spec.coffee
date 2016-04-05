@@ -149,16 +149,16 @@ describe "SendCtrl", ->
         expect(accounts.length).toBe(2)
 
       it "should contain addresses", ->
-        addresses = scope.origins.filter (origin) -> origin.isWatchOnly?
+        addresses = scope.origins.filter (origin) -> origin.isWatchOnly
         expect(addresses.length).toBe(1)
 
       it "should not cointain archived accounts or addresses", ->
         hasArchived = scope.origins.some (origin) -> origin.archived
         expect(hasArchived).toBe(false)
 
-      it "should not contain watch-only addresses", ->
+      it "should contain watch-only addresses", ->
         hasWatchOnly = scope.origins.some (origin) -> origin.isWatchOnly
-        expect(hasWatchOnly).toBe(false)
+        expect(hasWatchOnly).toBe(true)
 
     describe "payment request", ->
 
@@ -536,7 +536,7 @@ describe "SendCtrl", ->
 
       it "should return the correct amount", ->
         amount = scope.numberOfActiveAccountsAndLegacyAddresses()
-        expect(amount).toEqual(3)
+        expect(amount).toEqual(4)
 
     describe "hasZeroBalance", ->
 
