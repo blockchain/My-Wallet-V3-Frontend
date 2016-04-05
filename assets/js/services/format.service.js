@@ -21,7 +21,7 @@ function format () {
       balance: o.balance,
       archived: o.archived
     };
-    formatted.type = o.index != null ? '' : 'Imported Addresses';
+    formatted.type = o.index != null ? 'Accounts' : 'Imported Addresses';
     if (o.index == null) formatted.isWatchOnly = o.isWatchOnly;
     return formatted;
   }
