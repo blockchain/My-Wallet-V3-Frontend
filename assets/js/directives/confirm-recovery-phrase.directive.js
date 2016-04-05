@@ -21,12 +21,10 @@ function confirmRecoveryPhrase($uibModal, Wallet) {
     scope.status = Wallet.status;
     scope.buttonClass = scope._buttonClass || 'button-primary';
 
-    scope.confirmRecoveryPhrase = () => {
-      let modalInstance = $uibModal.open({
-        templateUrl: 'partials/confirm-recovery-phrase-modal.jade',
-        controller: 'ConfirmRecoveryPhraseCtrl',
-        windowClass: 'bc-modal'
-      }).opened.then(() => Wallet.store.resetLogoutTimeout());
-    };
+    scope.confirmRecoveryPhrase = () => $uibModal.open({
+      templateUrl: 'partials/confirm-recovery-phrase-modal.jade',
+      controller: 'ConfirmRecoveryPhraseCtrl',
+      windowClass: 'bc-modal'
+    });
   }
 }

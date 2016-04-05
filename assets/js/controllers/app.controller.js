@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller("AppCtrl", AppCtrl);
 
-function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location, $timeout, $uibModal, $window, $translate, $uibModalStack) {
+function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location, $timeout, $interval, $uibModal, $window, $translate, $uibModalStack) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $rootScope.isMock = Wallet.isMock;
@@ -20,12 +20,24 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
     $scope.menu.isCollapsed = false;
   };
 
+  $scope.inactivityTimeMinutes = 0;
+  $scope.resetInactivityTime = () => $scope.inactivityTimeMinutes = 0;
+
+  $interval(() => {
+    $scope.inactivityTimeMinutes++;
+    if ($scope.inactivityTimeMinutes > Wallet.settings.logoutTimeMinutes) {
+      let logoutTimer = $timeout(Wallet.my.logout, 10000);
+      Alerts.confirm('AUTO_LOGOUT_WARN', { minutes: Wallet.settings.logoutTimeMinutes }, '', 'LOG_ME_OUT')
+        .then(Wallet.logout).catch(() => $timeout.cancel(logoutTimer));
+    }
+  }, 60000);
+
   $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia) !== void 0;
 
   $scope.request = (hasLegacyAddress) => {
     Alerts.clear();
     $scope.requestBeacon = false;
-    let modalInstance = $uibModal.open({
+    $uibModal.open({
       templateUrl: "partials/request.jade",
       windowClass: "bc-modal large",
       controller: "RequestCtrl",
@@ -35,14 +47,11 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
         hasLegacyAddress: () => hasLegacyAddress
       }
     });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => Wallet.store.resetLogoutTimeout());
-    }
   };
 
   $scope.send = () => {
     Alerts.clear();
-    let modalInstance = $uibModal.open({
+    $uibModal.open({
       templateUrl: "partials/send.jade",
       controller: "SendCtrl",
       resolve: {
@@ -53,12 +62,6 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
       },
       windowClass: "bc-modal"
     });
-
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
-    }
   };
 
   $scope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
@@ -71,9 +74,6 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
     let loggedOutStates = ['public', "welcome", 'public.login-no-uid', 'public.login-uid', 'public.reset-two-factor', 'public.recover', 'public.reminder', 'public.signup', 'public.help', 'open', 'wallet.common.verify-email', 'wallet.common.unsubscribe', 'public.authorize-approve', 'public.reset-two-factor-token'];
     if (loggedOutStates.every(s => toState.name !== s) && $scope.status.isLoggedIn === false) {
       $state.go("public.login-no-uid");
-    }
-    if (Wallet.status.isLoggedIn && (Wallet.store.resetLogoutTimeout != null)) {
-      Wallet.store.resetLogoutTimeout();
     }
     $rootScope.outOfApp = toState.name === 'welcome';
     $scope.requestBeacon = false;

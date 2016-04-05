@@ -25,12 +25,10 @@ function configureSecondPassword($uibModal, Wallet) {
       Wallet.removeSecondPassword(done, done);
     };
 
-    scope.setSecondPassword = () => {
-      let modalInstance = $uibModal.open({
-        templateUrl: 'partials/settings/set-second-password.jade',
-        controller: 'SetSecondPasswordCtrl',
-        windowClass: 'bc-modal'
-      }).opened.then(() => Wallet.store.resetLogoutTimeout());
-    };
+    scope.setSecondPassword = () => $uibModal.open({
+      templateUrl: 'partials/settings/set-second-password.jade',
+      controller: 'SetSecondPasswordCtrl',
+      windowClass: 'bc-modal'
+    });
   }
 }

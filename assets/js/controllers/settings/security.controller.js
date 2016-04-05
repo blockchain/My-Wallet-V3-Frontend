@@ -152,29 +152,19 @@ function SettingsSecurityCtrl($scope, Wallet, Alerts, currency, $uibModal, $tran
   };
 
   $scope.changePassword = () => {
-    let modalInstance = $uibModal.open({
+    $uibModal.open({
       templateUrl: "partials/settings/change-password.jade",
       controller: "ChangePasswordCtrl",
       windowClass: "bc-modal"
     });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
-    }
   };
 
   $scope.changeTwoFactor = () => {
-    let modalInstance = $uibModal.open({
+    $uibModal.open({
       templateUrl: "partials/settings/two-factor.jade",
       controller: "TwoFactorCtrl",
       windowClass: "bc-modal"
     });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
-    }
   };
 
   $scope.clearErrors = () => {

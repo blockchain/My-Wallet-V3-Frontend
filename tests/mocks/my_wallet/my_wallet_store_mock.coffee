@@ -43,9 +43,6 @@ angular.module('walletApp.core').factory 'MyWalletStore', () ->
     getLogoutTime: () ->
         10
 
-    resetLogoutTimeout: () ->
-      return
-
     addEventListener: (func) ->
         eventListener = func
 

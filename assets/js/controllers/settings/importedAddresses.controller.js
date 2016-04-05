@@ -25,7 +25,7 @@ function SettingsImportedAddressesCtrl($scope, Wallet, Alerts, $translate, $uibM
 
   $scope.importAddress = () => {
     Alerts.clear();
-    let modalInstance = $uibModal.open({
+    $uibModal.open({
       templateUrl: "partials/settings/import-address.jade",
       controller: "AddressImportCtrl",
       windowClass: "bc-modal",
@@ -34,10 +34,5 @@ function SettingsImportedAddressesCtrl($scope, Wallet, Alerts, $translate, $uibM
         address: () => null
       }
     });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
-    }
   };
 }

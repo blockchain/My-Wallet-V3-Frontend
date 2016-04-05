@@ -12,7 +12,7 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
       scope.status = {edit: false};
 
       scope.showAddress = () => {
-        let modalInstance = $uibModal.open({
+        $uibModal.open({
           templateUrl: "partials/request.jade",
           controller: "RequestCtrl",
           resolve: {
@@ -22,11 +22,6 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
           },
           windowClass: "bc-modal"
         });
-        if (modalInstance != null) {
-          modalInstance.opened.then(() => {
-            Wallet.store.resetLogoutTimeout();
-          });
-        }
       };
 
       scope.archive = () => { Wallet.archive(scope.address) };
@@ -54,7 +49,7 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
       };
 
       scope.transfer = () => {
-        let modalInstance = $uibModal.open({
+        $uibModal.open({
           templateUrl: "partials/settings/import-address.jade",
           controller: "AddressImportCtrl",
           windowClass: "bc-modal",
@@ -62,15 +57,10 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
             address: () => scope.address
           }
         });
-        if (modalInstance != null) {
-          modalInstance.opened.then(() => {
-            Wallet.store.resetLogoutTimeout();
-          });
-        }
       };
 
       scope.showPrivKey = () => {
-        let modalInstance = $uibModal.open({
+        $uibModal.open({
           templateUrl: "partials/settings/show-private-key.jade",
           controller: "ShowPrivateKeyCtrl",
           windowClass: "bc-modal",
@@ -78,11 +68,6 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
             addressObj: () => scope.address
           }
         });
-        if (modalInstance != null) {
-          modalInstance.opened.then(() => {
-            Wallet.store.resetLogoutTimeout();
-          });
-        }
       };
 
     }
