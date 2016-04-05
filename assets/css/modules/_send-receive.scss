@@ -12,7 +12,7 @@
       overflow: auto;
       @include bc-ng-animate('advanced', 'height', '180px', '345px');
     }
-    &.small {
+    &.sm {
       .fade {
         @include bc-ng-animate('advanced', 'height', '145px', '290px');
       }
@@ -100,41 +100,50 @@
   @media (min-width: 769px) {
     opacity: 1;
     overflow: hidden;
-    @include bc-ng-animate('advanced', 'height', '255px', '385px');
-    &.small {
+    @include bc-ng-animate('advanced', 'height', '225px', '375px');
+    &.sm {
       @include bc-ng-animate('advanced', 'height', '205px', '325px');
     }
+  }
+
+  .ui-select-bootstrap > .ui-select-choices {
+    max-height: 168px;
   }
 
   .row {
     @extend .flex-row;
   }
 
-  .column {
-    @extend .flex-column;
-    h4 {
-      margin-top: 0px;
-    }
+  h4 {
+    margin: 0 auto;
   }
 
   .form-group {
+    > label {
+      min-width: 80px;
+    }
     > div {
-      @extend .mlm;
-      max-width: 385px;
-      @media (max-width: 768px) {
+      @extend .mll;
+      max-width: 400px;
+      min-width: 400px;
+    }
+    @media (max-width: 768px) {
+      display: block;
+      > label {
+        min-width: auto; 
+      }
+      > div {
+        min-width: auto; 
+        max-width: none;
         margin-left: 0px;
       }
     }
   }
 
-  .ti-arrow-right, .ti-arrow-down {
+  .ti-arrow-down {
     font-weight: bold;
     font-size: 18px;
     color: $blue;
-  }
-
-  .ti-arrow-down {
-    display: none;
   }
 
   .bitcoin-address {
@@ -164,61 +173,30 @@
       }
     }
   }
-
-  @media (max-width: 768px) {
-    .row {
-      display: block;
-    }
-    .ti-arrow-right {
-      display: none;
-    }
-    .ti-arrow-down {
-      display: block;
-      margin: 1.25em auto;
-    }
-  }
-}
-
-.message-beacon {
-  cursor: pointer;
 }
 
 .receive-code {
-  h4 {
-    position: relative;
-    .message-beacon {
-      position: absolute;
-      display: block;
-      left: -30px;
-      top: -5px;
-    }
-  }
-}
-
-.amount, .description {
-  position: relative;
-  .message-beacon {
-    position: absolute;
+  canvas {
     display: block;
-    left: -25px;
-    top: -10px;
   }
 }
 
 .payment-url {
   @extend .flex;
   > div {
-    width: 50%;
-    &.receive-address {
+    @media (min-width: 769px) {
       min-width: 320px;
-      &.max-width {
-        margin: 0 auto;
-        max-width: 320px;
+      &.receive-address {
+        &.max-width {
+          margin: 0 auto;
+          max-width: 320px;
+        }
       }
     }
   }
   .or {
     position: relative;
+    text-transform: uppercase;
     &:before, &:after {
       left: 50%;
       width: 1px;
@@ -233,28 +211,6 @@
     &:after {
       bottom: 0;
     }
-  }
-  &.column {
-    .or {
-      width: 100%;
-      display: block;
-      text-align: center;
-      @extend .mtl;
-      @extend .mbl;
-      &:before, &:after {
-        top: 50%;
-        width: 40%;
-        height: 1px;
-        left: initial;
-        right: initial;
-      }
-      &:before {
-        left: 0;
-      }
-      &:after {
-        right: 0;
-      }
-    } 
   }
   @media (max-width: 768px) {
     display: block;
