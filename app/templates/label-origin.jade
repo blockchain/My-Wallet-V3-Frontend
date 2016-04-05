@@ -6,3 +6,6 @@ div
       fiat(ng-switch-when="false" btc="determineAvailableBalance(origin.balance)")
       span(ng-switch-when="true") {{ determineAvailableBalance(origin.balance) | toBitCurrency:settings.btcCurrency }}
     span )
+  span(ng-show="origin.isWatchOnly")
+    | &ensp;
+    span.label.label-default(translate="WATCH_ONLY")
