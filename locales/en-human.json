@@ -366,7 +366,7 @@
   "SEND_FAILED": "Send failed, please come back later to try again",
   "RESET_FORM" : "Reset Form",
   "REGULAR_SEND" : "Regular Send",
-  "TX_FEE" : "Transaction Fee",
+  "TX_FEE" : "Fee",
   "TX_FEE_HELP": "Transaction fees impact how quickly the Bitcoin mining network will confirm your transactions, and depend on the current network conditions. We recommend the fee below for this transaction at this time.",
   "TOTAL_AVAILABLE": "Total available",
   "TOTAL_AVAILABLE_MINUS_FEE": "Total available minus fee",
@@ -642,5 +642,6 @@
   "OK": "OK",
   "DESCRIPTION:": "Description:",
   "COPY_HELPER": "Copy this address and share it with your sender via email, text, or carrier pigeon.",
-  "QR_HELPER": "Share this QR code with your sender."
+  "QR_HELPER": "Share this QR code with your sender.",
+  "CUSTOMIZE_HELPER": "Specify an amount and a description for this transaction."
 }

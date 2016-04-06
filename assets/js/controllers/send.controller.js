@@ -157,12 +157,8 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       .then(transactionSucceeded).catch(transactionFailed);
   };
 
-  $scope.getToLabel = () => {
-    let dests = $scope.transaction.destinations.filter(d => d != null);
-    if (!dests.length) return;
-    if (dests.length > 1) return `${dests.length} Recipients`;
-    if (dests[0].index == null) return dests[0].label || dests[0].address;
-    return dests[0].label;
+  $scope.getToLabels = () => {
+    return $scope.transaction.destinations.filter(d => d != null);
   };
 
   $scope.getTransactionTotal = (includeFee) => {

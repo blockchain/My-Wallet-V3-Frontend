@@ -78,6 +78,10 @@
   }
 }
 
+.rel { position: relative; }
+
+.brdrn { border-radius: 0px !important; }
+
 @media (max-width: 992px) {
   .top-view .heavy h1 { font-size: 1.75em; }
   .top-view .heavy p { font-size: 1em; }

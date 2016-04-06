@@ -15,34 +15,34 @@
   .alert-in-app
     alerts(context="alerts")
   .fade(ng-hide="confirmationStep" ng-class="{ 'advanced': advanced }")
-    form.ph-form(role="form",name="sendForm",novalidate)
+    form.ph-form(role="form",name="sendForm" novalidate)
       //- From
-      .form-group.row(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
-        label.pts.col-sm-2.col-xs-12
+      .form-group.row.flex-justify(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
+        label.pts
           span(translate="FROM")
           |:
-        .col-sm-10.col-xs-12(ng-class="{'has-error': (sendForm.from.$invalid && sendForm.destinations0.$touched) }")
+        .flex-1(ng-class="{'has-error': (sendForm.from.$invalid && sendForm.destinations0.$touched) }")
           p.form-control-static(ng-hide="originsLoaded")
             img(src="img/spinner.gif")
-          span(ng-show="originsLoaded")
-            ui-select.send-from-dropdown(
-              ng-model="transaction.from"
-              name="from"
-              ng-change="checkForSameDestination(); setPaymentFrom()"
-              required)
-              ui-select-match
-                label-origin(origin="$select.selected")
-              ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)")
-                span(ng-class="{aaa: hasZeroBalance(origin)}")
-                  label-origin(origin='origin' highlight="$select.search")
+          ui-select.send-from-dropdown(
+            ng-model="transaction.from"
+            name="from"
+            ng-show="originsLoaded"
+            ng-change="checkForSameDestination(); setPaymentFrom()"
+            required)
+            ui-select-match
+              label-origin(origin="$select.selected")
+            ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)")
+              span(ng-class="{aaa: hasZeroBalance(origin)}")
+                label-origin(origin='origin' highlight="$select.search")
           span.help-block(ng-show="sendForm.from.$invalid && sendForm.destinations0.$touched", translate="MUST_SELECT_ORIGIN") 
       //- Advanced Send
-      .form-group.bc-modal-fade.mvl.advanced-recipient.row
+      .form-group.flex-justify.bc-modal-fade.mvl.advanced-recipient.row
         //- To
-        label.pts.col-sm-2.col-xs-12
+        label.pts
           span(translate="TO")
           |:
-        .col-sm-10.col-xs-12
+        div(ng-class="{rel: advanced, mbl: advanced}")
           .flex-column(ng-class="{'advanced-recipient-row': advanced}" ng-repeat="item in transaction.destinations track by $index")
             p.form-control-static(ng-hide="originsLoaded")
               img(src="img/spinner.gif")
@@ -98,17 +98,23 @@
               span(translate="TOTAL_AVAILABLE" ng-show="!advanced")
               span(translate="TOTAL_AVAILABLE_MINUS_FEE" ng-show="advanced")
               | : {{ transaction.maxAvailable | convert:false:true }}
-          a.flex-center.flex-justify.button-default(ng-click="addDestination()" ng-show="advanced")
-            i.ti-plus.mrm
-            span(translate="ADD_ANOTHER_RECIPIENT")
+          a.flex-center.flex-justify.button-success.add(ng-click="addDestination()" ng-show="advanced")
+            i.ti-plus
+      .flex-row.form-group.note.mvl(ng-class="{'has-error': noteForm.note.$error.maxlength && noteForm.note.$touched}")
+        label.mbn
+          span(translate="NOTE")
+          helper-button(content="SEND_BITOIN_STEP2B")
+        textarea.pas(rows="4" ng-model="transaction.note" name="note" ng-maxlength="512" placeholder="Money for rent 🏡")
+        span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="noteForm.note.$error.maxlength && noteForm.note.$touched")
       //- Fee
-      .flex-column.form-group.bc-modal-fade.col-sm-offset-2.col-sm-10.mtm(ng-class="{'has-error': transaction.blockIdx > 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}" ng-show="advanced")
-        div.mbm.flex-center
-          label.mbn(translate="TX_FEE")
+      .flex-row.flex-center.form-group.bc-modal-fade.mtm.fee(ng-class="{'has-error': transaction.blockIdx > 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}" ng-show="advanced")
+        label.mbn
+          span(translate="TX_FEE")
+          |:
           helper-button(content="TX_FEE_HELP")
         .miners-fee-selection
           .fee-custom
-            .mrl.flex-1
+            .flex-1
               .flex-center.border-bottom
                 span.mrm {{ btcCurrency.code }}:
                 input.form-control.no-border(
@@ -122,65 +128,57 @@
                   required
                   transform-currency="settings.btcCurrency"
                   placeholder="Enter your fee here")
-        span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$dirty")
-        span.help-block.friendly(ng-show="!sendForm.$invalid && amountsAreValid()")
-          span(ng-show="transaction.blockIdx <= 6 && transaction.blockIdx >= 1")
-            span(translate="ESTIMATED_TX_TIME" translate-values="{ confirmationTime: transaction.blockIdx*10, blockQueue: transaction.blockIdx }")
-            |  
-            ng-pluralize(count="transaction.blockIdx" 
-                         ng-init="block='BLOCK'; blocks='BLOCKS'"
-                         when="{'1': '{{block | translate}}', 'other': '{{blocks | translate}}' }")
-            span ).
-          span.has-error(ng-show="transaction.blockIdx > 6" translate="SMALL_FEE_WARNING")
+      span.help-block.has-error(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$dirty && advanced")
+      span.help-block.friendly(ng-show="!sendForm.$invalid && amountsAreValid() && advanced")
+        span(ng-show="transaction.blockIdx <= 6 && transaction.blockIdx >= 1")
+          span(translate="ESTIMATED_TX_TIME" translate-values="{ confirmationTime: transaction.blockIdx*10, blockQueue: transaction.blockIdx }")
+          |  
+          ng-pluralize(count="transaction.blockIdx" 
+                       ng-init="block='BLOCK'; blocks='BLOCKS'"
+                       when="{'1': '{{block | translate}}', 'other': '{{blocks | translate}}' }")
+          span ).
+        span.has-error(ng-show="transaction.blockIdx > 6" translate="SMALL_FEE_WARNING")
   //- Step 2 (confirmation)
   div.overview(ng-show="confirmationStep")
     .flex-column
-      .flex-column.mbl
-        .flex-center.mbm
-          label.mbn.flex-1.mrm
-            span(translate="FROM")
-            |:
-          h5.mvn.flex-10.aaa.em-300.long-input {{ transaction.from.label || transaction.from.address }}
-        .flex-center
-          label.mbn.flex-1.mrm
-            span(translate="TO")
-            |:
-          h5.btcaddr.mvn.flex-10.aaa.em-300.long-input(ng-if="confirmationStep") {{:: getToLabel() }}
+      .flex-center.flex-justify.pbm
+        label.mbn(translate="OVERVIEW")
+        span.mbn.mls(ng-show="transaction.note.length") {{ transaction.note }}
+          span.ti-notepad.mls
+      .flex-row.mbl.mtm
+        .flex-center.center.flex-justify.flex-3
+          label.mvn.em-300.long-input {{ transaction.from.label || transaction.from.address }}
+          span.mlm.security-red -
+            fiat(btc="getTransactionTotal(false)")
+        .flex-justify.flex-1.flex-center
+          span.ti-arrow-right.center.type-h4.blue
+        .flex-justify.flex-center.flex-3.flex-column(ng-if="confirmationStep")
+          .flex-row.flex-center.flex-justify(ng-repeat="address in getToLabels() track by $index")
+            label.mvn.em-300(ng-show="address.label.length") {{ address.label }}
+            label.btcaddr.mvn.em-300.long-input(ng-hide="address.label.length") {{ address.address }}
+            span.mlm.success +
+              fiat(btc="transaction.amounts[$index]")
       .flex.flex-wrap.ptm
-        .total-amounts.aaa.mbm
-          .flex-center.pbl
-            label.mbn(translate="OVERVIEW")
-            helper-button(content="DYK_TX_FEES")
-          table.width-100
-            tr
-              td(translate="AMOUNT")
-              td {{getTransactionTotal() | toBitCurrency:btcCurrency:false}}
-              td
+        .total-amounts.aaa.mbm.width-100
+          .flex-column
+            .flex-row.flex-around
+              span.center(translate="AMOUNT")
+              span.center {{getTransactionTotal() | toBitCurrency:btcCurrency:false}}
+              span.center
                 fiat(btc="getTransactionTotal()")
-            tr
-              td(translate="TX_FEE")
+            .flex-row.flex-around.mbm.rel
+              span.center(translate="TX_FEE")
                 | :
-              td {{ transaction.fee | toBitCurrency:btcCurrency:false}}
-              td
+              span.center {{ transaction.fee | toBitCurrency:btcCurrency:false}}
+              span.center
                 fiat(btc="transaction.fee")
-            tr.blue
-              td(translate="TOTAL")
+              helper-button(content="DYK_TX_FEES")
+            .flex-row.flex-around.blue
+              span.center(translate="TOTAL")
                 | :
-              td {{getTransactionTotal(true) | toBitCurrency:btcCurrency:false}}
-              td
+              span.center {{getTransactionTotal(true) | toBitCurrency:btcCurrency:false}}
+              span.center
                 fiat(btc="getTransactionTotal(true)")
-        form(name="noteForm" novalidate)
-          .flex-column.form-group(ng-class="{'has-error': noteForm.note.$error.maxlength && noteForm.note.$touched}")
-            .flex-center.pbl
-              label.mbn(translate="NOTE")
-              helper-button(content="SEND_BITOIN_STEP2B")
-                |:
-            textarea.pas(rows="4" ng-model="transaction.note" name="note" ng-maxlength="512")
-            .flex-center.mtm
-              input.mrs(type="checkbox" ng-model="transaction.publicNote" name="public")
-              | &nbsp;
-              span(translate="MAKE_PUBLIC")
-            span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="noteForm.note.$error.maxlength && noteForm.note.$touched")
 
 .modal-footer.flex-between.flex-center.pal
   .flex-center

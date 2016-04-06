@@ -11,7 +11,8 @@
 .modal {
   display: none;
   position: fixed;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   top: 0;
   left: 0;
   right: 0;
@@ -75,9 +76,6 @@
 .modal-content {
   position: relative;
   background-color: $modal-content-bg;
-  border: 1px solid $modal-content-fallback-border-color; //old browsers fallback (ie8 etc)
-  border: 1px solid $modal-content-border-color;
-  border-radius: $border-radius-large;
   @include box-shadow(0 3px 9px rgba(0,0,0,.5));
   background-clip: padding-box;
   outline: 0;
@@ -183,8 +181,16 @@
   @extend .flex-justify;
   @extend .flex-center;
   .modal-content { background: $light-blue; }
-  .modal-dialog { width: 55vw; margin: 0 !important }
-  &.small { .modal-dialog { width: 40vw; } }
+  .modal-dialog { 
+    width: 55vw;
+    margin: 30px auto !important;
+  }
+  &.auto {
+    .modal-dialog { width: auto; } 
+  }
+  &.small { 
+    .modal-dialog { width: 40vw; } 
+  }
   &.large {
     .modal-dialog {
       width: 60vw;
@@ -194,11 +200,6 @@
     }
     @media (max-width: 992px) {
       .modal-dialog { width: 85vw; }
-    }
-  }
-  &.auto { 
-    @media (min-width: 768px) {
-      .modal-dialog { width: auto; } 
     }
   }
   &.medium {
@@ -270,12 +271,6 @@
     font-weight: 400;
     color: darken($ccc, 45%);
     font-size: 1.2em;
-  }
-  .total-amounts {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    td { padding: 2px 4px 2px 0px; }
   }
   .fa-arrows-h {
     color: $ccc;
@@ -389,16 +384,6 @@
   .rocket-gif {
     border-radius: 5px;
     height: 430px;
-  }
-  #send {
-    &.advanced-container {
-      padding: 0px;
-    }
-    .advanced { 
-      max-height: 400px;
-      overflow: auto;
-      padding: 15px;
-    }
   }
 
   [name='sendForm'], [name='requestForm']  {

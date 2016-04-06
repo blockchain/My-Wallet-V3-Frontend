@@ -27,7 +27,7 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
     $scope.requestBeacon = false;
     let modalInstance = $uibModal.open({
       templateUrl: "partials/request.jade",
-      windowClass: "bc-modal large",
+      windowClass: "bc-modal auto",
       controller: "RequestCtrl",
       resolve: {
         destination: () => null,
@@ -51,7 +51,7 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
           amount: ""
         })
       },
-      windowClass: "bc-modal"
+      windowClass: "bc-modal auto"
     });
 
     if (modalInstance != null) {
