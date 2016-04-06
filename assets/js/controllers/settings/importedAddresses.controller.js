@@ -14,6 +14,8 @@ function SettingsImportedAddressesCtrl($scope, Wallet, Alerts, $translate, $uibM
     $scope.display.imported = false;
   };
 
+  $scope.hasLegacyAddress = () => Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly).length > 0;
+
   $scope.unarchive = (address) => { Wallet.unarchive(address) };
 
   $scope.delete = (address) => {
@@ -35,4 +37,11 @@ function SettingsImportedAddressesCtrl($scope, Wallet, Alerts, $translate, $uibM
       }
     });
   };
+
+  $scope.signMessage = () => $uibModal.open({
+    templateUrl: 'partials/settings/sign-message.jade',
+    controller: 'SignMessageController',
+    windowClass: 'bc-modal',
+    backdrop: 'static'
+  });
 }

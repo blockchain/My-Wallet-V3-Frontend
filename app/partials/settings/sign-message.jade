@@ -1,0 +1,18 @@
+.modal-header
+  .flex-center.pam
+    h3.man.mrm(translate="SIGN_MESSAGE")
+    helper-button(content="SIGN_MESSAGE_EXPLAIN")
+.modal-body
+  form(role="form" name="form" autocomplete="off" novalidate)
+    .form-group
+      label.control-label(translate="ADDRESS")
+      ui-select(ng-model="$parent.address" required)
+        ui-select-match {{ $select.selected.label || $select.selected.address }}
+        ui-select-choices(repeat="a in addresses")
+          span(ng-bind-html="(a.label || a.address) | escapeHtml | highlight:$select.search")
+    .form-group
+      label.control-label(translate="{{ signed ? 'SIGNED_MESSAGE' : 'MESSAGE' }}")
+      textarea.form-control(rows="3" ng-model="message" ng-disabled="signed" required)
+.modal-footer
+  button.button-muted.mrm(translate="CLOSE" ng-click="$dismiss('close')")
+  button.btn.btn-primary(translate="SIGN" ng-click="sign()" ng-hide="signed" ng-disabled="form.$invalid")
