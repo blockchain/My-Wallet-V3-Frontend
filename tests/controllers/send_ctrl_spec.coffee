@@ -576,24 +576,11 @@ describe "SendCtrl", ->
         expect(scope.transaction.destinations[0].address).toBe("abcdefgh")
       )
 
-    describe "getToLabel", ->
+    describe "getToLabels", ->
 
-      it "should return if the destinations have not been loaded", ->
-        scope.transaction.destinations[0] = null
-        expect(scope.getToLabel()).toBeUndefined()
-
-      it "should set the label to an address", ->
+      it "should return an array of addresses", ->
         scope.transaction.destinations[0] = Wallet.legacyAddresses()[0]
-        expect(scope.getToLabel()).toEqual('some_label')
-
-      it "should set the label to an account", ->
-        scope.transaction.destinations[0] = Wallet.accounts()[0]
-        expect(scope.getToLabel()).toEqual('Checking')
-
-      it "should set the label when advanced", ->
-        scope.advanced = true
-        scope.transaction.destinations = Wallet.legacyAddresses()
-        expect(scope.getToLabel()).toEqual('3 Recipients')
+        expect(scope.getToLabels()).toEqual([ { address : 'some_address', archived : false, isWatchOnly : false, label : 'some_label' } ])
 
     describe "getTransactionTotal", ->
 
