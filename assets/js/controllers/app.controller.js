@@ -20,17 +20,19 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
     $scope.menu.isCollapsed = false;
   };
 
-  $scope.inactivityTimeMinutes = 0;
-  $scope.resetInactivityTime = () => $scope.inactivityTimeMinutes = 0;
+  $scope.inactivityTimeSeconds = 0;
+  $scope.resetInactivityTime = () => $scope.inactivityTimeSeconds = 0;
 
   $interval(() => {
-    $scope.inactivityTimeMinutes++;
-    if ($scope.inactivityTimeMinutes > Wallet.settings.logoutTimeMinutes) {
+    if (!Wallet.status.isLoggedIn) return;
+    $scope.inactivityTimeSeconds++;
+    let logoutTimeSeconds = Wallet.settings.logoutTimeMinutes * 60;
+    if ($scope.inactivityTimeSeconds === logoutTimeSeconds - 10) {
       let logoutTimer = $timeout(Wallet.my.logout, 10000);
       Alerts.confirm('AUTO_LOGOUT_WARN', { minutes: Wallet.settings.logoutTimeMinutes }, '', 'LOG_ME_OUT')
         .then(Wallet.logout).catch(() => $timeout.cancel(logoutTimer));
     }
-  }, 60000);
+  }, 1000);
 
   $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia) !== void 0;
 
