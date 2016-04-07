@@ -55,8 +55,8 @@
                 on-payment-request="applyPaymentRequest(request, $index)"
                 required)
             .has-error
-              span.help-block(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress && sendForm['destinations' + $index].$touched && transaction.destinations[$index].address !== ''")
-              span.help-block(translate="SAME_DESTINATION" ng-show="sendForm['destinations' + $index].$error.isNotEqual")
+              span.help-block.type-sm(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress && sendForm['destinations' + $index].$touched && transaction.destinations[$index].address !== ''")
+              span.help-block.type-sm(translate="SAME_DESTINATION" ng-show="sendForm['destinations' + $index].$error.isNotEqual")
             //- Amount
             div.flex-center.recipient-currency.mtl(ng-class="{'has-error': hasAmountError($index)}")
               .mrl.flex-1
@@ -92,11 +92,12 @@
                   )
             a.mlm.button-danger.type-sm.button-sm.remove(ng-click="removeDestination($index)" ng-hide="$first && $last")
               i.ti-close.type-xs
-          .has-error
+          .has-error.mbm
             span.help-block(ng-show="getTransactionTotal() > transaction.maxAvailable")
-              span(translate="TOTAL_AVAILABLE" ng-show="!advanced")
-              span(translate="TOTAL_AVAILABLE_MINUS_FEE" ng-show="advanced")
-              | : {{ transaction.maxAvailable | convert:false:true }}
+              span.type-sm(translate="TOTAL_AVAILABLE" ng-show="!advanced")
+              span.type-sm(translate="TOTAL_AVAILABLE_MINUS_FEE" ng-show="advanced")
+              | :
+              span.type-sm {{ transaction.maxAvailable | convert:false:true }}
           a.flex-center.flex-justify.add(ng-click="addDestination()" ng-show="advanced")
             i.ti-plus.white
       .flex-row.form-group.note.mvl(ng-class="{'has-error': noteForm.note.$error.maxlength && noteForm.note.$touched}")

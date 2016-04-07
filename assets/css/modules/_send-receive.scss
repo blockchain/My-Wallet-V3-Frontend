@@ -100,6 +100,14 @@
     }
   }
 
+  .has-error {
+    position: relative;
+    > span {
+      margin: 0;
+      position: absolute;
+    }
+  }
+
   &.advanced-container {
     .add {
       background-color: $aaa;
@@ -112,6 +120,14 @@
       width: 30px;
     }
     .advanced-recipient-row {
+      margin-bottom: 20px;
+      position: relative;
+      border: 1px solid #eee;
+      padding: 1em;
+      .ui-select-container {
+        min-width: 225px;
+        margin-right: 10px;
+      }
       > .remove {
         border-radius: 100%;
         position: absolute;
@@ -119,6 +135,9 @@
         right: -10px;
         top: -10px;
         z-index: 2;
+      }
+      & + .has-error {
+        top: -20px;
       }
     }
   }
