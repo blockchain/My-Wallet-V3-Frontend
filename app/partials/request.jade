@@ -107,4 +107,8 @@
   .flex-center.flex-end
     button.button-success.btn(ng-click="done()", translate="DONE" ng-hide="advanced && fields.label != ''")
     a.dark-grey.mrm(ng-click="cancel()", translate="CLOSE" ng-show="advanced && fields.label != ''")
-    button.button-success.btn(ng-click="done()", translate="SAVE" ng-show="advanced && fields.label != ''")
+    button.button-success.btn(ng-click="done()", translate="SAVE" ng-show="advanced && fields.label != ''"
+                              uib-popover="{{'SAVE_HELPER' | translate:{label: fields.to.label} }}"
+                              popover-class="message-contextual"
+                              popover-append-to-body="true"
+                              popover-trigger="mouseenter")

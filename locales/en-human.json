@@ -643,5 +643,6 @@
   "DESCRIPTION:": "Description:",
   "COPY_HELPER": "Copy this address and share it with your sender via email, text, or carrier pigeon.",
   "QR_HELPER": "Share this QR code with your sender.",
-  "CUSTOMIZE_HELPER": "Specify an amount and a description for this transaction."
+  "CUSTOMIZE_HELPER": "Specify an amount and a description for this transaction.",
+  "SAVE_HELPER": "You’ll find this in Settings -> Addresses -> {{ label }} -> Manage Addresses."
 }
