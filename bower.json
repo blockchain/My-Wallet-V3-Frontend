@@ -28,7 +28,6 @@
   },
   "devDependencies": {},
   "resolutions": {
-    "angular": "1.4.*",
-    "angular-bootstrap": "1.2.*"
+    "angular": "1.4.*"
   }
 }
