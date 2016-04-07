@@ -141,9 +141,15 @@ html,body {
 .versions {
   position: absolute;
   bottom: 10px;
-  opacity: 0.6;
+  opacity: 0.8;
   right: 15px;
-  color: white;
+  &:hover {
+    opacity: 1;
+  }
+  a {
+    color: white !important;
+    text-decoration: none !important;
+  }
 }
 
 noscript {

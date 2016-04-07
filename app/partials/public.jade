@@ -6,4 +6,5 @@
         alerts
     .login-box.mhs(ui-view="contents")
   .versions(ng-show="versionFrontend && versionMyWallet")
-    span {{ versionFrontend }} (MyWallet v{{ versionMyWallet }})
+    a(href="https://github.com/blockchain/My-Wallet-V3-Frontend/releases" target="_blank") {{ versionFrontend }} &nbsp;
+    a(href="https://github.com/blockchain/My-Wallet-V3/releases" target="_blank") (MyWallet v{{ versionMyWallet }})
