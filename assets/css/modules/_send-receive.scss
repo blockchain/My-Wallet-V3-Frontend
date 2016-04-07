@@ -144,32 +144,31 @@
 
   &.confirmation {
     @media (min-width: 769px) {
-      min-width: 600px;
+      min-width: 520px;
+      padding-left: 25px;
+      padding-right: 25px;
     }
     .btcaddr {
       font-size: 0.7em;
     }
-    .total-amounts {
-      .flex-around {
-        > span {
-          width: 33.333%;
+    .overview {
+      .flex-row {
+        > span.account {
+          text-align: left;
+          max-width: 200px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          &.aaa {
+            color: $aaa !important;
+          }
         }
-      }
-      .helper {
-        position: absolute;
-        right: 35px;
-        top: -2px;
-      }
-      .mbm {
-        position: relative;
-        &:after {
+        > span:last-of-type {
+          text-align: right;
+        }
+        .helper {
           position: absolute;
-          background: $aaa;
-          bottom: -3px;
-          height: 1px;
-          content: '';
-          width: 76%;
-          left: 12%;
+          left: 20px;
+          top: -2px;
         }
       }
     }

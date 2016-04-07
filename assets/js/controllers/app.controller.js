@@ -44,6 +44,7 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
     Alerts.clear();
     let modalInstance = $uibModal.open({
       templateUrl: "partials/send.jade",
+      windowClass: "bc-modal auto",
       controller: "SendCtrl",
       resolve: {
         paymentRequest: () => ({
@@ -51,7 +52,6 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
           amount: ""
         })
       },
-      windowClass: "bc-modal auto"
     });
 
     if (modalInstance != null) {
