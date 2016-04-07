@@ -138,9 +138,6 @@ describe "SendCtrl", ->
       it "should have an empty note field", ->
         expect(scope.transactionTemplate.note).toEqual('')
 
-      it "should have the public note option set to false", ->
-        expect(scope.transactionTemplate.publicNote).toEqual(false)
-
     describe "origins", ->
 
       it "should load", ->
@@ -515,27 +512,6 @@ describe "SendCtrl", ->
           spyOn(Wallet, 'setNote')
           scope.send()
           expect(Wallet.setNote).not.toHaveBeenCalled()
-        )
-
-        it "should set a public note if there is one", inject((Wallet) ->
-          # TODO: figure out how to test this using promises
-          pending()
-          t = scope.transaction
-          t.note = 'this_is_a_note'
-          t.publicNote = true
-          scope.send()
-          scope.$digest()
-          # expect().toHaveBeenCalledWith()
-        )
-
-        it "should not set a public note if there is not one", inject((Wallet) ->
-          # TODO: figure out how to test this using promises
-          pending()
-          t = scope.transaction
-          t.note = 'this_is_a_note'
-          scope.send()
-          scope.$digest()
-          # expect().toHaveBeenCalledWith()
         )
 
     describe "resetSendForm", ->

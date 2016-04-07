@@ -27,7 +27,6 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     amounts: [null],
     fee: 0,
     note: '',
-    publicNote: false,
     maxAvailable: null,
     surge: false,
     blockIdx: null,
@@ -104,9 +103,6 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
     Alerts.clear($scope.alerts);
 
-    var note = $scope.transaction.publicNote ? $scope.transaction.note : null;
-    $scope.payment.note(note);
-
     let paymentCheckpoint;
     const setCheckpoint = (payment) => {
       paymentCheckpoint = payment;
@@ -132,9 +128,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       Wallet.beep();
 
       let note = $scope.transaction.note;
-      if (!$scope.transaction.publicNote && note !== '') {
-        Wallet.setNote({ hash: tx.txid }, note);
-      }
+      if ( note !== '') Wallet.setNote({ hash: tx.txid }, note);
 
       let index = $scope.transaction.from.index;
       if (index == null) index = 'imported';
