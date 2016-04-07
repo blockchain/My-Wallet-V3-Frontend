@@ -1,6 +1,6 @@
 angular
   .module('walletApp')
-  .controller("AddressImportCtrl", AddressImportCtrl);
+  .controller('AddressImportCtrl', AddressImportCtrl);
 
 function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $translate, $state, $timeout, address, $rootScope) {
   $scope.settings = Wallet.settings;
@@ -20,7 +20,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
     account: null
   };
 
-  $scope.$watchCollection("accounts()", (newValue) => {
+  $scope.$watchCollection('accounts()', (newValue) => {
     $scope.fields.account = Wallet.accounts()[Wallet.my.wallet.hdwallet.defaultAccountIndex];
   });
 
@@ -89,9 +89,9 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
 
     const success = () => {
       $scope.status.sweeping = false;
-      $uibModalInstance.dismiss("");
+      $uibModalInstance.dismiss('');
       $rootScope.scheduleRefresh();
-      $state.go("wallet.common.transactions", {
+      $state.go('wallet.common.transactions', {
         accountIndex: $scope.fields.account.index
       });
       $translate(['SUCCESS', 'BITCOIN_SENT']).then(function(translations) {
@@ -119,7 +119,9 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
     payment
       .from($scope.address.address)
       .to($scope.fields.account.index)
-      .useAll().build();
+      .useAll()
+      .sideEffect(p => { if (p.sweepAmount <= 0) throw 'SWEEP_LOW_BALANCE_ERR'; })
+      .build();
 
     const signAndPublish = (passphrase) => {
       return payment.sign(passphrase).publish().payment;
@@ -144,7 +146,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
   $scope.cameraOff = () => {
     $scope.status.cameraIsOn = false;
     $scope.cameraRequested = false;
-    $scope.$broadcast("STOP_WEBCAM");
+    $scope.$broadcast('STOP_WEBCAM');
   };
 
   $scope.onAddressScan = (url) => {
@@ -162,7 +164,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
     if ($scope.step == 2 && $scope.address.balance > 0 && !$scope.address.isWatchOnly) {
       Alerts.confirm('CONFIRM_NOT_SWEEP', {}, '', 'DONT_SWEEP').then($uibModalInstance.dismiss);
     } else {
-      $uibModalInstance.dismiss("");
+      $uibModalInstance.dismiss('');
     }
   };
 
