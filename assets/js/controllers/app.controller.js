@@ -23,7 +23,7 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
   $scope.inactivityTimeSeconds = 0;
   $scope.resetInactivityTime = () => $scope.inactivityTimeSeconds = 0;
 
-  $interval(() => {
+  $scope.inactivityInterval = () => {
     if (!Wallet.status.isLoggedIn) return;
     $scope.inactivityTimeSeconds++;
     let logoutTimeSeconds = Wallet.settings.logoutTimeMinutes * 60;
@@ -32,7 +32,9 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
       Alerts.confirm('AUTO_LOGOUT_WARN', { minutes: Wallet.settings.logoutTimeMinutes }, '', 'LOG_ME_OUT')
         .then(Wallet.logout).catch(() => $timeout.cancel(logoutTimer));
     }
-  }, 1000);
+  };
+
+  $interval($scope.inactivityInterval, 1000);
 
   $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia) !== void 0;
 

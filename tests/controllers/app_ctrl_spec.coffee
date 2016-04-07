@@ -96,3 +96,29 @@ describe "AppCtrl", ->
 
       expect($uibModal.open).toHaveBeenCalled()
     )
+
+  describe "auto logout", ->
+
+    it "should reset the inactivity time", ->
+      scope.inactivityTimeSeconds = 1
+      scope.resetInactivityTime()
+      expect(scope.inactivityTimeSeconds).toEqual(0)
+
+    it "should increment the inactivity time", inject((Wallet) ->
+      Wallet.status.isLoggedIn = true
+      scope.inactivityInterval()
+      expect(scope.inactivityTimeSeconds).toEqual(1)
+    )
+
+    it "should show the logout warning modal", inject((Wallet, Alerts) ->
+      Wallet.status.isLoggedIn = true
+      Wallet.settings.logoutTimeMinutes = 10
+      scope.inactivityTimeSeconds = 589
+      spyOn(Alerts, 'confirm').and.callThrough()
+      scope.inactivityInterval()
+      expect(Alerts.confirm).toHaveBeenCalled()
+    )
+
+    it "should not increment ticker when logged out", ->
+      scope.inactivityInterval()
+      expect(scope.inactivityTimeSeconds).toEqual(0)
