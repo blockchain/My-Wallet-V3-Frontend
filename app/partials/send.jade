@@ -151,7 +151,7 @@
           span.width-100.security-red - {{getTransactionTotal(true) | toBitCurrency:btcCurrency:false}}
           span.width-100.security-red -
             fiat(btc="getTransactionTotal(true)")
-        .mbl.flex-justify.flex-1.flex-center
+        .mbl.flex-justify.flex-1.flex-center.split-rule
           span.ti-arrow-down.center.type-h4.blue
         .flex-column.mtm(ng-if="confirmationStep")
           .mbs.flex-row.flex-center.center.flex-between(ng-repeat="address in getToLabels() track by $index")

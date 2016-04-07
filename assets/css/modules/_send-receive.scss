@@ -29,10 +29,10 @@
     @media (max-width: 768px) {
       display: block;
       > label {
-        min-width: auto; 
+        min-width: auto;
       }
       > div {
-        min-width: auto; 
+        min-width: auto;
         max-width: none;
         margin-left: 0px;
       }
@@ -177,7 +177,7 @@
   @media (max-width: 768px) {
     .fade {
       opacity: 1 !important;
-    } 
+    }
   }
   @media (min-width: 769px) {
     .fade {
@@ -306,6 +306,27 @@
   }
 }
 
+.split-rule {
+  width: 100%;
+  display: block;
+  text-align: center;
+  position: relative;
+  &:before, &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 42.5%;
+    height: 1px;
+    background-color: $ccc;
+  }
+  &:before {
+    left: 0;
+  }
+  &:after {
+    right: 0;
+  }
+}
+
 .payment-url {
   @extend .flex;
   > div {
@@ -364,7 +385,7 @@
       &:after {
         right: 0;
       }
-    } 
+    }
   }
 }
 
