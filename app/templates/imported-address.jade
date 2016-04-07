@@ -11,11 +11,12 @@ tr
       a(ng-click="status.edit=1")
         i.ti-pencil.prm   
   td.shrink
-    span.prm
-      span(ng-show="address.balance != null")
-        fiat-or-btc(btc="address.balance")
-      img(ng-show="address.balance == null" src="img/spinner.gif")
-    button.btn-btn-default(ng-hide="address.balance == 0" translate="TRANSFER" ng-click="transfer()")
+    .flex.flex-between
+      span.prm
+        span(ng-show="address.balance != null")
+          fiat-or-btc(btc="address.balance")
+        img(ng-show="address.balance == null" src="img/spinner.gif")
+      a(ng-hide="address.balance == 0" translate="TRANSFER" ng-click="transfer()")
   td.shrink
     a(translate="YOUR_PRIVATE_KEY", ng-hide="address.isWatchOnly", ng-click="showPrivKey()")
   td.shrink
