@@ -129,24 +129,6 @@ $select-fg: #686868;
   box-shadow: none !important;
 }
 
-//override tooltip
-.tooltip {
-  font-family: "Roboto", sans-serif;
-  &.in {
-    opacity: 1;
-  }
-}
-.tooltip-arrow {
-  border-top-color: #ccc !important;
-  border-bottom-color: #ccc !important;
-}
-.tooltip-inner {
-  background: white;
-  border: 1px solid #ccc;
-  padding: 1em;
-  box-shadow: 0 2px 10px 0 #DDDDDD;
-}
-
 //override pre from bootstrap
 pre {
   word-break: normal;
@@ -169,6 +151,6 @@ pre {
   &.bottom {
    .arrow {
       border-bottom-color: $eee !important;
-   } 
+   }
   }
 }
