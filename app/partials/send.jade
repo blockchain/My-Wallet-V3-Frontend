@@ -90,16 +90,15 @@
                     ng-change="setPaymentAmount()"
                     required
                   )
-              a.mlm.button-danger.type-sm.button-sm(ng-click="removeDestination($index)" ng-hide="$first && $last")
-                i.ti-close.mrm.type-xs
-                span(translate="REMOVE")
+            a.mlm.button-danger.type-sm.button-sm.remove(ng-click="removeDestination($index)" ng-hide="$first && $last")
+              i.ti-close.type-xs
           .has-error
             span.help-block(ng-show="getTransactionTotal() > transaction.maxAvailable")
               span(translate="TOTAL_AVAILABLE" ng-show="!advanced")
               span(translate="TOTAL_AVAILABLE_MINUS_FEE" ng-show="advanced")
               | : {{ transaction.maxAvailable | convert:false:true }}
-          a.flex-center.flex-justify.button-success.add(ng-click="addDestination()" ng-show="advanced")
-            i.ti-plus
+          a.flex-center.flex-justify.add(ng-click="addDestination()" ng-show="advanced")
+            i.ti-plus.white
       .flex-row.form-group.note.mvl(ng-class="{'has-error': noteForm.note.$error.maxlength && noteForm.note.$touched}")
         label.mbn
           span(translate="NOTE")

@@ -102,6 +102,7 @@
 
   &.advanced-container {
     .add {
+      background-color: $aaa;
       border-radius: 100%;
       position: absolute;
       bottom: -5px;
@@ -109,6 +110,16 @@
       padding: 0px;
       height: 30px;
       width: 30px;
+    }
+    .advanced-recipient-row {
+      > .remove {
+        border-radius: 100%;
+        position: absolute;
+        padding: 1px 5px;
+        right: -10px;
+        top: -10px;
+        z-index: 2;
+      }
     }
   }
 
