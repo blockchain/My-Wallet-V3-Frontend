@@ -53,6 +53,9 @@
       width: 5%;
       top: -80px;
       background-image: none;
+      &.disabled {
+        opacity: 0;
+      }
       &.right, &.left {
         > span {
           text-shadow: none;
