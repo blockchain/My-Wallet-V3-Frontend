@@ -6,13 +6,25 @@
   form(role="form" name="form" autocomplete="off" novalidate)
     .form-group
       label.control-label(translate="ADDRESS")
-      ui-select(ng-model="$parent.address" required)
-        ui-select-match {{ $select.selected.label || $select.selected.address }}
-        ui-select-choices(repeat="a in addresses")
-          span(ng-bind-html="(a.label || a.address) | escapeHtml | highlight:$select.search")
+      ui-select(ng-model="$parent.address" ng-disabled="signature" required)
+        ui-select-match {{ formatLabel($select.selected) }}
+        ui-select-choices(repeat="a in addresses | filter:$select.search")
+          span(ng-bind-html="formatLabel(a) | escapeHtml | highlight:$select.search")
     .form-group
-      label.control-label(translate="{{ signed ? 'SIGNED_MESSAGE' : 'MESSAGE' }}")
-      textarea.form-control(rows="3" ng-model="message" ng-disabled="signed" required)
+      label.control-label(translate="MESSAGE")
+      textarea.form-control(rows="3" ng-model="message" ng-disabled="signature" required)
+    .form-group.tooltip-set-width(ng-show="signature")
+      label.control-label(translate="SIGNATURE")
+      p.form-control-static.bitcoin-address(
+        uib-tooltip="{{ copied ? 'COPIED' : 'CLICK_COPY' | translate }}"
+        tooltip-animation="false"
+        ng-click="copied = true"
+        ng-mouseleave="copied = false"
+        single-click-select) {{ signature }}
 .modal-footer
-  button.button-muted.mrm(translate="CLOSE" ng-click="$dismiss('close')")
-  button.btn.btn-primary(translate="SIGN" ng-click="sign()" ng-hide="signed" ng-disabled="form.$invalid")
+  div(ng-hide="signature")
+    button.button-muted.mrm(translate="CLOSE" ng-click="$dismiss()")
+    button.btn.button-primary(translate="SIGN" ng-click="sign()" ng-disabled="form.$invalid")
+  div(ng-show="signature")
+    button.button-muted.mrm(translate="RESET_FORM" ng-click="reset()")
+    button.btn.button-primary(translate="DONE" ng-click="$close()")
