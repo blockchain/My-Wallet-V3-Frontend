@@ -373,7 +373,7 @@ module.exports = (grunt) ->
         replacements: [{
           from: 'customApiDomain = $rootScope.apiDomain'
           to: () =>
-            'customApiDomain = "https://' + @apiDomain + '"'
+            'customApiDomain = "https://' + @apiDomain + '/"'
         }]
       version_frontend:
         src: ['build/js/services/wallet.service.js'],
