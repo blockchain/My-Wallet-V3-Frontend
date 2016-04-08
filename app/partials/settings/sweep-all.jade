@@ -2,52 +2,47 @@
   h3(translate="SWEEP_ALL")
   .alert-in-app
     alerts(context="alerts")
-.modal-body
-  div(ng-show="!sweeping && ncompleted === 0")
-    span.security-red.type-h4.mrs(class="ti-alert")
-    span.text(translate="SWEEP_WARNING")
-  div(ng-show="sweeping")
-    label(translate="SWEEPING")
-    span : {{ addresses[ncompleted].address }}
-  .mtl.flex-row.flex-around(ng-hide="ncompleted === ntotal")
-    ul.flex-2
-      li(ng-repeat="address in addresses")
-        span {{ address.address }} &nbsp;
-        span ({{ address.balance | toBitCurrency:settings.btcCurrency }})
-    .flex-center.prl.pll
-      span.ti-arrow-right.blue.type-h4.bold
-    .flex-1.flex-center.flex-justify.center
-      span {{ defaultAccount.label }} &nbsp;
-      span ({{ defaultAccount.balance | toBitCurrency:settings.btcCurrency }})
-  .flex-column(ng-show="ncompleted === ntotal")
-    div(ng-show="succeeded.length > 0")
-      h5.underline.success(translate="Success")
-      .flex-row.flex-around
-        ul.flex-2
-          li(ng-repeat="address in succeeded")
-            span {{ address.address }} &nbsp;
-            span ({{ address.balance | toBitCurrency:settings.btcCurrency }})
-        .flex-center.prl.pll
-          span.ti-arrow-right.blue.type-h4.bold
-        .flex-1.flex-center.flex-justify.center
-          span {{ defaultAccount.label }} &nbsp;
-          span ({{ defaultAccount.balance | toBitCurrency:settings.btcCurrency }})
-    div(ng-show="failed.length > 0")
-      span.type-h5.underline.security-red(translate="Failed" 
-                                popover-placement="top" 
-                                uib-popover="{{'SWEEP_FAIL' | translate}}" 
-                                popover-class="message-contextual"
-                                popover-trigger="mouseenter"
-                                popover-append-to-body="true")
-      .flex-center
-        ul.flex-1
-          li(ng-repeat="address in failed")
-            span {{ address.address }} &nbsp;
-            span ({{ address.balance | toBitCurrency:settings.btcCurrency }})
-  .flex-end(ng-show="ncompleted === ntotal")
-    span.success.type-h4.bold(class="ti-check")
-  uib-progressbar(ng-show="sweeping || ncompleted > 0" value="ncompleted" max="ntotal")
+.modal-body#sweep-all
+  span.security-red.type-h4.mrs(class="ti-alert")
+  span.text(translate="SWEEP_WARNING")
+  
+  .mtl.flex-row.flex-around
+    ul.flex-2.address-container
+      li(ng-repeat="address in addresses track by $index")
+        span(ng-class="{ 'security-red': failed[address.address] }")
+          | {{ address.address }}&nbsp;
+          | ({{ address.balance | toBitCurrency:settings.btcCurrency }})
+    .flex-column.overview.pll.prl
+      .flex-center.flex-justify
+        label.mbs(translate="OVERVIEW")
+      .flex-column.mtm
+        .flex-row.flex-center.center.flex-between
+          span.account.em-400.long-input(translate="SUCCEEDED")
+          span.success {{ nsucceeded }}
+        .flex-row.flex-center.center.flex-between.border-bottom.pbs.mbs
+          span.account.em-400.long-input(translate="FAILED")
+          span.security-red {{ nfailed }}
+        .flex-row.flex-center.center.flex-between
+          span.account.em-400.long-input(translate="TOTAL_COMPLETED")
+          span.blue {{ ncompleted() }}
+
+  .mtm.flex-row.flex-end.flex-center
+    span(ng-show="!state.sweeping && !state.complete")
+      | {{ addresses.length }}&nbsp;
+      span(translate="IMPORTED_ADDRESSES")
+    span(ng-show="state.sweeping") {{ addresses[ncompleted()].address }}
+    .mrm.mlm
+      span(ng-hide="state.failed || state.success").ti-arrow-right.blue.type-h4.bold
+      span(ng-show="state.success").ti-check.success.type-h4.bold
+      span(ng-show="state.failed").ti-close.security-red.type-h4.bold
+    span {{ defaultAccount.label }}&nbsp;
+    span ({{ defaultAccount.balance | toBitCurrency:settings.btcCurrency }})
+
+  uib-progressbar.mtl(value="ncompleted()" max="ntotal" animate="true")
+    span.pull-left.mls(ng-class="{ 'black': ncompleted() === 0 }") {{ ncompleted() }} / {{ ntotal }}
+
 .modal-footer.pal.flex-end
-  button.button-muted.mrm(ng-click="$dismiss('cancelled')" ng-show="!sweeping && ncompleted === 0" translate="CANCEL")
-  button.btn.btn-primary(ng-hide="ncompleted === ntotal" ui-ladda="sweeping" ng-click="sweepAll()" data-style="expand-left" ladda-translate="SWEEP_ALL")
-  button.btn.btn-primary(ng-show="ncompleted === ntotal" ng-click="$close(true)" translate="DONE")
+  button.button-muted.mrm(ng-click="$dismiss('cancelled')" ng-show="!state.sweeping && !state.complete" translate="CANCEL")
+  button.button-muted.mrm(ng-click="cancel()" ng-show="state.sweeping" translate="CANCEL")
+  button.btn.button-primary(ng-show="!state.complete" ui-ladda="state.sweeping" ng-click="sweepAll()" data-style="expand-left" ladda-translate="SWEEP_ALL")
+  button.btn.button-primary(ng-show="state.complete" ng-click="$close(true)" translate="DONE")

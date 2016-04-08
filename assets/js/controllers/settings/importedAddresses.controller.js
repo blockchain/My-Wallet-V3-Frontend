@@ -40,7 +40,7 @@ function SettingsImportedAddressesCtrl($scope, Wallet, Alerts, $translate, $uibM
     $uibModal.open({
       templateUrl: "partials/settings/sweep-all.jade",
       controller: "SweepAllController",
-      windowClass: "bc-modal auto",
+      windowClass: "bc-modal",
       backdrop: "static"
     });
   };
