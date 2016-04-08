@@ -6,7 +6,7 @@ describe "Verify Mobile Number Directive", ->
   Wallet = undefined
 
   beforeEach module("walletApp")
-  
+
   beforeEach inject((_$compile_, _$rootScope_, $injector) ->
 
     $compile = _$compile_
@@ -23,7 +23,7 @@ describe "Verify Mobile Number Directive", ->
       if mobile
         success()
       else
-        error('error')      
+        error('error')
 
     return
   )
@@ -62,4 +62,3 @@ describe "Verify Mobile Number Directive", ->
       spyOn(isoScope, "onSuccess")
       isoScope.retrySendCode()
       expect(isoScope.errors.retryFail).toBe(null)
-

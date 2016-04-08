@@ -23,7 +23,7 @@ describe "Imported Address Directive", ->
       legacyAddresses
 
     Wallet.changeLegacyAddressLabel = (address, label, success, error) ->
-      if label 
+      if label
         success()
       else
         error()
@@ -69,12 +69,12 @@ describe "Imported Address Directive", ->
     expect(isoScope.status.edit).toBe(false)
 
   describe "showAddress", ->
-    
+
     it "should open a modal", inject(($uibModal) ->
       spyOn($uibModal, 'open')
       isoScope.showAddress()
       expect($uibModal.open).toHaveBeenCalled()
-    )    
+    )
 
   describe "transfer", ->
 
@@ -91,4 +91,3 @@ describe "Imported Address Directive", ->
       isoScope.showPrivKey()
       expect($uibModal.open).toHaveBeenCalled()
     )
-

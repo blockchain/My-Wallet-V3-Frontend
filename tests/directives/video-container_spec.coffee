@@ -1,4 +1,4 @@
-describe "Scroll in View Directive", ->
+describe "Video Container Directive", ->
   $compile = undefined
   $rootScope = undefined
   $sce = undefined
@@ -6,7 +6,7 @@ describe "Scroll in View Directive", ->
   isoScope = undefined
 
   beforeEach module("walletApp")
-  
+
   beforeEach inject((_$compile_, _$rootScope_, _$sce_, Wallet) ->
 
     $compile = _$compile_

@@ -1,7 +1,7 @@
 'use strict';
 
 describe('currency', () => {
-
+  
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(done => {

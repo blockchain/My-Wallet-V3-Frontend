@@ -37,8 +37,8 @@ module.exports = (grunt) ->
 
     concat:
       options:
-        banner: "(function(){"
-        separator: ";"
+        banner: "(function () {\n"
+        separator: "})();\n(function () {\n"
         footer: "})();"
 
       application_dependencies:
@@ -173,7 +173,7 @@ module.exports = (grunt) ->
 
       js:
         files: [
-          {src: ["browser-polyfill.js"], dest: "build/js/", cwd: "node_modules/grunt-babel/node_modules/babel-core", expand: true}
+          {src: ["polyfill.js"], dest: "build/js/", cwd: "node_modules/babel-polyfill/dist", expand: true}
         ]
 
 
@@ -233,6 +233,7 @@ module.exports = (grunt) ->
     babel:
       options:
         sourceMap: true
+        presets: ['es2015']
       build:
         files: [{
           expand: true,

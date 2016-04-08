@@ -33,7 +33,7 @@ describe "Watch Only Address Directive", ->
 
   it "should be editable", ->
     success = () ->
-    error = () -> 
+    error = () ->
 
     spyOn(Wallet, "changeLegacyAddressLabel").and.callThrough()
     isoScope.changeLabel('label', success, error)
@@ -44,7 +44,7 @@ describe "Watch Only Address Directive", ->
     isoScope.cancelEdit()
 
     expect(isoScope.status.edit).toBe(false)
-    
+
   it "should let users delete", ->
     spyOn(Wallet, "deleteLegacyAddress")
     isoScope.delete()
