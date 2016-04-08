@@ -18,7 +18,7 @@ function SettingsAccountsController($scope, Wallet, Alerts, $uibModal, filterFil
 
   $scope.newAccount = () => {
     Alerts.clear();
-    let modalInstance = $uibModal.open({
+    $uibModal.open({
       templateUrl: "partials/account-form.jade",
       controller: "AccountFormCtrl",
       resolve: {
@@ -26,16 +26,11 @@ function SettingsAccountsController($scope, Wallet, Alerts, $uibModal, filterFil
       },
       windowClass: "bc-modal"
     });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
-    }
   };
 
   $scope.editAccount = (account) => {
     Alerts.clear();
-    let modalInstance = $uibModal.open({
+    $uibModal.open({
       templateUrl: "partials/account-form.jade",
       controller: "AccountFormCtrl",
       resolve: {
@@ -43,15 +38,10 @@ function SettingsAccountsController($scope, Wallet, Alerts, $uibModal, filterFil
       },
       windowClass: "bc-modal"
     });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
-    }
   };
 
   $scope.revealXpub = (account) => {
-    let modalInstance = $uibModal.open({
+    $uibModal.open({
       templateUrl: "partials/reveal-xpub.jade",
       controller: "RevealXpubCtrl",
       resolve: {
@@ -59,11 +49,6 @@ function SettingsAccountsController($scope, Wallet, Alerts, $uibModal, filterFil
       },
       windowClass: "bc-modal"
     });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
-    }
   };
 
   $scope.makeDefault = (account) => {
@@ -72,7 +57,7 @@ function SettingsAccountsController($scope, Wallet, Alerts, $uibModal, filterFil
   };
 
   $scope.transfer = () => {
-    let modalInstance = $uibModal.open({
+    $uibModal.open({
       templateUrl: "partials/send.jade",
       controller: "SendCtrl",
       resolve: {
@@ -83,15 +68,9 @@ function SettingsAccountsController($scope, Wallet, Alerts, $uibModal, filterFil
       },
       windowClass: "bc-modal"
     });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
-    }
   };
 
   $scope.archive = (account) => { Wallet.archive(account) };
   $scope.unarchive = (account) => { Wallet.unarchive(account) };
   $scope.isDefault = (account) => Wallet.isDefaultAccount(account);
-
 }

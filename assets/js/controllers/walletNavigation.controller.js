@@ -47,7 +47,7 @@ function WalletNavigationCtrl($rootScope, $scope, Wallet, Alerts, SecurityCenter
 
   $scope.newAccount = () => {
     Alerts.clear();
-    let modalInstance = $uibModal.open({
+    $uibModal.open({
       templateUrl: 'partials/account-form.jade',
       controller: 'AccountFormCtrl',
       resolve: {
@@ -55,11 +55,6 @@ function WalletNavigationCtrl($rootScope, $scope, Wallet, Alerts, SecurityCenter
       },
       windowClass: 'bc-modal small'
     });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
-    }
   };
 
   $scope.getLegacyTotal = () => Wallet.total('imported');

@@ -26,16 +26,12 @@ function SettingsSecurityCenterCtrl($scope, Wallet, SecurityCenter, filterFilter
       templateUrl: "partials/send.jade",
       controller: "SendCtrl",
       resolve: {
-        paymentRequest: () => {
-          return {
-            fromAddress: address,
-            amount: 0,
-            toAccount: Wallet.accounts()[Wallet.getDefaultAccountIndex()]
-          };
-        }
+        paymentRequest: () => ({
+          fromAddress: address,
+          amount: 0,
+          toAccount: Wallet.accounts()[Wallet.getDefaultAccountIndex()]
+        })
       }
-    }).opened.then(() => {
-      Wallet.store.resetLogoutTimeout();
     });
   };
 
@@ -71,7 +67,7 @@ function SettingsSecurityCenterCtrl($scope, Wallet, SecurityCenter, filterFilter
   $scope.cancelEditPasswordHint = () => {
     $scope.display.action = null;
   }
-  
+
   $scope.$watchCollection("user", (newValue, oldValue) => {
     if (!($scope.display.action === "mobilenumber" && !$scope.user.isMobileVerified)) {
       $scope.nextAction();
@@ -95,16 +91,11 @@ function SettingsSecurityCenterCtrl($scope, Wallet, SecurityCenter, filterFilter
   });
 
   $scope.changeTwoFactor = () => {
-    const modalInstance = $uibModal.open({
+    $uibModal.open({
       templateUrl: "partials/settings/two-factor.jade",
       controller: "TwoFactorCtrl",
       windowClass: "bc-modal"
     });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
-    }
   };
 
   $scope.nextAction = () => {
