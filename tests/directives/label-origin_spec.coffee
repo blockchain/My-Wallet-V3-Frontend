@@ -6,7 +6,7 @@ describe "Label Origin Directive", ->
   Wallet = undefined
 
   beforeEach module("walletApp")
-  
+
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
 
     $compile = _$compile_
@@ -44,7 +44,7 @@ describe "Label Origin Directive", ->
       expect(final).toBe(95)
 
     it "should return undefined if no balance is passed", ->
-      final = isoScope.determineAvailableBalance()      
+      final = isoScope.determineAvailableBalance()
       expect(final).toBeUndefined()
 
   describe "determineLabel function", ->

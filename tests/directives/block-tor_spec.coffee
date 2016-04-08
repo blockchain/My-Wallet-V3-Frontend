@@ -5,7 +5,7 @@ describe "TOR Directive", ->
   isoScope = undefined
 
   beforeEach module("walletApp")
-  
+
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
 
     $compile = _$compile_

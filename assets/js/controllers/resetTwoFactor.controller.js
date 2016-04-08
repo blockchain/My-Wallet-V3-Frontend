@@ -58,7 +58,7 @@ function ResetTwoFactorCtrl($scope, $rootScope, $http, $translate, WalletNetwork
       $scope.fields.newEmail,
       $scope.fields.secret,
       $scope.fields.message,
-      $scope.fields.captcha,
+      $scope.fields.captcha
     ).then(success).catch(error);
   };
 

@@ -6,7 +6,7 @@ describe "Transaction Note Directive", ->
 
   # Load the myApp module, which contains the directive
   beforeEach module("walletApp")
-  
+
   # Store references to $rootScope and $compile
   # so they are available to all tests in this describe block
   beforeEach inject((_$compile_, _$rootScope_) ->

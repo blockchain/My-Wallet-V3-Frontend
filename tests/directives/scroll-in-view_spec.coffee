@@ -1,11 +1,12 @@
 describe "Scroll in View Directive", ->
+  
   $compile = undefined
   $rootScope = undefined
   element = undefined
   isoScope = undefined
 
   beforeEach module("walletApp")
-  
+
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
 
     $compile = _$compile_
@@ -43,7 +44,7 @@ describe "Scroll in View Directive", ->
     isoScope.onScroll(bottom, top)
 
     expect(isoScope.isActive).toBeFalsy()
-  
+
 
   it "should be active when the element is visible", ->
     bottom = 1500
@@ -51,6 +52,6 @@ describe "Scroll in View Directive", ->
     isoScope.onScroll(bottom, top)
 
     expect(isoScope.isActive).toBeTruthy()
-    
+
 
   return

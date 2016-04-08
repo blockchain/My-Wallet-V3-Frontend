@@ -1,5 +1,4 @@
 describe('convertFilter', () => {
-
   beforeEach(module('walletApp'));
   beforeEach(module('walletFilters'));
 
