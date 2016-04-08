@@ -27,7 +27,6 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     amounts: [null],
     fee: 0,
     note: '',
-    publicNote: false,
     maxAvailable: null,
     surge: false,
     blockIdx: null,
@@ -104,9 +103,6 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
     Alerts.clear($scope.alerts);
 
-    var note = $scope.transaction.publicNote ? $scope.transaction.note : null;
-    $scope.payment.note(note);
-
     let paymentCheckpoint;
     const setCheckpoint = (payment) => {
       paymentCheckpoint = payment;
@@ -132,9 +128,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       Wallet.beep();
 
       let note = $scope.transaction.note;
-      if (!$scope.transaction.publicNote && note !== '') {
-        Wallet.setNote({ hash: tx.txid }, note);
-      }
+      if ( note !== '') Wallet.setNote({ hash: tx.txid }, note);
 
       let index = $scope.transaction.from.index;
       if (index == null) index = 'imported';
@@ -157,12 +151,8 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       .then(transactionSucceeded).catch(transactionFailed);
   };
 
-  $scope.getToLabel = () => {
-    let dests = $scope.transaction.destinations.filter(d => d != null);
-    if (!dests.length) return;
-    if (dests.length > 1) return `${dests.length} Recipients`;
-    if (dests[0].index == null) return dests[0].label || dests[0].address;
-    return dests[0].label;
+  $scope.getToLabels = () => {
+    return $scope.transaction.destinations.filter(d => d != null);
   };
 
   $scope.getTransactionTotal = (includeFee) => {

@@ -138,9 +138,6 @@ describe "SendCtrl", ->
       it "should have an empty note field", ->
         expect(scope.transactionTemplate.note).toEqual('')
 
-      it "should have the public note option set to false", ->
-        expect(scope.transactionTemplate.publicNote).toEqual(false)
-
     describe "origins", ->
 
       it "should load", ->
@@ -517,27 +514,6 @@ describe "SendCtrl", ->
           expect(Wallet.setNote).not.toHaveBeenCalled()
         )
 
-        it "should set a public note if there is one", inject((Wallet) ->
-          # TODO: figure out how to test this using promises
-          pending()
-          t = scope.transaction
-          t.note = 'this_is_a_note'
-          t.publicNote = true
-          scope.send()
-          scope.$digest()
-          # expect().toHaveBeenCalledWith()
-        )
-
-        it "should not set a public note if there is not one", inject((Wallet) ->
-          # TODO: figure out how to test this using promises
-          pending()
-          t = scope.transaction
-          t.note = 'this_is_a_note'
-          scope.send()
-          scope.$digest()
-          # expect().toHaveBeenCalledWith()
-        )
-
     describe "resetSendForm", ->
 
       beforeEach ->
@@ -576,24 +552,11 @@ describe "SendCtrl", ->
         expect(scope.transaction.destinations[0].address).toBe("abcdefgh")
       )
 
-    describe "getToLabel", ->
+    describe "getToLabels", ->
 
-      it "should return if the destinations have not been loaded", ->
-        scope.transaction.destinations[0] = null
-        expect(scope.getToLabel()).toBeUndefined()
-
-      it "should set the label to an address", ->
+      it "should return an array of addresses", ->
         scope.transaction.destinations[0] = Wallet.legacyAddresses()[0]
-        expect(scope.getToLabel()).toEqual('some_label')
-
-      it "should set the label to an account", ->
-        scope.transaction.destinations[0] = Wallet.accounts()[0]
-        expect(scope.getToLabel()).toEqual('Checking')
-
-      it "should set the label when advanced", ->
-        scope.advanced = true
-        scope.transaction.destinations = Wallet.legacyAddresses()
-        expect(scope.getToLabel()).toEqual('3 Recipients')
+        expect(scope.getToLabels()).toEqual([ { address : 'some_address', archived : false, isWatchOnly : false, label : 'some_label' } ])
 
     describe "getTransactionTotal", ->
 

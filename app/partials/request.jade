@@ -6,7 +6,7 @@
   .flex-row.flex-center(ng-show="hasLegacyAddress").legacy-msg 
     h5(translate="RECEIVE_BITCOIN_MESSAGE_LEGACY_1")
     a(translate="CLICK_HERE" ng-click="close()")
-#receive.fade.modal-body(ng-class="{'advanced': advanced, 'small': numberOfActiveAccountsAndLegacyAddresses() <= 1}")
+#receive.fade.modal-body(ng-class="{'advanced': advanced, 'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1}")
   form.form-horizontal.ph-form(role="form" name="requestForm" novalidate)
     .form-group.row.pbm.flex-justify(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': fields.to.isWatchOnlyLegacyAddress}")
       label.pts(translate="RECEIVE_TO")
@@ -26,15 +26,14 @@
           | {{ paymentRequest.paid / 100000000.0 }}  
 
 
-    .ptm.receive-container(ng-class="{'row': advanced, 'flex-around': advanced}")
+    .receive-container(ng-class="{'mtl': !advanced && numberOfActiveAccountsAndLegacyAddresses() <= 1}")
 
       .column.flex-justify(ng-show="advanced && fields.to.index != undefined")
-        h4.center(translate="CUSTOMIZE")
-        .mtl.amount(ng-class="{'has-error': requestForm.amount.$error.isValidAmount && requestForm.amount.$touched}")
-          label(translate="AMOUNT:")
+        .form-group.row.pbm.flex-justify.flex-center.amount(ng-class="{'has-error': requestForm.amount.$error.isValidAmount && requestForm.amount.$touched}")
+          label.mbn(translate="AMOUNT:")
           .flex-row
             .flex-center.flex-2.border-bottom
-              input.form-control.pln.no-border(
+              input.form-control.pln.pbn.no-border(
                 type="number"
                 ng-model="fields.amount"
                 name="amount"
@@ -46,7 +45,7 @@
               span.lh1 {{ settings.btcCurrency.code }}
             i.ti-arrows-horizontal.h4.aaa.center.flex-1
             .flex-center.border-bottom.flex-2
-              input.form-control.pln.no-border(
+              input.form-control.pln.pbn.no-border(
                 type="number"
                 ng-model="fields.amount"
                 name="amountFiat"
@@ -56,11 +55,11 @@
                 max="2100000000000000"
               )
               span.lh1 {{ settings.currency.code }}
-        .mtvl.description(ng-class="{'has-error': !requestForm.label.$valid}")
-          label(translate="DESCRIPTION:")
+        .form-group.row.pbm.flex-justify.flex-center.description(ng-class="{'has-error': !requestForm.label.$valid}")
+          label.mbn(translate="DESCRIPTION:")
           div
             .flex-center.prl.border-bottom
-              input.form-control.no-border.pln(
+              input.form-control.no-border.pln.pbn(
                 type="text"
                 ng-model="fields.label"
                 name="label"
@@ -68,13 +67,11 @@
             span.help-block(ng-show="requestForm.label.$error.characters", translate="INVALID_CHARACTERS_FOR_LABEL") 
             span.help-block(ng-show="requestForm.label.$error.gap", translate="LABEL_ERROR_BIP_44_GAP") 
 
-      .flex-center.prl.pll(ng-show="advanced && fields.to.index != undefined")
-        span.ti-arrow-right
+      .flex-center.flex-justify.pbl(ng-show="advanced && fields.to.index != undefined")
         span.ti-arrow-down.center
 
-      .payment-url.flex-around(ng-if="paymentRequestURL()" ng-class="{'row': !advanced, 'column': advanced, 'flex-center': advanced}")
+      .payment-url.flex-around.flex-row(ng-if="paymentRequestURL()")
         .flex-column.receive-address.flex-center(ng-class="{'max-width': advanced}"
-                                                 popover-placement="top" 
                                                  uib-popover="{{'COPY_HELPER' | translate}}" 
                                                  popover-class="message-contextual"
                                                  popover-trigger="mouseenter"
@@ -90,20 +87,28 @@
         span.or.flex-center.mrl.mll Or
         .flex-column.receive-code.flex-center(uib-popover="{{'QR_HELPER' | translate}}" 
                                               popover-class="message-contextual"
-                                              popover-placement="top" 
                                               popover-trigger="mouseenter"
                                               popover-append-to-body="true")
           h4 Scan
           p(ng-hide="status.didInitializeHD")
             img(src="img/spinner.gif")  
-          span(ng-show="status.didInitializeHD")
-            qr(text="paymentRequestURL()", size=120, correction-level="'M'")
+          span.mtl(ng-show="status.didInitializeHD")
+            qr(text="paymentRequestURL()", size=100, correction-level="'M'")
 
  LABEL_ERROR_BIP_44_GAP
 .modal-footer.flex-between.flex-center.pal
   .flex-center
-    a.dark-grey(ng-hide="advanced || fields.to.index == undefined", ng-click="advancedReceive()", translate="CUSTOMIZE")
-    a.dark-grey(ng-show="advanced", ng-click="regularReceive()", translate="BACK")
+    button.btn.button-default(ng-hide="advanced || fields.to.index == undefined", ng-click="advancedReceive()", translate="CUSTOMIZE"
+                              uib-popover="{{'CUSTOMIZE_HELPER' | translate}}"
+                              popover-class="message-contextual"
+                              popover-append-to-body="true"
+                              popover-trigger="mouseenter")
+    button.btn.button-default(ng-show="advanced", ng-click="regularReceive()", translate="BACK")
   .flex-center.flex-end
-    button.button-success.button-lg(ng-click="done()", translate="DONE" ng-hide="advanced && fields.label != ''")
-    button.button-success.button-lg(ng-click="done()", translate="SAVE" ng-show="advanced && fields.label != ''")
+    button.button-success.btn(ng-click="done()", translate="DONE" ng-hide="advanced && fields.label != ''")
+    a.dark-grey.mrm(ng-click="cancel()", translate="CLOSE" ng-show="advanced && fields.label != ''")
+    button.button-success.btn(ng-click="done()", translate="SAVE" ng-show="advanced && fields.label != ''"
+                              uib-popover="{{'SAVE_HELPER' | translate:{label: fields.to.label} }}"
+                              popover-class="message-contextual"
+                              popover-append-to-body="true"
+                              popover-trigger="mouseenter")

@@ -6,23 +6,39 @@ $fast: 0.2s;
 // ng-animate
 
 @mixin bc-ng-animate($class, $attr, $initial, $active) {
-  #{$attr}: #{$initial};
-  @include transition(#{$attr} $slow, opacity $slow !important);
+  opacity: 1;
+  #{$attr}: auto;
+  #{$attr}: initial;
+  @include transition(#{$attr} $fast, opacity $slow !important);
   &.#{$class} {
+    opacity: 1;
     #{$attr}: auto;
     #{$attr}: initial;
-    @include transition(0s !important);
   }
-  &.#{$class}-add,
-  &.#{$class}-remove,
-  &.#{$class}.#{$class}-add,
-  &.#{$class}.#{$class}-remove {
+  &.#{$class}-add {
     opacity: 0;
-    #{$attr}: #{$active} !important;
-    @include transition(#{$attr} $slow, opacity 0s !important);
-    &.#{$class}-remove-active.#{$class}-remove {
-      #{$attr}: #{$initial} !important;
-    }
+    #{$attr}: #{$initial};
+    @include transition(#{$attr} $fast, 0s !important);
+  }
+  &.#{$class}-add-active {
+    #{$attr}: #{$active};
+  }
+  &.#{$class}-remove {
+    opacity: 0;
+    #{$attr}: #{$active}; 
+    @include transition(#{$attr} $fast, 0s !important);
+  }
+  &.#{$class}-remove-active {
+    #{$attr}: #{$initial}; 
+  }
+  // something is seriously wrong with safari
+  @supports (overflow:-webkit-marquee) and (justify-content:inherit) {
+    -webkit-transition: height 0s, opacity 0s !important;
+    -o-transition: height 0s, opacity 0s !important;
+    transition: height 0s, opacity 0s !important;
+    height: initial !important;
+    height: auto !important;
+    opacity: 1 !important;
   }
 }
 

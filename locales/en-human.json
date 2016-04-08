@@ -368,7 +368,7 @@
   "SEND_FAILED": "Send failed, please come back later to try again",
   "RESET_FORM" : "Reset Form",
   "REGULAR_SEND" : "Regular Send",
-  "TX_FEE" : "Transaction Fee",
+  "TX_FEE" : "Fee",
   "TX_FEE_HELP": "Transaction fees impact how quickly the Bitcoin mining network will confirm your transactions, and depend on the current network conditions. We recommend the fee below for this transaction at this time.",
   "TOTAL_AVAILABLE": "Total available",
   "TOTAL_AVAILABLE_MINUS_FEE": "Total available minus fee",
@@ -444,7 +444,7 @@
   "PRIVACY" : "Privacy Policy",
   "CREATE_NEW_ACCOUNT_MODAL" : "Divide your wallet to better allocate, track and manage your bitcoins. Some common names include Savings, Spending, and Business Expenses.",
   "TRANSACTION_DETAIL_STATUS" : "Your transaction has been submitted to the bitcoin network and is waiting for miners to validate the transaction. A transaction is considered to be confirmed when there are 3 network confirmations.",
-  "SEND_BITOIN_STEP2B" : "Add a note to remind yourself of what this transaction relates to. This note will be private and only seen by you, unless you select the Make Public option. If a note is public, anyone viewing the transaction on Blockchain will be able to read your note.",
+  "SEND_BITOIN_STEP2B" : "Add a note to remind yourself what this transaction relates to. This note will be private and only seen by you.",
   "BACK_TO_FEED" : "Back to Transaction Feed",
   "VALUE_AT_SEND" : "Value at Send",
   "VALUE_NOW" : "Value Now",
@@ -644,5 +644,7 @@
   "OK": "OK",
   "DESCRIPTION:": "Description:",
   "COPY_HELPER": "Copy this address and share it with your sender via email, text, or carrier pigeon.",
-  "QR_HELPER": "Share this QR code with your sender."
+  "QR_HELPER": "Share this QR code with your sender.",
+  "CUSTOMIZE_HELPER": "Specify an amount and a description for this transaction.",
+  "SAVE_HELPER": "You’ll find this in Settings -> Addresses -> {{ label }} -> Manage Addresses."
 }

@@ -1,51 +1,200 @@
+// SEND & RECEIVE
+
+#send, #receive {
+  .divider {
+    margin: 0px auto;
+  }
+  // we need to remove this when we come up with what we want to call Accounts
+  .dropdown-menu {
+    > li:first-child {
+      .dropdown-header {
+        display: none;
+      }
+    }
+  }
+  .row {
+    @extend .flex-row;
+  }
+  .form-group {
+    position: relative;
+    > label {
+      font-size: 1.1em;
+      min-width: 80px;
+    }
+    > div, textarea {
+      @extend .mll;
+      max-width: 420px;
+      min-width: 420px;
+    }
+    @media (max-width: 768px) {
+      display: block;
+      > label {
+        min-width: auto;
+      }
+      > div {
+        min-width: auto;
+        max-width: none;
+        margin-left: 0px;
+      }
+    }
+  }
+  & + .modal-footer {
+    clear: left;
+  }
+  @media (max-width: 768px) {
+    .row {
+      display: block;
+    }
+  }
+}
+
 // SEND
 
 #send {
+  .destination-input {
+    input, button {
+      height: 34px;
+    }
+    input {
+      @extend .brdrn;
+    }
+  }
+
+  .form-group {
+    > label {
+      min-width: 35px;
+    }
+    &.note {
+      button {
+        top: -10px;
+        right: -10px;
+        position: absolute;
+      }
+    }
+    &.fee {
+      button {
+        bottom: 5px;
+        right: -10px;
+        position: absolute;
+      }
+      & ~ .help-block {
+        margin-left: calc(35px + 1.25em);
+        &.friendly {
+          color: $blue;
+        }
+        &.has-error {
+          color: $state-danger-text;
+        }
+      }
+    }
+  }
+
+  textarea {
+    border: 1px solid #EEEEEE;
+    padding: 6px 12px;
+    font-size: 14px;
+    height: 60px;
+    resize: none;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .has-error {
+    position: relative;
+    > span {
+      margin: 0;
+      position: absolute;
+    }
+  }
+
+  &.advanced-container {
+    .add {
+      background-color: $aaa;
+      border-radius: 100%;
+      position: absolute;
+      bottom: -5px;
+      right: -15px;
+      padding: 0px;
+      height: 30px;
+      width: 30px;
+    }
+    .advanced-recipient-row {
+      margin-bottom: 20px;
+      position: relative;
+      border: 1px solid #eee;
+      padding: 1em;
+      .ui-select-container {
+        min-width: 225px;
+        margin-right: 10px;
+      }
+      > .remove {
+        border-radius: 100%;
+        position: absolute;
+        padding: 1px 5px;
+        right: -10px;
+        top: -10px;
+        z-index: 2;
+      }
+      & + .has-error {
+        top: -20px;
+      }
+    }
+  }
+
+  &.confirmation {
+    @media (min-width: 769px) {
+      min-width: 520px;
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+    .btcaddr {
+      font-size: 0.7em;
+    }
+    .overview {
+      .flex-row {
+        > span.account {
+          text-align: left;
+          max-width: 200px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          &.aaa {
+            color: $aaa !important;
+          }
+        }
+        > span:last-of-type {
+          text-align: right;
+        }
+        .helper {
+          position: absolute;
+          left: 20px;
+          top: -2px;
+        }
+      }
+    }
+  }
+
   @media (max-width: 768px) {
     .fade {
       opacity: 1 !important;
-    } 
+    }
   }
   @media (min-width: 769px) {
     .fade {
       opacity: 1;
-      overflow: auto;
-      @include bc-ng-animate('advanced', 'height', '180px', '345px');
+      overflow-y: auto;
+      overflow-x: hidden;
+      @include bc-ng-animate('advanced', 'height', '230px', '330px');
     }
-    &.small {
+    &.sm {
       .fade {
         @include bc-ng-animate('advanced', 'height', '145px', '290px');
       }
     }
   }
-
-  .destination-input {
-    input, button {
-      height: 34px;
-    }
-  }
-
-  form[name="noteForm"] {
-    width: 50%;
-  }
-
-  textarea {
-    border-radius: 3px;
-    border: 1px solid #EEEEEE;
-    height: 60px;
-    width: 100%;
-    &:focus {
-      outline: none;
-    }
-    resize: none;
-    padding: 5px;
-
-  }
 }
 
 .miners-fee-selection {
-  display: flex;
-  align-items: center;
   .fee-choices, .fee-custom { @extend .flex; }
   .fee-choices {
     border-right: 1px solid $grey;
@@ -57,15 +206,6 @@
     align-items: center;
   }
   label { font-size: small; }
-  .form-control { width: auto; }
-  & ~ .help-block {
-    &.friendly {
-      color: $blue;
-    }
-    .has-error {
-      color: $state-danger-text;
-    }
-  }
 }
 
 @media (max-width: 668px) {
@@ -100,14 +240,28 @@
   @media (min-width: 769px) {
     opacity: 1;
     overflow: hidden;
-    @include bc-ng-animate('advanced', 'height', '255px', '385px');
-    &.small {
+    @include bc-ng-animate('advanced', 'height', '225px', '375px');
+    &.sm {
       @include bc-ng-animate('advanced', 'height', '205px', '325px');
     }
   }
 
+  .ui-select-bootstrap > .ui-select-choices {
+    max-height: 168px;
+  }
+
   .row {
     @extend .flex-row;
+  }
+
+  h4 {
+    margin: 0 auto;
+  }
+
+  .ti-arrow-down {
+    font-weight: bold;
+    font-size: 18px;
+    color: $blue;
   }
 
   .column {
@@ -115,26 +269,6 @@
     h4 {
       margin-top: 0px;
     }
-  }
-
-  .form-group {
-    > div {
-      @extend .mlm;
-      max-width: 385px;
-      @media (max-width: 768px) {
-        margin-left: 0px;
-      }
-    }
-  }
-
-  .ti-arrow-right, .ti-arrow-down {
-    font-weight: bold;
-    font-size: 18px;
-    color: $blue;
-  }
-
-  .ti-arrow-down {
-    display: none;
   }
 
   .bitcoin-address {
@@ -164,61 +298,51 @@
       }
     }
   }
-
-  @media (max-width: 768px) {
-    .row {
-      display: block;
-    }
-    .ti-arrow-right {
-      display: none;
-    }
-    .ti-arrow-down {
-      display: block;
-      margin: 1.25em auto;
-    }
-  }
-}
-
-.message-beacon {
-  cursor: pointer;
 }
 
 .receive-code {
-  h4 {
-    position: relative;
-    .message-beacon {
-      position: absolute;
-      display: block;
-      left: -30px;
-      top: -5px;
-    }
+  canvas {
+    display: block;
   }
 }
 
-.amount, .description {
+.split-rule {
+  width: 100%;
+  display: block;
+  text-align: center;
   position: relative;
-  .message-beacon {
+  &:before, &:after {
+    content: '';
     position: absolute;
-    display: block;
-    left: -25px;
-    top: -10px;
+    top: 50%;
+    width: 42.5%;
+    height: 1px;
+    background-color: $ccc;
+  }
+  &:before {
+    left: 0;
+  }
+  &:after {
+    right: 0;
   }
 }
 
 .payment-url {
   @extend .flex;
   > div {
-    width: 50%;
-    &.receive-address {
+    @media (min-width: 769px) {
       min-width: 320px;
-      &.max-width {
-        margin: 0 auto;
-        max-width: 320px;
+      &.receive-address {
+        &.max-width {
+          margin: 0 auto;
+          max-width: 320px;
+        }
       }
     }
   }
   .or {
     position: relative;
+    text-transform: uppercase;
     &:before, &:after {
       left: 50%;
       width: 1px;
@@ -233,28 +357,6 @@
     &:after {
       bottom: 0;
     }
-  }
-  &.column {
-    .or {
-      width: 100%;
-      display: block;
-      text-align: center;
-      @extend .mtl;
-      @extend .mbl;
-      &:before, &:after {
-        top: 50%;
-        width: 40%;
-        height: 1px;
-        left: initial;
-        right: initial;
-      }
-      &:before {
-        left: 0;
-      }
-      &:after {
-        right: 0;
-      }
-    } 
   }
   @media (max-width: 768px) {
     display: block;
@@ -283,7 +385,7 @@
       &:after {
         right: 0;
       }
-    } 
+    }
   }
 }
 
@@ -291,25 +393,6 @@
   > a {
     font-size: 14px;
     margin-left: 2px;
-  }
-}
-
-// SEND & RECEIVE
-
-#send, #receive {
-  .divider {
-    margin: 0px auto;
-  }
-  // we need to remove this when we come up with what we want to call Accounts
-  .dropdown-menu {
-    > li:first-child {
-      .dropdown-header {
-        display: none;
-      }
-    }
-  }
-  & + .modal-footer {
-    clear: left;
   }
 }
 
