@@ -2,7 +2,7 @@
   .flex-center.pam
     h3.man.mrm(translate="SIGN_MESSAGE")
     helper-button(content="SIGN_MESSAGE_EXPLAIN")
-#sign-msg.modal-body
+#sign-msg.modal-body.fade(ng-class="{signature: signature}")
   form.ph-form(role="form" name="signMessageForm" autocomplete="off" novalidate)
     .form-group.row.pbm.flex-justify.flex-center
       label.control-label.mbn(translate="ADDRESS")
