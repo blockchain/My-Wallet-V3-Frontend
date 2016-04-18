@@ -566,10 +566,10 @@
       width: auto;
       height: 200px;
       position: absolute;
-      outline: 1px solid transparent;
       transform: translate(-50%, -50%);
       -webkit-backface-visibility: hidden;
       -webkit-transform: translate(-50%, -50%);
+      outline: 1px solid transparent !important;
       &.full {
         -webkit-animation: opacity-change 1s infinite;
         -moz-animation:    opacity-change 1s infinite;

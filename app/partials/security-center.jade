@@ -5,12 +5,12 @@
       p.text.em-300.mvn(translate="LEVEL_1_TITLE")
     ul.flex.flex-start.pln.mbn
       li.level-header.bg-light-blue.flex-center.flex-justify
-        img(src="img/security-icon-1.png")
+        img(src="img/security-icon-1.png" alt="Level 1")
       li.level-badge(ng-click="user.isEmailVerified || toggle('email')", ng-class="{'active' : display.action == 'email', 'badge-active': user.isEmailVerified}")
         a
           .level-incomplete-container(ng-hide="user.isEmailVerified")
             .flex-center.flex-justify
-              img(src="img/badge-verifyemail.png")
+              img(src="img/badge-verifyemail.png" alt="Verify Email")
             p(translate="ADD_VERIFY_EMAIL")
           .level-complete-animation.flex-center.flex-column(ng-show="user.isEmailVerified")
             .flex-center.flex-column
@@ -22,7 +22,7 @@
         a
           .level-incomplete-container(ng-hide="status.didConfirmRecoveryPhrase")
             .flex-center.flex-justify
-              img(src="img/badge-securityphrase.png")
+              img(src="img/badge-securityphrase.png" alt="Security Phrase")
             p(translate="ADD_WALLET_RECOVERY")
           .level-complete-animation.flex-center.flex-column(ng-show="status.didConfirmRecoveryPhrase")
             .flex-center.flex-column
@@ -34,7 +34,7 @@
         a
           .level-incomplete-container(ng-hide="user.passwordHint")
             .flex-center.flex-justify
-              img(src="img/badge-passwordhint.png")
+              img(src="img/badge-passwordhint.png" alt="Password Hint")
             p(translate="ADD_PASSWORD_HINT")
           .level-complete-animation.flex-center.flex-column(ng-show="user.passwordHint")
             .flex-center.flex-column
@@ -80,12 +80,12 @@
       p.text.em-300.mvn(translate="LEVEL_2_TITLE")
     ul.flex.flex-start.pln.mbn
       li.level-header.bg-light-blue.flex-center.flex-justify
-        img(src="img/security-icon-2.png")
+        img(src="img/security-icon-2.png" alt="Level 2")
       li.level-badge(ng-click="user.isMobileVerified || toggle('mobilenumber')", ng-class="{'active' : display.action == 'mobilenumber', 'badge-active': user.isMobileVerified }")
         a
           .level-incomplete-container(ng-hide="user.isMobileVerified")
             .flex-center.flex-justify
-              img(src="img/badge-addmobile.png")
+              img(src="img/badge-addmobile.png" alt="Link Mobile Number")
             p(TRANSLATE="ADD_MOBILE_NUMBER")
           .level-complete-animation.flex-center.flex-column(ng-show="user.isMobileVerified")
             .flex-center.flex-column
@@ -97,7 +97,7 @@
         a
           .level-incomplete-container(ng-hide="settings.needs2FA")
             .flex-center.flex-justify
-              img(src="img/badge-add2FA.png")
+              img(src="img/badge-add2FA.png" alt="Add Two Factor Authentication")
             p(translate="ENABLE_TWO_STEP")
           .level-complete-animation.flex-center.flex-column(ng-show="settings.needs2FA")
             .flex-center.flex-column
@@ -123,12 +123,12 @@
       p.text.em-300.mvn(translate="LEVEL_3_TITLE")
     ul.flex.flex-start.pln.mbn
       li.level-header.bg-light-blue.flex-center.flex-justify
-        img(src="img/security-icon-3.png")
+        img(src="img/security-icon-3.png" alt="Level 3")
       li.level-badge(ng-click="settings.blockTOR || toggle('blocktor')", ng-class="{'active' : display.action == 'blocktor', 'badge-active': settings.blockTOR }")
         a
           .level-incomplete-container(ng-hide="settings.blockTOR")
             .flex-center.flex-justify
-              img(src="img/badge-blockTOR.png")
+              img(src="img/badge-blockTOR.png" alt="Block Tor")
             p(TRANSLATE="ADD_BLOCK_TOR")
           .level-complete-animation.flex-center.flex-column(ng-show="settings.blockTOR")
             .flex-center.flex-column
