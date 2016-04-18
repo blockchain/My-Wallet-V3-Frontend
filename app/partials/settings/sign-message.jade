@@ -7,11 +7,7 @@
     .form-group.row.pbm.flex-justify.flex-center
       label.control-label.mbn(translate="ADDRESS")
       span.type-lbl :
-      .flex-1
-        ui-select(ng-model="$parent.address" ng-disabled="signature" required)
-          ui-select-match {{ formatLabel($select.selected) }}
-          ui-select-choices(repeat="a in addresses | filter:$select.search")
-            span(ng-bind-html="formatLabel(a) | escapeHtml | highlight:$select.search")
+      .flex-1.type-lbl {{ address.address }}
     .form-group.row.pbm.flex-row.flex-justify.note
       label.control-label(translate="MESSAGE")
       span.type-lbl :

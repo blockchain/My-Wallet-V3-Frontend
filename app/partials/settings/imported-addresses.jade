@@ -22,15 +22,11 @@ h2(translate="SPENDABLE_ADDRESSES")
         th(translate="LABEL")
         th(translate="BALANCE")
         th
-        th
       tr(
         imported-address="address", 
         search-text="searchTextLegacy",
         ng-repeat="address in legacyAddresses() | filter:{archived: false, isWatchOnly: false} | addressOrNameMatch:searchTextLegacy"
       )
-
-div.flex-end.mtm
-  a.blue(type="button" ng-click="signMessage()" translate="SIGN_MESSAGE" ng-show="hasLegacyAddress()")
 
 h2(translate="WATCH_ONLY_ADDRESSES")
 

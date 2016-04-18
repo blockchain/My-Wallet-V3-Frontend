@@ -52,6 +52,18 @@
       }
     }
   }
+  .account-container {
+    .dropdown-menu {
+      left: auto !important;
+      right: 0px !important;
+      > li > a {
+        font-size: small;
+        &:before {
+          @extend .prm;
+        }
+      }
+    }
+  }
   // Accounts & Addresses
   @media (max-width: 768px) {
     .accounts-container {

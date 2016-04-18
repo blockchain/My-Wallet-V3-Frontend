@@ -70,6 +70,16 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
         });
       };
 
+      scope.signMessage = () => $uibModal.open({
+        templateUrl: 'partials/settings/sign-message.jade',
+        controller: 'SignMessageController',
+        windowClass: 'bc-modal initial',
+        backdrop: 'static',
+        resolve: {
+          address: () => scope.address
+        }
+      });
+
     }
   };
 });

@@ -37,11 +37,4 @@ function SettingsImportedAddressesCtrl($scope, Wallet, Alerts, $translate, $uibM
       }
     });
   };
-
-  $scope.signMessage = () => $uibModal.open({
-    templateUrl: 'partials/settings/sign-message.jade',
-    controller: 'SignMessageController',
-    windowClass: 'bc-modal initial',
-    backdrop: 'static'
-  });
 }

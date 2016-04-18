@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .controller('SignMessageController', SignMessageController);
 
-function SignMessageController($scope, Wallet) {
+function SignMessageController($scope, Wallet, address) {
   $scope.addresses = Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly);
-  $scope.address = $scope.addresses[0];
+  $scope.address = address;
   $scope.message = '';
 
   $scope.formatLabel = (addr) => addr.address + (addr.label ? ` (${addr.label})` : '');
