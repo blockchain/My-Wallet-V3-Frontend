@@ -23,8 +23,10 @@
     }
     > div, textarea {
       @extend .mll;
-      max-width: 420px;
-      min-width: 420px;
+      @media (min-width: 768px) {
+        max-width: 420px;
+        min-width: 420px;
+      }
     }
     @media (max-width: 768px) {
       display: block;
@@ -175,21 +177,23 @@
   }
 
   @media (max-width: 768px) {
-    .fade {
+    &.fade {
       opacity: 1 !important;
     }
   }
   @media (min-width: 769px) {
-    .fade {
+    &.fade {
       opacity: 1;
       overflow-y: auto;
       overflow-x: hidden;
-      @include bc-ng-animate('advanced', 'height', '230px', '330px');
+      @include bc-ng-animate('confirmation', 'height', '265px', '200px'); 
+      @include bc-ng-animate('advanced-container', 'height', '265px', '365px');
     }
-    &.sm {
-      .fade {
-        @include bc-ng-animate('advanced', 'height', '145px', '290px');
-      }
+    &.sm.fade {
+      @include bc-ng-animate('advanced-container', 'height', '145px', '290px');
+    }
+    &.confirmation.fade {
+      @include bc-ng-animate('confirmation', 'height', '265px', '200px');
     }
   }
 }

@@ -53,7 +53,7 @@ function WalletNavigationCtrl($rootScope, $scope, Wallet, Alerts, SecurityCenter
       resolve: {
         account: () => void 0
       },
-      windowClass: 'bc-modal small'
+      windowClass: 'bc-modal sm'
     });
   };
 
