@@ -57,7 +57,7 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
     Alerts.clear();
     $uibModal.open({
       templateUrl: "partials/send.jade",
-      windowClass: "bc-modal auto",
+      windowClass: "bc-modal initial",
       controller: "SendCtrl",
       resolve: {
         paymentRequest: () => ({

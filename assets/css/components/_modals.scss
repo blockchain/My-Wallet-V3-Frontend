@@ -185,10 +185,15 @@
     width: 55vw;
     margin: 30px auto !important;
   }
+  &.initial { // initial bootstrap width
+    @media (min-width: 768px) {
+      .modal-dialog { width: 600px; }
+    }
+  }
   &.auto {
     .modal-dialog { width: auto; } 
   }
-  &.small { 
+  &.sm { 
     .modal-dialog { width: 40vw; } 
   }
   &.large {
