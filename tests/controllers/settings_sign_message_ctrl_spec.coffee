@@ -1,6 +1,7 @@
 describe "SignMessageController", ->
   scope = undefined
   Wallet = undefined
+  addressObj = undefined
 
   beforeEach angular.mock.module("walletApp")
 
@@ -9,18 +10,9 @@ describe "SignMessageController", ->
       MyWallet = $injector.get('MyWallet')
       Wallet = $injector.get('Wallet')
 
-      Wallet.legacyAddresses = () -> [
-        { address: 'a', active: true, isWatchOnly: false, signMessage: (msg) -> msg + '_signed' }
-        { address: 'b', active: false, isWatchOnly: false }
-        { address: 'c', active: true, isWatchOnly: true }
-      ]
-
       scope = $rootScope.$new()
-      $controller "SignMessageController", $scope: scope
-
-  it "should have all active spendable addresses", ->
-    expect(scope.addresses.length).toEqual(1)
-    expect(scope.addresses[0].address).toEqual('a')
+      addressObj = { address: 'a', active: true, isWatchOnly: false, signMessage: (msg) -> msg + '_signed' };
+      $controller "SignMessageController", $scope: scope, addressObj: addressObj
 
   it "should select the first spendable address", ->
     expect(scope.address.address).toEqual('a')

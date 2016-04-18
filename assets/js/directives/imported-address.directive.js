@@ -76,7 +76,7 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
         windowClass: 'bc-modal initial',
         backdrop: 'static',
         resolve: {
-          address: () => scope.address
+          addressObj: () => scope.address
         }
       });
 
