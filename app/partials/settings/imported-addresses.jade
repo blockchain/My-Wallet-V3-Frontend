@@ -7,7 +7,6 @@
 .row
   .col-xs-12.col-md-6
     button.btn.button-primary(type="button" ng-click="importAddress()" translate="IMPORT_ADDRESS")
-    button.btn.button-primary.mlm(type="button" ng-click="signMessage()" translate="SIGN_MESSAGE" ng-show="hasLegacyAddress()")
   .col-xs-12.col-md-6
     .flex-1.mrl.filter-search-alt.width-100.pos-rel
       input(type="text", ng-model="searchTextLegacy")
@@ -29,6 +28,9 @@ h2(translate="SPENDABLE_ADDRESSES")
         search-text="searchTextLegacy",
         ng-repeat="address in legacyAddresses() | filter:{archived: false, isWatchOnly: false} | addressOrNameMatch:searchTextLegacy"
       )
+
+div.flex-end.mtm
+  a.blue(type="button" ng-click="signMessage()" translate="SIGN_MESSAGE" ng-show="hasLegacyAddress()")
 
 h2(translate="WATCH_ONLY_ADDRESSES")
 

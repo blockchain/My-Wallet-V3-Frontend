@@ -381,7 +381,7 @@
     height: 430px;
   }
 
-  [name='sendForm'], [name='requestForm']  {
+  [name='sendForm'], [name='requestForm'], [name="signMessageForm"]  {
     label { text-align: right; }
   }
 }

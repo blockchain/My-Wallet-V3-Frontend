@@ -2,29 +2,31 @@
   .flex-center.pam
     h3.man.mrm(translate="SIGN_MESSAGE")
     helper-button(content="SIGN_MESSAGE_EXPLAIN")
-.modal-body
-  form(role="form" name="form" autocomplete="off" novalidate)
-    .form-group
-      label.control-label(translate="ADDRESS")
-      ui-select(ng-model="$parent.address" ng-disabled="signature" required)
-        ui-select-match {{ formatLabel($select.selected) }}
-        ui-select-choices(repeat="a in addresses | filter:$select.search")
-          span(ng-bind-html="formatLabel(a) | escapeHtml | highlight:$select.search")
-    .form-group
+#sign-msg.modal-body
+  form.ph-form(role="form" name="signMessageForm" autocomplete="off" novalidate)
+    .form-group.row.pbm.flex-justify.flex-center
+      label.control-label.mbn(translate="ADDRESS")
+      span.type-lbl :
+      .flex-1
+        ui-select(ng-model="$parent.address" ng-disabled="signature" required)
+          ui-select-match {{ formatLabel($select.selected) }}
+          ui-select-choices(repeat="a in addresses | filter:$select.search")
+            span(ng-bind-html="formatLabel(a) | escapeHtml | highlight:$select.search")
+    .form-group.row.pbm.flex-row.flex-justify.note
       label.control-label(translate="MESSAGE")
-      textarea.form-control(rows="3" ng-model="message" ng-disabled="signature" required)
-    .form-group.tooltip-set-width(ng-show="signature")
+      span.type-lbl :
+      textarea.form-control(rows="3" ng-model="message" ng-disabled="signature" required placeholder="{{ 'THANKS_FOR_ACCEPTING' | translate }}")
+    .form-group.flex-row(ng-show="signature")
       label.control-label(translate="SIGNATURE")
-      p.form-control-static.bitcoin-address(
-        uib-tooltip="{{ copied ? 'COPIED' : 'CLICK_COPY' | translate }}"
-        tooltip-animation="false"
-        ng-click="copied = true"
-        ng-mouseleave="copied = false"
-        single-click-select) {{ signature }}
+      span.type-lbl :
+      p.form-control-static.bitcoin-address(single-click-select) 
+        button.clipboard.btn.btn-default
+        span {{ signature }}
+
 .modal-footer
   div(ng-hide="signature")
     button.button-muted.mrm(translate="CLOSE" ng-click="$dismiss()")
-    button.btn.button-primary(translate="SIGN" ng-click="sign()" ng-disabled="form.$invalid")
+    button.btn.button-primary(translate="SIGN" ng-click="sign()" ng-disabled="signMessageForm.$invalid")
   div(ng-show="signature")
     button.button-muted.mrm(translate="RESET_FORM" ng-click="reset()")
     button.btn.button-primary(translate="DONE" ng-click="$close()")
