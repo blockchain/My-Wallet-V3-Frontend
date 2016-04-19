@@ -14,7 +14,7 @@ describe "SignMessageController", ->
       addressObj = { address: 'a', active: true, isWatchOnly: false, signMessage: (msg) -> msg + '_signed' };
       $controller "SignMessageController", $scope: scope, addressObj: addressObj
 
-  it "should select the first spendable address", ->
+  it "should use the injected address object", ->
     expect(scope.address.address).toEqual('a')
 
   it "should format the address without a label", ->
