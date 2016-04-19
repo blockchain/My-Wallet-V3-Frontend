@@ -1,0 +1,14 @@
+  #sweep-all {
+    .address-container {
+      overflow: scroll;
+      height: 104px;
+      border: 1px solid #eee;
+      padding: 5px 0px 10px 10px;
+    }
+    .overview {
+      width: 200px;
+    }
+    .progress-bar {
+      span { width: 40px; }
+    }
+  }
