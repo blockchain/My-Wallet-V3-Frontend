@@ -25,6 +25,13 @@ function SettingsImportedAddressesCtrl($scope, Wallet, Alerts, $translate, $uibM
     });
   };
 
+  $scope.openVerifyMessage = () => $uibModal.open({
+    templateUrl: "partials/settings/verify-message.jade",
+    controller: "VerifyMessageController",
+    windowClass: "bc-modal initial",
+    backdrop: "static"
+  });
+
   $scope.importAddress = () => {
     Alerts.clear();
     $uibModal.open({
