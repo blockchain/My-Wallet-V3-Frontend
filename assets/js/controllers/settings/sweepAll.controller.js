@@ -24,7 +24,8 @@ function SweepAllController($scope, $q, $timeout, $translate, Wallet, Alerts) {
   // /dev
 
   $scope.state = {};
-  $scope.failed = {};
+  $scope.failed = { amount: 0 };
+  $scope.succeeded = { amount: 0 };
 
   $scope.ntotal = $scope.addresses.length;
   $scope.nsucceeded= 0;
@@ -61,10 +62,13 @@ function SweepAllController($scope, $q, $timeout, $translate, Wallet, Alerts) {
         // publish success
         .then(() => {
           // a.active = false;
+          $scope.succeeded.amount += a.balance;
+          $scope.succeeded[a.address] = true;
           $scope.nsucceeded++;
         })
         // publish fail
         .catch(() => {
+          $scope.failed.amount += a.balance;
           $scope.failed[a.address] = true;
           $scope.nfailed++;
         });

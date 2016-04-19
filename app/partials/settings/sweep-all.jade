@@ -7,24 +7,27 @@
   span.text(translate="SWEEP_WARNING")
   
   .mtl.flex-row.flex-around
-    ul.flex-2.address-container
+    ul.flex-3.address-container
       li(ng-repeat="address in addresses track by $index")
-        span(ng-class="{ 'security-red': failed[address.address] }")
+        span(ng-class="{ 'security-red': failed[address.address], 'success': succeeded[address.address] }")
           | {{ address.address }}&nbsp;
           | ({{ address.balance | toBitCurrency:settings.btcCurrency }})
-    .flex-column.overview.pll.prl
+    .flex-2.flex-column.overview.pll
       .flex-center.flex-justify
         label.mbs(translate="OVERVIEW")
       .flex-column.mtm
         .flex-row.flex-center.center.flex-between
-          span.account.em-400.long-input(translate="SUCCEEDED")
-          span.success {{ nsucceeded }}
+          span.flex-2.left-align.account.em-400.long-input(translate="SUCCEEDED")
+          span.flex-1.success {{ nsucceeded }}
+          span.flex-1.right-align.success {{ succeeded.amount | toBitCurrency:settings.btcCurrency:false }}
         .flex-row.flex-center.center.flex-between.border-bottom.pbs.mbs
-          span.account.em-400.long-input(translate="FAILED")
-          span.security-red {{ nfailed }}
+          span.flex-2.left-align.account.em-400.long-input(translate="FAILED")
+          span.flex-1.security-red {{ nfailed }}
+          span.flex-1.right-align.security-red {{ failed.amount | toBitCurrency:settings.btcCurrency:false }}
         .flex-row.flex-center.center.flex-between
-          span.account.em-400.long-input(translate="TOTAL_COMPLETED")
-          span.blue {{ ncompleted() }}
+          span.flex-2.left-align.account.em-400.long-input(translate="TOTAL_COMPLETED")
+          span.flex-1.blue {{ ncompleted() }}
+          span.flex-1.right-align.blue {{ failed.amount + succeeded.amount | toBitCurrency:settings.btcCurrency:false }}
 
   .mtm.flex-row.flex-end.flex-center
     span(ng-show="!state.sweeping && !state.complete")
