@@ -3,6 +3,8 @@
     h3.man.mrm(translate="VERIFY_MESSAGE")
     helper-button(content="VERIFY_MESSAGE_EXPLAIN")
 #sign-msg.modal-body.fade
+  .alert-in-app
+    alerts(context="alerts")
   form.ph-form(role="form" name="verifyMessageForm" autocomplete="off" novalidate)
     .form-group.row.pbm.flex-justify.flex-center(
       ng-class="{'has-error': verifyMessageForm.address.$invalid && verifyMessageForm.address.$touched}")

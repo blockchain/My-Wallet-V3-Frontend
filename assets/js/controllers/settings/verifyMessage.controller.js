@@ -2,12 +2,18 @@ angular
   .module('walletApp')
   .controller('VerifyMessageController', VerifyMessageController);
 
-function VerifyMessageController($scope, MyWalletHelpers) {
+function VerifyMessageController($scope, MyWalletHelpers, Alerts) {
+  $scope.alerts = [];
   $scope.isBitcoinAddress = MyWalletHelpers.isBitcoinAddress;
   $scope.isBase64 = MyWalletHelpers.isBase64;
 
   $scope.verify = () => {
-    $scope.verified = MyWalletHelpers.verifyMessage($scope.address, $scope.signature, $scope.message);
-    $scope.didVerify = true;
+    try {
+      Alerts.clear($scope.alerts);
+      $scope.verified = MyWalletHelpers.verifyMessage($scope.address, $scope.signature, $scope.message);
+      $scope.didVerify = true;
+    } catch (e) {
+      Alerts.displayError(e.message || e, false, $scope.alerts);
+    }
   };
 }
