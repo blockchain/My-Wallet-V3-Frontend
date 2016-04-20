@@ -17,17 +17,17 @@
         label.mbs(translate="OVERVIEW")
       .flex-column.mtm
         .flex-row.flex-center.center.flex-between
-          span.flex-2.left-align.account.em-400.long-input(translate="SUCCEEDED")
+          span.flex-4.left-align.account.em-400.long-input(translate="SUCCEEDED")
+          span.flex-3.right-align.success {{ succeeded.amount | toBitCurrency:settings.btcCurrency:false }}
           span.flex-1.success {{ nsucceeded }}
-          span.flex-1.right-align.success {{ succeeded.amount | toBitCurrency:settings.btcCurrency:false }}
         .flex-row.flex-center.center.flex-between.border-bottom.pbs.mbs
-          span.flex-2.left-align.account.em-400.long-input(translate="FAILED")
+          span.flex-4.left-align.account.em-400.long-input(translate="FAILED")
+          span.flex-3.right-align.security-red {{ failed.amount | toBitCurrency:settings.btcCurrency:false }}
           span.flex-1.security-red {{ nfailed }}
-          span.flex-1.right-align.security-red {{ failed.amount | toBitCurrency:settings.btcCurrency:false }}
         .flex-row.flex-center.center.flex-between
-          span.flex-2.left-align.account.em-400.long-input(translate="TOTAL_COMPLETED")
+          span.flex-4.left-align.account.em-400.long-input(translate="TOTAL_COMPLETED")
+          span.flex-3.right-align.blue {{ failed.amount + succeeded.amount | toBitCurrency:settings.btcCurrency:false }}
           span.flex-1.blue {{ ncompleted() }}
-          span.flex-1.right-align.blue {{ failed.amount + succeeded.amount | toBitCurrency:settings.btcCurrency:false }}
 
   .mtm.flex-row.flex-end.flex-center
     span(ng-show="!state.sweeping && !state.complete")
