@@ -5,12 +5,39 @@ p.form-control-static.bitcoin-address, .xpub {
   font-size: 10pt;
   color: $black;
   word-break: break-all;
-  span{
+  span {
     overflow-wrap: break-word;
     line-height: 1.9em;
   }
+  &.bitcoin-address {
+    position: relative;
+    padding-left: 35px !important;
+    .clipboard {
+      top: 0;
+      left: 0px;
+      width: 30px;
+      height: 100%;
+      cursor: pointer;
+      position: absolute;
+      border-radius: 0px;
+      background-color: $grey;
+      &:before {
+        top: 50%;
+        left: 50%;
+        content: "";
+        width: 18px;
+        height: 24px;
+        display: block;
+        position: absolute;
+        background-size: cover;
+        background-repeat: no-repeat;
+        transform: translate(-50%, -50%);
+        background-image: url('../img/clipboard.svg');
+      }
+    }
+  }
 }
 
-.btcaddr{
-word-break: break-all;
+.btcaddr {
+  word-break: break-all;
 }

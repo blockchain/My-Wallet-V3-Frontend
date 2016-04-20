@@ -27,20 +27,24 @@
 [class*=" bc-icon-"],
 [class^="ti-"],
 [class*=" ti-"]  {
-  font-family: 'BlockchainFontIcons';
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
+  &:before {
+    font-family: 'BlockchainFontIcons';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
 
-  /* better font rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    /* better font rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
 [class^="ti-"], [class*=" ti-"] {
-  font-family: 'ThemifyIcons';
+  &:before {
+    font-family: 'ThemifyIcons';
+  }
 }
 
 ////////////////////////////////

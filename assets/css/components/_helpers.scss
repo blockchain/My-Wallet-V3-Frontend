@@ -35,6 +35,10 @@
   }
 }
 
+.tooltip-set-width .tooltip {
+  width: 8em;
+}
+
 //override parts of bootstrap popover
 .popover {
   font-family: 'Roboto', 'Helvetica', sans-serif;

@@ -2,6 +2,7 @@
 .type-sm { font-size: .9em; }
 .type-h5 { font-size: 1.2em; }
 .type-h4 { font-size: 1.5em; }
+.type-lbl { font-size: 1.1em; }
 .title { font-size: 3.5em; }
 .underline { text-decoration: underline; }
 .pointer { cursor: pointer; }
@@ -15,6 +16,7 @@
 .break-word { word-break: break-word; }
 .long-input { overflow-wrap: break-word; }
 .text { font-size: 14px; } //use pixels to normalize with Bootstrap instead of em's
+.colon:after { content: ':' }
 
 .text-overflow-hidden, .ui-select-match-text {
   text-overflow: ellipsis;

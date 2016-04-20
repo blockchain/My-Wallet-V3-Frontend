@@ -6,7 +6,16 @@
         
 .row
   .col-xs-12.col-md-6
-    button.btn.button-primary(type="button", ng-click="importAddress()", translate="IMPORT_ADDRESS")
+    .flex
+      button.btn.button-primary.mrm(type="button" translate="IMPORT_ADDRESS" ng-click="importAddress()")
+      .btn-group(uib-dropdown)
+        button.btn.button-default(type="button" uib-dropdown-toggle)
+          span.black(translate="MORE_ACTIONS")
+          span.black.caret
+        ul.dropdown-menu(uib-dropdown-menu)
+          li
+            a(translate="VERIFY_MESSAGE" ng-click="openVerifyMessage()")
+
   .col-xs-12.col-md-6
     .flex-1.mrl.filter-search-alt.width-100.pos-rel
       input(type="text", ng-model="searchTextLegacy")
@@ -21,7 +30,6 @@ h2(translate="SPENDABLE_ADDRESSES")
         th(translate="ADDRESS")
         th(translate="LABEL")
         th(translate="BALANCE")
-        th
         th
       tr(
         imported-address="address", 

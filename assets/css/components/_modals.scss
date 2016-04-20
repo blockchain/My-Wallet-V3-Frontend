@@ -55,7 +55,7 @@
       -ms-transform: translate(0,-25%);
       -o-transform: translate(0,-25%);
       transform: translate(0,-25%);
-    } 
+    }
     &.in .modal-dialog {
       -webkit-transform: translate(0,10%);
       -ms-transform: translate(0,10%);
@@ -181,7 +181,7 @@
   @extend .flex-justify;
   @extend .flex-center;
   .modal-content { background: $light-blue; }
-  .modal-dialog { 
+  .modal-dialog {
     width: 55vw;
     margin: 30px auto !important;
   }
@@ -191,10 +191,10 @@
     }
   }
   &.auto {
-    .modal-dialog { width: auto; } 
+    .modal-dialog { width: auto; }
   }
-  &.sm { 
-    .modal-dialog { width: 40vw; } 
+  &.sm {
+    .modal-dialog { width: 40vw; }
   }
   &.large {
     .modal-dialog {
@@ -209,17 +209,17 @@
   }
   &.medium {
     @media (min-width: 768px) {
-      .modal-dialog { width: 45vw; } 
+      .modal-dialog { width: 45vw; }
     }
   }
-  &.confirm { 
+  &.confirm {
     @extend .flex-center;
     &.top {
       @extend .flex-align-start;
     }
-    .modal-dialog { 
-      width: auto; 
-    } 
+    .modal-dialog {
+      width: auto;
+    }
     .modal-body {
       min-height: 0px;
     }
@@ -267,7 +267,7 @@
     }
     &.no-border { border-bottom: 0px; }
   }
-  .has-error .border-bottom { 
+  .has-error .border-bottom {
     z-index: 10;
     position: relative;
     border-color: #a94442 !important;
@@ -381,7 +381,7 @@
     height: 430px;
   }
 
-  [name='sendForm'], [name='requestForm']  {
+  [name='sendForm'], [name='requestForm'], [name="signMessageForm"], [name="verifyMessageForm"]  {
     label { text-align: right; }
   }
 }

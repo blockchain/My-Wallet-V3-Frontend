@@ -1,6 +1,6 @@
-// SEND & RECEIVE
+// SEND & RECEIVE & SIGN MSG
 
-#send, #receive {
+#send, #receive, #sign-msg {
   .divider {
     margin: 0px auto;
   }
@@ -21,9 +21,9 @@
       font-size: 1.1em;
       min-width: 80px;
     }
-    > div, textarea {
+    > div, textarea, .bitcoin-address {
       @extend .mll;
-      @media (min-width: 768px) {
+      @media (min-width: 769px) {
         max-width: 420px;
         min-width: 420px;
       }
@@ -33,16 +33,30 @@
       > label {
         min-width: auto;
       }
-      > div {
+      > div, textarea, .bitcoin-address {
         min-width: auto;
         max-width: none;
         margin-left: 0px;
       }
     }
   }
+
+  textarea {
+    border: 1px solid #EEEEEE;
+    padding: 6px 12px;
+    font-size: 14px;
+    height: 60px;
+    resize: none;
+    &:focus {
+      outline: none;
+    }
+  }
+
   & + .modal-footer {
     clear: left;
   }
+
+
   @media (max-width: 768px) {
     .row {
       display: block;
@@ -88,17 +102,6 @@
           color: $state-danger-text;
         }
       }
-    }
-  }
-
-  textarea {
-    border: 1px solid #EEEEEE;
-    padding: 6px 12px;
-    font-size: 14px;
-    height: 60px;
-    resize: none;
-    &:focus {
-      outline: none;
     }
   }
 
@@ -186,7 +189,7 @@
       opacity: 1;
       overflow-y: auto;
       overflow-x: hidden;
-      @include bc-ng-animate('confirmation', 'height', '265px', '200px'); 
+      @include bc-ng-animate('confirmation', 'height', '265px', '200px');
       @include bc-ng-animate('advanced-container', 'height', '265px', '365px');
     }
     &.sm.fade {
@@ -272,34 +275,6 @@
     @extend .flex-column;
     h4 {
       margin-top: 0px;
-    }
-  }
-
-  .bitcoin-address {
-    position: relative;
-    padding-left: 35px;
-    .clipboard {
-      top: 0;
-      left: -5px;
-      width: 30px;
-      height: 100%;
-      cursor: pointer;
-      position: absolute;
-      border-radius: 0px;
-      background-color: $grey;
-      &:before {
-        top: 50%;
-        left: 50%;
-        content: "";
-        width: 18px;
-        height: 24px;
-        display: block;
-        position: absolute;
-        background-size: cover;
-        background-repeat: no-repeat;
-        transform: translate(-50%, -50%);
-        background-image: url('../img/clipboard.svg');
-      }
     }
   }
 }
@@ -402,4 +377,15 @@
 
 .popover {
   z-index: 1060;
+}
+
+#sign-msg {
+  @media (min-width: 769px) {
+    opacity: 1;
+    overflow: hidden;
+    @include bc-ng-animate('signature', 'height', '147px', '227px');
+  }
+  input {
+    border-bottom-color: $eee;
+  }
 }
