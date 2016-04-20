@@ -19,7 +19,6 @@
   bottom: 0;
   z-index: $zindex-modal;
   -webkit-overflow-scrolling: touch;
-  outline: 0;
   @media (max-width: 768px) {
     top: 20px;
     overflow: auto;
@@ -78,7 +77,6 @@
   background-color: $modal-content-bg;
   @include box-shadow(0 3px 9px rgba(0,0,0,.5));
   background-clip: padding-box;
-  outline: 0;
 }
 // Modal background
 .modal-backdrop {

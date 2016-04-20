@@ -24,9 +24,6 @@
       background: darken(#FEFEFE, 5%);
       color: $text;
     }
-    &:focus {
-      outline: none;
-    }
     .message-beacon {
       position: absolute;
       height: 10px;

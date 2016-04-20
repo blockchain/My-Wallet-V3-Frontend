@@ -27,9 +27,6 @@ $select-fg: #686868;
 
 .ui-select-container {
   .ui-select-match {
-    &:focus {
-      outline: none;
-    }
     &.btn-default-focus {
       box-shadow: none;
     }
@@ -108,14 +105,6 @@ $select-fg: #686868;
 //Too many effing hover states.
 .ui-select-container .btn-default:hover, .ui-select-container .btn-default:focus, .ui-select-container .btn-default.focus, .ui-select-container .btn-default:active, .ui-select-container .btn-default.active, .ui-select-container .open > .btn-default.dropdown-toggle {
   background-color: white;
-}
-
-//Get rid out outlines
-.dropdown {
-  outline: none;
-  &:focus {
-    outline: none;
-  }
 }
 
 //Give toggle min height

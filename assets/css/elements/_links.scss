@@ -1,6 +1,5 @@
 a {
   cursor: pointer;
-  outline: 0;
   color: $blue;
   transition: all .2s ease-in-out;
   -webkit-transition: all .2s ease-in-out;
@@ -11,8 +10,5 @@ a {
   &:hover {
     color: $blue;
     cursor: pointer;
-  }
-  &:focus {
-    outline: 0;
   }
 }

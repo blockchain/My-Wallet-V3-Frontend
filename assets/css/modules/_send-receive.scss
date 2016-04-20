@@ -47,9 +47,6 @@
     font-size: 14px;
     height: 60px;
     resize: none;
-    &:focus {
-      outline: none;
-    }
   }
 
   & + .modal-footer {
