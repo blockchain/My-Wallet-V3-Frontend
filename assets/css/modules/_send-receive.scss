@@ -189,7 +189,7 @@
       opacity: 1;
       overflow-y: auto;
       overflow-x: hidden;
-      @include bc-ng-animate('confirmation', 'height', '265px', '200px'); 
+      @include bc-ng-animate('confirmation', 'height', '265px', '200px');
       @include bc-ng-animate('advanced-container', 'height', '265px', '365px');
     }
     &.sm.fade {
@@ -384,5 +384,8 @@
     opacity: 1;
     overflow: hidden;
     @include bc-ng-animate('signature', 'height', '147px', '227px');
-  }  
+  }
+  input {
+    border-bottom-color: $eee;
+  }
 }

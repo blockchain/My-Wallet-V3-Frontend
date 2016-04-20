@@ -6,19 +6,16 @@
   form.ph-form(role="form" name="verifyMessageForm" autocomplete="off" novalidate)
     .form-group.row.pbm.flex-justify.flex-center(
       ng-class="{'has-error': verifyMessageForm.address.$invalid && verifyMessageForm.address.$touched}")
-      label.control-label.mbn(translate="ADDRESS")
-      span.type-lbl :
+      label.control-label.mbn.colon(translate="ADDRESS")
       .flex-1
         input.form-control(ng-model="address" name="address" is-valid="isBitcoinAddress(address)" required)
     .form-group.row.pbm.flex-row.flex-justify.note(
       ng-class="{'has-error': verifyMessageForm.signature.$invalid && verifyMessageForm.signature.$touched}")
-      label.control-label(translate="SIGNATURE")
-      span.type-lbl :
+      label.control-label.colon(translate="SIGNATURE")
       textarea.form-control(rows="3" ng-model="signature" name="signature" is-valid="isBase64(signature)" required)
     .form-group.row.pbm.flex-row.flex-justify.note(
       ng-class="{'has-error': verifyMessageForm.message.$invalid && verifyMessageForm.message.$touched}")
-      label.control-label(translate="MESSAGE")
-      span.type-lbl :
+      label.control-label.colon(translate="MESSAGE")
       textarea.form-control(rows="3" ng-model="message" name="message" required)
     .pull-right.type-h4.flex-center(ng-show="didVerify")
       span.mrm(translate="{{ verified ? 'MSG_VERIFIED' : 'MSG_NOT_VERIFIED' }}")
