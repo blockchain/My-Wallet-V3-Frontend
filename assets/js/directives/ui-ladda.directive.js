@@ -9,6 +9,7 @@ function uiLadda() {
     replace: false,
     scope: {
       laddaTranslate: '@',
+      laddaValues: '=',
       uiLadda: '=',
       disabled: '=ngDisabled'
     },

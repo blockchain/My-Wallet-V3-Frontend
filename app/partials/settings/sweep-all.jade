@@ -18,22 +18,22 @@
       .flex-column.mtm
         .flex-row.flex-center.center.flex-between
           span.flex-4.left-align.account.em-400.long-input(translate="SUCCEEDED")
-          span.flex-3.right-align.success {{ succeeded.amount | toBitCurrency:settings.btcCurrency:false }}
-          span.flex-1.success {{ nsucceeded }}
+          span.flex-3.right-align.success {{ succeeded.value | toBitCurrency:settings.btcCurrency:false }}
+          span.flex-1.success {{ succeeded.count }}
         .flex-row.flex-center.center.flex-between.border-bottom.pbs.mbs
           span.flex-4.left-align.account.em-400.long-input(translate="FAILED")
-          span.flex-3.right-align.security-red {{ failed.amount | toBitCurrency:settings.btcCurrency:false }}
-          span.flex-1.security-red {{ nfailed }}
+          span.flex-3.right-align.security-red {{ failed.value | toBitCurrency:settings.btcCurrency:false }}
+          span.flex-1.security-red {{ failed.count }}
         .flex-row.flex-center.center.flex-between
           span.flex-4.left-align.account.em-400.long-input(translate="TOTAL_COMPLETED")
-          span.flex-3.right-align.blue {{ failed.amount + succeeded.amount | toBitCurrency:settings.btcCurrency:false }}
+          span.flex-3.right-align.blue {{ failed.value + succeeded.value | toBitCurrency:settings.btcCurrency:false }}
           span.flex-1.blue {{ ncompleted() }}
 
   .mtm.flex-row.flex-end.flex-center
-    span(ng-show="!state.sweeping && !state.complete")
+    span(ng-show="!state.publishing && !state.complete")
       | {{ addresses.length }}&nbsp;
       span(translate="IMPORTED_ADDRESSES")
-    span(ng-show="state.sweeping") {{ addresses[ncompleted()].address }}
+    span(ng-show="state.publishing") {{ addresses[ncompleted()].address }}
     .mrm.mlm
       span(ng-hide="state.failed || state.success").ti-arrow-right.blue.type-h4.bold
       span(ng-show="state.success").ti-check.success.type-h4.bold
@@ -45,7 +45,18 @@
     span.pull-left.mls(ng-class="{ 'black': ncompleted() === 0 }") {{ ncompleted() }} / {{ ntotal }}
 
 .modal-footer.pal.flex-end
-  button.button-muted.mrm(ng-click="$dismiss('cancelled')" ng-show="!state.sweeping && !state.complete" translate="CANCEL")
-  button.button-muted.mrm(ng-click="cancel()" ng-show="state.sweeping" translate="CANCEL")
-  button.btn.button-primary(ng-show="!state.complete" ui-ladda="state.sweeping" ng-click="sweepAll()" data-style="expand-left" ladda-translate="SWEEP_ALL")
-  button.btn.button-primary(ng-show="state.complete" ng-click="$close(true)" translate="DONE")
+  button.button-muted.mrm(
+    translate="CANCEL"
+    ng-hide="state.complete"
+    ng-click="state.sweeping ? cancel() : $dismiss('cancelled')")
+  button.btn.button-primary(
+    ladda-translate="{{ state.signing ? 'SIGNING' : 'SWEEP_ALL' }}"
+    ladda-values="{ signed: succeeded.signed, total: ntotal }"
+    ui-ladda="state.sweeping"
+    data-style="expand-left"
+    ng-show="!state.complete"
+    ng-click="sweepAll()")
+  button.btn.button-primary(
+    translate="DONE"
+    ng-show="state.complete"
+    ng-click="$close(true)")
