@@ -166,7 +166,7 @@ module.exports = (grunt) ->
         files: [
           {src: ["beep.wav"], dest: "dist/"}
           {src: ["index.html"], dest: "dist/", cwd: "build", expand: true}
-          {src: ["img/*"], dest: "dist/", cwd: "build", expand: true}
+          {src: ["img/**/*"], dest: "dist/", cwd: "build", expand: true}
           {src: ["locales/*"], dest: "dist/", cwd: "build", expand: true}
           {src: ["**/*"], dest: "dist/fonts", cwd: "build/fonts", expand: true}
         ]
@@ -194,7 +194,7 @@ module.exports = (grunt) ->
 
       images:
         files: [
-          {src: ["*"], dest: "build/img", cwd: "img", expand: true }
+          {src: ["**/*"], dest: "build/img", cwd: "img", expand: true }
           {src: ["*"], dest: "build/img", cwd: "bower_components/bc-css-flags/dist/img", expand: true}
         ]
 
