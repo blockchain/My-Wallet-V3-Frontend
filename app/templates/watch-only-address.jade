@@ -12,7 +12,7 @@ tr
   td.shrink
     span(ng-show="address.balance != null")
       fiat-or-btc(btc="address.balance")
-    img(ng-show="address.balance == null" src="img/spinner.gif")
+    img(ng-show="address.balance == null" src="assets/img/spinner.gif")
   td.shrink
     a(ng-click="delete()")
       i.ti-trash

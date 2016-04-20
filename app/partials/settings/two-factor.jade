@@ -1,6 +1,6 @@
 .modal-header
   .flex-center
-    img.mrm.two-fa-image(src="img/2FA.png")
+    img.mrm.two-fa-image(src="assets/img/2FA.png")
     h3.mvn(translate="ENABLE_TWO_STEP" ng-hide="isStep('disable')")
     h3.mvn(translate="DISABLE_TWO_STEP" ng-show="isStep('disable')")
     helper-button(content="TWO_STEP_EXPLAIN")
@@ -12,7 +12,7 @@
   div(ng-show="isStep('enable')")
     .flex.flex-align-end.row.pal
       .flex-column.col-xs-6.flex-center.border-right(ng-click="authWithPhone()")
-        img.phone-image.mbl.pointer(src="img/phone.png")
+        img.phone-image.mbl.pointer(src="assets/img/phone.png")
         a(translate="USE_MOBILE")
       .flex-column.col-xs-6.flex-center(ng-click="authWithApp()")
         i.ti-lock.pointer
@@ -26,7 +26,7 @@
     .col-xs-6.flex-justify.flex
       a(ng-click="pairWith = 'yubiKey'", ng-class="{'basic-grey' : pairWith == 'authenticator'}") YubiKey
     .col-xs-12.mtl(ng-show="pairWith == 'authenticator'")
-      img(ng-hide="settings.googleAuthenticatorSecret" src="img/spinner.gif")
+      img(ng-hide="settings.googleAuthenticatorSecret" src="assets/img/spinner.gif")
       .form-group.flex-between(ng-if="settings.googleAuthenticatorSecret" ng-class="{'has-error': errors.authenticatorCode}")
         qr(text="settings.googleAuthenticatorSecret", size=172)
         .flex-column.flex-center.flex-1.pal
@@ -47,7 +47,7 @@
       span(ng-show="settings.twoFactorMethod == 5" translate="2FA_SMS")
     h5(translate="2FA_SUCCESS")
   div(ng-show="isStep('loading')")
-    img(src="img/spinner.gif")
+    img(src="assets/img/spinner.gif")
   div(ng-show="isStep('error')")
     p(translate="2FA_ERROR")
 .modal-footer.pal.flex-end

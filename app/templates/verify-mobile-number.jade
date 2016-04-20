@@ -10,5 +10,5 @@ div(ng-class="fullWidth ? 'width-100 flex-center' : 'flex-3'")
       span.mrm
         a(ng-click="retrySendCode()" ui-ladda="status.retrying" ladda-translate="RESEND" ng-hide="status.retrying || status.retrySuccess")
         span.label.label-success(translate="SENT" ng-show="status.retrySuccess")
-        img(src="img/spinner.gif" ng-show="status.retrying")
+        img(src="assets/img/spinner.gif" ng-show="status.retrying")
       button.button-success(type="submit" ui-ladda="status.busy" ng-disabled="!code || code.length < 3" ladda-translate="VERIFY" data-style="expand-left")

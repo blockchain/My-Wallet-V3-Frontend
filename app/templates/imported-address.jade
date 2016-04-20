@@ -15,7 +15,7 @@ tr
       span.prm
         span(ng-show="address.balance != null")
           fiat-or-btc(btc="address.balance")
-        img(ng-show="address.balance == null" src="img/spinner.gif")
+        img(ng-show="address.balance == null" src="assets/img/spinner.gif")
   td.shrink
     span(uib-dropdown on-toggle="toggled(open)")
       a(href uib-dropdown-toggle id="more-dropdown" translate="More Options") 

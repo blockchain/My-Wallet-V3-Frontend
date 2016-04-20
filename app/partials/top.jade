@@ -17,7 +17,7 @@
   .heavy.pointer.flex-column.flex-align-end.right-align.pointer(ng-click="toggleDisplayCurrency()", ng-show="status.didUpgradeToHd")
     span(ng-show="getTotal(accountIndex) == null")
       h3
-        img(ng-show="balance == null" src="img/spinner.gif") 
+        img(ng-show="balance == null" src="assets/img/spinner.gif") 
     span(ng-show="getTotal(accountIndex) != null")
       span(ng-hide="isBitCurrency(settings.displayCurrency)")
         h1.mtn.em-600.pos-rel

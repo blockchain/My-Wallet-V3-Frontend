@@ -102,8 +102,8 @@ module.exports = (grunt) ->
       options:
         templates:
           jade:
-            js: 'script(src="{filePath}" type="text/javascript")'
-            css: 'link(href="{filePath}" rel="stylesheet" type="text/css")'
+            js: 'script(src="assets/{filePath}" type="text/javascript")'
+            css: 'link(href="assets/{filePath}" rel="stylesheet" type="text/css")'
       myTarget:
         files:
           'build/index.jade': 'app/index.jade'
