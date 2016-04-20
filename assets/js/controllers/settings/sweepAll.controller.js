@@ -65,6 +65,7 @@ function SweepAllController($scope, $q, $timeout, $translate, Wallet, Alerts) {
     }), $q.resolve()))
       .then(() => {
         $scope.state.success = true;
+        $scope.refresh();
         if ($scope.nfailed > 0) Alerts.displayWarning('SWEEP_FAIL', false, $scope.alerts);
       })
       .catch(reason => {
