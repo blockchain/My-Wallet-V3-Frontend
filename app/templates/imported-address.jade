@@ -16,7 +16,6 @@ tr
         span(ng-show="address.balance != null")
           fiat-or-btc(btc="address.balance")
         img(ng-show="address.balance == null" src="img/spinner.gif")
-      a(ng-hide="address.balance == 0" translate="TRANSFER" ng-click="transfer()")
   td.shrink
     span(uib-dropdown on-toggle="toggled(open)")
       a(href uib-dropdown-toggle id="more-dropdown" translate="More Options") 
@@ -25,5 +24,7 @@ tr
           a.ti-import(translate="ARCHIVE", ng-click="archive(address)")
         li
           a.ti-key(translate="YOUR_PRIVATE_KEY", ng-hide="address.isWatchOnly", ng-click="showPrivKey()")
+        li
+          a.ti-arrow-right(ng-hide="address.balance == 0" translate="TRANSFER" ng-click="transfer()")
         li(ng-if="false")
           a.ti-check-box(translate="SIGN_MESSAGE" ng-click="signMessage()")
