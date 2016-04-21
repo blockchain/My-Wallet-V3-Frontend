@@ -660,5 +660,6 @@
   "QR_HELPER": "Share this QR code with your sender.",
   "CUSTOMIZE_HELPER": "Specify an amount and a description for this transaction.",
   "SAVE_HELPER": "You’ll find this in Settings -> Addresses -> {{ label }} -> Manage Addresses.",
-  "THANKS_FOR_ACCEPTING": "Thanks for accepting bitcoin!"
+  "THANKS_FOR_ACCEPTING": "Thanks for accepting bitcoin!",
+  "NOTE_PLACEHOLDER": "Money for rent 🏡"
 }

@@ -102,9 +102,9 @@
             i.ti-plus.white
       .flex-row.flex-justify.form-group.note.mvl(ng-class="{'has-error': noteForm.note.$error.maxlength && noteForm.note.$touched}")
         label.mbn
-          span(translate="NOTE")
+          span(translate="DESCRIPTION:")
           helper-button(content="SEND_BITOIN_STEP2B")
-        textarea.pas(rows="4" ng-model="transaction.note" name="note" ng-maxlength="512" placeholder="Money for rent 🏡")
+        textarea.pas(rows="4" ng-model="transaction.note" name="note" ng-maxlength="512" placeholder="{{'NOTE_PLACEHOLDER' | translate}}")
         span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="noteForm.note.$error.maxlength && noteForm.note.$touched")
       //- Fee
       .flex-row.flex-center.flex-justify.form-group.bc-modal-fade.mtm.fee(ng-class="{'has-error': transaction.blockIdx > 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}" ng-show="advanced")
