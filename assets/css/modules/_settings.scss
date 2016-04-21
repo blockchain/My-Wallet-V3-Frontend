@@ -115,7 +115,12 @@ table.accounts-container {
     font-weight: 500;
   }
 
-  .label-primary {background-color: $blue; color: white;}
+  .label-primary {
+    background-color: $blue;
+    display: inline-block;
+    @extend .btn-xs;
+    color: white;
+  }
 
   &.imported-addresses{
     color: $mid-grey;

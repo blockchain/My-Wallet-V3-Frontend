@@ -181,7 +181,7 @@
     button.button-muted.bc-modal-fade.mrm(
       ng-show="advanced && !confirmationStep" translate="RESET_FORM" ng-click="resetSendForm()")
 
-    button.button-success.button-lg(
+    button.button-primary(
       ladda-translate="NEXT_STEP"
       ui-ladda="building"
       ng-click="goToConfirmation()"
@@ -190,7 +190,7 @@
       data-style="expand-left"
       ng-hide="confirmationStep")
 
-    button.button-success.button-lg(
+    button.button-success(
       ladda-translate="SEND"
       ui-ladda="sending"
       ng-click="send()"

@@ -47,10 +47,10 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, Alerts, SecurityCente
     $uibModal.open({
       templateUrl: 'partials/account-form.jade',
       controller: 'AccountFormCtrl',
+      windowClass: 'bc-modal sm',
       resolve: {
         account: () => void 0
-      },
-      windowClass: 'bc-modal sm'
+      }
     });
   };
 

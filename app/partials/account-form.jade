@@ -13,8 +13,8 @@
         span.help-block(translate="ACCOUNT_NAME_TAKEN" ng-show="accountForm.new.$error.isValid")
     span(ng-show="!status.edit")
 .modal-footer.pal.flex-end.flex-center
-  button.button-muted.button-lg.mrm(ng-click="close()", translate="CLOSE", ng-hide="status.busy")
+  button.button-muted.mrm(ng-click="close()", translate="CLOSE", ng-hide="status.busy")
   span(ng-if="!status.edit")
-    button.button-primary.button-lg(ui-ladda="status.busy" ng-click="createAccount()" ladda-translate="CREATE_ACCOUNT" ng-disabled="accountForm.new.$error.required || accountForm.new.$error.isValid || accountForm.$pristine" data-style="expand-left")
+    button.button-success(ui-ladda="status.busy" ng-click="createAccount()" ladda-translate="CREATE_ACCOUNT" ng-disabled="accountForm.new.$error.required || accountForm.new.$error.isValid || accountForm.$pristine" data-style="expand-left")
   span(ng-if="status.edit")
-    button.button-primary.button-lg(ui-ladda="status.busy" ng-click="updateAccount()" ladda-translate="RENAME" ng-disabled="accountForm.$invalid || accountForm.$pristine" data-style="expand-left")
+    button.button-success(ui-ladda="status.busy" ng-click="updateAccount()" ladda-translate="RENAME" ng-disabled="accountForm.$invalid || accountForm.$pristine" data-style="expand-left")

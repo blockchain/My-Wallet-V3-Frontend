@@ -16,11 +16,11 @@ function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFi
     Alerts.clear();
     $uibModal.open({
       templateUrl: 'partials/account-form.jade',
+      windowClass: 'bc-modal initial',
       controller: 'AccountFormCtrl',
       resolve: {
         account: () => void 0
-      },
-      windowClass: 'bc-modal'
+      }
     });
   };
 
@@ -29,10 +29,10 @@ function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFi
     $uibModal.open({
       templateUrl: 'partials/account-form.jade',
       controller: 'AccountFormCtrl',
+      windowClass: 'bc-modal sm',
       resolve: {
         account: () => account
-      },
-      windowClass: 'bc-modal'
+      }
     });
   };
 
@@ -55,14 +55,14 @@ function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFi
   $scope.transfer = () => {
     $uibModal.open({
       templateUrl: 'partials/send.jade',
+      windowClass: 'bc-modal initial',
       controller: 'SendCtrl',
       resolve: {
         paymentRequest: () => ({
           fromAccount: Wallet.accounts()[Wallet.getDefaultAccountIndex()],
           amount: 0
         })
-      },
-      windowClass: 'bc-modal'
+      }
     });
   };
 
