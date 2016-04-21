@@ -71,7 +71,7 @@
         |:  
       .col-sm-7
         ui-select(ng-model="fields.account")
-          ui-select-match {{ $select.selected.label }}
+          ui-select-match(placeholder="{{'SEARCH' | translate}}...") {{ $select.selected.label }}
           ui-select-choices(repeat="account in accounts() | filter:{archived: false, label: $select.search}") 
             span(ng-bind-html="account.label | escapeHtml | highlight: $select.search")
     .form-group

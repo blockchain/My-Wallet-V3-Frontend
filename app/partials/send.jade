@@ -30,7 +30,7 @@
             ng-show="originsLoaded"
             ng-change="checkForSameDestination(); setPaymentFrom()"
             required)
-            ui-select-match
+            ui-select-match(placeholder="{{'SEARCH' | translate}}...")
               label-origin(origin="$select.selected")
             ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)")
               span(ng-class="{aaa: hasZeroBalance(origin)}")

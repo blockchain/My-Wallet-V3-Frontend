@@ -91,6 +91,7 @@ $select-fg: #686868;
 .ui-select-bootstrap .ui-select-choices-row>a {
   color: $select-fg;
   font-weight: 300;
+  padding: 3px 12px;
 }
 
 .ui-select-bootstrap .ui-select-choices-row.active>a {
