@@ -141,10 +141,10 @@
   //- Step 2 (confirmation)
   div.overview(ng-show="confirmationStep")
     .flex-column
-      .flex-center.flex-justify.pbm
-        label.mbn(translate="OVERVIEW")
-        span.mbn.mls(ng-show="transaction.note.length") {{ transaction.note }}
-          span.ti-notepad.mls
+      .flex-justify.pbm
+        span.mbn(ng-show="transaction.note.length")
+          span.type-h5.ti-notepad.mrs
+          span {{ transaction.note }}
       .flex-column.mtm
         .mbl.flex-row.flex-center.center.flex-between
           span.account.flex-2.width-100.mvn.em-400.long-input {{ transaction.from.label || transaction.from.address }}
