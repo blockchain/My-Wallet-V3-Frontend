@@ -160,9 +160,11 @@
       .flex-row {
         > span.account {
           text-align: left;
-          max-width: 200px;
-          overflow: hidden;
-          text-overflow: ellipsis;
+          @media (max-width: 768px) {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
           &.aaa {
             color: $aaa !important;
           }
