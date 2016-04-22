@@ -6,10 +6,10 @@
         | Be your own bank.
         span.type-xs.mls.align-offset.pos-rel &reg;
     .button-group.flex
-      a.em-300.flex-center.flex-justify.mrm(ng-click="send()")
+      a.em-300.flex-center.flex-justify.mrm(ng-click="send()" tabindex="0" href="")
         i.bc-icon-send
         span(translate="SEND")
-      a.em-300.flex-center.flex-justify.mrm(ng-click="request()")
+      a.em-300.flex-center.flex-justify.mrm(ng-click="request()" tabindex="0" href="")
         div.message-beacon.green(ng-show="requestBeacon")
         i.bc-icon-receive
         span(translate="REQUEST")

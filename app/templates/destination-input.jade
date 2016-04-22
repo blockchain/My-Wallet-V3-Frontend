@@ -20,6 +20,7 @@
         on-scan="onAddressScan"
         ng-class="{ 'border-rounded-right': dropdownHidden }")
       button.btn.btn-default.brdrn(
+        tabindex="1"
         type="button"
         ng-hide="dropdownHidden"
         uib-dropdown-toggle)
@@ -27,5 +28,5 @@
         span.sr-only Toggle Dropdown
       ul.uib-dropdown-menu.dropdown-menu-right.dropdown-menu
         li(ng-repeat="account in accounts")
-          a(ng-click="setModel(account)" ng-disabled="account.index === model.index")
+          a(ng-click="setModel(account)" ng-disabled="account.index === model.index" tabindex="1" href="")
             label-origin(origin="::account")
