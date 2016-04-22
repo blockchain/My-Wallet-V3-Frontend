@@ -5,7 +5,7 @@
   h5(translate="RECEIVE_BITCOIN_MESSAGE", ng-hide="focus || hasLegacyAddress")
   .flex-row.flex-center(ng-show="hasLegacyAddress").legacy-msg 
     h5(translate="RECEIVE_BITCOIN_MESSAGE_LEGACY_1")
-    a(translate="CLICK_HERE" ng-click="close()")
+    a(translate="CLICK_HERE" ng-click="close()" href="")
 #receive.fade.modal-body(ng-class="{'advanced': advanced, 'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1}")
   form.form-horizontal.ph-form(role="form" name="requestForm" novalidate)
     .form-group.row.pbm.flex-justify(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': fields.to.isWatchOnlyLegacyAddress}")

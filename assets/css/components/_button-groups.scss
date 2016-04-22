@@ -3,14 +3,6 @@
     transition: all .2s ease-in-out;
     margin-right: .25em;
   }
-  > span.request {
-    cursor:  pointer;
-    align-self: center;
-    @include transition(color $fast);
-    &:hover {
-      color: $blue;
-    }
-  }
   button, a {
     padding: .25em;
     border: 1px solid #e0e0e0;
@@ -45,5 +37,12 @@
     i {
       margin-right: 0px;
     }
+  }
+}
+
+a.request {
+  @include transition(color $fast);
+  &:hover {
+    color: $blue !important;
   }
 }

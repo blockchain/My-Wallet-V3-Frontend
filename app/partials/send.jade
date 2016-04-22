@@ -111,7 +111,6 @@
         label.mbn
           span(translate="TX_FEE")
           |:
-          helper-button(content="TX_FEE_HELP")
         .miners-fee-selection
           .fee-custom
             .flex-1
@@ -128,6 +127,7 @@
                   required
                   transform-currency="settings.btcCurrency"
                   placeholder="Enter your fee here")
+        helper-button(content="TX_FEE_HELP")
       span.help-block.has-error(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$dirty && advanced")
       span.help-block.friendly(ng-show="!sendForm.$invalid && amountsAreValid() && advanced")
         span(ng-show="transaction.blockIdx <= 6 && transaction.blockIdx >= 1")
@@ -169,11 +169,11 @@
 
 .modal-footer.flex-between.flex-center.pal
   .flex-center
-    a.dark-grey(ng-hide="advanced || confirmationStep", ng-click="advancedSend()", translate="ADVANCED_SEND" tabindex="1")
-    a.dark-grey(ng-show="advanced && !confirmationStep", ng-click="regularSend()", translate="REGULAR_SEND" tabindex="1")
+    button.button-muted.dark-grey(ng-hide="advanced || confirmationStep", ng-click="advancedSend()", translate="ADVANCED_SEND" tabindex="1")
+    button.button-muted.dark-grey(ng-show="advanced && !confirmationStep", ng-click="regularSend()", translate="REGULAR_SEND" tabindex="1")
   .flex-center.flex-end.send-actions
     button.button-muted.mrm(
-      ng-click="close()" translate="CANCEL" ng-hide="confirmationStep" tabindex="2")
+      ng-click="close()" translate="CANCEL" ng-hide="confirmationStep" tabindex="1")
 
     button.button-muted.mrm(
       ng-click="backToForm()" translate="BACK" ng-show="confirmationStep" tabindex="1")

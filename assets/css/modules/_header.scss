@@ -120,10 +120,10 @@
 
     }
     > li {
-      a:hover {
+      a:focus, a:hover {
         background-color: #0face5;
       }
-      a:focus, a:active {
+      a:active {
         background-color: transparent;
       }
     }
