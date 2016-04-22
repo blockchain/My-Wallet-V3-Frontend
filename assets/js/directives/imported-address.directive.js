@@ -48,27 +48,19 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
         scope.status.edit = false;
       };
 
-      scope.transfer = () => {
-        $uibModal.open({
-          templateUrl: 'partials/settings/import-address.jade',
-          controller: 'AddressImportCtrl',
-          windowClass: 'bc-modal',
-          resolve: {
-            address: () => scope.address
-          }
-        });
-      };
+      scope.transfer = () => $uibModal.open({
+        templateUrl: 'partials/settings/transfer.jade',
+        controller: 'TransferController',
+        windowClass: 'bc-modal',
+        resolve: { address: () => scope.address }
+      });
 
-      scope.showPrivKey = () => {
-        $uibModal.open({
-          templateUrl: 'partials/settings/show-private-key.jade',
-          controller: 'ShowPrivateKeyCtrl',
-          windowClass: 'bc-modal',
-          resolve: {
-            addressObj: () => scope.address
-          }
-        });
-      };
+      scope.showPrivKey = () => $uibModal.open({
+        templateUrl: 'partials/settings/show-private-key.jade',
+        controller: 'ShowPrivateKeyCtrl',
+        windowClass: 'bc-modal',
+        resolve: { addressObj: () => scope.address }
+      });
 
       scope.signMessage = () => $uibModal.open({
         templateUrl: 'partials/settings/sign-message.jade',

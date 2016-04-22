@@ -2,23 +2,16 @@ angular
   .module('walletApp')
   .controller('AddressImportCtrl', AddressImportCtrl);
 
-function AddressImportCtrl ($scope, $log, Wallet, Alerts, $uibModalInstance, $translate, $state, $timeout, address, $rootScope) {
+function AddressImportCtrl ($scope, $uibModal, Wallet, Alerts, $uibModalInstance, $state, $timeout) {
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
   $scope.alerts = [];
-  $scope.address = address;
-  $scope.step = address ? 3 : 1;
+  $scope.address = null;
   $scope.BIP38 = false;
-  $scope.status = {
-    busy: false,
-    sweeping: false,
-    cameraIsOn: false
-  };
-  $scope.fields = {
-    addressOrPrivateKey: '',
-    bip38passphrase: '',
-    account: null
-  };
+  $scope.step = 1;
+
+  $scope.status = {};
+  $scope.fields = { addressOrPrivateKey: '', bip38passphrase: '', account: null };
 
   $scope.$watchCollection('accounts()', (newValue) => {
     $scope.fields.account = Wallet.accounts()[Wallet.my.wallet.hdwallet.defaultAccountIndex];
@@ -26,6 +19,24 @@ function AddressImportCtrl ($scope, $log, Wallet, Alerts, $uibModalInstance, $tr
 
   $scope.isValidAddressOrPrivateKey = (val) => {
     return Wallet.isValidAddress(val) || Wallet.isValidPrivateKey(val);
+  };
+
+  $scope.goToTransfer = () => {
+    $uibModalInstance.close();
+    $uibModal.open({
+      templateUrl: 'partials/settings/transfer.jade',
+      controller: 'TransferController',
+      windowClass: 'bc-modal',
+      resolve: { address: () => $scope.address }
+    });
+  };
+
+  $scope.parseBitcoinUrl = (url) => url.replace('bitcoin:', '').replace(/\//g, '');
+
+  $scope.onAddressScan = (url) => {
+    $scope.fields.addressOrPrivateKey = $scope.parseBitcoinUrl(url);
+    let valid = $scope.isValidAddressOrPrivateKey($scope.fields.addressOrPrivateKey);
+    $scope.importForm.privateKey.$setValidity('isValid', valid);
   };
 
   $scope.import = () => {
@@ -89,84 +100,6 @@ function AddressImportCtrl ($scope, $log, Wallet, Alerts, $uibModalInstance, $tr
         $scope.proceedWithBip38(bip38passphrase);
       }
     }, 250);
-  };
-
-  $scope.transfer = () => {
-    $scope.status.sweeping = true;
-
-    const success = () => {
-      $scope.status.sweeping = false;
-      $uibModalInstance.dismiss('');
-      $rootScope.scheduleRefresh();
-      $state.go('wallet.common.transactions', {
-        accountIndex: $scope.fields.account.index
-      });
-      $translate(['SUCCESS', 'BITCOIN_SENT']).then(translations => {
-        $scope.$emit('showNotification', {
-          type: 'sent-bitcoin',
-          icon: 'bc-icon-send',
-          heading: translations.SUCCESS,
-          msg: translations.BITCOIN_SENT
-        });
-      });
-    };
-
-    const error = (error) => {
-      $scope.status.sweeping = false;
-      if (error && typeof error === 'string') {
-        Alerts.displayError(error, false, $scope.alerts);
-      } else {
-        console.log(error);
-        Alerts.displayError('SWEEP_FAILED', false, $scope.alerts);
-      }
-      $scope.$root.$safeApply($scope);
-    };
-
-    let sweepErr = 'SWEEP_LOW_BALANCE_ERR';
-
-    let payment = new Wallet.Payment();
-    payment
-      .from($scope.address.address)
-      .to($scope.fields.account.index)
-      .useAll()
-      .sideEffect(p => { if (p.sweepAmount <= 0) throw sweepErr; })
-      .build();
-
-    const signAndPublish = (passphrase) => {
-      return payment.sign(passphrase).publish().payment;
-    };
-
-    Wallet.askForSecondPasswordIfNeeded()
-      .then(signAndPublish).then(success).catch(error);
-  };
-
-  $scope.goToTransfer = () => {
-    $scope.step = 3;
-  };
-
-  $scope.onError = () => {
-    Alerts.displayWarning('CAMERA_PERMISSION_DENIED', false, $scope.alerts);
-  };
-
-  $scope.cameraOn = () => {
-    $scope.cameraRequested = true;
-  };
-
-  $scope.cameraOff = () => {
-    $scope.status.cameraIsOn = false;
-    $scope.cameraRequested = false;
-    $scope.$broadcast('STOP_WEBCAM');
-  };
-
-  $scope.onAddressScan = (url) => {
-    $scope.fields.addressOrPrivateKey = $scope.parseBitcoinUrl(url);
-    $scope.cameraOff();
-    let valid = $scope.isValidAddressOrPrivateKey($scope.fields.addressOrPrivateKey);
-    $scope.importForm.privateKey.$setValidity('isValid', valid);
-  };
-
-  $scope.parseBitcoinUrl = (url) => {
-    return url.replace('bitcoin:', '').replace(/\//g, '');
   };
 
   $scope.close = () => {

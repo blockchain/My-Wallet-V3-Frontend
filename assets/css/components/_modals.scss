@@ -65,6 +65,13 @@
   }
 }
 
+.modal-progress {
+  margin-bottom: 0;
+  height: 2px;
+  background-color: white;
+  box-shadow: none;
+}
+
 // Shell div to position the modal with bottom padding
 .modal-dialog {
   position: relative;

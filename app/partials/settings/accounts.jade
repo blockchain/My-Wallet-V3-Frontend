@@ -48,6 +48,11 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
           span  ({{ getLegacyTotal() | toBitCurrency:settings.btcCurrency }})
         td.shrink
         td.shrink
+          button.btn.btn-default(
+            translate="TRANSFER_ALL"
+            ng-show="activeSpendableAddresses().length > 0"
+            ng-click="openTransferAll()"
+          )
         td.shrink        
           button.btn.btn-default(
             ui-sref="wallet.common.settings.imported_addresses"

@@ -4,6 +4,8 @@ angular
 
 function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFilter) {
   $scope.accounts = Wallet.accounts;
+  $scope.activeSpendableAddresses = () => Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly);
+
   $scope.display = {
     archived: false
   };
@@ -65,6 +67,13 @@ function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFi
       }
     });
   };
+
+  $scope.openTransferAll = () => $uibModal.open({
+    templateUrl: 'partials/settings/transfer.jade',
+    controller: 'TransferController',
+    windowClass: 'bc-modal',
+    resolve: { address: () => $scope.activeSpendableAddresses() }
+  });
 
   $scope.archive = (account) => Wallet.archive(account);
   $scope.unarchive = (account) => Wallet.unarchive(account);

@@ -127,9 +127,11 @@ describe "AddressImportCtrl", ->
         expect(scope.importForm.privateKey.$valid).toBe(false)
 
 
-    it "should go to step 3 when user clicks transfer", ->
+    it "should open the transfer window when the user clicks transfer", inject(($uibModal) ->
+      spyOn($uibModal, 'open')
       scope.goToTransfer()
-      expect(scope.step).toBe(3)
+      expect($uibModal.open).toHaveBeenCalled()
+    )
 
   describe "transfer", ->
     beforeEach ->
