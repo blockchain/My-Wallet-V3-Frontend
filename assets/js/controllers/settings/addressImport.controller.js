@@ -115,12 +115,14 @@ function AddressImportCtrl ($scope, $log, Wallet, Alerts, $uibModalInstance, $tr
       $scope.$root.$safeApply($scope);
     };
 
+    let sweepErr = 'SWEEP_LOW_BALANCE_ERR';
+
     let payment = new Wallet.Payment();
     payment
       .from($scope.address.address)
       .to($scope.fields.account.index)
       .useAll()
-      .sideEffect(p => { if (p.sweepAmount <= 0) throw 'SWEEP_LOW_BALANCE_ERR'; })
+      .sideEffect(p => { if (p.sweepAmount <= 0) throw sweepErr; })
       .build();
 
     const signAndPublish = (passphrase) => {

@@ -21,7 +21,7 @@ function configureMobileNumber (Wallet) {
   function link (scope, elem, attrs) {
     scope.status = {
       busy: false,
-      disableChangeBecause2FA: () => Wallet.settings.twoFactorMethod == 5
+      disableChangeBecause2FA: () => parseInt(Wallet.settings.twoFactorMethod, 10) === 5
     };
 
     scope.fields = { newMobile: null };

@@ -65,7 +65,7 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
   $scope.done = () => {
     Alerts.clear();
 
-    if ($scope.fields.label == '' || $scope.fields.to.index == undefined) {
+    if ($scope.fields.label === '' || $scope.fields.to.index == null) {
       $uibModalInstance.dismiss('');
     } else {
       const success = () => {

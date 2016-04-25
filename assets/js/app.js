@@ -35,8 +35,7 @@ angular.module('walletApp', modules)
   uiSelectConfig.theme = 'bootstrap';
 })
 .run(($rootScope, $uibModal, $state, MyWallet, $q, currency, $timeout) => {
-
-  $rootScope.$safeApply = (scope=$rootScope, before) => {
+  $rootScope.$safeApply = (scope = $rootScope, before) => {
     before = before;
     if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
   };
@@ -58,7 +57,7 @@ angular.module('walletApp', modules)
         $rootScope.$broadcast('refresh');
         $timeout(() => $rootScope.refreshing = false, 500);
       });
-  }
+  };
 
   $rootScope.$on('showNotification', (_, notification) => {
     $uibModal.open({
@@ -68,5 +67,4 @@ angular.module('walletApp', modules)
       resolve: { notification: () => notification }
     });
   });
-
 });

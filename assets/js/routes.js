@@ -6,8 +6,7 @@ angular
 
 AppRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-function AppRouter($stateProvider, $urlRouterProvider) {
-
+function AppRouter ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise(function ($injector, $location) {
     let Wallet = $injector.get('Wallet');
     return Wallet.status.isLoggedIn ? '/home' : '/';
@@ -68,7 +67,7 @@ function AppRouter($stateProvider, $urlRouterProvider) {
       contents: {
         top: top
       }
-    })
+    });
 
   $stateProvider
     .state('public', {
@@ -345,5 +344,4 @@ function AppRouter($stateProvider, $urlRouterProvider) {
         }
       }
     });
-
 }

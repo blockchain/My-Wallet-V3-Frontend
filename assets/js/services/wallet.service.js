@@ -138,7 +138,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
           };
           wallet.user.internationalMobileNumber = '+' + result.dial_code;
         }
-        wallet.settings.notifications = result.notifications_type && result.notifications_type.length > 0 && result.notifications_type.indexOf(1) > -1 && (result.notifications_on == 0 || result.notifications_on == 2);
+        wallet.settings.notifications = result.notifications_type && result.notifications_type.length > 0 && result.notifications_type.indexOf(1) > -1 && (parseInt(result.notifications_on, 10) === 0 || parseInt(result.notifications_on, 10) === 2);
         wallet.user.isEmailVerified = result.email_verified;
         wallet.user.isMobileVerified = result.sms_verified;
         wallet.user.passwordHint = result.password_hint1;
@@ -561,7 +561,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   wallet.fetchBalanceForRedeemCode = (code) => {
     let logError = (error) => {
       console.log(error);
-      throw 'Could not retrieve balance';
+      throw $translate.instant('ERR_FETCH_BALANCE');
     };
     return MyBlockchainApi.getBalanceForRedeemCode(code)
       .catch(logError);
