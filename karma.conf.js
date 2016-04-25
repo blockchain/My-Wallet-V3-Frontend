@@ -1,7 +1,7 @@
-module.exports = function(config){
+module.exports = function (config) {
   var configuration = {
 
-    basePath : './',
+    basePath: './',
 
     logLevel: config.LOG_WARN,
 
@@ -9,7 +9,7 @@ module.exports = function(config){
 
     exclude: ['assets/js/my_wallet/'],
 
-    files : [
+    files: [
       'build/js/polyfill.js',
       'bower_components/angular/angular.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
@@ -37,23 +37,23 @@ module.exports = function(config){
       'tests/mocks/**/*.coffee',
       'tests/**/*.js',
       'app/templates/*.jade',
-      'bower_components/angular-password-entropy/password-entropy.js',
+      'bower_components/angular-password-entropy/password-entropy.js'
     ],
 
-    autoWatch : true,
+    autoWatch: true,
 
     preprocessors: {
       '**/*.jade': ['ng-jade2js'],
       'assets/js/core/core.module.js': ['babel'],
-      'assets/js/controllers/**/*.js' : ['coverage', 'babel'],
-      'assets/js/filters.js' : ['babel', 'coverage'],
-      'assets/js/services/*.service.js' : ['babel', 'coverage'],
-      'assets/js/directives/*.directive.js' : ['babel', 'coverage'],
+      'assets/js/controllers/**/*.js': ['coverage', 'babel'],
+      'assets/js/filters.js': ['babel', 'coverage'],
+      'assets/js/services/*.service.js': ['babel', 'coverage'],
+      'assets/js/directives/*.directive.js': ['babel', 'coverage'],
       'assets/js/core/*.service.js': ['babel'],
-      'assets/js/routes.js' : ['babel', 'coverage'],
-      'assets/js/app.js' : ['babel'],
-      'tests/**/*.coffee' : ['coffee'],
-      'tests/**/*.js' : ['babel']
+      'assets/js/routes.js': ['babel', 'coverage'],
+      'assets/js/app.js': ['babel'],
+      'tests/**/*.coffee': ['coffee'],
+      'tests/**/*.js': ['babel']
     },
     coffeePreprocessor: {
       // options passed to the coffee compiler
@@ -62,7 +62,7 @@ module.exports = function(config){
         sourceMap: true
       },
       // transforming the filenames
-      transformPath: function(path) {
+      transformPath: function (path) {
         return path.replace(/\.coffee$/, '.js');
       }
     },
@@ -107,29 +107,30 @@ module.exports = function(config){
 
     frameworks: ['jasmine'],
 
-    browsers : ['PhantomJS'],
+    browsers: ['PhantomJS'],
 
-    reporters: ['progress','osx', 'coverage'],
+    reporters: ['progress', 'osx', 'coverage'],
 
     coverageReporter: {
       reporters: [
         // Fails with: TypeError: Cannot read property 'text' of undefined
         // { type : 'html', dir : 'coverage/'},
-        { type : 'lcovonly', dir : 'coverage-lcov/'}
+        {type: 'lcovonly', dir: 'coverage-lcov/'}
       ],
 
       subdir: '.',
 
-      instrumenters: { isparta : require('isparta')},
+      instrumenters: {isparta: require('isparta')},
 
       instrumenter: {
-          '**/*.js' : 'isparta'
+        '**/*.js': 'isparta'
       }
 
     }
-  }
+  };
 
-  if(process.env.TRAVIS) {
+  if (process.env.TRAVIS) {
+    // Optionally do something Travis specific
   }
 
   config.set(configuration);
