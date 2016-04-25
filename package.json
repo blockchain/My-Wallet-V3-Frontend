@@ -70,5 +70,10 @@
   "keywords": [
     "blockchain"
   ],
-  "license": ""
+  "license": "",
+  "semistandard": {
+    "ignore": [
+      "tests/"
+    ]
+  }
 }
