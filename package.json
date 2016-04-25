@@ -74,6 +74,11 @@
   "semistandard": {
     "ignore": [
       "tests/"
+    ],
+    "globals": [
+      "angular",
+      "browserDetection",
+      "Blockchain"
     ]
   }
 }
