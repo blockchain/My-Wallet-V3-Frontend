@@ -31,7 +31,6 @@
     "grunt-preprocess": "^4.1.0",
     "grunt-rename-assets": "0.0.1",
     "grunt-sass": "^1.1.0",
-    "grunt-semistandard": "^1.0.6",
     "grunt-shell": "^1.1.1",
     "grunt-surround": "^0.1.0",
     "grunt-text-replace": "^0.4.0",
