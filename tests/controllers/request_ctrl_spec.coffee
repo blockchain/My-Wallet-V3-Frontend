@@ -46,7 +46,7 @@ describe "RequestCtrl", ->
         $uibModalInstance: modalInstance,
         destination: undefined,
         focus: false,
-        hasLegacyAddress: false
+        hasLegacyAddress: true
 
       scope.model = { fields: {to: null, amount: '0', currency: Wallet.settings.currency, label: ""} }
       $compile(template)(scope)
@@ -88,6 +88,10 @@ describe "RequestCtrl", ->
 
     it "should select the users currency by default", inject((Wallet)->
       expect(scope.settings.currency.code).toBe("USD")
+    )
+
+    it "should select the oldest address by default", inject((Wallet) ->
+      expect(scope.fields.to.address).toBe('1asdf')
     )
 
     it "should have a bit currency", inject((Wallet)->
