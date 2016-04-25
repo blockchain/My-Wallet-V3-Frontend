@@ -395,6 +395,11 @@ module.exports = (grunt) ->
             'versionMyWallet = "' + version.replace("\n", "") + '"'
         }]
 
+    semistandard:
+      app:
+        src:
+          ['{,assets/js/**/}*.js']
+
   grunt.loadNpmTasks "grunt-contrib-uglify"
   grunt.loadNpmTasks('grunt-contrib-concat')
   grunt.loadNpmTasks('grunt-contrib-copy')
@@ -413,6 +418,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-babel')
   grunt.loadNpmTasks('grunt-karma-coveralls')
   grunt.loadNpmTasks('grunt-text-replace')
+  grunt.loadNpmTasks 'grunt-semistandard'
 
   grunt.registerTask "build", [
     "html2js"
