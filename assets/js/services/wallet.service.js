@@ -460,11 +460,13 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
 
   wallet.changePassword = (newPassword, successCallback, errorCallback) => {
     wallet.store.changePassword(newPassword, (() => {
-      Alerts.displaySuccess('CHANGE_PASSWORD_SUCCESS');
-      successCallback(translation);
+      let msg = 'CHANGE_PASSWORD_SUCCESS';
+      Alerts.displaySuccess(msg);
+      successCallback(msg);
     }), () => {
-      Alerts.displayError('CHANGE_PASSWORD_FAILED');
-      errorCallback(translation);
+      let err = 'CHANGE_PASSWORD_FAILED';
+      Alerts.displayError(err);
+      errorCallback(err);
     });
   };
 

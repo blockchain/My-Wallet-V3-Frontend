@@ -32,7 +32,7 @@ function ChangePasswordCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tr
 
     const error = (err) => {
       $scope.status.waiting = false;
-      $scope.errors.unsuccessful = err;
+      $translate(err).then(msg => $scope.errors.unsuccessful = msg);
     };
 
     $scope.status.waiting = true;
