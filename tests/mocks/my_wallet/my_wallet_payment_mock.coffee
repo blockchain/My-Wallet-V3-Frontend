@@ -18,7 +18,7 @@ angular.module('walletApp.core').factory 'MyWalletPayment', ($q) ->
     this.fee = (fee) -> this
     this.feePerKb = (feePerKb) -> this
     this.note = (note) -> this
-    this.sweep = () -> this
+    this.useAll = () -> this
     this.build = () -> this
     this.then = (cb) -> cb({ transaction: 'tx' }); this
     this.catch = () -> this
