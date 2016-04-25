@@ -5,7 +5,7 @@ angular
 
 activityFeed.$inject = ['$http', 'Wallet', 'Activity'];
 
-function activityFeed($http, Wallet, Activity) {
+function activityFeed ($http, Wallet, Activity) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -14,7 +14,7 @@ function activityFeed($http, Wallet, Activity) {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     scope.status = Wallet.status;
     scope.activities = Activity.activities;
     scope.loading = true;

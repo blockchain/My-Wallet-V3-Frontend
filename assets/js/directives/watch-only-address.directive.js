@@ -1,6 +1,6 @@
 angular.module('walletApp').directive('watchOnlyAddress', (Wallet, $translate, Alerts) => {
   return {
-    restrict: "A",
+    restrict: 'A',
     replace: true,
     scope: {
       address: '=watchOnlyAddress',
@@ -19,8 +19,8 @@ angular.module('walletApp').directive('watchOnlyAddress', (Wallet, $translate, A
           successCallback();
         };
 
-        const error = (error) => {
-          $translate("INVALID_CHARACTERS_FOR_LABEL").then((translation) => {
+        const error = () => {
+          $translate('INVALID_CHARACTERS_FOR_LABEL').then((translation) => {
             scope.errors.label = translation;
           });
           errorCallback();
@@ -37,7 +37,6 @@ angular.module('walletApp').directive('watchOnlyAddress', (Wallet, $translate, A
         Alerts.confirm('CONFIRM_DELETE_WATCH_ONLY_ADDRESS')
           .then(() => Wallet.deleteLegacyAddress(scope.address));
       };
-
     }
   };
 });

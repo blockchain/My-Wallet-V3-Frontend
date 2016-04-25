@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .directive('settingToggle', settingToggle);
 
-function settingToggle($translate, Wallet) {
+function settingToggle ($translate, Wallet) {
   const directive = {
     restrict: 'E',
     replace: true,

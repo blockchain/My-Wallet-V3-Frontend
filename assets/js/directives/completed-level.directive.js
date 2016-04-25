@@ -5,7 +5,7 @@ angular
 
 completedLevel.$inject = ['$translate'];
 
-function completedLevel($translate) {
+function completedLevel ($translate) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -20,7 +20,7 @@ function completedLevel($translate) {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     $translate(scope.content).then((translation) => {
       scope.content = translation;
     });

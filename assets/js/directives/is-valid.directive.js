@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .directive('isValid', isValid);
 
-function isValid() {
+function isValid () {
   const directive = {
     restrict: 'A',
     require: 'ngModel',
@@ -10,7 +10,7 @@ function isValid() {
   };
   return directive;
 
-  function link(scope, elem, attrs, ctrl) {
+  function link (scope, elem, attrs, ctrl) {
     ctrl.$viewChangeListeners.push(() => {
       ctrl.$setValidity('isValid', scope.$eval(attrs.isValid));
     });

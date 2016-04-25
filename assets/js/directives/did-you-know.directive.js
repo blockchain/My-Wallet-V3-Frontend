@@ -5,7 +5,7 @@ angular
 
 didYouKnow.$inject = ['DidYouKnow'];
 
-function didYouKnow(DidYouKnow) {
+function didYouKnow (DidYouKnow) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -14,7 +14,7 @@ function didYouKnow(DidYouKnow) {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     scope.dyk = DidYouKnow.getRandom();
   }
 }

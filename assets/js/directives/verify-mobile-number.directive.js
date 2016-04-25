@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .directive('verifyMobileNumber', verifyMobileNumber);
 
-function verifyMobileNumber($translate, Wallet, $filter) {
+function verifyMobileNumber ($translate, Wallet, $filter) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -15,7 +15,7 @@ function verifyMobileNumber($translate, Wallet, $filter) {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     if (attrs.buttonLg != null) scope.buttonLg = true;
     if (attrs.fullWidth != null) scope.fullWidth = true;
 

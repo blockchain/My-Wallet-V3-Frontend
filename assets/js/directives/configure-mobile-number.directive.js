@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .directive('configureMobileNumber', configureMobileNumber);
 
-configureMobileNumber.$inject = ['Wallet']
+configureMobileNumber.$inject = ['Wallet'];
 
-function configureMobileNumber(Wallet) {
+function configureMobileNumber (Wallet) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -18,11 +18,10 @@ function configureMobileNumber(Wallet) {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     scope.status = {
       busy: false,
-      disableChangeBecause2FA: () =>
-        Wallet.settings.twoFactorMethod == 5
+      disableChangeBecause2FA: () => Wallet.settings.twoFactorMethod == 5
     };
 
     scope.fields = { newMobile: null };
@@ -49,7 +48,7 @@ function configureMobileNumber(Wallet) {
         Wallet.user.internationalMobileNumber = scope.fields.newMobile;
       };
 
-      let error = (error) => {
+      let error = () => {
         scope.status.busy = false;
       };
 

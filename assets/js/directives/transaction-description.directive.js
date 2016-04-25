@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .directive('transactionDescription', transactionDescription);
 
-function transactionDescription($translate, Wallet) {
+function transactionDescription ($translate, Wallet) {
   const directive = {
     restrict: 'E',
     replace: false,
@@ -16,17 +16,17 @@ function transactionDescription($translate, Wallet) {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     scope.getTxDirection = (txType) => {
-      if (txType === 'sent')      return 'SENT';
-      if (txType === 'received')  return 'RECEIVED_BITCOIN_FROM';
-      if (txType === 'transfer')  return 'MOVED_BITCOIN_TO';
+      if (txType === 'sent') return 'SENT';
+      if (txType === 'received') return 'RECEIVED_BITCOIN_FROM';
+      if (txType === 'transfer') return 'MOVED_BITCOIN_TO';
     };
 
     scope.getTxClass = (txType) => {
-      if (txType === 'sent')      return 'outgoing_tx';
-      if (txType === 'received')  return 'incoming_tx';
-      if (txType === 'transfer')  return 'local_tx';
+      if (txType === 'sent') return 'outgoing_tx';
+      if (txType === 'received') return 'incoming_tx';
+      if (txType === 'transfer') return 'local_tx';
     };
 
     scope.getTxWatchOnly = (tx) => {

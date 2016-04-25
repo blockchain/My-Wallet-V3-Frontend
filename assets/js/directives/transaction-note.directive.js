@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .directive('transactionNote', transactionNote);
 
-function transactionNote($translate, $rootScope, Wallet) {
+function transactionNote ($translate, $rootScope, Wallet) {
   const directive = {
     restrict: 'E',
     replace: false,
@@ -15,7 +15,7 @@ function transactionNote($translate, $rootScope, Wallet) {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     scope.editNote = false;
 
     scope.cancelEditNote = () => {

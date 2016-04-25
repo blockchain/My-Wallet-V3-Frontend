@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .directive('transformCurrency', transformCurrency);
 
-function transformCurrency(Wallet, currency) {
+function transformCurrency (Wallet, currency) {
   const directive = {
     restrict: 'A',
     require: 'ngModel',
@@ -14,7 +14,7 @@ function transformCurrency(Wallet, currency) {
   };
   return directive;
 
-  function link(scope, elem, attrs, ctrl) {
+  function link (scope, elem, attrs, ctrl) {
     if (!ctrl ||
         scope.transformCurrency == null ||
         scope.transformCurrency.code == null
@@ -29,15 +29,15 @@ function transformCurrency(Wallet, currency) {
 
     // Modifiers for imposing restrictions on viewValue
     const modifiers = {
-      max: function(input, max) {
-        return input > parseInt(max) ? parseInt(max) : input;
+      max: function (input, max) {
+        return input > parseInt(max, 10) ? parseInt(max, 10) : input;
       },
-      decimals: function(input, decimals) {
+      decimals: function (input, decimals) {
         let split = input.toString().split('.');
         if (split[1] != null) split[1] = split[1].slice(0, decimals);
         return parseFloat(split.join('.'));
       },
-      negative: function(input, allow) {
+      negative: function (input, allow) {
         return allow ? input : Math.abs(input);
       }
     };

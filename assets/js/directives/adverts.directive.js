@@ -5,7 +5,7 @@ angular
 
 adverts.$inject = ['Adverts', '$window'];
 
-function adverts(Adverts, $window) {
+function adverts (Adverts, $window) {
   const directive = {
     restrict: 'E',
     replace: 'true',
@@ -15,7 +15,7 @@ function adverts(Adverts, $window) {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     scope.ads = Adverts.ads;
     Adverts.fetchOnce();
 

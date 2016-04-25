@@ -5,7 +5,7 @@ angular
 
 videoContainer.$inject = ['$window', '$timeout', '$sce'];
 
-function videoContainer($window, $timeout, $sce) {
+function videoContainer ($window, $timeout, $sce) {
   const directive = {
     restrict: 'E',
     templateUrl: 'templates/video-container.jade',
@@ -16,20 +16,17 @@ function videoContainer($window, $timeout, $sce) {
 
   return directive;
 
-  function link(scope, elem, attrs) {
-    scope.img = attrs['img']
-    scope.video = attrs['video']
+  function link (scope, elem, attrs) {
+    scope.img = attrs['img'];
+    scope.video = attrs['video'];
     scope.videoElem = elem.find('video')[0];
 
-    scope.toggle = () => { scope.playing = scope.playing ? false : true; }
+    scope.toggle = () => scope.playing = !scope.playing;
+    scope.trust = (src) => $sce.trustAsResourceUrl(src);
 
-    scope.trust = (src) => { return $sce.trustAsResourceUrl(src); }
-
-    scope.$watch('playing', (newVal, oldVal) => {
-      if ( !scope.videoElem.play && !scope.videoElem.pause ) { return }
-
-      if (newVal) { scope.videoElem.play()
-      } else { scope.videoElem.pause() }
-    }, true)
+    scope.$watch('playing', (isPlaying) => {
+      if (!scope.videoElem.play && !scope.videoElem.pause) return;
+      isPlaying ? scope.videoElem.play() : scope.videoElem.pause();
+    }, true);
   }
 }

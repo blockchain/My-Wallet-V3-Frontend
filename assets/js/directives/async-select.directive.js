@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .directive('asyncSelect', asyncSelect);
 
-function asyncSelect($translate, Alerts) {
+function asyncSelect ($translate, Alerts) {
   const directive = {
     restrict: 'E',
     replace: false,
@@ -19,8 +19,7 @@ function asyncSelect($translate, Alerts) {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
-
+  function link (scope, elem, attrs) {
     scope.didSelect = (item) => {
       scope.changing = true;
       scope.onChange(item)
@@ -40,6 +39,5 @@ function asyncSelect($translate, Alerts) {
       }
       return text;
     };
-
   }
 }

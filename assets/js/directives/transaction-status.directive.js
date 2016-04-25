@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .directive('transactionStatus', transactionStatus);
 
-function transactionStatus() {
+function transactionStatus () {
   const directive = {
     restrict: 'E',
     replace: false,
@@ -15,8 +15,7 @@ function transactionStatus() {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
-
+  function link (scope, elem, attrs) {
     scope.$watch('transaction.confirmations', () => {
       if (scope.transaction && scope.transaction.confirmations != null) {
         scope.minutesRemaining = 30 - scope.transaction.confirmations * 10;
@@ -24,6 +23,5 @@ function transactionStatus() {
         scope.frugalWarning = scope.transaction.frugal && scope.transaction.confirmations === 0;
       }
     });
-
   }
 }

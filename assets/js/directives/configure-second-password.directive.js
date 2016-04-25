@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .directive('configureSecondPassword', configureSecondPassword);
 
-configureSecondPassword.$inject = ['$uibModal', 'Wallet']
+configureSecondPassword.$inject = ['$uibModal', 'Wallet'];
 
-function configureSecondPassword($uibModal, Wallet) {
+function configureSecondPassword ($uibModal, Wallet) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -15,7 +15,7 @@ function configureSecondPassword($uibModal, Wallet) {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     scope.settings = Wallet.settings;
 
     scope.removeSecondPassword = () => {

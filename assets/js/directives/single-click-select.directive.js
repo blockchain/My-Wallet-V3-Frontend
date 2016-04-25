@@ -3,19 +3,19 @@ angular
   .module('walletApp')
   .directive('singleClickSelect', singleClickSelect);
 
-function singleClickSelect($window) {
+function singleClickSelect ($window) {
   const directive = {
     restrict: 'A',
     link: link
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     scope.highlighted = false;
     scope.browserCanExecCommand = (
-      (browserDetection().browser === 'chrome'  && browserDetection().version > 42) ||
+      (browserDetection().browser === 'chrome' && browserDetection().version > 42) ||
       (browserDetection().browser === 'firefox' && browserDetection().version > 40) ||
-      (browserDetection().browser === 'ie'      && browserDetection().version > 10)
+      (browserDetection().browser === 'ie' && browserDetection().version > 10)
     );
 
     scope.select = () => {
@@ -31,7 +31,7 @@ function singleClickSelect($window) {
 
       if ($window.getSelection().toString() !== '') {
         scope.highlighted = true;
-        elem.addClass('highlighted')
+        elem.addClass('highlighted');
       }
       if (scope.browserCanExecCommand) {
         $window.document.execCommand('copy');

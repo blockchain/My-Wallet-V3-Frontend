@@ -4,7 +4,7 @@ angular
 
 bcAsyncInput.$inject = ['$timeout', 'Wallet'];
 
-function bcAsyncInput($timeout, Wallet) {
+function bcAsyncInput ($timeout, Wallet) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -33,7 +33,7 @@ function bcAsyncInput($timeout, Wallet) {
   };
   return directive;
 
-  function link(scope, elem, attrs, ctrl, transclude) {
+  function link (scope, elem, attrs, ctrl, transclude) {
     scope.isRequired = attrs.isRequired != null;
     scope.inline = attrs.inline != null;
 
@@ -55,9 +55,7 @@ function bcAsyncInput($timeout, Wallet) {
     scope.edit = () => {
       // finds and focuses on the text input field
       // a brief timeout is necessary before trying to focus
-      $timeout((() => {
-        elem.find('input')[0].focus();
-      }), 50);
+      $timeout(() => { elem.find('input')[0].focus(); }, 50);
       scope.status.edit = 1;
     };
 
@@ -76,8 +74,7 @@ function bcAsyncInput($timeout, Wallet) {
         scope.ngModel = scope.form.newValue;
         if (!attrs.custom) scope.bcAsyncForm.$setPristine();
 
-        scope.$root.$safeApply(scope)
-        Wallet.saveActivity(2)
+        scope.$root.$safeApply(scope);
 
         // Fixes issue: hit enter after changing PBKDF2 iterations
         // when 2nd password is enabled
