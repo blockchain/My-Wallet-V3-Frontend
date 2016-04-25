@@ -50,6 +50,7 @@
     "karma-phantomjs-launcher": "1.0.*",
     "node-env-file": "^0.1.4",
     "phantomjs-prebuilt": "2.1.*",
+    "semistandard": "7.0.*",
     "shelljs": "^0.3.0"
   },
   "scripts": {
