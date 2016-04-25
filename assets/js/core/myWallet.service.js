@@ -2,6 +2,6 @@ angular
   .module('walletApp.core')
   .factory('MyWallet', MyWallet);
 
-function MyWallet() {
+function MyWallet () {
   return Blockchain.MyWallet;
 }

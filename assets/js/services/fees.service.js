@@ -3,14 +3,13 @@ angular
   .module('walletApp')
   .factory('fees', fees);
 
-function fees($uibModal) {
-
+function fees ($uibModal) {
   const service = {
     showFeeWarning: showFeeWarning
   };
   return service;
 
-  function showFeeWarning(currentFee, suggestedFee, maxFee, surge) {
+  function showFeeWarning (currentFee, suggestedFee, maxFee, surge) {
     let modalOptions = {
       templateUrl: 'partials/dynamic-fee.jade',
       windowClass: 'bc-modal medium',

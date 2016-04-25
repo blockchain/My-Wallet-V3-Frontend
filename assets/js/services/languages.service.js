@@ -5,8 +5,7 @@ angular
 
 languages.$inject = [];
 
-function languages() {
-
+function languages () {
   const languageCodes = {
     'de': 'German',
     'hi': 'Hindi',
@@ -38,19 +37,16 @@ function languages() {
   const service = formatLanguages(languageCodes);
   return service;
 
-  //////////////////////////////////////////////////////////////////////////////
-
-  function formatLanguages(langs) {
+  function formatLanguages (langs) {
     let langFormat = code => ({
       code: code,
       name: langs[code]
     });
     let langSort = (l0, l1) => {
-      var name0 = l0.name.toLowerCase()
-        , name1 = l1.name.toLowerCase();
+      var name0 = l0.name.toLowerCase();
+      var name1 = l1.name.toLowerCase();
       return name0 < name1 ? -1 : 1;
     };
     return Object.keys(langs).map(langFormat).sort(langSort);
   }
-
 }
