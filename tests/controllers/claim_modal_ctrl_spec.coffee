@@ -23,7 +23,7 @@ describe "ClaimModalCtrl", ->
         }
       }
 
-      Wallet.payment = MyWalletPayment
+      Wallet.Payment = MyWalletPayment
       Wallet.status.isLoggedIn = true
 
       scope = $rootScope.$new()

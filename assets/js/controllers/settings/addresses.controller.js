@@ -1,19 +1,19 @@
 angular
   .module('walletApp')
-  .controller("SettingsAddressesCtrl", SettingsAddressesCtrl);
+  .controller('SettingsAddressesCtrl', SettingsAddressesCtrl);
 
-function SettingsAddressesCtrl($scope, Wallet, Alerts, addressOrNameMatchFilter, $stateParams, filterFilter, $translate) {
-  $scope.edit = {address: {}};
-  $scope.errors = {label: {}};
+function SettingsAddressesCtrl ($scope, Wallet, Alerts, addressOrNameMatchFilter, $stateParams, filterFilter, $translate) {
+  $scope.edit = { address: {} };
+  $scope.errors = { label: {} };
 
-  $scope.hdAddresses = Wallet.hdAddresses($stateParams.account)
+  $scope.hdAddresses = Wallet.hdAddresses($stateParams.account);
 
   $scope.settings = Wallet.settings;
-  $scope.account = Wallet.accounts()[parseInt($stateParams.account)];
+  $scope.account = Wallet.accounts()[parseInt($stateParams.account, 10)];
 
   $scope.createAddress = () => {
-    Wallet.addAddressForAccount($scope.account, (() => {}), (e) => {
+    Wallet.addAddressForAccount($scope.account, () => {}, (e) => {
       Alerts.displayError('LABEL_ERROR_BIP_44_GAP');
     });
-  }
+  };
 }

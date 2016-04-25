@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('RecoverFundsCtrl', RecoverFundsCtrl);
 
-function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wallet, Alerts) {
+function RecoverFundsCtrl ($scope, $rootScope, $state, $timeout, $translate, Wallet, Alerts) {
   $scope.isValidMnemonic = Wallet.isValidBIP39Mnemonic;
   $scope.currentStep = 1;
   $scope.fields = {
@@ -50,16 +50,15 @@ function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wall
   };
 
   $scope.getMnemonicLength = () => {
-    $scope.isValidMnemonicLength = $scope.fields.mnemonic.split(' ').length === 12
-  }
+    $scope.isValidMnemonicLength = $scope.fields.mnemonic.split(' ').length === 12;
+  };
 
   $scope.nextStep = () => {
     $scope.currentStep++;
-    $scope.fields.confirmation = ""
+    $scope.fields.confirmation = '';
   };
 
   $scope.goBack = () => {
     $scope.currentStep--;
   };
-
 }

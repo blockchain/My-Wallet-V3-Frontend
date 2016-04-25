@@ -1,12 +1,12 @@
 angular
   .module('walletApp')
-  .controller("AppCtrl", AppCtrl);
+  .controller('AppCtrl', AppCtrl);
 
-function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location, $timeout, $interval, $uibModal, $window, $translate, $uibModalStack) {
+function AppCtrl ($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location, $timeout, $interval, $uibModal, $window, $translate, $uibModalStack) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $rootScope.isMock = Wallet.isMock;
-  $rootScope.loginFormUID = $cookies.get("uid"); // Last entered in login form
+  $rootScope.loginFormUID = $cookies.get('uid');
   $scope.goal = Wallet.goal;
   $scope.menu = {
     isCollapsed: false
@@ -42,9 +42,9 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
     Alerts.clear();
     $scope.requestBeacon = false;
     $uibModal.open({
-      templateUrl: "partials/request.jade",
-      windowClass: "bc-modal auto",
-      controller: "RequestCtrl",
+      templateUrl: 'partials/request.jade',
+      windowClass: 'bc-modal auto',
+      controller: 'RequestCtrl',
       resolve: {
         destination: () => null,
         focus: () => false,
@@ -56,15 +56,15 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
   $scope.send = () => {
     Alerts.clear();
     $uibModal.open({
-      templateUrl: "partials/send.jade",
-      windowClass: "bc-modal initial",
-      controller: "SendCtrl",
+      templateUrl: 'partials/send.jade',
+      windowClass: 'bc-modal initial',
+      controller: 'SendCtrl',
       resolve: {
         paymentRequest: () => ({
-          address: "",
-          amount: ""
+          address: '',
+          amount: ''
         })
-      },
+      }
     });
   };
 
@@ -75,9 +75,9 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
   });
 
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) => {
-    let loggedOutStates = ['public', "welcome", 'public.login-no-uid', 'public.login-uid', 'public.reset-two-factor', 'public.recover', 'public.reminder', 'public.signup', 'public.help', 'open', 'wallet.common.verify-email', 'wallet.common.unsubscribe', 'public.authorize-approve', 'public.reset-two-factor-token'];
+    let loggedOutStates = ['public', 'welcome', 'public.login-no-uid', 'public.login-uid', 'public.reset-two-factor', 'public.recover', 'public.reminder', 'public.signup', 'public.help', 'open', 'wallet.common.verify-email', 'wallet.common.unsubscribe', 'public.authorize-approve', 'public.reset-two-factor-token'];
     if (loggedOutStates.every(s => toState.name !== s) && $scope.status.isLoggedIn === false) {
-      $state.go("public.login-no-uid");
+      $state.go('public.login-no-uid');
     }
     $rootScope.outOfApp = toState.name === 'welcome';
     $scope.requestBeacon = false;
@@ -85,13 +85,13 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
     $uibModalStack.dismissAll();
   });
 
-  $scope.$watch("status.isLoggedIn", () => {
+  $scope.$watch('status.isLoggedIn', () => {
     $timeout(() => {
       $scope.checkGoals();
     }, 0);
   });
 
-  $scope.$watchCollection("goal", ()=>  {
+  $scope.$watchCollection('goal', () => {
     $timeout(() => {
       $scope.checkGoals();
     }, 0);
@@ -100,30 +100,30 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
   $scope.checkGoals = () => {
     if ($scope.status.isLoggedIn) {
       if (!((Wallet.settings.currency != null) && (Wallet.settings.btcCurrency != null))) {
-        return $timeout((() => {
+        return $timeout(() => {
           $scope.checkGoals();
-        }), 100);
+        }, 100);
       }
       if (Wallet.goal != null) {
         if (Wallet.goal.send != null) {
           $uibModal.open({
-            templateUrl: "partials/send.jade",
-            controller: "SendCtrl",
+            templateUrl: 'partials/send.jade',
+            controller: 'SendCtrl',
             resolve: {
               paymentRequest: () => Wallet.goal.send
             },
-            windowClass: "bc-modal"
+            windowClass: 'bc-modal'
           });
           Wallet.goal.send = void 0;
         }
         if (Wallet.goal.claim != null) {
           let modalInstance = $uibModal.open({
-            templateUrl: "partials/claim.jade",
-            controller: "ClaimModalCtrl",
+            templateUrl: 'partials/claim.jade',
+            controller: 'ClaimModalCtrl',
             resolve: {
               claim: () => Wallet.goal.claim
             },
-            windowClass: "bc-modal"
+            windowClass: 'bc-modal'
           });
           modalInstance.result.then(() => {
             Wallet.goal.claim = void 0;
@@ -131,7 +131,7 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
         }
         if (Wallet.goal.auth) {
           Alerts.clear();
-          $translate(['AUTHORIZED', 'AUTHORIZED_MESSAGE']).then( translations => {
+          $translate(['AUTHORIZED', 'AUTHORIZED_MESSAGE']).then(translations => {
             $scope.$emit('showNotification', {
               type: 'authorization-verified',
               icon: 'ti-check',
@@ -148,30 +148,30 @@ function AppCtrl($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location
     $scope.requestBeacon = true;
   });
 
-  $scope.$on("requireSecondPassword", (notification, defer, insist) => {
+  $scope.$on('requireSecondPassword', (notification, defer, insist) => {
     const modalInstance = $uibModal.open({
-      templateUrl: "partials/second-password.jade",
-      controller: "SecondPasswordCtrl",
-      backdrop: insist ? "static" : null,
+      templateUrl: 'partials/second-password.jade',
+      controller: 'SecondPasswordCtrl',
+      backdrop: insist ? 'static' : null,
       keyboard: insist,
-      windowClass: "bc-modal",
+      windowClass: 'bc-modal',
       resolve: {
         insist: () => insist,
         defer: () => defer
       }
     });
-    modalInstance.result.then(() => {}, () => { defer.reject();});
+    modalInstance.result.then(() => {}, () => defer.reject());
   });
 
-  $scope.$on("needsUpgradeToHD", notification => {
-    const modalInstance = $uibModal.open({
-      templateUrl: "partials/upgrade.jade",
-      controller: "UpgradeCtrl",
-      backdrop: "static",
-      windowClass: "bc-modal",
+  $scope.$on('needsUpgradeToHD', notification => {
+    $uibModal.open({
+      templateUrl: 'partials/upgrade.jade',
+      controller: 'UpgradeCtrl',
+      backdrop: 'static',
+      windowClass: 'bc-modal',
       keyboard: false
     });
   });
 
-  $scope.back = () => {$window.history.back()};
+  $scope.back = () => $window.history.back();
 }

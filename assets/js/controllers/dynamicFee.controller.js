@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('DynamicFeeController', DynamicFeeController);
 
-function DynamicFeeController($scope, $translate, $uibModalInstance, feeValues) {
+function DynamicFeeController ($scope, $translate, $uibModalInstance, feeValues) {
   angular.extend($scope, feeValues);
 
   $scope.balanceOverflow = $scope.suggestedFee > $scope.maxFee;

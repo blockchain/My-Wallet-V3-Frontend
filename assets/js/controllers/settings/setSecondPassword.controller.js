@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SetSecondPasswordCtrl', SetSecondPasswordCtrl);
 
-function SetSecondPasswordCtrl($scope, $timeout, $uibModalInstance, Wallet) {
+function SetSecondPasswordCtrl ($scope, $timeout, $uibModalInstance, Wallet) {
   $scope.busy = null;
   $scope.fields = {
     password: '',

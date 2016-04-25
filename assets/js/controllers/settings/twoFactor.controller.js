@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller("TwoFactorCtrl", TwoFactorCtrl);
+  .controller('TwoFactorCtrl', TwoFactorCtrl);
 
-function TwoFactorCtrl($scope, Wallet, Alerts, $uibModalInstance, $translate, $timeout) {
+function TwoFactorCtrl ($scope, Wallet, Alerts, $uibModalInstance, $translate, $timeout) {
   $scope.settings = Wallet.settings;
   $scope.user = Wallet.user;
 
@@ -124,7 +124,7 @@ function TwoFactorCtrl($scope, Wallet, Alerts, $uibModalInstance, $translate, $t
 
   $scope.close = () => {
     Alerts.clear();
-    $uibModalInstance.dismiss("");
+    $uibModalInstance.dismiss('');
   };
 
   $scope.$watch('user.isMobileVerified', (newVal, oldVal) => {
@@ -143,5 +143,4 @@ function TwoFactorCtrl($scope, Wallet, Alerts, $uibModalInstance, $translate, $t
       $scope.goToStep('disabled');
     }
   });
-
 }

@@ -1,23 +1,23 @@
 angular
   .module('walletApp')
-  .controller("TransactionsCtrl", TransactionsCtrl);
+  .controller('TransactionsCtrl', TransactionsCtrl);
 
-function TransactionsCtrl($scope, Wallet, MyWallet, $timeout, $stateParams, $state, $rootScope) {
-  $scope.addressBook  = Wallet.addressBook;
-  $scope.status       = Wallet.status;
-  $scope.settings     = Wallet.settings;
-  $scope.totals       = Wallet.totals;
-  $scope.accounts     = Wallet.accounts;
+function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $state, $rootScope) {
+  $scope.addressBook = Wallet.addressBook;
+  $scope.status = Wallet.status;
+  $scope.settings = Wallet.settings;
+  $scope.totals = Wallet.totals;
+  $scope.accounts = Wallet.accounts;
 
-  $scope.getTotal     = Wallet.total;
+  $scope.getTotal = Wallet.total;
 
-  $scope.loading      = false;
+  $scope.loading = false;
   $scope.allTxsLoaded = false;
   $scope.canDisplayDescriptions = false;
-  $scope.txLimit      = 10;
+  $scope.txLimit = 10;
 
-  let accountIndex    = $stateParams.accountIndex;
-  let txList          = MyWallet.wallet.txList;
+  let accountIndex = $stateParams.accountIndex;
+  let txList = MyWallet.wallet.txList;
   $scope.transactions = txList.transactions(accountIndex);
 
   let fetchTxs = () => {
@@ -40,13 +40,13 @@ function TransactionsCtrl($scope, Wallet, MyWallet, $timeout, $stateParams, $sta
   };
 
   $scope.showTransaction = (transaction) => {
-    $state.go("wallet.common.transaction", {
+    $state.go('wallet.common.transaction', {
       accountIndex: $stateParams.accountIndex,
       hash: transaction.hash
     });
   };
 
-  $scope.$watchCollection("accounts()", newValue => {
+  $scope.$watchCollection('accounts()', newValue => {
     $scope.canDisplayDescriptions = $scope.accounts().length > 0;
   });
 
@@ -54,7 +54,7 @@ function TransactionsCtrl($scope, Wallet, MyWallet, $timeout, $stateParams, $sta
     let newTxs = txList.transactions(accountIndex);
     if ($scope.transactions.length > newTxs.length) $scope.allTxsLoaded = false;
     $scope.transactions = newTxs;
-    $rootScope.$safeApply()
+    $rootScope.$safeApply();
   };
 
   let unsub = txList.subscribe(setTxs);
@@ -98,5 +98,4 @@ function TransactionsCtrl($scope, Wallet, MyWallet, $timeout, $stateParams, $sta
     }
     return false;
   };
-
 }

@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller("RevealXpubCtrl", RevealXpubCtrl);
+  .controller('RevealXpubCtrl', RevealXpubCtrl);
 
-function RevealXpubCtrl($scope, Wallet, $uibModalInstance, account) {
+function RevealXpubCtrl ($scope, Wallet, $uibModalInstance, account) {
   $scope.accounts = Wallet.accounts;
   $scope.xpub = account.extendedPublicKey;
   $scope.showXpub = false;
@@ -12,7 +12,6 @@ function RevealXpubCtrl($scope, Wallet, $uibModalInstance, account) {
   };
 
   $scope.close = () => {
-    $uibModalInstance.dismiss("");
+    $uibModalInstance.dismiss('');
   };
-
 }

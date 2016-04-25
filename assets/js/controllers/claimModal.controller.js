@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller("ClaimModalCtrl", ClaimModalCtrl);
+  .controller('ClaimModalCtrl', ClaimModalCtrl);
 
-function ClaimModalCtrl($scope, Wallet, $translate, $uibModalInstance, claim, $rootScope) {
+function ClaimModalCtrl ($scope, Wallet, $translate, $uibModalInstance, claim, $rootScope) {
   $scope.accounts = Wallet.accounts;
   $scope.fields = {
     to: null
@@ -10,7 +10,7 @@ function ClaimModalCtrl($scope, Wallet, $translate, $uibModalInstance, claim, $r
   $scope.balance = null;
   $scope.redeeming = false;
 
-  $scope.payment = new Wallet.payment()
+  $scope.payment = new Wallet.Payment();
 
   claim.balance.then(balance => {
     $scope.balance = balance;
@@ -19,13 +19,13 @@ function ClaimModalCtrl($scope, Wallet, $translate, $uibModalInstance, claim, $r
   $scope.redeem = () => {
     const success = () => {
       $scope.redeeming = false;
-      $uibModalInstance.dismiss("");
+      $uibModalInstance.dismiss('');
       $rootScope.scheduleRefresh();
     };
     const error = (e) => {
       console.log(e);
       $scope.redeeming = false;
-      $scope.$digest()
+      $scope.$digest();
     };
     $scope.redeeming = true;
 
@@ -44,8 +44,7 @@ function ClaimModalCtrl($scope, Wallet, $translate, $uibModalInstance, claim, $r
       .then(success).catch(error);
   };
 
-  $scope.$watchCollection("accounts()", () => {
+  $scope.$watchCollection('accounts()', () => {
     $scope.fields.to = Wallet.accounts()[Wallet.getDefaultAccountIndex()];
   });
-
 }

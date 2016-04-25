@@ -94,7 +94,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     );
   });
 
-  wallet.payment = MyWalletPayment;
+  wallet.Payment = MyWalletPayment;
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
   MyBlockchainApi.API_CODE = wallet.api_code;

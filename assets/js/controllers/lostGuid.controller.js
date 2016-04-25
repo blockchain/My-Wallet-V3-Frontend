@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('LostGuidCtrl', LostGuidCtrl);
 
-function LostGuidCtrl($scope, $rootScope, $http, $translate, WalletNetwork, Alerts) {
+function LostGuidCtrl ($scope, $rootScope, $http, $translate, WalletNetwork, Alerts) {
   $scope.currentStep = 1;
   $scope.fields = {
     email: '',
@@ -22,8 +22,8 @@ function LostGuidCtrl($scope, $rootScope, $http, $translate, WalletNetwork, Aler
       $scope.currentStep = 2;
       Alerts.displaySuccess(message);
       $rootScope.$safeApply();
-
     };
+
     let error = (error) => {
       $scope.working = false;
 

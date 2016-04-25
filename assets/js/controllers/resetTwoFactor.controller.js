@@ -2,8 +2,7 @@ angular
   .module('walletApp')
   .controller('ResetTwoFactorCtrl', ResetTwoFactorCtrl);
 
-function ResetTwoFactorCtrl($scope, $rootScope, $http, $translate, WalletNetwork, Alerts) {
-
+function ResetTwoFactorCtrl ($scope, $rootScope, $http, $translate, WalletNetwork, Alerts) {
   $scope.currentStep = 1;
   $scope.fields = {
     uid: $rootScope.loginFormUID,
@@ -21,10 +20,9 @@ function ResetTwoFactorCtrl($scope, $rootScope, $http, $translate, WalletNetwork
   };
 
   $scope.resetTwoFactor = () => {
-
     $scope.working = true;
     let success = (message) => {
-      Alerts.clear()
+      Alerts.clear();
       Alerts.displaySuccess(message);
 
       $scope.working = false;

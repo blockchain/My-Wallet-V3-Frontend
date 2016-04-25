@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller("LoginCtrl", LoginCtrl);
+  .controller('LoginCtrl', LoginCtrl);
 
-function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNetwork, Alerts, $cookies, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter) {
+function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNetwork, Alerts, $cookies, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.disableLogin = null;
@@ -14,7 +14,7 @@ function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNet
 
   $scope.uid = $stateParams.uid || Wallet.guid || $rootScope.loginFormUID;
 
-  $scope.uidAvailable = !!$scope.uid
+  $scope.uidAvailable = !!$scope.uid;
 
   $scope.user = Wallet.user;
 
@@ -24,23 +24,23 @@ function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNet
 
   const browsers = {
     'ie': {
-      browser: "Internet Explorer",
+      browser: 'Internet Explorer',
       requiredVersion: 11
     },
     'chrome': {
-      browser: "Chrome",
+      browser: 'Chrome',
       requiredVersion: 11
     },
     'firefox': {
-      browser: "Firefox",
+      browser: 'Firefox',
       requiredVersion: 21
     },
     'safari': {
-      browser: "Safari",
+      browser: 'Safari',
       requiredVersion: 6
     },
     'opera': {
-      browser: "Opera",
+      browser: 'Opera',
       requiredVersion: 15
     }
   };
@@ -51,7 +51,7 @@ function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNet
       browser.userVersion = browserDetection().version;
       if (browser.userVersion < browser.requiredVersion) {
         $scope.disableLogin = true;
-        $translate("MINIMUM_BROWSER", browser).then(Alerts.displayError);
+        $translate('MINIMUM_BROWSER', browser).then(Alerts.displayError);
       } else if (code === 'ie') {
         Alerts.displayWarning('WARN_AGAINST_IE');
       }
@@ -62,11 +62,11 @@ function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNet
 
   $scope.displayBrowserWarning(browserDetection().browser);
 
-  $scope.twoFactorCode = "";
+  $scope.twoFactorCode = '';
   $scope.busy = false;
   $scope.isValid = false;
-  if (!!$cookies.get("password")) {
-    $scope.password = $cookies.get("password");
+  if ($cookies.get('password')) {
+    $scope.password = $cookies.get('password');
   }
   $scope.login = () => {
     if ($scope.busy) return;
@@ -74,11 +74,11 @@ function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNet
     Alerts.clear();
     const error = (field, message) => {
       $scope.busy = false;
-      if (field === "uid") {
+      if (field === 'uid') {
         $scope.errors.uid = 'UNKNOWN_IDENTIFIER';
-      } else if (field === "password") {
+      } else if (field === 'password') {
         $scope.errors.password = message;
-      } else if (field === "twoFactor") {
+      } else if (field === 'twoFactor') {
         $scope.errors.twoFactor = message;
       }
     };
@@ -94,15 +94,15 @@ function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNet
       }
     };
     if ($scope.settings.needs2FA) {
-      Wallet.login($scope.uid, $scope.password, $scope.twoFactorCode, (() => {}), success, error);
+      Wallet.login($scope.uid, $scope.password, $scope.twoFactorCode, () => {}, success, error);
     } else {
       Wallet.login($scope.uid, $scope.password, null, needs2FA, success, error);
     }
-    if ($scope.uid != null && $scope.uid !== "") {
-      $cookies.put("uid", $scope.uid);
+    if ($scope.uid != null && $scope.uid !== '') {
+      $cookies.put('uid', $scope.uid);
     }
-    if ($scope.autoReload && $scope.password != null && $scope.password !== "") {
-      $cookies.put("password", $scope.password);
+    if ($scope.autoReload && $scope.password != null && $scope.password !== '') {
+      $cookies.put('password', $scope.password);
     }
   };
 
@@ -128,7 +128,7 @@ function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNet
   };
 
   $scope.register = () => {
-    $state.go("public.signup");
+    $state.go('public.signup');
   };
 
   $scope.numberOfActiveAccounts = () => {
@@ -136,26 +136,26 @@ function LoginCtrl($scope, $rootScope, $location, $log, $http, Wallet, WalletNet
       archived: false
     }).length;
   };
-  $scope.$watch("status.isLoggedIn", (newValue) => {
+  $scope.$watch('status.isLoggedIn', (newValue) => {
     if (newValue) {
       $scope.busy = false;
-      $state.go("wallet.common.home");
+      $state.go('wallet.common.home');
     }
   });
 
-  $scope.$watch("uid + password + twoFactor", () => {
+  $scope.$watch('uid + password + twoFactor', () => {
     $rootScope.loginFormUID = $scope.uid;
     let isValid = null;
     $scope.errors.uid = null;
     $scope.errors.password = null;
     $scope.errors.twoFactor = null;
-    if ($scope.uid == null || $scope.uid === "") {
+    if ($scope.uid == null || $scope.uid === '') {
       isValid = false;
     }
-    if ($scope.password == null || $scope.password === "") {
+    if ($scope.password == null || $scope.password === '') {
       isValid = false;
     }
-    if ($scope.settings.needs2FA && $scope.twoFactorCode === "") {
+    if ($scope.settings.needs2FA && $scope.twoFactorCode === '') {
       isValid = false;
     }
     if (isValid == null) {

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('AddressImportCtrl', AddressImportCtrl);
 
-function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $translate, $state, $timeout, address, $rootScope) {
+function AddressImportCtrl ($scope, $log, Wallet, Alerts, $uibModalInstance, $translate, $state, $timeout, address, $rootScope) {
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
   $scope.alerts = [];
@@ -74,7 +74,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
     };
 
     $timeout(() => {
-      if(!$scope.BIP38) {
+      if (!$scope.BIP38) {
         Wallet.addAddressOrPrivateKey(
           addressOrPrivateKey, needsBipPassphrase, success, error, cancel
         );
@@ -94,7 +94,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
       $state.go('wallet.common.transactions', {
         accountIndex: $scope.fields.account.index
       });
-      $translate(['SUCCESS', 'BITCOIN_SENT']).then(function(translations) {
+      $translate(['SUCCESS', 'BITCOIN_SENT']).then(translations => {
         $scope.$emit('showNotification', {
           type: 'sent-bitcoin',
           icon: 'bc-icon-send',
@@ -115,7 +115,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
       $scope.$root.$safeApply($scope);
     };
 
-    let payment = new Wallet.payment();
+    let payment = new Wallet.Payment();
     payment
       .from($scope.address.address)
       .to($scope.fields.account.index)
@@ -135,7 +135,7 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
     $scope.step = 3;
   };
 
-  $scope.onError = (error) => {
+  $scope.onError = () => {
     Alerts.displayWarning('CAMERA_PERMISSION_DENIED', false, $scope.alerts);
   };
 
@@ -161,11 +161,10 @@ function AddressImportCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tra
   };
 
   $scope.close = () => {
-    if ($scope.step == 2 && $scope.address.balance > 0 && !$scope.address.isWatchOnly) {
+    if ($scope.step === 2 && $scope.address.balance > 0 && !$scope.address.isWatchOnly) {
       Alerts.confirm('CONFIRM_NOT_SWEEP', {}, '', 'DONT_SWEEP').then($uibModalInstance.dismiss);
     } else {
       $uibModalInstance.dismiss('');
     }
   };
-
 }
