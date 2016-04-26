@@ -39,12 +39,7 @@ app.use(function (req, res, next) {
     ]).join('; ');
     res.setHeader('content-security-policy', cspHeader);
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
-
-    if (dist) {
-      res.render('index.html');
-    } else {
-      res.render('app/index.jade');
-    }
+    res.render(dist ? 'index.html' : 'build/index.jade');
     return;
   }
   if (dist) {

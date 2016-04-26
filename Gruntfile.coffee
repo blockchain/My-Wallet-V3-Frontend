@@ -98,6 +98,16 @@ module.exports = (grunt) ->
           ext: '.css'
         }]
 
+    includeSource:
+      options:
+        templates:
+          jade:
+            js: 'script(src="{filePath}" type="text/javascript")'
+            css: 'link(href="{filePath}" rel="stylesheet" type="text/css")'
+      myTarget:
+        files:
+          'build/index.jade': 'app/index.jade'
+
     concat_css: {
       app: {
         src: [
@@ -213,7 +223,7 @@ module.exports = (grunt) ->
 
       es6:
         files: ['assets/js/controllers/**/*.js','assets/js/services/**/*.js','assets/js/directives/**/*.js','assets/js/core/**/*.js','assets/js/*.js']
-        tasks: ['babel:build']
+        tasks: ['babel:build', 'includeSource']
         options:
           spawn: false
 
@@ -413,6 +423,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-babel')
   grunt.loadNpmTasks('grunt-karma-coveralls')
   grunt.loadNpmTasks('grunt-text-replace')
+  grunt.loadNpmTasks('grunt-include-source')
 
   grunt.registerTask "build", [
     "html2js"
@@ -422,6 +433,7 @@ module.exports = (grunt) ->
     "copy:css"
     "copy:fonts"
     "autoprefixer"
+    "includeSource"
     "copy:images"
     "merge-json"
   ]
