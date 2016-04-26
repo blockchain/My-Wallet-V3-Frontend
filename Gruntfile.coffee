@@ -358,7 +358,7 @@ module.exports = (grunt) ->
         replacements: [{
           from: 'customRootURL = $rootScope.rootURL'
           to: () =>
-            'customRootURL = $rootScope.rootURL = "https://' + @rootUrl + '/"'
+            "customRootURL = $rootScope.rootURL = 'https://" + @rootUrl + "/'"
         }]
       web_socket_url:
         src: ['build/js/services/wallet.service.js'],
@@ -366,7 +366,7 @@ module.exports = (grunt) ->
         replacements: [{
           from: 'customWebSocketURL = $rootScope.webSocketURL'
           to: () =>
-            'customWebSocketURL = "wss://' + @rootUrl + '/inv"'
+            "customWebSocketURL = 'wss://" + @rootUrl + "/inv'"
         }]
       api_domain:
         src: ['build/js/services/wallet.service.js'],
@@ -374,7 +374,7 @@ module.exports = (grunt) ->
         replacements: [{
           from: 'customApiDomain = $rootScope.apiDomain'
           to: () =>
-            'customApiDomain = "https://' + @apiDomain + '/"'
+            "customApiDomain = 'https://" + @apiDomain + "/'"
         }]
       version_frontend:
         src: ['build/js/services/wallet.service.js'],
@@ -382,7 +382,7 @@ module.exports = (grunt) ->
         replacements: [{
           from: 'versionFrontend = null'
           to: () =>
-            'versionFrontend = "' + @versionFrontend + '"'
+            "versionFrontend = '" + @versionFrontend + "'"
         }]
 
       version_my_wallet:
@@ -392,7 +392,7 @@ module.exports = (grunt) ->
           from: 'versionMyWallet = null'
           to: () =>
             version = exec('./my_wallet_bower_version.rb').output
-            'versionMyWallet = "' + version.replace("\n", "") + '"'
+            "versionMyWallet = '" + version.replace("\n", "") + "'"
         }]
 
   grunt.loadNpmTasks "grunt-contrib-uglify"
