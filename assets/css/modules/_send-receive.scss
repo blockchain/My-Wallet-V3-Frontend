@@ -57,6 +57,23 @@
     }
   }
 
+  // when an address is too long
+  .ui-select-choices-row-inner {
+    > span {
+      > div {
+        overflow: hidden;
+        > span:first-child {
+          float: left;
+          overflow: auto;
+          max-width: 220px;
+          margin-bottom: -30px;
+          padding-bottom: 30px;
+          display: inline-block;
+        }
+      }
+    }
+  }
+
   & + .modal-footer {
     clear: left;
   }
