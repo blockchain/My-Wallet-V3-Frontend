@@ -12,7 +12,7 @@
     .navbar-collapse.collapse(ng-class="{'in bg-blue' : !navCollapsed}", ng-click="navCollapsed=true")
       ul.nav.navbar-nav.navbar-right(ng-show="status.isLoggedIn")
         li.item(ng-show="settings.btcCurrency")
-          a.flex-important.flex-column(ng-click="openBCmarkets()")
+          a.flex-important.flex-column(ng-click="openBCmarkets()" href="")
             span
               | 1 {{ settings.btcCurrency.code }} =&nbsp;
               fiat(btc="settings.btcCurrency.conversion")
@@ -42,8 +42,8 @@
         li.item.visible-xs
           a(href="https://markets.blockchain.info/", translate="MARKETS" target="_blank")
         li.item
-          a(ng-click="refresh()" ng-class="{'rotating': refreshing}").refresh
-            img(src="img/refresh.svg")
+          a(ng-click="refresh()" ng-class="{'rotating': refreshing}" href="").refresh
+            img(src="img/refresh.svg" alt="Refresh Button")
         li.item
-          a(ng-click="logout()", translate="SIGNOUT")
+          a(ng-click="logout()", translate="SIGNOUT" href="")
     // /.nav-collapse

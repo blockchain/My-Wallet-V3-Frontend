@@ -7,9 +7,6 @@
     border: 1px solid $eee;
     border-radius: 5px;
     min-height: 34px;
-    &:focus {
-      outline: none;
-    }
   }
 }
 
@@ -54,7 +51,6 @@
       input {
         width: 100%;
         border: 0px;
-        outline: 0px;
         padding: 0px;
         height: auto;
         font-size: 12pt;
@@ -71,9 +67,6 @@
           width: 50%;
         }
       }
-    }
-    button.button-muted {
-      outline: 0px !important;
     }
   }
 }

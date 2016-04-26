@@ -27,44 +27,33 @@ $select-fg: #686868;
 
 .ui-select-container {
   .ui-select-match {
-    &:focus {
-      outline: none;
-    }
     &.btn-default-focus {
-      box-shadow: none;
+      -webkit-box-shadow: 0px 2px 0px 0px $blue !important;
+      -moz-box-shadow: 0px 2px 0px 0px $blue !important;
+      box-shadow: 0px 2px 0px 0px $blue !important;
     }
     > span {
-      border: 1px solid $eee !important;
-
-      box-shadow: none;
       padding-bottom: 0;
       color: $black !important;
       border-radius: 0px !important;
-    }
-    .ui-select-container .ui-select-toggle {
-    height: 30px;
+      border: 1px solid $eee !important;
     }
   }
 
   .btn-default:hover, .btn-default:focus, .btn-default.focus, .btn-default:active, .btn-default.active, .open > .btn-default.dropdown-toggle {
     color: darken($black, 5%);
-    background-color: transparent;
     border-color: none;
   }
   &.ui-select-bootstrap.dropdown.open {
     input {
       border-radius: 0;
-      background: $select-bg;
-      color: $select-fg;
       border: 1px solid $eee;
-      box-shadow: none;
     }
     .caret {
       color: $select-fg;
     }
   }
   .ui-select-choices-group-label.dropdown-header { //idk what you want to call these colors.
-    color: $select-fg;
     padding: .4em 1.25em;
     background: #F4F4F4;
     text-shadow: 0px 1px 0px #FFFFFF;
@@ -73,30 +62,24 @@ $select-fg: #686868;
     border-bottom: 1px solid #E4E4E4;
     border-top: 1px solid #FFFFFF;
   }
-  .form-control:focus {
-    border-color: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-  }
 }
 
 .ui-select-bootstrap > .ui-select-choices {
   border-radius: 0;
-  background: $select-bg;
   border: 1px solid $eee; //you'll want to add this color in your sassy way
-  -webkit-box-shadow: 0px 5px 10px -6px black;
-  box-shadow: 0px 5px 10px -6px black;
 }
 
 .ui-select-bootstrap .ui-select-choices-row>a {
-  color: $select-fg;
   font-weight: 300;
   padding: 3px 12px;
 }
 
 .ui-select-bootstrap .ui-select-choices-row.active>a {
-  background-color: $select-bg;
   color: $select-fg;
+  background-color: #EEF4FA;
+  -webkit-box-shadow: 0px 2px 0px 0px $blue !important;
+  -moz-box-shadow: 0px 2px 0px 0px $blue !important;
+  box-shadow: 0px 2px 0px 0px $blue !important;
 }
 
 .ui-select-bootstrap .ui-select-choices-row>a:hover, .ui-select-bootstrap .ui-select-choices-row>a:focus {
@@ -107,15 +90,7 @@ $select-fg: #686868;
 
 //Too many effing hover states.
 .ui-select-container .btn-default:hover, .ui-select-container .btn-default:focus, .ui-select-container .btn-default.focus, .ui-select-container .btn-default:active, .ui-select-container .btn-default.active, .ui-select-container .open > .btn-default.dropdown-toggle {
-  background-color: white;
-}
-
-//Get rid out outlines
-.dropdown {
-  outline: none;
-  &:focus {
-    outline: none;
-  }
+  // background-color: white;
 }
 
 //Give toggle min height
@@ -126,8 +101,6 @@ $select-fg: #686868;
 //form errors in modals
 .has-error .form-control, .has-error .form-contorl:focus {
   border-color: #a94442 !important;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
 }
 
 //override pre from bootstrap

@@ -14,7 +14,7 @@
             span
               fiat-or-btc(btc="total()")    
         li(ng-repeat="account in accounts()" ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''" ui-sref="wallet.common.transactions({accountIndex: account.index.toString()})")
-          a.flex-between.pas(ng-if="!account.archived")
+          a.flex-between.pas(ng-if="!account.archived" href="")
             span.prs {{::account.label}}
             span
               fiat-or-btc(btc="account.balance")
@@ -55,7 +55,7 @@
           a.pas(ui-sref="wallet.common.settings.accounts_index")
             span(translate="MENU_ACCOUNTS_AND_ADDRESSES")
     li.header.mbm
-      a(ng-click="supportModal()")
+      a(ng-click="supportModal()" href="")
         i.ti-headphone
         span(translate="CONTACT_SUPPORT")
     li.header.mbm(ui-sref-active="current", ng-click="hideMenu()")
@@ -69,7 +69,8 @@
     li.terms-policy
       ul.flex-center.aside.em-300.type-sm
         li.pointer.mrm
-          a.text-color(href="https://blockchain.info/Resources/TermsofServicePolicy.pdf", translate="TOS" target="_blank")
+          a.text-color(href="https://blockchain.info/Resources/TermsofServicePolicy.pdf", translate="TOS" target="_blank" tabindex="-1")
         li.mrm.type-xs
-          i.ti-control-record
-        li.pointer(ng-click="privacyPolicy()", translate="PRIVACY")
+          i.ti-control-record(tabindex="-1")
+        li.pointer
+          a.text-color(ng-click="privacyPolicy()", translate="PRIVACY" href="" tabindex="-1")

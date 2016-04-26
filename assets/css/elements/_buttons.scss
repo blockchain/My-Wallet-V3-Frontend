@@ -15,10 +15,6 @@ button[disabled] {
   cursor: pointer;
   text-decoration: none;
   text-transform: capitalize;
-  &:focus {
-    outline: none;
-    text-decoration: none;
-  }
 }
 
 @mixin button($name, $background:white, $color:white, $max-width:none) {

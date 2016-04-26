@@ -103,15 +103,14 @@
       .flex-row.flex-justify.form-group.note.mvl(ng-class="{'has-error': noteForm.note.$error.maxlength && noteForm.note.$touched}")
         label.mbn
           span(translate="DESCRIPTION:")
-          helper-button(content="SEND_BITOIN_STEP2B")
         textarea.pas(rows="4" ng-model="transaction.note" name="note" ng-maxlength="512" placeholder="{{'NOTE_PLACEHOLDER' | translate}}")
+        helper-button(content="SEND_BITOIN_STEP2B")
         span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="noteForm.note.$error.maxlength && noteForm.note.$touched")
       //- Fee
       .flex-row.flex-center.flex-justify.form-group.bc-modal-fade.mtm.fee(ng-class="{'has-error': transaction.blockIdx > 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}" ng-show="advanced")
         label.mbn
           span(translate="TX_FEE")
           |:
-          helper-button(content="TX_FEE_HELP")
         .miners-fee-selection
           .fee-custom
             .flex-1
@@ -128,6 +127,7 @@
                   required
                   transform-currency="settings.btcCurrency"
                   placeholder="Enter your fee here")
+        helper-button(content="TX_FEE_HELP")
       span.help-block.has-error(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$dirty && advanced")
       span.help-block.friendly(ng-show="!sendForm.$invalid && amountsAreValid() && advanced")
         span(ng-show="transaction.blockIdx <= 6 && transaction.blockIdx >= 1")
@@ -169,17 +169,17 @@
 
 .modal-footer.flex-between.flex-center.pal
   .flex-center
-    a.dark-grey(ng-hide="advanced || confirmationStep", ng-click="advancedSend()", translate="ADVANCED_SEND")
-    a.dark-grey(ng-show="advanced && !confirmationStep", ng-click="regularSend()", translate="REGULAR_SEND")
+    button.button-muted.dark-grey(ng-hide="advanced || confirmationStep", ng-click="advancedSend()", translate="ADVANCED_SEND" tabindex="1")
+    button.button-muted.dark-grey(ng-show="advanced && !confirmationStep", ng-click="regularSend()", translate="REGULAR_SEND" tabindex="1")
   .flex-center.flex-end.send-actions
     button.button-muted.mrm(
-      ng-click="close()" translate="CANCEL" ng-hide="confirmationStep")
+      ng-click="close()" translate="CANCEL" ng-hide="confirmationStep" tabindex="1")
 
     button.button-muted.mrm(
-      ng-click="backToForm()" translate="BACK" ng-show="confirmationStep")
+      ng-click="backToForm()" translate="BACK" ng-show="confirmationStep" tabindex="1")
 
     button.button-muted.bc-modal-fade.mrm(
-      ng-show="advanced && !confirmationStep" translate="RESET_FORM" ng-click="resetSendForm()")
+      ng-show="advanced && !confirmationStep" translate="RESET_FORM" ng-click="resetSendForm()" tabindex="1")
 
     button.button-primary(
       ladda-translate="NEXT_STEP"
@@ -194,6 +194,7 @@
       ladda-translate="SEND"
       ui-ladda="sending"
       ng-click="send()"
+      tabindex="1"
       ng-disabled="noteForm.$invalid"
       data-style="expand-left"
       ng-show="confirmationStep")
