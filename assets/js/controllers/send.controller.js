@@ -250,6 +250,7 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     $scope.setPaymentFrom();
   };
 
+  let lastOrigin;
   $scope.setPaymentFrom = () => {
     let tx = $scope.transaction;
     if (!tx.from) return;
@@ -258,6 +259,8 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
       ? (Wallet.isValidPrivateKey(tx.priv) ? tx.priv : tx.from.address)
       : (tx.from.index == null ? tx.from.address : tx.from.index);
     let fee = $scope.advanced ? tx.fee : undefined;
+    if (origin === lastOrigin) return;
+    lastOrigin = origin;
     $scope.payment.from(origin, fee);
   };
 
