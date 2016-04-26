@@ -75,4 +75,4 @@
 
   button.button-primary(ng-click="goToShow()",translate="NEXT_STEP", ng-show="step==0")
   button.button-primary(ng-click="goToVerify()",translate="FINAL_STEP", ng-show="step==1", ng-disabled="!lastWordGroup")
-  button.button-primary(ng-click="verify()",translate="FINISH", ng-show="step==2", ng-disabled="hasEmptyWords()")
+  button.button-success(ng-click="verify()",translate="FINISH", ng-show="step==2", ng-disabled="hasEmptyWords()")

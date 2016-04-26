@@ -22,7 +22,7 @@
       min-width: 80px;
     }
     > div, textarea, .bitcoin-address {
-      @extend .mll;
+      @extend .mlm;
       @media (min-width: 769px) {
         max-width: 420px;
         min-width: 420px;
@@ -78,7 +78,7 @@
 
   .form-group {
     > label {
-      min-width: 35px;
+      min-width: 75px;
     }
     &.note {
       button {
@@ -160,9 +160,11 @@
       .flex-row {
         > span.account {
           text-align: left;
-          max-width: 200px;
-          overflow: hidden;
-          text-overflow: ellipsis;
+          @media (max-width: 768px) {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
           &.aaa {
             color: $aaa !important;
           }

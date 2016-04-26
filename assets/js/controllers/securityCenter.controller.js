@@ -21,20 +21,6 @@ function SettingsSecurityCenterCtrl ($scope, Wallet, SecurityCenter, filterFilte
 
   $scope.greaterThan = (prop, val) => item => item[prop] > val;
 
-  $scope.transfer = address => {
-    $uibModal.open({
-      templateUrl: 'partials/send.jade',
-      controller: 'SendCtrl',
-      resolve: {
-        paymentRequest: () => ({
-          fromAddress: address,
-          amount: 0,
-          toAccount: Wallet.accounts()[Wallet.getDefaultAccountIndex()]
-        })
-      }
-    });
-  };
-
   $scope.toggle = action => {
     if ($scope.display.action === action) {
       $scope.display.action = null;
@@ -92,8 +78,8 @@ function SettingsSecurityCenterCtrl ($scope, Wallet, SecurityCenter, filterFilte
   $scope.changeTwoFactor = () => {
     $uibModal.open({
       templateUrl: 'partials/settings/two-factor.jade',
-      controller: 'TwoFactorCtrl',
-      windowClass: 'bc-modal'
+      windowClass: 'bc-modal initial',
+      controller: 'TwoFactorCtrl'
     });
   };
 

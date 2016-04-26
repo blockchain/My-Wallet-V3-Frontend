@@ -9,5 +9,5 @@ span.note.em-300
     textarea.textarea.mvm(ng-model="transaction.draftNote" maxlength="255")
     .flex-center
       button.button-muted(ng-click="cancelEditNote()", translate="CANCEL_EDIT_NOTE")
-      button.button-primary.button-sm(ng-click="saveNote()", translate="SAVE_NOTE", ng-hide="transaction.note")
-      button.button-primary.button-sm(ng-click="saveNote()", translate="UPDATE_NOTE", ng-show="transaction.note")
+      button.button-success.button-sm(ng-click="saveNote()", translate="SAVE_NOTE", ng-hide="transaction.note")
+      button.button-success.button-sm(ng-click="saveNote()", translate="UPDATE_NOTE", ng-show="transaction.note")

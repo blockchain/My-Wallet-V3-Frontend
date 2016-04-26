@@ -183,7 +183,9 @@
   .modal-content { background: $light-blue; }
   .modal-dialog {
     width: 55vw;
-    margin: 30px auto !important;
+    @media (max-width: 768px) {
+      margin: 30px auto !important;
+    }
   }
   &.initial { // initial bootstrap width
     @media (min-width: 768px) {

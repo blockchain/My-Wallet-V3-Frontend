@@ -13,7 +13,7 @@ div
         input.form-control(transform-currency="transform" is-valid="validate()" is-not-equal="{{ ngModel }}" ng-required="isRequired" name="input" type="number" ng-model="form.newValue" ng-focus="focus()" placeholder="({{transform.code}})" ng-change="onChange()")
       span.help-block {{ errorMessage }}
       span(ng-hide="inline && !status.edit")
-        button(
+        button.button-success(
           type="submit" 
           ng-disabled="bcAsyncForm.$invalid || bcAsyncForm.$pristine" 
           ui-ladda="status.saving" 

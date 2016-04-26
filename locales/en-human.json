@@ -168,6 +168,7 @@
   "TWO_STEP_VERIFICATION" : "2-step Verification",
   "TWO_STEP_EXPLAIN" : "2-step Verification helps prevent unauthorized access to your wallet by requiring a one-time password after every login attempt. Enabling this option helps keep unauthorized users from being able to access your wallet.",
   "ENABLE_TWO_STEP" : "Enable Two Step",
+  "DISABLE_TWO_STEP" : "Disable Two Step",
   "2FA_YUBI" : "Yubikey",
   "2FA_SMS" : "SMS",
   "2FA_GOOGLE_AUTH" : "Google Authenticator",
@@ -660,5 +661,6 @@
   "QR_HELPER": "Share this QR code with your sender.",
   "CUSTOMIZE_HELPER": "Specify an amount and a description for this transaction.",
   "SAVE_HELPER": "You’ll find this in Settings -> Addresses -> {{ label }} -> Manage Addresses.",
-  "THANKS_FOR_ACCEPTING": "Thanks for accepting bitcoin!"
+  "THANKS_FOR_ACCEPTING": "Thanks for accepting bitcoin!",
+  "NOTE_PLACEHOLDER": "Money for rent 🏡"
 }

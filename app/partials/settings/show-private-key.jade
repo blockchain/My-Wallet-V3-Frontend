@@ -23,7 +23,7 @@
             |:
           .flex-2
             ui-select(ng-model="$parent.format")
-              ui-select-match
+              ui-select-match(placeholder="{{'SEARCH' | translate}}...")
                 span {{ $select.selected }}
               ui-select-choices(repeat="fmt in formats")
                 span {{ fmt }}

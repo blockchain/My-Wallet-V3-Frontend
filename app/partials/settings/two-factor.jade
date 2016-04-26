@@ -1,16 +1,14 @@
 .modal-header
   .flex-center
     img.mrm.two-fa-image(src="img/2FA.png")
-    h3.mvn(translate="ENABLE_TWO_STEP")
+    h3.mvn(translate="ENABLE_TWO_STEP" ng-hide="isStep('disable')")
+    h3.mvn(translate="DISABLE_TWO_STEP" ng-show="isStep('disable')")
     helper-button(content="TWO_STEP_EXPLAIN")
 .modal-body.two-factor-modal
   .alert-in-app
     alerts(context="alerts")
   div(ng-show="isStep('disable')")
     h5(translate="CONFIRM_DISABLE_2FA")
-    button.button-danger(translate="DISABLE" ng-click="disableTwoFactor()")
-  div(ng-show="isStep('disabled')")
-    h4(translate="2FA_DISABLED")
   div(ng-show="isStep('enable')")
     .flex.flex-align-end.row.pal
       .flex-column.col-xs-6.flex-center.border-right(ng-click="authWithPhone()")
@@ -20,7 +18,7 @@
         i.ti-lock.pointer
         a(translate="USE_AUTH_YUBIKEY")
   .pal(ng-show="isStep('configure_mobile')")
-    configure-mobile-number(on-success="mobileNumber.step = 2" on-cancel="goToStep('enable')" ng-show="mobileNumber.step == 1" button-lg)
+    configure-mobile-number(on-success="mobileNumber.step = 2" on-cancel="goToStep('enable')" ng-show="mobileNumber.step == 1")
     verify-mobile-number(on-success="mobileNumber.step = 0" ng-show="mobileNumber.step == 2")
   .row.clearfix.pal(ng-show="isStep('pair')")
     .col-xs-6.flex-justify.flex
@@ -56,3 +54,4 @@
   button.button-muted(ng-click="mobileNumber.step = 1; goToStep('configure_mobile')" ng-show="mobileNumber.step === 2 && isStep('configure_mobile')") Change Mobile Number
   button.button-muted.mrm(ng-click="close()" translate="CLOSE")
   button.button-success(ui-ladda="status.loading" data-style="expand-left" ng-show="isStep('pair')" ng-disabled="!validateCode(pairWith)" ng-click="pairWithApp(pairWith)" ladda-translate="ENABLE_2FA")
+  button.button-danger(translate="DISABLE" ng-click="disableTwoFactor(); close()" ng-show="isStep('disable')")
