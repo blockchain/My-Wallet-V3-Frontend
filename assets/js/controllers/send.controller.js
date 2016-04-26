@@ -324,14 +324,14 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     if (!tx.from.isWatchOnly) return $q.resolve();
     return $q.resolve(MyWalletHelpers.privateKeyCorrespondsToAddress(tx.from.address, tx.priv, bip38pw))
       .then(priv => {
-        if (priv == null) throw privErrors.noMatch;
+        if (priv == null) return $q.reject(privErrors.noMatch);
         else $scope.payment.from(priv);
       })
       .catch(e => {
         if (e === 'needsBip38') return Alerts.prompt('NEED_BIP38', { type: 'password' }).then($scope.checkPriv);
-        else if (e === 'wrongBipPass') throw privErrors.pw;
-        else if (e !== 'PRIV_NO_MATCH') throw privErrors.bip38;
-        else throw e;
+        else if (e === 'wrongBipPass') return $q.reject(privErrors.pw);
+        else if (e !== 'PRIV_NO_MATCH') return $q.reject(privErrors.bip38);
+        else return $q.reject(e);
       });
   };
 

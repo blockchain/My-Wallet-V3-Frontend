@@ -2,6 +2,8 @@ describe "SendCtrl", ->
   scope = undefined
   ngAudio = undefined
   Wallet = undefined
+  MyWalletHelpers = undefined
+  Alerts = undefined
   fees = undefined
   scope = undefined
   $q = undefined
@@ -26,6 +28,7 @@ describe "SendCtrl", ->
       currency = $injector.get('currency')
       fees = $injector.get('fees')
       MyWalletHelpers = $injector.get("MyWalletHelpers")
+      Alerts = $injector.get("Alerts")
 
       MyWallet.wallet =
         setNote: (-> )
@@ -685,6 +688,55 @@ describe "SendCtrl", ->
           done()
         )
         scope.$digest()
+
+    describe "checkPriv", ->
+
+      pkctaSpy = (val, reject=false) ->
+        returnVal = if reject then $q.reject(val) else $q.resolve(val)
+        spyOn(MyWalletHelpers, 'privateKeyCorrespondsToAddress').and.returnValue(returnVal)
+        MyWalletHelpers.privateKeyCorrespondsToAddress
+
+      beforeEach ->
+        scope.transaction.from = { address: 'addr', isWatchOnly: true }
+        scope.transaction.priv = 'priv_key'
+
+      it "should not check the priv if the address is spendable", ->
+        s = pkctaSpy()
+        scope.transaction.from.isWatchOnly = false
+        scope.checkPriv()
+        expect(s).not.toHaveBeenCalled()
+
+      it "should set the decrypted private key if successful", ->
+        s = pkctaSpy('decrypted_priv')
+        spyOn(scope.payment, 'from')
+        scope.checkPriv()
+        scope.$digest()
+        expect(scope.payment.from).toHaveBeenCalledWith('decrypted_priv')
+
+      it "should reject if the priv and address do not match", (done) ->
+        s = pkctaSpy(null)
+        scope.checkPriv().then(done).catch((e) ->
+          expect(s).toHaveBeenCalledWith('addr', 'priv_key', undefined)
+          expect(e).toEqual('PRIV_NO_MATCH')
+          done()
+        )
+        scope.$digest()
+
+      it "should reject if the bip38 password is wrong", (done) ->
+        s = pkctaSpy('wrongBipPass', true)
+        scope.checkPriv('wrong').catch((e) ->
+          expect(s).toHaveBeenCalledWith('addr', 'priv_key', 'wrong')
+          expect(e).toEqual('INCORRECT_PASSWORD')
+          done()
+        ).then(done)
+        scope.$digest()
+
+      it "should prompt the user for their bip password if needed", ->
+        spyOn(Alerts, 'prompt').and.returnValue({ then: (->) })
+        pkctaSpy('needsBip38', true)
+        scope.checkPriv()
+        scope.$digest()
+        expect(Alerts.prompt).toHaveBeenCalledWith('NEED_BIP38', jasmine.any(Object))
 
   describe "with a payment request", ->
     beforeEach ->
