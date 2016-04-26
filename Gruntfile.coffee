@@ -43,7 +43,7 @@ module.exports = (grunt) ->
 
       application_dependencies:
         src: [
-          'build/js/browser-polyfill.js' # Babel polyfill
+          'build/js/polyfill.js' # Babel polyfill
           'build/js/core/core.module.js'
           'build/js/app.js' # Needs to be included before controllers
           'build/js/core/*.service.js'
