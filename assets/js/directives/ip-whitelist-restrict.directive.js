@@ -5,7 +5,7 @@ angular
 
 ipWhitelistRestrict.$inject = ['$translate', 'Wallet'];
 
-function ipWhitelistRestrict($translate, Wallet) {
+function ipWhitelistRestrict ($translate, Wallet) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -15,7 +15,7 @@ function ipWhitelistRestrict($translate, Wallet) {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     scope.settings = Wallet.settings;
 
     scope.enableIpWhitelistRestrict = () =>

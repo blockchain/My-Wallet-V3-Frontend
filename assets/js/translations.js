@@ -6,7 +6,7 @@ angular
 
 TranslationsConfig.$inject = ['$translateProvider'];
 
-function TranslationsConfig($translateProvider) {
+function TranslationsConfig ($translateProvider) {
   // We need to support the same languages as iOs and Android or provide
   // fallbacks, or $translate.use will throw an exception.
 

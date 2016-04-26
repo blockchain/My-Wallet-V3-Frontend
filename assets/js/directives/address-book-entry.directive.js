@@ -5,9 +5,9 @@ angular
 
 addressBookEntry.$inject = ['Wallet', '$translate', 'Alerts'];
 
-function addressBookEntry(Wallet, $translate, Alerts) {
+function addressBookEntry (Wallet, $translate, Alerts) {
   const directive = {
-    restrict: "A",
+    restrict: 'A',
     replace: true,
     scope: {
       address: '=addressBookEntry',
@@ -18,7 +18,7 @@ function addressBookEntry(Wallet, $translate, Alerts) {
   };
   return directive;
 
-  function link(scope, elem, attrs, ctrl) {
+  function link (scope, elem, attrs, ctrl) {
     scope.delete = () => {
       Alerts.confirm('CONFIRM_DELETE_ADDRESS_BOOK_ENTRY', { address: scope.address.address })
         .then(() => Wallet.removeAddressBookEntry(scope.address));

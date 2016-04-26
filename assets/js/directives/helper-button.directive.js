@@ -5,9 +5,9 @@ angular
 
 helperButton.$inject = ['$translate'];
 
-function helperButton($translate) {
+function helperButton ($translate) {
   const directive = {
-    restrict: "E",
+    restrict: 'E',
     replace: true,
     scope: {
       content: '@',
@@ -16,18 +16,17 @@ function helperButton($translate) {
       link: '@',
       linktext: '@'
     },
-    templateUrl: "templates/helper-button.jade",
+    templateUrl: 'templates/helper-button.jade',
     link: link
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     scope.warning = attrs.warning != null;
 
     scope.helperText = {
       templateUrl: 'templates/helper-popover.jade',
       placement: scope.placement || 'right'
     };
-
   }
 }

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('VerifyMessageController', VerifyMessageController);
 
-function VerifyMessageController($scope, MyWalletHelpers, Alerts) {
+function VerifyMessageController ($scope, MyWalletHelpers, Alerts) {
   $scope.alerts = [];
   $scope.isBitcoinAddress = MyWalletHelpers.isBitcoinAddress;
   $scope.isBase64 = MyWalletHelpers.isBase64;

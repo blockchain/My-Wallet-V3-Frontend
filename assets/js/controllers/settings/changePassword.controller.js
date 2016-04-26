@@ -1,15 +1,15 @@
 angular
   .module('walletApp')
-  .controller("ChangePasswordCtrl", ChangePasswordCtrl);
+  .controller('ChangePasswordCtrl', ChangePasswordCtrl);
 
-function ChangePasswordCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $translate) {
+function ChangePasswordCtrl ($scope, $log, Wallet, Alerts, $uibModalInstance, $translate) {
   $scope.isCorrectMainPassword = Wallet.isCorrectMainPassword;
   $scope.uid = Wallet.user.uid;
 
   $scope.fields = {
-    currentPassword: "",
-    password: "",
-    confirmation: ""
+    currentPassword: '',
+    password: '',
+    confirmation: ''
   };
   $scope.errors = {};
   $scope.status = {};
@@ -26,7 +26,7 @@ function ChangePasswordCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tr
     if (!$scope.passwordForm.$valid) return;
 
     const success = () => {
-      $uibModalInstance.dismiss("");
+      $uibModalInstance.dismiss('');
       Wallet.saveActivity(2);
     };
 
@@ -42,7 +42,6 @@ function ChangePasswordCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tr
 
   $scope.close = () => {
     Alerts.clear();
-    $uibModalInstance.dismiss("");
+    $uibModalInstance.dismiss('');
   };
-
 }

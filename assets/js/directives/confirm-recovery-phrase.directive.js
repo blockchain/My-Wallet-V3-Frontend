@@ -5,7 +5,7 @@ angular
 
 confirmRecoveryPhrase.$inject = ['$uibModal', 'Wallet'];
 
-function confirmRecoveryPhrase($uibModal, Wallet) {
+function confirmRecoveryPhrase ($uibModal, Wallet) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -17,7 +17,7 @@ function confirmRecoveryPhrase($uibModal, Wallet) {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     scope.status = Wallet.status;
     scope.buttonClass = scope._buttonClass || 'button-primary';
 

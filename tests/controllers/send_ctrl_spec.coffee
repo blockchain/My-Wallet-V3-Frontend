@@ -54,7 +54,7 @@ describe "SendCtrl", ->
         btcCurrency: currency.bitCurrencies[0]
         feePerKB: 10000
 
-      Wallet.payment = MyWalletPayment
+      Wallet.Payment = MyWalletPayment
 
       askForSecondPassword = $q.defer()
       Wallet.askForSecondPasswordIfNeeded = () ->
@@ -425,7 +425,7 @@ describe "SendCtrl", ->
       describe "failure", ->
 
         beforeEach ->
-          scope.payment = new Wallet.payment({}, true)
+          scope.payment = new Wallet.Payment({}, true)
           askForSecondPassword.resolve()
 
         it "should display an error when process fails", inject((Alerts) ->

@@ -1,6 +1,6 @@
 angular.module('walletApp').directive('hdAddress', (Wallet, $translate, Alerts) => {
   return {
-    restrict: "A",
+    restrict: 'A',
     replace: true,
     scope: {
       address: '=hdAddress',
@@ -22,7 +22,6 @@ angular.module('walletApp').directive('hdAddress', (Wallet, $translate, Alerts) 
       };
 
       scope.changeLabel = (label, successCallback, errorCallback) => {
-
         scope.errors.label = null;
         scope.status.edit = false;
 
@@ -32,16 +31,16 @@ angular.module('walletApp').directive('hdAddress', (Wallet, $translate, Alerts) 
         };
 
         const error = (error) => {
-          if(error === "NOT_ALPHANUMERIC") {
-            $translate("INVALID_CHARACTERS_FOR_LABEL").then((translation) => {
+          if (error === 'NOT_ALPHANUMERIC') {
+            $translate('INVALID_CHARACTERS_FOR_LABEL').then((translation) => {
               scope.errors.label = translation;
             });
-          } else if (error === "GAP") {
-            $translate("LABEL_ERROR_BIP_44_GAP").then((translation) => {
+          } else if (error === 'GAP') {
+            $translate('LABEL_ERROR_BIP_44_GAP').then((translation) => {
               scope.errors.label = translation;
             });
           } else {
-            console.log("Unknown error: " + error);
+            console.log('Unknown error: ' + error);
           }
 
           errorCallback();

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SignMessageController', SignMessageController);
 
-function SignMessageController($scope, Wallet, addressObj) {
+function SignMessageController ($scope, Wallet, addressObj) {
   $scope.address = addressObj;
   $scope.message = '';
 

@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller("FeedbackCtrl", FeedbackCtrl);
+  .controller('FeedbackCtrl', FeedbackCtrl);
 
-function FeedbackCtrl($scope, $log, $state, $http, Alerts, $translate) {
+function FeedbackCtrl ($scope, $log, $state, $http, Alerts, $translate) {
   $scope.rating = 'MEH';
   $scope.state = $state;
   $scope.formStage = 0;
@@ -19,15 +19,15 @@ function FeedbackCtrl($scope, $log, $state, $http, Alerts, $translate) {
         'email': $scope.email
       };
       $http.post('/feedback', form).success(data => {
-        if(data.success) {
+        if (data.success) {
           $scope.formStage = 2;
         } else {
           $scope.formStage = 0;
-          $scope.failed()
+          $scope.failed();
         }
       }).error(() => {
         $scope.formStage = 0;
-        $scope.failed()
+        $scope.failed();
       });
     }
     $scope.formStage = 1;

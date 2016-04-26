@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .directive('resendEmailConfirmation', resendEmailConfirmation);
 
-function resendEmailConfirmation($translate, Wallet) {
+function resendEmailConfirmation ($translate, Wallet) {
   const directive = {
     restrict: 'E',
     replace: 'true',
@@ -13,7 +13,7 @@ function resendEmailConfirmation($translate, Wallet) {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     scope.status = {
       loading: null,
       done: null

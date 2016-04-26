@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller("AccountFormCtrl", AccountFormCtrl);
+  .controller('AccountFormCtrl', AccountFormCtrl);
 
-function AccountFormCtrl($scope, Wallet, $uibModalInstance, $log, $translate, account) {
+function AccountFormCtrl ($scope, Wallet, $uibModalInstance, $log, $translate, account) {
   $scope.accounts = Wallet.accounts;
 
   $scope.fields = {
@@ -19,21 +19,20 @@ function AccountFormCtrl($scope, Wallet, $uibModalInstance, $log, $translate, ac
     $scope.status.edit = true;
   }
 
-  $scope.close = () => {$uibModalInstance.dismiss("")};
+  $scope.close = () => $uibModalInstance.dismiss('');
 
   $scope.createAccount = () => {
-
     $scope.status.busy = true;
 
     const success = () => {
       $scope.status.busy = false;
-      $uibModalInstance.dismiss("");
+      $uibModalInstance.dismiss('');
       Wallet.saveActivity(3);
     };
 
-    const error = () => {$scope.status.busy = false;}
+    const error = () => $scope.status.busy = false;
 
-    const cancel = () => {$scope.status.busy = false;}
+    const cancel = () => $scope.status.busy = false;
 
     Wallet.createAccount($scope.fields.name, success, error, cancel);
   };
@@ -42,11 +41,11 @@ function AccountFormCtrl($scope, Wallet, $uibModalInstance, $log, $translate, ac
     $scope.status.busy = true;
     const success = () => {
       $scope.status.busy = false;
-      $uibModalInstance.dismiss("");
+      $uibModalInstance.dismiss('');
       Wallet.saveActivity(3);
     };
 
-    const error = () => {$scope.status.busy = false;}
+    const error = () => $scope.status.busy = false;
 
     Wallet.renameAccount(account, $scope.fields.name, success, error);
   };

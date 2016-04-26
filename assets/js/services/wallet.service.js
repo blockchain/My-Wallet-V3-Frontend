@@ -1,17 +1,12 @@
 'use strict';
 
-// MyWallet hacks
-
-// Don't allow it to play sound
-function playSound(id) {}
-
 angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
 Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
 
-function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet,   MyBlockchainApi, MyBlockchainRng,  MyBlockchainSettings,   MyWalletStore,   MyWalletPayment,  MyWalletHelpers,   $rootScope,   ngAudio,   $cookies,   $translate,   $filter,   $state,   $q,   bcPhoneNumber,   languages,   currency) {
+function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency) {
   const wallet = {
     goal: {
       auth: false
@@ -60,33 +55,32 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   wallet.api = MyBlockchainApi;
   wallet.rng = MyBlockchainRng;
 
-  $rootScope.$watch("rootURL", () => {
+  $rootScope.$watch('rootURL', () => {
     // If a custom rootURL is set by index.jade:
     //                    Grunt can replace this:
-    const customRootURL = $rootScope.rootURL || "/";
-    wallet.api.ROOT_URL=customRootURL;
+    const customRootURL = $rootScope.rootURL || '/';
+    wallet.api.ROOT_URL = customRootURL;
     // If customRootURL is set by Grunt:
     $rootScope.rootURL = customRootURL;
 
-
     const absUrl = $location.absUrl();
-    const path   = $location.path();
-    if(absUrl && path && path.length) {
+    const path = $location.path();
+    if (absUrl && path && path.length) {
       // e.g. https://blockchain.info/wallet-beta/#
-      $rootScope.rootPath =  $location.absUrl().slice(0, -$location.path().length);
+      $rootScope.rootPath = $location.absUrl().slice(0, -$location.path().length);
     }
 
     //                         Grunt can replace this:
     const customWebSocketURL = $rootScope.webSocketURL;
-    if(customWebSocketURL) {
-      wallet.my.ws.wsUrl=customWebSocketURL;
+    if (customWebSocketURL) {
+      wallet.my.ws.wsUrl = customWebSocketURL;
     }
 
     // If a custom apiDomain is set by index.jade:
     //                             Grunt can replace this:
-    const customApiDomain = $rootScope.apiDomain || "https://api.blockchain.info/";
+    const customApiDomain = $rootScope.apiDomain || 'https://api.blockchain.info/';
     $rootScope.apiDomain = customApiDomain;
-    if(customApiDomain) {
+    if (customApiDomain) {
       wallet.api.API_ROOT_URL = customApiDomain;
     }
 
@@ -100,7 +94,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     );
   });
 
-  wallet.payment = MyWalletPayment;
+  wallet.Payment = MyWalletPayment;
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
   MyBlockchainApi.API_CODE = wallet.api_code;
@@ -144,7 +138,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
           };
           wallet.user.internationalMobileNumber = '+' + result.dial_code;
         }
-        wallet.settings.notifications = result.notifications_type && result.notifications_type.length > 0 && result.notifications_type.indexOf(1) > -1 && (result.notifications_on == 0 || result.notifications_on == 2);
+        wallet.settings.notifications = result.notifications_type && result.notifications_type.length > 0 && result.notifications_type.indexOf(1) > -1 && (parseInt(result.notifications_on, 10) === 0 || parseInt(result.notifications_on, 10) === 2);
         wallet.user.isEmailVerified = result.email_verified;
         wallet.user.isMobileVerified = result.sms_verified;
         wallet.user.passwordHint = result.password_hint1;
@@ -157,7 +151,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
         wallet.status.didLoadSettings = true;
         if (wallet.my.wallet.isUpgradedToHD) {
           let didFetchTransactions = () => {
-            if ( browserDetection().browser === "ie" ) {
+            if (browserDetection().browser === 'ie') {
               console.warn('Stop!');
               console.warn('This browser feature is intended for developers. If someone told you to copy-paste something here, it is a scam and will give them access to your money!');
             } else {
@@ -228,11 +222,11 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     };
 
     var two_factor = null;
-    if(wallet.settings.twoFactorMethod) {
+    if (wallet.settings.twoFactorMethod) {
       two_factor = {
         type: wallet.settings.twoFactorMethod,
         code: two_factor_code
-      }
+      };
     }
 
     wallet.my.login(
@@ -281,12 +275,12 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
 
   wallet.legacyAddresses = () => {
-    if(wallet.status.isLoggedIn) {
-      return wallet.my.wallet.keys
+    if (wallet.status.isLoggedIn) {
+      return wallet.my.wallet.keys;
     } else {
       return null;
     }
-  }
+  };
 
   let hdAddresses = {};
   wallet.hdAddresses = (accountIdx) => {
@@ -296,13 +290,12 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
         let account = wallet.accounts()[accountIdx];
         hdAddresses[accountIdx] = account.receivingAddressesLabels.map((address) => {
           return {
-              index: address.index,
-              label: address.label,
-              address: account.receiveAddressAtIndex(address.index),
-              account: account
-            }
-          }
-        );
+            index: address.index,
+            label: address.label,
+            address: account.receiveAddressAtIndex(address.index),
+            account: account
+          };
+        });
       }
       return hdAddresses[accountIdx];
     };
@@ -395,7 +388,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
 
   wallet.createAccount = (label, successCallback, errorCallback, cancelCallback) => {
     let proceed = (password) => {
-      let newAccount = wallet.my.wallet.newAccount(label, password);
+      wallet.my.wallet.newAccount(label, password);
       wallet.my.wallet.getHistory();
       successCallback && successCallback();
     };
@@ -425,7 +418,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       $rootScope.$safeApply();
     };
 
-    let account = wallet.accounts()[parseInt(accountIdx)];
+    let account = wallet.accounts()[parseInt(accountIdx, 10)];
     account.setLabelForReceivingAddress(index, label)
       .then(success).catch(error);
   };
@@ -459,11 +452,11 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     wallet.store.isCorrectMainPassword(candidate);
 
   wallet.changePassword = (newPassword, successCallback, errorCallback) => {
-    wallet.store.changePassword(newPassword, (() => {
+    wallet.store.changePassword(newPassword, () => {
       let msg = 'CHANGE_PASSWORD_SUCCESS';
       Alerts.displaySuccess(msg);
       successCallback(msg);
-    }), () => {
+    }, () => {
       let err = 'CHANGE_PASSWORD_FAILED';
       Alerts.displayError(err);
       errorCallback(err);
@@ -500,7 +493,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
   wallet.setPbkdf2Iterations = (n, successCallback, errorCallback, cancelCallback) => {
     let proceed = (password) => {
-      wallet.my.wallet.changePbkdf2Iterations(parseInt(n), password);
+      wallet.my.wallet.changePbkdf2Iterations(parseInt(n, 10), password);
       wallet.settings.pbkdf2 = wallet.my.wallet.pbkdf2_iterations;
       successCallback();
     };
@@ -541,7 +534,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       $rootScope.$safeApply();
     };
 
-    let proceed = (secondPassword='') => {
+    let proceed = (secondPassword = '') => {
       let error = (message) => {
         if (message === 'needsBip38') {
           needsBipPassphraseCallback(proceedWithBip38);
@@ -568,7 +561,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   wallet.fetchBalanceForRedeemCode = (code) => {
     let logError = (error) => {
       console.log(error);
-      throw 'Could not retrieve balance';
+      throw $translate.instant('ERR_FETCH_BALANCE');
     };
     return MyBlockchainApi.getBalanceForRedeemCode(code)
       .catch(logError);
@@ -679,8 +672,8 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     }
   };
 
-  wallet.isValidAddress = (address) => MyWalletHelpers.isBitcoinAddress(address)
-  wallet.isValidPrivateKey = (priv) => MyWalletHelpers.isValidPrivateKey(priv)
+  wallet.isValidAddress = (address) => MyWalletHelpers.isBitcoinAddress(address);
+  wallet.isValidPrivateKey = (priv) => MyWalletHelpers.isValidPrivateKey(priv);
 
   wallet.archive = (address_or_account) => {
     wallet.saveActivity(3);
@@ -713,8 +706,9 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     switch (accountIndex) {
       case '':
         if (wallet.my.wallet.isUpgradedToHD) {
-          if(wallet.my.wallet.balanceSpendableActiveLegacy == null || wallet.my.wallet.hdwallet.balanceActiveAccounts == null)
-           return null;
+          if (wallet.my.wallet.balanceSpendableActiveLegacy == null || wallet.my.wallet.hdwallet.balanceActiveAccounts == null) {
+            return null;
+          }
           return wallet.my.wallet.hdwallet.balanceActiveAccounts + wallet.my.wallet.balanceSpendableActiveLegacy;
         } else {
           return wallet.my.wallet.balanceSpendableActiveLegacy;
@@ -724,16 +718,16 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
         return wallet.my.wallet.balanceSpendableActiveLegacy;
       case void 0:
         if (wallet.my.wallet.isUpgradedToHD) {
-          if(wallet.my.wallet.hdwallet.balanceActiveAccounts == null || wallet.my.wallet.balanceSpendableActiveLegacy == null)
-           return null;
-
+          if (wallet.my.wallet.hdwallet.balanceActiveAccounts == null || wallet.my.wallet.balanceSpendableActiveLegacy == null) {
+            return null;
+          }
           return wallet.my.wallet.hdwallet.balanceActiveAccounts + wallet.my.wallet.balanceSpendableActiveLegacy;
         } else {
           return wallet.my.wallet.balanceSpendableActiveLegacy;
         }
         break;
       default:
-        let account = wallet.accounts()[parseInt(accountIndex)];
+        let account = wallet.accounts()[parseInt(accountIndex, 10)];
         if (account === null) {
           return null;
         } else {
@@ -884,17 +878,18 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   });
 
   wallet.changeEmail = (email, successCallback, errorCallback) => {
-    wallet.settings_api.change_email(email, (() => {
+    wallet.settings_api.change_email(email, () => {
       wallet.user.email = email;
       wallet.user.isEmailVerified = false;
       successCallback();
       $rootScope.$safeApply();
-    }), () => {
+    }, () => {
       Alerts.displayError('CHANGE_EMAIL_FAILED');
       $rootScope.$safeApply();
       errorCallback();
     });
   };
+
   wallet.enableNotifications = () => {
     let success = () => {
       wallet.settings.notifications = true;
@@ -939,12 +934,12 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
 
   wallet.changeMobile = (mobile, successCallback, errorCallback) => {
-    wallet.settings_api.changeMobileNumber(wallet.internationalPhoneNumber(mobile), (() => {
+    wallet.settings_api.changeMobileNumber(wallet.internationalPhoneNumber(mobile), () => {
       wallet.user.mobile = mobile;
       wallet.user.isMobileVerified = false;
       successCallback();
       $rootScope.$safeApply();
-    }), () => {
+    }, () => {
       Alerts.displayError('CHANGE_MOBILE_FAILED');
       errorCallback();
       $rootScope.$safeApply();
@@ -952,11 +947,11 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
 
   wallet.verifyMobile = (code, successCallback, errorCallback) => {
-    wallet.settings_api.verifyMobile(code, (() => {
+    wallet.settings_api.verifyMobile(code, () => {
       wallet.user.isMobileVerified = true;
       successCallback();
       $rootScope.$safeApply();
-    }), () => {
+    }, () => {
       $translate('VERIFY_MOBILE_FAILED').then((translation) => {
         errorCallback(translation);
       });
@@ -965,11 +960,11 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
 
   wallet.changePasswordHint = (hint, successCallback, errorCallback) => {
-    wallet.settings_api.update_password_hint1(hint, (() => {
+    wallet.settings_api.update_password_hint1(hint, () => {
       wallet.user.passwordHint = hint;
       successCallback();
       $rootScope.$safeApply();
-    }), (err) => {
+    }, (err) => {
       errorCallback(err);
       $rootScope.$safeApply();
     });

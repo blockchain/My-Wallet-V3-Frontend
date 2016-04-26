@@ -1,5 +1,5 @@
 describe "Scroll in View Directive", ->
-  
+
   $compile = undefined
   $rootScope = undefined
   element = undefined

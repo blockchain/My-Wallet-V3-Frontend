@@ -5,18 +5,15 @@ angular
 
 format.$inject = [];
 
-function format() {
-
+function format () {
   const service = {
     origin: originDestination,
     destination: originDestination
-  }
+  };
 
   return service;
 
-  //////////////////////////////////////////////////////////////////////////////
-
-  function originDestination(o) {
+  function originDestination (o) {
     const formatted = {
       label: o.label || o.address,
       index: o.index,
@@ -28,5 +25,4 @@ function format() {
     if (o.index == null) formatted.isWatchOnly = o.isWatchOnly;
     return formatted;
   }
-
 }

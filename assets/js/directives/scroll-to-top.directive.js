@@ -2,14 +2,14 @@ angular
   .module('walletApp')
   .directive('scrollToTop', scrollToTop);
 
-function scrollToTop($window) {
+function scrollToTop ($window) {
   const directive = {
     restrict: 'A',
     link: link
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     let action = (newVal, oldVal) => {
       if (newVal !== oldVal) elem[0].scrollTop = 0;
     };

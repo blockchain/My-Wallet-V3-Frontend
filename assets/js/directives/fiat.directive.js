@@ -5,7 +5,7 @@ angular
 
 fiat.$inject = ['$rootScope', 'Wallet', 'currency'];
 
-function fiat($rootScope, Wallet, currency) {
+function fiat ($rootScope, Wallet, currency) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -19,7 +19,7 @@ function fiat($rootScope, Wallet, currency) {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     scope.fiat = { currencySymbol: null, amount: null };
     scope.settings = Wallet.settings;
     scope.conversions = currency.conversions;

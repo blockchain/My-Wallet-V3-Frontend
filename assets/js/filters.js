@@ -10,7 +10,7 @@ angular
   .filter('addressOrNameMatch', addressOrNameMatchFilter);
 
 toBitCurrencyFilter.$inject = ['currency'];
-function toBitCurrencyFilter(currency) {
+function toBitCurrencyFilter (currency) {
   return function (input, btcCurrency, hideCurrency) {
     if (input != null && !isNaN(input) && btcCurrency != null) {
       let amount = currency.convertFromSatoshi(input, btcCurrency);
@@ -22,22 +22,22 @@ function toBitCurrencyFilter(currency) {
 }
 
 convertFilter.$inject = ['Wallet', 'currency'];
-function convertFilter(Wallet, currency) {
-  return function (amount, useDisplayCurrency=true, useBtcSettings, swap) {
+function convertFilter (Wallet, currency) {
+  return function (amount, useDisplayCurrency = true, useBtcSettings, swap) {
     let fiatSettings = Wallet.settings.currency;
     let btcSettings = Wallet.settings.btcCurrency;
 
     let bitcoin = useBtcSettings ? btcSettings : currency.bitCurrencies[0];
     let displayCurrency = Wallet.settings.displayCurrency || bitcoin;
     let curr = useDisplayCurrency ? displayCurrency : bitcoin;
-    if (swap) { curr = currency.isBitCurrency(curr) ? fiatSettings : btcSettings }
+    if (swap) curr = currency.isBitCurrency(curr) ? fiatSettings : btcSettings;
 
     let conversion = currency.convertFromSatoshi(amount, curr);
     return currency.formatCurrencyForView(conversion, curr);
   };
 }
 
-function escapeHtmlFilter() {
+function escapeHtmlFilter () {
   var escapeHtml = function (html) {
     return html
       .replace(/&/g, '&amp;')
@@ -47,11 +47,11 @@ function escapeHtmlFilter() {
       .replace(/>/g, '&gt;');
   };
   return function (html) {
-    return 'string' === typeof html ? escapeHtml(html) : html;
+    return typeof html === 'string' ? escapeHtml(html) : html;
   };
 }
 
-function getByPropertyFilter() {
+function getByPropertyFilter () {
   return function (propertyName, propertyValue, collection) {
     let i = 0;
     let len = collection.length;
@@ -65,8 +65,8 @@ function getByPropertyFilter() {
   };
 }
 
-function getByPropertyNestedFilter() {
-  return function(propertyName, propertyValue, collection) {
+function getByPropertyNestedFilter () {
+  return function (propertyName, propertyValue, collection) {
     let i = 0;
     let len = collection.length;
     while (i < len) {
@@ -85,7 +85,7 @@ function getByPropertyNestedFilter() {
   };
 }
 
-function addressOrNameMatchFilter() {
+function addressOrNameMatchFilter () {
   return function (addresses, q) {
     if (q == null || q === '') return addresses;
     q = q.toLowerCase();

@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .directive('qrScan', qrScan);
 
-function qrScan($rootScope, $timeout, $translate, Wallet, Alerts) {
+function qrScan ($rootScope, $timeout, $translate, Wallet, Alerts) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -15,7 +15,7 @@ function qrScan($rootScope, $timeout, $translate, Wallet, Alerts) {
   };
   return directive;
 
-  function link(scope) {
+  function link (scope) {
     scope.popoverTemplate = 'templates/qr-scan-popover.jade';
     scope.browserWithCamera = $rootScope.browserWithCamera;
 
@@ -23,7 +23,7 @@ function qrScan($rootScope, $timeout, $translate, Wallet, Alerts) {
       if (scope.cameraOn) return;
 
       scope.loading = true;
-      $timeout(() => { scope.loading = false }, 1000)
+      $timeout(() => scope.loading = false, 1000);
     };
 
     scope.onCameraResult = (result) => {
@@ -31,7 +31,7 @@ function qrScan($rootScope, $timeout, $translate, Wallet, Alerts) {
 
       scope.scanSuccess = Wallet.isValidAddress(Wallet.parsePaymentRequest(result).address) ||
                           Wallet.isValidPrivateKey(result) ||
-                          Wallet.isValidAddress(result)
+                          Wallet.isValidAddress(result);
 
       $rootScope.$safeApply();
 

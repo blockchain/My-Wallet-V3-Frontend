@@ -5,7 +5,7 @@ angular
 
 isNotEqual.$inject = ['Wallet'];
 
-function isNotEqual(Wallet) {
+function isNotEqual (Wallet) {
   const directive = {
     restrict: 'A',
     require: 'ngModel',
@@ -13,7 +13,7 @@ function isNotEqual(Wallet) {
   };
   return directive;
 
-  function link(scope, elem, attrs, ctrl) {
+  function link (scope, elem, attrs, ctrl) {
     ctrl.$validators.isNotEqual = (modelValue, viewValue) => {
       return attrs.isNotEqual !== viewValue;
     };

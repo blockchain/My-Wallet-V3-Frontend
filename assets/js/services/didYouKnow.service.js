@@ -2,7 +2,7 @@ angular
   .module('didYouKnow', [])
   .factory('DidYouKnow', DidYouKnow);
 
-function DidYouKnow() {
+function DidYouKnow () {
   const getRandInRange = (min, max) =>
     Math.floor(Math.random() * (max - min + 1) + min);
 
@@ -26,7 +26,7 @@ function DidYouKnow() {
       title: 'DYK_TX_FEES_TITLE',
       type: 'EDUCATIONAL',
       text: 'DYK_TX_FEES',
-      icon: 'ti-thought',
+      icon: 'ti-thought'
     }, {
       id: 4,
       title: 'DYK_FEEDBACK_TITLE',
@@ -42,7 +42,7 @@ function DidYouKnow() {
       text: 'DYK_BTC_VALUE',
       icon: 'ti-stats-up'
     }
-  ]
+  ];
 
   const service = {
     getAll: () => dyks, // Only used for tests

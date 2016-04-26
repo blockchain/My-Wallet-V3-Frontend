@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .directive('alerts', alerts);
 
-function alerts(Alerts) {
+function alerts (Alerts) {
   const directive = {
     restrict: 'E',
     scope: {
@@ -17,8 +17,8 @@ function alerts(Alerts) {
   };
   return directive;
 
-  function link(scope) {
-    scope.alerts = Array.isArray(scope.alertsContext) ?
-      scope.alertsContext : Alerts.alerts;
+  function link (scope) {
+    scope.alerts = Array.isArray(scope.alertsContext)
+      ? scope.alertsContext : Alerts.alerts;
   }
 }

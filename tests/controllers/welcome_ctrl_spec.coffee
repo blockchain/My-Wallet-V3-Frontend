@@ -14,10 +14,10 @@ describe "WelcomeCtrl", ->
 
     return
 
-  it "should scroll", inject(($window) ->
+  it "should scroll", ->
+    document.getElementById = () -> {}
     spyOn(scope, 'scrollTo').and.callThrough()
     spyOn(scope, 'easeInOut').and.callThrough()
     scope.scroll()
     expect(scope.scrollTo).toHaveBeenCalled()
     expect(scope.easeInOut).toHaveBeenCalled()
-  )

@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .directive('uiLadda', uiLadda);
 
-function uiLadda() {
+function uiLadda () {
   const directive = {
     restrict: 'A',
     replace: false,
@@ -17,7 +17,7 @@ function uiLadda() {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     elem.addClass('ladda-button');
     elem.removeAttr('ng-click');
 

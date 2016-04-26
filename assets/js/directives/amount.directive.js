@@ -5,7 +5,7 @@ angular
 
 amount.$inject = ['Wallet', 'currency'];
 
-function amount(Wallet, currency) {
+function amount (Wallet, currency) {
   const directive = {
     restrict: 'E',
     replace: false,
@@ -17,7 +17,7 @@ function amount(Wallet, currency) {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     scope.settings = Wallet.settings;
     scope.isBitCurrency = currency.isBitCurrency;
     scope.toggle = Wallet.toggleDisplayCurrency;

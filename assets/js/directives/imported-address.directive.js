@@ -1,6 +1,6 @@
 angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $uibModal) => {
   return {
-    restrict: "A",
+    restrict: 'A',
     replace: true,
     scope: {
       address: '=importedAddress',
@@ -13,18 +13,18 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
 
       scope.showAddress = () => {
         $uibModal.open({
-          templateUrl: "partials/request.jade",
-          controller: "RequestCtrl",
+          templateUrl: 'partials/request.jade',
+          controller: 'RequestCtrl',
           resolve: {
             destination: () => scope.address,
             focus: () => true,
             hasLegacyAddress: () => null
           },
-          windowClass: "bc-modal"
+          windowClass: 'bc-modal'
         });
       };
 
-      scope.archive = () => { Wallet.archive(scope.address) };
+      scope.archive = () => Wallet.archive(scope.address);
 
       scope.changeLabel = (label, successCallback, errorCallback) => {
         scope.errors.label = null;
@@ -34,8 +34,8 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
           successCallback();
         };
 
-        const error = (error) => {
-          $translate("INVALID_CHARACTERS_FOR_LABEL").then((translation) => {
+        const error = () => {
+          $translate('INVALID_CHARACTERS_FOR_LABEL').then((translation) => {
             scope.errors.label = translation;
           });
           errorCallback();
@@ -50,9 +50,9 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
 
       scope.transfer = () => {
         $uibModal.open({
-          templateUrl: "partials/settings/import-address.jade",
-          controller: "AddressImportCtrl",
-          windowClass: "bc-modal",
+          templateUrl: 'partials/settings/import-address.jade',
+          controller: 'AddressImportCtrl',
+          windowClass: 'bc-modal',
           resolve: {
             address: () => scope.address
           }
@@ -61,9 +61,9 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
 
       scope.showPrivKey = () => {
         $uibModal.open({
-          templateUrl: "partials/settings/show-private-key.jade",
-          controller: "ShowPrivateKeyCtrl",
-          windowClass: "bc-modal",
+          templateUrl: 'partials/settings/show-private-key.jade',
+          controller: 'ShowPrivateKeyCtrl',
+          windowClass: 'bc-modal',
           resolve: {
             addressObj: () => scope.address
           }
@@ -79,7 +79,6 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
           addressObj: () => scope.address
         }
       });
-
     }
   };
 });

@@ -4,7 +4,7 @@ angular
 
 destinationInput.$inject = ['$rootScope', '$timeout', 'Wallet'];
 
-function destinationInput($rootScope, $timeout, Wallet) {
+function destinationInput ($rootScope, $timeout, Wallet) {
   const directive = {
     restrict: 'E',
     require: 'ngModel',
@@ -18,24 +18,24 @@ function destinationInput($rootScope, $timeout, Wallet) {
   };
   return directive;
 
-  function link(scope, elem, attrs, ctrl) {
+  function link (scope, elem, attrs, ctrl) {
     scope.browserWithCamera = $rootScope.browserWithCamera;
     scope.accounts = Wallet.accounts().filter(a => a.active);
     scope.addresses = Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly);
     scope.dropdownHidden = scope.accounts.length === 1 && scope.addresses.length === 0;
 
     let format = (a, type) => ({
-      label     : a.label || a.address || '',
-      address   : a.address || '',
-      index     : a.index,
-      balance   : a.balance,
-      active    : a.active,
-      archived  : a.archived,
-      type      : type
+      label: a.label || a.address || '',
+      address: a.address || '',
+      index: a.index,
+      balance: a.balance,
+      active: a.active,
+      archived: a.archived,
+      type: type
     });
 
     scope.onAddressScan = (result) => {
-      let address = Wallet.parsePaymentRequest(result)
+      let address = Wallet.parsePaymentRequest(result);
       scope.model = format(address, 'External');
       scope.onPaymentRequest({request: address});
       $timeout(scope.change);

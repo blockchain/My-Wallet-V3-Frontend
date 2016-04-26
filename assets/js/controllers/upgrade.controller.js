@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('UpgradeCtrl', UpgradeCtrl);
 
-function UpgradeCtrl($scope, Wallet, $uibModalInstance, $log, $window, $translate, $timeout) {
+function UpgradeCtrl ($scope, Wallet, $uibModalInstance, $log, $window, $translate, $timeout) {
   $scope.waiting = true;
   $scope.busy = false;
   $scope.settings = Wallet.settings;
@@ -35,5 +35,4 @@ function UpgradeCtrl($scope, Wallet, $uibModalInstance, $log, $window, $translat
   $timeout(() => {
     $scope.waiting = false;
   }, 3000);
-
 }

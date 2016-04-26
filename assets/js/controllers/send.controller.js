@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SendCtrl', SendCtrl);
 
-function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees) {
+function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.alerts = [];
@@ -30,11 +30,11 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     maxAvailable: null,
     surge: false,
     blockIdx: null,
-    feeBounds: [0,0,0,0,0,0],
-    sweepFees: [0,0,0,0,0,0]
+    feeBounds: [0, 0, 0, 0, 0, 0],
+    sweepFees: [0, 0, 0, 0, 0, 0]
   };
 
-  $scope.payment = new Wallet.payment({ feePerKb: 30000 });
+  $scope.payment = new Wallet.Payment({ feePerKb: 30000 });
   $scope.transaction = angular.copy($scope.transactionTemplate);
 
   $scope.payment.on('update', data => {
@@ -53,7 +53,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   $scope.hasZeroBalance = (origin) => origin.balance === 0;
   $scope.close = () => $uibModalInstance.dismiss('');
 
-  $scope.getFilter = (search, accounts=true) => ({
+  $scope.getFilter = (search, accounts = true) => ({
     label: search,
     type: accounts ? '!External' : 'Imported'
   });
@@ -112,10 +112,10 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       $scope.sending = false;
 
       if (paymentCheckpoint) {
-        $scope.payment = new Wallet.payment(paymentCheckpoint).build();
+        $scope.payment = new Wallet.Payment(paymentCheckpoint).build();
       }
 
-      let msgText = 'string' === typeof message ? message : 'SEND_FAILED';
+      let msgText = typeof message === 'string' ? message : 'SEND_FAILED';
       if (msgText.indexOf('Fee is too low') > -1) msgText = 'LOW_FEE_ERROR';
 
       Alerts.displayError(msgText, false, $scope.alerts);
@@ -128,7 +128,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       Wallet.beep();
 
       let note = $scope.transaction.note;
-      if ( note !== '') Wallet.setNote({ hash: tx.txid }, note);
+      if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
 
       let index = $scope.transaction.from.index;
       if (index == null) index = 'imported';
@@ -159,8 +159,8 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     let tx = $scope.transaction;
     let fee = includeFee ? tx.fee : 0;
     return tx.amounts.reduce((previous, current) => {
-      return (parseInt(previous) + parseInt(current)) || 0;
-    }, parseInt(fee));
+      return (parseInt(previous, 10) + parseInt(current, 10)) || 0;
+    }, parseInt(fee, 10));
   };
 
   $scope.amountsAreValid = () => (
@@ -196,7 +196,7 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   let unwatchDidLoad = $scope.$watch('status.didLoadBalances', (didLoad) => {
     if (!didLoad || $scope.origins.length !== 0) return;
     let defaultIdx = Wallet.my.wallet.hdwallet.defaultAccountIndex;
-    let selectedIdx = parseInt($stateParams.accountIndex);
+    let selectedIdx = parseInt($stateParams.accountIndex, 10);
     let idx = isNaN(selectedIdx) ? defaultIdx : selectedIdx;
 
     let accounts = Wallet.accounts().filter(a => !a.archived && a.index != null);
@@ -335,5 +335,4 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       return r.payment;
     });
   });
-
 }

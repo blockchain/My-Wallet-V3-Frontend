@@ -1,7 +1,7 @@
 angular
   .module('walletApp')
-  .controller("SettingsAddressBookCtrl", SettingsAddressBookCtrl);
+  .controller('SettingsAddressBookCtrl', SettingsAddressBookCtrl);
 
-function SettingsAddressBookCtrl($scope, Wallet) {
+function SettingsAddressBookCtrl ($scope, Wallet) {
   $scope.addressBook = Wallet.addressBook;
 }

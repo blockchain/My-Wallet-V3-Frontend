@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .directive('tor', tor);
 
-function tor($translate, Wallet) {
+function tor ($translate, Wallet) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -15,7 +15,7 @@ function tor($translate, Wallet) {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     scope.buttonClass = scope._buttonClass || 'button-primary';
     scope.settings = Wallet.settings;
     scope.enableBlockTOR = () => Wallet.enableBlockTOR();

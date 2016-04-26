@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('ShowPrivateKeyCtrl', ShowPrivateKeyCtrl);
 
-function ShowPrivateKeyCtrl($scope, $uibModalInstance, Wallet, MyWalletHelpers, addressObj) {
+function ShowPrivateKeyCtrl ($scope, $uibModalInstance, Wallet, MyWalletHelpers, addressObj) {
   $scope.accessAllowed = false;
   $scope.address = addressObj.address;
   $scope.balance = addressObj.balance;
@@ -13,7 +13,7 @@ function ShowPrivateKeyCtrl($scope, $uibModalInstance, Wallet, MyWalletHelpers, 
 
   $scope.tryContinue = () => {
     Wallet.askForSecondPasswordIfNeeded().then(secondPassword => {
-      let pk  = Wallet.my.wallet.getPrivateKeyForAddress(addressObj, secondPassword);
+      let pk = Wallet.my.wallet.getPrivateKeyForAddress(addressObj, secondPassword);
       let fmt = MyWalletHelpers.detectPrivateKeyFormat(pk);
       $scope.privKeys.Base58 = pk;
       $scope.privKeys.WIF = MyWalletHelpers.privateKeyStringToKey(pk, fmt).toWIF();

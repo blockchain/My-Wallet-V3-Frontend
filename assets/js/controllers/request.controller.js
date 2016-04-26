@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller("RequestCtrl", RequestCtrl);
+  .controller('RequestCtrl', RequestCtrl);
 
-function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, hasLegacyAddress, $translate, $stateParams, filterFilter, $filter, format) {
+function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, hasLegacyAddress, $translate, $stateParams, filterFilter, $filter, format) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -18,18 +18,18 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
   $scope.fields = {
     to: null,
     amount: null,
-    label: ""
+    label: ''
   };
 
-  for(let account of $scope.accounts()) {
+  for (let account of $scope.accounts()) {
     if (account.index != null && !account.archived) {
       account = format.destination(account);
       $scope.destinations.push(angular.copy(account));
-      if ((destination != null) && (destination.index != null) && destination.index === acct.index) {
-        $scope.fields.to = acct;
+      if ((destination != null) && (destination.index != null) && destination.index === account.index) {
+        $scope.fields.to = account;
       }
     }
-  };
+  }
 
   for (let address of $scope.legacyAddresses()) {
     address = format.destination(address);
@@ -42,7 +42,7 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
     }
   }
 
-  $scope.getFilter = (search, accounts=true) => ({
+  $scope.getFilter = (search, accounts = true) => ({
     label: search,
     type: accounts ? '!External' : 'Imported'
   });
@@ -53,30 +53,29 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
 
   $scope.advancedReceive = () => {
     $scope.advanced = true;
-  }
+  };
 
   $scope.regularReceive = () => {
     $scope.advanced = false;
 
-    $scope.fields.label = "";
+    $scope.fields.label = '';
     $scope.fields.amount = null;
-  }
+  };
 
   $scope.done = () => {
     Alerts.clear();
 
-    if($scope.fields.label == "" || $scope.fields.to.index == undefined) {
-        $uibModalInstance.dismiss("");
+    if ($scope.fields.label === '' || $scope.fields.to.index == null) {
+      $uibModalInstance.dismiss('');
     } else {
-
       const success = () => {
-        $uibModalInstance.dismiss("");
+        $uibModalInstance.dismiss('');
       };
 
       const error = (error) => {
-        if(error === "NOT_ALPHANUMERIC") {
+        if (error === 'NOT_ALPHANUMERIC') {
           $scope.requestForm.label.$error.characters = true;
-        } else if (error === "GAP") {
+        } else if (error === 'GAP') {
           $scope.requestForm.label.$error.gap = true;
         }
         $scope.requestForm.label.$valid = false;
@@ -84,19 +83,18 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
 
       let idx = $scope.fields.to.index;
       Wallet.changeHDAddressLabel($scope.fields.to.index, Wallet.getReceivingAddressIndexForAccount(idx), $scope.fields.label, success, error);
-    };
-
+    }
   };
 
   $scope.cancel = () => {
     Alerts.clear();
-    $uibModalInstance.dismiss("");
-  }
+    $uibModalInstance.dismiss('');
+  };
 
   $scope.close = () => {
     $scope.cancel();
-    $rootScope.$broadcast('enableRequestBeacon')
-  }
+    $rootScope.$broadcast('enableRequestBeacon');
+  };
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
     const activeAccounts = filterFilter(Wallet.accounts(), {
@@ -108,29 +106,27 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
     return activeAccounts.length + activeAddresses.length;
   };
 
-  $scope.$watchCollection("destinations", () => {
+  $scope.$watchCollection('destinations', () => {
     let idx = Wallet.getDefaultAccountIndex();
     if ($scope.hasLegacyAddress) {
-      return $scope.fields.to = filterFilter(Wallet.legacyAddresses(), {
-        archived: false,
-      }).reverse()[0]
+      $scope.fields.to = filterFilter(Wallet.legacyAddresses(), {
+        archived: false
+      }).reverse()[0];
     }
     if (($scope.fields.to == null) && $scope.accounts().length > 0) {
-      if ($stateParams.accountIndex === "" || ($stateParams.accountIndex == null)) {
+      if ($stateParams.accountIndex === '' || ($stateParams.accountIndex == null)) {
 
-      } else if ($stateParams.accountIndex === "imported" || ($stateParams.accountIndex == null)) {
+      } else if ($stateParams.accountIndex === 'imported' || ($stateParams.accountIndex == null)) {
 
       } else {
-        idx = parseInt($stateParams.accountIndex);
+        idx = parseInt($stateParams.accountIndex, 10);
       }
-      return $scope.fields.to = $scope.accounts()[idx];
+      $scope.fields.to = $scope.accounts()[idx];
     }
   });
 
   $scope.paymentRequestAddress = () => {
-    if(!$scope.status.didInitializeHD) {
-      return null;
-    }
+    if (!$scope.status.didInitializeHD) return null;
 
     if (($scope.fields.to != null) && ($scope.fields.to.address != null)) {
       $scope.advanced = false;
@@ -139,13 +135,10 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
       let idx = $scope.fields.to.index;
       return Wallet.getReceivingAddressForAccount(idx);
     }
-
-  }
+  };
 
   $scope.paymentRequestURL = () => {
-    if($scope.paymentRequestAddress() == null) {
-      return null;
-    }
+    if ($scope.paymentRequestAddress() == null) return null;
 
     let url = `bitcoin:${ $scope.paymentRequestAddress() }`;
 
@@ -157,5 +150,5 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
     }
 
     return url;
-  }
+  };
 }
