@@ -38,6 +38,7 @@
     "istanbul": "^1.0.0-alpha.2",
     "jade": "*",
     "jasmine-core": "2.4.*",
+    "jstransformer-verbatim": "^1.0.0",
     "karma": "0.13.*",
     "karma-babel-preprocessor": "6.0.*",
     "karma-coffee-preprocessor": "0.3.*",

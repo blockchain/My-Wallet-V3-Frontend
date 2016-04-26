@@ -30,7 +30,8 @@ app.use(function (req, res, next) {
       // Firefox appears to just allow unsafe-inline CSS
       "style-src 'self' 'uD+9kGdg1SXQagzGsu2+gAKYXqLRT/E07bh4OhgXN8Y=' '4IfJmohiqxpxzt6KnJiLmxBD72c3jkRoQ+8K5HT5K8o='",
       "child-src 'none'",
-      "script-src 'self' 'sha256-mBeSvdVuQxRa2pGoL8lzKX14b2vKgssqQoW36iRlU9g=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='",
+      // 'sha256-mWmlK...' : see index.jade
+      "script-src 'self' 'sha256-mWmlKhaAh2dtuiY9mzVa//G1T55bjyDCGxCXVg5uPX0='",
       "connect-src 'self' " + rootURL + ' ' + (webSocketURL || 'wss://*.blockchain.info') + ' ' + (apiDomain || 'https://api.blockchain.info'),
       "object-src 'none'",
       "media-src 'self' https://storage.googleapis.com/bc_public_assets/ data: mediastream: blob:",

@@ -1,5 +1,5 @@
 doctype
-<!-- @if !PRODUCTION --><html lang='en' ng-app='walletApp' ng-init="autoReload=#{ process.env.AUTO_RELOAD || false }; rootURL='#{ process.env.ROOT_URL }/'; rootPath='#{ process.env.ROOT_PATH }'; webSocketURL='#{ process.env.WEBSOCKET_URL }'; apiDomain='#{ process.env.API_DOMAIN }/';" ng-csp ng-class="{'not-fixed': outOfApp}"><!-- @endif -->
+<!-- @if !PRODUCTION --><html lang='en' ng-app='walletApp' ng-init="autoReload=#{ process.env.AUTO_RELOAD || false }; rootURL='#{ process.env.ROOT_URL }/'; webSocketURL='#{ process.env.WEBSOCKET_URL }'; apiDomain='#{ process.env.API_DOMAIN }/';" ng-csp ng-class="{'not-fixed': outOfApp}"><!-- @endif -->
 <!-- @if PRODUCTION !><html lang='en' ng-app='walletApp' ng-csp ng-class="{'not-fixed': outOfApp}"><!-- @endif -->
 head
   meta(charset='utf-8')
@@ -208,10 +208,11 @@ body(ng-controller="AppCtrl" ui-view="body" ng-mousemove="resetInactivityTime()"
   script(src='js/application.min.js')  
   <!-- @endif -->
 
-  //- Whitelist by copying script from browser and putting it in a file 
-  //- (including the last new line) and then run:
+  //- Whitelist by copying script from browser and putting it in a file.
+  //- Add a blank line at the top and then run:
   //- cat script | openssl dgst -sha256 -binary | openssl enc -base64
-  script.
+  :verbatim
+    <script>
     if(browserDetection().browser === "ie" && browserDetection().version < 11) {
       if ( confirm("Your browser is out of date! It looks like you're using an old version of Internet Explorer. For the best Blockchain experience, please update your browser or hit cancel to return to our homepage.") ) {
         window.location = "http://browsehappy.com/";
@@ -220,3 +221,4 @@ body(ng-controller="AppCtrl" ui-view="body" ng-mousemove="resetInactivityTime()"
         window.location = "https://blockchain.info/";
       }
     }
+    </script>
