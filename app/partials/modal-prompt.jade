@@ -7,4 +7,4 @@
       input.form-control(type="{{::type}}" ng-model="promptInput" name="promptInput" required autofocus)
 .modal-footer.pal.flex-end
   button.button-muted.mrm(translate="CANCEL" ng-click="$dismiss('cancelled')")
-  button.btn.btn-primary(translate="SUBMIT" ng-click="$close(promptInput)" ng-disabled="form.$invalid")
+  button.btn.button-primary(translate="SUBMIT" ng-click="$close(promptInput)" ng-disabled="form.$invalid")
