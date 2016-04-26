@@ -253,9 +253,9 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
   $scope.setPaymentFrom = () => {
     let tx = $scope.transaction;
     if (!tx.from) return;
-    let origin = tx.from.isWatchOnly ?
-      (Wallet.isValidPrivateKey(tx.priv) ? tx.priv : tx.from.address):
-      (tx.from.index == null ? tx.from.address : tx.from.index);
+    let origin = tx.from.isWatchOnly
+      ? (Wallet.isValidPrivateKey(tx.priv) ? tx.priv : tx.from.address)
+      : (tx.from.index == null ? tx.from.address : tx.from.index);
     let fee = $scope.advanced ? tx.fee : undefined;
     $scope.payment.from(origin, fee);
   };
@@ -319,16 +319,17 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
 
   $scope.checkPriv = (bip38pw) => {
     let tx = $scope.transaction;
+    let privErrors = { noMatch: 'PRIV_NO_MATCH', bip38: 'BIP38_ERROR', pw: 'INCORRECT_PASSWORD' };
     if (!tx.from.isWatchOnly) return $q.resolve();
     return $q.resolve(MyWalletHelpers.privateKeyCorrespondsToAddress(tx.from.address, tx.priv, bip38pw))
       .then(priv => {
-        if (priv == null) throw 'PRIV_NO_MATCH';
+        if (priv == null) throw privErrors.noMatch;
         else $scope.payment.from(priv);
       })
       .catch(e => {
         if (e === 'needsBip38') return Alerts.prompt('NEED_BIP38', { type: 'password' }).then($scope.checkPriv);
-        else if (e === 'wrongBipPass') throw 'INCORRECT_PASSWORD';
-        else if (e !== 'PRIV_NO_MATCH') throw 'BIP38_ERROR';
+        else if (e === 'wrongBipPass') throw privErrors.pw;
+        else if (e !== 'PRIV_NO_MATCH') throw privErrors.bip38;
         else throw e;
       });
   };
