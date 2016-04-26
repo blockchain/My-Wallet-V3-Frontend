@@ -253,6 +253,7 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
   $scope.setPaymentFrom = () => {
     let tx = $scope.transaction;
     if (!tx.from) return;
+    if (!tx.from.isWatchOnly) tx.priv = '';
     let origin = tx.from.isWatchOnly
       ? (Wallet.isValidPrivateKey(tx.priv) ? tx.priv : tx.from.address)
       : (tx.from.index == null ? tx.from.address : tx.from.index);
