@@ -81,6 +81,9 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
       } else if (field === 'twoFactor') {
         $scope.errors.twoFactor = message;
       }
+      if (field !== 'twoFactor' && $scope.didAsk2FA) {
+        $scope.didEnterCorrect2FA = true;
+      }
     };
     const needs2FA = () => {
       $scope.busy = false;

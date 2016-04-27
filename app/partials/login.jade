@@ -30,7 +30,7 @@ div
           span(translate="GOOGLE_AUTH_CODE", ng-show="settings.twoFactorMethod == 4")
           span(translate="SMS_CODE", ng-show="settings.twoFactorMethod == 5")
       div
-        input.form-control(type="text", ng-model="twoFactorCode", ng-disabled="busy || settings.twoFactorMethod == 3")
+        input.form-control(type="text" ng-model="twoFactorCode" ng-disabled="busy || didEnterCorrect2FA || settings.twoFactorMethod == 3")
         span.help-block {{ errors.twoFactor }}
         p.form-control-static(ng-show="settings.twoFactorMethod == 5")
           img(ng-show="resending" src="img/spinner.gif")
