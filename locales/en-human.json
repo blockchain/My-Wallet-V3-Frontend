@@ -296,7 +296,7 @@
   "UPGRADE_PRIVACY" : "Enhanced Privacy",
   "UPGRADE_BACKUP" : "Simplified backup and recovery",
   "UPGRADE_FUND_MANAGEMENT" : "Customized fund management",
-  "UPGRADE_LIMITATIONS" : "Two advanced transaction types (spending from watch-only addresses and Shared Coin) are not supported in the new version at this time.",
+  "UPGRADE_LIMITATIONS" : "Shared Coin transactions are not supported in the new version at this time.",
   "PBKDF2_ITERATIONS" : "Password Stretching (PBKDF2)",
   "PBKDF2_ITERATIONS_EXPLAIN" : "This increases the difficulty of discovering your password using a brute-force attack but slows down loading and saving your wallet.",
   "CHANGE_PASSWORD" : "Change Password",
