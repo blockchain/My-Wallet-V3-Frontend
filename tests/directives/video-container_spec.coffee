@@ -17,7 +17,7 @@ describe "Video Container Directive", ->
   )
 
   beforeEach ->
-    element = $compile("<video-container img='img/blockchain-ad-placeholder.jpg' video='my.video.mp4'></video-container>")($rootScope)
+    element = $compile("<video-container img='img/blockchain-ad-placeholder.jpg' src='my.video.mp4'></video-container>")($rootScope)
     $rootScope.$digest()
     isoScope = element.isolateScope()
     isoScope.$digest()
@@ -25,8 +25,8 @@ describe "Video Container Directive", ->
   it "should have an image", ->
     expect(isoScope.img).toBeDefined()
 
-  it "should have a video", ->
-    expect(isoScope.video).toBeDefined()
+  it "should have a video src", ->
+    expect(isoScope.src).toBeDefined()
 
   it "should toggle play and pause", ->
     isoScope.playing = false
@@ -35,5 +35,5 @@ describe "Video Container Directive", ->
 
   it "should trust the video src", ->
     spyOn(isoScope, "trust")
-    isoScope.$digest()
+    isoScope.load()
     expect(isoScope.trust).toHaveBeenCalled()
