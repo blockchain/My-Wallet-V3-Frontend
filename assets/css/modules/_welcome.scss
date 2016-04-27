@@ -39,85 +39,6 @@
       }
     }
   }
-  .split {
-    margin-top: 100px;
-    .right {
-      .flex-around {
-        img {
-          height: 35px;
-        }
-      }
-    }
-    @media (min-width: 769px) {
-      .left {
-        width: 60%;
-      }
-      .right {
-        width: 40%;
-      }
-      .panel-group {
-        .panel {
-          z-index: 1;
-          max-width: 250px;
-          position: relative;
-          h3, h4 {
-            margin: 0px;
-          }
-          h4 {
-            line-height: 1.4;
-          }
-          p {
-            font-size: 14px;
-            line-height: 1.8;
-            margin: 30px 0px 60px 0px;
-          }
-        }
-        .panel-collapse {
-          height: 100% !important;
-          display: block !important;
-        }
-      }
-    }
-    @media (max-width: 768px) {
-      display: block !important;
-      .panel-group {
-        .panel {
-          @media (max-width: 992px) {
-            margin: 10px 20px;
-            text-align: center;
-            border-bottom: 1px solid $light-grey;
-            h4 {
-              margin-bottom: 5px;
-            }
-            span {
-              margin-bottom: 10px;
-            }
-            .flex-around {
-              margin-top: 0px !important;
-              margin-bottom: 10px;
-            }
-          }
-        }
-      }
-    }
-    .apps {
-      img {
-        max-width: 135px;
-      }
-    }
-  }
-  #newUser {
-    padding: 100px 0;
-    @media (max-width: 768px) {
-      padding: 40px 0;
-      display: block !important;
-    }
-    p {
-      font-size: 14px;
-      line-height: 1.8;
-      margin: 30px 0px 60px 0px;
-    }
-  }
   .scroll-in-view {
       transition: all 1s;
       position: relative;
@@ -158,80 +79,6 @@
                               0  8px 10px -5px rgba(0, 0, 0, 0.4);
           }
         }
-      }
-      .tx {
-        @include transition(top 1s);
-        &:nth-child(1) {
-          top: 105px;
-          left: 310px;
-        }
-        &:nth-child(2) {
-          top: 125px;
-          left: 271px;
-        }
-        &:nth-child(3) {
-          top: 150px;
-          left: 227px;
-        }
-        &:nth-child(4) {
-          top: 172px;
-          left: 187px;
-        }
-        &:nth-child(5) {
-          top: 195px;
-          left: 148px;
-        }
-        &:nth-child(6) {
-          top: 215px;
-          left: 120px;
-          width: 30%;
-        }
-      }
-    }
-    .txs {
-      position: static;
-      .tx {
-        -webkit-transform: translateZ(0px);
-        transform: translateZ(0px);
-        @include delay(1, 6, 10);
-        position: absolute;
-        width: 31%;
-        top: 50px;
-      }
-    }
-  }
-  .blocket {
-    &.scroll-in-view {
-      &.active {
-        @include transition-delay(.5s);
-      }
-    }
-    .image-container {
-      position: relative;
-      margin: 0 auto;
-      width: 720px;
-      img {
-        top: -70px;
-        left: 150px;
-        width: 100px;
-        position: absolute;
-        @media (max-width: 768px) {
-          top: -30px;
-          width: 50px;
-        }
-      }
-    }
-  }
-  .ios {
-    &.scroll-in-view {
-      margin-top: 150px;
-      overflow: visible;
-      .image-container {
-        max-width: 720px;
-        min-width: 720px;
-      }
-      @media (max-width: 768px) {
-        overflow: hidden;
       }
     }
   }
@@ -500,8 +347,8 @@
     }
     @media (min-width: 768px) {
       float: left;
-      width: 50%;
-      &:nth-child(2), &:nth-child(3) {
+      width: 25%;
+      &:nth-child(2), &:nth-child(4) {
         .donut {
           border: 500px solid $steel;
         }

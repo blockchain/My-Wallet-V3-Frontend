@@ -54,45 +54,55 @@ blocket-loading
               video-container(img="img/legacy-video-placeholder-TEMP.jpg" video="https://storage.googleapis.com/bc_public_assets/video/legacy-what-is-bitcoin-TEMP.mp4")
   //- END TEMP
 
-  .welcome-nav.flex-row.flex-between
-    .flex-center.flex-column.flex-justify(ng-click="scroll('newUser')")
-      h3.thin(translate="NEW_TO_BITCOIN")
-      h4(translate="WHY_USE")
-    .flex-center.flex-column.flex-justify(ng-click="scroll('experiencedUser')")
-      h3.thin(translate="EXPERIENCED_USER")
-      h4(translate="WHY_USE_BLOCKCHAIN")
+  //- .welcome-nav.flex-row.flex-between
+  //-   .flex-center.flex-column.flex-justify(ng-click="scroll('newUser')")
+  //-     h3.thin(translate="NEW_TO_BITCOIN")
+  //-     h4(translate="WHY_USE")
+  //-   .flex-center.flex-column.flex-justify(ng-click="scroll('experiencedUser')")
+  //-     h3.thin(translate="EXPERIENCED_USER")
+  //-     h4(translate="WHY_USE_BLOCKCHAIN")
 
-  .split.flex-row
-    .left
-      .welcome-wrapper
-        scroll-in-view(img="img/new-wallet-hero.jpg" shadow="true")  
-      scroll-in-view.blocket(img="img/blocket.png")
-      scroll-in-view.ios(img="img/ios-feature.jpg", transactions="true")
-    .right
-      uib-accordion(close-others="oneAtATime")
-        uib-accordion-group(heading="EASE OF USE")
-          h4(translate="SEND_AND_RECEIVE")
-          p(translate="LOVED_BY_ALL")
-        uib-accordion-group(heading="PEACE OF MIND")
-          h4(translate="IN_CONTROL")
-          p(translate="ACCESS_TO_BITCOINS")
-        uib-accordion-group(heading="HIGH SECURITY")
-          h4(translate="PROTECTING_FUNDS")
-          p(translate="STATE_OF_THE_ART_SEC")
-        uib-accordion-group(heading="CROSS DEVICE COMPATIBLE")
-          .flex-around.flex-row.mtl
-            a.flex-1(href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309" target="_blank")
-              img(src="img/logo-apple.svg")
-            a.flex-1(href="https://play.google.com/store/apps/details?id=piuk.blockchain.android" target="_blank")
-              img(src="img/logo-android.svg")
-            a.flex-1(ui-sref="public.login-no-uid")
-              img(src="img/logo-www.jpg")
-  #newUser.container-max-width.flex-justify.flex-center
-    .col-md-4
-      h3.thin(translate="NEW_TO_BITCOIN")
-      h4(translate="WHY_BITCOIN")
-      p(translate="BLOCKCHAIN_MISSION")
-    video-container.col-md-6(img="img/blockchain-ad-placeholder.jpg" video="https://storage.googleapis.com/bc_public_assets/video/blockchain-ad.mp4")
+  .flex-column.container-max-width
+    h2.flex-center.flex-justify(translate="Why Blockchain?")
+    .flex-row.flex-center.flex-between
+      .flex-center.flex-column.center
+        h4(translate="#")
+        h4(translate="7.0 Million Wallets Created")
+      .flex-center.flex-column.center
+        h4(translate="$")
+        h4(translate="$67 Billion Transacted")
+      .flex-center.flex-column.center
+        h4(translate="%")
+        h4(translate="50% of all Blockchain Transactions")
+
+    h2.flex-center.flex-justify(translate="Why Bitcoin?")
+    .flex-row.flex-center.flex-between
+      .flex-center.flex-column.center
+        h4(translate="What makes Bitcoin special?")
+        p Bitcoin is an anonymous, decentralized currency that was created in 2008. It relies on the blockchain, a public ledger that records bitcoin transactions, instead of central banks.
+          a(href="http://www.coindesk.com/information/what-is-bitcoin/" translate="More info.")
+      .flex-center.flex-column.center
+        h4(translate="Where can I use Bitcoin?")
+        p You can use Bitcoin at thousands of online stores, or send money around the world to friends and family for a miniscule fee.
+          a(href="https://www.bitcoin.com/spend-bitcoin-online" translate="Find stores.")
+      .flex-center.flex-column.center
+        h4(translate="What determines Bitcoin's Price?")
+        p Supply and Demand determines the price of Bitcoin, and its value is backed by mathematics.
+          a(href="https://bitcoin.org/en/faq#why-do-bitcoins-have-value" translate="More info.")
+
+    h2.flex-center.flex-justify(translate="What's New?")
+    .flex-row.flex-center.flex-between
+      .flex-center.flex-column.center
+        h4(translate="HD Addresses")
+        p We have your privacy in mind which is why we use HD addresses to avoid address reuse for increased privacy.
+      .flex-center.flex-column.center
+        h4(translate="You control your key")
+        p Blockchain never controls your private keys. We encrypt everything before safely storing it on our servers. This is nothing new for our Legacy users.
+          a(href="https://blockchain.info/wallet/how-it-works") How it works.
+      .flex-center.flex-column.center
+        h4(translate="Dynamic Fees")
+        p We adjust fees for you based on the current network conditions and the size of your transaction. More advanced users can also set their own custom fees.
+
   div.squares
     div
       img(src="img/square.png")
