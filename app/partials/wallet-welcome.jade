@@ -54,14 +54,6 @@ blocket-loading
               video-container(img="img/legacy-video-placeholder-TEMP.jpg" video="https://storage.googleapis.com/bc_public_assets/video/legacy-what-is-bitcoin-TEMP.mp4")
   //- END TEMP
 
-  //- .welcome-nav.flex-row.flex-between
-  //-   .flex-center.flex-column.flex-justify(ng-click="scroll('newUser')")
-  //-     h3.thin(translate="NEW_TO_BITCOIN")
-  //-     h4(translate="WHY_USE")
-  //-   .flex-center.flex-column.flex-justify(ng-click="scroll('experiencedUser')")
-  //-     h3.thin(translate="EXPERIENCED_USER")
-  //-     h4(translate="WHY_USE_BLOCKCHAIN")
-
   .flex-column.container-max-width
     h2.flex-center.flex-justify(translate="Why Blockchain?")
     .flex-row.flex-center.flex-between
@@ -126,7 +118,7 @@ blocket-loading
       p.type-h4(translate="ACTIVITY_FEED")
   #experiencedUser.container-max-width
     .flex-row.flex-top.flex-between
-      scroll-in-view.flex-1(img="img/android-feature.jpg")
+      scroll-in-view.ios(img="img/ios-feature.jpg", transactions="true")
       ul.flex-1
         li
           span.heavy(translate="HD_ARCH") 
