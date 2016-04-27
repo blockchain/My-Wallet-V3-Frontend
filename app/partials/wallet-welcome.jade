@@ -57,41 +57,41 @@ blocket-loading
   .flex-column.container-max-width
     h2.flex-center.flex-justify(translate="Why Blockchain?")
     .flex-row.flex-center.flex-between
-      .flex-center.flex-column.center
-        h4(translate="#")
-        h4(translate="7.0 Million Wallets Created")
-      .flex-center.flex-column.center
-        h4(translate="$")
-        h4(translate="$67 Billion Transacted")
-      .flex-center.flex-column.center
-        h4(translate="%")
-        h4(translate="50% of all Blockchain Transactions")
+      .flex-1.flex-center.flex-column.center
+        h4(translate="7.0 Million")
+        h4(translate="Wallets Created")
+      .flex-1.flex-center.flex-column.center
+        h4(translate="$67 Billion")
+        h4(translate="Transacted")
+      .flex-1.flex-center.flex-column.center
+        h4(translate="50%")
+        h4(translate="Of All Blockchain Transactions")
 
     h2.flex-center.flex-justify(translate="Why Bitcoin?")
     .flex-row.flex-center.flex-between
-      .flex-center.flex-column.center
-        h4(translate="What makes Bitcoin special?")
+      .flex-1.flex-center.flex-column.center
+        h4(translate="What makes Bitcoin different?")
         p Bitcoin is an anonymous, decentralized currency that was created in 2008. It relies on the blockchain, a public ledger that records bitcoin transactions, instead of central banks.
           a(href="http://www.coindesk.com/information/what-is-bitcoin/" translate="More info.")
-      .flex-center.flex-column.center
+      .flex-1.flex-center.flex-column.center
         h4(translate="Where can I use Bitcoin?")
         p You can use Bitcoin at thousands of online stores, or send money around the world to friends and family for a miniscule fee.
           a(href="https://www.bitcoin.com/spend-bitcoin-online" translate="Find stores.")
-      .flex-center.flex-column.center
+      .flex-1.flex-center.flex-column.center
         h4(translate="What determines Bitcoin's Price?")
         p Supply and Demand determines the price of Bitcoin, and its value is backed by mathematics.
           a(href="https://bitcoin.org/en/faq#why-do-bitcoins-have-value" translate="More info.")
 
     h2.flex-center.flex-justify(translate="What's New?")
     .flex-row.flex-center.flex-between
-      .flex-center.flex-column.center
+      .flex-1.flex-center.flex-column.center
         h4(translate="HD Addresses")
         p We have your privacy in mind which is why we use HD addresses to avoid address reuse for increased privacy.
-      .flex-center.flex-column.center
+      .flex-1.flex-center.flex-column.center
         h4(translate="You control your key")
         p Blockchain never controls your private keys. We encrypt everything before safely storing it on our servers. This is nothing new for our Legacy users.
           a(href="https://blockchain.info/wallet/how-it-works") How it works.
-      .flex-center.flex-column.center
+      .flex-1.flex-center.flex-column.center
         h4(translate="Dynamic Fees")
         p We adjust fees for you based on the current network conditions and the size of your transaction. More advanced users can also set their own custom fees.
 
@@ -199,5 +199,25 @@ blocket-loading
       div
         p(translate="It's super slick and is easy to use. Would definitely recommend!!")
         span.author Anonymous Wallet User
-  a(ui-sref="public.login-no-uid")
-    img.footer-hero(src="img/footer-hero.jpg")
+  .flex-center.flex-column.flex-justify
+    h3 Be Your Own Bank
+    form.form-horizontal(
+      role="form"
+      name="signupForm"
+      ng-submit="signup()"
+      autocomplete="off"
+      novalidate)
+      .form-group.flex-row.flex-center(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
+        label.mbn(translate="EMAIL")
+        input.form-control.mlm.mrm(
+          name="email"
+          type="email"
+          ng-model="fields.email"
+          required
+          autofocus)
+        button.button-primary(
+          type="submit"
+          ng-disabled="signupForm.$invalid"
+          translate="GET_STARTED"
+          ng-show="!working")  
+        img(ng-show="working" src="img/spinner.gif")
