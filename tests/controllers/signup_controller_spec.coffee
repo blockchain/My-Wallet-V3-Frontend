@@ -9,6 +9,8 @@ describe "SignupCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile, $templateCache) ->
       Wallet = $injector.get("Wallet")
+      $state = $injector.get("$state") # This is a mock
+      $state.params = {email: ''}
 
       Wallet.login = (uid, pass, code, twoFactor, success, error) -> success()
       Wallet.create = (password, email, currency, language, success) -> success("new_guid")

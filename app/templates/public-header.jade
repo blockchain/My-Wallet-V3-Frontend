@@ -1,7 +1,7 @@
 .navbar.navbar-default.navbar-inverse.bc-header(role='navigation')
   .container-fluid.container-max-width
     .navbar-header.flex-between
-      a.navbar-brand(ui-sref="welcome") 
+      a.navbar-brand(href="{{rootURL}}") 
         img#logo(src="img/blockchain-logo.svg", alt="Blockchain")
       button.navbar-toggle(type="button", ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
         span.sr-only Toggle navigation

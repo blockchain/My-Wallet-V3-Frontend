@@ -662,5 +662,6 @@
   "CUSTOMIZE_HELPER": "Specify an amount and a description for this transaction.",
   "SAVE_HELPER": "You’ll find this in Settings -> Addresses -> {{ label }} -> Manage Addresses.",
   "THANKS_FOR_ACCEPTING": "Thanks for accepting bitcoin!",
-  "NOTE_PLACEHOLDER": "Money for rent 🏡"
+  "NOTE_PLACEHOLDER": "Money for rent 🏡",
+  "GET_STARTED": "Get Started"
 }

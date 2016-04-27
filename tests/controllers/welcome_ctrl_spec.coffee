@@ -13,11 +13,3 @@ describe "WelcomeCtrl", ->
       return
 
     return
-
-  it "should scroll", ->
-    document.getElementById = () -> {}
-    spyOn(scope, 'scrollTo').and.callThrough()
-    spyOn(scope, 'easeInOut').and.callThrough()
-    scope.scroll()
-    expect(scope.scrollTo).toHaveBeenCalled()
-    expect(scope.easeInOut).toHaveBeenCalled()
