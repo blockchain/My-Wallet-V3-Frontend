@@ -3,6 +3,8 @@ angular
   .controller('WelcomeCtrl', WelcomeCtrl);
 
 function WelcomeCtrl ($scope, $timeout, $state) {
+  $scope.fields = { email: '' };
+
   $scope.scrollTo = (element, to, duration) => {
     let start = element.scrollTop;
     let change = to - start;

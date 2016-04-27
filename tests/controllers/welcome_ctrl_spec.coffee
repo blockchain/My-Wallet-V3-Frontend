@@ -21,3 +21,11 @@ describe "WelcomeCtrl", ->
     scope.scroll()
     expect(scope.scrollTo).toHaveBeenCalled()
     expect(scope.easeInOut).toHaveBeenCalled()
+
+  describe "signup", ->
+
+    it "should navigate to public.signup", inject(($state) ->
+      spyOn($state, "go")
+      scope.signup()
+      expect($state.go).toHaveBeenCalled()
+    )
