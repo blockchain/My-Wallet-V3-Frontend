@@ -42,7 +42,6 @@
               name="priv"
               placeholder="{{ 'ENTER_PRIV' | translate }}..."
               ng-model="transaction.priv"
-              ng-change="setPaymentFrom()"
               ng-required="transaction.from.isWatchOnly"
               is-valid="!transaction.from.isWatchOnly || isValidPrivateKey(transaction.priv)")
             .input-group-btn

@@ -711,7 +711,7 @@ describe "SendCtrl", ->
         spyOn(scope.payment, 'from')
         scope.checkPriv()
         scope.$digest()
-        expect(scope.payment.from).toHaveBeenCalledWith('decrypted_priv')
+        expect(scope.payment.from).toHaveBeenCalledWith('decrypted_priv', undefined)
 
       it "should reject if the priv and address do not match", (done) ->
         s = pkctaSpy(null)
