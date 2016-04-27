@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('WelcomeCtrl', WelcomeCtrl);
 
-function WelcomeCtrl ($scope, $timeout) {
+function WelcomeCtrl ($scope, $timeout, $state) {
   $scope.scrollTo = (element, to, duration) => {
     let start = element.scrollTop;
     let change = to - start;
@@ -34,5 +34,9 @@ function WelcomeCtrl ($scope, $timeout) {
   $scope.scroll = (id) => {
     let top = document.getElementById(id).offsetTop;
     $scope.scrollTo(document.body, top, 500);
+  };
+
+  $scope.signup = () => {
+    $state.go('public.signup', { email: $scope.fields.email });
   };
 }

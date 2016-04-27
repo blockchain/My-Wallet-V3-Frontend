@@ -4,7 +4,7 @@
 .type-h4 { font-size: 1.5em; }
 .type-lbl { font-size: 1.1em; }
 .title { font-size: 3.5em; }
-.underline { text-decoration: underline; }
+.underline { text-decoration: underline; &:hover { text-decoration: underline; } }
 .pointer { cursor: pointer; }
 .right-align { text-align: right; }
 .left-align { text-align: left; }

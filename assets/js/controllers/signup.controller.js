@@ -42,10 +42,10 @@ function SignupCtrl ($scope, $state, $cookies, $filter, $translate, $uibModal, W
 
   $scope.currency_guess = $filter('getByProperty')('code', cur, currency.currencies);
   $scope.fields = {
-    email: '',
     password: '',
     confirmation: '',
-    acceptedAgreement: false
+    acceptedAgreement: false,
+    email: $state.params.email || ''
   };
 
   $scope.close = () => {
