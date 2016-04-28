@@ -90,5 +90,7 @@ form[name="signupForm"] {
 input.lrg {
   height: 54px;
   font-size: 1.4em;
-  min-width: 250px;
+  @media (min-width: 768px) {
+    min-width: 250px;
+  }
 }

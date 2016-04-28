@@ -278,6 +278,9 @@
     }
     @media (max-width: 768px) {
       padding: 40px 0 0 0;
+      img {
+        display: none;
+      }
       ul {
         max-width: initial;
         padding: 0 15px;
@@ -496,6 +499,10 @@
         .donut {
           border: 300px solid $steel;
         }
+      }
+      p:last-child {
+        font-size: 12px;
+        bottom: -1%;
       }
     }
     @media (min-width: 768px) {
