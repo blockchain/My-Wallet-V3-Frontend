@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SendCtrl', SendCtrl);
 
-function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees) {
+function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.alerts = [];
@@ -50,6 +50,13 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $t
     $scope.$safeApply();
   });
 
+  $scope.payment.on('error', error => {
+    if (error.error === 'ERR_FETCH_UNSPENT') {
+      Alerts.displayError(error.error, true, $scope.alerts);
+      $scope.failedToLoadUnspent = true;
+    }
+  });
+
   $scope.hasZeroBalance = (origin) => origin.balance === 0;
   $scope.close = () => $uibModalInstance.dismiss('');
 
@@ -77,6 +84,16 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $t
     // Remove error messages:
     $scope.sendForm.$setPristine();
     $scope.sendForm.$setUntouched();
+  };
+
+  $scope.reopenModal = () => {
+    $timeout(() => $uibModal.open({
+      templateUrl: 'partials/send.jade',
+      windowClass: 'bc-modal initial',
+      controller: 'SendCtrl',
+      resolve: { paymentRequest }
+    }), 500);
+    $uibModalInstance.dismiss();
   };
 
   $scope.addDestination = () => {

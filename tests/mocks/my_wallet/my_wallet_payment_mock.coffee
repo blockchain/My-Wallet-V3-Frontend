@@ -25,5 +25,8 @@ angular.module('walletApp.core').factory 'MyWalletPayment', ($q) ->
     this.sideEffect = () -> this
     this.sign = (pass) -> this
     this.publish = () -> this
-    this.on = (e, f) -> this.triggerUpdate = f; this
+    this.on = (e, f) ->
+      if e == 'update'
+        this.triggerUpdate = f
+      this
     this

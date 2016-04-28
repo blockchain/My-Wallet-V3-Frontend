@@ -380,6 +380,8 @@
   "AUTHORIZED_MESSAGE" : "You have authorized this login attempt.",
   "ADVANCED_SEND" : "Advanced Send",
   "SEND_FAILED": "Send failed, please come back later to try again",
+  "ERR_FETCH_UNSPENT": "Something went wrong, please check your connection and try again.",
+  "ERR_FETCH_UNSPENT_RETRY": "Failed to load available balance, click <u>here</u> to retry",
   "RESET_FORM" : "Reset Form",
   "REGULAR_SEND" : "Regular Send",
   "TX_FEE" : "Fee",
