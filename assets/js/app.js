@@ -31,8 +31,9 @@ const modules = [
 ];
 
 angular.module('walletApp', modules)
-.config(($uibModalProvider, uiSelectConfig) => {
+.config(($uibModalProvider, uiSelectConfig, $locationProvider) => {
   uiSelectConfig.theme = 'bootstrap';
+  $locationProvider.html5Mode(true);
 })
 .run(($rootScope, $uibModal, $state, MyWallet, $q, currency, $timeout) => {
   $rootScope.$safeApply = (scope = $rootScope, before) => {

@@ -6,7 +6,7 @@
           span.sr-only Toggle navigation
           span.ti-angle-down.white
         a.navbar-brand(ui-sref="wallet.common.home") 
-          img#logo(src="img/blockchain-wallet-logo.svg", alt="Blockchain")
+          img#logo(src="assets/img/blockchain-wallet-logo.svg", alt="Blockchain")
       a#wallet-nav-toggle(title="Wallet Navigation Menu", ng-click="toggleMenu()")
         span.ti-menu.white
     .navbar-collapse.collapse(ng-class="{'in bg-blue' : !navCollapsed}", ng-click="navCollapsed=true")
@@ -43,7 +43,7 @@
           a(href="https://markets.blockchain.info/", translate="MARKETS" target="_blank")
         li.item
           a(ng-click="refresh()" ng-class="{'rotating': refreshing}").refresh
-            img(src="img/refresh.svg")
+            img(src="assets/img/refresh.svg")
         li.item
           a(ng-click="logout()", translate="SIGNOUT")
     // /.nav-collapse

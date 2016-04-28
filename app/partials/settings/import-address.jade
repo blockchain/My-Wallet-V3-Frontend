@@ -57,7 +57,7 @@
       b(ng-show="address.balance != null") {{ address.balance | toBitCurrency:settings.btcCurrency }}
       span.fiat.plm(ng-show="address.balance != null")
         fiat(btc="address.balance")
-      img(ng-show="address.balance == null" src="img/spinner.gif")
+      img(ng-show="address.balance == null" src="assets/img/spinner.gif")
   form.form-horizontal(role="form",name="form",novalidate, ng-show="step==3")
     .form-group
       label.col-sm-3.control-label

@@ -1,6 +1,6 @@
 .modal-header.flex-column.bc-modal-header
   .flex-center
-    img(src="img/arrow-down.png")
+    img(src="assets/img/arrow-down.png")
     h3(translate="RECEIVE_BITCOIN")
   h5(translate="RECEIVE_BITCOIN_MESSAGE", ng-hide="focus || hasLegacyAddress")
   .flex-row.flex-center(ng-show="hasLegacyAddress").legacy-msg 
@@ -78,7 +78,7 @@
                                                  popover-append-to-body="true")
           h4 Copy and Share
           p.mtl.form-control-static.bitcoin-address
-            img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
+            img(src="assets/img/spinner.gif", ng-hide="status.didInitializeHD")  
             span(ng-show="status.didInitializeHD" single-click-select)
               | 
               button.clipboard.btn.btn-default
@@ -91,7 +91,7 @@
                                               popover-append-to-body="true")
           h4 Scan
           p(ng-hide="status.didInitializeHD")
-            img(src="img/spinner.gif")  
+            img(src="assets/img/spinner.gif")  
           span.mtl(ng-show="status.didInitializeHD")
             qr(text="paymentRequestURL()", size=100, correction-level="'M'")
 

@@ -2,35 +2,38 @@ doctype
 <!-- @if !PRODUCTION --><html lang='en' ng-app='walletApp' ng-init="autoReload=#{ process.env.AUTO_RELOAD || false }; rootURL='#{ process.env.ROOT_URL }/'; webSocketURL='#{ process.env.WEBSOCKET_URL }'; apiDomain='#{ process.env.API_DOMAIN }/';" ng-csp ng-class="{'not-fixed': outOfApp}"><!-- @endif -->
 <!-- @if PRODUCTION !><html lang='en' ng-app='walletApp' ng-csp ng-class="{'not-fixed': outOfApp}"><!-- @endif -->
 head
+  base(href='/wallet-beta/')
   meta(charset='utf-8')
   meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1") 
   meta(name="theme-color" content="#187fc0")
   meta(name="apple-itunes-app" content="app-id=493253309")
-  link(rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-icon-180x180.png")
-  link(rel="apple-touch-icon" sizes="152x152" href="img/favicon/apple-icon-152x152.png")
-  link(rel="apple-touch-icon" sizes="144x144" href="img/favicon/apple-icon-144x144.png")
-  link(rel="apple-touch-icon" sizes="120x120" href="img/favicon/apple-icon-120x120.png")
-  link(rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-icon-114x114.png")
-  link(rel="apple-touch-icon" sizes="76x76" href="img/favicon/apple-icon-76x76.png")
-  link(rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-icon-72x72.png")
-  link(rel="apple-touch-icon" sizes="60x60" href="img/favicon/apple-icon-60x60.png")
-  link(rel="apple-touch-icon" sizes="57x57" href="img/favicon/apple-icon-57x57.png")
-  link(rel="icon" type="image/png" sizes="192x192"  href="img/favicon/android-icon-192x192.png")
-  link(rel="icon" type="image/png" sizes="96x96" href="img/favicon/favicon-96x96.png")
-  link(rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png")
-  link(rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png")
+  link(rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon/apple-icon-180x180.png")
+  link(rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon/apple-icon-152x152.png")
+  link(rel="apple-touch-icon" sizes="144x144" href="assets/img/favicon/apple-icon-144x144.png")
+  link(rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon/apple-icon-120x120.png")
+  link(rel="apple-touch-icon" sizes="114x114" href="assets/img/favicon/apple-icon-114x114.png")
+  link(rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon/apple-icon-76x76.png")
+  link(rel="apple-touch-icon" sizes="72x72" href="assets/img/favicon/apple-icon-72x72.png")
+  link(rel="apple-touch-icon" sizes="60x60" href="assets/img/favicon/apple-icon-60x60.png")
+  link(rel="apple-touch-icon" sizes="57x57" href="assets/img/favicon/apple-icon-57x57.png")
+  link(rel="icon" type="image/png" sizes="192x192"  href="assets/img/favicon/android-icon-192x192.png")
+  link(rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon/favicon-96x96.png")
+  link(rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon/favicon-32x32.png")
+  link(rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon/favicon-16x16.png")
+
   meta(name="msapplication-TileColor" content="#ffffff")
-  meta(name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png")
+  meta(name="msapplication-TileImage" content="assets/img/favicon/ms-icon-144x144.png")
   title Blockchain Wallet
   <!-- @if !PRODUCTION -->
-  link(rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css")
-  link(rel='stylesheet' href='bower_components/bc-css-flags/dist/css/bc-css-flags.css')
-  link(rel='stylesheet' href='bower_components/bc-phone-number/dist/css/bc-phone-number.css')  
+  link(rel="stylesheet" href="assets/bower_components/angular-ui-select/dist/select.css")
+  link(rel='stylesheet' href='assets/bower_components/bc-css-flags/dist/css/bc-css-flags.css')
+  link(rel='stylesheet' href='assets/bower_components/bc-phone-number/dist/css/bc-phone-number.css')  
   // include: "type": "css", "files": "build/css/*.css"
+
   <!-- @endif -->
   
   <!-- @if PRODUCTION !>
-  link(rel='stylesheet', href='css/application.css')
+  link(rel='stylesheet', href='assets/css/application.css')
   <!-- @endif -->
 
 body(ng-controller="AppCtrl" ui-view="body" ng-mousemove="resetInactivityTime()" ng-keypress="resetInactivityTime()")
@@ -38,49 +41,50 @@ body(ng-controller="AppCtrl" ui-view="body" ng-mousemove="resetInactivityTime()"
   //- This does not depend on Angular and will show as soon as the images are done loading.
   .blocket-loading
     div
-      img.full(src="img/blocket-full.png")
-      img(src="img/blocket-no-boosters.png")
+      img.full(src="assets/img/blocket-full.png")
+      img(src="assets/img/blocket-no-boosters.png")
 
   noscript
-    img(src="/img/logo-bw.png")
+    img(src="assets/img/logo-bw.png")
     h3 Please enable JavaScript to use the Blockchain Wallet
 
   //- Load javascript in the body async.
   <!-- @if !PRODUCTION -->
-  script(src='bower_components/angular/angular.js')
-  script(src='bower_components/angular-sanitize/angular-sanitize.js')
-  script(src='bower_components/angular-cookies/angular-cookies.js')
-  script(src='bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
-  script(src='bower_components/angular-animate/angular-animate.js')
-  script(src='bower_components/angular-ui-router/release/angular-ui-router.js')
-  script(src='bower_components/angular-ui-select/dist/select.js')
-  script(src='bower_components/angular-audio/app/angular.audio.js')
-  script(src='bower_components/qrcode/lib/qrcode.js')
-  script(src='bower_components/angular-qr/src/angular-qr.js')
-  script(src='bower_components/angular-translate/angular-translate.js')
-  script(src='bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js')
-  script(src='bower_components/angular-inview/angular-inview.js')
-  script(src='bower_components/angular-password-entropy/password-entropy.js')  
-  script(src='bower_components/digits-trie/dist/digits-trie.js')
-  script(src='bower_components/google-libphonenumber/dist/browser/libphonenumber.js')
-  script(src='bower_components/bc-countries/dist/bc-countries.js')
-  script(src='bower_components/bc-phone-number/dist/js/bc-phone-number.js')  
-  script(src='bower_components/browserdetection/src/browser-detection.js')
-  script(src='bower_components/webcam-directive/app/scripts/webcam.js')
-  script(src='bower_components/bc-qr-reader/dist/bc-qr-reader.js')
+  script(src='assets/bower_components/angular/angular.js')
+  script(src='assets/bower_components/angular-sanitize/angular-sanitize.js')
+  script(src='assets/bower_components/angular-cookies/angular-cookies.js')
+  script(src='assets/bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
+  script(src='assets/bower_components/angular-animate/angular-animate.js')
+  script(src='assets/bower_components/angular-ui-router/release/angular-ui-router.js')
+  script(src='assets/bower_components/angular-ui-select/dist/select.js')
+  script(src='assets/bower_components/angular-audio/app/angular.audio.js')
+  script(src='assets/bower_components/qrcode/lib/qrcode.js')
+  script(src='assets/bower_components/angular-qr/src/angular-qr.js')
+  script(src='assets/bower_components/angular-translate/angular-translate.js')
+  script(src='assets/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js')
+  script(src='assets/bower_components/angular-inview/angular-inview.js')
+  script(src='assets/bower_components/angular-password-entropy/password-entropy.js')  
+  script(src='assets/bower_components/digits-trie/dist/digits-trie.js')
+  script(src='assets/bower_components/google-libphonenumber/dist/browser/libphonenumber.js')
+  script(src='assets/bower_components/bc-countries/dist/bc-countries.js')
+  script(src='assets/bower_components/bc-phone-number/dist/js/bc-phone-number.js')  
+  script(src='assets/bower_components/browserdetection/src/browser-detection.js')
+  script(src='assets/bower_components/webcam-directive/app/scripts/webcam.js')
+  script(src='assets/bower_components/bc-qr-reader/dist/bc-qr-reader.js')
 
   //- Blockchain MyWallet javascript (must be called before 'app')
-  script(src='bower_components/blockchain-wallet/dist/my-wallet.js')
+  script(src='assets/bower_components/blockchain-wallet/dist/my-wallet.js')
 
   // include: "type": "js", "files": "build/js/**/*.module.js"
   // include: "type": "js", "files": "build/js/*.js"
   // include: "type": "js", "files": "build/js/**/*.service.js"
   // include: "type": "js", "files": "build/js/**/*.controller.js"
   // include: "type": "js", "files": "build/js/**/*.directive.js"
+
   <!-- @endif -->
   
   <!-- @if PRODUCTION !>
-  script(src='js/application.min.js')  
+  script(src='assets/js/application.min.js')  
   <!-- @endif -->
 
   //- Whitelist by copying script from browser and putting it in a file.

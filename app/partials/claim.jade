@@ -9,7 +9,7 @@
           span(ng-show="balance != null")
             span.btc {{ balance | convert }}
             fiat.fiat(btc="balance") 
-          img(ng-show="balance == null" src="img/spinner.gif")
+          img(ng-show="balance == null" src="assets/img/spinner.gif")
     .form-group
       label.col-sm-3.control-label(translate="REDEEM_TO")
       .col-sm-9
@@ -19,4 +19,4 @@
             span(ng-bind-html="(account.label | escapeHtml | highlight: $select.search)")  
 .modal-footer
   button.btn.button-primary(ng-click="redeem()", translate="REDEEM", ng-hide="redeeming") 
-  img(ng-show="redeeming" src="img/spinner.gif") 
+  img(ng-show="redeeming" src="assets/imgimg/spinner.gif") 

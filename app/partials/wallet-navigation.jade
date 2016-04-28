@@ -18,7 +18,7 @@
             span.prs {{::account.label}}
             span
               fiat-or-btc(btc="account.balance")
-              img(ng-show="account.balance == null" src="img/spinner.gif")
+              img(ng-show="account.balance == null" src="assets/img/spinner.gif")
         li(ui-sref="wallet.common.transactions({accountIndex:'imported'})", ng-show="numberOfActiveLegacyAddresses() > 0", ng-class="{active: selectedAccountIndex == 'imported'}")
           a.flex-between.pas.imported-addresses
             span.prs(translate="IMPORTED_ADDRESSES")
