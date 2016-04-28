@@ -102,6 +102,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/signup.jade',
           controller: 'SignupCtrl'
         }
+      },
+      params: {
+        email: ''
       }
     })
     .state('public.help', {

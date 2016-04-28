@@ -30,6 +30,7 @@ div
           ng-maxlength="255"
           min-entropy="25"
           ng-change="fields.confirmation = ''"
+          focus-when="fields.email.length"
           required)
         password-entropy.help-block(password="fields.password")
         span.help-block

@@ -86,3 +86,11 @@ form[name="signupForm"] {
     margin-bottom: 0px;
   }
 }
+
+input.lrg {
+  height: 54px;
+  font-size: 1.4em;
+  @media (min-width: 768px) {
+    min-width: 250px;
+  }
+}

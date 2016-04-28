@@ -237,7 +237,7 @@
   }
   #experiencedUser {
     font-size: 14px;
-    padding: 60px 0;
+    padding: 60px 0px 0px 0px;
     h2, h3 {
       margin: 0px;
       color: $blue;
@@ -278,6 +278,9 @@
     }
     @media (max-width: 768px) {
       padding: 40px 0 0 0;
+      img {
+        display: none;
+      }
       ul {
         max-width: initial;
         padding: 0 15px;
@@ -477,33 +480,37 @@
                         0  8px 10px -5px rgba(0, 0, 0, 0.4);
     }
     p:last-child {
-      @include transition(opacity $slow);
+      @include transition(color $slow);
       transform: translateX(-50%);
       position: absolute;
       text-align: center;
       color: $pale-grey;
       max-width: 200px;
+      font-size: 16px;
       min-height: 10%;
       bottom: 2%;
       left: 50%;
-      @media (min-width: 768px) {
-        bottom: 5%;
-      }
     }
 
     @media (max-width: 768px) {
-      &:nth-child(2), &:nth-child(4) {
-        .donut {
-          border: 500px solid $steel;
-        }
-      }
-    }
-    @media (min-width: 768px) {
       float: left;
       width: 50%;
       &:nth-child(2), &:nth-child(3) {
         .donut {
-          border: 500px solid $steel;
+          border: 300px solid $steel;
+        }
+      }
+      p:last-child {
+        font-size: 12px;
+        bottom: -1%;
+      }
+    }
+    @media (min-width: 768px) {
+      float: left;
+      width: 25%;
+      &:nth-child(2), &:nth-child(4) {
+        .donut {
+          border: 300px solid $steel;
         }
       }
     }
@@ -535,8 +542,8 @@
         width: 101%;
         top: 50%;
       }
-      p {
-        opacity: 0;
+      p.dark {
+        color: $text;
       }
     }
   }

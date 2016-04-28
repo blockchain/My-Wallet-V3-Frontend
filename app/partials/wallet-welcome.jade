@@ -6,52 +6,50 @@ blocket-loading
     .quickstart
       #intro-header.container
         .row-fluid
-          .span4.col.hidden-phone
-            h6 New Users
-            p
-              | Creating a new bitcoin wallet takes literally a few seconds. You will be able to send and receive payments immediately.
           .span4.col
-            h6 Existing Users
-            p If you have previously created a My Wallet account click below to login.
+            h6(translate="EXISTING_USERS")
+            p(translate="UPGRADE_COPY")
           .span4.col.hidden-phone
-            h6 Help And Support
+            h6(translate="LEGACY_LOGIN") 
             p
-              | Please consult the FAQ for commonly asked questions. For any problems with the site, please contact us.
+              | {{ 'LEGACY_COPY' | translate }}
+          .span4.col.hidden-phone
+            h6(translate="HELP_SUPPORT")
+            p
+              | {{ 'SUPPORT_COPY' | translate }}
         .row-fluid
-          .span4.col.hidden-phone
-            p
-              a.btn.btn-primary(ui-sref="public.signup") Start A New Wallet
           .span4.col
             p
-              a.btn.btn-primary(ui-sref="public.login-no-uid") Login Now
+              a.btn.btn-primary(ui-sref="public.login-no-uid" translate="LOGIN_NEW")
           .span4.col.hidden-phone
             p
-              a.btn.btn-info(href='https://blockchain.zendesk.com' target="_blank") Support Pages
+              a.btn.btn-muted(href="{{rootURL}}wallet/login" translate="LOGIN_LEGACY")
+          .span4.col.hidden-phone
+            p
+              a.btn.btn-info(href='https://blockchain.zendesk.com' target="_blank" translate="SUPPORT_BUTTON") 
   .legacy
     .container
       .page-header
         h1
           | My Wallet 
-          small Be Your Own Bank®.
+          small Be Your Own Bank
+            sup.type-xs ®
           span.hidden-phone.small-pull-right
-            | Confused? Read the 
-            a(href='https://blockchain.zendesk.com' target="_blank") Beginners FAQ
-            |  - 
-            a(href='https://blockchain.info/wallet/how-it-works') How It Works
+            | {{ 'CONFUSED_READ' | translate }} - 
+            a(href='{{rootURL}}wallet/how-it-works' translate="HOW_IT_WORKS") 
   .legacy
     .container
       .row-fluid
             .span6
               p
                 img(src='img/blockchain-legacy-rubiks-TEMP.png').img-inline
-                | My Wallet is a free online bitcoin wallet, which you can use to make worldwide payments for free. We make paying with bitcoins easy and secure available anywhere on your phone or desktop.
+                | {{ 'MY_WALLET_IS' | translate }}
               p
-                | We are not a bank; you retain complete ownership of your Money. We cannot view your balance, see your transactions or make payments on your behalf.
+                | {{ 'ABOUT_BLOCKCHAIN_WALLET' | translate }}
               p(align='center')
-                a.btn.btn-success(ui-sref="public.signup") Create My Free Wallet
-                a.mlvl(href="https://blockchain.info/wallet/new") Create A Legacy Wallet
+                a.btn.btn-success(ui-sref="public.signup" translate="CREATE_NEW") 
             .span6.center.mbl
-              video-container(img="img/legacy-video-placeholder-TEMP.jpg" video="https://storage.googleapis.com/bc_public_assets/video/legacy-what-is-bitcoin-TEMP.mp4")
+              video-container(img="img/legacy-video-placeholder-TEMP.jpg" src="https://storage.googleapis.com/bc_public_assets/video/legacy-what-is-bitcoin-TEMP.mp4")
   //- END TEMP
 
   .welcome-nav.flex-row.flex-between
@@ -92,13 +90,13 @@ blocket-loading
       h3.thin(translate="NEW_TO_BITCOIN")
       h4(translate="WHY_BITCOIN")
       p(translate="BLOCKCHAIN_MISSION")
-    video-container.col-md-6(img="img/blockchain-ad-placeholder.jpg" video="https://storage.googleapis.com/bc_public_assets/video/blockchain-ad.mp4")
+    video-container.col-md-6(img="img/blockchain-ad-placeholder.jpg" src="https://storage.googleapis.com/bc_public_assets/video/blockchain-ad.mp4")
   div.squares
     div
       img(src="img/square.png")
       div.background
       div.donut
-      p.type-h4(translate="UPGRADE_SECURITY_CENTER")
+      p.type-h4.dark(translate="UPGRADE_SECURITY_CENTER")
     div
       img(src="img/square.png")
       div.background
@@ -108,12 +106,12 @@ blocket-loading
       img(src="img/square.png")
       div.background
       div.donut
-      p.type-h4(translate="FUN_AND_INSIGHTFUL")
+      p.type-h4.dark(translate="FUN_AND_INSIGHTFUL")
     div
       img(src="img/square.png")
       div.background
       div.donut
-      p.type-h4(translate="ACTIVITY_FEED")
+      p.type-h4.dark(translate="ACTIVITY_FEED")
   #experiencedUser.container-max-width
     .flex-row.flex-top.flex-between
       scroll-in-view.flex-1(img="img/android-feature.jpg")
@@ -197,5 +195,25 @@ blocket-loading
       div
         p(translate="It's super slick and is easy to use. Would definitely recommend!!")
         span.author Anonymous Wallet User
-  a(ui-sref="public.login-no-uid")
-    img.footer-hero(src="img/footer-hero.jpg")
+  .flex-center.flex-column.flex-justify
+    h3.mbn.mtl.flex-start Be Your Own Bank
+      small ®
+    form.form-horizontal(
+      role="form"
+      name="signupForm"
+      ng-submit="signup()"
+      autocomplete="off"
+      novalidate)
+      .form-group.flex-row.flex-center.mtl.mbvl(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
+        input.form-control.lrg.mrm(
+          name="email"
+          type="email"
+          ng-model="fields.email"
+          placeholder="jane@doe.com"
+          required)
+        button.button-primary.btn.button-vlg(
+          type="submit"
+          ng-disabled="signupForm.$invalid"
+          translate="GET_STARTED"
+          ng-show="!working")  
+        img(ng-show="working" src="img/spinner.gif")
