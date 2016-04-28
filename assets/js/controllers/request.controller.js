@@ -110,6 +110,7 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
     let idx = Wallet.getDefaultAccountIndex();
     if ($scope.hasLegacyAddress) {
       $scope.fields.to = filterFilter(Wallet.legacyAddresses(), {
+        isWatchOnly: false,
         archived: false
       })[0];
     }

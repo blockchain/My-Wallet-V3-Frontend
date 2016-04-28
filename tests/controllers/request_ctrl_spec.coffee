@@ -16,7 +16,7 @@ describe "RequestCtrl", ->
       MyWallet.wallet = {
         isUpgradedToHD: true
         keys: [
-          { address: '1asdf', archived: false }, { address: '1asdf', archived: true }
+          { address: '1asdf', archived: false, isWatchOnly: false }, { address: '1asdf', archived: true }
         ]
         hdwallet: {
           accounts: [{ index: 0, archived: true }, { index: 0, archived: false }, { index: 0, archived: true }]
