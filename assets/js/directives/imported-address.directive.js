@@ -20,7 +20,7 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
             focus: () => true,
             hasLegacyAddress: () => null
           },
-          windowClass: 'bc-modal'
+          windowClass: 'bc-modal auto'
         });
       };
 
