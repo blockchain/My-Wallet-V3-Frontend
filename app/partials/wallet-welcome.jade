@@ -32,7 +32,8 @@ blocket-loading
       .page-header
         h1
           | My Wallet 
-          small Be Your Own Bank®.
+          small Be Your Own Bank
+            sup.type-xs ®
           span.hidden-phone.small-pull-right
             | {{ 'CONFUSED_READ' | translate }} - 
             a(href='https://blockchain.info/wallet/how-it-works' translate="HOW_IT_WORKS") 
@@ -210,7 +211,7 @@ blocket-loading
           ng-model="fields.email"
           placeholder="jane@doe.com"
           required)
-        button.button-primary.btn.button-lg(
+        button.button-primary.btn.button-vlg(
           type="submit"
           ng-disabled="signupForm.$invalid"
           translate="GET_STARTED"
