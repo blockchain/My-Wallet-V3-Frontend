@@ -368,7 +368,10 @@ module.exports = (grunt) ->
         replacements: [{
           from: 'customRootURL = $rootScope.rootURL'
           to: () =>
-            "customRootURL = $rootScope.rootURL = 'https://" + @rootUrl + "/'"
+            if @rootDomain == null
+              "customRootURL = '/'"
+            else
+              "customRootURL = 'https://" + @rootDomain + "/'"
         }]
       web_socket_url:
         src: ['build/js/services/wallet.service.js'],
@@ -376,7 +379,7 @@ module.exports = (grunt) ->
         replacements: [{
           from: 'customWebSocketURL = $rootScope.webSocketURL'
           to: () =>
-            "customWebSocketURL = 'wss://" + @rootUrl + "/inv'"
+            'customWebSocketURL = "wss://' + @rootDomain + '/inv"'
         }]
       api_domain:
         src: ['build/js/services/wallet.service.js'],
@@ -445,7 +448,7 @@ module.exports = (grunt) ->
 
   # Make sure npm and bower dependencies are up to date
   # Run clean, test and build first
-  grunt.registerTask "dist", (versionFrontend, rootUrl, apiDomain) =>
+  grunt.registerTask "dist", (versionFrontend, rootDomain, apiDomain) =>
     if !versionFrontend
       versionFrontend = "intermediate"
     else if versionFrontend[0] != "v"
@@ -454,12 +457,14 @@ module.exports = (grunt) ->
 
     @versionFrontend = versionFrontend
 
-    if !rootUrl
-      rootUrl = "blockchain.info"
-
-    @rootUrl = rootUrl
-
-    console.log("Root URL: " + @rootUrl)
+    if !rootDomain
+      # Production will work with rootURL = "https://blockchain.info/" and "/"
+      # Tor will only work with   rootURL = "/"
+      console.log("No root domain specified, assuming blockchain.info or tor");
+      @rootDomain = null
+    else
+      console.log("Root domain: " + rootDomain)
+      @rootDomain = rootDomain
 
     grunt.task.run [
       "replace:root_url"
