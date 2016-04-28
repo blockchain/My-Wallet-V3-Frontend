@@ -146,7 +146,7 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
     }
   });
 
-  $scope.$watch('uid + password + twoFactor', () => {
+  $scope.$watch('uid + password + twoFactorCode + settings.needs2FA', () => {
     $rootScope.loginFormUID = $scope.uid;
     let isValid = null;
     $scope.errors.uid = null;
@@ -164,6 +164,6 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
     if (isValid == null) {
       isValid = true;
     }
-    $scope.isValid = isValid;
+    $timeout(() => $scope.isValid = isValid);
   });
 }
