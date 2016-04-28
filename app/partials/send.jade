@@ -107,7 +107,7 @@
         .flex-1
           textarea.pas(rows="4" ng-model="transaction.note" name="note" ng-maxlength="512" placeholder="{{'NOTE_PLACEHOLDER' | translate}}")
           .has-error
-            span.help-block.type-sm(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.note.$error.maxlength && sendForm.note.$touched")
+            span.help-block.type-sm(translate="ERR_NOTE_LENGTH" ng-show="sendForm.note.$error.maxlength && sendForm.note.$touched")
       //- Fee
       .flex-row.flex-center.flex-justify.form-group.bc-modal-fade.mtl.fee(ng-class="{'has-error': transaction.blockIdx > 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}" ng-show="advanced")
         label.mbn
