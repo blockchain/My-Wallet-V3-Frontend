@@ -337,7 +337,7 @@
   "EMAIL_VERIFIED" : "Thank you for verifying your email address",
   "PLEASE_LOGIN_FIRST" : "Please login to your wallet to proceed.",
   "API_ACCESS" : "API Access",
-  "API_ACCESS_NOT_SUPPORTED" : "API access is not enabled yet for our new wallet. Stay tuned.",
+  "API_ACCESS_SUPPORT": "Use our API to interact with your wallet programtically. Follow the steps <a href='https://github.com/blockchain/service-my-wallet-v3#installation' target='_blank'>here</a> to get started.",
   "BITCOIN_ADDRESS_INVALID" : "Invalid Bitcoin Address",
   "EMAIL_ADDRESS_REQUIRED" : "Required",
   "EMAIL_ADDRESS_INVALID" : "Invalid",
