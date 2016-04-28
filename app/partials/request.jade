@@ -82,8 +82,7 @@
             span(ng-show="status.didInitializeHD" single-click-select)
               | 
               button.clipboard.btn.btn-default
-              span(ng-hide="fields.amount > 0 || fields.label != ''") {{ paymentRequestAddress() }}
-              span(ng-show="advanced && (fields.amount > 0 || fields.label != '')") {{ paymentRequestURL() }}
+              span {{ paymentRequestAddress() }}
         span.or.flex-center.mrl.mll Or
         .flex-column.receive-code.flex-center(uib-popover="{{'QR_HELPER' | translate}}" 
                                               popover-class="message-contextual"

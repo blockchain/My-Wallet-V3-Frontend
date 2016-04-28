@@ -145,9 +145,6 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
     if ($scope.fields.amount > 0) {
       url += `?amount=${ parseFloat($scope.fields.amount / 100000000) }`;
     }
-    if ($scope.fields.label.length) {
-      url += `?message=${ $scope.fields.label.split(' ').join('+') }`;
-    }
 
     return url;
   };

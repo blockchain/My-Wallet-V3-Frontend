@@ -138,14 +138,6 @@ describe "RequestCtrl", ->
       expect(scope.paymentRequestURL()).toBeDefined()
       expect(scope.paymentRequestURL()).toContain("amount=0.1")
 
-    it "should show a payment URL with a message if the description field is filled", ->
-      scope.fields.to = scope.legacyAddresses()[0]
-      scope.fields.amount = 10000000
-      scope.fields.label = "hello world"
-      scope.$digest()
-      expect(scope.paymentRequestURL()).toBeDefined()
-      expect(scope.paymentRequestURL()).toContain("message=hello+world")
-
     it "should not have amount argument in URL if amount is zero, null or empty", ->
       scope.fields.to = scope.legacyAddresses()[0]
       scope.fields.amount = "0"
