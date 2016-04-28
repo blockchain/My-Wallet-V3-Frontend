@@ -58,7 +58,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   $rootScope.$watch('rootURL', () => {
     // If a custom rootURL is set by index.jade:
     //                    Grunt can replace this:
-    const customRootURL = $rootScope.rootURL || '/';
+    const customRootURL = $rootScope.rootURL;
     wallet.api.ROOT_URL = customRootURL;
     // If customRootURL is set by Grunt:
     $rootScope.rootURL = customRootURL;
