@@ -27,6 +27,11 @@
         max-width: 420px;
         min-width: 420px;
       }
+      &.auto {
+        width: auto;
+        max-width: initial;
+        min-width: initial;
+      }
     }
     @media (max-width: 768px) {
       display: block;
