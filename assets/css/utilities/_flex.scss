@@ -94,5 +94,6 @@
 @for $i from 1 through 12 {
   .flex-#{$i} {
     flex: $i 0 0;
+    -ms-flex: $i;
   }
 }
