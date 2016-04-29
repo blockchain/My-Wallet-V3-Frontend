@@ -5,12 +5,12 @@
     .flex-column
       h2.em-300.mtn(translate="RECOVER_FUNDS")
       p(translate="RECOVER_BTC_LOST")
-  form.ptl.form-horizontal(name="recoveryForm" autocomplete="off" novalidate)
-    div(ng-switch-when="1")
+  form.ptl.form-horizontal(name="passphraseForm" autocomplete="off" ng-switch-when="1" novalidate)
+    div
       .security-red.mbl.em-400.flex-center
         i.ti-hand-stop.mrm.h3.mvn.hidden-xs
         span(translate="RECOVER_FUNDS_WARNING")
-      .form-group(ng-class="{'has-error': recoveryForm.mnemonic.$error.isValid && isValidMnemonicLength}")
+      .form-group(ng-class="{'has-error': passphraseForm.mnemonic.$error.isValid && isValidMnemonicLength}")
         label(translate="YOUR_REC_PASS")
         p(translate="YOUR_REC_PASS_EXPLAIN")
         input.form-control(
@@ -20,8 +20,21 @@
           ng-model="fields.mnemonic"
           is-valid="isValidMnemonic(fields.mnemonic)"
           required)
-    div(ng-switch-when="2")
-      .form-group(ng-class="{'has-error': recoveryForm.email.$error.email && recoveryForm.email.$touched}")
+    .flex-center.flex-end
+      img(ng-show="working" src="img/spinner.gif")
+      button.button-muted.mrm(
+        type="button"
+        ng-disabled="working"
+        ui-sref="public.help"
+        translate="GO_BACK")
+      button.button-primary(
+        type="submit"
+        ng-click="nextStep()"
+        ng-disabled="!passphraseForm.$valid"
+        translate="CONTINUE")
+  form.ptl.form-horizontal(name="recoveryForm" ng-switch-when="2")
+    div
+      .form-group(ng-class="{'has-error': recoveryForm.email.$invalid && recoveryForm.email.$touched}")
         label.em-500(translate="EMAIL")
         input.form-control(
           type="email"
@@ -61,29 +74,18 @@
           div(ng-show="recoveryForm.confirmation.$touched")
             p(ng-show="recoveryForm.confirmation.$error.isValid" translate="NO_MATCH")
     .flex-center.flex-end.mvl
-      img(ng-show="working" src="img/spinner.gif")
-      div(ng-switch-when="1")
-        button.button-muted.mrm(
-          type="button"
-          ng-disabled="working"
-          ui-sref="public.help"
-          translate="GO_BACK")
-        button.button-primary(
-          type="submit"
-          ng-click="nextStep()"
-          ng-disabled="!recoveryForm.$valid"
-          translate="CONTINUE")
-      div(ng-switch-when="2")
-        button.button-muted.mrm(
-          type="button"
-          ng-disabled="working"
-          ng-click="goBack()"
-          translate="GO_BACK")
-        button.button-success(
-          type="submit"
-          ng-click="performImport()"
-          ng-disabled="!recoveryForm.$valid || working"
-          translate="RECOVER_FUNDS")
+      button.button-muted.mrm(
+        type="button"
+        ng-disabled="working"
+        ng-click="goBack()"
+        translate="GO_BACK")
+      button.button-success(
+        type="submit"
+        ng-click="performImport()"
+        ng-disabled="!recoveryForm.$valid || working"
+        ladda-translate="RECOVER_FUNDS"
+        data-style="expand-right"
+        ui-ladda="working")
   .flex-center.flex-justify.flex-column(ng-switch-when="3")
     .level-complete.flex-center.flex-justify
       i.ti-check.bright-green

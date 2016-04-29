@@ -11,9 +11,9 @@ function TopCtrl ($scope, $stateParams, Wallet, currency) {
 
   $scope.getTotal = (index) => Wallet.total(index);
 
-  $scope.hasLegacyAddress = () => {
+  $scope.hasLegacyAddresses = () => {
     if (Wallet.status.isLoggedIn) {
-      return Wallet.legacyAddresses().length > 0;
+      return Wallet.legacyAddresses().filter(a => !a.archived && !a.isWatchOnly).length > 0;
     } else {
       return null;
     }
