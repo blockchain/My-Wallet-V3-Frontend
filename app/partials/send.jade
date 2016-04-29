@@ -145,32 +145,31 @@
   //- Step 2 (confirmation)
   div.overview(ng-show="confirmationStep")
     .flex-column
-      .flex-justify.pbm
-        span.mbn(ng-show="transaction.note.length")
+      .flex-row
+        span.mbl(ng-show="transaction.note.length")
           span.type-h5.ti-notepad.mrs
-          span {{ transaction.note }}
-      .flex-column.mtm
-        .mbl.flex-row.flex-center.center.flex-between
-          span.account.flex-2.width-100.mvn.em-400.long-input {{ transaction.from.label || transaction.from.address }}
-          span.flex-1.security-red - {{getTransactionTotal(true) | toBitCurrency:btcCurrency:false}}
-          span.flex-1.security-red -
-            fiat(btc="getTransactionTotal(true)")
-        .mbl.flex-justify.flex-1.flex-center.split-rule
-          span.ti-arrow-down.center.type-h4.blue
-        .flex-column.mtm(ng-if="confirmationStep")
-          .mbs.flex-row.flex-center.center.flex-between(ng-repeat="address in getToLabels() track by $index")
-            span.aaa.account.flex-2.flex-1.mvn.em-400 {{ address.label || address.address }}
-            span.flex-1(ng-class="{aaa: address.type === 'External', success: address.type !== 'External'}") + {{transaction.amounts[$index] | toBitCurrency:btcCurrency:false}}
-            span.flex-1(ng-class="{aaa: address.type === 'External', success: address.type !== 'External'}") +
+          span.type-lbl {{ transaction.note }}
+      .flex-column
+        .flex-column
+          span.type-lbl.mbs.underline(translate="TO")
+          .mls.mbs.flex-row.flex-center.center.flex-between(ng-repeat="address in getToLabels() track by $index")
+            span.account.flex-3.mvn.em-400 {{ address.label || address.address }}
+            span.flex-2.flex-start(ng-class="{success: address.type !== 'External'}") + {{transaction.amounts[$index] | toBitCurrency:btcCurrency:false}}
+            span.flex-1(ng-class="{success: address.type !== 'External'}") +
               fiat(btc="transaction.amounts[$index]")
-          .mbs.flex-row.flex-center.center.flex-between.rel
-            span.aaa.account.flex-2.flex-1(translate="TX_FEE")
-              | :
-            span.aaa.center.flex-1 + {{ transaction.fee | toBitCurrency:btcCurrency:false}}
+          .mls.mbs.flex-row.flex-center.center.flex-between.rel
+            span.aaa.account.flex-3(translate="TX_FEE_REQUIRED")
+            span.aaa.center.flex-2.flex-start + {{ transaction.fee | toBitCurrency:btcCurrency:false}}
             span.aaa.center.flex-1 +
               fiat(btc="transaction.fee")
             helper-button(content="DYK_TX_FEES")
-
+        .mvm.flex-justify.flex-1.flex-center.split-rule
+        span.type-lbl.mbs.underline(translate="FROM")
+        .mls.flex-row.flex-center.center.flex-between
+          span.account.flex-3.width-100.mvn.em-400.long-input {{ transaction.from.label || transaction.from.address }}
+          span.flex-2.flex-start.security-red - {{getTransactionTotal(true) | toBitCurrency:btcCurrency:false}}
+          span.flex-1.security-red -
+            fiat(btc="getTransactionTotal(true)")
 .modal-footer.flex-between.flex-center.pal
   .flex-center
     a.dark-grey(ng-hide="advanced || confirmationStep", ng-click="advancedSend()", translate="ADVANCED_SEND")
