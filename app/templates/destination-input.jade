@@ -16,9 +16,7 @@
       ng-blur="blur()"
     )
     .input-group-btn(uib-dropdown)
-      qr-scan(
-        on-scan="onAddressScan"
-        ng-class="{ 'border-rounded-right': dropdownHidden }")
+      qr-scan(on-scan="onAddressScan")
       button.btn.btn-default.brdrn(
         type="button"
         ng-hide="dropdownHidden"
