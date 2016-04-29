@@ -462,14 +462,21 @@ module.exports = (grunt) ->
       # Tor will only work with   rootURL = "/"
       console.log("No root domain specified, assuming blockchain.info or tor");
       @rootDomain = null
+
+      grunt.task.run [
+        "replace:root_url"
+        # Web socket URL will default to wss://blockchain.info/inv
+        # Web sockets currently don't work on our Tor site
+        # "replace:web_socket_url"
+      ]
     else
       console.log("Root domain: " + rootDomain)
       @rootDomain = rootDomain
 
-    grunt.task.run [
-      "replace:root_url"
-      "replace:web_socket_url"
-    ]
+      grunt.task.run [
+        "replace:root_url"
+        "replace:web_socket_url"
+      ]
 
     if apiDomain
       @apiDomain = apiDomain
