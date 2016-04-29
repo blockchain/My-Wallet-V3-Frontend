@@ -663,6 +663,7 @@
   "SAVE_HELPER": "You’ll find this in Settings -> Addresses -> {{ label }} -> Manage Addresses.",
   "THANKS_FOR_ACCEPTING": "Thanks for accepting bitcoin!",
   "NOTE_PLACEHOLDER": "Money for rent 🏡",
+  "ERR_NOTE_LENGTH": "Description cannot be longer than 512 characters",
   "GET_STARTED": "Get Started",
   "EXISTING_USERS": "Existing Users",
   "UPGRADE_COPY": "If you have previously created a new Blockchain Wallet or want to upgrade, click below to login.",

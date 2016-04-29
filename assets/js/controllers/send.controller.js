@@ -65,8 +65,10 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $t
       type: 'External'
     };
     $scope.transaction.destinations[i] = destination;
-    $scope.transaction.amounts[i] = paymentRequest.amount;
-    $scope.transaction.note = paymentRequest.message || '';
+    if (paymentRequest.amount) $scope.transaction.amounts[i] = paymentRequest.amount;
+    if (paymentRequest.message) $scope.transaction.note = paymentRequest.message;
+    $scope.setPaymentTo();
+    $scope.setPaymentAmount();
   };
 
   $scope.resetSendForm = () => {

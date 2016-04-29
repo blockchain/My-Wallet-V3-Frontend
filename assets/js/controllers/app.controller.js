@@ -69,9 +69,8 @@ function AppCtrl ($scope, Wallet, Alerts, $state, $rootScope, $cookies, $locatio
   };
 
   $scope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
-    if (toState.name === 'welcome' && Wallet.status.isLoggedIn) {
-      event.preventDefault();
-    }
+    let isPublicState = toState.name === 'welcome' || toState.name.slice(0, 6) === 'public';
+    if (isPublicState && Wallet.status.isLoggedIn) event.preventDefault();
   });
 
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) => {

@@ -100,14 +100,16 @@
               span.type-sm {{ transaction.maxAvailable | convert:false:true }}
           a.flex-center.flex-justify.add(ng-click="addDestination()" ng-show="advanced")
             i.ti-plus.white
-      .flex-row.flex-justify.form-group.note.mvl(ng-class="{'has-error': noteForm.note.$error.maxlength && noteForm.note.$touched}")
+      .flex-row.flex-justify.form-group.note.mvl
         label.mbn
           span(translate="DESCRIPTION:")
           helper-button(content="SEND_BITOIN_STEP2B")
-        textarea.pas(rows="4" ng-model="transaction.note" name="note" ng-maxlength="512" placeholder="{{'NOTE_PLACEHOLDER' | translate}}")
-        span.help-block(translate="ENTER_VALID_AMOUNT" ng-show="noteForm.note.$error.maxlength && noteForm.note.$touched")
+        .flex-1
+          textarea.pas(rows="4" ng-model="transaction.note" name="note" ng-maxlength="512" placeholder="{{'NOTE_PLACEHOLDER' | translate}}")
+          .has-error
+            span.help-block.type-sm(translate="ERR_NOTE_LENGTH" ng-show="sendForm.note.$error.maxlength && sendForm.note.$touched")
       //- Fee
-      .flex-row.flex-center.flex-justify.form-group.bc-modal-fade.mtm.fee(ng-class="{'has-error': transaction.blockIdx > 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}" ng-show="advanced")
+      .flex-row.flex-center.flex-justify.form-group.bc-modal-fade.mtl.fee(ng-class="{'has-error': transaction.blockIdx > 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}" ng-show="advanced")
         label.mbn
           span(translate="TX_FEE")
           |:
@@ -194,6 +196,5 @@
       ladda-translate="SEND"
       ui-ladda="sending"
       ng-click="send()"
-      ng-disabled="noteForm.$invalid"
       data-style="expand-left"
       ng-show="confirmationStep")
