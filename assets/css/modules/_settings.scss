@@ -161,11 +161,14 @@ table.accounts-container {
 }
 
 .settings {
-  td.hd-label {
+  td.address-label {
     height: 44px;
     > span {
       display: inline-block;
       border-bottom: 1px solid transparent;
+    }
+    .col-sm-12 {
+      padding-left: 0px;
     }
     form[name="bcAsyncForm"] {
       > div {
