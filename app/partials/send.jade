@@ -93,11 +93,13 @@
             a.mlm.button-danger.type-sm.button-sm.remove(ng-click="removeDestination($index)" ng-hide="$first && $last")
               i.ti-close.type-xs
           .has-error.mbm
-            span.help-block(ng-show="getTransactionTotal() > transaction.maxAvailable")
+            span.help-block(ng-show="getTransactionTotal() > transaction.maxAvailable && !failedToLoadUnspent")
               span.type-sm(translate="TOTAL_AVAILABLE" ng-show="!advanced")
               span.type-sm(translate="TOTAL_AVAILABLE_MINUS_FEE" ng-show="advanced")
-              | :
+              | :&nbsp;
               span.type-sm {{ transaction.maxAvailable | convert:false:true }}
+            span.help-block(ng-show="failedToLoadUnspent" ng-click="reopenModal()")
+              span.type-sm.pointer(translate="ERR_FETCH_UNSPENT_RETRY")
           a.flex-center.flex-justify.add(ng-click="addDestination()" ng-show="advanced")
             i.ti-plus.white
       .flex-row.flex-justify.form-group.note.mvl
@@ -188,7 +190,7 @@
       ui-ladda="building"
       ng-click="goToConfirmation()"
       tabindex="1"
-      ng-disabled="sendForm.$invalid || !amountsAreValid()"
+      ng-disabled="sendForm.$invalid || failedToLoadUnspent || !amountsAreValid()"
       data-style="expand-left"
       ng-hide="confirmationStep")
 
