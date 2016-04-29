@@ -216,7 +216,6 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
 
     let authorizationRequired = (callback) => {
       callback(authorizationProvided());
-      Alerts.clear();
       Alerts.displayWarning('CHECK_EMAIL_VERIFY_BROWSER', true);
       $rootScope.$safeApply();
     };
