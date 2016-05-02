@@ -20,6 +20,14 @@ describe "ResetTwoFactorCtrl", ->
           }
       }
 
+      $rootScope.loginFormUID = {
+        then: (cb) ->
+          cb("1234")
+          {
+            catch: () ->
+          }
+      }
+
       scope = $rootScope.$new()
 
       $controller "ResetTwoFactorCtrl",
