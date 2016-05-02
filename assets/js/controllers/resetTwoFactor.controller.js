@@ -5,13 +5,16 @@ angular
 function ResetTwoFactorCtrl ($scope, $rootScope, $http, $translate, WalletNetwork, Alerts) {
   $scope.currentStep = 1;
   $scope.fields = {
-    uid: $rootScope.loginFormUID,
     email: '',
     newEmail: '',
     secret: '',
     message: '',
     captcha: ''
   };
+
+  $rootScope.loginFormUID.then((res) => {
+    $scope.fields.uid = res;
+  });
 
   $scope.refreshCaptcha = () => {
     let time = new Date().getTime();

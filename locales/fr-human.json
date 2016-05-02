@@ -465,8 +465,6 @@
   "SIGNOUT": "Se déconnecter",
   "EDIT_NOTE": "Modifier",
   "DELETE_NOTE": "Supprimer",
-  "USER_AGREEMENT" : "Accord de participation au Programme bêta",
-  "USER_AGREEMENT_WARNING": "Veuillez noter qu’il s’agit de la version bêta d’un nouveau produit. Veuillez ne pas tester ce portefeuille avec plus de fonds que vous n’êtes prêt à en perdre.",
   "XPUB_WARNING": "Vous deviez ne fournir cette clé publique étendue (xPub) qu’aux personnes de confiance. Avec cette information, ils peuvent tracer vos paiements et sont susceptibles de perturber votre accès à votre portefeuille.",
   "LOST_WALLET_ID": "J'ai perdu mon identifiant portefeuille ",
   "LOST_WALLET_PWD": "J'ai perdu mon mot de passe portefeuille",

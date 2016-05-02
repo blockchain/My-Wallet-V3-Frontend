@@ -465,8 +465,6 @@
   "SIGNOUT": "Sair",
   "EDIT_NOTE": "Editar",
   "DELETE_NOTE": "Excluir",
-  "USER_AGREEMENT" : "Contrato de participação do programa Beta",
-  "USER_AGREEMENT_WARNING": "Por favor, note que esta é a versão Beta de um novo produto. Por favor, não teste esta carteira com mais fundos do que você está disposto a perder.",
   "XPUB_WARNING": "Somente dê esta Chave pública estendida (xPub) para aqueles que você confia. Com esta informação, eles podem  manter o controle de seus pagamentos e interromper seu acesso à sua carteira.",
   "LOST_WALLET_ID": "Perdi meu ID de carteira",
   "LOST_WALLET_PWD": "Perdi minha senha de carteira",
