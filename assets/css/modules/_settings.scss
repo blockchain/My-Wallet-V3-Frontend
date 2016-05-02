@@ -56,7 +56,7 @@
       }
     }
   }
-  .account-container {
+  .imported-addresses-container {
     .dropdown-menu {
       left: auto !important;
       right: 0px !important;
@@ -69,8 +69,10 @@
     }
   }
   // Accounts & Addresses
-  @media (max-width: 768px) {
-    .accounts-container {
+  @media (max-width: 900px) {
+    .accounts-container, 
+    .addresses-container,
+    .imported-addresses-container {
       width: 100%;
       tr {
         height: auto;
@@ -88,6 +90,20 @@
           &:first-child {
             padding-top: 10px;
             border-top: 1px solid $grey;
+          }
+        }
+      }
+    }
+    .addresses-container,
+    .imported-addresses-container {
+      tr {
+        &:first-child {
+          display: none;
+        }
+        td {
+          button {
+            display: inline-block;
+            margin-top: 0px;
           }
         }
       }
@@ -183,6 +199,7 @@ table.accounts-container {
           margin-bottom: 1px;
           font-size: small;
           display: block;
+          width: 50%;
         }
         button {
           padding: 0px;
