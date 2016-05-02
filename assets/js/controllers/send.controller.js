@@ -34,7 +34,7 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     sweepFees: [0, 0, 0, 0, 0, 0]
   };
 
-  $scope.payment = new Wallet.Payment({ feePerKb: 30000 });
+  $scope.payment = new Wallet.Payment();
   $scope.transaction = angular.copy($scope.transactionTemplate);
 
   $scope.payment.on('update', data => {
