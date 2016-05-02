@@ -1,10 +1,15 @@
 describe "NavigationCtrl", ->
   scope = undefined
 
+  whatsNew = [
+    { date: 1, title: 'feat1' },
+    { date: 3, title: 'feat2' }
+  ]
+
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller) ->
+    angular.mock.inject ($cookies, $injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       Alerts = $injector.get("Alerts")
@@ -29,11 +34,13 @@ describe "NavigationCtrl", ->
 
       Wallet.store.setIsSynchronizedWithServer(true)
 
+      spyOn($cookies, 'get').and.returnValue(2)
+
       scope = $rootScope.$new()
 
       $controller "NavigationCtrl",
         $scope: scope,
-        $stateParams: {}
+        whatsNew: whatsNew
 
       return
 
@@ -62,3 +69,26 @@ describe "NavigationCtrl", ->
     expect(Wallet.logout).not.toHaveBeenCalled()
     expect(scope.status.isLoggedIn).toBe(true)
   )
+
+  describe "whats new", ->
+
+    it "should have the whats new template", ->
+      expect(scope.whatsNewTemplate).toEqual('templates/whats-new.jade')
+
+    it "should have the feature array injected", ->
+      expect(scope.feats.length).toEqual(2)
+
+    it "should get the last viewed time from a cookie", ->
+      expect(scope.lastViewedWhatsNew).toEqual(2)
+
+    it "should calculate the correct number of latest feats", ->
+      expect(scope.nLatestFeats).toEqual(1)
+
+    it "should set new cookie when whats new is viewed", inject(($cookies) ->
+      spyOn($cookies, 'put')
+      spyOn(Date, 'now').and.returnValue(4)
+      expect(scope.nLatestFeats).toEqual(1)
+      scope.viewedWhatsNew()
+      expect($cookies.put).toHaveBeenCalledWith('whatsNewViewed', 4)
+      expect(scope.nLatestFeats).toEqual(0)
+    )
