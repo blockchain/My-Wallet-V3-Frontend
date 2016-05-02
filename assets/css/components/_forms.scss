@@ -80,10 +80,17 @@
 
 form[name="signupForm"] {
   .accept-checkbox {
+    z-index: 10;
+    position: relative;
     padding-right: 0px;
   }
   .accept-label {
     margin-bottom: 0px;
+  }
+  @media (min-width: 769px) {
+    .accept-checkbox {
+      left: 20px;
+    }
   }
 }
 
