@@ -33,6 +33,14 @@ angular.module('walletApp', modules)
 .config(($uibModalProvider, uiSelectConfig) => {
   uiSelectConfig.theme = 'bootstrap';
 })
+.constant('whatsNew', [
+  { title: 'WHATS_NEW',
+    desc: 'WHATS_NEW_DESCRIPTION',
+    date: 1459697821925 },
+  { title: 'DYNAMIC_FEE',
+    desc: 'DYNAMIC_FEE_DESCRIPTION',
+    date: 1458920233357 }
+])
 .run(($rootScope, $uibModal, $state, MyWallet, $q, currency, $timeout) => {
   $rootScope.$safeApply = (scope = $rootScope, before) => {
     before = before;

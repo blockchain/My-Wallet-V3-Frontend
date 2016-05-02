@@ -1,0 +1,4 @@
+li(ng-repeat="feat in feats | orderBy:'-date' track by $index")
+  h4(translate="{{:: feat.title }}")
+    small.aaa.mlm {{:: feat.date | date }}
+  p(translate="{{:: feat.desc }}")
