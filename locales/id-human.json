@@ -465,8 +465,6 @@
   "SIGNOUT": "Keluar",
   "EDIT_NOTE": "Edit",
   "DELETE_NOTE": "Hapus",
-  "USER_AGREEMENT" : "Perjanjian Partisipasi Program Beta",
-  "USER_AGREEMENT_WARNING": "Harap dicatat, ini Beta produk baru. Tolong jangan menguji dompet ini dengan dana lebih dari yang Anda siap untuk hilang.",
   "XPUB_WARNING": "Anda hanya harus memberikan Perpanjangan Kunci Publik ini (xPub) kepada orang-orang yang Anda percaya. Dengan informasi ini, mereka dapat melacak pembayaran Anda, dan mungkin dapat mengganggu akses Anda ke dompet Anda.",
   "LOST_WALLET_ID": "Saya kehilangan Dompet ID saya",
   "LOST_WALLET_PWD": "Saya kehilangan Sandi Dompet saya",
