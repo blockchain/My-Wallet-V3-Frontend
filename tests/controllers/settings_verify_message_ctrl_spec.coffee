@@ -41,9 +41,6 @@ describe "VerifyMessageController", ->
     beforeEach ->
       expect(scope.verified).not.toBeDefined()
 
-    afterEach ->
-      expect(scope.didVerify).toEqual(true)
-
     it "should fail with an incorrect signature", ->
       scope.signature = 'invalid_sig'
       scope.verify()
