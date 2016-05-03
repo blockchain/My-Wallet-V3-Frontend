@@ -101,7 +101,7 @@ describe "ChangePasswordCtrl", ->
     describe "password", ->
 
       it "should display an error if the new password is too weak", ->
-        scope.passwordForm.password.$setViewValue('weak')
+        scope.passwordForm.password.$setViewValue('a')
         expect(scope.passwordForm.password.$error.minEntropy).toBe(true)
 
       it "should display an error if the new password is too long", ->

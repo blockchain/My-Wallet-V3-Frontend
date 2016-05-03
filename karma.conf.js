@@ -36,8 +36,7 @@ module.exports = function (config) {
       'tests/directives/*.coffee',
       'tests/mocks/**/*.coffee',
       'tests/**/*.js',
-      'app/templates/*.jade',
-      'bower_components/angular-password-entropy/password-entropy.js'
+      'app/templates/*.jade'
     ],
 
     autoWatch: true,
