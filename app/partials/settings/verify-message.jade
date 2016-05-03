@@ -19,7 +19,7 @@
       ng-class="{'has-error': verifyMessageForm.message.$invalid && verifyMessageForm.message.$touched}")
       label.control-label.colon(translate="MESSAGE")
       textarea.form-control(rows="3" ng-model="message" name="message" required)
-    .pull-right.type-h4.flex-center(ng-show="didVerify")
+    .pull-right.type-h4.flex-center(ng-show="verified != null")
       span.mrm(translate="{{ verified ? 'MSG_VERIFIED' : 'MSG_NOT_VERIFIED' }}")
       span.type-h4(ng-class="{ 'ti-check success': verified, 'ti-close security-red': !verified }")
 .modal-footer

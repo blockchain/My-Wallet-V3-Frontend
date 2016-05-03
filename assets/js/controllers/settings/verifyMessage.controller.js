@@ -11,9 +11,10 @@ function VerifyMessageController ($scope, MyWalletHelpers, Alerts) {
     try {
       Alerts.clear($scope.alerts);
       $scope.verified = MyWalletHelpers.verifyMessage($scope.address, $scope.signature, $scope.message);
-      $scope.didVerify = true;
     } catch (e) {
       Alerts.displayError(e.message || e, false, $scope.alerts);
     }
   };
+
+  $scope.$watch('address + signature + message', () => $scope.verified = null);
 }
