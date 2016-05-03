@@ -43,6 +43,7 @@ function AppCtrl ($scope, Wallet, Alerts, $state, $rootScope, $cookies, $locatio
     }
   };
 
+  // Don't automatically run during tests:
   if (!$scope.karma) {
     $scope.setLoginFormUID();
   }

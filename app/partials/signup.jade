@@ -49,17 +49,17 @@ div
         span.help-block
           div(ng-show="signupForm.confirmation.$touched")
             p(ng-show="signupForm.confirmation.$error.isValid" translate="NO_MATCH")
-    .form-group.flex-center.mtm
-      .col-sm-4.accept-checkbox
+    .flex-center.flex-end.mtm.mbl
+      .accept-checkbox
         input#agreement_accept.pull-right(
           name="agreement"
           type="checkbox"
           ng-model="fields.acceptedAgreement"
           required)
-      label.em-300.col-sm-8.accept-label
+      label.em-300.col-sm-8.accept-label.right-align
         | I have read and agree to the 
         a(href="https://blockchain.info/Resources/TermsofServicePolicy.pdf", translate="TERMS_OF_SERVICE", target="_blank")
-    .flex-center.flex-end.mbl
+    .flex-center.flex-end.mbl.prl
       button.button-primary(
         type="submit"
         ng-disabled="signupForm.$invalid"

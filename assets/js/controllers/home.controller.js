@@ -30,7 +30,7 @@ function HomeCtrl ($scope, Wallet, $uibModal) {
       resolve: {
         firstTime: () => { Wallet.status.firstTime = false; }
       },
-      windowClass: 'bc-modal rocket-modal'
+      windowClass: 'bc-modal rocket-modal initial'
     });
   }
 }
