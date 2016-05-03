@@ -11,6 +11,7 @@ function Alerts ($timeout, $rootScope, $translate, $uibModal) {
     clear: clear,
     display: display,
     confirm: confirm,
+    prompt: prompt,
     isDuplicate: isDuplicate,
     displayInfo: display.bind(null, 'info'),
     displaySuccess: display.bind(null, 'success'),
@@ -78,6 +79,17 @@ function Alerts ($timeout, $rootScope, $translate, $uibModal) {
         $scope.message = message;
         $scope.values = values;
         $scope.close = close;
+      }
+    }).result;
+  }
+
+  function prompt (message, options = {type: 'input'}) {
+    return $uibModal.open({
+      templateUrl: 'partials/modal-prompt.jade',
+      windowClass: 'bc-modal medium',
+      controller: function ($scope) {
+        $scope.message = message;
+        $scope.type = options.type;
       }
     }).result;
   }

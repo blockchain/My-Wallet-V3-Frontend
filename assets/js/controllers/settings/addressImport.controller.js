@@ -73,11 +73,18 @@ function AddressImportCtrl ($scope, $log, Wallet, Alerts, $uibModalInstance, $tr
       $scope.$safeApply();
     };
 
+    const attemptImport = Wallet.addAddressOrPrivateKey.bind(null,
+      addressOrPrivateKey, needsBipPassphrase, success, error, cancel);
+
     $timeout(() => {
       if (!$scope.BIP38) {
-        Wallet.addAddressOrPrivateKey(
-          addressOrPrivateKey, needsBipPassphrase, success, error, cancel
-        );
+        if (Wallet.isValidAddress(addressOrPrivateKey)) {
+          Alerts.confirm('CONFIRM_IMPORT_WATCH')
+            .then(attemptImport)
+            .finally(() => $scope.status.busy = false);
+        } else {
+          attemptImport();
+        }
       } else {
         $scope.proceedWithBip38(bip38passphrase);
       }

@@ -24,6 +24,6 @@
         span.caret
         span.sr-only Toggle Dropdown
       ul.uib-dropdown-menu.dropdown-menu-right.dropdown-menu
-        li(ng-repeat="account in accounts")
-          a(ng-click="setModel(account)" ng-disabled="account.index === model.index")
-            label-origin(origin="::account")
+        li(ng-repeat="dest in destinations")
+          a(ng-click="setModel(dest)")
+            label-origin(origin="::dest")

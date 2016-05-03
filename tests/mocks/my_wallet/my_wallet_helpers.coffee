@@ -4,4 +4,6 @@ angular
     {
       tor: () ->
         false
+      privateKeyCorrespondsToAddress: () ->
+        $q.resolve(true)
     }

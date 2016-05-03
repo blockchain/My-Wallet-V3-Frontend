@@ -1,6 +1,7 @@
 describe "AddressImportCtrl", ->
   scope = undefined
   Wallet = undefined
+  Alerts = undefined
 
   accounts = [{index: 0, label: "Spending", archived: false}]
 
@@ -13,6 +14,7 @@ describe "AddressImportCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile, $templateCache) ->
       Wallet = $injector.get("Wallet")
+      Alerts = $injector.get("Alerts")
 
       Wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bip38passphrase, success, error, cancel) ->
         if addressOrPrivateKey
@@ -24,6 +26,9 @@ describe "AddressImportCtrl", ->
 
       Wallet.accounts = () -> accounts
 
+      Wallet.isValidAddress = (addr) -> addr == 'watch_only'
+      Wallet.isValidPrivateKey = (priv) -> priv == 'valid_import_address'
+
       Wallet.my =
         wallet:
           keys: []
@@ -33,6 +38,9 @@ describe "AddressImportCtrl", ->
       Wallet.status = {
         isLoggedIn: true
       }
+
+      Alerts.confirm = () ->
+        then: (f) -> f(true)
 
       scope = $rootScope.$new()
       template = $templateCache.get('partials/settings/import-address.jade')
@@ -67,6 +75,20 @@ describe "AddressImportCtrl", ->
       scope.import()
       $timeout.flush()
       expect(scope.step).toBe(2)
+    )
+
+  describe "watch only", ->
+
+    beforeEach ->
+      scope.fields.addressOrPrivateKey = "watch_only"
+
+    it "should not go to step 2 when the user does not confirm", inject(($timeout, $q) ->
+      spyOn(Alerts, 'confirm').and.returnValue($q.reject('cancelled'))
+      expect(scope.step).toBe(1)
+      scope.import()
+      $timeout.flush()
+      expect(scope.step).toBe(1)
+      expect(scope.status.busy).toEqual(false)
     )
 
   describe "validate and add", ->

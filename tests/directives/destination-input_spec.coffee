@@ -15,8 +15,8 @@ describe "Destination Input directive", ->
 
     Wallet.my.wallet =
       hdwallet:
-        accounts: [{ active: true }]
-      keys: [{ active: false }, { active: true, isWatchOnly: true }]
+        accounts: [{ archived: false }]
+      keys: [{ archived: true }]
 
     Wallet.status.isLoggedIn = true
 

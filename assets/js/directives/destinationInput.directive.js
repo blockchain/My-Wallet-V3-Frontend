@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .directive('destinationInput', destinationInput);
 
-destinationInput.$inject = ['$rootScope', '$timeout', 'Wallet'];
+destinationInput.$inject = ['$rootScope', '$timeout', 'Wallet', 'format'];
 
-function destinationInput ($rootScope, $timeout, Wallet) {
+function destinationInput ($rootScope, $timeout, Wallet, format) {
   const directive = {
     restrict: 'E',
     require: 'ngModel',
@@ -19,35 +19,27 @@ function destinationInput ($rootScope, $timeout, Wallet) {
   return directive;
 
   function link (scope, elem, attrs, ctrl) {
-    scope.browserWithCamera = $rootScope.browserWithCamera;
-    scope.accounts = Wallet.accounts().filter(a => a.active);
-    scope.addresses = Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly);
-    scope.dropdownHidden = scope.accounts.length === 1 && scope.addresses.length === 0;
+    let accounts = Wallet.accounts().filter(a => !a.archived);
+    let addresses = Wallet.legacyAddresses().filter(a => !a.archived);
 
-    let format = (a, type) => ({
-      label: a.label || a.address || '',
-      address: a.address || '',
-      index: a.index,
-      balance: a.balance,
-      active: a.active,
-      archived: a.archived,
-      type: type
-    });
+    scope.destinations = accounts.concat(addresses).map(format.destination);
+    scope.dropdownHidden = accounts.length === 1 && addresses.length === 0;
+    scope.browserWithCamera = $rootScope.browserWithCamera;
 
     scope.onAddressScan = (result) => {
       let address = Wallet.parsePaymentRequest(result);
-      scope.model = format(address, 'External');
+      scope.model = format.destination(address, 'External');
       scope.onPaymentRequest({request: address});
       $timeout(scope.change);
     };
 
     scope.setModel = (a) => {
-      scope.model = format(a, 'Accounts');
+      scope.model = a;
       $timeout(scope.change);
     };
 
     scope.clearModel = () => {
-      scope.model = format({}, 'External');
+      scope.model = { address: '', type: 'External' };
       $timeout(scope.change);
     };
 
