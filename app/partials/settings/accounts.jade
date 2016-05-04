@@ -2,8 +2,8 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
   
 .row.pvl
   .col-xs-6.flex-center
-    button.btn.button-primary.mrm.button-nowrap(ng-click="newAccount()" translate="CREATE_ACCOUNT")
-    a.btn.button-default.hidden-xs.button-nowrap.mrm(
+    button.button-primary.mrm.button-nowrap(ng-click="newAccount()" translate="CREATE_ACCOUNT")
+    a.button-default.hidden-xs.button-nowrap.mrm(
       ng-click="transfer(address)"  
       ng-show="numberOfActiveAccounts() > 1" 
       translate="TRANSFER"
@@ -36,7 +36,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
           a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="account.archived || isDefault(account)")
           a(translate="UNARCHIVE",        ng-click="unarchive(account)", ng-show="account.archived")
         td.shrink
-          button.btn.btn-default(
+          button.button-default(
             ui-sref="wallet.common.settings.accounts_addresses({account: account.index})"
             translate="MANAGE_ADDRESSES"
             ng-hide="account.archived"
@@ -48,13 +48,13 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
           span  ({{ getLegacyTotal() | toBitCurrency:settings.btcCurrency }})
         td.shrink
         td.shrink
-          button.btn.btn-default(
+          button.button-primary(
             translate="TRANSFER_ALL"
             ng-show="activeSpendableAddresses().length > 0"
             ng-click="openTransferAll()"
           )
         td.shrink        
-          button.btn.btn-default(
+          button.button-default(
             ui-sref="wallet.common.settings.imported_addresses"
             translate="MANAGE_ADDRESSES"
           )
