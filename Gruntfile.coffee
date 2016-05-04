@@ -188,7 +188,7 @@ module.exports = (grunt) ->
 
       legacy_cache_bust:
         files: [
-          {src: ["legacy-cache-bust.js"], dest: "dist/wallet.min.js", cwd: "assets", expand: true}
+          {src: ["wallet.min.js"], dest: "dist/", cwd: "assets/legacy-cache-bust", expand: true}
         ]
 
       css:
