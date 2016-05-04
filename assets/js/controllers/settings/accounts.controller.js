@@ -4,7 +4,7 @@ angular
 
 function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFilter) {
   $scope.accounts = Wallet.accounts;
-  $scope.activeSpendableAddresses = () => Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly);
+  $scope.activeSpendableAddresses = () => Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly && a.balance > 0);
 
   $scope.display = {
     archived: false

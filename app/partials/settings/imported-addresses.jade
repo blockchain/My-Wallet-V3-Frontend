@@ -15,7 +15,7 @@
         ul.dropdown-menu(uib-dropdown-menu)
           li
             a(translate="VERIFY_MESSAGE" ng-click="openVerifyMessage()")
-          li
+          li(ng-show="activeSpendableAddresses().length > 0")
             a(translate="TRANSFER_ALL" ng-click="openTransferAll()")
 
   .col-xs-12.col-md-6

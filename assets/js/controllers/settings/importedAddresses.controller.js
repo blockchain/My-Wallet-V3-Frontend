@@ -12,7 +12,7 @@ function SettingsImportedAddressesCtrl ($scope, Wallet, Alerts, $translate, $uib
     $scope.display.imported = false;
   };
 
-  $scope.activeSpendableAddresses = () => Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly);
+  $scope.activeSpendableAddresses = () => Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly && a.balance > 0);
   $scope.hasLegacyAddress = () => $scope.activeSpendableAddresses().length > 0;
 
   $scope.unarchive = (address) => Wallet.unarchive(address);
