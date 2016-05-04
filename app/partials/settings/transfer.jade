@@ -5,21 +5,21 @@
 uib-progressbar.modal-progress(
   value="ncomplete" max="ntotal" ng-show="addresses.length > 1" animate="true")
 
-.modal-body#transfer-all
+#transfer-all.modal-body.fade(ng-class="{expanded : expand}")
   form.form-horizontal(role="form" name="transferForm" novalidate)
 
     .form-group
-      label.col-sm-3.control-label.colon
+      span.type-lbl.col-sm-3.control-label.colon
         span.security-red.mrs.ti-alert(
           ng-show="combinedBalance > totalAmount + totalFees && !status.loading"
           uib-tooltip="{{::'SWEEP_LOW_BALANCE_WARN'|translate}}"
           tooltip-placement="left")
         span(translate="FROM")
       .col-sm-5(ng-show="addresses.length === 1")
-        p.form-control-static {{ addresses[0].address }}
+        p.form-control-static.type-lbl {{ addresses[0].address }}
       .col-sm-7(ng-show="addresses.length > 1")
         .flex-row.flex-between.flex-center.pointer(ng-click="expand=!expand")
-          span.form-control-static
+          span.form-control-static.type-lbl
             span {{ addresses.length }}&nbsp;
             span(translate="IMPORTED_ADDRESSES")
           a(ng-class="'ti-angle-double-' + (expand ? 'up' : 'down')")
@@ -29,7 +29,7 @@ uib-progressbar.modal-progress(
               span {{ address.address }} ({{ address.balance | convert }})
 
     .form-group
-      label.col-sm-3.control-label.colon(translate="TO")
+      span.type-lbl.col-sm-3.control-label.colon(translate="TO")
       .col-sm-7
         ui-select(ng-model="$parent.selectedAccount")
           ui-select-match {{ $select.selected.label }}
@@ -37,16 +37,16 @@ uib-progressbar.modal-progress(
             span(ng-bind-html="account.label | escapeHtml | highlight: $select.search")
 
     .form-group
-      label.col-sm-3.control-label.colon(translate="AMOUNT")
+      span.type-lbl.col-sm-3.control-label.colon(translate="AMOUNT")
       .col-sm-5
-        p.form-control-static
+        p.form-control-static.type-lbl
           img(ng-show="status.loading" src="img/spinner.gif")
           span(ng-hide="status.loading") {{ totalAmount | convert }}
 
     .form-group
-      label.col-sm-3.control-label.colon(translate="FEES")
+      span.type-lbl.col-sm-3.control-label.colon(translate="FEES")
       .col-sm-5
-        p.form-control-static
+        p.form-control-static.type-lbl
           img(ng-show="status.loading" src="img/spinner.gif")
           span(ng-hide="status.loading") {{ totalFees | convert }}
 
