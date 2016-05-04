@@ -38,6 +38,8 @@ div
     .mtl.flex-center.flex-end
       button.button-primary(ui-ladda="busy", ng-click="login()", data-style="expand-left", ladda-translate="SIGNIN", ng-disabled="!isValid")
   //Wallet Recovery
-  .ptl.flex-column
-    .em-300.flex-end.mbm Having some trouble?
-      span.pointer.blue.mls(ui-sref="public.help") View Options
+  .ptl.flex-row.flex-between
+    a.em-300(href="{{rootURL}}wallet-legacy/login" translate="LOGIN_TO_LEGACY")
+    .flex-row
+      .em-300.mbm(translate="HAVING_TROUBLE")
+      span.pointer.em-300.blue.mls(ui-sref="public.help") View Options
