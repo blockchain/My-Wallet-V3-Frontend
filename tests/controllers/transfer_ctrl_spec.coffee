@@ -54,6 +54,3 @@ describe "TransferControllerSpec", ->
 
   it "should combine the balances of addresses", ->
     expect(scope.combinedBalance).toEqual(30000)
-
-  it "should set the payment array", ->
-    expect(scope.payments).toBeDefined()

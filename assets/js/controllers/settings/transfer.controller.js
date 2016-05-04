@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('TransferController', TransferController);
 
-function TransferController($scope, $state, $timeout, $q, $uibModalInstance, Wallet, Alerts, address) {
+function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wallet, Alerts, address) {
   $scope.accounts = Wallet.accounts;
   $scope.selectedAccount = Wallet.my.wallet.hdwallet.defaultAccount;
   $scope.addresses = Array.isArray(address) ? address : [address];
@@ -16,13 +16,20 @@ function TransferController($scope, $state, $timeout, $q, $uibModalInstance, Wal
 
   $scope.initializePayments = () => {
     let index = $scope.selectedAccount.index;
-    $scope.payments = $scope.addresses.map(a => (
-      new Wallet.payment().from(a.address).to(index).useAll()
-    ));
-    let paymentsP = $scope.payments.map(p => $q(resolve => p.sideEffect(resolve)));
-    $q.all(paymentsP).then(paymentData => {
-      $scope.totalAmount = paymentData.filter(p => p.amounts[0] > 0).reduce((t, p) => t + p.amounts[0], 0);
-      $scope.totalFees = paymentData.filter(p => p.finalFee > 0).reduce((t, p) => t + p.finalFee, 0);
+
+    let paymentsP = $scope.addresses.reduce((chain, a) => chain.then(payments => $q(resolve => {
+      let p = new Wallet.Payment().from(a.address).to(index).useAll();
+      p.sideEffect(() => resolve(payments.concat(p)));
+    })), $q.resolve([]));
+
+    let paymentsDataP = paymentsP.then(payments => {
+      $scope.payments = payments;
+      return $q.all(payments.map(p => $q(resolve => p.sideEffect(resolve))));
+    });
+
+    paymentsDataP.then(paymentsData => {
+      $scope.totalAmount = paymentsData.filter(p => p.amounts[0] > 0).reduce((t, p) => t + p.amounts[0], 0);
+      $scope.totalFees = paymentsData.filter(p => p.finalFee > 0).reduce((t, p) => t + p.finalFee, 0);
       $scope.status.loading = false;
     });
   };
@@ -47,7 +54,8 @@ function TransferController($scope, $state, $timeout, $q, $uibModalInstance, Wal
       let signAndPublish = () => $q.resolve(payment.build().sign(pw).publish().payment);
 
       payment.sideEffect(p => {
-        if (p.amounts[0] <= 0) throw 'SWEEP_LOW_BALANCE_ERR';
+        let sweepErr = 'SWEEP_LOW_BALANCE_ERR';
+        if (p.amounts[0] <= 0) throw sweepErr;
         else $scope.selectedAccount.incrementReceiveIndex();
       });
 
@@ -55,7 +63,6 @@ function TransferController($scope, $state, $timeout, $q, $uibModalInstance, Wal
         .then(() => $scope.addresses[i].archived = true)
         .catch(e => $scope.nfailed++)
         .then(() => $scope.ncomplete++);
-
     }), $q.resolve())
       .then(success).catch(error);
   });
