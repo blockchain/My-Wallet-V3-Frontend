@@ -21,7 +21,6 @@ const modules = [
   'pascalprecht.translate',
   'bcTranslateStaticFilesLoader',
   'angular-inview',
-  'passwordEntropy',
   'webcam',
   'bcQrReader',
 
