@@ -617,6 +617,8 @@
   "SETTING_SELECT_ERR": "Failed to change setting to {{ setting }}",
   "YOUR_ADDRESS": "Your Bitcoin Address",
   "SWEEP_FAILED" : "Unable to transfer funds",
+  "SWEEP_FINISHED": "<small>{{::archivable}} out of {{::total}} addresses were successfully transferred to {{::account}}</small>. <br/> <br/> Would you like to archive these addresses now?",
+  "SWEEP_FINISHED_SINGLE": "<small>{{::archivable}} address was successfully transferred to {{::account}}</small>. <br/> <br/> Would you like to archive this address now?",
   "YOU_WILL_LOSE": "You will lose all your bitcoins! Are you sure?",
   "SURGE_WARN": "Unusually High Fee Recommended",
   "SURGE_EXPLAIN": "The Bitcoin network is under a higher load than usual. <b>To avoid any delays in confirmation, we recommend an unusually high transaction fee of {{ suggested | convert }}.</b>",

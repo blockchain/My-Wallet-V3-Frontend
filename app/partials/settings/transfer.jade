@@ -32,9 +32,10 @@ uib-progressbar.modal-progress(
       span.type-lbl.col-sm-3.control-label.colon(translate="TO")
       .col-sm-7
         ui-select(ng-model="$parent.selectedAccount")
-          ui-select-match {{ $select.selected.label }}
+          ui-select-match
+            label-origin(origin="$select.selected")
           ui-select-choices(repeat="account in accounts() | filter:{archived: false, label: $select.search}") 
-            span(ng-bind-html="account.label | escapeHtml | highlight: $select.search")
+            label-origin(origin='account' highlight="$select.search")
 
     .form-group
       span.type-lbl.col-sm-3.control-label.colon(translate="AMOUNT")

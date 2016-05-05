@@ -9,7 +9,9 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
   $scope.combinedBalance = $scope.addresses.reduce((t, a) => t + a.balance, 0);
 
   $scope.status = { loading: true };
+  $scope.nfailed = 0;
   $scope.ncomplete = 0;
+  $scope.archivable = [];
   $scope.ntotal = $scope.addresses.length;
 
   $scope.wait = (t) => $q(r => $timeout(r, t));
@@ -34,13 +36,22 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
     });
   };
 
+  $scope.archive = () => {
+    $scope.archivable.forEach(a => a.archived = true);
+    $uibModalInstance.dismiss();
+  };
+
   $scope.transfer = () => Wallet.askForSecondPasswordIfNeeded().then(pw => {
     $scope.status.sweeping = true;
 
     const success = () => $scope.wait(500).then(() => {
       $scope.refresh();
-      if ($scope.nfailed > 0 || $scope.ncompleted === 0) Alerts.displayWarning('SWEEP_FAIL');
-      $state.go('wallet.common.transactions', { accountIndex: $scope.selectedAccount.index });
+      let confirmString = $scope.archivable.length > 1 ? 'SWEEP_FINISHED' : 'SWEEP_FINISHED_SINGLE';
+      Alerts.confirm(confirmString,
+                     {'archivable': $scope.archivable.length,
+                      'account': $scope.selectedAccount.label,
+                      'total': $scope.ncomplete + $scope.nfailed}, '', '', {'action': 'archive', 'translation': 'ARCHIVE'
+                    }).then($scope.archive).catch($uibModalInstance.dismiss);
     });
 
     const error = (e) => {
@@ -60,7 +71,7 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
       });
 
       return $scope.wait(250).then(signAndPublish)
-        .then(() => $scope.addresses[i].archived = true)
+        .then(() => $scope.archivable.push($scope.addresses[i]))
         .catch(e => $scope.nfailed++)
         .then(() => $scope.ncomplete++);
     }), $q.resolve())
