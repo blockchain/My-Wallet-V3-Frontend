@@ -24,7 +24,7 @@
     "bc-qr-reader": "0.2.*",
     "bootstrap-sass": "3.3.*",
     "blockchain-wallet": "3.14.*",
-    "bc-phone-number": "5.0.*"
+    "bc-phone-number": "5.0.11"
   },
   "devDependencies": {},
   "resolutions": {
