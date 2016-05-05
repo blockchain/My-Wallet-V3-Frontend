@@ -23,5 +23,6 @@
       span.mrm(translate="{{ verified ? 'MSG_VERIFIED' : 'MSG_NOT_VERIFIED' }}")
       span.type-h4(ng-class="{ 'ti-check success': verified, 'ti-close security-red': !verified }")
 .modal-footer
-    button.button-muted.mrm(translate="CLOSE" ng-click="$dismiss()")
-    button.btn.button-primary(translate="VERIFY" ng-click="verify()" ng-disabled="verifyMessageForm.$invalid")
+    button.button-muted.mrm(translate="CLOSE" ng-click="$dismiss()" ng-hide="verified != null")
+    button.btn.button-primary(translate="VERIFY" ng-click="verify()" ng-disabled="verifyMessageForm.$invalid" ng-hide="verified != null")
+    button.btn.button-primary(translate="DONE" ng-click="$dismiss()" ng-show="verified != null")
