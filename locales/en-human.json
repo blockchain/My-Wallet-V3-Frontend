@@ -198,7 +198,7 @@
   "NEW_ADDRESS" : "New Address",
   "IMPORT_ADDRESS" : "Import Address",
   "MORE_ACTIONS" : "More Actions",
-  "CONFIRM_IMPORT_WATCH": "You are about to import a watch-only address. That means you can only access these funds if you have the private key stored elsewhere. If you do not have a paper wallet or other backup you should not instruct anyone to send you coins to this address. <b>This is recommended for advanced users only.</b>",
+  "CONFIRM_IMPORT_WATCH": "<i class='ti-alert security-red mrs'></i>You are about to import a watch-only address. <b>This is recommended for advanced users only.</b> <br/> <br/> <small>You can only access these funds if you have the private key stored elsewhere. If you do not have a paper wallet or other backup you should not instruct anyone to send you coins to this address.</small>",
   "ADDRESS" : "Address",
   "LABEL" : "Label",
   "CONFIRM_REMOVE_LABEL" : "You will not be able to see or label this address again, but you can still safely receive funds on it.",
