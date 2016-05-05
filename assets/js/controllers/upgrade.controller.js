@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('UpgradeCtrl', UpgradeCtrl);
 
-function UpgradeCtrl ($scope, Wallet, $uibModalInstance, $log, $window, $translate, $timeout) {
+function UpgradeCtrl ($scope, Wallet, $uibModalInstance, $log, $window, $translate, $timeout, $rootScope) {
   $scope.waiting = true;
   $scope.busy = false;
   $scope.settings = Wallet.settings;
@@ -24,7 +24,7 @@ function UpgradeCtrl ($scope, Wallet, $uibModalInstance, $log, $window, $transla
   };
 
   $scope.goToBlockchain = () => {
-    $window.location = 'https://blockchain.info/wallet/login';
+    $window.location = $rootScope.rootURL + 'wallet-legacy/login';
   };
 
   $scope.cancel = () => {

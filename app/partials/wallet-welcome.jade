@@ -23,7 +23,7 @@ blocket-loading
               a.btn.btn-primary(ui-sref="public.login-no-uid" translate="LOGIN_NEW")
           .span4.col.hidden-phone
             p
-              a.btn.btn-muted(href="{{rootURL}}wallet/login" translate="LOGIN_LEGACY")
+              a.btn.btn-muted(href="{{rootURL}}wallet-legacy/login" translate="LOGIN_LEGACY")
           .span4.col.hidden-phone
             p
               a.btn.btn-info(href='https://blockchain.zendesk.com' target="_blank" translate="SUPPORT_BUTTON") 
@@ -128,6 +128,10 @@ blocket-loading
           span.heavy(translate="CLIENT_SIDE")
           |  
           span(translate="CLIENT_SIDE_ENCRYPTION")
+        li
+          span.heavy(translate="DEDICATED_SUPPORT")
+          |  
+          span(translate="DEDICATED_SUPPORT_TEAM")
       ul.flex-1
         li
           span.heavy(translate="OPEN_SOURCE") 
@@ -146,55 +150,55 @@ blocket-loading
           |  
           p(translate="CONVERSION_RATES")
           p(translate="LANGUAGES_FEAT")
-          p(translate="WATCH_ONLY")
+          p(translate="WATCH_ONLY_DESC")
           p(translate="SECOND_PASSWORD_PROTECTION")
           p(translate="LOGIN_IP_RESTRICTION")
-  uib-carousel(active="active" interval="5000")
+  uib-carousel(active="active" interval="0")
     h4(translate="Loved by Users. Praised by Geeks. Recognized by the Press.")
     uib-slide(index="0")
       div
-        p(translate="I definitely see why you guys are raved about by the Bitcoin community! Thanks again!")
-        span.author Anonymous Wallet User
-    uib-slide(index="1")
-      div
-        img(src="img/logo-wsj.svg")
-        p(translate="...bitcoin...could allow billions of people currently excluded from banking systems to directly send and receive money electronically.")
-        span.author
-          a(href="http://on.wsj.com/1u5CFZF" target="_blank") The Wall Street Journal
-    uib-slide(index="2")
-      div
-        p(translate="You are very fast, reliable and [provide] honest service. Big thank you.")
-        span.author Anonymous Wallet User
-    uib-slide(index="3")
-      div
         img(src="img/logo-nytimes.svg")
-        p(translate="Blockchain is far and away an early leader in Bitcoin. They’re actually enabling the entire ecosystem.")
+        p(translate="QUOTE_0")
         span.author
           a(href="http://nyti.ms/1sfHj9b" target="_blank") The New York Times            
+    uib-slide(index="1")
+      div
+        p(translate="QUOTE_1")
+        span.author(translate="WALLET_USER")
+    uib-slide(index="2")
+      div
+        img(src="img/logo-wsj.svg")
+        p(translate="QUOTE_2")
+        span.author
+          a(href="http://on.wsj.com/1u5CFZF" target="_blank") The Wall Street Journal
+    uib-slide(index="3")
+      div
+        p(translate="QUOTE_3")
+        span.author(translate="WALLET_USER")
     uib-slide(index="4")
       div
-        p(translate="Really digging the newest Blockchain wallet, especially the added security.")
-        span.author Anonymous Wallet User
-    uib-slide(index="5")
-      div
         img(src="img/logo-techcrunch.svg")
-        p(translate="At a larger scale, as Blockchain is developing the most popular wallet apps in the world, it has the opportunity to improve how transactions are handled.")
+        p(translate="QUOTE_4")
         span.author
           a(href="http://techcrunch.com/2014/07/19/blockchain-releases-new-android-wallet-app-to-put-bitcoin-into-everyones-hands/" target="_blank") Tech Crunch
+    uib-slide(index="5")
+      div
+        p(translate="QUOTE_5")
+        span.author(translate="WALLET_USER")
     uib-slide(index="6")
       div
-        p(translate="New @blockchain mobile Bitcoin wallet makes it really simple to send or ask for btc over social media, message apps, e-mail")
-        span.author Anonymous Wallet User
-    uib-slide(index="7")
-      div
         img(src="img/logo-telegraph.svg")
-        p(translate="'Consumers are being offered much greater control and freedom with their money…' [Richard] Branson, founder of Virgin Group Ltd., said.")
+        p(translate="QUOTE_6")
         span.author
           a(href="http://bit.ly/1sdIEzZ" target="_blank") The Telegraph
+    uib-slide(index="7")
+      div
+        p(translate="QUOTE_7")
+        span.author(translate="WALLET_USER")
     uib-slide(index="8")
       div
-        p(translate="It's super slick and is easy to use. Would definitely recommend!!")
-        span.author Anonymous Wallet User
+        p(translate="QUOTE_8")
+        span.author(translate="WALLET_USER")
   .flex-center.flex-column.flex-justify
     h3.mbn.mtl.flex-start Be Your Own Bank
       small ®

@@ -66,7 +66,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     const absUrl = $location.absUrl();
     const path = $location.path();
     if (absUrl && path && path.length) {
-      // e.g. https://blockchain.info/wallet-beta/#
+      // e.g. https://blockchain.info/wallet/#
       $rootScope.rootPath = $location.absUrl().slice(0, -$location.path().length);
     }
 

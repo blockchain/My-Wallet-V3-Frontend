@@ -186,6 +186,10 @@ module.exports = (grunt) ->
           {src: ["polyfill.js"], dest: "build/js/", cwd: "node_modules/babel-polyfill/dist", expand: true}
         ]
 
+      legacy_cache_bust:
+        files: [
+          {src: ["wallet.min.js"], dest: "dist/", cwd: "assets/legacy-cache-bust", expand: true}
+        ]
 
       css:
         files: [
@@ -498,6 +502,7 @@ module.exports = (grunt) ->
       "copy:main"
       "rename:assets"
       "rename:html"
+      "copy:legacy_cache_bust"
     ]
 
   # Run dist first

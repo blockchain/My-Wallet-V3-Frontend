@@ -465,8 +465,6 @@
   "SIGNOUT": "注销",
   "EDIT_NOTE": "编辑",
   "DELETE_NOTE": "删除",
-  "USER_AGREEMENT" : "Beta 版程序参与协议",
-  "USER_AGREEMENT_WARNING": "请注意，这是新产品的 Beta 版。对此钱包进行测试时请勿使用超出您能承受的损失范围的资金。",
   "XPUB_WARNING": "只应将此扩展公钥 (xPub) 给予信任的人。使用此信息，他们能够跟踪您的付款，也能够阻止您访问自己的钱包。",
   "LOST_WALLET_ID": "我已丢失钱包 ID",
   "LOST_WALLET_PWD": "我已丢失钱包密码",

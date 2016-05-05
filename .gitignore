@@ -17,7 +17,6 @@ bower_components
 
 # Config
 .env
-betakeys.MDF
 e2e-tests/ignore.js
 .settings
 

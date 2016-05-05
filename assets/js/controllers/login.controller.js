@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('LoginCtrl', LoginCtrl);
 
-function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNetwork, Alerts, $cookies, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter) {
+function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNetwork, Alerts, $cookies, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter, $q) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.disableLogin = null;
@@ -12,7 +12,30 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
     twoFactor: null
   };
 
-  $scope.uid = $stateParams.uid || Wallet.guid || $rootScope.loginFormUID;
+  $rootScope.loginFormUID.then((res) => {
+    $scope.uid = $stateParams.uid || Wallet.guid || res;
+
+    $scope.$watch('uid + password + twoFactorCode + settings.needs2FA', () => {
+      $rootScope.loginFormUID = $q.resolve($scope.uid);
+      let isValid = null;
+      $scope.errors.uid = null;
+      $scope.errors.password = null;
+      $scope.errors.twoFactor = null;
+      if ($scope.uid == null || $scope.uid === '') {
+        isValid = false;
+      }
+      if ($scope.password == null || $scope.password === '') {
+        isValid = false;
+      }
+      if ($scope.settings.needs2FA && $scope.twoFactorCode === '') {
+        isValid = false;
+      }
+      if (isValid == null) {
+        isValid = true;
+      }
+      $timeout(() => $scope.isValid = isValid);
+    });
+  });
 
   $scope.uidAvailable = !!$scope.uid;
 
@@ -109,7 +132,7 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
     }
   };
 
-  if ($scope.autoReload && $scope.password) {
+  if ($scope.autoReload && $scope.uid && $scope.password) {
     $scope.login();
   }
 
@@ -144,26 +167,5 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
       $scope.busy = false;
       $state.go('wallet.common.home');
     }
-  });
-
-  $scope.$watch('uid + password + twoFactorCode + settings.needs2FA', () => {
-    $rootScope.loginFormUID = $scope.uid;
-    let isValid = null;
-    $scope.errors.uid = null;
-    $scope.errors.password = null;
-    $scope.errors.twoFactor = null;
-    if ($scope.uid == null || $scope.uid === '') {
-      isValid = false;
-    }
-    if ($scope.password == null || $scope.password === '') {
-      isValid = false;
-    }
-    if ($scope.settings.needs2FA && $scope.twoFactorCode === '') {
-      isValid = false;
-    }
-    if (isValid == null) {
-      isValid = true;
-    }
-    $timeout(() => $scope.isValid = isValid);
   });
 }

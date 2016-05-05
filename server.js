@@ -16,7 +16,7 @@ var apiDomain = process.env.API_DOMAIN;
 var rootApp = express();
 var app = express();
 
-rootApp.use('/wallet-beta', app);
+rootApp.use('/wallet', app);
 
 app.use(function (req, res, next) {
   if (req.url === '/') {
@@ -52,9 +52,9 @@ app.use(function (req, res, next) {
 
 rootApp.use(function (req, res, next) {
   if (req.url === '/') {
-    res.redirect('wallet-beta/');
-  } else if (req.url === '/wallet-beta') {
-    res.redirect('wallet-beta/');
+    res.redirect('wallet/');
+  } else if (req.url === '/wallet') {
+    res.redirect('wallet/');
   } else {
     next();
   }
