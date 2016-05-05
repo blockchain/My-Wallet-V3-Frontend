@@ -171,7 +171,11 @@ function AddressImportCtrl ($scope, $log, Wallet, Alerts, $uibModalInstance, $tr
 
   $scope.close = () => {
     if ($scope.step === 2 && $scope.address.balance > 0 && !$scope.address.isWatchOnly) {
-      Alerts.confirm('CONFIRM_NOT_SWEEP', {}, '', 'DONT_SWEEP').then($uibModalInstance.dismiss);
+      var opts = {'action': 'goToTransfer', 'translation': 'TRANSFER'};
+      Alerts.confirm('CONFIRM_NOT_SWEEP', {}, '', 'DONT_TRANSFER', opts).then((d) => {
+        if (d === 'action') $scope.goToTransfer();
+        else $uibModalInstance.dismiss('');
+      });
     } else {
       $uibModalInstance.dismiss('');
     }

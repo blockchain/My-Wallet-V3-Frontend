@@ -71,11 +71,12 @@ function Alerts ($timeout, $rootScope, $translate, $uibModal) {
     });
   }
 
-  function confirm (message, values = {}, modalClass = '', close = 'OK') {
+  function confirm (message, values = {}, modalClass = '', close = 'OK', options = {}) {
     return $uibModal.open({
       templateUrl: 'partials/modal-confirm.jade',
       windowClass: 'bc-modal confirm ' + modalClass,
       controller: function ($scope) {
+        $scope.options = options;
         $scope.message = message;
         $scope.values = values;
         $scope.close = close;
