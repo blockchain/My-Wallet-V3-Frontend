@@ -56,11 +56,6 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, Alerts, SecurityCente
 
   $scope.getLegacyTotal = () => Wallet.total('imported');
 
-  $scope.privacyPolicy = () => $uibModal.open({
-    templateUrl: 'partials/privacy-policy.jade',
-    windowClass: 'bc-modal terms-modal'
-  });
-
   $scope.didLoad = () => {
     $scope.accounts = Wallet.accounts;
   };
