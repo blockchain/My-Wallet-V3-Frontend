@@ -384,6 +384,9 @@
   .rocket-gif {
     border-radius: 5px;
     height: 430px;
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 
   [name='sendForm'], [name='requestForm'], [name="signMessageForm"], [name="verifyMessageForm"]  {
