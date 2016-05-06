@@ -28,7 +28,7 @@
     .col-xs-12.mtl(ng-show="pairWith == 'authenticator'")
       img(ng-hide="settings.googleAuthenticatorSecret" src="img/spinner.gif")
       .form-group.flex-between(ng-if="settings.googleAuthenticatorSecret" ng-class="{'has-error': errors.authenticatorCode}")
-        qr(text="settings.googleAuthenticatorSecret", size=172)
+        qr(text="settings.googleAuthenticatorSecret", size=172, image="true")
         .flex-column.flex-center.flex-1.pal
           p.width-75(translate="SCAN_QR_CODE_GA")
           input.form-control.width-75(type="text" ng-model="fields.authenticatorCode")
