@@ -21,6 +21,12 @@
       }
    }
 
+   .hidden-desktop {
+      @media (min-width: 769px) {
+         display: none !important;
+      }
+   }
+
    .container {
       width: auto;
       min-width: 300px;
