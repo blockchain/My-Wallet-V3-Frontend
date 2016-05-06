@@ -106,9 +106,11 @@
             a.mlm.button-danger.type-sm.button-sm.remove(ng-click="removeDestination($index)" ng-hide="$first && $last")
               i.ti-close.type-xs
           .has-error.mbm
-            span.help-block(ng-show="getTransactionTotal() > transaction.maxAvailable && !failedToLoadUnspent")
-              span.type-sm(translate="TOTAL_AVAILABLE" ng-show="!advanced")
-              span.type-sm(translate="TOTAL_AVAILABLE_MINUS_FEE" ng-show="advanced")
+            span.help-block(
+              ng-click="transaction.destinations.length === 1 && useAll()"
+              ng-class="{pointer: transaction.destinations.length === 1}"
+              ng-show="transaction.maxAvailable != null && getTransactionTotal() > transaction.maxAvailable && !failedToLoadUnspent")
+              span.type-sm(translate="{{getTotalAvailableTranslation()}}")
               | :&nbsp;
               span.type-sm {{ transaction.maxAvailable | convert:false:true }}
             span.help-block(ng-show="failedToLoadUnspent" ng-click="reopenModal()")
