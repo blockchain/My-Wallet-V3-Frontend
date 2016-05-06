@@ -107,4 +107,10 @@
     -ms-flex-direction: column;
     flex-direction: column;
   }
+  .flex-between-mobile {
+    -ms-flex-pack: justify;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;    
+  }
 }

@@ -3,9 +3,9 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
 form.form-horizontal(role="form",name="form",novalidate)  
   .form-group
     .col-sm-12.col-md-6
-      .flex-center.mbm
+      .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="WALLET_RECOVERY_PHRASE")
-        span.label.label-danger(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
+        span.label.label-warning(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
         span.label.label-success(translate="VERIFIED", ng-show="status.didConfirmRecoveryPhrase")
       p.text.line-height.em-300.hidden-xs.hidden-sm(translate="RECOVERY_PHRASE_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
@@ -13,7 +13,7 @@ form.form-horizontal(role="form",name="form",novalidate)
 
   .form-group
     .col-sm-12.col-md-6
-      .flex-center.mbm
+      .flex-center.flex-between-mobile.mbm
         label.em-400.type-h5.mbn(translate="WALLET_PASSWORD")
         span.label.label-success(translate="PASSWORD_SET")
       p.text.line-height.em-300.hidden-xs(translate="WALLET_PASSWORD_EXPLAIN")
@@ -21,7 +21,7 @@ form.form-horizontal(role="form",name="form",novalidate)
       a.button-primary(ng-click="changePassword()", translate="CHANGE")
   .form-group(ng-class="{'has-error':errors.passwordHint}")
     .col-sm-12.col-md-6
-      .flex-center.mbm
+      .flex-center.flex-between-mobile.mbm
         label.em-400.type-h5.mbn(translate="PASSWORD_HINT")
         span.label.label-warning(translate="NOT_STORED", ng-show="!user.passwordHint")
         span.label.label-success(translate="HINT_STORED", ng-show="user.passwordHint")
@@ -33,7 +33,7 @@ form.form-horizontal(role="form",name="form",novalidate)
       
   .form-group
     .col-sm-12.col-md-6
-      .flex-center.mbm
+      .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="WALLET_SECOND_PASSWORD")
         span.label.label-warning(ng-hide="settings.secondPassword", translate="DISABLED")    
         span.label.label-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
@@ -43,7 +43,7 @@ form.form-horizontal(role="form",name="form",novalidate)
    
   .form-group
     .col-sm-12.col-md-6
-      .flex-center.mbm
+      .flex-center.flex-between-mobile.mbm
         label.em-400.type-h5.mbn(translate="TWO_STEP_VERIFICATION")
         span.label.label-warning(translate="DISABLED", ng-show="!settings.needs2FA")
         span.label.label-success(translate="ENABLED", ng-show="settings.needs2FA")
@@ -54,7 +54,7 @@ form.form-horizontal(role="form",name="form",novalidate)
 
   .form-group
     .col-sm-12.col-md-6
-      .flex-center.mbm
+      .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="REMEMBER_2FA")
         span.label.label-warning(ng-hide="settings.rememberTwoFactor", translate="DISABLED")
         span.label.label-success(ng-show="settings.rememberTwoFactor", translate="ENABLED")
@@ -76,7 +76,7 @@ h5.well.type-h5.em-400.hidden-xs(ng-show="display.advanced")
 form.form-horizontal(role="form",name="form",novalidate, ng-show="display.advanced")
   .form-group
     .col-sm-12.col-md-6
-      .flex-center.mbm
+      .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="LOGGING")
         span.label.label-warning(ng-hide="settings.loggingLevel" translate="DISABLED")
         span.label.label-success(ng-show="settings.loggingLevel" translate="ENABLED")
@@ -91,7 +91,7 @@ form.form-horizontal(role="form",name="form",novalidate, ng-show="display.advanc
       
   .form-group
     .col-sm-12.col-md-6
-      .flex-center.mbm
+      .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="IP_WHITELIST_RESTRICT")
         span.label.label-warning(ng-hide="settings.restrictToWhitelist", translate="DISABLED")
         span.label.label-success(ng-show="settings.restrictToWhitelist", translate="ENABLED")
@@ -109,7 +109,7 @@ form.form-horizontal(role="form",name="form",novalidate, ng-show="display.advanc
       
    .form-group
       .col-sm-12.col-md-6
-        .flex-center.mbm
+        .flex-center.flex-between-mobile.mbm
           label.type-h5.em-400(translate="BLOCK_TOR")
           span.label.label-success(ng-show="settings.blockTOR", translate="BLOCKED")
           span.label.label-warning(ng-hide="settings.blockTOR", translate="ALLOWED")
@@ -126,7 +126,7 @@ form.form-horizontal(role="form",name="form",novalidate, ng-show="display.advanc
 
   .form-group
     .col-sm-12.col-md-6
-      .flex-center.mbm
+      .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="API_ACCESS")
       p.em-300.text.line-height.hidden-xs.hidden-sm(translate="API_ACCESS_SUPPORT")    
     .col-sm-12.col-md-6
