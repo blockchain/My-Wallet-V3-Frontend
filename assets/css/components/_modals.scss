@@ -70,6 +70,9 @@
   height: 2px;
   background-color: white;
   box-shadow: none;
+  .progress-bar {
+    background-color: $blue;
+  }
 }
 
 // Shell div to position the modal with bottom padding

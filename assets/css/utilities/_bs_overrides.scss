@@ -133,9 +133,6 @@ $select-fg: #686868;
 //override progress bar
 .progress {
   border-radius: 0;
-  .progress-bar {
-    background-color: $blue;
-  }
 }
 
 //override pre from bootstrap
