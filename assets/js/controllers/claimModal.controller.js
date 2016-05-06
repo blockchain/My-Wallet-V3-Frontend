@@ -32,7 +32,7 @@ function ClaimModalCtrl ($scope, Wallet, $translate, $uibModalInstance, claim, $
     $scope.payment
       .from(claim.code)
       .to($scope.fields.to.index)
-      .sweep()
+      .useAll()
       .build();
 
     const signAndPublish = (secondPassword) => {

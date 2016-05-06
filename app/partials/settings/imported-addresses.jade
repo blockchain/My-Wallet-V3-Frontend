@@ -7,14 +7,16 @@
 .row
   .col-xs-12.col-md-6
     .flex
-      button.btn.button-primary.mrm(type="button" translate="IMPORT_ADDRESS" ng-click="importAddress()")
+      button.button-primary.mrm(type="button" translate="IMPORT_ADDRESS" ng-click="importAddress()")
       .btn-group(uib-dropdown)
-        button.btn.button-default(type="button" uib-dropdown-toggle)
+        button.button-default(type="button" uib-dropdown-toggle)
           span.black(translate="MORE_ACTIONS")
           span.black.caret
         ul.dropdown-menu(uib-dropdown-menu)
           li
             a(translate="VERIFY_MESSAGE" ng-click="openVerifyMessage()")
+          li(ng-show="activeSpendableAddresses().length > 0")
+            a(translate="TRANSFER_ALL" ng-click="openTransferAll()")
 
   .col-xs-12.col-md-6
     .flex-1.mrl.filter-search-alt.width-100.pos-rel

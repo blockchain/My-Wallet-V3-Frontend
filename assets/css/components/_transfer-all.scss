@@ -1,0 +1,15 @@
+#transfer-all {
+  &.fade {
+    opacity: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    @include bc-ng-animate('expanded', 'height', '212px', '326px');
+  }
+  .address-container {
+    overflow: scroll;
+    width: 100%;
+    height: 104px;
+    border: 1px solid #eee;
+    padding: 5px 0px 10px 10px;
+  }
+}

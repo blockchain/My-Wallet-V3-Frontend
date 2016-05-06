@@ -12,7 +12,8 @@ function SettingsImportedAddressesCtrl ($scope, Wallet, Alerts, $translate, $uib
     $scope.display.imported = false;
   };
 
-  $scope.hasLegacyAddress = () => Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly).length > 0;
+  $scope.activeSpendableAddresses = () => Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly && a.balance > 0);
+  $scope.hasLegacyAddress = () => $scope.activeSpendableAddresses().length > 0;
 
   $scope.unarchive = (address) => Wallet.unarchive(address);
 
@@ -42,4 +43,11 @@ function SettingsImportedAddressesCtrl ($scope, Wallet, Alerts, $translate, $uib
       }
     });
   };
+
+  $scope.openTransferAll = () => $uibModal.open({
+    templateUrl: 'partials/settings/transfer.jade',
+    controller: 'TransferController',
+    windowClass: 'bc-modal',
+    resolve: { address: () => $scope.activeSpendableAddresses() }
+  });
 }
