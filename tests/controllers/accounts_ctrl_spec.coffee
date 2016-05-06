@@ -72,9 +72,3 @@ describe "WalletNavigationCtrl", ->
   it "should show account based on state", inject(() ->
     expect(scope.showOrHide()).toBe(false)
   )
-
-  it "should open modal to see Privacy Policy",  inject(() ->
-    spyOn(modal, "open")
-    scope.privacyPolicy()
-    expect(modal.open).toHaveBeenCalled()
-  )

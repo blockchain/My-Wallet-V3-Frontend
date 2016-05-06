@@ -9,7 +9,7 @@
     p.xpub.break-word {{::xpub}}
   .form-group.flex-column.flex-justify(ng-show="showXpub")
     p(align="center")
-      qr(text="::xpub", size=200, correction-level="'M'")
+      qr(text="::xpub", size=200, correction-level="'M'", image="true")
 .modal-footer.pal.flex-end.flex-center
   button.button-muted.mrm(ng-click="close()", translate="CLOSE")
   button.button-primary.button-md(ng-click="continue()", translate="CONTINUE" ng-hide="showXpub")
