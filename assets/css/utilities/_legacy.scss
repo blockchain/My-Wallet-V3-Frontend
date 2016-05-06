@@ -90,6 +90,12 @@
       .quickstart .col {
          border-left: 0px;
       }
+      h1 small {
+         font-size: 16px;
+      }
+      .row-fluid [class*="span"] {
+         margin-left: 0px;
+      }
    }
 }
 

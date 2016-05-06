@@ -212,16 +212,14 @@ blocket-loading
       ng-submit="signup()"
       autocomplete="off"
       novalidate)
-      .form-group.flex-row.flex-center.mtl.mbvl(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
-        input.form-control.lrg.mrm(
+      .form-group.flex-row.flex-center.flex-column-mobile.mbvl(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
+        input.form-control.lrg.mrm.mtl(
           name="email"
           type="email"
           ng-model="fields.email"
           placeholder="jane@doe.com"
           required)
-        button.button-primary.btn.button-vlg(
+        button.button-primary.btn.button-vlg.mtl(
           type="submit"
           ng-disabled="signupForm.$invalid"
-          translate="GET_STARTED"
-          ng-show="!working")  
-        img(ng-show="working" src="img/spinner.gif")
+          translate="GET_STARTED")  
