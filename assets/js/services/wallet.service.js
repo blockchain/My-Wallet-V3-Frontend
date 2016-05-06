@@ -266,7 +266,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
 
     let proceed = (password) => {
       $translate('FIRST_ACCOUNT_NAME').then((translation) => {
-        wallet.my.wallet.newHDWallet(translation, password, success, error);
+        wallet.my.wallet.upgradeToV3(translation, password, success, error);
       });
     };
     wallet.askForSecondPasswordIfNeeded()
