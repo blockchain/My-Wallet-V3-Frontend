@@ -69,9 +69,6 @@ describe "TransactionsCtrl", ->
       scope.filterSearch(1, "test")
       expect(scope.filterSearch).toHaveBeenCalled()
 
-    it "can show a transaction", ->
-      scope.showTransaction({ result: 1, txType: 'received' })
-
     describe "filterByType", ->
 
       it "should fitler by sent", ->
