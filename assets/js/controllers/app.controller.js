@@ -96,6 +96,10 @@ function AppCtrl ($scope, Wallet, Alerts, $state, $rootScope, $cookies, $locatio
     }, 0);
   });
 
+  $scope.$watch('settings.theme', () => {
+    $scope.theme = $scope.settings.theme;
+  });
+
   $scope.checkGoals = () => {
     if ($scope.status.isLoggedIn) {
       if (!((Wallet.settings.currency != null) && (Wallet.settings.btcCurrency != null))) {
