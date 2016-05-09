@@ -83,8 +83,8 @@ html,body {
 }
 
 .hide { display: none; }
-
 .invisible { visibility: hidden; opacity: 0; }
+.hidden-desktop { @media (min-width: 769px) { display: none; } } 
 
 .hidden-phone {
    @media (max-width: 768px) {
