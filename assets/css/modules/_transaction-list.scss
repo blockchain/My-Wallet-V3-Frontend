@@ -84,6 +84,28 @@
       }
     }
   }
+  @media (max-width: 992px) {
+    .tx-details {
+      margin-left: 1em;
+    }
+  }
+  @media (max-width: 768px) {
+    .transaction {
+      padding-right: 10px;
+      button.amount {
+        padding: 5px 10px;
+        font-size: 10px;
+      }
+      .width-80 {
+        width: 100%;
+      }
+      .mtvl {
+        flex: 2 0 0;
+        -ms-flex: 2;
+        margin-top: 0.625em;
+      }
+    }
+  }
   .description {
     color: $dark-grey;
   }
@@ -214,10 +236,22 @@ button {
   .edit {
     right: 1.5em;
   }
-  .input.pos-abs {
-    width: 100%;
+  .cancel {
+    position: relative;
+    right: calc(-100% + 2.5em);
+  }
+  .input {
+    width: calc(100% - 1.5em);
     top: 1.5em;
     left: 0;
+  }
+  @media (max-width: 768px) {
+    .edit {
+      right: -1.5em;
+    }
+    .input.pos-abs {
+      position: relative;
+    }
   }
 }
 

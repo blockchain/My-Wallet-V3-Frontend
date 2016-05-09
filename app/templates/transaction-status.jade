@@ -1,11 +1,11 @@
 div
   .flex-column(ng-if="!complete")
     .flex-row
-      span.mts.mrs.mbm.em-400.type-lbl(translate="PENDING")
+      span.mts.mrs.mbm.em-600(translate="PENDING")
       helper-button(content="{{ 'TRANSACTION_WILL_COMPLETE_IN' | translate:{minutes: minutesRemaining } }}" ng-if="!frugalWarning")
       helper-button(content="{{ 'TRANSACTION_FRUGAL' | translate }}" ng-if="frugalWarning")
 
   .success.flex-column(ng-if="complete")
     .flex-row
-      span.mrm.mbm.em-400.type-lbl(translate="TRANSACTION_COMPLETE")
-      i.ti-check.em-400.type-lbl
+      span.mrm.mbn.em-600(translate="TRANSACTION_COMPLETE")
+      i.ti-check.em-600
