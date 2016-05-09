@@ -1,4 +1,9 @@
 .transactions {
+  .label-success,
+  .label-default {
+    @extend .btn-xs;
+    display: inline-block;
+  }
   .transaction-feed {
     position: relative;
     top: 50px;
@@ -37,27 +42,46 @@
      color: $transfer-blue;
     }
     .destination{
+      width: 265px;
       display: block;
       font-size: 1.1em;
-    }
-    .amount {
-      padding: 10px 0;
-      position: absolute;
-      right: 10px;
-      top: 18px;
-      button.amount{
-        font-size: 1.1em;
-        min-width: 125px;
-        float: right;
-      }
+      overflow: hidden;
     }
     .tx-toggle {
+      top: 10px;
+      left: 10px;
       position: absolute;
-      top: 62.5px;
-      transform: translateY(-50%);
     }
     .tx-details {
       margin-left: 3em;
+    }
+    transaction-status {
+      .helper {
+        margin: 0px;
+      }
+    }
+    transaction-description {
+      .on-hover {
+        top: 0;
+        left: 0;
+        opacity: 0;
+        width: 100%;
+        position: absolute;
+        @include transition(opacity $fast);
+      }
+      .bc-link {
+        width: 142px;
+        &:hover {
+          .on-hover {
+            opacity: 1;
+          }
+        }
+      }
+      .fee {
+        button {
+          margin-top: -3px;
+        }
+      }
     }
   }
   .description {
@@ -173,7 +197,29 @@ button {
 }
 .unconfirmed { opacity: 0.5; }
 
-.note { color: $black; }
+.note { 
+  color: $black;
+  position: relative;
+  textarea {
+    resize: none;
+    height: 60px;
+    border-color: $eee;
+    padding: 10px 0px 0px 10px;
+  }
+  .edit, .delete {
+    top: 0px;
+    right: 0px;
+    position: absolute;
+  }
+  .edit {
+    right: 1.5em;
+  }
+  .input.pos-abs {
+    width: 100%;
+    top: 1.5em;
+    left: 0;
+  }
+}
 
 a.date,p.date { color: $black; }
 

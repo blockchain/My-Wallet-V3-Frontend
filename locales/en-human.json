@@ -400,6 +400,7 @@
   "TX_FEE" : "Transaction Fee",
   "TX_FEE_REQUIRED": "Transaction Fee (required by Bitcoin miners)",
   "TX_FEE_HELP": "Transaction fees impact how quickly the Bitcoin mining network will confirm your transactions, and depend on the current network conditions. We recommend the fee below for this transaction at this time.",
+  "TX_FEE_EXPLAINATION": "Bitcoin miners receive fees for verifying transactions. We set fees dynamically based on network conditions and transaction size. You can customize your fee in advanced send.",
   "TOTAL_AVAILABLE": "Total available",
   "USE_TOTAL_AVAILABLE": "Use total available",
   "TOTAL_AVAILABLE_MINUS_FEE": "Total available minus fee",
@@ -714,5 +715,8 @@
   "QUOTE_7": "New @blockchain mobile Bitcoin wallet makes it really simple to send or ask for btc over social media, message apps, e-mail.",
   "QUOTE_8": "It's super slick and is easy to use. Would definitely recommend!!",
   "HAVING_TROUBLE": "Having some trouble?",
-  "LOGIN_TO_LEGACY": "Login to the Legacy wallet"
+  "LOGIN_TO_LEGACY": "Login to the Legacy wallet",
+  "CONFIRMATION": "confirmation",
+  "CONFIRMATIONS": "confirmations",
+  "ADD_A_DESCRIPTION": "Add a description"
 }

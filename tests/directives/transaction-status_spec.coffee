@@ -27,8 +27,6 @@ describe "Transaction Status Directive", ->
 
   it "should show minutes remaining if there are < 3 confirmations", ->
     expect(element.html()).toContain "TRANSACTION_WILL_COMPLETE_IN"
-    expect(element.html()).toContain "minutesRemaining"
-    expect(isoScope.minutesRemaining).toBe(10)
 
   it "should show there's 30 minutes remaining if there are 0 confirmations", ->
     isoScope.transaction.confirmations = 0
@@ -48,7 +46,7 @@ describe "Transaction Status Directive", ->
     isoScope.transaction.frugal = true
     isoScope.$digest()
     expect(isoScope.frugalWarning).toBe(true)
-    expect(element.html()).toContain "translate=\"TRANSACTION_FRUGAL"
+    expect(element.html()).toContain "TRANSACTION_FRUGAL"
     expect(element.html()).not.toContain "TRANSACTION_WILL_COMPLETE_IN"
 
   it "should should not warn about frugal fee if confirmed", ->

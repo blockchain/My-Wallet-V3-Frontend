@@ -1,39 +1,55 @@
 .flex-column
-  .flex-align-end.flex-end.pbl
-    .flex-column.col-md-3.col-sm-12.col-xs-12
+  .flex-start.flex-between
+    .flex-1.flex-column
       span.timestamp.pbm.type-sm.basic-grey
         date {{:: tx.time * 1000 | date:'MMMM d @ hh:mm a' }}
-      .flex-center
+      .flex-center.lh1
         span.action.prm(
           ng-class=":: txClass"
           translate="{{:: txDirection }}")
-        i.ti-notepad.aaa.plm.prm(ng-show="tx.note")
         span.label.label-default(translate="WATCH_ONLY" ng-show=":: txWatchOnly")
-    .hidden-xs.hidden-sm.destination.em-400.col-md-8(
-      ng-class="tx.toggled ? 'dark-grey' : 'basic-grey'")
-      .flex.row
-        span.text.col-md-1(
+    .flex-2.hidden-xs.hidden-sm.destination.em-400.basic-grey
+      div
+        span.text(
           ng-show=":: tx.txType === 'transfer' || tx.txType === 'received'") {{:: 'FROM' | translate}}:
-        span.text.col-md-1(
-          ng-show=":: tx.txType === 'sent'") {{:: 'TO' | translate}}
-        span.hidden-sm.hidden-xs.col-md-11.mlm(
+        span.text(
+          ng-show=":: tx.txType === 'sent'") {{:: 'TO' | translate}}:
+        span.hidden-sm.hidden-xs.mlm(
           ng-bind-html="txLabels.primary | escapeHtml | highlight:search")
-    .hidden-xs.hidden-sm.col-md-1
-  .flex-center.border-top.ptl.hidden-xs.hidden-sm.dark-grey(
-    ng-show="tx.toggled")
-    .col-md-3
-    .col-md-8.destination.em-400
-      .flex.row
-        span.text.col-md-1(
+      div(ng-show="tx.toggled")
+        span.text(
           ng-show=":: tx.txType === 'transfer' || tx.txType === 'received'") {{:: 'TO' | translate}}:
-        span.text.col-md-1(
-          ng-show=":: tx.txType === 'sent'") {{:: 'FROM' | translate}}
-        span.hidden-sm.hidden-xs.col-md-11.mlm(
+        span.text(
+          ng-show=":: tx.txType === 'sent'") {{:: 'FROM' | translate}}:
+        span.hidden-sm.hidden-xs.mlm(
           ng-bind-html="txLabels.secondary | escapeHtml | highlight:search")
-      .flex.row.mtm(ng-show="tx.note")
-        span.text.col-md-1(translate="NOTE_LC")
-        span.break-word.hidden-sm.hidden-xs.col-md-11.mlm {{ tx.note }}
-      .flex.row.mtm.timestamp.aaa(
-        ng-show="tx.confirmations === 0")
-        span.text.col-md-12(translate="UNCONFIRMED_WARNING")
-    .col-md-1
+    .flex-1
+      transaction-note(transaction="tx")
+    .flex-1.amount
+      span 
+        amount(transaction="tx")
+  .flex-start.flex-between.hidden-xs.hidden-sm.dark-grey(ng-show="tx.toggled")
+    .flex-1.flex-column.flex-end
+      transaction-status(transaction="tx")
+      a.black.pos-rel.bc-link(ng-href="http://www.blockchain.info/tx/{{:: tx.hash }}", target="_blank")
+       span.label.label-default.em-400(translate="VERIFY_ON_BCI")
+       span.on-hover.label.em-400(ng-class="{'label-success': tx.confirmations >= 3, 'label-default': tx.confirmations < 3}") {{ tx.confirmations }}
+         | &nbsp;
+         span
+           ng-pluralize(count="tx.confirmations" 
+                        ng-init="confirmation='CONFIRMATION'; confirmations='CONFIRMATIONS'"
+                        when="{'1': '{{ confirmation | translate }}', 'other': '{{ confirmations | translate }}' }")
+    .flex-2.hidden-xs.destination
+      div
+    .flex-1
+      div
+    .flex-1.flex-column.flex-align-end.mtvl
+      .flex-row
+        p.mbn(translate="VALUE_AT_SEND")
+        | :&nbsp;
+        fiat.em-600(btc=":: tx.amount" date=":: tx.time")
+      .flex-row.fee
+        helper-button(content="{{ 'TX_FEE_EXPLAINATION' | translate }}")
+        p.mbn(translate="TX_FEE")
+        | :&nbsp;
+        fiat.em-600(btc=":: tx.fee")

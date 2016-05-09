@@ -39,13 +39,6 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
     else if (!$scope.allTxsLoaded && !$scope.loading) fetchTxs();
   };
 
-  $scope.showTransaction = (transaction) => {
-    $state.go('wallet.common.transaction', {
-      accountIndex: $stateParams.accountIndex,
-      hash: transaction.hash
-    });
-  };
-
   $scope.$watchCollection('accounts()', newValue => {
     $scope.canDisplayDescriptions = $scope.accounts().length > 0;
   });

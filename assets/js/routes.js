@@ -215,20 +215,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/:accountIndex/transactions',
       views: transactionsViews
     })
-    .state('wallet.common.transaction', {
-      url: '/:accountIndex/transactions/:hash',
-      views: {
-        top: top,
-        left: {
-          templateUrl: 'partials/wallet-navigation.jade',
-          controller: 'WalletNavigationCtrl'
-        },
-        right: {
-          templateUrl: 'partials/transaction.jade',
-          controller: 'TransactionCtrl'
-        }
-      }
-    })
     .state('wallet.common.open', {
       url: '/open/{uri:.*}',
       views: {
