@@ -481,6 +481,7 @@
   "SEND_BITOIN_STEP2B" : "Add a note to remind yourself what this transaction relates to. This note will be private and only seen by you.",
   "BACK_TO_FEED" : "Back to Transaction Feed",
   "VALUE_AT_SEND" : "Value at Send",
+  "VALUE_WHEN_RECEIVED": "Value when Received",
   "VALUE_NOW" : "Value Now",
   "VERIFY_ON_BCI" : "Verify on Blockchain.info",
   "ARE_YOU_SURE" : "We just want to double check! Are you sure you wish to proceed? Remember you cannot go back to your old wallet :)",

@@ -44,7 +44,7 @@
     .destination{
       width: 265px;
       display: block;
-      font-size: 1.1em;
+      font-size: 1em;
       overflow: hidden;
     }
     .tx-toggle {
@@ -250,6 +250,7 @@ button {
       right: -1.5em;
     }
     .input.pos-abs {
+      top: 0px;
       position: relative;
     }
   }
