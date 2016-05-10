@@ -66,7 +66,9 @@ $bright-green:  #3CC476 !important; //override Security Center nested css select
 @include color('mid-grey', $mid-grey);
 @include color('basic-grey', $basic-grey);
 @include color('dark-grey', $dark-grey);
+@include color('send-red', $send-red);
 @include color('receive-green', $receive-green);
+@include color('transfer-blue', $transfer-blue);
 @include color('security-red', $security-red);
 @include color('security-yellow', $security-yellow);
 @include color('security-green', $security-green);

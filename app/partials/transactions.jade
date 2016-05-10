@@ -6,13 +6,16 @@
         ng-click="setFilterType($index)"
         ng-class="{'active': isFilterType($index)}"
         translate="{{::f}}")
-    .filter-search
-      input(
-        type="text"
-        placeholder="{{::'SEARCH' | translate}}"
-        ng-model="$parent.searchText"
-        ng-model-options="{ debounce: 250 }")
-      i.ti-search
+    .flex-center
+      a.black.mrl.em-500.em-alt(ng-click="exportHistory()")
+        i.ti-export
+      .filter-search
+        input(
+          type="text"
+          placeholder="{{::'SEARCH' | translate}}"
+          ng-model="$parent.searchText"
+          ng-model-options="{ debounce: 250 }")
+        i.ti-search
   .transaction-feed
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || getTotal(account) > 0 || filteredTransactions.length > 0 || selectedaccount == 'imported'")
       .flex-column.mbl.border-bottom.black

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('TransactionsCtrl', TransactionsCtrl);
 
-function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $state, $rootScope) {
+function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $state, $rootScope, $uibModal) {
   $scope.addressBook = Wallet.addressBook;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
@@ -50,14 +50,20 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
     $rootScope.$safeApply();
   };
 
+  $scope.exportHistory = () => $uibModal.open({
+    templateUrl: 'partials/export-history.jade',
+    controller: 'ExportHistoryController',
+    windowClass: 'bc-modal',
+    backdrop: 'static',
+    resolve: { filterBy: () => $scope.filterBy }
+  });
+
   let unsub = txList.subscribe(setTxs);
   $scope.$on('$destroy', unsub);
 
   // Searching and filtering
-  $scope.filterTypes = ['ALL', 'SENT', 'RECEIVED_BITCOIN_FROM', 'MOVED_BITCOIN_TO'];
-  $scope.setFilterType = type => {
-    $scope.filterBy = $scope.filterTypes[type];
-  };
+  $scope.filterTypes = ['ALL', 'SENT', 'RECEIVED', 'TRANSFERRED'];
+  $scope.setFilterType = (type) => $scope.filterBy = $scope.filterTypes[type];
   $scope.isFilterType = (type) => $scope.filterBy === $scope.filterTypes[type];
   $scope.setFilterType(0);
 

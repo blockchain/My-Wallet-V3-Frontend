@@ -17,6 +17,7 @@
 .long-input { overflow-wrap: break-word; }
 .text { font-size: 14px; } //use pixels to normalize with Bootstrap instead of em's
 .colon:after { content: ':' }
+.capitalize { text-transform: capitalize; }
 
 .text-overflow-hidden, .ui-select-match-text {
   text-overflow: ellipsis;
