@@ -152,7 +152,7 @@
   "ACCOUNT_XPUB_MODAL_TITLE" : "Extended Public Key",
   "PENDING" : "Pending",
   "COMPLETE" : "Complete",
-  "TRANSACTION_COMPLETE" : "Transaction Complete",
+  "TRANSACTION_COMPLETE" : "Transaction Confirmed",
   "OVERVIEW" : "Overview:",
   "NOTE" : "Note:",
   "CREATE" : "Create:",

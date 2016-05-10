@@ -1,6 +1,6 @@
 .flex-column
   .flex-start.flex-between
-    .flex-1.flex-column
+    .flex-1.flex-column.pointer(ng-click="tx.toggled = !tx.toggled")
       span.timestamp.pbm.type-sm.basic-grey
         date {{:: tx.time * 1000 | date:'MMMM d @ hh:mm a' }}
       .flex-center.lh1
@@ -8,7 +8,7 @@
           ng-class=":: txClass"
           translate="{{:: txDirection }}")
         span.label.label-default(translate="WATCH_ONLY" ng-show=":: txWatchOnly")
-    .flex-2.hidden-xs.hidden-sm.destination.em-400.basic-grey
+    .flex-2.hidden-xs.hidden-sm.destination.em-400.basic-grey.pointer(ng-click="tx.toggled = !tx.toggled")
       div
         span.text(
           ng-show=":: tx.txType === 'transfer' || tx.txType === 'received'") {{:: 'FROM' | translate}}:
@@ -55,9 +55,9 @@
            ng-pluralize(count="tx.confirmations" 
                         ng-init="confirmation='CONFIRMATION'; confirmations='CONFIRMATIONS'"
                         when="{'1': '{{ confirmation | translate }}', 'other': '{{ confirmations | translate }}' }")
-    .flex-2.hidden-xs.destination
+    .flex-2.hidden-xs.destination.pointer(ng-click="tx.toggled = !tx.toggled")
       div
-    .flex-1.hidden-xs
+    .flex-1.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
       div
     .flex-1.flex-column.flex-align-end.mtvl
       .flex-row
