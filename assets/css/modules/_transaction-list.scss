@@ -57,30 +57,37 @@
       margin-left: 3em;
     }
     transaction-status {
+      position: relative;
+      > * { @include transition(opacity $fast); }
       .helper {
         margin: 0px;
       }
-    }
-    transaction-description {
       .on-hover {
         top: 0;
         left: 0;
         opacity: 0;
         width: 100%;
         position: absolute;
-        @include transition(opacity $fast);
       }
-      .bc-link {
-        width: 142px;
-        &:hover {
-          .on-hover {
-            opacity: 1;
-          }
+      &:hover {
+        .on-hover {
+          opacity: 1;
+        }
+        & > *:not(.on-hover) {
+          opacity: 0;
         }
       }
+    }
+    transaction-description {
       .fee {
         button {
           margin-top: -3px;
+        }
+      }
+      .bc-link {
+        color: $basic-grey;
+        &:hover {
+          color: $blue;
         }
       }
     }
@@ -93,6 +100,13 @@
   @media (max-width: 768px) {
     .transaction {
       padding-right: 10px;
+      .tx-toggle {
+        top: 5px;
+        left: 5px;
+        i {
+          font-size: 14px;
+        }
+      }
       button.amount {
         padding: 5px 10px;
         font-size: 10px;

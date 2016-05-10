@@ -31,5 +31,8 @@ $multiplier: 100;
 @for $i from 1 through 9 {
   .em-#{$i}00 {
     font-weight: $i * $multiplier;
+    &:before {
+      font-weight: $i * $multiplier !important;
+    }
   }
 }
