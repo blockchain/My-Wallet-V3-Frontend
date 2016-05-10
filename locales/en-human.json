@@ -681,7 +681,7 @@
   "OK": "OK",
   "DESCRIPTION:": "Description:",
   "COPY_HELPER": "Copy this address and share it with your sender via email, text, or carrier pigeon.",
-  "QR_HELPER": "Share this QR code with your sender.",
+  "QR_HELPER": "Ask your sender to scan this QR code.",
   "CUSTOMIZE_HELPER": "Specify an amount and a description for this transaction.",
   "SAVE_HELPER": "You’ll find this in Settings -> Addresses -> {{ label }} -> Manage Addresses.",
   "THANKS_FOR_ACCEPTING": "Thanks for accepting bitcoin!",
