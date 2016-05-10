@@ -10,16 +10,16 @@
         span.label.label-default(translate="WATCH_ONLY" ng-show=":: txWatchOnly")
     .flex-2.hidden-xs.hidden-sm.destination.em-400.basic-grey.pointer(ng-click="tx.toggled = !tx.toggled")
       div
-        span.text(
+        span(
           ng-show=":: tx.txType === 'transfer' || tx.txType === 'received'") {{:: 'FROM' | translate}}:
-        span.text(
+        span(
           ng-show=":: tx.txType === 'sent'") {{:: 'TO' | translate}}:
         span.hidden-sm.hidden-xs.mlm(
           ng-bind-html="txLabels.primary | escapeHtml | highlight:search")
       div(ng-show="tx.toggled")
-        span.text(
+        span(
           ng-show=":: tx.txType === 'transfer' || tx.txType === 'received'") {{:: 'TO' | translate}}:
-        span.text(
+        span(
           ng-show=":: tx.txType === 'sent'") {{:: 'FROM' | translate}}:
         span.hidden-sm.hidden-xs.mlm(
           ng-bind-html="txLabels.secondary | escapeHtml | highlight:search")
@@ -31,30 +31,24 @@
   //- toggled and mobile
   .flex-start.flex-column.hidden-desktop.mvm(ng-show="tx.toggled")
     div
-      span.text(
+      span(
         ng-show=":: tx.txType === 'transfer' || tx.txType === 'received'") {{:: 'FROM' | translate}}:
-      span.text(
+      span(
         ng-show=":: tx.txType === 'sent'") {{:: 'TO' | translate}}:
       span.mlm(
         ng-bind-html="txLabels.primary | escapeHtml | highlight:search")
     div(ng-show="tx.toggled")
-      span.text(
+      span(
         ng-show=":: tx.txType === 'transfer' || tx.txType === 'received'") {{:: 'TO' | translate}}:
-      span.text(
+      span(
         ng-show=":: tx.txType === 'sent'") {{:: 'FROM' | translate}}:
       span.mlm(
         ng-bind-html="txLabels.secondary | escapeHtml | highlight:search")
   .flex-start.flex-between.dark-grey(ng-show="tx.toggled")
     .flex-1.flex-column.flex-end
       transaction-status(transaction="tx")
-      a.black.pos-rel.bc-link(ng-href="http://www.blockchain.info/tx/{{:: tx.hash }}", target="_blank")
-       span.label.label-default.em-400(translate="VERIFY_ON_BCI")
-       span.on-hover.label.em-400(ng-class="{'label-success': tx.confirmations >= 3, 'label-default': tx.confirmations < 3}") {{ tx.confirmations }}
-         | &nbsp;
-         span
-           ng-pluralize(count="tx.confirmations" 
-                        ng-init="confirmation='CONFIRMATION'; confirmations='CONFIRMATIONS'"
-                        when="{'1': '{{ confirmation | translate }}', 'other': '{{ confirmations | translate }}' }")
+      a.underline.bc-link(href="{{rootURL}}tx/{{:: tx.hash }}", target="_blank")
+       span(translate="VERIFY_ON_BCI")
     .flex-2.hidden-xs.destination.pointer(ng-click="tx.toggled = !tx.toggled")
       div
     .flex-1.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
