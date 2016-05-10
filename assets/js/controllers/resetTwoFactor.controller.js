@@ -3,6 +3,11 @@ angular
   .controller('ResetTwoFactorCtrl', ResetTwoFactorCtrl);
 
 function ResetTwoFactorCtrl ($scope, $rootScope, $http, $translate, WalletNetwork, Alerts) {
+  let service;
+  WalletNetwork.then((res) => {
+    service = res;
+  });
+
   $scope.currentStep = 1;
   $scope.fields = {
     email: '',
@@ -53,7 +58,7 @@ function ResetTwoFactorCtrl ($scope, $rootScope, $http, $translate, WalletNetwor
     $scope.form.$setPristine();
     $scope.form.$setUntouched();
 
-    WalletNetwork.requestTwoFactorReset(
+    service.requestTwoFactorReset(
       $scope.fields.uid,
       $scope.fields.email,
       $scope.fields.newEmail,

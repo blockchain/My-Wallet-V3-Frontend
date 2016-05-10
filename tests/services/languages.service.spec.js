@@ -1,7 +1,6 @@
 'use strict';
 
 describe('languages', () => {
-
   beforeEach(angular.mock.module('walletApp'));
 
   it('should load the language codes', inject((languages) => {
@@ -16,5 +15,4 @@ describe('languages', () => {
     }, '');
     expect(languagesAreSorted).toEqual(true);
   }));
-
 });

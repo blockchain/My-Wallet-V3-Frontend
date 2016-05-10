@@ -14,6 +14,17 @@ function passwordEntropy (MyWalletHelpers) {
   return directive;
 
   function passwordEntropyController ($scope) {
+    let scorePassword;
+    MyWalletHelpers.then((helpers) => {
+      scorePassword = helpers.scorePassword;
+
+      $scope.$watch('password', (newPw) => {
+        let score = scorePassword(newPw);
+        $scope.score = score > 100 ? 100 : score;
+        $scope.setDisplay($scope.score);
+      });
+    });
+
     $scope.score = 0;
 
     const displayOptions = {
@@ -27,11 +38,5 @@ function passwordEntropy (MyWalletHelpers) {
       let threshold = Object.keys(displayOptions).filter(threshold => threshold <= score).reverse()[0];
       [$scope.barColor, $scope.strength] = displayOptions[threshold];
     };
-
-    $scope.$watch('password', (newPw) => {
-      let score = MyWalletHelpers.scorePassword(newPw);
-      $scope.score = score > 100 ? 100 : score;
-      $scope.setDisplay($scope.score);
-    });
   }
 }

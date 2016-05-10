@@ -34,6 +34,15 @@ module.exports = (grunt) ->
         expand: true
         src: ['build/index.html']
         dest: ''
+      js:
+        options: {
+          context : {
+            PRODUCTION: true
+          }
+        },
+        expand: true
+        src: ['build/js/services/wallet.service.js']
+        dest: ''
 
     concat:
       options:
@@ -77,7 +86,6 @@ module.exports = (grunt) ->
 
       application: # All components should first be minimized. Only trusted sources should be imported as minified..
         src: [
-          'bower_components/blockchain-wallet/dist/my-wallet.min.js'
           'bower_components/angular/angular.min.js'
           'bower_components/angular-sanitize/angular-sanitize.min.js'
           'bower_components/angular-cookies/angular-cookies.min.js'
@@ -87,6 +95,13 @@ module.exports = (grunt) ->
         ]
 
         dest: "dist/js/application.min.js"
+
+      blockchain: # All components should first be minimized. Only trusted sources should be imported as minified..
+        src: [
+          'bower_components/blockchain-wallet/dist/my-wallet.min.js'
+        ]
+
+        dest: "dist/js/blockchain.min.js"
 
     sass:
       build:
@@ -280,7 +295,7 @@ module.exports = (grunt) ->
             ordered_befores = tuples.map((t)->t[0])
             ordered_afters  = tuples.map((t)->t[1])
 
-            for referring_file_path in ["dist/js/application.min.js", "dist/css/application.css", "dist/index.html"]
+            for referring_file_path in ["dist/js/blockchain.min.js", "dist/js/application.min.js", "dist/css/application.css", "dist/index.html"]
               contents = grunt.file.read(referring_file_path)
               before = undefined
               after = undefined
@@ -304,6 +319,50 @@ module.exports = (grunt) ->
             'dist/fonts/bootstrap/*'
             'dist/locales/*'
             'dist/beep.wav'
+          ]
+
+      js: # renames blockchain.min.js reference inside application.min.js
+        options:
+          skipIfHashed: true
+          startSymbol: "{{"
+          endSymbol: "}}"
+          algorithm: "sha1"
+          format: "{{basename}}-{{hash}}.{{ext}}"
+
+          callback: (befores, afters) ->
+            publicdir = fs.realpathSync("dist")
+
+            # Start with the longest file names, so e.g. some-font.woff2 is renamed before some-font.woff.
+            tuples = new Array
+            i = 0
+            while i < befores.length
+              tuples.push [path.relative(publicdir, befores[i]),path.relative(publicdir, afters[i])]
+              i++
+
+            tuples.sort((a,b) -> b[0].length - a[0].length)
+
+            ordered_befores = tuples.map((t)->t[0])
+            ordered_afters  = tuples.map((t)->t[1])
+
+            for referring_file_path in ["dist/js/application.min.js"]
+              contents = grunt.file.read(referring_file_path)
+              before = undefined
+              after = undefined
+              i = 0
+
+              while i < ordered_befores.length
+                before = ordered_befores[i]
+                after  = ordered_afters[i]
+                contents = contents.split("build/" + before).join(after)
+                contents = contents.split(before).join(after)
+
+                i++
+              grunt.file.write referring_file_path, contents
+            return
+
+        files:
+          src: [
+            'dist/js/blockchain.min.js'
           ]
 
       html: # Renames application.min.js/css and updates index.html
@@ -493,14 +552,17 @@ module.exports = (grunt) ->
     grunt.task.run [
       "replace:version_frontend"
       "replace:version_my_wallet"
+      "jade"
+      "preprocess"
       "concat:application_dependencies"
       "uglify:application_dependencies"
       "concat:application"
+      "concat:blockchain"
       "concat_css:app"
-      "jade"
-      "preprocess"
+
       "copy:main"
       "rename:assets"
+      "rename:js"
       "rename:html"
       "copy:legacy_cache_bust"
     ]

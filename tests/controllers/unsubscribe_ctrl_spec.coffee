@@ -1,5 +1,6 @@
 describe "UnsubscribeController", ->
   scope = undefined
+  service = undefined
 
   beforeEach angular.mock.module("walletApp")
 
@@ -9,7 +10,11 @@ describe "UnsubscribeController", ->
       $state = $injector.get("$state") # This is a mock
       Alerts = $injector.get("Alerts")
 
-      spyOn(WalletTokenEndpoints, "unsubscribe").and.callThrough()
+      WalletTokenEndpoints.then((res) ->
+        service = res
+        spyOn(service, "unsubscribe").and.callThrough()
+      )
+
 
       spyOn($state, "go").and.callThrough()
 
@@ -30,13 +35,11 @@ describe "UnsubscribeController", ->
           $scope: scope,
           $stateParams: {token: "token"}
 
-    it "should show call WalletTokenEndpoints.unsubscribe()", inject((WalletTokenEndpoints) ->
-      expect(WalletTokenEndpoints.unsubscribe).toHaveBeenCalled()
-    )
+    it "should show call WalletTokenEndpoints.unsubscribe()", ->
+      expect(service.unsubscribe).toHaveBeenCalled()
 
-    it "should pass the token parameter along", inject((WalletTokenEndpoints) ->
-      expect(WalletTokenEndpoints.unsubscribe).toHaveBeenCalledWith("token")
-    )
+    it "should pass the token parameter along", ->
+      expect(service.unsubscribe).toHaveBeenCalledWith("token")
 
     it "should redirect to the login page", inject(($state)->
       expect($state.go).toHaveBeenCalledWith("public.login-uid", { uid : '1234' })

@@ -3,62 +3,64 @@ angular
   .controller('TransactionsCtrl', TransactionsCtrl);
 
 function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $state, $rootScope) {
-  $scope.addressBook = Wallet.addressBook;
-  $scope.status = Wallet.status;
-  $scope.settings = Wallet.settings;
-  $scope.totals = Wallet.totals;
-  $scope.accounts = Wallet.accounts;
+  MyWallet.then((myWallet) => {
+    $scope.addressBook = Wallet.addressBook;
+    $scope.status = Wallet.status;
+    $scope.settings = Wallet.settings;
+    $scope.totals = Wallet.totals;
+    $scope.accounts = Wallet.accounts;
 
-  $scope.getTotal = Wallet.total;
+    $scope.getTotal = Wallet.total;
 
-  $scope.loading = false;
-  $scope.allTxsLoaded = false;
-  $scope.canDisplayDescriptions = false;
-  $scope.txLimit = 10;
+    $scope.loading = false;
+    $scope.allTxsLoaded = false;
+    $scope.canDisplayDescriptions = false;
+    $scope.txLimit = 10;
 
-  let accountIndex = $stateParams.accountIndex;
-  let txList = MyWallet.wallet.txList;
-  $scope.transactions = txList.transactions(accountIndex);
+    let accountIndex = $stateParams.accountIndex;
+    let txList = myWallet.wallet.txList;
+    $scope.transactions = txList.transactions(accountIndex);
 
-  let fetchTxs = () => {
-    $scope.loading = true;
-    MyWallet.wallet.fetchTransactions().then((numFetched) => {
-      $timeout(() => {
-        $scope.allTxsLoaded = numFetched < txList.loadNumber;
-        $scope.loading = false;
+    let fetchTxs = () => {
+      $scope.loading = true;
+      myWallet.wallet.fetchTransactions().then((numFetched) => {
+        $timeout(() => {
+          $scope.allTxsLoaded = numFetched < txList.loadNumber;
+          $scope.loading = false;
+        });
+      }).catch(() => {
+        $timeout(() => $scope.loading = false);
       });
-    }).catch(() => {
-      $timeout(() => $scope.loading = false);
+    };
+
+    if ($scope.transactions.length === 0) fetchTxs();
+
+    $scope.nextPage = () => {
+      if ($scope.txLimit < $scope.transactions.length) $scope.txLimit += 5;
+      else if (!$scope.allTxsLoaded && !$scope.loading) fetchTxs();
+    };
+
+    $scope.showTransaction = (transaction) => {
+      $state.go('wallet.common.transaction', {
+        accountIndex: $stateParams.accountIndex,
+        hash: transaction.hash
+      });
+    };
+
+    $scope.$watchCollection('accounts()', newValue => {
+      $scope.canDisplayDescriptions = $scope.accounts().length > 0;
     });
-  };
 
-  if ($scope.transactions.length === 0) fetchTxs();
+    let setTxs = () => {
+      let newTxs = txList.transactions(accountIndex);
+      if ($scope.transactions.length > newTxs.length) $scope.allTxsLoaded = false;
+      $scope.transactions = newTxs;
+      $rootScope.$safeApply();
+    };
 
-  $scope.nextPage = () => {
-    if ($scope.txLimit < $scope.transactions.length) $scope.txLimit += 5;
-    else if (!$scope.allTxsLoaded && !$scope.loading) fetchTxs();
-  };
-
-  $scope.showTransaction = (transaction) => {
-    $state.go('wallet.common.transaction', {
-      accountIndex: $stateParams.accountIndex,
-      hash: transaction.hash
-    });
-  };
-
-  $scope.$watchCollection('accounts()', newValue => {
-    $scope.canDisplayDescriptions = $scope.accounts().length > 0;
+    let unsub = txList.subscribe(setTxs);
+    $scope.$on('$destroy', unsub);
   });
-
-  let setTxs = () => {
-    let newTxs = txList.transactions(accountIndex);
-    if ($scope.transactions.length > newTxs.length) $scope.allTxsLoaded = false;
-    $scope.transactions = newTxs;
-    $rootScope.$safeApply();
-  };
-
-  let unsub = txList.subscribe(setTxs);
-  $scope.$on('$destroy', unsub);
 
   // Searching and filtering
   $scope.filterTypes = ['ALL', 'SENT', 'RECEIVED_BITCOIN_FROM', 'MOVED_BITCOIN_TO'];

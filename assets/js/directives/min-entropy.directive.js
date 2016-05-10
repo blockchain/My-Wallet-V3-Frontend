@@ -12,9 +12,14 @@ function minEntropy (MyWalletHelpers) {
 
   function link (scope, elem, attrs, ctrl) {
     let minimum = parseFloat(attrs.minEntropy);
+    let scorePassword;
+
+    MyWalletHelpers.then((helpers) => {
+      scorePassword = helpers.scorePassword;
+    });
 
     let checkEntropy = (viewValue) => {
-      let score = MyWalletHelpers.scorePassword(viewValue);
+      let score = scorePassword(viewValue);
       ctrl.$setValidity('minEntropy', score > minimum);
       return viewValue;
     };

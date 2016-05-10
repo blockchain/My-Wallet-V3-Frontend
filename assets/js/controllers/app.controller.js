@@ -5,7 +5,6 @@ angular
 function AppCtrl ($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location, $timeout, $interval, $uibModal, $window, $translate, $uibModalStack, $http, $q) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
-  $rootScope.isMock = Wallet.isMock;
 
   $scope.fetchLastKnownLegacyGuid = () => {
     let defer = $q.defer();
@@ -123,6 +122,12 @@ function AppCtrl ($scope, Wallet, Alerts, $state, $rootScope, $cookies, $locatio
     $scope.requestBeacon = false;
 
     $uibModalStack.dismissAll();
+
+    // Wallet specific Javascript is lazy-loaded when the user leaves
+    // the landing page.
+    if (toState.name !== 'welcome') {
+      Wallet.fetchJS();
+    }
   });
 
   $scope.$watch('status.isLoggedIn', () => {

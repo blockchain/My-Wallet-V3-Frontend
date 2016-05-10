@@ -5,8 +5,6 @@ angular
 Activity.$inject = ['$rootScope', '$timeout', 'Wallet', 'MyWallet'];
 
 function Activity ($rootScope, $timeout, Wallet, MyWallet) {
-  var txSub;
-
   const activity = {
     activities: [],
     transactions: [],
@@ -20,13 +18,20 @@ function Activity ($rootScope, $timeout, Wallet, MyWallet) {
     updateAllActivities: updateAllActivities
   };
 
-  setTxSub();
-  $rootScope.$on('updateActivityFeed', activity.updateAllActivities);
+  let myWallet;
+  MyWallet.then((res) => {
+    myWallet = res;
+    setTxSub();
+    $rootScope.$on('updateActivityFeed', activity.updateAllActivities);
+  });
+
+  var txSub;
+
   return activity;
 
   // Wait for wallet to be defined before subscribing to tx updates
   function setTxSub () {
-    let w = MyWallet.wallet;
+    let w = myWallet.wallet;
     if (txSub) {
       return;
     } else if (w) {
@@ -42,7 +47,7 @@ function Activity ($rootScope, $timeout, Wallet, MyWallet) {
   }
 
   function updateTxActivities () {
-    activity.transactions = MyWallet.wallet.txList.transactions()
+    activity.transactions = myWallet.wallet.txList.transactions()
       .slice(0, activity.limit)
       .map(factory.bind(null, 0));
     combineAll();

@@ -21,160 +21,162 @@ angular.module('walletApp.core').factory 'MyWalletStore', () ->
   legacyAddresses = () -> []
 
   {
-    isSynchronizedWithServer: () ->
-      isSynchronizedWithServer
+    then: (cb) -> cb({
+      isSynchronizedWithServer: () ->
+        isSynchronizedWithServer
 
-    setIsSynchronizedWithServer: (setting) ->
-      isSynchronizedWithServer = setting
+      setIsSynchronizedWithServer: (setting) ->
+        isSynchronizedWithServer = setting
 
-    sendEvent: (event) ->
-      eventListener(event)
+      sendEvent: (event) ->
+        eventListener(event)
 
-    getFeePerKB: () ->
-      return feePerKB
+      getFeePerKB: () ->
+        return feePerKB
 
-    setFeePerKB: (fee) ->
-      feePerKB = fee
-      return
+      setFeePerKB: (fee) ->
+        feePerKB = fee
+        return
 
-    getMultiAccountSetting: () ->
-        true
+      getMultiAccountSetting: () ->
+          true
 
-    getLogoutTime: () ->
+      getLogoutTime: () ->
+          10
+
+      addEventListener: (func) ->
+          eventListener = func
+
+      getPbkdf2Iterations: () ->
         10
 
-    addEventListener: (func) ->
-        eventListener = func
+      setPbkdf2Iterations: () ->
+        return
 
-    getPbkdf2Iterations: () ->
-      10
+      getLanguages: () ->
+        {de: "Deutch", en: "English", nl: "Nederlands"}
 
-    setPbkdf2Iterations: () ->
-      return
+      getCurrencies: () ->
+        {USD: "US Dollar", EUR: "Euro"}
 
-    getLanguages: () ->
-      {de: "Deutch", en: "English", nl: "Nederlands"}
+      didUpgradeToHd: () ->
+        true
 
-    getCurrencies: () ->
-      {USD: "US Dollar", EUR: "Euro"}
+      isMnemonicVerified: () ->
+        false
 
-    didUpgradeToHd: () ->
-      true
+      isCorrectMainPassword: (candidate) ->
+        candidate == password
 
-    isMnemonicVerified: () ->
-      false
+      changePassword: (newPassword) ->
+        password = newPassword
 
-    isCorrectMainPassword: (candidate) ->
-      candidate == password
+      getAllTransactions: (idx) ->
+        res = []
+        for transaction in transactions
+          res.push transaction
 
-    changePassword: (newPassword) ->
-      password = newPassword
+        return res
 
-    getAllTransactions: (idx) ->
-      res = []
-      for transaction in transactions
-        res.push transaction
+      getAllLegacyAddresses: () ->
+        res = []
+        for key, value of legacyAddresses
+          res.push key
+        return res
 
-      return res
+      getLegacyActiveAddresses: () ->
+        activeAddresses = []
+        for key, value of legacyAddresses
+          unless value.archived
+            activeAddresses.push key
+        return activeAddresses
 
-    getAllLegacyAddresses: () ->
-      res = []
-      for key, value of legacyAddresses
-        res.push key
-      return res
+      getLegacyAddressLabel: (address) ->
+        return legacyAddresses[address].label
 
-    getLegacyActiveAddresses: () ->
-      activeAddresses = []
-      for key, value of legacyAddresses
-        unless value.archived
-          activeAddresses.push key
-      return activeAddresses
+      isWatchOnlyLegacyAddress: (address) ->
+        return legacyAddresses[address].privateKey == null
 
-    getLegacyAddressLabel: (address) ->
-      return legacyAddresses[address].label
+      legacyAddressExists: (candidate) ->
+        return legacyAddresses[candidate]?
 
-    isWatchOnlyLegacyAddress: (address) ->
-      return legacyAddresses[address].privateKey == null
+      getAddressBook: () ->
+        addressBook
 
-    legacyAddressExists: (candidate) ->
-      return legacyAddresses[candidate]?
+      getLegacyAddressBalance: (address) ->
+        return legacyAddresses[address].balance
 
-    getAddressBook: () ->
-      addressBook
+      getPrivateKey: (address) ->
+        if address in legacyAddresses
+          return legacyAddresses[address].privateKey;
+        else
+          return null
 
-    getLegacyAddressBalance: (address) ->
-      return legacyAddresses[address].balance
-
-    getPrivateKey: (address) ->
-      if address in legacyAddresses
-        return legacyAddresses[address].privateKey;
-      else
-        return null
-
-    setLegacyAddressBalance: (address, balance) ->
-      legacyAddresses[address] = balance
-      return
+      setLegacyAddressBalance: (address, balance) ->
+        legacyAddresses[address] = balance
+        return
 
 
-    getTotalBalanceForActiveLegacyAddresses: () ->
-      tally = 0
-      for key, value of legacyAddresses
-        tally += value.balance
-      return tally
+      getTotalBalanceForActiveLegacyAddresses: () ->
+        tally = 0
+        for key, value of legacyAddresses
+          tally += value.balance
+        return tally
 
-    setLegacyAddressLabel: (label) ->
-      return
+      setLegacyAddressLabel: (label) ->
+        return
 
-    deleteLegacyAddress: (address) ->
-      return
+      deleteLegacyAddress: (address) ->
+        return
 
-    archiveLegacyAddr: (address) ->
-      return
+      archiveLegacyAddr: (address) ->
+        return
 
-    unArchiveLegacyAddr: (address) ->
-      return
+      unArchiveLegacyAddr: (address) ->
+        return
 
-    getDefaultAccountIndex: () ->
-      return defaultAccountIndex
+      getDefaultAccountIndex: () ->
+        return defaultAccountIndex
 
-    setDefaultAccountIndex: (idx) ->
-      defaultAccountIndex = idx
-      return
+      setDefaultAccountIndex: (idx) ->
+        defaultAccountIndex = idx
+        return
 
-    getDoubleEncryption: () ->
-      return false
+      getDoubleEncryption: () ->
+        return false
 
-    getNote: (hash) ->
-      notes[hash]
+      getNote: (hash) ->
+        notes[hash]
 
-    setNote: (hash, text) ->
-      notes[hash] = text
-      # Circular reference:
-      # MyWallet.sync()
-      return
+      setNote: (hash, text) ->
+        notes[hash] = text
+        # Circular reference:
+        # MyWallet.sync()
+        return
 
-    # Mock only:
+      # Mock only:
 
-    mockSetPassword: (pwd) ->
-      password = pwd
+      mockSetPassword: (pwd) ->
+        password = pwd
 
-    setNotes: (theNotes) ->
-      notes = theNotes
+      setNotes: (theNotes) ->
+        notes = theNotes
 
-    getNotes: () ->
-      notes
+      getNotes: () ->
+        notes
 
-    setTransactions: (theTransactions) ->
-      transactions = theTransactions
+      setTransactions: (theTransactions) ->
+        transactions = theTransactions
 
-    appendTransaction: (transaction) ->
-      transactions.push transaction
+      appendTransaction: (transaction) ->
+        transactions.push transaction
 
-    addLegacyAddress: (address, privateKey, balance, label, archived) ->
-      legacyAddresses[address] = {privateKey: privateKey, balance: balance, label: label, archived: archived}
-      return
+      addLegacyAddress: (address, privateKey, balance, label, archived) ->
+        legacyAddresses[address] = {privateKey: privateKey, balance: balance, label: label, archived: archived}
+        return
 
-    setAPICode: (api_code) ->
-      return
+      setAPICode: (api_code) ->
+        return
+    })
 
   }

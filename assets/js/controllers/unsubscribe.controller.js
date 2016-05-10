@@ -19,5 +19,7 @@ function UnsubscribeCtrl ($scope, $rootScope, WalletTokenEndpoints, $stateParams
     $rootScope.$safeApply();
   };
 
-  WalletTokenEndpoints.unsubscribe($stateParams.token).then(success).catch(error);
+  WalletTokenEndpoints.then((service) => {
+    service.unsubscribe($stateParams.token).then(success).catch(error);
+  });
 }

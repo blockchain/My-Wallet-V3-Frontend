@@ -3,6 +3,11 @@ angular
   .controller('LostGuidCtrl', LostGuidCtrl);
 
 function LostGuidCtrl ($scope, $rootScope, $http, $translate, WalletNetwork, Alerts) {
+  let service;
+  WalletNetwork.then((res) => {
+    service = res;
+  });
+
   $scope.currentStep = 1;
   $scope.fields = {
     email: '',
@@ -45,7 +50,7 @@ function LostGuidCtrl ($scope, $rootScope, $http, $translate, WalletNetwork, Ale
     $scope.form.$setPristine();
     $scope.form.$setUntouched();
 
-    WalletNetwork.recoverGuid($scope.fields.email, $scope.fields.captcha).then(success).catch(error);
+    service.recoverGuid($scope.fields.email, $scope.fields.captcha).then(success).catch(error);
   };
 
   $scope.refreshCaptcha();

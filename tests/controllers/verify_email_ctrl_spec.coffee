@@ -1,5 +1,6 @@
 describe "VerifyEmailController", ->
   scope = undefined
+  service = undefined
 
   beforeEach angular.mock.module("walletApp")
 
@@ -9,12 +10,15 @@ describe "VerifyEmailController", ->
       $state = $injector.get("$state") # This is a mock
       Alerts = $injector.get("Alerts")
 
-      spyOn(WalletTokenEndpoints, "verifyEmail").and.callThrough()
-
       spyOn($state, "go").and.callThrough()
 
       spyOn(Alerts, "displayError").and.callFake(() ->)
       spyOn(Alerts, "displayVerifiedEmail").and.callFake(() ->)
+
+      WalletTokenEndpoints.then((res) ->
+        service = res
+        spyOn(service, "verifyEmail").and.callThrough()
+      )
 
       return
 
@@ -30,13 +34,11 @@ describe "VerifyEmailController", ->
           $scope: scope,
           $stateParams: {token: "token"}
 
-    it "should show call WalletTokenEndpoints.verifyEmail()", inject((WalletTokenEndpoints) ->
-      expect(WalletTokenEndpoints.verifyEmail).toHaveBeenCalled()
-    )
+    it "should call WalletTokenEndpoints.verifyEmail()",  ->
+      expect(service.verifyEmail).toHaveBeenCalled()
 
-    it "should pass the token parameter along", inject((WalletTokenEndpoints) ->
-      expect(WalletTokenEndpoints.verifyEmail).toHaveBeenCalledWith("token")
-    )
+    it "should pass the token parameter along", ->
+      expect(service.verifyEmail).toHaveBeenCalledWith("token")
 
     it "should redirect to the login page", inject(($state)->
       expect($state.go).toHaveBeenCalledWith("public.login-uid", { uid : '1234' })

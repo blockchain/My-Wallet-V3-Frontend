@@ -6,6 +6,11 @@ angular
 currency.$inject = ['$q', 'MyBlockchainApi'];
 
 function currency ($q, MyBlockchainApi) {
+  let api;
+  MyBlockchainApi.then((res) => {
+    api = res;
+  });
+
   const SATOSHI = 100000000;
   const conversions = {};
   const fiatConversionCache = {};
@@ -90,7 +95,8 @@ function currency ($q, MyBlockchainApi) {
     let fail = error => {
       console.log('Failed to load ticker: %s', error);
     };
-    return MyBlockchainApi.getTicker().then(success).catch(fail);
+
+    return api.getTicker().then(success).catch(fail);
   }
 
   function getFiatAtTime (time, amount, currencyCode) {
@@ -102,7 +108,7 @@ function currency ($q, MyBlockchainApi) {
     let cacheResult = fiat => fiatConversionCache[key] = parseFloat(fiat).toFixed(2);
 
     let fiatValuePromise = cached !== undefined
-      ? $q.resolve(cached) : MyBlockchainApi.getFiatAtTime(time, amount, currencyCode);
+      ? $q.resolve(cached) : api.getFiatAtTime(time, amount, currencyCode);
 
     return fiatValuePromise.then(cacheResult);
   }

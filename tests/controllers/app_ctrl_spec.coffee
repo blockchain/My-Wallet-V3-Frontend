@@ -10,6 +10,8 @@ describe "AppCtrl", ->
 
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
+      $rootScope.karma = true
+
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       $httpBackend = $injector.get("$httpBackend")

@@ -24,5 +24,7 @@ function ResetTwoFactorTokenCtrl ($scope, WalletTokenEndpoints, $stateParams, $s
 
   $scope.checkingToken = true;
 
-  WalletTokenEndpoints.resetTwoFactor($stateParams.token).then(success).catch(error);
+  WalletTokenEndpoints.then((service) => {
+    service.resetTwoFactor($stateParams.token).then(success).catch(error);
+  });
 }

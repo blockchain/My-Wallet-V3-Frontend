@@ -1,4 +1,5 @@
 angular.module('walletApp.core').factory 'WalletTokenEndpoints', () ->
+  service = {
     verifyEmail: (token)->
       {
         then: (callback) ->
@@ -56,3 +57,7 @@ angular.module('walletApp.core').factory 'WalletTokenEndpoints', () ->
               }
         }
       }
+  }
+  {
+    then: (cb) -> cb(service)
+  }
