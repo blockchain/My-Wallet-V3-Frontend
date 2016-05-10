@@ -61,10 +61,11 @@
       div
     .flex-1.flex-column.flex-align-end.mtvl
       .flex-row
-        p.mbn(translate="VALUE_AT_SEND")
+        p.mbn(translate="VALUE_AT_SEND" ng-show=":: tx.txType === 'sent' || tx.txType === 'transfer'")
+        p.mbn(translate="VALUE_WHEN_RECEIVED" ng-show=":: tx.txType === 'received'")
         | :&nbsp;
         fiat.em-600(btc=":: tx.amount" date=":: tx.time")
-      .flex-row.fee
+      .flex-row.fee(ng-hide=":: tx.txType === 'received'")
         helper-button(content="{{ 'TX_FEE_EXPLAINATION' | translate }}")
         p.mbn(translate="TX_FEE")
         | :&nbsp;
