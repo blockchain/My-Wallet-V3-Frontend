@@ -43,6 +43,15 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     }
   };
 
+  let buyViews = {
+    top: top,
+    left: walletNav,
+    right: {
+      templateUrl: 'partials/buy.jade',
+      controller: 'BuyCtrl'
+    }
+  };
+
   $stateProvider
     .state('wallet', {
       views: {
@@ -200,6 +209,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     .state('wallet.common.transactions', {
       url: '/:accountIndex/transactions',
       views: transactionsViews
+    })
+    .state('wallet.common.buy', {
+      url: '/buy',
+      views: buyViews
     })
     .state('wallet.common.open', {
       url: '/open/{uri:.*}',

@@ -83,6 +83,7 @@
       "Blockchain",
       "compareVersions",
       "URL"
+      "event"
     ]
   }
 }
