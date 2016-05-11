@@ -26,15 +26,17 @@
             img(src="img/spinner.gif")
           ui-select.send-from-dropdown(
             ng-model="transaction.from"
+            ng-model-options="{debounce:250}"
             name="from"
             ng-show="originsLoaded"
             ng-change="checkForSameDestination(); setPaymentFrom()"
+            tagging
             required)
             ui-select-match(placeholder="{{'SEARCH' | translate}}...")
               label-origin(origin="$select.selected")
-            ui-select-choices(repeat="origin in origins | filter: getFilter($select.search)" group-by="'type'" ui-disable-choice="hasZeroBalance(origin)")
-              span(ng-class="{aaa: hasZeroBalance(origin)}")
-                label-origin(origin='origin' highlight="$select.search")
+            ui-select-choices(repeat="origin in origins | filter:{label:$select.search} | limitTo:originLimit" group-by="'type'" ui-disable-choice="::hasZeroBalance(origin)")
+              span(ng-class="::{aaa:hasZeroBalance(origin)}" in-view="$last && origin.type==='Imported Addresses' && increaseLimit()")
+                label-origin(origin="::origin" highlight="$select.search")
 
           //- Private Key for Watch Only
           .input-group(ng-show="transaction.from.isWatchOnly")

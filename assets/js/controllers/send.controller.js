@@ -9,6 +9,8 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
 
   $scope.origins = [];
   $scope.originsLoaded = false;
+  $scope.originLimit = 50;
+  $scope.increaseLimit = () => $scope.originLimit += 50;
 
   $scope.sending = false;
   $scope.confirmationStep = false;
@@ -60,11 +62,6 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
 
   $scope.hasZeroBalance = (origin) => origin.balance === 0;
   $scope.close = () => $uibModalInstance.dismiss('');
-
-  $scope.getFilter = (search, accounts = true) => ({
-    label: search,
-    type: accounts ? '!External' : 'Imported'
-  });
 
   $scope.applyPaymentRequest = (paymentRequest, i) => {
     let destination = {

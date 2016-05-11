@@ -668,18 +668,6 @@ describe "SendCtrl", ->
         expect(scope.transaction.destinations.length).toBe(1)
         expect(scope.transaction.amounts.length).toBe(1)
 
-    describe "getFilter", ->
-
-      it "should always set the filter label to the search string", ->
-        expect(scope.getFilter('search_1').label).toEqual('search_1')
-        expect(scope.getFilter('search_2', false).label).toEqual('search_2')
-
-      it "should return type '!External' when accounts=true", ->
-        expect(scope.getFilter('').type).toEqual('!External')
-
-      it "should return type 'Imported' when accounts=false", ->
-        expect(scope.getFilter('', false).type).toEqual('Imported')
-
     describe "finalBuild", ->
 
       it "should resolve with the payment transaction", (done) ->
