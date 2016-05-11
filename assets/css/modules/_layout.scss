@@ -48,6 +48,7 @@
   overflow-x: hidden;
   width: calc(100% - 270px);
   height: calc(100% - 175px); // make viewport smaller for overflow-y to work
+  -webkit-overflow-scrolling: touch; // smooth scrolling on ios
 }
 
 .overflow-scroll {
