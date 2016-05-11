@@ -5,7 +5,8 @@
         img#logo(src="img/blockchain-logo.svg", alt="Blockchain")
       button.navbar-toggle(type="button", ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
         span.sr-only Toggle navigation
-        span.ti-menu.h4.white
+        span.ti-angle-down.white.h4(ng-show="navCollapsed")
+        span.ti-angle-up.white.h4(ng-show="!navCollapsed")
     .navbar-collapse.collapse(ng-class="{'in bg-blue' : !navCollapsed}", ng-click="navCollapsed=true")
       ul.nav.navbar-nav.navbar-left
         li.item
