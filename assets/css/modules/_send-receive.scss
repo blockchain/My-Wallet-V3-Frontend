@@ -420,6 +420,9 @@
 }
 
 #sign-msg {
+  @media (max-width: 768px) {
+    opacity: 1 !important;
+  }
   @media (min-width: 769px) {
     opacity: 1;
     overflow: hidden;
