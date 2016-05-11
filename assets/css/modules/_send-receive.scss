@@ -153,6 +153,7 @@
   }
 
   &.advanced-container {
+    max-height: 460px; // avoid overflow issues
     .add {
       background-color: $aaa;
       border-radius: 100%;
