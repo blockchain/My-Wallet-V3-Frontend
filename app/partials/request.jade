@@ -74,7 +74,7 @@
       .payment-url.flex-around.flex-row(ng-if="paymentRequestURL()")
         .flex-column.receive-address.flex-center(ng-class="{'max-width': advanced}"
                                                  uib-popover="{{'COPY_HELPER' | translate}}" 
-                                                 popover-class="message-contextual"
+                                                 popover-class="message-contextual request-popover"
                                                  popover-trigger="mouseenter"
                                                  popover-append-to-body="true")
           h4 Copy and Share
@@ -86,7 +86,7 @@
               span {{ paymentRequestAddress() }}
         span.or.flex-center.mrl.mll Or
         .flex-column.receive-code.flex-center(uib-popover="{{'QR_HELPER' | translate}}" 
-                                              popover-class="message-contextual"
+                                              popover-class="message-contextual request-popover"
                                               popover-trigger="mouseenter"
                                               popover-append-to-body="true")
           h4 Scan
@@ -100,7 +100,7 @@
   .flex-center
     button.btn.button-default(ng-hide="advanced || fields.to.index == undefined", ng-click="advancedReceive()", translate="CUSTOMIZE"
                               uib-popover="{{'CUSTOMIZE_HELPER' | translate}}"
-                              popover-class="message-contextual"
+                              popover-class="message-contextual request-popover"
                               popover-append-to-body="true"
                               popover-placement="top-left"
                               popover-trigger="mouseenter")
@@ -110,6 +110,6 @@
     a.dark-grey.mrm(ng-click="cancel()", translate="CLOSE" ng-show="advanced && fields.label != ''")
     button.button-success.btn(ng-click="done()", translate="SAVE" ng-show="advanced && fields.label != ''"
                               uib-popover="{{'SAVE_HELPER' | translate:{label: fields.to.label} }}"
-                              popover-class="message-contextual"
+                              popover-class="message-contextual request-popover"
                               popover-append-to-body="true"
                               popover-trigger="mouseenter")

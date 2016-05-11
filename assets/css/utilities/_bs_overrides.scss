@@ -18,6 +18,18 @@
   margin-left: 5px;
 }
 
+// Mobile UIB Dropdowns
+@media (max-width: 768px) {
+  .open {
+    // Show the menu
+    > .uib-dropdown-menu {
+      display: block;
+      overflow: auto;
+      max-width: 280px;
+    }
+  }
+}
+
 /////////////////////////////////////
 //*** Angular UI Select Madness!***//
 ////////////////////////////////////

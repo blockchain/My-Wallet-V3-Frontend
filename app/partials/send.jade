@@ -115,7 +115,7 @@
               span.type-sm.pointer(translate="ERR_FETCH_UNSPENT_RETRY")
           a.flex-center.flex-justify.add(ng-click="addDestination()" ng-show="advanced")
             i.ti-plus.white
-      .flex-row.flex-justify.form-group.note.mvl
+      .flex-row.flex-justify.form-group.note.mvl.row
         label.mbn
           span(translate="DESCRIPTION:")
           helper-button(content="SEND_BITOIN_STEP2B")
@@ -124,7 +124,7 @@
           .has-error
             span.help-block.type-sm(translate="ERR_NOTE_LENGTH" ng-show="sendForm.note.$error.maxlength && sendForm.note.$touched")
       //- Fee
-      .flex-row.flex-center.flex-justify.form-group.bc-modal-fade.mtl.fee(ng-class="{'has-error': transaction.blockIdx > 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}" ng-show="advanced")
+      .flex-row.flex-center.flex-justify.form-group.row.bc-modal-fade.mtl.fee(ng-class="{'has-error': transaction.blockIdx > 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}" ng-show="advanced")
         label.mbn
           span(translate="TX_FEE")
           |:

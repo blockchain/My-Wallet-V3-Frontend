@@ -4,10 +4,16 @@
   .divider {
     margin: 0px auto;
   }
-  // we need to remove this when we come up with what we want to call Accounts
+  .open > .uib-dropdown-menu {
+    right: -25px;
+    overflow-y: auto;
+    max-height: 160px;
+    overflow-x: hidden;
+  }
   .dropdown-menu {
     > li:first-child {
       .dropdown-header {
+        // we need to remove this when we come up with what we want to call Accounts
         display: none;
       }
     }
@@ -37,11 +43,15 @@
       display: block;
       > label {
         min-width: auto;
+        min-width: initial;
       }
       > div, textarea, .bitcoin-address {
+        width: 100%;
         min-width: auto;
         max-width: none;
         margin-left: 0px;
+        min-width: initial;
+        border-radius: 0px;
       }
     }
   }
@@ -82,6 +92,9 @@
   @media (max-width: 768px) {
     .row {
       display: block;
+    }
+    & + .modal-footer {
+      font-size: 12px;
     }
   }
 }
@@ -305,6 +318,10 @@
       margin-top: 0px;
     }
   }
+}
+
+[uib-popover-popup].popover.request-popover {
+  display: none !important; //popovers dont play nice on mobile
 }
 
 .receive-code {
