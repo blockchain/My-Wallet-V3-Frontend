@@ -1,6 +1,6 @@
 div(ng-hide="quote")
   p Fetching quote...
-div(ng-show="quote && !trade")
-  p
-    button(ng-click="buy()") Buy {{ quote.quoteAmount | toBitCurrency:settings.btcCurrency }} BTC for {{ quote.baseCurrency }} {{ -quote.baseAmount }}
-isignthis(transaction-id='trade.iSignThisID')
+  div(ng-show="quote && !trade")
+   p
+     button(ng-click="buy()") Buy {{ quote.quoteAmount | toBitCurrency:settings.btcCurrency }} BTC for {{ quote.baseCurrency }} {{ -quote.baseAmount }}
+  isignthis(transaction-id='trade.iSignThisID')

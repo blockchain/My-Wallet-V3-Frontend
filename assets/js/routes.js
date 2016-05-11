@@ -214,6 +214,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/buy',
       views: buyViews
     })
+    .state('wallet.common.buy', {
+      url: '/buy',
+      views: buyViews
+    })
     .state('wallet.common.open', {
       url: '/open/{uri:.*}',
       views: {
