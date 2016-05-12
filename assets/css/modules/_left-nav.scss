@@ -74,9 +74,6 @@ ul.aside {
 }
 
 .wallet-footer {
-  left: 0px;
-  position: absolute;
-  bottom: calc(0% + 7%);
   ul.aside-list {
     background: transparent;
     li {
@@ -108,9 +105,7 @@ ul.aside {
 }
 
 @media (max-height: 550px) {
-  .adverts {
-    display: none;
-  }
+  display: none;
 }
 
 .scroll-parent{
