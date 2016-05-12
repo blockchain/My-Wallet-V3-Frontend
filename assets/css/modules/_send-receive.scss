@@ -57,6 +57,11 @@
     }
   }
 
+  .use-all {
+    cursor: pointer;
+    @extend .blue;
+  }
+
   // when an address is too long
   .ui-select-choices-row-inner {
     > span {
