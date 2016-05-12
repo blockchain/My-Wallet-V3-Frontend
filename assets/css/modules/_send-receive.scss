@@ -30,8 +30,8 @@
     > div, textarea, .bitcoin-address {
       @extend .mlm;
       @media (min-width: 769px) {
-        max-width: 420px;
-        min-width: 420px;
+        max-width: 440px;
+        min-width: 440px;
       }
       &.auto {
         width: auto;
