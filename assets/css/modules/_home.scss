@@ -1,4 +1,9 @@
 .home { padding: 10px 15px 0 30px; margin-bottom: 2em; }
+@media (max-width: 768px) {
+  .home {
+    padding: 10px 15px 0px 15px;
+  }
+}
 .col-home {
   &:first-of-type { margin-bottom: 35px; }
 }
