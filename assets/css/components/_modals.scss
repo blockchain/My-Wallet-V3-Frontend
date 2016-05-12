@@ -27,9 +27,15 @@
   }
   &.fade .modal-dialog {
     transform: scale(.8);
+    -moz-transform: scale(.8);
+    -webkit-transform: scale(.8);
     transition: transform 0.15s linear;
   }
-  &.in .modal-dialog { transform: scale(1) }
+  &.in .modal-dialog { 
+    transform: scale(1);
+    -moz-transform: scale(1);
+    -webkit-transform: scale(1);
+  }
   &.confirm {
     width: 35vw;
     margin: 0 auto;
@@ -372,6 +378,7 @@
   .recipient-currency {
     .form-control {
       padding: 3px 10px;
+      background-color: transparent;
     }
   }
   //Specific to the 2FA modal
