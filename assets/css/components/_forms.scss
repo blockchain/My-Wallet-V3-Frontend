@@ -103,6 +103,13 @@ form[name="signupForm"] {
   }
 }
 
+form[name="feedbackForm"] {
+  min-width: 60vw;
+  @media (max-width: 768px) {
+    min-width: 90vw;
+  }
+}
+
 input.lrg {
   height: 54px;
   font-size: 1.4em;
