@@ -6,7 +6,8 @@
     }
   }
   .dropdown {
-    .ti-angle-down {
+    .ti-menu {
+      line-height: 1;
       float: right;
     }
     a {
@@ -17,18 +18,17 @@
       }
     }
   }
-  span.ti-angle-down { font-weight: 900; font-size: 1.5em; position: relative; top: 1px; }
+  span.ti-menu { font-weight: 900; font-size: 1.5em; position: relative; top: 0px; }
   .navbar-toggle {  padding: 0; margin: 0 10px 0 20px; }
 }
 
 #wallet-nav-toggle {
-  span.ti-menu, span.ti-close {
+  span.ti-close, span.ti-angle-down, span.ti-angle-up {
     display: none;
-    font-size: 23px;
     padding: 0px 20px;
   }
   @media (max-width: 768px) {
-    span.ti-menu {
+    span.ti-angle-down, span.ti-angle-up {
       display: inline-block;
     }
   }
@@ -151,7 +151,7 @@ img#logo {
 }
 
 @media (max-width: 620px) {
-  img#logo { height: 25px; margin-top: 0; }
+  img#logo { height: 30px; margin-top: 0; }
 }
 
 .navbar-header {

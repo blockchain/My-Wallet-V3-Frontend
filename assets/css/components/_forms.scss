@@ -1,3 +1,12 @@
+.form-ctrl {
+  padding: 15px 0;
+  input {
+    border: 1px solid $border-grey;
+    border-radius: 5px;
+    padding: 3px;
+  }
+}
+
 .bc-form {
   background: $light-blue;
   border: 1px solid $eee;
@@ -91,6 +100,13 @@ form[name="signupForm"] {
     .accept-checkbox {
       left: 20px;
     }
+  }
+}
+
+form[name="feedbackForm"] {
+  min-width: 60vw;
+  @media (max-width: 768px) {
+    min-width: 90vw;
   }
 }
 

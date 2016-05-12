@@ -1,4 +1,4 @@
-.video-container(ng-click="load(); toggle();" ng-class="{'playing': playing}")
+.video-container.center(ng-click="load(); toggle();" ng-class="{'playing': playing}")
   img(ng-src="{{::img}}" ng-class="{'transparent': playing}")
   img(src="img/spinner.gif" class="loading")
   video(src="" type="video/mp4" controls="true")

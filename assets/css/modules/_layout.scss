@@ -6,9 +6,10 @@
 .left-nav {
   position: absolute;
   width: 270px;
-  height: 100%;
   padding: 15px;
+  overflow: auto;
   background: $light-blue;
+  height: calc(100% - 60px);
   border-right: 1px solid $border-grey;
   .active-accounts{
     margin-bottom: 30px;
@@ -48,6 +49,7 @@
   overflow-x: hidden;
   width: calc(100% - 270px);
   height: calc(100% - 175px); // make viewport smaller for overflow-y to work
+  -webkit-overflow-scrolling: touch; // smooth scrolling on ios
 }
 
 .overflow-scroll {
@@ -60,6 +62,7 @@
     left: -270px;
     z-index: 11; //just enough to be visible
     transition: all .3s ease-in-out;
+    height: calc(100% - 50px);
     top: 0px;
   }
   .left-nav.toggled { left: 0; }

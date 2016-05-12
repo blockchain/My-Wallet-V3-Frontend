@@ -97,3 +97,20 @@
     -ms-flex: $i;
   }
 }
+
+// mobile flex support
+@media (max-width: 768px) {
+  .flex-column-mobile {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+  .flex-between-mobile {
+    -ms-flex-pack: justify;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;    
+  }
+}

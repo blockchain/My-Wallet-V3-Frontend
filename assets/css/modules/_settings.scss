@@ -58,8 +58,10 @@
   }
   .imported-addresses-container {
     .dropdown-menu {
-      left: auto !important;
-      right: 0px !important;
+      @media (min-width: 769px) {
+        left: auto !important;
+        right: 0px !important;
+      }
       > li > a {
         font-size: small;
         &:before {
@@ -209,5 +211,11 @@ table.accounts-container {
         }
       }
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .settings {
+    padding: 15px 15px;   
   }
 }

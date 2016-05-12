@@ -2,13 +2,14 @@
   .container-fluid
     .navbar-header.flex-between.flex-center
       .flex-center
-        button.navbar-toggle.mvn(type="button", ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
+        button.navbar-toggle.mvn(type="button", ng-init="navCollapsed = true", ng-click="toggleMenu()")
           span.sr-only Toggle navigation
-          span.ti-angle-down.white
+          span.ti-menu.white
         a.navbar-brand(ui-sref="wallet.common.home") 
           img#logo(src="img/blockchain-wallet-logo.svg", alt="Blockchain")
-      a#wallet-nav-toggle(title="Wallet Navigation Menu", ng-click="toggleMenu()")
-        span.ti-menu.white
+      a#wallet-nav-toggle(title="Wallet Navigation Menu", ng-click="navCollapsed = !navCollapsed")
+        span.ti-angle-down.white.h4(ng-show="navCollapsed")
+        span.ti-angle-up.white.h4(ng-show="!navCollapsed")
     .navbar-collapse.collapse(ng-class="{'in bg-blue' : !navCollapsed}", ng-click="navCollapsed=true")
       ul.nav.navbar-nav.navbar-right(ng-show="status.isLoggedIn")
         li.item(ng-show="settings.btcCurrency")

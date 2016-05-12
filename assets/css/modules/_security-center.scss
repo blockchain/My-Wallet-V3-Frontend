@@ -95,13 +95,13 @@
       -webkit-filter: grayscale(100%);
       filter: grayscale(100%);
     }
-    a {
+    > a {
       display: block;
       text-align: center;
       width: 100%;
       padding: 20px 15px 30px 15px;
-      padding-bottom: 200px;
-      margin-bottom: -200px;
+      // padding-bottom: 200px;
+      // margin-bottom: -200px;
       cursor: pointer;
       img {
         width: 75px;

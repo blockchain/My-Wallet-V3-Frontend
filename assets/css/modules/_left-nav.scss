@@ -74,9 +74,6 @@ ul.aside {
 }
 
 .wallet-footer {
-  left: 0px;
-  position: absolute;
-  bottom: calc(0% + 7%);
   ul.aside-list {
     background: transparent;
     li {
@@ -105,6 +102,10 @@ ul.aside {
   span.btn-warning{
     color: #f0ad4e;
   }
+}
+
+@media (max-height: 550px) {
+  display: none;
 }
 
 .scroll-parent{
@@ -156,6 +157,42 @@ ul.aside {
   ::-webkit-scrollbar-corner {
     background: transparent;
   }
+}
+
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #fff;
+    border: 0px none $border-grey;
+    border-radius: 100px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #c9c9c9;
+  }
+  ::-webkit-scrollbar-thumb:active {
+    background: #606060;
+  }
+  ::-webkit-scrollbar-track {
+    background: white;
+    border: 0px none #ff5a28;
+    border-radius: 100px;
+  }
+  ::-webkit-scrollbar-track:hover {
+    background: #ffffff;
+  }
+  ::-webkit-scrollbar-track:active {
+    background: #ededed;
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  } 
 }
 
 

@@ -21,7 +21,11 @@ blocket-loading
           .span4.col
             p
               a.btn.btn-primary(ui-sref="public.login-no-uid" translate="LOGIN_NEW")
-          .span4.col.hidden-phone
+          .span4.col.hidden-desktop
+            h6(translate="LEGACY_LOGIN") 
+            p
+              | {{ 'LEGACY_COPY' | translate }}
+          .span4.col
             p
               a.btn.btn-muted(href="{{rootURL}}wallet-legacy/login" translate="LOGIN_LEGACY")
           .span4.col.hidden-phone
@@ -208,16 +212,14 @@ blocket-loading
       ng-submit="signup()"
       autocomplete="off"
       novalidate)
-      .form-group.flex-row.flex-center.mtl.mbvl(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
-        input.form-control.lrg.mrm(
+      .form-group.flex-row.flex-center.flex-column-mobile.mbvl(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
+        input.form-control.lrg.mrm.mtl(
           name="email"
           type="email"
           ng-model="fields.email"
           placeholder="jane@doe.com"
           required)
-        button.button-primary.btn.button-vlg(
+        button.button-primary.btn.button-vlg.mtl(
           type="submit"
           ng-disabled="signupForm.$invalid"
-          translate="GET_STARTED"
-          ng-show="!working")  
-        img(ng-show="working" src="img/spinner.gif")
+          translate="GET_STARTED")  
