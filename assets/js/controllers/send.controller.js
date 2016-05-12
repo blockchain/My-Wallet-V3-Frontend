@@ -253,6 +253,8 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
   };
 
   $scope.useAll = () => {
+    let tx = $scope.transaction;
+    if (tx.maxAvailable == null || tx.amounts.length !== 1) return;
     $scope.transaction.amounts[0] = $scope.transaction.maxAvailable;
     $scope.setPaymentAmount();
   };

@@ -618,6 +618,24 @@ describe "SendCtrl", ->
         spyOn(scope, 'amountsAreValid').and.returnValue(false)
         expect(scope.hasAmountError(0)).toEqual(true)
 
+    describe "useAll", ->
+      beforeEach ->
+        scope.transaction.maxAvailable = 100
+
+      it "should set the transaction amount", ->
+        scope.useAll()
+        expect(scope.transaction.amounts[0]).toEqual(100)
+
+      it "should not use all if there is more than 1 destination", ->
+        scope.transaction.amounts = [1, 2]
+        scope.useAll()
+        expect(scope.transaction.amounts[0]).toEqual(1)
+
+      it "should set payment.amount", ->
+        spyOn(scope.payment, 'amount')
+        scope.useAll()
+        expect(scope.payment.amount).toHaveBeenCalled()
+
     describe "modal navigation", ->
 
       it "should build the payment before going to confirmation step", inject(($q) ->
