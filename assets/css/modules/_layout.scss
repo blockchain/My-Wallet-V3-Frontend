@@ -6,9 +6,9 @@
 .left-nav {
   position: absolute;
   width: 270px;
-  height: 100%;
   padding: 15px;
   background: $light-blue;
+  height: calc(100% - 60px);
   border-right: 1px solid $border-grey;
   .active-accounts{
     margin-bottom: 30px;
