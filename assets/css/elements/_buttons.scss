@@ -19,6 +19,9 @@ button[disabled] {
     outline: none;
     text-decoration: none;
   }
+  &.initial-text {
+    text-transform: none;
+  }
 }
 
 @mixin button($name, $background:white, $color:white, $max-width:none) {

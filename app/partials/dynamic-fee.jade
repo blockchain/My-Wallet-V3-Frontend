@@ -9,5 +9,5 @@
     translate="GO_BACK" ng-click="cancel()")
   button.button-muted.mrm(
     translate="CONTINUE_CURRENT_FEE" ng-hide="surge" ng-click="useCurrent()")
-  button.button-primary(
+  button.button-primary.initial-text(
     translate="{{:: btnTranslation }}" translate-values="{ suggested: suggestedFee }" ng-click="useSuggested()")
