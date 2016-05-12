@@ -524,6 +524,7 @@
   "FEEDBACK_DISLIKES": "What can we improve on?",
   "FEEDBACK_TELL_US": "Tell us what you think!",
   "FEEDBACK_OVERALL": "What's your overall impression of the wallet?",
+  "FEEDBACK_WARN": "If you are having an issue with your wallet please <span class='blue pointer underline'><i class='ti-headphone mhs'></i> Contact Support</span>. This form is for general feedback of the wallet.",
   "WALLET_RECOVERY": "Wallet Recovery",
   "LOGGING" : "Activity Logging",
   "LOG" : "Log",

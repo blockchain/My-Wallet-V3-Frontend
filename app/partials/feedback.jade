@@ -8,6 +8,7 @@
       a(href="https://www.surveygizmo.com/s3/2271145/c67c5c2b6b11" target="_blank")  SurveyGizmo
       span .
   div(ng-hide="formStage >= 2")
+    .well(ng-click="supportModal()" translate="FEEDBACK_WARN")
     form.bc-form.pal(ng-submit="setFormSubmitted()" name="feedbackForm" autocomplete="off")
       .bc-form-header
         h2.mtn.em-400.type-h5(translate="FEEDBACK_TELL_US")
