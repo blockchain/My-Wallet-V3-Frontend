@@ -107,8 +107,8 @@
               i.ti-close.type-xs
           .has-error.mbm
             span.help-block(
-              ng-click="transaction.destinations.length === 1 && useAll()"
-              ng-class="{pointer: transaction.destinations.length === 1}"
+              ng-click="useAll()"
+              ng-class="{'use-all': transaction.destinations.length === 1}"
               ng-show="transaction.maxAvailable != null && getTransactionTotal() > transaction.maxAvailable && !failedToLoadUnspent")
               span.type-sm(translate="{{getTotalAvailableTranslation()}}")
               | :&nbsp;
