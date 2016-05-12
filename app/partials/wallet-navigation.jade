@@ -9,8 +9,9 @@
         i.ti-layout-list-post
         span(translate="MY_TRANSACTIONS") 
       ul.scroll-accounts.aside-list.pas(ng-show="showOrHide('transactions')", ng-click="hideMenu()")
-        li.mvs(ng-class="selectedAccountIndex == '' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex: ''})", ng-hide="!status.didUpgradeToHd || (numberOfActiveAccounts() <= 1 && numberOfActiveLegacyAddresses() == 0) ")
-          a.pas(translate="ALL")
+        li(ng-class="selectedAccountIndex == '' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex: ''})", ng-hide="!status.didUpgradeToHd || (numberOfActiveAccounts() <= 1 && numberOfActiveLegacyAddresses() == 0) ")
+          a.flex-between.pas
+            span(translate="ALL")
             span
               fiat-or-btc(btc="total()")    
         li(ng-repeat="account in accounts()" ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''" ui-sref="wallet.common.transactions({accountIndex: account.index.toString()})")

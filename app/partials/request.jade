@@ -17,7 +17,8 @@
           ui-select-match(placeholder="{{'SEARCH' | translate}}...")
             label-origin(origin="$select.selected")
           ui-select-choices(repeat="destination in destinations | filter: getFilter($select.search)" group-by="'type'")
-            label-origin(origin="destination" highlight="$select.search")
+            span
+              label-origin(origin="destination" highlight="$select.search")
         span.help-block(ng-show="fields.to.isWatchOnly" translate="WATCH_ONLY_REQUEST_WARN")
 
     .form-group.row(ng-show="paymentRequest && paymentRequest.paid > 0 && paymentRequest.paid != fields.amount")

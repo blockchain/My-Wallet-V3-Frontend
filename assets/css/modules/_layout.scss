@@ -7,10 +7,12 @@
   position: absolute;
   width: 270px;
   padding: 15px;
-  overflow: auto;
   background: $light-blue;
   height: calc(100% - 60px);
   border-right: 1px solid $border-grey;
+  @media (max-height: 550px) {
+    overflow: auto;
+  }
   .active-accounts{
     margin-bottom: 30px;
   }

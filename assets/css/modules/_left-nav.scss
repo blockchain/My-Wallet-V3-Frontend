@@ -50,9 +50,9 @@ ul.aside {
       span {
         color: $basic-grey;
       }
-      &.imported-addresses{
-        > span {
-          color: $mid-grey;
+      &.imported-addresses {
+        span {
+          color: $mid-grey !important;
         }
       }
     }
@@ -102,10 +102,6 @@ ul.aside {
   span.btn-warning{
     color: #f0ad4e;
   }
-}
-
-@media (max-height: 550px) {
-  display: none;
 }
 
 .scroll-parent{

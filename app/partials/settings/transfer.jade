@@ -13,6 +13,7 @@ uib-progressbar.modal-progress(
         span.security-red.mrs.ti-alert(
           ng-show="combinedBalance > totalAmount + totalFees && !status.loading"
           uib-tooltip="{{::'SWEEP_LOW_BALANCE_WARN'|translate}}"
+          tooltip-append-to-body="true"
           tooltip-placement="left")
         span(translate="FROM")
       .col-sm-5(ng-show="addresses.length === 1")
