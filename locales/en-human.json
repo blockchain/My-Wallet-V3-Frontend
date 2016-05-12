@@ -33,7 +33,7 @@
   "LOGGED_OUT_AUTOMATICALLY" : "Logged out automatically",
   "AUTO_LOGOUT" : "Auto Logout",
   "AUTO_LOGOUT_EXPLAIN" : "After a certain period of inactivity, you will be automatically logged out of your wallet.",
-  "AUTO_LOGOUT_WARN" : "Are you still there? You've been inactive for {{::minutes}} minutes. Click \"Cancel\" if you don't want to be logged out automatically .",
+  "AUTO_LOGOUT_WARN" : "Are you still there? You've been inactive for {{::minutes}} minutes. Click \"Cancel\" if you don't want to be logged out automatically.",
   "LOG_ME_OUT": "Log me out",
   "CHANGES_BEING_SAVED": "There are changes still being saved. Are you sure you wish to logout?",
   "CLOSE": "Close",
