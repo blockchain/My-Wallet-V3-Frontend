@@ -24,7 +24,10 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
         });
       };
 
-      scope.archive = () => Wallet.archive(scope.address);
+      scope.archive = () => {
+        Wallet.archive(scope.address);
+        scope.$root.scheduleRefresh();
+      };
 
       scope.changeLabel = (label, successCallback, errorCallback) => {
         scope.errors.label = null;
