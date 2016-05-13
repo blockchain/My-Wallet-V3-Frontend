@@ -62,6 +62,14 @@ function transactionDescription ($translate, Wallet, $rootScope) {
     scope.txWatchOnly = scope.getTxWatchOnly(scope.tx);
     scope.txLabels = scope.getTxLabels(scope.tx);
 
+    scope.$watch('tx.confirmations', () => {
+      if (scope.tx && scope.tx.confirmations != null) {
+        scope.minutesRemaining = 30 - scope.tx.confirmations * 10;
+        scope.complete = scope.tx.confirmations >= 3;
+        scope.frugalWarning = scope.tx.frugal && scope.tx.confirmations === 0;
+      }
+    });
+
     scope.$watch('search', (search) => {
       if (search == null) return;
       let s = search.toLowerCase();

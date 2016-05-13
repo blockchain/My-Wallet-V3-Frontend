@@ -16,7 +16,7 @@
           ng-show=":: tx.txType === 'sent'") {{:: 'TO' | translate}}:
         span.hidden-sm.hidden-xs.mlm(
           ng-bind-html="txLabels.primary | escapeHtml | highlight:search")
-      div(ng-show="tx.toggled")
+      div
         span(
           ng-show=":: tx.txType === 'transfer' || tx.txType === 'received'") {{:: 'TO' | translate}}:
         span(
@@ -37,7 +37,7 @@
         ng-show=":: tx.txType === 'sent'") {{:: 'TO' | translate}}:
       span.mlm(
         ng-bind-html="txLabels.primary | escapeHtml | highlight:search")
-    div(ng-show="tx.toggled")
+    div
       span(
         ng-show=":: tx.txType === 'transfer' || tx.txType === 'received'") {{:: 'TO' | translate}}:
       span(
@@ -46,11 +46,18 @@
         ng-bind-html="txLabels.secondary | escapeHtml | highlight:search")
   .flex-start.flex-between.dark-grey(ng-show="tx.toggled")
     .flex-1.flex-column.flex-end
-      transaction-status(transaction="tx")
       a.underline.bc-link(href="{{rootURL}}tx/{{:: tx.hash }}", target="_blank")
        span(translate="VERIFY_ON_BCI")
-    .flex-2.hidden-xs.destination.pointer(ng-click="tx.toggled = !tx.toggled")
-      div
+    .flex-2.hidden-xs.destination.flex-align-self-end
+      transaction-status(transaction="tx")
+      div(ng-show="!complete")
+        uib-progressbar(value="tx.confirmations" max="3")
+          span {{ tx.confirmations }}/3
+      div(ng-show="complete")
+        uib-progressbar(value="tx.confirmations" max="3" type="success")
+          span {{ tx.confirmations }} 
+          | 
+          span(translate="CONFIRMATIONS")
     .flex-1.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
       div
     .flex-1.flex-column.flex-align-end.mtvl

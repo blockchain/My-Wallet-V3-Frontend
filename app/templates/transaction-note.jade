@@ -10,10 +10,10 @@
       i.ti-pencil
     a.cancel(ng-click="cancelEditNote()" ng-show="editNote")
       i.ti-close
-    a.delete(ng-click="deleteNote()", ng-hide="editNote || !transaction.note")
-      i.ti-trash
   .flex-column.input(ng-show="editNote" ng-class="{'pos-abs': transaction.toggled}")
     textarea.basic-grey.em-400(ng-model="transaction.draftNote" maxlength="255" placeholder="{{'ADD_A_DESCRIPTION' | translate}}")
     .flex-end.mts
       span.label.label-success.pointer(ng-click="saveNote()", translate="SAVE", ng-hide="transaction.note")
       span.label.label-success.pointer(ng-click="saveNote()", translate="UPDATE_NOTE", ng-show="transaction.note")
+      span.label.label-danger.pointer.mls(ng-click="deleteNote()" ng-show="transaction.note")
+        i.ti-trash.type-h4

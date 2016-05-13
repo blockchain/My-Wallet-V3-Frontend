@@ -1,6 +1,6 @@
 .flex-column(ng-if="!complete")
   .flex-row
-    span.mts.mrs.mbm.em-400(translate="PENDING")
+    span.mts.mrs.em-400(translate="PENDING")
     helper-button(content="{{ 'TRANSACTION_WILL_COMPLETE_IN' | translate:{minutes: minutesRemaining } }}" ng-if="!frugalWarning")
     helper-button(content="{{ 'TRANSACTION_FRUGAL' | translate }}" ng-if="frugalWarning")
 
@@ -8,10 +8,3 @@
   .flex-row
     span.mrs.mbn.em-400(translate="TRANSACTION_COMPLETE")
     i.ti-check.em-600
-
-span.on-hover.em-400(ng-class="{'success': transaction.confirmations >= 3}") {{ transaction.confirmations }}
-  | 
-  span
-    ng-pluralize(count="transaction.confirmations" 
-                 ng-init="confirmation='CONFIRMATION'; confirmations='CONFIRMATIONS'"
-                 when="{'1': '{{ confirmation | translate }}', 'other': '{{ confirmations | translate }}' }")

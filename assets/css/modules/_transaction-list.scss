@@ -58,27 +58,21 @@
     }
     transaction-status {
       position: relative;
-      > * { @include transition(opacity $fast); }
       .helper {
         margin: 0px;
       }
-      .on-hover {
-        top: 0;
-        left: 0;
-        opacity: 0;
-        width: 100%;
-        position: absolute;
-      }
-      &:hover {
-        .on-hover {
-          opacity: 1;
-        }
-        & > *:not(.on-hover) {
-          opacity: 0;
-        }
-      }
     }
     transaction-description {
+      .progress {
+        width: 90%;
+        @extend .mbn;
+      }
+      .progress-bar {
+        background-color: $blue;
+        &.progress-bar-success {
+          background-color: $success;
+        }
+      }
       .fee {
         button {
           margin-top: -3px;
@@ -243,7 +237,7 @@ button {
     border-color: $eee;
     padding: 10px 0px 0px 10px;
   }
-  .edit, .delete {
+  .edit {
     top: 0px;
     right: 0px;
     position: absolute;
