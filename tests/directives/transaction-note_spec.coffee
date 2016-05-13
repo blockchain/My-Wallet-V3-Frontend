@@ -15,7 +15,7 @@ describe "Transaction Note Directive", ->
     $compile = _$compile_
     $rootScope = _$rootScope_
 
-    $rootScope.transaction = {note: "Hello World"}
+    $rootScope.transaction = {note: "Hello World", processedOutputs: {'address': '123', 'identity': 1}}
 
     return
   )
