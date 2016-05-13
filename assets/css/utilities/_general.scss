@@ -1,0 +1,50 @@
+* {
+  outline: none !important;
+}
+
+html,body {
+  font-size: small;
+  background-color: #fff;
+  color: $text;
+  font-family: 'Roboto', 'Helvetica', sans-serif !important;
+  height: 100%;
+  width: 100%;
+  position: fixed; //need this for scrolling on safari mobile
+  &.not-fixed {
+    position: relative;
+    body {
+      position: relative;
+    }
+  }
+}
+
+//Because span's are evil
+.display-block { display: block; }
+
+.pointer { cursor: pointer; }
+.pos-rel { position: relative; }
+.pos-abs { position: absolute; }
+.row { vertical-align: bottom; }
+.row.spacing {
+  height: 20px;
+  background: transparent;
+}
+
+#qr-canvas { display: none; }
+
+noscript {
+  display:flex;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items:center;
+  height: 100%;
+  width: 100%;
+
+  img {
+    margin-bottom: 3em;
+  }
+}
