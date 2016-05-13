@@ -1,6 +1,6 @@
 .flex-column
   .flex-start.flex-between
-    .flex-1.flex-column.pointer(ng-click="tx.toggled = !tx.toggled")
+    .flex-1.flex-column.pointer(ng-click=":: tx.toggled = !tx.toggled")
       span.timestamp.pbm.type-sm.basic-grey
         date {{:: tx.time * 1000 | date:'MMMM d @ hh:mm a' }}
       .flex-center.lh1
@@ -8,7 +8,7 @@
           ng-class=":: txClass"
           translate="{{:: txDirection }}")
         span.label.label-default(translate="WATCH_ONLY" ng-show=":: txWatchOnly")
-    .flex-2.hidden-xs.hidden-sm.destination.em-400.basic-grey.pointer(ng-click="tx.toggled = !tx.toggled")
+    .flex-2.hidden-xs.hidden-sm.destination.em-400.basic-grey.pointer(ng-click=":: tx.toggled = !tx.toggled")
       div
         span(
           ng-show=":: tx.txType === 'transfer' || tx.txType === 'received'") {{:: 'FROM' | translate}}:
@@ -24,12 +24,12 @@
         span.hidden-sm.hidden-xs.mlm(
           ng-bind-html="txLabels.secondary | escapeHtml | highlight:search")
     .flex-1
-      transaction-note(transaction="tx")
+      transaction-note(transaction=":: tx")
     .flex-1.amount.flex-end
       span 
-        amount(transaction="tx")
+        amount(transaction=":: tx")
   //- toggled and mobile
-  .flex-start.flex-column.hidden-desktop.mvm(ng-show="tx.toggled")
+  .flex-start.flex-column.hidden-desktop.mvm(ng-show=":: tx.toggled")
     div
       span(
         ng-show=":: tx.txType === 'transfer' || tx.txType === 'received'") {{:: 'FROM' | translate}}:
@@ -49,9 +49,9 @@
       transaction-status(transaction="tx")
       a.underline.bc-link(href="{{rootURL}}tx/{{:: tx.hash }}", target="_blank")
        span(translate="VERIFY_ON_BCI")
-    .flex-2.hidden-xs.destination.pointer(ng-click="tx.toggled = !tx.toggled")
+    .flex-2.hidden-xs.destination.pointer(ng-click=":: tx.toggled = !tx.toggled")
       div
-    .flex-1.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
+    .flex-1.hidden-xs.pointer(ng-click=":: tx.toggled = !tx.toggled")
       div
     .flex-1.flex-column.flex-align-end.mtvl
       .flex-row
