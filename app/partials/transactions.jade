@@ -27,7 +27,7 @@
       h3.em-100.mbl(translate="SORRY_ZERO_TXS")
       p.em-400(translate="PLEASE_TRY_AGAIN", ng-click="supportModal()")
     .transaction.no-select(ng-repeat="tx in transactions | filter:transactionFilter | limitTo:txLimit as filteredTransactions track by tx.hash")
-      .tx-toggle.pointer(ng-click="tx.toggled = !tx.toggled")
+      .tx-toggle.pointer.hidden-xs(ng-click="tx.toggled = !tx.toggled")
         i.ti-arrow-circle-right.h4.aaa.mrl.prl(ng-show="!tx.toggled")
         i.ti-arrow-circle-down.h4.aaa.mrl.prl(ng-show="tx.toggled")
       .tx-details

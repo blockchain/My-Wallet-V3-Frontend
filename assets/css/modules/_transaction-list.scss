@@ -93,6 +93,7 @@
   }
   @media (max-width: 768px) {
     .transaction {
+      padding-left: 10px;
       padding-right: 10px;
       .tx-toggle {
         top: 5px;
@@ -100,10 +101,6 @@
         i {
           font-size: 14px;
         }
-      }
-      button.amount {
-        padding: 5px 10px;
-        font-size: 10px;
       }
       .width-80 {
         width: 100%;
@@ -237,27 +234,26 @@ button {
     border-color: $eee;
     padding: 10px 0px 0px 10px;
   }
-  .edit {
-    top: 0px;
-    right: 0px;
-    position: absolute;
-  }
-  .edit {
-    right: 1.5em;
-  }
-  .cancel {
-    position: relative;
-    right: calc(-100% + 2.5em);
-  }
-  .input {
-    width: calc(100% - 1.5em);
-    top: 1.5em;
-    left: 0;
+  @media (min-width: 769px) {
+    .edit {
+      top: 0px;
+      right: 0px;
+      position: absolute;
+    }
+    .edit {
+      right: 1.5em;
+    }
+    .cancel {
+      position: relative;
+      right: calc(-100% + 2.5em);
+    }
+    .input {
+      width: calc(100% - 1.5em);
+      top: 1.5em;
+      left: 0;
+    }
   }
   @media (max-width: 768px) {
-    .edit {
-      right: -1.5em;
-    }
     .input.pos-abs {
       top: 0px;
       position: relative;

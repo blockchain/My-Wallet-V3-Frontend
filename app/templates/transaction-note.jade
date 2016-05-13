@@ -1,12 +1,14 @@
 .flex-column.note.em-300
   .flex-row
+    a.edit.mrm.hidden-desktop(ng-click="startEditNote()" ng-hide="editNote")
+      i.ti-pencil
     .flex-row.width-80(ng-hide="editNote")
       i.ti-notepad.mrm(ng-show="transaction.note")
       i.ti-notepad.mrm.aaa(ng-show="label && !transaction.note")
       .tx-note.aaa.em-400.text-cursor(ng-show="label && !transaction.note") {{ label }}
       .tx-note.basic-grey.em-400.text-cursor(ng-hide="label && !transaction.note") {{ transaction.note }}
       a.aaa.em-400(ng-click="startEditNote()" ng-hide="editNote || transaction.note || label" translate="ADD_A_DESCRIPTION") 
-    a.edit(ng-click="startEditNote()" ng-hide="editNote")
+    a.edit.hidden-xs(ng-click="startEditNote()" ng-hide="editNote")
       i.ti-pencil
     a.cancel(ng-click="cancelEditNote()" ng-show="editNote")
       i.ti-close

@@ -23,12 +23,14 @@
           ng-show=":: tx.txType === 'sent'") {{:: 'FROM' | translate}}:
         span.hidden-sm.hidden-xs.mlm(
           ng-bind-html="txLabels.secondary | escapeHtml | highlight:search")
-    .flex-1
+    .flex-1.hidden-xs
       transaction-note(transaction="tx")
     .flex-1.amount.flex-end
       span 
         amount(transaction="tx")
   //- toggled and mobile
+  .hidden-desktop.mtl.mbs(ng-show="tx.toggled")
+    transaction-note(transaction="tx")
   .flex-start.flex-column.hidden-desktop.mvm(ng-show="tx.toggled")
     div
       span(
