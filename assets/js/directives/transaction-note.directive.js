@@ -18,6 +18,11 @@ function transactionNote ($translate, $rootScope, Wallet) {
   function link (scope, elem, attrs) {
     scope.editNote = false;
 
+    if (scope.transaction.txType === 'received') {
+      let pOuts = scope.transaction.processedOutputs ? scope.transaction.processedOutputs[0] : null;
+      if (pOuts.identity) scope.label = Wallet.hdAddresses(pOuts.identity)().filter(a => a.address === pOuts.address)[0].label;
+    }
+
     scope.cancelEditNote = () => {
       scope.transaction.draftNote = '';
       scope.editNote = false;

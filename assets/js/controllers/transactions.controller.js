@@ -39,13 +39,6 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
     else if (!$scope.allTxsLoaded && !$scope.loading) fetchTxs();
   };
 
-  $scope.showTransaction = (transaction) => {
-    $state.go('wallet.common.transaction', {
-      accountIndex: $stateParams.accountIndex,
-      hash: transaction.hash
-    });
-  };
-
   $scope.$watchCollection('accounts()', newValue => {
     $scope.canDisplayDescriptions = $scope.accounts().length > 0;
   });
@@ -76,7 +69,8 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
   $scope.filterSearch = (tx, search) => {
     if (!search) return true;
     return ($scope.filterTx(tx.processedInputs, search) ||
-            $scope.filterTx(tx.processedOutputs, search));
+            $scope.filterTx(tx.processedOutputs, search) ||
+            (tx.note && tx.note.toLowerCase().search(search.toLowerCase()) > -1));
   };
 
   $scope.filterTx = (coins, search) => {

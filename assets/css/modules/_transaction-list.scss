@@ -1,4 +1,9 @@
 .transactions {
+  .label-success,
+  .label-default {
+    @extend .btn-xs;
+    display: inline-block;
+  }
   .transaction-feed {
     position: relative;
     top: 50px;
@@ -37,27 +42,83 @@
      color: $transfer-blue;
     }
     .destination{
+      width: 265px;
       display: block;
-      font-size: 1.1em;
-    }
-    .amount {
-      padding: 10px 0;
-      position: absolute;
-      right: 10px;
-      top: 18px;
-      button.amount{
-        font-size: 1.1em;
-        min-width: 125px;
-        float: right;
-      }
+      font-size: 1em;
+      overflow: hidden;
     }
     .tx-toggle {
+      top: 10px;
+      left: 10px;
       position: absolute;
-      top: 62.5px;
-      transform: translateY(-50%);
+      height: calc(100% - 10px);
     }
     .tx-details {
       margin-left: 3em;
+    }
+    transaction-status {
+      position: relative;
+      > * { @include transition(opacity $fast); }
+      .helper {
+        margin: 0px;
+      }
+      .on-hover {
+        top: 0;
+        left: 0;
+        opacity: 0;
+        width: 100%;
+        position: absolute;
+      }
+      &:hover {
+        .on-hover {
+          opacity: 1;
+        }
+        & > *:not(.on-hover) {
+          opacity: 0;
+        }
+      }
+    }
+    transaction-description {
+      .fee {
+        button {
+          margin-top: -3px;
+        }
+      }
+      .bc-link {
+        color: $basic-grey;
+        &:hover {
+          color: $blue;
+        }
+      }
+    }
+  }
+  @media (max-width: 992px) {
+    .tx-details {
+      margin-left: 1em;
+    }
+  }
+  @media (max-width: 768px) {
+    .transaction {
+      padding-right: 10px;
+      .tx-toggle {
+        top: 5px;
+        left: 5px;
+        i {
+          font-size: 14px;
+        }
+      }
+      button.amount {
+        padding: 5px 10px;
+        font-size: 10px;
+      }
+      .width-80 {
+        width: 100%;
+      }
+      .mtvl {
+        flex: 2 0 0;
+        -ms-flex: 2;
+        margin-top: 0.625em;
+      }
     }
   }
   .description {
@@ -173,7 +234,42 @@ button {
 }
 .unconfirmed { opacity: 0.5; }
 
-.note { color: $black; }
+.note { 
+  color: $black;
+  position: relative;
+  textarea {
+    resize: none;
+    height: 60px;
+    border-color: $eee;
+    padding: 10px 0px 0px 10px;
+  }
+  .edit, .delete {
+    top: 0px;
+    right: 0px;
+    position: absolute;
+  }
+  .edit {
+    right: 1.5em;
+  }
+  .cancel {
+    position: relative;
+    right: calc(-100% + 2.5em);
+  }
+  .input {
+    width: calc(100% - 1.5em);
+    top: 1.5em;
+    left: 0;
+  }
+  @media (max-width: 768px) {
+    .edit {
+      right: -1.5em;
+    }
+    .input.pos-abs {
+      top: 0px;
+      position: relative;
+    }
+  }
+}
 
 a.date,p.date { color: $black; }
 

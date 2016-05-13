@@ -1,13 +1,19 @@
-span.note.em-300
-  .flex.mvl(ng-hide="editNote")
-    i.ti-notepad.mrm
-    .pointer.break-word {{ transaction.note }}
-  button.button-primary.button-sm.mrm(ng-click="startEditNote()", ng-hide="transaction.note || editNote", translate="ADD_NOTE")
-  button.button-default.button-sm.mrm(ng-hide="editNote || !transaction.note", ng-click="startEditNote()" translate="EDIT_NOTE")
-  button.button-danger.button-sm(ng-click="deleteNote()", ng-hide="editNote || !transaction.note" translate="DELETE_NOTE")
-  .flex-column(ng-show="editNote")
-    textarea.textarea.mvm(ng-model="transaction.draftNote" maxlength="255")
-    .flex-center
-      button.button-muted(ng-click="cancelEditNote()", translate="CANCEL_EDIT_NOTE")
-      button.button-success.button-sm(ng-click="saveNote()", translate="SAVE_NOTE", ng-hide="transaction.note")
-      button.button-success.button-sm(ng-click="saveNote()", translate="UPDATE_NOTE", ng-show="transaction.note")
+.flex-column.note.em-300
+  .flex-row
+    .flex-row.width-80(ng-hide="editNote")
+      i.ti-notepad.mrm(ng-show="transaction.note")
+      i.ti-notepad.mrm.aaa(ng-show="label && !transaction.note")
+      .tx-note.aaa.em-400.text-cursor(ng-show="label && !transaction.note") {{ label }}
+      .tx-note.basic-grey.em-400.text-cursor(ng-hide="label && !transaction.note") {{ transaction.note }}
+      a.aaa.em-400(ng-click="startEditNote()" ng-hide="editNote || transaction.note || label" translate="ADD_A_DESCRIPTION") 
+    a.edit(ng-click="startEditNote()" ng-hide="editNote")
+      i.ti-pencil
+    a.cancel(ng-click="cancelEditNote()" ng-show="editNote")
+      i.ti-close
+    a.delete(ng-click="deleteNote()", ng-hide="editNote || !transaction.note")
+      i.ti-trash
+  .flex-column.input(ng-show="editNote" ng-class="{'pos-abs': transaction.toggled}")
+    textarea.basic-grey.em-400(ng-model="transaction.draftNote" maxlength="255" placeholder="{{'ADD_A_DESCRIPTION' | translate}}")
+    .flex-end.mts
+      span.label.label-success.pointer(ng-click="saveNote()", translate="SAVE", ng-hide="transaction.note")
+      span.label.label-success.pointer(ng-click="saveNote()", translate="UPDATE_NOTE", ng-show="transaction.note")
