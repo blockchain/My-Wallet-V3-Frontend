@@ -2,8 +2,10 @@
   .flex-row
     .flex-row.width-80(ng-hide="editNote")
       i.ti-notepad.mrm(ng-show="transaction.note")
-      .tx-note.basic-grey.em-400.text-cursor {{ transaction.note }}
-      a.aaa.em-400(ng-click="startEditNote()" ng-hide="editNote || transaction.note" translate="ADD_A_DESCRIPTION") 
+      i.ti-notepad.mrm.aaa(ng-show="label && !transaction.note")
+      .tx-note.aaa.em-400.text-cursor(ng-show="label && !transaction.note") {{ label }}
+      .tx-note.basic-grey.em-400.text-cursor(ng-hide="label && !transaction.note") {{ transaction.note }}
+      a.aaa.em-400(ng-click="startEditNote()" ng-hide="editNote || transaction.note || label" translate="ADD_A_DESCRIPTION") 
     a.edit(ng-click="startEditNote()" ng-hide="editNote")
       i.ti-pencil
     a.cancel(ng-click="cancelEditNote()" ng-show="editNote")
