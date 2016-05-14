@@ -4,8 +4,9 @@ div
       .flex-between.flex-center.flex-wrap
         h2.em-300.mtn(translate="LOGIN_HELP")
       p.em-300(translate="LOGIN_HELP_TEXT")
+    img(src="img/spinner.gif", ng-show="!status.didFetchJS")
   .flex-column
-    ul.pln
+    ul.pln(ng-hide="!status.didFetchJS")
       li.border-bottom-light.pvm.flex-between.flex-center
         .flex-column.flex-2.prm
           h5.blue.em-300(translate="LOST_WALLET_ID")

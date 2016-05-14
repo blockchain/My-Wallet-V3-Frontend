@@ -5,7 +5,8 @@
     .flex-column
       h2.em-300.mtn(translate="RECOVER_FUNDS")
       p(translate="RECOVER_BTC_LOST")
-  form.ptl.form-horizontal(name="passphraseForm" autocomplete="off" ng-switch-when="1" novalidate)
+  img(src="img/spinner.gif", ng-show="!status.didFetchJS")
+  form.ptl.form-horizontal(name="passphraseForm" autocomplete="off" ng-switch-when="1" novalidate ng-hide="!status.didFetchJS")
     div
       .security-red.mbl.em-400.flex-center
         i.ti-hand-stop.mrm.h3.mvn.hidden-xs

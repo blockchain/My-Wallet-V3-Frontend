@@ -34,6 +34,11 @@ angular.module('walletApp', modules)
   uiSelectConfig.theme = 'bootstrap';
 })
 .run(($rootScope, $uibModal, $state, MyWallet, $q, currency, $timeout) => {
+  let myWallet;
+  MyWallet.then((res) => {
+    myWallet = res;
+  });
+
   $rootScope.$safeApply = (scope = $rootScope, before) => {
     before = before;
     if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
@@ -50,7 +55,7 @@ angular.module('walletApp', modules)
 
   $rootScope.refresh = () => {
     $rootScope.refreshing = true;
-    $q.all([ MyWallet.wallet.getHistory(), currency.fetchExchangeRate() ])
+    $q.all([ myWallet.wallet.getHistory(), currency.fetchExchangeRate() ])
       .catch(() => console.log('error refreshing'))
       .finally(() => {
         $rootScope.$broadcast('refresh');

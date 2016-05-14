@@ -14,14 +14,6 @@ describe "Activity Feed directive", ->
     Wallet = $injector.get("Wallet")
     MyWallet = $injector.get("MyWallet")
 
-    MyWallet.wallet = {
-      hdwallet:
-        accounts: [{ archived: false }, { archived: false }, { archived: true }]
-      status: {didLoadTransactions: false}
-      txList:
-        subscribe: () -> (() ->)
-    }
-
     Activity = $injector.get("Activity")
     Activity.activity  = { activities: [], transactions: [], logs: [], limit: 8 }
 

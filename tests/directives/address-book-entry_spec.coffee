@@ -32,20 +32,11 @@ describe "Address Book Entry Directive", ->
       Alerts.confirm = () ->
         then: (f) -> f(true)
 
-      MyWallet.wallet = {
-        removeAddressBookEntry: () ->
-          address = 'address'
-          delete MyWallet.wallet.addressBook[address]
-
-        addressBook: {"address": "Satoshi"}
-      }
-
   it "has an element that is defined", ->
     expect(element).toBeDefined()
 
   it "can delete an address book entry", ->
     spyOn(Wallet, "removeAddressBookEntry").and.callThrough()
-
     isoScope.delete()
     expect(Wallet.removeAddressBookEntry).toHaveBeenCalled()
-    expect(MyWallet.wallet.addressBook['address']).toBeUndefined()
+    expect(Wallet.my.wallet.addressBook['address']).toBeUndefined()

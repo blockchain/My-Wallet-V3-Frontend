@@ -10,16 +10,10 @@ describe "WalletNavigationCtrl", ->
 
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
+      $rootScope.karma = true
+
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
-
-      MyWallet.wallet = {
-        balanceSpendableActiveLegacy: 100000000
-        keys: [{ archived: false }, { archived: true }]
-        hdwallet: {
-          accounts: [{ archived: false }, { archived: false }, { archived: true }]
-        }
-      }
 
       Wallet.status.isLoggedIn = true
 

@@ -3,7 +3,8 @@
     .flex-column
       h2.em-300.mtn(translate="REMIND_ME")
       p(translate="REMIND_ME_HELP")
-  form.ptl.form-horizontal(name="form" autocomplete="off" novalidate)
+  img(src="img/spinner.gif", ng-show="!status.didFetchJS")
+  form.ptl.form-horizontal(name="form" autocomplete="off" novalidate  ng-hide="!status.didFetchJS")
     div(ng-switch-when="1")
       .form-group(ng-class="{'has-error': form.email.$invalid && form.email.$touched}")
         label(translate="EMAIL")

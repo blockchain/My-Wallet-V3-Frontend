@@ -4,9 +4,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
 
-function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency) {
+function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockchainApi, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency) {
   const wallet = {
     goal: {
       auth: false
@@ -48,20 +48,34 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   wallet.fiatHistoricalConversionCache = {};
   wallet.conversions = {};
   wallet.paymentRequests = [];
-  wallet.my = MyWallet;
-  wallet.settings_api = MyBlockchainSettings;
-  wallet.store = MyWalletStore;
 
-  wallet.api = MyBlockchainApi;
-  wallet.rng = MyBlockchainRng;
+  // Has wallet related Javascript been loaded?
+  // null:  not loaded and not currently loading
+  // false: currently loading
+  // true:  loaded
+  wallet.status.didFetchJS = null;
 
-  $rootScope.$watch('rootURL', () => {
-    // If a custom rootURL is set by index.jade:
-    //                    Grunt can replace this:
-    const customRootURL = $rootScope.rootURL;
-    wallet.api.ROOT_URL = customRootURL;
-    // If customRootURL is set by Grunt:
-    $rootScope.rootURL = customRootURL;
+  wallet.fetchJS = () => {
+    if (wallet.status.didFetchJS === null) {
+      console.log('Fetching JS...');
+      wallet.status.didFetchJS = false;
+      $timeout(() => {
+        var scriptTag = angular.element(document.createElement('script'));
+        // @ifndef PRODUCTION
+        scriptTag.attr('src', 'bower_components/blockchain-wallet/dist/my-wallet.js');
+        // @endif
+        /* @ifdef PRODUCTION **
+        scriptTag.attr('src', 'js/blockchain.min.js');
+        /* @endif */
+        angular.element(document.body).append(scriptTag);
+      }, 1000);
+    }
+  };
+
+  MyWallet.then((res) => {
+    // console.log('JS loaded...');
+    wallet.status.didFetchJS = true;
+    wallet.my = res;
 
     const absUrl = $location.absUrl();
     const path = $location.path();
@@ -76,6 +90,31 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       wallet.my.ws.wsUrl = customWebSocketURL;
     }
 
+    // These are set by grunt dist:
+    $rootScope.versionFrontend = null;
+    $rootScope.versionMyWallet = null;
+
+    if (!$rootScope.karma) {
+      console.info(
+        'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s, connecting to %s',
+        $rootScope.versionFrontend, $rootScope.versionMyWallet, $rootScope.rootURL
+      );
+    }
+  });
+
+  MyWalletStore.then((res) => {
+    wallet.store = res;
+
+    wallet.store.addEventListener((event, data) => {
+      wallet.monitor(event, data);
+    });
+  });
+
+  MyBlockchainApi.then((res) => {
+    wallet.api = res;
+
+    wallet.api.ROOT_URL = $rootScope.rootURL;
+
     // If a custom apiDomain is set by index.jade:
     //                             Grunt can replace this:
     const customApiDomain = $rootScope.apiDomain || 'https://api.blockchain.info/';
@@ -83,18 +122,24 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     if (customApiDomain) {
       wallet.api.API_ROOT_URL = customApiDomain;
     }
-
-    // These are set by grunt dist:
-    $rootScope.versionFrontend = null;
-    $rootScope.versionMyWallet = null;
-
-    console.info(
-      'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s, connecting to %s',
-      $rootScope.versionFrontend, $rootScope.versionMyWallet, $rootScope.rootURL
-    );
   });
 
-  wallet.Payment = MyWalletPayment;
+  MyBlockchainSettings.then((res) => {
+    wallet.settings_api = res;
+  });
+
+  $rootScope.$watch('rootURL', () => {
+    // console.log('rootURL set');
+    // If a custom rootURL is set by index.jade:
+    //                    Grunt can replace this:
+    const customRootURL = $rootScope.rootURL;
+    // If customRootURL is set by Grunt:
+    $rootScope.rootURL = customRootURL;
+  });
+
+  MyWalletPayment.then((res) => {
+    wallet.Payment = res;
+  });
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
   MyBlockchainApi.API_CODE = wallet.api_code;
@@ -671,9 +716,6 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     }
   };
 
-  wallet.isValidAddress = (address) => MyWalletHelpers.isBitcoinAddress(address);
-  wallet.isValidPrivateKey = (priv) => MyWalletHelpers.isValidPrivateKey(priv);
-
   wallet.archive = (address_or_account) => {
     wallet.saveActivity(3);
     address_or_account.archived = true;
@@ -701,7 +743,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   };
 
   wallet.total = (accountIndex) => {
-    if (wallet.my.wallet == null || !wallet.status.isLoggedIn) return null;
+    if (!wallet.my || wallet.my.wallet == null || !wallet.status.isLoggedIn) return null;
     switch (accountIndex) {
       case '':
         if (wallet.my.wallet.isUpgradedToHD) {
@@ -811,10 +853,6 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     }
     $rootScope.$safeApply();
   };
-
-  wallet.store.addEventListener((event, data) => {
-    wallet.monitor(event, data);
-  });
 
   let message = $cookies.get('alert-warning');
   if (message !== void 0 && message !== null) {
@@ -1126,8 +1164,10 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   wallet.isDefaultAccount = (account) =>
     wallet.my.wallet.hdwallet.defaultAccountIndex === account.index;
 
-  wallet.isValidBIP39Mnemonic = (mnemonic) =>
-    MyWalletHelpers.isValidBIP39Mnemonic(mnemonic);
+  MyWalletHelpers.then((helpers) => {
+    wallet.isValidAddress = (address) => helpers.isBitcoinAddress(address);
+    wallet.isValidPrivateKey = (priv) => helpers.isValidPrivateKey(priv);
+  });
 
   wallet.removeSecondPassword = (successCallback, errorCallback) => {
     let success = () => {
@@ -1178,8 +1218,6 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   wallet.refresh = () => {
     wallet.my.refresh();
   };
-
-  wallet.isMock = wallet.my.mockShouldFailToSend !== void 0;
 
   return wallet;
 }

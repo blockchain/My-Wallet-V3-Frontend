@@ -16,5 +16,8 @@ function VerifyEmailCtrl ($scope, WalletTokenEndpoints, $stateParams, $state, Al
     $rootScope.$safeApply();
   };
 
-  WalletTokenEndpoints.verifyEmail($stateParams.token).then(success).catch(error);
+  WalletTokenEndpoints.then((res) => {
+    $scope.service = res;
+    $scope.service.verifyEmail($stateParams.token).then(success).catch(error);
+  });
 }

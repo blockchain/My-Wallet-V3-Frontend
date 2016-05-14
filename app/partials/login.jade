@@ -4,10 +4,12 @@ div
       .flex-between.flex-center.flex-wrap
         h2.em-300.mtn(translate="WELCOME_BACK")
         span.register.mbm
-          span(translate="OR")
-          | 
-          a.em-300(ng-click="register()")
-            span(translate="CLICK_HERE_TO_CREATE_WALLET")
+          img(ng-show="!status.didFetchJS" src="img/spinner.gif")
+          span(ng-hide="!status.didFetchJS" )
+            span(translate="OR")
+            | 
+            a.em-300(ng-click="register()")
+              span(translate="CLICK_HERE_TO_CREATE_WALLET")
       p.em-300(translate="LOGIN_BELOW")
   //GUID & Password fields
   form.ptl.form-horizontal.clearfix(role="form" autocomplete="off" novalidate)
@@ -36,7 +38,8 @@ div
           img(ng-show="resending" src="img/spinner.gif")
           a(ng-click="resend()", ng-show="!resending", translate="RESEND") 
     .mtl.flex-center.flex-end
-      button.button-primary(ui-ladda="busy", ng-click="login()", data-style="expand-left", ladda-translate="SIGNIN", ng-disabled="!isValid")
+        img(ng-show="!status.didFetchJS" src="img/spinner.gif")
+        button.button-primary(ui-ladda="busy", ng-click="login()", data-style="expand-left", ladda-translate="SIGNIN", ng-disabled="!isValid", ng-hide="!status.didFetchJS")
   //Wallet Recovery
   .ptl.flex-row.flex-between
     a.em-300(href="{{rootURL}}wallet-legacy/login" translate="LOGIN_TO_LEGACY")

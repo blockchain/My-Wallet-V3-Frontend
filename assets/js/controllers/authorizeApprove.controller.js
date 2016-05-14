@@ -38,13 +38,19 @@ function AuthorizeApproveCtrl ($window, $scope, WalletTokenEndpoints, $statePara
 
   $scope.checkingToken = true;
 
-  WalletTokenEndpoints.authorizeApprove($stateParams.token, differentBrowser, null)
-    .then(success)
-    .catch(error);
+  let service;
+
+  WalletTokenEndpoints.then((res) => {
+    service = res;
+
+    service.authorizeApprove($stateParams.token, differentBrowser, null)
+      .then(success)
+      .catch(error);
+  });
 
   $scope.approve = () => {
     $scope.busyApproving = true;
-    WalletTokenEndpoints.authorizeApprove($stateParams.token, () => {}, true)
+    service.authorizeApprove($stateParams.token, () => {}, true)
       .then(success)
       .catch(error);
   };
@@ -57,7 +63,7 @@ function AuthorizeApproveCtrl ($window, $scope, WalletTokenEndpoints, $statePara
       $state.go('public.login-no-uid').then(() => Alerts.displaySuccess('AUTHORIZE_REJECT_SUCCESS'));
     };
 
-    WalletTokenEndpoints.authorizeApprove($stateParams.token, () => {}, false)
+    service.authorizeApprove($stateParams.token, () => {}, false)
       .then(rejected)
       .catch(error);
   };

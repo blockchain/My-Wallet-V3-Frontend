@@ -1,7 +1,7 @@
 'use strict';
 
 describe('currency', () => {
-  
+
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(done => {
@@ -41,14 +41,19 @@ describe('currency', () => {
 
     it('should get a value from the cache', (done) => {
       inject((MyBlockchainApi, currency) => {
-        currency.getFiatAtTime(time, amount, curr).then(() => {
-          spyOn(MyBlockchainApi, 'getFiatAtTime').and.callThrough();
-          let checkForServerCall = (fiatValue) => {
-            expect(MyBlockchainApi.getFiatAtTime).not.toHaveBeenCalled();
-            done();
-          };
-          currency.getFiatAtTime(time, amount, curr).then(checkForServerCall);
+        let api;
+        MyBlockchainApi.then((res) => {
+          api = res;
+          currency.getFiatAtTime(time, amount, curr).then(() => {
+            spyOn(api, 'getFiatAtTime').and.callThrough();
+            let checkForServerCall = (fiatValue) => {
+              expect(api.getFiatAtTime).not.toHaveBeenCalled();
+              done();
+            };
+            currency.getFiatAtTime(time, amount, curr).then(checkForServerCall);
+          });
         });
+
       });
     });
   });

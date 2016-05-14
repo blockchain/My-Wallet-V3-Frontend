@@ -1,7 +1,7 @@
 describe "AccountFormCtrl", ->
   Wallet = undefined
   scope = undefined
-  accounts = [{label: 'Savings'}, {label: 'Party Money'}]
+  accounts = undefined
 
   modalInstance =
     close: ->
@@ -10,34 +10,19 @@ describe "AccountFormCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector) ->
+    angular.mock.inject ($injector, $rootScope) ->
+      $rootScope.karma = true
+
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
 
-      Wallet.accounts = () -> accounts
+      Wallet.accounts = () -> MyWallet.accounts
 
       Wallet.askForSecondPasswordIfNeeded = () ->
         return {
           then: (fn) -> fn(); return { catch: (-> ) }
         }
 
-      Wallet.my.fetchMoreTransactionsForAll = (success,error,allTransactionsLoaded) ->
-        success()
-
-      MyWallet.wallet = {
-        isDoubleEncrypted: false
-
-        newAccount: (label) ->
-          accounts.push { label: label }
-          return
-
-        getHistory: () ->
-          then: () ->
-            then: () ->
-
-        txList:
-          fetchTxs: () ->
-      }
 
   beforeEach ->
     angular.mock.inject ($rootScope, $controller, $compile, $templateCache) ->
@@ -57,8 +42,6 @@ describe "AccountFormCtrl", ->
 
       return
     return
-
-  beforeEach -> accounts.splice(2); accounts[0].label = 'Savings'
 
   describe "creation", ->
 
