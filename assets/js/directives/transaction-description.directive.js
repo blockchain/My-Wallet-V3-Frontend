@@ -9,7 +9,8 @@ function transactionDescription ($translate, Wallet, $rootScope) {
     replace: false,
     scope: {
       tx: '=transaction',
-      search: '=highlight'
+      search: '=highlight',
+      account: '=account'
     },
     templateUrl: 'templates/transaction-description.jade',
     link: link

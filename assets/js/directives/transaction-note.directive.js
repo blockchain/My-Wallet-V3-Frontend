@@ -8,7 +8,8 @@ function transactionNote ($translate, $rootScope, Wallet) {
     restrict: 'E',
     replace: false,
     scope: {
-      transaction: '='
+      transaction: '=',
+      account: '='
     },
     templateUrl: 'templates/transaction-note.jade',
     link: link
@@ -19,8 +20,14 @@ function transactionNote ($translate, $rootScope, Wallet) {
     scope.editNote = false;
 
     if (scope.transaction.txType === 'received') {
-      let pOuts = scope.transaction.processedOutputs ? scope.transaction.processedOutputs[0] : null;
-      if (pOuts.identity) scope.label = Wallet.hdAddresses(pOuts.identity)().filter(a => a.address === pOuts.address)[0].label;
+      let address = scope.transaction.processedOutputs.filter(p => p.identity >= 0)[0];
+
+      if (address && parseInt(scope.account, 10) === address.identity) {
+        let hdAddresses = Wallet.hdAddresses(address.identity)();
+        let hdAddress = hdAddresses.filter(a => a.address === address.address);
+
+        scope.label = hdAddress[0] ? hdAddress[0].label : undefined;
+      }
     }
 
     scope.cancelEditNote = () => {

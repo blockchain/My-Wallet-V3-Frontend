@@ -32,7 +32,7 @@
         i.ti-arrow-circle-down.h4.aaa.mrl.prl(ng-show="tx.toggled")
       .tx-details
         span 
-          transaction-description(transaction="tx" highlight="searchText" ng-if="canDisplayDescriptions")
+          transaction-description(transaction="tx" highlight="searchText" ng-if="canDisplayDescriptions" account="account")
     .row
       .col-xs-5
       .col-xs-2

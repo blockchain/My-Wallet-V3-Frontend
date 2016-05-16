@@ -16,9 +16,9 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
   $scope.canDisplayDescriptions = false;
   $scope.txLimit = 10;
 
-  let accountIndex = $stateParams.accountIndex;
   let txList = MyWallet.wallet.txList;
-  $scope.transactions = txList.transactions(accountIndex);
+  $scope.account = $stateParams.accountIndex;
+  $scope.transactions = txList.transactions($scope.accountIndex);
 
   let fetchTxs = () => {
     $scope.loading = true;
@@ -44,7 +44,7 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
   });
 
   let setTxs = () => {
-    let newTxs = txList.transactions(accountIndex);
+    let newTxs = txList.transactions($scope.account);
     if ($scope.transactions.length > newTxs.length) $scope.allTxsLoaded = false;
     $scope.transactions = newTxs;
     $rootScope.$safeApply();

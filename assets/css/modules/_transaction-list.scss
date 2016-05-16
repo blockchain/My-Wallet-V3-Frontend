@@ -72,6 +72,10 @@
         &.progress-bar-success {
           background-color: $success;
         }
+        [aria-valuenow="0"] span {
+          color: $basic-grey;
+          @extend .plm;
+        }
       }
       .fee {
         button {

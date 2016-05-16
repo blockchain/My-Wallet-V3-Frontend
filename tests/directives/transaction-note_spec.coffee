@@ -3,25 +3,29 @@ describe "Transaction Note Directive", ->
   $rootScope = undefined
   element = undefined
   isoScope = undefined
+  Wallet = undefined
 
   # Load the myApp module, which contains the directive
   beforeEach module("walletApp")
 
   # Store references to $rootScope and $compile
   # so they are available to all tests in this describe block
-  beforeEach inject((_$compile_, _$rootScope_) ->
+  beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
 
     # The injector unwraps the underscores (_) from around the parameter names when matching
     $compile = _$compile_
     $rootScope = _$rootScope_
 
-    $rootScope.transaction = {note: "Hello World", processedOutputs: {'address': '123', 'identity': 1}}
+    Wallet.hdAddresses = () -> () -> [{'address': '123', 'label': 'label label label fun'}]
+
+    $rootScope.transaction = {note: "Hello World", processedOutputs: [{'address': '123', 'identity': 1}], txType: 'received'}
+    $rootScope.account = 1
 
     return
   )
 
   beforeEach ->
-    element = $compile("<transaction-note transaction='transaction'></transaction-note>")($rootScope)
+    element = $compile("<transaction-note transaction='transaction' account='account'></transaction-note>")($rootScope)
     $rootScope.$digest()
     isoScope = element.isolateScope()
 
@@ -30,6 +34,9 @@ describe "Transaction Note Directive", ->
 
   it "should have the note in its scope", ->
     expect(isoScope.transaction.note).toBe("Hello World")
+
+  it "should display an addresses label", ->
+    expect(isoScope.label).toBe('label label label fun');
 
   it "should save a modified note", inject((Wallet) ->
     spyOn(Wallet, "setNote")

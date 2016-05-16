@@ -24,7 +24,7 @@
         span.hidden-sm.hidden-xs.mlm(
           ng-bind-html="txLabels.secondary | escapeHtml | highlight:search")
     .flex-1.hidden-xs
-      transaction-note(transaction="tx")
+      transaction-note(transaction="tx", account="account")
     .flex-1.amount.flex-end
       span 
         amount(transaction="tx")
