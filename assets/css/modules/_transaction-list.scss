@@ -64,15 +64,17 @@
     }
     transaction-description {
       .progress {
-        width: 90%;
         @extend .mbn;
+        @media (min-width: 769px) {
+          width: 90%;
+        }
       }
       .progress-bar {
         background-color: $blue;
         &.progress-bar-success {
           background-color: $success;
         }
-        [aria-valuenow="0"] span {
+        &[aria-valuenow="0"] span {
           color: $basic-grey;
           @extend .plm;
         }

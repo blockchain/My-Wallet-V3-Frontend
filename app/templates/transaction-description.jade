@@ -23,6 +23,9 @@
           ng-show=":: tx.txType === 'sent'") {{:: 'FROM' | translate}}:
         span.hidden-sm.hidden-xs.mlm(
           ng-bind-html="txLabels.secondary | escapeHtml | highlight:search")
+        span.mlm.aaa(ng-show="label")
+          i.ti-notepad.mrm.aaa
+          span.aaa {{ label }}
     .flex-1.hidden-xs
       transaction-note(transaction="tx", account="account")
     .flex-1.amount.flex-end
@@ -46,6 +49,17 @@
         ng-show=":: tx.txType === 'sent'") {{:: 'FROM' | translate}}:
       span.mlm(
         ng-bind-html="txLabels.secondary | escapeHtml | highlight:search")
+  //- toggled and mobile
+  .hidden-desktop.mts.mbl(ng-show="tx.toggled")
+    transaction-status(transaction="tx")
+    div(ng-show="!complete")
+      uib-progressbar(value="tx.confirmations" max="3")
+        span {{ tx.confirmations }}/3
+    div(ng-show="complete")
+      uib-progressbar(value="tx.confirmations" max="3" type="success")
+        span {{ tx.confirmations }} 
+        | 
+        span(translate="CONFIRMATIONS")
   .flex-start.flex-between.dark-grey(ng-show="tx.toggled")
     .flex-1.flex-column.flex-end
       a.underline.bc-link(href="{{rootURL}}tx/{{:: tx.hash }}", target="_blank")
