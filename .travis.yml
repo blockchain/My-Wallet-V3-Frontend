@@ -2,10 +2,10 @@ language: node_js
 node_js:
 - 5.10
 before_install:
-- npm install -g grunt-cli semistandard snazzy
+- npm install -g grunt-cli snazzy
 - gem install sass
 before_script:
-- semistandard --verbose | snazzy
+- node_modules/.bin/semistandard --verbose | snazzy
 script:
 - make build
 - make test
