@@ -30,7 +30,7 @@ function transactionNote ($translate, $rootScope, Wallet) {
       let account = parseInt(scope.account, 10);
       let addresses = scope.transaction.processedOutputs.filter(p => p.identity >= 0);
 
-      if (addresses.length) {
+      if (addresses.length && account >= 0) {
         let hdAddresses = Wallet.hdAddresses(account)();
         scope.label = match(addresses, hdAddresses, 'address').label;
       }
