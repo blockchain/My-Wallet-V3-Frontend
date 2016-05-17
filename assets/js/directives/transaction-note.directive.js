@@ -19,14 +19,20 @@ function transactionNote ($translate, $rootScope, Wallet) {
   function link (scope, elem, attrs) {
     scope.editNote = false;
 
+    let match = (a, b, prop) => {
+      let seen = {};
+      for (let i = 0, len = a.length; i < len; i++) seen[prop ? a[i][prop] : a[i]] = true;
+      for (let i = 0, len = b.length; i < len; i++) if (seen[prop ? b[i][prop] : b[i]]) return b[i];
+      return false;
+    };
+
     if (scope.transaction.txType === 'received') {
-      let address = scope.transaction.processedOutputs.filter(p => p.identity >= 0)[0];
+      let account = parseInt(scope.account, 10);
+      let addresses = scope.transaction.processedOutputs.filter(p => p.identity >= 0);
 
-      if (address && parseInt(scope.account, 10) === address.identity) {
-        let hdAddresses = Wallet.hdAddresses(address.identity)();
-        let hdAddress = hdAddresses.filter(a => a.address === address.address);
-
-        scope.label = hdAddress[0] ? hdAddress[0].label : undefined;
+      if (addresses.length) {
+        let hdAddresses = Wallet.hdAddresses(account)();
+        scope.label = match(addresses, hdAddresses, 'address').label;
       }
     }
 
