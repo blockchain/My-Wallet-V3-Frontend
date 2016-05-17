@@ -54,11 +54,12 @@
     transaction-status(transaction="tx")
     div(ng-show="!complete")
       uib-progressbar(value="tx.confirmations" max="3")
-        span.plm {{ tx.confirmations }}/3
+        span.plm {{ tx.confirmations }}
         span.pls(translate="CONFIRMATIONS")
     div(ng-show="complete")
       uib-progressbar(value="tx.confirmations" max="3" type="success")
-        span.plm {{ tx.confirmations }} 
+        span.plm(ng-show="tx.confirmations < 50") {{ tx.confirmations }} 
+        span.plm(ng-show="tx.confirmations >= 50") 50+ 
         | 
         span.pls(translate="CONFIRMATIONS")
   //- toggled
@@ -70,11 +71,12 @@
       transaction-status(transaction="tx")
       div(ng-show="!complete")
         uib-progressbar(value="tx.confirmations" max="3")
-          span.plm {{ tx.confirmations }}/3
+          span.plm {{ tx.confirmations }}
           span.pls(translate="CONFIRMATIONS")
       div(ng-show="complete")
         uib-progressbar(value="tx.confirmations" max="3" type="success")
-          span.plm {{ tx.confirmations }} 
+          span.plm(ng-show="tx.confirmations < 50") {{ tx.confirmations }} 
+          span.plm(ng-show="tx.confirmations >= 50") 50+ 
           | 
           span.pls(translate="CONFIRMATIONS")
     .flex-1.hidden-sm.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
