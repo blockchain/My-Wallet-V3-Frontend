@@ -54,12 +54,14 @@
     transaction-status(transaction="tx")
     div(ng-show="!complete")
       uib-progressbar(value="tx.confirmations" max="3")
-        span {{ tx.confirmations }}/3
+        span.plm {{ tx.confirmations }}/3
+        span.pls(translate="CONFIRMATIONS")
     div(ng-show="complete")
       uib-progressbar(value="tx.confirmations" max="3" type="success")
-        span {{ tx.confirmations }} 
+        span.plm {{ tx.confirmations }} 
         | 
-        span(translate="CONFIRMATIONS")
+        span.pls(translate="CONFIRMATIONS")
+  //- toggled
   .flex-start.flex-between.dark-grey(ng-show="tx.toggled")
     .flex-1.flex-column.flex-end
       a.underline.bc-link(href="{{rootURL}}tx/{{:: tx.hash }}", target="_blank")
@@ -68,12 +70,13 @@
       transaction-status(transaction="tx")
       div(ng-show="!complete")
         uib-progressbar(value="tx.confirmations" max="3")
-          span {{ tx.confirmations }}/3
+          span.plm {{ tx.confirmations }}/3
+          span.pls(translate="CONFIRMATIONS")
       div(ng-show="complete")
         uib-progressbar(value="tx.confirmations" max="3" type="success")
-          span {{ tx.confirmations }} 
+          span.plm {{ tx.confirmations }} 
           | 
-          span(translate="CONFIRMATIONS")
+          span.pls(translate="CONFIRMATIONS")
     .flex-1.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
       div
     .flex-1.flex-column.flex-align-end.mtvl

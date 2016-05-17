@@ -76,7 +76,6 @@
         }
         &[aria-valuenow="0"] span {
           color: $basic-grey;
-          @extend .plm;
         }
       }
       .fee {
