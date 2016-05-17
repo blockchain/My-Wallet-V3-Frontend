@@ -18,7 +18,7 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
 
   let txList = MyWallet.wallet.txList;
   $scope.account = $stateParams.accountIndex;
-  $scope.transactions = txList.transactions($scope.accountIndex);
+  $scope.transactions = txList.transactions($scope.account);
 
   let fetchTxs = () => {
     $scope.loading = true;

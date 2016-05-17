@@ -14,7 +14,7 @@
         ng-model-options="{ debounce: 250 }")
       i.ti-search
   .transaction-feed
-    .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || getTotal(accountIndex) > 0 || filteredTransactions.length > 0 || selectedAccountIndex == 'imported'")
+    .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || getTotal(account) > 0 || filteredTransactions.length > 0 || selectedaccount == 'imported'")
       .flex-column.mbl.border-bottom.black
         .flex-center.flex-justify
           i.ti-layout-list-post.h3.mrm
@@ -22,7 +22,7 @@
         p.em-400(translate="DESCRIBE_TRANSACTIONS")
       h3.em-100.center-align.mid-grey.emptystate(translate="HIT_RECEIVE", ng-click="request()")
       h3.em-100.center-align.mid-grey.emptystate(translate="HIT_SEND", ng-click="send()")
-    .flex-center.flex-justify.flex-column.mtl(ng-show="!loading && filteredTransactions.length == 0 && getTotal(accountIndex) > 0 ")
+    .flex-center.flex-justify.flex-column.mtl(ng-show="!loading && filteredTransactions.length == 0 && getTotal(account) > 0 ")
       i.ti-search.h1.mrm
       h3.em-100.mbl(translate="SORRY_ZERO_TXS")
       p.em-400(translate="PLEASE_TRY_AGAIN", ng-click="supportModal()")
