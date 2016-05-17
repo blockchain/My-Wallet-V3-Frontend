@@ -115,13 +115,6 @@ angular.module('walletApp.core').factory 'MyWalletStore', () ->
       legacyAddresses[address] = balance
       return
 
-
-    getTotalBalanceForActiveLegacyAddresses: () ->
-      tally = 0
-      for key, value of legacyAddresses
-        tally += value.balance
-      return tally
-
     setLegacyAddressLabel: (label) ->
       return
 
