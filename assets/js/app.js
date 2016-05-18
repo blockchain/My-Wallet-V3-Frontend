@@ -34,12 +34,11 @@ angular.module('walletApp', modules)
   uiSelectConfig.theme = 'bootstrap';
 })
 .constant('whatsNew', [
-  { title: 'WHATS_NEW',
-    desc: 'WHATS_NEW_DESCRIPTION',
-    date: 1459697821925 },
-  { title: 'DYNAMIC_FEE',
-    desc: 'DYNAMIC_FEE_DESCRIPTION',
-    date: 1458920233357 }
+  { title: 'WHATS_NEW', desc: 'WHATS_NEW_EXPLAIN', date: 1463716800000 },
+  { title: 'SIGN_VERIFY', desc: 'SIGN_VERIFY_EXPLAIN', date: 1462161600000 },
+  { title: 'TRANSFER_ALL', desc: 'TRANSFER_ALL_EXPLAIN', date: 1461556800000 },
+  { title: 'WATCH_ONLY', desc: 'WATCH_ONLY_EXPLAIN', date: 1459828800000 },
+  { title: 'DYNAMIC_FEE', desc: 'DYNAMIC_FEE_EXPLAIN', date: 1458792000000 }
 ])
 .run(($rootScope, $uibModal, $state, MyWallet, $q, currency, $timeout) => {
   $rootScope.$safeApply = (scope = $rootScope, before) => {
