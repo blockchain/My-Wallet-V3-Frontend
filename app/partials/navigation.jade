@@ -43,8 +43,7 @@
         li.item.visible-xs
           a(href="https://markets.blockchain.info/", translate="MARKETS" target="_blank")
         li.whats-new.item.hidden-xs(uib-dropdown ng-click="viewedWhatsNew()")
-          a(href="#"
-            uib-popover-template="::whatsNewTemplate"
+          a(uib-popover-template="::whatsNewTemplate"
             popover-class="whats-new-popover"
             popover-placement="bottom"
             popover-title="{{:: ('WHATS_NEW' | translate) + '?' }}"
