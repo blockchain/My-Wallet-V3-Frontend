@@ -6,7 +6,8 @@
       i.ti-notepad.mrm(ng-show="transaction.note")
       i.ti-notepad.mrm.aaa(ng-show="label && !transaction.note")
       .tx-note.aaa.em-400.text-cursor(ng-show="label && !transaction.note") {{ label }}
-      .tx-note.basic-grey.em-400.text-cursor(ng-hide="label && !transaction.note") {{ transaction.note }}
+      .tx-note.basic-grey.em-400.text-cursor(ng-hide="label && !transaction.note"
+                                             ng-bind-html="transaction.note | escapeHtml | highlight:search")
       a.aaa.em-400(ng-click="startEditNote()" ng-hide="editNote || transaction.note || label" translate="ADD_A_DESCRIPTION") 
     a.edit.hidden-xs(ng-click="startEditNote()" ng-hide="editNote")
       i.ti-pencil

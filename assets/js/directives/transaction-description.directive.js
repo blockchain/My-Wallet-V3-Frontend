@@ -70,13 +70,5 @@ function transactionDescription ($translate, Wallet, $rootScope) {
         scope.frugalWarning = scope.tx.frugal && scope.tx.confirmations === 0;
       }
     });
-
-    scope.$watch('search', (search) => {
-      if (search == null) return;
-      let s = search.toLowerCase();
-      let searchInAddress = scope.primaryLabel.toLowerCase().search(s) > -1;
-      let searchInOther = scope.secondaryLabel.toLowerCase().search(s) > -1;
-      scope.tx.toggled = !searchInAddress && searchInOther;
-    });
   }
 }

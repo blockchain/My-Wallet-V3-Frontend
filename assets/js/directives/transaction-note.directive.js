@@ -9,7 +9,8 @@ function transactionNote ($translate, $rootScope, Wallet) {
     replace: false,
     scope: {
       transaction: '=',
-      account: '='
+      account: '=',
+      search: '='
     },
     templateUrl: 'templates/transaction-note.jade',
     link: link
