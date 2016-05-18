@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('NavigationCtrl', NavigationCtrl);
 
-function NavigationCtrl ($scope, $interval, $cookies, Wallet, Alerts, currency, whatsNew) {
+function NavigationCtrl ($scope, $interval, $timeout, $cookies, Wallet, Alerts, currency, whatsNew) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
 
@@ -11,10 +11,11 @@ function NavigationCtrl ($scope, $interval, $cookies, Wallet, Alerts, currency, 
   $scope.feats = whatsNew;
   $scope.nLatestFeats = whatsNew.filter(({ date }) => date > $scope.lastViewedWhatsNew).length;
 
-  $scope.viewedWhatsNew = () => {
+  $scope.viewedWhatsNew = () => $timeout(() => {
     $scope.nLatestFeats = 0;
+    $scope.lastViewedWhatsNew = Date.now();
     $cookies.put('whatsNewViewed', Date.now());
-  };
+  });
 
   $scope.logout = () => {
     let isSynced = Wallet.isSynchronizedWithServer();

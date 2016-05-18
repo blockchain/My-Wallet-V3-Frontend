@@ -84,11 +84,12 @@ describe "NavigationCtrl", ->
     it "should calculate the correct number of latest feats", ->
       expect(scope.nLatestFeats).toEqual(1)
 
-    it "should set new cookie when whats new is viewed", inject(($cookies) ->
+    it "should set new cookie when whats new is viewed", inject(($cookies, $timeout) ->
       spyOn($cookies, 'put')
       spyOn(Date, 'now').and.returnValue(4)
       expect(scope.nLatestFeats).toEqual(1)
       scope.viewedWhatsNew()
+      $timeout.flush()
       expect($cookies.put).toHaveBeenCalledWith('whatsNewViewed', 4)
       expect(scope.nLatestFeats).toEqual(0)
     )
