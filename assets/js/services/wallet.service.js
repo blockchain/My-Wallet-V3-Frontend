@@ -704,34 +704,19 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     if (wallet.my.wallet == null || !wallet.status.isLoggedIn) return null;
     switch (accountIndex) {
       case '':
+      case void 0:
         if (wallet.my.wallet.isUpgradedToHD) {
-          if (wallet.my.wallet.balanceSpendableActiveLegacy == null || wallet.my.wallet.hdwallet.balanceActiveAccounts == null) {
-            return null;
-          }
-          return wallet.my.wallet.hdwallet.balanceActiveAccounts + wallet.my.wallet.balanceSpendableActiveLegacy;
+          if (wallet.my.wallet.balanceActiveLegacy == null || wallet.my.wallet.hdwallet.balanceActiveAccounts == null) return null;
+          return wallet.my.wallet.hdwallet.balanceActiveAccounts + wallet.my.wallet.balanceActiveLegacy;
         } else {
-          return wallet.my.wallet.balanceSpendableActiveLegacy;
+          return wallet.my.wallet.balanceActiveLegacy;
         }
         break;
       case 'imported':
-        return wallet.my.wallet.balanceSpendableActiveLegacy;
-      case void 0:
-        if (wallet.my.wallet.isUpgradedToHD) {
-          if (wallet.my.wallet.hdwallet.balanceActiveAccounts == null || wallet.my.wallet.balanceSpendableActiveLegacy == null) {
-            return null;
-          }
-          return wallet.my.wallet.hdwallet.balanceActiveAccounts + wallet.my.wallet.balanceSpendableActiveLegacy;
-        } else {
-          return wallet.my.wallet.balanceSpendableActiveLegacy;
-        }
-        break;
+        return wallet.my.wallet.balanceActiveLegacy;
       default:
         let account = wallet.accounts()[parseInt(accountIndex, 10)];
-        if (account === null) {
-          return null;
-        } else {
-          return account.balance;
-        }
+        return account == null ? null : account.balance;
     }
   };
 
@@ -1112,11 +1097,6 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       console.log('Failed');
       $rootScope.$safeApply();
     });
-  };
-
-  wallet.getTotalBalanceForActiveLegacyAddresses = () => {
-    if (wallet.my.wallet == null) return;
-    return wallet.my.wallet.balanceSpendableActiveLegacy;
   };
 
   wallet.setDefaultAccount = (account) => {
