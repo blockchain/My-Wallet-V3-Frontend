@@ -87,6 +87,32 @@ div.login-form {
   .step { right: 20px; top: 10px; }
 }
 
+#verify-recovery {
+  img {
+     height: 50px;
+     align: left;
+     margin-right: 10px;
+  }
+  pre {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+.versions {
+  position: absolute;
+  bottom: 10px;
+  opacity: 0.8;
+  right: 15px;
+  &:hover {
+    opacity: 1;
+  }
+  a {
+    color: white !important;
+    text-decoration: none !important;
+  }
+}
+
 @media (max-width: 620px) {
   .login-box {
     padding: 10px 25px 25px;

@@ -1,0 +1,11 @@
+.hidden-phone {
+   @media (max-width: 768px) {
+      display: none !important;
+   }
+}
+
+.hidden-desktop {
+   @media (min-width: 769px) {
+      display: none !important;
+   }
+}

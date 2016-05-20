@@ -174,7 +174,7 @@
             span.flex-2.flex-start(ng-class="{success: address.type !== 'External'}") + {{transaction.amounts[$index] | toBitCurrency:btcCurrency:false}}
             span.flex-1(ng-class="{success: address.type !== 'External'}") +
               fiat(btc="transaction.amounts[$index]")
-          .mls.mbs.flex-row.flex-center.center.flex-between.rel
+          .mls.mbs.flex-row.flex-center.center.flex-between.pos-rel
             span.aaa.account.flex-3(translate="TX_FEE_REQUIRED")
             span.aaa.center.flex-2.flex-start + {{ transaction.fee | toBitCurrency:btcCurrency:false}}
             span.aaa.center.flex-1 +
