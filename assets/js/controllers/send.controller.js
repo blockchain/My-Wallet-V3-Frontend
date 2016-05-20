@@ -60,6 +60,12 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     }
   });
 
+  $scope.payment.on('message', message => {
+    if (message && message.text) {
+      Alerts.displayWarning(message.text, true, $scope.alerts);
+    }
+  });
+
   $scope.hasZeroBalance = (origin) => origin.balance === 0;
   $scope.close = () => $uibModalInstance.dismiss('');
 
