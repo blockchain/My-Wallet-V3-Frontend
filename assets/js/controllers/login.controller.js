@@ -41,49 +41,7 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
 
   $scope.user = Wallet.user;
 
-  //   Browser compatibility warnings:
-  // * Secure random number generator: https://developer.mozilla.org/en-US/docs/Web/API/RandomSource/getRandomValues
-  // * AngularJS support (?)
-
-  const browsers = {
-    'ie': {
-      browser: 'Internet Explorer',
-      requiredVersion: 11
-    },
-    'chrome': {
-      browser: 'Chrome',
-      requiredVersion: 11
-    },
-    'firefox': {
-      browser: 'Firefox',
-      requiredVersion: 21
-    },
-    'safari': {
-      browser: 'Safari',
-      requiredVersion: 6
-    },
-    'opera': {
-      browser: 'Opera',
-      requiredVersion: 15
-    }
-  };
-
-  $scope.displayBrowserWarning = (code) => {
-    let browser = browsers[code];
-    if (browser) {
-      browser.userVersion = browserDetection().version;
-      if (browser.userVersion < browser.requiredVersion) {
-        $scope.disableLogin = true;
-        $translate('MINIMUM_BROWSER', browser).then(Alerts.displayError);
-      } else if (code === 'ie') {
-        Alerts.displayWarning('WARN_AGAINST_IE');
-      }
-    } else {
-      Alerts.displayWarning('UNKNOWN_BROWSER');
-    }
-  };
-
-  $scope.displayBrowserWarning(browserDetection().browser);
+  $scope.disableLogin = !Wallet.checkBrowserVersion();
 
   $scope.twoFactorCode = '';
   $scope.busy = false;

@@ -15,6 +15,7 @@ div
           type="email"
           ng-model="fields.email"
           required
+          ng-disabled="disableSignup"
           autofocus)
         span.help-block
           div(ng-show="signupForm.email.$touched")
@@ -31,6 +32,7 @@ div
           min-entropy="25"
           ng-change="fields.confirmation = ''"
           focus-when="fields.email.length"
+          ng-disabled="disableSignup"
           required)
         password-entropy.help-block(password="fields.password")
         span.help-block
@@ -45,6 +47,7 @@ div
           type="password"
           ng-model="fields.confirmation"
           is-valid="fields.confirmation == fields.password"
+          ng-disabled="disableSignup"
           required)
         span.help-block
           div(ng-show="signupForm.confirmation.$touched")
@@ -55,6 +58,7 @@ div
           name="agreement"
           type="checkbox"
           ng-model="fields.acceptedAgreement"
+          ng-disabled="disableSignup"
           required)
       label.em-300.col-sm-8.accept-label.right-align
         | I have read and agree to the 
@@ -62,7 +66,7 @@ div
     .flex-center.flex-end.mbl.prl
       button.button-primary(
         type="submit"
-        ng-disabled="signupForm.$invalid"
+        ng-disabled="signupForm.$invalid || disableSignup"
         translate="CONTINUE"
         ng-show="!working")  
       img(ng-show="working" src="img/spinner.gif")

@@ -19,6 +19,7 @@
           ng-keyup="getMnemonicLength()"
           ng-model="fields.mnemonic"
           is-valid="isValidMnemonic(fields.mnemonic)"
+          ng-disabled="disableSignup"
           required)
     .flex-center.flex-end
       img(ng-show="working" src="img/spinner.gif")
@@ -30,7 +31,7 @@
       button.button-primary(
         type="submit"
         ng-click="nextStep()"
-        ng-disabled="!passphraseForm.$valid"
+        ng-disabled="!passphraseForm.$valid || disableSignup"
         translate="CONTINUE")
   form.ptl.form-horizontal(name="recoveryForm" ng-switch-when="2")
     div

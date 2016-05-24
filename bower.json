@@ -19,13 +19,15 @@
     "angular-translate": "2.7.*",
     "angular-translate-loader-static-files": "2.7.*",
     "angular-inview": "1.5.*",
-    "browserdetection": "0.3.*",
+    "browserdetection": "sjors/browser-detection#webkit",
     "bc-qr-reader": "0.2.*",
     "bootstrap-sass": "3.3.*",
     "blockchain-wallet": "3.15 >=3.15.1",
     "bc-phone-number": "5.0.11"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "compare-versions": "^2.0.1"
+  },
   "resolutions": {
     "angular": "1.4.*"
   }
