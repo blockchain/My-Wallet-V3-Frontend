@@ -11,6 +11,7 @@
     ui-select-choices(repeat="d in destinations | filter:{label:$select.search} | limitTo:limit track by $index" group-by="'type'")
       label-origin(origin="::d" highlight="$select.search" in-view="$last && isLast(d) && incLimit()")
   .input-group(ng-click="focus()" ng-hide="selectOpen")
+    i.ti-reload.input-loader(ng-show="searching")
     button.form-control(
       type="button"
       ng-hide="model.type === 'External'"
@@ -22,7 +23,9 @@
       tabindex="1"
       autocomplete="off"
       placeholder="Paste or scan an address or select a destination"
-      ng-model="model.address"
+      ng-model="model.value"
+      ng-model-options="{ debounce: 250 }"
+      ng-change="updateModel()"
       ng-show="model.type === 'External'"
       ng-blur="blur()"
       autofocus)

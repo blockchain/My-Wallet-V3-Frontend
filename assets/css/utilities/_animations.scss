@@ -97,6 +97,15 @@ $fast: 0.2s;
   100% { background-color: inherit; }
 }
 
+.input-loader {
+  position: absolute;
+  top: calc(50% - 10px);
+  right: 90px;
+  color: black;
+  z-index: 1000;
+  animation: rotate 1.5s infinite reverse linear;
+}
+
 //Fade in & out animations
 
 .fade {

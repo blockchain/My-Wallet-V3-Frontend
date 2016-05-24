@@ -31,6 +31,8 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
           span.label.label-primary.btn-xs(translate="DEFAULT", ng-show="!account.archived && isDefault(account)")
           button.btn.btn-default.btn-xs(translate="MAKE_DEFAULT", ng-click="makeDefault(account)", ng-hide="account.archived || isDefault(account)")            
         td.shrink
+          a(translate="LINK_WITH_EMAIL" ng-click="linkWithEmail(account)" ng-hide="account.archived")            
+        td.shrink
           a(translate="REVEAL_XPUB",      ng-click="revealXpub(account)", ng-hide="account.archived")
         td.shrink
           a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="account.archived || isDefault(account)")

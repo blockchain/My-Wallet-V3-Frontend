@@ -60,6 +60,35 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   // $rootScope.rootURL is already set because this file is lazy loaded.
   wallet.api.ROOT_URL = $rootScope.rootURL;
 
+  wallet.matchEmail = (e) => (/^.+@.+\.((com)|(info))$/g).test(e);
+
+  wallet.exposePaymentData = (account) => {
+    let email = wallet.user.isEmailVerified && wallet.user.email;
+    if (!email) {
+      Alerts.displayWarning('NOT_VERIFIED');
+      return $q.reject();
+    }
+    let xpub = account.extendedPublicKey;
+    $http.post($rootScope.testURL, { email, xpub })
+      .then(({ data }) => {
+        let message = data.replaced ? 'XPUB_REPLACED' : 'XPUB_SET';
+        Alerts.displaySuccess(message);
+      })
+      .catch(({ data }) => {
+        Alerts.displayError(data.error);
+      });
+  };
+
+  wallet.lookupEmail = (email) => {
+    let reqEmail = wallet.user.isEmailVerified && wallet.user.email;
+    if (!reqEmail) {
+      Alerts.displayWarning('NOT_VERIFIED');
+      return $q.reject({ data: { error: 'NOT_VERIFIED' } });
+    }
+    let params = { email, reqEmail };
+    return $http.get($rootScope.testURL, { params });
+  };
+
   //                         Grunt can replace this:
   const customWebSocketURL = $rootScope.webSocketURL;
   if (customWebSocketURL) {

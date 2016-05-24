@@ -54,6 +54,10 @@ function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFi
     Wallet.saveActivity(3);
   };
 
+  $scope.linkWithEmail = (account) => {
+    Wallet.exposePaymentData(account);
+  };
+
   $scope.transfer = () => {
     $uibModal.open({
       templateUrl: 'partials/send.jade',

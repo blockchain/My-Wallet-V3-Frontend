@@ -12,6 +12,7 @@ var dist = parseInt(process.env.DIST, 10) === 1;
 var rootURL = process.env.ROOT_URL || 'https://blockchain.info/';
 var webSocketURL = process.env.WEBSOCKET_URL || false;
 var apiDomain = process.env.API_DOMAIN;
+var testURL = process.env.TEST_URL;
 
 // App configuration
 var rootApp = express();
@@ -37,6 +38,7 @@ app.use(function (req, res, next) {
       'connect-src ' + [
         "'self'",
         rootURL,
+        testURL,
         (webSocketURL || 'wss://*.blockchain.info'),
         (apiDomain || 'https://api.blockchain.info')
       ].join(' '),

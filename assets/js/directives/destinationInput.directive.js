@@ -35,7 +35,7 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     scope.onAddressScan = (result) => {
       let address = Wallet.parsePaymentRequest(result);
       scope.model = format.destination(address, 'External');
-      scope.onPaymentRequest({request: address});
+      scope.onPaymentRequest({ request: address });
       $timeout(scope.change);
     };
 
@@ -45,13 +45,34 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     };
 
     scope.clearModel = () => {
-      scope.model = { address: '', type: 'External' };
+      scope.model = { value: '', address: '', type: 'External' };
       $timeout(scope.change);
     };
 
     scope.focusInput = () => {
       let q = scope.selectOpen ? '.ui-select-search' : '#address-field';
       $timeout(() => elem[0].querySelectorAll(q)[0].focus(), 250);
+    };
+
+    scope.updateModel = () => {
+      let value = scope.model.value;
+      if (Wallet.matchEmail(value)) {
+        scope.searching = true;
+        Wallet.lookupEmail(value).then(({ data }) => {
+          scope.model.label = value;
+          scope.model.address = data.address;
+          ctrl.$setValidity('email', true);
+          scope.change();
+        }).catch(({ data }) => {
+          ctrl.$setValidity('email', false);
+        }).then(() => {
+          scope.searching = false;
+        });
+      } else {
+        ctrl.$setValidity('email', true);
+        scope.model.address = value;
+        scope.change();
+      }
     };
 
     let blurTime;
