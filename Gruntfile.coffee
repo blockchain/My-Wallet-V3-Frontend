@@ -71,6 +71,7 @@ module.exports = (grunt) ->
           'bower_components/bc-countries/dist/bc-countries.js'
           'bower_components/bc-phone-number/dist/js/bc-phone-number.js'
           'bower_components/browserdetection/src/browser-detection.js'
+          'bower_components/compare-versions/index.js'
         ]
 
         dest: "build/application-dependencies.js"

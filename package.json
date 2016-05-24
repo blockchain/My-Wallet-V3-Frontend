@@ -80,7 +80,8 @@
     "globals": [
       "angular",
       "browserDetection",
-      "Blockchain"
+      "Blockchain",
+      "compareVersions"
     ]
   }
 }
