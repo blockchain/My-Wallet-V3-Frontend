@@ -73,6 +73,17 @@
             span.help-block(ng-show="requestForm.label.$error.characters", translate="INVALID_CHARACTERS_FOR_LABEL") 
             span.help-block(ng-show="requestForm.label.$error.gap", translate="LABEL_ERROR_BIP_44_GAP") 
 
+        .form-group.row.pbm.flex-justify.flex-center.description(ng-class="{'has-error': requestForm.email.$invalid}")
+          label.mbn Email:
+          div
+            .flex-center.prl.border-bottom
+              input.form-control.no-border.pln.pbn(
+                type="email"
+                name="email"
+                ng-model="fields.email"
+              )
+            span.help-block.absolute(ng-show="requestForm.email.$error.email", translate="EMAIL_ADDRESS_INVALID")
+
       .flex-center.flex-justify.pbl(ng-show="advanced && fields.to.index != undefined")
         span.ti-arrow-down.center
 
@@ -110,8 +121,9 @@
                               tooltip-append-to-body="true")
     button.btn.button-default(ng-show="advanced", ng-click="regularReceive()", translate="BACK")
   .flex-center.flex-end
-    button.button-success.btn(ng-click="done()", translate="DONE" ng-hide="advanced && fields.label != ''")
-    a.dark-grey.mrm(ng-click="cancel()", translate="CLOSE" ng-show="advanced && fields.label != ''")
-    button.button-success.btn(ng-click="done()", translate="SAVE" ng-show="advanced && fields.label != ''"
+    button.button-success.btn(ng-click="done()", translate="DONE" ng-hide="advanced && (fields.label != '' || fields.email != '')")
+    a.dark-grey.mrm(ng-click="cancel()", translate="CLOSE" ng-show="advanced && (fields.label != '' || fields.email != '')")
+    button.button-success.btn(ng-click="done()", translate="SAVE" ng-show="advanced && (fields.label != '' || fields.email != '')"
+                              ng-disabled="requestForm.$invalid"
                               uib-tooltip="{{'SAVE_HELPER' | translate:{label: fields.to.label} }}"
                               tooltip-append-to-body="true")

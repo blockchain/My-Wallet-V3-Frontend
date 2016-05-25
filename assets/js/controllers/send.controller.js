@@ -75,6 +75,7 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     let destination = {
       address: paymentRequest.address || '',
       label: paymentRequest.address || '',
+      value: paymentRequest.address || '',
       type: 'External'
     };
     $scope.transaction.destinations[i] = destination;

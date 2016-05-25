@@ -22,7 +22,8 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
   $scope.fields = {
     to: null,
     amount: null,
-    label: ''
+    label: '',
+    email: ''
   };
 
   for (let account of $scope.accounts()) {
@@ -64,8 +65,28 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
   $scope.done = () => {
     Alerts.clear();
 
-    if ($scope.fields.label === '' || $scope.fields.to.index == null) {
+    if (($scope.fields.label === '' && $scope.fields.email === '') || $scope.fields.to.index == null) {
       $uibModalInstance.dismiss('');
+    } else if (Wallet.matchEmail($scope.fields.email)) {
+      let idx = $scope.fields.to.index;
+      let addrIdx = Wallet.getReceivingAddressIndexForAccount(idx);
+      let addr = Wallet.my.wallet.hdwallet.accounts[idx].receiveAddress;
+
+      const success = () => Wallet.requestPayment($scope.fields.email, addr, $scope.fields.amount).then(() => {
+        $uibModalInstance.dismiss('');
+      }).catch(({ data }) => Alerts.displayError(data.error));
+
+      const error = (error) => {
+        if (error === 'NOT_ALPHANUMERIC') {
+          $scope.requestForm.label.$error.characters = true;
+        } else if (error === 'GAP') {
+          $scope.requestForm.label.$error.gap = true;
+        }
+        $scope.requestForm.label.$valid = false;
+      };
+
+      let label = $scope.fields.label || $scope.fields.email;
+      Wallet.changeHDAddressLabel($scope.fields.to.index, addrIdx, label, success, error);
     } else {
       const success = () => {
         $uibModalInstance.dismiss('');

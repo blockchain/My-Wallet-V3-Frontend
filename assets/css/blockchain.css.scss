@@ -58,3 +58,30 @@
 //override bootstrap
 @import 'utilities/bs_overrides';
 @import 'utilities/general';
+
+.payment-requests {
+  position: absolute;
+  bottom: 50px;
+  right: 0px;
+  padding: 10px;
+  margin: 20px;
+  background: rgba(256, 256, 256, 0.8);
+  .payment-request {
+    border: 1px solid $blue;
+    border-left-width: 10px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+    width: 300px;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.1em;
+    cursor: pointer;
+  }
+}
+
+.absolute {
+  position: absolute;
+}

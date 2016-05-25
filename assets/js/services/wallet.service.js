@@ -89,6 +89,39 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     return $http.get($rootScope.testURL, { params });
   };
 
+  wallet.requestPayment = (payingEmail, address, amount) => {
+    let requestingEmail = wallet.user.isEmailVerified && wallet.user.email;
+    if (!requestingEmail) {
+      Alerts.displayWarning('NOT_VERIFIED');
+      return $q.reject();
+    }
+    return $http.post(`${$rootScope.testURL}payment_requests`, { requestingEmail, payingEmail, address, amount });
+  };
+
+  wallet.paymentRequests = [];
+  wallet.fetchPaymentRequests = () => {
+    let email = wallet.user.isEmailVerified && wallet.user.email;
+    if (!email) {
+      Alerts.displayWarning('NOT_VERIFIED');
+      return $q.reject();
+    }
+    let params = { email };
+    $http.get(`${$rootScope.testURL}payment_requests`, { params })
+      .then(({ data }) => {
+        wallet.paymentRequests = data;
+      });
+  };
+
+  wallet.deletePaymentRequest = (pr) => {
+    let email = wallet.user.isEmailVerified && wallet.user.email;
+    if (!email) {
+      Alerts.displayWarning('NOT_VERIFIED');
+      return $q.reject();
+    }
+    let params = { email, address: pr.address };
+    $http.delete(`${$rootScope.testURL}payment_requests`, { params });
+  };
+
   //                         Grunt can replace this:
   const customWebSocketURL = $rootScope.webSocketURL;
   if (customWebSocketURL) {
@@ -166,6 +199,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
         wallet.settings.feePerKB = wallet.my.wallet.fee_per_kb;
         wallet.settings.blockTOR = !!result.block_tor_ips;
         wallet.status.didLoadSettings = true;
+        wallet.fetchPaymentRequests();
         if (wallet.my.wallet.isUpgradedToHD) {
           let didFetchTransactions = () => {
             if (browserDetection().browser === 'ie') {
