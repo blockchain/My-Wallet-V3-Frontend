@@ -27,7 +27,6 @@
 @import 'components/forms';
 @import 'components/helpers';
 @import 'components/modals';
-@import 'components/video-container';
 @import 'components/notifications';
 @import 'components/progress-bars';
 @import 'components/spinner';
@@ -50,12 +49,8 @@
 @import 'modules/two-factor';
 @import 'modules/confirm-recovery-phrase';
 @import 'modules/upgrade';
-@import 'modules/welcome';
 
 //override bootstrap
 @import 'utilities/bs_overrides';
-
-// TEMP
-@import 'utilities/legacy';
 
 @import 'utilities/general';

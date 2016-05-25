@@ -36,12 +36,6 @@ head
   <!-- @endif -->
 
 body(ng-controller="AppCtrl" ui-view="body" ng-mousemove="resetInactivityTime()" ng-keypress="resetInactivityTime()")
-  
-  //- This does not depend on Angular and will show as soon as the images are done loading.
-  .blocket-loading
-    div
-      img.full(src="img/blocket-full.png")
-      img(src="img/blocket-no-boosters.png")
 
   noscript
     img(src="/img/logo-bw.png")
