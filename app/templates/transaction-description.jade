@@ -14,18 +14,17 @@
           ng-show=":: tx.txType === 'transfer' || tx.txType === 'received'") {{:: 'FROM' | translate}}:
         span(
           ng-show=":: tx.txType === 'sent'") {{:: 'TO' | translate}}:
-        span.hidden-sm.mlm(
-          ng-bind-html="txLabels.primary | escapeHtml | highlight:search")
+        span.oflow
+          span.mls(
+            ng-bind-html="txLabels.primary | escapeHtml | highlight:search")
       div
         span(
           ng-show=":: tx.txType === 'transfer' || tx.txType === 'received'") {{:: 'TO' | translate}}:
         span(
           ng-show=":: tx.txType === 'sent'") {{:: 'FROM' | translate}}:
-        span.hidden-sm.mlm(
-          ng-bind-html="txLabels.secondary | escapeHtml | highlight:search")
-        span.mlm.aaa(ng-show="label")
-          i.ti-notepad.mrm.aaa
-          span.aaa {{ label }}
+        span.oflow
+          span.mls(
+            ng-bind-html="txLabels.secondary | escapeHtml | highlight:search")
     .flex-1.hidden-sm.hidden-xs
       transaction-note(transaction="tx", account="account" search="search")
     .flex-1.amount.flex-end
@@ -34,61 +33,36 @@
   //- toggled and mobile
   .hidden-tablet.mtl.mbs(ng-show="tx.toggled")
     transaction-note(transaction="tx" account="account")
-  .flex-start.flex-column.hidden-tablet.mvm(ng-show="tx.toggled")
+  .hidden-tablet.flex-start.flex-column.mvm(ng-show="tx.toggled")
     div
       span(
         ng-show=":: tx.txType === 'transfer' || tx.txType === 'received'") {{:: 'FROM' | translate}}:
       span(
         ng-show=":: tx.txType === 'sent'") {{:: 'TO' | translate}}:
-      span.mlm(
+      span.mls(
         ng-bind-html="txLabels.primary | escapeHtml | highlight:search")
     div
       span(
         ng-show=":: tx.txType === 'transfer' || tx.txType === 'received'") {{:: 'TO' | translate}}:
       span(
         ng-show=":: tx.txType === 'sent'") {{:: 'FROM' | translate}}:
-      span.mlm(
+      span.mls(
         ng-bind-html="txLabels.secondary | escapeHtml | highlight:search")
-  //- toggled and mobile
-  .hidden-tablet.mts.mbl(ng-show="tx.toggled")
-    transaction-status(transaction="tx")
-    div(ng-show="!complete")
-      uib-progressbar(value=":: tx.confirmations" max="3")
-        span.plm {{ :: tx.confirmations }}
-        span.pls(translate="CONFIRMATIONS")
-    div(ng-show="complete")
-      uib-progressbar(value=":: tx.confirmations" max="3" type="success")
-        span.plm(ng-show=":: tx.confirmations < 50") {{ :: tx.confirmations }} 
-        span.plm(ng-show=":: tx.confirmations >= 50") 50+ 
-        | 
-        span.pls(translate="CONFIRMATIONS")
-  //- toggled
   .flex-start.flex-between.dark-grey(ng-show="tx.toggled")
-    .flex-1.flex-column.flex-end
-      a.underline.bc-link(href="{{rootURL}}tx/{{:: tx.hash }}", target="_blank")
-       span(translate="VERIFY_ON_BCI")
-    .flex-2.hidden-sm.hidden-xs.destination.flex-align-self-end
+    .flex-2.destination.flex-align-self-end.pointer
       transaction-status(transaction="tx")
-      div(ng-show="!complete")
-        uib-progressbar(value=":: tx.confirmations" max="3")
-          span.plm {{ :: tx.confirmations }}
-          span.pls(translate="CONFIRMATIONS")
-      div(ng-show="complete")
-        uib-progressbar(value=":: tx.confirmations" max="3" type="success")
-          span.plm(ng-show=":: tx.confirmations < 50") {{ :: tx.confirmations }} 
-          span.plm(ng-show=":: tx.confirmations >= 50") 50+ 
-          | 
-          span.pls(translate="CONFIRMATIONS")
     .flex-1.hidden-sm.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
       div
-    .flex-1.flex-column.flex-align-end.mtvl
+    .flex-1.hidden-sm.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
+      div
+    .flex-2.flex-column.flex-align-end.mtvl
       .flex-row
         p.mbn(translate="VALUE_AT_SEND" ng-show=":: tx.txType === 'sent' || tx.txType === 'transfer'")
         p.mbn(translate="VALUE_WHEN_RECEIVED" ng-show=":: tx.txType === 'received'")
         | :&nbsp;
-        fiat.em-600(btc=":: tx.amount" date=":: tx.time")
+        fiat.em-600(btc=":: tx.amount" date=":: tx.time" abs)
       .flex-row.fee(ng-hide=":: tx.txType === 'received'")
         helper-button(content="{{ 'TX_FEE_EXPLAINATION' | translate }}")
         p.mbn(translate="TX_FEE")
         | :&nbsp;
-        fiat.em-600(btc=":: tx.fee")
+        fiat-or-btc.em-600(btc=":: tx.fee")

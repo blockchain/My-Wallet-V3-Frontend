@@ -103,6 +103,13 @@
   -ms-flex-item-align: end;
   align-self: flex-end;
 }
+
+.inline-flex {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
 .flex-important { 
   display: -webkit-box !important;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
   display: -ms-flexbox !important;  /* TWEENER - IE 10 */

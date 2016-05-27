@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .directive('transactionStatus', transactionStatus);
 
-function transactionStatus () {
+function transactionStatus ($rootScope) {
   const directive = {
     restrict: 'E',
     replace: false,
@@ -16,6 +16,10 @@ function transactionStatus () {
   return directive;
 
   function link (scope, elem, attrs) {
+    scope.verify = () => {
+      window.open($rootScope.rootURL + 'tx/' + scope.transaction.hash, '_blank');
+    };
+
     scope.$watch('transaction.confirmations', () => {
       if (scope.transaction && scope.transaction.confirmations != null) {
         scope.minutesRemaining = 30 - scope.transaction.confirmations * 10;

@@ -1,0 +1,13 @@
+// when an address is too long
+.oflow {
+  overflow: hidden;
+  @extend .inline-flex;
+  > span {
+    float: left;
+    overflow: auto;
+    max-width: 200px;
+    margin-bottom: -30px;
+    padding-bottom: 30px;
+    display: inline-block;
+  }
+}

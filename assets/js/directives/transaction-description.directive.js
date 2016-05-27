@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .directive('transactionDescription', transactionDescription);
 
-function transactionDescription ($translate, Wallet, $rootScope) {
+function transactionDescription ($translate, Wallet) {
   const directive = {
     restrict: 'E',
     replace: false,
@@ -18,7 +18,6 @@ function transactionDescription ($translate, Wallet, $rootScope) {
   return directive;
 
   function link (scope, elem, attrs) {
-    scope.rootURL = $rootScope.rootURL;
     scope.getTxDirection = (txType) => {
       if (txType === 'sent') return 'SENT';
       if (txType === 'received') return 'RECEIVED_BITCOIN_FROM';

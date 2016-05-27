@@ -56,6 +56,10 @@
     .tx-details {
       margin-left: 3em;
     }
+    button.amount {
+      padding: 10px;
+      min-width: 125px;
+    }
     transaction-status {
       position: relative;
       .helper {
@@ -65,9 +69,7 @@
     transaction-description {
       .progress {
         @extend .mbn;
-        @media (min-width: 769px) {
-          width: 90%;
-        }
+        background: rgba(0,0,0,0.2);
       }
       .progress-bar {
         background-color: $blue;
@@ -108,9 +110,9 @@
       .width-80 {
         width: 100%;
       }
-    }
-    .tx-details {
-      margin-left: 1em;
+      .tx-details {
+        margin-left: 1em;
+      }
     }
   }
   @media (max-width: 768px) {
@@ -242,25 +244,13 @@ button {
     padding: 10px 0px 0px 10px;
   }
   @media (min-width: 769px) {
-    .edit {
-      top: 0px;
-      right: 0px;
-      position: absolute;
-    }
-    .edit {
-      right: 1.5em;
-    }
-    .cancel {
-      position: relative;
-      right: calc(-100% + 2.5em);
-    }
     .input {
       width: calc(100% - 1.5em);
       top: 1.5em;
       left: 0;
     }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 992px) {
     .input.pos-abs {
       top: 0px;
       position: relative;
