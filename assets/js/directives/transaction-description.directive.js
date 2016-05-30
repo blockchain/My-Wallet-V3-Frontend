@@ -35,32 +35,9 @@ function transactionDescription ($translate, Wallet) {
               (tx.txType === 'sent' && tx.fromWatchOnly);
     };
 
-    scope.getTxLabels = (tx) => {
-      if (!tx || !tx.processedInputs || !tx.processedOutputs) return;
-
-      let formatted = Wallet.formatTransactionCoins(tx);
-      let outputsLabel = '';
-
-      if (formatted.outputs && formatted.outputs.length > 0) {
-        outputsLabel = formatted.outputs[0].label;
-      }
-      if (formatted.outputs.length > 1) {
-        outputsLabel = $translate.instant('RECIPIENTS', { n: formatted.outputs.length });
-      }
-
-      return tx.txType === 'sent' ? ({
-        primary: scope.primaryLabel = outputsLabel,
-        secondary: scope.secondaryLabel = formatted.input.label
-      }) : ({
-        primary: scope.primaryLabel = formatted.input.label,
-        secondary: scope.secondaryLabel = outputsLabel
-      });
-    };
-
     scope.txDirection = scope.getTxDirection(scope.tx.txType);
     scope.txClass = scope.getTxClass(scope.tx.txType);
     scope.txWatchOnly = scope.getTxWatchOnly(scope.tx);
-    scope.txLabels = scope.getTxLabels(scope.tx);
 
     scope.$watch('tx.confirmations', () => {
       if (scope.tx && scope.tx.confirmations != null) {

@@ -1,0 +1,25 @@
+div
+  .flex-row
+    span(
+      ng-show=":: transaction.txType === 'transfer' || transaction.txType === 'received'") {{:: 'FROM' | translate}}:
+    span(
+      ng-show=":: transaction.txType === 'sent'") {{:: 'TO' | translate}}:
+    span.mls(
+      ng-show="txLabels.preview && txLabels.primary.length > 1 && !transaction.toggled") {{ txLabels.preview }}
+    span(
+      ng-hide="txLabels.preview && txLabels.primary.length > 1 && !transaction.toggled")
+      div(ng-repeat="address in txLabels.primary track by $index")
+        span.mls(
+          ng-bind-html="address.label | escapeHtml | highlight:search")
+  .flex-row
+    span(
+      ng-show=":: transaction.txType === 'transfer' || transaction.txType === 'received'") {{:: 'TO' | translate}}:
+    span(
+      ng-show=":: transaction.txType === 'sent'") {{:: 'FROM' | translate}}:
+    span.mls(
+      ng-show="txLabels.preview && txLabels.secondary.length > 1 && !transaction.toggled") {{ txLabels.preview }}
+    span(
+      ng-hide="txLabels.preview && txLabels.secondary.length > 1 && !transaction.toggled")
+      div(ng-repeat="address in txLabels.secondary track by $index")
+        span.mls(
+          ng-bind-html="address.label | escapeHtml | highlight:search")
