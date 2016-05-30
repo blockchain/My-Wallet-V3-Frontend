@@ -9,7 +9,7 @@ div
     span(
       ng-hide="txLabels.preview && txLabels.primary.length > 1 && !transaction.toggled")
       div(ng-repeat="address in txLabels.primary track by $index")
-        span.mls(
+        span.mls.oflow(
           ng-bind-html="address.label | escapeHtml | highlight:search")
   .flex-row
     span(
@@ -21,5 +21,5 @@ div
     span(
       ng-hide="txLabels.preview && txLabels.secondary.length > 1 && !transaction.toggled")
       div(ng-repeat="address in txLabels.secondary track by $index")
-        span.mls(
+        span.mls.oflow(
           ng-bind-html="address.label | escapeHtml | highlight:search")
