@@ -28,11 +28,11 @@ $fast: 0.2s;
   // remove active class
   &.#{$class}-remove {
     opacity: 0;
-    #{$attr}: #{$active}; 
+    #{$attr}: #{$active};
     @include transition(#{$attr} $fast, 0s !important);
   }
   &.#{$class}-remove-active {
-    #{$attr}: #{$initial}; 
+    #{$attr}: #{$initial};
   }
   // something is seriously wrong with safari
   @supports (overflow:-webkit-marquee) and (justify-content:inherit) {
@@ -81,6 +81,20 @@ $fast: 0.2s;
   img {
     animation: rotate .5s linear;
   }
+}
+
+// Yellow flash
+.flash {
+  animation-name: flash;
+  animation-duration: 1s;
+  animation-iteration-count: 2;
+  animation-timing-function: ease-out;
+}
+
+@keyframes flash {
+  0% { background-color: inherit; }
+  50% { background-color: $pale-yellow; }
+  100% { background-color: inherit; }
 }
 
 //Fade in & out animations
@@ -188,7 +202,7 @@ $fast: 0.2s;
 
 .fade-out-up {
   -webkit-animation-name: fade-out-up;
-  animation-name: fade-out-up; 
+  animation-name: fade-out-up;
 }
 
 // delay
@@ -196,7 +210,7 @@ $fast: 0.2s;
 @mixin delay($from, $to, $divisor) {
   @for $i from $from through $to {
     &:nth-child(#{$i}) { @include transition-delay(#{$i/$divisor}s); }
-  }  
+  }
 }
 
 //Zooming in out animations
