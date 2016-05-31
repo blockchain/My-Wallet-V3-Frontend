@@ -43,9 +43,6 @@
     }
     .destination{
       width: 265px;
-      display: block;
-      font-size: 1em;
-      overflow: hidden;
     }
     .tx-toggle {
       top: 10px;
@@ -61,6 +58,7 @@
       min-width: 125px;
     }
     transaction-status {
+      width: 100%;
       position: relative;
       .helper {
         margin: 0px;

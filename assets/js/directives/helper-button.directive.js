@@ -14,7 +14,8 @@ function helperButton ($translate) {
       url: '@',
       placement: '@',
       link: '@',
-      linktext: '@'
+      linktext: '@',
+      append: '@'
     },
     templateUrl: 'templates/helper-button.jade',
     link: link

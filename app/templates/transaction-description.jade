@@ -21,7 +21,7 @@
   .hidden-tablet.flex-start.flex-column.mvm(ng-show="tx.toggled")
     transaction-destinations(transaction="tx" search="search")
   .flex-start.flex-between.dark-grey(ng-if="tx.toggled")
-    .flex-2.destination.flex-align-self-end.pointer
+    .destination.flex-align-self-end.pointer
       transaction-status(transaction="tx")
     .flex-1.hidden-sm.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
       div
@@ -34,7 +34,7 @@
         | :&nbsp;
         fiat.em-600(btc=":: tx.amount" date=":: tx.time" abs)
       .flex-row.fee(ng-hide=":: tx.txType === 'received'")
-        helper-button(content="{{ 'TX_FEE_EXPLAINATION' | translate }}")
+        helper-button(content="{{ 'TX_FEE_EXPLAINATION' | translate }}" append="true")
         p.mbn(translate="TX_FEE")
         | :&nbsp;
         fiat-or-btc.em-600(btc=":: tx.fee")
