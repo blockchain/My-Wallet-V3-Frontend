@@ -8,9 +8,13 @@ div
       ng-show="txLabels.preview && txLabels.primary.length > 1 && !transaction.toggled") {{ txLabels.preview }}
     span(
       ng-hide="txLabels.preview && txLabels.primary.length > 1 && !transaction.toggled")
-      div(ng-repeat="address in txLabels.primary track by $index")
+      .flex-row(ng-repeat="address in txLabels.primary track by $index")
         span.mls.oflow(
           ng-bind-html="address.label | escapeHtml | highlight:search")
+        span(ng-show="txLabels.primary.length > 1")
+          |&nbsp;(
+          fiat-or-btc(btc="address.amount")
+          |)
   .flex-row
     span(
       ng-show=":: transaction.txType === 'transfer' || transaction.txType === 'received'") {{:: 'TO' | translate}}:
@@ -20,6 +24,10 @@ div
       ng-show="txLabels.preview && txLabels.secondary.length > 1 && !transaction.toggled") {{ txLabels.preview }}
     span(
       ng-hide="txLabels.preview && txLabels.secondary.length > 1 && !transaction.toggled")
-      div(ng-repeat="address in txLabels.secondary track by $index")
+      .flex-row(ng-repeat="address in txLabels.secondary track by $index")
         span.mls.oflow(
           ng-bind-html="address.label | escapeHtml | highlight:search")
+        span(ng-show="txLabels.secondary.length > 1")
+          |&nbsp;(
+          fiat-or-btc(btc="address.amount")
+          |)
