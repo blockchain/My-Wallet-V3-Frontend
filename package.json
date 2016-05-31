@@ -82,7 +82,7 @@
       "browserDetection",
       "Blockchain",
       "compareVersions",
-      "URL"
+      "URL",
       "event"
     ]
   }
