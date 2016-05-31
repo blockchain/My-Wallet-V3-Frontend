@@ -58,10 +58,11 @@ function SignupCtrl ($scope, $state, $cookies, $filter, $translate, $uibModal, W
   $scope.signup = () => {
     if ($scope.signupForm.$valid) {
       $scope.working = true;
-      $scope.createWallet((uid) => {
+      $scope.createWallet((uid, sessionToken) => {
         $scope.working = false;
         if (uid != null) {
           $cookies.put('uid', uid);
+          $cookies.put('session', sessionToken);
         }
         if ($scope.autoReload) {
           $cookies.put('password', $scope.fields.password);
@@ -72,8 +73,8 @@ function SignupCtrl ($scope, $state, $cookies, $filter, $translate, $uibModal, W
   };
 
   $scope.createWallet = successCallback => {
-    Wallet.create($scope.fields.password, $scope.fields.email, $scope.currency_guess, $scope.language_guess, (uid) => {
-      successCallback(uid);
+    Wallet.create($scope.fields.password, $scope.fields.email, $scope.currency_guess, $scope.language_guess, (uid, sessionToken) => {
+      successCallback(uid, sessionToken);
     });
   };
 

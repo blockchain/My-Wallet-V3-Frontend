@@ -81,7 +81,8 @@
       "angular",
       "browserDetection",
       "Blockchain",
-      "compareVersions"
+      "compareVersions",
+      "URL"
     ]
   }
 }

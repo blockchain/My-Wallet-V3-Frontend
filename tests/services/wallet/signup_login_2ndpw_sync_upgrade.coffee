@@ -11,14 +11,18 @@ describe "walletServices", () ->
       Wallet = $injector.get("Wallet")
 
       Wallet.my = {
-        login: (uid, sharedKey, password, two_factor, success, needs_2fa, wrong_2fa) ->
-          if uid == "test-2FA"
-            if two_factor && two_factor.code?
-              success()
+        login: (uid, password, credentials, callbacks) ->
+          then: (cb) ->
+            if uid == "test-2FA"
+              if credentials.twoFactor && credentials.twoFactor.code?
+                cb({guid: uid, sessionToken: "token"})
+              else
+                callbacks.needsTwoFactorCode("token", 4)
             else
-              needs_2fa(4)
-          else
-            success()
+              cb({guid: uid, sessionToken: "token"})
+            {
+              catch: () ->
+            }
 
 
         logout: () ->
@@ -104,20 +108,20 @@ describe "walletServices", () ->
 
     it "should ask for a code", inject((Wallet) ->
 
-      Wallet.login("test-2FA", "test", null, (() ->), (()->), (()->))
+      Wallet.login(null, "test-2FA", "test", null, (() ->), (()->), (()->))
 
       expect(Wallet.settings.needs2FA).toBe(true)
       expect(Wallet.status.isLoggedIn).toBe(false)
     )
 
     it "should specify the 2FA method", inject((Wallet) ->
-      Wallet.login("test-2FA", "test", null, (() ->), (()->), (()->))
+      Wallet.login(null, "test-2FA", "test", null, (() ->), (()->), (()->))
       expect(Wallet.settings.twoFactorMethod).toBe(4)
     )
 
     it "should login with  2FA code", inject((Wallet) ->
       Wallet.settings.twoFactorMethod = 4
-      Wallet.login("test-2FA", "test", "1234567", (() ->), (()->), (()->))
+      Wallet.login(null, "test-2FA", "test", "1234567", (() ->), (()->), (()->))
       expect(Wallet.status.isLoggedIn).toBe(true)
     )
 
@@ -131,7 +135,7 @@ describe "walletServices", () ->
 
       spyOn(Wallet.settings_api, "unsetTwoFactor").and.callThrough()
 
-      Wallet.login("test-2FA", "test", null, (() ->), (()->), (()->))
+      Wallet.login(null, "test-2FA", "test", null, (() ->), (()->), (()->))
 
       Wallet.disableSecondFactor()
 
@@ -202,7 +206,7 @@ describe "walletServices", () ->
     it "should not prompt user for HD upgrade", inject(($rootScope) ->
       callbacks = {
         success: (uid) ->
-          Wallet.login(uid, "1234567890")
+          Wallet.login(null, uid, "1234567890")
       }
 
       Wallet.create("1234567890", "a@b.com", "EUR", "EN", callbacks.success)
