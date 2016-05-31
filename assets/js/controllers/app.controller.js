@@ -152,7 +152,7 @@ function AppCtrl ($scope, Wallet, Alerts, $state, $rootScope, $cookies, $locatio
             resolve: {
               paymentRequest: () => Wallet.goal.send
             },
-            windowClass: 'bc-modal'
+            windowClass: 'bc-modal initial'
           });
           Wallet.goal.send = void 0;
         }

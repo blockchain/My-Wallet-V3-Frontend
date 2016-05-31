@@ -143,10 +143,19 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
 
     let url = `bitcoin:${ $scope.paymentRequestAddress() }`;
 
-    if ($scope.fields.amount > 0) {
-      url += `?amount=${ parseFloat($scope.fields.amount / 100000000) }`;
+    if ($scope.fields.amount > 0 && $scope.fields.label !== '') {
+      url += `?`;
+      url += `amount=${ parseFloat($scope.fields.amount / 100000000) }`;
+      url += `&`;
+      url += `message=${ $scope.fields.label }`;
+    } else if ($scope.fields.amount > 0) {
+      url += `?`;
+      url += `amount=${ parseFloat($scope.fields.amount / 100000000) }`;
+    } else if ($scope.fields.label !== '') {
+      url += `?`;
+      url += `message=${ $scope.fields.label }`;
     }
 
-    return url;
+    return encodeURI(url);
   };
 }

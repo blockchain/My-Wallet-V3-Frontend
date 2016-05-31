@@ -77,7 +77,7 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     };
     $scope.transaction.destinations[i] = destination;
     if (paymentRequest.amount) $scope.transaction.amounts[i] = paymentRequest.amount;
-    if (paymentRequest.message) $scope.transaction.note = paymentRequest.message;
+    if (paymentRequest.message) $scope.transaction.note = decodeURI(paymentRequest.message);
     $scope.setPaymentTo();
     $scope.setPaymentAmount();
   };
