@@ -330,3 +330,9 @@ $pulse-color-2: #accc8f;
   100% { opacity: 0; }
 }
 
+// opacity
+@for $i from 1 through 10 {
+  .opacity-#{$i} {
+    @include opacity($i/10);
+  }
+}

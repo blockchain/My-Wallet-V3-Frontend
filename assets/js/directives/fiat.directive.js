@@ -14,7 +14,12 @@ function fiat ($rootScope, Wallet, currency) {
       date: '=',
       currency: '='
     },
-    template: '<span>{{ fiat.currencySymbol }}{{ fiat.amount }}</span>',
+    template: `
+      <span>
+        <img ng-show="fiat.amount == null" src="img/spinner.gif" width="35" />
+        <span ng-hide="fiat.amount == null">{{ fiat.currencySymbol }}{{ fiat.amount }}</span>
+      <span>
+    `,
     link: link
   };
   return directive;

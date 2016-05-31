@@ -1,0 +1,9 @@
+// when an address is too long
+.oflow {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @media (max-width: 1200px) {
+    max-width: 170px;
+  }
+}

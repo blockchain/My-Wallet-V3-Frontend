@@ -4,9 +4,23 @@
   display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
   display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
 }
-.flex, .flex-end, .flex-between, .flex-start, .flex-column, .flex-center, .flex-align-start, .flex-align-end, .flex-baseline, .flex-row {
+
+.flex,
+.flex-end,
+.flex-between,
+.flex-start,
+.flex-column,
+.flex-center,
+.flex-align-start,
+.flex-align-end,
+.flex-baseline,
+.flex-row,
+.flex-wrap,
+.flex-baseline,
+.flex-align-self-end {
   @extend %flex;
 }
+
 .flex-between { 
   -ms-flex-pack: justify;
   -webkit-box-pack: justify;
@@ -84,6 +98,18 @@
   -ms-flex-direction: row;
   flex-direction: row; 
 }
+.flex-align-self-end {
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+}
+
+.inline-flex {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
 .flex-important { 
   display: -webkit-box !important;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
   display: -ms-flexbox !important;  /* TWEENER - IE 10 */

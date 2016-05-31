@@ -1,4 +1,9 @@
 .transactions {
+  .label-success,
+  .label-default {
+    @extend .btn-xs;
+    display: inline-block;
+  }
   .transaction-feed {
     position: relative;
     top: 50px;
@@ -37,27 +42,81 @@
      color: $transfer-blue;
     }
     .destination{
-      display: block;
-      font-size: 1.1em;
-    }
-    .amount {
-      padding: 10px 0;
-      position: absolute;
-      right: 10px;
-      top: 18px;
-      button.amount{
-        font-size: 1.1em;
-        min-width: 125px;
-        float: right;
-      }
+      width: 265px;
     }
     .tx-toggle {
+      top: 10px;
+      left: 10px;
       position: absolute;
-      top: 62.5px;
-      transform: translateY(-50%);
+      height: calc(100% - 10px);
     }
     .tx-details {
       margin-left: 3em;
+    }
+    button.amount {
+      padding: 10px;
+      min-width: 125px;
+    }
+    transaction-status {
+      width: 100%;
+      position: relative;
+      .helper {
+        margin: 0px;
+      }
+    }
+    transaction-description {
+      .progress {
+        @extend .mbn;
+        background: rgba(0,0,0,0.2);
+      }
+      .progress-bar {
+        background-color: $blue;
+        &.progress-bar-success {
+          background-color: $success;
+        }
+        &[aria-valuenow="0"] span {
+          color: $basic-grey;
+        }
+      }
+      .fee {
+        button {
+          margin-top: -3px;
+        }
+      }
+      .bc-link {
+        color: $basic-grey;
+        &:hover {
+          color: $blue;
+        }
+      }
+    }
+  }
+  @media (max-width: 992px) {
+    .transaction {
+      .mtvl {
+        flex: 2 0 0;
+        -ms-flex: 2;
+        margin-top: 0.625em;
+      }
+      .tx-toggle {
+        top: 5px;
+        left: 5px;
+        i {
+          font-size: 14px;
+        }
+      }
+      .width-80 {
+        width: 100%;
+      }
+      .tx-details {
+        margin-left: 1em;
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    .transaction {
+      padding-left: 10px;
+      padding-right: 10px;
     }
   }
   .description {
@@ -173,7 +232,29 @@ button {
 }
 .unconfirmed { opacity: 0.5; }
 
-.note { color: $black; }
+.note { 
+  color: $black;
+  position: relative;
+  textarea {
+    resize: none;
+    height: 60px;
+    border-color: $eee;
+    padding: 10px 0px 0px 10px;
+  }
+  @media (min-width: 769px) {
+    .input {
+      width: calc(100% - 1.5em);
+      top: 1.5em;
+      left: 0;
+    }
+  }
+  @media (max-width: 992px) {
+    .input.pos-abs {
+      top: 0px;
+      position: relative;
+    }
+  }
+}
 
 a.date,p.date { color: $black; }
 

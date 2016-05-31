@@ -16,9 +16,9 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
   $scope.canDisplayDescriptions = false;
   $scope.txLimit = 10;
 
-  let accountIndex = $stateParams.accountIndex;
   let txList = MyWallet.wallet.txList;
-  $scope.transactions = txList.transactions(accountIndex);
+  $scope.account = $stateParams.accountIndex;
+  $scope.transactions = txList.transactions($scope.account);
 
   let fetchTxs = () => {
     $scope.loading = true;
@@ -39,19 +39,12 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
     else if (!$scope.allTxsLoaded && !$scope.loading) fetchTxs();
   };
 
-  $scope.showTransaction = (transaction) => {
-    $state.go('wallet.common.transaction', {
-      accountIndex: $stateParams.accountIndex,
-      hash: transaction.hash
-    });
-  };
-
   $scope.$watchCollection('accounts()', newValue => {
     $scope.canDisplayDescriptions = $scope.accounts().length > 0;
   });
 
   let setTxs = () => {
-    let newTxs = txList.transactions(accountIndex);
+    let newTxs = txList.transactions($scope.account);
     if ($scope.transactions.length > newTxs.length) $scope.allTxsLoaded = false;
     $scope.transactions = newTxs;
     $rootScope.$safeApply();
@@ -76,7 +69,8 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
   $scope.filterSearch = (tx, search) => {
     if (!search) return true;
     return ($scope.filterTx(tx.processedInputs, search) ||
-            $scope.filterTx(tx.processedOutputs, search));
+            $scope.filterTx(tx.processedOutputs, search) ||
+            (tx.note && tx.note.toLowerCase().search(search.toLowerCase()) > -1));
   };
 
   $scope.filterTx = (coins, search) => {
