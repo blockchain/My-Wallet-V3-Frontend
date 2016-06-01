@@ -12,6 +12,7 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
   $scope.receiveAddress = null;
   $scope.advanced = false;
   $scope.focus = focus;
+  $scope.showPaymentRequestURL = false;
 
   $scope.hasLegacyAddress = hasLegacyAddress;
 

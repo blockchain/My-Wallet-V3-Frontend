@@ -723,5 +723,7 @@
   "HAVING_TROUBLE": "Having some trouble?",
   "LOGIN_TO_LEGACY": "Login to the Legacy wallet",
   "CONFIRMATIONS": "confirmations",
-  "ADD_A_DESCRIPTION": "Add a description"
+  "ADD_A_DESCRIPTION": "Add a description",
+  "COPY_AND_SHARE": "Copy and Share",
+  "SCAN": "Scan"
 }

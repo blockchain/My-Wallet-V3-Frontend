@@ -32,7 +32,7 @@
 
       .column.flex-justify(ng-show="advanced && fields.to.index != undefined")
         .form-group.row.pbm.flex-justify.flex-center.amount(ng-class="{'has-error': requestForm.amount.$error.isValidAmount && requestForm.amount.$touched}")
-          label.mbn(translate="AMOUNT:")
+          label.mbn.pts(translate="AMOUNT:")
           .flex-row
             .flex-center.flex-2.border-bottom
               input.form-control.pln.pbn.no-border(
@@ -58,7 +58,7 @@
               )
               span.lh1 {{ settings.currency.code }}
         .form-group.row.pbm.flex-justify.flex-center.description(ng-class="{'has-error': !requestForm.label.$valid}")
-          label.mbn(translate="DESCRIPTION:")
+          label.mbn.pts(translate="DESCRIPTION:")
           div
             .flex-center.prl.border-bottom
               input.form-control.no-border.pln.pbn(
@@ -78,23 +78,27 @@
                                                  popover-class="message-contextual request-popover"
                                                  popover-trigger="mouseenter"
                                                  popover-append-to-body="true")
-          h4 Copy and Share
-          p.mtl.form-control-static.bitcoin-address
+          h4.mbl(translate="COPY_AND_SHARE")
+          span.flex-align-self-end.phs.pvs.pointer(ng-show="fields.amount || fields.label && advanced" 
+                                                   ng-class="{'bg-light-blue': showPaymentRequestURL}"
+                                                   ng-click="showPaymentRequestURL = !showPaymentRequestURL")
+            i.ti-link
+          p.form-control-static.bitcoin-address
             img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
             span(ng-show="status.didInitializeHD" single-click-select)
               | 
-              button.clipboard.btn.btn-default
-              span(ng-hide="fields.amount || fields.label") {{ paymentRequestAddress() }}
-              span(ng-show="fields.amount || fields.label") {{ paymentRequestURL() }}
-        span.or.flex-center.mrl.mll Or
-        .flex-column.receive-code.flex-center(uib-popover="{{'QR_HELPER' | translate}}" 
+              button.clipboard.btn.button-default
+              span(ng-hide="(fields.amount || fields.label) && showPaymentRequestURL") {{ paymentRequestAddress() }}
+              span(ng-show="(fields.amount || fields.label) && showPaymentRequestURL") {{ paymentRequestURL() }}
+        span.or.flex-center.mrl.mll(translate="OR")
+        .receive-code.flex-column.flex-center.flex-around(uib-popover="{{'QR_HELPER' | translate}}" 
                                               popover-class="message-contextual request-popover"
                                               popover-trigger="mouseenter"
                                               popover-append-to-body="true")
-          h4 Scan
+          h4(translate="SCAN")
           p(ng-hide="status.didInitializeHD")
             img(src="img/spinner.gif")  
-          span.mtl(ng-show="status.didInitializeHD")
+          span(ng-show="status.didInitializeHD")
             qr(text="paymentRequestURL()", size=100, correction-level="'M'", image="true")
 
  LABEL_ERROR_BIP_44_GAP

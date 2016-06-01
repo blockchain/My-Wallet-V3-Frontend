@@ -309,10 +309,6 @@
     @extend .flex-row;
   }
 
-  h4 {
-    margin: 0 auto;
-  }
-
   .ti-arrow-down {
     font-weight: bold;
     font-size: 18px;
@@ -360,7 +356,6 @@
       min-width: 320px;
       &.receive-address {
         &.max-width {
-          margin: 0 auto;
           max-width: 320px;
         }
       }

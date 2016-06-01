@@ -128,6 +128,10 @@ describe "RequestCtrl", ->
       expect(scope.paymentRequestAddress()).toBe(scope.fields.to.address)
     )
 
+    describe "showPaymentRequestURL", ->
+      it "should be set as false initially", ->
+        expect(scope.showPaymentRequestURL).toBe(false);
+
     describe "paymentRequestURL", ->
 
       it "should show a payment URL when legacy address is selected", ->
