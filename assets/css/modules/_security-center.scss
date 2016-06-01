@@ -65,7 +65,6 @@
   .level-badge {
     width: 22%;
     position: relative;
-    padding-bottom: 20px;
     transition: all .3s ease-in-out;
     &.active {
       background-color: white;
@@ -99,9 +98,7 @@
       display: block;
       text-align: center;
       width: 100%;
-      padding: 20px 15px 30px 15px;
-      // padding-bottom: 200px;
-      // margin-bottom: -200px;
+      padding: 20px 15px 20px 15px;
       cursor: pointer;
       img {
         width: 75px;
