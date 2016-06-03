@@ -29,14 +29,6 @@ function DidYouKnow () {
       icon: 'ti-thought'
     }, {
       id: 4,
-      title: 'DYK_FEEDBACK_TITLE',
-      type: 'FEATURE',
-      text: 'DYK_FEEDBACK',
-      icon: 'ti-announcement',
-      linkText: 'GIVE_FEEDBACK',
-      state: 'wallet.common.feedback'
-    }, {
-      id: 5,
       title: 'DYK_BTC_VALUE_TITLE',
       type: 'EDUCATIONAL',
       text: 'DYK_BTC_VALUE',

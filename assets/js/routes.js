@@ -183,20 +183,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('wallet.common.feedback', {
-      url: '/feedback',
-      views: {
-        top: top,
-        left: {
-          templateUrl: 'partials/wallet-navigation.jade',
-          controller: 'WalletNavigationCtrl'
-        },
-        right: {
-          templateUrl: 'partials/feedback.jade',
-          controller: 'FeedbackCtrl'
-        }
-      }
-    })
     .state('wallet.common.security-center', {
       url: '/security-center',
       views: {
