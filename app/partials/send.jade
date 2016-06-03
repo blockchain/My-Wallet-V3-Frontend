@@ -66,8 +66,8 @@
                 name="{{ 'destinations' + $index }}"
                 ng-model="transaction.destinations[$index]"
                 ng-model-options="{ updateOn: 'blur' }"
-                ng-change="checkForSameDestination()"
                 on-payment-request="applyPaymentRequest(request, $index)"
+                ignore="transaction.from"
                 required)
             .has-error
               span.help-block.type-sm(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress && sendForm['destinations' + $index].$touched && transaction.destinations[$index].address !== ''")
