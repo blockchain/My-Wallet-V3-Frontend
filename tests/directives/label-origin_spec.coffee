@@ -12,11 +12,15 @@ describe "Label Origin Directive", ->
     $compile = _$compile_
     $rootScope = _$rootScope_
 
+    $rootScope.origin = {
+      balance: 0
+    }
+
     return
   )
 
   beforeEach ->
-    element = $compile("<label-origin></label-origin>")($rootScope)
+    element = $compile("<label-origin origin='origin'></label-origin>")($rootScope)
     $rootScope.$digest()
     isoScope = element.isolateScope()
     isoScope.$digest()
@@ -28,6 +32,14 @@ describe "Label Origin Directive", ->
     expect(isoScope.settings).toBe(Wallet.settings)
 
   describe "determineAvailableBalance function", ->
+
+    it "should show red text when available balance is 0", ->
+      isoScope.origin.balance = 0;
+      isoScope.isSelected = true;
+
+      isoScope.$digest()
+
+      expect(element[0].outerHTML).toContain('class="ng-isolate-scope state-danger-text')
 
     it "should return a balance", ->
       final = isoScope.determineAvailableBalance(100)

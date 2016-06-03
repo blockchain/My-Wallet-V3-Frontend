@@ -1,4 +1,4 @@
-div
+div(ng-class="{'state-danger-text': isSelected && determineAvailableBalance(origin.balance) === 0}")
   span(ng-bind-html="determineLabel(origin) | escapeHtml | highlight:highlight")
   span(ng-hide="isNaN(origin.balance)")
     span &ensp;(
