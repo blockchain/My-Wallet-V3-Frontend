@@ -139,13 +139,9 @@
         position: absolute;
       }
       & ~ .help-block {
-        margin-left: 105px;
-        &.friendly {
-          color: $blue;
-        }
-        &.has-error {
-          color: $state-danger-text;
-        }
+        bottom: -1px;
+        margin-left: 95px;
+        position: absolute;
       }
     }
   }
@@ -164,7 +160,7 @@
       background-color: $aaa;
       border-radius: 100%;
       position: absolute;
-      bottom: -5px;
+      bottom: 20px;
       right: -15px;
       padding: 0px;
       height: 30px;

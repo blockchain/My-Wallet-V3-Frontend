@@ -33,7 +33,7 @@
             tagging
             required)
             ui-select-match(placeholder="{{'SEARCH' | translate}}...")
-              label-origin(origin="$select.selected")
+              label-origin(origin="$select.selected" selected="true")
             ui-select-choices(repeat="origin in origins | filter:{label:$select.search} | limitTo:originLimit" group-by="'type'" ui-disable-choice="::hasZeroBalance(origin)")
               span(ng-class="::{aaa:hasZeroBalance(origin)}" in-view="$last && origin.type==='Imported Addresses' && increaseLimit()")
                 label-origin(origin="::origin" highlight="$select.search")
@@ -149,8 +149,8 @@
                   required
                   transform-currency="settings.btcCurrency"
                   placeholder="Enter your fee here")
-      span.help-block.has-error(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$dirty && advanced")
-      span.help-block.friendly(ng-show="!sendForm.$invalid && amountsAreValid() && advanced")
+      span.type-sm.help-block.state-danger-text(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$dirty && advanced")
+      span.type-sm.help-block.blue(ng-show="!sendForm.$invalid && amountsAreValid() && advanced")
         span(ng-show="transaction.blockIdx <= 6 && transaction.blockIdx >= 1")
           span(translate="ESTIMATED_TX_TIME" translate-values="{ confirmationTime: transaction.blockIdx*10, blockQueue: transaction.blockIdx }")
           |  
