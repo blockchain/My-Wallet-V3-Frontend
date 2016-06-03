@@ -4,31 +4,32 @@
 .modal-header.flex-center.upgrade-header
   h3(translate="UPGRADE_WALLET")
   helper-button(content="UPGRADE_EASY")
-.modal-body.upgrade-modal
-  uib-carousel(no-wrap="true", interval="3000" active="active")
-    uib-slide(index="0")
-      li(translate="UPGRADE_NEW_DESIGN").type-h4
-      div
-        img(src="img/new-design.jpg").logo
-    uib-slide(index="1")
-      li(translate="UPGRADE_SECURITY_CENTER").type-h4
-      div
-        img(src="img/security-upgrade.jpg").logo
-    uib-slide(index="2")
-      li(translate="UPGRADE_BACKUP").type-h4
-      div
-        img(src="img/backup.jpg").logo
-    uib-slide(index="3")
-      li(translate="UPGRADE_FUND_MANAGEMENT").type-h4
-      div
-        img(src="img/fund-management.jpg").logo
-  p.footnote.center
-    span(translate="UPGRADE_LIMITATIONS").type-sm
-    | &nbsp;
-    span
-      span.type-sm.bold(translate="UPGRADE_DISABLES_API_ACCESS", ng-show="settings.apiAccess")
-      |  
-      span(translate="NO_GOING_BACK").type-sm.bold
+.modal-body
+  .bc-carousel.upgrade
+    uib-carousel(no-wrap="true", interval="3000" active="active")
+      uib-slide(index="0")
+        li(translate="UPGRADE_NEW_DESIGN").type-h4
+        div
+          img(src="img/new-design.jpg").logo
+      uib-slide(index="1")
+        li(translate="UPGRADE_SECURITY_CENTER").type-h4
+        div
+          img(src="img/security-upgrade.jpg").logo
+      uib-slide(index="2")
+        li(translate="UPGRADE_BACKUP").type-h4
+        div
+          img(src="img/backup.jpg").logo
+      uib-slide(index="3")
+        li(translate="UPGRADE_FUND_MANAGEMENT").type-h4
+        div
+          img(src="img/fund-management.jpg").logo
+    p.footnote.center
+      span(translate="UPGRADE_LIMITATIONS").type-sm
+      | &nbsp;
+      span
+        span.type-sm.bold(translate="UPGRADE_DISABLES_API_ACCESS", ng-show="settings.apiAccess")
+        |  
+        span(translate="NO_GOING_BACK").type-sm.bold
 .modal-footer.pal.flex-end
   button.button-muted.mrm(ng-click="cancel()", translate="CANCEL", ng-disabled="busy")
   button.button-success(ui-ladda="busy", ng-click="upgrade()" ng-disabled="waiting", ladda-translate="UPGRADE_NOW", data-style="expand-left")
