@@ -13,6 +13,9 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
   $scope.advanced = false;
   $scope.focus = focus;
 
+  $scope.destinationLimit = 50;
+  $scope.increaseLimit = () => $scope.destinationLimit += 50;
+
   $scope.hasLegacyAddress = hasLegacyAddress;
 
   $scope.fields = {
@@ -41,11 +44,6 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
       }
     }
   }
-
-  $scope.getFilter = (search, accounts = true) => ({
-    label: search,
-    type: accounts ? '!External' : 'Imported'
-  });
 
   $scope.closeAlert = alert => {
     Alerts.close(alert);
