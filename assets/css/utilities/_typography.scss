@@ -36,3 +36,9 @@ $multiplier: 100;
     }
   }
 }
+
+@for $i from 1 through 5 {
+  .font-#{$i} {
+    font-size: #{$i}em;
+  }
+}
