@@ -149,8 +149,8 @@
                   required
                   transform-currency="settings.btcCurrency"
                   placeholder="Enter your fee here")
-      span.help-block.has-error(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$dirty && advanced")
-      span.help-block.friendly(ng-show="!sendForm.$invalid && amountsAreValid() && advanced")
+      span.help-block.has-error.type-sm(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$dirty && advanced")
+      span.help-block.friendly.type-sm(ng-show="!sendForm.$invalid && amountsAreValid() && advanced")
         span(ng-show="transaction.blockIdx <= 6 && transaction.blockIdx >= 1")
           span(translate="ESTIMATED_TX_TIME" translate-values="{ confirmationTime: transaction.blockIdx*10, blockQueue: transaction.blockIdx }")
           |  

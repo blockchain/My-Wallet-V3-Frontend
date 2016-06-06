@@ -7,14 +7,14 @@ p.form-control-static.bitcoin-address, .xpub {
   word-break: break-all;
   span {
     overflow-wrap: break-word;
-    line-height: 1.9em;
   }
   &.bitcoin-address {
     position: relative;
     padding-left: 35px !important;
     .clipboard {
       top: 0;
-      left: 0px;
+      left: -5px;
+      padding: 0;
       width: 30px;
       height: 100%;
       cursor: pointer;

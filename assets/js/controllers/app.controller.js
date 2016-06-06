@@ -139,7 +139,7 @@ function AppCtrl ($scope, Wallet, Alerts, $state, $rootScope, $cookies, $locatio
 
   $scope.checkGoals = () => {
     if ($scope.status.isLoggedIn) {
-      if (!((Wallet.settings.currency != null) && (Wallet.settings.btcCurrency != null))) {
+      if (!((Wallet.status.didLoadTransactions) && (Wallet.status.didLoadBalances))) {
         return $timeout(() => {
           $scope.checkGoals();
         }, 100);
@@ -152,7 +152,7 @@ function AppCtrl ($scope, Wallet, Alerts, $state, $rootScope, $cookies, $locatio
             resolve: {
               paymentRequest: () => Wallet.goal.send
             },
-            windowClass: 'bc-modal'
+            windowClass: 'bc-modal initial'
           });
           Wallet.goal.send = void 0;
         }

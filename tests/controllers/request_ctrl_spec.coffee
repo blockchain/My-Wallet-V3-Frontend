@@ -128,31 +128,70 @@ describe "RequestCtrl", ->
       expect(scope.paymentRequestAddress()).toBe(scope.fields.to.address)
     )
 
-    it "should show a payment URL when legacy address is selected", ->
-      scope.fields.to = scope.legacyAddresses()[0]
-      scope.$digest()
-      expect(scope.paymentRequestURL()).toBeDefined()
-      expect(scope.paymentRequestURL()).toContain("bitcoin:")
+    describe "showPaymentRequestURL", ->
+      it "should be set as false initially", ->
+        expect(scope.showPaymentRequestURL).toBe(false);
+
+    describe "paymentRequestURL", ->
+
+      it "should show a payment URL when legacy address is selected", ->
+        scope.fields.to = scope.legacyAddresses()[0]
+        scope.$digest()
+        expect(scope.paymentRequestURL()).toBeDefined()
+        expect(scope.paymentRequestURL()).toContain("bitcoin:")
 
 
-    it "should show a payment URL with amount when legacy address is selected and amount > 0", ->
-      scope.fields.to = scope.legacyAddresses()[0]
-      scope.fields.amount = 10000000
-      scope.$digest()
-      expect(scope.paymentRequestURL()).toBeDefined()
-      expect(scope.paymentRequestURL()).toContain("amount=0.1")
+      it "should show a payment URL with amount when legacy address is selected and amount > 0", ->
+        scope.fields.to = scope.legacyAddresses()[0]
+        scope.fields.amount = 10000000
+        scope.$digest()
+        expect(scope.paymentRequestURL()).toBeDefined()
+        expect(scope.paymentRequestURL()).toContain("amount=0.1")
 
-    it "should not have amount argument in URL if amount is zero, null or empty", ->
-      scope.fields.to = scope.legacyAddresses()[0]
-      scope.fields.amount = "0"
-      scope.$digest()
-      expect(scope.paymentRequestURL()).toBeDefined()
-      expect(scope.paymentRequestURL()).not.toContain("amount=")
+      it "should not have amount argument in URL if amount is zero, null or empty", ->
+        scope.fields.to = scope.legacyAddresses()[0]
+        scope.fields.amount = "0"
+        scope.$digest()
+        expect(scope.paymentRequestURL()).toBeDefined()
+        expect(scope.paymentRequestURL()).not.toContain("amount=")
 
-      scope.fields.amount = null
-      scope.$digest()
-      expect(scope.paymentRequestURL()).not.toContain("amount=")
+        scope.fields.amount = null
+        scope.$digest()
+        expect(scope.paymentRequestURL()).not.toContain("amount=")
 
-      scope.fields.amount = ""
-      scope.$digest()
-      expect(scope.paymentRequestURL()).not.toContain("amount=")
+        scope.fields.amount = ""
+        scope.$digest()
+        expect(scope.paymentRequestURL()).not.toContain("amount=")
+
+      it "should generate a valid bitcoin url", ->
+        scope.fields.to = scope.legacyAddresses()[0]
+        scope.fields.amount = 10000000
+        scope.fields.label = "Label Label Label"
+        scope.$digest()
+
+        expect(scope.paymentRequestURL()).toBe('bitcoin:1asdf?amount=0.1&message=Label%20Label%20Label')
+
+      it "should generate a valid bitcoin url with only an amount and address", ->
+        scope.fields.to = scope.legacyAddresses()[0]
+        scope.fields.amount = 10000000
+        scope.$digest()
+
+        expect(scope.paymentRequestURL()).not.toContain('&')
+        expect(scope.paymentRequestURL()).toBe('bitcoin:1asdf?amount=0.1')
+
+      it "should generate a valid bitcoin url with only a label and address", ->
+        scope.fields.to = scope.legacyAddresses()[0]
+        scope.fields.label = "Label Label Label"
+        scope.fields.amount = 0
+        scope.$digest()
+
+        expect(scope.paymentRequestURL()).not.toContain('&')
+        expect(scope.paymentRequestURL()).toBe("bitcoin:1asdf?message=Label%20Label%20Label")
+
+      it "should generate a bitcoin url with a message param instead of a label", ->
+        scope.fields.to = scope.legacyAddresses()[0]
+        scope.fields.label = "This is a message, though we save it as a label"
+        scope.$digest()
+
+        expect(scope.paymentRequestURL()).toContain('message')
+        expect(scope.paymentRequestURL()).not.toContain('label=')

@@ -97,7 +97,7 @@ describe "AppCtrl", ->
 
       # Fulfill necessary conditions befor goal can be checked
       Wallet.status.isLoggedIn = true
-      Wallet.settings = { currency: true, btcCurrency: true }
+      Wallet.status = { didLoadBalances: true, didLoadTransactions: true }
       Wallet.goal.claim = {code: "abcd", balance: 100000}
 
       $rootScope.$digest()
