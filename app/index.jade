@@ -35,8 +35,7 @@ head
   link(rel='stylesheet', href='css/application.css')
   <!-- @endif -->
 
-body(ng-controller="AppCtrl" ui-view="body" ng-mousemove="resetInactivityTime()" ng-keypress="resetInactivityTime()")
-  
+body(ng-controller="AppCtrl" ui-view="body" ng-mousemove="resetInactivityTime()" ng-keypress="resetInactivityTime()" ng-class="{'dev-theme': theme.name === 'Dev'}")
   //- This does not depend on Angular and will show as soon as the images are done loading.
   .blocket-loading
     div

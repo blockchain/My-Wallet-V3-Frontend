@@ -4,9 +4,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency', 'theme'];
 
-function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency) {
+function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency, theme) {
   const wallet = {
     goal: {
       auth: false
@@ -35,7 +35,8 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       ipWhitelist: null,
       apiAccess: null,
       restrictToWhitelist: null,
-      loggingLevel: null
+      loggingLevel: null,
+      theme: null
     },
     user: {
       current_ip: null,
@@ -112,6 +113,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       wallet.settings.secondPassword = wallet.my.wallet.isDoubleEncrypted;
       wallet.settings.pbkdf2 = wallet.my.wallet.pbkdf2_iterations;
       wallet.settings.logoutTimeMinutes = wallet.my.wallet.logoutTime / 60000;
+      wallet.settings.theme = $filter('getByProperty')('name', wallet.my.wallet.theme.name, theme.themes);
       if (wallet.my.wallet.isUpgradedToHD && !wallet.status.didInitializeHD) {
         wallet.status.didInitializeHD = true;
       }
@@ -843,6 +845,12 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       wallet.setLanguage(language);
       resolve(true);
     }, reject);
+  });
+
+  wallet.changeTheme = (theme) => $q((resolve, reject) => {
+    wallet.settings.theme = theme;
+    wallet.store.changeTheme(theme);
+    resolve(true);
   });
 
   wallet.changeCurrency = (curr) => $q((resolve, reject) => {

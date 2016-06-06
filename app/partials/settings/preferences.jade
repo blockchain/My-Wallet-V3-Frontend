@@ -71,3 +71,10 @@ form.form-horizontal(role="form",name="form",novalidate)
       p.em-300.text.line-height.hidden-sm.hidden-xs(translate="AUTO_LOGOUT_EXPLAIN") 
     .col-sm-12.col-md-6.setting-result
       bc-async-input(ng-model="settings.logoutTimeMinutes" validator="validateLogoutTime" is-required on-save="changeLogoutTime" action-title="'CHANGE' | translate" unit="minutes")
+  .form-group
+    .col-sm-12.col-md-6
+      label.em-400.type-h5(translate="Themes")
+      p.text.em-300.line-height.hidden-xs(translate="Try out different themes for the wallet.")
+    .col-sm-6.col-md-3
+    .col-sm-6.col-md-3.setting-result
+      async-select(selected="settings.theme" range="themes" display-prop="name" on-change="changeTheme")
