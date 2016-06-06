@@ -140,20 +140,18 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
   $scope.paymentRequestURL = () => {
     if ($scope.paymentRequestAddress() == null) return null;
 
-    let url = `bitcoin:${ $scope.paymentRequestAddress() }`;
+    let url = `bitcoin:${ $scope.paymentRequestAddress() }?`;
+    let amount = `amount=${ parseFloat($scope.fields.amount / 100000000) }`;
+    let message = `message=${ $scope.fields.label }`;
 
     if ($scope.fields.amount > 0 && $scope.fields.label !== '') {
-      url += `?`;
-      url += `amount=${ parseFloat($scope.fields.amount / 100000000) }`;
+      url += amount;
       url += `&`;
-      url += `message=${ $scope.fields.label }`;
-    } else if ($scope.fields.amount > 0) {
-      url += `?`;
-      url += `amount=${ parseFloat($scope.fields.amount / 100000000) }`;
-    } else if ($scope.fields.label !== '') {
-      url += `?`;
-      url += `message=${ $scope.fields.label }`;
+      url += message;
     }
+    else if ($scope.fields.amount > 0) url += amount;
+    else if ($scope.fields.label !== '') url += message;
+    else url = url.slice(0, -1);
 
     return encodeURI(url);
   };
