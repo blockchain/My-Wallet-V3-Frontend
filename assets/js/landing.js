@@ -1,5 +1,13 @@
 'use strict';
 
+if (browserDetection().browser === 'ie' && browserDetection().version < 11) {
+  if (confirm("Your browser is out of date! It looks like you're using an old version of Internet Explorer. For the best Blockchain experience, please update your browser or hit cancel to return to our homepage.")) {
+    window.location = 'http://browsehappy.com/';
+  } else {
+    window.location = 'https://blockchain.info/';
+  }
+}
+
 const modules = [
   'ngSanitize',
   'pascalprecht.translate',

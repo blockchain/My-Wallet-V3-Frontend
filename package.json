@@ -83,7 +83,8 @@
       "browserDetection",
       "Blockchain",
       "compareVersions",
-      "URL"
+      "URL",
+      "confirm"
     ]
   }
 }

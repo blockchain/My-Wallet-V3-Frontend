@@ -14,18 +14,18 @@ head
   script(src='bower_components/angular-bootstrap/ui-bootstrap-tpls.js', defer)
   script(src='bower_components/angular-translate/angular-translate.js', defer)
   script(src='bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js', defer)
-  script(src='bower_components/browserdetection/src/browser-detection.js', defer)
+  script(src='bower_components/browserdetection/src/browser-detection.js')
 
-  // include: "type": "js", "defer" : "defer", "files": "build/js/sharedDirectives.js"
-  // include: "type": "js", "defer" : "defer", "files": "build/js/sharedDirectives/*.js"
-  // include: "type": "js", "defer" : "defer", "files": "build/js/translations.js"
-  // include: "type": "js", "defer" : "defer", "files": "build/js/landing.js"
-  // include: "type": "js", "defer" : "defer", "files": "build/js/services/bcTranslationLoader.service.js"
+  // include: "type": "js", "files": "build/js/sharedDirectives.js"
+  // include: "type": "js", "files": "build/js/sharedDirectives/*.js"
+  // include: "type": "js", "files": "build/js/translations.js"
+  // include: "type": "js", "files": "build/js/landing.js"
+  // include: "type": "js", "files": "build/js/services/bcTranslationLoader.service.js"
   
   <!-- @endif -->
   
   <!-- @if PRODUCTION !>
-  script(src='js/landing.min.js')  
+  script(src='js/landing.min.js' defer)  
   <!-- @endif -->
   link(rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-icon-180x180.png")
   link(rel="apple-touch-icon" sizes="152x152" href="img/favicon/apple-icon-152x152.png")
@@ -48,7 +48,7 @@ head
   <!-- @endif -->
   
   <!-- @if PRODUCTION !>
-  link(rel='stylesheet', href='css/landing.css')
+  link(rel='stylesheet' href='css/landing.css')
   <!-- @endif -->
 
 body
@@ -62,18 +62,3 @@ body
   noscript
     img(src="/img/logo-bw.png")
     h3 Please enable JavaScript to use the Blockchain Wallet
-
-  //- Whitelist by copying script from browser and putting it in a file.
-  //- Add a blank line at the top and then run:
-  //- cat script | openssl dgst -sha256 -binary | openssl enc -base64
-  :verbatim
-    <script>
-    if(browserDetection().browser === "ie" && browserDetection().version < 11) {
-      if ( confirm("Your browser is out of date! It looks like you're using an old version of Internet Explorer. For the best Blockchain experience, please update your browser or hit cancel to return to our homepage.") ) {
-        window.location = "http://browsehappy.com/";
-      }
-      else {
-        window.location = "https://blockchain.info/";
-      }
-    }
-    </script>

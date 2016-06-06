@@ -5,9 +5,9 @@ angular
   .module('bcTranslateStaticFilesLoader', [])
   .factory('BCTranslateStaticFilesLoader', BCTranslateStaticFilesLoader);
 
-BCTranslateStaticFilesLoader.$inject = ['$http', '$q', '$translateStaticFilesLoader', '$rootScope', '$timeout'];
+BCTranslateStaticFilesLoader.$inject = ['$http', '$q', '$translateStaticFilesLoader', '$rootScope'];
 
-function BCTranslateStaticFilesLoader ($http, $q, $translateStaticFilesLoader, $rootScope, $timeout) {
+function BCTranslateStaticFilesLoader ($http, $q, $translateStaticFilesLoader, $rootScope) {
   const map = {
     de: 'build/locales/de.json',
     hi: 'build/locales/hi.json',
