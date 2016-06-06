@@ -26,6 +26,9 @@ const modules = [
 
   'bcPhoneNumber',
 
+  'translations',
+  'sharedDirectives',
+
   'templates-main'
 ];
 

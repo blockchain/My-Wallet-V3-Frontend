@@ -10,7 +10,7 @@ module.exports = function (config) {
     exclude: ['assets/js/my_wallet/'],
 
     files: [
-      'build/js/polyfill.js',
+      'node_modules/babel-polyfill/dist/polyfill.js',
       'bower_components/angular/angular.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-mocks/angular-mocks.js',
@@ -31,6 +31,7 @@ module.exports = function (config) {
       'assets/js/filters.js',
       'assets/js/services/**/*.service.js',
       'assets/js/directives/*.directive.js',
+      'assets/js/sharedDirectives/*.directive.js',
       'assets/js/core/*.js',
       'tests/filters/*.coffee',
       'tests/controllers/*.coffee',

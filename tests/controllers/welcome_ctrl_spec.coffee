@@ -1,4 +1,4 @@
-describe "WelcomeCtrl", ->
+describe "LandingCtrl", ->
   scope = undefined
 
   beforeEach angular.mock.module("walletApp")
@@ -7,7 +7,7 @@ describe "WelcomeCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       scope = $rootScope.$new()
 
-      $controller "WelcomeCtrl",
+      $controller "LandingCtrl",
         $scope: scope
 
       return

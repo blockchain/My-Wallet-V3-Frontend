@@ -56,20 +56,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     });
 
   $stateProvider
-    .state('welcome', {
-      url: '/',
-      views: {
-        body: {
-          templateUrl: 'partials/wallet-welcome.jade',
-          controller: 'WelcomeCtrl'
-        }
-      },
-      contents: {
-        top: top
-      }
-    });
-
-  $stateProvider
     .state('public', {
       views: {
         body: {

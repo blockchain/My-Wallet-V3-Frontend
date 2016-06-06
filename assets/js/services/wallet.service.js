@@ -1192,6 +1192,5 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   };
 
   wallet.isMock = wallet.my.mockShouldFailToSend !== void 0;
-
   return wallet;
 }

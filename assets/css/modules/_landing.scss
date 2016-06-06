@@ -1,4 +1,4 @@
-.welcome-page {
+.landing-page {
   .small-blocket {
     width: 30px;
     float: left;
@@ -26,7 +26,7 @@
     font-size: 16px;
     font-weight: 700;
   }
-  .welcome-nav {
+  .landing-nav {
     > div {
       background: $light-grey;
       cursor: pointer;
@@ -41,7 +41,7 @@
       }
     }
   }
-  .welcome-wrapper {
+  .landing-wrapper {
     @media (max-width: 768px) {
       padding: 0 20px;
       img {
@@ -575,11 +575,11 @@
     &:nth-child(1) {
       .background {
          background-image: url('../img/security-upgrade-welcome.jpg');
-      } 
+      }
     }
     &:nth-child(2) {
       .background {
-        background-image: url('../img/recover-welcome.jpg'); 
+        background-image: url('../img/recover-welcome.jpg');
       }
     }
     &:nth-child(3) {
@@ -589,7 +589,7 @@
     }
     &:nth-child(4) {
       .background {
-        background-image: url('../img/tx-list-welcome.jpg'); 
+        background-image: url('../img/tx-list-welcome.jpg');
       }
     }
     &:hover {

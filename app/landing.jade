@@ -1,6 +1,6 @@
 blocket-loading
-.welcome-page
-  public-header
+.landing-page
+  public-header(i18n-loaded='i18nLoaded')
   .quickstart
     #intro-header.container
       .flex-center.flex-row
@@ -35,7 +35,7 @@ blocket-loading
           .flex-1
             video-container(img="img/legacy-video-placeholder-TEMP.jpg" src="https://storage.googleapis.com/bc_public_assets/video/legacy-what-is-bitcoin-TEMP.mp4")
 
-  .welcome-nav.flex-row.flex-between
+  .landing-nav.flex-row.flex-between
     .flex-center.flex-column.flex-justify(ng-click="scroll('newUser')")
       h3.thin(translate="NEW_TO_BITCOIN")
       h4(translate="WHY_USE")
@@ -45,7 +45,7 @@ blocket-loading
 
   .split.flex-row
     .left
-      .welcome-wrapper
+      .landing-wrapper
         scroll-in-view(img="img/new-wallet-hero.jpg" shadow="true")  
       scroll-in-view.blocket(img="img/blocket.png")
       scroll-in-view.ios(img="img/ios-feature.jpg", transactions="true")

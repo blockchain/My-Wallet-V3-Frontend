@@ -5,9 +5,9 @@ angular
   .module('bcTranslateStaticFilesLoader', [])
   .factory('BCTranslateStaticFilesLoader', BCTranslateStaticFilesLoader);
 
-BCTranslateStaticFilesLoader.$inject = ['$http', '$q', '$translateStaticFilesLoader'];
+BCTranslateStaticFilesLoader.$inject = ['$http', '$q', '$translateStaticFilesLoader', '$rootScope', '$timeout'];
 
-function BCTranslateStaticFilesLoader ($http, $q, $translateStaticFilesLoader) {
+function BCTranslateStaticFilesLoader ($http, $q, $translateStaticFilesLoader, $rootScope, $timeout) {
   const map = {
     de: 'build/locales/de.json',
     hi: 'build/locales/hi.json',
@@ -47,8 +47,13 @@ function BCTranslateStaticFilesLoader ($http, $q, $translateStaticFilesLoader) {
       params: ''
     }, options.$http);
 
+    let success = function (res) {
+      $rootScope.i18nLoaded = true;
+      return deferred.resolve(res);
+    };
+
     $http(httpOptions)
-      .success(deferred.resolve)
+      .success(success)
       .error(function (data) {
         deferred.reject(options.key);
       });

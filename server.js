@@ -3,6 +3,7 @@
 var express = require('express');
 var ejs = require('ejs');
 var path = require('path');
+var compression = require('compression');
 
 loadEnv('.env');
 
@@ -15,6 +16,8 @@ var apiDomain = process.env.API_DOMAIN;
 // App configuration
 var rootApp = express();
 var app = express();
+
+app.use(compression());
 
 rootApp.use('/wallet', app);
 
