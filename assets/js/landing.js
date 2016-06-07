@@ -22,6 +22,10 @@ angular.module('landingApp', modules)
 })
 .run(($rootScope, $window) => {
   $rootScope.i18nLoaded = false;
+  $rootScope.isLanding = () => {
+    let isLanding = !($window.location.hash === '' || $window.location.hash === '#/');
+    return isLanding;
+  };
 
   var e = document.getElementById('wallet-app');
   angular.element(e).ready(function () {
@@ -76,11 +80,6 @@ angular
 
 function LandingCtrl ($scope, $timeout, $window) {
   $scope.fields = { email: '' };
-
-  $scope.shouldHide = () => {
-    let shouldHide = !($window.location.hash === '' || $window.location.hash === '#/');
-    return shouldHide;
-  };
 
   $scope.scrollTo = (element, to, duration) => {
     let start = element.scrollTop;

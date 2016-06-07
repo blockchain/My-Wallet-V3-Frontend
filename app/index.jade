@@ -1,6 +1,5 @@
 doctype
-<!-- @if !PRODUCTION --><html lang='en' class='not-fixed'><!-- @endif -->
-<!-- @if PRODUCTION !><html lang='en' class='not-fixed'><!-- @endif -->
+html(lang='en')
 head
   meta(charset='utf-8')
   meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1") 
@@ -53,8 +52,8 @@ head
 
 body
   downloader
-  #landing(ng-app='landingApp' ng-init="rootURL='#{ process.env.ROOT_URL }/'" ng-csp).ng-cloak
-    #landing-controller(ng-controller="LandingCtrl", ng-hide='shouldHide()')
+  #landing(ng-app='landingApp' ng-init="rootURL='#{ process.env.ROOT_URL }/'" ng-hide='isLanding()' ng-csp).ng-cloak
+    #landing-controller(ng-controller="LandingCtrl")
       include ./landing.jade
   #wallet-app(ng-init="autoReload=#{ process.env.AUTO_RELOAD || false }; rootURL='#{ process.env.ROOT_URL }/'; webSocketURL='#{ process.env.WEBSOCKET_URL }'; apiDomain='#{ process.env.API_DOMAIN }/';" ng-csp)
     #app-controller(ng-controller="AppCtrl" ui-view="body" ng-mousemove="resetInactivityTime()" ng-keypress="resetInactivityTime()")
