@@ -9,7 +9,7 @@ function SignupCtrl ($scope, $state, $cookies, $filter, $translate, $uibModal, W
   $scope.alerts = Alerts.alerts;
   $scope.status = Wallet.status;
 
-  $scope.disableSignup = !Wallet.checkBrowserVersion();
+  $scope.browser = {disabled: true};
 
   $scope.$watch('status.isLoggedIn', newValue => {
     if (newValue) {

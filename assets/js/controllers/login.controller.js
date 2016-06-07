@@ -41,7 +41,7 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
 
   $scope.user = Wallet.user;
 
-  $scope.disableLogin = !Wallet.checkBrowserVersion();
+  $scope.browser = {disabled: true};
 
   $scope.twoFactorCode = '';
   $scope.busy = false;

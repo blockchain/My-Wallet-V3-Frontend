@@ -13,7 +13,7 @@ function RecoverFundsCtrl ($scope, $rootScope, $state, $timeout, $translate, $co
     bip39phrase: ''
   };
 
-  $scope.disableSignup = !Wallet.checkBrowserVersion();
+  $scope.browser = {disabled: true};
 
   $scope.performImport = () => {
     $scope.working = true;
