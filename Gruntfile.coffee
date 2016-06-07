@@ -142,6 +142,7 @@ module.exports = (grunt) ->
           "bower_components/bc-phone-number/dist/css/bc-phone-number.css"
           "build/css/wallet-imports.css"
           "build/css/ladda.css"
+          "build/css/fonts.css"
         ],
         dest: "build/css/wallet.css"
       },
@@ -149,7 +150,6 @@ module.exports = (grunt) ->
         src: [
           "build/css/angular-csp.css"
           "build/css/landing-imports.css"
-          "build/css/fonts.css"
           "build/css/fonts.css"
         ],
         dest: "build/css/landing.css"
@@ -256,7 +256,7 @@ module.exports = (grunt) ->
 
       css:
         files: ['assets/css/**/*.scss']
-        tasks: ['sass', 'concat:css', 'copy:fonts']
+        tasks: ['sass', 'concat_css', 'copy:fonts']
         options:
           spawn: false
 

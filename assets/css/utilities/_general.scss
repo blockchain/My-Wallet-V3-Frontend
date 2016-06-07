@@ -2,7 +2,8 @@
   outline: none !important;
 }
 
-html,body {
+html,
+body {
   font-size: small;
   background-color: #fff;
   color: $text;
@@ -15,6 +16,17 @@ html,body {
     body {
       position: relative;
     }
+  }
+}
+
+#landing-app,
+#wallet-app {
+  height: 100%;
+  position: relative;
+  #landing-controller,
+  #app-controller {
+    height: 100%;
+    position: relative;
   }
 }
 

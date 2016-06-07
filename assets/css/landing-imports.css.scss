@@ -6,7 +6,6 @@
 @import 'utilities/flex';
 @import 'utilities/spacing';
 @import 'utilities/typography';
-@import 'utilities/borders';
 @import 'utilities/shadows';
 @import 'utilities/mobile-specific';
 
@@ -19,15 +18,12 @@
 @import 'elements/carousel';
 
 //import components
-@import 'components/button-groups';
 @import 'components/forms';
-@import 'components/helpers';
-@import 'components/modals';
 @import 'components/video-container';
-@import 'components/spinner';
 
 // Not used on landing page, but depends on Bootstrap mixins:
 @import 'components/qr-scan';
+@import 'components/modals';
 @import 'components/transfer-all';
 
 //import modules

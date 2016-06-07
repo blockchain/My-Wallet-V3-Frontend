@@ -44,11 +44,11 @@ head
   meta(name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png")
   title Blockchain Wallet
   <!-- @if !PRODUCTION -->  
-  // include: "type": "css", "files": "build/css/landing.css"
+  link(rel='stylesheet' href='build/css/landing.css' id="landing-imports")
   <!-- @endif -->
   
   <!-- @if PRODUCTION !>
-  link(rel='stylesheet' href='css/landing.css')
+  link(rel='stylesheet' href='build/css/landing.css' id="landing-imports")
   <!-- @endif -->
 
 body
