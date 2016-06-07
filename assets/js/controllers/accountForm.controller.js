@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('AccountFormCtrl', AccountFormCtrl);
 
-function AccountFormCtrl ($scope, Wallet, $uibModalInstance, $log, $translate, account) {
+function AccountFormCtrl ($scope, Wallet, $uibModalInstance, $log, $translate, account, Alerts) {
   $scope.accounts = Wallet.accounts;
 
   $scope.fields = {
@@ -34,7 +34,15 @@ function AccountFormCtrl ($scope, Wallet, $uibModalInstance, $log, $translate, a
 
     const cancel = () => $scope.status.busy = false;
 
-    Wallet.createAccount($scope.fields.name, success, error, cancel);
+    $scope.$$postDigest(() => {
+      if (!Wallet.my.browserCheck()) {
+        $scope.status.busy = false;
+        Alerts.displayError($translate.instant('UNSUITABLE_BROWSER'), true);
+        $scope.close();
+      } else {
+        Wallet.createAccount($scope.fields.name, success, error, cancel);
+      }
+    });
   };
 
   $scope.updateAccount = () => {

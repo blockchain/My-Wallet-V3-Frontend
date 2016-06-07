@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .controller('SignupCtrl', SignupCtrl);
 
-SignupCtrl.$inject = ['$scope', '$state', '$cookies', '$filter', '$translate', '$uibModal', 'Wallet', 'Alerts', 'currency', 'languages'];
+SignupCtrl.$inject = ['$scope', '$state', '$cookies', '$filter', '$translate', '$uibModal', 'Wallet', 'Alerts', 'currency', 'languages', 'MyWallet'];
 
-function SignupCtrl ($scope, $state, $cookies, $filter, $translate, $uibModal, Wallet, Alerts, currency, languages) {
+function SignupCtrl ($scope, $state, $cookies, $filter, $translate, $uibModal, Wallet, Alerts, currency, languages, MyWallet) {
   $scope.working = false;
   $scope.alerts = Alerts.alerts;
   $scope.status = Wallet.status;
@@ -58,16 +58,24 @@ function SignupCtrl ($scope, $state, $cookies, $filter, $translate, $uibModal, W
   $scope.signup = () => {
     if ($scope.signupForm.$valid) {
       $scope.working = true;
-      $scope.createWallet((uid, sessionToken) => {
-        $scope.working = false;
-        if (uid != null) {
-          $cookies.put('uid', uid);
-          $cookies.put('session', sessionToken);
+      $scope.$$postDigest(() => {
+        if (!MyWallet.browserCheck()) {
+          $scope.browser.disabled = true;
+          $scope.browser.msg = $translate.instant('UNSUITABLE_BROWSER');
+          $scope.working = false;
+        } else {
+          $scope.createWallet((uid, sessionToken) => {
+            $scope.working = false;
+            if (uid != null) {
+              $cookies.put('uid', uid);
+              $cookies.put('session', sessionToken);
+            }
+            if ($scope.autoReload) {
+              $cookies.put('password', $scope.fields.password);
+            }
+            $scope.close('');
+          });
         }
-        if ($scope.autoReload) {
-          $cookies.put('password', $scope.fields.password);
-        }
-        $scope.close('');
       });
     }
   };
