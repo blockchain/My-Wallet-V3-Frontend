@@ -7,6 +7,7 @@
       p(translate="RECOVER_BTC_LOST")
   form.ptl.form-horizontal(name="passphraseForm" autocomplete="off" ng-switch-when="1" novalidate)
     div
+      browser-detection(result="browser")
       .security-red.mbl.em-400.flex-center
         i.ti-hand-stop.mrm.h3.mvn.hidden-xs
         span(translate="RECOVER_FUNDS_WARNING")
@@ -19,7 +20,7 @@
           ng-keyup="getMnemonicLength()"
           ng-model="fields.mnemonic"
           is-valid="isValidMnemonic(fields.mnemonic)"
-          ng-disabled="disableSignup"
+          ng-disabled="browser.disabled"
           required)
     .flex-center.flex-end
       img(ng-show="working" src="img/spinner.gif")
@@ -31,7 +32,7 @@
       button.button-primary(
         type="submit"
         ng-click="nextStep()"
-        ng-disabled="!passphraseForm.$valid || disableSignup"
+        ng-disabled="!passphraseForm.$valid || browser.disabled"
         translate="CONTINUE")
   form.ptl.form-horizontal(name="recoveryForm" ng-switch-when="2")
     div

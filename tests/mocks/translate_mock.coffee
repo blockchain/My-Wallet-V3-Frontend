@@ -17,7 +17,10 @@ angular.module("pascalprecht.translate").provider "$translate", ->
         , {}
 
       promise.then = (callback) ->
-        callback(template)
+        res = template
+        for key, value of params
+          res += "|" + value
+        callback(res)
 
       return promise
 

@@ -369,6 +369,7 @@
   "WARN_AGAINST_IE" : "We recommend that you login using a more secure browser like Chrome or Safari.",
   "MINIMUM_BROWSER" : "{{ browser }} {{ userVersion }} is not supported. Please install {{ browser }} {{ requiredVersion }} or newer.",
   "UNKNOWN_BROWSER" : "Be careful when using a browser other than Chrome, Firefox or Safari. Make sure it supports secure random number generation and offers strong protection against cross site scripting attacks or you may lose your bitcoins.",
+  "UNSUITABLE_BROWSER" : "Your browser is not supported",
   "SPONSORS" : "Sponsored Links",
   "BITCOIN_CURRENCY" : "Bitcoin Unit",
   "BITCOIN_CURRENCY_EXPLAIN": "Adjust the precision you would prefer bitcoin values to be displayed in.",

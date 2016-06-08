@@ -8,6 +8,7 @@ div
     autocomplete="off"
     novalidate)
     .form-group(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
+      browser-detection(result="browser")
       label.col-sm-4.control-label(translate="EMAIL")
       .col-sm-8
         input.form-control(
@@ -15,7 +16,7 @@ div
           type="email"
           ng-model="fields.email"
           required
-          ng-disabled="disableSignup"
+          ng-disabled="browser.disabled"
           autofocus)
         span.help-block
           div(ng-show="signupForm.email.$touched")
@@ -32,7 +33,7 @@ div
           min-entropy="25"
           ng-change="fields.confirmation = ''"
           focus-when="fields.email.length"
-          ng-disabled="disableSignup"
+          ng-disabled="browser.disabled"
           required)
         password-entropy.help-block(password="fields.password")
         span.help-block
@@ -47,7 +48,7 @@ div
           type="password"
           ng-model="fields.confirmation"
           is-valid="fields.confirmation == fields.password"
-          ng-disabled="disableSignup"
+          ng-disabled="browser.disabled"
           required)
         span.help-block
           div(ng-show="signupForm.confirmation.$touched")
@@ -58,7 +59,7 @@ div
           name="agreement"
           type="checkbox"
           ng-model="fields.acceptedAgreement"
-          ng-disabled="disableSignup"
+          ng-disabled="browser.disabled"
           required)
       label.em-300.col-sm-8.accept-label.right-align
         | I have read and agree to the 
@@ -66,7 +67,7 @@ div
     .flex-center.flex-end.mbl.prl
       button.button-primary(
         type="submit"
-        ng-disabled="signupForm.$invalid || disableSignup"
+        ng-disabled="signupForm.$invalid || browser.disabled"
         translate="CONTINUE"
         ng-show="!working")  
       img(ng-show="working" src="img/spinner.gif")

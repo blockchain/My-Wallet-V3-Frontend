@@ -13,7 +13,7 @@ function RecoverFundsCtrl ($scope, $rootScope, $state, $timeout, $translate, $co
     bip39phrase: ''
   };
 
-  $scope.disableSignup = !Wallet.checkBrowserVersion();
+  $scope.browser = {disabled: true};
 
   $scope.performImport = () => {
     $scope.working = true;
@@ -59,8 +59,18 @@ function RecoverFundsCtrl ($scope, $rootScope, $state, $timeout, $translate, $co
   };
 
   $scope.nextStep = () => {
-    $scope.currentStep++;
-    $scope.fields.confirmation = '';
+    $scope.working = true;
+    $scope.$$postDigest(() => {
+      if (!Wallet.my.browserCheck()) {
+        $scope.working = false;
+        $scope.browser.disabled = true;
+        $scope.browser.msg = $translate.instant('UNSUITABLE_BROWSER');
+      } else {
+        $scope.working = false;
+        $scope.currentStep++;
+        $scope.fields.confirmation = '';
+      }
+    });
   };
 
   $scope.goBack = () => {

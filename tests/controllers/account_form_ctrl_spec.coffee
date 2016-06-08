@@ -13,6 +13,7 @@ describe "AccountFormCtrl", ->
     angular.mock.inject ($injector) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
+      Wallet.my.browserCheck = () -> true
 
       Wallet.accounts = () -> accounts
 
@@ -68,11 +69,13 @@ describe "AccountFormCtrl", ->
     it "should be created", inject((Wallet) ->
       before = Wallet.accounts().length
       scope.createAccount()
+      scope.$digest()
       expect(Wallet.accounts().length).toBe(before + 1)
     )
 
     it "should have a name", inject((Wallet) ->
         scope.createAccount()
+        scope.$digest()
         expect(Wallet.accounts()[Wallet.accounts().length - 1].label).toBe("New Account")
     )
 

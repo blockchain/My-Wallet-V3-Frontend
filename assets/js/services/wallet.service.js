@@ -1159,68 +1159,6 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     wallet.my.wallet.encrypt(password, success, error, encrypting, syncing);
   };
 
-  //   Browser compatibility warnings:
-  // * Secure random number generator: https://developer.mozilla.org/en-US/docs/Web/API/RandomSource/getRandomValues
-  // * AngularJS support (?)
-  // * No support before Safari 6 and equivalents based on experience
-
-  const browsers = {
-    'ie': {
-      browser: 'Internet Explorer',
-      requiredVersion: 11
-    },
-    'chrome': {
-      browser: 'Chrome',
-      requiredVersion: 30 // Roughly the same as Webkit 537.85.17
-    },
-    'firefox': {
-      browser: 'Firefox',
-      requiredVersion: 21
-    },
-    'opera': {
-      browser: 'Opera',
-      requiredVersion: 20 // First Chromium (33) based release
-    }
-  };
-  wallet.checkBrowserVersion = () => {
-    let info = browserDetection();
-    let matchingBrowser = browsers[info.browser.toLowerCase()];
-    if (matchingBrowser) { // One of the known browsers listed above
-      let requiredVersion = matchingBrowser.requiredVersion;
-      if (info.version < requiredVersion) {
-        $translate('MINIMUM_BROWSER', {browser: info.browser, userVersion: info.version, requiredVersion: requiredVersion}).then(Alerts.displayError);
-        return false;
-      } else if (info.browser === 'ie') {
-        Alerts.displayWarning('WARN_AGAINST_IE');
-        return true;
-      } else {
-        return true;
-      }
-    } else if (info.webkit) {
-      let minimumWebkitVersion = '537.85.17';
-      // Patch field may be undefined:
-      let userVersion = [
-        info.webkit.major,
-        info.webkit.minor,
-        info.webkit.patch
-      ].filter((x) => typeof (x) === 'number').join('.');
-      if (compareVersions(userVersion, minimumWebkitVersion) === -1) {
-        // Webkit version too old.
-        if (info.browser === 'safari') {
-          $translate('MINIMUM_BROWSER', {browser: 'Safari', userVersion: 'version', requiredVersion: '6.2.8'}).then(Alerts.displayError);
-        } else {
-          $translate('MINIMUM_BROWSER', {browser: 'Webkit', userVersion: info.version, requiredVersion: minimumWebkitVersion}).then(Alerts.displayError);
-        }
-        return false;
-      } else {
-        return true;
-      }
-    } else {
-      Alerts.displayWarning('UNKNOWN_BROWSER');
-      return true;
-    }
-  };
-
   // Testing: only works on mock MyWallet
 
   wallet.refresh = () => {

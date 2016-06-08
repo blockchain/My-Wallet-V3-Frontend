@@ -9,6 +9,9 @@ describe "SignupCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile, $templateCache) ->
       Wallet = $injector.get("Wallet")
+
+      Wallet.my.browserCheck = () -> true
+
       $state = $injector.get("$state") # This is a mock
       $state.params = {email: ''}
 
@@ -54,6 +57,7 @@ describe "SignupCtrl", ->
     scope.$digest()
 
     scope.signup()
+    scope.$digest()
     expect(scope.createWallet).not.toHaveBeenCalled()
 
   describe "password", ->
@@ -107,6 +111,8 @@ describe "SignupCtrl", ->
     it "should call createWallet()", ->
       spyOn(scope, "createWallet")
       scope.signup()
+      scope.$digest()
+
       expect(scope.createWallet).toHaveBeenCalled()
 
     it "should not call createWallet() if validation failed", ->
@@ -127,6 +133,7 @@ describe "SignupCtrl", ->
     it "should add uid to cookies", inject(($cookies) ->
       spyOn($cookies, 'put')
       scope.signup()
+      scope.$digest()
       expect($cookies.put).toHaveBeenCalledWith('uid', "new_guid")
     )
 
@@ -136,6 +143,7 @@ describe "SignupCtrl", ->
       scope.fields.password = "testing"
 
       scope.signup()
+      scope.$digest()
       expect($cookies.put).toHaveBeenCalledWith('password', "testing")
     )
 
