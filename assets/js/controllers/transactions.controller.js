@@ -55,7 +55,7 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
     controller: 'ExportHistoryController',
     windowClass: 'bc-modal',
     backdrop: 'static',
-    resolve: { filterBy: () => $scope.filterBy }
+    resolve: { activeIndex: () => $scope.account }
   });
 
   let unsub = txList.subscribe(setTxs);

@@ -1,51 +1,67 @@
-.modal-header
-  .flex-center.pam
-    h3.man.mrm(translate="EXPORT_HISTORY")
-    helper-button(content="EXPORT_HISTORY_EXPLAIN")
+form(
+  role="form"
+  name="exportForm"
+  autocomplete="off"
+  action="{{::action}}"
+  method="POST"
+  novalidate)
 
-.modal-body
-  .alert-in-app
-    alerts(context="alerts")
+  .modal-header
+    .flex-center.pam
+      h3.man.mrm(translate="EXPORT_HISTORY")
+      helper-button(content="EXPORT_HISTORY_EXPLAIN")
 
-  form.ph-form(role="form" name="exportForm" autocomplete="off" novalidate)
-    .form-group.row.pbm.filter-buttons.flex
-      a.black.em-500.em-alt(
-        ng-repeat="f in filterTypes track by f"
-        ng-click="setFilterType($index)"
-        ng-class="{'active': isFilterType($index)}"
-        translate="{{::f}}")
+  .modal-body
+    .ph-form
+      input(type="hidden" name="action" value="export")
+      input(type="hidden" name="active" value="{{active}}")
+      input(type="hidden" name="archived" value="{{archived}}")
+      
+      .flex-row
+        .flex-column.flex-1
+          label.control-label.mbn.colon(translate="TIMEFRAME")
+          .pam(ng-class="{'has-error':exportForm.start.$invalid}")
+            p.input-group.flex-center
+              input.form-control(
+                type="text"
+                name="start"
+                ng-model="start.date"
+                uib-datepicker-popup="{{format}}"
+                is-open="start.open"
+                placeholder="{{'START_DATE'|translate}}"
+                required)
+              span.ti-calendar.pointer(ng-click="start.open=true")
+            p.input-group.flex-center
+              input.form-control(
+                type="text"
+                name="end"
+                ng-model="end.date"
+                uib-datepicker-popup="{{format}}"
+                is-open="end.open"
+                placeholder="{{'END_DATE'|translate}}"
+                required)
+              span.ti-calendar.pointer(ng-click="end.open=true")
 
-    .form-group.row.pbm.flex-justify.flex-center(ng-class="{'has-error':exportForm.start.$invalid && exportForm.start.$touched}")
-      label.control-label.mbn.colon(translate="START_DATE")
-      .flex-1
-        input.form-control(
-          type="text"
-          name="start"
-          placeholder="{{format}}"
-          uib-datepicker-popup="{{format}}"
-          ng-model="startDate"
-          ng-disabled="loading"
-          required)
-    .form-group.row.pbm.flex-justify.flex-center(ng-class="{'has-error':exportForm.end.$invalid && exportForm.end.$touched}")
-      label.control-label.mbn.colon(translate="END_DATE")
-      .flex-1
-        input.form-control(
-          type="text"
-          name="end"
-          placeholder="{{format}}"
-          uib-datepicker-popup="{{format}}"
-          ng-model="endDate"
-          ng-disabled="loading"
-          required)
+        .flex-column.flex-1
+          label.control-label.mbn.colon(translate="FORMAT")
+          .pam
+            .radio
+              label
+                input(type="radio" name="format" value="csv" checked)
+                | CSV
+            .radio
+              label
+                input(type="radio" name="format" value="xls")
+                | XLS
+       
+      span.type-h4(translate="EXPORTING_FOR" translate-values="::{name:activeName}")
 
-.modal-footer
-  button.button-muted.mrm(
-    translate="CLOSE"
-    ng-click="$dismiss()")
-  button.btn.button-primary(
-    ladda-translate="EXPORT"
-    data-style="expand-left"
-    ng-hide="historyUrl"
-    ng-click="exportHistory()"
-    ui-ladda="loading"
-    ng-disabled="exportForm.$invalid")
+  .modal-footer
+    button.button-muted.mrm(
+      type="button"
+      translate="CLOSE"
+      ng-click="$dismiss()")
+    button.btn.button-primary(
+      type="submit"
+      translate="EXPORT"
+      ng-disabled="exportForm.$invalid")
