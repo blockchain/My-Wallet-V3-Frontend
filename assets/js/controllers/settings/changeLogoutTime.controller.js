@@ -4,9 +4,6 @@ angular
 
 function ChangeLogoutTimeCtrl ($scope, Wallet, Alerts, $translate) {
   $scope.settings = Wallet.settings;
-  $scope.errors = {};
-  $scope.status = {};
-  $scope.active = false;
 
   $scope.fields = {
     logoutTime: ''
@@ -16,36 +13,6 @@ function ChangeLogoutTimeCtrl ($scope, Wallet, Alerts, $translate) {
     $scope.fields = {
       logoutTime: ''
     };
-
-    $scope.errors = {};
-    $scope.status = {};
-    $scope.active = false;
-
-    $scope.form.$setPristine();
-    $scope.form.$setUntouched();
-    $scope.$root.$safeApply($scope);
-  };
-
-  $scope.activate = () => {
-    $scope.active = true;
-  };
-
-  $scope.deactivate = () => {
-    $scope.active = false;
-    $scope.reset();
-  };
-
-  $scope.changeLogoutTime = () => {
-    $scope.status.waiting = true;
-
-    const error = () => {
-      Alerts.displayError('Failed to update auto logout time');
-    };
-    const success = () => {
-      $scope.deactivate();
-    };
-
-    Wallet.setLogoutTime($scope.fields.logoutTime, success, error);
   };
 
   $scope.validateLogoutTime = () => {
@@ -59,5 +26,17 @@ function ChangeLogoutTimeCtrl ($scope, Wallet, Alerts, $translate) {
     } else {
       $scope.errors.logoutTime = '';
     }
+  };
+
+  $scope.changeLogoutTime = () => {
+    const error = () => {
+      Alerts.displayError('Failed to update auto logout time');
+    };
+    const success = () => {
+      $scope.deactivate();
+    };
+
+    $scope.status.waiting = true;
+    Wallet.setLogoutTime($scope.fields.logoutTime, success, error);
   };
 }

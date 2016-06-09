@@ -3,18 +3,10 @@ angular
   .controller('ChangeSecondPasswordCtrl', ChangeSecondPasswordCtrl);
 
 function ChangeSecondPasswordCtrl ($scope, Wallet, $timeout) {
-  $scope.busy = null;
+  $scope.form = {};
   $scope.fields = {
     password: '',
     confirmation: ''
-  };
-  $scope.active = false;
-
-  $scope.removeSecondPassword = () => {
-    if ($scope.busy) return;
-    $scope.busy = true;
-    let done = () => $scope.busy = false;
-    Wallet.removeSecondPassword(done, done);
   };
 
   $scope.reset = () => {
@@ -22,20 +14,13 @@ function ChangeSecondPasswordCtrl ($scope, Wallet, $timeout) {
       password: '',
       confirmation: ''
     };
-    $scope.busy = false;
-    $scope.active = false;
-
-    $scope.passwordForm.$setPristine();
-    $scope.passwordForm.$setUntouched();
-    $scope.$root.$safeApply($scope);
   };
 
-  $scope.activate = () => {
-    $scope.active = true;
-  };
-
-  $scope.deactivate = () => {
-    $scope.active = false;
+  $scope.removeSecondPassword = () => {
+    if ($scope.status.waiting) return;
+    $scope.status.waiting = true;
+    let done = () => $scope.status.waiting = false;
+    Wallet.removeSecondPassword(done, done);
   };
 
   $scope.isMainPassword = Wallet.isCorrectMainPassword;
@@ -45,14 +30,14 @@ function ChangeSecondPasswordCtrl ($scope, Wallet, $timeout) {
   };
 
   $scope.setPassword = () => {
-    if ($scope.busy || $scope.form.$invalid) return;
-    $scope.busy = true;
+    if ($scope.status.waiting || $scope.form.$invalid) return;
     $scope.$safeApply();
 
-    const success = () => { $scope.reset(); };
+    const success = () => {
+      $scope.deactivate();
+    };
 
-    $timeout(() => {
-      Wallet.setSecondPassword($scope.fields.password, success);
-    }, 500);
+    $scope.status.waiting = true;
+    Wallet.setSecondPassword($scope.fields.password, success);
   };
 }

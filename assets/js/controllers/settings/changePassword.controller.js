@@ -5,15 +5,13 @@ angular
 function ChangePasswordCtrl ($scope, $log, Wallet, Alerts, $translate) {
   $scope.isCorrectMainPassword = Wallet.isCorrectMainPassword;
   $scope.uid = Wallet.user.uid;
+  $scope.form = {};
 
   $scope.fields = {
     currentPassword: '',
     password: '',
     confirmation: ''
   };
-  $scope.errors = {};
-  $scope.status = {};
-  $scope.active = false;
 
   $scope.reset = () => {
     $scope.fields = {
@@ -21,22 +19,6 @@ function ChangePasswordCtrl ($scope, $log, Wallet, Alerts, $translate) {
       password: '',
       confirmation: ''
     };
-    $scope.errors = {};
-    $scope.status = {};
-    $scope.active = false;
-
-    $scope.passwordForm.$setPristine();
-    $scope.passwordForm.$setUntouched();
-    $scope.$root.$safeApply($scope);
-  };
-
-  $scope.activate = () => {
-    $scope.active = true;
-  };
-
-  $scope.deactivate = () => {
-    $scope.active = false;
-    $scope.reset();
   };
 
   $scope.isUserEmail = (candidate) => {
@@ -47,12 +29,12 @@ function ChangePasswordCtrl ($scope, $log, Wallet, Alerts, $translate) {
     return Wallet.user.passwordHint && candidate === Wallet.user.passwordHint;
   };
 
-  $scope.changePassword = () => {
-    if (!$scope.passwordForm.$valid) return;
+  $scope.change = () => {
+    if (!$scope.form.$valid) return;
 
     const success = () => {
       Wallet.saveActivity(2);
-      $scope.reset();
+      $scope.deactivate();
     };
 
     const error = (err) => {
@@ -61,7 +43,6 @@ function ChangePasswordCtrl ($scope, $log, Wallet, Alerts, $translate) {
     };
 
     $scope.status.waiting = true;
-    $scope.$root.$safeApply($scope);
     Wallet.changePassword($scope.fields.password, success, error);
   };
 }

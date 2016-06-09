@@ -12,40 +12,43 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
       confirm-recovery-phrase
 
   .form-group.mbn.border-bottom.clearfix.pvl(ng-controller="ChangePasswordCtrl")
-    .col-sm-12.col-md-6
-      .flex-center.flex-between-mobile.mbm
-        label.em-400.type-h5.mbn(translate="WALLET_PASSWORD")
-        span.label.label-success(translate="PASSWORD_SET")
-      p.text.em-300.hidden-xs(translate="WALLET_PASSWORD_EXPLAIN")
-    .col-sm-12.col-md-6.setting-result.mtm(ng-hide="active")
-      a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
-    .col-sm-12.col-md-6(ng-show="active")
-      include ./change-password.jade
+    div(settings-form)
+      .col-sm-12.col-md-6
+        .flex-center.flex-between-mobile.mbm
+          label.em-400.type-h5.mbn(translate="WALLET_PASSWORD")
+          span.label.label-success(translate="PASSWORD_SET")
+        p.text.em-300.hidden-xs(translate="WALLET_PASSWORD_EXPLAIN")
+      .col-sm-12.col-md-6.setting-result.mtm(ng-hide="active")
+        a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
+      .col-sm-12.col-md-6(ng-show="active")
+        include ./change-password.jade
   .form-group.mbn.border-bottom.clearfix.pvl(ng-class="{'has-error':errors.passwordHint}" ng-controller="ChangePasswordHintCtrl")
-    .col-sm-12.col-md-6
-      .flex-center.flex-between-mobile.mbm
-        label.em-400.type-h5.mbn(translate="PASSWORD_HINT")
-        span.label.label-warning(translate="NOT_STORED", ng-show="!user.passwordHint")
-        span.label.label-success(translate="HINT_STORED", ng-show="user.passwordHint")
-      p.text.em-300.hidden-xs(translate="PASSWORD_HINT_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result(ng-hide="active")
-      p.em-400.type-h5.mbm {{ user.passwordHint }}
-      a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
-    .col-sm-12.col-md-6(ng-show="active")
-      include ./change-password-hint.jade
+    div(settings-form)
+      .col-sm-12.col-md-6
+        .flex-center.flex-between-mobile.mbm
+          label.em-400.type-h5.mbn(translate="PASSWORD_HINT")
+          span.label.label-warning(translate="NOT_STORED", ng-show="!user.passwordHint")
+          span.label.label-success(translate="HINT_STORED", ng-show="user.passwordHint")
+        p.text.em-300.hidden-xs(translate="PASSWORD_HINT_EXPLAIN")    
+      .col-sm-12.col-md-6.setting-result(ng-hide="active")
+        p.em-400.type-h5.mbm {{ user.passwordHint }}
+        a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
+      .col-sm-12.col-md-6(ng-show="active")
+        include ./change-password-hint.jade
       
   .form-group.mbn.border-bottom.clearfix.pvl(ng-controller="ChangeSecondPasswordCtrl")
-    .col-sm-12.col-md-6
-      .flex-center.flex-between-mobile.mbm
-        label.type-h5.em-400.mbn(translate="WALLET_SECOND_PASSWORD")
-        span.label.label-warning(ng-hide="settings.secondPassword", translate="DISABLED")    
-        span.label.label-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
-      p.em-300.text.hidden-xs(translate="WALLET_SECOND_PASSWORD_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result(ng-hide="active")
-      a.button-primary.display-inline-block(ng-click="activate()", translate="SET_SECOND_PASSWORD", ng-show="!settings.secondPassword")
-      a.button-primary.display-inline-block(ng-click="removeSecondPassword()", ladda-translate="REMOVE_SECOND_PASSWORD", ng-show="settings.secondPassword", ui-ladda="busy", data-style="expand-right")
-    .col-sm-12.col-md-6(ng-show="active")
-      include ./change-second-password.jade
+    div(settings-form)
+      .col-sm-12.col-md-6
+        .flex-center.flex-between-mobile.mbm
+          label.type-h5.em-400.mbn(translate="WALLET_SECOND_PASSWORD")
+          span.label.label-warning(ng-hide="settings.secondPassword", translate="DISABLED")    
+          span.label.label-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
+        p.em-300.text.hidden-xs(translate="WALLET_SECOND_PASSWORD_EXPLAIN")    
+      .col-sm-12.col-md-6.setting-result(ng-hide="active")
+        a.button-primary.display-inline-block(ng-click="activate()", translate="SET_SECOND_PASSWORD", ng-show="!settings.secondPassword")
+        a.button-primary.display-inline-block(ng-click="removeSecondPassword()", ladda-translate="REMOVE_SECOND_PASSWORD", ng-show="settings.secondPassword", ui-ladda="status.waiting", data-style="expand-right")
+      .col-sm-12.col-md-6(ng-show="active")
+        include ./change-second-password.jade
    
   .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
@@ -102,14 +105,15 @@ div.clearfix(ng-show="display.advanced")
       ip-whitelist-restrict
       
   .form-group.mbn.border-bottom.clearfix.pvl(ng-class="{'has-error': errors.ipWhitelist}" ng-controller="ChangeIpWhitelistCtrl")
-    .col-sm-12.col-md-6
-      label.type-h5.em-400(translate="IP_WHITELIST")
-      p.em-300.text.hidden-xs.hidden-sm(translate="IP_WHITELIST_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result(ng-hide="active")
-      p.em-400.type-h5.mbm {{ settings.ipWhitelist }}
-      a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
-    .col-sm-12.col-md-6(ng-show="active")
-      include ./change-ip-whitelist.jade
+    div(settings-form)
+      .col-sm-12.col-md-6
+        label.type-h5.em-400(translate="IP_WHITELIST")
+        p.em-300.text.hidden-xs.hidden-sm(translate="IP_WHITELIST_EXPLAIN")    
+      .col-sm-12.col-md-6.setting-result(ng-hide="active")
+        p.em-400.type-h5.mbm {{ settings.ipWhitelist }}
+        a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
+      .col-sm-12.col-md-6(ng-show="active")
+        include ./change-ip-whitelist.jade
       
    .form-group.mbn.border-bottom.clearfix.pvl
       .col-sm-12.col-md-6
@@ -122,14 +126,15 @@ div.clearfix(ng-show="display.advanced")
         tor
 
   .form-group.mbn.border-bottom.clearfix.pvl(ng-class="{'has-error':errors.pbkdf2}" ng-controller="ChangePbkdf2Ctrl")
-    .col-sm-12.col-md-6
-      label.type-h5.em-400(translate="PBKDF2_ITERATIONS")
-      p.em-300.text.hidden-xs.hidden-sm(translate="PBKDF2_ITERATIONS_EXPLAIN")
-    .col-sm-12.col-md-6.setting-result(ng-hide="active")
-      p.em-400.type-h5.mbm {{ settings.pbkdf2 }}
-      a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
-    .col-sm-12.col-md-6(ng-show="active")
-      include ./change-pbkdf2.jade
+    div(settings-form)
+      .col-sm-12.col-md-6
+        label.type-h5.em-400(translate="PBKDF2_ITERATIONS")
+        p.em-300.text.hidden-xs.hidden-sm(translate="PBKDF2_ITERATIONS_EXPLAIN")
+      .col-sm-12.col-md-6.setting-result(ng-hide="active")
+        p.em-400.type-h5.mbm {{ settings.pbkdf2 }}
+        a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
+      .col-sm-12.col-md-6(ng-show="active")
+        include ./change-pbkdf2.jade
 
   .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6

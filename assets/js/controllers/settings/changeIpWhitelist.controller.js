@@ -4,9 +4,7 @@ angular
 
 function ChangeIpWhitelistCtrl ($scope, Wallet, $translate, Alerts) {
   $scope.settings = Wallet.settings;
-  $scope.errors = {};
-  $scope.status = {};
-  $scope.active = false;
+  $scope.form = {};
 
   $scope.fields = {
     ipWhitelist: ''
@@ -16,23 +14,6 @@ function ChangeIpWhitelistCtrl ($scope, Wallet, $translate, Alerts) {
     $scope.fields = {
       ipWhitelist: ''
     };
-
-    $scope.errors = {};
-    $scope.status = {};
-    $scope.active = false;
-
-    $scope.form.$setPristine();
-    $scope.form.$setUntouched();
-    $scope.$root.$safeApply($scope);
-  };
-
-  $scope.activate = () => {
-    $scope.active = true;
-  };
-
-  $scope.deactivate = () => {
-    $scope.active = false;
-    $scope.reset();
   };
 
   $scope.validateIpWhitelist = () => {
@@ -81,12 +62,13 @@ function ChangeIpWhitelistCtrl ($scope, Wallet, $translate, Alerts) {
 
   $scope.changeIpWhitelist = () => {
     const success = () => {
-      $scope.reset();
+      $scope.deactivate();
     };
     const error = () => {
       Alerts.displayError('Failed to update IP whitelist');
     };
 
+    $scope.status.waiting = true;
     Wallet.setIPWhitelist($scope.fields.ipWhitelist, success, error);
   };
 }

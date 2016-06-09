@@ -2,20 +2,21 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
 
 .clearfix
   .form-group.mbn.border-bottom.clearfix.pvl(ng-controller="ChangeEmailCtrl")
-    .col-sm-12.col-md-6
-      .flex-center.mbm
-        label.em-400.type-h5.mbn(translate="EMAIL_ADDRESS")
-        span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isEmailVerified")
-        span.label.label-success(translate="VERIFIED", ng-show="user.isEmailVerified")
-      p.text.em-300.hidden-xs(translate="EMAIL_ADDRESS_EXPLAIN")
-    .col-sm-12.col-md-6.setting-result(ng-hide="active")
-      p.em-400.type-h5.mbm {{ user.email }}
-      a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
-    .col-sm-12.col-md-6.flex-column(ng-show="active")
-      include ./change-email.jade
-      //- bc-async-input(type="email" is-required ng-model="user.email" on-save="changeEmail" action-title="'CHANGE' | translate" autofocus)
-      .right-align.mtm
-        resend-email-confirmation.mtl(ng-hide="user.isEmailVerified")
+    div(settings-form)
+      .col-sm-12.col-md-6
+        .flex-center.mbm
+          label.em-400.type-h5.mbn(translate="EMAIL_ADDRESS")
+          span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isEmailVerified")
+          span.label.label-success(translate="VERIFIED", ng-show="user.isEmailVerified")
+        p.text.em-300.hidden-xs(translate="EMAIL_ADDRESS_EXPLAIN")
+      .col-sm-12.col-md-6.setting-result(ng-hide="active")
+        p.em-400.type-h5.mbm {{ user.email }}
+        a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
+      .col-sm-12.col-md-6.flex-column(ng-show="active")
+        include ./change-email.jade
+        //- bc-async-input(type="email" is-required ng-model="user.email" on-save="changeEmail" action-title="'CHANGE' | translate" autofocus)
+        .right-align.mtm
+          resend-email-confirmation.mtl(ng-hide="user.isEmailVerified")
   .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       .flex-center.mbm
@@ -72,11 +73,12 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
       a.button-primary(ng-click="setHandleBitcoinLinks()", translate="SET_HANDLE_BITCOIN_LINKS", ng-hide="settings.handleBitcoinLinks")
       p.settingtext.mtl(translate="HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN")
   .form-group.mbn.border-bottom.clearfix.pvl(ng-controller="ChangeLogoutTimeCtrl")
-    .col-sm-12.col-md-6
-      label.type-h5.em-400(translate="AUTO_LOGOUT")
-      p.em-300.text.hidden-sm.hidden-xs(translate="AUTO_LOGOUT_EXPLAIN") 
-    .col-sm-12.col-md-6.setting-result(ng-hide="active")
-      p.em-400.type-h5.mbm {{ settings.logoutTimeMinutes }} minutes
-      a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
-    .col-sm-12.col-md-6(ng-show="active")
-      include ./change-logout.jade
+    div(settings-form)
+      .col-sm-12.col-md-6
+        label.type-h5.em-400(translate="AUTO_LOGOUT")
+        p.em-300.text.hidden-sm.hidden-xs(translate="AUTO_LOGOUT_EXPLAIN") 
+      .col-sm-12.col-md-6.setting-result(ng-hide="active")
+        p.em-400.type-h5.mbm {{ settings.logoutTimeMinutes }} minutes
+        a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
+      .col-sm-12.col-md-6(ng-show="active")
+        include ./change-logout.jade

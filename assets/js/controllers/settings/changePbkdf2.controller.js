@@ -4,36 +4,16 @@ angular
 
 function ChangePbkdf2Ctrl ($scope, Wallet, $translate, Alerts) {
   $scope.settings = Wallet.settings;
+  $scope.form = {};
 
   $scope.fields = {
     pbkdf2: ''
   };
 
-  $scope.errors = {};
-  $scope.status = {};
-  $scope.active = false;
-
   $scope.reset = () => {
     $scope.fields = {
       pbkdf2: ''
     };
-
-    $scope.errors = {};
-    $scope.status = {};
-    $scope.active = false;
-
-    $scope.form.$setPristine();
-    $scope.form.$setUntouched();
-    $scope.$root.$safeApply($scope);
-  };
-
-  $scope.activate = () => {
-    $scope.active = true;
-  };
-
-  $scope.deactivate = () => {
-    $scope.active = false;
-    $scope.reset();
   };
 
   $scope.validatePbkdf2 = () => {
@@ -50,8 +30,6 @@ function ChangePbkdf2Ctrl ($scope, Wallet, $translate, Alerts) {
   };
 
   $scope.changePbkdf2 = () => {
-    $scope.status.waiting = true;
-
     const error = () => {
       Alerts.displayError('Failed to update PBKDF2 iterations');
       $scope.status = {};
@@ -59,9 +37,10 @@ function ChangePbkdf2Ctrl ($scope, Wallet, $translate, Alerts) {
 
     const success = () => {
       Wallet.saveActivity(2);
-      $scope.reset();
+      $scope.deactivate();
     };
 
+    $scope.status.waiting = true;
     Wallet.setPbkdf2Iterations($scope.fields.pbkdf2, success, error);
   };
 }
