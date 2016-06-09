@@ -1,0 +1,22 @@
+form(role="form" name="form" novalidate)
+  .form-group(ng-class="{'has-error': errors.ipWhitelist}")
+    label.control-label(translate="IP_WHITELIST")
+    div
+      input.form-control(
+        type="text"
+        name="ipWhitelist"
+        ng-model="fields.ipWhitelist"
+        ng-change="validateIpWhitelist()"
+        on-enter="changeIpWhitelist()"
+        maxlength="255"
+        focus-when="active")
+      span.help-block(ng-show="errors.ipWhitelist")
+        span {{ errors.ipWhitelist }}
+  .form-group.mbn.has-error.pull-right.right-align
+    button.button-muted(ng-click="deactivate()" translate="CANCEL" ng-hide="busy")
+    button.button-success(
+      ui-ladda="status.waiting"
+      ng-click="changeIpWhitelist()"
+      ng-disabled="form.$invalid"
+      ladda-translate="CHANGE"
+      data-style="expand-left")

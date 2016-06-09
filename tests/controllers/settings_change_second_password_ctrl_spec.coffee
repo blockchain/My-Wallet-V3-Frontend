@@ -1,4 +1,4 @@
-describe "SetSecondPasswordCtrl", ->
+describe "ChangeSecondPasswordCtrl", ->
   scope = undefined
   Wallet = undefined
   modalInstance =
@@ -14,9 +14,9 @@ describe "SetSecondPasswordCtrl", ->
       Wallet.isCorrectMainPassword = (pw) -> pw == 'mainpw'
 
       scope = $rootScope.$new()
-      template = $templateCache.get('partials/settings/set-second-password.jade')
+      template = $templateCache.get('partials/settings/change-second-password.jade')
 
-      $controller "SetSecondPasswordCtrl",
+      $controller "ChangeSecondPasswordCtrl",
         $scope: scope,
         $uibModalInstance: modalInstance
 
@@ -24,10 +24,10 @@ describe "SetSecondPasswordCtrl", ->
       $compile(template)(scope)
       scope.$digest()
 
-  it "should close", ->
-    spyOn(modalInstance, "dismiss")
-    scope.close()
-    expect(modalInstance.dismiss).toHaveBeenCalledWith('')
+  it "should be able to toggle active", ->
+    expect(scope.active).toBe(false);
+    scope.activate()
+    expect(scope.active).toBe(true);
 
   describe "password", ->
 

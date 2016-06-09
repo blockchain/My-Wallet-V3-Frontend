@@ -14,7 +14,7 @@ div
       span.help-block {{ errorMessage }}
       span(ng-hide="inline && !status.edit")
         button.button-success(
-          type="submit" 
+          type="submit"
           ng-disabled="bcAsyncForm.$invalid || bcAsyncForm.$pristine" 
           ui-ladda="status.saving" 
           data-style="expand-left" 

@@ -726,5 +726,11 @@
   "CONFIRMATIONS": "confirmations",
   "ADD_A_DESCRIPTION": "Add a description",
   "COPY_AND_SHARE": "Copy and Share",
-  "SCAN": "Scan"
+  "SCAN": "Scan",
+  "PBKDF2_GREATER_THAN_1": "PBKDF2 must be greater than 1",
+  "PBKDF2_LESS_THAN_20000": "PBKDF2 must be less than 20000",
+  "LOGOUT_GREATER_THAN_1": "Please set an auto logout time greater than 1 minute.",
+  "LOGOUT_LESS_THAN_1440": "Please set an auto logout time less than 1440",
+  "CREATE_A_WALLET": "Create your Wallet",
+  "CREATE_FREE_WALLET": "Sign up for a free wallet below"
 }

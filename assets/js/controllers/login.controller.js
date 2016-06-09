@@ -14,6 +14,7 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
 
   $rootScope.loginFormUID.then((res) => {
     $scope.uid = $stateParams.uid || Wallet.guid || res;
+    $scope.uidAvailable = !!$scope.uid;
 
     $scope.$watch('uid + password + twoFactorCode + settings.needs2FA', () => {
       $rootScope.loginFormUID = $q.resolve($scope.uid);
@@ -36,8 +37,6 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
       $timeout(() => $scope.isValid = isValid);
     });
   });
-
-  $scope.uidAvailable = !!$scope.uid;
 
   $scope.user = Wallet.user;
 

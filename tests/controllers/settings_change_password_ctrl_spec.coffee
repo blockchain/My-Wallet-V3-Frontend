@@ -40,11 +40,10 @@ describe "ChangePasswordCtrl", ->
 
     return
 
-  it "should be able to close", inject((Alerts) ->
-    spyOn(Alerts, "clear")
-    scope.close()
-    expect(Alerts.clear).toHaveBeenCalled()
-  )
+  it "should be able to toggle active", ->
+    expect(scope.active).toBe(false);
+    scope.activate()
+    expect(scope.active).toBe(true);
 
   it "should get model values from the form", (() ->
     scope.passwordForm.currentPassword.$setViewValue('test')

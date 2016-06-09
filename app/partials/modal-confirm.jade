@@ -2,5 +2,5 @@
   h4(translate="{{::message}}" translate-values="values")
 .modal-footer
   button.button-muted(ng-click="$dismiss('cancelled')" translate="CANCEL")
-  button.btn.button-danger(ng-click="$close(true)" translate="{{::close}}" focus-when="{{true}}" ng-hide="options.action")
+  button.btn.button-danger(ng-click="$close(true)" translate="{{::close}}" ng-hide="options.action")
   button.btn.button-primary(ng-click="$close(options.action)" translate="{{::options.translation}}" ng-hide="!options.action")
