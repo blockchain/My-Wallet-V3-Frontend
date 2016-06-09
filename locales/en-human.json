@@ -248,6 +248,7 @@
   "PAST_ADDRESSES" : "Past Addresses",
   "TOTAL_RECEIVED" : "Total Received",
   "CURRENT_BALANCE" : "Current Balance",
+  "CURRENT_BALANCE_HELP" : "When you send bitcoin, your Blockchain wallet automatically selects addresses to spend from. That's why the current balance of an address can be different from the total received value.",
   "WATCH_ONLY_ADDRESSES" : "Watch-only Addresses",
   "ARCHIVED_ADDRESSES" : "Archived Addresses",
   "ARCHIVED_ADDRESSES_EXPLAIN" : "Archived addresses are addresses you may not need anymore that are hidden from the main view but still part of your wallet. You can unarchive them at any time.",

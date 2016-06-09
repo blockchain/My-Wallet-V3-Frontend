@@ -50,7 +50,9 @@ div(ng-if="showPast" ng-init="setAddresses(page)")
         tr
           th.shrink(translate="ADDRESS")
           th.shrink(translate="LABEL")
-          th.shrink(translate="CURRENT_BALANCE")
+          th.shrink
+            span(translate="CURRENT_BALANCE")
+            helper-button(content="CURRENT_BALANCE_HELP")
           th.shrink(translate="TOTAL_RECEIVED")
         tr(ng-repeat="address in addresses | orderBy:'-index' track by address.index")
           td.shrink
