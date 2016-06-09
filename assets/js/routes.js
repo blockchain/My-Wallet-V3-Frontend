@@ -299,6 +299,12 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/settings/addresses.jade',
           controller: 'SettingsAddressesCtrl'
         }
+      },
+      resolve: {
+        paymentRequests: ($stateParams, Wallet) => {
+          let index = parseInt($stateParams.account, 10);
+          return Wallet.getPendingPayments(index);
+        }
       }
     })
     .state('wallet.common.settings.imported_addresses', {

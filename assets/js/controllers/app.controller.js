@@ -125,6 +125,10 @@ function AppCtrl ($scope, Wallet, Alerts, $state, $rootScope, $cookies, $locatio
     $uibModalStack.dismissAll();
   });
 
+  $scope.$on('$stateChangeError', (event, toState, toParams, fromState, fromParams, error) => {
+    Alerts.displayError(error);
+  });
+
   $scope.$watch('status.isLoggedIn', () => {
     $timeout(() => {
       $scope.checkGoals();

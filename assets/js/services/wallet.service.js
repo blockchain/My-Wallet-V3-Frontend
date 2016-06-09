@@ -284,6 +284,29 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     }
   };
 
+  wallet.getReceiveAddress = MyWalletHelpers.memoize((acctIdx, addrIdx) => {
+    let account = wallet.accounts()[acctIdx];
+    return account.receiveAddressAtIndex(addrIdx);
+  });
+
+  wallet.getLabelledHdAddresses = (acctIdx) => {
+    let account = wallet.accounts()[acctIdx];
+    return account.receivingAddressesLabels.map(({ index, label }) => ({
+      index, label, address: wallet.getReceiveAddress(acctIdx, index)
+    }));
+  };
+
+  wallet.getPendingPayments = (acctIdx) => {
+    let labelledAddresses = wallet.getLabelledHdAddresses(acctIdx);
+    let addresses = labelledAddresses.map(a => a.address);
+    return $q.resolve(MyBlockchainApi.getBalances(addresses)).then(data => (
+      labelledAddresses.map(({ index, address, label }) => ({
+        index, address, label,
+        ntxs: data[address].n_tx
+      })).filter(a => a.ntxs === 0)
+    ));
+  };
+
   let hdAddresses = {};
   wallet.hdAddresses = (accountIdx) => {
     return (refresh) => {
@@ -303,16 +326,12 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     };
   };
 
-  wallet.addAddressForAccount = (account, successCallback, errorCallback) => {
-    let success = () => {
-      wallet.hdAddresses(account.index)(true);
-      successCallback();
-      $rootScope.$safeApply();
-    };
-    $translate('DEFAULT_NEW_ADDRESS_LABEL').then((translation) => {
-      account.setLabelForReceivingAddress(account.receiveIndex, translation)
-        .then(success).catch(errorCallback);
-    });
+  wallet.addAddressForAccount = (account) => {
+    let index = account.receiveIndex;
+    let address = wallet.getReceiveAddress(account.index, index);
+    let label = $translate.instant('DEFAULT_NEW_ADDRESS_LABEL');
+    return $q.resolve(account.setLabelForReceivingAddress(index, label))
+      .then(() => ({ index, address, label }));
   };
 
   wallet.create = (password, email, currency, language, success_callback) => {

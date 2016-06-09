@@ -1,15 +1,12 @@
 tr
   td.shrink(ng-bind-html="address.address | escapeHtml | highlight:searchText")
   td.expand.address-label
-    span(ng-bind-html="address.label | escapeHtml | highlight:searchText", ng-hide="status.edit").prm.oflow
-    div(ng-class="{'has-error': errors.label}", ng-show="status.edit")
-      div
-        bc-async-input(inline ng-model="address.label" on-save="changeLabel" on-cancel="cancelEdit" is-required editing="true")
-        span.help-block(ng-show="errors.label") {{::errors.label}}
-    span(ng-hide="status.edit").float-right
-      a(ng-click="status.edit=1")
+    span.flex-1.prm.oflow(ng-bind-html="address.label | escapeHtml | highlight:searchText" ng-hide="editing")
+    div(ng-show="editing")
+      bc-async-input(inline ng-model="address.label" on-save="changeLabel" on-cancel="cancelEdit" is-required editing="true")
+    span.float-right(ng-hide="editing")
+      a(ng-click="editing = true")
         i.ti-pencil.prm        
   td.shrink
-    span
-      a(ng-click="removeLabel()")
-        i.ti-trash.prm
+    a(ng-click="removeLabel()")
+      i.ti-trash.prm
