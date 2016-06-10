@@ -56,7 +56,7 @@ function AddressImportCtrl ($scope, $uibModal, Wallet, Alerts, $uibModalInstance
       $scope.status.busy = false;
       $scope.$safeApply();
 
-      switch (err) {
+      switch (err.message) {
         case 'presentInWallet':
           $scope.importForm.privateKey.$setValidity('present', false);
           $scope.BIP38 = false;

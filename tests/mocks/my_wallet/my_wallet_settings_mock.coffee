@@ -1,6 +1,6 @@
 angular.module('walletApp.core').factory 'MyBlockchainSettings', () ->
   {
-    get_account_info: (success, error) ->
+    getAccountInfo: (success, error) ->
       success({
         email: "steve@me.com"
         email_verified: 1

@@ -20,7 +20,7 @@ describe "SettingsSecurityCtrl", ->
       Wallet.user = {passwordHint: "Open sesame"}
 
       Wallet.settings_api =
-        update_password_hint1: (hint, success, error) ->
+        updatePasswordHint1: (hint, success, error) ->
           if hint == "आपकी पसंदीदा"
             error(101)
           else

@@ -21,7 +21,7 @@ describe "SettingsPreferencesCtrl", ->
       Wallet.user = {email: "steve@me.com"}
 
       Wallet.settings_api =
-        change_email: (email, success, error) -> success()
+        changeEmail: (email, success, error) -> success()
 
       Wallet.settings.languages = [
         {code: "en", name: "English"}
@@ -33,8 +33,8 @@ describe "SettingsPreferencesCtrl", ->
         {code: "EUR", name: "Euro"}
       ]
 
-      Wallet.settings_api.change_language = (-> )
-      Wallet.settings_api.change_local_currency = (-> )
+      Wallet.settings_api.changeLanguage = (-> )
+      Wallet.settings_api.changeLocalCurrency = (-> )
 
       Wallet.setLanguage(Wallet.settings.languages[0])
       Wallet.changeCurrency(Wallet.settings.currencies[0])

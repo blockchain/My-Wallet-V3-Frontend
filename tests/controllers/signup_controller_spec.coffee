@@ -18,8 +18,8 @@ describe "SignupCtrl", ->
       Wallet.login = (uid, pass, code, twoFactor, success, error) -> success()
       Wallet.create = (password, email, currency, language, success) -> success("new_guid")
       Wallet.settings_api =
-        change_language: (code, success) -> success()
-        change_local_currency: () ->
+        changeLanguage: (code, success) -> success()
+        changeLocalCurrency: () ->
       Wallet.changeCurrency = () ->
 
       scope = $rootScope.$new()
