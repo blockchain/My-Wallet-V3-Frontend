@@ -24,11 +24,6 @@ describe "ChangeSecondPasswordCtrl", ->
       $compile(template)(scope)
       scope.$digest()
 
-  it "should be able to toggle active", ->
-    expect(scope.active).toBe(false);
-    scope.activate()
-    expect(scope.active).toBe(true);
-
   describe "password", ->
 
     it "should be valid if the password is ok", ->

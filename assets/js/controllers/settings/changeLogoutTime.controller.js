@@ -3,6 +3,7 @@ angular
   .controller('ChangeLogoutTimeCtrl', ChangeLogoutTimeCtrl);
 
 function ChangeLogoutTimeCtrl ($scope, Wallet, Alerts, $translate) {
+  $scope.status = {};
   $scope.settings = Wallet.settings;
 
   $scope.fields = {
@@ -28,7 +29,7 @@ function ChangeLogoutTimeCtrl ($scope, Wallet, Alerts, $translate) {
     }
   };
 
-  $scope.changeLogoutTime = () => {
+  $scope.setLogoutTime = () => {
     const error = () => {
       Alerts.displayError('Failed to update auto logout time');
     };

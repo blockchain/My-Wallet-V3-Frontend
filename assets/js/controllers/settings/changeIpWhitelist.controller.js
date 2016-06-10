@@ -4,6 +4,7 @@ angular
 
 function ChangeIpWhitelistCtrl ($scope, Wallet, $translate, Alerts) {
   $scope.settings = Wallet.settings;
+  $scope.status = {};
   $scope.form = {};
 
   $scope.fields = {
@@ -60,7 +61,7 @@ function ChangeIpWhitelistCtrl ($scope, Wallet, $translate, Alerts) {
     return true;
   };
 
-  $scope.changeIpWhitelist = () => {
+  $scope.setIPWhitelist = () => {
     const success = () => {
       $scope.deactivate();
     };

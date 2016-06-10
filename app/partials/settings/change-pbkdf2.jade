@@ -6,7 +6,7 @@ form(role="form" name="form" novalidate)
         type="number"
         name="pbkdf2"
         ng-model="fields.pbkdf2"
-        on-enter="changePbkdf2()"
+        on-enter="setPbkdf2()"
         ng-change="validatePbkdf2()"
         required
         maxlength="255"
@@ -17,7 +17,7 @@ form(role="form" name="form" novalidate)
     button.button-muted(ng-click="deactivate()" translate="CANCEL" ng-hide="busy")
     button.button-success(
       ui-ladda="status.waiting"
-      ng-click="changePbkdf2()"
+      ng-click="setPbkdf2()"
       ng-disabled="errors.pbkdf2 || form.$invalid"
       ladda-translate="CHANGE"
       data-style="expand-left")

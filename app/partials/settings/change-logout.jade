@@ -6,7 +6,7 @@ form(role="form" name="form" novalidate)
         type="number"
         name="logoutTime"
         ng-model="fields.logoutTime"
-        on-enter="changeLogoutTime()"
+        on-enter="setLogoutTime()"
         ng-change="validateLogoutTime()"
         required
         maxlength="255"
@@ -17,7 +17,7 @@ form(role="form" name="form" novalidate)
     button.button-muted(ng-click="deactivate()" translate="CANCEL" ng-hide="busy")
     button.button-success(
       ui-ladda="status.waiting"
-      ng-click="changeLogoutTime()"
+      ng-click="setLogoutTime()"
       ng-disabled="errors.logoutTime || form.$invalid"
       ladda-translate="CHANGE"
       data-style="expand-left")

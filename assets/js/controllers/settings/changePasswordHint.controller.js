@@ -4,6 +4,7 @@ angular
 
 function ChangePasswordHintCtrl ($rootScope, $scope, Wallet, $translate) {
   $scope.form = {};
+  $scope.status = {};
   $scope.fields = {
     passwordHint: ''
   };

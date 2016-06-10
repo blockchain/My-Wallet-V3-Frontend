@@ -4,6 +4,7 @@ angular
 
 function ChangePbkdf2Ctrl ($scope, Wallet, $translate, Alerts) {
   $scope.settings = Wallet.settings;
+  $scope.status = {};
   $scope.form = {};
 
   $scope.fields = {
@@ -29,7 +30,7 @@ function ChangePbkdf2Ctrl ($scope, Wallet, $translate, Alerts) {
     }
   };
 
-  $scope.changePbkdf2 = () => {
+  $scope.setPbkdf2 = () => {
     const error = () => {
       Alerts.displayError('Failed to update PBKDF2 iterations');
       $scope.status = {};

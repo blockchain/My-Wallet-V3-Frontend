@@ -7,7 +7,7 @@ form(role="form" name="form" novalidate)
         name="ipWhitelist"
         ng-model="fields.ipWhitelist"
         ng-change="validateIpWhitelist()"
-        on-enter="changeIpWhitelist()"
+        on-enter="setIPWhitelist()"
         maxlength="255"
         focus-when="active")
       span.help-block(ng-show="errors.ipWhitelist")
@@ -16,7 +16,7 @@ form(role="form" name="form" novalidate)
     button.button-muted(ng-click="deactivate()" translate="CANCEL" ng-hide="busy")
     button.button-success(
       ui-ladda="status.waiting"
-      ng-click="changeIpWhitelist()"
+      ng-click="setIPWhitelist()"
       ng-disabled="form.$invalid"
       ladda-translate="CHANGE"
       data-style="expand-left")
