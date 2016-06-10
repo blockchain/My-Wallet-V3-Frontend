@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SettingsAddressesCtrl', SettingsAddressesCtrl);
 
-function SettingsAddressesCtrl ($scope, $q, Wallet, MyWalletHelpers, MyBlockchainApi, Alerts, $stateParams, paymentRequests) {
+function SettingsAddressesCtrl ($scope, $stateParams, $q, $sce, Wallet, MyWalletHelpers, MyBlockchainApi, Alerts, paymentRequests) {
   $scope.paymentRequests = paymentRequests;
   $scope.account = Wallet.accounts()[$stateParams.account];
   $scope.receiveIndex = $scope.account.receiveIndex;
@@ -10,6 +10,8 @@ function SettingsAddressesCtrl ($scope, $q, Wallet, MyWalletHelpers, MyBlockchai
   $scope.page = 1;
   $scope.pageLength = 20;
   $scope.hdLabels = $scope.account.receivingAddressesLabels.reduce((acc, address) => { acc[address.index] = address.label; return acc; }, {});
+
+  $scope.addressLink = (address) => $sce.trustAsResourceUrl(`${$scope.rootURL}address/${address}`);
 
   $scope.createAddress = () => {
     Wallet.addAddressForAccount($scope.account)

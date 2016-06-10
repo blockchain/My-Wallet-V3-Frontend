@@ -19,6 +19,7 @@
 .colon:after { content: ':' }
 .capitalize { text-transform: capitalize; }
 .upper { text-transform: uppercase; }
+.parens { &:before { content: '('; } &:after { content: ')'; } }
 
 .text-overflow-hidden, .ui-select-match-text {
   text-overflow: ellipsis;
