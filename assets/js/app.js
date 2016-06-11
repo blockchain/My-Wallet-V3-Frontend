@@ -2,7 +2,6 @@
 
 const modules = [
   'walletApp.core',
-
   'walletFilters',
   'walletServices',
   'securityCenter',
