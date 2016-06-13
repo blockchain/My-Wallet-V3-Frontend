@@ -17,10 +17,12 @@ function SettingsAddressesCtrl ($scope, $stateParams, $q, $sce, Wallet, MyWallet
       .catch(Alerts.displayError);
   };
 
-  $scope.removeAddressLabel = (addressIndex, i) => {
+  $scope.removeAddressLabel = (addressIndex, i, used) => {
     Alerts.confirm('CONFIRM_REMOVE_LABEL').then(() => {
       $scope.account.removeLabelForReceivingAddress(addressIndex);
-      $scope.paymentRequests.splice(i, 1);
+      used
+        ? $scope.usedAddresses[i].label = null
+        : $scope.paymentRequests.splice(i, 1);
     });
   };
 
@@ -29,7 +31,7 @@ function SettingsAddressesCtrl ($scope, $stateParams, $q, $sce, Wallet, MyWallet
     : Alerts.confirm('SHOW_PAST').then(() => $scope.showPast = true);
 
   $scope.setAddresses = (page) => {
-    $scope.addresses = $scope.generatePage(page);
+    $scope.usedAddresses = $scope.generatePage(page);
   };
 
   $scope.generatePage = MyWalletHelpers.memoize((page) => {

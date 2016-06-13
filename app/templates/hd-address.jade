@@ -13,7 +13,7 @@ tr
       span.float-right
         a(ng-click="editing = true")
           i.ti-pencil.prm        
-        a(ng-click="removeLabel()")
+        a(ng-click="removeLabel()" ng-show="address.label")
           i.ti-trash.prm
   td.shrink(ng-if="pastAddress")
     span(ng-hide="address.balance == null") {{ address.balance | convert }}

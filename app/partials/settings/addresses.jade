@@ -54,7 +54,7 @@ div(ng-if="showPast" ng-init="setAddresses(page)")
             helper-button(content="CURRENT_BALANCE_HELP")
         tr(
           account="account"
-          ng-repeat="address in addresses | orderBy:'-index' track by address.index"
+          ng-repeat="address in usedAddresses | orderBy:'-index' track by address.index"
           hd-address="address"
-          remove="removeAddressLabel(address.index, addresses.indexOf(address))"
+          remove="removeAddressLabel(address.index, usedAddresses.indexOf(address), true)"
           past-address="true")
