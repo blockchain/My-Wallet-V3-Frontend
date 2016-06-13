@@ -9,7 +9,7 @@ function SettingsAddressesCtrl ($scope, $stateParams, $q, $sce, Wallet, MyWallet
 
   $scope.page = 1;
   $scope.pageLength = 20;
-  $scope.totalItems = $scope.receiveIndex - $scope.paymentRequests.length + 1;
+  $scope.totalUsed = $scope.receiveIndex - $scope.paymentRequests.length + 1;
   $scope.hdLabels = $scope.account.receivingAddressesLabels.reduce((acc, address) => { acc[address.index] = address.label; return acc; }, {});
 
   $scope.createAddress = () => {
