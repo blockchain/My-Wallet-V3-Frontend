@@ -11,8 +11,6 @@ function SettingsAddressesCtrl ($scope, $stateParams, $q, $sce, Wallet, MyWallet
   $scope.pageLength = 20;
   $scope.hdLabels = $scope.account.receivingAddressesLabels.reduce((acc, address) => { acc[address.index] = address.label; return acc; }, {});
 
-  $scope.addressLink = (address) => $sce.trustAsResourceUrl(`${$scope.rootURL}address/${address}`);
-
   $scope.createAddress = () => {
     Wallet.addAddressForAccount($scope.account)
       .then(address => $scope.paymentRequests.push(address))
@@ -55,7 +53,6 @@ function SettingsAddressesCtrl ($scope, $stateParams, $q, $sce, Wallet, MyWallet
       addresses.forEach((a) => {
         if (!data[a.address]) return;
         a.balance = data[a.address].final_balance;
-        a.total = data[a.address].total_received;
         a.ntxs = data[a.address].n_tx;
       });
     });

@@ -22,7 +22,6 @@ h2(translate="NEXT_ADDRESSES_FOR_ACCOUNT" translate-values="::{account:account.l
       tr
         th.shrink(translate="ADDRESS")
         th.expand(translate="LABEL")
-        th.shrink
       tr(
         account="account"
         ng-repeat="address in paymentRequests | filter:searchText | orderBy:'-index' track by address.index"
@@ -50,18 +49,12 @@ div(ng-if="showPast" ng-init="setAddresses(page)")
         tr
           th.shrink(translate="ADDRESS")
           th.shrink(translate="LABEL")
-          th.shrink(translate="TOTAL_RECEIVED")
           th.shrink
             span(translate="CURRENT_BALANCE")
             helper-button(content="CURRENT_BALANCE_HELP")
-        tr(ng-repeat="address in addresses | orderBy:'-index' track by address.index")
-          td.shrink
-            a(ng-href="{{ addressLink(address.address) }}" target="_blank") {{ address.address }}&nbsp;
-            span.security-yellow.parens(translate="NO_TXS" ng-show="address.ntxs === 0")
-          td.shrink {{ address.label }}
-          td.shrink
-            span(ng-hide="address.total == null") {{ address.total | convert }}
-            img(src="img/spinner.gif" ng-show="address.total == null")
-          td.shrink
-            span(ng-hide="address.balance == null") {{ address.balance | convert }}
-            img(src="img/spinner.gif" ng-show="address.balance == null")
+        tr(
+          account="account"
+          ng-repeat="address in addresses | orderBy:'-index' track by address.index"
+          hd-address="address"
+          remove="removeAddressLabel(address.index, addresses.indexOf(address))"
+          past-address="true")

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .directive('hdAddress', hdAddress);
 
-function hdAddress (Wallet, Alerts) {
+function hdAddress ($rootScope, $sce, Wallet, Alerts) {
   const directive = {
     restrict: 'A',
     replace: true,
@@ -10,16 +10,19 @@ function hdAddress (Wallet, Alerts) {
       account: '=',
       address: '=hdAddress',
       searchText: '=',
-      remove: '&'
+      remove: '&',
+      pastAddress: '='
     },
     templateUrl: 'templates/hd-address.jade',
-    link: link
+    link
   };
   return directive;
 
   function link (scope, elem, attrs, ctrl) {
     scope.cancelEdit = () => scope.editing = false;
     scope.removeLabel = () => scope.remove();
+
+    scope.addressLink = (address) => $sce.trustAsResourceUrl(`${$rootScope.rootURL}address/${address}`);
 
     scope.changeLabel = (label, successCallback, errorCallback) => {
       let success = () => {
