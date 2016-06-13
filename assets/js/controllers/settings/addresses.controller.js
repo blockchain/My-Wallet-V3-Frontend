@@ -9,6 +9,7 @@ function SettingsAddressesCtrl ($scope, $stateParams, $q, $sce, Wallet, MyWallet
 
   $scope.page = 1;
   $scope.pageLength = 20;
+  $scope.totalItems = $scope.receiveIndex - $scope.paymentRequests.length + 1;
   $scope.hdLabels = $scope.account.receivingAddressesLabels.reduce((acc, address) => { acc[address.index] = address.label; return acc; }, {});
 
   $scope.createAddress = () => {
@@ -35,19 +36,11 @@ function SettingsAddressesCtrl ($scope, $stateParams, $q, $sce, Wallet, MyWallet
   };
 
   $scope.generatePage = MyWalletHelpers.memoize((page) => {
-    let addresses = [];
-    let blacklist = {};
-    for (let i = 0; i < $scope.paymentRequests.length; i++) {
-      blacklist[$scope.paymentRequests[i].index] = true;
-    }
-    for (let i = 0; addresses.length < $scope.pageLength; i++) {
-      let index = $scope.receiveIndex - ((page - 1) * $scope.pageLength) - i;
-      let label = $scope.hdLabels[index];
-      if (blacklist[index]) continue;
-      if (index < 0 || i > 60) break;
-      let address = Wallet.getReceiveAddress($scope.account.index, index);
-      addresses.push({ index, address, label });
-    }
+    let addresses = $scope.getIndexesForPage(page).map(index => ({
+      index,
+      address: Wallet.getReceiveAddress($scope.account.index, index),
+      label: $scope.hdLabels[index]
+    }));
     if (addresses.length === 0) return;
     $q.resolve(
       MyBlockchainApi.getBalances(addresses.map(a => a.address))
@@ -60,4 +53,23 @@ function SettingsAddressesCtrl ($scope, $stateParams, $q, $sce, Wallet, MyWallet
     });
     return addresses;
   });
+
+  $scope.getIndexesForPage = (page) => {
+    let indexes = [];
+    let used = [];
+    for (let i = 0; i < $scope.paymentRequests.length; i++) {
+      used[$scope.paymentRequests[i].index] = true;
+    }
+    for (
+      let i = $scope.account.receiveIndex, n = i;
+      i >= 0 && n >= 0 && indexes.length < $scope.pageLength;
+      i--
+    ) {
+      if (used[i]) continue;
+      let start = $scope.receiveIndex - (page - 1) * $scope.pageLength;
+      if (n <= start && n > start - $scope.pageLength) indexes.push(i);
+      n--;
+    }
+    return indexes;
+  };
 }

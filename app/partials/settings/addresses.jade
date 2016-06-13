@@ -37,8 +37,9 @@ div(ng-if="showPast" ng-init="setAddresses(page)")
     h2(translate="PAST_ADDRESSES_FOR_ACCOUNT" translate-values="::{account:account.label}")
     uib-pagination.pagination-sm(
       ng-model="page"
+      ng-show="totalItems > pageLength"
       ng-change="setAddresses(page)"
-      total-items="receiveIndex + 1"
+      total-items="totalItems"
       items-per-page="pageLength"
       max-size="5"
       boundary-links="true")
