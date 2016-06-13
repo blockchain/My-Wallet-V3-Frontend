@@ -307,25 +307,6 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     ));
   };
 
-  let hdAddresses = {};
-  wallet.hdAddresses = (accountIdx) => {
-    return (refresh) => {
-      refresh = refresh || null;
-      if (refresh || hdAddresses[accountIdx] == null) {
-        let account = wallet.accounts()[accountIdx];
-        hdAddresses[accountIdx] = account.receivingAddressesLabels.map((address) => {
-          return {
-            index: address.index,
-            label: address.label,
-            address: account.receiveAddressAtIndex(address.index),
-            account: account
-          };
-        });
-      }
-      return hdAddresses[accountIdx];
-    };
-  };
-
   wallet.addAddressForAccount = (account) => {
     let index = account.receiveIndex;
     let address = wallet.getReceiveAddress(account.index, index);
@@ -428,20 +409,9 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   };
 
   wallet.changeHDAddressLabel = (accountIdx, index, label, successCallback, errorCallback) => {
-    let success = () => {
-      wallet.hdAddresses(accountIdx)(true);
-      successCallback();
-      $rootScope.$safeApply();
-    };
-
-    let error = (msg) => {
-      errorCallback(msg);
-      $rootScope.$safeApply();
-    };
-
     let account = wallet.accounts()[parseInt(accountIdx, 10)];
-    account.setLabelForReceivingAddress(index, label)
-      .then(success).catch(error);
+    $q.resolve(account.setLabelForReceivingAddress(index, label))
+      .then(successCallback).catch(errorCallback);
   };
 
   wallet.logout = (sessionToken) => {
