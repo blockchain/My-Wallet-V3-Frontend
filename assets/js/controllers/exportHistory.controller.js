@@ -2,24 +2,33 @@ angular
   .module('walletApp')
   .controller('ExportHistoryController', ExportHistoryController);
 
-function ExportHistoryController ($scope, $sce, MyWallet, activeIndex) {
-  let active = [];
-  if (!activeIndex) {
-    active = MyWallet.wallet.context;
-    $scope.activeName = 'All';
-  } else if (activeIndex === 'imported') {
-    active = MyWallet.wallet.activeAddresses;
-    $scope.activeName = 'Imported Addresses';
-  } else if (!isNaN(activeIndex)) {
-    let acct = MyWallet.wallet.hdwallet.accounts[activeIndex];
-    active = [acct.extendedPublicKey];
-    $scope.activeName = acct.label;
+function ExportHistoryController ($scope, $sce, format, Wallet, MyWallet, activeIndex) {
+  let accounts = Wallet.accounts().filter(a => !a.archived && a.index != null);
+  let addresses = Wallet.legacyAddresses().filter(a => !a.archived);
+  $scope.targets = accounts.concat(addresses).map(format.origin);
+
+  $scope.activeCount = (
+    Wallet.accounts().filter(a => !a.archived).length +
+    Wallet.legacyAddresses().filter(a => !a.archived).length
+  );
+
+  $scope.setActive = () => {
+    let t = $scope.target;
+    $scope.active = t.index != null ? t.xpub : t.address;
+  };
+
+  for (let i = 0; i < $scope.targets.length; i++) {
+    if (i === parseInt(activeIndex, 10)) {
+      $scope.target = $scope.targets[i];
+      $scope.setActive();
+      break;
+    }
   }
 
   $scope.action = $sce.trustAsResourceUrl(`${$scope.rootURL}export-history`);
-  $scope.active = active.join('|');
   $scope.format = 'dd/MM/yyyy';
 
+  $scope.exportFormat = 'csv';
   $scope.start = { date: Date.now() - 604800000 };
   $scope.end = { date: Date.now() };
 }
