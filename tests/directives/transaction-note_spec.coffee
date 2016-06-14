@@ -123,6 +123,11 @@ describe "Transaction Note Directive", ->
     expect(isoScope.editNote).toBe(false)
     return
 
+  it "should save a note on enter", ->
+    spyOn(isoScope, "saveNote")
+    isoScope.saveOnEnter({keyCode: 13})
+    expect(isoScope.saveNote).toHaveBeenCalled()
+
   it "does delete note", ->
     isoScope.deleteNote()
     expect(isoScope.transaction.note).toBe(null)

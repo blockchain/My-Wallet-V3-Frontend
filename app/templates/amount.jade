@@ -5,8 +5,7 @@ span.amountTotal
       'received'    : tx.txType === 'received',\
       'spent'       : tx.txType === 'sent',\
       'unconfirmed' : tx.confirmations < 3 \
-    }"
-    ng-click="toggle()")
+    }")
     fiat(btc="tx.amount" ng-hide="isBitCurrency(settings.displayCurrency)" abs)
     span(ng-show="isBitCurrency(settings.displayCurrency)")
       | {{ absolute(tx.amount) | toBitCurrency:settings.btcCurrency }}

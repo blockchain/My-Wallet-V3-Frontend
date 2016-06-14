@@ -10,7 +10,7 @@
     a.cancel(ng-click="cancelEditNote()" ng-show="editNote")
       i.ti-close
   .flex-column.input(ng-show="editNote" ng-class="{'pos-abs': transaction.toggled}")
-    textarea.basic-grey.em-400(ng-model="transaction.draftNote" maxlength="255" placeholder="{{'ADD_A_DESCRIPTION' | translate}}")
+    textarea.basic-grey.em-400(ng-keypress="saveOnEnter($event)" ng-model="transaction.draftNote" maxlength="255" placeholder="{{'ADD_A_DESCRIPTION' | translate}}")
     .flex-end.mts
       span.label.label-success.pointer(ng-click="saveNote()", translate="SAVE", ng-hide="transaction.note")
       span.label.label-success.pointer(ng-click="saveNote()", translate="UPDATE_NOTE", ng-show="transaction.note")

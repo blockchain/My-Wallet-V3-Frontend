@@ -1,4 +1,4 @@
-div
+div(ng-class="{'flex-column-reverse' : (transaction.txType === 'transfer' || transaction.txType === 'received')}")
   .flex-row
     span(
       ng-show=":: transaction.txType === 'transfer' || transaction.txType === 'received'") {{:: 'FROM' | translate}}:

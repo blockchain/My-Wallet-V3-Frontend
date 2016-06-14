@@ -10,7 +10,8 @@ function labelOrigin (Wallet, currency) {
     scope: {
       origin: '=',
       fee: '=',
-      highlight: '='
+      highlight: '=',
+      selected: '@'
     },
     link: link
   };
@@ -19,6 +20,7 @@ function labelOrigin (Wallet, currency) {
   function link (scope, elem, attrs) {
     scope.settings = Wallet.settings;
     scope.isBitCurrency = currency.isBitCurrency;
+    scope.isSelected = attrs['selected'] !== undefined;
 
     scope.determineAvailableBalance = (balance) => {
       if (balance == null) return;

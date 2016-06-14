@@ -37,6 +37,11 @@ function transactionNote ($translate, $rootScope, Wallet) {
       }
     }
 
+    scope.saveOnEnter = (e) => {
+      if (e.keyCode !== 13) return;
+      scope.saveNote();
+    };
+
     scope.cancelEditNote = () => {
       scope.transaction.draftNote = '';
       scope.editNote = false;

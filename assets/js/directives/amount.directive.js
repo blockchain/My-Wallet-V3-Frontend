@@ -20,7 +20,6 @@ function amount (Wallet, currency) {
   function link (scope, elem, attrs) {
     scope.settings = Wallet.settings;
     scope.isBitCurrency = currency.isBitCurrency;
-    scope.toggle = Wallet.toggleDisplayCurrency;
     scope.absolute = (value) => Math.abs(value);
   }
 }

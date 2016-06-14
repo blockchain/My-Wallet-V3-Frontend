@@ -11,7 +11,8 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     scope: {
       model: '=ngModel',
       change: '&ngChange',
-      onPaymentRequest: '&onPaymentRequest'
+      onPaymentRequest: '&onPaymentRequest',
+      ignore: '='
     },
     templateUrl: 'templates/destination-input.jade',
     link: link
@@ -22,7 +23,6 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     let accounts = Wallet.accounts().filter(a => !a.archived);
     let addresses = Wallet.legacyAddresses().filter(a => !a.archived);
 
-    scope.destinations = accounts.concat(addresses).map(format.destination);
     scope.dropdownHidden = accounts.length === 1 && addresses.length === 0;
     scope.browserWithCamera = $rootScope.browserWithCamera;
 
@@ -62,5 +62,14 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     if (!scope.model) scope.clearModel();
     scope.focusInput(250);
     scope.$watch('model', scope.change);
+
+    scope.$watch('ignore', () => {
+      if (!scope.ignore) return;
+      let destinations = accounts.concat(addresses).map(format.destination);
+      let idx = destinations.map((d) => { return d.label; }).indexOf(scope.ignore.label);
+      destinations.splice(idx, 1);
+
+      scope.destinations = destinations;
+    });
   }
 }

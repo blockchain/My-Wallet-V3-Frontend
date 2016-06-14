@@ -84,6 +84,7 @@ $bright-green:  #3CC476 !important; //override Security Center nested css select
 @include color('received', $receive-green);
 @include color('tertiary-blue', $tertiary-blue);
 @include color('text-color', $text);
+@include color('state-danger-text', $state-danger-text);
 
 //Background Mixin
 @mixin bg-color($name, $color) {

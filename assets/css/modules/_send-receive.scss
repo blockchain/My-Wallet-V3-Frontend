@@ -5,7 +5,6 @@
     margin: 0px auto;
   }
   .open > .uib-dropdown-menu {
-    right: -25px;
     overflow-y: auto;
     max-height: 160px;
     overflow-x: hidden;
@@ -139,13 +138,9 @@
         position: absolute;
       }
       & ~ .help-block {
+        bottom: -1px;
         margin-left: 95px;
-        &.friendly {
-          color: $blue;
-        }
-        &.has-error {
-          color: $state-danger-text;
-        }
+        position: absolute;
       }
     }
   }
@@ -164,7 +159,7 @@
       background-color: $aaa;
       border-radius: 100%;
       position: absolute;
-      bottom: -5px;
+      bottom: 20px;
       right: -15px;
       padding: 0px;
       height: 30px;

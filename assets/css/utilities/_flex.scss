@@ -17,7 +17,8 @@
 .flex-row,
 .flex-wrap,
 .flex-baseline,
-.flex-align-self-end {
+.flex-align-self-end,
+.flex-column-reverse {
   @extend %flex;
 }
 
@@ -65,6 +66,12 @@
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
+}
+.flex-column-reverse {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+  -ms-flex-direction: column-reverse;
+  flex-direction: column-reverse;
 }
 .flex-center { 
   -webkit-box-align: center;

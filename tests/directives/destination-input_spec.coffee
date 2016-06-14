@@ -4,6 +4,7 @@ describe "Destination Input directive", ->
   element = undefined
   isoScope = undefined
   Wallet = undefined
+  ignore = undefined
 
   beforeEach module("walletApp")
 
@@ -19,12 +20,13 @@ describe "Destination Input directive", ->
       keys: [{ archived: true }]
 
     Wallet.status.isLoggedIn = true
+    ignore = {'label': 'label'}
 
     return
   )
 
   beforeEach ->
-    element = $compile('<destination-input ng-model="transaction"></destination-input>')($rootScope)
+    element = $compile('<destination-input ng-model="transaction" ignore="ignore"></destination-input>')($rootScope)
     $rootScope.$digest()
     isoScope = element.isolateScope()
     isoScope.$digest()

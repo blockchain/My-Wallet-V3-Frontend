@@ -1,14 +1,14 @@
 .flex-column
   .flex-start.flex-between
-    .mrvl.flex-column.pointer(ng-click="tx.toggled = !tx.toggled")
+    .mrvl.flex-column
       span.timestamp.pbm.type-sm.basic-grey
         date {{:: tx.time * 1000 | date:'MMMM d @ hh:mm a' }}
-      .flex-center.lh1
+      .flex-center.lh1.pointer(ng-click="tx.toggled = !tx.toggled")
         span.action.prm(
           ng-class=":: txClass"
           translate="{{:: txDirection }}")
         span.label.label-default(translate="WATCH_ONLY" ng-show=":: txWatchOnly")
-    .flex-2.hidden-sm.hidden-xs.destination.em-400.basic-grey.pointer(ng-click="tx.toggled = !tx.toggled")
+    .flex-2.hidden-sm.hidden-xs.destination.em-400.basic-grey
       transaction-destinations(transaction="tx" search="search")
     .flex-1.hidden-sm.hidden-xs
       transaction-note(transaction="tx", account="account" search="search")
@@ -21,7 +21,7 @@
   .hidden-tablet.flex-start.flex-column.mvm(ng-show="tx.toggled")
     transaction-destinations(transaction="tx" search="search")
   .flex-start.flex-between.dark-grey(ng-if="tx.toggled")
-    .destination.flex-align-self-end.pointer
+    .destination.flex-align-self-end
       transaction-status(transaction="tx")
     .flex-1.hidden-sm.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
       div
