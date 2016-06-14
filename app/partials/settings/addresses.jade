@@ -52,7 +52,7 @@ div(ng-if="showPast" ng-init="setAddresses(page)")
           th.shrink(translate="LABEL")
           th.shrink
             span(translate="CURRENT_BALANCE")
-            helper-button(content="CURRENT_BALANCE_HELP")
+            helper-button(content="CURRENT_BALANCE_HELP" placement="left")
         tr(
           account="account"
           ng-repeat="address in usedAddresses | orderBy:'-index' track by address.index"
