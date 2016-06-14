@@ -182,6 +182,7 @@
   "DISABLE" : "Disable",
   "CONFIRM_DISABLE_2FA" : "Are you sure you wish to disable two step authentication?",
   "IMPORTED_ADDRESSES" : "Imported Addresses",
+  "HD_ADDRESSES" : "HD Addresses",
   "ADDRESS_BOOK" : "Address Book",
   "MANAGE_ADDRESS_BOOK" : "Manage Address Book",
   "CONFIRM_DELETE_ADDRESS_BOOK_ENTRY" : "Are you sure you want to remove {{ address }} from your address book?",
