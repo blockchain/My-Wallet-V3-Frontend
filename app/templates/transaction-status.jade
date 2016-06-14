@@ -1,15 +1,18 @@
 .flex-column(ng-if="!complete")
-  .flex-row.flex-end
+  .flex-row.flex-between
+    i.pointer.ti-new-window.blue(ng-click="verify()" uib-tooltip="{{'VERIFY_ON_BCI' | translate}}")
     helper-button(content="{{ 'TRANSACTION_WILL_COMPLETE_IN' | translate:{minutes: minutesRemaining } }}" ng-if="!frugalWarning" append="true")
     helper-button(content="{{ 'TRANSACTION_FRUGAL' | translate }}" ng-if="frugalWarning" append="true")
-  uib-progressbar.mts(value=":: transaction.confirmations" max="3" ng-click="verify()")
+  uib-progressbar.mts(value=":: transaction.confirmations" max="3")
     span.plm(translate="PENDING")
     span :
     span.pls {{ :: transaction.confirmations }}
     span /3
     span.pls(translate="CONFIRMATIONS")
 
-.success.flex-column(ng-if="complete" ng-click="verify()")
+.success.flex-column(ng-if="complete")
+  .flex-row
+    i.pointer.ti-new-window.blue(ng-click="verify()" uib-tooltip="{{'VERIFY_ON_BCI' | translate}}")
   .flex-row
     span.mrs.mbn.em-400(translate="TRANSACTION_COMPLETE")
     i.ti-check.em-600

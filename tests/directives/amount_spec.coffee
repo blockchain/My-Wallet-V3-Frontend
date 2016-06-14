@@ -27,22 +27,6 @@ describe "Amount", ->
     expect(isoScope.isBitCurrency(Wallet.settings.displayCurrency)).toBe(false)
   )
 
-  it "should toggle between Fiat and BTC", inject((Wallet) ->
-    Wallet.settings.displayCurrency = {code: "USD"}
-    Wallet.settings.currency = {code: "USD"}
-    Wallet.settings.btcCurrency = {code: "BTC"}
-    isoScope.toggle()
-    expect(isoScope.settings.displayCurrency.code).toBe("BTC")
-  )
-
-  it "should toggle between BTC and Fiat", inject((Wallet) ->
-    Wallet.settings.displayCurrency = {code: "BTC"}
-    Wallet.settings.currency = {code: "USD"}
-    Wallet.settings.btcCurrency = {code: "BTC"}
-    isoScope.toggle()
-    expect(isoScope.settings.displayCurrency.code).toBe("USD")
-  )
-
   it "should respond to toggle elsewhere", inject((currency) ->
     isoScope.settings.displayCurrency = currency.currencies[1]
     expect(isoScope.settings.displayCurrency.code).toBe("EUR")
