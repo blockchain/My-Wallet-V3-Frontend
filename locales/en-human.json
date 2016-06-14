@@ -233,7 +233,7 @@
   "RENAME" : "Rename",
   "TRANSACTION_WILL_COMPLETE_IN" : "This transaction will complete in approximately {{ minutes }} minutes after it has 3 confirmations.",
   "EXPORT_HISTORY" : "Export History",
-  "EXPORT_HISTORY_EXPLAIN" : "Export your transaction history in CSV format",
+  "EXPORT_HISTORY_EXPLAIN" : "Export the transaction history of your addresses in CSV or XLS format",
   "EXPORT" : "Export",
   "START_DATE" : "Start Date",
   "END_DATE" : "End Date",
