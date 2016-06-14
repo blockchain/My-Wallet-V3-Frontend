@@ -18,7 +18,7 @@ function ExportHistoryController ($scope, $sce, MyWallet, activeIndex) {
 
   $scope.action = $sce.trustAsResourceUrl(`${$scope.rootURL}export-history`);
   $scope.active = active.join('|');
-  $scope.format = 'MM/dd/yyyy';
+  $scope.format = 'dd/MM/yyyy';
 
   $scope.start = { date: Date.now() - 604800000 };
   $scope.end = { date: Date.now() };
