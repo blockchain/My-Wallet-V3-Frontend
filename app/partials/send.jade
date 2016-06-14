@@ -66,6 +66,7 @@
                 name="{{ 'destinations' + $index }}"
                 ng-model="transaction.destinations[$index]"
                 ng-model-options="{ updateOn: 'blur' }"
+                ng-change="checkForSameDestination()"
                 on-payment-request="applyPaymentRequest(request, $index)"
                 ignore="transaction.from"
                 required)

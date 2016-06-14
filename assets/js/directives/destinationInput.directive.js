@@ -10,6 +10,7 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     require: 'ngModel',
     scope: {
       model: '=ngModel',
+      change: '&ngChange',
       onPaymentRequest: '&onPaymentRequest',
       ignore: '='
     },
@@ -63,6 +64,7 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     scope.$watch('model', scope.change);
 
     scope.$watch('ignore', () => {
+      if (!scope.ignore) return;
       let destinations = accounts.concat(addresses).map(format.destination);
       let idx = destinations.map((d) => { return d.label; }).indexOf(scope.ignore.label);
       destinations.splice(idx, 1);

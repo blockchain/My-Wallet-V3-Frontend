@@ -27,13 +27,13 @@ function transactionDestinations ($rootScope, Wallet, $translate) {
       if (formatted.outputs && formatted.outputs.length > 0) {
         outputsLabel = formatted.outputs.filter((o) => {
           return tx.txType === 'sent'
-            ? o.coinType === 'external'
+            ? o.coinType === 'external' || o.coinType === 'legacy'
             : o.coinType !== 'external';
         });
       }
 
       if (outputsLabel.length > 1) {
-        outputsLabelPreview = $translate.instant('RECIPIENTS', { n: formatted.outputs.length });
+        outputsLabelPreview = $translate.instant('RECIPIENTS', { n: outputsLabel.length });
       }
 
       return tx.txType === 'sent' ? ({
