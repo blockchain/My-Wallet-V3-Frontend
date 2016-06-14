@@ -35,6 +35,8 @@ function transactionDescription ($translate, Wallet) {
               (tx.txType === 'sent' && tx.fromWatchOnly);
     };
 
+    scope.settings = Wallet.settings;
+
     scope.txDirection = scope.getTxDirection(scope.tx.txType);
     scope.txClass = scope.getTxClass(scope.tx.txType);
     scope.txWatchOnly = scope.getTxWatchOnly(scope.tx);
