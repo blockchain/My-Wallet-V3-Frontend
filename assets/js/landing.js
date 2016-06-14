@@ -13,19 +13,29 @@ const modules = [
   'pascalprecht.translate',
   'bcTranslateStaticFilesLoader',
   'ui.bootstrap',
+  'ui.router',
   'translations',
-  'sharedDirectives'
+  'sharedDirectives',
+  'oc.lazyLoad'
 ];
 
 angular.module('landingApp', modules)
-.config(() => {
+.config(($ocLazyLoadProvider) => {
+  $ocLazyLoadProvider.config({
+    debug: true,
+    events: true,
+    modules: [{
+      name: 'templates-main',
+      files: [
+        'bower_components/blockchain-wallet/dist/my-wallet.min.js',
+        'build/js/wallet.js',
+        'build/css/wallet.css'
+      ]
+    }]
+  });
 })
 .run(($rootScope, $window) => {
   $rootScope.i18nLoaded = false;
-  $rootScope.isLanding = () => {
-    let isLanding = !($window.location.hash === '' || $window.location.hash === '#/');
-    return isLanding;
-  };
 
   var e = document.getElementById('wallet-app');
   angular.element(e).ready(function () {
@@ -48,8 +58,8 @@ angular.module('landingApp', modules)
         return tag;
       };
       // @ifndef PRODUCTION
-      loadScript('bower_components/blockchain-wallet/dist/my-wallet.min.js');
-      loadScript('build/js/wallet.js');
+      // loadScript('bower_components/blockchain-wallet/dist/my-wallet.min.js');
+      // loadScript('build/js/wallet.js');
       loadCSS('build/css/wallet.css');
       // @endif
       /* @ifdef PRODUCTION **
@@ -61,22 +71,26 @@ angular.module('landingApp', modules)
       $rootScope.$digest();
     };
 
-    if ($window.location.hash === '' || $window.location.hash === '#/') {
-      // Delay wallet JS / CSS download until user navigates to login / signup
-      angular.element(window).on('hashchange', function () {
-        if ($window.location.hash === '#/login' || $window.location.hash === '#/signup') {
-          loadWallet();
-        }
-      });
-    } else {
-      loadWallet();
-    }
+    // if ($window.location.hash === '' || $window.location.hash === '#/') {
+    //   // Delay wallet JS / CSS download until user navigates to login / signup
+    //   angular.element(window).on('hashchange', function () {
+    //     if ($window.location.hash === '#/login' || $window.location.hash === '#/signup') {
+    //       loadWallet();
+    //     }
+    //   });
+    // } else {
+    //   loadWallet();
+    // }
   });
+
+
 });
 
 angular
   .module('landingApp')
   .controller('LandingCtrl', LandingCtrl);
+
+
 
 function LandingCtrl ($scope, $timeout, $window) {
   $scope.fields = { email: '' };

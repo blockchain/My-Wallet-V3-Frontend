@@ -1,63 +1,67 @@
 doctype
-html(lang='en')
-head
-  meta(charset='utf-8')
-  meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1") 
-  meta(name="theme-color" content="#187fc0")
-  meta(name="apple-itunes-app" content="app-id=493253309")
-  meta(name="description" content="Blockchain Wallet is an online bitcoin wallet that allows anyone to make worldwide payments for free. Blockchain cannot view your balance, see your transactions, or make payments on your behalf. Join today, be your own bank")
-  meta(name="keywords" content="Blockchain, Wallet, Blockchain Wallet, My Wallet, Bitcoin Wallet, HD, BIP38, secure, Bitcoin, BTC, send, receive, currency, money, transfer")
-  <!-- @if !PRODUCTION -->
-  script(src='bower_components/angular/angular.js', defer)
-  script(src='bower_components/angular-sanitize/angular-sanitize.js', defer)
-  script(src='bower_components/angular-bootstrap/ui-bootstrap-tpls.js', defer)
-  script(src='bower_components/angular-translate/angular-translate.js', defer)
-  script(src='bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js', defer)
-  script(src='bower_components/browserdetection/src/browser-detection.js')
+html(lang='en', ng-app='landingApp' ng-init="rootURL='#{ process.env.ROOT_URL }/'" ng-csp).ng-cloak
+  head
+    meta(charset='utf-8')
+    meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1") 
+    meta(name="theme-color" content="#187fc0")
+    meta(name="apple-itunes-app" content="app-id=493253309")
+    meta(name="description" content="Blockchain Wallet is an online bitcoin wallet that allows anyone to make worldwide payments for free. Blockchain cannot view your balance, see your transactions, or make payments on your behalf. Join today, be your own bank")
+    meta(name="keywords" content="Blockchain, Wallet, Blockchain Wallet, My Wallet, Bitcoin Wallet, HD, BIP38, secure, Bitcoin, BTC, send, receive, currency, money, transfer")
+    <!-- @if !PRODUCTION -->
+    script(src='bower_components/angular/angular.js', defer)
+    script(src='bower_components/angular-sanitize/angular-sanitize.js', defer)
+    script(src='bower_components/angular-bootstrap/ui-bootstrap-tpls.js', defer)
+    script(src='bower_components/angular-translate/angular-translate.js', defer)
+    script(src='bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js', defer)
+    script(src='bower_components/browserdetection/src/browser-detection.js')
+    script(src='bower_components/oclazyload/dist/ocLazyLoad.js', defer)
+    script(src='bower_components/angular-ui-router/release/angular-ui-router.js', defer)
 
-  // include: "type": "js", "files": "build/js/sharedDirectives.js"
-  // include: "type": "js", "files": "build/js/sharedDirectives/*.js"
-  // include: "type": "js", "files": "build/js/translations.js"
-  // include: "type": "js", "files": "build/js/landing.js"
-  // include: "type": "js", "files": "build/js/services/bcTranslationLoader.service.js"
-  
-  <!-- @endif -->
-  
-  <!-- @if PRODUCTION !>
-  script(src='js/landing.min.js' defer)  
-  <!-- @endif -->
-  link(rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-icon-180x180.png")
-  link(rel="apple-touch-icon" sizes="152x152" href="img/favicon/apple-icon-152x152.png")
-  link(rel="apple-touch-icon" sizes="144x144" href="img/favicon/apple-icon-144x144.png")
-  link(rel="apple-touch-icon" sizes="120x120" href="img/favicon/apple-icon-120x120.png")
-  link(rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-icon-114x114.png")
-  link(rel="apple-touch-icon" sizes="76x76" href="img/favicon/apple-icon-76x76.png")
-  link(rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-icon-72x72.png")
-  link(rel="apple-touch-icon" sizes="60x60" href="img/favicon/apple-icon-60x60.png")
-  link(rel="apple-touch-icon" sizes="57x57" href="img/favicon/apple-icon-57x57.png")
-  link(rel="icon" type="image/png" sizes="192x192"  href="img/favicon/android-icon-192x192.png")
-  link(rel="icon" type="image/png" sizes="96x96" href="img/favicon/favicon-96x96.png")
-  link(rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png")
-  link(rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png")
-  meta(name="msapplication-TileColor" content="#ffffff")
-  meta(name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png")
-  title Blockchain Wallet
-  <!-- @if !PRODUCTION -->  
-  link(rel='stylesheet' href='build/css/landing.css' id="landing-imports")
-  <!-- @endif -->
-  
-  <!-- @if PRODUCTION !>
-  link(rel='stylesheet' href='build/css/landing.css' id="landing-imports")
-  <!-- @endif -->
+    // include: "type": "js", "files": "build/js/sharedDirectives.js"
+    // include: "type": "js", "files": "build/js/sharedDirectives/*.js"
+    // include: "type": "js", "files": "build/js/translations.js"
+    // include: "type": "js", "files": "build/js/landing.js"
+    // include: "type": "js", "files": "build/js/services/bcTranslationLoader.service.js"
+    // include: "type": "js", "files": "build/js/routes.js"
+    
+    <!-- @endif -->
+    
+    <!-- @if PRODUCTION !>
+    script(src='js/landing.min.js' defer)  
+    <!-- @endif -->
+    link(rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-icon-180x180.png")
+    link(rel="apple-touch-icon" sizes="152x152" href="img/favicon/apple-icon-152x152.png")
+    link(rel="apple-touch-icon" sizes="144x144" href="img/favicon/apple-icon-144x144.png")
+    link(rel="apple-touch-icon" sizes="120x120" href="img/favicon/apple-icon-120x120.png")
+    link(rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-icon-114x114.png")
+    link(rel="apple-touch-icon" sizes="76x76" href="img/favicon/apple-icon-76x76.png")
+    link(rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-icon-72x72.png")
+    link(rel="apple-touch-icon" sizes="60x60" href="img/favicon/apple-icon-60x60.png")
+    link(rel="apple-touch-icon" sizes="57x57" href="img/favicon/apple-icon-57x57.png")
+    link(rel="icon" type="image/png" sizes="192x192"  href="img/favicon/android-icon-192x192.png")
+    link(rel="icon" type="image/png" sizes="96x96" href="img/favicon/favicon-96x96.png")
+    link(rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png")
+    link(rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png")
+    meta(name="msapplication-TileColor" content="#ffffff")
+    meta(name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png")
+    title Blockchain Wallet
+    <!-- @if !PRODUCTION -->  
+    link(rel='stylesheet' href='build/css/landing.css' id="landing-imports")
+    <!-- @endif -->
+    
+    <!-- @if PRODUCTION !>
+    link(rel='stylesheet' href='build/css/landing.css' id="landing-imports")
+    <!-- @endif -->
 
-body
-  downloader
-  #landing(ng-app='landingApp' ng-init="rootURL='#{ process.env.ROOT_URL }/'" ng-hide='isLanding()' ng-csp).ng-cloak
-    #landing-controller(ng-controller="LandingCtrl")
-      include ./landing.jade
-  #wallet-app(ng-init="autoReload=#{ process.env.AUTO_RELOAD || false }; rootURL='#{ process.env.ROOT_URL }/'; webSocketURL='#{ process.env.WEBSOCKET_URL }'; apiDomain='#{ process.env.API_DOMAIN }/';" ng-csp)
-    #app-controller(ng-controller="AppCtrl" ui-view="body" ng-mousemove="resetInactivityTime()" ng-keypress="resetInactivityTime()")
-
-  noscript
-    img(src="/img/logo-bw.png")
-    h3 Please enable JavaScript to use the Blockchain Wallet
+  body
+    downloader
+    #landing
+      //- #landing-controller(ng-controller="LandingCtrl")
+      //-   include ./landing.jade
+      a(ui-sref="public.login-no-uid") Login
+      #app-controller(ui-view="body")
+    //- #wallet-app(ng-init="autoReload=#{ process.env.AUTO_RELOAD || false }; rootURL='#{ process.env.ROOT_URL }/'; webSocketURL='#{ process.env.WEBSOCKET_URL }'; apiDomain='#{ process.env.API_DOMAIN }/';" ng-csp)
+    //-   #app-controller(ng-controller="AppCtrl" ui-view="body" ng-mousemove="resetInactivityTime()" ng-keypress="resetInactivityTime()")
+    noscript
+      img(src="/img/logo-bw.png")
+      h3 Please enable JavaScript to use the Blockchain Wallet

@@ -9,7 +9,6 @@ const modules = [
   'didYouKnow',
   'activity',
   'adverts',
-  'ui.router',
   'ui.bootstrap',
   'ngCookies',
   'ngAnimate',

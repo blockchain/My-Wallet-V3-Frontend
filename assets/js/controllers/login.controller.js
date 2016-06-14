@@ -1,8 +1,9 @@
 angular
-  .module('walletApp')
+  .module('landingApp')
   .controller('LoginCtrl', LoginCtrl);
 
 function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNetwork, Alerts, $cookies, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter, $q) {
+  console.log("LoginCtrl loaded")
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.disableLogin = null;
