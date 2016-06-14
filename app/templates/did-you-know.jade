@@ -10,4 +10,5 @@
     p.text.em-300
       | {{ dyk.text | translate }}
       span(ng-if="dyk.state")
-        a.mls(ui-sref="{{ dyk.state }}") {{ dyk.linkText | translate }}
+        a.mls(ui-sref="{{ dyk.state }}" ng-hide="dyk.external") {{ dyk.linkText | translate }}
+        a.mls(href="{{ dyk.state }}" target="_blank" ng-show="dyk.external") {{ dyk.linkText | translate }}

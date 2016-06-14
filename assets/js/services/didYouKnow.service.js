@@ -33,6 +33,15 @@ function DidYouKnow () {
       type: 'EDUCATIONAL',
       text: 'DYK_BTC_VALUE',
       icon: 'ti-stats-up'
+    }, {
+      id: 5,
+      title: 'SEND_FEEDBACK',
+      type: 'FEATURE',
+      text: 'DYK_FEEDBACK_VALUE',
+      icon: 'ti-announcement',
+      linkText: 'SHARE_FEEDBACK',
+      external: true,
+      state: 'https://blockchain.co1.qualtrics.com/jfe5/form/SV_ac4FYxlIxXhbF9b'
     }
   ];
 
