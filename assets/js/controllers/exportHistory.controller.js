@@ -18,7 +18,7 @@ function ExportHistoryController ($scope, $sce, $translate, format, Wallet, MyWa
     address: addresses.map(a => a.address).join('|')
   };
 
-  $scope.targets = [allHD, allAddresses].concat(accounts.concat(addresses).concat(allAddresses).map(format.origin));
+  $scope.targets = [allHD, allAddresses].concat(accounts.concat(addresses).map(format.origin));
 
   $scope.activeCount = (
     Wallet.accounts().filter(a => !a.archived).length +
@@ -30,7 +30,9 @@ function ExportHistoryController ($scope, $sce, $translate, format, Wallet, MyWa
     $scope.active = t.index != null ? t.xpub : t.address;
   };
 
-  if (activeIndex === '') {
+  if ($scope.activeCount === 1) {
+    $scope.target = $scope.targets[$scope.targets.length - 1];
+  } else if (activeIndex === '') {
     $scope.target = allHD;
   } else if (activeIndex === 'imported') {
     $scope.target = allAddresses;
