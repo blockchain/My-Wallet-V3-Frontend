@@ -71,7 +71,7 @@ describe "TransactionsCtrl", ->
 
     describe "filterByType", ->
 
-      it "should fitler by sent", ->
+      it "should filter by sent", ->
         tx = {}
         tx.txType = 'sent'
         scope.filterBy = 'SENT'
@@ -79,10 +79,10 @@ describe "TransactionsCtrl", ->
         result = scope.filterByType(tx)
         expect(result).toBe(true)
 
-      it "should fitler by received", ->
+      it "should filter by received", ->
         tx = {}
         tx.txType = 'received'
-        scope.filterBy = 'RECEIVED_BITCOIN_FROM'
+        scope.filterBy = 'RECEIVED'
 
         result = scope.filterByType(tx)
         expect(result).toBe(true)
@@ -90,7 +90,7 @@ describe "TransactionsCtrl", ->
       it "should filter by transferred", ->
         tx = {}
         tx.txType = 'transfer'
-        scope.filterBy = 'MOVED_BITCOIN_TO'
+        scope.filterBy = 'TRANSFERRED'
 
         result = scope.filterByType(tx)
         expect(result).toBe(true)

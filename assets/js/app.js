@@ -30,7 +30,8 @@ const modules = [
 ];
 
 angular.module('walletApp', modules)
-.config(($uibModalProvider, uiSelectConfig) => {
+.config(($compileProvider, uiSelectConfig) => {
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob):/);
   uiSelectConfig.theme = 'bootstrap';
 })
 .constant('whatsNew', [

@@ -1,6 +1,6 @@
 div
   span(ng-bind-html="determineLabel(origin) | escapeHtml | highlight:highlight")
-  span(ng-hide="isNaN(origin.balance)")
+  span(ng-hide="origin.balance == null")
     span &ensp;(
     span(ng-switch="isBitCurrency(settings.displayCurrency)")
       fiat(ng-switch-when="false" btc="determineAvailableBalance(origin.balance)")

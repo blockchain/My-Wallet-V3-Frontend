@@ -30,6 +30,20 @@ html,body {
   background: transparent;
 }
 
+.line-split {
+  position: relative;
+  &:before, &:after {
+    left: 50%;
+    width: 1px;
+    content: '';
+    height: 50%;
+    position: absolute;
+    background-color: $ccc;
+  }
+  &:before { top: 0; }
+  &:after { bottom: 0; }
+}
+
 #qr-canvas { display: none; }
 
 noscript {

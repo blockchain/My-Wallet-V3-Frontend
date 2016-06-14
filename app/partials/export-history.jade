@@ -1,0 +1,74 @@
+form(
+  role="form"
+  name="exportForm"
+  autocomplete="off"
+  action="{{::action}}"
+  method="POST"
+  novalidate)
+
+  .modal-header
+    .flex-center.pam
+      h3.man.mrm(translate="EXPORT_HISTORY")
+      helper-button(content="EXPORT_HISTORY_EXPLAIN")
+
+  .modal-body
+    .ph-form
+      input(type="hidden" name="action" value="export")
+      input(type="hidden" name="active" value="{{active}}")
+      input(type="hidden" name="archived" value="{{archived}}")
+      input(type="hidden" name="format" value="{{exportFormat}}")
+
+      .flex-row.pal
+        .flex-1
+        .flex-4.form-group(ng-show="activeCount > 1")
+          ui-select.send-from-dropdown(
+            name="target"
+            ng-model="$parent.target"
+            ng-change="setActive()"
+            required)
+            ui-select-match(placeholder="{{'SEARCH' | translate}}...")
+              label-origin(origin="$select.selected")
+            ui-select-choices(repeat="t in targets | filter:{label:$select.search}" group-by="'type'")
+              label-origin(origin="::t" highlight="$select.search")
+        .flex-1
+      
+      .flex-row
+        .flex-3.flex-column.flex-center.flex-around.pam(ng-class="{'has-error':exportForm.start.$invalid}")
+          p.input-group.flex-center
+            input.form-control(
+              type="text"
+              name="start"
+              ng-model="start.date"
+              uib-datepicker-popup="{{format}}"
+              is-open="start.open"
+              placeholder="{{'START_DATE'|translate}}"
+              required)
+            span.ti-calendar.pointer(ng-click="start.open=true")
+          i.ti-arrow-down.blue
+          p.input-group.flex-center
+            input.form-control(
+              type="text"
+              name="end"
+              ng-model="end.date"
+              uib-datepicker-popup="{{format}}"
+              is-open="end.open"
+              placeholder="{{'END_DATE'|translate}}"
+              required)
+            span.ti-calendar.pointer(ng-click="end.open=true")
+
+        span.line-split.flex-center.mrl.mll
+
+        .flex-3.flex-row.flex-center.flex-around.pam
+          label.mll.btn.button-default(ng-model="exportFormat" uib-btn-radio="'csv'") CSV
+          span.upper(translate="OR")
+          label.mrl.btn.button-default(ng-model="exportFormat" uib-btn-radio="'xls'") XLS
+       
+  .modal-footer
+    button.button-muted.mrm(
+      type="button"
+      translate="CLOSE"
+      ng-click="$dismiss()")
+    button.btn.button-primary(
+      type="submit"
+      translate="EXPORT"
+      ng-disabled="exportForm.$invalid")
