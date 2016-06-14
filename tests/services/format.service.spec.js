@@ -11,14 +11,16 @@ describe('format', () => {
         index : 0,
         balance : 1,
         archived : false,
-        isWatchOnly : false
+        isWatchOnly : false,
+        extendedPublicKey: 'xpub_Savings'
       })).toEqual({
         label : "Savings",
         index : 0,
         address : undefined,
         balance : 1,
         archived : false,
-        type : 'Accounts'
+        type : 'Accounts',
+        xpub: 'xpub_Savings'
       });
     }));
 
