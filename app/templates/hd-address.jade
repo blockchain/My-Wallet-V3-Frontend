@@ -2,7 +2,8 @@ tr
   td.shrink
     a(ng-href="{{::addressLink(address.address)}}"
       ng-bind-html="::address.address | escapeHtml | highlight:searchText"
-      target="_blank")
+      target="_blank"
+      rel="noopener noreferrer")
     | &nbsp;
     span.security-yellow.parens(translate="NO_TXS" ng-show="pastAddress && address.ntxs === 0")
   td.expand.address-label
