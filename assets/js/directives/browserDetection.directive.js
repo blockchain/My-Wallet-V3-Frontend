@@ -81,9 +81,8 @@ function directive ($q, $translate, MyWallet) {
           defer.resolve({});
         }
       } else if (info.webkit) {
-        // 537.36 is the version referenced by modern Chrome, slightly lower
-        // might still be acceptable.
-        let minimumWebkitVersion = '537.36';
+        // 600.1.4 shipped with iOs 8
+        let minimumWebkitVersion = '600.1.4';
         // Patch field may be undefined:
         let userVersion = [
           info.webkit.major,
@@ -99,10 +98,8 @@ function directive ($q, $translate, MyWallet) {
               safariVersion = safari[1];
             }
 
-            // The last patch version of Safari 5 (5.1.4 - webkit 534.54.16) did
-            // work when last checked, but 5.1.2. does not. We increased the
-            // minimum Safari 6.1 to be on the safe side.
-            $translate('MINIMUM_BROWSER', {browser: 'Safari', userVersion: safariVersion, requiredVersion: '6.1'}).then((translation) => {
+            // iOs 8 ships with webkit 600
+            $translate('MINIMUM_BROWSER', {browser: 'Safari', userVersion: safariVersion, requiredVersion: '8.0.6'}).then((translation) => {
               defer.reject({msg: translation});
             });
           } else {
