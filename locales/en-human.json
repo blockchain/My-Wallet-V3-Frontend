@@ -186,6 +186,8 @@
   "ADDRESS_BOOK" : "Address Book",
   "MANAGE_ADDRESS_BOOK" : "Manage Address Book",
   "CONFIRM_DELETE_ADDRESS_BOOK_ENTRY" : "Are you sure you want to remove {{ address }} from your address book?",
+  "ROUTE_ERROR" : "There was a problem navigating to that page, please try again",
+  "LOAD_ADDR_ERR" : "Failed to load your HD address balances, please try again",
   "SHARE" : "Share",
   "TRANSACTION_FRUGAL" : "This transaction may take a while to confirm, if ever, due to a low bitcoin network fee",
   "DISABLED" : "Disabled",

@@ -126,7 +126,8 @@ function AppCtrl ($scope, Wallet, Alerts, $state, $rootScope, $cookies, $locatio
   });
 
   $scope.$on('$stateChangeError', (event, toState, toParams, fromState, fromParams, error) => {
-    Alerts.displayError(error);
+    let message = typeof error === 'string' ? error : 'ROUTE_ERROR';
+    Alerts.displayError(message);
   });
 
   $scope.$watch('status.isLoggedIn', () => {

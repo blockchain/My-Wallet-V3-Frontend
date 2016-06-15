@@ -301,9 +301,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-        paymentRequests: ($stateParams, Wallet) => {
+        paymentRequests: ($stateParams, $q, Wallet) => {
           let index = parseInt($stateParams.account, 10);
-          return Wallet.getPendingPayments(index);
+          return Wallet.getPendingPayments(index).catch(() => $q.reject('LOAD_ADDR_ERR'));
         }
       }
     })
