@@ -33,6 +33,7 @@ describe "browserDetection", ->
   describe "performCheck()", ->
 
     it "should not show an error when above minimum version", ->
+      spyOn(window, "browserDetection").and.returnValue {version: 100, browser: "Chrome"}
       spyOn(MyWallet, "browserCheckFast").and.returnValue true
 
       isoScope.performCheck()
@@ -89,10 +90,10 @@ describe "browserDetection", ->
         expect(isoScope.result.disabled).toBe(true)
 
       it "should include Safari version in error message", ->
-        expect(isoScope.result.msg).toEqual("MINIMUM_BROWSER|Safari|5.1|6.1")
+        expect(isoScope.result.msg).toEqual("MINIMUM_BROWSER|Safari|5.1|8.0.6")
 
     it "should permit modern Safari", ->
-      spyOn(window, "browserDetection").and.returnValue {version: 600, browser: "safari", webkit: {major: 600, minor: 0, patch: 0}}
+      spyOn(window, "browserDetection").and.returnValue {version: 610, browser: "safari", webkit: {major: 610, minor: 0, patch: 0}}
       spyOn(MyWallet, "browserCheckFast").and.returnValue true
 
       isoScope.performCheck()
@@ -110,7 +111,7 @@ describe "browserDetection", ->
 
     it "should permit modern Webkit if safe", ->
       spyOn(MyWallet, "browserCheckFast").and.returnValue true
-      spyOn(window, "browserDetection").and.returnValue {version: 2, browser: "obscure", webkit: {major: 600, minor: 0, patch: 0}}
+      spyOn(window, "browserDetection").and.returnValue {version: 2, browser: "obscure", webkit: {major: 610, minor: 0, patch: 0}}
 
       isoScope.performCheck()
       isoScope.$digest()
