@@ -27,7 +27,7 @@ function helperButton ($translate) {
 
     scope.helperText = {
       templateUrl: 'templates/helper-popover.jade',
-      placement: scope.placement || 'right'
+      placement: scope.placement || 'top'
     };
   }
 }

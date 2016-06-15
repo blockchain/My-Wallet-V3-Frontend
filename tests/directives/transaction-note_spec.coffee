@@ -16,7 +16,7 @@ describe "Transaction Note Directive", ->
     $compile = _$compile_
     $rootScope = _$rootScope_
 
-    Wallet.hdAddresses = () -> () -> [{'address': '123', 'label': 'label label label fun'}]
+    Wallet.getLabelledHdAddresses = () -> [{'address': '123', 'label': 'label label label fun'}]
 
     $rootScope.transaction = {note: "Hello World", processedOutputs: [{'address': '123', 'identity': 1}], txType: 'received'}
     $rootScope.account = 1
@@ -36,7 +36,7 @@ describe "Transaction Note Directive", ->
     expect(isoScope.transaction.note).toBe("Hello World")
 
   it "should show only the note if no address labels match the tx", inject((Wallet) ->
-    Wallet.hdAddresses = () -> () -> [{'address': '123123123nomatch', 'label': 'label label label fun'}]
+    Wallet.getLabelledHdAddresses = () -> [{'address': '123123123nomatch', 'label': 'label label label fun'}]
     element = $compile("<transaction-note transaction='transaction' account='account'></transaction-note>")($rootScope)
     $rootScope.$digest()
     isoScope = element.isolateScope()

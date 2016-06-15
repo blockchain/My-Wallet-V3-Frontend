@@ -72,6 +72,15 @@
   //scoped CSS (refactor)
   a.button-success-alt { color: white; }
   a.aaa { color: $aaa; }
+  &.left {
+    .arrow {
+      border-bottom-color: transparent !important;
+      &:after {
+        border-top-color: transparent !important;
+        border-left-color: #F5F7F9 !important;
+      }
+    }
+  }
 }
 
 // popover and contextual-message overrides
