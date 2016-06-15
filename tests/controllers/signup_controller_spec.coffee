@@ -11,6 +11,8 @@ describe "SignupCtrl", ->
       Wallet = $injector.get("Wallet")
 
       Wallet.my.browserCheck = () -> true
+      Wallet.my.browserCheckFast = () -> true
+
 
       $state = $injector.get("$state") # This is a mock
       $state.params = {email: ''}

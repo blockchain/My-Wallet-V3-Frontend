@@ -47,17 +47,25 @@ function directive ($q, $translate, MyWallet) {
   return directive;
 
   function link (scope, elem, attrs) {
-    // Unknown browser, check if it can handle the math required:
-    const checkUnknownBrowser = (defer) => {
+    const warnUnknownBrowser = (defer) => {
+      $translate('UNKNOWN_BROWSER').then((translation) => {
+        defer.resolve({warn: true, msg: translation});
+      });
+    };
+
+    // Check if it can handle the math required:
+    const checkBrowserMath = () => {
+      let defer = $q.defer();
+
       if (!MyWallet.browserCheckFast()) {
         $translate('UNSUITABLE_BROWSER').then((translation) => {
           defer.reject({msg: translation});
         });
       } else {
-        $translate('UNKNOWN_BROWSER').then((translation) => {
-          defer.resolve({warn: true, msg: translation});
-        });
+        defer.resolve();
       }
+
+      return defer.promise;
     };
 
     scope.getUserAgent = () => navigator.userAgent;
@@ -115,25 +123,29 @@ function directive ($q, $translate, MyWallet) {
             defer.resolve({});
           } else {
             // Unknown webkit browser:
-            checkUnknownBrowser(defer);
+            warnUnknownBrowser(defer);
           }
         }
       } else {
         // Unknown non-webkit browser:
-        checkUnknownBrowser(defer);
+        warnUnknownBrowser(defer);
       }
       return defer.promise;
     };
 
     scope.performCheck = () => {
-      checkBrowserVersion().then((res) => {
-        scope.result.disabled = false;
-        scope.result.warn = res.warn;
-        scope.result.msg = res.msg;
-      }).catch((res) => {
+      const error = (res) => {
         scope.result.disabled = true;
         scope.result.msg = res.msg;
-      });
+      };
+
+      checkBrowserMath().then(() => {
+        checkBrowserVersion().then((res) => {
+          scope.result.disabled = false;
+          scope.result.warn = res.warn;
+          scope.result.msg = res.msg;
+        }).catch(error);
+      }).catch(error);
     };
 
     scope.performCheck();
