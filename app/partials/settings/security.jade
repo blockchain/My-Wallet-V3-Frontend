@@ -1,71 +1,76 @@
 h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
 
-form.form-horizontal(role="form",name="form",novalidate)  
-  .form-group
+.clearfix
+  .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="WALLET_RECOVERY_PHRASE")
         span.label.label-warning(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
         span.label.label-success(translate="VERIFIED", ng-show="status.didConfirmRecoveryPhrase")
-      p.text.line-height.em-300.hidden-xs.hidden-sm(translate="RECOVERY_PHRASE_EXPLAIN")    
+      p.text.em-300.hidden-xs.hidden-sm(translate="RECOVERY_PHRASE_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       confirm-recovery-phrase
 
-  .form-group
-    .col-sm-12.col-md-6
-      .flex-center.flex-between-mobile.mbm
-        label.em-400.type-h5.mbn(translate="WALLET_PASSWORD")
-        span.label.label-success(translate="PASSWORD_SET")
-      p.text.line-height.em-300.hidden-xs(translate="WALLET_PASSWORD_EXPLAIN")
-    .col-sm-12.col-md-6.setting-result
-      a.button-primary(ng-click="changePassword()", translate="CHANGE")
-  .form-group(ng-class="{'has-error':errors.passwordHint}")
-    .col-sm-12.col-md-6
-      .flex-center.flex-between-mobile.mbm
-        label.em-400.type-h5.mbn(translate="PASSWORD_HINT")
-        span.label.label-warning(translate="NOT_STORED", ng-show="!user.passwordHint")
-        span.label.label-success(translate="HINT_STORED", ng-show="user.passwordHint")
-      p.text.line-height.em-300.hidden-xs(translate="PASSWORD_HINT_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result
-      bc-async-input(ng-model="user.passwordHint" on-save="changePasswordHint" on-change="clearErrors" max-length="255" action-title="'CHANGE' | translate")
-    .help-block
-      span {{ errors.passwordHint }}
+  .form-group.mbn.border-bottom.clearfix.pvl(ng-controller="ChangePasswordCtrl")
+    div(settings-form)
+      .col-sm-12.col-md-6
+        .flex-center.flex-between-mobile.mbm
+          label.em-400.type-h5.mbn(translate="WALLET_PASSWORD")
+          span.label.label-success(translate="PASSWORD_SET")
+        p.text.em-300.hidden-xs(translate="WALLET_PASSWORD_EXPLAIN")
+      .col-sm-12.col-md-6.setting-result.mtm(ng-hide="active")
+        a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
+      .col-sm-12.col-md-6(ng-show="active")
+        include ./change-password.jade
+  .form-group.mbn.border-bottom.clearfix.pvl(ng-class="{'has-error':errors.passwordHint}" ng-controller="ChangePasswordHintCtrl")
+    div(settings-form)
+      .col-sm-12.col-md-6
+        .flex-center.flex-between-mobile.mbm
+          label.em-400.type-h5.mbn(translate="PASSWORD_HINT")
+          span.label.label-warning(translate="NOT_STORED", ng-show="!user.passwordHint")
+          span.label.label-success(translate="HINT_STORED", ng-show="user.passwordHint")
+        p.text.em-300.hidden-xs(translate="PASSWORD_HINT_EXPLAIN")    
+      .col-sm-12.col-md-6.setting-result(ng-hide="active")
+        p.em-400.type-h5.mbm {{ user.passwordHint }}
+        a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
+      .col-sm-12.col-md-6(ng-show="active")
+        include ./change-password-hint.jade
       
-  .form-group
-    .col-sm-12.col-md-6
-      .flex-center.flex-between-mobile.mbm
-        label.type-h5.em-400.mbn(translate="WALLET_SECOND_PASSWORD")
-        span.label.label-warning(ng-hide="settings.secondPassword", translate="DISABLED")    
-        span.label.label-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
-      p.em-300.text.line-height.hidden-xs.hidden-sm(translate="WALLET_SECOND_PASSWORD_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result
-      configure-second-password
+  .form-group.mbn.border-bottom.clearfix.pvl(ng-controller="ChangeSecondPasswordCtrl")
+    div(settings-form)
+      .col-sm-12.col-md-6
+        .flex-center.flex-between-mobile.mbm
+          label.type-h5.em-400.mbn(translate="WALLET_SECOND_PASSWORD")
+          span.label.label-warning(ng-hide="settings.secondPassword", translate="DISABLED")    
+          span.label.label-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
+        p.em-300.text.hidden-xs(translate="WALLET_SECOND_PASSWORD_EXPLAIN")    
+      .col-sm-12.col-md-6.setting-result(ng-hide="active")
+        a.button-primary.display-inline-block(ng-click="activate()", translate="SET_SECOND_PASSWORD", ng-show="!settings.secondPassword")
+        a.button-primary.display-inline-block(ng-click="removeSecondPassword()", ladda-translate="REMOVE_SECOND_PASSWORD", ng-show="settings.secondPassword", ui-ladda="status.waiting", data-style="expand-right")
+      .col-sm-12.col-md-6(ng-show="active")
+        include ./change-second-password.jade
    
-  .form-group
+  .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
         label.em-400.type-h5.mbn(translate="TWO_STEP_VERIFICATION")
         span.label.label-warning(translate="DISABLED", ng-show="!settings.needs2FA")
         span.label.label-success(translate="ENABLED", ng-show="settings.needs2FA")
-      p.text.line-height.em-300.hidden-xs(translate="TWO_STEP_EXPLAIN")    
+      p.text.em-300.hidden-xs(translate="TWO_STEP_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
-      a.button-primary(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA" ng-hide="settings.needs2FA")
-      a.button-primary(ng-click="changeTwoFactor()" translate="DISABLE" ng-show="settings.needs2FA")
+      a.button-primary.display-inline-block(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA" ng-hide="settings.needs2FA")
+      a.button-primary.display-inline-block(ng-click="changeTwoFactor()" translate="DISABLE" ng-show="settings.needs2FA")
 
-  .form-group
+  .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="REMEMBER_2FA")
         span.label.label-warning(ng-hide="settings.rememberTwoFactor", translate="DISABLED")
         span.label.label-success(ng-show="settings.rememberTwoFactor", translate="ENABLED")
-      p.em-300.text.line-height.hidden-xs.hidden-sm(translate="REMEMBER_2FA_EXPLAIN")    
+      p.em-300.text.hidden-xs.hidden-sm(translate="REMEMBER_2FA_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
-      div(ng-show="processToggleRememberTwoFactor")
-        img(src="img/spinner.gif")
-      div(ng-hide="processToggleRememberTwoFactor")
-      .mtl
-        a.button-primary(ng-click="enableRememberTwoFactor()", translate="ENABLE", ng-hide="settings.rememberTwoFactor")
-        a.button-primary(ng-click="disableRememberTwoFactor()", translate="DISABLE", ng-show="settings.rememberTwoFactor")
+      a.button-primary.display-inline-block(ng-click="enableRememberTwoFactor()", ladda-translate="ENABLE", ng-hide="settings.rememberTwoFactor" ui-ladda="processToggleRememberTwoFactor" data-style="expand-right")
+      a.button-primary.display-inline-block(ng-click="disableRememberTwoFactor()", ladda-translate="DISABLE", ng-show="settings.rememberTwoFactor" ui-ladda="processToggleRememberTwoFactor" data-style="expand-right")
 
 .mtl
   button.button-default(translate="ADVANCED_SETTINGS", ng-click="toggleAdvanced()" ng-class="{active : display.advanced}")
@@ -73,14 +78,14 @@ form.form-horizontal(role="form",name="form",novalidate)
 h5.well.type-h5.em-400.hidden-xs(ng-show="display.advanced")
   span(translate="SECURITY_ADVANCED_EXPLAIN")
     
-form.form-horizontal(role="form",name="form",novalidate, ng-show="display.advanced")
-  .form-group
+div.clearfix(ng-show="display.advanced")
+  .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="LOGGING")
         span.label.label-warning(ng-hide="settings.loggingLevel" translate="DISABLED")
         span.label.label-success(ng-show="settings.loggingLevel" translate="ENABLED")
-      p.em-300.text.line-height.hidden-xs.hidden-sm(translate="LOGGING_EXPLAIN")    
+      p.em-300.text.hidden-xs.hidden-sm(translate="LOGGING_EXPLAIN")    
     .col-sm-12.col-md-6
       setting-toggle(
         value="settings.loggingLevel"
@@ -89,44 +94,51 @@ form.form-horizontal(role="form",name="form",novalidate, ng-show="display.advanc
         disable-title="DISABLE"
       )
       
-  .form-group
+  .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="IP_WHITELIST_RESTRICT")
         span.label.label-warning(ng-hide="settings.restrictToWhitelist", translate="DISABLED")
         span.label.label-success(ng-show="settings.restrictToWhitelist", translate="ENABLED")
-      p.em-300.text.line-height.hidden-xs.hidden-sm(translate="IP_WHITELIST_RESTRICT_EXPLAIN")    
+      p.em-300.text.hidden-xs.hidden-sm(translate="IP_WHITELIST_RESTRICT_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       ip-whitelist-restrict
       
-  .form-group(ng-class="{'has-error': errors.ipWhitelist}")
-    .col-sm-12.col-md-6
-      label.type-h5.em-400(translate="IP_WHITELIST")
-      p.em-300.text.line-height.hidden-xs.hidden-sm(translate="IP_WHITELIST_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result
-      bc-async-input.long-input(ng-model="settings.ipWhitelist", validator="validateIpWhitelist", on-save="changeIpWhitelist", action-title="'CHANGE' | translate", error-message="errors.ipWhitelist")
-
+  .form-group.mbn.border-bottom.clearfix.pvl(ng-class="{'has-error': errors.ipWhitelist}" ng-controller="ChangeIpWhitelistCtrl")
+    div(settings-form)
+      .col-sm-12.col-md-6
+        label.type-h5.em-400(translate="IP_WHITELIST")
+        p.em-300.text.hidden-xs.hidden-sm(translate="IP_WHITELIST_EXPLAIN")    
+      .col-sm-12.col-md-6.setting-result(ng-hide="active")
+        p.em-400.type-h5.mbm {{ settings.ipWhitelist }}
+        a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
+      .col-sm-12.col-md-6(ng-show="active")
+        include ./change-ip-whitelist.jade
       
-   .form-group
+   .form-group.mbn.border-bottom.clearfix.pvl
       .col-sm-12.col-md-6
         .flex-center.flex-between-mobile.mbm
           label.type-h5.em-400(translate="BLOCK_TOR")
           span.label.label-success(ng-show="settings.blockTOR", translate="BLOCKED")
           span.label.label-warning(ng-hide="settings.blockTOR", translate="ALLOWED")
-        p.em-300.text.line-height.hidden-xs.hidden-sm(translate="BLOCK_TOR_EXPLAIN")    
+        p.em-300.text.hidden-xs.hidden-sm(translate="BLOCK_TOR_EXPLAIN")    
       .col-sm-12.col-md-6.setting-result
         tor
 
-  .form-group
-    .col-sm-12.col-md-6
-      label.type-h5.em-400(translate="PBKDF2_ITERATIONS")
-      p.em-300.text.line-height.hidden-xs.hidden-sm(translate="PBKDF2_ITERATIONS_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result
-      bc-async-input(ng-model="settings.pbkdf2" validator="validatePbkdf2" is-required on-save="changePbkdf2" action-title="'CHANGE' | translate")
+  .form-group.mbn.border-bottom.clearfix.pvl(ng-class="{'has-error':errors.pbkdf2}" ng-controller="ChangePbkdf2Ctrl")
+    div(settings-form)
+      .col-sm-12.col-md-6
+        label.type-h5.em-400(translate="PBKDF2_ITERATIONS")
+        p.em-300.text.hidden-xs.hidden-sm(translate="PBKDF2_ITERATIONS_EXPLAIN")
+      .col-sm-12.col-md-6.setting-result(ng-hide="active")
+        p.em-400.type-h5.mbm {{ settings.pbkdf2 }}
+        a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
+      .col-sm-12.col-md-6(ng-show="active")
+        include ./change-pbkdf2.jade
 
-  .form-group
+  .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="API_ACCESS")
-      p.em-300.text.line-height(translate="API_ACCESS_SUPPORT")    
+      p.em-300.text(translate="API_ACCESS_SUPPORT")    
     .col-sm-12.col-md-6

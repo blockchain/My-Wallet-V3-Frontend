@@ -1,0 +1,23 @@
+form(role="form" name="form" novalidate)
+  .form-group(ng-class="{'has-error': errors.logoutTime}")
+    label.control-label(translate="AUTO_LOGOUT")
+    div
+      input.form-control(
+        type="number"
+        name="logoutTime"
+        ng-model="fields.logoutTime"
+        on-enter="setLogoutTime()"
+        ng-change="validateLogoutTime()"
+        required
+        maxlength="255"
+        focus-when="active")
+      span.help-block(ng-show="errors.logoutTime")
+        span {{ errors.logoutTime }}
+  .form-group.mbn.has-error.pull-right.right-align
+    button.button-muted(ng-click="deactivate()" translate="CANCEL" ng-hide="busy")
+    button.button-success(
+      ui-ladda="status.waiting"
+      ng-click="setLogoutTime()"
+      ng-disabled="errors.logoutTime || form.$invalid"
+      ladda-translate="CHANGE"
+      data-style="expand-left")

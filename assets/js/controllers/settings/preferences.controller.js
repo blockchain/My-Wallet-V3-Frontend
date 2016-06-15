@@ -14,13 +14,8 @@ function SettingsPreferencesCtrl ($scope, Wallet, Alerts, currency, $uibModal, $
   $scope.changeCurrency = Wallet.changeCurrency;
   $scope.changeBTCCurrency = Wallet.changeBTCCurrency;
 
-  $scope.edit = { email: false };
   $scope.errors = {};
   $scope.mobileNumber = { step: 0 };
-
-  $scope.changeEmail = (email, success, error) => {
-    Wallet.changeEmail(email, success, error);
-  };
 
   $scope.enableNotifications = () => Wallet.enableNotifications();
   $scope.disableNotifications = () => Wallet.disableNotifications();
@@ -28,19 +23,6 @@ function SettingsPreferencesCtrl ($scope, Wallet, Alerts, currency, $uibModal, $
   $scope.canHandleBitcoinLinks = () => $window.navigator.registerProtocolHandler != null;
 
   $scope.browserCanHandleBitcoinLinks = $scope.canHandleBitcoinLinks();
-
-  $scope.changeLogoutTime = (m, success, errorCallback) => {
-    const error = () => {
-      Alerts.displayError('Failed to update auto logout time');
-      errorCallback();
-    };
-    Wallet.setLogoutTime(m, success, error);
-  };
-
-  $scope.validateLogoutTime = (candidate) => {
-    let n = parseInt(candidate, 10);
-    return !isNaN(candidate) && n >= 1 && n <= 1440;
-  };
 
   $scope.clearErrors = () => {
     $scope.errors = {};

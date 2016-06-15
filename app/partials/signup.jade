@@ -1,6 +1,14 @@
 div
   header
-    h2.em-300(translate="NEW_ACCT_WELCOME")
+    hgroup
+      .flex-between.flex-center.flex-wrap
+        h2.em-300.mtn(translate="CREATE_A_WALLET")
+        span.register.mbm
+          span(translate="OR")
+          | 
+          a.em-300(ui-sref="public.login-uid")
+            span(translate="LOGIN")
+      p.em-300(translate="CREATE_FREE_WALLET")
   form.form-horizontal(
     role="form"
     name="signupForm"
@@ -9,22 +17,22 @@ div
     novalidate)
     .form-group(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
       browser-detection(result="browser")
-      label.col-sm-4.control-label(translate="EMAIL")
-      .col-sm-8
+      label(translate="EMAIL")
+      div
         input.form-control(
           name="email"
           type="email"
           ng-model="fields.email"
           required
           ng-disabled="browser.disabled"
-          autofocus)
+          focus-when="!fields.email.length")
         span.help-block
           div(ng-show="signupForm.email.$touched")
             p(ng-show="signupForm.email.$error.required" translate="EMAIL_ADDRESS_REQUIRED")
             p(ng-show="signupForm.email.$error.email" translate="EMAIL_ADDRESS_INVALID")
     .form-group(ng-class="{'has-error': signupForm.password.$invalid && signupForm.password.$touched}")
-      label.col-sm-4.control-label(translate="NEW_PASSWORD")
-      .col-sm-8
+      label(translate="NEW_PASSWORD")
+      div
         input.form-control(
           name="password"
           type="password"
@@ -32,7 +40,6 @@ div
           ng-maxlength="255"
           min-entropy="25"
           ng-change="fields.confirmation = ''"
-          focus-when="fields.email.length"
           ng-disabled="browser.disabled"
           required)
         password-entropy.help-block(password="fields.password")
@@ -41,8 +48,8 @@ div
             p(ng-show="signupForm.password.$error.minEntropy && fields.password != undefined" translate="TOO_WEAK")
             p(ng-show="signupForm.password.$error.maxlength" translate="TOO_LONG")
     .form-group(ng-class="{'has-error': signupForm.confirmation.$invalid && signupForm.confirmation.$touched}")
-      label.col-sm-4.control-label(translate="CONFIRM_PASSWORD")
-      .col-sm-8
+      label(translate="CONFIRM_PASSWORD")
+      div
         input.form-control(
           name="confirmation"
           type="password"
@@ -54,20 +61,19 @@ div
           div(ng-show="signupForm.confirmation.$touched")
             p(ng-show="signupForm.confirmation.$error.isValid" translate="NO_MATCH")
     .flex-center.flex-end.mtm.mbl
-      .accept-checkbox
-        input#agreement_accept.pull-right(
-          name="agreement"
-          type="checkbox"
-          ng-model="fields.acceptedAgreement"
-          ng-disabled="browser.disabled"
-          required)
-      label.em-300.col-sm-8.accept-label.right-align
+      input#agreement_accept.pull-right(
+        name="agreement"
+        type="checkbox"
+        ng-model="fields.acceptedAgreement"
+        ng-disabled="browser.disabled"
+        required)
+      label.em-300.mbn.mls.right-align
         | I have read and agree to the 
         a(href="https://blockchain.info/Resources/TermsofServicePolicy.pdf", translate="TERMS_OF_SERVICE", target="_blank")
-    .flex-center.flex-end.mbl.prl
+    .flex-center.flex-end.mbl
       button.button-primary(
         type="submit"
+        data-style="expand-left"
         ng-disabled="signupForm.$invalid || browser.disabled"
-        translate="CONTINUE"
-        ng-show="!working")  
-      img(ng-show="working" src="img/spinner.gif")
+        ladda-translate="CONTINUE"
+        ui-ladda="working")

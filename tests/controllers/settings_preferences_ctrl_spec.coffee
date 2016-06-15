@@ -68,19 +68,6 @@ describe "SettingsPreferencesCtrl", ->
       return
     )
 
-    it "should let user change their email", inject((Wallet) ->
-      spyOn(Wallet, "changeEmail").and.callThrough()
-
-      scope.changeEmail("other@me.com", mockObserver.success, mockObserver.error)
-
-      scope.$digest()
-
-      expect(Wallet.changeEmail).toHaveBeenCalledWith("other@me.com", mockObserver.success, mockObserver.error)
-      expect(scope.user.email).toBe("other@me.com")
-
-      return
-    )
-
     return
 
   describe "language", ->
@@ -135,10 +122,3 @@ describe "SettingsPreferencesCtrl", ->
       expect(Wallet.handleBitcoinLinks).toHaveBeenCalled()
     )
 
-  describe "logout time", ->
-
-    it "should be a valid time", () ->
-      expect(scope.validateLogoutTime(-42)).toBe(false)
-      expect(scope.validateLogoutTime(0.6)).toBe(false)
-      expect(scope.validateLogoutTime('x')).toBe(false)
-      expect(scope.validateLogoutTime(5.5)).toBe(true)

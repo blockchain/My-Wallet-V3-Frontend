@@ -15,10 +15,6 @@
     font-size: 12pt;
   }
   .edit-mobile {
-    // Our custom CSS causes layout issues for bc-phone-number:
-    .form-control {
-      height: 33px !important;
-    }
     .caret {
       padding-left: 0px !important;
       margin-left: 0px;
@@ -40,15 +36,9 @@
     }
   }
   // Preferences
-  form.form-horizontal {
+  .clearfix {
     .form-group {
-      margin: 0!important;
-      border-bottom: 1px solid $grey;
-      padding: 20px 0;
       &:hover { background: $hover-blue; }
-      .button-primary {
-        display: inline-block;
-      }
       @media(max-width: 992px) {
         .setting-result {
           clear: left;
@@ -111,10 +101,6 @@
       }
     }
   }
-}
-
-.setting-result {
-  p { margin-top: 15px; }
 }
 
 .inneredit { padding: 10px 15px 0;}

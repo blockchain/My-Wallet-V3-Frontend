@@ -24,3 +24,12 @@
   box-shadow: inset 0px 1px 1px 1px #D7D7D7;
   margin-left: 1em;
 }
+
+input[name="password"] + password-entropy .progress {
+  margin-bottom: 5px;
+  > div {
+    font-size: 10px;
+    padding-left: 10px;
+    text-transform: uppercase;
+  }
+}
