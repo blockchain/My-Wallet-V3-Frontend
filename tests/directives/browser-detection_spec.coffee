@@ -30,18 +30,18 @@ describe "browserDetection", ->
   it "should have text", ->
     expect(element.html()).toContain "text-warning"
 
-  it "should be enabled for PhantomJS", ->
-    expect(isoScope.result.disabled).toBe(false)
-
   describe "performCheck()", ->
 
     it "should not show an error when above minimum version", ->
+      spyOn(MyWallet, "browserCheckFast").and.returnValue true
+
       isoScope.performCheck()
       isoScope.$digest()
       expect(isoScope.result.disabled).toBe(false)
 
     it "should show an error when below minimum version", ->
       spyOn(window, "browserDetection").and.returnValue {version: 10, browser: "Chrome"}
+      spyOn(MyWallet, "browserCheckFast").and.returnValue true
 
       isoScope.performCheck()
       isoScope.$digest()
@@ -68,6 +68,7 @@ describe "browserDetection", ->
 
     it "should warn against IE, but allow it", ->
       spyOn(window, "browserDetection").and.returnValue {version: 11, browser: "ie"}
+      spyOn(MyWallet, "browserCheckFast").and.returnValue true
 
       isoScope.performCheck()
       isoScope.$digest()
@@ -79,6 +80,7 @@ describe "browserDetection", ->
       beforeEach ->
         spyOn(window, "browserDetection").and.returnValue {version: 300, browser: "safari", webkit: {major: 200, minor: 0, patch: 0}}
         spyOn(isoScope, "getUserAgent").and.returnValue "... Version/5.1.2 Safari/534.54"
+        spyOn(MyWallet, "browserCheckFast").and.returnValue true
 
         isoScope.performCheck()
         isoScope.$digest()
@@ -91,6 +93,7 @@ describe "browserDetection", ->
 
     it "should permit modern Safari", ->
       spyOn(window, "browserDetection").and.returnValue {version: 600, browser: "safari", webkit: {major: 600, minor: 0, patch: 0}}
+      spyOn(MyWallet, "browserCheckFast").and.returnValue true
 
       isoScope.performCheck()
       isoScope.$digest()
