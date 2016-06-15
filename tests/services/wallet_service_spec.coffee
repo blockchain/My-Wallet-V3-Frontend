@@ -194,7 +194,6 @@ describe "walletServices", () ->
     return
 
   describe "total()", ->
-    pending()
     beforeEach ->
       Wallet.status.isLoggedIn = true
 
@@ -225,7 +224,7 @@ describe "walletServices", () ->
       it "should return the sum of all accounts and addresses", inject((Wallet) ->
 
         Wallet.my.wallet.hdwallet.balanceActiveAccounts = 3
-        Wallet.my.wallet.balanceSpendableActiveLegacy = 1
+        Wallet.my.wallet.balanceActiveLegacy = 1
 
         expect(Wallet.total("")).toBeGreaterThan(0)
         expect(Wallet.total("")).toBe(4)
@@ -251,7 +250,7 @@ describe "walletServices", () ->
 
     describe "for imported addresses", ->
       it "should return the sum of all legacy addresses", inject((Wallet, MyWalletStore) ->
-        Wallet.my.wallet.balanceSpendableActiveLegacy = 1
+        Wallet.my.wallet.balanceActiveLegacy = 1
 
         expect(Wallet.total("imported")).toBeGreaterThan(0)
         expect(Wallet.total("imported")).toBe(1)
