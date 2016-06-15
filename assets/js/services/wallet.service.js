@@ -115,7 +115,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       if (wallet.my.wallet.isUpgradedToHD && !wallet.status.didInitializeHD) {
         wallet.status.didInitializeHD = true;
       }
-      wallet.settings_api.get_account_info((result) => {
+      wallet.settings_api.getAccountInfo((result) => {
         $window.name = 'blockchain-' + result.guid;
         wallet.settings.ipWhitelist = result.ip_lock || '';
         wallet.settings.restrictToWhitelist = result.ip_lock_on;
@@ -478,7 +478,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       $rootScope.$safeApply();
     };
 
-    wallet.settings_api.update_IP_lock(ips, success, error);
+    wallet.settings_api.updateIPlock(ips, success, error);
   };
 
   wallet.resendEmailConfirmation = (successCallback, errorCallback) => {
@@ -839,14 +839,14 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   };
 
   wallet.changeLanguage = (language) => $q((resolve, reject) => {
-    wallet.settings_api.change_language(language.code, () => {
+    wallet.settings_api.changeLanguage(language.code, () => {
       wallet.setLanguage(language);
       resolve(true);
     }, reject);
   });
 
   wallet.changeCurrency = (curr) => $q((resolve, reject) => {
-    wallet.settings_api.change_local_currency(curr.code, () => {
+    wallet.settings_api.changeLocalCurrency(curr.code, () => {
       wallet.settings.currency = curr;
       if (!currency.isBitCurrency(wallet.settings.displayCurrency)) {
         wallet.settings.displayCurrency = curr;
@@ -856,7 +856,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   });
 
   wallet.changeBTCCurrency = (btcCurrency) => $q((resolve, reject) => {
-    wallet.settings_api.change_btc_currency(btcCurrency.serverCode, () => {
+    wallet.settings_api.changeBtcCurrency(btcCurrency.serverCode, () => {
       wallet.settings.btcCurrency = btcCurrency;
       if (currency.isBitCurrency(wallet.settings.displayCurrency)) {
         wallet.settings.displayCurrency = btcCurrency;
@@ -866,7 +866,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   });
 
   wallet.changeEmail = (email, successCallback, errorCallback) => {
-    wallet.settings_api.change_email(email, () => {
+    wallet.settings_api.changeEmail(email, () => {
       wallet.user.email = email;
       wallet.user.isEmailVerified = false;
       successCallback();
@@ -948,7 +948,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   };
 
   wallet.changePasswordHint = (hint, successCallback, errorCallback) => {
-    wallet.settings_api.update_password_hint1(hint, () => {
+    wallet.settings_api.updatePasswordHint1(hint, () => {
       wallet.user.passwordHint = hint;
       successCallback();
       $rootScope.$safeApply();
@@ -1064,7 +1064,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   };
 
   wallet.enableBlockTOR = () => {
-    wallet.settings_api.update_tor_ip_block(1, () => {
+    wallet.settings_api.updateTorIpBlock(1, () => {
       wallet.settings.blockTOR = true;
       $rootScope.$safeApply();
     }, () => {
@@ -1074,7 +1074,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   };
 
   wallet.disableBlockTOR = () => {
-    wallet.settings_api.update_tor_ip_block(0, () => {
+    wallet.settings_api.updateTorIpBlock(0, () => {
       wallet.settings.blockTOR = false;
       $rootScope.$safeApply();
     }, () => {
@@ -1084,7 +1084,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   };
 
   wallet.enableRestrictToWhiteListedIPs = () => {
-    wallet.settings_api.update_IP_lock_on(true, () => {
+    wallet.settings_api.updateIPlockOn(true, () => {
       wallet.settings.restrictToWhitelist = true;
       wallet.saveActivity(2);
       $rootScope.$safeApply();
@@ -1095,7 +1095,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   };
 
   wallet.disableRestrictToWhiteListedIPs = () => {
-    wallet.settings_api.update_IP_lock_on(false, () => {
+    wallet.settings_api.updateIPlockOn(false, () => {
       wallet.settings.restrictToWhitelist = false;
       wallet.saveActivity(2);
       $rootScope.$safeApply();

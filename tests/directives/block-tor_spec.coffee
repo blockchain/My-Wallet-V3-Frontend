@@ -12,7 +12,7 @@ describe "TOR Directive", ->
     $rootScope = _$rootScope_
 
     Wallet.settings_api =
-      update_tor_ip_block: (value, success, error) ->
+      updateTorIpBlock: (value, success, error) ->
         success()
 
     return

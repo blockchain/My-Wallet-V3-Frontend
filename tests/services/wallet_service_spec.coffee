@@ -66,14 +66,14 @@ describe "walletServices", () ->
     )
 
     it "should switch language", inject((Wallet, languages) ->
-      Wallet.settings_api.change_language = (language, success, error) ->
+      Wallet.settings_api.changeLanguage = (language, success, error) ->
         success()
 
-      spyOn(Wallet.settings_api, "change_language").and.callThrough()
+      spyOn(Wallet.settings_api, "changeLanguage").and.callThrough()
 
       Wallet.changeLanguage(languages[0])
-      expect(MyBlockchainSettings.change_language).toHaveBeenCalled()
-      expect(MyBlockchainSettings.change_language.calls.argsFor(0)[0]).toBe("bg")
+      expect(MyBlockchainSettings.changeLanguage).toHaveBeenCalled()
+      expect(MyBlockchainSettings.changeLanguage.calls.argsFor(0)[0]).toBe("bg")
       expect(Wallet.settings.language.code).toBe("bg")
 
     )
@@ -95,11 +95,11 @@ describe "walletServices", () ->
     )
 
     it "can be switched", inject(($rootScope, Wallet, currency) ->
-      Wallet.settings_api.change_local_currency = (newCurrency, f) -> f()
+      Wallet.settings_api.changeLocalCurrency = (newCurrency, f) -> f()
 
-      spyOn(Wallet.settings_api, "change_local_currency").and.callThrough()
+      spyOn(Wallet.settings_api, "changeLocalCurrency").and.callThrough()
       Wallet.changeCurrency(currency.currencies[1])
-      expect(MyBlockchainSettings.change_local_currency).toHaveBeenCalledWith("EUR", jasmine.any(Function), jasmine.any(Function))
+      expect(MyBlockchainSettings.changeLocalCurrency).toHaveBeenCalledWith("EUR", jasmine.any(Function), jasmine.any(Function))
       expect(Wallet.settings.currency.code).toBe("EUR")
     )
 
@@ -113,11 +113,11 @@ describe "walletServices", () ->
     )
 
     it "can be changed", inject((Wallet) ->
-      Wallet.settings_api.change_email = (newVal, success, error) -> success()
+      Wallet.settings_api.changeEmail = (newVal, success, error) -> success()
 
-      spyOn(Wallet.settings_api, "change_email").and.callThrough()
+      spyOn(Wallet.settings_api, "changeEmail").and.callThrough()
       Wallet.changeEmail("other@me.com", mockObserver.success, mockObserver.error)
-      expect(MyBlockchainSettings.change_email).toHaveBeenCalled()
+      expect(MyBlockchainSettings.changeEmail).toHaveBeenCalled()
       expect(Wallet.user.email).toBe("other@me.com")
       expect(Wallet.user.isEmailVerified).toBe(false)
     )
@@ -179,15 +179,15 @@ describe "walletServices", () ->
     )
 
     it "can be changed", inject((Wallet) ->
-      Wallet.settings_api.update_password_hint1 = (hint, success, error) ->
+      Wallet.settings_api.updatePasswordHint1 = (hint, success, error) ->
         if hint.split('').some((c) -> c.charCodeAt(0) > 255)
           error(101)
         else
           success()
 
-      spyOn(Wallet.settings_api, "update_password_hint1").and.callThrough()
+      spyOn(Wallet.settings_api, "updatePasswordHint1").and.callThrough()
       Wallet.changePasswordHint("Better hint", mockObserver.success, mockObserver.error)
-      expect(MyBlockchainSettings.update_password_hint1).toHaveBeenCalled()
+      expect(MyBlockchainSettings.updatePasswordHint1).toHaveBeenCalled()
       expect(Wallet.user.passwordHint).toBe("Better hint")
     )
 
