@@ -82,6 +82,7 @@ describe "SendCtrl", ->
           '<input type="text" name="from" ng-model="transaction.from" required />' +
           '<input type="text" name="destinations0" ng-model="transaction.destinations[0]" required />' +
           '<input type="number" name="amounts0" ng-model="transaction.amounts[0]" ng-change="" min="1" required />' +
+          '<input type="number" name="amountsFiat0" ng-model="transaction.amountsFiat[0]" ng-change="" min="1" required />' +
           '<input type="text" name="destinations1" ng-model="transaction.destinations[1]" required />' +
           '<input type="number" name="amounts1" ng-model="transaction.amounts[1]" ng-change="" min="1" required />' +
           '<input type="text" name="destinations2" ng-model="transaction.destinations[2]" required />' +
@@ -414,6 +415,7 @@ describe "SendCtrl", ->
           from: Wallet.accounts()[0]
           destinations: Wallet.legacyAddresses().slice(0, 2)
           amounts: [100, 200]
+          amountsFiat: [100]
           fee: 50
           note: 'this_is_a_note'
 
@@ -613,8 +615,10 @@ describe "SendCtrl", ->
 
       it "should be true when all conditions are met", ->
         field = scope.sendForm.amounts0
+        fiatField = scope.sendForm.amountsFiat0
         expect(field.$invalid).toEqual(true)
         field.$setTouched()
+        fiatField.$setTouched()
         spyOn(scope, 'amountsAreValid').and.returnValue(false)
         expect(scope.hasAmountError(0)).toEqual(true)
 
