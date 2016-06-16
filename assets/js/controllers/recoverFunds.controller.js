@@ -18,24 +18,24 @@ function RecoverFundsCtrl ($scope, $rootScope, $state, $timeout, $translate, $co
   $scope.performImport = () => {
     $scope.working = true;
 
-    const success = (wallet) => {
+    const success = (result) => {
+      $cookies.put('session', result.sessionToken);
+      $cookies.put('uid', result.guid);
+
       $scope.working = false;
       $scope.nextStep();
       $rootScope.$safeApply();
 
-      const loginSuccess = (guid, sessionToken) => {
-        $cookies.put('session', sessionToken);
-        $cookies.put('uid', guid);
-
+      const loginSuccess = () => {
         Alerts.displaySuccess('Successfully recovered wallet!');
       };
       const loginError = (err) => {
         console.error(err);
       };
       $timeout(() => {
-        $state.go('public.login-uid', {uid: wallet.guid});
+        $state.go('public.login-uid', {uid: result.guid});
         Wallet.login(
-          null, wallet.guid, wallet.password, null, null, loginSuccess, loginError
+          result.guid, result.password, null, null, loginSuccess, loginError
         );
       }, 4000);
     };

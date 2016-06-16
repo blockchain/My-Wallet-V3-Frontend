@@ -21,10 +21,7 @@ function NavigationCtrl ($scope, $interval, $timeout, $cookies, Wallet, Alerts, 
     let isSynced = Wallet.isSynchronizedWithServer();
     let message = isSynced ? 'ARE_YOU_SURE_LOGOUT' : 'CHANGES_BEING_SAVED';
     Alerts.confirm(message, {}, 'top').then(() => {
-      $cookies.remove('password');
-      let sessionToken = $cookies.get('session');
-      $cookies.remove('session');
-      Wallet.logout(sessionToken);  // Refreshes the browser, so won't return
+      Wallet.logout();  // Refreshes the browser, so won't return
     });
   };
 
