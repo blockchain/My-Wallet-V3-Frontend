@@ -26,7 +26,6 @@
             img(src="img/spinner.gif")
           ui-select.send-from-dropdown(
             ng-model="transaction.from"
-            ng-model-options="{debounce:250}"
             name="from"
             ng-show="originsLoaded"
             ng-change="checkForSameDestination(); setPaymentFrom()"
