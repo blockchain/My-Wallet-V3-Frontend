@@ -171,13 +171,18 @@
           span.type-lbl.mbs.underline(translate="TO")
           .mls.mbs.flex-row.flex-center.center.flex-between(ng-repeat="address in getToLabels() track by $index")
             span.account.flex-3.mvn.em-400 {{ address.label || address.address }}
-            span.flex-2.flex-start(ng-class="{success: address.type !== 'External'}") + {{transaction.amounts[$index] | toBitCurrency:btcCurrency:false}}
-            span.flex-1(ng-class="{success: address.type !== 'External'}") +
+            span.flex-2.flex-start(ng-class="{success: address.type !== 'External'}")
+              span(ng-class="{fade: address.type === 'External'}" translate="+&nbsp;")
+              span{{transaction.amounts[$index] | toBitCurrency:btcCurrency:false}}
+            span.flex-1(ng-class="{success: address.type !== 'External'}")
+              span(ng-show="address.type !== 'External'" translate="+")
               fiat(btc="transaction.amounts[$index]")
           .mls.mbs.flex-row.flex-center.center.flex-between.pos-rel
             span.aaa.account.flex-3(translate="TX_FEE_REQUIRED")
-            span.aaa.center.flex-2.flex-start + {{ transaction.fee | toBitCurrency:btcCurrency:false}}
-            span.aaa.center.flex-1 +
+            span.aaa.center.flex-2.flex-start 
+              span.fade(translate="+&nbsp;")
+              span {{ transaction.fee | toBitCurrency:btcCurrency:false}}
+            span.aaa.center.flex-1
               fiat(btc="transaction.fee")
             helper-button(content="DYK_TX_FEES")
         .mvm.flex-justify.flex-1.flex-center.split-rule
