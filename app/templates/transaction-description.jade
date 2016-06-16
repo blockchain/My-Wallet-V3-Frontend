@@ -1,13 +1,13 @@
 .flex-column
   .flex-start.flex-between
-    .mrvl.flex-column
-      span.timestamp.pbm.type-sm.basic-grey
+    div.mrvl
+      span.timestamp.type-sm.basic-grey
         date {{:: tx.time * 1000 | date:'MMMM d @ hh:mm a' }}
       .flex-center.lh1.pointer(ng-click="tx.toggled = !tx.toggled")
-        span.action.prm(
+        span.action.type-lbl.em-500.prm(
           ng-class=":: txClass"
           translate="{{:: txDirection }}")
-        span.label.label-default(translate="WATCH_ONLY" ng-show=":: txWatchOnly")
+      span.label.label-default.mts(translate="WATCH_ONLY" ng-show=":: txWatchOnly")
     .flex-2.hidden-sm.hidden-xs.destination.em-400.basic-grey
       transaction-destinations(transaction="tx" search="search")
     .flex-1.hidden-sm.hidden-xs
