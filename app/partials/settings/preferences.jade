@@ -14,7 +14,6 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
         a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
       .col-sm-12.col-md-6.flex-column(ng-show="active")
         include ./change-email.jade
-        //- bc-async-input(type="email" is-required ng-model="user.email" on-save="changeEmail" action-title="'CHANGE' | translate" autofocus)
         .right-align.mtm
           resend-email-confirmation.mtl(ng-hide="user.isEmailVerified")
   .form-group.mbn.border-bottom.clearfix.pvl
@@ -28,8 +27,7 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
       div(ng-show="mobileNumber.step == 0")
         //- Don't use one-time binding for user.internationalMobileNumber
         h2.status.complete.hidden-xs.long-input(ng-hide="user.internationalMobileNumber.length < 5") {{user.internationalMobileNumber}}
-        br
-        a.button-primary(ng-click="mobileNumber.step = 1", translate="CHANGE")
+        a.button-primary.display-inline-block(ng-click="mobileNumber.step = 1", translate="CHANGE")
       configure-mobile-number(on-success="mobileNumber.step = 2" on-cancel="mobileNumber.step = 0" ng-show="mobileNumber.step == 1")
       verify-mobile-number(on-success="mobileNumber.step = 0" ng-show="user.internationalMobileNumber.length > 4 && !user.isMobileVerified && mobileNumber.step != 1")
   .form-group.mbn.border-bottom.clearfix.pvl

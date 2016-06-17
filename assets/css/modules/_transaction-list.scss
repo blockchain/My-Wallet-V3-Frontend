@@ -28,10 +28,6 @@
     .feed-info {
       width: 120px;
     }
-    .action {
-      font-weight: 500;
-      font-size: 1.3em;
-    }
     .action.incoming_tx{
       color: $receive-green;
     }
@@ -49,9 +45,6 @@
       left: 10px;
       position: absolute;
       height: calc(100% - 10px);
-    }
-    .tx-details {
-      margin-left: 3em;
     }
     button.amount {
       padding: 10px;
