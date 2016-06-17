@@ -72,6 +72,7 @@ button[disabled] {
 @include button('default', white, $black);
 @include button('info', $light-grey, white);
 @include button('danger', #E28081, white);
+@include button('transfer', $transfer-blue, white)
 
 .button-sm {
   padding: .3125em .625em;
