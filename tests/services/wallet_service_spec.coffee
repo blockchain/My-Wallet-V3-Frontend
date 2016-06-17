@@ -8,10 +8,15 @@ describe "walletServices", () ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $q) ->
+    angular.mock.inject ($injector, $q, $cookies) ->
       Wallet = $injector.get("Wallet")
       MyBlockchainSettings = $injector.get("MyBlockchainSettings")
       Alerts = $injector.get('Alerts')
+
+      spyOn($cookies, "get").and.callFake((name) ->
+        if name == "session"
+          "token"
+      )
 
       spyOn(Wallet,"monitor").and.callThrough()
 
@@ -22,7 +27,7 @@ describe "walletServices", () ->
 
       Wallet.my.login = (uid, password, credentials, callbacks) ->
         then: (cb) ->
-          cb({guid: "1234", sessionToken: "token"})
+          cb({guid: "1234"})
           {
             catch: () ->
           }

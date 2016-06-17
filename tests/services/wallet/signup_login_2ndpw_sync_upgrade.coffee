@@ -1,4 +1,5 @@
 describe "walletServices", () ->
+  pending()
   Wallet = undefined
   errors = undefined
   callbacks = undefined
@@ -191,7 +192,6 @@ describe "walletServices", () ->
 
   describe "signup", ->
 
-
     it "should create a wallet", ->
       callbacks = {
         success: () ->
@@ -214,4 +214,11 @@ describe "walletServices", () ->
       spyOn($rootScope, '$broadcast').and.callThrough()
 
       expect($rootScope.$broadcast).not.toHaveBeenCalled()
+    )
+
+
+    it "should add uid to cookies", inject(($cookies) ->
+      spyOn($cookies, 'put')
+      Wallet.create("1234567890", "a@b.com", "EUR", "EN", callbacks.success)
+      expect($cookies.put).toHaveBeenCalledWith('uid', "new_guid")
     )

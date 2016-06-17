@@ -132,13 +132,6 @@ describe "SignupCtrl", ->
       expect(Wallet.create).toHaveBeenCalled()
     )
 
-    it "should add uid to cookies", inject(($cookies) ->
-      spyOn($cookies, 'put')
-      scope.signup()
-      scope.$digest()
-      expect($cookies.put).toHaveBeenCalledWith('uid', "new_guid")
-    )
-
     it "should add password to cookies in dev mode", inject(($cookies) ->
       spyOn($cookies, 'put')
       scope.autoReload = true

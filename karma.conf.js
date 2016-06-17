@@ -34,7 +34,7 @@ module.exports = function (config) {
       'assets/js/core/*.js',
       'tests/filters/*.coffee',
       'tests/controllers/*.coffee',
-      'tests/services/*.coffee',
+      'tests/services/**/*.coffee',
       'tests/directives/*.coffee',
       'tests/mocks/**/*.coffee',
       'tests/**/*.js',
