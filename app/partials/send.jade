@@ -15,7 +15,7 @@
   .alert-in-app
     alerts(context="alerts")
   div(ng-hide="confirmationStep" ng-class="{ 'advanced': advanced }")
-    form.ph-form(role="form",name="sendForm" autocomplete="off" novalidate)
+    form.pos-rel.ph-form(role="form",name="sendForm" autocomplete="off" novalidate)
       //- From
       .form-group.row.flex-justify(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
         label.pts
