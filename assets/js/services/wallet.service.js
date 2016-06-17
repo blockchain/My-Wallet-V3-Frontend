@@ -99,10 +99,9 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
   MyBlockchainApi.API_CODE = wallet.api_code;
 
-  wallet.login = (sessionToken, uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) => {
+  wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) => {
     let didLogin = (result) => {
       let guid = result.guid;
-      let sessionToken = result.sessionToken;
       wallet.status.isLoggedIn = true;
       wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
       if (wallet.my.wallet.isUpgradedToHD) {
@@ -169,12 +168,12 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
         $rootScope.$safeApply();
       });
       if (successCallback != null) {
-        successCallback(guid, sessionToken);
+        successCallback(guid);
       }
       $rootScope.$safeApply();
     };
 
-    let needsTwoFactorCode = (sessionToken, method) => {
+    let needsTwoFactorCode = (method) => {
       Alerts.displayWarning('Please enter your 2FA code');
       wallet.settings.needs2FA = true;
       // 2: Email
@@ -182,7 +181,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       // 4: Google Authenticator
       // 5: SMS
 
-      needsTwoFactorCallback(sessionToken, method);
+      needsTwoFactorCallback(method);
 
       wallet.settings.twoFactorMethod = method;
       $rootScope.$safeApply();
@@ -231,19 +230,53 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       };
     }
 
-    wallet.my.login(
-      uid,
-      password,
-      {
-        twoFactor: two_factor,
-        sessionToken: sessionToken
-      },
-      {
-        needsTwoFactorCode: needsTwoFactorCode,
-        wrongTwoFactorCode: wrongTwoFactorCode,
-        authorizationRequired: authorizationRequired
+    const doLogin = (uid, sessionGuid, sessionToken) => {
+      if (uid !== sessionGuid) {
+        // Don't reuse the session token for a different wallet.
+        sessionToken = null;
       }
-    ).then(didLogin).catch(loginError);
+
+      // Immedidately store the new guid and session token, in case the user needs
+      // to refresh their browser:
+      const newSessionToken = (token) => {
+        $cookies.put('session', token);
+        $cookies.put('uid', uid);
+      };
+
+      wallet.my.login(
+        uid,
+        password,
+        {
+          twoFactor: two_factor,
+          sessionToken: sessionToken
+        },
+        {
+          newSessionToken: newSessionToken,
+          needsTwoFactorCode: needsTwoFactorCode,
+          wrongTwoFactorCode: wrongTwoFactorCode,
+          authorizationRequired: authorizationRequired
+        }
+      ).then(didLogin).catch(loginError);
+    };
+
+    // Check if we already have a session token:
+    let sessionToken = $cookies.get('session');
+    let sessionGuid = $cookies.get('uid');
+
+    if (!sessionToken) {
+      $http.get($rootScope.rootURL + 'wallet-legacy/guid_from_cookie', {withCredentials: true}).success(data => {
+        if (data.success) {
+          sessionToken = data.sid;
+          sessionGuid = data.guid;
+        }
+        doLogin(uid, sessionGuid, sessionToken);
+      }).error(() => {
+        // If guid_from_cookie endpoint can't be reach, just create a new session
+        doLogin(uid, sessionGuid, sessionToken);
+      });
+    } else {
+      doLogin(uid, sessionGuid, sessionToken);
+    }
 
     currency.fetchExchangeRate();
   };
@@ -316,12 +349,14 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   };
 
   wallet.create = (password, email, currency, language, success_callback) => {
-    let success = (uid) => {
+    let success = (uid, sharedKey, password, sessionToken) => {
+      $cookies.put('session', sessionToken);
+      $cookies.put('uid', uid);
       Alerts.displaySuccess('Wallet created with identifier: ' + uid, true);
       wallet.status.firstTime = true;
 
-      let loginSuccess = (guid, sessionToken) => {
-        success_callback(uid, sessionToken);
+      let loginSuccess = (guid) => {
+        success_callback(uid);
       };
 
       let loginError = (error) => {
@@ -329,7 +364,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
         Alerts.displayError('Unable to login to new wallet');
       };
 
-      wallet.login(null, uid, password, null, null, loginSuccess, loginError);
+      wallet.login(uid, password, null, null, loginSuccess, loginError);
     };
 
     let error = (error) => {
@@ -425,10 +460,12 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       .then(success).catch(error);
   };
 
-  wallet.logout = (sessionToken) => {
+  wallet.logout = () => {
+    $cookies.remove('password');
+    let sessionToken = $cookies.get('session');
+    $cookies.remove('session');
     wallet.didLogoutByChoice = true;
     $window.name = 'blockchain';
-    $cookies.remove('session');
     wallet.my.logout(sessionToken, true);
   };
 
