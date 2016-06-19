@@ -1,0 +1,45 @@
+form(ng-class="{'has-error': hasAmountError($index)}" name="buyAmount")
+  h5.man(translate="Enter an amount")
+  .ph-form.flex-center.recipient-currency
+    .mrl.flex-1
+      .flex-center.border-bottom
+        span.mrm {{ btcCurrency.code }}:
+        //- ng-change="getQuote(btcCurrency)"
+        input.form-control.no-border(
+          type="number"
+          name="btc"
+          ng-model="transaction.amount"
+          tabindex="1"
+          transform-currency="btcCurrency"
+          placeholder="0"
+          min="1"
+          max="2100000000000000"
+          required
+        )
+    i.ti-arrows-horizontal.h4.aaa.prm
+    .flex-1
+      .flex-center.border-bottom
+        span.mrm {{ fiatCurrency.code }}:
+        //- ng-change="getQuote(fiatCurrency)"
+        input.form-control.no-border(
+          type="number"
+          ng-model="transaction.amount"
+          name="fiat"
+          tabindex="1"
+          transform-currency="fiatCurrency"
+          placeholder="0"
+          min="1"
+          max="2100000000000000"
+          required
+        )
+  .mtl
+    h5.mtn.mbm(translate="How would you like to pay?")
+    div
+      input(type="radio" name="medium" id="sepa")
+      label.em-400(translate="SEPA transfer (funds will be in your wallet in ~2 days, no fees)" for="sepa")
+    div
+      input(type="radio" name="medium" id="giro")
+      label.em-400(translate="Giropay (funds will be in your wallet in ~10 minutes, 2%)" for="giro")
+    div
+      input(type="radio" name="medium" id="credit-card" checked="checked")
+      label.em-400(translate="Credit card (funds will be in your wallet in ~10 minutes, 7% fee)" for="credit-card")

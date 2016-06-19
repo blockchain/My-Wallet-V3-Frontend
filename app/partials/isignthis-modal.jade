@@ -1,0 +1,7 @@
+.modal-header.bc-modal-header.flex-between.flex-center
+  h3(translate="Buy Bitcoin")
+.modal-body
+  isignthis(transaction-id='trade.iSignThisID')
+.modal-footer.flex-between
+  button.button-muted.mrm(ng-click="back()" translate="BACK")
+  button.button-muted.mrm(ng-click="close()" translate="CANCEL")

@@ -1,0 +1,37 @@
+.buy-sell {
+  padding: 20px 30px 0 30px;
+}
+
+.bc-modal.coinify {
+  .modal-dialog {
+    width: 90%;
+    height: 90%;
+    .modal-content {
+      height: 100%;
+      .modal-body {
+        padding: 1px;
+        height: calc(100% - 134px);
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    .modal-dialog {
+      width: 90%;
+      height: 100%;
+      .modal-content {
+        height: 100%;
+        .modal-body {
+          padding: 1px;
+          height: calc(100% + 34px);
+        }
+        .modal-footer {
+          background-color: #fff;
+        }
+      }
+    }    
+  }
+}
+
+.coinify-logo {
+  width: 80px;
+}

@@ -36,6 +36,7 @@ function bcAsyncInput ($timeout, Wallet) {
   function link (scope, elem, attrs, ctrl, transclude) {
     scope.isRequired = attrs.isRequired != null;
     scope.inline = attrs.inline != null;
+    scope.button = attrs.button || 'SAVE';
 
     scope.type = scope._type || 'text';
     scope.buttonClass = scope._buttonClass || 'button-primary btn-small';
@@ -47,6 +48,7 @@ function bcAsyncInput ($timeout, Wallet) {
     };
 
     if (attrs.editing != null) scope.status.edit = true;
+    if (attrs.hidecancel != null) scope.hideCancel = true;
 
     scope.form = {
       newValue: scope.ngModel

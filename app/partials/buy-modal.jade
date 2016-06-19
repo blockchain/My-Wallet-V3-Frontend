@@ -1,0 +1,74 @@
+.modal-header.bc-modal-header.flex-between.flex-center
+  h3(translate="BUY_BITCOIN")
+.modal-body
+  div(ng-show="status.loading")
+    .phvl
+      p(translate="Requesting your profile information from our partner. This should take a few seconds.")
+  div(ng-hide="status.loading")
+    div(ng-hide="exchangeAccount")
+      .phvl(ng-show="!exchange && !user.isEmailVerified")
+        .form-group.row.pbm.flex-justify
+          label.flex-start.pts(translate="Please Select Your Country:")
+          .flex-1
+            ui-select(ng-model="profile.countryCode")
+              ui-select-match(placeholder="{{'SEARCH' | translate}}...") 
+                span {{ $select.selected.name }}
+              ui-select-choices(repeat="country.code as country in countries.countryCodes | filter: $select.search")
+                span(ng-bind-html="country.name")
+      div(ng-show="exchange && !user.isEmailVerified")
+        div(ng-hide="editEmail")
+          p
+            span(translate="SENT_VERIFICATION" translate-values="{email: user.email}")
+            span.blue.pointer(translate="CHANGE_EMAIL" ng-click="toggleEmail()")
+          form.clearfix(name="confirmationCode")
+            bc-async-input(type="text" is-required ng-model="fields.confirmationCode" on-save="verifyConfirmationCode" inline editing="true" hideCancel="true" button="VERIFY_EMAIL")
+          div.mtl
+            span(translate="Can't find your verification email?").mrs
+            resend-email-confirmation
+        form.clearfix(name="emailForm" ng-show="editEmail")
+          bc-async-input(type="email" is-required ng-model="user.email" on-cancel="toggleEmail" on-save="changeEmail" action-title="'CHANGE' | translate" autofocus inline editing="true")
+      div(ng-show="exchange && user.isEmailVerified")
+        form.clearfix(name="signupForm" role="form" novalidate)
+          p(translate="PARTNER" translate-values="{partner: partner, email: user.email}")
+          div.mtl
+            input(type="checkbox" id="tos" name="tos" ng-model="fields.acceptTOS" ng-disabled="rejectedEmail" required)
+            label.mlm.em-400(translate="ACCEPT_PARTNER_TOS" translate-values="{partner: partner}" for="tos")
+          div
+            input(type="checkbox" id="privacy" name="privacy" ng-model="fields.acceptPrivacy" ng-disabled="rejectedEmail" required)
+            label.mlm.em-400(translate="ACCEPT_PARTNER_PRIVACY" translate-values="{partner: partner}" for="privacy")
+          .flex-baseline.mtl(ng-show="rejectedEmail")
+            i.ti-alert.sent.mrs.type-h4
+            span.sent.mrs(translate="EMAIL_IN_USE" translate-values="{email: user.email}")
+            span.blue.pointer(translate="CLICK_TO_CHANGE" ng-click="toggleEmail(); user.isEmailVerified = false;")
+    div(ng-show="exchangeAccount")
+      include ./buy-amount
+.modal-footer.flex-row.flex-between.flex-center
+  div
+    span Powered by 
+    img.coinify-logo(src="img/coinify-logo.svg")
+  .flex-end(ng-hide="status.loading")
+    button.button-muted.mrm(
+      ng-click="close()" translate="CANCEL")
+    div(ng-hide="exchangeAccount")
+      button.button-primary(
+        ladda-translate="NEXT_STEP"
+        data-style="expand-left"
+        ng-click="addExchange();"
+        ng-show="!exchange"
+        ng-disabled="!profile.countryCode"
+        ui-ladda="status.waiting")
+      button.button-success(
+        ladda-translate="SIGN_UP"
+        data-style="expand-left"
+        ng-click="signup()"
+        ng-show="exchange && user.isEmailVerified"
+        ng-disabled="signupForm.$invalid"
+        ui-ladda="status.waiting")
+    div(ng-show="exchangeAccount")
+      button.button-primary(
+        ng-click="buy()" 
+        ladda-translate="Buy"
+        data-style="expand-left"
+        ui-ladda="status.waiting"
+        ng-show="exchangeAccount"
+        ng-disabled="buyAmount.$invalid")

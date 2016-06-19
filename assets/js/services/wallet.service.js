@@ -520,6 +520,21 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
 
     wallet.settings_api.resendEmailConfirmation(wallet.user.email, success, error);
   };
+
+  wallet.verifyEmail = (code, successCallback, errorCallback) => {
+    let success = () => {
+      successCallback();
+      $rootScope.$safeApply();
+    };
+
+    let error = () => {
+      errorCallback('Invalid confirmation code');
+      $rootScope.$safeApply();
+    };
+
+    wallet.settings_api.verifyEmail(code, success, error);
+  };
+
   wallet.setPbkdf2Iterations = (n, successCallback, errorCallback, cancelCallback) => {
     let proceed = (password) => {
       wallet.my.wallet.changePbkdf2Iterations(parseInt(n, 10), password);

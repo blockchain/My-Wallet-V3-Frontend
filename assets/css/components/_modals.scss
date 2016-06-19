@@ -272,27 +272,29 @@
   input[type="checkbox"] {
     margin: 0;
   }
-  .form-group { margin-bottom: 10px; }
-  .form-control {
-    border: none;
-    box-shadow: none;
-    border-radius: 0;
-    border-bottom: 1px solid $ccc;
-    &:focus {
-      border-color: none;
-      box-shadow: none
+  .ph-form {
+    .form-group { margin-bottom: 10px; }
+    .form-control {
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      border-bottom: 1px solid $ccc;
+      &:focus {
+        border-color: none;
+        box-shadow: none
+      }
+      &.no-border { border-bottom: 0px; }
     }
-    &.no-border { border-bottom: 0px; }
+    label {
+      font-weight: 400;
+      color: darken($ccc, 45%);
+      font-size: 1.2em;
+    }
   }
   .has-error .border-bottom {
     z-index: 10;
     position: relative;
     border-color: #a94442 !important;
-  }
-  label {
-    font-weight: 400;
-    color: darken($ccc, 45%);
-    font-size: 1.2em;
   }
   .fa-arrows-h {
     color: $ccc;

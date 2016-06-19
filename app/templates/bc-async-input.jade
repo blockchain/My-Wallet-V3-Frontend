@@ -18,7 +18,7 @@ div.width-100
           ng-disabled="bcAsyncForm.$invalid || bcAsyncForm.$pristine" 
           ui-ladda="status.saving" 
           data-style="expand-left" 
-          ladda-translate="SAVE"
+          ladda-translate="{{button}}"
           ng-class="buttonClass"
         )
-        button.button-muted.btn-small.mlm(type="button" ng-click="cancel(); onChange()" translate="CANCEL" ng-hide="status.saving")
+        button.button-muted.btn-small.mlm(type="button" ng-click="cancel(); onChange()" translate="CANCEL" ng-hide="status.saving || hideCancel")

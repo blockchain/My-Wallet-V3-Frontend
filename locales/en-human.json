@@ -11,6 +11,7 @@
   "MY_TRANSACTIONS": "Transactions",
   "ALL": "All",
   "SEND_FEEDBACK": "Send Feedback",
+  "BUYSELL": "Buy/Sell",
   "FEEDBACK_SUBMIT_FAILED" : "Something went wrong, please try again.",
   "BACK": "Back",
   "CONTACT_SUPPORT": "Contact Support",
@@ -160,7 +161,7 @@
   "TRANSACTION_COMPLETE" : "Transaction Confirmed",
   "OVERVIEW" : "Overview:",
   "NOTE" : "Note:",
-  "CREATE" : "Create:",
+  "CREATE" : "Create",
   "MAKE_PUBLIC" : "Make Public",
   "FROM" : "From",
   "TO" : "To",
@@ -754,5 +755,15 @@
   "LOGOUT_LESS_THAN_1440": "Please set an auto logout time less than 1440",
   "CREATE_A_WALLET": "Create your Wallet",
   "CREATE_FREE_WALLET": "Sign up for a free wallet below",
-  "WHY_HD": "Why is my bitcoin address changing?"
+  "WHY_HD": "Why is my bitcoin address changing?",
+  "PHONE_NUMBER": "Phone Number",
+  "EDIT_PROFILE": "Edit Your Profile",
+  "BUY_BITCOIN": "Buy Bitcoin",
+  "SENT_VERIFICATION": "We sent a verification email to <span class='em-500'>{{::email}}</span>. Please enter your confirmation code below, ",
+  "CHANGE_EMAIL": "or change your email address.",
+  "PARTNER": "Our partner {{::partner}} will process your bitcoin purchase. By clicking 'Sign Up' you will create an account with {{::partner}}. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
+  "ACCEPT_PARTNER_TOS": "Accept {{::partner}}'s <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>Terms of Service</a>",
+  "ACCEPT_PARTNER_PRIVACY": "Accept {{::partner}}'s <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>Privacy Policy</a>",
+  "EMAIL_IN_USE": "{{::email}} is already in use. ",
+  "CLICK_TO_CHANGE": "Click here to change it."
 }

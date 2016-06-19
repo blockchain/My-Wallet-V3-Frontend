@@ -43,15 +43,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     }
   };
 
-  let buyViews = {
-    top: top,
-    left: walletNav,
-    right: {
-      templateUrl: 'partials/buy.jade',
-      controller: 'BuyCtrl'
-    }
-  };
-
   $stateProvider
     .state('wallet', {
       views: {
@@ -192,6 +183,20 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('wallet.common.buy-sell', {
+      url: '/buy-sell',
+      views: {
+        top: top,
+        left: {
+          templateUrl: 'partials/wallet-navigation.jade',
+          controller: 'WalletNavigationCtrl'
+        },
+        right: {
+          templateUrl: 'partials/buy-sell.jade',
+          controller: 'BuySellCtrl'
+        }
+      }
+    })
     .state('wallet.common.security-center', {
       url: '/security-center',
       views: {
@@ -209,14 +214,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     .state('wallet.common.transactions', {
       url: '/:accountIndex/transactions',
       views: transactionsViews
-    })
-    .state('wallet.common.buy', {
-      url: '/buy',
-      views: buyViews
-    })
-    .state('wallet.common.buy', {
-      url: '/buy',
-      views: buyViews
     })
     .state('wallet.common.open', {
       url: '/open/{uri:.*}',
