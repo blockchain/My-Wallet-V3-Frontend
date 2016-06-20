@@ -76,7 +76,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
       $scope.rejectedEmail = e.error === 'email_address_in_use' ? true : undefined;
     };
 
-    $scope.exchange.signup($scope.user.email, undefined, $scope.settings.currency.code)
+    $scope.exchange.signup($scope.user.email, $scope.settings.currency.code)
       .then(success).catch(error);
   };
 
