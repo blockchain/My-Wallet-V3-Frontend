@@ -719,7 +719,7 @@
   "ERR_NOTE_LENGTH": "Description cannot be longer than 512 characters",
   "GET_STARTED": "Get Started",
   "NEW_USERS": "New Users",
-  "NEW_USERS_COPY": "Creating a Blockchain Wallet takes a few seconds. You will be able to send and receive payments immediately.",
+  "NEW_USERS_COPY": "Creating a Blockchain Wallet takes a few seconds. Send and receive payments immediately.",
   "EXISTING_USERS": "Existing Users",
   "EXISTING_USERS_COPY": "If you have previously created a Blockchain Wallet click below to login.",
   "LOGIN_NOW": "Login Now",

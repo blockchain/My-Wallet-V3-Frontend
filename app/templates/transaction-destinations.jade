@@ -6,15 +6,15 @@ div(ng-class="{'flex-column-reverse' : (transaction.txType === 'transfer' || tra
       ng-show=":: transaction.txType === 'sent'") {{:: 'TO' | translate}}:
     span.mls.pointer(
       ng-show="txLabels.preview && txLabels.primary.length > 1 && !transaction.toggled" ng-click="transaction.toggled = !transaction.toggled") {{ txLabels.preview }}
-    span(
-      ng-hide="txLabels.preview && txLabels.primary.length > 1 && !transaction.toggled")
-      .flex-row(ng-repeat="address in txLabels.primary track by $index")
-        span.mls.oflow(
-          ng-bind-html="address.label | escapeHtml | highlight:search")
-        span(ng-show="txLabels.primary.length > 1")
-          |&nbsp;(
-          fiat-or-btc(btc="address.amount")
-          |)
+    span.dest-oflow(ng-hide="txLabels.preview && txLabels.primary.length > 1 && !transaction.toggled")
+      span
+        .flex-row(ng-repeat="address in txLabels.primary track by $index")
+          span.mls(
+            ng-bind-html="address.label | escapeHtml | highlight:search")
+          span(ng-show="txLabels.primary.length > 1")
+            |&nbsp;(
+            fiat-or-btc(btc="address.amount")
+            |)
   .flex-row
     span(
       ng-show=":: transaction.txType === 'transfer' || transaction.txType === 'received'") {{:: 'TO' | translate}}:
@@ -22,12 +22,12 @@ div(ng-class="{'flex-column-reverse' : (transaction.txType === 'transfer' || tra
       ng-show=":: transaction.txType === 'sent'") {{:: 'FROM' | translate}}:
     span.mls.pointer(
       ng-show="txLabels.preview && txLabels.secondary.length > 1 && !transaction.toggled" ng-click="transaction.toggled = !transaction.toggled") {{ txLabels.preview }}
-    span(
-      ng-hide="txLabels.preview && txLabels.secondary.length > 1 && !transaction.toggled")
-      .flex-row(ng-repeat="address in txLabels.secondary track by $index")
-        span.mls.oflow(
-          ng-bind-html="address.label | escapeHtml | highlight:search")
-        span(ng-show="txLabels.secondary.length > 1")
-          |&nbsp;(
-          fiat-or-btc(btc="address.amount")
-          |)
+    span.dest-oflow(ng-hide="txLabels.preview && txLabels.secondary.length > 1 && !transaction.toggled")
+      span
+        .flex-row(ng-repeat="address in txLabels.secondary track by $index")
+          span.mls(
+            ng-bind-html="address.label | escapeHtml | highlight:search")
+          span(ng-show="txLabels.secondary.length > 1")
+            |&nbsp;(
+            fiat-or-btc(btc="address.amount")
+            |)
