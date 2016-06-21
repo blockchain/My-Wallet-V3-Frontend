@@ -52,6 +52,7 @@ function ExportHistoryController ($scope, $sce, $translate, format, Wallet, MyWa
 
   $scope.action = $sce.trustAsResourceUrl(`${$scope.rootURL}export-history`);
   $scope.format = 'dd/MM/yyyy';
+  $scope.options = { minDate: new Date(1231024500000), maxDate: new Date() };
 
   $scope.exportFormat = 'csv';
   $scope.start = { date: Date.now() - 604800000 };

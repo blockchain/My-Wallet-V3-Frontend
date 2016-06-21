@@ -40,6 +40,7 @@ form(
               name="start"
               ng-model="start.date"
               uib-datepicker-popup="{{format}}"
+              datepicker-options="options"
               is-open="start.open"
               placeholder="{{'START_DATE'|translate}}"
               required)
@@ -51,6 +52,7 @@ form(
               name="end"
               ng-model="end.date"
               uib-datepicker-popup="{{format}}"
+              datepicker-options="options"
               is-open="end.open"
               placeholder="{{'END_DATE'|translate}}"
               required)
