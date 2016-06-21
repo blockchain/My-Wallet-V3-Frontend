@@ -25,11 +25,12 @@ form(
             name="target"
             ng-model="$parent.target"
             ng-change="setActive()"
+            tagging
             required)
             ui-select-match(placeholder="{{'SEARCH' | translate}}...")
               label-origin(origin="$select.selected")
-            ui-select-choices(repeat="t in targets | filter:{label:$select.search}" group-by="'type'")
-              label-origin(origin="::t" highlight="$select.search")
+            ui-select-choices(repeat="t in targets | filter:{label:$select.search} | limitTo:limit" group-by="'type'")
+              label-origin(origin="::t" in-view="$last && isLast(t) && incLimit()" highlight="$select.search")
         .flex-1
       
       .flex-row
