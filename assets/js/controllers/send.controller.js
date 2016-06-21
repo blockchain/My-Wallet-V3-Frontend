@@ -258,6 +258,7 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
   };
 
   $scope.setPrivateKey = (priv) => {
+    $scope.sendForm.priv.$setTouched();
     $scope.transaction.priv = priv;
   };
 
