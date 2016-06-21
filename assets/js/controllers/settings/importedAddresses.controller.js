@@ -27,8 +27,7 @@ function SettingsImportedAddressesCtrl ($scope, Wallet, Alerts, $translate, $uib
   $scope.openVerifyMessage = () => $uibModal.open({
     templateUrl: 'partials/settings/verify-message.jade',
     controller: 'VerifyMessageController',
-    windowClass: 'bc-modal initial',
-    backdrop: 'static'
+    windowClass: 'bc-modal initial'
   });
 
   $scope.importAddress = () => {
@@ -37,7 +36,6 @@ function SettingsImportedAddressesCtrl ($scope, Wallet, Alerts, $translate, $uib
       templateUrl: 'partials/settings/import-address.jade',
       controller: 'AddressImportCtrl',
       windowClass: 'bc-modal',
-      backdrop: 'static',
       resolve: {
         address: () => null
       }

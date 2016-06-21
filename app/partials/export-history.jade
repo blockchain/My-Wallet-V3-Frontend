@@ -25,21 +25,23 @@ form(
             name="target"
             ng-model="$parent.target"
             ng-change="setActive()"
+            tagging
             required)
             ui-select-match(placeholder="{{'SEARCH' | translate}}...")
               label-origin(origin="$select.selected")
-            ui-select-choices(repeat="t in targets | filter:{label:$select.search}" group-by="'type'")
-              label-origin(origin="::t" highlight="$select.search")
+            ui-select-choices(repeat="t in targets | filter:{label:$select.search} | limitTo:limit" group-by="'type'")
+              label-origin(origin="::t" in-view="$last && isLast(t) && incLimit()" highlight="$select.search")
         .flex-1
       
       .flex-row
-        .flex-3.flex-column.flex-center.flex-around.pam(ng-class="{'has-error':exportForm.start.$invalid}")
+        .flex-3.flex-column.flex-center.flex-around.pam(ng-class="{'has-error':exportForm.$invalid || start.date > end.date}")
           p.input-group.flex-center
             input.form-control(
               type="text"
               name="start"
               ng-model="start.date"
               uib-datepicker-popup="{{format}}"
+              datepicker-options="options"
               is-open="start.open"
               placeholder="{{'START_DATE'|translate}}"
               required)
@@ -51,6 +53,7 @@ form(
               name="end"
               ng-model="end.date"
               uib-datepicker-popup="{{format}}"
+              datepicker-options="options"
               is-open="end.open"
               placeholder="{{'END_DATE'|translate}}"
               required)
@@ -71,4 +74,4 @@ form(
     button.btn.button-primary(
       type="submit"
       translate="EXPORT"
-      ng-disabled="exportForm.$invalid")
+      ng-disabled="exportForm.$invalid || start.date > end.date")

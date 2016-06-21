@@ -54,7 +54,6 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
     templateUrl: 'partials/export-history.jade',
     controller: 'ExportHistoryController',
     windowClass: 'bc-modal',
-    backdrop: 'static',
     resolve: { activeIndex: () => $scope.account }
   });
 

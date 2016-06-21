@@ -47,12 +47,12 @@ function fiat ($rootScope, Wallet, currency) {
 
       if (scope.date) {
         currency.getFiatAtTime(scope.date, btc, curr.code).then((fiat) => {
-          scope.fiat.amount = fiat;
+          scope.fiat.amount = currency.commaSeparate(fiat);
           scope.$root.$safeApply(scope);
         });
       } else {
         let fiat = currency.convertFromSatoshi(btc, curr);
-        scope.fiat.amount = (Math.floor(fiat * 100) / 100).toFixed(2);
+        scope.fiat.amount = currency.commaSeparate((Math.floor(fiat * 100) / 100).toFixed(2));
       }
     };
 

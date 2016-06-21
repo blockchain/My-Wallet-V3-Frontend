@@ -23,7 +23,7 @@ function ChangePbkdf2Ctrl ($scope, Wallet, $translate, Alerts) {
     let n = parseInt(candidate, 10);
     if (n <= 1) {
       $translate('PBKDF2_GREATER_THAN_1').then((t) => $scope.errors.pbkdf2 = t);
-    } else if (n >= 20000) {
+    } else if (n > 20000) {
       $translate('PBKDF2_LESS_THAN_20000').then((t) => $scope.errors.pbkdf2 = t);
     } else {
       $scope.errors.pbkdf2 = '';
