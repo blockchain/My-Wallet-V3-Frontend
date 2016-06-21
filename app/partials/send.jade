@@ -112,7 +112,7 @@
               ng-click="useAll()"
               ng-class="{'pointer': transaction.destinations.length === 1}"
               ng-show="transaction.maxAvailable != null && getTransactionTotal() > transaction.maxAvailable && !failedToLoadUnspent")
-              span.type-sm(translate="{{getTotalAvailableTranslation()}}")
+              span.type-sm(translate="USE_TOTAL")
               | :&nbsp;
               span.type-sm {{ transaction.maxAvailable | convert:false:true }}
             span.help-block(ng-show="failedToLoadUnspent" ng-click="reopenModal()")
