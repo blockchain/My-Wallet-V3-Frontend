@@ -34,7 +34,7 @@ form(
         .flex-1
       
       .flex-row
-        .flex-3.flex-column.flex-center.flex-around.pam(ng-class="{'has-error':exportForm.start.$invalid}")
+        .flex-3.flex-column.flex-center.flex-around.pam(ng-class="{'has-error':exportForm.$invalid || start.date > end.date}")
           p.input-group.flex-center
             input.form-control(
               type="text"
@@ -74,4 +74,4 @@ form(
     button.btn.button-primary(
       type="submit"
       translate="EXPORT"
-      ng-disabled="exportForm.$invalid")
+      ng-disabled="exportForm.$invalid || start.date > end.date")
