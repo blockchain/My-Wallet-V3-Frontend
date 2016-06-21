@@ -1,5 +1,5 @@
 angular
-  .module('landingApp')
+  .module('walletApp')
   .controller('LoginCtrl', LoginCtrl);
 
 function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNetwork, Alerts, $cookies, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter, $q) {

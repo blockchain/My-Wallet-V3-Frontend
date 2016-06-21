@@ -1,5 +1,5 @@
 doctype
-html(lang='en', ng-app='landingApp' ng-init="rootURL='#{ process.env.ROOT_URL }/'" ng-csp).ng-cloak
+html(lang='en', ng-app='walletApp' ng-init="autoReload=#{ process.env.AUTO_RELOAD || false }; rootURL='#{ process.env.ROOT_URL }/'; webSocketURL='#{ process.env.WEBSOCKET_URL }'; apiDomain='#{ process.env.API_DOMAIN }/';" ng-csp).ng-cloak
   head
     meta(charset='utf-8')
     meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1") 
@@ -16,11 +16,12 @@ html(lang='en', ng-app='landingApp' ng-init="rootURL='#{ process.env.ROOT_URL }/
     script(src='bower_components/browserdetection/src/browser-detection.js')
     script(src='bower_components/oclazyload/dist/ocLazyLoad.js', defer)
     script(src='bower_components/angular-ui-router/release/angular-ui-router.js', defer)
+    script(src='bower_components/angular-ui-select/dist/select.js', defer)
 
     // include: "type": "js", "files": "build/js/sharedDirectives.js"
     // include: "type": "js", "files": "build/js/sharedDirectives/*.js"
     // include: "type": "js", "files": "build/js/translations.js"
-    // include: "type": "js", "files": "build/js/landing.js"
+    // include: "type": "js", "files": "build/js/app.js"
     // include: "type": "js", "files": "build/js/services/bcTranslationLoader.service.js"
     // include: "type": "js", "files": "build/js/routes.js"
     
@@ -53,15 +54,11 @@ html(lang='en', ng-app='landingApp' ng-init="rootURL='#{ process.env.ROOT_URL }/
     link(rel='stylesheet' href='build/css/landing.css' id="landing-imports")
     <!-- @endif -->
 
-  body
-    downloader
-    #landing
-      //- #landing-controller(ng-controller="LandingCtrl")
-      //-   include ./landing.jade
-      a(ui-sref="public.login-no-uid") Login
-      #app-controller(ui-view="body")
-    //- #wallet-app(ng-init="autoReload=#{ process.env.AUTO_RELOAD || false }; rootURL='#{ process.env.ROOT_URL }/'; webSocketURL='#{ process.env.WEBSOCKET_URL }'; apiDomain='#{ process.env.API_DOMAIN }/';" ng-csp)
-    //-   #app-controller(ng-controller="AppCtrl" ui-view="body" ng-mousemove="resetInactivityTime()" ng-keypress="resetInactivityTime()")
+  body(
+    ui-view="body"
+    ng-mousemove="resetInactivityTime()"
+    ng-keypress="resetInactivityTime()"
+  )
     noscript
       img(src="/img/logo-bw.png")
       h3 Please enable JavaScript to use the Blockchain Wallet

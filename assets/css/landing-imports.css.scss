@@ -25,6 +25,18 @@
 @import 'components/qr-scan';
 @import 'components/modals';
 @import 'components/transfer-all';
+@import 'components/alerts';
+@import 'components/bitcoin-addresses';
+@import 'components/filter-bar';
+@import 'components/notifications';
+@import 'components/progress-bars';
+@import 'components/helpers';
+
+@import 'modules/destination-input';
+@import 'modules/home';
+@import 'modules/left-nav';
+@import 'modules/signin';
+
 
 //import modules
 @import 'modules/header';

@@ -43,6 +43,9 @@ app.use(function (req, res, next) {
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
     res.render(dist ? 'index.html' : 'build/index.jade');
     return;
+  } else if (req.url === '/landing.html') {
+    res.render(dist ? 'landing.html' : 'build/landing.jade');
+    return;
   }
   if (dist) {
     res.setHeader('Cache-Control', 'public, max-age=31557600');

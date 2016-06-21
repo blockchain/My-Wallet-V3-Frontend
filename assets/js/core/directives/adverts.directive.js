@@ -1,0 +1,27 @@
+//
+// angular
+//   .module('walletApp')
+//   .directive('adverts', adverts);
+//
+// adverts.$inject = ['Adverts', '$window'];
+//
+// function adverts (Adverts, $window) {
+//   console.log("Advertes directive.")
+//   const directive = {
+//     restrict: 'E',
+//     replace: 'true',
+//     scope: {},
+//     templateUrl: 'templates/adverts.jade',
+//     link: link
+//   };
+//   return directive;
+//
+//   function link (scope, elem, attrs) {
+//     scope.ads = Adverts.ads;
+//     Adverts.fetchOnce();
+//
+//     scope.visit = (ad) => {
+//       $window.open(ad.link, '_blank');
+//     };
+//   }
+// }

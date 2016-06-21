@@ -61,12 +61,13 @@ module.exports = (grunt) ->
           'bower_components/angular-ui-router/release/angular-ui-router.js'
           "bower_components/browserdetection/src/browser-detection.js"
           "bower_components/oclazyload/dist/ocLazyLoad.js"
+          'bower_components/angular-ui-select/dist/select.js'
           "build/js/sharedDirectives.js"
           "build/js/sharedDirectives/public-header.directive.js"
           "build/js/sharedDirectives/video-container.directive.js"
           "build/js/sharedDirectives/scroll-in-view.directive.js"
           "build/js/translations.js"
-          "build/js/landing.js"
+          "build/js/app.js"
           'build/js/routes.js'
           "build/js/services/bcTranslationLoader.service.js"
         ]
@@ -86,7 +87,6 @@ module.exports = (grunt) ->
         src: [
           'node_modules/babel-polyfill/dist/polyfill.js'
           'build/js/core/core.module.js'
-          'build/js/app.js' # Needs to be included before controllers
           'build/js/core/*.service.js'
           'build/js/services/*.js'
           'build/js/controllers/*.js'
@@ -103,13 +103,12 @@ module.exports = (grunt) ->
           'bower_components/angular-password-entropy/password-entropy.js'
           'bower_components/qrcode/lib/qrcode.js'
           'bower_components/angular-qr/src/angular-qr.js'
-          'bower_components/angular-ui-select/dist/select.js'
           'bower_components/digits-trie/dist/digits-trie.js'
           'bower_components/google-libphonenumber/dist/browser/libphonenumber.js'
           'bower_components/bc-countries/dist/bc-countries.js'
           'bower_components/bc-phone-number/dist/js/bc-phone-number.js'
           'bower_components/compare-versions/index.js'
-          'build/js/wallet-bootstrap.js'
+          'build/js/walletLazyLoad.js'
         ]
 
         dest: "build/js/wallet.js"
