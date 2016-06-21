@@ -45,7 +45,7 @@ module.exports = (grunt) ->
 
       js:
         expand: true
-        src: ['build/js/landing.js']
+        src: ['build/js/app.js']
         dest: ''
 
     concat:
@@ -209,7 +209,7 @@ module.exports = (grunt) ->
       main:
         files: [
           {src: ["beep.wav"], dest: "dist/"}
-          {src: ["index.html"], dest: "dist/", cwd: "build", expand: true}
+          {src: ["index.html", "landing.html"], dest: "dist/", cwd: "build", expand: true}
           {src: ["img/**/*"], dest: "dist/", cwd: "build", expand: true}
           {src: ["locales/*"], dest: "dist/", cwd: "build", expand: true}
           {src: ["**/*"], dest: "dist/fonts", cwd: "build/fonts", expand: true}
@@ -278,6 +278,8 @@ module.exports = (grunt) ->
           client: false
         files:
           "build/index.html": "app/index.jade"
+          "build/landing.html": "app/landing.jade"
+
 
     babel:
       options:
@@ -315,7 +317,7 @@ module.exports = (grunt) ->
             ordered_befores = tuples.map((t)->t[0])
             ordered_afters  = tuples.map((t)->t[1])
 
-            for referring_file_path in ["dist/js/landing.min.js", "dist/css/landing.css", "dist/js/wallet.min.js", "dist/css/wallet.css", "dist/index.html"]
+            for referring_file_path in ["dist/js/landing.min.js", "dist/css/landing.css", "dist/js/wallet.min.js", "dist/css/wallet.css", "dist/index.html", "dist/landing.html"]
               contents = grunt.file.read(referring_file_path)
               before = undefined
               after = undefined
@@ -371,6 +373,7 @@ module.exports = (grunt) ->
             'dist/js/my-wallet.min.js'
             'dist/js/wallet.min.js'
             'dist/css/wallet.css'
+            'dist/landing.html'
           ]
 
       landing: # Renames landing.min.js/css and updates index.html
@@ -434,7 +437,7 @@ module.exports = (grunt) ->
 
     replace:
       root_url:
-        src: ['build/js/services/wallet.service.js'],
+        src: ['build/js/app.js'],
         overwrite: true,
         replacements: [{
           from: 'customRootURL = $rootScope.rootURL'
@@ -461,7 +464,7 @@ module.exports = (grunt) ->
             "customApiDomain = 'https://" + @apiDomain + "/'"
         }]
       version_frontend:
-        src: ['build/js/services/wallet.service.js'],
+        src: ['build/js/app.js'],
         overwrite: true,
         replacements: [{
           from: 'versionFrontend = null'

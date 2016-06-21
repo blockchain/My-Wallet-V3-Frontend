@@ -55,44 +55,22 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   wallet.api = MyBlockchainApi;
   wallet.rng = MyBlockchainRng;
 
-  $rootScope.$watch('rootURL', () => {
-    // If a custom rootURL is set by index.jade:
-    //                    Grunt can replace this:
-    const customRootURL = $rootScope.rootURL;
-    wallet.api.ROOT_URL = customRootURL;
-    // If customRootURL is set by Grunt:
-    $rootScope.rootURL = customRootURL;
+  // $rootScope.rootURL is already set because this file is lazy loaded.
+  wallet.api.ROOT_URL = $rootScope.rootURL;
 
-    const absUrl = $location.absUrl();
-    const path = $location.path();
-    if (absUrl && path && path.length) {
-      // e.g. https://blockchain.info/wallet/#
-      $rootScope.rootPath = $location.absUrl().slice(0, -$location.path().length);
-    }
+  //                         Grunt can replace this:
+  const customWebSocketURL = $rootScope.webSocketURL;
+  if (customWebSocketURL) {
+    wallet.my.ws.wsUrl = customWebSocketURL;
+  }
 
-    //                         Grunt can replace this:
-    const customWebSocketURL = $rootScope.webSocketURL;
-    if (customWebSocketURL) {
-      wallet.my.ws.wsUrl = customWebSocketURL;
-    }
-
-    // If a custom apiDomain is set by index.jade:
-    //                             Grunt can replace this:
-    const customApiDomain = $rootScope.apiDomain || 'https://api.blockchain.info/';
-    $rootScope.apiDomain = customApiDomain;
-    if (customApiDomain) {
-      wallet.api.API_ROOT_URL = customApiDomain;
-    }
-
-    // These are set by grunt dist:
-    $rootScope.versionFrontend = null;
-    $rootScope.versionMyWallet = null;
-
-    console.info(
-      'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s, connecting to %s',
-      $rootScope.versionFrontend, $rootScope.versionMyWallet, $rootScope.rootURL
-    );
-  });
+  // If a custom apiDomain is set by index.jade:
+  //                             Grunt can replace this:
+  const customApiDomain = $rootScope.apiDomain || 'https://api.blockchain.info/';
+  $rootScope.apiDomain = customApiDomain;
+  if (customApiDomain) {
+    wallet.api.API_ROOT_URL = customApiDomain;
+  }
 
   wallet.Payment = MyWalletPayment;
 

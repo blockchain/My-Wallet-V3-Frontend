@@ -1,6 +1,4 @@
-angular
-  .module('walletApp')
-  .controller('AppCtrl', AppCtrl);
+// TODO: move to different places
 
 function AppCtrl ($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location, $timeout, $interval, $uibModal, $window, $translate, $uibModalStack, $http, $q) {
   $scope.status = Wallet.status;

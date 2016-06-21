@@ -26,16 +26,28 @@ angular.module('walletApp', modules)
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob):/);
   uiSelectConfig.theme = 'bootstrap';
 
+  // @if !PRODUCTION
+  const lazyLoadFiles = [
+    'bower_components/blockchain-wallet/dist/my-wallet.min.js',
+    'build/js/wallet.js',
+    'build/css/wallet.css'
+  ];
+  // @endif
+
+  /* @if PRODUCTION **
+  const lazyLoadFiles = [
+    'js/my-wallet.min.js',
+    'js/wallet.min.js',
+    'css/wallet.css'
+  ];
+  /* @endif */
+
   $ocLazyLoadProvider.config({
     debug: true,
     events: true,
     modules: [{
       name: 'walletLazyLoad',
-      files: [
-        'bower_components/blockchain-wallet/dist/my-wallet.min.js',
-        'build/js/wallet.js',
-        'build/css/wallet.css'
-      ]
+      files: lazyLoadFiles
     }]
   });
 })
@@ -45,7 +57,7 @@ angular.module('walletApp', modules)
   { title: 'TRANSFER_ALL', desc: 'TRANSFER_ALL_EXPLAIN', date: 1461556800000 }
 ])
 // .run(($rootScope, $uibModal, $state, MyWallet, $q, currency, $timeout) => {
-.run(($rootScope, $uibModal, $state, $q, $timeout) => {
+.run(($rootScope, $uibModal, $state, $q, $timeout, $location) => {
   $rootScope.$safeApply = (scope = $rootScope, before) => {
     before = before;
     if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
@@ -77,6 +89,30 @@ angular.module('walletApp', modules)
       windowClass: 'notification-modal',
       resolve: { notification: () => notification }
     });
+  });
+
+  $rootScope.$watch('rootURL', () => {
+    // If a custom rootURL is set by index.jade:
+    //                    Grunt can replace this:
+    const customRootURL = $rootScope.rootURL;
+    // If customRootURL is set by Grunt:
+    $rootScope.rootURL = customRootURL;
+
+    const absUrl = $location.absUrl();
+    const path = $location.path();
+    if (absUrl && path && path.length) {
+      // e.g. https://blockchain.info/wallet/#
+      $rootScope.rootPath = $location.absUrl().slice(0, -$location.path().length);
+    }
+
+    // These are set by grunt dist:
+    $rootScope.versionFrontend = null;
+    $rootScope.versionMyWallet = null;
+
+    console.info(
+      'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s, connecting to %s',
+      $rootScope.versionFrontend, $rootScope.versionMyWallet, $rootScope.rootURL
+    );
   });
 })
 
