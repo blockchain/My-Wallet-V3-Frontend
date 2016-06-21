@@ -23,13 +23,180 @@
         sup.type-xs ®
   .container.flex-row.pvl
     .flex
-          .flex-1
-            img(src='img/blocket.png').small-blocket.mrl.mbl
-            p.text
-              | {{ 'MY_WALLET_IS' | translate }}
-            p.text
-              | {{ 'ABOUT_BLOCKCHAIN_WALLET' | translate }}
-            p(align='center')
-              button.button-success(ui-sref="public.signup" translate="CREATE_NEW") 
-          .flex-1
-            video-container(img="img/legacy-video-placeholder-TEMP.jpg" src="https://storage.googleapis.com/bc_public_assets/video/legacy-what-is-bitcoin-TEMP.mp4")
+      .flex-1
+        img(src='img/blocket.png').small-blocket.mrl.mbl
+        p.text
+          | {{ 'MY_WALLET_IS' | translate }}
+        p.text
+          | {{ 'ABOUT_BLOCKCHAIN_WALLET' | translate }}
+        p(align='center')
+          button.button-success(ui-sref="public.signup" translate="CREATE_NEW") 
+      .flex-1
+        video-container(img="img/legacy-video-placeholder-TEMP.jpg" src="https://storage.googleapis.com/bc_public_assets/video/legacy-what-is-bitcoin-TEMP.mp4")
+  .landing-nav.flex-row.flex-between
+    .flex-center.flex-column.flex-justify(ng-click="scroll('newUser')")
+      h3.thin(translate="NEW_TO_BITCOIN")
+      h4(translate="WHY_USE")
+    .flex-center.flex-column.flex-justify(ng-click="scroll('experiencedUser')")
+      h3.thin(translate="EXPERIENCED_USER")
+      h4(translate="WHY_USE_BLOCKCHAIN")
+
+  .split.flex-row
+    .left
+      .landing-wrapper
+        scroll-in-view(img="img/new-wallet-hero.jpg" shadow="true")  
+      scroll-in-view.blocket(img="img/blocket.png")
+      scroll-in-view.ios(img="img/ios-feature.jpg", transactions="true")
+    .right
+      uib-accordion(close-others="oneAtATime")
+        uib-accordion-group(heading="EASE OF USE")
+          h4(translate="SEND_AND_RECEIVE")
+          p(translate="LOVED_BY_ALL")
+        uib-accordion-group(heading="PEACE OF MIND")
+          h4(translate="IN_CONTROL")
+          p(translate="ACCESS_TO_BITCOINS")
+        uib-accordion-group(heading="HIGH SECURITY")
+          h4(translate="PROTECTING_FUNDS")
+          p(translate="STATE_OF_THE_ART_SEC")
+        uib-accordion-group(heading="CROSS DEVICE COMPATIBLE")
+          .flex-around.flex-row.mtl
+            a.flex-1(href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309" target="_blank")
+              img(src="img/logo-apple.svg")
+            a.flex-1(href="https://play.google.com/store/apps/details?id=piuk.blockchain.android" target="_blank")
+              img(src="img/logo-android.svg")
+            a.flex-1(ui-sref="public.login-no-uid")
+              img(src="img/logo-www.jpg")
+  #newUser.container-max-width.flex-justify.flex-center
+    .col-md-4
+      h3.thin(translate="NEW_TO_BITCOIN")
+      h4(translate="WHY_BITCOIN")
+      p(translate="BLOCKCHAIN_MISSION")
+    video-container.col-md-6(img="img/blockchain-ad-placeholder.jpg" src="https://storage.googleapis.com/bc_public_assets/video/blockchain-ad.mp4")
+  div.squares
+    div
+      img(src="img/square.png")
+      div.background
+      div.donut
+      p.type-h4.dark(translate="UPGRADE_SECURITY_CENTER")
+    div
+      img(src="img/square.png")
+      div.background
+      div.donut
+      p.type-h4(translate="UPGRADE_BACKUP")
+    div
+      img(src="img/square.png")
+      div.background
+      div.donut
+      p.type-h4.dark(translate="FUN_AND_INSIGHTFUL")
+    div
+      img(src="img/square.png")
+      div.background
+      div.donut
+      p.type-h4.dark(translate="ACTIVITY_FEED")
+  #experiencedUser.container-max-width
+    .flex-row.flex-top.flex-between
+      scroll-in-view.flex-1(img="img/android-feature.jpg")
+      ul.flex-1
+        li
+          span.heavy(translate="HD_ARCH") 
+          |  
+          span(translate="PRIVACY_IN_MIND")
+        li
+          span.heavy(translate="SECURITY_AUDITS")
+          |  
+          span(translate="AES_ENCRYPTION")
+        li
+          span.heavy(translate="CLIENT_SIDE")
+          |  
+          span(translate="CLIENT_SIDE_ENCRYPTION")
+        li
+          span.heavy(translate="DEDICATED_SUPPORT")
+          |  
+          span(translate="DEDICATED_SUPPORT_TEAM")
+      ul.flex-1
+        li
+          span.heavy(translate="OPEN_SOURCE") 
+          |  
+          span(translate="OPEN_SOURCE_DES")
+        li
+          span.heavy(translate="DYN_TX_FEE_ADJ")
+          |  
+          span(translate="DYN_TX_FEE_ADJ_DES")
+        li
+          span.heavy(translate="INTEROP")
+          |  
+          span(translate="INTEROP_DES")
+        li
+          span.heavy(translate="OTHER_FEATURES")
+          |  
+          p(translate="CONVERSION_RATES")
+          p(translate="LANGUAGES_FEAT")
+          p(translate="WATCH_ONLY_DESC")
+          p(translate="SECOND_PASSWORD_PROTECTION")
+          p(translate="LOGIN_IP_RESTRICTION")
+  uib-carousel(active="active" interval="0")
+    h4(translate="Loved by Users. Praised by Geeks. Recognized by the Press.")
+    uib-slide(index="0")
+      div
+        img(src="img/logo-nytimes.svg")
+        p(translate="QUOTE_0")
+        span.author
+          a(href="http://nyti.ms/1sfHj9b" target="_blank") The New York Times            
+    uib-slide(index="1")
+      div
+        p(translate="QUOTE_1")
+        span.author(translate="WALLET_USER")
+    uib-slide(index="2")
+      div
+        img(src="img/logo-wsj.svg")
+        p(translate="QUOTE_2")
+        span.author
+          a(href="http://on.wsj.com/1u5CFZF" target="_blank") The Wall Street Journal
+    uib-slide(index="3")
+      div
+        p(translate="QUOTE_3")
+        span.author(translate="WALLET_USER")
+    uib-slide(index="4")
+      div
+        img(src="img/logo-techcrunch.svg")
+        p(translate="QUOTE_4")
+        span.author
+          a(href="http://techcrunch.com/2014/07/19/blockchain-releases-new-android-wallet-app-to-put-bitcoin-into-everyones-hands/" target="_blank") Tech Crunch
+    uib-slide(index="5")
+      div
+        p(translate="QUOTE_5")
+        span.author(translate="WALLET_USER")
+    uib-slide(index="6")
+      div
+        img(src="img/logo-telegraph.svg")
+        p(translate="QUOTE_6")
+        span.author
+          a(href="http://bit.ly/1sdIEzZ" target="_blank") The Telegraph
+    uib-slide(index="7")
+      div
+        p(translate="QUOTE_7")
+        span.author(translate="WALLET_USER")
+    uib-slide(index="8")
+      div
+        p(translate="QUOTE_8")
+        span.author(translate="WALLET_USER")
+  .flex-center.flex-column.flex-justify
+    h3.mbn.mtl.flex-start Be Your Own Bank
+      small ®
+    form.form-horizontal(
+      role="form"
+      name="signupForm"
+      ng-submit="signup()"
+      autocomplete="off"
+      novalidate)
+      .form-group.flex-row.flex-center.flex-column-mobile.mbvl(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
+        input.form-control.lrg.mrm.mtl(
+          name="email"
+          type="email"
+          ng-model="fields.email"
+          placeholder="jane@doe.com"
+          required)
+        button.button-primary.btn.button-vlg.mtl(
+          type="submit"
+          ng-disabled="signupForm.$invalid"
+          translate="GET_STARTED")  
