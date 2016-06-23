@@ -31,6 +31,8 @@ function ChangePbkdf2Ctrl ($scope, Wallet, $translate, Alerts) {
   };
 
   $scope.setPbkdf2 = () => {
+    if ($scope.errors.pbkdf2.length) return;
+
     const error = () => {
       Alerts.displayError('Failed to update PBKDF2 iterations');
       $scope.status = {};

@@ -30,6 +30,8 @@ function ChangeLogoutTimeCtrl ($scope, Wallet, Alerts, $translate) {
   };
 
   $scope.setLogoutTime = () => {
+    if ($scope.errors.logoutTime.length) return;
+
     const error = () => {
       Alerts.displayError('Failed to update auto logout time');
     };
