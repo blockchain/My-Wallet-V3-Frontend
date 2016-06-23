@@ -765,5 +765,6 @@
   "ACCEPT_PARTNER_TOS": "Accept {{::partner}}'s <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>Terms of Service</a>",
   "ACCEPT_PARTNER_PRIVACY": "Accept {{::partner}}'s <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>Privacy Policy</a>",
   "EMAIL_IN_USE": "{{::email}} is already in use. ",
-  "CLICK_TO_CHANGE": "Click here to change it."
+  "CLICK_TO_CHANGE": "Click here to change it.",
+  "PAYMENT_METHOD": "Payment Method"
 }

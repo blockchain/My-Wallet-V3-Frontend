@@ -2,8 +2,10 @@ angular
   .module('walletApp')
   .controller('iSignThisCtrl', iSignThisCtrl);
 
-function iSignThisCtrl ($scope, amount, $uibModal, $uibModalInstance, currency, Alerts, MyWallet) {
+function iSignThisCtrl ($scope, amount, $uibModal, $uibModalInstance, currency, Alerts, MyWallet, Wallet) {
   $scope.coinify = MyWallet.wallet.external.coinify;
+  $scope.settings = Wallet.settings;
+
   const success = (trade) => {
     $scope.trade = trade;
   };
@@ -13,7 +15,7 @@ function iSignThisCtrl ($scope, amount, $uibModal, $uibModalInstance, currency, 
     Alerts.displayError(err);
   };
 
-  let n = currency.convertFromSatoshi(amount, currency.bitCurrencies[0]);
+  let n = currency.convertFromSatoshi(amount, $scope.settings.currency);
   $scope.coinify.buy(n).then(success, error);
 
   $scope.close = () => $uibModalInstance.dismiss('');

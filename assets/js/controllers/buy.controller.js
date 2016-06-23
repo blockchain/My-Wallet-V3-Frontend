@@ -19,6 +19,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
   };
 
   $scope.fetchProfile = () => {
+    $scope.status.waiting = true;
     if (!$scope.user.isEmailVerified) $scope.status = {};
     if (!$scope.user.isEmailVerified) return;
 
@@ -34,14 +35,15 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
     $scope.exchange.fetchProfile().then(success, error);
   };
 
-  // since country is only used to get the right exchange partner,
-  // and we only have one exchange partner right now,
-  // just fake this for now.
-  $scope.profile.countryCode = 'US';
-  if (!MyWallet.wallet.external.coinify) MyWallet.wallet.external.addCoinify();
-  $scope.exchange = MyWallet.wallet.external.coinify;
+  if (MyWallet.wallet.external.coinify) $scope.exchange = MyWallet.wallet.external.coinify;
   $scope.partner = 'Coinify';
   $scope.fetchProfile();
+
+  $scope.addExchange = () => {
+    MyWallet.wallet.external.addCoinify();
+    $scope.exchange = MyWallet.wallet.external.coinify;
+    $scope.fetchProfile();
+  };
 
   $scope.changeEmail = (email, successCallback, errorCallback) => {
     const success = () => $scope.editEmail = false; successCallback();

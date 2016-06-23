@@ -9,6 +9,7 @@ function country () {
   const countryCodes = {
     'GB': 'United Kingdom',
     'US': 'United States',
+    'CH': 'Switzerland',
     'DE': 'Germany'
   };
 
