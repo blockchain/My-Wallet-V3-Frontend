@@ -1,0 +1,20 @@
+div(translate-namespace="LARGE_TX")
+  .modal-header.flex-row.flex-center
+    h3.mas(translate=".TITLE")
+    helper-button(content="LARGE_TX.EXPLAIN")
+  .modal-body
+    .flex-column.flex-center
+      span.center-align.mal
+        p.man(translate=".BODY_1")
+        p.man(translate=".BODY_2")
+      .flex-row.flex-around.blue.em-300.mal.width-100
+        .flex-column.flex-center.width-100
+          h2.em-300.mts {{::multiplier}}x
+          span(translate=".NORMAL_SIZE")
+        span.line-split.mll.mrl
+        .flex-column.flex-center.width-100
+          h2.em-300.mts {{::recommendedFee|convert}}
+          span(translate=".RECOMMENDED_FEE") 
+  .modal-footer
+    button.button-muted.mrm(translate="GO_BACK" ng-click="$dismiss('cancelled')")
+    button.button-primary.initial-text(translate=".ACCEPT_FEE" ng-click="$close(recommendedFee)")
