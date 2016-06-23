@@ -17,19 +17,6 @@ function ChangePbkdf2Ctrl ($scope, Wallet, $translate, Alerts) {
     };
   };
 
-  $scope.validatePbkdf2 = () => {
-    let candidate = $scope.fields.pbkdf2;
-
-    let n = parseInt(candidate, 10);
-    if (n <= 1) {
-      $translate('PBKDF2_GREATER_THAN_1').then((t) => $scope.errors.pbkdf2 = t);
-    } else if (n > 20000) {
-      $translate('PBKDF2_LESS_THAN_20000').then((t) => $scope.errors.pbkdf2 = t);
-    } else {
-      $scope.errors.pbkdf2 = '';
-    }
-  };
-
   $scope.setPbkdf2 = () => {
     const error = () => {
       Alerts.displayError('Failed to update PBKDF2 iterations');

@@ -22,7 +22,7 @@ function ChangeEmailCtrl ($rootScope, $scope, Wallet, $translate) {
     };
 
     const error = () => {
-      $scope.error = 'Please enter a valid email address.';
+      $scope.deactivate();
     };
 
     $scope.status.waiting = true;
