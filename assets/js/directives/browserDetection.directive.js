@@ -1,4 +1,4 @@
-console.log('Am I loaded?');
+
 angular
   .module('walletApp')
   .directive('browserDetection', directive);

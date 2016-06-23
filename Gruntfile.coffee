@@ -31,6 +31,20 @@ module.exports = (grunt) ->
           mangle: false
         }
 
+      bcQrReader:
+        src: "build/js/bc-qr-reader.js"
+        dest: "dist/js/bc-qr-reader.min.js"
+        options: {
+          mangle: false
+        }
+
+      bcPhoneNumber:
+        src: "build/js/bc-phone-number.js"
+        dest: "dist/js/bc-phone-number.min.js"
+        options: {
+          mangle: false
+        }
+
     preprocess:
       options: {
         context : {
@@ -99,19 +113,30 @@ module.exports = (grunt) ->
           'bower_components/angular-animate/angular-animate.min.js'
           'build/js/templates.js'
           'bower_components/webcam-directive/app/scripts/webcam.js'
-          'bower_components/bc-qr-reader/dist/bc-qr-reader.js'
           'bower_components/angular-password-entropy/password-entropy.js'
           'bower_components/qrcode/lib/qrcode.js'
           'bower_components/angular-qr/src/angular-qr.js'
-          'bower_components/digits-trie/dist/digits-trie.js'
-          'bower_components/google-libphonenumber/dist/browser/libphonenumber.js'
-          'bower_components/bc-countries/dist/bc-countries.js'
-          'bower_components/bc-phone-number/dist/js/bc-phone-number.js'
           'bower_components/compare-versions/index.js'
           'build/js/walletLazyLoad.js'
         ]
 
         dest: "build/js/wallet.js"
+
+      qrReader:
+        src: [
+          'bower_components/bc-qr-reader/dist/bc-qr-reader.js'
+        ]
+        dest: "build/js/bc-qr-reader.js"
+
+      bcPhoneNumber:
+        src:
+          [
+            'bower_components/digits-trie/dist/digits-trie.js'
+            'bower_components/google-libphonenumber/dist/browser/libphonenumber.js'
+            'bower_components/bc-countries/dist/bc-countries.js'
+            'bower_components/bc-phone-number/dist/js/bc-phone-number.js'
+          ]
+        dest: "build/js/bc-phone-number.js"
 
     sass:
       build:
@@ -335,6 +360,8 @@ module.exports = (grunt) ->
 
         files:
           src: [
+            'dist/js/bc-qr-reader.min.js'
+            'dist/js/bc-phone-number.min.js'
             'dist/img/*.*'
             'dist/img/favicon/*'
             'dist/fonts/*.*'
@@ -448,7 +475,7 @@ module.exports = (grunt) ->
               "customRootURL = 'https://" + @rootDomain + "/'"
         }]
       web_socket_url:
-        src: ['build/js/services/wallet.service.js'],
+        src: ['build/js/wallet.js'],
         overwrite: true,
         replacements: [{
           from: 'customWebSocketURL = $rootScope.webSocketURL'
@@ -456,7 +483,7 @@ module.exports = (grunt) ->
             'customWebSocketURL = "wss://' + @rootDomain + '/inv"'
         }]
       api_domain:
-        src: ['build/js/services/wallet.service.js'],
+        src: ['build/js/wallet.js'],
         overwrite: true,
         replacements: [{
           from: 'customApiDomain = $rootScope.apiDomain'
@@ -507,6 +534,8 @@ module.exports = (grunt) ->
     "html2js"
     "babel:build"
     "concat:wallet"
+    "concat:qrReader"
+    "concat:bcPhoneNumber"
     "sass"
     "concat_css:landing"
     "concat_css:app"
@@ -570,6 +599,8 @@ module.exports = (grunt) ->
       "uglify:landingDependencies"
       "concat:landing"
       "uglify:wallet"
+      "uglify:bcQrReader"
+      "uglify:bcPhoneNumber"
       "jade"
       "preprocess:html"
       "copy:main"

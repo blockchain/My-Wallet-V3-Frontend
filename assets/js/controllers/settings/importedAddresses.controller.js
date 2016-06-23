@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SettingsImportedAddressesCtrl', SettingsImportedAddressesCtrl);
 
-function SettingsImportedAddressesCtrl ($scope, Wallet, Alerts, $translate, $uibModal) {
+function SettingsImportedAddressesCtrl ($scope, Wallet, Alerts, $translate, $uibModal, $ocLazyLoad) {
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.display = { archived: false };
   $scope.settings = Wallet.settings;
@@ -39,7 +39,10 @@ function SettingsImportedAddressesCtrl ($scope, Wallet, Alerts, $translate, $uib
       windowClass: 'bc-modal',
       backdrop: 'static',
       resolve: {
-        address: () => null
+        address: () => null,
+        loadBcQrReader: () => {
+          return $ocLazyLoad.load('bcQrReader');
+        }
       }
     });
   };

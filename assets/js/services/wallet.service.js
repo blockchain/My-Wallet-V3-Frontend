@@ -4,9 +4,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency'];
 
-function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, bcPhoneNumber, languages, currency) {
+function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency) {
   const wallet = {
     goal: {
       auth: false
@@ -42,7 +42,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       email: null,
       mobile: null,
       passwordHint: '',
-      internationalMobileNumber: null
+      mobileNumber: null
     }
   };
   wallet.fiatHistoricalConversionCache = {};
@@ -80,7 +80,6 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) => {
     let didLogin = (result) => {
       let guid = result.guid;
-      wallet.status.isLoggedIn = true;
       wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
       if (wallet.my.wallet.isUpgradedToHD) {
         wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.hdwallet.isMnemonicVerified;
@@ -109,13 +108,13 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
             country: result.sms_number.split(' ')[0],
             number: result.sms_number.split(' ')[1]
           };
-          wallet.user.internationalMobileNumber = bcPhoneNumber.format(result.sms_number);
+          wallet.user.mobileNumber = result.sms_number;
         } else {
           wallet.user.mobile = {
             country: '+' + result.dial_code,
             number: ''
           };
-          wallet.user.internationalMobileNumber = '+' + result.dial_code;
+          wallet.user.mobileNumber = '+' + result.dial_code;
         }
         wallet.settings.notifications = result.notifications_type && result.notifications_type.length > 0 && result.notifications_type.indexOf(1) > -1 && (parseInt(result.notifications_on, 10) === 0 || parseInt(result.notifications_on, 10) === 2);
         wallet.user.isEmailVerified = result.email_verified;
@@ -143,6 +142,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
           };
           wallet.my.wallet.getHistory().then(didFetchTransactions);
         }
+        wallet.status.isLoggedIn = true;
         $rootScope.$safeApply();
       });
       if (successCallback != null) {

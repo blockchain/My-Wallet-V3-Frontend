@@ -27,18 +27,30 @@ angular.module('walletApp', modules)
   uiSelectConfig.theme = 'bootstrap';
 
   // @if !PRODUCTION
-  const lazyLoadFiles = [
+  const walletLazyLoadFiles = [
     'bower_components/blockchain-wallet/dist/my-wallet.min.js',
     'build/js/wallet.js',
     'build/css/wallet.css'
   ];
+  const bcQrReaderLazyLoadFiles = [
+    'bower_components/bc-qr-reader/dist/bc-qr-reader.js'
+  ];
+  const bcPhoneNumberLazyLoadFiles = [
+    'build/js/bc-phone-number.js'
+  ];
   // @endif
 
   /* @if PRODUCTION **
-  const lazyLoadFiles = [
+  const walletLazyLoadFiles = [
     'js/my-wallet.min.js',
     'js/wallet.min.js',
     'css/wallet.css'
+  ];
+  const bcQrReaderLazyLoadFiles = [
+    'js/bc-qr-reader.min.js'
+  ];
+  const bcPhoneNumberLazyLoadFiles = [
+    'js/bc-phone-number.min.js'
   ];
   /* @endif */
 
@@ -47,7 +59,13 @@ angular.module('walletApp', modules)
     events: true,
     modules: [{
       name: 'walletLazyLoad',
-      files: lazyLoadFiles
+      files: walletLazyLoadFiles
+    }, {
+      name: 'bcQrReader',
+      files: bcQrReaderLazyLoadFiles
+    }, {
+      name: 'bcPhoneNumber',
+      files: bcPhoneNumberLazyLoadFiles
     }]
   });
 })
@@ -118,7 +136,7 @@ angular.module('walletApp', modules)
 
 .controller('LandingCtrl', LandingCtrl);
 
-function LandingCtrl ($scope, $timeout, $window) {
+function LandingCtrl ($scope, $timeout, $window, $state) {
   $scope.scrollTo = (element, to, duration) => {
     let start = element.scrollTop;
     let change = to - start;
@@ -153,6 +171,6 @@ function LandingCtrl ($scope, $timeout, $window) {
   };
 
   $scope.signup = () => {
-    // $state.go('public.signup', { email: $scope.fields.email });
+    $state.go('public.signup', { email: $scope.fields.email });
   };
 }

@@ -48,7 +48,12 @@ function SettingsSecurityCtrl ($scope, Wallet, Alerts, currency, $uibModal, $tra
     $uibModal.open({
       templateUrl: 'partials/settings/two-factor.jade',
       windowClass: 'bc-modal initial',
-      controller: 'TwoFactorCtrl'
+      controller: 'TwoFactorCtrl',
+      resolve: {
+        loadBcPhoneNumber: ($ocLazyLoad) => {
+          return $ocLazyLoad.load('bcPhoneNumber');
+        }
+      }
     });
   };
 

@@ -1,6 +1,6 @@
 h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
 
-.clearfix
+.clearfix(ng-if="status.isLoggedIn")
   .form-group.mbn.border-bottom.clearfix.pvl(ng-controller="ChangeEmailCtrl")
     div(settings-form)
       .col-sm-12.col-md-6
@@ -25,11 +25,11 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
       p.text.em-300.hidden-xs(translate="MOBILE_NUMBER_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       div(ng-show="mobileNumber.step == 0")
-        //- Don't use one-time binding for user.internationalMobileNumber
-        h2.status.complete.hidden-xs.long-input(ng-hide="user.internationalMobileNumber.length < 5") {{user.internationalMobileNumber}}
+        //- Don't use one-time binding for formattedMobileNumber
+        h2.status.complete.hidden-xs.long-input(ng-hide="user.mobileNumber.length < 5") {{ formattedMobileNumber }}
         a.button-primary.display-inline-block(ng-click="mobileNumber.step = 1", translate="CHANGE")
       configure-mobile-number(on-success="mobileNumber.step = 2" on-cancel="mobileNumber.step = 0" ng-show="mobileNumber.step == 1")
-      verify-mobile-number(on-success="mobileNumber.step = 0" ng-show="user.internationalMobileNumber.length > 4 && !user.isMobileVerified && mobileNumber.step != 1")
+      verify-mobile-number(on-success="mobileNumber.step = 0" ng-show="user.mobileNumber.length > 4 && !user.isMobileVerified && mobileNumber.step != 1")
   .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="LANGUAGE")
