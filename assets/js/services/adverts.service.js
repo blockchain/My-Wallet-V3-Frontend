@@ -4,10 +4,7 @@ angular
 
 Adverts.$inject = ['$http', '$rootScope'];
 
-console.log('Adverts.service.js');
-
 function Adverts ($http, $rootScope) {
-  console.log('Adverts factory');
   const service = {
     ads: [],
     didFetch: false,

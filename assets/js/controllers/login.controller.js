@@ -5,7 +5,6 @@ angular
 function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNetwork, Alerts, $cookies, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter, $q) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
-  $scope.disableLogin = null;
   $scope.errors = {
     uid: null,
     password: null,
