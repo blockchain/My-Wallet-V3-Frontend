@@ -58,6 +58,11 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/wallet.jade',
           controller: 'WalletCtrl'
         }
+      },
+      resolve: {
+        loadWalletModule: ($ocLazyLoad) => {
+          return $ocLazyLoad.load('walletLazyLoad');
+        }
       }
     })
     .state('wallet.common', {

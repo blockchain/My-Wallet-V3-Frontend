@@ -55,8 +55,8 @@ angular.module('walletApp', modules)
   /* @endif */
 
   $ocLazyLoadProvider.config({
-    debug: true,
-    events: true,
+    debug: false,
+    events: false,
     modules: [{
       name: 'walletLazyLoad',
       files: walletLazyLoadFiles
@@ -79,25 +79,6 @@ angular.module('walletApp', modules)
   $rootScope.$safeApply = (scope = $rootScope, before) => {
     before = before;
     if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
-  };
-
-  $rootScope.scheduleRefresh = () => {
-    $rootScope.cancelRefresh();
-    $rootScope.refreshTimeout = $timeout($rootScope.refresh, 3000);
-  };
-
-  $rootScope.cancelRefresh = () => {
-    $timeout.cancel($rootScope.refreshTimeout);
-  };
-
-  $rootScope.refresh = () => {
-    $rootScope.refreshing = true;
-    // $q.all([ MyWallet.wallet.getHistory(), currency.fetchExchangeRate() ])
-    //   .catch(() => console.log('error refreshing'))
-    //   .finally(() => {
-    //     $rootScope.$broadcast('refresh');
-    //     $timeout(() => $rootScope.refreshing = false, 500);
-    //   });
   };
 
   $rootScope.$on('showNotification', (_, notification) => {
@@ -133,7 +114,6 @@ angular.module('walletApp', modules)
     );
   });
 })
-
 .controller('LandingCtrl', LandingCtrl);
 
 function LandingCtrl ($scope, $timeout, $window, $state) {
