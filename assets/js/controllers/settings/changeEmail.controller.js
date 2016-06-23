@@ -16,6 +16,8 @@ function ChangeEmailCtrl ($rootScope, $scope, Wallet, $translate) {
   };
 
   $scope.changeEmail = () => {
+    if ($scope.form.$invalid) return;
+
     const success = () => {
       Wallet.saveActivity(2);
       $scope.deactivate();
