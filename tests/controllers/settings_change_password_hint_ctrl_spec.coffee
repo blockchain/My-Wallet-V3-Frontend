@@ -13,10 +13,12 @@ describe "ChangePasswordHintCtrl", ->
       $controller "ChangePasswordHintCtrl",
         $scope: scope
 
-      scope.model = { fields: {} }
+      scope.model = {}
       $compile(template)(scope)
 
-      scope.$digest
+      scope.status = {}
+      scope.reset()
+      scope.$digest()
 
       return
 
@@ -31,5 +33,3 @@ describe "ChangePasswordHintCtrl", ->
     scope.changePasswordHint()
     expect(Wallet.changePasswordHint).toHaveBeenCalled()
   )
-
-

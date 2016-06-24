@@ -99,6 +99,7 @@
   "ARE_YOU_SURE_LOGOUT" : "Are you sure you wish to logout?",
   "LANGUAGE_EXPLAIN" : "Set your preferred language.",
   "EMAIL_ADDRESS" : "Email Address",
+  "NOT_VALID_EMAIL_ADDRESS": "Please enter a valid email address.",
   "EMAIL_ADDRESS_EXPLAIN" : "Your verified email address is used to send login codes when suspicious or unusual activity is detected, to remind you of your wallet login ID, and to send bitcoin payment alerts when you receive funds. We will not use your email address for marketing purposes.",
   "VERIFIED" : "Verified",
   "UNVERIFIED" : "Unverified",

@@ -10,6 +10,7 @@ function settingsForm () {
       scope.$parent.errors = {};
       scope.$parent.status = {};
       scope.$parent.active = false;
+      scope.$parent.reset();
 
       scope.$parent.activate = () => {
         scope.$parent.active = true;
