@@ -365,7 +365,7 @@
   "INVALID_CHARACTERS_FOR_LABEL" : "A label can only contain letters, numbers and spaces.",
   "GAP" : "You cannot label more than 20 unused addresses in a row; please send some bitcoins to at least one of them.",
   "LABEL_ERROR_BIP_44_GAP" : "@:GAP",
-  "EMAIL_VERIFIED" : "Thank you for verifying your email address",
+  "EMAIL_VERIFIED_MSG" : "Your email address has been verified",
   "PLEASE_LOGIN_FIRST" : "Please login to your wallet to proceed.",
   "API_ACCESS" : "API Access",
   "API_ACCESS_SUPPORT": "Use our API to interact with your wallet programtically. Follow the steps <a href='https://github.com/blockchain/service-my-wallet-v3#installation' target='_blank'>here</a> to get started.",

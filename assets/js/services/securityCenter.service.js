@@ -32,7 +32,7 @@ function SecurityCenter ($rootScope, Wallet) {
   }
 
   function sumSecurityObjectives () {
-    return getSecurityObjectives().reduce((prev, curr) => prev + curr, false);
+    return getSecurityObjectives().map(o => o ? 1 : 0).reduce((a, b) => a + b);
   }
 
   function getSecurityObjectives () {
