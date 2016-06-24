@@ -10,10 +10,9 @@ form(role="form" name="form" novalidate ng-submit="setLogoutTime()")
         max="1440"
         required
         focus-when="active")
-      span.help-block(ng-show="form.logoutTime.$error.min")
-        span(translate="LOGOUT_GREATER_THAN_1")
-      span.help-block(ng-show="form.logoutTime.$error.max")
-        span(translate="LOGOUT_LESS_THAN_1440")
+      span.help-block(ng-show="form.$invalid")
+        span(ng-show="form.logoutTime.$error.min" translate="LOGOUT_GREATER_THAN_1")
+        span(ng-show="form.logoutTime.$error.max" translate="LOGOUT_LESS_THAN_1440")
   .form-group.mbn.has-error.pull-right.right-align
     button.button-muted(ng-click="deactivate()" translate="CANCEL" ng-hide="busy" type="button")
     button.button-success(

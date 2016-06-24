@@ -11,10 +11,9 @@ form(role="form" name="form" novalidate ng-submit="setPbkdf2()")
         max="20000"
         maxlength="255"
         focus-when="active")
-      span.help-block(ng-show="form.pbkdf2.$error.min")
-        span(translate="PBKDF2_GREATER_THAN_1")
-      span.help-block(ng-show="form.pbkdf2.$error.max")
-        span(translate="PBKDF2_LESS_THAN_20000")
+      span.help-block(ng-show="form.$invalid")
+        span(ng-show="form.pbkdf2.$error.min" translate="PBKDF2_GREATER_THAN_1")
+        span(ng-show="form.pbkdf2.$error.max" translate="PBKDF2_LESS_THAN_20000")
   .form-group.mbn.has-error.pull-right.right-align
     button.button-muted(ng-click="deactivate()" translate="CANCEL" ng-hide="busy" type="button")
     button.button-success(

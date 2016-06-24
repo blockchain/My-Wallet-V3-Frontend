@@ -2,29 +2,13 @@ angular
   .module('walletApp')
   .controller('ChangeLogoutTimeCtrl', ChangeLogoutTimeCtrl);
 
-function ChangeLogoutTimeCtrl ($scope, Wallet, Alerts, $translate) {
-  $scope.status = {};
-  $scope.settings = Wallet.settings;
-
-  $scope.fields = {
-    logoutTime: ''
-  };
-
+function ChangeLogoutTimeCtrl ($scope, Wallet) {
   $scope.reset = () => {
-    $scope.fields = {
-      logoutTime: ''
-    };
+    $scope.fields = { logoutTime: Wallet.settings.logoutTimeMinutes };
   };
 
   $scope.setLogoutTime = () => {
-    const error = () => {
-      Alerts.displayError('Failed to update auto logout time');
-    };
-    const success = () => {
-      $scope.deactivate();
-    };
-
     $scope.status.waiting = true;
-    Wallet.setLogoutTime($scope.fields.logoutTime, success, error);
+    Wallet.setLogoutTime($scope.fields.logoutTime, $scope.deactivate, $scope.deactivate);
   };
 }

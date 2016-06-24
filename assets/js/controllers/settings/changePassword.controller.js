@@ -5,14 +5,6 @@ angular
 function ChangePasswordCtrl ($scope, $log, Wallet, Alerts, $translate) {
   $scope.isCorrectMainPassword = Wallet.isCorrectMainPassword;
   $scope.uid = Wallet.user.uid;
-  $scope.status = {};
-  $scope.form = {};
-
-  $scope.fields = {
-    currentPassword: '',
-    password: '',
-    confirmation: ''
-  };
 
   $scope.reset = () => {
     $scope.fields = {
@@ -33,17 +25,12 @@ function ChangePasswordCtrl ($scope, $log, Wallet, Alerts, $translate) {
   $scope.change = () => {
     if (!$scope.form.$valid) return;
 
-    const success = () => {
-      Wallet.saveActivity(2);
-      $scope.deactivate();
-    };
-
     const error = (err) => {
       $scope.status.waiting = false;
       $translate(err).then(msg => $scope.errors.unsuccessful = msg);
     };
 
     $scope.status.waiting = true;
-    Wallet.changePassword($scope.fields.password, success, error);
+    Wallet.changePassword($scope.fields.password, $scope.deactivate, error);
   };
 }
