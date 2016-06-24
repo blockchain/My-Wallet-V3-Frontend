@@ -14,7 +14,8 @@ function AuthorizeApproveCtrl ($window, $scope, WalletTokenEndpoints, $statePara
     if (res.success == null) return;
 
     $scope.success = true;
-
+    // Prompt to open iOS app
+    $window.location.href = 'blockchain-wallet://loginAuthorized';
     $rootScope.$safeApply();
   };
 
