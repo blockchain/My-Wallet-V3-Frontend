@@ -25,6 +25,7 @@ describe "LandingCtrl", ->
   describe "signup", ->
 
     it "should navigate to public.signup", inject(($state) ->
+      scope.fields = {email: null}
       spyOn($state, "go")
       scope.signup()
       expect($state.go).toHaveBeenCalled()

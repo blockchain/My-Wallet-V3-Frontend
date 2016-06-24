@@ -84,7 +84,8 @@
       "Blockchain",
       "compareVersions",
       "URL",
-      "confirm"
+      "confirm",
+      "beforeEach"
     ]
   }
 }

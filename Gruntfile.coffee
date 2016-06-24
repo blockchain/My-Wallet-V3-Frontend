@@ -82,6 +82,7 @@ module.exports = (grunt) ->
           "build/js/sharedDirectives/scroll-in-view.directive.js"
           "build/js/translations.js"
           "build/js/app.js"
+          'build/js/LandingCtrl.js'
           'build/js/routes.js'
           "build/js/services/bcTranslationLoader.service.js"
         ]

@@ -5,7 +5,7 @@ module.exports = function (config) {
 
     logLevel: config.LOG_WARN,
 
-    client: { captureConsole: false },
+    client: { captureConsole: true },
 
     exclude: ['assets/js/my_wallet/'],
 
@@ -15,6 +15,7 @@ module.exports = function (config) {
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/angular-animate/angular-animate.js',
+      'bower_components/oclazyload/dist/ocLazyLoad.js',
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/angular-cookies/angular-cookies.js',
       'bower_components/angular-ui-select/dist/select.js',
@@ -24,14 +25,18 @@ module.exports = function (config) {
       'bower_components/angular-inview/angular-inview.js',
       'bower_components/browserdetection/src/browser-detection.js',
       'bower_components/compare-versions/index.js',
-      'assets/js/app.js',
+      'tests/app.module.spec.js',
+      'assets/js/LandingCtrl.js',
       'assets/js/core/core.module.js',
       'build/js/templates.js',
       'assets/js/controllers/**/*.controller.js',
       'assets/js/filters.js',
       'assets/js/services/**/*.service.js',
       'assets/js/directives/*.directive.js',
+      'assets/js/sharedDirectives.js',
       'assets/js/sharedDirectives/*.directive.js',
+      'assets/js/translations.js',
+      'assets/js/walletLazyLoad.js',
       'assets/js/core/*.js',
       'tests/filters/*.coffee',
       'tests/controllers/*.coffee',
@@ -51,9 +56,11 @@ module.exports = function (config) {
       'assets/js/filters.js': ['babel', 'coverage'],
       'assets/js/services/*.service.js': ['babel', 'coverage'],
       'assets/js/directives/*.directive.js': ['babel', 'coverage'],
+      'assets/js/sharedDirectives/*.directive.js': ['babel', 'coverage'],
       'assets/js/core/*.service.js': ['babel'],
       'assets/js/routes.js': ['babel', 'coverage'],
       'assets/js/app.js': ['babel'],
+      'assets/js/LandingCtrl.js': ['babel', 'coverage'],
       'tests/**/*.coffee': ['coffee'],
       'tests/**/*.js': ['babel']
     },

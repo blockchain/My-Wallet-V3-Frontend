@@ -1,4 +1,4 @@
-describe "AppCtrl", ->
+describe "WalletCtrl", ->
   scope = undefined
   callbacks = undefined
   mockModalInstance = undefined
@@ -36,7 +36,7 @@ describe "AppCtrl", ->
 
       scope = $rootScope.$new()
 
-      $controller "AppCtrl",
+      $controller "WalletCtrl",
         $scope: scope,
         $stateParams: {}
 
@@ -128,95 +128,33 @@ describe "AppCtrl", ->
       expect(Alerts.confirm).toHaveBeenCalled()
     )
 
-    it "should not increment ticker when logged out", ->
-      scope.inactivityInterval()
-      expect(scope.inactivityTimeSeconds).toEqual(0)
 
-  describe "fetchLastKnownLegacyGuid()", ->
+  describe "HD upgrade", ->
+    beforeEach ->
+      callbacks =  {
+        proceed: () ->
+          console.log "proceed"
+      }
+      spyOn(callbacks, "proceed")
 
-    it "should call legacy guid endpoint", inject (($http) ->
-      $httpBackend.expectGET("https://blockchain.info/wallet-legacy/guid_from_cookie").respond {success: true, guid: "1234"}
-      scope.fetchLastKnownLegacyGuid()
-      $httpBackend.flush()
+    it "should show modal if HD upgrade is needed", inject(($uibModal) ->
+      spyOn($uibModal, "open").and.callThrough()
+      scope.$broadcast("needsUpgradeToHD", callbacks.proceed)
+      expect($uibModal.open).toHaveBeenCalled()
     )
 
-    it "should return the guid if found", inject (($http) ->
-      $httpBackend.expectGET("https://blockchain.info/wallet-legacy/guid_from_cookie").respond {success: true, guid: "1234"}
-      guid = undefined
-      scope.fetchLastKnownLegacyGuid().then((res) -> guid = res)
-      $httpBackend.flush()
-      expect(guid).toEqual("1234")
+  describe "redeem from email", ->
+    it "should proceed after login", inject((Wallet, $rootScope, $timeout, $uibModal) ->
+
+      spyOn($uibModal, 'open').and.returnValue(mockModalInstance)
+
+      # Fulfill necessary conditions befor goal can be checked
+      Wallet.status.isLoggedIn = true
+      Wallet.status = { didLoadBalances: true, didLoadTransactions: true }
+      Wallet.goal.claim = {code: "abcd", balance: 100000}
+
+      $rootScope.$digest()
+      $timeout.flush() # Modal won't open otherwise
+
+      expect($uibModal.open).toHaveBeenCalled()
     )
-
-    it "should fail if no cookie was found", ->
-      $httpBackend.expectGET("https://blockchain.info/wallet-legacy/guid_from_cookie").respond {success: false}
-      guid = undefined
-      scope.fetchLastKnownLegacyGuid().then((res) -> guid = res)
-      $httpBackend.flush()
-      expect(guid).not.toBeDefined()
-
-  describe "setLoginFormUID()", ->
-    guid = undefined
-
-    it "should set loginFormUID to null is no cookies are found", ->
-      spyOn($cookies, "get").and.returnValue(undefined)
-      spyOn(scope, "fetchLastKnownLegacyGuid").and.callFake () ->
-        {
-          then: (cb) ->
-            cb(null)
-            {
-              catch: () ->
-            }
-        }
-
-      scope.setLoginFormUID()
-      scope.loginFormUID.then((res) -> guid = res)
-      scope.$digest()
-      expect(guid).toEqual(null)
-
-    it "should set loginFormUID if frontend cookie is found", ->
-      spyOn($cookies, "get").and.returnValue("1234")
-      scope.setLoginFormUID()
-      scope.loginFormUID.then((res) ->
-        guid = res
-      )
-
-      scope.$digest()
-      expect(guid).toEqual("1234")
-
-    it "should fetch legacy uid if frontend cookie is not found", ->
-      spyOn($cookies, "get").and.returnValue(undefined)
-      spyOn(scope, "fetchLastKnownLegacyGuid").and.callFake () ->
-        {
-          then: (cb) ->
-            cb("12345")
-            {
-              catch: () ->
-            }
-        }
-
-      scope.setLoginFormUID()
-
-      scope.loginFormUID.then((res) ->
-        guid = res
-      )
-
-      scope.$digest()
-      expect(scope.fetchLastKnownLegacyGuid).toHaveBeenCalled()
-      expect(guid).toEqual("12345")
-
-    it "should not fetch legacy uid if frontend cookie is found", ->
-      spyOn($cookies, "get").and.returnValue("1234")
-      spyOn(scope, "fetchLastKnownLegacyGuid").and.callFake () ->
-        {
-          then: (cb) ->
-            cb("12345")
-            {
-              catch: () ->
-            }
-        }
-
-      scope.setLoginFormUID()
-
-      scope.$digest()
-      expect(scope.fetchLastKnownLegacyGuid).not.toHaveBeenCalled()

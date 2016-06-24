@@ -1,7 +1,7 @@
 'use strict';
 
 describe('currency', () => {
-  
+
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(done => {
@@ -179,7 +179,7 @@ describe('currency', () => {
       expect(formatted).toEqual('0.12 USD');
     }));
 
-    it('should be able to format without the code', inject((Wallet, currency) => {
+    it('should be able to format without the code', inject((currency) => {
       let formatted = currency.formatCurrencyForView(amount, currency.bitCurrencies[0], false);
       expect(formatted).toEqual('0.12345679');
     }));

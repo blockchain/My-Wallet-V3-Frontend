@@ -146,7 +146,7 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     };
 
     const transactionSucceeded = (tx) => {
-      $scope.scheduleRefresh();
+      $scope.$root.scheduleRefresh();
       $scope.sending = false;
       $uibModalInstance.close('');
       Wallet.beep();

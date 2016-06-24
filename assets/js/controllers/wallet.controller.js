@@ -113,12 +113,12 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     $uibModalStack.dismissAll();
   });
 
-  $scope.scheduleRefresh = () => {
-    $rootScope.cancelRefresh();
-    $rootScope.refreshTimeout = $timeout($scope.refresh, 3000);
+  $rootScope.scheduleRefresh = () => {
+    $scope.cancelRefresh();
+    $scope.refreshTimeout = $timeout($scope.refresh, 3000);
   };
 
-  $scope.cancelRefresh = () => {
+  $rootScope.cancelRefresh = () => {
     $timeout.cancel($scope.refreshTimeout);
   };
 

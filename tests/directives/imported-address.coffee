@@ -34,6 +34,7 @@ describe "Imported Address Directive", ->
   beforeEach ->
     $rootScope.address = Wallet.legacyAddresses()[0]
     element = $compile("<tr imported-address='address'></tr>")($rootScope)
+    $rootScope.scheduleRefresh = () ->
     $rootScope.$digest()
     isoScope = element.isolateScope()
 
