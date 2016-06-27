@@ -166,11 +166,10 @@ module.exports = (grunt) ->
           "bower_components/angular-ui-select/dist/select.min.css"
           "bower_components/bc-css-flags/dist/css/bc-css-flags.css"
           "bower_components/bc-phone-number/dist/css/bc-phone-number.css"
-          "build/css/wallet-imports.css"
           "build/css/ladda.css"
           "build/css/fonts.css"
           "build/css/angular-csp.css"
-          "build/css/landing-imports.css"
+          "build/css/blockchain.css"
           "build/css/fonts.css"
         ],
         dest: "build/css/wallet.css"
