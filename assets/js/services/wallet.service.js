@@ -674,9 +674,10 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       event.preventDefault();
       return 'There are unsaved changes. Are you sure?';
     }
-    if ($rootScope.autoReload) {
-      $cookies.put('reload.url', $location.url());
-    }
+    // TODO: fix autoreload dev feature
+    // if ($rootScope.autoReload) {
+    //   $cookies.put('reload.url', $location.url());
+    // }
   };
 
   wallet.isValidAddress = (address) => MyWalletHelpers.isBitcoinAddress(address);

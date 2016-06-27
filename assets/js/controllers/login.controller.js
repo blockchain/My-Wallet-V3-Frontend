@@ -68,16 +68,10 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
       $scope.busy = false;
       $scope.didAsk2FA = true;
     };
-    const success = (guid) => {
-      if ($scope.autoReload && $cookies.get('reload.url')) {
-        $location.url($cookies.get('reload.url'));
-        $cookies.remove('reload.url');
-      }
-    };
     if ($scope.settings.needs2FA) {
-      Wallet.login($scope.uid, $scope.password, $scope.twoFactorCode, () => {}, success, error);
+      Wallet.login($scope.uid, $scope.password, $scope.twoFactorCode, () => {}, () => {}, error);
     } else {
-      Wallet.login($scope.uid, $scope.password, null, needs2FA, success, error);
+      Wallet.login($scope.uid, $scope.password, null, needs2FA, () => {}, error);
     }
     if ($scope.autoReload && $scope.password != null && $scope.password !== '') {
       $cookies.put('password', $scope.password);
@@ -119,10 +113,15 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
       archived: false
     }).length;
   };
-  $scope.$watch('status.isLoggedIn', (newValue) => {
-    if (newValue) {
-      $scope.busy = false;
+
+  $scope.$watch('status.isLoggedIn', (isLoggedIn) => {
+    if (isLoggedIn) {
       $state.go('wallet.common.home');
+      // TODO: fix autoreload dev feature
+      // if ($scope.autoReload && $cookies.get('reload.url')) {
+      //   $location.url($cookies.get('reload.url'));
+      //   $cookies.remove('reload.url');
+      // }
     }
   });
 }
