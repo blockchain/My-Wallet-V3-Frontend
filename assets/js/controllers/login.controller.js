@@ -69,7 +69,6 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
       $scope.didAsk2FA = true;
     };
     const success = (guid) => {
-      $scope.busy = false;
       if ($scope.autoReload && $cookies.get('reload.url')) {
         $location.url($cookies.get('reload.url'));
         $cookies.remove('reload.url');
