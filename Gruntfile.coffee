@@ -532,7 +532,6 @@ module.exports = (grunt) ->
 
   grunt.registerTask "build", [
     "html2js"
-    "html2js"
     "babel:build"
     "concat:wallet"
     "concat:qrReader"
