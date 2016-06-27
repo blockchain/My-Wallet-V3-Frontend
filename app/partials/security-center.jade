@@ -48,7 +48,7 @@
         .flex-center
           p.flex-1.prl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
           .flex-1.mll.backup-phrase-actions
-            confirm-recovery-phrase(button-class="button-primary", ng-hide="status.didConfirmRecoveryPhrase")
+            confirm-recovery-phrase(ng-hide="status.didConfirmRecoveryPhrase")
       li.level-badge(ng-click="user.passwordHint || toggle('passwordhint')", ng-class="{'active' : display.action == 'passwordhint', 'badge-active': user.passwordHint }")
         a
           .level-incomplete-container(ng-hide="user.passwordHint")
