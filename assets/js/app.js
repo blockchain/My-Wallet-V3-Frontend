@@ -28,7 +28,7 @@ angular.module('walletApp', modules)
 
   // @if !PRODUCTION
   const walletLazyLoadFiles = [
-    'bower_components/blockchain-wallet/dist/my-wallet.min.js',
+    'bower_components/blockchain-wallet/dist/my-wallet.js',
     'build/js/wallet.js'
   ];
   const bcQrReaderLazyLoadFiles = [

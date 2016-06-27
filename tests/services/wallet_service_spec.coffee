@@ -47,6 +47,20 @@ describe "walletServices", () ->
           transactions: () ->
             [{ result: 1, txType: 'received' }]
           fetchTxs: () ->
+        fetchAccountInfo: () ->
+          then: (cb) ->
+            cb({
+              password_hint1: "Same as username"
+              language: "en"
+              currency: "USD"
+              btc_currency: "BTC"
+              block_tor_ips: 0
+              my_ip: "123.456.789.012"
+            })
+        accountInfo:
+          email: "steve@me.com"
+          mobile: "+1234"
+          currency: "USD"
 
       return
 
@@ -133,7 +147,7 @@ describe "walletServices", () ->
 
     it "should be set after loading", inject((Wallet) ->
       Wallet.login()
-      expect(Wallet.user.mobile.number).toEqual("12345678")
+      expect(Wallet.user.mobileNumber).toEqual("+1234")
     )
 
     it "should allow change", inject((Wallet) ->
