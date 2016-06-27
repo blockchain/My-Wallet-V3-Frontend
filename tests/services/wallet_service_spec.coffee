@@ -124,7 +124,7 @@ describe "walletServices", () ->
       Wallet.changeEmail("other@me.com", mockObserver.success, mockObserver.error)
       expect(MyBlockchainSettings.changeEmail).toHaveBeenCalled()
       expect(Wallet.user.email).toBe("other@me.com")
-      expect(Wallet.user.isEmailVerified).toBe(false)
+      expect(Wallet.user.isEmailVerified).toBe(0)
     )
 
     return
