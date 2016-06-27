@@ -29,8 +29,7 @@ angular.module('walletApp', modules)
   // @if !PRODUCTION
   const walletLazyLoadFiles = [
     'bower_components/blockchain-wallet/dist/my-wallet.min.js',
-    'build/js/wallet.js',
-    'build/css/wallet.css'
+    'build/js/wallet.js'
   ];
   const bcQrReaderLazyLoadFiles = [
     'bower_components/bc-qr-reader/dist/bc-qr-reader.js'
@@ -43,8 +42,7 @@ angular.module('walletApp', modules)
   /* @if PRODUCTION **
   const walletLazyLoadFiles = [
     'js/my-wallet.min.js',
-    'js/wallet.min.js',
-    'css/wallet.css'
+    'js/wallet.min.js'
   ];
   const bcQrReaderLazyLoadFiles = [
     'js/bc-qr-reader.min.js'

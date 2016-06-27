@@ -169,16 +169,11 @@ module.exports = (grunt) ->
           "build/css/wallet-imports.css"
           "build/css/ladda.css"
           "build/css/fonts.css"
-        ],
-        dest: "build/css/wallet.css"
-      },
-      landing: {
-        src: [
           "build/css/angular-csp.css"
           "build/css/landing-imports.css"
           "build/css/fonts.css"
         ],
-        dest: "build/css/landing.css"
+        dest: "build/css/wallet.css"
       }
     },
 
@@ -251,7 +246,7 @@ module.exports = (grunt) ->
           {src: ["ui-bootstrap-csp.css"], dest: "build/css", cwd: "bower_components/angular-bootstrap", expand: true }
         ]
       css_dist:
-          {src: ["landing.css", "wallet.css"], dest: "dist/css", cwd: "build/css", expand: true }
+          {src: ["wallet.css"], dest: "dist/css", cwd: "build/css", expand: true }
 
       fonts:
         files: [
@@ -343,7 +338,7 @@ module.exports = (grunt) ->
             ordered_befores = tuples.map((t)->t[0])
             ordered_afters  = tuples.map((t)->t[1])
 
-            for referring_file_path in ["dist/js/landing.min.js", "dist/css/landing.css", "dist/js/wallet.min.js", "dist/css/wallet.css", "dist/index.html", "dist/landing.html"]
+            for referring_file_path in ["dist/js/landing.min.js", "dist/js/wallet.min.js", "dist/css/wallet.css", "dist/index.html", "dist/landing.html"]
               contents = grunt.file.read(referring_file_path)
               before = undefined
               after = undefined
@@ -432,7 +427,6 @@ module.exports = (grunt) ->
         files:
           src: [
             'dist/js/landing.min.js'
-            'dist/css/landing.css'
           ]
 
     shell:
@@ -537,7 +531,6 @@ module.exports = (grunt) ->
     "concat:qrReader"
     "concat:bcPhoneNumber"
     "sass"
-    "concat_css:landing"
     "concat_css:app"
     "copy:fonts"
     "autoprefixer"
