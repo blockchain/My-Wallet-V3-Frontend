@@ -314,7 +314,7 @@ module.exports = (grunt) ->
         }]
 
     rename:
-      assets: # Renames all images, fonts, etc and updates [welcome,wallet].min.js and [welcome,wallet.css] with their new names.
+      assets: # Renames all images, fonts, etc and updates [landing,wallet].min.js and wallet.css with their new names.
         options:
           skipIfHashed: true
           startSymbol: "{{"
@@ -394,7 +394,6 @@ module.exports = (grunt) ->
           src: [
             'dist/js/my-wallet.min.js'
             'dist/js/wallet.min.js'
-            'dist/css/wallet.css'
             'dist/landing.html'
           ]
 
@@ -426,6 +425,7 @@ module.exports = (grunt) ->
         files:
           src: [
             'dist/js/landing.min.js'
+            'dist/css/wallet.css'
           ]
 
     shell:
