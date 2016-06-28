@@ -23,9 +23,9 @@ h5.well.em-400.type-h5.hidden-xs(translate="WALLET_INFO_EXPLAIN")
         span .
 
     .col-sm-12.col-md-6.setting-result
-      a.button-primary.display-inline-block(ng-click="showPairingCode()", ng-hide="display.pairingCode", ui-ladda="loading" ladda-translate="SHOW_PAIRING_CODE" data-style="expand-right")
-      a.button-primary.display-inline-block(ng-click="hidePairingCode()", ng-show="display.pairingCode", translate="HIDE_PAIRING_CODE")
-      
+      a.button-primary.display-inline-block(ng-click="showPairingCode()" ng-hide="pairingCode" ladda-translate="SHOW_PAIRING_CODE" ui-ladda="loading" data-style="expand-right")
+      a.button-primary.display-inline-block(ng-click="hidePairingCode()" ng-show="pairingCode" translate="HIDE_PAIRING_CODE")
+
       .qr.ptl.mtl
-        span(ng-show="display.pairingCode")
-          qr(text="pairingCode", size=180, image="true")
+        span(ng-show="pairingCode")
+          qr(text="pairingCode" size="180" image="true")

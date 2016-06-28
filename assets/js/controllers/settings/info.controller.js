@@ -2,30 +2,20 @@ angular
   .module('walletApp')
   .controller('SettingsInfoCtrl', SettingsInfoCtrl);
 
-function SettingsInfoCtrl ($scope, Wallet, Alerts, $translate, $window) {
+function SettingsInfoCtrl ($scope, $q, Wallet, Alerts) {
   $scope.uid = Wallet.user.uid;
-
-  $scope.display = {
-    pairingCode: false
-  };
   $scope.pairingCode = null;
 
   $scope.hidePairingCode = () => {
     $scope.pairingCode = null;
-    $scope.display.pairingCode = false;
   };
 
   $scope.showPairingCode = () => {
-    const success = (pairingCode) => {
-      $scope.pairingCode = pairingCode;
-      $scope.loading = false;
-      $scope.display.pairingCode = true;
-    };
-    const error = () => {
-      Alerts.displayError('Failed to load pairing code.');
-      $scope.loading = false;
-    };
     $scope.loading = true;
-    Wallet.makePairingCode(success, error);
+    let success = (code) => $scope.pairingCode = code;
+    let error = () => Alerts.displayError('SHOW_PAIRING_CODE_FAIL');
+    $q(Wallet.makePairingCode)
+      .then(success, error)
+      .then(() => $scope.loading = false);
   };
 }
