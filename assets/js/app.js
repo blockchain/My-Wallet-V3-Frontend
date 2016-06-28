@@ -9,6 +9,7 @@ if (browserDetection().browser === 'ie' && browserDetection().version < 11) {
 }
 
 const modules = [
+  'ngAnimate',
   'ngSanitize',
   'pascalprecht.translate',
   'bcTranslateStaticFilesLoader',
