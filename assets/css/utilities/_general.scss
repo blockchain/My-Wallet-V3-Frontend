@@ -8,16 +8,18 @@ body {
   background-color: #fff;
   color: $text;
   font-family: 'Roboto', 'Helvetica', sans-serif !important;
+  position: relative;
   height: 100%;
   width: 100%;
-  position: fixed; //need this for scrolling on safari mobile
-  &.not-fixed {
-    position: relative;
-    body {
-      position: relative;
-    }
-  }
 }
+
+.wallet-container {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+
+.center { text-align: center; }
 
 .display-block { display: block; }
 .display-inline-block { display: inline-block; }
