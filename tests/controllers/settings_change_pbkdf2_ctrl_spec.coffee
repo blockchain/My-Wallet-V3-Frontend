@@ -6,6 +6,8 @@ describe "ChangePbkdf2Ctrl", ->
 
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile, $templateCache) ->
+      Wallet = $injector.get("Wallet")
+      Wallet.settings.pbkdf2 = 10
 
       scope = $rootScope.$new()
       template = $templateCache.get('partials/settings/change-pbkdf2.jade')
@@ -13,23 +15,19 @@ describe "ChangePbkdf2Ctrl", ->
       $controller "ChangePbkdf2Ctrl",
         $scope: scope
 
-      scope.model = { fields: {} }
+      scope.model = {}
       $compile(template)(scope)
 
-      scope.$digest
+      scope.status = {}
+      scope.reset()
+      scope.$digest()
 
-      return
+  it "should have a pbkdf2 field", ->
+    expect(scope.fields.pbkdf2).toBe(10)
 
-    return
-
-  it "should have a password hint field", ->
-    expect(scope.fields.pbkdf2).toBe('')
-
-  it "should change the password hint", inject((Wallet) ->
+  it "should change the pbkdf2 iterations", inject((Wallet) ->
     spyOn(Wallet, "setPbkdf2Iterations")
-    scope.fields.pbkdf2 = "100"
+    scope.fields.pbkdf2 = 100
     scope.setPbkdf2()
     expect(Wallet.setPbkdf2Iterations).toHaveBeenCalled()
   )
-
-

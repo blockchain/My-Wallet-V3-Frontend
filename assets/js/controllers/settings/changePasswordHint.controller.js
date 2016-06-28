@@ -2,26 +2,13 @@ angular
   .module('walletApp')
   .controller('ChangePasswordHintCtrl', ChangePasswordHintCtrl);
 
-function ChangePasswordHintCtrl ($rootScope, $scope, Wallet, $translate) {
-  $scope.form = {};
-  $scope.status = {};
-  $scope.fields = {
-    passwordHint: ''
-  };
-
+function ChangePasswordHintCtrl ($scope, $translate, Wallet) {
   $scope.reset = () => {
-    $scope.fields = {
-      passwordHint: ''
-    };
+    $scope.fields = { passwordHint: Wallet.user.passwordHint };
   };
 
   $scope.changePasswordHint = () => {
     if (!$scope.form.$valid) return;
-
-    const success = () => {
-      Wallet.saveActivity(2);
-      $scope.deactivate();
-    };
 
     const error = (err) => {
       $scope.status = {};
@@ -49,6 +36,6 @@ function ChangePasswordHintCtrl ($rootScope, $scope, Wallet, $translate) {
     };
 
     $scope.status.waiting = true;
-    Wallet.changePasswordHint($scope.fields.passwordHint, success, error);
+    Wallet.changePasswordHint($scope.fields.passwordHint, $scope.deactivate, error);
   };
 }

@@ -41,7 +41,7 @@ function DidYouKnow () {
       icon: 'ti-announcement',
       linkText: 'SHARE_FEEDBACK',
       external: true,
-      state: 'https://blockchain.co1.qualtrics.com/jfe5/form/SV_ac4FYxlIxXhbF9b'
+      state: 'https://blockchain.co1.qualtrics.com/SE/?SID=SV_0PMH4ruxU5krOmh'
     }
   ];
 

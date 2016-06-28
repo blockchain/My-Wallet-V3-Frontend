@@ -185,4 +185,14 @@ describe('currency', () => {
     }));
   });
 
+  describe('commaSeparate()', () => {
+    let amounts = [100, 1000, 10000, 100000, 1000000, 1000.123];
+    let expected = ['100', '1,000', '10,000', '100,000', '1,000,000', '1,000.123'];
+    amounts.forEach((amount, i) => {
+      it(`should separate ${amount}`, inject((currency) => {
+        let withCommas = currency.commaSeparate(amount, currency.bitCurrencies[0]);
+        expect(withCommas).toEqual(expected[i]);
+      }));
+    });
+  });
 });

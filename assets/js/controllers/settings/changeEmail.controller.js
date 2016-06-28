@@ -2,30 +2,13 @@ angular
   .module('walletApp')
   .controller('ChangeEmailCtrl', ChangeEmailCtrl);
 
-function ChangeEmailCtrl ($rootScope, $scope, Wallet, $translate) {
-  $scope.form = {};
-  $scope.status = {};
-  $scope.fields = {
-    email: ''
-  };
-
+function ChangeEmailCtrl ($scope, Wallet) {
   $scope.reset = () => {
-    $scope.fields = {
-      email: ''
-    };
+    $scope.fields = { email: Wallet.user.email };
   };
 
   $scope.changeEmail = () => {
-    const success = () => {
-      Wallet.saveActivity(2);
-      $scope.deactivate();
-    };
-
-    const error = () => {
-      $scope.error = 'Please enter a valid email address.';
-    };
-
     $scope.status.waiting = true;
-    Wallet.changeEmail($scope.fields.email, success, error);
+    Wallet.changeEmail($scope.fields.email, $scope.deactivate, $scope.deactivate);
   };
 }

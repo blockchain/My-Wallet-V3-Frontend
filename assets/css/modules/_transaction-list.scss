@@ -37,14 +37,11 @@
     .action.local_tx{
      color: $transfer-blue;
     }
-    .destination{
-      width: 265px;
-    }
     .tx-toggle {
-      top: 10px;
+      top: 31px;
       left: 10px;
+      height: 100%;
       position: absolute;
-      height: calc(100% - 10px);
     }
     button.amount {
       padding: 10px;
@@ -90,16 +87,6 @@
         flex: 2 0 0;
         -ms-flex: 2;
         margin-top: 0.625em;
-      }
-      .tx-toggle {
-        top: 5px;
-        left: 5px;
-        i {
-          font-size: 14px;
-        }
-      }
-      .width-80 {
-        width: 100%;
       }
       .tx-details {
         margin-left: 1em;

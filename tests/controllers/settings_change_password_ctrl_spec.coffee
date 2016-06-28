@@ -26,9 +26,11 @@ describe "ChangePasswordCtrl", ->
         $scope: scope,
         $stateParams: {}
 
-      scope.model = { fields: {} }
+      scope.model = {}
       $compile(template)(scope)
 
+      scope.status = {}
+      scope.reset()
       scope.$digest()
 
       return

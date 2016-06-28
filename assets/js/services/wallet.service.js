@@ -801,6 +801,11 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
         $rootScope.$safeApply();
       } else {
       }
+    } else if (event === 'on_email_verified') {
+      if (data.email === wallet.user.email && data.verified) {
+        wallet.user.isEmailVerified = 1;
+        Alerts.displaySuccess('EMAIL_VERIFIED_MSG');
+      }
     } else {
     }
     $rootScope.$safeApply();
@@ -873,7 +878,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   wallet.changeEmail = (email, successCallback, errorCallback) => {
     wallet.settings_api.changeEmail(email, () => {
       wallet.user.email = email;
-      wallet.user.isEmailVerified = false;
+      wallet.user.isEmailVerified = 0;
       successCallback();
       $rootScope.$safeApply();
     }, () => {

@@ -124,11 +124,25 @@
   display: flex !important;         /* NEW, Spec - Firefox, Chrome, Opera */
 }
 
-@for $i from 0 through 12 {
+.flex-0 {
+  width: 100%;
+  -ms-flex: 0 0 auto;
+}
+
+@for $i from 1 through 5 {
   .flex-#{$i} {
     flex: #{$i};
     -ms-flex: #{$i} #{$i} auto;
     -webkit-box-flex: #{$i};
+    width: 100%;
+  }
+}
+
+@for $i from 1 through 5 {
+  .flex-#{$i}-0 {
+    flex: #{$i} 0 auto;
+    -ms-flex: #{$i} 0 auto;
+    -webkit-box-flex: #{$i} 0 auto;
     width: 100%;
   }
 }

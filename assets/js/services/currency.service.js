@@ -64,7 +64,8 @@ function currency ($q, MyBlockchainApi) {
     decimalPlacesForCurrency: decimalPlacesForCurrency,
     convertToSatoshi: convertToSatoshi,
     convertFromSatoshi: convertFromSatoshi,
-    formatCurrencyForView: formatCurrencyForView
+    formatCurrencyForView: formatCurrencyForView,
+    commaSeparate: commaSeparate
   };
 
   return service;
@@ -150,6 +151,12 @@ function currency ($q, MyBlockchainApi) {
     } else {
       amount = (Math.floor(amount * 100) / 100).toFixed(decimalPlaces);
     }
-    return amount + code;
+    return commaSeparate(amount) + code;
+  }
+
+  function commaSeparate (amount) {
+    let parts = amount.toString().split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+\b)/g, ',');
+    return parts.join('.');
   }
 }

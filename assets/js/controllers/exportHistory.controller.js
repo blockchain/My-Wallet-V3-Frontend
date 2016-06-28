@@ -3,6 +3,9 @@ angular
   .controller('ExportHistoryController', ExportHistoryController);
 
 function ExportHistoryController ($scope, $sce, $translate, format, Wallet, MyWallet, activeIndex) {
+  $scope.limit = 50;
+  $scope.incLimit = () => $scope.limit += 50;
+
   let accounts = Wallet.accounts().filter(a => !a.archived && a.index != null);
   let addresses = Wallet.legacyAddresses().filter(a => !a.archived);
 
@@ -19,6 +22,7 @@ function ExportHistoryController ($scope, $sce, $translate, format, Wallet, MyWa
   };
 
   $scope.targets = [allHD, allAddresses].concat(accounts.concat(addresses).map(format.origin));
+  $scope.isLast = (t) => t === $scope.targets[$scope.limit - 1];
 
   $scope.activeCount = (
     Wallet.accounts().filter(a => !a.archived).length +
@@ -52,6 +56,7 @@ function ExportHistoryController ($scope, $sce, $translate, format, Wallet, MyWa
 
   $scope.action = $sce.trustAsResourceUrl(`${$scope.rootURL}export-history`);
   $scope.format = 'dd/MM/yyyy';
+  $scope.options = { minDate: new Date(1231024500000), maxDate: new Date() };
 
   $scope.exportFormat = 'csv';
   $scope.start = { date: Date.now() - 604800000 };

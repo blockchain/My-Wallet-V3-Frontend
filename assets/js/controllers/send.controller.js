@@ -250,13 +250,6 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     unwatchDidLoad();
   });
 
-  $scope.getTotalAvailableTranslation = () => {
-    let code = $scope.transaction.destinations.length > 1 ? '' : 'USE_';
-    code += 'TOTAL_AVAILABLE';
-    if ($scope.advanced) code += '_MINUS_FEE';
-    return code;
-  };
-
   $scope.useAll = () => {
     let tx = $scope.transaction;
     if (tx.maxAvailable == null || tx.amounts.length !== 1) return;
@@ -265,6 +258,7 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
   };
 
   $scope.setPrivateKey = (priv) => {
+    $scope.sendForm.priv.$setTouched();
     $scope.transaction.priv = priv;
   };
 

@@ -9,4 +9,6 @@ angular
       scorePassword: (pw) ->
         (pw && pw.length || 0) * 25
       memoize: (f) -> f
+      getMobileOperatingSystem: () ->
+        'unknown'
     }
