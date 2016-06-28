@@ -60,7 +60,7 @@ module.exports = function (config) {
       'assets/js/core/*.service.js': ['babel'],
       'assets/js/routes.js': ['babel', 'coverage'],
       'assets/js/app.js': ['babel'],
-      'assets/js/LandingCtrl.js': ['babel', 'coverage'],
+      'assets/js/landingCtrl.js': ['babel', 'coverage'],
       'tests/**/*.coffee': ['coffee'],
       'tests/**/*.js': ['babel']
     },
