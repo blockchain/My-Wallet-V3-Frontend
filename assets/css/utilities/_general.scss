@@ -10,22 +10,14 @@ body {
   font-family: 'Roboto', 'Helvetica', sans-serif !important;
   height: 100%;
   width: 100%;
-  overflow: hidden;
-}
-
-#landing,
-#wallet-app {
-  width: 100%;
-  height: 100%;
-  #landing-controller,
-  #app-controller {
-    height: 100%;
+  position: fixed; //need this for scrolling on safari mobile
+  &.not-fixed {
     position: relative;
+    body {
+      position: relative;
+    }
   }
 }
-
-#landing { position: relative; }
-#wallet-app { position: fixed; }
 
 .display-block { display: block; }
 .display-inline-block { display: inline-block; }
