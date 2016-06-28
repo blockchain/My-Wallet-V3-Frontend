@@ -1,54 +1,14 @@
 angular
   .module('walletApp')
-  .controller('AppCtrl', AppCtrl);
+  .controller('WalletCtrl', WalletCtrl);
 
-function AppCtrl ($scope, Wallet, Alerts, $state, $rootScope, $cookies, $location, $timeout, $interval, $uibModal, $window, $translate, $uibModalStack, $http, $q) {
+function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, MyWallet, currency, $translate, $window) {
+  $scope.goal = Wallet.goal;
+
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $rootScope.isMock = Wallet.isMock;
 
-  $scope.fetchLastKnownLegacyGuid = () => {
-    let defer = $q.defer();
-
-    $rootScope.$watch('rootURL', () => {
-      $http.get($rootScope.rootURL + 'wallet-legacy/guid_from_cookie', {withCredentials: true}).success(data => {
-        if (data.success) {
-          defer.resolve(data.guid);
-        } else {
-          defer.reject();
-        }
-      }).error(() => {
-        defer.reject();
-      });
-    });
-
-    return defer.promise;
-  };
-
-  // Set a default wallet identifier for the login and reset password pages.
-  // First check if a uid cookie is set. If not, check the guid_from_cookie
-  // endpoint. loginFormUID is a promise, because using the endpoint is
-  // asynchronous. If all fails, loginFormUID will resolve with null.
-  $scope.setLoginFormUID = () => {
-    let defer = $q.defer();
-    $rootScope.loginFormUID = defer.promise;
-    if ($cookies.get('uid')) {
-      defer.resolve($cookies.get('uid'));
-    } else {
-      $scope.fetchLastKnownLegacyGuid().then((res) => {
-        defer.resolve(res);
-      }).catch(() => {
-        defer.resolve(null);
-      });
-    }
-  };
-
-  // Don't automatically run during tests:
-  if (!$scope.karma) {
-    $scope.setLoginFormUID();
-  }
-
-  $scope.goal = Wallet.goal;
   $scope.menu = {
     isCollapsed: false
   };
@@ -104,26 +64,73 @@ function AppCtrl ($scope, Wallet, Alerts, $state, $rootScope, $cookies, $locatio
         paymentRequest: () => ({
           address: '',
           amount: ''
-        })
+        }),
+        loadBcQrReader: () => {
+          return $ocLazyLoad.load('bcQrReader');
+        }
       }
     });
   };
 
+  $scope.$on('requireSecondPassword', (notification, defer, insist) => {
+    const modalInstance = $uibModal.open({
+      templateUrl: 'partials/second-password.jade',
+      controller: 'SecondPasswordCtrl',
+      backdrop: insist ? 'static' : null,
+      keyboard: insist,
+      windowClass: 'bc-modal',
+      resolve: {
+        insist: () => insist,
+        defer: () => defer
+      }
+    });
+    modalInstance.result.then(() => {}, () => defer.reject());
+  });
+
+  $scope.$on('needsUpgradeToHD', notification => {
+    $uibModal.open({
+      templateUrl: 'partials/upgrade.jade',
+      controller: 'UpgradeCtrl',
+      backdrop: 'static',
+      windowClass: 'bc-modal',
+      keyboard: false
+    });
+  });
+
   $scope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
-    let isPublicState = toState.name === 'welcome' || toState.name.slice(0, 6) === 'public';
+    let isPublicState = toState.name === 'landing' || toState.name.slice(0, 6) === 'public';
     if (isPublicState && Wallet.status.isLoggedIn) event.preventDefault();
   });
 
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) => {
-    let loggedOutStates = ['public', 'welcome', 'public.login-no-uid', 'public.login-uid', 'public.reset-two-factor', 'public.recover', 'public.reminder', 'public.signup', 'public.help', 'open', 'wallet.common.verify-email', 'wallet.common.unsubscribe', 'public.authorize-approve', 'public.reset-two-factor-token'];
+    let loggedOutStates = ['public', 'landing', 'public.login-no-uid', 'public.login-uid', 'public.reset-two-factor', 'public.recover', 'public.reminder', 'public.signup', 'public.help', 'open', 'wallet.common.verify-email', 'wallet.common.unsubscribe', 'public.authorize-approve', 'public.reset-two-factor-token'];
     if (loggedOutStates.every(s => toState.name !== s) && $scope.status.isLoggedIn === false) {
       $state.go('public.login-no-uid');
     }
-    $rootScope.outOfApp = toState.name === 'welcome';
+    $rootScope.outOfApp = toState.name === 'landing';
     $scope.requestBeacon = false;
 
     $uibModalStack.dismissAll();
   });
+
+  $rootScope.scheduleRefresh = () => {
+    $scope.cancelRefresh();
+    $scope.refreshTimeout = $timeout($scope.refresh, 3000);
+  };
+
+  $rootScope.cancelRefresh = () => {
+    $timeout.cancel($scope.refreshTimeout);
+  };
+
+  $scope.refresh = () => {
+    $scope.refreshing = true;
+    $q.all([ MyWallet.wallet.getHistory(), currency.fetchExchangeRate() ])
+      .catch(() => console.log('error refreshing'))
+      .finally(() => {
+        $scope.$broadcast('refresh');
+        $timeout(() => $scope.refreshing = false, 500);
+      });
+  };
 
   $scope.$on('$stateChangeError', (event, toState, toParams, fromState, fromParams, error) => {
     let message = typeof error === 'string' ? error : 'ROUTE_ERROR';
@@ -155,7 +162,10 @@ function AppCtrl ($scope, Wallet, Alerts, $state, $rootScope, $cookies, $locatio
             templateUrl: 'partials/send.jade',
             controller: 'SendCtrl',
             resolve: {
-              paymentRequest: () => Wallet.goal.send
+              paymentRequest: () => Wallet.goal.send,
+              loadBcQrReader: () => {
+                return $ocLazyLoad.load('bcQrReader');
+              }
             },
             windowClass: 'bc-modal initial'
           });
@@ -191,31 +201,6 @@ function AppCtrl ($scope, Wallet, Alerts, $state, $rootScope, $cookies, $locatio
 
   $scope.$on('enableRequestBeacon', () => {
     $scope.requestBeacon = true;
-  });
-
-  $scope.$on('requireSecondPassword', (notification, defer, insist) => {
-    const modalInstance = $uibModal.open({
-      templateUrl: 'partials/second-password.jade',
-      controller: 'SecondPasswordCtrl',
-      backdrop: insist ? 'static' : null,
-      keyboard: insist,
-      windowClass: 'bc-modal',
-      resolve: {
-        insist: () => insist,
-        defer: () => defer
-      }
-    });
-    modalInstance.result.then(() => {}, () => defer.reject());
-  });
-
-  $scope.$on('needsUpgradeToHD', notification => {
-    $uibModal.open({
-      templateUrl: 'partials/upgrade.jade',
-      controller: 'UpgradeCtrl',
-      backdrop: 'static',
-      windowClass: 'bc-modal',
-      keyboard: false
-    });
   });
 
   $scope.back = () => $window.history.back();

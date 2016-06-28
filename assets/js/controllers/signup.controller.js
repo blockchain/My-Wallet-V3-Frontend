@@ -85,11 +85,6 @@ function SignupCtrl ($scope, $state, $cookies, $filter, $translate, $uibModal, W
   $scope.$watch('language_guess', (newVal, oldVal) => {
     if (newVal) {
       $translate.use(newVal.code);
-      Wallet.changeLanguage(newVal);
     }
-  });
-
-  $scope.$watch('currency_guess', (newVal, oldVal) => {
-    if (newVal) Wallet.changeCurrency(newVal);
   });
 }

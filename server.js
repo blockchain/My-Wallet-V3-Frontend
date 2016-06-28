@@ -3,6 +3,7 @@
 var express = require('express');
 var ejs = require('ejs');
 var path = require('path');
+var compression = require('compression');
 
 loadEnv('.env');
 
@@ -15,6 +16,8 @@ var apiDomain = process.env.API_DOMAIN;
 // App configuration
 var rootApp = express();
 var app = express();
+
+app.use(compression());
 
 rootApp.use('/wallet', app);
 
@@ -30,8 +33,7 @@ app.use(function (req, res, next) {
       // Firefox appears to just allow unsafe-inline CSS
       "style-src 'self' 'uD+9kGdg1SXQagzGsu2+gAKYXqLRT/E07bh4OhgXN8Y=' '4IfJmohiqxpxzt6KnJiLmxBD72c3jkRoQ+8K5HT5K8o='",
       "child-src 'none'",
-      // 'sha256-mWmlK...' : see index.jade
-      "script-src 'self' 'sha256-mWmlKhaAh2dtuiY9mzVa//G1T55bjyDCGxCXVg5uPX0='",
+      "script-src 'self'",
       "connect-src 'self' " + rootURL + ' ' + (webSocketURL || 'wss://*.blockchain.info') + ' ' + (apiDomain || 'https://api.blockchain.info'),
       "object-src 'none'",
       "media-src 'self' https://storage.googleapis.com/bc_public_assets/ data: mediastream: blob:",
@@ -40,6 +42,9 @@ app.use(function (req, res, next) {
     res.setHeader('content-security-policy', cspHeader);
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
     res.render(dist ? 'index.html' : 'build/index.jade');
+    return;
+  } else if (req.url === '/landing.html') {
+    res.render(dist ? 'landing.html' : 'build/landing.jade');
     return;
   }
   if (dist) {

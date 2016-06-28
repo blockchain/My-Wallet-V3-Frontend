@@ -1,7 +1,6 @@
 'use strict';
-
 angular
-  .module('walletApp')
+  .module('translations', [])
   .config(TranslationsConfig);
 
 TranslationsConfig.$inject = ['$translateProvider'];

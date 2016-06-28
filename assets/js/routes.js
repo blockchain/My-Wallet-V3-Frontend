@@ -8,8 +8,16 @@ AppRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 function AppRouter ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise(function ($injector, $location) {
-    let Wallet = $injector.get('Wallet');
-    return Wallet.status.isLoggedIn ? '/home' : '/';
+    if (!$injector.has('Wallet')) {
+      return '/';
+    } else {
+      let Wallet = $injector.get('Wallet');
+      if (!Wallet.status.isLoggedIn) {
+        return '/';
+      } else {
+        return '/home';
+      }
+    }
   });
 
   $urlRouterProvider.when('/settings', '/settings/wallet');
@@ -47,7 +55,13 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     .state('wallet', {
       views: {
         body: {
-          templateUrl: 'partials/wallet.jade'
+          templateUrl: 'partials/wallet.jade',
+          controller: 'WalletCtrl'
+        }
+      },
+      resolve: {
+        loadWalletModule: ($ocLazyLoad) => {
+          return $ocLazyLoad.load('walletLazyLoad');
         }
       }
     })
@@ -56,24 +70,25 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     });
 
   $stateProvider
-    .state('welcome', {
+    .state('landing', {
       url: '/',
       views: {
         body: {
-          templateUrl: 'partials/wallet-welcome.jade',
-          controller: 'WelcomeCtrl'
+          templateUrl: 'landing.html',
+          controller: 'LandingCtrl'
         }
-      },
-      contents: {
-        top: top
       }
-    });
-
-  $stateProvider
+    })
     .state('public', {
       views: {
         body: {
-          templateUrl: 'partials/public.jade'
+          templateUrl: 'partials/public.jade',
+          controller: 'PublicCtrl'
+        }
+      },
+      resolve: {
+        loadWalletModule: ($ocLazyLoad) => {
+          return $ocLazyLoad.load('walletLazyLoad');
         }
       }
     })
@@ -183,6 +198,20 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('wallet.common.feedback', {
+      url: '/feedback',
+      views: {
+        top: top,
+        left: {
+          templateUrl: 'partials/wallet-navigation.jade',
+          controller: 'WalletNavigationCtrl'
+        },
+        right: {
+          templateUrl: 'partials/feedback.jade',
+          controller: 'FeedbackCtrl'
+        }
+      }
+    })
     .state('wallet.common.security-center', {
       url: '/security-center',
       views: {
@@ -193,7 +222,12 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         },
         right: {
           templateUrl: 'partials/security-center.jade',
-          controller: 'SettingsSecurityCenterCtrl'
+          controller: 'SettingsSecurityCenterCtrl',
+          resolve: {
+            loadBcPhoneNumber: ($ocLazyLoad) => {
+              return $ocLazyLoad.load('bcPhoneNumber');
+            }
+          }
         }
       }
     })
@@ -271,6 +305,11 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         settings: {
           templateUrl: 'partials/settings/preferences.jade',
           controller: 'SettingsPreferencesCtrl'
+        }
+      },
+      resolve: {
+        loadBcPhoneNumber: ($ocLazyLoad) => {
+          return $ocLazyLoad.load('bcPhoneNumber');
         }
       }
     })

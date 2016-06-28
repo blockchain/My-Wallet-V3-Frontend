@@ -5,9 +5,9 @@ describe "Scroll in View Directive", ->
   element = undefined
   isoScope = undefined
 
-  beforeEach module("walletApp")
+  beforeEach module("sharedDirectives")
 
-  beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
+  beforeEach inject((_$compile_, _$rootScope_) ->
 
     $compile = _$compile_
     $rootScope = _$rootScope_

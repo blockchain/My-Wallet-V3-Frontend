@@ -1,4 +1,4 @@
-describe "WelcomeCtrl", ->
+describe "LandingCtrl", ->
   scope = undefined
 
   beforeEach angular.mock.module("walletApp")
@@ -7,7 +7,7 @@ describe "WelcomeCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       scope = $rootScope.$new()
 
-      $controller "WelcomeCtrl",
+      $controller "LandingCtrl",
         $scope: scope
 
       return
@@ -25,6 +25,7 @@ describe "WelcomeCtrl", ->
   describe "signup", ->
 
     it "should navigate to public.signup", inject(($state) ->
+      scope.fields = {email: null}
       spyOn($state, "go")
       scope.signup()
       expect($state.go).toHaveBeenCalled()
