@@ -26,7 +26,7 @@ module.exports = function (config) {
       'bower_components/browserdetection/src/browser-detection.js',
       'bower_components/compare-versions/index.js',
       'tests/app.module.spec.js',
-      'assets/js/LandingCtrl.js',
+      'assets/js/landingCtrl.js',
       'assets/js/core/core.module.js',
       'build/js/templates.js',
       'assets/js/controllers/**/*.controller.js',
