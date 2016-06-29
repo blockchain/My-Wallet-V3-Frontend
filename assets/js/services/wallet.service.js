@@ -91,8 +91,23 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       if (wallet.my.wallet.isUpgradedToHD && !wallet.status.didInitializeHD) {
         wallet.status.didInitializeHD = true;
       }
-      wallet.settings_api.getAccountInfo((result) => {
-        $window.name = 'blockchain-' + result.guid;
+      $window.name = 'blockchain-' + uid;
+      wallet.my.wallet.fetchAccountInfo().then((result) => {
+        const accountInfo = wallet.my.wallet.accountInfo;
+
+        wallet.user.email = accountInfo.email;
+
+        if (wallet.my.wallet.accountInfo.mobile) {
+          wallet.user.mobileNumber = accountInfo.mobile;
+        } else {
+          wallet.user.mobileNumber = '+' + accountInfo.dialCode;
+        }
+        wallet.user.isEmailVerified = accountInfo.isEmailVerified;
+        wallet.user.isMobileVerified = accountInfo.isMobileVerified;
+
+        wallet.settings.currency = $filter('getByProperty')('code', accountInfo.currency, currency.currencies);
+
+        // TODO: handle more of this in My-Wallet-V3
         wallet.settings.ipWhitelist = result.ip_lock || '';
         wallet.settings.restrictToWhitelist = result.ip_lock_on;
         wallet.settings.apiAccess = result.is_api_access_enabled;
@@ -100,28 +115,10 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
         wallet.settings.needs2FA = result.auth_type !== 0;
         wallet.settings.twoFactorMethod = result.auth_type;
         wallet.settings.loggingLevel = result.logging_level;
-        wallet.user.email = result.email;
         wallet.user.current_ip = result.my_ip;
-        wallet.status.currentCountryCode = result.country_code;
-        if (result.sms_number) {
-          wallet.user.mobile = {
-            country: result.sms_number.split(' ')[0],
-            number: result.sms_number.split(' ')[1]
-          };
-          wallet.user.mobileNumber = result.sms_number;
-        } else {
-          wallet.user.mobile = {
-            country: '+' + result.dial_code,
-            number: ''
-          };
-          wallet.user.mobileNumber = '+' + result.dial_code;
-        }
         wallet.settings.notifications = result.notifications_type && result.notifications_type.length > 0 && result.notifications_type.indexOf(1) > -1 && (parseInt(result.notifications_on, 10) === 0 || parseInt(result.notifications_on, 10) === 2);
-        wallet.user.isEmailVerified = result.email_verified;
-        wallet.user.isMobileVerified = result.sms_verified;
         wallet.user.passwordHint = result.password_hint1;
         wallet.setLanguage($filter('getByProperty')('code', result.language, languages));
-        wallet.settings.currency = $filter('getByProperty')('code', result.currency, currency.currencies);
         wallet.settings.btcCurrency = $filter('getByProperty')('serverCode', result.btc_currency, currency.bitCurrencies);
         wallet.settings.displayCurrency = wallet.settings.btcCurrency;
         wallet.settings.feePerKB = wallet.my.wallet.fee_per_kb;
@@ -926,13 +923,8 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
 
   wallet.isEmailVerified = () => wallet.my.isEmailVerified;
 
-  wallet.internationalPhoneNumber = (mobile) => {
-    if (mobile == null) return null;
-    return mobile.country + ' ' + mobile.number.replace(/^0*/, '');
-  };
-
   wallet.changeMobile = (mobile, successCallback, errorCallback) => {
-    wallet.settings_api.changeMobileNumber(wallet.internationalPhoneNumber(mobile), () => {
+    wallet.settings_api.changeMobileNumber(mobile, () => {
       wallet.user.mobile = mobile;
       wallet.user.isMobileVerified = false;
       successCallback();

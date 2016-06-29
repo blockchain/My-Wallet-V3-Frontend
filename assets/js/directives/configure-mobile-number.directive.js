@@ -54,11 +54,7 @@ function configureMobileNumber (Wallet, bcPhoneNumber) {
         scope.status.busy = false;
       };
 
-      let mobile = {
-        country: scope.fields.newMobile.split(' ')[0],
-        number: scope.fields.newMobile.split(' ').slice(1).join('')
-      };
-      Wallet.changeMobile(mobile, success, error);
+      Wallet.changeMobile(scope.fields.newMobile.split('-').join(''), success, error);
     };
   }
 }
