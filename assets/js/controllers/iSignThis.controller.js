@@ -15,13 +15,13 @@ function iSignThisCtrl ($scope, amount, $uibModal, $uibModalInstance, currency, 
     Alerts.displayError(err);
   };
 
-  let n = currency.convertFromSatoshi(amount, $scope.settings.currency);
-  $scope.coinify.buy(n).then(success, error);
+  $scope.coinify.buy(amount).then(success, error);
 
-  $scope.close = () => $uibModalInstance.dismiss('');
+  $scope.cancel = () => $uibModalInstance.dismiss('');
+  $scope.close = () => Alerts.confirm('ARE_YOU_SURE_CANCEL', {}, '', 'IM_DONE').then($scope.cancel);
 
   $scope.back = () => {
-    $scope.close();
+    $scope.cancel();
 
     $uibModal.open({
       templateUrl: 'partials/buy-modal.jade',

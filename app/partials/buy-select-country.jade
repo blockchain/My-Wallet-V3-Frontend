@@ -1,0 +1,9 @@
+.phvl.ph-form
+  .form-group.row.pbm.flex-justify
+    label.flex-start.pts(translate="Please Select Your Country:")
+    .flex-1
+      ui-select(ng-model="profile.countryCode")
+        ui-select-match(placeholder="{{'SEARCH' | translate}}...") 
+          span {{ $select.selected.name }}
+        ui-select-choices(repeat="country.code as country in countries.countryCodes | filter: $select.search")
+          span(ng-bind-html="country.name")

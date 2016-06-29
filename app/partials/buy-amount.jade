@@ -1,49 +1,41 @@
-form(ng-class="{'has-error': hasAmountError($index)}" name="buyAmount")
-  h5.man(translate="Enter an amount")
-  .ph-form.flex-center.recipient-currency
-    .mrl.flex-1
-      .flex-center.border-bottom
-        span.mrm {{ btcCurrency.code }}:
-        //- ng-change="getQuote(btcCurrency)"
-        input.form-control.no-border(
-          type="number"
-          name="btc"
-          ng-model="transaction.amount"
-          tabindex="1"
-          transform-currency="btcCurrency"
-          placeholder="0"
-          min="1"
-          max="2100000000000000"
-          required
-        )
-    i.ti-arrows-horizontal.h4.aaa.prm
-    .flex-1
-      .flex-center.border-bottom
-        span.mrm {{ fiatCurrency.code }}:
-        //- ng-change="getQuote(fiatCurrency)"
-        input.form-control.no-border(
-          type="number"
-          ng-model="transaction.amount"
-          name="fiat"
-          tabindex="1"
-          transform-currency="fiatCurrency"
-          placeholder="0"
-          min="1"
-          max="2100000000000000"
-          required
-        )
-  .mtl
-    h5.mtn.mbm(translate="PAYMENT_METHOD")
-    .flex-row.flex-center.mbl.pvm.border-bottom
-      input(type="radio" name="medium" id="bank")
-      .flex-column.flex-1.mlm
-        label.em-400(for="bank")
-          span.mbm.type-h5.em-500.display-block(translate="Bank Transfer")
-          span(translate="The final exchange will be determined when Coinify receives your payment. You will receive your bitcoin on the working day after the payment has been received.")
-    .flex-row.flex-center.pbm
-      input(type="radio" name="medium" id="credit-card" checked="checked")
-      .flex-column.flex-1.mlm
-        label.em-400(for="credit-card")
-          span.mbm.type-h5.em-500.display-block(translate="Credit/Debit Card")
-          span.display-block(translate="You get the current exchange rate and receive your bitcoins instantly.")
-          span.display-block.italic(translate="2.75% fees charged by the card payment processor.")
+form(name="buyAmount")
+  .flex-column
+    label.em-500 Choose an amount to buy:
+    section.input-group
+      div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
+        button.btn.btn-default.dropdown-toggle(type="button" uib-dropdown-toggle aria-haspopup="true")
+          span {{ fiatCurrency.code }}
+          span.caret
+        ul.uib-dropdown-menu.dropdown-menu(role="menu")
+          li(ng-repeat="currency in currencies"
+             role="menuitem" 
+             ng-click="changeCurrency(currency); getQuote();"
+             ng-class="{active: isCurrencySelected(currency)}")
+            a(ng-click="$event.preventDefault()") {{ currency.code }}
+      input.form-control(
+        type="number"
+        ng-model="transaction.amount.fiat"
+        name="fiat"
+        tabindex="1"
+        ng-change="getQuote()"
+        placeholder="0"
+        min="0"
+        max="2100000000000000"
+        required
+      )
+  .flex-row.flex-between.flex-center.mtl
+    .flex-row.flex-center.flex-1.flex-around.mrl
+      label.mbn.em-500 You will receive this amount of {{ btcCurrency.code }} at the current rate.
+      i.ti-arrow-right.blue.type-h4
+    .flex-row.flex-center.flex-1
+      input.form-control(
+        type="number"
+        name="btc"
+        ng-model="transaction.amount.btc"
+        tabindex="1"
+        placeholder="0"
+        disabled
+        min="1"
+        max="2100000000000000"
+        required
+      )

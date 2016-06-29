@@ -8,9 +8,38 @@ country.$inject = [];
 function country () {
   const countryCodes = {
     'GB': 'United Kingdom',
-    'US': 'United States',
-    'CH': 'Switzerland',
-    'DE': 'Germany'
+    'AT': 'Austria',
+    'BE': 'Belgium',
+    'BG': 'Bulgaria',
+    'HR': 'Croatia',
+    'CY': 'Cyprus',
+    'CZ': 'Czech Republic',
+    'DK': 'Denmark',
+    'EE': 'Estonia',
+    'FI': 'Finland',
+    'FR': 'France',
+    'DE': 'Germany',
+    'GR': 'Greece',
+    'HU': 'Hungary',
+    'IS': 'Iceland',
+    'IE': 'Ireland',
+    'IT': 'Italy',
+    'LV': 'Latvia',
+    'LI': 'Liechtenstein',
+    'LT': 'Lithuania',
+    'LU': 'Luxembourg',
+    'MT': 'Malta',
+    'MC': 'Monaco',
+    'NL': 'Netherlands',
+    'NO': 'Norway',
+    'PL': 'Poland',
+    'PT': 'Portugal',
+    'RO': 'Romania',
+    'SM': 'San Marino',
+    'SK': 'Slovakia',
+    'ES': 'Spain',
+    'SE': 'Sweden',
+    'CH': 'Switzerland'
   };
 
   function formatCountries (countries) {

@@ -1,7 +1,7 @@
 .buy-sell
   .flex-between
     .flex-column.flex-1
-      h5.mtn.em-400.type-h5.mbl Buy/Sell
+      h5.mtn.em-400.type-h5.mbl(translate="BUY_BITCOIN")
       .flex-row.mbl(ng-show="coinifyProfile")
         button.button-primary.mrm(ng-click="buy()" translate="Buy" ng-disabled="!coinifyProfile")
         button.button-primary(ng-click="" translate="Sell" ng-disabled="!coinifyProfile")
