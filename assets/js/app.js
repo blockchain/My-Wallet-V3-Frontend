@@ -41,14 +41,14 @@ angular.module('walletApp', modules)
   // @endif
 
   /* @if PRODUCTION **
-  const walletLazyLoadFiles = [
+  var walletLazyLoadFiles = [
     'js/my-wallet.min.js',
     'js/wallet.min.js'
   ];
-  const bcQrReaderLazyLoadFiles = [
+  var bcQrReaderLazyLoadFiles = [
     'js/bc-qr-reader.min.js'
   ];
-  const bcPhoneNumberLazyLoadFiles = [
+  var bcPhoneNumberLazyLoadFiles = [
     'js/bc-phone-number.min.js'
   ];
   /* @endif */
