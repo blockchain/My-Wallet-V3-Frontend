@@ -15,6 +15,6 @@ function didYouKnow (DidYouKnow) {
   return directive;
 
   function link (scope, elem, attrs) {
-    scope.dyk = DidYouKnow.getRandom();
+    scope.dyk = DidYouKnow.getSurvey();
   }
 }
