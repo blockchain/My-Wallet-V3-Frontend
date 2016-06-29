@@ -475,7 +475,7 @@
   "NORMAL" : "Normal",
   "RECEIVE_BITCOIN_MESSAGE" : "A new address has been created for you to share with others in order to receive bitcoins.",
   "RECEIVE_BITCOIN_MESSAGE_LEGACY_1": "This is your old address.",
-  "CLICK_HERE": "Click here to use a new address for increased privacy.",
+  "CLICK_HERE": "Click here to use a new address for this transaction for increased privacy.",
   "COPY_ADDRESS" : "Copy the above address to share with others!",
   "SC_CONFIGURE_2FA" : "2-Step Verification helps prevent unauthorized access to your wallet by requiring a one-time password after every login attempt. Enabling this option helps keep unauthorized users from being able to access your wallet.",
   "OR" : " or ",
