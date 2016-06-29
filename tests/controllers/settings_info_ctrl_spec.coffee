@@ -2,16 +2,21 @@ describe "SettingsInfoCtrl", ->
   scope = undefined
   Wallet = undefined
   Alerts = undefined
+  $q = undefined
 
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller) ->
+    angular.mock.inject ($injector, $rootScope, $controller, _$q_) ->
       Wallet = $injector.get("Wallet")
       Alerts = $injector.get("Alerts")
+      $q = _$q_
 
+      Wallet.user.guid = "user_guid"
+      Wallet.user.alias = "user_alias"
       Wallet.makePairingCode = (success, error) ->
         if scope.pairingCode then error() else success("code")
+      Wallet.removeAlias = () -> $q.resolve()
 
       scope = $rootScope.$new()
 
@@ -20,23 +25,36 @@ describe "SettingsInfoCtrl", ->
 
       scope.$digest()
 
-  describe "show pairing code", ->
-    afterEach ->
-      expect(scope.loading).toEqual(false)
+  describe "remove alias", ->
+    it "should ask to confirm", ->
+      spyOn(Alerts, 'confirm').and.callThrough()
+      scope.removeAlias()
+      expect(Alerts.confirm).toHaveBeenCalledWith(jasmine.any(String), { id: 'user_guid' })
 
-    it "should show pairing code if valid", ->
+    it "should remove the alias", ->
+      spyOn(Alerts, 'confirm').and.returnValue($q.resolve())
+      spyOn(Wallet, 'removeAlias').and.returnValue($q.resolve())
+      scope.removeAlias()
+      scope.$digest()
+      expect(Wallet.removeAlias).toHaveBeenCalled()
+      expect(scope.loading.alias).toEqual(false)
+
+  describe "pairing code", ->
+    it "should show if valid", ->
       scope.showPairingCode()
       scope.$digest()
       expect(scope.pairingCode).toEqual("code")
+      expect(scope.loading.code).toEqual(false)
 
-    it "should show an error when failed", ->
+    it "should display an error when show failed", ->
       spyOn(Alerts, "displayError")
       scope.pairingCode = "code"
       scope.showPairingCode()
       scope.$digest()
       expect(Alerts.displayError).toHaveBeenCalled()
+      expect(scope.loading.code).toEqual(false)
 
-  it "should hide the pairing code", ->
-    scope.pairingCode = "code"
-    scope.hidePairingCode()
-    expect(scope.pairingCode).toEqual(null)
+    it "should hide", ->
+      scope.pairingCode = "code"
+      scope.hidePairingCode()
+      expect(scope.pairingCode).toEqual(null)
