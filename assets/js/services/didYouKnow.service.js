@@ -36,7 +36,7 @@ function DidYouKnow () {
     }, {
       id: 5,
       title: 'SEND_FEEDBACK',
-      type: 'SURVEY',
+      type: 'FEATURE',
       text: 'DYK_FEEDBACK_VALUE',
       icon: 'ti-announcement',
       linkText: 'SHARE_FEEDBACK',
@@ -47,8 +47,7 @@ function DidYouKnow () {
 
   const service = {
     getAll: () => dyks, // Only used for tests
-    getRandom: () => dyks[getRandInRange(0, dyks.length - 1)],
-    getSurvey: () => dyks[4]
+    getRandom: () => dyks[getRandInRange(0, dyks.length - 1)]
   };
   return service;
 }
