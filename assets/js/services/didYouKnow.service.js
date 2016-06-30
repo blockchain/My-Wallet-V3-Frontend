@@ -36,18 +36,19 @@ function DidYouKnow () {
     }, {
       id: 5,
       title: 'SEND_FEEDBACK',
-      type: 'FEATURE',
+      type: 'SURVEY',
       text: 'DYK_FEEDBACK_VALUE',
       icon: 'ti-announcement',
       linkText: 'SHARE_FEEDBACK',
       external: true,
-      state: 'https://blockchain.co1.qualtrics.com/jfe5/form/SV_ac4FYxlIxXhbF9b'
+      state: 'https://blockchain.co1.qualtrics.com/SE/?SID=SV_0PMH4ruxU5krOmh'
     }
   ];
 
   const service = {
     getAll: () => dyks, // Only used for tests
-    getRandom: () => dyks[getRandInRange(0, dyks.length - 1)]
+    getRandom: () => dyks[getRandInRange(0, dyks.length - 1)],
+    getSurvey: () => dyks[4]
   };
   return service;
 }

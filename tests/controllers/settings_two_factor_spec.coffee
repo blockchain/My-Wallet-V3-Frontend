@@ -12,15 +12,15 @@ describe "TwoFactorCtrl", ->
       Wallet = $injector.get("Wallet")
 
       Wallet.user = {
-        internationalMobileNumber: "+1234567890"
+        mobileNumber: "+1234567890"
       }
 
-      Wallet.settings = 
+      Wallet.settings =
         twoFactorMethod: null
         needs2FA: false
         googleAuthenticatorSecret: null
-      
-      Wallet.settings_api = 
+
+      Wallet.settings_api =
         unsetTwoFactor: (success) ->
           success()
         setTwoFactorGoogleAuthenticator: (success) ->

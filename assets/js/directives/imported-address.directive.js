@@ -69,7 +69,6 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
         templateUrl: 'partials/settings/sign-message.jade',
         controller: 'SignMessageController',
         windowClass: 'bc-modal initial',
-        backdrop: 'static',
         resolve: {
           addressObj: () => scope.address
         }

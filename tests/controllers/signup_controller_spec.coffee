@@ -166,11 +166,3 @@ describe "SignupCtrl", ->
   describe "currency", ->
     it "should guess the correct currency", ->
       expect(scope.currency_guess.code).toBe("USD")
-
-    it "should switch to the guessed currency", inject((currency, Wallet) ->
-      spyOn(Wallet, "changeCurrency")
-      expect(scope.currency_guess.code).not.toBe(currency.currencies[1].code)
-      scope.currency_guess = currency.currencies[1]
-      scope.$digest()
-      expect(Wallet.changeCurrency).toHaveBeenCalledWith(currency.currencies[1])
-    )

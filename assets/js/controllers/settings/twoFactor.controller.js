@@ -18,7 +18,7 @@ function TwoFactorCtrl ($scope, Wallet, Alerts, $uibModalInstance, $translate, $
     step: 1
   };
 
-  if (Wallet.user.internationalMobileNumber.length > 4 && !Wallet.user.isMobileVerified) {
+  if (Wallet.user.mobileNumber.length > 4 && !Wallet.user.isMobileVerified) {
     $scope.mobileNumber.step = 2;
   }
 

@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .directive('configureMobileNumber', configureMobileNumber);
 
-configureMobileNumber.$inject = ['Wallet'];
+configureMobileNumber.$inject = ['Wallet', 'bcPhoneNumber'];
 
-function configureMobileNumber (Wallet) {
+function configureMobileNumber (Wallet, bcPhoneNumber) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -29,13 +29,15 @@ function configureMobileNumber (Wallet) {
     if (attrs.buttonLg) scope.buttonLg = true;
     if (attrs.fullWidth) scope.fullWidth = true;
 
-    scope.fields.newMobile = Wallet.user.internationalMobileNumber;
+    let previousNumber = bcPhoneNumber.format(Wallet.user.mobileNumber);
+
+    scope.fields.newMobile = previousNumber;
 
     scope.numberChanged = () =>
-      scope.fields.newMobile !== Wallet.user.internationalMobileNumber;
+      scope.fields.newMobile !== previousNumber;
 
     scope.cancel = () => {
-      scope.fields.newMobile = Wallet.user.internationalMobileNumber;
+      scope.fields.newMobile = previousNumber;
       scope.onCancel();
     };
 
@@ -45,18 +47,14 @@ function configureMobileNumber (Wallet) {
       let success = () => {
         scope.status.busy = false;
         scope.onSuccess();
-        Wallet.user.internationalMobileNumber = scope.fields.newMobile;
+        Wallet.user.mobileNumber = scope.fields.newMobile;
       };
 
       let error = () => {
         scope.status.busy = false;
       };
 
-      let mobile = {
-        country: scope.fields.newMobile.split(' ')[0],
-        number: scope.fields.newMobile.split(' ').slice(1).join('')
-      };
-      Wallet.changeMobile(mobile, success, error);
+      Wallet.changeMobile(scope.fields.newMobile.split('-').join(''), success, error);
     };
   }
 }

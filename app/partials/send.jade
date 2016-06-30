@@ -15,7 +15,7 @@
   .alert-in-app
     alerts(context="alerts")
   div(ng-hide="confirmationStep" ng-class="{ 'advanced': advanced }")
-    form.ph-form(role="form",name="sendForm" autocomplete="off" novalidate)
+    form.pos-rel.ph-form(role="form",name="sendForm" autocomplete="off" novalidate)
       //- From
       .form-group.row.flex-justify(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
         label.pts
@@ -112,7 +112,7 @@
               ng-click="useAll()"
               ng-class="{'pointer': transaction.destinations.length === 1}"
               ng-show="transaction.maxAvailable != null && getTransactionTotal() > transaction.maxAvailable && !failedToLoadUnspent")
-              span.type-sm(translate="{{getTotalAvailableTranslation()}}")
+              span.type-sm(translate="USE_TOTAL")
               | :&nbsp;
               span.type-sm {{ transaction.maxAvailable | convert:false:true }}
             span.help-block(ng-show="failedToLoadUnspent" ng-click="reopenModal()")
@@ -173,7 +173,7 @@
             span.account.flex-3.mvn.em-400 {{ address.label || address.address }}
             span.flex-2.flex-start(ng-class="{success: address.type !== 'External'}")
               span(ng-class="{fade: address.type === 'External'}" translate="+&nbsp;")
-              span{{transaction.amounts[$index] | toBitCurrency:btcCurrency:false}}
+              span {{transaction.amounts[$index] | toBitCurrency:btcCurrency:false}}
             span.flex-1(ng-class="{success: address.type !== 'External'}")
               span(ng-show="address.type !== 'External'" translate="+")
               fiat(btc="transaction.amounts[$index]")

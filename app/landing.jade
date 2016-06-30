@@ -1,41 +1,39 @@
-blocket-loading
-.welcome-page
-  public-header
+.landing-page
+  public-header(i18n-loaded='i18nLoaded')
   .quickstart
-    #intro-header.container
-      .flex-center.flex-row
+    #intro-header
+      .flex-center.flex-row.flex-column-mobile
         .flex-1.flex-center.center.flex-column.pvl.phl
           h5.flex-1.mtn(translate="NEW_USERS")
           p.flex-1(translate="NEW_USERS_COPY")
           button.button-success(ui-sref="public.signup" translate="CREATE_NEW")
-        .flex-1.flex-center.center.flex-column.pvl.phl.hidden-phone.border-right.border-left
+        .flex-1.flex-center.center.flex-column.pvl.phl.border-left
           h5.flex-1.mtn(translate="EXISTING_USERS")
           p.flex-1(translate="EXISTING_USERS_COPY")
           button.button-primary(ui-sref="public.login-no-uid" translate="LOGIN_NOW")
-        .flex-1.flex-center.center.flex-column.pvl.phl.hidden-phone
+        .flex-1.flex-center.center.flex-column.pvl.phl.hidden-xs.border-left
           h5.flex-1.mtn(translate="HOW_IT_WORKS")
           p.flex-1
             | {{ 'HOW_IT_WORKS_COPY' | translate }}
           a.button-default(href="{{rootURL}}wallet/how-it-works" translate="HOW_IT_WORKS" target="_blank")
   .container.border-bottom
-    h1
+    h2
       | My Wallet 
       small Be Your Own Bank
         sup.type-xs ®
   .container.flex-row.pvl
-    .flex
-          .flex-1
-            img(src='img/blocket.png').small-blocket.mrl.mbl
-            p.text
-              | {{ 'MY_WALLET_IS' | translate }}
-            p.text
-              | {{ 'ABOUT_BLOCKCHAIN_WALLET' | translate }}
-            p(align='center')
-              button.button-success(ui-sref="public.signup" translate="CREATE_NEW") 
-          .flex-1
-            video-container(img="img/legacy-video-placeholder-TEMP.jpg" src="https://storage.googleapis.com/bc_public_assets/video/legacy-what-is-bitcoin-TEMP.mp4")
-
-  .welcome-nav.flex-row.flex-between
+    .flex.flex-column-mobile
+      .flex-1.mrl
+        img(src='img/blocket.png').small-blocket.mrl.mbl
+        p.text
+          | {{ 'MY_WALLET_IS' | translate }}
+        p.text
+          | {{ 'ABOUT_BLOCKCHAIN_WALLET' | translate }}
+        p(align='center')
+          button.button-success(ui-sref="public.signup" translate="CREATE_NEW") 
+      .flex-1
+        video-container(img="img/legacy-video-placeholder-TEMP.jpg" src="https://storage.googleapis.com/bc_public_assets/video/legacy-what-is-bitcoin-TEMP.mp4")
+  .landing-nav.flex-row.flex-between
     .flex-center.flex-column.flex-justify(ng-click="scroll('newUser')")
       h3.thin(translate="NEW_TO_BITCOIN")
       h4(translate="WHY_USE")
@@ -45,7 +43,7 @@ blocket-loading
 
   .split.flex-row
     .left
-      .welcome-wrapper
+      .landing-wrapper
         scroll-in-view(img="img/new-wallet-hero.jpg" shadow="true")  
       scroll-in-view.blocket(img="img/blocket.png")
       scroll-in-view.ios(img="img/ios-feature.jpg", transactions="true")

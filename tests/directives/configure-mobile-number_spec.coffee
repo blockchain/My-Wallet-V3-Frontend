@@ -15,7 +15,7 @@ describe "Change Mobile Number Directive", ->
     Wallet.settings = {}
 
     # bc-mobile-number formats the number:
-    Wallet.user.internationalMobileNumber = "+31 12345678"
+    Wallet.user.mobileNumber = "+31 12345678"
 
     element = $compile("<configure-mobile-number button-lg='true' full-width='true'></configure-mobile-number>")($rootScope)
 

@@ -1,4 +1,4 @@
-//import bootstrap
+@import 'angular-csp';
 @import 'bootstrap-blockchain';
 
 //import utilitarian CSS
@@ -7,10 +7,12 @@
 @import 'utilities/flex';
 @import 'utilities/spacing';
 @import 'utilities/typography';
-@import 'utilities/borders';
 @import 'utilities/shadows';
 @import 'utilities/mobile-specific';
+@import 'utilities/borders';
 @import 'utilities/addresses';
+@import 'utilities/shadows';
+@import 'utilities/flex';
 
 //import elements
 @import 'elements/buttons';
@@ -21,41 +23,40 @@
 @import 'elements/carousel';
 
 //import components
-@import 'components/activity-feed';
+@import 'components/forms';
+@import 'components/video-container';
+@import 'components/qr-scan';
+@import 'components/modals';
+@import 'components/transfer-all';
 @import 'components/alerts';
 @import 'components/bitcoin-addresses';
-@import 'components/button-groups';
 @import 'components/filter-bar';
-@import 'components/forms';
-@import 'components/helpers';
-@import 'components/modals';
-@import 'components/video-container';
 @import 'components/notifications';
 @import 'components/progress-bars';
-@import 'components/spinner';
+@import 'components/helpers';
+@import 'components/activity-feed';
 @import 'components/virtual-keyboard';
-@import 'components/qr-scan';
-@import 'components/transfer-all';
 @import 'components/isx';
+@import 'components/spinner';
 
-//import modules
 @import 'modules/destination-input';
-@import 'modules/header';
 @import 'modules/home';
-@import 'modules/layout';
 @import 'modules/left-nav';
-@import 'modules/send-receive';
-@import 'modules/security-center';
 @import 'modules/buy-sell';
-@import 'modules/settings';
 @import 'modules/signin';
-@import 'modules/transaction-list';
 @import 'modules/two-factor';
 @import 'modules/confirm-recovery-phrase';
+
+//import modules
+@import 'modules/header';
+@import 'modules/layout';
+@import 'modules/landing';
+@import 'modules/send-receive';
+@import 'modules/security-center';
 @import 'modules/upgrade';
-@import 'modules/welcome';
+@import 'modules/settings';
+@import 'modules/transaction-list';
 
 //override bootstrap
 @import 'utilities/bs_overrides';
-
 @import 'utilities/general';

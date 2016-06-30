@@ -7,3 +7,15 @@
     max-width: 170px;
   }
 }
+
+.dest-oflow {
+  overflow: hidden;
+  white-space: nowrap;
+  > span {
+    display: block;
+    overflow: scroll;
+    // hide scrollbar
+    margin-bottom: -20px;
+    padding-bottom: 20px;
+  }
+}

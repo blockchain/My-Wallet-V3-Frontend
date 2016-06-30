@@ -30,7 +30,7 @@
     p(translate="WRITE_DOWN_EXPLAIN").recovery-instruction-text
     
     .row
-      .col-xs-3(ng-repeat="word in recoveryPhrase.slice(offset, offset + 4)")
+      .col-xs-3(ng-repeat="word in recoveryPhrase | limitTo:4:offset track by $index")
         p.center
           b {{ offset + $index + 1 }}. {{ word }}
     .row

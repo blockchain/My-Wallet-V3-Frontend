@@ -1,10 +1,6 @@
-angular
-  .module('walletApp')
-  .controller('WelcomeCtrl', WelcomeCtrl);
+angular.module('walletApp').controller('LandingCtrl', LandingCtrl);
 
-function WelcomeCtrl ($scope, $timeout, $state) {
-  $scope.fields = { email: '' };
-
+function LandingCtrl ($scope, $timeout, $window, $state) {
   $scope.scrollTo = (element, to, duration) => {
     let start = element.scrollTop;
     let change = to - start;

@@ -15,7 +15,7 @@ function SettingsSecurityCenterCtrl ($scope, Wallet, SecurityCenter, filterFilte
     step: 1
   };
 
-  if (Wallet.user.internationalMobileNumber.length > 4 && !Wallet.user.isMobileVerified) {
+  if (Wallet.user.mobileNumber.length > 4 && !Wallet.user.isMobileVerified) {
     $scope.mobileNumber.step = 2;
   }
 

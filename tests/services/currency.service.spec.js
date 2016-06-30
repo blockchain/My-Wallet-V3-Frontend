@@ -1,7 +1,7 @@
 'use strict';
 
 describe('currency', () => {
-  
+
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(done => {
@@ -179,10 +179,20 @@ describe('currency', () => {
       expect(formatted).toEqual('0.12 USD');
     }));
 
-    it('should be able to format without the code', inject((Wallet, currency) => {
+    it('should be able to format without the code', inject((currency) => {
       let formatted = currency.formatCurrencyForView(amount, currency.bitCurrencies[0], false);
       expect(formatted).toEqual('0.12345679');
     }));
   });
 
+  describe('commaSeparate()', () => {
+    let amounts = [100, 1000, 10000, 100000, 1000000, 1000.123];
+    let expected = ['100', '1,000', '10,000', '100,000', '1,000,000', '1,000.123'];
+    amounts.forEach((amount, i) => {
+      it(`should separate ${amount}`, inject((currency) => {
+        let withCommas = currency.commaSeparate(amount, currency.bitCurrencies[0]);
+        expect(withCommas).toEqual(expected[i]);
+      }));
+    });
+  });
 });

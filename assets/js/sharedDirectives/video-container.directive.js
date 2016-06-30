@@ -1,6 +1,5 @@
-
 angular
-  .module('walletApp')
+  .module('sharedDirectives')
   .directive('videoContainer', videoContainer);
 
 videoContainer.$inject = ['$window', '$timeout', '$sce'];
@@ -8,7 +7,11 @@ videoContainer.$inject = ['$window', '$timeout', '$sce'];
 function videoContainer ($window, $timeout, $sce) {
   const directive = {
     restrict: 'E',
-    templateUrl: 'templates/video-container.jade',
+    template: `
+    <div ng-click="load(); toggle();" ng-class="{'playing': playing}" class="video-container center"><img ng-src="{{::img}}" ng-class="{'transparent': playing}"/><img src="img/spinner.gif" class="loading"/>
+      <video src="" type="video/mp4" controls="true"></video>
+    </div>
+    `,
     replace: true,
     scope: {},
     link: link

@@ -5,9 +5,9 @@ describe "Video Container Directive", ->
   element = undefined
   isoScope = undefined
 
-  beforeEach module("walletApp")
+  beforeEach module("sharedDirectives")
 
-  beforeEach inject((_$compile_, _$rootScope_, _$sce_, Wallet) ->
+  beforeEach inject((_$compile_, _$rootScope_, _$sce_) ->
 
     $compile = _$compile_
     $rootScope = _$rootScope_

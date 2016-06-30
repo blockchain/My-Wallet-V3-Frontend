@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SettingsAccountsController', SettingsAccountsController);
 
-function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFilter) {
+function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFilter, $ocLazyLoad) {
   $scope.accounts = Wallet.accounts;
   $scope.activeSpendableAddresses = () => Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly && a.balance > 0);
 
@@ -63,7 +63,10 @@ function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFi
         paymentRequest: () => ({
           fromAccount: Wallet.accounts()[Wallet.getDefaultAccountIndex()],
           amount: 0
-        })
+        }),
+        loadBcQrReader: () => {
+          return $ocLazyLoad.load('bcQrReader');
+        }
       }
     });
   };

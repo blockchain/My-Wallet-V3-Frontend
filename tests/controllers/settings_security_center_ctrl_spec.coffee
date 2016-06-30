@@ -9,7 +9,7 @@ describe "SettingsSecurityCenterCtrl", ->
       Wallet = $injector.get("Wallet")
 
       Wallet.user = {
-        internationalMobileNumber: "+1234567890"
+        mobileNumber: "+1234567890"
       }
 
       Wallet.changeEmail = (email, success, error) ->
@@ -81,13 +81,13 @@ describe "SettingsSecurityCenterCtrl", ->
     it "should toggle actions", ->
       scope.user.isEmailVerified = true
       scope.status.didConfirmRecoveryPhrase = false
-      
+
       scope.nextAction()
       expect(scope.display.action).toBe('securityphrase')
-      
+
       scope.status.didConfirmRecoveryPhrase = true
       scope.user.passwordHint = false
-      
+
       scope.nextAction()
       expect(scope.display.action).toBe('passwordhint')
 
@@ -104,7 +104,7 @@ describe "SettingsSecurityCenterCtrl", ->
       scope.settings.needs2FA = false
 
       scope.nextAction()
-      expect(scope.display.action).toBe('twofactor')      
+      expect(scope.display.action).toBe('twofactor')
 
       scope.status.didConfirmRecoveryPhrase = true
       scope.user.passwordHint = true
@@ -113,4 +113,4 @@ describe "SettingsSecurityCenterCtrl", ->
       scope.settings.blockTOR = false
 
       scope.nextAction()
-      expect(scope.display.action).toBe('blocktor')            
+      expect(scope.display.action).toBe('blocktor')

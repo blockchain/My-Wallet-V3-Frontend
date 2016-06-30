@@ -2,7 +2,9 @@ angular
   .module('walletApp')
   .controller('AuthorizeApproveCtrl', AuthorizeApproveCtrl);
 
-function AuthorizeApproveCtrl ($window, $scope, WalletTokenEndpoints, $stateParams, $state, Alerts, $translate, $rootScope) {
+// Wallet is injected to ensure it's lazy-load before this controller is
+// initialized. Otherwise $rootScope.rootUrl will be incorrect.
+function AuthorizeApproveCtrl ($window, $scope, WalletTokenEndpoints, $stateParams, $state, Alerts, $translate, $rootScope, MyWalletHelpers, Wallet) {
   $scope.success = false;
 
   const success = (res) => {
@@ -14,7 +16,10 @@ function AuthorizeApproveCtrl ($window, $scope, WalletTokenEndpoints, $statePara
     if (res.success == null) return;
 
     $scope.success = true;
-
+    // Prompt to open iOS app
+    if (MyWalletHelpers.getMobileOperatingSystem() === 'iOS') {
+      $window.location.href = 'blockchain-wallet://loginAuthorized';
+    }
     $rootScope.$safeApply();
   };
 

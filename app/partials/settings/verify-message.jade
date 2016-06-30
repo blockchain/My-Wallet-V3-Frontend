@@ -12,13 +12,13 @@
       .flex-1
         input.form-control(ng-model="address" name="address" is-valid="isBitcoinAddress(address)" required)
     .form-group.row.pbm.flex-row.flex-justify.note(
-      ng-class="{'has-error': verifyMessageForm.signature.$invalid && verifyMessageForm.signature.$touched}")
-      label.control-label.colon(translate="SIGNATURE")
-      textarea.form-control(rows="3" ng-model="signature" name="signature" is-valid="isBase64(signature)" required)
-    .form-group.row.pbm.flex-row.flex-justify.note(
       ng-class="{'has-error': verifyMessageForm.message.$invalid && verifyMessageForm.message.$touched}")
       label.control-label.colon(translate="MESSAGE")
       textarea.form-control(rows="3" ng-model="message" name="message" required)
+    .form-group.row.pbm.flex-row.flex-justify.note(
+      ng-class="{'has-error': verifyMessageForm.signature.$invalid && verifyMessageForm.signature.$touched}")
+      label.control-label.colon(translate="SIGNATURE")
+      textarea.form-control(rows="3" ng-model="signature" name="signature" is-valid="isBase64(signature)" required)
     .pull-right.type-h4.flex-center(ng-show="verified != null")
       span.mrm(translate="{{ verified ? 'MSG_VERIFIED' : 'MSG_NOT_VERIFIED' }}")
       span.type-h4(ng-class="{ 'ti-check success': verified, 'ti-close security-red': !verified }")
