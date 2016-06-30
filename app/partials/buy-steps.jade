@@ -24,7 +24,9 @@
     i.ti-arrow-right.type-h4
 
   .flex-column.flex-center(ng-click="nextStep()")
-    i.flex-1.type-lrg.ti-credit-card(ng-class="{blue: step === 4}")
+    i.flex-1.type-lrg.ti-credit-card(ng-class="{blue: step === 4}" ng-hide="step > 4")
+    i.flex-1.type-lrg.ti-check-box(ng-show="step > 4")
+    span.success(ng-show="step > 4") {{ method.name }}
 
   .flex-column.flex-center
     i.ti-arrow-right.type-h4

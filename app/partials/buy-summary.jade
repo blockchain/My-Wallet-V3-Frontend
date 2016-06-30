@@ -1,13 +1,13 @@
 h5.mtn.mbm(translate="PAYMENT_METHOD")
 .flex-row.flex-center.pbm
-  input(type="radio" name="medium" id="credit-card" checked="checked")
+  input(type="radio" name="method" id="creditcard" checked="checked" ng-model="method" ng-value="creditcard")
   .flex-column.flex-1.mlm
-    label.em-400(for="credit-card")
+    label.em-400(for="creditcard")
       span.mbm.type-h5.em-500.display-block(translate="Credit/Debit Card")
       span.display-block(translate="You get the current exchange rate and receive your bitcoins instantly.")
       span.display-block.italic(translate="2.75% fees charged by the card payment processor.")
 .flex-row.flex-center.mbl.pvm.border-bottom
-  input(type="radio" name="medium" id="bank")
+  input(type="radio" name="method" id="bank" ng-model="method" ng-value="bank")
   .flex-column.flex-1.mlm
     label.em-400(for="bank")
       span.mbm.type-h5.em-500.display-block(translate="Bank Transfer")
@@ -22,10 +22,14 @@ h5.mtn.mbm(translate="SUMMARY")
       span.success {{ transaction.btc }} BTC
     span
       span {{ displayFiatAmount }}
-  .flex-row.flex-between.mts.mbm
-    span.italic Fees
+  .flex-row.flex-between.mts
+    span.italic Trading Fee
     span
-      span {{ displayFeeAmount }}
+      span {{ transaction.tradingFee }}
+  .flex-row.flex-between.mts.mbm
+    span.italic {{ method.name }} Fee
+    span
+      span {{ transaction.methodFee }}
 .flex-row.flex-between.mtm.em-500
   span Total
   span.state-danger-text {{ currencySymbol.symbol }}{{ displayTotalAmount }}

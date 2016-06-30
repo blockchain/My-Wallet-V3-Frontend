@@ -17,6 +17,7 @@ form(name="buyAmount")
         ng-model="transaction.fiat"
         name="fiat"
         tabindex="1"
+        on-enter="nextStep()"
         ng-change="getQuote()"
         placeholder="0"
         min="0"

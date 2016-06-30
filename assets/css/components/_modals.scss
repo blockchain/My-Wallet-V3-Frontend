@@ -291,11 +291,6 @@
       }
       &.no-border { border-bottom: 0px; }
     }
-    label {
-      font-weight: 400;
-      color: darken($ccc, 45%);
-      font-size: 1.2em;
-    }
   }
   .has-error .border-bottom {
     z-index: 10;

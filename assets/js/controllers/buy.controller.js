@@ -11,9 +11,13 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
   $scope.status = {loading: true};
   $scope.countries = country;
   $scope.user = Wallet.user;
+  $scope.method = undefined;
   $scope.step = 0;
 
   $scope.fields = { email: $scope.user.email };
+  $scope.bank = { name: 'Bank Account', fee: 0 };
+  $scope.creditcard = { name: 'Credit Card', fee: 2.75 };
+  $scope.method = $scope.creditcard;
   $scope.transaction = {fiat: 0, btc: 0, fee: 0, total: 0};
 
   $scope.fetchProfile = () => {
@@ -32,25 +36,32 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
     return $scope.exchange.fetchProfile().then(success, error);
   };
 
+  $scope.updateAmounts = () => {
+    let fiatAmt = $scope.transaction.fiat;
+    let feePercentage = $scope.exchange.profile.level.feePercentage;
+    let methodFee = fiatAmt * ($scope.method.fee / 100);
+    let tradingFee = fiatAmt * (feePercentage / 100);
+
+    $scope.transaction.tradingFee = tradingFee.toFixed(2);
+    $scope.transaction.methodFee = methodFee.toFixed(2);
+    $scope.transaction.btc = $scope.quote.quoteAmount / 10000;
+    $scope.transaction.total = fiatAmt +
+                               +$scope.transaction.methodFee +
+                               +$scope.transaction.tradingFee;
+  };
+
   $scope.getQuote = () => {
     if (!$scope.exchangeAccount) return;
+    $scope.transaction.btc = 0;
+    $scope.quote = null;
+
     let amt = $scope.transaction.fiat * 100;
     let curr = $scope.fiatCurrency.code;
-    if (!amt) {
-      $scope.transaction.btc = 0;
-      $scope.quote = null;
-      return;
-    }
+    if (!amt) return;
 
     const success = (quote) => {
-      let fiatAmt = $scope.transaction.fiat;
-      let feePercentage = $scope.exchange.profile.level.feePercentage;
-      let fee = fiatAmt * (feePercentage / 100);
-
       $scope.quote = quote;
-      $scope.transaction.fee = +fee.toFixed(2);
-      $scope.transaction.btc = $scope.quote.quoteAmount / 10000;
-      $scope.transaction.total = fiatAmt + $scope.transaction.fee;
+      $scope.updateAmounts();
     };
 
     const error = (err) => {
@@ -158,6 +169,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
         windowClass: 'bc-modal coinify',
         resolve: { trade: () => { return trade; },
                    quote: () => { return $scope.quote; },
+                   method: () => { return $scope.method; },
                    partner: () => { return $scope.partner; },
                    displayTotalAmount: () => { return $scope.displayTotalAmount; },
                    currencySymbol: () => { return $scope.currencySymbol; }}
@@ -185,6 +197,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
   $scope.isCurrencySelected = (currency) => currency === $scope.fiatCurrency;
 
   $scope.$watch('exchange', $scope.fetchProfile);
+  $scope.$watch('method', $scope.updateAmounts);
 
   $scope.$watch('fiatCurrency', () => {
     let curr = $scope.fiatCurrency || null;
@@ -193,10 +206,6 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
   $scope.$watch('transaction.fiat', () => {
     let fiatAmt = $scope.transaction.fiat;
     $scope.displayFiatAmount = currency.formatCurrencyForView(fiatAmt, $scope.settings.currency, false);
-  });
-  $scope.$watch('transaction.fee', () => {
-    let fee = $scope.transaction.fee;
-    $scope.displayFeeAmount = currency.formatCurrencyForView(fee, $scope.settings.currency, false);
   });
   $scope.$watch('transaction.total', () => {
     let total = $scope.transaction.total;
