@@ -16,7 +16,7 @@ describe "NavigationCtrl", ->
 
       Alerts.confirm = (msg) ->
         then: (f) ->
-          if msg != 'CHANGES_BEING_SAVED'
+          if msg != 'CONFIRM_FORCE_LOGOUT'
             f(true)
 
       Wallet.status = {

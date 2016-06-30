@@ -45,13 +45,16 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
     $scope.status.sweeping = true;
 
     const success = () => $scope.wait(500).then(() => {
-      $scope.refresh();
       let confirmString = $scope.archivable.length > 1 ? 'SWEEP_FINISHED' : 'SWEEP_FINISHED_SINGLE';
-      Alerts.confirm(confirmString,
-                     {'archivable': $scope.archivable.length,
-                      'account': $scope.selectedAccount.label,
-                      'total': $scope.ncomplete + $scope.nfailed}, '', '', {'action': 'archive', 'translation': 'ARCHIVE'
-                    }).then($scope.archive).catch($uibModalInstance.dismiss);
+      Alerts.confirm(confirmString, {
+        values: {
+          archivable: $scope.archivable.length,
+          account: $scope.selectedAccount.label,
+          total: $scope.ncomplete + $scope.nfailed
+        },
+        action: 'ARCHIVE',
+        friendly: true
+      }).then($scope.archive).catch($uibModalInstance.dismiss);
     });
 
     const error = (e) => {

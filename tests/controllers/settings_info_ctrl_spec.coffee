@@ -29,7 +29,7 @@ describe "SettingsInfoCtrl", ->
     it "should ask to confirm", ->
       spyOn(Alerts, 'confirm').and.callThrough()
       scope.removeAlias()
-      expect(Alerts.confirm).toHaveBeenCalledWith(jasmine.any(String), { id: 'user_guid' })
+      expect(Alerts.confirm).toHaveBeenCalledWith(jasmine.any(String), props: { 'UID': 'user_guid' })
 
     it "should remove the alias", ->
       spyOn(Alerts, 'confirm').and.returnValue($q.resolve())

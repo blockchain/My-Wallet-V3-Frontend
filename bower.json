@@ -16,7 +16,7 @@
     "angular-ui-select": "0.14.*",
     "angular-sanitize": "1.4.*",
     "angular-qr": "0.2.*",
-    "angular-translate": "2.7.*",
+    "angular-translate": "2.11.*",
     "angular-translate-loader-static-files": "2.7.*",
     "angular-inview": "1.5.*",
     "browserdetection": "sjors/browser-detection#webkit",

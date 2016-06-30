@@ -9,7 +9,7 @@ function SettingsInfoCtrl ($scope, $q, Wallet, Alerts) {
 
   $scope.removeAlias = () => {
     $scope.loading.alias = true;
-    Alerts.confirm('CONFIRM_DISABLE_ALIAS', { id: $scope.guid })
+    Alerts.confirm('CONFIRM_REMOVE_ALIAS', { props: { 'UID': $scope.guid } })
       .then(Wallet.removeAlias)
       .then(() => $scope.alias = Wallet.user.alias, () => {})
       .then(() => $scope.loading.alias = false);

@@ -104,8 +104,7 @@ function AddressImportCtrl ($scope, $uibModal, Wallet, Alerts, $uibModalInstance
 
   $scope.close = () => {
     if ($scope.step === 2 && $scope.address.balance > 0 && !$scope.address.isWatchOnly) {
-      var opts = {'action': 'goToTransfer', 'translation': 'TRANSFER'};
-      Alerts.confirm('CONFIRM_NOT_SWEEP', {}, '', 'DONT_TRANSFER', opts)
+      Alerts.confirm('CONFIRM_NOT_SWEEP', { action: 'TRANSFER', friendly: true })
         .then($scope.goToTransfer).catch($uibModalInstance.dismiss);
     } else {
       $uibModalInstance.dismiss('');
