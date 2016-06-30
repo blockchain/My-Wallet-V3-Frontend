@@ -4,31 +4,16 @@
 
 .bc-modal.coinify {
   .modal-dialog {
-    width: 90%;
-    height: 90%;
     .modal-content {
       height: 100%;
       .modal-body {
-        padding: 1px;
-        height: calc(100% - 134px);
+        width: calc(100% - 1px);
+        position: relative;
+        height: 470px;
+        overflow: auto;
+        padding: 0px;
       }
     }
-  }
-  @media (max-width: 768px) {
-    .modal-dialog {
-      width: 90%;
-      height: 100%;
-      .modal-content {
-        height: 100%;
-        .modal-body {
-          padding: 1px;
-          height: calc(100% + 34px);
-        }
-        .modal-footer {
-          background-color: #fff;
-        }
-      }
-    }    
   }
 }
 

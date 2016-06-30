@@ -8,36 +8,13 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
   $scope.currencies = currency.currencies;
   $scope.profile = MyWallet.wallet.profile;
   $scope.settings = Wallet.settings;
+  $scope.status = {loading: true};
   $scope.countries = country;
   $scope.user = Wallet.user;
-  $scope.quote = null;
-  $scope.status = {loading: true};
-  $scope.editEmail = undefined;
   $scope.step = 0;
 
   $scope.fields = { email: $scope.user.email };
-  $scope.transaction = { amount: { fiat: 0, btc: 0 } };
-
-  // move to quote countdown directive
-  $scope.setQuoteCountdown = (quote) => {
-    $scope.countdown = $interval(() => {
-      let now = new Date();
-      let expiration = new Date(quote.expiresAt);
-      let diff = expiration - now;
-      let time = diff / 1000 / 60;
-      let minutes = parseInt(time, 10);
-      let seconds = parseInt((time % 1) * 60, 10);
-      if (seconds < 10) seconds = '0' + seconds;
-
-      $scope.quoteCountdown = minutes + ':' + seconds;
-    }, 1000);
-  };
-
-  // move to quote countdown directive
-  $scope.resetQuoteCountdown = () => {
-    $scope.quoteCountdown = undefined;
-    $interval.cancel($scope.countdown);
-  };
+  $scope.transaction = {fiat: 0, btc: 0, fee: 0, total: 0};
 
   $scope.fetchProfile = () => {
     $scope.status.waiting = true;
@@ -45,30 +22,35 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
 
     const success = (msg) => {
       $scope.status = {};
-      $scope.exchangeAccount = msg;
+      $scope.exchangeAccount = true;
 
       $scope.nextStep();
     };
 
     const error = () => { $scope.status = {}; };
 
-    $scope.exchange.fetchProfile().then(success, error);
+    return $scope.exchange.fetchProfile().then(success, error);
   };
 
   $scope.getQuote = () => {
-    let amt = $scope.transaction.amount.fiat * 100;
+    if (!$scope.exchangeAccount) return;
+    let amt = $scope.transaction.fiat * 100;
     let curr = $scope.fiatCurrency.code;
     if (!amt) {
-      $scope.transaction.amount.btc = 0;
-      $scope.resetQuoteCountdown();
+      $scope.transaction.btc = 0;
+      $scope.quote = null;
       return;
     }
 
     const success = (quote) => {
-      $scope.transaction.amount.btc = quote.quoteAmount / 10000;
+      let fiatAmt = $scope.transaction.fiat;
+      let feePercentage = $scope.exchange.profile.level.feePercentage;
+      let fee = fiatAmt * (feePercentage / 100);
 
-      $scope.resetQuoteCountdown();
-      $scope.setQuoteCountdown(quote);
+      $scope.quote = quote;
+      $scope.transaction.fee = +fee.toFixed(2);
+      $scope.transaction.btc = $scope.quote.quoteAmount / 10000;
+      $scope.transaction.total = fiatAmt + $scope.transaction.fee;
     };
 
     const error = (err) => {
@@ -91,7 +73,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
   $scope.toggleEmail = () => $scope.editEmail = !$scope.editEmail;
 
   $scope.nextStep = () => {
-    if (!$scope.transaction.amount.fiat) {
+    if (!$scope.transaction.fiat) {
       $scope.step = 0;
     } else if (!$scope.profile.countryCode) {
       $scope.step = 1;
@@ -115,7 +97,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
 
   $scope.isDisabled = () => {
     if ($scope.step === 0) {
-      return !($scope.transaction.amount.fiat > 0);
+      return !($scope.transaction.fiat > 0);
     } else if ($scope.step === 1) {
       return !$scope.profile.countryCode;
     } else if ($scope.step === 3) {
@@ -149,7 +131,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
 
     const success = () => {
       $scope.status = {};
-      $scope.fetchProfile();
+      $scope.fetchProfile().then($scope.getQuote);
     };
 
     const error = (err) => {
@@ -164,14 +146,30 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
   };
 
   $scope.buy = () => {
-    $scope.cancel();
+    $scope.status.waiting = true;
 
-    $uibModal.open({
-      templateUrl: 'partials/isignthis-modal.jade',
-      controller: 'iSignThisCtrl',
-      windowClass: 'bc-modal coinify',
-      resolve: { amount: () => { return $scope.transaction.amount.fiat * 100; } }
-    });
+    const success = (trade) => {
+      $scope.cancel();
+      $scope.status = {};
+
+      $uibModal.open({
+        templateUrl: 'partials/isignthis-modal.jade',
+        controller: 'iSignThisCtrl',
+        windowClass: 'bc-modal coinify',
+        resolve: { trade: () => { return trade; },
+                   quote: () => { return $scope.quote; },
+                   partner: () => { return $scope.partner; },
+                   displayTotalAmount: () => { return $scope.displayTotalAmount; },
+                   currencySymbol: () => { return $scope.currencySymbol; }}
+      });
+    };
+
+    const error = (err) => {
+      $scope.status = {};
+      Alerts.displayError(err);
+    };
+
+    $scope.exchange.buy($scope.transaction.fiat).then(success, error);
   };
 
   $scope.cancel = () => $uibModalInstance.dismiss('');
@@ -187,12 +185,21 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
   $scope.isCurrencySelected = (currency) => currency === $scope.fiatCurrency;
 
   $scope.$watch('exchange', $scope.fetchProfile);
+
   $scope.$watch('fiatCurrency', () => {
     let curr = $scope.fiatCurrency || null;
     $scope.currencySymbol = currency.conversions[curr.code];
   });
-  $scope.$watch('transaction.amount.fiat', () => {
-    let amt = $scope.transaction.amount.fiat;
-    $scope.displayAmount = currency.formatCurrencyForView(amt, $scope.settings.currency);
+  $scope.$watch('transaction.fiat', () => {
+    let fiatAmt = $scope.transaction.fiat;
+    $scope.displayFiatAmount = currency.formatCurrencyForView(fiatAmt, $scope.settings.currency, false);
+  });
+  $scope.$watch('transaction.fee', () => {
+    let fee = $scope.transaction.fee;
+    $scope.displayFeeAmount = currency.formatCurrencyForView(fee, $scope.settings.currency, false);
+  });
+  $scope.$watch('transaction.total', () => {
+    let total = $scope.transaction.total;
+    $scope.displayTotalAmount = currency.formatCurrencyForView(total, $scope.settings.currency, false);
   });
 }

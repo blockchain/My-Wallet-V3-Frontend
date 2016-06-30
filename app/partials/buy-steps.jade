@@ -1,0 +1,33 @@
+.flex-row.flex-between.flex-baseline.center.pointer(ng-hide="status.loading")
+  .flex-column.flex-center
+    span.flex-1.type-lrg(ng-class="{blue: step === 0}" ng-click="step = 0") {{ currencySymbol.symbol }}
+    span.success(ng-show="step > 0") {{ displayFiatAmount }}
+
+  .flex-column.flex-center
+    i.ti-arrow-right.type-h4
+
+  .flex-column.flex-center(ng-class="{blue: step === 1}" ng-click="nextStep()")
+    i.flex-1.type-lrg.ti-map-alt(ng-hide="profile.countryCode")
+    i.flex-1.type-lrg.ti-check-box(ng-show="profile.countryCode")
+    span.success {{ profile.countryCode }}
+
+  .flex-column.flex-center
+    i.ti-arrow-right.type-h4
+
+  //- Should use exchange account for success but causes maximum call stack exceeded err
+  .flex-column.flex-center(ng-click="nextStep()" ng-class="{blue: step === 2}")
+    i.flex-1.type-lrg.ti-user(ng-hide="exchangeAccount")
+    i.flex-1.type-lrg.ti-check-box(ng-show="exchangeAccount")
+    span(ng-class="{success: exchangeAccount}" ng-show="exchangeAccount") {{ partner }}
+
+  .flex-column.flex-center
+    i.ti-arrow-right.type-h4
+
+  .flex-column.flex-center(ng-click="nextStep()")
+    i.flex-1.type-lrg.ti-credit-card(ng-class="{blue: step === 4}")
+
+  .flex-column.flex-center
+    i.ti-arrow-right.type-h4
+
+  .flex-column.flex-center
+    span.flex-1.type-lrg(ng-class="{blue: step === 5}") BTC

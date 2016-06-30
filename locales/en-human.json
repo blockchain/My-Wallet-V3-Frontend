@@ -767,5 +767,7 @@
   "ACCEPT_PARTNER_TOS_PRIVACY": "Accept <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>{{::partner}}'s Terms of Service</a> and <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>{{::partner}}'s Privacy Policy</a>",
   "EMAIL_IN_USE": "{{::email}} is already in use. ",
   "CLICK_TO_CHANGE": "Click here to change it.",
-  "PAYMENT_METHOD": "Payment Method"
+  "PAYMENT_METHOD": "Payment Method:",
+  "PLEASE_CREATE_ACCOUNT": "Please <span class='underline pointer'>create an account</span> to get an accurate exchange rate.",
+  "SUMMARY": "Summary:"
 }

@@ -1,5 +1,10 @@
 .modal-header.bc-modal-header.flex-between.flex-center
-  h3(translate="Buy Bitcoin")
+  .flex-column.width-100
+    .flex-row.flex-between.flex-center
+      h3(translate="Buy Bitcoin")
+      quote-countdown(quote="quote")
+    div(ng-click="back()")
+      include ./buy-steps
 .modal-body
   isignthis(transaction-id='trade.iSignThisID')
 .modal-footer.flex-between

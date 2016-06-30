@@ -2,23 +2,8 @@
   .flex-column.flex-1
     .flex-row.flex-between.flex-center
       h3(translate="BUY_BITCOIN")
-      span.security-red(ng-show="quoteCountdown") Rate Expires In: {{ quoteCountdown }}
-    .flex-row.flex-between.flex-baseline.center.pointer
-      .flex-column.flex-center
-        span.flex-1.type-lrg(ng-class="{blue: step === 0}" ng-click="step = 0") {{ currencySymbol.symbol }}
-        span.success(ng-show="step > 0") {{ displayAmount }}
-      .flex-column.flex-center(ng-class="{blue: step === 1}" ng-click="nextStep()")
-        i.flex-1.type-lrg.ti-map-alt(ng-hide="profile.countryCode")
-        i.flex-1.type-lrg.ti-check-box(ng-show="profile.countryCode")
-        span.success {{ profile.countryCode }}
-      .flex-column.flex-center(ng-click="nextStep()" ng-class="{blue: step === 2}")
-        i.flex-1.type-lrg.ti-user(ng-hide="user.isEmailVerified")
-        i.flex-1.type-lrg.ti-check-box(ng-show="user.isEmailVerified")
-        span(ng-class="{success: user.isEmailVerified}") {{ user.email }}
-      .flex-column.flex-center(ng-click="nextStep()")
-        i.flex-1.type-lrg.ti-credit-card(ng-class="{blue: step === 4}")
-      .flex-column.flex-center
-        span.flex-1.type-lrg(ng-class="{blue: step === 5}") BTC
+      quote-countdown(quote="quote")
+    include ./buy-steps
 .modal-body
   div(ng-show="status.loading")
     .phvl

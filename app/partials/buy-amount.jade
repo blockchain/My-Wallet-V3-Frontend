@@ -14,7 +14,7 @@ form(name="buyAmount")
             a(ng-click="$event.preventDefault()") {{ currency.code }}
       input.form-control(
         type="number"
-        ng-model="transaction.amount.fiat"
+        ng-model="transaction.fiat"
         name="fiat"
         tabindex="1"
         ng-change="getQuote()"
@@ -23,15 +23,17 @@ form(name="buyAmount")
         max="2100000000000000"
         required
       )
-  .flex-row.flex-between.flex-center.mtl
+  .flex-1.mtl(ng-hide="exchangeAccount || !transaction.fiat")
+    label.mbn.em-500.state-danger-text(translate="PLEASE_CREATE_ACCOUNT" ng-click="nextStep()")
+  .flex-row.flex-between.flex-center.mtl(ng-show="exchangeAccount")
     .flex-row.flex-center.flex-1.flex-around.mrl
-      label.mbn.em-500 You will receive this amount of {{ btcCurrency.code }} at the current rate.
+      label.mbn.em-500 You will receive this amount of {{ btcCurrency.code }} at the current exchange rate.
       i.ti-arrow-right.blue.type-h4
     .flex-row.flex-center.flex-1
       input.form-control(
         type="number"
         name="btc"
-        ng-model="transaction.amount.btc"
+        ng-model="transaction.btc"
         tabindex="1"
         placeholder="0"
         disabled

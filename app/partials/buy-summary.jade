@@ -1,10 +1,4 @@
 h5.mtn.mbm(translate="PAYMENT_METHOD")
-.flex-row.flex-center.mbl.pvm.border-bottom
-  input(type="radio" name="medium" id="bank")
-  .flex-column.flex-1.mlm
-    label.em-400(for="bank")
-      span.mbm.type-h5.em-500.display-block(translate="Bank Transfer")
-      span(translate="The final exchange will be determined when Coinify receives your payment. You will receive your bitcoin on the working day after the payment has been received.")
 .flex-row.flex-center.pbm
   input(type="radio" name="medium" id="credit-card" checked="checked")
   .flex-column.flex-1.mlm
@@ -12,3 +6,26 @@ h5.mtn.mbm(translate="PAYMENT_METHOD")
       span.mbm.type-h5.em-500.display-block(translate="Credit/Debit Card")
       span.display-block(translate="You get the current exchange rate and receive your bitcoins instantly.")
       span.display-block.italic(translate="2.75% fees charged by the card payment processor.")
+.flex-row.flex-center.mbl.pvm.border-bottom
+  input(type="radio" name="medium" id="bank")
+  .flex-column.flex-1.mlm
+    label.em-400(for="bank")
+      span.mbm.type-h5.em-500.display-block(translate="Bank Transfer")
+      span(translate="The final exchange will be determined when Coinify receives your payment. You will receive your bitcoin on the working day after the payment has been received.")
+
+h5.mtn.mbm(translate="SUMMARY")
+.flex-column.border-bottom
+  .flex-row.flex-between.em-500
+    span
+      span Buy
+      | 
+      span.success {{ transaction.btc }} BTC
+    span
+      span {{ displayFiatAmount }}
+  .flex-row.flex-between.mts.mbm
+    span.italic Fees
+    span
+      span {{ displayFeeAmount }}
+.flex-row.flex-between.mtm.em-500
+  span Total
+  span.state-danger-text {{ currencySymbol.symbol }}{{ displayTotalAmount }}

@@ -202,6 +202,12 @@
       margin: 30px auto !important;
     }
   }
+  &.block {
+    display: block !important;
+    .modal-dialog {
+      margin: 30px auto;
+    }
+  }
   &.initial { // initial bootstrap width
     @media (min-width: 768px) {
       .modal-dialog { width: 600px; }

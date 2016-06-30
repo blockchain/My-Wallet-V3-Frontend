@@ -2,20 +2,16 @@ angular
   .module('walletApp')
   .controller('iSignThisCtrl', iSignThisCtrl);
 
-function iSignThisCtrl ($scope, amount, $uibModal, $uibModalInstance, currency, Alerts, MyWallet, Wallet) {
-  $scope.coinify = MyWallet.wallet.external.coinify;
+function iSignThisCtrl ($scope, quote, trade, partner, displayTotalAmount, currencySymbol, $uibModal, $uibModalInstance, currency, Alerts, MyWallet, Wallet) {
   $scope.settings = Wallet.settings;
-
-  const success = (trade) => {
-    $scope.trade = trade;
-  };
-
-  const error = (err) => {
-    $scope.status = {};
-    Alerts.displayError(err);
-  };
-
-  $scope.coinify.buy(amount).then(success, error);
+  $scope.profile = MyWallet.wallet.profile;
+  $scope.currencySymbol = currencySymbol;
+  $scope.displayFiatAmount = displayTotalAmount;
+  $scope.exchangeAccount = true;
+  $scope.partner = partner;
+  $scope.quote = quote;
+  $scope.trade = trade;
+  $scope.step = 5;
 
   $scope.cancel = () => $uibModalInstance.dismiss('');
   $scope.close = () => Alerts.confirm('ARE_YOU_SURE_CANCEL', {}, '', 'IM_DONE').then($scope.cancel);
