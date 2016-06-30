@@ -12,7 +12,7 @@ function TranslationsConfig ($translateProvider) {
   $translateProvider.registerAvailableLanguageKeys([
     'de', 'hi', 'no', 'ru', 'pt', 'bg', 'fr', 'zh-cn',
     'hu', 'sl', 'id', 'sv', 'ko', 'el', 'en', 'it',
-    'es', 'vi', 'th', 'ja', 'pl', 'da', 'ro', 'nl', 'tr'
+    'es', 'vi', 'th', 'ja', 'pl', 'da', 'ro', 'nl', 'tr', 'ca'
   ]);
 
   $translateProvider.useLoader('BCTranslateStaticFilesLoader');
