@@ -11,7 +11,8 @@ function BuySellCtrl ($rootScope, $scope, $state, $uibModal, MyWallet) {
     $uibModal.open({
       templateUrl: 'partials/buy-modal.jade',
       windowClass: 'bc-modal initial',
-      controller: 'BuyCtrl'
+      controller: 'BuyCtrl',
+      backdrop: 'static'
     });
   };
 }

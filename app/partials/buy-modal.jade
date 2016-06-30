@@ -20,8 +20,9 @@
     div(ng-show="step === 4")
       include ./buy-summary
   .flex-end.flex-center.mtl
-    span.mrs.type-sm Powered by
-    img.coinify-logo(src="img/coinify-logo.svg")
+      span.mrs.type-sm Powered by
+      a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
+        img.coinify-logo(src="img/coinify-logo.svg")
 .modal-footer.flex-end.flex-row
   button.button-muted(ng-show="step > 0" ng-click="prevStep()") Go Back
   .flex-end.flex-1(ng-hide="status.loading")

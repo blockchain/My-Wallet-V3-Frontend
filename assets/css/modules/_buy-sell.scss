@@ -20,3 +20,21 @@
 .coinify-logo {
   width: 60px;
 }
+
+.payment-methods {
+  input {
+    opacity: 0;
+    position: absolute;
+    & ~ img { 
+      width: 25px; 
+      &.checked { display: none; }
+    }
+  }
+  input:checked ~ img {
+    display: none;
+    &.checked { display: block; }
+  }
+  input:checked ~ .type-h5 {
+    color: $blue;
+  }
+}

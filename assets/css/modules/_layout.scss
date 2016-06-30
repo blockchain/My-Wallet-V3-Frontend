@@ -140,3 +140,8 @@
 .clear-left { clear: left; }
 .clear-right { clear: right; }
 
+.width-100 {
+  @media (max-width: 992px) {
+    width: 100%;
+  }
+}

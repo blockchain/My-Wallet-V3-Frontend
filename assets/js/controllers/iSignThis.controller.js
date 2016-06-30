@@ -19,11 +19,5 @@ function iSignThisCtrl ($scope, quote, trade, partner, method, displayTotalAmoun
 
   $scope.back = () => {
     $scope.cancel();
-
-    $uibModal.open({
-      templateUrl: 'partials/buy-modal.jade',
-      windowClass: 'bc-modal initial',
-      controller: 'BuyCtrl'
-    });
   };
 }

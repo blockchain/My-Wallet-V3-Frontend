@@ -24,8 +24,6 @@ form(name="buyAmount")
         max="2100000000000000"
         required
       )
-  .flex-1.mtl(ng-hide="exchangeAccount || !transaction.fiat")
-    label.mbn.em-500.state-danger-text(translate="PLEASE_CREATE_ACCOUNT" ng-click="nextStep()")
   .flex-row.flex-between.flex-center.mtl(ng-show="exchangeAccount")
     .flex-row.flex-center.flex-1.flex-around.mrl
       label.mbn.em-500 You will receive this amount of {{ btcCurrency.code }} at the current exchange rate.

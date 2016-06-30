@@ -1,19 +1,24 @@
-h5.mtn.mbm(translate="PAYMENT_METHOD")
-.flex-row.flex-center.pbm
-  input(type="radio" name="method" id="creditcard" checked="checked" ng-model="method" ng-value="creditcard")
-  .flex-column.flex-1.mlm
-    label.em-400(for="creditcard")
-      span.mbm.type-h5.em-500.display-block(translate="Credit/Debit Card")
-      span.display-block(translate="You get the current exchange rate and receive your bitcoins instantly.")
-      span.display-block.italic(translate="2.75% fees charged by the card payment processor.")
-.flex-row.flex-center.mbl.pvm.border-bottom
-  input(type="radio" name="method" id="bank" ng-model="method" ng-value="bank")
-  .flex-column.flex-1.mlm
-    label.em-400(for="bank")
-      span.mbm.type-h5.em-500.display-block(translate="Bank Transfer")
-      span(translate="The final exchange will be determined when Coinify receives your payment. You will receive your bitcoin on the working day after the payment has been received.")
+h5.mtn.mbm.em-400(translate="PAYMENT_METHOD")
+.payment-methods
+  .flex-row.flex-center.pointer
+    input(type="radio" name="method" id="creditcard" ng-model="method" ng-value="creditcard")
+    img(src="img/credit-card.png")
+    img.checked(src="img/credit-card-blue.png")
+    .flex-column.flex-1.mlml.border-bottom.pointer
+      label.pointer.em-400(for="creditcard")
+        span.mbn.type-h5.em-500.display-block(translate="Credit/Debit Card (Faster)")
+        span.display-block(translate="You get the current exchange rate and receive your bitcoins instantly.")
+        span.display-block.italic(translate="2.75% fees charged by the card payment processor.")
+  .flex-row.flex-center.mbl.pvm.border-bottom.pointer
+    input(type="radio" name="method" id="bank" ng-model="method" ng-value="bank")
+    img(src="img/bank.png")
+    img.checked(src="img/bank-blue.png")
+    .flex-column.flex-1.mlml.pointer
+      label.pointer.em-400(for="bank")
+        span.mbn.type-h5.em-500.display-block(translate="Bank Transfer (Cheaper)")
+        span(translate="The final exchange will be determined when Coinify receives your payment. You will receive your bitcoin on the working day after the payment has been received.")
 
-h5.mtn.mbm(translate="SUMMARY")
+h5.mtn.mbm.em-400(translate="SUMMARY")
 .flex-column.border-bottom
   .flex-row.flex-between.em-500
     span
