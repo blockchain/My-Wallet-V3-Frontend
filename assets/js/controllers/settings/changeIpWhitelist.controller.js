@@ -2,74 +2,45 @@ angular
   .module('walletApp')
   .controller('ChangeIpWhitelistCtrl', ChangeIpWhitelistCtrl);
 
-function ChangeIpWhitelistCtrl ($scope, Wallet, $translate, Alerts) {
-  $scope.settings = Wallet.settings;
-  $scope.status = {};
-  $scope.form = {};
-
-  $scope.fields = {
-    ipWhitelist: ''
-  };
+function ChangeIpWhitelistCtrl ($scope, Wallet, Alerts) {
+  const ipRegex = /^\s?(?:(?:(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|%)\.){3}(?:(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|%)\s?$/;
 
   $scope.reset = () => {
-    $scope.fields = {
-      ipWhitelist: ''
-    };
+    $scope.fields = { ipWhitelist: Wallet.settings.ipWhitelist };
   };
 
-  $scope.validateIpWhitelist = () => {
-    let candidates = $scope.fields.ipWhitelist;
+  $scope.isWhitelistValid = () => {
     $scope.errors.ipWhitelist = null;
-    if (candidates == null) return false;
-    if (candidates === '') return true;
-    if (candidates.length > 255) {
-      $translate('MAX_CHARACTERS', {
-        max: 255
-      }).then((translation) => {
-        $scope.errors.ipWhitelist = translation;
-      });
+    if (
+      $scope.fields.ipWhitelist == null ||
+      $scope.fields.ipWhitelist === ''
+    ) return true;
+
+    let ips = $scope.fields.ipWhitelist.split(',');
+    if (ips.length > 16) {
+      $scope.errors.ipWhitelist = 'MAX_IP_ADDRESSES';
       return false;
     }
-    let candidatesArray = candidates.split(',');
-    if (candidatesArray.length > 16) {
-      $translate('MAX_IP_ADDRESSES', {
-        max: 16
-      }).then((translation) => {
-        $scope.errors.ipWhitelist = translation;
-      });
-      return false;
-    }
-    for (let candidate of candidatesArray) {
-      if (candidate.trim() === '%.%.%.%') {
-        $translate('NOT_ALLOWED', {
-          forbidden: '%.%.%.%'
-        }).then((translation) => {
-          $scope.errors.ipWhitelist = translation;
-        });
+
+    for (let i = 0; i < ips.length; i++) {
+      let ip = ips[i];
+      if (ip === '') continue;
+      if (ip === '%.%.%.%') {
+        $scope.errors.ipWhitelist = 'IP_NOT_ALLOWED';
         return false;
       }
-      let digits_or_wildcards = candidate.trim().split('.');
-      if (digits_or_wildcards.length !== 4) return false;
-      for (let digit_or_wildcard of digits_or_wildcards) {
-        if (digit_or_wildcard === '%') {
-        } else {
-          let digit = parseInt(digit_or_wildcard, 10);
-          if (isNaN(digit) || digit < 0 || digit > 255) return false;
-        }
+      if (!ipRegex.test(ip)) {
+        $scope.errors.ipWhitelist = 'IP_INVALID';
+        return false;
       }
     }
     return true;
   };
 
   $scope.setIPWhitelist = () => {
-    const success = () => {
-      $scope.deactivate();
-    };
-    const error = () => {
-      Alerts.displayError('Failed to update IP whitelist');
-    };
-
     $scope.status.waiting = true;
-    Wallet.setIPWhitelist($scope.fields.ipWhitelist, success, error);
+    Wallet.setIPWhitelist($scope.fields.ipWhitelist)
+      .then($scope.deactivate, () => Alerts.displayError('IP_WHITELIST_ERROR'))
+      .then(() => $scope.status.waiting = false);
   };
 }
