@@ -25,7 +25,7 @@ function ChangeIpWhitelistCtrl ($scope, Wallet, Alerts) {
     for (let i = 0; i < ips.length; i++) {
       let ip = ips[i];
       if (ip === '') continue;
-      if (ip === '%.%.%.%') {
+      if (ip.trim() === '%.%.%.%') {
         $scope.errors.ipWhitelist = 'IP_NOT_ALLOWED';
         return false;
       }
