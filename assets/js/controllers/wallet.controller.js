@@ -137,24 +137,12 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     Alerts.displayError(message);
   });
 
-  $scope.$watch('status.isLoggedIn', () => {
-    $timeout(() => {
-      $scope.checkGoals();
-    }, 0);
-  });
-
-  $scope.$watchCollection('goal', () => {
-    $timeout(() => {
-      $scope.checkGoals();
-    }, 0);
-  });
+  $scope.$watch('status.isLoggedIn + goal', () => $timeout($scope.checkGoals));
 
   $scope.checkGoals = () => {
     if ($scope.status.isLoggedIn) {
       if (!((Wallet.status.didLoadTransactions) && (Wallet.status.didLoadBalances))) {
-        return $timeout(() => {
-          $scope.checkGoals();
-        }, 100);
+        return $timeout($scope.checkGoals, 100);
       }
       if (Wallet.goal != null) {
         if (Wallet.goal.send != null) {
@@ -163,9 +151,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
             controller: 'SendCtrl',
             resolve: {
               paymentRequest: () => Wallet.goal.send,
-              loadBcQrReader: () => {
-                return $ocLazyLoad.load('bcQrReader');
-              }
+              loadBcQrReader: () => $ocLazyLoad.load('bcQrReader')
             },
             windowClass: 'bc-modal initial'
           });
@@ -194,6 +180,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
               msg: translations.AUTHORIZED_MESSAGE
             });
           });
+          Wallet.goal.auth = void 0;
         }
       }
     }
