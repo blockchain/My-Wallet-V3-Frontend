@@ -6,7 +6,7 @@
   "license": "",
   "private": true,
   "dependencies": {
-    "angular": "1.4.*",
+    "angular": "1.5.*",
     "angular-mocks": "1.4.*",
     "angular-animate": "1.4.*",
     "angular-ui-router": "0.2.*",
@@ -30,6 +30,6 @@
     "compare-versions": "^2.0.1"
   },
   "resolutions": {
-    "angular": "1.4.*"
+    "angular": "1.5.*"
   }
 }
