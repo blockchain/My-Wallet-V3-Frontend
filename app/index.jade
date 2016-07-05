@@ -59,8 +59,8 @@ head
 
 body(
   ui-view="body"
-  ng-mousemove="resetInactivityTime()"
-  ng-keypress="resetInactivityTime()"
+  ng-mousemove="onAction()"
+  ng-keypress="onAction()"
 )
   noscript
     img(src="/img/logo-bw.png")
