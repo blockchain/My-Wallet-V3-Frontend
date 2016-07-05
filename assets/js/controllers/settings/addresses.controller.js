@@ -43,7 +43,7 @@ function SettingsAddressesCtrl ($scope, $stateParams, $q, $sce, Wallet, MyWallet
     }));
     if (addresses.length === 0) return;
     $q.resolve(
-      MyBlockchainApi.getMultiAddr(addresses.map(a => a.address))
+      MyBlockchainApi.getBalances(addresses.map(a => a.address))
     ).then((data) => {
       addresses.forEach((a) => {
         if (!data[a.address]) return;

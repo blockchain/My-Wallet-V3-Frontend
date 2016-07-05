@@ -307,7 +307,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   wallet.getPendingPayments = (acctIdx) => {
     let labelledAddresses = wallet.getLabelledHdAddresses(acctIdx);
     let addresses = labelledAddresses.map(a => a.address);
-    return $q.resolve(MyBlockchainApi.getMultiAddr(addresses)).then(data => (
+    return $q.resolve(MyBlockchainApi.getBalances(addresses)).then(data => (
       labelledAddresses.map(({ index, address, label }) => ({
         index, address, label,
         ntxs: data[address].n_tx
