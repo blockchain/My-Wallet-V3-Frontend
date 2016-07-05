@@ -206,7 +206,9 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
   $scope.hasAmountError = (index) => {
     let field = $scope.sendForm['amounts' + index];
     let fiatField = $scope.sendForm['amountsFiat' + index];
-    return (fiatField.$touched || field.$touched) && !$scope.amountsAreValid();
+    let fieldError = (fiatField.$touched || field.$touched) && (fiatField.$invalid || field.$invalid);
+    let notEnoughFunds = !$scope.amountsAreValid() && !$scope.transaction.amounts.some(a => !a);
+    return fieldError || notEnoughFunds;
   };
 
   $scope.$watch('transaction.destinations', (destinations) => {
