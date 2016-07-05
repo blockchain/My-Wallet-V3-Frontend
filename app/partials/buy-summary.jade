@@ -24,17 +24,17 @@ h5.mtn.mbm.em-400(translate="SUMMARY")
     span
       span Buy
       | 
-      span.success {{ transaction.btc }} BTC
+      span.success {{ transaction.btc }}
     span
-      span {{ displayFiatAmount }}
+      span {{ transaction.fiat | convert:true:true:true }}
   .flex-row.flex-between.mts
     span.italic Trading Fee
     span
-      span {{ transaction.tradingFee }}
+      span {{ transaction.tradingFee | convert:true:true:true }}
   .flex-row.flex-between.mts.mbm
     span.italic {{ method.name }} Fee
     span
-      span {{ transaction.methodFee }}
+      span {{ transaction.methodFee | convert:true:true:true }}
 .flex-row.flex-between.mtm.em-500
   span Total
-  span.state-danger-text {{ currencySymbol.symbol }}{{ displayTotalAmount }}
+  span.state-danger-text {{ currencySymbol.symbol }}{{ transaction.total | convert:true:true:true }}

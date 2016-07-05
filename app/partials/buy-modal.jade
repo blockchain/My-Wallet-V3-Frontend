@@ -5,20 +5,16 @@
       quote-countdown(quote="quote")
     include ./buy-steps
 .modal-body
-  div(ng-show="status.loading")
-    .phvl
-      p(translate="Requesting your profile information from our partner. This should take a few seconds.")
-  div(ng-hide="status.loading")
-    div(ng-show="step === 0")
-      include ./buy-amount
-    div(ng-show="step === 1")
-      include ./buy-select-country
-    div(ng-show="step === 2")
-      include ./buy-email
-    div(ng-show="step === 3")
-      include ./buy-accept-terms
-    div(ng-show="step === 4")
-      include ./buy-summary
+  div(ng-show="step === 0")
+    include ./buy-amount
+  div(ng-show="step === 1")
+    include ./buy-select-country
+  div(ng-show="step === 2")
+    include ./buy-email
+  div(ng-show="step === 3")
+    include ./buy-accept-terms
+  div(ng-show="step === 4")
+    include ./buy-summary
   .flex-end.flex-center.mtl
       span.mrs.type-sm Powered by
       a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
