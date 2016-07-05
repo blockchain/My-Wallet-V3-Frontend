@@ -24,7 +24,7 @@ describe "SettingsAddressesCtrl", ->
 
       Wallet.accounts = () -> [account]
 
-      MyBlockchainApi.getMultiAddr = (addrs) ->
+      MyBlockchainApi.getBalances = (addrs) ->
         response = {}
         for addr in addrs
           response[addr] =
@@ -106,7 +106,7 @@ describe "SettingsAddressesCtrl", ->
 
   describe "generatePage", ->
     beforeEach ->
-      spyOn(MyBlockchainApi, 'getMultiAddr').and.callThrough()
+      spyOn(MyBlockchainApi, 'getBalances').and.callThrough()
 
     it "should get the first page of addresses", ->
       page = scope.generatePage(1)
@@ -116,7 +116,7 @@ describe "SettingsAddressesCtrl", ->
     it "should set the tx count and balance of each address", ->
       page = scope.generatePage(1)
       scope.$digest()
-      expect(MyBlockchainApi.getMultiAddr).toHaveBeenCalled()
+      expect(MyBlockchainApi.getBalances).toHaveBeenCalled()
       expect(page[0].ntxs).toEqual(1)
       expect(page[0].balance).toEqual(1000)
 
