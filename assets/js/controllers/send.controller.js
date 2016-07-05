@@ -106,11 +106,15 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
   $scope.addDestination = () => {
     $scope.transaction.amounts.push(null);
     $scope.transaction.destinations.push(null);
+    $scope.setPaymentAmount();
+    $scope.setPaymentTo();
   };
 
   $scope.removeDestination = (index) => {
     $scope.transaction.amounts.splice(index, 1);
     $scope.transaction.destinations.splice(index, 1);
+    $scope.setPaymentAmount();
+    $scope.setPaymentTo();
   };
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
