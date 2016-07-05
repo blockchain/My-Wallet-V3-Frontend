@@ -106,6 +106,7 @@ module.exports = (grunt) ->
           'build/js/core/*.service.js'
           'build/js/services/*.js'
           'build/js/controllers/*.js'
+          'build/js/components/*.js'
           'build/js/controllers/settings/*.js'
           'build/js/directives/*.js'
           'build/js/filters.js'
@@ -279,7 +280,7 @@ module.exports = (grunt) ->
           spawn: false
 
       es6:
-        files: ['assets/js/controllers/**/*.js','assets/js/services/**/*.js','assets/js/sharedDirectives/**/*.js','assets/js/directives/**/*.js','assets/js/core/**/*.js','assets/js/*.js']
+        files: ['assets/js/controllers/**/*.js','assets/js/services/**/*.js','assets/js/sharedDirectives/**/*.js','assets/js/components/**/*.js','assets/js/directives/**/*.js','assets/js/core/**/*.js','assets/js/*.js']
         tasks: ['babel:build', 'includeSource', 'concat:wallet']
         options:
           spawn: false
@@ -307,7 +308,7 @@ module.exports = (grunt) ->
         files: [{
           expand: true,
           cwd: 'assets/js',
-          src: ['**/*.controller.js','services/**/*.js','sharedDirectives/**/*.js','directives/**/*.js','core/**/*.js','*.js'],
+          src: ['**/*.controller.js','**/*.component.js','services/**/*.js','sharedDirectives/**/*.js','directives/**/*.js','core/**/*.js','*.js'],
           dest: 'build/js',
         }]
 
