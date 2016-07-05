@@ -167,6 +167,7 @@ module.exports = (grunt) ->
           "bower_components/angular-ui-select/dist/select.min.css"
           "bower_components/bc-css-flags/dist/css/bc-css-flags.css"
           "bower_components/bc-phone-number/dist/css/bc-phone-number.css"
+          "bower_components/angular-bootstrap/ui-bootstrap-csp.css"
           "build/css/ladda.css"
           "build/css/fonts.css"
           "build/css/angular-csp.css"
@@ -241,10 +242,6 @@ module.exports = (grunt) ->
           {src: ["wallet.min.js"], dest: "dist/", cwd: "assets/legacy-cache-bust", expand: true}
         ]
 
-      css:
-        files: [
-          {src: ["ui-bootstrap-csp.css"], dest: "build/css", cwd: "bower_components/angular-bootstrap", expand: true }
-        ]
       css_dist:
           {src: ["wallet.css"], dest: "dist/css", cwd: "build/css", expand: true }
 
