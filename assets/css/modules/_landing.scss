@@ -665,3 +665,154 @@
     }
   }
 }
+
+.landing-page #video-player {
+    position: relative;
+}
+
+.landing-page #video-player > #placeholder {
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.landing-page #video-player > #play-button {
+    width: 5%;
+    position: absolute;
+    top: 49%;
+    left: 51%;
+    transform: translate(-50%,-50%);
+}
+
+.landing-page #video-player > h3 {
+    position: absolute;
+    top: 57%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.landing-page .video-player .video-container {
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    visibility: hidden;
+    z-index: -3;
+}
+
+.landing-page .bitinf > img {
+    width: 3em;
+}
+
+.landing-page #newToBTC {
+  margin-bottom: 16px;
+}
+
+.landing-page #timeline {
+  width: 35em;
+  margin-right: 0px;
+}
+
+
+.title {
+  color: white;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 992px){
+  .landing-page #timeline {
+    margin: 0;
+    width: 65%;
+  }
+  .flex-column-med {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+
+  .landing-page #newToBTC {
+    margin-bottom: 35px;
+  }
+
+  .landing-page #video-player {
+      margin-bottom: 50px;
+  }
+
+  .landing-page #video-player > #placeholder {
+      position: relative;
+      top: 0px;
+      left: 0px;
+      transform: translate(0,0);
+      width: 40%;
+  }
+
+  .landing-page #video-player > #play-button {
+      width: 4%;
+  }
+
+  .landing-page #video-player > h3 {
+      top: 67%;
+  }
+  .landing-page .video-player .video-container {
+    top: 0px;
+    left: 0px;
+  }
+}
+
+.title {
+  color: black;
+}
+//plax
+.plax{
+  height: 130px;
+  position: relative;
+  background-image: url(../img/home-banner.jpg);
+  background-size: cover;
+  background-position: top center;
+  background-attachment: fixed;
+  width: 100%;
+}
+
+#stat-row {
+  justify-content: space-around;
+  color: white;
+  text-align: center;
+  height: 100px;
+  padding-top: 20px;
+}
+
+#stat-row > div > h1 {
+  font-size: 30px;
+  margin-bottom: 1px;
+  font-weight: 300;
+}
+
+#stat-row > div > h2{
+  margin-top: 0px;
+  font-size: 15px;
+}
+
+#newToBTC .flex-row .video-container .imag-prev {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  width: 60%;
+}
+
+@media (max-width: 992px) {
+  #newToBTC .flex-row .video-container .imag-prev {
+    position: relative;
+    width: 25%;
+    left: 0;
+    top: 0;
+    transform: translate(0,0);
+  }
+}
