@@ -1,0 +1,42 @@
+.buy-steps.flex-row.flex-between.flex-baseline.center(ng-hide="status.loading"
+                                                      ng-click="buy()"
+                                                      ng-class="{'flex-justify': !allSteps}")
+  .width-20.flex-column.flex-center(ng-class="{blue: step === 0, success: step > 0}")
+    span.type-lrg {{ currencySymbol.symbol }}
+    span(ng-show="step > 0") {{ transaction.fiat | convert:true:true:true }}
+    span(ng-hide="step > 0" translate="Amount")
+
+  .flex-justify(ng-class="{success: step > 0}")
+    i.ti-arrow-right.type-h4
+
+  .width-20.flex-column.flex-center(ng-class="{blue: step === 1, success: step > 1}"
+                                    ng-show="allSteps")
+    i.type-lrg.ti-map-alt
+    span {{ profile.countryCode }}
+    span(ng-hide="profile.countryCode" translate="Country")
+
+  .flex-justify(ng-class="{success: step > 1}"
+                ng-show="allSteps")
+    i.ti-arrow-right.type-h4
+
+  .width-20.flex-column.flex-center(ng-class="{blue: step === 2 || step === 3, success: step > 3}"
+                                    ng-show="allSteps")
+    i.type-lrg.ti-user
+    span(ng-show="exchange.profile") {{ partner }}
+    span(ng-hide="exchange.profile" translate="Exchange Account")
+
+  .flex-justify(ng-class="{success: step > 3}"
+                ng-show="allSteps")
+    i.ti-arrow-right.type-h4
+
+  .width-20.flex-column.flex-center(ng-class="{blue: step === 4, success: step > 4}")
+    i.type-lrg.ti-credit-card
+    span(ng-show="step > 4") {{ method.name }}
+    span(ng-hide="step > 4" translate="Payment")
+
+  .flex-justify(ng-class="{success: step > 4}")
+    i.ti-arrow-right.type-h4
+
+  .width-20.flex-column.flex-center
+    span.type-lrg(ng-class="{blue: step === 5}") BTC
+    span(ng-show="column" translate="Get Bitcoin")

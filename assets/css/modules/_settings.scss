@@ -148,6 +148,11 @@ table.accounts-container {
   font-size: 1.1em;
 }
 
+.well.friendly {
+  background-color: $light-blue;
+  border-left: 5px solid $blue;
+}
+
 @media (min-width: 992px){
   .setting-result {
     text-align: right;

@@ -4,9 +4,16 @@
       h3(translate="Buy Bitcoin")
       quote-countdown(quote="quote")
     div(ng-click="back()")
-      include ./buy-steps
+      buy-steps(next-step="nextStep()"
+                all-steps="allSteps"
+                transaction="transaction"
+                step="step"
+                currency-symbol="currencySymbol"
+                profile="profile"
+                exchange="exchange"
+                partner="partner"
+                method="method")
 .modal-body
   isignthis(transaction-id='trade.iSignThisID')
 .modal-footer.flex-between
-  button.button-muted.mrm(ng-click="back()" translate="BACK")
   button.button-muted.mrm(ng-click="close()" translate="CANCEL")

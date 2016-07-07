@@ -1,5 +1,77 @@
 .buy-sell
-  .flex-column.flex-center.flex-justify(ng-show="status.waiting")
-    .flex-center(translate="Getting your information from our exchange partner.")
-  div(ng-hide="status.waiting")
-    button.button-primary.mrm(ng-click="buy()" translate="Buy")
+  .flex-center.flex-justify(ng-if="status.waiting") Fetching information from your exchange partner.
+  div(ng-if="!status.waiting")
+    .width-60.ptm.margin-0-auto
+      buy-steps.pointer(buy="buy()"
+                        all-steps="allSteps"
+                        currency-symbol="currencySymbol"
+                        profile="profile"
+                        partner="partner")
+    .flex-row.mtvl
+      .flex-column.width-50.mrm
+        h4.type-h4(translate="Quick Start")
+        .border.paml
+          .flex-between
+            button.button-muted.btn.button-default.type-h4(ng-click="transaction.fiat = 20; buy()")
+              span 20.00
+              |  
+              span.type-xs {{ fiatCurrency.code }}
+            button.button-muted.btn.button-default.type-h4(ng-click="transaction.fiat = 20; buy()")
+              span 40.00
+              |  
+              span.type-xs {{ fiatCurrency.code }}
+            button.button-muted.btn.button-default.type-h4(ng-click="transaction.fiat = 20; buy()")
+              span 60.00
+              |  
+              span.type-xs {{ fiatCurrency.code }}
+          .flex-between.mtml
+            button.button-muted.btn.button-default.type-h4(ng-click="transaction.fiat = 20; buy()")
+              span 80.00
+              |  
+              span.type-xs {{ fiatCurrency.code }}
+            button.button-muted.btn.button-default.type-h4(ng-click="transaction.fiat = 20; buy()")
+              span 100.00
+              |  
+              span.type-xs {{ fiatCurrency.code }}
+            button.button-muted.btn.button-default.type-h4(ng-click="transaction.fiat = 20; buy()")
+              span 200.00
+              |  
+              span.type-xs {{ fiatCurrency.code }}
+          .flex-column.mtml
+            section.input-group
+              div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
+                button.btn.btn-default.dropdown-toggle(type="button" uib-dropdown-toggle aria-haspopup="true")
+                  span {{ fiatCurrency.code }}
+                  span.caret
+                ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
+                  li(ng-repeat="currency in currencies"
+                     role="menuitem" 
+                     ng-click="changeCurrency(currency);"
+                     ng-class="{active: isCurrencySelected(currency)}")
+                    a(ng-click="$event.preventDefault()") {{ currency.code }}
+              input.form-control(
+                type="number"
+                ng-model="transaction.fiat"
+                name="fiat"
+                tabindex="1"
+                on-enter="buy()"
+                placeholder="0"
+                min="0"
+                max="2100000000000000"
+                required
+              )
+          .flex-end.mtml
+            button.button-success(translate="Buy Bitcoin" ng-click="buy()")
+      .flex-column.width-50.mlm
+        h4.type-h4(translate="Why Bitcoin?")
+        .border.paml.height-100
+          .flex-column
+            span Send Money Overseas
+            span Buy Something Online
+            span Store Value
+
+    div(ng-show="scope.exchange")
+      .flex-column.flex-center.flex-justify(ng-show="status.waiting")
+        .flex-center(translate="Getting your information from our exchange partner.")
+      div(ng-hide="status.waiting")
+        button.button-primary.mrm(ng-click="buy()" translate="Buy")

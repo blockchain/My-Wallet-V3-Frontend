@@ -2,24 +2,27 @@ angular
   .module('walletApp')
   .controller('BuyCtrl', BuyCtrl);
 
-function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uibModalInstance, $uibModal, country, $interval, exchange) {
+function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModal, country, exchange, trades, fiat) {
   $scope.fiatCurrency = Wallet.settings.currency;
   $scope.btcCurrency = Wallet.settings.btcCurrency;
   $scope.currencies = currency.currencies;
   $scope.profile = MyWallet.wallet.profile;
+  $scope.allSteps = trades.length < 1;
   $scope.settings = Wallet.settings;
   $scope.countries = country;
   $scope.user = Wallet.user;
   $scope.exchange = exchange;
   $scope.method = undefined;
+  $scope.trades = trades;
   $scope.status = {};
   $scope.step = 0;
 
   $scope.fields = { email: $scope.user.email };
   $scope.bank = { name: 'Bank Account', fee: 0 };
-  $scope.creditcard = { name: 'Credit Card', fee: 2.75 };
+  $scope.creditcard = { name: 'Credit/Debit Card', fee: 2.75 };
   $scope.method = $scope.creditcard;
   $scope.transaction = {fiat: 0, btc: 0, fee: 0, total: 0};
+  $scope.transaction.fiat = fiat || 0;
 
   $scope.fetchProfile = () => {
     $scope.status.waiting = true;
@@ -37,29 +40,25 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
   $scope.updateAmounts = () => {
     if (!$scope.exchange.profile) return;
     let fiatAmt = $scope.transaction.fiat;
-    let feePercentage = $scope.exchange.profile.level.feePercentage;
     let methodFee = fiatAmt * ($scope.method.fee / 100);
-    let tradingFee = fiatAmt * (feePercentage / 100);
 
-    $scope.transaction.tradingFee = tradingFee.toFixed(2);
     $scope.transaction.methodFee = methodFee.toFixed(2);
     $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount / 10000, currency.bitCurrencies[0]);
     $scope.transaction.total = fiatAmt +
-                               +$scope.transaction.methodFee +
-                               +$scope.transaction.tradingFee;
+                               +$scope.transaction.methodFee;
   };
 
-  // $scope.verifyConfirmationCode = (code, successCallback, errorCallback) => {
-  //   const success = () => {
-  //     $scope.user.isEmailVerified = true;
-  //     successCallback();
-  //     $scope.nextStep();
-  //   };
+  $scope.verifyConfirmationCode = (code, successCallback, errorCallback) => {
+    const success = () => {
+      $scope.user.isEmailVerified = true;
+      successCallback();
+      $scope.nextStep();
+    };
 
-  //   const error = (err) => Alerts.displayError(err); errorCallback();
+    const error = (err) => Alerts.displayError(err); errorCallback();
 
-  //   Wallet.verifyEmail($scope.confirmationCode.bcAsyncForm.input.$viewValue, success, error);
-  // };
+    Wallet.verifyEmail($scope.confirmationCode.bcAsyncForm.input.$viewValue, success, error);
+  };
 
   $scope.getQuote = () => {
     if (!$scope.exchange.profile) return;
@@ -69,13 +68,16 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
     let amt = $scope.transaction.fiat * 100;
     let curr = $scope.fiatCurrency.code;
     if (!amt) return;
+    $scope.status.waiting = true;
 
     const success = (quote) => {
+      $scope.status = {};
       $scope.quote = quote;
       $scope.updateAmounts();
     };
 
     const error = (err) => {
+      $scope.status = {};
       Alerts.displayError(err);
     };
 
@@ -111,7 +113,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
 
   $scope.prevStep = () => {
     if ($scope.step > 0) {
-      if ($scope.exchange.profile) $scope.step = 0;
+      if ($scope.exchange) $scope.step = 0;
       else $scope.step--;
     }
   };
@@ -167,6 +169,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
       let iSignThisProps = {
         trade: trade,
         method: $scope.method,
+        trades: $scope.trades,
         partner: $scope.partner,
         transaction: $scope.transaction,
         currencySymbol: $scope.currencySymbol
@@ -202,6 +205,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
   $scope.isCurrencySelected = (currency) => currency === $scope.fiatCurrency;
 
   $scope.$watch('method', $scope.updateAmounts);
+  $scope.$watch('transation.fiat', $scope.getQuote);
 
   $scope.addExchange();
 
@@ -214,4 +218,6 @@ function BuyCtrl ($scope, MyWallet, Wallet, $stateParams, Alerts, currency, $uib
     let curr = $scope.fiatCurrency || null;
     $scope.currencySymbol = currency.conversions[curr.code];
   });
+
+  $scope.$on('disableAllSteps', () => $scope.allSteps = false);
 }

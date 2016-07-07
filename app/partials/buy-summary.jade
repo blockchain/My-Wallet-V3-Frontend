@@ -1,38 +1,35 @@
-h5.mtn.mbm.em-400(translate="PAYMENT_METHOD")
 .payment-methods
-  .flex-row.flex-center.pointer
+  .flex-row.flex-center.pointer.border-bottom
     input(type="radio" name="method" id="creditcard" ng-model="method" ng-value="creditcard")
-    img(src="img/credit-card.png")
-    img.checked(src="img/credit-card-blue.png")
-    .flex-column.flex-1.mlml.border-bottom.pointer
-      label.pointer.em-400(for="creditcard")
-        span.mbn.type-h5.em-500.display-block(translate="Credit/Debit Card (Faster)")
+    .flex-column.flex-1.mlm.pointer
+      label.mts.pointer.em-400(for="creditcard")
+        span.mbs.type-h5.em-500.flex-center
+          img.mrs(src="img/credit-card.png")
+          img.mrs.checked(src="img/credit-card-blue.png")
+          span(translate="Credit/Debit Card (Faster)")
         span.display-block(translate="You get the current exchange rate and receive your bitcoins instantly.")
         span.display-block.italic(translate="2.75% fees charged by the card payment processor.")
   .flex-row.flex-center.mbl.pvm.border-bottom.pointer
     input(type="radio" name="method" id="bank" ng-model="method" ng-value="bank")
-    img(src="img/bank.png")
-    img.checked(src="img/bank-blue.png")
-    .flex-column.flex-1.mlml.pointer
-      label.pointer.em-400(for="bank")
-        span.mbn.type-h5.em-500.display-block(translate="Bank Transfer (Cheaper)")
+    .flex-column.flex-1.mlm.pointer
+      label.mts.pointer.em-400(for="bank")
+        span.mbs.type-h5.em-500.flex-center
+          img.mrs(src="img/bank.png")
+          img.mrs.checked(src="img/bank-blue.png")
+          span(translate="Bank Transfer (Cheaper)")
         span(translate="The final exchange will be determined when Coinify receives your payment. You will receive your bitcoin on the working day after the payment has been received.")
 
-h5.mtn.mbm.em-400(translate="SUMMARY")
 .flex-column.border-bottom
   .flex-row.flex-between.em-500
     span
       span Buy
       | 
       span.success {{ transaction.btc }}
+      span.blue.underline.type-sm.mlvl.pointer(ng-click="prevStep()") Change Amount
     span
       span {{ transaction.fiat | convert:true:true:true }}
-  .flex-row.flex-between.mts
-    span.italic Trading Fee
-    span
-      span {{ transaction.tradingFee | convert:true:true:true }}
   .flex-row.flex-between.mts.mbm
-    span.italic {{ method.name }} Fee
+    span.italic Payment Processing Fee
     span
       span {{ transaction.methodFee | convert:true:true:true }}
 .flex-row.flex-between.mtm.em-500
