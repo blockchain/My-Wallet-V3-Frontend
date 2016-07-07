@@ -493,7 +493,7 @@ module.exports = (grunt) ->
         }]
 
       version_my_wallet:
-        src: ['build/js/services/wallet.service.js'],
+        src: ['build/js/app.js'],
         overwrite: true,
         replacements: [{
           from: 'versionMyWallet = null'
