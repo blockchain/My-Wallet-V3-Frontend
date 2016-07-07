@@ -717,9 +717,8 @@
   "SMALL_FEE_WARNING": "Your fee is so small that your transaction may never be confirmed.",
   "LARGE_TX": {
     "TITLE": "Large Transaction",
-    "EXPLAIN": "In order to make this payment, your wallet needs to consolidate many smaller payments you've received in the past. This requires a relatively high fee in order to be confirmed quickly. There isn’t much you can do about this. If it’s fine for the transaction to take longer to confirm, you could reduce the fee manually in Advanced Send.",
     "BODY_1": "This is an oversized bitcoin transaction!",
-    "BODY_2": "For this transaction to confirm in a reasonable time, we recommend setting a higher fee.",
+    "BODY_2": "Your wallet needs to consolidate many smaller payments you've received in the past. This requires a relatively high fee in order to be confirmed quickly.",
     "NORMAL_SIZE": "The Normal Size",
     "RECOMMENDED_FEE": "Recommended Fee",
     "ACCEPT_FEE": "Accept Higher Fee"

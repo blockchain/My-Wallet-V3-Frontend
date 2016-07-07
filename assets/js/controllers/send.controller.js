@@ -391,7 +391,7 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     } else {
       let feeUSD = currency.convertFromSatoshi(tx.fee, currency.currencies[0]);
       let feeRatio = tx.fee / tx.amounts.reduce((a, b) => a + b);
-      if (feeRatio > 0.1 && feeUSD > 0.25) {
+      if (feeUSD > 0.50 && tx.size > 1000 && feeRatio > 0.01) {
         return fees.showLargeTxWarning(tx.size, tx.fee).then(commitFee);
       } else if (surge) {
         return showFeeWarning(mid).then(commitFee);
