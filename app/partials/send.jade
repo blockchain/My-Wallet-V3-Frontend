@@ -32,7 +32,7 @@
             tagging
             required)
             ui-select-match(placeholder="{{'SEARCH' | translate}}...")
-              label-origin(origin="$select.selected" selected="true")
+              label-origin(origin="$select.selected" ng-class="{'state-danger-text': $select.selected.balance === 0}")
             ui-select-choices(repeat="origin in origins | filter:{label:$select.search} | limitTo:originLimit" group-by="'type'" ui-disable-choice="::hasZeroBalance(origin)")
               span(ng-class="::{aaa:hasZeroBalance(origin)}" in-view="$last && origin.type==='Imported Addresses' && increaseLimit()")
                 label-origin(origin="::origin" highlight="$select.search")
@@ -143,7 +143,7 @@
                   name="fee"
                   tabindex="1"
                   ng-model="transaction.fee"
-                  min="1"
+                  min="546"
                   step="any"
                   ng-change="setPaymentFee()"
                   required

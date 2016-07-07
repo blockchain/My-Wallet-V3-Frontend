@@ -21,14 +21,14 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     $scope.menu.isCollapsed = false;
   };
 
-  $scope.inactivityTimeSeconds = 0;
-  $scope.resetInactivityTime = () => $scope.inactivityTimeSeconds = 0;
+  $scope.lastAction = Date.now();
+  $scope.onAction = () => $scope.lastAction = Date.now();
 
   $scope.inactivityInterval = () => {
     if (!Wallet.status.isLoggedIn) return;
-    $scope.inactivityTimeSeconds++;
+    let inactivityTimeSeconds = Math.round((Date.now() - $scope.lastAction) / 1000);
     let logoutTimeSeconds = Wallet.settings.logoutTimeMinutes * 60;
-    if ($scope.inactivityTimeSeconds === logoutTimeSeconds - 10) {
+    if (inactivityTimeSeconds === logoutTimeSeconds - 10) {
       let logoutTimer = $timeout(Wallet.my.logout, 10000);
       Alerts.confirm('AUTO_LOGOUT_WARN', { minutes: Wallet.settings.logoutTimeMinutes }, '', 'LOG_ME_OUT')
         .then(Wallet.logout).catch(() => $timeout.cancel(logoutTimer));
@@ -137,24 +137,12 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     Alerts.displayError(message);
   });
 
-  $scope.$watch('status.isLoggedIn', () => {
-    $timeout(() => {
-      $scope.checkGoals();
-    }, 0);
-  });
-
-  $scope.$watchCollection('goal', () => {
-    $timeout(() => {
-      $scope.checkGoals();
-    }, 0);
-  });
+  $scope.$watch('status.isLoggedIn + goal', () => $timeout($scope.checkGoals));
 
   $scope.checkGoals = () => {
     if ($scope.status.isLoggedIn) {
       if (!((Wallet.status.didLoadTransactions) && (Wallet.status.didLoadBalances))) {
-        return $timeout(() => {
-          $scope.checkGoals();
-        }, 100);
+        return $timeout($scope.checkGoals, 100);
       }
       if (Wallet.goal != null) {
         if (Wallet.goal.send != null) {
@@ -163,9 +151,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
             controller: 'SendCtrl',
             resolve: {
               paymentRequest: () => Wallet.goal.send,
-              loadBcQrReader: () => {
-                return $ocLazyLoad.load('bcQrReader');
-              }
+              loadBcQrReader: () => $ocLazyLoad.load('bcQrReader')
             },
             windowClass: 'bc-modal initial'
           });
@@ -194,6 +180,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
               msg: translations.AUTHORIZED_MESSAGE
             });
           });
+          Wallet.goal.auth = void 0;
         }
       }
     }

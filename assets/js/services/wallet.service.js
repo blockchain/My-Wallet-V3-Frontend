@@ -467,19 +467,9 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     });
   };
 
-  wallet.setIPWhitelist = (ips, successCallback, errorCallback) => {
-    let success = () => {
-      wallet.settings.ipWhitelist = ips;
-      successCallback();
-      $rootScope.$safeApply();
-    };
-
-    let error = () => {
-      errorCallback();
-      $rootScope.$safeApply();
-    };
-
-    wallet.settings_api.updateIPlock(ips, success, error);
+  wallet.setIPWhitelist = (ips) => {
+    let update = (s, e) => wallet.settings_api.updateIPlock(ips, s, e);
+    return $q(update).then(() => wallet.settings.ipWhitelist = ips);
   };
 
   wallet.resendEmailConfirmation = (successCallback, errorCallback) => {
