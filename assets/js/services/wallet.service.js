@@ -4,9 +4,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'MyWalletMetadata'];
 
-function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency) {
+function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, MyWalletMetadata) {
   const wallet = {
     goal: {
       auth: false,
@@ -1131,10 +1131,43 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     let syncing = () => {
       console.log('Syncing...');
     };
-    let proceed = (password) => {
-      wallet.my.wallet.decrypt(password, success, error, decrypting, syncing);
+    let proceedWithPassword = (password) => {
+      const didDecrypt = () => {
+        // Check which metadata service features we use:
+
+        // whatsNew
+        // This falls back to cookies if 2nd password is enabled:
+        let whatsNewViewed = $cookies.get('whatsNewViewed');
+        if (whatsNewViewed) {
+          let whatsNew = new MyWalletMetadata(2);
+
+          whatsNew.fetch().then((res) => {
+            if (res === null) {
+              whatsNew.create({lastViewed: whatsNewViewed}).then(() => {
+                // TODO: uncomment once cookie fallback is removed
+                // $cookies.remove('whatsNewViewed');
+                success();
+              });
+            } else {
+              whatsNew.update({lastViewed: whatsNewViewed}).then(() => {
+                // TODO: uncomment once cookie fallback is removed
+                // $cookies.remove('whatsNewViewed');
+                success();
+              });
+            }
+          }).catch(() => {
+            // The What's New section may be marked (partially) unread at the
+            // next login.
+            success();
+          });
+        } else {
+          success();
+        }
+      };
+
+      wallet.my.wallet.decrypt(password, didDecrypt, error, decrypting, syncing);
     };
-    wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel);
+    wallet.askForSecondPasswordIfNeeded().then(proceedWithPassword).catch(cancel);
   };
 
   wallet.validateSecondPassword = (password) =>
@@ -1155,7 +1188,28 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     let syncing = () => {
       console.log('Syncing...');
     };
-    wallet.my.wallet.encrypt(password, success, error, encrypting, syncing);
+
+    const proceed = () => {
+      wallet.my.wallet.encrypt(password, success, error, encrypting, syncing);
+    };
+
+    // whatsNew
+    // This falls back to cookies if 2nd password is enabled:
+    let whatsNew = new MyWalletMetadata(2);
+    whatsNew.fetch().then((res) => {
+      if (res !== null) {
+        $cookies.put('whatsNewViewed', res.lastViewed);
+      }
+    }).catch(() => {
+      throw new Error("saving your What's New view status failed");
+    });
+
+    let other = $q.resolve(); // $q.reject('it can't be combined with feature X');
+
+    $q.all([whatsNew, other]).then(proceed).catch((reason) => {
+      console.log('all');
+      Alerts.displayError('Could enable second password, because ' + reason);
+    });
   };
 
   // Testing: only works on mock MyWallet

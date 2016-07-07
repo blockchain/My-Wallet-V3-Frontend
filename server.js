@@ -34,7 +34,12 @@ app.use(function (req, res, next) {
       "style-src 'self' 'uD+9kGdg1SXQagzGsu2+gAKYXqLRT/E07bh4OhgXN8Y=' '4IfJmohiqxpxzt6KnJiLmxBD72c3jkRoQ+8K5HT5K8o='",
       "child-src 'none'",
       "script-src 'self'",
-      "connect-src 'self' " + rootURL + ' ' + (webSocketURL || 'wss://*.blockchain.info') + ' ' + (apiDomain || 'https://api.blockchain.info'),
+      'connect-src ' + [
+        "'self'",
+        rootURL,
+        (webSocketURL || 'wss://*.blockchain.info'),
+        (apiDomain || 'https://api.blockchain.info')
+      ].join(' '),
       "object-src 'none'",
       "media-src 'self' https://storage.googleapis.com/bc_public_assets/ data: mediastream: blob:",
       "font-src 'self'", ''
