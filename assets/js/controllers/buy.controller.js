@@ -60,6 +60,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
     Wallet.verifyEmail($scope.confirmationCode.bcAsyncForm.input.$viewValue, success, error);
   };
 
+  // move to directive
   $scope.getQuote = () => {
     if (!$scope.exchange.profile) return;
     $scope.transaction.btc = 0;
@@ -100,12 +101,10 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
       $scope.step = 1;
     } else if (!$scope.user.isEmailVerified) {
       $scope.step = 2;
-      $scope.addExchange();
     } else if ($scope.rejectedEmail) {
       $scope.step = 2;
     } else if (!$scope.exchange.profile) {
       $scope.step = 3;
-      $scope.fetchProfile();
     } else {
       $scope.step = 4;
     }
@@ -178,6 +177,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
       $uibModal.open({
         templateUrl: 'partials/isignthis-modal.jade',
         backdrop: 'static',
+        keyboard: false,
         controller: 'iSignThisCtrl',
         windowClass: 'bc-modal coinify',
         resolve: { iSignThisProps: iSignThisProps }
@@ -204,10 +204,18 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
 
   $scope.isCurrencySelected = (currency) => currency === $scope.fiatCurrency;
 
+  $scope.addExchange();
+
+  $scope.$watch('step', () => {
+    if ($scope.profile.countryCode &&
+        $scope.isEmailVerified) {
+      $scope.addExchange();
+      if ($scope.step === 2) $scope.fetchProfile();
+    }
+  });
+
   $scope.$watch('method', $scope.updateAmounts);
   $scope.$watch('transation.fiat', $scope.getQuote);
-
-  $scope.addExchange();
 
   $scope.$watch('user.isEmailVerified', (newVal) => {
     $scope.user.isEmailVerified = newVal;

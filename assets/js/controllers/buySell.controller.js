@@ -57,6 +57,7 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
         windowClass: 'bc-modal initial',
         controller: 'BuyCtrl',
         backdrop: 'static',
+        keyboard: false,
         resolve: { exchange: () => $scope.exchange,
                    trades: () => $scope.trades || [],
                    fiat: () => $scope.transaction.fiat }
