@@ -9,7 +9,8 @@ Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWall
 function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency) {
   const wallet = {
     goal: {
-      auth: false
+      auth: false,
+      upgrade: false
     },
     status: {
       isLoggedIn: false,
@@ -751,9 +752,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     } else if (event === 'on_wallet_decrypt_finish') {
     } else if (event === 'hd_wallets_does_not_exist') {
       wallet.status.didUpgradeToHd = false;
-      $timeout(() => {
-        $rootScope.$broadcast('needsUpgradeToHD', 1000);
-      });
+      wallet.goal.upgrade = true;
     } else if (event === 'wallet not found') {
       Alerts.displayError('WALLET_NOT_FOUND');
     } else if (event === 'ticker_updated' || event === 'did_set_latest_block') {
