@@ -87,16 +87,6 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     modalInstance.result.then(() => {}, () => defer.reject());
   });
 
-  $scope.$on('needsUpgradeToHD', notification => {
-    $uibModal.open({
-      templateUrl: 'partials/upgrade.jade',
-      controller: 'UpgradeCtrl',
-      backdrop: 'static',
-      windowClass: 'bc-modal',
-      keyboard: false
-    });
-  });
-
   $scope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
     let isPublicState = toState.name === 'landing' || toState.name.slice(0, 6) === 'public';
     if (isPublicState && Wallet.status.isLoggedIn) event.preventDefault();
@@ -141,10 +131,29 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $scope.checkGoals = () => {
     if ($scope.status.isLoggedIn) {
-      if (!((Wallet.status.didLoadTransactions) && (Wallet.status.didLoadBalances))) {
-        return $timeout($scope.checkGoals, 100);
+      if (Wallet.goal.upgrade) {
+        $uibModal.open({
+          templateUrl: 'partials/upgrade.jade',
+          controller: 'UpgradeCtrl',
+          backdrop: 'static',
+          windowClass: 'bc-modal',
+          keyboard: false
+        });
+        Wallet.goal.upgrade = void 0;
       }
-      if (Wallet.goal != null) {
+      if (Wallet.goal.auth) {
+        Alerts.clear();
+        $translate(['AUTHORIZED', 'AUTHORIZED_MESSAGE']).then(translations => {
+          $scope.$emit('showNotification', {
+            type: 'authorization-verified',
+            icon: 'ti-check',
+            heading: translations.AUTHORIZED,
+            msg: translations.AUTHORIZED_MESSAGE
+          });
+        });
+        Wallet.goal.auth = void 0;
+      }
+      if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {
         if (Wallet.goal.send != null) {
           $uibModal.open({
             templateUrl: 'partials/send.jade',
@@ -170,18 +179,8 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
             Wallet.goal.claim = void 0;
           });
         }
-        if (Wallet.goal.auth) {
-          Alerts.clear();
-          $translate(['AUTHORIZED', 'AUTHORIZED_MESSAGE']).then(translations => {
-            $scope.$emit('showNotification', {
-              type: 'authorization-verified',
-              icon: 'ti-check',
-              heading: translations.AUTHORIZED,
-              msg: translations.AUTHORIZED_MESSAGE
-            });
-          });
-          Wallet.goal.auth = void 0;
-        }
+      } else {
+        $timeout($scope.checkGoals, 100);
       }
     }
   };

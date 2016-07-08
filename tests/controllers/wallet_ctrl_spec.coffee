@@ -76,20 +76,6 @@ describe "WalletCtrl", ->
     expect($uibModal.open).toHaveBeenCalled()
   )
 
-  describe "HD upgrade", ->
-    beforeEach ->
-      callbacks =  {
-        proceed: () ->
-          console.log "proceed"
-      }
-      spyOn(callbacks, "proceed")
-
-    it "should show modal if HD upgrade is needed", inject(($uibModal) ->
-      spyOn($uibModal, "open").and.callThrough()
-      scope.$broadcast("needsUpgradeToHD", callbacks.proceed)
-      expect($uibModal.open).toHaveBeenCalled()
-    )
-
   describe "redeem from email", ->
     it "should proceed after login", inject((Wallet, $rootScope, $timeout, $uibModal) ->
 
@@ -125,16 +111,11 @@ describe "WalletCtrl", ->
     )
 
   describe "HD upgrade", ->
-    beforeEach ->
-      callbacks =  {
-        proceed: () ->
-          console.log "proceed"
-      }
-      spyOn(callbacks, "proceed")
-
-    it "should show modal if HD upgrade is needed", inject(($uibModal) ->
+    it "should show modal if HD upgrade is needed", inject((Wallet, $uibModal) ->
+      Wallet.status.isLoggedIn = true
+      Wallet.goal.upgrade = true
       spyOn($uibModal, "open").and.callThrough()
-      scope.$broadcast("needsUpgradeToHD", callbacks.proceed)
+      scope.checkGoals()
       expect($uibModal.open).toHaveBeenCalled()
     )
 
