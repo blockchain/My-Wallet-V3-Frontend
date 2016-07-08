@@ -728,6 +728,7 @@
   .landing-page #timeline {
     margin: 0;
     width: 65%;
+    margin-bottom: 10px;
   }
   .flex-column-med {
     -webkit-box-orient: vertical;
@@ -810,9 +811,10 @@
 @media (max-width: 992px) {
   #newToBTC .flex-row .video-container .imag-prev {
     position: relative;
-    width: 25%;
+    width: 50%;
     left: 0;
     top: 0;
     transform: translate(0,0);
+    margin-bottom: 20px;
   }
 }
