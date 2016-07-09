@@ -7,3 +7,5 @@
           span {{ $select.selected.name }}
         ui-select-choices(repeat="country.code as country in countries.countryCodes | filter: $select.search")
           span(ng-bind-html="country.name")
+    .clearfix
+      span.display-inline-block.pull-right.pointer.blue.type-sm.underline(translate="CANT_FIND_COUNTRY" uib-tooltip="{{'COUNTRY_COMING_SOON' | translate}}" tooltip-placement="top")

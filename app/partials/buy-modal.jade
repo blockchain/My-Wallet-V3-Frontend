@@ -3,7 +3,7 @@
     .flex-column.flex-1
       .flex-row.flex-between.flex-center
         h3(translate="BUY_BITCOIN")
-        quote-countdown(quote="quote")
+        quote-countdown(quote="quote" get-quote="getQuote()")
       buy-steps(transaction="transaction" 
                 currency-symbol="currencySymbol"
                 profile="profile"

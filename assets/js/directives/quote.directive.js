@@ -10,7 +10,8 @@ function quoteCountdown ($interval) {
     restrict: 'E',
     replace: true,
     scope: {
-      quote: '='
+      quote: '=',
+      getQuote: '&'
     },
     templateUrl: 'templates/quote.jade',
     link: link
@@ -27,7 +28,7 @@ function quoteCountdown ($interval) {
         let minutes = parseInt(time, 10);
         let seconds = parseInt((time % 1) * 60, 10);
         if (seconds < 10) seconds = '0' + seconds;
-        if (time < 0) scope.expired = true;
+        if (time < 0) scope.getQuote();
 
         scope.count = minutes + ':' + seconds;
       }, 1000);

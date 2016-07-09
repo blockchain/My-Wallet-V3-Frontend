@@ -1,3 +1,2 @@
-span
-  span.security-red(ng-show="count && !expired") Rate Expires In: {{ count }}
-  span.security-red(ng-show="expired") This rate has expired.
+span(uib-tooltip="{{'RATE_AUTO_REFRESH' | translate}}")
+  span.security-red(ng-show="count" translate="RATE_EXPIRES" translate-values="{count: count}")

@@ -774,8 +774,14 @@
   "TRADE_EXCEEDS_LIMITS": "The amount of this trade is larger than your allowed limit. TODO: <span class='underline blue'>Click here to increase your limit.</span> Or <span class='underline blue'>Change Amount.</span>",
   "INVALID_ARGUMENT": "An error occured. Please try again later or contact support.",
   "INVALID_REQUEST": "An error occured. Please try again later or contact support.",
-  "INTERNAL_ERROR": "An internal error happened during signup. This is most likely not an issue with Blockchain. Please try again later or contact Coinify support.",
+  "INTERNAL_ERROR": "An internal error. This is most likely not an issue with Blockchain. Please try again later or contact Coinify support.",
   "INVALID_TRUSTED_EMAIL_VALIDATION_TOKEN": "We are having trouble verifying your email. Please try again later or contact support.",
   "OFFLINE_TOKEN_NOT_FOUND": "We were unable to login to your account. Please try again later or contact support.",
-  "INVALID_OFFLINE_TOKEN": "We were unable to login to your account. Please contact support and reference your account number {{::user}}."
+  "INVALID_OFFLINE_TOKEN": "We were unable to login to your account. Please contact support and reference your account number {{::user}}.",
+  "CANT_FIND_CURRENCY": "Can't find your currency?",
+  "CURRENCY_COMING_SOON": "We'll be rolling out more currencies soon. Stay tuned.",
+  "CANT_FIND_COUNTRY": "Can't find your country?",
+  "COUNTRY_COMING_SOON": "We'll be rolling out more countries soon. Stay tuned.",
+  "RATE_AUTO_REFRESH": "Exchange rates automatically refresh after 15 minutes.",
+  "RATE_EXPIRES": "Rate Expires: {{::count}}"
 }

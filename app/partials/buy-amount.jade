@@ -1,5 +1,5 @@
 form(name="buyAmount")
-  .flex-column
+  div
     label.em-500 Choose amount to exchange:
     section.input-group
       div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
@@ -24,6 +24,8 @@ form(name="buyAmount")
         max="2100000000000000"
         required
       )
+    .clearfix
+      span.display-inline-block.pull-right.mbn.mts.pointer.blue.type-sm.underline(translate="CANT_FIND_CURRENCY" uib-tooltip="{{'CURRENCY_COMING_SOON' | translate}}" tooltip-placement="top")
   .flex-row.flex-between.flex-center.mtl(ng-show="exchange.user")
     .flex-row.flex-center.flex-1.flex-around.mrl
       label.mbn.em-500 You will receive this amount of {{ btcCurrency.code }} at the current exchange rate.
