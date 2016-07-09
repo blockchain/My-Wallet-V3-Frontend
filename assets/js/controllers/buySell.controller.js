@@ -3,14 +3,12 @@ angular
   .controller('BuySellCtrl', BuySellCtrl);
 
 function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, Wallet, currency) {
-  $scope.user = Wallet.user;
-  $scope.status = {loading: true};
+  $scope.status = { loading: true };
   $scope.currencies = currency.currencies;
   $scope.fiatCurrency = Wallet.settings.currency;
   $scope.exchange = MyWallet.wallet.external.coinify;
   $scope.currencySymbol = currency.conversions[$scope.fiatCurrency.code];
   $scope.profile = MyWallet.wallet.profile;
-  $scope.user = Wallet.user;
   $scope.transaction = {fiat: 0};
   $scope.allSteps = true;
 
@@ -28,29 +26,26 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
       $scope.allSteps = $scope.trades.length < 1;
     };
 
-    const error = (err) => {
-      Alerts.displayError(err);
-    };
+    const error = () => $scope.status = {};
 
     return $scope.exchange.getTrades().then(success, error);
   };
 
   $scope.fetchProfile = () => {
-    $scope.status.waiting = true;
-    if (!$scope.user.isEmailVerified) { $scope.status = {}; return; }
-
-    const success = () => {
-      $scope.getTrades();
-    };
-
     const error = (err) => {
-      Alerts.displayError(err);
+      try {
+        let e = JSON.parse(err);
+        let msg = e.error.toUpperCase();
+        Alerts.displayError(msg, true, $scope.alerts, {user: $scope.exchange.user});
+      } catch (e) {
+        Alerts.displayError('INVALID_REQUEST', true);
+      }
     };
 
-    $scope.exchange.fetchProfile().then(success, error);
+    $scope.exchange.fetchProfile().then($scope.getTrades, error);
   };
 
-  $scope.buy = () => {
+  $scope.buy = (amt) => {
     const success = () => {
       $uibModal.open({
         templateUrl: 'partials/buy-modal.jade',
@@ -60,15 +55,25 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
         keyboard: false,
         resolve: { exchange: () => $scope.exchange,
                    trades: () => $scope.trades || [],
-                   fiat: () => $scope.transaction.fiat }
+                   fiat: () => amt || $scope.transaction.fiat }
       });
     };
 
-    if ($scope.exchange) $scope.getTrades().then(success);
-    else success();
+    try {
+      // Might need a loading state here
+      if ($scope.exchange.user) $scope.getTrades().then(success);
+      else success();
+    } catch (e) {
+      success();
+    }
   };
 
-  $scope.exchange ? $scope.fetchProfile() : $scope.status = {};
+  try {
+    if ($scope.exchange.user) $scope.fetchProfile();
+    else $scope.status = {};
+  } catch (e) {
+    $scope.status = {};
+  }
 
   $scope.$watch('fiatCurrency', () => {
     let curr = $scope.fiatCurrency || null;

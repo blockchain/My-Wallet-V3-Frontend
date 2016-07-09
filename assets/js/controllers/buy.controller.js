@@ -12,8 +12,8 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
   $scope.countries = country;
   $scope.user = Wallet.user;
   $scope.exchange = exchange;
-  $scope.method = undefined;
   $scope.trades = trades;
+  $scope.alerts = [];
   $scope.status = {};
   $scope.step = 0;
 
@@ -24,21 +24,32 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
   $scope.transaction = {fiat: 0, btc: 0, fee: 0, total: 0};
   $scope.transaction.fiat = fiat || 0;
 
+  $scope.standardError = (err) => {
+    $scope.status = {};
+    try {
+      let e = JSON.parse(err);
+      let msg = e.error.toUpperCase();
+      if (msg === 'EMAIL_ADDRESS_IN_USE') $scope.rejectedEmail = true;
+      else Alerts.displayError(msg, true, $scope.alerts, {user: $scope.exchange.user});
+    } catch (e) {
+      Alerts.displayError('INVALID_REQUEST', true, $scope.alerts);
+    }
+  };
+
   $scope.fetchProfile = () => {
     $scope.status.waiting = true;
 
-    const success = (msg) => {
+    const success = () => {
       $scope.status = {};
       $scope.nextStep();
     };
 
-    const error = () => { $scope.status = {}; };
-
-    return $scope.exchange.fetchProfile().then(success, error);
+    return $scope.exchange.fetchProfile().then(success, $scope.standardError);
   };
 
   $scope.updateAmounts = () => {
-    if (!$scope.exchange.profile) return;
+    if (!$scope.quote) return;
+    if (!$scope.exchange && !$scope.exchange.user) return;
     let fiatAmt = $scope.transaction.fiat;
     let methodFee = fiatAmt * ($scope.method.fee / 100);
 
@@ -55,14 +66,16 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
       $scope.nextStep();
     };
 
-    const error = (err) => Alerts.displayError(err); errorCallback();
+    const error = (err) => $scope.standardError(err); errorCallback();
 
     Wallet.verifyEmail($scope.confirmationCode.bcAsyncForm.input.$viewValue, success, error);
   };
 
   // move to directive
   $scope.getQuote = () => {
-    if (!$scope.exchange.profile) return;
+    if (!$scope.exchange) return;
+    if (!$scope.exchange.user) return;
+
     $scope.transaction.btc = 0;
     $scope.quote = null;
 
@@ -77,12 +90,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
       $scope.updateAmounts();
     };
 
-    const error = (err) => {
-      $scope.status = {};
-      Alerts.displayError(err);
-    };
-
-    $scope.exchange.getQuote(amt, curr).then(success, error);
+    $scope.exchange.getQuote(amt, curr).then(success, $scope.standardError);
   };
 
   $scope.toggleEmail = () => $scope.editEmail = !$scope.editEmail;
@@ -103,7 +111,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
       $scope.step = 2;
     } else if ($scope.rejectedEmail) {
       $scope.step = 2;
-    } else if (!$scope.exchange.profile) {
+    } else if (!$scope.exchange.user) {
       $scope.step = 3;
     } else {
       $scope.step = 4;
@@ -144,19 +152,8 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
       $scope.fetchProfile().then($scope.getQuote);
     };
 
-    const error = (err) => {
-      $scope.status = {};
-
-      try {
-        let e = JSON.parse(err);
-        $scope.rejectedEmail = e.error === 'email_address_in_use' ? true : undefined;
-      } catch (e) {
-        Alerts.displayError(err);
-      }
-    };
-
     $scope.exchange.signup()
-      .then(success).catch(error);
+      .then(success).catch($scope.standardError);
   };
 
   $scope.buy = () => {
@@ -184,12 +181,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
       });
     };
 
-    const error = (err) => {
-      $scope.status = {};
-      Alerts.displayError(err);
-    };
-
-    $scope.exchange.buy($scope.transaction.fiat).then(success, error);
+    $scope.exchange.buy($scope.transaction.fiat).then(success, $scope.standardError);
   };
 
   $scope.cancel = () => $uibModalInstance.dismiss('');
@@ -204,16 +196,6 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
 
   $scope.isCurrencySelected = (currency) => currency === $scope.fiatCurrency;
 
-  $scope.addExchange();
-
-  $scope.$watch('step', () => {
-    if ($scope.profile.countryCode &&
-        $scope.isEmailVerified) {
-      $scope.addExchange();
-      if ($scope.step === 2) $scope.fetchProfile();
-    }
-  });
-
   $scope.$watch('method', $scope.updateAmounts);
   $scope.$watch('transation.fiat', $scope.getQuote);
 
@@ -225,6 +207,12 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
   $scope.$watch('fiatCurrency', () => {
     let curr = $scope.fiatCurrency || null;
     $scope.currencySymbol = currency.conversions[curr.code];
+  });
+
+  $scope.$watch('step', () => {
+    if ($scope.step === 0) return;
+    if (!$scope.partner) $scope.addExchange();
+    if ($scope.exchange && $scope.exchange.user) $scope.fetchProfile();
   });
 
   $scope.$on('disableAllSteps', () => $scope.allSteps = false);

@@ -1,6 +1,6 @@
 .buy-sell
-  .flex-center.flex-justify(ng-if="status.waiting") Fetching information from your exchange partner.
-  div(ng-if="!status.waiting")
+  .flex-center.flex-justify(ng-if="status.loading") Fetching information from your exchange partner.
+  div(ng-if="!status.loading")
     .width-60.ptm.margin-0-auto
       buy-steps.pointer(buy="buy()"
                         all-steps="allSteps"
@@ -12,28 +12,28 @@
         h4.type-h4(translate="Quick Start")
         .border.paml
           .flex-between
-            button.button-muted.btn.button-default.type-h4(ng-click="transaction.fiat = 20; buy()")
+            button.button-muted.btn.button-default.type-h4(ng-click="buy(20)")
               span 20.00
               |  
               span.type-xs {{ fiatCurrency.code }}
-            button.button-muted.btn.button-default.type-h4(ng-click="transaction.fiat = 20; buy()")
+            button.button-muted.btn.button-default.type-h4(ng-click="buy(40)")
               span 40.00
               |  
               span.type-xs {{ fiatCurrency.code }}
-            button.button-muted.btn.button-default.type-h4(ng-click="transaction.fiat = 20; buy()")
+            button.button-muted.btn.button-default.type-h4(ng-click="buy(60)")
               span 60.00
               |  
               span.type-xs {{ fiatCurrency.code }}
           .flex-between.mtml
-            button.button-muted.btn.button-default.type-h4(ng-click="transaction.fiat = 20; buy()")
+            button.button-muted.btn.button-default.type-h4(ng-click="buy(80)")
               span 80.00
               |  
               span.type-xs {{ fiatCurrency.code }}
-            button.button-muted.btn.button-default.type-h4(ng-click="transaction.fiat = 20; buy()")
+            button.button-muted.btn.button-default.type-h4(ng-click="buy(100)")
               span 100.00
               |  
               span.type-xs {{ fiatCurrency.code }}
-            button.button-muted.btn.button-default.type-h4(ng-click="transaction.fiat = 20; buy()")
+            button.button-muted.btn.button-default.type-h4(ng-click="buy(200)")
               span 200.00
               |  
               span.type-xs {{ fiatCurrency.code }}

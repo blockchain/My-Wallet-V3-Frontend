@@ -769,5 +769,13 @@
   "CLICK_TO_CHANGE": "Click here to change it.",
   "PAYMENT_METHOD": "Payment Method:",
   "PLEASE_CREATE_ACCOUNT": "Please <span class='underline pointer'>create an account</span> to get an accurate exchange rate.",
-  "SUMMARY": "Summary:"
+  "SUMMARY": "Summary:",
+  "TRADE_AMOUNT_TOO_LOW": "The amount of this trade is too small. Minimal amount is NaN undefined.",
+  "TRADE_EXCEEDS_LIMITS": "The amount of this trade is larger than your allowed limit. TODO: <span class='underline blue'>Click here to increase your limit.</span> Or <span class='underline blue'>Change Amount.</span>",
+  "INVALID_ARGUMENT": "An error occured. Please try again later or contact support.",
+  "INVALID_REQUEST": "An error occured. Please try again later or contact support.",
+  "INTERNAL_ERROR": "An internal error happened during signup. This is most likely not an issue with Blockchain. Please try again later or contact Coinify support.",
+  "INVALID_TRUSTED_EMAIL_VALIDATION_TOKEN": "We are having trouble verifying your email. Please try again later or contact support.",
+  "OFFLINE_TOKEN_NOT_FOUND": "We were unable to login to your account. Please try again later or contact support.",
+  "INVALID_OFFLINE_TOKEN": "We were unable to login to your account. Please contact support and reference your account number {{::user}}."
 }

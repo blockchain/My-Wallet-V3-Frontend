@@ -22,8 +22,8 @@
   .width-20.flex-column.flex-center(ng-class="{blue: step === 2 || step === 3, success: step > 3}"
                                     ng-show="allSteps")
     i.type-lrg.ti-user
-    span(ng-show="exchange.profile") {{ partner }}
-    span(ng-hide="exchange.profile" translate="Exchange Account")
+    span(ng-show="exchange.user") {{ partner }}
+    span(ng-hide="exchange.user" translate="Exchange Account")
 
   .flex-justify(ng-class="{success: step > 3}"
                 ng-show="allSteps")
