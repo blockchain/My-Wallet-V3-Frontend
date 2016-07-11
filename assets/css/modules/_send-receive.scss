@@ -197,16 +197,12 @@
         > span.account {
           text-align: left;
           @media (max-width: 768px) {
-            max-width: 200px;
             overflow: hidden;
             text-overflow: ellipsis;
           }
           &.aaa {
             color: $aaa !important;
           }
-        }
-        > span:last-of-type {
-          text-align: right;
         }
         .helper {
           position: absolute;
