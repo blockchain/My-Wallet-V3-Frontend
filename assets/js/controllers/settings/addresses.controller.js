@@ -29,7 +29,7 @@ function SettingsAddressesCtrl ($scope, $stateParams, $q, $sce, Wallet, MyWallet
 
   $scope.toggleShowPast = () => $scope.showPast
     ? $scope.showPast = false
-    : Alerts.confirm('SHOW_PAST').then(() => $scope.showPast = true);
+    : Alerts.confirm('CONFIRM_SHOW_PAST').then(() => $scope.showPast = true);
 
   $scope.setAddresses = (page) => {
     $scope.usedAddresses = $scope.generatePage(page);

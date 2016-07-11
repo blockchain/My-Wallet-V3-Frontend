@@ -1,6 +1,16 @@
-.modal-body
-  h4(translate="{{::message}}" translate-values="values")
+.modal-body(translate-namespace="{{::namespace}}")
+  h4
+    i.ti-alert.security-red.mrs
+    span(translate=".TITLE")
+  p.em-300.ptm(translate=".BODY" translate-values="::values")
+  ul.em-300(ng-if="props")
+    li.pts(ng-repeat="(prop, val) in props track by $index")
+      span(translate="{{::prop}}")
+      | :&nbsp;
+      b(ng-bind="::val")
 .modal-footer
   button.button-muted(ng-click="$dismiss('cancelled')" translate="CANCEL")
-  button.btn.button-danger(ng-click="$close(true)" translate="{{::close}}" ng-hide="options.action")
-  button.btn.button-primary(ng-click="$close(options.action)" translate="{{::options.translation}}" ng-hide="!options.action")
+  button.btn(
+    ng-class="::'button-' + (friendly ? 'primary' : 'danger')"
+    ng-click="$close()"
+    translate="{{::action || 'OK'}}")

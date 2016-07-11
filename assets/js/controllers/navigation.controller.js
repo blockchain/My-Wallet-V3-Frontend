@@ -19,8 +19,8 @@ function NavigationCtrl ($scope, $interval, $timeout, $cookies, Wallet, Alerts, 
 
   $scope.logout = () => {
     let isSynced = Wallet.isSynchronizedWithServer();
-    let message = isSynced ? 'ARE_YOU_SURE_LOGOUT' : 'CHANGES_BEING_SAVED';
-    Alerts.confirm(message, {}, 'top').then(() => {
+    let message = isSynced ? 'CONFIRM_LOGOUT' : 'CONFIRM_FORCE_LOGOUT';
+    Alerts.confirm(message, { modalClass: 'top' }).then(() => {
       Wallet.logout();  // Refreshes the browser, so won't return
     });
   };

@@ -71,27 +71,20 @@ function Alerts ($timeout, $rootScope, $translate, $uibModal) {
     });
   }
 
-  function confirm (message, values = {}, modalClass = '', close = 'OK', options = {}) {
+  // options = { values, props, friendly, action, modalClass }
+  function confirm (namespace, options = {}) {
     return $uibModal.open({
       templateUrl: 'partials/modal-confirm.jade',
-      windowClass: 'bc-modal confirm ' + modalClass,
-      controller: function ($scope) {
-        $scope.options = options;
-        $scope.message = message;
-        $scope.values = values;
-        $scope.close = close;
-      }
+      windowClass: `bc-modal confirm ${options.modalClass || ''}`,
+      controller: ($scope) => angular.extend($scope, options, { namespace })
     }).result;
   }
 
-  function prompt (message, options = {type: 'input'}) {
+  function prompt (message, options = {}) {
     return $uibModal.open({
       templateUrl: 'partials/modal-prompt.jade',
       windowClass: 'bc-modal medium',
-      controller: function ($scope) {
-        $scope.message = message;
-        $scope.type = options.type;
-      }
+      controller: ($scope) => angular.extend($scope, options, { message })
     }).result;
   }
 

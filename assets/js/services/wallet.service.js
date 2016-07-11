@@ -43,7 +43,8 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       email: null,
       mobile: null,
       passwordHint: '',
-      mobileNumber: null
+      mobileNumber: null,
+      alias: null
     }
   };
   wallet.fiatHistoricalConversionCache = {};
@@ -80,7 +81,6 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
 
   wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) => {
     let didLogin = (result) => {
-      let guid = result.guid;
       wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
       if (wallet.my.wallet.isUpgradedToHD) {
         wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.hdwallet.isMnemonicVerified;
@@ -117,6 +117,8 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
         wallet.settings.twoFactorMethod = result.auth_type;
         wallet.settings.loggingLevel = result.logging_level;
         wallet.user.current_ip = result.my_ip;
+        wallet.user.guid = result.guid;
+        wallet.user.alias = result.alias;
         wallet.settings.notifications = result.notifications_type && result.notifications_type.length > 0 && result.notifications_type.indexOf(1) > -1 && (parseInt(result.notifications_on, 10) === 0 || parseInt(result.notifications_on, 10) === 2);
         wallet.user.passwordHint = result.password_hint1;
         wallet.setLanguage($filter('getByProperty')('code', result.language, languages));
@@ -144,7 +146,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
         $rootScope.$safeApply();
       });
       if (successCallback != null) {
-        successCallback(guid);
+        successCallback(result.guid);
       }
       $rootScope.$safeApply();
     };
@@ -1094,6 +1096,12 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       console.log('Failed');
       $rootScope.$safeApply();
     });
+  };
+
+  wallet.removeAlias = () => {
+    return $q.resolve(wallet.settings_api.removeAlias()).then(
+      () => wallet.user.alias = null,
+      () => Alerts.displayError('POOR_CONNECTION'));
   };
 
   wallet.setDefaultAccount = (account) => {

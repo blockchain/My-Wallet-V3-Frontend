@@ -38,9 +38,15 @@
   "LOGGED_OUT_AUTOMATICALLY" : "Logged out automatically",
   "AUTO_LOGOUT" : "Auto Logout",
   "AUTO_LOGOUT_EXPLAIN" : "After a certain period of inactivity, you will be automatically logged out of your wallet.",
-  "AUTO_LOGOUT_WARN" : "Are you still there? You've been inactive for {{::minutes}} minutes. Click \"Cancel\" if you don't want to be logged out automatically.",
+  "CONFIRM_AUTO_LOGOUT" : {
+    "TITLE": "Are you still there?",
+    "BODY": "You've been inactive for {{::minutes}} minutes. Click \"Cancel\" if you don't want to be logged out automatically."
+  },
   "LOG_ME_OUT": "Log me out",
-  "CHANGES_BEING_SAVED": "There are changes still being saved. Are you sure you wish to logout?",
+  "CONFIRM_FORCE_LOGOUT": {
+    "TITLE": "Sign out without saving?",
+    "BODY": "There are changes still being saved, signing out now may result in loss of data. Are you sure you wish to continue?"
+  },
   "CLOSE": "Close",
   "TRANSACTIONS" : "Transactions",
   "TRANSACTION" : "Transaction",
@@ -96,7 +102,10 @@
   "WALLET_RECOVERY" : "Wallet Recovery",
   "ADD_WALLET_RECOVERY" : "Backup Security Phrase",
   "PRINT_RECOVERY_SHEET" : "Print Recovery Sheet",
-  "ARE_YOU_SURE_LOGOUT" : "Are you sure you wish to logout?",
+  "CONFIRM_LOGOUT": {
+    "TITLE": "Sign Out?",
+    "BODY": "All changes have been saved, it is safe to sign out."
+  },
   "LANGUAGE_EXPLAIN" : "Set your preferred language.",
   "EMAIL_ADDRESS" : "Email Address",
   "NOT_VALID_EMAIL_ADDRESS": "Please enter a valid email address.",
@@ -186,7 +195,10 @@
   "HD_ADDRESSES" : "HD Addresses",
   "ADDRESS_BOOK" : "Address Book",
   "MANAGE_ADDRESS_BOOK" : "Manage Address Book",
-  "CONFIRM_DELETE_ADDRESS_BOOK_ENTRY" : "Are you sure you want to remove {{ address }} from your address book?",
+  "CONFIRM_DELETE_ADDRESS_BOOK_ENTRY": {
+    "TITLE": "Delete address book entry?",
+    "BODY": "This will remove {{::address}} from your address book."
+  },
   "ROUTE_ERROR" : "There was a problem navigating to that page, please try again",
   "LOAD_ADDR_ERR" : "Failed to load your HD address balances, please try again",
   "SHARE" : "Share",
@@ -208,10 +220,16 @@
   "NEW_ADDRESS" : "New Address",
   "IMPORT_ADDRESS" : "Import Address",
   "MORE_ACTIONS" : "More Actions",
-  "CONFIRM_IMPORT_WATCH": "<i class='ti-alert security-red mrs'></i>You are about to import a watch-only address. <b>This is recommended for advanced users only.</b> <br/> <br/> <small>You can only access these funds if you have the private key stored elsewhere. If you do not have a paper wallet or other backup you should not instruct anyone to send you coins to this address.</small>",
+  "CONFIRM_IMPORT_WATCH": {
+    "TITLE": "Import Watch-only Address?",
+    "BODY": "You can only access these funds if you have the private key stored elsewhere. If you do not have a paper wallet or other backup you should not instruct anyone to send you coins to this address."
+  },
   "ADDRESS" : "Address",
   "LABEL" : "Label",
-  "CONFIRM_REMOVE_LABEL" : "<i class='ti-alert security-red mrs'></i>Remove Label?<br/><br/><small>This action cannot be undone. Removing a label does not delete this address, you can still safely receive funds to it.</small>",
+  "CONFIRM_REMOVE_LABEL": {
+    "TITLE": "Remove Label?",
+    "BODY": "This action cannot be undone. Removing a label does not delete this address, you can still safely receive funds to it."
+  },
   "DETAILS" : "Details",
   "TRANSFER" : "Transfer",
   "TRANSFER_ALL" : "Transfer All",
@@ -247,7 +265,10 @@
   "SPENDABLE_ADDRESSES" : "Spendable Addresses",
   "NEXT_ADDRESSES_FOR_ACCOUNT" : "Unused Addresses in {{account}}",
   "PAST_ADDRESSES_FOR_ACCOUNT" : "Used Addresses in {{account}}",
-  "SHOW_PAST": "<i class='ti-alert security-red mrs'></i>Are you sure?<br/><br/><small>Viewing used addresses can be helpful for debugging purposes, and is recommended for advanced users only. For privacy reasons, we strongly discourage using each address more than once.</small>",
+  "CONFIRM_SHOW_PAST": {
+    "TITLE": "Are you sure?",
+    "BODY": "Viewing used addresses can be helpful for debugging purposes, and is recommended for advanced users only. For privacy reasons, we strongly discourage using each address more than once."
+  },
   "PAST_ADDRESSES" : "Used Addresses",
   "TOTAL_RECEIVED" : "Total Received",
   "CURRENT_BALANCE" : "Current Balance",
@@ -256,23 +277,40 @@
   "WATCH_ONLY_ADDRESSES" : "Watch-only Addresses",
   "ARCHIVED_ADDRESSES" : "Archived Addresses",
   "ARCHIVED_ADDRESSES_EXPLAIN" : "Archived addresses are addresses you may not need anymore that are hidden from the main view but still part of your wallet. You can unarchive them at any time.",
-  "LOSE_ACCESS" : "The wallet does not check the balance of archived addresses, so please make sure there are no funds left. If you receive funds on this address in the future, you will not be able to spend them. Are you sure?",
-  "CONFIRM_DELETE_WATCH_ONLY_ADDRESS" : "Do you wish to stop monitoring this address?",
+  "CONFIRM_LOSE_ACCESS": {
+    "TITLE": "Delete Address?",
+    "BODY": "Only delete an address if you are done using it. Funds sent to this address in the future cannot be recovered."
+  },
+  "CONFIRM_DELETE_WATCH_ONLY_ADDRESS" : {
+    "TITLE": "Delete Watch-only Address?",
+    "BODY": "Your wallet will no longer monitor this address."
+  },
   "HIDE_PAIRING_CODE"  : "Hide Pairing Code",
   "SHOW_PAIRING_CODE"  : "Show Pairing Code",
   "PAIRING_CODE_EXPLAIN": "Scan the code <i>(click on 'Show Pairing Code')</i> with your Blockchain Wallet (iOS or Android) for a seamless connection to your wallet.",
+  "SHOW_PAIRING_CODE_FAIL" : "Failed to load pairing code",
   "DOWNLOAD_THE": "Download the",
   "IOS_APP_HERE": "iOS app here",
   "AND_THE": "and the",
   "ANDROID_APP_HERE": "Android app here",
   "MOBILE" : "Mobile",
+  "CONFIRM_REMOVE_ALIAS": {
+    "TITLE": "Remove Wallet Alias?",
+    "BODY": "Once your alias is removed, you will not be able to use it to log in. This cannot be undone. Make sure you write down your Wallet Identifier before continuing."
+  },
+  "ALIAS" : "Alias",
+  "ALIAS_EXPLAIN" : "Log into Blockchain Wallet using a name of your choosing. This is not recommended, as it is less secure than logging in with your Wallet ID.",
+  "POOR_CONNECTION" : "Something went wrong, please check your connection and try again",
   "WATCH_ONLY" : "Watch Only",
   "WATCH_ONLY_REQUEST_WARN": "You are about to receive to a watch-only address. You can only spend these funds if you have access to the private key.",
   "WARNING" : "Warning",
   "IMPORT_BITCOIN_ADDRESS" : "Import Existing Bitcoin Address",
   "IMPORT_BITCOIN_ADDRESS_SWEEP" : "Transfer Funds from Imported Address",
   "IMPORT_BITCOIN_ADDRESS_EXPLAIN" : "Your wallet automatically creates new bitcoin addresses as it needs them. You can optionally import an existing address and transfer the funds to your wallet if you have the corresponding Private Key. This is an advanced functionality and only suggested for advanced users.",
-  "CONFIRM_NOT_SWEEP" : "Are you sure? We recommend that you transfer these funds.",
+  "CONFIRM_NOT_SWEEP": {
+    "TITLE": "Are You Sure?",
+    "BODY": "We recommend that you transfer these funds for added security and privacy."
+  },
   "SWEEP_LOW_BALANCE_ERR" : "You don't have enough funds to sweep this address using the recommended fee and will have to send manually",
   "YOUR_PRIVATE_KEY" : "Private Key",
   "PK_FORMAT": "Private Key Format",
@@ -651,8 +689,14 @@
   "SETTING_SELECT_ERR": "Failed to change setting to {{ setting }}",
   "YOUR_ADDRESS": "Your Bitcoin Address",
   "SWEEP_FAILED" : "Unable to transfer funds",
-  "SWEEP_FINISHED": "<small>{{::archivable}} out of {{::total}} addresses were successfully transferred to {{::account}}</small>. <br/> <br/> Would you like to archive these addresses now?",
-  "SWEEP_FINISHED_SINGLE": "<small>{{::archivable}} address was successfully transferred to {{::account}}</small>. <br/> <br/> Would you like to archive this address now?",
+  "SWEEP_FINISHED": {
+    "TITLE": "Archive swept addresses?",
+    "BODY": "{{::archivable}} out of {{::total}} addresses were successfully transferred to {{::account}}. Would you like to archive these addresses now?"
+  },
+  "SWEEP_FINISHED_SINGLE": {
+    "TITLE": "@:SWEEP_FINISHED.TITLE",
+    "BODY": "{{::archivable}} address was successfully transferred to {{::account}}. Would you like to archive this address now?"
+  },
   "YOU_WILL_LOSE": "You will lose all your bitcoins! Are you sure?",
   "SURGE_WARN": "Unusually High Fee Recommended",
   "SURGE_EXPLAIN": "The Bitcoin network is under a higher load than usual. <b>To avoid any delays in confirmation, we recommend an unusually high transaction fee of {{ suggested | convert }}.</b>",
