@@ -800,7 +800,7 @@
   font-size: 15px;
 }
 
-#newToBTC .flex-row .video-container .imag-prev {
+.new .flex-row .video-container .imag-prev {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -809,7 +809,7 @@
 }
 
 @media (max-width: 992px) {
-  #newToBTC .flex-row .video-container .imag-prev {
+  .new .flex-row .video-container .imag-prev {
     position: relative;
     width: 50%;
     left: 0;
