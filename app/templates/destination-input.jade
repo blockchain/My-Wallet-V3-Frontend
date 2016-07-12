@@ -1,8 +1,20 @@
 .destination-input
-  .input-group(ng-click="focus()")
+  ui-select(
+    ng-model="model"
+    ng-model-options="{}"
+    ng-show="selectOpen"
+    on-select="setModel($select.selected)"
+    ui-select-open="$parent.selectOpen"
+    ui-select-on-close="$parent.selectOpen=false"
+    tagging)
+    ui-select-match(placeholder="{{'SEARCH' | translate}}...")
+      label-origin(origin="$select.selected")
+    ui-select-choices(repeat="d in destinations | filter:{label:$select.search} | limitTo:limit track by $index" group-by="'type'")
+      label-origin(origin="::d" highlight="$select.search" in-view="$last && isLast(d) && incLimit()")
+  .input-group(ng-click="focus()" ng-hide="selectOpen")
     button.form-control(
       type="button"
-      ng-show="model.type === 'Accounts'"
+      ng-show="model.type === 'Accounts' || model.label != null"
       ng-click="clearModel(); focusInput();")
       span.pull-left
         label-origin(origin="model")
@@ -12,18 +24,14 @@
       autocomplete="off"
       placeholder="Paste or scan an address or select a destination"
       ng-model="model.address"
-      ng-hide="model.type === 'Accounts'"
+      ng-hide="model.type === 'Accounts' || model.label != null"
       ng-blur="blur()"
     )
-    .input-group-btn(uib-dropdown)
+    .input-group-btn
       qr-scan(on-scan="onAddressScan")
       button.btn.btn-default.brdrn(
         type="button"
         ng-hide="dropdownHidden"
-        uib-dropdown-toggle)
+        ng-click="selectOpen=true")
         span.caret
         span.sr-only Toggle Dropdown
-      ul.uib-dropdown-menu.dropdown-menu-right.dropdown-menu
-        li(ng-repeat="dest in destinations")
-          a(ng-click="setModel(dest)")
-            label-origin(origin="::dest")
