@@ -103,7 +103,7 @@ div.login-form {
     color: white !important;
     text-decoration: none !important;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 768px) and (max-height: 600px) {
     position: relative;
     bottom: -10px;
     right: -15px;
