@@ -24,7 +24,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   $scope.lastAction = Date.now();
   $scope.onAction = () => $scope.lastAction = Date.now();
 
-  $scope.inactivityInterval = () => {
+  $scope.inactivityCheck = () => {
     if (!Wallet.status.isLoggedIn) return;
     let inactivityTimeSeconds = Math.round((Date.now() - $scope.lastAction) / 1000);
     let logoutTimeSeconds = Wallet.settings.logoutTimeMinutes * 60;
@@ -35,7 +35,8 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     }
   };
 
-  $interval($scope.inactivityInterval, 1000);
+  $scope.inactivityInterval = $interval($scope.inactivityCheck, 1000);
+  $scope.$on('$destroy', () => $interval.cancel($scope.inactivityInterval));
 
   $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia) !== void 0;
 
