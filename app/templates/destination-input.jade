@@ -5,7 +5,7 @@
     ng-show="selectOpen"
     on-select="setModel($select.selected)"
     ui-select-open="$parent.selectOpen"
-    ui-select-on-close="$parent.selectOpen=false"
+    ui-select-on-close="$parent.selectOpen=false; focusInput()"
     tagging)
     ui-select-match(placeholder="{{'SEARCH' | translate}}...")
       label-origin(origin="$select.selected")
@@ -18,7 +18,7 @@
       ng-click="clearModel(); focusInput();")
       span.pull-left
         label-origin(origin="model")
-    input.form-control(
+    input#address-field.form-control(
       type="text"
       tabindex="1"
       autocomplete="off"
@@ -26,7 +26,7 @@
       ng-model="model.address"
       ng-hide="model.type === 'Accounts' || model.label != null"
       ng-blur="blur()"
-    )
+      autofocus)
     .input-group-btn
       qr-scan(on-scan="onAddressScan")
       button.btn.btn-default.brdrn(

@@ -55,7 +55,8 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     };
 
     scope.focusInput = () => {
-      $timeout(() => elem.find('input')[0].focus(), 250);
+      let q = scope.selectOpen ? '.ui-select-search' : '#address-field';
+      $timeout(() => elem[0].querySelectorAll(q)[0].focus(), 250);
     };
 
     let blurTime;
@@ -69,7 +70,6 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     };
 
     if (!scope.model) scope.clearModel();
-    scope.focusInput();
     scope.$watch('model', scope.change);
     scope.$watch('selectOpen', (open) => open && scope.focusInput());
   }
