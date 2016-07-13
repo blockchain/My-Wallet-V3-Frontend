@@ -93,7 +93,6 @@ describe "WalletCtrl", ->
     )
 
   describe "auto logout", ->
-
     it "should reset the inactivity time", ->
       spyOn(Date, "now").and.returnValue(100)
       scope.inactivityTimeSeconds = 1
@@ -106,8 +105,14 @@ describe "WalletCtrl", ->
       Wallet.settings.logoutTimeMinutes = 10
       scope.lastAction = 100000
       spyOn(Alerts, 'confirm').and.callThrough()
-      scope.inactivityInterval()
+      scope.inactivityCheck()
       expect(Alerts.confirm).toHaveBeenCalled()
+    )
+
+    it "should clear the interval when the controller is destroyed", inject(($interval) ->
+      spyOn($interval, "cancel")
+      scope.$broadcast("$destroy")
+      expect($interval.cancel).toHaveBeenCalledWith(scope.inactivityInterval)
     )
 
   describe "HD upgrade", ->
