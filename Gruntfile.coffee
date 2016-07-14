@@ -465,7 +465,10 @@ module.exports = (grunt) ->
             if @rootDomain == null
               "customRootURL = '/'"
             else
-              "customRootURL = 'https://" + @rootDomain + "/'"
+              if @rootDomain.substr(0,5) != "local"
+                "customRootURL = 'https://" + @rootDomain + "/'"
+              else
+                "customRootURL = 'http://" + @rootDomain + "/'"
         }]
       web_socket_url:
         src: ['build/js/wallet.js'],
@@ -473,7 +476,10 @@ module.exports = (grunt) ->
         replacements: [{
           from: 'customWebSocketURL = $rootScope.webSocketURL'
           to: () =>
-            'customWebSocketURL = "wss://' + @rootDomain + '/inv"'
+            prefix = "wss://"
+            if @rootDomain && @rootDomain.substr(0,5) == "local"
+              prefix = "ws://"
+            'customWebSocketURL = "' + prefix + @rootDomain + '/inv"'
         }]
       api_domain:
         src: ['build/js/wallet.js'],
@@ -481,7 +487,10 @@ module.exports = (grunt) ->
         replacements: [{
           from: 'customApiDomain = $rootScope.apiDomain'
           to: () =>
-            "customApiDomain = 'https://" + @apiDomain + "/'"
+            if @rootDomain && @rootDomain.substr(0,5) == "local"
+              "customApiDomain = 'http://" + @apiDomain + "/'"
+            else
+              "customApiDomain = 'https://" + @apiDomain + "/'"
         }]
       version_frontend:
         src: ['build/js/app.js'],
@@ -544,7 +553,10 @@ module.exports = (grunt) ->
 
   # Make sure npm and bower dependencies are up to date
   # Run clean, test and build first
-  grunt.registerTask "dist", (versionFrontend, rootDomain, apiDomain) =>
+  grunt.registerTask "dist", () =>
+    versionFrontend = grunt.option('versionFrontend')
+    rootDomain = grunt.option('rootDomain')
+    apiDomain = grunt.option('apiDomain')
     if !versionFrontend
       versionFrontend = "intermediate"
     else if versionFrontend[0] != "v"
