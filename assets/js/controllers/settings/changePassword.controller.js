@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('ChangePasswordCtrl', ChangePasswordCtrl);
 
-function ChangePasswordCtrl ($scope, $log, Wallet, Alerts, $translate) {
+function ChangePasswordCtrl ($scope, $log, Wallet, Alerts) {
   $scope.isCorrectMainPassword = Wallet.isCorrectMainPassword;
   $scope.uid = Wallet.user.uid;
 
@@ -27,7 +27,7 @@ function ChangePasswordCtrl ($scope, $log, Wallet, Alerts, $translate) {
 
     const error = (err) => {
       $scope.status.waiting = false;
-      $translate(err).then(msg => $scope.errors.unsuccessful = msg);
+      $scope.errors.unsuccessful = err;
     };
 
     $scope.status.waiting = true;
