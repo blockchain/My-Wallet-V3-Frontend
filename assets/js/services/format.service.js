@@ -8,7 +8,8 @@ format.$inject = [];
 function format () {
   const service = {
     origin: originDestination,
-    destination: originDestination
+    destination: originDestination,
+    addressBook: addressBook
   };
 
   return service;
@@ -25,5 +26,13 @@ function format () {
     if (o.index == null) formatted.isWatchOnly = o.isWatchOnly;
     else formatted.xpub = o.extendedPublicKey;
     return formatted;
+  }
+
+  function addressBook (o) {
+    return {
+      label: o.label,
+      address: o.address,
+      type: 'Address Book'
+    };
   }
 }

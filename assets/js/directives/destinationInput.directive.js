@@ -22,8 +22,9 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
   function link (scope, elem, attrs, ctrl) {
     let accounts = Wallet.accounts().filter(a => !a.archived);
     let addresses = Wallet.legacyAddresses().filter(a => !a.archived);
+    let addressBook = Wallet.addressBook().map(format.addressBook);
 
-    scope.destinations = accounts.concat(addresses).map(format.destination);
+    scope.destinations = accounts.concat(addresses).map(format.destination).concat(addressBook);
 
     if (scope.ignore) {
       scope.destinations = scope.destinations.filter(d => d.label !== scope.ignore.label);
