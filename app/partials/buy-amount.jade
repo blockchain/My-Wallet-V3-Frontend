@@ -4,12 +4,12 @@ form(name="buyAmount")
     section.input-group
       div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
         button.btn.btn-default.dropdown-toggle(type="button" uib-dropdown-toggle aria-haspopup="true")
-          span {{ fiatCurrency.code }}
+          span {{ transaction.currency.code }}
           span.caret
         ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
           li(ng-repeat="currency in currencies"
              role="menuitem" 
-             ng-click="changeCurrency(currency); getQuote();"
+             ng-click="changeCurrency(currency);"
              ng-class="{active: isCurrencySelected(currency)}")
             a(ng-click="$event.preventDefault()") {{ currency.code }}
       input.form-control(

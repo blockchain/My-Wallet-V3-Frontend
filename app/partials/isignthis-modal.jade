@@ -2,9 +2,9 @@
   .flex-column.width-100
     .flex-row.flex-between.flex-center
       h3(translate="Buy Bitcoin")
-      quote-countdown(quote="quote")
+      quote-countdown(quote="quote" get-quote="cancel()")
     div(ng-click="back()")
-      buy-steps(all-steps="allSteps"
+      buy-steps(exchange-acct="userHasExchangeAcct"
                 transaction="transaction"
                 step="step"
                 currency-symbol="currencySymbol"
@@ -14,5 +14,6 @@
                 method="method")
 .modal-body
   isignthis(transaction-id='trade.iSignThisID')
-.modal-footer.flex-end
-  button.button-muted.mrm(ng-click="close()" translate="CANCEL")
+.modal-footer.flex-between
+  span(ng-show="showReceiveAddress") Receive Address: {{ receiveAddress }}
+  button.button-muted.mrm(ng-click="close(true)" translate="CLOSE")

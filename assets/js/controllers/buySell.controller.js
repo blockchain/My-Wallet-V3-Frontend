@@ -4,17 +4,19 @@ angular
 
 function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, Wallet, currency) {
   $scope.status = { loading: true };
-  $scope.currencies = currency.currencies;
-  $scope.fiatCurrency = Wallet.settings.currency;
+  $scope.currencies = currency.coinifyCurrencies;
   $scope.exchange = MyWallet.wallet.external.coinify;
-  $scope.currencySymbol = currency.conversions[$scope.fiatCurrency.code];
   $scope.profile = MyWallet.wallet.profile;
-  $scope.transaction = {fiat: 0};
-  $scope.allSteps = true;
+  $scope.settings = Wallet.settings;
+  $scope.transaction = {fiat: 0, currency: $scope.settings.currency};
+  $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
+  $scope.userHasExchangeAcct = false;
 
   $scope.changeCurrency = (curr) => {
+    if (!curr) curr = $scope.settings.currency;
+
     const error = () => {};
-    const success = () => { $scope.fiatCurrency = curr; };
+    const success = () => { $scope.transaction.currency = curr; };
 
     Wallet.changeCurrency(curr).then(success, error);
   };
@@ -23,7 +25,7 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
     const success = (trades) => {
       $scope.status = {};
       $scope.trades = trades;
-      $scope.allSteps = $scope.trades.length < 1;
+      $scope.userHasExchangeAcct = trades.length > 0;
     };
 
     const error = () => $scope.status = {};
@@ -75,13 +77,16 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
     $scope.status = {};
   }
 
-  $scope.$watch('fiatCurrency', () => {
-    let curr = $scope.fiatCurrency || null;
+  $scope.$watch('settings.currency', $scope.changeCurrency);
+
+  $scope.$watch('transaction.currency', () => {
+    let curr = $scope.transaction.currency || null;
     $scope.currencySymbol = currency.conversions[curr.code];
   });
 
-  $scope.$on('disableAllSteps', () => {
-    $scope.allSteps = false;
+  $scope.$on('initExchangeAcct', () => {
+    $scope.userHasExchangeAcct = true;
     $scope.exchange = MyWallet.wallet.external.coinify;
+    $scope.getTrades();
   });
 }

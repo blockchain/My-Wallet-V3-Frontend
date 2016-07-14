@@ -148,6 +148,16 @@
 }
 
 // mobile flex support
+@media (max-width: 992px) {
+  .flex-column-tablet {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
 @media (max-width: 768px) {
   .flex-column-mobile {
     -webkit-box-orient: vertical;

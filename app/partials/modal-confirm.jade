@@ -1,6 +1,7 @@
 .modal-body
   h4(translate="{{::message}}" translate-values="values")
 .modal-footer
-  button.btn.button-muted(ng-click="$close(true)" translate="{{::close}}" ng-hide="options.action")
+  button.btn.button-muted(ng-click="$dismiss('cancelled')" translate="CANCEL" ng-hide="options.action")
   button.btn.button-primary(ng-click="$close(options.action)" translate="{{::options.translation}}" ng-hide="!options.action")
-  button.button-danger(ng-click="$dismiss('cancelled')" translate="CANCEL")
+  button.button-danger(ng-click="$close(true)" translate="{{::close}}" ng-hide="options.friendly")
+  button.btn.button-primary(ng-click="$dismiss('cancelled')" translate="{{::options.dismiss}}" ng-show="options.friendly")

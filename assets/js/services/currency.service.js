@@ -10,6 +10,13 @@ function currency ($q, MyBlockchainApi) {
   const conversions = {};
   const fiatConversionCache = {};
 
+  const coinifyCurrencyCodes = {
+    'USD': 'U.S. Dollar',
+    'EUR': 'Euro',
+    'GBP': 'Great British Pound',
+    'DKK': 'Danish Krone'
+  };
+
   const currencyCodes = {
     'USD': 'U.S. Dollar',
     'EUR': 'Euro',
@@ -55,6 +62,7 @@ function currency ($q, MyBlockchainApi) {
 
   var service = {
     currencies: formatCurrencies(currencyCodes),
+    coinifyCurrencies: formatCurrencies(coinifyCurrencyCodes),
     bitCurrencies: bitCurrencies,
     conversions: conversions,
 

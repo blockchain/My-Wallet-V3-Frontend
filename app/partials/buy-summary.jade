@@ -27,11 +27,11 @@
       span.success {{ transaction.btc }}
       span.blue.underline.type-sm.mlvl.pointer(ng-click="prevStep()") Change Amount
     span
-      span {{ transaction.fiat | convert:true:true:true }}
+      span {{ transaction.fiat | format }} {{ transaction.currency.code }}
   .flex-row.flex-between.mts.mbm
     span.italic Payment Processing Fee
     span
-      span {{ transaction.methodFee | convert:true:true:true }}
+      span {{ transaction.methodFee | format }} {{ transaction.currency.code }}
 .flex-row.flex-between.mtm.em-500
   span Total
-  span.state-danger-text {{ currencySymbol.symbol }}{{ transaction.total | convert:true:true:true }}
+  span.state-danger-text {{ currencySymbol.symbol }}{{ transaction.total | format }} {{ transaction.currency.code }}

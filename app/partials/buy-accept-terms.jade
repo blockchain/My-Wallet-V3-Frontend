@@ -1,9 +1,9 @@
 form.clearfix(name="signupForm" role="form" novalidate)
   p(translate="PARTNER" translate-values="{partner: partner, email: user.email}")
   div.mtl
-    input(type="checkbox" id="tos" name="tos" ng-model="fields.acceptTOS" ng-disabled="rejectedEmail" required)
+    input(type="checkbox" checked id="tos" name="tos" ng-model="fields.acceptTOS" ng-disabled="rejectedEmail" required)
     label.mlm.em-400(translate="ACCEPT_PARTNER_TOS_PRIVACY" translate-values="{partner: partner}" for="tos")
   .flex-baseline.mtl(ng-show="rejectedEmail")
     i.ti-alert.sent.mrs.type-h4
     span.sent.mrs(translate="EMAIL_IN_USE" translate-values="{email: user.email}")
-    span.blue.pointer(translate="CLICK_TO_CHANGE" ng-click="toggleEmail(); nextStep();")
+    span.blue.pointer(translate="CLICK_TO_CHANGE" ng-click="nextStep();")

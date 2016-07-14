@@ -7,14 +7,14 @@ function buySteps () {
     replace: true,
     scope: {
       buy: '&',
-      allSteps: '=allSteps',
-      profile: '=profile',
-      exchange: '=exchange',
-      transaction: '=transaction',
-      partner: '=partner',
-      method: '=method',
-      step: '=step',
-      currencySymbol: '=currencySymbol'
+      step: '=',
+      method: '=',
+      profile: '=',
+      partner: '=',
+      exchange: '=',
+      transaction: '=',
+      exchangeAcct: '=',
+      currencySymbol: '='
     },
     templateUrl: 'templates/buy-steps.jade',
     link: link

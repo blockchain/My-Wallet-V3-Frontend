@@ -770,11 +770,11 @@
   "PAYMENT_METHOD": "Payment Method:",
   "PLEASE_CREATE_ACCOUNT": "Please <span class='underline pointer'>create an account</span> to get an accurate exchange rate.",
   "SUMMARY": "Summary:",
-  "TRADE_AMOUNT_TOO_LOW": "The amount of this trade is too small. Minimal amount is NaN undefined.",
-  "TRADE_EXCEEDS_LIMITS": "The amount of this trade is larger than your allowed limit. TODO: <span class='underline blue'>Click here to increase your limit.</span> Or <span class='underline blue'>Change Amount.</span>",
+  "TRADE_AMOUNT_TOO_LOW": "The amount of this trade is too small. TODO: Show min amount.",
+  "TRADE_EXCEEDS_LIMITS": "The amount of this trade is larger than your allowed limit. TODO: Click here to increase your limit or change the amount.",
   "INVALID_ARGUMENT": "An error occured. Please try again later or contact support.",
   "INVALID_REQUEST": "An error occured. Please try again later or contact support.",
-  "INTERNAL_ERROR": "An internal error. This is most likely not an issue with Blockchain. Please try again later or contact Coinify support.",
+  "INTERNAL_ERROR": "An internal error occurred. This is most likely not an issue with Blockchain. Please try again later or contact Coinify support.",
   "INVALID_TRUSTED_EMAIL_VALIDATION_TOKEN": "We are having trouble verifying your email. Please try again later or contact support.",
   "OFFLINE_TOKEN_NOT_FOUND": "We were unable to login to your account. Please try again later or contact support.",
   "INVALID_OFFLINE_TOKEN": "We were unable to login to your account. Please contact support and reference your account number {{::user}}.",
@@ -783,5 +783,7 @@
   "CANT_FIND_COUNTRY": "Can't find your country?",
   "COUNTRY_COMING_SOON": "We'll be rolling out more countries soon. Stay tuned.",
   "RATE_AUTO_REFRESH": "Exchange rates automatically refresh after 15 minutes.",
-  "RATE_EXPIRES": "Rate Expires: {{::count}}"
+  "RATE_EXPIRES": "Rate Expires: {{::count}}",
+  "NOT_FINISHED": "Not Finished",
+  "awaiting_transfer_in": "Pending"
 }

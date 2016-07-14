@@ -17,6 +17,7 @@ function bcAsyncInput ($timeout, Wallet) {
       onChange: '=',
       actionTitle: '=',
       placeholder: '=',
+      hideCancel: '@',
       unit: '@',
       _type: '@type',
       errorMessage: '=',
@@ -47,18 +48,18 @@ function bcAsyncInput ($timeout, Wallet) {
       saving: false
     };
 
-    if (attrs.editing != null) scope.status.edit = true;
-    if (attrs.hidecancel != null) scope.hideCancel = true;
-
-    scope.form = {
-      newValue: scope.ngModel
-    };
-
     scope.edit = () => {
       // finds and focuses on the text input field
       // a brief timeout is necessary before trying to focus
       $timeout(() => { elem.find('input')[0].focus(); }, 50);
       scope.status.edit = 1;
+    };
+
+    if (attrs.editing != null) scope.status.edit = true;
+    if (scope.status.edit) { scope.edit(); }
+
+    scope.form = {
+      newValue: scope.ngModel
     };
 
     scope.focus = () => {

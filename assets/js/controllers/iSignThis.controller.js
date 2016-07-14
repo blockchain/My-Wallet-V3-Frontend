@@ -2,24 +2,40 @@ angular
   .module('walletApp')
   .controller('iSignThisCtrl', iSignThisCtrl);
 
-function iSignThisCtrl ($rootScope, $scope, iSignThisProps, $uibModal, $uibModalInstance, Alerts, MyWallet, Wallet) {
+function iSignThisCtrl ($rootScope, $scope, iSignThisProps, $uibModal, $uibModalInstance, $uibModalStack, Alerts, MyWallet, Wallet, trade, currency) {
   $scope.settings = Wallet.settings;
   $scope.profile = MyWallet.wallet.profile;
+  $scope.fiatCurrency = Wallet.settings.currency;
   $scope.exchange = MyWallet.wallet.external.coinify;
-  $scope.transaction = {fiat: iSignThisProps.transaction.total};
-  $scope.currencySymbol = iSignThisProps.currencySymbol;
-  $scope.partner = iSignThisProps.partner;
-  $scope.method = iSignThisProps.method;
-  $scope.trades = iSignThisProps.trades;
-  $scope.trade = iSignThisProps.trade;
+
+  if (iSignThisProps) {
+    $scope.transaction = {fiat: iSignThisProps.transaction.total};
+    $scope.partner = iSignThisProps.partner;
+    $scope.method = iSignThisProps.method;
+    $scope.trades = iSignThisProps.trades;
+    $scope.quote = iSignThisProps.quote;
+    $scope.trade = iSignThisProps.trade;
+    $scope.userHasExchangeAcct = $scope.trades.length > 0;
+  } else {
+    $scope.trade = trade;
+    $scope.userHasExchangeAcct = true;
+    $scope.method = {name: trade.medium};
+  }
+
+  $scope.receiveAddress = $scope.trade._receiveAddress;
+  $scope.showReceiveAddress = $rootScope.rootURL && $rootScope.rootURL !== '/';
+
   $scope.step = 5;
 
-  $scope.allSteps = $scope.trades.length < 1;
-
-  $scope.cancel = () => {
-    $uibModalInstance.dismiss('');
-    $rootScope.$broadcast('disableAllSteps');
+  $scope.close = (all) => {
+    Alerts.confirm('ARE_YOU_SURE_CANCEL', {}, '', 'IM_DONE').then(() => {
+      all ? $uibModalStack.dismissAll() : $uibModalInstance.dismiss('');
+      $rootScope.$broadcast('initExchangeAcct');
+    });
   };
 
-  $scope.close = () => Alerts.confirm('ARE_YOU_SURE_CANCEL', {}, '', 'IM_DONE').then($scope.cancel);
+  $scope.$watch('fiatCurrency', () => {
+    let curr = $scope.fiatCurrency || null;
+    $scope.currencySymbol = currency.conversions[curr.code];
+  });
 }
