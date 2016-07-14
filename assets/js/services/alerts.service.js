@@ -40,13 +40,14 @@ function Alerts ($timeout, $rootScope, $translate, $uibModal) {
   }
 
   function display (type, message, keep = false, context = service.alerts) {
-    $translate(message).then(translation => {
+    let displayAlert = (translation) => {
       let alert = { type: type, msg: translation };
       if (isDuplicate(context, alert)) return;
       alert.close = close.bind(null, alert, context);
       if (!keep) alert.timer = $timeout(() => alert.close(), 7000);
       context.push(alert);
-    });
+    };
+    $translate(message).then(displayAlert, () => displayAlert(message));
   }
 
   function displayVerifiedEmail () {
