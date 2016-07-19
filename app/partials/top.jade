@@ -6,12 +6,12 @@
         | Be your own bank.
         span.type-xs.mls.align-offset.pos-rel &reg;
     .flex
-      button.btn.button-default.button-short.type-h5.flex-center.flex-justify.mrm(ng-click="send()")
-        i.mrs.flex-center.bc-icon-send
+      button.btn.button-default.button-short.type-h5.mrm(ng-click="send()")
+        i.mrs.media-middle.bc-icon-send
         span.em-300(translate="SEND")
-      button.btn.button-default.button-short.type-h5.flex-center.flex-justify.mrm(ng-click="request()")
+      button.btn.button-default.button-short.type-h5.mrm(ng-click="request()")
         .message-beacon.green(ng-show="requestBeacon")
-        i.mrs.flex-center.bc-icon-receive
+        i.mrs.media-middle.bc-icon-receive
         span.em-300(translate="REQUEST")
       a.pointer.flex-center(ng-click="request(true)" translate="YOUR_ADDRESS" ng-show="hasLegacyAddresses()")
   .heavy.pointer.flex-column.flex-align-end.right-align.pointer(ng-click="toggleDisplayCurrency()", ng-show="status.didUpgradeToHd")
