@@ -12,7 +12,7 @@
                 partner="partner"
                 method="method"
                 step="step")
-  .modal-body.fade(ng-class="{'buy-amount': step === 0, 'buy-select-country': step === 1, 'buy-email': step === 2, 'buy-accept-terms': step === 3, 'buy-summary': step === 4}")
+  .modal-body.fade(ng-class="{'buy-amount': step === 0, 'buy-select-country': step === 1, 'buy-email': step === 2, 'buy-accept-terms': step === 3, 'buy-summary': step === 4, 'isx': step === 5}")
     .alert-in-app
       alerts(context="alerts")
     div(ng-show="step === 0")
@@ -25,12 +25,14 @@
       include ./buy-accept-terms
     div(ng-show="step === 4")
       include ./buy-summary
+    div.iframe(ng-show="step === 5")
+      isignthis(transaction-id='trade.iSignThisID' on-load="loadISX()")
     .flex-end.flex-center.mtl
         span.mrs.type-sm Powered by
         a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
           img.coinify-logo(src="img/coinify-logo.svg")
   .modal-footer.flex-end.flex-row
-    button.button-muted(ng-show="step > 0" ng-click="prevStep()") Go Back
+    button.button-muted(ng-show="step > 0 && step < 5" ng-click="prevStep()") Go Back
     
     .flex-end.flex-1(ng-hide="status.loading")
       button.button-muted.mrm(
@@ -42,7 +44,7 @@
           data-style="expand-left"
           ui-ladda="status.waiting"
           ng-disabled="isDisabled() || step === 2"
-          ng-hide="step === 3 || step === 4")
+          ng-hide="step > 2")
         button.button-success(
           ladda-translate="CONTINUE"
           ng-click="signup()"
@@ -51,7 +53,7 @@
           ng-disabled="isDisabled()"
           ng-show="step === 3")
         button.button-success(
-          ladda-translate="CONTINUE"
+          ladda-translate="CONFIRM_PAY"
           ng-click="buy()"
           data-style="expand-left"
           ui-ladda="status.waiting"

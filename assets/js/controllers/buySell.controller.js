@@ -51,7 +51,7 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
     const success = () => {
       $uibModal.open({
         templateUrl: 'partials/buy-modal.jade',
-        windowClass: 'bc-modal initial',
+        windowClass: 'bc-modal auto buy',
         controller: 'BuyCtrl',
         backdrop: 'static',
         keyboard: false,

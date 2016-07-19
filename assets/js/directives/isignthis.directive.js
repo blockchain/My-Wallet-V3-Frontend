@@ -6,6 +6,7 @@ function isignthis ($sce) {
   const directive = {
     restrict: 'E',
     scope: {
+      onLoad: '&',
       transactionId: '='
     },
     template: `
@@ -147,6 +148,7 @@ function isignthis ($sce) {
           console.log('error. e=' + JSON.stringify(e));
         })
         .route(function (e) {
+          if (!scope.ready) scope.onLoad(); scope.ready = true;
           console.log('route. e=' + JSON.stringify(e));
         })
         .publish();

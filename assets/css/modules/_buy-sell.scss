@@ -58,6 +58,7 @@
         @include bc-ng-animate('buy-email', 'height', '122px', '260px');
         @include bc-ng-animate('buy-accept-terms', 'height', '260px', '160px');
         @include bc-ng-animate('buy-summary', 'height', '160px', '320px');
+        @include bc-ng-animate('isx', 'height', '320px', '450px');
       }
     }
   }
@@ -68,5 +69,27 @@
   .success,
   .width-20 {
     @include transition(color $slow);
+  }
+}
+
+.isx {
+  padding: 0px;
+}
+
+.iframe {
+  height: 450px;
+  isignthis {
+    position: absolute;
+    overflow: scroll;
+    height: 100%;
+    width: 100%;
+  }
+  #isx-iframe {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    border: 0;
+    left: 0;
+    top: 0;
   }
 }

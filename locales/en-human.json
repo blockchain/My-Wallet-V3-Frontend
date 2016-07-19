@@ -785,5 +785,6 @@
   "RATE_AUTO_REFRESH": "Exchange rates automatically refresh after 15 minutes.",
   "RATE_EXPIRES": "Rate Expires: {{::count}}",
   "NOT_FINISHED": "Not Finished",
-  "awaiting_transfer_in": "Pending"
+  "awaiting_transfer_in": "Pending",
+  "CONFIRM_PAY": "Confirm & Pay"
 }

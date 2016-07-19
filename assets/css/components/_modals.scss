@@ -202,6 +202,14 @@
       margin: 30px auto !important;
     }
   }
+  &.buy {
+    .modal-dialog {
+      .modal-body {
+        width: 600px;
+        &.isx { width: 1000px; }
+      }
+    }
+  }
   &.block {
     display: block !important;
     .modal-dialog {

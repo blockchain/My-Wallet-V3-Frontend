@@ -83,6 +83,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
     if (!$scope.exchange.user) return;
 
     $scope.transaction.btc = 0;
+    $scope.trade = null;
     $scope.quote = null;
 
     let amt = $scope.transaction.fiat;
@@ -119,8 +120,10 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
       $scope.step = 2;
     } else if (!$scope.exchange || !$scope.exchange.user) {
       $scope.step = 3;
-    } else {
+    } else if (!$scope.trade) {
       $scope.step = 4;
+    } else {
+      $scope.step = 5;
     }
   };
 
@@ -172,31 +175,14 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
   $scope.buy = () => {
     $scope.status.waiting = true;
 
-    const success = (trade) => {
-      $scope.status = {};
-
-      let iSignThisProps = {
-        trade: trade,
-        quote: $scope.quote,
-        method: $scope.method,
-        trades: $scope.trades,
-        partner: $scope.partner,
-        transaction: $scope.transaction,
-        currencySymbol: $scope.currencySymbol
-      };
-
-      $uibModal.open({
-        templateUrl: 'partials/isignthis-modal.jade',
-        backdrop: 'static',
-        keyboard: false,
-        controller: 'iSignThisCtrl',
-        windowClass: 'bc-modal coinify',
-        resolve: { iSignThisProps: iSignThisProps,
-                   trade: null }
-      });
-    };
+    const success = (trade) => $scope.trade = trade;
 
     $scope.exchange.buy(-$scope.transaction.fiat).then(success, $scope.standardError);
+  };
+
+  $scope.loadISX = () => {
+    $scope.status = {};
+    $scope.nextStep();
   };
 
   $scope.cancel = () => $uibModalInstance.dismiss('');
