@@ -5,6 +5,7 @@ angular
 function SettingsPreferencesCtrl ($scope, Wallet, Alerts, currency, $uibModal, $filter, $translate, $window, languages, bcPhoneNumber) {
   $scope.user = Wallet.user;
   $scope.settings = Wallet.settings;
+  $scope.notifications = $scope.settings.notifications;
   $scope.languages = languages;
   $scope.currencies = currency.currencies;
   $scope.btcCurrencies = currency.bitCurrencies;
@@ -14,9 +15,15 @@ function SettingsPreferencesCtrl ($scope, Wallet, Alerts, currency, $uibModal, $
   $scope.changeCurrency = Wallet.changeCurrency;
   $scope.changeBTCCurrency = Wallet.changeBTCCurrency;
 
-  $scope.errors = {};
-  $scope.mobileNumber = { step: 0 };
+  $scope.updateNotificationsType = () => {
+    Wallet.updateNotificationsType($scope.notifications).then(() => {
+      if ($scope.settings.notifications_on !== 2) {
+        Wallet.updateNotificationsOn({ receive: true });
+      }
+    });
+  };
 
+  $scope.mobileNumber = { step: 0 };
   $scope.formattedMobileNumber = null;
 
   $scope.$watch('status.isLoggedIn', (newValue) => {
@@ -29,14 +36,8 @@ function SettingsPreferencesCtrl ($scope, Wallet, Alerts, currency, $uibModal, $
     }
   });
 
-  $scope.enableNotifications = () => Wallet.enableNotifications();
-  $scope.disableNotifications = () => Wallet.disableNotifications();
   $scope.setHandleBitcoinLinks = () => Wallet.handleBitcoinLinks();
   $scope.canHandleBitcoinLinks = () => $window.navigator.registerProtocolHandler != null;
 
   $scope.browserCanHandleBitcoinLinks = $scope.canHandleBitcoinLinks();
-
-  $scope.clearErrors = () => {
-    $scope.errors = {};
-  };
 }

@@ -102,3 +102,7 @@ input.lrg {
     min-width: 250px;
   }
 }
+
+input[type="checkbox"] {
+  margin: 0;
+}
