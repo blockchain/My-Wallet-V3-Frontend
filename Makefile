@@ -13,7 +13,7 @@ pgp: node_modules
 	ruby ./check_pgp_signatures.rb
 
 dist: build
-	grunt dist:$(VERSION):$(BACKEND_DOMAIN):$(API_DOMAIN)
+	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN)
 	npm shrinkwrap --dev
 
 clean:
