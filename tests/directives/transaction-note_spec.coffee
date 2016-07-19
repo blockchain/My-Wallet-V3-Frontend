@@ -1,4 +1,4 @@
-describe "Transaction Note Directive", ->
+fdescribe "Transaction Note Directive", ->
   $compile = undefined
   $rootScope = undefined
   element = undefined
@@ -55,6 +55,17 @@ describe "Transaction Note Directive", ->
     spyOn(Wallet, "deleteNote")
     isoScope.deleteNote()
     isoScope.$digest()
+
+    addressLabel = element[0].querySelectorAll('.aaa.tx-note')
+    expect(angular.element(addressLabel).hasClass('ng-hide')).toBe(false)
+  )
+
+  it "should show a label when All wallets are filtered", inject((Wallet) ->
+    $rootScope.account = '';
+    spyOn(Wallet, "deleteNote")
+    isoScope.deleteNote()
+    element = $compile("<transaction-note transaction='transaction' account='account'></transaction-note>")($rootScope)
+    $rootScope.$digest()
 
     addressLabel = element[0].querySelectorAll('.aaa.tx-note')
     expect(angular.element(addressLabel).hasClass('ng-hide')).toBe(false)
