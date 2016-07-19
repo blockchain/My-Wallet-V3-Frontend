@@ -309,10 +309,6 @@
   }
 }
 
-[uib-popover-popup].popover.request-popover {
-  display: none !important; //popovers dont play nice on mobile
-}
-
 .receive-code {
   canvas {
     display: block;
