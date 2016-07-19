@@ -154,6 +154,7 @@
   "RECOVERY_PHRASE_EXPLAIN" : "Your recovery phrase can be used to restore all your funds in the case of a lost password or a loss of service at Blockchain. Note, that the recovery phrase never changes and recovers all of your existing bitcoins as well as newly received funds in this wallet. Please note that imported addresses are not backed up by the wallet recovery phrase. We strongly recommend to transfer funds from imported addresses into this wallet.",
   "CONFIRM_RECOVERY_PHRASE" : "Backup Phrase",
   "RECOVERY_ERROR": "Unable to import now, please try again.",
+  "MAIN_PW_REQUIRED": "Enter your main wallet password to view your Recovery Phrase.",
   "NEXT_STEP" : "Next Step",
   "NEXT" : "Next",
   "EMAIL" : "Email",

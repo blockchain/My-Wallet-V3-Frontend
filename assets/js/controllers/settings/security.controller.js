@@ -2,11 +2,10 @@ angular
   .module('walletApp')
   .controller('SettingsSecurityCtrl', SettingsSecurityCtrl);
 
-function SettingsSecurityCtrl ($scope, Wallet, Alerts, currency, $uibModal, $translate) {
+function SettingsSecurityCtrl ($scope, $uibModal, Wallet, Alerts) {
   $scope.settings = Wallet.settings;
   $scope.user = Wallet.user;
 
-  $scope.btc = currency.bitCurrencies[0];
   $scope.processToggleRememberTwoFactor = null;
 
   $scope.display = { advanced: false };
@@ -55,6 +54,25 @@ function SettingsSecurityCtrl ($scope, Wallet, Alerts, currency, $uibModal, $tra
         }
       }
     });
+  };
+
+  $scope.confirmRecoveryPhrase = () => {
+    let openModal = () => $uibModal.open({
+      templateUrl: 'partials/confirm-recovery-phrase-modal.jade',
+      controller: 'ConfirmRecoveryPhraseCtrl',
+      windowClass: 'bc-modal'
+    });
+    let validatePw = (result) => {
+      if (Wallet.isCorrectMainPassword(result)) {
+        openModal();
+      } else {
+        Alerts.displayError('INCORRECT_PASSWORD');
+        $scope.confirmRecoveryPhrase();
+      }
+    };
+    $scope.settings.secondPassword
+      ? openModal()
+      : Alerts.prompt('MAIN_PW_REQUIRED', { type: 'password' }).then(validatePw);
   };
 
   $scope.clearErrors = () => {

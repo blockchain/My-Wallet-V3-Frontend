@@ -8,8 +8,8 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
         span.label.label-warning(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
         span.label.label-success(translate="VERIFIED", ng-show="status.didConfirmRecoveryPhrase")
       p.text.em-300.hidden-xs.hidden-sm(translate="RECOVERY_PHRASE_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result
-      confirm-recovery-phrase
+    .col-sm-12.col-md-6.setting-result.mbl
+      button.button-primary(type="button" ng-click="confirmRecoveryPhrase()" translate="CONFIRM_RECOVERY_PHRASE")
 
   .form-group.mbn.border-bottom.clearfix.pvl(ng-controller="ChangePasswordCtrl")
     div(settings-form)
