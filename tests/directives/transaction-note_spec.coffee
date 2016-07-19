@@ -1,4 +1,4 @@
-fdescribe "Transaction Note Directive", ->
+describe "Transaction Note Directive", ->
   $compile = undefined
   $rootScope = undefined
   element = undefined
@@ -133,11 +133,6 @@ fdescribe "Transaction Note Directive", ->
     expect(isoScope.transaction.draftNote).toBe(isoScope.transaction.note)
     expect(isoScope.editNote).toBe(false)
     return
-
-  it "should save a note on enter", ->
-    spyOn(isoScope, "saveNote")
-    isoScope.saveOnEnter({keyCode: 13})
-    expect(isoScope.saveNote).toHaveBeenCalled()
 
   it "does delete note", ->
     isoScope.deleteNote()
