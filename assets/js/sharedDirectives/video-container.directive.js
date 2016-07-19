@@ -8,8 +8,8 @@ function videoContainer ($window, $timeout, $sce) {
   const directive = {
     restrict: 'E',
     template: `
-    <div ng-click="load(); toggle();" ng-class="{'playing': playing}" class="video-container center"><img ng-src="{{::img}}" ng-class="{'transparent': playing}"/><img src="img/spinner.gif" class="loading"/>
-      <video src="" type="video/mp4" controls="true"></video>
+    <div ng-click="load(); toggle();" ng-class="{'playing': playing}" class="video-container center"><img class="imag-prev" ng-src="{{::img}}" ng-class="{'transparent': playing}"/><img src="img/spinner.gif" class="loading"/>
+      <video src="" type="video/mp4"></video>
     </div>
     `,
     replace: true,
@@ -22,6 +22,7 @@ function videoContainer ($window, $timeout, $sce) {
   function link (scope, elem, attrs) {
     scope.img = attrs['img'];
     scope.src = attrs['src'];
+    scope.class = attrs['class'];
     scope.videoElem = elem.find('video')[0];
 
     scope.toggle = () => scope.playing = !scope.playing;
