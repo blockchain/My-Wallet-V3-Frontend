@@ -148,6 +148,15 @@
 }
 
 // mobile flex support
+@media (max-width: 992px) {
+  .flex-start-tablet {
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+  }
+}
+
 @media (max-width: 768px) {
   .flex-column-mobile {
     -webkit-box-orient: vertical;
