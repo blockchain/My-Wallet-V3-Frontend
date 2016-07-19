@@ -114,38 +114,32 @@
   .new.container-max-width.container-fluid.width-100
       .flex-row.flex-column-mobile.flex-column-med
         video-container.col-md-6.blue-play-button.small-image(img="img/blockchain-ad-placeholder.jpg" src="https://storage.googleapis.com/bc_public_assets/video/blockchain-ad.mp4")
-        .flex-column.width-50.flex-center.flex-justify
-          #timeline.flex-row.flex-center.mhvl.mhl-mobile.mvl
-            img(src='img/logo-timeline.png')
-          .bitinf.flex-row.flex-center.mbl.mhvl.mhl-mobile
+        .flex-column.width-50.flex-1.flex-center.flex-justify
+          #timeline.flex-row.flex-1.flex-center.mhvl.mhl-mobile.mvl
+            img.flex-1(src='img/logo-timeline.png')
+          .bitinf.flex-row.flex-center.mbl.mhvl.mhl-mobile.flex-1
             img.width-3.width-200-mobile.mrl(src='img/logo-what-bitcoin.png')
-            .flex-column
-              h3.mtn.blue What is Bitcoin?
-              p
+            .flex-column.flex-1
+              h3.flex-1.mtn.blue What is Bitcoin?
+              p.flex-1
                 | Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike it predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees.
-          .bitinf.flex-row.flex-center.mvl.mhvl.mhl-mobile
+          .bitinf.flex-row.flex-center.mvl.mhvl.mhl-mobile.flex-1
             img.width-3.width-200-mobile.mrl(src='img/logo-why-bitcoin.png')
-            .flex-column
-              h3.blue Why use it?
-              p
+            .flex-column.flex-1
+              h3.flex-1.blue Why use it?
+              p.flex-1
                 | You use bitcoin for many of the same reasons you opt to send an email, stream a movie, or download a song. It’s faster, cheaper, more secure and immutable. And its uses extend beyond the peer to peer payments. In many places, bitcoin is less volatile than the local currency so some use it to store value while others use it to consume at hundreds of thousands of vendors across the globe and online.
-  .container.plax.hidden-xs
-    #stat-row.flex-row
-      div
-        h1
-          | 60 Million+
-        h2
-          | Transactions
-      div
-        h1
-          | 7 Million+
-        h2
-          | Users
-      div
-        h1
-          | 120+
-        h2
-          | Countries Served
+  .container.plax.hidden-xs.flex-center
+    .flex-row.flex-around.width-100
+      .flex-column.center
+        span.title.white.lh1 60 Million+
+        span.type-h5.white Transactions
+      .flex-column.center
+        span.title.white.lh1 7 Million+
+        span.type-h5.white Users
+      .flex-column.center
+        span.title.white.lh1 120+
+        span.type-h5.white Countries Served
   #experiencedUser.container-max-width
     .flex-row.flex-top.flex-between
       scroll-in-view.flex-1(img="img/android-feature.jpg")
