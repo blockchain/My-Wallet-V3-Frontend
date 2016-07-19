@@ -78,10 +78,8 @@
 
       .payment-url.flex-around.flex-row(ng-if="paymentRequestURL()")
         .flex-column.receive-address.flex-center(ng-class="{'max-width': advanced}"
-                                                 uib-popover="{{'COPY_HELPER' | translate}}" 
-                                                 popover-class="message-contextual request-popover"
-                                                 popover-trigger="mouseenter"
-                                                 popover-append-to-body="true")
+                                                 uib-tooltip="{{'COPY_HELPER' | translate}}" 
+                                                 tooltip-append-to-body="true")
           h4.mbl(translate="COPY_AND_SHARE")
           span.flex-align-self-end.phs.pvs.pointer(ng-show="fields.amount || fields.label && advanced" 
                                                    ng-class="{'bg-light-blue': showPaymentRequestURL}"
@@ -95,10 +93,9 @@
               span(ng-hide="(fields.amount || fields.label) && showPaymentRequestURL") {{ paymentRequestAddress() }}
               span(ng-show="(fields.amount || fields.label) && showPaymentRequestURL") {{ paymentRequestURL() }}
         span.or.flex-center.mrl.mll(translate="OR")
-        .receive-code.flex-column.flex-center.flex-around(uib-popover="{{'QR_HELPER' | translate}}" 
-                                              popover-class="message-contextual request-popover"
-                                              popover-trigger="mouseenter"
-                                              popover-append-to-body="true")
+        .receive-code.flex-column.flex-center.flex-around(uib-tooltip="{{'QR_HELPER' | translate}}" 
+                                              tooltip-trigger="mouseenter"
+                                              tooltip-append-to-body="true")
           h4(translate="SCAN")
           p(ng-hide="status.didInitializeHD")
             img(src="img/spinner.gif")  
@@ -109,17 +106,12 @@
 .modal-footer.flex-between.flex-center.pal
   .flex-center
     button.btn.button-default(ng-hide="advanced || fields.to.index == undefined", ng-click="advancedReceive()", translate="CUSTOMIZE"
-                              uib-popover="{{'CUSTOMIZE_HELPER' | translate}}"
-                              popover-class="message-contextual request-popover"
-                              popover-append-to-body="true"
-                              popover-placement="top-left"
-                              popover-trigger="mouseenter")
+                              uib-tooltip="{{'CUSTOMIZE_HELPER' | translate}}"
+                              tooltip-append-to-body="true")
     button.btn.button-default(ng-show="advanced", ng-click="regularReceive()", translate="BACK")
   .flex-center.flex-end
     button.button-success.btn(ng-click="done()", translate="DONE" ng-hide="advanced && fields.label != ''")
     a.dark-grey.mrm(ng-click="cancel()", translate="CLOSE" ng-show="advanced && fields.label != ''")
     button.button-success.btn(ng-click="done()", translate="SAVE" ng-show="advanced && fields.label != ''"
-                              uib-popover="{{'SAVE_HELPER' | translate:{label: fields.to.label} }}"
-                              popover-class="message-contextual request-popover"
-                              popover-append-to-body="true"
-                              popover-trigger="mouseenter")
+                              uib-tooltip="{{'SAVE_HELPER' | translate:{label: fields.to.label} }}"
+                              tooltip-append-to-body="true")
