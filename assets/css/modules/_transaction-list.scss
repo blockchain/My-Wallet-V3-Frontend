@@ -238,7 +238,10 @@ button {
 
 a.date,p.date { color: $black; }
 
-.amountTotal{ float: none;}
+.amountTotal {
+  float: none;
+  min-width: 130px;
+}
 
 .from, .to{
   padding: 5px 0;
