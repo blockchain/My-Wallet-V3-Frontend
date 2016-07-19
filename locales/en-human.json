@@ -715,6 +715,14 @@
   "BLOCK": "block",
   "BLOCKS": "blocks",
   "SMALL_FEE_WARNING": "Your fee is so small that your transaction may never be confirmed.",
+  "LARGE_TX": {
+    "TITLE": "Large Transaction",
+    "BODY_1": "This is an oversized bitcoin transaction!",
+    "BODY_2": "Your wallet needs to consolidate many smaller payments you've received in the past. This requires a relatively high fee in order to be confirmed quickly.",
+    "NORMAL_SIZE": "The Normal Size",
+    "RECOMMENDED_FEE": "Recommended Fee",
+    "ACCEPT_FEE": "Accept Higher Fee"
+  },
   "NO_UNSPENT_OUTPUTS" : "Missing coins to spend",
   "BELOW_DUST_THRESHOLD" : "One of your amounts is below the required minimum of {{ threshold }} satoshis",
   "STRANGE_SCRIPT" : "Strange Script",
