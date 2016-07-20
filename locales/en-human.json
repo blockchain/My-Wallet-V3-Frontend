@@ -655,7 +655,7 @@
   "REDIRECTING": "We're redirecting you to your wallet now!",
   "TAKES_A_WHILE": "This may take a while. If your browser asks if you want to cancel the script, please press continue.",
   "NOTIFICATIONS" : "Notifications",
-  "NOTIFICATIONS_EXPLAIN" : "Get notified whenever your wallet receives bitcoin. Only labeled addresses and imported addresses will trigger notifications.",
+  "NOTIFICATIONS_EXPLAIN" : "Get notified when you receive bitcoin.",
   "VERIFY_EMAIL_FIRST" : "Verify your email address to enable notifications",
   "VERIFY_MOBILE_FIRST": "Verify your mobile number to enable notifications",
   "SMS": "SMS",
