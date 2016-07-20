@@ -24,12 +24,6 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     let addresses = Wallet.legacyAddresses().filter(a => !a.archived);
     let addressBook = Wallet.addressBook().map(format.addressBook);
 
-    scope.destinations = accounts.concat(addresses).map(format.destination).concat(addressBook);
-
-    if (scope.ignore) {
-      scope.destinations = scope.destinations.filter(d => d.label !== scope.ignore.label);
-    }
-
     scope.selectOpen = false;
     scope.limit = 50;
     scope.incLimit = () => scope.limit += 50;
@@ -73,5 +67,12 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     if (!scope.model) scope.clearModel();
     scope.$watch('model', scope.change);
     scope.$watch('selectOpen', (open) => open && scope.focusInput());
+
+    scope.$watch('ignore', (ignore) => {
+      scope.destinations = accounts.concat(addresses).map(format.destination).concat(addressBook);
+      if (ignore && typeof ignore === 'object') {
+        scope.destinations = scope.destinations.filter(d => d.label !== ignore.label);
+      }
+    });
   }
 }
