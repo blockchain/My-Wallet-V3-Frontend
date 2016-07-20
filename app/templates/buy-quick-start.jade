@@ -1,0 +1,36 @@
+.border.paml.mtl
+  .flex-between
+    button.button-muted.btn.button-default.type-h5.width-33.mrm(ng-repeat="n in [20,40,60] track by $index" ng-click="buy({amt: n})")
+      span {{n}}
+      |  
+      span.type-xs {{ transaction.currency.code }}
+  .flex-between.mtml
+    button.button-muted.btn.button-default.type-h5.width-33.mrm(ng-repeat="n in [80, 100, 200] track by $index" ng-click="buy({amt: n})")
+      span {{n}}
+      |  
+      span.type-xs {{ transaction.currency.code }}
+  .flex-column.mtml
+    section.input-group
+      div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
+        button.btn.btn-default.dropdown-toggle(type="button" uib-dropdown-toggle aria-haspopup="true")
+          span {{ transaction.currency.code }}
+          span.caret
+        ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
+          li(ng-repeat="currency in currencies"
+             role="menuitem" 
+             ng-click="changeCurrency({currency: currency});"
+             ng-class="{active: isCurrencySelected(currency)}")
+            a(ng-click="$event.preventDefault()") {{ currency.code }}
+      input.form-control(
+        type="number"
+        ng-model="transaction.fiat"
+        name="fiat"
+        tabindex="1"
+        on-enter="buy()"
+        placeholder="0"
+        min="0"
+        max="2100000000000000"
+        required
+      )
+  .flex-end.mtml
+    button.button-success(translate="Buy Bitcoin" ng-click="buy()")
