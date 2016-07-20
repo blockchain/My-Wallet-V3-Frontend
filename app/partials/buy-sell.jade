@@ -35,12 +35,18 @@
               i.type-lrg.ti-check-box.blue.mrs 
               span.type-h5(translate="Secure: Encrypted Communication")
           button.button-primary.mtm(translate="Get Started" ng-click="buy()")
-    .flex-column.mtl(ng-show="trades")
-      h4.type-h4(translate="History")
-      table.width-100.border.mbvl
-        th.ptm.plm.pbn Date
-        th.ptm.pbn Amount
-        th.ptm.pbn Status
-        tr(ng-repeat="trade in trades" trade="trade")
-              
-
+    .flex-column.mtl(ng-show="trades.pending || trades.completed")
+      div(ng-show="trades.pending.length")
+        h4.type-h4(translate="Pending")
+        table.width-100.border.mbvl
+          th.ptm.plm.pbn Date
+          th.ptm.pbn Amount
+          th.ptm.pbn Status
+          tr(ng-repeat="trade in trades.pending" trade="trade" buy="buy(amt, trade)" pending="true")
+      div(ng-show="trades.completed.length")
+        h4.type-h4(translate="History")
+        table.width-100.border.mbvl
+          th.ptm.plm.pbn Date
+          th.ptm.pbn Amount
+          th.ptm.pbn Status
+          tr(ng-repeat="trade in trades.completed" trade="trade")

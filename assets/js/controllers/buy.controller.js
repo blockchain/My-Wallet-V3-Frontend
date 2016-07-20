@@ -2,18 +2,19 @@ angular
   .module('walletApp')
   .controller('BuyCtrl', BuyCtrl);
 
-function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModal, country, exchange, trades, fiat) {
-  $scope.btcCurrency = Wallet.settings.btcCurrency;
-  $scope.userHasExchangeAcct = trades.length > 0;
+function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModal, country, exchange, trades, fiat, trade) {
+  $scope.settings = Wallet.settings;
+  $scope.btcCurrency = $scope.settings.btcCurrency;
+  $scope.userHasExchangeAcct = trades.pending.length || trades.completed.length;
   $scope.currencies = currency.coinifyCurrencies;
   $scope.profile = MyWallet.wallet.profile;
-  $scope.settings = Wallet.settings;
   $scope.countries = country;
   $scope.user = Wallet.user;
   $scope.exchange = exchange;
   $scope.trades = trades;
   $scope.alerts = [];
   $scope.status = {};
+  $scope.trade = trade;
   $scope.step = 0;
 
   $scope.fields = { email: $scope.user.email };
@@ -48,7 +49,9 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
 
   $scope.fetchProfile = () => {
     $scope.status.waiting = true;
-    const success = () => $scope.status = {};
+    const success = () => {
+      $scope.status = {};
+    };
 
     return $scope.exchange.fetchProfile().then(success, $scope.standardError);
   };
@@ -83,7 +86,6 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
     if (!$scope.exchange.user) return;
 
     $scope.transaction.btc = 0;
-    $scope.trade = null;
     $scope.quote = null;
 
     let amt = $scope.transaction.fiat;
@@ -95,6 +97,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
       $scope.status = {};
       $scope.quote = quote;
       $scope.updateAmounts();
+      Alerts.clear($scope.alerts);
     };
 
     $scope.exchange.getQuote(amt, curr).then(success, $scope.standardError);
@@ -154,7 +157,10 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
   $scope.changeEmail = (email, successCallback, errorCallback) => {
     $scope.rejectedEmail = undefined;
 
-    const success = () => $scope.editEmail = false; successCallback();
+    const success = () => {
+      Alerts.clear($scope.alerts);
+      $scope.editEmail = false; successCallback();
+    };
     const error = () => $scope.editEmail = false; errorCallback();
 
     Wallet.changeEmail(email, success, error);
@@ -165,6 +171,7 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
 
     const success = () => {
       $scope.status = {};
+      Alerts.clear($scope.alerts);
       $scope.fetchProfile().then($scope.getQuote);
     };
 
@@ -175,18 +182,40 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
   $scope.buy = () => {
     $scope.status.waiting = true;
 
-    const success = (trade) => $scope.trade = trade;
+    const success = (trade) => {
+      Alerts.clear($scope.alerts);
+      $scope.trade = trade;
+    };
 
     $scope.exchange.buy(-$scope.transaction.fiat).then(success, $scope.standardError);
   };
 
   $scope.loadISX = () => {
+    if ($scope.step === 5) return;
     $scope.status = {};
     $scope.nextStep();
   };
 
-  $scope.cancel = () => $uibModalInstance.dismiss('');
-  $scope.close = () => Alerts.confirm('ARE_YOU_SURE_CANCEL', {}, '', 'IM_DONE', {}).then($scope.cancel);
+  $scope.decline = () => {
+    $scope.cancel();
+    Alerts.confirm('DECLINED_TRANSACTION', {}, '', 'TRY_AGAIN', {}).then(() => {
+      $rootScope.$broadcast('initBuy');
+    });
+  };
+
+  $scope.cancel = () => {
+    $uibModalInstance.dismiss('');
+    $scope.trade = null;
+  };
+
+  $scope.close = (acct) => {
+    Alerts.confirm('ARE_YOU_SURE_CANCEL', {}, '', 'IM_DONE', {}).then(() => {
+      if (acct) $scope.initExchangeAcct();
+      $scope.cancel();
+    });
+  };
+
+  if ($scope.trade) $scope.nextStep();
 
   $scope.isCurrencySelected = (currency) => currency === $scope.transaction.currency;
 
@@ -205,5 +234,8 @@ function BuyCtrl ($scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance,
     if ($scope.exchange && $scope.exchange.user && !$scope.exchange.profile) $scope.fetchProfile();
   });
 
-  $scope.$on('initExchangeAcct', () => $scope.userHasExchangeAcct = true);
+  $scope.initExchangeAcct = () => {
+    $scope.userHasExchangeAcct = true;
+    $rootScope.$broadcast('initExchangeAcct');
+  };
 }

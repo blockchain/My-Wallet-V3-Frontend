@@ -1,12 +1,12 @@
 tr
-  td.vat.ptm.plm 
+  td.vat.ptm.plm.pbm
     span {{ trade.createdAt | date:'MM/dd/yyyy @ h:mma' }}
     br
     span Bought
   td.vat.ptm
     span {{ trade.outAmountExpected }} {{ trade.outCurrency }} for 
-    span.bold.mrs {{ trade.inAmount }} {{ trade.inCurrency }}
+    span.em-600.mrs {{ trade.inAmount }} {{ trade.inCurrency }}
     span.blue.underline.pointer Details
   td.vat.ptm
-    span.mrs {{ trade._state | translate }}
-    span.blue.underline.pointer(ng-click="buy()") Finish Payment
+    span.mrs {{ trade.state | translate }}
+    span.blue.underline.pointer(ng-click="buy({amt: trade.inAmount, trade: trade})" ng-show="pending") Finish Payment

@@ -9,7 +9,9 @@ function trade ($uibModal) {
     restrict: 'A',
     replace: true,
     scope: {
-      trade: '='
+      pending: '@',
+      trade: '=',
+      buy: '&'
     },
     templateUrl: 'templates/trade.jade',
     link: link
@@ -17,18 +19,6 @@ function trade ($uibModal) {
   return directive;
 
   function link (scope, elem, attrs) {
-    scope.buy = () => {
-      let iSignThisProps = null;
-
-      $uibModal.open({
-        templateUrl: 'partials/isignthis-modal.jade',
-        backdrop: 'static',
-        keyboard: false,
-        controller: 'iSignThisCtrl',
-        windowClass: 'bc-modal coinify',
-        resolve: { trade: scope.trade,
-                   iSignThisProps: iSignThisProps }
-      });
-    };
+    scope.pending = attrs.pending;
   }
 }

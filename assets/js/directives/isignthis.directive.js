@@ -7,6 +7,7 @@ function isignthis ($sce) {
     restrict: 'E',
     scope: {
       onLoad: '&',
+      onDecline: '&',
       transactionId: '='
     },
     template: `
@@ -148,8 +149,17 @@ function isignthis ($sce) {
           console.log('error. e=' + JSON.stringify(e));
         })
         .route(function (e) {
-          if (!scope.ready) scope.onLoad(); scope.ready = true;
           console.log('route. e=' + JSON.stringify(e));
+          switch (e.state) {
+            case 'PENDING':
+              if (scope.loaded) { scope.loaded = true; return; }
+              scope.onLoad();
+              break;
+            case 'DECLINED':
+              if (scope.declined) { scope.declined = true; return; }
+              scope.onDecline();
+              break;
+          }
         })
         .publish();
     };

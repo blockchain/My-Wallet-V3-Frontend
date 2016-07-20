@@ -404,6 +404,7 @@
   "NO_TRANSACTIONS_YET" : "Your Transactions",
   "SORRY_ZERO_TXS" : "Sorry, we couldn't find any transactions!",
   "PLEASE_TRY_AGAIN" : "Please try different filtering criteria or drop us a line by <b class='pointer blue em-500'>Contacting Support</b>",
+  "TRY_AGAIN": "Try Again",
   "DESCRIBE_TRANSACTIONS" : "Transactions occur when you receive and send bitcoin.",
   "HIT_RECEIVE" : "Click <b class='pointer black em-500'><i class='bc-icon-receive'></i> Receive </b> to deposit bitcoin into your wallet.",
   "HIT_SEND" : "Click <b class='pointer black em-500'><i class='bc-icon-send'></i> Send </b> to instantly send bitcoin anywhere in the world!",
@@ -785,6 +786,13 @@
   "RATE_AUTO_REFRESH": "Exchange rates automatically refresh after 15 minutes.",
   "RATE_EXPIRES": "Rate Expires: {{::count}}",
   "NOT_FINISHED": "Not Finished",
-  "awaiting_transfer_in": "Pending",
-  "CONFIRM_PAY": "Confirm & Pay"
+  "awaiting_transfer_in": "Awaiting Payment",
+  "processing": "Processing Payment",
+  "reviewing": "Reviewing Payment",
+  "completed": "Completed",
+  "cancelled": "Cancelled",
+  "rejected": "Rejected",
+  "expired": "Expired",
+  "CONFIRM_PAY": "Confirm & Pay",
+  "DECLINED_TRANSACTION": "Your transaction was declined. The country or card provider is not accepted by Coinify."
 }

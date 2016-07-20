@@ -24,7 +24,14 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
   $scope.getTrades = () => {
     const success = (trades) => {
       $scope.status = {};
-      $scope.trades = trades;
+      $scope.trades = {};
+      $scope.trades.pending = trades.filter(t => t.state === 'awaiting_transfer_in' ||
+                                                 t.state === 'processing' ||
+                                                 t.state === 'reviewing');
+      $scope.trades.completed = trades.filter(t => t.state === 'expired' ||
+                                                  t.state === 'rejected' ||
+                                                  t.state === 'cancelled' ||
+                                                  t.state === 'completed');
       $scope.userHasExchangeAcct = trades.length > 0;
     };
 
@@ -47,7 +54,7 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
     $scope.exchange.fetchProfile().then($scope.getTrades, error);
   };
 
-  $scope.buy = (amt) => {
+  $scope.buy = (amt, _trade) => {
     const success = () => {
       $uibModal.open({
         templateUrl: 'partials/buy-modal.jade',
@@ -57,12 +64,12 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
         keyboard: false,
         resolve: { exchange: () => $scope.exchange,
                    trades: () => $scope.trades || [],
+                   trade: () => _trade || null,
                    fiat: () => amt || $scope.transaction.fiat }
       });
     };
 
     try {
-      // Might need a loading state here
       if ($scope.exchange.user) $scope.getTrades().then(success);
       else success();
     } catch (e) {
@@ -89,4 +96,6 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
     $scope.exchange = MyWallet.wallet.external.coinify;
     $scope.getTrades();
   });
+
+  $scope.$on('initBuy', () => $scope.buy());
 }
