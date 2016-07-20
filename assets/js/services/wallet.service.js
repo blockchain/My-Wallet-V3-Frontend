@@ -119,7 +119,17 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
         wallet.user.current_ip = result.my_ip;
         wallet.user.guid = result.guid;
         wallet.user.alias = result.alias;
-        wallet.settings.notifications = result.notifications_type && result.notifications_type.length > 0 && result.notifications_type.indexOf(1) > -1 && (parseInt(result.notifications_on, 10) === 0 || parseInt(result.notifications_on, 10) === 2);
+        wallet.settings.notifications_on = result.notifications_on;
+        wallet.settings.notifications = {};
+        if (result.notifications_type) {
+          let notifs = wallet.settings.notifications;
+          result.notifications_type.forEach(code => {
+            let type = Math.log2(code);
+            if (type === 0) notifs.email = true;
+            if (type === 2) notifs.http = true;
+            if (type === 5) notifs.sms = true;
+          });
+        }
         wallet.user.passwordHint = result.password_hint1;
         wallet.setLanguage($filter('getByProperty')('code', result.language, languages));
         wallet.settings.btcCurrency = $filter('getByProperty')('serverCode', result.btc_currency, currency.bitCurrencies);
@@ -876,29 +886,15 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     });
   };
 
-  wallet.enableNotifications = () => {
-    let success = () => {
-      wallet.settings.notifications = true;
-      $rootScope.$safeApply();
-    };
-    let error = () => {
-      Alerts.displayError('Failed to enable notifications');
-      $rootScope.$safeApply();
-    };
-    wallet.my.wallet.enableNotifications(success, error);
-  };
+  wallet.updateNotificationsType = (types) => $q.resolve(
+    MyBlockchainSettings.updateNotificationsType(types).catch(() => {
+      Alerts.displayError('UPDATE_NOTIF_FAIL');
+    })
+  );
 
-  wallet.disableNotifications = () => {
-    let success = () => {
-      wallet.settings.notifications = false;
-      $rootScope.$safeApply();
-    };
-    let error = () => {
-      Alerts.displayError('Failed to disable notifications');
-      $rootScope.$safeApply();
-    };
-    wallet.my.wallet.disableNotifications(success, error);
-  };
+  wallet.updateNotificationsOn = (on) => $q.resolve(
+    MyBlockchainSettings.updateNotificationsOn(on)
+  );
 
   wallet.setFeePerKB = (fee, successCallback, errorCallback) => {
     wallet.my.wallet.fee_per_kb = fee;

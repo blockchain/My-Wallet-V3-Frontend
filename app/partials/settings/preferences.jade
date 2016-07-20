@@ -16,6 +16,7 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
         include ./change-email.jade
         .right-align.mtm
           resend-email-confirmation.mtl(ng-hide="user.isEmailVerified")
+
   .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       .flex-center.mbm
@@ -30,6 +31,7 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
         a.button-primary.display-inline-block(ng-click="mobileNumber.step = 1", translate="CHANGE")
       configure-mobile-number(on-success="mobileNumber.step = 2" on-cancel="mobileNumber.step = 0" ng-show="mobileNumber.step == 1")
       verify-mobile-number(on-success="mobileNumber.step = 0" ng-show="user.mobileNumber.length > 4 && !user.isMobileVerified && mobileNumber.step != 1")
+
   .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="LANGUAGE")
@@ -37,6 +39,7 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
       async-select(selected="settings.language" range="languages" display-prop="name" on-change="changeLanguage")
+
   .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="CURRENCY")
@@ -44,6 +47,7 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
       async-select(selected="settings.currency" range="currencies" display-prop="name" display-optional="code" on-change="changeCurrency")
+
   .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="BITCOIN_CURRENCY")
@@ -51,17 +55,23 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
       async-select(selected="settings.btcCurrency" range="btcCurrencies" display-prop="code" display-optional="btcValue" on-change="changeBTCCurrency")
+
   .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="NOTIFICATIONS")
-      span.label.label-warning(translate="DISABLED", ng-show="!settings.notifications")
-      span.label.label-success(translate="ENABLED", ng-show="settings.notifications")
       p.text.em-300.hidden-xs(translate="NOTIFICATIONS_EXPLAIN")    
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
-      button.button-primary(ng-click="enableNotifications()",  translate="ENABLE",  ng-hide="settings.notifications", ng-disabled="!user.isEmailVerified")
-      button.button-primary(ng-click="disableNotifications()", translate="DISABLE", ng-show="settings.notifications")
-      p.settingtext.mtl(translate="VERIFY_EMAIL_FIRST", ng-show="!settings.notifications && !user.isEmailVerified")
+      label.em-400.type-h5.colon(translate="RECEIVE_BY")
+      br
+      .flex-column.flex-end.display-inline-block.mbl
+        label.flex-between.flex-center
+          input(type="checkbox" ng-model="notifications.email" ng-checked="user.isEmailVerified && notifications.email" ng-change="updateNotificationsType()" ng-disabled="!user.isEmailVerified")
+          span.mlm(translate="EMAIL" uib-tooltip="{{::'VERIFY_EMAIL_FIRST'|translate}}" tooltip-enable="!user.isEmailVerified" tooltip-placement="left")
+        label.flex-between.flex-center
+          input(type="checkbox" ng-model="notifications.sms" ng-checked="user.isMobileVerified && notifications.sms" ng-change="updateNotificationsType()" ng-disabled="!user.isMobileVerified")
+          span.mlm(translate="SMS" uib-tooltip="{{::'VERIFY_MOBILE_FIRST'|translate}}" tooltip-enable="!user.isMobileVerified" tooltip-placement="left")
+
   .form-group.mbn.border-bottom.clearfix.pvl(ng-show="browserCanHandleBitcoinLinks")
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="HANDLE_BITCOIN_LINKS")
@@ -70,6 +80,7 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
     .col-sm-6.col-md-3.setting-result
       a.button-primary(ng-click="setHandleBitcoinLinks()", translate="SET_HANDLE_BITCOIN_LINKS", ng-hide="settings.handleBitcoinLinks")
       p.settingtext.mtl(translate="HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN")
+
   .form-group.mbn.border-bottom.clearfix.pvl(ng-controller="ChangeLogoutTimeCtrl")
     div(settings-form)
       .col-sm-12.col-md-6
