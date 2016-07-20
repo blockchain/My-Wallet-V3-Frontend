@@ -341,7 +341,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       $cookies.put('session', sessionToken);
       $cookies.put('uid', uid);
       Alerts.displaySuccess('Wallet created with identifier: ' + uid, true);
-      wallet.status.firstTime = true;
+      wallet.goal.firstTime = true;
 
       let loginSuccess = (guid) => {
         success_callback(uid);

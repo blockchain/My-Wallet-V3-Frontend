@@ -154,6 +154,13 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         });
         Wallet.goal.auth = void 0;
       }
+      if (Wallet.goal.firstTime) {
+        $uibModal.open({
+          templateUrl: 'partials/first-login-modal.jade',
+          windowClass: 'bc-modal rocket-modal initial'
+        });
+        Wallet.goal.firstTime = void 0;
+      }
       if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {
         if (Wallet.goal.send != null) {
           $uibModal.open({

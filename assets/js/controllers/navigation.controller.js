@@ -77,7 +77,7 @@ function NavigationCtrl ($scope, $rootScope, $interval, $timeout, $cookies, Wall
     });
   };
 
-  if ($scope.status.firstTime) {
+  if (Wallet.goal.firstTime) {
     $scope.viewedWhatsNew();
   }
 
