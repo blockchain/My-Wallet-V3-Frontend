@@ -6,9 +6,11 @@
       p.mbl.type-h4.em-300(translate="THANK_YOU_FOR_JOINING")
       p.mbl.type-h5.width-100.em-300
         span(translate="FIRST_LOGIN_TEXT_1")
+        | &nbsp;
         a.security-red(ui-sref="wallet.common.security-center")
           i.bc-icon-security
-          | 
+          | &nbsp;
           span(translate="SECURITY_CENTER")
+          | &nbsp;
         span(translate="FIRST_LOGIN_TEXT_2")
-    button.button-success.mtl(ng-click="ok()", translate="FIRST_LOGIN_ACTION")
+    button.button-success.mtl(ng-click="$close()" translate="FIRST_LOGIN_ACTION")
