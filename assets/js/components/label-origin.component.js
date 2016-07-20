@@ -3,7 +3,8 @@ angular
   .component('labelOrigin', {
     bindings: {
       origin: '<',
-      highlight: '<'
+      highlight: '<',
+      simple: '<'
     },
     templateUrl: 'templates/label-origin.jade'
   });

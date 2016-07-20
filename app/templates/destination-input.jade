@@ -13,17 +13,17 @@
   .input-group(ng-click="focus()" ng-hide="selectOpen")
     button.form-control(
       type="button"
-      ng-show="model.type === 'Accounts'"
+      ng-hide="model.type === 'External'"
       ng-click="clearModel(); focusInput();")
       span.pull-left
-        label-origin(origin="model")
+        label-origin(origin="model" simple="true")
     input#address-field.form-control(
       type="text"
       tabindex="1"
       autocomplete="off"
       placeholder="Paste or scan an address or select a destination"
       ng-model="model.address"
-      ng-hide="model.type === 'Accounts'"
+      ng-show="model.type === 'External'"
       ng-blur="blur()"
       autofocus)
     .input-group-btn
