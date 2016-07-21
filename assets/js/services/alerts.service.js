@@ -39,14 +39,15 @@ function Alerts ($timeout, $rootScope, $translate, $uibModal) {
     return context.some(alert => alert.msg === nextAlert.msg);
   }
 
-  function display (type, message, keep = false, context = service.alerts, messageParams) {
-    $translate(message, messageParams).then(translation => {
+  function display (type, message, keep = false, context = service.alerts) {
+    let displayAlert = (translation) => {
       let alert = { type: type, msg: translation };
       if (isDuplicate(context, alert)) return;
       alert.close = close.bind(null, alert, context);
       if (!keep) alert.timer = $timeout(() => alert.close(), 7000);
       context.push(alert);
-    });
+    };
+    $translate(message).then(displayAlert, () => displayAlert(message));
   }
 
   function displayVerifiedEmail () {
@@ -71,27 +72,20 @@ function Alerts ($timeout, $rootScope, $translate, $uibModal) {
     });
   }
 
-  function confirm (message, values = {}, modalClass = '', close = 'OK', options = {}) {
+  // options = { values, props, friendly, action, modalClass }
+  function confirm (namespace, options = {}) {
     return $uibModal.open({
       templateUrl: 'partials/modal-confirm.jade',
-      windowClass: 'bc-modal confirm ' + modalClass,
-      controller: function ($scope) {
-        $scope.options = options;
-        $scope.message = message;
-        $scope.values = values;
-        $scope.close = close;
-      }
+      windowClass: `bc-modal confirm ${options.modalClass || ''}`,
+      controller: ($scope) => angular.extend($scope, options, { namespace })
     }).result;
   }
 
-  function prompt (message, options = {type: 'input'}) {
+  function prompt (message, options = {}) {
     return $uibModal.open({
       templateUrl: 'partials/modal-prompt.jade',
       windowClass: 'bc-modal medium',
-      controller: function ($scope) {
-        $scope.message = message;
-        $scope.type = options.type;
-      }
+      controller: ($scope) => angular.extend($scope, options, { message })
     }).result;
   }
 

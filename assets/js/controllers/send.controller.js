@@ -34,7 +34,8 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     surge: false,
     blockIdx: null,
     feeBounds: [0, 0, 0, 0, 0, 0],
-    sweepFees: [0, 0, 0, 0, 0, 0]
+    sweepFees: [0, 0, 0, 0, 0, 0],
+    size: 0
   };
 
   $scope.payment = new Wallet.Payment();
@@ -50,6 +51,7 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     tx.blockIdx = data.confEstimation;
     tx.feeBounds = data.absoluteFeeBounds;
     tx.sweepFees = data.sweepFees;
+    tx.size = data.txSize;
     $scope.$safeApply();
   });
 
@@ -106,11 +108,15 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
   $scope.addDestination = () => {
     $scope.transaction.amounts.push(null);
     $scope.transaction.destinations.push(null);
+    $scope.setPaymentAmount();
+    $scope.setPaymentTo();
   };
 
   $scope.removeDestination = (index) => {
     $scope.transaction.amounts.splice(index, 1);
     $scope.transaction.destinations.splice(index, 1);
+    $scope.setPaymentAmount();
+    $scope.setPaymentTo();
   };
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
@@ -206,7 +212,9 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
   $scope.hasAmountError = (index) => {
     let field = $scope.sendForm['amounts' + index];
     let fiatField = $scope.sendForm['amountsFiat' + index];
-    return (fiatField.$touched || field.$touched) && !$scope.amountsAreValid();
+    let fieldError = (fiatField.$touched || field.$touched) && (fiatField.$invalid || field.$invalid);
+    let notEnoughFunds = !$scope.amountsAreValid() && !$scope.transaction.amounts.some(a => !a);
+    return fieldError || notEnoughFunds;
   };
 
   $scope.$watch('transaction.destinations', (destinations) => {
@@ -374,15 +382,22 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     let low = tx.feeBounds[5] || tx.sweepFees[5];
     console.log(`Fees { high: ${high}, mid: ${mid}, low: ${low} }`);
 
-    if (tx.fee > high && $scope.advanced) {
-      return showFeeWarning(high).then(commitFee);
-    } else if (tx.fee < low && $scope.advanced) {
-      return showFeeWarning(low).then(commitFee);
-    } else if (surge) {
-      return showFeeWarning(mid).then(commitFee);
+    if ($scope.advanced) {
+      if (tx.fee > high) {
+        return showFeeWarning(high).then(commitFee);
+      } else if (tx.fee < low && $scope.advanced) {
+        return showFeeWarning(low).then(commitFee);
+      }
     } else {
-      return $q.resolve();
+      let feeUSD = currency.convertFromSatoshi(tx.fee, currency.currencies[0]);
+      let feeRatio = tx.fee / tx.amounts.reduce((a, b) => a + b);
+      if (feeUSD > 0.50 && tx.size > 1000 && feeRatio > 0.01) {
+        return fees.showLargeTxWarning(tx.size, tx.fee).then(commitFee);
+      } else if (surge) {
+        return showFeeWarning(mid).then(commitFee);
+      }
     }
+    return $q.resolve();
   };
 
   $scope.finalBuild = () => $q((resolve, reject) => {

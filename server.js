@@ -33,8 +33,14 @@ app.use(function (req, res, next) {
       // Firefox appears to just allow unsafe-inline CSS
       "style-src 'self' 'uD+9kGdg1SXQagzGsu2+gAKYXqLRT/E07bh4OhgXN8Y=' '4IfJmohiqxpxzt6KnJiLmxBD72c3jkRoQ+8K5HT5K8o='",
       'child-src https://verify.isignthis.com/',
-      "connect-src 'self' " + rootURL + ' ' + (webSocketURL || 'wss://*.blockchain.info') + ' ' + (apiDomain || 'https://api.blockchain.info') + ' https://app-api.coinify.com',
       "script-src 'self'",
+      'connect-src ' + [
+        "'self'",
+        rootURL,
+        (webSocketURL || 'wss://*.blockchain.info'),
+        (apiDomain || 'https://api.blockchain.info'),
+        'https://app-api.coinify.com'
+      ].join(' '),
       "object-src 'none'",
       "media-src 'self' https://storage.googleapis.com/bc_public_assets/ data: mediastream: blob:",
       "font-src 'self'", ''

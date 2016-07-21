@@ -22,15 +22,4 @@ function HomeCtrl ($scope, Wallet, $uibModal) {
       return null;
     }
   };
-
-  if (Wallet.status.firstTime) {
-    $uibModal.open({
-      templateUrl: 'partials/first-login-modal.jade',
-      controller: 'FirstTimeCtrl',
-      resolve: {
-        firstTime: () => { Wallet.status.firstTime = false; }
-      },
-      windowClass: 'bc-modal rocket-modal initial'
-    });
-  }
 }

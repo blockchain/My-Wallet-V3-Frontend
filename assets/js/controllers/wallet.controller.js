@@ -21,21 +21,22 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     $scope.menu.isCollapsed = false;
   };
 
-  $scope.inactivityTimeSeconds = 0;
-  $scope.resetInactivityTime = () => $scope.inactivityTimeSeconds = 0;
+  $scope.lastAction = Date.now();
+  $scope.onAction = () => $scope.lastAction = Date.now();
 
-  $scope.inactivityInterval = () => {
+  $scope.inactivityCheck = () => {
     if (!Wallet.status.isLoggedIn) return;
-    $scope.inactivityTimeSeconds++;
+    let inactivityTimeSeconds = Math.round((Date.now() - $scope.lastAction) / 1000);
     let logoutTimeSeconds = Wallet.settings.logoutTimeMinutes * 60;
-    if ($scope.inactivityTimeSeconds === logoutTimeSeconds - 10) {
+    if (inactivityTimeSeconds === logoutTimeSeconds - 10) {
       let logoutTimer = $timeout(Wallet.my.logout, 10000);
-      Alerts.confirm('AUTO_LOGOUT_WARN', { minutes: Wallet.settings.logoutTimeMinutes }, '', 'LOG_ME_OUT')
+      Alerts.confirm('CONFIRM_AUTO_LOGOUT', { values: { minutes: Wallet.settings.logoutTimeMinutes }, action: 'LOG_ME_OUT' })
         .then(Wallet.logout).catch(() => $timeout.cancel(logoutTimer));
     }
   };
 
-  $interval($scope.inactivityInterval, 1000);
+  $scope.inactivityInterval = $interval($scope.inactivityCheck, 1000);
+  $scope.$on('$destroy', () => $interval.cancel($scope.inactivityInterval));
 
   $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia) !== void 0;
 
@@ -87,16 +88,6 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     modalInstance.result.then(() => {}, () => defer.reject());
   });
 
-  $scope.$on('needsUpgradeToHD', notification => {
-    $uibModal.open({
-      templateUrl: 'partials/upgrade.jade',
-      controller: 'UpgradeCtrl',
-      backdrop: 'static',
-      windowClass: 'bc-modal',
-      keyboard: false
-    });
-  });
-
   $scope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
     let isPublicState = toState.name === 'landing' || toState.name.slice(0, 6) === 'public';
     if (isPublicState && Wallet.status.isLoggedIn) event.preventDefault();
@@ -137,35 +128,47 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     Alerts.displayError(message);
   });
 
-  $scope.$watch('status.isLoggedIn', () => {
-    $timeout(() => {
-      $scope.checkGoals();
-    }, 0);
-  });
-
-  $scope.$watchCollection('goal', () => {
-    $timeout(() => {
-      $scope.checkGoals();
-    }, 0);
-  });
+  $scope.$watch('status.isLoggedIn + goal', () => $timeout($scope.checkGoals));
 
   $scope.checkGoals = () => {
     if ($scope.status.isLoggedIn) {
-      if (!((Wallet.status.didLoadTransactions) && (Wallet.status.didLoadBalances))) {
-        return $timeout(() => {
-          $scope.checkGoals();
-        }, 100);
+      if (Wallet.goal.upgrade) {
+        $uibModal.open({
+          templateUrl: 'partials/upgrade.jade',
+          controller: 'UpgradeCtrl',
+          backdrop: 'static',
+          windowClass: 'bc-modal',
+          keyboard: false
+        });
+        Wallet.goal.upgrade = void 0;
       }
-      if (Wallet.goal != null) {
+      if (Wallet.goal.auth) {
+        Alerts.clear();
+        $translate(['AUTHORIZED', 'AUTHORIZED_MESSAGE']).then(translations => {
+          $scope.$emit('showNotification', {
+            type: 'authorization-verified',
+            icon: 'ti-check',
+            heading: translations.AUTHORIZED,
+            msg: translations.AUTHORIZED_MESSAGE
+          });
+        });
+        Wallet.goal.auth = void 0;
+      }
+      if (Wallet.goal.firstTime) {
+        $uibModal.open({
+          templateUrl: 'partials/first-login-modal.jade',
+          windowClass: 'bc-modal rocket-modal initial'
+        });
+        Wallet.goal.firstTime = void 0;
+      }
+      if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {
         if (Wallet.goal.send != null) {
           $uibModal.open({
             templateUrl: 'partials/send.jade',
             controller: 'SendCtrl',
             resolve: {
               paymentRequest: () => Wallet.goal.send,
-              loadBcQrReader: () => {
-                return $ocLazyLoad.load('bcQrReader');
-              }
+              loadBcQrReader: () => $ocLazyLoad.load('bcQrReader')
             },
             windowClass: 'bc-modal initial'
           });
@@ -184,17 +187,8 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
             Wallet.goal.claim = void 0;
           });
         }
-        if (Wallet.goal.auth) {
-          Alerts.clear();
-          $translate(['AUTHORIZED', 'AUTHORIZED_MESSAGE']).then(translations => {
-            $scope.$emit('showNotification', {
-              type: 'authorization-verified',
-              icon: 'ti-check',
-              heading: translations.AUTHORIZED,
-              msg: translations.AUTHORIZED_MESSAGE
-            });
-          });
-        }
+      } else {
+        $timeout($scope.checkGoals, 100);
       }
     }
   };

@@ -76,20 +76,6 @@ describe "WalletCtrl", ->
     expect($uibModal.open).toHaveBeenCalled()
   )
 
-  describe "HD upgrade", ->
-    beforeEach ->
-      callbacks =  {
-        proceed: () ->
-          console.log "proceed"
-      }
-      spyOn(callbacks, "proceed")
-
-    it "should show modal if HD upgrade is needed", inject(($uibModal) ->
-      spyOn($uibModal, "open").and.callThrough()
-      scope.$broadcast("needsUpgradeToHD", callbacks.proceed)
-      expect($uibModal.open).toHaveBeenCalled()
-    )
-
   describe "redeem from email", ->
     it "should proceed after login", inject((Wallet, $rootScope, $timeout, $uibModal) ->
 
@@ -107,39 +93,34 @@ describe "WalletCtrl", ->
     )
 
   describe "auto logout", ->
-
     it "should reset the inactivity time", ->
+      spyOn(Date, "now").and.returnValue(100)
       scope.inactivityTimeSeconds = 1
-      scope.resetInactivityTime()
-      expect(scope.inactivityTimeSeconds).toEqual(0)
-
-    it "should increment the inactivity time", inject((Wallet) ->
-      Wallet.status.isLoggedIn = true
-      scope.inactivityInterval()
-      expect(scope.inactivityTimeSeconds).toEqual(1)
-    )
+      scope.onAction()
+      expect(scope.lastAction).toEqual(100)
 
     it "should show the logout warning modal", inject((Wallet, Alerts) ->
+      spyOn(Date, "now").and.returnValue(690000)
       Wallet.status.isLoggedIn = true
       Wallet.settings.logoutTimeMinutes = 10
-      scope.inactivityTimeSeconds = 589
+      scope.lastAction = 100000
       spyOn(Alerts, 'confirm').and.callThrough()
-      scope.inactivityInterval()
+      scope.inactivityCheck()
       expect(Alerts.confirm).toHaveBeenCalled()
     )
 
+    it "should clear the interval when the controller is destroyed", inject(($interval) ->
+      spyOn($interval, "cancel")
+      scope.$broadcast("$destroy")
+      expect($interval.cancel).toHaveBeenCalledWith(scope.inactivityInterval)
+    )
 
   describe "HD upgrade", ->
-    beforeEach ->
-      callbacks =  {
-        proceed: () ->
-          console.log "proceed"
-      }
-      spyOn(callbacks, "proceed")
-
-    it "should show modal if HD upgrade is needed", inject(($uibModal) ->
+    it "should show modal if HD upgrade is needed", inject((Wallet, $uibModal) ->
+      Wallet.status.isLoggedIn = true
+      Wallet.goal.upgrade = true
       spyOn($uibModal, "open").and.callThrough()
-      scope.$broadcast("needsUpgradeToHD", callbacks.proceed)
+      scope.checkGoals()
       expect($uibModal.open).toHaveBeenCalled()
     )
 

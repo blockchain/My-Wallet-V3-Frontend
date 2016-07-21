@@ -1,11 +1,5 @@
-div(ng-class="{'state-danger-text': isSelected && determineAvailableBalance(origin.balance) === 0}")
-  span(ng-bind-html="determineLabel(origin) | escapeHtml | highlight:highlight")
-  span(ng-hide="origin.balance == null")
-    span &ensp;(
-    span(ng-switch="isBitCurrency(settings.displayCurrency)")
-      fiat(ng-switch-when="false" btc="determineAvailableBalance(origin.balance)")
-      span(ng-switch-when="true") {{ determineAvailableBalance(origin.balance) | toBitCurrency:settings.btcCurrency }}
-    span )
-  span(ng-show="origin.isWatchOnly")
-    | &ensp;
-    span.label.label-default(translate="WATCH_ONLY")
+span
+  span(ng-show="$ctrl.origin" ng-bind-html="($ctrl.origin.label || $ctrl.origin.address) | escapeHtml | highlight:$ctrl.highlight")
+span(ng-hide="$ctrl.simple && $ctrl.origin.type !== 'Accounts'")
+  span(ng-hide="$ctrl.origin.balance == null") &ensp;({{ $ctrl.origin.balance | convert }})&ensp;
+  span.label.label-default(ng-show="$ctrl.origin.isWatchOnly" translate="WATCH_ONLY")

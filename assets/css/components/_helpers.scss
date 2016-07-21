@@ -4,8 +4,8 @@
   border: 1px solid $mid-grey;
   border-radius: 100%;
   background-color: white;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   font-size: 12px;
   font-weight: 500;
   margin-left: 5px;
@@ -19,18 +19,20 @@
     background: $blue;
     color: white;
   }
-  .close-helper {
+  > span {
     top: 50%;
     left: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
-    &:before {
-      color: white;
-      font-size: 9px;
-      content: "\e646";
-      font-family: 'ThemifyIcons';
+    &.close-helper {
+      &:before {
+        color: white;
+        font-size: 9px;
+        content: "\e646";
+        font-family: 'ThemifyIcons';
+      }
     }
   }
 }

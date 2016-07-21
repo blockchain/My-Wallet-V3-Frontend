@@ -97,7 +97,14 @@
   }
 }
 
-.width-33 { width: 33.333%; }
+@for $i from 1 through 20 {
+  .width-#{$i*5}-mobile {
+    width: percentage($i*5/100);
+    @media (max-width: 992px) {
+      width: percentage($i*5/100);
+    }
+  }
+}
 
 .z-10 { z-index: 10; }
 

@@ -4,12 +4,13 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'MyWalletMetadata'];
 
-function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency) {
+function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, MyWalletMetadata) {
   const wallet = {
     goal: {
-      auth: false
+      auth: false,
+      upgrade: false
     },
     status: {
       isLoggedIn: false,
@@ -42,7 +43,8 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       email: null,
       mobile: null,
       passwordHint: '',
-      mobileNumber: null
+      mobileNumber: null,
+      alias: null
     }
   };
   wallet.fiatHistoricalConversionCache = {};
@@ -79,7 +81,6 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
 
   wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) => {
     let didLogin = (result) => {
-      let guid = result.guid;
       wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
       if (wallet.my.wallet.isUpgradedToHD) {
         wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.hdwallet.isMnemonicVerified;
@@ -116,7 +117,19 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
         wallet.settings.twoFactorMethod = result.auth_type;
         wallet.settings.loggingLevel = result.logging_level;
         wallet.user.current_ip = result.my_ip;
-        wallet.settings.notifications = result.notifications_type && result.notifications_type.length > 0 && result.notifications_type.indexOf(1) > -1 && (parseInt(result.notifications_on, 10) === 0 || parseInt(result.notifications_on, 10) === 2);
+        wallet.user.guid = result.guid;
+        wallet.user.alias = result.alias;
+        wallet.settings.notifications_on = result.notifications_on;
+        wallet.settings.notifications = {};
+        if (result.notifications_type) {
+          let notifs = wallet.settings.notifications;
+          result.notifications_type.forEach(code => {
+            let type = Math.log2(code);
+            if (type === 0) notifs.email = true;
+            if (type === 2) notifs.http = true;
+            if (type === 5) notifs.sms = true;
+          });
+        }
         wallet.user.passwordHint = result.password_hint1;
         wallet.setLanguage($filter('getByProperty')('code', result.language, languages));
         wallet.settings.btcCurrency = $filter('getByProperty')('serverCode', result.btc_currency, currency.bitCurrencies);
@@ -143,7 +156,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
         $rootScope.$safeApply();
       });
       if (successCallback != null) {
-        successCallback(guid);
+        successCallback(result.guid);
       }
       $rootScope.$safeApply();
     };
@@ -328,7 +341,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       $cookies.put('session', sessionToken);
       $cookies.put('uid', uid);
       Alerts.displaySuccess('Wallet created with identifier: ' + uid, true);
-      wallet.status.firstTime = true;
+      wallet.goal.firstTime = true;
 
       let loginSuccess = (guid) => {
         success_callback(uid);
@@ -467,19 +480,9 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     });
   };
 
-  wallet.setIPWhitelist = (ips, successCallback, errorCallback) => {
-    let success = () => {
-      wallet.settings.ipWhitelist = ips;
-      successCallback();
-      $rootScope.$safeApply();
-    };
-
-    let error = () => {
-      errorCallback();
-      $rootScope.$safeApply();
-    };
-
-    wallet.settings_api.updateIPlock(ips, success, error);
+  wallet.setIPWhitelist = (ips) => {
+    let update = (s, e) => wallet.settings_api.updateIPlock(ips, s, e);
+    return $q(update).then(() => wallet.settings.ipWhitelist = ips);
   };
 
   wallet.resendEmailConfirmation = (successCallback, errorCallback) => {
@@ -776,9 +779,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     } else if (event === 'on_wallet_decrypt_finish') {
     } else if (event === 'hd_wallets_does_not_exist') {
       wallet.status.didUpgradeToHd = false;
-      $timeout(() => {
-        $rootScope.$broadcast('needsUpgradeToHD', 1000);
-      });
+      wallet.goal.upgrade = true;
     } else if (event === 'wallet not found') {
       Alerts.displayError('WALLET_NOT_FOUND');
     } else if (event === 'ticker_updated' || event === 'did_set_latest_block') {
@@ -900,29 +901,15 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     });
   };
 
-  wallet.enableNotifications = () => {
-    let success = () => {
-      wallet.settings.notifications = true;
-      $rootScope.$safeApply();
-    };
-    let error = () => {
-      Alerts.displayError('Failed to enable notifications');
-      $rootScope.$safeApply();
-    };
-    wallet.my.wallet.enableNotifications(success, error);
-  };
+  wallet.updateNotificationsType = (types) => $q.resolve(
+    MyBlockchainSettings.updateNotificationsType(types).catch(() => {
+      Alerts.displayError('UPDATE_NOTIF_FAIL');
+    })
+  );
 
-  wallet.disableNotifications = () => {
-    let success = () => {
-      wallet.settings.notifications = false;
-      $rootScope.$safeApply();
-    };
-    let error = () => {
-      Alerts.displayError('Failed to disable notifications');
-      $rootScope.$safeApply();
-    };
-    wallet.my.wallet.disableNotifications(success, error);
-  };
+  wallet.updateNotificationsOn = (on) => $q.resolve(
+    MyBlockchainSettings.updateNotificationsOn(on)
+  );
 
   wallet.setFeePerKB = (fee, successCallback, errorCallback) => {
     wallet.my.wallet.fee_per_kb = fee;
@@ -1122,6 +1109,12 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     });
   };
 
+  wallet.removeAlias = () => {
+    return $q.resolve(wallet.settings_api.removeAlias()).then(
+      () => wallet.user.alias = null,
+      () => Alerts.displayError('POOR_CONNECTION'));
+  };
+
   wallet.setDefaultAccount = (account) => {
     wallet.my.wallet.hdwallet.defaultAccountIndex = account.index;
   };
@@ -1149,10 +1142,43 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     let syncing = () => {
       console.log('Syncing...');
     };
-    let proceed = (password) => {
-      wallet.my.wallet.decrypt(password, success, error, decrypting, syncing);
+    let proceedWithPassword = (password) => {
+      const didDecrypt = () => {
+        // Check which metadata service features we use:
+
+        // whatsNew
+        // This falls back to cookies if 2nd password is enabled:
+        let whatsNewViewed = $cookies.get('whatsNewViewed');
+        if (whatsNewViewed) {
+          let whatsNew = new MyWalletMetadata(2);
+
+          whatsNew.fetch().then((res) => {
+            if (res === null) {
+              whatsNew.create({lastViewed: whatsNewViewed}).then(() => {
+                // TODO: uncomment once cookie fallback is removed
+                // $cookies.remove('whatsNewViewed');
+                success();
+              });
+            } else {
+              whatsNew.update({lastViewed: whatsNewViewed}).then(() => {
+                // TODO: uncomment once cookie fallback is removed
+                // $cookies.remove('whatsNewViewed');
+                success();
+              });
+            }
+          }).catch(() => {
+            // The What's New section may be marked (partially) unread at the
+            // next login.
+            success();
+          });
+        } else {
+          success();
+        }
+      };
+
+      wallet.my.wallet.decrypt(password, didDecrypt, error, decrypting, syncing);
     };
-    wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel);
+    wallet.askForSecondPasswordIfNeeded().then(proceedWithPassword).catch(cancel);
   };
 
   wallet.validateSecondPassword = (password) =>
@@ -1173,7 +1199,28 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     let syncing = () => {
       console.log('Syncing...');
     };
-    wallet.my.wallet.encrypt(password, success, error, encrypting, syncing);
+
+    const proceed = () => {
+      wallet.my.wallet.encrypt(password, success, error, encrypting, syncing);
+    };
+
+    // whatsNew
+    // This falls back to cookies if 2nd password is enabled:
+    let whatsNew = new MyWalletMetadata(2);
+    whatsNew.fetch().then((res) => {
+      if (res !== null) {
+        $cookies.put('whatsNewViewed', res.lastViewed);
+      }
+    }).catch(() => {
+      throw new Error("saving your What's New view status failed");
+    });
+
+    let other = $q.resolve(); // $q.reject('it can't be combined with feature X');
+
+    $q.all([whatsNew, other]).then(proceed).catch((reason) => {
+      console.log('all');
+      Alerts.displayError('Could enable second password, because ' + reason);
+    });
   };
 
   // Testing: only works on mock MyWallet

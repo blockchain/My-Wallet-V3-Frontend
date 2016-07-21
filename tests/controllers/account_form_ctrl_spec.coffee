@@ -51,20 +51,17 @@ describe "AccountFormCtrl", ->
         $uibModalInstance: modalInstance
         account: Wallet.accounts()[0]
 
-      scope.model = { fields: { name: '' } }
+      scope.model = { status: {} }
       $compile(template)(scope)
 
       scope.$digest()
-
-      return
-    return
 
   beforeEach -> accounts.splice(2); accounts[0].label = 'Savings'
 
   describe "creation", ->
 
     beforeEach ->
-      scope.fields.name = 'New Account'
+      scope.name = 'New Account'
 
     it "should be created", inject((Wallet) ->
       before = Wallet.accounts().length
@@ -82,10 +79,10 @@ describe "AccountFormCtrl", ->
   describe "rename", ->
 
     it "original name should be shown", ->
-      expect(scope.fields.name).toBe("Savings")
+      expect(scope.name).toBe("Savings")
 
     it "should save the new name",  inject((Wallet) ->
-      scope.fields.name = "New Name"
+      scope.name = "New Name"
       scope.updateAccount()
       expect(Wallet.accounts()[0].label).toBe("New Name")
     )
@@ -93,24 +90,24 @@ describe "AccountFormCtrl", ->
   describe "validate", ->
 
     beforeEach ->
-      scope.fields.name = 'Valid Name'
+      scope.name = 'Valid Name'
       scope.$apply()
 
     it "should not have a null name", ->
       expect(scope.accountForm.$valid).toBe(true)
-      scope.fields.name = null
+      scope.name = null
       scope.$apply()
       expect(scope.accountForm.$valid).toBe(false)
 
     it "should not have a name of zero length", ->
       expect(scope.accountForm.$valid).toBe(true)
-      scope.fields.name = ''
+      scope.name = ''
       scope.$apply()
       expect(scope.accountForm.$valid).toBe(false)
 
     it "should not have a name longer than 17 characters", ->
       expect(scope.accountForm.$valid).toBe(true)
-      scope.fields.name = 'abcdefghijklmnopqr'
+      scope.name = 'abcdefghijklmnopqr'
       scope.$apply()
       expect(scope.accountForm.$valid).toBe(false)
 

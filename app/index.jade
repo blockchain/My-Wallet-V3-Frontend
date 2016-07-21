@@ -3,7 +3,7 @@ doctype
 <!-- @if PRODUCTION !><html lang='en' ng-app='walletApp' ng-csp ng-class="{'not-fixed': outOfApp}"><!-- @endif -->
 head
   meta(charset='utf-8')
-  meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1") 
+  meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1")
   meta(name="theme-color" content="#187fc0")
   meta(name="apple-itunes-app" content="app-id=493253309")
   meta(name="description" content="Blockchain Wallet is an online bitcoin wallet that allows anyone to make worldwide payments for free. Blockchain cannot view your balance, see your transactions, or make payments on your behalf. Join today, be your own bank")
@@ -27,11 +27,11 @@ head
   // include: "type": "js", "files": "build/js/landingCtrl.js"
   // include: "type": "js", "files": "build/js/services/bcTranslationLoader.service.js"
   // include: "type": "js", "files": "build/js/routes.js"
-  
+
   <!-- @endif -->
-  
+
   <!-- @if PRODUCTION !>
-  script(src='js/landing.min.js' defer)  
+  script(src='js/landing.min.js' defer)
   <!-- @endif -->
   link(rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-icon-180x180.png")
   link(rel="apple-touch-icon" sizes="152x152" href="img/favicon/apple-icon-152x152.png")
@@ -48,20 +48,19 @@ head
   link(rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png")
   meta(name="msapplication-TileColor" content="#ffffff")
   meta(name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png")
-  title Blockchain Wallet
+  title Bitcoin Wallet from Blockchain
   <!-- @if !PRODUCTION -->  
   link(rel='stylesheet' href='build/css/wallet.css')
   <!-- @endif -->
-  
+
   <!-- @if PRODUCTION !>
   link(rel='stylesheet' href='css/wallet.css')
   <!-- @endif -->
 
 body(
   ui-view="body"
-  ng-mousemove="resetInactivityTime()"
-  ng-keypress="resetInactivityTime()"
-)
+  ng-mousemove="onAction()"
+  ng-click="onAction()")
   noscript
     img(src="/img/logo-bw.png")
     h3 Please enable JavaScript to use the Blockchain Wallet
