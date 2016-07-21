@@ -68,7 +68,7 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
     let methodFee = fiatAmt * ($scope.method.fee / 100);
 
     $scope.transaction.methodFee = methodFee.toFixed(2);
-    $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount / 10000, currency.bitCurrencies[0]);
+    $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount / 100, currency.bitCurrencies[0]);
     $scope.transaction.total = fiatAmt +
                                +$scope.transaction.methodFee;
   };
