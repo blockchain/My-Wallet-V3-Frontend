@@ -5,7 +5,7 @@ angular
 function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModal, country, exchange, trades, fiat, trade) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
-  $scope.userHasExchangeAcct = trades.pending.length || trades.completed.length;
+  $scope.userHasExchangeAcct = trades.length && (trades.pending.length || trades.completed.length);
   $scope.currencies = currency.coinifyCurrencies;
   $scope.profile = MyWallet.wallet.profile;
   $scope.countries = country;
@@ -187,7 +187,7 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
       $scope.trade = trade;
     };
 
-    $scope.exchange.buy(-$scope.transaction.fiat).then(success, $scope.standardError);
+    $scope.exchange.buy($scope.transaction.fiat).then(success, $scope.standardError);
   };
 
   $scope.loadISX = () => {

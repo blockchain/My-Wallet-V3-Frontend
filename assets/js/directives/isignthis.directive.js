@@ -8,6 +8,7 @@ function isignthis ($sce) {
     scope: {
       onLoad: '&',
       onDecline: '&',
+      onSuccess: '&',
       transactionId: '='
     },
     template: `
@@ -155,7 +156,13 @@ function isignthis ($sce) {
               if (scope.loaded) { scope.loaded = true; return; }
               scope.onLoad();
               break;
+            case 'SUCCESS':
+              scope.onSuccess();
             case 'DECLINED':
+              if (scope.declined) { scope.declined = true; return; }
+              scope.onDecline();
+              break;
+            case 'REJECTED':
               if (scope.declined) { scope.declined = true; return; }
               scope.onDecline();
               break;
