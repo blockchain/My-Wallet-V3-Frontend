@@ -112,6 +112,14 @@
     "TITLE": "Finish Later?",
     "BODY": "You'll be able to finish the payment later."
   },
+  "CONFIRM_CLOSE_ACCT": {
+    "TITLE": "Are You Sure?",
+    "BODY": "You'll have to start from the beginning next time."
+  },
+  "CONFIRM_CLOSE_AMT": {
+    "TITLE": "Are You Sure?",
+    "BODY": "Clicking Close will exit the modal. But you can buy Bitcoin anytime."
+  },
   "CONFIRM_LOGOUT": {
     "TITLE": "Sign Out?",
     "BODY": "All changes have been saved, it is safe to sign out."
@@ -836,8 +844,8 @@
   "PAYMENT_METHOD": "Payment Method:",
   "PLEASE_CREATE_ACCOUNT": "Please <span class='underline pointer'>create an account</span> to get an accurate exchange rate.",
   "SUMMARY": "Summary:",
-  "TRADE_AMOUNT_TOO_LOW": "The amount of this trade is too small. TODO: Show min amount.",
-  "TRADE_EXCEEDS_LIMITS": "The amount of this trade is larger than your allowed limit. TODO: Click here to increase your limit or change the amount.",
+  "TRADE_AMOUNT_TOO_LOW": "The amount of this trade is too small. Try increasing the amount.",
+  "TRADE_EXCEEDS_LIMITS": "The amount of this trade is larger than your allowed limit.",
   "INVALID_ARGUMENT": "An error occured. Please try again later or contact support.",
   "INVALID_REQUEST": "An error occured. Please try again later or contact support.",
   "INTERNAL_ERROR": "An internal error occurred. This is most likely not an issue with Blockchain. Please try again later or contact Coinify support.",

@@ -3,7 +3,7 @@
     .flex-column.flex-1
       .flex-row.flex-between.flex-center
         h3(translate="BUY_BITCOIN")
-        quote-countdown(quote="quote" get-quote="getQuote()" ng-hide="step === 5")
+        quote-countdown(quote="quote" get-quote="getQuote()" ng-hide="step >= 5")
       buy-steps(transaction="transaction" 
                 exchange-acct="userHasExchangeAcct"
                 currency-symbol="currencySymbol"
@@ -12,7 +12,7 @@
                 partner="partner"
                 method="method"
                 step="step")
-  .modal-body.fade(ng-class="{'buy-amount': step === 0, 'buy-select-country': step === 1, 'buy-email': step === 2, 'buy-accept-terms': step === 3, 'buy-summary': step === 4, 'isx': step === 5}")
+  .modal-body.fade(ng-class="{'buy-amount': step === 0, 'buy-select-country': step === 1, 'buy-email': step === 2, 'buy-accept-terms': step === 3, 'buy-summary': step === 4, 'isx': step >= 5}")
     .alert-in-app
       alerts(context="alerts")
     div(ng-show="step === 0")
@@ -25,7 +25,7 @@
       include ./buy-accept-terms
     div(ng-show="step === 4")
       include ./buy-summary
-    div.iframe(ng-show="step === 5")
+    div.iframe(ng-show="step >= 5")
       isignthis(transaction-id='trade.iSignThisID' on-load="loadISX()" on-decline="decline()")
     .flex-end.flex-center.mtl
         span.mrs.type-sm Powered by
@@ -34,10 +34,11 @@
   .modal-footer.flex-end.flex-row
     button.button-muted(ng-show="step > 0 && step < 5" ng-click="prevStep()") Go Back
     
-    .flex-end.flex-1(ng-hide="status.loading")
-      button.button-muted.mrm(ng-click="close()" translate="CANCEL" ng-hide="step === 5")
-      button.button-muted.mrm(ng-click="close(true)" translate="CANCEL" ng-show="step === 5")
-      div
+    .flex-1(ng-hide="status.loading" ng-class="{'flex-end': step < 5, 'flex-between': step >= 5}")
+      button.button-muted(ng-show="step >= 5") BTC Address: {{ trade._receiveAddress }}
+      button.button-muted.mrm(ng-click="close()" translate="CANCEL" ng-hide="step >= 5")
+      button.button-muted.mrm(ng-click="close(true)" translate="CANCEL" ng-show="step >= 5")
+      div(ng-hide="step >= 5")
         button.button-primary(
           ladda-translate="CONTINUE"
           ng-click="nextStep()"
