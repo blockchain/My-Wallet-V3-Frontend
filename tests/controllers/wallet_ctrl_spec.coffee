@@ -124,18 +124,15 @@ describe "WalletCtrl", ->
       expect($uibModal.open).toHaveBeenCalled()
     )
 
-  describe "redeem from email", ->
-    it "should proceed after login", inject((Wallet, $rootScope, $timeout, $uibModal) ->
-
+  describe "welcome modal", ->
+    it "should open when firstTime goal is set", inject((Wallet, $rootScope, $timeout, $uibModal) ->
       spyOn($uibModal, 'open').and.returnValue(mockModalInstance)
 
-      # Fulfill necessary conditions befor goal can be checked
       Wallet.status.isLoggedIn = true
-      Wallet.status = { didLoadBalances: true, didLoadTransactions: true }
-      Wallet.goal.claim = {code: "abcd", balance: 100000}
+      Wallet.goal.firstTime = true
 
       $rootScope.$digest()
-      $timeout.flush() # Modal won't open otherwise
+      $timeout.flush()
 
       expect($uibModal.open).toHaveBeenCalled()
     )
