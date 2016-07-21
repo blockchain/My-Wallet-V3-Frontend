@@ -158,6 +158,7 @@ function isignthis ($sce) {
               break;
             case 'SUCCESS':
               scope.onSuccess();
+              break;
             case 'DECLINED':
               if (scope.declined) { scope.declined = true; return; }
               scope.onDecline();

@@ -104,7 +104,10 @@
   "ADD_WALLET_RECOVERY" : "Backup Security Phrase",
   "PRINT_RECOVERY_SHEET" : "Print Recovery Sheet",
   "ARE_YOU_SURE_LOGOUT" : "Are you sure you wish to logout?",
-  "ARE_YOU_SURE_CANCEL" : "Are you sure you're finished?",
+  "CONFIRM_CANCEL": {
+    "TITLE": "Cancel Trade?",
+    "BODY": "You'll have to start over from the beginning."
+  },
   "CONFIRM_LOGOUT": {
     "TITLE": "Sign Out?",
     "BODY": "All changes have been saved, it is safe to sign out."
@@ -852,5 +855,8 @@
   "rejected": "Rejected",
   "expired": "Expired",
   "CONFIRM_PAY": "Confirm & Pay",
-  "DECLINED_TRANSACTION": "Your transaction was declined. The country or card provider is not accepted by Coinify."
+  "DECLINED_TRANSACTION": {
+    "TITLE": "Card Declined",
+    "BODY": "Your transaction was declined. The country or card provider is not accepted by Coinify."
+  }
 }

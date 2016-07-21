@@ -5,7 +5,6 @@ angular
 function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModal, country, exchange, trades, fiat, trade) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
-  $scope.userHasExchangeAcct = trades.length && (trades.pending.length || trades.completed.length);
   $scope.currencies = currency.coinifyCurrencies;
   $scope.profile = MyWallet.wallet.profile;
   $scope.countries = country;
@@ -23,6 +22,12 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
   $scope.method = $scope.creditcard;
   $scope.transaction = {fiat: 0, btc: 0, fee: 0, total: 0, currency: $scope.settings.currency};
   $scope.transaction.fiat = fiat || 0;
+
+  try {
+    if (trades.pending.length || trades.completed.length) $scope.userHasExchangeAcct = true;
+  } catch (e) {
+    $scope.userHasExchangeAcct = false;
+  }
 
   $scope.changeCurrency = (curr) => {
     if (!curr) curr = $scope.settings.currency;
@@ -198,7 +203,7 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
 
   $scope.decline = () => {
     $scope.cancel();
-    Alerts.confirm('DECLINED_TRANSACTION', {}, '', 'TRY_AGAIN', {}).then(() => {
+    Alerts.confirm('DECLINED_TRANSACTION', {action: 'TRY_AGAIN'}).then(() => {
       $rootScope.$broadcast('initBuy');
     });
   };
@@ -209,7 +214,7 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
   };
 
   $scope.close = (acct) => {
-    Alerts.confirm('ARE_YOU_SURE_CANCEL', {}, '', 'IM_DONE', {}).then(() => {
+    Alerts.confirm('CONFIRM_CANCEL', {action: 'IM_DONE'}).then(() => {
       if (acct) $scope.initExchangeAcct();
       $scope.cancel();
     });
