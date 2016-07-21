@@ -85,6 +85,17 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
     $scope.status = {};
   }
 
+  // handle in trades service
+  $scope.cancel = (trade) => {
+    Alerts.confirm('CONFIRM_CANCEL_TRADE', {action: 'CANCEL_TRADE', cancel: 'GO_BACK'}).then(() => {
+      const error = (err) => {
+        Alerts.displayError(err);
+      };
+
+      trade.cancel().then($scope.getTrades, error);
+    });
+  };
+
   $scope.$watch('settings.currency', $scope.changeCurrency);
 
   $scope.$watch('transaction.currency', () => {

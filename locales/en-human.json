@@ -48,6 +48,11 @@
     "TITLE": "Sign out without saving?",
     "BODY": "There are changes still being saved, signing out now may result in loss of data. Are you sure you wish to continue?"
   },
+  "CONFIRM_CANCEL_TRADE": {
+    "TITLE": "Cancel Trade?",
+    "BODY": "Are you sure you want to cancel this trade? You'll have to create a new trade."
+  },
+  "CANCEL_TRADE": "Cancel Trade",
   "CLOSE": "Close",
   "TRANSACTIONS" : "Transactions",
   "TRANSACTION" : "Transaction",
@@ -871,5 +876,6 @@
   "DECLINED_TRANSACTION": {
     "TITLE": "Card Declined",
     "BODY": "Your transaction was declined. The country or card provider is not accepted by Coinify."
-  }
+  },
+  "CLICK_TO_CANCEL": "Cancel trade."
 }

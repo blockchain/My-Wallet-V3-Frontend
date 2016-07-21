@@ -9,7 +9,7 @@
       | :&nbsp;
       b(ng-bind="::val")
 .modal-footer
-  button.button-muted(ng-click="$dismiss('cancelled')" translate="CANCEL")
+  button.button-muted(ng-click="$dismiss('cancelled')" translate="{{::cancel || 'CANCEL'}}")
   button.btn(
     ng-class="::'button-' + (friendly ? 'primary' : 'danger')"
     ng-click="$close()"

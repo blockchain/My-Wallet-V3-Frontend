@@ -10,3 +10,5 @@ tr
   td.vat.ptm
     span.mrs {{ trade.state | translate }}
     span.blue.underline.pointer(ng-click="buy({amt: trade.inAmount, trade: trade})" ng-show="pending") Finish Payment
+    i.ti-trash.pointer.mls.state-danger-text(ng-click="cancel({trade: trade})" ng-show="pending" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
+

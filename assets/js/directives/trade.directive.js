@@ -10,6 +10,7 @@ function trade ($uibModal) {
     replace: true,
     scope: {
       pending: '@',
+      cancel: '&',
       trade: '=',
       buy: '&'
     },

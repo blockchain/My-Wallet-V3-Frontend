@@ -42,7 +42,7 @@
           th.ptm.plm.pbn Date
           th.ptm.pbn Amount
           th.ptm.pbn Status
-          tr(ng-repeat="trade in trades.pending" trade="trade" buy="buy(amt, trade)" pending="true")
+          tr(ng-repeat="trade in trades.pending" trade="trade" buy="buy(amt, trade)" cancel="cancel(trade)" pending="true")
       div(ng-show="trades.completed.length")
         h4.type-h4(translate="History")
         table.width-100.border.mbvl
