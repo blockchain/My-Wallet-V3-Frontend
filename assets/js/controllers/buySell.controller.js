@@ -31,7 +31,8 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
       $scope.trades.completed = trades.filter(t => t.state === 'expired' ||
                                                   t.state === 'rejected' ||
                                                   t.state === 'cancelled' ||
-                                                  t.state === 'completed');
+                                                  t.state === 'completed' ||
+                                                  t.state === 'completed_test');
       $scope.userHasExchangeAcct = trades.length > 0;
     };
 

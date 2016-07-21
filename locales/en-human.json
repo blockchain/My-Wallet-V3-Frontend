@@ -851,6 +851,7 @@
   "processing": "Processing Payment",
   "reviewing": "Reviewing Payment",
   "completed": "Completed",
+  "completed_test": "Completed Test",
   "cancelled": "Cancelled",
   "rejected": "Rejected",
   "expired": "Expired",
