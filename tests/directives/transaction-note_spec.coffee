@@ -60,6 +60,17 @@ describe "Transaction Note Directive", ->
     expect(angular.element(addressLabel).hasClass('ng-hide')).toBe(false)
   )
 
+  it "should show a label when All wallets are filtered", inject((Wallet) ->
+    $rootScope.account = '';
+    spyOn(Wallet, "deleteNote")
+    isoScope.deleteNote()
+    element = $compile("<transaction-note transaction='transaction' account='account'></transaction-note>")($rootScope)
+    $rootScope.$digest()
+
+    addressLabel = element[0].querySelectorAll('.aaa.tx-note')
+    expect(angular.element(addressLabel).hasClass('ng-hide')).toBe(false)
+  )
+
   it "should save a modified note", inject((Wallet) ->
     spyOn(Wallet, "setNote")
     isoScope.transaction.note = "Modified note"
@@ -122,11 +133,6 @@ describe "Transaction Note Directive", ->
     expect(isoScope.transaction.draftNote).toBe(isoScope.transaction.note)
     expect(isoScope.editNote).toBe(false)
     return
-
-  it "should save a note on enter", ->
-    spyOn(isoScope, "saveNote")
-    isoScope.saveOnEnter({keyCode: 13})
-    expect(isoScope.saveNote).toHaveBeenCalled()
 
   it "does delete note", ->
     isoScope.deleteNote()

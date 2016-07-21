@@ -73,3 +73,9 @@ noscript {
 .ph-form { padding: 0 2em; }
 
 .mw { max-width: 100%; }
+
+@media (max-width: 768px) {
+  hidden-xs {
+    display: none;
+  }
+}

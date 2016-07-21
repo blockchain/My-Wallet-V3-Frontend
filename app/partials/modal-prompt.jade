@@ -4,7 +4,7 @@
   form(role="form" name="form" ng-submit="$close(promptInput)" autocomplete="off" novalidate)
     p(translate="{{::message}}")
     .form-group
-      input.form-control(type="{{::type}}" ng-model="promptInput" name="promptInput" required autofocus)
+      input.form-control(type="{{::type}}" ng-model="promptInput" name="promptInput" ng-model-options="{debounce: 250}" required autofocus)
 .modal-footer.pal.flex-end
   button.button-muted.mrm(translate="CANCEL" ng-click="$dismiss('cancelled')")
   button.btn.button-primary(translate="SUBMIT" ng-click="$close(promptInput)" ng-disabled="form.$invalid")

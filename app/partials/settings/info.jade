@@ -5,7 +5,15 @@ h5.well.em-400.type-h5.hidden-xs(translate="WALLET_INFO_EXPLAIN")
       label.em-400.type-h5(translate="UID")
       p.text.em-300.hidden-xs(translate="UID_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result.flex-column
-      label.em-400.type-h5(ng-bind="uid")
+      label.em-400.type-h5(ng-bind="guid")
+
+  .form-group.mbn.border-bottom.clearfix.pvl(ng-if="alias")
+    .col-sm-12.col-md-6
+      label.em-400.type-h5(translate="ALIAS")
+      p.text.em-300.hidden-xs(translate="ALIAS_EXPLAIN")
+    .col-sm-12.col-md-6.setting-result
+      p.em-400.type-h5.mbm(ng-bind="alias")
+      button.button-primary(ng-click="removeAlias()" ladda-translate="REMOVE" ui-ladda="loading.alias" ng-disabled="loading.alias" data-style="expand-right")
 
   .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
@@ -23,9 +31,9 @@ h5.well.em-400.type-h5.hidden-xs(translate="WALLET_INFO_EXPLAIN")
         span .
 
     .col-sm-12.col-md-6.setting-result
-      a.button-primary.display-inline-block(ng-click="showPairingCode()", ng-hide="display.pairingCode", ui-ladda="loading" ladda-translate="SHOW_PAIRING_CODE" data-style="expand-right")
-      a.button-primary.display-inline-block(ng-click="hidePairingCode()", ng-show="display.pairingCode", translate="HIDE_PAIRING_CODE")
-      
+      button.button-primary(ng-click="showPairingCode()" ng-hide="pairingCode" ladda-translate="SHOW_PAIRING_CODE" ui-ladda="loading.code" ng-disabled="loading.code" data-style="expand-right")
+      button.button-primary(ng-click="hidePairingCode()" ng-show="pairingCode" translate="HIDE_PAIRING_CODE")
+
       .qr.ptl.mtl
-        span(ng-show="display.pairingCode")
-          qr(text="pairingCode", size=180, image="true")
+        span(ng-show="pairingCode")
+          qr(text="pairingCode" size="180" image="true")

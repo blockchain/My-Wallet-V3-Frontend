@@ -401,7 +401,7 @@
           @media (min-width: 799px) {
             max-width: 600px;
             padding: initial;
-            margin: 0 auto;
+            margin: 0;
           }
           img {
             display: block;
@@ -501,115 +501,6 @@
   }
 }
 
-.squares {
-  @extend .clearfix;
-  > div {
-    position: relative;
-    overflow: hidden;
-    img {
-      width: 100%;
-    }
-    .background {
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      background-size: cover;
-      background-position: center center;
-    }
-    .donut {
-      transform: translate(-50%, -50%);
-      -moz-transform: translate(-50%, -50%);
-      -webkit-transform: translate(-50%, -50%);
-      @include transition(all 1s);
-      box-sizing: content-box;
-      background: transparent;
-      border-radius: 100%;
-      position: absolute;
-      height: 65%;
-      width: 65%;
-      left: 50%;
-      top: 45%;
-      border: 500px solid $baby-blue;
-      box-shadow: inset 0 16px 24px 2px rgba(0, 0, 0, 0.14),
-                        0  6px 30px 5px rgba(0, 0, 0, 0.12),
-                        0  8px 10px -5px rgba(0, 0, 0, 0.4);
-    }
-    p:last-child {
-      @include transition(color $slow);
-      transform: translateX(-50%);
-      -moz-transform: translateX(-50%);
-      -webkit-transform: translateX(-50%);
-      position: absolute;
-      text-align: center;
-      color: $pale-grey;
-      min-width: 150px;
-      margin-bottom: 0;
-      font-size: 16px;
-      min-height: 10%;
-      bottom: 2%;
-      left: 50%;
-    }
-
-    @media (max-width: 768px) {
-      float: left;
-      width: 50%;
-      &:nth-child(2), &:nth-child(3) {
-        .donut {
-          border: 300px solid $steel;
-        }
-      }
-      p:last-child {
-        font-size: 12px;
-        line-height: 1;
-        bottom: -1%;
-      }
-    }
-    @media (min-width: 769px) {
-      float: left;
-      width: 25%;
-      &:nth-child(2), &:nth-child(4) {
-        .donut {
-          border: 300px solid $steel;
-        }
-      }
-    }
-    &:nth-child(1) {
-      .background {
-         background-image: url('../img/security-upgrade-welcome.jpg');
-      }
-    }
-    &:nth-child(2) {
-      .background {
-        background-image: url('../img/recover-welcome.jpg');
-      }
-    }
-    &:nth-child(3) {
-      .background {
-        background-image: url('../img/fun-and-insightful-welcome.jpg');
-      }
-    }
-    &:nth-child(4) {
-      .background {
-        background-image: url('../img/tx-list-welcome.jpg');
-      }
-    }
-    &:hover {
-      .donut {
-        border-radius: 0%;
-        box-shadow: none;
-        height: 101%;
-        width: 101%;
-        top: 50%;
-      }
-      p.dark {
-        color: $text;
-      }
-    }
-  }
-}
-
 .blocket-loading {
   @include transition(top 0.7s 0.3s, opacity 0s 1s);
   background-color: $blue;
@@ -663,5 +554,130 @@
         @include transition(transform 0.5s);
       }
     }
+  }
+}
+
+.landing-page #video-player {
+    position: relative;
+}
+
+.landing-page #video-player > #placeholder {
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.landing-page #video-player > #play-button {
+    width: 5%;
+    position: absolute;
+    top: 49%;
+    left: 51%;
+    transform: translate(-50%,-50%);
+}
+
+.landing-page #video-player > h3 {
+    position: absolute;
+    top: 57%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.landing-page .video-player .video-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  visibility: hidden;
+  z-index: -3;
+}
+
+.landing-page .bitinf > img {
+  width: 3em;
+}
+
+.landing-page #newToBTC {
+  margin-bottom: 16px;
+}
+
+.landing-page #timeline {
+  width: 35em;
+  margin-right: 0px;
+}
+
+@media (max-width: 992px){
+  .landing-page #timeline {
+    margin: 0;
+    width: 65%;
+    margin-bottom: 10px;
+  }
+  .flex-column-med {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+
+  .landing-page #newToBTC {
+    margin-bottom: 35px;
+  }
+
+  .landing-page #video-player {
+      margin-bottom: 50px;
+  }
+
+  .landing-page #video-player > #placeholder {
+      position: relative;
+      top: 0px;
+      left: 0px;
+      transform: translate(0,0);
+      width: 40%;
+  }
+
+  .landing-page #video-player > #play-button {
+      width: 4%;
+  }
+
+  .landing-page #video-player > h3 {
+      top: 67%;
+  }
+  .landing-page .video-player .video-container {
+    top: 0px;
+    left: 0px;
+  }
+}
+
+.plax{
+  height: 200px;
+  margin-top: 40px;
+  position: relative;
+  background-image: url(../img/home-banner.jpg);
+  background-size: cover;
+  background-position: top center;
+  background-attachment: fixed;
+  width: 100%;
+}
+
+#stat-row {
+  height: 100px;
+}
+
+.new .flex-row .video-container .imag-prev {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  width: 60%;
+}
+
+@media (max-width: 992px) {
+  .new .flex-row .video-container .imag-prev {
+    position: relative;
+    width: 50%;
+    left: 0;
+    top: 0;
+    transform: translate(0,0);
+    margin-bottom: 20px;
   }
 }

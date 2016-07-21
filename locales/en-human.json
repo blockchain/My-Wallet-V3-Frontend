@@ -39,9 +39,15 @@
   "LOGGED_OUT_AUTOMATICALLY" : "Logged out automatically",
   "AUTO_LOGOUT" : "Auto Logout",
   "AUTO_LOGOUT_EXPLAIN" : "After a certain period of inactivity, you will be automatically logged out of your wallet.",
-  "AUTO_LOGOUT_WARN" : "Are you still there? You've been inactive for {{::minutes}} minutes. Click \"Cancel\" if you don't want to be logged out automatically.",
+  "CONFIRM_AUTO_LOGOUT" : {
+    "TITLE": "Are you still there?",
+    "BODY": "You've been inactive for {{::minutes}} minutes. Click \"Cancel\" if you don't want to be logged out automatically."
+  },
   "LOG_ME_OUT": "Log me out",
-  "CHANGES_BEING_SAVED": "There are changes still being saved. Are you sure you wish to logout?",
+  "CONFIRM_FORCE_LOGOUT": {
+    "TITLE": "Sign out without saving?",
+    "BODY": "There are changes still being saved, signing out now may result in loss of data. Are you sure you wish to continue?"
+  },
   "CLOSE": "Close",
   "TRANSACTIONS" : "Transactions",
   "TRANSACTION" : "Transaction",
@@ -99,6 +105,10 @@
   "PRINT_RECOVERY_SHEET" : "Print Recovery Sheet",
   "ARE_YOU_SURE_LOGOUT" : "Are you sure you wish to logout?",
   "ARE_YOU_SURE_CANCEL" : "Are you sure you're finished?",
+  "CONFIRM_LOGOUT": {
+    "TITLE": "Sign Out?",
+    "BODY": "All changes have been saved, it is safe to sign out."
+  },
   "LANGUAGE_EXPLAIN" : "Set your preferred language.",
   "EMAIL_ADDRESS" : "Email Address",
   "NOT_VALID_EMAIL_ADDRESS": "Please enter a valid email address.",
@@ -147,6 +157,7 @@
   "RECOVERY_PHRASE_EXPLAIN" : "Your recovery phrase can be used to restore all your funds in the case of a lost password or a loss of service at Blockchain. Note, that the recovery phrase never changes and recovers all of your existing bitcoins as well as newly received funds in this wallet. Please note that imported addresses are not backed up by the wallet recovery phrase. We strongly recommend to transfer funds from imported addresses into this wallet.",
   "CONFIRM_RECOVERY_PHRASE" : "Backup Phrase",
   "RECOVERY_ERROR": "Unable to import now, please try again.",
+  "MAIN_PW_REQUIRED": "Enter your main wallet password to view your Recovery Phrase.",
   "NEXT_STEP" : "Next Step",
   "NEXT" : "Next",
   "EMAIL" : "Email",
@@ -188,7 +199,10 @@
   "HD_ADDRESSES" : "HD Addresses",
   "ADDRESS_BOOK" : "Address Book",
   "MANAGE_ADDRESS_BOOK" : "Manage Address Book",
-  "CONFIRM_DELETE_ADDRESS_BOOK_ENTRY" : "Are you sure you want to remove {{ address }} from your address book?",
+  "CONFIRM_DELETE_ADDRESS_BOOK_ENTRY": {
+    "TITLE": "Delete address book entry?",
+    "BODY": "This will remove {{::address}} from your address book."
+  },
   "ROUTE_ERROR" : "There was a problem navigating to that page, please try again",
   "LOAD_ADDR_ERR" : "Failed to load your HD address balances, please try again",
   "SHARE" : "Share",
@@ -210,10 +224,16 @@
   "NEW_ADDRESS" : "New Address",
   "IMPORT_ADDRESS" : "Import Address",
   "MORE_ACTIONS" : "More Actions",
-  "CONFIRM_IMPORT_WATCH": "<i class='ti-alert security-red mrs'></i>You are about to import a watch-only address. <b>This is recommended for advanced users only.</b> <br/> <br/> <small>You can only access these funds if you have the private key stored elsewhere. If you do not have a paper wallet or other backup you should not instruct anyone to send you coins to this address.</small>",
+  "CONFIRM_IMPORT_WATCH": {
+    "TITLE": "Import Watch-only Address?",
+    "BODY": "You can only access these funds if you have the private key stored elsewhere. If you do not have a paper wallet or other backup you should not instruct anyone to send you coins to this address."
+  },
   "ADDRESS" : "Address",
   "LABEL" : "Label",
-  "CONFIRM_REMOVE_LABEL" : "<i class='ti-alert security-red mrs'></i>Remove Label?<br/><br/><small>This action cannot be undone. Removing a label does not delete this address, you can still safely receive funds to it.</small>",
+  "CONFIRM_REMOVE_LABEL": {
+    "TITLE": "Remove Label?",
+    "BODY": "This action cannot be undone. Removing a label does not delete this address, you can still safely receive funds to it."
+  },
   "DETAILS" : "Details",
   "TRANSFER" : "Transfer",
   "TRANSFER_ALL" : "Transfer All",
@@ -249,7 +269,10 @@
   "SPENDABLE_ADDRESSES" : "Spendable Addresses",
   "NEXT_ADDRESSES_FOR_ACCOUNT" : "Unused Addresses in {{account}}",
   "PAST_ADDRESSES_FOR_ACCOUNT" : "Used Addresses in {{account}}",
-  "SHOW_PAST": "<i class='ti-alert security-red mrs'></i>Are you sure?<br/><br/><small>Viewing used addresses can be helpful for debugging purposes, and is recommended for advanced users only. For privacy reasons, we strongly discourage using each address more than once.</small>",
+  "CONFIRM_SHOW_PAST": {
+    "TITLE": "Are you sure?",
+    "BODY": "Viewing used addresses can be helpful for debugging purposes, and is recommended for advanced users only. For privacy reasons, we strongly discourage using each address more than once."
+  },
   "PAST_ADDRESSES" : "Used Addresses",
   "TOTAL_RECEIVED" : "Total Received",
   "CURRENT_BALANCE" : "Current Balance",
@@ -258,23 +281,40 @@
   "WATCH_ONLY_ADDRESSES" : "Watch-only Addresses",
   "ARCHIVED_ADDRESSES" : "Archived Addresses",
   "ARCHIVED_ADDRESSES_EXPLAIN" : "Archived addresses are addresses you may not need anymore that are hidden from the main view but still part of your wallet. You can unarchive them at any time.",
-  "LOSE_ACCESS" : "The wallet does not check the balance of archived addresses, so please make sure there are no funds left. If you receive funds on this address in the future, you will not be able to spend them. Are you sure?",
-  "CONFIRM_DELETE_WATCH_ONLY_ADDRESS" : "Do you wish to stop monitoring this address?",
+  "CONFIRM_LOSE_ACCESS": {
+    "TITLE": "Delete Address?",
+    "BODY": "Only delete an address if you are done using it. Funds sent to this address in the future cannot be recovered."
+  },
+  "CONFIRM_DELETE_WATCH_ONLY_ADDRESS" : {
+    "TITLE": "Delete Watch-only Address?",
+    "BODY": "Your wallet will no longer monitor this address."
+  },
   "HIDE_PAIRING_CODE"  : "Hide Pairing Code",
   "SHOW_PAIRING_CODE"  : "Show Pairing Code",
   "PAIRING_CODE_EXPLAIN": "Scan the code <i>(click on 'Show Pairing Code')</i> with your Blockchain Wallet (iOS or Android) for a seamless connection to your wallet.",
+  "SHOW_PAIRING_CODE_FAIL" : "Failed to load pairing code",
   "DOWNLOAD_THE": "Download the",
   "IOS_APP_HERE": "iOS app here",
   "AND_THE": "and the",
   "ANDROID_APP_HERE": "Android app here",
   "MOBILE" : "Mobile",
+  "CONFIRM_REMOVE_ALIAS": {
+    "TITLE": "Remove Wallet Alias?",
+    "BODY": "Once your alias is removed, you will not be able to use it to log in. This cannot be undone. Make sure you write down your Wallet Identifier before continuing."
+  },
+  "ALIAS" : "Alias",
+  "ALIAS_EXPLAIN" : "Log into Blockchain Wallet using a name of your choosing. This is not recommended, as it is less secure than logging in with your Wallet ID.",
+  "POOR_CONNECTION" : "Something went wrong, please check your connection and try again",
   "WATCH_ONLY" : "Watch Only",
   "WATCH_ONLY_REQUEST_WARN": "You are about to receive to a watch-only address. You can only spend these funds if you have access to the private key.",
   "WARNING" : "Warning",
   "IMPORT_BITCOIN_ADDRESS" : "Import Existing Bitcoin Address",
   "IMPORT_BITCOIN_ADDRESS_SWEEP" : "Transfer Funds from Imported Address",
   "IMPORT_BITCOIN_ADDRESS_EXPLAIN" : "Your wallet automatically creates new bitcoin addresses as it needs them. You can optionally import an existing address and transfer the funds to your wallet if you have the corresponding Private Key. This is an advanced functionality and only suggested for advanced users.",
-  "CONFIRM_NOT_SWEEP" : "Are you sure? We recommend that you transfer these funds.",
+  "CONFIRM_NOT_SWEEP": {
+    "TITLE": "Are You Sure?",
+    "BODY": "We recommend that you transfer these funds for added security and privacy."
+  },
   "SWEEP_LOW_BALANCE_ERR" : "You don't have enough funds to sweep this address using the recommended fee and will have to send manually",
   "YOUR_PRIVATE_KEY" : "Private Key",
   "PK_FORMAT": "Private Key Format",
@@ -305,6 +345,9 @@
   "IP_WHITELIST_RESTRICT_EXPLAIN" : "Only allow login from IP address in the whitelist. If you do not have a static IP address, this may lock you out of your wallet.",
   "IP_WHITELIST" : "IP Whitelist",
   "IP_WHITELIST_EXPLAIN" : "Allow login without email verification from the following list of comma-separated IP addresses. Use % as a wildcard. This requires your email address to be verified.",
+  "IP_WHITELIST_ERROR": "Failed to update IP Whitelist",
+  "IP_INVALID": "Invalid IP Address",
+  "IP_NOT_ALLOWED" : "%.%.%.% is not allowed",
   "WALLET_SECOND_PASSWORD" : "Second Wallet Password",
   "WALLET_SECOND_PASSWORD_EXPLAIN" : "For additional security, you can choose a second password that is asked whenever you want to spend bitcoins. Beware that there is no password reset functionality.",
   "SECOND_PASSWORD_SET" : "Second Password Enabled",
@@ -315,7 +358,6 @@
   "UPGRADE_WALLET" : "Upgrade Your Wallet",
   "NEED_SECOND_PASSWORD_FOR_UPGRADE" : "Your second password is required to upgrade the wallet.",
   "UPGRADE_DISABLES_API_ACCESS" : "Upgrading will disable API access.",
-  "UPGRADE_NOW" : "Upgrade Now",
   "NO_GOING_BACK": "After the upgrade, you can’t go back.",
   "UPGRADE_WELCOME" : "Welcome to the new version of the Blockchain Wallet!",
   "UPGRADE_EASY" : "The upgrade takes just a second, and your bitcoins and history will be safe.",
@@ -324,7 +366,6 @@
   "UPGRADE_PRIVACY" : "Enhanced Privacy",
   "UPGRADE_BACKUP" : "Simplified backup and recovery",
   "UPGRADE_FUND_MANAGEMENT" : "Customized fund management",
-  "UPGRADE_LIMITATIONS" : "Shared Coin transactions are not supported in the new version at this time.",
   "PBKDF2_ITERATIONS" : "Password Stretching (PBKDF2)",
   "PBKDF2_ITERATIONS_EXPLAIN" : "This increases the difficulty of discovering your password using a brute-force attack but slows down loading and saving your wallet.",
   "CHANGE_PASSWORD" : "Change Password",
@@ -384,7 +425,6 @@
   "RESENT_2FA_SMS_FAILED" : "Failed to resend verification SMS.",
   "MAX_CHARACTERS" : "Maximum of {{ max }} characters",
   "MAX_IP_ADDRESSES" : "Maximum of {{ max }} IP addresses",
-  "NOT_ALLOWED" : "{{ forbidden }} is not allowed",
   "DO_NOT_COPY_PASTE" : "It is not safe to copy paste this.",
   "INCORRECT_PASSWORD" : "Incorrect Password",
   "TOO_WEAK" : "Your password is not strong enough",
@@ -619,9 +659,13 @@
   "RESTORE_SUCCESSFUL": "Restore Successful",
   "REDIRECTING": "We're redirecting you to your wallet now!",
   "TAKES_A_WHILE": "This may take a while. If your browser asks if you want to cancel the script, please press continue.",
-  "NOTIFICATIONS" : "Email Notifications",
-  "NOTIFICATIONS_EXPLAIN" : "Enable notifications to receive an email whenever you receive bitcoins. Only labeled addresses and imported addresses are eligible to trigger notifications.",
-  "VERIFY_EMAIL_FIRST" : "Please verify your email address first.",
+  "NOTIFICATIONS" : "Notifications",
+  "NOTIFICATIONS_EXPLAIN" : "Get notified when you receive bitcoin.",
+  "VERIFY_EMAIL_FIRST" : "Verify your email address to enable notifications",
+  "VERIFY_MOBILE_FIRST": "Verify your mobile number to enable notifications",
+  "SMS": "SMS",
+  "RECEIVE_BY": "Receive by",
+  "UPDATE_NOTIF_FAIL": "Failed to update notification settings",
   "UNSUBSCRIBE_SUCCESS" : "We have removed your email address (and phone number) from our systems.",
   "AUTHORIZE_APPROVE_SUCCESS" : "Login approved! Please return to your previous browser / tab to see your wallet.",
   "AUTHORIZE_APPROVE_OTHER_BROWSER" : "Login attempt from other browser",
@@ -653,8 +697,14 @@
   "SETTING_SELECT_ERR": "Failed to change setting to {{ setting }}",
   "YOUR_ADDRESS": "Your Bitcoin Address",
   "SWEEP_FAILED" : "Unable to transfer funds",
-  "SWEEP_FINISHED": "<small>{{::archivable}} out of {{::total}} addresses were successfully transferred to {{::account}}</small>. <br/> <br/> Would you like to archive these addresses now?",
-  "SWEEP_FINISHED_SINGLE": "<small>{{::archivable}} address was successfully transferred to {{::account}}</small>. <br/> <br/> Would you like to archive this address now?",
+  "SWEEP_FINISHED": {
+    "TITLE": "Archive swept addresses?",
+    "BODY": "{{::archivable}} out of {{::total}} addresses were successfully transferred to {{::account}}. Would you like to archive these addresses now?"
+  },
+  "SWEEP_FINISHED_SINGLE": {
+    "TITLE": "@:SWEEP_FINISHED.TITLE",
+    "BODY": "{{::archivable}} address was successfully transferred to {{::account}}. Would you like to archive this address now?"
+  },
   "YOU_WILL_LOSE": "You will lose all your bitcoins! Are you sure?",
   "SURGE_WARN": "Unusually High Fee Recommended",
   "SURGE_EXPLAIN": "The Bitcoin network is under a higher load than usual. <b>To avoid any delays in confirmation, we recommend an unusually high transaction fee of {{ suggested | convert }}.</b>",
@@ -673,6 +723,14 @@
   "BLOCK": "block",
   "BLOCKS": "blocks",
   "SMALL_FEE_WARNING": "Your fee is so small that your transaction may never be confirmed.",
+  "LARGE_TX": {
+    "TITLE": "Large Transaction",
+    "BODY_1": "This is an oversized bitcoin transaction!",
+    "BODY_2": "Your wallet needs to consolidate many smaller payments you've received in the past. This requires a relatively high fee in order to be confirmed quickly.",
+    "NORMAL_SIZE": "The Normal Size",
+    "RECOMMENDED_FEE": "Recommended Fee",
+    "ACCEPT_FEE": "Accept Higher Fee"
+  },
   "NO_UNSPENT_OUTPUTS" : "Missing coins to spend",
   "BELOW_DUST_THRESHOLD" : "One of your amounts is below the required minimum of {{ threshold }} satoshis",
   "STRANGE_SCRIPT" : "Strange Script",

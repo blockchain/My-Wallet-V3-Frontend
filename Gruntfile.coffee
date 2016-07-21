@@ -106,6 +106,7 @@ module.exports = (grunt) ->
           'build/js/core/*.service.js'
           'build/js/services/*.js'
           'build/js/controllers/*.js'
+          'build/js/components/*.js'
           'build/js/controllers/settings/*.js'
           'build/js/directives/*.js'
           'build/js/filters.js'
@@ -167,6 +168,7 @@ module.exports = (grunt) ->
           "bower_components/angular-ui-select/dist/select.min.css"
           "bower_components/bc-css-flags/dist/css/bc-css-flags.css"
           "bower_components/bc-phone-number/dist/css/bc-phone-number.css"
+          "bower_components/angular-bootstrap/ui-bootstrap-csp.css"
           "build/css/ladda.css"
           "build/css/fonts.css"
           "build/css/angular-csp.css"
@@ -196,7 +198,7 @@ module.exports = (grunt) ->
         base: "app"
         singleModule: true
       main:
-        src: ["app/partials/notifications/*.jade", "app/partials/settings/*.jade", "app/partials/*.jade", "app/templates/*.jade"],
+        src: ["app/partials/notifications/*.jade", "app/partials/settings/*.jade", "app/partials/*.jade", "app/templates/*.jade", "app/*.jade"],
         dest: 'build/js/templates.js'
     },
     "merge-json": # TODO: generate this list...
@@ -241,10 +243,6 @@ module.exports = (grunt) ->
           {src: ["wallet.min.js"], dest: "dist/", cwd: "assets/legacy-cache-bust", expand: true}
         ]
 
-      css:
-        files: [
-          {src: ["ui-bootstrap-csp.css"], dest: "build/css", cwd: "bower_components/angular-bootstrap", expand: true }
-        ]
       css_dist:
           {src: ["wallet.css"], dest: "dist/css", cwd: "build/css", expand: true }
 
@@ -270,7 +268,7 @@ module.exports = (grunt) ->
 
     watch:
       jade:
-        files: ['app/partials/**/*.jade', 'app/templates/**/*.jade']
+        files: ['app/partials/**/*.jade', 'app/templates/**/*.jade', 'app/*.jade']
         tasks: ['build']
         options:
           spawn: false
@@ -282,7 +280,7 @@ module.exports = (grunt) ->
           spawn: false
 
       es6:
-        files: ['assets/js/controllers/**/*.js','assets/js/services/**/*.js','assets/js/sharedDirectives/**/*.js','assets/js/directives/**/*.js','assets/js/core/**/*.js','assets/js/*.js']
+        files: ['assets/js/controllers/**/*.js','assets/js/services/**/*.js','assets/js/sharedDirectives/**/*.js','assets/js/components/**/*.js','assets/js/directives/**/*.js','assets/js/core/**/*.js','assets/js/*.js']
         tasks: ['babel:build', 'includeSource', 'concat:wallet']
         options:
           spawn: false
@@ -310,7 +308,7 @@ module.exports = (grunt) ->
         files: [{
           expand: true,
           cwd: 'assets/js',
-          src: ['**/*.controller.js','services/**/*.js','sharedDirectives/**/*.js','directives/**/*.js','core/**/*.js','*.js'],
+          src: ['**/*.controller.js','**/*.component.js','services/**/*.js','sharedDirectives/**/*.js','directives/**/*.js','core/**/*.js','*.js'],
           dest: 'build/js',
         }]
 
@@ -467,7 +465,10 @@ module.exports = (grunt) ->
             if @rootDomain == null
               "customRootURL = '/'"
             else
-              "customRootURL = 'https://" + @rootDomain + "/'"
+              if @rootDomain.substr(0,5) != "local"
+                "customRootURL = 'https://" + @rootDomain + "/'"
+              else
+                "customRootURL = 'http://" + @rootDomain + "/'"
         }]
       web_socket_url:
         src: ['build/js/wallet.js'],
@@ -475,7 +476,10 @@ module.exports = (grunt) ->
         replacements: [{
           from: 'customWebSocketURL = $rootScope.webSocketURL'
           to: () =>
-            'customWebSocketURL = "wss://' + @rootDomain + '/inv"'
+            prefix = "wss://"
+            if @rootDomain && @rootDomain.substr(0,5) == "local"
+              prefix = "ws://"
+            'customWebSocketURL = "' + prefix + @rootDomain + '/inv"'
         }]
       api_domain:
         src: ['build/js/wallet.js'],
@@ -483,7 +487,10 @@ module.exports = (grunt) ->
         replacements: [{
           from: 'customApiDomain = $rootScope.apiDomain'
           to: () =>
-            "customApiDomain = 'https://" + @apiDomain + "/'"
+            if @rootDomain && @rootDomain.substr(0,5) == "local"
+              "customApiDomain = 'http://" + @apiDomain + "/'"
+            else
+              "customApiDomain = 'https://" + @apiDomain + "/'"
         }]
       version_frontend:
         src: ['build/js/app.js'],
@@ -495,7 +502,7 @@ module.exports = (grunt) ->
         }]
 
       version_my_wallet:
-        src: ['build/js/services/wallet.service.js'],
+        src: ['build/js/app.js'],
         overwrite: true,
         replacements: [{
           from: 'versionMyWallet = null'
@@ -546,7 +553,10 @@ module.exports = (grunt) ->
 
   # Make sure npm and bower dependencies are up to date
   # Run clean, test and build first
-  grunt.registerTask "dist", (versionFrontend, rootDomain, apiDomain) =>
+  grunt.registerTask "dist", () =>
+    versionFrontend = grunt.option('versionFrontend')
+    rootDomain = grunt.option('rootDomain')
+    apiDomain = grunt.option('apiDomain')
     if !versionFrontend
       versionFrontend = "intermediate"
     else if versionFrontend[0] != "v"

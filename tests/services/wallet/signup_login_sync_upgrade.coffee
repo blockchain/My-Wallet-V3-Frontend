@@ -1,5 +1,4 @@
 describe "walletServices", () ->
-  pending()
   Wallet = undefined
   errors = undefined
   callbacks = undefined
@@ -58,6 +57,7 @@ describe "walletServices", () ->
     return
 
   describe "login()", ->
+    pending()
     beforeEach ->
       spyOn(Wallet.my, "login").and.callThrough()
       Wallet.login()
@@ -116,11 +116,13 @@ describe "walletServices", () ->
     )
 
     it "should specify the 2FA method", inject((Wallet) ->
+      pending()
       Wallet.login(null, "test-2FA", "test", null, (() ->), (()->), (()->))
       expect(Wallet.settings.twoFactorMethod).toBe(4)
     )
 
     it "should login with  2FA code", inject((Wallet) ->
+      pending()
       Wallet.settings.twoFactorMethod = 4
       Wallet.login(null, "test-2FA", "test", "1234567", (() ->), (()->), (()->))
       expect(Wallet.status.isLoggedIn).toBe(true)
@@ -130,6 +132,7 @@ describe "walletServices", () ->
     return
 
   describe "2FA settings", ->
+    pending()
     it "can be disabled", inject((Wallet) ->
       Wallet.settings_api.unsetTwoFactor = (success) ->
         success()
@@ -167,19 +170,13 @@ describe "walletServices", () ->
       return
     )
 
-  describe "second password", ->
-    # Enable, disable, prompt
-    it "...", ->
-      pending()
-
-
   describe "HD upgrade", ->
     beforeEach ->
       Wallet.my.wallet.upgradeToHDWallet = () ->
       Wallet.my.wallet.newHDWallet = () ->
 
     it "should prompt the user if upgrade to HD is needed", inject(($rootScope, $timeout) ->
-
+      pending()
       spyOn($rootScope, '$broadcast').and.callThrough()
 
       Wallet.monitor("hd_wallets_does_not_exist")
@@ -191,6 +188,7 @@ describe "walletServices", () ->
     )
 
   describe "signup", ->
+    pending()
 
     it "should create a wallet", ->
       callbacks = {

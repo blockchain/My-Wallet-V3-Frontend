@@ -14,6 +14,10 @@ describe "Destination Input directive", ->
     scope = $rootScope.$new()
     Wallet = $injector.get('Wallet')
 
+    Wallet.addressBook = () -> [
+      { address: '1abc', label: 'address_book_entry' }
+    ]
+
     Wallet.my.wallet =
       hdwallet:
         accounts: [{ archived: false }]
@@ -49,3 +53,6 @@ describe "Destination Input directive", ->
 
   it "should hide the dropdown when there is one account and no active addresses", ->
     expect(isoScope.dropdownHidden).toEqual(true)
+
+  it "should have the correct number of destinations", ->
+    expect(isoScope.destinations.length).toEqual(2)
