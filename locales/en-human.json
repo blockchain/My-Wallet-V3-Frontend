@@ -108,6 +108,10 @@
     "TITLE": "Cancel Trade?",
     "BODY": "You'll have to start over from the beginning."
   },
+  "CONFIRM_CLOSE": {
+    "TITLE": "Finish Later?",
+    "BODY": "You'll be able to finish the payment later."
+  },
   "CONFIRM_LOGOUT": {
     "TITLE": "Sign Out?",
     "BODY": "All changes have been saved, it is safe to sign out."

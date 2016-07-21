@@ -214,10 +214,16 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
   };
 
   $scope.close = (acct) => {
-    Alerts.confirm('CONFIRM_CANCEL', {action: 'IM_DONE'}).then(() => {
-      if (acct) $scope.initExchangeAcct();
-      $scope.cancel();
-    });
+    if (acct) {
+      Alerts.confirm('CONFIRM_CLOSE', {action: 'CLOSE'}).then(() => {
+        $scope.cancel();
+        $scope.initExchangeAcct();
+      });
+    } else {
+      Alerts.confirm('CONFIRM_CANCEL', {action: 'IM_DONE'}).then(() => {
+        $scope.cancel();
+      });
+    }
   };
 
   if ($scope.trade) $scope.nextStep();
