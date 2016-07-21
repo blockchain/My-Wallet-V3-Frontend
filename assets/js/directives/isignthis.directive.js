@@ -9,6 +9,7 @@ function isignthis ($sce) {
       onLoad: '&',
       onDecline: '&',
       onSuccess: '&',
+      paymentInfo: '=',
       transactionId: '='
     },
     template: `
@@ -151,20 +152,29 @@ function isignthis ($sce) {
         })
         .route(function (e) {
           console.log('route. e=' + JSON.stringify(e));
+          scope.paymentInfo = e.route.match('/otp|/secret|/verify-pin');
           switch (e.state) {
             case 'PENDING':
-              if (scope.loaded) { scope.loaded = true; return; }
+              if (scope.loaded) return;
+              scope.loaded = true;
               scope.onLoad();
               break;
             case 'SUCCESS':
               scope.onSuccess();
               break;
             case 'DECLINED':
-              if (scope.declined) { scope.declined = true; return; }
+              if (scope.declined) return;
+              scope.declined = true;
               scope.onDecline();
               break;
             case 'REJECTED':
-              if (scope.declined) { scope.declined = true; return; }
+              if (scope.declined) return;
+              scope.declined = true;
+              scope.onDecline();
+              break;
+            case 'FAILED':
+              if (scope.declined) return;
+              scope.declined = true;
               scope.onDecline();
               break;
           }

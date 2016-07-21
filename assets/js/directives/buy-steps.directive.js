@@ -14,6 +14,7 @@ function buySteps () {
       exchange: '=',
       transaction: '=',
       exchangeAcct: '=',
+      paymentInfo: '=',
       currencySymbol: '='
     },
     templateUrl: 'templates/buy-steps.jade',

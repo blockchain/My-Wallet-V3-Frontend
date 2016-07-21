@@ -15,6 +15,7 @@ form(name="buyAmount")
       input.form-control(
         type="number"
         ng-model="transaction.fiat"
+        ng-model-options="{debounce: 250}"
         name="fiat"
         tabindex="1"
         on-enter="nextStep()"

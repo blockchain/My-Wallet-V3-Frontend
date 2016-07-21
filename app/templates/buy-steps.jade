@@ -29,14 +29,14 @@
                 ng-hide="exchangeAcct")
     i.ti-arrow-right.type-h4
 
-  .width-20.flex-column.flex-center(ng-class="{blue: step >= 4}")
+  .width-20.flex-column.flex-center(ng-class="{blue: step >= 4, success: step > 5}")
     i.type-lrg.ti-credit-card
     span(ng-show="step > 4").capitalize {{ method.name }}
     span(ng-hide="step > 4" translate="Payment")
 
-  .flex-justify
+  .flex-justify(ng-class="{success: step > 5}")
     i.ti-arrow-right.type-h4
 
-  .width-20.flex-column.flex-center
+  .width-20.flex-column.flex-center(ng-class="{blue: step > 5}")
     i.type-lrg.ti-shopping-cart
     span(translate="Get Bitcoin")

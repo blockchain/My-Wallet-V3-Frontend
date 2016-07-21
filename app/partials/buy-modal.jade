@@ -5,6 +5,7 @@
         h3(translate="BUY_BITCOIN")
         quote-countdown(quote="quote" get-quote="getQuote()" ng-hide="step >= 5")
       buy-steps(transaction="transaction" 
+                payment-info="paymentInfo"
                 exchange-acct="userHasExchangeAcct"
                 currency-symbol="currencySymbol"
                 profile="profile"
@@ -26,7 +27,7 @@
     div(ng-show="step === 4")
       include ./buy-summary
     div.iframe(ng-show="step >= 5")
-      isignthis(transaction-id='trade.iSignThisID' on-load="loadISX()" on-decline="decline()")
+      isignthis(transaction-id='trade.iSignThisID' on-load="loadISX()" on-decline="decline()" payment-info="paymentInfo")
     .flex-end.flex-center.mtl
         span.mrs.type-sm Powered by
         a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")

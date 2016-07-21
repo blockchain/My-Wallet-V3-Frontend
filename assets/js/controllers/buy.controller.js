@@ -22,6 +22,7 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
   $scope.method = $scope.creditcard;
   $scope.transaction = {fiat: 0, btc: 0, fee: 0, total: 0, currency: $scope.settings.currency};
   $scope.transaction.fiat = fiat || 0;
+  $scope.paymentInfo = undefined;
 
   try {
     if (trades.pending.length || trades.completed.length) $scope.userHasExchangeAcct = true;
@@ -130,8 +131,10 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
       $scope.step = 3;
     } else if (!$scope.trade) {
       $scope.step = 4;
-    } else {
+    } else if (!$scope.paymentInfo) {
       $scope.step = 5;
+    } else {
+      $scope.step = 6;
     }
   };
 
@@ -242,7 +245,7 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
 
   $scope.$watch('method', $scope.updateAmounts);
   $scope.$watch('transaction.fiat', $scope.getQuote);
-  $scope.$watchGroup(['exchange.user', 'user.isEmailVerified'], $scope.nextStep);
+  $scope.$watchGroup(['exchange.user', 'user.isEmailVerified', 'paymentInfo'], $scope.nextStep);
 
   $scope.$watch('transaction.currency', () => {
     let curr = $scope.transaction.currency || null;
