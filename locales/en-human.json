@@ -427,7 +427,7 @@
   "WORD_11" : "Eleventh Word",
   "WORD_12" : "Twelfth Word",
   "INVALID_CHARACTERS_FOR_LABEL" : "A label can only contain letters, numbers and spaces.",
-  "GAP" : "You cannot label more than 20 unused addresses in a row; please send some bitcoins to at least one of them.",
+  "GAP" : "You cannot label more than 10 unused addresses in a row; please send some bitcoins to at least one of them.",
   "LABEL_ERROR_BIP_44_GAP" : "@:GAP",
   "EMAIL_VERIFIED_MSG" : "Your email address has been verified",
   "PLEASE_LOGIN_FIRST" : "Please login to your wallet to proceed.",
