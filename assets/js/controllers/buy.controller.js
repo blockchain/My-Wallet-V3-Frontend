@@ -195,7 +195,8 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
       $scope.trade = trade;
     };
 
-    $scope.exchange.buy($scope.transaction.fiat).then(success, $scope.standardError);
+    console.log($scope.transaction);
+    $scope.exchange.buy($scope.transaction.fiat, $scope.transaction.currency.code).then(success, $scope.standardError);
   };
 
   $scope.loadISX = () => {
