@@ -223,6 +223,7 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
 
   $scope.declineTx = (tx) => {
     $scope.cancel();
+    $rootScope.$broadcast('initExchangeAcct');
     Alerts.confirm('DECLINED_TRANSACTION', {action: 'TRY_AGAIN'}).then(() => {
       $rootScope.$broadcast('initBuy');
     });

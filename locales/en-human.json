@@ -50,7 +50,7 @@
   },
   "CONFIRM_CANCEL_TRADE": {
     "TITLE": "Cancel Trade?",
-    "BODY": "Are you sure you want to cancel this trade? You'll have to create a new trade."
+    "BODY": "Are you sure you want to cancel this trade? You only have a few more steps to complete before receiving bitcoin."
   },
   "CANCEL_TRADE": "Cancel Trade",
   "CLOSE": "Close",
@@ -111,7 +111,7 @@
   "ARE_YOU_SURE_LOGOUT" : "Are you sure you wish to logout?",
   "CONFIRM_CANCEL": {
     "TITLE": "Cancel Trade?",
-    "BODY": "You'll have to start over from the beginning."
+    "BODY": "You're so close to receiving bitcoin."
   },
   "CONFIRM_CLOSE": {
     "TITLE": "Finish Later?",
@@ -119,11 +119,11 @@
   },
   "CONFIRM_CLOSE_ACCT": {
     "TITLE": "Are You Sure?",
-    "BODY": "You'll have to start from the beginning next time."
+    "BODY": "You're just a few steps from receiving bitcoin, are you sure you want to stop?"
   },
   "CONFIRM_CLOSE_AMT": {
     "TITLE": "Are You Sure?",
-    "BODY": "Clicking Close will exit the modal. But you can buy Bitcoin anytime."
+    "BODY": "Clicking Close will exit the modal. But you can buy bitcoin anytime."
   },
   "CONFIRM_LOGOUT": {
     "TITLE": "Sign Out?",

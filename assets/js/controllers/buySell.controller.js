@@ -71,7 +71,8 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
     };
 
     try {
-      if ($scope.exchange.user) $scope.getTrades().then(success);
+      if ($scope.trades.pending.length || $scope.trades.completed.length) success();
+      else if ($scope.exchange.user) $scope.getTrades().then(success);
       else success();
     } catch (e) {
       success();
