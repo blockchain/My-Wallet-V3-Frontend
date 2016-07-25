@@ -72,7 +72,7 @@ function Alerts ($timeout, $rootScope, $translate, $uibModal) {
     });
   }
 
-  // options = { values, props, friendly, action, modalClass }
+  // options = { values, props, friendly, success, action, modalClass, iconClass }
   function confirm (namespace, options = {}) {
     return $uibModal.open({
       templateUrl: 'partials/modal-confirm.jade',

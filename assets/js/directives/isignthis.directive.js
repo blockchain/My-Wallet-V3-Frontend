@@ -152,7 +152,7 @@ function isignthis ($sce) {
         })
         .route(function (e) {
           console.log('route. e=' + JSON.stringify(e));
-          scope.paymentInfo = e.route.match('/otp|/secret|/verify-pin');
+          scope.paymentInfo = e.route.match('/otp|/secret|/verify-pin|/kyc');
           switch (e.state) {
             case 'PENDING':
               if (scope.loaded) return;
@@ -160,7 +160,11 @@ function isignthis ($sce) {
               scope.onLoad();
               break;
             case 'SUCCESS':
-              scope.onSuccess();
+              if (scope.success) return;
+              scope.success = true;
+              let id = e.route.split('/result/')[1];
+              let tx = {id: id};
+              scope.onSuccess({tx: tx});
               break;
             case 'DECLINED':
               if (scope.declined) return;

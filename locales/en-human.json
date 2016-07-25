@@ -66,7 +66,7 @@
   "BITCOIN_ADDRESS" : "Bitcoin Address for Your Next Transaction",
   "DEFAULT_NEW_ADDRESS_LABEL" : "New Address",
   "CANCEL" : "Cancel",
-  "CANCELLED" : "Cancelled",
+  "CANCELLED" : "Canceled",
   "SAVE" : "Save",
   "COPY" : "Copy",
   "CLICK_COPY" : "Click to Copy",
@@ -842,7 +842,7 @@
   "BUY_BITCOIN": "Buy Bitcoin",
   "SENT_VERIFICATION": "We sent a verification email to <span class='em-500'>{{::email}}</span> when you created your Blockchain wallet. Click on the <b>Verification Link</b> or enter the <b>Verification Code</b> below to continue.",
   "CHANGE_EMAIL": "You can also&nbsp;<span class='blue'>change your email address.</span>",
-  "PARTNER": "Our partner {{::partner}} will process your bitcoin purchase. By clicking 'Sign Up' you will create an account with {{::partner}}. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
+  "PARTNER": "Our partner {{::partner}} will process your bitcoin purchase. By clicking 'Continue' you will create an account with {{::partner}}. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
   "ACCEPT_PARTNER_TOS_PRIVACY": "Accept <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>{{::partner}}'s Terms of Service</a> and <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>{{::partner}}'s Privacy Policy</a>",
   "EMAIL_IN_USE": "{{::email}} is already in use. ",
   "CLICK_TO_CHANGE": "Click here to change it.",
@@ -869,7 +869,7 @@
   "reviewing": "Reviewing Payment",
   "completed": "Completed",
   "completed_test": "Completed Test",
-  "cancelled": "Cancelled",
+  "cancelled": "Canceled",
   "rejected": "Rejected",
   "expired": "Expired",
   "CONFIRM_PAY": "Confirm & Pay",
@@ -877,5 +877,17 @@
     "TITLE": "Card Declined",
     "BODY": "Your transaction was declined. The country or card provider is not accepted by Coinify."
   },
-  "CLICK_TO_CANCEL": "Cancel trade."
+  "TRANSACTION_ERROR": {
+    "TITLE": "Transaction Error",
+    "BODY": "This transaction was been canceled. Click 'Try Again' to buy Bitcoin."
+  },
+  "CLICK_TO_CANCEL": "Cancel trade",
+  "TX_SUCCESSFUL": {
+    "TITLE": "Transaction successful!",
+    "BODY": "You should receive your bitcoin shortly. Bitcoins are deposited to your default account."
+  },
+  "BITCOIN_RECEIVED": {
+    "TITLE": "Bitcoin received!",
+    "BODY": "You have just received bitcoin from Coinify. Check out your transaction list to see the trade in your Blockchain wallet."
+  }
 }

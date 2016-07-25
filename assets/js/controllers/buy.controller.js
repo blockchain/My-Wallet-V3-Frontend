@@ -187,6 +187,23 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
       .then(success).catch($scope.standardError);
   };
 
+  $scope.watchTrade = () => {
+    if (!$scope.trade) return;
+
+    console.log('Watch Bitcoin Receive Address');
+
+    const success = () => {
+      console.log('Bitcoin Received');
+      $scope.bitcoinReceived = true;
+
+      Alerts.confirm('BITCOIN_RECEIVED', {success: true, action: 'CLOSE', iconClass: 'ti-money'}).then(() => {
+        $rootScope.$broadcast('initExchangeAcct');
+      });
+    };
+
+    $scope.trade.bitcoinReceived().then(success);
+  };
+
   $scope.buy = () => {
     $scope.status.waiting = true;
 
@@ -195,8 +212,7 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
       $scope.trade = trade;
     };
 
-    console.log($scope.transaction);
-    $scope.exchange.buy($scope.transaction.fiat, $scope.transaction.currency.code).then(success, $scope.standardError);
+    $scope.exchange.buy($scope.transaction.fiat, $scope.transaction.currency.code).then(success, $scope.standardError).then($scope.watchTrade);
   };
 
   $scope.loadISX = () => {
@@ -205,11 +221,26 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
     $scope.nextStep();
   };
 
-  $scope.decline = () => {
+  $scope.declineTx = (tx) => {
     $scope.cancel();
     Alerts.confirm('DECLINED_TRANSACTION', {action: 'TRY_AGAIN'}).then(() => {
       $rootScope.$broadcast('initBuy');
     });
+  };
+
+  $scope.successTx = (tx) => {
+    $uibModalInstance.dismiss('');
+
+    if (!$scope.bitcoinReceived) {
+      tx['Purchased'] = $scope.trade.inAmount + ' ' + $scope.trade.inCurrency;
+      tx['BTC Amount'] = $scope.trade.outAmountExpected;
+      tx['BTC Address'] = $scope.trade.receiveAddress;
+      tx['Date'] = $scope.trade.createdAt;
+
+      Alerts.confirm('TX_SUCCESSFUL', {success: true, action: 'CLOSE', props: tx, iconClass: 'ti-check'}).then(() => {
+        $rootScope.$broadcast('initExchangeAcct');
+      });
+    }
   };
 
   $scope.cancel = () => {
@@ -240,7 +271,10 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
     });
   };
 
-  if ($scope.trade) $scope.nextStep();
+  if ($scope.trade) {
+    $scope.nextStep();
+    $scope.watchTrade();
+  }
 
   $scope.isCurrencySelected = (currency) => currency === $scope.transaction.currency;
 

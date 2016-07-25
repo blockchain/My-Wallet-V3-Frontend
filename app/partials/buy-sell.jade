@@ -35,6 +35,7 @@
               i.type-lrg.ti-check-box.blue.mrs 
               span.type-h5(translate="Secure: Encrypted Communication")
           button.button-primary.mtm(translate="Get Started" ng-click="buy()")
+      account-info(exchange="exchange" ng-show="userHasExchangeAcct")
     .flex-column.mtl(ng-show="trades.pending || trades.completed")
       div(ng-show="trades.pending.length")
         h4.type-h4(translate="Pending")

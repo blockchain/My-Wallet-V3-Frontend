@@ -29,10 +29,10 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
                                                  t.state === 'processing' ||
                                                  t.state === 'reviewing');
       $scope.trades.completed = trades.filter(t => t.state === 'expired' ||
-                                                  t.state === 'rejected' ||
-                                                  t.state === 'cancelled' ||
-                                                  t.state === 'completed' ||
-                                                  t.state === 'completed_test');
+                                                   t.state === 'rejected' ||
+                                                   t.state === 'cancelled' ||
+                                                   t.state === 'completed' ||
+                                                   t.state === 'completed_test');
       $scope.userHasExchangeAcct = trades.length > 0;
     };
 

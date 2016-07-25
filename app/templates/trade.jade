@@ -7,8 +7,10 @@ tr
     span {{ trade.outAmountExpected }} {{ trade.outCurrency }} for 
     span.em-600.mrs {{ trade.inAmount }} {{ trade.inCurrency }}
     span.blue.underline.pointer Details
-  td.vat.ptm
+  td.vat.ptm(ng-hide="status.waiting")
     span.mrs {{ trade.state | translate }}
     span.blue.underline.pointer(ng-click="buy({amt: trade.inAmount, trade: trade})" ng-show="pending") Finish Payment
+    span.blue.underline.pointer(ng-click="alertStatus()" ng-show="!pending && !totalReceived") Check Status
     i.ti-trash.pointer.mls.state-danger-text(ng-click="cancel({trade: trade})" ng-show="pending" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
-
+  td.vat.ptm(ng-show="status.waiting")
+    img(src="img/spinner.gif")

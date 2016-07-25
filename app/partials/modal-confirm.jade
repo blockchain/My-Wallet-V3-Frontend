@@ -1,6 +1,6 @@
 .modal-body(translate-namespace="{{::namespace}}")
   h4
-    i.ti-alert.security-red.mrs
+    i.security-red.mrs(ng-class="{'{{iconClass}}': iconClass, 'ti-alert': !iconClass, success: success}")
     span(translate=".TITLE")
   p.em-300.ptm(translate=".BODY" translate-values="::values")
   ul.em-300(ng-if="props")
@@ -9,8 +9,8 @@
       | :&nbsp;
       b(ng-bind="::val")
 .modal-footer
-  button.button-muted(ng-click="$dismiss('cancelled')" translate="{{::cancel || 'CANCEL'}}")
+  button.button-muted(ng-click="$dismiss('cancelled')" translate="{{::cancel || 'CANCEL'}}" ng-hide="success")
   button.btn(
-    ng-class="::'button-' + (friendly ? 'primary' : 'danger')"
+    ng-class="{'button-primary': friendly, 'button-success': success, 'button-danger': !friendly && !success}"
     ng-click="$close()"
     translate="{{::action || 'OK'}}")
