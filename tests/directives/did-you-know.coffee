@@ -55,7 +55,7 @@ describe "Did You Know directive", ->
       #   linkText: 'SECURITY',
       #   state: 'wallet.common.settings.security'
       # }
-      spyOn(DidYouKnow, "getSurvey").and.returnValue {
+      spyOn(DidYouKnow, "getRandom").and.returnValue {
         id: 5,
         title: 'SEND_FEEDBACK',
         type: 'SURVEY',

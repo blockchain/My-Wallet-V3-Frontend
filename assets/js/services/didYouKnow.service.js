@@ -33,22 +33,24 @@ function DidYouKnow () {
       type: 'EDUCATIONAL',
       text: 'DYK_BTC_VALUE',
       icon: 'ti-stats-up'
-    }, {
-      id: 5,
-      title: 'SEND_FEEDBACK',
-      type: 'SURVEY',
-      text: 'DYK_FEEDBACK_VALUE',
-      icon: 'ti-announcement',
-      linkText: 'SHARE_FEEDBACK',
-      external: true,
-      state: 'https://blockchain.co1.qualtrics.com/SE/?SID=SV_0PMH4ruxU5krOmh'
     }
   ];
+
+  const survey = {
+    id: 5,
+    title: 'SEND_FEEDBACK',
+    type: 'SURVEY',
+    text: 'DYK_FEEDBACK_VALUE',
+    icon: 'ti-announcement',
+    linkText: 'SHARE_FEEDBACK',
+    external: true,
+    state: 'https://blockchain.co1.qualtrics.com/SE/?SID=SV_0PMH4ruxU5krOmh'
+  };
 
   const service = {
     getAll: () => dyks, // Only used for tests
     getRandom: () => dyks[getRandInRange(0, dyks.length - 1)],
-    getSurvey: () => dyks[4]
+    getSurvey: () => survey
   };
   return service;
 }
