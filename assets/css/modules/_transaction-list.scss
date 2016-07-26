@@ -137,8 +137,8 @@
     }
     label {
       vertical-align: top;
-      & + ul { 
-        display: inline-block; 
+      & + ul {
+        display: inline-block;
       }
     }
   }
@@ -212,7 +212,7 @@ button {
 }
 .unconfirmed { opacity: 0.5; }
 
-.note { 
+.note {
   color: $black;
   position: relative;
   textarea {
@@ -241,6 +241,7 @@ a.date,p.date { color: $black; }
 .amountTotal {
   float: none;
   min-width: 130px;
+  text-transform: none;
 }
 
 .from, .to{
