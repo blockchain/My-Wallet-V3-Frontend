@@ -436,17 +436,6 @@ module.exports = (grunt) ->
         command: (newVersion, message) ->
           "git tag -a -s #{ newVersion } -m '#{ message }' && git push --tags"
 
-    git_changelog:
-      default:
-        options:
-          file: 'Changelog.md',
-          app_name : 'Blockchain HD Frontend',
-          # logo : 'https://raw.githubusercontent.com/blockchain/My-Wallet-HD-Frontend/changelog/assets/icons/png/logo.png',
-          intro : 'Recent changes'
-          grep_commits: '^fix|^feat|^docs|^style|^refactor|^chore|^test|BREAKING'
-          repo_url: 'https://github.com/blockchain/My-Wallet-HD-Frontend'
-          branch_name: 'master'
-
     coveralls:
       options:
         debug: true
@@ -525,7 +514,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-preprocess')
   grunt.loadNpmTasks('grunt-autoprefixer')
   grunt.loadNpmTasks('grunt-merge-json')
-  grunt.loadNpmTasks('git-changelog')
   grunt.loadNpmTasks('grunt-babel')
   grunt.loadNpmTasks('grunt-karma-coveralls')
   grunt.loadNpmTasks('grunt-text-replace')
@@ -622,13 +610,12 @@ module.exports = (grunt) ->
       exit(1)
 
     grunt.task.run [
-      "git_changelog"
       "shell:tag_release:#{ versionFrontend }:#{ versionFrontend }"
       "release_done:#{ versionFrontend }"
     ]
 
   grunt.registerTask "release_done", (versionFrontend) =>
-    console.log "Release done. Please copy Changelog.md over to Github release notes:"
+    console.log "Release done. Please run 'make changelog' and copy Changelog.md over to Github release notes:"
     console.log "https://github.com/blockchain/My-Wallet-V3-Frontend/releases/edit/#{ versionFrontend }"
 
   grunt.registerTask "check_translations", [
