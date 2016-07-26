@@ -884,10 +884,14 @@
   "CLICK_TO_CANCEL": "Cancel trade",
   "TX_SUCCESSFUL": {
     "TITLE": "Transaction successful!",
-    "BODY": "You should receive your bitcoin shortly. Bitcoins are deposited to your default account."
+    "BODY": "You should receive your bitcoin shortly. Bitcoins will be deposited to <b>{{::label}}</b>."
+  },
+  "TX_IN_REVIEW": {
+    "TITLE": "Transaction in review.",
+    "BODY": "Your transaction is currently being processed. Any issues should be resolved shortly. Thank you for your patience."
   },
   "BITCOIN_RECEIVED": {
     "TITLE": "Bitcoin received!",
-    "BODY": "You have just received bitcoin from Coinify. Check out your transaction list to see the trade in your Blockchain wallet."
+    "BODY": "You have just received bitcoin from Coinify! <br/> Bitcoins are deposited to <b>{{::label}}</b>."
   }
 }

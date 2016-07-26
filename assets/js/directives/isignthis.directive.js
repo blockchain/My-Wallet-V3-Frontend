@@ -9,6 +9,7 @@ function isignthis ($sce) {
       onLoad: '&',
       onDecline: '&',
       onSuccess: '&',
+      onReview: '&',
       paymentInfo: '=',
       transactionId: '='
     },
@@ -153,6 +154,8 @@ function isignthis ($sce) {
         .route(function (e) {
           console.log('route. e=' + JSON.stringify(e));
           scope.paymentInfo = e.route.match('/otp|/secret|/verify-pin|/kyc');
+          let id = e.route.split('/result/')[1];
+          let tx = {id: id};
           switch (e.state) {
             case 'PENDING':
               if (scope.loaded) return;
@@ -162,14 +165,17 @@ function isignthis ($sce) {
             case 'SUCCESS':
               if (scope.success) return;
               scope.success = true;
-              let id = e.route.split('/result/')[1];
-              let tx = {id: id};
               scope.onSuccess({tx: tx});
+              break;
+            case 'MANUAL_REVIEW':
+              if (scope.review) return;
+              scope.review = true;
+              scope.onReview({tx: tx});
               break;
             case 'DECLINED':
               if (scope.declined) return;
               scope.declined = true;
-              scope.onDecline();
+              scope.onDecline({tx: tx});
               break;
             case 'REJECTED':
               if (scope.declined) return;

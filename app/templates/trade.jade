@@ -1,16 +1,17 @@
-tr
-  td.vat.ptm.plm.pbm
-    span {{ trade.createdAt | date:'MM/dd/yyyy @ h:mma' }}
-    br
-    span Bought
-  td.vat.ptm
-    span {{ trade.outAmountExpected }} {{ trade.outCurrency }} for 
-    span.em-600.mrs {{ trade.inAmount }} {{ trade.inCurrency }}
-    span.blue.underline.pointer Details
-  td.vat.ptm(ng-hide="status.waiting")
-    span.mrs {{ trade.state | translate }}
+tr.border.pointer(ng-class="{'bg-light-blue': active}")
+  td.paml(ng-click="toggle()")
+    i.ti-direction-alt.mrm.type-h5
+    span.receive-green.type-lbl.em-500 Bought
+    span.display-block.mts.italic(ng-show="active" translate="{{ pending ? 'Pending': 'Completed' }}")
+  td.paml
+    span.type-lbl.mrm(ng-click="toggle()") {{ trade.createdAt | date:'MM/dd/yyyy @ h:mma' }}
     span.blue.underline.pointer(ng-click="buy({amt: trade.inAmount, trade: trade})" ng-show="pending") Finish Payment
-    span.blue.underline.pointer(ng-click="alertStatus()" ng-show="!pending && !totalReceived") Check Status
+    span.display-block.mts(ng-show="active") {{ trade.state | translate }}
+  td.right-align.paml(ng-hide="status.waiting")
+    span.type-lbl {{ trade.outAmountExpected }} {{ trade.outCurrency }} | 
+    span.type-lbl.em-600 {{ trade.inAmount }} {{ trade.inCurrency }}
     i.ti-trash.pointer.mls.state-danger-text(ng-click="cancel({trade: trade})" ng-show="pending" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
-  td.vat.ptm(ng-show="status.waiting")
+    span.display-block.mts(ng-show="pending && active").fade Placeholder
+    span.display-block.mts.blue.underline.pointer(ng-click="alertStatus()" ng-show="!pending && !totalReceived && active") Check Status
+  td.right-align.paml(ng-show="status.waiting")
     img(src="img/spinner.gif")

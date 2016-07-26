@@ -190,13 +190,12 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
   $scope.watchTrade = () => {
     if (!$scope.trade) return;
 
-    console.log('Watch Bitcoin Receive Address');
-
     const success = () => {
-      console.log('Bitcoin Received');
+      Alerts.clear();
       $scope.bitcoinReceived = true;
+      let label = MyWallet.wallet.hdwallet.defaultAccount.label;
 
-      Alerts.confirm('BITCOIN_RECEIVED', {success: true, action: 'CLOSE', iconClass: 'ti-money'}).then(() => {
+      Alerts.confirm('BITCOIN_RECEIVED', {success: true, action: 'CLOSE', iconClass: 'ti-money', values: {label: label}}).then(() => {
         $rootScope.$broadcast('initExchangeAcct');
       });
     };
@@ -221,10 +220,21 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
     $scope.nextStep();
   };
 
+  $scope.formatTxProps = (tx) => {
+    tx['Purchased'] = $scope.trade.inAmount + ' ' + $scope.trade.inCurrency;
+    tx['BTC Amount'] = $scope.trade.outAmountExpected;
+    tx['BTC Address'] = $scope.trade.receiveAddress;
+    tx['Date'] = $scope.trade.createdAt;
+
+    return tx;
+  };
+
   $scope.declineTx = (tx) => {
     $scope.cancel();
     $rootScope.$broadcast('initExchangeAcct');
-    Alerts.confirm('DECLINED_TRANSACTION', {action: 'TRY_AGAIN'}).then(() => {
+
+    let txProps = $scope.formatTxProps(tx);
+    Alerts.confirm('DECLINED_TRANSACTION', {action: 'TRY_AGAIN', props: txProps}).then(() => {
       $rootScope.$broadcast('initBuy');
     });
   };
@@ -233,15 +243,20 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
     $uibModalInstance.dismiss('');
 
     if (!$scope.bitcoinReceived) {
-      tx['Purchased'] = $scope.trade.inAmount + ' ' + $scope.trade.inCurrency;
-      tx['BTC Amount'] = $scope.trade.outAmountExpected;
-      tx['BTC Address'] = $scope.trade.receiveAddress;
-      tx['Date'] = $scope.trade.createdAt;
+      let txProps = $scope.formatTxProps(tx);
+      let label = MyWallet.wallet.hdwallet.defaultAccount.label;
 
-      Alerts.confirm('TX_SUCCESSFUL', {success: true, action: 'CLOSE', props: tx, iconClass: 'ti-check'}).then(() => {
+      Alerts.confirm('TX_SUCCESSFUL', {success: true, action: 'CLOSE', props: txProps, iconClass: 'ti-check', values: {label: label}}).then(() => {
         $rootScope.$broadcast('initExchangeAcct');
       });
     }
+  };
+
+  $scope.reviewTx = (tx) => {
+    $uibModalInstance.dismiss('');
+    let txProps = $scope.formatTxProps(tx);
+
+    Alerts.confirm('TX_IN_REVIEW', {action: 'CLOSE', props: txProps});
   };
 
   $scope.cancel = () => {

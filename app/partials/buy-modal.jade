@@ -27,7 +27,7 @@
     div(ng-show="step === 4")
       include ./buy-summary
     div.iframe(ng-show="step >= 5")
-      isignthis(transaction-id='trade.iSignThisID' on-load="loadISX()" on-decline="declineTx(tx)" on-success="successTx(tx)" payment-info="paymentInfo")
+      isignthis(transaction-id='trade.iSignThisID' on-load="loadISX()" on-decline="declineTx(tx)" on-success="successTx(tx)" on-review="reviewTx(tx)" payment-info="paymentInfo")
     .flex-end.flex-center.mtl
         span.mrs.type-sm Powered by
         a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")

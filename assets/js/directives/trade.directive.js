@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .directive('trade', trade);
 
-trade.$inject = ['$rootScope', 'Alerts', 'MyBlockchainApi'];
+trade.$inject = ['$rootScope', 'Alerts', 'MyBlockchainApi', 'MyWallet'];
 
-function trade ($rootScope, Alerts, MyBlockchainApi) {
+function trade ($rootScope, Alerts, MyBlockchainApi, MyWallet) {
   const directive = {
     restrict: 'A',
     replace: true,
@@ -24,6 +24,7 @@ function trade ($rootScope, Alerts, MyBlockchainApi) {
     scope.pending = attrs.pending;
     scope.status = {};
     scope.status.waiting = true;
+    scope.toggle = () => scope.active = !scope.active;
 
     MyBlockchainApi.getBalances([scope.trade.receiveAddress]).then(function (res) {
       scope.status = {};
@@ -51,7 +52,8 @@ function trade ($rootScope, Alerts, MyBlockchainApi) {
           $rootScope.$broadcast('initBuy');
         });
       } else {
-        Alerts.confirm('TX_SUCCESSFUL', {success: true, action: 'CLOSE', props: tx, iconClass: 'ti-check'});
+        let label = MyWallet.wallet.hdwallet.defaultAccount.label;
+        Alerts.confirm('TX_SUCCESSFUL', {success: true, action: 'CLOSE', props: tx, iconClass: 'ti-check', values: {label: label}});
       }
     };
   }

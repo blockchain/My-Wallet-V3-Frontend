@@ -39,15 +39,9 @@
     .flex-column.mtl(ng-show="trades.pending || trades.completed")
       div(ng-show="trades.pending.length")
         h4.type-h4(translate="Pending")
-        table.width-100.border.mbvl
-          th.ptm.plm.pbn Date
-          th.ptm.pbn Amount
-          th.ptm.pbn Status
+        table.width-100.mbvl
           tr(ng-repeat="trade in trades.pending" trade="trade" buy="buy(amt, trade)" cancel="cancel(trade)" pending="true")
       div(ng-show="trades.completed.length")
         h4.type-h4(translate="History")
-        table.width-100.border.mbvl
-          th.ptm.plm.pbn Date
-          th.ptm.pbn Amount
-          th.ptm.pbn Status
+        table.width-100.mbvl
           tr(ng-repeat="trade in trades.completed" trade="trade")
