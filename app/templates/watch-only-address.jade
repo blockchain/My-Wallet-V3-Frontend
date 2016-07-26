@@ -1,14 +1,14 @@
 tr
   td.shrink(ng-bind-html="address.address | escapeHtml | highlight:searchText")
   td.expand.address-label
+    span.float-right(ng-hide="status.edit")
+      a(ng-click="status.edit=1")
+        i.ti-pencil.prm   
     span(ng-bind-html="address.label | escapeHtml | highlight:searchText", ng-hide="status.edit").prm
     .form-group(ng-class="{'has-error': errors.label}", ng-show="status.edit")
       .col-sm-12
         bc-async-input(inline ng-model="address.label" on-save="changeLabel" on-cancel="cancelEdit" is-required editing)
           span.help-block(ng-show="errors.label") {{::errors.label}}  
-    span.float-right(ng-hide="status.edit")
-      a(ng-click="status.edit=1")
-        i.ti-pencil.prm   
   td.shrink
     span(ng-show="address.balance != null")
       fiat-or-btc(btc="address.balance")
