@@ -1,6 +1,6 @@
 tr
   td.shrink(ng-bind-html="address.address | escapeHtml | highlight:searchText")
-  td.expand 
+  td.expand.address-label
     span(ng-bind-html="address.label | escapeHtml | highlight:searchText", ng-hide="status.edit").prm
     .form-group(ng-class="{'has-error': errors.label}", ng-show="status.edit")
       .col-sm-12
