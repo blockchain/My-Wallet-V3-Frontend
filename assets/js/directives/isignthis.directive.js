@@ -156,8 +156,6 @@ function isignthis ($sce) {
         .route(function (e) {
           console.log('route. e=' + JSON.stringify(e));
 
-          if (scope.loaded) return;
-          scope.loaded = true;
           scope.onLoad();
 
           scope.paymentInfo = e.route.match('/otp|/secret|/verify-pin|/kyc');
@@ -166,33 +164,21 @@ function isignthis ($sce) {
 
           switch (e.state) {
             case 'SUCCESS':
-              if (scope.success) return;
-              scope.success = true;
               scope.onSuccess({tx: tx});
               break;
             case 'MANUAL_REVIEW':
-              if (scope.review) return;
-              scope.review = true;
               scope.onReview({tx: tx});
               break;
             case 'DECLINED':
-              if (scope.declined) return;
-              scope.declined = true;
               scope.onDeclined({tx: tx});
               break;
             case 'EXPIRED':
-              if (scope.expired) return;
-              scope.expired = true;
               scope.onExpired({tx: tx});
               break;
             case 'REJECTED':
-              if (scope.declined) return;
-              scope.declined = true;
               scope.onDecline({tx: tx});
               break;
             case 'FAILED':
-              if (scope.failed) return;
-              scope.failed = true;
               scope.onFailed({tx: tx});
               break;
           }

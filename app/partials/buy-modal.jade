@@ -29,7 +29,7 @@
       include ./buy-summary
     div.iframe(ng-show="step === 5 || step === 6")
       isignthis(transaction-id='trade.iSignThisID' on-load="loadISX()" on-declined="declinedTx(tx)" on-success="successTx(tx)" on-review="reviewTx(tx)" on-expired="expiredTx(tx)" on-failed="failedTx(tx)" payment-info="paymentInfo")
-    div(ng-show="step === 7")
+    div(ng-if="step === 7")
       include ./buy-completed
     .flex-end.flex-center.mtl
         span.mrs.type-sm Powered by

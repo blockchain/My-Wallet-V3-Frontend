@@ -236,10 +236,11 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
   $scope.completeTrade = (opts) => {
     let txProps = $scope.formatTxProps(opts.tx);
     $scope.completedTrade = {
-      error: opts.error,
+      icon: opts.icon,
       txProps: txProps,
-      namespace: opts.namespace,
-      icon: opts.icon
+      error: opts.error,
+      values: opts.values,
+      namespace: opts.namespace
     };
   };
 
