@@ -17,9 +17,9 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
   $scope.step = 0;
 
   $scope.fields = { email: $scope.user.email };
-  $scope.bank = { name: 'Bank Account', fee: 0 };
-  $scope.creditcard = { name: 'Credit/Debit', fee: 2.75 };
-  $scope.method = $scope.creditcard;
+  $scope.bank = { name: 'bank', fee: 0 };
+  $scope.card = { name: 'card', fee: 2.75 };
+  $scope.method = $scope.card;
   $scope.transaction = {fiat: 0, btc: 0, fee: 0, total: 0, currency: $scope.settings.currency};
   $scope.transaction.fiat = fiat || 0;
   $scope.paymentInfo = undefined;
@@ -211,7 +211,7 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
       $scope.trade = trade;
     };
 
-    $scope.exchange.buy($scope.transaction.fiat, $scope.transaction.currency.code).then(success, $scope.standardError).then($scope.watchTrade);
+    $scope.exchange.buy($scope.transaction.fiat, $scope.transaction.currency.code, $scope.method.name).then(success, $scope.standardError).then($scope.watchTrade);
   };
 
   $scope.loadISX = () => {
@@ -257,6 +257,15 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
     let txProps = $scope.formatTxProps(tx);
 
     Alerts.confirm('TX_IN_REVIEW', {action: 'CLOSE', props: txProps});
+  };
+
+  $scope.expiredTx = (tx) => {
+    $uibModalInstance.dismiss('');
+    let txProps = $scope.formatTxProps(tx);
+
+    Alerts.confirm('TX_EXPIRED', {action: 'TRY_AGAIN', props: txProps}).then(() => {
+      $rootScope.$broadcast('initBuy');
+    });
   };
 
   $scope.cancel = () => {

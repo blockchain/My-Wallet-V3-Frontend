@@ -890,6 +890,10 @@
     "TITLE": "Transaction in review.",
     "BODY": "Your transaction is currently being processed. Any issues should be resolved shortly. Thank you for your patience."
   },
+  "TX_EXPIRED": {
+    "TITLE": "Transaction expired.",
+    "BODY": "This transaction is expired. Click Try Again to buy bitcoin."
+  },
   "BITCOIN_RECEIVED": {
     "TITLE": "Bitcoin received!",
     "BODY": "You have just received bitcoin from Coinify! <br/> Bitcoins are deposited to <b>{{::label}}</b>."

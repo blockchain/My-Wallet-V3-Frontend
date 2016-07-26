@@ -10,6 +10,7 @@ function isignthis ($sce) {
       onDecline: '&',
       onSuccess: '&',
       onReview: '&',
+      onExpired: '&',
       paymentInfo: '=',
       transactionId: '='
     },
@@ -176,6 +177,11 @@ function isignthis ($sce) {
               if (scope.declined) return;
               scope.declined = true;
               scope.onDecline({tx: tx});
+              break;
+            case 'EXPIRED':
+              if (scope.expired) return;
+              scope.expired = true;
+              scope.onExpired({tx: tx});
               break;
             case 'REJECTED':
               if (scope.declined) return;

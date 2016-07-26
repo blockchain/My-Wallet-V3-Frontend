@@ -1,4 +1,4 @@
-.flex-column.width-50.mll.right-align
+.flex-column.width-50.mbml
   h4.type-h4.mbm(translate="Account Information")
   span Country: {{ exchange.profile.country }}
   span Email: {{ exchange.profile.email }}
@@ -9,6 +9,6 @@
     span Daily Bank Transfer Limit: {{ exchange.profile.level.limits.bank.out.daily }} {{ exchange.profile.defaultCurrency }}
     span Yearly Bank Transfer Limit: {{ exchange.profile.level.limits.bank.out.yearly }} {{ exchange.profile.defaultCurrency }}
 
-  div.flex-end.mtml
+  div.mtml
     button.button-primary.mrs Increase Limits
     button.button-danger Logout
