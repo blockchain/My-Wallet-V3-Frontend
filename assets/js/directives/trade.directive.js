@@ -36,25 +36,5 @@ function trade ($rootScope, Alerts, MyBlockchainApi, MyWallet) {
         scope.totalReceived = totalReceived;
       }
     });
-
-    scope.alertStatus = () => {
-      let tx = {
-        'Purchased': scope.trade.inAmount + ' ' + scope.trade.inCurrency,
-        'BTC Amount': scope.trade.outAmountExpected,
-        'BTC Address': scope.trade.receiveAddress,
-        'Date': scope.trade.createdAt
-      };
-
-      if (scope.trade.state === 'expired' ||
-          scope.trade.state === 'rejected' ||
-          scope.trade.state === 'cancelled') {
-        Alerts.confirm('TRANSACTION_ERROR', {action: 'TRY_AGAIN'}).then(() => {
-          $rootScope.$broadcast('initBuy');
-        });
-      } else {
-        let label = MyWallet.wallet.hdwallet.defaultAccount.label;
-        Alerts.confirm('TX_SUCCESSFUL', {success: true, action: 'CLOSE', props: tx, iconClass: 'ti-check', values: {label: label}});
-      }
-    };
   }
 }

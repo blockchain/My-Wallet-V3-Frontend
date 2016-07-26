@@ -14,6 +14,7 @@ function buySteps () {
       exchange: '=',
       transaction: '=',
       exchangeAcct: '=',
+      tradeError: '=',
       paymentInfo: '=',
       currencySymbol: '='
     },

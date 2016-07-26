@@ -8,12 +8,13 @@
                 payment-info="paymentInfo"
                 exchange-acct="userHasExchangeAcct"
                 currency-symbol="currencySymbol"
+                trade-error="completedTrade.error"
                 profile="profile"
                 exchange="exchange"
                 partner="partner"
                 method="method"
                 step="step")
-  .modal-body.fade(ng-class="{'buy-amount': step === 0, 'buy-select-country': step === 1, 'buy-email': step === 2, 'buy-accept-terms': step === 3, 'buy-summary': step === 4, 'isx': step >= 5}")
+  .modal-body.fade(ng-class="{'buy-amount': step === 0, 'buy-select-country': step === 1, 'buy-email': step === 2, 'buy-accept-terms': step === 3, 'buy-summary': step === 4, 'isx': step === 5 || step === 6, 'buy-completed': step === 7}")
     .alert-in-app
       alerts(context="alerts")
     div(ng-show="step === 0")
@@ -26,19 +27,22 @@
       include ./buy-accept-terms
     div(ng-show="step === 4")
       include ./buy-summary
-    div.iframe(ng-show="step >= 5")
-      isignthis(transaction-id='trade.iSignThisID' on-load="loadISX()" on-decline="declineTx(tx)" on-success="successTx(tx)" on-review="reviewTx(tx)" on-expired="expiredTx(tx)" payment-info="paymentInfo")
+    div.iframe(ng-show="step === 5 || step === 6")
+      isignthis(transaction-id='trade.iSignThisID' on-load="loadISX()" on-declined="declinedTx(tx)" on-success="successTx(tx)" on-review="reviewTx(tx)" on-expired="expiredTx(tx)" on-failed="failedTx(tx)" payment-info="paymentInfo")
+    div(ng-show="step === 7")
+      include ./buy-completed
     .flex-end.flex-center.mtl
         span.mrs.type-sm Powered by
         a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
           img.coinify-logo(src="img/coinify-logo.svg")
+  //- needs directive
   .modal-footer.flex-end.flex-row
     button.button-muted(ng-show="step > 0 && step < 5" ng-click="prevStep()") Go Back
     
-    .flex-1(ng-hide="status.loading" ng-class="{'flex-end': step < 5, 'flex-between': step >= 5}")
-      button.button-muted(ng-show="step >= 5") BTC Address: {{ trade.receiveAddress }}
+    .flex-1.flex-end(ng-hide="status.loading")
       button.button-muted.mrm(ng-click="close()" translate="CANCEL" ng-hide="step >= 5")
-      button.button-muted.mrm(ng-click="close(true)" translate="CANCEL" ng-show="step >= 5")
+      button.button-muted.mrm(ng-click="close(true)" translate="CANCEL" ng-show="step === 5 || step === 6")
+      button.button-muted.mrm(ng-click="cancel()" translate="CANCEL" ng-show="step === 7 && completedTrade.error")
       div(ng-hide="step >= 5")
         button.button-primary(
           ladda-translate="CONTINUE"
@@ -60,3 +64,6 @@
           data-style="expand-left"
           ui-ladda="status.waiting"
           ng-show="step === 4")
+      div(ng-show="step === 7")
+        button.button-danger(translate="TRY_AGAIN" ng-click="initBuy()" ng-show="completedTrade.error")
+        button.button-success(translate="CLOSE" ng-click="cancel()" ng-hide="completedTrade.error")

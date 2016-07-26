@@ -8,10 +8,10 @@ tr.border.pointer(ng-class="{'bg-light-blue': active}")
     span.blue.underline.pointer(ng-click="buy({amt: trade.inAmount, trade: trade})" ng-show="pending") Finish Payment
     span.display-block.mts(ng-show="active") {{ trade.state | translate }}
   td.right-align.paml(ng-hide="status.waiting")
-    span.type-lbl {{ trade.outAmountExpected }} {{ trade.outCurrency }} | 
-    span.type-lbl.em-600 {{ trade.inAmount }} {{ trade.inCurrency }}
+    span.type-lbl(ng-click="toggle()") {{ trade.outAmountExpected }} {{ trade.outCurrency }} | 
+    span.type-lbl.em-600(ng-click="toggle()") {{ trade.inAmount }} {{ trade.inCurrency }}
     i.ti-trash.pointer.mls.state-danger-text(ng-click="cancel({trade: trade})" ng-show="pending" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
     span.display-block.mts(ng-show="pending && active").fade Placeholder
-    span.display-block.mts.blue.underline.pointer(ng-click="alertStatus()" ng-show="!pending && !totalReceived && active") Check Status
+    span.display-block.mts.blue.underline.pointer(ng-click="buy({amt: trade.inAmount, trade: trade})" ng-show="!pending && !totalReceived && active") Check Status
   td.right-align.paml(ng-show="status.waiting")
     img(src="img/spinner.gif")

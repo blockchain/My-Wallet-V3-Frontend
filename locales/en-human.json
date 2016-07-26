@@ -875,7 +875,11 @@
   "CONFIRM_PAY": "Confirm & Pay",
   "DECLINED_TRANSACTION": {
     "TITLE": "Card Declined",
-    "BODY": "Your transaction was declined. The country or card provider is not accepted by Coinify."
+    "BODY": "Your transaction has been declined. The country or card provider is not accepted by Coinify."
+  },
+  "FAILED_TRANSACTION": {
+    "TITLE": "Transaction Failed",
+    "BODY": "The transaction has failed. There was an iSignthis system error. Please contact iSignthis at customersupport@isignthis.com"
   },
   "TRANSACTION_ERROR": {
     "TITLE": "Transaction Error",
@@ -884,7 +888,7 @@
   "CLICK_TO_CANCEL": "Cancel trade",
   "TX_SUCCESSFUL": {
     "TITLE": "Transaction successful!",
-    "BODY": "You should receive your bitcoin shortly. Bitcoins will be deposited to <b>{{::label}}</b>."
+    "BODY": "You should receive your bitcoin shortly. Bitcoins will be sent to <b>{{::label}}</b>."
   },
   "TX_IN_REVIEW": {
     "TITLE": "Transaction in review.",
@@ -896,6 +900,6 @@
   },
   "BITCOIN_RECEIVED": {
     "TITLE": "Bitcoin received!",
-    "BODY": "You have just received bitcoin from Coinify! <br/> Bitcoins are deposited to <b>{{::label}}</b>."
+    "BODY": "You have just received bitcoin from Coinify! <br/> Bitcoins are sent to <b>{{::label}}</b>."
   }
 }

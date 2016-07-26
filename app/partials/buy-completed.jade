@@ -1,0 +1,10 @@
+div(translate-namespace="{{::completedTrade.namespace}}")
+  h4
+    i.security-red.mrs(ng-class="{'{{completedTrade.icon}}': icon, 'ti-alert': !iconClass, success: !completedTrade.error}")
+    span(translate=".TITLE")
+  p.em-300.ptm(translate=".BODY" translate-values="::values")
+  ul.em-300(ng-if="completedTrade.txProps")
+    li.pts(ng-repeat="(prop, val) in completedTrade.txProps track by $index")
+      span(translate="{{::prop}}")
+      | :&nbsp;
+      b(ng-bind="::val")

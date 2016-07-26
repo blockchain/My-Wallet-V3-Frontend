@@ -7,10 +7,11 @@ function isignthis ($sce) {
     restrict: 'E',
     scope: {
       onLoad: '&',
-      onDecline: '&',
+      onDeclined: '&',
       onSuccess: '&',
       onReview: '&',
       onExpired: '&',
+      onFailed: '&',
       paymentInfo: '=',
       transactionId: '='
     },
@@ -154,15 +155,16 @@ function isignthis ($sce) {
         })
         .route(function (e) {
           console.log('route. e=' + JSON.stringify(e));
+
+          if (scope.loaded) return;
+          scope.loaded = true;
+          scope.onLoad();
+
           scope.paymentInfo = e.route.match('/otp|/secret|/verify-pin|/kyc');
           let id = e.route.split('/result/')[1];
           let tx = {id: id};
+
           switch (e.state) {
-            case 'PENDING':
-              if (scope.loaded) return;
-              scope.loaded = true;
-              scope.onLoad();
-              break;
             case 'SUCCESS':
               if (scope.success) return;
               scope.success = true;
@@ -176,7 +178,7 @@ function isignthis ($sce) {
             case 'DECLINED':
               if (scope.declined) return;
               scope.declined = true;
-              scope.onDecline({tx: tx});
+              scope.onDeclined({tx: tx});
               break;
             case 'EXPIRED':
               if (scope.expired) return;
@@ -186,12 +188,12 @@ function isignthis ($sce) {
             case 'REJECTED':
               if (scope.declined) return;
               scope.declined = true;
-              scope.onDecline();
+              scope.onDecline({tx: tx});
               break;
             case 'FAILED':
-              if (scope.declined) return;
-              scope.declined = true;
-              scope.onDecline();
+              if (scope.failed) return;
+              scope.failed = true;
+              scope.onFailed({tx: tx});
               break;
           }
         })

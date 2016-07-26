@@ -22,9 +22,9 @@
       div(ng-show="trades.pending.length")
         h4.type-h4(translate="Pending")
         table.width-100.mbvl
-          tr(ng-repeat="trade in trades.pending | orderBy:'createdAt':true" trade="trade" buy="buy(amt, trade)" cancel="cancel(trade)" pending="true")
+          tr(ng-repeat="trade in trades.pending | orderBy:'createdAt':true" trade="trade" buy="buy(amt, trade, 'active-tx')" cancel="cancel(trade)" pending="true")
       div(ng-show="trades.completed.length")
         h4.type-h4(translate="History")
         table.width-100.mbvl
-          tr(ng-repeat="trade in trades.completed | orderBy:'createdAt':true" trade="trade")
+          tr(ng-repeat="trade in trades.completed | orderBy:'createdAt':true" trade="trade" buy="buy(amt, trade, 'active-tx')")
     account-info(exchange="exchange" ng-show="userHasExchangeAcct")

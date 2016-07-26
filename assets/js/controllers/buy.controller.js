@@ -16,6 +16,8 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
   $scope.trade = trade;
   $scope.step = 0;
 
+  $scope.completedTrade = undefined;
+
   $scope.fields = { email: $scope.user.email };
   $scope.bank = { name: 'bank', fee: 0 };
   $scope.card = { name: 'card', fee: 2.75 };
@@ -131,10 +133,12 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
       $scope.step = 3;
     } else if (!$scope.trade) {
       $scope.step = 4;
-    } else if (!$scope.paymentInfo) {
+    } else if (!$scope.paymentInfo && !$scope.completedTrade) {
       $scope.step = 5;
-    } else {
+    } else if (!$scope.completedTrade) {
       $scope.step = 6;
+    } else {
+      $scope.step = 7;
     }
   };
 
@@ -193,11 +197,10 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
     const success = () => {
       Alerts.clear();
       $scope.bitcoinReceived = true;
+      // fix this asap
       let label = MyWallet.wallet.hdwallet.defaultAccount.label;
 
-      Alerts.confirm('BITCOIN_RECEIVED', {success: true, action: 'CLOSE', iconClass: 'ti-money', values: {label: label}}).then(() => {
-        $rootScope.$broadcast('initExchangeAcct');
-      });
+      Alerts.confirm('BITCOIN_RECEIVED', {success: true, action: 'CLOSE', iconClass: 'ti-money', values: {label: label}});
     };
 
     $scope.trade.bitcoinReceived().then(success);
@@ -224,48 +227,43 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
     tx['Purchased'] = $scope.trade.inAmount + ' ' + $scope.trade.inCurrency;
     tx['BTC Amount'] = $scope.trade.outAmountExpected;
     tx['BTC Address'] = $scope.trade.receiveAddress;
+    tx['Coinify Trade'] = $scope.trade.id;
     tx['Date'] = $scope.trade.createdAt;
 
     return tx;
   };
 
-  $scope.declineTx = (tx) => {
-    $scope.cancel();
-    $rootScope.$broadcast('initExchangeAcct');
-
-    let txProps = $scope.formatTxProps(tx);
-    Alerts.confirm('DECLINED_TRANSACTION', {action: 'TRY_AGAIN', props: txProps}).then(() => {
-      $rootScope.$broadcast('initBuy');
-    });
+  $scope.completeTrade = (opts) => {
+    let txProps = $scope.formatTxProps(opts.tx);
+    $scope.completedTrade = {
+      error: opts.error,
+      txProps: txProps,
+      namespace: opts.namespace,
+      icon: opts.icon
+    };
   };
 
-  $scope.successTx = (tx) => {
-    $uibModalInstance.dismiss('');
+  $scope.declinedTx = (tx) => {
+    $scope.completeTrade({tx: tx, error: true, icon: 'ti-alert', namespace: 'DECLINED_TRANSACTION'});
+  };
 
-    if (!$scope.bitcoinReceived) {
-      let txProps = $scope.formatTxProps(tx);
-      let label = MyWallet.wallet.hdwallet.defaultAccount.label;
-
-      Alerts.confirm('TX_SUCCESSFUL', {success: true, action: 'CLOSE', props: txProps, iconClass: 'ti-check', values: {label: label}}).then(() => {
-        $rootScope.$broadcast('initExchangeAcct');
-      });
-    }
+  $scope.failedTx = (tx) => {
+    $scope.completeTrade({tx: tx, error: true, icon: 'ti-alert', namespace: 'FAILED_TRANSACTION'});
   };
 
   $scope.reviewTx = (tx) => {
-    $uibModalInstance.dismiss('');
-    let txProps = $scope.formatTxProps(tx);
-
-    Alerts.confirm('TX_IN_REVIEW', {action: 'CLOSE', props: txProps});
+    $scope.completeTrade({tx: tx, error: true, icon: 'ti-alert', namespace: 'TX_IN_REVIEW'});
   };
 
   $scope.expiredTx = (tx) => {
-    $uibModalInstance.dismiss('');
-    let txProps = $scope.formatTxProps(tx);
+    $scope.completeTrade({tx: tx, error: true, icon: 'ti-alert', namespace: 'TX_EXPIRED'});
+  };
 
-    Alerts.confirm('TX_EXPIRED', {action: 'TRY_AGAIN', props: txProps}).then(() => {
-      $rootScope.$broadcast('initBuy');
-    });
+  $scope.successTx = (tx) => {
+    // fix asap
+    let label = MyWallet.wallet.hdwallet.defaultAccount.label;
+
+    $scope.completeTrade({tx: tx, icon: 'ti-check', values: {label: label}, namespace: 'TX_SUCCESSFUL'});
   };
 
   $scope.cancel = () => {
@@ -305,7 +303,7 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
 
   $scope.$watch('method', $scope.updateAmounts);
   $scope.$watch('transaction.fiat', $scope.getQuote);
-  $scope.$watchGroup(['exchange.user', 'user.isEmailVerified', 'paymentInfo'], $scope.nextStep);
+  $scope.$watchGroup(['exchange.user', 'user.isEmailVerified', 'paymentInfo', 'completedTrade'], $scope.nextStep);
 
   $scope.$watch('transaction.currency', () => {
     let curr = $scope.transaction.currency || null;
@@ -321,5 +319,10 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
   $scope.initExchangeAcct = () => {
     $scope.userHasExchangeAcct = true;
     $rootScope.$broadcast('initExchangeAcct');
+  };
+
+  $scope.initBuy = () => {
+    $uibModalInstance.dismiss('');
+    $rootScope.$broadcast('initBuy');
   };
 }

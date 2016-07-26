@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySellCtrl', BuySellCtrl);
 
-function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, Wallet, currency) {
+function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibModal, MyWallet, Wallet, currency, $timeout) {
   $scope.status = { loading: true };
   $scope.currencies = currency.coinifyCurrencies;
   $scope.exchange = MyWallet.wallet.external.coinify;
@@ -55,11 +55,11 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
     $scope.exchange.fetchProfile().then($scope.getTrades, error);
   };
 
-  $scope.buy = (amt, _trade) => {
+  $scope.buy = (amt, _trade, active) => {
     const success = () => {
       $uibModal.open({
         templateUrl: 'partials/buy-modal.jade',
-        windowClass: 'bc-modal auto buy',
+        windowClass: 'bc-modal auto buy ' + active,
         controller: 'BuyCtrl',
         backdrop: 'static',
         keyboard: false,
@@ -67,6 +67,11 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
                    trades: () => $scope.trades || [],
                    trade: () => _trade || null,
                    fiat: () => amt || $scope.transaction.fiat }
+      }).rendered.then(() => {
+        // timeout for good measure, not ideal
+        $timeout(() => {
+          angular.element(buy)[0].className = 'ng-scope rendered';
+        }, 4000);
       });
     };
 
@@ -79,13 +84,6 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
     }
   };
 
-  try {
-    if ($scope.exchange.user) $scope.fetchProfile();
-    else $scope.status = {};
-  } catch (e) {
-    $scope.status = {};
-  }
-
   // handle in trades service
   $scope.cancel = (trade) => {
     Alerts.confirm('CONFIRM_CANCEL_TRADE', {action: 'CANCEL_TRADE', cancel: 'GO_BACK'}).then(() => {
@@ -96,6 +94,13 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModal, MyWallet, W
       trade.cancel().then($scope.getTrades, error);
     });
   };
+
+  try {
+    if ($scope.exchange.user) $scope.fetchProfile();
+    else $scope.status = {};
+  } catch (e) {
+    $scope.status = {};
+  }
 
   $scope.$watch('settings.currency', $scope.changeCurrency);
 
