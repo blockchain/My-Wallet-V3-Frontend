@@ -71,7 +71,10 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     scope.$watch('ignore', (ignore) => {
       scope.destinations = accounts.concat(addresses).map(format.destination).concat(addressBook);
       if (ignore && typeof ignore === 'object') {
-        scope.destinations = scope.destinations.filter(d => d.label !== ignore.label);
+        let filterSame = (dest) => ignore.index != null
+          ? dest.index !== ignore.index
+          : dest.address !== ignore.address;
+        scope.destinations = scope.destinations.filter(filterSame);
       }
     });
   }
