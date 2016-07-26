@@ -1,9 +1,9 @@
 .buy-sell
   .flex-center.flex-justify(ng-if="status.loading") Fetching information from your exchange partner.
   div(ng-if="!status.loading")
+    h4.blue.type-h4(translate="Quick Start")
     .flex-row.flex-column-tablet
       .flex-column.width-50.mrl
-        h4.blue.type-h4(translate="Quick Start" ng-click="buy()")
         buy-steps.pointer(buy="buy()"
                           exchange-acct="userHasExchangeAcct"
                           currency-symbol="currencySymbol"
@@ -12,29 +12,12 @@
         buy-quick-start(transaction="transaction" 
                         change-currency="changeCurrency(currency)"
                         buy="buy(amt)")
-      .flex-column.width-50.mll(ng-hide="userHasExchangeAcct")
-        h4.type-h4.mbm(translate="How does it work?")
-        p.mbn.flex-center
-          span.type-h5.mrs 💰
-          span(translate="Choose how much you want to buy.")
-        p.mbn.flex-center
-          span.type-h5.mrs 💳
-          span(translate="Tell us how you want to pay.")
-        p.mbn.flex-center
-          span.type-h5.mrs 😌
-          span(translate="We'll do the rest for you.")
-        .height-100
-          .flex-column.mtl
-            p.flex-center.mbs
-              i.type-lrg.ti-check-box.blue.mrs 
-              span.type-h5(translate="Simple: 4 Easy Steps")
-            p.flex-center.mbs
-              i.type-lrg.ti-check-box.blue.mrs 
-              span.type-h5(translate="Fast: Instant Exchange")
-            p.flex-center.mbs
-              i.type-lrg.ti-check-box.blue.mrs 
-              span.type-h5(translate="Secure: Encrypted Communication")
-          button.button-primary.mtm(translate="Get Started" ng-click="buy()")
+      .flex-column.width-50.mll
+        buy-steps.fade(exchange-acct="userHasExchangeAcct"
+                       currency-symbol="currencySymbol"
+                       profile="profile"
+                       partner="partner")
+        sell-quick-start
     .flex-column.mtl(ng-show="trades.pending || trades.completed")
       div(ng-show="trades.pending.length")
         h4.type-h4(translate="Pending")

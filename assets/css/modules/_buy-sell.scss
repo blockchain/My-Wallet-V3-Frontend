@@ -111,3 +111,11 @@
     top: 0;
   }
 }
+
+.buy-sell {
+  .sell,
+  .sell > * {
+    opacity: 0.6;
+    cursor: no-drop;
+  }
+}
