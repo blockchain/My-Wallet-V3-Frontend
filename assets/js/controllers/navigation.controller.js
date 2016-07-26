@@ -13,7 +13,7 @@ function NavigationCtrl ($scope, $rootScope, $interval, $timeout, $cookies, Wall
   const lastViewedDefaultTime = 1231469665000;
 
   $scope.initialize = (mockFailure) => {
-    if (Wallet.status.isLoggedIn) {
+    const fetchLastViewed = () => {
       if (!Wallet.settings.secondPassword) {
         $scope.metaData = new MyWalletMetadata(2, mockFailure);
         $scope.metaData.fetch().then((res) => {
@@ -33,6 +33,21 @@ function NavigationCtrl ($scope, $rootScope, $interval, $timeout, $cookies, Wall
       } else {
         // Metadata service doesn't work with 2nd password
         $scope.lastViewedWhatsNew = $cookies.get('whatsNewViewed') || lastViewedDefaultTime;
+      }
+    };
+
+    console.log($scope.status);
+    if ($scope.status.isLoggedIn) {
+      if ($scope.status.didUpgradeToHd) {
+        fetchLastViewed();
+      } else {
+        // Wait for upgrade:
+        const watcher = $scope.$watch('status.didUpgradeToHd', (newValue) => {
+          if (newValue) {
+            watcher();
+            fetchLastViewed();
+          }
+        });
       }
     }
   };
