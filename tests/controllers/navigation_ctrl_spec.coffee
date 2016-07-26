@@ -22,6 +22,7 @@ describe "NavigationCtrl", ->
 
       Wallet.status = {
         isLoggedIn: true
+        didUpgradeToHd: true
       }
 
       Wallet.settings = {
@@ -42,6 +43,8 @@ describe "NavigationCtrl", ->
       spyOn($cookies, 'get').and.returnValue(2)
 
       scope = $rootScope.$new()
+
+      $rootScope.mock = true
 
       $controller "NavigationCtrl",
         $scope: scope,
@@ -142,3 +145,16 @@ describe "NavigationCtrl", ->
         expect($cookies.put).toHaveBeenCalledWith('whatsNewViewed', 4)
         expect(scope.nLatestFeats()).toEqual(0)
       )
+
+    describe "for a v2 wallet", ->
+      beforeEach ->
+        scope.status.didUpgradeToHd = false
+        scope.initialize();
+
+      it "should not fetch", ->
+        expect(scope.lastViewedWhatsNew).toEqual(null)
+
+      it "should fetch after upgrade", ->
+        scope.status.didUpgradeToHd = true
+        scope.$digest()
+        expect(scope.lastViewedWhatsNew).toEqual(3)
