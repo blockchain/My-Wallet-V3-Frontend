@@ -1,4 +1,4 @@
-form(role="form" name="form" novalidate ng-submit="changeEmail()")
+form(role="form" name="form" novalidate ng-submit="form.$valid && changeEmail()")
   .form-group(ng-class="{'has-error': form.$invalid && form.$dirty}")
     label.control-label(translate="EMAIL_ADDRESS")
     div
