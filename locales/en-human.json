@@ -874,6 +874,7 @@
   "expired": "Expired",
   "CONFIRM_PAY": "Confirm & Pay",
   "SEE_BITCOIN": "See Your Bitcoin",
+  "CURRENCY_NOT_SUPPORTED": "The currency for this transaction is not supported by the payment method selected. Try another currency or select a different payment method.",
   "DECLINED_TRANSACTION": {
     "TITLE": "Card Declined",
     "BODY": "Your transaction has been declined. The country or card provider is not accepted by Coinify."

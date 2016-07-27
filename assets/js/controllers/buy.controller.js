@@ -217,7 +217,20 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
       $scope.trade = trade;
     };
 
-    $scope.exchange.buy($scope.transaction.fiat, $scope.transaction.currency.code, $scope.method.name).then(success, $scope.standardError).then($scope.watchAddress);
+    // check if currency is supported by payment method first
+    $scope.exchange.getPaymentMethods().then((methods) => {
+      let curr = methods.filter(method => method.inMedium === $scope.method.name)[0].inCurrencies
+                        .filter(curr => curr === $scope.transaction.currency.code);
+
+      if (curr.length) {
+        $scope.exchange.buy($scope.transaction.fiat, $scope.transaction.currency.code, $scope.method.name)
+                       .then(success, $scope.standardError)
+                       .then($scope.watchAddress);
+      } else {
+        $scope.status = {};
+        Alerts.displayError('CURRENCY_NOT_SUPPORTED', false, $scope.alerts);
+      }
+    });
   };
 
   $scope.loadISX = () => {
@@ -265,7 +278,6 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
 
   $scope.successTx = (tx) => {
     if (!tx) return;
-    // fix asap
     let label = MyWallet.wallet.hdwallet.defaultAccount.label;
 
     $scope.completeTrade({tx: tx, icon: 'ti-check', values: {label: label}, namespace: 'TX_SUCCESSFUL'});
