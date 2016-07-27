@@ -26,12 +26,15 @@ function trade ($rootScope, Alerts, MyWallet) {
     scope.pending = attrs.pending;
     scope.toggle = () => scope.active = !scope.active;
 
-    scope.completed = scope.trade.bitcoinReceived ||
-                      scope.trade.state === 'cancelled';
-
     scope.$watch('active', () => {
       if (scope.active) return;
       scope.active = scope.first && scope.pending;
+    });
+
+    scope.$watch('trade.state', () => {
+      scope.cancelled = scope.trade.state === 'cancelled';
+      scope.completed = scope.trade.bitcoinReceived ||
+                        scope.cancelled;
     });
   }
 }
