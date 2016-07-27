@@ -15,6 +15,6 @@ function accountInfo () {
   return directive;
 
   function link (scope, elem, attr) {
-
+    scope.toggle = () => scope.active = !scope.active;
   }
 }

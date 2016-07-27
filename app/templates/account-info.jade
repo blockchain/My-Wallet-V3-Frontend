@@ -1,14 +1,20 @@
 .flex-column.width-50.mbml
-  h4.type-h4.mbm(translate="Account Information")
-  span Country: {{ exchange.profile.country }}
-  span Email: {{ exchange.profile.email }}
-  
-  .flex-column.mts
-    h5.type-h5(translate="Limits")
-    span Daily Card Limit: {{ exchange.profile.level.limits.card.in.daily }} {{ exchange.profile.defaultCurrency }}
-    span Daily Bank Transfer Limit: {{ exchange.profile.level.limits.bank.out.daily }} {{ exchange.profile.defaultCurrency }}
-    span Yearly Bank Transfer Limit: {{ exchange.profile.level.limits.bank.out.yearly }} {{ exchange.profile.defaultCurrency }}
+  .flex-row.flex-center
+    h4.type-h4.mbm.pointer.mrm
+      i.ti-user.mrm(ng-class="{blue: active}")
+      span(translate="Account Information")
+    span.blue.underline.pointer(ng-show="active" ng-click="toggle()") Hide
+    span.blue.underline.pointer(ng-hide="active" ng-click="toggle()") Show
+  .flex-column(ng-show="active")
+    span Country: {{ exchange.profile.country }}
+    span Email: {{ exchange.profile.email }}
+    
+    .flex-column.mts
+      h5.type-h5(translate="Limits")
+      span Daily Card Limit: {{ exchange.profile.level.limits.card.in.daily }} {{ exchange.profile.defaultCurrency }}
+      span Daily Bank Transfer Limit: {{ exchange.profile.level.limits.bank.out.daily }} {{ exchange.profile.defaultCurrency }}
+      span Yearly Bank Transfer Limit: {{ exchange.profile.level.limits.bank.out.yearly }} {{ exchange.profile.defaultCurrency }}
 
-  div.mtml
-    button.button-primary.mrs Increase Limits
-    button.button-danger Logout
+    div.mtml
+      button.button-primary.mrs Increase Limits
+      button.button-danger Logout
