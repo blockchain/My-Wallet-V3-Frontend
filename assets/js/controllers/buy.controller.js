@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuyCtrl', BuyCtrl);
 
-function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModalStack, $uibModal, country, exchange, trades, fiat, trade) {
+function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModal, country, exchange, trades, fiat, trade, $timeout) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -195,14 +195,14 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
     if (!$scope.trade) return;
 
     const success = () => {
-      if ($scope.bitcoinReceived) return;
-      $scope.bitcoinReceived = true;
-      $uibModalStack.dismissAll('');
+      $uibModalInstance.dismiss('');
+      $timeout(() => {
       // fix this asap
-      let label = MyWallet.wallet.hdwallet.defaultAccount.label;
+        let label = MyWallet.wallet.hdwallet.defaultAccount.label;
 
-      Alerts.confirm('BITCOIN_RECEIVED', {success: true, action: 'SEE_BITCOIN', iconClass: 'ti-money', values: {label: label}}).then(() => {
-        $state.go('wallet.common.transactions');
+        Alerts.confirm('BITCOIN_RECEIVED', {success: true, action: 'SEE_BITCOIN', iconClass: 'ti-money', values: {label: label}}).then(() => {
+          $state.go('wallet.common.transactions');
+        });
       });
     };
 
