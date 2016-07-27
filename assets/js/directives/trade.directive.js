@@ -12,6 +12,7 @@ function trade ($rootScope, Alerts, MyWallet) {
       bitcoinReceived: '=',
       pending: '@',
       cancel: '&',
+      first: '=',
       trade: '=',
       buy: '&'
     },
@@ -21,10 +22,16 @@ function trade ($rootScope, Alerts, MyWallet) {
   return directive;
 
   function link (scope, elem, attrs) {
-    scope.pending = attrs.pending;
     scope.status = {};
+    scope.pending = attrs.pending;
     scope.toggle = () => scope.active = !scope.active;
 
-    scope.totalReceived = scope.trade.bitcoinReceived;
+    scope.completed = scope.trade.bitcoinReceived ||
+                      scope.trade.state === 'cancelled';
+
+    scope.$watch('active', () => {
+      if (scope.active) return;
+      scope.active = scope.first && scope.pending;
+    });
   }
 }

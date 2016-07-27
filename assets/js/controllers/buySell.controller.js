@@ -23,7 +23,9 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
 
   $scope.getTrades = () => {
     const success = (trades) => {
-      $scope.status = {};
+      $timeout(() => {
+        $scope.status = {};
+      }, 1000);
       $scope.trades = {};
       $scope.trades.pending = trades.filter(t => t.state === 'awaiting_transfer_in' ||
                                                  t.state === 'processing' ||
