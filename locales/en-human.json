@@ -50,7 +50,7 @@
   },
   "CONFIRM_CANCEL_TRADE": {
     "TITLE": "Cancel Trade?",
-    "BODY": "Are you sure you want to cancel this trade? You only have a few more steps to complete before receiving bitcoin."
+    "BODY": "Are you sure you want to cancel this trade?"
   },
   "CANCEL_TRADE": "Cancel Trade",
   "CLOSE": "Close",
@@ -873,6 +873,7 @@
   "rejected": "Rejected",
   "expired": "Expired",
   "CONFIRM_PAY": "Confirm & Pay",
+  "SEE_BITCOIN": "See Your Bitcoin",
   "DECLINED_TRANSACTION": {
     "TITLE": "Card Declined",
     "BODY": "Your transaction has been declined. The country or card provider is not accepted by Coinify."
@@ -900,6 +901,6 @@
   },
   "BITCOIN_RECEIVED": {
     "TITLE": "Bitcoin received!",
-    "BODY": "You have just received bitcoin from Coinify! <br/> Bitcoins are sent to <b>{{::label}}</b>."
+    "BODY": "You have just received bitcoin from Coinify! <br/> Bitcoins were sent to <b>{{::label}}</b>."
   }
 }

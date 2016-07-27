@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuyCtrl', BuyCtrl);
 
-function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModal, country, exchange, trades, fiat, trade) {
+function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModal, country, exchange, trades, fiat, trade) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -195,12 +195,15 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
     if (!$scope.trade) return;
 
     const success = () => {
-      Alerts.clear();
+      if ($scope.bitcoinReceived) return;
       $scope.bitcoinReceived = true;
+      $uibModalInstance.dismiss('');
       // fix this asap
       let label = MyWallet.wallet.hdwallet.defaultAccount.label;
 
-      Alerts.confirm('BITCOIN_RECEIVED', {success: true, action: 'CLOSE', iconClass: 'ti-money', values: {label: label}});
+      Alerts.confirm('BITCOIN_RECEIVED', {success: true, action: 'SEE_BITCOIN', iconClass: 'ti-money', values: {label: label}}).then(() => {
+        $state.go('wallet.common.transactions');
+      });
     };
 
     $scope.trade.watchAddress().then(success);
@@ -261,6 +264,7 @@ function BuyCtrl ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibMo
   };
 
   $scope.successTx = (tx) => {
+    if (!tx) return;
     // fix asap
     let label = MyWallet.wallet.hdwallet.defaultAccount.label;
 
