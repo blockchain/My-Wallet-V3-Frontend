@@ -1,10 +1,10 @@
 .flex-column.width-50.mbml
-  .flex-row.flex-center
-    h4.type-h4.mbm.pointer.mrm
+  .flex-row.flex-center.pointer(ng-click="toggle()")
+    h4.type-h4.mbm.mrm.pointer
       i.ti-user.mrm(ng-class="{blue: active}")
       span(translate="Account Information")
-    span.blue.underline.pointer(ng-show="active" ng-click="toggle()") Hide
-    span.blue.underline.pointer(ng-hide="active" ng-click="toggle()") Show
+    span.blue.underline.pointer(ng-show="active") Hide
+    span.blue.underline.pointer(ng-hide="active") Show
   .flex-column(ng-show="active")
     span Country: {{ exchange.profile.country }}
     span Email: {{ exchange.profile.email }}

@@ -1,5 +1,7 @@
-.buy-sell
-  .flex-center.flex-justify(ng-if="status.loading") Fetching information from your exchange partner.
+.buy-sell(ng-class="{'height-100': status.loading}")
+  .flex-column.flex-justify.flex-center.height-100(ng-if="status.loading")
+    span.type-h4 Getting information from your exchange partner. This could take a few seconds.
+    img.width-60.width-60-mobile.mtl(src="img/money.gif")
   div(ng-if="!status.loading")
     h4.blue.type-h4(translate="Quick Start")
     .flex-row.flex-column-tablet
