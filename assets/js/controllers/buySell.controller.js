@@ -25,18 +25,14 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
     const success = (trades) => {
       $scope.status = {};
       $scope.trades = {};
-      $scope.trades.pending = trades.filter(t => (t.state === 'awaiting_transfer_in' ||
+      $scope.trades.pending = trades.filter(t => t.state === 'awaiting_transfer_in' ||
                                                  t.state === 'processing' ||
-                                                 t.state === 'reviewing') &&
-                                                 // fake
-                                                 !t.bitcoinReceived);
+                                                 t.state === 'reviewing');
       $scope.trades.completed = trades.filter(t => t.state === 'expired' ||
                                                    t.state === 'rejected' ||
                                                    t.state === 'cancelled' ||
                                                    t.state === 'completed' ||
-                                                   t.state === 'completed_test' ||
-                                                   // fake
-                                                   t.bitcoinReceived);
+                                                   t.state === 'completed_test');
       $scope.userHasExchangeAcct = trades.length > 0;
     };
 

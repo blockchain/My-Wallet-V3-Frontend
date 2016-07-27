@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuyCtrl', BuyCtrl);
 
-function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModal, country, exchange, trades, fiat, trade) {
+function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModalStack, $uibModal, country, exchange, trades, fiat, trade) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -197,7 +197,7 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
     const success = () => {
       if ($scope.bitcoinReceived) return;
       $scope.bitcoinReceived = true;
-      $uibModalInstance.dismiss('');
+      $uibModalStack.dismissAll('');
       // fix this asap
       let label = MyWallet.wallet.hdwallet.defaultAccount.label;
 
