@@ -26,6 +26,10 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
   $scope.transaction.fiat = fiat || 0;
   $scope.paymentInfo = undefined;
 
+  $scope.countryCodeGuess = MyWallet.wallet.accountInfo.countryCodeGuess;
+  $scope.countryCodeGuess = $scope.countries.countryCodes.filter(country => country.code === $scope.countryCodeGuess)[0];
+  if ($scope.countryCodeGuess) $scope.profile.countryCode = $scope.countryCodeGuess.code;
+
   try {
     if (trades.pending.length || trades.completed.length) $scope.userHasExchangeAcct = true;
   } catch (e) {
