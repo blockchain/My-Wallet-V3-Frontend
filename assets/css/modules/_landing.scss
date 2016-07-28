@@ -775,3 +775,11 @@
     margin-bottom: 20px;
   }
 }
+
+@media (min-width: 768px) {
+  .newtobitcoin {
+    .video-container {
+      margin-right: 15px;
+    }
+  }
+}
