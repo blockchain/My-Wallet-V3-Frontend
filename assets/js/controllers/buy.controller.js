@@ -54,7 +54,8 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
       if (msg === 'EMAIL_ADDRESS_IN_USE') $scope.rejectedEmail = true;
       else Alerts.displayError(msg, true, $scope.alerts, {user: $scope.exchange.user});
     } catch (e) {
-      if (e.error) Alerts.displayError(e.error);
+      let msg = e.error || err.message;
+      if (msg) Alerts.displayError(msg, true, $scope.alerts);
       else Alerts.displayError('INVALID_REQUEST', true, $scope.alerts);
     }
   };
@@ -147,6 +148,8 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
   };
 
   $scope.prevStep = () => {
+    if ($scope.status.waiting) return;
+
     try {
       if ($scope.exchange.user) {
         $scope.step = 0;
@@ -289,6 +292,7 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
 
   $scope.cancel = () => {
     if ($scope.exchange && $scope.exchange.user) $scope.fetchTrades();
+    if ($scope.status.waiting) return;
     $uibModalInstance.dismiss('');
     $scope.trade = null;
   };

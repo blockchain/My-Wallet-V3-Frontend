@@ -158,7 +158,7 @@ function isignthis ($sce) {
 
           scope.onLoad();
 
-          scope.paymentInfo = e.route.match('/otp|/secret|/verify-pin|/kyc');
+          scope.paymentInfo = e.route.match('/otp|/verify-pin|/kyc');
           let id = e.route.split('/result/')[1];
           let tx = {id: id};
 
