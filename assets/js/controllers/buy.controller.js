@@ -304,7 +304,7 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
       action = 'IM_DONE';
     } else if (acct) {
       text = 'CONFIRM_CLOSE';
-      action = 'CLOSE';
+      action = 'IM_DONE';
     } else {
       text = 'CONFIRM_CANCEL';
       action = 'IM_DONE';

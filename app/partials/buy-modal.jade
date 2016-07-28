@@ -41,7 +41,7 @@
     
     .flex-1.flex-end(ng-hide="status.loading")
       button.button-muted.mrm(ng-click="close()" translate="CANCEL" ng-hide="step >= 5")
-      button.button-muted.mrm(ng-click="close(true)" translate="CANCEL" ng-show="step === 5 || step === 6")
+      button.button-muted.mrm(ng-click="close(true)" translate="FINISH_LATER" ng-show="step === 5 || step === 6")
       button.button-muted.mrm(ng-click="cancel()" translate="CANCEL" ng-show="step === 7 && completedTrade.error")
       div(ng-hide="step >= 5")
         button.button-primary(

@@ -109,13 +109,14 @@
   "ADD_WALLET_RECOVERY" : "Backup Security Phrase",
   "PRINT_RECOVERY_SHEET" : "Print Recovery Sheet",
   "ARE_YOU_SURE_LOGOUT" : "Are you sure you wish to logout?",
+  "FINISH_LATER": "Finish Later",
   "CONFIRM_CANCEL": {
     "TITLE": "Cancel Trade?",
     "BODY": "You're so close to receiving bitcoin."
   },
   "CONFIRM_CLOSE": {
     "TITLE": "Finish Later?",
-    "BODY": "You'll be able to finish the payment later."
+    "BODY": "You'll be able to finish paying later."
   },
   "CONFIRM_CLOSE_ACCT": {
     "TITLE": "Are You Sure?",
@@ -123,7 +124,7 @@
   },
   "CONFIRM_CLOSE_AMT": {
     "TITLE": "Are You Sure?",
-    "BODY": "Clicking Close will exit the modal. But you can buy bitcoin anytime."
+    "BODY": "Clicking Close will exit the modal, but you can buy bitcoin anytime."
   },
   "CONFIRM_LOGOUT": {
     "TITLE": "Sign Out?",
