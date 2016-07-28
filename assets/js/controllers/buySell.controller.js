@@ -111,7 +111,7 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
     $scope.currencySymbol = currency.conversions[curr.code];
   });
 
-  $scope.$on('initExchangeAcct', () => {
+  $scope.$on('fetchTrades', () => {
     $scope.userHasExchangeAcct = true;
     $scope.exchange = MyWallet.wallet.external.coinify;
     $scope.getTrades();

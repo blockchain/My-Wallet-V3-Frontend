@@ -288,7 +288,7 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
   };
 
   $scope.cancel = () => {
-    if ($scope.exchange && $scope.exchange.user) $scope.initExchangeAcct();
+    if ($scope.exchange && $scope.exchange.user) $scope.fetchTrades();
     $uibModalInstance.dismiss('');
     $scope.trade = null;
   };
@@ -312,7 +312,7 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
 
     Alerts.confirm(text, {action: action}).then(() => {
       $scope.cancel();
-      if (acct) $scope.initExchangeAcct();
+      if (acct) $scope.fetchTrades();
     });
   };
 
@@ -325,6 +325,7 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
 
   $scope.$watch('method', $scope.updateAmounts);
   $scope.$watch('transaction.fiat', $scope.getQuote);
+  $scope.$watch('completedTrade', $scope.fetchTrades);
   $scope.$watchGroup(['exchange.user', 'user.isEmailVerified', 'paymentInfo', 'completedTrade'], $scope.nextStep);
 
   $scope.$watch('transaction.currency', () => {
@@ -338,9 +339,9 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
     if ($scope.exchange && $scope.exchange.user && !$scope.exchange.profile) $scope.fetchProfile();
   });
 
-  $scope.initExchangeAcct = () => {
+  $scope.fetchTrades = () => {
     $scope.userHasExchangeAcct = true;
-    $rootScope.$broadcast('initExchangeAcct');
+    $rootScope.$broadcast('fetchTrades');
   };
 
   $scope.initBuy = () => {
