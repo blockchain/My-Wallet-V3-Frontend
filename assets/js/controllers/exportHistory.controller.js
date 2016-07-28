@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('ExportHistoryController', ExportHistoryController);
 
-function ExportHistoryController ($scope, $sce, $translate, format, Wallet, MyWallet, activeIndex) {
+function ExportHistoryController ($scope, $sce, $translate, $filter, format, Wallet, MyWallet, activeIndex) {
   $scope.limit = 50;
   $scope.incLimit = () => $scope.limit += 50;
 
@@ -54,11 +54,17 @@ function ExportHistoryController ($scope, $sce, $translate, format, Wallet, MyWa
     $scope.setActive();
   }
 
-  $scope.action = $sce.trustAsResourceUrl(`${$scope.rootURL}export-history`);
   $scope.format = 'dd/MM/yyyy';
   $scope.options = { minDate: new Date(1231024500000), maxDate: new Date() };
 
   $scope.exportFormat = 'csv';
   $scope.start = { open: false, date: Date.now() - 604800000 };
   $scope.end = { open: false, date: Date.now() };
+
+  let formatDate = (date) => $filter('date')(date, 'mm/dd/yyyy');
+  $scope.submit = () => {
+    let start = formatDate($scope.start.date);
+    let end = formatDate($scope.end.date);
+    Wallet.exportHistory(start, end, $scope.active);
+  };
 }

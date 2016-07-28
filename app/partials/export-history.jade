@@ -1,11 +1,4 @@
-form(
-  role="form"
-  name="exportForm"
-  autocomplete="off"
-  action="{{::action}}"
-  method="POST"
-  novalidate)
-
+form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" novalidate)
   .modal-header
     .flex-center.pam
       h3.man.mrm(translate="EXPORT_HISTORY")
@@ -13,11 +6,6 @@ form(
 
   .modal-body
     .ph-form
-      input(type="hidden" name="action" value="export")
-      input(type="hidden" name="active" value="{{active}}")
-      input(type="hidden" name="archived" value="{{archived}}")
-      input(type="hidden" name="format" value="{{exportFormat}}")
-
       .flex-row.pal
         .flex-1
         .flex-4.form-group(ng-show="activeCount > 1")

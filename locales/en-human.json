@@ -263,6 +263,8 @@
   "TIMEFRAME" : "Timeframe",
   "FORMAT" : "Format",
   "EXPORTING_FOR" : "Exporting transactions for: {{ name }}",
+  "NO_HISTORY" : "No transactions found in that range",
+  "TOO_MANY_TXS" : "Too many transactions to export, maximum of 10,000 allowed",
   "SPENDABLE_ADDRESSES" : "Spendable Addresses",
   "NEXT_ADDRESSES_FOR_ACCOUNT" : "Unused Addresses in {{account}}",
   "PAST_ADDRESSES_FOR_ACCOUNT" : "Used Addresses in {{account}}",
