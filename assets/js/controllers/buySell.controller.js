@@ -11,6 +11,8 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
   $scope.transaction = {fiat: 0, currency: $scope.settings.currency};
   $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
   $scope.userHasExchangeAcct = false;
+  $scope.trades = {};
+  $scope.trades.watching = [];
 
   $scope.changeCurrency = (curr) => {
     if (!curr) curr = $scope.settings.currency;
@@ -26,16 +28,26 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
       $timeout(() => {
         $scope.status = {};
       }, 1000);
-      $scope.trades = {};
       $scope.trades.pending = trades.filter(t => t.state === 'awaiting_transfer_in' ||
                                                  t.state === 'processing' ||
                                                  t.state === 'reviewing');
+
       $scope.trades.completed = trades.filter(t => t.state === 'expired' ||
                                                    t.state === 'rejected' ||
                                                    t.state === 'cancelled' ||
                                                    t.state === 'completed' ||
                                                    t.state === 'completed_test');
-      $scope.userHasExchangeAcct = trades.length > 0;
+
+      if (!$rootScope.tradesInitialized) {
+        for (let trade of $scope.trades.completed) {
+          $scope.watchAddress(trade);
+        }
+      }
+
+      $rootScope.$safeApply();
+
+      $scope.userHasExchangeAcct = true;
+      $rootScope.tradesInitialized = true;
     };
 
     const error = () => $scope.status = {};
@@ -57,7 +69,7 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
     $scope.exchange.fetchProfile().then($scope.getTrades, error);
   };
 
-  $scope.buy = (amt, _trade, active) => {
+  $scope.buy = (amt, _trade, active, bitcoinReceived) => {
     const success = () => {
       $uibModal.open({
         templateUrl: 'partials/buy-modal.jade',
@@ -65,15 +77,19 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
         controller: 'BuyCtrl',
         backdrop: 'static',
         keyboard: false,
-        resolve: { exchange: () => $scope.exchange,
+        resolve: { bitcoinReceived: () => bitcoinReceived || undefined,
+                   exchange: () => $scope.exchange,
                    trades: () => $scope.trades || [],
                    trade: () => _trade || null,
                    fiat: () => amt || $scope.transaction.fiat }
       }).rendered.then(() => {
-        // timeout for good measure, not ideal
-        $timeout(() => {
-          angular.element(buy)[0].className = 'ng-scope rendered';
-        }, 4000);
+        if (bitcoinReceived) angular.element(buy)[0].className = 'ng-scope rendered';
+        else {
+          // timeout for good measure, not ideal
+          $timeout(() => {
+            angular.element(buy)[0].className = 'ng-scope rendered';
+          }, 4000);
+        }
       });
     };
 
@@ -84,6 +100,13 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
     } catch (e) {
       success();
     }
+  };
+
+  $scope.watchAddress = (trade) => {
+    if (trade.bitcoinReceived) return;
+    trade.watchAddress().then(() => {
+      $scope.buy(trade.inAmount, trade, '', true);
+    });
   };
 
   // handle in trades service
@@ -114,7 +137,18 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
   $scope.$on('fetchTrades', () => {
     $scope.userHasExchangeAcct = true;
     $scope.exchange = MyWallet.wallet.external.coinify;
-    $scope.getTrades();
+
+    if ($scope.trades) {
+      let completed = $scope.trades.completed.length;
+      $scope.getTrades().then(() => {
+        if (completed < $scope.trades.completed.length) {
+          let trade = $scope.trades.completed.splice(-1)[0];
+          $scope.watchAddress(trade);
+        }
+      });
+    } else {
+      $scope.getTrades();
+    }
   });
 
   $scope.$on('initBuy', () => $scope.buy());

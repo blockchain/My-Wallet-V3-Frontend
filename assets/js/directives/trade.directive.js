@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .directive('trade', trade);
 
-trade.$inject = ['$rootScope', 'Alerts', 'MyWallet'];
+trade.$inject = ['$rootScope', 'Alerts', 'MyWallet', '$timeout'];
 
-function trade ($rootScope, Alerts, MyWallet) {
+function trade ($rootScope, Alerts, MyWallet, $timeout) {
   const directive = {
     restrict: 'A',
     replace: true,
@@ -32,9 +32,10 @@ function trade ($rootScope, Alerts, MyWallet) {
     });
 
     scope.$watch('trade.state', () => {
-      scope.cancelled = scope.trade.state === 'cancelled';
-      scope.completed = scope.trade.bitcoinReceived ||
-                        scope.cancelled;
+      $timeout(() => {
+        scope.cancelled = scope.trade.state === 'cancelled';
+        scope.completed = scope.trade.bitcoinReceived || scope.cancelled;
+      });
     });
   }
 }

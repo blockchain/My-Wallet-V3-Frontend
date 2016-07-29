@@ -1,4 +1,4 @@
-.buy-sell(ng-class="{'height-100': status.loading}")
+#buysell.buy-sell(ng-class="{'height-100': status.loading}")
   .flex-column.flex-justify.flex-center.height-100(ng-if="status.loading")
     span.type-h4.center Getting information from your exchange partner. This could take a few seconds.
     img.width-60.width-60-mobile.mtl(src="img/money.gif")
@@ -24,9 +24,9 @@
       div(ng-show="trades.pending.length")
         h4.type-h4(translate="Pending")
         table.width-100.mbvl
-          tr(ng-repeat="trade in trades.pending | orderBy:'createdAt':true track by $index" trade="trade" first="$first" buy="buy(amt, trade, 'active-tx')" cancel="cancel(trade)" pending="true")
+          tr(ng-repeat="trade in trades.pending | orderBy:'createdAt':true" trade="trade" first="$first" buy="buy(amt, trade, 'active-tx')" cancel="cancel(trade)" pending="true")
       div(ng-show="trades.completed.length")
         h4.type-h4(translate="History")
         table.width-100.mbvl
-          tr(ng-repeat="trade in trades.completed | orderBy:'createdAt':true track by $index" trade="trade" first="$first" buy="buy(amt, trade, 'active-tx')")
+          tr(ng-repeat="trade in trades.completed | orderBy:'createdAt':true" trade="trade" first="$first" buy="buy(amt, trade, 'active-tx')")
     account-info(exchange="exchange" ng-show="userHasExchangeAcct")

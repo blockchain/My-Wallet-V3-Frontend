@@ -81,6 +81,8 @@ angular.module('walletApp', modules)
     if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
   };
 
+  $rootScope.tradesInitialized = false;
+
   $rootScope.$on('showNotification', (_, notification) => {
     $uibModal.open({
       templateUrl: 'partials/modal-notification.jade',

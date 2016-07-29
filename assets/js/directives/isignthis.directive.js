@@ -8,7 +8,7 @@ function isignthis ($sce) {
     scope: {
       onLoad: '&',
       onDeclined: '&',
-      onSuccess: '&',
+      onPending: '&',
       onReview: '&',
       onExpired: '&',
       onFailed: '&',
@@ -164,7 +164,7 @@ function isignthis ($sce) {
 
           switch (e.state) {
             case 'SUCCESS':
-              scope.onSuccess({tx: tx});
+              scope.onPending({tx: tx});
               break;
             case 'MANUAL_REVIEW':
               scope.onReview({tx: tx});
