@@ -9,6 +9,7 @@ describe "ExportHistoryController", ->
     angular.mock.inject ($injector, _$rootScope_, _$controller_) ->
       $rootScope = _$rootScope_
       $controller = _$controller_
+      $q = $injector.get("$q")
       Wallet = $injector.get("Wallet")
 
       Wallet.legacyAddresses = () -> [
@@ -22,6 +23,8 @@ describe "ExportHistoryController", ->
         { label: "Savings", index: 1, archived: false, balance: 1, extendedPublicKey: 'xpub2' }
         { label: "Something", index: 2, archived: true, extendedPublicKey: 'xpub3' }
       ]
+
+      Wallet.exportHistory = () -> $q.resolve()
 
   getCtrlScope = (activeIndex) ->
     scope = $rootScope.$new()
@@ -48,12 +51,33 @@ describe "ExportHistoryController", ->
   describe "activeIndex", ->
     it "should set all accounts when ''", ->
       scope = getCtrlScope('')
-      expect(scope.active).toEqual('xpub1|xpub2')
+      expect(scope.active).toEqual(['xpub1', 'xpub2'])
 
     it "should set all addresses when 'imported'", ->
       scope = getCtrlScope('imported')
-      expect(scope.active).toEqual('some_address|watch_address')
+      expect(scope.active).toEqual(['some_address', 'watch_address'])
 
     it "should set the right account", ->
       scope = getCtrlScope(1)
       expect(scope.active).toEqual('xpub2')
+
+  describe "submit", ->
+    scope = undefined
+    beforeEach ->
+      scope = getCtrlScope('')
+      spyOn(Wallet, 'exportHistory').and.callThrough()
+      spyOn(scope, 'formatDate').and.returnValue('date')
+
+    it "should format the dates", ->
+      scope.submit()
+      expect(scope.formatDate).toHaveBeenCalledTimes(2)
+
+    it "should call exportHistory", ->
+      scope.submit()
+      expect(Wallet.exportHistory).toHaveBeenCalledWith('date', 'date', ['xpub1', 'xpub2'])
+
+    it "should toggle busy status", ->
+      scope.submit()
+      expect(scope.busy).toEqual(true)
+      scope.$digest()
+      expect(scope.busy).toEqual(false)

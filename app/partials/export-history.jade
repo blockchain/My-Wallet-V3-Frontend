@@ -61,5 +61,7 @@ form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" noval
       ng-click="$dismiss()")
     button.btn.button-primary(
       type="submit"
-      translate="EXPORT"
+      ui-ladda="busy"
+      ladda-translate="EXPORT"
+      data-style="expand-left"
       ng-disabled="exportForm.$invalid || start.date > end.date")

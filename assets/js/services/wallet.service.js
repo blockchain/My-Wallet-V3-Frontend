@@ -1130,13 +1130,13 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     let p = MyBlockchainApi.exportHistory(active, currency.code, { start, end });
     return $q.resolve(p)
       .then(history => {
-        if (!history.length) throw new Error('NO_HISTORY');
+        if (!history.length) return $q.reject('NO_HISTORY');
         let contents = json2csv(history.map(addTxNote));
         $rootScope.$broadcast('download', { contents, filename: 'history.csv' });
       })
       .catch(e => {
         let error = e.message || e;
-        if (error.indexOf('Too many transactions')) error = 'TOO_MANY_TXS';
+        if (error.indexOf('Too many transactions') > -1) error = 'TOO_MANY_TXS';
         Alerts.displayError(error);
       });
   };

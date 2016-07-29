@@ -12,13 +12,13 @@ function ExportHistoryController ($scope, $sce, $translate, $filter, format, Wal
   let allHD = {
     type: $translate.instant('ALL'),
     label: $translate.instant('HD_ADDRESSES'),
-    address: accounts.map(a => a.extendedPublicKey).join('|')
+    address: accounts.map(a => a.extendedPublicKey)
   };
 
   let allAddresses = {
     type: $translate.instant('ALL'),
     label: $translate.instant('IMPORTED_ADDRESSES'),
-    address: addresses.map(a => a.address).join('|')
+    address: addresses.map(a => a.address)
   };
 
   $scope.targets = [allHD, allAddresses].concat(accounts.concat(addresses).map(format.origin));
@@ -61,10 +61,12 @@ function ExportHistoryController ($scope, $sce, $translate, $filter, format, Wal
   $scope.start = { open: false, date: Date.now() - 604800000 };
   $scope.end = { open: false, date: Date.now() };
 
-  let formatDate = (date) => $filter('date')(date, 'mm/dd/yyyy');
+  $scope.formatDate = (date) => $filter('date')(date, 'mm/dd/yyyy');
+
   $scope.submit = () => {
-    let start = formatDate($scope.start.date);
-    let end = formatDate($scope.end.date);
-    Wallet.exportHistory(start, end, $scope.active);
+    $scope.busy = true;
+    let start = $scope.formatDate($scope.start.date);
+    let end = $scope.formatDate($scope.end.date);
+    Wallet.exportHistory(start, end, $scope.active).finally(() => $scope.busy = false);
   };
 }
