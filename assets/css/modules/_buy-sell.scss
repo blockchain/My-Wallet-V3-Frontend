@@ -70,7 +70,8 @@
         @include bc-ng-animate('buy-accept-terms', 'height', '260px', '160px');
         @include bc-ng-animate('buy-summary', 'height', '160px', '320px');
         @include bc-ng-animate('isx', 'height', '320px', '450px');
-        @include bc-ng-animate('buy-completed', 'height', '450px', '250px');
+        @include bc-ng-animate('buy-pending', 'height', '450px', '250px');
+        @include bc-ng-animate('buy-success', 'height', '250px', '150px');
       }
     }
   }

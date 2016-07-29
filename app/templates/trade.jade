@@ -11,7 +11,5 @@ tr.border.pointer(ng-class="{'bg-light-blue': active, 'o-3': cancelled}" ng-clic
     span.type-lbl {{ trade.outAmountExpected }} {{ trade.outCurrency }} | 
     span.type-lbl.em-600 {{ trade.inAmount }} {{ trade.inCurrency }}
     i.ti-trash.pointer.mls.state-danger-text(ng-click="cancel({trade: trade}); $event.stopPropagation();" ng-show="pending" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
-    span.display-block.mts(ng-show="pending && active").fade Placeholder
+    span.display-block.mts(ng-show="(pending || completed) && active").fade Placeholder
     span.display-block.mts.blue.underline.pointer(ng-click="buy({amt: trade.inAmount, trade: trade}); $event.stopPropagation();" ng-show="active && !pending && !completed") Check Status
-  td.right-align.paml(ng-show="status.waiting")
-    img(src="img/spinner.gif")

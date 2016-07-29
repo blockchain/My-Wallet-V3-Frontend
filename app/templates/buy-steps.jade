@@ -34,9 +34,9 @@
     span(ng-show="step > 4").capitalize {{ method.name }}
     span(ng-hide="step > 4" translate="Payment")
 
-  .flex-justify(ng-class="{blue: step === 6, success: step === 7 && !tradeError, 'send-red': step === 7 && tradeError}")
+  .flex-justify(ng-class="{blue: step > 5 && step < 8, success: step === 8, 'send-red': step === 7 && tradeError}")
     i.ti-arrow-right.type-h4
 
-  .width-20.flex-column.flex-center(ng-class="{blue: step === 6, success: step === 7 && !tradeError, 'send-red': step === 7 && tradeError}")
+  .width-20.flex-column.flex-center(ng-class="{blue: step > 5 && step < 8, success: step === 8, 'send-red': step === 7 && tradeError}")
     i.type-lrg.ti-shopping-cart
     span(translate="Get Bitcoin")

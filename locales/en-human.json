@@ -875,6 +875,7 @@
   "expired": "Expired",
   "CONFIRM_PAY": "Confirm & Pay",
   "SEE_BITCOIN": "See Your Bitcoin",
+  "SUMMARY": "Summary:",
   "CURRENCY_NOT_SUPPORTED": "The currency for this transaction is not supported by the payment method selected. Try another currency or select a different payment method.",
   "DECLINED_TRANSACTION": {
     "TITLE": "Card Declined",
@@ -882,20 +883,24 @@
   },
   "FAILED_TRANSACTION": {
     "TITLE": "Transaction Failed",
-    "BODY": "The transaction has failed. There was an iSignthis system error. Please contact iSignthis at customersupport@isignthis.com"
+    "BODY": "Your purchase of {{::btcAmt}} BTC for <b>{{::fiatAmt}}</b> failed. There was an iSignthis system error. Please contact iSignthis at customersupport@isignthis.com"
   },
   "TRANSACTION_ERROR": {
     "TITLE": "Transaction Error",
-    "BODY": "This transaction was been canceled. Click 'Try Again' to buy Bitcoin."
+    "BODY": "Your purchase of {{::btcAmt}} BTC for <b>{{::fiatAmt}}</b> has been canceled. Click 'Try Again' to buy Bitcoin."
   },
   "CLICK_TO_CANCEL": "Cancel trade",
-  "TX_SUCCESSFUL": {
-    "TITLE": "Transaction successful!",
-    "BODY": "You should receive your bitcoin shortly. Bitcoins will be sent to <b>{{::label}}</b>."
+  "TX_PENDING": {
+    "TITLE": "Transaction Pending",
+    "BODY": "Your purchase of {{::btcAmt}} BTC for <b>{{::fiatAmt}}</b> is currently pending. Bitcoins will be sent to <b>{{::label}}</b>."
+  },
+  "TX_SUCCESS": {
+    "TITLE": "Bitcoin Received!",
+    "BODY": "Your purchase of {{::btcAmt}} BTC for <b>{{::fiatAmt}}</b> was successful! Bitcoins were sent to <b>{{::label}}</b>."
   },
   "TX_IN_REVIEW": {
     "TITLE": "Transaction in review.",
-    "BODY": "Your transaction is currently being processed. Any issues should be resolved shortly. Thank you for your patience."
+    "BODY": "Your purchase of {{::btcAmt}} BTC for <b>{{::fiatAmt}}</b> is currently being processed. Any issues should be resolved shortly. Thank you for your patience."
   },
   "TX_EXPIRED": {
     "TITLE": "Transaction expired.",

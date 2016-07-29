@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuyCtrl', BuyCtrl);
 
-function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModal, country, exchange, trades, fiat, trade, $timeout) {
+function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModal, country, exchange, trades, fiat, trade, $timeout) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -16,7 +16,7 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
   $scope.trade = trade;
   $scope.step = 0;
 
-  $scope.completedTrade = undefined;
+  $scope.formattedTrade = undefined;
 
   $scope.fields = { email: $scope.user.email };
   $scope.bank = { name: 'bank', fee: 0 };
@@ -138,12 +138,14 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
       $scope.step = 3;
     } else if (!$scope.trade) {
       $scope.step = 4;
-    } else if (!$scope.paymentInfo && !$scope.completedTrade) {
+    } else if (!$scope.paymentInfo && !$scope.formattedTrade) {
       $scope.step = 5;
-    } else if (!$scope.completedTrade) {
+    } else if (!$scope.formattedTrade) {
       $scope.step = 6;
-    } else {
+    } else if (!$scope.bitcoinReceived) {
       $scope.step = 7;
+    } else {
+      $scope.step = 8;
     }
   };
 
@@ -202,14 +204,20 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
     if (!$scope.trade) return;
 
     const success = () => {
-      $uibModalInstance.dismiss('');
       $timeout(() => {
-      // fix this asap
+        $scope.bitcoinReceived = true;
+        // fix this asap
         let label = MyWallet.wallet.hdwallet.defaultAccount.label;
 
-        Alerts.confirm('BITCOIN_RECEIVED', {success: true, action: 'SEE_BITCOIN', iconClass: 'ti-money', values: {label: label}}).then(() => {
-          $state.go('wallet.common.transactions');
-        });
+        $scope.formatTrade({status: 'success',
+                            icon: 'ti-direction-alt',
+                            tx: {id: $scope.trade.iSignThisID},
+                            values: {
+                              label: label,
+                              fiatAmt: $scope.trade.inAmount + ' ' + $scope.trade.inCurrency,
+                              btcAmt: $scope.trade.outAmountExpected
+                            },
+                            namespace: 'TX_SUCCESS'});
       });
     };
 
@@ -246,48 +254,50 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
     $scope.nextStep();
   };
 
-  $scope.formatTxProps = (tx) => {
-    tx['Purchased'] = $scope.trade.inAmount + ' ' + $scope.trade.inCurrency;
-    tx['BTC Amount'] = $scope.trade.outAmountExpected;
-    tx['BTC Address'] = $scope.trade.receiveAddress;
-    tx['Coinify Trade'] = $scope.trade.id;
-    tx['Date'] = $scope.trade.createdAt;
+  $scope.formatTrade = (opts) => {
+    opts.tx['Coinify Trade'] = $scope.trade.id;
+    opts.tx['Date'] = $filter('date')($scope.trade.createdAt, 'dd/MM/yyyy');
+    opts.tx['BTC Receiving Address'] = $scope.trade.receiveAddress;
 
-    return tx;
-  };
-
-  $scope.completeTrade = (opts) => {
-    let txProps = $scope.formatTxProps(opts.tx);
-    $scope.completedTrade = {
-      icon: opts.icon,
-      txProps: txProps,
-      error: opts.error,
-      values: opts.values,
-      namespace: opts.namespace
+    $scope.formattedTrade = {
+      error: opts.error || false,
+      icon: opts.icon || 'ti-alert',
+      status: opts.status || 'security-red',
+      txProps: opts.tx,
+      namespace: opts.namespace,
+      values: opts.values || { fiatAmt: $scope.trade.inAmount + ' ' + $scope.trade.inCurrency, btcAmt: $scope.trade.outAmountExpected }
     };
   };
 
   $scope.declinedTx = (tx) => {
-    $scope.completeTrade({tx: tx, error: true, icon: 'ti-alert', namespace: 'DECLINED_TRANSACTION'});
+    $scope.formatTrade({tx: tx, error: true, namespace: 'DECLINED_TRANSACTION'});
   };
 
   $scope.failedTx = (tx) => {
-    $scope.completeTrade({tx: tx, error: true, icon: 'ti-alert', namespace: 'FAILED_TRANSACTION'});
-  };
-
-  $scope.reviewTx = (tx) => {
-    $scope.completeTrade({tx: tx, error: true, icon: 'ti-alert', namespace: 'TX_IN_REVIEW'});
+    $scope.formatTrade({tx: tx, error: true, namespace: 'FAILED_TRANSACTION'});
   };
 
   $scope.expiredTx = (tx) => {
-    $scope.completeTrade({tx: tx, error: true, icon: 'ti-alert', namespace: 'TX_EXPIRED'});
+    $scope.formatTrade({tx: tx, error: true, namespace: 'TX_EXPIRED'});
+  };
+
+  $scope.reviewTx = (tx) => {
+    $scope.formatTrade({tx: tx, namespace: 'TX_IN_REVIEW'});
   };
 
   $scope.successTx = (tx) => {
     if (!tx) return;
     let label = MyWallet.wallet.hdwallet.defaultAccount.label;
 
-    $scope.completeTrade({tx: tx, icon: 'ti-check', values: {label: label}, namespace: 'TX_SUCCESSFUL'});
+    $scope.formatTrade({tx: tx,
+                        status: 'blue',
+                        icon: 'ti-direction-alt',
+                        values: {
+                          label: label,
+                          fiatAmt: $scope.trade.inAmount + ' ' + $scope.trade.inCurrency,
+                          btcAmt: $scope.trade.outAmountExpected
+                        },
+                        namespace: 'TX_PENDING'});
   };
 
   $scope.cancel = () => {
@@ -329,8 +339,8 @@ function BuyCtrl ($rootScope, $scope, $state, MyWallet, Wallet, Alerts, currency
 
   $scope.$watch('method', $scope.updateAmounts);
   $scope.$watch('transaction.fiat', $scope.getQuote);
-  $scope.$watch('completedTrade', $scope.fetchTrades);
-  $scope.$watchGroup(['exchange.user', 'user.isEmailVerified', 'paymentInfo', 'completedTrade'], $scope.nextStep);
+  $scope.$watch('formattedTrade', $scope.fetchTrades);
+  $scope.$watchGroup(['exchange.user', 'user.isEmailVerified', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
 
   $scope.$watch('transaction.currency', () => {
     let curr = $scope.transaction.currency || null;
