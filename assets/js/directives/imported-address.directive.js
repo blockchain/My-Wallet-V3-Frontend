@@ -78,7 +78,7 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
         templateUrl: 'partials/send.jade',
         controller: 'SendCtrl',
         windowClass: 'bc-modal auto',
-	    	resolve: {
+        resolve: {
           paymentRequest: () => ({fromAccount: scope.address})
         }
       });
