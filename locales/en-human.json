@@ -140,7 +140,7 @@
   "CHANGE_EMAIL_FAILED" : "Could not change email address.",
   "CHANGE_PASSWORD_SUCCESS" : "Password has been changed.",
   "CHANGE_PASSWORD_FAILED" : "Could not change password.",
-  "MOBILE_NUMBER_CHANGE_DISABLED_BECAUSE_SMS_2FA" : "You must first disable SMS 2FA",
+  "MOBILE_NUMBER_CHANGE_DISABLED_BECAUSE_SMS_2FA" : "Please disable 2-step Verification via SMS in the security settings first",
   "CURRENCY" : "Local Currency",
   "CURRENCY_EXPLAIN" : "Select your local currency.",
   "SETTINGS" : "Settings",
