@@ -73,6 +73,15 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
           addressObj: () => scope.address
         }
       });
+
+      scope.spend = () => $uibModal.open({
+        templateUrl: 'partials/send.jade',
+        controller: 'SendCtrl',
+        windowClass: 'bc-modal auto',
+        resolve: {
+          paymentRequest: () => ({fromAccount: scope.address})
+        }
+      });
     }
   };
 });

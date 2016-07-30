@@ -811,5 +811,6 @@
   "LOGOUT_LESS_THAN_1440": "Please set an auto logout time less than 1440",
   "CREATE_A_WALLET": "Create your Wallet",
   "CREATE_FREE_WALLET": "Sign up for a free wallet below",
-  "WHY_HD": "Why is my bitcoin address changing?"
+  "WHY_HD": "Why is my bitcoin address changing?",
+  "SPEND_IMPORTED_ADDRESS": "Spend"
 }
