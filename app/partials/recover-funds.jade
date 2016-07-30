@@ -75,6 +75,16 @@
         span.help-block 
           div(ng-show="recoveryForm.confirmation.$touched")
             p(ng-show="recoveryForm.confirmation.$error.isValid" translate="NO_MATCH")
+    .flex-center.flex-end.mtm.mbl
+      input#agreement_accept.pull-right(
+        name="agreement"
+        type="checkbox"
+        ng-model="fields.acceptedAgreement"
+        ng-disabled="browser.disabled"
+        required)
+      label.em-300.mbn.mls.right-align
+        | I have read and agree to the 
+        a(href="https://blockchain.info/Resources/TermsofServicePolicy.pdf", translate="TERMS_OF_SERVICE", target="_blank" rel="noopener noreferrer")
     .flex-center.flex-end.mvl
       button.button-muted.mrm(
         type="button"
