@@ -67,9 +67,7 @@ div
         ng-model="fields.acceptedAgreement"
         ng-disabled="browser.disabled"
         required)
-      label.em-300.mbn.mls.right-align
-        | I have read and agree to the 
-        a(href="https://blockchain.info/Resources/TermsofServicePolicy.pdf", translate="TERMS_OF_SERVICE", target="_blank" rel="noopener noreferrer")
+      label.em-300.mbn.mls.right-align(translate="ACCEPT_TOS")
     .flex-center.flex-end.mbl
       button.button-primary(
         type="submit"
