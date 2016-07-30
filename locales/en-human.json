@@ -497,7 +497,7 @@
   "ENABLE_2FA_ENTER_MOBILE" : "Use your mobile phone to receive a one-time-password after a login attempt. Add your mobile phone number below to continue.",
   "USE_AUTH_YUBIKEY" : "Use Google Authenticator or Yubikey",
   "USE_MOBILE" : "Use your mobile phone number",
-  "SCAN_QR_CODE_GA" : "Scan this QR code with your Google Authenticator app on your mobile phone. Once scanned you will be presented with a random 6 digit number. Enter that number below to finish the setup process.",
+  "SCAN_QR_CODE_GA" : "Scan this QR code with your Google Authenticator app on your mobile phone (download for <a href='https://itunes.apple.com/gb/app/google-authenticator/id388497605' target='_blank' rel='noopener noreferrer'>iOS</a> or <a href='https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2' target='_blank' rel='noopener noreferrer'>Android</a>). Once scanned you will be presented with a random 6 digit number. Enter that number below to finish the setup process.",
   "ENABLE_2FA" : "Enable 2FA",
   "PAIR_YUBIKEY" : "Pair with your Yubikey",
   "TRANSACTION_DETAILS" : "Transaction Details",

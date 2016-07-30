@@ -33,7 +33,7 @@
       .flex-column.flex-center(ng-if="settings.googleAuthenticatorSecret" ng-class="{'has-error': errors.authenticatorCode}")
         qr.pal(text="settings.googleAuthenticatorSecret", size=100, image="true")
         .flex-column.flex-center
-          p.width-75.center(translate="SCAN_QR_CODE_GA")
+          p.width-75.left(translate="SCAN_QR_CODE_GA")
           input.form-control.width-75(type="text" ng-model="fields.authenticatorCode")
     .col-xs-12.mtl(ng-show="pairWith == 'yubiKey'")
       .flex-center.flex-column.pal(ng-class="{'has-error': errors.yubiKeyCode}")
