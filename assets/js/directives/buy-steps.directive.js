@@ -9,7 +9,7 @@ function buySteps () {
       buy: '&',
       step: '=',
       method: '=',
-      profile: '=',
+      fields: '=',
       partner: '=',
       exchange: '=',
       transaction: '=',

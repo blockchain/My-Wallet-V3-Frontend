@@ -6,12 +6,11 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
   $scope.status = { loading: true };
   $scope.currencies = currency.coinifyCurrencies;
   $scope.exchange = MyWallet.wallet.external.coinify;
-  $scope.profile = MyWallet.wallet.profile;
   $scope.settings = Wallet.settings;
   $scope.transaction = {fiat: 0, currency: $scope.settings.currency};
   $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
+  $scope.trades = { completed: [], pending: [] };
   $scope.userHasExchangeAcct = false;
-  $scope.trades = {};
   $scope.trades.watching = [];
 
   $scope.changeCurrency = (curr) => {
@@ -46,8 +45,8 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
 
       $rootScope.$safeApply();
 
-      $scope.userHasExchangeAcct = true;
       $rootScope.tradesInitialized = true;
+      $scope.userHasExchangeAcct = $scope.trades.pending.length || $scope.trades.completed.length;
     };
 
     const error = () => $scope.status = {};
@@ -138,17 +137,13 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
     $scope.userHasExchangeAcct = true;
     $scope.exchange = MyWallet.wallet.external.coinify;
 
-    if ($scope.trades) {
-      let completed = $scope.trades.completed.length;
-      $scope.getTrades().then(() => {
-        if (completed < $scope.trades.completed.length) {
-          let trade = $scope.trades.completed.splice(-1)[0];
-          $scope.watchAddress(trade);
-        }
-      });
-    } else {
-      $scope.getTrades();
-    }
+    let completed = $scope.trades.completed.length;
+    $scope.getTrades().then(() => {
+      if (completed < $scope.trades.completed.length) {
+        let trade = $scope.trades.completed.splice(-1)[0];
+        $scope.watchAddress(trade);
+      }
+    });
   });
 
   $scope.$on('initBuy', () => $scope.buy());

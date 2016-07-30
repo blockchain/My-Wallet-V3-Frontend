@@ -12,7 +12,7 @@
   .width-20.flex-column.flex-center(ng-class="{blue: step === 1, success: step > 1}"
                                     ng-hide="exchangeAcct")
     i.type-lrg.ti-map-alt
-    span(ng-show="step > 1 || exchange.user") {{ profile.countryCode }}
+    span(ng-show="step > 1 || exchange.user") {{ fields.countryCode }}
     span(ng-hide="step > 1 || exchange.user" translate="Country")
 
   .flex-justify(ng-class="{success: step > 1}"

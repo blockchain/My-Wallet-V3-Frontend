@@ -4,12 +4,11 @@ angular
 
 function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModal, country, exchange, trades, fiat, trade, $timeout, bitcoinReceived) {
   $scope.settings = Wallet.settings;
+  $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
-  $scope.profile = MyWallet.wallet.profile;
   $scope.countries = country;
   $scope.user = Wallet.user;
-  $scope.exchange = exchange;
   $scope.trades = trades;
   $scope.alerts = [];
   $scope.status = {};
@@ -20,7 +19,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
 
   $scope.bitcoinReceived = bitcoinReceived;
 
-  $scope.fields = { email: $scope.user.email };
+  $scope.fields = { email: $scope.user.email, countryCode: $scope.exchange.profile.country };
   $scope.bank = { name: 'bank', fee: 0 };
   $scope.card = { name: 'card', fee: 2.75 };
   $scope.method = $scope.card;
@@ -30,7 +29,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
 
   $scope.countryCodeGuess = MyWallet.wallet.accountInfo.countryCodeGuess;
   $scope.countryCodeGuess = $scope.countries.countryCodes.filter(country => country.code === $scope.countryCodeGuess)[0];
-  if ($scope.countryCodeGuess) $scope.profile.countryCode = $scope.countryCodeGuess.code;
+  if ($scope.countryCodeGuess) $scope.fields.countryCode = $scope.countryCodeGuess.code;
 
   try {
     if (trades.pending.length || trades.completed.length) $scope.userHasExchangeAcct = true;
@@ -121,7 +120,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   $scope.toggleEmail = () => $scope.editEmail = !$scope.editEmail;
 
   $scope.addExchange = () => {
-    if (!$scope.profile.countryCode) return;
+    if (!$scope.fields.countryCode) return;
     if (!MyWallet.wallet.external.coinify) MyWallet.wallet.external.addCoinify();
     $scope.exchange = MyWallet.wallet.external.coinify;
     $scope.partner = 'Coinify';
@@ -130,7 +129,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   $scope.nextStep = () => {
     if (!$scope.transaction.fiat) {
       $scope.step = 0;
-    } else if (!$scope.profile.countryCode) {
+    } else if (!$scope.fields.countryCode) {
       $scope.step = 1;
     } else if (!$scope.user.isEmailVerified) {
       $scope.step = 2;
@@ -171,7 +170,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
     if ($scope.step === 0) {
       return !($scope.transaction.fiat > 0);
     } else if ($scope.step === 1) {
-      return !$scope.profile.countryCode;
+      return !$scope.fields.countryCode;
     } else if ($scope.step === 3) {
       return !$scope.signupForm.$valid;
     }
@@ -198,7 +197,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
       $scope.fetchProfile().then($scope.getQuote);
     };
 
-    $scope.exchange.signup()
+    $scope.exchange.signup($scope.fields.countryCode)
       .then(success).catch($scope.standardError);
   };
 
