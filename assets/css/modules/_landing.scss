@@ -1,5 +1,6 @@
 .landing-page {
   input {
+    width: auto;
     @media (max-width: 768px) {
       margin-right: 0;
     }
@@ -7,10 +8,10 @@
   .banner {
     height: 600px;
     background-image: url(../img/mountain-man.jpg);
-    background: -webkit-linear-gradient(bottom, rgba(54,98,173,0.5), rgba(255,0,0,0), url(../img/mountain-man.jpg)); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(bottom, rgba(54,98,173,0.5), rgba(255,0,0,0), url(../img/mountain-man.jpg)); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(bottom, rgba(54,98,173,0.5), rgba(255,0,0,0), url(../img/mountain-man.jpg)); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to bottom, rgba(54,98,173,0.5), rgba(255,0,0,0)), url(../img/mountain-man.jpg); /* Standard syntax (must be last) */
+    background: -webkit-linear-gradient(bottom, rgba(54,98,173,0.5), rgba(0,0,0,0), url(../img/mountain-man.jpg)); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom, rgba(54,98,173,0.5), rgba(0,0,0,0), url(../img/mountain-man.jpg)); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom, rgba(54,98,173,0.5), rgba(0,0,0,0), url(../img/mountain-man.jpg)); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom, rgba(54,98,173,0.5), rgba(0,0,0,0)), url(../img/mountain-man.jpg); /* Standard syntax (must be last) */
     color: white;
     -webkit-background-size: cover;
     -moz-background-size: cover;
