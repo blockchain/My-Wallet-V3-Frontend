@@ -61,7 +61,7 @@ function ExportHistoryController ($scope, $sce, $translate, $filter, format, Wal
   $scope.start = { open: false, date: Date.now() - 604800000 };
   $scope.end = { open: false, date: Date.now() };
 
-  $scope.formatDate = (date) => $filter('date')(date, 'mm/dd/yyyy');
+  $scope.formatDate = (date) => $filter('date')(date, 'dd/MM/yyyy');
 
   $scope.submit = () => {
     $scope.busy = true;

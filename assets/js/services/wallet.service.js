@@ -1136,8 +1136,10 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
       })
       .catch(e => {
         let error = e.message || e;
-        if (error.indexOf('Too many transactions') > -1) error = 'TOO_MANY_TXS';
-        Alerts.displayError(error);
+        if (error && error.indexOf('Too many transactions') > -1) {
+          error = 'TOO_MANY_TXS';
+        }
+        Alerts.displayError(error || 'UNKNOWN_ERROR');
       });
   };
 
