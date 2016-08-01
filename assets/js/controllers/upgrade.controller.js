@@ -5,7 +5,6 @@ angular
 function UpgradeCtrl ($scope, Wallet, $uibModalInstance, $log, $window, $translate, $timeout, $rootScope) {
   $scope.waiting = true;
   $scope.busy = false;
-  $scope.settings = Wallet.settings;
 
   $scope.upgrade = () => {
     const secondPasswordCancelled = () => {

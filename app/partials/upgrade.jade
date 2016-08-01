@@ -3,7 +3,6 @@
     span(translate="NEED_SECOND_PASSWORD_FOR_UPGRADE")
 .modal-header.flex-center.upgrade-header
   h3(translate="UPGRADE_WALLET")
-  helper-button(content="UPGRADE_EASY")
 .modal-body
   .bc-carousel.upgrade
     uib-carousel(no-wrap="true", interval="3000" active="active")
@@ -23,10 +22,5 @@
         li(translate="UPGRADE_FUND_MANAGEMENT").type-h4
         div
           img(src="img/fund-management.jpg").logo
-    p.footnote.center.mbn.mtl
-      span
-        span.type-sm.bold(translate="UPGRADE_DISABLES_API_ACCESS", ng-show="settings.apiAccess")
-        | 
-        span.type-sm(translate="NO_GOING_BACK")
 .modal-footer.pal.flex-end
   button.button-success(ui-ladda="busy", ng-click="upgrade()" ng-disabled="waiting", ladda-translate="CONTINUE", data-style="expand-left")
