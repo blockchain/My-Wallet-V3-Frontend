@@ -62,10 +62,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   };
 
   $scope.fetchProfile = () => {
-    $scope.status.waiting = true;
-    const success = () => {
-      $scope.status = {};
-    };
+    const success = () => {};
 
     return $scope.exchange.fetchProfile().then(success, $scope.standardError);
   };
@@ -129,7 +126,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   $scope.nextStep = () => {
     if (!$scope.transaction.fiat) {
       $scope.step = 0;
-    } else if (!$scope.fields.countryCode) {
+    } else if ((!$scope.fields.countryCode && !$scope.step > 0) || ($scope.step === 0 && !$scope.exchange.user)) {
       $scope.step = 1;
     } else if (!$scope.user.isEmailVerified) {
       $scope.step = 2;
@@ -192,7 +189,6 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
     $scope.status.waiting = true;
 
     const success = () => {
-      $scope.status = {};
       Alerts.clear($scope.alerts);
       $scope.fetchProfile().then($scope.getQuote);
     };
@@ -353,7 +349,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
     if (newVal) $scope.successTx();
   });
 
-  $scope.$watch('step', () => {
+  $scope.$watch('step', (newVal) => {
     if (!$scope.partner) $scope.addExchange();
     if ($scope.exchange && $scope.exchange.user && !$scope.exchange.profile) $scope.fetchProfile();
   });

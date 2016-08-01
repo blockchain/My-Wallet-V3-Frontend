@@ -134,7 +134,6 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
   });
 
   $scope.$on('fetchTrades', () => {
-    $scope.userHasExchangeAcct = true;
     $scope.exchange = MyWallet.wallet.external.coinify;
 
     let completed = $scope.trades.completed.length;
