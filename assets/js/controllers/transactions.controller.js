@@ -75,6 +75,7 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
     if (!search) return true;
     return ($scope.filterTx(tx.processedInputs, search) ||
             $scope.filterTx(tx.processedOutputs, search) ||
+            (tx.hash.toLowerCase().search(search.toLowerCase()) > -1) ||
             (tx.note && tx.note.toLowerCase().search(search.toLowerCase()) > -1));
   };
 
