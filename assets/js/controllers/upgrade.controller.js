@@ -23,16 +23,5 @@ function UpgradeCtrl ($scope, Wallet, $uibModalInstance, $log, $window, $transla
     Wallet.upgrade(success, secondPasswordCancelled);
   };
 
-  $scope.goToBlockchain = () => {
-    $window.location = $rootScope.rootURL + 'wallet-legacy/login';
-  };
-
-  $scope.cancel = () => {
-    $scope.busy = false;
-    $scope.goToBlockchain();
-  };
-
-  $timeout(() => {
-    $scope.waiting = false;
-  }, 3000);
+  $timeout(() => $scope.waiting = false, 3000);
 }
