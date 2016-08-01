@@ -29,7 +29,7 @@
                 ng-hide="exchangeAcct")
     i.ti-arrow-right.type-h4
 
-  .width-20.flex-column.flex-center(ng-class="{blue: step >= 4, success: step > 5 && !method.name === 'bank'}")
+  .width-20.flex-column.flex-center(ng-class="{blue: step >= 4, success: step > 5 && method.name !== 'bank'}")
     i.type-lrg.ti-credit-card(ng-class="{'bank': method.name === 'bank'}")
     span(ng-show="step > 4").capitalize {{ method.name }}
     span(ng-hide="step > 4" translate="Payment")

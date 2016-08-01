@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuyCtrl', BuyCtrl);
 
-function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModal, country, exchange, trades, fiat, trade, $timeout, bitcoinReceived) {
+function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModal, country, exchange, trades, fiat, trade, $timeout, bitcoinReceived, formatTrade) {
   $scope.settings = Wallet.settings;
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   $scope.btcCurrency = $scope.settings.btcCurrency;
@@ -234,68 +234,31 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
     $scope.nextStep();
   };
 
-  $scope.formatTrade = (opts) => {
-    opts.tx['Coinify Trade'] = $scope.trade.id;
-    opts.tx['Date'] = $filter('date')($scope.trade.createdAt, 'dd/MM/yyyy');
-    opts.tx['BTC Receiving Address'] = $scope.trade.receiveAddress;
-
-    $scope.formattedTrade = {
-      error: opts.error || false,
-      icon: opts.icon || 'ti-alert',
-      status: opts.status || 'security-red',
-      txProps: opts.tx,
-      namespace: opts.namespace,
-      values: opts.values || { fiatAmt: $scope.trade.inAmount + ' ' + $scope.trade.inCurrency, btcAmt: $scope.trade.outAmountExpected }
-    };
-
-    $scope.nextStep();
-  };
-
   $scope.declinedTx = (tx) => {
-    $scope.formatTrade({tx: tx, error: true, namespace: 'DECLINED_TRANSACTION'});
+    $scope.formattedTrade = formatTrade.error(tx, $scope.trade, 'DECLINED_TRANSACTION');
   };
 
   $scope.failedTx = (tx) => {
-    $scope.formatTrade({tx: tx, error: true, namespace: 'FAILED_TRANSACTION'});
+    $scope.formattedTrade = formatTrade.error(tx, $scope.trade, 'FAILED_TRANSACTION');
   };
 
   $scope.expiredTx = (tx) => {
-    $scope.formatTrade({tx: tx, error: true, namespace: 'TX_EXPIRED'});
+    $scope.formattedTrade = formatTrade.error(tx, $scope.trade, 'TX_EXPIRED');
+  };
+
+  $scope.successTx = (tx) => {
+    $scope.formattedTrade = formatTrade.success($scope.trade);
   };
 
   $scope.reviewTx = (tx) => {
-    $scope.formatTrade({tx: tx, namespace: 'TX_IN_REVIEW'});
+    $scope.formattedTrade = formatTrade.review(tx);
   };
 
   $scope.pendingTx = (tx) => {
     if (!tx) return;
     if ($scope.formattedTrade && $scope.formattedTrade.status === 'success') return;
 
-    let label = MyWallet.wallet.hdwallet.defaultAccount.label;
-
-    $scope.formatTrade({tx: tx,
-                        status: 'blue',
-                        icon: 'ti-direction-alt',
-                        values: {
-                          label: label,
-                          fiatAmt: $scope.trade.inAmount + ' ' + $scope.trade.inCurrency,
-                          btcAmt: $scope.trade.outAmountExpected
-                        },
-                        namespace: 'TX_PENDING'});
-  };
-
-  $scope.successTx = (tx) => {
-    let label = MyWallet.wallet.hdwallet.defaultAccount.label;
-
-    $scope.formatTrade({status: 'success',
-                        icon: 'ti-direction-alt',
-                        tx: {id: $scope.trade.iSignThisID},
-                        values: {
-                          label: label,
-                          fiatAmt: $scope.trade.inAmount + ' ' + $scope.trade.inCurrency,
-                          btcAmt: $scope.trade.outAmountExpected
-                        },
-                        namespace: 'TX_SUCCESS'});
+    $scope.formattedTrade = formatTrade.pending(tx, $scope.trade);
   };
 
   $scope.cancel = () => {
@@ -331,7 +294,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
 
   $scope.$watch('method', $scope.updateAmounts);
   $scope.$watch('transaction.fiat', $scope.getQuote);
-  $scope.$watchGroup(['exchange.user', 'user.isEmailVerified', 'paymentInfo'], $scope.nextStep);
+  $scope.$watchGroup(['exchange.user', 'user.isEmailVerified', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
 
   $scope.$watch('transaction.currency', () => {
     let curr = $scope.transaction.currency || null;

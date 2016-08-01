@@ -11,7 +11,6 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
   $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
   $scope.trades = { completed: [], pending: [] };
   $scope.userHasExchangeAcct = false;
-  $scope.trades.watching = [];
 
   $scope.changeCurrency = (curr) => {
     if (!curr) curr = $scope.settings.currency;
@@ -27,6 +26,7 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
       $timeout(() => {
         $scope.status = {};
       }, 1000);
+
       $scope.trades.pending = trades.filter(t => t.state === 'awaiting_transfer_in' ||
                                                  t.state === 'processing' ||
                                                  t.state === 'reviewing');
@@ -42,8 +42,6 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
           $scope.watchAddress(trade);
         }
       }
-
-      $rootScope.$safeApply();
 
       $rootScope.tradesInitialized = true;
       $scope.userHasExchangeAcct = $scope.trades.pending.length || $scope.trades.completed.length;
@@ -137,6 +135,7 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
     $scope.exchange = MyWallet.wallet.external.coinify;
 
     let completed = $scope.trades.completed.length;
+
     $scope.getTrades().then(() => {
       if (completed < $scope.trades.completed.length) {
         let trade = $scope.trades.completed.splice(-1)[0];
