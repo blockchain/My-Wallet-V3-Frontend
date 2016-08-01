@@ -17,8 +17,11 @@
     -o-background-size: cover;
     background-size: cover;
     h1 {
-      font-weight: 300;
+      font-weight: 400;
       letter-spacing: 1px;
+    }
+    .title {
+      font-weight: 300;
     }
     .type-h5 {
       font-weight: 300;
@@ -29,6 +32,7 @@
     a {
       color: #f5f5f5;
       text-decoration: none;
+      right: 0;
     }
     @media (max-width: 768px) {
       span {
@@ -78,6 +82,7 @@
       color: #5f5f5f;
       font-size: 13px;
       font-weight: 400;
+      line-height: 1.428571429;
     }
     .plrl-desk {
       padding-right: 3em;

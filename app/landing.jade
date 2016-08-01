@@ -2,7 +2,7 @@
   public-header(i18n-loaded='i18nLoaded')
   .quickstart
     #intro-header
-      .flex-center.flex-row.flex-column-mobile
+      .flex-center.flex-row.flex-column-mobile.container
         .flex-1.flex-center.center.flex-column.pvl.phl
           h5.flex-1.mtn(translate="NEW_USERS")
           p.flex-1(translate="NEW_USERS_COPY")
@@ -16,10 +16,10 @@
           p.flex-1(translate='HOW_IT_WORKS_COPY')
           a.button-default(href="{{rootURL}}wallet/how-it-works" translate="HOW_IT_WORKS" target="_blank")
   .banner
-    .flex-column.height-100.flex-center.flex-around
+    .flex-column.height-100.flex-center.flex-around.container
       div
         h1.center(translate="MOST_POPULAR_WALLET")
-      .flex-row.flex-around.width-80.flex-between-mobile
+      .flex-row.flex-around.width-100.flex-between-mobile
         .flex-column.center.width-30
           span.title.white.lh1(translate="TRANSACTIONS_AMT")
           span.type-h5.white(translate="TRANSACTIONS")
@@ -45,12 +45,12 @@
               ng-model="fields.email"
               placeholder="jane@doe.com"
               required)
-            .flex-column
+            .flex-column.pos-rel
               button.button-success.btn.button-vlg.mtl(
                 type="submit"
                 ng-disabled="signupForm.$invalid"
                 translate="CREATE_NEW") 
-              a.pos-abs.plml(ui-sref="public.login-no-uid" translate="OR_LOGIN")
+              a.pos-abs(ui-sref="public.login-no-uid" translate="OR_LOGIN")
   .newtobitcoin.container
     #newToBTC.container-max-width.container-fluid.width-100
       .flex-column.flex-justify.flex-center.mvvl
