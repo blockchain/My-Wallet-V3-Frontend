@@ -10,14 +10,13 @@ form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" noval
         .flex-1
         .flex-4.form-group(ng-show="activeCount > 1")
           ui-select.send-from-dropdown(
-            name="target"
-            ng-model="$parent.target"
-            ng-change="setActive()"
+            name="active"
+            ng-model="$parent.active"
             tagging
             required)
             ui-select-match(placeholder="{{'SEARCH' | translate}}...")
               label-origin(origin="$select.selected")
-            ui-select-choices(repeat="t in targets | filter:{label:$select.search} | limitTo:limit" group-by="'type'")
+            ui-select-choices(repeat="t in targets | filter:{label:$select.search} | limitTo:limit")
               label-origin(origin="::t" in-view="$last && isLast(t) && incLimit()" highlight="$select.search")
         .flex-1
       

@@ -7,21 +7,21 @@ function ExportHistoryController ($scope, $sce, $translate, $filter, format, Wal
   $scope.incLimit = () => $scope.limit += 50;
 
   let accounts = Wallet.accounts().filter(a => !a.archived && a.index != null);
-  let addresses = Wallet.legacyAddresses().filter(a => !a.archived);
+  let addresses = Wallet.legacyAddresses().filter(a => !a.archived).map(a => a.address);
 
-  let allHD = {
-    type: $translate.instant('ALL'),
-    label: $translate.instant('HD_ADDRESSES'),
-    address: accounts.map(a => a.extendedPublicKey)
+  let all = {
+    index: '',
+    label: $translate.instant('ALL'),
+    address: accounts.map(a => a.extendedPublicKey).concat(addresses)
   };
 
-  let allAddresses = {
-    type: $translate.instant('ALL'),
+  let imported = {
+    index: 'imported',
     label: $translate.instant('IMPORTED_ADDRESSES'),
-    address: addresses.map(a => a.address)
+    address: addresses
   };
 
-  $scope.targets = [allHD, allAddresses].concat(accounts.concat(addresses).map(format.origin));
+  $scope.targets = [all].concat(accounts.map(format.origin)).concat(imported);
   $scope.isLast = (t) => t === $scope.targets[$scope.limit - 1];
 
   $scope.activeCount = (
@@ -29,30 +29,8 @@ function ExportHistoryController ($scope, $sce, $translate, $filter, format, Wal
     Wallet.legacyAddresses().filter(a => !a.archived).length
   );
 
-  $scope.setActive = () => {
-    let t = $scope.target;
-    $scope.active = t.index != null ? t.xpub : t.address;
-  };
-
-  if ($scope.activeCount === 1) {
-    $scope.target = $scope.targets[$scope.targets.length - 1];
-  } else if (activeIndex === '') {
-    $scope.target = allHD;
-  } else if (activeIndex === 'imported') {
-    $scope.target = allAddresses;
-  } else if (!isNaN(activeIndex)) {
-    for (let i = 0; i < $scope.targets.length; i++) {
-      let target = $scope.targets[i];
-      if (target.index === parseInt(activeIndex, 10)) {
-        $scope.target = target;
-        break;
-      }
-    }
-  }
-
-  if ($scope.target) {
-    $scope.setActive();
-  }
+  $scope.active = $scope.activeCount === 1
+    ? all : $scope.targets.filter(t => t.index.toString() === activeIndex)[0];
 
   $scope.format = 'dd/MM/yyyy';
   $scope.options = { minDate: new Date(1231024500000), maxDate: new Date() };
@@ -67,6 +45,7 @@ function ExportHistoryController ($scope, $sce, $translate, $filter, format, Wal
     $scope.busy = true;
     let start = $scope.formatDate($scope.start.date);
     let end = $scope.formatDate($scope.end.date);
-    Wallet.exportHistory(start, end, $scope.active).finally(() => $scope.busy = false);
+    let active = $scope.active.address || $scope.active.xpub;
+    Wallet.exportHistory(start, end, active).finally(() => $scope.busy = false);
   };
 }
