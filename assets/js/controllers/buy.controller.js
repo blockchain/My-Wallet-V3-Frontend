@@ -16,7 +16,6 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   $scope.step = 0;
 
   $scope.formattedTrade = undefined;
-
   $scope.bitcoinReceived = bitcoinReceived;
 
   $scope.fields = { email: $scope.user.email, countryCode: $scope.exchange.profile.country };
@@ -27,8 +26,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   $scope.transaction.fiat = fiat || 0;
   $scope.paymentInfo = undefined;
 
-  $scope.countryCodeGuess = MyWallet.wallet.accountInfo.countryCodeGuess;
-  $scope.countryCodeGuess = $scope.countries.countryCodes.filter(country => country.code === $scope.countryCodeGuess)[0];
+  $scope.countryCodeGuess = $scope.countries.countryCodes.filter(country => country.code === MyWallet.wallet.accountInfo.countryCodeGuess)[0];
   if ($scope.countryCodeGuess) $scope.fields.countryCode = $scope.countryCodeGuess.code;
 
   try {
@@ -75,12 +73,10 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
 
     $scope.transaction.methodFee = methodFee.toFixed(2);
     $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount / 100, currency.bitCurrencies[0]);
-    $scope.transaction.total = fiatAmt +
-                               +$scope.transaction.methodFee;
+    $scope.transaction.total = fiatAmt + +$scope.transaction.methodFee;
   };
 
   $scope.getQuote = () => {
-    if (!$scope.exchange) return;
     if (!$scope.exchange.user) return;
 
     $scope.transaction.btc = 0;
@@ -102,6 +98,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   };
 
   $scope.toggleEmail = () => $scope.editEmail = !$scope.editEmail;
+  $scope.isCurrencySelected = (currency) => currency === $scope.transaction.currency;
 
   $scope.addExchange = () => {
     if (!$scope.fields.countryCode) return;
@@ -119,7 +116,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
       $scope.step = 2;
     } else if ($scope.rejectedEmail) {
       $scope.step = 2;
-    } else if (!$scope.exchange || !$scope.exchange.user) {
+    } else if (!$scope.exchange.user) {
       $scope.step = 3;
     } else if (!$scope.trade) {
       $scope.step = 4;
@@ -137,15 +134,11 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   $scope.prevStep = () => {
     if ($scope.status.waiting) return;
 
-    try {
-      if ($scope.exchange.user) {
-        $scope.step = 0;
-      } else if ($scope.step > 2) {
-        $scope.step = 1;
-      } else {
-        $scope.step--;
-      }
-    } catch (e) {
+    if ($scope.exchange.user) {
+      $scope.step = 0;
+    } else if ($scope.step > 2) {
+      $scope.step = 1;
+    } else {
       $scope.step--;
     }
   };
@@ -185,8 +178,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   };
 
   $scope.watchAddress = () => {
-    if (!$scope.trade) return;
-    if ($scope.bitcoinReceived) return;
+    if (!$scope.trade || $scope.bitcoinReceived) return;
 
     const success = () => {
       $timeout(() => {
@@ -262,35 +254,26 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   };
 
   $scope.cancel = () => {
-    if ($scope.exchange && $scope.exchange.user) $scope.fetchTrades();
+    if ($scope.exchange.user) $scope.fetchTrades();
     if ($scope.status.waiting) return;
     $uibModalInstance.dismiss('');
     $scope.trade = null;
   };
 
   $scope.close = (acct) => {
-    let text = '';
-    let action = '';
+    let text = ''; let action = '';
     if ($scope.step === 0) {
-      text = 'CONFIRM_CLOSE_AMT';
-      action = 'CLOSE';
+      text = 'CONFIRM_CLOSE_AMT'; action = 'CLOSE';
     } else if (!acct && $scope.step > 0) {
-      text = 'CONFIRM_CLOSE_ACCT';
-      action = 'IM_DONE';
+      text = 'CONFIRM_CLOSE_ACCT'; action = 'IM_DONE';
     } else if (acct) {
-      text = 'CONFIRM_CLOSE';
-      action = 'IM_DONE';
+      text = 'CONFIRM_CLOSE'; action = 'IM_DONE';
     } else {
-      text = 'CONFIRM_CANCEL';
-      action = 'IM_DONE';
+      text = 'CONFIRM_CANCEL'; action = 'IM_DONE';
     }
 
-    Alerts.confirm(text, {action: action}).then(() => {
-      $scope.cancel();
-    });
+    Alerts.confirm(text, {action: action}).then($scope.cancel);
   };
-
-  $scope.isCurrencySelected = (currency) => currency === $scope.transaction.currency;
 
   $scope.$watch('method', $scope.updateAmounts);
   $scope.$watch('transaction.fiat', $scope.getQuote);
@@ -308,7 +291,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
 
   $scope.$watch('step', (newVal) => {
     if (!$scope.partner) $scope.addExchange();
-    if ($scope.exchange && $scope.exchange.user && !$scope.exchange.profile) $scope.fetchProfile();
+    if ($scope.exchange.user && !$scope.exchange.profile) $scope.fetchProfile();
   });
 
   if ($scope.trade && !bitcoinReceived) {
