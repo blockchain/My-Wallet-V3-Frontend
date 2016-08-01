@@ -1,11 +1,16 @@
 .landing-page {
   input {
-    width: auto;
+    @media (min-width: 768px) {
+      width: auto;
+    }
     @media (max-width: 768px) {
       margin-right: 0;
     }
   }
   .banner {
+    .width-100 {
+      width: 100% !important;
+    }
     height: 600px;
     background-image: url(../img/mountain-man.jpg);
     background: -webkit-linear-gradient(bottom, rgba(54,98,173,0.5), rgba(0,0,0,0), url(../img/mountain-man.jpg)); /* For Safari 5.1 to 6.0 */
