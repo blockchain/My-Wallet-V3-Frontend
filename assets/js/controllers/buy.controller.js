@@ -200,10 +200,17 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   $scope.buy = () => {
     $scope.status.waiting = true;
 
-    const success = (trade) => {
+    let success = (trade) => {
       Alerts.clear($scope.alerts);
       $scope.trade = trade;
     };
+
+    // check if bank transfer and kyc level
+    if ($scope.method.name === 'bank' &&
+        parseInt($scope.exchange.profile.level.name, 10) < 2) {
+      $scope.exchange.triggerKYC().then(success, $scope.standardError);
+      return;
+    }
 
     // check if currency is supported by payment method first
     $scope.exchange.getPaymentMethods().then((methods) => {
