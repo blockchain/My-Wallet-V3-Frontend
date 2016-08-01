@@ -66,8 +66,8 @@
         opacity: 1;
         @include bc-ng-animate('buy-amount', 'height', '122px', '122px');
         @include bc-ng-animate('buy-select-country', 'height', '122px', '122px');
-        @include bc-ng-animate('buy-email', 'height', '122px', '260px');
-        @include bc-ng-animate('buy-accept-terms', 'height', '260px', '160px');
+        @include bc-ng-animate('buy-email', 'height', '122px', '152px');
+        @include bc-ng-animate('buy-accept-terms', 'height', '152', '160px');
         @include bc-ng-animate('buy-summary', 'height', '160px', '320px');
         @include bc-ng-animate('isx', 'height', '320px', '450px');
         @include bc-ng-animate('buy-pending', 'height', '450px', '250px');

@@ -2,8 +2,6 @@ div
   div(ng-hide="editEmail || rejectedEmail")
     p
       span(translate="SENT_VERIFICATION" translate-values="{email: user.email}")
-      form.clearfix(name="confirmationCode")
-        bc-async-input(type="text" is-required ng-model="fields.confirmationCode" on-save="verifyConfirmationCode" inline editing="true" hide-cancel="true" button="VERIFY_EMAIL")
     .flex-column.mtl
         div
           span.flex-center.pointer(translate="CHANGE_EMAIL" ng-click="toggleEmail()")

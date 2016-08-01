@@ -79,19 +79,6 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
                                +$scope.transaction.methodFee;
   };
 
-  // $scope.verifyConfirmationCode = (code, successCallback, errorCallback) => {
-  //   const success = () => {
-  //     $scope.user.isEmailVerified = true;
-  //     successCallback();
-  //     $scope.nextStep();
-  //   };
-
-  //   const error = (err) => $scope.standardError(err); errorCallback();
-
-  //   Wallet.verifyEmail($scope.confirmationCode.bcAsyncForm.input.$viewValue, success, error);
-  // };
-
-  // move to directive
   $scope.getQuote = () => {
     if (!$scope.exchange) return;
     if (!$scope.exchange.user) return;
