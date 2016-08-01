@@ -21,7 +21,9 @@ function ExportHistoryController ($scope, $sce, $translate, $filter, format, Wal
     address: addresses
   };
 
-  $scope.targets = [all].concat(accounts.map(format.origin)).concat(imported);
+  $scope.targets = [all].concat(accounts.map(format.origin));
+  if (addresses.length) $scope.targets.push(imported);
+
   $scope.isLast = (t) => t === $scope.targets[$scope.limit - 1];
 
   $scope.activeCount = (
