@@ -1,6 +1,6 @@
 .flex-column.note.em-300.width-80
   .flex-row.flex-end.flex-start-tablet
-    .flex-row(ng-hide="editNote")
+    .flex-row.width-100(ng-hide="editNote")
       .tx-note.aaa.em-400.text-cursor(ng-show="label && !transaction.note") {{ label }}
       .tx-note.basic-grey.em-400.text-cursor(ng-hide="label && !transaction.note"
                                              ng-bind-html="transaction.note | escapeHtml | highlight:search")

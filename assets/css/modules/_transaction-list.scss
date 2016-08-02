@@ -105,6 +105,10 @@
   .feed-details {
     border-top: 1px solid $eee;
   }
+  .tx-note {
+    max-width: 100%;
+    word-wrap: break-word;
+  }
 }
 
 .transaction-card {
