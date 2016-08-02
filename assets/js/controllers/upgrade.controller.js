@@ -5,7 +5,6 @@ angular
 function UpgradeCtrl ($scope, Wallet, $uibModalInstance, $log, $window, $translate, $timeout, $rootScope) {
   $scope.waiting = true;
   $scope.busy = false;
-  $scope.settings = Wallet.settings;
 
   $scope.upgrade = () => {
     const secondPasswordCancelled = () => {
@@ -23,16 +22,5 @@ function UpgradeCtrl ($scope, Wallet, $uibModalInstance, $log, $window, $transla
     Wallet.upgrade(success, secondPasswordCancelled);
   };
 
-  $scope.goToBlockchain = () => {
-    $window.location = $rootScope.rootURL + 'wallet-legacy/login';
-  };
-
-  $scope.cancel = () => {
-    $scope.busy = false;
-    $scope.goToBlockchain();
-  };
-
-  $timeout(() => {
-    $scope.waiting = false;
-  }, 3000);
+  $timeout(() => $scope.waiting = false, 3000);
 }
