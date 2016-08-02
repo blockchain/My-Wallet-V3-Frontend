@@ -1,11 +1,4 @@
-form(
-  role="form"
-  name="exportForm"
-  autocomplete="off"
-  action="{{::action}}"
-  method="POST"
-  novalidate)
-
+form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" novalidate)
   .modal-header
     .flex-center.pam
       h3.man.mrm(translate="EXPORT_HISTORY")
@@ -13,23 +6,17 @@ form(
 
   .modal-body
     .ph-form
-      input(type="hidden" name="action" value="export")
-      input(type="hidden" name="active" value="{{active}}")
-      input(type="hidden" name="archived" value="{{archived}}")
-      input(type="hidden" name="format" value="{{exportFormat}}")
-
       .flex-row.pal
         .flex-1
         .flex-4.form-group(ng-show="activeCount > 1")
           ui-select.send-from-dropdown(
-            name="target"
-            ng-model="$parent.target"
-            ng-change="setActive()"
+            name="active"
+            ng-model="$parent.active"
             tagging
             required)
             ui-select-match(placeholder="{{'SEARCH' | translate}}...")
               label-origin(origin="$select.selected")
-            ui-select-choices(repeat="t in targets | filter:{label:$select.search} | limitTo:limit" group-by="'type'")
+            ui-select-choices(repeat="t in targets | filter:{label:$select.search} | limitTo:limit")
               label-origin(origin="::t" in-view="$last && isLast(t) && incLimit()" highlight="$select.search")
         .flex-1
       
@@ -73,5 +60,7 @@ form(
       ng-click="$dismiss()")
     button.btn.button-primary(
       type="submit"
-      translate="EXPORT"
+      ui-ladda="busy"
+      ladda-translate="EXPORT"
+      data-style="expand-left"
       ng-disabled="exportForm.$invalid || start.date > end.date")
