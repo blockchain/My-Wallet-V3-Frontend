@@ -63,14 +63,18 @@ function formatTrade ($filter) {
     };
   }
 
-  function review (tx) {
-    tx = addTradeDetails(tx);
+  function review (tx, trade) {
+    tx = addTradeDetails(tx, trade);
 
     return {
       tx: tx,
       status: 'blue',
       icon: 'ti-direction-alt',
-      namespace: 'TX_PENDING'
+      namespace: 'TX_PENDING',
+      values: {
+        fiatAmt: trade.inAmount + ' ' + trade.inCurrency,
+        btcAmt: trade.outAmountExpected
+      }
     };
   }
 

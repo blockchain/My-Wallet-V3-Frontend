@@ -243,7 +243,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   };
 
   $scope.reviewTx = (tx) => {
-    $scope.formattedTrade = formatTrade.review(tx);
+    $scope.formattedTrade = formatTrade.review(tx, $scope.trade);
   };
 
   $scope.pendingTx = (tx) => {
