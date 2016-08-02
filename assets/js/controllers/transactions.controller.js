@@ -78,9 +78,13 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
             (tx.note && tx.note.toLowerCase().search(search.toLowerCase()) > -1));
   };
 
+  $scope.checkLabelDiff = (label, address) => {
+    return label === address ? address : label + ', ' + address;
+  };
+
   $scope.filterTx = (coins, search) => {
     return coins
-      .map(coin => coin.label || coin.address)
+      .map(coin => $scope.checkLabelDiff(coin.label, coin.address))
       .join(', ').toLowerCase().search(search.toLowerCase()) > -1;
   };
 
