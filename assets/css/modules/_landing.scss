@@ -1,4 +1,9 @@
 .landing-page {
+  @media (max-width: 768px) {
+    .quickpad {
+      padding-top: 285px;
+    }
+  }
   input {
     @media (min-width: 768px) {
       width: auto;
@@ -50,6 +55,9 @@
       .width-30 {
         width: 30%;
       }
+      h1 {
+        margin: 0;
+      }
     }
     @media (min-width: 768px) {
       h1 {
@@ -98,6 +106,9 @@
     width: 100%;
     position: absolute;
     background-color: rgba(245,245,245,0.6);
+    .border-left {
+      border-left: 0;
+    }
   }
   .navbar {
     margin-bottom: 0px;

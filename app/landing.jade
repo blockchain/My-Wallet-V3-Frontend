@@ -16,7 +16,7 @@
           p.flex-1(translate='HOW_IT_WORKS_COPY')
           a.button-default(href="{{rootURL}}wallet/how-it-works" translate="HOW_IT_WORKS" target="_blank")
   .banner
-    .flex-column.height-100.flex-center.flex-around.container.width-100
+    .flex-column.height-100.flex-center.flex-around.container.quickpad
       div.mtvl.width-100
         h1.mtml.mbm.center.width-100(translate="MOST_POPULAR_WALLET")
       .flex-row.flex-around.width-100.flex-between-mobile.container.hidden-xs
@@ -45,7 +45,7 @@
               ng-model="fields.email"
               placeholder="jane@doe.com"
               required)
-            .flex-column.pos-rel
+            .flex-column.pos-rel.width-100-mobile
               button.button-success.btn.button-vlg.mtl(
                 type="submit"
                 ng-disabled="signupForm.$invalid"
