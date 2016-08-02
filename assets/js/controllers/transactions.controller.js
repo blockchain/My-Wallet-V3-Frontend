@@ -79,11 +79,7 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
   };
 
   $scope.checkLabelDiff = (label, address) => {
-    if (label === address) {
-      return address;
-    } else {
-      return (label + ', ' + address);
-    }
+    return label === address ? address : label + ', ' + address;
   };
 
   $scope.filterTx = (coins, search) => {
