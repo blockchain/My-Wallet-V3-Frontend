@@ -63,4 +63,9 @@ form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" noval
       ui-ladda="busy"
       ladda-translate="EXPORT"
       data-style="expand-left"
+      ng-show="history == null || canTriggerDownload"
       ng-disabled="exportForm.$invalid || start.date > end.date")
+    download-button.btn.button-success(
+      ng-hide="history == null || canTriggerDownload"
+      filename="history.csv"
+      content="history")

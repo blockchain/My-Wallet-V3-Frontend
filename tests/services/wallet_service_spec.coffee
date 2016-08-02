@@ -529,10 +529,8 @@ describe "walletServices", () ->
       it "should convert to csv with notes and broadcast broadcast download event", (done) ->
         spyOn(Wallet, 'getNote').and.callFake((hash) -> hash == 'asdf' && 'test_note')
         spyOn($rootScope, '$broadcast')
-        Wallet.exportHistory().then ->
-          expect($rootScope.$broadcast).toHaveBeenCalledWith 'download',
-            contents: 'sent,receive,tx,note\n1,0,asdf,test_note\n0,2,qwer,'
-            filename: 'history.csv'
+        Wallet.exportHistory().then (data) ->
+          expect(data).toEqual('sent,receive,tx,note\n1,0,asdf,test_note\n0,2,qwer,')
           done()
         $rootScope.$digest()
 
