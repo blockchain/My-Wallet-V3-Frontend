@@ -45,3 +45,11 @@ $multiplier: 100;
     font-size: #{$i}em;
   }
 }
+
+@for $i from 1 through 5 {
+  @media (max-width: 768px) {
+    .font-#{$i}-mobile {
+      font-size: #{$i}em;
+    }
+  }
+}

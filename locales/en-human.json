@@ -798,7 +798,7 @@
   "CONFUSED_READ": "Confused? Read",
   "MY_WALLET_IS": "My Wallet is the world's most popular Bitcoin wallet. It's free, open source, and trusted by more than 7 million users.",
   "MOST_POPULAR_WALLET": "The World's Most Popular Bitcoin Wallet",
-  "ABOUT_BLOCKCHAIN_WALLET": "We are not a bank. We cannot view your balance, see your transactions<br/>or make payments on your behalf. You retain complete ownership of your money.",
+  "ABOUT_BLOCKCHAIN_WALLET": "We are not a bank. We cannot view your balance, see your transactions<br class='hidden-xs'/>or make payments on your behalf. You retain complete ownership of your money.",
   "CREATE_NEW": "Create a Free Bitcoin Wallet",
   "WALLET_USER": "Wallet User",
   "QUOTE_0": "Blockchain is far and away an early leader in Bitcoin. They’re actually enabling the entire ecosystem.",
