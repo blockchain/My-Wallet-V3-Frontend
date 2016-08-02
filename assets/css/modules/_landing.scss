@@ -1,4 +1,9 @@
 .landing-page {
+  @media (max-width: 768px) {
+    .quickpad {
+      padding-top: 285px;
+    }
+  }
   input {
     @media (min-width: 768px) {
       width: auto;
@@ -50,6 +55,9 @@
       .width-30 {
         width: 30%;
       }
+      h1 {
+        margin: 0;
+      }
     }
     @media (min-width: 768px) {
       h1 {
@@ -98,6 +106,9 @@
     width: 100%;
     position: absolute;
     background-color: rgba(245,245,245,0.6);
+    .border-left {
+      border-left: 0;
+    }
   }
   .navbar {
     margin-bottom: 0px;
@@ -697,7 +708,7 @@
 @media (max-width: 992px){
   .landing-page #timeline {
     margin: 0;
-    width: 65%;
+    width: 100%;
     margin-bottom: 10px;
   }
   .flex-column-med {
@@ -763,7 +774,7 @@
 @media (max-width: 992px) {
   .new .flex-row .video-container .imag-prev {
     position: relative;
-    width: 50%;
+    width: 75%;
     left: 0;
     top: 0;
     transform: translate(0,0);
