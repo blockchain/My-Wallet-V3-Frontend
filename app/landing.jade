@@ -2,7 +2,7 @@
   public-header(i18n-loaded='i18nLoaded')
   .quickstart
     #intro-header
-      .flex-center.flex-row.flex-column-mobile
+      .flex-center.flex-row.flex-column-mobile.container
         .flex-1.flex-center.center.flex-column.pvl.phl
           h5.flex-1.mtn(translate="NEW_USERS")
           p.flex-1(translate="NEW_USERS_COPY")
@@ -15,53 +15,64 @@
           h5.flex-1.mtn(translate="HOW_IT_WORKS")
           p.flex-1(translate='HOW_IT_WORKS_COPY')
           a.button-default(href="{{rootURL}}wallet/how-it-works" translate="HOW_IT_WORKS" target="_blank")
-  .container.border-bottom
-    h2
-      | My Wallet 
-      small Be Your Own Bank
-        sup.type-xs ®
-  .container.flex-row.pvl
-    .flex.flex-column-mobile
-      .flex-1.mrl
-        img(src='img/blocket.png').small-blocket.mrl.mbl
-        p.text(translate='MY_WALLET_IS')
-        p.text(translate='ABOUT_BLOCKCHAIN_WALLET')
-        p(align='center')
-          button.button-success(ui-sref="public.signup" translate="CREATE_NEW")
-      .flex-1
-        video-container(img="img/legacy-video-placeholder-TEMP.jpg" src="https://storage.googleapis.com/bc_public_assets/video/legacy-what-is-bitcoin-TEMP.mp4")
-  .landing-nav.flex-row.flex-between
-    .flex-center.flex-column.flex-justify(ng-click="scroll('newToBTC')")
-      h3.thin(translate="NEW_TO_BITCOIN")
-      h4(translate="WHY_USE")
-    .flex-center.flex-column.flex-justify(ng-click="scroll('experiencedUser')")
-      h3.thin(translate="EXPERIENCED_USER")
-      h4(translate="WHY_USE_BLOCKCHAIN")
-  .split.flex-row
-    .left
-      .landing-wrapper
-        scroll-in-view(img="img/new-wallet-hero.jpg" shadow="true")
-      scroll-in-view.blocket(img="img/blocket.png")
-      scroll-in-view.ios(img="img/ios-feature.jpg", transactions="true")
-    .right
-      uib-accordion(close-others="oneAtATime")
-        uib-accordion-group(heading="EASE OF USE")
-          h4(translate="SEND_AND_RECEIVE")
-          p(translate="LOVED_BY_ALL")
-        uib-accordion-group(heading="PEACE OF MIND")
-          h4(translate="IN_CONTROL")
-          p(translate="ACCESS_TO_BITCOINS")
-        uib-accordion-group(heading="HIGH SECURITY")
-          h4(translate="PROTECTING_FUNDS")
-          p(translate="STATE_OF_THE_ART_SEC")
-        uib-accordion-group(heading="CROSS DEVICE COMPATIBLE")
-          .flex-around.flex-row.mtl
-            a.flex-1(href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309" target="_blank")
-              img(src="img/logo-apple.svg")
-            a.flex-1(href="https://play.google.com/store/apps/details?id=piuk.blockchain.android" target="_blank")
-              img(src="img/logo-android.svg")
-            a.flex-1(ui-sref="public.login-no-uid")
-              img(src="img/logo-www.jpg")
+  .banner
+    .flex-column.height-100.flex-center.flex-around.container.width-100
+      div.width-100
+        h1.center.width-100(translate="MOST_POPULAR_WALLET")
+      .flex-row.flex-around.width-100.flex-between-mobile
+        .flex-column.center.width-30
+          span.title.white.lh1(translate="TRANSACTIONS_AMT")
+          span.type-h5.white(translate="TRANSACTIONS")
+        .flex-column.center.width-30
+          span.title.white.lh1(translate="USERS_AMT")
+          span.type-h5.white(translate="USERS")
+        .flex-column.center.width-30
+          span.title.white.lh1(translate="COUNTRIES_SERVED_AMT")
+          span.type-h5.white(translate="COUNTRIES_SERVED")
+      .flex-center.flex-column.flex-justify
+        h3.mbn.mtl.flex-start Be Your Own Bank
+          small ®
+        form.form-horizontal(
+          role="form"
+          name="signupForm"
+          ng-submit="signup()"
+          autocomplete="off"
+          novalidate)
+          .form-group.flex-row.flex-center.flex-column-mobile.mbvl(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
+            input.form-control.lrg.mrm.mtl(
+              name="email"
+              type="email"
+              ng-model="fields.email"
+              placeholder="jane@doe.com"
+              required)
+            .flex-column.pos-rel
+              button.button-success.btn.button-vlg.mtl(
+                type="submit"
+                ng-disabled="signupForm.$invalid"
+                translate="CREATE_NEW") 
+              a.pos-abs(ui-sref="public.login-no-uid" translate="OR_LOGIN")
+  .newtobitcoin.container
+    #newToBTC.container-max-width.container-fluid.width-100
+      .flex-column.flex-justify.flex-center.mvvl
+        h2.em-200.mvn.font-4 New To Bitcoin?
+    .new.container-max-width.container-fluid.width-100
+        .flex-row.flex-column-mobile.flex-column-med
+          video-container.col-md-6.blue-play-button.small-image(img="img/blockchain-ad-placeholder.jpg" src="https://storage.googleapis.com/bc_public_assets/video/blockchain-ad.mp4")
+          .flex-column.width-50.flex-1.flex-center.flex-justify
+            #timeline.flex-row.flex-1.flex-center.mhvl.mhl-mobile.mvl
+              img.flex-1(src='img/logo-timeline.png')
+            .bitinf.flex-row.flex-center.mbl.mhvl.mhl-mobile.flex-1
+              img.width-3.width-200-mobile.mrl(src='img/logo-what-bitcoin.png')
+              .flex-column.flex-1
+                h3.flex-1.mtn.blue What is Bitcoin?
+                p.flex-1
+                  | Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike it predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees.
+            .bitinf.flex-row.flex-center.mvl.mhvl.mhl-mobile.flex-1
+              img.width-3.width-200-mobile.mrl(src='img/logo-why-bitcoin.png')
+              .flex-column.flex-1
+                h3.flex-1.blue Why use it?
+                p.flex-1
+                  | You use bitcoin for many of the same reasons you opt to send an email, stream a movie, or download a song. It’s faster, cheaper, more secure and immutable. And its uses extend beyond the peer to peer payments. In many places, bitcoin is less volatile than the local currency so some use it to store value while others use it to consume at hundreds of thousands of vendors across the globe and online.
   uib-carousel(active="active" interval="0")
     h4(translate="Loved by Users. Praised by Geeks. Recognized by the Press.")
     uib-slide(index="0")
@@ -108,79 +119,43 @@
       div
         p(translate="QUOTE_8")
         span.author(translate="WALLET_USER")
-  #newToBTC.container-max-width.container-fluid.width-100
-    .flex-column.flex-justify.flex-center.mvvl
-      h2.em-200.mvn.font-4 New To Bitcoin?
-  .new.container-max-width.container-fluid.width-100
-      .flex-row.flex-column-mobile.flex-column-med
-        video-container.col-md-6.blue-play-button.small-image(img="img/blockchain-ad-placeholder.jpg" src="https://storage.googleapis.com/bc_public_assets/video/blockchain-ad.mp4")
-        .flex-column.width-50.flex-1.flex-center.flex-justify
-          #timeline.flex-row.flex-1.flex-center.mhvl.mhl-mobile.mvl
-            img.flex-1(src='img/logo-timeline.png')
-          .bitinf.flex-row.flex-center.mbl.mhvl.mhl-mobile.flex-1
-            img.width-3.width-200-mobile.mrl(src='img/logo-what-bitcoin.png')
-            .flex-column.flex-1
-              h3.flex-1.mtn.blue What is Bitcoin?
-              p.flex-1
-                | Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike it predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees.
-          .bitinf.flex-row.flex-center.mvl.mhvl.mhl-mobile.flex-1
-            img.width-3.width-200-mobile.mrl(src='img/logo-why-bitcoin.png')
-            .flex-column.flex-1
-              h3.flex-1.blue Why use it?
-              p.flex-1
-                | You use bitcoin for many of the same reasons you opt to send an email, stream a movie, or download a song. It’s faster, cheaper, more secure and immutable. And its uses extend beyond the peer to peer payments. In many places, bitcoin is less volatile than the local currency so some use it to store value while others use it to consume at hundreds of thousands of vendors across the globe and online.
-  .container.plax.hidden-xs.flex-center
-    .flex-row.flex-around.width-100
-      .flex-column.center
-        span.title.white.lh1 60 Million+
-        span.type-h5.white Transactions
-      .flex-column.center
-        span.title.white.lh1 7 Million+
-        span.type-h5.white Users
-      .flex-column.center
-        span.title.white.lh1 120+
-        span.type-h5.white Countries Served
-  #experiencedUser.container-max-width
-    .flex-row.flex-top.flex-between
-      scroll-in-view.flex-1(img="img/android-feature.jpg")
-      ul.flex-1
-        li
-          span.heavy(translate="HD_ARCH")
-
-          span(translate="PRIVACY_IN_MIND")
-        li
-          span.heavy(translate="SECURITY_AUDITS")
-
-          span(translate="AES_ENCRYPTION")
-        li
-          span.heavy(translate="CLIENT_SIDE")
-
-          span(translate="CLIENT_SIDE_ENCRYPTION")
-        li
-          span.heavy(translate="DEDICATED_SUPPORT")
-
-          span(translate="DEDICATED_SUPPORT_TEAM")
-      ul.flex-1
-        li
-          span.heavy(translate="OPEN_SOURCE")
-
-          span(translate="OPEN_SOURCE_DES")
-        li
-          span.heavy(translate="DYN_TX_FEE_ADJ")
-
-          span(translate="DYN_TX_FEE_ADJ_DES")
-        li
-          span.heavy(translate="INTEROP")
-
-          span(translate="INTEROP_DES")
-        li
-          span.heavy(translate="OTHER_FEATURES")
-
-          p(translate="CONVERSION_RATES")
-          p(translate="LANGUAGES_FEAT")
-          p(translate="WATCH_ONLY_DESC")
-          p(translate="SECOND_PASSWORD_PROTECTION")
-          p(translate="LOGIN_IP_RESTRICTION")
+  .container.flex-center
+    .whyuseblockchain.width-80.flex-column.flex-center
+      h2(translate="WHY_USE_BLOCKCHAIN")
+      .type-h5.center.pbm.width-100(translate="ABOUT_BLOCKCHAIN_WALLET")
+      .flex-row.pos-rel.width-100.ptl.mbvl.flex-column-mobile
+        .flex-column.width-50.plrl-desk
+          .flex-row.pbvl.flex-center
+            img(src="img/logo-easy-to-use.png")
+            .flex-column.width-100
+              h3(translate="SIMPLE")
+              h4(translate="WE_MAKE_USING_BTC")
+          .flex-row.pbvl.flex-center
+            img(src="img/logo-mobile-bitcoin.png")
+            .flex-column.width-100
+              h3(translate="CROSS_PLATFORM")
+              h4(translate="ACCESS_ANYWHERE")
+          .flex-row.pbvl.flex-center
+            img(src="img/logo-interoperability.png")
+            .flex-column.width-100
+              h3(translate="GLOBAL")
+              h4(translate="GLOBAL_INFO")
+        .flex-column.width-50.plrl-desk
+          .flex-row.pbvl.flex-center
+            img(src="img/logo-client-side-encryption.png")
+            .flex-column.width-100
+              h3(translate="SAFE_AND_SECURE")
+              h4(translate="SECURITY_INFO")
+          .flex-row.pbvl.flex-center
+            img(src="img/logo-support.png")
+            .flex-column.width-100
+              h3(translate="SUPPORTED")
+              h4(translate="DEDICATED_SUPPORT_TEAM")
+          .flex-row.pbvl.flex-center
+            img(src="img/logo-hd-arch.png")
+            .flex-column.width-100
+              h3(translate="SOPHISTICATED")
+              h4(translate="SOPHISTICATED_INFO")
   .flex-center.flex-column.flex-justify
     h3.mbn.mtl.flex-start Be Your Own Bank
       small ®
@@ -197,7 +172,7 @@
           ng-model="fields.email"
           placeholder="jane@doe.com"
           required)
-        button.button-primary.btn.button-vlg.mtl(
+        button.button-success.btn.button-vlg.mtl(
           type="submit"
           ng-disabled="signupForm.$invalid"
-          translate="GET_STARTED")
+          translate="CREATE_NEW")
