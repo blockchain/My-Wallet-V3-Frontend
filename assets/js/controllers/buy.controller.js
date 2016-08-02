@@ -20,7 +20,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
 
   $scope.fields = { email: $scope.user.email, countryCode: $scope.exchange.profile.country };
   $scope.bank = { name: 'bank', fee: 0 };
-  $scope.card = { name: 'card', fee: 2.75 };
+  $scope.card = { name: 'card', fee: 3 };
   $scope.method = $scope.card;
   $scope.transaction = {fiat: 0, btc: 0, fee: 0, total: 0, currency: $scope.settings.currency};
   $scope.transaction.fiat = fiat || 0;
