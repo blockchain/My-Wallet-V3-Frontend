@@ -19,7 +19,6 @@ function Alerts ($timeout, $rootScope, $translate, $uibModal) {
     displayError: display.bind(null, 'danger'),
     displayReceivedBitcoin: display.bind(null, 'received-bitcoin'),
     displaySentBitcoin: display.bind(null, 'sent-bitcoin'),
-    displayVerifiedEmail: displayVerifiedEmail,
     displayResetTwoFactor: displayResetTwoFactor
   };
 
@@ -48,17 +47,6 @@ function Alerts ($timeout, $rootScope, $translate, $uibModal) {
       context.push(alert);
     };
     $translate(message).then(displayAlert, () => displayAlert(message));
-  }
-
-  function displayVerifiedEmail () {
-    $translate(['SUCCESS', 'EMAIL_VERIFIED_SUCCESS']).then(translations => {
-      $rootScope.$emit('showNotification', {
-        type: 'verified-email',
-        icon: 'ti-email',
-        heading: translations.SUCCESS,
-        msg: translations.EMAIL_VERIFIED_SUCCESS
-      });
-    });
   }
 
   function displayResetTwoFactor (message) {
