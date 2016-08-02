@@ -17,9 +17,9 @@
           a.button-default(href="{{rootURL}}wallet/how-it-works" translate="HOW_IT_WORKS" target="_blank")
   .banner
     .flex-column.height-100.flex-center.flex-around.container.width-100
-      div.width-100
-        h1.center.width-100(translate="MOST_POPULAR_WALLET")
-      .flex-row.flex-around.width-100.flex-between-mobile
+      div.mtvl.width-100
+        h1.mtml.mbm.center.width-100(translate="MOST_POPULAR_WALLET")
+      .flex-row.flex-around.width-100.flex-between-mobile.container
         .flex-column.center.width-30
           span.title.white.lh1(translate="TRANSACTIONS_AMT")
           span.type-h5.white(translate="TRANSACTIONS")
@@ -50,7 +50,7 @@
                 type="submit"
                 ng-disabled="signupForm.$invalid"
                 translate="CREATE_NEW") 
-              a.pos-abs(ui-sref="public.login-no-uid" translate="OR_LOGIN")
+              a.mts.pos-abs(ui-sref="public.login-no-uid" translate="OR_LOGIN")
   .newtobitcoin.container
     #newToBTC.container-max-width.container-fluid.width-100
       .flex-column.flex-justify.flex-center.mvvl
@@ -59,7 +59,7 @@
         .flex-row.flex-column-mobile.flex-column-med
           video-container.col-md-6.blue-play-button.small-image(img="img/blockchain-ad-placeholder.jpg" src="https://storage.googleapis.com/bc_public_assets/video/blockchain-ad.mp4")
           .flex-column.width-50.flex-1.flex-center.flex-justify
-            #timeline.flex-row.flex-1.flex-center.mhvl.mhl-mobile.mvl
+            #timeline.flex-row.flex-1.flex-center.mhvl.mhl-mobile.mbl
               img.flex-1(src='img/logo-timeline.png')
             .bitinf.flex-row.flex-center.mbl.mhvl.mhl-mobile.flex-1
               img.width-3.width-200-mobile.mrl(src='img/logo-what-bitcoin.png')
@@ -121,7 +121,8 @@
         span.author(translate="WALLET_USER")
   .container.flex-center
     .whyuseblockchain.width-80.flex-column.flex-center
-      h2(translate="WHY_USE_BLOCKCHAIN")
+      .flex-column.flex-justify.flex-center.mtvl.mbm
+        h2.em-200.mvn.font-4(translate="WHY_USE_BLOCKCHAIN")
       .type-h5.center.pbm.width-100(translate="ABOUT_BLOCKCHAIN_WALLET")
       .flex-row.pos-rel.width-100.ptl.mbvl.flex-column-mobile
         .flex-column.width-50.plrl-desk
