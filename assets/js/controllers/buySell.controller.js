@@ -138,7 +138,7 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
 
     $scope.getTrades().then(() => {
       if (completed < $scope.trades.completed.length) {
-        let trade = $scope.trades.completed.splice(-1)[0];
+        let trade = $scope.trades.completed.slice(-1)[0];
         $scope.watchAddress(trade);
       }
     });
