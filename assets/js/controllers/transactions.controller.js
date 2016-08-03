@@ -19,6 +19,9 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
   let txList = MyWallet.wallet.txList;
   $scope.account = $stateParams.accountIndex;
   $scope.transactions = txList.transactions($scope.account);
+  $scope.transactions.forEach(function initAbs (tx) {
+    tx.absamt = Math.abs(tx.amount);
+  });
 
   let fetchTxs = () => {
     $scope.loading = true;
@@ -47,6 +50,10 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
     let newTxs = txList.transactions($scope.account);
     if ($scope.transactions.length > newTxs.length) $scope.allTxsLoaded = false;
     $scope.transactions = newTxs;
+    $scope.transactions.forEach(function initAbs (tx) {
+      tx.absamt = Math.abs(tx.amount);
+    });
+    for (var tx in $scope.transactions) { tx.absamt = Math.abs(tx.amount); }
     $rootScope.$safeApply();
   };
 
@@ -82,6 +89,16 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
   $scope.checkLabelDiff = (label, address) => {
     return label === address ? address : label + ', ' + address;
   };
+
+  // Sorting
+  $scope.sortTypes = ['TIME', 'AMOUNT'];
+  $scope.sortTerms = ['-time', '-absamt'];
+  $scope.isSortType = (type) => $scope.order;
+  
+  $scope.orderBy = (order) => {
+    $scope.order = (order === 'TIME' ? $scope.sortTerms[0] : (order === 'AMOUNT' ? $scope.sortTerms[1] : $scope.sortTerms[0]));
+  };
+  $scope.orderBy();
 
   $scope.filterTx = (coins, search) => {
     return coins
