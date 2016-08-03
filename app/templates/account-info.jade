@@ -12,8 +12,7 @@
     .flex-column.mts
       h5.type-h5(translate="Limits")
       span Daily Card Limit: {{ exchange.profile.level.limits.card.in.daily }} {{ exchange.profile.defaultCurrency }}
-      span Daily Bank Transfer Limit: {{ exchange.profile.level.limits.bank.out.daily }} {{ exchange.profile.defaultCurrency }}
-      span Yearly Bank Transfer Limit: {{ exchange.profile.level.limits.bank.out.yearly }} {{ exchange.profile.defaultCurrency }}
+      span Daily Bank Transfer Limit: {{ exchange.profile.level.limits.bank.in.daily }} {{ exchange.profile.defaultCurrency }}
 
     div.mtml
       button.button-primary.mrs Increase Limits
