@@ -10,9 +10,11 @@
       span.black.em-500.em-alt.prm(translate="Sort by:")
       a.black.em-500.em-alt(
         ng-repeat="f in sortTypes track by f"
-        ng-click="orderBy(f)"
+        ng-click="checkReverse(f); orderBy(f)"
         ng-class="{'active': isSortType(f)}"
         translate="{{::f}}")
+      i.ti-arrow-up(ng-if="reverseSort")
+      i.ti-arrow-down(ng-if="!reverseSort")
     .flex-center
       a.black.mrl.em-500.em-alt(ng-click="exportHistory()")
         i.ti-export
@@ -36,7 +38,7 @@
       i.ti-search.h1.mrm
       h3.em-100.mbl(translate="SORRY_ZERO_TXS")
       p.em-400(translate="PLEASE_TRY_AGAIN", ng-click="supportModal()")
-    .transaction(ng-repeat="tx in transactions | filter:transactionFilter | orderBy:order | limitTo:txLimit as filteredTransactions track by tx.hash" ng-init="tx.toggled = false")
+    .transaction(ng-repeat="tx in transactions | filter:transactionFilter | orderBy: order : reverseSort | limitTo:txLimit as filteredTransactions track by tx.hash" ng-init="tx.toggled = false")
       .tx-toggle.pointer.hidden-xs(ng-click="tx.toggled = !tx.toggled")
         i.ti-arrow-circle-right.h4.aaa(ng-show="!tx.toggled")
         i.ti-arrow-circle-down.h4.aaa(ng-show="tx.toggled")

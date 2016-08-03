@@ -92,7 +92,8 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
 
   // Sorting
   $scope.sortTypes = ['DATE', 'AMOUNT'];
-  $scope.sortEx = ['-time', '-absamt'];
+  $scope.sortEx = ['time', 'absamt'];
+  $scope.reverseSort = true;
   $scope.isSortType = (type) => $scope.currSort === type;
 
   $scope.orderBy = (order) => {
@@ -100,6 +101,12 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
     $scope.order = (order === 'TIME' ? $scope.sortEx[0] : (order === 'AMOUNT' ? $scope.sortEx[1] : $scope.sortEx[0]));
   };
   $scope.orderBy('DATE');
+
+  $scope.checkReverse = (type) => {
+    if ($scope.currSort === type) {
+      $scope.reverseSort = !$scope.reverseSort;
+    }
+  };
 
   $scope.filterTx = (coins, search) => {
     return coins

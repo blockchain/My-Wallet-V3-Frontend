@@ -267,6 +267,8 @@
   "EXPORT" : "Export",
   "START_DATE" : "Start Date",
   "END_DATE" : "End Date",
+  "DATE" : "Date",
+  "AMOUNT" : "Amount",
   "TIMEFRAME" : "Timeframe",
   "FORMAT" : "Format",
   "EXPORTING_FOR" : "Exporting transactions for: {{ name }}",
