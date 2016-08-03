@@ -876,6 +876,7 @@
   "CONFIRM_PAY": "Confirm & Pay",
   "SEE_BITCOIN": "See Your Bitcoin",
   "SUMMARY": "Summary:",
+  "PROCESSED_BY_EXCHANGE": "Coinify will process the exchange. The bitcoin will be sent directly from or into your Blockchain wallet. Your payment and bank information will be submitted to the payment processor and not be seen by Blockchain.",
   "CARD_FEES": "{{::fee}}% fees charged by the card payment processor.",
   "CURRENCY_NOT_SUPPORTED": "The currency for this transaction is not supported by the payment method selected. Try another currency or select a different payment method.",
   "DECLINED_TRANSACTION": {

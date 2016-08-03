@@ -38,6 +38,10 @@
 
 .coinify-logo {
   width: 60px;
+  & + span {
+    top: 0;
+    left: 0; 
+  }
 }
 
 .payment-methods {

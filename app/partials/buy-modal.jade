@@ -34,9 +34,11 @@
     div(ng-if="step === 8")
       include ./trade-summary
     .flex-end.flex-center.mtl
+      span.pos-rel
         span.mrs.type-sm Powered by
         a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
           img.coinify-logo(src="img/coinify-logo.svg")
+          span.pos-abs.fade.height-100.width-100(ng-show="step === 4" uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" translate="placeholder" tooltip-append-to-body="true")
   //- needs directive
   .modal-footer.flex-end.flex-row
     button.button-muted(ng-show="step > 0 && step < 5" ng-click="prevStep()") Go Back
