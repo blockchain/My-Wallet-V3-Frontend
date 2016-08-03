@@ -6,12 +6,12 @@
         ng-click="setFilterType($index)"
         ng-class="{'active': isFilterType($index)}"
         translate="{{::f}}")
-    .sort-by
+    .sort-by.prm
       span.black.em-500.em-alt.prm(translate="Sort by:")
       a.black.em-500.em-alt(
         ng-repeat="f in sortTypes track by f"
         ng-click="orderBy(f)"
-        ng-class="{'active': isFilterType($index)}"
+        ng-class="{'active': isSortType(f)}"
         translate="{{::f}}")
     .flex-center
       a.black.mrl.em-500.em-alt(ng-click="exportHistory()")

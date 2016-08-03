@@ -42,6 +42,12 @@
   }
 }
 
+@media (max-width: 1085px) {
+  .sort-by {
+    display: none;
+  }
+}
+
 .filter-search {
   position: relative;
   input {

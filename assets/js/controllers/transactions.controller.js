@@ -91,14 +91,15 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
   };
 
   // Sorting
-  $scope.sortTypes = ['TIME', 'AMOUNT'];
-  $scope.sortTerms = ['-time', '-absamt'];
-  $scope.isSortType = (type) => $scope.order;
-  
+  $scope.sortTypes = ['DATE', 'AMOUNT'];
+  $scope.sortEx = ['-time', '-absamt'];
+  $scope.isSortType = (type) => $scope.currSort === type;
+
   $scope.orderBy = (order) => {
-    $scope.order = (order === 'TIME' ? $scope.sortTerms[0] : (order === 'AMOUNT' ? $scope.sortTerms[1] : $scope.sortTerms[0]));
+    $scope.currSort = order;
+    $scope.order = (order === 'TIME' ? $scope.sortEx[0] : (order === 'AMOUNT' ? $scope.sortEx[1] : $scope.sortEx[0]));
   };
-  $scope.orderBy();
+  $scope.orderBy('DATE');
 
   $scope.filterTx = (coins, search) => {
     return coins
