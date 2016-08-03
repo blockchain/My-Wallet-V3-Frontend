@@ -104,7 +104,14 @@
       display: block;
       position: absolute;
       background-size: cover;
-      background-image: url('../img/bank-blue.png');
+      background-image: url('../img/bank.png');
+    }
+  }
+  .blue {
+    i.ti-credit-card.bank {
+      &:after {
+        background-image: url('../img/bank-blue.png');
+      }
     }
   }
 }

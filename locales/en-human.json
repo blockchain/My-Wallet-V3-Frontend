@@ -876,6 +876,7 @@
   "CONFIRM_PAY": "Confirm & Pay",
   "SEE_BITCOIN": "See Your Bitcoin",
   "SUMMARY": "Summary:",
+  "CARD_FEES": "{{::fee}}% fees charged by the card payment processor.",
   "CURRENCY_NOT_SUPPORTED": "The currency for this transaction is not supported by the payment method selected. Try another currency or select a different payment method.",
   "DECLINED_TRANSACTION": {
     "TITLE": "Card Declined",

@@ -19,9 +19,6 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   $scope.bitcoinReceived = bitcoinReceived;
 
   $scope.fields = { email: $scope.user.email, countryCode: $scope.exchange.profile.country };
-  $scope.bank = { name: 'bank', fee: 0 };
-  $scope.card = { name: 'card', fee: 3 };
-  $scope.method = $scope.card;
   $scope.transaction = {fiat: 0, btc: 0, fee: 0, total: 0, currency: $scope.settings.currency};
   $scope.transaction.fiat = fiat || 0;
   $scope.paymentInfo = undefined;
@@ -35,11 +32,31 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
     $scope.userHasExchangeAcct = false;
   }
 
+  $scope.getPaymentMethods = () => {
+    const success = (methods) => {
+      $scope.card = methods.filter((m) => m.inMedium === 'card')[0];
+      $scope.bank = methods.filter((m) => m.inMedium === 'bank')[0];
+
+      $scope.method = $scope.card;
+    };
+
+    const error = () => {};
+
+    $scope.exchange.getPaymentMethods($scope.transaction.currency.code, 'BTC').then(success, error);
+  };
+
   $scope.changeCurrency = (curr) => {
     if (!curr) curr = $scope.settings.currency;
 
+    curr = $scope.transaction.currency || curr;
+    $scope.currencySymbol = currency.conversions[curr.code];
+
     const error = () => {};
-    const success = () => { $scope.transaction.currency = curr; };
+    const success = () => {
+      $scope.transaction.currency = curr;
+      $scope.getPaymentMethods();
+      $scope.getQuote();
+    };
 
     Wallet.changeCurrency(curr).then(success, error);
   };
@@ -66,10 +83,10 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   };
 
   $scope.updateAmounts = () => {
-    if (!$scope.quote) return;
-    if (!$scope.exchange && !$scope.exchange.user) return;
+    if (!$scope.quote || !$scope.exchange.user) return;
+
     let fiatAmt = $scope.transaction.fiat;
-    let methodFee = fiatAmt * ($scope.method.fee / 100);
+    let methodFee = fiatAmt * ($scope.method.inPercentageFee / 100);
 
     $scope.transaction.methodFee = methodFee.toFixed(2);
     $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount / 100, currency.bitCurrencies[0]);
@@ -79,12 +96,11 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   $scope.getQuote = () => {
     if (!$scope.exchange.user) return;
 
-    $scope.transaction.btc = 0;
     $scope.quote = null;
+    $scope.transaction.btc = 0;
 
-    let amt = $scope.transaction.fiat;
-    let curr = $scope.transaction.currency.code;
-    if (!amt) return;
+    if (!$scope.transaction.fiat) return;
+
     $scope.status.waiting = true;
 
     const success = (quote) => {
@@ -94,7 +110,8 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
       Alerts.clear($scope.alerts);
     };
 
-    $scope.exchange.getQuote(amt, curr).then(success, $scope.standardError);
+    $scope.exchange.getQuote($scope.transaction.fiat, $scope.transaction.currency.code)
+                   .then(success, $scope.standardError);
   };
 
   $scope.toggleEmail = () => $scope.editEmail = !$scope.editEmail;
@@ -198,26 +215,15 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
     };
 
     // check if bank transfer and kyc level
-    if ($scope.method.name === 'bank' &&
+    if ($scope.method.inMedium === 'bank' &&
         parseInt($scope.exchange.profile.level.name, 10) < 2) {
       $scope.exchange.triggerKYC().then(success, $scope.standardError);
       return;
     }
 
-    // check if currency is supported by payment method first
-    $scope.exchange.getPaymentMethods().then((methods) => {
-      let curr = methods.filter(method => method.inMedium === $scope.method.name)[0].inCurrencies
-                        .filter(curr => curr === $scope.transaction.currency.code);
-
-      if (curr.length) {
-        $scope.exchange.buy($scope.transaction.fiat, $scope.transaction.currency.code, $scope.method.name)
-                       .then(success, $scope.standardError)
-                       .then($scope.watchAddress);
-      } else {
-        $scope.status = {};
-        Alerts.displayError('CURRENCY_NOT_SUPPORTED', false, $scope.alerts);
-      }
-    });
+    $scope.exchange.buy($scope.transaction.fiat, $scope.transaction.currency.code, $scope.method.inMedium)
+                   .then(success, $scope.standardError)
+                   .then($scope.watchAddress);
   };
 
   $scope.loadISX = () => {
@@ -276,14 +282,10 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   };
 
   $scope.$watch('method', $scope.updateAmounts);
-  $scope.$watch('transaction.fiat', $scope.getQuote);
+  // $scope.$watch('transaction.fiat', $scope.getQuote);
   $scope.$watchGroup(['exchange.user', 'user.isEmailVerified', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
 
-  $scope.$watch('transaction.currency', () => {
-    let curr = $scope.transaction.currency || null;
-    $scope.currencySymbol = currency.conversions[curr.code];
-    $scope.getQuote();
-  });
+  $scope.$watch('transaction.currency', $scope.changeCurrency);
 
   $scope.$watch('bitcoinReceived', (newVal) => {
     if (newVal) $scope.successTx();
