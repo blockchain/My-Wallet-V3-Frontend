@@ -539,7 +539,7 @@ describe "walletServices", () ->
         spyOn(MyBlockchainApi, 'exportHistory').and.returnValue([])
 
       it "should show an error", (done) ->
-        Wallet.exportHistory().then ->
+        Wallet.exportHistory().finally ->
           expect(Alerts.displayError).toHaveBeenCalledWith('NO_HISTORY')
           done()
         $rootScope.$digest()

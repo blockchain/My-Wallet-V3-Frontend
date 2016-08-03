@@ -5,10 +5,10 @@ form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" noval
       helper-button(content="EXPORT_HISTORY_EXPLAIN")
 
   .modal-body
-    .ph-form
-      .flex-row.pal
-        .flex-1
-        .flex-4.form-group(ng-show="activeCount > 1")
+    .ph-form.flex-row
+      .flex-1
+      .flex-4
+        .form-group.pal(ng-show="activeCount > 1")
           ui-select.send-from-dropdown(
             name="active"
             ng-model="$parent.active"
@@ -18,10 +18,7 @@ form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" noval
               label-origin(origin="$select.selected")
             ui-select-choices(repeat="t in targets | filter:{label:$select.search} | limitTo:limit")
               label-origin(origin="::t" in-view="$last && isLast(t) && incLimit()" highlight="$select.search")
-        .flex-1
-      
-      .flex-row
-        .flex-3.flex-column.flex-center.flex-around.pam(ng-class="{'has-error':exportForm.$invalid || start.date > end.date}")
+        .flex-row.flex-center.flex-between.pal(ng-class="{'has-error':exportForm.$invalid || start.date > end.date}")
           p.input-group.flex-center
             input.form-control(
               type="text"
@@ -33,7 +30,7 @@ form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" noval
               placeholder="{{'START_DATE'|translate}}"
               required)
             span.ti-calendar.pointer(ng-click="start.open=true")
-          i.ti-arrow-down.blue
+          i.ti-arrow-right.blue
           p.input-group.flex-center
             input.form-control(
               type="text"
@@ -45,14 +42,8 @@ form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" noval
               placeholder="{{'END_DATE'|translate}}"
               required)
             span.ti-calendar.pointer(ng-click="end.open=true")
+      .flex-1
 
-        span.line-split.flex-center.mrl.mll
-
-        .flex-3.flex-row.flex-center.flex-around.pam
-          label.mll.btn.button-default(ng-model="exportFormat" uib-btn-radio="'csv'") CSV
-          span.upper(translate="OR")
-          label.mrl.btn.button-default(ng-model="exportFormat" uib-btn-radio="'xls'") XLS
-       
   .modal-footer
     button.button-muted.mrm(
       type="button"

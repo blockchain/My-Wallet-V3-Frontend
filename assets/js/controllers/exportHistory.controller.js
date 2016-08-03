@@ -40,7 +40,6 @@ function ExportHistoryController ($scope, $sce, $translate, $filter, format, Wal
   $scope.format = 'dd/MM/yyyy';
   $scope.options = { minDate: new Date(1231024500000), maxDate: new Date() };
 
-  $scope.exportFormat = 'csv';
   $scope.start = { open: false, date: Date.now() - 604800000 };
   $scope.end = { open: false, date: Date.now() };
 
