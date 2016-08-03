@@ -3,7 +3,7 @@
     .flex-column.flex-1
       .flex-row.flex-between.flex-center
         h3(translate="BUY_BITCOIN")
-        quote-countdown(quote="quote" get-quote="getQuote()" ng-hide="step >= 5")
+        quote-countdown(quote="quote" get-quote="getQuote()" ng-hide="step > 6")
       buy-steps(transaction="transaction" 
                 payment-info="paymentInfo"
                 exchange-acct="userHasExchangeAcct"

@@ -1,2 +1,2 @@
-span(uib-tooltip="{{'RATE_AUTO_REFRESH' | translate}}")
-  span.security-red(ng-show="count" translate="RATE_EXPIRES" translate-values="{count: count}")
+div
+  span.security-red(ng-show="count" translate="RATE_EXPIRES" translate-values="{count: count}" uib-tooltip="{{'RATE_AUTO_REFRESH' | translate}}" tooltip-append-to-body="true")
