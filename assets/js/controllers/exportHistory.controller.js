@@ -6,6 +6,9 @@ function ExportHistoryController ($scope, $sce, $translate, $filter, format, Wal
   $scope.limit = 50;
   $scope.incLimit = () => $scope.limit += 50;
 
+  $scope.ableBrowsers = ['chrome', 'firefox'];
+  $scope.canTriggerDownload = $scope.ableBrowsers.indexOf(browserDetection().browser) > -1;
+
   let accounts = Wallet.accounts().filter(a => !a.archived && a.index != null);
   let addresses = Wallet.legacyAddresses().filter(a => !a.archived).map(a => a.address);
 
@@ -37,7 +40,6 @@ function ExportHistoryController ($scope, $sce, $translate, $filter, format, Wal
   $scope.format = 'dd/MM/yyyy';
   $scope.options = { minDate: new Date(1231024500000), maxDate: new Date() };
 
-  $scope.exportFormat = 'csv';
   $scope.start = { open: false, date: Date.now() - 604800000 };
   $scope.end = { open: false, date: Date.now() };
 
@@ -48,6 +50,11 @@ function ExportHistoryController ($scope, $sce, $translate, $filter, format, Wal
     let start = $scope.formatDate($scope.start.date);
     let end = $scope.formatDate($scope.end.date);
     let active = $scope.active.address || $scope.active.xpub;
-    Wallet.exportHistory(start, end, active).finally(() => $scope.busy = false);
+    Wallet.exportHistory(start, end, active)
+      .then((data) => {
+        $scope.history = data;
+        $scope.canTriggerDownload && $scope.$broadcast('download');
+      })
+      .finally(() => $scope.busy = false);
   };
 }

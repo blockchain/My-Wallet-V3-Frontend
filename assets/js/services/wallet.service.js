@@ -1131,15 +1131,15 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     return $q.resolve(p)
       .then(history => {
         if (!history.length) return $q.reject('NO_HISTORY');
-        let contents = json2csv(history.map(addTxNote));
-        $rootScope.$broadcast('download', { contents, filename: 'history.csv' });
+        return json2csv(history.map(addTxNote));
       })
       .catch(e => {
         let error = e.message || e;
-        if (error && error.indexOf('Too many transactions') > -1) {
+        if (typeof error === 'string' && error.indexOf('Too many transactions') > -1) {
           error = 'TOO_MANY_TXS';
         }
         Alerts.displayError(error || 'UNKNOWN_ERROR');
+        return $q.reject(error);
       });
   };
 
