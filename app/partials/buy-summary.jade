@@ -1,23 +1,40 @@
 .payment-methods
-  .flex-row.flex-center.pointer.border-bottom
+  .flex-row.flex-center.pbm.pointer.border-bottom
     input(type="radio" name="inMedium" id="card" ng-model="method" ng-value="card" ng-disabled="status.waiting")
     .flex-column.flex-1.mlm.pointer
       label.mts.pointer.em-400(for="card")
-        span.mbs.type-h5.em-500.flex-center
-          img.mrs(src="img/credit-card.png")
-          img.mrs.checked(src="img/credit-card-blue.png")
-          span(translate="Credit/Debit Card (Faster)")
-        span.display-block(translate="You get the current exchange rate and receive your bitcoins instantly.")
-        span.display-block.italic(translate="CARD_FEES" translate-values="{fee: card.inPercentageFee}")
+        span.flex-row.flex-between.flex-align-start
+          span.mbs.type-h5.em-500.flex-column
+            img.mrs(src="img/credit-card.png")
+            img.mrs.checked(src="img/credit-card-blue.png")
+            span.mtm(translate="Credit/Debit Card (Faster)")
+          span
+            span.flex-center.flex-end
+              span.em-600.black(translate="INSTANT")
+            span.flex-center.flex-end
+              helper-button(content="FIXED_EXCHANGE_RATE.COPY")
+              span(translate="FIXED_EXCHANGE_RATE.TITLE")
+            span.flex-center.flex-end
+              helper-button(content="PAYMENT_FEES.COPY" translate-values="{fee: card.inPercentageFee}")
+              span(translate="PAYMENT_FEES.TITLE")
   .flex-row.flex-center.mbl.pvm.border-bottom.pointer
     input(type="radio" name="inMedium" id="bank" ng-model="method" ng-value="bank" ng-disabled="status.waiting")
     .flex-column.flex-1.mlm.pointer
       label.mts.pointer.em-400(for="bank")
-        span.mbs.type-h5.em-500.flex-center
-          img.mrs(src="img/bank.png")
-          img.mrs.checked(src="img/bank-blue.png")
-          span(translate="Bank Transfer (Cheaper)")
-        span(translate="The final exchange will be determined when Coinify receives your payment. You will receive your bitcoin on the working day after the payment has been received.")
+        span.flex-row.flex-between.flex-align-start
+          span.mbs.type-h5.em-500.flex-column
+            img.mrs.display-block(src="img/bank.png")
+            img.mrs.display-block.checked(src="img/bank-blue.png")
+            span.mtm(translate="Bank Transfer (Cheaper)")
+          span
+            span.flex-center.flex-end
+              helper-button(content="BANK_TRANSFER.COPY")
+              span(translate="BANK_TRANSFER.TITLE")
+            span.flex-center.flex-end
+              helper-button(content="EXCHANGE_NOT_FIXED.COPY")
+              span(translate="EXCHANGE_NOT_FIXED.TITLE")
+            span.flex-center.flex-end
+              span.em-600.black(translate="NO_PAYMENT_PROCESSING_FEE")
 
 .flex-column.border-bottom
   .flex-row.flex-between.em-500

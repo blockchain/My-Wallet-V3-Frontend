@@ -936,5 +936,23 @@
     "TITLE": "Bitcoin received!",
     "BODY": "You have just received bitcoin from Coinify! <br/> Bitcoins were sent to <b>{{::label}}</b>."
   },
-  "SPEND_IMPORTED_ADDRESS": "Spend"
+  "SPEND_IMPORTED_ADDRESS": "Spend",
+  "BANK_TRANSFER": {
+    "TITLE": "2-3 days",
+    "COPY": "Depending on your bank Coinify will send you the bitcoin within 24 hours after they receive your payment."
+  },
+  "EXCHANGE_NOT_FIXED": {
+    "TITLE": "Exchange rate not fixed",
+    "COPY": "The final exchange rate will be determined once your bank transfer arrives."
+  },
+  "NO_PAYMENT_PROCESSING_FEE": "No payment processing fees",
+  "INSTANT": "Instant",
+  "FIXED_EXCHANGE_RATE": {
+    "COPY": "The exchange rate used for converting your payment into bitcoin is fixed for this payment method.",
+    "TITLE": "Guaranteed exchange rate"
+  },
+  "PAYMENT_FEES": {
+    "COPY": "The {{::fee}}% payment fee is charged for the convenience and speed of the checkout.",
+    "TITLE": "Payment fees apply"
+  }
 }
