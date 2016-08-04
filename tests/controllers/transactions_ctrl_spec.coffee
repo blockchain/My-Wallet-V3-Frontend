@@ -111,3 +111,26 @@ describe "TransactionsCtrl", ->
         
         result = scope.checkLabelDiff(label, address)
         expect(result).toBe('abc, bcd')
+        
+    describe "orderBy", ->
+      
+      it "should return the first item in expressions array when ordered by date", ->
+        order = 'DATE'
+        
+        scope.orderBy(order);
+        result = scope.order
+        expect(result).toBe('time')
+        
+      it "should return the second item in expressions array when ordered by amount", ->
+        order = 'AMOUNT'
+        
+        scope.orderBy(order);
+        result = scope.order
+        expect(result).toBe('absamt')
+        
+      it "should store the last order in currSort", ->
+        order = 'HELLO'
+        scope.orderBy(order);
+        
+        result = scope.currSort
+        expect(result).toBe('HELLO')
