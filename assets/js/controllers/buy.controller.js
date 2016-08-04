@@ -33,6 +33,8 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   }
 
   $scope.getPaymentMethods = () => {
+    if (!$scope.exchange.user) return;
+
     const success = (methods) => {
       $scope.card = methods.filter((m) => m.inMedium === 'card')[0];
       $scope.bank = methods.filter((m) => m.inMedium === 'bank')[0];
@@ -284,8 +286,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   $scope.$watch('method', $scope.updateAmounts);
   // $scope.$watch('transaction.fiat', $scope.getQuote);
   $scope.$watchGroup(['exchange.user', 'user.isEmailVerified', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
-
-  $scope.$watch('transaction.currency', $scope.changeCurrency);
+  $scope.$watchGroup(['exchange.user', 'transaction.currency'], $scope.changeCurrency);
 
   $scope.$watch('bitcoinReceived', (newVal) => {
     if (newVal) $scope.successTx();
