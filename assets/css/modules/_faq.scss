@@ -1,5 +1,11 @@
-.faq-box {
-  margin-left: 15px;
-  margin-right: 15px;
-  max-width: 1200px;
+.faq {
+  .faq-box {
+    margin-left: 15px;
+    margin-right: 15px;
+    max-width: 1200px;
+  }
+
+  .still-q {
+    margin: 50px
+  }
 }

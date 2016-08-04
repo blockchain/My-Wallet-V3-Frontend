@@ -1,5 +1,9 @@
 .faq.container.flex-column.width-100.flex-center
   h1(translate="FAQ")
   //replace with ng-repeat later
-  .flex-column.faq-box.width-100
-    
+  .flex-column.faq-box.width-80(ng-repeat="item in items")
+    faq-question
+  .flex-column.flex-center.still-q.width-30
+    h3 
+      small Still Have Questions?
+    a.button-primary.width-90(href="https://blockchain.zendesk.com/" target="_blank" translate="VISIT_SUPPORT" rel="noopener noreferrer")
