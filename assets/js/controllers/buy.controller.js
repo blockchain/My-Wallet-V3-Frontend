@@ -14,6 +14,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   $scope.status = {};
   $scope.trade = trade;
   $scope.step = 0;
+  $scope.label = MyWallet.wallet.hdwallet.accounts[0].label;
 
   $scope.formattedTrade = undefined;
   $scope.bitcoinReceived = bitcoinReceived;

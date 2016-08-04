@@ -41,7 +41,7 @@
     span
       span Buy
       | 
-      span.success {{ transaction.btc }}
+      span.success(uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ transaction.btc }}
       span.blue.underline.type-sm.mlvl.pointer(ng-click="prevStep()") Change Amount
     span
       span {{ transaction.fiat | format }} {{ transaction.currency.code }}

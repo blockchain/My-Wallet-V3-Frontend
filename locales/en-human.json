@@ -954,5 +954,6 @@
   "PAYMENT_FEES": {
     "COPY": "The {{::fee}}% payment fee is charged for the convenience and speed of the checkout.",
     "TITLE": "Payment fees apply"
-  }
+  },
+  "RECEIVE_BITCOIN_TO": "Bitcoins will be sent to {{::label}}."
 }
