@@ -166,6 +166,15 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('public.verify-email', {
+      url: '/verify-email/{token:.*}',
+      views: {
+        contents: {
+          controller: 'VerifyEmailCtrl',
+          templateUrl: 'partials/verify-email.jade'
+        }
+      }
+    })
     .state('public.reset-two-factor-token', {
       url: '/reset-two-factor/{token:.*}',
       views: {
@@ -251,16 +260,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         left: walletNav,
         right: {
           controller: 'ClaimCtrl'
-        }
-      }
-    })
-    .state('wallet.common.verify-email', {
-      url: '/verify-email/{token:.*}',
-      views: {
-        top: top,
-        left: walletNav,
-        right: {
-          controller: 'VerifyEmailCtrl'
         }
       }
     })
