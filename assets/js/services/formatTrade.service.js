@@ -16,7 +16,7 @@ function formatTrade ($filter, MyWallet) {
 
   let addTradeDetails = (tx, trade) => {
     tx['Coinify Trade'] = trade.id;
-    tx['Date'] = $filter('date')(trade.createdAt, 'dd/MM/yyyy');
+    tx['Date Initialized'] = $filter('date')(trade.createdAt, 'MM/dd/yyyy @ h:mma');
     tx['BTC Receiving Address'] = trade.receiveAddress;
 
     return tx;
