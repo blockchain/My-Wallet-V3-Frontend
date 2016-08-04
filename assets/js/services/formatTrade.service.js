@@ -70,7 +70,7 @@ function formatTrade ($filter) {
       tx: tx,
       status: 'blue',
       icon: 'ti-direction-alt',
-      namespace: 'TX_PENDING',
+      namespace: 'TX_IN_REVIEW',
       values: {
         fiatAmt: trade.inAmount + ' ' + trade.inCurrency,
         btcAmt: trade.outAmountExpected
