@@ -2,15 +2,17 @@ angular
   .module('walletApp')
   .factory('formatTrade', formatTrade);
 
-formatTrade.$inject = ['$filter'];
+formatTrade.$inject = ['$filter', 'MyWallet'];
 
-function formatTrade ($filter) {
+function formatTrade ($filter, MyWallet) {
   const service = {
     error: error,
     review: review,
     success: success,
     pending: pending
   };
+
+  let label = MyWallet.wallet.hdwallet.accounts[0].label;
 
   let addTradeDetails = (tx, trade) => {
     tx['Coinify Trade'] = trade.id;
@@ -39,7 +41,7 @@ function formatTrade ($filter) {
       icon: 'ti-direction-alt',
       tx: {id: trade.iSignThisID},
       values: {
-        // label: label,
+        label: label,
         fiatAmt: trade.inAmount + ' ' + trade.inCurrency,
         btcAmt: trade.outAmountExpected
       },
@@ -55,7 +57,7 @@ function formatTrade ($filter) {
       status: 'blue',
       icon: 'ti-direction-alt',
       values: {
-        // label: label,
+        label: label,
         fiatAmt: trade.inAmount + ' ' + trade.inCurrency,
         btcAmt: trade.outAmountExpected
       },
