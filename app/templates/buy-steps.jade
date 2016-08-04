@@ -29,9 +29,11 @@
                 ng-hide="exchangeAcct")
     i.ti-arrow-right.type-h4
 
-  .width-20.flex-column.flex-center(ng-class="{blue: step >= 4, success: step > 5 && method.name !== 'bank'}")
-    i.type-lrg.ti-credit-card(ng-class="{'bank': method.inMedium === 'bank'}")
-    span(ng-show="step > 4").capitalize {{ method.inMedium }}
+  .width-20.flex-column.flex-center(ng-class="{blue: step >= 4, success: step > 5 && method.inMedium !== 'bank'}")
+    i.type-lrg.ti-credit-card(ng-class="{'bank': method.inMedium === 'bank' || medium === 'bank'}")
+    span(ng-show="step > 4 && !medium").capitalize {{ method.inMedium }}
+    span(ng-show="step > 4 && medium && medium !== 'bank'").capitalize {{ medium }}
+    span.security-red(ng-show="step > 4 && medium === 'bank'" translate="BANK_TRANSFER_PENDING")
     span(ng-hide="step > 4" translate="Payment")
 
   .flex-justify(ng-class="{blue: step > 5 && step < 8, success: step === 8, 'send-red': step === 7 && tradeError}")

@@ -228,7 +228,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
                    .then($scope.watchAddress);
   };
 
-  $scope.loadISX = () => {
+  $scope.loadPayment = () => {
     if ($scope.step === 5) return;
     $scope.status = {};
     $scope.nextStep();

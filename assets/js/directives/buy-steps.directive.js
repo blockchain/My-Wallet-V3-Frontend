@@ -8,10 +8,11 @@ function buySteps () {
     scope: {
       buy: '&',
       step: '=',
-      method: '=',
       fields: '=',
+      method: '=',
       partner: '=',
       exchange: '=',
+      tradeObj: '=',
       transaction: '=',
       exchangeAcct: '=',
       tradeError: '=',
@@ -24,5 +25,6 @@ function buySteps () {
   return directive;
 
   function link (scope, elem, attrs) {
+    if (scope.tradeObj) scope.medium = scope.tradeObj.medium;
   }
 }

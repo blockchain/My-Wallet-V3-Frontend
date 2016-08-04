@@ -10,11 +10,12 @@
                 currency-symbol="currencySymbol"
                 trade-error="formattedTrade.error"
                 exchange="exchange"
+                trade-obj="trade"
                 partner="partner"
                 fields="fields"
                 method="method"
                 step="step")
-  .modal-body.fade(ng-class="{'buy-amount': step === 0, 'buy-select-country': step === 1, 'buy-email': step === 2, 'buy-accept-terms': step === 3, 'buy-summary': step === 4, 'isx': step === 5 || step === 6, 'buy-pending': step === 7, 'buy-success': step === 8}")
+  .modal-body.fade(ng-class="{'buy-amount': step === 0, 'buy-select-country': step === 1, 'buy-email': step === 2, 'buy-accept-terms': step === 3, 'buy-summary': step === 4, 'isx': (step === 5 || step === 6) && (trade.medium === 'card' || !trade.medium), 'bank-account': (step === 5 || step === 6) && trade.medium === 'bank', 'buy-pending': step === 7, 'buy-success': step === 8}")
     .alert-in-app
       alerts(context="alerts")
     div(ng-show="step === 0")
@@ -27,8 +28,13 @@
       include ./buy-accept-terms
     div(ng-show="step === 4")
       include ./buy-summary
-    div.iframe(ng-show="step === 5 || step === 6")
-      isignthis(transaction-id='trade.iSignThisID' on-load="loadISX()" on-declined="declinedTx(tx)" on-pending="pendingTx(tx)" on-review="reviewTx(tx)" on-expired="expiredTx(tx)" on-failed="failedTx(tx)" payment-info="paymentInfo")
+    div(ng-show="step === 5 || step === 6")
+      div.iframe(ng-show="!trade.medium")
+        isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-declined="declinedTx(tx)" on-pending="pendingTx(tx)" on-review="reviewTx(tx)" on-expired="expiredTx(tx)" on-failed="failedTx(tx)" payment-info="paymentInfo")
+      div.iframe(ng-show="trade.medium === 'card'")
+        isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-declined="declinedTx(tx)" on-pending="pendingTx(tx)" on-review="reviewTx(tx)" on-expired="expiredTx(tx)" on-failed="failedTx(tx)" payment-info="paymentInfo")
+      div(ng-show="trade.medium === 'bank'")
+        bank-account(transaction="trade" on-load="loadPayment()")
     div(ng-if="step === 7")
       include ./trade-summary
     div(ng-if="step === 8")

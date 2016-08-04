@@ -1,0 +1,19 @@
+div
+  p.em-300.ptm(translate="SEND_TRADE_AMOUNT" translate-values="{amt: transaction.inAmount, curr: transaction.inCurrency}")
+  .flex-row.flex-around.bg-light-blue.paml
+    div
+      h5.type-h5.mbn(translate="BANK_ACCOUNT_DETAILS")
+      ul.em-300
+        li.pts(ng-repeat="(prop, val) in formattedBankAccount track by $index")
+          span(translate="{{::prop}}")
+          | :&nbsp;
+          b(ng-bind="::val")
+    div
+      h5.type-h5.mbn(translate="BANK_ADDRESS")
+      ul.em-300
+        li.pts(ng-repeat="(prop, val) in bankAddress track by $index")
+          span(translate="{{::prop}}")
+          | :&nbsp;
+          b(ng-bind="::val")
+  p.underline.blue.pointer.em-300.ptm(translate="Download Instructions" translate-values="" ng-click="")
+  p.em-300.ptm(translate="BANK_TRANSFER_UPON_COMPLETION" translate-values="{label: label}")
