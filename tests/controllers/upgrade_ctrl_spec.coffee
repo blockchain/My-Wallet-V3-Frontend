@@ -33,17 +33,3 @@ describe "UpgradeCtrl", ->
 
     scope.upgrade()
     expect(Wallet.upgrade).toHaveBeenCalled()
-
-  it "covers cancel", ->
-    spyOn(scope, 'goToBlockchain')
-    scope.cancel()
-    expect(scope.goToBlockchain).toHaveBeenCalled()
-
-  describe "goToBlockchain function", ->
-
-    it "sets a window location", inject(($window) ->
-      # This wreaks havoc in the rest of the test suite
-      pending()
-      scope.goToBlockchain()
-      expect($window.location).toBeDefined()
-    )

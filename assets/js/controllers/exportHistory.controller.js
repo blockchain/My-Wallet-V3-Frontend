@@ -2,26 +2,31 @@ angular
   .module('walletApp')
   .controller('ExportHistoryController', ExportHistoryController);
 
-function ExportHistoryController ($scope, $sce, $translate, format, Wallet, MyWallet, activeIndex) {
+function ExportHistoryController ($scope, $sce, $translate, $filter, format, Wallet, MyWallet, activeIndex) {
   $scope.limit = 50;
   $scope.incLimit = () => $scope.limit += 50;
 
+  $scope.ableBrowsers = ['chrome', 'firefox'];
+  $scope.canTriggerDownload = $scope.ableBrowsers.indexOf(browserDetection().browser) > -1;
+
   let accounts = Wallet.accounts().filter(a => !a.archived && a.index != null);
-  let addresses = Wallet.legacyAddresses().filter(a => !a.archived);
+  let addresses = Wallet.legacyAddresses().filter(a => !a.archived).map(a => a.address);
 
-  let allHD = {
-    type: $translate.instant('ALL'),
-    label: $translate.instant('HD_ADDRESSES'),
-    address: accounts.map(a => a.extendedPublicKey).join('|')
+  let all = {
+    index: '',
+    label: $translate.instant('ALL'),
+    address: accounts.map(a => a.extendedPublicKey).concat(addresses)
   };
 
-  let allAddresses = {
-    type: $translate.instant('ALL'),
+  let imported = {
+    index: 'imported',
     label: $translate.instant('IMPORTED_ADDRESSES'),
-    address: addresses.map(a => a.address).join('|')
+    address: addresses
   };
 
-  $scope.targets = [allHD, allAddresses].concat(accounts.concat(addresses).map(format.origin));
+  $scope.targets = [all].concat(accounts.map(format.origin));
+  if (addresses.length) $scope.targets.push(imported);
+
   $scope.isLast = (t) => t === $scope.targets[$scope.limit - 1];
 
   $scope.activeCount = (
@@ -29,36 +34,27 @@ function ExportHistoryController ($scope, $sce, $translate, format, Wallet, MyWa
     Wallet.legacyAddresses().filter(a => !a.archived).length
   );
 
-  $scope.setActive = () => {
-    let t = $scope.target;
-    $scope.active = t.index != null ? t.xpub : t.address;
-  };
+  $scope.active = $scope.activeCount === 1
+    ? all : $scope.targets.filter(t => t.index.toString() === activeIndex)[0];
 
-  if ($scope.activeCount === 1) {
-    $scope.target = $scope.targets[$scope.targets.length - 1];
-  } else if (activeIndex === '') {
-    $scope.target = allHD;
-  } else if (activeIndex === 'imported') {
-    $scope.target = allAddresses;
-  } else if (!isNaN(activeIndex)) {
-    for (let i = 0; i < $scope.targets.length; i++) {
-      let target = $scope.targets[i];
-      if (target.index === parseInt(activeIndex, 10)) {
-        $scope.target = target;
-        break;
-      }
-    }
-  }
-
-  if ($scope.target) {
-    $scope.setActive();
-  }
-
-  $scope.action = $sce.trustAsResourceUrl(`${$scope.rootURL}export-history`);
   $scope.format = 'dd/MM/yyyy';
   $scope.options = { minDate: new Date(1231024500000), maxDate: new Date() };
 
-  $scope.exportFormat = 'csv';
   $scope.start = { open: false, date: Date.now() - 604800000 };
   $scope.end = { open: false, date: Date.now() };
+
+  $scope.formatDate = (date) => $filter('date')(date, 'dd/MM/yyyy');
+
+  $scope.submit = () => {
+    $scope.busy = true;
+    let start = $scope.formatDate($scope.start.date);
+    let end = $scope.formatDate($scope.end.date);
+    let active = $scope.active.address || $scope.active.xpub;
+    Wallet.exportHistory(start, end, active)
+      .then((data) => {
+        $scope.history = data;
+        $scope.canTriggerDownload && $scope.$broadcast('download');
+      })
+      .finally(() => $scope.busy = false);
+  };
 }

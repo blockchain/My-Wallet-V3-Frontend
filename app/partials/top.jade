@@ -9,8 +9,8 @@
       button.btn.button-default.button-short.type-h5.mrm(ng-click="send()")
         i.mrs.media-middle.bc-icon-send
         span.em-300(translate="SEND")
-      button.btn.button-default.button-short.type-h5.mrm(ng-click="request()")
-        .message-beacon.green(ng-show="requestBeacon")
+      button.btn.button-default.button-short.type-h5.mrm.pos-rel(ng-click="request()")
+        .message-beacon.green.pos-abs.center-self(ng-show="requestBeacon")
         i.mrs.media-middle.bc-icon-receive
         span.em-300(translate="REQUEST")
       a.pointer.flex-center(ng-click="request(true)" translate="YOUR_ADDRESS" ng-show="hasLegacyAddresses()")

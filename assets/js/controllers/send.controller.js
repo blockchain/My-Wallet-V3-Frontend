@@ -204,7 +204,11 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     const transaction = $scope.transaction;
     transaction.destinations.forEach((dest, index) => {
       let match = false;
-      if (dest != null) match = dest.label === transaction.from.label;
+      if (dest != null) {
+        match = transaction.from.index != null
+          ? dest.index === transaction.from.index
+          : dest.address === transaction.from.address;
+      }
       $scope.sendForm['destinations' + index].$setValidity('isNotEqual', !match);
     });
   };

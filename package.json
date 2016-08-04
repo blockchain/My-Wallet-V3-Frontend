@@ -12,7 +12,7 @@
     "compression": "^1.6.2",
     "ejs": "~0.8.4",
     "express": "^4.13.3",
-    "git-changelog": "^0.1.8",
+    "git-changelog": "1.0.*",
     "grunt": "^0.4.5",
     "grunt-autoprefixer": "^3.0.0",
     "grunt-babel": "^6.0.*",

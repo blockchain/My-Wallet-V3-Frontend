@@ -1,4 +1,4 @@
-form(role="form" name="form" novalidate ng-submit="setPbkdf2()")
+form(role="form" name="form" novalidate ng-submit="form.$valid && setPbkdf2()")
   .form-group(ng-class="{'has-error': form.$invalid && form.$dirty}")
     label.control-label(translate="PBKDF2_ITERATIONS")
     div

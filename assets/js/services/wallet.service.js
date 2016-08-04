@@ -848,6 +848,10 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     wallet.my.wallet.deleteNote(tx.hash);
   };
 
+  wallet.getNote = (hash) => {
+    return wallet.my.wallet.getNote(hash);
+  };
+
   wallet.setLogoutTime = (minutes, success, error) => {
     wallet.store.setLogoutTime(minutes * 60000);
     wallet.settings.logoutTimeMinutes = minutes;
@@ -1124,6 +1128,35 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
 
   wallet.isValidBIP39Mnemonic = (mnemonic) =>
     MyWalletHelpers.isValidBIP39Mnemonic(mnemonic);
+
+  wallet.exportHistory = (start, end, active) => {
+    let json2csv = (json) => {
+      let headers = Object.keys(json[0]);
+      let makeRow = (obj) => Object.keys(obj).map(key => obj[key]).join(',');
+      return [headers.join(',')].concat(json.map(makeRow)).join('\n');
+    };
+
+    let addTxNote = (tx) => {
+      tx.note = wallet.getNote(tx.tx) || '';
+      return tx;
+    };
+
+    let currency = wallet.settings.currency;
+    let p = MyBlockchainApi.exportHistory(active, currency.code, { start, end });
+    return $q.resolve(p)
+      .then(history => {
+        if (!history.length) return $q.reject('NO_HISTORY');
+        return json2csv(history.map(addTxNote));
+      })
+      .catch(e => {
+        let error = e.message || e;
+        if (typeof error === 'string' && error.indexOf('Too many transactions') > -1) {
+          error = 'TOO_MANY_TXS';
+        }
+        Alerts.displayError(error || 'UNKNOWN_ERROR');
+        return $q.reject(error);
+      });
+  };
 
   wallet.removeSecondPassword = (successCallback, errorCallback) => {
     let success = () => {

@@ -105,6 +105,10 @@
   .feed-details {
     border-top: 1px solid $eee;
   }
+  .tx-note {
+    max-width: 100%;
+    word-wrap: break-word;
+  }
 }
 
 .transaction-card {
@@ -137,8 +141,8 @@
     }
     label {
       vertical-align: top;
-      & + ul { 
-        display: inline-block; 
+      & + ul {
+        display: inline-block;
       }
     }
   }
@@ -212,7 +216,7 @@ button {
 }
 .unconfirmed { opacity: 0.5; }
 
-.note { 
+.note {
   color: $black;
   position: relative;
   textarea {
@@ -241,6 +245,7 @@ a.date,p.date { color: $black; }
 .amountTotal {
   float: none;
   min-width: 130px;
+  text-transform: none;
 }
 
 .from, .to{

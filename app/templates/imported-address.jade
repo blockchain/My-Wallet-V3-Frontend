@@ -2,14 +2,14 @@ tr
   td.shrink
     a(ng-bind-html="address.address | escapeHtml | highlight:searchText", ng-click="showAddress(address)")
   td.expand.address-label
+    span.float-right(ng-hide="status.edit")
+      a(ng-click="status.edit=1")
+        i.ti-pencil.prm   
     span(ng-bind-html="address.label | escapeHtml | highlight:searchText", ng-hide="status.edit").prm.oflow
     .form-group(ng-class="{'has-error': errors.label}", ng-show="status.edit")
       .col-sm-12
         bc-async-input(inline ng-model="address.label" on-save="changeLabel" on-cancel="cancelEdit" is-required editing="true")
           span.help-block(ng-show="errors.label") {{::errors.label}}  
-    span.float-right(ng-hide="status.edit")
-      a(ng-click="status.edit=1")
-        i.ti-pencil.prm   
   td.shrink
     .flex.flex-between
       span.prm
@@ -28,3 +28,5 @@ tr
           a.ti-arrow-right(ng-hide="address.balance == 0" translate="TRANSFER" ng-click="transfer()")
         li
           a.ti-check-box(translate="SIGN_MESSAGE" ng-click="signMessage()")
+        li
+          a.ti-arrow-up(ng-hide="address.balance == 0" translate="SPEND_IMPORTED_ADDRESS" ng-click="spend()")

@@ -75,12 +75,17 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $timeout, $stateParams, $st
     if (!search) return true;
     return ($scope.filterTx(tx.processedInputs, search) ||
             $scope.filterTx(tx.processedOutputs, search) ||
+            (tx.hash.toLowerCase().search(search.toLowerCase()) > -1) ||
             (tx.note && tx.note.toLowerCase().search(search.toLowerCase()) > -1));
+  };
+
+  $scope.checkLabelDiff = (label, address) => {
+    return label === address ? address : label + ', ' + address;
   };
 
   $scope.filterTx = (coins, search) => {
     return coins
-      .map(coin => coin.label || coin.address)
+      .map(coin => $scope.checkLabelDiff(coin.label, coin.address))
       .join(', ').toLowerCase().search(search.toLowerCase()) > -1;
   };
 
