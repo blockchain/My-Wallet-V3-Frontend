@@ -9,7 +9,9 @@
   h5(ng-show="advanced && !confirmationStep", translate="SEND_STEP_1_ADVANCED")
   p.step
     span(translate="STEP")
+    | 
     span {{ confirmationStep ? 2 : 1 }}
+    | 
     span(translate="OF_2")
 #send.modal-body.fade(ng-class="{ 'advanced-container': advanced && !confirmationStep, 'confirmation': confirmationStep, 'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1 }")
   .alert-in-app
@@ -177,7 +179,7 @@
                 span {{transaction.amounts[$index] | toBitCurrency:btcCurrency:false}}
               span(ng-class="{success: address.type !== 'External'}")
                 span(ng-show="address.type !== 'External'") + 
-                fiat(btc="transaction.amounts[$index]")
+                fiat.mrml(btc="transaction.amounts[$index]")
           .mls.mbs.flex-row.flex-center.center.flex-between.pos-rel
             span.aaa.account.width-50-mobile.width-50(translate="TX_FEE_REQUIRED")
             .width-50.width-50-mobile.flex-between
@@ -185,7 +187,7 @@
                 span.fade + 
                 span {{ transaction.fee | toBitCurrency:btcCurrency:false}}
               span.aaa.center
-                fiat(btc="transaction.fee")
+                fiat.mrml(btc="transaction.fee")
             helper-button(content="DYK_TX_FEES")
         .mvm.flex-justify.flex-1.flex-center.split-rule
         span.type-lbl.mbs.underline(translate="FROM")
@@ -194,7 +196,7 @@
           .width-50.width-50-mobile.flex-between
             span.flex-start.security-red - {{getTransactionTotal(true) | toBitCurrency:btcCurrency:false}}
             span.security-red -
-              fiat(btc="getTransactionTotal(true)")
+              fiat.mrml(btc="getTransactionTotal(true)")
 .modal-footer.flex-between.flex-center.pal
   .flex-center
     a.dark-grey(ng-hide="advanced || confirmationStep", ng-click="advancedSend()", translate="ADVANCED_SEND")
