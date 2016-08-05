@@ -6,6 +6,10 @@ angular
 function faqQuestion () {
   const directive = {
     restrict: 'E',
+    scope: {
+      item: '=',
+      tog: '='
+    },
     templateUrl: 'templates/faq-question.jade'
   };
   return directive;

@@ -8,4 +8,31 @@
   .still-q {
     margin: 50px
   }
+  
+  h1 {
+    font-size: 53px
+  }
+  
+  hr {
+    width: 75%;
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #5f5f5f;
+    margin: 1em 0;
+    padding: 0;
+  }
+  
+  h3, p {
+    font-weight: 300;
+  }
+  
+  @media (max-width: 768px) {
+    hr {
+      width: 100%;
+    }
+    .faq-box {
+      margin: 0;
+    }
+  }
 }

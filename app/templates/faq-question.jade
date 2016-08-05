@@ -1,3 +1,3 @@
-h2 {{item.question}}
-blockquote
+h3(ng-click="tog(item.id)") # {{ item.id + 1 }}. {{item.question}}
+blockquote(ng-if="item.displayed")
   p {{item.answer}}
