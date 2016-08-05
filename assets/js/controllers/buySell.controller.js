@@ -12,6 +12,9 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
   $scope.trades = { completed: [], pending: [] };
   $scope.userHasExchangeAcct = false;
 
+  $scope.pendingStates = ['awaiting_transfer_in', 'processing', 'reviewing'];
+  $scope.completedStates = ['expired', 'rejected', 'cancelled', 'completed', 'completed_test'];
+
   $scope.changeCurrency = (curr) => {
     if (!curr) curr = $scope.settings.currency;
 
@@ -23,19 +26,10 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
 
   $scope.getTrades = () => {
     const success = (trades) => {
-      $timeout(() => {
-        $scope.status = {};
-      }, 1000);
+      $timeout(() => $scope.status = {}, 1000);
 
-      $scope.trades.pending = trades.filter(t => t.state === 'awaiting_transfer_in' ||
-                                                 t.state === 'processing' ||
-                                                 t.state === 'reviewing');
-
-      $scope.trades.completed = trades.filter(t => t.state === 'expired' ||
-                                                   t.state === 'rejected' ||
-                                                   t.state === 'cancelled' ||
-                                                   t.state === 'completed' ||
-                                                   t.state === 'completed_test');
+      $scope.trades.pending = trades.filter(t => $scope.pendingStates.indexOf(t.state) > -1);
+      $scope.trades.completed = trades.filter(t => $scope.completedStates.indexOf(t.state) > -1);
 
       if (!$rootScope.tradesInitialized) {
         for (let trade of $scope.trades.completed) {
@@ -74,18 +68,12 @@ function BuySellCtrl ($rootScope, $scope, Alerts, $state, $uibModalStack, $uibMo
         controller: 'BuyCtrl',
         backdrop: 'static',
         keyboard: false,
-        resolve: { bitcoinReceived: () => bitcoinReceived || undefined,
-                   exchange: () => $scope.exchange,
-                   trades: () => $scope.trades || [],
-                   trade: () => _trade || null,
-                   fiat: () => amt || $scope.transaction.fiat }
-      }).rendered.then(() => {
-        if (bitcoinReceived) angular.element(buy)[0].className = 'ng-scope rendered';
-        else {
-          // timeout for good measure, not ideal
-          $timeout(() => {
-            angular.element(buy)[0].className = 'ng-scope rendered';
-          }, 4000);
+        resolve: {
+          bitcoinReceived: () => bitcoinReceived || undefined,
+          exchange: () => $scope.exchange,
+          trades: () => $scope.trades || [],
+          trade: () => _trade || null,
+          fiat: () => amt || $scope.transaction.fiat
         }
       });
     };

@@ -42,6 +42,8 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   $scope.transaction.fiat = fiat || 0;
   $scope.paymentInfo = undefined;
 
+  $timeout(() => $scope.rendered = true, bitcoinReceived ? 0 : 4000);
+
   $scope.countryCodeGuess = $scope.countries.countryCodes.filter(country => country.code === MyWallet.wallet.accountInfo.countryCodeGuess)[0];
   if ($scope.countryCodeGuess) $scope.fields.countryCode = $scope.countryCodeGuess.code;
 
