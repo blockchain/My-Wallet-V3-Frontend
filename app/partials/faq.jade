@@ -1,7 +1,7 @@
-.faq.container.flex-column.width-100.flex-center
-  h1(translate="FAQ")
-  hr
-  .flex-column.faq-box.width-70
+.faq.flex-column.width-100.flex-center
+  .header-bar
+    h2 Frequently Asked Questions
+  .flex-column.faq-box.width-100.pll.prl
     faq-question(item="item" tog="toggleCurr" ng-repeat="item in items")
   .flex-column.flex-center.still-q.width-30
     h3 
