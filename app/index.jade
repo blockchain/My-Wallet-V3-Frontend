@@ -57,10 +57,15 @@ head
   link(rel='stylesheet' href='css/wallet.css')
   <!-- @endif -->
 
+<<<<<<< HEAD
 body(
   ui-view="body"
   ng-mousemove="onAction()"
   ng-click="onAction()")
+=======
+body(ng-controller="AppCtrl" ui-view="body" ng-mousemove="resetInactivityTime()" ng-keypress="resetInactivityTime()")
+
+>>>>>>> refs/remotes/blockchain/remove-wallet-landing
   noscript
     img(src="/img/logo-bw.png")
     h3 Please enable JavaScript to use the Blockchain Wallet

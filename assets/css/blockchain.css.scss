@@ -31,6 +31,12 @@
 @import 'components/alerts';
 @import 'components/bitcoin-addresses';
 @import 'components/filter-bar';
+<<<<<<< HEAD
+=======
+@import 'components/forms';
+@import 'components/helpers';
+@import 'components/modals';
+>>>>>>> refs/remotes/blockchain/remove-wallet-landing
 @import 'components/notifications';
 @import 'components/progress-bars';
 @import 'components/helpers';
@@ -52,9 +58,16 @@
 @import 'modules/send-receive';
 @import 'modules/security-center';
 @import 'modules/upgrade';
+<<<<<<< HEAD
 @import 'modules/settings';
 @import 'modules/transaction-list';
 
 //override bootstrap
 @import 'utilities/bs_overrides';
+=======
+
+//override bootstrap
+@import 'utilities/bs_overrides';
+
+>>>>>>> refs/remotes/blockchain/remove-wallet-landing
 @import 'utilities/general';

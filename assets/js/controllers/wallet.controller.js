@@ -89,16 +89,27 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   });
 
   $scope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
+<<<<<<< HEAD:assets/js/controllers/wallet.controller.js
     let isPublicState = toState.name === 'landing' || toState.name.slice(0, 6) === 'public';
+=======
+    let isPublicState = toState.name.slice(0, 6) === 'public';
+>>>>>>> refs/remotes/blockchain/remove-wallet-landing:assets/js/controllers/app.controller.js
     if (isPublicState && Wallet.status.isLoggedIn) event.preventDefault();
   });
 
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) => {
+<<<<<<< HEAD:assets/js/controllers/wallet.controller.js
     let loggedOutStates = ['public', 'landing', 'public.login-no-uid', 'public.login-uid', 'public.reset-two-factor', 'public.recover', 'public.reminder', 'public.signup', 'public.help', 'open', 'wallet.common.verify-email', 'wallet.common.unsubscribe', 'public.authorize-approve', 'public.reset-two-factor-token'];
     if (loggedOutStates.every(s => toState.name !== s) && $scope.status.isLoggedIn === false) {
       $state.go('public.login-no-uid');
     }
     $rootScope.outOfApp = toState.name === 'landing';
+=======
+    let loggedOutStates = ['public', 'public.login-no-uid', 'public.login-uid', 'public.reset-two-factor', 'public.recover', 'public.reminder', 'public.signup', 'public.help', 'open', 'wallet.common.verify-email', 'wallet.common.unsubscribe', 'public.authorize-approve', 'public.reset-two-factor-token'];
+    if (loggedOutStates.every(s => toState.name !== s) && $scope.status.isLoggedIn === false) {
+      $state.go('public.login-no-uid');
+    }
+>>>>>>> refs/remotes/blockchain/remove-wallet-landing:assets/js/controllers/app.controller.js
     $scope.requestBeacon = false;
 
     $uibModalStack.dismissAll();

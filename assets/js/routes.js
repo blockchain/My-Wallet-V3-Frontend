@@ -8,6 +8,7 @@ AppRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 function AppRouter ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise(function ($injector, $location) {
+<<<<<<< HEAD
     if (!$injector.has('Wallet')) {
       return '/';
     } else {
@@ -18,6 +19,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         return '/home';
       }
     }
+=======
+    let Wallet = $injector.get('Wallet');
+    return Wallet.status.isLoggedIn ? '/home' : '/login';
+>>>>>>> refs/remotes/blockchain/remove-wallet-landing
   });
 
   $urlRouterProvider.when('/settings', '/settings/wallet');
@@ -70,6 +75,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     });
 
   $stateProvider
+<<<<<<< HEAD
     .state('landing', {
       url: '/',
       views: {
@@ -79,6 +85,8 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       }
     })
+=======
+>>>>>>> refs/remotes/blockchain/remove-wallet-landing
     .state('public', {
       views: {
         body: {
