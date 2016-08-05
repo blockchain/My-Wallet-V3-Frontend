@@ -17,88 +17,129 @@ module.exports = (grunt) ->
         banner: "/*! <%= pkg.name %> <%= grunt.template.today(\"yyyy-mm-dd\") %> */\n"
         mangle: false
 
-      application_dependencies:
-        src: "build/application-dependencies.js"
-        dest: "build/application-dependencies.min.js"
+      landingDependencies:
+        src: "build/js/landing-not-minified-dependencies.js"
+        dest: "build/js/landing-minified-dependencies.min.js"
+        options: {
+          mangle: false
+        }
+
+      wallet:
+        src: "build/js/wallet.js"
+        dest: "dist/js/wallet.min.js"
+        options: {
+          mangle: false
+        }
+
+      bcQrReader:
+        src: "build/js/bc-qr-reader.js"
+        dest: "dist/js/bc-qr-reader.min.js"
+        options: {
+          mangle: false
+        }
+
+      bcPhoneNumber:
+        src: "build/js/bc-phone-number.js"
+        dest: "dist/js/bc-phone-number.min.js"
         options: {
           mangle: false
         }
 
     preprocess:
+      options: {
+        context : {
+          PRODUCTION: true
+        }
+      }
+
       html:
-        options: {
-          context : {
-            PRODUCTION: true
-          }
-        },
         expand: true
         src: ['build/index.html']
         dest: ''
 
+      js:
+        expand: true
+        src: ['build/js/app.js']
+        dest: ''
+
     concat:
       options:
-        banner: "(function(){"
-        separator: ";"
+        banner: "(function () {\n"
+        separator: "})();\n(function () {\n"
         footer: "})();"
 
-      application_dependencies:
+      landingNotMinifiedDependencies:
         src: [
-          'build/js/browser-polyfill.js' # Babel polyfill
+          "bower_components/angular-translate/angular-translate.js"
+          "bower_components/angular-animate/angular-animate.js"
+          "bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"
+          'bower_components/angular-ui-router/release/angular-ui-router.js'
+          "bower_components/browserdetection/src/browser-detection.js"
+          "bower_components/oclazyload/dist/ocLazyLoad.js"
+          'bower_components/angular-ui-select/dist/select.js'
+          "build/js/sharedDirectives.js"
+          "build/js/sharedDirectives/public-header.directive.js"
+          "build/js/sharedDirectives/video-container.directive.js"
+          "build/js/sharedDirectives/scroll-in-view.directive.js"
+          "build/js/translations.js"
+          "build/js/app.js"
+          'build/js/landingCtrl.js'
+          'build/js/routes.js'
+          "build/js/services/bcTranslationLoader.service.js"
+        ]
+        dest: "build/js/landing-not-minified-dependencies.js"
+
+      landing:
+        src: [
+          "bower_components/angular/angular.min.js",
+          "bower_components/angular-sanitize/angular-sanitize.min.js",
+          "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
+          "build/js/landing-minified-dependencies.min.js"
+        ]
+        dest: "dist/js/landing.min.js"
+
+
+      wallet:
+        src: [
+          'node_modules/babel-polyfill/dist/polyfill.js'
           'build/js/core/core.module.js'
-          'build/js/app.js' # Needs to be included before controllers
           'build/js/core/*.service.js'
           'build/js/services/*.js'
           'build/js/controllers/*.js'
+          'build/js/components/*.js'
           'build/js/controllers/settings/*.js'
           'build/js/directives/*.js'
           'build/js/filters.js'
-          'build/js/routes.js'
-          'build/js/translations.js'
-          'build/bower_components/angular-audio/app/angular.audio.js'
-          'build/bower_components/angular-inview/angular-inview.js'
+          'bower_components/angular-audio/app/angular.audio.js'
+          'bower_components/angular-inview/angular-inview.js'
+          'bower_components/angular-cookies/angular-cookies.min.js'
+          'bower_components/angular-animate/angular-animate.min.js'
           'build/js/templates.js'
-          'build/bower_components/webcam-directive/app/scripts/webcam.js'
-          'build/bower_components/bc-qr-reader/dist/bc-qr-reader.js'
-          'build/bower_components/angular-password-entropy/password-entropy.js'
-          'build/bower_components/qrcode/lib/qrcode.js'
-          'build/bower_components/angular-qr/src/angular-qr.js'
-          'build/bower_components/angular-ui-select/dist/select.js'
-          'build/bower_components/angular-ui-router/release/angular-ui-router.js'
-          'build/bower_components/angular-translate/angular-translate.js'
-          'build/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js'
-          'build/bower_components/digits-trie/dist/digits-trie.js'
-          'build/bower_components/google-libphonenumber/dist/browser/libphonenumber.js'
-          'build/bower_components/bc-countries/dist/bc-countries.js'
-          'build/bower_components/bc-phone-number/dist/js/bc-phone-number.js'
-          'build/bower_components/browserdetection/src/browser-detection.js'
+          'bower_components/webcam-directive/app/scripts/webcam.js'
+          'bower_components/angular-password-entropy/password-entropy.js'
+          'bower_components/qrcode/lib/qrcode.js'
+          'bower_components/angular-qr/src/angular-qr.js'
+          'bower_components/compare-versions/index.js'
+          'build/js/walletLazyLoad.js'
         ]
 
-        dest: "build/application-dependencies.js"
+        dest: "build/js/wallet.js"
 
-      application: # All components should first be minimized. Only trusted sources should be imported as minified..
+      qrReader:
         src: [
-          'build/bower_components/blockchain-wallet/dist/my-wallet.min.js'
-          'build/bower_components/angular/angular.min.js'
-          'build/bower_components/angular-sanitize/angular-sanitize.min.js'
-          'build/bower_components/angular-cookies/angular-cookies.min.js'
-          'build/bower_components/angular-animate/angular-animate.min.js'
-          'build/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
-          'build/application-dependencies.min.js'
+          'bower_components/bc-qr-reader/dist/bc-qr-reader.js'
         ]
+        dest: "build/js/bc-qr-reader.js"
 
-        dest: "dist/js/application.min.js"
-
-    coffee:
-      coffee_to_js:
-        options:
-          bare: true
-          sourceMap: false
-        expand: true
-        flatten: false
-        cwd: "assets/js"
-        src: ["*.js.coffee", "directives/**/*.js.coffee", "services/**/*.js.coffee"]
-        dest: 'build/js'
-        ext: ".js"
+      bcPhoneNumber:
+        src:
+          [
+            'bower_components/digits-trie/dist/digits-trie.js'
+            'bower_components/google-libphonenumber/dist/browser/libphonenumber.js'
+            'bower_components/bc-countries/dist/bc-countries.js'
+            'bower_components/bc-phone-number/dist/js/bc-phone-number.js'
+          ]
+        dest: "build/js/bc-phone-number.js"
 
     sass:
       build:
@@ -109,25 +150,41 @@ module.exports = (grunt) ->
           dest: 'build/css',
           ext: '.css'
         }]
+
+    includeSource:
       options:
-        loadPath: ["bower_components/bootstrap-sass/assets/stylesheets"]
+        templates:
+          jade:
+            js: 'script(src="{filePath}" type="text/javascript" defer="defer")'
+            css: 'link(href="{filePath}" rel="stylesheet" type="text/css")'
+      myTarget:
+        files:
+          'build/index.jade': 'app/index.jade'
+          'build/landing.jade': 'app/landing.jade'
 
     concat_css: {
       app: {
         src: [
-          "build/bower_components/angular-ui-select/dist/select.min.css"
-          "build/bower_components/bc-css-flags/dist/css/bc-css-flags.css"
-          "build/bower_components/bc-phone-number/dist/css/bc-phone-number.css"
-          "build/css/blockchain.css" # Needs to be loaded first
-          "build/css/**/*.css"
+          "bower_components/angular-ui-select/dist/select.min.css"
+          "bower_components/bc-css-flags/dist/css/bc-css-flags.css"
+          "bower_components/bc-phone-number/dist/css/bc-phone-number.css"
+          "bower_components/angular-bootstrap/ui-bootstrap-csp.css"
+          "build/css/ladda.css"
+          "build/css/fonts.css"
+          "build/css/angular-csp.css"
+          "build/css/blockchain.css"
+          "build/css/fonts.css"
         ],
-        dest: "dist/css/application.css"
+        dest: "build/css/wallet.css"
       }
     },
 
     autoprefixer: {
       options: {
-        browsers: ['last 2 versions']
+        browsers: ['last 2 versions'],
+        # TEMP
+        remove: false
+        # END TEMP
       }
       no_dest_multiple: {
         src: 'build/css/*.css'
@@ -140,10 +197,9 @@ module.exports = (grunt) ->
           doctype: "html"
         base: "app"
         singleModule: true
-      main: {
-        src: ["app/partials/notifications/*.jade", "app/partials/settings/*.jade", "app/partials/*.jade", "app/templates/*.jade"],
+      main:
+        src: ["app/partials/notifications/*.jade", "app/partials/settings/*.jade", "app/partials/*.jade", "app/templates/*.jade", "app/*.jade"],
         dest: 'build/js/templates.js'
-      }
     },
     "merge-json": # TODO: generate this list...
       bg: {src: [ "locales/bg-*.json" ], dest: "build/locales/bg.json"}
@@ -176,23 +232,20 @@ module.exports = (grunt) ->
       main:
         files: [
           {src: ["beep.wav"], dest: "dist/"}
-          {src: ["index.html"], dest: "dist/", cwd: "build", expand: true}
-          {src: ["img/*"], dest: "dist/", cwd: "build", expand: true}
+          {src: ["index.html", "landing.html"], dest: "dist/", cwd: "build", expand: true}
+          {src: ["img/**/*"], dest: "dist/", cwd: "build", expand: true}
           {src: ["locales/*"], dest: "dist/", cwd: "build", expand: true}
           {src: ["**/*"], dest: "dist/fonts", cwd: "build/fonts", expand: true}
         ]
 
-      js:
+      legacy_cache_bust:
         files: [
-          {src: ["browser-polyfill.js"], dest: "build/js/", cwd: "node_modules/grunt-babel/node_modules/babel-core", expand: true}
+          {src: ["wallet.min.js"], dest: "dist/", cwd: "assets/legacy-cache-bust", expand: true}
         ]
 
+      css_dist:
+          {src: ["wallet.css"], dest: "dist/css", cwd: "build/css", expand: true }
 
-      css:
-        files: [
-          {src: ["font-awesome.min.css"], dest: "build/css", cwd: "bower_components/fontawesome/css", expand: true }
-          {src: ["*.css"], dest: "build/css", cwd: "assets/css", expand: true }
-        ]
       fonts:
         files: [
           {src: ["bootstrap/*"], dest: "build/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
@@ -202,34 +255,33 @@ module.exports = (grunt) ->
 
         ]
 
+      blockchainWallet:
+        files: [
+          {src: ["my-wallet.min.js"], dest: "dist/js", cwd: "bower_components/blockchain-wallet/dist", expand: true }
+        ]
+
       images:
         files: [
-          {src: ["*"], dest: "build/img", cwd: "img", expand: true }
+          {src: ["**/*"], dest: "build/img", cwd: "img", expand: true }
           {src: ["*"], dest: "build/img", cwd: "bower_components/bc-css-flags/dist/img", expand: true}
         ]
 
     watch:
       jade:
-        files: ['app/partials/**/*.jade', 'app/templates/**/*.jade']
-        tasks: ['html2js']
+        files: ['app/partials/**/*.jade', 'app/templates/**/*.jade', 'app/*.jade']
+        tasks: ['build']
         options:
           spawn: false
 
       css:
         files: ['assets/css/**/*.scss']
-        tasks: ['sass', 'copy:css', 'copy:fonts']
+        tasks: ['sass', 'concat_css', 'copy:fonts']
         options:
           spawn: false
 
       es6:
-        files: ['assets/js/controllers/**/*.js','assets/js/services/**/*.js','assets/js/directives/**/*.js','assets/js/core/**/*.js','assets/js/*.js']
-        tasks: ['babel:build']
-        options:
-          spawn: false
-
-      js:
-        files: ['assets/js/**/*.js.coffee']
-        tasks: ['compile']
+        files: ['assets/js/controllers/**/*.js','assets/js/services/**/*.js','assets/js/sharedDirectives/**/*.js','assets/js/components/**/*.js','assets/js/directives/**/*.js','assets/js/core/**/*.js','assets/js/*.js']
+        tasks: ['babel:build', 'includeSource', 'concat:wallet']
         options:
           spawn: false
 
@@ -245,20 +297,23 @@ module.exports = (grunt) ->
           client: false
         files:
           "build/index.html": "app/index.jade"
+          "build/landing.html": "app/landing.jade"
+
 
     babel:
       options:
         sourceMap: true
+        presets: ['es2015']
       build:
         files: [{
           expand: true,
           cwd: 'assets/js',
-          src: ['**/*.controller.js','services/**/*.js','directives/**/*.js','core/**/*.js','*.js'],
+          src: ['**/*.controller.js','**/*.component.js','services/**/*.js','sharedDirectives/**/*.js','directives/**/*.js','core/**/*.js','*.js'],
           dest: 'build/js',
         }]
 
     rename:
-      assets: # Renames all images, fonts, etc and updates application.min.js and application.css with their new names.
+      assets: # Renames all images, fonts, etc and updates [landing,wallet].min.js and wallet.css with their new names.
         options:
           skipIfHashed: true
           startSymbol: "{{"
@@ -281,7 +336,7 @@ module.exports = (grunt) ->
             ordered_befores = tuples.map((t)->t[0])
             ordered_afters  = tuples.map((t)->t[1])
 
-            for referring_file_path in ["dist/js/application.min.js", "dist/css/application.css", "dist/index.html"]
+            for referring_file_path in ["dist/js/landing.min.js", "dist/js/wallet.min.js", "dist/css/wallet.css", "dist/index.html", "dist/landing.html"]
               contents = grunt.file.read(referring_file_path)
               before = undefined
               after = undefined
@@ -299,14 +354,49 @@ module.exports = (grunt) ->
 
         files:
           src: [
-            'dist/img/*'
+            'dist/js/bc-qr-reader.min.js'
+            'dist/js/bc-phone-number.min.js'
+            'dist/img/*.*'
+            'dist/img/favicon/*'
             'dist/fonts/*.*'
             'dist/fonts/bootstrap/*'
             'dist/locales/*'
             'dist/beep.wav'
           ]
 
-      html: # Renames application.min.js/css and updates index.html
+      wallet: # Renames (my-)wallet.min.js/css and updates landing.min.js
+        options:
+          skipIfHashed: true
+          startSymbol: "{{"
+          endSymbol: "}}"
+          algorithm: "sha1"
+          format: "{{basename}}-{{hash}}.{{ext}}"
+
+          callback: (befores, afters) ->
+            publicdir = fs.realpathSync("dist")
+
+            for referring_file_path in ["dist/js/landing.min.js"]
+              contents = grunt.file.read(referring_file_path)
+              before = undefined
+              after = undefined
+              i = 0
+
+              while i < befores.length
+                before = path.relative(publicdir, befores[i])
+                after = path.relative(publicdir, afters[i])
+                contents = contents.split(before).join(after)
+
+                i++
+              grunt.file.write referring_file_path, contents
+
+        files:
+          src: [
+            'dist/js/my-wallet.min.js'
+            'dist/js/wallet.min.js'
+            'dist/landing.html'
+          ]
+
+      landing: # Renames landing.min.js/css and updates index.html
         options:
           skipIfHashed: true
           startSymbol: "{{"
@@ -333,82 +423,22 @@ module.exports = (grunt) ->
 
         files:
           src: [
-            'dist/js/application.min.js'
-            'dist/css/application.css'
+            'dist/js/landing.min.js'
+            'dist/css/wallet.css'
           ]
 
     shell:
-      check_bower_dependencies:
-        command: () ->
-          'mkdir -p build && ruby ./check-dependencies.rb'
-
-      copy_bower_components_to_build:
-        command: () ->
-          'cp -r bower_components build'
-
-      npm_update_dependencies:
-        command: () ->
-           'npm update'
-
-      bower_install_dependencies:
-        command: () ->
-           'cd build && bower install'
-
       check_translations:
         command: () ->
           'ruby check_translations.rb'
 
-      check_pgp_signatures:
-        command: () ->
-          'ruby ./check_pgp_signatures.rb'
-
-      shrinkwrap:
-        command: (version) ->
-          "git rm --ignore-unmatch npm-shrinkwrap-*.json && npm shrinkwrap --dev && mv npm-shrinkwrap.json npm-shrinkwrap-#{ version }.json"
-
-      use_shrinkwrap:
-        command: (version) ->
-          "cp npm-shrinkwrap-#{ version }.json npm-shrinkwrap.json"
-
-      bower_update:
-        command: () ->
-          "bower update"
-
-      freeze_bower:
-        command: (version) ->
-          "git rm --ignore-unmatch bower-*.json && cp build/bower.json bower-#{ version }.json"
-
-      use_frozen_bower:
-        command: (version) ->
-          "cp bower-#{ version }.json build/bower.json"
-
-      commit_and_push_release:
-        command: (newVersion) ->
-          [
-              "git add npm-shrinkwrap-#{ newVersion }.json"
-              "git add bower-#{ newVersion }.json"
-              "git commit -m 'Release #{ newVersion }'"
-              "git push"
-          ].join(" && ")
-
       tag_release:
         command: (newVersion, message) ->
-          "git tag -a -s #{ newVersion } -m '#{ message }' && git push --tags"
-
-      test_once:
-        command: () ->
-          './node_modules/karma/bin/karma start karma.conf.js --single-run'
-
-    git_changelog:
-      default:
-        options:
-          file: 'Changelog.md',
-          app_name : 'Blockchain HD Frontend',
-          # logo : 'https://raw.githubusercontent.com/blockchain/My-Wallet-HD-Frontend/changelog/assets/icons/png/logo.png',
-          intro : 'Recent changes'
-          grep_commits: '^fix|^feat|^docs|^style|^refactor|^chore|^test|BREAKING'
-          repo_url: 'https://github.com/blockchain/My-Wallet-HD-Frontend'
-          branch_name: 'master'
+<<<<<<< HEAD
+          "git tag -a -s #{ newVersion } -m '#{ message }' && git push #{ newVersion }"
+=======
+          "git tag -a -s #{ newVersion } -m '#{ message }' && git push origin #{ newVersion }"
+>>>>>>> refs/remotes/blockchain/master
 
     coveralls:
       options:
@@ -420,62 +450,65 @@ module.exports = (grunt) ->
 
     replace:
       root_url:
-        src: ['build/js/services/wallet.service.js'],
+        src: ['build/js/app.js'],
         overwrite: true,
         replacements: [{
           from: 'customRootURL = $rootScope.rootURL'
           to: () =>
-            'customRootURL = $rootScope.rootURL = "https://' + @rootUrl + '/"'
-        }]
-      root_path:
-        src: ['build/js/services/wallet.service.js'],
-        overwrite: true,
-        replacements: [{
-          from: 'customRootPath = $rootScope.rootPath'
-          to: () =>
-            'customRootPath = $rootScope.rootPath = "' + @rootPath + '/"'
+            if @rootDomain == null
+              "customRootURL = '/'"
+            else
+              if @rootDomain.substr(0,5) != "local"
+                "customRootURL = 'https://" + @rootDomain + "/'"
+              else
+                "customRootURL = 'http://" + @rootDomain + "/'"
         }]
       web_socket_url:
-        src: ['build/js/services/wallet.service.js'],
+        src: ['build/js/wallet.js'],
         overwrite: true,
         replacements: [{
           from: 'customWebSocketURL = $rootScope.webSocketURL'
           to: () =>
-            'customWebSocketURL = "wss://' + @rootUrl + '/inv"'
+            prefix = "wss://"
+            if @rootDomain && @rootDomain.substr(0,5) == "local"
+              prefix = "ws://"
+            'customWebSocketURL = "' + prefix + @rootDomain + '/inv"'
         }]
-      fee_service_domain:
-        src: ['build/js/services/wallet.service.js'],
+      api_domain:
+        src: ['build/js/wallet.js'],
         overwrite: true,
         replacements: [{
-          from: 'customFeeServiceDomain = $rootScope.feeServiceDomain'
+          from: 'customApiDomain = $rootScope.apiDomain'
           to: () =>
-            'customFeeServiceDomain = "https://' + @feeServiceDomain + '"'
+            if @rootDomain && @rootDomain.substr(0,5) == "local"
+              "customApiDomain = 'http://" + @apiDomain + "/'"
+            else
+              "customApiDomain = 'https://" + @apiDomain + "/'"
         }]
       version_frontend:
-        src: ['build/js/services/wallet.service.js'],
+        src: ['build/js/app.js'],
         overwrite: true,
         replacements: [{
           from: 'versionFrontend = null'
           to: () =>
-            'versionFrontend = "' + @versionFrontend + '"'
+            "versionFrontend = '" + @versionFrontend + "'"
         }]
 
       version_my_wallet:
-        src: ['build/js/services/wallet.service.js'],
+        src: ['build/js/app.js'],
         overwrite: true,
         replacements: [{
           from: 'versionMyWallet = null'
           to: () =>
-            version = exec('cat build/bower_components/blockchain-wallet/bower.json | grep \'version\": \' | grep -o \'\\d\\+.\\d\\+.\\d\\+\'').output
-            'versionMyWallet = "' + version.replace("\n", "") + '"'
+            version = exec('./my_wallet_bower_version.rb').output
+            "versionMyWallet = '" + version.replace("\n", "") + "'"
         }]
 
   grunt.loadNpmTasks "grunt-contrib-uglify"
   grunt.loadNpmTasks('grunt-contrib-concat')
-  grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-contrib-clean')
-  grunt.loadNpmTasks('grunt-contrib-sass')
+  grunt.loadNpmTasks('grunt-sass')
   grunt.loadNpmTasks('grunt-contrib-jade')
   grunt.loadNpmTasks('grunt-concat-css')
   grunt.loadNpmTasks('grunt-html2js')
@@ -485,22 +518,22 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-preprocess')
   grunt.loadNpmTasks('grunt-autoprefixer')
   grunt.loadNpmTasks('grunt-merge-json')
-  grunt.loadNpmTasks('git-changelog')
   grunt.loadNpmTasks('grunt-babel')
   grunt.loadNpmTasks('grunt-karma-coveralls')
   grunt.loadNpmTasks('grunt-text-replace')
-
-  grunt.registerTask "compile", ["coffee"]
+  grunt.loadNpmTasks('grunt-include-source')
 
   grunt.registerTask "build", [
     "html2js"
-    "compile"
     "babel:build"
+    "concat:wallet"
+    "concat:qrReader"
+    "concat:bcPhoneNumber"
     "sass"
-    "copy:js"
-    "copy:css"
+    "concat_css:app"
     "copy:fonts"
     "autoprefixer"
+    "includeSource"
     "copy:images"
     "merge-json"
   ]
@@ -510,161 +543,84 @@ module.exports = (grunt) ->
     "watch"
   ]
 
+  # Make sure npm and bower dependencies are up to date
+  # Run clean, test and build first
+  grunt.registerTask "dist", () =>
+    versionFrontend = grunt.option('versionFrontend')
+    rootDomain = grunt.option('rootDomain')
+    apiDomain = grunt.option('apiDomain')
+    if !versionFrontend
+      versionFrontend = "intermediate"
+    else if versionFrontend[0] != "v"
+      console.log "Version is missing 'v'"
+      exit(1)
+
+    @versionFrontend = versionFrontend
+
+    if !rootDomain
+      # Production will work with rootURL = "https://blockchain.info/" and "/"
+      # Tor will only work with   rootURL = "/"
+      console.log("No root domain specified, assuming blockchain.info or tor");
+      @rootDomain = null
+
+      grunt.task.run [
+        "replace:root_url"
+        # Web socket URL will default to wss://blockchain.info/inv
+        # Web sockets currently don't work on our Tor site
+        # "replace:web_socket_url"
+      ]
+    else
+      console.log("Root domain: " + rootDomain)
+      @rootDomain = rootDomain
+
+      grunt.task.run [
+        "replace:root_url"
+        "replace:web_socket_url"
+      ]
+
+    if apiDomain
+      @apiDomain = apiDomain
+      console.log("Custom API domain: " + @apiDomain)
+
+      grunt.task.run [
+        "replace:api_domain"
+      ]
+
+    grunt.task.run [
+      "replace:version_frontend"
+      "replace:version_my_wallet"
+      "preprocess:js"
+      "concat:landingNotMinifiedDependencies"
+      "uglify:landingDependencies"
+      "concat:landing"
+      "uglify:wallet"
+      "uglify:bcQrReader"
+      "uglify:bcPhoneNumber"
+      "jade"
+      "preprocess:html"
+      "copy:main"
+      "copy:blockchainWallet"
+      "copy:css_dist"
+      "rename:assets"
+      "rename:wallet"
+      "rename:landing"
+      "copy:legacy_cache_bust"
+    ]
+
+  # Run dist first
   grunt.registerTask "release", (versionFrontend) =>
     if versionFrontend == undefined || versionFrontend[0] != "v"
       console.log "Missing version or version is missing 'v'"
       exit(1)
 
     grunt.task.run [
-      "clean"
-      "build"
-      "shell:test_once"
-      "shell:npm_update_dependencies"
-      "shell:shrinkwrap:#{ versionFrontend }"
-
-      "shell:bower_update"
-      "shell:check_bower_dependencies"
-      "shell:bower_install_dependencies"
-      "shell:check_pgp_signatures"
-      "shell:freeze_bower:#{ versionFrontend }"
-
-      # Uglify, rename, etc just to make sure that works:
-      "concat:application_dependencies"
-      "uglify:application_dependencies"
-      "concat:application"
-      "concat_css:app"
-      "jade"
-      "preprocess"
-      "copy:main"
-      "rename:assets"
-      "rename:html"
-
-      # Generate changelog
-      "git_changelog"
-
-      # Commit shrinkwrap and tag release:
-      "shell:commit_and_push_release:#{ versionFrontend }"
       "shell:tag_release:#{ versionFrontend }:#{ versionFrontend }"
       "release_done:#{ versionFrontend }"
     ]
 
   grunt.registerTask "release_done", (versionFrontend) =>
-    console.log "Release done. Please copy Changelog.md over to Github release notes:"
+    console.log "Release done. Please run 'make changelog' and copy Changelog.md over to Github release notes:"
     console.log "https://github.com/blockchain/My-Wallet-V3-Frontend/releases/edit/#{ versionFrontend }"
-
-
-
-  grunt.registerTask "deploy", (versionFrontend, rootUrl, rootPath, feeServiceDomain) =>
-    if versionFrontend == undefined || versionFrontend[0] != "v"
-      console.log "Missing version or version is missing 'v'"
-      exit(1)
-
-    grunt.task.run [
-      "clean"
-      "shell:use_shrinkwrap:#{ versionFrontend }"
-      "shell:npm_update_dependencies"
-      "build"
-    ]
-
-    @versionFrontend = versionFrontend
-
-    if rootUrl
-      @rootUrl = rootUrl
-
-      console.log("Custom root URL: " + @rootUrl)
-
-      grunt.task.run [
-        "replace:root_url"
-        "replace:web_socket_url"
-      ]
-
-    if rootPath
-      @rootPath = rootPath
-
-      console.log("Custom root path: " + @rootPath)
-
-      grunt.task.run [
-        "replace:root_path"
-      ]
-
-    if feeServiceDomain
-      @feeServiceDomain = feeServiceDomain
-      console.log("Custom dynamic fee domain: " + @feeServiceDomain)
-
-      grunt.task.run [
-        "replace:fee_service_domain"
-      ]
-
-    grunt.task.run [
-      "replace:version_frontend"
-
-      "shell:use_frozen_bower:#{ versionFrontend }"
-      "shell:bower_install_dependencies"
-      # Faster, buy unsafe:
-      # "shell:copy_bower_components_to_build"
-
-      "replace:version_my_wallet"
-      "concat:application_dependencies"
-      "uglify:application_dependencies"
-      "concat:application"
-      "concat_css:app"
-      "jade"
-      "preprocess"
-      "copy:main"
-      "rename:assets"
-      "rename:html"
-    ]
-
-  grunt.registerTask "dist_unsafe", (rootUrl, rootPath, feeServiceDomain) =>
-    console.warn "Do not deploy this to production."
-    console.warn "Make sure your bower_components and node_modules are up to date"
-    grunt.task.run [
-      "build"
-    ]
-
-    @versionFrontend = "Unsafe"
-
-    if rootUrl
-      @rootUrl = rootUrl
-
-      console.log("Custom root URL: " + @rootUrl)
-
-      grunt.task.run [
-        "replace:root_url"
-        "replace:web_socket_url"
-      ]
-
-      if rootPath
-        @rootPath = rootPath
-
-        console.log("Custom root path: " + @rootPath)
-
-        grunt.task.run [
-          "replace:root_path"
-        ]
-
-    if feeServiceDomain
-      @feeServiceDomain = feeServiceDomain
-      console.log("Custom dynamic fee domain: " + @feeServiceDomain)
-
-      grunt.task.run [
-        "replace:fee_service_domain"
-      ]
-
-    grunt.task.run [
-      "replace:version_frontend"
-      "shell:copy_bower_components_to_build"
-      "replace:version_my_wallet"
-      "concat:application_dependencies"
-      "uglify:application_dependencies"
-      "concat:application"
-      "concat_css:app"
-      "jade"
-      "preprocess"
-      "copy:main"
-      "rename:assets"
-      "rename:html"
-    ]
 
   grunt.registerTask "check_translations", [
     "shell:check_translations"

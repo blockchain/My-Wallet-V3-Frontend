@@ -1,10 +1,8 @@
 angular
   .module('walletApp')
-  .controller("ModalNotificationCtrl", ModalNotificationCtrl);
+  .controller('ModalNotificationCtrl', ModalNotificationCtrl);
 
-function ModalNotificationCtrl($scope, Wallet, $uibModalInstance, notification) {
+function ModalNotificationCtrl ($scope, Wallet, $uibModalInstance, notification) {
   $scope.notification = notification;
-  $scope.ok = () => {
-  	$uibModalInstance.close(notification);
-  }
+  $scope.ok = () => $uibModalInstance.close(notification);
 }

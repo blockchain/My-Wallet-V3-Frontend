@@ -1,11 +1,12 @@
 describe "SendCtrl", ->
-
   scope = undefined
   ngAudio = undefined
   Wallet = undefined
+  MyWalletHelpers = undefined
+  Alerts = undefined
+  fees = undefined
   scope = undefined
-  $httpBackend = undefined
-  $uibModal = undefined
+  $q = undefined
 
   askForSecondPassword = undefined
 
@@ -19,23 +20,15 @@ describe "SendCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller, $compile, $q) ->
+    angular.mock.inject ($injector, $rootScope, $controller, $compile, _$q_) ->
+      $q = _$q_
       MyWallet = $injector.get("MyWallet")
       Wallet = $injector.get("Wallet")
       MyWalletPayment = $injector.get("MyWalletPayment")
       currency = $injector.get('currency')
+      fees = $injector.get('fees')
       MyWalletHelpers = $injector.get("MyWalletHelpers")
-      $httpBackend = $injector.get('$httpBackend')
-      $uibModal = $injector.get('$uibModal')
-
-      feeEstimates = [
-        { fee: 60000, surge: false }, { fee: 50000, surge: false },
-        { fee: 40000, surge: false }, { fee: 30000, surge: false },
-        { fee: 20000, surge: false }, { fee: 10000, surge: false }
-      ]
-
-      $httpBackend.when('GET', 'https://api.blockchain.info/fees')
-        .respond({ estimate: feeEstimates })
+      Alerts = $injector.get("Alerts")
 
       MyWallet.wallet =
         setNote: (-> )
@@ -64,7 +57,7 @@ describe "SendCtrl", ->
         btcCurrency: currency.bitCurrencies[0]
         feePerKB: 10000
 
-      Wallet.payment = MyWalletPayment
+      Wallet.Payment = MyWalletPayment
 
       askForSecondPassword = $q.defer()
       Wallet.askForSecondPasswordIfNeeded = () ->
@@ -74,18 +67,6 @@ describe "SendCtrl", ->
 
       scope.qrStream = {}
       scope.qrStream.stop = (-> )
-
-      return
-
-    return
-
-  beforeEach ->
-    $httpBackend.expectGET('https://api.blockchain.info/fees')
-
-  afterEach ->
-    $httpBackend.flush()
-    $httpBackend.verifyNoOutstandingExpectation()
-    $httpBackend.verifyNoOutstandingRequest()
 
   describe "", ->
     beforeEach ->
@@ -100,12 +81,13 @@ describe "SendCtrl", ->
           '<form role="form" name="sendForm" novalidate>' +
           '<input type="text" name="from" ng-model="transaction.from" required />' +
           '<input type="text" name="destinations0" ng-model="transaction.destinations[0]" required />' +
-          '<input type="number" name="amounts0" ng-model="transaction.amounts[0]" ng-change="validateAmounts()" min="1" required />' +
+          '<input type="number" name="amounts0" ng-model="transaction.amounts[0]" ng-change="" min="1" required />' +
+          '<input type="number" name="amountsFiat0" ng-model="transaction.amountsFiat[0]" ng-change="" min="1" required />' +
           '<input type="text" name="destinations1" ng-model="transaction.destinations[1]" required />' +
-          '<input type="number" name="amounts1" ng-model="transaction.amounts[1]" ng-change="validateAmounts()" min="1" required />' +
+          '<input type="number" name="amounts1" ng-model="transaction.amounts[1]" ng-change="" min="1" required />' +
           '<input type="text" name="destinations2" ng-model="transaction.destinations[2]" required />' +
-          '<input type="number" name="amounts1" ng-model="transaction.amounts[1]" ng-change="validateAmounts()" min="1" required />' +
-          '<input type="number" name="fee" ng-model="transaction.fee" ng-change="validateAmounts()" min="0" required />' +
+          '<input type="number" name="amounts1" ng-model="transaction.amounts[1]" ng-change="" min="1" required />' +
+          '<input type="number" name="fee" ng-model="transaction.fee" ng-change="" min="1" required />' +
           '<textarea rows="4" name="note" ng-model="transaction.note" ng-maxlength="512"></textarea>' +
           '</form>'
         )
@@ -120,16 +102,6 @@ describe "SendCtrl", ->
 
     describe "initialization", ->
 
-      it "should load legacyAddresses", ->
-        expect(scope.legacyAddresses().length).toBeGreaterThan(0)
-
-      it "should load accounts", ->
-        expect(scope.accounts().length).toBeGreaterThan(0)
-
-      it "should load addressBook", ->
-        # TODO: Make the address book work, then wite tests
-        pending()
-
       it "should load wallet status", ->
         expect(scope.status).toBeDefined()
 
@@ -142,20 +114,14 @@ describe "SendCtrl", ->
       it "should know the users btc currency", ->
         expect(scope.btcCurrency.code).toEqual('BTC')
 
-      it "should know that the camera is not on", ->
-        expect(scope.cameraIsOn).toBe(false)
-
       it "should not be sending", ->
-        expect(scope.sending).toBe(false)
-
-      it "should initially assume amount to be valid", ->
-        expect(scope.amountIsValid).toBe(true)
+        expect(scope.sending).toEqual(false)
 
       it "should not start on the confirmation step", ->
-        expect(scope.confirmationStep).toBeFalsy()
+        expect(scope.confirmationStep).toEqual(false)
 
       it "should not start in advanced send mode", ->
-        expect(scope.advanced).toBeFalsy()
+        expect(scope.advanced).toEqual(false)
 
     describe "transaction template", ->
 
@@ -170,14 +136,11 @@ describe "SendCtrl", ->
         expect(scope.transactionTemplate.amounts.length).toEqual(1)
         expect(scope.transactionTemplate.amounts[0]).toEqual(null)
 
-      it "should have a fee set to the feePerKB setting", ->
-        expect(scope.transactionTemplate.fee).toEqual(Wallet.settings.feePerKB)
+      it "should have an initial fee set to 0", ->
+        expect(scope.transactionTemplate.fee).toEqual(0)
 
       it "should have an empty note field", ->
         expect(scope.transactionTemplate.note).toEqual('')
-
-      it "should have the public note option set to false", ->
-        expect(scope.transactionTemplate.publicNote).toBeFalsy()
 
     describe "origins", ->
 
@@ -190,38 +153,16 @@ describe "SendCtrl", ->
         expect(accounts.length).toBe(2)
 
       it "should contain addresses", ->
-        addresses = scope.origins.filter (origin) -> origin.isWatchOnly?
+        addresses = scope.origins.filter (origin) -> origin.isWatchOnly
         expect(addresses.length).toBe(1)
 
       it "should not cointain archived accounts or addresses", ->
         hasArchived = scope.origins.some (origin) -> origin.archived
         expect(hasArchived).toBe(false)
 
-      it "should not contain watch-only addresses", ->
+      it "should contain watch-only addresses", ->
         hasWatchOnly = scope.origins.some (origin) -> origin.isWatchOnly
-        expect(hasWatchOnly).toBe(false)
-
-    describe "scope destinations", ->
-
-      it "should load", ->
-        expect(scope.destinations.length).toBeGreaterThan(0)
-        expect(scope.destinations[0].length).toBeGreaterThan(0)
-
-      it "should include accounts",  ->
-        hasAccount = scope.destinations[0].some (dest) -> dest.index?
-        expect(hasAccount).toBe(true)
-
-      it "should include addresses",  ->
-        hasAddress = scope.destinations[0].some (dest) -> dest.address?
-        expect(hasAddress).toBe(true)
-
-      it "should include watch-only addresses",  ->
-        hasWatchOnly = scope.destinations[0].some (dest) -> dest.isWatchOnly
         expect(hasWatchOnly).toBe(true)
-
-      it "should not include archived accounts", ->
-        hasArchived = scope.destinations[0].some (dest) -> dest.archived
-        expect(hasArchived).toBe(false)
 
     describe "payment request", ->
 
@@ -246,15 +187,61 @@ describe "SendCtrl", ->
         scope.applyPaymentRequest(scope.paymentRequest, 0)
         expect(scope.transaction.note).toEqual('hi')
 
-      it "should validate the amount", ->
-        spyOn(scope, 'validateAmounts')
-        scope.applyPaymentRequest(scope.paymentRequest, 0)
-        expect(scope.validateAmounts).toHaveBeenCalled()
+    describe "on update", ->
+      data =
+        finalFee: 2
+        sweepFees: [1,2,3,4,5,6]
+        balance: 5
+        sweepAmount: 2.5
+        fees: { estimate: [{ surge: true },{},{},{},{},{}] }
+        confEstimation: 2
+        absoluteFeeBounds: [2,4,6,8,10,12]
 
-      it "should update the to label", ->
-        spyOn(scope, 'updateToLabel')
-        scope.applyPaymentRequest(scope.paymentRequest, 0)
-        expect(scope.updateToLabel).toHaveBeenCalled()
+      it "should set the surge warning", ->
+        scope.defaultBlockInclusion = 0
+        scope.payment.triggerUpdate(data)
+        expect(scope.transaction.surge).toEqual(true)
+
+      it "should set the blockIdx to the confEstimation", ->
+        scope.payment.triggerUpdate(data)
+        expect(scope.transaction.blockIdx).toEqual(data.confEstimation)
+
+      it "should set the fee bounds", ->
+        scope.payment.triggerUpdate(data)
+        expect(scope.transaction.feeBounds).toEqual(data.absoluteFeeBounds)
+
+      it "should set the sweep fees", ->
+        scope.payment.triggerUpdate(data)
+        expect(scope.transaction.sweepFees).toEqual(data.sweepFees)
+
+      describe "fee", ->
+
+        it "should be set to finalFee in regular send", ->
+          scope.payment.triggerUpdate(data)
+          expect(scope.transaction.fee).toEqual(2)
+
+        it "should be set to finalFee in advanced send", ->
+          scope.advanced = true
+          scope.payment.triggerUpdate(data)
+          expect(scope.transaction.fee).toEqual(2)
+
+        it "should not change if fee field was touched in advanced send", ->
+          scope.advanced = true
+          scope.transaction.fee = 3
+          scope.sendForm.fee.$setDirty()
+          scope.payment.triggerUpdate(data)
+          expect(scope.transaction.fee).toEqual(3)
+
+      describe "maxAvailable", ->
+
+        it "should be set to the sweepAmount", ->
+          scope.payment.triggerUpdate(data)
+          expect(scope.transaction.maxAvailable).toEqual(2.5)
+
+        it "should be set to the balance minus the fee in advanced send", ->
+          scope.advanced = true
+          scope.payment.triggerUpdate(data)
+          expect(scope.transaction.maxAvailable).toEqual(3)
 
     describe "from", ->
 
@@ -322,11 +309,14 @@ describe "SendCtrl", ->
     describe "miners fee", ->
 
       beforeEach ->
-        scope.transaction.destinations = scope.legacyAddresses().slice(0, 2)
+        scope.transaction.destinations = Wallet.legacyAddresses().slice(0, 2)
         scope.transaction.amounts = [100, 5000]
 
       it "should be valid", ->
-        expect(scope.transaction.fee).toEqual(10000)
+        expect(scope.transaction.fee).toEqual(0)
+        expect(scope.sendForm.fee.$valid).toBe(false)
+        scope.transaction.fee = 10000
+        scope.$digest()
         expect(scope.sendForm.fee.$valid).toBe(true)
 
       it "should be invalid if null", ->
@@ -361,34 +351,55 @@ describe "SendCtrl", ->
       lgSizeFee = 100000
 
       beforeEach ->
-        spyOn($uibModal, 'open').and.callThrough()
-        scope.dynamicFeeAvailable = true
+        spyOn(fees, 'showFeeWarning').and.callFake(() -> $q.resolve())
+        scope.transaction.feeBounds = [30000, 25000, 20000, 15000, 10000, 5000]
 
-      it 'should warn when the tx fee is low', ->
+      it 'should warn when the tx fee is low', (done) ->
+        scope.advanced = true
         scope.transaction.fee = lowFee
-        scope.checkFee({ sizeEstimate: avgSize }).then ->
-          expect($uibModal.open).toHaveBeenCalled()
+        scope.transaction.size = avgSize
+        scope.checkFee().then(() ->
+          expect(fees.showFeeWarning).toHaveBeenCalledWith(4999, 5000, 4999, false)
+          done()
+        )
+        scope.$digest()
 
-      it 'should warn when the tx fee is high', ->
+      it 'should warn when the tx fee is high', (done) ->
+        scope.advanced = true
         scope.transaction.fee = highFee
-        scope.checkFee({ sizeEstimate: avgSize }).then ->
-          expect($uibModal.open).toHaveBeenCalled()
+        scope.transaction.size = avgSize
+        scope.checkFee().then(() ->
+          expect(fees.showFeeWarning).toHaveBeenCalledWith(30001, 30000, 30001, false)
+          done()
+        )
+        scope.$digest()
 
-      it 'should not warn when the tx fee is normal', ->
+      it 'should not warn when the tx fee is normal', (done) ->
         scope.transaction.fee = midFee
-        scope.checkFee({ sizeEstimate: avgSize }).then ->
-          expect($uibModal.open).not.toHaveBeenCalled()
+        scope.transaction.size = avgSize
+        scope.checkFee().then(() ->
+          expect(fees.showFeeWarning).not.toHaveBeenCalled()
+          done()
+        )
+        scope.$digest()
 
-      it 'should take tx size into account when deciding to show warning', ->
+      it 'should take tx size into account when deciding to show warning', (done) ->
         scope.transaction.fee = lgSizeFee
-        scope.checkFee({ sizeEstimate: lgSize }).then ->
-          expect($uibModal.open).not.toHaveBeenCalled()
+        scope.transaction.feeBounds[0] = 100000
+        scope.checkFee().then(() ->
+          expect(fees.showFeeWarning).not.toHaveBeenCalled()
+          done()
+        )
+        scope.$digest()
 
-      it 'should warn when there is a surge', ->
+      it 'should warn when there is a surge', (done) ->
         scope.transaction.fee = midFee
-        scope.surgeWarning = true
-        scope.checkFee({ sizeEstimate: avgSize }).then ->
-          expect($uibModal.open).toHaveBeenCalled()
+        scope.transaction.surge = true
+        scope.checkFee().then(() ->
+          expect(fees.showFeeWarning).toHaveBeenCalledWith(25000, 25000, 25000, true)
+          done()
+        )
+        scope.$digest()
 
     describe "note", ->
 
@@ -401,24 +412,25 @@ describe "SendCtrl", ->
 
       beforeEach ->
         scope.transaction =
-          from: scope.accounts()[0]
-          destinations: scope.legacyAddresses().slice(0, 2)
+          from: Wallet.accounts()[0]
+          destinations: Wallet.legacyAddresses().slice(0, 2)
           amounts: [100, 200]
+          amountsFiat: [100]
           fee: 50
           note: 'this_is_a_note'
 
     describe "after send", ->
 
       beforeEach ->
-        scope.transaction.from = scope.accounts()[1]
-        scope.transaction.destinations[0] = scope.accounts()[0]
+        scope.transaction.from = Wallet.accounts()[1]
+        scope.transaction.destinations[0] = Wallet.accounts()[0]
         scope.transaction.amounts[0] = 420
         scope.transaction.fee = 10
 
       describe "failure", ->
 
         beforeEach ->
-          scope.payment = new Wallet.payment({}, true)
+          scope.payment = new Wallet.Payment({}, true)
           askForSecondPassword.resolve()
 
         it "should display an error when process fails", inject((Alerts) ->
@@ -485,7 +497,7 @@ describe "SendCtrl", ->
 
         it "should show imported address transactions", inject(($state) ->
           spyOn($state, 'go')
-          scope.transaction.from = scope.legacyAddresses()[0]
+          scope.transaction.from = Wallet.legacyAddresses()[0]
           scope.send()
           scope.$digest()
           expect($state.go).toHaveBeenCalledWith('wallet.common.transactions', { accountIndex: 'imported' })
@@ -507,32 +519,11 @@ describe "SendCtrl", ->
           expect(Wallet.setNote).not.toHaveBeenCalled()
         )
 
-        it "should set a public note if there is one", inject((Wallet) ->
-          # TODO: figure out how to test this using promises
-          pending()
-          t = scope.transaction
-          t.note = 'this_is_a_note'
-          t.publicNote = true
-          scope.send()
-          scope.$digest()
-          # expect().toHaveBeenCalledWith()
-        )
-
-        it "should not set a public note if there is not one", inject((Wallet) ->
-          # TODO: figure out how to test this using promises
-          pending()
-          t = scope.transaction
-          t.note = 'this_is_a_note'
-          scope.send()
-          scope.$digest()
-          # expect().toHaveBeenCalledWith()
-        )
-
     describe "resetSendForm", ->
 
       beforeEach ->
-        scope.transaction.from = scope.legacyAddresses()[1]
-        scope.transaction.destinations = [scope.accounts()[1]]
+        scope.transaction.from = Wallet.legacyAddresses()[1]
+        scope.transaction.destinations = [Wallet.accounts()[1]]
         scope.transaction.amounts = [1111]
         scope.transaction.fee = 9000
 
@@ -540,60 +531,37 @@ describe "SendCtrl", ->
         scope.resetSendForm()
         expect(scope.transaction.destinations).toEqual([null])
         expect(scope.transaction.amounts).toEqual([null])
-        expect(scope.transaction.fee).toEqual(Wallet.settings.feePerKB)
+        expect(scope.transaction.fee).toEqual(0)
 
       it "should set transaction from field to default account", ->
         scope.resetSendForm()
-        expect(scope.transaction.from).toEqual(scope.accounts()[0])
+        expect(scope.transaction.from).toEqual(Wallet.accounts()[0])
 
     describe "numberOfActiveAccountsAndLegacyAddresses", ->
 
       it "should return the correct amount", ->
         amount = scope.numberOfActiveAccountsAndLegacyAddresses()
-        expect(amount).toEqual(3)
+        expect(amount).toEqual(4)
 
     describe "hasZeroBalance", ->
 
       it "should determine if balance is zero", ->
         expect(scope.hasZeroBalance({balance: 0})).toBe(true)
 
-    describe "processURLfromQR", ->
+    describe "applyPaymentRequest", ->
 
-      it "should process a succesfully scanned QR code", inject((Wallet) ->
-        scope.qrIndex = 0
-        scope.processURLfromQR("bitcoin://abcdefgh?amount=0.001")
+      it "should succesfully apply a payment request", inject((Wallet) ->
+        scope.result = Wallet.parsePaymentRequest('bitcoin://abcdefgh?amount=0.001')
+        scope.applyPaymentRequest(scope.result, 0)
         expect(scope.transaction.amounts[0]).toBe(100000)
         expect(scope.transaction.destinations[0].address).toBe("abcdefgh")
       )
 
-      it "should warn user if QR code is not recognized", inject((Wallet) ->
-        expect(scope.alerts.length).toBe(0)
-        scope.processURLfromQR("http://www.google.com")
-        expect(scope.alerts.length).toBe(1)
-      )
+    describe "getToLabels", ->
 
-    describe "updateToLabel", ->
-
-      it "should return if the destinations have not been loaded", ->
-        scope.transaction.destinations[0] = null
-        scope.updateToLabel()
-        expect(scope.toLabel).toBeUndefined()
-
-      it "should set the label to an address", ->
-        scope.transaction.destinations[0] = scope.legacyAddresses()[0]
-        scope.updateToLabel()
-        expect(scope.toLabel).toEqual('some_label')
-
-      it "should set the label to an account", ->
-        scope.transaction.destinations[0] = scope.accounts()[0]
-        scope.updateToLabel()
-        expect(scope.toLabel).toEqual('Checking')
-
-      it "should set the label when advanced", ->
-        scope.advanced = true
-        scope.transaction.destinations = scope.legacyAddresses()
-        scope.updateToLabel()
-        expect(scope.toLabel).toEqual('3 Recipients')
+      it "should return an array of addresses", ->
+        scope.transaction.destinations[0] = Wallet.legacyAddresses()[0]
+        expect(scope.getToLabels()).toEqual([ { address : 'some_address', archived : false, isWatchOnly : false, label : 'some_label' } ])
 
     describe "getTransactionTotal", ->
 
@@ -609,55 +577,78 @@ describe "SendCtrl", ->
         total = scope.getTransactionTotal(true)
         expect(total).toEqual(750)
 
-    describe "validateAmounts", ->
+    describe "amountsAreValid", ->
 
       beforeEach ->
-        scope.amountIsValid = false
-        scope.transaction.from = { balance: 100 }
-        scope.transaction.amounts = [30, 40]
-        scope.transaction.fee = 20
+        scope.transaction.amounts = [10, 20]
+        scope.transaction.maxAvailable = 40
 
-      afterEach ->
-        return if scope.amountIsValid
-        scope.validateAmounts()
-        expect(scope.amountIsValid).toBe(false)
+      it "should be true when all conditions are met", ->
+        expect(scope.amountsAreValid()).toEqual(true)
 
-      it "should validate the amounts if possible", ->
-        scope.validateAmounts()
-        expect(scope.amountIsValid).toBe(true)
+      it "should be false when any amounts are null", ->
+        scope.transaction.amounts[0] = null
+        expect(scope.amountsAreValid()).toEqual(false)
 
-      it "should not validate if the balance is too small", ->
-        scope.transaction.from.balance = 25
-
-      it "should not validate if one amount is too large", ->
-        scope.transaction.amounts[1] = 60
-
-      it "should not validate if the fee is too large", ->
-        scope.transaction.fee = 100
+      it "should be false when amounts exceed the available balance", ->
+        scope.transaction.maxAvailable = 29
+        expect(scope.amountsAreValid()).toEqual(false)
 
     describe "checkForSameDestination", ->
 
       beforeEach ->
-        scope.transaction.destinations = [scope.accounts()[0], scope.accounts()[1]]
+        scope.transaction.destinations = [Wallet.accounts()[0], Wallet.accounts()[1]]
 
       it "should recognize when all destinations are valid", ->
-        scope.transaction.from = scope.legacyAddresses()[0]
+        scope.transaction.from = Wallet.legacyAddresses()[0]
         scope.checkForSameDestination()
         expect(hasErr 'destinations0', 'isNotEqual').toBeUndefined()
         expect(hasErr 'destinations1', 'isNotEqual').toBeUndefined()
 
       it "should recognize when two destinations match", ->
-        scope.transaction.from = scope.accounts()[1]
+        scope.transaction.from = Wallet.accounts()[1]
         scope.checkForSameDestination()
         expect(hasErr 'destinations0', 'isNotEqual').toBeUndefined()
         expect(hasErr 'destinations1', 'isNotEqual').toBe(true)
 
+    describe "hasAmountError", ->
+
+      it "should be true when all conditions are met", ->
+        field = scope.sendForm.amounts0
+        fiatField = scope.sendForm.amountsFiat0
+        expect(field.$invalid).toEqual(true)
+        field.$setTouched()
+        fiatField.$setTouched()
+        spyOn(scope, 'amountsAreValid').and.returnValue(false)
+        expect(scope.hasAmountError(0)).toEqual(true)
+
+    describe "useAll", ->
+      beforeEach ->
+        scope.transaction.maxAvailable = 100
+
+      it "should set the transaction amount", ->
+        scope.useAll()
+        expect(scope.transaction.amounts[0]).toEqual(100)
+
+      it "should not use all if there is more than 1 destination", ->
+        scope.transaction.amounts = [1, 2]
+        scope.useAll()
+        expect(scope.transaction.amounts[0]).toEqual(1)
+
+      it "should set payment.amount", ->
+        spyOn(scope.payment, 'amount')
+        scope.useAll()
+        expect(scope.payment.amount).toHaveBeenCalled()
+
     describe "modal navigation", ->
 
       it "should build the payment before going to confirmation step", inject(($q) ->
-        spyOn(scope, 'setAllAndBuild').and.callFake(() -> $q.resolve())
+        spyOn(scope, 'checkFee').and.callFake(() -> $q.resolve())
+        spyOn(scope, 'finalBuild').and.callFake(() -> $q.resolve())
         scope.goToConfirmation()
-        expect(scope.setAllAndBuild).toHaveBeenCalled()
+        scope.$digest()
+        expect(scope.finalBuild).toHaveBeenCalled()
+        expect(scope.confirmationStep).toEqual(true)
       )
 
       it "should be able to go back from confirmation step", ->
@@ -699,34 +690,63 @@ describe "SendCtrl", ->
         expect(scope.transaction.destinations.length).toBe(1)
         expect(scope.transaction.amounts.length).toBe(1)
 
-    describe "camera", ->
+    describe "finalBuild", ->
 
-      it "should turn on", ->
-        spyOn(scope, '$broadcast')
-        scope.cameraOn(1)
-        expect(scope.cameraRequested).toBe(true)
-        expect(scope.qrIndex).toEqual(1)
+      it "should resolve with the payment transaction", (done) ->
+        scope.finalBuild().then((tx) ->
+          expect(tx).toEqual('tx')
+          done()
+        )
+        scope.$digest()
 
-      it "should turn off", ->
-        scope.cameraIsOn = true
-        scope.cameraRequested = true
-        scope.qrIndex = 1
-        scope.cameraOff()
-        expect(scope.cameraIsOn).toBe(false)
-        expect(scope.cameraRequested).toBe(false)
-        expect(scope.qrIndex).toBeNull()
+    describe "checkPriv", ->
 
-    describe "getFilter", ->
+      pkctaSpy = (val, reject=false) ->
+        returnVal = if reject then $q.reject(val) else $q.resolve(val)
+        spyOn(MyWalletHelpers, 'privateKeyCorrespondsToAddress').and.returnValue(returnVal)
+        MyWalletHelpers.privateKeyCorrespondsToAddress
 
-      it "should always set the filter label to the search string", ->
-        expect(scope.getFilter('search_1').label).toEqual('search_1')
-        expect(scope.getFilter('search_2', false).label).toEqual('search_2')
+      beforeEach ->
+        scope.transaction.from = { address: 'addr', isWatchOnly: true }
+        scope.transaction.priv = 'priv_key'
 
-      it "should return type '!External' when accounts=true", ->
-        expect(scope.getFilter('').type).toEqual('!External')
+      it "should not check the priv if the address is spendable", ->
+        s = pkctaSpy()
+        scope.transaction.from.isWatchOnly = false
+        scope.checkPriv()
+        expect(s).not.toHaveBeenCalled()
 
-      it "should return type 'Imported' when accounts=false", ->
-        expect(scope.getFilter('', false).type).toEqual('Imported')
+      it "should set the decrypted private key if successful", ->
+        s = pkctaSpy('decrypted_priv')
+        spyOn(scope.payment, 'from')
+        scope.checkPriv()
+        scope.$digest()
+        expect(scope.payment.from).toHaveBeenCalledWith('decrypted_priv', undefined)
+
+      it "should reject if the priv and address do not match", (done) ->
+        s = pkctaSpy(null)
+        scope.checkPriv().then(done).catch((e) ->
+          expect(s).toHaveBeenCalledWith('addr', 'priv_key', undefined)
+          expect(e).toEqual('PRIV_NO_MATCH')
+          done()
+        )
+        scope.$digest()
+
+      it "should reject if the bip38 password is wrong", (done) ->
+        s = pkctaSpy('wrongBipPass', true)
+        scope.checkPriv('wrong').catch((e) ->
+          expect(s).toHaveBeenCalledWith('addr', 'priv_key', 'wrong')
+          expect(e).toEqual('INCORRECT_PASSWORD')
+          done()
+        ).then(done)
+        scope.$digest()
+
+      it "should prompt the user for their bip password if needed", ->
+        spyOn(Alerts, 'prompt').and.returnValue({ then: (->) })
+        pkctaSpy('needsBip38', true)
+        scope.checkPriv()
+        scope.$digest()
+        expect(Alerts.prompt).toHaveBeenCalledWith('NEED_BIP38', jasmine.any(Object))
 
   describe "with a payment request", ->
     beforeEach ->
@@ -741,8 +761,8 @@ describe "SendCtrl", ->
           '<form role="form" name="sendForm" novalidate>' +
           '<input type="text" name="from" ng-model="transaction.from" required />' +
           '<input type="text" name="destinations0" ng-model="transaction.destinations[0]" required />' +
-          '<input type="number" name="amounts0" ng-model="transaction.amounts[0]" ng-change="validateAmounts()" min="1" required />' +
-          '<input type="number" name="fee" ng-model="transaction.fee" ng-change="validateAmounts()" min="0" required />' +
+          '<input type="number" name="amounts0" ng-model="transaction.amounts[0]" ng-change="" min="1" required />' +
+          '<input type="number" name="fee" ng-model="transaction.fee" ng-change="" min="0" required />' +
           '<textarea rows="4" name="note" ng-model="transaction.note" ng-maxlength="512"></textarea>' +
           '</form>'
         )

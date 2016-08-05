@@ -4,7 +4,7 @@ angular
 
 Activity.$inject = ['$rootScope', '$timeout', 'Wallet', 'MyWallet'];
 
-function Activity($rootScope, $timeout, Wallet, MyWallet) {
+function Activity ($rootScope, $timeout, Wallet, MyWallet) {
   var txSub;
 
   const activity = {
@@ -14,6 +14,7 @@ function Activity($rootScope, $timeout, Wallet, MyWallet) {
     limit: 8,
     timeSort: timeSort,
     capitalize: capitalize,
+    factory: factory,
     updateTxActivities: updateTxActivities,
     updateLogActivities: updateLogActivities,
     updateAllActivities: updateAllActivities
@@ -24,26 +25,30 @@ function Activity($rootScope, $timeout, Wallet, MyWallet) {
   return activity;
 
   // Wait for wallet to be defined before subscribing to tx updates
-  function setTxSub() {
+  function setTxSub () {
     let w = MyWallet.wallet;
-    if (txSub) { return; }
-    else if (w) { txSub = w.txList.subscribe(updateTxActivities); }
-    else { $timeout(setTxSub, 250); }
+    if (txSub) {
+      return;
+    } else if (w) {
+      txSub = w.txList.subscribe(updateTxActivities);
+    } else {
+      $timeout(setTxSub, 250);
+    }
   }
 
-  function updateAllActivities() {
+  function updateAllActivities () {
     activity.updateTxActivities();
     activity.updateLogActivities();
   }
 
-  function updateTxActivities() {
+  function updateTxActivities () {
     activity.transactions = MyWallet.wallet.txList.transactions()
       .slice(0, activity.limit)
       .map(factory.bind(null, 0));
     combineAll();
   }
 
-  function updateLogActivities() {
+  function updateLogActivities () {
     if (Wallet.settings.loggingLevel > 0) {
       Wallet.getActivityLogs(logs => {
         activity.logs = logs.results
@@ -57,7 +62,7 @@ function Activity($rootScope, $timeout, Wallet, MyWallet) {
     }
   }
 
-  function combineAll() {
+  function combineAll () {
     activity.activities = activity.transactions
       .concat(activity.logs)
       .filter(hasTime)
@@ -66,7 +71,7 @@ function Activity($rootScope, $timeout, Wallet, MyWallet) {
     $rootScope.$safeApply();
   }
 
-  function factory(type, obj) {
+  function factory (type, obj) {
     let a = { type: type };
     switch (type) {
       case 0:
@@ -74,7 +79,7 @@ function Activity($rootScope, $timeout, Wallet, MyWallet) {
         a.icon = 'ti-layout-list-post';
         a.time = obj.time * 1000;
         a.message = obj.txType.toUpperCase();
-        a.result = Math.abs(obj.result);
+        a.amount = Math.abs(obj.amount);
         break;
       case 4:
         a.title = 'LOG';
@@ -85,15 +90,15 @@ function Activity($rootScope, $timeout, Wallet, MyWallet) {
     return a;
   }
 
-  function capitalize(str) {
+  function capitalize (str) {
     return str[0].toUpperCase() + str.substr(1);
   }
 
-  function timeSort(x, y) {
+  function timeSort (x, y) {
     return y.time - x.time;
   }
 
-  function hasTime(x) {
+  function hasTime (x) {
     return (x.time != null) && x.time > 0;
   }
 }

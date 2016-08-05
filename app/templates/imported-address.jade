@@ -1,22 +1,32 @@
 tr
   td.shrink
     a(ng-bind-html="address.address | escapeHtml | highlight:searchText", ng-click="showAddress(address)")
-  td.expand
-    span(ng-bind-html="address.label | escapeHtml | highlight:searchText", ng-hide="status.edit").prm
-    .form-group(ng-class="{'has-error': errors.label}", ng-show="status.edit")
-      .col-sm-12
-        bc-async-input(inline ng-model="address.label" on-save="changeLabel" on-cancel="cancelEdit" is-required editing)
-          span.help-block(ng-show="errors.label") {{::errors.label}}  
+  td.expand.address-label
     span.float-right(ng-hide="status.edit")
       a(ng-click="status.edit=1")
         i.ti-pencil.prm   
+    span(ng-bind-html="address.label | escapeHtml | highlight:searchText", ng-hide="status.edit").prm.oflow
+    .form-group(ng-class="{'has-error': errors.label}", ng-show="status.edit")
+      .col-sm-12
+        bc-async-input(inline ng-model="address.label" on-save="changeLabel" on-cancel="cancelEdit" is-required editing="true")
+          span.help-block(ng-show="errors.label") {{::errors.label}}  
   td.shrink
-    span.prm
-      span(ng-show="address.balance != null")
-        fiat-or-btc(btc="address.balance")
-      img(ng-show="address.balance == null" src="img/spinner.gif")
-    button.btn-btn-default(ng-hide="address.balance == 0" translate="TRANSFER" ng-click="transfer()")
+    .flex.flex-between
+      span.prm
+        span(ng-show="address.balance != null")
+          fiat-or-btc(btc="address.balance")
+        img(ng-show="address.balance == null" src="img/spinner.gif")
   td.shrink
-    a(translate="YOUR_PRIVATE_KEY", ng-hide="address.isWatchOnly", ng-click="showPrivKey()")
-  td.shrink
-    a(translate="ARCHIVE", ng-click="archive(address)")
+    span(uib-dropdown on-toggle="toggled(open)")
+      a(href uib-dropdown-toggle id="more-dropdown" translate="More Options") 
+      ul.dropdown-menu(uib-dropdown-menu aria-labelledby="more-dropdown")
+        li
+          a.ti-import(translate="ARCHIVE", ng-click="archive(address)")
+        li
+          a.ti-key(translate="YOUR_PRIVATE_KEY", ng-hide="address.isWatchOnly", ng-click="showPrivKey()")
+        li
+          a.ti-arrow-right(ng-hide="address.balance == 0" translate="TRANSFER" ng-click="transfer()")
+        li
+          a.ti-check-box(translate="SIGN_MESSAGE" ng-click="signMessage()")
+        li
+          a.ti-arrow-up(ng-hide="address.balance == 0" translate="SPEND_IMPORTED_ADDRESS" ng-click="spend()")

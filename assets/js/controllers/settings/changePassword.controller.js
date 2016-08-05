@@ -1,32 +1,29 @@
 angular
   .module('walletApp')
-  .controller("ChangePasswordCtrl", ChangePasswordCtrl);
+  .controller('ChangePasswordCtrl', ChangePasswordCtrl);
 
-function ChangePasswordCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $translate) {
+function ChangePasswordCtrl ($scope, $log, Wallet, Alerts) {
   $scope.isCorrectMainPassword = Wallet.isCorrectMainPassword;
   $scope.uid = Wallet.user.uid;
 
-  $scope.fields = {
-    currentPassword: "",
-    password: "",
-    confirmation: ""
+  $scope.reset = () => {
+    $scope.fields = {
+      currentPassword: '',
+      password: '',
+      confirmation: ''
+    };
   };
-  $scope.errors = {};
-  $scope.status = {};
 
   $scope.isUserEmail = (candidate) => {
-    return ('string' === typeof candidate &&
-            candidate.length &&
-            candidate === Wallet.user.email);
+    return Wallet.user.email && candidate === Wallet.user.email;
   };
 
-  $scope.changePassword = () => {
-    if (!$scope.passwordForm.$valid) return;
+  $scope.isPasswordHint = (candidate) => {
+    return Wallet.user.passwordHint && candidate === Wallet.user.passwordHint;
+  };
 
-    const success = () => {
-      $uibModalInstance.dismiss("");
-      Wallet.saveActivity(2);
-    };
+  $scope.change = () => {
+    if (!$scope.form.$valid) return;
 
     const error = (err) => {
       $scope.status.waiting = false;
@@ -34,13 +31,6 @@ function ChangePasswordCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $tr
     };
 
     $scope.status.waiting = true;
-    $scope.$root.$safeApply($scope);
-    Wallet.changePassword($scope.fields.password, success, error);
+    Wallet.changePassword($scope.fields.password, $scope.deactivate, error);
   };
-
-  $scope.close = () => {
-    Alerts.clear();
-    $uibModalInstance.dismiss("");
-  };
-
 }

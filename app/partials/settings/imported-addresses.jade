@@ -5,9 +5,20 @@
       span(translate="BACK")
         
 .row
-  .col-xs-12.col-md-6
-    button.btn.button-primary(type="button", ng-click="importAddress()", translate="IMPORT_ADDRESS")
-  .col-xs-12.col-md-6
+  .col-xs-12.col-md-6.mbm
+    .flex
+      button.button-primary.mrm(type="button" translate="IMPORT_ADDRESS" ng-click="importAddress()")
+      .btn-group(uib-dropdown)
+        button.button-default(type="button" uib-dropdown-toggle)
+          span.black(translate="MORE_ACTIONS")
+          span.black.caret
+        ul.dropdown-menu(uib-dropdown-menu)
+          li
+            a(translate="VERIFY_MESSAGE" ng-click="openVerifyMessage()")
+          li(ng-show="activeSpendableAddresses().length > 0")
+            a(translate="TRANSFER_ALL" ng-click="openTransferAll()")
+
+  .col-xs-12.col-md-6.mtm
     .flex-1.mrl.filter-search-alt.width-100.pos-rel
       input(type="text", ng-model="searchTextLegacy")
       i.ti-search.pos-abs
@@ -16,12 +27,11 @@ h2(translate="SPENDABLE_ADDRESSES")
 
 .row
   .col-xs-12
-    table.responsive.width-100.account-container
+    table.responsive.width-100.imported-addresses-container
       tr
         th(translate="ADDRESS")
         th(translate="LABEL")
         th(translate="BALANCE")
-        th
         th
       tr(
         imported-address="address", 
@@ -32,7 +42,7 @@ h2(translate="SPENDABLE_ADDRESSES")
 h2(translate="WATCH_ONLY_ADDRESSES")
 
 .row
-  .col-xs-12.table-container
+  .col-xs-12.table-container.addresses-container
     table.responsive.width-100
       tr
         th(translate="ADDRESS")
@@ -57,7 +67,7 @@ p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archive
       i.ti-search.pos-abs
 .row(ng-show="display.archived")
   .col-xs-12.table-container
-    table.responsive.width-100
+    table.responsive.width-100.addresses-container
       tr
         th(translate="ADDRESS")
         th(translate="LABEL")

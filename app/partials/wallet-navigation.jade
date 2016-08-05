@@ -1,5 +1,5 @@
-.left-navigation(ng-show="status.isLoggedIn")
-  ul.aside
+.left-navigation.flex-column.flex-between(ng-if="status.isLoggedIn")
+  ul.aside.flex-1-0
     li.header(ui-sref-active="current", ng-click="hideMenu()")
       a(ui-sref="wallet.common.home")
         i.ti-home
@@ -9,8 +9,9 @@
         i.ti-layout-list-post
         span(translate="MY_TRANSACTIONS") 
       ul.scroll-accounts.aside-list.pas(ng-show="showOrHide('transactions')", ng-click="hideMenu()")
-        li.mvs(ng-class="selectedAccountIndex == '' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex: ''})", ng-hide="!status.didUpgradeToHd || (numberOfActiveAccounts() <= 1 && numberOfActiveLegacyAddresses() == 0) ")
-          a.pas(translate="ALL")
+        li(ng-class="selectedAccountIndex == '' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex: ''})", ng-hide="!status.didUpgradeToHd || (numberOfActiveAccounts() <= 1 && numberOfActiveLegacyAddresses() == 0) ")
+          a.flex-between.pas
+            span(translate="ALL")
             span
               fiat-or-btc(btc="total()")    
         li(ng-repeat="account in accounts()" ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''" ui-sref="wallet.common.transactions({accountIndex: account.index.toString()})")
@@ -18,6 +19,7 @@
             span.prs {{::account.label}}
             span
               fiat-or-btc(btc="account.balance")
+              img(ng-show="account.balance == null" src="img/spinner.gif")
         li(ui-sref="wallet.common.transactions({accountIndex:'imported'})", ng-show="numberOfActiveLegacyAddresses() > 0", ng-class="{active: selectedAccountIndex == 'imported'}")
           a.flex-between.pas.imported-addresses
             span.prs(translate="IMPORTED_ADDRESSES")
@@ -34,7 +36,7 @@
         i.bc-icon-security.security-yellow(ng-show="security.level > 2 && security.level < 6")
         i.bc-icon-security.security-green(ng-show="security.level == 6")
         span(translate="SECURITY_CENTER")
-        .progress-bar-wrapper.mlm(ng-hide="security.level == 6")
+        .progress-bar-wrapper.mlm.flex-1(ng-hide="security.level == 6")
           .bar(ng-class="'level-' + security.level")
     li.scroll-parent.header.mbm(ui-sref-active="current")
       a(ui-sref="wallet.common.settings")
@@ -42,28 +44,34 @@
         span(translate="SETTINGS")
       ul.scroll-settings.aside-list.pas(ng-show="showOrHide('settings')" ng-click="hideMenu()")
         li.mts.mbm(ui-sref-active="active")
-          a.pas(ui-sref="wallet.common.settings.info", translate="WALLET_INFO")
+          a.pas(ui-sref="wallet.common.settings.info")
+            span(translate="WALLET_INFO")
         li.mvm(ui-sref-active="active")
-          a.pas(ui-sref="wallet.common.settings.preferences", translate="PREFERENCES")
+          a.pas(ui-sref="wallet.common.settings.preferences")
+            span(translate="PREFERENCES")
         li.mvm(ui-sref-active="active")
-          a.pas(ui-sref="wallet.common.settings.security", translate="SECURITY")
+          a.pas(ui-sref="wallet.common.settings.security")
+            span(translate="SECURITY")
         li.mvm(ng-class="{active: accountsRoute()}")
-          a.pas(ui-sref="wallet.common.settings.accounts_index", translate="MENU_ACCOUNTS_AND_ADDRESSES")
+          a.pas(ui-sref="wallet.common.settings.accounts_index")
+            span(translate="MENU_ACCOUNTS_AND_ADDRESSES")
     li.header.mbm
       a(ng-click="supportModal()")
         i.ti-headphone
         span(translate="CONTACT_SUPPORT")
-    li.header.mbm(ui-sref-active="current", ng-click="hideMenu()")
-      a(ui-sref="wallet.common.feedback")
-        i.ti-thumb-up
-        span(translate="SEND_FEEDBACK")
   ul.aside.wallet-footer
     li.header.adverts.mbm
       span(translate="SPONSORS")
       adverts
     li.terms-policy
       ul.flex-center.aside.em-300.type-sm
-        li.pointer.mrm(ng-click="termsOfService()", translate="TOS")
+        li.pointer.mrm
+          a.text-color(href="https://blockchain.info/Resources/TermsofServicePolicy.pdf", translate="TOS" target="_blank" rel="noopener noreferrer")
         li.mrm.type-xs
           i.ti-control-record
-        li.pointer(ng-click="privacyPolicy()", translate="PRIVACY")
+        li.pointer.mrm
+          a.text-color(href="https://www.blockchain.com/assets/pdf/Blockchain_PrivacyPolicy.pdf", translate="PRIVACY" target="_blank" rel="noopener noreferrer")
+        li.mrm.type-xs
+          i.ti-control-record
+        li.pointer
+          a.text-color(href="https://www.blockchain.com/about", translate="ABOUT" target="_blank" rel="noopener noreferrer")

@@ -5,15 +5,15 @@
       p.mtn.mlm.type-h4.em-300
         | Be your own bank.
         span.type-xs.mls.align-offset.pos-rel &reg;
-    .button-group.flex
-      a.em-300.flex-center.flex-justify.mrm(ng-click="send()")
-        i.bc-icon-send
-        span(translate="SEND")
-      a.em-300.flex-center.flex-justify.mrm(ng-click="request()")
-        div.message-beacon.green(ng-show="requestBeacon")
-        i.bc-icon-receive
-        span(translate="REQUEST")
-      span.request(ng-click="request(true)" translate="YOUR_ADDRESS" ng-show="hasLegacyAddress")
+    .flex
+      button.btn.button-default.button-short.type-h5.mrm(ng-click="send()")
+        i.mrs.media-middle.bc-icon-send
+        span.em-300(translate="SEND")
+      button.btn.button-default.button-short.type-h5.mrm.pos-rel(ng-click="request()")
+        .message-beacon.green.pos-abs.center-self(ng-show="requestBeacon")
+        i.mrs.media-middle.bc-icon-receive
+        span.em-300(translate="REQUEST")
+      a.pointer.flex-center(ng-click="request(true)" translate="YOUR_ADDRESS" ng-show="hasLegacyAddresses()")
   .heavy.pointer.flex-column.flex-align-end.right-align.pointer(ng-click="toggleDisplayCurrency()", ng-show="status.didUpgradeToHd")
     span(ng-show="getTotal(accountIndex) == null")
       h3

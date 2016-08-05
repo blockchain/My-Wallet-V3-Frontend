@@ -23,12 +23,7 @@
     button.dropdown-toggle {
       border: none;
       background-color: white !important;
-
     }
-
-    // .btn-default:active, .btn-default.active, .open > .btn-default.dropdown-toggle {
-    //   background-color: white;
-    // }
   }
 }
 
@@ -70,7 +65,6 @@
   .level-badge {
     width: 22%;
     position: relative;
-    padding-bottom: 20px;
     transition: all .3s ease-in-out;
     &.active {
       background-color: white;
@@ -100,13 +94,11 @@
       -webkit-filter: grayscale(100%);
       filter: grayscale(100%);
     }
-    a {
+    > a {
       display: block;
       text-align: center;
       width: 100%;
-      padding: 20px 15px 30px 15px;
-      padding-bottom: 200px;
-      margin-bottom: -200px;
+      padding: 20px 15px 20px 15px;
       cursor: pointer;
       img {
         width: 75px;
@@ -191,6 +183,80 @@
   border: 5px solid $bright-green;
   border-radius: 100%;
   i { font-size: 2em; }
+}
+
+.security-center-ui {
+  .level-incomplete-container,
+  .level-complete-animation,
+  .level-complete-container {
+    top: 20px;
+    display: block !important;
+    @include transform-center-horizontal;
+    &.ng-hide {
+      opacity: 0;
+      &:not(.ng-animate) {
+        @include transition(opacity 0s);
+      }
+    }
+  }
+
+  .level-complete-animation,
+  .level-complete-container {
+    &.ng-hide {
+      opacity: 0;
+      z-index: -1;
+      @include transition(opacity 0s);
+    }
+  }
+
+  // step 1
+  .level-incomplete-container {
+    top: 0px;
+    opacity: 1;
+    z-index: 3;
+    position: relative;
+    @include transition(opacity .4s, transform .4s);
+    &.ng-hide-add-active {
+      -webkit-transform: translate3d(-80%, 0, 0);
+      transform: translate3d(-80%, 0, 0);
+    }
+  }
+
+  // step 2
+  .level-complete-animation {
+    z-index: 2;
+    opacity: 0;
+    @include transition(opacity .2s .6s);
+    &.ng-hide-remove.ng-hide-remove-active {
+      opacity: 1;
+    }
+  }
+
+  // step 3
+  .level-complete-container {
+    @include transition(all .4s 1.6s);
+    height: auto !important;
+    opacity: 1;
+    z-index: 3;
+  }
+
+  //override tooltip
+  .tooltip {
+    font-family: "Roboto", sans-serif;
+    &.in {
+      opacity: 1;
+    }
+  }
+  .tooltip-arrow {
+    border-top-color: #ccc !important;
+    border-bottom-color: #ccc !important;
+  }
+  .tooltip-inner {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 1em;
+    box-shadow: 0 2px 10px 0 #DDDDDD;
+  }
 }
 
 @media (max-width: 620px) {

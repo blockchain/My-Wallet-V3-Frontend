@@ -7,34 +7,33 @@ describe "SignupCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
+    angular.mock.inject ($injector, $rootScope, $controller, $compile, $templateCache) ->
       Wallet = $injector.get("Wallet")
+
+      Wallet.my.browserCheck = () -> true
+      Wallet.my.browserCheckFast = () -> true
+
+
+      $state = $injector.get("$state") # This is a mock
+      $state.params = {email: ''}
 
       Wallet.login = (uid, pass, code, twoFactor, success, error) -> success()
       Wallet.create = (password, email, currency, language, success) -> success("new_guid")
       Wallet.settings_api =
-        change_language: (code, success) -> success()
-        change_local_currency: () ->
+        changeLanguage: (code, success) -> success()
+        changeLocalCurrency: () ->
       Wallet.changeCurrency = () ->
 
-
       scope = $rootScope.$new()
+      template = $templateCache.get('partials/signup.jade')
 
       $controller "SignupCtrl",
         $scope: scope,
         $stateParams: {},
         $uibModalInstance: modalInstance
 
-      element = angular.element(
-        '<form role="form" name="signupForm" novalidate>' +
-          '<input type="email"    name="email"          ng-model="fields.email"         required />' +
-          '<input type="password" name="password"       ng-model="fields.password"      min-entropy="25" ng-maxlength="255" required />' +
-          '<input type="password" name="confirmation"   ng-model="fields.confirmation"  is-valid="fields.confirmation == fields.password" required />' +
-          '<input type="checkbox" name="agreement"      ng-model="fields.acceptedAgreement" required />' +
-        '</form>'
-      )
       scope.model = { fields: { email: '', password: '', confirmation: '', acceptedAgreement: false } }
-      $compile(element)(scope)
+      $compile(template)(scope)
 
       scope.$digest()
 
@@ -60,6 +59,7 @@ describe "SignupCtrl", ->
     scope.$digest()
 
     scope.signup()
+    scope.$digest()
     expect(scope.createWallet).not.toHaveBeenCalled()
 
   describe "password", ->
@@ -113,6 +113,8 @@ describe "SignupCtrl", ->
     it "should call createWallet()", ->
       spyOn(scope, "createWallet")
       scope.signup()
+      scope.$digest()
+
       expect(scope.createWallet).toHaveBeenCalled()
 
     it "should not call createWallet() if validation failed", ->
@@ -130,18 +132,13 @@ describe "SignupCtrl", ->
       expect(Wallet.create).toHaveBeenCalled()
     )
 
-    it "should add uid to cookies", inject(($cookies) ->
-      spyOn($cookies, 'put')
-      scope.signup()
-      expect($cookies.put).toHaveBeenCalledWith('uid', "new_guid")
-    )
-
     it "should add password to cookies in dev mode", inject(($cookies) ->
       spyOn($cookies, 'put')
       scope.autoReload = true
       scope.fields.password = "testing"
 
       scope.signup()
+      scope.$digest()
       expect($cookies.put).toHaveBeenCalledWith('password', "testing")
     )
 
@@ -169,11 +166,3 @@ describe "SignupCtrl", ->
   describe "currency", ->
     it "should guess the correct currency", ->
       expect(scope.currency_guess.code).toBe("USD")
-
-    it "should switch to the guessed currency", inject((currency, Wallet) ->
-      spyOn(Wallet, "changeCurrency")
-      expect(scope.currency_guess.code).not.toBe(currency.currencies[1].code)
-      scope.currency_guess = currency.currencies[1]
-      scope.$digest()
-      expect(Wallet.changeCurrency).toHaveBeenCalledWith(currency.currencies[1])
-    )

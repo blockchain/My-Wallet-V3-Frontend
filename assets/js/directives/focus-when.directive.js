@@ -3,14 +3,17 @@ angular
   .module('walletApp')
   .directive('focusWhen', focusWhen);
 
-focusWhen.$inject = ['$timeout'];
-
-function focusWhen($timeout) {
+function focusWhen ($timeout) {
   return {
     restrict: 'A',
+    scope: {
+      trigger: '=focusWhen'
+    },
     link: link
   };
-  function link(scope, elem, attrs) {
-    if (scope.$eval(attrs.focusWhen)) elem[0].focus();
+  function link (scope, elem, attrs) {
+    scope.$watch('trigger', (value) => {
+      if (value) $timeout(() => elem[0].focus(), 100);
+    });
   }
 }

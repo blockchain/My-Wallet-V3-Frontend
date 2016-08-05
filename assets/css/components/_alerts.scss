@@ -31,8 +31,7 @@
   animation: fade-in-right .5s;
   box-shadow: 0 2px 3px 0 #676767;
   .close {
-    right: -11px !important;
-    color: grey;
+    color: $success;
   }
 }
 

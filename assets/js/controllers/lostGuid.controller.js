@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('LostGuidCtrl', LostGuidCtrl);
 
-function LostGuidCtrl($scope, $rootScope, $http, $translate, WalletNetwork, Alerts) {
+function LostGuidCtrl ($scope, $rootScope, $http, $translate, WalletNetwork, Alerts, $sce) {
   $scope.currentStep = 1;
   $scope.fields = {
     email: '',
@@ -10,9 +10,14 @@ function LostGuidCtrl($scope, $rootScope, $http, $translate, WalletNetwork, Aler
   };
 
   $scope.refreshCaptcha = () => {
-    let time = new Date().getTime();
-    $scope.captchaSrc = $rootScope.rootURL + `kaptcha.jpg?timestamp=${time}`;
-    $scope.fields.captcha = '';
+    WalletNetwork.getCaptchaImage().then((data) => {
+      let url = URL.createObjectURL(data.image);
+      $sce.trustAsResourceUrl(url);
+      $scope.captchaSrc = url;
+      $scope.sessionToken = data.sessionToken;
+      $scope.fields.captcha = '';
+      $rootScope.$safeApply();
+    });
   };
 
   $scope.sendReminder = () => {
@@ -22,20 +27,20 @@ function LostGuidCtrl($scope, $rootScope, $http, $translate, WalletNetwork, Aler
       $scope.currentStep = 2;
       Alerts.displaySuccess(message);
       $rootScope.$safeApply();
-
     };
+
     let error = (error) => {
       $scope.working = false;
 
       switch (error) {
         case 'Captcha Code Incorrect':
-          Alerts.displayError($translate.instant('CAPTCHA_INCORRECT'));
+          Alerts.displayError('CAPTCHA_INCORRECT');
           break;
         case 'Quota Exceeded':
-          Alerts.displayError($translate.instant('QUOTA_EXCEEDED'));
+          Alerts.displayError('QUOTA_EXCEEDED');
           break;
         default:
-          Alerts.displayError($translate.instant('UNKNOWN_ERROR'));
+          Alerts.displayError('UNKNOWN_ERROR');
       }
 
       $scope.refreshCaptcha();
@@ -45,7 +50,7 @@ function LostGuidCtrl($scope, $rootScope, $http, $translate, WalletNetwork, Aler
     $scope.form.$setPristine();
     $scope.form.$setUntouched();
 
-    WalletNetwork.recoverGuid($scope.fields.email, $scope.fields.captcha).then(success).catch(error);
+    WalletNetwork.recoverGuid($scope.sessionToken, $scope.fields.email, $scope.fields.captcha).then(success).catch(error);
   };
 
   $scope.refreshCaptcha();

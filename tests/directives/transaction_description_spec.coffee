@@ -1,4 +1,4 @@
-describe "Transaction Description Directive", ->
+describe "Transaction Description Directive", ->  
   $compile = undefined
   $rootScope = undefined
   element = undefined
@@ -42,8 +42,27 @@ describe "Transaction Description Directive", ->
     $rootScope.$digest()
     isoScope = element.isolateScope()
 
-  it "should include incoming_tx class", ->
-    expect(element.html()).toContain 'incoming_tx'
+  describe "getTxDirection", ->
+
+    it "should have correct translation when sent", ->
+      expect(isoScope.getTxDirection('sent')).toEqual('SENT')
+
+    it "should have correct translation when received", ->
+      expect(isoScope.getTxDirection('received')).toEqual('RECEIVED_BITCOIN_FROM')
+
+    it "should have correct translation when transferred", ->
+      expect(isoScope.getTxDirection('transfer')).toEqual('MOVED_BITCOIN_TO')
+
+  describe "getTxClass", ->
+
+    it "should return outgoing_tx class when sent", ->
+      expect(isoScope.getTxClass('sent')).toEqual('outgoing_tx')
+
+    it "should return incoming_tx class when received", ->
+      expect(isoScope.getTxClass('received')).toEqual('incoming_tx')
+
+    it "should return local_tx class when transferred", ->
+      expect(isoScope.getTxClass('transfer')).toEqual('local_tx')
 
   it "should have the transaction in its scope", ->
     expect(isoScope.tx.hash).toBe("tx_hash")
@@ -55,18 +74,6 @@ describe "Transaction Description Directive", ->
     $rootScope.$digest()
 
     expect(element.html()).toContain 'translate="MOVED_BITCOIN_TO"'
-
-  it "should determine the other address for inter wallet transactions", ->
-    isoScope.tx.txType = 'transfer'
-
-    element = $compile(html)($rootScope)
-    $rootScope.$digest()
-    isoScope = element.isolateScope()
-
-    expect(isoScope.primaryLabel).toBe("Savings")
-
-  it "should determine the other address for received transactions", ->
-    expect(isoScope.secondaryLabel).toBe("Spending")
 
   it "should recognize sending from imported address", ->
     isoScope.tx.txType = 'sent'

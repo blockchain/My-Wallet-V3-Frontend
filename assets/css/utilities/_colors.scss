@@ -4,6 +4,7 @@ $send-red: #e27e82;
 $receive-green: #85b45b;
 $transfer-blue: #5bacd0;
 $pending-red: #ffbcbd;
+$pale-yellow: #fff7e5;
 
 //Blockchain Blue Tints
 $hover-blue: #edf6fc;
@@ -16,7 +17,7 @@ $baby-blue: #edf6fd;
 
 //Blockchain Text
 $black: #4B4D4E;
-$text: #6C6C6C;
+$text: #5f5f5f;
 
 //Blockchain Greys
 $light-grey: #f7f7f7;
@@ -25,6 +26,7 @@ $mid-grey: #b0b0b0;
 $dark-grey: #757575;
 $border-grey: #ddd;
 $pale-grey: #bababa;
+$basic-grey: #757575;
 $steel: #6c6c6c;
 
 //Did You Know
@@ -38,6 +40,7 @@ $success: #8CCA6A;
 $eee: #EEEEEE;
 $ccc: #CCCCCC;
 $aaa: #AAAAAA;
+$a7a7a7: #a7a7a7;
 
 //Security Badge Colors
 $security-red: #E47F7F;
@@ -61,8 +64,11 @@ $bright-green:  #3CC476 !important; //override Security Center nested css select
 @include color('grey', $light-grey);
 @include color('light-grey', $light-grey);
 @include color('mid-grey', $mid-grey);
+@include color('basic-grey', $basic-grey);
 @include color('dark-grey', $dark-grey);
+@include color('send-red', $send-red);
 @include color('receive-green', $receive-green);
+@include color('transfer-blue', $transfer-blue);
 @include color('security-red', $security-red);
 @include color('security-yellow', $security-yellow);
 @include color('security-green', $security-green);
@@ -77,6 +83,8 @@ $bright-green:  #3CC476 !important; //override Security Center nested css select
 @include color('sent', $send-red);
 @include color('received', $receive-green);
 @include color('tertiary-blue', $tertiary-blue);
+@include color('text-color', $text);
+@include color('state-danger-text', $state-danger-text);
 
 //Background Mixin
 @mixin bg-color($name, $color) {
@@ -92,3 +100,4 @@ $bright-green:  #3CC476 !important; //override Security Center nested css select
 @include bg-color('light-blue', $light-blue);
 @include bg-color('mid-grey', $mid-grey);
 @include bg-color('success', $success);
+@include bg-color('grey', $grey);

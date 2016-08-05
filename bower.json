@@ -6,29 +6,31 @@
   "license": "",
   "private": true,
   "dependencies": {
-    "angular": "1.4.*",
+    "angular": "1.5.*",
     "angular-mocks": "1.4.*",
     "angular-animate": "1.4.*",
     "angular-ui-router": "0.2.*",
-    "angular-bootstrap": "1.1.*",
+    "angular-bootstrap": "1.3.*",
     "angular-cookies": "1.4.*",
     "angular-audio": "1.6.*",
     "angular-ui-select": "0.14.*",
     "angular-sanitize": "1.4.*",
     "angular-qr": "0.2.*",
-    "angular-translate": "2.7.*",
+    "angular-translate": "2.11.*",
     "angular-translate-loader-static-files": "2.7.*",
     "angular-inview": "1.5.*",
-    "angular-password-entropy": "0.1.*",
-    "browserdetection": "0.3.*",
+    "browserdetection": "sjors/browser-detection#webkit",
     "bc-qr-reader": "0.2.*",
     "bootstrap-sass": "3.3.*",
-    "blockchain-wallet": "3.10.*",
-    "bc-phone-number": "5.0.*"
+    "blockchain-wallet": "3.21.*",
+    "bc-phone-number": "5.0.11",
+    "oclazyload": "1.0.*"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "compare-versions": "^2.0.1"
+  },
   "resolutions": {
-    "angular": "1.4.*",
-    "angular-bootstrap": "1.1.*"
+    "angular": "1.5.*",
+    "angular-translate": "2.11.*"
   }
 }

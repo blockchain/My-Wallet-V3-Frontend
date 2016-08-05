@@ -1,64 +1,245 @@
-.payment-url {
-  @extend .flex;
+// SEND & RECEIVE & SIGN MSG
+
+#send, #receive, #sign-msg {
+  .divider {
+    margin: 0px auto;
+  }
+  .open > .uib-dropdown-menu {
+    overflow-y: auto;
+    max-height: 160px;
+    overflow-x: hidden;
+  }
+  .dropdown-menu {
+    > li:first-child {
+      .dropdown-header {
+        // we need to remove this when we come up with what we want to call Accounts
+        display: none;
+      }
+    }
+  }
+  .row {
+    @extend .flex-row;
+  }
+  .form-group {
+    position: relative;
+    > label {
+      font-size: 1.1em;
+      min-width: 80px;
+    }
+    > div, textarea, .bitcoin-address {
+      @extend .mlm;
+      @media (min-width: 769px) {
+        max-width: 440px;
+        min-width: 440px;
+      }
+      &.auto {
+        width: auto;
+        max-width: initial;
+        min-width: initial;
+      }
+    }
+    @media (max-width: 768px) {
+      display: block;
+      > label {
+        min-width: auto;
+        min-width: initial;
+      }
+      > div, textarea, .bitcoin-address {
+        width: 100%;
+        min-width: auto;
+        max-width: none;
+        margin-left: 0px;
+        min-width: initial;
+        border-radius: 0px;
+      }
+    }
+  }
+
+  textarea {
+    border: 1px solid #EEEEEE;
+    padding: 6px 12px;
+    font-size: 14px;
+    height: 60px;
+    resize: none;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  // when an address is too long
+  .ui-select-choices-row-inner {
+    > span {
+      > div {
+        overflow: hidden;
+        height: 1.428571429em;
+        > span:first-child {
+          float: left;
+          overflow: auto;
+          max-width: 220px;
+          margin-bottom: -30px;
+          padding-bottom: 30px;
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  & + .modal-footer {
+    clear: left;
+  }
+
+
+  @media (max-width: 768px) {
+    .row {
+      display: block;
+    }
+    & + .modal-footer {
+      font-size: 12px;
+    }
+  }
 }
 
-.modal-body#send {
+// SEND
+
+#send {
   .destination-input {
     input, button {
       height: 34px;
     }
-  }
-
-  form[name="noteForm"] {
-    width: 50%;
-  }
-
-  textarea {
-    border-radius: 3px;
-    border: 1px solid #EEEEEE;
-    height: 60px;
-    width: 100%;
-    &:focus {
-      outline: none;
+    input {
+      @extend .brdrn;
     }
-    resize: none;
-    padding: 5px;
-
   }
-}
 
-.receive-code canvas { margin-right: 2em; padding-right: 2em; }
-@media (max-width: 768px) {
-  .payment-url {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    -ms-grid-row-align: center;
-    align-items: center;
+  .form-group {
+    > label {
+      min-width: 105px;
+    }
+    &.note {
+      button {
+        top: -10px;
+        right: -10px;
+        position: absolute;
+      }
+      textarea {
+        margin-left: 0;
+      }
+    }
+    &.fee {
+      button {
+        z-index: 15;
+        bottom: 5px;
+        right: -10px;
+        position: absolute;
+      }
+      & ~ .help-block {
+        bottom: -30px;
+        margin-left: 95px;
+        position: absolute;
+      }
+    }
   }
-  .receive-address { margin-top: 1em; }
-  .receive-code canvas { margin-right: 0; padding-right: 0; }
-}
 
-.legacy-msg {
-  > a {
-    font-size: 14px;
-    margin-left: 2px;
+  .has-error {
+    position: relative;
+    > span {
+      margin: 0;
+      position: absolute;
+    }
+  }
+
+  &.advanced-container {
+    max-height: 460px; // avoid overflow issues
+    .add {
+      background-color: $aaa;
+      border-radius: 100%;
+      position: absolute;
+      bottom: 20px;
+      right: -15px;
+      padding: 0px;
+      height: 30px;
+      width: 30px;
+    }
+    .advanced-recipient-row {
+      margin-bottom: 20px;
+      position: relative;
+      border: 1px solid #eee;
+      padding: 1em;
+      .ui-select-container {
+        min-width: 225px;
+        margin-right: 10px;
+      }
+      > .remove {
+        border-radius: 100%;
+        position: absolute;
+        padding: 1px 5px;
+        right: -10px;
+        top: -10px;
+        z-index: 2;
+      }
+      & + .has-error {
+        top: -20px;
+      }
+    }
+  }
+
+  &.confirmation {
+    @media (min-width: 769px) {
+      min-width: 520px;
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+    .btcaddr {
+      font-size: 0.7em;
+    }
+    .overview {
+      .flex-row {
+        > span.account {
+          text-align: left;
+          @media (max-width: 768px) {
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          &.aaa {
+            color: $aaa !important;
+          }
+        }
+        .helper {
+          position: absolute;
+          right: -25px;
+          top: -2px;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    &.fade {
+      opacity: 1 !important;
+    }
+  }
+  @media (min-width: 769px) {
+    &.fade {
+      opacity: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      @include bc-ng-animate('confirmation', 'height', '265px', '200px');
+      @include bc-ng-animate('advanced-container', 'height', '265px', '365px');
+    }
+    &.sm.fade {
+      @include bc-ng-animate('advanced-container', 'height', '235px', '345px');
+    }
+    &.confirmation.fade {
+      @include bc-ng-animate('confirmation', 'height', '265px', '200px');
+    }
   }
 }
 
 .miners-fee-selection {
-  display: flex;
-  align-items: center;
   .fee-choices, .fee-custom { @extend .flex; }
   .fee-choices {
-    flex-direction: column;
     border-right: 1px solid $grey;
+    flex-direction: column;
     margin-right: 30px;
     padding-right: 20px;
   }
@@ -66,15 +247,6 @@
     align-items: center;
   }
   label { font-size: small; }
-  .form-control { width: auto; }
-  & ~ .help-block {
-    &.friendly {
-      color: $blue;
-    }
-    .has-error {
-      color: $state-danger-text;
-    }
-  }
 }
 
 @media (max-width: 668px) {
@@ -89,7 +261,6 @@
       margin-right: 0;
       border-right: none;
     }
-    .fee-custom {}
   }
 }
 
@@ -101,19 +272,144 @@
   }
 }
 
-#send, #receive {
-  .divider {
-    margin: 0px auto;
+// RECEIVE
+
+#receive {
+  @media (max-width: 768px) {
+    opacity: 1 !important;
   }
-  // we need to remove this when we come up with what we want to call Accounts
-  .dropdown-menu {
-    > li:first-child {
-      .dropdown-header {
-        display: none;
+  @media (min-width: 769px) {
+    opacity: 1;
+    overflow: hidden;
+    @include bc-ng-animate('advanced', 'height', '225px', '375px');
+    &.sm {
+      @include bc-ng-animate('advanced', 'height', '205px', '325px');
+    }
+  }
+
+  .ui-select-bootstrap > .ui-select-choices {
+    max-height: 168px;
+  }
+
+  .row {
+    @extend .flex-row;
+  }
+
+  .ti-arrow-down {
+    font-weight: bold;
+    font-size: 18px;
+    color: $blue;
+  }
+
+  .column {
+    @extend .flex-column;
+    h4 {
+      margin-top: 0px;
+    }
+  }
+  
+  .amount .form-control {
+    min-width: 0;
+  }
+}
+
+.receive-code {
+  canvas {
+    display: block;
+  }
+}
+
+.split-rule {
+  width: 100%;
+  display: block;
+  text-align: center;
+  position: relative;
+  &:before {
+    content: '';
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    background-color: $ccc;
+  }
+}
+
+.payment-url {
+  @extend .flex;
+  > div {
+    @media (min-width: 769px) {
+      min-width: 320px;
+      &.receive-address {
+        &.max-width {
+          max-width: 320px;
+        }
       }
     }
   }
-  & + .modal-footer {
-    clear: left;
+  .or {
+    position: relative;
+    text-transform: uppercase;
+    &:before, &:after {
+      left: 50%;
+      width: 1px;
+      content: '';
+      height: 40%;
+      position: absolute;
+      background-color: $ccc;
+    }
+    &:before {
+      top: 0;
+    }
+    &:after {
+      bottom: 0;
+    }
+  }
+  @media (max-width: 768px) {
+    display: block;
+    > div {
+      width: 100%;
+      &.receive-address {
+        min-width: initial !important;
+        max-width: initial !important;
+      }
+    }
+    .or {
+      width: 100%;
+      display: block;
+      text-align: center;
+      margin: 1.25em auto;
+      &:before, &:after {
+        top: 50%;
+        width: 40%;
+        height: 1px;
+        left: initial;
+        right: initial;
+      }
+      &:before {
+        left: 0;
+      }
+      &:after {
+        right: 0;
+      }
+    }
+  }
+}
+
+.popover {
+  z-index: 1060;
+}
+
+#sign-msg {
+  @media (max-width: 768px) {
+    opacity: 1 !important;
+  }
+  @media (min-width: 769px) {
+    opacity: 1;
+    overflow: hidden;
+    @include bc-ng-animate('signature', 'height', '147px', '227px');
+  }
+  input {
+    border-bottom-color: $eee;
   }
 }

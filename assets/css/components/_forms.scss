@@ -1,3 +1,12 @@
+.form-ctrl {
+  padding: 15px 0;
+  input {
+    border: 1px solid $border-grey;
+    border-radius: 5px;
+    padding: 3px;
+  }
+}
+
 .bc-form {
   background: $light-blue;
   border: 1px solid $eee;
@@ -65,7 +74,7 @@
         display: inline-block;
         background: transparent;
         box-shadow: none !important;
-        border-bottom: 1px solid $black;
+        border-bottom: 1px solid $aaa;
         @include transition(width 0.1s);
         @media (min-width: 768px) {
           width: 50%;
@@ -80,9 +89,20 @@
 
 form[name="signupForm"] {
   .accept-checkbox {
+    z-index: 10;
+    position: relative;
     padding-right: 0px;
   }
-  .accept-label {
-    margin-bottom: 0px;
+}
+
+input.lrg {
+  height: 54px;
+  font-size: 1.4em;
+  @media (min-width: 768px) {
+    min-width: 250px;
   }
+}
+
+input[type="checkbox"] {
+  margin: 0;
 }

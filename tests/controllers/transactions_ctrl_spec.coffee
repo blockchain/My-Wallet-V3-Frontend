@@ -46,9 +46,10 @@ describe "TransactionsCtrl", ->
       expect(scope.addressBook["17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq"]).toBe("John")
     )
 
-    it "should be able to fetch more transactions", inject((Wallet) ->
+    it "should be able to fetch more transactions", inject((Wallet, $timeout) ->
       spyOn(Wallet.my.wallet, "fetchTransactions").and.callThrough()
       scope.nextPage()
+      $timeout.flush()
       expect(Wallet.my.wallet.fetchTransactions).toHaveBeenCalled()
     )
 
@@ -67,3 +68,46 @@ describe "TransactionsCtrl", ->
       spyOn(scope, "filterSearch")
       scope.filterSearch(1, "test")
       expect(scope.filterSearch).toHaveBeenCalled()
+
+    describe "filterByType", ->
+
+      it "should filter by sent", ->
+        tx = {}
+        tx.txType = 'sent'
+        scope.filterBy = 'SENT'
+
+        result = scope.filterByType(tx)
+        expect(result).toBe(true)
+
+      it "should filter by received", ->
+        tx = {}
+        tx.txType = 'received'
+        scope.filterBy = 'RECEIVED'
+
+        result = scope.filterByType(tx)
+        expect(result).toBe(true)
+
+      it "should filter by transferred", ->
+        tx = {}
+        tx.txType = 'transfer'
+        scope.filterBy = 'TRANSFERRED'
+
+        result = scope.filterByType(tx)
+        expect(result).toBe(true)
+    
+    describe "checkLabelDiff", ->
+      
+      it "should return the address when the label is the same as the address", ->
+        label = 'abc'
+        address = 'abc'
+        
+        result = scope.checkLabelDiff(label, address)
+        expect(result).toBe('abc')
+        
+      
+      it "should return a concatenate combination when the label is different from the address", ->
+        label = 'abc'
+        address = 'bcd'
+        
+        result = scope.checkLabelDiff(label, address)
+        expect(result).toBe('abc, bcd')

@@ -1,4 +1,9 @@
 .transactions {
+  .label-success,
+  .label-default {
+    @extend .btn-xs;
+    display: inline-block;
+  }
   .transaction-feed {
     position: relative;
     top: 50px;
@@ -9,12 +14,11 @@
   }
   a.date { padding-top: 10px; }
   .transaction {
-    border-bottom: 1pt solid $light-grey;
+    border-bottom: 1pt solid $eee;
     padding: 15px 30px;
     position: relative;
     &:hover { background: $hover-blue; }
     .timestamp{
-      color: rgb(190, 190, 190);
       font-style: italic;
     }
     .type {
@@ -23,10 +27,6 @@
     }
     .feed-info {
       width: 120px;
-    }
-    .action {
-      font-weight: 500;
-      font-size: 1.3em;
     }
     .action.incoming_tx{
       color: $receive-green;
@@ -37,28 +37,66 @@
     .action.local_tx{
      color: $transfer-blue;
     }
-    .destination{
-      display: block;
-      font-size: 1.1em;
-    }
-    .amount {
-      padding: 10px 0;
+    .tx-toggle {
+      top: 31px;
+      left: 10px;
+      height: 100%;
       position: absolute;
-      right: 10px;
-      top: 18px;
-      button.amount{
-        font-size: 1.1em;
-        min-width: 125px;
-        float: right;
+    }
+    button.amount {
+      padding: 10px;
+      min-width: 125px;
+    }
+    transaction-status {
+      width: 100%;
+      position: relative;
+      .helper {
+        margin: 0px;
       }
     }
-    .tx-toggle {
-      position: absolute;
-      top: 62.5px;
-      transform: translateY(-50%);
+    transaction-description {
+      .progress {
+        @extend .mbn;
+        background: rgba(0,0,0,0.2);
+      }
+      .progress-bar {
+        background-color: $blue;
+        &.progress-bar-success {
+          background-color: $success;
+        }
+        &[aria-valuenow="0"] span {
+          color: $basic-grey;
+        }
+      }
+      .fee {
+        button {
+          margin-top: -3px;
+        }
+      }
+      .bc-link {
+        color: $basic-grey;
+        &:hover {
+          color: $blue;
+        }
+      }
     }
-    .tx-details {
-      margin-left: 3em;
+  }
+  @media (max-width: 992px) {
+    .transaction {
+      .mtvl {
+        flex: 2 0 0;
+        -ms-flex: 2;
+        margin-top: 0.625em;
+      }
+      .tx-details {
+        margin-left: 1em;
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    .transaction {
+      padding-left: 10px;
+      padding-right: 10px;
     }
   }
   .description {
@@ -66,6 +104,10 @@
   }
   .feed-details {
     border-top: 1px solid $eee;
+  }
+  .tx-note {
+    max-width: 100%;
+    word-wrap: break-word;
   }
 }
 
@@ -75,6 +117,9 @@
   border-radius: 5px;
   min-width: 50vw;
   font-size: 1.1em;
+  @media (max-width: 992px) {
+    width: 95%;
+  }
   .tx-status{
     font-weight: 600;
     color: rgb(4, 155, 212);
@@ -85,6 +130,67 @@
   }
   button.amount{padding: 10px;height: auto;width: 100%;}
   span.you{opacity: .5; font-style: italic;padding-right: 5px;}
+  .tx-sender, .tx-receiver {
+    @media (max-width: 992px) {
+      overflow: hidden;
+      label + ul, &.tx-sender span {
+        width: calc(100% - 50px);
+        text-overflow: ellipsis;
+        display: inline-block;
+      }
+    }
+    label {
+      vertical-align: top;
+      & + ul {
+        display: inline-block;
+      }
+    }
+  }
+  @media (max-width: 620px) {
+    .details-container {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+    }
+    .tx-details {
+      padding: 0px;
+    }
+    .border-left {
+      border-top: 1px solid $eee;
+      -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+      margin-top: 0.625em;
+      flex-wrap: wrap;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      border-left: 0px;
+      padding: 15px 0px;
+      > div {
+        width: 50%;
+        margin-bottom: 5px;
+        .success {
+          h6 {
+            text-align: center;
+          }
+          i {
+            margin-right: 3px;
+          }
+        }
+      }
+      .tx-status {
+        padding: 0px 15px;
+      }
+      .tx-bci-link {
+        margin-top: 10px;
+        font-size: 0.9em;
+        width: 100%;
+      }
+    }
+  }
 }
 
 button.amount {
@@ -110,11 +216,37 @@ button {
 }
 .unconfirmed { opacity: 0.5; }
 
-.note { color: $black; }
+.note {
+  color: $black;
+  position: relative;
+  textarea {
+    resize: none;
+    height: 60px;
+    border-color: $eee;
+    padding: 10px 0px 0px 10px;
+  }
+  @media (min-width: 769px) {
+    .input {
+      width: 100%;
+      top: 1.5em;
+      left: 0;
+    }
+  }
+  @media (max-width: 992px) {
+    .input.pos-abs {
+      top: 0px;
+      position: relative;
+    }
+  }
+}
 
 a.date,p.date { color: $black; }
 
-.amountTotal{ float: none;}
+.amountTotal {
+  float: none;
+  min-width: 130px;
+  text-transform: none;
+}
 
 .from, .to{
   padding: 5px 0;

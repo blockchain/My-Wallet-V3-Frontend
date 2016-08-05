@@ -18,6 +18,18 @@
   margin-left: 5px;
 }
 
+// Mobile UIB Dropdowns
+@media (max-width: 768px) {
+  .open {
+    // Show the menu
+    > .uib-dropdown-menu {
+      display: block;
+      overflow: auto;
+      max-width: 280px;
+    }
+  }
+}
+
 /////////////////////////////////////
 //*** Angular UI Select Madness!***//
 ////////////////////////////////////
@@ -30,12 +42,16 @@ $select-fg: #686868;
     &:focus {
       outline: none;
     }
+    &.btn-default-focus {
+      box-shadow: none;
+    }
     > span {
       border: 1px solid $eee !important;
-      color: $black !important;
-      border-radius: 5px !important;
+
       box-shadow: none;
       padding-bottom: 0;
+      color: $black !important;
+      border-radius: 0px !important;
     }
     .ui-select-container .ui-select-toggle {
     height: 30px;
@@ -87,6 +103,7 @@ $select-fg: #686868;
 .ui-select-bootstrap .ui-select-choices-row>a {
   color: $select-fg;
   font-weight: 300;
+  padding: 3px 12px;
 }
 
 .ui-select-bootstrap .ui-select-choices-row.active>a {
@@ -125,22 +142,9 @@ $select-fg: #686868;
   box-shadow: none !important;
 }
 
-//override tooltip
-.tooltip {
-  font-family: "Roboto", sans-serif;
-  &.in {
-    opacity: 1;
-  }
-}
-.tooltip-arrow {
-  border-top-color: #ccc !important;
-  border-bottom-color: #ccc !important;
-}
-.tooltip-inner {
-  background: white;
-  border: 1px solid #ccc;
-  padding: 1em;
-  box-shadow: 0 2px 10px 0 #DDDDDD;
+//override progress bar
+.progress {
+  border-radius: 0;
 }
 
 //override pre from bootstrap
@@ -148,4 +152,23 @@ pre {
   word-break: normal;
   word-wrap: normal;
   white-space: pre-line;
+}
+
+//angular popovers
+.clean-popover {
+  border-radius: 0px !important;
+  border: 1px solid $eee !important;
+  .popover-content {
+    padding: 5px 5px 7px 5px;
+  }
+  &.top {
+    .arrow {
+      border-top-color: $eee !important;
+    }
+  }
+  &.bottom {
+   .arrow {
+      border-bottom-color: $eee !important;
+   }
+  }
 }

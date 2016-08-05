@@ -3,28 +3,33 @@ angular
   .module('walletApp')
   .factory('fees', fees);
 
-function fees() {
-
+function fees ($uibModal) {
+  const standardTx = 512;
   const service = {
-    guessAbsoluteFee: guessAbsoluteFee,
-    getClosestBlock: getClosestBlock
+    showFeeWarning: showFeeWarning,
+    showLargeTxWarning: showLargeTxWarning
   };
   return service;
 
-  function guessAbsoluteFee(sizeBytes, satoshiPerKb) {
-    return Math.ceil(satoshiPerKb * (sizeBytes / 1000));
+  function showFeeWarning (currentFee, suggestedFee, maxFee, surge) {
+    let modalOptions = {
+      templateUrl: 'partials/dynamic-fee.jade',
+      windowClass: 'bc-modal medium',
+      resolve: { feeValues: () => ({
+        currentFee, suggestedFee, maxFee, surge
+      }) },
+      controller: 'DynamicFeeController'
+    };
+    return $uibModal.open(modalOptions).result;
   }
 
-  function getClosestBlock(fee, sizeBytes, feeEstimates) {
-    fee = Math.ceil(fee);
-    let fees = feeEstimates.map(e => service.guessAbsoluteFee(sizeBytes, e.fee));
-    let closestBlock = fees.reduce((x, y) => (x-fee > y-fee && fee >= x ? x : y));
-    let low = fees[5];
-
-    let blockIdx = fees.indexOf(closestBlock) + 1;
-    if (fee === low) blockIdx = 6;
-    if (fee < low) blockIdx = 7;
-    return blockIdx;
+  function showLargeTxWarning (txSize, recommendedFee) {
+    let multiplier = (txSize / standardTx).toFixed(1);
+    let modalOptions = {
+      templateUrl: 'partials/large-tx.jade',
+      windowClass: 'bc-modal medium',
+      controller: ($scope) => angular.extend($scope, { multiplier, recommendedFee })
+    };
+    return $uibModal.open(modalOptions).result;
   }
-
 }

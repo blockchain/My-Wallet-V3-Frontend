@@ -1,73 +1,80 @@
 angular
   .module('walletApp')
-  .controller("SignupCtrl", SignupCtrl);
+  .controller('SignupCtrl', SignupCtrl);
 
-SignupCtrl.$inject = ['$scope', '$state', '$cookies', '$filter', '$translate', '$uibModal', 'Wallet', 'Alerts', 'currency', 'languages'];
+SignupCtrl.$inject = ['$scope', '$state', '$cookies', '$filter', '$translate', '$uibModal', 'Wallet', 'Alerts', 'currency', 'languages', 'MyWallet'];
 
-function SignupCtrl($scope, $state, $cookies, $filter, $translate, $uibModal, Wallet, Alerts, currency, languages) {
+function SignupCtrl ($scope, $state, $cookies, $filter, $translate, $uibModal, Wallet, Alerts, currency, languages, MyWallet) {
   $scope.working = false;
   $scope.alerts = Alerts.alerts;
   $scope.status = Wallet.status;
 
-  $scope.$watch("status.isLoggedIn", newValue => {
+  $scope.browser = {disabled: true};
+
+  $scope.$watch('status.isLoggedIn', newValue => {
     if (newValue) {
       $scope.busy = false;
-      $state.go("signup.finish.show");
+      $state.go('signup.finish.show');
     }
   });
 
   let language_code = $translate.use();
-  if(language_code == "zh_CN") {
-    language_code = "zh-cn";
+  if (language_code === 'zh_CN') {
+    language_code = 'zh-cn';
   }
 
-  let language_guess = $filter("getByProperty")("code", language_code, languages);
+  let language_guess = $filter('getByProperty')('code', language_code, languages);
   if (language_guess == null) {
-    language_guess = $filter("getByProperty")("code", "en", languages);
+    language_guess = $filter('getByProperty')('code', 'en', languages);
   }
 
-  var cur = "USD";
+  var cur = 'USD';
 
-  switch(language_guess.code) {
+  switch (language_guess.code) {
     case 'zh-cn':
-      cur = "CNY";
+      cur = 'CNY';
       break;
     case 'ca':
       cur = "EUR";
       break;
     case 'nl':
-      cur = "EUR";
+      cur = 'EUR';
       break;
     default:
   }
 
   $scope.language_guess = language_guess;
 
-  $scope.currency_guess = $filter("getByProperty")("code", cur, currency.currencies);
+  $scope.currency_guess = $filter('getByProperty')('code', cur, currency.currencies);
   $scope.fields = {
-    email: "",
-    password: "",
-    confirmation: "",
-    acceptedAgreement: false
+    password: '',
+    confirmation: '',
+    acceptedAgreement: false,
+    email: $state.params.email || ''
   };
 
   $scope.close = () => {
     Alerts.clear();
-    $state.go("wallet.common.home");
+    $state.go('wallet.common.home');
   };
 
   $scope.signup = () => {
     if ($scope.signupForm.$valid) {
       $scope.working = true;
-      $scope.createWallet((uid) => {
-        $scope.working = false;
-        if (uid != null) {
-          $cookies.put("uid", uid);
+      $scope.$$postDigest(() => {
+        if (!MyWallet.browserCheck()) {
+          $scope.browser.disabled = true;
+          $scope.browser.msg = $translate.instant('UNSUITABLE_BROWSER');
+          $scope.working = false;
+        } else {
+          $scope.createWallet((uid) => {
+            $scope.working = false;
+            if ($scope.autoReload) {
+              $cookies.put('password', $scope.fields.password);
+            }
+            $scope.close('');
+          });
         }
-        if ($scope.autoReload) {
-          $cookies.put("password", $scope.fields.password);
-        }
-        $scope.close("");
       });
     }
   };
@@ -78,14 +85,9 @@ function SignupCtrl($scope, $state, $cookies, $filter, $translate, $uibModal, Wa
     });
   };
 
-  $scope.$watch("language_guess", (newVal, oldVal) => {
+  $scope.$watch('language_guess', (newVal, oldVal) => {
     if (newVal) {
       $translate.use(newVal.code);
-      Wallet.changeLanguage(newVal);
     }
-  });
-
-  $scope.$watch("currency_guess", (newVal, oldVal) => {
-    if (newVal) Wallet.changeCurrency(newVal);
   });
 }

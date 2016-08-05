@@ -2,55 +2,61 @@ angular
   .module('walletApp')
   .directive('destinationInput', destinationInput);
 
-destinationInput.$inject = ['$rootScope', '$timeout', 'Wallet'];
+destinationInput.$inject = ['$rootScope', '$timeout', 'Wallet', 'format'];
 
-function destinationInput($rootScope, $timeout, Wallet) {
+function destinationInput ($rootScope, $timeout, Wallet, format) {
   const directive = {
     restrict: 'E',
-    require: 'ngModel',
+    require: '^ngModel',
     scope: {
       model: '=ngModel',
-      onRequestQr: '&',
-      change: '&ngChange'
+      change: '&ngChange',
+      onPaymentRequest: '&onPaymentRequest',
+      ignore: '='
     },
     templateUrl: 'templates/destination-input.jade',
     link: link
   };
   return directive;
 
-  function link(scope, elem, attrs, ctrl) {
-    scope.browserWithCamera = $rootScope.browserWithCamera;
-    scope.accounts = Wallet.accounts().filter(a => a.active);
+  function link (scope, elem, attrs, ctrl) {
+    let accounts = Wallet.accounts().filter(a => !a.archived);
+    let addresses = Wallet.legacyAddresses().filter(a => !a.archived);
+    let addressBook = Wallet.addressBook().map(format.addressBook);
 
-    let format = (a, type) => ({
-      label     : a.label,
-      balance   : a.balance,
-      active    : a.active,
-      archived  : a.archived,
-      type      : type
-    });
+    scope.selectOpen = false;
+    scope.limit = 50;
+    scope.incLimit = () => scope.limit += 50;
+    scope.isLast = (d) => d === scope.destinations[scope.limit - 1];
+
+    scope.dropdownHidden = accounts.length === 1 && addresses.length === 0;
+    scope.browserWithCamera = $rootScope.browserWithCamera;
+
+    scope.onAddressScan = (result) => {
+      let address = Wallet.parsePaymentRequest(result);
+      scope.model = format.destination(address, 'External');
+      scope.onPaymentRequest({request: address});
+      $timeout(scope.change);
+    };
 
     scope.setModel = (a) => {
-      scope.model = format(a, 'Accounts');
-      scope.model.index = a.index;
+      scope.model = a;
       $timeout(scope.change);
     };
 
     scope.clearModel = () => {
-      scope.model = format({}, 'External');
-      scope.model.address = '';
+      scope.model = { address: '', type: 'External' };
       $timeout(scope.change);
     };
 
-    scope.focusInput = (t) => {
-      $timeout(() => elem.find('input')[0].focus(), t || 50);
+    scope.focusInput = () => {
+      let q = scope.selectOpen ? '.ui-select-search' : '#address-field';
+      $timeout(() => elem[0].querySelectorAll(q)[0].focus(), 250);
     };
 
     let blurTime;
     scope.blur = () => {
-      blurTime = $timeout(() => {
-        ctrl.$setTouched();
-      }, 250);
+      blurTime = $timeout(() => ctrl.$setTouched(), 250);
     };
 
     scope.focus = () => {
@@ -59,7 +65,17 @@ function destinationInput($rootScope, $timeout, Wallet) {
     };
 
     if (!scope.model) scope.clearModel();
-    scope.focusInput(250);
     scope.$watch('model', scope.change);
+    scope.$watch('selectOpen', (open) => open && scope.focusInput());
+
+    scope.$watch('ignore', (ignore) => {
+      scope.destinations = accounts.concat(addresses).map(format.destination).concat(addressBook);
+      if (ignore && typeof ignore === 'object') {
+        let filterSame = (dest) => ignore.index != null
+          ? dest.index !== ignore.index
+          : dest.address !== ignore.address;
+        scope.destinations = scope.destinations.filter(filterSame);
+      }
+    });
   }
 }

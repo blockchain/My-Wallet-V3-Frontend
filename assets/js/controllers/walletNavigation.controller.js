@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('WalletNavigationCtrl', WalletNavigationCtrl);
 
-function WalletNavigationCtrl($rootScope, $scope, Wallet, Alerts, SecurityCenter, $state, $stateParams, $uibModal, filterFilter, $location) {
+function WalletNavigationCtrl ($rootScope, $scope, Wallet, Alerts, SecurityCenter, $state, $stateParams, $uibModal, filterFilter, $location) {
   $scope.status = Wallet.status;
   $scope.total = Wallet.total;
   $scope.settings = Wallet.settings;
@@ -11,6 +11,8 @@ function WalletNavigationCtrl($rootScope, $scope, Wallet, Alerts, SecurityCenter
   $scope.selectedAccountIndex = $stateParams.accountIndex;
 
   $scope.numberOfActiveLegacyAddresses = () => {
+    if (!Wallet.status.isLoggedIn) return null;
+
     return filterFilter(Wallet.legacyAddresses(), {
       archived: false
     }).length;
@@ -24,8 +26,7 @@ function WalletNavigationCtrl($rootScope, $scope, Wallet, Alerts, SecurityCenter
 
   $scope.getMainAccountId = () => {
     if (!$scope.status.isLoggedIn) return 0;
-    return ($scope.numberOfActiveAccounts() <= 1) ?
-      Wallet.getDefaultAccountIndex() : '';
+    return ($scope.numberOfActiveAccounts() <= 1) ? Wallet.getDefaultAccountIndex() : '';
   };
 
   $scope.showImported = () => {
@@ -36,54 +37,33 @@ function WalletNavigationCtrl($rootScope, $scope, Wallet, Alerts, SecurityCenter
   $scope.accountsRoute = () => [
     'wallet.common.settings.accounts_index',
     'wallet.common.settings.accounts_addresses',
-    'wallet.common.settings.imported_addresses',
-  ].indexOf($state.current.name) > -1
+    'wallet.common.settings.imported_addresses'
+  ].indexOf($state.current.name) > -1;
 
-  $scope.showOrHide = (path) => {
-    return $location.url().indexOf(path) !== -1;
-  };
+  $scope.showOrHide = (path) => $location.url().indexOf(path) !== -1;
 
   $scope.newAccount = () => {
     Alerts.clear();
-    let modalInstance = $uibModal.open({
+    $uibModal.open({
       templateUrl: 'partials/account-form.jade',
       controller: 'AccountFormCtrl',
+      windowClass: 'bc-modal sm',
       resolve: {
         account: () => void 0
-      },
-      windowClass: 'bc-modal small'
+      }
     });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
-    }
   };
 
   $scope.getLegacyTotal = () => Wallet.total('imported');
-
-  $scope.privacyPolicy = () => {
-    let modalInstance = $uibModal.open({
-      templateUrl: 'partials/privacy-policy.jade',
-      windowClass: 'bc-modal terms-modal'
-    });
-  };
-
-  $scope.termsOfService = () => {
-    window.open("https://blockchain.info/terms_of_service", "_blank");  
-  }
 
   $scope.didLoad = () => {
     $scope.accounts = Wallet.accounts;
   };
 
-  $rootScope.supportModal = () => {
-    let modalInstance = $uibModal.open({
-      templateUrl: 'partials/support.jade',
-      windowClass: 'bc-modal auto'
-    })
-  }
+  $rootScope.supportModal = () => $uibModal.open({
+    templateUrl: 'partials/support.jade',
+    windowClass: 'bc-modal auto'
+  });
 
   $scope.didLoad();
-
 }

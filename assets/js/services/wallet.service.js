@@ -1,20 +1,16 @@
 'use strict';
 
-// MyWallet hacks
-
-// Don't allow it to play sound
-function playSound(id) {}
-
 angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'bcPhoneNumber', 'languages', 'currency'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'MyWalletMetadata'];
 
-function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet,   MyBlockchainApi,   MyBlockchainSettings,   MyWalletStore,   MyWalletPayment,  MyWalletHelpers,   $rootScope,   ngAudio,   $cookies,   $translate,   $filter,   $state,   $q,   bcPhoneNumber,   languages,   currency) {
+function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, MyWalletMetadata) {
   const wallet = {
     goal: {
-      auth: false
+      auth: false,
+      upgrade: false
     },
     status: {
       isLoggedIn: false,
@@ -47,7 +43,8 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       email: null,
       mobile: null,
       passwordHint: '',
-      internationalMobileNumber: null
+      mobileNumber: null,
+      alias: null
     }
   };
   wallet.fiatHistoricalConversionCache = {};
@@ -58,50 +55,32 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   wallet.store = MyWalletStore;
 
   wallet.api = MyBlockchainApi;
+  wallet.rng = MyBlockchainRng;
 
-  // If a custom rootURL is set by index.jade:
-  //                    Grunt can replace this:
-  const customRootURL = $rootScope.rootURL || "/";
-  wallet.api.ROOT_URL=customRootURL;
-  // If customRootURL is set by Grunt:
-  $rootScope.rootURL = customRootURL;
-
-  // If a custom root path is set by index.jade:
-  //                    Grunt can replace this:
-  const customRootPath = $rootScope.rootPath || "";
-  // If customRootPath is set by Grunt:
-  $rootScope.rootPath = customRootPath;
+  // $rootScope.rootURL is already set because this file is lazy loaded.
+  wallet.api.ROOT_URL = $rootScope.rootURL;
 
   //                         Grunt can replace this:
   const customWebSocketURL = $rootScope.webSocketURL;
-  if(customWebSocketURL) {
-    wallet.my.ws.wsUrl=customWebSocketURL;
+  if (customWebSocketURL) {
+    wallet.my.ws.wsUrl = customWebSocketURL;
   }
 
-  // If a custom feeServiceDomain is set by index.jade:
+  // If a custom apiDomain is set by index.jade:
   //                             Grunt can replace this:
-  const customFeeServiceDomain = $rootScope.feeServiceDomain || "https://api.blockchain.info";
-  $rootScope.feeServiceDomain = customFeeServiceDomain;
-
-  // These are set by grunt dist:
-  $rootScope.versionFrontend = null;
-  $rootScope.versionMyWallet = null;
-
-  if ($rootScope.versionFrontend) {
-    console.log(
-      'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s',
-      $rootScope.versionFrontend, $rootScope.versionMyWallet
-    );
+  const customApiDomain = $rootScope.apiDomain || 'https://api.blockchain.info/';
+  $rootScope.apiDomain = customApiDomain;
+  if (customApiDomain) {
+    wallet.api.API_ROOT_URL = customApiDomain;
   }
 
-  wallet.payment = MyWalletPayment;
+  wallet.Payment = MyWalletPayment;
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
   MyBlockchainApi.API_CODE = wallet.api_code;
 
   wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) => {
-    let didLogin = () => {
-      wallet.status.isLoggedIn = true;
+    let didLogin = (result) => {
       wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
       if (wallet.my.wallet.isUpgradedToHD) {
         wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.hdwallet.isMnemonicVerified;
@@ -113,8 +92,23 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       if (wallet.my.wallet.isUpgradedToHD && !wallet.status.didInitializeHD) {
         wallet.status.didInitializeHD = true;
       }
-      wallet.settings_api.get_account_info((result) => {
-        $window.name = 'blockchain-' + result.guid;
+      $window.name = 'blockchain-' + uid;
+      wallet.my.wallet.fetchAccountInfo().then((result) => {
+        const accountInfo = wallet.my.wallet.accountInfo;
+
+        wallet.user.email = accountInfo.email;
+
+        if (wallet.my.wallet.accountInfo.mobile) {
+          wallet.user.mobileNumber = accountInfo.mobile;
+        } else {
+          wallet.user.mobileNumber = '+' + accountInfo.dialCode;
+        }
+        wallet.user.isEmailVerified = accountInfo.isEmailVerified;
+        wallet.user.isMobileVerified = accountInfo.isMobileVerified;
+
+        wallet.settings.currency = $filter('getByProperty')('code', accountInfo.currency, currency.currencies);
+
+        // TODO: handle more of this in My-Wallet-V3
         wallet.settings.ipWhitelist = result.ip_lock || '';
         wallet.settings.restrictToWhitelist = result.ip_lock_on;
         wallet.settings.apiAccess = result.is_api_access_enabled;
@@ -122,28 +116,22 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
         wallet.settings.needs2FA = result.auth_type !== 0;
         wallet.settings.twoFactorMethod = result.auth_type;
         wallet.settings.loggingLevel = result.logging_level;
-        wallet.user.email = result.email;
         wallet.user.current_ip = result.my_ip;
-        wallet.status.currentCountryCode = result.country_code;
-        if (result.sms_number) {
-          wallet.user.mobile = {
-            country: result.sms_number.split(' ')[0],
-            number: result.sms_number.split(' ')[1]
-          };
-          wallet.user.internationalMobileNumber = bcPhoneNumber.format(result.sms_number);
-        } else {
-          wallet.user.mobile = {
-            country: '+' + result.dial_code,
-            number: ''
-          };
-          wallet.user.internationalMobileNumber = '+' + result.dial_code;
+        wallet.user.guid = result.guid;
+        wallet.user.alias = result.alias;
+        wallet.settings.notifications_on = result.notifications_on;
+        wallet.settings.notifications = {};
+        if (result.notifications_type) {
+          let notifs = wallet.settings.notifications;
+          result.notifications_type.forEach(code => {
+            let type = Math.log2(code);
+            if (type === 0) notifs.email = true;
+            if (type === 2) notifs.http = true;
+            if (type === 5) notifs.sms = true;
+          });
         }
-        wallet.settings.notifications = result.notifications_type && result.notifications_type.length > 0 && result.notifications_type.indexOf(1) > -1 && (result.notifications_on == 0 || result.notifications_on == 2);
-        wallet.user.isEmailVerified = result.email_verified;
-        wallet.user.isMobileVerified = result.sms_verified;
         wallet.user.passwordHint = result.password_hint1;
         wallet.setLanguage($filter('getByProperty')('code', result.language, languages));
-        wallet.settings.currency = $filter('getByProperty')('code', result.currency, currency.currencies);
         wallet.settings.btcCurrency = $filter('getByProperty')('serverCode', result.btc_currency, currency.bitCurrencies);
         wallet.settings.displayCurrency = wallet.settings.btcCurrency;
         wallet.settings.feePerKB = wallet.my.wallet.fee_per_kb;
@@ -151,18 +139,24 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
         wallet.status.didLoadSettings = true;
         if (wallet.my.wallet.isUpgradedToHD) {
           let didFetchTransactions = () => {
-            console.log('%cStop!', 'color:white; background:red; font-size: 16pt');
-            console.log('%cThis browser feature is intended for developers. If someone told you to copy-paste something here, it is a scam and will give them access to your money!', 'font-size: 14pt');
+            if (browserDetection().browser === 'ie') {
+              console.warn('Stop!');
+              console.warn('This browser feature is intended for developers. If someone told you to copy-paste something here, it is a scam and will give them access to your money!');
+            } else {
+              console.log('%cStop!', 'color:white; background:red; font-size: 16pt');
+              console.log('%cThis browser feature is intended for developers. If someone told you to copy-paste something here, it is a scam and will give them access to your money!', 'font-size: 14pt');
+            }
             wallet.status.didLoadTransactions = true;
             wallet.status.didLoadBalances = true;
             $rootScope.$safeApply();
           };
           wallet.my.wallet.getHistory().then(didFetchTransactions);
         }
+        wallet.status.isLoggedIn = true;
         $rootScope.$safeApply();
       });
       if (successCallback != null) {
-        successCallback();
+        successCallback(result.guid);
       }
       $rootScope.$safeApply();
     };
@@ -175,7 +169,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       // 4: Google Authenticator
       // 5: SMS
 
-      needsTwoFactorCallback();
+      needsTwoFactorCallback(method);
 
       wallet.settings.twoFactorMethod = method;
       $rootScope.$safeApply();
@@ -188,16 +182,17 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
 
     let loginError = (error) => {
       console.log(error);
-      if (error.indexOf('Unknown Wallet Identifier') > -1) {
+      if (error.length && error.indexOf('Unknown Wallet Identifier') > -1) {
         errorCallback('uid', error);
-      } else if (error.indexOf('password') > -1) {
+      } else if (error.length && error.indexOf('password') > -1) {
         errorCallback('password', error);
       } else {
-        Alerts.displayError(error, true);
+        Alerts.displayError(error.message || error, true);
         errorCallback();
       }
       $rootScope.$safeApply();
     };
+
     if (two_factor_code != null && two_factor_code !== '') {
       wallet.settings.needs2FA = true;
     } else {
@@ -211,37 +206,66 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
 
     let authorizationRequired = (callback) => {
       callback(authorizationProvided());
-      Alerts.clear();
-      $translate("CHECK_EMAIL_VERIFY_BROWSER").then(translation => {
-        Alerts.displayWarning(translation, true);
-      });
+      Alerts.displayWarning('CHECK_EMAIL_VERIFY_BROWSER', true);
       $rootScope.$safeApply();
     };
 
-    $window.root = 'https://blockchain.info/';
-
     var two_factor = null;
-    if(wallet.settings.twoFactorMethod) {
+    if (wallet.settings.twoFactorMethod) {
       two_factor = {
         type: wallet.settings.twoFactorMethod,
         code: two_factor_code
-      }
+      };
     }
 
-    wallet.my.login(
-      uid,
-      null, // sharedKey
-      password,
-      two_factor,
-      didLogin,
-      needsTwoFactorCode,
-      wrongTwoFactorCode,
-      authorizationRequired,
-      loginError,
-      () => {}, // fetchSuccess
-      () => {}, // decryptSucces
-      () => {} // buildHDSucces
-    );
+    const doLogin = (uid, sessionGuid, sessionToken) => {
+      if (uid !== sessionGuid) {
+        // Don't reuse the session token for a different wallet.
+        sessionToken = null;
+      }
+
+      // Immedidately store the new guid and session token, in case the user needs
+      // to refresh their browser:
+      const newSessionToken = (token) => {
+        $cookies.put('session', token);
+        $cookies.put('uid', uid);
+      };
+
+      wallet.my.login(
+        uid,
+        password,
+        {
+          twoFactor: two_factor,
+          sessionToken: sessionToken
+        },
+        {
+          newSessionToken: newSessionToken,
+          needsTwoFactorCode: needsTwoFactorCode,
+          wrongTwoFactorCode: wrongTwoFactorCode,
+          authorizationRequired: authorizationRequired
+        }
+      ).then(didLogin).catch(loginError);
+    };
+
+    // Check if we already have a session token:
+    let sessionToken = $cookies.get('session');
+    let sessionGuid = $cookies.get('uid');
+
+    if (!sessionToken) {
+      $http.get($rootScope.rootURL + 'wallet-legacy/guid_from_cookie', {withCredentials: true}).success(data => {
+        if (data.success) {
+          sessionToken = data.sid;
+          sessionGuid = data.guid;
+        }
+        doLogin(uid, sessionGuid, sessionToken);
+      }).error(() => {
+        // If guid_from_cookie endpoint can't be reach, just create a new session
+        doLogin(uid, sessionGuid, sessionToken);
+      });
+    } else {
+      doLogin(uid, sessionGuid, sessionToken);
+    }
+
     currency.fetchExchangeRate();
   };
 
@@ -266,53 +290,60 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
 
     let proceed = (password) => {
       $translate('FIRST_ACCOUNT_NAME').then((translation) => {
-        wallet.my.wallet.newHDWallet(translation, password, success, error);
+        wallet.my.wallet.upgradeToV3(translation, password, success, error);
       });
     };
     wallet.askForSecondPasswordIfNeeded()
       .then(proceed).catch(cancelSecondPasswordCallback);
   };
 
-  wallet.legacyAddresses = () => wallet.my.wallet.keys;
-
-  let hdAddresses = {};
-  wallet.hdAddresses = (accountIdx) => {
-    return (refresh) => {
-      refresh = refresh || null;
-      if (refresh || hdAddresses[accountIdx] == null) {
-        let account = wallet.accounts()[accountIdx];
-        hdAddresses[accountIdx] = account.receivingAddressesLabels.map((address) => {
-          return {
-              index: address.index,
-              label: address.label,
-              address: account.receiveAddressAtIndex(address.index),
-              account: account
-            }
-          }
-        );
-      }
-      return hdAddresses[accountIdx];
-    };
+  wallet.legacyAddresses = () => {
+    if (wallet.status.isLoggedIn) {
+      return wallet.my.wallet.keys;
+    } else {
+      return null;
+    }
   };
 
-  wallet.addAddressForAccount = (account, successCallback, errorCallback) => {
-    let success = () => {
-      wallet.hdAddresses(account.index)(true);
-      successCallback();
-      $rootScope.$safeApply();
-    };
-    $translate('DEFAULT_NEW_ADDRESS_LABEL').then((translation) => {
-      account.setLabelForReceivingAddress(account.receiveIndex, translation)
-        .then(success).catch(errorCallback);
-    });
+  wallet.getReceiveAddress = MyWalletHelpers.memoize((acctIdx, addrIdx) => {
+    let account = wallet.accounts()[acctIdx];
+    return account.receiveAddressAtIndex(addrIdx);
+  });
+
+  wallet.getLabelledHdAddresses = (acctIdx) => {
+    let account = wallet.accounts()[acctIdx];
+    return account.receivingAddressesLabels.map(({ index, label }) => ({
+      index, label, address: wallet.getReceiveAddress(acctIdx, index)
+    }));
+  };
+
+  wallet.getPendingPayments = (acctIdx) => {
+    let labelledAddresses = wallet.getLabelledHdAddresses(acctIdx);
+    let addresses = labelledAddresses.map(a => a.address);
+    return $q.resolve(MyBlockchainApi.getBalances(addresses)).then(data => (
+      labelledAddresses.map(({ index, address, label }) => ({
+        index, address, label,
+        ntxs: data[address].n_tx
+      })).filter(a => a.ntxs === 0)
+    ));
+  };
+
+  wallet.addAddressForAccount = (account) => {
+    let index = account.receiveIndex;
+    let address = wallet.getReceiveAddress(account.index, index);
+    let label = $translate.instant('DEFAULT_NEW_ADDRESS_LABEL');
+    return $q.resolve(account.setLabelForReceivingAddress(index, label))
+      .then(() => ({ index, address, label }));
   };
 
   wallet.create = (password, email, currency, language, success_callback) => {
-    let success = (uid) => {
+    let success = (uid, sharedKey, password, sessionToken) => {
+      $cookies.put('session', sessionToken);
+      $cookies.put('uid', uid);
       Alerts.displaySuccess('Wallet created with identifier: ' + uid, true);
-      wallet.status.firstTime = true;
+      wallet.goal.firstTime = true;
 
-      let loginSuccess = () => {
+      let loginSuccess = (guid) => {
         success_callback(uid);
       };
 
@@ -382,7 +413,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
 
   wallet.createAccount = (label, successCallback, errorCallback, cancelCallback) => {
     let proceed = (password) => {
-      let newAccount = wallet.my.wallet.newAccount(label, password);
+      wallet.my.wallet.newAccount(label, password);
       wallet.my.wallet.getHistory();
       successCallback && successCallback();
     };
@@ -401,26 +432,18 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
 
   wallet.changeHDAddressLabel = (accountIdx, index, label, successCallback, errorCallback) => {
-    let success = () => {
-      wallet.hdAddresses(accountIdx)(true);
-      successCallback();
-      $rootScope.$safeApply();
-    };
-
-    let error = (msg) => {
-      errorCallback(msg);
-      $rootScope.$safeApply();
-    };
-
-    let account = wallet.accounts()[parseInt(accountIdx)];
-    account.setLabelForReceivingAddress(index, label)
-      .then(success).catch(error);
+    let account = wallet.accounts()[parseInt(accountIdx, 10)];
+    $q.resolve(account.setLabelForReceivingAddress(index, label))
+      .then(successCallback).catch(errorCallback);
   };
 
   wallet.logout = () => {
+    $cookies.remove('password');
+    let sessionToken = $cookies.get('session');
+    $cookies.remove('session');
     wallet.didLogoutByChoice = true;
     $window.name = 'blockchain';
-    wallet.my.logout(true);
+    wallet.my.logout(sessionToken, true);
   };
 
   wallet.makePairingCode = (successCallback, errorCallback) => {
@@ -446,32 +469,20 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     wallet.store.isCorrectMainPassword(candidate);
 
   wallet.changePassword = (newPassword, successCallback, errorCallback) => {
-    wallet.store.changePassword(newPassword, (() => {
-      $translate('CHANGE_PASSWORD_SUCCESS').then((translation) => {
-        Alerts.displaySuccess(translation);
-        successCallback(translation);
-      });
-    }), () => {
-      $translate('CHANGE_PASSWORD_FAILED').then((translation) => {
-        Alerts.displayError(translation);
-        errorCallback(translation);
-      });
+    wallet.store.changePassword(newPassword, () => {
+      let msg = 'CHANGE_PASSWORD_SUCCESS';
+      Alerts.displaySuccess(msg);
+      successCallback(msg);
+    }, () => {
+      let err = 'CHANGE_PASSWORD_FAILED';
+      Alerts.displayError(err);
+      errorCallback(err);
     });
   };
 
-  wallet.setIPWhitelist = (ips, successCallback, errorCallback) => {
-    let success = () => {
-      wallet.settings.ipWhitelist = ips;
-      successCallback();
-      $rootScope.$safeApply();
-    };
-
-    let error = () => {
-      errorCallback();
-      $rootScope.$safeApply();
-    };
-
-    wallet.settings_api.update_IP_lock(ips, success, error);
+  wallet.setIPWhitelist = (ips) => {
+    let update = (s, e) => wallet.settings_api.updateIPlock(ips, s, e);
+    return $q(update).then(() => wallet.settings.ipWhitelist = ips);
   };
 
   wallet.resendEmailConfirmation = (successCallback, errorCallback) => {
@@ -489,7 +500,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
   wallet.setPbkdf2Iterations = (n, successCallback, errorCallback, cancelCallback) => {
     let proceed = (password) => {
-      wallet.my.wallet.changePbkdf2Iterations(parseInt(n), password);
+      wallet.my.wallet.changePbkdf2Iterations(parseInt(n, 10), password);
       wallet.settings.pbkdf2 = wallet.my.wallet.pbkdf2_iterations;
       successCallback();
     };
@@ -530,7 +541,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       $rootScope.$safeApply();
     };
 
-    let proceed = (secondPassword='') => {
+    let proceed = (secondPassword = '') => {
       let error = (message) => {
         if (message === 'needsBip38') {
           needsBipPassphraseCallback(proceedWithBip38);
@@ -557,7 +568,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   wallet.fetchBalanceForRedeemCode = (code) => {
     let logError = (error) => {
       console.log(error);
-      throw 'Could not retrieve balance';
+      throw $translate.instant('ERR_FETCH_BALANCE');
     };
     return MyBlockchainApi.getBalanceForRedeemCode(code)
       .catch(logError);
@@ -663,13 +674,14 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       event.preventDefault();
       return 'There are unsaved changes. Are you sure?';
     }
-    if ($rootScope.autoReload) {
-      $cookies.put('reload.url', $location.url());
-    }
+    // TODO: fix autoreload dev feature
+    // if ($rootScope.autoReload) {
+    //   $cookies.put('reload.url', $location.url());
+    // }
   };
 
-  wallet.isValidAddress = (address) => MyWalletHelpers.isBitcoinAddress(address)
-  wallet.isValidPrivateKey = (priv) => MyWalletHelpers.isValidPrivateKey(priv)
+  wallet.isValidAddress = (address) => MyWalletHelpers.isBitcoinAddress(address);
+  wallet.isValidPrivateKey = (priv) => MyWalletHelpers.isValidPrivateKey(priv);
 
   wallet.archive = (address_or_account) => {
     wallet.saveActivity(3);
@@ -689,6 +701,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
 
   wallet.accounts = () => {
+    if (!wallet.status.isLoggedIn) return null;
     if (wallet.my.wallet.hdwallet != null) {
       return wallet.my.wallet.hdwallet.accounts;
     } else {
@@ -697,36 +710,22 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
 
   wallet.total = (accountIndex) => {
-    if (wallet.my.wallet == null) return;
+    if (wallet.my.wallet == null || !wallet.status.isLoggedIn) return null;
     switch (accountIndex) {
       case '':
+      case void 0:
         if (wallet.my.wallet.isUpgradedToHD) {
-          if(wallet.my.wallet.balanceSpendableActiveLegacy == null || wallet.my.wallet.hdwallet.balanceActiveAccounts == null)
-           return null;
-          return wallet.my.wallet.hdwallet.balanceActiveAccounts + wallet.my.wallet.balanceSpendableActiveLegacy;
+          if (wallet.my.wallet.balanceActiveLegacy == null || wallet.my.wallet.hdwallet.balanceActiveAccounts == null) return null;
+          return wallet.my.wallet.hdwallet.balanceActiveAccounts + wallet.my.wallet.balanceActiveLegacy;
         } else {
-          return wallet.my.wallet.balanceSpendableActiveLegacy;
+          return wallet.my.wallet.balanceActiveLegacy;
         }
         break;
       case 'imported':
-        return wallet.my.wallet.balanceSpendableActiveLegacy;
-      case void 0:
-        if (wallet.my.wallet.isUpgradedToHD) {
-          if(wallet.my.wallet.hdwallet.balanceActiveAccounts == null || wallet.my.wallet.balanceSpendableActiveLegacy == null)
-           return null;
-
-          return wallet.my.wallet.hdwallet.balanceActiveAccounts + wallet.my.wallet.balanceSpendableActiveLegacy;
-        } else {
-          return wallet.my.wallet.balanceSpendableActiveLegacy;
-        }
-        break;
+        return wallet.my.wallet.balanceActiveLegacy;
       default:
-        let account = wallet.accounts()[parseInt(accountIndex)];
-        if (account === null) {
-          return null;
-        } else {
-          return account.balance;
-        }
+        let account = wallet.accounts()[parseInt(accountIndex, 10)];
+        return account == null ? null : account.balance;
     }
   };
 
@@ -757,7 +756,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       let tx = wallet.my.wallet.txList.transactions()[0];
       if (tx.result > 0 && tx.txType === 'received') {
         wallet.beep();
-        $translate('JUST_RECEIVED_BITCOIN').then(Alerts.displayReceivedBitcoin);
+        Alerts.displayReceivedBitcoin('JUST_RECEIVED_BITCOIN');
       }
     } else if (event === 'on_block') {
     } else if (event === 'error_restoring_wallet') {
@@ -765,13 +764,9 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     } else if (event === 'on_wallet_decrypt_finish') {
     } else if (event === 'hd_wallets_does_not_exist') {
       wallet.status.didUpgradeToHd = false;
-      $timeout(() => {
-        $rootScope.$broadcast('needsUpgradeToHD', 1000);
-      });
+      wallet.goal.upgrade = true;
     } else if (event === 'wallet not found') {
-      $translate('WALLET_NOT_FOUND').then((translation) => {
-        Alerts.displayError(translation);
-      });
+      Alerts.displayError('WALLET_NOT_FOUND');
     } else if (event === 'ticker_updated' || event === 'did_set_latest_block') {
       $rootScope.$safeApply();
     } else if (event === 'logging_out') {
@@ -804,6 +799,11 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
         $rootScope.$safeApply();
       } else {
       }
+    } else if (event === 'on_email_verified') {
+      if (data.email === wallet.user.email && data.verified) {
+        wallet.user.isEmailVerified = 1;
+        Alerts.displaySuccess('EMAIL_VERIFIED_MSG');
+      }
     } else {
     }
     $rootScope.$safeApply();
@@ -833,6 +833,10 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     wallet.my.wallet.deleteNote(tx.hash);
   };
 
+  wallet.getNote = (hash) => {
+    return wallet.my.wallet.getNote(hash);
+  };
+
   wallet.setLogoutTime = (minutes, success, error) => {
     wallet.store.setLogoutTime(minutes * 60000);
     wallet.settings.logoutTimeMinutes = minutes;
@@ -846,58 +850,55 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     wallet.settings.language = language;
   };
 
-  wallet.changeLanguage = (language) => {
-    wallet.settings_api.change_language(language.code, (() => {}));
-    wallet.setLanguage(language);
-  };
+  wallet.changeLanguage = (language) => $q((resolve, reject) => {
+    wallet.settings_api.changeLanguage(language.code, () => {
+      wallet.setLanguage(language);
+      resolve(true);
+    }, reject);
+  });
 
-  wallet.changeCurrency = (currency) => {
-    wallet.settings_api.change_local_currency(currency.code);
-    wallet.settings.currency = currency;
-  };
+  wallet.changeCurrency = (curr) => $q((resolve, reject) => {
+    wallet.settings_api.changeLocalCurrency(curr.code, () => {
+      wallet.settings.currency = curr;
+      if (!currency.isBitCurrency(wallet.settings.displayCurrency)) {
+        wallet.settings.displayCurrency = curr;
+      }
+      resolve(true);
+    }, reject);
+  });
 
-  wallet.changeBTCCurrency = (btcCurrency) => {
-    wallet.settings_api.change_btc_currency(btcCurrency.serverCode);
-    wallet.settings.btcCurrency = btcCurrency;
-  };
+  wallet.changeBTCCurrency = (btcCurrency) => $q((resolve, reject) => {
+    wallet.settings_api.changeBtcCurrency(btcCurrency.serverCode, () => {
+      wallet.settings.btcCurrency = btcCurrency;
+      if (currency.isBitCurrency(wallet.settings.displayCurrency)) {
+        wallet.settings.displayCurrency = btcCurrency;
+      }
+      resolve(true);
+    }, reject);
+  });
 
   wallet.changeEmail = (email, successCallback, errorCallback) => {
-    wallet.settings_api.change_email(email, (() => {
+    wallet.settings_api.changeEmail(email, () => {
       wallet.user.email = email;
-      wallet.user.isEmailVerified = false;
+      wallet.user.isEmailVerified = 0;
       successCallback();
       $rootScope.$safeApply();
-    }), () => {
-      $translate('CHANGE_EMAIL_FAILED').then((translation) => {
-        Alerts.displayError(translation);
-        $rootScope.$safeApply();
-      });
+    }, () => {
+      Alerts.displayError('CHANGE_EMAIL_FAILED');
+      $rootScope.$safeApply();
       errorCallback();
     });
   };
-  wallet.enableNotifications = () => {
-    let success = () => {
-      wallet.settings.notifications = true;
-      $rootScope.$safeApply();
-    };
-    let error = () => {
-      Alerts.displayError('Failed to enable notifications');
-      $rootScope.$safeApply();
-    };
-    wallet.my.wallet.enableNotifications(success, error);
-  };
 
-  wallet.disableNotifications = () => {
-    let success = () => {
-      wallet.settings.notifications = false;
-      $rootScope.$safeApply();
-    };
-    let error = () => {
-      Alerts.displayError('Failed to disable notifications');
-      $rootScope.$safeApply();
-    };
-    wallet.my.wallet.disableNotifications(success, error);
-  };
+  wallet.updateNotificationsType = (types) => $q.resolve(
+    MyBlockchainSettings.updateNotificationsType(types).catch(() => {
+      Alerts.displayError('UPDATE_NOTIF_FAIL');
+    })
+  );
+
+  wallet.updateNotificationsOn = (on) => $q.resolve(
+    MyBlockchainSettings.updateNotificationsOn(on)
+  );
 
   wallet.setFeePerKB = (fee, successCallback, errorCallback) => {
     wallet.my.wallet.fee_per_kb = fee;
@@ -913,32 +914,25 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
 
   wallet.isEmailVerified = () => wallet.my.isEmailVerified;
 
-  wallet.internationalPhoneNumber = (mobile) => {
-    if (mobile == null) return null;
-    return mobile.country + ' ' + mobile.number.replace(/^0*/, '');
-  };
-
   wallet.changeMobile = (mobile, successCallback, errorCallback) => {
-    wallet.settings_api.changeMobileNumber(wallet.internationalPhoneNumber(mobile), (() => {
+    wallet.settings_api.changeMobileNumber(mobile, () => {
       wallet.user.mobile = mobile;
       wallet.user.isMobileVerified = false;
       successCallback();
       $rootScope.$safeApply();
-    }), () => {
-      $translate('CHANGE_MOBILE_FAILED').then((translation) => {
-        Alerts.displayError(translation);
-      });
+    }, () => {
+      Alerts.displayError('CHANGE_MOBILE_FAILED');
       errorCallback();
       $rootScope.$safeApply();
     });
   };
 
   wallet.verifyMobile = (code, successCallback, errorCallback) => {
-    wallet.settings_api.verifyMobile(code, (() => {
+    wallet.settings_api.verifyMobile(code, () => {
       wallet.user.isMobileVerified = true;
       successCallback();
       $rootScope.$safeApply();
-    }), () => {
+    }, () => {
       $translate('VERIFY_MOBILE_FAILED').then((translation) => {
         errorCallback(translation);
       });
@@ -947,11 +941,11 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
 
   wallet.changePasswordHint = (hint, successCallback, errorCallback) => {
-    wallet.settings_api.update_password_hint1(hint, (() => {
+    wallet.settings_api.updatePasswordHint1(hint, () => {
       wallet.user.passwordHint = hint;
       successCallback();
       $rootScope.$safeApply();
-    }), (err) => {
+    }, (err) => {
       errorCallback(err);
       $rootScope.$safeApply();
     });
@@ -1044,6 +1038,8 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   wallet.disableRememberTwoFactor = (successCallback, errorCallback) => {
     let success = () => {
       wallet.settings.rememberTwoFactor = false;
+      // This takes effect immedidately:
+      $cookies.remove('session');
       successCallback();
       $rootScope.$safeApply();
     };
@@ -1056,12 +1052,12 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
 
   wallet.handleBitcoinLinks = () => {
     wallet.saveActivity(2);
-    const uri = $window.location.origin + "/" + $rootScope.rootPath + '#/open/%s';
+    const uri = $rootScope.rootPath + '/open/%s';
     $window.navigator.registerProtocolHandler('bitcoin', uri, 'Blockchain');
   };
 
   wallet.enableBlockTOR = () => {
-    wallet.settings_api.update_tor_ip_block(1, () => {
+    wallet.settings_api.updateTorIpBlock(1, () => {
       wallet.settings.blockTOR = true;
       $rootScope.$safeApply();
     }, () => {
@@ -1071,7 +1067,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
 
   wallet.disableBlockTOR = () => {
-    wallet.settings_api.update_tor_ip_block(0, () => {
+    wallet.settings_api.updateTorIpBlock(0, () => {
       wallet.settings.blockTOR = false;
       $rootScope.$safeApply();
     }, () => {
@@ -1081,18 +1077,18 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
 
   wallet.enableRestrictToWhiteListedIPs = () => {
-    wallet.settings_api.update_IP_lock_on(true, () => {
+    wallet.settings_api.updateIPlockOn(true, () => {
       wallet.settings.restrictToWhitelist = true;
       wallet.saveActivity(2);
       $rootScope.$safeApply();
     }, () => {
-      $translate('ERR_ENABLE_IP_RESTRICT').then(Alerts.displayError);
+      Alerts.displayError('ERR_ENABLE_IP_RESTRICT');
       $rootScope.$safeApply();
     });
   };
 
   wallet.disableRestrictToWhiteListedIPs = () => {
-    wallet.settings_api.update_IP_lock_on(false, () => {
+    wallet.settings_api.updateIPlockOn(false, () => {
       wallet.settings.restrictToWhitelist = false;
       wallet.saveActivity(2);
       $rootScope.$safeApply();
@@ -1102,9 +1098,10 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     });
   };
 
-  wallet.getTotalBalanceForActiveLegacyAddresses = () => {
-    if (wallet.my.wallet == null) return;
-    return wallet.my.wallet.balanceSpendableActiveLegacy;
+  wallet.removeAlias = () => {
+    return $q.resolve(wallet.settings_api.removeAlias()).then(
+      () => wallet.user.alias = null,
+      () => Alerts.displayError('POOR_CONNECTION'));
   };
 
   wallet.setDefaultAccount = (account) => {
@@ -1117,6 +1114,35 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   wallet.isValidBIP39Mnemonic = (mnemonic) =>
     MyWalletHelpers.isValidBIP39Mnemonic(mnemonic);
 
+  wallet.exportHistory = (start, end, active) => {
+    let json2csv = (json) => {
+      let headers = Object.keys(json[0]);
+      let makeRow = (obj) => Object.keys(obj).map(key => obj[key]).join(',');
+      return [headers.join(',')].concat(json.map(makeRow)).join('\n');
+    };
+
+    let addTxNote = (tx) => {
+      tx.note = wallet.getNote(tx.tx) || '';
+      return tx;
+    };
+
+    let currency = wallet.settings.currency;
+    let p = MyBlockchainApi.exportHistory(active, currency.code, { start, end });
+    return $q.resolve(p)
+      .then(history => {
+        if (!history.length) return $q.reject('NO_HISTORY');
+        return json2csv(history.map(addTxNote));
+      })
+      .catch(e => {
+        let error = e.message || e;
+        if (typeof error === 'string' && error.indexOf('Too many transactions') > -1) {
+          error = 'TOO_MANY_TXS';
+        }
+        Alerts.displayError(error || 'UNKNOWN_ERROR');
+        return $q.reject(error);
+      });
+  };
+
   wallet.removeSecondPassword = (successCallback, errorCallback) => {
     let success = () => {
       Alerts.displaySuccess('Second password has been removed.');
@@ -1124,7 +1150,7 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
       successCallback();
     };
     let error = () => {
-      $translate('SECOND_PASSWORD_REMOVE_ERR').then(Alerts.displayError);
+      Alerts.displayError('SECOND_PASSWORD_REMOVE_ERR');
       errorCallback();
     };
     let cancel = errorCallback;
@@ -1134,10 +1160,43 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     let syncing = () => {
       console.log('Syncing...');
     };
-    let proceed = (password) => {
-      wallet.my.wallet.decrypt(password, success, error, decrypting, syncing);
+    let proceedWithPassword = (password) => {
+      const didDecrypt = () => {
+        // Check which metadata service features we use:
+
+        // whatsNew
+        // This falls back to cookies if 2nd password is enabled:
+        let whatsNewViewed = $cookies.get('whatsNewViewed');
+        if (whatsNewViewed) {
+          let whatsNew = new MyWalletMetadata(2);
+
+          whatsNew.fetch().then((res) => {
+            if (res === null) {
+              whatsNew.create({lastViewed: whatsNewViewed}).then(() => {
+                // TODO: uncomment once cookie fallback is removed
+                // $cookies.remove('whatsNewViewed');
+                success();
+              });
+            } else {
+              whatsNew.update({lastViewed: whatsNewViewed}).then(() => {
+                // TODO: uncomment once cookie fallback is removed
+                // $cookies.remove('whatsNewViewed');
+                success();
+              });
+            }
+          }).catch(() => {
+            // The What's New section may be marked (partially) unread at the
+            // next login.
+            success();
+          });
+        } else {
+          success();
+        }
+      };
+
+      wallet.my.wallet.decrypt(password, didDecrypt, error, decrypting, syncing);
     };
-    wallet.askForSecondPasswordIfNeeded().then(proceed).catch(cancel);
+    wallet.askForSecondPasswordIfNeeded().then(proceedWithPassword).catch(cancel);
   };
 
   wallet.validateSecondPassword = (password) =>
@@ -1158,7 +1217,28 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
     let syncing = () => {
       console.log('Syncing...');
     };
-    wallet.my.wallet.encrypt(password, success, error, encrypting, syncing);
+
+    const proceed = () => {
+      wallet.my.wallet.encrypt(password, success, error, encrypting, syncing);
+    };
+
+    // whatsNew
+    // This falls back to cookies if 2nd password is enabled:
+    let whatsNew = new MyWalletMetadata(2);
+    whatsNew.fetch().then((res) => {
+      if (res !== null) {
+        $cookies.put('whatsNewViewed', res.lastViewed);
+      }
+    }).catch(() => {
+      throw new Error("saving your What's New view status failed");
+    });
+
+    let other = $q.resolve(); // $q.reject('it can't be combined with feature X');
+
+    $q.all([whatsNew, other]).then(proceed).catch((reason) => {
+      console.log('all');
+      Alerts.displayError('Could enable second password, because ' + reason);
+    });
   };
 
   // Testing: only works on mock MyWallet
@@ -1168,6 +1248,5 @@ function Wallet(   $http,   $window,   $timeout,  $location,  Alerts,   MyWallet
   };
 
   wallet.isMock = wallet.my.mockShouldFailToSend !== void 0;
-
   return wallet;
 }

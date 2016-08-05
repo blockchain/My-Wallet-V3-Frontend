@@ -1,5 +1,6 @@
 .left-navigation {
   height: 100%;
+  position: relative;
   @extend .flex-between;
   flex-direction: column;
 }
@@ -19,12 +20,20 @@ ul.aside {
     position: relative;
     text-transform: uppercase;
     > a {
-      color: #737373;
       padding: .4em .8em;
-      display: -webkit-flex;
-      display: flex;
-      -webkit-align-items: center;
-      align-items: center;
+      @extend .flex-center;
+      > span, i {
+        color: $basic-grey;
+        &.security-red {
+          color: $security-red;
+        }
+        &.security-yellow {
+          color: $security-yellow;
+        }
+        &.security-green {
+          color: $security-green;
+        }
+      }
       i { margin-right: .55em; line-height: 0; font-size: 1.3em; }
     }
   }
@@ -37,16 +46,22 @@ ul.aside {
     font-size: 1em;
     text-transform: none;
     .btn {  min-width: 110px; }
-    a{
-      color: #878787;
-      &.imported-addresses{
-        color: $mid-grey;
+    a {
+      span {
+        color: $basic-grey;
+      }
+      &.imported-addresses {
+        span {
+          color: $mid-grey !important;
+        }
       }
     }
     li.active{
-      a{
-        color: $blue;
-        font-weight: 500;
+      a {
+        span {
+          color: $blue;
+          font-weight: 500;
+        }
         &:focus {
           text-decoration: none;
         }
@@ -59,8 +74,6 @@ ul.aside {
 }
 
 .wallet-footer {
-  position: relative;
-  bottom: calc(0% + 7%);
   ul.aside-list {
     background: transparent;
     li {
@@ -89,10 +102,6 @@ ul.aside {
   span.btn-warning{
     color: #f0ad4e;
   }
-}
-
-@media (max-width: 768px) {
-  .wallet-footer { bottom: 0; }
 }
 
 .scroll-parent{
@@ -146,6 +155,42 @@ ul.aside {
   }
 }
 
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #fff;
+    border: 0px none $border-grey;
+    border-radius: 100px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #c9c9c9;
+  }
+  ::-webkit-scrollbar-thumb:active {
+    background: #606060;
+  }
+  ::-webkit-scrollbar-track {
+    background: white;
+    border: 0px none #ff5a28;
+    border-radius: 100px;
+  }
+  ::-webkit-scrollbar-track:hover {
+    background: #ffffff;
+  }
+  ::-webkit-scrollbar-track:active {
+    background: #ededed;
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  } 
+}
+
 
 li.action-bar{
   background: white;
@@ -161,18 +206,6 @@ li.action-bar{
   background: $light-grey;
 }
 
-@media (max-width: 768px) {
-  .adverts {
-    display: none;
-  }
-}
-
-@media (max-height: 680px) {
-  .adverts {
-    display: none;
-  }
-}
-
 @media (max-width: 480px) {
   ul.aside  {
     li.header, a.new-acct {
@@ -181,7 +214,6 @@ li.action-bar{
   }
   .wallet-footer { margin: 0; }
   .terms-policy {
-    float:right;
     font-size: .75em;
   }
 }

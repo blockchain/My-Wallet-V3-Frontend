@@ -1,0 +1,62 @@
+form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" novalidate)
+  .modal-header
+    .flex-center.pam
+      h3.man.mrm(translate="EXPORT_HISTORY")
+      helper-button(content="EXPORT_HISTORY_EXPLAIN")
+
+  .modal-body
+    .ph-form.flex-row
+      .flex-1
+      .flex-4
+        .form-group.pal(ng-show="activeCount > 1")
+          ui-select.send-from-dropdown(
+            name="active"
+            ng-model="$parent.active"
+            tagging
+            required)
+            ui-select-match(placeholder="{{'SEARCH' | translate}}...")
+              label-origin(origin="$select.selected")
+            ui-select-choices(repeat="t in targets | filter:{label:$select.search} | limitTo:limit")
+              label-origin(origin="::t" in-view="$last && isLast(t) && incLimit()" highlight="$select.search")
+        .flex-row.flex-center.flex-between.pal(ng-class="{'has-error':exportForm.$invalid || start.date > end.date}")
+          p.input-group.flex-center
+            input.form-control(
+              type="text"
+              name="start"
+              ng-model="start.date"
+              uib-datepicker-popup="{{format}}"
+              datepicker-options="options"
+              is-open="start.open"
+              placeholder="{{'START_DATE'|translate}}"
+              required)
+            span.ti-calendar.pointer(ng-click="start.open=true")
+          i.ti-arrow-right.blue
+          p.input-group.flex-center
+            input.form-control(
+              type="text"
+              name="end"
+              ng-model="end.date"
+              uib-datepicker-popup="{{format}}"
+              datepicker-options="options"
+              is-open="end.open"
+              placeholder="{{'END_DATE'|translate}}"
+              required)
+            span.ti-calendar.pointer(ng-click="end.open=true")
+      .flex-1
+
+  .modal-footer
+    button.button-muted.mrm(
+      type="button"
+      translate="CLOSE"
+      ng-click="$dismiss()")
+    button.btn.button-primary(
+      type="submit"
+      ui-ladda="busy"
+      ladda-translate="EXPORT"
+      data-style="expand-left"
+      ng-show="history == null || canTriggerDownload"
+      ng-disabled="exportForm.$invalid || start.date > end.date")
+    download-button.btn.button-success(
+      ng-hide="history == null || canTriggerDownload"
+      filename="history.csv"
+      content="history")

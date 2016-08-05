@@ -1,42 +1,60 @@
 describe "SettingsInfoCtrl", ->
   scope = undefined
   Wallet = undefined
+  Alerts = undefined
+  $q = undefined
 
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller) ->
+    angular.mock.inject ($injector, $rootScope, $controller, _$q_) ->
       Wallet = $injector.get("Wallet")
-      MyWallet = $injector.get("MyWallet")
+      Alerts = $injector.get("Alerts")
+      $q = _$q_
 
-      Wallet.status.isLoggedIn = true
+      Wallet.user.guid = "user_guid"
+      Wallet.user.alias = "user_alias"
+      Wallet.makePairingCode = (success, error) ->
+        if scope.pairingCode then error() else success("code")
+      Wallet.removeAlias = () -> $q.resolve()
 
       scope = $rootScope.$new()
 
       $controller "SettingsInfoCtrl",
-        $scope: scope,
-        $stateParams: {},
+        $scope: scope
 
       scope.$digest()
 
-      return
+  describe "remove alias", ->
+    it "should ask to confirm", ->
+      spyOn(Alerts, 'confirm').and.callThrough()
+      scope.removeAlias()
+      expect(Alerts.confirm).toHaveBeenCalledWith(jasmine.any(String), props: { 'UID': 'user_guid' })
 
-    return
+    it "should remove the alias", ->
+      spyOn(Alerts, 'confirm').and.returnValue($q.resolve())
+      spyOn(Wallet, 'removeAlias').and.returnValue($q.resolve())
+      scope.removeAlias()
+      scope.$digest()
+      expect(Wallet.removeAlias).toHaveBeenCalled()
+      expect(scope.loading.alias).toEqual(false)
 
-  it "should show pairing code", inject((Wallet, Alerts) ->
-    spyOn(Wallet, "makePairingCode")
-    spyOn(Alerts, "displayError")
+  describe "pairing code", ->
+    it "should show if valid", ->
+      scope.showPairingCode()
+      scope.$digest()
+      expect(scope.pairingCode).toEqual("code")
+      expect(scope.loading.code).toEqual(false)
 
-    scope.showPairingCode()
+    it "should display an error when show failed", ->
+      spyOn(Alerts, "displayError")
+      scope.pairingCode = "code"
+      scope.showPairingCode()
+      scope.$digest()
+      expect(Alerts.displayError).toHaveBeenCalled()
+      expect(scope.loading.code).toEqual(false)
 
-    expect(Wallet.makePairingCode).toHaveBeenCalled()
-    expect(Alerts.displayError).not.toHaveBeenCalled()
-
-    return
-  )
-
-  it "can hide pairing code", ->
-    scope.hidePairingCode()
-    expect(scope.pairingCode).toBe(null)
-    expect(scope.display.pairingCode).toBe(false)
-    return
+    it "should hide", ->
+      scope.pairingCode = "code"
+      scope.hidePairingCode()
+      expect(scope.pairingCode).toEqual(null)

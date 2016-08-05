@@ -4,49 +4,53 @@ angular
 
 Alerts.$inject = ['$timeout', '$rootScope', '$translate', '$uibModal'];
 
-function Alerts($timeout, $rootScope, $translate, $uibModal) {
+function Alerts ($timeout, $rootScope, $translate, $uibModal) {
   const service = {
-    alerts          : [],
-    close           : close,
-    clear           : clear,
-    display         : display,
-    confirm         : confirm,
-    isDuplicate     : isDuplicate,
-    displayInfo     : display.bind(null, 'info'),
-    displaySuccess  : display.bind(null, 'success'),
-    displayWarning  : display.bind(null, ''),
-    displayError    : display.bind(null, 'danger'),
-    displayReceivedBitcoin : display.bind(null, 'received-bitcoin'),
+    alerts: [],
+    close: close,
+    clear: clear,
+    display: display,
+    confirm: confirm,
+    prompt: prompt,
+    isDuplicate: isDuplicate,
+    displayInfo: display.bind(null, 'info'),
+    displaySuccess: display.bind(null, 'success'),
+    displayWarning: display.bind(null, ''),
+    displayError: display.bind(null, 'danger'),
+    displayReceivedBitcoin: display.bind(null, 'received-bitcoin'),
     displaySentBitcoin: display.bind(null, 'sent-bitcoin'),
-    displayVerifiedEmail : displayVerifiedEmail,
-    displayResetTwoFactor : displayResetTwoFactor
+    displayVerifiedEmail: displayVerifiedEmail,
+    displayResetTwoFactor: displayResetTwoFactor
   };
 
-  function close(alert, context=service.alerts) {
+  function close (alert, context = service.alerts) {
     $timeout.cancel(alert.timer);
     context.splice(context.indexOf(alert), 1);
   }
 
-  function clear(context=service.alerts) {
+  function clear (context = service.alerts) {
     while (context.length > 0) {
       let alert = context.pop();
       $timeout.cancel(alert.timer);
     }
   }
 
-  function isDuplicate(context=service.alerts, nextAlert) {
+  function isDuplicate (context = service.alerts, nextAlert) {
     return context.some(alert => alert.msg === nextAlert.msg);
   }
 
-  function display(type, message, keep=false, context=service.alerts) {
-    let alert = { type: type, msg: message };
-    if (isDuplicate(context, alert)) return;
-    alert.close = close.bind(null, alert, context);
-    if (!keep) alert.timer = $timeout(() => alert.close(), 7000);
-    context.push(alert);
+  function display (type, message, keep = false, context = service.alerts) {
+    let displayAlert = (translation) => {
+      let alert = { type: type, msg: translation };
+      if (isDuplicate(context, alert)) return;
+      alert.close = close.bind(null, alert, context);
+      if (!keep) alert.timer = $timeout(() => alert.close(), 7000);
+      context.push(alert);
+    };
+    $translate(message).then(displayAlert, () => displayAlert(message));
   }
 
-  function displayVerifiedEmail() {
+  function displayVerifiedEmail () {
     $translate(['SUCCESS', 'EMAIL_VERIFIED_SUCCESS']).then(translations => {
       $rootScope.$emit('showNotification', {
         type: 'verified-email',
@@ -57,7 +61,7 @@ function Alerts($timeout, $rootScope, $translate, $uibModal) {
     });
   }
 
-  function displayResetTwoFactor(message) {
+  function displayResetTwoFactor (message) {
     $translate(['SUCCESS']).then(translations => {
       $rootScope.$emit('showNotification', {
         type: 'verified-email',
@@ -68,14 +72,20 @@ function Alerts($timeout, $rootScope, $translate, $uibModal) {
     });
   }
 
-  function confirm(message, values={}, modalClass='') {
+  // options = { values, props, friendly, action, modalClass }
+  function confirm (namespace, options = {}) {
     return $uibModal.open({
       templateUrl: 'partials/modal-confirm.jade',
-      windowClass: 'bc-modal confirm ' + modalClass,
-      controller: function ($scope) {
-        $scope.message = message;
-        $scope.values = values;
-      }
+      windowClass: `bc-modal confirm ${options.modalClass || ''}`,
+      controller: ($scope) => angular.extend($scope, options, { namespace })
+    }).result;
+  }
+
+  function prompt (message, options = {}) {
+    return $uibModal.open({
+      templateUrl: 'partials/modal-prompt.jade',
+      windowClass: 'bc-modal medium',
+      controller: ($scope) => angular.extend($scope, options, { message })
     }).result;
   }
 

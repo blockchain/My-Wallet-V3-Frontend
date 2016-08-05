@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('RecoverFundsCtrl', RecoverFundsCtrl);
 
-function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wallet, Alerts) {
+function RecoverFundsCtrl ($scope, $rootScope, $state, $timeout, $translate, $cookies, Wallet, Alerts) {
   $scope.isValidMnemonic = Wallet.isValidBIP39Mnemonic;
   $scope.currentStep = 1;
   $scope.fields = {
@@ -13,10 +13,15 @@ function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wall
     bip39phrase: ''
   };
 
+  $scope.browser = {disabled: true};
+
   $scope.performImport = () => {
     $scope.working = true;
 
-    const success = (wallet) => {
+    const success = (result) => {
+      $cookies.put('session', result.sessionToken);
+      $cookies.put('uid', result.guid);
+
       $scope.working = false;
       $scope.nextStep();
       $rootScope.$safeApply();
@@ -28,17 +33,16 @@ function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wall
         console.error(err);
       };
       $timeout(() => {
-        $state.go('public.login-uid', {uid: wallet.guid});
+        $state.go('public.login-uid', {uid: result.guid});
         Wallet.login(
-          wallet.guid, wallet.password, null, null, loginSuccess, loginError
+          result.guid, result.password, null, null, loginSuccess, loginError
         );
       }, 4000);
     };
 
     const error = (err) => {
       $scope.working = false;
-      let message = err || $translate.instant('RECOVERY_ERROR');
-      Alerts.displayError(message);
+      Alerts.displayError(err || 'RECOVERY_ERROR');
     };
 
     Wallet.my.recoverFromMnemonic(
@@ -51,16 +55,25 @@ function RecoverFundsCtrl($scope, $rootScope, $state, $timeout, $translate, Wall
   };
 
   $scope.getMnemonicLength = () => {
-    $scope.isValidMnemonicLength = $scope.fields.mnemonic.split(' ').length === 12
-  }
+    $scope.isValidMnemonicLength = $scope.fields.mnemonic.split(' ').length === 12;
+  };
 
   $scope.nextStep = () => {
-    $scope.currentStep++;
-    $scope.fields.confirmation = ""
+    $scope.working = true;
+    $scope.$$postDigest(() => {
+      if (!Wallet.my.browserCheck()) {
+        $scope.working = false;
+        $scope.browser.disabled = true;
+        $scope.browser.msg = $translate.instant('UNSUITABLE_BROWSER');
+      } else {
+        $scope.working = false;
+        $scope.currentStep++;
+        $scope.fields.confirmation = '';
+      }
+    });
   };
 
   $scope.goBack = () => {
     $scope.currentStep--;
   };
-
 }

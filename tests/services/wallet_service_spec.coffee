@@ -4,14 +4,23 @@ describe "walletServices", () ->
   mockObserver = undefined
   errors = undefined
   MyBlockchainSettings = undefined
+  MyBlockchainApi = undefined
+  $rootScope = undefined
 
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $q) ->
+    angular.mock.inject ($injector, _$rootScope_, $q, $cookies) ->
+      $rootScope = _$rootScope_
       Wallet = $injector.get("Wallet")
       MyBlockchainSettings = $injector.get("MyBlockchainSettings")
+      MyBlockchainApi = $injector.get("MyBlockchainApi")
       Alerts = $injector.get('Alerts')
+
+      spyOn($cookies, "get").and.callFake((name) ->
+        if name == "session"
+          "token"
+      )
 
       spyOn(Wallet,"monitor").and.callThrough()
 
@@ -20,8 +29,13 @@ describe "walletServices", () ->
         success: (() ->),
         error: (() ->)}
 
-      Wallet.my.login = (uid, sharedKey, password, two_factor_code, didLogin) ->
-        didLogin()
+      Wallet.my.login = (uid, password, credentials, callbacks) ->
+        then: (cb) ->
+          cb({guid: "1234"})
+          {
+            catch: () ->
+          }
+
 
       Wallet.my.wallet =
         isUpgradedToHD: true
@@ -37,6 +51,20 @@ describe "walletServices", () ->
           transactions: () ->
             [{ result: 1, txType: 'received' }]
           fetchTxs: () ->
+        fetchAccountInfo: () ->
+          then: (cb) ->
+            cb({
+              password_hint1: "Same as username"
+              language: "en"
+              currency: "USD"
+              btc_currency: "BTC"
+              block_tor_ips: 0
+              my_ip: "123.456.789.012"
+            })
+        accountInfo:
+          email: "steve@me.com"
+          mobile: "+1234"
+          currency: "USD"
 
       return
 
@@ -61,14 +89,14 @@ describe "walletServices", () ->
     )
 
     it "should switch language", inject((Wallet, languages) ->
-      Wallet.settings_api.change_language = (language, success, error) ->
+      Wallet.settings_api.changeLanguage = (language, success, error) ->
         success()
 
-      spyOn(Wallet.settings_api, "change_language").and.callThrough()
+      spyOn(Wallet.settings_api, "changeLanguage").and.callThrough()
 
       Wallet.changeLanguage(languages[0])
-      expect(MyBlockchainSettings.change_language).toHaveBeenCalled()
-      expect(MyBlockchainSettings.change_language.calls.argsFor(0)[0]).toBe("bg")
+      expect(MyBlockchainSettings.changeLanguage).toHaveBeenCalled()
+      expect(MyBlockchainSettings.changeLanguage.calls.argsFor(0)[0]).toBe("bg")
       expect(Wallet.settings.language.code).toBe("bg")
 
     )
@@ -89,12 +117,12 @@ describe "walletServices", () ->
       expect(currency.fetchExchangeRate).toHaveBeenCalled()
     )
 
-    it "can be switched", inject((Wallet, currency) ->
-      Wallet.settings_api.change_local_currency = (newCurrency) ->
+    it "can be switched", inject(($rootScope, Wallet, currency) ->
+      Wallet.settings_api.changeLocalCurrency = (newCurrency, f) -> f()
 
-      spyOn(Wallet.settings_api, "change_local_currency").and.callThrough()
+      spyOn(Wallet.settings_api, "changeLocalCurrency").and.callThrough()
       Wallet.changeCurrency(currency.currencies[1])
-      expect(MyBlockchainSettings.change_local_currency).toHaveBeenCalledWith("EUR")
+      expect(MyBlockchainSettings.changeLocalCurrency).toHaveBeenCalledWith("EUR", jasmine.any(Function), jasmine.any(Function))
       expect(Wallet.settings.currency.code).toBe("EUR")
     )
 
@@ -108,13 +136,13 @@ describe "walletServices", () ->
     )
 
     it "can be changed", inject((Wallet) ->
-      Wallet.settings_api.change_email = (newVal, success, error) -> success()
+      Wallet.settings_api.changeEmail = (newVal, success, error) -> success()
 
-      spyOn(Wallet.settings_api, "change_email").and.callThrough()
+      spyOn(Wallet.settings_api, "changeEmail").and.callThrough()
       Wallet.changeEmail("other@me.com", mockObserver.success, mockObserver.error)
-      expect(MyBlockchainSettings.change_email).toHaveBeenCalled()
+      expect(MyBlockchainSettings.changeEmail).toHaveBeenCalled()
       expect(Wallet.user.email).toBe("other@me.com")
-      expect(Wallet.user.isEmailVerified).toBe(false)
+      expect(Wallet.user.isEmailVerified).toBe(0)
     )
 
     return
@@ -123,7 +151,7 @@ describe "walletServices", () ->
 
     it "should be set after loading", inject((Wallet) ->
       Wallet.login()
-      expect(Wallet.user.mobile.number).toEqual("12345678")
+      expect(Wallet.user.mobileNumber).toEqual("+1234")
     )
 
     it "should allow change", inject((Wallet) ->
@@ -174,21 +202,28 @@ describe "walletServices", () ->
     )
 
     it "can be changed", inject((Wallet) ->
-      Wallet.settings_api.update_password_hint1 = (hint, success, error) ->
+      Wallet.settings_api.updatePasswordHint1 = (hint, success, error) ->
         if hint.split('').some((c) -> c.charCodeAt(0) > 255)
           error(101)
         else
           success()
 
-      spyOn(Wallet.settings_api, "update_password_hint1").and.callThrough()
+      spyOn(Wallet.settings_api, "updatePasswordHint1").and.callThrough()
       Wallet.changePasswordHint("Better hint", mockObserver.success, mockObserver.error)
-      expect(MyBlockchainSettings.update_password_hint1).toHaveBeenCalled()
+      expect(MyBlockchainSettings.updatePasswordHint1).toHaveBeenCalled()
       expect(Wallet.user.passwordHint).toBe("Better hint")
     )
 
     return
 
   describe "total()", ->
+    beforeEach ->
+      Wallet.status.isLoggedIn = true
+
+    it "should return null if not logged in", ->
+      Wallet.status.isLoggedIn = false
+      expect(Wallet.total(0)).toEqual(null)
+
     describe "for an account", ->
 
       it "should return the balance", inject((Wallet) ->
@@ -212,7 +247,7 @@ describe "walletServices", () ->
       it "should return the sum of all accounts and addresses", inject((Wallet) ->
 
         Wallet.my.wallet.hdwallet.balanceActiveAccounts = 3
-        Wallet.my.wallet.balanceSpendableActiveLegacy = 1
+        Wallet.my.wallet.balanceActiveLegacy = 1
 
         expect(Wallet.total("")).toBeGreaterThan(0)
         expect(Wallet.total("")).toBe(4)
@@ -238,7 +273,7 @@ describe "walletServices", () ->
 
     describe "for imported addresses", ->
       it "should return the sum of all legacy addresses", inject((Wallet, MyWalletStore) ->
-        Wallet.my.wallet.balanceSpendableActiveLegacy = 1
+        Wallet.my.wallet.balanceActiveLegacy = 1
 
         expect(Wallet.total("imported")).toBeGreaterThan(0)
         expect(Wallet.total("imported")).toBe(1)
@@ -453,3 +488,58 @@ describe "walletServices", () ->
       Wallet.disableRememberTwoFactor((() -> ))
       expect(Wallet.settings.rememberTwoFactor).toEqual(false)
     )
+
+  describe "legacyAddresses()", ->
+    beforeEach ->
+      Wallet.status.isLoggedIn = true
+
+    it "should return an array of legacy addresses", ->
+      expect(Wallet.legacyAddresses()).toEqual([])
+
+    it "should be null if not logged in", ->
+      Wallet.status.isLoggedIn = false
+      expect(Wallet.legacyAddresses()).toBe(null)
+
+  describe "accounts()", ->
+    beforeEach ->
+      Wallet.status.isLoggedIn = true
+
+    it "should return an array of accounts", ->
+      expect(Wallet.accounts()).toEqual([])
+
+    it "should be null if not logged in", ->
+      Wallet.status.isLoggedIn = false
+      expect(Wallet.accounts()).toBe(null)
+
+  describe "exportHistory", ->
+    beforeEach ->
+      Wallet.settings.currency = { code: 'USD' }
+      MyBlockchainApi.exportHistory = () ->
+      spyOn(Alerts, 'displayError')
+
+    describe "with transactions", ->
+      beforeEach ->
+        history = [{ sent: 1, receive: 0, tx: 'asdf' }, { sent: 0, receive: 2, tx: 'qwer' }]
+        spyOn(MyBlockchainApi, 'exportHistory').and.returnValue(history)
+
+      it "should call API.exportHistory with correct arguments", ->
+        Wallet.exportHistory('01/01/2015', '01/01/2016', ['1asdf'])
+        expect(MyBlockchainApi.exportHistory).toHaveBeenCalledWith(['1asdf'], 'USD', { start: '01/01/2015', end: '01/01/2016' })
+
+      it "should convert to csv with notes and broadcast broadcast download event", (done) ->
+        spyOn(Wallet, 'getNote').and.callFake((hash) -> hash == 'asdf' && 'test_note')
+        spyOn($rootScope, '$broadcast')
+        Wallet.exportHistory().then (data) ->
+          expect(data).toEqual('sent,receive,tx,note\n1,0,asdf,test_note\n0,2,qwer,')
+          done()
+        $rootScope.$digest()
+
+    describe "with no transactions", ->
+      beforeEach ->
+        spyOn(MyBlockchainApi, 'exportHistory').and.returnValue([])
+
+      it "should show an error", (done) ->
+        Wallet.exportHistory().finally ->
+          expect(Alerts.displayError).toHaveBeenCalledWith('NO_HISTORY')
+          done()
+        $rootScope.$digest()

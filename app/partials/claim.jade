@@ -18,5 +18,5 @@
           ui-select-choices(repeat="account in accounts() | filter:{archived: false, label: $select.search}" group-by="'type'") 
             span(ng-bind-html="(account.label | escapeHtml | highlight: $select.search)")  
 .modal-footer
-  button.btn.btn-primary(ng-click="redeem()", translate="REDEEM", ng-hide="redeeming") 
+  button.btn.button-primary(ng-click="redeem()", translate="REDEEM", ng-hide="redeeming") 
   img(ng-show="redeeming" src="img/spinner.gif") 

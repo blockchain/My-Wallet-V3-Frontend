@@ -1,6 +1,8 @@
 describe "HomeCtrl", ->
   scope = undefined
 
+  Wallet = undefined
+
   modal =
     open: ->
 
@@ -39,11 +41,24 @@ describe "HomeCtrl", ->
 
     return
 
-  describe "on load", ->
+  describe "activeAccounts()", ->
+    it "should know the number", inject((Wallet) ->
+      expect(scope.activeAccounts().length).toBeGreaterThan(0)
+    )
 
-    it "should have access to wallet accounts", ->
-      expect(scope.activeAccounts.length).toBeGreaterThan(0)
+    it "should be null when not logged in", inject((Wallet), ->
+      Wallet.status.isLoggedIn = false
+      expect(scope.activeAccounts()).toBe(null)
+    )
 
   describe "getTotal()", ->
     it "should return total", ->
       expect(scope.getTotal()).toEqual(1)
+
+  describe "hasLegacyAddresses()", ->
+    it "should be true if there are legacy addresses", ->
+      expect(scope.hasLegacyAddresses()).toBe(true)
+
+    it "should be null if not logged in", ->
+      Wallet.status.isLoggedIn = false
+      expect(scope.hasLegacyAddresses()).toBe(null)

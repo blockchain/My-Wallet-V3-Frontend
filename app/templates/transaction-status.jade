@@ -1,12 +1,17 @@
-div
-  .flex-column(ng-if="!complete")
-    .flex-center.ccc
-      i.ti-time.mrm
-      h6.prs(translate="PENDING")
-      helper-button(content="TRANSACTION_DETAIL_STATUS" placement='bottom')
-    h6.status-detail(translate="TRANSACTION_WILL_COMPLETE_IN", translate-values="{minutes: minutesRemaining}", ng-if="!frugalWarning")
-    h6.status-detail(translate="TRANSACTION_FRUGAL", ng-if="frugalWarning")
+.flex-column(ng-if="!complete")
+  .flex-row.flex-between
+    i.pointer.ti-new-window.blue(ng-click="verify()" uib-tooltip="{{'VERIFY_ON_BCI' | translate}}" tooltip-append-to-body="true")
+    helper-button(content="{{ 'TRANSACTION_WILL_COMPLETE_IN' | translate:{minutes: minutesRemaining } }}" ng-if="!frugalWarning" append="true")
+    helper-button(content="{{ 'TRANSACTION_FRUGAL' | translate }}" ng-if="frugalWarning" append="true")
+  uib-progressbar.mts(value=":: transaction.confirmations" max="3")
+    span.plm(translate="PENDING")
+    span :
+    span.pls {{ :: transaction.confirmations }}
+    span /3
+    span.pls(translate="CONFIRMATIONS")
 
-  .success.flex-center(ng-if="complete")
-    i.ti-check.mrm
-    h6(translate="TRANSACTION_COMPLETE")
+.success.flex-column(ng-if="complete")
+  .flex-row.flex-center(ng-click="verify()")
+    i.pointer.ti-new-window.blue.mrs(uib-tooltip="{{'VERIFY_ON_BCI' | translate}}" tooltip-append-to-body="true")
+    span.mrs.mbn.em-400(translate="TRANSACTION_COMPLETE")
+    i.ti-check.em-600

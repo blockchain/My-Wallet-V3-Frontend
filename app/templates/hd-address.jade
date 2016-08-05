@@ -1,15 +1,21 @@
 tr
-  td.shrink(ng-bind-html="address.address | escapeHtml | highlight:searchText")
-  td.expand
-    span(ng-bind-html="address.label | escapeHtml | highlight:searchText", ng-hide="status.edit").prm
-    .form-group(ng-class="{'has-error': errors.label}", ng-show="status.edit")
-      .col-sm-12
-        bc-async-input(inline ng-model="address.label" on-save="changeLabel" on-cancel="cancelEdit" is-required editing)
-        span.help-block(ng-show="errors.label") {{::errors.label}}
-    span(ng-hide="status.edit").float-right
-      a(ng-click="status.edit=1")
-        i.ti-pencil.prm        
   td.shrink
-    span(ng-hide="status.edit")
-      a(ng-click="removeLabel()")
-        i.ti-trash.prm
+    a(ng-href="{{::addressLink(address.address)}}"
+      ng-bind-html="::address.address | escapeHtml | highlight:searchText"
+      target="_blank"
+      rel="noopener noreferrer")
+    | &nbsp;
+    span.security-yellow.parens(translate="NO_TXS" ng-show="pastAddress && address.ntxs === 0")
+  td.expand.address-label
+    .flex-row.flex-between(ng-show="editing")
+      bc-async-input(inline ng-model="address.label" on-save="changeLabel" on-cancel="cancelEdit" is-required editing="editing")
+    .flex-row.flex-between(ng-hide="editing")
+      span.flex-1.prm.oflow(ng-bind-html="address.label | escapeHtml | highlight:searchText")
+      span.float-right
+        a(ng-click="editing = true")
+          i.ti-pencil.prm        
+        a(ng-click="removeLabel()" ng-show="address.label")
+          i.ti-trash.prm
+  td.shrink(ng-if="pastAddress")
+    span(ng-hide="address.balance == null") {{ address.balance | convert }}
+    img(src="img/spinner.gif" ng-show="address.balance == null")

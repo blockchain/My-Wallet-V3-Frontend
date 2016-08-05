@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller("TopCtrl", TopCtrl);
+  .controller('TopCtrl', TopCtrl);
 
-function TopCtrl($scope, $stateParams, Wallet, currency) {
+function TopCtrl ($scope, $stateParams, Wallet, currency) {
   $scope.settings = Wallet.settings;
   $scope.isBitCurrency = currency.isBitCurrency;
   $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency;
@@ -10,6 +10,12 @@ function TopCtrl($scope, $stateParams, Wallet, currency) {
   $scope.accountIndex = $stateParams.accountIndex;
 
   $scope.getTotal = (index) => Wallet.total(index);
-  $scope.hasLegacyAddress = Wallet.legacyAddresses().length > 0;
 
+  $scope.hasLegacyAddresses = () => {
+    if (Wallet.status.isLoggedIn) {
+      return Wallet.legacyAddresses().filter(a => !a.archived && !a.isWatchOnly).length > 0;
+    } else {
+      return null;
+    }
+  };
 }

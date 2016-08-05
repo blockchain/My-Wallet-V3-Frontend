@@ -9,7 +9,7 @@ describe "ResetTwoFactorCtrl", ->
       Wallet = $injector.get("Wallet")
       WalletNetwork = $injector.get("WalletNetwork")
 
-      WalletNetwork.requestTwoFactorReset = (uid) -> {
+      WalletNetwork.requestTwoFactorReset = (token, uid) -> {
         then: (callback) ->
           if uid != ""
             callback()
@@ -19,6 +19,26 @@ describe "ResetTwoFactorCtrl", ->
                 callback()
           }
       }
+
+      $rootScope.loginFormUID = {
+        then: (cb) ->
+          cb("1234")
+          {
+            catch: () ->
+          }
+      }
+
+      WalletNetwork.getCaptchaImage = () -> {
+        then: (cb) ->
+          cb({
+            image: "captcha-image-blob",
+            sessionToken: "token"
+          })
+      }
+
+      window.URL =
+        createObjectURL: (blob) ->
+          blob + "_url"
 
       scope = $rootScope.$new()
 
@@ -70,7 +90,7 @@ describe "ResetTwoFactorCtrl", ->
 
     it "should call requestTwoFactorReset() with form data", ->
       scope.resetTwoFactor()
-      expect(WalletNetwork.requestTwoFactorReset).toHaveBeenCalledWith("1234", "a@b.com", '', '', 'Help', '1zabc')
+      expect(WalletNetwork.requestTwoFactorReset).toHaveBeenCalledWith("token", "1234", "a@b.com", '', '', 'Help', '1zabc')
 
     it "should go to the next step", ->
       scope.resetTwoFactor()

@@ -38,7 +38,6 @@ describe "Activity Feed directive", ->
 
   it "has no loading state once transactions have loaded", ->
     # need to stub out the Activity service
-    pending()
     scope.status.didLoadTransactions = true
     scope.$apply()
     expect(scope.loading).toBe(false)

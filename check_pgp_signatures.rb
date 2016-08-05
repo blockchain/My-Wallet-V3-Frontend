@@ -7,7 +7,7 @@ packages   = whitelist["pgp-signed"]
 keys = whitelist["pgp-keys"]
 
 for package in packages
-  bower = JSON.parse(File.read("build/bower_components/#{ package }/.bower.json"))
+  bower = JSON.parse(File.read("bower_components/#{ package }/.bower.json"))
   version = bower["version"]
   puts version
   puts bower["_resolution"]

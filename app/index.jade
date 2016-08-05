@@ -1,196 +1,71 @@
 doctype
-<!-- @if !PRODUCTION --><html lang='en' ng-app='walletApp' ng-init="autoReload=#{ process.env.AUTO_RELOAD || false }; rootURL='#{ process.env.ROOT_URL }/'; rootPath='#{ process.env.ROOT_PATH }'; webSocketURL='#{ process.env.WEBSOCKET_URL }'; feeServiceDomain='#{ process.env.FEE_SERVICE_DOMAIN }';" ng-csp ng-class="{'not-fixed': outOfApp}"><!-- @endif -->
+<!-- @if !PRODUCTION --><html lang='en' ng-app='walletApp' ng-init="autoReload=#{ process.env.AUTO_RELOAD || false }; rootURL='#{ process.env.ROOT_URL }/'; webSocketURL='#{ process.env.WEBSOCKET_URL }'; apiDomain='#{ process.env.API_DOMAIN }/';" ng-csp ng-class="{'not-fixed': outOfApp}"><!-- @endif -->
 <!-- @if PRODUCTION !><html lang='en' ng-app='walletApp' ng-csp ng-class="{'not-fixed': outOfApp}"><!-- @endif -->
 head
   meta(charset='utf-8')
-  meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1") 
+  meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1")
   meta(name="theme-color" content="#187fc0")
   meta(name="apple-itunes-app" content="app-id=493253309")
-  link(rel="icon" type="image/vnd.microsoft.icon" href="img/favicon.ico")
-  title Blockchain Wallet
+  meta(name="description" content="Blockchain Wallet is an online bitcoin wallet that allows anyone to make worldwide payments for free. Blockchain cannot view your balance, see your transactions, or make payments on your behalf. Join today, be your own bank")
+  meta(name="keywords" content="Blockchain, Wallet, Blockchain Wallet, My Wallet, Bitcoin Wallet, HD, BIP38, secure, Bitcoin, BTC, send, receive, currency, money, transfer")
   <!-- @if !PRODUCTION -->
-  link(rel="stylesheet", href="bower_components/angular-ui-select/dist/select.css")
-  script(src='bower_components/angular/angular.js')
-  script(src='bower_components/angular-sanitize/angular-sanitize.js')
-  script(src='bower_components/angular-cookies/angular-cookies.js')
-  script(src='bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
-  script(src='bower_components/angular-animate/angular-animate.js')
-  script(src='bower_components/angular-ui-router/release/angular-ui-router.js')
-  script(src='bower_components/angular-ui-select/dist/select.js')
-  script(src='bower_components/angular-audio/app/angular.audio.js')
-  script(src='bower_components/qrcode/lib/qrcode.js')
-  script(src='bower_components/angular-qr/src/angular-qr.js')
-  script(src='bower_components/angular-translate/angular-translate.js')
-  script(src='bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js')
- 
-  script(src='bower_components/angular-inview/angular-inview.js')
-  script(src='bower_components/angular-password-entropy/password-entropy.js')  
-  
-  script(                src='bower_components/digits-trie/dist/digits-trie.js')
-  link(rel='stylesheet' href='bower_components/bc-css-flags/dist/css/bc-css-flags.css')
-  script(                src='bower_components/google-libphonenumber/dist/browser/libphonenumber.js')
-  script(                src='bower_components/bc-countries/dist/bc-countries.js')
-  script(                src='bower_components/bc-phone-number/dist/js/bc-phone-number.js')
-  link(rel='stylesheet' href='bower_components/bc-phone-number/dist/css/bc-phone-number.css')
-  
-  
+  script(src='bower_components/angular/angular.js', defer)
+  script(src='bower_components/angular-sanitize/angular-sanitize.js', defer)
+  script(src='bower_components/angular-animate/angular-animate.js', defer)
+  script(src='bower_components/angular-bootstrap/ui-bootstrap-tpls.js', defer)
+  script(src='bower_components/angular-translate/angular-translate.js', defer)
+  script(src='bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js', defer)
   script(src='bower_components/browserdetection/src/browser-detection.js')
-  
-  // angular-ladda doesn't play nicely with ui-bootstrap
-  // script(src="bower_components/ladda/js/spin.js")
-  // script(src="bower_components/ladda/js/ladda.js")
-  // script(src="bower_components/angular-ladda/dist/angular-ladda.js")
-  
-  //- link(rel="stylesheet", href="bower_components/ladda/dist/ladda-themeless.css")
-  link(rel='stylesheet', href='build/css/ladda.css')
-  link(rel='stylesheet', href='build/css/blockchain.css')
-  link(rel='stylesheet', href='build/css/fonts.css')
-  link(rel='stylesheet', href='build/css/angular-csp.css')
-  
-  // Blockchain MyWallet javascript (must be called before 'app')
-  script(src='bower_components/blockchain-wallet/dist/my-wallet.js')
-  script(src='build/js/core/core.module.js')
-  script(src='build/js/core/api.service.js')
-  script(src='build/js/core/settings.service.js')
-  script(src='build/js/core/store.service.js')
-  script(src='build/js/core/myWallet.service.js')
-  script(src='build/js/core/payment.service.js')
-  script(src='build/js/core/walletTokenEndpoints.service.js')
-  script(src='build/js/core/walletNetwork.service.js')
-  script(src='build/js/core/helpers.service.js')
-  
-  script(src='build/js/browser-polyfill.js')
-  script(src='build/js/app.js')
-  script(src='build/js/translations.js')
-  
-  script(src='build/js/controllers/accountForm.controller.js')
-  script(src='build/js/controllers/revealXpub.controller.js')
-  script(src='build/js/controllers/app.controller.js')
-  script(src='build/js/controllers/claim.controller.js')
-  script(src='build/js/controllers/claimModal.controller.js')
-  script(src='build/js/controllers/confirmRecoveryPhrase.controller.js')
-  script(src='build/js/controllers/home.controller.js')
-  script(src='build/js/controllers/firstTime.controller.js')
-  script(src='build/js/controllers/login.controller.js')
-  script(src='build/js/controllers/navigation.controller.js')
-  script(src='build/js/controllers/openLink.controller.js')
-  script(src='build/js/controllers/request.controller.js')
-  script(src='build/js/controllers/secondPassword.controller.js')
-  script(src='build/js/controllers/securityCenter.controller.js')
-  script(src='build/js/controllers/send.controller.js')
-  script(src='build/js/controllers/signup.controller.js')
-  script(src='build/js/controllers/top.controller.js')
-  script(src='build/js/controllers/transaction.controller.js')
-  script(src='build/js/controllers/transactions.controller.js')
-  script(src='build/js/controllers/upgrade.controller.js')
-  script(src='build/js/controllers/modalNotification.controller.js')
-  script(src='build/js/controllers/recoverFunds.controller.js')
-  script(src='build/js/controllers/lostGuid.controller.js')
-  script(src='build/js/controllers/ResetTwoFactor.controller.js')
-  script(src='build/js/controllers/feedback.controller.js')
-  script(src='build/js/controllers/walletNavigation.controller.js')
-  script(src='build/js/controllers/verifyEmail.controller.js')
-  script(src='build/js/controllers/unsubscribe.controller.js')
-  script(src='build/js/controllers/authorizeApprove.controller.js')
-  script(src='build/js/controllers/resetTwoFactorToken.controller.js')
-  script(src='build/js/controllers/settings/settings.controller.js')
-  script(src='build/js/controllers/settings/info.controller.js')
-  script(src='build/js/controllers/settings/preferences.controller.js')
-  script(src='build/js/controllers/settings/security.controller.js')
-  script(src='build/js/controllers/settings/accounts.controller.js')
-  script(src='build/js/controllers/settings/addresses.controller.js')
-  script(src='build/js/controllers/settings/importedAddresses.controller.js')
-  script(src='build/js/controllers/settings/addressBook.controller.js')
-  script(src='build/js/controllers/settings/addressImport.controller.js')
-  script(src='build/js/controllers/settings/changePassword.controller.js')
-  script(src='build/js/controllers/settings/setSecondPassword.controller.js')
-  script(src='build/js/controllers/settings/showPrivateKey.controller.js')
-  script(src='build/js/controllers/settings/twoFactor.controller.js')
-  
-  script(src='build/js/filters.js')
-  script(src='build/js/routes.js')
-  
-  script(src='build/js/directives/activity-feed.directive.js')
-  script(src='build/js/directives/address-book-entry.directive.js')
-  script(src='build/js/directives/adverts.directive.js')
-  script(src='build/js/directives/alerts.directive.js')
-  script(src='build/js/directives/amount.directive.js')
-  script(src='build/js/directives/setting-toggle.js')
-  script(src='build/js/directives/bc-async-input.directive.js')
-  script(src='build/js/directives/completed-level.directive.js')
-  script(src='build/js/directives/contextual-message.directive.js')
-  script(src='build/js/directives/configure-mobile-number.directive.js')
-  script(src='build/js/directives/verify-mobile-number.js')
-  script(src='build/js/directives/configure-second-password.directive.js')
-  script(src='build/js/directives/confirm-recovery-phrase.directive.js')
-  script(src='build/js/directives/currency-picker.directive.js')
-  script(src='build/js/directives/did-you-know.directive.js')
-  script(src='build/js/directives/fiat-or-btc.directive.js')
-  script(src='build/js/directives/fiat.directive.js')
-  script(src='build/js/directives/hd-address.directive.js')
-  script(src='build/js/directives/imported-address.directive.js')
-  script(src='build/js/directives/watch-only-address.js')
-  script(src='build/js/directives/helper-button.directive.js')
-  script(src='build/js/directives/ip-whitelist-restrict.directive.js')
-  script(src='build/js/directives/language-picker.js')
-  script(src='build/js/directives/on-enter.js')
-  script(src='build/js/directives/resend-email-confirmation.js')
-  script(src='build/js/directives/scroll-to-top.js')
-  script(src='build/js/directives/single-click-select.js')
-  script(src='build/js/directives/tor.js')
-  script(src='build/js/directives/transaction-description.js')
-  script(src='build/js/directives/transaction-note.js')
-  script(src='build/js/directives/transaction-status.js')
-  script(src='build/js/directives/ui-ladda.js')
-  script(src='build/js/directives/virtual-keyboard.js')
-  script(src='build/js/directives/btc-picker.directive.js')
-  script(src='build/js/directives/focus-when.directive.js')
-  script(src='build/js/directives/is-valid.directive.js')
-  script(src='build/js/directives/is-not-equal.directive.js')
-  script(src='build/js/directives/transform-currency.js')
-  script(src='build/js/directives/label-origin.js')
-  script(src='build/js/directives/destinationInput.directive.js')
-  script(src='build/js/directives/scroll-in-view.js')
-  script(src='build/js/directives/public-header.directive.js')
-  
-  script(src='build/js/services/wallet.service.js')
-  script(src='build/js/services/securityCenter.service.js')
-  script(src='build/js/services/adverts.service.js')
-  script(src='build/js/services/bcTranslationLoader.service.js')
-  script(src='build/js/services/didYouKnow.service.js')
-  script(src='build/js/services/activity.service.js')
-  script(src='build/js/services/alerts.service.js')
-  script(src='build/js/services/languages.service.js')
-  script(src='build/js/services/currency.service.js')
-  script(src='build/js/services/format.service.js')
-  script(src='build/js/services/fees.service.js')
-  
-  script(src='build/js/templates.js')
-      
-  script(src='bower_components/webcam-directive/app/scripts/webcam.js')
-  script(src='bower_components/bc-qr-reader/dist/bc-qr-reader.js')
-  
-  <!-- @endif -->
-  
-  <!-- @if PRODUCTION !>
-  link(rel='stylesheet', href='css/application.css')
-  script(src='js/application.min.js')  
-  <!-- @endif -->
-  
-  //- Whitelist by copying script from browser and putting it in a file 
-  //- (including the last new line) and then run:
-  //- cat script | openssl dgst -sha256 -binary | openssl enc -base64
-  script.
-    if(browserDetection().browser === "ie" && browserDetection().version < 11) {
-      if ( confirm("Your browser is out of date! It looks like you're using an old version of Internet Explorer. For the best Blockchain experience, please update your browser or hit cancel to return to our homepage.") ) {
-        window.location = "http://browsehappy.com/";
-      }
-      else {
-        window.location = "https://blockchain.info/";
-      }
-    }
+  script(src='bower_components/oclazyload/dist/ocLazyLoad.js', defer)
+  script(src='bower_components/angular-ui-router/release/angular-ui-router.js', defer)
+  script(src='bower_components/angular-ui-select/dist/select.js', defer)
 
-body(ng-controller="AppCtrl", ui-view="body")
+  // include: "type": "js", "files": "build/js/sharedDirectives.js"
+  // include: "type": "js", "files": "build/js/sharedDirectives/*.js"
+  // include: "type": "js", "files": "build/js/translations.js"
+  // include: "type": "js", "files": "build/js/app.js"
+  // include: "type": "js", "files": "build/js/landingCtrl.js"
+  // include: "type": "js", "files": "build/js/services/bcTranslationLoader.service.js"
+  // include: "type": "js", "files": "build/js/routes.js"
+
+  <!-- @endif -->
+
+  <!-- @if PRODUCTION !>
+  script(src='js/landing.min.js' defer)
+  <!-- @endif -->
+  link(rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-icon-180x180.png")
+  link(rel="apple-touch-icon" sizes="152x152" href="img/favicon/apple-icon-152x152.png")
+  link(rel="apple-touch-icon" sizes="144x144" href="img/favicon/apple-icon-144x144.png")
+  link(rel="apple-touch-icon" sizes="120x120" href="img/favicon/apple-icon-120x120.png")
+  link(rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-icon-114x114.png")
+  link(rel="apple-touch-icon" sizes="76x76" href="img/favicon/apple-icon-76x76.png")
+  link(rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-icon-72x72.png")
+  link(rel="apple-touch-icon" sizes="60x60" href="img/favicon/apple-icon-60x60.png")
+  link(rel="apple-touch-icon" sizes="57x57" href="img/favicon/apple-icon-57x57.png")
+  link(rel="icon" type="image/png" sizes="192x192"  href="img/favicon/android-icon-192x192.png")
+  link(rel="icon" type="image/png" sizes="96x96" href="img/favicon/favicon-96x96.png")
+  link(rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png")
+  link(rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png")
+  meta(name="msapplication-TileColor" content="#ffffff")
+  meta(name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png")
+  title Bitcoin Wallet from Blockchain
+  <!-- @if !PRODUCTION -->  
+  link(rel='stylesheet' href='build/css/wallet.css')
+  <!-- @endif -->
+
+  <!-- @if PRODUCTION !>
+  link(rel='stylesheet' href='css/wallet.css')
+  <!-- @endif -->
+
+<<<<<<< HEAD
+body(
+  ui-view="body"
+  ng-mousemove="onAction()"
+  ng-click="onAction()")
+=======
+body(ng-controller="AppCtrl" ui-view="body" ng-mousemove="resetInactivityTime()" ng-keypress="resetInactivityTime()")
+
+>>>>>>> refs/remotes/blockchain/remove-wallet-landing
   noscript
     img(src="/img/logo-bw.png")
     h3 Please enable JavaScript to use the Blockchain Wallet

@@ -1,20 +1,30 @@
-.modal-header
-  .flex-center.pam(ng-hide="status.edit")
-    h3.man.mrm(translate="CREATE_NEW_ACCOUNT")
-    helper-button(content="CREATE_NEW_ACCOUNT_MODAL")
-  h3(translate="RENAME_ACCOUNT", ng-show="status.edit") 
-.modal-body
-  form(role="form" name="accountForm" novalidate)
+form(role="form" name="accountForm" ng-submit="submit()" autocomplete="off" novalidate)
+  .modal-header
+    .flex-center.pam
+      h3.man.mrm(translate="{{status.edit ? 'RENAME_ACCOUNT':'CREATE_NEW_ACCOUNT'}}")
+      helper-button(ng-hide="status.edit" content="CREATE_NEW_ACCOUNT_MODAL")
+  .modal-body
     .form-group.flex-column.flex-justify(ng-class="{'has-error': accountForm.$invalid && accountForm.$dirty}")
       label.control-label(translate="ACCOUNT_NAME")
-      div
-        input.form-control(type="text" name="new" ng-model="fields.name" is-valid="isNameUnused(fields.name)" maxlength="17" required autofocus)
-        span.help-block(translate="INCORRECT_PASSWORD" ng-show="accountForm.new.$error.incorrectPassword")
-        span.help-block(translate="ACCOUNT_NAME_TAKEN" ng-show="accountForm.new.$error.isValid")
-    span(ng-show="!status.edit")
-.modal-footer.pal.flex-end.flex-center
-  button.button-muted.button-lg.mrm(ng-click="close()", translate="CLOSE", ng-hide="status.busy")
-  span(ng-if="!status.edit")
-    button.button-primary.button-lg(ui-ladda="status.busy" ng-click="createAccount()" ladda-translate="CREATE_ACCOUNT" ng-disabled="accountForm.new.$error.required || accountForm.new.$error.isValid || accountForm.$pristine" data-style="expand-left")
-  span(ng-if="status.edit")
-    button.button-primary.button-lg(ui-ladda="status.busy" ng-click="updateAccount()" ladda-translate="RENAME" ng-disabled="accountForm.$invalid || accountForm.$pristine" data-style="expand-left")
+      input.form-control(
+        name="new"
+        ng-model="name"
+        ng-model-options="{debounce: 250}"
+        is-valid="isNameUnused(name)"
+        maxlength="17"
+        required
+        autofocus)
+      span.help-block(ng-show="accountForm.$dirty")
+        span(translate="ACCOUNT_NAME_TAKEN" ng-show="accountForm.new.$error.isValid")
+  .modal-footer.pal.flex-end.flex-center
+    button.button-muted.mrm(
+      type="button"
+      translate="CLOSE"
+      ng-hide="status.busy"
+      ng-click="$dismiss()")
+    button.button-success(
+      type="submit"
+      ladda-translate="{{status.edit ? 'RENAME':'CREATE_ACCOUNT'}}"
+      ui-ladda="status.busy"
+      ng-disabled="accountForm.$invalid"
+      data-style="expand-left")

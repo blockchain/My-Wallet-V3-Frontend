@@ -4,23 +4,23 @@ angular
 
 Adverts.$inject = ['$http', '$rootScope'];
 
-function Adverts($http, $rootScope) {
+function Adverts ($http, $rootScope) {
   const service = {
-    ads       : [],
-    didFetch  : false,
-    fetchOnce : fetchOnce,
-    fetch     : fetch
+    ads: [],
+    didFetch: false,
+    fetchOnce: fetchOnce,
+    fetch: fetch
   };
   return service;
 
-  function fetchOnce() {
+  function fetchOnce () {
     if (!service.didFetch) {
       service.fetch();
       service.didFetch = true;
     }
   }
 
-  function fetch() {
+  function fetch () {
     let advertsFeed = $rootScope.rootURL + 'adverts_feed?wallet_version=3';
     $http.get(advertsFeed)
       .success(data => {
@@ -30,7 +30,7 @@ function Adverts($http, $rootScope) {
       });
   }
 
-  function randFromArray(array) {
+  function randFromArray (array) {
     return array.splice(Math.floor(Math.random() * array.length), 1)[0];
   }
 }

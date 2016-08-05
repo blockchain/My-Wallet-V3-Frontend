@@ -1,17 +1,21 @@
-module.exports = function(karma){
+module.exports = function (config) {
   var configuration = {
 
-    basePath : './',
+    basePath: './',
 
-    // logLevel: config.LOG_DISABLE,
+    logLevel: config.LOG_WARN,
+
+    client: { captureConsole: true },
 
     exclude: ['assets/js/my_wallet/'],
 
-    files : [
+    files: [
+      'node_modules/babel-polyfill/dist/polyfill.js',
       'bower_components/angular/angular.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/angular-animate/angular-animate.js',
+      'bower_components/oclazyload/dist/ocLazyLoad.js',
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/angular-cookies/angular-cookies.js',
       'bower_components/angular-ui-select/dist/select.js',
@@ -19,44 +23,49 @@ module.exports = function(karma){
       'bower_components/qrcode/lib/qrcode.min.js',
       'bower_components/angular-qr/angular-qr.min.js',
       'bower_components/angular-inview/angular-inview.js',
-      'build/js/browser-polyfill.js',
-      'assets/js/app.js',
+      'bower_components/browserdetection/src/browser-detection.js',
+      'bower_components/compare-versions/index.js',
+      'tests/app.module.spec.js',
+      'assets/js/landingCtrl.js',
       'assets/js/core/core.module.js',
       'build/js/templates.js',
       'assets/js/controllers/**/*.controller.js',
+      'assets/js/components/**/*.component.js',
       'assets/js/filters.js',
       'assets/js/services/**/*.service.js',
-      'assets/js/directives/*.js.coffee',
-      'assets/js/directives/*.js',
+      'assets/js/directives/*.directive.js',
+      'assets/js/sharedDirectives.js',
+      'assets/js/sharedDirectives/*.directive.js',
+      'assets/js/translations.js',
+      'assets/js/walletLazyLoad.js',
       'assets/js/core/*.js',
-      'tests/mocks/**/*.coffee',
-      'tests/*.coffee',
-      'tests/controllers/**/*.coffee',
-      'tests/directives/*.coffee',
       'tests/filters/*.coffee',
+      'tests/controllers/*.coffee',
+      'tests/components/*.coffee',
       'tests/services/**/*.coffee',
+      'tests/directives/*.coffee',
+      'tests/mocks/**/*.coffee',
       'tests/**/*.js',
-      'app/templates/*.jade',
-      'bower_components/angular-password-entropy/password-entropy.js',
+      'app/templates/*.jade'
     ],
 
-    autoWatch : true,
+    autoWatch: true,
 
     preprocessors: {
       '**/*.jade': ['ng-jade2js'],
       'assets/js/core/core.module.js': ['babel'],
-      'assets/js/controllers/**/*.js' : ['coverage'],
-      'assets/js/filters.js' : ['coverage'],
-      'assets/js/services/*.js.coffee' : ['coffee','coverage'],
-      'assets/js/services/*.service.js' : ['coverage'],
-      'assets/js/directives/*.js.coffee' : ['coffee','coverage'],
-      'assets/js/directives/*.js' : ['coverage'],
+      'assets/js/controllers/**/*.js': ['coverage', 'babel'],
+      'assets/js/components/**/*.js': ['coverage', 'babel'],
+      'assets/js/filters.js': ['babel', 'coverage'],
+      'assets/js/services/*.service.js': ['babel', 'coverage'],
+      'assets/js/directives/*.directive.js': ['babel', 'coverage'],
+      'assets/js/sharedDirectives/*.directive.js': ['babel', 'coverage'],
       'assets/js/core/*.service.js': ['babel'],
-      'assets/js/my_wallet.js.coffee': ['coffee'],
-      'assets/js/routes.js' : ['coverage'],
-      'assets/js/app.js' : ['coverage'],
-      'tests/**/*.coffee' : ['coffee'],
-      'tests/**/*.js' : ['babel']
+      'assets/js/routes.js': ['babel', 'coverage'],
+      'assets/js/app.js': ['babel'],
+      'assets/js/landingCtrl.js': ['babel', 'coverage'],
+      'tests/**/*.coffee': ['coffee'],
+      'tests/**/*.js': ['babel']
     },
     coffeePreprocessor: {
       // options passed to the coffee compiler
@@ -65,12 +74,13 @@ module.exports = function(karma){
         sourceMap: true
       },
       // transforming the filenames
-      transformPath: function(path) {
+      transformPath: function (path) {
         return path.replace(/\.coffee$/, '.js');
       }
     },
     babelPreprocessor: {
       options: {
+        presets: ['es2015'],
         sourceMap: 'inline'
       },
       filename: function (file) {
@@ -80,7 +90,6 @@ module.exports = function(karma){
         return file.originalPath;
       }
     },
-
     ngJade2JsPreprocessor: {
       stripPrefix: 'app/',
       prependPrefix: '',
@@ -110,31 +119,31 @@ module.exports = function(karma){
 
     frameworks: ['jasmine'],
 
-    browsers : ['PhantomJS'],
+    browsers: ['PhantomJS'],
 
-    reporters: ['progress','osx', 'coverage'],
+    reporters: ['progress', 'osx', 'coverage'],
 
     coverageReporter: {
       reporters: [
-        { type : 'html', dir : 'coverage/'},
-        { type : 'lcov', dir : 'coverage-lcov/'}
+        // Fails with: TypeError: Cannot read property 'text' of undefined
+        // { type : 'html', dir : 'coverage/'},
+        {type: 'lcovonly', dir: 'coverage-lcov/'}
       ],
 
       subdir: '.',
 
-      instrumenters: { isparta : require('isparta') },
+      instrumenters: {isparta: require('isparta')},
 
       instrumenter: {
-          '**/*.js': 'isparta'
+        '**/*.js': 'isparta'
       }
+
     }
+  };
 
-
-
+  if (process.env.TRAVIS) {
+    // Optionally do something Travis specific
   }
 
-  if(process.env.TRAVIS) {
-  }
-
-  karma.set(configuration);
+  config.set(configuration);
 };

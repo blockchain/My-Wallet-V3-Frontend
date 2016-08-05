@@ -18,6 +18,20 @@
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="user.isEmailVerified" placement="bottom" content="EMAIL_ADDRESS_TOOLTIP" img="img/badge-verifyemail.png" message="EMAIL_VERIFIED")
+      .badge-panel.hidden-desktop(ng-show="display.action == 'email'")
+        div(ng-show="display.action == 'email' && !display.editingEmail")
+          .verify-email
+            p(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
+            verify-email(button-class="button-success")
+            p(ng-hide="user.isEmailVerified")
+              span(translate="DIDNT_RECEIVE_EMAIL")
+              span 
+                resend-email-confirmation
+                span(translate="OR")
+              span
+                a(ng-click="beginEditEmail()", translate="CHANGE")
+        div(ng-show="display.action == 'email' && display.editingEmail")       
+          bc-async-input(custom inline type="email" is-required placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-cancel="cancelEditEmail" on-save="changeEmail", action-title="'CHANGE' | translate" editing=1)
       li.level-badge(ng-click="status.didConfirmRecoveryPhrase || toggle('securityphrase')", ng-class="{'active' : display.action == 'securityphrase', 'badge-active': status.didConfirmRecoveryPhrase }")
         a
           .level-incomplete-container(ng-hide="status.didConfirmRecoveryPhrase")
@@ -30,6 +44,11 @@
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="status.didConfirmRecoveryPhrase" placement="bottom" content="RECOVERY_PHRASE_TOOLTIP" img="img/badge-securityphrase.png" message="PHRASE_BACKED")
+      .badge-panel.hidden-desktop(ng-show="display.action == 'securityphrase'")
+        .flex-center
+          p.flex-1.prl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
+          .flex-1.mll.backup-phrase-actions
+            confirm-recovery-phrase(ng-hide="status.didConfirmRecoveryPhrase")
       li.level-badge(ng-click="user.passwordHint || toggle('passwordhint')", ng-class="{'active' : display.action == 'passwordhint', 'badge-active': user.passwordHint }")
         a
           .level-incomplete-container(ng-hide="user.passwordHint")
@@ -42,12 +61,21 @@
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="user.passwordHint" placement="bottom" content="PASSWORD_HINT_TOOLTIP" img="img/badge-passwordhint.png" message="HINT_STORED")
+      .badge-panel.hidden-desktop(ng-show="display.action == 'passwordhint'")
+        bc-async-input(custom inline placeholder="'ADD_PASSWORD_HINT' | translate" ng-model="user.passwordHint" on-cancel="cancelEditPasswordHint" on-save="changePasswordHint" action-title="'CHANGE' | translate" editing=1)
+          .flex-center
+            .form-group.width-50.flex-column(ng-class="{'has-error': !validate()}")
+              p(translate="CHANGE")
+              input.form-control.mtm(on-enter="save()" type="{{ type }}" ng-model="form.newValue" ng-focus="focus()" placeholder="{{ placeholder }}" ng-change="onChange()" maxlength="255")
+              span.help-block {{::errorMessage}}
+            .width-50.mll.pll
+              button.button-success(ng-click="save()",ng-disabled="!validate() || form.newValue == ngModel",ui-ladda="status.saving", ladda-translate="SAVE", data-style="expand-left")
 
-    .badge-panel(ng-show="display.action == 'email' || display.action == 'securityphrase' || display.action == 'passwordhint' ")
+    .badge-panel.hidden-phone(ng-show="display.action == 'email' || display.action == 'securityphrase' || display.action == 'passwordhint' ")
       div(ng-show="display.action == 'email' && !display.editingEmail")
         .verify-email
           p(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
-          verify-email(button-class="button-success button-lg")
+          verify-email(button-class="button-success")
           p(ng-hide="user.isEmailVerified")
             span(translate="DIDNT_RECEIVE_EMAIL")
             span 
@@ -58,12 +86,13 @@
 
       div(ng-show="display.action == 'email' && display.editingEmail")       
         bc-async-input(custom inline type="email" is-required placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-cancel="cancelEditEmail" on-save="changeEmail", action-title="'CHANGE' | translate" editing=1)
-      .flex-center(ng-show="display.action == 'securityphrase'")        
+
+      div.flex-center(ng-show="display.action == 'securityphrase'")        
         p.flex-1.prl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
         .flex-1.mll.backup-phrase-actions
-          confirm-recovery-phrase(button-class="button-success button-lg", ng-hide="status.didConfirmRecoveryPhrase")
+          confirm-recovery-phrase(button-class="button-primary", ng-hide="status.didConfirmRecoveryPhrase")
 
-      div(ng-show="display.action == 'passwordhint'")       
+      div(ng-show="display.action == 'passwordhint'")
         bc-async-input(custom inline placeholder="'ADD_PASSWORD_HINT' | translate" ng-model="user.passwordHint" on-cancel="cancelEditPasswordHint" on-save="changePasswordHint" action-title="'CHANGE' | translate" editing=1)
           .flex-center
             .form-group.width-50.flex-column(ng-class="{'has-error': !validate()}")
@@ -71,7 +100,7 @@
               input.form-control.mtm(on-enter="save()" type="{{ type }}" ng-model="form.newValue" ng-focus="focus()" placeholder="{{ placeholder }}" ng-change="onChange()" maxlength="255")
               span.help-block {{::errorMessage}}
             .width-50.mll.pll
-              button.button-success.button-lg(ng-click="save()",ng-disabled="!validate() || form.newValue == ngModel",ui-ladda="status.saving", ladda-translate="SAVE", data-style="expand-left")
+              button.button-success(ng-click="save()",ng-disabled="!validate() || form.newValue == ngModel",ui-ladda="status.saving", ladda-translate="SAVE", data-style="expand-left")
 
 
   section.level.level_two
@@ -93,6 +122,12 @@
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="user.isMobileVerified" content="MOBILE_NUMBER_TOOLTIP" img="img/badge-addmobile.png" message="MOBILE_LINKED")
+      .badge-panel.hidden-desktop(ng-show="display.action == 'mobilenumber'")
+        div
+          configure-mobile-number(on-success="mobileNumber.step = 2" on-cancel="mobileNumber.step = 1; toggle('mobilenumber');" ng-show="mobileNumber.step == 1" full-width)          
+          div(ng-show="mobileNumber.step == 2")
+            h2.status.complete.hidden-xs.long-input
+            verify-mobile-number(on-success="mobileNumber.step = 0" full-width)
       li.level-badge(ng-click="settings.needs2FA || toggle('twofactor')", ng-class="{'active' : display.action == 'twofactor', 'badge-active': settings.needs2FA }")
         a
           .level-incomplete-container(ng-hide="settings.needs2FA")
@@ -105,17 +140,21 @@
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="settings.needs2FA" content="2FA_TOOLTIP" img="img/badge-add2FA.png" message="TWO_STEP_ENABLED")
-
-    .badge-panel(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
+      .badge-panel.hidden-desktop(ng-show="display.action == 'twofactor'")     
+        div.flex-center
+          p.flex-1.prl(translate="SC_CONFIGURE_2FA")
+          .flex-1.mll
+            a.button-primary(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA")
+    .badge-panel.hidden-phone(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
       div(ng-show="display.action == 'mobilenumber'")
-        configure-mobile-number(on-success="mobileNumber.step = 2" on-cancel="mobileNumber.step = 1; toggle('mobilenumber');" ng-show="mobileNumber.step == 1" button-lg full-width)          
+        configure-mobile-number(on-success="mobileNumber.step = 2" on-cancel="mobileNumber.step = 1; toggle('mobilenumber');" ng-show="mobileNumber.step == 1" full-width)          
         div(ng-show="mobileNumber.step == 2")
           h2.status.complete.hidden-xs.long-input
-          verify-mobile-number(on-success="mobileNumber.step = 0" button-lg full-width)
-      .flex-center(ng-show="display.action == 'twofactor'")     
+          verify-mobile-number(on-success="mobileNumber.step = 0" full-width)
+      div.flex-center(ng-show="display.action == 'twofactor'")     
         p.flex-1.prl(translate="SC_CONFIGURE_2FA")
         .flex-1.mll
-          a.button-success.button-lg(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA")
+          a.button-primary(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA")
 
   section.level.level_three
     header.flex-baseline.mtl
@@ -136,9 +175,14 @@
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="settings.blockTOR" content="BLOCK_TOR_TOOLTIP" img="img/badge-blockTOR.png" message="TOR_BLOCKED")
+        .badge-panel.hidden-desktop(ng-show="display.action == 'blocktor'")
+          .flex-center(ng-show="display.action == 'blocktor'")
+            p.flex-1(TRANSLATE="BLOCK_TOR_EXPLAIN")
+            .mll.pll.block-tor-actions
+              tor(button-class="button-success")
 
-    .badge-panel(ng-show="display.action == 'blocktor'")
+    .badge-panel.hidden-phone(ng-show="display.action == 'blocktor'")
       .flex-center(ng-show="display.action == 'blocktor'")
         p.flex-1(TRANSLATE="BLOCK_TOR_EXPLAIN")
         .mll.pll.block-tor-actions
-          tor(button-class="button-success button-lg")
+          tor(button-class="button-success")

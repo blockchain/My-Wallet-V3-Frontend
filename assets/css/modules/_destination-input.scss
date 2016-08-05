@@ -1,18 +1,7 @@
 .destination-input {
-  #qr {
-    img {
-      height: 18px;
-      width: 18px;
-    }
-  }
   .form-control {
     width: 100%;
     border: 1px solid $grey;
-    border-radius: 5px 0px 0px 5px !important;
-  }
-  .border-rounded-right {
-    border-bottom-right-radius: 5px !important;
-    border-top-right-radius: 5px !important;
   }
   .btn-default { border-color: $grey; }
   .drop-menu {

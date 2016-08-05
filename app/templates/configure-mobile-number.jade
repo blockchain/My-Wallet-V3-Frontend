@@ -13,9 +13,8 @@
     span.help-block(ng-show="status.disableChangeBecause2FA()", translate="MOBILE_NUMBER_CHANGE_DISABLED_BECAUSE_SMS_2FA")
     br(ng-if="!fullWidth")
     div(ng-class="{'flex-1': fullWidth, 'mll': fullWidth}")
-      button(
-        type="submit"
-        ng-class="buttonLg ? 'button-success button-lg' : 'button-primary'" 
+      button.button-success(
+        type="submit" 
         ui-ladda="status.busy"
         ng-disabled="mobileForm.mobile.$invalid || !numberChanged() || status.disableChangeBecause2FA()" 
         ladda-translate="SAVE" 

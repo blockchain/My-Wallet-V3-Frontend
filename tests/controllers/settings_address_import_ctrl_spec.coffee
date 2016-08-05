@@ -1,6 +1,7 @@
 describe "AddressImportCtrl", ->
   scope = undefined
   Wallet = undefined
+  Alerts = undefined
 
   accounts = [{index: 0, label: "Spending", archived: false}]
 
@@ -11,19 +12,38 @@ describe "AddressImportCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller, $compile) ->
+    angular.mock.inject ($injector, $rootScope, $controller, $compile, $templateCache) ->
       Wallet = $injector.get("Wallet")
+      Alerts = $injector.get("Alerts")
 
-      Wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bip38passphrase, success, error) ->
-        success({address: "valid_import_address"})
+      Wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bip38passphrase, success, error, cancel) ->
+        if addressOrPrivateKey
+          success({address: "valid_import_address"})
+        else
+          error('presentInWallet')
+          error('wrongBipPass')
+          error('importError')
 
       Wallet.accounts = () -> accounts
+
+      Wallet.isValidAddress = (addr) -> addr == 'watch_only'
+      Wallet.isValidPrivateKey = (priv) -> priv == 'valid_import_address'
 
       Wallet.my =
         wallet:
           keys: []
+          hdwallet:
+            defaultAccountIndex: 0
+
+      Wallet.status = {
+        isLoggedIn: true
+      }
+
+      Alerts.confirm = () ->
+        then: (f) -> f(true)
 
       scope = $rootScope.$new()
+      template = $templateCache.get('partials/settings/import-address.jade')
 
       $controller "AddressImportCtrl",
         $scope: scope,
@@ -31,14 +51,8 @@ describe "AddressImportCtrl", ->
         $uibModalInstance: modalInstance
         address: null
 
-      element = angular.element(
-        '<form role="form" name="importForm" novalidate>' +
-        '<input type="textarea" name="privateKey"       ng-model="fields.addressOrPrivateKey"   is-valid="isValidAddressOrPrivateKey(fields.addressOrPrivateKey)"     ng-disabled="BIP38"    ng-change="importForm.privateKey.$setValidity(\'present\', true)"   required />' +
-        '<input type="password" name="bipPassphrase"    ng-model="fields.bip38passphrase"       ng-change="importForm.bipPassphrase.$setValidity(\'wrong\', true)"      ng-required="BIP38" />' +
-        '</form>'
-      )
       scope.model = { fields: {} }
-      $compile(element)(scope)
+      $compile(template)(scope)
 
       scope.$digest()
 
@@ -63,6 +77,20 @@ describe "AddressImportCtrl", ->
       expect(scope.step).toBe(2)
     )
 
+  describe "watch only", ->
+
+    beforeEach ->
+      scope.fields.addressOrPrivateKey = "watch_only"
+
+    it "should not go to step 2 when the user does not confirm", inject(($timeout, $q) ->
+      spyOn(Alerts, 'confirm').and.returnValue($q.reject('cancelled'))
+      expect(scope.step).toBe(1)
+      scope.import()
+      $timeout.flush()
+      expect(scope.step).toBe(1)
+      expect(scope.status.busy).toEqual(false)
+    )
+
   describe "validate and add", ->
     it "should add the address if no errors are present", inject(($timeout) ->
       scope.fields.addressOrPrivateKey = "valid_import_address"
@@ -78,9 +106,32 @@ describe "AddressImportCtrl", ->
       expect(scope.address.balance).not.toBe(0)
     )
 
-    it "should go to step 3 when user clicks transfer", ->
+    describe "error", ->
+
+      beforeEach ->
+        scope.success = () ->
+        scope.cancel = () ->
+        scope.error = () ->
+
+      it "should handle an error", inject(($timeout) ->
+        spyOn(scope, "error")
+        scope.import()
+        $timeout.flush()
+        Wallet.addAddressOrPrivateKey('', false, scope.success, scope.error, scope.cancel);
+        expect(scope.error).toHaveBeenCalled()
+      )
+
+      it "should set validity based on error message", ->
+        scope.error = (error) -> error
+        Wallet.addAddressOrPrivateKey('presentInWallet', false, scope.success, scope.error, scope.cancel);
+        expect(scope.importForm.privateKey.$valid).toBe(false)
+
+
+    it "should open the transfer window when the user clicks transfer", inject(($uibModal) ->
+      spyOn($uibModal, 'open')
       scope.goToTransfer()
-      expect(scope.step).toBe(3)
+      expect($uibModal.open).toHaveBeenCalled()
+    )
 
   describe "transfer", ->
     beforeEach ->

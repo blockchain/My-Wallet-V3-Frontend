@@ -17,7 +17,7 @@
     .row
       .col-xs-12
         p.center
-          a.btn.btn-inverse(href="img/recovery.pdf", target="_blank", download="recovery.pdf")
+          a.btn.btn-inverse(href="img/recovery.pdf", target="_blank", download="recovery.pdf" rel="noopener noreferrer")
             span
               i.ti-printer.prm
               span(translate="PRINT_RECOVERY_SHEET")
@@ -30,7 +30,7 @@
     p(translate="WRITE_DOWN_EXPLAIN").recovery-instruction-text
     
     .row
-      .col-xs-3(ng-repeat="word in recoveryPhrase.slice(offset, offset + 4)")
+      .col-xs-3(ng-repeat="word in recoveryPhrase | limitTo:4:offset track by $index")
         p.center
           b {{ offset + $index + 1 }}. {{ word }}
     .row
@@ -75,4 +75,4 @@
 
   button.button-primary(ng-click="goToShow()",translate="NEXT_STEP", ng-show="step==0")
   button.button-primary(ng-click="goToVerify()",translate="FINAL_STEP", ng-show="step==1", ng-disabled="!lastWordGroup")
-  button.button-primary(ng-click="verify()",translate="FINISH", ng-show="step==2", ng-disabled="hasEmptyWords()")
+  button.button-success(ng-click="verify()",translate="FINISH", ng-show="step==2", ng-disabled="hasEmptyWords()")

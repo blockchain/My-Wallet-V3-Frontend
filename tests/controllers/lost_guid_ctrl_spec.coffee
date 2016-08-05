@@ -9,7 +9,7 @@ describe "LostGuidCtrl", ->
       Wallet = $injector.get("Wallet")
       WalletNetwork = $injector.get("WalletNetwork")
 
-      WalletNetwork.recoverGuid = (email, captcha) -> {
+      WalletNetwork.recoverGuid = (token, email, captcha) -> {
         then: (callback) ->
           if captcha != ""
             callback()
@@ -19,6 +19,18 @@ describe "LostGuidCtrl", ->
                 callback()
           }
       }
+
+      WalletNetwork.getCaptchaImage = () -> {
+        then: (cb) ->
+          cb({
+            image: "captcha-image-blob",
+            sessionToken: "token"
+          })
+      }
+
+      window.URL =
+        createObjectURL: (blob) ->
+          blob + "_url"
 
       scope = $rootScope.$new()
 
@@ -68,7 +80,7 @@ describe "LostGuidCtrl", ->
 
     it "should call recoverGuid() with form data", ->
       scope.sendReminder()
-      expect(WalletNetwork.recoverGuid).toHaveBeenCalledWith("a@b.com", "1zabc")
+      expect(WalletNetwork.recoverGuid).toHaveBeenCalledWith("token", "a@b.com", "1zabc")
 
     it "should go to the next step", ->
       scope.sendReminder()

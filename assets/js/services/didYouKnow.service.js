@@ -2,7 +2,7 @@ angular
   .module('didYouKnow', [])
   .factory('DidYouKnow', DidYouKnow);
 
-function DidYouKnow() {
+function DidYouKnow () {
   const getRandInRange = (min, max) =>
     Math.floor(Math.random() * (max - min + 1) + min);
 
@@ -26,27 +26,31 @@ function DidYouKnow() {
       title: 'DYK_TX_FEES_TITLE',
       type: 'EDUCATIONAL',
       text: 'DYK_TX_FEES',
-      icon: 'ti-thought',
+      icon: 'ti-thought'
     }, {
       id: 4,
-      title: 'DYK_FEEDBACK_TITLE',
-      type: 'FEATURE',
-      text: 'DYK_FEEDBACK',
-      icon: 'ti-announcement',
-      linkText: 'GIVE_FEEDBACK',
-      state: 'wallet.common.feedback'
-    }, {
-      id: 5,
       title: 'DYK_BTC_VALUE_TITLE',
       type: 'EDUCATIONAL',
       text: 'DYK_BTC_VALUE',
       icon: 'ti-stats-up'
     }
-  ]
+  ];
+
+  const survey = {
+    id: 5,
+    title: 'SEND_FEEDBACK',
+    type: 'SURVEY',
+    text: 'DYK_FEEDBACK_VALUE',
+    icon: 'ti-announcement',
+    linkText: 'SHARE_FEEDBACK',
+    external: true,
+    state: 'https://blockchain.co1.qualtrics.com/SE/?SID=SV_0PMH4ruxU5krOmh'
+  };
 
   const service = {
     getAll: () => dyks, // Only used for tests
-    getRandom: () => dyks[getRandInRange(0, dyks.length - 1)]
+    getRandom: () => dyks[getRandInRange(0, dyks.length - 1)],
+    getSurvey: () => survey
   };
   return service;
 }

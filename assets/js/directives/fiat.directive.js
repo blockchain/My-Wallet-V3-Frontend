@@ -5,7 +5,7 @@ angular
 
 fiat.$inject = ['$rootScope', 'Wallet', 'currency'];
 
-function fiat($rootScope, Wallet, currency) {
+function fiat ($rootScope, Wallet, currency) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -14,12 +14,17 @@ function fiat($rootScope, Wallet, currency) {
       date: '=',
       currency: '='
     },
-    template: '<span>{{ fiat.currencySymbol }}{{ fiat.amount }}</span>',
+    template: `
+      <span>
+        <img ng-show="fiat.amount == null" src="img/spinner.gif" width="35" />
+        <span ng-hide="fiat.amount == null">{{ fiat.currencySymbol }}{{ fiat.amount }}</span>
+      <span>
+    `,
     link: link
   };
   return directive;
 
-  function link(scope, elem, attrs) {
+  function link (scope, elem, attrs) {
     scope.fiat = { currencySymbol: null, amount: null };
     scope.settings = Wallet.settings;
     scope.conversions = currency.conversions;
@@ -42,12 +47,12 @@ function fiat($rootScope, Wallet, currency) {
 
       if (scope.date) {
         currency.getFiatAtTime(scope.date, btc, curr.code).then((fiat) => {
-          scope.fiat.amount = fiat;
+          scope.fiat.amount = currency.commaSeparate(fiat);
           scope.$root.$safeApply(scope);
         });
       } else {
         let fiat = currency.convertFromSatoshi(btc, curr);
-        scope.fiat.amount = (Math.floor(fiat * 100) / 100).toFixed(2);
+        scope.fiat.amount = currency.commaSeparate((Math.floor(fiat * 100) / 100).toFixed(2));
       }
     };
 

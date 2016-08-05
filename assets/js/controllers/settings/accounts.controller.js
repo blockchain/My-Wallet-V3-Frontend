@@ -1,69 +1,52 @@
 angular
   .module('walletApp')
-  .controller("SettingsAccountsController", SettingsAccountsController);
+  .controller('SettingsAccountsController', SettingsAccountsController);
 
-function SettingsAccountsController($scope, Wallet, Alerts, $uibModal, filterFilter) {
+function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFilter, $ocLazyLoad) {
   $scope.accounts = Wallet.accounts;
+  $scope.activeSpendableAddresses = () => Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly && a.balance > 0);
+
   $scope.display = {
     archived: false
   };
 
   $scope.addressBookPresent = Wallet.addressBook().length;
-
-  $scope.numberOfActiveAccounts = () => {
-    return Wallet.accounts().filter(a => !a.archived).length
-  };
-
+  $scope.numberOfActiveAccounts = () => Wallet.accounts().filter(a => !a.archived).length;
   $scope.getLegacyTotal = () => Wallet.total('imported');
 
   $scope.newAccount = () => {
     Alerts.clear();
-    let modalInstance = $uibModal.open({
-      templateUrl: "partials/account-form.jade",
-      controller: "AccountFormCtrl",
+    $uibModal.open({
+      templateUrl: 'partials/account-form.jade',
+      windowClass: 'bc-modal initial',
+      controller: 'AccountFormCtrl',
       resolve: {
         account: () => void 0
-      },
-      windowClass: "bc-modal"
+      }
     });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
-    }
   };
 
   $scope.editAccount = (account) => {
     Alerts.clear();
-    let modalInstance = $uibModal.open({
-      templateUrl: "partials/account-form.jade",
-      controller: "AccountFormCtrl",
+    $uibModal.open({
+      templateUrl: 'partials/account-form.jade',
+      controller: 'AccountFormCtrl',
+      windowClass: 'bc-modal sm',
       resolve: {
         account: () => account
-      },
-      windowClass: "bc-modal"
+      }
     });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
-    }
   };
 
   $scope.revealXpub = (account) => {
-    let modalInstance = $uibModal.open({
-      templateUrl: "partials/reveal-xpub.jade",
-      controller: "RevealXpubCtrl",
+    $uibModal.open({
+      templateUrl: 'partials/reveal-xpub.jade',
+      controller: 'RevealXpubCtrl',
       resolve: {
         account: () => account
       },
-      windowClass: "bc-modal"
+      windowClass: 'bc-modal'
     });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
-    }
   };
 
   $scope.makeDefault = (account) => {
@@ -72,26 +55,30 @@ function SettingsAccountsController($scope, Wallet, Alerts, $uibModal, filterFil
   };
 
   $scope.transfer = () => {
-    let modalInstance = $uibModal.open({
-      templateUrl: "partials/send.jade",
-      controller: "SendCtrl",
+    $uibModal.open({
+      templateUrl: 'partials/send.jade',
+      windowClass: 'bc-modal initial',
+      controller: 'SendCtrl',
       resolve: {
         paymentRequest: () => ({
           fromAccount: Wallet.accounts()[Wallet.getDefaultAccountIndex()],
           amount: 0
-        })
-      },
-      windowClass: "bc-modal"
+        }),
+        loadBcQrReader: () => {
+          return $ocLazyLoad.load('bcQrReader');
+        }
+      }
     });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
-    }
   };
 
-  $scope.archive = (account) => { Wallet.archive(account) };
-  $scope.unarchive = (account) => { Wallet.unarchive(account) };
-  $scope.isDefault = (account) => Wallet.isDefaultAccount(account);
+  $scope.openTransferAll = () => $uibModal.open({
+    templateUrl: 'partials/settings/transfer.jade',
+    controller: 'TransferController',
+    windowClass: 'bc-modal',
+    resolve: { address: () => $scope.activeSpendableAddresses() }
+  });
 
+  $scope.archive = (account) => Wallet.archive(account);
+  $scope.unarchive = (account) => Wallet.unarchive(account);
+  $scope.isDefault = (account) => Wallet.isDefaultAccount(account);
 }

@@ -1,73 +1,93 @@
 h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
-form.form-horizontal(role="form",name="form",novalidate)  
-  .form-group
-    .col-sm-12.col-md-6
-      .flex-center.mbm
-        label.em-400.type-h5.mbn(translate="EMAIL_ADDRESS")
-        span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isEmailVerified")
-        span.label.label-success(translate="VERIFIED", ng-show="user.isEmailVerified")
-      p.text.line-height.em-300.hidden-xs(translate="EMAIL_ADDRESS_EXPLAIN")    
-    .col-sm-12.col-md-6.setting-result.flex-column
-      bc-async-input(type="email" is-required ng-model="user.email" on-save="changeEmail" action-title="'CHANGE' | translate" autofocus)
-      resend-email-confirmation.mtl(ng-hide="user.isEmailVerified")
-  .form-group
+
+.clearfix(ng-if="status.isLoggedIn")
+  .form-group.mbn.border-bottom.clearfix.pvl(ng-controller="ChangeEmailCtrl")
+    div(settings-form)
+      .col-sm-12.col-md-6
+        .flex-center.mbm
+          label.em-400.type-h5.mbn(translate="EMAIL_ADDRESS")
+          span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isEmailVerified")
+          span.label.label-success(translate="VERIFIED", ng-show="user.isEmailVerified")
+        p.text.em-300.hidden-xs(translate="EMAIL_ADDRESS_EXPLAIN")
+      .col-sm-12.col-md-6.setting-result(ng-hide="active")
+        p.em-400.type-h5.mbm {{ user.email }}
+        a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
+      .col-sm-12.col-md-6.flex-column(ng-show="active")
+        include ./change-email.jade
+        .right-align.mtm
+          resend-email-confirmation.mtl(ng-hide="user.isEmailVerified")
+
+  .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       .flex-center.mbm
         label.em-400.type-h5.mbn(translate="MOBILE_NUMBER")
         span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isMobileVerified")
         span.label.label-success(translate="VERIFIED", ng-show="user.isMobileVerified")
-      p.text.line-height.em-300.hidden-xs(translate="MOBILE_NUMBER_EXPLAIN")    
+      p.text.em-300.hidden-xs(translate="MOBILE_NUMBER_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       div(ng-show="mobileNumber.step == 0")
-        //- Don't use one-time binding for user.internationalMobileNumber
-        h2.status.complete.hidden-xs.long-input(ng-hide="user.internationalMobileNumber.length < 5") {{user.internationalMobileNumber}}
-        br
-        a.button-primary(ng-click="mobileNumber.step = 1", translate="CHANGE")
+        //- Don't use one-time binding for mobileNumber
+        h2.status.complete.hidden-xs.long-input(ng-hide="user.mobileNumber.length < 5") {{ formattedMobileNumber }}
+        a.button-primary.display-inline-block(ng-click="mobileNumber.step = 1", translate="CHANGE")
       configure-mobile-number(on-success="mobileNumber.step = 2" on-cancel="mobileNumber.step = 0" ng-show="mobileNumber.step == 1")
-      verify-mobile-number(on-success="mobileNumber.step = 0" ng-show="user.internationalMobileNumber.length > 4 && !user.isMobileVerified && mobileNumber.step != 1")
-  .form-group
+      verify-mobile-number(on-success="mobileNumber.step = 0" ng-show="user.mobileNumber.length > 4 && !user.isMobileVerified && mobileNumber.step != 1")
+
+  .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="LANGUAGE")
-      p.text.em-300.line-height.hidden-xs(translate="LANGUAGE_EXPLAIN")   
+      p.text.em-300.hidden-xs(translate="LANGUAGE_EXPLAIN")   
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
-      language-picker(language="settings.language")
-  .form-group
+      async-select(selected="settings.language" range="languages" display-prop="name" on-change="changeLanguage")
+
+  .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="CURRENCY")
-      p.text.em-300.line-height.hidden-xs(translate="CURRENCY_EXPLAIN")    
+      p.text.em-300.hidden-xs(translate="CURRENCY_EXPLAIN")    
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
-      currency-picker(currency="settings.currency" display-currency="settings.displayCurrency")
-  .form-group
+      async-select(selected="settings.currency" range="currencies" display-prop="name" display-optional="code" on-change="changeCurrency")
+
+  .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="BITCOIN_CURRENCY")
-      p.text.em-300.line-height.hidden-xs(translate="BITCOIN_CURRENCY_EXPLAIN")
+      p.text.em-300.hidden-xs(translate="BITCOIN_CURRENCY_EXPLAIN")
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
-      btc-picker(currency="settings.btcCurrency" display-currency="settings.displayCurrency")
-  .form-group
+      async-select(selected="settings.btcCurrency" range="btcCurrencies" display-prop="code" display-optional="btcValue" on-change="changeBTCCurrency")
+
+  .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="NOTIFICATIONS")
-      span.label.label-warning(translate="DISABLED", ng-show="!settings.notifications")
-      span.label.label-success(translate="ENABLED", ng-show="settings.notifications")
-      p.text.em-300.line-height.hidden-xs(translate="NOTIFICATIONS_EXPLAIN")    
+      p.text.em-300.hidden-xs(translate="NOTIFICATIONS_EXPLAIN")    
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
-      button.button-primary(ng-click="enableNotifications()",  translate="ENABLE",  ng-hide="settings.notifications", ng-disabled="!user.isEmailVerified")
-      button.button-primary(ng-click="disableNotifications()", translate="DISABLE", ng-show="settings.notifications")
-      p.settingtext.mtl(translate="VERIFY_EMAIL_FIRST", ng-show="!settings.notifications && !user.isEmailVerified")
-  .form-group(ng-show="browserCanHandleBitcoinLinks")
+      label.em-400.type-h5.colon(translate="RECEIVE_BY")
+      br
+      .flex-column.flex-end.display-inline-block.mbl
+        label.flex-between.flex-center
+          input(type="checkbox" ng-model="notifications.email" ng-checked="user.isEmailVerified && notifications.email" ng-change="updateNotificationsType()" ng-disabled="!user.isEmailVerified")
+          span.mlm(translate="EMAIL" uib-tooltip="{{::'VERIFY_EMAIL_FIRST'|translate}}" tooltip-enable="!user.isEmailVerified" tooltip-placement="left")
+        label.flex-between.flex-center
+          input(type="checkbox" ng-model="notifications.sms" ng-checked="user.isMobileVerified && notifications.sms" ng-change="updateNotificationsType()" ng-disabled="!user.isMobileVerified")
+          span.mlm(translate="SMS" uib-tooltip="{{::'VERIFY_MOBILE_FIRST'|translate}}" tooltip-enable="!user.isMobileVerified" tooltip-placement="left")
+
+  .form-group.mbn.border-bottom.clearfix.pvl(ng-show="browserCanHandleBitcoinLinks")
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="HANDLE_BITCOIN_LINKS")
-      p.text.em-300.line-height.hidden-xs(translate="HANDLE_BITCOIN_LINKS_EXPLAIN")    
+      p.text.em-300.hidden-xs(translate="HANDLE_BITCOIN_LINKS_EXPLAIN")    
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
       a.button-primary(ng-click="setHandleBitcoinLinks()", translate="SET_HANDLE_BITCOIN_LINKS", ng-hide="settings.handleBitcoinLinks")
       p.settingtext.mtl(translate="HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN")
-  .form-group
-    .col-sm-12.col-md-6
-      label.type-h5.em-400(translate="AUTO_LOGOUT")
-      p.em-300.text.line-height.hidden-sm.hidden-xs(translate="AUTO_LOGOUT_EXPLAIN") 
-    .col-sm-12.col-md-6.setting-result
-      bc-async-input(ng-model="settings.logoutTimeMinutes" validator="validateLogoutTime" is-required on-save="changeLogoutTime" action-title="'CHANGE' | translate" unit="minutes")
+
+  .form-group.mbn.border-bottom.clearfix.pvl(ng-controller="ChangeLogoutTimeCtrl")
+    div(settings-form)
+      .col-sm-12.col-md-6
+        label.type-h5.em-400(translate="AUTO_LOGOUT")
+        p.em-300.text.hidden-sm.hidden-xs(translate="AUTO_LOGOUT_EXPLAIN") 
+      .col-sm-12.col-md-6.setting-result(ng-hide="active")
+        p.em-400.type-h5.mbm {{ settings.logoutTimeMinutes }} minutes
+        a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
+      .col-sm-12.col-md-6(ng-show="active")
+        include ./change-logout.jade

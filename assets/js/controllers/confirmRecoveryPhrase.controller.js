@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller("ConfirmRecoveryPhraseCtrl", ConfirmRecoveryPhraseCtrl);
+  .controller('ConfirmRecoveryPhraseCtrl', ConfirmRecoveryPhraseCtrl);
 
-function ConfirmRecoveryPhraseCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $translate) {
+function ConfirmRecoveryPhraseCtrl ($scope, $log, Wallet, Alerts, $uibModalInstance, $translate) {
   $scope.step = 0;
   $scope.offset = 0;
   $scope.recoveryPhrase = null;
@@ -35,7 +35,6 @@ function ConfirmRecoveryPhraseCtrl($scope, $log, Wallet, Alerts, $uibModalInstan
 
   $scope.setRandomWords = recoveryPhrase => {
     let currentWordIndex = 0;
-    let results = [];
     while (currentWordIndex < 4) {
       const randIndex = $scope.getRandInRange(0, 11);
       const randWord = recoveryPhrase.split(' ').splice(randIndex, 1).toString();
@@ -57,64 +56,52 @@ function ConfirmRecoveryPhraseCtrl($scope, $log, Wallet, Alerts, $uibModalInstan
   };
 
   $scope.close = () => {
-    $uibModalInstance.dismiss("");
+    $uibModalInstance.dismiss('');
   };
 
   $scope.goToVerify = () => {
     $scope.step = 2;
   };
 
-  $scope.goToShow= () => {
+  $scope.goToShow = () => {
     $scope.step = 1;
 
-    if($scope.mnemonic == null) {
+    if ($scope.mnemonic == null) {
       const success = mnemonic => {
-        $scope.recoveryPhrase = mnemonic.split(" ");
+        $scope.recoveryPhrase = mnemonic.split(' ');
         $scope.setRandomWords(mnemonic);
       };
 
       const error = error => {
-        $translate(error).then( translation => {
-          Alerts.displayError(translation);
-        });
-        $uibModalInstance.dismiss("");
+        Alerts.displayError(error);
+        $uibModalInstance.dismiss('');
       };
 
       const cancel = () => {
-        $uibModalInstance.dismiss("");
+        $uibModalInstance.dismiss('');
       };
 
       Wallet.getMnemonic(success, error, cancel);
     }
   };
 
-  $scope.hasEmptyWords = () => $scope.words.some((word) => word.value === "");
+  $scope.hasEmptyWords = () => $scope.words.some((word) => word.value === '');
 
   $scope.nextWords = () => {
-    if($scope.offset >= 8) {
-      return;
-    }
-
-    $scope.offset += 4
-
-    if($scope.offset == 8) {
-      $scope.lastWordGroup = true;
-    }
-  }
+    if ($scope.offset >= 8) return;
+    $scope.offset += 4;
+    if ($scope.offset === 8) $scope.lastWordGroup = true;
+  };
 
   $scope.previousWords = () => {
-    if($scope.offset <= 0) {
-      return;
-    }
-
-    $scope.offset -= 4
-
+    if ($scope.offset <= 0) return;
+    $scope.offset -= 4;
     $scope.lastWordGroup = false;
-  }
+  };
 
   $scope.previousStep = () => {
     $scope.step -= 1;
-  }
+  };
 
   $scope.verify = () => {
     let valid = true;

@@ -1,9 +1,10 @@
 .login-pg.overflow-scroll.flex-justify.flex-center
-  public-header
+  public-header(i18n-loaded='i18nLoaded')
   .flex-center.flex-justify.flex-column.login-box-container
     .flex.flex-justify
       .alert-in-app
         alerts
     .login-box.mhs(ui-view="contents")
   .versions(ng-show="versionFrontend && versionMyWallet")
-    span {{ versionFrontend }} (MyWallet v{{ versionMyWallet }})
+    a(href="https://github.com/blockchain/My-Wallet-V3-Frontend/releases" target="_blank" rel="noopener noreferrer") {{ versionFrontend }} &nbsp;
+    a(href="https://github.com/blockchain/My-Wallet-V3/releases" target="_blank" rel="noopener noreferrer") (MyWallet v{{ versionMyWallet }})

@@ -1,0 +1,17 @@
+.hidden-phone {
+   @media (max-width: 768px) {
+      display: none !important;
+   }
+}
+
+.hidden-tablet {
+  @media (min-width: 993px) {
+    display: none !important;
+  }
+}
+
+.hidden-desktop {
+   @media (min-width: 769px) {
+      display: none !important;
+   }
+}

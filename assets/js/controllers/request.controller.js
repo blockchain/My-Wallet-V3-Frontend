@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller("RequestCtrl", RequestCtrl);
+  .controller('RequestCtrl', RequestCtrl);
 
-function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, hasLegacyAddress, $translate, $stateParams, filterFilter, $filter, format) {
+function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, hasLegacyAddress, $translate, $stateParams, filterFilter, $filter, format) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -12,24 +12,28 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
   $scope.receiveAddress = null;
   $scope.advanced = false;
   $scope.focus = focus;
+  $scope.showPaymentRequestURL = false;
+
+  $scope.destinationLimit = 50;
+  $scope.increaseLimit = () => $scope.destinationLimit += 50;
 
   $scope.hasLegacyAddress = hasLegacyAddress;
 
   $scope.fields = {
     to: null,
     amount: null,
-    label: ""
+    label: ''
   };
 
-  for(let account of $scope.accounts()) {
+  for (let account of $scope.accounts()) {
     if (account.index != null && !account.archived) {
       account = format.destination(account);
       $scope.destinations.push(angular.copy(account));
-      if ((destination != null) && (destination.index != null) && destination.index === acct.index) {
-        $scope.fields.to = acct;
+      if ((destination != null) && (destination.index != null) && destination.index === account.index) {
+        $scope.fields.to = account;
       }
     }
-  };
+  }
 
   for (let address of $scope.legacyAddresses()) {
     address = format.destination(address);
@@ -42,44 +46,35 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
     }
   }
 
-  $scope.getFilter = (search, accounts=true) => ({
-    label: search,
-    type: accounts ? '!External' : 'Imported'
-  });
-
-  $scope.determineLabel = origin => {
-    if (origin == null) return;
-    return origin.label || origin.address;
-  };
-
   $scope.closeAlert = alert => {
     Alerts.close(alert);
   };
 
   $scope.advancedReceive = () => {
     $scope.advanced = true;
-  }
+  };
 
   $scope.regularReceive = () => {
     $scope.advanced = false;
-    $scope.fields.label = "";
-  }
+
+    $scope.fields.label = '';
+    $scope.fields.amount = null;
+  };
 
   $scope.done = () => {
     Alerts.clear();
 
-    if($scope.fields.label == "" || $scope.fields.to.index == undefined) {
-        $uibModalInstance.dismiss("");
+    if ($scope.fields.label === '' || $scope.fields.to.index == null) {
+      $uibModalInstance.dismiss('');
     } else {
-
       const success = () => {
-        $uibModalInstance.dismiss("");
+        $uibModalInstance.dismiss('');
       };
 
       const error = (error) => {
-        if(error === "NOT_ALPHANUMERIC") {
+        if (error === 'NOT_ALPHANUMERIC') {
           $scope.requestForm.label.$error.characters = true;
-        } else if (error === "GAP") {
+        } else if (error === 'GAP') {
           $scope.requestForm.label.$error.gap = true;
         }
         $scope.requestForm.label.$valid = false;
@@ -87,19 +82,18 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
 
       let idx = $scope.fields.to.index;
       Wallet.changeHDAddressLabel($scope.fields.to.index, Wallet.getReceivingAddressIndexForAccount(idx), $scope.fields.label, success, error);
-    };
-
+    }
   };
 
   $scope.cancel = () => {
     Alerts.clear();
-    $uibModalInstance.dismiss("");
-  }
+    $uibModalInstance.dismiss('');
+  };
 
   $scope.close = () => {
     $scope.cancel();
-    $rootScope.$broadcast('enableRequestBeacon')
-  }
+    $rootScope.$broadcast('enableRequestBeacon');
+  };
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
     const activeAccounts = filterFilter(Wallet.accounts(), {
@@ -111,27 +105,28 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
     return activeAccounts.length + activeAddresses.length;
   };
 
-  $scope.$watchCollection("destinations", () => {
+  $scope.$watchCollection('destinations', () => {
     let idx = Wallet.getDefaultAccountIndex();
     if ($scope.hasLegacyAddress) {
-      return $scope.fields.to = $scope.legacyAddresses()[0]
+      $scope.fields.to = filterFilter(Wallet.legacyAddresses(), {
+        isWatchOnly: false,
+        archived: false
+      })[0];
     }
     if (($scope.fields.to == null) && $scope.accounts().length > 0) {
-      if ($stateParams.accountIndex === "" || ($stateParams.accountIndex == null)) {
+      if ($stateParams.accountIndex === '' || ($stateParams.accountIndex == null)) {
 
-      } else if ($stateParams.accountIndex === "imported" || ($stateParams.accountIndex == null)) {
+      } else if ($stateParams.accountIndex === 'imported' || ($stateParams.accountIndex == null)) {
 
       } else {
-        idx = parseInt($stateParams.accountIndex);
+        idx = parseInt($stateParams.accountIndex, 10);
       }
-      return $scope.fields.to = $scope.accounts()[idx];
+      $scope.fields.to = $scope.accounts()[idx];
     }
   });
 
   $scope.paymentRequestAddress = () => {
-    if(!$scope.status.didInitializeHD) {
-      return null;
-    }
+    if (!$scope.status.didInitializeHD) return null;
 
     if (($scope.fields.to != null) && ($scope.fields.to.address != null)) {
       $scope.advanced = false;
@@ -140,25 +135,24 @@ function RequestCtrl($rootScope, $scope, Wallet, Alerts, currency, $uibModalInst
       let idx = $scope.fields.to.index;
       return Wallet.getReceivingAddressForAccount(idx);
     }
-
-  }
+  };
 
   $scope.paymentRequestURL = () => {
-    if($scope.paymentRequestAddress() == null) {
-      return null;
+    if ($scope.paymentRequestAddress() == null) return null;
+
+    let url = `bitcoin:${ $scope.paymentRequestAddress() }?`;
+    let amount = `amount=${ parseFloat($scope.fields.amount / 100000000) }`;
+    let message = `message=${ $scope.fields.label }`;
+
+    if ($scope.fields.amount > 0 && $scope.fields.label !== '') {
+      url += amount;
+      url += `&`;
+      url += message;
     }
+    else if ($scope.fields.amount > 0) url += amount;
+    else if ($scope.fields.label !== '') url += message;
+    else url = url.slice(0, -1);
 
-    let url = `bitcoin:${ $scope.paymentRequestAddress() }`;
-
-    if ($scope.fields.amount > 0) {
-      url += `?amount=${ parseFloat($scope.fields.amount / 100000000) }`;
-    }
-
-    return url;
-  }
-
-
-  $scope.setPaymentRequestURL = (address, amount) => {
-
+    return encodeURI(url);
   };
 }

@@ -1,12 +1,51 @@
-//////////
-//speeds//
-//////////
+//speeds
+
 $slow: 0.4s;
 $fast: 0.2s;
 
-////////////////////////////////
-//modal collapse and come back//
-////////////////////////////////
+// ng-animate
+
+@mixin bc-ng-animate($class, $attr, $initial, $active) {
+  // non-active
+  opacity: 1;
+  #{$attr}: auto;
+  #{$attr}: initial;
+  @include transition(#{$attr} $fast, opacity $slow !important);
+  &.#{$class} {
+    opacity: 1;
+    #{$attr}: auto;
+    #{$attr}: initial;
+  }
+  // add active class
+  &.#{$class}-add {
+    opacity: 0;
+    #{$attr}: #{$initial};
+    @include transition(#{$attr} $fast, 0s !important);
+  }
+  &.#{$class}-add-active {
+    #{$attr}: #{$active};
+  }
+  // remove active class
+  &.#{$class}-remove {
+    opacity: 0;
+    #{$attr}: #{$active};
+    @include transition(#{$attr} $fast, 0s !important);
+  }
+  &.#{$class}-remove-active {
+    #{$attr}: #{$initial};
+  }
+  // something is seriously wrong with safari
+  @supports (overflow:-webkit-marquee) and (justify-content:inherit) {
+    -webkit-transition: #{$attr} 0s, opacity 0s !important;
+    -o-transition: #{$attr} 0s, opacity 0s !important;
+    transition: #{$attr} 0s, opacity 0s !important;
+    #{$attr}: initial !important;
+    #{$attr}: auto !important;
+    opacity: 1 !important;
+  }
+}
+
+//modal collapse and come back
 
 @-webkit-keyframes scale {
   10% { -webkit-transform: scale(.9); }
@@ -44,7 +83,21 @@ $fast: 0.2s;
   }
 }
 
-//speed up fade in animation
+// Yellow flash
+.flash {
+  animation-name: flash;
+  animation-duration: 1s;
+  animation-iteration-count: 2;
+  animation-timing-function: ease-out;
+}
+
+@keyframes flash {
+  0% { background-color: inherit; }
+  50% { background-color: $pale-yellow; }
+  100% { background-color: inherit; }
+}
+
+//Fade in & out animations
 
 .fade {
   -webkit-transition: opacity $fast linear;
@@ -52,9 +105,6 @@ $fast: 0.2s;
   transition: opacity $fast linear;
 }
 
-///////////////////////////////////
-//Fade in & out animations/////////
-///////////////////////////////////
 
 @-webkit-keyframes fade-in-right {
   0% {
@@ -152,22 +202,18 @@ $fast: 0.2s;
 
 .fade-out-up {
   -webkit-animation-name: fade-out-up;
-  animation-name: fade-out-up; 
+  animation-name: fade-out-up;
 }
 
-////////////////
-/////Delay//////
-////////////////
+// delay
 
 @mixin delay($from, $to, $divisor) {
   @for $i from $from through $to {
     &:nth-child(#{$i}) { @include transition-delay(#{$i/$divisor}s); }
-  }  
+  }
 }
 
-////////////////////////////////////
-/////Zooming in out animations//////
-////////////////////////////////////
+//Zooming in out animations
 
 @-webkit-keyframes zoom-out {
   0% {
@@ -206,12 +252,6 @@ $fast: 0.2s;
   animation-name: zoom-out;
 }
 
-//////////////////////////////////////////
-/////////                         ///////
-///*** SECURITY CENTER ANIMATIONS ***////
-////////                        ////////
-////////////////////////////////////////
-
 @mixin transform-center-horizontal {
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
@@ -220,58 +260,8 @@ $fast: 0.2s;
   left: 50%;
 }
 
-.security-center-ui {
-  .level-incomplete-container,
-  .level-complete-animation, 
-  .level-complete-container {
-    top: 20px;
-    display: block !important;
-    @include transform-center-horizontal;
-    &.ng-hide {
-      opacity: 0;
-    }
-  }
-
-  .level-complete-animation,
-  .level-complete-container {
-    &.ng-hide {
-      z-index: -1;
-    }
-  }
-
-  // step 1
-  .level-incomplete-container {
-    top: 0px;
-    opacity: 1;
-    z-index: 3;
-    position: relative;
-    @include transition(opacity .4s, transform .4s);
-    &.ng-hide-add-active {
-      -webkit-transform: translate3d(-80%, 0, 0);
-      transform: translate3d(-80%, 0, 0);
-    }
-  }
-
-  // step 2
-  .level-complete-animation {
-    z-index: 2;
-    opacity: 0;
-    @include transition(opacity .2s .6s);
-    &.ng-hide-remove.ng-hide-remove-active {
-      opacity: 1;
-    }
-  }
-
-  // step 3
-  .level-complete-container {
-    @include transition(all .4s 1.6s);
-    height: auto !important;
-    opacity: 1;
-    z-index: 3;
-  }
-}
-
 // progress bar animation
+
 .progress-bar-wrapper.ng-hide-add {
   display: block !important;
   -webkit-transition: all .5s linear 1s !important;
@@ -294,33 +284,7 @@ $fast: 0.2s;
   display: none !important
 }
 
-
-
-///////////////////////////////////////////
-/////////                    //////////////
-////****** SEND ANIMATIONs ******* ////////
-////////                    ///////////////
-//////////////////////////////////////////
-
-/* Initial state when showing */
-.bc-modal-fade.ng-hide-remove {
-  opacity: 0;
-  display: block !important;
-  -webkit-transition: linear .4s all !important;
-  transition: linear .4s all !important;
-}
-
-/* Will transition towards this state */
-.bc-modal-fade.ng-hide-remove.ng-hide-remove-active {
-  opacity: 1;
-}
-
-
-///////////////////////////////////////////
-/////////                    //////////////
-////****** MESSAGE ANIMATIONs ******* /////
-////////                    ///////////////
-//////////////////////////////////////////
+// message beacon
 
 $pulse-color-1: #E8A1A1;
 $pulse-color-2: #F0D3D4;
@@ -344,19 +308,11 @@ $pulse-color-2: #accc8f;
   100% { box-shadow: none;}
 }
 
-///////////////////////////////////////////
-/////////                    //////////////
-////****** UI LADDA SPINNER ******* /////
-////////                    ///////////////
-//////////////////////////////////////////
+// ladda
 
 .ladda-spinner { margin: -8px !important; }
 
-///////////////////////////////////////////
-/////////                    //////////////
-////****** Addresses ******* /////
-////////                    ///////////////
-//////////////////////////////////////////
+// addresses
 
 .address-animate {
   &.ng-enter, &.ng-leave {
@@ -367,5 +323,30 @@ $pulse-color-2: #accc8f;
   }
   &.ng-leave-active {
     background-color: #FFFFE0;
+  }
+}
+
+// opacity change
+
+@-webkit-keyframes opacity-change {
+  0%   { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@-moz-keyframes opacity-change {
+  0%   { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes opacity-change {
+  0%   { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+// opacity
+@for $i from 1 through 10 {
+  .opacity-#{$i} {
+    @include opacity($i/10);
   }
 }

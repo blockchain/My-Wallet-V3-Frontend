@@ -7,25 +7,55 @@
 h5.well.type-h5.em-400.hidden-xs(translate="MY_ADDRESSES_EXPLAIN")
 
 .row
-  .col-xs-12.col-md-6
-    button.btn.button-primary(role="button", ng-click="createAddress()", translate="CREATE_ADDRESS")
-  .col-xs-12.col-md-6
+  .col-xs-6
+    button.btn.button-primary(role="button" ng-click="createAddress()" translate="CREATE_ADDRESS")
+  .col-xs-6
     .flex-1.width-100.filter-search-alt.pos-rel
-      input(type="text", ng-model="searchText")
+      input(type="text" ng-model="searchText")
       i.ti-search.pos-abs
 
-h2(translate="HD_ADDRESSES_FOR_ACCOUNT", translate-values="{account: account.label}")
+h2(translate="NEXT_ADDRESSES_FOR_ACCOUNT" translate-values="::{account:account.label}")
 
 .row
   .col-xs-12.table-container
-    table.responsive.width-100
+    table.addresses-container.responsive.width-100
       tr
         th.shrink(translate="ADDRESS")
         th.expand(translate="LABEL")
-        th.shrink
       tr(
-        hd-address="address" 
-        search-text="searchText" 
-        ng-repeat="address in hdAddresses() | addressOrNameMatch:searchText | orderBy:'-index' track by address.index"
-        ng-class="{'address-animate': !searchText}"
-      )
+        account="account"
+        ng-repeat="address in paymentRequests | filter:searchText | orderBy:'-index' track by address.index"
+        hd-address="address"
+        search-text="searchText"
+        remove="removeAddressLabel(address.index, paymentRequests.indexOf(address))")
+
+.mtl
+  button.button-default(translate="PAST_ADDRESSES" ng-click="toggleShowPast()" ng-class="{active:showPast}")
+
+div(ng-if="showPast" ng-init="setAddresses(page)")
+  .flex-between.flex-center
+    h2(translate="PAST_ADDRESSES_FOR_ACCOUNT" translate-values="::{account:account.label}")
+    uib-pagination.pagination-sm(
+      ng-model="page"
+      ng-show="totalUsed > pageLength"
+      ng-change="setAddresses(page)"
+      total-items="totalUsed"
+      items-per-page="pageLength"
+      max-size="5"
+      boundary-links="true")
+
+  .row
+    .col-xs-12.table-container
+      table.addresses-container.responsive.width-100
+        tr
+          th.shrink(translate="ADDRESS")
+          th.shrink(translate="LABEL")
+          th.shrink
+            span(translate="CURRENT_BALANCE")
+            helper-button(content="CURRENT_BALANCE_HELP" placement="left")
+        tr(
+          account="account"
+          ng-repeat="address in usedAddresses | orderBy:'-index' track by address.index"
+          hd-address="address"
+          remove="removeAddressLabel(address.index, usedAddresses.indexOf(address), true)"
+          past-address="true")

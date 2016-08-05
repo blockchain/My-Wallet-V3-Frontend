@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .directive('completedLevel', completedLevel);
 
-completedLevel.$inject = ['$translate'];
+completedLevel.$inject = [];
 
-function completedLevel($translate) {
+function completedLevel () {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -20,13 +20,7 @@ function completedLevel($translate) {
   };
   return directive;
 
-  function link(scope, elem, attrs) {
-    $translate(scope.content).then((translation) => {
-      scope.content = translation;
-    });
-    $translate(scope.message).then((translation) => {
-      scope.message = translation;
-    });
+  function link (scope, elem, attrs) {
     scope.tooltip = {
       templateUrl: 'templates/completed-level-tooltip.jade',
       placement: scope.placement || 'top'

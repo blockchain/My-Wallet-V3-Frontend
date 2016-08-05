@@ -2,7 +2,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
   
 .row.pvl
   .col-xs-6.flex-center
-    button.btn.button-primary.mrm.button-nowrap(ng-click="newAccount()" translate="CREATE_ACCOUNT")
+    button.button-primary.mrm.button-nowrap(ng-click="newAccount()" translate="CREATE_ACCOUNT")
     a.button-default.hidden-xs.button-nowrap.mrm(
       ng-click="transfer(address)"  
       ng-show="numberOfActiveAccounts() > 1" 
@@ -17,7 +17,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
             
 .row
   .col-xs-12
-    table.accounts-container
+    table.accounts-container(ng-if="status.isLoggedIn")
       tr.responsive.width-100(
         ng-repeat="account in accounts() | filter:{label: searchText}"
       )
@@ -28,7 +28,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
           span.man(ng-show="account.archived", translate="ACCOUNT_IS_ARCHIVED").prm
           a(ng-click="editAccount(account)", ng-hide="account.archived")
             i.ti-pencil.prm
-          span.label.label-primary(translate="DEFAULT", ng-show="!account.archived && isDefault(account)")
+          span.label.label-primary.btn-xs(translate="DEFAULT", ng-show="!account.archived && isDefault(account)")
           button.btn.btn-default.btn-xs(translate="MAKE_DEFAULT", ng-click="makeDefault(account)", ng-hide="account.archived || isDefault(account)")            
         td.shrink
           a(translate="REVEAL_XPUB",      ng-click="revealXpub(account)", ng-hide="account.archived")
@@ -36,7 +36,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
           a(translate="ARCHIVE",          ng-click="archive(account)", ng-hide="account.archived || isDefault(account)")
           a(translate="UNARCHIVE",        ng-click="unarchive(account)", ng-show="account.archived")
         td.shrink
-          button.btn.btn-default(
+          button.button-default(
             ui-sref="wallet.common.settings.accounts_addresses({account: account.index})"
             translate="MANAGE_ADDRESSES"
             ng-hide="account.archived"
@@ -48,8 +48,13 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
           span  ({{ getLegacyTotal() | toBitCurrency:settings.btcCurrency }})
         td.shrink
         td.shrink
+          button.button-primary(
+            translate="TRANSFER_ALL"
+            ng-show="activeSpendableAddresses().length > 0"
+            ng-click="openTransferAll()"
+          )
         td.shrink        
-          button.btn.btn-default(
+          button.button-default(
             ui-sref="wallet.common.settings.imported_addresses"
             translate="MANAGE_ADDRESSES"
           )

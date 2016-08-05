@@ -1,6 +1,0 @@
-div
-  ui-select(ng-model="currency" on-select="didSelect($item, $model)")
-    ui-select-match {{ $select.selected.name + ' (' + $select.selected.code + ')' }}
-    // "as cur" is a workaround which prevents all options from being hightlighted as of version 0.9.0 of angular-ui-select
-    ui-select-choices(repeat="currency.code as cur in currencies | filter:$select.search") 
-      span(ng-bind-html="cur.name + ' (' + cur.code + ')' | highlight: $select.search")

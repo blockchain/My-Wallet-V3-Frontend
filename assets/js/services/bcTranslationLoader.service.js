@@ -5,9 +5,9 @@ angular
   .module('bcTranslateStaticFilesLoader', [])
   .factory('BCTranslateStaticFilesLoader', BCTranslateStaticFilesLoader);
 
-BCTranslateStaticFilesLoader.$inject = ['$http', '$q', '$translateStaticFilesLoader'];
+BCTranslateStaticFilesLoader.$inject = ['$http', '$q', '$translateStaticFilesLoader', '$rootScope'];
 
-function BCTranslateStaticFilesLoader($http, $q, $translateStaticFilesLoader) {
+function BCTranslateStaticFilesLoader ($http, $q, $translateStaticFilesLoader, $rootScope) {
   const map = {
     de: 'build/locales/de.json',
     hi: 'build/locales/hi.json',
@@ -17,7 +17,7 @@ function BCTranslateStaticFilesLoader($http, $q, $translateStaticFilesLoader) {
     bg: 'build/locales/bg.json',
     fr: 'build/locales/fr.json',
     zh_CN: 'build/locales/zh-cn.json',
-    "zh-cn": 'build/locales/zh-cn.json',
+    'zh-cn': 'build/locales/zh-cn.json',
     hu: 'build/locales/hu.json',
     sl: 'build/locales/sl.json',
     id: 'build/locales/id.json',
@@ -48,8 +48,13 @@ function BCTranslateStaticFilesLoader($http, $q, $translateStaticFilesLoader) {
       params: ''
     }, options.$http);
 
+    let success = function (res) {
+      $rootScope.i18nLoaded = true;
+      return deferred.resolve(res);
+    };
+
     $http(httpOptions)
-      .success(deferred.resolve)
+      .success(success)
       .error(function (data) {
         deferred.reject(options.key);
       });

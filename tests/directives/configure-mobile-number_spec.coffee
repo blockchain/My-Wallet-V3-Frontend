@@ -15,9 +15,9 @@ describe "Change Mobile Number Directive", ->
     Wallet.settings = {}
 
     # bc-mobile-number formats the number:
-    Wallet.user.internationalMobileNumber = "+31 12345678"
+    Wallet.user.mobileNumber = "+31 12345678"
 
-    element = $compile("<configure-mobile-number></configure-mobile-number>")($rootScope)
+    element = $compile("<configure-mobile-number button-lg='true' full-width='true'></configure-mobile-number>")($rootScope)
 
     return
   )
@@ -40,9 +40,16 @@ describe "Change Mobile Number Directive", ->
     return
   )
 
-  it "should let user change it", inject((Wallet) ->
+  it "should not save if the user cancels", inject((Wallet) ->
     spyOn(Wallet, "changeMobile")
+    isoScope.cancel()
+    expect(Wallet.changeMobile).not.toHaveBeenCalled()
 
+    return
+  )
+
+  it "should let user change it", inject((Wallet) ->
+    spyOn(Wallet, "changeMobile");
     isoScope.changeMobile("+3100000000")
 
     expect(Wallet.changeMobile).toHaveBeenCalled()

@@ -25,8 +25,6 @@
           span(ng-show="importForm.privateKey.$error.check", translate="CHECK_PRIVATE_KEY")
           span(ng-show="importForm.privateKey.$error.present")
             span(translate="ALREADY_IN_WALLET")
-            |: 
-            b {{::address.address}}
 
       .form-group(ng-class="{'has-error': importForm.bipPassphrase.$invalid && importForm.bipPassphrase.$dirty}" ng-show="BIP38")
         label.control-label Password for private key
@@ -42,55 +40,26 @@
           span.help-block(translate="INCORRECT_PASSWORD" ng-show="importForm.bipPassphrase.$error.wrong") 
        
       p(ng-show="BIP38 && status.busy", translate="TAKES_A_WHILE")
-      .pal.flex-center.flex-column(ng-hide="!status.cameraIsOn")
-        label(translate="SCAN_QR_CODE")
-        bc-qr-reader(active="cameraRequested" on-result="processURLfromQR" on-error="onError" camera-status="status.cameraIsOn")
 
   div(ng-show="step==2")
     p(translate="PRIVATE_KEY_VALID", ng-hide="address.isWatchOnly")
     p
       span(translate="ADDRESS_VALID", ng-show="address.isWatchOnly")
-      span(translate="ADDRESS_FOR_PRIVATE_KEY", ng-hide="address.isWatchOnly")
-      |: 
-      b {{::address.address}}
+      span.colon(translate="ADDRESS_FOR_PRIVATE_KEY", ng-hide="address.isWatchOnly")
+      b &nbsp;{{::address.address}}
     p
-      span(translate="BALANCE_FOR_ADDRESS")
-      |: 
-      b(ng-show="address.balance != null") {{ address.balance | toBitCurrency:settings.btcCurrency }}
+      span.colon(translate="BALANCE_FOR_ADDRESS")
+      b(ng-show="address.balance != null") &nbsp;{{ address.balance | toBitCurrency:settings.btcCurrency }}
       span.fiat.plm(ng-show="address.balance != null")
         fiat(btc="address.balance")
       img(ng-show="address.balance == null" src="img/spinner.gif")
-  form.form-horizontal(role="form",name="form",novalidate, ng-show="step==3")
-    .form-group
-      label.col-sm-3.control-label
-        span(translate="FROM")
-        |:  
-      .col-sm-5
-        p.form-control-static {{ address.address }}
-    .form-group
-      label.col-sm-3.control-label
-        span(translate="TO")
-        |:  
-      .col-sm-7
-        ui-select(ng-model="fields.account")
-          ui-select-match {{ $select.selected.label }}
-          ui-select-choices(repeat="account in accounts() | filter:{archived: false, label: $select.search}") 
-            span(ng-bind-html="account.label | escapeHtml | highlight: $select.search")
-    .form-group
-      label.col-sm-3.control-label
-        span(translate="AMOUNT")
-      .col-sm-5
-        p.form-control-static 
-          b {{ address.balance | toBitCurrency:settings.btcCurrency }}
-          span.fiat.plm
-            fiat(btc="address.balance")
 
 .modal-footer.pal.flex-end
-  button.button-muted.mrm(ng-click="close()", translate="CANCEL", ng-show="(step == 1 || step == 3) && !status.busy")
+  button.button-muted.mrm(ng-click="close()", translate="CANCEL", ng-show="step == 1 && !status.busy")
   span(ng-if="step == 1")
-    button.btn.btn-info(ng-click="cameraOn()" ng-disabled="status.busy" ng-if="browserWithCamera" translate="QR")
-    button.btn.btn-primary(ui-ladda="status.busy" ng-click="import()" ng-disabled="importForm.$invalid" ladda-translate="IMPORT" data-style="expand-left")
-  button.btn.btn-info(ng-show="step == 2", ng-click="close()", translate="CLOSE")
-  button.btn.btn-primary(ng-show="step == 2 && !address.isWatchOnly && address.balance > 0" ng-click="goToTransfer()" translate="SWEEP")
+    qr-scan(on-scan="onAddressScan")
+    button.btn.button-primary(ui-ladda="status.busy" ng-click="import()" ng-disabled="importForm.$invalid" ladda-translate="IMPORT" data-style="expand-left")
+  button.button-muted(ng-show="step == 2", ng-click="close()", translate="CLOSE")
+  button.btn.button-primary(ng-show="step == 2 && !address.isWatchOnly && address.balance > 0" ng-click="goToTransfer()" translate="TRANSFER")
   span(ng-if="step == 3")
-    button.btn.btn-primary(ui-ladda="status.sweeping", ng-click="transfer()", data-style="expand-left", ladda-translate="TRANSFER")
+    button.btn.button-primary(ui-ladda="status.sweeping", ng-click="transfer()", data-style="expand-left", ladda-translate="TRANSFER")

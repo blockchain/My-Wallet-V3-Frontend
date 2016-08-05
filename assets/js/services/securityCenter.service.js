@@ -4,10 +4,10 @@ angular
 
 SecurityCenter.$inject = ['$rootScope', 'Wallet'];
 
-function SecurityCenter($rootScope, Wallet) {
-  var settings  = Wallet.settings
-    , user      = Wallet.user
-    , status    = Wallet.status;
+function SecurityCenter ($rootScope, Wallet) {
+  var settings = Wallet.settings;
+  var user = Wallet.user;
+  var status = Wallet.status;
 
   const service = {
     security: {
@@ -19,7 +19,7 @@ function SecurityCenter($rootScope, Wallet) {
   $rootScope.$watch(sumSecurityObjectives, updateLevel);
   return service;
 
-  function updateLevel() {
+  function updateLevel () {
     let securityObjectives = getSecurityObjectives();
     let securityLevel = 0;
 
@@ -31,11 +31,11 @@ function SecurityCenter($rootScope, Wallet) {
     service.security.score = securityLevel / securityObjectives.length;
   }
 
-  function sumSecurityObjectives() {
-    return getSecurityObjectives().reduce((prev, curr) => prev + curr, false);
+  function sumSecurityObjectives () {
+    return getSecurityObjectives().map(o => o ? 1 : 0).reduce((a, b) => a + b);
   }
 
-  function getSecurityObjectives() {
+  function getSecurityObjectives () {
     return [
       user.isEmailVerified,
       status.didConfirmRecoveryPhrase,

@@ -5,8 +5,7 @@ angular
 
 currency.$inject = ['$q', 'MyBlockchainApi'];
 
-function currency($q, MyBlockchainApi) {
-
+function currency ($q, MyBlockchainApi) {
   const SATOSHI = 100000000;
   const conversions = {};
   const fiatConversionCache = {};
@@ -39,22 +38,25 @@ function currency($q, MyBlockchainApi) {
     {
       serverCode: 'BTC',
       code: 'BTC',
-      conversion: 100000000
+      conversion: 100000000,
+      btcValue: '1 BTC'
     }, {
       serverCode: 'MBC',
       code: 'mBTC',
-      conversion: 100000
+      conversion: 100000,
+      btcValue: '0.001 BTC'
     }, {
       serverCode: 'UBC',
       code: 'bits',
-      conversion: 100
+      conversion: 100,
+      btcValue: '0.000001 BTC'
     }
   ];
 
   var service = {
-    currencies    : formatCurrencies(currencyCodes),
-    bitCurrencies : bitCurrencies,
-    conversions   : conversions,
+    currencies: formatCurrencies(currencyCodes),
+    bitCurrencies: bitCurrencies,
+    conversions: conversions,
 
     fetchExchangeRate: fetchExchangeRate,
     getFiatAtTime: getFiatAtTime,
@@ -62,14 +64,13 @@ function currency($q, MyBlockchainApi) {
     decimalPlacesForCurrency: decimalPlacesForCurrency,
     convertToSatoshi: convertToSatoshi,
     convertFromSatoshi: convertFromSatoshi,
-    formatCurrencyForView: formatCurrencyForView
+    formatCurrencyForView: formatCurrencyForView,
+    commaSeparate: commaSeparate
   };
 
   return service;
 
-  //////////////////////////////////////////////////////////////////////////////
-
-  function formatCurrencies(currencies) {
+  function formatCurrencies (currencies) {
     let currencyFormat = code => ({
       code: code,
       name: currencies[code]
@@ -77,10 +78,10 @@ function currency($q, MyBlockchainApi) {
     return Object.keys(currencies).map(currencyFormat);
   }
 
-  function fetchExchangeRate() {
+  function fetchExchangeRate () {
     let currencyFormat = info => ({
       symbol: info.symbol,
-      conversion: parseInt(SATOSHI / info.last)
+      conversion: parseInt(SATOSHI / info.last, 10)
     });
     let success = result => {
       Object.keys(result).forEach(code => {
@@ -93,32 +94,32 @@ function currency($q, MyBlockchainApi) {
     return MyBlockchainApi.getTicker().then(success).catch(fail);
   }
 
-  function getFiatAtTime(time, amount, currencyCode) {
-    time            = time * 1000;
-    currencyCode    = currencyCode.toLowerCase();
+  function getFiatAtTime (time, amount, currencyCode) {
+    time = time * 1000;
+    currencyCode = currencyCode.toLowerCase();
 
-    let key         = time + amount + currencyCode;
-    let cached      = fiatConversionCache[key];
+    let key = time + amount + currencyCode;
+    let cached = fiatConversionCache[key];
     let cacheResult = fiat => fiatConversionCache[key] = parseFloat(fiat).toFixed(2);
 
-    let fiatValuePromise = cached !== undefined ?
-      $q.resolve(cached) : MyBlockchainApi.getFiatAtTime(time, amount, currencyCode);
+    let fiatValuePromise = cached !== undefined
+      ? $q.resolve(cached) : MyBlockchainApi.getFiatAtTime(time, amount, currencyCode);
 
     return fiatValuePromise.then(cacheResult);
   }
 
-  function isBitCurrency(currency) {
+  function isBitCurrency (currency) {
     if (currency == null) return null;
     return bitCurrencies.map(c => c.code).indexOf(currency.code) > -1;
   }
 
-  function decimalPlacesForCurrency(currency) {
+  function decimalPlacesForCurrency (currency) {
     if (currency == null) return null;
     let decimalPlaces = ({ 'BTC': 8, 'mBTC': 5, 'bits': 2 })[currency.code];
     return decimalPlaces || 2;
   }
 
-  function convertToSatoshi(amount, currency) {
+  function convertToSatoshi (amount, currency) {
     if (amount == null || currency == null) return null;
     if (isBitCurrency(currency)) {
       return Math.round(amount * currency.conversion);
@@ -129,7 +130,7 @@ function currency($q, MyBlockchainApi) {
     }
   }
 
-  function convertFromSatoshi(amount, currency) {
+  function convertFromSatoshi (amount, currency) {
     if (amount == null || currency == null) return null;
     if (isBitCurrency(currency)) {
       return amount / currency.conversion;
@@ -140,7 +141,7 @@ function currency($q, MyBlockchainApi) {
     }
   }
 
-  function formatCurrencyForView(amount, currency, showCode=true) {
+  function formatCurrencyForView (amount, currency, showCode = true) {
     if (amount == null || currency == null) return null;
     let decimalPlaces = decimalPlacesForCurrency(currency);
     let code = showCode ? (' ' + currency.code) : '';
@@ -150,7 +151,12 @@ function currency($q, MyBlockchainApi) {
     } else {
       amount = (Math.floor(amount * 100) / 100).toFixed(decimalPlaces);
     }
-    return amount + code;
+    return commaSeparate(amount) + code;
   }
 
+  function commaSeparate (amount) {
+    let parts = amount.toString().split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+\b)/g, ',');
+    return parts.join('.');
+  }
 }

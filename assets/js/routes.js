@@ -6,11 +6,23 @@ angular
 
 AppRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-function AppRouter($stateProvider, $urlRouterProvider) {
-
+function AppRouter ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise(function ($injector, $location) {
+<<<<<<< HEAD
+    if (!$injector.has('Wallet')) {
+      return '/';
+    } else {
+      let Wallet = $injector.get('Wallet');
+      if (!Wallet.status.isLoggedIn) {
+        return '/';
+      } else {
+        return '/home';
+      }
+    }
+=======
     let Wallet = $injector.get('Wallet');
-    return Wallet.status.isLoggedIn ? '/home' : '/';
+    return Wallet.status.isLoggedIn ? '/home' : '/login';
+>>>>>>> refs/remotes/blockchain/remove-wallet-landing
   });
 
   $urlRouterProvider.when('/settings', '/settings/wallet');
@@ -48,7 +60,13 @@ function AppRouter($stateProvider, $urlRouterProvider) {
     .state('wallet', {
       views: {
         body: {
-          templateUrl: 'partials/wallet.jade'
+          templateUrl: 'partials/wallet.jade',
+          controller: 'WalletCtrl'
+        }
+      },
+      resolve: {
+        loadWalletModule: ($ocLazyLoad) => {
+          return $ocLazyLoad.load('walletLazyLoad');
         }
       }
     })
@@ -57,23 +75,28 @@ function AppRouter($stateProvider, $urlRouterProvider) {
     });
 
   $stateProvider
-    .state('welcome', {
+<<<<<<< HEAD
+    .state('landing', {
       url: '/',
       views: {
         body: {
-          templateUrl: 'partials/wallet-welcome.jade'
+          templateUrl: 'landing.html',
+          controller: 'LandingCtrl'
         }
-      },
-      contents: {
-        top: top
       }
     })
-
-  $stateProvider
+=======
+>>>>>>> refs/remotes/blockchain/remove-wallet-landing
     .state('public', {
       views: {
         body: {
-          templateUrl: 'partials/public.jade'
+          templateUrl: 'partials/public.jade',
+          controller: 'PublicCtrl'
+        }
+      },
+      resolve: {
+        loadWalletModule: ($ocLazyLoad) => {
+          return $ocLazyLoad.load('walletLazyLoad');
         }
       }
     })
@@ -102,6 +125,9 @@ function AppRouter($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/signup.jade',
           controller: 'SignupCtrl'
         }
+      },
+      params: {
+        email: ''
       }
     })
     .state('public.help', {
@@ -204,27 +230,18 @@ function AppRouter($stateProvider, $urlRouterProvider) {
         },
         right: {
           templateUrl: 'partials/security-center.jade',
-          controller: 'SettingsSecurityCenterCtrl'
+          controller: 'SettingsSecurityCenterCtrl',
+          resolve: {
+            loadBcPhoneNumber: ($ocLazyLoad) => {
+              return $ocLazyLoad.load('bcPhoneNumber');
+            }
+          }
         }
       }
     })
     .state('wallet.common.transactions', {
       url: '/:accountIndex/transactions',
       views: transactionsViews
-    })
-    .state('wallet.common.transaction', {
-      url: '/:accountIndex/transactions/:hash',
-      views: {
-        top: top,
-        left: {
-          templateUrl: 'partials/wallet-navigation.jade',
-          controller: 'WalletNavigationCtrl'
-        },
-        right: {
-          templateUrl: 'partials/transaction.jade',
-          controller: 'TransactionCtrl'
-        }
-      }
     })
     .state('wallet.common.open', {
       url: '/open/{uri:.*}',
@@ -297,6 +314,11 @@ function AppRouter($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/settings/preferences.jade',
           controller: 'SettingsPreferencesCtrl'
         }
+      },
+      resolve: {
+        loadBcPhoneNumber: ($ocLazyLoad) => {
+          return $ocLazyLoad.load('bcPhoneNumber');
+        }
       }
     })
     .state('wallet.common.settings.security', {
@@ -324,6 +346,12 @@ function AppRouter($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/settings/addresses.jade',
           controller: 'SettingsAddressesCtrl'
         }
+      },
+      resolve: {
+        paymentRequests: ($stateParams, $q, Wallet) => {
+          let index = parseInt($stateParams.account, 10);
+          return Wallet.getPendingPayments(index).catch(() => $q.reject('LOAD_ADDR_ERR'));
+        }
       }
     })
     .state('wallet.common.settings.imported_addresses', {
@@ -344,5 +372,4 @@ function AppRouter($stateProvider, $urlRouterProvider) {
         }
       }
     });
-
 }

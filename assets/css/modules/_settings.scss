@@ -7,14 +7,14 @@
   }
   .label-warning { background-color: $security-red; }
   .label-success { background-color: $security-green; }
+  .label-success, .label-warning {
+    @extend .btn-xs;
+    display: inline-block;
+  }
   h2 {
     font-size: 12pt;
   }
   .edit-mobile {
-    // Our custom CSS causes layout issues for bc-phone-number:
-    .form-control {
-      height: 33px !important;
-    }
     .caret {
       padding-left: 0px !important;
       margin-left: 0px;
@@ -36,15 +36,9 @@
     }
   }
   // Preferences
-  form.form-horizontal {
+  .clearfix {
     .form-group {
-      margin: 0!important;
-      border-bottom: 1px solid $grey;
-      padding: 20px 0;
       &:hover { background: $hover-blue; }
-      .button-primary {
-        display: inline-block;
-      }
       @media(max-width: 992px) {
         .setting-result {
           clear: left;
@@ -52,9 +46,25 @@
       }
     }
   }
+  .imported-addresses-container {
+    .dropdown-menu {
+      @media (min-width: 769px) {
+        left: auto !important;
+        right: 0px !important;
+      }
+      > li > a {
+        font-size: small;
+        &:before {
+          @extend .prm;
+        }
+      }
+    }
+  }
   // Accounts & Addresses
-  @media (max-width: 768px) {
-    .accounts-container {
+  @media (max-width: 900px) {
+    .accounts-container, 
+    .addresses-container,
+    .imported-addresses-container {
       width: 100%;
       tr {
         height: auto;
@@ -76,11 +86,21 @@
         }
       }
     }
+    .addresses-container,
+    .imported-addresses-container {
+      tr {
+        &:first-child {
+          display: none;
+        }
+        td {
+          button {
+            display: inline-block;
+            margin-top: 0px;
+          }
+        }
+      }
+    }
   }
-}
-
-.setting-result {
-  p { margin-top: 15px; }
 }
 
 .inneredit { padding: 10px 15px 0;}
@@ -103,7 +123,12 @@ table.accounts-container {
     font-weight: 500;
   }
 
-  .label-primary {background-color: $blue; color: white;}
+  .label-primary {
+    background-color: $blue;
+    display: inline-block;
+    @extend .btn-xs;
+    color: white;
+  }
 
   &.imported-addresses{
     color: $mid-grey;
@@ -115,17 +140,21 @@ table.accounts-container {
 
 //A better .well class
 .well {
-  padding: 20px;
+  padding: 15px;
   margin-bottom: 20px;
-  background-color: $light-blue;
-  border: 1px solid $border-grey;
-  border-radius: 5px;
-  line-height: 2em;
+  background-color: $pale-yellow;
+  border-left: 5px solid $security-yellow;
+  line-height: 1.5em;
+  font-size: 1.1em;
 }
 
 @media (min-width: 992px){
   .setting-result {
     text-align: right;
+    float: right;
+    @media (max-width: 1200px) {
+      min-width: 33.333%;
+    }
   }
   h2.status {
     margin: 0px 0px 15px;
@@ -133,4 +162,46 @@ table.accounts-container {
 }
 @media (max-width: 991px) {
   .setting-result { margin-top: 10px; }
+}
+
+.settings {
+  td.address-label {
+    height: 44px;
+    > span {
+      display: inline-block;
+      border-bottom: 1px solid transparent;
+    }
+    .col-sm-12 {
+      padding-left: 0px;
+    }
+    form[name="bcAsyncForm"] {
+      > div {
+        @extend .flex-row;
+        @extend .flex-center;
+        @extend .flex-between;
+        > div:first-child {
+          @extend .flex-1;
+        }
+        input {
+          font-weight: normal;
+          margin-bottom: 1px;
+          font-size: small;
+          display: block;
+          width: 80%;
+        }
+        button {
+          padding: 0px;
+        }
+        button.button-primary {
+          padding: 2px 4px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .settings {
+    padding: 15px 15px;   
+  }
 }

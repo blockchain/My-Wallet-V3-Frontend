@@ -13,6 +13,7 @@ describe "AccountFormCtrl", ->
     angular.mock.inject ($injector) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
+      Wallet.my.browserCheck = () -> true
 
       Wallet.accounts = () -> accounts
 
@@ -40,8 +41,9 @@ describe "AccountFormCtrl", ->
       }
 
   beforeEach ->
-    angular.mock.inject ($rootScope, $controller, $compile) ->
+    angular.mock.inject ($rootScope, $controller, $compile, $templateCache) ->
       scope = $rootScope.$new()
+      template = $templateCache.get('partials/account-form.jade')
 
       $controller "AccountFormCtrl",
         $scope: scope
@@ -49,44 +51,38 @@ describe "AccountFormCtrl", ->
         $uibModalInstance: modalInstance
         account: Wallet.accounts()[0]
 
-      element = angular.element(
-        '<form role="form" name="accountForm" novalidate>' +
-        '<input type="text" name="new" ng-model="fields.name" is-valid="validate(fields.name)" maxlength="17" required />' +
-        '</form>'
-      )
-      scope.model = { fields: { name: '' } }
-      $compile(element)(scope)
+      scope.model = { status: {} }
+      $compile(template)(scope)
 
       scope.$digest()
-
-      return
-    return
 
   beforeEach -> accounts.splice(2); accounts[0].label = 'Savings'
 
   describe "creation", ->
 
     beforeEach ->
-      scope.fields.name = 'New Account'
+      scope.name = 'New Account'
 
     it "should be created", inject((Wallet) ->
       before = Wallet.accounts().length
       scope.createAccount()
+      scope.$digest()
       expect(Wallet.accounts().length).toBe(before + 1)
     )
 
     it "should have a name", inject((Wallet) ->
         scope.createAccount()
+        scope.$digest()
         expect(Wallet.accounts()[Wallet.accounts().length - 1].label).toBe("New Account")
     )
 
   describe "rename", ->
 
     it "original name should be shown", ->
-      expect(scope.fields.name).toBe("Savings")
+      expect(scope.name).toBe("Savings")
 
     it "should save the new name",  inject((Wallet) ->
-      scope.fields.name = "New Name"
+      scope.name = "New Name"
       scope.updateAccount()
       expect(Wallet.accounts()[0].label).toBe("New Name")
     )
@@ -94,24 +90,24 @@ describe "AccountFormCtrl", ->
   describe "validate", ->
 
     beforeEach ->
-      scope.fields.name = 'Valid Name'
+      scope.name = 'Valid Name'
       scope.$apply()
 
     it "should not have a null name", ->
       expect(scope.accountForm.$valid).toBe(true)
-      scope.fields.name = null
+      scope.name = null
       scope.$apply()
       expect(scope.accountForm.$valid).toBe(false)
 
     it "should not have a name of zero length", ->
       expect(scope.accountForm.$valid).toBe(true)
-      scope.fields.name = ''
+      scope.name = ''
       scope.$apply()
       expect(scope.accountForm.$valid).toBe(false)
 
     it "should not have a name longer than 17 characters", ->
       expect(scope.accountForm.$valid).toBe(true)
-      scope.fields.name = 'abcdefghijklmnopqr'
+      scope.name = 'abcdefghijklmnopqr'
       scope.$apply()
       expect(scope.accountForm.$valid).toBe(false)
 

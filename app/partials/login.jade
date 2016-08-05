@@ -11,16 +11,18 @@ div
       p.em-300(translate="LOGIN_BELOW")
   //GUID & Password fields
   form.ptl.form-horizontal.clearfix(role="form" autocomplete="off" novalidate)
+    browser-detection(result="browser")
     .form-group(ng-class="{'has-error': errors.uid}")
       label.em-500(translate="UID", for="UID_input")
       div
-        input#UID_input.form-control(type="text", ng-model="uid", ng-disabled="busy || disableLogin" name="UID_input" focus-when="!uidAvailable")
-        span.help-block {{ errors.uid }}
+        input#UID_input.form-control(type="text", ng-model="uid", ng-disabled="busy || browser.disabled" name="UID_input" focus-when="!uidAvailable")
+          
+        span.help-block(ng-show="errors.uid" ui-sref="public.reminder" translate="{{ errors.uid }}")
         span.help-block.info.hidden-xs(translate="FIND_GUID_EXPLAIN")
     .form-group(ng-class="{'has-error': errors.password}")
       label.em-500(translate="PASSWORD", for="pass_input")
       div
-        input#pass_input.form-control(type="password", name="pass_input" ng-model="password", ng-disabled="busy || disableLogin" focus-when="uidAvailable")
+        input#pass_input.form-control(type="password", name="pass_input" ng-model="password", ng-disabled="busy || browser.disabled" focus-when="uidAvailable")
         span.help-block {{ errors.password }}  
     .form-group(ng-show="settings.needs2FA", ng-class="{'has-error': errors.twoFactor || settings.twoFactorMethod == 3}")
       label.em-500
@@ -30,14 +32,15 @@ div
           span(translate="GOOGLE_AUTH_CODE", ng-show="settings.twoFactorMethod == 4")
           span(translate="SMS_CODE", ng-show="settings.twoFactorMethod == 5")
       div
-        input.form-control(type="text", ng-model="twoFactorCode", ng-disabled="busy || settings.twoFactorMethod == 3")
+        input.form-control(type="text" ng-model="twoFactorCode" ng-disabled="busy || didEnterCorrect2FA || settings.twoFactorMethod == 3")
         span.help-block {{ errors.twoFactor }}
         p.form-control-static(ng-show="settings.twoFactorMethod == 5")
           img(ng-show="resending" src="img/spinner.gif")
           a(ng-click="resend()", ng-show="!resending", translate="RESEND") 
     .mtl.flex-center.flex-end
-      button.button-primary(ui-ladda="busy", ng-click="login()", data-style="expand-left", ladda-translate="SIGNIN", ng-disabled="!isValid")
+      button.button-primary(ui-ladda="busy", ng-click="login()", data-style="expand-left", ladda-translate="SIGNIN", ng-disabled="!isValid || browser.disabled")
   //Wallet Recovery
-  .ptl.flex-column
-    .em-300.flex-end.mbm Having some trouble?
-      span.pointer.blue.mls(ui-sref="public.help") View Options
+  .ptl.flex-end
+    .flex-row
+      .em-300.mbm(translate="HAVING_TROUBLE")
+      span.pointer.em-300.blue.mls(ui-sref="public.help") View Options

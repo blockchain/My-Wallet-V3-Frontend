@@ -1,0 +1,21 @@
+form(role="form" name="form" novalidate ng-submit="form.$valid && changeEmail()")
+  .form-group(ng-class="{'has-error': form.$invalid && form.$dirty}")
+    label.control-label(translate="EMAIL_ADDRESS")
+    div
+      input.form-control(
+        type="email"
+        name="email"
+        ng-model="fields.email"
+        required
+        maxlength="255"
+        focus-when="active")
+      span.help-block(ng-show="form.$invalid && form.$dirty")
+        span(translate="NOT_VALID_EMAIL_ADDRESS")
+  .form-group.mbn.has-error.pull-right.right-align
+    button.button-muted(ng-click="deactivate()" translate="CANCEL" ng-hide="busy" type="button")
+    button.button-success(
+      ui-ladda="status.waiting"
+      ng-disabled="form.$invalid"
+      ladda-translate="CHANGE"
+      data-style="expand-left"
+      type="submit")

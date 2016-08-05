@@ -1,58 +1,40 @@
-angular.module('walletApp').directive('hdAddress', (Wallet, $translate, Alerts) => {
-  return {
-    restrict: "A",
+angular
+  .module('walletApp')
+  .directive('hdAddress', hdAddress);
+
+function hdAddress ($rootScope, $sce, Wallet, Alerts) {
+  const directive = {
+    restrict: 'A',
     replace: true,
     scope: {
+      account: '=',
       address: '=hdAddress',
-      searchText: '='
+      searchText: '=',
+      remove: '&',
+      pastAddress: '='
     },
-    templateUrl: (elem, attrs) => 'templates/hd-address.jade',
-    link: (scope, elem, attrs, ctrl) => {
-      const addressIndex = scope.address.index;
-      const accountIndex = scope.address.account.index;
-
-      scope.errors = {label: null};
-      scope.status = {edit: false};
-
-      scope.removeLabel = () => {
-        Alerts.confirm('CONFIRM_REMOVE_LABEL').then(() => {
-          scope.address.account.removeLabelForReceivingAddress(addressIndex);
-          Wallet.hdAddresses(accountIndex)(true);
-        });
-      };
-
-      scope.changeLabel = (label, successCallback, errorCallback) => {
-
-        scope.errors.label = null;
-        scope.status.edit = false;
-
-        const success = () => {
-          scope.status.edit = false;
-          successCallback();
-        };
-
-        const error = (error) => {
-          if(error === "NOT_ALPHANUMERIC") {
-            $translate("INVALID_CHARACTERS_FOR_LABEL").then((translation) => {
-              scope.errors.label = translation;
-            });
-          } else if (error === "GAP") {
-            $translate("LABEL_ERROR_BIP_44_GAP").then((translation) => {
-              scope.errors.label = translation;
-            });
-          } else {
-            console.log("Unknown error: " + error);
-          }
-
-          errorCallback();
-        };
-
-        Wallet.changeHDAddressLabel(accountIndex, addressIndex, label, success, error);
-      };
-
-      scope.cancelEdit = () => {
-        scope.status.edit = false;
-      };
-    }
+    templateUrl: 'templates/hd-address.jade',
+    link
   };
-});
+  return directive;
+
+  function link (scope, elem, attrs, ctrl) {
+    scope.cancelEdit = () => scope.editing = false;
+    scope.removeLabel = () => scope.remove();
+
+    scope.addressLink = (address) => $sce.trustAsResourceUrl(`${$rootScope.rootURL}address/${address}`);
+
+    scope.changeLabel = (label, successCallback, errorCallback) => {
+      let success = () => {
+        scope.editing = false;
+        successCallback();
+      };
+      let error = (error) => {
+        if (error === 'NOT_ALPHANUMERIC') Alerts.displayError('INVALID_CHARACTERS_FOR_LABEL');
+        else if (error === 'GAP') Alerts.displayError('GAP');
+        error();
+      };
+      Wallet.changeHDAddressLabel(scope.account.index, scope.address.index, label, success, error);
+    };
+  }
+}

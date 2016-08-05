@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller("TwoFactorCtrl", TwoFactorCtrl);
+  .controller('TwoFactorCtrl', TwoFactorCtrl);
 
-function TwoFactorCtrl($scope, Wallet, Alerts, $uibModalInstance, $translate, $timeout) {
+function TwoFactorCtrl ($scope, Wallet, Alerts, $uibModalInstance, $translate, $timeout) {
   $scope.settings = Wallet.settings;
   $scope.user = Wallet.user;
 
@@ -18,7 +18,7 @@ function TwoFactorCtrl($scope, Wallet, Alerts, $uibModalInstance, $translate, $t
     step: 1
   };
 
-  if (Wallet.user.internationalMobileNumber.length > 4 && !Wallet.user.isMobileVerified) {
+  if (Wallet.user.mobileNumber.length > 4 && !Wallet.user.isMobileVerified) {
     $scope.mobileNumber.step = 2;
   }
 
@@ -31,10 +31,7 @@ function TwoFactorCtrl($scope, Wallet, Alerts, $uibModalInstance, $translate, $t
   };
 
   $scope.displayConfirmationError = () => {
-    if ($scope.alerts.length !== 0) return;
-    $translate('2FA_INVALID').then(translation => {
-      Alerts.displayError(translation, false, $scope.alerts)
-    });
+    Alerts.displayError('2FA_INVALID', false, $scope.alerts);
   };
 
   $scope.validateCode = (pairWith) => {
@@ -127,7 +124,7 @@ function TwoFactorCtrl($scope, Wallet, Alerts, $uibModalInstance, $translate, $t
 
   $scope.close = () => {
     Alerts.clear();
-    $uibModalInstance.dismiss("");
+    $uibModalInstance.dismiss('');
   };
 
   $scope.$watch('user.isMobileVerified', (newVal, oldVal) => {
@@ -146,5 +143,4 @@ function TwoFactorCtrl($scope, Wallet, Alerts, $uibModalInstance, $translate, $t
       $scope.goToStep('disabled');
     }
   });
-
 }

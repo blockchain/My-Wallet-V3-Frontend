@@ -2,8 +2,10 @@
 .type-sm { font-size: .9em; }
 .type-h5 { font-size: 1.2em; }
 .type-h4 { font-size: 1.5em; }
+.type-lbl { font-size: 1.1em; }
+.type-med { font-size: 2.2em; }
 .title { font-size: 3.5em; }
-.underline { text-decoration: underline; }
+.underline { text-decoration: underline; &:hover { text-decoration: underline; } }
 .pointer { cursor: pointer; }
 .right-align { text-align: right; }
 .left-align { text-align: left; }
@@ -15,12 +17,16 @@
 .break-word { word-break: break-word; }
 .long-input { overflow-wrap: break-word; }
 .text { font-size: 14px; } //use pixels to normalize with Bootstrap instead of em's
+.colon:after { content: ':' }
+.capitalize { text-transform: capitalize; }
+.upper { text-transform: uppercase; }
+.parens { &:before { content: '('; } &:after { content: ')'; } }
 
 .text-overflow-hidden, .ui-select-match-text {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  width: calc(100% - 50px);
+  width: calc(100% - 10px);
   display: block;
 }
 
@@ -29,5 +35,22 @@ $multiplier: 100;
 @for $i from 1 through 9 {
   .em-#{$i}00 {
     font-weight: $i * $multiplier;
+    &:before {
+      font-weight: $i * $multiplier !important;
+    }
+  }
+}
+
+@for $i from 1 through 5 {
+  .font-#{$i} {
+    font-size: #{$i}em;
+  }
+}
+
+@for $i from 1 through 5 {
+  @media (max-width: 768px) {
+    .font-#{$i}-mobile {
+      font-size: #{$i}em;
+    }
   }
 }

@@ -25,8 +25,21 @@ div.login-form {
 }
 
 @media (max-height: 700px) {
+  html, body {
+    position: relative;
+  }
+  .login-pg {
+    height: 100%;
+    display: block !important;
+    .navbar {
+      position: relative;
+    }
+  }
   .login-box-container {
     margin-top: 0px;
+  }
+  .login-box {
+    max-height: none !important;
   }
 }
 
@@ -47,14 +60,6 @@ div.login-form {
     margin-left: auto;
     margin-right: auto; 
   }
-  .progress {
-    margin-bottom: 5px;
-    > div {
-      font-size: 10px;
-      padding-left: 10px;
-      text-transform: uppercase;
-    }
-  }
   .help-block .info {
     color: $mid-grey;
     &:hover {
@@ -74,6 +79,37 @@ div.login-form {
   .step { right: 20px; top: 10px; }
 }
 
+#verify-recovery {
+  img {
+     height: 50px;
+     align: left;
+     margin-right: 10px;
+  }
+  pre {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+.versions {
+  position: absolute;
+  bottom: 10px;
+  opacity: 0.8;
+  right: 15px;
+  &:hover {
+    opacity: 1;
+  }
+  a {
+    color: white !important;
+    text-decoration: none !important;
+  }
+  @media (max-width: 768px) and (max-height: 600px) {
+    position: relative;
+    bottom: -10px;
+    right: -15px;
+  }
+}
+
 @media (max-width: 620px) {
   .login-box {
     padding: 10px 25px 25px;
@@ -82,5 +118,61 @@ div.login-form {
     header h2 { font-size: 18px; margin-top: 0; margin-bottom: 5px; }
     .navbar { margin-bottom: 0; }
     .form-group { margin-bottom: 0; }
+  }
+}
+
+.blocket-loading {
+  @include transition(top 0.7s 0.3s, opacity 0s 1s);
+  background-color: $blue;
+  overflow: hidden;
+  position: fixed;
+  z-index: 10000;
+  height: 100%;
+  width: 100%;
+  opacity: 1;
+  left: 0;
+  top: 0;
+  > div {
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    position: absolute;
+    height: 200px;
+    left: 50%;
+    top: 50%;
+    img {
+      top: 50%;
+      left: 50%;
+      width: auto;
+      height: 200px;
+      position: absolute;
+      outline: 1px solid transparent;
+      transform: translate(-50%, -50%);
+      -webkit-backface-visibility: hidden;
+      -webkit-transform: translate(-50%, -50%);
+      &.full {
+        -webkit-animation: opacity-change 1s infinite;
+        -moz-animation:    opacity-change 1s infinite;
+        -o-animation:      opacity-change 1s infinite;
+        animation:         opacity-change 1s infinite;
+        transition:        opacity 1s, transform 0.5s;
+      }
+    }
+  }
+  &.liftoff {
+    > div img.full {
+      -webkit-animation: none;
+      -moz-animation:    none;
+      -o-animation:      none;
+      animation:         none;
+      transition:        opacity 0.8s, transform 0.5s;
+    }
+    &.orbit {
+      top: -100%;
+      @include transition(top 0.3s 0.2s);
+      > div {
+        transform: translate(-50%, -500%);
+        @include transition(transform 0.5s);
+      }
+    }
   }
 }

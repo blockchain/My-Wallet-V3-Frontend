@@ -1,30 +1,54 @@
 describe "Confirm Recovery Phrase", ->
-  $compile = undefined
-  $rootScope = undefined
-  element = undefined
   isoScope = undefined
+  $q = undefined
+  $uibModal = undefined
+  Wallet = undefined
+  Alerts = undefined
 
   beforeEach module("walletApp")
 
-  beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
+  beforeEach inject(($injector, $compile, $rootScope) ->
+    $q = $injector.get('$q')
+    $uibModal = $injector.get("$uibModal")
+    Wallet = $injector.get("Wallet")
+    Alerts = $injector.get("Alerts")
 
-    $compile = _$compile_
-    $rootScope = _$rootScope_
-
-    return
-  )
-
-  beforeEach ->
     element = $compile("<confirm-recovery-phrase></confirm-recovery-phrase>")($rootScope)
     $rootScope.$digest()
     isoScope = element.isolateScope()
     isoScope.$digest()
 
-  it "should have wallet status", inject((Wallet) ->
-    expect(isoScope.status).toBe(Wallet.status)
-    return
+    spyOn(Alerts, "prompt").and.returnValue($q.resolve('asdf'))
+    spyOn($uibModal, "open").and.callThrough()
   )
 
-  it "covers confirmRecoveryPhrase", ->
+  it "should open when second pw is enabled", ->
+    Wallet.settings.secondPassword = true
     isoScope.confirmRecoveryPhrase()
-    return
+    expect($uibModal.open).toHaveBeenCalled()
+
+  it "should prompt for main password when second pw is not enabled", ->
+    isoScope.confirmRecoveryPhrase()
+    expect(Alerts.prompt).toHaveBeenCalled()
+
+  it "should validate the main password", ->
+    spyOn(Wallet, "isCorrectMainPassword").and.returnValue(true)
+
+    isoScope.confirmRecoveryPhrase()
+    expect(Alerts.prompt).toHaveBeenCalled()
+
+    isoScope.$digest()
+    expect($uibModal.open).toHaveBeenCalled()
+
+  it "should display an error and retry if the main password was incorrect", ->
+    spyOn(Alerts, "displayError").and.callThrough()
+    spyOn(Wallet, "isCorrectMainPassword").and.returnValue(false)
+
+    isoScope.confirmRecoveryPhrase()
+    spyOn(isoScope, "confirmRecoveryPhrase")
+
+    expect(Alerts.prompt).toHaveBeenCalled()
+    isoScope.$digest()
+
+    expect(Alerts.displayError).toHaveBeenCalled()
+    expect(isoScope.confirmRecoveryPhrase).toHaveBeenCalled()

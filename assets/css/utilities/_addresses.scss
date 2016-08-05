@@ -1,0 +1,21 @@
+.oflow {
+  display: block;
+  overflow: hidden;
+  max-width: 400px;
+  text-overflow: ellipsis;
+  @media (max-width: 1200px) {
+    max-width: 170px;
+  }
+}
+
+.dest-oflow {
+  overflow: hidden;
+  white-space: nowrap;
+  > span {
+    display: block;
+    overflow: scroll;
+    // hide scrollbar
+    margin-bottom: -20px;
+    padding-bottom: 20px;
+  }
+}

@@ -1,0 +1,4 @@
+li(ng-if="status.didUpgradeToHd" ng-class="::{flash: feat.date > lastViewedWhatsNew}" ng-repeat="feat in feats | orderBy:'-date' track by $index")
+  h4 {{::feat.title | translate}}
+    small.aaa.mlm {{::feat.date | date:'shortDate'}}
+  p(translate="{{::feat.desc}}")

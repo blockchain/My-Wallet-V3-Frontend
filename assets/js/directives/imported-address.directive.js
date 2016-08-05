@@ -1,6 +1,6 @@
 angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $uibModal) => {
   return {
-    restrict: "A",
+    restrict: 'A',
     replace: true,
     scope: {
       address: '=importedAddress',
@@ -12,24 +12,22 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
       scope.status = {edit: false};
 
       scope.showAddress = () => {
-        let modalInstance = $uibModal.open({
-          templateUrl: "partials/request.jade",
-          controller: "RequestCtrl",
+        $uibModal.open({
+          templateUrl: 'partials/request.jade',
+          controller: 'RequestCtrl',
           resolve: {
             destination: () => scope.address,
             focus: () => true,
             hasLegacyAddress: () => null
           },
-          windowClass: "bc-modal"
+          windowClass: 'bc-modal auto'
         });
-        if (modalInstance != null) {
-          modalInstance.opened.then(() => {
-            Wallet.store.resetLogoutTimeout();
-          });
-        }
       };
 
-      scope.archive = () => { Wallet.archive(scope.address) };
+      scope.archive = () => {
+        Wallet.archive(scope.address);
+        scope.$root.scheduleRefresh();
+      };
 
       scope.changeLabel = (label, successCallback, errorCallback) => {
         scope.errors.label = null;
@@ -39,8 +37,8 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
           successCallback();
         };
 
-        const error = (error) => {
-          $translate("INVALID_CHARACTERS_FOR_LABEL").then((translation) => {
+        const error = () => {
+          $translate('INVALID_CHARACTERS_FOR_LABEL').then((translation) => {
             scope.errors.label = translation;
           });
           errorCallback();
@@ -53,38 +51,37 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
         scope.status.edit = false;
       };
 
-      scope.transfer = () => {
-        let modalInstance = $uibModal.open({
-          templateUrl: "partials/settings/import-address.jade",
-          controller: "AddressImportCtrl",
-          windowClass: "bc-modal",
-          resolve: {
-            address: () => scope.address
-          }
-        });
-        if (modalInstance != null) {
-          modalInstance.opened.then(() => {
-            Wallet.store.resetLogoutTimeout();
-          });
-        }
-      };
+      scope.transfer = () => $uibModal.open({
+        templateUrl: 'partials/settings/transfer.jade',
+        controller: 'TransferController',
+        windowClass: 'bc-modal',
+        resolve: { address: () => scope.address }
+      });
 
-      scope.showPrivKey = () => {
-        let modalInstance = $uibModal.open({
-          templateUrl: "partials/settings/show-private-key.jade",
-          controller: "ShowPrivateKeyCtrl",
-          windowClass: "bc-modal",
-          resolve: {
-            addressObj: () => scope.address
-          }
-        });
-        if (modalInstance != null) {
-          modalInstance.opened.then(() => {
-            Wallet.store.resetLogoutTimeout();
-          });
-        }
-      };
+      scope.showPrivKey = () => $uibModal.open({
+        templateUrl: 'partials/settings/show-private-key.jade',
+        controller: 'ShowPrivateKeyCtrl',
+        windowClass: 'bc-modal',
+        resolve: { addressObj: () => scope.address }
+      });
 
+      scope.signMessage = () => $uibModal.open({
+        templateUrl: 'partials/settings/sign-message.jade',
+        controller: 'SignMessageController',
+        windowClass: 'bc-modal initial',
+        resolve: {
+          addressObj: () => scope.address
+        }
+      });
+
+      scope.spend = () => $uibModal.open({
+        templateUrl: 'partials/send.jade',
+        controller: 'SendCtrl',
+        windowClass: 'bc-modal auto',
+        resolve: {
+          paymentRequest: () => ({fromAccount: scope.address})
+        }
+      });
     }
   };
 });

@@ -1,0 +1,24 @@
+form(role="form" name="form" novalidate ng-submit="form.$valid && setPbkdf2()")
+  .form-group(ng-class="{'has-error': form.$invalid && form.$dirty}")
+    label.control-label(translate="PBKDF2_ITERATIONS")
+    div
+      input.form-control(
+        type="number"
+        name="pbkdf2"
+        ng-model="fields.pbkdf2"
+        required
+        min="2"
+        max="20000"
+        maxlength="255"
+        focus-when="active")
+      span.help-block(ng-show="form.$invalid")
+        span(ng-show="form.pbkdf2.$error.min" translate="PBKDF2_GREATER_THAN_1")
+        span(ng-show="form.pbkdf2.$error.max" translate="PBKDF2_LESS_THAN_20000")
+  .form-group.mbn.has-error.pull-right.right-align
+    button.button-muted(ng-click="deactivate()" translate="CANCEL" ng-hide="busy" type="button")
+    button.button-success(
+      ui-ladda="status.waiting"
+      ng-disabled="form.$invalid"
+      ladda-translate="CHANGE"
+      data-style="expand-left"
+      type="submit")

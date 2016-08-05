@@ -3,34 +3,62 @@ describe "Verify Mobile Number Directive", ->
   $rootScope = undefined
   element = undefined
   isoScope = undefined
+  Wallet = undefined
 
   beforeEach module("walletApp")
-  
-  beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
+
+  beforeEach inject((_$compile_, _$rootScope_, $injector) ->
 
     $compile = _$compile_
     $rootScope = _$rootScope_
+    Wallet = $injector.get('Wallet')
+
+    Wallet.verifyMobile = (code, success, error) ->
+      if code
+        success()
+      else
+        error('error')
+
+    Wallet.changeMobile = (mobile, success, error) ->
+      if mobile
+        success()
+      else
+        error('error')
 
     return
   )
 
   beforeEach ->
-    element = $compile("<verify-mobile-number></verify-mobile-number>")($rootScope)
+    element = $compile("<verify-mobile-number button-lg full-width></verify-mobile-number>")($rootScope)
     $rootScope.$digest()
     isoScope = element.isolateScope()
     isoScope.$digest()
 
+    isoScope.onSuccess = () -> true
+
   it "should have text", ->
     expect(element.html()).toContain "VERIFY"
 
-  it "can be verified", inject((Wallet) ->
-    spyOn(Wallet, "verifyMobile")
+  describe "verifyMobile", ->
 
-    isoScope.verifyMobile("31 1 2345")
+    it "can be verified", ->
+      spyOn(isoScope, "onSuccess")
+      isoScope.verifyMobile("31 1 2345")
+      expect(isoScope.onSuccess).toHaveBeenCalled()
 
-    expect(Wallet.verifyMobile).toHaveBeenCalled()
+    it "can not be verified if no code is passed", ->
+      isoScope.verifyMobile()
+      expect(isoScope.errors.verify).toBe('error')
 
-    return
-  )
+  describe "retrySendCode", ->
 
-  return
+    it "should get an error if retry fails", ->
+      isoScope.retrySendCode()
+      expect(isoScope.errors.retryFail).toBeDefined()
+
+    it "should call successful retry to send", ->
+      error = () ->
+      Wallet.user.mobile = '639'
+      spyOn(isoScope, "onSuccess")
+      isoScope.retrySendCode()
+      expect(isoScope.errors.retryFail).toBe(null)

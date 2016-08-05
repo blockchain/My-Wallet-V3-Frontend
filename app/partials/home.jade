@@ -1,3 +1,4 @@
+blocket-loading
 .home
   .flex.flex-wrap.mtl
     activity-feed
@@ -5,13 +6,13 @@
       .section
         h5.mtn.type-h5.em-400.mbl(translate="BALANCES")
         ul.pln.account-balances
-          li.flex-between.border-bottom-light(ng-repeat="account in activeAccounts")
+          li.flex-between.border-bottom-light(ng-repeat="account in activeAccounts()")
             span.em-500 {{::account.label}}
             fiat-or-btc(btc="account.balance")
-          li.flex-between.border-bottom-thick.tertiary-blue(ng-show="activeAddresses.length > 0")
+          li.flex-between.border-bottom-thick.mid-grey(ng-show="hasLegacyAddresses()")
             span.em-400 Imported Addresses
             fiat-or-btc(btc="getLegacyTotal()")
-          li.flex-between.border-bottom-light.mid-grey.em-500
+          li.flex-between.border-bottom-light.basic-grey.em-500
             span Total
             fiat-or-btc(btc="getTotal()")
       .section.mtvl

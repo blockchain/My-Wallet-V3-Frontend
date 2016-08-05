@@ -1,25 +1,18 @@
 angular
   .module('walletApp')
-  .controller("SendCtrl", SendCtrl);
+  .controller('SendCtrl', SendCtrl);
 
-function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, filterFilter, $uibModal, format, MyWalletHelpers, $rootScope, $q, $http, fees) {
-
-  $scope.legacyAddresses = Wallet.legacyAddresses;
-  $scope.accounts = Wallet.accounts;
-  $scope.addressBook = Wallet.addressBook;
-
+function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.alerts = [];
 
   $scope.origins = [];
-  $scope.destinations = [];
-  $scope.destinationsBase = [];
   $scope.originsLoaded = false;
+  $scope.originLimit = 50;
+  $scope.increaseLimit = () => $scope.originLimit += 50;
 
-  $scope.cameraIsOn = false;
   $scope.sending = false;
-  $scope.amountIsValid = true;
   $scope.confirmationStep = false;
   $scope.advanced = false;
   $scope.building = false;
@@ -27,142 +20,108 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
   $scope.fiatCurrency = Wallet.settings.currency;
   $scope.btcCurrency = Wallet.settings.btcCurrency;
   $scope.isBitCurrency = currency.isBitCurrency;
+  $scope.isValidPrivateKey = Wallet.isValidPrivateKey;
+
+  $scope.defaultBlockInclusion = 1;
 
   $scope.transactionTemplate = {
     from: null,
-    sweepAmount: null,
     destinations: [null],
     amounts: [null],
-    fee: 10000,
-    note: "",
-    publicNote: false
+    fee: 0,
+    note: '',
+    maxAvailable: null,
+    surge: false,
+    blockIdx: null,
+    feeBounds: [0, 0, 0, 0, 0, 0],
+    sweepFees: [0, 0, 0, 0, 0, 0],
+    size: 0
   };
 
-  $scope.payment = new Wallet.payment({ feePerKb: 30000 });
+  $scope.payment = new Wallet.Payment();
   $scope.transaction = angular.copy($scope.transactionTemplate);
 
-  let dynamicFeeService = $rootScope.feeServiceDomain + '/fees';
-  let dynamicFeeVectorP = $http
-    .get(dynamicFeeService)
-    .then(response => response.data.estimate);
-
-  dynamicFeeVectorP.then(estimate => {
-    $scope.surgeWarning = estimate[1].surge;
-    $scope.payment.feePerKb(estimate[1].fee);
-    $scope.dynamicFeeAvailable = true;
-    $scope.setPaymentFrom();
+  $scope.payment.on('update', data => {
+    let tx = $scope.transaction;
+    tx.fee = $scope.advanced && $scope.sendForm.fee.$dirty ? tx.fee : data.finalFee;
+    if (tx.fee === 0) tx.fee = data.sweepFees[$scope.defaultBlockInclusion];
+    tx.maxAvailable = $scope.advanced ? data.balance - tx.fee : data.sweepAmount;
+    if (tx.maxAvailable < 0) tx.maxAvailable = 0;
+    tx.surge = data.fees.estimate[$scope.defaultBlockInclusion].surge;
+    tx.blockIdx = data.confEstimation;
+    tx.feeBounds = data.absoluteFeeBounds;
+    tx.sweepFees = data.sweepFees;
+    tx.size = data.txSize;
+    $scope.$safeApply();
   });
 
-  $scope.determineLabel = (origin) => origin.label || origin.address;
-  $scope.hasZeroBalance = (origin) => origin.balance === 0.0;
-
-  $scope.getFilter = (search, accounts=true) => ({
-    label: search,
-    type: accounts ? '!External' : 'Imported'
+  $scope.payment.on('error', error => {
+    if (error.error === 'ERR_FETCH_UNSPENT') {
+      Alerts.displayError(error.error, true, $scope.alerts);
+      $scope.failedToLoadUnspent = true;
+    }
   });
 
-  $scope.filterDestinations = (destinationsIdx, query) => {
-    return $scope.destinations[destinationsIdx].filter(dest => {
-      if (dest.type == "External" && dest.address == "") {
-        return false;
-      }
-      if (!!dest.address && dest.address != "") {
-        // If it's an address, match either address or label
-        if(!dest.address.toLowerCase().includes(query.toLowerCase()) & !dest.label.toLowerCase().includes(query.toLowerCase())) {
-          return false;
-        }
-      }
-      // If it's an account, only match the label
-      if (!!dest.label && dest.label != "" && !dest.label.toLowerCase().includes(query.toLowerCase())) {
-        return false;
-      }
-      return true;
-    });
-  };
+  $scope.payment.on('message', message => {
+    if (message && message.text) {
+      Alerts.displayWarning(message.text, true, $scope.alerts);
+    }
+  });
 
-  $scope.onError = (error) => {
-    $translate("CAMERA_PERMISSION_DENIED").then(translation => {
-      Alerts.displayWarning(translation, false, $scope.alerts);
-    });
-  };
+  $scope.hasZeroBalance = (origin) => origin.balance === 0;
+  $scope.close = () => $uibModalInstance.dismiss('');
 
   $scope.applyPaymentRequest = (paymentRequest, i) => {
-    $scope.processingPaymentRequest = true;
     let destination = {
-      address: paymentRequest.address || "",
-      label: paymentRequest.address || "",
-      type: "External"
+      address: paymentRequest.address || '',
+      label: paymentRequest.address || '',
+      type: 'External'
     };
     $scope.transaction.destinations[i] = destination;
-    $scope.transaction.amounts[i] = paymentRequest.amount;
-    $scope.transaction.note = paymentRequest.message || '';
-    $scope.validateAmounts();
-    $scope.updateToLabel();
-    $scope.$$postDigest(() => {
-      $timeout(() => {
-        $scope.processingPaymentRequest = false;
-      }, 3000);
-    });
-  };
+    if (paymentRequest.amount) $scope.transaction.amounts[i] = paymentRequest.amount;
+    if (paymentRequest.message) $scope.transaction.note = decodeURI(paymentRequest.message);
 
-  $scope.processURLfromQR = (url) => {
-    paymentRequest = Wallet.parsePaymentRequest(url);
-    if (paymentRequest.isValid) {
-      $scope.applyPaymentRequest(paymentRequest, $scope.qrIndex);
-      $scope.cameraOff();
-    } else {
-      $translate("QR_CODE_NOT_BITCOIN").then(translation => {
-        Alerts.displayWarning(translation, false, $scope.alerts);
-      });
-      $log.error("Not a bitcoin QR code:" + url);
-    }
-  };
-
-  $scope.cameraOn = (index=0) => {
-    $scope.cameraRequested = true;
-    $scope.qrIndex = index;
-  };
-
-  $scope.cameraOff = () => {
-    $scope.cameraIsOn = false;
-    $scope.cameraRequested = false;
-    $scope.qrIndex = null;
-    $scope.$broadcast("STOP_WEBCAM");
-  };
-
-  $scope.close = () => {
-    Alerts.clear($scope.alerts);
-    $uibModalInstance.dismiss("");
+    $scope.setPaymentTo();
+    $scope.setPaymentAmount();
   };
 
   $scope.resetSendForm = () => {
     $scope.transaction = angular.copy($scope.transactionTemplate);
     $scope.transaction.from = Wallet.accounts()[Wallet.my.wallet.hdwallet.defaultAccountIndex];
+    $scope.setPaymentFee();
 
     // Remove error messages:
-    $scope.validateAmounts();
     $scope.sendForm.$setPristine();
     $scope.sendForm.$setUntouched();
+  };
 
-    $scope.setPaymentFee();
+  $scope.reopenModal = () => {
+    $timeout(() => $uibModal.open({
+      templateUrl: 'partials/send.jade',
+      windowClass: 'bc-modal initial',
+      controller: 'SendCtrl',
+      resolve: { paymentRequest }
+    }), 500);
+    $uibModalInstance.dismiss();
   };
 
   $scope.addDestination = () => {
-    let originalDestinations = angular.copy($scope.destinations[0]);
-    $scope.destinations.push(originalDestinations);
     $scope.transaction.amounts.push(null);
     $scope.transaction.destinations.push(null);
+    $scope.setPaymentAmount();
+    $scope.setPaymentTo();
   };
 
   $scope.removeDestination = (index) => {
-    $scope.destinations.splice(index, 1);
     $scope.transaction.amounts.splice(index, 1);
     $scope.transaction.destinations.splice(index, 1);
+    $scope.setPaymentAmount();
+    $scope.setPaymentTo();
   };
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
     let numAccts = Wallet.accounts().filter(a => !a.archived).length;
-    let numAddrs = Wallet.legacyAddresses().filter(a => !a.archived && !a.isWatchOnly).length;
+    let numAddrs = Wallet.legacyAddresses().filter(a => !a.archived).length;
     return numAccts + numAddrs;
   };
 
@@ -174,9 +133,6 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
     Alerts.clear($scope.alerts);
 
-    var note = $scope.transaction.publicNote ? $scope.transaction.note : null;
-    $scope.payment.note(note);
-
     let paymentCheckpoint;
     const setCheckpoint = (payment) => {
       paymentCheckpoint = payment;
@@ -184,51 +140,36 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
     const transactionFailed = (message) => {
       $scope.sending = false;
-      $scope.payment = new Wallet.payment(paymentCheckpoint).build();
 
-      let msgText = 'string' === typeof message ? message : 'SEND_FAILED';
+      if (paymentCheckpoint) {
+        $scope.payment = new Wallet.Payment(paymentCheckpoint).build();
+      }
+
+      let msgText = typeof message === 'string' ? message : 'SEND_FAILED';
       if (msgText.indexOf('Fee is too low') > -1) msgText = 'LOW_FEE_ERROR';
 
-      $translate(msgText).then(t => {
-        Alerts.displayError(t, false, $scope.alerts);
-      });
+      Alerts.displayError(msgText, false, $scope.alerts);
     };
 
     const transactionSucceeded = (tx) => {
-      $rootScope.scheduleRefresh();
+      $scope.$root.scheduleRefresh();
       $scope.sending = false;
-      $uibModalInstance.close("");
+      $uibModalInstance.close('');
       Wallet.beep();
 
       let note = $scope.transaction.note;
-      if (!$scope.transaction.publicNote && note !== "") {
-        Wallet.setNote({ hash: tx.txid }, note);
-      }
+      if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
+
       let index = $scope.transaction.from.index;
-      if(index === null || index == undefined)  {
-        index = 'imported';
+      if (index == null) index = 'imported';
+
+      if (!($state.current.name === 'wallet.common.transactions' || $stateParams.accountIndex === '')) {
+        $state.go('wallet.common.transactions', { accountIndex: index });
       }
 
-      if (!($state.current.name === "wallet.common.transactions" || $stateParams.accountIndex === "")) {
-        $state.go("wallet.common.transactions", {
-          accountIndex: index
-        });
-      }
-
-      Wallet.saveActivity(0);
-
-      let message = 'BITCOIN_SENT';
-
-
-      if(MyWalletHelpers.tor()) {
-        message = 'BITCOIN_SENT_TOR';
-      }
-
-      $translate(message).then(translation => {
-        Alerts.displaySentBitcoin(translation);
-      });
-
-      $rootScope.$safeApply();
+      let message = MyWalletHelpers.tor() ? 'BITCOIN_SENT_TOR' : 'BITCOIN_SENT';
+      Alerts.displaySentBitcoin(message);
+      $scope.$safeApply();
     };
 
     const signAndPublish = (passphrase) => {
@@ -240,168 +181,108 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
       .then(transactionSucceeded).catch(transactionFailed);
   };
 
-  $scope.closeAlert = (alert) => {
-    Alerts.close(alert);
-  };
-
-  $scope.updateToLabel = () => {
-    let destinations = $scope.transaction.destinations.filter(d => d != null);
-    if (destinations.length === 0) return;
-    if ($scope.advanced && destinations.length > 1) {
-      $scope.toLabel = destinations.length + ' Recipients';
-    } else {
-      let dest = destinations[0];
-      $scope.toLabel = dest.index == null ?
-        dest.label || dest.address : `${dest.label}`;
-    }
+  $scope.getToLabels = () => {
+    return $scope.transaction.destinations.filter(d => d != null);
   };
 
   $scope.getTransactionTotal = (includeFee) => {
     let tx = $scope.transaction;
     let fee = includeFee ? tx.fee : 0;
     return tx.amounts.reduce((previous, current) => {
-      return (parseInt(previous) + parseInt(current)) || 0;
-    }, parseInt(fee));
+      return (parseInt(previous, 10) + parseInt(current, 10)) || 0;
+    }, parseInt(fee, 10));
   };
 
-  $scope.validateAmounts = () => {
-    if ($scope.transaction.from == null) return;
-    let available = $scope.getAvailableBalance();
-    let transactionTotal = $scope.getTransactionTotal();
-    $scope.amountIsValid = available - transactionTotal >= 0;
-  };
-
-  $scope.allAmountsAboveZero = () => {
-    return $scope.transaction.amounts.every(amt => amt > 0);
-  };
+  $scope.amountsAreValid = () => (
+    $scope.transaction.from == null ||
+    ($scope.transaction.amounts.every(amt => !isNaN(amt) && amt > 0) &&
+    $scope.transaction.maxAvailable - $scope.getTransactionTotal() >= 0)
+  );
 
   $scope.checkForSameDestination = () => {
+    if ($scope.sendForm == null) return;
     const transaction = $scope.transaction;
-    return transaction.destinations.forEach((dest, index) => {
+    transaction.destinations.forEach((dest, index) => {
       let match = false;
       if (dest != null) {
-        match = dest.label === transaction.from.label;
+        match = transaction.from.index != null
+          ? dest.index === transaction.from.index
+          : dest.address === transaction.from.address;
       }
-      if ($scope.sendForm == null) return;
       $scope.sendForm['destinations' + index].$setValidity('isNotEqual', !match);
     });
   };
 
   $scope.hasAmountError = (index) => {
     let field = $scope.sendForm['amounts' + index];
-    return field.$invalid && !field.$untouched;
+    let fiatField = $scope.sendForm['amountsFiat' + index];
+    let fieldError = (fiatField.$touched || field.$touched) && (fiatField.$invalid || field.$invalid);
+    let notEnoughFunds = !$scope.amountsAreValid() && !$scope.transaction.amounts.some(a => !a);
+    return fieldError || notEnoughFunds;
   };
 
-  $scope.hasInsufficientError = (index) => {
-    return !$scope.amountIsValid;
-  };
-
-  $scope.getAvailableBalance = () => {
-    let tx = $scope.transaction;
-    if (!tx.from) return 0;
-    let availableBal = tx.from.balance - tx.fee;
-    let maxAvailable = tx.sweepAmount || availableBal;
-    if ($scope.advanced && !isNaN(tx.sweepFee)) maxAvailable += (tx.sweepFee - tx.fee);
-    if (maxAvailable < 0) maxAvailable = 0;
-    return isNaN(maxAvailable) ? tx.from.balance : maxAvailable;
-  };
-
-  $scope.$watch("transaction.destinations", (destinations) => {
+  $scope.$watch('transaction.destinations', (destinations) => {
     destinations.forEach((dest, index) => {
       if (dest == null) return;
-      if (dest.type === 'Accounts' || (dest.index != null)) {
-        $scope.sendForm['destinations' + index].$setValidity('isValidAddress', true);
-      } else {
-        let valid = Wallet.isValidAddress(dest.address);
-        $scope.sendForm['destinations' + index].$setValidity('isValidAddress', valid);
-      }
-      $scope.updateToLabel();
+      let valid = dest.index == null ? Wallet.isValidAddress(dest.address) : true;
+      $scope.sendForm['destinations' + index].$setValidity('isValidAddress', valid);
       $scope.setPaymentTo();
     });
   }, true);
 
-  $scope.$watch("status.didLoadBalances", () => {
-    if ($scope.status.didLoadBalances) {
-      if ($scope.origins.length === 0) {
-        let defaultIdx = Wallet.my.wallet.hdwallet.defaultAccountIndex;
-        let selectedIdx = parseInt($stateParams.accountIndex);
-        let idx = isNaN(selectedIdx) ? defaultIdx : selectedIdx;
-        for (let account of $scope.accounts()) {
-          account = format.origin(account);
-          if (account.index != null && !account.archived) {
-            if (account.index === idx) {
-              $scope.transaction.from = account;
-            }
-            $scope.origins.push(account);
-            $scope.destinationsBase.push(angular.copy(account));
-          }
-        }
-        for (let address of $scope.legacyAddresses()) {
-          address = format.origin(address);
-          if (!address.archived) {
-            $scope.destinationsBase.push(address);
-            if (!address.isWatchOnly) {
-              $scope.origins.push(angular.copy(address));
-            }
-          }
-        }
-        $scope.destinationsBase.push({
-          address: "",
-          label: "",
-          type: "External"
-        });
-        $scope.destinations.push($scope.destinationsBase);
-        $scope.originsLoaded = true;
-        if ((paymentRequest.address != null) && paymentRequest.address !== '') {
-          $scope.applyPaymentRequest(paymentRequest, 0);
-        } else if (paymentRequest.toAccount != null) {
-          $scope.transaction.destinations[0] = format.origin(paymentRequest.toAccount);
-          $scope.transaction.from = paymentRequest.fromAddress;
-        } else if (paymentRequest.fromAccount != null) {
-          $scope.transaction.from = paymentRequest.fromAccount;
-        }
-      }
-      $scope.setPaymentFrom();
-      $scope.setPaymentTo();
-      $scope.setPaymentAmount();
+  let unwatchDidLoad = $scope.$watch('status.didLoadBalances', (didLoad) => {
+    if (!didLoad || $scope.origins.length !== 0) return;
+    let defaultIdx = Wallet.my.wallet.hdwallet.defaultAccountIndex;
+    let selectedIdx = parseInt($stateParams.accountIndex, 10);
+    let idx = isNaN(selectedIdx) ? defaultIdx : selectedIdx;
+
+    let accounts = Wallet.accounts().filter(a => !a.archived && a.index != null);
+    let addresses = Wallet.legacyAddresses().filter(a => !a.archived);
+
+    $scope.origins = accounts.concat(addresses).map(format.origin);
+
+    accounts.forEach(a => {
+      if (a.index === idx) $scope.transaction.from = format.origin(a);
+    });
+
+    $scope.originsLoaded = true;
+
+    if (paymentRequest.address) {
+      $scope.applyPaymentRequest(paymentRequest, 0);
+    } else if (paymentRequest.toAccount != null) {
+      $scope.transaction.destinations[0] = format.origin(paymentRequest.toAccount);
+      $scope.transaction.from = paymentRequest.fromAddress;
+    } else if (paymentRequest.fromAccount != null) {
+      $scope.transaction.from = paymentRequest.fromAccount;
     }
+
+    $scope.setPaymentFrom();
+    $scope.setPaymentTo();
+    $scope.setPaymentAmount();
+    unwatchDidLoad();
   });
 
-  $scope.handleTxUpdate = (tx) => {
-    if (tx.fee != null) {
-      $scope.transaction.fee = tx.forcedFee ? tx.forcedFee : tx.fee;
-      $scope.validateAmounts();
-      $scope.$safeApply();
-
-      dynamicFeeVectorP.then(estimates => { $timeout(() => {
-        $scope.blockIdx = fees.getClosestBlock($scope.transaction.fee, tx.transaction.sizeEstimate, estimates);
-      })});
-    }
-    if (tx.sweepAmount != null && tx.sweepAmount !== $scope.transaction.sweepAmount) {
-      $scope.transaction.sweepAmount = tx.sweepAmount;
-      $scope.transaction.sweepFee = tx.sweepFee;
-      $scope.$root.$safeApply($scope);
-    }
+  $scope.useAll = () => {
+    let tx = $scope.transaction;
+    if (tx.maxAvailable == null || tx.amounts.length !== 1) return;
+    $scope.transaction.amounts[0] = $scope.transaction.maxAvailable;
+    $scope.setPaymentAmount();
   };
 
-  $scope.buildTx = () => {
-    let valid = !$scope.sendForm.$invalid &&
-                $scope.sendForm.$dirty &&
-                $scope.amountIsValid;
-    if (valid) {
-      console.log("Build tx")
-
-      $scope.payment.build()
-        .sideEffect($scope.handleTxUpdate);
-    }
+  $scope.setPrivateKey = (priv) => {
+    $scope.sendForm.priv.$setTouched();
+    $scope.transaction.priv = priv;
   };
 
+  let lastOrigin;
   $scope.setPaymentFrom = () => {
-    let txFrom = $scope.transaction.from;
-    if (!txFrom) return;
-    let origin = (txFrom.index == null) ? txFrom.address : txFrom.index;
-    $scope.payment.from(origin).sideEffect($scope.handleTxUpdate);
-    $scope.buildTx();
+    let tx = $scope.transaction;
+    if (!tx.from) return;
+    let origin = tx.from.index == null ? tx.from.address : tx.from.index;
+    let fee = $scope.advanced ? tx.fee : undefined;
+    if (origin === lastOrigin) return;
+    lastOrigin = origin;
+    $scope.payment.from(origin, fee);
   };
 
   $scope.setPaymentTo = () => {
@@ -409,18 +290,19 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
     if (destinations.some(d => d == null)) return;
     destinations = destinations.map(d => d.type === 'Accounts' ? d.index : d.address);
     $scope.payment.to(destinations);
-    $scope.buildTx();
   };
 
   $scope.setPaymentAmount = () => {
-    $scope.payment.amount($scope.transaction.amounts)
-    $scope.buildTx();
+    let amounts = $scope.transaction.amounts;
+    if (amounts.some(a => isNaN(a) || a <= 0)) return;
+    let fee = $scope.advanced ? $scope.transaction.fee : undefined;
+    $scope.payment.amount($scope.transaction.amounts, fee);
   };
 
   $scope.setPaymentFee = () => {
-    let fee = ($scope.advanced) ? $scope.transaction.fee : null;
+    let fee = $scope.advanced ? $scope.transaction.fee : undefined;
+    if ($scope.advanced && fee === undefined) return;
     $scope.payment.fee(fee);
-    $scope.buildTx();
   };
 
   $scope.backToForm = () => {
@@ -429,123 +311,106 @@ function SendCtrl($scope, $log, Wallet, Alerts, currency, $uibModalInstance, $ti
 
   $scope.advancedSend = () => {
     $scope.advanced = true;
-    $scope.buildTx();
+    $scope.setPaymentFee();
   };
 
   $scope.regularSend = () => {
     $scope.transaction.destinations.splice(1);
     $scope.transaction.amounts.splice(1);
     $scope.advanced = false;
-    $scope.setPaymentFee();
+    $scope.setPaymentAmount();
   };
 
   $scope.goToConfirmation = () => {
     $scope.building = true;
+    let modalErrors = ['cancelled', 'backdrop click', 'escape key press'];
 
-    $scope.setAllAndBuild()
+    const handleNextStepError = error => {
+      Alerts.clear($scope.alerts);
+      let errorMsg = error.error ? $translate.instant(error.error, error) : errorMsg = error;
+      if (modalErrors.indexOf(errorMsg) === -1) Alerts.displayError(errorMsg, false, $scope.alerts);
+      if (error === 'cancelled') $scope.advancedSend();
+      $scope.backToForm();
+      $scope.$safeApply();
+    };
+
+    $scope.checkPriv()
       .then($scope.checkFee)
-      .then(fee => $scope.transaction.fee = fee)
-      .then($scope.setAllAndBuild)
+      .then($scope.finalBuild)
       .then(() => $scope.confirmationStep = true)
-      .catch(errorMsg => {
-        $scope.backToForm();
-        Alerts.clear($scope.alerts);
-        if (['cancelled', 'backdrop click', 'escape key press'].indexOf(errorMsg) === -1) {
-          Alerts.displayError(errorMsg, false, $scope.alerts);
-        }
-        $scope.$root.$safeApply($scope);
-      })
+      .catch(handleNextStepError)
       .finally(() => $scope.building = false);
   };
 
-  $scope.buildPayment = () => {
-    return $q((resolve, reject) => {
-      $scope.payment.buildbeta()
-        .then((p) => {
-          $scope.buildTx();
-          resolve(p.transaction);
-          return p;
-        })
-        .catch((r) => {
-          reject(r.error.message || r.error);
-          return r.payment;
-        });
-    });
-  }
-
-  $scope.setAllAndBuild = () => {
-    $scope.setPaymentFrom();
-    $scope.setPaymentTo();
-    $scope.setPaymentAmount();
-    $scope.setPaymentFee();
-
-    return $scope.buildPayment();
+  $scope.checkPriv = (bip38pw) => {
+    let tx = $scope.transaction;
+    let fee = $scope.advanced ? tx.fee : undefined;
+    let privErrors = { noMatch: 'PRIV_NO_MATCH', bip38: 'BIP38_ERROR', pw: 'INCORRECT_PASSWORD' };
+    if (!tx.from.isWatchOnly) return $q.resolve();
+    return $q.resolve(MyWalletHelpers.privateKeyCorrespondsToAddress(tx.from.address, tx.priv, bip38pw))
+      .then(priv => {
+        if (priv == null) return $q.reject(privErrors.noMatch);
+        else $scope.payment.from(priv, fee);
+      })
+      .catch(e => {
+        if (e === 'needsBip38') return Alerts.prompt('NEED_BIP38', { type: 'password' }).then($scope.checkPriv);
+        else if (e === 'wrongBipPass') return $q.reject(privErrors.pw);
+        else if (e !== 'PRIV_NO_MATCH') return $q.reject(privErrors.bip38);
+        else return $q.reject(e);
+      });
   };
 
-  $scope.checkFee = (tx) => {
-    let goAdvanced = () => $scope.advancedSend();
+  $scope.checkFee = () => {
+    let tx = $scope.transaction;
+    let surge = !$scope.advanced && tx.surge;
+    let maximumFee = tx.maxAvailable + tx.fee - $scope.getTransactionTotal();
 
-    let suggestFee = (fee) => {
-      $scope.transaction.fee = fee;
-      $scope.setPaymentFee();
+    const commitFee = (fee) => {
+      if (fee) {
+        if (fee > maximumFee) {
+          let feeDiff = fee - tx.fee;
+          tx.amounts[0] -= feeDiff;
+          $scope.setPaymentAmount();
+        }
+        tx.fee = fee;
+        $scope.setPaymentFee();
+      }
     };
 
-    let surge = $scope.surgeWarning && !$scope.advanced;
-    let currentFee = $scope.transaction.fee;
-    let minimumFee = 5000;
-    let highestFeePossible = $scope.transaction.from.balance - $scope.transaction.amounts.reduce((a, b) => a + b, 0);
-    let suggestedFee;
+    const showFeeWarning = (suggestedFee) => {
+      return fees.showFeeWarning(tx.fee, suggestedFee, maximumFee, surge);
+    };
 
-    let showFeeWarning = $uibModal.open.bind($uibModal, {
-      templateUrl: 'partials/dynamic-fee.jade',
-      windowClass: 'bc-modal medium',
-      controller: function DynamicFeeController($scope, $uibModalInstance) {
-        $scope.surge = surge;
-        $scope.currentFee = currentFee;
-        $scope.suggestedFee = suggestedFee;
-        $scope.balanceOverflow = suggestedFee > highestFeePossible;
-        $scope.cancel = () => {
-          $uibModalInstance.dismiss('cancelled');
-          if (surge) goAdvanced();
-        };
-        $scope.useCurrent = () => $uibModalInstance.close(currentFee);
-        $scope.useSuggested = () => {
-          if ($scope.balanceOverflow) {
-            $scope.cancel();
-            suggestFee($scope.suggestedFee);
-          } else {
-            $uibModalInstance.close($scope.suggestedFee);
-          }
-        };
+    let high = tx.feeBounds[0] || tx.sweepFees[0];
+    let mid = tx.feeBounds[$scope.defaultBlockInclusion] || tx.sweepFees[$scope.defaultBlockInclusion];
+    let low = tx.feeBounds[5] || tx.sweepFees[5];
+    console.log(`Fees { high: ${high}, mid: ${mid}, low: ${low} }`);
+
+    if ($scope.advanced) {
+      if (tx.fee > high) {
+        return showFeeWarning(high).then(commitFee);
+      } else if (tx.fee < low && $scope.advanced) {
+        return showFeeWarning(low).then(commitFee);
       }
-    });
-
-    if (!$scope.dynamicFeeAvailable) {
-      console.log('Dynamic fee service unavailable');
-      return $q.resolve(currentFee);
+    } else {
+      let feeUSD = currency.convertFromSatoshi(tx.fee, currency.currencies[0]);
+      let feeRatio = tx.fee / tx.amounts.reduce((a, b) => a + b);
+      if (feeUSD > 0.50 && tx.size > 1000 && feeRatio > 0.01) {
+        return fees.showLargeTxWarning(tx.size, tx.fee).then(commitFee);
+      } else if (surge) {
+        return showFeeWarning(mid).then(commitFee);
+      }
     }
-
-    return dynamicFeeVectorP.then(estimate => {
-      let high = fees.guessAbsoluteFee(tx.sizeEstimate, estimate[0].fee);
-      let mid = fees.guessAbsoluteFee(tx.sizeEstimate, estimate[1].fee);
-      let low = fees.guessAbsoluteFee(tx.sizeEstimate, estimate[5].fee);
-      low = low < minimumFee ? minimumFee : low;
-      console.log('Fees (high: %d, mid: %d, low: %d)', high, mid, low);
-
-      if (currentFee > high) {
-        suggestedFee = high;
-        return showFeeWarning().result;
-      }
-      else if (currentFee < low) {
-        suggestedFee = low;
-        return showFeeWarning().result;
-      }
-      else if (surge) {
-        suggestedFee = mid;
-        return showFeeWarning().result;
-      }
-      return currentFee;
-    });
+    return $q.resolve();
   };
 
+  $scope.finalBuild = () => $q((resolve, reject) => {
+    $scope.payment.build().then(p => {
+      resolve(p.transaction);
+      return p;
+    }).catch(r => {
+      reject(r.error ? r.error.message || r.error : 'Error building transaction');
+      return r.payment;
+    });
+  });
 }

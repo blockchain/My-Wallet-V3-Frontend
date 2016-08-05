@@ -1,5 +1,4 @@
 describe('convertFilter', () => {
-
   beforeEach(module('walletApp'));
   beforeEach(module('walletFilters'));
 
@@ -16,7 +15,7 @@ describe('convertFilter', () => {
     let convert = $filter('convert');
     expect(convert(100000000)).toBe('1 BTC');
     Wallet.settings.displayCurrency = currency.bitCurrencies[1];
-    expect(convert(100000000)).toBe('1000 mBTC');
+    expect(convert(100000000)).toBe('1,000 mBTC');
   }));
 
   it('should not convert if the amount is not defined', inject(($filter) => {

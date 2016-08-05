@@ -5,14 +5,14 @@ describe "TOR Directive", ->
   isoScope = undefined
 
   beforeEach module("walletApp")
-  
+
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
 
     $compile = _$compile_
     $rootScope = _$rootScope_
 
     Wallet.settings_api =
-      update_tor_ip_block: (value, success, error) ->
+      updateTorIpBlock: (value, success, error) ->
         success()
 
     return

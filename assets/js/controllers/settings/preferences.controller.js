@@ -1,78 +1,43 @@
 angular
   .module('walletApp')
-  .controller("SettingsPreferencesCtrl", SettingsPreferencesCtrl);
+  .controller('SettingsPreferencesCtrl', SettingsPreferencesCtrl);
 
-function SettingsPreferencesCtrl($scope, Wallet, Alerts, currency, $uibModal, $filter, $translate, $window, languages) {
+function SettingsPreferencesCtrl ($scope, Wallet, Alerts, currency, $uibModal, $filter, $translate, $window, languages, bcPhoneNumber) {
   $scope.user = Wallet.user;
   $scope.settings = Wallet.settings;
+  $scope.notifications = $scope.settings.notifications;
   $scope.languages = languages;
   $scope.currencies = currency.currencies;
   $scope.btcCurrencies = currency.bitCurrencies;
   $scope.btc = currency.bitCurrencies[0];
 
-  $scope.edit = {
-    email: false,
-  };
-  $scope.errors = {};
-  $scope.mobileNumber = {
-    step: 0
-  };
+  $scope.changeLanguage = Wallet.changeLanguage;
+  $scope.changeCurrency = Wallet.changeCurrency;
+  $scope.changeBTCCurrency = Wallet.changeBTCCurrency;
 
-  $scope.changeEmail = (email, success, error) => {
-    Wallet.changeEmail(email, success, error);
-  };
-
-  $scope.enableNotifications = () => {
-    Wallet.enableNotifications();
-  }
-
-  $scope.disableNotifications = () => {
-    Wallet.disableNotifications();
-  }
-
-  $scope.setHandleBitcoinLinks = () => {
-    Wallet.handleBitcoinLinks();
+  $scope.updateNotificationsType = () => {
+    Wallet.updateNotificationsType($scope.notifications).then(() => {
+      if ($scope.settings.notifications_on !== 2) {
+        Wallet.updateNotificationsOn({ receive: true });
+      }
+    });
   };
 
-  $scope.canHandleBitcoinLinks = () => {
-    return $window.navigator.registerProtocolHandler != null;
-  };
+  $scope.mobileNumber = { step: 0 };
+  $scope.formattedMobileNumber = null;
 
-  $scope.$watch("settings.language", (newVal, oldVal) => {
-    if ((oldVal != null) && newVal !== oldVal) {
-      Wallet.changeLanguage(newVal);
+  $scope.$watch('status.isLoggedIn', (newValue) => {
+    if (newValue && $scope.user.mobileNumber) {
+      $scope.formattedMobileNumber = bcPhoneNumber.format($scope.user.mobileNumber);
+
+      $scope.$watch('user.mobileNumber', (newValue) => {
+        $scope.formattedMobileNumber = newValue;
+      });
     }
   });
 
-  $scope.$watch("settings.currency", (newVal, oldVal) => {
-    if ((oldVal != null) && newVal !== oldVal) {
-      Wallet.changeCurrency(newVal);
-    }
-  });
+  $scope.setHandleBitcoinLinks = () => Wallet.handleBitcoinLinks();
+  $scope.canHandleBitcoinLinks = () => $window.navigator.registerProtocolHandler != null;
 
-  $scope.$watch("settings.btcCurrency", (newVal, oldVal) => {
-    if ((oldVal != null) && newVal !== oldVal) {
-      Wallet.changeBTCCurrency(newVal);
-    }
-  });
-
-  $scope.browserCanHandleBitcoinLinks = $scope.canHandleBitcoinLinks()
-
-  $scope.changeLogoutTime = (m, success, errorCallback) => {
-    const error = () => {
-      Alerts.displayError("Failed to update auto logout time");
-      errorCallback();
-    };
-    Wallet.setLogoutTime(m, success, error);
-  };
-
-  $scope.validateLogoutTime = (candidate) => {
-    let n = parseInt(candidate);
-    return !isNaN(candidate) && n >= 1 && n <= 1440;
-  };
-
-  $scope.clearErrors = () => {
-    $scope.errors = {};
-  };
-
+  $scope.browserCanHandleBitcoinLinks = $scope.canHandleBitcoinLinks();
 }

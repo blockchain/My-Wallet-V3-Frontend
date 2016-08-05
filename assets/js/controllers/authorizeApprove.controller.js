@@ -1,12 +1,13 @@
 angular
   .module('walletApp')
-  .controller("AuthorizeApproveCtrl", AuthorizeApproveCtrl);
+  .controller('AuthorizeApproveCtrl', AuthorizeApproveCtrl);
 
-function AuthorizeApproveCtrl($window, $scope, WalletTokenEndpoints, $stateParams, $state, Alerts, $translate, $rootScope) {
-  $scope.success = false
+// Wallet is injected to ensure it's lazy-load before this controller is
+// initialized. Otherwise $rootScope.rootUrl will be incorrect.
+function AuthorizeApproveCtrl ($window, $scope, WalletTokenEndpoints, $stateParams, $state, Alerts, $translate, $rootScope, MyWalletHelpers, Wallet) {
+  $scope.success = false;
 
   const success = (res) => {
-
     $scope.checkingToken = false;
     $scope.busyApproving = false;
     $scope.busyRejecting = false;
@@ -14,20 +15,23 @@ function AuthorizeApproveCtrl($window, $scope, WalletTokenEndpoints, $stateParam
     // If differentBrowser is called, success will be null:
     if (res.success == null) return;
 
-    $scope.success = true
-
+    $scope.success = true;
+    // Prompt to open iOS app
+    if (MyWalletHelpers.getMobileOperatingSystem() === 'iOS') {
+      $window.location.href = 'blockchain-wallet://loginAuthorized';
+    }
     $rootScope.$safeApply();
-  }
+  };
 
   const error = (res) => {
     $scope.checkingToken = false;
     $scope.busyApproving = false;
     $scope.busyRejecting = false;
 
-    $state.go("public.login-no-uid");
+    $state.go('public.login-no-uid');
     Alerts.displayError(res.error, true);
     $rootScope.$safeApply();
-  }
+  };
 
   const differentBrowser = (details) => {
     $scope.checkingToken = false;
@@ -35,7 +39,7 @@ function AuthorizeApproveCtrl($window, $scope, WalletTokenEndpoints, $stateParam
     $scope.differentBrowser = true;
     $scope.details = details;
     $rootScope.$safeApply();
-  }
+  };
 
   $scope.checkingToken = true;
 
@@ -48,23 +52,18 @@ function AuthorizeApproveCtrl($window, $scope, WalletTokenEndpoints, $stateParam
     WalletTokenEndpoints.authorizeApprove($stateParams.token, () => {}, true)
       .then(success)
       .catch(error);
-  }
+  };
 
   $scope.reject = () => {
     $scope.busyRejecting = true;
 
     const rejected = () => {
       $scope.busyRejecting = false;
-
-      $translate('AUTHORIZE_REJECT_SUCCESS').then(translation => {
-        $state.go("public.login-no-uid").then(() => {
-          Alerts.displaySuccess(translation)
-        });
-      });
+      $state.go('public.login-no-uid').then(() => Alerts.displaySuccess('AUTHORIZE_REJECT_SUCCESS'));
     };
 
     WalletTokenEndpoints.authorizeApprove($stateParams.token, () => {}, false)
       .then(rejected)
       .catch(error);
-  }
+  };
 }

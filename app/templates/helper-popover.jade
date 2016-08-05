@@ -2,5 +2,5 @@ div
   p.type-sm.black {{::content | translate}}
     span(ng-show="linktext != undefined")
       | &nbsp;
-      a(href="{{::link}}" target="_blank") {{::linktext | translate}}
+      a(href="{{::link}}" target="_blank" rel="noopener noreferrer") {{::linktext | translate}}
       | .

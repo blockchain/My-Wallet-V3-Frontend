@@ -1,6 +1,0 @@
-div
-  ui-select(ng-model="language" on-select="didSelect($item, $model)")
-    ui-select-match {{ $select.selected.name }}
-    // "as lan" is a workaround which prevents all options from being hightlighted as of version 0.9.0 of angular-ui-select
-    ui-select-choices(repeat="language.code as lan in languages | filter:$select.search") 
-      span(ng-bind-html="lan.name | highlight: $select.search")

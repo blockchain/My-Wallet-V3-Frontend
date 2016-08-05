@@ -1,0 +1,103 @@
+.bc-carousel {
+  .carousel {
+    margin-top: 10px;
+    .carousel-inner {
+      .item {
+        margin-bottom: 40px;
+        @include transition(all $fast);
+      }
+    }
+    .carousel-control {
+      width: 5%;
+      top: -80px;
+      background-image: none;
+      &.disabled {
+        opacity: 0;
+      }
+      &.right, &.left {
+        > span {
+          text-shadow: none;
+          &:before {
+            color: $blue;
+            content: '\e649';
+            font-family: 'ThemifyIcons';
+          }
+        }
+        @media (max-width: 758px) {
+          > span {
+            left: 0;
+            right: 0;
+          }
+        }
+      }
+      &.left > span:before {
+        content: '\e64a';
+      }
+    }
+  }
+  .carousel-indicators {
+    bottom: 0px;
+    margin-bottom: 0px;
+    > li {
+      margin: 4px;
+      border: 1px solid $blue;
+      background-color: white;
+      @include transition(background-color $slow);
+      &.active {
+        margin: 4px;
+        width: 10px;
+        height: 10px;
+        background-color: $blue;
+      }
+    }
+  }
+  &.no-arrows {
+    .carousel-control {
+      display: none !important;
+    }
+  }
+}
+
+.bc-carousel.upgrade {
+  .carousel {
+    .carousel-inner {
+      .item {
+        @include transition(transform $slow);
+        li {
+          list-style-type: none;
+          margin-bottom: 15px;
+        }
+        .logo {
+          margin: 0 auto;
+          max-width: 100%;
+          max-height: 250px;
+          margin-bottom: 10px;
+          border: 1px solid $light-grey;
+          border-radius: 4px 4px 0px 0px;
+          border-top: 16px solid $light-grey;
+        }
+      }
+      .item {
+        > div {
+          display: inline-block;
+          position: relative;
+          max-width: 85%;
+          @media (max-width: 768px) {
+            max-width: 80%;
+          }
+          &:before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #fdb0ad;
+            box-shadow: 12px 0 0 #fdeaa2, 24px 0 0 #d7edb4;
+          }
+        }
+      }      
+    }
+  }  
+}

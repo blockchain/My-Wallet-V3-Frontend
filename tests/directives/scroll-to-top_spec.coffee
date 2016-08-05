@@ -16,7 +16,7 @@ describe "Scroll To Top Directive", ->
   )
 
   beforeEach ->
-    element = $compile("<div></div>")($rootScope)
+    element = $compile("<div scroll-to-top></div>")($rootScope)
     $rootScope.$digest()
     $scope.$apply()
 

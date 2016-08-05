@@ -2,11 +2,9 @@ angular
   .module('walletApp')
   .controller('ResetTwoFactorCtrl', ResetTwoFactorCtrl);
 
-function ResetTwoFactorCtrl($scope, $rootScope, $http, $translate, WalletNetwork, Alerts) {
-
+function ResetTwoFactorCtrl ($scope, $rootScope, $http, $translate, WalletNetwork, Alerts, $sce) {
   $scope.currentStep = 1;
   $scope.fields = {
-    uid: $rootScope.loginFormUID,
     email: '',
     newEmail: '',
     secret: '',
@@ -14,17 +12,25 @@ function ResetTwoFactorCtrl($scope, $rootScope, $http, $translate, WalletNetwork
     captcha: ''
   };
 
+  $rootScope.loginFormUID.then((res) => {
+    $scope.fields.uid = res;
+  });
+
   $scope.refreshCaptcha = () => {
-    let time = new Date().getTime();
-    $scope.captchaSrc = $rootScope.rootURL + `kaptcha.jpg?timestamp=${time}`;
-    $scope.fields.captcha = '';
+    WalletNetwork.getCaptchaImage().then((data) => {
+      let url = URL.createObjectURL(data.image);
+      $sce.trustAsResourceUrl(url);
+      $scope.captchaSrc = url;
+      $scope.sessionToken = data.sessionToken;
+      $scope.fields.captcha = '';
+      $rootScope.$safeApply();
+    });
   };
 
   $scope.resetTwoFactor = () => {
-
     $scope.working = true;
     let success = (message) => {
-      Alerts.clear()
+      Alerts.clear();
       Alerts.displaySuccess(message);
 
       $scope.working = false;
@@ -37,10 +43,10 @@ function ResetTwoFactorCtrl($scope, $rootScope, $http, $translate, WalletNetwork
 
       switch (error) {
         case 'Captcha Code Incorrect':
-          Alerts.displayError($translate.instant('CAPTCHA_INCORRECT'), true);
+          Alerts.displayError('CAPTCHA_INCORRECT', true);
           break;
         case 'Quota Exceeded':
-          Alerts.displayError($translate.instant('QUOTA_EXCEEDED'), true);
+          Alerts.displayError('QUOTA_EXCEEDED', true);
           break;
         default:
           Alerts.displayError(error, true);
@@ -53,12 +59,13 @@ function ResetTwoFactorCtrl($scope, $rootScope, $http, $translate, WalletNetwork
     $scope.form.$setUntouched();
 
     WalletNetwork.requestTwoFactorReset(
+      $scope.sessionToken,
       $scope.fields.uid,
       $scope.fields.email,
       $scope.fields.newEmail,
       $scope.fields.secret,
       $scope.fields.message,
-      $scope.fields.captcha,
+      $scope.fields.captcha
     ).then(success).catch(error);
   };
 

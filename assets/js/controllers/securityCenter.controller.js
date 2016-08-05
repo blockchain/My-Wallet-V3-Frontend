@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller("SettingsSecurityCenterCtrl", SettingsSecurityCenterCtrl);
+  .controller('SettingsSecurityCenterCtrl', SettingsSecurityCenterCtrl);
 
-function SettingsSecurityCenterCtrl($scope, Wallet, SecurityCenter, filterFilter, $uibModal) {
+function SettingsSecurityCenterCtrl ($scope, Wallet, SecurityCenter, filterFilter, $uibModal) {
   $scope.security = SecurityCenter.security;
   $scope.settings = Wallet.settings;
   $scope.user = Wallet.user;
@@ -15,29 +15,11 @@ function SettingsSecurityCenterCtrl($scope, Wallet, SecurityCenter, filterFilter
     step: 1
   };
 
-  if(Wallet.user.internationalMobileNumber.length > 4 && !Wallet.user.isMobileVerified) {
+  if (Wallet.user.mobileNumber.length > 4 && !Wallet.user.isMobileVerified) {
     $scope.mobileNumber.step = 2;
   }
 
   $scope.greaterThan = (prop, val) => item => item[prop] > val;
-
-  $scope.transfer = address => {
-    $uibModal.open({
-      templateUrl: "partials/send.jade",
-      controller: "SendCtrl",
-      resolve: {
-        paymentRequest: () => {
-          return {
-            fromAddress: address,
-            amount: 0,
-            toAccount: Wallet.accounts()[Wallet.getDefaultAccountIndex()]
-          };
-        }
-      }
-    }).opened.then(() => {
-      Wallet.store.resetLogoutTimeout();
-    });
-  };
 
   $scope.toggle = action => {
     if ($scope.display.action === action) {
@@ -63,22 +45,21 @@ function SettingsSecurityCenterCtrl($scope, Wallet, SecurityCenter, filterFilter
     $scope.display.editingEmail = false;
   };
 
-
   $scope.changePasswordHint = (hint, success, error) => {
     Wallet.changePasswordHint(hint, success, error);
   };
 
   $scope.cancelEditPasswordHint = () => {
     $scope.display.action = null;
-  }
-  
-  $scope.$watchCollection("user", (newValue, oldValue) => {
-    if (!($scope.display.action === "mobilenumber" && !$scope.user.isMobileVerified)) {
+  };
+
+  $scope.$watchCollection('user', (newValue, oldValue) => {
+    if (!($scope.display.action === 'mobilenumber' && !$scope.user.isMobileVerified)) {
       $scope.nextAction();
     }
   });
 
-  $scope.$watchCollection("settings", (newValue, oldValue) => {
+  $scope.$watchCollection('settings', (newValue, oldValue) => {
     if (newValue.needs2FA && $scope.display.action === 'twofactor') {
       $scope.toggle('twofactor');
     }
@@ -90,21 +71,16 @@ function SettingsSecurityCenterCtrl($scope, Wallet, SecurityCenter, filterFilter
     }
   });
 
-  $scope.$watchCollection("status", (newValue, oldValue) => {
+  $scope.$watchCollection('status', (newValue, oldValue) => {
     $scope.nextAction();
   });
 
   $scope.changeTwoFactor = () => {
-    const modalInstance = $uibModal.open({
-      templateUrl: "partials/settings/two-factor.jade",
-      controller: "TwoFactorCtrl",
-      windowClass: "bc-modal"
+    $uibModal.open({
+      templateUrl: 'partials/settings/two-factor.jade',
+      windowClass: 'bc-modal initial',
+      controller: 'TwoFactorCtrl'
     });
-    if (modalInstance != null) {
-      modalInstance.opened.then(() => {
-        Wallet.store.resetLogoutTimeout();
-      });
-    }
   };
 
   $scope.nextAction = () => {

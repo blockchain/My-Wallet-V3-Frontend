@@ -6,27 +6,62 @@
     }
   }
   .dropdown {
-    .ti-angle-down {
+    .ti-menu {
+      line-height: 1;
       float: right;
     }
+    a {
+      @extend .clearfix;
+      > span, > i {
+        display: inline-block;
+        float: left;
+      }
+    }
   }
-  span.ti-angle-down { font-weight: 900; font-size: 1.5em; position: relative; top: 1px; }
+  span.ti-menu { font-weight: 900; font-size: 1.5em; position: relative; top: 0px; }
   .navbar-toggle {  padding: 0; margin: 0 10px 0 20px; }
 }
 
 #wallet-nav-toggle {
-  span.ti-menu, span.ti-close {
+  span.ti-close, span.ti-angle-down, span.ti-angle-up {
     display: none;
-    font-size: 23px;
     padding: 0px 20px;
   }
   @media (max-width: 768px) {
-    span.ti-menu {
+    span.ti-angle-down, span.ti-angle-up {
       display: inline-block;
     }
   }
 }
 
+.whats-new {
+  .whats-new-popover {
+    width: 400px;
+    .popover-content {
+      max-height: 300px;
+      overflow: scroll;
+      @extend .pts;
+      > div > li {
+        border-bottom: 1px solid $ccc;
+        small, p {
+          font-size: 12px;
+        }
+        &:last-child {
+          border-bottom: 0px;
+        }
+      }
+    }
+  }
+  .whats-new-icon {
+    background-color: $security-red;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    right: 0;
+    height: 1.45em;
+    width: 1.5em;
+  }
+}
 
 //bootstrap overrides
 
@@ -49,8 +84,8 @@
 
 .navbar-inverse .navbar-toggle { border: none; }
 
-.navbar-inverse .navbar-nav > li > a { 
-  color: white; 
+.navbar-inverse .navbar-nav > li > a {
+  color: white;
   padding: 10px 15px 10px;
 }
 
@@ -139,11 +174,12 @@
 }
 
 img#logo {
-  height: 30px;
+  height: 40px;
+  padding-left: 5px;
 }
 
 @media (max-width: 620px) {
-  img#logo { height: 25px; margin-top: 0; }
+  img#logo { height: 30px; margin-top: 0; }
 }
 
 .navbar-header {

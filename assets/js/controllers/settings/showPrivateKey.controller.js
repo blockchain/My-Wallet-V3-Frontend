@@ -2,23 +2,24 @@ angular
   .module('walletApp')
   .controller('ShowPrivateKeyCtrl', ShowPrivateKeyCtrl);
 
-function ShowPrivateKeyCtrl($scope, $log, Wallet, Alerts, $uibModalInstance, $timeout, $translate, addressObj) {
-  $scope.settings = Wallet.settings;
+function ShowPrivateKeyCtrl ($scope, $uibModalInstance, Wallet, MyWalletHelpers, addressObj) {
   $scope.accessAllowed = false;
   $scope.address = addressObj.address;
   $scope.balance = addressObj.balance;
-  $scope.privKey = null;
+
+  $scope.format = 'WIF';
+  $scope.formats = ['WIF', 'Base58'];
+  $scope.privKeys = { WIF: '', Base58: '' };
 
   $scope.tryContinue = () => {
     Wallet.askForSecondPasswordIfNeeded().then(secondPassword => {
+      let pk = Wallet.my.wallet.getPrivateKeyForAddress(addressObj, secondPassword);
+      let fmt = MyWalletHelpers.detectPrivateKeyFormat(pk);
+      $scope.privKeys.Base58 = pk;
+      $scope.privKeys.WIF = MyWalletHelpers.privateKeyStringToKey(pk, fmt).toWIF();
       $scope.accessAllowed = true;
-      $scope.privKey = Wallet.my.wallet.getPrivateKeyForAddress(addressObj, secondPassword);
     });
   };
 
-  $scope.close = () => {
-    Alerts.clear();
-    $uibModalInstance.dismiss('');
-  };
-
+  $scope.close = () => $uibModalInstance.dismiss('');
 }

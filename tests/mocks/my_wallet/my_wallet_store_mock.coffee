@@ -43,9 +43,6 @@ angular.module('walletApp.core').factory 'MyWalletStore', () ->
     getLogoutTime: () ->
         10
 
-    resetLogoutTimeout: () ->
-      return
-
     addEventListener: (func) ->
         eventListener = func
 
@@ -117,13 +114,6 @@ angular.module('walletApp.core').factory 'MyWalletStore', () ->
     setLegacyAddressBalance: (address, balance) ->
       legacyAddresses[address] = balance
       return
-
-
-    getTotalBalanceForActiveLegacyAddresses: () ->
-      tally = 0
-      for key, value of legacyAddresses
-        tally += value.balance
-      return tally
 
     setLegacyAddressLabel: (label) ->
       return

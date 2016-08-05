@@ -19,6 +19,9 @@ button[disabled] {
     outline: none;
     text-decoration: none;
   }
+  &.initial-text {
+    text-transform: none;
+  }
 }
 
 @mixin button($name, $background:white, $color:white, $max-width:none) {
@@ -51,6 +54,9 @@ button[disabled] {
           opacity: .6;
         }
       }
+      &.btn:focus {
+        color: $color;
+      }
       &.active {
         background: darken($background, 5%);
         box-shadow: inset 0 2px 4px 0 darken($background, 10%);
@@ -66,6 +72,7 @@ button[disabled] {
 @include button('default', white, $black);
 @include button('info', $light-grey, white);
 @include button('danger', #E28081, white);
+@include button('transfer', $transfer-blue, white)
 
 .button-sm {
   padding: .3125em .625em;
@@ -73,6 +80,11 @@ button[disabled] {
 .button-lg {
   padding: 1em 2em;
   font-size: 1.2em;
+}
+.button-vlg {
+  padding: 0.8em 1.6em;
+  font-size: 1.4em;
+  width: 100%;
 }
 .button-muted {
   border: none;
@@ -96,6 +108,10 @@ button[disabled] {
 }
 .button-default { border: 1px solid #e0e0e0; }
 .button-nowrap { white-space: nowrap; }
+.button-short {
+  padding: .25em;
+  min-width: 100px;
+}
 
 .btn-inverse {
   background: #454545;

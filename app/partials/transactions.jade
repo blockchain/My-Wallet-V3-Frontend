@@ -1,21 +1,23 @@
-.transactions
+.transactions(ng-if="status.isLoggedIn")
   .filter-bar.flex-between.flex-center
     .filter-buttons.flex
       a.black.em-500.em-alt(
-        ng-repeat="f in filterTypes"
+        ng-repeat="f in filterTypes track by f"
         ng-click="setFilterType($index)"
         ng-class="{'active': isFilterType($index)}"
-        translate="{{ f }}"
-      )
-    .filter-search
-      input(
-        type="text"
-        placeholder="{{::'SEARCH' | translate}}"
-        ng-model="searchText"
-        ng-model-options="{debounce: 500}")
-      i.ti-search
+        translate="{{::f}}")
+    .flex-center
+      a.black.mrl.em-500.em-alt(ng-click="exportHistory()")
+        i.ti-export
+      .filter-search
+        input(
+          type="text"
+          placeholder="{{::'SEARCH' | translate}}"
+          ng-model="$parent.searchText"
+          ng-model-options="{ debounce: 250 }")
+        i.ti-search
   .transaction-feed
-    .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || getTotal(accountIndex) > 0 || (transactions | filter:transactionFilter).length > 0 || selectedAccountIndex == 'imported'")
+    .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || getTotal(account) > 0 || filteredTransactions.length > 0 || selectedaccount == 'imported'")
       .flex-column.mbl.border-bottom.black
         .flex-center.flex-justify
           i.ti-layout-list-post.h3.mrm
@@ -23,26 +25,22 @@
         p.em-400(translate="DESCRIBE_TRANSACTIONS")
       h3.em-100.center-align.mid-grey.emptystate(translate="HIT_RECEIVE", ng-click="request()")
       h3.em-100.center-align.mid-grey.emptystate(translate="HIT_SEND", ng-click="send()")
-    .flex-center.flex-justify.flex-column.mtl(ng-show="!loading && (transactions | filter:transactionFilter).length == 0 && getTotal(accountIndex) > 0 ")
+    .flex-center.flex-justify.flex-column.mtl(ng-show="!loading && filteredTransactions.length == 0 && getTotal(account) > 0 ")
       i.ti-search.h1.mrm
       h3.em-100.mbl(translate="SORRY_ZERO_TXS")
       p.em-400(translate="PLEASE_TRY_AGAIN", ng-click="supportModal()")
-    .transaction.no-select(ng-repeat="transaction in transactions | filter:transactionFilter | orderBy:'-time' track by $index")
-      .tx-toggle.hidden-xs.hidden-sm(ng-click="transaction.toggled = !transaction.toggled")
-        i.ti-arrow-circle-right.h4.ccc.pointer.mrl.prl(ng-show="!transaction.toggled")
-        i.ti-arrow-circle-down.h4.dark-grey.pointer.mrl.prl(ng-show="transaction.toggled")
-      .tx-details
-        .type.pointer(ng-click="showTransaction(transaction)")
-          span 
-            transaction-description(transaction="transaction" highlight="searchText" ng-if="canDisplayDescriptions")
-      .amount
+    .transaction(ng-repeat="tx in transactions | filter:transactionFilter | limitTo:txLimit as filteredTransactions track by tx.hash" ng-init="tx.toggled = false")
+      .tx-toggle.pointer.hidden-xs(ng-click="tx.toggled = !tx.toggled")
+        i.ti-arrow-circle-right.h4.aaa(ng-show="!tx.toggled")
+        i.ti-arrow-circle-down.h4.aaa(ng-show="tx.toggled")
+      .tx-details.mll.mvm
         span 
-          amount(transaction="transaction")
+          transaction-description(transaction="tx" highlight="searchText" ng-if="canDisplayDescriptions" account="account")
     .row
       .col-xs-5
       .col-xs-2
-        p(align="center", ng-hide="loading || allTxsLoaded || (transactions | filter:transactionFilter).length == 0")
-          a(in-view="nextPage()", ng-click="nextPage()")
+        p(align="center" ng-hide="loading || allTxsLoaded || filteredTransactions.length == 0")
+          a(in-view="nextPage()" ng-click="nextPage()")
     .row(ng-show="loading").mtm.loading
        .col-xs-5
        .col-xs-2
