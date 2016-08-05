@@ -16,41 +16,33 @@
           p.flex-1(translate='HOW_IT_WORKS_COPY')
           a.button-default(href="{{rootURL}}wallet/how-it-works" translate="HOW_IT_WORKS" target="_blank")
   .banner
-    .flex-column.height-100.flex-center.flex-around.container.quickpad
-      div.mtvl.width-100
-        h1.mtml.mbm.center.width-100(translate="MOST_POPULAR_WALLET")
-      .flex-row.flex-around.width-100.flex-between-mobile.container.hidden-xs
+    .flex-column.height-100.flex-center.flex-justify.container
+      div.width-100
+        h1.center.width-100(translate="MOST_POPULAR_WALLET")
+      .flex-row.flex-around.width-100.flex-between-mobile.container.hidden-xs.stats
         .flex-column.center.width-30
-          span.title.white.lh1(translate="TRANSACTIONS_AMT")
+          span.type-med.em-400.white.lh1(translate="TRANSACTIONS_AMT")
           span.type-h5.white(translate="TRANSACTIONS")
         .flex-column.center.width-30
-          span.title.white.lh1(translate="WALLETS_AMT")
+          span.type-med.em-400.white.lh1(translate="WALLETS_AMT")
           span.type-h5.white(translate="WALLETS")
         .flex-column.center.width-30
-          span.title.white.lh1(translate="COUNTRIES_SERVED_AMT")
+          span.type-med.em-400.white.lh1(translate="COUNTRIES_SERVED_AMT")
           span.type-h5.white(translate="COUNTRIES_SERVED")
-      .flex-center.flex-column.flex-justify
-        h3.mbn.mtl.flex-start Be Your Own Bank
-          small ®
+      .flex-center.flex-column.flex-justify.signup
         form.form-horizontal(
           role="form"
           name="signupForm"
           ng-submit="signup()"
           autocomplete="off"
           novalidate)
-          .form-group.flex-row.flex-center.flex-column-mobile.mbvl(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
-            input.form-control.lrg.mrm.mtl(
-              name="email"
-              type="email"
-              ng-model="fields.email"
-              placeholder="jane@doe.com"
-              required)
-            .flex-column.pos-rel.width-100-mobile
-              button.button-success.btn.button-vlg.mtl(
-                type="submit"
-                ng-disabled="signupForm.$invalid"
-                translate="GET_STARTED") 
-              a.mts.pos-abs(ui-sref="public.login-no-uid" translate="OR_LOGIN")
+          .flex-column.pos-rel.width-100-mobile.center
+            button.button-primary.btn.button-vlg.mtl(
+              type="submit"
+              translate="CREATE_YOUR_WALLET") 
+            span.type-h5.mtm
+              span(translate="ALREADY_HAVE_WALLET") 
+              a.mls.em-500.white.underline(ui-sref="public.login-no-uid" translate="LOG_IN")
   .newtobitcoin.container
     #newToBTC.container-max-width.container-fluid.width-100
       .flex-column.flex-justify.flex-center.mvvl
