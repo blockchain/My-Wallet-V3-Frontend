@@ -1,42 +1,34 @@
 .payment-methods
+  p.em-400.type-lbl.black Select Payment Method:
   .flex-row.flex-center.pbm.pointer.border-bottom
     input(type="radio" name="inMedium" id="card" ng-model="method" ng-value="card" ng-disabled="status.waiting")
     .flex-column.flex-1.mlm.pointer
       label.mts.pointer.em-400(for="card")
-        span.flex-row.flex-between.flex-align-start
+        span.flex-column
           span.mbs.type-h5.em-500.flex-column
-            img.mrs(src="img/credit-card.png")
-            img.mrs.checked(src="img/credit-card-blue.png")
-            span.mtm(translate="Credit/Debit Card (Faster)")
-          span
-            span.flex-center.flex-end
-              span.em-600.black(translate="INSTANT")
-            span.flex-center.flex-end
-              helper-button(content="FIXED_EXCHANGE_RATE.COPY")
-              span(translate="FIXED_EXCHANGE_RATE.TITLE")
-            span.flex-center.flex-end
-              helper-button(content="PAYMENT_FEES.COPY" translate-values="{fee: card.inPercentageFee}")
-              span(translate="PAYMENT_FEES.TITLE")
+            span
+              img.mrs(src="img/credit-card.png")
+              img.mrs.checked(src="img/credit-card-blue.png")
+              span.mtm(translate="Credit/Debit Card")
+          span.flex-row
+            span.em-400(translate="CARD_TRANSFER.TITLE")
+            helper-button(content="CARD_TRANSFER.COPY")
   .flex-row.flex-center.mbl.pvm.border-bottom.pointer
     input(type="radio" name="inMedium" id="bank" ng-model="method" ng-value="bank" ng-disabled="status.waiting")
     .flex-column.flex-1.mlm.pointer
       label.mts.pointer.em-400(for="bank")
-        span.flex-row.flex-between.flex-align-start
+        span.flex-column
           span.mbs.type-h5.em-500.flex-column
-            img.mrs.display-block(src="img/bank.png")
-            img.mrs.display-block.checked(src="img/bank-blue.png")
-            span.mtm(translate="Bank Transfer (Cheaper)")
-          span
-            span.flex-center.flex-end
-              helper-button(content="BANK_TRANSFER.COPY")
-              span(translate="BANK_TRANSFER.TITLE")
-            span.flex-center.flex-end
-              helper-button(content="EXCHANGE_NOT_FIXED.COPY")
-              span(translate="EXCHANGE_NOT_FIXED.TITLE")
-            span.flex-center.flex-end
-              span.em-600.black(translate="NO_PAYMENT_PROCESSING_FEE")
+            span
+              img.mrs(src="img/bank.png")
+              img.mrs.checked(src="img/bank-blue.png")
+              span.mtm(translate="Bank Transfer")
+          span.flex-row
+            span.em-400(translate="BANK_TRANSFER.TITLE")
+            helper-button(content="BANK_TRANSFER.COPY")
 
-.flex-column.border-bottom
+.flex-column.border-bottom.mtvl
+  p.em-400.type-lbl.black Review Order:
   .flex-row.flex-between.em-500
     span
       span Buy
