@@ -264,7 +264,6 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
 
   $scope.cancel = () => {
     if ($scope.exchange.user) $scope.fetchTrades();
-    if ($scope.status.waiting) return;
     $uibModalInstance.dismiss('');
     $scope.trade = null;
   };
