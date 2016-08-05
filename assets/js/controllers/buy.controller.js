@@ -13,8 +13,26 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   $scope.alerts = [];
   $scope.status = {};
   $scope.trade = trade;
-  $scope.step = 0;
   $scope.label = MyWallet.wallet.hdwallet.accounts[0].label;
+
+  $scope.steps = {
+    'amount': 0,
+    'select-country': 1,
+    'email': 2,
+    'accept-terms': 3,
+    'summary': 4,
+    'trade-formatted': 5,
+    'trade-complete': 6,
+    'pending': 7,
+    'success': 8
+  };
+
+  $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
+  $scope.afterStep = (step) => $scope.step > $scope.steps[step];
+  $scope.beforeStep = (step) => $scope.step < $scope.steps[step];
+
+  $scope.goTo = (step) => $scope.step = $scope.steps[step];
+  $scope.goTo('amount');
 
   $scope.formattedTrade = undefined;
   $scope.bitcoinReceived = bitcoinReceived;
@@ -129,25 +147,23 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
 
   $scope.nextStep = () => {
     if (!$scope.transaction.fiat) {
-      $scope.step = 0;
-    } else if ((!$scope.fields.countryCode && !$scope.step > 0) || ($scope.step === 0 && !$scope.exchange.user)) {
-      $scope.step = 1;
-    } else if (!$scope.user.isEmailVerified) {
-      $scope.step = 2;
-    } else if ($scope.rejectedEmail) {
-      $scope.step = 2;
+      $scope.goTo('amount');
+    } else if ((!$scope.fields.countryCode && !$scope.afterStep('amount')) || ($scope.onStep('amount') && !$scope.exchange.user)) {
+      $scope.goTo('select-country');
+    } else if (!$scope.user.isEmailVerified || $scope.rejectedEmail) {
+      $scope.goTo('email');
     } else if (!$scope.exchange.user) {
-      $scope.step = 3;
+      $scope.goTo('accept-terms');
     } else if (!$scope.trade) {
-      $scope.step = 4;
+      $scope.goTo('summary');
     } else if (!$scope.paymentInfo && !$scope.formattedTrade) {
-      $scope.step = 5;
+      $scope.goTo('trade-formatted');
     } else if (!$scope.formattedTrade) {
-      $scope.step = 6;
+      $scope.goTo('trade-complete');
     } else if (!$scope.bitcoinReceived) {
-      $scope.step = 7;
+      $scope.goTo('pending');
     } else {
-      $scope.step = 8;
+      $scope.goTo('success');
     }
   };
 
@@ -155,20 +171,20 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
     if ($scope.status.waiting) return;
 
     if ($scope.exchange.user) {
-      $scope.step = 0;
-    } else if ($scope.step > 2) {
-      $scope.step = 1;
+      $scope.goTo('amount');
+    } else if ($scope.afterStep('email')) {
+      $scope.goTo('select-country');
     } else {
       $scope.step--;
     }
   };
 
   $scope.isDisabled = () => {
-    if ($scope.step === 0) {
+    if ($scope.onStep('amount')) {
       return !($scope.transaction.fiat > 0);
-    } else if ($scope.step === 1) {
+    } else if ($scope.onStep('select-country')) {
       return !$scope.fields.countryCode;
-    } else if ($scope.step === 3) {
+    } else if ($scope.onStep('accept-terms')) {
       return !$scope.signupForm.$valid;
     }
   };
@@ -230,7 +246,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   };
 
   $scope.loadPayment = () => {
-    if ($scope.step === 5) return;
+    if ($scope.onStep('trade-formatted')) return;
     $scope.status = {};
     $scope.nextStep();
   };
@@ -270,9 +286,9 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
 
   $scope.close = (acct) => {
     let text = ''; let action = '';
-    if ($scope.step === 0) {
+    if ($scope.onStep('amount')) {
       text = 'CONFIRM_CLOSE_AMT'; action = 'CLOSE';
-    } else if (!acct && $scope.step > 0) {
+    } else if (!acct && $scope.afterStep('amount')) {
       text = 'CONFIRM_CLOSE_ACCT'; action = 'IM_DONE';
     } else if (acct) {
       text = 'CONFIRM_CLOSE'; action = 'IM_DONE';
