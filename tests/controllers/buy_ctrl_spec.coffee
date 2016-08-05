@@ -1,5 +1,6 @@
 describe "BuyCtrl", ->
   scope = undefined
+  Alerts = undefined
   $rootScope = undefined
   $controller = undefined
   $q = undefined
@@ -14,6 +15,7 @@ describe "BuyCtrl", ->
 
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
+      Alerts = $injector.get("Alerts")
 
       MyWallet.wallet = {}
       MyWallet.wallet.accountInfo = {}
@@ -76,3 +78,23 @@ describe "BuyCtrl", ->
       scope.bitcoinReceived = true
       scope.nextStep()
       expect(scope.onStep('success')).toEqual(true)
+
+  describe "close", ->
+    beforeEach ->
+      spyOn(Alerts, 'confirm').and.callThrough()
+      scope = getControllerScope()
+
+    it "should confirm when leaving amount selection", ->
+      scope.goTo('amount')
+      scope.close()
+      expect(Alerts.confirm).toHaveBeenCalledWith('CONFIRM_CLOSE_AMT', {action: 'CLOSE'})
+
+    it "should confirm close when acct is true", ->
+      scope.goTo('select-country')
+      scope.close(true)
+      expect(Alerts.confirm).toHaveBeenCalledWith('CONFIRM_CLOSE', {action: 'IM_DONE'})
+
+    it "should confirm close account otherwise", ->
+      scope.goTo('select-country')
+      scope.close()
+      expect(Alerts.confirm).toHaveBeenCalledWith('CONFIRM_CLOSE_ACCT', {action: 'IM_DONE'})

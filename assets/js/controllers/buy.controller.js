@@ -285,17 +285,14 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   };
 
   $scope.close = (acct) => {
-    let text = ''; let action = '';
+    let text, action;
     if ($scope.onStep('amount')) {
-      text = 'CONFIRM_CLOSE_AMT'; action = 'CLOSE';
-    } else if (!acct && $scope.afterStep('amount')) {
-      text = 'CONFIRM_CLOSE_ACCT'; action = 'IM_DONE';
+      [text, action] = ['CONFIRM_CLOSE_AMT', 'CLOSE'];
     } else if (acct) {
-      text = 'CONFIRM_CLOSE'; action = 'IM_DONE';
+      [text, action] = ['CONFIRM_CLOSE', 'IM_DONE'];
     } else {
-      text = 'CONFIRM_CANCEL'; action = 'IM_DONE';
+      [text, action] = ['CONFIRM_CLOSE_ACCT', 'IM_DONE'];
     }
-
     Alerts.confirm(text, {action: action}).then($scope.cancel);
   };
 
