@@ -36,7 +36,6 @@ function NavigationCtrl ($scope, $rootScope, $interval, $timeout, $cookies, Wall
       }
     };
 
-    console.log($scope.status);
     if ($scope.status.isLoggedIn) {
       if ($scope.status.didUpgradeToHd) {
         fetchLastViewed();
