@@ -434,7 +434,11 @@ module.exports = (grunt) ->
 
       tag_release:
         command: (newVersion, message) ->
+<<<<<<< HEAD
           "git tag -a -s #{ newVersion } -m '#{ message }' && git push #{ newVersion }"
+=======
+          "git tag -a -s #{ newVersion } -m '#{ message }' && git push origin #{ newVersion }"
+>>>>>>> refs/remotes/blockchain/master
 
     coveralls:
       options:
