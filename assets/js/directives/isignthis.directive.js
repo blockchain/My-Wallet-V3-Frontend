@@ -85,6 +85,11 @@ function isignthis ($sce) {
         return this;
       };
 
+      _isx.resized = function (_resizedListener) {
+        this.resizedListener = _resizedListener;
+        return this;
+      };
+
       _isx.publish = function () {
         this.iframe = e;
 
@@ -111,7 +116,7 @@ function isignthis ($sce) {
           }
 
           try {
-            var d = JSON.parse(e.data);
+            var d = JSON.parse(e.data.split('[ISX-Embed]')[1]);
 
             if (d.event.toLowerCase() === 'complete') {
               if (self.completeListener) {
@@ -124,6 +129,10 @@ function isignthis ($sce) {
             } else if (d.event.toLowerCase() === 'error') {
               if (self.errorListener) {
                 self.errorListener(d);
+              }
+            } else if (d.event.toLowerCase() === 'resized') {
+              if (self.resizedListener) {
+                self.resizedListener(d);
               }
             }
           } catch (err) {
@@ -139,7 +148,8 @@ function isignthis ($sce) {
       // Inline Javascript from demo:
       var widget = {
         transaction_id: iSignThisID,
-        height: '680px'
+        container_id: 'isx-iframe',
+        minimum_height: 400
       };
 
       scope.showFrame = true;
@@ -152,6 +162,9 @@ function isignthis ($sce) {
         })
         .fail(function (e) {
           console.log('error. e=' + JSON.stringify(e));
+        })
+        .resized(function (e) {
+          console.log('resized. e=', JSON.stringify(e));
         })
         .route(function (e) {
           console.log('route. e=' + JSON.stringify(e));
