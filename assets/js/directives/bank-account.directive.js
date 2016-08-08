@@ -22,6 +22,8 @@ function bankAccount (MyWallet) {
       if (newVal) scope.onLoad();
     });
 
+    if (!scope.transaction) return;
+
     scope.label = MyWallet.wallet.hdwallet.accounts[0].label;
 
     scope.formattedBankAccount = {
