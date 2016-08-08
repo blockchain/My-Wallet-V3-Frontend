@@ -29,11 +29,9 @@
     div(ng-show="onStep('summary')")
       include ./buy-summary
     div(ng-show="onStep('trade-formatted', 'trade-complete')")
-      div.iframe(ng-show="!trade.medium")
+      div.iframe(ng-if="!trade.medium || trade.medium === 'card'")
         isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-declined="declinedTx(tx)" on-pending="pendingTx(tx)" on-review="reviewTx(tx)" on-expired="expiredTx(tx)" on-failed="failedTx(tx)" payment-info="paymentInfo")
-      div.iframe(ng-show="trade.medium === 'card'")
-        isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-declined="declinedTx(tx)" on-pending="pendingTx(tx)" on-review="reviewTx(tx)" on-expired="expiredTx(tx)" on-failed="failedTx(tx)" payment-info="paymentInfo")
-      div(ng-show="trade.medium === 'bank'")
+      div(ng-if="trade.medium === 'bank'")
         bank-account(transaction="trade" on-load="loadPayment()")
     div(ng-if="onStep('pending')")
       include ./trade-summary
