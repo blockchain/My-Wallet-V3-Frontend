@@ -81,14 +81,12 @@ describe "BuyCtrl", ->
       scope.changeCurrency()
       expect(scope.currencySymbol).toEqual("P")
 
-    it "should set the transaction currency and refresh quote/methods data", ->
+    it "should set the transaction currency and refresh payment methods data", ->
       spyOn(scope, "getPaymentMethods")
-      spyOn(scope, "getQuote")
       scope.changeCurrency()
       $rootScope.$digest()
       expect(scope.transaction.currency.code).toEqual("USD")
       expect(scope.getPaymentMethods).toHaveBeenCalled()
-      expect(scope.getQuote).toHaveBeenCalled()
 
   describe "updateAmounts", ->
     beforeEach ->
