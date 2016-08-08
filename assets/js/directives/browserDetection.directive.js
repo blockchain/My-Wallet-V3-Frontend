@@ -15,11 +15,11 @@ const browsers = {
   },
   'chrome': {
     name: 'Chrome',
-    requiredVersion: 30 // Roughly the same as Webkit 537.85.17
+    requiredVersion: 45 // Fixes various iframe CVE's
   },
   'firefox': {
     name: 'Firefox',
-    requiredVersion: 21
+    requiredVersion: 45 // Fixes various iframe CVE's
   },
   'opera': {
     name: 'Opera',
