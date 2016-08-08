@@ -1,7 +1,7 @@
 .question
   i.ti-angle-right(ng-if="!item.displayed")
   i.ti-angle-down(ng-if="item.displayed")
-  span.plm.pointer(ng-click="tog(item.id)") {{item.question}}
-blockquote.answer(ng-if="item.displayed" class="animate-if")
+  span.plm.pointer(ng-click="tog(index)") {{item.question}}
+.answer(ng-if="item.displayed" class="animate-if")
   p {{item.answer}}
 hr

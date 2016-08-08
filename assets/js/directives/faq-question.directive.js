@@ -8,7 +8,8 @@ function faqQuestion () {
     restrict: 'E',
     scope: {
       item: '=',
-      tog: '='
+      tog: '=',
+      index: '@'
     },
     templateUrl: 'templates/faq-question.jade'
   };
