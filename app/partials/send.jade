@@ -40,7 +40,7 @@
                 label-origin(origin="::origin" highlight="$select.search")
 
           //- Private Key for Watch Only
-          .input-group(ng-show="transaction.from.isWatchOnly")
+          .input-group.pbm(ng-show="transaction.from.isWatchOnly")
             input.form-control(
               name="priv"
               placeholder="{{ 'ENTER_PRIV' | translate }}..."
@@ -50,7 +50,7 @@
             .input-group-btn
               qr-scan.form-control(on-scan="setPrivateKey")
           span.help-block(ng-show="sendForm.from.$invalid && sendForm.destinations0.$touched", translate="MUST_SELECT_ORIGIN") 
-          span.help-block(ng-show="sendForm.priv.$invalid && sendForm.priv.$touched" translate="INVALID_PRIV")
+          span.help-block.inprv(ng-show="sendForm.priv.$invalid && sendForm.priv.$touched" translate="INVALID_PRIV")
 
       //- Advanced Send
       .form-group.flex-justify.bc-modal-fade.mvl.advanced-recipient.row
