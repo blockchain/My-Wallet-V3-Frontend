@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuyCtrl', BuyCtrl);
 
-function BuyCtrl ($scope, $filter, MyWallet, Wallet, Alerts, currency, $uibModalInstance, country, fiat, trade, $timeout, bitcoinReceived, formatTrade, buySell) {
+function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, country, fiat, trade, $timeout, bitcoinReceived, formatTrade, buySell) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -190,15 +190,12 @@ function BuyCtrl ($scope, $filter, MyWallet, Wallet, Alerts, currency, $uibModal
   };
 
   $scope.changeEmail = (email, successCallback, errorCallback) => {
-    $scope.rejectedEmail = undefined;
+    $scope.rejectedEmail = void 0;
+    Alerts.clear($scope.alerts);
 
-    const success = () => {
-      Alerts.clear($scope.alerts);
-      $scope.editEmail = false; successCallback();
-    };
-    const error = () => $scope.editEmail = false; errorCallback();
-
-    Wallet.changeEmail(email, success, error);
+    $q((res, rej) => Wallet.changeEmail(email, res, rej))
+      .then(successCallback, errorCallback)
+      .finally(() => { $scope.editEmail = false; });
   };
 
   $scope.signup = () => {
@@ -279,7 +276,7 @@ function BuyCtrl ($scope, $filter, MyWallet, Wallet, Alerts, currency, $uibModal
   };
 
   $scope.cancel = () => {
-    if ($scope.exchange.user) $scope.fetchTrades();
+    if ($scope.exchange.user) buySell.getTrades();
     $uibModalInstance.dismiss('');
     $scope.trade = null;
   };
@@ -317,18 +314,6 @@ function BuyCtrl ($scope, $filter, MyWallet, Wallet, Alerts, currency, $uibModal
     $scope.nextStep();
     $scope.watchAddress();
   }
-
-  $scope.fetchTrades = () => {
-    $scope.userHasExchangeAcct = true;
-    let completed = $scope.trades.completed.length;
-    buySell.getTrades().then(() => {
-      let newlyCompleted = $scope.trades.completed.length - completed;
-      if (newlyCompleted > 0) {
-        let unwatchedTrades = $scope.trades.completed.slice(-newlyCompleted);
-        unwatchedTrades.forEach(buySell.watchAddress);
-      }
-    });
-  };
 
   $scope.initBuy = () => {
     $uibModalInstance.dismiss('');

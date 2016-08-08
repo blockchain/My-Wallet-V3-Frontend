@@ -9,7 +9,6 @@ function buySell ($timeout, $q, $uibModal, MyWallet, Alerts) {
   const service = {
     getExchange: () => MyWallet.wallet.external.coinify,
     trades: { completed: [], pending: [] },
-    tradesInitialized: false,
     init,
     getTrades,
     watchAddress,
@@ -27,13 +26,16 @@ function buySell ($timeout, $q, $uibModal, MyWallet, Alerts) {
   }
 
   function getTrades () {
+    let prevCompleted = service.trades.completed.length;
+
     const success = (trades) => {
       service.trades.pending = trades.filter(t => pendingStates.indexOf(t.state) > -1);
       service.trades.completed = trades.filter(t => completedStates.indexOf(t.state) > -1);
 
-      if (!service.tradesInitialized) {
-        service.trades.completed.forEach(service.watchAddress);
-        service.tradesInitialized = true;
+      let newlyCompleted = service.trades.completed.length - prevCompleted;
+      if (newlyCompleted > 0 || prevCompleted === 0) {
+        let unwatchedTrades = service.trades.completed.slice(-newlyCompleted);
+        unwatchedTrades.forEach(service.watchAddress);
       }
 
       return service.trades;

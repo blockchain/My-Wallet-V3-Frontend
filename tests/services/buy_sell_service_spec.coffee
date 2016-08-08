@@ -56,10 +56,9 @@ describe "buySell service", () ->
       buySell.getTrades()
       $rootScope.$digest()
       expect(buySell.watchAddress).toHaveBeenCalledTimes(2)
-      expect(buySell.tradesInitialized).toEqual(true)
 
     it "should not watch trades if already initialized", ->
-      buySell.tradesInitialized = true
+      buySell.trades.completed.push(trades[1], trades[2])
       buySell.getTrades()
       $rootScope.$digest()
       expect(buySell.watchAddress).not.toHaveBeenCalled()
