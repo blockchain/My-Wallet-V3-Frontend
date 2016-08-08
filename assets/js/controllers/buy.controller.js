@@ -57,14 +57,11 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     const success = (methods) => {
       $scope.card = methods.filter((m) => m.inMedium === 'card')[0];
       $scope.bank = methods.filter((m) => m.inMedium === 'bank')[0];
-
       $scope.method = $scope.card;
       $scope.getQuote();
     };
 
-    const error = () => {};
-
-    return $scope.exchange.getPaymentMethods($scope.transaction.currency.code, 'BTC').then(success, error);
+    $scope.exchange.getPaymentMethods($scope.transaction.currency.code, 'BTC').then(success);
   };
 
   $scope.changeCurrency = (curr) => {
@@ -73,13 +70,12 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
 
     $scope.currencySymbol = currency.conversions[curr.code];
 
-    const error = () => {};
     const success = () => {
       $scope.transaction.currency = curr;
       $scope.getPaymentMethods();
     };
 
-    Wallet.changeCurrency(curr).then(success, error);
+    Wallet.changeCurrency(curr).then(success);
   };
 
   $scope.standardError = (err) => {
@@ -98,9 +94,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   };
 
   $scope.fetchProfile = () => {
-    const success = () => {};
-
-    return $scope.exchange.fetchProfile().then(success, $scope.standardError);
+    return $scope.exchange.fetchProfile().catch($scope.standardError);
   };
 
   $scope.updateAmounts = () => {
@@ -212,13 +206,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
 
   $scope.watchAddress = () => {
     if (!$scope.trade || $scope.bitcoinReceived) return;
-
-    const success = () => {
-      $timeout(() => {
-        $scope.bitcoinReceived = true;
-      });
-    };
-
+    const success = () => $timeout(() => $scope.bitcoinReceived = true);
     $scope.trade.watchAddress().then(success);
   };
 
