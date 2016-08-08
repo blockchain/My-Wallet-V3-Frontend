@@ -24,16 +24,26 @@
       }
     }
     color: white;
-    height: 610px;
+    height: 660px;
+    padding-top: 150px;
     background-image: url('../img/landing-page-banner.jpg');
     background-repeat: no-repeat;
-    background-position: 100% 115%;
+    background-position: 100% 100%;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     @media (max-width: 768px) {
-      background-position: 10% 115%;
+      padding-top: 285px;
+      background-position: 10% 100%;
+    }
+    @media (min-width: 1441px) {
+      height: 800px;
+      background-position: 100% 60%;
+    }
+    @media (min-width: 1800px) {
+      height: 1000px;
+      background-position: 100% 60%;
     }
     h1 {
       font-weight: 400;
@@ -102,7 +112,9 @@
     }
   }
   .quickstart {
-    background-color: rgba(245,245,245,1);
+    width: 100%;
+    position: absolute;
+    background-color: rgba(245,245,245,0.7);
     .border-left {
       border-left: 0;
     }
