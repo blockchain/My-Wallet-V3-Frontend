@@ -51,6 +51,23 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
     $scope.userHasExchangeAcct = false;
   }
 
+  $scope.changeCurrency = (curr) => {
+    if (!curr) curr = $scope.settings.currency;
+    if ($scope.trade) curr = {code: $scope.trade.inCurrency};
+
+    $scope.currencySymbol = currency.conversions[curr.code];
+
+    const error = () => {};
+    const success = () => {
+      $scope.transaction.currency = curr;
+      $scope.getPaymentMethods().then($scope.getQuote);
+    };
+
+    Wallet.changeCurrency(curr).then(success, error);
+  };
+
+  $scope.changeCurrency();
+
   $scope.getPaymentMethods = () => {
     if (!$scope.exchange.user) return;
 
@@ -63,23 +80,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
 
     const error = () => {};
 
-    $scope.exchange.getPaymentMethods($scope.transaction.currency.code, 'BTC').then(success, error);
-  };
-
-  $scope.changeCurrency = (curr) => {
-    if (!curr) curr = $scope.settings.currency;
-    if ($scope.trade) curr = {code: $scope.trade.inCurrency};
-
-    $scope.currencySymbol = currency.conversions[curr.code];
-
-    const error = () => {};
-    const success = () => {
-      $scope.transaction.currency = curr;
-      $scope.getPaymentMethods();
-      $scope.getQuote();
-    };
-
-    Wallet.changeCurrency(curr).then(success, error);
+    return $scope.exchange.getPaymentMethods($scope.transaction.currency.code, 'BTC').then(success, error);
   };
 
   $scope.standardError = (err) => {
@@ -299,7 +300,9 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   $scope.$watch('method', $scope.updateAmounts);
   // $scope.$watch('transaction.fiat', $scope.getQuote);
   $scope.$watchGroup(['exchange.user', 'user.isEmailVerified', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
-  $scope.$watchGroup(['exchange.user', 'transaction.currency'], () => { $scope.changeCurrency(); });
+  $scope.$watchGroup(['exchange.user', 'transaction.currency'], (newVal, oldVal) => {
+    if (newVal !== oldVal) $scope.changeCurrency();
+  });
 
   $scope.$watch('bitcoinReceived', (newVal) => {
     if (newVal) $scope.successTx();
