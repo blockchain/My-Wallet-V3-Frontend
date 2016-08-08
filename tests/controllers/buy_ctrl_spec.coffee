@@ -2,6 +2,7 @@ describe "BuyCtrl", ->
   scope = undefined
   Wallet = undefined
   Alerts = undefined
+  currency = undefined
   $rootScope = undefined
   $controller = undefined
   $q = undefined
@@ -32,6 +33,7 @@ describe "BuyCtrl", ->
           profile: {}
 
       currency.conversions = { "USD": "$", "EUR": "E", "GBP": "P" }
+      currency.formatCurrencyForView = (amt, curr) -> "#{curr.code}(#{amt})"
 
   getControllerScope = (params = {}) ->
     scope = $rootScope.$new()
@@ -87,6 +89,24 @@ describe "BuyCtrl", ->
       expect(scope.transaction.currency.code).toEqual("USD")
       expect(scope.getPaymentMethods).toHaveBeenCalled()
       expect(scope.getQuote).toHaveBeenCalled()
+
+  describe "updateAmounts", ->
+    beforeEach ->
+      scope = getControllerScope()
+      spyOn(currency, "formatCurrencyForView").and.callThrough()
+
+    it "should not do anything without a user or exchange", ->
+      scope.quote = scope.exchange.user = null
+      scope.updateAmounts()
+      expect(currency.formatCurrencyForView).not.toHaveBeenCalled()
+
+    it "should update with the correct values", ->
+      scope.exchange.user = {}
+      scope.quote = quoteAmount: 105
+      scope.transaction.fiat = 100
+      scope.method = inPercentageFee: 5
+      scope.updateAmounts()
+      expect(scope.transaction).toEqual(jasmine.objectContaining({fiat: 100, btc: "BTC(105)", methodFee: "5.00"}))
 
   describe "nextStep", ->
     it "should switch to amount step", ->
