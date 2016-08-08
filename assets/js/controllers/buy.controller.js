@@ -2,18 +2,20 @@ angular
   .module('walletApp')
   .controller('BuyCtrl', BuyCtrl);
 
-function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModal, country, exchange, trades, fiat, trade, $timeout, bitcoinReceived, formatTrade) {
+function BuyCtrl ($scope, $filter, MyWallet, Wallet, Alerts, currency, $uibModalInstance, country, fiat, trade, $timeout, bitcoinReceived, formatTrade, buySell) {
   $scope.settings = Wallet.settings;
-  $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
   $scope.countries = country;
   $scope.user = Wallet.user;
-  $scope.trades = trades;
+  $scope.trades = buySell.trades;
   $scope.alerts = [];
   $scope.status = {};
   $scope.trade = trade;
   $scope.label = MyWallet.wallet.hdwallet.accounts[0].label;
+
+  let exchange = buySell.getExchange();
+  $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
 
   $scope.steps = {
     'amount': 0,
@@ -47,11 +49,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   $scope.countryCodeGuess = $scope.countries.countryCodes.filter(country => country.code === MyWallet.wallet.accountInfo.countryCodeGuess)[0];
   if ($scope.countryCodeGuess) $scope.fields.countryCode = $scope.countryCodeGuess.code;
 
-  try {
-    if (trades.pending.length || trades.completed.length) $scope.userHasExchangeAcct = true;
-  } catch (e) {
-    $scope.userHasExchangeAcct = false;
-  }
+  $scope.userHasExchangeAcct = $scope.trades.pending.length || $scope.trades.completed.length;
 
   $scope.getPaymentMethods = () => {
     if (!$scope.exchange.user) return;
@@ -322,11 +320,18 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
 
   $scope.fetchTrades = () => {
     $scope.userHasExchangeAcct = true;
-    $rootScope.$broadcast('fetchTrades');
+    let completed = $scope.trades.completed.length;
+    buySell.getTrades().then(() => {
+      let newlyCompleted = $scope.trades.completed.length - completed;
+      if (newlyCompleted > 0) {
+        let unwatchedTrades = $scope.trades.completed.slice(-newlyCompleted);
+        unwatchedTrades.forEach(buySell.watchAddress);
+      }
+    });
   };
 
   $scope.initBuy = () => {
     $uibModalInstance.dismiss('');
-    $rootScope.$broadcast('initBuy');
+    $timeout(() => buySell.openBuyView());
   };
 }
