@@ -92,7 +92,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
     let methodFee = fiatAmt * ($scope.method.inPercentageFee / 100);
 
     $scope.transaction.methodFee = methodFee.toFixed(2);
-    $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount / 100, currency.bitCurrencies[0]);
+    $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount, currency.bitCurrencies[0]);
     $scope.transaction.total = fiatAmt + +$scope.transaction.methodFee;
   };
 
@@ -113,7 +113,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
       Alerts.clear($scope.alerts);
     };
 
-    $scope.exchange.getQuote($scope.transaction.fiat, $scope.transaction.currency.code)
+    $scope.exchange.getBuyQuote($scope.transaction.fiat, $scope.transaction.currency.code)
                    .then(success, $scope.standardError);
   };
 
