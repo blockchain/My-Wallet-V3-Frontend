@@ -76,6 +76,51 @@
         @include bc-ng-animate('isx', 'height', '320px', '450px');
         @include bc-ng-animate('buy-pending', 'height', '450px', '250px');
         @include bc-ng-animate('buy-success', 'height', '250px', '150px');
+        #isx-iframe {
+          margin-bottom: -5px;
+        }
+        &.capture {
+          height: 500px;
+          #isx-iframe {
+            height: 650px;
+          }
+        }
+        &.secret {
+          height: 400px;
+          #isx-iframe {
+            height: 400px;
+          }
+        }
+        &.otp {
+          height: 415px;
+          #isx-iframe {
+            height: 415px;
+          }
+        }
+        &.otp-pin {
+          height: 500px;
+          #isx-iframe {
+            height: 632px;
+          }
+        }
+        &.verify-pin {
+          height: 347px;
+          #isx-iframe {
+            height: 347px;
+          }
+        }
+        &.kyc {
+          height: 500px;
+          #isx-iframe {
+            height: 700px;
+          }
+        }
+        &.documents {
+          height: 500px;
+          #isx-iframe {
+            height: 520px;
+          }
+        }
       }
     }
   }
@@ -125,16 +170,14 @@
 }
 
 .iframe {
-  height: 510px;
   isignthis {
     position: absolute;
-    overflow: scroll;
+    overflow: auto;
     height: 100%;
     width: 100%;
   }
   #isx-iframe {
     position: relative;
-    height: 100vh;
     width: 100%;
     border: 0;
     left: 0;

@@ -278,6 +278,10 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
     $scope.formattedTrade = formatTrade.pending(tx, $scope.trade);
   };
 
+  $scope.onResize = (step) => {
+    $scope.isxStep = step;
+  };
+
   $scope.cancel = () => {
     if ($scope.exchange.user) $scope.fetchTrades();
     $uibModalInstance.dismiss('');

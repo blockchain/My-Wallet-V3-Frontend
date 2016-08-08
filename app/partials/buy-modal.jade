@@ -15,7 +15,7 @@
                 fields="fields"
                 method="method"
                 step="step")
-  .modal-body.fade(ng-class="{'buy-amount': onStep('amount'), 'buy-select-country': onStep('select-country'), 'buy-email': onStep('email'), 'buy-accept-terms': onStep('accept-terms'), 'buy-summary': onStep('summary'), 'isx': onStep('trade-formatted', 'trade-complete') && (trade.medium === 'card' || !trade.medium), 'bank-account': onStep('trade-formatted', 'trade-complete') && trade.medium === 'bank', 'buy-pending': onStep('pending'), 'buy-success': onStep('success')}")
+  .modal-body.fade(class="{{isxStep}}" ng-class="{'buy-amount': onStep('amount'), 'buy-select-country': onStep('select-country'), 'buy-email': onStep('email'), 'buy-accept-terms': onStep('accept-terms'), 'buy-summary': onStep('summary'), 'isx': onStep('trade-formatted', 'trade-complete') && (trade.medium === 'card' || !trade.medium), 'bank-account': onStep('trade-formatted', 'trade-complete') && trade.medium === 'bank', 'buy-pending': onStep('pending'), 'buy-success': onStep('success')}")
     .alert-in-app
       alerts(context="alerts")
     div(ng-show="onStep('amount')")
@@ -30,14 +30,14 @@
       include ./buy-summary
     div(ng-show="onStep('trade-formatted', 'trade-complete')")
       div.iframe(ng-if="!trade.medium || trade.medium === 'card'")
-        isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-declined="declinedTx(tx)" on-pending="pendingTx(tx)" on-review="reviewTx(tx)" on-expired="expiredTx(tx)" on-failed="failedTx(tx)" payment-info="paymentInfo")
+        isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-declined="declinedTx(tx)" on-pending="pendingTx(tx)" on-review="reviewTx(tx)" on-expired="expiredTx(tx)" on-failed="failedTx(tx)" payment-info="paymentInfo" on-resize="onResize(step)")
       div(ng-if="trade.medium === 'bank'")
         bank-account(transaction="trade" on-load="loadPayment()")
     div(ng-if="onStep('pending')")
       include ./trade-summary
     div(ng-if="onStep('success')")
       include ./trade-summary
-    .flex-end.flex-center.mtl
+    .flex-end.flex-center.mtl(ng-hide="afterStep('summary')")
       span.pos-rel
         span.mrs.type-sm Powered by
         a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
