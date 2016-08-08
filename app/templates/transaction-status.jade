@@ -3,10 +3,10 @@
     i.pointer.ti-new-window.blue(ng-click="verify()" uib-tooltip="{{'VERIFY_ON_BCI' | translate}}" tooltip-append-to-body="true")
     helper-button(content="{{ 'TRANSACTION_WILL_COMPLETE_IN' | translate:{minutes: minutesRemaining } }}" ng-if="!frugalWarning" append="true")
     helper-button(content="{{ 'TRANSACTION_FRUGAL' | translate }}" ng-if="frugalWarning" append="true")
-  uib-progressbar.mts(value=":: transaction.confirmations" max="3")
+  uib-progressbar.mts(value="transaction.confirmations" max="3")
     span.plm(translate="PENDING")
     span :
-    span.pls {{ :: transaction.confirmations }}
+    span.pls {{ transaction.confirmations }}
     span /3
     span.pls(translate="CONFIRMATIONS")
 
