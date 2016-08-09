@@ -7,6 +7,7 @@ function isignthis ($sce) {
     restrict: 'E',
     scope: {
       onLoad: '&',
+      onResize: '&',
       onDeclined: '&',
       onPending: '&',
       onReview: '&',
@@ -76,7 +77,6 @@ function isignthis ($sce) {
 
       _isx.fail = function (_errorListener) {
         this.errorListener = _errorListener;
-
         return this;
       };
 
@@ -85,8 +85,8 @@ function isignthis ($sce) {
         return this;
       };
 
-      _isx.resized = function (_resizedListener) {
-        this.resizedListener = _resizedListener;
+      _isx.resized = function (_resizeListener) {
+        this.resizeListener = _resizeListener;
         return this;
       };
 
@@ -131,8 +131,8 @@ function isignthis ($sce) {
                 self.errorListener(d);
               }
             } else if (d.event.toLowerCase() === 'resized') {
-              if (self.resizedListener) {
-                self.resizedListener(d);
+              if (self.resizeListener) {
+                self.resizeListener(d);
               }
             }
           } catch (err) {
@@ -174,6 +174,8 @@ function isignthis ($sce) {
           scope.paymentInfo = e.route.match('/otp|/verify-pin|/kyc');
           let id = e.route.split('/result/')[1];
           let tx = {id: id};
+
+          scope.onResize({step: e.route.match(/\/(.*)\//)[1]});
 
           switch (e.state) {
             case 'SUCCESS':

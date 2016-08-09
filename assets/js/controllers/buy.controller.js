@@ -263,6 +263,10 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     $scope.formattedTrade = formatTrade.pending(tx, $scope.trade);
   };
 
+  $scope.onResize = (step) => {
+    $scope.isxStep = step;
+  };
+
   $scope.cancel = () => {
     if ($scope.exchange.user) buySell.getTrades();
     $uibModalInstance.dismiss('');
