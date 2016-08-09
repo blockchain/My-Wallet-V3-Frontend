@@ -487,12 +487,12 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
 
   wallet.resendEmailConfirmation = (successCallback, errorCallback) => {
     let success = () => {
-      successCallback();
+      successCallback && successCallback();
       $rootScope.$safeApply();
     };
 
     let error = () => {
-      errorCallback();
+      errorCallback && errorCallback();
       $rootScope.$safeApply();
     };
 

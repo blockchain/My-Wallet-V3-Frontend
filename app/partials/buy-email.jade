@@ -5,9 +5,6 @@ div
     .flex-column.mtl
         div
           span.flex-center.pointer(translate="CHANGE_EMAIL" ng-click="toggleEmail()")
-        div
-          span.mrs.pointer(translate="Can't find your verification email?")
-          resend-email-confirmation
   form.clearfix(name="emailForm" ng-show="editEmail || rejectedEmail")
     bc-async-input(type="email"
                    is-required 
