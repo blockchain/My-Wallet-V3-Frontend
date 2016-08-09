@@ -288,7 +288,11 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   $scope.changeCurrency();
 
   $scope.$watch('method', $scope.updateAmounts);
-  $scope.$watchGroup(['exchange.user', 'user.isEmailVerified', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
+  $scope.$watchGroup(['exchange.user', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
+
+  $scope.$watch('user.isEmailVerified', () => {
+    if ($scope.onStep('email')) $scope.nextStep();
+  });
 
   $scope.$watch('transaction.fiat', (newVal, oldVal) => {
     if (newVal !== oldVal) $scope.changeCurrency();
