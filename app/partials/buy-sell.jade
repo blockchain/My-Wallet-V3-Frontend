@@ -6,18 +6,10 @@
     h4.blue.type-h4(translate="Quick Start")
     .flex-row.flex-column-tablet
       .flex-column.width-50.mrl
-        buy-steps.pointer(buy="buy()"
-                          exchange-acct="exchange.profile != null"
-                          currency-symbol="currencySymbol"
-                          partner="partner")
         buy-quick-start(transaction="transaction" 
                         change-currency="changeCurrency(currency)"
                         buy="buy(amt)")
       .flex-column.width-50.mll
-        buy-steps.fade(exchange-acct="exchange.profile != null"
-                       currency-symbol="currencySymbol"
-                       profile="profile"
-                       partner="partner")
         sell-quick-start
     .flex-column.mtl(ng-show="trades.pending || trades.completed")
       div(ng-show="trades.pending.length")
