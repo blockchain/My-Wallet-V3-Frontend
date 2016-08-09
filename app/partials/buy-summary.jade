@@ -29,14 +29,30 @@
 
 .flex-column.border-bottom.mtvl
   p.em-400.type-lbl.black Review Order:
-  .flex-row.flex-between.em-500
+  .flex-row.flex-between.flex-center.em-500
     span
       span Buy
       | 
       span.success(uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ transaction.btc }}
-      span.blue.underline.type-sm.mlvl.pointer(ng-click="prevStep()") Change Amount
-    span
-      span {{ transaction.fiat | format }} {{ transaction.currency.code }}
+      span.blue.underline.type-sm.mlvl.pointer(ng-click="toggleEditAmount()") Change Amount
+    span.flex-row.flex-center
+      span(ng-hide="editAmount") {{ transaction.fiat | format }}
+      input.form-control(
+        type="number"
+        ng-show="editAmount"
+        ng-model="transaction.fiat"
+        ng-model-options="{debounce: 250}"
+        name="fiat"
+        tabindex="1"
+        on-enter="toggleEditAmount()"
+        ng-change="getQuote()"
+        placeholder="0"
+        focus-when="editAmount"
+        min="0"
+        max="2100000000000000"
+        required
+      )
+      span.mls {{ transaction.currency.code }}
   .flex-row.flex-between.mts.mbm
     span.italic Payment Processing Fee
     span
