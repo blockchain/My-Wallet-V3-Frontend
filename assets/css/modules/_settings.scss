@@ -205,3 +205,9 @@ table.accounts-container {
     padding: 15px 15px;   
   }
 }
+
+@media (max-width: 395px) {
+  .hidden-xxs {
+    display: none;   
+  }
+}
