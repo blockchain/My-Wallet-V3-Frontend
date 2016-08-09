@@ -130,6 +130,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   };
 
   $scope.toggleEmail = () => $scope.editEmail = !$scope.editEmail;
+  $scope.toggleEditAmount = () => $scope.editAmount = !$scope.editAmount;
   $scope.isCurrencySelected = (currency) => currency === $scope.transaction.currency;
 
   $scope.addExchange = () => {
