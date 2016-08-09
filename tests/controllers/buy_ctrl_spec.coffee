@@ -1,6 +1,8 @@
 describe "BuyCtrl", ->
   scope = undefined
+  Wallet = undefined
   Alerts = undefined
+  currency = undefined
   $rootScope = undefined
   $controller = undefined
   $q = undefined
@@ -16,10 +18,22 @@ describe "BuyCtrl", ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       Alerts = $injector.get("Alerts")
+      currency = $injector.get("currency")
+
+      Wallet.settings.currency = { code: "USD" }
+      Wallet.changeCurrency = () -> $q.resolve()
 
       MyWallet.wallet = {}
       MyWallet.wallet.accountInfo = {}
       MyWallet.wallet.hdwallet = { accounts: [{ label: 'My Bitcoin Wallet '}] }
+
+      MyWallet.wallet.external =
+        coinify:
+          getPaymentMethods: ->
+          profile: {}
+
+      currency.conversions = { "USD": "$", "EUR": "E", "GBP": "P" }
+      currency.formatCurrencyForView = (amt, curr) -> "#{curr.code}(#{amt})"
 
   getControllerScope = (params = {}) ->
     scope = $rootScope.$new()
@@ -32,6 +46,65 @@ describe "BuyCtrl", ->
       trade: params.trade ? false
       bitcoinReceived: params.bitcoinReceived ? false
     scope
+
+  describe "getPaymentMethods", ->
+    methods = [{ inMedium: "card" }, { inMedium: "bank" }]
+    beforeEach ->
+      scope = getControllerScope()
+      scope.exchange.user = {}
+      spyOn(Wallet, "changeCurrency").and.callThrough()
+      spyOn(scope.exchange, "getPaymentMethods").and.returnValue($q.resolve(methods))
+
+    it "should set the correct scope variables from the response", ->
+      scope.getPaymentMethods()
+      $rootScope.$digest()
+      expect(scope.exchange.getPaymentMethods).toHaveBeenCalled()
+      expect(scope.card).toEqual(methods[0])
+      expect(scope.bank).toEqual(methods[1])
+      expect(scope.method).toEqual(methods[0])
+
+  describe "changeCurrency", ->
+    beforeEach ->
+      scope = getControllerScope()
+      spyOn(Wallet, "changeCurrency").and.callThrough()
+
+    it "should default to the users currency setting", ->
+      scope.changeCurrency()
+      expect(scope.currencySymbol).toEqual("$")
+
+    it "should use the currency argument if passed", ->
+      scope.changeCurrency({ code: "EUR" })
+      expect(scope.currencySymbol).toEqual("E")
+
+    it "should use the trade currency if trade exists", ->
+      scope.trade = { inCurrency: "GBP" }
+      scope.changeCurrency()
+      expect(scope.currencySymbol).toEqual("P")
+
+    it "should set the transaction currency and refresh payment methods data", ->
+      spyOn(scope, "getPaymentMethods")
+      scope.changeCurrency()
+      $rootScope.$digest()
+      expect(scope.transaction.currency.code).toEqual("USD")
+      expect(scope.getPaymentMethods).toHaveBeenCalled()
+
+  describe "updateAmounts", ->
+    beforeEach ->
+      scope = getControllerScope()
+      spyOn(currency, "formatCurrencyForView").and.callThrough()
+
+    it "should not do anything without a user or exchange", ->
+      scope.quote = scope.exchange.user = null
+      scope.updateAmounts()
+      expect(currency.formatCurrencyForView).not.toHaveBeenCalled()
+
+    it "should update with the correct values", ->
+      scope.exchange.user = {}
+      scope.quote = quoteAmount: 105
+      scope.transaction.fiat = 100
+      scope.method = inPercentageFee: 5
+      scope.updateAmounts()
+      expect(scope.transaction).toEqual(jasmine.objectContaining({fiat: 100, btc: "BTC(105)", methodFee: "5.00"}))
 
   describe "nextStep", ->
     it "should switch to amount step", ->

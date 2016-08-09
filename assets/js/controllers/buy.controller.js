@@ -2,18 +2,20 @@ angular
   .module('walletApp')
   .controller('BuyCtrl', BuyCtrl);
 
-function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts, currency, $uibModalInstance, $uibModal, country, exchange, trades, fiat, trade, $timeout, bitcoinReceived, formatTrade) {
+function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, country, fiat, trade, $timeout, bitcoinReceived, formatTrade, buySell) {
   $scope.settings = Wallet.settings;
-  $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
   $scope.countries = country;
   $scope.user = Wallet.user;
-  $scope.trades = trades;
+  $scope.trades = buySell.trades;
   $scope.alerts = [];
   $scope.status = {};
   $scope.trade = trade;
   $scope.label = MyWallet.wallet.hdwallet.accounts[0].label;
+
+  let exchange = buySell.getExchange();
+  $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
 
   $scope.steps = {
     'amount': 0,
@@ -42,14 +44,12 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   $scope.transaction.fiat = fiat || 0;
   $scope.paymentInfo = undefined;
 
+  $timeout(() => $scope.rendered = true, bitcoinReceived ? 0 : 4000);
+
   $scope.countryCodeGuess = $scope.countries.countryCodes.filter(country => country.code === MyWallet.wallet.accountInfo.countryCodeGuess)[0];
   if ($scope.countryCodeGuess) $scope.fields.countryCode = $scope.countryCodeGuess.code;
 
-  try {
-    if (trades.pending.length || trades.completed.length) $scope.userHasExchangeAcct = true;
-  } catch (e) {
-    $scope.userHasExchangeAcct = false;
-  }
+  $scope.userHasExchangeAcct = $scope.trades.pending.length || $scope.trades.completed.length;
 
   $scope.getPaymentMethods = () => {
     if (!$scope.exchange.user) return;
@@ -57,14 +57,11 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
     const success = (methods) => {
       $scope.card = methods.filter((m) => m.inMedium === 'card')[0];
       $scope.bank = methods.filter((m) => m.inMedium === 'bank')[0];
-
       $scope.method = $scope.card;
       $scope.getQuote();
     };
 
-    const error = () => {};
-
-    return $scope.exchange.getPaymentMethods($scope.transaction.currency.code, 'BTC').then(success, error);
+    $scope.exchange.getPaymentMethods($scope.transaction.currency.code, 'BTC').then(success);
   };
 
   $scope.changeCurrency = (curr) => {
@@ -73,13 +70,12 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
 
     $scope.currencySymbol = currency.conversions[curr.code];
 
-    const error = () => {};
     const success = () => {
       $scope.transaction.currency = curr;
       $scope.getPaymentMethods();
     };
 
-    Wallet.changeCurrency(curr).then(success, error);
+    Wallet.changeCurrency(curr).then(success);
   };
 
   $scope.standardError = (err) => {
@@ -98,9 +94,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   };
 
   $scope.fetchProfile = () => {
-    const success = () => {};
-
-    return $scope.exchange.fetchProfile().then(success, $scope.standardError);
+    return $scope.exchange.fetchProfile().catch($scope.standardError);
   };
 
   $scope.updateAmounts = () => {
@@ -190,15 +184,12 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   };
 
   $scope.changeEmail = (email, successCallback, errorCallback) => {
-    $scope.rejectedEmail = undefined;
+    $scope.rejectedEmail = void 0;
+    Alerts.clear($scope.alerts);
 
-    const success = () => {
-      Alerts.clear($scope.alerts);
-      $scope.editEmail = false; successCallback();
-    };
-    const error = () => $scope.editEmail = false; errorCallback();
-
-    Wallet.changeEmail(email, success, error);
+    $q((res, rej) => Wallet.changeEmail(email, res, rej))
+      .then(successCallback, errorCallback)
+      .finally(() => { $scope.editEmail = false; });
   };
 
   $scope.signup = () => {
@@ -215,13 +206,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
 
   $scope.watchAddress = () => {
     if (!$scope.trade || $scope.bitcoinReceived) return;
-
-    const success = () => {
-      $timeout(() => {
-        $scope.bitcoinReceived = true;
-      });
-    };
-
+    const success = () => $timeout(() => $scope.bitcoinReceived = true);
     $scope.trade.watchAddress().then(success);
   };
 
@@ -279,7 +264,7 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
   };
 
   $scope.cancel = () => {
-    if ($scope.exchange.user) $scope.fetchTrades();
+    if ($scope.exchange.user) buySell.getTrades();
     $uibModalInstance.dismiss('');
     $scope.trade = null;
   };
@@ -318,13 +303,8 @@ function BuyCtrl ($rootScope, $scope, $state, $filter, MyWallet, Wallet, Alerts,
     $scope.watchAddress();
   }
 
-  $scope.fetchTrades = () => {
-    $scope.userHasExchangeAcct = true;
-    $rootScope.$broadcast('fetchTrades');
-  };
-
   $scope.initBuy = () => {
     $uibModalInstance.dismiss('');
-    $rootScope.$broadcast('initBuy');
+    $timeout(() => buySell.openBuyView());
   };
 }
