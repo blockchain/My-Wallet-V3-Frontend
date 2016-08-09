@@ -197,7 +197,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
 
     const success = () => {
       Alerts.clear($scope.alerts);
-      $scope.fetchProfile().then($scope.changeCurrency);
+      $scope.fetchProfile().then($scope.changeCurrency());
     };
 
     $scope.exchange.signup($scope.fields.countryCode)
@@ -285,11 +285,16 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     Alerts.confirm(text, {action: action}).then($scope.cancel);
   };
 
+  $scope.changeCurrency();
+
   $scope.$watch('method', $scope.updateAmounts);
-  $scope.$watch('exchange.user', $scope.changeCurrency());
   $scope.$watchGroup(['exchange.user', 'user.isEmailVerified', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
 
   $scope.$watch('transaction.fiat', (newVal, oldVal) => {
+    if (newVal !== oldVal) $scope.changeCurrency();
+  });
+
+  $scope.$watch('exchange.user', (newVal, oldVal) => {
     if (newVal !== oldVal) $scope.changeCurrency();
   });
 
