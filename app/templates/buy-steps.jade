@@ -16,10 +16,10 @@
 
   .width-20.flex-column.flex-center(ng-class="{blue: afterStep('accept-terms'), success: afterStep('trade-formatted') && method.inMedium !== 'bank'}")
     i.type-lrg.ti-credit-card(ng-class="{'bank': method.inMedium === 'bank' || medium === 'bank'}")
-    span(ng-show="afterStep('accept-terms') && !medium").capitalize {{ method.inMedium }}
-    span(ng-show="afterStep('accept-terms') && medium && medium !== 'bank'").capitalize {{ medium }}
-    span.security-red(ng-show="afterStep('accept-terms') && medium === 'bank'" translate="BANK_TRANSFER_PENDING")
-    span(ng-hide="afterStep('accept-terms')" translate="Payment")
+    span(ng-show="afterStep('summary') && !medium").capitalize {{ method.inMedium }}
+    span(ng-show="afterStep('summary') && medium && medium !== 'bank'").capitalize {{ medium }}
+    span.security-red(ng-show="afterStep('summary') && medium === 'bank'" translate="BANK_TRANSFER_PENDING")
+    span(ng-hide="afterStep('summary')" translate="Payment")
 
   .flex-justify(ng-class="{blue: afterStep('trade-formatted'), success: onStep('success'), 'send-red': onStep('pending') && tradeError}")
     i.ti-arrow-right.type-h4
