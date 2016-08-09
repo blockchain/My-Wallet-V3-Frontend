@@ -13,8 +13,11 @@ function BuySellCtrl ($scope, Alerts, Wallet, currency, buySell) {
   buySell.init().finally(() => {
     $scope.trades = buySell.trades;
     $scope.exchange = buySell.getExchange();
-    $scope.userHasExchangeAcct = $scope.exchange != null;
     $scope.status.loading = false;
+
+    if (!$scope.exchange) {
+      $scope.$watch(buySell.getExchange, (ex) => $scope.exchange = ex);
+    }
   });
 
   $scope.changeCurrency = (curr) => {

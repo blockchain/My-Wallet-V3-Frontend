@@ -7,14 +7,14 @@
     .flex-row.flex-column-tablet
       .flex-column.width-50.mrl
         buy-steps.pointer(buy="buy()"
-                          exchange-acct="userHasExchangeAcct"
+                          exchange-acct="exchange.profile != null"
                           currency-symbol="currencySymbol"
                           partner="partner")
         buy-quick-start(transaction="transaction" 
                         change-currency="changeCurrency(currency)"
                         buy="buy(amt)")
       .flex-column.width-50.mll
-        buy-steps.fade(exchange-acct="userHasExchangeAcct"
+        buy-steps.fade(exchange-acct="exchange.profile != null"
                        currency-symbol="currencySymbol"
                        profile="profile"
                        partner="partner")
@@ -28,4 +28,4 @@
         h4.type-h4(translate="History")
         table.width-100.mbvl
           tr(ng-repeat="trade in trades.completed | orderBy:'createdAt':true" trade="trade" first="$first" buy="buy(amt, trade, 'active-tx')")
-    account-info(exchange="exchange" ng-show="userHasExchangeAcct")
+    account-info(exchange="exchange" ng-show="exchange.profile != null")
