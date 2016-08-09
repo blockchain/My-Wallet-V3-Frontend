@@ -1,44 +1,29 @@
-.buy-steps.flex-row.flex-between.flex-baseline.center(ng-hide="status.loading"
-                                                      ng-click="buy()"
-                                                      ng-class="{'flex-justify': exchangeAcct}")
-  .width-20.flex-column.flex-center(ng-class="{blue: step === 0, success: step > 0}")
+.buy-steps.flex-row.flex-between.flex-baseline.center(ng-hide="status.loading" ng-click="buy()" ng-class="{'flex-justify': exchangeAcct}")
+  .width-20.flex-column.flex-center(ng-class="{blue: onStep('amount'), success: afterStep('amount')}")
     span.type-lrg {{ currencySymbol.symbol }}
-    span(ng-show="step > 0") {{ transaction.fiat |format }} {{ transaction.currency.code }}
-    span(ng-hide="step > 0" translate="Amount")
+    span(ng-show="afterStep('amount')") {{ transaction.fiat | format }} {{ transaction.currency.code }}
+    span(ng-show="onStep('amount')" translate="Amount")
 
-  .flex-justify(ng-class="{success: step > 0}")
+  .flex-justify(ng-class="{success: afterStep('amount')}")
     i.ti-arrow-right.type-h4
 
-  .width-20.flex-column.flex-center(ng-class="{blue: step === 1, success: step > 1}"
-                                    ng-hide="exchangeAcct")
-    i.type-lrg.ti-map-alt
-    span(ng-show="step > 1 || exchange.user") {{ fields.countryCode }}
-    span(ng-hide="step > 1 || exchange.user" translate="Country")
-
-  .flex-justify(ng-class="{success: step > 1}"
-                ng-hide="exchangeAcct")
-    i.ti-arrow-right.type-h4
-
-  .width-20.flex-column.flex-center(ng-class="{blue: step === 2 || step === 3, success: step > 3}"
-                                    ng-hide="exchangeAcct")
+  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('amount'), success: afterStep('accept-terms')}" ng-hide="exchangeAcct")
     i.type-lrg.ti-user
-    span(ng-show="exchange.user") {{ partner }}
-    span(ng-hide="exchange.user" translate="Account")
+    span(translate="Account")
 
-  .flex-justify(ng-class="{success: step > 3}"
-                ng-hide="exchangeAcct")
+  .flex-justify(ng-class="{success: afterStep('accept-terms')}" ng-hide="exchangeAcct")
     i.ti-arrow-right.type-h4
 
-  .width-20.flex-column.flex-center(ng-class="{blue: step >= 4, success: step > 5 && method.inMedium !== 'bank'}")
+  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('accept-terms'), success: afterStep('trade-formatted') && method.inMedium !== 'bank'}")
     i.type-lrg.ti-credit-card(ng-class="{'bank': method.inMedium === 'bank' || medium === 'bank'}")
-    span(ng-show="step > 4 && !medium").capitalize {{ method.inMedium }}
-    span(ng-show="step > 4 && medium && medium !== 'bank'").capitalize {{ medium }}
-    span.security-red(ng-show="step > 4 && medium === 'bank'" translate="BANK_TRANSFER_PENDING")
-    span(ng-hide="step > 4" translate="Payment")
+    span(ng-show="afterStep('accept-terms') && !medium").capitalize {{ method.inMedium }}
+    span(ng-show="afterStep('accept-terms') && medium && medium !== 'bank'").capitalize {{ medium }}
+    span.security-red(ng-show="afterStep('accept-terms') && medium === 'bank'" translate="BANK_TRANSFER_PENDING")
+    span(ng-hide="afterStep('accept-terms')" translate="Payment")
 
-  .flex-justify(ng-class="{blue: step > 5 && step < 8, success: step === 8, 'send-red': step === 7 && tradeError}")
+  .flex-justify(ng-class="{blue: afterStep('trade-formatted'), success: onStep('success'), 'send-red': onStep('pending') && tradeError}")
     i.ti-arrow-right.type-h4
 
-  .width-20.flex-column.flex-center(ng-class="{blue: step > 5 && step < 8, success: step === 8, 'send-red': step === 7 && tradeError}")
+  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('trade-formatted'), success: onStep('success'), 'send-red': onStep('pending') && tradeError}")
     i.type-lrg.ti-shopping-cart
     span(translate="Get Bitcoin")
