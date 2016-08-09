@@ -863,7 +863,7 @@
   "PHONE_NUMBER": "Phone Number",
   "EDIT_PROFILE": "Edit Your Profile",
   "BUY_BITCOIN": "Buy Bitcoin",
-  "SENT_VERIFICATION": "We sent a verification email to <span class='em-500'>{{::email}}</span> when you created your Blockchain wallet. Click on the <b>Verification Link</b> to continue.",
+  "SENT_VERIFICATION": "We just sent a verification email to <span class='em-500'>{{::email}}</span>. Click on the <b>Verification Link</b> to continue.",
   "CHANGE_EMAIL": "You can also&nbsp;<span class='blue'>change your email address.</span>",
   "PARTNER": "Our partner {{::partner}} will process your bitcoin purchase. By clicking 'Continue' you will create an account with {{::partner}}. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
   "ACCEPT_PARTNER_TOS_PRIVACY": "Accept <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>{{::partner}}'s Terms of Service</a> and <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>{{::partner}}'s Privacy Policy</a>",
