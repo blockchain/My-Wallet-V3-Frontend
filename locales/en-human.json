@@ -887,6 +887,7 @@
   "RATE_AUTO_REFRESH": "Exchange rates automatically refresh after 15 minutes.",
   "RATE_EXPIRES": "Rate Expires: {{::count}}",
   "NOT_FINISHED": "Not Finished",
+  "COUNTRY_NOT_FOUND": "Sorry, you cannot create an account in the country you selected.",
   "awaiting_transfer_in": "Awaiting Payment",
   "processing": "Processing Payment",
   "reviewing": "Reviewing Payment",
