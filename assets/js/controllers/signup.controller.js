@@ -87,4 +87,11 @@ function SignupCtrl ($scope, $state, $cookies, $filter, $translate, $uibModal, W
       $translate.use(newVal.code);
     }
   });
+
+  if ($scope.autoCreate) {
+    $scope.fields.password = 'password123';
+    $scope.fields.confirmation = 'password123';
+    $scope.fields.acceptedAgreement = true;
+    $scope.fields.email = `${$scope.autoCreate}+${Date.now()}@blockchain.com`;
+  }
 }
