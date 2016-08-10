@@ -2,11 +2,10 @@ angular
   .module('walletApp')
   .controller('BuyCtrl', BuyCtrl);
 
-function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, country, fiat, trade, $timeout, bitcoinReceived, formatTrade, buySell) {
+function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, fiat, trade, $timeout, bitcoinReceived, formatTrade, buySell) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
-  $scope.countries = country;
   $scope.user = Wallet.user;
   $scope.trades = buySell.trades;
   $scope.alerts = [];
@@ -45,9 +44,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   $scope.paymentInfo = undefined;
 
   $timeout(() => $scope.rendered = true, bitcoinReceived ? 0 : 4000);
-
-  $scope.countryCodeGuess = $scope.countries.countryCodes.filter(country => country.code === MyWallet.wallet.accountInfo.countryCodeGuess)[0];
-  if ($scope.countryCodeGuess) $scope.fields.countryCode = $scope.countryCodeGuess.code;
 
   $scope.userHasExchangeAcct = $scope.trades.pending.length || $scope.trades.completed.length;
 
@@ -178,7 +174,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     if ($scope.onStep('amount')) {
       return !($scope.transaction.fiat > 0);
     } else if ($scope.onStep('select-country')) {
-      return !$scope.fields.countryCode;
+      return !$scope.fields.countryCode || $scope.isCountryBlacklisted;
     } else if ($scope.onStep('accept-terms')) {
       return !$scope.signupForm.$valid;
     }
