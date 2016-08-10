@@ -103,6 +103,12 @@
             height: 632px;
           }
         }
+        &.pin {
+          height: 366px;
+          #isx-iframe {
+            height: 366px;
+          }
+        }
         &.verify-pin {
           height: 347px;
           #isx-iframe {
