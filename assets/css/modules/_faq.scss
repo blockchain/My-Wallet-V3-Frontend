@@ -1,0 +1,105 @@
+.faq {
+  
+  h2 {
+    margin: 0;
+    font-size: 23px;
+    font-weight: 300;
+  }
+  
+  .faq-box {
+    margin-top: 61px;
+  }
+  
+  .header-bar {
+    position: fixed;
+    width: calc(100% - 270px);
+    left: 270px;
+    top: 175px;
+    height: 50px;
+    background: $light-blue;
+    padding: 13px 30px;
+    border-bottom: 1px solid #ddd;
+    z-index: 1;
+  }
+  
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 17px;
+    }
+    .header-bar {
+      width: 100%;
+      top: 145px;
+      left: 0;
+      border-top: 1px solid $eee;
+      padding: 14px 30px;
+    }
+  }
+  
+  .still-q {
+    margin: 50px; }
+
+  h1 {
+    font-size: 53px; }
+
+  hr {
+    width: 100%;
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #5f5f5f;
+    margin: 1em 0;
+    padding: 0;
+    opacity: 0.5;
+  }
+  
+  span {
+    margin-top: 10px;
+    color: #049bd4; }
+
+  span, p {
+    font-weight: 300; }
+
+  @media (max-width: 992px) {
+    .width-100 {
+      width: 100% !important;
+    }
+  }
+
+  .question {
+    font-size: 1.2em;
+  }
+  
+  .answer {
+    font-size: 14px;
+    padding-bottom: 0px !important;
+  }
+  
+  .animate-if {
+    padding:10px;
+  }
+
+  .animate-if.ng-enter, .animate-if.ng-leave {
+    transition:all cubic-bezier(0.68,0.64,0.67,1.04) 0.3s;
+  } 
+  
+  .animate-if.ng-enter,
+  .animate-if.ng-leave.ng-leave-active {
+    line-height: 0;
+    opacity: 0;
+    padding: 0 10px;
+  }
+
+  .animate-if.ng-leave,
+  .animate-if.ng-enter.ng-enter-active {
+    line-height: 1.428571429;
+    opacity: 1;
+    padding: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .answer {
+      letter-spacing: .1px;
+    }
+  }
+  
+}

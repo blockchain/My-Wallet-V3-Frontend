@@ -287,6 +287,20 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/settings/settings.jade'
         }
       }
+    })
+    .state('wallet.common.faq', {
+      url: '/faq',
+      views: {
+        top: top,
+        left: {
+          templateUrl: 'partials/wallet-navigation.jade',
+          controller: 'WalletNavigationCtrl'
+        },
+        right: {
+          templateUrl: 'partials/faq.jade',
+          controller: 'faqCtrl'
+        }
+      }
     });
 
   $stateProvider
