@@ -2,12 +2,14 @@ angular
   .module('walletApp')
   .controller('ChangeSecondPasswordCtrl', ChangeSecondPasswordCtrl);
 
-function ChangeSecondPasswordCtrl ($scope, Wallet, $timeout) {
+function ChangeSecondPasswordCtrl ($scope, Wallet, $timeout, MyWallet) {
   $scope.form = {};
   $scope.fields = {
     password: '',
     confirmation: ''
   };
+
+  try { $scope.userHasExchangeAcct = MyWallet.wallet.external.coinify.user; } catch (e) {}
 
   $scope.reset = () => {
     $scope.fields = {
