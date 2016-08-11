@@ -103,7 +103,7 @@ function isignthis ($sce) {
         // Listen to message from child window
         eventer(messageEvent, function (e) {
           // Check for the domain who sent the messageEvent
-          var origin = event.origin || event.originalEvent.origin;
+          var origin = e.origin || e.originalEvent.origin;
           if (origin !== 'https://verify.isignthis.com') {
             // Event not generated from ISX, simply return
             return;
