@@ -1,6 +1,5 @@
 .question.em-400
-  i.ti-angle-right(ng-if="!item.displayed")
-  i.ti-angle-down(ng-if="item.displayed")
+  i.ti-angle-right(ng-class="{'active' : item.displayed}")
   span.plm.pointer(ng-click="tog(index)") {{item.question}}
 .answer.em-300(ng-if="item.displayed" class="animate-if")
   p {{item.answer}}
