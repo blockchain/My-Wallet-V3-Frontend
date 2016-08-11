@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buySell', buySell);
 
-function buySell ($timeout, $q, $uibModal, MyWallet, Alerts) {
+function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
   let pendingStates = ['awaiting_transfer_in', 'processing', 'reviewing'];
   let completedStates = ['expired', 'rejected', 'cancelled', 'completed', 'completed_test'];
 
@@ -13,7 +13,8 @@ function buySell ($timeout, $q, $uibModal, MyWallet, Alerts) {
     getTrades,
     watchAddress,
     fetchProfile,
-    openBuyView
+    openBuyView,
+    getCurrency
   };
 
   return service;
@@ -87,5 +88,12 @@ function buySell ($timeout, $q, $uibModal, MyWallet, Alerts) {
     } catch (e) {
       open();
     }
+  }
+
+  function getCurrency () {
+    let coinifyCurrencies = currency.coinifyCurrencies;
+    let walletCurrency = Wallet.settings.currency;
+    let isCoinifyCompatible = coinifyCurrencies.some(c => c.code === walletCurrency.code);
+    return isCoinifyCompatible ? walletCurrency : coinifyCurrencies[0];
   }
 }

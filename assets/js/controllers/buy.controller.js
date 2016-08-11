@@ -39,10 +39,11 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   $scope.bitcoinReceived = bitcoinReceived;
 
   $scope.fields = { email: $scope.user.email, countryCode: $scope.exchange.profile.country };
-  $scope.transaction = {fiat: 0, btc: 0, fee: 0, total: 0, currency: $scope.settings.currency};
+  $scope.transaction = {fiat: 0, btc: 0, fee: 0, total: 0, currency: buySell.getCurrency()};
   $scope.transaction.fiat = fiat || 0;
-  $scope.paymentInfo = undefined;
+  $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
 
+  $timeout(() => $scope.getPaymentMethods());
   $timeout(() => $scope.rendered = true, bitcoinReceived ? 0 : 4000);
 
   $scope.userHasExchangeAcct = $scope.trades.pending.length || $scope.trades.completed.length;
@@ -61,7 +62,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   };
 
   $scope.changeCurrency = (curr) => {
-    if (!curr) curr = $scope.settings.currency;
+    if (!curr) curr = buySell.getCurrency();
     if ($scope.trade) curr = {code: $scope.trade.inCurrency};
 
     $scope.currencySymbol = currency.conversions[curr.code];
@@ -71,7 +72,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
       $scope.getPaymentMethods();
     };
 
-    Wallet.changeCurrency(curr).then(success);
+    return Wallet.changeCurrency(curr).then(success);
   };
 
   $scope.standardError = (err) => {
@@ -89,9 +90,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     }
   };
 
-  $scope.fetchProfile = () => {
-    return $scope.exchange.fetchProfile().catch($scope.standardError);
-  };
+  $scope.fetchProfile = () => $scope.exchange.fetchProfile();
 
   $scope.updateAmounts = () => {
     if (!$scope.quote || !$scope.exchange.user) return;
@@ -191,14 +190,12 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
 
   $scope.signup = () => {
     $scope.status.waiting = true;
+    Alerts.clear($scope.alerts);
 
-    const success = () => {
-      Alerts.clear($scope.alerts);
-      $scope.fetchProfile().then($scope.changeCurrency());
-    };
-
-    $scope.exchange.signup($scope.fields.countryCode)
-      .then(success).catch($scope.standardError);
+    return $scope.exchange.signup($scope.fields.countryCode)
+      .then(() => $scope.fetchProfile())
+      .then(() => $scope.changeCurrency())
+      .catch($scope.standardError);
   };
 
   $scope.watchAddress = () => {
@@ -282,8 +279,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     Alerts.confirm(text, {action: action}).then($scope.cancel);
   };
 
-  $scope.changeCurrency();
-
   $scope.$watch('method', $scope.updateAmounts);
   $scope.$watchGroup(['exchange.user', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
 
@@ -305,7 +300,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
 
   $scope.$watch('step', (newVal) => {
     if (!$scope.partner) $scope.addExchange();
-    if ($scope.exchange.user && !$scope.exchange.profile) $scope.fetchProfile();
+    if ($scope.exchange.user && !$scope.exchange.profile) $scope.fetchProfile().catch($scope.standardError);
     if ($scope.steps['email'] === newVal) Wallet.resendEmailConfirmation();
   });
 

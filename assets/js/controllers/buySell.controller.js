@@ -21,7 +21,7 @@ function BuySellCtrl ($scope, Alerts, Wallet, currency, buySell) {
   });
 
   $scope.changeCurrency = (curr) => {
-    if (!curr) curr = $scope.settings.currency;
+    if (!curr) return;
     let success = () => { $scope.transaction.currency = curr; };
     Wallet.changeCurrency(curr).then(success);
   };
@@ -31,7 +31,9 @@ function BuySellCtrl ($scope, Alerts, Wallet, currency, buySell) {
       .then(() => trade.cancel().then(buySell.getTrades, Alerts.displayError));
   };
 
-  $scope.$watch('settings.currency', $scope.changeCurrency, true);
+  $scope.$watch('settings.currency', () => {
+    $scope.transaction.currency = buySell.getCurrency();
+  }, true);
 
   $scope.$watch('transaction.currency', () => {
     let curr = $scope.transaction.currency || null;
