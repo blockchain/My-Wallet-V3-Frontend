@@ -6,14 +6,12 @@ angular
 country.$inject = [];
 
 function country () {
-  const countryCodes = [{'Name': 'Åland Islands', 'Code': 'AX'},
-                        {'Name': 'Albania', 'Code': 'AL'},
+  const countryCodes = [{'Name': 'Albania', 'Code': 'AL'},
                         {'Name': 'Algeria', 'Code': 'DZ'},
                         {'Name': 'American Samoa', 'Code': 'AS'},
                         {'Name': 'Andorra', 'Code': 'AD'},
                         {'Name': 'Angola', 'Code': 'AO'},
                         {'Name': 'Anguilla', 'Code': 'AI'},
-                        {'Name': 'Antarctica', 'Code': 'AQ'},
                         {'Name': 'Antigua and Barbuda', 'Code': 'AG'},
                         {'Name': 'Argentina', 'Code': 'AR'},
                         {'Name': 'Armenia', 'Code': 'AM'},
@@ -94,7 +92,6 @@ function country () {
                         {'Name': 'Guyana', 'Code': 'GY'},
                         {'Name': 'Haiti', 'Code': 'HT'},
                         {'Name': 'Heard Island and McDonald Islands', 'Code': 'HM'},
-                        {'Name': 'Holy See (Vatican City State)', 'Code': 'VA'},
                         {'Name': 'Honduras', 'Code': 'HN'},
                         {'Name': 'Hong Kong', 'Code': 'HK'},
                         {'Name': 'Hungary', 'Code': 'HU'},
@@ -227,7 +224,6 @@ function country () {
                         {'Name': 'Vanuatu', 'Code': 'VU'},
                         {'Name': 'Viet Nam', 'Code': 'VN'},
                         {'Name': 'Virgin Islands, British', 'Code': 'VG'},
-                        {'Name': 'Virgin Islands, U.S.', 'Code': 'VI'},
                         {'Name': 'Wallis and Futuna', 'Code': 'WF'},
                         {'Name': 'Western Sahara', 'Code': 'EH'},
                         {'Name': 'Zambia', 'Code': 'ZM'}];
