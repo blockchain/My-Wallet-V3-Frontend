@@ -1,7 +1,7 @@
 .payment-methods
   p.em-400.type-lbl.black Select Payment Method:
   .flex-row.flex-center.pbm.pointer.border-bottom
-    input(type="radio" name="inMedium" id="card" ng-model="method" ng-value="card" ng-disabled="status.waiting")
+    input(type="radio" name="inMedium" id="card" ng-model="method" value="card" ng-disabled="status.waiting")
     .flex-column.flex-1.mlm.pointer
       label.mts.pointer.em-400(for="card")
         span.flex-column
@@ -14,7 +14,7 @@
             span.em-400(translate="CARD_TRANSFER.TITLE")
             helper-button(content="CARD_TRANSFER.COPY")
   .flex-row.flex-center.mbl.pvm.border-bottom.pointer
-    input(type="radio" name="inMedium" id="bank" ng-model="method" ng-value="bank" ng-disabled="status.waiting")
+    input(type="radio" name="inMedium" id="bank" ng-model="method" value="bank" ng-disabled="status.waiting")
     .flex-column.flex-1.mlm.pointer
       label.mts.pointer.em-400(for="bank")
         span.flex-column
