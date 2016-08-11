@@ -34,14 +34,17 @@ function quoteCountdown ($interval) {
       }, 1000);
     };
 
+    scope.cancelCounter = () => $interval.cancel(scope.counter);
+
     scope.restartCounter = () => {
       scope.count = undefined;
-      $interval.cancel(scope.counter);
+      scope.cancelCounter();
 
       if (!scope.quote) return;
       scope.startCounter();
     };
 
     scope.$watch('quote', scope.restartCounter);
+    scope.$on('$destroy', scope.cancelCounter);
   }
 }
