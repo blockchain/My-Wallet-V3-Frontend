@@ -1,10 +1,4 @@
-.faq {
-  h2 {
-    margin: 0;
-    font-size: 1.75em;
-    font-weight: 300;
-  }
-  
+.faq {  
   .faq-box {
     margin-top: 50px;
   }
@@ -16,7 +10,7 @@
     top: 175px;
     height: 50px;
     background: $light-blue;
-    padding: 13px 30px;
+    padding: 14px 30px;
     border-bottom: 1px solid #ddd;
     z-index: 1;
   }
@@ -37,9 +31,6 @@
   span {
     margin-top: 10px;
     color: #049bd4; }
-
-  span, p {
-    font-weight: 300; }
 
   @media (max-width: 992px) {
     .width-100 {
@@ -66,11 +57,6 @@
       transform: rotate(90deg);
       transition:all linear 0.3s;
     }
-  }
-  
-  .answer {
-    font-size: 14px;
-    padding-bottom: 0px !important;
   }
   
   .animate-if {
