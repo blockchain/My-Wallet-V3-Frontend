@@ -49,6 +49,23 @@
 
   .question {
     font-size: 1.2em;
+    i {
+      display: inline-block;
+      -webkit-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+      transition:all linear 0.3s;
+    }
+    i.active {
+      -webkit-transform: rotate(90deg);
+      -moz-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+      -o-transform: rotate(90deg);
+      transform: rotate(90deg);
+      transition:all linear 0.3s;
+    }
   }
   
   .answer {
@@ -87,5 +104,4 @@
   faq-question {
     border-bottom: 1px solid #a7a7a7;
   }
-  
 }
