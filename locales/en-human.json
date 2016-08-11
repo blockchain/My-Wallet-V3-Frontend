@@ -887,6 +887,7 @@
   "RATE_AUTO_REFRESH": "Exchange rates automatically refresh after 15 minutes.",
   "RATE_EXPIRES": "Rate Expires: {{::count}}",
   "NOT_FINISHED": "Not Finished",
+  "COUNTRY_NOT_FOUND": "Sorry, you cannot create an account in the country you selected.",
   "awaiting_transfer_in": "Awaiting Payment",
   "processing": "Processing Payment",
   "reviewing": "Reviewing Payment",
@@ -949,5 +950,6 @@
     "COPY": "Depending on your bank Coinify will send you the bitcoin within 24 hours after they receive your payment. The final exchange rate will be determined once your bank transfer arrives."
   },
   "RECEIVE_BITCOIN_TO": "Bitcoins will be sent to {{::label}}.",
-  "MUST_DISABLE_2ND_PW": "Please remove your second password to access this section of the wallet."
+  "MUST_DISABLE_2ND_PW": "Please remove your second password to access this section of the wallet.",
+  "BLACKLISTED_COUNTRY": "Buying bitcoin is not available in your country yet."
 }

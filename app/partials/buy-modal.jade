@@ -23,7 +23,7 @@
       alerts(context="alerts")
     div(ng-show="onStep('amount')")
       include ./buy-amount
-    div(ng-show="onStep('select-country')")
+    div(ng-show="onStep('select-country')" ng-controller="BuySelectCountryCtrl")
       include ./buy-select-country
     div(ng-show="onStep('email')")
       include ./buy-email
