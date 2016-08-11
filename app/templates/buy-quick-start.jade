@@ -27,11 +27,11 @@
         ng-model="transaction.fiat"
         name="fiat"
         tabindex="1"
-        on-enter="buy()"
+        on-enter="buy({amt: transaction.fiat})"
         placeholder="0"
         min="0"
         max="2100000000000000"
         required
       )
   .flex-end.mtml
-    button.button-success(translate="Buy Bitcoin" ng-click="buy()")
+    button.button-success(translate="Buy Bitcoin" ng-click="buy({amt: transaction.fiat})")
