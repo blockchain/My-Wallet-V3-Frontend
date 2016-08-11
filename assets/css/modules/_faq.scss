@@ -1,10 +1,4 @@
-.faq {
-  h2 {
-    margin: 0;
-    font-size: 1.75em;
-    font-weight: 300;
-  }
-  
+.faq {  
   .faq-box {
     margin-top: 50px;
   }
@@ -16,7 +10,7 @@
     top: 175px;
     height: 50px;
     background: $light-blue;
-    padding: 13px 30px;
+    padding: 14px 30px;
     border-bottom: 1px solid #ddd;
     z-index: 1;
   }
@@ -38,9 +32,6 @@
     margin-top: 10px;
     color: #049bd4; }
 
-  span, p {
-    font-weight: 300; }
-
   @media (max-width: 992px) {
     .width-100 {
       width: 100% !important;
@@ -49,11 +40,23 @@
 
   .question {
     font-size: 1.2em;
-  }
-  
-  .answer {
-    font-size: 14px;
-    padding-bottom: 0px !important;
+    i {
+      display: inline-block;
+      -webkit-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+      transition:all linear 0.3s;
+    }
+    i.active {
+      -webkit-transform: rotate(90deg);
+      -moz-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+      -o-transform: rotate(90deg);
+      transform: rotate(90deg);
+      transition:all linear 0.3s;
+    }
   }
   
   .animate-if {
@@ -87,5 +90,4 @@
   faq-question {
     border-bottom: 1px solid #a7a7a7;
   }
-  
 }
