@@ -1,0 +1,9 @@
+.faq.flex-column.width-100.flex-center
+  .header-bar
+    h2 Frequently Asked Questions
+  .flex-column.faq-box.width-100.pll.prl
+    faq-question.ptm.pbm(item="item" tog="toggleCurr" ng-repeat="item in items" index="{{$index}}")
+  .flex-column.flex-center.width-30.mbvl.mtm
+    h3 
+      small Still Have Questions?
+    a.button-primary.width-90(href="https://blockchain.zendesk.com/" target="_blank" translate="VISIT_SUPPORT" rel="noopener noreferrer")
