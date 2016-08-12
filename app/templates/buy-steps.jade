@@ -15,9 +15,9 @@
   .flex-justify(ng-class="{success: afterStep('accept-terms')}" ng-hide="exchangeAcct")
     i.ti-arrow-right.type-h4
 
-  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('accept-terms'), success: afterStep('trade-formatted') && method.inMedium !== 'bank'}")
-    i.type-lrg.ti-credit-card(ng-class="{'bank': method.inMedium === 'bank' || medium === 'bank'}")
-    span(ng-show="afterStep('summary') && !medium").capitalize {{ method.inMedium }}
+  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('accept-terms'), success: afterStep('trade-formatted') && getMethod().inMedium !== 'bank'}")
+    i.type-lrg.ti-credit-card(ng-class="{'bank': getMethod().inMedium === 'bank' || medium === 'bank'}")
+    span(ng-show="afterStep('summary') && !medium").capitalize {{ getMethod().inMedium }}
     span(ng-show="afterStep('summary') && medium && medium !== 'bank'").capitalize {{ medium }}
     span.security-red(ng-show="afterStep('summary') && medium === 'bank'" translate="BANK_TRANSFER_PENDING")
     span(ng-hide="afterStep('summary')" translate="Payment")

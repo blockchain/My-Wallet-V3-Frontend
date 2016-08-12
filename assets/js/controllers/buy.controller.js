@@ -13,6 +13,10 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   $scope.trade = trade;
   $scope.label = MyWallet.wallet.hdwallet.accounts[0].label;
 
+  $scope.method = 'card';
+  $scope.methods = {};
+  $scope.getMethod = () => $scope.methods[$scope.method];
+
   let exchange = buySell.getExchange();
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
 
@@ -51,14 +55,17 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   $scope.getPaymentMethods = () => {
     if (!$scope.exchange.user) return;
 
-    const success = (methods) => {
-      $scope.card = methods.filter((m) => m.inMedium === 'card')[0];
-      $scope.bank = methods.filter((m) => m.inMedium === 'bank')[0];
-      $scope.method = $scope.card;
-      $scope.getQuote();
+    $scope.status.waiting = true;
+
+    let success = (methods) => {
+      $scope.methods = {
+        card: methods.filter((m) => m.inMedium === 'card')[0],
+        bank: methods.filter((m) => m.inMedium === 'bank')[0]
+      };
     };
 
-    $scope.exchange.getPaymentMethods($scope.transaction.currency.code, 'BTC').then(success);
+    return $scope.exchange.getPaymentMethods($scope.transaction.currency.code, 'BTC')
+      .then(success).then(() => $scope.getQuote());
   };
 
   $scope.changeCurrency = (curr) => {
@@ -96,7 +103,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     if (!$scope.quote || !$scope.exchange.user) return;
 
     let fiatAmt = $scope.transaction.fiat;
-    let methodFee = fiatAmt * ($scope.method.inPercentageFee / 100);
+    let methodFee = fiatAmt * ($scope.getMethod().inPercentageFee / 100);
 
     $scope.transaction.methodFee = methodFee.toFixed(2);
     $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount, currency.bitCurrencies[0]);
@@ -110,8 +117,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     $scope.transaction.btc = 0;
 
     if (!$scope.transaction.fiat) return;
-
-    $scope.status.waiting = true;
 
     const success = (quote) => {
       $scope.status = {};
@@ -213,13 +218,13 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     };
 
     // check if bank transfer and kyc level
-    if ($scope.method.inMedium === 'bank' &&
+    if ($scope.getMethod().inMedium === 'bank' &&
         parseInt($scope.exchange.profile.level.name, 10) < 2) {
       $scope.exchange.triggerKYC().then(success, $scope.standardError);
       return;
     }
 
-    $scope.exchange.buy($scope.transaction.fiat, $scope.transaction.currency.code, $scope.method.inMedium)
+    $scope.exchange.buy($scope.transaction.fiat, $scope.transaction.currency.code, $scope.getMethod().inMedium)
                    .then(success, $scope.standardError)
                    .then($scope.watchAddress);
   };
