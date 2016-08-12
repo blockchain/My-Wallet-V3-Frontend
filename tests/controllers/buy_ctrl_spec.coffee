@@ -1,4 +1,4 @@
-describe "BuyCtrl", ->
+fdescribe "BuyCtrl", ->
   scope = undefined
   Wallet = undefined
   Alerts = undefined
@@ -151,6 +151,12 @@ describe "BuyCtrl", ->
       scope.bitcoinReceived = true
       scope.nextStep()
       expect(scope.onStep('success')).toEqual(true)
+
+  describe "standardError", ->
+    it "should reject an email already that has an acct", ->
+      err = '{"error":"email_address_in_use","error_description":"A user already exists with the given email address."}'
+      scope.standardError(err)
+      expect(scope.rejectedEmail).toEqual(true)
 
   describe "close", ->
     beforeEach ->

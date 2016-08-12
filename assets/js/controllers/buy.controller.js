@@ -87,7 +87,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     $scope.status = {};
     try {
       let e = JSON.parse(err);
-      let msg = e.error_description.toUpperCase();
+      let msg = e.error.toUpperCase();
       if (msg === 'EMAIL_ADDRESS_IN_USE') $scope.rejectedEmail = true;
       else Alerts.displayError(msg, true, $scope.alerts, {user: $scope.exchange.user});
     } catch (e) {
