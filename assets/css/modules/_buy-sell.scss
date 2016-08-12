@@ -88,41 +88,49 @@
           margin-bottom: -5px;
         }
         &.capture {
+          height: 500px;
           #isx-iframe {
             height: 650px;
           }
         }
         &.secret {
+          height: 400px;
           #isx-iframe {
             height: 400px;
           }
         }
         &.otp {
+          height: 415px;
           #isx-iframe {
             height: 415px;
           }
         }
         &.otp-pin {
+          height: 500px;
           #isx-iframe {
             height: 632px;
           }
         }
         &.pin {
+          height: 366px;
           #isx-iframe {
             height: 366px;
           }
         }
         &.verify-pin {
+          height: 347px;
           #isx-iframe {
             height: 347px;
           }
         }
         &.kyc {
+          height: 500px;
           #isx-iframe {
             height: 700px;
           }
         }
         &.documents {
+          height: 500px;
           #isx-iframe {
             height: 520px;
           }
