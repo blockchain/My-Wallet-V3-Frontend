@@ -6,6 +6,7 @@
         quote-countdown(quote="quote" get-quote="getQuote()" ng-hide="afterStep('trade-complete')")
       buy-steps(transaction="transaction"
                 on-step="onStep"
+                get-method="getMethod"
                 after-step="afterStep"
                 before-step="beforeStep"
                 payment-info="paymentInfo"
@@ -16,7 +17,6 @@
                 trade-obj="trade"
                 partner="partner"
                 fields="fields"
-                method="method"
                 step="step")
   .modal-body.fade(class="{{isxStep}}" ng-class="{'buy-amount': onStep('amount'), 'buy-select-country': onStep('select-country'), 'buy-email': onStep('email'), 'buy-accept-terms': onStep('accept-terms'), 'buy-summary': onStep('summary'), 'isx': onStep('trade-formatted', 'trade-complete') && (trade.medium === 'card' || !trade.medium), 'bank-account': onStep('trade-formatted', 'trade-complete') && trade.medium === 'bank', 'buy-pending': onStep('pending'), 'buy-success': onStep('success')}")
     .alert-in-app
