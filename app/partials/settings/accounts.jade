@@ -1,14 +1,14 @@
 h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
   
-.row.pvl
-  .col-xs-6.flex-center
+.flex-row.flex-column-mobile.pvl
+  .col-xs-6.flex-center.width-100-mobile.pbm-m
     button.button-primary.mrm.button-nowrap(ng-click="newAccount()" translate="CREATE_ACCOUNT")
-    a.button-default.button-nowrap.mrm.hidden-xxs(
+    a.button-default.button-nowrap.mrm(
       ng-click="transfer(address)"  
       ng-show="numberOfActiveAccounts() > 1" 
       translate="TRANSFER"
     )
-  .col-xs-6.flex-center
+  .col-xs-6.flex-center.width-100-mobile
     .filter-search-alt.width-100.width-100-mobile.pos-rel.mrm
       input(type="text" ng-model="searchText")
       i.ti-search.pos-abs

@@ -206,8 +206,8 @@ table.accounts-container {
   }
 }
 
-@media (max-width: 395px) {
-  .hidden-xxs {
-    display: none;   
+@media (max-width: 768px) {
+  .pbm-m {
+    padding-bottom: 0.625em;
   }
 }
