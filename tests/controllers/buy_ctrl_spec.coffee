@@ -56,12 +56,12 @@ describe "BuyCtrl", ->
       spyOn(scope.exchange, "getPaymentMethods").and.returnValue($q.resolve(methods))
 
     it "should set the correct scope variables from the response", ->
+      expect(scope.method).toEqual('card')
       scope.getPaymentMethods()
       $rootScope.$digest()
       expect(scope.exchange.getPaymentMethods).toHaveBeenCalled()
-      expect(scope.card).toEqual(methods[0])
-      expect(scope.bank).toEqual(methods[1])
-      expect(scope.method).toEqual(methods[0])
+      expect(scope.methods.card).toEqual(methods[0])
+      expect(scope.methods.bank).toEqual(methods[1])
 
   describe "changeCurrency", ->
     beforeEach ->
@@ -102,7 +102,7 @@ describe "BuyCtrl", ->
       scope.exchange.user = {}
       scope.quote = quoteAmount: 105
       scope.transaction.fiat = 100
-      scope.method = inPercentageFee: 5
+      scope.methods.card = inPercentageFee: 5
       scope.updateAmounts()
       expect(scope.transaction).toEqual(jasmine.objectContaining({fiat: 100, btc: "BTC(105)", methodFee: "5.00"}))
 

@@ -1,65 +1,46 @@
 describe "VerifyEmailController", ->
   scope = undefined
+  $rootScope = undefined
+  $controller = undefined
 
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller) ->
+    angular.mock.inject ($injector, $q, _$rootScope_, _$controller_) ->
+      $rootScope = _$rootScope_
+      $controller = _$controller_
+
       WalletTokenEndpoints = $injector.get("WalletTokenEndpoints")
-      $state = $injector.get("$state") # This is a mock
-      Alerts = $injector.get("Alerts")
 
-      spyOn(WalletTokenEndpoints, "verifyEmail").and.callThrough()
+      spyOn(WalletTokenEndpoints, "verifyEmail").and.callFake((token) ->
+        if token is "token" then $q.resolve() else $q.reject({ error: "error_msg" })
+      )
 
-      spyOn($state, "go").and.callThrough()
-
-      spyOn(Alerts, "displayError").and.callFake(() ->)
-      spyOn(Alerts, "displayVerifiedEmail").and.callFake(() ->)
-
-      return
-
-    return
+  getControllerScope = (token) ->
+    scope = $rootScope.$new()
+    $controller "VerifyEmailCtrl",
+      $scope: scope,
+      $stateParams: {token: token}
+    scope
 
   describe "with token", ->
-    beforeEach ->
-      angular.mock.inject ($controller, $rootScope) ->
+    beforeEach -> scope = getControllerScope("token")
 
-        scope = $rootScope.$new()
-
-        $controller "VerifyEmailCtrl",
-          $scope: scope,
-          $stateParams: {token: "token"}
-
-    it "should show call WalletTokenEndpoints.verifyEmail()", inject((WalletTokenEndpoints) ->
-      expect(WalletTokenEndpoints.verifyEmail).toHaveBeenCalled()
-    )
-
-    it "should pass the token parameter along", inject((WalletTokenEndpoints) ->
+    it "should call WalletTokenEndpoints.verifyEmail()", inject((WalletTokenEndpoints) ->
       expect(WalletTokenEndpoints.verifyEmail).toHaveBeenCalledWith("token")
     )
 
-    it "should redirect to the login page", inject(($state)->
-      expect($state.go).toHaveBeenCalledWith("public.login-uid", { uid : '1234' })
-    )
-
-    it "should request a modal success message", inject((Alerts) ->
-      expect(Alerts.displayVerifiedEmail).toHaveBeenCalled()
-    )
+    it "should set the state to 'success'", ->
+      scope.$digest()
+      expect(scope.state).toEqual("success")
 
   describe "with wrong token", ->
-    beforeEach ->
-      angular.mock.inject ($controller, $rootScope) ->
+    beforeEach -> scope = getControllerScope("wrong-token")
 
-        scope = $rootScope.$new()
+    it "should set the state to 'error'", ->
+      scope.$digest()
+      expect(scope.state).toEqual("error")
 
-        $controller "VerifyEmailCtrl",
-          $scope: scope,
-          $stateParams: {token: "wrong-token"}
-
-    it "should display an error message", inject((Alerts)->
-      expect(Alerts.displayError).toHaveBeenCalled()
-    )
-
-    it "should redirect to the login page", inject(($state)->
-      expect($state.go).toHaveBeenCalledWith("public.login-no-uid")
-    )
+    it "should set the error value on the scope", ->
+      scope.$digest()
+      expect(scope.error).toEqual("error_msg")
