@@ -3,7 +3,7 @@
     .flex-column.flex-1
       .flex-row.flex-between.flex-center
         h3(translate="BUY_BITCOIN")
-        quote-countdown(quote="quote" get-quote="getQuote()" ng-hide="afterStep('trade-complete')")
+        quote-countdown(quote="quote" get-quote="getQuote()" ng-hide="afterStep('trade-complete') || getMethod().inMedium === 'bank'")
       buy-steps(transaction="transaction"
                 on-step="onStep"
                 get-method="getMethod"
