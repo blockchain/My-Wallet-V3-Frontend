@@ -1,4 +1,4 @@
-fdescribe "BuyCtrl", ->
+describe "BuyCtrl", ->
   scope = undefined
   Wallet = undefined
   Alerts = undefined
