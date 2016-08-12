@@ -907,6 +907,8 @@
   "BANK_ADDRESS": "Bank Address:",
   "BANK_TRANSFER_PENDING": "Bank Transfer Pending",
   "BANK_TRANSFER_UPON_COMPLETION": "Once your transfer is completed it will be exchanged to bitcoin and automatically sent to <be>{{::label}}</b>.",
+  "BOUGHT_VIA": "Bought via {{exchange}}",
+  "SOLD_VIA": "Sold via {{exchange}}",
   "DECLINED_TRANSACTION": {
     "TITLE": "Card Declined",
     "BODY": "Your transaction has been declined. The country or card provider is not accepted by Coinify."

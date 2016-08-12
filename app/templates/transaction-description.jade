@@ -8,6 +8,9 @@
           ng-class=":: txClass"
           translate="{{:: txDirection }}")
       span.label.label-default.mts(translate="WATCH_ONLY" ng-show=":: txWatchOnly")
+      span.label.label-primary.mts(ng-show="txMethod != null")
+        span(translate="BOUGHT_VIA" translate-values="{exchange:exchange}" ng-show="txMethod === 'buy'")
+        span(translate="SOLD_VIA" translate-values="{exchange:exchange}" ng-show="txMethod === 'sell'")
     .flex-2.width-30.mrl.hidden-sm.hidden-xs.destination.em-400.basic-grey
       transaction-destinations(transaction="tx" search="search")
     .flex-2.width-30.hidden-sm.hidden-xs

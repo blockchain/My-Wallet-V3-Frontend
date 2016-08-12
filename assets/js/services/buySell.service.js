@@ -5,10 +5,14 @@ angular
 function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
   let pendingStates = ['awaiting_transfer_in', 'processing', 'reviewing'];
   let completedStates = ['expired', 'rejected', 'cancelled', 'completed', 'completed_test'];
+  let receiveAddressMap = {};
+  let initialized = $q.defer();
 
   const service = {
     getExchange: () => MyWallet.wallet.external.coinify,
     trades: { completed: [], pending: [] },
+    getAddressMethod: (address) => receiveAddressMap[address] || null,
+    initialized: () => initialized.promise,
     init,
     getTrades,
     watchAddress,
@@ -17,6 +21,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
     getCurrency
   };
 
+  init().then(initialized.resolve);
   return service;
 
   function init () {
@@ -32,6 +37,11 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
     const success = (trades) => {
       service.trades.pending = trades.filter(t => pendingStates.indexOf(t.state) > -1);
       service.trades.completed = trades.filter(t => completedStates.indexOf(t.state) > -1);
+
+      trades.forEach(t => {
+        let type = t.outCurrency === 'BTC' ? 'buy' : 'sell';
+        receiveAddressMap[t.receiveAddress] = type;
+      });
 
       let newlyCompleted = service.trades.completed.length - prevCompleted;
       if (newlyCompleted > 0 || prevCompleted === 0) {
