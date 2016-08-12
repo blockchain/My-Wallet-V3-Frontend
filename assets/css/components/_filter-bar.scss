@@ -63,6 +63,14 @@
   }
 }
 
+@media (max-width: 768px) {
+  .filter-search input { padding-right: 25px !important }
+}
+
+@media (min-width: 900px) {
+  .filter-search input { padding-right: 25px !important }
+}
+
 @media (min-width: 768px) and (max-width: 900px) {
   .filter-search input { min-width: 180px }
   .filter-search .ti-search { display: none; }
