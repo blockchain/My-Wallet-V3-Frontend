@@ -63,7 +63,7 @@
   }
 
   .animate-if.ng-enter, .animate-if.ng-leave {
-    transition:all cubic-bezier(0.68,0.64,0.67,1.04) 0.3s;
+    transition:all linear 0.3s;
   } 
   
   .animate-if.ng-enter,
