@@ -184,6 +184,12 @@ function isignthis ($sce) {
             case 'MANUAL_REVIEW':
               scope.onReview({tx: tx});
               break;
+            case 'MANUAL_HOLD':
+              scope.onReview({tx: tx});
+              break;
+            case 'MANUAL_ACCEPTED':
+              scope.onPending({tx: tx});
+              break;
             case 'DECLINED':
               scope.onDeclined({tx: tx});
               break;
@@ -191,6 +197,9 @@ function isignthis ($sce) {
               scope.onExpired({tx: tx});
               break;
             case 'REJECTED':
+              scope.onDecline({tx: tx});
+              break;
+            case 'MANUAL_REJECTED':
               scope.onDecline({tx: tx});
               break;
             case 'FAILED':
