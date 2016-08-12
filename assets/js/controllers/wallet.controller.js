@@ -163,6 +163,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
           templateUrl: 'partials/first-login-modal.jade',
           windowClass: 'bc-modal rocket-modal initial'
         });
+        Wallet.goal.firstLogin = true;
         Wallet.goal.firstTime = void 0;
       }
       if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {

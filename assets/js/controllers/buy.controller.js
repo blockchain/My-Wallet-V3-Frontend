@@ -306,7 +306,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   $scope.$watch('step', (newVal) => {
     if (!$scope.partner) $scope.addExchange();
     if ($scope.exchange.user && !$scope.exchange.profile) $scope.fetchProfile().catch($scope.standardError);
-    if ($scope.steps['email'] === newVal) Wallet.resendEmailConfirmation();
+    if ($scope.steps['email'] === newVal && !Wallet.goal.firstLogin) Wallet.resendEmailConfirmation();
   });
 
   if ($scope.trade && !bitcoinReceived) {
