@@ -950,7 +950,7 @@
   },
   "BANK_TRANSFER": {
     "TITLE": "No payment processing fees | 2-3 days",
-    "COPY": "Depending on your bank Coinify will send you the bitcoin within 24 hours after they receive your payment. The final exchange rate will be determined once your bank transfer arrives."
+    "COPY": "Depending on your bank, Coinify will send you the bitcoin within 24 hours after they receive your payment. The final exchange rate will be determined once your bank transfer arrives."
   },
   "RECEIVE_BITCOIN_TO": "Bitcoins will be sent to {{::label}}.",
   "MUST_DISABLE_2ND_PW": "Please remove your second password to access this section of the wallet.",
