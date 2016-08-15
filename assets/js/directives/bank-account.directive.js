@@ -33,11 +33,13 @@ function bankAccount (MyWallet) {
       'IBAN': scope.bankAccount.number,
       'BIC': scope.bankAccount.bic,
       'Bank Name': scope.bankAccount.bankName,
-      'Bank Address': scope.bankAccount.bankAddress.street + ', ' +
-                      scope.bankAccount.bankAddress.city + ', ' +
-                      scope.bankAccount.bankAddress.state + ', ' +
-                      scope.bankAccount.bankAddress.country + ', ' +
-                      scope.bankAccount.bankAddress.zipcode,
+      'Bank Address': [
+        scope.bankAccount.bankAddress.street,
+        scope.bankAccount.bankAddress.city,
+        scope.bankAccount.bankAddress.state,
+        scope.bankAccount.bankAddress.country,
+        scope.bankAccount.bankAddress.zipcode
+      ].join(', '),
       'Message': scope.bankAccount.referenceText
     };
 
