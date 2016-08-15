@@ -2,6 +2,7 @@ describe "buySell service", () ->
   Wallet = undefined
   MyWallet = undefined
   buySell = undefined
+  currency = undefined
   $rootScope = undefined
   $q = undefined
   $uibModal = undefined
@@ -25,8 +26,10 @@ describe "buySell service", () ->
           coinify:
             getTrades: -> $q.resolve([])
             fetchProfile: ->
+            getBuyCurrencies: -> $q.resolve(["USD", "EUR"])
 
       buySell = $injector.get("buySell")
+      currency = $injector.get("currency")
 
   makeTrade = (state) ->
     state: state
@@ -98,6 +101,12 @@ describe "buySell service", () ->
       buySell.fetchProfile()
       $rootScope.$digest()
       expect(buySell.getTrades).toHaveBeenCalled()
+
+    it "should call updateCoinifyCurrencies when successful", ->
+      spyOn(currency, "updateCoinifyCurrencies")
+      buySell.fetchProfile()
+      $rootScope.$digest()
+      expect(currency.updateCoinifyCurrencies).toHaveBeenCalledWith(["USD", "EUR"])
 
     it "should reject with the error if there is one", ->
       fetchFailWith = JSON.stringify(error: 'some_err')
