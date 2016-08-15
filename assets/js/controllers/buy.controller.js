@@ -13,7 +13,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   $scope.trade = trade;
   $scope.label = MyWallet.wallet.hdwallet.accounts[0].label;
 
-  $scope.method = 'card';
+  $scope.method = $scope.trade ? $scope.trade.medium : 'card';
   $scope.methods = {};
   $scope.getMethod = () => $scope.methods[$scope.method];
 

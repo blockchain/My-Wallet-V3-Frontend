@@ -177,6 +177,13 @@
       }
     }
   }
+  .success {
+    i.ti-credit-card.bank {
+      &:after {
+        background-image: url('../img/bank-success.png');
+      }
+    } 
+  }
 }
 
 .isx {

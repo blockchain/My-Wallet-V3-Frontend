@@ -15,11 +15,13 @@ function formatTrade ($filter, MyWallet) {
   let label = MyWallet.wallet.hdwallet.accounts[0].label;
 
   let addTradeDetails = (tx, trade) => {
-    tx['Coinify Trade'] = trade.id;
-    tx['Date Initialized'] = $filter('date')(trade.createdAt, 'MM/dd/yyyy @ h:mma');
-    tx['BTC Receiving Address'] = trade.receiveAddress;
+    let transaction = {};
+    transaction['iSignThis ID'] = tx.id;
+    transaction['Coinify Trade'] = trade.id;
+    transaction['Date Initialized'] = $filter('date')(trade.createdAt, 'MM/dd/yyyy @ h:mma');
+    transaction['BTC Receiving Address'] = trade.receiveAddress;
 
-    return tx;
+    return transaction;
   };
 
   function error (tx, trade, namespace) {

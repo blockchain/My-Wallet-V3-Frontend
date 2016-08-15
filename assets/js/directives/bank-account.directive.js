@@ -10,6 +10,7 @@ function bankAccount (MyWallet) {
     replace: true,
     scope: {
       onLoad: '&',
+      pendingTx: '=',
       transaction: '='
     },
     templateUrl: 'templates/bank-account.jade',
@@ -18,27 +19,36 @@ function bankAccount (MyWallet) {
   return directive;
 
   function link (scope, elem, attrs) {
-    scope.$watch('bankAccount', (newVal) => {
+    scope.$watch('transaction.bankAccount', (newVal) => {
+      if (scope.transaction.state === 'completed_test') scope.pendingTx(scope.transaction);
       if (newVal) scope.onLoad();
     });
 
     if (!scope.transaction) return;
 
     scope.label = MyWallet.wallet.hdwallet.accounts[0].label;
+    scope.bankAccount = scope.transaction.bankAccount;
 
     scope.formattedBankAccount = {
-      'Bank Name': scope.transaction.bankAccount.bankName,
-      'BIC': scope.transaction.bankAccount.bic,
-      'Number': scope.transaction.bankAccount.number,
-      'Type': scope.transaction.bankAccount.type
+      'IBAN': scope.bankAccount.number,
+      'BIC': scope.bankAccount.bic,
+      'Bank Name': scope.bankAccount.bankName,
+      'Bank Address': [
+        scope.bankAccount.bankAddress.street,
+        scope.bankAccount.bankAddress.city,
+        scope.bankAccount.bankAddress.state,
+        scope.bankAccount.bankAddress.country,
+        scope.bankAccount.bankAddress.zipcode
+      ].join(', '),
+      'Message': scope.bankAccount.referenceText
     };
 
-    scope.bankAddress = {
-      'City': scope.transaction.bankAccount.bankAddress._city,
-      'Country': scope.transaction.bankAccount.bankAddress._country,
-      'State': scope.transaction.bankAccount.bankAddress._state,
-      'Street': scope.transaction.bankAccount.bankAddress._street,
-      'Zipcode': scope.transaction.bankAccount.bankAddress._zipcode
+    scope.fakeBankTransfer = () => {
+      const success = () => {
+        scope.pendingTx(scope.transaction);
+      };
+
+      scope.transaction.fakeBankTransfer().then(success);
     };
   }
 }
