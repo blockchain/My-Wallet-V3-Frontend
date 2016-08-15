@@ -15,12 +15,19 @@
   .flex-justify(ng-class="{success: afterStep('accept-terms')}" ng-hide="exchangeAcct")
     i.ti-arrow-right.type-h4
 
-  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('accept-terms'), success: afterStep('trade-formatted') && getMethod().inMedium !== 'bank'}")
-    i.type-lrg.ti-credit-card(ng-class="{'bank': getMethod().inMedium === 'bank' || medium === 'bank'}")
+  //- card
+  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('accept-terms'), success: afterStep('trade-formatted')}" ng-hide="getMethod().inMedium === 'bank' || medium === 'bank'")
+    i.type-lrg.ti-credit-card
+    span(ng-hide="afterStep('summary')" translate="Payment")
     span(ng-show="afterStep('summary') && !medium").capitalize {{ getMethod().inMedium }}
     span(ng-show="afterStep('summary') && medium && medium !== 'bank'").capitalize {{ medium }}
-    span.security-red(ng-show="afterStep('summary') && medium === 'bank'" translate="BANK_TRANSFER_PENDING")
+
+  //- bank
+  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('accept-terms'), success: afterStep('trade-complete')}" ng-show="getMethod().inMedium === 'bank' || medium === 'bank'")
+    i.type-lrg.ti-credit-card.bank
     span(ng-hide="afterStep('summary')" translate="Payment")
+    span(ng-show="afterStep('summary')").capitalize {{ getMethod().inMedium }}
+    span.security-red(ng-show="afterStep('summary') && beforeStep('trade-completed')" translate="BANK_TRANSFER_PENDING")
 
   .flex-justify(ng-class="{blue: afterStep('trade-formatted'), success: onStep('success'), 'send-red': onStep('pending') && tradeError}")
     i.ti-arrow-right.type-h4

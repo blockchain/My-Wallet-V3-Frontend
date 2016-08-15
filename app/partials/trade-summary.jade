@@ -6,7 +6,7 @@ div(translate-namespace="{{::formattedTrade.namespace}}")
   div(ng-hide="formattedTrade.status === 'success'")
     h5.type-h5.mtl(translate="SUMMARY")
     ul.em-300(ng-if="formattedTrade.tx")
-      li.pts(ng-repeat="(prop, val) in formattedTrade.tx track by $index")
+      li.pts(ng-repeat="(prop, val) in formattedTrade.tx track by $index" ng-if="val")
         span(translate="{{::prop}}")
         | :&nbsp;
         b(ng-bind="::val")

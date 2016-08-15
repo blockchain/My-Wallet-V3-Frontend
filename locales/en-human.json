@@ -903,7 +903,7 @@
   "PROCESSED_BY_EXCHANGE": "Coinify will process the exchange. The bitcoin will be sent directly from or into your Blockchain wallet. Your payment and bank information will be submitted to the payment processor and not be seen by Blockchain.",
   "CARD_FEES": "{{::fee}}% fees charged by the card payment processor.",
   "CURRENCY_NOT_SUPPORTED": "The currency for this transaction is not supported by the payment method selected. Try another currency or select a different payment method.",
-  "SEND_TRADE_AMOUNT": "Please send {{::amt}} {{::curr}} to the bank account below within the next 48 hours.",
+  "SEND_TRADE_AMOUNT": "Please send <b>{{::amt}} {{::curr}}</b> to the bank account below within the next <b>48 hours</b>.",
   "BANK_ACCOUNT_DETAILS": "Bank Account Details:",
   "BANK_ADDRESS": "Bank Address:",
   "BANK_TRANSFER_PENDING": "Bank Transfer Pending",
