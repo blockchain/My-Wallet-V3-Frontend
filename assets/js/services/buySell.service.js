@@ -61,7 +61,12 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
   }
 
   function fetchProfile () {
-    const error = (err) => {
+    let success = () => $q.all([
+      service.getTrades(),
+      service.getExchange().getBuyCurrencies().then(currency.updateCoinifyCurrencies)
+    ]);
+
+    let error = (err) => {
       let msg;
       try {
         msg = JSON.parse(err).error.toUpperCase();
@@ -71,7 +76,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
       return $q.reject(msg);
     };
 
-    return service.getExchange().fetchProfile().then(service.getTrades, error);
+    return service.getExchange().fetchProfile().then(success, error);
   }
 
   function openBuyView (amt, _trade, active, bitcoinReceived) {
