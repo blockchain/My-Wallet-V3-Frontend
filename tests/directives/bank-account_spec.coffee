@@ -1,4 +1,4 @@
-fdescribe "bankAccount", ->
+describe "bankAccount", ->
   scope = undefined
   element = undefined
   isoScope = undefined
