@@ -32,8 +32,6 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
   }
 
   function getTrades () {
-    let prevCompleted = service.trades.completed.length;
-
     const success = (trades) => {
       service.trades.pending = trades.filter(t => pendingStates.indexOf(t.state) > -1);
       service.trades.completed = trades.filter(t => completedStates.indexOf(t.state) > -1);
@@ -43,11 +41,9 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
         receiveAddressMap[t.receiveAddress] = type;
       });
 
-      let newlyCompleted = service.trades.completed.length - prevCompleted;
-      if (newlyCompleted > 0 || prevCompleted === 0) {
-        let unwatchedTrades = service.trades.completed.slice(-newlyCompleted);
-        unwatchedTrades.forEach(service.watchAddress);
-      }
+      service.trades.completed
+        .filter(t => !t.bitcoinReceived)
+        .forEach(service.watchAddress);
 
       return service.trades;
     };

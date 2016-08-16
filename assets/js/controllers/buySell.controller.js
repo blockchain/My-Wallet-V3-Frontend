@@ -10,7 +10,7 @@ function BuySellCtrl ($scope, Alerts, Wallet, currency, buySell) {
   $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
   $scope.buy = buySell.openBuyView;
 
-  buySell.init().finally(() => {
+  buySell.initialized().finally(() => {
     $scope.trades = buySell.trades;
     $scope.exchange = buySell.getExchange();
     $scope.status.loading = false;
