@@ -73,6 +73,7 @@
   "BITCOIN_ADDRESS" : "Bitcoin Address for Your Next Transaction",
   "DEFAULT_NEW_ADDRESS_LABEL" : "New Address",
   "CANCEL" : "Cancel",
+  "CANCEL_ORDER" : "Cancel Order",
   "CANCELLED" : "Canceled",
   "SAVE" : "Save",
   "COPY" : "Copy",
@@ -897,7 +898,6 @@
   "cancelled": "Canceled",
   "rejected": "Rejected",
   "expired": "Expired",
-  "CONFIRM_PAY": "Confirm & Pay",
   "SEE_BITCOIN": "See Your Bitcoin",
   "SUMMARY": "Summary:",
   "PROCESSED_BY_EXCHANGE": "Coinify will process the exchange. The bitcoin will be sent directly from or into your Blockchain wallet. Your payment and bank information will be submitted to the payment processor and not be seen by Blockchain.",
@@ -954,5 +954,6 @@
   },
   "RECEIVE_BITCOIN_TO": "Bitcoins will be sent to {{::label}}.",
   "MUST_DISABLE_2ND_PW": "Please remove your second password to access this section of the wallet.",
-  "BLACKLISTED_COUNTRY": "Buying bitcoin is not available in your country yet."
+  "BLACKLISTED_COUNTRY": "Buying bitcoin is not available in your country yet.",
+  "ORDER_CONFIRMATION_COPY": "Before collecting payment information, please confirm your order amount. We'll then direct you to our secure payment provider to verify your card information."
 }

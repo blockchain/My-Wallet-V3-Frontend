@@ -41,6 +41,7 @@ function quoteCountdown ($interval) {
       scope.cancelCounter();
 
       if (!scope.quote) return;
+      scope.count = '15:00';
       scope.startCounter();
     };
 

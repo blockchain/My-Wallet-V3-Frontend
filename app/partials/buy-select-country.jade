@@ -1,13 +1,13 @@
 .phvl.ph-form
-  .form-group.row.pbm.flex-justify
-    label.em-500.flex-start.pts(translate="Please Select Your Country Of Residence:")
-    .flex-1
+  .form-group.row.flex-justify
+    label.em-500.flex-start.pts(translate="Select country of residence:")
+    .flex-1.mvl
       ui-select(ng-model="fields.countryCode" tagging)
         ui-select-match(placeholder="{{'SEARCH' | translate}}...") 
           span {{ $select.selected['Name'] }}
         ui-select-choices(repeat="country['Code'] as country in countries.countryCodes | filter: $select.search")
           span(ng-bind-html="country['Name']")
-    .clearfix
+    .clearfix.mtm
       span.display-inline-block.pull-right.pointer.blue.type-sm.underline(translate="CANT_FIND_COUNTRY" uib-tooltip="{{'COUNTRY_COMING_SOON' | translate}}" tooltip-placement="top")
 
   .flex-baseline.row.mtl(ng-show="isCountryBlacklisted")

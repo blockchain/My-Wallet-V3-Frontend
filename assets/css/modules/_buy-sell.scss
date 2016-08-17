@@ -37,26 +37,33 @@
 }
 
 .coinify-logo {
-  width: 60px;
-  & + span {
-    top: 0;
-    left: 0; 
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  img {
+    width: 60px;
+    & + span {
+      top: 0;
+      left: 0; 
+    }
+  }
+  &.coinify-logo-left {
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
   }
 }
 
 .payment-methods {
   input {
     & ~ .flex-column img { 
-      width: 25px; 
+      width: 30px; 
       &.checked { display: none; }
     }
   }
   input:checked ~ .flex-column img {
     display: none;
     &.checked { display: inline-block; }
-  }
-  input:checked ~ .flex-column .type-h5 {
-    color: $blue;
   }
 }
 
@@ -68,14 +75,8 @@
     @media (min-width: 769px) {
       &.fade {
         opacity: 1;
-        @include bc-ng-animate('buy-amount', 'height', '122px', '122px');
-        @include bc-ng-animate('buy-select-country', 'height', '122px', '122px');
-        @include bc-ng-animate('buy-email', 'height', '122px', '135px');
-        @include bc-ng-animate('buy-accept-terms', 'height', '152', '160px');
-        @include bc-ng-animate('buy-summary', 'height', '160px', '320px');
+        @include bc-ng-animate('summary', 'height', '260px', '325px');
         @include bc-ng-animate('isx', 'height', '320px', '450px');
-        @include bc-ng-animate('buy-pending', 'height', '450px', '250px');
-        @include bc-ng-animate('buy-success', 'height', '250px', '150px');
         @include bc-ng-animate('capture', 'height', '250px', '500px', '!important');
         @include bc-ng-animate('secret', 'height', '500px', '400px', '!important');
         @include bc-ng-animate('otp', 'height', '400px', '415px', '!important');
@@ -135,6 +136,8 @@
             height: 520px;
           }
         }
+        // default height
+        height: 260px;
       }
     }
   }
@@ -196,6 +199,8 @@
     overflow: auto;
     height: 100%;
     width: 100%;
+    left: 0;
+    top: 0;
   }
   #isx-iframe {
     position: relative;
@@ -227,9 +232,28 @@
 
 .o-3 {
   opacity: 0.3;
+  @include transition(opacity $fast);
 }
 
 .modal .buy-steps {
   width: 570px;
   margin: auto;
+}
+
+.pos-rel {
+  .amount-input {
+    top: 0;
+    right: 0;
+    position: absolute;
+    input, button {
+      border-top: 0px;
+      border-radius: 0px;
+    }
+    button {
+      margin-top: 1px;
+    }
+    .input-group-btn {
+      width: 70px;
+    }
+  }
 }

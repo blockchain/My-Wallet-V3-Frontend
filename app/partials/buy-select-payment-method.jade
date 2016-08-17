@@ -1,0 +1,28 @@
+.payment-methods
+  label.em-500.flex-start.pts Select your preferred payment method:
+  .flex-row.flex-center.pbs.pointer.mtml
+    input.man(type="radio" name="inMedium" id="card" ng-model="method" value="card" ng-disabled="status.waiting")
+    .flex-column.flex-1.mlm.pointer
+      label.mts.pointer.em-400(for="card")
+        .flex-row.flex-center
+          span
+            img.mrm(src="img/credit-card.png")
+            img.mrm.checked(src="img/credit-card-blue.png")
+          .flex-column
+            span.type-h5.em-400(translate="Credit/Debit Card")
+            span.flex-row
+              span.em-300(translate="CARD_TRANSFER.TITLE")
+              helper-button(content="CARD_TRANSFER.COPY")
+  .flex-row.flex-center.mbl.pvs.pointer
+    input.man(type="radio" name="inMedium" id="bank" ng-model="method" value="bank" ng-disabled="status.waiting")
+    .flex-column.flex-1.mlm.pointer
+      label.mts.pointer.em-400(for="bank")
+        .flex-row.flex-center
+          span
+            img.mrm(src="img/bank.png")
+            img.mrm.checked(src="img/bank-blue.png")
+          .flex-column
+            span.type-h5.em-400(translate="Bank Transfer")
+            span.flex-row
+              span.em-300(translate="BANK_TRANSFER.TITLE")
+              helper-button(content="BANK_TRANSFER.COPY")
