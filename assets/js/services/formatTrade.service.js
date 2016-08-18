@@ -17,7 +17,7 @@ function formatTrade ($filter, MyWallet) {
   let addTradeDetails = (tx, trade) => {
     let transaction = {};
     transaction['Coinify trade:'] = '#' + trade.id;
-    transaction['iSignthis ID:'] = tx.id;
+    transaction['iSignthis ID:'] = trade.iSignThisID;
     transaction['Date initialized:'] = $filter('date')(trade.createdAt, 'MM/dd/yyyy @ h:mma');
     transaction['Receiving wallet:'] = label;
     transaction['QA: BTC receiving address:'] = trade.receiveAddress;
@@ -40,8 +40,8 @@ function formatTrade ($filter, MyWallet) {
     tx = addTradeDetails(tx, trade);
 
     return {
+      tx: tx,
       class: 'success',
-      tx: {id: trade.iSignThisID},
       values: {
         label: label,
         fiatAmt: trade.inAmount + ' ' + trade.inCurrency,
@@ -71,7 +71,7 @@ function formatTrade ($filter, MyWallet) {
 
     return {
       tx: tx,
-      status: 'success',
+      class: 'blue',
       namespace: 'TX_IN_REVIEW',
       values: {
         fiatAmt: trade.inAmount + ' ' + trade.inCurrency,
