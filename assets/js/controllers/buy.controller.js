@@ -146,7 +146,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
       $scope.goTo('email');
     } else if (!$scope.exchange.user) {
       $scope.goTo('accept-terms');
-    } else if (!$scope.isMethodSelected) {
+    } else if (!$scope.isMethodSelected && !$scope.trade) {
       $scope.goTo('select-payment-method');
       $scope.isMethodSelected = true;
     } else if (!$scope.trade) {
