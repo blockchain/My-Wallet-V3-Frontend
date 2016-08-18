@@ -3,20 +3,25 @@
     span.type-h4.center Getting information from your exchange partner. This could take a few seconds.
     img.width-60.width-60-mobile.mtl(src="img/money.gif")
   div(ng-if="!status.loading")
-    h4.blue.type-h4(translate="Quick Start")
+    .flex-row
+      span.type-h5.pointer(translate="Buy Bitcoin" ng-class="{'underline-blue': state.buy}" ng-click="state.buy = true")
+      span.type-h5.mlml.o-3.pointer(translate="Sell Bitcoin" ng-class="{'underline-blue': !state.buy}" uib-tooltip="Coming Soon!" tooltip-append-to-body="true")
     .flex-row.flex-column-tablet
-      .flex-column.width-50.mrl
+      .width-50.mrl(ng-show="state.buy")
         buy-quick-start(transaction="transaction" 
+                        currency-symbol="currencySymbol"
                         change-currency="changeCurrency(currency)"
                         buy="buy(amt)")
-      .flex-column.width-50.mll
-        sell-quick-start
-    .flex-column.mtl(ng-show="trades.pending || trades.completed")
-      div(ng-show="trades.pending.length")
-        h4.type-h4(translate="Pending")
-        table.width-100.mbvl
-          tr(ng-repeat="trade in trades.pending | orderBy:'createdAt':true" trade="trade" first="$first" buy="buy(amt, trade, 'active-tx')" cancel="cancel(trade)" pending="true")
-      div(ng-show="trades.completed.length")
-        h4.type-h4(translate="History")
-        table.width-100.mbvl
-          tr(ng-repeat="trade in trades.completed | orderBy:'createdAt':true" trade="trade" first="$first" buy="buy(amt, trade, 'active-tx')")
+      .flex-column.width-50.mlvl.mtml(ng-hide="trades.pending.length || trades.completed.length")
+        .font-2.blue.em-300.lh1(translate="Simple. Secure. Seamless.")
+        .type-h4.em-300.mtm.basic-grey(translate="The world's most popular bitcoin wallet <br> now let's you buy bitcoin securely in 4 <br> easy steps.")
+    .flex-column.mtl(ng-show="trades.pending.length || trades.completed.length")
+      .flex-row.flex-between.flex-center
+        h4.type-h4(translate="Order History")
+        span Coinify Account: {{ exchange.profile.email }}
+      table.width-100.mbvl
+        tr.border.bg-light-blue
+          th.phml.pvs Status
+          th.phml.pvs Date
+          th.phml.right-align.pvs Amount
+        tr(ng-repeat="trade in trades.pending.concat(trades.completed) | orderBy:'createdAt':true" trade="trade" buy="buy(amt, trade, 'active-tx')")

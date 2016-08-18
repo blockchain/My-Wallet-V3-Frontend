@@ -25,11 +25,12 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     'select-country': 1,
     'email': 2,
     'accept-terms': 3,
-    'summary': 4,
-    'trade-formatted': 5,
-    'trade-complete': 6,
-    'pending': 7,
-    'success': 8
+    'select-payment-method': 4,
+    'summary': 5,
+    'trade-formatted': 6,
+    'trade-complete': 7,
+    'pending': 8,
+    'success': 9
   };
 
   $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
@@ -53,7 +54,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   $scope.userHasExchangeAcct = $scope.trades.pending.length || $scope.trades.completed.length;
 
   $scope.getPaymentMethods = () => {
-    if (!$scope.exchange.user) return;
+    if (!$scope.exchange.user) { $scope.getQuote(); return; }
 
     $scope.status.waiting = true;
 
@@ -106,23 +107,20 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     let methodFee = fiatAmt * ($scope.getMethod().inPercentageFee / 100);
 
     $scope.transaction.methodFee = methodFee.toFixed(2);
-    $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount, currency.bitCurrencies[0]);
     $scope.transaction.total = fiatAmt + +$scope.transaction.methodFee;
   };
 
   $scope.getQuote = () => {
-    if (!$scope.exchange.user) return;
-
     $scope.quote = null;
     $scope.transaction.btc = 0;
-
-    if (!$scope.transaction.fiat) return;
+    if (!$scope.transaction.fiat) { $scope.status = {}; return; }
 
     const success = (quote) => {
       $scope.status = {};
       $scope.quote = quote;
       $scope.updateAmounts();
       Alerts.clear($scope.alerts);
+      $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount, currency.bitCurrencies[0]);
     };
 
     $scope.exchange.getBuyQuote($scope.transaction.fiat, $scope.transaction.currency.code)
@@ -134,7 +132,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   $scope.isCurrencySelected = (currency) => currency === $scope.transaction.currency;
 
   $scope.addExchange = () => {
-    if (!$scope.fields.countryCode) return;
     if (!MyWallet.wallet.external.coinify) MyWallet.wallet.external.addCoinify();
     $scope.exchange = MyWallet.wallet.external.coinify;
     $scope.partner = 'Coinify';
@@ -149,6 +146,9 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
       $scope.goTo('email');
     } else if (!$scope.exchange.user) {
       $scope.goTo('accept-terms');
+    } else if (!$scope.isMethodSelected) {
+      $scope.goTo('select-payment-method');
+      $scope.isMethodSelected = true;
     } else if (!$scope.trade) {
       $scope.goTo('summary');
     } else if (!$scope.paymentInfo && !$scope.formattedTrade) {
@@ -167,6 +167,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
 
     if ($scope.exchange.user) {
       $scope.goTo('amount');
+      $scope.isMethodSelected = false;
     } else if ($scope.afterStep('email')) {
       $scope.goTo('select-country');
     } else {
@@ -248,7 +249,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   };
 
   $scope.successTx = (tx) => {
-    $scope.formattedTrade = formatTrade.success($scope.trade);
+    $scope.formattedTrade = formatTrade.success(tx, $scope.trade);
   };
 
   $scope.reviewTx = (tx) => {

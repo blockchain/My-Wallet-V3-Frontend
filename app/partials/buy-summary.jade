@@ -1,62 +1,45 @@
-.payment-methods
-  p.em-400.type-lbl.black Select Payment Method:
-  .flex-row.flex-center.pbm.pointer.border-bottom
-    input(type="radio" name="inMedium" id="card" ng-model="method" value="card" ng-disabled="status.waiting")
-    .flex-column.flex-1.mlm.pointer
-      label.mts.pointer.em-400(for="card")
-        span.flex-column
-          span.mbs.type-h5.em-500.flex-column
-            span
-              img.mrs(src="img/credit-card.png")
-              img.mrs.checked(src="img/credit-card-blue.png")
-              span.mtm(translate="Credit/Debit Card")
-          span.flex-row
-            span.em-400(translate="CARD_TRANSFER.TITLE")
-            helper-button(content="CARD_TRANSFER.COPY")
-  .flex-row.flex-center.mbl.pvm.border-bottom.pointer
-    input(type="radio" name="inMedium" id="bank" ng-model="method" value="bank" ng-disabled="status.waiting")
-    .flex-column.flex-1.mlm.pointer
-      label.mts.pointer.em-400(for="bank")
-        span.flex-column
-          span.mbs.type-h5.em-500.flex-column
-            span
-              img.mrs(src="img/bank.png")
-              img.mrs.checked(src="img/bank-blue.png")
-              span.mtm(translate="Bank Transfer")
-          span.flex-row
-            span.em-400(translate="BANK_TRANSFER.TITLE")
-            helper-button(content="BANK_TRANSFER.COPY")
-
-.flex-column.border-bottom.mtvl
-  p.em-400.type-lbl.black Review Order:
-  .flex-row.flex-between.flex-center.em-500
-    span
-      span Buy
-      | 
+.flex-column.mbvl
+  label.em-500.flex-start.pts Confirm your order:
+  p.mvm
+    span(translate="ORDER_CONFIRMATION_COPY")
+  .flex-end.mbs
+    span.type-sm.blue.underline.pointer(ng-click="toggleEditAmount()" ng-hide="editAmount") Edit Order
+    span.type-sm.blue.underline.pointer(ng-click="toggleEditAmount()" ng-show="editAmount") Cancel
+  .border.pam(ng-class="{'bg-light-grey': editAmount}")
+    .flex-row.flex-between.pam.border-bottom-light
+      span(translate="BTC Order:")
       span.success(uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ transaction.btc }}
-      span.blue.underline.type-sm.mlvl.pointer(ng-click="toggleEditAmount()") Change Amount
-    span.flex-row.flex-center
-      span(ng-hide="editAmount") {{ transaction.fiat | format }}
-      input.form-control(
-        type="number"
-        ng-show="editAmount"
-        ng-model="transaction.fiat"
-        ng-model-options="{debounce: 250}"
-        name="fiat"
-        tabindex="1"
-        on-enter="toggleEditAmount()"
-        ng-change="getQuote()"
-        placeholder="0"
-        focus-when="editAmount"
-        min="0"
-        max="2100000000000000"
-        required
-      )
-      span.mls {{ transaction.currency.code }}
-  .flex-row.flex-between.mts.mbm
-    span.italic Payment Processing Fee
-    span
+    .flex-row.flex-between.pam.pos-rel
+      span(translate="AMOUNT")
+      span(ng-hide="editAmount") {{ transaction.fiat | format }} {{ transaction.currency.code }}
+      section.input-group.width-60.flex-row.flex-center.amount-input(ng-show="editAmount")
+        span.type-sm.blue.underline.pointer.mrm(ng-click="toggleEditAmount()" ng-show="editAmount") Update
+        input.form-control(
+          type="number"
+          ng-model="transaction.fiat"
+          name="fiat"
+          tabindex="1"
+          focus-when="editAmount"
+          ng-model-options="{debounce: 250}"
+          on-enter="buy(transaction.fiat)"
+          placeholder="0"
+          min="0"
+          max="2100000000000000"
+          required
+        )
+        div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
+          button.btn.btn-default.dropdown-toggle(type="button" uib-dropdown-toggle aria-haspopup="true")
+            span {{ transaction.currency.code }}
+            span.caret
+          ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
+            li(ng-repeat="currency in currencies"
+               role="menuitem" 
+               ng-click="changeCurrency(currency);"
+               ng-class="{active: isCurrencySelected(currency)}")
+              a(ng-click="$event.preventDefault()") {{ currency.code }}
+    .flex-row.flex-between.pam.border-bottom-light
+      span Fee:
       span {{ transaction.methodFee | format }} {{ transaction.currency.code }}
-.flex-row.flex-between.mtm.em-500
-  span Total
-  span.state-danger-text {{ currencySymbol.symbol }}{{ transaction.total | format }} {{ transaction.currency.code }}
+    .flex-row.flex-between.pam
+      span.em-500 Total Cost:
+      span {{ currencySymbol.symbol }}{{ transaction.total | format }} {{ transaction.currency.code }}

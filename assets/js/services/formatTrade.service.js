@@ -16,10 +16,11 @@ function formatTrade ($filter, MyWallet) {
 
   let addTradeDetails = (tx, trade) => {
     let transaction = {};
-    transaction['iSignThis ID'] = tx.id;
-    transaction['Coinify Trade'] = trade.id;
-    transaction['Date Initialized'] = $filter('date')(trade.createdAt, 'MM/dd/yyyy @ h:mma');
-    transaction['BTC Receiving Address'] = trade.receiveAddress;
+    transaction['Coinify trade:'] = '#' + trade.id;
+    transaction['iSignthis ID:'] = tx.id;
+    transaction['Date initialized:'] = $filter('date')(trade.createdAt, 'MM/dd/yyyy @ h:mma');
+    transaction['Receiving wallet:'] = label;
+    transaction['QA: BTC receiving address:'] = trade.receiveAddress;
 
     return transaction;
   };
@@ -29,18 +30,17 @@ function formatTrade ($filter, MyWallet) {
 
     return {
       tx: tx,
-      error: true,
-      icon: 'ti-alert',
-      status: 'security-red',
+      class: 'state-danger-text',
       namespace: namespace,
       values: {fiatAmt: trade.inAmount + ' ' + trade.inCurrency, btcAmt: trade.outAmountExpected}
     };
   }
 
-  function success (trade) {
+  function success (tx, trade) {
+    tx = addTradeDetails(tx, trade);
+
     return {
-      status: 'success',
-      icon: 'ti-direction-alt',
+      class: 'success',
       tx: {id: trade.iSignThisID},
       values: {
         label: label,
@@ -56,8 +56,7 @@ function formatTrade ($filter, MyWallet) {
 
     return {
       tx: tx,
-      status: 'blue',
-      icon: 'ti-direction-alt',
+      class: 'blue',
       values: {
         label: label,
         fiatAmt: trade.inAmount + ' ' + trade.inCurrency,
@@ -72,8 +71,7 @@ function formatTrade ($filter, MyWallet) {
 
     return {
       tx: tx,
-      status: 'blue',
-      icon: 'ti-direction-alt',
+      status: 'success',
       namespace: 'TX_IN_REVIEW',
       values: {
         fiatAmt: trade.inAmount + ' ' + trade.inCurrency,

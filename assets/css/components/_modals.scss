@@ -195,7 +195,6 @@
   @extend .flex-important;
   @extend .flex-justify;
   @extend .flex-center;
-  .modal-content { background: $light-blue; }
   .modal-dialog {
     width: 55vw;
     @media (max-width: 768px) {

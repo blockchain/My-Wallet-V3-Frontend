@@ -18,6 +18,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
     getAddressMethod: (address) => receiveAddressMap[address] || null,
     initialized: () => initialized.promise,
     init,
+    getQuote,
     getTrades,
     watchAddress,
     fetchProfile,
@@ -33,6 +34,14 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
     return exchange && exchange.user
       ? $q.resolve(service.fetchProfile())
       : $q.reject('USER_UNKNOWN');
+  }
+
+  function getQuote (amt, curr) {
+    const success = (quote) => {
+      return quote;
+    };
+
+    return service.getExchange().getBuyQuote(amt, curr).then(success);
   }
 
   function getTrades () {

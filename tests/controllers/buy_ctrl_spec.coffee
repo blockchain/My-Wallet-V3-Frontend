@@ -104,7 +104,7 @@ describe "BuyCtrl", ->
       scope.transaction.fiat = 100
       scope.methods.card = inPercentageFee: 5
       scope.updateAmounts()
-      expect(scope.transaction).toEqual(jasmine.objectContaining({fiat: 100, btc: "BTC(105)", methodFee: "5.00"}))
+      expect(scope.transaction).toEqual(jasmine.objectContaining({fiat: 100, methodFee: "5.00"}))
 
   describe "nextStep", ->
     it "should switch to amount step", ->
@@ -127,8 +127,13 @@ describe "BuyCtrl", ->
       scope.nextStep()
       expect(scope.onStep('accept-terms')).toEqual(true)
 
-    it "should switch to summary step", ->
+    it "should switch to select-payment-method step", ->
       scope.exchange.user = {}
+      scope.nextStep()
+      expect(scope.onStep('select-payment-method')).toEqual(true)
+
+    it "should switch to summary step", ->
+      scope.isMethodSelected = true
       scope.nextStep()
       expect(scope.onStep('summary')).toEqual(true)
 

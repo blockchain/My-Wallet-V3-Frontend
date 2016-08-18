@@ -1,6 +1,7 @@
 form.clearfix(name="signupForm" role="form" novalidate)
-  p(translate="PARTNER" translate-values="{partner: partner, email: user.email}")
-  div.mtl
+  label.em-500.flex-start.pts Coinify account terms:
+  p.mvl(translate="PARTNER" translate-values="{partner: partner, email: user.email}")
+  div
     input(type="checkbox" checked id="tos" name="tos" ng-model="fields.acceptTOS" ng-disabled="rejectedEmail" required)
     label.mlm.em-400(translate="ACCEPT_PARTNER_TOS_PRIVACY" translate-values="{partner: partner}" for="tos")
   .flex-baseline.mtl(ng-show="rejectedEmail")

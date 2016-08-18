@@ -3,7 +3,9 @@
     .flex-column.flex-1
       .flex-row.flex-between.flex-center
         h3(translate="BUY_BITCOIN")
-        quote-countdown(quote="quote" get-quote="getQuote()" ng-hide="afterStep('trade-complete') || getMethod().inMedium === 'bank'")
+        .flex-column.flex-align-end
+          span.type-h5.em-400(ng-show="transaction.btc !== 0") {{ transaction.btc }}
+          quote-countdown(quote="quote" get-quote="getQuote()" ng-class="{'fade': afterStep('trade-complete') || getMethod().inMedium === 'bank'}")
       buy-steps(transaction="transaction"
                 on-step="onStep"
                 get-method="getMethod"
@@ -18,40 +20,42 @@
                 partner="partner"
                 fields="fields"
                 step="step")
-  .modal-body.fade(class="{{isxStep}}" ng-class="{'buy-amount': onStep('amount'), 'buy-select-country': onStep('select-country'), 'buy-email': onStep('email'), 'buy-accept-terms': onStep('accept-terms'), 'buy-summary': onStep('summary'), 'isx': onStep('trade-formatted', 'trade-complete') && (trade.medium === 'card' || !trade.medium), 'bank-account': onStep('trade-formatted', 'trade-complete') && trade.medium === 'bank', 'buy-pending': onStep('pending'), 'buy-success': onStep('success')}")
+  .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'),'isx': onStep('trade-formatted', 'trade-complete') && (trade.medium === 'card' || !trade.medium), 'bank-account': onStep('trade-formatted', 'trade-complete') && trade.medium === 'bank'}")
     .alert-in-app
       alerts(context="alerts")
-    div(ng-show="onStep('amount')")
+    div.width-80(ng-show="onStep('amount')")
       include ./buy-amount
-    div(ng-show="onStep('select-country')" ng-controller="BuySelectCountryCtrl")
+    div.width-80(ng-show="onStep('select-country')" ng-controller="BuySelectCountryCtrl")
       include ./buy-select-country
-    div(ng-show="onStep('email')")
+    div.width-80(ng-show="onStep('email')")
       include ./buy-email
-    div(ng-show="onStep('accept-terms')")
+    div.width-80(ng-show="onStep('accept-terms')")
       include ./buy-accept-terms
-    div(ng-show="onStep('summary')")
+    div.width-80(ng-show="onStep('select-payment-method')")
+      include ./buy-select-payment-method
+    div.width-80(ng-show="onStep('summary')")
       include ./buy-summary
     div(ng-show="onStep('trade-formatted', 'trade-complete')")
       div.iframe(ng-if="!trade.medium || trade.medium === 'card'")
         isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-declined="declinedTx(tx)" on-pending="pendingTx(tx)" on-review="reviewTx(tx)" on-expired="expiredTx(tx)" on-failed="failedTx(tx)" payment-info="paymentInfo" on-resize="onResize(step)")
-      div(ng-if="trade.medium === 'bank'")
+      div.width-80.margin-0-auto(ng-if="trade.medium === 'bank'")
         bank-account(transaction="trade" on-load="loadPayment()" pending-tx="pendingTx")
-    div(ng-if="onStep('pending')")
+    div.width-80(ng-if="onStep('pending')")
       include ./trade-summary
-    div(ng-if="onStep('success')")
+    div.width-80(ng-if="onStep('success')")
       include ./trade-summary
-    .flex-end.flex-center.mtl(ng-hide="afterStep('summary')")
+    .flex-end.flex-center.mtl.coinify-logo(ng-hide="afterStep('summary')")
       span.pos-rel
         span.mrs.type-sm Powered by
         a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
-          img.coinify-logo(src="img/coinify-logo.svg")
+          img(src="img/coinify-logo.svg")
           span.pos-abs.fade.height-100.width-100(ng-show="onStep('summary')" uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" translate="placeholder" tooltip-append-to-body="true")
   //- needs directive
   .modal-footer.flex-end.flex-row
     button.button-muted(ng-show="afterStep('amount') && beforeStep('trade-formatted')" ng-click="prevStep()") Go Back
     
     .flex-1.flex-end(ng-hide="status.loading")
-      button.button-muted.mrm(ng-click="close()" translate="CANCEL" ng-hide="afterStep('summary')")
+      button.button-muted.mrm(ng-click="close()" translate="CANCEL_ORDER" ng-hide="afterStep('summary')")
       button.button-muted.mrm(ng-click="close(true)" translate="FINISH_LATER" ng-show="onStep('trade-formatted', 'trade-complete')")
       button.button-muted.mrm(ng-click="cancel()" translate="CANCEL" ng-show="afterStep('pending')")
       div(ng-hide="afterStep('summary')")
@@ -61,16 +65,16 @@
           data-style="expand-left"
           ui-ladda="status.waiting"
           ng-disabled="isDisabled() || onStep('email')"
-          ng-hide="afterStep('email')")
-        button.button-success(
+          ng-hide="afterStep('select-payment-method') || onStep('accept-terms')")
+        button.button-primary(
           ladda-translate="CONTINUE"
           ng-click="signup()"
           data-style="expand-left"
           ui-ladda="status.waiting"
           ng-disabled="isDisabled()"
           ng-show="onStep('accept-terms')")
-        button.button-success(
-          ladda-translate="CONFIRM_PAY"
+        button.button-primary(
+          ladda-translate="CONFIRM"
           ng-click="buy()"
           data-style="expand-left"
           ui-ladda="status.waiting"

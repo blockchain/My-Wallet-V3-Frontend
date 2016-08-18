@@ -22,7 +22,7 @@ function quoteCountdown ($interval) {
     scope.startCounter = () => {
       scope.counter = $interval(() => {
         let now = new Date();
-        let expiration = new Date(scope.quote.expiresAt);
+        let expiration = new Date(scope.quote.expiresAt || scope.quote.expiryTime);
         let diff = expiration - now;
         let time = diff / 1000 / 60;
         let minutes = parseInt(time, 10);
@@ -37,10 +37,12 @@ function quoteCountdown ($interval) {
     scope.cancelCounter = () => $interval.cancel(scope.counter);
 
     scope.restartCounter = () => {
+      scope.isFake = scope.quote && !scope.quote.id;
       scope.count = undefined;
       scope.cancelCounter();
 
-      if (!scope.quote) return;
+      if (!scope.quote || scope.isFake) return;
+      scope.count = '15:00';
       scope.startCounter();
     };
 

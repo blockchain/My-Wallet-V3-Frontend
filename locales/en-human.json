@@ -73,6 +73,7 @@
   "BITCOIN_ADDRESS" : "Bitcoin Address for Your Next Transaction",
   "DEFAULT_NEW_ADDRESS_LABEL" : "New Address",
   "CANCEL" : "Cancel",
+  "CANCEL_ORDER" : "Cancel Order",
   "CANCELLED" : "Canceled",
   "SAVE" : "Save",
   "COPY" : "Copy",
@@ -872,7 +873,6 @@
   "CLICK_TO_CHANGE": "Click here to change it.",
   "PAYMENT_METHOD": "Payment Method:",
   "PLEASE_CREATE_ACCOUNT": "Please <span class='underline pointer'>create an account</span> to get an accurate exchange rate.",
-  "SUMMARY": "Summary:",
   "TRADE_AMOUNT_TOO_LOW": "The amount of this trade is too small. Try increasing the amount.",
   "TRADE_EXCEEDS_LIMITS": "The amount of this trade is larger than your allowed limit.",
   "INVALID_ARGUMENT": "An error occured. Please try again later or contact support.",
@@ -897,17 +897,15 @@
   "cancelled": "Canceled",
   "rejected": "Rejected",
   "expired": "Expired",
-  "CONFIRM_PAY": "Confirm & Pay",
   "SEE_BITCOIN": "See Your Bitcoin",
   "SUMMARY": "Summary:",
   "PROCESSED_BY_EXCHANGE": "Coinify will process the exchange. The bitcoin will be sent directly from or into your Blockchain wallet. Your payment and bank information will be submitted to the payment processor and not be seen by Blockchain.",
   "CARD_FEES": "{{::fee}}% fees charged by the card payment processor.",
   "CURRENCY_NOT_SUPPORTED": "The currency for this transaction is not supported by the payment method selected. Try another currency or select a different payment method.",
-  "SEND_TRADE_AMOUNT": "Please send <b>{{::amt}} {{::curr}}</b> to the bank account below within the next <b>48 hours</b>.",
-  "BANK_ACCOUNT_DETAILS": "Bank Account Details:",
+  "SEND_TRADE_AMOUNT": "Please send <b>{{::amt}} {{::curr}}</b> to the bank account below within the next <b>48 hours</b> to process your transaction. Once the transfer is complete, your bitcoin will be automatically sent to <b>{{::label}}</b>.",
+  "SEND_FUNDS_TO": "Send funds to the following bank account:",
   "BANK_ADDRESS": "Bank Address:",
   "BANK_TRANSFER_PENDING": "Bank Transfer Pending",
-  "BANK_TRANSFER_UPON_COMPLETION": "Once your transfer is completed it will be exchanged to bitcoin and automatically sent to <be>{{::label}}</b>.",
   "BOUGHT_VIA": "Bought via {{exchange}}",
   "SOLD_VIA": "Sold via {{exchange}}",
   "DECLINED_TRANSACTION": {
@@ -916,24 +914,24 @@
   },
   "FAILED_TRANSACTION": {
     "TITLE": "Transaction Failed",
-    "BODY": "Your purchase of {{::btcAmt}} BTC for <b>{{::fiatAmt}}</b> failed. There was an iSignthis system error. Please contact iSignthis at customersupport@isignthis.com"
+    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt}})</b> failed. There was an iSignthis system error. Please contact iSignthis at customersupport@isignthis.com"
   },
   "TRANSACTION_ERROR": {
     "TITLE": "Transaction Error",
-    "BODY": "Your purchase of {{::btcAmt}} BTC for <b>{{::fiatAmt}}</b> has been canceled. Click 'Try Again' to buy Bitcoin."
+    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt}})</b> has been canceled. Click 'Try Again' to buy Bitcoin."
   },
   "CLICK_TO_CANCEL": "Cancel trade",
   "TX_PENDING": {
-    "TITLE": "Transaction Pending",
-    "BODY": "Your purchase of {{::btcAmt}} BTC for <b>{{::fiatAmt}}</b> is currently pending. Bitcoins will be sent to <b>{{::label}}</b>."
+    "TITLE": "Order Pending",
+    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt}})</b> is currently being processed."
   },
   "TX_SUCCESS": {
-    "TITLE": "Bitcoin Received!",
-    "BODY": "Your purchase of {{::btcAmt}} BTC for <b>{{::fiatAmt}}</b> was successful! Bitcoins were sent to <b>{{::label}}</b>."
+    "TITLE": "Order Purchased",
+    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt}})</b> was successful! Bitcoins were sent to <b>{{::label}}</b>."
   },
   "TX_IN_REVIEW": {
     "TITLE": "Transaction in review.",
-    "BODY": "Your purchase of {{::btcAmt}} BTC for <b>{{::fiatAmt}}</b> is currently being processed. Any issues should be resolved shortly. Thank you for your patience."
+    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt}})</b> is currently being processed. Any issues should be resolved shortly. Thank you for your patience."
   },
   "TX_EXPIRED": {
     "TITLE": "Transaction expired.",
@@ -954,5 +952,8 @@
   },
   "RECEIVE_BITCOIN_TO": "Bitcoins will be sent to {{::label}}.",
   "MUST_DISABLE_2ND_PW": "Please remove your second password to access this section of the wallet.",
-  "BLACKLISTED_COUNTRY": "Buying bitcoin is not available in your country yet."
+  "BLACKLISTED_COUNTRY": "Buying bitcoin is not available in your country yet.",
+  "ORDER_CONFIRMATION_COPY": "Before collecting payment information, please confirm your order amount. We'll then direct you to our secure payment provider to verify your card information.",
+  "ORDER_DETAILS": "Order details:",
+  "ACTION_REQUIRED": "Action Required"
 }

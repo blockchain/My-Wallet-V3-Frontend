@@ -1,45 +1,30 @@
 form(name="buyAmount")
   div
-    label.em-500 Choose amount to exchange:
-    section.input-group
-      div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
-        button.btn.btn-default.dropdown-toggle(type="button" uib-dropdown-toggle aria-haspopup="true")
-          span {{ transaction.currency.code }}
-          span.caret
-        ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
-          li(ng-repeat="currency in currencies"
-             role="menuitem" 
-             ng-click="changeCurrency(currency);"
-             ng-class="{active: isCurrencySelected(currency)}")
-            a(ng-click="$event.preventDefault()") {{ currency.code }}
-      input.form-control(
-        type="number"
-        ng-model="transaction.fiat"
-        ng-model-options="{debounce: 250}"
-        name="fiat"
-        tabindex="1"
-        on-enter="nextStep()"
-        ng-change="getQuote()"
-        placeholder="0"
-        min="0"
-        max="2100000000000000"
-        required
-      )
-    .clearfix
+    label.em-500.flex-start.pts Choose amount to exchange:
+    .flex-1.mvl
+      section.input-group
+        input.form-control(
+          type="number"
+          ng-model="transaction.fiat"
+          name="fiat"
+          tabindex="1"
+          focus-when="onStep('amount')"
+          ng-model-options="{debounce: 250}"
+          on-enter="buy(transaction.fiat)"
+          placeholder="0"
+          min="0"
+          max="2100000000000000"
+          required
+        )
+        div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
+          button.btn.btn-default.dropdown-toggle(type="button" uib-dropdown-toggle aria-haspopup="true")
+            span {{ transaction.currency.code }}
+            span.caret
+          ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
+            li(ng-repeat="currency in currencies"
+               role="menuitem" 
+               ng-click="changeCurrency(currency);"
+               ng-class="{active: isCurrencySelected(currency)}")
+              a(ng-click="$event.preventDefault()") {{ currency.code }}
+    .clearfix.mtm
       span.display-inline-block.pull-right.mbn.mts.pointer.blue.type-sm.underline(translate="CANT_FIND_CURRENCY" uib-tooltip="{{'CURRENCY_COMING_SOON' | translate}}" tooltip-placement="top")
-  .flex-row.flex-between.flex-center.mtl(ng-show="exchange.user")
-    .flex-row.flex-center.flex-1.flex-around.mrl
-      label.mbn.em-500 You will receive this amount of {{ btcCurrency.code }} at the current exchange rate.
-      i.ti-arrow-right.blue.type-h4
-    .flex-row.flex-center.flex-1
-      input.form-control(
-        type="text"
-        name="btc"
-        ng-model="transaction.btc"
-        tabindex="1"
-        placeholder="0"
-        disabled
-        min="1"
-        max="2100000000000000"
-        required
-      )
