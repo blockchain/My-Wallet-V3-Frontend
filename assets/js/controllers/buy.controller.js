@@ -54,7 +54,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   $scope.userHasExchangeAcct = $scope.trades.pending.length || $scope.trades.completed.length;
 
   $scope.getPaymentMethods = () => {
-    if (!$scope.exchange.user) { $scope.getQuote(); return; }
+    if (!$scope.exchange.user) return;
 
     $scope.status.waiting = true;
 

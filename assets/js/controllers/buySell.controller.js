@@ -30,11 +30,6 @@ function BuySellCtrl ($scope, Alerts, Wallet, currency, buySell, MyWallet) {
     Wallet.changeCurrency(curr).then(success);
   };
 
-  $scope.cancel = (trade) => {
-    Alerts.confirm('CONFIRM_CANCEL_TRADE', { action: 'CANCEL_TRADE', cancel: 'GO_BACK' })
-      .then(() => trade.cancel().then(buySell.getTrades, Alerts.displayError));
-  };
-
   $scope.$watch('settings.currency', () => {
     $scope.transaction.currency = buySell.getCurrency();
   }, true);

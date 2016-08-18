@@ -15,12 +15,11 @@
       .flex-column.width-50.mlvl.mtml(ng-hide="trades.pending.length || trades.completed.length")
         .font-2.blue.em-300.lh1(translate="Simple. Secure. Seamless.")
         .type-h4.em-300.mtm.basic-grey(translate="The world's most popular bitcoin wallet <br> now let's you buy bitcoin securely in 4 <br> easy steps.")
-    .flex-column.mtl(ng-show="trades.pending || trades.completed")
-      div(ng-show="trades.pending.length")
-        h4.type-h4(translate="Pending")
-        table.width-100.mbvl
-          tr(ng-repeat="trade in trades.pending | orderBy:'createdAt':true" trade="trade" first="$first" buy="buy(amt, trade, 'active-tx')" cancel="cancel(trade)" pending="true")
-      div(ng-show="trades.completed.length")
-        h4.type-h4(translate="History")
-        table.width-100.mbvl
-          tr(ng-repeat="trade in trades.completed | orderBy:'createdAt':true" trade="trade" first="$first" buy="buy(amt, trade, 'active-tx')")
+    .flex-column.mtl(ng-show="trades.pending.length || trades.completed.length")
+      h4.type-h4(translate="Order History")
+      table.width-100.mbvl
+        tr.border.bg-light-blue
+          th.phml.pvs Status
+          th.phml.pvs Date
+          th.phml.right-align.pvs Amount
+        tr(ng-repeat="trade in trades.pending.concat(trades.completed) | orderBy:'createdAt':true" trade="trade" buy="buy(amt, trade, 'active-tx')")
