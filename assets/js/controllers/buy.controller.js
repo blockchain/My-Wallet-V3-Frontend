@@ -258,7 +258,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
 
   $scope.pendingTx = (tx) => {
     if (!tx) return;
-    if ($scope.formattedTrade && $scope.formattedTrade.status === 'success') return;
+    if ($scope.formattedTrade && $scope.formattedTrade.class === 'success') return;
 
     $scope.formattedTrade = formatTrade.pending(tx, $scope.trade);
   };
