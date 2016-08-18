@@ -1,14 +1,12 @@
 div
-  p.em-300.ptm(translate="SEND_TRADE_AMOUNT" translate-values="{amt: transaction.inAmount, curr: transaction.inCurrency}")
+  span.type-h5.em-500.flex-start.pts.state-danger-text(translate="ACTION_REQUIRED")
+  p.em-300.ptm(translate="SEND_TRADE_AMOUNT" translate-values="{amt: transaction.inAmount, curr: transaction.inCurrency, label: label}")
   div.mtm
-    h5.type-h5.mbs(translate="BANK_ACCOUNT_DETAILS")
-    ul.em-300
-      li.pts(ng-repeat="(prop, val) in formattedBankAccount track by $index")
-        span(translate="{{::prop}}")
-        | :&nbsp;
-        b(ng-bind="::val")
-
-  p.em-300.ptm(translate="BANK_TRANSFER_UPON_COMPLETION" translate-values="{label: label}")
+    label.em-500.flex-start.pts.mtl(translate="SEND_FUNDS_TO")
+    ul.em-300.border
+      li.pam.flex-between(ng-repeat="(prop, val) in formattedBankAccount track by $index")
+        span.em-400(translate="{{::prop}}")
+        span.em-400.right-align(ng-bind="::val")
   p.security-red.pointer
     i.ti-search.mrm
     span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")

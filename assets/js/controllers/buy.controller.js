@@ -249,7 +249,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   };
 
   $scope.successTx = (tx) => {
-    $scope.formattedTrade = formatTrade.success($scope.trade);
+    $scope.formattedTrade = formatTrade.success(tx, $scope.trade);
   };
 
   $scope.reviewTx = (tx) => {
