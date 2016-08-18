@@ -104,7 +104,7 @@ describe "BuyCtrl", ->
       scope.transaction.fiat = 100
       scope.methods.card = inPercentageFee: 5
       scope.updateAmounts()
-      expect(scope.transaction).toEqual(jasmine.objectContaining({fiat: 100, btc: "BTC(105)", methodFee: "5.00"}))
+      expect(scope.transaction).toEqual(jasmine.objectContaining({fiat: 100, methodFee: "5.00"}))
 
   describe "nextStep", ->
     it "should switch to amount step", ->

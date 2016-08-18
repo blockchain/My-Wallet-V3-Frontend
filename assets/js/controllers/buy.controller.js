@@ -54,7 +54,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   $scope.userHasExchangeAcct = $scope.trades.pending.length || $scope.trades.completed.length;
 
   $scope.getPaymentMethods = () => {
-    if (!$scope.exchange.user) return;
+    if (!$scope.exchange.user) { $scope.getQuote(); return; }
 
     $scope.status.waiting = true;
 
@@ -107,7 +107,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     let methodFee = fiatAmt * ($scope.getMethod().inPercentageFee / 100);
 
     $scope.transaction.methodFee = methodFee.toFixed(2);
-    $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount, currency.bitCurrencies[0]);
     $scope.transaction.total = fiatAmt + +$scope.transaction.methodFee;
   };
 
@@ -121,6 +120,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
       $scope.quote = quote;
       $scope.updateAmounts();
       Alerts.clear($scope.alerts);
+      $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount, currency.bitCurrencies[0]);
     };
 
     $scope.exchange.getBuyQuote($scope.transaction.fiat, $scope.transaction.currency.code)
@@ -293,7 +293,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   });
 
   $scope.$watch('transaction.fiat', (newVal, oldVal) => {
-    if (!$scope.exchange.user) return;
     if (newVal !== oldVal) $scope.changeCurrency();
   });
 
