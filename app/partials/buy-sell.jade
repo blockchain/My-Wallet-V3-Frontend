@@ -16,7 +16,9 @@
         .font-2.blue.em-300.lh1(translate="Simple. Secure. Seamless.")
         .type-h4.em-300.mtm.basic-grey(translate="The world's most popular bitcoin wallet <br> now let's you buy bitcoin securely in 4 <br> easy steps.")
     .flex-column.mtl(ng-show="trades.pending.length || trades.completed.length")
-      h4.type-h4(translate="Order History")
+      .flex-row.flex-between.flex-center
+        h4.type-h4(translate="Order History")
+        span Coinify Account: {{ exchange.profile.email }}
       table.width-100.mbvl
         tr.border.bg-light-blue
           th.phml.pvs Status
