@@ -81,7 +81,7 @@
         opacity: 1;
         @include bc-ng-animate('summary', 'height', '260px', '325px');
         @include bc-ng-animate('bank-account', 'height', '260px', '400px');
-        @include bc-ng-animate('result', 'height', '500px', '275px');
+        @include bc-ng-animate('result', 'height', '500px', '335px');
         @include bc-ng-animate('isx', 'height', '320px', '450px');
         @include bc-ng-animate('capture', 'height', '250px', '500px', '!important');
         @include bc-ng-animate('secret', 'height', '500px', '400px', '!important');
