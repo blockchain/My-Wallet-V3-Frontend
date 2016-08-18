@@ -5,7 +5,11 @@ angular
 function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
   let pendingStates = ['awaiting_transfer_in', 'processing', 'reviewing'];
   let completedStates = ['expired', 'rejected', 'cancelled', 'completed', 'completed_test'];
+  let watchableStates = ['completed', 'completed_test'];
+  let tradeStateIn = (states) => (t) => states.indexOf(t.state) > -1;
+
   let receiveAddressMap = {};
+  let watching = {};
   let initialized = $q.defer();
 
   const service = {
@@ -21,7 +25,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
     getCurrency
   };
 
-  init().then(initialized.resolve);
+  init().then(initialized.resolve, initialized.reject);
   return service;
 
   function init () {
@@ -32,22 +36,22 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
   }
 
   function getTrades () {
-    let prevCompleted = service.trades.completed.length;
-
     const success = (trades) => {
-      service.trades.pending = trades.filter(t => pendingStates.indexOf(t.state) > -1);
-      service.trades.completed = trades.filter(t => completedStates.indexOf(t.state) > -1);
+      service.trades.pending = trades.filter(tradeStateIn(pendingStates));
+      service.trades.completed = trades.filter(tradeStateIn(completedStates));
 
       trades.forEach(t => {
         let type = t.outCurrency === 'BTC' ? 'buy' : 'sell';
         receiveAddressMap[t.receiveAddress] = type;
       });
 
-      let newlyCompleted = service.trades.completed.length - prevCompleted;
-      if (newlyCompleted > 0 || prevCompleted === 0) {
-        let unwatchedTrades = service.trades.completed.slice(-newlyCompleted);
-        unwatchedTrades.forEach(service.watchAddress);
-      }
+      service.trades.completed
+        .filter(t => (
+          tradeStateIn(watchableStates)(t) &&
+          !t.bitcoinReceived &&
+          !watching[t.receiveAddress]
+        ))
+        .forEach(service.watchAddress);
 
       return service.trades;
     };
@@ -56,7 +60,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
   }
 
   function watchAddress (trade) {
-    if (trade.bitcoinReceived) return;
+    watching[trade.receiveAddress] = true;
     trade.watchAddress().then(() => service.openBuyView(trade.inAmount, trade, '', true));
   }
 

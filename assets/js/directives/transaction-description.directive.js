@@ -47,7 +47,7 @@ function transactionDescription ($translate, Wallet, buySell) {
     scope.txDirection = scope.getTxDirection(scope.tx.txType);
     scope.txClass = scope.getTxClass(scope.tx.txType);
     scope.txWatchOnly = scope.getTxWatchOnly(scope.tx);
-    buySell.initialized().then(() => scope.txMethod = scope.getTxMethod(scope.tx));
+    buySell.initialized().finally(() => scope.txMethod = scope.getTxMethod(scope.tx));
 
     scope.$watch('tx.confirmations', () => {
       if (scope.tx && scope.tx.confirmations != null) {

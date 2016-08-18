@@ -38,7 +38,7 @@ describe "buySell service", () ->
 
   describe "getTrades", ->
     exchange = undefined
-    trades = ["processing", "completed", "cancelled"].map(makeTrade)
+    trades = ["processing", "completed", "completed_test", "cancelled"].map(makeTrade)
 
     beforeEach ->
       exchange = buySell.getExchange()
@@ -53,18 +53,12 @@ describe "buySell service", () ->
       buySell.getTrades()
       $rootScope.$digest()
       expect(buySell.trades.pending.length).toEqual(1)
-      expect(buySell.trades.completed.length).toEqual(2)
+      expect(buySell.trades.completed.length).toEqual(3)
 
     it "should watch completed trades and be initialized", ->
       buySell.getTrades()
       $rootScope.$digest()
-      expect(buySell.watchAddress).toHaveBeenCalledTimes(2)
-
-    it "should not watch trades if already initialized", ->
-      buySell.trades.completed.push(trades[1], trades[2])
-      buySell.getTrades()
-      $rootScope.$digest()
-      expect(buySell.watchAddress).not.toHaveBeenCalled()
+      expect(buySell.watchAddress).toHaveBeenCalledTimes(1)
 
   describe "watchAddress", ->
     trades = {}
@@ -76,10 +70,6 @@ describe "buySell service", () ->
     it "should watch if bitcoin has not been received", ->
       buySell.watchAddress(trades.pending)
       expect(trades.pending.watchAddress).toHaveBeenCalled()
-
-    it "should not watch if bitcoin has been received", ->
-      buySell.watchAddress(trades.completed)
-      expect(trades.completed.watchAddress).not.toHaveBeenCalled()
 
     it "should open the buy modal when bitcoin is received", ->
       spyOn(buySell, 'openBuyView')
