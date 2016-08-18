@@ -2,11 +2,12 @@ angular
   .module('walletApp')
   .controller('WalletNavigationCtrl', WalletNavigationCtrl);
 
-function WalletNavigationCtrl ($rootScope, $scope, Wallet, Alerts, SecurityCenter, $state, $stateParams, $uibModal, filterFilter, $location) {
+function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Alerts, SecurityCenter, $state, $stateParams, $uibModal, filterFilter, $location) {
   $scope.status = Wallet.status;
   $scope.total = Wallet.total;
   $scope.settings = Wallet.settings;
   $scope.security = SecurityCenter.security;
+  $scope.isUserInvited = MyWallet.wallet.accountInfo.invited;
 
   $scope.selectedAccountIndex = $stateParams.accountIndex;
 

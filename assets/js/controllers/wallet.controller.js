@@ -89,8 +89,10 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   });
 
   $scope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
+    let isUserInvited = MyWallet.wallet.accountInfo.invited;
     let isPublicState = toState.name === 'landing' || toState.name.slice(0, 6) === 'public';
     if (isPublicState && Wallet.status.isLoggedIn) event.preventDefault();
+    if (!isUserInvited && toState.name === 'wallet.common.buy-sell') event.preventDefault();
     if (MyWallet.wallet.isDoubleEncrypted && toState.name === 'wallet.common.buy-sell') {
       event.preventDefault();
       Alerts.displayError('MUST_DISABLE_2ND_PW');
