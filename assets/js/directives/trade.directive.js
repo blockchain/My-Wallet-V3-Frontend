@@ -9,7 +9,6 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, buySell) {
     restrict: 'A',
     replace: true,
     scope: {
-      bitcoinReceived: '=',
       trade: '=',
       buy: '&'
     },
@@ -23,6 +22,8 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, buySell) {
     let errorStates = ['cancelled', 'expired', 'rejected'];
     let pendingStates = ['awaiting_transfer_in', 'processing', 'reviewing'];
     let completedStates = ['expired', 'rejected', 'cancelled', 'completed', 'completed_test'];
+
+    scope.bitcoinReceived = scope.trade.bitcoinReceived;
 
     scope.status = {};
     scope.error = errorStates.indexOf(scope.trade.state) > -1;
