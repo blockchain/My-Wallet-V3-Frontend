@@ -179,31 +179,23 @@ function isignthis ($sce) {
 
           switch (e.state) {
             case 'SUCCESS':
-              scope.onPending({tx: tx});
+            case 'MANUAL_ACCEPTED':
+              scope.onPending({tx});
               break;
             case 'MANUAL_REVIEW':
-              scope.onReview({tx: tx});
-              break;
             case 'MANUAL_HOLD':
-              scope.onReview({tx: tx});
-              break;
-            case 'MANUAL_ACCEPTED':
-              scope.onPending({tx: tx});
-              break;
-            case 'DECLINED':
-              scope.onDeclined({tx: tx});
+              scope.onReview({tx});
               break;
             case 'EXPIRED':
-              scope.onExpired({tx: tx});
+              scope.onExpired({tx});
               break;
+            case 'DECLINED':
             case 'REJECTED':
-              scope.onDecline({tx: tx});
-              break;
             case 'MANUAL_REJECTED':
-              scope.onDecline({tx: tx});
+              scope.onDecline({tx});
               break;
             case 'FAILED':
-              scope.onFailed({tx: tx});
+              scope.onFailed({tx});
               break;
           }
         })

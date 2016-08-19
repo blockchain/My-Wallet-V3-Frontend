@@ -21,6 +21,14 @@ function BuySellCtrl ($scope, Alerts, Wallet, currency, buySell, MyWallet) {
 
     if (!$scope.exchange) {
       $scope.$watch(buySell.getExchange, (ex) => $scope.exchange = ex);
+    } else if (+$scope.exchange.profile.level.name < 2) {
+      buySell.getKYCs().then(kycs => {
+        if (kycs.length > 0) {
+          $scope.kyc = kycs[0];
+          buySell.pollUserLevel($scope.kyc)
+            .then(() => Alerts.displaySuccess('Account has been upgraded!'));
+        }
+      });
     }
   });
 

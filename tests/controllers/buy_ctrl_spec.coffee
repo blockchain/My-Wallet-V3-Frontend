@@ -40,11 +40,10 @@ describe "BuyCtrl", ->
     $controller "BuyCtrl",
       $scope: scope,
       $uibModalInstance: params.modalInstance ? { close: (->) dismiss: (->) }
-      exchange: params.exchange ? {}
-      trades: params.trades ? []
       fiat: params.fiat ? 0
       trade: params.trade ? false
       bitcoinReceived: params.bitcoinReceived ? false
+      kyc: params.kyc ? false
     scope
 
   describe "getPaymentMethods", ->

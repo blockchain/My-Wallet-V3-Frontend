@@ -6,22 +6,22 @@ formatTrade.$inject = ['$filter', 'MyWallet'];
 
 function formatTrade ($filter, MyWallet) {
   const service = {
-    error: error,
-    review: review,
-    success: success,
-    pending: pending
+    error,
+    review,
+    success,
+    pending,
+    kyc
   };
 
   let label = MyWallet.wallet.hdwallet.accounts[0].label;
 
   let addTradeDetails = (tx, trade) => {
     let transaction = {};
-    transaction['Coinify trade:'] = '#' + trade.id;
-    transaction['iSignthis ID:'] = trade.iSignThisID;
-    transaction['Date initialized:'] = $filter('date')(trade.createdAt, 'MM/dd/yyyy @ h:mma');
-    transaction['Receiving wallet:'] = label;
-    transaction['QA: BTC receiving address:'] = trade.receiveAddress;
-
+    transaction['COINIFY_TRADE'] = '#' + trade.id;
+    transaction['ISX_ID'] = trade.iSignThisID;
+    transaction['DATE_INITIALIZED'] = $filter('date')(trade.createdAt, 'MM/dd/yyyy @ h:mma');
+    transaction['RECEIVING_WALLET'] = label;
+    transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
     return transaction;
   };
 
@@ -77,6 +77,20 @@ function formatTrade ($filter, MyWallet) {
         fiatAmt: trade.inAmount + ' ' + trade.inCurrency,
         btcAmt: trade.outAmountExpected
       }
+    };
+  }
+
+  function kyc (tx, trade) {
+    tx = addTradeDetails(tx, trade);
+    delete tx.COINIFY_TRADE;
+    delete tx.RECEIVING_WALLET;
+    delete tx.RECEIVING_ADDRESS;
+
+    return {
+      tx: tx,
+      class: 'state-danger-text',
+      namespace: 'TX_KYC_PENDING',
+      values: {}
     };
   }
 
