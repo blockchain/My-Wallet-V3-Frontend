@@ -83,6 +83,14 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     return Wallet.changeCurrency(curr).then(success);
   };
 
+  $scope.changeTempCurrency = (curr) => {
+    $scope.transaction.tempCurrency = curr;
+  };
+
+  $scope.changeTempAmount = () => {
+    $scope.transaction.fiat = $scope.transaction.tempFiat;
+  };
+
   $scope.standardError = (err) => {
     console.log(err);
     $scope.status = {};
@@ -182,6 +190,8 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
       return !$scope.fields.countryCode || $scope.isCountryBlacklisted;
     } else if ($scope.onStep('accept-terms')) {
       return !$scope.signupForm.$valid;
+    } else if ($scope.onStep('summary')) {
+      return $scope.editAmount;
     }
   };
 
@@ -292,8 +302,12 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     if ($scope.onStep('email')) $scope.nextStep();
   });
 
+  $scope.$watch('transaction.currency', (newVal, oldVal) => {
+    $scope.transaction.tempCurrency = $scope.transaction.currency;
+  });
+
   $scope.$watch('transaction.fiat', (newVal, oldVal) => {
-    if (newVal !== oldVal) $scope.changeCurrency();
+    $scope.transaction.tempFiat = $scope.transaction.fiat;
   });
 
   $scope.$watch('exchange.user', (newVal, oldVal) => {

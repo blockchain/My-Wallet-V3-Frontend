@@ -13,15 +13,15 @@
       span(translate="AMOUNT")
       span(ng-hide="editAmount") {{ transaction.fiat | format }} {{ transaction.currency.code }}
       section.input-group.width-60.flex-row.flex-center.amount-input(ng-show="editAmount")
-        span.type-sm.blue.underline.pointer.mrm(ng-click="toggleEditAmount()" ng-show="editAmount") Update
+        span.type-sm.blue.underline.pointer.mrm(ng-click="changeTempAmount(); changeCurrency(transaction.tempCurrency); toggleEditAmount();" ng-show="editAmount") Update
         input.form-control(
           type="number"
-          ng-model="transaction.fiat"
+          ng-model="transaction.tempFiat"
           name="fiat"
           tabindex="1"
           focus-when="editAmount"
           ng-model-options="{debounce: 250}"
-          on-enter="buy(transaction.fiat)"
+          on-enter="changeTempAmount(); changeCurrency(transaction.tempCurrency); toggleEditAmount();"
           placeholder="0"
           min="0"
           max="2100000000000000"
@@ -29,12 +29,12 @@
         )
         div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
           button.btn.btn-default.dropdown-toggle(type="button" uib-dropdown-toggle aria-haspopup="true")
-            span {{ transaction.currency.code }}
+            span {{ transaction.tempCurrency.code }}
             span.caret
           ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
             li(ng-repeat="currency in currencies"
-               role="menuitem" 
-               ng-click="changeCurrency(currency);"
+               role="menuitem"
+               ng-click="changeTempCurrency(currency);"
                ng-class="{active: isCurrencySelected(currency)}")
               a(ng-click="$event.preventDefault()") {{ currency.code }}
     .flex-row.flex-between.pam.border-bottom-light

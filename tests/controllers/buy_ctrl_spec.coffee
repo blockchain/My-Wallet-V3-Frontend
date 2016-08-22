@@ -63,6 +63,27 @@ describe "BuyCtrl", ->
       expect(scope.methods.card).toEqual(methods[0])
       expect(scope.methods.bank).toEqual(methods[1])
 
+  describe "changeTempCurrency", ->
+    beforeEach ->
+      scope = getControllerScope()
+
+    it "should only change tempCurrency", ->
+      scope.changeCurrency({ code: "EUR" })
+      scope.changeTempCurrency({ code: "DKK" })
+      expect(scope.currencySymbol).toBe("E")
+      expect(scope.transaction.tempCurrency.code).toBe("DKK")
+
+  describe "changeTempAmount", ->
+    beforeEach ->
+      scope = getControllerScope()
+      scope.exchange.getBuyQuote = () -> $q.resolve()
+
+    it "should change transaction.fiat with transaction.tempFiat", ->
+      scope.transaction.fiat = 20
+      scope.transaction.tempFiat = 30
+      scope.changeTempAmount()
+      expect(scope.transaction.fiat).toBe(30)
+
   describe "changeCurrency", ->
     beforeEach ->
       scope = getControllerScope()
