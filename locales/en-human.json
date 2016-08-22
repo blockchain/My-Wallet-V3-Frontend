@@ -938,7 +938,7 @@
     "BODY": "This transaction is expired. Click Try Again to buy bitcoin."
   },
   "TX_KYC_PENDING": {
-    "TITLE": "Identity Verification In Review",
+    "TITLE": "@:KYC_IN_REVIEW.TITLE",
     "BODY": "To purchase bitcoin via bank transfer, your identiry needs to go through a manual confirmation process. This can take up to 2 days. We'll let you know as soon as you are approved."
   },
   "BITCOIN_RECEIVED": {
@@ -954,14 +954,17 @@
     "TITLE": "No payment processing fees | 2-3 days",
     "COPY": "Depending on your bank, Coinify will send you the bitcoin within 24 hours after they receive your payment. The final exchange rate will be determined once your bank transfer arrives."
   },
+  "KYC_IN_REVIEW": {
+    "TITLE": "Identity Verification In Review",
+    "BODY": "Bank transfers are unavailable until verification is complete. Credit card purchases are available up to $300 per day.",
+    "LINK": "Review Status"
+  },
   "COINIFY_TRADE": "Coinify trade",
   "ISX_ID": "iSignthis ID",
   "DATE_INITIALIZED": "Date initialized",
   "RECEIVING_WALLET": "Receiving wallet",
   "RECEIVING_ADDRESS": "QA: Receiving address",
   "RECEIVE_BITCOIN_TO": "Bitcoins will be sent to {{::label}}.",
-  "PENDING_VERIFICATION": "Bank transfers are unavailable until verification is complete. Credit card purchases are available up to $300 per day.",
-  "REVIEW_STATUS": "Review Status",
   "MUST_DISABLE_2ND_PW": "Please remove your second password to access this section of the wallet.",
   "BLACKLISTED_COUNTRY": "Buying bitcoin is not available in your country yet.",
   "ORDER_CONFIRMATION_COPY": "Before collecting payment information, please confirm your order amount. We'll then direct you to our secure payment provider to verify your card information.",

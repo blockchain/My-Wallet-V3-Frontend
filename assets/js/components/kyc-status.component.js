@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .component('kycReview', {
+  .component('kycStatus', {
     bindings: {
       onTrigger: '&'
     },
-    templateUrl: 'templates/kyc-review.jade'
+    templateUrl: 'templates/kyc-status.jade'
   });
