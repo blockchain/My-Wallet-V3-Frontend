@@ -31,9 +31,17 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
 
   function init () {
     let exchange = service.getExchange();
-    return exchange && exchange.user
-      ? $q.resolve(service.fetchProfile())
-      : $q.reject('USER_UNKNOWN');
+
+    if (exchange && exchange.user) {
+      // Get receive addresses from cached trade history:
+      service.getExchange().trades.forEach(t => {
+        let type = t.outCurrency === 'BTC' ? 'buy' : 'sell';
+        receiveAddressMap[t.receiveAddress] = type;
+      });
+      return $q.resolve();
+    } else {
+      return $q.reject('USER_UNKNOWN');
+    }
   }
 
   function getQuote (amt, curr) {
