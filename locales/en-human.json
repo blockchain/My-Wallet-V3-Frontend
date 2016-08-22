@@ -962,6 +962,7 @@
   "COINIFY_TRADE": "Coinify trade",
   "ISX_ID": "iSignthis ID",
   "VERIFY_ID_NOTE": "Please note that in order to buy bitcoin via bank transfer, you will need to verify your identity with our partner iSignThis. You will only have to do this once.",
+  "KYC_APPROVED": "Identity verification approved! Click here to start buying bitcoin via bank transfer.",
   "DATE_INITIALIZED": "Date initialized",
   "RECEIVING_WALLET": "Receiving wallet",
   "RECEIVING_ADDRESS": "QA: Receiving address",

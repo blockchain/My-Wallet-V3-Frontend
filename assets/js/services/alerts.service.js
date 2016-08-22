@@ -38,11 +38,12 @@ function Alerts ($timeout, $rootScope, $translate, $uibModal) {
     return context.some(alert => alert.msg === nextAlert.msg);
   }
 
-  function display (type, message, keep = false, context = service.alerts) {
-    let displayAlert = (translation) => {
-      let alert = { type: type, msg: translation };
+  function display (type, message, keep = false, context = service.alerts, action) {
+    let displayAlert = (msg) => {
+      let alert = { type, msg };
       if (isDuplicate(context, alert)) return;
       alert.close = close.bind(null, alert, context);
+      alert.action = action ? () => { action(); alert.close(); } : null;
       if (!keep) alert.timer = $timeout(() => alert.close(), 7000);
       context.push(alert);
     };

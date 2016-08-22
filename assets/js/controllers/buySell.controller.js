@@ -11,6 +11,10 @@ function BuySellCtrl ($scope, Alerts, Wallet, currency, buySell, MyWallet) {
   $scope.buy = buySell.openBuyView;
   $scope.state = {buy: true};
 
+  $scope.poll = () => buySell.pollUserLevel($scope.kyc).then(() => {
+    Alerts.displaySuccess('KYC_APPROVED', true, void 0, $scope.buy);
+  });
+
   // for quote
   if (!MyWallet.wallet.external.coinify) MyWallet.wallet.external.addCoinify();
 
@@ -21,13 +25,10 @@ function BuySellCtrl ($scope, Alerts, Wallet, currency, buySell, MyWallet) {
     $scope.status.loading = false;
 
     if ($scope.exchange) {
-      if (!$scope.kyc && +$scope.exchange.profile.level.name < 2) {
+      if (+$scope.exchange.profile.level.name < 2) {
+        if ($scope.kyc) return $scope.poll();
         buySell.getKYCs().then(kycs => {
-          if (kycs.length > 0) {
-            $scope.kyc = kycs[0];
-            buySell.pollUserLevel($scope.kyc)
-              .then(() => Alerts.displaySuccess('Account has been upgraded!'));
-          }
+          if (kycs.length > 0) { $scope.kyc = kycs[0]; $scope.poll(); }
           $scope.$watch(() => buySell.kycs.length, () => $scope.kyc = buySell.kycs[0]);
         });
       }

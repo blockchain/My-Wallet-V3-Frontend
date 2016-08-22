@@ -70,7 +70,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
     });
 
     let pollKyc = () => pollUntil(() => kyc.refresh(), () => kyc.state === 'completed');
-    let pollProfile = () => pollUntil(() => profile.fetch(), () => profile.level === 2);
+    let pollProfile = () => pollUntil(() => profile.fetch(), () => +profile.level.name === 2);
 
     return $q.resolve(pollKyc().then(pollProfile));
   }
