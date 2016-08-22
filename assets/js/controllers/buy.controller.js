@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuyCtrl', BuyCtrl);
 
-function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, fiat, trade, kyc, $timeout, bitcoinReceived, formatTrade, buySell) {
+function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, fiat, trade, $timeout, bitcoinReceived, formatTrade, buySell) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -11,7 +11,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   $scope.alerts = [];
   $scope.status = {};
   $scope.trade = trade;
-  $scope.kyc = kyc;
   $scope.label = MyWallet.wallet.hdwallet.accounts[0].label;
 
   $scope.method = $scope.trade ? $scope.trade.medium : 'card';
@@ -21,6 +20,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   let exchange = buySell.getExchange();
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
 
+  $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
   $scope.needsKyc = () => $scope.getMethod().inMedium === 'bank' && +$scope.exchange.profile.level.name < 2;
 
   $scope.steps = {
@@ -48,13 +48,12 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   $scope.bitcoinReceived = bitcoinReceived;
 
   $scope.fields = { email: $scope.user.email, countryCode: $scope.exchange.profile.country };
-  $scope.transaction = {fiat: 0, btc: 0, fee: 0, total: 0, currency: buySell.getCurrency()};
-  $scope.transaction.fiat = fiat || 0;
+  $scope.transaction = {fiat: fiat || 0, btc: 0, fee: 0, total: 0, currency: buySell.getCurrency()};
   $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
 
   $timeout(() => {
-    if ($scope.kyc) {
-      $scope.formattedTrade = formatTrade.kyc(null, $scope.kyc);
+    if ($scope.isKYC) {
+      $scope.formattedTrade = formatTrade.kyc(null, $scope.trade);
       $scope.goTo('pending');
     } else {
       $scope.getPaymentMethods();
@@ -83,7 +82,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
 
   $scope.changeCurrency = (curr) => {
     if (!curr) curr = buySell.getCurrency();
-    if ($scope.trade) curr = {code: $scope.trade.inCurrency};
+    if ($scope.trade && !$scope.isKYC) curr = {code: $scope.trade.inCurrency};
 
     $scope.currencySymbol = currency.conversions[curr.code];
 
@@ -150,7 +149,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   };
 
   $scope.nextStep = () => {
-    if ($scope.transaction.fiat == null || $scope.transaction.fiat === 0) {
+    if (!$scope.transaction.fiat && !$scope.isKYC) {
       $scope.goTo('amount');
     } else if ((!$scope.fields.countryCode && !$scope.afterStep('amount')) || ($scope.onStep('amount') && !$scope.exchange.user)) {
       $scope.goTo('select-country');
@@ -161,7 +160,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     } else if (!$scope.isMethodSelected) {
       $scope.goTo('select-payment-method');
       $scope.isMethodSelected = true;
-    } else if (!$scope.trade && !$scope.kyc) {
+    } else if (!$scope.trade) {
       $scope.goTo('summary');
     } else if (!$scope.paymentInfo && !$scope.formattedTrade) {
       $scope.goTo('trade-formatted');
@@ -217,7 +216,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   };
 
   $scope.watchAddress = () => {
-    if (!$scope.trade || $scope.bitcoinReceived) return;
+    if (!$scope.trade || $scope.bitcoinReceived || $scope.isKYC) return;
     const success = () => $timeout(() => $scope.bitcoinReceived = true);
     $scope.trade.watchAddress().then(success);
   };
@@ -263,7 +262,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   };
 
   $scope.reviewTx = (tx) => {
-    let type = $scope.needsKyc() ? 'kyc' : 'review';
+    let type = $scope.isKYC || $scope.needsKyc() ? 'kyc' : 'review';
     $scope.formattedTrade = formatTrade[type](tx, $scope.trade);
   };
 

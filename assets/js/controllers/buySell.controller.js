@@ -46,4 +46,6 @@ function BuySellCtrl ($scope, Alerts, Wallet, currency, buySell, MyWallet) {
     let curr = $scope.transaction.currency || null;
     $scope.currencySymbol = currency.conversions[curr.code];
   });
+
+  $scope.$watch(() => buySell.kycs.length, () => $scope.kyc = buySell.kycs[0]);
 }

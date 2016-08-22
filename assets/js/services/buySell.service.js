@@ -128,7 +128,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
     return service.getExchange().fetchProfile().then(success, error);
   }
 
-  function openBuyView (amt, _trade, active, bitcoinReceived, kyc) {
+  function openBuyView (amt, trade, active, bitcoinReceived) {
     const open = () => $uibModal.open({
       templateUrl: 'partials/buy-modal.jade',
       windowClass: 'bc-modal auto buy ' + active,
@@ -137,9 +137,8 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
       keyboard: false,
       resolve: {
         bitcoinReceived: () => bitcoinReceived || undefined,
-        trade: () => _trade || null,
-        fiat: () => amt,
-        kyc: () => kyc
+        trade: () => trade || null,
+        fiat: () => amt
       }
     });
 

@@ -24,7 +24,7 @@
             span.type-h5.mbs.mts(translate="TX_KYC_PENDING.TITLE")
             span.type-sm(translate="PENDING_VERIFICATION")
           .flex-2.flex-center.flex-end.prl
-            span.blue.underline.pointer.type-sm(translate="REVIEW_STATUS" ng-click="buy('', null, '', false, kyc)")
+            span.blue.underline.pointer.type-sm(translate="REVIEW_STATUS" ng-click="buy(null, kyc)")
     .flex-column.mtl(ng-show="trades.pending.length || trades.completed.length")
       .flex-row.flex-between.flex-center
         h4.type-h4(translate="Order History")
