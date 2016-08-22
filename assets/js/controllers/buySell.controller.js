@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySellCtrl', BuySellCtrl);
 
-function BuySellCtrl ($scope, Alerts, Wallet, currency, buySell, MyWallet) {
+function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWallet) {
   $scope.status = { loading: true };
   $scope.currencies = currency.coinifyCurrencies;
   $scope.settings = Wallet.settings;
@@ -11,9 +11,14 @@ function BuySellCtrl ($scope, Alerts, Wallet, currency, buySell, MyWallet) {
   $scope.buy = buySell.openBuyView;
   $scope.state = {buy: true};
 
-  $scope.poll = () => buySell.pollUserLevel($scope.kyc).then(() => {
-    Alerts.displaySuccess('KYC_APPROVED', true, void 0, $scope.buy);
-  });
+  $scope.poll = () => {
+    buySell.pollUserLevel($scope.kyc)
+      .then(() => Alerts.displaySuccess('KYC_APPROVED', true))
+      .then(() => {
+        $scope.buy();
+        $state.go('wallet.common.buy-sell');
+      });
+  };
 
   // for quote
   if (!MyWallet.wallet.external.coinify) MyWallet.wallet.external.addCoinify();
