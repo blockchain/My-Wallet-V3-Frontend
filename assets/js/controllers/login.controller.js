@@ -15,6 +15,10 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
     $scope.uid = $stateParams.uid || Wallet.guid || res;
     $scope.uidAvailable = !!$scope.uid;
 
+    if ($scope.autoReload && $scope.uid && $scope.password) {
+      $scope.login();
+    }
+
     $scope.$watch('uid + password + twoFactorCode + settings.needs2FA', () => {
       $rootScope.loginFormUID = $q.resolve($scope.uid);
       let isValid = null;
@@ -77,10 +81,6 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
       $cookies.put('password', $scope.password);
     }
   };
-
-  if ($scope.autoReload && $scope.uid && $scope.password) {
-    $scope.login();
-  }
 
   $scope.resend = () => {
     if (Wallet.settings.twoFactorMethod === 5) {
