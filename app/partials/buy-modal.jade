@@ -34,7 +34,7 @@
       include ./buy-accept-terms
     div.width-80(ng-show="onStep('select-payment-method')")
       include ./buy-select-payment-method
-    div.width-80(ng-show="onStep('summary')")
+    div.width-80(ng-show="onStep('summary')" ng-controller="BuySummaryCtrl")
       include ./buy-summary
     div(ng-show="onStep('trade-formatted', 'trade-complete')")
       div.iframe(ng-if="!trade.medium || trade.medium === 'card'")

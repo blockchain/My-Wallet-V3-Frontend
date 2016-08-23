@@ -83,14 +83,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     return Wallet.changeCurrency(curr).then(success);
   };
 
-  $scope.changeTempCurrency = (curr) => {
-    $scope.transaction.tempCurrency = curr;
-  };
-
-  $scope.changeTempAmount = () => {
-    $scope.transaction.fiat = $scope.transaction.tempFiat;
-  };
-
   $scope.standardError = (err) => {
     console.log(err);
     $scope.status = {};
@@ -136,7 +128,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   };
 
   $scope.toggleEmail = () => $scope.editEmail = !$scope.editEmail;
-  $scope.toggleEditAmount = () => $scope.editAmount = !$scope.editAmount;
   $scope.isCurrencySelected = (currency) => currency === $scope.transaction.currency;
 
   $scope.addExchange = () => {
@@ -300,14 +291,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
 
   $scope.$watch('user.isEmailVerified', () => {
     if ($scope.onStep('email')) $scope.nextStep();
-  });
-
-  $scope.$watch('transaction.currency', (newVal, oldVal) => {
-    $scope.transaction.tempCurrency = $scope.transaction.currency;
-  });
-
-  $scope.$watch('transaction.fiat', (newVal, oldVal) => {
-    $scope.transaction.tempFiat = $scope.transaction.fiat;
   });
 
   $scope.$watch('exchange.user', (newVal, oldVal) => {

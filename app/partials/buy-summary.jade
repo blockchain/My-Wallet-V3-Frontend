@@ -2,6 +2,10 @@
   label.em-500.flex-start.pts Confirm your order:
   p.mvm
     span(translate="ORDER_CONFIRMATION_COPY")
+    .flex-center.mtl(ng-show="tempFiatForm.fiat.$error.max || tempFiatForm.fiat.$error.min")
+      i.ti-alert.sent.mrs.type-h4
+      span.sent.mrs(ng-show="tempFiatForm.fiat.$error.max" translate="MAX_LIMIT_EXCEEDED" translate-values="{max: max, amt: tempFiatForm.fiat.$viewValue, code: transaction.currency.code, amtAvailable: amtAvailable}")
+      span.sent.mrs(ng-show="tempFiatForm.fiat.$error.min" translate="BELOW_MIN_LIMIT" translate-values="{min: min, amt: tempFiatForm.fiat.$viewValue, code: transaction.currency.code}")
   .flex-end.mbs
     span.type-sm.blue.underline.pointer(ng-click="toggleEditAmount()" ng-hide="editAmount") Edit Order
     span.type-sm.blue.underline.pointer(ng-click="toggleEditAmount()" ng-show="editAmount") Cancel
@@ -13,30 +17,31 @@
       span(translate="AMOUNT")
       span(ng-hide="editAmount") {{ transaction.fiat | format }} {{ transaction.currency.code }}
       section.input-group.width-60.flex-row.flex-center.amount-input(ng-show="editAmount")
-        span.type-sm.blue.underline.pointer.mrm(ng-click="changeTempAmount(); changeCurrency(transaction.tempCurrency); toggleEditAmount();" ng-show="editAmount") Update
-        input.form-control(
-          type="number"
-          ng-model="transaction.tempFiat"
-          name="fiat"
-          tabindex="1"
-          focus-when="editAmount"
-          ng-model-options="{debounce: 250}"
-          on-enter="changeTempAmount(); changeCurrency(transaction.tempCurrency); toggleEditAmount();"
-          placeholder="0"
-          min="0"
-          max="2100000000000000"
-          required
-        )
-        div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
-          button.btn.btn-default.dropdown-toggle(type="button" uib-dropdown-toggle aria-haspopup="true")
-            span {{ transaction.tempCurrency.code }}
-            span.caret
-          ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
-            li(ng-repeat="currency in currencies"
-               role="menuitem"
-               ng-click="changeTempCurrency(currency);"
-               ng-class="{active: isCurrencySelected(currency)}")
-              a(ng-click="$event.preventDefault()") {{ currency.code }}
+        span.type-sm.blue.underline.pointer.mrm(ng-click="tempFiatForm.fiat.$valid && updateAmounts()" ng-show="editAmount" ng-class="{'o-3': tempFiatForm.fiat.$invalid}") Update
+        form.flex-row.flex-center.width-100(name="tempFiatForm")
+          input.form-control(
+            type="number"
+            ng-model="transaction.tempFiat"
+            name="fiat"
+            tabindex="1"
+            focus-when="editAmount"
+            ng-model-options="{debounce: 250}"
+            on-enter="tempFiatForm.fiat.$valid && updateAmounts()"
+            placeholder="Enter an amount"
+            min="{{min}}"
+            max="{{amtAvailable}}"
+            required
+          )
+          div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
+            button.btn.btn-default.dropdown-toggle(type="button" uib-dropdown-toggle aria-haspopup="true")
+              span {{ transaction.tempCurrency.code }}
+              span.caret
+            ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
+              li(ng-repeat="currency in currencies"
+                 role="menuitem"
+                 ng-click="changeTempCurrency(currency);"
+                 ng-class="{active: isCurrencySelected(currency)}")
+                a(ng-click="$event.preventDefault()") {{ currency.code }}
     .flex-row.flex-between.pam.border-bottom-light
       span Fee:
       span {{ transaction.methodFee | format }} {{ transaction.currency.code }}
