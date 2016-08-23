@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buySell', buySell);
 
-function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
+function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Alerts, currency) {
   let pendingStates = ['awaiting_transfer_in', 'processing', 'reviewing'];
   let completedStates = ['expired', 'rejected', 'cancelled', 'completed', 'completed_test'];
   let watchableStates = ['completed', 'completed_test'];
@@ -15,14 +15,19 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
   const service = {
     getExchange: () => MyWallet.wallet.external.coinify,
     trades: { completed: [], pending: [] },
+    kycs: [],
     getAddressMethod: (address) => receiveAddressMap[address] || null,
     initialized: () => initialized.promise,
     init,
     getQuote,
+    getKYCs,
+    triggerKYC,
+    getOpenKYC,
     getTrades,
     watchAddress,
     fetchProfile,
     openBuyView,
+    pollUserLevel,
     getCurrency
   };
 
@@ -37,11 +42,41 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
   }
 
   function getQuote (amt, curr) {
-    const success = (quote) => {
-      return quote;
-    };
+    return service.getExchange().getBuyQuote(amt, curr);
+  }
 
-    return service.getExchange().getBuyQuote(amt, curr).then(success);
+  function getKYCs () {
+    return service.getExchange().getKYCs().then(kycs => {
+      service.kycs = kycs.sort((k0, k1) => k1.createdAt > k0.createdAt);
+      return service.kycs;
+    });
+  }
+
+  function triggerKYC () {
+    return service.getExchange().triggerKYC().then(kyc => {
+      service.kycs.unshift(kyc);
+      return kyc;
+    });
+  }
+
+  function pollUserLevel (kyc) {
+    let profile = service.getExchange().profile;
+
+    let pollUntil = (action, test) => $q((resolve) => {
+      let stop;
+      let exit = () => { stop(); resolve(); };
+      let check = () => action().then(() => test() && exit());
+      stop = MyWalletHelpers.exponentialBackoff(check);
+    });
+
+    let pollKyc = () => pollUntil(() => kyc.refresh(), () => kyc.state === 'completed');
+    let pollProfile = () => pollUntil(() => profile.fetch(), () => +profile.level.name === 2);
+
+    return $q.resolve(pollKyc().then(pollProfile));
+  }
+
+  function getOpenKYC () {
+    return service.kycs.length ? $q.resolve(service.kycs[0]) : service.triggerKYC();
   }
 
   function getTrades () {
@@ -76,6 +111,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
   function fetchProfile () {
     let success = () => $q.all([
       service.getTrades(),
+      service.getKYCs(),
       service.getExchange().getBuyCurrencies().then(currency.updateCoinifyCurrencies)
     ]);
 
@@ -92,7 +128,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
     return service.getExchange().fetchProfile().then(success, error);
   }
 
-  function openBuyView (amt, _trade, active, bitcoinReceived) {
+  function openBuyView (amt, trade, active, bitcoinReceived) {
     const open = () => $uibModal.open({
       templateUrl: 'partials/buy-modal.jade',
       windowClass: 'bc-modal auto buy ' + active,
@@ -101,9 +137,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, Alerts, currency) {
       keyboard: false,
       resolve: {
         bitcoinReceived: () => bitcoinReceived || undefined,
-        exchange: () => service.getExchange(),
-        trades: () => service.trades || [],
-        trade: () => _trade || null,
+        trade: () => trade || null,
         fiat: () => amt
       }
     });

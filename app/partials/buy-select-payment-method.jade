@@ -13,7 +13,7 @@
             span.flex-row
               span.em-300(translate="CARD_TRANSFER.TITLE")
               helper-button(content="CARD_TRANSFER.COPY")
-  .flex-row.flex-center.mbl.pvs.pointer
+  .flex-row.flex-center.pvs.pointer
     input.man(type="radio" name="inMedium" id="bank" ng-model="method" value="bank" ng-disabled="status.waiting")
     .flex-column.flex-1.mlm.pointer
       label.mts.pointer.em-400(for="bank")
@@ -26,3 +26,7 @@
             span.flex-row
               span.em-300(translate="BANK_TRANSFER.TITLE")
               helper-button(content="BANK_TRANSFER.COPY")
+  .flex-row.mbl.pvs
+    .mam
+    .mlm.blue.width-70.type-sm(ng-hide="exchange.profile.level.name == 2")
+      label.em-400(translate="VERIFY_ID_NOTE")

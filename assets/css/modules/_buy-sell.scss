@@ -18,6 +18,9 @@
       min-width: 70px;
     }
   }
+  .kyc-status {
+    background-color: $light-grey;
+  }
 }
 
 .currency-dropdown {
@@ -48,7 +51,7 @@
     width: 60px;
     & + span {
       top: 0;
-      left: 0; 
+      left: 0;
     }
   }
   &.coinify-logo-left {
@@ -60,8 +63,8 @@
 
 .payment-methods {
   input {
-    & ~ .flex-column img { 
-      width: 30px; 
+    & ~ .flex-column img {
+      width: 30px;
       &.checked { display: none; }
     }
   }
@@ -191,7 +194,7 @@
       &:after {
         background-image: url('../img/bank-success.png');
       }
-    } 
+    }
   }
 }
 

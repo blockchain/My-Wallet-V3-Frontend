@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuyCtrl', BuyCtrl);
 
-function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, fiat, trade, $timeout, bitcoinReceived, formatTrade, buySell) {
+function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, fiat, trade, $timeout, bitcoinReceived, formatTrade, buySell) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -15,10 +15,13 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
 
   $scope.method = $scope.trade ? $scope.trade.medium : 'card';
   $scope.methods = {};
-  $scope.getMethod = () => $scope.methods[$scope.method];
+  $scope.getMethod = () => $scope.methods[$scope.method] || {};
 
   let exchange = buySell.getExchange();
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
+
+  $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
+  $scope.needsKyc = () => $scope.getMethod().inMedium === 'bank' && +$scope.exchange.profile.level.name < 2;
 
   $scope.steps = {
     'amount': 0,
@@ -36,6 +39,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
   $scope.afterStep = (step) => $scope.step > $scope.steps[step];
   $scope.beforeStep = (step) => $scope.step < $scope.steps[step];
+  $scope.currentStep = () => Object.keys($scope.steps).filter($scope.onStep)[0];
 
   $scope.goTo = (step) => $scope.step = $scope.steps[step];
   $scope.goTo('amount');
@@ -44,11 +48,10 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   $scope.bitcoinReceived = bitcoinReceived;
 
   $scope.fields = { email: $scope.user.email, countryCode: $scope.exchange.profile.country };
-  $scope.transaction = {fiat: 0, btc: 0, fee: 0, total: 0, currency: buySell.getCurrency()};
-  $scope.transaction.fiat = fiat || 0;
+  $scope.transaction = {fiat: fiat || 0, btc: 0, fee: 0, total: 0, currency: buySell.getCurrency()};
   $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
 
-  $timeout(() => $scope.getPaymentMethods());
+  $timeout(() => !$scope.isKYC && $scope.getPaymentMethods());
   $timeout(() => $scope.rendered = true, bitcoinReceived ? 0 : 4000);
 
   $scope.userHasExchangeAcct = $scope.trades.pending.length || $scope.trades.completed.length;
@@ -71,7 +74,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
 
   $scope.changeCurrency = (curr) => {
     if (!curr) curr = buySell.getCurrency();
-    if ($scope.trade) curr = {code: $scope.trade.inCurrency};
+    if ($scope.trade && !$scope.isKYC) curr = {code: $scope.trade.inCurrency};
 
     $scope.currencySymbol = currency.conversions[curr.code];
 
@@ -138,7 +141,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   };
 
   $scope.nextStep = () => {
-    if (!$scope.transaction.fiat) {
+    if (!$scope.transaction.fiat && !$scope.isKYC) {
       $scope.goTo('amount');
     } else if ((!$scope.fields.countryCode && !$scope.afterStep('amount')) || ($scope.onStep('amount') && !$scope.exchange.user)) {
       $scope.goTo('select-country');
@@ -205,7 +208,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   };
 
   $scope.watchAddress = () => {
-    if (!$scope.trade || $scope.bitcoinReceived) return;
+    if (!$scope.trade || $scope.bitcoinReceived || $scope.isKYC) return;
     const success = () => $timeout(() => $scope.bitcoinReceived = true);
     $scope.trade.watchAddress().then(success);
   };
@@ -219,10 +222,8 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
     };
 
     // check if bank transfer and kyc level
-    if ($scope.getMethod().inMedium === 'bank' &&
-        parseInt($scope.exchange.profile.level.name, 10) < 2) {
-      $scope.exchange.triggerKYC().then(success, $scope.standardError);
-      return;
+    if ($scope.needsKyc()) {
+      return buySell.getOpenKYC().then(success, $scope.standardError);
     }
 
     $scope.exchange.buy($scope.transaction.fiat, $scope.transaction.currency.code, $scope.getMethod().inMedium)
@@ -253,12 +254,18 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
   };
 
   $scope.reviewTx = (tx) => {
-    $scope.formattedTrade = formatTrade.review(tx, $scope.trade);
+    let type = $scope.isKYC || $scope.needsKyc() ? 'kyc' : 'review';
+    $scope.formattedTrade = formatTrade[type](tx, $scope.trade);
   };
 
   $scope.pendingTx = (tx) => {
     if (!tx) return;
     if ($scope.formattedTrade && $scope.formattedTrade.class === 'success') return;
+
+    if ($scope.needsKyc()) {
+      buySell.pollingLevel = true;
+      return buySell.pollUserLevel().then($scope.buy).finally(() => $scope.pollingLevel = false);
+    }
 
     $scope.formattedTrade = formatTrade.pending(tx, $scope.trade);
   };

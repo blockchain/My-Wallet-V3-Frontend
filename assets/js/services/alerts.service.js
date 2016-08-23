@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .factory('Alerts', Alerts);
 
-Alerts.$inject = ['$timeout', '$rootScope', '$translate', '$uibModal'];
+Alerts.$inject = ['$timeout', '$rootScope', '$q', '$translate', '$uibModal'];
 
-function Alerts ($timeout, $rootScope, $translate, $uibModal) {
+function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
   const service = {
     alerts: [],
     close: close,
@@ -39,14 +39,16 @@ function Alerts ($timeout, $rootScope, $translate, $uibModal) {
   }
 
   function display (type, message, keep = false, context = service.alerts) {
-    let displayAlert = (translation) => {
-      let alert = { type: type, msg: translation };
-      if (isDuplicate(context, alert)) return;
-      alert.close = close.bind(null, alert, context);
-      if (!keep) alert.timer = $timeout(() => alert.close(), 7000);
+    let displayAlert = (msg) => $q((resolve, reject) => {
+      let alert = { type, msg };
+      let close = service.close.bind(null, alert, context);
+      if (isDuplicate(context, alert)) return reject('DUPLICATE');
+      alert.close = () => { close(); reject('CLOSED'); };
+      alert.action = () => { close(); resolve('CLICKED'); };
+      alert.timer = keep ? null : $timeout(alert.close, 7000);
       context.push(alert);
-    };
-    $translate(message).then(displayAlert, () => displayAlert(message));
+    });
+    return $translate(message).then(displayAlert, () => displayAlert(message));
   }
 
   function displayResetTwoFactor (message) {

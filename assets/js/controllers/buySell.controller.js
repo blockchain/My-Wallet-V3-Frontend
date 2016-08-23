@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySellCtrl', BuySellCtrl);
 
-function BuySellCtrl ($scope, Alerts, Wallet, currency, buySell, MyWallet) {
+function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWallet) {
   $scope.status = { loading: true };
   $scope.currencies = currency.coinifyCurrencies;
   $scope.settings = Wallet.settings;
@@ -11,15 +11,36 @@ function BuySellCtrl ($scope, Alerts, Wallet, currency, buySell, MyWallet) {
   $scope.buy = buySell.openBuyView;
   $scope.state = {buy: true};
 
+  $scope.poll = () => {
+    buySell.pollUserLevel($scope.kyc)
+      .then(() => Alerts.displaySuccess('KYC_APPROVED', true))
+      .then(() => {
+        $scope.buy();
+        $state.go('wallet.common.buy-sell');
+      });
+  };
+
   // for quote
   if (!MyWallet.wallet.external.coinify) MyWallet.wallet.external.addCoinify();
 
   buySell.initialized().finally(() => {
     $scope.trades = buySell.trades;
+    $scope.kyc = buySell.kycs[0];
     $scope.exchange = buySell.getExchange();
     $scope.status.loading = false;
 
-    if (!$scope.exchange) {
+    let unwatchKycs = $scope.$watch(() => buySell.kycs.length, () => $scope.kyc = buySell.kycs[0]);
+
+    if ($scope.exchange) {
+      if (+$scope.exchange.profile.level.name < 2) {
+        if ($scope.kyc) return $scope.poll();
+        buySell.getKYCs().then(kycs => {
+          if (kycs.length > 0) $scope.poll();
+        });
+      } else {
+        unwatchKycs();
+      }
+    } else {
       $scope.$watch(buySell.getExchange, (ex) => $scope.exchange = ex);
     }
   });

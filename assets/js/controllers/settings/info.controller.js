@@ -22,7 +22,7 @@ function SettingsInfoCtrl ($scope, $q, Wallet, Alerts) {
   $scope.showPairingCode = () => {
     $scope.loading.code = true;
     let success = (code) => $scope.pairingCode = code;
-    let error = () => Alerts.displayError('SHOW_PAIRING_CODE_FAIL');
+    let error = () => { Alerts.displayError('SHOW_PAIRING_CODE_FAIL'); };
     $q(Wallet.makePairingCode)
       .then(success, error)
       .then(() => $scope.loading.code = false);

@@ -27,6 +27,7 @@ describe "buySell service", () ->
             getTrades: -> $q.resolve([])
             fetchProfile: ->
             getBuyCurrencies: -> $q.resolve(["USD", "EUR"])
+            getKYCs: -> $q.resolve([])
 
       buySell = $injector.get("buySell")
       currency = $injector.get("currency")
