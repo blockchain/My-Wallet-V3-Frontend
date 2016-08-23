@@ -1,4 +1,4 @@
-fdescribe "BuySummaryCtrl", ->
+describe "BuySummaryCtrl", ->
   scope = undefined
   Wallet = undefined
   currency = undefined
