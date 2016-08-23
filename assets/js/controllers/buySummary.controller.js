@@ -8,16 +8,14 @@ function BuySummaryCtrl ($scope, Wallet, buySell, currency) {
     let limits = buySell.getExchange().profile.level.limits;
     let dailyLimit = limits[$scope.method].in.daily;
     let activeTradesAmt = buySell.trades.pending.map(t => t.inAmount)
-                                                .reduce((a, b) => a + b);
+                                                .reduce((a, b) => a + b, 0);
 
     const success = (rate) => {
       $scope.min = parseFloat((rate * 10).toFixed(2)) + 0.01;
       $scope.max = parseFloat((rate * dailyLimit)).toFixed(2);
       $scope.amtAvailable = parseFloat($scope.max - activeTradesAmt).toFixed(2);
-
+      $scope.$parent.editAmount = $scope.tempFiatForm.$error.max || $scope.tempFiatForm.$error.min;
       $scope.$safeApply();
-      if ($scope.tempFiatForm.$error.max ||
-          $scope.tempFiatForm.$error.min) $scope.$parent.editAmount = true;
     };
 
     buySell.getExchange().exchangeRate.get('EUR', $scope.transaction.currency.code)
