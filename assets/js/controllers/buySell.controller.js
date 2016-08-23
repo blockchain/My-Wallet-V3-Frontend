@@ -29,13 +29,16 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
     $scope.exchange = buySell.getExchange();
     $scope.status.loading = false;
 
+    let unwatchKycs = $scope.$watch(() => buySell.kycs.length, () => $scope.kyc = buySell.kycs[0]);
+
     if ($scope.exchange) {
       if (+$scope.exchange.profile.level.name < 2) {
         if ($scope.kyc) return $scope.poll();
         buySell.getKYCs().then(kycs => {
-          if (kycs.length > 0) { $scope.kyc = kycs[0]; $scope.poll(); }
-          $scope.$watch(() => buySell.kycs.length, () => $scope.kyc = buySell.kycs[0]);
+          if (kycs.length > 0) $scope.poll();
         });
+      } else {
+        unwatchKycs();
       }
     } else {
       $scope.$watch(buySell.getExchange, (ex) => $scope.exchange = ex);

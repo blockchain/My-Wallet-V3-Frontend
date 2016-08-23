@@ -51,15 +51,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.transaction = {fiat: fiat || 0, btc: 0, fee: 0, total: 0, currency: buySell.getCurrency()};
   $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
 
-  $timeout(() => {
-    if ($scope.isKYC) {
-      $scope.formattedTrade = formatTrade.kyc(null, $scope.trade);
-      $scope.goTo('pending');
-    } else {
-      $scope.getPaymentMethods();
-    }
-  });
-
+  $timeout(() => !$scope.isKYC && $scope.getPaymentMethods());
   $timeout(() => $scope.rendered = true, bitcoinReceived ? 0 : 4000);
 
   $scope.userHasExchangeAcct = $scope.trades.pending.length || $scope.trades.completed.length;
