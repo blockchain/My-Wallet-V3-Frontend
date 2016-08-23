@@ -939,7 +939,7 @@
   },
   "TX_KYC_PENDING": {
     "TITLE": "@:KYC_IN_REVIEW.TITLE",
-    "BODY": "To purchase bitcoin via bank transfer, your identiry needs to go through a manual confirmation process. This can take up to 2 days. We'll let you know as soon as you are approved."
+    "BODY": "To purchase bitcoin via bank transfer, your identity needs to go through a manual confirmation process. This can take up to 2 days. We'll let you know as soon as you are approved."
   },
   "BITCOIN_RECEIVED": {
     "TITLE": "Bitcoin received!",
