@@ -12,7 +12,6 @@ function BuySummaryCtrl ($scope, Wallet, buySell, currency) {
     for (var i in buySell.getExchange().trades.pending) { activeTradesAmt += buySell.getExchange().trades[i].inAmount; }
 
     const getEuroRate = (rate) => {
-      console.log('here');
       $scope.minEuroRate = rate * 10;
       $scope.maxEuroRate = rate * dailyLimit;
       $scope.amtAvailableRate = rate * (dailyLimit - activeTradesAmt);
