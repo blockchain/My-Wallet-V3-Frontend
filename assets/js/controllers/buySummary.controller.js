@@ -14,6 +14,10 @@ function BuySummaryCtrl ($scope, Wallet, buySell, currency) {
       $scope.min = parseFloat((rate * 10).toFixed(2)) + 0.01;
       $scope.max = parseFloat((rate * dailyLimit)).toFixed(2);
       $scope.amtAvailable = parseFloat($scope.max - activeTradesAmt).toFixed(2);
+
+      $scope.$safeApply();
+      if ($scope.tempFiatForm.$error.max ||
+          $scope.tempFiatForm.$error.min) $scope.$parent.editAmount = true;
     };
 
     buySell.getExchange().exchangeRate.get('EUR', $scope.transaction.currency.code)
