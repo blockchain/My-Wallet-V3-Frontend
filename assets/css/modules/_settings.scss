@@ -209,3 +209,9 @@ table.accounts-container {
     padding: 15px 15px;
   }
 }
+
+@media (max-width: 768px) {
+  .pbm-m {
+    padding-bottom: 0.625em;
+  }
+}

@@ -8,9 +8,11 @@ languages.$inject = [];
 function languages () {
   const languageCodes = {
     'de': 'German',
+    // 'cs': 'Czech', // Pending backend support
     'hi': 'Hindi',
     'no': 'Norwegian',
     'ru': 'Russian',
+    // 'uk': 'Ukrainian', // Pending backend support
     'pt': 'Portuguese',
     'bg': 'Bulgarian',
     'fr': 'French',
