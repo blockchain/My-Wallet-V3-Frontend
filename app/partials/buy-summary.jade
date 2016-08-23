@@ -17,7 +17,7 @@
       span(translate="AMOUNT")
       span(ng-hide="editAmount") {{ transaction.fiat | format }} {{ transaction.currency.code }}
       section.input-group.width-60.flex-row.flex-center.amount-input(ng-show="editAmount")
-        span.type-sm.blue.underline.pointer.mrm(ng-click="tempFiatForm.fiat.$valid && updateAmounts()" ng-show="editAmount" ng-class="{'o-3': tempFiatForm.fiat.$invalid}") Update
+        span.type-sm.blue.underline.pointer.mrm(ng-click="tempFiatForm.fiat.$valid && [toggleEditAmount(), updateAmounts()]" ng-show="editAmount" ng-class="{'o-3': tempFiatForm.fiat.$invalid}") Update
         form.flex-row.flex-center.width-100(name="tempFiatForm")
           input.form-control(
             type="number"
@@ -25,8 +25,7 @@
             name="fiat"
             tabindex="1"
             focus-when="editAmount"
-            ng-model-options="{debounce: 250}"
-            on-enter="tempFiatForm.fiat.$valid && updateAmounts()"
+            on-enter="tempFiatForm.fiat.$valid && [toggleEditAmount(), updateAmounts()]"
             placeholder="Enter an amount"
             min="{{min}}"
             max="{{amtAvailable}}"

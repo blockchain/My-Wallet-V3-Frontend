@@ -77,10 +77,10 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
 
     const success = () => {
       $scope.transaction.currency = curr;
-      $scope.getPaymentMethods();
     };
 
-    return Wallet.changeCurrency(curr).then(success);
+    return Wallet.changeCurrency(curr).then(success)
+                                      .then($scope.getPaymentMethods);
   };
 
   $scope.standardError = (err) => {
