@@ -2,7 +2,7 @@
   label.em-500.flex-start.pts Confirm your order:
   p.mvm
     span(translate="ORDER_CONFIRMATION_COPY")
-    .flex-center.mtl(ng-show="tempFiatForm.fiat.$error.max || tempFiatForm.fiat.$error.min")
+    .flex-center.mtl(ng-show="(tempFiatForm.fiat.$error.max || tempFiatForm.fiat.$error.min) && editAmount")
       i.ti-alert.sent.mrs.type-h4
       span.sent.mrs(ng-show="tempFiatForm.fiat.$error.max" translate="MAX_LIMIT_EXCEEDED" translate-values="{max: max, amt: tempFiatForm.fiat.$viewValue, code: transaction.currency.code, amtAvailable: amtAvailable}")
       span.sent.mrs(ng-show="tempFiatForm.fiat.$error.min" translate="BELOW_MIN_LIMIT" translate-values="{min: min, amt: tempFiatForm.fiat.$viewValue, code: transaction.currency.code}")
