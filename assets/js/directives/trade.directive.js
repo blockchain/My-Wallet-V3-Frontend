@@ -18,22 +18,30 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, buySell) {
   return directive;
 
   function link (scope, elem, attrs) {
-    let successStates = ['completed', 'completed_test'];
     let errorStates = ['cancelled', 'expired', 'rejected'];
+    let successStates = ['completed', 'completed_test'];
     let pendingStates = ['awaiting_transfer_in', 'processing', 'reviewing'];
     let completedStates = ['expired', 'rejected', 'cancelled', 'completed', 'completed_test'];
 
-    scope.bitcoinReceived = scope.trade.bitcoinReceived;
-
     scope.status = {};
-    scope.error = errorStates.indexOf(scope.trade.state) > -1;
-    scope.success = successStates.indexOf(scope.trade.state) > -1;
-    scope.pending = pendingStates.indexOf(scope.trade.state) > -1;
-    scope.completed = completedStates.indexOf(scope.trade.state) > -1;
+
+    scope.update = () => angular.extend(scope, {
+      error: errorStates.indexOf(scope.trade.state) > -1,
+      success: successStates.indexOf(scope.trade.state) > -1,
+      pending: pendingStates.indexOf(scope.trade.state) > -1,
+      completed: completedStates.indexOf(scope.trade.state) > -1
+    });
 
     scope.cancel = (trade) => {
-      Alerts.confirm('CONFIRM_CANCEL_TRADE', { action: 'CANCEL_TRADE', cancel: 'GO_BACK' })
-        .then(() => trade.cancel().then(buySell.getTrades, Alerts.displayError));
+      scope.status.canceling = true;
+      Alerts.confirm('CONFIRM_CANCEL_TRADE', {
+        action: 'CANCEL_TRADE',
+        cancel: 'GO_BACK'
+      }).then(() => trade.cancel(), () => {})
+        .catch((e) => { Alerts.displayError(e); })
+        .finally(() => scope.status.canceling = false);
     };
+
+    scope.$watch('trade.state', scope.update);
   }
 }

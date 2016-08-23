@@ -1,8 +1,8 @@
 tr.border
   td.paml
     span.state.mrl.state-danger-text(ng-show="completed && error") {{ trade.state | translate }}
-    span.state.mrl.success(ng-show="completed && success && bitcoinReceived") Purchased
-    span.state.italic.mrl(ng-show="completed && success && !bitcoinReceived") Pending
+    span.state.mrl.success(ng-show="completed && success && trade.bitcoinReceived") Purchased
+    span.state.italic.mrl(ng-show="completed && success && !trade.bitcoinReceived") Pending
     span.state.italic.mrl(ng-show="pending") {{ trade.state | translate }}
     
     span(ng-show="trade.state === 'cancelled'") You canceled this order
@@ -13,4 +13,4 @@ tr.border
   td.right-align.paml(ng-hide="status.waiting")
     span.type-lbl {{ trade.outAmountExpected }} {{ trade.outCurrency }} | 
     span.type-lbl.em-600 {{ trade.inAmount }} {{ trade.inCurrency }}
-    i.ti-trash.pointer.mls.state-danger-text(ng-click="cancel(trade)" ng-show="pending" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
+    i.ti-trash.pointer.mls.state-danger-text(ng-click="cancel(trade)" ng-show="pending && !status.canceling" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
