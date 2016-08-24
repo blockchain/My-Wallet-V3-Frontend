@@ -144,7 +144,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
       $scope.goTo('amount');
     } else if ((!$scope.fields.countryCode && !$scope.afterStep('amount')) || ($scope.onStep('amount') && !$scope.exchange.user)) {
       $scope.goTo('select-country');
-    } else if (!$scope.user.isEmailVerified || $scope.rejectedEmail) {
+    } else if ((!$scope.user.isEmailVerified || $scope.rejectedEmail) && !$scope.exchange.user) {
       $scope.goTo('email');
     } else if (!$scope.exchange.user) {
       $scope.goTo('accept-terms');
