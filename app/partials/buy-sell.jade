@@ -16,7 +16,7 @@
         div(ng-hide="trades.pending.length || trades.completed.length || (kyc && kyc.state !== 'completed')")
           .font-2.blue.em-300.lh1(translate="Simple. Secure. Seamless.")
           .type-h4.em-300.mtm.basic-grey(translate="The world's most popular bitcoin wallet <br> now lets you buy bitcoin securely in 4 <br> easy steps.")
-        kyc-status(ng-show="exchange.profile.level.name < 2 && kyc && kyc.state !== 'completed'" on-trigger="buy(null, kyc, 'active-tx')")
+        kyc-status(ng-show="exchange.profile.level.name < 2 && kyc" state="kyc.state" on-trigger="buy(null, kyc, 'active-tx')")
     .flex-column.mtl(ng-show="trades.pending.length || trades.completed.length")
       .flex-row.flex-between.flex-center
         h4.type-h4(translate="Order History")

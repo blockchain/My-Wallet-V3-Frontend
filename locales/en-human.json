@@ -959,6 +959,16 @@
     "BODY": "Bank transfers are unavailable until verification is complete. Credit card purchases are available up to $300 per day.",
     "LINK": "Review Status"
   },
+  "KYC_REJECTED": {
+    "TITLE": "Identity Verification Failed",
+    "BODY": "There was an issue verifying your identity. Please try again.",
+    "LINK": "More Info"
+  },
+  "KYC_EXPIRED": {
+    "TITLE": "Identity Verification Expired",
+    "BODY": "The identity verification process was not completed in time. Please try again.",
+    "LINK": "More Info"
+  },
   "COINIFY_TRADE": "Coinify trade",
   "ISX_ID": "iSignthis ID",
   "VERIFY_ID_NOTE": "Please note that in order to buy bitcoin via bank transfer, you will need to verify your identity with our partner iSignThis. You will only have to do this once.",

@@ -1,7 +1,7 @@
-.kyc-status.flex-row.border.pbl.ptl(translate-namespace="KYC_IN_REVIEW")
+.kyc-status.flex-row.border.pbl.ptl(translate-namespace="{{ $ctrl.getState().ns }}")
   .flex-1.pll
     h1
-      i.ti-alert.type-h4
+      i.type-h4(ng-class="$ctrl.getState().i")
   .flex-4.flex-column.flex-justify.pll
     span.type-h5.mbs.mts(translate=".TITLE")
     span.type-sm(translate=".BODY")
