@@ -41,7 +41,9 @@
         isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-declined="declinedTx(tx)" on-pending="pendingTx(tx)" on-review="reviewTx(tx)" on-expired="expiredTx(tx)" on-failed="failedTx(tx)" payment-info="paymentInfo" on-resize="onResize(step)")
       div.width-80.margin-0-auto(ng-if="trade.medium === 'bank'")
         bank-account(transaction="trade" on-load="loadPayment()" pending-tx="pendingTx")
-    div.width-80(ng-if="onStep('pending', 'success')")
+    div.width-80(ng-if="onStep('pending')")
+      include ./trade-summary
+    div.width-80(ng-if="onStep('success')")
       include ./trade-summary
     .flex-end.flex-center.mtl.coinify-logo(ng-hide="afterStep('summary')")
       span.pos-rel
@@ -83,4 +85,4 @@
         button.button-danger(translate="TRY_AGAIN" ng-click="initBuy()" ng-show="formattedTrade.error")
         button.button-success(translate="CLOSE" ng-click="cancel()" ng-hide="formattedTrade.error")
       div(ng-show="onStep('success')")
-        button.button-success(translate="SEE_BITCOIN" ui-sref="wallet.common.transactions")
+        button.button-success(translate="SEE_BITCOIN" ng-click="cancel()" ui-sref="wallet.common.transactions")
