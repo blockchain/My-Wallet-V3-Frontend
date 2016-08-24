@@ -10,7 +10,7 @@
           tabindex="1"
           focus-when="status.ready"
           ng-change="status.waiting = true"
-          ng-model-options="{debounce: 250}"
+          ng-model-options="{debounce: 50}"
           on-enter="buy({amt: transaction.fiat})"
           placeholder="0"
           min="0"
