@@ -35,8 +35,8 @@
             tabindex="1"
             focus-when="editAmount"
             placeholder="Enter an amount"
-            min="{{min}}"
-            max="{{amtAvailable}}"
+            min="{{!needsKyc() ? min : 1}}"
+            max="{{!needsKyc() ? amtAvailable : 1000}}"
             step="0.01"
             required)
           div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
