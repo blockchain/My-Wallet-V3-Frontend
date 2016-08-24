@@ -147,6 +147,21 @@
         }
         // default height
         height: 260px;
+        @supports (overflow:-webkit-marquee) and (justify-content:inherit) {
+          height: 260px !important;
+          &.summary {
+            height: 325px !important;
+          }
+          &.bank-account {
+            height: 400px !important;
+          }
+          &.result {
+            height: 335px !important;
+          }
+          &.isx {
+            height: 450px !important;
+          }
+        }
       }
     }
   }
