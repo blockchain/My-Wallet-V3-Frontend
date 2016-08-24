@@ -36,6 +36,7 @@ $fast: 0.2s;
   }
   @if $important == '!important' {
     &.#{$class} {
+      opacity: 1 !important;
       @supports (overflow:-webkit-marquee) and (justify-content:inherit) {
         -webkit-transition: #{$attr} 0s, opacity 0s !important;
         -o-transition: #{$attr} 0s, opacity 0s !important;
