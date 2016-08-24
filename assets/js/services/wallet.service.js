@@ -1117,7 +1117,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
   wallet.exportHistory = (start, end, active) => {
     let json2csv = (json) => {
       let headers = Object.keys(json[0]);
-      let makeRow = (obj) => Object.keys(obj).map(key => obj[key]).join(',');
+      let makeRow = (obj) => `"${Object.keys(obj).map(key => obj[key]).join('","')}"`;
       return [headers.join(',')].concat(json.map(makeRow)).join('\n');
     };
 
