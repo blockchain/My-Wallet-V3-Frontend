@@ -3,9 +3,9 @@ module.exports = function (config) {
 
     basePath: './',
 
-    logLevel: config.LOG_WARN,
+    // logLevel: config.LOG_WARN,
 
-    client: { captureConsole: true },
+    // client: { captureConsole: true },
 
     exclude: ['assets/js/my_wallet/'],
 

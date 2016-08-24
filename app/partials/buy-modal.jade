@@ -34,7 +34,7 @@
       include ./buy-accept-terms
     div.width-80(ng-show="onStep('select-payment-method')")
       include ./buy-select-payment-method
-    div.width-80(ng-show="onStep('summary')")
+    div.width-80(ng-show="onStep('summary')" ng-controller="BuySummaryCtrl")
       include ./buy-summary
     div(ng-show="onStep('trade-formatted', 'trade-complete')")
       div.iframe(ng-if="!trade.medium || trade.medium === 'card'")
@@ -77,6 +77,7 @@
           ng-click="buy()"
           data-style="expand-left"
           ui-ladda="status.waiting"
+          ng-disabled="isDisabled() || fiatFormInvalid"
           ng-show="onStep('summary')")
       div(ng-show="onStep('pending')")
         button.button-danger(translate="TRY_AGAIN" ng-click="initBuy()" ng-show="formattedTrade.error")

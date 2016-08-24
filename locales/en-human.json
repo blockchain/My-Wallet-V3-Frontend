@@ -971,5 +971,7 @@
   "BLACKLISTED_COUNTRY": "Buying bitcoin is not available in your country yet.",
   "ORDER_CONFIRMATION_COPY": "Before collecting payment information, please confirm your order amount. We'll then direct you to our secure payment provider to verify your card information.",
   "ORDER_DETAILS": "Order details:",
-  "ACTION_REQUIRED": "Action Required"
+  "ACTION_REQUIRED": "Action Required",
+  "MAX_LIMIT_EXCEEDED": "{{::amt}} {{::code}} exceeds your daily limit of {{::max}} {{::code}}. You can only purchase {{::amtAvailable}} {{::code}} amount more.",
+  "BELOW_MIN_LIMIT": "{{::amt}} {{::code}} is below the minimum amount of {{::min}} {{::code}} required to create a trade."
 }

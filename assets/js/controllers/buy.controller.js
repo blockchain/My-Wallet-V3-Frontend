@@ -80,10 +80,10 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
     const success = () => {
       $scope.transaction.currency = curr;
-      $scope.getPaymentMethods();
     };
 
-    return Wallet.changeCurrency(curr).then(success);
+    return Wallet.changeCurrency(curr).then(success)
+                                      .then($scope.getPaymentMethods);
   };
 
   $scope.standardError = (err) => {
@@ -126,12 +126,11 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
       $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount, currency.bitCurrencies[0]);
     };
 
-    $scope.exchange.getBuyQuote($scope.transaction.fiat, $scope.transaction.currency.code)
-                   .then(success, $scope.standardError);
+    let quote = $scope.exchange.getBuyQuote($scope.transaction.fiat, $scope.transaction.currency.code);
+    return $q.resolve(quote).then(success, $scope.standardError);
   };
 
   $scope.toggleEmail = () => $scope.editEmail = !$scope.editEmail;
-  $scope.toggleEditAmount = () => $scope.editAmount = !$scope.editAmount;
   $scope.isCurrencySelected = (currency) => currency === $scope.transaction.currency;
 
   $scope.addExchange = () => {
@@ -185,6 +184,8 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
       return !$scope.fields.countryCode || $scope.isCountryBlacklisted;
     } else if ($scope.onStep('accept-terms')) {
       return !$scope.signupForm.$valid;
+    } else if ($scope.onStep('summary')) {
+      return $scope.editAmount;
     }
   };
 
@@ -297,10 +298,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   $scope.$watch('user.isEmailVerified', () => {
     if ($scope.onStep('email')) $scope.nextStep();
-  });
-
-  $scope.$watch('transaction.fiat', (newVal, oldVal) => {
-    if (newVal !== oldVal) $scope.changeCurrency();
   });
 
   $scope.$watch('exchange.user', (newVal, oldVal) => {
