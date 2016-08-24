@@ -42,7 +42,7 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency) {
   };
 
   $scope.setParentError = () => $timeout(() => {
-    $scope.$parent.fiatFormInvalid = $scope.tempFiatForm.$invalid;
+    $scope.$parent.fiatFormInvalid = $scope.tempFiatForm.$invalid && !$scope.needsKyc();
   });
 
   $scope.$watch('transaction.currency', (newVal, oldVal) => {
