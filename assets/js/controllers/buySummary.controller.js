@@ -2,52 +2,55 @@ angular
   .module('walletApp')
   .controller('BuySummaryCtrl', BuySummaryCtrl);
 
-function BuySummaryCtrl ($scope, Wallet, buySell, currency) {
+function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency) {
+  $scope.exchange = buySell.getExchange();
   $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
+
   $scope.getMaxMin = () => {
-    let limits = buySell.getExchange().profile.level.limits;
+    let limits = $scope.exchange.profile.level.limits;
     let dailyLimit = limits[$scope.method].in.daily;
     let activeTradesAmt = buySell.trades.pending.map(t => t.inAmount)
                                                 .reduce((a, b) => a + b, 0);
 
-    const success = (rate) => {
-      $scope.min = parseFloat((rate * 10).toFixed(2)) + 0.01;
-      $scope.max = parseFloat((rate * dailyLimit)).toFixed(2);
-      $scope.amtAvailable = parseFloat($scope.max - activeTradesAmt).toFixed(2);
-      $scope.$parent.editAmount = $scope.tempFiatForm.$error.max || $scope.tempFiatForm.$error.min;
-      $scope.$safeApply();
+    const calculateLimits = (rate) => {
+      $scope.min = (rate * 10 + 0.01).toFixed(2);
+      $scope.max = (rate * dailyLimit).toFixed(2);
+      $scope.amtAvailable = ($scope.max - activeTradesAmt).toFixed(2);
     };
 
-    buySell.getExchange().exchangeRate.get('EUR', $scope.transaction.currency.code)
-                                      .then(success);
+    let getRate = $scope.exchange.exchangeRate.get('EUR', $scope.tempCurrency.code);
+    return $q.resolve(getRate).then(calculateLimits);
   };
 
-  let needsUpdate = () => {
-    return $scope.transaction.fiat !== $scope.transaction.tempFiat ||
-           $scope.transaction.currency !== $scope.transaction.tempCurrency;
+  $scope.commitValues = () => {
+    $scope.status.waiting = true;
+    $scope.transaction.currency = $scope.tempCurrency;
+    $scope.transaction.fiat = $scope.tempFiat;
+    $scope.getQuote().then(() => $scope.status.waiting = false);
+    $scope.toggleEditAmount();
   };
 
-  $scope.updateAmounts = () => {
-    if (!needsUpdate()) return;
-    $scope.changeTempAmount();
-    $scope.changeCurrency($scope.transaction.tempCurrency);
-    $scope.getMaxMin();
+  $scope.cancel = () => {
+    $scope.tempCurrency = $scope.transaction.currency;
+    $scope.tempFiat = $scope.transaction.fiat;
+    $scope.toggleEditAmount();
   };
 
   $scope.changeTempCurrency = (curr) => {
-    $scope.transaction.tempCurrency = curr;
+    $scope.tempCurrency = curr;
+    $scope.getMaxMin().then($scope.setParentError);
   };
 
-  $scope.changeTempAmount = () => {
-    $scope.transaction.fiat = $scope.transaction.tempFiat;
-  };
+  $scope.setParentError = () => $timeout(() => {
+    $scope.$parent.fiatFormInvalid = $scope.tempFiatForm.$invalid;
+  });
 
   $scope.$watch('transaction.currency', (newVal, oldVal) => {
-    $scope.transaction.tempCurrency = $scope.transaction.currency;
+    $scope.tempCurrency = $scope.transaction.currency;
   });
 
   $scope.$watch('transaction.fiat', (newVal, oldVal) => {
-    $scope.transaction.tempFiat = $scope.transaction.fiat;
+    $scope.tempFiat = $scope.transaction.fiat;
   });
 
   $scope.$watch('step', () => $scope.onStep('summary') && $scope.getMaxMin());

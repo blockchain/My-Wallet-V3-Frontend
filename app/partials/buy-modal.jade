@@ -79,7 +79,7 @@
           ng-click="buy()"
           data-style="expand-left"
           ui-ladda="status.waiting"
-          ng-disabled="isDisabled()"
+          ng-disabled="isDisabled() || fiatFormInvalid"
           ng-show="onStep('summary')")
       div(ng-show="onStep('pending')")
         button.button-danger(translate="TRY_AGAIN" ng-click="initBuy()" ng-show="formattedTrade.error")

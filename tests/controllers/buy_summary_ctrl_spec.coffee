@@ -4,6 +4,7 @@ describe "BuySummaryCtrl", ->
   currency = undefined
   $controller = undefined
   $rootScope = undefined
+  $q = undefined
   buySell = undefined
 
   beforeEach angular.mock.module("walletApp")
@@ -36,7 +37,7 @@ describe "BuySummaryCtrl", ->
       buySell.getExchange = () -> {
         exchangeRate: {
           get: -> $q.resolve({"baseCurrency":"EUR","quoteCurrency":"BTC","rate":0.0019397889509621354})
-        } 
+        }
         trades: {
           pending: {}
         }
@@ -77,8 +78,9 @@ describe "BuySummaryCtrl", ->
       scope = getControllerScope()
 
     it "should only change tempCurrency", ->
+      spyOn(scope, 'getMaxMin').and.returnValue($q.resolve())
       scope.changeTempCurrency({ code: "DKK" })
-      expect(scope.transaction.tempCurrency.code).toBe("DKK")
+      expect(scope.tempCurrency.code).toBe("DKK")
 
   describe "changeTempAmount", ->
     beforeEach ->
@@ -87,7 +89,9 @@ describe "BuySummaryCtrl", ->
       scope.exchange.getBuyQuote = () -> $q.resolve()
 
     it "should change transaction.fiat with transaction.tempFiat", ->
+      scope.status = {}
+      scope.getQuote = () -> $q.resolve()
       scope.transaction.fiat = 20
-      scope.transaction.tempFiat = 30
-      scope.changeTempAmount()
+      scope.tempFiat = 30
+      scope.commitValues()
       expect(scope.transaction.fiat).toBe(30)

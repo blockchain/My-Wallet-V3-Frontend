@@ -123,8 +123,8 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, Alerts, currency, $uibM
       $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount, currency.bitCurrencies[0]);
     };
 
-    $scope.exchange.getBuyQuote($scope.transaction.fiat, $scope.transaction.currency.code)
-                   .then(success, $scope.standardError);
+    let quote = $scope.exchange.getBuyQuote($scope.transaction.fiat, $scope.transaction.currency.code);
+    return $q.resolve(quote).then(success, $scope.standardError);
   };
 
   $scope.toggleEmail = () => $scope.editEmail = !$scope.editEmail;
