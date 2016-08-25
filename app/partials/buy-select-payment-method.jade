@@ -28,5 +28,5 @@
               helper-button(content="BANK_TRANSFER.COPY")
   .flex-row.mbl.pvs
     .mam
-    .mlm.blue.width-70.type-sm(ng-hide="exchange.profile.level.name == 2")
+    .mlm.blue.width-70.type-sm(ng-hide="exchange.profile.level.name >= 2 || method !== 'bank'")
       label.em-400(translate="VERIFY_ID_NOTE")

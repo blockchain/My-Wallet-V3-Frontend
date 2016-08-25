@@ -36,7 +36,8 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
     fetchProfile,
     openBuyView,
     pollUserLevel,
-    getCurrency
+    getCurrency,
+    resolveState
   };
 
   init().then(initialized.resolve, initialized.reject);
@@ -189,5 +190,21 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
     let walletCurrency = Wallet.settings.currency;
     let isCoinifyCompatible = coinifyCurrencies.some(c => c.code === walletCurrency.code);
     return isCoinifyCompatible ? walletCurrency : coinifyCurrencies[0];
+  }
+
+  function resolveState (state) {
+    // maps a coinify state to one of: pending, rejected, expired, success
+    return ({
+      'pending': 'pending',
+      'rejected': 'rejected',
+      'declined': 'rejected',
+      'failed': 'rejected',
+      'expired': 'expired',
+      'completed': 'success',
+      'completed_test': 'success',
+      'manual_rejected': 'rejected',
+      'manual_hold': 'pending',
+      'manual_review': 'pending'
+    })[state.toLowerCase()];
   }
 }
