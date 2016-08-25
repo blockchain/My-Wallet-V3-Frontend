@@ -18,6 +18,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
     kycs: [],
     getAddressMethod: (address) => receiveAddressMap[address] || null,
     initialized: () => initialized.promise,
+    login: () => initialized.promise.then(service.fetchProfile),
     init,
     getQuote,
     getKYCs,
@@ -36,9 +37,16 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
 
   function init () {
     let exchange = service.getExchange();
-    return exchange && exchange.user
-      ? $q.resolve(service.fetchProfile())
-      : $q.reject('USER_UNKNOWN');
+    if (exchange && exchange.user) {
+      // Get receive addresses from cached trade history:
+      exchange.trades.forEach(t => {
+        let type = t.isBuy ? 'buy' : 'sell';
+        receiveAddressMap[t.receiveAddress] = type;
+      });
+      return $q.resolve();
+    } else {
+      return $q.reject('USER_UNKNOWN');
+    }
   }
 
   function getQuote (amt, curr) {
@@ -83,11 +91,6 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
     const success = (trades) => {
       service.trades.pending = trades.filter(tradeStateIn(pendingStates));
       service.trades.completed = trades.filter(tradeStateIn(completedStates));
-
-      trades.forEach(t => {
-        let type = t.outCurrency === 'BTC' ? 'buy' : 'sell';
-        receiveAddressMap[t.receiveAddress] = type;
-      });
 
       service.trades.completed
         .filter(t => (

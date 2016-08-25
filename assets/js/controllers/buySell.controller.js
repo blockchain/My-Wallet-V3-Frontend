@@ -23,7 +23,8 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
   // for quote
   if (!MyWallet.wallet.external.coinify) MyWallet.wallet.external.addCoinify();
 
-  buySell.initialized().finally(() => {
+  buySell.login().finally(() => {
+    console.log("Finally!");
     $scope.trades = buySell.trades;
     $scope.kyc = buySell.kycs[0];
     $scope.exchange = buySell.getExchange();
