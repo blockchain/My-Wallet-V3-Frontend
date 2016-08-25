@@ -18,7 +18,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
     kycs: [],
     getAddressMethod: (address) => receiveAddressMap[address] || null,
     initialized: () => initialized.promise,
-    login: () => initialized.promise.then(service.fetchProfile),
+    login: () => initialized.promise.finally(service.fetchProfile),
     init,
     getQuote,
     getKYCs,
