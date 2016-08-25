@@ -9,4 +9,4 @@ div
         span.em-400.right-align(ng-bind="::val")
   p.security-red.pointer
     i.ti-search.mrm
-    span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")
+    span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer", ng-show="buySellDebug")

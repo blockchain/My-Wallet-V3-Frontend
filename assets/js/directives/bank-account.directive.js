@@ -19,6 +19,8 @@ function bankAccount (MyWallet) {
   return directive;
 
   function link (scope, elem, attrs) {
+    scope.buySellDebug = true; // Grunt overrides for production
+
     scope.$watch('transaction.bankAccount', (newVal) => {
       if (scope.transaction.state === 'completed_test') scope.pendingTx(scope.transaction);
       if (newVal) scope.onLoad();
