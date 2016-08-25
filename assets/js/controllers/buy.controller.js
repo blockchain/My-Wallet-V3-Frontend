@@ -134,8 +134,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.isCurrencySelected = (currency) => currency === $scope.transaction.currency;
 
   $scope.addExchange = () => {
-    if (!MyWallet.wallet.external.coinify) MyWallet.wallet.external.addCoinify();
-    $scope.exchange = MyWallet.wallet.external.coinify;
+    $scope.exchange = buySell.getExchange();
     $scope.partner = 'Coinify';
   };
 

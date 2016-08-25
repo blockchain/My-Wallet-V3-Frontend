@@ -470,6 +470,29 @@ module.exports = (grunt) ->
               prefix = "ws://"
             'customWebSocketURL = "' + prefix + @rootDomain + '/inv"'
         }]
+      buy_sell_debug:
+        src: ['build/js/wallet.js'],
+        overwrite: true,
+        replacements: [{
+          from: 'buySellDebug = true'
+          to: () =>
+            if @rootDomain == null || @rootDomain == 'blockchain.info'
+              'buySellDebug = false'
+            else
+              'buySellDebug = true'
+        }]
+      buy_sell_coinify:
+        src: ['build/js/wallet.js'],
+        overwrite: true,
+        replacements: [{
+          from: 'partnerId = 18'
+          to: () =>
+            partnerId = 18
+            if @rootDomain == null || @rootDomain == 'blockchain.info'
+              partnerId = 19
+            console.log "Coinify partner ID: #{ partnerId }"
+            "partnerId = #{ partnerId }"
+        }]
       api_domain:
         src: ['build/js/wallet.js'],
         overwrite: true,
@@ -564,6 +587,8 @@ module.exports = (grunt) ->
         # Web socket URL will default to wss://blockchain.info/inv
         # Web sockets currently don't work on our Tor site
         # "replace:web_socket_url"
+        "replace:buy_sell_debug"
+        "replace:buy_sell_coinify"
       ]
     else
       console.log("Root domain: " + rootDomain)
@@ -572,6 +597,8 @@ module.exports = (grunt) ->
       grunt.task.run [
         "replace:root_url"
         "replace:web_socket_url"
+        "replace:buy_sell_debug"
+        "replace:buy_sell_coinify"
       ]
 
     if apiDomain

@@ -21,7 +21,10 @@ function formatTrade ($filter, MyWallet) {
     transaction['ISX_ID'] = trade.iSignThisID;
     transaction['DATE_INITIALIZED'] = $filter('date')(trade.createdAt, 'MM/dd/yyyy @ h:mma');
     transaction['RECEIVING_WALLET'] = label;
-    transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
+    const buySellDebug = true; // Grunt overrides for production
+    if (buySellDebug) {
+      transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
+    }
     return transaction;
   };
 

@@ -9,7 +9,10 @@ function ChangeSecondPasswordCtrl ($scope, Wallet, $timeout, MyWallet) {
     confirmation: ''
   };
 
-  try { $scope.userHasExchangeAcct = MyWallet.wallet.external.coinify.user; } catch (e) {}
+  // TODO: add function to My-Wallet-V3 to check if the user has any exchange account:
+  $scope.userHasExchangeAcct = MyWallet.wallet.external &&
+                               MyWallet.wallet.external.coinify &&
+                               MyWallet.wallet.external.coinify.user;
 
   $scope.reset = () => {
     $scope.fields = {

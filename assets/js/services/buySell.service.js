@@ -13,7 +13,12 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
   let initialized = $q.defer();
 
   const service = {
-    getExchange: () => MyWallet.wallet.external.coinify,
+    getExchange: () => {
+      if (!MyWallet.wallet.external.coinify) MyWallet.wallet.external.addCoinify();
+      var coinify = MyWallet.wallet.external.coinify;
+      coinify.partnerId = 18; // Replaced by Grunt for production
+      return coinify;
+    },
     trades: { completed: [], pending: [] },
     kycs: [],
     getAddressMethod: (address) => receiveAddressMap[address] || null,
