@@ -43,6 +43,9 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
         let type = t.isBuy ? 'buy' : 'sell';
         receiveAddressMap[t.receiveAddress] = type;
       });
+
+      exchange.monitorPayments();
+
       return $q.resolve();
     } else {
       return $q.reject('USER_UNKNOWN');
