@@ -45,6 +45,19 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
     }
   });
 
+  let kycStates = ['pending', 'manual_review', 'declined', 'rejected'];
+  $scope.showKycStatus = () => (
+    $scope.kyc &&
+    $scope.exchange.profile.level.name < 2 &&
+    kycStates.indexOf($scope.kyc.state) > -1
+  );
+
+  $scope.openKyc = () => {
+    ['declined', 'rejected'].indexOf($scope.kyc.state) > -1
+      ? buySell.triggerKYC().then(kyc => $scope.buy(null, kyc, 'active-tx'))
+      : $scope.buy(null, $scope.kyc, 'active-tx');
+  };
+
   $scope.changeCurrency = (curr) => {
     if (!curr) return;
     let success = () => { $scope.transaction.currency = curr; };

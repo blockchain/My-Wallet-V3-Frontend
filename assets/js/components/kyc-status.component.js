@@ -8,10 +8,11 @@ angular
     templateUrl: 'templates/kyc-status.jade',
     controller: function (buySell) {
       this.stateMap = {
-        'pending': { ns: 'KYC_IN_REVIEW', i: 'ti-alert' },
-        'rejected': { ns: 'KYC_REJECTED', i: 'ti-close' },
-        'expired': { ns: 'KYC_EXPIRED', i: 'ti-timer' }
+        'pending': { ns: 'KYC_PENDING', i: 'ti-alert' },
+        'manual_review': { ns: 'KYC_IN_REVIEW', i: 'ti-alert' },
+        'declined': { ns: 'KYC_DENIED', i: 'ti-na' },
+        'rejected': { ns: 'KYC_DENIED', i: 'ti-na' }
       };
-      this.getState = () => this.stateMap[buySell.resolveState(this.state)];
+      this.getState = () => this.stateMap[this.state];
     }
   });
