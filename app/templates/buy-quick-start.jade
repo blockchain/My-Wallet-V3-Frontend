@@ -1,22 +1,24 @@
 .border.paml.mtml
   .mtl
     label.em-500 Enter amount:
+    helper-button(ng-show="limits.bank && limits.card" content="MAX_MIN_HELPER" values="{cardMax: limits.card.max, min: limits.card.min, bankMax: limits.bank.max, symbol: currencySymbol.symbol}")
     .flex-row.flex-between.flex-center
       section.input-group.width-60
-        input.form-control(
-          type="number"
-          ng-model="transaction.fiat"
-          name="fiat"
-          tabindex="1"
-          focus-when="status.ready"
-          ng-change="status.waiting = true"
-          ng-model-options="{debounce: 50}"
-          on-enter="buy({amt: transaction.fiat})"
-          placeholder="0"
-          min="0"
-          max="2100000000000000"
-          required
-        )
+        form(name="fiatForm")
+          input.form-control(
+            type="number"
+            ng-model="transaction.fiat"
+            name="fiat"
+            tabindex="1"
+            focus-when="status.ready"
+            ng-change="status.waiting = true"
+            ng-model-options="{debounce: 50}"
+            on-enter="fiatForm.fiat.$valid && buy({amt: transaction.fiat})"
+            placeholder="{{limits.card.min}}"
+            min="{{limits.card.min}}"
+            max="{{limits.bank.available > limits.card.available ? limits.bank.available : limits.card.available}}"
+            step="0.01"
+            required)
         div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
           button.btn.btn-default.dropdown-toggle(type="button" uib-dropdown-toggle aria-haspopup="true")
             span {{ transaction.currency.code }}
@@ -28,6 +30,9 @@
                ng-class="{active: isCurrencySelected(currency)}")
               a(ng-click="$event.preventDefault()") {{ currency.code }}
       .success.type-h4.em-300(ng-show="transaction.fiat" ng-class="{'o-3': status.waiting}") {{quote.quoteAmount}} {{quote.quoteCurrency}}
+    .mts.pos-rel
+      span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="BUY_AMT_LOW")
+      span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max" translate="BUY_AMT_HIGH")
   .flex-row.mtvl
     label.em-500.mrm(translate="Or select quick amount: ")
     span.blue.mrml.pointer(ng-repeat="n in defaultAmts[transaction.currency.code] track by $index" ng-click="buy({amt: n})")
@@ -38,4 +43,4 @@
       a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
         img(src="img/coinify-logo.svg")
         span.pos-abs.fade.height-100.width-100(ng-show="onStep('summary')" uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" translate="placeholder" tooltip-append-to-body="true")
-    button.button-primary(translate="Buy Bitcoin" ng-click="buy({amt: transaction.fiat})")
+    button.button-primary(translate="Buy Bitcoin" ng-click="fiatForm.fiat.$valid && buy({amt: transaction.fiat})" ng-disabled="!fiatForm.fiat.$valid")

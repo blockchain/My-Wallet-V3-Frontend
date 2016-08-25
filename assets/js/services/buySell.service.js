@@ -27,6 +27,8 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
     init,
     getQuote,
     getKYCs,
+    getRate,
+    calculateLimits,
     triggerKYC,
     getOpenKYC,
     getTrades,
@@ -66,6 +68,25 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
       service.kycs = kycs.sort((k0, k1) => k1.createdAt > k0.createdAt);
       return service.kycs;
     });
+  }
+
+  function getRate (base, quote) {
+    let getRate = service.getExchange().exchangeRate.get(base, quote);
+    return $q.resolve(getRate);
+  }
+
+  function calculateLimits (rate, method) {
+    let limits = service.getExchange().profile.level.limits;
+    let dailyLimit = limits[method].in.daily;
+    let activeTradesAmt = service.trades.pending.map(t => t.inAmount)
+                                                .reduce((a, b) => a + b, 0);
+
+    limits = {};
+    limits.min = (rate * 10 + 0.01).toFixed(2);
+    limits.max = (rate * dailyLimit).toFixed(2);
+    limits.available = (limits.max - activeTradesAmt).toFixed(2);
+
+    return limits;
   }
 
   function triggerKYC () {
