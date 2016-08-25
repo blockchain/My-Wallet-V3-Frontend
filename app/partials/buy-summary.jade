@@ -3,9 +3,9 @@
   p.mvm
     span(translate="ORDER_CONFIRMATION_COPY")
     .flex-center.mtl(ng-show="(tempFiatForm.fiat.$error.max || tempFiatForm.fiat.$error.min) && !needsKyc()")
-      i.ti-alert.sent.mrs.type-h4
-      span.sent.mrs(ng-show="tempFiatForm.fiat.$error.max" translate="MAX_LIMIT_EXCEEDED" translate-values="{max: limits.max, amt: tempFiatForm.fiat.$viewValue, code: tempCurrency.code, amtAvailable: limits.available}")
-      span.sent.mrs(ng-show="tempFiatForm.fiat.$error.min" translate="BELOW_MIN_LIMIT" translate-values="{min: limits.min, amt: tempFiatForm.fiat.$viewValue, code: tempCurrency.code}")
+      i.ti-alert.state-danger-text.mrs.type-h4
+      span.state-danger-text.mrs(ng-show="tempFiatForm.fiat.$error.max" translate="MAX_LIMIT_EXCEEDED" translate-values="{code: tempCurrency.code, available: limits.available}")
+      span.state-danger-text.mrs(ng-show="tempFiatForm.fiat.$error.min" translate="BELOW_MIN_LIMIT" translate-values="{code: tempCurrency.code, min: limits.min}")
   .flex-end.mbs
     span.type-sm.blue.underline.pointer(ng-click="toggleEditAmount()" ng-hide="editAmount") Edit Order
     span.type-sm.blue.underline.pointer(ng-click="cancel()" ng-show="editAmount") Cancel
