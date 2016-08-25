@@ -9,6 +9,7 @@ function buyQuickStart (currency, buySell) {
     replace: true,
     scope: {
       buy: '&',
+      limits: '=',
       transaction: '=',
       currencySymbol: '=',
       changeCurrency: '&'
@@ -32,6 +33,10 @@ function buyQuickStart (currency, buySell) {
     scope.isCurrencySelected = (currency) => currency === scope.transaction.currency;
 
     scope.$watchGroup(['transaction.currency', 'transaction.fiat'], (newVal, oldVal) => {
+      if (!scope.transaction.currency || !scope.transaction.fiat) {
+        scope.quote = undefined; return;
+      }
+
       if (newVal !== oldVal) {
         const success = (quote) => {
           scope.quote = quote;

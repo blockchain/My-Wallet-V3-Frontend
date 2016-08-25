@@ -7,19 +7,11 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency) {
   $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
 
   $scope.getMaxMin = () => {
-    let limits = $scope.exchange.profile.level.limits;
-    let dailyLimit = limits[$scope.method].in.daily;
-    let activeTradesAmt = buySell.trades.pending.map(t => t.inAmount)
-                                                .reduce((a, b) => a + b, 0);
-
     const calculateLimits = (rate) => {
-      $scope.min = (rate * 10 + 0.01).toFixed(2);
-      $scope.max = (rate * dailyLimit).toFixed(2);
-      $scope.amtAvailable = ($scope.max - activeTradesAmt).toFixed(2);
+      $scope.limits = buySell.calculateLimits(rate, $scope.method);
     };
 
-    let getRate = $scope.exchange.exchangeRate.get('EUR', $scope.tempCurrency.code);
-    return $q.resolve(getRate).then(calculateLimits);
+    buySell.getRate('EUR', $scope.tempCurrency.code).then(calculateLimits);
   };
 
   $scope.commitValues = () => {

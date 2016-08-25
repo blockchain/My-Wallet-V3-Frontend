@@ -8,9 +8,10 @@
       span.type-h5.mlml.o-3.pointer(translate="Sell Bitcoin" ng-class="{'underline-blue': !state.buy}" uib-tooltip="Coming Soon!" tooltip-append-to-body="true")
     .flex-row.flex-column-tablet
       .width-50.mrl(ng-show="state.buy")
-        buy-quick-start(transaction="transaction" 
+        buy-quick-start(transaction="transaction"
                         currency-symbol="currencySymbol"
                         change-currency="changeCurrency(currency)"
+                        limits="limits"
                         buy="buy(amt)")
       .flex-column.width-50.mlvl.mtml
         div(ng-hide="trades.pending.length || trades.completed.length || (kyc && kyc.state !== 'completed')")
