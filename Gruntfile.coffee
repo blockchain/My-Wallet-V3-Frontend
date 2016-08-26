@@ -471,7 +471,7 @@ module.exports = (grunt) ->
             'customWebSocketURL = "' + prefix + @rootDomain + '/inv"'
         }]
       buy_sell_debug:
-        src: ['build/js/wallet.js'],
+        src: ['build/js/app.js'],
         overwrite: true,
         replacements: [{
           from: 'buySellDebug = true'
