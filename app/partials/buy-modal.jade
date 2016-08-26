@@ -3,10 +3,12 @@
     .flex-column.flex-1
       .flex-row.flex-between.flex-center
         h3(translate="BUY_BITCOIN")
-        .flex-column.flex-align-end
+        .flex-column.flex-align-end(ng-show="status.gettingQuote")
+          img(src="img/spinner.gif")
+        .flex-column.flex-align-end(ng-hide="status.gettingQuote")
           span.type-h5.em-400(ng-show="transaction.btc !== 0 && !trade") {{ transaction.btc }}
-          span.type-h5.em-400(ng-show="trade") {{ trade.outAmountExpected }} BTC
-          quote-countdown(quote="quote" get-quote="getQuote()" ng-class="{'fade': afterStep('trade-complete') || getMethod().inMedium === 'bank'}")
+          span.type-h5.em-400(ng-show="trade") {{ expiredQuote ? btcExpected : trade.outAmountExpected }} BTC
+          quote-countdown(expires-at="quote.expiresAt" created-at="trade.createdAt" expired-quote="expiredQuote" ng-class="{'fade': afterStep('trade-complete') || getMethod().inMedium === 'bank' || expiredQuote || (!trade && !quote.id) }")
       buy-steps(transaction="transaction"
                 on-step="onStep"
                 get-method="getMethod"

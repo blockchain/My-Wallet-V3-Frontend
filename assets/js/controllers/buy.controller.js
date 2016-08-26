@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuyCtrl', BuyCtrl);
 
-function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, fiat, trade, $timeout, bitcoinReceived, formatTrade, buySell) {
+function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, fiat, trade, $timeout, $interval, bitcoinReceived, formatTrade, buySell) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -22,6 +22,10 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
   $scope.needsKyc = () => $scope.getMethod().inMedium === 'bank' && +$scope.exchange.profile.level.name < 2;
+
+  let fifteenMinutesAgo = new Date(new Date().getTime() - 15 * 60 * 1000);
+  $scope.expiredQuote = $scope.trade && fifteenMinutesAgo > $scope.trade.createdAt;
+  let updateBTCExpected = (quote) => { $scope.status.gettingQuote = false; $scope.btcExpected = quote; };
 
   $scope.steps = {
     'amount': 0,
@@ -104,7 +108,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.fetchProfile = () => $scope.exchange.fetchProfile();
 
   $scope.updateAmounts = () => {
-    if (!$scope.quote || !$scope.exchange.user) return;
+    if (!$scope.trade && (!$scope.quote || !$scope.exchange.user)) return;
 
     let fiatAmt = $scope.transaction.fiat;
     let methodFee = fiatAmt * ($scope.getMethod().inPercentageFee / 100);
@@ -114,8 +118,11 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   };
 
   $scope.getQuote = () => {
+    if ($scope.trade) { $scope.updateAmounts(); return; }
+
     $scope.quote = null;
     $scope.transaction.btc = 0;
+    $scope.status.gettingQuote = true;
     if (!$scope.transaction.fiat) { $scope.status = {}; return; }
 
     const success = (quote) => {
@@ -305,6 +312,14 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   $scope.$watch('bitcoinReceived', (newVal) => {
     if (newVal) $scope.successTx();
+  });
+
+  $scope.$watch('expiredQuote', (newVal) => {
+    if (newVal) {
+      $scope.status.gettingQuote = true;
+      if (!$scope.trade) $scope.getQuote();
+      else $scope.trade.btcExpected().then(updateBTCExpected);
+    }
   });
 
   $scope.$watch('step', (newVal) => {
