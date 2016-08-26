@@ -13,6 +13,7 @@ function BuySelectCountryCtrl ($scope, country, MyWallet) {
                    {'Name': 'Panama', 'Code': 'PA'},
                    {'Name': 'Papua New Guinea', 'Code': 'PG'},
                    {'Name': 'Uganda', 'Code': 'UG'},
+                   {'Name': 'Puerto Rico', 'Code': 'PR'},
                    {'Name': 'United States', 'Code': 'US'},
                    {'Name': 'United States Minor Outlying Islands', 'Code': 'UM'}];
 
