@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .directive('trade', trade);
 
-trade.$inject = ['$rootScope', 'Alerts', 'MyWallet', '$timeout', 'buySell'];
+trade.$inject = ['$rootScope', 'Alerts', 'MyWallet', '$timeout', '$interval', 'buySell'];
 
-function trade ($rootScope, Alerts, MyWallet, $timeout, buySell) {
+function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
   const directive = {
     restrict: 'A',
     replace: true,
@@ -22,6 +22,9 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, buySell) {
     let successStates = ['completed', 'completed_test'];
     let pendingStates = ['awaiting_transfer_in', 'processing', 'reviewing'];
     let completedStates = ['expired', 'rejected', 'cancelled', 'completed', 'completed_test'];
+
+    let fifteenMinutesAgo = new Date(new Date().getTime() - 15 * 60 * 1000);
+    scope.expiredQuote = fifteenMinutesAgo > scope.trade.createdAt;
 
     scope.status = {};
 
@@ -41,6 +44,15 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, buySell) {
         .catch((e) => { Alerts.displayError(e); })
         .finally(() => scope.status.canceling = false);
     };
+
+    let updateBTCExpected = (quote) => { scope.status.gettingQuote = false; scope.btcExpected = quote; };
+
+    scope.$watch('expiredQuote', (newVal) => {
+      if (newVal) {
+        scope.status.gettingQuote = true;
+        scope.pending && scope.trade.btcExpected().then(updateBTCExpected);
+      }
+    });
 
     scope.$watch('trade.state', scope.update);
   }
