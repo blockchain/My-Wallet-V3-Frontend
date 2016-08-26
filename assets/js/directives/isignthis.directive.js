@@ -192,7 +192,7 @@ function isignthis ($sce) {
             case 'DECLINED':
             case 'REJECTED':
             case 'MANUAL_REJECTED':
-              scope.onDecline({tx});
+              scope.onDeclined({tx});
               break;
             case 'FAILED':
               scope.onFailed({tx});
