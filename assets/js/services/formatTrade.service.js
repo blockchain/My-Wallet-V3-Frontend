@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .factory('formatTrade', formatTrade);
 
-formatTrade.$inject = ['$filter', 'MyWallet'];
+formatTrade.$inject = ['$filter', 'MyWallet', '$rootScope'];
 
-function formatTrade ($filter, MyWallet) {
+function formatTrade ($filter, MyWallet, $rootScope) {
   const service = {
     error,
     review,
@@ -21,8 +21,7 @@ function formatTrade ($filter, MyWallet) {
     transaction['ISX_ID'] = trade.iSignThisID;
     transaction['DATE_INITIALIZED'] = $filter('date')(trade.createdAt, 'MM/dd/yyyy @ h:mma');
     transaction['RECEIVING_WALLET'] = label;
-    const buySellDebug = true; // Grunt overrides for production
-    if (buySellDebug) {
+    if ($rootScope.buySellDebug) {
       transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
     }
     return transaction;

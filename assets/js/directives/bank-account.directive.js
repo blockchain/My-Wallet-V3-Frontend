@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .directive('bankAccount', bankAccount);
 
-bankAccount.$inject = ['MyWallet'];
+bankAccount.$inject = ['MyWallet', '$rootScope'];
 
-function bankAccount (MyWallet) {
+function bankAccount (MyWallet, $rootScope) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -19,14 +19,14 @@ function bankAccount (MyWallet) {
   return directive;
 
   function link (scope, elem, attrs) {
-    scope.buySellDebug = true; // Grunt overrides for production
-
     scope.$watch('transaction.bankAccount', (newVal) => {
       if (scope.transaction.state === 'completed_test') scope.pendingTx(scope.transaction);
       if (newVal) scope.onLoad();
     });
 
     if (!scope.transaction) return;
+
+    scope.buySellDebug = $rootScope.buySellDebug;
 
     scope.label = MyWallet.wallet.hdwallet.accounts[0].label;
     scope.bankAccount = scope.transaction.bankAccount;

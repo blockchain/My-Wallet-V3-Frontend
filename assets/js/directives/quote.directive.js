@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .directive('quoteCountdown', quoteCountdown);
 
-quoteCountdown.$inject = ['$interval'];
+quoteCountdown.$inject = ['$interval', '$rootScope'];
 
-function quoteCountdown ($interval) {
+function quoteCountdown ($interval, $rootScope) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -19,7 +19,7 @@ function quoteCountdown ($interval) {
   return directive;
 
   function link (scope, elem, attrs) {
-    scope.buySellDebug = true; // Grunt overrides for production
+    scope.buySellDebug = $rootScope.buySellDebug;
 
     scope.startCounter = () => {
       scope.counter = $interval(() => {
