@@ -57,5 +57,9 @@ function bankAccount (MyWallet) {
 
       scope.transaction.fakeBankTransfer().then(success);
     };
+
+    scope.expireQuote = () => {
+      scope.transaction.expireQuote();
+    };
   }
 }

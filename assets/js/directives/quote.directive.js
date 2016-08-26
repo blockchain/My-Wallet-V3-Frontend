@@ -19,6 +19,8 @@ function quoteCountdown ($interval) {
   return directive;
 
   function link (scope, elem, attrs) {
+    scope.buySellDebug = true; // Grunt overrides for production
+
     scope.startCounter = () => {
       scope.counter = $interval(() => {
         let now = new Date();
@@ -48,5 +50,10 @@ function quoteCountdown ($interval) {
 
     scope.$watch('quote', scope.restartCounter);
     scope.$on('$destroy', scope.cancelCounter);
+
+    // QA tool:
+    scope.expireQuote = () => {
+      scope.quote.expiresAt = new Date(new Date().getTime() + 3 * 1000);
+    };
   }
 }
