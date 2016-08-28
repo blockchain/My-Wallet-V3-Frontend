@@ -9,7 +9,7 @@ tr.border
     span.blue.underline.pointer(ng-click="buy({amt: trade.inAmount, trade: trade});" ng-show="pending") Finish payment
     span.blue.underline.pointer(ng-click="buy({amt: trade.inAmount, trade: trade});" ng-show="completed && trade.state !== 'cancelled'") View details
   td.paml
-    span.type-lbl.mrm {{ trade.createdAt | date:'MM/dd/yyyy @ h:mma' }}
+    span.type-lbl.mrm {{ trade.createdAt | date:'d MMMM yyyy, HH:mm' }}
   td.right-align.paml(ng-show="status.gettingQuote")
     img(src="img/spinner.gif")
   td.paml.right-align(ng-hide="status.gettingQuote")
