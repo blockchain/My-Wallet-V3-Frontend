@@ -25,6 +25,7 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
     const calculateLimits = (rate) => {
       $scope.limits.bank = buySell.calculateLimits(rate, 'bank');
       $scope.limits.card = buySell.calculateLimits(rate, 'card');
+      $scope.limits.currency = $scope.currencySymbol;
     };
 
     buySell.getRate('EUR', $scope.transaction.currency.code).then(calculateLimits);

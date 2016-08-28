@@ -4,6 +4,6 @@
       i.type-h4(ng-class="$ctrl.getState().i")
   .flex-4.flex-column.flex-justify.pll
     span.type-h5.mbs.mts(translate=".TITLE")
-    span.type-sm(translate=".BODY")
+    span.type-sm(translate=".BODY" translate-values="{ccmax: $ctrl.getCardMax()}")
   .flex-2.flex-center.flex-end.prl.mrm
     span.blue.underline.pointer.type-sm(translate=".LINK" ng-click="$ctrl.onTrigger()")
