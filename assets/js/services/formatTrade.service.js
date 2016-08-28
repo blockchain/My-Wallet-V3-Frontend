@@ -90,7 +90,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
 
     return {
       tx: tx,
-      class: 'state-danger-text',
+      class: 'blue',
       namespace: 'TX_KYC_PENDING',
       values: {}
     };
