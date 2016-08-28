@@ -173,15 +173,15 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
         trade: () => trade || null,
         fiat: () => amt
       }
-    });
+    }).result;
 
     try {
       let exchange = service.getExchange();
-      if (service.trades.pending.length || service.trades.completed.length) open();
-      else if (exchange.user) service.getTrades().then(open);
-      else open();
+      if (service.trades.pending.length || service.trades.completed.length) return open();
+      else if (exchange.user) return service.getTrades().then(open);
+      else return open();
     } catch (e) {
-      open();
+      return open();
     }
   }
 
