@@ -45,10 +45,14 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
         .finally(() => scope.status.canceling = false);
     };
 
-    let updateBTCExpected = (quote) => { scope.status.gettingQuote = false; scope.btcExpected = quote; };
+    let updateBTCExpected = (quote) => {
+      scope.status.gettingQuote = false;
+      scope.btcExpected = quote;
+    };
 
     scope.$watch('expiredQuote', (newVal) => {
       if (newVal) {
+        scope.update();
         scope.status.gettingQuote = true;
         scope.pending && scope.trade.btcExpected().then(updateBTCExpected);
       }
