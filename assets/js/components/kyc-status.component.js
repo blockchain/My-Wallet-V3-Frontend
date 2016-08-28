@@ -2,7 +2,8 @@ angular
   .module('walletApp')
   .component('kycStatus', {
     bindings: {
-      state: '=',
+      state: '<',
+      limits: '<',
       onTrigger: '&'
     },
     templateUrl: 'templates/kyc-status.jade',
@@ -14,5 +15,11 @@ angular
         'rejected': { ns: 'KYC_DENIED', i: 'ti-na' }
       };
       this.getState = () => this.stateMap[this.state];
+
+      this.getCardMax = () => {
+        let symbol = this.limits.currency && this.limits.currency.symbol;
+        let amt = this.limits.card && this.limits.card.available;
+        return (symbol || '€') + (amt || '300.00');
+      };
     }
   });
