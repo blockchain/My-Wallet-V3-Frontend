@@ -14,7 +14,10 @@ describe "Trade Directive", ->
     Alerts = $injector.get("Alerts")
 
     MyWallet.wallet =
-      external: {}
+      external: {
+        addCoinify: () ->
+        coinify: {}
+      }
 
     parentScope = $rootScope.$new()
 

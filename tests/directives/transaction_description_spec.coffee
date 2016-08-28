@@ -21,7 +21,10 @@ describe "Transaction Description Directive", ->
         getAddressBookLabel: () -> null
 
     MyWallet.wallet =
-      external: {}
+      external: {
+        addCoinify: () ->
+        coinify: {}
+      }
 
     Wallet.accounts = () -> [{index: 0, label: "Savings"}, { index: 1, label: "Spending"}]
 
