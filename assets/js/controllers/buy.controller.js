@@ -80,7 +80,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     if (!curr) curr = buySell.getCurrency();
     if ($scope.trade && !$scope.isKYC) curr = {code: $scope.trade.inCurrency};
 
-    $scope.currencySymbol = currency.conversions[curr.code];
+    $scope.changeCurrencySymbol(curr);
 
     const success = () => {
       $scope.transaction.currency = curr;
@@ -88,6 +88,10 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
     return Wallet.changeCurrency(curr).then(success)
                                       .then($scope.getPaymentMethods);
+  };
+
+  $scope.changeCurrencySymbol = (curr) => {
+    $scope.currencySymbol = currency.conversions[curr.code];
   };
 
   $scope.standardError = (err) => {

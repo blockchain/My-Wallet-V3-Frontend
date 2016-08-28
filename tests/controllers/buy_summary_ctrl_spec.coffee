@@ -91,6 +91,7 @@ describe "BuySummaryCtrl", ->
     it "should change transaction.fiat with transaction.tempFiat", ->
       scope.status = {}
       scope.getQuote = () -> $q.resolve()
+      scope.$parent.changeCurrencySymbol = () ->
       scope.transaction.fiat = 20
       scope.tempFiat = 30
       scope.commitValues()

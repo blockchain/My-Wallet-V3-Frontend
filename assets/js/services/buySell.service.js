@@ -83,7 +83,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
                                                 .reduce((a, b) => a + b, 0);
 
     limits = {};
-    limits.min = (rate * 10 + 0.01).toFixed(2);
+    limits.min = (rate * 10).toFixed(2);
     limits.max = (rate * dailyLimit).toFixed(2);
     limits.available = (limits.max - activeTradesAmt).toFixed(2);
 
