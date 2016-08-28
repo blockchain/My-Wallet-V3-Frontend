@@ -118,7 +118,7 @@ describe "buySell service", () ->
       exchange = buySell.getExchange()
       trades = ["processing", "completed", "cancelled"].map(makeTrade)
       spyOn(exchange, "getTrades").and.returnValue($q.resolve(trades))
-      spyOn($uibModal, 'open')
+      spyOn($uibModal, 'open').and.returnValue({ result: {} })
 
     it "should open if there are trades", ->
       buySell.getTrades()
