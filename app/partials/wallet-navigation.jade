@@ -29,8 +29,11 @@
       li.action-bar(ng-show="showOrHide('transactions')")
         a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
 
-    li.header(ui-sref-active="current" ng-show="isUserInvited")
-      a(ui-sref="wallet.common.buy-sell")
+    li.header(ui-sref-active="current" ng-show="isUserWhitelisted || isUserInvited")
+      a(ui-sref="wallet.common.buy-sell" ng-show="isUserInvited")
+        i.ti-direction-alt
+        span(translate="BUY_BITCOIN")
+      a(ng-click="subscribe()" ng-show="!isUserInvited")
         i.ti-direction-alt
         span(translate="BUY_BITCOIN")
 

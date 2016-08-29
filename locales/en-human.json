@@ -986,5 +986,10 @@
   "BELOW_MIN_LIMIT": "Minimum buy amount is {{::min}} {{::code}}. Please update your order.",
   "MAX_MIN_HELPER": "Minimum buy amount is {{::symbol}}{{::min}}. Maximum daily amounts are {{::symbol}}{{::cardMax}} for credit card payments and {{::symbol}}{{::bankMax}} for bank transfers.",
   "BUY_AMT_LOW": "Buy amount too low.",
-  "BUY_AMT_HIGH": "Buy amount too high."
+  "BUY_AMT_HIGH": "Buy amount too high.",
+  "SUBSCRIBE": {
+    "TITLE": "This feature is coming soon!",
+    "BODY": "The world's most popular bitcoin wallet now lets you buy bitcoin securely. Confirm your email address and country to get access as soon as we launch in your area!",
+    "BUTTON": "Sign Up"
+  }
 }

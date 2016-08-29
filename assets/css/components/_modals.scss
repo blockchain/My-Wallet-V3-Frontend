@@ -226,6 +226,9 @@
   &.sm {
     .modal-dialog { width: 40vw; }
   }
+  &.xs {
+    .modal-dialog { width: 30vw; }
+  }
   &.large {
     .modal-dialog {
       width: 60vw;
