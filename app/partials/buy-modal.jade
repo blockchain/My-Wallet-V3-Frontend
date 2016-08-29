@@ -8,7 +8,9 @@
         .flex-column.flex-align-end(ng-hide="status.gettingQuote")
           span.type-h5.em-400(ng-show="transaction.btc !== 0 && !trade") {{ transaction.btc }}
           span.type-h5.em-400(ng-show="trade") {{ expiredQuote ? btcExpected : trade.outAmountExpected }} BTC
-          quote-countdown(expires-at="quote.expiresAt" created-at="trade.createdAt" expired-quote="expiredQuote" ng-class="{'fade': afterStep('trade-complete') || getMethod().inMedium === 'bank' || expiredQuote || (!trade && !quote.id) }")
+          quote-countdown(quote="quote" trade-created-at="trade.createdAt" expired-quote="expiredQuote" ng-class="{'fade': afterStep('trade-complete') || getMethod().inMedium === 'bank' || expiredQuote || (!trade && !quote.id) }")
+          p.security-red.pointer(ng-show="buySellDebug && quote.id")
+            i.ti-search.mrm.right-align(ng-click="expireQuote()")  QA: Now
       buy-steps(transaction="transaction"
                 on-step="onStep"
                 get-method="getMethod"

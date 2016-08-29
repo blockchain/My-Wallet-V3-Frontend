@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuyCtrl', BuyCtrl);
 
-function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, fiat, trade, $timeout, $interval, bitcoinReceived, formatTrade, buySell) {
+function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, fiat, trade, $timeout, $interval, bitcoinReceived, formatTrade, buySell, $rootScope) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -12,6 +12,8 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.status = {};
   $scope.trade = trade;
   $scope.label = MyWallet.wallet.hdwallet.accounts[0].label;
+
+  $scope.buySellDebug = $rootScope.buySellDebug;
 
   $scope.method = $scope.trade ? $scope.trade.medium : 'card';
   $scope.methods = {};
@@ -130,8 +132,10 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     if (!$scope.transaction.fiat) { $scope.status = {}; return; }
 
     const success = (quote) => {
+      console.log(quote);
       $scope.status = {};
       $scope.quote = quote;
+      $scope.expiredQuote = false;
       $scope.updateAmounts();
       Alerts.clear($scope.alerts);
       $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount, currency.bitCurrencies[0]);
@@ -336,6 +340,21 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     $scope.nextStep();
     $scope.watchAddress();
   }
+
+  $scope.$watch('quote.expiresAt', (newVal) => {
+    if (!$scope.quote) return;
+
+    let expiresAt = new Date($scope.quote.expiresAt);
+    if (new Date() > expiresAt) {
+      $scope.quote = null;
+      $scope.getQuote();
+    }
+  });
+
+  // QA tool:
+  $scope.expireQuote = () => {
+    $scope.quote.expiresAt = new Date(new Date().getTime() + 3 * 1000);
+  };
 
   $scope.initBuy = () => {
     $uibModalInstance.dismiss('');
