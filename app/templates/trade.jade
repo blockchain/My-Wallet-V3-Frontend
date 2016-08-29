@@ -14,7 +14,7 @@ tr.border
     img(src="img/spinner.gif")
   td.paml.right-align(ng-hide="status.gettingQuote")
     span.type-lbl.display-inline-block.mrm.left-align
-      quote-countdown(created-at="trade.createdAt" expired-quote="expiredQuote" ng-hide="expiredQuote || !pending")
+      quote-countdown(trade-created-at="trade.createdAt" ng-hide="expiredQuote || !pending")
     span.quote-amount.display-inline-block
       span.type-lbl {{ expiredQuote ? btcExpected : trade.outAmountExpected }} {{ trade.outCurrency }} | 
       span.type-lbl.em-600 {{ trade.inAmount }} {{ trade.inCurrency }}

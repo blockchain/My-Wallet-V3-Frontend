@@ -54,7 +54,7 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
       if (newVal) {
         scope.update();
         scope.status.gettingQuote = true;
-        scope.pending && scope.trade.btcExpected().then(updateBTCExpected);
+        scope.trade.btcExpected().then(updateBTCExpected);
       }
     });
 

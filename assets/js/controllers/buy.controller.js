@@ -132,7 +132,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     if (!$scope.transaction.fiat) { $scope.status = {}; return; }
 
     const success = (quote) => {
-      console.log(quote);
       $scope.status = {};
       $scope.quote = quote;
       $scope.expiredQuote = false;
