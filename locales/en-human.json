@@ -142,6 +142,7 @@
   "EMAIL_ADDRESS" : "Email Address",
   "NOT_VALID_EMAIL_ADDRESS": "Please enter a valid email address.",
   "EMAIL_ADDRESS_EXPLAIN" : "Your verified email address is used to send login codes when suspicious or unusual activity is detected, to remind you of your wallet login ID, and to send bitcoin payment alerts when you receive funds. We will not use your email address for marketing purposes.",
+  "CHANGE_EMAIL_NOT_EXCHANGE": "This will change your wallet's email address, but the email address you signed up to Buy Bitcoin with will remain the same.",
   "VERIFIED" : "Verified",
   "UNVERIFIED" : "Unverified",
   "MOBILE_NUMBER" : "Mobile Number",
