@@ -9,6 +9,7 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
           span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isEmailVerified")
           span.label.label-success(translate="VERIFIED", ng-show="user.isEmailVerified")
         p.text.em-300.hidden-xs(translate="EMAIL_ADDRESS_EXPLAIN")
+        p.text.em-400.hidden-xs.security-red(translate="CHANGE_EMAIL_NOT_EXCHANGE" ng-show="userHasExchangeAcct && active")
       .col-sm-12.col-md-6.setting-result(ng-hide="active")
         p.em-400.type-h5.mbm {{ user.email }}
         a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")

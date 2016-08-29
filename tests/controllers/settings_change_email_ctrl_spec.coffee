@@ -7,7 +7,12 @@ describe "ChangeEmailCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile, $templateCache) ->
       Wallet = $injector.get("Wallet")
+      MyWallet = $injector.get("MyWallet")
+      
       Wallet.user.email = "a@b.com"
+      MyWallet.wallet = {
+        external: {}
+      }
 
       scope = $rootScope.$new()
       template = $templateCache.get('partials/settings/change-email.jade')
