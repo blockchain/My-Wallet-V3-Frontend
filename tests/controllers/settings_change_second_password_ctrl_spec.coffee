@@ -1,6 +1,7 @@
 describe "ChangeSecondPasswordCtrl", ->
   scope = undefined
   Wallet = undefined
+  MyWallet = undefined
   modalInstance =
     close: ->
     dismiss: ->
@@ -9,9 +10,13 @@ describe "ChangeSecondPasswordCtrl", ->
 
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile, $templateCache) ->
+      MyWallet = $injector.get("MyWallet")
       Wallet = $injector.get("Wallet")
       Wallet.user.passwordHint = "passhint"
       Wallet.isCorrectMainPassword = (pw) -> pw == 'mainpw'
+
+      MyWallet.wallet =
+        external: {}
 
       scope = $rootScope.$new()
       template = $templateCache.get('partials/settings/change-second-password.jade')

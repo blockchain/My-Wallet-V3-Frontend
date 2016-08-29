@@ -36,6 +36,7 @@ function bcAsyncInput ($timeout, Wallet) {
   function link (scope, elem, attrs, ctrl, transclude) {
     scope.isRequired = attrs.isRequired != null;
     scope.inline = attrs.inline != null;
+    scope.button = attrs.button || 'SAVE';
 
     scope.type = scope._type || 'text';
     scope.buttonClass = scope._buttonClass || 'button-primary btn-small';
@@ -46,17 +47,18 @@ function bcAsyncInput ($timeout, Wallet) {
       saving: false
     };
 
-    if (attrs.editing != null) scope.status.edit = true;
-
-    scope.form = {
-      newValue: scope.ngModel
-    };
-
     scope.edit = () => {
       // finds and focuses on the text input field
       // a brief timeout is necessary before trying to focus
       $timeout(() => { elem.find('input')[0].focus(); }, 50);
       scope.status.edit = 1;
+    };
+
+    if (attrs.editing != null) scope.status.edit = true;
+    if (scope.status.edit) { scope.edit(); }
+
+    scope.form = {
+      newValue: scope.ngModel
     };
 
     scope.focus = () => {

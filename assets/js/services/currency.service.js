@@ -10,6 +10,13 @@ function currency ($q, MyBlockchainApi) {
   const conversions = {};
   const fiatConversionCache = {};
 
+  const coinifyCurrencyCodes = {
+    'DKK': 'Danish Krone',
+    'EUR': 'Euro',
+    'GBP': 'Great British Pound',
+    'USD': 'U.S. Dollar'
+  };
+
   const currencyCodes = {
     'USD': 'U.S. Dollar',
     'EUR': 'Euro',
@@ -55,17 +62,19 @@ function currency ($q, MyBlockchainApi) {
 
   var service = {
     currencies: formatCurrencies(currencyCodes),
-    bitCurrencies: bitCurrencies,
-    conversions: conversions,
+    coinifyCurrencies: formatCurrencies(coinifyCurrencyCodes),
+    bitCurrencies,
+    conversions,
 
-    fetchExchangeRate: fetchExchangeRate,
-    getFiatAtTime: getFiatAtTime,
-    isBitCurrency: isBitCurrency,
-    decimalPlacesForCurrency: decimalPlacesForCurrency,
-    convertToSatoshi: convertToSatoshi,
-    convertFromSatoshi: convertFromSatoshi,
-    formatCurrencyForView: formatCurrencyForView,
-    commaSeparate: commaSeparate
+    fetchExchangeRate,
+    updateCoinifyCurrencies,
+    getFiatAtTime,
+    isBitCurrency,
+    decimalPlacesForCurrency,
+    convertToSatoshi,
+    convertFromSatoshi,
+    formatCurrencyForView,
+    commaSeparate
   };
 
   return service;
@@ -106,6 +115,11 @@ function currency ($q, MyBlockchainApi) {
       ? $q.resolve(cached) : MyBlockchainApi.getFiatAtTime(time, amount, currencyCode);
 
     return fiatValuePromise.then(cacheResult);
+  }
+
+  function updateCoinifyCurrencies (currencies) {
+    let format = (code) => ({ code, name: currencyCodes[code] });
+    service.coinifyCurrencies = currencies.slice().sort().map(format);
   }
 
   function isBitCurrency (currency) {

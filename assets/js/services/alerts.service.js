@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .factory('Alerts', Alerts);
 
-Alerts.$inject = ['$timeout', '$rootScope', '$translate', '$uibModal'];
+Alerts.$inject = ['$timeout', '$rootScope', '$q', '$translate', '$uibModal'];
 
-function Alerts ($timeout, $rootScope, $translate, $uibModal) {
+function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
   const service = {
     alerts: [],
     close: close,
@@ -19,7 +19,6 @@ function Alerts ($timeout, $rootScope, $translate, $uibModal) {
     displayError: display.bind(null, 'danger'),
     displayReceivedBitcoin: display.bind(null, 'received-bitcoin'),
     displaySentBitcoin: display.bind(null, 'sent-bitcoin'),
-    displayVerifiedEmail: displayVerifiedEmail,
     displayResetTwoFactor: displayResetTwoFactor
   };
 
@@ -40,25 +39,16 @@ function Alerts ($timeout, $rootScope, $translate, $uibModal) {
   }
 
   function display (type, message, keep = false, context = service.alerts) {
-    let displayAlert = (translation) => {
-      let alert = { type: type, msg: translation };
-      if (isDuplicate(context, alert)) return;
-      alert.close = close.bind(null, alert, context);
-      if (!keep) alert.timer = $timeout(() => alert.close(), 7000);
+    let displayAlert = (msg) => $q((resolve, reject) => {
+      let alert = { type, msg };
+      let close = service.close.bind(null, alert, context);
+      if (isDuplicate(context, alert)) return reject('DUPLICATE');
+      alert.close = () => { close(); reject('CLOSED'); };
+      alert.action = () => { close(); resolve('CLICKED'); };
+      alert.timer = keep ? null : $timeout(alert.close, 7000);
       context.push(alert);
-    };
-    $translate(message).then(displayAlert, () => displayAlert(message));
-  }
-
-  function displayVerifiedEmail () {
-    $translate(['SUCCESS', 'EMAIL_VERIFIED_SUCCESS']).then(translations => {
-      $rootScope.$emit('showNotification', {
-        type: 'verified-email',
-        icon: 'ti-email',
-        heading: translations.SUCCESS,
-        msg: translations.EMAIL_VERIFIED_SUCCESS
-      });
     });
+    return $translate(message).then(displayAlert, () => displayAlert(message));
   }
 
   function displayResetTwoFactor (message) {
@@ -72,7 +62,7 @@ function Alerts ($timeout, $rootScope, $translate, $uibModal) {
     });
   }
 
-  // options = { values, props, friendly, action, modalClass }
+  // options = { values, props, friendly, success, action, modalClass, iconClass }
   function confirm (namespace, options = {}) {
     return $uibModal.open({
       templateUrl: 'partials/modal-confirm.jade',

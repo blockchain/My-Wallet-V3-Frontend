@@ -1,0 +1,9 @@
+div(translate-namespace="{{::formattedTrade.namespace}}")
+  span.type-h5.em-500.flex-start.pts(class="{{formattedTrade.class}}" translate=".TITLE")
+  p.em-300.ptm(translate=".BODY" translate-values="::formattedTrade.values")
+  div
+    label.em-500.flex-start.pts.mtl(translate="ORDER_DETAILS")
+    ul.em-300(ng-if="formattedTrade.tx")
+      li.pam.border-right.border-left.border-bottom-light.flex-between(ng-repeat="(prop, val) in formattedTrade.tx track by $index" ng-if="val" ng-class="{'border-top': $first}")
+        span.em-400.colon(translate="{{::prop}}")
+        span.em-400.right-align(ng-bind="::val")

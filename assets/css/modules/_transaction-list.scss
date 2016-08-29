@@ -1,5 +1,6 @@
 .transactions {
   .label-success,
+  .label-primary,
   .label-default {
     @extend .btn-xs;
     display: inline-block;

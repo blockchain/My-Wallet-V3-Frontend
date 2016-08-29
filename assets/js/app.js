@@ -107,6 +107,7 @@ angular.module('walletApp', modules)
     // These are set by grunt dist:
     $rootScope.versionFrontend = null;
     $rootScope.versionMyWallet = null;
+    $rootScope.buySellDebug = true;
 
     console.info(
       'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s, connecting to %s',

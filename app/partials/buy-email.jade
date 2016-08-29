@@ -1,0 +1,17 @@
+div
+  div(ng-hide="editEmail || rejectedEmail")
+    label.em-500.flex-start.pts Verify email:
+    p.mvl
+      span(translate="SENT_VERIFICATION" translate-values="{email: user.email}")
+    .flex-column
+        div
+          span.flex-center.pointer(translate="CHANGE_EMAIL" ng-click="toggleEmail()")
+  form.clearfix(name="emailForm" ng-show="editEmail || rejectedEmail")
+    bc-async-input(type="email"
+                   is-required 
+                   ng-model="user.email" 
+                   on-cancel="toggleEmail" 
+                   on-save="changeEmail" 
+                   action-title="'CHANGE' | translate" 
+                   inline 
+                   editing="true")

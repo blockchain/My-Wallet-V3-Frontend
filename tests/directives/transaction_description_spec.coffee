@@ -1,4 +1,4 @@
-describe "Transaction Description Directive", ->  
+describe "Transaction Description Directive", ->
   $compile = undefined
   $rootScope = undefined
   element = undefined
@@ -9,18 +9,22 @@ describe "Transaction Description Directive", ->
   beforeEach module("walletApp")
 
   beforeEach inject((_$compile_, _$rootScope_, $injector) ->
-
-
     # The injector unwraps the underscores (_) from around the parameter names when matching
     $compile = _$compile_
     $rootScope = _$rootScope_
 
-
     Wallet = $injector.get("Wallet")
+    MyWallet = $injector.get("MyWallet")
 
     Wallet.my =
       wallet:
         getAddressBookLabel: () -> null
+
+    MyWallet.wallet =
+      external: {
+        addCoinify: () ->
+        coinify: {}
+      }
 
     Wallet.accounts = () -> [{index: 0, label: "Savings"}, { index: 1, label: "Spending"}]
 

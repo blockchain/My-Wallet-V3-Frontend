@@ -7,8 +7,8 @@ div.width-100
   form(role="form" name="bcAsyncForm" ng-submit="save()" novalidate)
     .pvl(ng-class="{'has-error': bcAsyncForm.$invalid && bcAsyncForm.$dirty && !bcAsyncForm.input.$error.required && !bcAsyncForm.input.$error.isNotEqual}" ng-show="inline || status.edit")
       div(ng-if="!transform")
-        input.form-control(autofocus ng-if="type == 'email'" is-valid="validate()" is-not-equal="{{ ngModel }}" ng-required="isRequired" name="input" type="email" ng-model="form.newValue" maxlength="{{ maxLength }}" ng-focus="focus()" placeholder="{{ placeholder }}" ng-change="onChange()")
-        input.form-control(autofocus ng-if="type != 'email'" is-valid="validate()" is-not-equal="{{ ngModel }}" ng-required="isRequired" name="input" type="text" ng-model="form.newValue" maxlength="{{ maxLength }}" ng-focus="focus()" placeholder="{{ placeholder }}" ng-change="onChange()")
+        input.form-control(focus-when="focus" ng-if="type == 'email'" is-valid="validate()" is-not-equal="{{ ngModel }}" ng-required="isRequired" name="input" type="email" ng-model="form.newValue" maxlength="{{ maxLength }}" ng-focus="focus()" placeholder="{{ placeholder }}" ng-change="onChange()")
+        input.form-control(focus-when="focus" ng-if="type != 'email'" is-valid="validate()" is-not-equal="{{ ngModel }}" ng-required="isRequired" name="input" type="text" ng-model="form.newValue" maxlength="{{ maxLength }}" ng-focus="focus()" placeholder="{{ placeholder }}" ng-change="onChange()")
       div(ng-if="transform")
         input.form-control(transform-currency="transform" is-valid="validate()" is-not-equal="{{ ngModel }}" ng-required="isRequired" name="input" type="number" ng-model="form.newValue" ng-focus="focus()" placeholder="({{transform.code}})" ng-change="onChange()")
       span.help-block {{ errorMessage }}
@@ -18,7 +18,7 @@ div.width-100
           ng-disabled="bcAsyncForm.$invalid || bcAsyncForm.$pristine" 
           ui-ladda="status.saving" 
           data-style="expand-left" 
-          ladda-translate="SAVE"
+          ladda-translate="{{button}}"
           ng-class="buttonClass"
         )
         button.button-muted.btn-small.mlm(type="button" ng-click="cancel(); onChange()" translate="CANCEL" ng-hide="status.saving")

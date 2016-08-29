@@ -106,6 +106,8 @@
   }
 }
 
+.width-33 { width: 33.333%; }
+
 .z-10 { z-index: 10; }
 
 .brdrn { border-radius: 0px !important; }
@@ -149,3 +151,10 @@
 .clear-left { clear: left; }
 .clear-right { clear: right; }
 
+.width-100 {
+  @media (max-width: 992px) {
+    width: 100%;
+  }
+}
+
+.vat { vertical-align: top; }

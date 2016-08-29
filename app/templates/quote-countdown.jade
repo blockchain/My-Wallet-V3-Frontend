@@ -1,0 +1,3 @@
+div.type-sm
+  span.fade(ng-show="!count || expiredQuote" translate="PLACEHOLDER")
+  span.security-red(ng-show="count && !expiredQuote" translate="RATE_EXPIRES" translate-values="{count: count}" uib-tooltip="{{'RATE_AUTO_REFRESH' | translate}}" tooltip-append-to-body="true" tooltip-enable="!createdAt")

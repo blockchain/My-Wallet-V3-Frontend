@@ -332,7 +332,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     let index = account.receiveIndex;
     let address = wallet.getReceiveAddress(account.index, index);
     let label = $translate.instant('DEFAULT_NEW_ADDRESS_LABEL');
-    return $q.resolve(account.setLabelForReceivingAddress(index, label))
+    return $q.resolve(account.setLabelForReceivingAddress(index, label, 10))
       .then(() => ({ index, address, label }));
   };
 
@@ -433,7 +433,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
 
   wallet.changeHDAddressLabel = (accountIdx, index, label, successCallback, errorCallback) => {
     let account = wallet.accounts()[parseInt(accountIdx, 10)];
-    $q.resolve(account.setLabelForReceivingAddress(index, label))
+    $q.resolve(account.setLabelForReceivingAddress(index, label, 10))
       .then(successCallback).catch(errorCallback);
   };
 
@@ -487,17 +487,32 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
 
   wallet.resendEmailConfirmation = (successCallback, errorCallback) => {
     let success = () => {
-      successCallback();
+      successCallback && successCallback();
       $rootScope.$safeApply();
     };
 
     let error = () => {
-      errorCallback();
+      errorCallback && errorCallback();
       $rootScope.$safeApply();
     };
 
     wallet.settings_api.resendEmailConfirmation(wallet.user.email, success, error);
   };
+
+  wallet.verifyEmail = (code, successCallback, errorCallback) => {
+    let success = () => {
+      successCallback();
+      $rootScope.$safeApply();
+    };
+
+    let error = () => {
+      errorCallback('Invalid confirmation code');
+      $rootScope.$safeApply();
+    };
+
+    wallet.settings_api.verifyEmail(code, success, error);
+  };
+
   wallet.setPbkdf2Iterations = (n, successCallback, errorCallback, cancelCallback) => {
     let proceed = (password) => {
       wallet.my.wallet.changePbkdf2Iterations(parseInt(n, 10), password);

@@ -40,7 +40,7 @@ function ChangeIpWhitelistCtrl ($scope, Wallet, Alerts) {
   $scope.setIPWhitelist = () => {
     $scope.status.waiting = true;
     Wallet.setIPWhitelist($scope.fields.ipWhitelist)
-      .then($scope.deactivate, () => Alerts.displayError('IP_WHITELIST_ERROR'))
+      .then($scope.deactivate, () => { Alerts.displayError('IP_WHITELIST_ERROR'); })
       .then(() => $scope.status.waiting = false);
   };
 }

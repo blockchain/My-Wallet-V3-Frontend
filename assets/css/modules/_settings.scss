@@ -62,7 +62,7 @@
   }
   // Accounts & Addresses
   @media (max-width: 900px) {
-    .accounts-container, 
+    .accounts-container,
     .addresses-container,
     .imported-addresses-container {
       width: 100%;
@@ -75,7 +75,7 @@
           padding: 0px;
           display: block;
           margin: 10px 0;
-          button { 
+          button {
             display: block;
             margin-top: 10px;
           }
@@ -124,7 +124,6 @@ table.accounts-container {
   }
 
   .label-primary {
-    background-color: $blue;
     display: inline-block;
     @extend .btn-xs;
     color: white;
@@ -146,6 +145,11 @@ table.accounts-container {
   border-left: 5px solid $security-yellow;
   line-height: 1.5em;
   font-size: 1.1em;
+}
+
+.well.friendly {
+  background-color: $light-blue;
+  border-left: 5px solid $blue;
 }
 
 @media (min-width: 992px){
@@ -202,7 +206,7 @@ table.accounts-container {
 
 @media (max-width: 768px) {
   .settings {
-    padding: 15px 15px;   
+    padding: 15px 15px;
   }
 }
 

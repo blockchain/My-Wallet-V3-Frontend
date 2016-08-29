@@ -89,12 +89,18 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   });
 
   $scope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
+    let isUserInvited = MyWallet.wallet.accountInfo.invited;
     let isPublicState = toState.name === 'landing' || toState.name.slice(0, 6) === 'public';
     if (isPublicState && Wallet.status.isLoggedIn) event.preventDefault();
+    if (!isUserInvited && toState.name === 'wallet.common.buy-sell') event.preventDefault();
+    if (MyWallet.wallet.isDoubleEncrypted && toState.name === 'wallet.common.buy-sell') {
+      event.preventDefault();
+      Alerts.displayError('MUST_DISABLE_2ND_PW');
+    }
   });
 
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) => {
-    let loggedOutStates = ['public', 'landing', 'public.login-no-uid', 'public.login-uid', 'public.reset-two-factor', 'public.recover', 'public.reminder', 'public.signup', 'public.help', 'open', 'wallet.common.verify-email', 'wallet.common.unsubscribe', 'public.authorize-approve', 'public.reset-two-factor-token'];
+    let loggedOutStates = ['public', 'landing', 'public.login-no-uid', 'public.login-uid', 'public.reset-two-factor', 'public.recover', 'public.reminder', 'public.signup', 'public.help', 'open', 'public.verify-email', 'wallet.common.unsubscribe', 'public.authorize-approve', 'public.reset-two-factor-token'];
     if (loggedOutStates.every(s => toState.name !== s) && $scope.status.isLoggedIn === false) {
       $state.go('public.login-no-uid');
     }
@@ -159,6 +165,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
           templateUrl: 'partials/first-login-modal.jade',
           windowClass: 'bc-modal rocket-modal initial'
         });
+        Wallet.goal.firstLogin = true;
         Wallet.goal.firstTime = void 0;
       }
       if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {

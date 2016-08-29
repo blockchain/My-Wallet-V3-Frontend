@@ -22,7 +22,7 @@
     "browserdetection": "sjors/browser-detection#webkit",
     "bc-qr-reader": "0.2.*",
     "bootstrap-sass": "3.3.*",
-    "blockchain-wallet": "3.21.*",
+    "blockchain-wallet": "3.22.*",
     "bc-phone-number": "5.0.11",
     "oclazyload": "1.0.*"
   },

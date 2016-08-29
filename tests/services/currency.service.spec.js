@@ -53,6 +53,14 @@ describe('currency', () => {
     });
   });
 
+  describe('updateCoinifyCurrencies', () => {
+    it('should set the coinify currencies correctly', inject((currency) => {
+      let expected = [{ code: 'EUR', name: 'Euro' }, { code: 'USD', name: 'U.S. Dollar' }];
+      currency.updateCoinifyCurrencies(['USD', 'EUR']);
+      expect(currency.coinifyCurrencies).toEqual(expected);
+    }));
+  });
+
   describe('isBitcurrency()', () => {
     it('should identify "BTC" as a bit currency', inject((currency) => {
       let isBit = currency.isBitCurrency(currency.bitCurrencies[0]);

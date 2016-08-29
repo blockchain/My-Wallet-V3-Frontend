@@ -11,6 +11,7 @@ function helperButton ($translate) {
     replace: true,
     scope: {
       content: '@',
+      values: '=',
       url: '@',
       placement: '@',
       link: '@',

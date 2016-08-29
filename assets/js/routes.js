@@ -166,6 +166,15 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('public.verify-email', {
+      url: '/verify-email/{token:.*}',
+      views: {
+        contents: {
+          controller: 'VerifyEmailCtrl',
+          templateUrl: 'partials/verify-email.jade'
+        }
+      }
+    })
     .state('public.reset-two-factor-token', {
       url: '/reset-two-factor/{token:.*}',
       views: {
@@ -198,8 +207,8 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('wallet.common.feedback', {
-      url: '/feedback',
+    .state('wallet.common.buy-sell', {
+      url: '/buy-sell',
       views: {
         top: top,
         left: {
@@ -207,8 +216,8 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           controller: 'WalletNavigationCtrl'
         },
         right: {
-          templateUrl: 'partials/feedback.jade',
-          controller: 'FeedbackCtrl'
+          templateUrl: 'partials/buy-sell.jade',
+          controller: 'BuySellCtrl'
         }
       }
     })
@@ -251,16 +260,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         left: walletNav,
         right: {
           controller: 'ClaimCtrl'
-        }
-      }
-    })
-    .state('wallet.common.verify-email', {
-      url: '/verify-email/{token:.*}',
-      views: {
-        top: top,
-        left: walletNav,
-        right: {
-          controller: 'VerifyEmailCtrl'
         }
       }
     })

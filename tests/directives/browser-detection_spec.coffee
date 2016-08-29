@@ -47,7 +47,7 @@ describe "browserDetection", ->
       isoScope.performCheck()
       isoScope.$digest()
       expect(isoScope.result.disabled).toBe(true)
-      expect(isoScope.result.msg).toEqual('MINIMUM_BROWSER|Chrome|10|30')
+      expect(isoScope.result.msg).toEqual('MINIMUM_BROWSER|Chrome|10|45')
 
     it "should warn against an unknown but safe browser", ->
       spyOn(MyWallet, "browserCheckFast").and.returnValue true

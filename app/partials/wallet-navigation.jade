@@ -29,6 +29,11 @@
       li.action-bar(ng-show="showOrHide('transactions')")
         a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
 
+    li.header(ui-sref-active="current" ng-show="isUserInvited")
+      a(ui-sref="wallet.common.buy-sell")
+        i.ti-direction-alt
+        span(translate="BUY_BITCOIN")
+
     li.header.mbm(ui-sref-active="current",  ng-click="hideMenu()")
       contextual-message
       a(ui-sref="wallet.common.security-center")

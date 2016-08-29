@@ -1,0 +1,21 @@
+tr.border
+  td.paml
+    span.state.mrl.state-danger-text(ng-show="completed && error") {{ trade.state | translate }}
+    span.state.mrl.success(ng-show="completed && success && trade.bitcoinReceived") Purchased
+    span.state.italic.mrl(ng-show="completed && success && !trade.bitcoinReceived") Pending
+    span.state.italic.mrl(ng-show="pending") {{ trade.state | translate }}
+    
+    span(ng-show="trade.state === 'cancelled'") You canceled this order
+    span.blue.underline.pointer(ng-click="buy({amt: trade.inAmount, trade: trade});" ng-show="pending") Finish payment
+    span.blue.underline.pointer(ng-click="buy({amt: trade.inAmount, trade: trade});" ng-show="completed && trade.state !== 'cancelled'") View details
+  td.paml
+    span.type-lbl.mrm {{ trade.createdAt | date:'d MMMM yyyy, HH:mm' }}
+  td.right-align.paml(ng-show="status.gettingQuote")
+    img(src="img/spinner.gif")
+  td.paml.right-align(ng-hide="status.gettingQuote")
+    span.type-lbl.display-inline-block.mrm.left-align
+      quote-countdown(trade-created-at="trade.createdAt" ng-hide="expiredQuote || !pending")
+    span.quote-amount.display-inline-block
+      span.type-lbl {{ expiredQuote ? btcExpected : trade.outAmountExpected }} {{ trade.outCurrency }} | 
+      span.type-lbl.em-600 {{ trade.inAmount }} {{ trade.inCurrency }}
+      i.ti-trash.pointer.mls.state-danger-text(ng-click="cancel(trade)" ng-show="pending && !status.canceling" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")

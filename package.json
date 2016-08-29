@@ -84,6 +84,7 @@
       "Blockchain",
       "compareVersions",
       "URL",
+      "event",
       "confirm",
       "beforeEach"
     ]

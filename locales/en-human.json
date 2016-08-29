@@ -13,6 +13,7 @@
   "MY_TRANSACTIONS": "Transactions",
   "ALL": "All",
   "SEND_FEEDBACK": "Send Feedback",
+  "BUYSELL": "Buy/Sell",
   "FEEDBACK_SUBMIT_FAILED" : "Something went wrong, please try again.",
   "BACK": "Back",
   "CONTACT_SUPPORT": "Contact Support",
@@ -49,6 +50,11 @@
     "TITLE": "Sign out without saving?",
     "BODY": "There are changes still being saved, signing out now may result in loss of data. Are you sure you wish to continue?"
   },
+  "CONFIRM_CANCEL_TRADE": {
+    "TITLE": "Cancel Trade?",
+    "BODY": "Are you sure you want to cancel this trade?"
+  },
+  "CANCEL_TRADE": "Cancel Trade",
   "CLOSE": "Close",
   "TRANSACTIONS" : "Transactions",
   "TRANSACTION" : "Transaction",
@@ -67,7 +73,8 @@
   "BITCOIN_ADDRESS" : "Bitcoin Address for Your Next Transaction",
   "DEFAULT_NEW_ADDRESS_LABEL" : "New Address",
   "CANCEL" : "Cancel",
-  "CANCELLED" : "Cancelled",
+  "CANCEL_ORDER" : "Cancel Order",
+  "CANCELLED" : "Canceled",
   "SAVE" : "Save",
   "COPY" : "Copy",
   "CLICK_COPY" : "Click to Copy",
@@ -109,6 +116,24 @@
   "WALLET_RECOVERY" : "Wallet Recovery",
   "ADD_WALLET_RECOVERY" : "Backup Security Phrase",
   "PRINT_RECOVERY_SHEET" : "Print Recovery Sheet",
+  "ARE_YOU_SURE_LOGOUT" : "Are you sure you wish to logout?",
+  "FINISH_LATER": "Finish Later",
+  "CONFIRM_CANCEL": {
+    "TITLE": "Cancel Trade?",
+    "BODY": "You're so close to receiving bitcoin."
+  },
+  "CONFIRM_CLOSE": {
+    "TITLE": "Finish Later?",
+    "BODY": "You'll be able to finish paying later."
+  },
+  "CONFIRM_CLOSE_ACCT": {
+    "TITLE": "Are You Sure?",
+    "BODY": "You're just a few steps from receiving bitcoin, are you sure you want to stop?"
+  },
+  "CONFIRM_CLOSE_AMT": {
+    "TITLE": "Are You Sure?",
+    "BODY": "Clicking Close will exit the modal, but you can buy bitcoin anytime."
+  },
   "CONFIRM_LOGOUT": {
     "TITLE": "Sign Out?",
     "BODY": "All changes have been saved, it is safe to sign out."
@@ -178,7 +203,7 @@
   "TRANSACTION_COMPLETE" : "Transaction Confirmed",
   "OVERVIEW" : "Overview:",
   "NOTE" : "Note:",
-  "CREATE" : "Create:",
+  "CREATE" : "Create",
   "MAKE_PUBLIC" : "Make Public",
   "FROM" : "From",
   "TO" : "To",
@@ -357,6 +382,7 @@
   "IP_NOT_ALLOWED" : "%.%.%.% is not allowed",
   "WALLET_SECOND_PASSWORD" : "Second Wallet Password",
   "WALLET_SECOND_PASSWORD_EXPLAIN" : "For additional security, you can choose a second password that is asked whenever you want to spend bitcoins. Beware that there is no password reset functionality.",
+  "WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN": "You cannot set a second password if you have an exchange account.",
   "SECOND_PASSWORD_SET" : "Second Password Enabled",
   "REMOVE_SECOND_PASSWORD" : "Remove Second Password",
   "SECOND_PASSWORD_INCORRECT" : "Incorrect Second Password, please try again.",
@@ -380,6 +406,7 @@
   "IN_PROGRESS" : "In Progress",
   "ADD_VERIFY_EMAIL" : "Verify Email",
   "VERIFY_EMAIL" : "Verify your email address",
+  "VERIFYING_EMAIL" : "Verifying email address",
   "RESEND_EMAIL_VERIFICATION" : "Resend Verification Email",
   "SWEEP" : "Sweep",
   "VERIFY_RECOVERY_PHRASE" : "Backup Recovery Phrase",
@@ -395,6 +422,7 @@
   "NEXT_4_WORDS" : "Next 4 words",
   "PREVIOUS" : "Previous",
   "DONE" : "Done",
+  "IM_DONE": "I'm Done",
   "ENTER_WORDS" : "Using the completed Recovery Sheet as a reference, please enter the following words from your Recovery Phrase to complete the backup process.",
   "BACKED_UP" : "You have backed up your Recovery Phrase",
   "WORD_1" : "First Word",
@@ -410,7 +438,7 @@
   "WORD_11" : "Eleventh Word",
   "WORD_12" : "Twelfth Word",
   "INVALID_CHARACTERS_FOR_LABEL" : "A label can only contain letters, numbers and spaces.",
-  "GAP" : "You cannot label more than 20 unused addresses in a row; please send some bitcoins to at least one of them.",
+  "GAP" : "You cannot label more than 10 unused addresses in a row; please send some bitcoins to at least one of them.",
   "LABEL_ERROR_BIP_44_GAP" : "@:GAP",
   "EMAIL_VERIFIED_MSG" : "Your email address has been verified",
   "PLEASE_LOGIN_FIRST" : "Please login to your wallet to proceed.",
@@ -447,12 +475,12 @@
   "NO_TRANSACTIONS_YET" : "Your Transactions",
   "SORRY_ZERO_TXS" : "Sorry, we couldn't find any transactions!",
   "PLEASE_TRY_AGAIN" : "Please try different filtering criteria or drop us a line by <b class='pointer blue em-500'>Contacting Support</b>",
+  "TRY_AGAIN": "Try Again",
   "DESCRIBE_TRANSACTIONS" : "Transactions occur when you receive and send bitcoin.",
   "HIT_RECEIVE" : "Click <b class='pointer black em-500'><i class='bc-icon-receive'></i> Receive </b> to deposit bitcoin into your wallet.",
   "HIT_SEND" : "Click <b class='pointer black em-500'><i class='bc-icon-send'></i> Send </b> to instantly send bitcoin anywhere in the world!",
   "FIRST_ACCOUNT_NAME" : "My Bitcoin Wallet",
-  "EMAIL_VERIFIED_SUCCESS" : "You've successfully verified your email! Login with your password, we've gone ahead and filled out your Wallet ID for you.",
-  "EMAIL_VERIFIED_SUCCESS_NO_UID" : "You've successfully verified your email! Login with your Wallet ID and password.",
+  "EMAIL_VERIFIED_SUCCESS" : "You've successfully verified your email! Please return to your previous browser / tab to see your wallet.",
   "UID_EXPLAIN" : "Wallet ID is your unique identifier. It is completely individual to you and what you will use to access your wallet.",
   "AUTHORIZED" : "Authorized!",
   "AUTHORIZED_MESSAGE" : "You have authorized this login attempt.",
@@ -681,6 +709,7 @@
   "COUNTRY_OF_ORIGIN" : "Country Of Origin",
   "AUTHORIZE_REJECT_SUCCESS" : "Login attempt rejected! Please contact support if this was not you.",
   "CHECKING_LOGIN_ATTEMPT" : "Checking login attempt",
+  "ERROR" : "Error",
   "SEARCH" : "Search",
   "BALANCES" : "Balances",
   "MUST_SELECT_ORIGIN" : "Must select where to send from",
@@ -833,5 +862,129 @@
   "CREATE_A_WALLET": "Create your Wallet",
   "CREATE_FREE_WALLET": "Sign up for a free wallet below",
   "WHY_HD": "Why is my bitcoin address changing?",
-  "SPEND_IMPORTED_ADDRESS": "Spend"
+  "PHONE_NUMBER": "Phone Number",
+  "EDIT_PROFILE": "Edit Your Profile",
+  "BUY_BITCOIN": "Buy Bitcoin",
+  "SENT_VERIFICATION": "We just sent a verification email to <span class='em-500'>{{::email}}</span>. Click on the <b>Verification Link</b> to continue.",
+  "CHANGE_EMAIL": "Want to change your email address?&nbsp;<span class='blue'>Click here.</span>",
+  "PARTNER": "<span class='success'>Email Verified!</span> Our partner {{::partner}} will process your bitcoin purchase. By clicking 'Continue' you will create an account with {{::partner}}. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
+  "ACCEPT_PARTNER_TOS_PRIVACY": "Accept <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>{{::partner}}'s Terms of Service</a> and <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>{{::partner}}'s Privacy Policy</a>",
+  "EMAIL_IN_USE": "{{::email}} is already in use. ",
+  "CLICK_TO_CHANGE": "Click here to change it.",
+  "PAYMENT_METHOD": "Payment Method:",
+  "PLEASE_CREATE_ACCOUNT": "Please <span class='underline pointer'>create an account</span> to get an accurate exchange rate.",
+  "TRADE_AMOUNT_TOO_LOW": "The amount of this trade is too small. Try increasing the amount.",
+  "TRADE_EXCEEDS_LIMITS": "The amount of this trade is larger than your allowed limit.",
+  "INVALID_ARGUMENT": "An error occured. Please try again later or contact support.",
+  "INVALID_REQUEST": "An error occured. Please try again later or contact support.",
+  "INTERNAL_ERROR": "An internal error occurred. This is most likely not an issue with Blockchain. Please try again later or contact Coinify support.",
+  "INVALID_TRUSTED_EMAIL_VALIDATION_TOKEN": "We are having trouble verifying your email. Please try again later or contact support.",
+  "OFFLINE_TOKEN_NOT_FOUND": "We were unable to login to your account. Please try again later or contact support.",
+  "INVALID_OFFLINE_TOKEN": "We were unable to login to your account. Please contact support and reference your account number {{::user}}.",
+  "CANT_FIND_CURRENCY": "Can't find your currency?",
+  "CURRENCY_COMING_SOON": "We'll be rolling out more currencies soon. Stay tuned.",
+  "CANT_FIND_COUNTRY": "Can't find your country?",
+  "COUNTRY_COMING_SOON": "We'll be rolling out more countries soon. Stay tuned.",
+  "RATE_AUTO_REFRESH": "Exchange rates automatically refresh after 15 minutes.",
+  "RATE_EXPIRES": "Rate Expires: {{::count}}",
+  "NOT_FINISHED": "Not Finished",
+  "COUNTRY_NOT_FOUND": "Sorry, you cannot create an account in the country you selected.",
+  "awaiting_transfer_in": "Pending",
+  "processing": "Processing",
+  "reviewing": "In Review",
+  "completed": "Completed",
+  "completed_test": "Completed Test",
+  "cancelled": "Canceled",
+  "rejected": "Rejected",
+  "expired": "Expired",
+  "SEE_BITCOIN": "See Your Bitcoin",
+  "SUMMARY": "Summary:",
+  "PROCESSED_BY_EXCHANGE": "Coinify will process the exchange. The bitcoin will be sent directly from or into your Blockchain wallet. Your payment and bank information will be submitted to the payment processor and not be seen by Blockchain.",
+  "CARD_FEES": "{{::fee}}% fees charged by the card payment processor.",
+  "CURRENCY_NOT_SUPPORTED": "The currency for this transaction is not supported by the payment method selected. Try another currency or select a different payment method.",
+  "SEND_TRADE_AMOUNT": "Please send <b>{{::amt}} {{::curr}}</b> to the bank account below within the next <b>48 hours</b> to process your transaction. Once the transfer is complete, your bitcoin will be automatically sent to <b>{{::label}}</b>.",
+  "SEND_FUNDS_TO": "Send funds to the following bank account:",
+  "BANK_ADDRESS": "Bank Address:",
+  "BANK_TRANSFER_PENDING": "Bank Transfer Pending",
+  "BOUGHT_VIA": "Bought via {{exchange}}",
+  "SOLD_VIA": "Sold via {{exchange}}",
+  "DECLINED_TRANSACTION": {
+    "TITLE": "Card Declined",
+    "BODY": "Your transaction has been declined. The country or card provider is not accepted by Coinify."
+  },
+  "FAILED_TRANSACTION": {
+    "TITLE": "Transaction Failed",
+    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt}})</b> failed. There was an iSignthis system error. Please contact iSignthis at customersupport@isignthis.com"
+  },
+  "TRANSACTION_ERROR": {
+    "TITLE": "Transaction Error",
+    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt}})</b> has been canceled. Click 'Try Again' to buy Bitcoin."
+  },
+  "CLICK_TO_CANCEL": "Cancel trade",
+  "TX_PENDING": {
+    "TITLE": "Order Pending",
+    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt}})</b> is currently being processed."
+  },
+  "TX_SUCCESS": {
+    "TITLE": "Order Purchased",
+    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt}})</b> was successful! Bitcoins were sent to <b>{{::label}}</b>."
+  },
+  "TX_IN_REVIEW": {
+    "TITLE": "Transaction in review.",
+    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt}})</b> is currently being processed. Any issues should be resolved shortly. Thank you for your patience."
+  },
+  "TX_EXPIRED": {
+    "TITLE": "Transaction expired.",
+    "BODY": "This transaction is expired. Click Try Again to buy bitcoin."
+  },
+  "TX_KYC_PENDING": {
+    "TITLE": "@:KYC_IN_REVIEW.TITLE",
+    "BODY": "To purchase bitcoin via bank transfer, your identity needs to go through a manual confirmation process. This can take up to 2 days. We'll let you know as soon as you are approved."
+  },
+  "BITCOIN_RECEIVED": {
+    "TITLE": "Bitcoin received!",
+    "BODY": "You have just received bitcoin from Coinify! <br/> Bitcoins were sent to <b>{{::label}}</b>."
+  },
+  "SPEND_IMPORTED_ADDRESS": "Spend",
+  "CARD_TRANSFER": {
+    "TITLE": "Instant transaction | 3% fee",
+    "COPY": "The payment fee is charged for the convenience and speed of the checkout. The exchange rate used for converting your payment into bitcoin is fixed."
+  },
+  "BANK_TRANSFER": {
+    "TITLE": "No payment processing fees | 2-3 days",
+    "COPY": "Depending on your bank, Coinify will send you the bitcoin within 24 hours after they receive your payment. The final exchange rate will be determined once your bank transfer arrives."
+  },
+  "KYC_IN_REVIEW": {
+    "TITLE": "Identity Verification In Review",
+    "BODY": "Bank transfers are unavailable until verification is complete. Credit card purchases are available up to {{ccmax}} per day.",
+    "LINK": "Review status"
+  },
+  "KYC_DENIED": {
+    "TITLE": "Identity Verification Denied",
+    "BODY": "There was an issue verifying your identity with the documents provided. Please try uploading different identification. Bank transfers are unavailable until we can successfully verify your identity.",
+    "LINK": "Try again"
+  },
+  "KYC_PENDING": {
+    "TITLE": "Complete Identity Verification",
+    "BODY": "@:KYC_IN_REVIEW.BODY",
+    "LINK": "Finish verification"
+  },
+  "COINIFY_TRADE": "Coinify trade",
+  "ISX_ID": "iSignthis ID",
+  "VERIFY_ID_NOTE": "Please note that in order to buy bitcoin via bank transfer, you will need to verify your identity with our partner iSignThis. You will only have to do this once.",
+  "KYC_APPROVED": "Identity verification approved! Click here to start buying bitcoin via bank transfer.",
+  "DATE_INITIALIZED": "Date initialized",
+  "RECEIVING_WALLET": "Receiving wallet",
+  "RECEIVING_ADDRESS": "QA: Receiving address",
+  "RECEIVE_BITCOIN_TO": "Bitcoins will be sent to {{::label}}.",
+  "MUST_DISABLE_2ND_PW": "Please remove your second password to access this section of the wallet.",
+  "BLACKLISTED_COUNTRY": "Buying bitcoin is not available in your country yet.",
+  "ORDER_CONFIRMATION_COPY": "Before collecting payment information, please confirm your order amount. We'll then direct you to our secure payment provider to verify your card information.",
+  "ORDER_DETAILS": "Order details:",
+  "ACTION_REQUIRED": "Action Required",
+  "MAX_LIMIT_EXCEEDED": "Exceeds your daily buy amount. Today you can purchase {{::available}} {{::code}} or less. Please update your order.",
+  "BELOW_MIN_LIMIT": "Minimum buy amount is {{::min}} {{::code}}. Please update your order.",
+  "MAX_MIN_HELPER": "Minimum buy amount is {{::symbol}}{{::min}}. Maximum daily amounts are {{::symbol}}{{::cardMax}} for credit card payments and {{::symbol}}{{::bankMax}} for bank transfers.",
+  "BUY_AMT_LOW": "Buy amount too low.",
+  "BUY_AMT_HIGH": "Buy amount too high."
 }
