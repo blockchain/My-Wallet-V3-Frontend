@@ -322,7 +322,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   });
 
   $scope.$watch('expiredQuote', (newVal) => {
-    if (newVal) {
+    if (newVal && !$scope.isKYC) {
       $scope.status.gettingQuote = true;
       if (!$scope.trade) $scope.getQuote();
       else $scope.trade.btcExpected().then(updateBTCExpected);
