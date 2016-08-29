@@ -61,11 +61,11 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
   }
 
   function getQuote (amt, curr) {
-    return service.getExchange().getBuyQuote(amt, curr);
+    return $q.resolve(service.getExchange().getBuyQuote(amt, curr));
   }
 
   function getKYCs () {
-    return service.getExchange().getKYCs().then(kycs => {
+    return $q.resolve(service.getExchange().getKYCs()).then(kycs => {
       service.kycs = kycs.sort((k0, k1) => k1.createdAt > k0.createdAt);
       return service.kycs;
     });
@@ -91,7 +91,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
   }
 
   function triggerKYC () {
-    return service.getExchange().triggerKYC().then(kyc => {
+    return $q.resolve(service.getExchange().triggerKYC()).then(kyc => {
       service.kycs.unshift(kyc);
       return kyc;
     });
@@ -133,7 +133,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
       return service.trades;
     };
 
-    return service.getExchange().getTrades().then(success);
+    return $q.resolve(service.getExchange().getTrades()).then(success);
   }
 
   function watchAddress (trade) {
@@ -158,11 +158,11 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
       return $q.reject(msg);
     };
 
-    return service.getExchange().fetchProfile().then(success, error);
+    return $q.resolve(service.getExchange().fetchProfile()).then(success, error);
   }
 
   function openBuyView (amt, trade, active, bitcoinReceived) {
-    const open = () => $uibModal.open({
+    const open = () => $q.resolve($uibModal.open({
       templateUrl: 'partials/buy-modal.jade',
       windowClass: 'bc-modal auto buy ' + active,
       controller: 'BuyCtrl',
@@ -173,7 +173,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
         trade: () => trade || null,
         fiat: () => amt
       }
-    }).result;
+    }).result);
 
     try {
       let exchange = service.getExchange();
