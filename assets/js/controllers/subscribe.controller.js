@@ -16,6 +16,6 @@ function SubscribeCtrl ($scope, MyWallet, country) {
     let url = 'https://docs.google.com/forms/d/e/1FAIpQLSeYiTe7YsqEIvaQ-P1NScFLCSPlxRh24zv06FFpNcxY_Hs0Ow/viewform?entry.1192956638=' + email + '&entry.644018680=' + countryName;
     let otherWindow = window.open(url);
 
-    otherWindow.referrer = null;
+    otherWindow.opener = null;
   };
 }
