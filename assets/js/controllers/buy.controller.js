@@ -215,7 +215,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     $scope.status.waiting = true;
     Alerts.clear($scope.alerts);
 
-    return $scope.exchange.signup($scope.fields.countryCode)
+    return $scope.exchange.signup($scope.fields.countryCode, $scope.transaction.currency.code)
       .then(() => $scope.fetchProfile())
       .then(() => $scope.changeCurrency())
       .catch($scope.standardError);
