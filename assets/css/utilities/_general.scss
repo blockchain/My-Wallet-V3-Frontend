@@ -79,6 +79,12 @@ noscript {
 
 .mw { max-width: 100%; }
 
+.tilda-before {
+  &:before {
+    content: '~';
+  }
+}
+
 @media (max-width: 768px) {
   hidden-xs {
     display: none;

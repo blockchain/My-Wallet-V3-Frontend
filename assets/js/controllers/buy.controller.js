@@ -306,6 +306,13 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     Alerts.confirm(text, {action: action}).then($scope.cancel);
   };
 
+  $scope.getQuoteHelper = () => {
+    if ($scope.quote && !$scope.expiredQuote && $scope.beforeStep('trade-formatted')) return 'AUTO_REFRESH';
+    else if ($scope.quote && !$scope.quote.id) return 'EST_QUOTE_1';
+    else if ($scope.expiredQuote) return 'EST_QUOTE_2';
+    else return 'RATE_WILL_EXPIRE';
+  };
+
   $scope.$watch('method', $scope.updateAmounts);
   $scope.$watchGroup(['exchange.user', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
 

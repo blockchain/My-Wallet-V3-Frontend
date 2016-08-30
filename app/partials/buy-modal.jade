@@ -5,9 +5,12 @@
         h3(translate="BUY_BITCOIN")
         .flex-column.flex-align-end(ng-show="status.gettingQuote")
           img(src="img/spinner.gif")
-        .flex-column.flex-align-end(ng-hide="status.gettingQuote")
+        .flex-column.flex-align-end(ng-hide="status.gettingQuote"
+                                    uib-tooltip="{{getQuoteHelper() | translate}}" 
+                                    tooltip-append-to-body="true"
+                                    tooltip-placement="right")
           span.type-h5.em-400(ng-show="transaction.btc !== 0 && !trade") {{ transaction.btc }}
-          span.type-h5.em-400(ng-show="trade") {{ expiredQuote ? btcExpected : trade.outAmountExpected }} BTC
+          span.type-h5.em-400(ng-show="trade" ng-class="{italic: expiredQuote, 'tilda-before': expiredQuote}") {{ expiredQuote ? btcExpected : trade.outAmountExpected }} BTC
           quote-countdown(quote="quote" trade-created-at="trade.createdAt" expired-quote="expiredQuote" ng-class="{'fade': afterStep('trade-complete') || getMethod().inMedium === 'bank' || expiredQuote || (!trade && !quote.id) }")
           p.security-red.pointer(ng-show="buySellDebug && quote.id")
             i.ti-search.mrm.right-align(ng-click="expireQuote()")  QA: Now
