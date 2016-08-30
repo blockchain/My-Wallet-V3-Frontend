@@ -60,6 +60,12 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $timeout(() => !$scope.isKYC && $scope.getPaymentMethods());
   $timeout(() => $scope.rendered = true, bitcoinReceived ? 0 : 4000);
 
+  $scope.hideQuote = () => (
+    $scope.afterStep('trade-complete') ||
+    $scope.getMethod().inMedium === 'bank' ||
+    $scope.expiredQuote || (!$scope.trade && !$scope.quote.id)
+  );
+
   $scope.userHasExchangeAcct = $scope.trades.pending.length || $scope.trades.completed.length;
 
   $scope.getPaymentMethods = () => {
