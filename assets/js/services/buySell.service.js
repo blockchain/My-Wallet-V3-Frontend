@@ -13,11 +13,13 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
   let initialized = $q.defer();
 
   let buySellMyWallet = new MyWalletBuySell(MyWallet.wallet);
-  buySellMyWallet.exchanges.coinify.partnerId = 18; // Replaced by Grunt for production
+  if (buySellMyWallet.exchanges) { // Absent if 2nd password set
+    buySellMyWallet.exchanges.coinify.partnerId = 18; // Replaced by Grunt for production
+  }
 
   const service = {
     getExchange: () => {
-      if (!buySellMyWallet.exchanges) return null;
+      if (!buySellMyWallet.exchanges) return null; // Absent if 2nd password set
       return buySellMyWallet.exchanges.coinify;
     },
     trades: { completed: [], pending: [] },
