@@ -530,7 +530,7 @@ describe "walletServices", () ->
         spyOn(Wallet, 'getNote').and.callFake((hash) -> hash == 'asdf' && 'test_note')
         spyOn($rootScope, '$broadcast')
         Wallet.exportHistory().then (data) ->
-          expect(data).toEqual('sent,receive,tx,note\n"1","0","asdf","test_note"\n"0","2","qwer",""')
+          expect(data).toEqual('sent,receive,tx,note\n1,0,"asdf","test_note"\n0,2,"qwer",""')
           done()
         $rootScope.$digest()
 
