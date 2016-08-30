@@ -14,6 +14,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
 
   const service = {
     getExchange: () => {
+      if (!MyWallet.wallet.external) return null;
       if (!MyWallet.wallet.external.coinify) MyWallet.wallet.external.addCoinify();
       var coinify = MyWallet.wallet.external.coinify;
       coinify.partnerId = 18; // Replaced by Grunt for production
