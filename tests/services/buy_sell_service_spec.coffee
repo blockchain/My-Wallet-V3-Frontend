@@ -6,6 +6,7 @@ describe "buySell service", () ->
   $rootScope = undefined
   $q = undefined
   $uibModal = undefined
+  exchange = undefined
 
   beforeEach angular.mock.module("walletApp")
 
@@ -22,28 +23,28 @@ describe "buySell service", () ->
           countryCodeGuess: {}
         hdwallet:
           accounts: [{ label: "" }]
-        external:
-          coinify:
-            getTrades: -> $q.resolve([])
-            fetchProfile: ->
-            getBuyCurrencies: -> $q.resolve(["USD", "EUR"])
-            getKYCs: -> $q.resolve([])
 
       buySell = $injector.get("buySell")
       currency = $injector.get("currency")
+
+      Wallet.settings.currency = {code: 'EUR'}
 
   makeTrade = (state) ->
     state: state
     bitcoinReceived: state == "completed"
     watchAddress: -> $q.resolve()
 
-  describe "getTrades", ->
-    exchange = undefined
+  beforeEach ->
+    exchange = buySell.getExchange()
+
     trades = ["processing", "completed", "completed_test", "cancelled"].map(makeTrade)
 
+    spyOn(exchange, "getBuyCurrencies").and.returnValue($q.resolve(["USD", "EUR"]))
+    spyOn(exchange, "getTrades").and.returnValue($q.resolve(trades))
+    spyOn(exchange, "getKYCs").and.returnValue($q.resolve([]))
+
+  describe "getTrades", ->
     beforeEach ->
-      exchange = buySell.getExchange()
-      spyOn(exchange, "getTrades").and.returnValue($q.resolve(trades))
       spyOn(buySell, "watchAddress").and.returnValue($q.resolve())
 
     it "should call exchange.getTrades", ->
@@ -84,9 +85,9 @@ describe "buySell service", () ->
 
     beforeEach ->
       exchange = buySell.getExchange()
-      spyOn(buySell, "getTrades").and.callThrough()
       spyOn(exchange, "fetchProfile").and.callFake  ->
         if fetchFailWith? then $q.reject(fetchFailWith) else $q.resolve()
+      spyOn(buySell, "getTrades").and.callThrough()
 
     it "should call getTrades when successful", ->
       buySell.fetchProfile()
@@ -115,9 +116,6 @@ describe "buySell service", () ->
     exchange = undefined
 
     beforeEach ->
-      exchange = buySell.getExchange()
-      trades = ["processing", "completed", "cancelled"].map(makeTrade)
-      spyOn(exchange, "getTrades").and.returnValue($q.resolve(trades))
       spyOn($uibModal, 'open').and.returnValue({ result: {} })
 
     it "should open if there are trades", ->
