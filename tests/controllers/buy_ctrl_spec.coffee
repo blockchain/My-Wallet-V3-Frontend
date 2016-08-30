@@ -162,6 +162,11 @@ describe "BuyCtrl", ->
       scope.standardError(err)
       expect(scope.rejectedEmail).toEqual(true)
 
+  describe "hideQuote", ->
+    it "should hide the quote", ->
+      scope.goTo('pending')
+      expect(scope.hideQuote()).toBe(true)
+
   describe "close", ->
     beforeEach ->
       spyOn(Alerts, 'confirm').and.callThrough()
