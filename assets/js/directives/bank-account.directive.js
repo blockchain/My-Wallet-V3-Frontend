@@ -33,8 +33,8 @@ function bankAccount (MyWallet, $rootScope) {
     scope.holderAddress = scope.transaction.holderAddress;
 
     scope.formattedBankAccount = {
-      'Recipient': [
-        scope.bankAccount.holderName,
+      'Recipient Name': scope.bankAccount.holderName,
+      'Recipient Address': [
         scope.bankAccount.holderAddress.street,
         scope.bankAccount.holderAddress.zipcode + ' ' + scope.bankAccount.holderAddress.city,
         scope.bankAccount.holderAddress.country
