@@ -186,7 +186,8 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
     }
   }
 
-  function getCurrency () {
+  function getCurrency (trade) {
+    if (trade) return currency.currencies.filter(t => t.code === trade.inCurrency)[0];
     let coinifyCurrencies = currency.coinifyCurrencies;
     let walletCurrency = Wallet.settings.currency;
     let isCoinifyCompatible = coinifyCurrencies.some(c => c.code === walletCurrency.code);

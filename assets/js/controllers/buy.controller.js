@@ -54,7 +54,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.bitcoinReceived = bitcoinReceived;
 
   $scope.fields = { email: $scope.user.email, countryCode: $scope.exchange.profile.country };
-  $scope.transaction = {fiat: fiat || 0, btc: 0, fee: 0, total: 0, currency: buySell.getCurrency()};
+  $scope.transaction = {fiat: fiat || 0, btc: 0, fee: 0, total: 0, currency: buySell.getCurrency($scope.trade)};
   $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
 
   $timeout(() => !$scope.isKYC && $scope.getPaymentMethods());
