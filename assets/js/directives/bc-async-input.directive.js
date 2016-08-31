@@ -76,15 +76,10 @@ function bcAsyncInput ($timeout, Wallet) {
         scope.ngModel = scope.form.newValue;
         if (!attrs.custom) scope.bcAsyncForm.$setPristine();
 
-        scope.$root.$safeApply(scope);
-
-        // Fixes issue: hit enter after changing PBKDF2 iterations
-        // when 2nd password is enabled
-        scope.$evalAsync(() => {
+        $timeout(() => {
           scope.status.saving = false;
           if (!attrs.editing) scope.status.edit = false;
         });
-        scope.$root.$safeApply(scope);
       };
 
       let error = () => {
