@@ -63,7 +63,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.hideQuote = () => (
     $scope.afterStep('trade-complete') ||
     $scope.getMethod().inMedium === 'bank' ||
-    $scope.expiredQuote || (!$scope.trade && !$scope.quote.id)
+    $scope.expiredQuote || ($scope.quote && !$scope.quote.id && !$scope.trade)
   );
 
   $scope.userHasExchangeAcct = $scope.trades.pending.length || $scope.trades.completed.length;
