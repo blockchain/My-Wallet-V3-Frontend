@@ -167,6 +167,19 @@ describe "BuyCtrl", ->
       scope.goTo('pending')
       expect(scope.hideQuote()).toBe(true)
 
+  describe "prevStep", ->
+    it "should go back one step", ->
+      scope.exchange.user = undefined
+      scope.step = 2
+      scope.prevStep()
+      expect(scope.step).toBe(1)
+    
+    it "should go to a specific step", ->
+      scope.goTo('summary')
+      scope.exchange.user = true
+      scope.prevStep()
+      expect(scope.step).toBe(4)
+
   describe "close", ->
     beforeEach ->
       spyOn(Alerts, 'confirm').and.callThrough()

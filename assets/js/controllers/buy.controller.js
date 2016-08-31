@@ -186,7 +186,9 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.prevStep = () => {
     if ($scope.status.waiting) return;
 
-    if ($scope.exchange.user) {
+    if ($scope.exchange.user && $scope.afterStep('select-payment-method')) {
+      $scope.goTo('select-payment-method');
+    } else if ($scope.exchange.user) {
       $scope.goTo('amount');
       $scope.isMethodSelected = false;
     } else if ($scope.afterStep('email')) {
