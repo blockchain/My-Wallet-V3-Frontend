@@ -29,7 +29,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
     getQuote,
     getKYCs,
     getRate,
-    calculateLimits,
+    calculateMax,
     triggerKYC,
     getOpenKYC,
     getTrades,
@@ -77,16 +77,18 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
     return $q.resolve(getRate);
   }
 
-  function calculateLimits (rate, method) {
-    let limits = service.getExchange().profile.level.limits;
-    let dailyLimit = limits[method].in.daily;
-    let activeTradesAmt = service.trades.pending.map(t => t.inAmount)
-                                                .reduce((a, b) => a + b, 0);
+  function calculateMax (rate, method) {
+    let currentLimit = service.getExchange().profile.currentLimits[method].in;
+    let userLimits = service.getExchange().profile.level.limits;
+    let dailyLimit = userLimits[method].in.daily;
 
-    limits = {};
-    limits.min = (rate * 10).toFixed(2);
-    limits.max = (rate * dailyLimit).toFixed(2);
-    limits.available = (limits.max - activeTradesAmt).toFixed(2);
+    let limits = {};
+    limits.max = (Math.round(((rate * dailyLimit) / 100)) * 100);
+    limits.available = (rate * currentLimit).toFixed(2);
+
+    limits.available > limits.max && (limits.available = limits.max);
+    limits.available > 0 ? limits.available : 0;
+    limits.max = limits.max.toFixed(2);
 
     return limits;
   }

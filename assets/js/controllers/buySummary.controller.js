@@ -3,15 +3,25 @@ angular
   .controller('BuySummaryCtrl', BuySummaryCtrl);
 
 function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency) {
+  $scope.limits = {};
   $scope.exchange = buySell.getExchange();
   $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
 
   $scope.getMaxMin = () => {
-    const calculateLimits = (rate) => {
-      $scope.limits = buySell.calculateLimits(rate, $scope.method);
+    const calculateMin = (rate) => {
+      $scope.limits.min = (rate * 10).toFixed(2);
     };
 
-    buySell.getRate('EUR', $scope.tempCurrency.code).then(calculateLimits);
+    const calculateMax = (rate) => {
+      $scope.limits.max = buySell.calculateMax(rate, $scope.method).max;
+      $scope.limits.available = buySell.calculateMax(rate, $scope.method).available;
+    };
+
+    buySell.fetchProfile().then(() => {
+      let min = buySell.getRate('EUR', $scope.tempCurrency.code).then(calculateMin);
+      let max = buySell.getRate($scope.exchange.profile.defaultCurrency, $scope.tempCurrency.code).then(calculateMax);
+      $q.all([min, max]).then($scope.setParentError);
+    });
   };
 
   $scope.commitValues = () => {
@@ -31,7 +41,7 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency) {
 
   $scope.changeTempCurrency = (curr) => {
     $scope.tempCurrency = curr;
-    $scope.getMaxMin().then($scope.setParentError);
+    $scope.getMaxMin();
   };
 
   $scope.setParentError = () => $timeout(() => {
