@@ -37,7 +37,9 @@ describe "BuyCtrl", ->
 
       MyWallet.wallet = {}
       MyWallet.wallet.accountInfo = {}
-      MyWallet.wallet.hdwallet = { accounts: [{ label: 'My Bitcoin Wallet '}] }
+      MyWallet.wallet.hdwallet = 
+        accounts: [{ label: 'My Bitcoin Wallet'}, {label: 'New Wallet'}]
+        defaultAccount: {index: 0}
 
       currency.conversions = { "USD": "$", "EUR": "E", "GBP": "P" }
       currency.formatCurrencyForView = (amt, curr) -> "#{curr.code}(#{amt})"
@@ -56,6 +58,11 @@ describe "BuyCtrl", ->
   beforeEach ->
     scope = getControllerScope()
     $rootScope.$digest()
+
+  describe "label", ->
+    it "should use the default label if no trade exists", ->
+      scope.trade = undefined
+      expect(scope.label).toBe('My Bitcoin Wallet')
 
   describe "getPaymentMethods", ->
     beforeEach ->

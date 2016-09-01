@@ -28,7 +28,9 @@ function bankAccount (MyWallet, $rootScope) {
 
     scope.buySellDebug = $rootScope.buySellDebug;
 
-    scope.label = MyWallet.wallet.hdwallet.accounts[0].label;
+    let accountIndex = scope.transaction.accountIndex;
+    scope.label = MyWallet.wallet.hdwallet.accounts[accountIndex].label;
+
     scope.bankAccount = scope.transaction.bankAccount;
     scope.holderAddress = scope.transaction.holderAddress;
 
