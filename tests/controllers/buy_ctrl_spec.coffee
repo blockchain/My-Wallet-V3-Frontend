@@ -6,6 +6,7 @@ describe "BuyCtrl", ->
   $rootScope = undefined
   $controller = undefined
   $q = undefined
+  methods = undefined
 
   beforeEach angular.mock.module("walletApp")
 
@@ -19,6 +20,17 @@ describe "BuyCtrl", ->
       MyWallet = $injector.get("MyWallet")
       Alerts = $injector.get("Alerts")
       currency = $injector.get("currency")
+      buySell = $injector.get("buySell")
+
+      methods = [{ inMedium: "card" }, { inMedium: "bank" }]
+
+      buySell.getExchange = () ->
+        {
+          getPaymentMethods: () ->
+            $q.resolve(methods)
+          profile: {}
+          user: {}
+        }
 
       Wallet.settings.currency = { code: "USD" }
       Wallet.changeCurrency = () -> $q.resolve()
@@ -26,11 +38,6 @@ describe "BuyCtrl", ->
       MyWallet.wallet = {}
       MyWallet.wallet.accountInfo = {}
       MyWallet.wallet.hdwallet = { accounts: [{ label: 'My Bitcoin Wallet '}] }
-
-      MyWallet.wallet.external =
-        coinify:
-          getPaymentMethods: ->
-          profile: {}
 
       currency.conversions = { "USD": "$", "EUR": "E", "GBP": "P" }
       currency.formatCurrencyForView = (amt, curr) -> "#{curr.code}(#{amt})"
@@ -46,25 +53,25 @@ describe "BuyCtrl", ->
       kyc: params.kyc ? false
     scope
 
+  beforeEach ->
+    scope = getControllerScope()
+    $rootScope.$digest()
+
   describe "getPaymentMethods", ->
-    methods = [{ inMedium: "card" }, { inMedium: "bank" }]
     beforeEach ->
-      scope = getControllerScope()
-      scope.exchange.user = {}
-      spyOn(Wallet, "changeCurrency").and.callThrough()
-      spyOn(scope.exchange, "getPaymentMethods").and.returnValue($q.resolve(methods))
+      spyOn(scope.exchange, "getPaymentMethods").and.callThrough()
 
     it "should set the correct scope variables from the response", ->
       expect(scope.method).toEqual('card')
+
       scope.getPaymentMethods()
-      $rootScope.$digest()
       expect(scope.exchange.getPaymentMethods).toHaveBeenCalled()
+
       expect(scope.methods.card).toEqual(methods[0])
       expect(scope.methods.bank).toEqual(methods[1])
 
   describe "changeCurrency", ->
     beforeEach ->
-      scope = getControllerScope()
       spyOn(Wallet, "changeCurrency").and.callThrough()
 
     it "should default to the users currency setting", ->
@@ -89,7 +96,6 @@ describe "BuyCtrl", ->
 
   describe "updateAmounts", ->
     beforeEach ->
-      scope = getControllerScope()
       spyOn(currency, "formatCurrencyForView").and.callThrough()
 
     it "should not do anything without a user or exchange", ->
@@ -106,8 +112,14 @@ describe "BuyCtrl", ->
       expect(scope.transaction).toEqual(jasmine.objectContaining({fiat: 100, methodFee: "5.00"}))
 
   describe "nextStep", ->
+    beforeEach ->
+      scope.exchange.user = undefined
+      scope.user.isEmailVerified = false
+      scope.user.email = "a@b.com"
+      scope.$digest()
+
+
     it "should switch to amount step", ->
-      scope = getControllerScope()
       scope.nextStep()
       expect(scope.onStep('amount')).toEqual(true)
 
@@ -117,42 +129,68 @@ describe "BuyCtrl", ->
       expect(scope.onStep('select-country')).toEqual(true)
 
     it "should switch to email step", ->
+      scope.transaction.fiat = 1
       scope.fields.countryCode = 'GB'
+      scope.nextStep()
       scope.nextStep()
       expect(scope.onStep('email')).toEqual(true)
 
     it "shuold switch to accept-terms step", ->
+      scope.transaction.fiat = 1
       scope.user.isEmailVerified = true
+      scope.fields.countryCode = 'GB'
+      scope.nextStep()
       scope.nextStep()
       expect(scope.onStep('accept-terms')).toEqual(true)
 
     it "should switch to select-payment-method step", ->
+      scope.transaction.fiat = 1
       scope.exchange.user = {}
+      scope.nextStep()
       scope.nextStep()
       expect(scope.onStep('select-payment-method')).toEqual(true)
 
     it "should switch to summary step", ->
+      scope.transaction.fiat = 1
+      scope.exchange.user = {}
       scope.isMethodSelected = true
+      scope.nextStep()
       scope.nextStep()
       expect(scope.onStep('summary')).toEqual(true)
 
     it "should switch to trade-formatted step", ->
+      scope.transaction.fiat = 1
+      scope.exchange.user = {}
       scope.trade = {}
+      scope.nextStep()
       scope.nextStep()
       expect(scope.onStep('trade-formatted')).toEqual(true)
 
     it "should switch to trade-complete step", ->
+      scope.transaction.fiat = 1
+      scope.exchange.user = {}
+      scope.trade = {}
       scope.paymentInfo = {}
+      scope.nextStep()
       scope.nextStep()
       expect(scope.onStep('trade-complete')).toEqual(true)
 
     it "should switch to pending step", ->
+      scope.transaction.fiat = 1
+      scope.exchange.user = {}
+      scope.trade = {}
       scope.formattedTrade = {}
+      scope.nextStep()
       scope.nextStep()
       expect(scope.onStep('pending')).toEqual(true)
 
     it "should switch to success step", ->
+      scope.transaction.fiat = 1
+      scope.exchange.user = {}
+      scope.trade = {}
+      scope.formattedTrade = {}
       scope.bitcoinReceived = true
+      scope.nextStep()
       scope.nextStep()
       expect(scope.onStep('success')).toEqual(true)
 
@@ -183,7 +221,6 @@ describe "BuyCtrl", ->
   describe "close", ->
     beforeEach ->
       spyOn(Alerts, 'confirm').and.callThrough()
-      scope = getControllerScope()
 
     it "should confirm when leaving amount selection", ->
       scope.goTo('amount')

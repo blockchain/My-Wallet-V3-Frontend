@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buySell', buySell);
 
-function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Alerts, currency) {
+function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell) {
   let pendingStates = ['awaiting_transfer_in', 'processing', 'reviewing'];
   let completedStates = ['expired', 'rejected', 'cancelled', 'completed', 'completed_test'];
   let watchableStates = ['completed', 'completed_test'];
@@ -12,13 +12,15 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
   let watching = {};
   let initialized = $q.defer();
 
+  let buySellMyWallet = new MyWalletBuySell(MyWallet.wallet);
+  if (buySellMyWallet.exchanges) { // Absent if 2nd password set
+    buySellMyWallet.exchanges.coinify.partnerId = 18; // Replaced by Grunt for production
+  }
+
   const service = {
     getExchange: () => {
-      if (!MyWallet.wallet.external) return null;
-      if (!MyWallet.wallet.external.coinify) MyWallet.wallet.external.addCoinify();
-      var coinify = MyWallet.wallet.external.coinify;
-      coinify.partnerId = 18; // Replaced by Grunt for production
-      return coinify;
+      if (!buySellMyWallet.exchanges) return null; // Absent if 2nd password set
+      return buySellMyWallet.exchanges.coinify;
     },
     trades: { completed: [], pending: [] },
     kycs: [],
