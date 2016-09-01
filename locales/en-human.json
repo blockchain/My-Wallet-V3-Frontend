@@ -986,7 +986,7 @@
   "ORDER_CONFIRMATION_COPY": "Before collecting payment information, please confirm your order amount. We'll then direct you to our secure payment provider to verify your card information.",
   "ORDER_DETAILS": "Order details:",
   "ACTION_REQUIRED": "Action Required",
-  "MAX_LIMIT_EXCEEDED": "Exceeds your daily buy amount. Today you can purchase {{::available}} {{::code}} or less. Please update your order.",
+  "MAX_LIMIT_EXCEEDED": "Exceeds your daily buy amount. Today you can purchase {{::max}} {{::code}} or less. Please update your order.",
   "BELOW_MIN_LIMIT": "Minimum buy amount is {{::min}} {{::code}}. Please update your order.",
   "MAX_MIN_HELPER": "Minimum buy amount is {{::symbol}}{{::min}}. Maximum daily amounts are {{::symbol}}{{::cardMax}} for credit card payments and {{::symbol}}{{::bankMax}} for bank transfers.",
   "BUY_AMT_LOW": "Buy amount too low.",

@@ -1,7 +1,7 @@
 .border.paml.mtml
   .mtl
     label.em-500 Enter amount:
-    helper-button(ng-show="limits.bank && limits.card" content="MAX_MIN_HELPER" values="{cardMax: limits.card.max, min: limits.card.min, bankMax: limits.bank.max, symbol: currencySymbol.symbol}")
+    helper-button(ng-show="limits.card.min && limits.card.max" content="MAX_MIN_HELPER" values="{cardMax: limits.card.max, min: limits.card.min, bankMax: limits.bank.max, symbol: currencySymbol.symbol}")
     .flex-row.flex-between.flex-center
       section.input-group.width-60
         form(name="fiatForm")

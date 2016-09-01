@@ -9,8 +9,8 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
   $scope.transaction = { fiat: undefined, currency: $scope.settings.currency };
   $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
   $scope.buy = (...args) => buySell.openBuyView(...args).finally($scope.onCloseModal);
+  $scope.limits = {card: {}, bank: {}};
   $scope.state = {buy: true};
-  $scope.limits = {};
 
   $scope.onCloseModal = () => {
     $scope.kyc = buySell.kycs[0];
@@ -26,13 +26,20 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
   };
 
   $scope.getMaxMin = () => {
-    const calculateLimits = (rate) => {
-      $scope.limits.bank = buySell.calculateLimits(rate, 'bank');
-      $scope.limits.card = buySell.calculateLimits(rate, 'card');
+    const calculateMin = (rate) => {
+      $scope.limits.card.min = (rate * 10).toFixed(2);
+    };
+
+    const calculateMax = (rate) => {
+      $scope.limits.bank.max = buySell.calculateMax(rate, 'bank').max;
+      $scope.limits.card.max = buySell.calculateMax(rate, 'card').max;
       $scope.limits.currency = $scope.currencySymbol;
     };
 
-    buySell.getRate('EUR', $scope.transaction.currency.code).then(calculateLimits);
+    buySell.fetchProfile().then(() => {
+      buySell.getRate('EUR', $scope.transaction.currency.code).then(calculateMin);
+      buySell.getRate($scope.exchange.profile.defaultCurrency, $scope.transaction.currency.code).then(calculateMax);
+    });
   };
 
   // for quote
