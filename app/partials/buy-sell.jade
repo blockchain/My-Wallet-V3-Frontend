@@ -22,9 +22,15 @@
       .flex-row.flex-between.flex-center
         h4.type-h4(translate="Order History")
         span Coinify Account: {{ exchange.profile.email }}
-      table.width-100.mbvl
+      table.width-100
         tr.border.bg-light-blue
           th.phml.pvs Status
           th.phml.pvs Date
           th.phml.right-align.pvs Amount
         tr(ng-repeat="trade in trades.pending.concat(trades.completed) | orderBy:'createdAt':true" trade="trade" buy="buy(amt, trade, 'active-tx')")
+      .flex-column.flex-align-end.mbvl.mtml(translate-namespace="BUY_FEEDBACK")
+        span.type-h5.em-500(translate=".PROMPT")
+        .flex-row.flex-center.mts
+          span.type-h5.security-red(translate=".DISAGREE")
+          span.type-h5.mhm.pointer(uib-rating ng-model="rating" max="5" state-on="'glyphicon-ok-sign'" state-off="'glyphicon-ok-circle'" ng-click="submitFeedback(rating)")
+          span.type-h5.success(translate=".AGREE")

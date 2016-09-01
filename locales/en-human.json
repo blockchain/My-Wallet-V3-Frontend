@@ -995,5 +995,10 @@
     "TITLE": "This feature is coming soon!",
     "BODY": "The world's most popular bitcoin wallet now lets you buy bitcoin securely. Confirm your email address and country to get access as soon as we launch in your area!",
     "BUTTON": "Sign Up"
+  },
+  "BUY_FEEDBACK": {
+    "PROMPT": "I thought the Buy Bitcoin feature was easy to use",
+    "DISAGREE": "Strongly Disagree",
+    "AGREE": "Strongly Agree"
   }
 }
