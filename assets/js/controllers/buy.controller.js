@@ -126,7 +126,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     let methodFee = fiatAmt * ($scope.getMethod().inPercentageFee / 100);
 
     $scope.transaction.methodFee = methodFee.toFixed(2);
-    $scope.transaction.total = fiatAmt + +$scope.transaction.methodFee;
+    $scope.transaction.total = (fiatAmt + +$scope.transaction.methodFee).toFixed(2);
   };
 
   $scope.getQuote = () => {
