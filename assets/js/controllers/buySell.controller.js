@@ -14,6 +14,7 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
   $scope.buy = (...args) => buySell.openBuyView(...args).finally($scope.onCloseModal);
   $scope.limits = {card: {}, bank: {}};
   $scope.state = {buy: true};
+  $scope.rating = 0;
 
   $scope.onCloseModal = () => {
     $scope.kyc = buySell.kycs[0];
@@ -85,6 +86,12 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
     if (!curr) return;
     let success = () => { $scope.transaction.currency = curr; };
     Wallet.changeCurrency(curr).then(success);
+  };
+
+  $scope.submitFeedback = (rating) => {
+    let url = 'https://docs.google.com/a/blockchain.com/forms/d/e/1FAIpQLSeKRzLKn0jsR19vkN6Bw4jK0QW-2pH6Ptb-LbFSaOqxOnbO-Q/viewform?entry.1125242796=' + rating;
+    let otherWindow = window.open(url);
+    otherWindow.opener = null;
   };
 
   $scope.$watch('settings.currency', () => {
