@@ -3,7 +3,10 @@ angular
   .controller('BuySellCtrl', BuySellCtrl);
 
 function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWallet) {
-  $scope.status = { loading: true };
+  $scope.status = buySell.status;
+
+  $scope.status.loading = true;
+
   $scope.currencies = currency.coinifyCurrencies;
   $scope.settings = Wallet.settings;
   $scope.transaction = { fiat: undefined, currency: $scope.settings.currency };

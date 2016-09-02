@@ -18,6 +18,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
   }
 
   const service = {
+    status: buySellMyWallet.status,
     getExchange: () => {
       if (!buySellMyWallet.exchanges) return null; // Absent if 2nd password set
       return buySellMyWallet.exchanges.coinify;
