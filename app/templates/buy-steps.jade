@@ -4,7 +4,7 @@
     span(ng-show="onStep('amount') || !transaction.fiat" translate="Amount")
     span(ng-show="afterStep('amount') && transaction.fiat")
       span(ng-show="beforeStep('trade-formatted')") {{ transaction.fiat | format }} {{ transaction.currency.code }}
-      span(ng-show="afterStep('summary')") {{ transaction.total | format }} {{ transaction.currency.code }}
+      span(ng-show="afterStep('summary')") {{ transaction.total }} {{ transaction.currency.code }}
 
   .flex-justify
     i.ti-arrow-right.type-h4

@@ -918,24 +918,24 @@
   },
   "FAILED_TRANSACTION": {
     "TITLE": "Transaction Failed",
-    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt}})</b> failed. There was an iSignthis system error. Please contact iSignthis at customersupport@isignthis.com"
+    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> failed. There was an iSignthis system error. Please contact iSignthis at customersupport@isignthis.com"
   },
   "TRANSACTION_ERROR": {
     "TITLE": "Transaction Error",
-    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt}})</b> has been canceled. Click 'Try Again' to buy Bitcoin."
+    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> has been canceled. Click 'Try Again' to buy Bitcoin."
   },
   "CLICK_TO_CANCEL": "Cancel trade",
   "TX_PENDING": {
     "TITLE": "Order Pending",
-    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt}})</b> is currently being processed."
+    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> is currently being processed."
   },
   "TX_SUCCESS": {
     "TITLE": "Order Purchased",
-    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt}})</b> was successful! Bitcoins were sent to <b>{{::label}}</b>."
+    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> was successful! Bitcoins were sent to <b>{{::label}}</b>."
   },
   "TX_IN_REVIEW": {
     "TITLE": "Transaction in review.",
-    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt}})</b> is currently being processed. Any issues should be resolved shortly. Thank you for your patience."
+    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> is currently being processed. Any issues should be resolved shortly. Thank you for your patience."
   },
   "TX_EXPIRED": {
     "TITLE": "Transaction expired.",

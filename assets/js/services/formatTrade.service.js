@@ -37,7 +37,11 @@ function formatTrade ($filter, MyWallet, $rootScope) {
       tx: tx,
       class: 'state-danger-text',
       namespace: namespace,
-      values: {fiatAmt: trade.inAmount + ' ' + trade.inCurrency, btcAmt: trade.outAmountExpected}
+      values: {
+        curr: trade.inCurrency,
+        fiatAmt: trade.sendAmount,
+        btcAmt: trade.outAmountExpected
+      }
     };
   }
 
@@ -49,7 +53,8 @@ function formatTrade ($filter, MyWallet, $rootScope) {
       class: 'success',
       values: {
         label: getLabel(trade),
-        fiatAmt: trade.inAmount + ' ' + trade.inCurrency,
+        curr: trade.inCurrency,
+        fiatAmt: trade.sendAmount,
         btcAmt: trade.outAmountExpected
       },
       namespace: 'TX_SUCCESS'
@@ -64,7 +69,8 @@ function formatTrade ($filter, MyWallet, $rootScope) {
       class: 'blue',
       values: {
         label: getLabel(trade),
-        fiatAmt: trade.inAmount + ' ' + trade.inCurrency,
+        curr: trade.inCurrency,
+        fiatAmt: trade.sendAmount,
         btcAmt: trade.outAmountExpected
       },
       namespace: 'TX_PENDING'
@@ -79,7 +85,8 @@ function formatTrade ($filter, MyWallet, $rootScope) {
       class: 'blue',
       namespace: 'TX_IN_REVIEW',
       values: {
-        fiatAmt: trade.inAmount + ' ' + trade.inCurrency,
+        curr: trade.inCurrency,
+        fiatAmt: trade.sendAmount,
         btcAmt: trade.outAmountExpected
       }
     };
