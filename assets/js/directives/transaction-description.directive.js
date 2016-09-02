@@ -37,17 +37,12 @@ function transactionDescription ($translate, Wallet, buySell) {
               (tx.txType === 'sent' && tx.fromWatchOnly);
     };
 
-    scope.getTxMethod = (tx) => {
-      let addrs = tx.processedOutputs.map(i => i.address);
-      return addrs.reduce((acc, a) => acc || buySell.getAddressMethod(a), null);
-    };
-
     scope.settings = Wallet.settings;
 
     scope.txDirection = scope.getTxDirection(scope.tx.txType);
     scope.txClass = scope.getTxClass(scope.tx.txType);
     scope.txWatchOnly = scope.getTxWatchOnly(scope.tx);
-    buySell.initialized().finally(() => scope.txMethod = scope.getTxMethod(scope.tx));
+    buySell.initialized().finally(() => scope.txMethod = buySell.getTxMethod(scope.tx.hash));
 
     scope.$watch('tx.confirmations', () => {
       if (scope.tx && scope.tx.confirmations != null) {

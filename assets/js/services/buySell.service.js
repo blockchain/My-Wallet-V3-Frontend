@@ -8,7 +8,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
   let watchableStates = ['completed', 'completed_test'];
   let tradeStateIn = (states) => (t) => states.indexOf(t.state) > -1;
 
-  let receiveAddressMap = {};
+  let txHashes = {};
   let watching = {};
   let initialized = $q.defer();
 
@@ -25,7 +25,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
     },
     trades: { completed: [], pending: [] },
     kycs: [],
-    getAddressMethod: (address) => receiveAddressMap[address] || null,
+    getTxMethod: (hash) => txHashes[hash] || null,
     initialized: () => initialized.promise,
     login: () => initialized.promise.finally(service.fetchProfile),
     init,
@@ -53,7 +53,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
       // Get receive addresses from cached trade history:
       exchange.trades.forEach(t => {
         let type = t.isBuy ? 'buy' : 'sell';
-        receiveAddressMap[t.receiveAddress] = type;
+        if (t.txHash) { txHashes[t.txHash] = type; }
       });
 
       exchange.monitorPayments();
@@ -144,7 +144,10 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
 
   function watchAddress (trade) {
     watching[trade.receiveAddress] = true;
-    trade.watchAddress().then(() => service.openBuyView(trade.inAmount, trade, '', true));
+    trade.watchAddress().then(() => {
+      if (trade.txHash && trade.isBuy) { txHashes[trade.txHash] = 'buy'; }
+      service.openBuyView(trade.inAmount, trade, '', true);
+    });
   }
 
   function fetchProfile () {
