@@ -13,14 +13,17 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     kyc
   };
 
-  let label = MyWallet.wallet.hdwallet.accounts[0].label;
+  let getLabel = (trade) => {
+    let accountIndex = trade.accountIndex;
+    return MyWallet.wallet.hdwallet.accounts[accountIndex].label;
+  };
 
   let addTradeDetails = (tx, trade) => {
     let transaction = {};
     transaction['COINIFY_TRADE'] = '#' + trade.id;
     transaction['ISX_ID'] = trade.iSignThisID;
     transaction['DATE_INITIALIZED'] = $filter('date')(trade.createdAt, 'MM/dd/yyyy @ h:mma');
-    transaction['RECEIVING_WALLET'] = label;
+    transaction['RECEIVING_WALLET'] = getLabel(trade);
     if ($rootScope.buySellDebug) {
       transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
     }
@@ -49,7 +52,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
       tx: tx,
       class: 'success',
       values: {
-        label: label,
+        label: getLabel(trade),
         curr: trade.inCurrency,
         fiatAmt: trade.sendAmount,
         btcAmt: trade.outAmountExpected
@@ -65,7 +68,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
       tx: tx,
       class: 'blue',
       values: {
-        label: label,
+        label: getLabel(trade),
         curr: trade.inCurrency,
         fiatAmt: trade.sendAmount,
         btcAmt: trade.outAmountExpected

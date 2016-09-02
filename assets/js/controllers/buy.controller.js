@@ -11,9 +11,11 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.alerts = [];
   $scope.status = {};
   $scope.trade = trade;
-  $scope.label = MyWallet.wallet.hdwallet.accounts[0].label;
 
   $scope.buySellDebug = $rootScope.buySellDebug;
+
+  let accountIndex = $scope.trade && $scope.trade.accountIndex ? $scope.trade.accountIndex : MyWallet.wallet.hdwallet.defaultAccount.index;
+  $scope.label = MyWallet.wallet.hdwallet.accounts[accountIndex].label;
 
   $scope.method = $scope.trade ? $scope.trade.medium : 'card';
   $scope.methods = {};

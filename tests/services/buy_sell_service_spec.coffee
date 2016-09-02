@@ -22,7 +22,8 @@ describe "buySell service", () ->
         accountInfo:
           countryCodeGuess: {}
         hdwallet:
-          accounts: [{ label: "" }]
+          accounts: [{label: ""}, {label: "2nd account"}]
+          defaultAccount: {index: 0}
 
       buySell = $injector.get("buySell")
       currency = $injector.get("currency")
@@ -31,6 +32,8 @@ describe "buySell service", () ->
 
   makeTrade = (state) ->
     state: state
+    accountIndex: 0
+    inCurrency: 'USD'
     bitcoinReceived: state == "completed"
     watchAddress: -> $q.resolve()
 
