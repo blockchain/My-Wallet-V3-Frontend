@@ -163,7 +163,7 @@ function currency ($q, MyBlockchainApi) {
       amount = amount.toFixed(decimalPlaces);
       amount = amount.replace(/\.?0+$/, '');
     } else {
-      amount = (Math.floor(amount * 100) / 100).toFixed(decimalPlaces);
+      amount = (Math.round(amount * 100) / 100).toFixed(decimalPlaces);
     }
     return commaSeparate(amount) + code;
   }
