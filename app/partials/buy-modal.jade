@@ -14,7 +14,7 @@
           span.type-h5.em-400(ng-show="trade" ng-class="{italic: expiredQuote, 'tilda-before': expiredQuote}") {{ expiredQuote ? btcExpected : trade.outAmountExpected }} BTC
           quote-countdown(quote="quote" trade-created-at="trade.createdAt" expired-quote="expiredQuote" ng-class="{'fade': hideQuote() }")
           p.security-red.pointer(ng-show="buySellDebug && quote.id")
-            i.ti-search.mrm.right-align(ng-click="expireQuote()")  QA: Now
+            i.ti-search.mrm.right-align(ng-click="quote.expire()")  QA: Now
       buy-steps(transaction="transaction"
                 on-step="onStep"
                 get-method="getMethod"

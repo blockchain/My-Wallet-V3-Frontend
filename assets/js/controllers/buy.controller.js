@@ -367,11 +367,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     }
   });
 
-  // QA tool:
-  $scope.expireQuote = () => {
-    $scope.quote.expiresAt = new Date(new Date().getTime() + 3 * 1000);
-  };
-
   $scope.initBuy = () => {
     $uibModalInstance.dismiss('');
     $timeout(() => buySell.openBuyView());
