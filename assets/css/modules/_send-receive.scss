@@ -1,6 +1,9 @@
 // SEND & RECEIVE & SIGN MSG
 
 #send, #receive, #sign-msg {
+  .inprv {
+    bottom: -12px;
+  }
   .divider {
     margin: 0px auto;
   }
