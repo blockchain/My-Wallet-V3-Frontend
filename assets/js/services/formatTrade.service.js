@@ -15,7 +15,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
 
   let getLabel = (trade) => {
     let accountIndex = trade.accountIndex;
-    return MyWallet.wallet.hdwallet.accounts[accountIndex].label;
+    return accountIndex ? MyWallet.wallet.hdwallet.accounts[accountIndex].label : '';
   };
 
   let addTradeDetails = (tx, trade) => {
