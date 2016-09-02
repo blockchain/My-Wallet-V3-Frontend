@@ -332,7 +332,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
     let index = account.receiveIndex;
     let address = wallet.getReceiveAddress(account.index, index);
     let label = $translate.instant('DEFAULT_NEW_ADDRESS_LABEL');
-    return $q.resolve(account.setLabelForReceivingAddress(index, label, 10))
+    return $q.resolve(account.setLabelForReceivingAddress(index, label, 15))
       .then(() => ({ index, address, label }));
   };
 
@@ -433,7 +433,7 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
 
   wallet.changeHDAddressLabel = (accountIdx, index, label, successCallback, errorCallback) => {
     let account = wallet.accounts()[parseInt(accountIdx, 10)];
-    $q.resolve(account.setLabelForReceivingAddress(index, label, 10))
+    $q.resolve(account.setLabelForReceivingAddress(index, label, 15))
       .then(successCallback).catch(errorCallback);
   };
 
