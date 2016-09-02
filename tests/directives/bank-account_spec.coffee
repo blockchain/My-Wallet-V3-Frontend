@@ -10,6 +10,7 @@ describe "bankAccount", ->
     scope = $rootScope.$new()
     scope.transaction = {
       step: 'pending',
+      accountIndex: 0,
       bankAccount: {
         'holderName': 'phil'
         'holderAddress': {
