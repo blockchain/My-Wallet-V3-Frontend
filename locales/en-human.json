@@ -1000,5 +1000,7 @@
     "PROMPT": "I thought the Buy Bitcoin feature was easy to use",
     "DISAGREE": "Strongly Disagree",
     "AGREE": "Strongly Agree"
-  }
+  },
+  "SPEND_IMPORTED_ADDRESS": "Spend",
+  "ACCEPT_TOS": "I have read and agree to the <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Terms of Service</a>"
 }

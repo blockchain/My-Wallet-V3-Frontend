@@ -75,6 +75,13 @@
         span.help-block 
           div(ng-show="recoveryForm.confirmation.$touched")
             p(ng-show="recoveryForm.confirmation.$error.isValid" translate="NO_MATCH")
+    .flex-center.flex-end.mtm.mbl
+      input#agreement_accept.pull-right(
+        name="agreement"
+        type="checkbox"
+        ng-disabled="browser.disabled"
+        required)
+      label.em-300.mbn.mls.right-align(translate="ACCEPT_TOS")
     .flex-center.flex-end.mvl
       button.button-muted.mrm(
         type="button"
