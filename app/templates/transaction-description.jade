@@ -2,7 +2,7 @@
   .flex-start.flex-between
     div.mrl.width-20
       span.timestamp.type-sm.basic-grey
-        date {{:: tx.time * 1000 | date:'MMMM d yyyy @ hh:mm a' }}
+        date {{:: tx.time * 1000 | date:'MMMM d ' + year + ' @ hh:mm a' }}
       .flex-center.lh1.pointer(ng-click="tx.toggled = !tx.toggled")
         span.action.type-lbl.em-500.prm(
           ng-class=":: txClass"

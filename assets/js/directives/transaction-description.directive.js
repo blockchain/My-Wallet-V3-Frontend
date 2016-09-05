@@ -20,6 +20,10 @@ function transactionDescription ($translate, Wallet, buySell) {
   function link (scope, elem, attrs) {
     scope.exchange = 'Coinify';
 
+    let currentYear = new Date().getFullYear();
+    let isCurrentYear = currentYear === new Date(scope.tx.time * 1000).getFullYear();
+    scope.year = isCurrentYear ? '' : 'yyyy';
+
     scope.getTxDirection = (txType) => {
       if (txType === 'sent') return 'SENT';
       if (txType === 'received') return 'RECEIVED_BITCOIN_FROM';

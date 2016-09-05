@@ -46,6 +46,11 @@ describe "Transaction Description Directive", ->
     $rootScope.$digest()
     isoScope = element.isolateScope()
 
+  it "should set the year to 'yyyy' if tx year is different than current year", ->
+    isoScope.tx.time = 1373101120065 #July 6 2013
+    $rootScope.$digest()
+    expect(isoScope.year).toBe('yyyy')
+
   describe "getTxDirection", ->
 
     it "should have correct translation when sent", ->
