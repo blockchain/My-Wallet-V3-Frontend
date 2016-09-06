@@ -70,7 +70,7 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Alerts, Sec
     windowClass: 'bc-modal auto'
   });
 
-  $scope.subscribe = () => {
+  $scope.signupForBuyAccess = () => {
     $uibModal.open({
       templateUrl: 'partials/subscribe-modal.jade',
       controller: 'SubscribeCtrl',

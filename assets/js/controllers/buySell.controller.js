@@ -88,11 +88,7 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
     Wallet.changeCurrency(curr).then(success);
   };
 
-  $scope.submitFeedback = (rating) => {
-    let url = 'https://docs.google.com/a/blockchain.com/forms/d/e/1FAIpQLSeKRzLKn0jsR19vkN6Bw4jK0QW-2pH6Ptb-LbFSaOqxOnbO-Q/viewform?entry.1125242796=' + rating;
-    let otherWindow = window.open(url);
-    otherWindow.opener = null;
-  };
+  $scope.submitFeedback = (rating) => buySell.submitFeedback(rating);
 
   $scope.$watch('settings.currency', () => {
     $scope.transaction.currency = buySell.getCurrency();
