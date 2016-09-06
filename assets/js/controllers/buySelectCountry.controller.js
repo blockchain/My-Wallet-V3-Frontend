@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySelectCountryCtrl', BuySelectCountryCtrl);
 
-function BuySelectCountryCtrl ($scope, country, MyWallet) {
+function BuySelectCountryCtrl ($scope, country, MyWallet, buySell) {
   $scope.countries = country;
 
   let blacklist = [{'Name': 'Algeria', 'Code': 'DZ'},
@@ -25,12 +25,9 @@ function BuySelectCountryCtrl ($scope, country, MyWallet) {
     if ($scope.$parent.isCountryBlacklisted) $scope.isDisabled();
   });
 
-  $scope.signupForBuyAccess = () => {
+  $scope.signupForAccess = () => {
     let email = $scope.$parent.fields.email;
-    let countryName = $scope.countries.countryCodes.filter(c => c['Code'] === $scope.fields.countryCode)[0]['Name'];
-    let url = 'https://docs.google.com/forms/d/e/1FAIpQLSeYiTe7YsqEIvaQ-P1NScFLCSPlxRh24zv06FFpNcxY_Hs0Ow/viewform?entry.1192956638=' + email + '&entry.644018680=' + countryName;
-    let otherWindow = window.open(url);
-
-    otherWindow.opener = null;
+    let country = $scope.countries.countryCodes.filter(c => c['Code'] === $scope.fields.countryCode)[0]['Name'];
+    buySell.signupForAccess(email, country);
   };
 }
