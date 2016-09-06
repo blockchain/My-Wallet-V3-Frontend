@@ -83,7 +83,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
   function calculateMax (rate, method) {
     let currentLimit = service.getExchange().profile.currentLimits[method].in;
     let userLimits = service.getExchange().profile.level.limits;
-    let dailyLimit = userLimits[method].in.daily;
+    let dailyLimit = userLimits[method].inDaily;
 
     let limits = {};
     limits.max = (Math.round(((rate * dailyLimit) / 100)) * 100);
