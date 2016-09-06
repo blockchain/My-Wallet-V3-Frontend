@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buySell', buySell);
 
-function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell) {
+function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell) {
   let pendingStates = ['awaiting_transfer_in', 'processing', 'reviewing'];
   let completedStates = ['expired', 'rejected', 'cancelled', 'completed', 'completed_test'];
   let watchableStates = ['completed', 'completed_test'];
@@ -18,7 +18,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
   }
 
   const service = {
-    status: buySellMyWallet.status,
+    getStatus: () => buySellMyWallet.status,
     getExchange: () => {
       if (!buySellMyWallet.exchanges) return null; // Absent if 2nd password set
       return buySellMyWallet.exchanges.coinify;
@@ -46,24 +46,16 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
     resolveState
   };
 
-  init().then(initialized.resolve, initialized.reject);
+  let unwatch = $rootScope.$watch(service.getExchange, (exchange) => {
+    if (exchange) init(exchange).then(unwatch).then(initialized.resolve);
+  });
+
   return service;
 
-  function init () {
-    let exchange = service.getExchange();
-    if (exchange && exchange.user) {
-      // Get receive addresses from cached trade history:
-      exchange.trades.forEach(t => {
-        let type = t.isBuy ? 'buy' : 'sell';
-        if (t.txHash) { txHashes[t.txHash] = type; }
-      });
-
-      exchange.monitorPayments();
-
-      return $q.resolve();
-    } else {
-      return $q.reject('USER_UNKNOWN');
-    }
+  function init (exchange) {
+    if (exchange.trades) setTrades(exchange.trades);
+    exchange.monitorPayments();
+    return $q.resolve();
   }
 
   function getQuote (amt, curr) {
@@ -126,22 +118,27 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
   }
 
   function getTrades () {
-    const success = (trades) => {
-      service.trades.pending = trades.filter(tradeStateIn(pendingStates));
-      service.trades.completed = trades.filter(tradeStateIn(completedStates));
+    return $q.resolve(service.getExchange().getTrades()).then(setTrades);
+  }
 
-      service.trades.completed
-        .filter(t => (
-          tradeStateIn(watchableStates)(t) &&
-          !t.bitcoinReceived &&
-          !watching[t.receiveAddress]
-        ))
-        .forEach(service.watchAddress);
+  function setTrades (trades) {
+    service.trades.pending = trades.filter(tradeStateIn(pendingStates));
+    service.trades.completed = trades.filter(tradeStateIn(completedStates));
 
-      return service.trades;
-    };
+    service.trades.completed
+      .filter(t => (
+        tradeStateIn(watchableStates)(t) &&
+        !t.bitcoinReceived &&
+        !watching[t.receiveAddress]
+      ))
+      .forEach(service.watchAddress);
 
-    return $q.resolve(service.getExchange().getTrades()).then(success);
+    service.trades.completed.forEach(t => {
+      let type = t.isBuy ? 'buy' : 'sell';
+      if (t.txHash) { txHashes[t.txHash] = type; }
+    });
+
+    return service.trades;
   }
 
   function watchAddress (trade) {
