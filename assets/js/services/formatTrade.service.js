@@ -40,7 +40,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
       values: {
         curr: trade.inCurrency,
         fiatAmt: trade.sendAmount,
-        btcAmt: trade.outAmountExpected
+        btcAmt: trade.outAmount || trade.outAmountExpected
       }
     };
   }
@@ -55,7 +55,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
         label: getLabel(trade),
         curr: trade.inCurrency,
         fiatAmt: trade.sendAmount,
-        btcAmt: trade.outAmountExpected
+        btcAmt: trade.outAmount || trade.outAmountExpected
       },
       namespace: 'TX_SUCCESS'
     };
@@ -71,7 +71,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
         label: getLabel(trade),
         curr: trade.inCurrency,
         fiatAmt: trade.sendAmount,
-        btcAmt: trade.outAmountExpected
+        btcAmt: trade.outAmount || trade.outAmountExpected
       },
       namespace: 'TX_PENDING'
     };
@@ -87,7 +87,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
       values: {
         curr: trade.inCurrency,
         fiatAmt: trade.sendAmount,
-        btcAmt: trade.outAmountExpected
+        btcAmt: trade.outAmount || trade.outAmountExpected
       }
     };
   }
