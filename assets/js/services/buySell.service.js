@@ -146,7 +146,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
     watching[trade.receiveAddress] = true;
     trade.watchAddress().then(() => {
       if (trade.txHash && trade.isBuy) { txHashes[trade.txHash] = 'buy'; }
-      service.openBuyView(trade.inAmount, trade, '', true);
+      service.openBuyView(trade.inAmount / 100, trade, '', true);
     });
   }
 
