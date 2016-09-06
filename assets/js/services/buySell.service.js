@@ -65,7 +65,7 @@ function buySell ($timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Al
   }
 
   function getQuote (amt, curr) {
-    return $q.resolve(service.getExchange().getBuyQuote(amt, curr));
+    return $q.resolve(service.getExchange().getBuyQuote(Math.trunc(amt * 100), curr));
   }
 
   function getKYCs () {
