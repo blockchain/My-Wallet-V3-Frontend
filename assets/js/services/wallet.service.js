@@ -154,10 +154,8 @@ function Wallet ($http, $window, $timeout, $location, Alerts, MyWallet, MyBlockc
         }
         wallet.status.isLoggedIn = true;
         $rootScope.$safeApply();
+        successCallback && successCallback(result.guid);
       });
-      if (successCallback != null) {
-        successCallback(result.guid);
-      }
       $rootScope.$safeApply();
     };
 

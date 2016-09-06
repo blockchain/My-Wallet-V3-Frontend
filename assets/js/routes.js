@@ -183,13 +183,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           controller: 'ResetTwoFactorTokenCtrl'
         }
       }
-    })
-    .state('signup.finish', {
-      url: '/signup/finish',
-      views: commonViews
-    })
-    .state('signup.finish.show', {
-      views: transactionsViews
     });
 
   $stateProvider
