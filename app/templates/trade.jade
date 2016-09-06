@@ -6,8 +6,8 @@ tr.border
     span.state.italic.mrl(ng-show="pending") {{ trade.state | translate }}
     
     span.type-sm(ng-show="trade.state === 'cancelled'") You canceled this order
-    span.type-sm.blue.underline.pointer(ng-click="buy({amt: trade.inAmount, trade: trade});" ng-show="pending") Finish payment
-    span.type-sm.blue.underline.pointer(ng-click="buy({amt: trade.inAmount, trade: trade});" ng-show="completed && trade.state !== 'cancelled'") View details
+    span.type-sm.blue.underline.pointer(ng-click="triggerBuy()" ng-show="pending") Finish payment
+    span.type-sm.blue.underline.pointer(ng-click="triggerBuy()" ng-show="completed && trade.state !== 'cancelled'") View details
   td.type-lbl.paml
     span.mrm {{ trade.createdAt | date:'d MMMM yyyy, HH:mm' }}
   td.type-lbl.right-align.paml(ng-show="status.gettingQuote")

@@ -9,7 +9,7 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
 
   $scope.currencies = currency.coinifyCurrencies;
   $scope.settings = Wallet.settings;
-  $scope.transaction = { fiat: undefined, currency: $scope.settings.currency };
+  $scope.transaction = { fiat: undefined, currency: buySell.getCurrency() };
   $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
   $scope.buy = (...args) => buySell.openBuyView(...args).finally($scope.onCloseModal);
   $scope.limits = {card: {}, bank: {}};
@@ -83,9 +83,9 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
   };
 
   $scope.changeCurrency = (curr) => {
-    if (!curr) return;
-    let success = () => { $scope.transaction.currency = curr; };
-    Wallet.changeCurrency(curr).then(success);
+    if (curr && $scope.currencies.some(c => c.code === curr.code)) {
+      $scope.transaction.currency = curr;
+    }
   };
 
   $scope.submitFeedback = (rating) => buySell.submitFeedback(rating);

@@ -145,7 +145,7 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
     watching[trade.receiveAddress] = true;
     trade.watchAddress().then(() => {
       if (trade.txHash && trade.isBuy) { txHashes[trade.txHash] = 'buy'; }
-      service.openBuyView(trade.inAmount, trade, '', true);
+      service.openBuyView({ fiat: trade.inAmount }, trade, '', true);
     });
   }
 
@@ -169,7 +169,7 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
     return $q.resolve(service.getExchange().fetchProfile()).then(success, error);
   }
 
-  function openBuyView (amt, trade, active, bitcoinReceived) {
+  function openBuyView (transaction, trade, active, bitcoinReceived) {
     return $uibModal.open({
       templateUrl: 'partials/buy-modal.jade',
       windowClass: 'bc-modal auto buy ' + active,
@@ -179,7 +179,7 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
       resolve: {
         bitcoinReceived: () => bitcoinReceived || undefined,
         trade: () => trade || null,
-        fiat: () => amt
+        transaction: () => transaction || {}
       }
     }).result;
   }
@@ -189,7 +189,9 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
     let coinifyCurrencies = currency.coinifyCurrencies;
     let walletCurrency = Wallet.settings.currency;
     let isCoinifyCompatible = coinifyCurrencies.some(c => c.code === walletCurrency.code);
-    return isCoinifyCompatible ? walletCurrency : coinifyCurrencies[0];
+    let exchange = service.getExchange();
+    let coinifyCode = exchange && exchange.profile ? exchange.profile.defaultCurrency : 'EUR';
+    return isCoinifyCompatible ? walletCurrency : coinifyCurrencies.filter(c => c.code === coinifyCode)[0];
   }
 
   function signupForAccess (email, country) {
