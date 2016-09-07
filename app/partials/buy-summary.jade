@@ -11,10 +11,10 @@
     span.type-sm.blue.underline.pointer(ng-click="cancel()" ng-show="editAmount") Cancel
   .border.pam(ng-class="{'bg-light-grey': editAmount}")
     .flex-row.flex-between.pam.border-bottom-light
-      span(translate="BTC Order:")
+      span(translate="BTC:")
       span.success(uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ transaction.btc }}
     .flex-row.flex-between.pam.pos-rel
-      span(translate="AMOUNT")
+      span(translate="AMOUNT:")
       span(ng-hide="editAmount") {{ transaction.fiat | format }} {{ transaction.currency.code }}
       form.input-group.width-60.flex-row.flex-center.amount-input(
         name="tempFiatForm"

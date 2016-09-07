@@ -282,8 +282,8 @@
   }
 }
 
-td {
-  .quote-amount {
-    min-width: 190px;
+#buysell {
+  table th:last-child {
+    padding-right: 36px;
   }
 }

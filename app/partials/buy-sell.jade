@@ -28,7 +28,8 @@
         tr.border.bg-light-blue
           th.phml.pvs Status
           th.phml.pvs Date
-          th.phml.right-align.pvs Amount
+          th.phml.right-align.pvs BTC
+          th.phml.right-align.pvs Total
         tr(ng-repeat="trade in trades.pending.concat(trades.completed) | orderBy:'createdAt':true" trade="trade" buy="buy(amt, trade, 'active-tx')")
       .flex-column.flex-align-end.mbvl.mtml(translate-namespace="BUY_FEEDBACK")
         span.type-h5.em-500(translate=".PROMPT")
