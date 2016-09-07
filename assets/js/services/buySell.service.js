@@ -170,7 +170,7 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
   }
 
   function openBuyView (amt, trade, active, bitcoinReceived) {
-    const open = () => $q.resolve($uibModal.open({
+    return $uibModal.open({
       templateUrl: 'partials/buy-modal.jade',
       windowClass: 'bc-modal auto buy ' + active,
       controller: 'BuyCtrl',
@@ -181,16 +181,7 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
         trade: () => trade || null,
         fiat: () => amt
       }
-    }).result);
-
-    try {
-      let exchange = service.getExchange();
-      if (service.trades.pending.length || service.trades.completed.length) return open();
-      else if (exchange.user) return service.getTrades().then(open);
-      else return open();
-    } catch (e) {
-      return open();
-    }
+    }).result;
   }
 
   function getCurrency (trade) {
