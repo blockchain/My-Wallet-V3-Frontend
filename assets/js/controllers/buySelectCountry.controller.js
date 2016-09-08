@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySelectCountryCtrl', BuySelectCountryCtrl);
 
-function BuySelectCountryCtrl ($scope, country, MyWallet) {
+function BuySelectCountryCtrl ($scope, country, MyWallet, buySell) {
   $scope.countries = country;
 
   let blacklist = [{'Name': 'Algeria', 'Code': 'DZ'},
@@ -24,4 +24,10 @@ function BuySelectCountryCtrl ($scope, country, MyWallet) {
     $scope.$parent.isCountryBlacklisted = blacklist.some((country) => country['Code'] === newVal);
     if ($scope.$parent.isCountryBlacklisted) $scope.isDisabled();
   });
+
+  $scope.signupForAccess = () => {
+    let email = $scope.$parent.fields.email;
+    let country = $scope.countries.countryCodes.filter(c => c['Code'] === $scope.fields.countryCode)[0]['Name'];
+    buySell.signupForAccess(email, country);
+  };
 }
