@@ -7,8 +7,10 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Alerts, Sec
   $scope.total = Wallet.total;
   $scope.settings = Wallet.settings;
   $scope.security = SecurityCenter.security;
-  $scope.isUserInvited = MyWallet.wallet.accountInfo.invited;
-  $scope.isUserWhitelisted = ['GB', 'DK'].indexOf(MyWallet.wallet.accountInfo.countryCodeGuess) > -1;
+
+  let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
+  $scope.isUserInvited = accountInfo && accountInfo.invited;
+  $scope.isUserWhitelisted = accountInfo && ['GB', 'DK'].indexOf(accountInfo.countryCodeGuess) > -1;
   // debug uninvited user and whitelisted
   // $scope.isUserInvited = false;
   // $scope.isUserWhitelisted = true;
