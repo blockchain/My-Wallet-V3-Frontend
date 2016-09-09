@@ -53,7 +53,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.goTo('amount');
 
   $scope.formattedTrade = undefined;
-  $scope.bitcoinReceived = bitcoinReceived;
+  $scope.bitcoinReceived = bitcoinReceived || $scope.trade && $scope.trade.bitcoinReceived;
 
   $scope.fields = { email: $scope.user.email, countryCode: $scope.exchange.profile.country };
   $scope.transaction = {fiat: fiat || 0, btc: 0, fee: 0, total: 0, currency: buySell.getCurrency($scope.trade)};

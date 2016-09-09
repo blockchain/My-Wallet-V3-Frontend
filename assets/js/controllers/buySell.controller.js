@@ -3,7 +3,7 @@ angular
   .controller('BuySellCtrl', BuySellCtrl);
 
 function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWallet) {
-  $scope.status = buySell.status;
+  $scope.status = buySell.getStatus();
 
   $scope.status.loading = true;
 
