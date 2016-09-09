@@ -6,10 +6,20 @@ formatTrade.$inject = ['$filter', 'MyWallet', '$rootScope'];
 
 function formatTrade ($filter, MyWallet, $rootScope) {
   const service = {
+    // format for possible coinify trade states
+    // awaiting_transfer_in is ignored because trade is not in a formattable state yet
+    reviewing,
+    processing,
+    cancelled,
+    declined,
+    rejected,
+    failed,
+    expired,
+    completed,
+    completed_test,
+
     error,
-    review,
     success,
-    pending,
     kyc
   };
 
@@ -17,6 +27,14 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     let accountIndex = trade.accountIndex;
     return accountIndex ? MyWallet.wallet.hdwallet.accounts[accountIndex].label : '';
   };
+
+  function cancelled (tx, trade) { return service.error(tx, trade); }
+  function declined (tx, trade) { return service.error(tx, trade); }
+  function rejected (tx, trade) { return service.error(tx, trade); }
+  function failed (tx, trade) { return service.error(tx, trade); }
+  function expired (tx, trade) { return service.error(tx, trade); }
+  function completed (tx, trade) { return service.success(tx, trade); }
+  function completed_test (tx, trade) { return service.success(tx, trade); }
 
   let addTradeDetails = (tx, trade) => {
     let transaction = {};
@@ -36,8 +54,9 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     return {
       tx: tx,
       class: 'state-danger-text',
-      namespace: namespace,
+      namespace: 'TX_ERROR_STATE',
       values: {
+        state: trade.state,
         curr: trade.inCurrency,
         fiatAmt: trade.sendAmount / 100,
         btcAmt: (trade.outAmount || trade.outAmountExpected) / 100000000
@@ -47,6 +66,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
 
   function success (tx, trade) {
     tx = addTradeDetails(tx, trade);
+    if (!trade.bitcoinReceived) { service.processing(tx, trade); return; }
 
     return {
       tx: tx,
@@ -61,7 +81,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     };
   }
 
-  function pending (tx, trade) {
+  function processing (tx, trade) {
     tx = addTradeDetails(tx, trade);
 
     return {
@@ -77,7 +97,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     };
   }
 
-  function review (tx, trade) {
+  function reviewing (tx, trade) {
     tx = addTradeDetails(tx, trade);
 
     return {

@@ -6,13 +6,8 @@ function isignthis ($sce) {
   const directive = {
     restrict: 'E',
     scope: {
-      onLoad: '&',
       onResize: '&',
-      onDeclined: '&',
-      onPending: '&',
-      onReview: '&',
-      onExpired: '&',
-      onFailed: '&',
+      onComplete: '=',
       paymentInfo: '=',
       transactionId: '='
     },
@@ -169,33 +164,32 @@ function isignthis ($sce) {
         .route(function (e) {
           console.log('route. e=' + JSON.stringify(e));
 
-          scope.onLoad();
-
           scope.paymentInfo = e.route.match('/otp|/verify-pin|/kyc');
           let id = e.route.split('/result/')[1];
           let tx = {id: id};
 
           scope.onResize({step: e.route.match(/\/(.*)\//)[1]});
 
+          // handle states in between awaiting_transfer_in and completed
           switch (e.state) {
             case 'SUCCESS':
             case 'MANUAL_ACCEPTED':
-              scope.onPending({tx});
+              scope.onComplete(tx, 'processing');
               break;
             case 'MANUAL_REVIEW':
             case 'MANUAL_HOLD':
-              scope.onReview({tx});
+              scope.onComplete(tx, 'reviewing');
               break;
             case 'EXPIRED':
-              scope.onExpired({tx});
+              scope.onComplete(tx, 'expired');
               break;
             case 'DECLINED':
             case 'REJECTED':
             case 'MANUAL_REJECTED':
-              scope.onDeclined({tx});
+              scope.onComplete(tx, 'declined');
               break;
             case 'FAILED':
-              scope.onFailed({tx});
+              scope.onComplete(tx, 'failed');
               break;
           }
         })
