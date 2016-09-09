@@ -174,7 +174,7 @@ describe "BuyCtrl", ->
     it "should switch to trade-formatted step", ->
       scope.transaction.fiat = 1
       scope.exchange.user = {}
-      scope.trade = {}
+      scope.trade = {state: 'pending'}
       scope.nextStep()
       scope.nextStep()
       expect(scope.onStep('trade-formatted')).toEqual(true)
