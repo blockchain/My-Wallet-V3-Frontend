@@ -6,8 +6,8 @@ tr.border
     span.state.italic.mrl(ng-show="pending") {{ trade.state | translate }}
     
     span.type-sm(ng-show="trade.state === 'cancelled'") You canceled this order
-    span.type-sm.blue.underline.pointer(ng-click="buy({amt: trade.inAmount, trade: trade});" ng-show="pending") Finish payment
-    span.type-sm.blue.underline.pointer(ng-click="buy({amt: trade.inAmount, trade: trade});" ng-show="completed && trade.state !== 'cancelled'") View details
+    span.type-sm.blue.underline.pointer(ng-click="buy({amt: trade.inAmount / 100, trade: trade});" ng-show="pending") Finish payment
+    span.type-sm.blue.underline.pointer(ng-click="buy({amt: trade.inAmount / 100, trade: trade});" ng-show="completed && trade.state !== 'cancelled'") View details
   td.type-lbl.paml
     span.mrm {{ trade.createdAt | date:'d MMMM yyyy, HH:mm' }}
   td.type-lbl.right-align.paml(ng-show="status.gettingQuote")
@@ -15,7 +15,7 @@ tr.border
   td.type-lbl.paml.right-align(ng-hide="status.gettingQuote")
     span.display-inline-block.mrm.left-align
       quote-countdown(trade-created-at="trade.createdAt" ng-hide="expiredQuote || !pending" expired-quote="expiredQuote")
-    span.display-inline-block(ng-class="{italic: expiredQuote, 'tilda-before': expiredQuote}") {{ expiredQuote ? btcExpected : trade.outAmount || trade.outAmountExpected }} {{ trade.outCurrency }}
+    span.display-inline-block(ng-class="{italic: expiredQuote, 'tilda-before': expiredQuote}") {{ expiredQuote ? btcExpected / 100000000 : trade.outAmount || trade.outAmountExpected / 100000000 }} {{ trade.outCurrency }}
   td.type-lbl.paml.right-align(ng-hide="status.gettingQuote")
-    span.em-600 {{ trade.sendAmount | format }} {{ trade.inCurrency }}
+    span.em-600 {{ trade.sendAmount / 100 | format }} {{ trade.inCurrency }}
     i.ti-trash.mls.state-danger-text(ng-click="pending && !status.canceling && cancel(trade)" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}" ng-class="{fade: !pending || status.canceling, pointer: pending}")

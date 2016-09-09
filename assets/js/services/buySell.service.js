@@ -59,7 +59,7 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
   }
 
   function getQuote (amt, curr) {
-    return $q.resolve(service.getExchange().getBuyQuote(amt, curr));
+    return $q.resolve(service.getExchange().getBuyQuote(Math.trunc(amt * 100), curr));
   }
 
   function getKYCs () {
@@ -77,7 +77,7 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
   function calculateMax (rate, method) {
     let currentLimit = service.getExchange().profile.currentLimits[method].in;
     let userLimits = service.getExchange().profile.level.limits;
-    let dailyLimit = userLimits[method].in.daily;
+    let dailyLimit = userLimits[method].inDaily;
 
     let limits = {};
     limits.max = (Math.round(((rate * dailyLimit) / 100)) * 100);
@@ -145,7 +145,7 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
     watching[trade.receiveAddress] = true;
     trade.watchAddress().then(() => {
       if (trade.txHash && trade.isBuy) { txHashes[trade.txHash] = 'buy'; }
-      service.openBuyView(trade.inAmount, trade, '', true);
+      service.openBuyView(trade.inAmount / 100, trade, '', true);
     });
   }
 
