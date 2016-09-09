@@ -18,7 +18,7 @@ angular
 
       this.getCardMax = () => {
         let symbol = this.limits.currency && this.limits.currency.symbol;
-        let amt = this.limits.card && this.limits.card.available;
+        let amt = this.limits.card && this.limits.card.max;
         return (symbol || '€') + (amt || '300.00');
       };
     }
