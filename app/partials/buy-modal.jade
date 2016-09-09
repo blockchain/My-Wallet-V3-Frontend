@@ -58,7 +58,7 @@
         span.mrs.type-sm Powered by
         a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
           img(src="img/coinify-logo.svg")
-          span.pos-abs.fade.height-100.width-100(ng-show="onStep('summary')" uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" translate="placeholder" tooltip-append-to-body="true")
+          span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
   //- needs directive
   .modal-footer.flex-end.flex-row
     button.button-muted(ng-show="afterStep('amount') && beforeStep('trade-formatted')" ng-click="prevStep()") Go Back
