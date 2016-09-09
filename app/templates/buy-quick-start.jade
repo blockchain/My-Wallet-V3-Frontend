@@ -29,7 +29,7 @@
                ng-click="changeCurrency({currency: currency});"
                ng-class="{active: isCurrencySelected(currency)}")
               a(ng-click="$event.preventDefault()") {{ currency.code }}
-      .success.type-h4.em-300(ng-show="transaction.fiat" ng-class="{'o-3': status.waiting}") {{quote.quoteAmount}} {{quote.quoteCurrency}}
+      .success.type-h4.em-300(ng-show="transaction.fiat" ng-class="{'o-3': status.waiting}") {{quote.quoteAmount / 100000000}} {{quote.quoteCurrency}}
     .mts.pos-rel
       span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="BUY_AMT_LOW")
       span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max" translate="BUY_AMT_HIGH")

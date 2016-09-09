@@ -83,6 +83,8 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
       };
     };
 
+    // TODO: use quote.paymentMethods to populate the list of methods. Fees
+    //       have already been calculated.
     return $scope.exchange.getPaymentMethods($scope.transaction.currency.code, 'BTC')
       .then(success).then(() => $scope.getQuote());
   };
@@ -115,11 +117,8 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.updateAmounts = () => {
     if (!$scope.trade && (!$scope.quote || !$scope.exchange.user)) return;
 
-    let fiatAmt = $scope.transaction.fiat;
-    let methodFee = fiatAmt * ($scope.getMethod().inPercentageFee / 100);
-
-    $scope.transaction.methodFee = methodFee.toFixed(2);
-    $scope.transaction.total = (fiatAmt + +$scope.transaction.methodFee).toFixed(2);
+    $scope.transaction.methodFee = ($scope.quote.paymentMethods[$scope.method].fee / 100).toFixed(2);
+    $scope.transaction.total = ($scope.quote.paymentMethods[$scope.method].total / 100).toFixed(2);
   };
 
   $scope.getQuote = () => {
@@ -130,17 +129,26 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     $scope.status.gettingQuote = true;
     if (!$scope.transaction.fiat) { $scope.status = {}; return; }
 
-    const success = (quote) => {
-      $scope.status = {};
+    let quote = $scope.exchange.getBuyQuote(Math.trunc($scope.transaction.fiat * 100), $scope.transaction.currency.code);
+
+    let getPaymentMethods = (quote) => {
+      return quote.getPaymentMethods();
+    };
+
+    const setQuote = (quote) => {
       $scope.quote = quote;
+      return quote;
+    };
+
+    const success = () => {
+      $scope.status = {};
       $scope.expiredQuote = false;
       $scope.updateAmounts();
       Alerts.clear($scope.alerts);
-      $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount, currency.bitCurrencies[0]);
+      $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount / 100000000, currency.bitCurrencies[0]);
     };
 
-    let quote = $scope.exchange.getBuyQuote($scope.transaction.fiat, $scope.transaction.currency.code);
-    return $q.resolve(quote).then(success, $scope.standardError);
+    return quote.then(setQuote).then(getPaymentMethods).then(success, $scope.standardError);
   };
 
   $scope.toggleEmail = () => $scope.editEmail = !$scope.editEmail;
@@ -241,7 +249,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
       return buySell.getOpenKYC().then(success, $scope.standardError);
     }
 
-    $scope.exchange.buy($scope.transaction.fiat, $scope.transaction.currency.code, $scope.getMethod().inMedium)
+    $scope.exchange.buy($scope.transaction.fiat * 100, $scope.transaction.currency.code, $scope.getMethod().inMedium)
                    .then(success, $scope.standardError)
                    .then($scope.watchAddress);
   };
