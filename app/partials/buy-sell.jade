@@ -14,7 +14,7 @@
                         currency-symbol="currencySymbol"
                         change-currency="changeCurrency(currency)"
                         limits="limits"
-                        buy="buy(amt)")
+                        buy="buy({ fiat: amt, currency: transaction.currency })")
       .flex-column.width-50.mlvl.mtml
         div(ng-hide="trades.pending.length || trades.completed.length || (kyc && kyc.state !== 'completed')")
           .font-2.blue.em-300.lh1(translate="Simple. Secure. Seamless.")
@@ -30,7 +30,7 @@
           th.phml.pvs Date
           th.phml.right-align.pvs BTC
           th.phml.right-align.pvs Total
-        tr(ng-repeat="trade in trades.pending.concat(trades.completed) | orderBy:'createdAt':true" trade="trade" buy="buy(amt, trade, 'active-tx')")
+        tr(ng-repeat="trade in trades.pending.concat(trades.completed) | orderBy:'createdAt':true" trade="trade" buy="buy")
       .flex-column.flex-align-end.mbvl.mtml(translate-namespace="BUY_FEEDBACK")
         span.type-h5.em-500(translate=".PROMPT")
         .flex-row.flex-center.mts

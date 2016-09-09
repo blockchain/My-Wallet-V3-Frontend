@@ -37,7 +37,7 @@ describe "BuyCtrl", ->
 
       MyWallet.wallet = {}
       MyWallet.wallet.accountInfo = {}
-      MyWallet.wallet.hdwallet = 
+      MyWallet.wallet.hdwallet =
         accounts: [{ label: 'My Bitcoin Wallet'}, {label: 'New Wallet'}]
         defaultAccount: {index: 0}
 
@@ -49,7 +49,7 @@ describe "BuyCtrl", ->
     $controller "BuyCtrl",
       $scope: scope,
       $uibModalInstance: params.modalInstance ? { close: (->) dismiss: (->) }
-      fiat: params.fiat ? 0
+      transaction: params.transaction ? {}
       trade: params.trade ? false
       bitcoinReceived: params.bitcoinReceived ? false
       kyc: params.kyc ? false
@@ -218,7 +218,7 @@ describe "BuyCtrl", ->
       scope.step = 2
       scope.prevStep()
       expect(scope.step).toBe(1)
-    
+
     it "should go to a specific step", ->
       scope.goTo('summary')
       scope.exchange.user = true

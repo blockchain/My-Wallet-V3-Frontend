@@ -10,7 +10,7 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
     replace: true,
     scope: {
       trade: '=',
-      buy: '&'
+      buy: '='
     },
     templateUrl: 'templates/trade.jade',
     link: link
@@ -43,6 +43,11 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
       }).then(() => trade.cancel(), () => {})
         .catch((e) => { Alerts.displayError(e); })
         .finally(() => scope.status.canceling = false);
+    };
+
+    scope.triggerBuy = () => {
+      let t = scope.trade;
+      scope.buy({ fiat: t.inAmount / 100, currency: t.inCurrency }, t, 'active-tx');
     };
 
     let updateBTCExpected = (quote) => {

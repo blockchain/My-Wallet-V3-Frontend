@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuyCtrl', BuyCtrl);
 
-function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, fiat, trade, $timeout, $interval, bitcoinReceived, formatTrade, buySell, $rootScope) {
+function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, transaction, trade, $timeout, $interval, bitcoinReceived, formatTrade, buySell, $rootScope) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -56,7 +56,8 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.bitcoinReceived = bitcoinReceived || $scope.trade && $scope.trade.bitcoinReceived;
 
   $scope.fields = { email: $scope.user.email, countryCode: $scope.exchange.profile.country };
-  $scope.transaction = {fiat: fiat || 0, btc: 0, fee: 0, total: 0, currency: buySell.getCurrency($scope.trade)};
+  let txTemplate = { fiat: 0, btc: 0, fee: 0, total: 0, currency: buySell.getCurrency($scope.trade) };
+  $scope.transaction = Object.assign({}, txTemplate, transaction);
   $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
 
   $timeout(() => !$scope.isKYC && $scope.getPaymentMethods());
@@ -91,19 +92,9 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.changeCurrency = (curr) => {
     if (!curr) curr = buySell.getCurrency();
     if ($scope.trade && !$scope.isKYC) curr = {code: $scope.trade.inCurrency};
-
-    $scope.changeCurrencySymbol(curr);
-
-    const success = () => {
-      $scope.transaction.currency = curr;
-    };
-
-    return Wallet.changeCurrency(curr).then(success)
-                                      .then($scope.getPaymentMethods);
-  };
-
-  $scope.changeCurrencySymbol = (curr) => {
+    $scope.transaction.currency = curr;
     $scope.currencySymbol = currency.conversions[curr.code];
+    $scope.getPaymentMethods();
   };
 
   $scope.standardError = (err) => {
