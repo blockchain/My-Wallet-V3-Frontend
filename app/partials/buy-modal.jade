@@ -44,9 +44,9 @@
       include ./buy-select-payment-method
     div.width-80(ng-show="onStep('summary')" ng-controller="BuySummaryCtrl")
       include ./buy-summary
-    div(ng-show="onStep('trade-formatted', 'trade-complete')")
+    div(ng-if="onStep('trade-formatted', 'trade-complete')")
       div.iframe(ng-if="!trade.medium || trade.medium === 'card'")
-        isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-declined="declinedTx(tx)" on-pending="pendingTx(tx)" on-review="reviewTx(tx)" on-expired="expiredTx(tx)" on-failed="failedTx(tx)" payment-info="paymentInfo" on-resize="onResize(step)")
+        isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="formatTrade" payment-info="paymentInfo" on-resize="onResize(step)")
       div.width-80.margin-0-auto(ng-if="trade.medium === 'bank'")
         bank-account(transaction="trade" on-load="loadPayment()" pending-tx="pendingTx")
     div.width-80(ng-if="onStep('pending')")

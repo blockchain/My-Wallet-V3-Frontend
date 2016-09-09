@@ -155,7 +155,7 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
     watching[trade.receiveAddress] = true;
     trade.watchAddress().then(() => {
       if (trade.txHash && trade.isBuy) { txHashes[trade.txHash] = 'buy'; }
-      service.openBuyView({ fiat: trade.inAmount / 100 }, trade, '', true);
+      service.openBuyView({ fiat: trade.inAmount / 100 }, trade, true);
     });
   }
 
@@ -179,10 +179,10 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
     return $q.resolve(service.getExchange().fetchProfile()).then(success, error);
   }
 
-  function openBuyView (transaction, trade, active, bitcoinReceived) {
+  function openBuyView (transaction, trade, bitcoinReceived) {
     return $uibModal.open({
       templateUrl: 'partials/buy-modal.jade',
-      windowClass: 'bc-modal auto buy ' + active,
+      windowClass: 'bc-modal auto buy',
       controller: 'BuyCtrl',
       backdrop: 'static',
       keyboard: false,
@@ -220,15 +220,16 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
     // maps a coinify state to one of: pending, rejected, expired, success
     return ({
       'pending': 'pending',
+      'awaiting_transfer_in': 'pending',
+      'failed': 'rejected',
       'rejected': 'rejected',
       'declined': 'rejected',
-      'failed': 'rejected',
+      'manual_rejected': 'rejected',
       'expired': 'expired',
       'completed': 'success',
       'completed_test': 'success',
-      'manual_rejected': 'rejected',
-      'manual_hold': 'pending',
-      'manual_review': 'pending'
+      'manual_hold': 'review',
+      'manual_review': 'review'
     })[state.toLowerCase()];
   }
 }

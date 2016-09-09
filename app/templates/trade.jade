@@ -5,7 +5,7 @@ tr.border
     span.state.italic.mrl(ng-show="completed && success && !trade.bitcoinReceived") Pending
     span.state.italic.mrl(ng-show="pending") {{ trade.state | translate }}
     
-    span.type-sm(ng-show="trade.state === 'cancelled'") You canceled this order
+    span.type-sm.blue.underline.pointer(ng-click="triggerBuy()" ng-show="trade.state === 'cancelled'") You canceled this order
     span.type-sm.blue.underline.pointer(ng-click="triggerBuy()" ng-show="pending") Finish payment
     span.type-sm.blue.underline.pointer(ng-click="triggerBuy()" ng-show="completed && trade.state !== 'cancelled'") View details
   td.type-lbl.paml

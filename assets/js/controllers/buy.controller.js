@@ -26,6 +26,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
   $scope.needsKyc = () => $scope.getMethod().inMedium === 'bank' && +$scope.exchange.profile.level.name < 2;
+  $scope.needsIST = () => buySell.resolveState($scope.trade.state) === 'pending' || $scope.isKYC;
 
   let fifteenMinutesAgo = new Date(new Date().getTime() - 15 * 60 * 1000);
   $scope.expiredQuote = $scope.trade && fifteenMinutesAgo > $scope.trade.createdAt && $scope.trade.id;
@@ -184,7 +185,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
       $scope.isMethodSelected = true;
     } else if (!$scope.trade) {
       $scope.goTo('summary');
-    } else if (!$scope.paymentInfo && !$scope.formattedTrade) {
+    } else if (!$scope.paymentInfo && !$scope.formattedTrade && $scope.needsIST()) {
       $scope.goTo('trade-formatted');
     } else if (!$scope.formattedTrade) {
       $scope.goTo('trade-complete');
@@ -253,6 +254,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     let success = (trade) => {
       Alerts.clear($scope.alerts);
       $scope.trade = trade;
+      $scope.nextStep();
     };
 
     // check if bank transfer and kyc level
@@ -265,44 +267,22 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
                    .then($scope.watchAddress);
   };
 
-  $scope.loadPayment = () => {
-    if ($scope.onStep('trade-formatted')) return;
-    $scope.status = {};
-    $scope.nextStep();
-  };
-
-  $scope.declinedTx = (tx) => {
-    $scope.formattedTrade = formatTrade.error(tx, $scope.trade, 'DECLINED_TRANSACTION');
-  };
-
-  $scope.failedTx = (tx) => {
-    $scope.formattedTrade = formatTrade.error(tx, $scope.trade, 'FAILED_TRANSACTION');
-  };
-
-  $scope.expiredTx = (tx) => {
-    $scope.formattedTrade = formatTrade.error(tx, $scope.trade, 'TX_EXPIRED');
-  };
-
-  $scope.successTx = (tx) => {
-    $scope.formattedTrade = formatTrade.success(tx, $scope.trade);
-  };
-
-  $scope.reviewTx = (tx) => {
-    let type = $scope.isKYC || $scope.needsKyc() ? 'kyc' : 'review';
-    $scope.formattedTrade = formatTrade[type](tx, $scope.trade);
-  };
-
-  $scope.pendingTx = (tx) => {
-    if (!tx) return;
-    if ($scope.formattedTrade && $scope.formattedTrade.class === 'success') return;
-
+  $scope.formatTrade = (tx, state) => {
     if ($scope.needsKyc()) {
       buySell.pollingLevel = true;
       return buySell.pollUserLevel().then($scope.buy).finally(() => $scope.pollingLevel = false);
     }
 
-    $scope.formattedTrade = formatTrade.pending(tx, $scope.trade);
+    if ($scope.isKYC || $scope.needsKyc()) state = 'kyc';
+    $scope.formattedTrade = formatTrade[state](tx, $scope.trade);
   };
+
+  if ($scope.trade && !$scope.needsIST()) {
+    let state = $scope.trade.state;
+    if (!bitcoinReceived) $scope.watchAddress();
+
+    $scope.formattedTrade = formatTrade[state]({id: $scope.trade.iSignThisID}, $scope.trade);
+  }
 
   $scope.onResize = (step) => {
     $scope.isxStep = step;
@@ -345,7 +325,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   });
 
   $scope.$watch('bitcoinReceived', (newVal) => {
-    if (newVal) $scope.successTx();
+    if (newVal) $scope.formattedTrade = formatTrade['success']({id: trade.iSignThisID}, trade);
   });
 
   $scope.$watch('expiredQuote', (newVal) => {
@@ -361,11 +341,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     if ($scope.exchange.user && !$scope.exchange.profile) $scope.fetchProfile().catch($scope.standardError);
     if ($scope.steps['email'] === newVal && !Wallet.goal.firstLogin) Wallet.resendEmailConfirmation();
   });
-
-  if ($scope.trade && !bitcoinReceived) {
-    $scope.nextStep();
-    $scope.watchAddress();
-  }
 
   $scope.$watch('quote.expiresAt', (newVal) => {
     if (!$scope.quote || !$scope.exchange.user) return;

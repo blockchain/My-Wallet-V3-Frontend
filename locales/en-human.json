@@ -912,19 +912,10 @@
   "BANK_TRANSFER_PENDING": "Bank Transfer Pending",
   "BOUGHT_VIA": "Bought via {{exchange}}",
   "SOLD_VIA": "Sold via {{exchange}}",
-  "DECLINED_TRANSACTION": {
-    "TITLE": "Card Declined",
-    "BODY": "Your transaction has been declined. The country or card provider is not accepted by Coinify."
+  "TX_ERROR_STATE": {
+    "TITLE": "Transaction <span class='capitalize'>{{::state}}</span>",
+    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> has been {{::state}}."
   },
-  "FAILED_TRANSACTION": {
-    "TITLE": "Transaction Failed",
-    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> failed. There was an iSignthis system error. Please contact iSignthis at customersupport@isignthis.com"
-  },
-  "TRANSACTION_ERROR": {
-    "TITLE": "Transaction Error",
-    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> has been canceled. Click 'Try Again' to buy Bitcoin."
-  },
-  "CLICK_TO_CANCEL": "Cancel trade",
   "TX_PENDING": {
     "TITLE": "Order Pending",
     "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> is currently being processed."
@@ -949,6 +940,7 @@
     "TITLE": "Bitcoin received!",
     "BODY": "You have just received bitcoin from Coinify! <br/> Bitcoins were sent to <b>{{::label}}</b>."
   },
+  "CLICK_TO_CANCEL": "Cancel trade",
   "SPEND_IMPORTED_ADDRESS": "Spend",
   "CARD_TRANSFER": {
     "TITLE": "Instant transaction | 3% fee",
