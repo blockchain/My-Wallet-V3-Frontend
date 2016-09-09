@@ -869,7 +869,7 @@
   "SENT_VERIFICATION": "We just sent a verification email to <span class='em-500'>{{::email}}</span>. Click on the <b>Verification Link</b> to continue.",
   "CHANGE_EMAIL": "Want to change your email address?&nbsp;<span class='blue'>Click here.</span>",
   "PARTNER": "<span class='success'>Email Verified!</span> Our partner {{::partner}} will process your bitcoin purchase. By clicking 'Continue' you will create an account with {{::partner}}. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
-  "ACCEPT_PARTNER_TOS_PRIVACY": "Accept <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>{{::partner}}'s Terms of Service</a> and <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>{{::partner}}'s Privacy Policy</a>",
+  "ACCEPT_PARTNER_TOS_PRIVACY": "Accept <a href='https://www.blockchain.com/assets/pdf/Blockchain_BuySellAlphaAgreement.pdf' target='_blank' rel='noopener noreferrer'>our Alpha Agreement</a>, {{::partner}}'s <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>Terms of Service</a> and <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>Privacy Policy</a>",
   "EMAIL_IN_USE": "{{::email}} is already in use. ",
   "CLICK_TO_CHANGE": "Click here to change it.",
   "PAYMENT_METHOD": "Payment Method:",
