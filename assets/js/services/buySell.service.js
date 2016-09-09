@@ -180,7 +180,6 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
   }
 
   function openBuyView (transaction, trade, active, bitcoinReceived) {
-    console.log(transaction, trade);
     return $uibModal.open({
       templateUrl: 'partials/buy-modal.jade',
       windowClass: 'bc-modal auto buy ' + active,

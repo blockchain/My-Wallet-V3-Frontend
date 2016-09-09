@@ -28,7 +28,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.needsKyc = () => $scope.getMethod().inMedium === 'bank' && +$scope.exchange.profile.level.name < 2;
 
   let fifteenMinutesAgo = new Date(new Date().getTime() - 15 * 60 * 1000);
-  $scope.expiredQuote = $scope.trade && fifteenMinutesAgo > $scope.trade.createdAt;
+  $scope.expiredQuote = $scope.trade && fifteenMinutesAgo > $scope.trade.createdAt && $scope.trade.id;
   let updateBTCExpected = (quote) => { $scope.status.gettingQuote = false; $scope.btcExpected = quote; };
 
   $scope.steps = {
@@ -72,7 +72,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.userHasExchangeAcct = $scope.trades.pending.length || $scope.trades.completed.length;
 
   $scope.getPaymentMethods = () => {
-    if (!$scope.exchange.user) { $scope.getQuote(); return; }
+    if (!$scope.exchange.user) { return; }
 
     $scope.status.waiting = true;
 
@@ -131,7 +131,12 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     $scope.status.gettingQuote = true;
     if (!$scope.transaction.fiat) { $scope.status = {}; return; }
 
-    let quote = $scope.exchange.getBuyQuote(Math.trunc($scope.transaction.fiat * 100), $scope.transaction.currency.code);
+    let quote;
+    if ($scope.userHasExchangeAcct) {
+      quote = $scope.exchange.getBuyQuote(Math.trunc($scope.transaction.fiat * 100), $scope.transaction.currency.code);
+    } else {
+      quote = exchange.getBuyQuote(Math.trunc($scope.transaction.fiat * 100), $scope.transaction.currency.code);
+    }
 
     let getPaymentMethods = (quote) => {
       return quote.getPaymentMethods();
@@ -150,7 +155,11 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
       $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount / 100000000, currency.bitCurrencies[0]);
     };
 
-    return quote.then(setQuote).then(getPaymentMethods).then(success, $scope.standardError);
+    if ($scope.exchange.user) {
+      return quote.then(setQuote).then(getPaymentMethods).then(success, $scope.standardError);
+    } else {
+      return quote.then(setQuote).then(success, $scope.standardError);
+    }
   };
 
   $scope.toggleEmail = () => $scope.editEmail = !$scope.editEmail;
@@ -340,7 +349,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   });
 
   $scope.$watch('expiredQuote', (newVal) => {
-    if (newVal && !$scope.isKYC) {
+    if (newVal && !$scope.isKYC && $scope.exchange.user) {
       $scope.status.gettingQuote = true;
       if (!$scope.trade) $scope.getQuote();
       else $scope.trade.btcExpected().then(updateBTCExpected);
@@ -359,11 +368,26 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   }
 
   $scope.$watch('quote.expiresAt', (newVal) => {
-    if (!$scope.quote) return;
+    if (!$scope.quote || !$scope.exchange.user) return;
 
     let expiresAt = new Date($scope.quote.expiresAt);
     if (new Date() > expiresAt) {
       $scope.quote = null;
+      $scope.getQuote();
+    }
+  });
+
+  $scope.$watch('transaction.currency.code + transaction.fiat', () => {
+    // Only needed for anonymous quotes...
+    if ($scope.exchange && $scope.exchange.user) return;
+
+    if (
+      !$scope.quote ||
+      !$scope.transaction ||
+      !transaction.currency ||
+      $scope.transaction.currency.code !== $scope.quote.baseCurrency ||
+      Math.round($scope.transaction.fiat * 100) !== -$scope.quote.baseAmount
+    ) {
       $scope.getQuote();
     }
   });
