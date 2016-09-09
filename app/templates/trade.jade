@@ -15,7 +15,7 @@ tr.border
   td.type-lbl.paml.right-align(ng-hide="status.gettingQuote")
     span.display-inline-block.mrm.left-align
       quote-countdown(trade-created-at="trade.createdAt" ng-hide="expiredQuote || !pending" expired-quote="expiredQuote")
-    span.display-inline-block(ng-class="{italic: expiredQuote, 'tilda-before': expiredQuote}") {{ expiredQuote ? btcExpected / 100000000 : trade.outAmount || trade.outAmountExpected / 100000000 }} {{ trade.outCurrency }}
+    span.display-inline-block(ng-class="{italic: !trade.outAmount && expiredQuote, 'tilda-before': !trade.outAmount && expiredQuote}") {{ expiredQuote && !trade.outAmount ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} {{ trade.outCurrency }}
   td.type-lbl.paml.right-align(ng-hide="status.gettingQuote")
     span.em-600 {{ trade.sendAmount / 100 | format }} {{ trade.inCurrency }}
     i.ti-trash.mls.state-danger-text(ng-click="pending && !status.canceling && cancel(trade)" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}" ng-class="{fade: !pending || status.canceling, pointer: pending}")
