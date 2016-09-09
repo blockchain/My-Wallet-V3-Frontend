@@ -12,16 +12,26 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
   let watching = {};
   let initialized = $q.defer();
 
-  let buySellMyWallet = new MyWalletBuySell(MyWallet.wallet);
-  if (buySellMyWallet.exchanges) { // Absent if 2nd password set
-    buySellMyWallet.exchanges.coinify.partnerId = 18; // Replaced by Grunt for production
-  }
+  let _buySellMyWallet;
+
+  let buySellMyWallet = () => {
+    if (!Wallet.status.isLoggedIn) {
+      return null;
+    }
+    if (!_buySellMyWallet) {
+      _buySellMyWallet = new MyWalletBuySell(MyWallet.wallet);
+      if (_buySellMyWallet.exchanges) { // Absent if 2nd password set
+        _buySellMyWallet.exchanges.coinify.partnerId = 18; // Replaced by Grunt for production
+      }
+    }
+    return _buySellMyWallet;
+  };
 
   const service = {
-    getStatus: () => buySellMyWallet.status,
+    getStatus: () => buySellMyWallet() && buySellMyWallet().status,
     getExchange: () => {
-      if (!buySellMyWallet.exchanges) return null; // Absent if 2nd password set
-      return buySellMyWallet.exchanges.coinify;
+      if (!buySellMyWallet() || !buySellMyWallet().exchanges) return null; // Absent if 2nd password set
+      return buySellMyWallet().exchanges.coinify;
     },
     trades: { completed: [], pending: [] },
     kycs: [],
@@ -170,6 +180,7 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
   }
 
   function openBuyView (transaction, trade, active, bitcoinReceived) {
+    console.log(transaction, trade);
     return $uibModal.open({
       templateUrl: 'partials/buy-modal.jade',
       windowClass: 'bc-modal auto buy ' + active,

@@ -29,6 +29,7 @@ describe "buySell service", () ->
       currency = $injector.get("currency")
 
       Wallet.settings.currency = {code: 'EUR'}
+      Wallet.status.isLoggedIn = true
 
   makeTrade = (state) ->
     state: state

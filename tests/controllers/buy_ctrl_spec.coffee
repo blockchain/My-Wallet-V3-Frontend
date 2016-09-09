@@ -112,11 +112,17 @@ describe "BuyCtrl", ->
 
     it "should update with the correct values", ->
       scope.exchange.user = {}
-      scope.quote = quoteAmount: 105
+      scope.quote =
+        quoteAmount: 10000 # $100.00
+        id: 1
+        paymentMethods:
+          card:
+            fee: 501
+            total: 10501
       scope.transaction.fiat = 100
-      scope.methods.card = inPercentageFee: 5
       scope.updateAmounts()
-      expect(scope.transaction).toEqual(jasmine.objectContaining({fiat: 100, methodFee: "5.00"}))
+      expect(scope.transaction.methodFee).toEqual('5.01')
+      expect(scope.transaction.total).toEqual('105.01')
 
   describe "nextStep", ->
     beforeEach ->

@@ -1,10 +1,10 @@
 #buysell.buy-sell(ng-class="{'height-100': status.loading}")
-  .flex-column.flex-justify.flex-center.height-100(ng-if="!status.metaDataService")
+  .flex-column.flex-justify.flex-center.height-100(ng-if="!buySellStatus().metaDataService")
     span.type-h4.center Unable to load exchange details from our servers. Please try refreshing the page.
   .flex-column.flex-justify.flex-center.height-100(ng-if="status.loading")
     span.type-h4.center Getting information from your exchange partner. This could take a few seconds.
     img.width-60.width-60-mobile.mtl(src="img/money.gif")
-  div(ng-if="!status.loading && status.metaDataService")
+  div(ng-if="!status.loading && buySellStatus().metaDataService")
     .flex-row
       span.type-h5.pointer(translate="Buy Bitcoin" ng-class="{'underline-blue': state.buy}" ng-click="state.buy = true")
       span.type-h5.mlml.o-3.pointer(translate="Sell Bitcoin" ng-class="{'underline-blue': !state.buy}" uib-tooltip="Coming Soon!" tooltip-append-to-body="true")
