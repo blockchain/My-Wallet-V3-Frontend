@@ -1,4 +1,4 @@
-describe "ChangeSecondPasswordCtrl", ->
+describe "ManageSecondPasswordCtrl", ->
   scope = undefined
   Wallet = undefined
   MyWallet = undefined
@@ -21,7 +21,7 @@ describe "ChangeSecondPasswordCtrl", ->
       scope = $rootScope.$new()
       template = $templateCache.get('partials/settings/change-second-password.jade')
 
-      $controller "ChangeSecondPasswordCtrl",
+      $controller "ManageSecondPasswordCtrl",
         $scope: scope,
         $uibModalInstance: modalInstance
 

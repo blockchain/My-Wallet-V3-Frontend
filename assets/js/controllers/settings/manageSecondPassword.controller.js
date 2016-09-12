@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller('ChangeSecondPasswordCtrl', ChangeSecondPasswordCtrl);
+  .controller('ManageSecondPasswordCtrl', ManageSecondPasswordCtrl);
 
-function ChangeSecondPasswordCtrl ($scope, Wallet, $timeout, MyWallet) {
+function ManageSecondPasswordCtrl ($scope, Wallet, $timeout, MyWallet) {
   $scope.form = {};
   $scope.fields = {
     password: '',
