@@ -7,6 +7,7 @@ function BuySelectCountryCtrl ($scope, country, MyWallet, buySell) {
 
   let blacklist = [{'Name': 'Algeria', 'Code': 'DZ'},
                    {'Name': 'Angola', 'Code': 'AO'},
+                   {'Name': 'Brazil', 'Code': 'BR'},
                    {'Name': 'Bosnia and Herzegovina', 'Code': 'BA'},
                    {'Name': 'Guyana', 'Code': 'GY'},
                    {'Name': 'Lao People\'s Democratic Republic', 'Code': 'LA'},
@@ -14,6 +15,7 @@ function BuySelectCountryCtrl ($scope, country, MyWallet, buySell) {
                    {'Name': 'Papua New Guinea', 'Code': 'PG'},
                    {'Name': 'Uganda', 'Code': 'UG'},
                    {'Name': 'Puerto Rico', 'Code': 'PR'},
+                   {'Name': 'Romania', 'Code': 'RO'},
                    {'Name': 'United States', 'Code': 'US'},
                    {'Name': 'United States Minor Outlying Islands', 'Code': 'UM'}];
 
