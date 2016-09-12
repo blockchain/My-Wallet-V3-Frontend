@@ -7,7 +7,7 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency) {
   $scope.exchange = buySell.getExchange();
   $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
 
-  $scope.getMaxMin = () => {
+  $scope.getMaxMin = (curr) => {
     const calculateMin = (rate) => {
       $scope.limits.min = (rate * 10).toFixed(2);
     };
@@ -17,10 +17,10 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency) {
       $scope.limits.available = buySell.calculateMax(rate, $scope.method).available;
     };
 
-    buySell.fetchProfile().then(() => {
-      let min = buySell.getRate('EUR', $scope.tempCurrency.code).then(calculateMin);
-      let max = buySell.getRate($scope.exchange.profile.defaultCurrency, $scope.tempCurrency.code).then(calculateMax);
-      $q.all([min, max]).then($scope.setParentError);
+    return buySell.fetchProfile(true).then(() => {
+      let min = buySell.getRate('EUR', curr.code).then(calculateMin);
+      let max = buySell.getRate($scope.exchange.profile.defaultCurrency, curr.code).then(calculateMax);
+      return $q.all([min, max]).then($scope.setParentError);
     });
   };
 
@@ -39,14 +39,15 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency) {
     $scope.toggleEditAmount();
   };
 
-  $scope.changeTempCurrency = (curr) => {
-    $scope.tempCurrency = curr;
-    $scope.getMaxMin();
-  };
+  $scope.changeTempCurrency = (curr) => (
+    $scope.getMaxMin(curr).then(() => { $scope.tempCurrency = curr; })
+  );
 
-  $scope.setParentError = () => $timeout(() => {
-    $scope.$parent.fiatFormInvalid = $scope.tempFiatForm.$invalid && !$scope.needsKyc();
-  });
+  $scope.setParentError = () => {
+    $timeout(() => {
+      $scope.$parent.fiatFormInvalid = $scope.tempFiatForm.$invalid && !$scope.needsKyc();
+    });
+  };
 
   $scope.$watch('transaction.currency', (newVal, oldVal) => {
     $scope.tempCurrency = $scope.transaction.currency;
@@ -56,5 +57,7 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency) {
     $scope.tempFiat = $scope.transaction.fiat;
   });
 
-  $scope.$watch('step', () => $scope.onStep('summary') && $scope.getMaxMin());
+  $scope.$watch('step', () => {
+    $scope.onStep('summary') && $scope.getMaxMin($scope.tempCurrency);
+  });
 }

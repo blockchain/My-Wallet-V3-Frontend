@@ -2,13 +2,14 @@
   span.type-h5.em-500.flex-start.pts(translate="CONFIRM_YOUR_ORDER")
   p.mvm
     span(translate="ORDER_CONFIRMATION_COPY")
-    .flex-center.mtl(ng-show="(tempFiatForm.fiat.$error.max || tempFiatForm.fiat.$error.min) && !needsKyc()")
+  .flex-center.flex-between.flex-row-reverse.mtm
+    .mam
+      span.type-sm.blue.underline.pointer(ng-click="toggleEditAmount()" ng-hide="editAmount") Edit Order
+      span.type-sm.blue.underline.pointer(ng-click="cancel()" ng-show="editAmount") Cancel
+    .flex-center(ng-show="(tempFiatForm.fiat.$error.max || tempFiatForm.fiat.$error.min) && !needsKyc()")
       i.ti-alert.state-danger-text.mrs.type-h4
-      span.state-danger-text.mrs(ng-show="tempFiatForm.fiat.$error.max" translate="MAX_LIMIT_EXCEEDED" translate-values="{code: tempCurrency.code, max: limits.max}")
+      span.state-danger-text.mrs(ng-show="tempFiatForm.fiat.$error.max" translate="MAX_LIMIT_EXCEEDED" translate-values="{code: tempCurrency.code, max: limits.available}")
       span.state-danger-text.mrs(ng-show="tempFiatForm.fiat.$error.min && !tempFiatForm.fiat.$error.max" translate="BELOW_MIN_LIMIT" translate-values="{code: tempCurrency.code, min: limits.min}")
-  .flex-end.mbs
-    span.type-sm.blue.underline.pointer(ng-click="toggleEditAmount()" ng-hide="editAmount") Edit Order
-    span.type-sm.blue.underline.pointer(ng-click="cancel()" ng-show="editAmount") Cancel
   .border.pam(ng-class="{'bg-light-grey': editAmount}")
     .flex-row.flex-between.pam.border-bottom-light
       span(translate="BTC:")
@@ -24,8 +25,8 @@
           ng-disabled="tempFiatForm.$invalid"
           ng-show="editAmount"
           ng-class="{'o-3': tempFiatForm.fiat.$invalid}"
-          ng-click="commitValues()"
-          translate="Update")
+          ng-click="tempFiatForm.$valid && commitValues()"
+          translate="UPDATE")
         .flex-row.flex-center.width-100
           input.form-control(
             type="number"

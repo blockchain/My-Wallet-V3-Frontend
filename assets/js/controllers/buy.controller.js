@@ -59,7 +59,9 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.fields = { email: $scope.user.email, countryCode: $scope.exchange.profile.country };
   let txTemplate = { fiat: 0, btc: 0, fee: 0, total: 0, currency: buySell.getCurrency($scope.trade) };
   $scope.transaction = Object.assign({}, txTemplate, transaction);
-  $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
+
+  $scope.changeCurrencySymbol = (curr) => { $scope.currencySymbol = currency.conversions[curr.code]; };
+  $scope.changeCurrencySymbol($scope.transaction.currency);
 
   $timeout(() => !$scope.isKYC && $scope.changeCurrency());
   $timeout(() => $scope.rendered = true, bitcoinReceived ? 0 : 4000);
@@ -94,7 +96,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     if (!curr) curr = buySell.getCurrency();
     if ($scope.trade && !$scope.isKYC) curr = {code: $scope.trade.inCurrency};
     $scope.transaction.currency = curr;
-    $scope.currencySymbol = currency.conversions[curr.code];
+    $scope.changeCurrencySymbol(curr);
     $scope.getPaymentMethods();
   };
 
