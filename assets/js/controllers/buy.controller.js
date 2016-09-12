@@ -63,7 +63,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.changeCurrencySymbol = (curr) => { $scope.currencySymbol = currency.conversions[curr.code]; };
   $scope.changeCurrencySymbol($scope.transaction.currency);
 
-  $timeout(() => !$scope.isKYC && $scope.changeCurrency());
+  $timeout(() => !$scope.isKYC && $scope.changeCurrency($scope.transaction.currency));
   $timeout(() => $scope.rendered = true, bitcoinReceived ? 0 : 4000);
 
   $scope.hideQuote = () => (
