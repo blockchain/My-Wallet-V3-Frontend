@@ -186,7 +186,7 @@ function isignthis ($sce) {
             case 'DECLINED':
             case 'REJECTED':
             case 'MANUAL_REJECTED':
-              scope.onComplete(tx, 'declined');
+              scope.onComplete(tx, 'rejected');
               break;
             case 'FAILED':
               scope.onComplete(tx, 'failed');
