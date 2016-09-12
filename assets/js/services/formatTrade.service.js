@@ -11,7 +11,6 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     reviewing,
     processing,
     cancelled,
-    declined,
     rejected,
     failed,
     expired,
@@ -28,9 +27,8 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     return accountIndex ? MyWallet.wallet.hdwallet.accounts[accountIndex].label : '';
   };
 
+  function rejected (tx, trade) { return service.error(tx, trade, 'rejected'); }
   function cancelled (tx, trade) { return service.error(tx, trade); }
-  function declined (tx, trade) { return service.error(tx, trade); }
-  function rejected (tx, trade) { return service.error(tx, trade); }
   function failed (tx, trade) { return service.error(tx, trade); }
   function expired (tx, trade) { return service.error(tx, trade); }
   function completed (tx, trade) { return service.success(tx, trade); }
@@ -48,7 +46,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     return transaction;
   };
 
-  function error (tx, trade, namespace) {
+  function error (tx, trade, state) {
     tx = addTradeDetails(tx, trade);
 
     return {
@@ -56,8 +54,8 @@ function formatTrade ($filter, MyWallet, $rootScope) {
       class: 'state-danger-text',
       namespace: 'TX_ERROR_STATE',
       values: {
-        state: trade.state,
         curr: trade.inCurrency,
+        state: state || trade.state,
         fiatAmt: trade.sendAmount / 100,
         btcAmt: (trade.outAmount || trade.outAmountExpected) / 100000000
       }
