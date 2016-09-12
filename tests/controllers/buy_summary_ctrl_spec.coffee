@@ -76,11 +76,14 @@ describe "BuySummaryCtrl", ->
   describe "changeTempCurrency", ->
     beforeEach ->
       scope = getControllerScope()
+      scope.onStep = () ->
 
-    it "should only change tempCurrency", ->
+    it "should only change tempCurrency", (done) ->
       spyOn(scope, 'getMaxMin').and.returnValue($q.resolve())
-      scope.changeTempCurrency({ code: "DKK" })
-      expect(scope.tempCurrency.code).toBe("DKK")
+      scope.changeTempCurrency({ code: "DKK" }).then ->
+        expect(scope.tempCurrency.code).toBe("DKK")
+        done()
+      scope.$digest()
 
   describe "changeTempAmount", ->
     beforeEach ->
