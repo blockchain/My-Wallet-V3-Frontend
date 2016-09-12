@@ -1,3 +1,3 @@
 div.type-sm
   span.fade(ng-show="!count || expiredQuote" translate="PLACEHOLDER")
-  span.security-red(ng-show="count && !expiredQuote" translate="RATE_EXPIRES" translate-values="{count: count}")
+  span(ng-show="count && !expiredQuote" translate="RATE_GUARANTEED" translate-values="{count: count}")
