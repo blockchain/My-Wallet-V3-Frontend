@@ -17,7 +17,7 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency) {
       $scope.limits.available = buySell.calculateMax(rate, $scope.method).available;
     };
 
-    return buySell.fetchProfile().then(() => {
+    return buySell.fetchProfile(true).then(() => {
       let min = buySell.getRate('EUR', curr.code).then(calculateMin);
       let max = buySell.getRate($scope.exchange.profile.defaultCurrency, curr.code).then(calculateMax);
       return $q.all([min, max]).then($scope.setParentError);

@@ -159,7 +159,7 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
     });
   }
 
-  function fetchProfile () {
+  function fetchProfile (lean) {
     let success = () => $q.all([
       service.getTrades(),
       service.getKYCs(),
@@ -168,15 +168,12 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
 
     let error = (err) => {
       let msg;
-      try {
-        msg = JSON.parse(err).error.toUpperCase();
-      } catch (e) {
-        msg = 'INVALID_REQUEST';
-      }
+      try { msg = JSON.parse(err).error.toUpperCase(); } catch (e) { msg = 'INVALID_REQUEST'; }
       return $q.reject(msg);
     };
 
-    return $q.resolve(service.getExchange().fetchProfile()).then(success, error);
+    return $q.resolve(service.getExchange().fetchProfile())
+      .then(lean ? () => {} : success, error);
   }
 
   function openBuyView (transaction, trade, bitcoinReceived) {
