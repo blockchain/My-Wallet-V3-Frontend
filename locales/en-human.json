@@ -291,6 +291,7 @@
   "EXPORT_HISTORY" : "Export History",
   "EXPORT_HISTORY_EXPLAIN" : "Export the transaction history of your addresses in CSV or XLS format",
   "EXPORT" : "Export",
+  "DATE": "Date",
   "START_DATE" : "Start Date",
   "END_DATE" : "End Date",
   "TIMEFRAME" : "Timeframe",
@@ -866,6 +867,7 @@
   "PHONE_NUMBER": "Phone Number",
   "EDIT_PROFILE": "Edit Your Profile",
   "BUY_BITCOIN": "Buy Bitcoin",
+  "SELL_BITCOIN": "Sell Bitcoin",
   "SENT_VERIFICATION": "We just sent a verification email to <span class='em-500'>{{::email}}</span>. Click on the <b>Verification Link</b> to continue.",
   "CHANGE_EMAIL": "Want to change your email address?&nbsp;<span class='blue'>Click here.</span>",
   "PARTNER": "<span class='success'>Email Verified!</span> Our partner {{::partner}} will process your bitcoin purchase. By clicking 'Continue' you will create an account with {{::partner}}. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
@@ -903,7 +905,7 @@
   "expired": "Expired",
   "SEE_BITCOIN": "See Your Bitcoin",
   "SUMMARY": "Summary:",
-  "PROCESSED_BY_EXCHANGE": "Coinify will process the exchange. The bitcoin will be sent directly from or into your Blockchain wallet. Your payment and bank information will be submitted to the payment processor and not be seen by Blockchain.",
+  "PROCESSED_BY_EXCHANGE": "This transaction is processed directly by Coinify. Blockchain is not a party to this transaction, nor is any transaction information sent to Blockchain. As always, bitcoins are sent directly to your wallet. Blockchain does not act as an intermediary in this transaction.",
   "CARD_FEES": "{{::fee}}% fees charged by the card payment processor.",
   "CURRENCY_NOT_SUPPORTED": "The currency for this transaction is not supported by the payment method selected. Try another currency or select a different payment method.",
   "SEND_TRADE_AMOUNT": "Please send <b>{{::amt}} {{::curr}}</b> to the bank account below within the next <b>48 hours</b> to process your transaction. Once the transfer is complete, your bitcoin will be automatically sent to <b>{{::label}}</b>.",
@@ -947,7 +949,7 @@
     "COPY": "The payment fee is charged for the convenience and speed of the checkout. The exchange rate used for converting your payment into bitcoin is fixed."
   },
   "BANK_TRANSFER": {
-    "TITLE": "No payment processing fees | 2-3 days",
+    "TITLE": "No payment fees | 2-3 days",
     "COPY": "Depending on your bank, Coinify will send you the bitcoin within 24 hours after they receive your payment. The final exchange rate will be determined once your bank transfer arrives."
   },
   "KYC_IN_REVIEW": {
@@ -975,7 +977,8 @@
   "RECEIVE_BITCOIN_TO": "Bitcoins will be sent to {{::label}}.",
   "MUST_DISABLE_2ND_PW": "Please remove your second password to access this section of the wallet.",
   "BLACKLISTED_COUNTRY": "Buying bitcoin is not available in your country yet.<br>We'll be rolling out more countries soon.",
-  "ORDER_CONFIRMATION_COPY": "Before collecting payment information, please confirm your order amount. We'll then direct you to our secure payment provider to verify your card information.",
+  "CONFIRM_YOUR_ORDER": "Confirm your order:",
+  "ORDER_CONFIRMATION_COPY": "Please confirm your order details before we direct you to our secure payment provider.",
   "ORDER_DETAILS": "Order details:",
   "ACTION_REQUIRED": "Action Required",
   "MAX_LIMIT_EXCEEDED": "Exceeds your daily buy amount. Today you can purchase {{::max}} {{::code}} or less. Please update your order.",
@@ -994,5 +997,17 @@
     "AGREE": "Strongly Agree"
   },
   "SPEND_IMPORTED_ADDRESS": "Spend",
-  "ACCEPT_TOS": "I have read and agree to the <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Terms of Service</a>"
+  "ACCEPT_TOS": "I have read and agree to the <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Terms of Service</a>",
+  "SIMPLE_SECURE_SEAMLESS": "Simple. Secure. Seamless.",
+  "BUY_SIMPLE_STEPS": "The world's most popular bitcoin wallet <br> now lets you buy bitcoin in 4 <br> simple and secure steps.",
+  "METADATA_DOWN_EXCHANGE": "Unable to load your exchange details. Please try refreshing the page.",
+  "FETCHING_INFO_EXCHANGE": "Getting information from your exchange partner. This could take a few seconds.",
+  "ORDER_HISTORY": "Order History",
+  "STATUS": "Status",
+  "CHOOSE_EXCHANGE_AMOUNT": "Choose amount to exchange:",
+  "SELECT_COUNTRY": "Select country of residence:",
+  "VERIFY_EMAIL": "Verify email:",
+  "ACCEPT_TERMS": "Coinify account terms:",
+  "SELECT_PAYMENT_METHOD": "Select your preferred payment method:",
+  "PAYMENT_FEE": "Payment Fee:"
 }

@@ -1,5 +1,5 @@
 form.clearfix(name="signupForm" role="form" novalidate)
-  label.em-500.flex-start.pts Coinify account terms:
+  span.type-h5.em-500.flex-start.pts(translate="ACCEPT_TERMS")
   p.mvl(translate="PARTNER" translate-values="{partner: partner, email: user.email}")
   div
     input(type="checkbox" checked id="tos" name="tos" ng-model="fields.acceptTOS" ng-disabled="rejectedEmail" required)
