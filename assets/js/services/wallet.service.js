@@ -1157,60 +1157,55 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       });
   };
 
-  wallet.removeSecondPassword = (successCallback, errorCallback) => {
+  wallet.removeSecondPassword = (password, successCallback, errorCallback) => {
     let success = () => {
-      Alerts.displaySuccess('Second password has been removed.');
       wallet.settings.secondPassword = false;
       successCallback();
     };
     let error = () => {
-      Alerts.displayError('SECOND_PASSWORD_REMOVE_ERR');
       errorCallback();
     };
-    let cancel = errorCallback;
     let decrypting = () => {
       console.log('Decrypting...');
     };
     let syncing = () => {
       console.log('Syncing...');
     };
-    let proceedWithPassword = (password) => {
-      const didDecrypt = () => {
-        // Check which metadata service features we use:
 
-        // whatsNew
-        // This falls back to cookies if 2nd password is enabled:
-        let whatsNewViewed = $cookies.get('whatsNewViewed');
-        if (whatsNewViewed) {
-          let whatsNew = new MyWalletMetadata(2);
+    const didDecrypt = () => {
+      // Check which metadata service features we use:
 
-          whatsNew.fetch().then((res) => {
-            if (res === null) {
-              whatsNew.create({lastViewed: whatsNewViewed}).then(() => {
-                // TODO: uncomment once cookie fallback is removed
-                // $cookies.remove('whatsNewViewed');
-                success();
-              });
-            } else {
-              whatsNew.update({lastViewed: whatsNewViewed}).then(() => {
-                // TODO: uncomment once cookie fallback is removed
-                // $cookies.remove('whatsNewViewed');
-                success();
-              });
-            }
-          }).catch(() => {
-            // The What's New section may be marked (partially) unread at the
-            // next login.
-            success();
-          });
-        } else {
+      // whatsNew
+      // This falls back to cookies if 2nd password is enabled:
+      let whatsNewViewed = $cookies.get('whatsNewViewed');
+      if (whatsNewViewed) {
+        let whatsNew = new MyWalletMetadata(2);
+
+        whatsNew.fetch().then((res) => {
+          if (res === null) {
+            whatsNew.create({lastViewed: whatsNewViewed}).then(() => {
+              // TODO: uncomment once cookie fallback is removed
+              // $cookies.remove('whatsNewViewed');
+              success();
+            });
+          } else {
+            whatsNew.update({lastViewed: whatsNewViewed}).then(() => {
+              // TODO: uncomment once cookie fallback is removed
+              // $cookies.remove('whatsNewViewed');
+              success();
+            });
+          }
+        }).catch(() => {
+          // The What's New section may be marked (partially) unread at the
+          // next login.
           success();
-        }
-      };
-
-      wallet.my.wallet.decrypt(password, didDecrypt, error, decrypting, syncing);
+        });
+      } else {
+        success();
+      }
     };
-    wallet.askForSecondPasswordIfNeeded().then(proceedWithPassword).catch(cancel);
+
+    wallet.my.wallet.decrypt(password, didDecrypt, error, decrypting, syncing);
   };
 
   wallet.validateSecondPassword = (password) =>

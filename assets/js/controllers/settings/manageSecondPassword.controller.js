@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('ManageSecondPasswordCtrl', ManageSecondPasswordCtrl);
 
-function ManageSecondPasswordCtrl ($scope, Wallet, $timeout, MyWallet) {
+function ManageSecondPasswordCtrl ($scope, Wallet, $timeout, MyWallet, $uibModal) {
   $scope.form = {};
   $scope.fields = {
     password: '',
@@ -22,10 +22,11 @@ function ManageSecondPasswordCtrl ($scope, Wallet, $timeout, MyWallet) {
   };
 
   $scope.removeSecondPassword = () => {
-    if ($scope.status.waiting) return;
-    $scope.status.waiting = true;
-    let done = () => $scope.status.waiting = false;
-    Wallet.removeSecondPassword(done, done);
+    $uibModal.open({
+      templateUrl: 'partials/settings/remove-second-password.jade',
+      windowClass: 'bc-modal initial',
+      controller: 'RemoveSecondPasswordCtrl'
+    });
   };
 
   $scope.isMainPassword = Wallet.isCorrectMainPassword;

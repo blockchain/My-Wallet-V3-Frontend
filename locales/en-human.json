@@ -275,6 +275,8 @@
   "SECOND_PASSWORD_EXPLAIN" : "For Additional security, you can choose a second password that is required whenever you want to spend bitcoins. This is different from your standard wallet password. If you set your second wallet password, don’t forget it!",
   "SECOND_PASSWORD_WARNING" : "This is different from your standard wallet password. If you set your second wallet password, don’t forget it!",
   "SECOND_PASSWORD_CANCEL": "Your second password is required to send bitcoin. Please try again",
+  "SECOND_PASSWORD_REMOVE_SUCCESS" : "Second password has been removed.",
+  "SECOND_PASSWORD_REMOVE_LOGOUT" : "You need to logout and then login again to proceed.",
   "SECOND_PASSWORD_REMOVE_ERR": "Second password cannot be removed. Please contact support.",
   "REMEMBER_2FA" : "Remember 2-step Verification",
   "REMEMBER_2FA_EXPLAIN" : "Your browser will be remembered for a short period of time, allowing you to login again without having to re-authenticate. Disable this to require full authentication every time you login. This will not affect your current browser until you delete all cookies.",
