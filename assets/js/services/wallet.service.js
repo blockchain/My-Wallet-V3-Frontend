@@ -153,7 +153,9 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
           wallet.my.wallet.getHistory().then(didFetchTransactions);
         }
         wallet.status.isLoggedIn = true;
-        $injector.get('buySell'); // init buySell to monitor incoming payments
+        if (wallet.my.wallet.external) {
+          $injector.get('buySell'); // init buySell to monitor incoming payments
+        }
         $rootScope.$safeApply();
         successCallback && successCallback(result.guid);
       });
