@@ -104,6 +104,12 @@
   -ms-flex-direction: row;
   flex-direction: row;
 }
+.flex-row-reverse {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
 .flex-align-self-end {
   -webkit-align-self: flex-end;
   -ms-flex-item-align: end;
