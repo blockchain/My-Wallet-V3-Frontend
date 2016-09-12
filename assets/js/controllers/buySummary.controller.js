@@ -29,6 +29,7 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency) {
     $scope.transaction.currency = $scope.tempCurrency;
     $scope.transaction.fiat = $scope.tempFiat;
     $scope.getQuote().then(() => $scope.status.waiting = false);
+    $scope.$parent.changeCurrencySymbol($scope.transaction.currency);
     $scope.toggleEditAmount();
   };
 
