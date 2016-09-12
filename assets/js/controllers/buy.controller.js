@@ -63,7 +63,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.changeCurrencySymbol = (curr) => { $scope.currencySymbol = currency.conversions[curr.code]; };
   $scope.changeCurrencySymbol($scope.transaction.currency);
 
-  $timeout(() => !$scope.isKYC && $scope.changeCurrency());
+  $timeout(() => !$scope.isKYC && $scope.changeCurrency($scope.transaction.currency));
   $timeout(() => $scope.rendered = true, bitcoinReceived ? 0 : 4000);
 
   $scope.hideQuote = () => (
@@ -242,7 +242,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
     return $scope.exchange.signup($scope.fields.countryCode, $scope.transaction.currency.code)
       .then(() => $scope.fetchProfile())
-      .then(() => $scope.changeCurrency())
+      .then(() => $scope.getPaymentMethods())
       .catch($scope.standardError);
   };
 
@@ -322,10 +322,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   $scope.$watch('user.isEmailVerified', () => {
     if ($scope.onStep('email')) $scope.nextStep();
-  });
-
-  $scope.$watch('exchange.user', (newVal, oldVal) => {
-    if (newVal !== oldVal) $scope.changeCurrency();
   });
 
   $scope.$watch('bitcoinReceived', (newVal) => {
