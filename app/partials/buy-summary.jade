@@ -1,5 +1,5 @@
 .flex-column.mbvl
-  label.em-500.flex-start.pts Confirm your order:
+  span.type-h5.em-500.flex-start.pts(translate="CONFIRM_YOUR_ORDER")
   p.mvm
     span(translate="ORDER_CONFIRMATION_COPY")
     .flex-center.mtl(ng-show="(tempFiatForm.fiat.$error.max || tempFiatForm.fiat.$error.min) && !needsKyc()")
@@ -50,7 +50,7 @@
                  ng-class="{active: isCurrencySelected(currency)}")
                 a(ng-click="$event.preventDefault()") {{ currency.code }}
     .flex-row.flex-between.pam.border-bottom-light
-      span Fee:
+      span(translate="PAYMENT_FEE")
       span {{ transaction.methodFee | format }} {{ transaction.currency.code }}
     .flex-row.flex-between.pam
       span.em-500 Total Cost:

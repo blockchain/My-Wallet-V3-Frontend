@@ -1,13 +1,13 @@
 #buysell.buy-sell(ng-class="{'height-100': status.loading}")
   .flex-column.flex-justify.flex-center.height-100(ng-if="!buySellStatus().metaDataService")
-    span.type-h4.center Unable to load exchange details from our servers. Please try refreshing the page.
+    span.type-h4.center(translate="METADATA_DOWN_EXCHANGE")
   .flex-column.flex-justify.flex-center.height-100(ng-if="status.loading")
-    span.type-h4.center Getting information from your exchange partner. This could take a few seconds.
+    span.type-h4.center(translate="FETCHING_INFO_EXCHANGE")
     img.width-60.width-60-mobile.mtl(src="img/money.gif")
   div(ng-if="!status.loading && buySellStatus().metaDataService")
     .flex-row
-      span.type-h5.pointer(translate="Buy Bitcoin" ng-class="{'underline-blue': state.buy}" ng-click="state.buy = true")
-      span.type-h5.mlml.o-3.pointer(translate="Sell Bitcoin" ng-class="{'underline-blue': !state.buy}" uib-tooltip="Coming Soon!" tooltip-append-to-body="true")
+      span.type-h5.pointer(translate="BUY_BITCOIN" ng-class="{'underline-blue': state.buy}" ng-click="state.buy = true")
+      span.type-h5.mlml.o-3.pointer(translate="SELL_BITCOIN" ng-class="{'underline-blue': !state.buy}" uib-tooltip="Coming Soon!" tooltip-append-to-body="true")
     .flex-row.flex-column-tablet
       .width-50.mrl(ng-show="state.buy")
         buy-quick-start(transaction="transaction"
@@ -17,19 +17,19 @@
                         buy="buy({ fiat: amt, currency: transaction.currency })")
       .flex-column.width-50.mlvl.mtml
         div(ng-hide="trades.pending.length || trades.completed.length || (kyc && kyc.state !== 'completed')")
-          .font-2.blue.em-300.lh1(translate="Simple. Secure. Seamless.")
-          .type-h4.em-300.mtm.basic-grey(translate="The world's most popular bitcoin wallet <br> now lets you buy bitcoin securely in 4 <br> easy steps.")
+          .font-2.blue.em-300.lh1(translate="SIMPLE_SECURE_SEAMLESS")
+          .type-h4.em-300.mtm.basic-grey(translate="BUY_SIMPLE_STEPS")
         kyc-status(ng-if="showKycStatus()" state="kyc.state" on-trigger="openKyc()" limits="limits")
     .flex-column.mtl(ng-show="trades.pending.length || trades.completed.length")
       .flex-row.flex-between.flex-center
-        h4.type-h4(translate="Order History")
+        h4.type-h4(translate="ORDER_HISTORY")
         span Coinify Account: {{ exchange.profile.email }}
       table.width-100
         tr.border.bg-light-blue
-          th.phml.pvs Status
-          th.phml.pvs Date
+          th.phml.pvs(translate="STATUS")
+          th.phml.pvs(translate="DATE")
           th.phml.right-align.pvs BTC
-          th.phml.right-align.pvs Total
+          th.phml.right-align.pvs(translate="TOTAL")
         tr(ng-repeat="trade in trades.pending.concat(trades.completed) | orderBy:'createdAt':true" trade="trade" buy="buy")
       .flex-column.flex-align-end.mbvl.mtml(translate-namespace="BUY_FEEDBACK")
         span.type-h5.em-500(translate=".PROMPT")
