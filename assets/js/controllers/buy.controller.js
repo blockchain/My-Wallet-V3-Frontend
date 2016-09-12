@@ -61,7 +61,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.transaction = Object.assign({}, txTemplate, transaction);
   $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
 
-  $timeout(() => !$scope.isKYC && $scope.getPaymentMethods());
+  $timeout(() => !$scope.isKYC && $scope.changeCurrency());
   $timeout(() => $scope.rendered = true, bitcoinReceived ? 0 : 4000);
 
   $scope.hideQuote = () => (
@@ -121,6 +121,8 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     if ($scope.quote && $scope.quote.id) {
       $scope.transaction.methodFee = ($scope.quote.paymentMethods[$scope.method].fee / 100).toFixed(2);
       $scope.transaction.total = ($scope.quote.paymentMethods[$scope.method].total / 100).toFixed(2);
+    } else if ($scope.trade) {
+      $scope.transaction.total = ($scope.trade.sendAmount / 100).toFixed(2);
     }
   };
 
