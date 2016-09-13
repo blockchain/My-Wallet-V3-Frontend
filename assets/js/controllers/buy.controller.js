@@ -20,12 +20,13 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.method = $scope.trade ? $scope.trade.medium : 'card';
   $scope.methods = {};
   $scope.getMethod = () => $scope.methods[$scope.method] || {};
+  $scope.isMedium = (medium) => $scope.getMethod().inMedium === medium;
 
   let exchange = buySell.getExchange();
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
 
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
-  $scope.needsKyc = () => $scope.getMethod().inMedium === 'bank' && +$scope.exchange.profile.level.name < 2;
+  $scope.needsKyc = () => $scope.isMedium('bank') && +$scope.exchange.profile.level.name < 2;
   $scope.needsIST = () => buySell.resolveState($scope.trade.state) === 'pending' || $scope.isKYC;
 
   let fifteenMinutesAgo = new Date(new Date().getTime() - 15 * 60 * 1000);
@@ -68,7 +69,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   $scope.hideQuote = () => (
     $scope.afterStep('trade-complete') ||
-    $scope.getMethod().inMedium === 'bank' ||
+    $scope.isMedium('bank') ||
     $scope.expiredQuote || ($scope.quote && !$scope.quote.id && !$scope.trade)
   );
 
@@ -227,8 +228,11 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     }
   };
 
-  $scope.confirmOrKYC = () => {
-    $scope.needsKyc() ? $scope.buy() : $scope.goTo('summary');
+  $scope.confirmOrContinue = () => {
+    let bankBuyMax = $scope.exchange.profile.currentLimits.bank.inRemaining;
+    let belowBuyLimit = transaction.fiat <= bankBuyMax;
+    let skipConfirm = $scope.needsKyc() || (belowBuyLimit && $scope.isMedium('bank'));
+    skipConfirm ? $scope.buy() : $scope.goTo('summary');
   };
 
   $scope.changeEmail = (email, successCallback, errorCallback) => {
