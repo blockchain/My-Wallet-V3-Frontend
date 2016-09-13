@@ -8,6 +8,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $rootScope.isMock = Wallet.isMock;
+  $rootScope.needsRefresh = false;
 
   $scope.menu = {
     isCollapsed: false
@@ -97,6 +98,9 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     if (wallet && wallet.isDoubleEncrypted && toState.name === 'wallet.common.buy-sell') {
       event.preventDefault();
       Alerts.displayError('MUST_DISABLE_2ND_PW');
+    } else if (wallet && $rootScope.needsRefresh && toState.name === 'wallet.common.buy-sell') {
+      event.preventDefault();
+      Alerts.displayError('NEEDS_REFRESH');
     }
   });
 

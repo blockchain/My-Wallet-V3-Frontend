@@ -45,11 +45,11 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
           span.label.label-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
         p.em-300.text.hidden-xs(translate="WALLET_SECOND_PASSWORD_EXPLAIN" ng-hide="userHasExchangeAcct")    
         p.em-300.text.hidden-xs.security-red(translate="WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN" ng-show="userHasExchangeAcct")
-      .col-sm-12.col-md-6.setting-result(ng-hide="active")
+      .col-sm-12.col-md-6.setting-result(ng-hide="active || removing")
         button.button-primary.display-inline-block(ng-click="activate()", translate="SET_SECOND_PASSWORD", ng-show="!settings.secondPassword" ng-disabled="userHasExchangeAcct")
-        a.button-primary.display-inline-block(ng-click="removeSecondPassword()", ladda-translate="REMOVE_SECOND_PASSWORD", ng-show="settings.secondPassword", ui-ladda="status.waiting", data-style="expand-right")
+        button.button-danger.display-inline-block.mlm(ng-click="activate()" translate="REMOVE_SECOND_PASSWORD" ng-show="settings.secondPassword")
       .col-sm-12.col-md-6(ng-show="active")
-        include ./change-second-password.jade
+        include ./manage-second-password.jade
    
   .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
