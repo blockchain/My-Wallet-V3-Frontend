@@ -6,15 +6,17 @@ describe "BuyCtrl", ->
   $rootScope = undefined
   $controller = undefined
   $q = undefined
+  $timeout = undefined
   methods = undefined
 
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, _$rootScope_, _$controller_, _$q_) ->
+    angular.mock.inject ($injector, _$rootScope_, _$controller_, _$q_, _$timeout_) ->
       $rootScope = _$rootScope_
       $controller = _$controller_
       $q = _$q_
+      $timeout = _$timeout_
 
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
@@ -69,6 +71,7 @@ describe "BuyCtrl", ->
       spyOn(scope.exchange, "getPaymentMethods").and.callThrough()
 
     it "should set the correct scope variables from the response", ->
+      $timeout.flush()
       expect(scope.method).toEqual('card')
 
       scope.getPaymentMethods()
