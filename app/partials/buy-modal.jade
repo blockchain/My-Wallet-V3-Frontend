@@ -10,9 +10,9 @@
                                     tooltip-append-to-body="true"
                                     tooltip-placement="right"
                                     tooltip-enable="!hideQuote()")
-          span.type-h5.em-400(ng-show="transaction.btc !== 0 && !trade") {{ transaction.btc }}
-          span.type-h5.em-400(ng-show="trade" ng-class="{italic: expiredQuote && !trade.outAmount, 'tilda-before': expiredQuote && !trade.outAmount}") {{ expiredQuote && !trade.outAmount ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} BTC
-          quote-countdown(quote="quote" trade-created-at="trade.createdAt" expired-quote="expiredQuote" ng-class="{'fade': hideQuote() }")
+          span.type-h5.em-400(ng-hide="!transaction.btc || trade || needsKyc()") {{ isKYC}} {{ transaction.btc }}
+          span.type-h5.em-400(ng-show="trade && !isKYC && !needsKyc()" ng-class="{italic: expiredQuote && !trade.outAmount, 'tilda-before': expiredQuote && !trade.outAmount}") {{ expiredQuote && !trade.outAmount ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} BTC
+          quote-countdown(ng-hide="isKYC" quote="quote" trade-created-at="trade.createdAt" expired-quote="expiredQuote" ng-class="{'fade': hideQuote() }")
           p.security-red.pointer(ng-show="buySellDebug && quote.id")
             i.ti-search.mrm.right-align(ng-click="quote.expire()")  QA: Now
       buy-steps(transaction="transaction"
@@ -74,7 +74,7 @@
           data-style="expand-left"
           ui-ladda="status.waiting"
           ng-disabled="isDisabled() || onStep('email')"
-          ng-hide="afterStep('select-payment-method') || onStep('accept-terms')")
+          ng-hide="afterStep('email')")
         button.button-primary(
           ladda-translate="CONTINUE"
           ng-click="signup()"
@@ -82,6 +82,13 @@
           ui-ladda="status.waiting"
           ng-disabled="isDisabled()"
           ng-show="onStep('accept-terms')")
+        button.button-primary(
+          ladda-translate="CONTINUE"
+          ng-click="confirmOrContinue()"
+          data-style="expand-left"
+          ui-ladda="status.waiting"
+          ng-disabled="isDisabled()"
+          ng-show="onStep('select-payment-method')")
         button.button-primary(
           ladda-translate="CONFIRM"
           ng-click="buy()"
