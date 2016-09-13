@@ -6,8 +6,10 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
   $scope.buySellStatus = buySell.getStatus;
 
   $scope.status = {
-    loading: true
+    loading: false
   };
+
+  $scope.walletStatus = Wallet.status;
 
   $scope.initialize = () => {
     $scope.currencies = currency.coinifyCurrencies;
@@ -32,25 +34,28 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
       if (newVal !== oldVal) $scope.getMaxMin();
     });
 
-    buySell.login().finally(() => {
-      $scope.trades = buySell.trades;
-      $scope.kyc = buySell.kycs[0];
-      $scope.exchange = buySell.getExchange();
-      $scope.status.loading = false;
-      $scope.getMaxMin();
+    if (buySell.getStatus().metaDataService) {
+      $scope.loading = true;
+      buySell.login().finally(() => {
+        $scope.trades = buySell.trades;
+        $scope.kyc = buySell.kycs[0];
+        $scope.exchange = buySell.getExchange();
+        $scope.status.loading = false;
+        $scope.getMaxMin();
 
-      if ($scope.exchange) {
-        if (+$scope.exchange.profile.level.name < 2) {
-          if ($scope.kyc) return $scope.poll();
-          buySell.getKYCs().then(kycs => {
-            if (kycs.length > 0) $scope.poll();
-            $scope.kyc = kycs[0];
-          });
+        if ($scope.exchange) {
+          if (+$scope.exchange.profile.level.name < 2) {
+            if ($scope.kyc) return $scope.poll();
+            buySell.getKYCs().then(kycs => {
+              if (kycs.length > 0) $scope.poll();
+              $scope.kyc = kycs[0];
+            });
+          }
+        } else {
+          $scope.$watch(buySell.getExchange, (ex) => $scope.exchange = ex);
         }
-      } else {
-        $scope.$watch(buySell.getExchange, (ex) => $scope.exchange = ex);
-      }
-    });
+      });
+    }
 
     let kycStates = ['pending', 'manual_review', 'declined', 'rejected'];
     $scope.showKycStatus = () => (

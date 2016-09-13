@@ -1,5 +1,5 @@
 #buysell.buy-sell(ng-class="{'height-100': status.loading}")
-  .flex-column.flex-justify.flex-center.height-100(ng-if="!buySellStatus().metaDataService")
+  .flex-column.flex-justify.flex-center.height-100(ng-if="walletStatus.isLoggedIn && !buySellStatus().metaDataService")
     span.type-h4.center(translate="METADATA_DOWN_EXCHANGE")
   .flex-column.flex-justify.flex-center.height-100(ng-if="status.loading")
     span.type-h4.center(translate="FETCHING_INFO_EXCHANGE")
