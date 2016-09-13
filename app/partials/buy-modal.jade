@@ -74,7 +74,7 @@
           data-style="expand-left"
           ui-ladda="status.waiting"
           ng-disabled="isDisabled() || onStep('email')"
-          ng-hide="afterStep('select-payment-method') || onStep('accept-terms')")
+          ng-hide="afterStep('email')")
         button.button-primary(
           ladda-translate="CONTINUE"
           ng-click="signup()"
@@ -82,6 +82,13 @@
           ui-ladda="status.waiting"
           ng-disabled="isDisabled()"
           ng-show="onStep('accept-terms')")
+        button.button-primary(
+          ladda-translate="CONTINUE"
+          ng-click="confirmOrKYC()"
+          data-style="expand-left"
+          ui-ladda="status.waiting"
+          ng-disabled="isDisabled()"
+          ng-show="onStep('select-payment-method')")
         button.button-primary(
           ladda-translate="CONFIRM"
           ng-click="buy()"

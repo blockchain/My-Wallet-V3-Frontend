@@ -227,6 +227,10 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     }
   };
 
+  $scope.confirmOrKYC = () => {
+    $scope.needsKyc() ? $scope.buy() : $scope.goTo('summary');
+  };
+
   $scope.changeEmail = (email, successCallback, errorCallback) => {
     $scope.rejectedEmail = void 0;
     Alerts.clear($scope.alerts);
