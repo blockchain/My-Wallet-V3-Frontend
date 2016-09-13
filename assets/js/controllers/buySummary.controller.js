@@ -6,6 +6,7 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency) {
   $scope.limits = {};
   $scope.exchange = buySell.getExchange();
   $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
+  $scope.isBankTransfer = () => $scope.isMedium('bank');
 
   $scope.getMaxMin = (curr) => {
     const calculateMin = (rate) => {

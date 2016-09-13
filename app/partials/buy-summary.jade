@@ -1,12 +1,18 @@
 .flex-column.mbvl
-  span.type-h5.em-500.flex-start.pts(translate="CONFIRM_YOUR_ORDER")
+  span.type-h5.em-500.flex-start.pts(
+    ng-hide="isBankTransfer()"
+    translate="CONFIRM_YOUR_ORDER")
+  span.type-h5.em-500.flex-start.pts.state-danger-text(
+    ng-show="isBankTransfer()"
+    translate="ERROR_DAILY_LIMIT")
   p.mvm
-    span(translate="ORDER_CONFIRMATION_COPY")
+    span(translate="ORDER_CONFIRMATION_COPY" ng-hide="isBankTransfer()")
+    span(translate="ERROR_DAILY_LIMIT_COPY" ng-show="isBankTransfer()" translate-values="{symbol: currencySymbol.symbol, max: limits.available}")
   .flex-center.flex-between.flex-row-reverse.mtm
     .mam
       span.type-sm.blue.underline.pointer(ng-click="toggleEditAmount()" ng-hide="editAmount") Edit Order
       span.type-sm.blue.underline.pointer(ng-click="cancel()" ng-show="editAmount") Cancel
-    .flex-center(ng-show="(tempFiatForm.fiat.$error.max || tempFiatForm.fiat.$error.min) && !needsKyc()")
+    .flex-center(ng-show="(tempFiatForm.fiat.$error.max || tempFiatForm.fiat.$error.min) && !isBankTransfer()")
       i.ti-alert.state-danger-text.mrs.type-h4
       span.state-danger-text.mrs(ng-show="tempFiatForm.fiat.$error.max" translate="MAX_LIMIT_EXCEEDED" translate-values="{code: tempCurrency.code, max: limits.available}")
       span.state-danger-text.mrs(ng-show="tempFiatForm.fiat.$error.min && !tempFiatForm.fiat.$error.max" translate="BELOW_MIN_LIMIT" translate-values="{code: tempCurrency.code, min: limits.min}")
@@ -50,9 +56,9 @@
                  ng-click="changeTempCurrency(currency);"
                  ng-class="{active: isCurrencySelected(currency)}")
                 a(ng-click="$event.preventDefault()") {{ currency.code }}
-    .flex-row.flex-between.pam.border-bottom-light
+    .flex-row.flex-between.pam.border-bottom-light(ng-hide="isBankTransfer()")
       span(translate="PAYMENT_FEE")
       span {{ transaction.methodFee | format }} {{ transaction.currency.code }}
-    .flex-row.flex-between.pam
+    .flex-row.flex-between.pam(ng-hide="isBankTransfer()")
       span.em-500 Total Cost:
       span {{ currencySymbol.symbol }}{{ transaction.total }} {{ transaction.currency.code }}

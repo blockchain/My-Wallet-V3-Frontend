@@ -979,6 +979,8 @@
   "BLACKLISTED_COUNTRY": "Buying bitcoin is not available in your country yet.<br>We'll be rolling out more countries soon.",
   "CONFIRM_YOUR_ORDER": "Confirm your order:",
   "ORDER_CONFIRMATION_COPY": "Please confirm your order details before we direct you to our secure payment provider.",
+  "ERROR_DAILY_LIMIT": "Error: Exceeds Daily Limit",
+  "ERROR_DAILY_LIMIT_COPY": "The amount selected exceeds your daily buy limit. For bank transfers, you can exchange up to {{symbol}}{{max}} per day. Please update your order to proceed.",
   "ORDER_DETAILS": "Order details:",
   "ACTION_REQUIRED": "Action Required",
   "MAX_LIMIT_EXCEEDED": "Exceeds your daily buy amount of {{::max}} {{::code}}.",
