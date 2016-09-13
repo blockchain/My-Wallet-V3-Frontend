@@ -1010,5 +1010,6 @@
   "VERIFY_EMAIL": "Verify email:",
   "ACCEPT_TERMS": "Coinify account terms:",
   "SELECT_PAYMENT_METHOD": "Select your preferred payment method:",
-  "PAYMENT_FEE": "Payment Fee:"
+  "PAYMENT_FEE": "Payment Fee:",
+  "METADATA_FETCH_FAILED": "Oops. We are having issues getting some important wallet information. Please try again later."
 }
