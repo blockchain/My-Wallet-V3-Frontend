@@ -35,7 +35,7 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
     });
 
     if (buySell.getStatus().metaDataService) {
-      $scope.loading = true;
+      $scope.status.loading = true;
       buySell.login().finally(() => {
         $scope.trades = buySell.trades;
         $scope.kyc = buySell.kycs[0];
