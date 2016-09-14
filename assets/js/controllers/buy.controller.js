@@ -219,7 +219,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   $scope.confirmOrContinue = () => {
     let bankBuyMax = $scope.exchange.profile.currentLimits.bank.inRemaining;
-    let belowBuyLimit = transaction.fiat <= bankBuyMax;
+    let belowBuyLimit = $scope.transaction.fiat <= bankBuyMax;
     let skipConfirm = $scope.needsKyc() || (belowBuyLimit && $scope.isMedium('bank'));
     skipConfirm ? $scope.buy() : $scope.goTo('summary');
   };
