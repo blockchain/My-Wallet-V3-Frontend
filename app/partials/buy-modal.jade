@@ -23,13 +23,8 @@
                 payment-info="paymentInfo"
                 exchange-acct="userHasExchangeAcct"
                 currency-symbol="currencySymbol"
-                trade-error="formattedTrade.error"
-                exchange="exchange"
-                trade-obj="trade"
-                partner="partner"
-                fields="fields"
-                step="step")
-  .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'),'isx': onStep('trade-formatted', 'trade-complete') && (trade.medium === 'card' || !trade.medium), 'bank-account': onStep('trade-formatted', 'trade-complete') && trade.medium === 'bank'}")
+                trade-obj="trade")
+  .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'),'isx': onStep('isx') && (trade.medium === 'card' || !trade.medium), 'bank-account': onStep('isx') && trade.medium === 'bank'}")
     .alert-in-app
       alerts(context="alerts")
     div.width-80(ng-show="onStep('amount')")
@@ -44,14 +39,12 @@
       include ./buy-select-payment-method
     div.width-80(ng-show="onStep('summary')" ng-controller="BuySummaryCtrl")
       include ./buy-summary
-    div(ng-if="onStep('trade-formatted', 'trade-complete')")
+    div(ng-if="onStep('isx')")
       div.iframe(ng-if="!trade.medium || trade.medium === 'card'")
         isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="formatTrade" payment-info="paymentInfo" on-resize="onResize(step)")
       div.width-80.margin-0-auto(ng-if="trade.medium === 'bank'")
-        bank-account(transaction="trade" on-load="loadPayment()" pending-tx="pendingTx")
-    div.width-80(ng-if="onStep('pending')")
-      include ./trade-summary
-    div.width-80(ng-if="onStep('success')")
+        bank-account(transaction="trade" format-trade="formatTrade")
+    div.width-80(ng-if="onStep('trade-formatted')")
       include ./trade-summary
     .flex-end.flex-center.mtl.coinify-logo(ng-hide="afterStep('summary')")
       span.pos-rel
@@ -61,12 +54,11 @@
           span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
   //- needs directive
   .modal-footer.flex-end.flex-row
-    button.button-muted(ng-show="afterStep('amount') && beforeStep('trade-formatted')" ng-click="prevStep()") Go Back
+    button.button-muted(ng-show="afterStep('amount') && beforeStep('isx')" ng-click="prevStep()") Go Back
     
     .flex-1.flex-end(ng-hide="status.loading")
       button.button-muted.mrm(ng-click="close()" translate="CANCEL_ORDER" ng-hide="afterStep('summary')")
-      button.button-muted.mrm(ng-click="close(true)" translate="FINISH_LATER" ng-show="onStep('trade-formatted', 'trade-complete')")
-      button.button-muted.mrm(ng-click="cancel()" translate="CANCEL" ng-show="afterStep('pending')")
+      button.button-muted.mrm(ng-click="close(true)" translate="FINISH_LATER" ng-show="onStep('isx')")
       div(ng-hide="afterStep('summary')")
         button.button-primary(
           ladda-translate="CONTINUE"
@@ -96,8 +88,7 @@
           ui-ladda="status.waiting"
           ng-disabled="isDisabled() || fiatFormInvalid"
           ng-show="onStep('summary')")
-      div(ng-show="onStep('pending')")
-        button.button-danger(translate="TRY_AGAIN" ng-click="initBuy()" ng-show="formattedTrade.error")
-        button.button-success(translate="CLOSE" ng-click="cancel()" ng-hide="formattedTrade.error")
-      div(ng-show="onStep('success')")
+      div(ng-show="onStep('trade-formatted') && !bitcoinReceived")
+        button.button-success(translate="CLOSE" ng-click="cancel()")
+      div(ng-show="onStep('trade-formatted') && bitcoinReceived")
         button.button-success(translate="SEE_BITCOIN" ng-click="cancel()" ui-sref="wallet.common.transactions")

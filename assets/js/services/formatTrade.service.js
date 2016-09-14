@@ -64,7 +64,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
 
   function success (tx, trade) {
     tx = addTradeDetails(tx, trade);
-    if (!trade.bitcoinReceived) { service.processing(tx, trade); return; }
+    if (!trade.bitcoinReceived) { return service.processing(tx, trade); }
 
     return {
       tx: tx,
