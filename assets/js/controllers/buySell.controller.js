@@ -66,8 +66,8 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
 
     $scope.openKyc = () => {
       ['declined', 'rejected'].indexOf($scope.kyc.state) > -1
-        ? buySell.triggerKYC().then(kyc => $scope.buy(null, kyc, 'active-tx'))
-        : $scope.buy(null, $scope.kyc, 'active-tx');
+        ? buySell.triggerKYC().then(kyc => $scope.buy(null, kyc))
+        : $scope.buy(null, $scope.kyc);
     };
 
     $scope.changeCurrency = (curr) => {

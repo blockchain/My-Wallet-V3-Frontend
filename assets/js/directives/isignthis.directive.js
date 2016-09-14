@@ -176,8 +176,8 @@ function isignthis ($sce) {
             case 'MANUAL_ACCEPTED':
               scope.onComplete(tx, 'processing');
               break;
-            case 'MANUAL_REVIEW':
             case 'MANUAL_HOLD':
+            case 'MANUAL_REVIEW':
             case 'PROCESSING_DOCUMENT':
               scope.onComplete(tx, 'reviewing');
               break;
