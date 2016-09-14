@@ -1,13 +1,20 @@
 angular
   .module('walletApp')
-  .controller('ChangeSecondPasswordCtrl', ChangeSecondPasswordCtrl);
+  .controller('ManageSecondPasswordCtrl', ManageSecondPasswordCtrl);
 
-function ChangeSecondPasswordCtrl ($scope, Wallet, $timeout, MyWallet) {
+function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWallet, $uibModal, Alerts) {
   $scope.form = {};
   $scope.fields = {
     password: '',
     confirmation: ''
   };
+  $scope.status = {
+    waiting: false,
+    removed: false
+  };
+
+  $scope.isMainPassword = Wallet.isCorrectMainPassword;
+  $scope.validateSecondPassword = Wallet.validateSecondPassword;
 
   // TODO: add function to My-Wallet-V3 to check if the user has any exchange account:
   $scope.userHasExchangeAcct = MyWallet.wallet.external &&
@@ -24,11 +31,23 @@ function ChangeSecondPasswordCtrl ($scope, Wallet, $timeout, MyWallet) {
   $scope.removeSecondPassword = () => {
     if ($scope.status.waiting) return;
     $scope.status.waiting = true;
-    let done = () => $scope.status.waiting = false;
-    Wallet.removeSecondPassword(done, done);
-  };
+    $scope.$safeApply();
 
-  $scope.isMainPassword = Wallet.isCorrectMainPassword;
+    let success = () => {
+      Alerts.displaySuccess('SECOND_PASSWORD_REMOVE_SUCCESS', true);
+      $scope.status.waiting = false;
+      $scope.status.removed = true;
+      $scope.deactivate();
+    };
+    let error = () => {
+      Alerts.displayError('SECOND_PASSWORD_REMOVE_ERR');
+      $scope.status.waiting = false;
+      $scope.deactivate();
+    };
+
+    Wallet.removeSecondPassword($scope.fields.password, success, error);
+    $rootScope.needsRefresh = true;
+  };
 
   $scope.isPasswordHint = (candidate) => {
     return Wallet.user.passwordHint && candidate === Wallet.user.passwordHint;
