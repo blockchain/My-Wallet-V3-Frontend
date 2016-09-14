@@ -6,20 +6,32 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
   $scope.buySellStatus = buySell.getStatus;
 
   $scope.status = {
-    loading: false
+    loading: false,
+    modalOpen: false
   };
 
   $scope.walletStatus = Wallet.status;
+
+  $scope.onCloseModal = () => {
+    $scope.status.modalOpen = false;
+    $scope.kyc = buySell.kycs[0];
+  };
 
   $scope.initialize = () => {
     $scope.currencies = currency.coinifyCurrencies;
     $scope.settings = Wallet.settings;
     $scope.transaction = { fiat: undefined, currency: buySell.getCurrency() };
     $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
-    $scope.buy = (...args) => buySell.openBuyView(...args).finally($scope.onCloseModal);
     $scope.limits = {card: {}, bank: {}};
     $scope.state = {buy: true};
     $scope.rating = 0;
+
+    $scope.buy = (...args) => {
+      if (!$scope.status.modalOpen) {
+        $scope.status.modalOpen = true;
+        buySell.openBuyView(...args).finally($scope.onCloseModal);
+      }
+    };
 
     // for quote
     buySell.getExchange();
@@ -91,10 +103,6 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
       }
     });
   }
-
-  $scope.onCloseModal = () => {
-    $scope.kyc = buySell.kycs[0];
-  };
 
   $scope.poll = () => {
     buySell.pollUserLevel($scope.kyc)
