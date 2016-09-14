@@ -28,7 +28,7 @@ function BuySelectCountryCtrl ($scope, country, MyWallet, buySell) {
   });
 
   $scope.signupForAccess = () => {
-    let email = $scope.$parent.fields.email;
+    let email = encodeURIComponent($scope.$parent.fields.email);
     let country = $scope.countries.countryCodes.filter(c => c['Code'] === $scope.fields.countryCode)[0]['Name'];
     buySell.signupForAccess(email, country);
   };
