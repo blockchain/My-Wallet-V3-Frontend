@@ -166,49 +166,23 @@ describe "BuyCtrl", ->
       scope.nextStep()
       expect(scope.onStep('select-payment-method')).toEqual(true)
 
-    it "should switch to summary step", ->
-      scope.transaction.fiat = 1
-      scope.exchange.user = {}
-      scope.isMethodSelected = true
-      scope.nextStep()
-      scope.nextStep()
-      expect(scope.onStep('summary')).toEqual(true)
-
-    it "should switch to trade-formatted step", ->
+    it "should switch to isx step", ->
       scope.transaction.fiat = 1
       scope.exchange.user = {}
       scope.trade = {state: 'pending'}
       scope.nextStep()
       scope.nextStep()
+      expect(scope.onStep('isx')).toEqual(true)
+
+    it "should switch to trade-formatted step", ->
+      scope.transaction.fiat = 1
+      scope.exchange.user = {}
+      scope.isMethodSelected = true
+      scope.trade = {state: 'pending'}
+      scope.formattedTrade = 'finished trade'
+      scope.nextStep()
+      scope.nextStep()
       expect(scope.onStep('trade-formatted')).toEqual(true)
-
-    it "should switch to trade-complete step", ->
-      scope.transaction.fiat = 1
-      scope.exchange.user = {}
-      scope.trade = {}
-      scope.paymentInfo = {}
-      scope.nextStep()
-      scope.nextStep()
-      expect(scope.onStep('trade-complete')).toEqual(true)
-
-    it "should switch to pending step", ->
-      scope.transaction.fiat = 1
-      scope.exchange.user = {}
-      scope.trade = {}
-      scope.formattedTrade = {}
-      scope.nextStep()
-      scope.nextStep()
-      expect(scope.onStep('pending')).toEqual(true)
-
-    it "should switch to success step", ->
-      scope.transaction.fiat = 1
-      scope.exchange.user = {}
-      scope.trade = {}
-      scope.formattedTrade = {}
-      scope.bitcoinReceived = true
-      scope.nextStep()
-      scope.nextStep()
-      expect(scope.onStep('success')).toEqual(true)
 
   describe "standardError", ->
     it "should reject an email already that has an acct", ->
@@ -218,7 +192,7 @@ describe "BuyCtrl", ->
 
   describe "hideQuote", ->
     it "should hide the quote", ->
-      scope.goTo('pending')
+      scope.goTo('trade-formatted')
       expect(scope.hideQuote()).toBe(true)
 
   describe "prevStep", ->

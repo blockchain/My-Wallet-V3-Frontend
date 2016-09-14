@@ -66,7 +66,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $timeout(() => $scope.rendered = true, bitcoinReceived ? 0 : 4000);
 
   $scope.hideQuote = () => (
-    $scope.afterStep('trade-complete') ||
+    $scope.afterStep('isx') ||
     $scope.isMedium('bank') ||
     $scope.expiredQuote || ($scope.quote && !$scope.quote.id && !$scope.trade)
   );
@@ -282,8 +282,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   if ($scope.trade && !$scope.needsISX()) {
     let state = $scope.trade.state;
     if (!bitcoinReceived) $scope.watchAddress();
-
-    console.log('here');
 
     $scope.formattedTrade = formatTrade[state]({id: $scope.trade.iSignThisID}, $scope.trade);
   }
