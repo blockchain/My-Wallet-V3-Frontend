@@ -914,6 +914,7 @@
   "SEND_TRADE_AMOUNT": "Please send <b>{{::amt}} {{::curr}}</b> to the bank account below within the next <b>48 hours</b> to process your transaction. Once the transfer is complete, your bitcoin will be automatically sent to <b>{{::label}}</b>.",
   "SEND_FUNDS_TO": "Send funds to the following bank account:",
   "BANK_ADDRESS": "Bank Address:",
+  "VERIFY_IDENTITY": "Verify Identity",
   "BANK_TRANSFER_PENDING": "Bank Transfer Pending",
   "BOUGHT_VIA": "Bought via {{exchange}}",
   "SOLD_VIA": "Sold via {{exchange}}",

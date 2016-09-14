@@ -7,7 +7,6 @@ function buySteps () {
     replace: true,
     scope: {
       buy: '&',
-      step: '=',
       tradeObj: '=',
       onStep: '=',
       afterStep: '=',
@@ -25,5 +24,9 @@ function buySteps () {
 
   function link (scope, elem, attrs) {
     if (scope.tradeObj) scope.medium = scope.tradeObj.medium;
+
+    scope.$watch('tradeObj', () => {
+      if (scope.tradeObj && scope.tradeObj.constructor.name === 'CoinifyKYC') scope.isKYC = true;
+    });
   }
 }
