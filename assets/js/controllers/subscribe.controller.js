@@ -11,7 +11,7 @@ function SubscribeCtrl ($scope, MyWallet, country, buySell) {
   };
 
   $scope.signupForAccess = () => {
-    let email = $scope.fields.email;
+    let email = encodeURIComponent($scope.fields.email);
     let country = $scope.countries.countryCodes.filter(c => c['Code'] === $scope.fields.countryCode)[0]['Name'];
     buySell.signupForAccess(email, country);
   };
