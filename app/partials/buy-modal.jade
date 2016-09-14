@@ -43,7 +43,7 @@
       div.iframe(ng-if="!trade.medium || trade.medium === 'card'")
         isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="formatTrade" payment-info="paymentInfo" on-resize="onResize(step)")
       div.width-80.margin-0-auto(ng-if="trade.medium === 'bank'")
-        bank-account(transaction="trade" on-load="loadPayment()" pending-tx="pendingTx")
+        bank-account(transaction="trade" format-trade="formatTrade")
     div.width-80(ng-if="onStep('pending')")
       include ./trade-summary
     div.width-80(ng-if="onStep('success')")

@@ -9,8 +9,7 @@ function bankAccount (MyWallet, $rootScope) {
     restrict: 'E',
     replace: true,
     scope: {
-      onLoad: '&',
-      pendingTx: '=',
+      formatTrade: '=',
       transaction: '='
     },
     templateUrl: 'templates/bank-account.jade',
@@ -20,8 +19,7 @@ function bankAccount (MyWallet, $rootScope) {
 
   function link (scope, elem, attrs) {
     scope.$watch('transaction.bankAccount', (newVal) => {
-      if (scope.transaction.state === 'completed_test') scope.pendingTx(scope.transaction);
-      if (newVal) scope.onLoad();
+      if (scope.transaction.state === 'completed_test') scope.formatTrade({id: scope.transaction.iSignThisID}, 'success');
     });
 
     if (!scope.transaction) return;
@@ -53,11 +51,7 @@ function bankAccount (MyWallet, $rootScope) {
     };
 
     scope.fakeBankTransfer = () => {
-      const success = () => {
-        scope.pendingTx(scope.transaction);
-      };
-
-      scope.transaction.fakeBankTransfer().then(success);
+      scope.transaction.fakeBankTransfer().then(scope.formatTrade({id: scope.transaction.iSignThisID}, 'processing'));
     };
 
     scope.expireQuote = () => {
