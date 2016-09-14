@@ -23,11 +23,7 @@
                 payment-info="paymentInfo"
                 exchange-acct="userHasExchangeAcct"
                 currency-symbol="currencySymbol"
-                trade-error="formattedTrade.error"
-                exchange="exchange"
                 trade-obj="trade"
-                partner="partner"
-                fields="fields"
                 step="step")
   .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'),'isx': onStep('trade-formatted', 'trade-complete') && (trade.medium === 'card' || !trade.medium), 'bank-account': onStep('trade-formatted', 'trade-complete') && trade.medium === 'bank'}")
     .alert-in-app

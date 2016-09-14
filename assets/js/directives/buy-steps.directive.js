@@ -8,9 +8,6 @@ function buySteps () {
     scope: {
       buy: '&',
       step: '=',
-      fields: '=',
-      partner: '=',
-      exchange: '=',
       tradeObj: '=',
       onStep: '=',
       afterStep: '=',
@@ -18,7 +15,6 @@ function buySteps () {
       getMethod: '=',
       transaction: '=',
       exchangeAcct: '=',
-      tradeError: '=',
       paymentInfo: '=',
       currencySymbol: '='
     },

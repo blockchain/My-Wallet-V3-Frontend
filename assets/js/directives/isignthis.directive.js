@@ -178,6 +178,7 @@ function isignthis ($sce) {
               break;
             case 'MANUAL_REVIEW':
             case 'MANUAL_HOLD':
+            case 'PROCESSING_DOCUMENT':
               scope.onComplete(tx, 'reviewing');
               break;
             case 'EXPIRED':

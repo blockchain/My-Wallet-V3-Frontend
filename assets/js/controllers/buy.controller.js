@@ -171,11 +171,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.toggleEmail = () => $scope.editEmail = !$scope.editEmail;
   $scope.isCurrencySelected = (currency) => currency === $scope.transaction.currency;
 
-  $scope.addExchange = () => {
-    $scope.exchange = buySell.getExchange();
-    $scope.partner = 'Coinify';
-  };
-
   $scope.nextStep = () => {
     if (!$scope.transaction.fiat && !$scope.isKYC) {
       $scope.goTo('amount');
@@ -247,6 +242,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.signup = () => {
     $scope.status.waiting = true;
     Alerts.clear($scope.alerts);
+    $scope.exchange = buySell.getExchange();
 
     return $scope.exchange.signup($scope.fields.countryCode, $scope.transaction.currency.code)
       .then(() => $scope.fetchProfile())
@@ -345,7 +341,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   });
 
   $scope.$watch('step', (newVal) => {
-    if (!$scope.partner) $scope.addExchange();
     if ($scope.exchange.user && !$scope.exchange.profile) $scope.fetchProfile().catch($scope.standardError);
     if ($scope.steps['email'] === newVal && !Wallet.goal.firstLogin) Wallet.resendEmailConfirmation();
   });

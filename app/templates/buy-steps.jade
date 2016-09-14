@@ -30,9 +30,11 @@
     span(ng-show="afterStep('summary')").capitalize {{ getMethod().inMedium }}
     span.security-red(ng-show="afterStep('summary') && beforeStep('trade-completed')" translate="BANK_TRANSFER_PENDING")
 
+  //- kyc
+
   .flex-justify
     i.ti-arrow-right.type-h4
 
-  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('trade-formatted'), 'send-red': onStep('pending') && tradeError}")
+  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('trade-formatted')}")
     i.type-lrg.ti-shopping-cart
     span(translate="Get Bitcoin")
