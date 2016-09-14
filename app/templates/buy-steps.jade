@@ -3,7 +3,7 @@
     span.type-lrg {{ currencySymbol.symbol }}
     span(ng-show="onStep('amount') || !transaction.fiat" translate="Amount")
     span(ng-show="afterStep('amount') && transaction.fiat")
-      span(ng-show="beforeStep('trade-formatted')") {{ transaction.fiat | format }} {{ transaction.currency.code }}
+      span(ng-show="beforeStep('isx')") {{ transaction.fiat | format }} {{ transaction.currency.code }}
       span(ng-show="afterStep('summary')") {{ transaction.total }} {{ transaction.currency.code }}
 
   .flex-justify
@@ -17,22 +17,27 @@
     i.ti-arrow-right.type-h4
 
   //- card
-  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('accept-terms') && beforeStep('trade-complete')}" ng-hide="getMethod().inMedium === 'bank' || medium === 'bank'")
+  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('accept-terms') && beforeStep('trade-formatted')}" ng-hide="getMethod().inMedium === 'bank' || medium === 'bank' || isKYC")
     i.type-lrg.ti-credit-card
     span(ng-hide="afterStep('summary') && (medium || getMethod().inMedium)" translate="Payment")
     span(ng-show="afterStep('summary') && medium").capitalize {{ medium }}
     span(ng-show="afterStep('summary') && !medium && getMethod().inMedium").capitalize {{ getMethod().inMedium }}
 
   //- bank
-  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('accept-terms') && beforeStep('trade-complete')}" ng-show="getMethod().inMedium === 'bank' || medium === 'bank'")
+  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('accept-terms') && beforeStep('trade-formatted')}" ng-show="(getMethod().inMedium === 'bank' || medium === 'bank') && !isKYC")
     i.type-lrg.ti-credit-card.bank
     span(ng-hide="afterStep('summary')" translate="Payment")
     span(ng-show="afterStep('summary')").capitalize {{ getMethod().inMedium }}
-    span.security-red(ng-show="afterStep('summary') && beforeStep('trade-completed')" translate="BANK_TRANSFER_PENDING")
+    span.security-red(ng-show="afterStep('summary') && beforeStep('trade-formatted')" translate="BANK_TRANSFER_PENDING")
+
+  //- kyc
+  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('accept-terms') && beforeStep('trade-formatted')}" ng-show="isKYC")
+    i.type-lrg.ti-id-badge.bank
+    span(translate="VERIFY_IDENTITY")
 
   .flex-justify
     i.ti-arrow-right.type-h4
 
-  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('trade-formatted'), 'send-red': onStep('pending') && tradeError}")
+  .width-20.flex-column.flex-center(ng-class="{blue: onStep('trade-formatted')}")
     i.type-lrg.ti-shopping-cart
     span(translate="Get Bitcoin")
