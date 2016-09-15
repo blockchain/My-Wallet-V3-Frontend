@@ -27,7 +27,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
   $scope.needsKyc = () => $scope.isMedium('bank') && +$scope.exchange.profile.level.name < 2;
-  $scope.needsISX = () => buySell.resolveState($scope.trade.state) === 'pending' || $scope.isKYC;
+  $scope.needsISX = () => !$scope.trade.bankAccount && buySell.resolveState($scope.trade.state) === 'pending' || $scope.isKYC;
 
   let fifteenMinutesAgo = new Date(new Date().getTime() - 15 * 60 * 1000);
   $scope.expiredQuote = $scope.trade && fifteenMinutesAgo > $scope.trade.createdAt && $scope.trade.id;
@@ -254,8 +254,10 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     $scope.status.waiting = true;
 
     let success = (trade) => {
-      Alerts.clear($scope.alerts);
       $scope.trade = trade;
+      Alerts.clear($scope.alerts);
+      if ($scope.trade.bankAccount) $scope.formatTrade('bank_transfer');
+
       $scope.nextStep();
     };
 
@@ -269,9 +271,9 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
                    .then($scope.watchAddress);
   };
 
-  $scope.formatTrade = (tx, state) => {
+  $scope.formatTrade = (state) => {
     if ($scope.isKYC || $scope.needsKyc()) state = 'kyc';
-    $scope.formattedTrade = formatTrade[state](tx, $scope.trade);
+    $scope.formattedTrade = formatTrade[state]($scope.trade);
 
     if ($scope.needsKyc()) {
       buySell.pollingLevel = true;
@@ -282,8 +284,9 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   if ($scope.trade && !$scope.needsISX()) {
     let state = $scope.trade.state;
     if (!bitcoinReceived) $scope.watchAddress();
+    if ($scope.trade.bankAccount && $scope.trade.state === 'awaiting_transfer_in') state = 'bank_transfer';
 
-    $scope.formattedTrade = formatTrade[state]({id: $scope.trade.iSignThisID}, $scope.trade);
+    $scope.formattedTrade = formatTrade[state]($scope.trade);
   }
 
   $scope.onResize = (step) => {
@@ -315,6 +318,10 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     else return 'RATE_WILL_EXPIRE';
   };
 
+  $scope.fakeBankTransfer = () => {
+    $scope.trade.fakeBankTransfer().then($scope.formatTrade('processing'));
+  };
+
   $scope.$watch('method', $scope.updateAmounts);
   $scope.$watchGroup(['exchange.user', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
 
@@ -323,7 +330,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   });
 
   $scope.$watch('bitcoinReceived', (newVal) => {
-    if (newVal) $scope.formattedTrade = formatTrade['success']({id: trade.iSignThisID}, trade);
+    if (newVal) $scope.formattedTrade = formatTrade['success'](trade);
   });
 
   $scope.$watch('expiredQuote', (newVal) => {

@@ -82,7 +82,6 @@
     &.fade {
       opacity: 1;
       @include bc-ng-animate('summary', 'height', '260px', '325px');
-      @include bc-ng-animate('bank-account', 'height', '260px', '400px');
       @include bc-ng-animate('result', 'height', '500px', '335px');
       @include bc-ng-animate('isx', 'height', '320px', '450px');
       @include bc-ng-animate('capture', 'height', '250px', '500px', '!important');
@@ -151,14 +150,11 @@
         }
       }
       // default height
-      height: 260px;
+      min-height: 260px;
       @supports (overflow:-webkit-marquee) and (justify-content:inherit) {
-        height: 260px !important;
+        min-height: 260px !important;
         &.summary {
           height: 325px !important;
-        }
-        &.bank-account {
-          height: 400px !important;
         }
         &.result {
           height: 335px !important;

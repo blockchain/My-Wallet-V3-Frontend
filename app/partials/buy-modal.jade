@@ -24,7 +24,7 @@
                 exchange-acct="userHasExchangeAcct"
                 currency-symbol="currencySymbol"
                 trade-obj="trade")
-  .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'),'isx': onStep('isx') && (trade.medium === 'card' || !trade.medium), 'bank-account': onStep('isx') && trade.medium === 'bank'}")
+  .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'), 'isx': onStep('isx')}")
     .alert-in-app
       alerts(context="alerts")
     div.width-80(ng-show="onStep('amount')")
@@ -39,13 +39,13 @@
       include ./buy-select-payment-method
     div.width-80(ng-show="onStep('summary')" ng-controller="BuySummaryCtrl")
       include ./buy-summary
-    div(ng-if="onStep('isx')")
-      div.iframe(ng-if="!trade.medium || trade.medium === 'card'")
-        isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="formatTrade" payment-info="paymentInfo" on-resize="onResize(step)")
-      div.width-80.margin-0-auto(ng-if="trade.medium === 'bank'")
-        bank-account(transaction="trade" format-trade="formatTrade")
+    div.iframe(ng-if="onStep('isx')")
+      isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="formatTrade" payment-info="paymentInfo" on-resize="onResize(step)")
     div.width-80(ng-if="onStep('trade-formatted')")
       include ./trade-summary
+      p.security-red.pointer(ng-show="buySellDebug && trade.bankAccount")
+        i.ti-search.mrm
+        span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")
     .flex-end.flex-center.mtl.coinify-logo(ng-hide="afterStep('summary')")
       span.pos-rel
         span.mrs.type-sm Powered by

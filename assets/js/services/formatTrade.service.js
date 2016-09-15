@@ -17,9 +17,10 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     completed,
     completed_test,
 
+    kyc,
     error,
     success,
-    kyc
+    bank_transfer
   };
 
   let getLabel = (trade) => {
@@ -27,14 +28,14 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     return accountIndex ? MyWallet.wallet.hdwallet.accounts[accountIndex].label : '';
   };
 
-  function rejected (tx, trade) { return service.error(tx, trade, 'rejected'); }
-  function cancelled (tx, trade) { return service.error(tx, trade); }
-  function failed (tx, trade) { return service.error(tx, trade); }
-  function expired (tx, trade) { return service.error(tx, trade); }
-  function completed (tx, trade) { return service.success(tx, trade); }
-  function completed_test (tx, trade) { return service.success(tx, trade); }
+  function rejected (trade) { return service.error(trade, 'rejected'); }
+  function cancelled (trade) { return service.error(trade); }
+  function failed (trade) { return service.error(trade); }
+  function expired (trade) { return service.error(trade); }
+  function completed (trade) { return service.success(trade); }
+  function completed_test (trade) { return service.success(trade); }
 
-  let addTradeDetails = (tx, trade) => {
+  let addTradeDetails = (trade) => {
     let transaction = {};
     transaction['COINIFY_TRADE'] = '#' + trade.id;
     transaction['ISX_ID'] = trade.iSignThisID;
@@ -46,8 +47,8 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     return transaction;
   };
 
-  function error (tx, trade, state) {
-    tx = addTradeDetails(tx, trade);
+  function error (trade, state) {
+    let tx = addTradeDetails(trade);
 
     return {
       tx: tx,
@@ -62,9 +63,9 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     };
   }
 
-  function success (tx, trade) {
-    tx = addTradeDetails(tx, trade);
-    if (!trade.bitcoinReceived) { return service.processing(tx, trade); }
+  function success (trade) {
+    let tx = addTradeDetails(trade);
+    if (!trade.bitcoinReceived) { return service.processing(trade); }
 
     return {
       tx: tx,
@@ -79,8 +80,8 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     };
   }
 
-  function processing (tx, trade) {
-    tx = addTradeDetails(tx, trade);
+  function processing (trade) {
+    let tx = addTradeDetails(trade);
 
     return {
       tx: tx,
@@ -95,8 +96,8 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     };
   }
 
-  function reviewing (tx, trade) {
-    tx = addTradeDetails(tx, trade);
+  function reviewing (trade) {
+    let tx = addTradeDetails(trade);
 
     return {
       tx: tx,
@@ -110,8 +111,8 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     };
   }
 
-  function kyc (tx, trade) {
-    tx = addTradeDetails(tx, trade);
+  function kyc (trade) {
+    let tx = addTradeDetails(trade);
     delete tx.COINIFY_TRADE;
     delete tx.RECEIVING_WALLET;
     delete tx.RECEIVING_ADDRESS;
@@ -121,6 +122,35 @@ function formatTrade ($filter, MyWallet, $rootScope) {
       class: 'blue',
       namespace: 'TX_KYC_PENDING',
       values: {}
+    };
+  }
+
+  function bank_transfer (trade) {
+    return {
+      class: 'state-danger-text',
+      namespace: 'TX_BANK_TRANSFER',
+      tx: {
+        'Recipient Name': trade.bankAccount.holderName,
+        'Recipient Address': [
+          trade.bankAccount.holderAddress.street,
+          trade.bankAccount.holderAddress.zipcode + ' ' + trade.bankAccount.holderAddress.city,
+          trade.bankAccount.holderAddress.country
+        ].join(', '),
+        'IBAN': trade.bankAccount.number,
+        'BIC': trade.bankAccount.bic,
+        'Bank': [
+          trade.bankAccount.bankName,
+          trade.bankAccount.bankAddress.street,
+          trade.bankAccount.bankAddress.zipcode + ' ' + trade.bankAccount.bankAddress.city,
+          trade.bankAccount.bankAddress.country
+        ].join(', '),
+        'Message': trade.bankAccount.referenceText
+      },
+      values: {
+        label: getLabel(trade),
+        curr: trade.inCurrency,
+        amt: trade.inAmount / 100
+      }
     };
   }
 
