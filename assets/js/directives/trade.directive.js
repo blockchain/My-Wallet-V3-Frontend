@@ -47,7 +47,7 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
 
     scope.triggerBuy = () => {
       let t = scope.trade;
-      scope.buy({ fiat: t.inAmount / 100, currency: t.inCurrency }, t);
+      scope.buy(t);
     };
 
     let updateBTCExpected = (quote) => {
