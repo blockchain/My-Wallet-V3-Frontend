@@ -51,10 +51,8 @@ describe "BuyCtrl", ->
     $controller "BuyCtrl",
       $scope: scope,
       $uibModalInstance: params.modalInstance ? { close: (->) dismiss: (->) }
-      transaction: params.transaction ? {}
       trade: params.trade ? false
-      bitcoinReceived: params.bitcoinReceived ? false
-      kyc: params.kyc ? false
+      buyOptions: params.buyOptions ? {}
     scope
 
   beforeEach ->
