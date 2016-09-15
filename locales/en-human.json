@@ -911,7 +911,6 @@
   "PROCESSED_BY_EXCHANGE": "This transaction is processed directly by Coinify. Blockchain is not a party to this transaction, nor is any transaction information sent to Blockchain. As always, bitcoins are sent directly to your wallet. Blockchain does not act as an intermediary in this transaction.",
   "CARD_FEES": "{{::fee}}% fees charged by the card payment processor.",
   "CURRENCY_NOT_SUPPORTED": "The currency for this transaction is not supported by the payment method selected. Try another currency or select a different payment method.",
-  "SEND_TRADE_AMOUNT": "Please send <b>{{::amt}} {{::curr}}</b> to the bank account below within the next <b>48 hours</b> to process your transaction. Once the transfer is complete, your bitcoin will be automatically sent to <b>{{::label}}</b>.",
   "SEND_FUNDS_TO": "Send funds to the following bank account:",
   "BANK_ADDRESS": "Bank Address:",
   "VERIFY_IDENTITY": "Verify Identity",
@@ -941,6 +940,10 @@
   "TX_KYC_PENDING": {
     "TITLE": "@:KYC_IN_REVIEW.TITLE",
     "BODY": "To purchase bitcoin via bank transfer, your identity needs to go through a manual confirmation process. This can take up to 2 days. We'll let you know as soon as you are approved."
+  },
+  "TX_BANK_TRANSFER": {
+    "TITLE": "Action Required",
+    "BODY": "Send <b>{{::amt}} {{::curr}}</b> to the bank account below within the next <b>48 hours</b> to process your transaction. Bank transfers can take a day or more. Once the transfer is complete, your bitcoin will be automatically sent to <b>{{::label}}</b>. "
   },
   "BITCOIN_RECEIVED": {
     "TITLE": "Bitcoin received!",
@@ -986,7 +989,6 @@
   "ERROR_DAILY_LIMIT": "Error: Exceeds Daily Limit",
   "ERROR_DAILY_LIMIT_COPY": "The amount selected exceeds your daily buy limit. For bank transfers, you can exchange up to {{symbol}}{{max}} per day. Please update your order to proceed.",
   "ORDER_DETAILS": "Order details:",
-  "ACTION_REQUIRED": "Action Required",
   "MAX_LIMIT_EXCEEDED": "Exceeds your daily buy amount of {{::max}} {{::code}}.",
   "BELOW_MIN_LIMIT": "Below your minimum buy amount of {{::min}} {{::code}}.",
   "MAX_MIN_HELPER": "Minimum buy amount is {{::symbol}}{{::min}}. Maximum daily amounts are {{::symbol}}{{::cardMax}} for credit card payments and {{::symbol}}{{::bankMax}} for bank transfers.",

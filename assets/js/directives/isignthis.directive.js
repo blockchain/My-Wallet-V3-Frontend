@@ -165,32 +165,29 @@ function isignthis ($sce) {
           console.log('route. e=' + JSON.stringify(e));
 
           scope.paymentInfo = e.route.match('/otp|/verify-pin|/kyc');
-          let id = e.route.split('/result/')[1];
-          let tx = {id: id};
-
           scope.onResize({step: e.route.match(/\/(.*)\//)[1]});
 
           // handle states in between awaiting_transfer_in and completed
           switch (e.state) {
             case 'SUCCESS':
             case 'MANUAL_ACCEPTED':
-              scope.onComplete(tx, 'processing');
+              scope.onComplete('processing');
               break;
             case 'MANUAL_HOLD':
             case 'MANUAL_REVIEW':
             case 'PROCESSING_DOCUMENT':
-              scope.onComplete(tx, 'reviewing');
+              scope.onComplete('reviewing');
               break;
             case 'EXPIRED':
-              scope.onComplete(tx, 'expired');
+              scope.onComplete('expired');
               break;
             case 'DECLINED':
             case 'REJECTED':
             case 'MANUAL_REJECTED':
-              scope.onComplete(tx, 'rejected');
+              scope.onComplete('rejected');
               break;
             case 'FAILED':
-              scope.onComplete(tx, 'failed');
+              scope.onComplete('failed');
               break;
           }
         })
