@@ -155,7 +155,7 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
     watching[trade.receiveAddress] = true;
     trade.watchAddress().then(() => {
       if (trade.txHash && trade.isBuy) { txHashes[trade.txHash] = 'buy'; }
-      service.openBuyView(trade, { bitcoinReceived: true });
+      service.openBuyView({ fiat: trade.inAmount / 100 }, trade, true);
     });
   }
 
@@ -176,7 +176,7 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
       .then(lean ? () => {} : success, error);
   }
 
-  function openBuyView (trade = null, options = {}) {
+  function openBuyView (transaction, trade, bitcoinReceived) {
     return $uibModal.open({
       templateUrl: 'partials/buy-modal.jade',
       windowClass: 'bc-modal auto buy',
@@ -184,8 +184,9 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
       backdrop: 'static',
       keyboard: false,
       resolve: {
-        trade: () => trade && trade.refresh(),
-        buyOptions: () => options
+        bitcoinReceived: () => bitcoinReceived || undefined,
+        trade: () => trade || null,
+        transaction: () => transaction || {}
       }
     }).result;
   }

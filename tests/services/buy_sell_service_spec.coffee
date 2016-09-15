@@ -37,7 +37,6 @@ describe "buySell service", () ->
     inCurrency: 'USD'
     bitcoinReceived: state == "completed"
     watchAddress: -> $q.resolve()
-    refresh: -> $q.resolve()
 
   beforeEach ->
     exchange = buySell.getExchange()

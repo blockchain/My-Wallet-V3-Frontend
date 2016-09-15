@@ -26,10 +26,10 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
     $scope.state = {buy: true};
     $scope.rating = 0;
 
-    $scope.buy = (trade, options) => {
+    $scope.buy = (...args) => {
       if (!$scope.status.modalOpen) {
         $scope.status.modalOpen = true;
-        buySell.openBuyView(trade, options).finally($scope.onCloseModal);
+        buySell.openBuyView(...args).finally($scope.onCloseModal);
       }
     };
 
@@ -78,8 +78,8 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
 
     $scope.openKyc = () => {
       ['declined', 'rejected'].indexOf($scope.kyc.state) > -1
-        ? buySell.triggerKYC().then(kyc => $scope.buy(kyc))
-        : $scope.buy($scope.kyc);
+        ? buySell.triggerKYC().then(kyc => $scope.buy(null, kyc))
+        : $scope.buy(null, $scope.kyc);
     };
 
     $scope.changeCurrency = (curr) => {

@@ -14,7 +14,7 @@
                         currency-symbol="currencySymbol"
                         change-currency="changeCurrency(currency)"
                         limits="limits"
-                        buy="buy(null, {fiat: amt, currency: transaction.currency})")
+                        buy="buy({ fiat: amt, currency: transaction.currency })")
       .flex-column.width-50.mlvl.mtml
         div(ng-hide="trades.pending.length || trades.completed.length || (kyc && kyc.state !== 'completed')")
           .font-2.blue.em-300.lh1(translate="SIMPLE_SECURE_SEAMLESS")
