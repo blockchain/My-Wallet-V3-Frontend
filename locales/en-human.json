@@ -952,7 +952,7 @@
   "CLICK_TO_CANCEL": "Cancel trade",
   "SPEND_IMPORTED_ADDRESS": "Spend",
   "CARD_TRANSFER": {
-    "TITLE": "Instant transaction | 3% fee",
+    "TITLE": "Instant transaction | 3% payment fee",
     "COPY": "The payment fee is charged for the convenience and speed of the checkout. The exchange rate used for converting your payment into bitcoin is fixed."
   },
   "BANK_TRANSFER": {
