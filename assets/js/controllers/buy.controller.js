@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuyCtrl', BuyCtrl);
 
-function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buyOptions, $timeout, $interval, formatTrade, buySell, $rootScope) {
+function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, transaction, trade, $timeout, $interval, bitcoinReceived, formatTrade, buySell, $rootScope) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -53,19 +53,17 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.goTo('amount');
 
   $scope.formattedTrade = undefined;
-  $scope.bitcoinReceived = buyOptions.bitcoinReceived && $scope.trade && $scope.trade.bitcoinReceived;
+  $scope.bitcoinReceived = bitcoinReceived || $scope.trade && $scope.trade.bitcoinReceived;
 
   $scope.fields = { email: $scope.user.email, countryCode: $scope.exchange.profile.country };
-
-  $scope.transaction = trade == null
-    ? ({ fiat: buyOptions.fiat || 0, btc: 0, fee: 0, total: 0, currency: buyOptions.currency || buySell.getCurrency() })
-    : ({ fiat: $scope.trade.inAmount / 100, btc: 0, fee: 0, total: 0, currency: buySell.getCurrency($scope.trade) });
+  let txTemplate = { fiat: 0, btc: 0, fee: 0, total: 0, currency: buySell.getCurrency($scope.trade) };
+  $scope.transaction = Object.assign({}, txTemplate, transaction);
 
   $scope.changeCurrencySymbol = (curr) => { $scope.currencySymbol = currency.conversions[curr.code]; };
   $scope.changeCurrencySymbol($scope.transaction.currency);
 
   $timeout(() => !$scope.isKYC && $scope.changeCurrency($scope.transaction.currency));
-  $timeout(() => $scope.rendered = true, $scope.bitcoinReceived ? 0 : 4000);
+  $timeout(() => $scope.rendered = true, bitcoinReceived ? 0 : 4000);
 
   $scope.hideQuote = () => (
     $scope.afterStep('isx') ||
@@ -172,27 +170,23 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.isCurrencySelected = (currency) => currency === $scope.transaction.currency;
 
   $scope.nextStep = () => {
-    if (!$scope.trade) {
-      if (!$scope.transaction.fiat) {
-        $scope.goTo('amount');
-      } else if ((!$scope.fields.countryCode && !$scope.afterStep('amount')) || ($scope.onStep('amount') && !$scope.exchange.user)) {
-        $scope.goTo('select-country');
-      } else if ((!$scope.user.isEmailVerified || $scope.rejectedEmail) && !$scope.exchange.user) {
-        $scope.goTo('email');
-      } else if (!$scope.exchange.user) {
-        $scope.goTo('accept-terms');
-      } else if (!$scope.isMethodSelected) {
-        $scope.goTo('select-payment-method');
-        $scope.isMethodSelected = true;
-      } else {
-        $scope.goTo('summary');
-      }
+    if (!$scope.transaction.fiat && !$scope.isKYC) {
+      $scope.goTo('amount');
+    } else if ((!$scope.fields.countryCode && !$scope.afterStep('amount')) || ($scope.onStep('amount') && !$scope.exchange.user)) {
+      $scope.goTo('select-country');
+    } else if ((!$scope.user.isEmailVerified || $scope.rejectedEmail) && !$scope.exchange.user) {
+      $scope.goTo('email');
+    } else if (!$scope.exchange.user) {
+      $scope.goTo('accept-terms');
+    } else if (!$scope.isMethodSelected && !$scope.trade) {
+      $scope.goTo('select-payment-method');
+      $scope.isMethodSelected = true;
+    } else if (!$scope.trade) {
+      $scope.goTo('summary');
+    } else if ($scope.needsISX() && !$scope.formattedTrade) {
+      $scope.goTo('isx');
     } else {
-      if ($scope.needsISX() && !$scope.formattedTrade) {
-        $scope.goTo('isx');
-      } else {
-        $scope.goTo('trade-formatted');
-      }
+      $scope.goTo('trade-formatted');
     }
   };
 
@@ -289,7 +283,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   if ($scope.trade && !$scope.needsISX()) {
     let state = $scope.trade.state;
-    if (!$scope.bitcoinReceived) $scope.watchAddress();
+    if (!bitcoinReceived) $scope.watchAddress();
     if ($scope.trade.bankAccount && $scope.trade.state === 'awaiting_transfer_in') state = 'bank_transfer';
 
     $scope.formattedTrade = formatTrade[state]($scope.trade);
@@ -369,7 +363,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     if (
       !$scope.quote ||
       !$scope.transaction ||
-      !$scope.transaction.currency ||
+      !transaction.currency ||
       $scope.transaction.currency.code !== $scope.quote.baseCurrency ||
       Math.round($scope.transaction.fiat * 100) !== -$scope.quote.baseAmount
     ) {
