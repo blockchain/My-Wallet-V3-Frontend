@@ -24,7 +24,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
 
   let getLabel = (trade) => {
     let accountIndex = trade.accountIndex;
-    return accountIndex ? MyWallet.wallet.hdwallet.accounts[accountIndex].label : '';
+    return accountIndex != null ? MyWallet.wallet.hdwallet.accounts[accountIndex].label : '';
   };
 
   function rejected (tx, trade) { return service.error(tx, trade, 'rejected'); }
