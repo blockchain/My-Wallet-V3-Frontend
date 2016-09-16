@@ -1,24 +1,22 @@
-.border.paml.mtml
+form.border.paml.mtml(name="fiatForm" ng-submit="triggerBuy()")
   .mtl
     label.em-500 Enter amount:
     helper-button(ng-show="limits.card.min && limits.card.max" content="MAX_MIN_HELPER" values="{cardMax: limits.card.max, min: limits.card.min, bankMax: limits.bank.max, symbol: currencySymbol.symbol}")
     .flex-row.flex-between.flex-center
       section.input-group.width-60
-        form(name="fiatForm")
-          input.form-control(
-            type="number"
-            ng-model="transaction.fiat"
-            name="fiat"
-            tabindex="1"
-            focus-when="status.ready"
-            ng-change="status.waiting = true"
-            ng-model-options="{debounce: 250}"
-            on-enter="fiatForm.fiat.$valid && buy({amt: transaction.fiat})"
-            placeholder="{{limits.card.min}}"
-            min="{{limits.card.min}}"
-            max="{{limits.bank.available > limits.card.available ? limits.bank.available : limits.card.available}}"
-            step="0.01"
-            required)
+        input.form-control(
+          type="number"
+          ng-model="transaction.fiat"
+          name="fiat"
+          tabindex="1"
+          focus-when="status.ready"
+          ng-change="status.waiting = true"
+          ng-model-options="{debounce: 250}"
+          placeholder="{{limits.card.min}}"
+          min="{{limits.card.min}}"
+          max="{{limits.bank.available > limits.card.available ? limits.bank.available : limits.card.available}}"
+          step="0.01"
+          required)
         div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
           button.btn.btn-default.dropdown-toggle(type="button" uib-dropdown-toggle aria-haspopup="true")
             span {{ transaction.currency.code }}
@@ -43,4 +41,4 @@
       a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
         img(src="img/coinify-logo.svg")
         span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
-    button.button-primary(translate="Buy Bitcoin" ng-click="fiatForm.fiat.$valid && buy({amt: transaction.fiat})" ng-disabled="!fiatForm.fiat.$valid")
+    button.button-primary(translate="Buy Bitcoin" type="submit" ng-disabled="!fiatForm.fiat.$valid")
