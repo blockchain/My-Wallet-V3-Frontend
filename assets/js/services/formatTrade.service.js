@@ -39,7 +39,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     let transaction = {};
     transaction['COINIFY_TRADE'] = '#' + trade.id;
     transaction['ISX_ID'] = trade.iSignThisID;
-    transaction['DATE_INITIALIZED'] = $filter('date')(trade.createdAt, 'MM/dd/yyyy @ h:mma');
+    transaction['DATE_INITIALIZED'] = $filter('date')(trade.createdAt, 'd MMMM yyyy, HH:mm');
     transaction['RECEIVING_WALLET'] = getLabel(trade);
     if ($rootScope.buySellDebug) {
       transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
