@@ -13,6 +13,9 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
   $scope.walletStatus = Wallet.status;
   $scope.status.metaDataDown = $scope.walletStatus.isLoggedIn && !$scope.buySellStatus().metaDataService;
 
+  $scope.tradeLimit = 5;
+  $scope.scrollTrades = () => { $scope.tradeLimit += 5; };
+
   $scope.onCloseModal = () => {
     $scope.status.modalOpen = false;
     $scope.kyc = buySell.kycs[0];
