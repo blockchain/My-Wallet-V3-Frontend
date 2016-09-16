@@ -184,7 +184,7 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
       backdrop: 'static',
       keyboard: false,
       resolve: {
-        trade: () => trade && trade.refresh(),
+        trade: () => trade && trade.refresh().then(() => trade),
         buyOptions: () => options
       }
     }).result;
