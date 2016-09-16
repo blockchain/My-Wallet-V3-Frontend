@@ -5,7 +5,7 @@
   .flex-column.flex-justify.flex-center.height-100(ng-if="status.loading")
     blocket-troposphere(status="burn_baby_burn")
     span.bg-deeper-blue.type-h4.copy-bar.white.flex-center.flex-justify(translate="FETCHING_INFO_EXCHANGE")
-  div(ng-if="!status.loading && !metaDataDown && !status.exchangeDown")
+  div(ng-if="!status.loading && !status.metaDataDown && !status.exchangeDown")
     .flex-row
       span.type-h5.pointer(translate="BUY_BITCOIN" ng-class="{'underline-blue': state.buy}" ng-click="state.buy = true")
       span.type-h5.mlml.o-3.pointer(translate="SELL_BITCOIN" ng-class="{'underline-blue': !state.buy}" uib-tooltip="Coming Soon!" tooltip-append-to-body="true")

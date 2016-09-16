@@ -47,7 +47,7 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
       if (newVal !== oldVal) $scope.getMaxMin();
     });
 
-    if (buySell.getStatus().metaDataService) {
+    if (buySell.getStatus().metaDataService && buySell.getExchange().user) {
       $scope.status.loading = true;
       buySell.login().finally(() => {
         $scope.trades = buySell.trades;
