@@ -67,6 +67,8 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
         } else {
           $scope.$watch(buySell.getExchange, (ex) => $scope.exchange = ex);
         }
+      }).catch((e) => {
+        $scope.status.exchangeDown = true;
       });
     }
 
