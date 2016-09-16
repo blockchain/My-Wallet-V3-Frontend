@@ -124,9 +124,7 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
       $scope.limits.currency = $scope.currencySymbol;
     };
 
-    buySell.fetchProfile().then(() => {
-      buySell.getRate('EUR', $scope.transaction.currency.code).then(calculateMin);
-      buySell.getRate($scope.exchange.profile.defaultCurrency, $scope.transaction.currency.code).then(calculateMax);
-    });
+    buySell.getRate('EUR', $scope.transaction.currency.code).then(calculateMin);
+    buySell.getRate($scope.exchange.profile.defaultCurrency, $scope.transaction.currency.code).then(calculateMax);
   };
 }
