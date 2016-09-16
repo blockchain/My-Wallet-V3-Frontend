@@ -126,6 +126,20 @@ function formatTrade ($filter, MyWallet, $rootScope) {
   }
 
   function bank_transfer (trade) {
+    if (trade.bankAccount && trade.bankAccount.type === 'sepa') {
+      // Turn into QR code:
+      const qr = `BCD
+001
+1
+SCT
+${ trade.bankAccount.bic }
+${ trade.bankAccount.holderName }
+${ trade.bankAccount.number }
+${ trade.inCurrency }${ trade.inAmount / 100 }
+
+${ trade.bankAccount.referenceText }`;
+      console.log(qr);
+    }
     return {
       class: 'state-danger-text',
       namespace: 'TX_BANK_TRANSFER',
