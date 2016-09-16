@@ -145,7 +145,11 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     }
 
     let getPaymentMethods = (quote) => {
-      return quote.getPaymentMethods();
+      const getPaymentMethodsError = () => {
+        $scope.standardError({message: 'ERROR_PAYMENT_METHODS_FETCH'});
+      };
+
+      return quote.getPaymentMethods().catch(getPaymentMethodsError);
     };
 
     const setQuote = (quote) => {
@@ -161,10 +165,14 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
       $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount / 100000000, currency.bitCurrencies[0]);
     };
 
+    const getQuoteError = () => {
+      return Promise.reject({message: 'ERROR_QUOTE_FETCH'});
+    };
+
     if ($scope.exchange.user) {
-      return quote.then(setQuote).then(getPaymentMethods).then(success, $scope.standardError);
+      return quote.then(setQuote, getQuoteError).then(getPaymentMethods).then(success, $scope.standardError);
     } else {
-      return quote.then(setQuote).then(success, $scope.standardError);
+      return quote.then(setQuote, getQuoteError).then(success, $scope.standardError);
     }
   };
 
@@ -272,7 +280,12 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
       return buySell.getOpenKYC().then(success, $scope.standardError);
     }
 
+    const buyError = () => {
+      return Promise.reject({message: 'ERROR_TRADE_CREATE'});
+    };
+
     $scope.exchange.buy($scope.transaction.fiat * 100, $scope.transaction.currency.code, $scope.getMethod().inMedium)
+                   .catch(buyError)
                    .then(success, $scope.standardError)
                    .then($scope.watchAddress);
   };
