@@ -191,6 +191,11 @@ describe('currency', () => {
       let formatted = currency.formatCurrencyForView(amount, currency.bitCurrencies[0], false);
       expect(formatted).toEqual('0.12345679');
     }));
+
+    it('should format amounts that javascript has trouble with', inject((currency) => {
+      let formatted = currency.formatCurrencyForView(35.05, currency.currencies[0]);
+      expect(formatted).toEqual('35.05 USD');
+    }))
   });
 
   describe('commaSeparate()', () => {
