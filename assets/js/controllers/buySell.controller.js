@@ -11,6 +11,7 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
   };
 
   $scope.walletStatus = Wallet.status;
+  $scope.status.metaDataDown = $scope.walletStatus.isLoggedIn && !$scope.buySellStatus().metaDataService;
 
   $scope.onCloseModal = () => {
     $scope.status.modalOpen = false;

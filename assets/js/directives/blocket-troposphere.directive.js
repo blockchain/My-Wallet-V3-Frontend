@@ -5,6 +5,7 @@ angular
 function blocketTroposphere () {
   const directive = {
     restrict: 'E',
+    replace: true,
     scope: {
       status: '@'
     },
@@ -15,6 +16,6 @@ function blocketTroposphere () {
   return directive;
 
   function link (scope, elem, attrs) {
-
+    scope.getRange = (n) => [...Array(n).keys()];
   }
 }
