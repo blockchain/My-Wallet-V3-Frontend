@@ -923,7 +923,7 @@
   },
   "TX_PENDING": {
     "TITLE": "Order Pending",
-    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> is currently being processed."
+    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> is currently being processed. Coinify will send a status update your way within 1 business day."
   },
   "TX_SUCCESS": {
     "TITLE": "Order Purchased",
@@ -939,7 +939,7 @@
   },
   "TX_KYC_PENDING": {
     "TITLE": "@:KYC_IN_REVIEW.TITLE",
-    "BODY": "To purchase bitcoin via bank transfer, your identity needs to go through a manual confirmation process. This can take up to 2 days. We'll let you know as soon as you are approved."
+    "BODY": "Your request for authentication has been flagged for manual review. Coinify will send a status update your way within 1 business day. Apologies for the inconvenience and thanks, in advance, for your patience!"
   },
   "TX_BANK_TRANSFER": {
     "TITLE": "Action Required",
