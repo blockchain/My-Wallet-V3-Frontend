@@ -13,6 +13,7 @@ $light-blue-2: #eaeff4;
 $tertiary-blue: #D0E0E8;
 $dark-blue: #1476ab;
 $deep-blue: #005380;
+$deeper-blue: #177EC1;
 $baby-blue: #edf6fd;
 
 //Blockchain Text
@@ -95,6 +96,7 @@ $bright-green:  #3CC476 !important; //override Security Center nested css select
 
 @include bg-color('blue', $blue);
 @include bg-color('black', $black);
+@include bg-color('deeper-blue', $deeper-blue);
 @include bg-color('dark-grey', $dark-grey);
 @include bg-color('light-grey', $light-grey);
 @include bg-color('light-blue', $light-blue);

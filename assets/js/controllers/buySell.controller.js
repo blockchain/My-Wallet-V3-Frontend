@@ -11,6 +11,7 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
   };
 
   $scope.walletStatus = Wallet.status;
+  $scope.status.metaDataDown = $scope.walletStatus.isLoggedIn && !$scope.buySellStatus().metaDataService;
 
   $scope.onCloseModal = () => {
     $scope.status.modalOpen = false;
@@ -46,7 +47,7 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
       if (newVal !== oldVal) $scope.getMaxMin();
     });
 
-    if (buySell.getStatus().metaDataService) {
+    if (buySell.getStatus().metaDataService && buySell.getExchange().user) {
       $scope.status.loading = true;
       buySell.login().finally(() => {
         $scope.trades = buySell.trades;
@@ -66,6 +67,8 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
         } else {
           $scope.$watch(buySell.getExchange, (ex) => $scope.exchange = ex);
         }
+      }).catch((e) => {
+        $scope.status.exchangeDown = true;
       });
     }
 
