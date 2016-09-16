@@ -32,6 +32,10 @@ function buyQuickStart (currency, buySell) {
 
     scope.isCurrencySelected = (currency) => currency === scope.transaction.currency;
 
+    scope.triggerBuy = () => {
+      scope.buy({ amt: scope.transaction.fiat });
+    };
+
     scope.$watchGroup(['transaction.currency', 'transaction.fiat'], (newVal, oldVal) => {
       if (!scope.transaction.currency || !scope.transaction.fiat) {
         scope.quote = undefined; return;
