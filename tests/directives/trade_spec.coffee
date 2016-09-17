@@ -79,11 +79,11 @@ describe "Trade Directive", ->
       expect(trade.cancel).not.toHaveBeenCalled()
 
     it "should show an error if the cancel fails", ->
-      spyOn(trade, "cancel").and.returnValue($q.reject("FAIL"))
+      spyOn(trade, "cancel").and.returnValue($q.reject("ERROR_TRADE_CANCEL"))
       spyOn(Alerts, "confirm").and.returnValue($q.resolve())
       isoScope.cancel(trade)
       isoScope.$digest()
-      expect(Alerts.displayError).toHaveBeenCalledWith("FAIL")
+      expect(Alerts.displayError).toHaveBeenCalledWith("ERROR_TRADE_CANCEL")
 
     it "should reset the scope status", ->
       spyOn(trade, "cancel").and.returnValue($q.resolve())
