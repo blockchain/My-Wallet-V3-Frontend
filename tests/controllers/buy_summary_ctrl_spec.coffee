@@ -73,6 +73,12 @@ describe "BuySummaryCtrl", ->
   #     scope.getMaxMin()
   #     expect(buySell.getExchange().exchangeRate.get).toHaveBeenCalled()
 
+  describe "cancel", ->
+    it "should set fiatFormInvalid to false", ->
+      scope = getControllerScope()
+      scope.cancel()
+      expect(scope.fiatFormInvalid).toBe(false)
+
   describe "changeTempCurrency", ->
     beforeEach ->
       scope = getControllerScope()
