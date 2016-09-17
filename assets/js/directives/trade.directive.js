@@ -41,7 +41,7 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
         action: 'CANCEL_TRADE',
         cancel: 'GO_BACK'
       }).then(() => trade.cancel(), () => {})
-        .catch((e) => { Alerts.displayError(e); })
+        .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); })
         .finally(() => scope.status.canceling = false);
     };
 
