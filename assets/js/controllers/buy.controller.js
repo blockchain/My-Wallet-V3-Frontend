@@ -226,6 +226,8 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
       return !$scope.fields.countryCode || $scope.isCountryBlacklisted;
     } else if ($scope.onStep('accept-terms')) {
       return !$scope.signupForm.$valid;
+    } else if ($scope.onStep('select-payment-method')) {
+      return !$scope.quote;
     } else if ($scope.onStep('summary')) {
       return $scope.editAmount;
     }

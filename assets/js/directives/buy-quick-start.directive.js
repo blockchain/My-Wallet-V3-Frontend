@@ -1,9 +1,9 @@
 angular.module('walletApp')
   .directive('buyQuickStart', buyQuickStart);
 
-buyQuickStart.$inject = ['currency', 'buySell'];
+buyQuickStart.$inject = ['currency', 'buySell', 'Alerts'];
 
-function buyQuickStart (currency, buySell) {
+function buyQuickStart (currency, buySell, Alerts) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -45,9 +45,14 @@ function buyQuickStart (currency, buySell) {
         const success = (quote) => {
           scope.quote = quote;
           scope.status = {};
+          Alerts.clear();
         };
 
-        buySell.getQuote(scope.transaction.fiat, scope.transaction.currency.code).then(success);
+        const error = () => {
+          Alerts.displayError('ERROR_QUOTE_FETCH');
+        };
+
+        buySell.getQuote(scope.transaction.fiat, scope.transaction.currency.code).then(success, error);
       }
     });
   }

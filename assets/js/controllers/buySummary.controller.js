@@ -37,6 +37,7 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency) {
   $scope.cancel = () => {
     $scope.tempCurrency = $scope.transaction.currency;
     $scope.tempFiat = $scope.transaction.fiat;
+    $scope.$parent.fiatFormInvalid = false;
     $scope.toggleEditAmount();
   };
 
