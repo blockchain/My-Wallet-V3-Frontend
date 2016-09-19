@@ -33,6 +33,8 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.expiredQuote = $scope.trade && fifteenMinutesAgo > $scope.trade.createdAt && $scope.trade.id;
   let updateBTCExpected = (quote) => { $scope.status.gettingQuote = false; $scope.btcExpected = quote; };
 
+  let eventualError = (message) => Promise.reject.bind(Promise, { message });
+
   $scope.steps = {
     'amount': 0,
     'select-country': 1,
@@ -81,16 +83,16 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     $scope.status.waiting = true;
 
     let success = (methods) => {
-      $scope.methods = {
-        card: methods.filter((m) => m.inMedium === 'card')[0],
-        bank: methods.filter((m) => m.inMedium === 'bank')[0]
-      };
+      $scope.methods = methods;
+      $scope.status.waiting = false;
+      $scope.updateAmounts();
     };
 
-    // TODO: use quote.paymentMethods to populate the list of methods. Fees
-    //       have already been calculated.
-    return $scope.exchange.getPaymentMethods($scope.transaction.currency.code, 'BTC')
-      .then(success).then(() => $scope.getQuote());
+    let methodsError = eventualError('ERROR_PAYMENT_METHODS_FETCH');
+
+    return $scope.quote && $scope.quote.expiresAt > new Date()
+      ? $scope.quote.getPaymentMethods().then(success, methodsError)
+      : $scope.getQuote();
   };
 
   $scope.changeCurrency = (curr) => {
@@ -98,7 +100,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     if ($scope.trade && !$scope.isKYC) curr = {code: $scope.trade.inCurrency};
     $scope.transaction.currency = curr;
     $scope.changeCurrencySymbol(curr);
-    $scope.getPaymentMethods();
+    $scope.getQuote();
   };
 
   $scope.standardError = (err) => {
@@ -133,45 +135,25 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     $scope.quote = null;
     $scope.transaction.btc = 0;
     $scope.status.gettingQuote = true;
+    $scope.status.waiting = true;
     if (!$scope.transaction.fiat) { $scope.status = {}; return; }
 
-    let quote;
-    if ($scope.userHasExchangeAcct) {
-      quote = $scope.exchange.getBuyQuote(Math.trunc($scope.transaction.fiat * 100), $scope.transaction.currency.code);
-    } else {
-      quote = exchange.getBuyQuote(Math.trunc($scope.transaction.fiat * 100), $scope.transaction.currency.code);
-    }
+    let quoteError = eventualError('ERROR_QUOTE_FETCH');
+    let amount = Math.round($scope.transaction.fiat * 100);
+    let currCode = $scope.transaction.currency.code;
 
-    let getPaymentMethods = (quote) => {
-      const getPaymentMethodsError = () => {
-        $scope.standardError({message: 'ERROR_PAYMENT_METHODS_FETCH'});
-      };
-
-      return quote.getPaymentMethods().catch(getPaymentMethodsError);
-    };
-
-    const setQuote = (quote) => {
-      $scope.quote = quote;
-      return quote;
-    };
-
-    const success = () => {
+    const success = (quote) => {
       $scope.status = {};
       $scope.expiredQuote = false;
-      $scope.updateAmounts();
+      $scope.quote = quote;
       Alerts.clear($scope.alerts);
       $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount / 100000000, currency.bitCurrencies[0]);
     };
 
-    const getQuoteError = () => {
-      return Promise.reject({message: 'ERROR_QUOTE_FETCH'});
-    };
-
-    if ($scope.exchange.user) {
-      return quote.then(setQuote, getQuoteError).then(getPaymentMethods).then(success, $scope.standardError);
-    } else {
-      return quote.then(setQuote, getQuoteError).then(success, $scope.standardError);
-    }
+    return buySell.getExchange().getBuyQuote(amount, currCode)
+      .then(success, quoteError)
+      .then($scope.getPaymentMethods)
+      .catch($scope.standardError);
   };
 
   $scope.isCurrencySelected = (currency) => currency === $scope.transaction.currency;
@@ -270,9 +252,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
       return buySell.getOpenKYC().then(success, $scope.standardError);
     }
 
-    const buyError = () => {
-      return Promise.reject({message: 'ERROR_TRADE_CREATE'});
-    };
+    let buyError = eventualError('ERROR_TRADE_CREATE');
 
     $scope.exchange.buy($scope.transaction.fiat * 100, $scope.transaction.currency.code, $scope.getMethod().inMedium)
                    .catch(buyError)
