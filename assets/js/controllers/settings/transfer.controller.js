@@ -66,18 +66,19 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
 
       let signAndPublish = () => {
         payment.to($scope.selectedAccount.index);
-        $scope.selectedAccount.incrementReceiveIndex();
         return $q.resolve(payment.build().sign(pw).publish().payment);
       };
 
       payment.sideEffect(p => {
         let sweepErr = 'SWEEP_LOW_BALANCE_ERR';
         if (p.amounts[0] <= 0) throw sweepErr;
-        else $scope.selectedAccount.incrementReceiveIndex();
       });
 
       return $scope.wait(250).then(signAndPublish)
-        .then(() => $scope.archivable.push($scope.addresses[i]))
+        .then(() => {
+          $scope.selectedAccount.incrementReceiveIndex();
+          $scope.archivable.push($scope.addresses[i]);
+        })
         .catch(e => $scope.nfailed++)
         .then(() => $scope.ncomplete++);
     }), $q.resolve())
