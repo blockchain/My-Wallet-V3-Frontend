@@ -27,12 +27,8 @@ describe "BuyCtrl", ->
       methods = [{ inMedium: "card" }, { inMedium: "bank" }]
 
       buySell.getExchange = () ->
-        {
-          getPaymentMethods: () ->
-            $q.resolve(methods)
-          profile: {}
-          user: {}
-        }
+        profile: {}
+        user: {}
 
       Wallet.settings.currency = { code: "USD" }
       Wallet.changeCurrency = () -> $q.resolve()
@@ -64,20 +60,6 @@ describe "BuyCtrl", ->
       scope.trade = undefined
       expect(scope.label).toBe('My Bitcoin Wallet')
 
-  describe "getPaymentMethods", ->
-    beforeEach ->
-      spyOn(scope.exchange, "getPaymentMethods").and.callThrough()
-
-    it "should set the correct scope variables from the response", ->
-      $timeout.flush()
-      expect(scope.method).toEqual('card')
-
-      scope.getPaymentMethods()
-      expect(scope.exchange.getPaymentMethods).toHaveBeenCalled()
-
-      expect(scope.methods.card).toEqual(methods[0])
-      expect(scope.methods.bank).toEqual(methods[1])
-
   describe "changeCurrency", ->
     beforeEach ->
       spyOn(Wallet, "changeCurrency").and.callThrough()
@@ -96,11 +78,9 @@ describe "BuyCtrl", ->
       expect(scope.currencySymbol).toEqual("P")
 
     it "should set the transaction currency and refresh payment methods data", ->
-      spyOn(scope, "getPaymentMethods")
       scope.changeCurrency()
       $rootScope.$digest()
       expect(scope.transaction.currency.code).toEqual("USD")
-      expect(scope.getPaymentMethods).toHaveBeenCalled()
 
   describe "updateAmounts", ->
     beforeEach ->
