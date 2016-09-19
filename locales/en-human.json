@@ -609,6 +609,7 @@
   "EDUCATIONAL": "Educational",
   "CONTRIBUTE": "Contribute",
   "SURVEY": "Survey",
+  "BOUGHT": "Bought",
   "DYK_CUSTOM_FEES": "When the bitcoin network is experiencing a lot of traffic, you can ensure that your transactions go through by enabling higher fees with our Advanced Send feature. Just click on the Advanced Send toggle in our Send screen to get started!",
   "DYK_CUSTOM_FEES_TITLE": "You can send Custom Fees",
   "DYK_RECOVERY": "This means only you know the password you used for your wallet, but your funds can still be recovered with the 12-word recovery phrase. Find out how and more by visiting your security settings.",

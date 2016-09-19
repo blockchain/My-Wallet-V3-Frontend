@@ -2,9 +2,9 @@ angular
   .module('activity', [])
   .factory('Activity', Activity);
 
-Activity.$inject = ['$rootScope', '$timeout', 'Wallet', 'MyWallet'];
+Activity.$inject = ['$rootScope', '$timeout', 'Wallet', 'MyWallet', 'buySell'];
 
-function Activity ($rootScope, $timeout, Wallet, MyWallet) {
+function Activity ($rootScope, $timeout, Wallet, MyWallet, buySell) {
   var txSub;
 
   const activity = {
@@ -19,6 +19,10 @@ function Activity ($rootScope, $timeout, Wallet, MyWallet) {
     updateLogActivities: updateLogActivities,
     updateAllActivities: updateAllActivities
   };
+
+  let getTxMessage = (tx) => (
+    buySell.getTxMethod(tx.hash) === 'buy' ? 'BOUGHT' : tx.txType.toUpperCase()
+  );
 
   setTxSub();
   $rootScope.$on('updateActivityFeed', activity.updateAllActivities);
@@ -78,14 +82,16 @@ function Activity ($rootScope, $timeout, Wallet, MyWallet) {
         a.title = 'TRANSACTION';
         a.icon = 'ti-layout-list-post';
         a.time = obj.time * 1000;
-        a.message = obj.txType.toUpperCase();
+        a.message = getTxMessage(obj);
         a.amount = Math.abs(obj.amount);
+        a.labelClass = obj.txType.toLowerCase();
         break;
       case 4:
         a.title = 'LOG';
         a.icon = 'ti-settings';
         a.time = obj.time;
         a.message = capitalize(obj.action);
+        a.labelClass = obj.action.toLowerCase();
     }
     return a;
   }

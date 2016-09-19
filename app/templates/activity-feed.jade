@@ -12,7 +12,7 @@
           p.h5.af-type.flex-1.mvn(translate="{{::activity.title}}")
           p.af-date.mlm.flex-1.hidden-xs.mvn {{::activity.time | date:'mediumDate'}}
           .af-log.flex-center.flex-3.flex-end
-            p.mvn.right-align(ng-class="activity.message.toLowerCase()" translate="{{::activity.message}}")
+            p.mvn.right-align(ng-class="::activity.labelClass" translate="{{::activity.message}}")
             span.pls(ng-show="activity.type == 0")
               fiat-or-btc(btc="activity.amount")
       //psuedo empty-state
