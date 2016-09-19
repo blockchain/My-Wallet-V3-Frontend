@@ -105,9 +105,8 @@ module.exports = (grunt) ->
           'build/js/core/core.module.js'
           'build/js/core/*.service.js'
           'build/js/services/*.js'
-          'build/js/controllers/*.js'
+          'build/js/controllers/**/*.js'
           'build/js/components/*.js'
-          'build/js/controllers/settings/*.js'
           'build/js/directives/*.js'
           'build/js/filters.js'
           'bower_components/angular-audio/app/angular.audio.js'
@@ -198,7 +197,7 @@ module.exports = (grunt) ->
         base: "app"
         singleModule: true
       main:
-        src: ["app/partials/notifications/*.jade", "app/partials/settings/*.jade", "app/partials/*.jade", "app/templates/*.jade", "app/*.jade"],
+        src: ["app/partials/notifications/*.jade", "app/partials/**/*.jade", "app/templates/*.jade", "app/*.jade"],
         dest: 'build/js/templates.js'
     },
     "merge-json": # TODO: generate this list...
