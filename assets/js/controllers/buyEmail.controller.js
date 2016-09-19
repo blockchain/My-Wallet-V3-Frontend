@@ -13,4 +13,8 @@ function BuyEmailCtrl ($scope, Alerts, Wallet, $q) {
       .then(successCallback, errorCallback)
       .finally(() => { $scope.editEmail = false; });
   };
+
+  $scope.$watch('$parent.step', (newVal) => {
+    if ($scope.steps['email'] === newVal && !Wallet.goal.firstLogin) Wallet.resendEmailConfirmation();
+  });
 }

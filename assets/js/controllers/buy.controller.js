@@ -298,9 +298,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     $scope.formattedTrade = formatTrade[state]($scope.trade);
   }
 
-  $scope.onResize = (step) => {
-    $scope.isxStep = step;
-  };
+  $scope.onResize = (step) => $scope.isxStep = step;
 
   $scope.cancel = () => {
     if ($scope.exchange.user) buySell.getTrades();
@@ -327,20 +325,11 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     else return 'RATE_WILL_EXPIRE';
   };
 
-  $scope.fakeBankTransfer = () => {
-    $scope.trade.fakeBankTransfer().then(() => { $scope.formatTrade('processing'); });
-  };
+  $scope.fakeBankTransfer = () => $scope.trade.fakeBankTransfer().then(() => { $scope.formatTrade('processing'); });
 
-  $scope.$watch('method', $scope.updateAmounts);
   $scope.$watchGroup(['exchange.user', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
-
-  $scope.$watch('user.isEmailVerified', () => {
-    if ($scope.onStep('email')) $scope.nextStep();
-  });
-
-  $scope.$watch('bitcoinReceived', (newVal) => {
-    if (newVal) $scope.formattedTrade = formatTrade['success'](trade);
-  });
+  $scope.$watch('user.isEmailVerified', () => $scope.onStep('email') && $scope.nextStep());
+  $scope.$watch('bitcoinReceived', (newVal) => newVal && ($scope.formattedTrade = formatTrade['success'](trade)));
 
   $scope.$watch('expiredQuote', (newVal) => {
     if (newVal && !$scope.isKYC && $scope.exchange.user) {
@@ -348,11 +337,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
       if (!$scope.trade) $scope.getQuote();
       else $scope.trade.btcExpected().then(updateBTCExpected);
     }
-  });
-
-  $scope.$watch('step', (newVal) => {
-    if ($scope.exchange.user && !$scope.exchange.profile) $scope.exchange.fetchProfile().catch($scope.standardError);
-    if ($scope.steps['email'] === newVal && !Wallet.goal.firstLogin) Wallet.resendEmailConfirmation();
   });
 
   $scope.$watch('quote.expiresAt', (newVal) => {
