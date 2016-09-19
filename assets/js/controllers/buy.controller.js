@@ -116,8 +116,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     }
   };
 
-  $scope.fetchProfile = () => $scope.exchange.fetchProfile();
-
   $scope.updateAmounts = () => {
     if (!$scope.trade && (!$scope.quote || !$scope.exchange.user)) return;
 
@@ -176,7 +174,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     }
   };
 
-  $scope.toggleEmail = () => $scope.editEmail = !$scope.editEmail;
   $scope.isCurrencySelected = (currency) => currency === $scope.transaction.currency;
 
   $scope.nextStep = () => {
@@ -240,22 +237,13 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     skipConfirm ? $scope.buy() : $scope.goTo('summary');
   };
 
-  $scope.changeEmail = (email, successCallback, errorCallback) => {
-    $scope.rejectedEmail = void 0;
-    Alerts.clear($scope.alerts);
-
-    $q((res, rej) => Wallet.changeEmail(email, res, rej))
-      .then(successCallback, errorCallback)
-      .finally(() => { $scope.editEmail = false; });
-  };
-
   $scope.signup = () => {
     $scope.status.waiting = true;
     Alerts.clear($scope.alerts);
     $scope.exchange = buySell.getExchange();
 
     return $scope.exchange.signup($scope.fields.countryCode, $scope.transaction.currency.code)
-      .then(() => $scope.fetchProfile())
+      .then(() => $scope.exchange.fetchProfile())
       .then(() => $scope.getPaymentMethods())
       .catch($scope.standardError);
   };
@@ -363,7 +351,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   });
 
   $scope.$watch('step', (newVal) => {
-    if ($scope.exchange.user && !$scope.exchange.profile) $scope.fetchProfile().catch($scope.standardError);
+    if ($scope.exchange.user && !$scope.exchange.profile) $scope.exchange.fetchProfile().catch($scope.standardError);
     if ($scope.steps['email'] === newVal && !Wallet.goal.firstLogin) Wallet.resendEmailConfirmation();
   });
 
@@ -391,9 +379,4 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
       $scope.getQuote();
     }
   });
-
-  $scope.initBuy = () => {
-    $uibModalInstance.dismiss('');
-    $timeout(() => buySell.openBuyView());
-  };
 }
