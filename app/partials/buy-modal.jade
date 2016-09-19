@@ -31,7 +31,7 @@
       include ./buy-amount
     div.width-80(ng-show="onStep('select-country')" ng-controller="BuySelectCountryCtrl")
       include ./buy-select-country
-    div.width-80(ng-show="onStep('email')")
+    div.width-80(ng-show="onStep('email')" ng-controller="BuyEmailCtrl")
       include ./buy-email
     div.width-80(ng-show="onStep('accept-terms')")
       include ./buy-accept-terms
