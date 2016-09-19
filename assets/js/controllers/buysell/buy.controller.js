@@ -253,8 +253,9 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     }
 
     let buyError = eventualError('ERROR_TRADE_CREATE');
+    let amount = Math.round($scope.transaction.fiat * 100);
 
-    $scope.exchange.buy($scope.transaction.fiat * 100, $scope.transaction.currency.code, $scope.getMethod().inMedium)
+    $scope.exchange.buy(amount, $scope.transaction.currency.code, $scope.getMethod().inMedium)
                    .catch(buyError)
                    .then(success, $scope.standardError)
                    .then($scope.watchAddress);
