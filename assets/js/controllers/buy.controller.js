@@ -340,7 +340,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   };
 
   $scope.fakeBankTransfer = () => {
-    $scope.trade.fakeBankTransfer().then($scope.formatTrade('processing'));
+    $scope.trade.fakeBankTransfer().then(() => { $scope.formatTrade('processing'); });
   };
 
   $scope.$watch('method', $scope.updateAmounts);
