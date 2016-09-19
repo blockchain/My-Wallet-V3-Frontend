@@ -189,6 +189,9 @@ function isignthis ($sce) {
             case 'FAILED':
               scope.onComplete('failed');
               break;
+            case 'CANCELLED':
+              scope.onComplete('cancelled');
+              break;
           }
         })
         .publish();
