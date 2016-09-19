@@ -4,6 +4,7 @@ angular
 
 function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWallet) {
   $scope.buySellStatus = buySell.getStatus;
+  $scope.trades = buySell.trades;
 
   $scope.status = {
     loading: false,
@@ -53,7 +54,6 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
     if (buySell.getStatus().metaDataService && buySell.getExchange().user) {
       $scope.status.loading = true;
       buySell.login().finally(() => {
-        $scope.trades = buySell.trades;
         $scope.kyc = buySell.kycs[0];
         $scope.exchange = buySell.getExchange();
         $scope.status.loading = false;
