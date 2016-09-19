@@ -17,10 +17,8 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
   $scope.wait = (t) => $q(r => $timeout(r, t));
 
   $scope.initializePayments = () => {
-    let index = $scope.selectedAccount.index;
-
     let paymentsP = $scope.addresses.reduce((chain, a) => chain.then(payments => $q(resolve => {
-      let p = new Wallet.Payment().from(a.address).to(index).useAll();
+      let p = new Wallet.Payment().from(a.address).useAll();
       p.sideEffect(() => resolve(payments.concat(p)));
     })), $q.resolve([]));
 
@@ -65,7 +63,12 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
 
     $scope.payments.reduce((chain, payment, i) => chain.then(() => {
       if ($scope.status.cancelled) return $q.reject('CANCELLED');
-      let signAndPublish = () => $q.resolve(payment.build().sign(pw).publish().payment);
+
+      let signAndPublish = () => {
+        payment.to($scope.selectedAccount.index);
+        $scope.selectedAccount.incrementReceiveIndex();
+        return $q.resolve(payment.build().sign(pw).publish().payment);
+      };
 
       payment.sideEffect(p => {
         let sweepErr = 'SWEEP_LOW_BALANCE_ERR';
