@@ -28,17 +28,17 @@
     .alert-in-app
       alerts(context="alerts")
     div.width-80(ng-show="onStep('amount')")
-      include ./buy-amount
+      include ./buy/amount
     div.width-80(ng-show="onStep('select-country')" ng-controller="BuySelectCountryCtrl")
-      include ./buy-select-country
+      include ./buy/select-country
     div.width-80(ng-show="onStep('email')" ng-controller="BuyEmailCtrl")
-      include ./buy-email
+      include ./buy/email
     div.width-80(ng-show="onStep('accept-terms')")
-      include ./buy-accept-terms
+      include ./buy/accept-terms
     div.width-80(ng-show="onStep('select-payment-method')")
-      include ./buy-select-payment-method
+      include ./buy/select-payment-method
     div.width-80(ng-show="onStep('summary')" ng-controller="BuySummaryCtrl")
-      include ./buy-summary
+      include ./buy/summary
     div.iframe(ng-if="onStep('isx')")
       isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="formatTrade" payment-info="paymentInfo" on-resize="onResize(step)")
     div.width-80(ng-if="onStep('trade-formatted')")
