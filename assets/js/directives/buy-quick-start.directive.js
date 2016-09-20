@@ -61,6 +61,6 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
       Alerts.displayError('ERROR_QUOTE_FETCH');
     };
 
-    scope.$on('$destroy', () => stopFetchingQuote);
+    scope.$on('$destroy', stopFetchingQuote);
   }
 }
