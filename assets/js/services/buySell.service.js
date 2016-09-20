@@ -3,6 +3,7 @@ angular
   .factory('buySell', buySell);
 
 function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell) {
+  let errorStates = ['cancelled', 'expired', 'rejected'];
   let pendingStates = ['awaiting_transfer_in', 'processing', 'reviewing'];
   let completedStates = ['expired', 'rejected', 'cancelled', 'completed', 'completed_test'];
   let watchableStates = ['completed', 'completed_test'];
@@ -53,7 +54,12 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
     getCurrency,
     signupForAccess,
     submitFeedback,
-    resolveState
+    resolveState,
+    tradeStateIn,
+    errorStates,
+    pendingStates,
+    completedStates,
+    watchableStates
   };
 
   let unwatch = $rootScope.$watch(service.getExchange, (exchange) => {

@@ -277,6 +277,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     if ($scope.trade.bankAccount && $scope.trade.state === 'awaiting_transfer_in') state = 'bank_transfer';
 
     $scope.formattedTrade = formatTrade[state]($scope.trade);
+    $scope.completed = buySell.tradeStateIn(buySell.completedStates)($scope.trade);
   }
 
   $scope.onResize = (step) => $scope.isxStep = step;
@@ -314,9 +315,10 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   $scope.$watch('expiredQuote', (newVal) => {
     if (newVal && !$scope.isKYC && $scope.exchange.user) {
-      $scope.status.gettingQuote = true;
+      !buySell.tradeStateIn(buySell.completedStates)($scope.trade) && ($scope.status.gettingQuote = true);
+
       if (!$scope.trade) $scope.getQuote();
-      else $scope.trade.btcExpected().then(updateBTCExpected);
+      else !buySell.tradeStateIn(buySell.completedStates)($scope.trade) && $scope.trade.btcExpected().then(updateBTCExpected);
     }
   });
 
