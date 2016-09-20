@@ -310,7 +310,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   $scope.$watchGroup(['exchange.user', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
   $scope.$watch('user.isEmailVerified', () => $scope.onStep('email') && $scope.nextStep());
-  $scope.$watch('bitcoinReceived', (newVal) => newVal && ($scope.formattedTrade = formatTrade['success'](trade)));
+  $scope.$watch('bitcoinReceived', (newVal) => newVal && ($scope.formattedTrade = formatTrade['success']($scope.trade)));
 
   $scope.$watch('expiredQuote', (newVal) => {
     if (newVal && !$scope.isKYC && $scope.exchange.user) {
