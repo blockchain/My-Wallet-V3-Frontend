@@ -3,19 +3,19 @@ angular
   .controller('BuySummaryCtrl', BuySummaryCtrl);
 
 function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency) {
-  $scope.limits = {};
+  $scope.$parent.limits = {};
   $scope.exchange = buySell.getExchange();
   $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
   $scope.isBankTransfer = () => $scope.isMedium('bank');
 
   $scope.getMaxMin = (curr) => {
     const calculateMin = (rate) => {
-      $scope.limits.min = (rate * 10).toFixed(2);
+      $scope.$parent.limits.min = (rate * 10).toFixed(2);
     };
 
     const calculateMax = (rate) => {
-      $scope.limits.max = buySell.calculateMax(rate, $scope.method).max;
-      $scope.limits.available = buySell.calculateMax(rate, $scope.method).available;
+      $scope.$parent.limits.max = buySell.calculateMax(rate, $scope.method).max;
+      $scope.$parent.limits.available = buySell.calculateMax(rate, $scope.method).available;
     };
 
     return buySell.fetchProfile(true).then(() => {

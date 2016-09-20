@@ -208,7 +208,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     } else if ($scope.onStep('select-payment-method')) {
       return !$scope.quote;
     } else if ($scope.onStep('summary')) {
-      return $scope.editAmount;
+      return $scope.editAmount || !$scope.limits.max;
     }
   };
 
