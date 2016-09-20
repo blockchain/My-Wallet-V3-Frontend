@@ -82,7 +82,7 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
     let kycStates = ['pending', 'manual_review', 'declined', 'rejected'];
     $scope.showKycStatus = () => (
       $scope.kyc &&
-      $scope.exchange.profile.level.name < 2 &&
+      buySell.getExchange().profile.level.name < 2 &&
       kycStates.indexOf($scope.kyc.state) > -1
     );
 
