@@ -33,11 +33,13 @@ function BuySelectCountryCtrl ($scope, country, MyWallet, buySell) {
     buySell.signupForAccess(email, country);
   };
 
-  $scope.startsWith = (viewValue, search) => {
+  $scope.checkStartsWith = (viewValue, search) => {
+    let startsWith = (a, b) => a.toLowerCase().lastIndexOf(b.toLowerCase(), 0) === 0;
+
     if (!search.length) return true;
     else {
-      return viewValue.toLowerCase && viewValue.toLowerCase().startsWith(search.toLowerCase()) ||
-             viewValue.name && viewValue.name.toLowerCase().startsWith(search.toLowerCase());
+      return viewValue.toLowerCase && startsWith(viewValue, search) ||
+             viewValue.name && startsWith(viewValue.name, search);
     }
   };
 }

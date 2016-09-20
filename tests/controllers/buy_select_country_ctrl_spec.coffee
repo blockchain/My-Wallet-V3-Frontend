@@ -37,9 +37,9 @@ describe "BuySelectCountryCtrl", ->
     scope = getControllerScope()
     $rootScope.$digest()
 
-  describe "startsWith", ->
+  describe "checkStartsWith", ->
     it "should filter countries that start with the search", ->
-      expect(scope.startsWith('Americaaa', 'am')).toBe(true)
+      expect(scope.checkStartsWith('Americaaa', 'am')).toBe(true)
 
   describe "signupForAccess", ->
     it "should call buySell signup", ->
