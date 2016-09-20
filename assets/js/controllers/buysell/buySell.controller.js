@@ -111,12 +111,14 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
   }
 
   $scope.poll = () => {
-    buySell.pollUserLevel($scope.kyc)
+    let poll = buySell.pollUserLevel($scope.kyc);
+    poll.result
       .then(() => Alerts.displaySuccess('KYC_APPROVED', true))
       .then(() => {
         $scope.buy();
         $state.go('wallet.common.buy-sell');
       });
+    $scope.$on('$destroy', poll.cancel);
   };
 
   $scope.getMaxMin = () => {

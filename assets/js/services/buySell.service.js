@@ -108,10 +108,10 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
   }
 
   function pollUserLevel (kyc) {
+    let stop;
     let profile = service.getExchange().profile;
 
     let pollUntil = (action, test) => $q((resolve) => {
-      let stop;
       let exit = () => { stop(); resolve(); };
       let check = () => action().then(() => test() && exit());
       stop = MyWalletHelpers.exponentialBackoff(check);
@@ -120,7 +120,10 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
     let pollKyc = () => pollUntil(() => kyc.refresh(), () => kyc.state === 'completed');
     let pollProfile = () => pollUntil(() => profile.fetch(), () => +profile.level.name === 2);
 
-    return $q.resolve(pollKyc().then(pollProfile));
+    return {
+      cancel: () => stop && stop(),
+      result: $q.resolve(pollKyc().then(pollProfile))
+    };
   }
 
   function getOpenKYC () {
