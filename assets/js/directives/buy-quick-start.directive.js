@@ -1,9 +1,9 @@
 angular.module('walletApp')
   .directive('buyQuickStart', buyQuickStart);
 
-buyQuickStart.$inject = ['currency', 'buySell', 'Alerts'];
+buyQuickStart.$inject = ['currency', 'buySell', 'Alerts', '$interval'];
 
-function buyQuickStart (currency, buySell, Alerts) {
+function buyQuickStart (currency, buySell, Alerts, $interval) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -36,24 +36,31 @@ function buyQuickStart (currency, buySell, Alerts) {
       scope.buy({ amt: scope.transaction.fiat });
     };
 
-    scope.$watchGroup(['transaction.currency', 'transaction.fiat'], (newVal, oldVal) => {
-      if (!scope.transaction.currency || !scope.transaction.fiat) {
-        scope.quote = undefined; return;
-      }
+    let fetchingQuote;
+    let startFetchingQuote = () => {
+      fetchingQuote = $interval(() => scope.getQuote(), 1000 * 60);
+    };
 
-      if (newVal !== oldVal) {
-        const success = (quote) => {
-          scope.quote = quote;
-          scope.status = {};
-          Alerts.clear();
-        };
+    let stopFetchingQuote = () => {
+      $interval.cancel(fetchingQuote);
+    };
 
-        const error = () => {
-          Alerts.displayError('ERROR_QUOTE_FETCH');
-        };
+    scope.getQuote = () => {
+      stopFetchingQuote();
+      startFetchingQuote();
+      scope.transaction.fiat && buySell.getQuote(scope.transaction.fiat, scope.transaction.currency.code).then(success, error);
+    };
 
-        buySell.getQuote(scope.transaction.fiat, scope.transaction.currency.code).then(success, error);
-      }
-    });
+    const success = (quote) => {
+      scope.quote = quote;
+      scope.status = {};
+      Alerts.clear();
+    };
+
+    const error = () => {
+      Alerts.displayError('ERROR_QUOTE_FETCH');
+    };
+
+    scope.$on('$destroy', () => stopFetchingQuote);
   }
 }
