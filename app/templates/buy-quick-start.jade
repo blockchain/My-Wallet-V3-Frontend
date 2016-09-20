@@ -10,7 +10,7 @@ form.border.paml.mtml(name="fiatForm" ng-submit="triggerBuy()")
           name="fiat"
           tabindex="1"
           focus-when="status.ready"
-          ng-change="status.waiting = true"
+          ng-change="getQuote()"
           ng-model-options="{debounce: 250}"
           placeholder="{{limits.card.min}}"
           min="{{limits.card.min}}"
