@@ -32,4 +32,14 @@ function BuySelectCountryCtrl ($scope, country, MyWallet, buySell) {
     let country = $scope.countries.countryCodes.filter(c => c['Code'] === $scope.fields.countryCode)[0]['Name'];
     buySell.signupForAccess(email, country);
   };
+
+  $scope.checkStartsWith = (viewValue, search) => {
+    let startsWith = (a, b) => a.toLowerCase().lastIndexOf(b.toLowerCase(), 0) === 0;
+
+    if (!search.length) return true;
+    else {
+      return viewValue.toLowerCase && startsWith(viewValue, search) ||
+             viewValue.name && startsWith(viewValue.name, search);
+    }
+  };
 }

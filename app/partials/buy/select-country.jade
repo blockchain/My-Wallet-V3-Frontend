@@ -5,8 +5,8 @@
       ui-select(ng-model="fields.countryCode" tagging)
         ui-select-match(placeholder="{{'SEARCH' | translate}}...") 
           span {{ $select.selected['Name'] }}
-        ui-select-choices(repeat="country['Code'] as country in countries.countryCodes | filter: $select.search")
-          span(ng-bind-html="country['Name']")
+        ui-select-choices(repeat="country['Code'] as country in countries.countryCodes | filter:$select.search:checkStartsWith")
+          span(ng-bind-html="country['Name'] | highlight: $select.search")
   .flex-center.flex-between.flex-row.row.mtl(ng-show="isCountryBlacklisted")
     i.ti-alert.sent.mrs.type-h4
     span.sent.mrs(translate="BLACKLISTED_COUNTRY")
