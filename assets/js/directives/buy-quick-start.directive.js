@@ -48,6 +48,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
     scope.getQuote = () => {
       stopFetchingQuote();
       startFetchingQuote();
+      scope.status.waiting = true;
       scope.transaction.fiat && buySell.getQuote(scope.transaction.fiat, scope.transaction.currency.code).then(success, error);
     };
 
