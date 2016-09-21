@@ -10,7 +10,7 @@ function quoteCountdown ($interval) {
     replace: true,
     scope: {
       expiredQuote: '=',
-      tradeCreatedAt: '=',
+      tradeObj: '=',
       quote: '='
     },
     templateUrl: 'templates/quote-countdown.jade',
@@ -20,15 +20,13 @@ function quoteCountdown ($interval) {
 
   function link (scope, elem, attrs) {
     scope.counter = $interval(() => {
-      if (!scope.quote && !scope.tradeCreatedAt) return;
-      let now = new Date();
+      if (!scope.quote && !scope.tradeObj) return;
       let expiresAt;
-      if (scope.quote) {
-        expiresAt = new Date(scope.quote.expiresAt);
-      } else {
-        // TODO: use trade.priceQuoteExpiryTime once Coinify adds it
-        expiresAt = new Date(scope.tradeCreatedAt).getTime() + 15 * 60 * 1000;
-      }
+      let now = new Date();
+
+      if (scope.quote) expiresAt = new Date(scope.quote.expiresAt);
+      else expiresAt = new Date(scope.tradeObj.quoteExpireTime);
+
       scope.expiredQuote = false;
 
       let diff = expiresAt - now;
@@ -36,9 +34,7 @@ function quoteCountdown ($interval) {
       let minutes = parseInt(time, 10);
       let seconds = parseInt((time % 1) * 60, 10);
       if (seconds < 10) seconds = '0' + seconds;
-      if (time <= 0) {
-        scope.expiredQuote = true;
-      }
+      if (time <= 0) scope.expiredQuote = true;
 
       scope.count = !time ? undefined : minutes + ':' + seconds;
     }, 1000);

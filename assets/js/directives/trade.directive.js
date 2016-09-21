@@ -18,22 +18,19 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
   return directive;
 
   function link (scope, elem, attrs) {
-    let errorStates = ['cancelled', 'expired', 'rejected'];
-    let successStates = ['completed', 'completed_test'];
-    let pendingStates = ['awaiting_transfer_in', 'processing', 'reviewing'];
-    let completedStates = ['expired', 'rejected', 'cancelled', 'completed', 'completed_test'];
+    scope.update = () => angular.extend(scope, {
+      error: buySell.tradeStateIn(buySell.states.error)(scope.trade),
+      success: buySell.tradeStateIn(buySell.states.success)(scope.trade),
+      pending: buySell.tradeStateIn(buySell.states.pending)(scope.trade),
+      completed: buySell.tradeStateIn(buySell.states.completed)(scope.trade)
+    });
 
-    let fifteenMinutesAgo = new Date(new Date().getTime() - 15 * 60 * 1000);
-    scope.expiredQuote = fifteenMinutesAgo > scope.trade.createdAt;
+    scope.update();
 
     scope.status = {};
+    scope.status.gettingQuote = true;
 
-    scope.update = () => angular.extend(scope, {
-      error: errorStates.indexOf(scope.trade.state) > -1,
-      success: successStates.indexOf(scope.trade.state) > -1,
-      pending: pendingStates.indexOf(scope.trade.state) > -1,
-      completed: completedStates.indexOf(scope.trade.state) > -1
-    });
+    let isExpiredQuote = new Date() > scope.trade.quoteExpireTime;
 
     scope.cancel = (trade) => {
       scope.status.canceling = true;
@@ -50,18 +47,16 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
       scope.buy(t);
     };
 
-    let updateBTCExpected = (quote) => {
+    scope.updateBTCExpected = (quote) => {
       scope.status.gettingQuote = false;
       scope.btcExpected = quote;
     };
 
-    scope.$watch('expiredQuote', (newVal) => {
-      if (newVal) {
-        scope.update();
-        scope.status.gettingQuote = true;
-        scope.trade.btcExpected().then(updateBTCExpected);
-      }
-    });
+    if (isExpiredQuote && scope.pending) {
+      scope.trade.btcExpected().then(scope.updateBTCExpected);
+    } else {
+      scope.status = {};
+    }
 
     scope.$watch('trade.state', scope.update);
   }

@@ -1,6 +1,6 @@
 tr.border
   td.type-lbl.paml
-    span.state.mrl.state-danger-text(ng-show="completed && error") {{ trade.state | translate }}
+    span.state.mrl.state-danger-text(ng-show="completed") {{ trade.state | translate }}
     span.state.mrl.success(ng-show="completed && success && trade.bitcoinReceived") Purchased
     span.state.italic.mrl(ng-show="completed && success && !trade.bitcoinReceived") Pending
     span.state.italic.mrl(ng-show="pending") {{ trade.state | translate }}
@@ -8,15 +8,15 @@ tr.border
     span.type-sm.blue.underline.pointer(ng-click="triggerBuy()" ng-show="trade.state === 'cancelled'") You canceled this order
     span.type-sm.blue.underline.pointer(ng-click="triggerBuy()" ng-show="pending") Finish payment
     span.type-sm.blue.underline.pointer(ng-click="triggerBuy()" ng-show="completed && trade.state !== 'cancelled'") View details
-  td.type-lbl.paml
+  td.type-lbl.pvml
     span.mrm {{ trade.createdAt | date:'d MMMM yyyy, HH:mm' }}
-  td.type-lbl.right-align.paml(ng-show="status.gettingQuote")
-    img(src="img/spinner.gif")
-  td.type-lbl.paml.right-align(ng-hide="status.gettingQuote")
-    span.display-inline-block.mrm.left-align
-      quote-countdown(trade-created-at="trade.createdAt" ng-hide="expiredQuote || !pending" expired-quote="expiredQuote")
-    span.display-inline-block(ng-class="{italic: !trade.outAmount && expiredQuote, 'tilda-before': !trade.outAmount && expiredQuote}") {{ expiredQuote && !trade.outAmount ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} {{ trade.outCurrency }}
+  td.type-lbl.pvml.right-align(ng-hide="status.gettingQuote")
+    span.display-inline-block.left-align
+      quote-countdown(trade-obj="trade" ng-hide="expiredQuote || !pending" expired-quote="expiredQuote")
+    span.display-inline-block.mlm(ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ pending && expiredQuote ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} {{ trade.outCurrency }}
   td.type-lbl.paml.right-align
     span(ng-hide="status.gettingQuote")
       span.em-600 {{ trade.sendAmount / 100 | format }} {{ trade.inCurrency }}
       i.ti-trash.mls.state-danger-text(ng-click="pending && !status.canceling && cancel(trade)" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}" ng-class="{fade: !pending || status.canceling, pointer: pending}")
+  td.type-lbl.right-align.paml(ng-show="status.gettingQuote")
+    img(src="img/spinner.gif")
