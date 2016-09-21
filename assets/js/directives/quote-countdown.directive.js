@@ -20,7 +20,9 @@ function quoteCountdown ($interval) {
 
   function link (scope, elem, attrs) {
     scope.counter = $interval(() => {
-      if (!scope.quote && !scope.tradeObj) return;
+      if (!scope.quote && !scope.tradeObj ||
+           scope.quote && !scope.quote.id) return;
+
       let expiresAt;
       let now = new Date();
 

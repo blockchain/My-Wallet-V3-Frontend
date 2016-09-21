@@ -319,19 +319,4 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
       else $scope.trade.btcExpected().then(updateBTCExpected);
     }
   });
-
-  $scope.$watch('transaction.currency.code + transaction.fiat', () => {
-    // Only needed for anonymous quotes...
-    if ($scope.exchange && $scope.exchange.user) return;
-
-    if (
-      !$scope.quote ||
-      !$scope.transaction ||
-      !$scope.transaction.currency ||
-      $scope.transaction.currency.code !== $scope.quote.baseCurrency ||
-      Math.round($scope.transaction.fiat * 100) !== -$scope.quote.baseAmount
-    ) {
-      $scope.getQuote();
-    }
-  });
 }
