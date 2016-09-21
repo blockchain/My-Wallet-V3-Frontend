@@ -45,13 +45,14 @@ function RecoverFundsCtrl ($scope, $rootScope, $state, $timeout, $translate, $co
       Alerts.displayError(err || 'RECOVERY_ERROR');
     };
 
-    Wallet.my.recoverFromMnemonic(
-      $scope.fields.email,
-      $scope.fields.password,
-      $scope.fields.mnemonic,
-      $scope.fields.bip39phrase,
-      success, error
-    );
+    $timeout(() => {
+      Wallet.my.recoverFromMnemonic(
+        $scope.fields.email,
+        $scope.fields.password,
+        $scope.fields.mnemonic,
+        $scope.fields.bip39phrase,
+        success, error);
+    }, 250);
   };
 
   $scope.getMnemonicLength = () => {
@@ -60,17 +61,16 @@ function RecoverFundsCtrl ($scope, $rootScope, $state, $timeout, $translate, $co
 
   $scope.nextStep = () => {
     $scope.working = true;
-    $scope.$$postDigest(() => {
+    $timeout(() => {
       if (!Wallet.my.browserCheck()) {
-        $scope.working = false;
         $scope.browser.disabled = true;
         $scope.browser.msg = $translate.instant('UNSUITABLE_BROWSER');
       } else {
-        $scope.working = false;
         $scope.currentStep++;
         $scope.fields.confirmation = '';
       }
-    });
+      $scope.working = false;
+    }, 250);
   };
 
   $scope.goBack = () => {

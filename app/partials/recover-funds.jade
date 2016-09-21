@@ -5,8 +5,8 @@
     .flex-column
       h2.em-300.mtn(translate="RECOVER_FUNDS")
       p(translate="RECOVER_BTC_LOST")
-  form.ptl.form-horizontal(name="passphraseForm" autocomplete="off" ng-switch-when="1" novalidate)
-    div
+  form.ptl.form-horizontal(name="passphraseForm" ng-submit="nextStep()" autocomplete="off" ng-switch-when="1" novalidate)
+    fieldset(ng-disabled="browser.disabled || working")
       browser-detection(result="browser")
       .security-red.mbl.em-400.flex-center
         i.ti-hand-stop.mrm.h3.mvn.hidden-xs
@@ -20,22 +20,20 @@
           ng-keyup="getMnemonicLength()"
           ng-model="fields.mnemonic"
           is-valid="isValidMnemonic(fields.mnemonic)"
-          ng-disabled="browser.disabled"
           required)
-    .flex-center.flex-end
-      img(ng-show="working" src="img/spinner.gif")
-      button.button-muted.mrm(
-        type="button"
-        ng-disabled="working"
-        ui-sref="public.help"
-        translate="GO_BACK")
-      button.button-primary(
-        type="submit"
-        ng-click="nextStep()"
-        ng-disabled="!passphraseForm.$valid || browser.disabled"
-        translate="CONTINUE")
-  form.rf-step-2.ptl.form-horizontal(name="recoveryForm" ng-switch-when="2")
-    div
+      .flex-center.flex-end
+        button.button-muted.mrm(
+          type="button"
+          ui-sref="public.help"
+          translate="GO_BACK")
+        button.button-primary(
+          type="submit"
+          ui-ladda="working"
+          data-style="expand-left"
+          ng-disabled="passphraseForm.$invalid"
+          ladda-translate="CONTINUE")
+  form.rf-step-2.ptl.form-horizontal(name="recoveryForm" ng-submit="performImport()" ng-switch-when="2")
+    fieldset(ng-disabled="browser.disabled || working")
       .form-group(ng-class="{'has-error': recoveryForm.email.$invalid && recoveryForm.email.$touched}")
         label.em-500(translate="EMAIL")
         input.form-control(
@@ -75,29 +73,26 @@
         span.help-block 
           div(ng-show="recoveryForm.confirmation.$touched")
             p(ng-show="recoveryForm.confirmation.$error.isValid" translate="NO_MATCH")
-    .flex-center.flex-end.mtm.mbl
-      input#agreement_accept.pull-right(
-        name="agreement"
-        type="checkbox"
-        ng-model="fields.acceptedAgreement"
-        ng-disabled="browser.disabled"
-        required)
-      label.em-300.mbn.mls.right-align(translate="ACCEPT_TOS")
-    .flex-center.flex-end.mvl
-      button.button-muted.mrm(
-        type="button"
-        ng-disabled="working"
-        ng-click="goBack()"
-        translate="GO_BACK")
-      button.button-success(
-        type="submit"
-        ng-click="performImport()"
-        ng-disabled="!recoveryForm.$valid || working"
-        ladda-translate="RECOVER_FUNDS"
-        data-style="expand-right"
-        ui-ladda="working")
+      .flex-center.flex-end.mtm.mbl
+        input#agreement_accept.pull-right(
+          name="agreement"
+          type="checkbox"
+          ng-model="fields.acceptedAgreement"
+          required)
+        label.em-300.mbn.mls.right-align(translate="ACCEPT_TOS")
+      .flex-center.flex-end.mvl
+        button.button-muted.mrm(
+          type="button"
+          ng-click="goBack()"
+          translate="GO_BACK")
+        button.button-success(
+          type="submit"
+          ladda-translate="RECOVER_FUNDS"
+          ng-disabled="recoveryForm.$invalid"
+          data-style="expand-right"
+          ui-ladda="working")
   .flex-center.flex-justify.flex-column(ng-switch-when="3")
-    .level-complete.flex-center.flex-justify
+    .level-complete.flex-center.flex-justify.mtl
       i.ti-check.bright-green
     h4.em-300.mtl(translate="RESTORE_SUCCESSFUL")
     p.em-300(translate="REDIRECTING")
