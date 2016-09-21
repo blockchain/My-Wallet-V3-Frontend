@@ -147,7 +147,7 @@ describe "BuyCtrl", ->
     it "should switch to isx step", ->
       scope.transaction.fiat = 1
       scope.exchange.user = {}
-      scope.trade = {state: 'pending'}
+      scope.trade = {state: 'processing'}
       scope.nextStep()
       scope.nextStep()
       expect(scope.onStep('isx')).toEqual(true)
@@ -156,7 +156,7 @@ describe "BuyCtrl", ->
       scope.transaction.fiat = 1
       scope.exchange.user = {}
       scope.isMethodSelected = true
-      scope.trade = {state: 'pending'}
+      scope.trade = {state: 'completed'}
       scope.formattedTrade = 'finished trade'
       scope.nextStep()
       scope.nextStep()

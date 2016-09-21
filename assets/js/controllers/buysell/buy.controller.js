@@ -27,10 +27,9 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
   $scope.needsKyc = () => $scope.isMedium('bank') && +$scope.exchange.profile.level.name < 2;
-  $scope.needsISX = () => !$scope.trade.bankAccount && buySell.resolveState($scope.trade.state) === 'pending' || $scope.isKYC;
+  $scope.needsISX = () => $scope.trade && !$scope.trade.bankAccount && buySell.tradeStateIn(buySell.states.pending)($scope.trade) || $scope.isKYC;
 
-  let fifteenMinutesAgo = new Date(new Date().getTime() - 15 * 60 * 1000);
-  $scope.expiredQuote = $scope.trade && fifteenMinutesAgo > $scope.trade.createdAt && $scope.trade.id;
+  $scope.expiredQuote = $scope.trade && new Date() > $scope.trade.quoteExpireTime && $scope.trade.id;
   let updateBTCExpected = (quote) => { $scope.status.gettingQuote = false; $scope.btcExpected = quote; };
 
   let eventualError = (message) => Promise.reject.bind(Promise, { message });
@@ -314,35 +313,10 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.$watch('bitcoinReceived', (newVal) => newVal && ($scope.formattedTrade = formatTrade['success']($scope.trade)));
 
   $scope.$watch('expiredQuote', (newVal) => {
-    if (newVal && !$scope.isKYC && $scope.exchange.user) {
+    if (newVal && !$scope.isKYC) {
       $scope.status.gettingQuote = true;
       if (!$scope.trade) $scope.getQuote();
       else $scope.trade.btcExpected().then(updateBTCExpected);
-    }
-  });
-
-  $scope.$watch('quote.expiresAt', (newVal) => {
-    if (!$scope.quote || !$scope.exchange.user) return;
-
-    let expiresAt = new Date($scope.quote.expiresAt);
-    if (new Date() > expiresAt) {
-      $scope.quote = null;
-      $scope.getQuote();
-    }
-  });
-
-  $scope.$watch('transaction.currency.code + transaction.fiat', () => {
-    // Only needed for anonymous quotes...
-    if ($scope.exchange && $scope.exchange.user) return;
-
-    if (
-      !$scope.quote ||
-      !$scope.transaction ||
-      !$scope.transaction.currency ||
-      $scope.transaction.currency.code !== $scope.quote.baseCurrency ||
-      Math.round($scope.transaction.fiat * 100) !== -$scope.quote.baseAmount
-    ) {
-      $scope.getQuote();
     }
   });
 }

@@ -3,9 +3,12 @@ angular
   .factory('buySell', buySell);
 
 function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell) {
-  let pendingStates = ['awaiting_transfer_in', 'processing', 'reviewing'];
-  let completedStates = ['expired', 'rejected', 'cancelled', 'completed', 'completed_test'];
-  let watchableStates = ['completed', 'completed_test'];
+  let states = {
+    error: ['expired', 'rejected', 'cancelled'],
+    success: ['completed', 'completed_test'],
+    pending: ['awaiting_transfer_in', 'processing', 'reviewing'],
+    completed: ['expired', 'rejected', 'cancelled', 'completed', 'completed_test']
+  };
   let tradeStateIn = (states) => (t) => states.indexOf(t.state) > -1;
 
   let txHashes = {};
@@ -57,7 +60,8 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     getCurrency,
     signupForAccess,
     submitFeedback,
-    resolveState
+    tradeStateIn,
+    states
   };
 
   let unwatch = $rootScope.$watch(service.getExchange, (exchange) => {
@@ -154,12 +158,12 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
   }
 
   function setTrades (trades) {
-    service.trades.pending = trades.filter(tradeStateIn(pendingStates));
-    service.trades.completed = trades.filter(tradeStateIn(completedStates));
+    service.trades.pending = trades.filter(tradeStateIn(states.pending));
+    service.trades.completed = trades.filter(tradeStateIn(states.completed));
 
     service.trades.completed
       .filter(t => (
-        tradeStateIn(watchableStates)(t) &&
+        tradeStateIn(states.success)(t) &&
         !t.bitcoinReceived &&
         !watching[t.receiveAddress]
       ))
@@ -232,22 +236,5 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     let url = 'https://docs.google.com/a/blockchain.com/forms/d/e/1FAIpQLSeKRzLKn0jsR19vkN6Bw4jK0QW-2pH6Ptb-LbFSaOqxOnbO-Q/viewform?entry.1125242796=' + rating;
     let otherWindow = window.open(url);
     otherWindow.opener = null;
-  }
-
-  function resolveState (state) {
-    // maps a coinify state to one of: pending, rejected, expired, success
-    return ({
-      'pending': 'pending',
-      'awaiting_transfer_in': 'pending',
-      'failed': 'rejected',
-      'rejected': 'rejected',
-      'declined': 'rejected',
-      'manual_rejected': 'rejected',
-      'expired': 'expired',
-      'completed': 'success',
-      'completed_test': 'success',
-      'manual_hold': 'review',
-      'manual_review': 'review'
-    })[state.toLowerCase()];
   }
 }
