@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buySell', buySell);
 
-function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell) {
+function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell) {
   let pendingStates = ['awaiting_transfer_in', 'processing', 'reviewing'];
   let completedStates = ['expired', 'rejected', 'cancelled', 'completed', 'completed_test'];
   let watchableStates = ['completed', 'completed_test'];
@@ -11,6 +11,9 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
   let txHashes = {};
   let watching = {};
   let initialized = $q.defer();
+
+  let poll;
+  let maxPollTime = 30000;
 
   let _buySellMyWallet;
 
@@ -49,6 +52,7 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
     watchAddress,
     fetchProfile,
     openBuyView,
+    pollKYC,
     pollUserLevel,
     getCurrency,
     signupForAccess,
@@ -107,20 +111,38 @@ function buySell ($rootScope, $timeout, $q, $uibModal, Wallet, MyWallet, MyWalle
     });
   }
 
+  function pollKYC () {
+    let kyc = service.kycs[0];
+
+    if (kyc && kyc.state !== 'pending') { return; }
+    if (poll && poll.$$state.status === 0) { return; }
+
+    poll = service.pollUserLevel(kyc).result
+      .then(() => Alerts.displaySuccess('KYC_APPROVED', true))
+      .then(() => {
+        $state.go('wallet.common.buy-sell');
+        $uibModalStack.dismissAll();
+        $timeout(service.openBuyView, 500);
+      });
+  }
+
   function pollUserLevel (kyc) {
+    let stop;
     let profile = service.getExchange().profile;
 
     let pollUntil = (action, test) => $q((resolve) => {
-      let stop;
       let exit = () => { stop(); resolve(); };
       let check = () => action().then(() => test() && exit());
-      stop = MyWalletHelpers.exponentialBackoff(check);
+      stop = MyWalletHelpers.exponentialBackoff(check, maxPollTime);
     });
 
     let pollKyc = () => pollUntil(() => kyc.refresh(), () => kyc.state === 'completed');
     let pollProfile = () => pollUntil(() => profile.fetch(), () => +profile.level.name === 2);
 
-    return $q.resolve(pollKyc().then(pollProfile));
+    return {
+      cancel: () => stop && stop(),
+      result: $q.resolve(pollKyc().then(pollProfile))
+    };
   }
 
   function getOpenKYC () {

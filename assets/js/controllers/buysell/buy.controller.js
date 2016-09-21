@@ -266,8 +266,9 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     $scope.formattedTrade = formatTrade[state]($scope.trade);
 
     if ($scope.needsKyc()) {
-      buySell.pollingLevel = true;
-      return buySell.pollUserLevel(buySell.kycs[0]).then($scope.buy).finally(() => $scope.pollingLevel = false);
+      let poll = buySell.pollUserLevel(buySell.kycs[0]);
+      $scope.$on('$destroy', poll.cancel);
+      return poll.result.then($scope.buy);
     }
   };
 

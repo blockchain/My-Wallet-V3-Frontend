@@ -20,6 +20,7 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
   $scope.onCloseModal = () => {
     $scope.status.modalOpen = false;
     $scope.kyc = buySell.kycs[0];
+    buySell.pollKYC();
   };
 
   $scope.initialize = () => {
@@ -61,11 +62,14 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
 
         if ($scope.exchange) {
           if (+$scope.exchange.profile.level.name < 2) {
-            if ($scope.kyc) return $scope.poll();
-            buySell.getKYCs().then(kycs => {
-              if (kycs.length > 0) $scope.poll();
-              $scope.kyc = kycs[0];
-            });
+            if ($scope.kyc) {
+              buySell.pollKYC();
+            } else {
+              buySell.getKYCs().then(kycs => {
+                if (kycs.length > 0) buySell.pollKYC();
+                $scope.kyc = kycs[0];
+              });
+            }
           }
         } else {
           $scope.$watch(buySell.getExchange, (ex) => $scope.exchange = ex);
@@ -78,7 +82,7 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
     let kycStates = ['pending', 'manual_review', 'declined', 'rejected'];
     $scope.showKycStatus = () => (
       $scope.kyc &&
-      $scope.exchange.profile.level.name < 2 &&
+      buySell.getExchange().profile.level.name < 2 &&
       kycStates.indexOf($scope.kyc.state) > -1
     );
 
@@ -109,15 +113,6 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
       }
     });
   }
-
-  $scope.poll = () => {
-    buySell.pollUserLevel($scope.kyc)
-      .then(() => Alerts.displaySuccess('KYC_APPROVED', true))
-      .then(() => {
-        $scope.buy();
-        $state.go('wallet.common.buy-sell');
-      });
-  };
 
   $scope.getMaxMin = () => {
     const calculateMin = (rate) => {
