@@ -25,6 +25,29 @@
     border-bottom: 1px solid $black;
   }
 }
+
+.sort-by {
+  a {
+    transition: opacity .3s ease-in-out;
+    opacity: .5;
+    margin-right: 1em;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  .active {
+    font-weight: 700;
+    opacity: 1;
+    border-bottom: 1px solid $black;
+  }
+}
+
+@media (max-width: 1130px) {
+  .sort-by {
+    display: none;
+  }
+}
+
 .filter-search {
   position: relative;
   input {
