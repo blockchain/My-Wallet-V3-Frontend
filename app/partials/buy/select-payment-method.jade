@@ -1,6 +1,6 @@
-.payment-methods.ptl
+.payment-methods
   span.type-h5.em-500.flex-start.pts(translate="SELECT_PAYMENT_METHOD")
-  .flex-row.flex-center.pbs.pointer.mtml
+  .flex-row.flex-center.pointer.mtml
     input.man(type="radio" name="inMedium" id="card" ng-model="method" value="card" ng-disabled="status.waiting")
     .flex-column.flex-1.mlm.pointer
       label.mts.pointer.em-400(for="card")
@@ -9,11 +9,13 @@
             img.mrm(src="img/credit-card.png")
             img.mrm.checked(src="img/credit-card-blue.png")
           .flex-column
-            span.type-h5.em-400(translate="Credit/Debit Card")
+            span.type-h5.em-400(translate="CARD")
             span.flex-row
-              span.em-300(translate="CARD_TRANSFER.TITLE")
+              span.em-400(translate="CARD_TRANSFER.TITLE")
               helper-button(content="CARD_TRANSFER.COPY")
-  .flex-row.flex-center.pvs.pointer
+  .mlm.mbl.em-300.width-70(ng-show="method === 'card' && !userHasExchangeAcct")
+    span(translate="VERIFY_CARD_NOTE")
+  .flex-row.flex-center.pointer
     input.man(type="radio" name="inMedium" id="bank" ng-model="method" value="bank" ng-disabled="status.waiting")
     .flex-column.flex-1.mlm.pointer
       label.mts.pointer.em-400(for="bank")
@@ -22,11 +24,9 @@
             img.mrm(src="img/bank.png")
             img.mrm.checked(src="img/bank-blue.png")
           .flex-column
-            span.type-h5.em-400(translate="Bank Transfer")
+            span.type-h5.em-400(translate="BANK")
             span.flex-row
-              span.em-300(translate="BANK_TRANSFER.TITLE")
+              span.em-400(translate="BANK_TRANSFER.TITLE")
               helper-button(content="BANK_TRANSFER.COPY")
-  .flex-row.mbl.pvs
-    .mam
-    .mlm.blue.width-70.type-sm(ng-hide="exchange.profile.level.name >= 2 || method !== 'bank'")
-      label.em-400(translate="VERIFY_ID_NOTE")
+  .mlm.mbl.em-300.width-70(ng-hide="exchange.profile.level.name >= 2 || method !== 'bank'")
+    span(translate="VERIFY_ID_NOTE")
