@@ -230,6 +230,9 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   };
 
   $scope.watchAddress = () => {
+    if ($rootScope.buySellDebug) {
+      console.log('$scope.watchAddress() for', $scope.trade);
+    }
     if (!$scope.trade || $scope.bitcoinReceived || $scope.isKYC) return;
     const success = () => $timeout(() => $scope.bitcoinReceived = true);
     $scope.trade.watchAddress().then(success);
