@@ -26,11 +26,8 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
     });
 
     scope.update();
-
     scope.status = {};
-    scope.status.gettingQuote = true;
-
-    let isExpiredQuote = new Date() > scope.trade.quoteExpireTime;
+    scope.expiredQuote = new Date() > scope.trade.quoteExpireTime;
 
     scope.cancel = (trade) => {
       scope.status.canceling = true;
@@ -47,17 +44,21 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
       scope.buy(t);
     };
 
-    scope.updateBTCExpected = (quote) => {
-      scope.status.gettingQuote = false;
-      scope.btcExpected = quote;
+    scope.updateBTCExpected = () => {
+      scope.status.gettingQuote = true;
+
+      const success = (quote) => {
+        scope.status.gettingQuote = false;
+        scope.btcExpected = quote;
+      };
+
+      scope.trade.btcExpected().then(success);
     };
 
-    if (isExpiredQuote && scope.pending) {
-      scope.trade.btcExpected().then(scope.updateBTCExpected);
-    } else {
-      scope.status = {};
-    }
-
     scope.$watch('trade.state', scope.update);
+    scope.$watch('expiredQuote', (newVal, oldVal) => {
+      if (newVal) scope.updateBTCExpected();
+      else scope.status = {};
+    });
   }
 }
