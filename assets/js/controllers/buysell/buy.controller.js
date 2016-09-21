@@ -14,9 +14,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   $scope.buySellDebug = $rootScope.buySellDebug;
 
-  let accountIndex = $scope.trade && $scope.trade.accountIndex ? $scope.trade.accountIndex : MyWallet.wallet.hdwallet.defaultAccount.index;
-  $scope.label = MyWallet.wallet.hdwallet.accounts[accountIndex].label;
-
   $scope.method = $scope.trade ? $scope.trade.medium : 'card';
   $scope.methods = {};
   $scope.getMethod = () => $scope.methods[$scope.method] || {};
@@ -236,31 +233,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     if (!$scope.trade || $scope.bitcoinReceived || $scope.isKYC) return;
     const success = () => $timeout(() => $scope.bitcoinReceived = true);
     $scope.trade.watchAddress().then(success);
-  };
-
-  $scope.buy = () => {
-    $scope.status.waiting = true;
-
-    let success = (trade) => {
-      $scope.trade = trade;
-      Alerts.clear($scope.alerts);
-      if ($scope.trade.bankAccount) $scope.formatTrade('bank_transfer');
-
-      $scope.nextStep();
-    };
-
-    // check if bank transfer and kyc level
-    if ($scope.needsKyc()) {
-      return buySell.getOpenKYC().then(success, $scope.standardError);
-    }
-
-    let buyError = eventualError('ERROR_TRADE_CREATE');
-    let amount = Math.round($scope.transaction.fiat * 100);
-
-    $scope.exchange.buy(amount, $scope.transaction.currency.code, $scope.getMethod().inMedium)
-                   .catch(buyError)
-                   .then(success, $scope.standardError)
-                   .then($scope.watchAddress);
   };
 
   $scope.formatTrade = (state) => {

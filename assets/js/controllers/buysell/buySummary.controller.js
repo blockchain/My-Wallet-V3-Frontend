@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySummaryCtrl', BuySummaryCtrl);
 
-function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency) {
+function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency, Alerts) {
   $scope.$parent.limits = {};
   $scope.exchange = buySell.getExchange();
   $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
@@ -49,6 +49,33 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency) {
     $timeout(() => {
       $scope.$parent.fiatFormInvalid = $scope.tempFiatForm.$invalid && !$scope.needsKyc();
     });
+  };
+
+  let eventualError = (message) => Promise.reject.bind(Promise, { message });
+
+  $scope.$parent.buy = () => {
+    $scope.status.waiting = true;
+
+    let success = (trade) => {
+      $scope.$parent.trade = trade;
+      Alerts.clear($scope.alerts);
+      if ($scope.$parent.trade.bankAccount) $scope.formatTrade('bank_transfer');
+
+      $scope.nextStep();
+    };
+
+    // check if bank transfer and kyc level
+    if ($scope.needsKyc()) {
+      return buySell.getOpenKYC().then(success, $scope.standardError);
+    }
+
+    let buyError = eventualError('ERROR_TRADE_CREATE');
+    let amount = Math.round($scope.transaction.fiat * 100);
+
+    $scope.exchange.buy(amount, $scope.transaction.currency.code, $scope.getMethod().inMedium)
+                   .catch(buyError)
+                   .then(success, $scope.standardError)
+                   .then($scope.watchAddress);
   };
 
   $scope.$watch('transaction.currency', (newVal, oldVal) => {
