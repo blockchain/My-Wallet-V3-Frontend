@@ -4,7 +4,7 @@ div
       .flex-between.flex-center.flex-wrap
         h2.em-300.mtn(ng-hide="didLogout" translate="WELCOME_BACK")
         h2.em-300.mtn(ng-show="didLogout" translate="LOGGED_OUT")
-        span.register.mbm(ng-hide="didLogout")
+        span.register.mbm
           span(translate="OR")
           | 
           a.em-300(ng-click="register()")
@@ -19,7 +19,7 @@ div
       div
         input#UID_input.form-control(type="text", ng-model="uid", ng-disabled="busy || browser.disabled" name="UID_input" focus-when="!uidAvailable")
         span.help-block(ng-show="errors.uid" ui-sref="public.reminder" translate="{{ errors.uid }}")
-        span.help-block.info.hidden-xs(ng-hide="didLogout" translate="FIND_GUID_EXPLAIN")
+        span.help-block.info.hidden-xs(translate="FIND_GUID_EXPLAIN")
     .form-group(ng-class="{'has-error': errors.password}")
       label.em-500(translate="PASSWORD", for="pass_input")
       div
@@ -51,12 +51,13 @@ div
       span.pointer.em-300.blue.mls(translate="TAKE_SURVEY")
 
   // Deauthorize Browser
-  .pvl.mtl.flex-between.flex-center.border-top-light(ng-show="didLogout && canDeauth")
-    .flex-column.flex-2.prm
-      h5.state-danger-text.em-300(translate="DEAUTH_BROWSER")
-      p.em-400(translate="DEAUTH_EXPLAIN")
-    .flex-1.flex-end
-      a.button-danger.button-nowrap(ng-hide="deauthorized" ng-click="deauth()" ng-disabled="working" translate="DEAUTHORIZE")
-      span.success(ng-show="deauthorized")
-        i.ti-check.success-green
-        span.mam(translate="DEAUTHORIZED")
+  .slide-up-outer(ng-class="deauthorized ? 'slide-out' : 'slide-in'" ng-show="didLogout && canDeauth")
+    .slide-up-inner.ptl.mtl.border-top-light.flex-between.flex-center
+      .flex-column.flex-2.prm
+        h5.state-danger-text.em-300(translate="DEAUTH_BROWSER")
+        p.em-400(translate="DEAUTH_EXPLAIN")
+      .flex-1.flex-end
+        button.button-danger.button-nowrap(ng-hide="deauthorized" ng-click="deauth()" ng-disabled="working" translate="DEAUTHORIZE")
+        span.success(ng-show="deauthorized")
+          i.ti-check.success-green
+          span.mam(translate="DEAUTHORIZED")

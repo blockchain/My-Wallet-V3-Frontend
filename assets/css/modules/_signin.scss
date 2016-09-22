@@ -47,7 +47,6 @@ div.login-form {
   background-color: white;
   padding: 10px 50px 25px;
   width: 550px;
-  border-radius: 10px;
   box-shadow: 0px 0px 20px -8px black;
   max-height: 600px;
   overflow: auto;
@@ -58,7 +57,7 @@ div.login-form {
   .form-horizontal .form-group {
     margin-top: 15px;
     margin-left: auto;
-    margin-right: auto; 
+    margin-right: auto;
   }
   .help-block .info {
     color: $mid-grey;
@@ -122,7 +121,7 @@ div.login-form {
 }
 
 .recover-funds {
-  .rf-step-2 .flex-center .button-muted{ 
+  .rf-step-2 .flex-center .button-muted{
       min-height: 45px;
   }
 }
