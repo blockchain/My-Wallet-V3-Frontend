@@ -13,7 +13,12 @@ function theme () {
     {
       'name': 'dev',
       'class': 'dev-theme',
-      'display-name': 'The Matrix'
+      'display-name': 'Dev Theme'
+    },
+    {
+      'name': 'berlin',
+      'class': 'berlin-theme',
+      'display-name': 'Berlin (Red & White)'
     }
   ];
 
