@@ -6,7 +6,8 @@
           span.sr-only Toggle navigation
           span.ti-menu.white
         a.navbar-brand(ui-sref="wallet.common.home") 
-          img#logo(src="img/blockchain-wallet-logo.svg", alt="Blockchain")
+          img#logo(src="img/blockchain-wallet-logo.svg", alt="Blockchain" ng-show="getTheme().name === 'default'")
+          img#logo(src="img/blockchain-wallet-logo-dev.svg", alt="Blockchain" ng-show="getTheme().name === 'dev'")
       a#wallet-nav-toggle(title="Wallet Navigation Menu", ng-click="navCollapsed = !navCollapsed")
         span.ti-angle-down.white.h4(ng-show="navCollapsed")
         span.ti-angle-up.white.h4(ng-show="!navCollapsed")
@@ -53,7 +54,8 @@
               span {{ nLatestFeats() }}
         li.item
           a(ng-click="refresh()" ng-class="{'rotating': refreshing}").refresh
-            img(src="img/refresh.svg")
+            img(src="img/refresh.svg" ng-show="getTheme().name === 'default'")
+            img(src="img/refresh-dev.svg" ng-show="getTheme().name === 'dev'")
         li.item
           a(ng-click="logout()")
             span.white(translate="SIGNOUT")
