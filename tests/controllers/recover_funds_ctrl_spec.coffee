@@ -38,10 +38,11 @@ describe "RecoverFundsCtrl", ->
       scope.getMnemonicLength()
       expect(scope.isValidMnemonicLength).toBeTruthy()
 
-    it "should be able to increase steps", ->
+    it "should be able to increase steps", inject(($timeout) ->
       scope.nextStep()
-      scope.$digest()
+      $timeout.flush()
       expect(scope.currentStep).toBe(2)
+    )
 
     it "should be able to go back steps", ->
       scope.goBack()
@@ -52,6 +53,7 @@ describe "RecoverFundsCtrl", ->
       it "should stop 'working' after callback", inject(($timeout) ->
         spyOn(Wallet, "login")
         scope.performImport()
-        expect(scope.working).toBe(false)
         $timeout.flush()
+        $timeout.flush()
+        expect(scope.working).toBe(false)
       )
