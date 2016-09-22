@@ -14,3 +14,19 @@ body.dev-theme {
     background-color: #1e1e1e !important;
   }
 }
+
+// all dev themes
+body.dev-theme,
+body.berlin-theme {
+  button,
+  .button,
+  .button-primary,
+  .button-success,
+  .button-default,
+  .button-info,
+  .button-danger,
+  .button-transfer {
+    border-radius: 5px !important;
+    border: 1px solid #ddd !important;
+  }
+}
