@@ -77,7 +77,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
         curr: trade.inCurrency,
         fiatAmt: trade.sendAmount / 100,
         btcAmt: (trade.outAmount || trade.outAmountExpected) / 100000000,
-        url: $rootScope.buySellDebug && !trade.receiptUrl ? 'https://goo.gl/uXkl8O' : trade.receiptUrl
+        url: $rootScope.buySellDebug && !trade.receiptUrl ? 'https://goo.gl/m0uKEx' : trade.receiptUrl
       },
       namespace: 'TX_SUCCESS'
     };
