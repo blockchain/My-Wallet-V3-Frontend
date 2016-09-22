@@ -93,6 +93,7 @@ describe "BuyCtrl", ->
 
     it "should update with the correct values", ->
       scope.exchange.user = {}
+      scope.method = 'card'
       scope.quote =
         quoteAmount: 10000 # $100.00
         id: 1
