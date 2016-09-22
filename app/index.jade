@@ -60,7 +60,8 @@ head
 body.bg-white.text-color(
   ui-view="body"
   ng-mousemove="onAction()"
-  ng-click="onAction()")
+  ng-click="onAction()"
+  ng-class="getTheme()")
   noscript
     img(src="/img/logo-bw.png")
     h3 Please enable JavaScript to use the Blockchain Wallet

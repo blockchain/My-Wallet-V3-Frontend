@@ -2,15 +2,17 @@ angular
   .module('walletApp')
   .controller('SettingsPreferencesCtrl', SettingsPreferencesCtrl);
 
-function SettingsPreferencesCtrl ($scope, Wallet, Alerts, currency, $uibModal, $filter, $translate, $window, languages, bcPhoneNumber) {
+function SettingsPreferencesCtrl ($scope, Wallet, Alerts, currency, $uibModal, $filter, $translate, $window, languages, bcPhoneNumber, theme) {
   $scope.user = Wallet.user;
   $scope.settings = Wallet.settings;
   $scope.notifications = $scope.settings.notifications;
   $scope.languages = languages;
+  $scope.themes = theme.themes;
   $scope.currencies = currency.currencies;
   $scope.btcCurrencies = currency.bitCurrencies;
   $scope.btc = currency.bitCurrencies[0];
 
+  $scope.changeTheme = Wallet.changeTheme;
   $scope.changeLanguage = Wallet.changeLanguage;
   $scope.changeCurrency = Wallet.changeCurrency;
   $scope.changeBTCCurrency = Wallet.changeBTCCurrency;
