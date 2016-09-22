@@ -41,12 +41,6 @@ describe "SignupCtrl", ->
 
     return
 
-  it "should close", inject((Alerts) ->
-    spyOn(Alerts, "clear")
-    scope.close()
-    expect(Alerts.clear).toHaveBeenCalled()
-  )
-
   it "should have initial values", ->
     expect(scope.fields.email).toBeDefined()
     expect(scope.fields.password).toBeDefined()
@@ -110,12 +104,14 @@ describe "SignupCtrl", ->
       form.agreement.$setViewValue(true)
       scope.$digest()
 
-    it "should call createWallet()", ->
+    it "should call createWallet()", inject(($timeout) ->
       spyOn(scope, "createWallet")
       scope.signup()
       scope.$digest()
+      $timeout.flush()
 
       expect(scope.createWallet).toHaveBeenCalled()
+    )
 
     it "should not call createWallet() if validation failed", ->
       spyOn(scope, "createWallet")

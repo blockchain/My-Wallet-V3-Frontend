@@ -2,18 +2,11 @@ angular
   .module('walletApp')
   .controller('SignupCtrl', SignupCtrl);
 
-SignupCtrl.$inject = ['$scope', '$state', '$cookies', '$filter', '$translate', '$uibModal', 'Wallet', 'Alerts', 'currency', 'languages', 'MyWallet'];
+SignupCtrl.$inject = ['$scope', '$state', '$cookies', '$filter', '$timeout', '$translate', 'Wallet', 'currency', 'languages', 'MyWallet'];
 
-function SignupCtrl ($scope, $state, $cookies, $filter, $translate, $uibModal, Wallet, Alerts, currency, languages, MyWallet) {
+function SignupCtrl ($scope, $state, $cookies, $filter, $timeout, $translate, Wallet, currency, languages, MyWallet) {
   $scope.working = false;
-  $scope.alerts = Alerts.alerts;
-  $scope.status = Wallet.status;
-
   $scope.browser = {disabled: true};
-
-  $scope.$watch('status.isLoggedIn', (isLoggedIn) => {
-    if (isLoggedIn) $scope.busy = false;
-  });
 
   let language_code = $translate.use();
   if (language_code === 'zh_CN') {
@@ -47,36 +40,26 @@ function SignupCtrl ($scope, $state, $cookies, $filter, $translate, $uibModal, W
     email: $state.params.email || ''
   };
 
-  $scope.close = () => {
-    Alerts.clear();
-    $state.go('wallet.common.home');
-  };
-
   $scope.signup = () => {
-    if ($scope.signupForm.$valid) {
-      $scope.working = true;
-      $scope.$$postDigest(() => {
-        if (!MyWallet.browserCheck()) {
-          $scope.browser.disabled = true;
-          $scope.browser.msg = $translate.instant('UNSUITABLE_BROWSER');
-          $scope.working = false;
-        } else {
-          $scope.createWallet((uid) => {
-            $scope.working = false;
-            if ($scope.autoReload) {
-              $cookies.put('password', $scope.fields.password);
-            }
-            $scope.close('');
-          });
-        }
-      });
+    $scope.working = true;
+
+    if ($scope.autoReload) {
+      $cookies.put('password', $scope.fields.password);
     }
+
+    $timeout(() => {
+      if (!MyWallet.browserCheck()) {
+        $scope.browser.disabled = true;
+        $scope.browser.msg = $translate.instant('UNSUITABLE_BROWSER');
+        $scope.working = false;
+      } else {
+        $scope.createWallet((uid) => { $state.go('wallet.common.home'); });
+      }
+    }, 250);
   };
 
-  $scope.createWallet = successCallback => {
-    Wallet.create($scope.fields.password, $scope.fields.email, $scope.currency_guess, $scope.language_guess, (uid) => {
-      successCallback(uid);
-    });
+  $scope.createWallet = (success) => {
+    Wallet.create($scope.fields.password, $scope.fields.email, $scope.currency_guess, $scope.language_guess, success);
   };
 
   $scope.$watch('language_guess', (newVal, oldVal) => {

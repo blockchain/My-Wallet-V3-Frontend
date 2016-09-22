@@ -9,14 +9,16 @@ div
           a.em-300(ui-sref="public.login-uid")
             span(translate="LOGIN")
       p.em-300(translate="CREATE_FREE_WALLET")
-  form.form-horizontal(
-    role="form"
-    name="signupForm"
-    ng-submit="signup()"
-    autocomplete="off"
-    novalidate)
+
+form.form-horizontal(
+  role="form"
+  name="signupForm"
+  ng-submit="signup()"
+  autocomplete="off"
+  novalidate)
+  browser-detection(result="browser")
+  fieldset(ng-disabled="browser.disabled || working")
     .form-group(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
-      browser-detection(result="browser")
       label(translate="EMAIL")
       div
         input.form-control(
@@ -24,7 +26,6 @@ div
           type="email"
           ng-model="fields.email"
           required
-          ng-disabled="browser.disabled"
           focus-when="!fields.email.length")
         span.help-block
           div(ng-show="signupForm.email.$touched")
@@ -40,7 +41,6 @@ div
           ng-maxlength="255"
           min-entropy="25"
           ng-change="fields.confirmation = ''"
-          ng-disabled="browser.disabled"
           required)
         password-entropy.help-block(password="fields.password")
         span.help-block
@@ -55,7 +55,6 @@ div
           type="password"
           ng-model="fields.confirmation"
           is-valid="fields.confirmation == fields.password"
-          ng-disabled="browser.disabled"
           required)
         span.help-block
           div(ng-show="signupForm.confirmation.$touched")
@@ -65,13 +64,12 @@ div
         name="agreement"
         type="checkbox"
         ng-model="fields.acceptedAgreement"
-        ng-disabled="browser.disabled"
         required)
       label.em-300.mbn.mls.right-align(translate="ACCEPT_TOS")
     .flex-center.flex-end.mbl
       button.button-primary(
         type="submit"
         data-style="expand-left"
-        ng-disabled="signupForm.$invalid || browser.disabled"
+        ng-disabled="signupForm.$invalid"
         ladda-translate="CONTINUE"
         ui-ladda="working")

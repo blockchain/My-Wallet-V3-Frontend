@@ -339,7 +339,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let success = (uid, sharedKey, password, sessionToken) => {
       $cookies.put('session', sessionToken);
       $cookies.put('uid', uid);
-      Alerts.displaySuccess('Wallet created with identifier: ' + uid, true);
+      Alerts.displaySuccess('Wallet created with identifier: ' + uid);
       wallet.goal.firstTime = true;
 
       let loginSuccess = (guid) => {
