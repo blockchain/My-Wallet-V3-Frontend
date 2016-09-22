@@ -2,14 +2,18 @@ angular
   .module('walletApp')
   .controller('LoginCtrl', LoginCtrl);
 
-function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNetwork, Alerts, $cookies, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter, $q) {
-  $scope.status = Wallet.status;
+function LoginCtrl ($scope, $rootScope, $window, $log, $http, Wallet, WalletNetwork, Alerts, $cookies, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter, $q) {
   $scope.settings = Wallet.settings;
+
   $scope.errors = {
     uid: null,
     password: null,
     twoFactor: null
   };
+
+  $scope.didLogout = $window.name === 'blockchain-logout';
+  $scope.canDeauth = $cookies.get('session') != null;
+  $window.name = 'blockchain';
 
   $rootScope.loginFormUID.then((res) => {
     $scope.uid = $stateParams.uid || Wallet.guid || res;
@@ -104,6 +108,17 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
     }
   };
 
+  $scope.deauth = () => {
+    $scope.working = true;
+    let sessionToken = $cookies.get('session');
+    $cookies.remove('session');
+
+    $q.resolve(Wallet.my.endSession(sessionToken))
+      .then(() => $scope.deauthorized = true)
+      .catch(() => { Alerts.displayError('ERROR_DEAUTH'); })
+      .finally(() => $scope.working = false);
+  };
+
   $scope.register = () => {
     $state.go('public.signup');
   };
@@ -114,14 +129,7 @@ function LoginCtrl ($scope, $rootScope, $location, $log, $http, Wallet, WalletNe
     }).length;
   };
 
-  $scope.$watch('status.isLoggedIn', (isLoggedIn) => {
-    if (isLoggedIn) {
-      $state.go('wallet.common.home');
-      // TODO: fix autoreload dev feature
-      // if ($scope.autoReload && $cookies.get('reload.url')) {
-      //   $location.url($cookies.get('reload.url'));
-      //   $cookies.remove('reload.url');
-      // }
-    }
+  $scope.$watch(() => Wallet.status.isLoggedIn, (isLoggedIn) => {
+    isLoggedIn && $state.go('wallet.common.home');
   });
 }

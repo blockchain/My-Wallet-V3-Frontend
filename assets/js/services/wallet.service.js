@@ -437,13 +437,11 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       .then(successCallback).catch(errorCallback);
   };
 
-  wallet.logout = () => {
+  wallet.logout = (byChoice) => {
     $cookies.remove('password');
-    let sessionToken = $cookies.get('session');
-    $cookies.remove('session');
-    wallet.didLogoutByChoice = true;
-    $window.name = 'blockchain';
-    wallet.my.logout(sessionToken, true);
+    wallet.didLogoutByChoice = byChoice;
+    $window.name = byChoice && wallet.user.isEmailVerified ? 'blockchain-logout' : 'blockchain';
+    wallet.my.logout(true);
   };
 
   wallet.makePairingCode = (successCallback, errorCallback) => {
@@ -689,6 +687,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       event.preventDefault();
       return 'There are unsaved changes. Are you sure?';
     }
+
+    if (wallet.status.isLoggedIn && wallet.user.isEmailVerified) {
+      $window.name = 'blockchain-logout';
+    }
     // TODO: fix autoreload dev feature
     // if ($rootScope.autoReload) {
     //   $cookies.put('reload.url', $location.url());
@@ -783,16 +785,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     } else if (event === 'wallet not found') {
       Alerts.displayError('WALLET_NOT_FOUND');
     } else if (event === 'ticker_updated' || event === 'did_set_latest_block') {
-      $rootScope.$safeApply();
     } else if (event === 'logging_out') {
-      if (wallet.didLogoutByChoice) {
-        $translate('LOGGED_OUT').then((translation) => {
-          $cookies.put('alert-success', translation);
-        });
-      } else {
+      if (!wallet.didLogoutByChoice) {
         $translate('LOGGED_OUT_AUTOMATICALLY').then((translation) => {
           $cookies.put('alert-warning', translation);
-          $rootScope.$safeApply();
         });
       }
       wallet.status.isLoggedIn = false;
@@ -805,13 +801,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     } else if (event.type !== void 0) {
       if (event.type === 'error') {
         Alerts.displayError(event.msg);
-        $rootScope.$safeApply();
       } else if (event.type === 'success') {
         Alerts.displaySuccess(event.msg);
-        $rootScope.$safeApply();
       } else if (event.type === 'notice') {
         Alerts.displayWarning(event.msg);
-        $rootScope.$safeApply();
       } else {
       }
     } else if (event === 'on_email_verified') {

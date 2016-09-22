@@ -31,9 +31,10 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     let inactivityTimeSeconds = Math.round((Date.now() - $scope.lastAction) / 1000);
     let logoutTimeSeconds = Wallet.settings.logoutTimeMinutes * 60;
     if (inactivityTimeSeconds === logoutTimeSeconds - 10) {
-      let logoutTimer = $timeout(Wallet.my.logout, 10000);
-      Alerts.confirm('CONFIRM_AUTO_LOGOUT', { values: { minutes: Wallet.settings.logoutTimeMinutes }, action: 'LOG_ME_OUT' })
-        .then(Wallet.logout).catch(() => $timeout.cancel(logoutTimer));
+      let logoutTimer = $timeout(Wallet.logout, 10000);
+      let alertOpts = { values: { minutes: Wallet.settings.logoutTimeMinutes }, action: 'LOG_ME_OUT' };
+      Alerts.confirm('CONFIRM_AUTO_LOGOUT', alertOpts)
+        .then(() => Wallet.logout(true)).catch(() => $timeout.cancel(logoutTimer));
     }
   };
 
