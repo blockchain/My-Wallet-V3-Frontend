@@ -169,7 +169,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
         $scope.goTo('summary');
       }
     } else {
-      console.log($scope.needsISX() && !$scope.formattedTrade);
       if ($scope.needsISX() && !$scope.formattedTrade) {
         $scope.goTo('isx');
       } else {
