@@ -133,7 +133,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         wallet.user.passwordHint = result.password_hint1;
         wallet.setLanguage($filter('getByProperty')('code', result.language, languages));
         wallet.settings.btcCurrency = $filter('getByProperty')('serverCode', result.btc_currency, currency.bitCurrencies);
-        wallet.settings.theme = $filter('getByProperty')('name', result.theme, theme.themes) || theme.themes[0];
+        wallet.settings.theme = $filter('getByProperty')('name', $cookies.get('theme'), theme.themes) || theme.themes[0];
         wallet.settings.displayCurrency = wallet.settings.btcCurrency;
         wallet.settings.feePerKB = wallet.my.wallet.fee_per_kb;
         wallet.settings.blockTOR = !!result.block_tor_ips;
@@ -873,10 +873,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   });
 
   wallet.changeTheme = (theme) => $q((resolve, reject) => {
-    wallet.settings_api.changeTheme(theme, () => {
-      wallet.settings.theme = theme;
-      resolve(true);
-    }, reject);
+    $cookies.put('theme', theme.name);
+    resolve(true);
   });
 
   wallet.changeCurrency = (curr) => $q((resolve, reject) => {
