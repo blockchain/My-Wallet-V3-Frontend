@@ -14,10 +14,8 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   $scope.buySellDebug = $rootScope.buySellDebug;
 
-  $scope.method = $scope.trade ? $scope.trade.medium : 'card';
-  $scope.methods = {};
-  $scope.getMethod = () => $scope.methods[$scope.method] || {};
-  $scope.isMedium = (medium) => $scope.getMethod().inMedium === medium;
+  let accountIndex = $scope.trade && $scope.trade.accountIndex ? $scope.trade.accountIndex : MyWallet.wallet.hdwallet.defaultAccount.index;
+  $scope.label = MyWallet.wallet.hdwallet.accounts[accountIndex].label;
 
   let exchange = buySell.getExchange();
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
@@ -171,6 +169,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
         $scope.goTo('summary');
       }
     } else {
+      console.log($scope.needsISX() && !$scope.formattedTrade);
       if ($scope.needsISX() && !$scope.formattedTrade) {
         $scope.goTo('isx');
       } else {
@@ -206,24 +205,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     } else if ($scope.onStep('summary')) {
       return $scope.editAmount || !$scope.limits.max;
     }
-  };
-
-  $scope.confirmOrContinue = () => {
-    let bankBuyMax = $scope.exchange.profile.currentLimits.bank.inRemaining;
-    let belowBuyLimit = $scope.transaction.fiat <= bankBuyMax;
-    let skipConfirm = $scope.needsKyc() || (belowBuyLimit && $scope.isMedium('bank'));
-    skipConfirm ? $scope.buy() : $scope.goTo('summary');
-  };
-
-  $scope.signup = () => {
-    $scope.status.waiting = true;
-    Alerts.clear($scope.alerts);
-    $scope.exchange = buySell.getExchange();
-
-    return $scope.exchange.signup($scope.fields.countryCode, $scope.transaction.currency.code)
-      .then(() => $scope.exchange.fetchProfile())
-      .then(() => $scope.getPaymentMethods())
-      .catch($scope.standardError);
   };
 
   $scope.watchAddress = () => {
