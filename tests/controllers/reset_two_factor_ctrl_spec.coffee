@@ -5,36 +5,21 @@ describe "ResetTwoFactorCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller, $http) ->
+    angular.mock.inject ($injector, $rootScope, $controller, $http, $q) ->
       Wallet = $injector.get("Wallet")
       WalletNetwork = $injector.get("WalletNetwork")
 
-      WalletNetwork.requestTwoFactorReset = (token, uid) -> {
-        then: (callback) ->
-          if uid != ""
-            callback()
-          {
-            catch: (callback) ->
-              if uid == ""
-                callback()
-          }
-      }
+      WalletNetwork.requestTwoFactorReset = (token, uid) ->
+        if uid != ''
+          $q.resolve()
+        else
+          $q.reject()
 
-      $rootScope.loginFormUID = {
-        then: (cb) ->
-          cb("1234")
-          {
-            catch: () ->
-          }
-      }
-
-      WalletNetwork.getCaptchaImage = () -> {
-        then: (cb) ->
-          cb({
-            image: "captcha-image-blob",
-            sessionToken: "token"
-          })
-      }
+      WalletNetwork.getCaptchaImage = () ->
+        $q.resolve({
+          image: "captcha-image-blob",
+          sessionToken: "token"
+        })
 
       window.URL =
         createObjectURL: (blob) ->
@@ -45,10 +30,6 @@ describe "ResetTwoFactorCtrl", ->
       $controller "ResetTwoFactorCtrl",
         $scope: scope,
         $stateParams: {},
-
-      return
-
-    return
 
   describe "on load", ->
     beforeEach ->
@@ -65,12 +46,14 @@ describe "ResetTwoFactorCtrl", ->
     it "should update captchaSrc", inject(() ->
       scope.captchaSrc = undefined
       scope.refreshCaptcha()
+      scope.$digest()
       expect(scope.captchaSrc).not.toBeUndefined()
     )
 
     it "should reset the form field", ->
       scope.fields.captcha = "12345"
       scope.refreshCaptcha()
+      scope.$digest()
       expect(scope.fields.captcha).toEqual("")
 
   describe "resetTwoFactor()", ->
@@ -89,11 +72,15 @@ describe "ResetTwoFactorCtrl", ->
         captcha: '1zabc'
 
     it "should call requestTwoFactorReset() with form data", ->
+      scope.$digest()
+      scope.fields.captcha = "1zabc"
       scope.resetTwoFactor()
+      scope.$digest()
       expect(WalletNetwork.requestTwoFactorReset).toHaveBeenCalledWith("token", "1234", "a@b.com", '', '', 'Help', '1zabc')
 
     it "should go to the next step", ->
       scope.resetTwoFactor()
+      scope.$digest()
       expect(scope.currentStep).toEqual(2)
 
     it "on failure should not go to the next step and refresh captch", ->
@@ -101,6 +88,7 @@ describe "ResetTwoFactorCtrl", ->
       scope.fields.uid = ""
 
       scope.resetTwoFactor()
+      scope.$digest()
 
       expect(scope.currentStep).toEqual(1)
       expect(scope.refreshCaptcha).toHaveBeenCalled()

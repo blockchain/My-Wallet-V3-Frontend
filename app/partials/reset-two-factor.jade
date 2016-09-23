@@ -57,7 +57,6 @@
           ng-model="fields.captcha"
           required)
     .flex-center.flex-end.mvl(ng-switch-when="1")
-      img(ng-show="working" src="img/spinner.gif")
       button.button-muted.mrm(
         type="button"
         ng-disabled="working"
@@ -67,7 +66,9 @@
         type="submit"
         ng-click="resetTwoFactor()"
         ng-disabled="!form.$valid || working"
-        translate="CONTINUE")
+        ui-ladda="working"
+        data-style="expand-left"
+        ladda-translate="CONTINUE")
   .flex-center.flex-justify.flex-column(ng-switch-when="2")
     .level-complete.flex-center.flex-justify
       i.ti-check.bright-green

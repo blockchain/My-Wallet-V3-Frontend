@@ -10,6 +10,9 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
   $scope.status = {};
   $scope.browser = { disabled: true };
 
+  $scope.uid = $stateParams.uid || Wallet.guid || $cookies.get('uid');
+  $scope.uidAvailable = !!$scope.uid;
+
   $scope.didLogout = $window.name === 'blockchain-logout';
   $scope.canDeauth = $cookies.get('session') != null;
   $window.name = 'blockchain';
@@ -18,19 +21,9 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
     $scope.password = $cookies.get('password');
   }
 
-  $rootScope.loginFormUID.then((res) => {
-    $scope.uid = $stateParams.uid || Wallet.guid || res;
-    $scope.uidAvailable = !!$scope.uid;
-
-    if ($scope.autoReload && $scope.uid && $scope.password) {
-      $scope.login();
-    }
-
-    $scope.$watch('twoFactorCode + settings.needs2FA', () => {
-      $rootScope.loginFormUID = $q.resolve($scope.uid);
-      $scope.errors.twoFactor = null;
-    });
-  });
+  if ($scope.autoReload && $scope.uid && $scope.password) {
+    $scope.login();
+  }
 
   $scope.login = () => {
     $scope.status.busy = true;
@@ -49,6 +42,7 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
       $scope.errors[field] = message;
       if (field !== 'twoFactor' && $scope.didAsk2FA) {
         $scope.didEnterCorrect2FA = true;
+        $scope.errors.twoFactor = null;
       }
     });
 
@@ -64,7 +58,7 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
         $scope.settings.needs2FA ? $scope.twoFactorCode : null,
         $scope.settings.needs2FA ? () => {} : needs2FA,
         success, error
-    ), 250);
+    ), 150);
   };
 
   $scope.resend = () => {
