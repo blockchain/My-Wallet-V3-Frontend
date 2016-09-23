@@ -6,7 +6,7 @@
       b
         i.ti-shield.prm
         span(translate="SECURITY_TIP")
-    p(translate="DO_NOT_STORE_ON_COMPUTER").recovery-instruction-text
+    p.aa"DO_NOT_STORE_ON_COMPUTER")a(translate=
     
     hr
     .row
@@ -27,7 +27,7 @@
       b
         i.ti-pencil.prm
         span(translate="WRITE_DOWN")
-    p(translate="WRITE_DOWN_EXPLAIN").recovery-instruction-text
+    p.aa"WRITE_DOWN_EXPLAIN")a(translate=
     
     .row
       .col-xs-3(ng-repeat="word in recoveryPhrase | limitTo:4:offset track by $index")
@@ -48,7 +48,7 @@
       b
         i.ti-check.prm
         span(translate="VERIFY")
-    p(translate="ENTER_WORDS").recovery-instruction-text
+    p.aa"ENTER_WORDS")a(translate=
     
     .row
       .col-xs-3(ng-repeat="word in words")
@@ -59,14 +59,14 @@
   span(ng-show="step==3")
     .row
       .col-xs-12
-        p.full-circle.center
-          i.ti-check.big-white
+        p.full-circle.success.center
+          i.ti-check.big-white.white
     .row 
       .col-xs-12
         p
     .row
       .col-xs-12
-        p(translate="BACKED_UP").recovery-instruction-text.center
+        p.aaa.center(translate="BACKED_UP")
 
 .modal-footer.pal.flex-end
   button.button-muted.mrm(  ng-click="close()", translate="CLOSE", ng-show="step==0")

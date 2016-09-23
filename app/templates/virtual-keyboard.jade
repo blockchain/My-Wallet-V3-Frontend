@@ -1,10 +1,10 @@
 table.virtual-keyboard
   tr(ng-repeat="row in (caps ? keysUpperCase : keysLowerCase)")
     td(ng-repeat="key in row")
-      a(ng-click="press(key)") {{ key }}
+      a.a1a1a1(ng-click="press(key)") {{ key }}
   tr
     td(colspan=5)
-      a(ng-click="toggleCaps()") Shift
+      a.a1a1a1(ng-click="toggleCaps()") Shift
     td(colspan=4)
-      a(ng-click="press(' ')") Space
+      a.a1a1a1(ng-click="press(' ')") Space
       

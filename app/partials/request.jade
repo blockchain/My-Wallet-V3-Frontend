@@ -74,7 +74,7 @@
             span.help-block(ng-show="requestForm.label.$error.gap", translate="LABEL_ERROR_BIP_44_GAP") 
 
       .flex-center.flex-justify.pbl(ng-show="advanced && fields.to.index != undefined")
-        span.ti-arrow-down.center
+        span.ti-arrow-down.blue.center
 
       .payment-url.flex-around.flex-row(ng-if="paymentRequestURL()")
         .flex-column.receive-address.flex-center(ng-class="{'max-width': advanced}"
@@ -85,11 +85,11 @@
                                                    ng-class="{'bg-light-blue': showPaymentRequestURL}"
                                                    ng-click="showPaymentRequestURL = !showPaymentRequestURL")
             i.ti-link
-          p.form-control-static.bitcoin-address
+          p.form-control-static.bg-light-blue.black.bitcoin-address
             img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
             span(ng-show="status.didInitializeHD" single-click-select)
               | 
-              button.clipboard.btn.button-default
+              button.clipboard.bg-grey.btn.button-default
               span(ng-hide="(fields.amount || fields.label) && showPaymentRequestURL") {{ paymentRequestAddress() }}
               span(ng-show="(fields.amount || fields.label) && showPaymentRequestURL") {{ paymentRequestURL() }}
         span.or.flex-center.mrl.mll(translate="OR")

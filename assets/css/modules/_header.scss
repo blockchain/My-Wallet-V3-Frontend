@@ -53,7 +53,6 @@
     }
   }
   .whats-new-icon {
-    background-color: $security-red;
     position: absolute;
     text-align: center;
     top: 0;
@@ -85,7 +84,6 @@
 .navbar-inverse .navbar-toggle { border: none; }
 
 .navbar-inverse .navbar-nav > li > a {
-  color: white;
   padding: 10px 15px 10px;
 }
 
@@ -96,15 +94,13 @@
 }
 
 .navbar-inverse {
-  background-color: $blue;
-  border:none;
   border-radius: 0px;
+  border: none;
   z-index: 1030;
   @media (min-width: 768px) {
     height: 60px;
   }
   .navbar-brand {
-    color: white;
     margin-left: 0px !important;
     img {
       padding-left: 0px;
@@ -160,7 +156,6 @@
     }
     // The dropdown on the top right:
     .dropdown-menu a {
-      color: $black;
       text-transform: none;
     }
   }
@@ -208,53 +203,12 @@ img#logo {
 
 
 @media (min-width: 768px){
-  .navbar-collapse{
+  .navbar-collapse {
     display: block !important;
   }
-  ul.navbar-nav{
-    .container-fluid{
+  ul.navbar-nav {
+    .container-fluid {
       padding: 10px 30px;
-    }
-   li.active{
-     a {
-      border-bottom: none;
-      margin-bottom: 1px;
-      color: #d3edfb;
-     }
-   }
-  }
-}
-
-// language dropdown
-.language {
-  min-width: 120px;
-  min-height: 20px;
-  position: relative;
-  .ui-select-container {
-    width: 100%;
-    position: absolute;
-    background: transparent;
-    &.open {
-      .ui-select-match {
-        display: block !important;
-      }
-    }
-    input[type="text"].ui-select-search {
-      display: none !important;
-    }
-    .btn-default-focus, .btn-default:hover {
-      background: transparent;
-      border: 0px !important;
-    }
-    .ui-select-toggle {
-      height: 100%;
-      padding: 0px;
-      border: 0px !important;
-      background: transparent;
-    }
-    .ui-select-match-text {
-      color: #fff;
-      font-size: 13px;
     }
   }
 }

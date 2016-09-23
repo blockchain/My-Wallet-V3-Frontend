@@ -1,9 +1,7 @@
 //class should be applied on elements that have a focus state
 .helper {
-  color: $mid-grey;
   border: 1px solid $mid-grey;
   border-radius: 100%;
-  background-color: white;
   width: 22px;
   height: 22px;
   font-size: 12px;
@@ -16,24 +14,15 @@
   }
   &.active {
     border: 1px solid transparent;
-    background: $blue;
-    color: white;
   }
-  > span {
+  > i.ti-close {
     top: 50%;
     left: 50%;
+    font-size: 9px;
     position: absolute;
     transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
-    &.close-helper {
-      &:before {
-        color: white;
-        font-size: 9px;
-        content: "\e646";
-        font-family: 'ThemifyIcons';
-      }
-    }
   }
 }
 

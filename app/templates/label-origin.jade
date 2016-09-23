@@ -2,4 +2,4 @@ span
   span(ng-show="$ctrl.origin" ng-bind-html="($ctrl.origin.label || $ctrl.origin.address) | escapeHtml | highlight:$ctrl.highlight")
 span(ng-hide="$ctrl.simple && $ctrl.origin.type !== 'Accounts'")
   span(ng-hide="$ctrl.origin.balance == null") &ensp;({{ $ctrl.origin.balance | convert }})&ensp;
-  span.label.label-default(ng-show="$ctrl.origin.isWatchOnly" translate="WATCH_ONLY")
+  span.label.label-default.bg-a7a7a7(ng-show="$ctrl.origin.isWatchOnly" translate="WATCH_ONLY")

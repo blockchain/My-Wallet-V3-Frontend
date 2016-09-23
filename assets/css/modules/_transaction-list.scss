@@ -29,15 +29,6 @@
     .feed-info {
       width: 120px;
     }
-    .action.incoming_tx{
-      color: $receive-green;
-    }
-    .action.outgoing_tx{
-     color: $send-red;
-    }
-    .action.local_tx{
-     color: $transfer-blue;
-    }
     .tx-toggle {
       top: 31px;
       left: 10px;
@@ -74,12 +65,6 @@
           margin-top: -3px;
         }
       }
-      .bc-link {
-        color: $basic-grey;
-        &:hover {
-          color: $blue;
-        }
-      }
     }
   }
   @media (max-width: 992px) {
@@ -100,9 +85,6 @@
       padding-right: 10px;
     }
   }
-  .description {
-    color: $dark-grey;
-  }
   .feed-details {
     border-top: 1px solid $eee;
   }
@@ -112,113 +94,16 @@
   }
 }
 
-.transaction-card {
-  background-color: $light-blue;
-  border: 1px solid $eee;
-  border-radius: 5px;
-  min-width: 50vw;
-  font-size: 1.1em;
-  @media (max-width: 992px) {
-    width: 95%;
-  }
-  .tx-status{
-    font-weight: 600;
-    color: rgb(4, 155, 212);
-    padding: 15px 0px;
-  }
-  .tx-amount{
-    span{float: none;}
-  }
-  button.amount{padding: 10px;height: auto;width: 100%;}
-  span.you{opacity: .5; font-style: italic;padding-right: 5px;}
-  .tx-sender, .tx-receiver {
-    @media (max-width: 992px) {
-      overflow: hidden;
-      label + ul, &.tx-sender span {
-        width: calc(100% - 50px);
-        text-overflow: ellipsis;
-        display: inline-block;
-      }
-    }
-    label {
-      vertical-align: top;
-      & + ul {
-        display: inline-block;
-      }
-    }
-  }
-  @media (max-width: 620px) {
-    .details-container {
-      -webkit-box-orient: vertical;
-      -webkit-box-direction: normal;
-      -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-      flex-direction: column;
-    }
-    .tx-details {
-      padding: 0px;
-    }
-    .border-left {
-      border-top: 1px solid $eee;
-      -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-      margin-top: 0.625em;
-      flex-wrap: wrap;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
-      border-left: 0px;
-      padding: 15px 0px;
-      > div {
-        width: 50%;
-        margin-bottom: 5px;
-        .success {
-          h6 {
-            text-align: center;
-          }
-          i {
-            margin-right: 3px;
-          }
-        }
-      }
-      .tx-status {
-        padding: 0px 15px;
-      }
-      .tx-bci-link {
-        margin-top: 10px;
-        font-size: 0.9em;
-        width: 100%;
-      }
-    }
-  }
-}
-
 button.amount {
   padding: 10px 20px;
   border: none;
-  color: white;
   border-radius: 5px;
   outline: none;
 }
 
-button {
-  &.intra-wallet  { background: $transfer-blue; }
-  &.spent { background: $send-red; }
-  &.received {
-    background: $receive-green;
-    span.glyphicon {
-      padding-left: 10px;
-    }
-    &:hover {
-      color:white;
-    }
-  }
-}
 .unconfirmed { opacity: 0.5; }
 
 .note {
-  color: $black;
   position: relative;
   textarea {
     resize: none;
@@ -240,8 +125,6 @@ button {
     }
   }
 }
-
-a.date,p.date { color: $black; }
 
 .amountTotal {
   float: none;
@@ -285,13 +168,6 @@ a.date,p.date { color: $black; }
 }
 
 @media(max-width: 767px) {
-  .transaction-card {
-    top: 0;
-    margin: 10px;
-    .tx-sidebar, .tx-details {
-      width: 100%;
-    }
-  }
   .transactions .row.transaction div.amount button.amount {
     min-width: 121px;
     font-size: .8em;

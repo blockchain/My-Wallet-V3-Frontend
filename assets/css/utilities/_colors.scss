@@ -5,6 +5,7 @@ $receive-green: #85b45b;
 $transfer-blue: #5bacd0;
 $pending-red: #ffbcbd;
 $pale-yellow: #fff7e5;
+$off-white: #fdfdfd;
 
 //Blockchain Blue Tints
 $hover-blue: #edf6fc;
@@ -14,11 +15,12 @@ $tertiary-blue: #D0E0E8;
 $dark-blue: #1476ab;
 $deep-blue: #005380;
 $deeper-blue: #177EC1;
-$baby-blue: #edf6fd;
+$baby-blue: #d3edfb;
 
 //Blockchain Text
 $black: #4B4D4E;
 $text: #5f5f5f;
+$main: $text;
 
 //Blockchain Greys
 $light-grey: #f7f7f7;
@@ -38,9 +40,11 @@ $partner: #E02771;
 //Button colors
 $default: #3F3F3F;
 $success: #8CCA6A;
+$ececec: #ECECEC;
 $eee: #EEEEEE;
 $ccc: #CCCCCC;
 $aaa: #AAAAAA;
+$a1a1a1: #a1a1a1;
 $a7a7a7: #a7a7a7;
 
 //Security Badge Colors
@@ -75,6 +79,7 @@ $bright-green:  #3CC476 !important; //override Security Center nested css select
 @include color('security-green', $security-green);
 @include color('ccc', $ccc);
 @include color('aaa', $aaa);
+@include color('a1a1a1', $a1a1a1);
 @include color('success', $success);
 @include color('bright-green', $bright-green);
 @include color('feature', $feature);
@@ -95,11 +100,20 @@ $bright-green:  #3CC476 !important; //override Security Center nested css select
 }
 
 @include bg-color('blue', $blue);
+@include bg-color('grey', $grey);
+@include bg-color('white', white);
+@include bg-color('aaa', $aaa);
 @include bg-color('black', $black);
+@include bg-color('a7a7a7', $a7a7a7);
+@include bg-color('off-white', $off-white);
 @include bg-color('deeper-blue', $deeper-blue);
 @include bg-color('dark-grey', $dark-grey);
 @include bg-color('light-grey', $light-grey);
+@include bg-color('pale-yellow', $pale-yellow);
+@include bg-color('security-red', $security-red);
+@include bg-color('security-green', $security-green);
 @include bg-color('light-blue', $light-blue);
 @include bg-color('mid-grey', $mid-grey);
 @include bg-color('success', $success);
+@include bg-color('ececec', $ececec);
 @include bg-color('grey', $grey);
