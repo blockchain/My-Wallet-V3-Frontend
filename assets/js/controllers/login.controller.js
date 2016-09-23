@@ -2,18 +2,21 @@ angular
   .module('walletApp')
   .controller('LoginCtrl', LoginCtrl);
 
-function LoginCtrl ($scope, $rootScope, $window, $log, $http, Wallet, WalletNetwork, Alerts, $cookies, $uibModal, $state, $stateParams, $timeout, $translate, filterFilter, $q) {
+function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams, $timeout, $q, Alerts, Wallet, WalletNetwork) {
   $scope.settings = Wallet.settings;
+  $scope.user = Wallet.user;
 
-  $scope.errors = {
-    uid: null,
-    password: null,
-    twoFactor: null
-  };
+  $scope.errors = {};
+  $scope.status = {};
+  $scope.browser = { disabled: true };
 
   $scope.didLogout = $window.name === 'blockchain-logout';
   $scope.canDeauth = $cookies.get('session') != null;
   $window.name = 'blockchain';
+
+  if ($cookies.get('password')) {
+    $scope.password = $cookies.get('password');
+  }
 
   $rootScope.loginFormUID.then((res) => {
     $scope.uid = $stateParams.uid || Wallet.guid || res;
@@ -23,113 +26,67 @@ function LoginCtrl ($scope, $rootScope, $window, $log, $http, Wallet, WalletNetw
       $scope.login();
     }
 
-    $scope.$watch('uid + password + twoFactorCode + settings.needs2FA', () => {
+    $scope.$watch('twoFactorCode + settings.needs2FA', () => {
       $rootScope.loginFormUID = $q.resolve($scope.uid);
-      let isValid = null;
-      $scope.errors.uid = null;
-      $scope.errors.password = null;
       $scope.errors.twoFactor = null;
-      if ($scope.uid == null || $scope.uid === '') {
-        isValid = false;
-      }
-      if ($scope.password == null || $scope.password === '') {
-        isValid = false;
-      }
-      if ($scope.settings.needs2FA && $scope.twoFactorCode === '') {
-        isValid = false;
-      }
-      if (isValid == null) {
-        isValid = true;
-      }
-      $timeout(() => $scope.isValid = isValid);
     });
   });
 
-  $scope.user = Wallet.user;
-
-  $scope.browser = {disabled: true};
-
-  $scope.twoFactorCode = '';
-  $scope.busy = false;
-  $scope.isValid = false;
-  if ($cookies.get('password')) {
-    $scope.password = $cookies.get('password');
-  }
   $scope.login = () => {
-    if ($scope.busy) return;
-    $scope.busy = true;
+    $scope.status.busy = true;
     Alerts.clear();
-    const error = (field, message) => {
-      $scope.busy = false;
-      if (field === 'uid') {
-        $scope.errors.uid = 'UNKNOWN_IDENTIFIER';
-      } else if (field === 'password') {
-        $scope.errors.password = message;
-      } else if (field === 'twoFactor') {
-        $scope.errors.twoFactor = message;
-      }
+
+    if ($scope.autoReload && $scope.password) {
+      $cookies.put('password', $scope.password);
+    }
+
+    let success = () => {
+      $state.go('wallet.common.home');
+    };
+
+    let error = (field, message) => $timeout(() => {
+      $scope.status.busy = false;
+      $scope.errors[field] = message;
       if (field !== 'twoFactor' && $scope.didAsk2FA) {
         $scope.didEnterCorrect2FA = true;
       }
-    };
-    const needs2FA = () => {
-      $scope.busy = false;
+    });
+
+    let needs2FA = () => $timeout(() => {
+      $scope.status.busy = false;
       $scope.didAsk2FA = true;
-    };
-    if ($scope.settings.needs2FA) {
-      Wallet.login($scope.uid, $scope.password, $scope.twoFactorCode, () => {}, () => {}, error);
-    } else {
-      Wallet.login($scope.uid, $scope.password, null, needs2FA, () => {}, error);
-    }
-    if ($scope.autoReload && $scope.password != null && $scope.password !== '') {
-      $cookies.put('password', $scope.password);
-    }
+    });
+
+    $timeout(() =>
+      Wallet.login(
+        $scope.uid,
+        $scope.password,
+        $scope.settings.needs2FA ? $scope.twoFactorCode : null,
+        $scope.settings.needs2FA ? () => {} : needs2FA,
+        success, error
+    ), 250);
   };
 
   $scope.resend = () => {
-    if (Wallet.settings.twoFactorMethod === 5) {
-      $scope.resending = true;
-      const success = (res) => {
-        $scope.resending = false;
-        Alerts.displaySuccess('RESENT_2FA_SMS');
-        $rootScope.$safeApply();
-      };
-      const error = (res) => {
-        Alerts.displayError('RESENT_2FA_SMS_FAILED');
-        $scope.resending = false;
-        $rootScope.$safeApply();
-      };
+    let success = (res) => { Alerts.displaySuccess('RESENT_2FA_SMS'); };
+    let error = (res) => { Alerts.displayError('RESENT_2FA_SMS_FAILED'); };
 
-      // The resend button is only visible after a login call has been made,
-      // so we know for sure this cookie is set. The uid can't be changed,
-      // so we know the session corresponds to the uid.
+    if (Wallet.settings.twoFactorMethod === 5) {
+      $scope.status.resending = true;
       let sessionToken = $cookies.get('session');
-      WalletNetwork.resendTwoFactorSms($scope.uid, sessionToken).then(success).catch(error);
+      $q.resolve(WalletNetwork.resendTwoFactorSms($scope.uid, sessionToken))
+        .then(success, error).finally(() => $scope.status.resending = false);
     }
   };
 
   $scope.deauth = () => {
-    $scope.working = true;
+    $scope.status.deauthorizing = true;
     let sessionToken = $cookies.get('session');
     $cookies.remove('session');
 
     $q.resolve(Wallet.my.endSession(sessionToken))
       .then(() => $scope.deauthorized = true)
       .catch(() => { Alerts.displayError('ERROR_DEAUTH'); })
-      .finally(() => $scope.working = false);
+      .finally(() => $scope.status.deauthorizing = false);
   };
-
-  $scope.register = () => {
-    $state.go('public.signup');
-  };
-
-  $scope.numberOfActiveAccounts = () => {
-    filterFilter(Wallet.accounts(), {
-      archived: false
-    }).length;
-  };
-
-  $scope.$watch(() => Wallet.status.isLoggedIn, (isLoggedIn) => {
-    isLoggedIn && $state.go('wallet.common.home');
-  });
 }
