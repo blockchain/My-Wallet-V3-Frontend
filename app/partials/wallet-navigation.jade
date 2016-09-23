@@ -1,36 +1,39 @@
 .left-navigation.flex-column.flex-between(ng-if="status.isLoggedIn")
   ul.aside.flex-1-0
     li.header(ui-sref-active="current", ng-click="hideMenu()")
-      a(ui-sref="wallet.common.home")
+      span.pointer(ui-sref="wallet.common.home")
         i.ti-home
         span(translate="HOME")
     li.scroll-parent.header.scroll-hidden(ui-sref-active="current")
-      a(ui-sref="wallet.common.transactions({accountIndex: ''})")
+      span.pointer(ui-sref="wallet.common.transactions({accountIndex: ''})")
         i.ti-layout-list-post
         span(translate="MY_TRANSACTIONS") 
-      ul.scroll-accounts.aside-list.pas(ng-show="showOrHide('transactions')", ng-click="hideMenu()")
-        li(ng-class="selectedAccountIndex == '' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex: ''})", ng-hide="!status.didUpgradeToHd || (numberOfActiveAccounts() <= 1 && numberOfActiveLegacyAddresses() == 0) ")
-          a.flex-between.pas
-            span(translate="ALL")
-            span
-              fiat-or-btc(btc="total()")    
-        li(ng-repeat="account in accounts()" ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''" ui-sref="wallet.common.transactions({accountIndex: account.index.toString()})")
-          a.flex-between.pas(ng-if="!account.archived")
-            span.prs {{::account.label}}
-            span
-              fiat-or-btc(btc="account.balance")
-              img(ng-show="account.balance == null" src="img/spinner.gif")
-        li(ui-sref="wallet.common.transactions({accountIndex:'imported'})", ng-show="numberOfActiveLegacyAddresses() > 0", ng-class="{active: selectedAccountIndex == 'imported'}")
-          a.flex-between.pas.imported-addresses
-            span.prs(translate="IMPORTED_ADDRESSES")
-            span
-              fiat-or-btc(btc="getLegacyTotal()")
+      ul.scroll-accounts.aside-list.bg-white.pas(ng-show="showOrHide('transactions')", ng-click="hideMenu()")
+        li(ui-sref="wallet.common.transactions({accountIndex: ''})", ng-hide="!status.didUpgradeToHd || (numberOfActiveAccounts() <= 1 && numberOfActiveLegacyAddresses() == 0) ")
+          a.pas.display-block
+            span.flex-between(ng-class="selectedAccountIndex == '' ? 'blue em-500' : 'basic-grey'")
+              span(translate="ALL")
+              span
+                fiat-or-btc(btc="total()")    
+        li(ng-repeat="account in accounts()" ui-sref="wallet.common.transactions({accountIndex: account.index.toString()})")
+          a.pas.display-block(ng-if="!account.archived")
+            span.flex-between(ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'blue em-500' : 'basic-grey'")
+              span.prs {{::account.label}}
+              span
+                fiat-or-btc(btc="account.balance")
+                img(ng-show="account.balance == null" src="img/spinner.gif")
+        li(ui-sref="wallet.common.transactions({accountIndex:'imported'})", ng-show="numberOfActiveLegacyAddresses() > 0")
+          a.pas.display-block.imported-addresses
+            span.flex-between(ng-class="selectedAccountIndex == 'imported' ? 'blue em-500' : 'mid-grey'")
+              span.prs(translate="IMPORTED_ADDRESSES")
+              span
+                fiat-or-btc(btc="getLegacyTotal()")
           
-      li.action-bar(ng-show="showOrHide('transactions')")
-        a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
+      li.action-bar.bg-white(ng-show="showOrHide('transactions')")
+        a.new-acct.basic-grey.em-500(ng-click="newAccount()", translate="NEW_ACCOUNT")
 
     li.header(ui-sref-active="current" ng-show="isUserWhitelisted || isUserInvited")
-      a(ui-sref="wallet.common.buy-sell" ng-show="isUserInvited")
+      span.pointer(ui-sref="wallet.common.buy-sell" ng-show="isUserInvited")
         i.ti-direction-alt
         span(translate="BUY_BITCOIN")
       a(ng-click="signupForBuyAccess()" ng-show="!isUserInvited")
@@ -39,32 +42,32 @@
 
     li.header.mbm(ui-sref-active="current",  ng-click="hideMenu()")
       contextual-message
-      a(ui-sref="wallet.common.security-center")
+      span.pointer(ui-sref="wallet.common.security-center")
         i.bc-icon-security.security-red(ng-show="security.level <= 2")
         i.bc-icon-security.security-yellow(ng-show="security.level > 2 && security.level < 6")
         i.bc-icon-security.security-green(ng-show="security.level == 6")
         span(translate="SECURITY_CENTER")
-        .progress-bar-wrapper.mlm.flex-1(ng-hide="security.level == 6")
+        .progress-bar-wrapper.bg-blue.mlm.flex-1(ng-hide="security.level == 6")
           .bar(ng-class="'level-' + security.level")
     li.scroll-parent.header.mbm(ui-sref-active="current")
-      a(ui-sref="wallet.common.settings")
+      span.pointer(ui-sref="wallet.common.settings")
         i.ti-settings
         span(translate="SETTINGS")
-      ul.scroll-settings.aside-list.pas(ng-show="showOrHide('settings')" ng-click="hideMenu()")
+      ul.scroll-settings.aside-list.bg-white.pas(ng-show="showOrHide('settings')" ng-click="hideMenu()")
         li.mts.mbm(ui-sref-active="active")
           a.pas(ui-sref="wallet.common.settings.info")
-            span(translate="WALLET_INFO")
+            span.basic-grey(translate="WALLET_INFO")
         li.mvm(ui-sref-active="active")
           a.pas(ui-sref="wallet.common.settings.preferences")
-            span(translate="PREFERENCES")
+            span.basic-grey(translate="PREFERENCES")
         li.mvm(ui-sref-active="active")
           a.pas(ui-sref="wallet.common.settings.security")
-            span(translate="SECURITY")
+            span.basic-grey(translate="SECURITY")
         li.mvm(ng-class="{active: accountsRoute()}")
           a.pas(ui-sref="wallet.common.settings.accounts_index")
-            span(translate="MENU_ACCOUNTS_AND_ADDRESSES")
+            span.basic-grey(translate="MENU_ACCOUNTS_AND_ADDRESSES")
     li.header.mbm
-      a(ng-click="supportModal()")
+      span(ng-click="supportModal()")
         i.ti-headphone
         span(translate="CONTACT_SUPPORT")
   ul.aside.wallet-footer

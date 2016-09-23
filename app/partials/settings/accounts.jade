@@ -1,4 +1,4 @@
-h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
+h5.well.bg-pale-yellow.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
   
 .flex-row.flex-column-mobile.pvl
   .col-xs-6.flex-center.width-100-mobile.pbm-m
@@ -28,7 +28,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
           span.man(ng-show="account.archived", translate="ACCOUNT_IS_ARCHIVED").prm
           a(ng-click="editAccount(account)", ng-hide="account.archived")
             i.ti-pencil.prm
-          span.label.label-primary.btn-xs(translate="DEFAULT", ng-show="!account.archived && isDefault(account)")
+          span.label.label-primary.white.bg-blue.btn-xs(translate="DEFAULT", ng-show="!account.archived && isDefault(account)")
           button.btn.btn-default.btn-xs(translate="MAKE_DEFAULT", ng-click="makeDefault(account)", ng-hide="account.archived || isDefault(account)")            
         td.shrink
           a(translate="REVEAL_XPUB",      ng-click="revealXpub(account)", ng-hide="account.archived")
@@ -41,7 +41,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
             translate="MANAGE_ADDRESSES"
             ng-hide="account.archived"
           )
-    table.accounts-container.imported-addresses     
+    table.accounts-container.imported-addresses.mid-grey
       tr.responsive.width-100
         td.expand
           span.account-label(translate="IMPORTED_ADDRESSES")
@@ -58,10 +58,6 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN")
             ui-sref="wallet.common.settings.imported_addresses"
             translate="MANAGE_ADDRESSES"
           )
-
-.row.spacing
-.row.spacing
-
 .row
   .col-xs-12
     a.button-default(

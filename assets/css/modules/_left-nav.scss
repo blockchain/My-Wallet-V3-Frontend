@@ -8,65 +8,26 @@
 ul.aside {
   list-style: none;
   padding: 0;
-  a.new-acct {
-    font-weight: bold;
-    color: #747474;
-    &:hover{color: #444;}
-  }
   li.header{
     font-size: 1em;
     font-weight: 400;
     margin:0 0 10px 0;
     position: relative;
     text-transform: uppercase;
-    > a {
+    > span {
       padding: .4em .8em;
       @extend .flex-center;
-      > span, i {
-        color: $basic-grey;
-        &.security-red {
-          color: $security-red;
-        }
-        &.security-yellow {
-          color: $security-yellow;
-        }
-        &.security-green {
-          color: $security-green;
-        }
-      }
       i { margin-right: .55em; line-height: 0; font-size: 1.3em; }
     }
   }
   li.current {
     background: #EBEBEB;
   }
-  ul.aside-list{
-    background: white;
+  ul.aside-list {
     list-style: none;
     font-size: 1em;
     text-transform: none;
     .btn {  min-width: 110px; }
-    a {
-      span {
-        color: $basic-grey;
-      }
-      &.imported-addresses {
-        span {
-          color: $mid-grey !important;
-        }
-      }
-    }
-    li.active{
-      a {
-        span {
-          color: $blue;
-          font-weight: 500;
-        }
-        &:focus {
-          text-decoration: none;
-        }
-      }
-    }
     ::-webkit-scrollbar {
       background: white;
     }
@@ -82,25 +43,6 @@ ul.aside {
     a {
       padding: .25em .5em;
     }
-  }
-  span.btn, span.btn-danger, span.btn-success, span.btn-primary, span.btn-warning{
-    text-align: right;
-    background: none!important;
-    border: none!important;
-    font-size: 13px!important;
-    font-weight: normal!important;
-  }
-  span.btn-danger{
-    color: #d9534f;
-  }
-  span.btn-success{
-    color: #5cb85c;
-  }
-  span.btn-primary{
-    color: #1973D6;
-  }
-  span.btn-warning{
-    color: #f0ad4e;
   }
 }
 
@@ -192,18 +134,13 @@ ul.aside {
 }
 
 
-li.action-bar{
-  background: white;
+li.action-bar {
   margin: -10px 0 5px;
   padding: 5px 15px;
   box-shadow: 0px -2px 13px -9px $black;
   border-top: 1px solid white;
   z-index: 1;
   position: relative;
-}
-.settings-nav { margin-top: 10px; }
-.settings-nav-header {
-  background: $light-grey;
 }
 
 @media (max-width: 480px) {

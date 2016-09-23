@@ -7,7 +7,6 @@
   position: absolute;
   width: 270px;
   padding: 15px;
-  background: $light-blue;
   height: calc(100% - 60px);
   border-right: 1px solid $border-grey;
   @media (max-height: 550px) {
@@ -19,16 +18,11 @@
   .legacy-addresses, .partners{
     margin-bottom: 30px;
   }
-  .side-box {
-    background-color: $light-grey;
-    border: 1px solid $grey;
-  }
 }
 .top-view {
   position: absolute;
   width: calc(100% - 270px);
   z-index: 1;
-  background: white;
   margin-left: 270px;
   border-bottom: 1px solid $border-grey;
   padding: 0 30px;
@@ -43,7 +37,6 @@
 }
 
 .main-container {
-  background: white;
   position: relative;
   left: 270px;
   top: 115px;

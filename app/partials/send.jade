@@ -119,7 +119,7 @@
               span.type-sm {{ transaction.maxAvailable | convert:false:true }}
             span.help-block(ng-show="failedToLoadUnspent" ng-click="reopenModal()")
               span.type-sm.pointer(translate="ERR_FETCH_UNSPENT_RETRY")
-          a.flex-center.flex-justify.add(ng-click="addDestination()" ng-show="advanced")
+          a.flex-center.flex-justify.add.bg-aaa(ng-click="addDestination()" ng-show="advanced")
             i.ti-plus.white
       .flex-row.flex-justify.form-group.note.mvl.row
         label.mbn

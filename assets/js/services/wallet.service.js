@@ -770,7 +770,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       let tx = wallet.my.wallet.txList.transactions()[0];
       if (tx.result > 0 && tx.txType === 'received') {
         wallet.beep();
-        Alerts.displayReceivedBitcoin('JUST_RECEIVED_BITCOIN');
+        Alerts.displayReceivedBitcoin('JUST_RECEIVED_BITCOIN', true);
       }
     } else if (event === 'on_block') {
     } else if (event === 'error_restoring_wallet') {

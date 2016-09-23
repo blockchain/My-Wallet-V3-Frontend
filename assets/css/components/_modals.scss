@@ -52,7 +52,6 @@
     }
     .modal-footer {
       border-radius: 0px 0px 5px 5px;
-      background-color: #fff;
       padding: 10px;
     }
     &.fade .modal-dialog {
@@ -71,13 +70,9 @@
 }
 
 .modal-progress {
-  margin-bottom: 0;
   height: 2px;
-  background-color: white;
+  margin-bottom: 0;
   box-shadow: none;
-  .progress-bar {
-    background-color: $blue;
-  }
 }
 
 // Shell div to position the modal with bottom padding

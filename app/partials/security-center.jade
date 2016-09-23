@@ -3,10 +3,10 @@
     header.flex-baseline.mtl
       h2.prm.type-h5.mvn.em-400(translate="LEVEL_1")
       p.text.em-300.mvn(translate="LEVEL_1_TITLE")
-    ul.flex.flex-start.pln.mbn
+    ul.off-white.flex.flex-start.pln.mbn
       li.level-header.bg-light-blue.flex-center.flex-justify
         img(src="img/security-icon-1.png")
-      li.level-badge(ng-click="user.isEmailVerified || toggle('email')", ng-class="{'active' : display.action == 'email', 'badge-active': user.isEmailVerified}")
+      li.level-badge(ng-click="user.isEmailVerified || toggle('email')", ng-class="{'bg-white active' : display.action == 'email', 'badge-active': user.isEmailVerified}")
         a
           .level-incomplete-container(ng-hide="user.isEmailVerified")
             .flex-center.flex-justify
@@ -32,7 +32,7 @@
                 a(ng-click="beginEditEmail()", translate="CHANGE")
         div(ng-show="display.action == 'email' && display.editingEmail")       
           bc-async-input(custom inline type="email" is-required placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-cancel="cancelEditEmail" on-save="changeEmail", action-title="'CHANGE' | translate" editing=1)
-      li.level-badge(ng-click="status.didConfirmRecoveryPhrase || toggle('securityphrase')", ng-class="{'active' : display.action == 'securityphrase', 'badge-active': status.didConfirmRecoveryPhrase }")
+      li.level-badge(ng-click="status.didConfirmRecoveryPhrase || toggle('securityphrase')", ng-class="{'bg-white active' : display.action == 'securityphrase', 'badge-active': status.didConfirmRecoveryPhrase }")
         a
           .level-incomplete-container(ng-hide="status.didConfirmRecoveryPhrase")
             .flex-center.flex-justify
@@ -46,10 +46,10 @@
           completed-level(ng-show="status.didConfirmRecoveryPhrase" placement="bottom" content="RECOVERY_PHRASE_TOOLTIP" img="img/badge-securityphrase.png" message="PHRASE_BACKED")
       .badge-panel.hidden-desktop(ng-show="display.action == 'securityphrase'")
         .flex-center
-          p.flex-1.prl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
+          p.flex-1.prl.dark-grey(translate="RECOVERY_PHRASE_SECURITY_CENTER")
           .flex-1.mll.backup-phrase-actions
             confirm-recovery-phrase(ng-hide="status.didConfirmRecoveryPhrase")
-      li.level-badge(ng-click="user.passwordHint || toggle('passwordhint')", ng-class="{'active' : display.action == 'passwordhint', 'badge-active': user.passwordHint }")
+      li.level-badge(ng-click="user.passwordHint || toggle('passwordhint')", ng-class="{'bg-white active' : display.action == 'passwordhint', 'badge-active': user.passwordHint }")
         a
           .level-incomplete-container(ng-hide="user.passwordHint")
             .flex-center.flex-justify
@@ -80,7 +80,9 @@
             span(translate="DIDNT_RECEIVE_EMAIL")
             span 
               resend-email-confirmation
+              | 
               span(translate="OR")
+            | 
             span
               a(ng-click="beginEditEmail()", translate="CHANGE")
 
@@ -88,7 +90,7 @@
         bc-async-input(custom inline type="email" is-required placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-cancel="cancelEditEmail" on-save="changeEmail", action-title="'CHANGE' | translate" editing=1)
 
       div.flex-center(ng-show="display.action == 'securityphrase'")        
-        p.flex-1.prl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
+        p.flex-1.prl.dark-grey(translate="RECOVERY_PHRASE_SECURITY_CENTER")
         .flex-1.mll.backup-phrase-actions
           confirm-recovery-phrase(button-class="button-primary", ng-hide="status.didConfirmRecoveryPhrase")
 
@@ -107,10 +109,10 @@
     header.flex-baseline.mtl
       h2.prm.type-h5.mvn.em-400(translate="LEVEL_2")
       p.text.em-300.mvn(translate="LEVEL_2_TITLE")
-    ul.flex.flex-start.pln.mbn
+    ul.off-white.flex.flex-start.pln.mbn
       li.level-header.bg-light-blue.flex-center.flex-justify
         img(src="img/security-icon-2.png")
-      li.level-badge(ng-click="user.isMobileVerified || toggle('mobilenumber')", ng-class="{'active' : display.action == 'mobilenumber', 'badge-active': user.isMobileVerified }")
+      li.level-badge(ng-click="user.isMobileVerified || toggle('mobilenumber')", ng-class="{'bg-white active' : display.action == 'mobilenumber', 'badge-active': user.isMobileVerified }")
         a
           .level-incomplete-container(ng-hide="user.isMobileVerified")
             .flex-center.flex-justify
@@ -128,7 +130,7 @@
           div(ng-show="mobileNumber.step == 2")
             h2.status.complete.hidden-xs.long-input
             verify-mobile-number(on-success="mobileNumber.step = 0" full-width)
-      li.level-badge(ng-click="settings.needs2FA || toggle('twofactor')", ng-class="{'active' : display.action == 'twofactor', 'badge-active': settings.needs2FA }")
+      li.level-badge(ng-click="settings.needs2FA || toggle('twofactor')", ng-class="{'bg-white active' : display.action == 'twofactor', 'badge-active': settings.needs2FA }")
         a
           .level-incomplete-container(ng-hide="settings.needs2FA")
             .flex-center.flex-justify
@@ -142,7 +144,7 @@
           completed-level(ng-show="settings.needs2FA" content="2FA_TOOLTIP" img="img/badge-add2FA.png" message="TWO_STEP_ENABLED")
       .badge-panel.hidden-desktop(ng-show="display.action == 'twofactor'")     
         div.flex-center
-          p.flex-1.prl(translate="SC_CONFIGURE_2FA")
+          p.flex-1.prl.dark-grey(translate="SC_CONFIGURE_2FA")
           .flex-1.mll
             a.button-primary(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA")
     .badge-panel.hidden-phone(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
@@ -152,7 +154,7 @@
           h2.status.complete.hidden-xs.long-input
           verify-mobile-number(on-success="mobileNumber.step = 0" full-width)
       div.flex-center(ng-show="display.action == 'twofactor'")     
-        p.flex-1.prl(translate="SC_CONFIGURE_2FA")
+        p.flex-1.prl.dark-grey(translate="SC_CONFIGURE_2FA")
         .flex-1.mll
           a.button-primary(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA")
 
@@ -160,10 +162,10 @@
     header.flex-baseline.mtl
       h2.prm.type-h5.mvn.em-400(translate="LEVEL_3")
       p.text.em-300.mvn(translate="LEVEL_3_TITLE")
-    ul.flex.flex-start.pln.mbn
+    ul.off-white.flex.flex-start.pln.mbn
       li.level-header.bg-light-blue.flex-center.flex-justify
         img(src="img/security-icon-3.png")
-      li.level-badge(ng-click="settings.blockTOR || toggle('blocktor')", ng-class="{'active' : display.action == 'blocktor', 'badge-active': settings.blockTOR }")
+      li.level-badge(ng-click="settings.blockTOR || toggle('blocktor')", ng-class="{'bg-white active' : display.action == 'blocktor', 'badge-active': settings.blockTOR }")
         a
           .level-incomplete-container(ng-hide="settings.blockTOR")
             .flex-center.flex-justify

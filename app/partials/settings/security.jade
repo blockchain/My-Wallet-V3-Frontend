@@ -1,12 +1,12 @@
-h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
+h5.well.bg-pale-yellow.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
 
 .clearfix
   .form-group.mbn.border-bottom.clearfix.pvl
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="WALLET_RECOVERY_PHRASE")
-        span.label.label-warning(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
-        span.label.label-success(translate="VERIFIED", ng-show="status.didConfirmRecoveryPhrase")
+        span.label.label-warning.bg-security-red(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
+        span.label.label-success.bg-security-green(translate="VERIFIED", ng-show="status.didConfirmRecoveryPhrase")
       p.text.em-300.hidden-xs.hidden-sm(translate="RECOVERY_PHRASE_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       confirm-recovery-phrase
@@ -16,7 +16,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
       .col-sm-12.col-md-6
         .flex-center.flex-between-mobile.mbm
           label.em-400.type-h5.mbn(translate="WALLET_PASSWORD")
-          span.label.label-success(translate="PASSWORD_SET")
+          span.label.label-success.bg-security-green(translate="PASSWORD_SET")
         p.text.em-300.hidden-xs(translate="WALLET_PASSWORD_EXPLAIN")
       .col-sm-12.col-md-6.setting-result.mtm(ng-hide="active")
         a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
@@ -27,8 +27,8 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
       .col-sm-12.col-md-6
         .flex-center.flex-between-mobile.mbm
           label.em-400.type-h5.mbn(translate="PASSWORD_HINT")
-          span.label.label-warning(translate="NOT_STORED", ng-show="!user.passwordHint")
-          span.label.label-success(translate="HINT_STORED", ng-show="user.passwordHint")
+          span.label.label-warning.bg-security-red(translate="NOT_STORED", ng-show="!user.passwordHint")
+          span.label.label-success.bg-security-green(translate="HINT_STORED", ng-show="user.passwordHint")
         p.text.em-300.hidden-xs(translate="PASSWORD_HINT_EXPLAIN")    
       .col-sm-12.col-md-6.setting-result(ng-hide="active")
         p.em-400.type-h5.mbm {{ user.passwordHint }}
@@ -41,8 +41,8 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
       .col-sm-12.col-md-6
         .flex-center.flex-between-mobile.mbm
           label.type-h5.em-400.mbn(translate="WALLET_SECOND_PASSWORD")
-          span.label.label-warning(ng-hide="settings.secondPassword", translate="DISABLED")    
-          span.label.label-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
+          span.label.label-warning.bg-security-red(ng-hide="settings.secondPassword", translate="DISABLED")    
+          span.label.label-success.bg-security-green(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
         p.em-300.text.hidden-xs(translate="WALLET_SECOND_PASSWORD_EXPLAIN" ng-hide="userHasExchangeAcct")    
         p.em-300.text.hidden-xs.security-red(translate="WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN" ng-show="userHasExchangeAcct")
       .col-sm-12.col-md-6.setting-result(ng-hide="active || removing")
@@ -55,8 +55,8 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
         label.em-400.type-h5.mbn(translate="TWO_STEP_VERIFICATION")
-        span.label.label-warning(translate="DISABLED", ng-show="!settings.needs2FA")
-        span.label.label-success(translate="ENABLED", ng-show="settings.needs2FA")
+        span.label.label-warning.bg-security-red(translate="DISABLED", ng-show="!settings.needs2FA")
+        span.label.label-success.bg-security-green(translate="ENABLED", ng-show="settings.needs2FA")
       p.text.em-300.hidden-xs(translate="TWO_STEP_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       a.button-primary.display-inline-block(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA" ng-hide="settings.needs2FA")
@@ -66,8 +66,8 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="REMEMBER_2FA")
-        span.label.label-warning(ng-hide="settings.rememberTwoFactor", translate="DISABLED")
-        span.label.label-success(ng-show="settings.rememberTwoFactor", translate="ENABLED")
+        span.label.label-warning.bg-security-red(ng-hide="settings.rememberTwoFactor", translate="DISABLED")
+        span.label.label-success.bg-security-green(ng-show="settings.rememberTwoFactor", translate="ENABLED")
       p.em-300.text.hidden-xs.hidden-sm(translate="REMEMBER_2FA_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       a.button-primary.display-inline-block(ng-click="enableRememberTwoFactor()", ladda-translate="ENABLE", ng-hide="settings.rememberTwoFactor" ui-ladda="processToggleRememberTwoFactor" data-style="expand-right")
@@ -76,7 +76,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
 .mtl
   button.button-default(translate="ADVANCED_SETTINGS", ng-click="toggleAdvanced()" ng-class="{active : display.advanced}")
 
-h5.well.type-h5.em-400.hidden-xs(ng-show="display.advanced")
+h5.well.pale-yellow.type-h5.em-400.hidden-xs(ng-show="display.advanced")
   span(translate="SECURITY_ADVANCED_EXPLAIN")
     
 div.clearfix(ng-show="display.advanced")
@@ -84,8 +84,8 @@ div.clearfix(ng-show="display.advanced")
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="LOGGING")
-        span.label.label-warning(ng-hide="settings.loggingLevel" translate="DISABLED")
-        span.label.label-success(ng-show="settings.loggingLevel" translate="ENABLED")
+        span.label.label-warning.bg-security-red(ng-hide="settings.loggingLevel" translate="DISABLED")
+        span.label.label-success.bg-security-green(ng-show="settings.loggingLevel" translate="ENABLED")
       p.em-300.text.hidden-xs.hidden-sm(translate="LOGGING_EXPLAIN")    
     .col-sm-12.col-md-6
       setting-toggle(
@@ -99,8 +99,8 @@ div.clearfix(ng-show="display.advanced")
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="IP_WHITELIST_RESTRICT")
-        span.label.label-warning(ng-hide="settings.restrictToWhitelist", translate="DISABLED")
-        span.label.label-success(ng-show="settings.restrictToWhitelist", translate="ENABLED")
+        span.label.label-warning.bg-security-red(ng-hide="settings.restrictToWhitelist", translate="DISABLED")
+        span.label.label-success.bg-security-green(ng-show="settings.restrictToWhitelist", translate="ENABLED")
       p.em-300.text.hidden-xs.hidden-sm(translate="IP_WHITELIST_RESTRICT_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       ip-whitelist-restrict
@@ -120,8 +120,8 @@ div.clearfix(ng-show="display.advanced")
       .col-sm-12.col-md-6
         .flex-center.flex-between-mobile.mbm
           label.type-h5.em-400(translate="BLOCK_TOR")
-          span.label.label-success(ng-show="settings.blockTOR", translate="BLOCKED")
-          span.label.label-warning(ng-hide="settings.blockTOR", translate="ALLOWED")
+          span.label.label-success.bg-security-green(ng-show="settings.blockTOR", translate="BLOCKED")
+          span.label.label-warning.bg-security-red(ng-hide="settings.blockTOR", translate="ALLOWED")
         p.em-300.text.hidden-xs.hidden-sm(translate="BLOCK_TOR_EXPLAIN")    
       .col-sm-12.col-md-6.setting-result
         tor
