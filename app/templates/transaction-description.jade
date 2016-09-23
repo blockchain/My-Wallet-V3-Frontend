@@ -5,10 +5,10 @@
         date {{:: tx.time * 1000 | date:'MMMM d ' + year + ' @ hh:mm a' }}
       .flex-center.lh1.pointer(ng-click="tx.toggled = !tx.toggled")
         span.action.type-lbl.em-500.prm(
-          ng-class=":: txClass"
+          ng-class="{'receive-green': txClass === 'incoming_tx', 'send-red': txClass === 'outgoing_tx', 'transfer-blue': txClass === 'local_tx'}"
           translate="{{:: txDirection }}")
-      span.label.label-default.mts(translate="WATCH_ONLY" ng-show=":: txWatchOnly")
-      span.label.label-primary.mts(ng-show="txMethod != null")
+      span.label.label-default.bg-a7a7a7.mts(translate="WATCH_ONLY" ng-show=":: txWatchOnly")
+      span.label.label-primary.bg-blue.mts(ng-show="txMethod != null")
         span(translate="BOUGHT_VIA" translate-values="{exchange:exchange}" ng-show="txMethod === 'buy'")
         span(translate="SOLD_VIA" translate-values="{exchange:exchange}" ng-show="txMethod === 'sell'")
     .flex-2.width-30.mrl.hidden-sm.hidden-xs.destination.em-400.basic-grey

@@ -1,0 +1,32 @@
+body.dev-theme {
+  * {
+    color: #76FF03 !important;
+    background: #1e1e1e !important;
+    background-color: #1e1e1e !important;
+  }
+  .navbar.navbar-inverse {
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+.dev-theme {
+  .blocket-loading {
+    background-color: #1e1e1e !important;
+  }
+}
+
+// all dev themes
+body.dev-theme,
+body.berlin-theme {
+  button,
+  .button,
+  .button-primary,
+  .button-success,
+  .button-default,
+  .button-info,
+  .button-danger,
+  .button-transfer {
+    border-radius: 5px !important;
+    border: 1px solid #ddd !important;
+  }
+}

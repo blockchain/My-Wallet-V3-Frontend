@@ -1,4 +1,4 @@
-h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
+h5.well.bg-pale-yellow.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
 
 .clearfix(ng-if="status.isLoggedIn")
   .form-group.mbn.border-bottom.clearfix.pvl(ng-controller="ChangeEmailCtrl")
@@ -6,8 +6,8 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
       .col-sm-12.col-md-6
         .flex-center.mbm
           label.em-400.type-h5.mbn(translate="EMAIL_ADDRESS")
-          span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isEmailVerified")
-          span.label.label-success(translate="VERIFIED", ng-show="user.isEmailVerified")
+          span.label.label-warning.bg-security-red(translate="UNVERIFIED", ng-show="!user.isEmailVerified")
+          span.label.label-success.bg-security-green(translate="VERIFIED", ng-show="user.isEmailVerified")
         p.text.em-300.hidden-xs(translate="EMAIL_ADDRESS_EXPLAIN")
         p.text.em-400.hidden-xs.security-red(translate="CHANGE_EMAIL_NOT_EXCHANGE" ng-show="userHasExchangeAcct && active")
       .col-sm-12.col-md-6.setting-result(ng-hide="active")
@@ -22,8 +22,8 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
     .col-sm-12.col-md-6
       .flex-center.mbm
         label.em-400.type-h5.mbn(translate="MOBILE_NUMBER")
-        span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isMobileVerified")
-        span.label.label-success(translate="VERIFIED", ng-show="user.isMobileVerified")
+        span.label.label-warning.bg-security-red(translate="UNVERIFIED", ng-show="!user.isMobileVerified")
+        span.label.label-success.bg-security-green(translate="VERIFIED", ng-show="user.isMobileVerified")
       p.text.em-300.hidden-xs(translate="MOBILE_NUMBER_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       div(ng-show="mobileNumber.step == 0")
@@ -92,3 +92,11 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
         a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
       .col-sm-12.col-md-6(ng-show="active")
         include ./change-logout.jade
+        
+  .form-group.mbn.border-bottom.clearfix.pvl
+    .col-sm-12.col-md-6
+      label.em-400.type-h5(translate="Themes")
+      p.text.em-300.line-height.hidden-xs(translate="Try out different themes for the wallet.")
+    .col-sm-6.col-md-3
+    .col-sm-6.col-md-3.setting-result
+      async-select.capitalize(selected="settings.theme" range="themes" display-prop="display-name" on-change="changeTheme")

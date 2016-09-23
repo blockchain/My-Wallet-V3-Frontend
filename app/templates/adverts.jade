@@ -1,6 +1,6 @@
-ul.aside-list.pln.pas.mtm(ng-show="ads && ads.length > 0")
+ul.aside-list.bg-white.pln.pas.mtm(ng-show="ads && ads.length > 0")
   li.ad(ng-repeat="ad in ads")
     a.flex-between.flex-center.right-align.mbs(ng-click="visit(ad)")
       button.pan.btn(ng-click="visit(ad)", ng-class="[ ad.button_class ]")
         img(ng-src="{{ ad.image }}")
-      span.adtext(ng-class="[ ad.button_class ]") {{ ad.title }}
+      span.adtext {{ ad.title }}

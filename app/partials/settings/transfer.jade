@@ -2,7 +2,7 @@
   h3(translate="TRANSFER" ng-show="addresses.length === 1")
   h3(translate="TRANSFER_ALL" ng-show="addresses.length > 1")
 
-uib-progressbar.modal-progress(
+uib-progressbar.bg-white.modal-progress(
   value="ncomplete" max="ntotal" ng-show="addresses.length > 1" animate="true")
 
 #transfer-all.modal-body.fade(ng-class="{expanded : expand}")

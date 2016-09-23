@@ -4,9 +4,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'MyWalletMetadata'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'MyWalletMetadata', 'theme'];
 
-function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, MyWalletMetadata) {
+function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, MyWalletMetadata, theme) {
   const wallet = {
     goal: {
       auth: false,
@@ -133,6 +133,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         wallet.user.passwordHint = result.password_hint1;
         wallet.setLanguage($filter('getByProperty')('code', result.language, languages));
         wallet.settings.btcCurrency = $filter('getByProperty')('serverCode', result.btc_currency, currency.bitCurrencies);
+        wallet.settings.theme = $filter('getByProperty')('name', $cookies.get('theme'), theme.themes) || theme.themes[0];
         wallet.settings.displayCurrency = wallet.settings.btcCurrency;
         wallet.settings.feePerKB = wallet.my.wallet.fee_per_kb;
         wallet.settings.blockTOR = !!result.block_tor_ips;
@@ -770,7 +771,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       let tx = wallet.my.wallet.txList.transactions()[0];
       if (tx.result > 0 && tx.txType === 'received') {
         wallet.beep();
-        Alerts.displayReceivedBitcoin('JUST_RECEIVED_BITCOIN');
+        Alerts.displayReceivedBitcoin('JUST_RECEIVED_BITCOIN', true);
       }
     } else if (event === 'on_block') {
     } else if (event === 'error_restoring_wallet') {
@@ -869,6 +870,11 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       wallet.setLanguage(language);
       resolve(true);
     }, reject);
+  });
+
+  wallet.changeTheme = (theme) => $q((resolve, reject) => {
+    $cookies.put('theme', theme.name);
+    resolve(true);
   });
 
   wallet.changeCurrency = (curr) => $q((resolve, reject) => {

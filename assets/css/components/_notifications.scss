@@ -66,18 +66,16 @@
   z-index: 1048;
   position: absolute;
   border: 1px solid $aaa;
-  background-color: $light-blue;
   border-radius: 0px !important;
   text-transform: none !important;
   //scoped CSS (refactor)
   a.button-success-alt { color: white; }
-  a.aaa { color: $aaa; }
   &.left {
     .arrow {
       border-bottom-color: transparent !important;
       &:after {
         border-top-color: transparent !important;
-        border-left-color: #F5F7F9 !important;
+        border-left-color: $light-blue !important;
       }
     }
   }

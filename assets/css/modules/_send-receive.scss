@@ -154,7 +154,6 @@
   &.advanced-container {
     max-height: 460px; // avoid overflow issues
     .add {
-      background-color: $aaa;
       border-radius: 100%;
       position: absolute;
       bottom: 20px;
@@ -202,9 +201,6 @@
           @media (max-width: 768px) {
             overflow: hidden;
             text-overflow: ellipsis;
-          }
-          &.aaa {
-            color: $aaa !important;
           }
         }
         .helper {
@@ -301,7 +297,6 @@
   .ti-arrow-down {
     font-weight: bold;
     font-size: 18px;
-    color: $blue;
   }
 
   .column {

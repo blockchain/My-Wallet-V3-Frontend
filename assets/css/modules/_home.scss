@@ -9,25 +9,6 @@
 }
 .section { &:last-of-type { margin-bottom: 5px } }
 
-.hashtag {
-  &.feature {
-    color: $blue;
-    &:hover { color: $blue; }
-  }
-  &.survey {
-    color: $blue;
-    &:hover { color: $blue; }
-  }
-  &.partner {
-  color: $partner;
-    &:hover { color: $partner; }
-  }
-  &.educational {
-    color: $educational;
-    &:hover { color: $educational; }
-  }
-}
-
 .widget {
   padding: 1em;
   border: 1px solid $grey;
