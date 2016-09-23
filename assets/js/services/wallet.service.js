@@ -183,7 +183,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let loginError = (error) => {
       console.log(error);
       if (error.length && error.indexOf('Unknown Wallet Identifier') > -1) {
-        errorCallback('uid', error);
+        errorCallback('uid', 'UNKNOWN_IDENTIFIER');
       } else if (error.length && error.indexOf('password') > -1) {
         errorCallback('password', error);
       } else {
