@@ -1,8 +1,8 @@
 .buy-steps.flex-row.flex-between.flex-baseline.center(ng-hide="status.loading" ng-click="buy()" ng-class="{'flex-justify': exchangeAcct}")
   .width-20.flex-column.flex-center(ng-class="{blue: onStep('amount')}")
     span.type-lrg {{ currencySymbol.symbol }}
-    span(ng-show="onStep('amount') || !transaction.fiat" translate="Amount")
-    span(ng-show="afterStep('amount') && transaction.fiat")
+    span(ng-show="onStep('amount') || needsKyc() || isKYC" translate="Amount")
+    span(ng-show="afterStep('amount') && !needsKyc() && !isKYC")
       span(ng-show="beforeStep('isx')") {{ transaction.fiat | format }} {{ transaction.currency.code }}
       span(ng-show="afterStep('summary')") {{ transaction.total }} {{ transaction.currency.code }}
 

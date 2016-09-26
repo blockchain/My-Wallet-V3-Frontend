@@ -8,6 +8,7 @@ function buySteps () {
     scope: {
       buy: '&',
       tradeObj: '=',
+      needsKyc: '=',
       onStep: '=',
       afterStep: '=',
       beforeStep: '=',
