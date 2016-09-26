@@ -428,7 +428,16 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     $cookies.remove('password');
     wallet.didLogoutByChoice = byChoice;
     $window.name = byChoice && wallet.user.isEmailVerified ? 'blockchain-logout' : 'blockchain';
-    wallet.my.logout(true);
+
+    let beforeLogout = () => {
+      if (wallet.status.deauthOnLogout) {
+        let sessionToken = $cookies.get('session');
+        $cookies.remove('session');
+        return wallet.my.endSession(sessionToken);
+      }
+    };
+
+    wallet.my.logout(true, beforeLogout);
   };
 
   wallet.makePairingCode = (successCallback, errorCallback) => {
