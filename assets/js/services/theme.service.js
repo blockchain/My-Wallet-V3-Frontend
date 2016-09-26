@@ -19,6 +19,11 @@ function theme () {
       'name': 'inverted',
       'class': 'inverted-theme',
       'display-name': 'Invert Colors'
+    },
+    {
+      'name': 'x-ray',
+      'class': 'x-ray',
+      'display-name': 'X-Ray'
     }
   ];
 
