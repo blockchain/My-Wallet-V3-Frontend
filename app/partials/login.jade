@@ -51,9 +51,6 @@ div#login
     .flex-row(ng-hide="didLogout")
       .em-300.mbm(translate="HAVING_TROUBLE")
       span.pointer.em-300.blue.mls(ui-sref="public.help" translate="VIEW_OPTIONS")
-    .flex-row(ng-show="didLogout")
-      .em-300.mbm(translate="WHAT_DO_YOU_THINK")
-      span.pointer.em-300.blue.mls(translate="TAKE_SURVEY")
 
   // Deauthorize Browser
   .slide-up-outer(ng-class="deauthorized ? 'slide-out' : 'slide-in'" ng-show="didLogout && canDeauth")

@@ -10,15 +10,13 @@ describe "NavigationCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($cookies, $injector, $rootScope, $controller) ->
+    angular.mock.inject ($cookies, $injector, $rootScope, $controller, $q) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       Alerts = $injector.get("Alerts")
 
       Alerts.confirm = (msg) ->
-        then: (f) ->
-          if msg != 'CONFIRM_FORCE_LOGOUT'
-            f(true)
+        $q.resolve()
 
       Wallet.status = {
         isLoggedIn: true
@@ -63,6 +61,7 @@ describe "NavigationCtrl", ->
     spyOn($state, "go")
 
     scope.logout()
+    scope.$digest()
 
     expect(Wallet.logout).toHaveBeenCalled()
     expect(scope.status.isLoggedIn).toBe(false)
