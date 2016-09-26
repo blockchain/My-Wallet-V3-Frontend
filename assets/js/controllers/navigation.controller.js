@@ -87,8 +87,13 @@ function NavigationCtrl ($scope, $rootScope, $interval, $timeout, $cookies, Wall
 
   $scope.logout = () => {
     let isSynced = Wallet.isSynchronizedWithServer();
-    let message = isSynced ? 'CONFIRM_LOGOUT' : 'CONFIRM_FORCE_LOGOUT';
-    Alerts.confirm(message, { modalClass: 'top' }).then(() => Wallet.logout(true));
+
+    let confirmForce = () =>
+      Alerts.confirm('CONFIRM_FORCE_LOGOUT', { modalClass: 'top' });
+
+    isSynced
+      ? Wallet.logout(true)
+      : confirmForce().then(() => Wallet.logout(true));
   };
 
   if (Wallet.goal.firstTime) {
