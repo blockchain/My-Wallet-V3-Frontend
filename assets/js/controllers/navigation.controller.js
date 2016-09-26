@@ -10,6 +10,8 @@ function NavigationCtrl ($scope, $rootScope, $interval, $timeout, $cookies, Wall
 
   $scope.lastViewedWhatsNew = null;
 
+  $scope.getTheme = () => $scope.settings.theme;
+
   const lastViewedDefaultTime = 1231469665000;
 
   $scope.initialize = (mockFailure) => {

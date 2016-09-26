@@ -22,6 +22,10 @@
 @import 'elements/tables';
 @import 'elements/carousel';
 
+// import themes
+@import 'themes/dev';
+@import 'themes/filters';
+
 //import components
 @import 'components/forms';
 @import 'components/video-container';

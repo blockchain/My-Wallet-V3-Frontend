@@ -1,0 +1,15 @@
+body.inverted-theme {
+  -webkit-filter: invert(100%);
+  -moz-filter: invert(100%);
+  -ms-filter: invert(100%);
+  -o-filter: invert(100%);
+  filter: invert(100%);
+}
+
+body.x-ray {
+  -webkit-filter: grayscale(100%) invert(100%);
+  -moz-filter: grayscale(100%) invert(100%);
+  -ms-filter: grayscale(100%) invert(100%);
+  -o-filter: grayscale(100%) invert(100%);
+  filter: grayscale(100%) invert(100%);
+}
