@@ -812,6 +812,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         wallet.user.isEmailVerified = 1;
         Alerts.displaySuccess('EMAIL_VERIFIED_MSG');
       }
+    } else if (event === 'wallet_logout') {
+      wallet.logout(false);
     } else {
     }
     $rootScope.$safeApply();
