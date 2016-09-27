@@ -38,7 +38,6 @@ function formatTrade ($filter, MyWallet, $rootScope) {
   let addTradeDetails = (trade) => {
     let transaction = {};
     transaction['COINIFY_TRADE'] = '#' + trade.id;
-    transaction['ISX_ID'] = trade.iSignThisID;
     transaction['DATE_INITIALIZED'] = $filter('date')(trade.createdAt, 'd MMMM yyyy, HH:mm');
     transaction['RECEIVING_WALLET'] = getLabel(trade);
     if ($rootScope.buySellDebug) {
@@ -112,16 +111,12 @@ function formatTrade ($filter, MyWallet, $rootScope) {
   }
 
   function kyc (trade) {
-    let tx = addTradeDetails(trade);
-    delete tx.COINIFY_TRADE;
-    delete tx.RECEIVING_WALLET;
-    delete tx.RECEIVING_ADDRESS;
-
     return {
-      tx: tx,
       class: 'blue',
       namespace: 'TX_KYC_PENDING',
-      values: {}
+      values: {
+        date: $filter('date')(trade.createdAt, 'MM/dd')
+      }
     };
   }
 
