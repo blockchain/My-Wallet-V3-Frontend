@@ -122,7 +122,9 @@ describe "Fiat Directive", ->
         expect(isoScope.fiat.amount).toEqual('-10.00')
 
       it "should set the absolute value if needed", inject(($compile) ->
-        isoScope = $compile('<fiat btc="btc" abs></fiat>')(scope).isolateScope()
+        element = $compile('<fiat btc="btc" abs></fiat>')(scope)
+        scope.$digest()
+        isoScope = element.isolateScope()
         isoScope.btc = -10000
         isoScope.updateFiat()
         expect(isoScope.fiat.amount).toEqual('10.00')
