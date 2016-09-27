@@ -1,6 +1,6 @@
 tr.border
   td.type-lbl.paml
-    span.state.mrl.state-danger-text(ng-show="completed") {{ trade.state | translate }}
+    span.state.mrl.state-danger-text(ng-show="completed && error") {{ trade.state | translate }}
     span.state.mrl.success(ng-show="completed && success && trade.bitcoinReceived") Purchased
     span.state.italic.mrl(ng-show="completed && success && !trade.bitcoinReceived") Pending
     span.state.italic.mrl(ng-show="pending") {{ trade.state | translate }}
