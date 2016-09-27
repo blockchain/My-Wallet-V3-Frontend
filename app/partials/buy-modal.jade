@@ -42,7 +42,7 @@
       include ./buy/summary
     div.iframe(ng-if="onStep('isx')")
       isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="formatTrade" payment-info="paymentInfo" on-resize="onResize(step)")
-    div.width-80(ng-if="onStep('trade-formatted')")
+    div.width-80(ng-if="onStep('trade-in-review', 'trade-formatted')")
       include ./trade-summary
       p.security-red.pointer(ng-show="buySellDebug && trade.bankAccount")
         i.ti-search.mrm
@@ -89,7 +89,7 @@
           ui-ladda="status.waiting"
           ng-disabled="isDisabled() || fiatFormInvalid"
           ng-show="onStep('summary')")
-      div(ng-show="onStep('trade-formatted') && !bitcoinReceived")
+      div(ng-show="onStep('trade-in-review') || onStep('trade-formatted') && !bitcoinReceived")
         button.button-success(translate="CLOSE" ng-click="cancel()")
       div(ng-show="onStep('trade-formatted') && bitcoinReceived")
         button.button-success(translate="SEE_BITCOIN" ng-click="cancel()" ui-sref="wallet.common.transactions")

@@ -17,16 +17,17 @@
     i.ti-arrow-right.type-h4
 
   //- card || bank
-  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('accept-terms') && beforeStep('trade-formatted')}")
-    i.type-lrg.ti-credit-card(ng-class="{bank: (getMethod().inMedium === 'bank' || medium === 'bank') && !isKYC}")
-    span(ng-hide="afterStep('summary') && (medium || getMethod().inMedium)" translate="Payment")
-    span(ng-show="afterStep('summary') && medium").capitalize {{ medium }}
-    span(ng-show="afterStep('summary') && !medium && getMethod().inMedium").capitalize {{ getMethod().inMedium }}
+  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('accept-terms') && beforeStep('isx')}")
+    i.type-lrg.ti-credit-card(ng-class="{bank: (getMethod().inMedium === 'bank' || medium === 'bank') || isKYC}")
+    span(translate="METHOD")
 
-  //- kyc
-  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('accept-terms') && beforeStep('trade-formatted')}" ng-show="isKYC")
+  .flex-justify
+    i.ti-arrow-right.type-h4
+
+  //- verify
+  .width-20.flex-column.flex-center(ng-class="{blue: afterStep('summary') && beforeStep('trade-formatted')}")
     i.type-lrg.ti-id-badge.bank
-    span(translate="VERIFY_IDENTITY")
+    span(translate="VERIFY_PAYMENT")
 
   .flex-justify
     i.ti-arrow-right.type-h4
