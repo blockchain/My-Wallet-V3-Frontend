@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySellCtrl', BuySellCtrl);
 
-function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWallet) {
+function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet) {
   $scope.buySellStatus = buySell.getStatus;
   $scope.trades = buySell.trades;
 
@@ -58,6 +58,7 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
         $scope.kyc = buySell.kycs[0];
         $scope.exchange = buySell.getExchange();
         $scope.status.loading = false;
+        $scope.status.disabled = false;
         $scope.getMaxMin();
 
         if ($scope.exchange) {
@@ -128,4 +129,9 @@ function BuySellCtrl ($scope, $state, Alerts, Wallet, currency, buySell, MyWalle
     buySell.getRate('EUR', $scope.transaction.currency.code).then(calculateMin);
     buySell.getRate($scope.exchange.profile.defaultCurrency, $scope.transaction.currency.code).then(calculateMax);
   };
+
+  $rootScope.$on('fetchExchangeProfile', () => {
+    $scope.status.disabled = true;
+    $scope.initialize();
+  });
 }

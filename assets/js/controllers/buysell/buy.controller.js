@@ -232,7 +232,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.onResize = (step) => $scope.isxStep = step;
 
   $scope.cancel = () => {
-    if ($scope.exchange.user) buySell.getTrades();
+    $rootScope.$broadcast('fetchExchangeProfile');
     $uibModalInstance.dismiss('');
     $scope.trade = null;
   };
