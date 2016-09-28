@@ -1029,5 +1029,6 @@
   "SELECT_PAYMENT_METHOD": "Select your preferred payment method:",
   "PAYMENT_FEE": "Payment Fee:",
   "NEEDS_REFRESH": "Please refresh your wallet to access this feature.",
-  "GO_BACK": "Go Back"
+  "GO_BACK": "Go Back",
+  "AMOUNT_FOR": "{{::symbol}}{{::amount}} for"
 }
