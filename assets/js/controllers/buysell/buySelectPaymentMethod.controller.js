@@ -3,7 +3,7 @@ angular
   .controller('BuySelectPaymentMethodCtrl', BuySelectPaymentMethodCtrl);
 
 function BuySelectPaymentMethodCtrl ($scope, Alerts, buySell) {
-  $scope.$parent.method = $scope.trade ? $scope.trade.medium : 'card';
+  $scope.$parent.method = $scope.trade ? $scope.trade.medium : undefined;
   $scope.$parent.methods = {};
 
   $scope.$parent.getMethod = () => $scope.methods[$scope.method] || {};

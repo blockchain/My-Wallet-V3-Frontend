@@ -1,7 +1,7 @@
 .payment-methods
   span.type-h5.em-500.flex-start.pts(translate="SELECT_PAYMENT_METHOD")
   .flex-row.flex-center.pointer.mtml
-    input.man(type="radio" name="inMedium" id="card" ng-model="method" value="card" ng-disabled="status.waiting")
+    input.man(type="radio" name="inMedium" id="card" ng-model="$parent.method" value="card" ng-disabled="status.waiting")
     .flex-column.flex-1.mlm.pointer
       label.mts.pointer.em-400(for="card")
         .flex-row.flex-center
@@ -16,7 +16,7 @@
   .mlm.mbl.em-300.width-70(ng-show="method === 'card' && !userHasExchangeAcct")
     span(translate="VERIFY_CARD_NOTE")
   .flex-row.flex-center.pointer
-    input.man(type="radio" name="inMedium" id="bank" ng-model="method" value="bank" ng-disabled="status.waiting")
+    input.man(type="radio" name="inMedium" id="bank" ng-model="$parent.method" value="bank" ng-disabled="status.waiting")
     .flex-column.flex-1.mlm.pointer
       label.mts.pointer.em-400(for="bank")
         .flex-row.flex-center

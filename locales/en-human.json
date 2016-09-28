@@ -878,7 +878,8 @@
   "ACCEPT_PARTNER_TOS_PRIVACY": "Accept <a href='https://www.blockchain.com/assets/pdf/Blockchain_BuySellAlphaAgreement.pdf' target='_blank' rel='noopener noreferrer'>our Alpha Agreement</a>, Coinify's <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>Terms of Service</a> and <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>Privacy Policy</a>",
   "EMAIL_IN_USE": "{{::email}} is already in use. ",
   "CLICK_TO_CHANGE": "Click here to change it.",
-  "PAYMENT_METHOD": "Payment Method:",
+  "METHOD": "Method",
+  "VERIFY_PAYMENT": "Verify Payment",
   "PLEASE_CREATE_ACCOUNT": "Please <span class='underline pointer'>create an account</span> to get an accurate exchange rate.",
   "TRADE_AMOUNT_TOO_LOW": "The amount of this trade is too small. Try increasing the amount.",
   "TRADE_EXCEEDS_LIMITS": "The amount of this trade is larger than your allowed limit.",
@@ -1027,5 +1028,6 @@
   "ACCEPT_TERMS": "Coinify account terms:",
   "SELECT_PAYMENT_METHOD": "Select your preferred payment method:",
   "PAYMENT_FEE": "Payment Fee:",
-  "NEEDS_REFRESH": "Please refresh your wallet to access this feature."
+  "NEEDS_REFRESH": "Please refresh your wallet to access this feature.",
+  "GO_BACK": "Go Back"
 }
