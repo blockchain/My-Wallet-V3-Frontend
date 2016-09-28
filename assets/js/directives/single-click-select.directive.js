@@ -6,17 +6,13 @@ angular
 function singleClickSelect ($window) {
   const directive = {
     restrict: 'A',
+    scope: false,
     link: link
   };
   return directive;
 
   function link (scope, elem, attrs) {
     scope.highlighted = false;
-    scope.browserCanExecCommand = (
-      (browserDetection().browser === 'chrome' && browserDetection().version > 42) ||
-      (browserDetection().browser === 'firefox' && browserDetection().version > 40) ||
-      (browserDetection().browser === 'ie' && browserDetection().version > 10)
-    );
 
     scope.select = () => {
       let text = elem[0];

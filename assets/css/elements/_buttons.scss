@@ -110,6 +110,9 @@ button[disabled] {
 .button-nowrap { white-space: nowrap; }
 .button-short {
   padding: .25em;
+}
+.button-short-wide {
+  padding: .25em;
   min-width: 100px;
 }
 

@@ -82,6 +82,12 @@ angular.module('walletApp', modules)
     if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
   };
 
+  $rootScope.browserCanExecCommand = (
+    (browserDetection().browser === 'chrome' && browserDetection().version > 42) ||
+    (browserDetection().browser === 'firefox' && browserDetection().version > 40) ||
+    (browserDetection().browser === 'ie' && browserDetection().version > 10)
+  );
+
   $rootScope.$on('showNotification', (_, notification) => {
     $uibModal.open({
       templateUrl: 'partials/modal-notification.jade',
