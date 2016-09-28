@@ -7,7 +7,7 @@
     translate="ERROR_DAILY_LIMIT")
   p.mvm
     span(translate="ORDER_CONFIRMATION_COPY" ng-hide="isBankTransfer()")
-    span(translate="ERROR_DAILY_LIMIT_COPY" ng-show="isBankTransfer()" translate-values="{symbol: currencySymbol.symbol, max: limits.available}")
+    span(translate="ERROR_DAILY_LIMIT_COPY" ng-show="isBankTransfer()" translate-values="{code: tempCurrency.code, max: limits.available}")
   .flex-center.flex-between.flex-row-reverse
     .mam
       span.type-sm.blue.underline.pointer(ng-click="toggleEditAmount()" ng-hide="editAmount") Edit Order
