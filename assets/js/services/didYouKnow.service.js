@@ -19,8 +19,8 @@ function DidYouKnow () {
       type: 'FEATURE',
       text: 'DYK_RECOVERY',
       icon: 'ti-lock',
-      linkText: 'SECURITY',
-      state: 'wallet.common.settings.security'
+      linkText: 'SECURITY_CENTER',
+      state: 'wallet.common.security-center'
     }, {
       id: 3,
       title: 'DYK_TX_FEES_TITLE',
@@ -33,6 +33,52 @@ function DidYouKnow () {
       type: 'EDUCATIONAL',
       text: 'DYK_BTC_VALUE',
       icon: 'ti-stats-up'
+    }, {
+      id: 5,
+      title: 'DYK_TOP_SECURITY_TIPS_TITLE',
+      type: 'EDUCATIONAL',
+      text: 'DYK_TOP_SECURITY_TIPS',
+      icon: 'ti-lock',
+      linkText: 'SECURITY_CENTER',
+      state: 'wallet.common.security-center'
+    }, {
+      id: 6,
+      title: 'WALLET_ID_EXPLANATION_TITLE',
+      type: 'EDUCATIONAL',
+      text: 'WALLET_ID_EXPLANATION',
+      icon: 'ti-id-badge'
+    }, {
+      id: 7,
+      title: 'DYK_MOBILE_TITLE',
+      type: 'FEATURE',
+      text: 'DYK_MOBILE',
+      icon: 'ti-mobile',
+      linkText: 'PAIRING_CODE',
+      state: 'wallet.common.settings.info'
+    }, {
+      id: 8,
+      title: 'DYK_HOW_IT_WORKS_TITLE',
+      type: 'EDUCATIONAL',
+      text: 'DYK_HOW_IT_WORKS',
+      icon: 'ti-cloud-up'
+    }, {
+      id: 9,
+      title: 'DYK_HD_PRIVACY_TITLE',
+      type: 'EDUCATIONAL',
+      text: 'DYK_HD_PRIVACY',
+      icon: 'ti-check'
+    }, {
+      id: 10,
+      title: 'DYK_DYNAMIC_FEES_TITLE',
+      type: 'FEATURE',
+      text: 'DYK_DYNAMIC_FEES',
+      icon: 'ti-check'
+    }, {
+      id: 11,
+      title: 'DYK_OPEN_SOURCE_TITLE',
+      type: 'EDUCATIONAL',
+      text: 'DYK_OPEN_SOURCE',
+      icon: 'ti-github'
     }
   ];
 
