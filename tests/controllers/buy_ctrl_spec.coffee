@@ -110,23 +110,15 @@ describe "BuyCtrl", ->
     beforeEach ->
       scope.exchange.user = undefined
       scope.user.isEmailVerified = false
+      scope.isMethodSelected = false
       scope.user.email = "a@b.com"
       scope.$digest()
 
-
-    it "should switch to amount step", ->
-      scope.nextStep()
-      expect(scope.onStep('amount')).toEqual(true)
-
     it "should switch to select-country step", ->
-      scope.transaction.fiat = 1
-      scope.nextStep()
       expect(scope.onStep('select-country')).toEqual(true)
 
     it "should switch to email step", ->
-      scope.transaction.fiat = 1
       scope.fields.countryCode = 'GB'
-      scope.nextStep()
       scope.nextStep()
       expect(scope.onStep('email')).toEqual(true)
 
@@ -141,7 +133,6 @@ describe "BuyCtrl", ->
     it "should switch to select-payment-method step", ->
       scope.transaction.fiat = 1
       scope.exchange.user = {}
-      scope.nextStep()
       scope.nextStep()
       expect(scope.onStep('select-payment-method')).toEqual(true)
 
@@ -177,24 +168,19 @@ describe "BuyCtrl", ->
   describe "prevStep", ->
     it "should go back one step", ->
       scope.exchange.user = undefined
-      scope.step = 2
+      scope.step = 1
       scope.prevStep()
-      expect(scope.step).toBe(1)
+      expect(scope.step).toBe(0)
 
     it "should go to a specific step", ->
       scope.goTo('summary')
       scope.exchange.user = true
       scope.prevStep()
-      expect(scope.step).toBe(4)
+      expect(scope.step).toBe(3)
 
   describe "close", ->
     beforeEach ->
       spyOn(Alerts, 'confirm').and.callThrough()
-
-    it "should confirm when leaving amount selection", ->
-      scope.goTo('amount')
-      scope.close()
-      expect(Alerts.confirm).toHaveBeenCalledWith('CONFIRM_CLOSE_AMT', {action: 'CLOSE'})
 
     it "should confirm close when acct is true", ->
       scope.goTo('select-country')

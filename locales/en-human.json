@@ -1028,5 +1028,6 @@
   "ACCEPT_TERMS": "Coinify account terms:",
   "SELECT_PAYMENT_METHOD": "Select your preferred payment method:",
   "PAYMENT_FEE": "Payment Fee:",
-  "NEEDS_REFRESH": "Please refresh your wallet to access this feature."
+  "NEEDS_REFRESH": "Please refresh your wallet to access this feature.",
+  "GO_BACK": "Go Back"
 }

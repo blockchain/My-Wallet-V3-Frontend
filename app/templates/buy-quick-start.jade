@@ -12,7 +12,7 @@ form.border.paml.mtml(name="fiatForm" ng-submit="triggerBuy()")
           focus-when="status.ready"
           ng-change="getQuote()"
           ng-model-options="{debounce: 250}"
-          placeholder="{{limits.card.min}}"
+          placeholder="Minimum buy is {{limits.card.min ? limits.card.min : '10.00'}}"
           min="{{limits.card.min}}"
           max="{{limits.bank.available > limits.card.available ? limits.bank.available : limits.card.available}}"
           step="0.01"

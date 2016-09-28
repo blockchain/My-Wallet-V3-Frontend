@@ -31,15 +31,14 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   let eventualError = (message) => Promise.reject.bind(Promise, { message });
 
   $scope.steps = {
-    'amount': 0,
-    'select-country': 1,
-    'email': 2,
-    'accept-terms': 3,
-    'select-payment-method': 4,
-    'summary': 5,
-    'isx': 6,
-    'trade-in-review': 7,
-    'trade-formatted': 8
+    'select-country': 0,
+    'email': 1,
+    'accept-terms': 2,
+    'select-payment-method': 3,
+    'summary': 4,
+    'isx': 5,
+    'trade-in-review': 6,
+    'trade-formatted': 7
   };
 
   $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
@@ -48,7 +47,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.currentStep = () => Object.keys($scope.steps).filter($scope.onStep)[0];
 
   $scope.goTo = (step) => $scope.step = $scope.steps[step];
-  $scope.goTo('amount');
 
   $scope.formattedTrade = undefined;
   $scope.bitcoinReceived = buyOptions.bitcoinReceived && $scope.trade && $scope.trade.bitcoinReceived;
@@ -71,7 +69,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     $scope.expiredQuote || ($scope.quote && !$scope.quote.id && !$scope.trade)
   );
 
-  $scope.userHasExchangeAcct = $scope.trades.pending.length || $scope.trades.completed.length;
+  $scope.userHasExchangeAcct = $scope.exchange.user;
 
   $scope.getPaymentMethods = () => {
     if (!$scope.exchange.user) { return; }
@@ -81,7 +79,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     let success = (methods) => {
       $scope.methods = methods;
       $scope.status.waiting = false;
-      $scope.updateAmounts();
     };
 
     let methodsError = eventualError('ERROR_PAYMENT_METHODS_FETCH');
@@ -156,10 +153,9 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   $scope.nextStep = () => {
     if (!$scope.trade) {
-      if (!$scope.transaction.fiat) {
-        $scope.goTo('amount');
-      } else if ((!$scope.fields.countryCode && !$scope.afterStep('amount')) || ($scope.onStep('amount') && !$scope.exchange.user)) {
+      if (!$scope.isCountrySelected && !$scope.exchange.user) {
         $scope.goTo('select-country');
+        $scope.isCountrySelected = true;
       } else if ((!$scope.user.isEmailVerified || $scope.rejectedEmail) && !$scope.exchange.user) {
         $scope.goTo('email');
       } else if (!$scope.exchange.user) {
@@ -184,11 +180,8 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.prevStep = () => {
     if ($scope.status.waiting) return;
 
-    if ($scope.exchange.user && $scope.afterStep('select-payment-method')) {
+    if ($scope.exchange.user && $scope.afterStep('accept-terms')) {
       $scope.goTo('select-payment-method');
-    } else if ($scope.exchange.user) {
-      $scope.goTo('amount');
-      $scope.isMethodSelected = false;
     } else if ($scope.afterStep('email')) {
       $scope.goTo('select-country');
     } else {
@@ -197,14 +190,12 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   };
 
   $scope.isDisabled = () => {
-    if ($scope.onStep('amount')) {
-      return !($scope.transaction.fiat > 0);
-    } else if ($scope.onStep('select-country')) {
+    if ($scope.onStep('select-country')) {
       return !$scope.fields.countryCode || $scope.isCountryBlacklisted;
     } else if ($scope.onStep('accept-terms')) {
       return !$scope.signupForm.$valid;
     } else if ($scope.onStep('select-payment-method')) {
-      return !$scope.quote;
+      return !$scope.quote || !$scope.method;
     } else if ($scope.onStep('summary')) {
       return $scope.editAmount || !$scope.limits.max;
     }
@@ -248,9 +239,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   $scope.close = (acct) => {
     let text, action;
-    if ($scope.onStep('amount')) {
-      [text, action] = ['CONFIRM_CLOSE_AMT', 'CLOSE'];
-    } else if (acct) {
+    if (acct) {
       [text, action] = ['CONFIRM_CLOSE', 'IM_DONE'];
     } else {
       [text, action] = ['CONFIRM_CLOSE_ACCT', 'IM_DONE'];
@@ -267,6 +256,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   $scope.fakeBankTransfer = () => $scope.trade.fakeBankTransfer().then(() => { $scope.formatTrade('processing'); });
 
+  $scope.$watch('method', (newVal) => newVal && $scope.updateAmounts());
   $scope.$watchGroup(['exchange.user', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
   $scope.$watch('user.isEmailVerified', () => $scope.onStep('email') && $scope.nextStep());
   $scope.$watch('bitcoinReceived', (newVal) => newVal && ($scope.formattedTrade = formatTrade['success']($scope.trade)));

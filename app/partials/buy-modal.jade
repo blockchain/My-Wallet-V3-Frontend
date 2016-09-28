@@ -28,8 +28,6 @@
   .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'), 'isx': onStep('isx')}")
     .alert-in-app
       alerts(context="alerts")
-    div.width-80(ng-show="onStep('amount')")
-      include ./buy/amount
     div.width-80(ng-show="onStep('select-country')" ng-controller="BuySelectCountryCtrl")
       include ./buy/select-country
     div.width-80(ng-show="onStep('email')" ng-controller="BuyEmailCtrl")
@@ -55,7 +53,8 @@
           span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
   //- needs directive
   .modal-footer.flex-end.flex-row
-    button.button-muted(ng-show="afterStep('amount') && beforeStep('isx')" ng-click="prevStep()") Go Back
+    button.button-muted(ng-hide="onStep('select-country', 'select-payment-method') || afterStep('summary')"
+                        ng-click="prevStep()" translate="GO_BACK")
     
     .flex-1.flex-end(ng-hide="status.loading")
       button.button-muted.mrm(ng-click="close()" translate="CANCEL_ORDER" ng-hide="afterStep('summary')")
