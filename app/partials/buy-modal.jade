@@ -10,8 +10,12 @@
                                     tooltip-append-to-body="true"
                                     tooltip-placement="right"
                                     tooltip-enable="!hideQuote()")
-          span.type-h5.em-400(ng-hide="!transaction.btc || trade || needsKyc()") {{ isKYC}} {{ transaction.btc }}
-          span.type-h5.em-400(ng-show="trade && !isKYC && !needsKyc()" ng-class="{italic: expiredQuote && needsISX(), 'tilda-before': expiredQuote && needsISX()}") {{ expiredQuote && needsISX() ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} BTC
+          .flex-row.type-h5.em-400
+            span(ng-hide="!transaction.btc || trade || needsKyc()" translate="AMOUNT_FOR" translate-values="{symbol: currencySymbol.symbol, amount: transaction.fiat}")
+            span(ng-show="trade && !isKYC && !needsKyc()" translate="AMOUNT_FOR" translate-values="{symbol: currencySymbol.symbol, amount: transaction.total}")
+            | &nbsp;
+            span(ng-hide="!transaction.btc || trade || needsKyc()") {{ transaction.btc }}
+            span(ng-show="trade && !isKYC && !needsKyc()" ng-class="{italic: expiredQuote && needsISX(), 'tilda-before': expiredQuote && needsISX()}") {{ expiredQuote && needsISX() ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} BTC
           quote-countdown(ng-hide="isKYC" quote="quote" trade-obj="trade" expired-quote="expiredQuote" ng-class="{'fade': hideQuote() }")
           p.security-red.pointer(ng-show="buySellDebug && quote.id")
             i.ti-search.mrm.right-align(ng-click="quote.expire()")  QA: Now
