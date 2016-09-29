@@ -6,8 +6,8 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
   let states = {
     error: ['expired', 'rejected', 'cancelled'],
     success: ['completed', 'completed_test'],
-    pending: ['awaiting_transfer_in', 'processing', 'reviewing', 'pending'],
-    completed: ['expired', 'rejected', 'cancelled', 'completed', 'completed_test']
+    pending: ['awaiting_transfer_in', 'reviewing', 'pending'],
+    completed: ['expired', 'rejected', 'cancelled', 'completed', 'completed_test', 'processing']
   };
   let tradeStateIn = (states) => (t) => states.indexOf(t.state) > -1;
 
