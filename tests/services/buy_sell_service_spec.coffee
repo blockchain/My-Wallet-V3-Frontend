@@ -42,7 +42,7 @@ describe "buySell service", () ->
   beforeEach ->
     exchange = buySell.getExchange()
 
-    trades = ["processing", "completed", "completed_test", "cancelled"].map(makeTrade)
+    trades = ["pending", "completed", "completed_test", "cancelled"].map(makeTrade)
 
     spyOn(exchange, "getBuyCurrencies").and.returnValue($q.resolve(["USD", "EUR"]))
     spyOn(exchange, "getTrades").and.returnValue($q.resolve(trades))

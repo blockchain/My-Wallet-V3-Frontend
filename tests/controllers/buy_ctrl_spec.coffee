@@ -139,7 +139,7 @@ describe "BuyCtrl", ->
     it "should switch to isx step", ->
       scope.transaction.fiat = 1
       scope.exchange.user = {}
-      scope.trade = {state: 'processing'}
+      scope.trade = {state: 'pending'}
       scope.nextStep()
       scope.nextStep()
       expect(scope.onStep('isx')).toEqual(true)
