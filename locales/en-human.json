@@ -522,6 +522,7 @@
   "HOME" : "Home",
   "ABOUT" : "About",
   "WALLET" : "Wallet",
+  "BITCOIN_WALLET": "Bitcoin Wallet",
   "EXPLORER" : "Explorer",
   "MERCHANT" : "Merchant",
   "SUPPORT" : "Support",
