@@ -18,6 +18,8 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
   return directive;
 
   function link (scope, elem, attrs) {
+    scope.buySellDebug = $rootScope.buySellDebug;
+
     scope.update = () => angular.extend(scope, {
       error: buySell.tradeStateIn(buySell.states.error)(scope.trade),
       success: buySell.tradeStateIn(buySell.states.success)(scope.trade),

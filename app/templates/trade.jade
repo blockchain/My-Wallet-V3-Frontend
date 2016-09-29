@@ -11,8 +11,14 @@ tr.border
   td.type-lbl.pvml
     span.mrm {{ trade.createdAt | date:'d MMMM yyyy, HH:mm' }}
   td.type-lbl.pvml.right-align(ng-hide="status.gettingQuote")
-    span.display-inline-block.left-align
-      quote-countdown(trade-obj="trade" ng-hide="expiredQuote || !pending || trade.bankAccount" expired-quote="expiredQuote")
+    span(ng-hide="expiredQuote || !pending || trade.bankAccount")
+      span.display-inline-block.left-align
+        quote-countdown(trade-obj="trade" expired-quote="expiredQuote")
+      span(ng-if="buySellDebug")
+        br
+        span.display-inline-block.mlm
+          i.ti-search(ng-click="trade.expireQuote()") QA: Now
+        br
     span.display-inline-block.mlm(ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ pending && expiredQuote ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} {{ trade.outCurrency }}
   td.type-lbl.paml.right-align
     span(ng-hide="status.gettingQuote")
