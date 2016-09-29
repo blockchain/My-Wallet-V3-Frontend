@@ -18,16 +18,120 @@ function SignupCtrl ($scope, $state, $cookies, $filter, $timeout, $translate, Wa
     language_guess = $filter('getByProperty')('code', 'en', languages);
   }
 
-  var cur = 'USD';
-
-  switch (language_guess.code) {
-    case 'zh-cn':
-      cur = 'CNY';
+  let cur;
+  const country_code = 'nl'; // TODO: get from endpoint
+  switch (country_code) { // iso-3166-2
+    case 'us':
+    case 'io': // British Indian Ocean Territory (de-facto)
+      cur = 'USD';
       break;
+    // Eurozone countries:
+    case 'at':
+    case 'be':
+    case 'cy':
+    case 'ee':
+    case 'fi':
+    case 'fr':
+    case 'de':
+    case 'gr':
+    case 'ie':
+    case 'it':
+    case 'lv':
+    case 'lt':
+    case 'lu':
+    case 'mt':
     case 'nl':
+    case 'pt':
+    case 'sk':
+    case 'si':
+    case 'es':
+    // Euro de-facto currency:
+    case 'mc': // Monaco
+    case 'sm': // San Marino
+    case 'va': // Vatican City
+    case 'ad': // Andorra
+    case 'pm': // Saint Pierre and Miquelon
+    case 'yt': // Mayotte
+    case 'bl': // Saint Barthélemy
+    case 'xk': // Kosovo
+    case 'me': // Montenegro
+    // EUR is probably best alternative we support:
+    case 'no': // Norway
+    case 'al': // Albania
+    case 'ba': // Bosnia and Herzegovina
+    case 'mk': // Macedonia
+    case 'rs': // Serbia
+    case 'tr': // Turkey
+    case 'md': // Moldova
+    case 'cz': // Czech Republic
       cur = 'EUR';
       break;
+    case 'is': // Iceland
+      cur = 'ISK';
+      break;
+    case 'hk': // Hong Kong
+      cur = 'HKD';
+      break;
+    case 'tw': // Taiwan
+      cur = 'TWD';
+      break;
+    case 'ch': // Switserland
+    case 'li': // Liechtenstein
+      cur = 'CHF';
+      break;
+    case 'dk': // Denmark
+    case 'gl': // Greenland
+    case 'fo': // Faroe Islands
+      cur = 'DKK';
+      break;
+    case 'cl': // Chili
+      cur = 'CLP';
+      break;
+    case 'ca': // Canada
+      cur = 'CAD';
+      break;
+    case 'cn': // China
+    case 'mo': // Macau (or is HKD better?)
+      cur = 'CNY';
+      break;
+    case 'th': // Thailand
+      cur = 'THB';
+      break;
+    case 'au': // Australia
+      cur = 'AUD';
+      break;
+    case 'sg': // Singapore
+      cur = 'SGD';
+      break;
+    case 'kr': // South Korea
+      cur = 'KRW';
+      break;
+    case 'jp': // Japan
+      cur = 'JPY';
+      break;
+    case 'pl': // Poland
+      cur = 'PLN';
+      break;
+    case 'gb': // Great Britain, United Kingdom, Channel Islands
+    case 'im': // Isle of Man
+    case 'gg': // Guernsey
+    case 'ss': // South Georgia and the South Sandwich Islands
+      cur = 'GBP';
+      break;
+    case 'se': // Sweden
+      cur = 'SEK';
+      break;
+    case 'nz': // New Zealand
+      cur = 'NZD';
+      break;
+    case 'br': // Brazil
+      cur = 'BRL';
+      break;
+    case 'ru': // Russia
+      cur = 'RUB';
+      break;
     default:
+      cur = 'USD'; // One day this will be BTC
   }
 
   $scope.language_guess = language_guess;
