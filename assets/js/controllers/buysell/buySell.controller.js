@@ -78,6 +78,8 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
       }).catch((e) => {
         $scope.status.exchangeDown = true;
       });
+    } else {
+      $scope.status.disabled = false;
     }
 
     let kycStates = ['pending', 'manual_review', 'declined', 'rejected'];
