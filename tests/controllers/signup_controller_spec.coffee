@@ -3,12 +3,17 @@ describe "SignupCtrl", ->
   modalInstance =
     close: ->
     dismiss: ->
+  $httpBackend = undefined
 
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile, $templateCache) ->
       Wallet = $injector.get("Wallet")
+
+      $rootScope.rootURL = "/"
+      $httpBackend = $injector.get("$httpBackend")
+      $httpBackend.expectGET("/wallet/browser-info").respond {country_code: "NL"}
 
       Wallet.my.browserCheck = () -> true
       Wallet.my.browserCheckFast = () -> true
@@ -161,4 +166,5 @@ describe "SignupCtrl", ->
 
   describe "currency", ->
     it "should guess the correct currency", ->
-      expect(scope.currency_guess.code).toBe("USD")
+      $httpBackend.flush()
+      expect(scope.currency_guess.code).toBe("EUR")

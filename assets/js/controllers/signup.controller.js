@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .controller('SignupCtrl', SignupCtrl);
 
-SignupCtrl.$inject = ['$scope', '$state', '$cookies', '$filter', '$timeout', '$translate', 'Wallet', 'currency', 'languages', 'MyWallet'];
+SignupCtrl.$inject = ['$scope', '$state', '$cookies', '$filter', '$timeout', '$translate', 'Wallet', 'currency', 'languages', 'MyWallet', '$http', '$rootScope'];
 
-function SignupCtrl ($scope, $state, $cookies, $filter, $timeout, $translate, Wallet, currency, languages, MyWallet) {
+function SignupCtrl ($scope, $state, $cookies, $filter, $timeout, $translate, Wallet, currency, languages, MyWallet, $http, $rootScope) {
   $scope.working = false;
   $scope.browser = {disabled: true};
 
@@ -18,125 +18,134 @@ function SignupCtrl ($scope, $state, $cookies, $filter, $timeout, $translate, Wa
     language_guess = $filter('getByProperty')('code', 'en', languages);
   }
 
-  let cur;
-  const country_code = 'nl'; // TODO: get from endpoint
-  switch (country_code) { // iso-3166-2
-    case 'us':
-    case 'io': // British Indian Ocean Territory (de-facto)
-      cur = 'USD';
-      break;
-    // Eurozone countries:
-    case 'at':
-    case 'be':
-    case 'cy':
-    case 'ee':
-    case 'fi':
-    case 'fr':
-    case 'de':
-    case 'gr':
-    case 'ie':
-    case 'it':
-    case 'lv':
-    case 'lt':
-    case 'lu':
-    case 'mt':
-    case 'nl':
-    case 'pt':
-    case 'sk':
-    case 'si':
-    case 'es':
-    // Euro de-facto currency:
-    case 'mc': // Monaco
-    case 'sm': // San Marino
-    case 'va': // Vatican City
-    case 'ad': // Andorra
-    case 'pm': // Saint Pierre and Miquelon
-    case 'yt': // Mayotte
-    case 'bl': // Saint Barthélemy
-    case 'xk': // Kosovo
-    case 'me': // Montenegro
-    // EUR is probably best alternative we support:
-    case 'no': // Norway
-    case 'al': // Albania
-    case 'ba': // Bosnia and Herzegovina
-    case 'mk': // Macedonia
-    case 'rs': // Serbia
-    case 'tr': // Turkey
-    case 'md': // Moldova
-    case 'cz': // Czech Republic
-      cur = 'EUR';
-      break;
-    case 'is': // Iceland
-      cur = 'ISK';
-      break;
-    case 'hk': // Hong Kong
-      cur = 'HKD';
-      break;
-    case 'tw': // Taiwan
-      cur = 'TWD';
-      break;
-    case 'ch': // Switserland
-    case 'li': // Liechtenstein
-      cur = 'CHF';
-      break;
-    case 'dk': // Denmark
-    case 'gl': // Greenland
-    case 'fo': // Faroe Islands
-      cur = 'DKK';
-      break;
-    case 'cl': // Chili
-      cur = 'CLP';
-      break;
-    case 'ca': // Canada
-      cur = 'CAD';
-      break;
-    case 'cn': // China
-    case 'mo': // Macau (or is HKD better?)
-      cur = 'CNY';
-      break;
-    case 'th': // Thailand
-      cur = 'THB';
-      break;
-    case 'au': // Australia
-      cur = 'AUD';
-      break;
-    case 'sg': // Singapore
-      cur = 'SGD';
-      break;
-    case 'kr': // South Korea
-      cur = 'KRW';
-      break;
-    case 'jp': // Japan
-      cur = 'JPY';
-      break;
-    case 'pl': // Poland
-      cur = 'PLN';
-      break;
-    case 'gb': // Great Britain, United Kingdom, Channel Islands
-    case 'im': // Isle of Man
-    case 'gg': // Guernsey
-    case 'ss': // South Georgia and the South Sandwich Islands
-      cur = 'GBP';
-      break;
-    case 'se': // Sweden
-      cur = 'SEK';
-      break;
-    case 'nz': // New Zealand
-      cur = 'NZD';
-      break;
-    case 'br': // Brazil
-      cur = 'BRL';
-      break;
-    case 'ru': // Russia
-      cur = 'RUB';
-      break;
-    default:
-      cur = 'USD'; // One day this will be BTC
-  }
-
   $scope.language_guess = language_guess;
 
-  $scope.currency_guess = $filter('getByProperty')('code', cur, currency.currencies);
+  // Get country code from server:
+  $http.get($rootScope.rootURL + 'wallet/browser-info')
+    .success(data => {
+      let cur;
+      const country_code = data.country_code;
+      switch (country_code) { // iso-3166-2
+        case 'US':
+        case 'IO': // British Indian Ocean Territory (de-facto)
+          cur = 'USD';
+          break;
+        // Eurozone countries:
+        case 'AT':
+        case 'BE':
+        case 'CY':
+        case 'EE':
+        case 'FI':
+        case 'FR':
+        case 'DE':
+        case 'GR':
+        case 'IE':
+        case 'IT':
+        case 'LV':
+        case 'LT':
+        case 'LU':
+        case 'MT':
+        case 'NL':
+        case 'PT':
+        case 'SK':
+        case 'SI':
+        case 'ES':
+        // Euro de-facto currency:
+        case 'MC': // Monaco
+        case 'SM': // San Marino
+        case 'VA': // Vatican City
+        case 'AD': // Andorra
+        case 'PM': // Saint Pierre and Miquelon
+        case 'YT': // Mayotte
+        case 'BL': // Saint Barthélemy
+        case 'XK': // Kosovo
+        case 'ME': // Montenegro
+        // EUR is probably best alternative we support:
+        case 'NO': // Norway
+        case 'AL': // Albania
+        case 'BA': // Bosnia and Herzegovina
+        case 'MK': // Macedonia
+        case 'RS': // Serbia
+        case 'TR': // Turkey
+        case 'MD': // Moldova
+        case 'CZ': // Czech Republic
+          cur = 'EUR';
+          break;
+        case 'IS': // Iceland
+          cur = 'ISK';
+          break;
+        case 'HK': // Hong Kong
+          cur = 'HKD';
+          break;
+        case 'TW': // Taiwan
+          cur = 'TWD';
+          break;
+        case 'CH': // Switserland
+        case 'LI': // Liechtenstein
+          cur = 'CHF';
+          break;
+        case 'DK': // Denmark
+        case 'GL': // Greenland
+        case 'FO': // Faroe Islands
+          cur = 'DKK';
+          break;
+        case 'CL': // Chili
+          cur = 'CLP';
+          break;
+        case 'CA': // Canada
+          cur = 'CAD';
+          break;
+        case 'CN': // China
+        case 'MO': // Macau (or is HKD better?)
+          cur = 'CNY';
+          break;
+        case 'TH': // Thailand
+          cur = 'THB';
+          break;
+        case 'AU': // Australia
+          cur = 'AUD';
+          break;
+        case 'SG': // Singapore
+          cur = 'SGD';
+          break;
+        case 'KR': // South Korea
+          cur = 'KRW';
+          break;
+        case 'JP': // Japan
+          cur = 'JPY';
+          break;
+        case 'PL': // Poland
+          cur = 'PLN';
+          break;
+        case 'GB': // Great Britain, United Kingdom, Channel Islands
+        case 'IM': // Isle of Man
+        case 'GG': // Guernsey
+        case 'SS': // South Georgia and the South Sandwich Islands
+        case 'JE': // Jersey
+          cur = 'GBP';
+          break;
+        case 'SE': // Sweden
+          cur = 'SEK';
+          break;
+        case 'NZ': // New Zealand
+          cur = 'NZD';
+          break;
+        case 'BR': // Brazil
+          cur = 'BRL';
+          break;
+        case 'RU': // Russia
+          cur = 'RUB';
+          break;
+        default:
+          cur = 'USD'; // One day this will be BTC
+      }
+
+      $scope.currency_guess = $filter('getByProperty')('code', cur, currency.currencies);
+    }).error(() => {
+      // Fallback to USD
+      $scope.currency_guess = $filter('getByProperty')('code', 'USD', currency.currencies);
+    });
+
   $scope.fields = {
     password: '',
     confirmation: '',
