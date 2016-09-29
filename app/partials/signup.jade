@@ -70,6 +70,6 @@ form.form-horizontal(
       button.button-primary(
         type="submit"
         data-style="expand-left"
-        ng-disabled="signupForm.$invalid"
+        ng-disabled="signupForm.$invalid || !currency_guess"
         ladda-translate="CONTINUE"
         ui-ladda="working")
