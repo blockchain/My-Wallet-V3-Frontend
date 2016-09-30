@@ -60,9 +60,7 @@ Run local http server:
 npm start
 ```
 
-Visit [local.blockchain.com:8080](http://local.blockchain.com:8080/).  Do not use `localhost:8080`. You will need to modify your "hosts" file (`/etc/hosts` on OSX and most UNIX systems) because this is no longer registered at the DNS level for application security reasons. Add this line to `/etc/hosts`:
-
-    127.0.0.1   local.blockchain.com
+Visit [localhost:8080](http://localhost:8080/).
 
 ## Developing My-Wallet-V3
 
@@ -83,7 +81,7 @@ To automatically login and go back to where you last were in the app after every
 To reclaim funds from an email take code at the of link and add it to `#/claim`, e.g.:
 
     https://blockchain.info/wallet/claim#7Educ5YNnVPQCQ556w7W8tQpj1dchhxPK56vVNab68cK
-    http://local.blockchain.com:8080/#/claim/7Educ5YNnVPQCQ556w7W8tQpj1dchhxPK56vVNab68cK
+    http://localhost.com:8080/#/claim/7Educ5YNnVPQCQ556w7W8tQpj1dchhxPK56vVNab68cK
 
 If you enable "handle bitcoin links" in your wallet settings, you can open bitcoin URI's like this one:
 
