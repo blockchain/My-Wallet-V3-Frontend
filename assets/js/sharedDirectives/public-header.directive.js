@@ -2,9 +2,9 @@ angular
   .module('sharedDirectives')
   .directive('publicHeader', publicHeader);
 
-publicHeader.$inject = ['$rootScope'];
+publicHeader.$inject = ['$rootScope', '$location', 'languages'];
 
-function publicHeader ($rootScope) {
+function publicHeader ($rootScope, $location, languages) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -23,6 +23,18 @@ function publicHeader ($rootScope) {
             <li class="item"><a href="{{rootURL}}api" translate="API" class="pam"></a></li>
             <li class="item active"><a href="#" translate="BITCOIN_WALLET" class="pam"></a></li>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown" uib-dropdown>
+              <a href="#" class="dropdown-toggle" role="button" aria-haspopup="true" uib-dropdown-toggle>
+                <div class="flex-center">
+                  {{language}}<span class="caret mlm"></span>
+                </div>
+              </a>
+              <ul class="dropdown-menu" uib-dropdown-menu>
+                <li ng-repeat="lang in languages"><a ng-href="/{{lang.code}}/wallet/#{{path()}}">{{lang.name}}</a></li>
+              </ul>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -36,5 +48,10 @@ function publicHeader ($rootScope) {
 
   function link (scope, elem, attrs) {
     scope.rootURL = $rootScope.rootURL;
+    scope.languages = languages.languages;
+    scope.path = () => $location.$$path;
+    scope.$watch(languages.get, (code) => {
+      scope.language = languages.mapCodeToName(code);
+    });
   }
 }

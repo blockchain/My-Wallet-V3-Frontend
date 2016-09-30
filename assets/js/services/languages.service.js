@@ -41,6 +41,7 @@ function languages ($translate) {
     codes: Object.keys(languageCodes),
     get: () => $translate.use(),
     set: (code) => $translate.use(code),
+    mapCodeToName: (code) => languageCodes[code],
     parseFromUrl
   };
 

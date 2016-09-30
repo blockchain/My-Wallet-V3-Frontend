@@ -19,7 +19,7 @@ var app = express();
 
 app.use(compression());
 
-rootApp.use('/wallet', app);
+rootApp.use('/:lang?/wallet', app);
 
 app.use(function (req, res, next) {
   if (req.url === '/') {
