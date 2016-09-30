@@ -21,7 +21,7 @@ function publicHeader ($rootScope) {
             <li class="item"><a href="{{rootURL}}stats" translate="STATS" class="pam"></a></li>
             <li class="item"><a href="https://markets.blockchain.info" translate="MARKETS" class="pam"></a></li>
             <li class="item"><a href="{{rootURL}}api" translate="API" class="pam"></a></li>
-            <li class="item active"><a href="#" translate="WALLET" class="pam"></a></li>
+            <li class="item active"><a href="#" translate="BITCOIN_WALLET" class="pam"></a></li>
           </ul>
         </div>
       </div>
