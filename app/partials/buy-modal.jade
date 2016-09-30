@@ -46,7 +46,7 @@
       isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="formatTrade" payment-info="paymentInfo" on-resize="onResize(step)")
     div.width-80(ng-if="onStep('trade-in-review', 'trade-formatted')")
       include ./trade-summary
-      p.security-red.pointer(ng-show="buySellDebug && trade.bankAccount")
+      p.security-red.pointer(ng-show="buySellDebug && trade.bankAccount && trade.state === 'awaiting_transfer_in'")
         i.ti-search.mrm
         span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")
     .flex-end.flex-center.mtl.coinify-logo(ng-hide="afterStep('summary')")

@@ -254,7 +254,10 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     else return 'RATE_WILL_EXPIRE';
   };
 
-  $scope.fakeBankTransfer = () => $scope.trade.fakeBankTransfer().then(() => { $scope.formatTrade('processing'); });
+  $scope.fakeBankTransfer = () => $scope.trade.fakeBankTransfer().then(() => {
+    $scope.formatTrade('processing');
+    $scope.$digest();
+  });
 
   $scope.$watch('method', (newVal) => newVal && $scope.updateAmounts());
   $scope.$watchGroup(['exchange.user', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
