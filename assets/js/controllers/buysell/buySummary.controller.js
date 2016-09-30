@@ -66,7 +66,9 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency, Alerts
 
     // check if bank transfer and kyc level
     if ($scope.needsKyc()) {
-      return buySell.getOpenKYC().then(success, $scope.standardError);
+      return buySell.kycs.length && ['declined', 'rejected'].indexOf(buySell.kycs[0].state) > -1
+        ? buySell.triggerKYC().then(success, $scope.standardError)
+        : buySell.getOpenKYC().then(success, $scope.standardError);
     }
 
     let buyError = eventualError('ERROR_TRADE_CREATE');
