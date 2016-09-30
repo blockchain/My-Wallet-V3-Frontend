@@ -81,7 +81,7 @@ To automatically login and go back to where you last were in the app after every
 To reclaim funds from an email take code at the of link and add it to `#/claim`, e.g.:
 
     https://blockchain.info/wallet/claim#7Educ5YNnVPQCQ556w7W8tQpj1dchhxPK56vVNab68cK
-    http://localhost.com:8080/#/claim/7Educ5YNnVPQCQ556w7W8tQpj1dchhxPK56vVNab68cK
+    http://localhost:8080/#/claim/7Educ5YNnVPQCQ556w7W8tQpj1dchhxPK56vVNab68cK
 
 If you enable "handle bitcoin links" in your wallet settings, you can open bitcoin URI's like this one:
 
