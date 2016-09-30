@@ -1,0 +1,22 @@
+div
+  header
+    hgroup
+      .flex-between.flex-center.flex-wrap
+        h3.em-300.mtn.state-danger-text(translate="DEAUTH_BROWSER")
+        span.mbm
+          span(translate="OR")
+          | &nbsp;
+          a.em-300(ui-sref="public.login-no-uid" translate="CONTINUE_TO_LOGIN")
+  .flex-column.mtl
+    .flex-between.flex-center
+      .flex-column.flex-2.prm
+        p.em-400(translate="DEAUTH_EXPLAIN")
+      .flex-1.flex-end
+        button.button-danger.button-nowrap(
+          ng-hide="deauthorized"
+          ng-click="deauth()"
+          ng-disabled="deauthorizing"
+          translate="DEAUTHORIZE")
+        span.success(ng-show="deauthorized")
+          i.ti-check.success-green
+          span.mam(translate="DEAUTHORIZED")

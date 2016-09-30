@@ -424,10 +424,18 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       .then(successCallback).catch(errorCallback);
   };
 
-  wallet.logout = (byChoice) => {
+  wallet.askForDeauth = () => (
+    wallet.user.isEmailVerified &&
+    !wallet.status.deauthOnLogout &&
+    !wallet.autoLogout
+  );
+
+  wallet.logout = (options = {}) => {
+    let { auto = false } = options;
+
     $cookies.remove('password');
-    wallet.didLogoutByChoice = byChoice;
-    $window.name = byChoice && wallet.user.isEmailVerified ? 'blockchain-logout' : 'blockchain';
+    wallet.autoLogout = auto;
+    $window.name = wallet.askForDeauth() ? 'blockchain-logout' : 'blockchain';
 
     let beforeLogout = () => {
       if (wallet.status.deauthOnLogout) {
@@ -675,8 +683,14 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       return 'There are unsaved changes. Are you sure?';
     }
 
-    if (wallet.status.isLoggedIn && wallet.user.isEmailVerified) {
+    if (wallet.askForDeauth()) {
       $window.name = 'blockchain-logout';
+    }
+
+    if (wallet.status.deauthOnLogout) {
+      let sessionToken = $cookies.get('session');
+      $cookies.remove('session');
+      wallet.my.endSession(sessionToken);
     }
     // TODO: fix autoreload dev feature
     // if ($rootScope.autoReload) {
@@ -773,7 +787,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       Alerts.displayError('WALLET_NOT_FOUND');
     } else if (event === 'ticker_updated' || event === 'did_set_latest_block') {
     } else if (event === 'logging_out') {
-      if (!wallet.didLogoutByChoice) {
+      if (wallet.autoLogout) {
         $translate('LOGGED_OUT_AUTOMATICALLY').then((translation) => {
           $cookies.put('alert-warning', translation);
         });
@@ -800,7 +814,9 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         Alerts.displaySuccess('EMAIL_VERIFIED_MSG');
       }
     } else if (event === 'wallet_logout') {
-      wallet.logout(false);
+      if (data.guid === wallet.user.uid) {
+        wallet.logout({ auto: true });
+      }
     } else {
     }
     $rootScope.$safeApply();

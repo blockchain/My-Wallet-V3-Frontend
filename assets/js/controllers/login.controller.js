@@ -13,16 +13,16 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
   $scope.uid = $stateParams.uid || Wallet.guid || $cookies.get('uid');
   $scope.uidAvailable = !!$scope.uid;
 
-  $scope.didLogout = $window.name === 'blockchain-logout';
-  $scope.canDeauth = $cookies.get('session') != null;
-  $window.name = 'blockchain';
+  let didJustLogout = $window.name === 'blockchain-logout';
+  let canDeauth = $cookies.get('session') != null;
+
+  if (didJustLogout && canDeauth) {
+    $window.name = 'blockchain';
+    $state.go('public.logout');
+  }
 
   if ($cookies.get('password')) {
     $scope.password = $cookies.get('password');
-  }
-
-  if ($scope.autoReload && $scope.uid && $scope.password) {
-    $scope.login();
   }
 
   $scope.login = () => {
@@ -34,6 +34,7 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
     }
 
     let success = () => {
+      Wallet.status.deauthOnLogout = $scope.deauthOnLogout;
       $state.go('wallet.common.home');
     };
 
@@ -73,14 +74,7 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
     }
   };
 
-  $scope.deauth = () => {
-    $scope.status.deauthorizing = true;
-    let sessionToken = $cookies.get('session');
-    $cookies.remove('session');
-
-    $q.resolve(Wallet.my.endSession(sessionToken))
-      .then(() => $scope.deauthorized = true)
-      .catch(() => { Alerts.displayError('ERROR_DEAUTH'); })
-      .finally(() => $scope.status.deauthorizing = false);
-  };
+  if ($scope.autoReload && $scope.uid && $scope.password) {
+    $scope.login();
+  }
 }
