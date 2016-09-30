@@ -79,6 +79,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     let success = (methods) => {
       $scope.methods = methods;
       $scope.status.waiting = false;
+      $scope.updateAmounts();
     };
 
     let methodsError = eventualError('ERROR_PAYMENT_METHODS_FETCH');
@@ -114,7 +115,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.updateAmounts = () => {
     if (!$scope.trade && (!$scope.quote || !$scope.exchange.user)) return;
 
-    if ($scope.quote && $scope.quote.id) {
+    if ($scope.quote && $scope.quote.id && $scope.method) {
       $scope.transaction.methodFee = ($scope.quote.paymentMethods[$scope.method].fee / 100).toFixed(2);
       $scope.transaction.total = ($scope.quote.paymentMethods[$scope.method].total / 100).toFixed(2);
     } else if ($scope.trade) {
