@@ -23,7 +23,12 @@ function publicHeader ($rootScope, $location, languages) {
             <li class="item"><a href="{{rootURL}}api" translate="API" class="pam"></a></li>
             <li class="item active"><a href="#" translate="BITCOIN_WALLET" class="pam"></a></li>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right hidden-xs">
+            <li class="hidden-sm">
+              <form action="{{searchUrl}}" method="GET">
+                <input type="text" name="search" class="form-control input-sm mts search-query" placeholder="{{'SEARCH'|translate}}">
+              </form>
+            </li>
             <li class="dropdown" uib-dropdown>
               <a href="#" class="dropdown-toggle" role="button" aria-haspopup="true" uib-dropdown-toggle>
                 <div class="flex-center">
@@ -49,9 +54,10 @@ function publicHeader ($rootScope, $location, languages) {
   function link (scope, elem, attrs) {
     scope.rootURL = $rootScope.rootURL;
     scope.languages = languages.languages;
-    scope.path = () => $location.$$path;
+    scope.path = () => $location.path();
     scope.$watch(languages.get, (code) => {
       scope.language = languages.mapCodeToName(code);
+      scope.searchUrl = code === 'en' ? '/search' : `/${code}/search`;
     });
   }
 }
