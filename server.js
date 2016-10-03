@@ -44,7 +44,9 @@ app.use(function (req, res, next) {
         rootURL,
         (webSocketURL || 'wss://*.blockchain.info'),
         (apiDomain || 'https://api.blockchain.info'),
-        'https://app-api.coinify.com'
+        'https://app-api.coinify.com',
+        'https://api.staging.sfox.com',
+        'https://quotes.staging.sfox.com'
       ].join(' '),
       "object-src 'none'",
       "media-src 'self' https://storage.googleapis.com/bc_public_assets/ data: mediastream: blob:",
