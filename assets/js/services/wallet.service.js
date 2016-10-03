@@ -131,7 +131,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
           });
         }
         wallet.user.passwordHint = result.password_hint1;
-        wallet.setLanguage($filter('getByProperty')('code', result.language, languages));
+        wallet.setLanguage($filter('getByProperty')('code', result.language, languages.languages));
         wallet.settings.btcCurrency = $filter('getByProperty')('serverCode', result.btc_currency, currency.bitCurrencies);
         wallet.settings.displayCurrency = wallet.settings.btcCurrency;
         wallet.settings.theme = $filter('getByProperty')('name', $cookies.get('theme'), theme.themes) || theme.themes[0];
@@ -861,7 +861,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.getCurrency = () => wallet.my.getCurrency();
 
   wallet.setLanguage = (language) => {
-    $translate.use(language.code);
+    languages.set(language.code);
     wallet.settings.language = language;
   };
 
