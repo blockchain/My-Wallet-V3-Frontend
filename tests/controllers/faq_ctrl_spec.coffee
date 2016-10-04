@@ -1,24 +1,28 @@
 describe "faqCtrl", ->
-  Wallet = undefined
   scope = undefined
-  
+
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       scope = $rootScope.$new()
-
       $controller "faqCtrl",
         $scope: scope
 
-      return
+  it "should have an array of questions", ->
+    expect(scope.questions.length).toBeGreaterThan(0)
 
-    return
+  it "should set question displayed to false by default", ->
+    expect(scope.questions[0].displayed).toEqual(false)
 
-  describe "toggleCurr", ->
-    it "should change the boolean value of displayed to true if it is false", ->
-      scope.items = [{ displayed: false }, { displayed: true }]
-      id = 1
-      
-      scope.toggleCurr(id)
-      expect(scope.items[1].displayed).toBe(false)
+  describe "toggle", ->
+    it "should toggle question display to true", ->
+      q = scope.questions[0]
+      scope.toggle(q)
+      expect(q.displayed).toBe(true)
+
+    it "should toggle question display to false", ->
+      q = scope.questions[0]
+      q.displayed = true
+      scope.toggle(q)
+      expect(q.displayed).toBe(false)
