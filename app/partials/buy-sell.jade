@@ -6,8 +6,6 @@
     blocket-troposphere(status="burn_baby_burn")
     span.bg-deeper-blue.type-h4.copy-bar.white.flex-center.flex-justify(translate="FETCHING_INFO_EXCHANGE")
   div(ng-if="!status.loading && !status.metaDataDown && !status.exchangeDown || status.disabled")
-    .flex-row
-      span.type-h5.pointer(translate="BUY_BITCOIN" ng-class="{'underline-blue': state.buy}")
     .flex-row.flex-column-tablet
       .width-50.mrl(ng-show="state.buy")
         buy-quick-start(transaction="transaction"
