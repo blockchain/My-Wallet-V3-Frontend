@@ -23,8 +23,8 @@ function publicHeader ($rootScope, $location, languages) {
             <li class="item"><a href="{{rootURL}}api" translate="API" class="pam"></a></li>
             <li class="item active"><a href="#" translate="BITCOIN_WALLET" class="pam"></a></li>
           </ul>
-          <ul class="nav navbar-nav navbar-right hidden-xs">
-            <li class="hidden-sm">
+          <ul class="nav navbar-nav navbar-right hidden-sm">
+            <li class="hidden-md">
               <form action="{{searchUrl}}" method="GET">
                 <input type="text" name="search" class="form-control input-sm mts search-query" placeholder="{{'SEARCH'|translate}}">
               </form>
