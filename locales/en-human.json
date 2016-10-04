@@ -23,21 +23,33 @@
   "NEED_MORE_HELP": "Can't find what you're looking for?",
   "VISIT_SUPPORT": "Support Center",
   "FAQ_QUESTIONS": {
-    "HOW_TO_BUY": {
-      "Q": "How do I buy bitcoin?",
-      "A": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis nulla tempus sem auctor auctor. Aenean pellentesque neque magna, ac tincidunt tellus vehicula vitae. Donec sit amet consectetur quam, non iaculis mi."
-    },
-    "HOW_TO_SEND": {
-      "Q": "How do I send a bitcoin transaction?",
-      "A": "Pellentesque mollis felis ac justo cursus, a ultricies tellus finibus. Vivamus venenatis arcu eget massa tempus, non posuere risus imperdiet. Sed nunc augue, iaculis sit amet ligula ut, rhoncus porta diam."
-    },
     "WALLET_SAFETY": {
-      "Q": "How do I make my wallet more safe?",
-      "A": "Sed sit amet vulputate odio, eget gravida nunc. Quisque elementum velit nec nunc eleifend, at accumsan lacus cursus. Fusce a lorem et diam tincidunt sagittis."
+      "Q": "What do I need to do to keep my wallet safe?",
+      "A": "Our Security Center can help you keep your wallet secure and ensure that can access to your funds even if you lose your password - all in less than 5 minutes. A great place to start is to enable 2-Step Verification to help prevent unauthorized access to your wallet and write down your Recovery Phrase to make sure you never lose access to your funds. We also recommend using a unique, random password that’s at least 16 characters or more."
     },
-    "HOW_TO_SELL": {
-      "Q": "How do I sell bitcoin?",
-      "A": "Morbi finibus nisi a massa fringilla, et convallis nunc porta. Nullam congue aliquam nisi et blandit. Duis nec purus augue. Pellentesque vehicula consectetur congue."
+    "WALLET_ID_VS_ADDRESS": {
+      "Q": "What is the difference between a wallet ID and a bitcoin address?",
+      "A": "A wallet ID is like a username, and it contains numbers, letters, and dashes. It is only used to log into your wallet and should be kept private. Your wallet ID can be found in the welcome email we sent you when you created your wallet or under Wallet Information in Settings. A bitcoin address is what you share with others when you want to receive funds. To generate a new bitcoin address click on Receive."
+    },
+    "HOW_TO_TRANSACT": {
+      "Q": "How do I receive/send bitcoin?",
+      "A": "To receive bitcoin, the sender needs your bitcoin address. Our wallet will automatically generate a new address for each transaction you want to make. Click on Receive and copy the address to share with the sender. To send bitcoin, click Send, enter the recipient’s bitcoin address in the ‘To’ field and how much you want to send."
+    },
+    "HOW_MUCH_TO_SEND": {
+      "Q": "How much does it cost to send bitcoin?",
+      "A": "While our wallet is entirely free to use, the small fee included in your transaction goes to the miners, who help power the flow of transactions on the Bitcoin network. To ensure your transactions confirm consistently and reliably, our wallet will automatically include an appropriate fee based on your transaction’s size and the level of network traffic at the time. Before you send your transaction, you can view the included fee that we recommend. If you wish to specify your own fee, you can do so under Advanced Send."
+    },
+    "WHEN_IS_A_TX_CONFIRMED": {
+      "Q": "How do I know a transaction has been successfully received/sent?",
+      "A": "Transactions will appear almost instantly in your transaction feed which you can find on the left navigation of the wallet. Your transaction is considered complete once it has received 3 network confirmations. This typically takes about 30 minutes, but can vary. Until then your transaction will show up as pending."
+    },
+    "CAN_BC_SEE_FUNDS": {
+      "Q": "Can Blockchain see or access my funds?",
+      "A": "We are a noncustodial wallet and do not have access to your bitcoins. This means we cannot view your total balance, make payments on your behalf, or prevent you from accessing your wallet. With a Blockchain wallet, you retain complete ownership of your bitcoin."
+    },
+    "CAN_BC_RESET_PW": {
+      "Q": "Can Blockchain reset my password?",
+      "A": "At Blockchain, we’re committed to letting customers maintain full control of their funds. In that spirit, we never see or store your password, so we can’t reset it for you. However, we do provide users a recovery phrase that can be used to restore access to your bitcoins. Head over to our Security Center to get yours and make sure you store it somewhere secure and never share it."
     }
   },
   "SETTINGS": "Settings",

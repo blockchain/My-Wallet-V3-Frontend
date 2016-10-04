@@ -4,10 +4,13 @@ angular
 
 function faq () {
   const questions = [
-    'HOW_TO_BUY',
-    'HOW_TO_SEND',
     'WALLET_SAFETY',
-    'HOW_TO_SELL'
+    'WALLET_ID_VS_ADDRESS',
+    'HOW_TO_TRANSACT',
+    'HOW_MUCH_TO_SEND',
+    'WHEN_IS_A_TX_CONFIRMED',
+    'CAN_BC_SEE_FUNDS',
+    'CAN_BC_RESET_PW'
   ];
 
   const service = {
