@@ -7,7 +7,7 @@ function faqQuestion () {
   const directive = {
     restrict: 'E',
     scope: {
-      item: '=',
+      q: '=question',
       onToggle: '&'
     },
     templateUrl: 'templates/faq-question.jade'

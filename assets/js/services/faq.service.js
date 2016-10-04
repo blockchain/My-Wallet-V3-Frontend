@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .factory('FaqQuestions', FaqQuestions);
+  .factory('faq', faq);
 
-function FaqQuestions () {
+function faq () {
   const questions = [
     'HOW_TO_BUY',
     'HOW_TO_SEND',
@@ -11,7 +11,7 @@ function FaqQuestions () {
   ];
 
   const service = {
-    questions: questions.map(name => ({ name }))
+    questions
   };
 
   return service;
