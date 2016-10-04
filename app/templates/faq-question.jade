@@ -1,7 +1,7 @@
-.faq-question
+.faq-question(translate-namespace="FAQ_QUESTIONS.{{item.name}}")
   .question.pointer.flex-between.em-500(ng-click="onToggle()")
-    span(translate="{{item.question}}")
+    span(translate=".Q")
     i.ti-angle-right(ng-class="{active:item.displayed}")
   .answer.text.em-300.mts.flex(ng-if="item.displayed")
-    p.em-300.mbn.flex-2(translate="{{item.answer}}")
+    p.em-300.mbn.flex-2(translate=".A")
     .flex-1

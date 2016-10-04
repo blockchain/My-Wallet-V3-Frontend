@@ -3,28 +3,16 @@ angular
   .factory('FaqQuestions', FaqQuestions);
 
 function FaqQuestions () {
-  const qs = [
-    {
-      question: 'How do I buy bitcoin?',
-      answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis nulla tempus sem auctor auctor. Aenean pellentesque neque magna, ac tincidunt tellus vehicula vitae. Donec sit amet consectetur quam, non iaculis mi.',
-      displayed: false
-    }, {
-      question: 'How do I send a bitcoin transaction?',
-      answer: 'Pellentesque mollis felis ac justo cursus, a ultricies tellus finibus. Vivamus venenatis arcu eget massa tempus, non posuere risus imperdiet. Sed nunc augue, iaculis sit amet ligula ut, rhoncus porta diam.',
-      displayed: false
-    }, {
-      question: 'How do I make my wallet more safe?',
-      answer: 'Sed sit amet vulputate odio, eget gravida nunc. Quisque elementum velit nec nunc eleifend, at accumsan lacus cursus. Fusce a lorem et diam tincidunt sagittis.',
-      displayed: false
-    }, {
-      question: 'How do I sell bitcoin?',
-      answer: 'Morbi finibus nisi a massa fringilla, et convallis nunc porta. Nullam congue aliquam nisi et blandit. Duis nec purus augue. Pellentesque vehicula consectetur congue.',
-      displayed: false
-    }
+  const questions = [
+    'HOW_TO_BUY',
+    'HOW_TO_SEND',
+    'WALLET_SAFETY',
+    'HOW_TO_SELL'
   ];
 
   const service = {
-    getAll: () => qs
+    questions: questions.map(name => ({ name }))
   };
+
   return service;
 }
