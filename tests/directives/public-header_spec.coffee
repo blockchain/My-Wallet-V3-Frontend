@@ -4,6 +4,7 @@ describe "Public Header directive", ->
   element = undefined
   isoScope = undefined
 
+  beforeEach module("walletApp")
   beforeEach module("sharedDirectives")
 
   beforeEach inject((_$compile_, _$rootScope_) ->

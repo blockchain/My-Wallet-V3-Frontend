@@ -86,6 +86,7 @@ module.exports = (grunt) ->
           'build/js/landingCtrl.js'
           'build/js/routes.js'
           "build/js/services/bcTranslationLoader.service.js"
+          "build/js/services/languages.service.js"
         ]
         dest: "build/js/landing-not-minified-dependencies.js"
 

@@ -6,7 +6,7 @@ function SettingsPreferencesCtrl ($scope, Wallet, Alerts, currency, $uibModal, $
   $scope.user = Wallet.user;
   $scope.settings = Wallet.settings;
   $scope.notifications = $scope.settings.notifications;
-  $scope.languages = languages;
+  $scope.languages = languages.languages;
   $scope.themes = theme.themes;
   $scope.currencies = currency.currencies;
   $scope.btcCurrencies = currency.bitCurrencies;
