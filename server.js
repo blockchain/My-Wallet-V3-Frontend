@@ -9,7 +9,7 @@ loadEnv('.env');
 
 var port = process.env.PORT || 8080;
 var dist = parseInt(process.env.DIST, 10) === 1;
-var rootURL = process.env.ROOT_URL || 'https://blockchain.info/';
+var rootURL = process.env.ROOT_URL || 'https://blockchain.info';
 var webSocketURL = process.env.WEBSOCKET_URL || false;
 var apiDomain = process.env.API_DOMAIN;
 
@@ -20,6 +20,10 @@ var app = express();
 app.use(compression());
 
 rootApp.use('/:lang?/wallet', app);
+
+rootApp.get('/:lang?/search', (req, res) => {
+  res.redirect(`${rootURL}/search?search=${req.query.search}`);
+});
 
 app.use(function (req, res, next) {
   if (req.url === '/') {
