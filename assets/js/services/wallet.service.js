@@ -251,20 +251,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let sessionToken = $cookies.get('session');
     let sessionGuid = $cookies.get('uid');
 
-    if (!sessionToken) {
-      $http.get($rootScope.rootURL + 'wallet-legacy/guid_from_cookie', {withCredentials: true}).success(data => {
-        if (data.success) {
-          sessionToken = data.sid;
-          sessionGuid = data.guid;
-        }
-        doLogin(uid, sessionGuid, sessionToken);
-      }).error(() => {
-        // If guid_from_cookie endpoint can't be reach, just create a new session
-        doLogin(uid, sessionGuid, sessionToken);
-      });
-    } else {
-      doLogin(uid, sessionGuid, sessionToken);
-    }
+    doLogin(uid, sessionGuid, sessionToken);
 
     currency.fetchExchangeRate();
   };
