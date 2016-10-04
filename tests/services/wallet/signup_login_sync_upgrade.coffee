@@ -17,14 +17,12 @@ describe "walletServices", () ->
               if credentials.twoFactor && credentials.twoFactor.code?
                 cb({guid: uid, sessionToken: "token"})
               else
-                callbacks.needsTwoFactorCode("token", 4)
+                callbacks.needsTwoFactorCode(4)
             else
               cb({guid: uid, sessionToken: "token"})
             {
               catch: () ->
             }
-
-
         logout: () ->
           Wallet.monitor("logging_out")
 
@@ -42,6 +40,13 @@ describe "walletServices", () ->
               [{ result: 1, txType: 'received' }]
             fetchTxs: () ->
           keys: [{address: "some_legacy_address", label: "Old", archived: false}, {address: "some_legacy_address_without_label", label: "some_legacy_address_without_label", archived: false}]
+          fetchAccountInfo: () ->
+            then: (cb) ->
+              cb({
+                ip_lock: false
+              })
+          accountInfo:
+            email: "a@b.com"
 
         createNewWallet: (email, pwd, firstAccount, language, currency, success, fail) ->
           success()
@@ -103,33 +108,31 @@ describe "walletServices", () ->
       expect(Wallet.user.current_ip).toBeDefined()
     )
 
-
-
   describe "2FA login()", ->
+    callbacks =
+      needs2FA: () ->
+
+    beforeEach ->
+      spyOn(callbacks, "needs2FA")
 
     it "should ask for a code", inject((Wallet) ->
-
-      Wallet.login(null, "test-2FA", "test", null, (() ->), (()->), (()->))
-
-      expect(Wallet.settings.needs2FA).toBe(true)
-      expect(Wallet.status.isLoggedIn).toBe(false)
+      Wallet.login("test-2FA", "password", null, callbacks.needs2FA, (()->), (()->))
+      expect(callbacks.needs2FA).toHaveBeenCalled()
     )
 
     it "should specify the 2FA method", inject((Wallet) ->
-      pending()
-      Wallet.login(null, "test-2FA", "test", null, (() ->), (()->), (()->))
-      expect(Wallet.settings.twoFactorMethod).toBe(4)
+      Wallet.login("test-2FA", "password", null, callbacks.needs2FA, (()->), (()->))
+      expect(callbacks.needs2FA).toHaveBeenCalledWith(4)
     )
 
     it "should login with  2FA code", inject((Wallet) ->
-      pending()
+      spyOn(Wallet.my.wallet, "fetchAccountInfo").and.callFake () -> {
+        then: () -> # Do nothing, so execution stops
+      }
       Wallet.settings.twoFactorMethod = 4
-      Wallet.login(null, "test-2FA", "test", "1234567", (() ->), (()->), (()->))
-      expect(Wallet.status.isLoggedIn).toBe(true)
+      Wallet.login("test-2FA", "password", "1234567", (() ->), (()->), (()->))
+      expect(Wallet.my.wallet.fetchAccountInfo).toHaveBeenCalled()
     )
-
-
-    return
 
   describe "2FA settings", ->
     pending()
