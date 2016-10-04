@@ -1,5 +1,7 @@
-.question.em-400
-  i.ti-angle-right(ng-class="{'active' : item.displayed}")
-  span.plm.pointer.em-300(ng-click="tog(index)") {{item.question | translate}}
-.answer.text.em-300(ng-if="item.displayed" class="animate-if")
-  p.em-300.mbn {{item.answer | translate}}
+.faq-question
+  .question.pointer.flex-between.em-500(ng-click="onToggle()")
+    span(translate="{{item.question}}")
+    i.ti-angle-right(ng-class="{active:item.displayed}")
+  .answer.text.em-300.mts.flex(ng-if="item.displayed")
+    p.em-300.mbn.flex-2(translate="{{item.answer}}")
+    .flex-1
