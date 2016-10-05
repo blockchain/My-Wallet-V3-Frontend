@@ -36,26 +36,6 @@
 
   .question {
     font-size: 1.2em;
-    i {
-      display: inline-block;
-      transform: rotate(0deg);
-      transition: all linear 0.3s;
-      &.active {
-        transform: rotate(90deg);
-        color: $blue;
-      }
-    }
-  }
-
-  .answer {
-    transition: all linear 0.3s;
-    &.ng-enter, &.ng-leave.ng-leave-active {
-      line-height: 0;
-      opacity: 0;
-    }
-    &.ng-leave, &.ng-enter.ng-enter-active {
-      line-height: 1.43;
-      opacity: 1;
-    }
+    i { display: inline-block; }
   }
 }
