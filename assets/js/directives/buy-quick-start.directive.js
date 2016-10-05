@@ -23,13 +23,6 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
     scope.status = {ready: true};
     scope.currencies = currency.coinifyCurrencies;
 
-    scope.defaultAmts = {
-      'DKK': [100, 1000, 2000],
-      'USD': [20, 100, 250],
-      'EUR': [20, 100, 250],
-      'GBP': [20, 100, 200]
-    };
-
     scope.isCurrencySelected = (currency) => currency === scope.transaction.currency;
 
     scope.triggerBuy = () => {
