@@ -75,7 +75,8 @@ angular.module('walletApp', modules)
   { title: 'TRANSFER_ALL', desc: 'TRANSFER_ALL_EXPLAIN', date: 1461556800000 },
   { title: 'DEV_THEMES', desc: 'DEV_THEMES_EXPLAIN', date: 1474862400000 }
 ])
-.run(($rootScope, $uibModal, $state, $q, $timeout, $location, languages) => {
+// .run(($rootScope, $uibModal, $state, MyWallet, $q, currency, $timeout) => {
+.run(($rootScope, $uibModal, $state, $q, $timeout, $location) => {
   $rootScope.$safeApply = (scope = $rootScope, before) => {
     before = before;
     if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
@@ -120,7 +121,4 @@ angular.module('walletApp', modules)
       $rootScope.versionFrontend, $rootScope.versionMyWallet, $rootScope.rootURL
     );
   });
-
-  let code = languages.parseFromUrl($location.absUrl());
-  if (code) languages.set(code);
 });

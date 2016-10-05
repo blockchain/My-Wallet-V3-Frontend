@@ -158,10 +158,10 @@ describe "SignupCtrl", ->
 
     it "should switch interface language to guessed language", inject(($translate, languages) ->
       spyOn($translate, "use")
-      expect(scope.language_guess.code).not.toBe(languages.languages[0].code)
-      scope.language_guess = languages.languages[0]
+      expect(scope.language_guess.code).not.toBe(languages[0].code)
+      scope.language_guess = languages[0]
       scope.$digest()
-      expect($translate.use).toHaveBeenCalledWith(languages.languages[0].code)
+      expect($translate.use).toHaveBeenCalledWith(languages[0].code)
     )
 
   describe "currency", ->

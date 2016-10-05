@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .factory('languages', languages);
 
-languages.$inject = ['$translate'];
+languages.$inject = [];
 
-function languages ($translate) {
+function languages () {
   const languageCodes = {
     'de': 'German',
     // 'cs': 'Czech', // Pending backend support
@@ -36,15 +36,7 @@ function languages ($translate) {
     'tr': 'Turkish'
   };
 
-  const service = {
-    languages: formatLanguages(languageCodes),
-    codes: Object.keys(languageCodes),
-    get: () => $translate.use(),
-    set: (code) => $translate.use(code),
-    mapCodeToName: (code) => languageCodes[code],
-    parseFromUrl
-  };
-
+  const service = formatLanguages(languageCodes);
   return service;
 
   function formatLanguages (langs) {
@@ -58,12 +50,5 @@ function languages ($translate) {
       return name0 < name1 ? -1 : 1;
     };
     return Object.keys(langs).map(langFormat).sort(langSort);
-  }
-
-  function parseFromUrl (url) {
-    let codes = service.codes.join('|');
-    let regex = new RegExp(`\\/(${codes})\\/wallet`);
-    let matches = url.match(regex);
-    return matches && matches.length ? matches[1] : null;
   }
 }
