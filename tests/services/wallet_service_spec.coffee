@@ -94,7 +94,7 @@ describe "walletServices", () ->
 
       spyOn(Wallet.settings_api, "changeLanguage").and.callThrough()
 
-      Wallet.changeLanguage(languages.languages[0])
+      Wallet.changeLanguage(languages[0])
       expect(MyBlockchainSettings.changeLanguage).toHaveBeenCalled()
       expect(MyBlockchainSettings.changeLanguage.calls.argsFor(0)[0]).toBe("bg")
       expect(Wallet.settings.language.code).toBe("bg")

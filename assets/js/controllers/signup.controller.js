@@ -8,14 +8,14 @@ function SignupCtrl ($scope, $state, $cookies, $filter, $timeout, $translate, Wa
   $scope.working = false;
   $scope.browser = {disabled: true};
 
-  let language_code = languages.get();
+  let language_code = $translate.use();
   if (language_code === 'zh_CN') {
     language_code = 'zh-cn';
   }
 
-  let language_guess = $filter('getByProperty')('code', language_code, languages.languages);
+  let language_guess = $filter('getByProperty')('code', language_code, languages);
   if (language_guess == null) {
-    language_guess = $filter('getByProperty')('code', 'en', languages.languages);
+    language_guess = $filter('getByProperty')('code', 'en', languages);
   }
 
   $scope.language_guess = language_guess;
@@ -177,7 +177,7 @@ function SignupCtrl ($scope, $state, $cookies, $filter, $timeout, $translate, Wa
 
   $scope.$watch('language_guess', (newVal, oldVal) => {
     if (newVal) {
-      languages.set(newVal.code);
+      $translate.use(newVal.code);
     }
   });
 
