@@ -97,7 +97,7 @@ app.use(function (req, res) {
 });
 
 rootApp.listen(port, function () {
-  console.log('Listening on %d', port);
+  console.log('Visit http://localhost:%d/', port);
 });
 
 // Helper functions
