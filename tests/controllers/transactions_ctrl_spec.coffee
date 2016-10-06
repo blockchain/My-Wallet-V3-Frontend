@@ -19,7 +19,7 @@ describe "TransactionsCtrl", ->
         txList:
           subscribe: () -> (() -> )
           transactions: () ->
-            [{ result: 1, txType: 'received'}]
+            [{ result: 1, txType: 'received', processedInputs: [{'address': '123'}], processedOutputs: [{'address': '456'}]}]
         fetchTransactions: () ->
           $q.resolve(1)
 
@@ -113,3 +113,10 @@ describe "TransactionsCtrl", ->
         
         result = scope.checkLabelDiff(label, address)
         expect(result).toBe('abc, bcd')
+
+    describe "filterByAddress", ->
+
+      it "should return all transactions associated with an address", ->
+        txs = scope.filterByAddress({address:'123'})
+        expect(txs).toEqual([{ result: 1, txType: 'received', processedInputs: [{'address': '123'}], processedOutputs: [{'address': '456'}]}])
+
