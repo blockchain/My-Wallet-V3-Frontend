@@ -8,6 +8,40 @@
   padding: 0 30px;
   border-bottom: 1px solid #ddd;
   z-index: 1;
+  .ui-select-container {
+    width: 360px;
+    .divider {
+      margin: 0px auto;
+    }
+  }
+  .dropdown-menu {
+    margin: 0px;
+    > li:first-child {
+      .dropdown-header {
+        // we need to remove this when we come up with what we want to call Accounts
+        display: none;
+      }
+    }
+  }
+  // when an address is too long
+  .uib-dropdown-menu {
+    overflow-y: auto;
+    max-height: 160px;
+    overflow-x: hidden;
+  }
+  label-origin {
+    display: block;
+    overflow: hidden;
+    height: 1.428571429em;
+    > span:first-child {
+      float: left;
+      overflow: auto;
+      max-width: 135px;
+      margin-bottom: -30px;
+      padding-bottom: 30px;
+      display: inline-block;
+    }
+  }
 }
 
 .filter-buttons {

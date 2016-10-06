@@ -2,12 +2,12 @@ angular
   .module('walletApp')
   .controller('TransactionsCtrl', TransactionsCtrl);
 
-function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $stateParams, $state, $rootScope, $uibModal) {
+function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $stateParams, $state, $rootScope, $uibModal, format) {
   $scope.addressBook = Wallet.addressBook;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.totals = Wallet.totals;
-  $scope.accounts = Wallet.accounts;
+  $scope.filterByAccount = {};
 
   $scope.getTotal = Wallet.total;
 
@@ -16,9 +16,17 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $stateParams, $state, $
   $scope.canDisplayDescriptions = false;
   $scope.txLimit = 10;
 
+  // more logic here later
+  let idx = Wallet.my.wallet.hdwallet.defaultAccountIndex;
+
+  let accounts = Wallet.accounts().filter(a => !a.archived && a.index != null);
+  let addresses = Wallet.legacyAddresses().filter(a => !a.archived);
+
+  $scope.accounts = accounts.concat(addresses).map(format.origin);
+  $scope.filterByAccount.account = $scope.accounts.filter(a => a.index === idx)[0];
+
   let txList = MyWallet.wallet.txList;
-  $scope.account = $stateParams.accountIndex;
-  $scope.transactions = txList.transactions($scope.account);
+  $scope.transactions = txList.transactions(idx);
 
   let fetchTxs = () => {
     $scope.loading = true;
@@ -34,12 +42,15 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $stateParams, $state, $
     else if (!$scope.allTxsLoaded && !$scope.loading) fetchTxs();
   };
 
-  $scope.$watchCollection('accounts()', newValue => {
-    $scope.canDisplayDescriptions = $scope.accounts().length > 0;
+  $scope.$watchCollection('accounts', newValue => {
+    $scope.canDisplayDescriptions = $scope.accounts.length > 0;
   });
 
   let setTxs = () => {
-    let newTxs = txList.transactions($scope.account);
+    let newTxs;
+    let idx = $scope.filterByAccount.account.index;
+    !isNaN(idx) && (newTxs = txList.transactions(idx));
+    isNaN(idx) && (newTxs = $scope.filterByAddress($scope.filterByAccount.account));
     if ($scope.transactions.length > newTxs.length) $scope.allTxsLoaded = false;
     $scope.transactions = newTxs;
     $rootScope.$safeApply();
@@ -97,4 +108,17 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $stateParams, $state, $
     }
     return false;
   };
+
+  $scope.filterByAddress = (addr) => {
+    let txs = [];
+    txList.transactions().forEach((tx) => {
+      tx.processedOutputs.concat(tx.processedInputs).filter((p) => {
+        if (addr.address === p.address) txs.push(tx);
+      });
+    });
+
+    return txs;
+  };
+
+  $scope.$watch('filterByAccount.account', setTxs);
 }

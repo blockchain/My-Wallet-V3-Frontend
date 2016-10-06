@@ -19,13 +19,15 @@ describe "TransactionsCtrl", ->
         txList:
           subscribe: () -> (() -> )
           transactions: () ->
-            [{ result: 1, txType: 'received' }]
+            [{ result: 1, txType: 'received'}]
         fetchTransactions: () ->
           $q.resolve(1)
 
       Wallet.status =
         isLoggedIn: true
         didLoadBalances: true
+
+      Wallet.legacyAddresses = () -> ['1A2B3C']
 
       scope = $rootScope.$new()
 
