@@ -4,7 +4,6 @@ angular
 
 function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Alerts, SecurityCenter, $state, $stateParams, $uibModal, filterFilter, $location) {
   $scope.status = Wallet.status;
-  $scope.total = Wallet.total;
   $scope.settings = Wallet.settings;
   $scope.security = SecurityCenter.security;
 
@@ -64,16 +63,6 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Alerts, Sec
     }).length;
   };
 
-  $scope.getMainAccountId = () => {
-    if (!$scope.status.isLoggedIn) return 0;
-    return ($scope.numberOfActiveAccounts() <= 1) ? Wallet.getDefaultAccountIndex() : '';
-  };
-
-  $scope.showImported = () => {
-    return ($scope.selectedAccountIndex === 'imported' &&
-            $state.current.name === 'wallet.common.transactions');
-  };
-
   $scope.accountsRoute = () => [
     'wallet.common.settings.accounts_index',
     'wallet.common.settings.accounts_addresses',
@@ -81,24 +70,6 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Alerts, Sec
   ].indexOf($state.current.name) > -1;
 
   $scope.showOrHide = (path) => $location.url().indexOf(path) !== -1;
-
-  $scope.newAccount = () => {
-    Alerts.clear();
-    $uibModal.open({
-      templateUrl: 'partials/account-form.jade',
-      controller: 'AccountFormCtrl',
-      windowClass: 'bc-modal sm',
-      resolve: {
-        account: () => void 0
-      }
-    });
-  };
-
-  $scope.getLegacyTotal = () => Wallet.total('imported');
-
-  $scope.didLoad = () => {
-    $scope.accounts = Wallet.accounts;
-  };
 
   $rootScope.supportModal = () => $uibModal.open({
     templateUrl: 'partials/support.jade',
@@ -112,6 +83,4 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Alerts, Sec
       windowClass: 'bc-modal xs'
     });
   };
-
-  $scope.didLoad();
 }

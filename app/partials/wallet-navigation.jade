@@ -7,27 +7,7 @@
     li.scroll-parent.header.scroll-hidden(ui-sref-active="current")
       a(ui-sref="wallet.common.transactions({accountIndex: ''})")
         i.ti-layout-list-post
-        span(translate="MY_TRANSACTIONS") 
-      ul.scroll-accounts.aside-list.pas(ng-show="showOrHide('transactions')", ng-click="hideMenu()")
-        li(ng-class="selectedAccountIndex == '' ? 'active' : ''", ui-sref="wallet.common.transactions({accountIndex: ''})", ng-hide="!status.didUpgradeToHd || (numberOfActiveAccounts() <= 1 && numberOfActiveLegacyAddresses() == 0) ")
-          a.flex-between.pas
-            span(translate="ALL")
-            span
-              fiat-or-btc(btc="total()")    
-        li(ng-repeat="account in accounts()" ng-class="selectedAccountIndex != '' && $index == selectedAccountIndex ? 'active' : ''" ui-sref="wallet.common.transactions({accountIndex: account.index.toString()})")
-          a.flex-between.pas(ng-if="!account.archived")
-            span.prs {{::account.label}}
-            span
-              fiat-or-btc(btc="account.balance")
-              img(ng-show="account.balance == null" src="img/spinner.gif")
-        li(ui-sref="wallet.common.transactions({accountIndex:'imported'})", ng-show="numberOfActiveLegacyAddresses() > 0", ng-class="{active: selectedAccountIndex == 'imported'}")
-          a.flex-between.pas.imported-addresses
-            span.prs(translate="IMPORTED_ADDRESSES")
-            span
-              fiat-or-btc(btc="getLegacyTotal()")
-          
-      li.action-bar(ng-show="showOrHide('transactions')")
-        a.new-acct(ng-click="newAccount()", translate="NEW_ACCOUNT")
+        span(translate="MY_TRANSACTIONS")
 
     li.header(ui-sref-active="current" ng-show="isUserWhitelisted || isUserInvited")
       a(ui-sref="wallet.common.buy-sell" ng-show="isUserInvited")
