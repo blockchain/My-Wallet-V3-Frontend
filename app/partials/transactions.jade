@@ -2,6 +2,7 @@
   .filter-bar.flex-between.flex-center
     .flex-row.flex-center
       ui-select.mrl(
+        ng-show="accounts.length > 1"
         ng-model="filterByAccount.account"
         name="accounts"
         tagging)

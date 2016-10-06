@@ -16,6 +16,8 @@ describe "TransactionsCtrl", ->
             { label: "Spending", index: 2, archived: false, balance: 0 }
             { label: "Partay", index: 3, archived: true, balance: 50 }
           ]
+          defaultAccount: { label: "Checking", index: 0, archived: false, balance: 100 }
+          defaultAccountIndex: 0
         txList:
           subscribe: () -> (() -> )
           transactions: () ->
@@ -28,6 +30,7 @@ describe "TransactionsCtrl", ->
         didLoadBalances: true
 
       Wallet.legacyAddresses = () -> ['1A2B3C']
+      Wallet.accounts = () -> MyWallet.wallet.hdwallet.accounts
 
       scope = $rootScope.$new()
 
@@ -120,3 +123,8 @@ describe "TransactionsCtrl", ->
         txs = scope.filterByAddress({address:'123'})
         expect(txs).toEqual([{ result: 1, txType: 'received', processedInputs: [{'address': '123'}], processedOutputs: [{'address': '456'}]}])
 
+    describe "getDefaultAcct", ->
+
+      it "should return the default account if it has a balance", ->
+        idx = scope.getDefaultAcct()
+        expect(idx).toBe(0)

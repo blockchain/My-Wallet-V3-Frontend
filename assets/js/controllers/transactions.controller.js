@@ -16,8 +16,23 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $stateParams, $state, $
   $scope.canDisplayDescriptions = false;
   $scope.txLimit = 10;
 
-  // more logic here later
-  let idx = Wallet.my.wallet.hdwallet.defaultAccountIndex;
+  $scope.getDefaultAcct = () => {
+    // 1. a default account has a balance
+    // 2. another account has a balance
+    // 3. a legacy address has a balance
+    // 4. no balances, show default
+    if (MyWallet.wallet.hdwallet.defaultAccount.balance > 0) {
+      return MyWallet.wallet.hdwallet.defaultAccountIndex;
+    } else if (Wallet.accounts().filter(a => a.balance > 0).length) {
+      return Wallet.accounts().filter(a => a.balance > 0)[0].index;
+    } else if (Wallet.legacyAddresses().filter(a => !a.archived && !a.isWatchOnly && a.balance > 0).length) {
+      return Wallet.legacyAddresses().filter(a => !a.archived && !a.isWatchOnly).sort((a, b) => b.balance - a.balance)[0].index;
+    } else {
+      return MyWallet.wallet.hdwallet.defaultAccountIndex;
+    }
+  };
+
+  let idx = $scope.getDefaultAcct();
 
   let accounts = Wallet.accounts().filter(a => !a.archived && a.index != null);
   let addresses = Wallet.legacyAddresses().filter(a => !a.archived);
