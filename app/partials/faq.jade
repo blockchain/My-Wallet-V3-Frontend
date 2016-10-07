@@ -1,7 +1,7 @@
 .faq.flex-column.width-100.flex-center
   .header-bar
     h2.type-h4.mbn.mtn.em-300(translate="FAQ_FULL")
-  .flex-column.faq-box.width-100
+  .flex-column.width-100
     faq-question(ng-repeat="q in questions" ng-class="{toggled: q.displayed}" question="q" on-toggle="toggle(q)")
   .flex-column.flex-center.width-30.mbvl.mtm
     h3 

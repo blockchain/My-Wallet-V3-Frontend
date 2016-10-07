@@ -1,26 +1,8 @@
 .faq {
-  .faq-box {
-    margin-top: 5.5em;
-  }
-
   .header-bar {
-    position: fixed;
-    width: calc(100% - 270px);
-    left: 270px;
-    top: 175px;
+    width: 100%;
     height: 5.5em;
-    background-color: white;
     padding: 2em;
-    border-bottom: 1px solid #ddd;
-    z-index: 1;
-  }
-
-  @media (max-width: 768px) {
-    .header-bar {
-      top: 145px;
-      left: 0;
-      width: 100%;
-    }
   }
 
   faq-question {
