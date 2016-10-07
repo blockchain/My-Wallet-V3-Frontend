@@ -3,5 +3,8 @@
     span(translate=".Q")
     i(ng-class="q.displayed ? 'blue ti-angle-up' : 'ti-angle-down'")
   .answer.text.em-300.mts.flex(ng-if="q.displayed")
-    p.em-300.mbn.flex-2(translate=".A")
+    p.em-300.mbn.flex-2
+      span(translate=".A")
+      | &nbsp;
+      span.pointer.blue(ng-show="q.link" translate="{{q.link[0]}}" ui-sref="{{q.link[1]}}")
     .flex-1

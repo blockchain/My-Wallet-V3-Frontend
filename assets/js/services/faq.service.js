@@ -4,13 +4,14 @@ angular
 
 function faq () {
   const questions = [
-    'WALLET_SAFETY',
-    'WALLET_ID_VS_ADDRESS',
-    'HOW_TO_TRANSACT',
-    'HOW_MUCH_TO_SEND',
-    'WHEN_IS_A_TX_CONFIRMED',
-    'CAN_BC_SEE_FUNDS',
-    'CAN_BC_RESET_PW'
+    { name: 'WALLET_SAFETY',
+      link: ['START_CLICK_HERE', 'wallet.common.security-center'] },
+    { name: 'WALLET_ID_VS_ADDRESS' },
+    { name: 'HOW_TO_TRANSACT' },
+    { name: 'HOW_MUCH_TO_SEND' },
+    { name: 'WHEN_IS_A_TX_CONFIRMED' },
+    { name: 'CAN_BC_SEE_FUNDS' },
+    { name: 'CAN_BC_RESET_PW' }
   ];
 
   const service = {

@@ -869,6 +869,7 @@
   "NOTE_PLACEHOLDER": "Money for rent 🏡",
   "ERR_NOTE_LENGTH": "Description cannot be longer than 512 characters",
   "GET_STARTED": "Get Started",
+  "START_CLICK_HERE": "Click here to get started.",
   "CREATE_YOUR_WALLET": "Create Your Wallet",
   "NEW_USERS": "New Users",
   "NEW_USERS_COPY": "Creating a Blockchain Wallet takes a few seconds. Send and receive payments immediately.",
