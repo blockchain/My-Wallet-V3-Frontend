@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('RequestCtrl', RequestCtrl);
 
-function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, hasLegacyAddress, $translate, $stateParams, filterFilter, $filter, format) {
+function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, hasLegacyAddress, $translate, $stateParams, filterFilter, $filter, format, smartAccount) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -25,26 +25,8 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
     label: ''
   };
 
-  for (let account of $scope.accounts()) {
-    if (account.index != null && !account.archived) {
-      account = format.destination(account);
-      $scope.destinations.push(angular.copy(account));
-      if ((destination != null) && (destination.index != null) && destination.index === account.index) {
-        $scope.fields.to = account;
-      }
-    }
-  }
-
-  for (let address of $scope.legacyAddresses()) {
-    address = format.destination(address);
-
-    if (!address.archived) {
-      $scope.destinations.push(angular.copy(address));
-      if ((destination != null) && (destination.address != null) && destination.address === address.address) {
-        $scope.fields.to = address;
-      }
-    }
-  }
+  $scope.destinations = smartAccount.getOptions();
+  $scope.fields.to = smartAccount.getDefault();
 
   $scope.closeAlert = alert => {
     Alerts.close(alert);
@@ -106,7 +88,6 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
   };
 
   $scope.$watchCollection('destinations', () => {
-    let idx = Wallet.getDefaultAccountIndex();
     if ($scope.hasLegacyAddress) {
       $scope.fields.to = filterFilter(Wallet.legacyAddresses(), {
         isWatchOnly: false,
@@ -114,14 +95,7 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
       })[0];
     }
     if (($scope.fields.to == null) && $scope.accounts().length > 0) {
-      if ($stateParams.accountIndex === '' || ($stateParams.accountIndex == null)) {
-
-      } else if ($stateParams.accountIndex === 'imported' || ($stateParams.accountIndex == null)) {
-
-      } else {
-        idx = parseInt($stateParams.accountIndex, 10);
-      }
-      $scope.fields.to = $scope.accounts()[idx];
+      $scope.fields.to = smartAccount.getDefault();
     }
   });
 

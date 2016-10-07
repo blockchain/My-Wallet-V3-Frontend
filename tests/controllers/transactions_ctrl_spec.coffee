@@ -7,6 +7,7 @@ describe "TransactionsCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller, $q) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
+      smartAccount = $injector.get("smartAccount")
 
       MyWallet.wallet =
         hdwallet:
@@ -122,9 +123,3 @@ describe "TransactionsCtrl", ->
       it "should return all transactions associated with an address", ->
         txs = scope.filterByAddress({address:'123'})
         expect(txs).toEqual([{ result: 1, txType: 'received', processedInputs: [{'address': '123'}], processedOutputs: [{'address': '456'}]}])
-
-    describe "getDefaultAcct", ->
-
-      it "should return the default account if it has a balance", ->
-        idx = scope.getDefaultAcct()
-        expect(idx).toBe(0)

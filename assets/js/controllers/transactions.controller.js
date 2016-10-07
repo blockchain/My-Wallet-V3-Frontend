@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('TransactionsCtrl', TransactionsCtrl);
 
-function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $stateParams, $state, $rootScope, $uibModal, format) {
+function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $stateParams, $state, $rootScope, $uibModal, format, smartAccount) {
   $scope.addressBook = Wallet.addressBook;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
@@ -16,32 +16,11 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $stateParams, $state, $
   $scope.canDisplayDescriptions = false;
   $scope.txLimit = 10;
 
-  $scope.getDefaultAcct = () => {
-    // 1. a default account has a balance
-    // 2. another account has a balance
-    // 3. a legacy address has a balance
-    // 4. no balances, show default
-    if (MyWallet.wallet.hdwallet.defaultAccount.balance > 0) {
-      return MyWallet.wallet.hdwallet.defaultAccountIndex;
-    } else if (Wallet.accounts().filter(a => a.balance > 0).length) {
-      return Wallet.accounts().filter(a => a.balance > 0)[0].index;
-    } else if (Wallet.legacyAddresses().filter(a => !a.archived && !a.isWatchOnly && a.balance > 0).length) {
-      return Wallet.legacyAddresses().filter(a => !a.archived && !a.isWatchOnly).sort((a, b) => b.balance - a.balance)[0].index;
-    } else {
-      return MyWallet.wallet.hdwallet.defaultAccountIndex;
-    }
-  };
-
-  let idx = $scope.getDefaultAcct();
-
-  let accounts = Wallet.accounts().filter(a => !a.archived && a.index != null);
-  let addresses = Wallet.legacyAddresses().filter(a => !a.archived);
-
-  $scope.accounts = accounts.concat(addresses).map(format.origin);
-  $scope.filterByAccount.account = $scope.accounts.filter(a => a.index === idx)[0];
+  $scope.accounts = smartAccount.getOptions();
+  $scope.filterByAccount.account = smartAccount.getDefault();
 
   let txList = MyWallet.wallet.txList;
-  $scope.transactions = txList.transactions(idx);
+  $scope.transactions = txList.transactions(smartAccount.getDefaultIdx());
 
   let fetchTxs = () => {
     $scope.loading = true;
@@ -63,7 +42,7 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $stateParams, $state, $
 
   let setTxs = () => {
     let newTxs;
-    let idx = $scope.filterByAccount.account.index;
+    let idx = smartAccount.getDefaultIdx();
     !isNaN(idx) && (newTxs = txList.transactions(idx));
     isNaN(idx) && (newTxs = $scope.filterByAddress($scope.filterByAccount.account));
     if ($scope.transactions.length > newTxs.length) $scope.allTxsLoaded = false;
