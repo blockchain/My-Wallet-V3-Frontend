@@ -2,7 +2,7 @@
   .header-bar
     h2.type-h4.mbn.mtn.em-300(translate="FAQ_FULL")
   .flex-column.width-100
-    faq-question(ng-repeat="q in questions" ng-class="{toggled: q.displayed}" question="q" on-toggle="toggle(q)")
+    faq-question(ng-repeat="q in questions" question="q" on-toggle="toggle(q)")
   .flex-column.flex-center.width-30.mbvl.mtm
     h3 
       small(translate="NEED_MORE_HELP")
