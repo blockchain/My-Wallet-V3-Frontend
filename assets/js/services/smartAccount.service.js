@@ -37,8 +37,8 @@ function smartAccount (Wallet, MyWallet, format) {
       return MyWallet.wallet.hdwallet.defaultAccountIndex;
     } else if (Wallet.accounts().filter(a => a.balance > 0).length) {
       return Wallet.accounts().filter(a => a.balance > 0)[0].index;
-    } else if (Wallet.legacyAddresses().filter(a => !a.archived && !a.isWatchOnly && a.balance > 0).length) {
-      return Wallet.legacyAddresses().filter(a => !a.archived && !a.isWatchOnly).sort((a, b) => b.created_time - a.created_time)[0];
+    } else if (Wallet.legacyAddresses().filter(a => !a.archived && a.balance > 0).length) {
+      return Wallet.legacyAddresses().filter(a => !a.archived && a.balance > 0).sort((a, b) => a.created_time - b.created_time)[0];
     } else {
       return MyWallet.wallet.hdwallet.defaultAccountIndex;
     }
