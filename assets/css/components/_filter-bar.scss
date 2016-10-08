@@ -23,23 +23,11 @@
       }
     }
   }
-  // when an address is too long
-  .uib-dropdown-menu {
-    overflow-y: auto;
-    max-height: 160px;
-    overflow-x: hidden;
-  }
-  label-origin {
-    display: block;
-    overflow: hidden;
-    height: 1.428571429em;
-    > span:first-child {
-      float: left;
-      overflow: auto;
-      max-width: 135px;
-      margin-bottom: -30px;
-      padding-bottom: 30px;
-      display: inline-block;
+  .ui-select-match {
+    label-origin {
+      > span:first-child {
+        max-width: 120px;
+      }
     }
   }
 }
