@@ -63,10 +63,10 @@
         li.mvm(ng-class="{active: accountsRoute()}")
           a.pas(ui-sref="wallet.common.settings.accounts_index")
             span(translate="MENU_ACCOUNTS_AND_ADDRESSES")
-    li.header.mbm
-      a(ng-click="supportModal()")
-        i.ti-headphone
-        span(translate="CONTACT_SUPPORT")
+    li.header(ui-sref-active="current", ng-click="hideMenu()")
+      a(ui-sref="wallet.common.faq")
+        i.ti-help-alt
+        span(translate="FAQ")
   ul.aside.wallet-footer
     li.header.adverts.mbm
       span(translate="SPONSORS")

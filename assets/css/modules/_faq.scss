@@ -1,0 +1,19 @@
+.faq {
+  .header-bar {
+    width: 100%;
+    padding: 2em 30px 0em;
+  }
+
+  faq-question {
+    padding: 0em 3em;
+    .faq-question {
+      padding: 3em 0em;
+      border-bottom: 1px solid $light-blue;
+    }
+  }
+
+  .question {
+    font-size: 1.2em;
+    i { display: inline-block; }
+  }
+}
