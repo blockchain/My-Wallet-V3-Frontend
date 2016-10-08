@@ -26,7 +26,7 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
   };
 
   $scope.destinations = smartAccount.getOptions();
-  $scope.fields.to = Wallet.my.wallet.hdwallet.defaultAccount;
+  $scope.fields.to = focus ? destination : Wallet.my.wallet.hdwallet.defaultAccount;
 
   $scope.closeAlert = alert => {
     Alerts.close(alert);
