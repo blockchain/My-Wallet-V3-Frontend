@@ -42,7 +42,7 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $stateParams, $state, $
 
   let setTxs = () => {
     let newTxs;
-    let idx = smartAccount.getDefaultIdx();
+    let idx = $scope.filterByAccount.account.index;
     !isNaN(idx) && (newTxs = txList.transactions(idx));
     isNaN(idx) && (newTxs = $scope.filterByAddress($scope.filterByAccount.account));
     if ($scope.transactions.length > newTxs.length) $scope.allTxsLoaded = false;
