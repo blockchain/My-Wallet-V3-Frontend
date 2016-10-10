@@ -54,7 +54,12 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $stateParams, $state, $
     templateUrl: 'partials/export-history.jade',
     controller: 'ExportHistoryController',
     windowClass: 'bc-modal',
-    resolve: { activeIndex: () => $scope.account }
+    resolve: {
+      activeIndex: () => {
+        let idx = $scope.filterByAccount.account.index;
+        return isNaN(idx) ? 'imported' : idx.toString();
+      }
+    }
   });
 
   let unsub = txList.subscribe(setTxs);
