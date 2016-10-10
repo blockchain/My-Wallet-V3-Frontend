@@ -494,7 +494,7 @@ describe "SendCtrl", ->
           spyOn($state, 'go')
           scope.send()
           scope.$digest()
-          expect($state.go).toHaveBeenCalledWith('wallet.common.transactions', { accountIndex: 1 })
+          expect($state.go).toHaveBeenCalledWith('wallet.common.transactions')
         )
 
         it "should show imported address transactions", inject(($state) ->
@@ -502,7 +502,7 @@ describe "SendCtrl", ->
           scope.transaction.from = Wallet.legacyAddresses()[0]
           scope.send()
           scope.$digest()
-          expect($state.go).toHaveBeenCalledWith('wallet.common.transactions', { accountIndex: 'imported' })
+          expect($state.go).toHaveBeenCalledWith('wallet.common.transactions')
         )
 
         it "should set a note if there is one", inject((Wallet, MyWallet) ->

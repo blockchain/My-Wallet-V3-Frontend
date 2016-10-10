@@ -161,11 +161,8 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
       let note = $scope.transaction.note;
       if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
 
-      let index = $scope.transaction.from.index;
-      if (index == null) index = 'imported';
-
-      if (!($state.current.name === 'wallet.common.transactions' || $stateParams.accountIndex === '')) {
-        $state.go('wallet.common.transactions', { accountIndex: index });
+      if ($state.current.name !== 'wallet.common.transactions') {
+        $state.go('wallet.common.transactions');
       }
 
       let message = MyWalletHelpers.tor() ? 'BITCOIN_SENT_TOR' : 'BITCOIN_SENT';

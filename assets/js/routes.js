@@ -234,7 +234,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       }
     })
     .state('wallet.common.transactions', {
-      url: '/:accountIndex/transactions',
+      url: '/transactions',
       views: transactionsViews
     })
     .state('wallet.common.open', {

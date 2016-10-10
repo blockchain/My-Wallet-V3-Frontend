@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('TransactionsCtrl', TransactionsCtrl);
 
-function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $stateParams, $state, $rootScope, $uibModal, format, smartAccount) {
+function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $state, $rootScope, $uibModal, format, smartAccount) {
   $scope.addressBook = Wallet.addressBook;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;

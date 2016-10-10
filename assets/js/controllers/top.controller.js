@@ -9,7 +9,7 @@ function TopCtrl ($scope, Wallet, currency) {
   $scope.status = Wallet.status;
   $scope.copied = false;
 
-  $scope.getTotal = (index) => Wallet.total(index);
+  $scope.getTotal = () => Wallet.total();
   $scope.resetCopy = () => $scope.copied = false;
 
   $scope.hasLegacyAddresses = () => {
@@ -23,9 +23,7 @@ function TopCtrl ($scope, Wallet, currency) {
   $scope.nextAddress = () => {
     if ($scope.copied) return;
     $scope.copied = true;
-    let selectedIdx = parseInt($scope.accountIndex, 10);
     let defaultIdx = Wallet.my.wallet.hdwallet.defaultAccountIndex;
-    let idx = isNaN(selectedIdx) ? defaultIdx : selectedIdx;
-    return Wallet.getReceivingAddressForAccount(idx);
+    return Wallet.getReceivingAddressForAccount(defaultIdx);
   };
 }
