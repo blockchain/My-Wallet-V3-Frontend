@@ -1,4 +1,21 @@
-// SEND & RECEIVE & SIGN MSG
+#send, #receive, #sign-msg, .filter-bar {
+  .ui-select-choices-row-inner,
+  .ui-select-match {
+    label-origin {
+      display: block;
+      overflow: hidden;
+      height: 1.428571429em;
+      > span:first-child {
+        float: left;
+        overflow: auto;
+        max-width: 135px;
+        margin-bottom: -30px;
+        padding-bottom: 30px;
+        display: inline-block;
+      }
+    }
+  }
+}
 
 #send, #receive, #sign-msg {
   .inprv {
@@ -69,28 +86,17 @@
     }
   }
 
-  // when an address is too long
-  .ui-select-choices-row-inner {
-    > span {
-      > div {
-        overflow: hidden;
-        height: 1.428571429em;
-        > span:first-child {
-          float: left;
-          overflow: auto;
-          max-width: 220px;
-          margin-bottom: -30px;
-          padding-bottom: 30px;
-          display: inline-block;
-        }
-      }
-    }
-  }
-
   & + .modal-footer {
     clear: left;
   }
 
+  .ui-select-match {
+    label-origin {
+      > span:first-child {
+        max-width: 200px;
+      }
+    }
+  }
 
   @media (max-width: 768px) {
     .row {

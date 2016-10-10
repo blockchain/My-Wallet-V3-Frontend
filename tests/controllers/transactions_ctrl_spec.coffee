@@ -7,6 +7,7 @@ describe "TransactionsCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller, $q) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
+      smartAccount = $injector.get("smartAccount")
 
       MyWallet.wallet =
         hdwallet:
@@ -16,16 +17,21 @@ describe "TransactionsCtrl", ->
             { label: "Spending", index: 2, archived: false, balance: 0 }
             { label: "Partay", index: 3, archived: true, balance: 50 }
           ]
+          defaultAccount: { label: "Checking", index: 0, archived: false, balance: 100 }
+          defaultAccountIndex: 0
         txList:
           subscribe: () -> (() -> )
           transactions: () ->
-            [{ result: 1, txType: 'received' }]
+            [{ result: 1, txType: 'received', processedInputs: [{'address': '123'}], processedOutputs: [{'address': '456'}]}]
         fetchTransactions: () ->
           $q.resolve(1)
 
       Wallet.status =
         isLoggedIn: true
         didLoadBalances: true
+
+      Wallet.legacyAddresses = () -> ['1A2B3C']
+      Wallet.accounts = () -> MyWallet.wallet.hdwallet.accounts
 
       scope = $rootScope.$new()
 
@@ -111,3 +117,9 @@ describe "TransactionsCtrl", ->
         
         result = scope.checkLabelDiff(label, address)
         expect(result).toBe('abc, bcd')
+
+    describe "filterByAddress", ->
+
+      it "should return all transactions associated with an address", ->
+        txs = scope.filterByAddress({address:'123'})
+        expect(txs).toEqual([{ result: 1, txType: 'received', processedInputs: [{'address': '123'}], processedOutputs: [{'address': '456'}]}])

@@ -8,6 +8,28 @@
   padding: 0 30px;
   border-bottom: 1px solid #ddd;
   z-index: 1;
+  .ui-select-container {
+    width: 360px;
+    .divider {
+      margin: 0px auto;
+    }
+  }
+  .dropdown-menu {
+    margin: 0px;
+    > li:first-child {
+      .dropdown-header {
+        // we need to remove this when we come up with what we want to call Accounts
+        display: none;
+      }
+    }
+  }
+  .ui-select-match {
+    label-origin {
+      > span:first-child {
+        max-width: 120px;
+      }
+    }
+  }
 }
 
 .filter-buttons {

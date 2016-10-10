@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SendCtrl', SendCtrl);
 
-function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees) {
+function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.alerts = [];
@@ -87,7 +87,8 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
 
   $scope.resetSendForm = () => {
     $scope.transaction = angular.copy($scope.transactionTemplate);
-    $scope.transaction.from = Wallet.accounts()[Wallet.my.wallet.hdwallet.defaultAccountIndex];
+    $scope.transaction.from = smartAccount.getDefault();
+    console.log($scope.transaction.from);
     $scope.setPaymentFee();
 
     // Remove error messages:
@@ -160,11 +161,8 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
       let note = $scope.transaction.note;
       if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
 
-      let index = $scope.transaction.from.index;
-      if (index == null) index = 'imported';
-
-      if (!($state.current.name === 'wallet.common.transactions' || $stateParams.accountIndex === '')) {
-        $state.go('wallet.common.transactions', { accountIndex: index });
+      if ($state.current.name !== 'wallet.common.transactions') {
+        $state.go('wallet.common.transactions');
       }
 
       let message = MyWalletHelpers.tor() ? 'BITCOIN_SENT_TOR' : 'BITCOIN_SENT';
@@ -232,19 +230,8 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
 
   let unwatchDidLoad = $scope.$watch('status.didLoadBalances', (didLoad) => {
     if (!didLoad || $scope.origins.length !== 0) return;
-    let defaultIdx = Wallet.my.wallet.hdwallet.defaultAccountIndex;
-    let selectedIdx = parseInt($stateParams.accountIndex, 10);
-    let idx = isNaN(selectedIdx) ? defaultIdx : selectedIdx;
-
-    let accounts = Wallet.accounts().filter(a => !a.archived && a.index != null);
-    let addresses = Wallet.legacyAddresses().filter(a => !a.archived);
-
-    $scope.origins = accounts.concat(addresses).map(format.origin);
-
-    accounts.forEach(a => {
-      if (a.index === idx) $scope.transaction.from = format.origin(a);
-    });
-
+    $scope.transaction.from = smartAccount.getDefault();
+    $scope.origins = smartAccount.getOptions();
     $scope.originsLoaded = true;
 
     if (paymentRequest.address) {

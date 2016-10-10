@@ -1,11 +1,22 @@
 .transactions(ng-if="status.isLoggedIn")
   .filter-bar.flex-between.flex-center
-    .filter-buttons.flex
-      a.black.em-500.em-alt(
-        ng-repeat="f in filterTypes track by f"
-        ng-click="setFilterType($index)"
-        ng-class="{'active': isFilterType($index)}"
-        translate="{{::f}}")
+    .flex-row.flex-center
+      ui-select.mrl(
+        ng-show="accounts.length > 1"
+        ng-model="filterByAccount.account"
+        name="accounts"
+        tagging)
+        ui-select-match
+          label-origin(origin="$select.selected")
+        ui-select-choices(repeat="account in accounts | filter:{label:$select.search} | limitTo:accountLimit" group-by="'type'")
+          span(in-view="$last && account.type==='Imported Addresses' && increaseLimit()")
+            label-origin(origin="::account" highlight="$select.search")
+      .filter-buttons.flex
+        a.black.em-500.em-alt(
+          ng-repeat="f in filterTypes track by f"
+          ng-click="setFilterType($index)"
+          ng-class="{'active': isFilterType($index)}"
+          translate="{{::f}}")
     .flex-center
       a.black.mrl.em-500.em-alt(ng-click="exportHistory()")
         i.ti-export
