@@ -31,10 +31,6 @@ export VERSION:=vIntermediate
 endif
 endif
 
-ifndef BACKEND_DOMAIN
-export BACKEND_DOMAIN:=blockchain.info
-endif
-
 ifndef API_DOMAIN
 export API_DOMAIN:=api.blockchain.info
 endif
@@ -43,13 +39,17 @@ dist: build
 	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN)
 	npm shrinkwrap --dev
 
+dist_fixed_domain: build
+	grunt dist --versionFrontend=$(VERSION) --rootDomain=blockchain.info --apiDomain=api.blockchain.info
+	npm shrinkwrap --dev
+
 changelog: node_modules
 	node_modules/git-changelog/tasks/command.js $(TAG_ARG) -f "Changelog.md" -g "^fix|^feat|^docs|^refactor|^chore|^test|BREAKING" -i "" -a "Blockchain Wallet V3 Frontend" --repo_url "https://github.com/blockchain/My-Wallet-V3-Frontend"
 
 .env:
 	echo "DIST=1\nAUTO_RELOAD=0\nPORT=8080\nROOT_URL=https://blockchain.info\nWEBSOCKET_URL=wss://blockchain.info/inv\nAPI_DOMAIN=https://api.blockchain.info" >> .env
 
-server: .env dist
+server: .env dist_fixed_domain
 	npm start
 
 clean:
