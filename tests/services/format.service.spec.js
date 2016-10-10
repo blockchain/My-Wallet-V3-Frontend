@@ -1,55 +1,51 @@
 'use strict';
 
 describe('format', () => {
-
   beforeEach(angular.mock.module('walletApp'));
 
-  describe("origin()", () => {
+  describe('origin()', () => {
     it('should format an account', inject((format) => {
-      expect(format.origin({
-        label : "Savings",
-        index : 0,
-        balance : 1,
-        archived : false,
-        isWatchOnly : false,
+      let formatted = format.origin({
+        label: 'Savings',
+        index: 0,
+        balance: 1,
+        archived: false,
+        isWatchOnly: false,
         extendedPublicKey: 'xpub_Savings'
-      })).toEqual({
-        label : "Savings",
-        index : 0,
-        address : undefined,
-        balance : 1,
-        archived : false,
-        type : 'Accounts',
-        xpub: 'xpub_Savings'
       });
+
+      expect(formatted.label).toEqual('Savings');
+      expect(formatted.index).toEqual(0);
+      expect(formatted.address).not.toBeDefined();
+      expect(formatted.balance).toEqual(1);
+      expect(formatted.archived).toEqual(false);
+      expect(formatted.type).toEqual('Accounts');
+      expect(formatted.xpub).toEqual('xpub_Savings');
     }));
 
     it('should format an address', inject((format) => {
-      expect(format.origin({
-        label : "Imported",
+      let formatted = format.origin({
+        label: 'Imported',
         index: undefined,
-        address: "1234ab",
-        balance : 1,
-        archived : false,
-        isWatchOnly : false
-      })).toEqual({
-        label : "Imported",
-        index: undefined,
-        address : "1234ab",
-        balance : 1,
-        archived : false,
-        type : 'Imported Addresses',
-        isWatchOnly : false
+        address: '1234ab',
+        balance: 1,
+        archived: false,
+        isWatchOnly: false
       });
+
+      expect(formatted.label).toEqual('Imported');
+      expect(formatted.index).not.toBeDefined();
+      expect(formatted.address).toEqual('1234ab');
+      expect(formatted.balance).toEqual(1);
+      expect(formatted.archived).toEqual(false);
+      expect(formatted.type).toEqual('Imported Addresses');
+      expect(formatted.isWatchOnly).toEqual(false);
     }));
   });
 
-  describe("destination()", () => {
+  describe('destination()', () => {
     it('should be the same as origin', inject((format) => {
       expect(format.origin).toEqual(format.destination);
     }));
   });
-
-
-
 });
