@@ -187,19 +187,6 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
           });
           Wallet.goal.send = void 0;
         }
-        if (Wallet.goal.claim != null) {
-          let modalInstance = $uibModal.open({
-            templateUrl: 'partials/claim.jade',
-            controller: 'ClaimModalCtrl',
-            resolve: {
-              claim: () => Wallet.goal.claim
-            },
-            windowClass: 'bc-modal'
-          });
-          modalInstance.result.then(() => {
-            Wallet.goal.claim = void 0;
-          });
-        }
       } else {
         $timeout($scope.checkGoals, 100);
       }

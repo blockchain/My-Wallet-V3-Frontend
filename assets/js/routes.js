@@ -246,16 +246,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('wallet.common.claim', {
-      url: '/claim/:code',
-      views: {
-        top: top,
-        left: walletNav,
-        right: {
-          controller: 'ClaimCtrl'
-        }
-      }
-    })
     .state('wallet.common.unsubscribe', {
       url: '/unsubscribe/{token:.*}',
       views: {
