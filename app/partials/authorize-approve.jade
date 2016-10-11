@@ -5,7 +5,7 @@ div(ng-show="checkingToken")
         h2.em-300.mtn(translate="CHECKING_LOGIN_ATTEMPT")
     hgroup
       img(src="img/spinner.gif")
-div(ng-show="differentBrowser && !success")
+div(ng-show="differentBrowser && !success" data-preflight-tag="AuthApprove")
   header
     hgroup
       .flex-between.flex-center.flex-wrap

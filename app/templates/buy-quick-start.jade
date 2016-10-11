@@ -1,4 +1,4 @@
-form.border.paml.mtml(name="fiatForm" ng-submit="triggerBuy()")
+form.border.paml.mtml(name="fiatForm" ng-submit="triggerBuy()" data-preflight-tag="BuyQuickStart")
   .mtl
     label.em-500 Enter amount:
     helper-button(ng-show="limits.card.min && limits.card.max" content="MAX_MIN_HELPER" values="{cardMax: limits.card.max, min: limits.card.min, bankMax: limits.bank.max, symbol: currencySymbol.symbol}")

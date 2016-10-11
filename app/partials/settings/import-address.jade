@@ -1,4 +1,4 @@
-.modal-header
+.modal-header(data-preflight-tag="ImportAddress")
   h3(translate="IMPORT_BITCOIN_ADDRESS", ng-show="step < 2 || address.isWatchOnly || address.balance == 0 || address.balance == null")
   h3(translate="IMPORT_BITCOIN_ADDRESS_SWEEP", ng-show="step >= 2 && !address.isWatchOnly && address.balance > 0")
 .modal-body

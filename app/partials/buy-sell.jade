@@ -1,4 +1,4 @@
-.buy-sell(ng-class="{'loading': status.loading || status.metaDataDown || status.exchangeDown, 'disabled': status.disabled}")
+.buy-sell(ng-class="{'loading': status.loading || status.metaDataDown || status.exchangeDown, 'disabled': status.disabled}" data-preflight-tag="BuySell")
   .flex-column.flex-justify.flex-center.height-100(ng-if="status.metaDataDown || status.exchangeDown")
     blocket-troposphere(status="of_course_i_still_love_you")
     span.bg-deeper-blue.type-h4.copy-bar.white.flex-center.flex-justify(translate="METADATA_DOWN_EXCHANGE")
@@ -20,7 +20,7 @@
           .font-2.blue.em-300.lh1(translate="SIMPLE_SECURE_SEAMLESS")
           .type-h4.em-300.mtm.basic-grey(translate="BUY_SIMPLE_STEPS")
         kyc-status(ng-if="showKycStatus()" state="kyc.state" on-trigger="openKyc()" limits="limits")
-    .flex-column.mtl(ng-show="trades.pending.length || trades.completed.length")
+    .flex-column.mtl(ng-show="trades.pending.length || trades.completed.length" data-preflight-tag="BuySellTrades")
       .flex-row.flex-between.flex-center
         h4.type-h4(translate="ORDER_HISTORY")
         span Coinify Account: {{ exchange.profile.email }}

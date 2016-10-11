@@ -1,7 +1,7 @@
 .alert-in-app
   uib-alert(type="danger", close="insist = false", ng-show="insist")
     span(translate="NEED_SECOND_PASSWORD_FOR_UPGRADE")
-.modal-header.flex-center.upgrade-header
+.modal-header.flex-center.upgrade-header(data-preflight-tag="Upgrade")
   h3(translate="UPGRADE_WALLET")
 .modal-body
   .bc-carousel.upgrade
