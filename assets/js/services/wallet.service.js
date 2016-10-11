@@ -425,27 +425,15 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   };
 
   wallet.askForDeauth = () => (
-    wallet.user.isEmailVerified &&
-    !wallet.status.deauthOnLogout &&
-    !wallet.autoLogout
+    wallet.user.isEmailVerified && !wallet.autoLogout
   );
 
   wallet.logout = (options = {}) => {
     let { auto = false } = options;
-
-    $cookies.remove('password');
     wallet.autoLogout = auto;
     $window.name = wallet.askForDeauth() ? 'blockchain-logout' : 'blockchain';
-
-    let beforeLogout = () => {
-      if (wallet.status.deauthOnLogout) {
-        let sessionToken = $cookies.get('session');
-        $cookies.remove('session');
-        return wallet.my.endSession(sessionToken);
-      }
-    };
-
-    wallet.my.logout(true, beforeLogout);
+    $cookies.remove('password');
+    wallet.my.logout(true);
   };
 
   wallet.makePairingCode = (successCallback, errorCallback) => {
@@ -685,12 +673,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
     if (wallet.askForDeauth()) {
       $window.name = 'blockchain-logout';
-    }
-
-    if (wallet.status.deauthOnLogout) {
-      let sessionToken = $cookies.get('session');
-      $cookies.remove('session');
-      wallet.my.endSession(sessionToken);
     }
     // TODO: fix autoreload dev feature
     // if ($rootScope.autoReload) {

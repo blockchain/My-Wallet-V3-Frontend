@@ -655,8 +655,6 @@
   "DEAUTH_EXPLAIN": "Email authorization will be required the next time there is a login attempt from this browser.",
   "DEAUTHORIZE": "Secure Wallet",
   "DEAUTHORIZED": "Wallet Secured",
-  "REQUIRE_AUTH_LATER": "Email authorization will be required for the next login from this browser",
-  "PRIVATE_SESSION": "Forget this wallet after logout",
   "BOUGHT": "Bought",
   "DYK_CUSTOM_FEES": "Want to set your own fees? You can! Just click on Advanced Send on the Send screen.",
   "DYK_CUSTOM_FEES_TITLE": "Set your own fees",

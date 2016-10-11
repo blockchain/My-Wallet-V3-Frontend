@@ -25,10 +25,6 @@ div#login
         div
           input#pass_input.form-control(type="password" name="pass_input" ng-model="password" focus-when="uidAvailable" required)
           span.help-block(translate="{{ errors.password }}")
-        .flex-center.flex-row.mtm
-          label.em-300
-            input(type="checkbox" ng-model="deauthOnLogout")
-            span.mls(translate="PRIVATE_SESSION" uib-tooltip="{{'REQUIRE_AUTH_LATER'|translate}}")
       .form-group(ng-show="settings.needs2FA" ng-class="{'has-error': errors.twoFactor || settings.twoFactorMethod == 3}")
         label.em-500
           span(translate="YUBI_CODE" ng-show="settings.twoFactorMethod == 1")

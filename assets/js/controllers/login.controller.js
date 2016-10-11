@@ -34,7 +34,6 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
     }
 
     let success = () => {
-      Wallet.status.deauthOnLogout = $scope.deauthOnLogout;
       $state.go('wallet.common.home');
     };
 
