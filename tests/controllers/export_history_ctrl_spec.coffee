@@ -2,6 +2,7 @@ describe "ExportHistoryController", ->
   $rootScope = undefined
   $controller = undefined
   Wallet = undefined
+  scope = undefined
 
   beforeEach angular.mock.module("walletApp")
 
@@ -62,7 +63,6 @@ describe "ExportHistoryController", ->
       expect(scope.active.xpub).toEqual('xpub2')
 
   describe "submit", ->
-    scope = undefined
     beforeEach ->
       scope = getCtrlScope('')
       spyOn(Wallet, 'exportHistory').and.callThrough()
@@ -81,3 +81,12 @@ describe "ExportHistoryController", ->
       expect(scope.busy).toEqual(true)
       scope.$digest()
       expect(scope.busy).toEqual(false)
+
+  describe "formatFilename", ->
+    beforeEach ->
+      scope = getCtrlScope('')
+
+    it "should format correctly", ->
+      scope.start.date = new Date('11/24/1995')
+      scope.end.date = new Date('10/03/1998')
+      expect(scope.formatFilename()).toEqual('history-24-11-1995-03-10-1998.csv')

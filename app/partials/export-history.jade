@@ -58,5 +58,5 @@ form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" noval
       ng-disabled="exportForm.$invalid || start.date > end.date")
     download-button.btn.button-success(
       ng-hide="history == null || canTriggerDownload"
-      filename="history.csv"
+      filename="{{formatFilename()}}"
       content="history")
