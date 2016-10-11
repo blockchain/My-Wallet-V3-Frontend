@@ -567,15 +567,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       .then(proceed, cancel);
   };
 
-  wallet.fetchBalanceForRedeemCode = (code) => {
-    let logError = (error) => {
-      console.log(error);
-      throw $translate.instant('ERR_FETCH_BALANCE');
-    };
-    return MyBlockchainApi.getBalanceForRedeemCode(code)
-      .catch(logError);
-  };
-
   wallet.getAddressBookLabel = (address) =>
     wallet.my.wallet.getAddressBookLabel(address);
 
