@@ -201,7 +201,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       }
     })
     .state('wallet.common.buy-sell', {
-      url: '/buy-sell',
+      url: '/buy',
       views: {
         top: top,
         left: {
