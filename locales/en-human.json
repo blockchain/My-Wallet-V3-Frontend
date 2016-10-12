@@ -719,7 +719,7 @@
   "LOST_PWD_DESC": "Recover your funds with your 12 word recovery passphrase",
   "RESET_2FA" : "Reset 2FA",
   "REMIND_ME": "Remind Me",
-  "REMIND_ME_HELP": "Lost your Wallet Identifier? We'll send it to you via your verified email.",
+  "REMIND_ME_HELP": "Lost your Wallet Identifier? We'll send it to you via your email.",
   "REMIND_SUCCESS": "You will receive an email containing your Wallet Identifier soon.",
   "CAPTCHA": "Captcha",
   "CAPTCHA_EXPAIN": "So that we know you're not a robot",
