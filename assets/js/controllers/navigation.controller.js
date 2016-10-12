@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('NavigationCtrl', NavigationCtrl);
 
-function NavigationCtrl ($scope, $rootScope, $interval, $timeout, $cookies, Wallet, Alerts, currency, whatsNew, MyWalletMetadata) {
+function NavigationCtrl ($scope, $window, $rootScope, $interval, $timeout, $cookies, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWalletMetadata) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
 
@@ -87,10 +87,27 @@ function NavigationCtrl ($scope, $rootScope, $interval, $timeout, $cookies, Wall
 
   $scope.logout = () => {
     let isSynced = Wallet.isSynchronizedWithServer();
-    let message = isSynced ? 'CONFIRM_LOGOUT' : 'CONFIRM_FORCE_LOGOUT';
-    Alerts.confirm(message, { modalClass: 'top' }).then(() => {
-      Wallet.logout();  // Refreshes the browser, so won't return
-    });
+
+    let options = { friendly: true, cancel: 'NO_THANKS', modalClass: 'top' };
+    let saidNoThanks = (e) => e === 'cancelled' ? $q.resolve() : $q.reject();
+    let setSurveyCookie = () => $cookies.put('logout-survey', true);
+    let openSurvey = () => { $window.open('https://blockchain.co1.qualtrics.com/SE/?SID=SV_7PupfD2KjBeazC5'); };
+
+    let promptSurvey = () =>
+      Boolean($cookies.get('logout-survey')) === true
+        ? $q.resolve()
+        : Alerts.confirm('SURVEY_CONFIRM', options)
+          .then(openSurvey, saidNoThanks).then(setSurveyCookie);
+
+    let confirmForce = () =>
+      Alerts.confirm('CONFIRM_FORCE_LOGOUT', { modalClass: 'top' });
+
+    let logout = () =>
+      Wallet.logout();
+
+    isSynced
+      ? promptSurvey().then(logout)
+      : confirmForce().then(promptSurvey).then(logout);
   };
 
   if (Wallet.goal.firstTime) {

@@ -31,8 +31,9 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     let inactivityTimeSeconds = Math.round((Date.now() - $scope.lastAction) / 1000);
     let logoutTimeSeconds = Wallet.settings.logoutTimeMinutes * 60;
     if (inactivityTimeSeconds === logoutTimeSeconds - 10) {
-      let logoutTimer = $timeout(Wallet.my.logout, 10000);
-      Alerts.confirm('CONFIRM_AUTO_LOGOUT', { values: { minutes: Wallet.settings.logoutTimeMinutes }, action: 'LOG_ME_OUT' })
+      let logoutTimer = $timeout(() => Wallet.logout({ auto: true }), 10000);
+      let alertOpts = { values: { minutes: Wallet.settings.logoutTimeMinutes }, action: 'LOG_ME_OUT' };
+      Alerts.confirm('CONFIRM_AUTO_LOGOUT', alertOpts)
         .then(Wallet.logout).catch(() => $timeout.cancel(logoutTimer));
     }
   };
@@ -90,12 +91,20 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     modalInstance.result.then(() => {}, () => defer.reject());
   });
 
+  $scope.isPublicState = (stateName) => (
+    stateName.split('.')[0] === 'public' ||
+    ['landing', 'open', 'wallet.common.unsubscribe'].indexOf(stateName) > -1
+  );
+
   $scope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
     let wallet = MyWallet.wallet;
     let isUserInvited = wallet && wallet.accountInfo && wallet.accountInfo.invited;
-    let isPublicState = toState.name === 'landing' || toState.name.slice(0, 6) === 'public';
-    if (isPublicState && Wallet.status.isLoggedIn) event.preventDefault();
-    if (!isUserInvited && toState.name === 'wallet.common.buy-sell') event.preventDefault();
+    if ($scope.isPublicState(toState.name) && Wallet.status.isLoggedIn) {
+      event.preventDefault();
+    }
+    if (!isUserInvited && toState.name === 'wallet.common.buy-sell') {
+      event.preventDefault();
+    }
     if (wallet && wallet.isDoubleEncrypted && toState.name === 'wallet.common.buy-sell') {
       event.preventDefault();
       Alerts.displayError('MUST_DISABLE_2ND_PW');
@@ -106,8 +115,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   });
 
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) => {
-    let loggedOutStates = ['public', 'landing', 'public.login-no-uid', 'public.login-uid', 'public.reset-two-factor', 'public.recover', 'public.reminder', 'public.signup', 'public.help', 'open', 'public.verify-email', 'wallet.common.unsubscribe', 'public.authorize-approve', 'public.reset-two-factor-token'];
-    if (loggedOutStates.every(s => toState.name !== s) && $scope.status.isLoggedIn === false) {
+    if (!$scope.isPublicState(toState.name) && !$scope.status.isLoggedIn) {
       $state.go('public.login-no-uid');
     }
     $rootScope.outOfApp = toState.name === 'landing';

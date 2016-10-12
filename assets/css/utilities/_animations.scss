@@ -110,6 +110,42 @@ $fast: 0.2s;
   100% { background-color: inherit; }
 }
 
+
+// Slide up to exit
+
+@keyframes slide-in {
+  20% { opacity: 0; }
+  100% { height: 8em; opacity: 1; }
+}
+
+@keyframes slide-out {
+  80% { opacity: 0; }
+  100% { height: 0em; opacity: 0; }
+}
+
+.slide-up-outer {
+  position: relative;
+  overflow: hidden;
+  animation-delay: 1s;
+  animation-duration: $slow;
+  animation-fill-mode: forwards;
+  &.slide-in {
+    height: 0em;
+    opacity: 0;
+    animation-name: slide-in;
+  }
+  &.slide-out {
+    height: 8em;
+    opacity: 1;
+    animation-name: slide-out;
+  }
+}
+
+.slide-up-inner {
+  position: absolute;
+  bottom: 0px;
+}
+
 //Fade in & out animations
 
 .fade {

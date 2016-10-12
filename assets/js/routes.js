@@ -82,8 +82,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     .state('public', {
       views: {
         body: {
-          templateUrl: 'partials/public.jade',
-          controller: 'PublicCtrl'
+          templateUrl: 'partials/public.jade'
         }
       },
       resolve: {
@@ -107,6 +106,15 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         contents: {
           templateUrl: 'partials/login.jade',
           controller: 'LoginCtrl'
+        }
+      }
+    })
+    .state('public.logout', {
+      url: '/logout',
+      views: {
+        contents: {
+          templateUrl: 'partials/logout.jade',
+          controller: 'LogoutController'
         }
       }
     })

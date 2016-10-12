@@ -1,46 +1,53 @@
-div
+div#login
   header
     hgroup
       .flex-between.flex-center.flex-wrap
-        h2.em-300.mtn(translate="WELCOME_BACK")
+        h2.em-300.mtn(ng-hide="didLogout" translate="WELCOME_BACK")
+        h2.em-300.mtn(ng-show="didLogout" translate="LOGGED_OUT")
         span.register.mbm
           span(translate="OR")
-          | 
-          a.em-300(ng-click="register()")
-            span(translate="CLICK_HERE_TO_CREATE_WALLET")
+          | &nbsp;
+          a.em-300(ui-sref="public.signup" translate="CLICK_HERE_TO_CREATE_WALLET")
       p.em-300(translate="LOGIN_BELOW")
-  //GUID & Password fields
-  form.ptl.form-horizontal.clearfix(role="form" autocomplete="off" novalidate)
+
+  // GUID & Password fields
+  form.ptl.form-horizontal.clearfix(name="loginForm" ng-submit="login()" role="form" autocomplete="off" novalidate)
     browser-detection(result="browser")
-    .form-group(ng-class="{'has-error': errors.uid}")
-      label.em-500(translate="UID", for="UID_input")
-      div
-        input#UID_input.form-control(type="text", ng-model="uid", ng-disabled="busy || browser.disabled" name="UID_input" focus-when="!uidAvailable")
-          
-        span.help-block(ng-show="errors.uid" ui-sref="public.reminder" translate="{{ errors.uid }}")
-        span.help-block.info.hidden-xs(translate="FIND_GUID_EXPLAIN")
-    .form-group(ng-class="{'has-error': errors.password}")
-      label.em-500(translate="PASSWORD", for="pass_input")
-      div
-        input#pass_input.form-control(type="password", name="pass_input" ng-model="password", ng-disabled="busy || browser.disabled" focus-when="uidAvailable")
-        span.help-block {{ errors.password }}  
-    .form-group(ng-show="settings.needs2FA", ng-class="{'has-error': errors.twoFactor || settings.twoFactorMethod == 3}")
-      label.em-500
-          span(translate="YUBI_CODE", ng-show="settings.twoFactorMethod == 1")
-          span(translate="EMAIL_CODE", ng-show="settings.twoFactorMethod == 2")
-          span(translate="2FA_NOT_SUPPORTED", ng-show="settings.twoFactorMethod == 3")
-          span(translate="GOOGLE_AUTH_CODE", ng-show="settings.twoFactorMethod == 4")
-          span(translate="SMS_CODE", ng-show="settings.twoFactorMethod == 5")
-      div
-        input.form-control(type="text" ng-model="twoFactorCode" ng-disabled="busy || didEnterCorrect2FA || settings.twoFactorMethod == 3")
-        span.help-block {{ errors.twoFactor }}
-        p.form-control-static(ng-show="settings.twoFactorMethod == 5")
-          img(ng-show="resending" src="img/spinner.gif")
-          a(ng-click="resend()", ng-show="!resending", translate="RESEND") 
-    .mtl.flex-center.flex-end
-      button.button-primary(ui-ladda="busy", ng-click="login()", data-style="expand-left", ladda-translate="SIGNIN", ng-disabled="!isValid || browser.disabled")
-  //Wallet Recovery
+    fieldset(ng-disabled="browser.disabled || status.busy")
+      .form-group(ng-class="{'has-error': errors.uid}")
+        label.em-500(translate="UID" for="UID_input")
+        div
+          input#UID_input.form-control(type="text" ng-model="uid" name="UID_input" focus-when="!uidAvailable" required)
+          span.help-block(ng-show="errors.uid" ui-sref="public.reminder" translate="{{ errors.uid }}")
+          span.help-block.info.hidden-xs(translate="FIND_GUID_EXPLAIN")
+      .form-group(ng-class="{'has-error': errors.password}")
+        label.em-500(translate="PASSWORD" for="pass_input")
+        div
+          input#pass_input.form-control(type="password" name="pass_input" ng-model="password" focus-when="uidAvailable" required)
+          span.help-block(translate="{{ errors.password }}")
+      .form-group(ng-show="settings.needs2FA" ng-class="{'has-error': errors.twoFactor || settings.twoFactorMethod == 3}")
+        label.em-500
+          span(translate="YUBI_CODE" ng-show="settings.twoFactorMethod == 1")
+          span(translate="EMAIL_CODE" ng-show="settings.twoFactorMethod == 2")
+          span(translate="2FA_NOT_SUPPORTED" ng-show="settings.twoFactorMethod == 3")
+          span(translate="GOOGLE_AUTH_CODE" ng-show="settings.twoFactorMethod == 4")
+          span(translate="SMS_CODE" ng-show="settings.twoFactorMethod == 5")
+        div
+          input.form-control(type="text" ng-model="twoFactorCode" ng-disabled="didEnterCorrect2FA || settings.twoFactorMethod == 3" ng-required="settings.needs2FA")
+          span.help-block(translate="{{ errors.twoFactor }}")
+          p.form-control-static(ng-show="settings.twoFactorMethod == 5")
+            img(ng-show="status.resending" src="img/spinner.gif")
+            a(ng-click="resend()" ng-hide="status.resending" translate="RESEND") 
+      .mtl.flex-center.flex-end
+        button.button-primary(
+          type="submit"
+          ui-ladda="status.busy"
+          data-style="expand-left"
+          ladda-translate="SIGNIN"
+          ng-disabled="loginForm.$invalid")
+
+  // Wallet Recovery
   .ptl.flex-end
-    .flex-row
+    .flex-row(ng-hide="didLogout")
       .em-300.mbm(translate="HAVING_TROUBLE")
-      span.pointer.em-300.blue.mls(ui-sref="public.help") View Options
+      span.pointer.em-300.blue.mls(ui-sref="public.help" translate="VIEW_OPTIONS")

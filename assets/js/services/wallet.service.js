@@ -183,7 +183,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let loginError = (error) => {
       console.log(error);
       if (error.length && error.indexOf('Unknown Wallet Identifier') > -1) {
-        errorCallback('uid', error);
+        errorCallback('uid', 'UNKNOWN_IDENTIFIER');
       } else if (error.length && error.indexOf('password') > -1) {
         errorCallback('password', error);
       } else {
@@ -424,13 +424,16 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       .then(successCallback).catch(errorCallback);
   };
 
-  wallet.logout = () => {
+  wallet.askForDeauth = () => (
+    wallet.user.isEmailVerified && !wallet.autoLogout
+  );
+
+  wallet.logout = (options = {}) => {
+    let { auto = false } = options;
+    wallet.autoLogout = auto;
+    $window.name = wallet.askForDeauth() ? 'blockchain-logout' : 'blockchain';
     $cookies.remove('password');
-    let sessionToken = $cookies.get('session');
-    $cookies.remove('session');
-    wallet.didLogoutByChoice = true;
-    $window.name = 'blockchain';
-    wallet.my.logout(sessionToken, true);
+    wallet.my.logout(true);
   };
 
   wallet.makePairingCode = (successCallback, errorCallback) => {
@@ -667,6 +670,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       event.preventDefault();
       return 'There are unsaved changes. Are you sure?';
     }
+
+    if (wallet.askForDeauth()) {
+      $window.name = 'blockchain-logout';
+    }
     // TODO: fix autoreload dev feature
     // if ($rootScope.autoReload) {
     //   $cookies.put('reload.url', $location.url());
@@ -761,16 +768,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     } else if (event === 'wallet not found') {
       Alerts.displayError('WALLET_NOT_FOUND');
     } else if (event === 'ticker_updated' || event === 'did_set_latest_block') {
-      $rootScope.$safeApply();
     } else if (event === 'logging_out') {
-      if (wallet.didLogoutByChoice) {
-        $translate('LOGGED_OUT').then((translation) => {
-          $cookies.put('alert-success', translation);
-        });
-      } else {
+      if (wallet.autoLogout) {
         $translate('LOGGED_OUT_AUTOMATICALLY').then((translation) => {
           $cookies.put('alert-warning', translation);
-          $rootScope.$safeApply();
         });
       }
       wallet.status.isLoggedIn = false;
@@ -783,19 +784,20 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     } else if (event.type !== void 0) {
       if (event.type === 'error') {
         Alerts.displayError(event.msg);
-        $rootScope.$safeApply();
       } else if (event.type === 'success') {
         Alerts.displaySuccess(event.msg);
-        $rootScope.$safeApply();
       } else if (event.type === 'notice') {
         Alerts.displayWarning(event.msg);
-        $rootScope.$safeApply();
       } else {
       }
     } else if (event === 'on_email_verified') {
       if (data.email === wallet.user.email && data.verified) {
         wallet.user.isEmailVerified = 1;
         Alerts.displaySuccess('EMAIL_VERIFIED_MSG');
+      }
+    } else if (event === 'wallet_logout') {
+      if (data.guid === wallet.user.uid) {
+        wallet.logout({ auto: true });
       }
     } else {
     }
