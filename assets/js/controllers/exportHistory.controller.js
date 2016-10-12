@@ -43,12 +43,18 @@ function ExportHistoryController ($scope, $sce, $translate, $filter, format, Wal
   $scope.start = { open: false, date: Date.now() - 604800000 };
   $scope.end = { open: false, date: Date.now() };
 
-  $scope.formatDate = (date) => $filter('date')(date, 'dd/MM/yyyy');
+  $scope.formatDate = (sep, date) => $filter('date')(date, `dd${sep}MM${sep}yyyy`);
+
+  $scope.formatFilename = () => {
+    let start = $scope.formatDate('-', $scope.start.date);
+    let end = $scope.formatDate('-', $scope.end.date);
+    return `history-${start}-${end}.csv`;
+  };
 
   $scope.submit = () => {
     $scope.busy = true;
-    let start = $scope.formatDate($scope.start.date);
-    let end = $scope.formatDate($scope.end.date);
+    let start = $scope.formatDate('/', $scope.start.date);
+    let end = $scope.formatDate('/', $scope.end.date);
     let active = $scope.active.address || $scope.active.xpub;
     Wallet.exportHistory(start, end, active)
       .then((data) => {
