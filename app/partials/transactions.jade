@@ -1,5 +1,5 @@
 .transactions(ng-if="status.isLoggedIn")
-  .filter-bar.flex-between.flex-center
+  .filter-bar.flex-between.flex-center(data-preflight-tag="TxsOptions")
     .flex-row.flex-center
       ui-select.mrl(
         ng-show="accounts.length > 1"
@@ -27,7 +27,7 @@
           ng-model="$parent.searchText"
           ng-model-options="{ debounce: 250 }")
         i.ti-search
-  .transaction-feed
+  .transaction-feed(data-preflight-tag="TxsFeed")
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || getTotal(account) > 0 || filteredTransactions.length > 0 || selectedaccount == 'imported'")
       .flex-column.mbl.border-bottom.black
         .flex-center.flex-justify

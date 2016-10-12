@@ -1,7 +1,7 @@
 blocket-loading
-.home
+.home(data-preflight-tag="Home")
   .flex.flex-wrap.mtl
-    activity-feed
+    activity-feed(data-preflight-tag="ActivityFeed")
     .col-md-6.col-sm-12.col-xs-12.col-home.flex-column
       .section
         h5.mtn.type-h5.em-400.mbl(translate="BALANCES")
@@ -16,4 +16,4 @@ blocket-loading
             span Total
             fiat-or-btc(btc="getTotal()")
       .section.mtvl
-        did-you-know
+        did-you-know(data-preflight-tag="DidYouKnow")
