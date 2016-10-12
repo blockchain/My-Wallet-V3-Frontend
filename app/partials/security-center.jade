@@ -78,9 +78,12 @@
           verify-email(button-class="button-success")
           p(ng-hide="user.isEmailVerified")
             span(translate="DIDNT_RECEIVE_EMAIL")
-            span 
+            | &nbsp;
+            span
               resend-email-confirmation
-              span(translate="OR")
+            | &nbsp;
+            span(translate="OR")
+            | &nbsp;
             span
               a(ng-click="beginEditEmail()", translate="CHANGE")
 
