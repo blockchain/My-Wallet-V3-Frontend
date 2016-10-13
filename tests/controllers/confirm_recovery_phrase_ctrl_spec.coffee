@@ -37,7 +37,7 @@ describe "ConfirmRecoveryPhraseCtrl", ->
 
   it "should verify", inject((Wallet) ->
     for word in scope.words
-      word.value = word.actual
+      word.value = word.actual = 'word'
 
     scope.$apply()
 

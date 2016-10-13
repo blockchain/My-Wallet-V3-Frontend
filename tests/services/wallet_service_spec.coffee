@@ -496,9 +496,11 @@ describe "walletServices", () ->
     it "should return an array of legacy addresses", ->
       expect(Wallet.legacyAddresses()).toEqual([])
 
-    it "should be null if not logged in", ->
+    it "should be an empty array if not logged in", ->
       Wallet.status.isLoggedIn = false
-      expect(Wallet.legacyAddresses()).toBe(null)
+      addrs = Wallet.legacyAddresses()
+      expect(Array.isArray addrs).toBe(true)
+      expect(addrs.length).toBe(0)
 
   describe "accounts()", ->
     beforeEach ->

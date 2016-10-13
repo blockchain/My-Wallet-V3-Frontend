@@ -2,11 +2,13 @@ angular
   .module('walletApp')
   .controller('ConfirmRecoveryPhraseCtrl', ConfirmRecoveryPhraseCtrl);
 
-function ConfirmRecoveryPhraseCtrl ($scope, $uibModalInstance, Wallet, Alerts) {
+function ConfirmRecoveryPhraseCtrl ($scope, $uibModalInstance, Wallet, Alerts, modals) {
   $scope.step = 0;
   $scope.offset = 0;
   $scope.recoveryPhrase = [];
   $scope.words = [...Array(4)].map(_ => ({}));
+  $scope.addresses = Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly && a.balance > 0);
+  $scope.shouldTransfer = $scope.addresses.reduce((sum, a) => sum + a.balance, 0) > 0;
 
   $scope.setRandomWords = () => {
     let currentWordIndex = 0;
@@ -56,8 +58,13 @@ function ConfirmRecoveryPhraseCtrl ($scope, $uibModalInstance, Wallet, Alerts) {
     }
     if (valid) {
       Wallet.confirmRecoveryPhrase();
-      $scope.step = 3;
+      $scope.step = $scope.shouldTransfer ? 4 : 3;
     }
+  };
+
+  $scope.openTransferAll = () => {
+    $scope.close();
+    modals.openTransfer($scope.addresses);
   };
 
   $scope.close = () => { $uibModalInstance.dismiss(''); };
