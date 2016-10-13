@@ -30,6 +30,9 @@
       }
     }
   }
+  .ui-select-choices-group:first-of-type > .ui-select-choices-row:nth-child(3) {
+    @extend .border-bottom-light;
+  }
 }
 
 .filter-buttons {
