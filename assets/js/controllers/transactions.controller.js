@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('TransactionsCtrl', TransactionsCtrl);
 
-function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $state, $rootScope, $uibModal, format, smartAccount) {
+function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, format, smartAccount) {
   $scope.addressBook = Wallet.addressBook;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
@@ -16,8 +16,9 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $state, $rootScope, $ui
   $scope.canDisplayDescriptions = false;
   $scope.txLimit = 10;
 
-  $scope.accounts = smartAccount.getOptions();
-  $scope.filterByAccount.account = smartAccount.getDefault();
+  let all = { label: $translate.instant('ALL'), index: '', type: 'Accounts' };
+  $scope.accounts = [all].concat(smartAccount.getOptions());
+  $scope.filterByAccount.account = $scope.accounts[0];
 
   let txList = MyWallet.wallet.txList;
   $scope.transactions = txList.transactions(smartAccount.getDefaultIdx());
@@ -40,14 +41,14 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $state, $rootScope, $ui
     $scope.canDisplayDescriptions = $scope.accounts.length > 0;
   });
 
-  let setTxs = () => {
-    let newTxs;
+  let setTxs = $scope.setTxs = () => {
     let idx = $scope.filterByAccount.account.index;
-    !isNaN(idx) && (newTxs = txList.transactions(idx));
-    isNaN(idx) && (newTxs = $scope.filterByAddress($scope.filterByAccount.account));
+    let newTxs = idx === '' || !isNaN(idx)
+      ? txList.transactions(idx)
+      : $scope.filterByAddress($scope.filterByAccount.account);
     if ($scope.transactions.length > newTxs.length) $scope.allTxsLoaded = false;
     $scope.transactions = newTxs;
-    $rootScope.$safeApply();
+    $scope.$safeApply();
   };
 
   $scope.exportHistory = () => $uibModal.open({
@@ -108,16 +109,12 @@ function TransactionsCtrl ($scope, Wallet, MyWallet, $q, $state, $rootScope, $ui
     return false;
   };
 
-  $scope.filterByAddress = (addr) => {
-    let txs = [];
-    txList.transactions().forEach((tx) => {
-      tx.processedOutputs.concat(tx.processedInputs).filter((p) => {
-        if (addr.address === p.address) txs.push(tx);
-      });
-    });
-
-    return txs;
-  };
+  $scope.filterByAddress = (addr) => (
+    txList.transactions('imported').filter(tx =>
+      tx.processedOutputs.concat(tx.processedInputs)
+        .some(p => addr.address === p.address)
+    )
+  );
 
   $scope.$watch('filterByAccount.account', setTxs);
 }
