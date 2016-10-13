@@ -29,16 +29,19 @@ function smartAccount (Wallet, MyWallet, format) {
   }
 
   function getDefaultIdx () {
+    let isAvail = (a) => !a.archived && a.balance > 0;
+    let availAccounts = Wallet.accounts().filter(isAvail);
+    let availAddresses = Wallet.legacyAddresses().filter(isAvail);
     // 1. a default account has a balance
     // 2. another account has a balance, return lowest index
     // 3. a legacy address has a balance, return oldest index
     // 4. no balances, show default
     if (MyWallet.wallet.hdwallet.defaultAccount.balance > 0) {
       return MyWallet.wallet.hdwallet.defaultAccountIndex;
-    } else if (Wallet.accounts().filter(a => a.balance > 0).length) {
-      return Wallet.accounts().filter(a => a.balance > 0)[0].index;
-    } else if (Wallet.legacyAddresses().filter(a => !a.archived && a.balance > 0).length) {
-      return Wallet.legacyAddresses().filter(a => !a.archived && a.balance > 0).sort((a, b) => a.created_time - b.created_time)[0];
+    } else if (availAccounts.length) {
+      return availAccounts[0].index;
+    } else if (availAddresses.length) {
+      return availAddresses.sort((a, b) => a.created_time - b.created_time)[0];
     } else {
       return MyWallet.wallet.hdwallet.defaultAccountIndex;
     }
