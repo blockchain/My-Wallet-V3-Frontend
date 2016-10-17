@@ -43,17 +43,15 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia) !== void 0;
 
-  $scope.request = (hasLegacyAddress) => {
+  $scope.request = () => {
     Alerts.clear();
-    $scope.requestBeacon = false;
     $uibModal.open({
       templateUrl: 'partials/request.jade',
       windowClass: 'bc-modal auto',
       controller: 'RequestCtrl',
       resolve: {
         destination: () => null,
-        focus: () => false,
-        hasLegacyAddress: () => hasLegacyAddress
+        focus: () => false
       }
     });
   };
@@ -119,8 +117,6 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       $state.go('public.login-no-uid');
     }
     $rootScope.outOfApp = toState.name === 'landing';
-    $scope.requestBeacon = false;
-
     $uibModalStack.dismissAll();
   });
 
@@ -200,10 +196,6 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       }
     }
   };
-
-  $scope.$on('enableRequestBeacon', () => {
-    $scope.requestBeacon = true;
-  });
 
   $scope.back = () => $window.history.back();
 }

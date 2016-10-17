@@ -12,14 +12,6 @@ function TopCtrl ($scope, Wallet, currency) {
   $scope.getTotal = () => Wallet.total();
   $scope.resetCopy = () => $scope.copied = false;
 
-  $scope.hasLegacyAddresses = () => {
-    if (Wallet.status.isLoggedIn) {
-      return Wallet.legacyAddresses().filter(a => !a.archived && !a.isWatchOnly).length > 0;
-    } else {
-      return null;
-    }
-  };
-
   $scope.nextAddress = () => {
     if ($scope.copied) return;
     $scope.copied = true;

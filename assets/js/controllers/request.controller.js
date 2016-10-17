@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('RequestCtrl', RequestCtrl);
 
-function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, hasLegacyAddress, $translate, $stateParams, filterFilter, $filter, format, smartAccount) {
+function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, $translate, $stateParams, filterFilter, $filter, format, smartAccount) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -17,8 +17,6 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
   $scope.destinationLimit = 50;
   $scope.increaseLimit = () => $scope.destinationLimit += 50;
 
-  $scope.hasLegacyAddress = hasLegacyAddress;
-
   $scope.fields = {
     to: null,
     amount: null,
@@ -27,10 +25,6 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
 
   $scope.destinations = smartAccount.getOptions();
   $scope.fields.to = focus ? destination : Wallet.my.wallet.hdwallet.defaultAccount;
-
-  $scope.closeAlert = alert => {
-    Alerts.close(alert);
-  };
 
   $scope.advancedReceive = () => {
     $scope.advanced = true;
@@ -72,9 +66,9 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
     $uibModalInstance.dismiss('');
   };
 
-  $scope.close = () => {
-    $scope.cancel();
-    $rootScope.$broadcast('enableRequestBeacon');
+  $scope.useAccount = () => {
+    let idx = Wallet.my.wallet.hdwallet.defaultAccountIndex;
+    $scope.fields.to = $scope.destinations.filter(d => d.index === idx)[0];
   };
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
@@ -88,13 +82,7 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
   };
 
   $scope.$watchCollection('destinations', () => {
-    if ($scope.hasLegacyAddress) {
-      $scope.fields.to = filterFilter(Wallet.legacyAddresses(), {
-        isWatchOnly: false,
-        archived: false
-      })[0];
-    }
-    if (($scope.fields.to == null) && $scope.accounts().length > 0) {
+    if ($scope.fields.to == null) {
       $scope.fields.to = smartAccount.getDefault();
     }
   });

@@ -2,13 +2,14 @@
   .flex-center
     img(src="img/arrow-down.png")
     h3(translate="RECEIVE_BITCOIN")
-  div(ng-hide="focus || hasLegacyAddress")
+  div(ng-hide="focus || fields.to.type === 'Imported Addresses'")
     h5.display-inline-block(translate="RECEIVE_BITCOIN_MESSAGE")
-    helper-button(ng-hide="fields.to.type==='Imported Addresses'" content="WHY_HD" linktext="LEARN_MORE" link="https://support.blockchain.com/hc/en-us/articles/210353663-Why-is-my-bitcoin-address-changing-")
-  div(ng-show="hasLegacyAddress")
-    h5(translate="RECEIVE_BITCOIN_MESSAGE_LEGACY_1")
+    helper-button(content="WHY_HD" linktext="LEARN_MORE" link="https://support.blockchain.com/hc/en-us/articles/210353663-Why-is-my-bitcoin-address-changing-")
+  div(ng-show="fields.to.type === 'Imported Addresses'")
     h5
-      a(translate="CLICK_HERE" ng-click="close()")
+      span(translate="RECEIVE_BITCOIN_MESSAGE_LEGACY_1")
+      | &nbsp;
+      a(translate="CLICK_HERE" ng-click="useAccount()")
 #receive.fade.modal-body(ng-class="{'advanced': advanced, 'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1}")
   form.form-horizontal.ph-form(role="form" name="requestForm" novalidate)
     .form-group.row.pbm.flex-justify(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': fields.to.isWatchOnly}")

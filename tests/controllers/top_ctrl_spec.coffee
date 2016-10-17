@@ -37,14 +37,6 @@ describe "TopCtrl", ->
     expect(scope.status.isLoggedIn).toBe(true)
   )
 
-  describe "hasLegacyAddresses()", ->
-    it "should be true if there are legacy addresses", ->
-      expect(scope.hasLegacyAddresses()).toBe(true)
-
-    it "should be null if not logged in", ->
-      Wallet.status.isLoggedIn = false
-      expect(scope.hasLegacyAddresses()).toBe(null)
-
   it "should have access to total balance",  inject((Wallet) ->
     Wallet.total = () -> 1
     expect(scope.getTotal()).toBe(1)
