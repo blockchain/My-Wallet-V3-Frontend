@@ -928,7 +928,7 @@
   "LOGOUT_LESS_THAN_1440": "Please set an auto logout time less than 1440",
   "CREATE_A_WALLET": "Create your Wallet",
   "CREATE_FREE_WALLET": "Sign up for a free wallet below",
-  "WHY_HD": "Why is my bitcoin address changing?",
+  "WHY_HD": "For increased privacy, we generate a unique address for every payment. All addresses generated in your wallet can still receive funds, even if they no longer appear under Receive.",
   "PHONE_NUMBER": "Phone Number",
   "EDIT_PROFILE": "Edit Your Profile",
   "BUY_BITCOIN": "Buy Bitcoin",
