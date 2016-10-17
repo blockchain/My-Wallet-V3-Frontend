@@ -33,7 +33,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
     scope.isCurrencySelected = (currency) => currency === scope.transaction.currency;
 
     scope.triggerBuy = () => {
-      scope.buy({ amt: scope.transaction.fiat });
+      scope.buy({ fiat: scope.transaction.fiat, btc: scope.transaction.btc, quote: scope.quote });
     };
 
     let fetchingQuote;

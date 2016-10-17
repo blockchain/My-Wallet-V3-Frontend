@@ -11,6 +11,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.alerts = [];
   $scope.status = {};
   $scope.trade = trade;
+  $scope.quote = buyOptions.quote;
 
   $scope.buySellDebug = $rootScope.buySellDebug;
 
@@ -54,7 +55,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.fields = { email: $scope.user.email, countryCode: $scope.exchange.profile.country };
 
   $scope.transaction = trade == null
-    ? ({ fiat: buyOptions.fiat || 0, btc: 0, fee: 0, total: 0, currency: buyOptions.currency || buySell.getCurrency() })
+    ? ({ fiat: buyOptions.fiat, btc: buyOptions.btc, fee: 0, total: 0, currency: buyOptions.currency || buySell.getCurrency() })
     : ({ fiat: $scope.trade.inAmount / 100, btc: 0, fee: 0, total: 0, currency: buySell.getCurrency($scope.trade) });
 
   $scope.changeCurrencySymbol = (curr) => { $scope.currencySymbol = currency.conversions[curr.code]; };
@@ -79,6 +80,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     let success = (methods) => {
       $scope.methods = methods;
       $scope.status.waiting = false;
+      $scope.method && $scope.updateAmounts();
     };
 
     let methodsError = eventualError('ERROR_PAYMENT_METHODS_FETCH');
@@ -123,6 +125,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   };
 
   $scope.getQuote = () => {
+    if ($scope.quote && $scope.quote.id) { $scope.getPaymentMethods(); return; }
     if ($scope.trade) { $scope.updateAmounts(); return; }
 
     $scope.quote = null;
@@ -140,7 +143,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
       $scope.expiredQuote = false;
       $scope.quote = quote;
       Alerts.clear($scope.alerts);
-      $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount / 100000000, currency.bitCurrencies[0]);
+      $scope.transaction.btc = quote.quoteAmount / 100000000;
     };
 
     return buySell.getExchange().getBuyQuote(amount, currCode)

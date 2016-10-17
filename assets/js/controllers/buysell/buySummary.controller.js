@@ -26,6 +26,7 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency, Alerts
   };
 
   $scope.commitValues = () => {
+    $scope.$parent.quote = null;
     $scope.status.waiting = true;
     $scope.transaction.currency = $scope.tempCurrency;
     $scope.transaction.fiat = $scope.tempFiat;
