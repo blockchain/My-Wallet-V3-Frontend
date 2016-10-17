@@ -4,7 +4,7 @@
     h3(translate="RECEIVE_BITCOIN")
   div(ng-hide="focus || hasLegacyAddress")
     h5.display-inline-block(translate="RECEIVE_BITCOIN_MESSAGE")
-    helper-button(content="WHY_HD" linktext="LEARN_MORE" link="https://support.blockchain.com/hc/en-us/articles/210353663-Why-is-my-bitcoin-address-changing-")
+    helper-button(ng-hide="fields.to.type==='Imported Addresses'" content="WHY_HD" linktext="LEARN_MORE" link="https://support.blockchain.com/hc/en-us/articles/210353663-Why-is-my-bitcoin-address-changing-")
   div(ng-show="hasLegacyAddress")
     h5(translate="RECEIVE_BITCOIN_MESSAGE_LEGACY_1")
     h5
