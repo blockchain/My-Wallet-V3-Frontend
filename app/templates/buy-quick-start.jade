@@ -1,6 +1,9 @@
 .quick-start.border.paml.mtml
   .flex-row.flex-between.flex-center.mbl
     span.type-md(translate="BUY_BITCOIN")
+    div(ng-show="exchangeRate.fiat")
+      span.type-sm 1 BTC = {{currencySymbol.symbol}}{{ exchangeRate.fiat }}
+      helper-button(content="EXCHANGE_RATE_HELPER")
   form(name="fiatForm" ng-submit="triggerBuy()")
     .mtl
       label.em-500 Enter amount:
@@ -36,6 +39,7 @@
             type="number"
             ng-model="transaction.btc"
             name="btc"
+            step="any"
             tabindex="1"
             ng-change="transaction.fiat = null; getQuote(transaction.btc);"
             ng-model-options="{debounce: 250}"

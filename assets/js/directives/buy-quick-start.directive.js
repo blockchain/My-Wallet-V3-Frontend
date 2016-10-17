@@ -21,7 +21,14 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
 
   function link (scope, elem, attr) {
     scope.status = {ready: true};
+    scope.exchangeRate = {};
     scope.currencies = currency.coinifyCurrencies;
+
+    scope.getExchangeRate = () => {
+      buySell.getQuote(-1, 'BTC', scope.transaction.currency.code).then((quote) => {
+        scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
+      }, error);
+    };
 
     scope.isCurrencySelected = (currency) => currency === scope.transaction.currency;
 
@@ -41,15 +48,16 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
     scope.getQuote = () => {
       stopFetchingQuote();
       startFetchingQuote();
+      scope.getExchangeRate();
       scope.status.waiting = true;
       scope.transaction.fiat && buySell.getQuote(scope.transaction.fiat, scope.transaction.currency.code).then(success, error);
-      scope.transaction.btc && buySell.getQuote(scope.transaction.btc, 'BTC', scope.transaction.currency.code).then(success, error);
+      scope.transaction.btc && buySell.getQuote(-scope.transaction.btc, 'BTC', scope.transaction.currency.code).then(success, error);
     };
 
     const success = (quote) => {
       scope.transaction.fiat
         ? scope.transaction.btc = quote.quoteAmount / 100000000
-        : scope.transaction.fiat = quote.quoteAmount / 100;
+        : scope.transaction.fiat = -quote.quoteAmount / 100;
       scope.quote = quote;
       scope.status = {};
       Alerts.clear();
@@ -59,6 +67,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
       Alerts.displayError('ERROR_QUOTE_FETCH');
     };
 
+    scope.getExchangeRate();
     scope.$on('$destroy', stopFetchingQuote);
   }
 }

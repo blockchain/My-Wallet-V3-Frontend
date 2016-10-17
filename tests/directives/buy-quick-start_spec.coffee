@@ -16,6 +16,7 @@ describe "buyQuickStart", ->
       'fiat': 1,
       'currency': {'code': 'USD'}
     }
+    scope.exchangeRate = {fiat: 0}
 
     MyWallet = $injector.get("MyWallet")
 
@@ -27,9 +28,10 @@ describe "buyQuickStart", ->
     buySell = $injector.get("buySell")
     currency = $injector.get("currency")
 
-    buySell = {
-      getQuote: () ->
-    }
+    buySell.getExchange = () ->
+      profile: {}
+      user: {}
+      getBuyQuote: -> $q.resolve([])
 
     element = $compile("<buy-quick-start transaction='transaction' currency-symbol='currencySymbol'></buy-quick-start>")(scope)
     scope.$digest()
