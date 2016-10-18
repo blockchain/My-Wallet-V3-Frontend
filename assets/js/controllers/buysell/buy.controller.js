@@ -84,10 +84,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     };
 
     let methodsError = eventualError('ERROR_PAYMENT_METHODS_FETCH');
-
-    return $scope.quote && $scope.quote.expiresAt > new Date()
-      ? $scope.quote.getPaymentMethods().then(success, methodsError)
-      : $scope.getQuote();
+    return $scope.quote.getPaymentMethods().then(success, methodsError);
   };
 
   $scope.changeCurrency = (curr) => {
@@ -116,7 +113,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.updateAmounts = () => {
     if (!$scope.trade && (!$scope.quote || !$scope.exchange.user)) return;
 
-    if ($scope.quote && $scope.quote.id) {
+    if ($scope.quote) {
       $scope.transaction.methodFee = ($scope.quote.paymentMethods[$scope.method].fee / 100).toFixed(2);
       $scope.transaction.total = ($scope.quote.paymentMethods[$scope.method].total / 100).toFixed(2);
     } else if ($scope.trade) {
@@ -125,7 +122,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   };
 
   $scope.getQuote = () => {
-    if ($scope.quote && $scope.quote.id) { $scope.getPaymentMethods(); return; }
+    if ($scope.quote) { $scope.getPaymentMethods(); return; }
     if ($scope.trade) { $scope.updateAmounts(); return; }
 
     $scope.quote = null;
@@ -135,8 +132,10 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     if (!$scope.transaction.fiat) { $scope.status = {}; return; }
 
     let quoteError = eventualError('ERROR_QUOTE_FETCH');
-    let amount = Math.round($scope.transaction.fiat * 100);
     let currCode = $scope.transaction.currency.code;
+
+    // need to toggle this between btc and fiat
+    let amount = Math.round($scope.transaction.fiat * 100);
 
     const success = (quote) => {
       $scope.status = {};
