@@ -862,7 +862,6 @@
   "WHY_BITCOIN": "<a class='underline' href='http://www.coindesk.com/information/why-use-bitcoin/' target='_blank'>Why use it?</a> <a class='underline' href='https://www.bitcoin.com/spend-bitcoin-online'  target='_blank'>What can you buy with it?</a> <a class='underline' href='https://bitcoin.org/en/faq#what-is-bitcoin' target='_blank'>What is it?",
   "BLOCKCHAIN_MISSION": "Bitcoin is great if you need to send money overseas or want to buy something online. There are hundreds of thousands of merchants that accept Bitcoin around the world, and because the fees are so low, you can often get great discounts when you choose to pay with Bitcoin instead of your credit card.",
   "SEND_AND_RECEIVE": "Send and Receive bitcoin with ease.",
-  "LOVED_BY_ALL": "Loved by Users. Praised by Geeks. Recognized by the Press. We make using Bitcoin safe, simple, and fun. You can instantly transact with anyone in the world.",
   "WE_MAKE_USING_BTC": "We make using Bitcoin safe, simple, and fun. You can instantly transact with anyone in the world.",
   "IN_CONTROL": "You stay in control.",
   "ACCESS_TO_BITCOINS": "With Blockchain, you are the only one who has access to your bitcoins. Your wallet can never be seized or blocked.",
@@ -1091,5 +1090,14 @@
   "PAYMENT_FEE": "Payment Fee:",
   "NEEDS_REFRESH": "Please refresh your wallet to access this feature.",
   "GO_BACK": "Go Back",
-  "AMOUNT_FOR": "{{::symbol}}{{::amount}} for"
+  "AMOUNT_FOR": "{{::symbol}}{{::amount}} for",
+  "LANDING": {
+    "NEW_TO_BITCOIN" : "New To Bitcoin?",
+    "WHAT_IS_BITCOIN": "What is Bitcoin?",
+    "BITCOIN_IS" : "Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike it predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees.",
+    "WHY_USE" : "Why use it?",
+    "USE_BECAUSE" : "You use bitcoin for many of the same reasons you opt to send an email, stream a movie, or download a song. It’s faster, cheaper, more secure and immutable. And its uses extend beyond the peer to peer payments. In many places, bitcoin is less volatile than the local currency so some use it to store value while others use it to consume at hundreds of thousands of vendors across the globe and online.",
+    "LOVED_BY_ALL": "Loved by Users. Praised by Geeks. Recognized by the Press.",
+    "" : ""
+  }
 }

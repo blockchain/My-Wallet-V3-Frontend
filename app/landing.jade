@@ -1,4 +1,4 @@
-.landing-page
+.landing-page(translate-namespace="LANDING")
   public-header(i18n-loaded='i18nLoaded')
   .quickstart
     #intro-header
@@ -41,7 +41,7 @@
   .newtobitcoin.container
     #newToBTC.container-max-width.container-fluid.width-100
       .flex-column.flex-justify.flex-center.mvvl
-        h2.em-200.mvn.font-4.font-3-mobile.center New To Bitcoin?
+        h2.em-200.mvn.font-4.font-3-mobile.center(translate=".NEW_TO_BITCOIN")
     .new.container-max-width.container-fluid.width-100
         .flex-row.flex-column-mobile.flex-column-med
           video-container.col-md-6.blue-play-button.small-image(img="img/blockchain-ad-placeholder.jpg" src="https://storage.googleapis.com/bc_public_assets/video/blockchain-ad.mp4")
@@ -51,17 +51,15 @@
             .bitinf.flex-row.flex-center.mbl.mhvl.mhl-mobile.flex-1
               img.width-3.width-200-mobile.mrl(src='img/logo-what-bitcoin.png' alt="What is Bitcoin")
               .flex-column.flex-1
-                h3.flex-1.mtn.blue What is Bitcoin?
-                p.flex-1
-                  | Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike it predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees.
+                h3.flex-1.mtn.blue(translate=".WHAT_IS_BITCOIN")
+                p.flex-1(translate=".BITCOIN_IS")
             .bitinf.flex-row.flex-center.mvl.mhvl.mhl-mobile.flex-1
               img.width-3.width-200-mobile.mrl(src='img/logo-why-bitcoin.png' alt="Why use Blockchain Bitcoin Wallet")
               .flex-column.flex-1
-                h3.flex-1.blue Why use it?
-                p.flex-1
-                  | You use bitcoin for many of the same reasons you opt to send an email, stream a movie, or download a song. It’s faster, cheaper, more secure and immutable. And its uses extend beyond the peer to peer payments. In many places, bitcoin is less volatile than the local currency so some use it to store value while others use it to consume at hundreds of thousands of vendors across the globe and online.
+                h3.flex-1.blue(translate=".WHY_USE")
+                p.flex-1(translate=".USE_BECAUSE")
   uib-carousel(active="active" interval="0")
-    h4(translate="Loved by Users. Praised by Geeks. Recognized by the Press.")
+    h4(translate=".LOVED_BY_ALL")
     uib-slide(index="0")
       div
         img(src="img/logo-nytimes.svg" alt="Blockchain Bitcoin Wallet New York Times")
