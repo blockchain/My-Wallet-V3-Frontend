@@ -1,26 +1,15 @@
-h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN" data-preflight-tag="Accounts")
-  
-.flex-row.flex-column-mobile.pvl
-  .col-xs-6.flex-center.width-100-mobile.pbm-m
-    button.button-primary.mrm.button-nowrap(ng-click="newAccount()" translate="CREATE_ACCOUNT")
-    a.button-default.button-nowrap.mrm(
-      ng-click="transfer(address)"  
-      ng-show="numberOfActiveAccounts() > 1" 
-      translate="TRANSFER"
-    )
-  .col-xs-6.flex-center.width-100-mobile
-    .filter-search-alt.width-100.width-100-mobile.pos-rel.mrm
-      input(type="text" ng-model="searchText")
-      i.ti-search.pos-abs
-        .row
-          .col-xs-12.table-container
-            
-.row
+.filter-bar.flex-end.flex-center(data-preflight-tag="AccountsSearch")
+  .filter-search
+    input(
+      type="text"
+      placeholder="{{::'SEARCH' | translate}}"
+      ng-model="searchText")
+    i.ti-search
+
+.row.ptvl
   .col-xs-12
     table.accounts-container(ng-if="status.isLoggedIn")
-      tr.responsive.width-100(
-        ng-repeat="account in accounts() | filter:{label: searchText}"
-      )
+      tr.responsive.width-100(ng-repeat="account in accounts() | filter:{label: searchText}")
         td.expand
           span.account-label(ng-bind-html="account.label | escapeHtml | highlight:searchText")
           span.man(ng-show="!account.archived && account.balance != null").prm
@@ -42,6 +31,9 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN" data-pre
             translate="MANAGE_ADDRESSES"
             ng-hide="account.archived"
           )
+      tr.responsive.width-100
+        td
+          button.button-primary.mrm.button-nowrap(ng-click="newAccount()" translate="CREATE_ACCOUNT")
     table.accounts-container.imported-addresses     
       tr.responsive.width-100
         td.expand
