@@ -633,6 +633,7 @@
   "SECURE_WALLET_MSG_1" : "We’re thrilled you’re using your bitcoin wallet! But it looks like you’re still not as secure as you could be. Securing your wallet can help keep funds safe.",
   "SECURE_WALLET_MSG_2" : "Don't forget to secure your wallet - take advantage of our Security Center and keep your funds safe",
   "NO_THANKS" : "No Thanks",
+  "CONTINUE_LOGOUT": "Continue signing out",
   "SECURE_WALLET" : "Secure Wallet",
   "MOST_RECENT_ACTIVITY" : "Most Recent Activity",
   "DYK" : "Did You Know?",
@@ -649,6 +650,10 @@
   "SURVEY_CONFIRM": {
     "TITLE": "@:BEFORE_LEAVE",
     "BODY": "@:SURVEY_ASK"
+  },
+  "BACKUP_REMINDER": {
+    "TITLE": "Wait!",
+    "BODY": "Before you sign out, make sure to record your backup phrase. This will allow you to recover your wallet if you ever forget your password."
   },
   "WHAT_DO_YOU_THINK": "What do you think of Blockchain Wallet?",
   "VIEW_OPTIONS": "View Options",
