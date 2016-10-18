@@ -133,8 +133,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
     let quoteError = eventualError('ERROR_QUOTE_FETCH');
     let currCode = $scope.transaction.currency.code;
-
-    // need to toggle this between btc and fiat
     let amount = Math.round($scope.transaction.fiat * 100);
 
     const success = (quote) => {

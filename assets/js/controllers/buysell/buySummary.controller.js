@@ -90,6 +90,14 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency, Alerts
   });
 
   $scope.$watch('step', () => {
-    $scope.onStep('summary') && $scope.getMaxMin($scope.tempCurrency);
+    if ($scope.onStep('summary')) {
+      $scope.getMaxMin($scope.tempCurrency);
+
+      // Get a new quote if using a fake quote.
+      if (!$scope.$parent.quote.id) {
+        $scope.$parent.quote = null;
+        $scope.getQuote();
+      }
+    }
   });
 }
