@@ -11,7 +11,7 @@
     table.accounts-container(ng-if="status.isLoggedIn")
       tr.responsive.width-100(ng-repeat="account in accounts() | filter:{label: searchText}")
         td.expand
-          span.account-label(ng-bind-html="account.label | escapeHtml | highlight:searchText")
+          span.type-md.em-500(ng-bind-html="account.label | escapeHtml | highlight:searchText")
           span.man(ng-show="!account.archived && account.balance != null").prm
             |  ({{ account.balance | toBitCurrency:settings.btcCurrency }})
           span.man(ng-show="account.archived").prm
@@ -34,10 +34,11 @@
       tr.responsive.width-100
         td
           button.button-primary.mrm.button-nowrap(ng-click="newAccount()" translate="CREATE_ACCOUNT")
-    table.accounts-container.imported-addresses     
+
+    table.accounts-container.imported-addresses(data-preflight-tag="ImportedAddresses" ng-controller="SettingsImportedAddressesCtrl")
       tr.responsive.width-100
         td.expand
-          span.account-label(translate="IMPORTED_ADDRESSES")
+          span.type-md.em-500(translate="IMPORTED_ADDRESSES")
           span  ({{ getLegacyTotal() | toBitCurrency:settings.btcCurrency }})
         td.shrink
         td.shrink
@@ -46,11 +47,9 @@
             ng-show="activeSpendableAddresses().length > 0"
             ng-click="openTransferAll()"
           )
-        td.shrink        
-          button.button-default(
-            ui-sref="wallet.common.settings.imported_addresses"
-            translate="MANAGE_ADDRESSES"
-          )
+        td.shrink
+          button.button-default(translate="VERIFY_MESSAGE" ng-click="openVerifyMessage()")
+      include ./imported-addresses
 
 .row.spacing
 .row.spacing

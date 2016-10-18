@@ -124,21 +124,11 @@ table.accounts-container {
     border-bottom: 1px solid $grey;
   }
 
-  .account-label {
-    font-size: 12pt;
-    font-weight: 500;
-  }
-
   .label-primary {
     display: inline-block;
     @extend .btn-xs;
     color: white;
   }
-
-  &.imported-addresses{
-    color: $mid-grey;
-  }
-
 }
 
 .intl-tel-input { margin-bottom: 10px; }

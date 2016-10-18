@@ -1100,5 +1100,7 @@
     "LOVED_BY_ALL": "Loved by Users. Praised by Geeks. Recognized by the Press.",
     "" : ""
   },
-  "DOUBLE_SPEND": "This transaction may be at risk of a double spend."
+  "DOUBLE_SPEND": "This transaction may be at risk of a double spend.",
+  "SHOW": "Show",
+  "HIDE": "Hide"
 }

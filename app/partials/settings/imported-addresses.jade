@@ -1,33 +1,6 @@
-.row(data-preflight-tag="ImportedAddresses")
-  .col-xs-12.mbl
-    a.flex-center.text.em-400.blue(ng-click="back()")
-      i.ti-arrow-left.mrm
-      span(translate="BACK")
-        
-.row
-  .col-xs-12.col-md-6.mbm
-    .flex
-      button.button-primary.mrm(type="button" translate="IMPORT_ADDRESS" ng-click="importAddress()")
-      .btn-group(uib-dropdown)
-        button.button-default(type="button" uib-dropdown-toggle)
-          span.black(translate="MORE_ACTIONS")
-          span.black.caret
-        ul.dropdown-menu(uib-dropdown-menu)
-          li
-            a(translate="VERIFY_MESSAGE" ng-click="openVerifyMessage()")
-          li(ng-show="activeSpendableAddresses().length > 0")
-            a(translate="TRANSFER_ALL" ng-click="openTransferAll()")
-
-  .col-xs-12.col-md-6.mtm
-    .flex-1.mrl.filter-search-alt.width-100.pos-rel
-      input(type="text", ng-model="searchTextLegacy")
-      i.ti-search.pos-abs
-
-h2(translate="SPENDABLE_ADDRESSES")
-
 .row
   .col-xs-12
-    table.responsive.width-100.imported-addresses-container
+    table.responsive.width-100.imported-addresses-container(ng-controller="SettingsImportedAddressesCtrl")
       tr
         th(translate="ADDRESS")
         th(translate="LABEL")
@@ -35,54 +8,29 @@ h2(translate="SPENDABLE_ADDRESSES")
         th
       tr(
         imported-address="address", 
-        search-text="searchTextLegacy",
-        ng-repeat="address in legacyAddresses() | filter:{archived: false, isWatchOnly: false} | addressOrNameMatch:searchTextLegacy"
+        search-text="searchText",
+        ng-repeat="address in legacyAddresses() | filter:{archived: false} | addressOrNameMatch:searchText"
       )
 
-h2(translate="WATCH_ONLY_ADDRESSES")
+div(ng-controller="SettingsImportedAddressesCtrl")
+  .flex-between.flex-center.mtl
+    span.type-md.em-500(translate="ARCHIVED_ADDRESSES")
+    span.pointer.blue(translate="{{display.archived ? 'HIDE' : 'SHOW'}}" ng-click="toggleDisplayArchived()")
 
-.row
-  .col-xs-12.table-container.addresses-container
-    table.responsive.width-100
-      tr
-        th(translate="ADDRESS")
-        th(translate="LABEL")
-        th(translate="BALANCE")
-        th
-      tr(
-        watch-only-address="address",
-        search-text="searchTextLegacy",
-        ng-repeat="address in legacyAddresses() | filter:{archived: false, isWatchOnly: true} | addressOrNameMatch:searchTextLegacy"
-      )
+  p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
 
-.flex.mtl
-  button.button-default(translate="ARCHIVED_ADDRESSES" ng-click="toggleDisplayArchived()" ng-class="{active : display.archived}")
-
-p.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
-
-.row.form-ctrl(ng-show="display.archived")
-  .col-xs-12
-    .filter-search-alt.pos-rel.width-100
-      input(type="text", ng-model="searchTextArchived")
-      i.ti-search.pos-abs
-.row(ng-show="display.archived")
-  .col-xs-12.table-container
-    table.responsive.width-100.addresses-container
-      tr
-        th(translate="ADDRESS")
-        th(translate="LABEL")
-        //- th(translate="BALANCE")
-        th
+  .row(ng-show="display.archived")
+    .col-xs-12.table-container
+      table.responsive.width-100.addresses-container(ng-controller="SettingsImportedAddressesCtrl")
+        tr
+          th(translate="ADDRESS")
+          th(translate="LABEL")
           th
-      tr(ng-repeat="address in legacyAddresses() | filter:{archived: true} | addressOrNameMatch:searchTextArchived")
-        td(ng-bind-html="address.address | escapeHtml | highlight:searchTextArchived")
-        td(ng-bind-html="address.label | escapeHtml | highlight:searchTextArchived")
-        //- td
-        //-   span(ng-show="address.balance != null")
-        //-     span.btc {{ address.balance | toBitCurrency:settings.btcCurrency }}
-        //-     fiat.fiat(btc="address.balance")
-        //-   img(ng-show="address.balance == null" src="img/spinner.gif")
-        td
-          a(translate="UNARCHIVE", ng-click="unarchive(address)")
-        td
-          a(translate="DELETE", ng-click="delete(address)")
+            th
+        tr(ng-repeat="address in legacyAddresses() | filter:{archived: true} | addressOrNameMatch:searchText")
+          td(ng-bind-html="address.address | escapeHtml | highlight:searchText")
+          td(ng-bind-html="address.label | escapeHtml | highlight:searchText")
+          td
+            a(translate="UNARCHIVE", ng-click="unarchive(address)")
+          td
+            a(translate="DELETE", ng-click="delete(address)")
