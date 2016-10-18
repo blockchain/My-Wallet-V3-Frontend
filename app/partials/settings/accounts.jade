@@ -25,7 +25,8 @@ h5.well.type-h5.em-400.hidden-xs(translate="ACCOUNT_MANAGEMENT_EXPLAIN" data-pre
           span.account-label(ng-bind-html="account.label | escapeHtml | highlight:searchText")
           span.man(ng-show="!account.archived && account.balance != null").prm
             |  ({{ account.balance | toBitCurrency:settings.btcCurrency }})
-          span.man(ng-show="account.archived", translate="ACCOUNT_IS_ARCHIVED").prm
+          span.man(ng-show="account.archived").prm
+            |  {{"ACCOUNT_IS_ARCHIVED" | translate}}
           a(ng-click="editAccount(account)", ng-hide="account.archived")
             i.ti-pencil.prm
           span.label.label-primary.btn-xs(translate="DEFAULT", ng-show="!account.archived && isDefault(account)")
