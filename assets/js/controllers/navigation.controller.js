@@ -97,9 +97,6 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
     let goToBackup = () => $q.all([$state.go('wallet.common.settings.security'), $q.reject('backing_up')]);
     let openSurvey = () => { $window.open('https://blockchain.co1.qualtrics.com/SE/?SID=SV_7PupfD2KjBeazC5'); };
 
-    let confirmForce = () =>
-      Alerts.confirm('CONFIRM_FORCE_LOGOUT', options({ friendly: false }));
-
     let remindBackup = () =>
       Alerts.confirm('BACKUP_REMINDER', options({ cancel: 'CONTINUE_LOGOUT', action: 'VERIFY_RECOVERY_PHRASE' }))
         .then(goToBackup, saidNoThanks).then(rememberChoice('backup-reminder'));
@@ -108,7 +105,7 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
       Alerts.confirm('SURVEY_CONFIRM', options({ cancel: 'NO_THANKS' }))
         .then(openSurvey, saidNoThanks).then(rememberChoice('logout-survey'));
 
-    $q.resolve(isSynced || confirmForce())
+    $q.resolve(isSynced || Alerts.saving())
       .then(() => {
         if (needsBackup && hasNotSeen('backup-reminder')) return remindBackup();
         else if (hasNotSeen('logout-survey')) return promptSurvey();

@@ -79,14 +79,12 @@
     "BODY": "You've been inactive for {{::minutes}} minutes. Click \"Cancel\" if you don't want to be logged out automatically."
   },
   "LOG_ME_OUT": "Log me out",
-  "CONFIRM_FORCE_LOGOUT": {
-    "TITLE": "Sign out without saving?",
-    "BODY": "There are changes still being saved, signing out now may result in loss of data. Are you sure you wish to continue?"
-  },
   "CONFIRM_CANCEL_TRADE": {
     "TITLE": "Cancel Trade?",
     "BODY": "Are you sure you want to cancel this trade?"
   },
+  "SAVING": "Saving",
+  "SAVING_DESC": "Please wait while your wallet is saved...",
   "CANCEL_TRADE": "Cancel Trade",
   "CLOSE": "Close",
   "TRANSACTIONS" : "Transactions",
@@ -166,10 +164,6 @@
   "CONFIRM_CLOSE_AMT": {
     "TITLE": "Are You Sure?",
     "BODY": "Clicking Close will exit the modal, but you can buy bitcoin anytime."
-  },
-  "CONFIRM_LOGOUT": {
-    "TITLE": "Sign Out?",
-    "BODY": "All changes have been saved, it is safe to sign out."
   },
   "LANGUAGE_EXPLAIN" : "Set your preferred language.",
   "EMAIL_ADDRESS" : "Email Address",
