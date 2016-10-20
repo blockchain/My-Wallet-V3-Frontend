@@ -29,10 +29,7 @@
             a(translate="REVEAL_XPUB" ng-click="revealXpub(account)" ng-hide="account.archived")
     .type-lbl.em-500(translate="UNUSED_ADDRESSES")
     p.em-300.mvm.pbm(translate="UNUSED_ADDRESSES_COPY")
-    table.addresses-container.responsive.width-100
-      tr
-        th.shrink(translate="ADDRESS")
-        th.expand(translate="LABEL")
+    table.accounts-container.addresses.responsive.width-100
       tr(
         account="account"
         ng-repeat="address in paymentRequests | filter:searchText | orderBy:'-index' track by address.index"
@@ -57,13 +54,7 @@ div(ng-if="showPast" ng-init="setAddresses(page)")
 
   .row
     .col-xs-12.table-container
-      table.addresses-container.responsive.width-100
-        tr
-          th.shrink(translate="ADDRESS")
-          th.shrink(translate="LABEL")
-          th.shrink
-            span(translate="CURRENT_BALANCE")
-            helper-button(content="CURRENT_BALANCE_HELP" placement="left")
+      table.accounts-container.addresses.responsive.width-100
         tr(
           account="account"
           ng-repeat="address in usedAddresses | orderBy:'-index' track by address.index"

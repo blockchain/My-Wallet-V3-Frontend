@@ -13,6 +13,7 @@ function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFi
   $scope.addressBookPresent = Wallet.addressBook().length;
   $scope.numberOfActiveAccounts = () => Wallet.accounts().filter(a => !a.archived).length;
   $scope.isDefault = (account) => Wallet.isDefaultAccount(account);
+  $scope.unarchive = (account) => Wallet.unarchive(account);
   $scope.getLegacyTotal = () => Wallet.total('imported');
 
   $scope.newAccount = () => {
@@ -49,5 +50,11 @@ function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFi
     controller: 'TransferController',
     windowClass: 'bc-modal',
     resolve: { address: () => $scope.activeSpendableAddresses() }
+  });
+
+  $scope.openVerifyMessage = () => $uibModal.open({
+    templateUrl: 'partials/settings/verify-message.jade',
+    controller: 'VerifyMessageController',
+    windowClass: 'bc-modal initial'
   });
 }

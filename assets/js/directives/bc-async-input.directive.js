@@ -13,6 +13,7 @@ function bcAsyncInput ($timeout, Wallet) {
       ngModel: '=',
       validator: '=',
       onSave: '=',
+      onFocus: '=',
       onCancel: '=',
       onChange: '=',
       actionTitle: '=',

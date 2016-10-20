@@ -1,11 +1,6 @@
 .row
   .col-xs-12
-    table.responsive.width-100.imported-addresses-container(ng-controller="SettingsImportedAddressesCtrl")
-      tr
-        th(translate="ADDRESS")
-        th(translate="LABEL")
-        th(translate="BALANCE")
-        th
+    table.accounts-container.addresses.responsive.width-100(ng-controller="SettingsImportedAddressesCtrl")
       tr(
         imported-address="address", 
         search-text="searchText",
@@ -21,16 +16,11 @@ div(ng-controller="SettingsImportedAddressesCtrl")
 
   .row(ng-show="display.archived")
     .col-xs-12.table-container
-      table.responsive.width-100.addresses-container(ng-controller="SettingsImportedAddressesCtrl")
-        tr
-          th(translate="ADDRESS")
-          th(translate="LABEL")
-          th
-            th
+      table.accounts-container.addresses.responsive.width-100(ng-controller="SettingsImportedAddressesCtrl")
         tr(ng-repeat="address in legacyAddresses() | filter:{archived: true} | addressOrNameMatch:searchText")
           td(ng-bind-html="address.address | escapeHtml | highlight:searchText")
           td(ng-bind-html="address.label | escapeHtml | highlight:searchText")
-          td
+          td.right-align
             a(translate="UNARCHIVE", ng-click="unarchive(address)")
-          td
+          td.right-align
             a(translate="DELETE", ng-click="delete(address)")

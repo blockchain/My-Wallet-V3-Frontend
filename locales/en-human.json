@@ -912,6 +912,7 @@
   "LOGIN_TO_LEGACY": "Login to the Legacy wallet",
   "CONFIRMATIONS": "confirmations",
   "ADD_A_DESCRIPTION": "Add a description",
+  "ADD_A_LABEL": "Add a label",
   "COPY_AND_SHARE": "Copy and Share",
   "SCAN": "Scan",
   "SIMPLE": "Simple",
@@ -1105,5 +1106,6 @@
   "DOUBLE_SPEND": "This transaction may be at risk of a double spend.",
   "SHOW": "Show",
   "HIDE": "Hide",
-  "EDIT_NAME": "Edit Name"
+  "EDIT_NAME": "Edit Name",
+  "NOT_BACKED_BY_RECOVERY": "Not backed up by your Recovery Phrase. Transfer into a wallet to secure funds."
 }

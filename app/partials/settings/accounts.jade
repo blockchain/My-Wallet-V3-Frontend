@@ -11,8 +11,9 @@
     table.accounts-container.width-100(ng-if="status.isLoggedIn")
       tr.responsive.width-100(ng-repeat="account in accounts() | filter:{label: searchText}")
         td.col-md-3
-          span.type-md.em-500(ng-bind-html="account.label | escapeHtml | highlight:searchText")
+          span.type-md.em-500(ng-bind-html="account.label | escapeHtml | highlight:searchText" ng-class="{'o-3': account.archived}")
           span.label.label-primary.btn-xs(translate="DEFAULT", ng-show="!account.archived && isDefault(account)")
+          span.label.label-default.btn-xs.mrm(translate="ARCHIVED" ng-show="account.archived")
         td.col-md-3.center
           span.display-inline-block.right-align(ng-show="!account.archived && account.balance != null")
             span.display-block.em-500 {{ account.balance | toBitCurrency:settings.btcCurrency }}
@@ -21,26 +22,28 @@
           span.pointer.blue(
             ui-sref="wallet.common.settings.accounts_addresses({account: account.index})"
             translate="MANAGE_ADDRESSES"
+            ng-show="!account.archived"
           )
+          span.pointer.blue(translate="UNARCHIVE" ng-click="unarchive(account)" ng-show="account.archived")")
       tr.responsive.width-100
         td
           button.button-primary.mrm.button-nowrap(ng-click="newAccount()" translate="CREATE_ACCOUNT")
 
-    table.accounts-container.imported-addresses(data-preflight-tag="ImportedAddresses" ng-controller="SettingsImportedAddressesCtrl")
-      tr.responsive.width-100
-        td.expand
-          span.type-md.em-500(translate="IMPORTED_ADDRESSES")
-          span  ({{ getLegacyTotal() | toBitCurrency:settings.btcCurrency }})
-        td.shrink
-        td.shrink
-          button.button-primary(
-            translate="TRANSFER_ALL"
-            ng-show="activeSpendableAddresses().length > 0"
-            ng-click="openTransferAll()"
-          )
-        td.shrink
-          button.button-default(translate="VERIFY_MESSAGE" ng-click="openVerifyMessage()")
-      include ./imported-addresses
+    .flex-between.flex-center.mbl.mtvl
+      div
+        span.type-md.em-500(translate="IMPORTED_ADDRESSES")
+        |  
+        i.ti-alert.security-red
+        |  
+        span.security-red(translate="NOT_BACKED_BY_RECOVERY")
+      .flex-center.flex-row
+        button.button-primary.mrl(
+          translate="TRANSFER_ALL"
+          ng-show="activeSpendableAddresses().length > 0"
+          ng-click="openTransferAll()"
+        )
+        button.button-default(translate="VERIFY_MESSAGE" ng-click="openVerifyMessage()")
+    include ./imported-addresses
 
 .row.spacing
 .row.spacing
