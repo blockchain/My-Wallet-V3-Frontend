@@ -225,7 +225,7 @@
   "CREATE_ADDRESS" : "Next Address",
   "ACCOUNT_NAME" : "Name:",
   "REVEAL_XPUB" : "Show xPub",
-  "MANAGE_ADDRESSES" : "Manage Addresses",
+  "MANAGE_ADDRESSES" : "Manage",
   "ACCOUNT_XPUB_MODAL_TITLE" : "Extended Public Key",
   "PENDING" : "Pending",
   "COMPLETE" : "Complete",
@@ -334,6 +334,8 @@
   "TOO_MANY_TXS" : "Too many transactions to export, maximum of 10,000 allowed",
   "DOWNLOAD": "Download File",
   "SPENDABLE_ADDRESSES" : "Spendable Addresses",
+  "UNUSED_ADDRESSES": "Unused Addresses",
+  "UNUSED_ADDRESSES_COPY": "Your Blockchain Wallet contains an unlimited collection of bitcoin addresses that you can use to receive funds from anybody, globally. <br/>Your wallet will automatically manage your bitcoin addresses for you. The addresses below are the subset of addresses that are labeled.",
   "NEXT_ADDRESSES_FOR_ACCOUNT" : "Unused Addresses in {{account}}",
   "PAST_ADDRESSES_FOR_ACCOUNT" : "Used Addresses in {{account}}",
   "CONFIRM_SHOW_PAST": {
@@ -1102,5 +1104,6 @@
   },
   "DOUBLE_SPEND": "This transaction may be at risk of a double spend.",
   "SHOW": "Show",
-  "HIDE": "Hide"
+  "HIDE": "Hide",
+  "EDIT_NAME": "Edit Name"
 }

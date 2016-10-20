@@ -38,20 +38,6 @@ describe "SettingsAccountsController", ->
     expect(scope.accounts().length).toBeGreaterThan(1)
   )
 
-  it "should open modal to edit an account",  inject(() ->
-    account = scope.accounts()[0]
-    spyOn(modal, "open")
-    scope.editAccount(account)
-    expect(modal.open).toHaveBeenCalled()
-  )
-
-  it "should open modal to reveal the xpub",  inject(() ->
-    account = scope.accounts()[0]
-    spyOn(modal, "open")
-    scope.revealXpub(account)
-    expect(modal.open).toHaveBeenCalled()
-  )
-
   it "should open modal to transfer funds",  inject(() ->
     spyOn(modal, "open")
     scope.transfer()
