@@ -12,6 +12,7 @@ var dist = parseInt(process.env.DIST, 10) === 1;
 var rootURL = process.env.ROOT_URL || 'https://blockchain.info';
 var webSocketURL = process.env.WEBSOCKET_URL || false;
 var apiDomain = process.env.API_DOMAIN;
+var iSignThisDomain = rootURL === 'https://blockchain.info' ? 'https://verify.isignthis.com/' : 'https://stage-verify.isignthis.com/';
 
 // App configuration
 var rootApp = express();
@@ -36,8 +37,8 @@ app.use(function (req, res, next) {
       // Safari throws the same error, but without suggesting an hash to whitelist.
       // Firefox appears to just allow unsafe-inline CSS
       "style-src 'self' 'uD+9kGdg1SXQagzGsu2+gAKYXqLRT/E07bh4OhgXN8Y=' '4IfJmohiqxpxzt6KnJiLmxBD72c3jkRoQ+8K5HT5K8o='",
-      'child-src https://verify.isignthis.com/',
-      'frame-src https://verify.isignthis.com/',
+      'child-src ' + iSignThisDomain,
+      'frame-src ' + iSignThisDomain,
       "script-src 'self' ",
       'connect-src ' + [
         "'self'",
