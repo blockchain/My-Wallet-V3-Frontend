@@ -125,9 +125,7 @@ module.exports = function (config) {
 
     coverageReporter: {
       reporters: [
-        // Fails with: TypeError: Cannot read property 'text' of undefined
-        // { type : 'html', dir : 'coverage/'},
-        {type: 'lcovonly', dir: 'coverage-lcov/'}
+        {type: 'html', dir: 'coverage/'}
       ],
 
       subdir: '.',
