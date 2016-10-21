@@ -3,17 +3,21 @@ blocket-loading
   .flex.flex-wrap.mtl
     activity-feed(data-preflight-tag="ActivityFeed")
     .col-md-6.col-sm-12.col-xs-12.col-home.flex-column
-      .section
+      .section.mbvl(ng-show="activeLegacyAddresses().length || activeAccounts().length > 1")
         h5.mtn.type-h5.em-400.mbl(translate="BALANCES")
         ul.pln.account-balances
           li.flex-between.border-bottom-light(ng-repeat="account in activeAccounts()")
             span.em-500 {{::account.label}}
             fiat-or-btc(btc="account.balance")
-          li.flex-between.border-bottom-thick.mid-grey(ng-show="hasLegacyAddresses()")
-            span.em-400 Imported Addresses
+          li.flex-between.border-bottom-light.mid-grey(ng-show="activeLegacyAddresses().length")
+            span.em-500 Imported Addresses
             fiat-or-btc(btc="getLegacyTotal()")
+          ul
+            li.flex-between.border-bottom-light.mid-grey(ng-repeat="address in activeLegacyAddresses()")
+              span.em-400 {{::address.address}}
+              fiat-or-btc(btc="address.balance")
           li.flex-between.border-bottom-light.basic-grey.em-500
             span Total
             fiat-or-btc(btc="getTotal()")
-      .section.mtvl
+      .section
         did-you-know(data-preflight-tag="DidYouKnow")
