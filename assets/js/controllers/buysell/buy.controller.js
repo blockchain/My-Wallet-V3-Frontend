@@ -79,6 +79,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     let success = (methods) => {
       $scope.methods = methods;
       $scope.status.waiting = false;
+      $scope.method && $scope.updateAmounts();
     };
 
     let methodsError = eventualError('ERROR_PAYMENT_METHODS_FETCH');
