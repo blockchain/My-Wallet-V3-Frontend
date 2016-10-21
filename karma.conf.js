@@ -117,7 +117,15 @@ module.exports = function (config) {
       }
     },
 
-    frameworks: ['jasmine'],
+    browserify: {
+      debug: true,
+      transform: [
+        'babelify',
+        ['browserify-istanbul', { instrumenter: require('isparta') }]
+      ]
+    },
+
+    frameworks: ['jasmine', 'browserify'],
 
     browsers: ['PhantomJS'],
 
@@ -125,19 +133,11 @@ module.exports = function (config) {
 
     coverageReporter: {
       reporters: [
-        // Fails with: TypeError: Cannot read property 'text' of undefined
-        // { type : 'html', dir : 'coverage/'},
+        {type: 'html', dir: 'coverage/'},
         {type: 'lcovonly', dir: 'coverage-lcov/'}
       ],
 
-      subdir: '.',
-
-      instrumenters: {isparta: require('isparta')},
-
-      instrumenter: {
-        '**/*.js': 'isparta'
-      }
-
+      subdir: '.'
     }
   };
 
