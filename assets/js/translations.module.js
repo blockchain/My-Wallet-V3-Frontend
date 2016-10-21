@@ -1,7 +1,13 @@
-'use strict';
-angular
-  .module('translations', [])
-  .config(TranslationsConfig);
+
+import ngtranslate from 'angular-translate';
+import ngtranslateloader from 'angular-translate-loader-static-files';
+import BCTranslateStaticFilesLoader from './services/bcTranslationLoader.service';
+
+export default angular
+  .module('translations', [ngtranslate, ngtranslateloader])
+  .factory('BCTranslateStaticFilesLoader', BCTranslateStaticFilesLoader)
+  .config(TranslationsConfig)
+  .name;
 
 TranslationsConfig.$inject = ['$translateProvider'];
 

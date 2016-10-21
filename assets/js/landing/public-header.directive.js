@@ -1,10 +1,10 @@
-angular
-  .module('sharedDirectives')
-  .directive('publicHeader', publicHeader);
+// angular
+//   .module('sharedDirectives')
+//   .directive('publicHeader', publicHeader);
 
 publicHeader.$inject = ['$rootScope', '$location', 'languages'];
 
-function publicHeader ($rootScope, $location, languages) {
+export default function publicHeader ($rootScope, $location, languages) {
   const directive = {
     restrict: 'E',
     replace: true,

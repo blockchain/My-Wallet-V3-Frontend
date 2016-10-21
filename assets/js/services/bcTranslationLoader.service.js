@@ -1,13 +1,9 @@
 // Grunt will parse the lookup table and replace the file names with easier to cache versions.
 // Thanks to @knalli: https://github.com/angular-translate/bower-angular-translate-loader-static-files/pull/15#issuecomment-94441414
 
-angular
-  .module('bcTranslateStaticFilesLoader', [])
-  .factory('BCTranslateStaticFilesLoader', BCTranslateStaticFilesLoader);
-
 BCTranslateStaticFilesLoader.$inject = ['$http', '$q', '$translateStaticFilesLoader', '$rootScope'];
 
-function BCTranslateStaticFilesLoader ($http, $q, $translateStaticFilesLoader, $rootScope) {
+export default function BCTranslateStaticFilesLoader ($http, $q, $translateStaticFilesLoader, $rootScope) {
   const map = {
     de: 'build/locales/de.json',
     hi: 'build/locales/hi.json',

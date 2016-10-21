@@ -1,10 +1,7 @@
-angular
-  .module('sharedDirectives')
-  .directive('videoContainer', videoContainer);
 
 videoContainer.$inject = ['$window', '$timeout', '$sce'];
 
-function videoContainer ($window, $timeout, $sce) {
+export default function videoContainer ($window, $timeout, $sce) {
   const directive = {
     restrict: 'E',
     template: `

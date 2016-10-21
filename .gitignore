@@ -26,6 +26,7 @@ Changelog.md
 *.log
 .sass-cache
 build
+buildpack
 coverage
 coverage-lcov
 dist

@@ -7,7 +7,9 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
   $scope.user = Wallet.user;
 
   $scope.errors = {};
-  $scope.status = {};
+  $scope.status = { busy: true };
+  console.log($scope.status);
+  window.status = $scope.status;
   $scope.browser = { disabled: true };
 
   $scope.uid = $stateParams.uid || Wallet.guid || $cookies.get('uid');

@@ -1,6 +1,6 @@
 'use strict';
 
-angular
+export default angular
   .module('walletFilters', [])
   .filter('toBitCurrency', toBitCurrencyFilter)
   .filter('convert', convertFilter)
@@ -8,7 +8,8 @@ angular
   .filter('escapeHtml', escapeHtmlFilter)
   .filter('getByProperty', getByPropertyFilter)
   .filter('getByPropertyNested', getByPropertyNestedFilter)
-  .filter('addressOrNameMatch', addressOrNameMatchFilter);
+  .filter('addressOrNameMatch', addressOrNameMatchFilter)
+  .name;
 
 toBitCurrencyFilter.$inject = ['currency'];
 function toBitCurrencyFilter (currency) {

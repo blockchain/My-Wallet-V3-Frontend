@@ -20,8 +20,11 @@ function uiLadda () {
   function link (scope, elem, attrs) {
     elem.addClass('ladda-button');
     elem.removeAttr('ng-click');
+    console.log(scope);
+    window.uis = scope;
 
     scope.$watch('uiLadda + disabled', (newVal) => {
+      console.log(newVal);
       if (scope.uiLadda) {
         elem.attr('data-loading', true);
         elem.attr('disabled', true);

@@ -1,12 +1,7 @@
-'use strict';
-
-angular
-  .module('walletApp')
-  .config(AppRouter);
 
 AppRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-function AppRouter ($stateProvider, $urlRouterProvider) {
+export default function AppRouter ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise(function ($injector, $location) {
     if (!$injector.has('Wallet')) {
       return '/';
@@ -61,7 +56,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       },
       resolve: {
         loadWalletModule: ($ocLazyLoad) => {
-          return $ocLazyLoad.load('walletLazyLoad');
+          return $ocLazyLoad.load('walletApp.core');
         }
       }
     })
@@ -75,7 +70,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       views: {
         body: {
           templateUrl: 'landing.html',
-          controller: 'LandingCtrl'
+          controller: 'LandingController'
         }
       }
     })
@@ -87,7 +82,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       },
       resolve: {
         loadWalletModule: ($ocLazyLoad) => {
-          return $ocLazyLoad.load('walletLazyLoad');
+          return $ocLazyLoad.load('walletApp.core');
         }
       }
     })

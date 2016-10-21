@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-  .module('walletServices', [])
+  .module('walletApp')
   .factory('Wallet', Wallet);
 
 Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'MyWalletMetadata', 'theme'];
