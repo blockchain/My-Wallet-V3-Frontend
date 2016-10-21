@@ -30,6 +30,12 @@
     .type-lbl.em-500(translate="UNUSED_ADDRESSES")
     p.em-300.mvm.pbm(translate="UNUSED_ADDRESSES_COPY")
     table.accounts-container.addresses.responsive.width-100
+      tr.width-100.pointer(ng-click="createAddress()")
+        td.col-md-3
+          i.ti-plus.blue.mrm
+          span(translate="ADD_NEXT_ADDRESS")
+        td.col-md-3
+        td.col-md-3
       tr(
         account="account"
         ng-repeat="address in paymentRequests | filter:searchText | orderBy:'-index' track by address.index"

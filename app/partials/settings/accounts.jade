@@ -25,9 +25,12 @@
             ng-show="!account.archived"
           )
           span.pointer.blue(translate="UNARCHIVE" ng-click="unarchive(account)" ng-show="account.archived")")
-      tr.responsive.width-100
-        td
-          button.button-primary.mrm.button-nowrap(ng-click="newAccount()" translate="CREATE_ACCOUNT")
+      tr.width-100.pointer(ng-click="newAccount()")
+        td.col-md-3
+          i.ti-plus.blue.mrm
+          span(translate="ADD_WALLET")
+        td.col-md-3
+        td.col-md-3
 
     .flex-between.flex-center.mbl.mtvl
       div

@@ -1,6 +1,12 @@
 .row
   .col-xs-12
     table.accounts-container.addresses.responsive.width-100(ng-controller="SettingsImportedAddressesCtrl")
+      tr.width-100.pointer(ng-click="importAddress()")
+        td.col-md-3
+          i.ti-plus.blue.mrm
+          span(translate="IMPORT_ADDRESS")
+        td.col-md-3
+        td.col-md-3
       tr(
         imported-address="address", 
         search-text="searchText",

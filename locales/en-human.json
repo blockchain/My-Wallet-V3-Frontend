@@ -220,6 +220,7 @@
   "NEXT" : "Next",
   "EMAIL" : "Email",
   "NEW_ACCT_WELCOME" : "Create A New Blockchain Wallet",
+  "ADD_WALLET": "Add Wallet",
   "CREATE_NEW_ACCOUNT" : "Create New",
   "CREATE_ACCOUNT" : "Create New",
   "CREATE_ADDRESS" : "Next Address",
@@ -280,6 +281,7 @@
   "RENAME" : "Rename",
   "MY_ADDRESSES_EXPLAIN" : "Your Blockchain Wallet contains an unlimited collection of bitcoin addresses that you can use to receive funds from anybody, globally. Your wallet will automatically manage your bitcoin addresses for you. The addresses below are the subset of addresses that are labeled.",
   "NEW_ADDRESS" : "New Address",
+  "ADD_NEXT_ADDRESS": "Add Next Address",
   "IMPORT_ADDRESS" : "Import Address",
   "MORE_ACTIONS" : "More Actions",
   "CONFIRM_IMPORT_WATCH": {
