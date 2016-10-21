@@ -126,7 +126,6 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       .then(() => {
         $state.go('wallet.common.buy-sell');
         $uibModalStack.dismissAll();
-        $timeout(service.openBuyView, 500);
       });
   }
 
