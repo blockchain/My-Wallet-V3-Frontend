@@ -338,13 +338,12 @@
   "SPENDABLE_ADDRESSES" : "Spendable Addresses",
   "UNUSED_ADDRESSES": "Unused Addresses",
   "UNUSED_ADDRESSES_COPY": "Your Blockchain Wallet contains an unlimited collection of bitcoin addresses that you can use to receive funds from anybody, globally. <br/>Your wallet will automatically manage your bitcoin addresses for you. The addresses below are the subset of addresses that are labeled.",
-  "NEXT_ADDRESSES_FOR_ACCOUNT" : "Unused Addresses in {{account}}",
-  "PAST_ADDRESSES_FOR_ACCOUNT" : "Used Addresses in {{account}}",
   "CONFIRM_SHOW_PAST": {
     "TITLE": "Are you sure?",
     "BODY": "Viewing used addresses can be helpful for debugging purposes, and is recommended for advanced users only. For privacy reasons, we strongly discourage using each address more than once."
   },
   "PAST_ADDRESSES" : "Used Addresses",
+  "PAST_ADDRESSES_COPY": "Previously used addresses are helpful for debugging purposes and viewing associated balances. For privacy <br> reasons, we do not recommend re-using these addresses.",
   "TOTAL_RECEIVED" : "Total Received",
   "CURRENT_BALANCE" : "Current Balance",
   "CURRENT_BALANCE_HELP" : "When you send bitcoin, your Blockchain wallet automatically selects addresses to spend from. That's why the current balance of an address can be different from the total received value.",

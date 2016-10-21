@@ -31,11 +31,10 @@
     p.em-300.mvm.pbm(translate="UNUSED_ADDRESSES_COPY")
     table.accounts-container.addresses.responsive.width-100
       tr.width-100.pointer(ng-click="createAddress()")
-        td.col-md-3
+        td.col-md-6
           i.ti-plus.blue.mrm
           span(translate="ADD_NEXT_ADDRESS")
-        td.col-md-3
-        td.col-md-3
+        td.col-md-6
       tr(
         account="account"
         ng-repeat="address in paymentRequests | filter:searchText | orderBy:'-index' track by address.index"
@@ -43,24 +42,30 @@
         search-text="searchText"
         remove="removeAddressLabel(address.index, paymentRequests.indexOf(address))")
 
-.mtl
-  button.button-default(translate="PAST_ADDRESSES" ng-click="toggleShowPast()" ng-class="{active:showPast}")
+.flex-between.flex-center.mtl
+  .type-lbl.em-500(translate="PAST_ADDRESSES")
+  a(translate="{{showPast ? 'HIDE' : 'SHOW'}}" ng-click="toggleShowPast()" ng-class="{active:showPast}")
+.flex-row.flex-between(ng-if="showPast")
+  p.em-300.mvm.pbm(translate="PAST_ADDRESSES_COPY")
+  uib-pagination.pagination-sm(
+    ng-model="page"
+    ng-show="totalUsed > pageLength"
+    ng-change="setAddresses(page)"
+    total-items="totalUsed"
+    items-per-page="pageLength"
+    max-size="5"
+    boundary-links="true")
 
 div(ng-if="showPast" ng-init="setAddresses(page)")
-  .flex-between.flex-center
-    h2(translate="PAST_ADDRESSES_FOR_ACCOUNT" translate-values="::{account:account.label}")
-    uib-pagination.pagination-sm(
-      ng-model="page"
-      ng-show="totalUsed > pageLength"
-      ng-change="setAddresses(page)"
-      total-items="totalUsed"
-      items-per-page="pageLength"
-      max-size="5"
-      boundary-links="true")
-
   .row
     .col-xs-12.table-container
       table.accounts-container.addresses.responsive.width-100
+        tr.short
+          td.col-md-3.em-500(translate="ADDRESS")
+          td.col-md-3.em-500(translate="LABEL")
+          td.col-md-3.em-500.right-align
+            span(translate="CURRENT_BALANCE")
+            helper-button.mrn(content="CURRENT_BALANCE_HELP" placement="left")
         tr(
           account="account"
           ng-repeat="address in usedAddresses | orderBy:'-index' track by address.index"

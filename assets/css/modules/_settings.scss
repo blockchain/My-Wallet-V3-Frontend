@@ -40,6 +40,9 @@
     &.addresses {
       td {
         padding: 10px 25px;
+        &.pan {
+          padding: 0px;
+        }
       }
     }
   }
@@ -92,6 +95,9 @@ table.accounts-container {
     }
     &:last-child td {
       border-bottom: 0px;
+    }
+    &.short {
+      height: 40px;
     }
   }
 
