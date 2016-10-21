@@ -277,7 +277,7 @@
   "ACCOUNT_MANAGEMENT_EXPLAIN" : "You can customize the way you organize your bitcoins in your Blockchain Wallet. You may find this useful when you would like to separate your funds between personal and business expenses, or put your savings aside.",
   "BALANCE" : "Balance",
   "ERR_FETCH_BALANCE" : "Could not retrieve balance",
-  "MAKE_DEFAULT" : "Make default",
+  "MAKE_DEFAULT" : "Make Default",
   "RENAME" : "Rename",
   "MY_ADDRESSES_EXPLAIN" : "Your Blockchain Wallet contains an unlimited collection of bitcoin addresses that you can use to receive funds from anybody, globally. Your wallet will automatically manage your bitcoin addresses for you. The addresses below are the subset of addresses that are labeled.",
   "NEW_ADDRESS" : "New Address",
