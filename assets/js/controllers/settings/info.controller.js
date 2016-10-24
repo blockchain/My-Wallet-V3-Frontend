@@ -21,9 +21,17 @@ function SettingsInfoCtrl ($scope, $q, Wallet, Alerts) {
 
   $scope.showPairingCode = () => {
     $scope.loading.code = true;
-    let success = (code) => $scope.pairingCode = code;
-    let error = () => { Alerts.displayError('SHOW_PAIRING_CODE_FAIL'); };
-    $q(Wallet.makePairingCode)
+
+    let success = (code) => { $scope.pairingCode = code; };
+
+    let error = (err) => {
+      if (err === 'cancelled') return;
+      let msg = err === 'incorrect_main_pw' ? 'INCORRECT_PASSWORD' : 'SHOW_PAIRING_CODE_FAIL';
+      Alerts.displayError(msg);
+    };
+
+    Wallet.askForMainPasswordConfirmation()
+      .then(() => $q(Wallet.makePairingCode))
       .then(success, error)
       .then(() => $scope.loading.code = false);
   };

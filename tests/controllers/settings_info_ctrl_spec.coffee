@@ -16,6 +16,8 @@ describe "SettingsInfoCtrl", ->
       Wallet.user.alias = "user_alias"
       Wallet.makePairingCode = (success, error) ->
         if scope.pairingCode then error() else success("code")
+      Wallet.askForMainPasswordConfirmation = () ->
+        if scope._enterIncorrectPw then $q.reject('incorrect_main_pw') else $q.resolve(true)
       Wallet.removeAlias = () -> $q.resolve()
 
       scope = $rootScope.$new()
@@ -51,7 +53,15 @@ describe "SettingsInfoCtrl", ->
       scope.pairingCode = "code"
       scope.showPairingCode()
       scope.$digest()
-      expect(Alerts.displayError).toHaveBeenCalled()
+      expect(Alerts.displayError).toHaveBeenCalledWith('SHOW_PAIRING_CODE_FAIL')
+      expect(scope.loading.code).toEqual(false)
+
+    it "should not display the code if main pw was not entered", ->
+      spyOn(Alerts, "displayError")
+      scope._enterIncorrectPw = true
+      scope.showPairingCode()
+      scope.$digest()
+      expect(Alerts.displayError).toHaveBeenCalledWith('INCORRECT_PASSWORD')
       expect(scope.loading.code).toEqual(false)
 
     it "should hide", ->
