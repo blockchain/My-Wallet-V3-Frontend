@@ -11,6 +11,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.alerts = [];
   $scope.status = {};
   $scope.trade = trade;
+  $scope.quote = buyOptions.quote;
 
   $scope.buySellDebug = $rootScope.buySellDebug;
 
@@ -54,7 +55,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.fields = { email: $scope.user.email, countryCode: $scope.exchange.profile.country };
 
   $scope.transaction = trade == null
-    ? ({ fiat: buyOptions.fiat || 0, btc: 0, fee: 0, total: 0, currency: buyOptions.currency || buySell.getCurrency() })
+    ? ({ fiat: buyOptions.fiat, btc: buyOptions.btc, fee: 0, total: 0, currency: buyOptions.currency || buySell.getCurrency() })
     : ({ fiat: $scope.trade.inAmount / 100, btc: 0, fee: 0, total: 0, currency: buySell.getCurrency($scope.trade) });
 
   $scope.changeCurrencySymbol = (curr) => { $scope.currencySymbol = currency.conversions[curr.code]; };
@@ -83,10 +84,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     };
 
     let methodsError = eventualError('ERROR_PAYMENT_METHODS_FETCH');
-
-    return $scope.quote && $scope.quote.expiresAt > new Date()
-      ? $scope.quote.getPaymentMethods().then(success, methodsError)
-      : $scope.getQuote();
+    return $scope.quote.getPaymentMethods().then(success, methodsError);
   };
 
   $scope.changeCurrency = (curr) => {
@@ -115,7 +113,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   $scope.updateAmounts = () => {
     if (!$scope.trade && (!$scope.quote || !$scope.exchange.user)) return;
 
-    if ($scope.quote && $scope.quote.id) {
+    if ($scope.quote) {
       $scope.transaction.methodFee = ($scope.quote.paymentMethods[$scope.method].fee / 100).toFixed(2);
       $scope.transaction.total = ($scope.quote.paymentMethods[$scope.method].total / 100).toFixed(2);
     } else if ($scope.trade) {
@@ -124,6 +122,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   };
 
   $scope.getQuote = () => {
+    if ($scope.quote) { $scope.getPaymentMethods(); return; }
     if ($scope.trade) { $scope.updateAmounts(); return; }
 
     $scope.quote = null;
@@ -133,15 +132,15 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     if (!$scope.transaction.fiat) { $scope.status = {}; return; }
 
     let quoteError = eventualError('ERROR_QUOTE_FETCH');
-    let amount = Math.round($scope.transaction.fiat * 100);
     let currCode = $scope.transaction.currency.code;
+    let amount = Math.round($scope.transaction.fiat * 100);
 
     const success = (quote) => {
       $scope.status = {};
       $scope.expiredQuote = false;
       $scope.quote = quote;
       Alerts.clear($scope.alerts);
-      $scope.transaction.btc = currency.formatCurrencyForView($scope.quote.quoteAmount / 100000000, currency.bitCurrencies[0]);
+      $scope.transaction.btc = quote.quoteAmount / 100000000;
     };
 
     return buySell.getExchange().getBuyQuote(amount, currCode)

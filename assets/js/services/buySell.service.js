@@ -76,8 +76,13 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     return $q.resolve();
   }
 
-  function getQuote (amt, curr) {
-    return $q.resolve(service.getExchange().getBuyQuote(Math.trunc(amt * 100), curr));
+  function getQuote (amt, curr, quoteCurr) {
+    if (curr === 'BTC') {
+      amt = Math.trunc(amt * 100000000);
+    } else {
+      amt = Math.trunc(amt * 100);
+    }
+    return $q.resolve(service.getExchange().getBuyQuote(amt, curr, quoteCurr));
   }
 
   function getKYCs () {
