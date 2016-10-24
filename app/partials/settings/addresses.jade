@@ -1,27 +1,40 @@
-.row(data-preflight-tag="AccountAddresses")
-  .col-xs-12.mbl
-    a.flex-center.text.em-400.blue(ng-click="back()")
+.filter-bar.flex-between.flex-center(data-preflight-tag="AccountsSearch")
+  a.flex-center.text.em-400.black(ng-click="back()")
       i.ti-arrow-left.mrm
-      span(translate="BACK")
+  .filter-search
+    input(
+      type="text"
+      placeholder="{{::'SEARCH' | translate}}"
+      ng-model="searchText")
+    i.ti-search
 
-h5.well.type-h5.em-400.hidden-xs(translate="MY_ADDRESSES_EXPLAIN")
-
-.row
-  .col-xs-6
-    button.btn.button-primary(role="button" ng-click="createAddress()" translate="CREATE_ADDRESS")
-  .col-xs-6
-    .flex-1.width-100.filter-search-alt.pos-rel
-      input(type="text" ng-model="searchText")
-      i.ti-search.pos-abs
-
-h2(translate="NEXT_ADDRESSES_FOR_ACCOUNT" translate-values="::{account:account.label}")
-
-.row
+.row.ptvl(data-preflight-tag="AccountAddresses")
   .col-xs-12.table-container
-    table.addresses-container.responsive.width-100
-      tr
-        th.shrink(translate="ADDRESS")
-        th.expand(translate="LABEL")
+    .flex-between.flex-center
+      h2.mvl.pbl {{account.label}}
+        span.label.label-primary.btn-xs(translate="DEFAULT", ng-show="!account.archived && isDefault(account)")
+        span.label.label-default.btn-xs(translate="ARCHIVED" ng-show="account.archived")
+      span(uib-dropdown on-toggle="toggled(open)")
+        a(href uib-dropdown-toggle id="more-dropdown" translate="More Options") 
+        ul.dropdown-menu.dropdown-menu-right(uib-dropdown-menu aria-labelledby="more-dropdown")
+          li
+            a(translate="EDIT_NAME" ng-click="editAccount(account)")
+          li
+            a(translate="MAKE_DEFAULT" ng-click="makeDefault(account)" ng-hide="account.archived || isDefault(account)")
+          li
+            a(translate="ARCHIVE" ng-click="archive(account)" ng-hide="account.archived || isDefault(account)")
+          li
+            a(translate="UNARCHIVE" ng-click="unarchive(account)" ng-show="account.archived")
+          li
+            a(translate="REVEAL_XPUB" ng-click="revealXpub(account)" ng-hide="account.archived")
+    .type-lbl.em-500(translate="UNUSED_ADDRESSES")
+    p.em-300.mvm.pbm(translate="UNUSED_ADDRESSES_COPY")
+    table.accounts-container.addresses.responsive.width-100
+      tr.width-100.pointer(ng-click="createAddress()")
+        td.col-md-6
+          i.ti-plus.blue.mrm
+          span(translate="ADD_NEXT_ADDRESS")
+        td.col-md-6
       tr(
         account="account"
         ng-repeat="address in paymentRequests | filter:searchText | orderBy:'-index' track by address.index"
@@ -29,30 +42,30 @@ h2(translate="NEXT_ADDRESSES_FOR_ACCOUNT" translate-values="::{account:account.l
         search-text="searchText"
         remove="removeAddressLabel(address.index, paymentRequests.indexOf(address))")
 
-.mtl
-  button.button-default(translate="PAST_ADDRESSES" ng-click="toggleShowPast()" ng-class="{active:showPast}")
+.flex-between.flex-center.mtl
+  .type-lbl.em-500(translate="PAST_ADDRESSES")
+  a(translate="{{showPast ? 'HIDE' : 'SHOW'}}" ng-click="toggleShowPast()" ng-class="{active:showPast}")
+.flex-row.flex-between(ng-if="showPast")
+  p.em-300.mvm.pbm(translate="PAST_ADDRESSES_COPY")
+  uib-pagination.pagination-sm(
+    ng-model="page"
+    ng-show="totalUsed > pageLength"
+    ng-change="setAddresses(page)"
+    total-items="totalUsed"
+    items-per-page="pageLength"
+    max-size="5"
+    boundary-links="true")
 
 div(ng-if="showPast" ng-init="setAddresses(page)")
-  .flex-between.flex-center
-    h2(translate="PAST_ADDRESSES_FOR_ACCOUNT" translate-values="::{account:account.label}")
-    uib-pagination.pagination-sm(
-      ng-model="page"
-      ng-show="totalUsed > pageLength"
-      ng-change="setAddresses(page)"
-      total-items="totalUsed"
-      items-per-page="pageLength"
-      max-size="5"
-      boundary-links="true")
-
   .row
     .col-xs-12.table-container
-      table.addresses-container.responsive.width-100
-        tr
-          th.shrink(translate="ADDRESS")
-          th.shrink(translate="LABEL")
-          th.shrink
+      table.accounts-container.addresses.responsive.width-100
+        tr.short
+          td.col-md-3.em-500(translate="ADDRESS")
+          td.col-md-3.em-500(translate="LABEL")
+          td.col-md-3.em-500.right-align
             span(translate="CURRENT_BALANCE")
-            helper-button(content="CURRENT_BALANCE_HELP" placement="left")
+            helper-button.mrn(content="CURRENT_BALANCE_HELP" placement="left")
         tr(
           account="account"
           ng-repeat="address in usedAddresses | orderBy:'-index' track by address.index"

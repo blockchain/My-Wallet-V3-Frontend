@@ -1,7 +1,7 @@
 form(role="form" name="accountForm" ng-submit="submit()" autocomplete="off" novalidate data-preflight-tag="AccountForm")
   .modal-header
     .flex-center.pam
-      h3.man.mrm(translate="{{status.edit ? 'RENAME_ACCOUNT':'CREATE_NEW_ACCOUNT'}}")
+      h3.man.mrm(translate="{{status.edit ? 'RENAME_ACCOUNT':'ADD_WALLET'}}")
       helper-button(ng-hide="status.edit" content="CREATE_NEW_ACCOUNT_MODAL")
   .modal-body
     .form-group.flex-column.flex-justify(ng-class="{'has-error': accountForm.$invalid && accountForm.$dirty}")

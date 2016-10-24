@@ -7,7 +7,10 @@
   }
   .label-warning { background-color: $security-red; }
   .label-success { background-color: $security-green; }
-  .label-success, .label-warning {
+  .label-success,
+  .label-warning,
+  .label-default,
+  .label-primary {
     @extend .btn-xs;
     display: inline-block;
   }
@@ -34,6 +37,14 @@
       border: 1px solid $border-grey;
       padding: 10px;
     }
+    &.addresses {
+      td {
+        padding: 10px 25px;
+        &.pan {
+          padding: 0px;
+        }
+      }
+    }
   }
   // Preferences
   .clearfix {
@@ -46,25 +57,9 @@
       }
     }
   }
-  .imported-addresses-container {
-    .dropdown-menu {
-      @media (min-width: 769px) {
-        left: auto !important;
-        right: 0px !important;
-      }
-      > li > a {
-        font-size: small;
-        &:before {
-          @extend .prm;
-        }
-      }
-    }
-  }
   // Accounts & Addresses
   @media (max-width: 900px) {
-    .accounts-container,
-    .addresses-container,
-    .imported-addresses-container {
+    .accounts-container {
       width: 100%;
       tr {
         height: auto;
@@ -86,20 +81,6 @@
         }
       }
     }
-    .addresses-container,
-    .imported-addresses-container {
-      tr {
-        &:first-child {
-          display: none;
-        }
-        td {
-          button {
-            display: inline-block;
-            margin-top: 0px;
-          }
-        }
-      }
-    }
   }
 }
 
@@ -108,7 +89,16 @@
 table.accounts-container {
 
   tr {
-    height: 66px;
+    height: 80px;
+    &:first-child td {
+      border-top: 0px;
+    }
+    &:last-child td {
+      border-bottom: 0px;
+    }
+    &.short {
+      height: 40px;
+    }
   }
 
   td {
@@ -116,23 +106,27 @@ table.accounts-container {
     border-right: none;
     border-top: 1px solid $grey;
     border-bottom: 1px solid $grey;
+    &.center {
+      > span {
+        min-width: 100px;
+      }
+    }
   }
 
-  .account-label {
-    font-size: 12pt;
-    font-weight: 500;
+  &.addresses {
+    td:first-child {
+      border-left: 1px solid $grey;
+    }
+    td:last-child {
+      border-right: 1px solid $grey;
+    }
+    tr:first-child td {
+      border-top: 1px solid $grey;
+    }
+    tr:last-child td {
+      border-bottom: 1px solid $grey;
+    }
   }
-
-  .label-primary {
-    display: inline-block;
-    @extend .btn-xs;
-    color: white;
-  }
-
-  &.imported-addresses{
-    color: $mid-grey;
-  }
-
 }
 
 .intl-tel-input { margin-bottom: 10px; }
@@ -169,36 +163,32 @@ table.accounts-container {
 }
 
 .settings {
-  td.address-label {
-    height: 44px;
-    > span {
-      display: inline-block;
-      border-bottom: 1px solid transparent;
-    }
+  .form-group {
     .col-sm-12 {
-      padding-left: 0px;
+      padding: 0px;
     }
-    form[name="bcAsyncForm"] {
-      > div {
-        @extend .flex-row;
-        @extend .flex-center;
-        @extend .flex-between;
-        > div:first-child {
-          @extend .flex-1;
-        }
-        input {
-          font-weight: normal;
-          margin-bottom: 1px;
-          font-size: small;
-          display: block;
-          width: 80%;
-        }
-        button {
-          padding: 0px;
-        }
-        button.button-primary {
-          padding: 2px 4px;
-        }
+  }
+  form[name="bcAsyncForm"] {
+    > div {
+      @extend .flex-row;
+      @extend .flex-center;
+      @extend .flex-between;
+      > div:first-child {
+        @extend .flex-1;
+      }
+      input {
+        font-weight: normal;
+        margin-bottom: 1px;
+        font-size: small;
+        display: block;
+        padding: 5px;
+        width: 90%;
+      }
+      button {
+        padding: 0px;
+      }
+      button.button-primary {
+        padding: 2px 4px;
       }
     }
   }

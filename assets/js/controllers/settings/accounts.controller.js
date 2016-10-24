@@ -12,6 +12,8 @@ function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFi
 
   $scope.addressBookPresent = Wallet.addressBook().length;
   $scope.numberOfActiveAccounts = () => Wallet.accounts().filter(a => !a.archived).length;
+  $scope.isDefault = (account) => Wallet.isDefaultAccount(account);
+  $scope.unarchive = (account) => Wallet.unarchive(account);
   $scope.getLegacyTotal = () => Wallet.total('imported');
 
   $scope.newAccount = () => {
@@ -24,34 +26,6 @@ function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFi
         account: () => void 0
       }
     });
-  };
-
-  $scope.editAccount = (account) => {
-    Alerts.clear();
-    $uibModal.open({
-      templateUrl: 'partials/account-form.jade',
-      controller: 'AccountFormCtrl',
-      windowClass: 'bc-modal sm',
-      resolve: {
-        account: () => account
-      }
-    });
-  };
-
-  $scope.revealXpub = (account) => {
-    $uibModal.open({
-      templateUrl: 'partials/reveal-xpub.jade',
-      controller: 'RevealXpubCtrl',
-      resolve: {
-        account: () => account
-      },
-      windowClass: 'bc-modal'
-    });
-  };
-
-  $scope.makeDefault = (account) => {
-    Wallet.setDefaultAccount(account);
-    Wallet.saveActivity(3);
   };
 
   $scope.transfer = () => {
@@ -78,7 +52,9 @@ function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFi
     resolve: { address: () => $scope.activeSpendableAddresses() }
   });
 
-  $scope.archive = (account) => Wallet.archive(account);
-  $scope.unarchive = (account) => Wallet.unarchive(account);
-  $scope.isDefault = (account) => Wallet.isDefaultAccount(account);
+  $scope.openVerifyMessage = () => $uibModal.open({
+    templateUrl: 'partials/settings/verify-message.jade',
+    controller: 'VerifyMessageController',
+    windowClass: 'bc-modal initial'
+  });
 }

@@ -358,15 +358,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('wallet.common.settings.imported_addresses', {
-      url: '/imported-addresses',
-      views: {
-        settings: {
-          templateUrl: 'partials/settings/imported-addresses.jade',
-          controller: 'SettingsImportedAddressesCtrl'
-        }
-      }
-    })
     .state('wallet.common.settings.address_book', {
       url: '/address-book',
       views: {

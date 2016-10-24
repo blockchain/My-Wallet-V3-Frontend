@@ -50,11 +50,6 @@ ul.aside {
       span {
         color: $basic-grey;
       }
-      &.imported-addresses {
-        span {
-          color: $mid-grey !important;
-        }
-      }
     }
     li.active{
       a {

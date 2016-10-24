@@ -7,6 +7,9 @@ describe "SettingsAddressesCtrl", ->
 
   beforeEach angular.mock.module("walletApp")
 
+  modal =
+    open: ->
+
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller, _$q_) ->
       $q = _$q_
@@ -38,6 +41,7 @@ describe "SettingsAddressesCtrl", ->
         $scope: scope,
         $stateParams: { account: 0 }
         Wallet: Wallet
+        $uibModal: modal
         paymentRequests: [{ address: '1aaa', label: 'pending', index: 2 }]
 
 
@@ -49,6 +53,16 @@ describe "SettingsAddressesCtrl", ->
 
   it "should create the hd label map", ->
     expect(scope.hdLabels[1]).toEqual('labelled_address')
+
+  it "should open modal to edit an account", ->
+    spyOn(modal, "open")
+    scope.editAccount(scope.account)
+    expect(modal.open).toHaveBeenCalled()
+
+  it "should open modal to reveal the xpub", ->
+    spyOn(modal, "open")
+    scope.revealXpub(scope.account)
+    expect(modal.open).toHaveBeenCalled()
 
   describe "createAddress", ->
     it "should label the next receive address", ->

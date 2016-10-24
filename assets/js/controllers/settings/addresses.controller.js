@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SettingsAddressesCtrl', SettingsAddressesCtrl);
 
-function SettingsAddressesCtrl ($scope, $stateParams, $q, $sce, Wallet, MyWalletHelpers, MyBlockchainApi, Alerts, paymentRequests) {
+function SettingsAddressesCtrl ($scope, $stateParams, $q, $sce, Wallet, MyWalletHelpers, MyBlockchainApi, Alerts, paymentRequests, $uibModal) {
   $scope.paymentRequests = paymentRequests;
   $scope.account = Wallet.accounts()[$stateParams.account];
   $scope.receiveIndex = $scope.account.receiveIndex;
@@ -72,4 +72,48 @@ function SettingsAddressesCtrl ($scope, $stateParams, $q, $sce, Wallet, MyWallet
     }
     return indexes;
   };
+
+  $scope.newAccount = () => {
+    Alerts.clear();
+    $uibModal.open({
+      templateUrl: 'partials/account-form.jade',
+      windowClass: 'bc-modal initial',
+      controller: 'AccountFormCtrl',
+      resolve: {
+        account: () => void 0
+      }
+    });
+  };
+
+  $scope.editAccount = (account) => {
+    Alerts.clear();
+    $uibModal.open({
+      templateUrl: 'partials/account-form.jade',
+      controller: 'AccountFormCtrl',
+      windowClass: 'bc-modal sm',
+      resolve: {
+        account: () => account
+      }
+    });
+  };
+
+  $scope.revealXpub = (account) => {
+    $uibModal.open({
+      templateUrl: 'partials/reveal-xpub.jade',
+      controller: 'RevealXpubCtrl',
+      resolve: {
+        account: () => account
+      },
+      windowClass: 'bc-modal'
+    });
+  };
+
+  $scope.makeDefault = (account) => {
+    Wallet.setDefaultAccount(account);
+    Wallet.saveActivity(3);
+  };
+
+  $scope.archive = (account) => Wallet.archive(account);
+  $scope.unarchive = (account) => Wallet.unarchive(account);
+  $scope.isDefault = (account) => Wallet.isDefaultAccount(account);
 }

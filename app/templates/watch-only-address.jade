@@ -3,7 +3,7 @@ tr
   td.expand.address-label
     span.float-right(ng-hide="status.edit")
       a(ng-click="status.edit=1")
-        i.ti-pencil.prm   
+        i.ti-pencil.prm
     span(ng-bind-html="address.label | escapeHtml | highlight:searchText", ng-hide="status.edit").prm
     .form-group(ng-class="{'has-error': errors.label}", ng-show="status.edit")
       .col-sm-12

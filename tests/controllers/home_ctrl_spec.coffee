@@ -51,14 +51,16 @@ describe "HomeCtrl", ->
       expect(scope.activeAccounts()).toBe(null)
     )
 
+  describe "activeLegacyAddresses()", ->
+    it "should know the number", inject((Wallet) ->
+      expect(scope.activeLegacyAddresses().length).toBeGreaterThan(0)
+    )
+
+    it "should be null when not logged in", inject((Wallet), ->
+      Wallet.status.isLoggedIn = false
+      expect(scope.activeLegacyAddresses()).toBe(null)
+    )
+
   describe "getTotal()", ->
     it "should return total", ->
       expect(scope.getTotal()).toEqual(1)
-
-  describe "hasLegacyAddresses()", ->
-    it "should be true if there are legacy addresses", ->
-      expect(scope.hasLegacyAddresses()).toBe(true)
-
-    it "should be null if not logged in", ->
-      Wallet.status.isLoggedIn = false
-      expect(scope.hasLegacyAddresses()).toBe(null)
