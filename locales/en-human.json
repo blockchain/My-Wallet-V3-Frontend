@@ -1054,7 +1054,7 @@
   "ERROR_DAILY_LIMIT": "Error: Exceeds Daily Limit",
   "ERROR_DAILY_LIMIT_COPY": "The amount selected exceeds your daily buy limit. For bank transfers, you can exchange up to {{max}} {{code}} per day. Please update your order to proceed.",
   "ERROR_QUOTE_FETCH" : "Unable to obtain quote at this time, please try again later.",
-  "ERROR_PAYMENT_METHODS_FETCH" : "Something went wrong, please try again later.",
+  "ERROR_PAYMENT_MEDIUMS_FETCH" : "Something went wrong, please try again later.",
   "ERROR_TRADE_CREATE" : "Unable to place your order at this time, please try again later.",
   "ERROR_TRADE_CANCEL": "Unable to cancel your trade at this time, please try again later.",
   "ORDER_DETAILS": "Order details:",
