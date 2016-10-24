@@ -8,7 +8,7 @@ describe "ChangeEmailCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile, $templateCache) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
-      
+
       Wallet.user.email = "a@b.com"
       MyWallet.wallet = {
         external: {}
@@ -40,3 +40,18 @@ describe "ChangeEmailCtrl", ->
     scope.changeEmail()
     expect(Wallet.changeEmail).toHaveBeenCalled()
   )
+
+  describe "isProblemProvider", ->
+    it "should detect a reported mail provider", ->
+      isProblem = scope.isProblemProvider('user@aol.com')
+      expect(isProblem).toEqual(true)
+
+    it "should return false for an ok mail provider", ->
+      isProblem = scope.isProblemProvider('user@gmail.com')
+      expect(isProblem).toEqual(false)
+
+    it "should return false if passed a non-email", ->
+      expect(scope.isProblemProvider()).toEqual(false)
+      expect(scope.isProblemProvider(null)).toEqual(false)
+      expect(scope.isProblemProvider(false)).toEqual(false)
+      expect(scope.isProblemProvider('')).toEqual(false)
