@@ -52,3 +52,7 @@ describe "Confirm Recovery Phrase", ->
 
     expect(Alerts.displayError).toHaveBeenCalled()
     expect(isoScope.confirmRecoveryPhrase).toHaveBeenCalled()
+
+  it "should not prompt backup recovery phrase modal if promptBackup is not set", ->
+    spyOn(isoScope, 'confirmRecoveryPhrase')
+    expect(isoScope.confirmRecoveryPhrase).not.toHaveBeenCalled()

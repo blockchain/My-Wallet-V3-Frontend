@@ -224,6 +224,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     })
     .state('wallet.common.security-center', {
       url: '/security-center',
+      params: {
+        promptBackup: ''
+      },
       views: {
         top: top,
         left: {

@@ -94,7 +94,7 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
     let hasNotSeen = (id) => !$cookies.get(id);
     let rememberChoice = (id) => () => $cookies.put(id, true);
 
-    let goToBackup = () => $q.all([$state.go('wallet.common.settings.security'), $q.reject('backing_up')]);
+    let goToBackup = () => $q.all([$state.go('wallet.common.security-center', {promptBackup: true}), $q.reject('backing_up')]);
     let openSurvey = () => { $window.open('https://blockchain.co1.qualtrics.com/SE/?SID=SV_7PupfD2KjBeazC5'); };
 
     let remindBackup = () =>
