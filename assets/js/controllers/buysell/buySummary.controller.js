@@ -14,8 +14,8 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency, Alerts
     };
 
     const calculateMax = (rate) => {
-      $scope.$parent.limits.max = buySell.calculateMax(rate, $scope.method).max;
-      $scope.$parent.limits.available = buySell.calculateMax(rate, $scope.method).available;
+      $scope.$parent.limits.max = buySell.calculateMax(rate, $scope.medium).max;
+      $scope.$parent.limits.available = buySell.calculateMax(rate, $scope.medium).available;
     };
 
     return buySell.fetchProfile(true).then(() => {
@@ -75,7 +75,7 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency, Alerts
     let buyError = eventualError('ERROR_TRADE_CREATE');
     let amount = Math.round($scope.transaction.fiat * 100);
 
-    $scope.exchange.buy(amount, $scope.transaction.currency.code, $scope.getMethod().inMedium)
+    $scope.accounts[0].buy(amount, $scope.transaction.currency.code, $scope.getMedium().inMedium)
                    .catch(buyError)
                    .then(success, $scope.standardError)
                    .then($scope.watchAddress);

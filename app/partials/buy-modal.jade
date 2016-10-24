@@ -22,7 +22,7 @@
       buy-steps(transaction="transaction"
                 on-step="onStep"
                 needs-kyc="needsKyc"
-                get-method="getMethod"
+                get-medium="getMedium"
                 after-step="afterStep"
                 before-step="beforeStep"
                 payment-info="paymentInfo"
@@ -38,8 +38,8 @@
       include ./buy/email
     div.width-80(ng-show="onStep('accept-terms')" ng-controller="BuyAcceptTermsCtrl")
       include ./buy/accept-terms
-    div.width-80(ng-show="onStep('select-payment-method')" ng-controller="BuySelectPaymentMethodCtrl")
-      include ./buy/select-payment-method
+    div.width-80(ng-show="onStep('select-payment-medium')" ng-controller="BuySelectPaymentMediumCtrl")
+      include ./buy/select-payment-medium
     div.width-80(ng-show="onStep('summary')" ng-controller="BuySummaryCtrl")
       include ./buy/summary
     div.iframe(ng-if="onStep('isx')")
@@ -57,7 +57,7 @@
           span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
   //- needs directive
   .modal-footer.flex-end.flex-row
-    button.button-muted(ng-hide="onStep('select-country', 'select-payment-method') || afterStep('summary')"
+    button.button-muted(ng-hide="onStep('select-country', 'select-payment-medium') || afterStep('summary')"
                         ng-click="prevStep()" translate="GO_BACK")
     
     .flex-1.flex-end(ng-hide="status.loading")
@@ -84,7 +84,7 @@
           data-style="expand-left"
           ui-ladda="status.waiting"
           ng-disabled="isDisabled()"
-          ng-show="onStep('select-payment-method')")
+          ng-show="onStep('select-payment-medium')")
         button.button-primary(
           ladda-translate="CONFIRM"
           ng-click="buy()"

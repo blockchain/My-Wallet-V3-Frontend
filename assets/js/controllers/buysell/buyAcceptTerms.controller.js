@@ -10,7 +10,7 @@ function BuyAcceptTermsCtrl ($scope, Alerts, buySell) {
 
     return $scope.exchange.signup($scope.fields.countryCode, $scope.transaction.currency.code)
       .then(() => $scope.exchange.fetchProfile())
-      .then(() => $scope.getPaymentMethods())
+      .then(() => $scope.getPaymentMediums())
       .catch($scope.standardError);
   };
 

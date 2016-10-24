@@ -7,7 +7,7 @@ describe "BuyCtrl", ->
   $controller = undefined
   $q = undefined
   $timeout = undefined
-  methods = undefined
+  mediums = undefined
 
   beforeEach angular.mock.module("walletApp")
 
@@ -24,7 +24,7 @@ describe "BuyCtrl", ->
       currency = $injector.get("currency")
       buySell = $injector.get("buySell")
 
-      methods = [{ inMedium: "card" }, { inMedium: "bank" }]
+      mediums = [{ inMedium: "card" }, { inMedium: "bank" }]
 
       buySell.getExchange = () ->
         profile: {}
@@ -77,7 +77,7 @@ describe "BuyCtrl", ->
       scope.changeCurrency()
       expect(scope.currencySymbol).toEqual("P")
 
-    it "should set the transaction currency and refresh payment methods data", ->
+    it "should set the transaction currency and refresh payment mediums data", ->
       scope.changeCurrency()
       $rootScope.$digest()
       expect(scope.transaction.currency.code).toEqual("USD")
@@ -93,11 +93,11 @@ describe "BuyCtrl", ->
 
     it "should update with the correct values", ->
       scope.exchange.user = {}
-      scope.method = 'card'
+      scope.medium = 'card'
       scope.quote =
         quoteAmount: 10000 # $100.00
         id: 1
-        paymentMethods:
+        paymentMediums:
           card:
             fee: 501
             total: 10501
@@ -110,7 +110,7 @@ describe "BuyCtrl", ->
     beforeEach ->
       scope.exchange.user = undefined
       scope.user.isEmailVerified = false
-      scope.isMethodSelected = false
+      scope.isMediumSelected = false
       scope.user.email = "a@b.com"
       scope.$digest()
 
@@ -130,11 +130,11 @@ describe "BuyCtrl", ->
       scope.nextStep()
       expect(scope.onStep('accept-terms')).toEqual(true)
 
-    it "should switch to select-payment-method step", ->
+    it "should switch to select-payment-medium step", ->
       scope.transaction.fiat = 1
       scope.exchange.user = {}
       scope.nextStep()
-      expect(scope.onStep('select-payment-method')).toEqual(true)
+      expect(scope.onStep('select-payment-medium')).toEqual(true)
 
     it "should switch to isx step", ->
       scope.transaction.fiat = 1
@@ -147,7 +147,7 @@ describe "BuyCtrl", ->
     it "should switch to trade-formatted step", ->
       scope.transaction.fiat = 1
       scope.exchange.user = {}
-      scope.isMethodSelected = true
+      scope.isMediumSelected = true
       scope.trade = {state: 'completed'}
       scope.formattedTrade = 'finished trade'
       scope.nextStep()
