@@ -492,6 +492,15 @@ module.exports = (grunt) ->
               partnerId = 19
             console.log "Coinify partner ID: #{ partnerId }"
             "partnerId = #{ partnerId }"
+        },
+        {
+          from: 'stage-verify.isignthis.com'
+          to: () =>
+            domain = 'stage-verify.isignthis.com'
+            if @rootDomain == null || @rootDomain == 'blockchain.info'
+              domain = 'verify.isignthis.com'
+            console.log "iSignThis domain: #{ domain }"
+            domain
         }]
       api_domain:
         src: ['build/js/wallet.js'],
