@@ -1099,5 +1099,6 @@
     "USE_BECAUSE" : "You use bitcoin for many of the same reasons you opt to send an email, stream a movie, or download a song. It’s faster, cheaper, more secure and immutable. And its uses extend beyond the peer to peer payments. In many places, bitcoin is less volatile than the local currency so some use it to store value while others use it to consume at hundreds of thousands of vendors across the globe and online.",
     "LOVED_BY_ALL": "Loved by Users. Praised by Geeks. Recognized by the Press.",
     "" : ""
-  }
+  },
+  "DOUBLE_SPEND": "This transaction may be at risk of a double spend."
 }

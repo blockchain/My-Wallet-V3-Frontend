@@ -1,4 +1,5 @@
 .flex-column(ng-if="!complete")
+  transaction-warning(transaction="transaction")
   .flex-row.flex-between
     i.pointer.ti-new-window.blue(ng-click="verify()" uib-tooltip="{{'VERIFY_ON_BCI' | translate}}" tooltip-append-to-body="true")
     helper-button(content="{{ 'TRANSACTION_WILL_COMPLETE_IN' | translate:{minutes: minutesRemaining } }}" ng-if="!frugalWarning" append="true")
@@ -11,6 +12,7 @@
     span.pls(translate="CONFIRMATIONS")
 
 .success.flex-column(ng-if="complete")
+  transaction-warning(transaction="transaction")
   .flex-row.flex-center(ng-click="verify()")
     i.pointer.ti-new-window.blue.mrs(uib-tooltip="{{'VERIFY_ON_BCI' | translate}}" tooltip-append-to-body="true")
     span.mrs.mbn.em-400(translate="TRANSACTION_COMPLETE")

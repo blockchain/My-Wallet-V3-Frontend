@@ -41,7 +41,6 @@
     .tx-toggle {
       top: 31px;
       left: 10px;
-      height: 100%;
       position: absolute;
     }
     button.amount {
@@ -109,6 +108,10 @@
   .tx-note {
     max-width: 100%;
     word-wrap: break-word;
+  }
+  .tx-warning {
+    left: -37px;
+    bottom: -2px;
   }
 }
 
