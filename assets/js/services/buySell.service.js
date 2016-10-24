@@ -97,10 +97,10 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     return $q.resolve(getRate);
   }
 
-  function calculateMax (rate, method) {
-    let currentLimit = service.getExchange().profile.currentLimits[method].inRemaining;
+  function calculateMax (rate, medium) {
+    let currentLimit = service.getExchange().profile.currentLimits[medium].inRemaining;
     let userLimits = service.getExchange().profile.level.limits;
-    let dailyLimit = userLimits[method].inDaily;
+    let dailyLimit = userLimits[medium].inDaily;
 
     let limits = {};
     limits.max = (Math.round(((rate * dailyLimit) / 100)) * 100);

@@ -72,6 +72,17 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
 
   $scope.userHasExchangeAcct = $scope.exchange.user;
 
+  $scope.getAccounts = () => {
+    if (!$scope.exchange.user) { return; }
+
+    let success = (accounts) => {
+      $scope.accounts = accounts;
+    };
+
+    let accountsError = eventualError('ERROR_ACCOUNTS_FETCH');
+    return $scope.mediums[$scope.medium].getAccounts().then(success, accountsError);
+  };
+
   $scope.getPaymentMediums = () => {
     if (!$scope.exchange.user) { return; }
 
@@ -146,6 +157,7 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
     return buySell.getExchange().getBuyQuote(amount, currCode)
       .then(success, quoteError)
       .then($scope.getPaymentMediums)
+      .then($scope.getAccounts)
       .catch($scope.standardError);
   };
 
