@@ -9,7 +9,9 @@ function confirmRecoveryPhrase ($uibModal, Wallet, Alerts) {
   const directive = {
     restrict: 'E',
     replace: true,
-    scope: {},
+    scope: {
+      promptBackup: '='
+    },
     templateUrl: 'templates/confirm-recovery-phrase.jade',
     link: link
   };
@@ -27,10 +29,13 @@ function confirmRecoveryPhrase ($uibModal, Wallet, Alerts) {
         ? openModal()
         : Wallet.askForMainPasswordConfirmation()
           .then(openModal)
-          .catch(() => {
+          .catch((reason) => {
+            if (reason !== 'incorrect_main_pw') return;
             Alerts.displayError('INCORRECT_PASSWORD');
             scope.confirmRecoveryPhrase();
           })
-    );
+      );
+
+    if (scope.promptBackup) scope.confirmRecoveryPhrase();
   }
 }

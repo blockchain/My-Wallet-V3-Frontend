@@ -76,6 +76,12 @@ describe "SettingsSecurityCenterCtrl", ->
       scope.changePasswordHint('phil', scope.success, scope.error)
       expect(Wallet.changePasswordHint).toHaveBeenCalled()
 
+  it "should toggle state to securityphrase", inject(($timeout) ->
+    scope.promptBackup = true
+    $timeout.flush()
+    expect(scope.display.action).toBe('securityphrase')
+  )
+
   describe "nextAction", ->
 
     it "should toggle actions", ->

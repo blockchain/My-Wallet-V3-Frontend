@@ -79,14 +79,12 @@
     "BODY": "You've been inactive for {{::minutes}} minutes. Click \"Cancel\" if you don't want to be logged out automatically."
   },
   "LOG_ME_OUT": "Log me out",
-  "CONFIRM_FORCE_LOGOUT": {
-    "TITLE": "Sign out without saving?",
-    "BODY": "There are changes still being saved, signing out now may result in loss of data. Are you sure you wish to continue?"
-  },
   "CONFIRM_CANCEL_TRADE": {
     "TITLE": "Cancel Trade?",
     "BODY": "Are you sure you want to cancel this trade?"
   },
+  "SAVING": "Saving",
+  "SAVING_DESC": "Please wait while your wallet is saved...",
   "CANCEL_TRADE": "Cancel Trade",
   "CLOSE": "Close",
   "TRANSACTIONS" : "Transactions",
@@ -166,10 +164,6 @@
   "CONFIRM_CLOSE_AMT": {
     "TITLE": "Are You Sure?",
     "BODY": "Clicking Close will exit the modal, but you can buy bitcoin anytime."
-  },
-  "CONFIRM_LOGOUT": {
-    "TITLE": "Sign Out?",
-    "BODY": "All changes have been saved, it is safe to sign out."
   },
   "LANGUAGE_EXPLAIN" : "Set your preferred language.",
   "EMAIL_ADDRESS" : "Email Address",
@@ -633,6 +627,7 @@
   "SECURE_WALLET_MSG_1" : "We’re thrilled you’re using your bitcoin wallet! But it looks like you’re still not as secure as you could be. Securing your wallet can help keep funds safe.",
   "SECURE_WALLET_MSG_2" : "Don't forget to secure your wallet - take advantage of our Security Center and keep your funds safe",
   "NO_THANKS" : "No Thanks",
+  "CONTINUE_LOGOUT": "Continue signing out",
   "SECURE_WALLET" : "Secure Wallet",
   "MOST_RECENT_ACTIVITY" : "Most Recent Activity",
   "DYK" : "Did You Know?",
@@ -649,6 +644,10 @@
   "SURVEY_CONFIRM": {
     "TITLE": "@:BEFORE_LEAVE",
     "BODY": "@:SURVEY_ASK"
+  },
+  "BACKUP_REMINDER": {
+    "TITLE": "Wait!",
+    "BODY": "Before you sign out, make sure to record your backup phrase. This will allow you to recover your wallet if you ever forget your password."
   },
   "WHAT_DO_YOU_THINK": "What do you think of Blockchain Wallet?",
   "VIEW_OPTIONS": "View Options",

@@ -93,7 +93,7 @@
       div.flex-center(ng-show="display.action == 'securityphrase'")        
         p.flex-1.prl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
         .flex-1.mll.backup-phrase-actions
-          confirm-recovery-phrase(button-class="button-primary", ng-hide="status.didConfirmRecoveryPhrase")
+          confirm-recovery-phrase(button-class="button-primary", ng-hide="status.didConfirmRecoveryPhrase", prompt-backup="promptBackup")
 
       div(ng-show="display.action == 'passwordhint'")
         bc-async-input(custom inline placeholder="'ADD_PASSWORD_HINT' | translate" ng-model="user.passwordHint" on-cancel="cancelEditPasswordHint" on-save="changePasswordHint" action-title="'CHANGE' | translate" editing=1)

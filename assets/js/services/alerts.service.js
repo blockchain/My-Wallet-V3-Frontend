@@ -7,19 +7,20 @@ Alerts.$inject = ['$timeout', '$rootScope', '$q', '$translate', '$uibModal'];
 function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
   const service = {
     alerts: [],
-    close: close,
-    clear: clear,
-    display: display,
-    confirm: confirm,
-    prompt: prompt,
-    isDuplicate: isDuplicate,
+    close,
+    clear,
+    display,
+    confirm,
+    prompt,
+    saving,
+    isDuplicate,
     displayInfo: display.bind(null, 'info'),
     displaySuccess: display.bind(null, 'success'),
     displayWarning: display.bind(null, ''),
     displayError: display.bind(null, 'danger'),
     displayReceivedBitcoin: display.bind(null, 'received-bitcoin'),
     displaySentBitcoin: display.bind(null, 'sent-bitcoin'),
-    displayResetTwoFactor: displayResetTwoFactor
+    displayResetTwoFactor
   };
 
   function close (alert, context = service.alerts) {
@@ -76,6 +77,20 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
       templateUrl: 'partials/modal-prompt.jade',
       windowClass: 'bc-modal medium',
       controller: ($scope) => angular.extend($scope, options, { message })
+    }).result;
+  }
+
+  function saving () {
+    return $uibModal.open({
+      templateUrl: 'partials/modal-saving.jade',
+      windowClass: 'bc-modal confirm top',
+      backdrop: 'static',
+      keyboard: false,
+      controller: function ($scope, $interval, $uibModalInstance, Wallet) {
+        let tick = () => Wallet.isSynchronizedWithServer() && $uibModalInstance.close(true);
+        $scope.timer = $interval(tick, 500);
+        $scope.$on('$destroy', () => $interval.cancel($scope.timer));
+      }
     }).result;
   }
 

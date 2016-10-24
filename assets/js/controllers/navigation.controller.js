@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('NavigationCtrl', NavigationCtrl);
 
-function NavigationCtrl ($scope, $window, $rootScope, $interval, $timeout, $cookies, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWalletMetadata) {
+function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeout, $cookies, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWalletMetadata) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
 
@@ -87,27 +87,30 @@ function NavigationCtrl ($scope, $window, $rootScope, $interval, $timeout, $cook
 
   $scope.logout = () => {
     let isSynced = Wallet.isSynchronizedWithServer();
+    let needsBackup = !Wallet.status.didConfirmRecoveryPhrase;
 
-    let options = { friendly: true, cancel: 'NO_THANKS', modalClass: 'top' };
+    let options = (ops) => angular.merge({ friendly: true, modalClass: 'top' }, ops);
     let saidNoThanks = (e) => e === 'cancelled' ? $q.resolve() : $q.reject();
-    let setSurveyCookie = () => $cookies.put('logout-survey', true);
+    let hasNotSeen = (id) => !$cookies.get(id);
+    let rememberChoice = (id) => () => $cookies.put(id, true);
+
+    let goToBackup = () => $q.all([$state.go('wallet.common.security-center', {promptBackup: true}), $q.reject('backing_up')]);
     let openSurvey = () => { $window.open('https://blockchain.co1.qualtrics.com/SE/?SID=SV_7PupfD2KjBeazC5'); };
 
+    let remindBackup = () =>
+      Alerts.confirm('BACKUP_REMINDER', options({ cancel: 'CONTINUE_LOGOUT', action: 'VERIFY_RECOVERY_PHRASE' }))
+        .then(goToBackup, saidNoThanks).then(rememberChoice('backup-reminder'));
+
     let promptSurvey = () =>
-      Boolean($cookies.get('logout-survey')) === true
-        ? $q.resolve()
-        : Alerts.confirm('SURVEY_CONFIRM', options)
-          .then(openSurvey, saidNoThanks).then(setSurveyCookie);
+      Alerts.confirm('SURVEY_CONFIRM', options({ cancel: 'NO_THANKS' }))
+        .then(openSurvey, saidNoThanks).then(rememberChoice('logout-survey'));
 
-    let confirmForce = () =>
-      Alerts.confirm('CONFIRM_FORCE_LOGOUT', { modalClass: 'top' });
-
-    let logout = () =>
-      Wallet.logout();
-
-    isSynced
-      ? promptSurvey().then(logout)
-      : confirmForce().then(promptSurvey).then(logout);
+    $q.resolve(isSynced || Alerts.saving())
+      .then(() => {
+        if (needsBackup && hasNotSeen('backup-reminder')) return remindBackup();
+        else if (hasNotSeen('logout-survey')) return promptSurvey();
+      })
+      .then(() => Wallet.logout());
   };
 
   if (Wallet.goal.firstTime) {
