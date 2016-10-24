@@ -1,6 +1,6 @@
 .row
   .col-xs-12
-    table.accounts-container.addresses.responsive.width-100(ng-controller="SettingsImportedAddressesCtrl")
+    table.accounts-container.addresses.responsive.width-100(ng-controller="SettingsImportedAddressesCtrl" gradual-render)
       tr.width-100.pointer(ng-click="importAddress()")
         td.col-md-3
           i.ti-plus.blue.mrm
@@ -8,10 +8,10 @@
         td.col-md-3
         td.col-md-3
       tr(
-        imported-address="address", 
-        search-text="searchText",
-        ng-repeat="address in legacyAddresses() | filter:{archived: false} | addressOrNameMatch:searchText"
-      )
+        imported-address="address"
+        search-text="searchText"
+        ng-repeat="address in legacyAddresses() | filter:{archived: false} | addressOrNameMatch:searchText | limitTo:$render.limit track by $index"
+        in-view="$last && $render.next()")
 
 div(ng-controller="SettingsImportedAddressesCtrl")
   .flex-between.flex-center.mtl

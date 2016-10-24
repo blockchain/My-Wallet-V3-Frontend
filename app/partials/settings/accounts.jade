@@ -3,7 +3,8 @@
     input(
       type="text"
       placeholder="{{::'SEARCH' | translate}}"
-      ng-model="searchText")
+      ng-model="searchText"
+      ng-model-options="{debounce:250}")
     i.ti-search
 
 .row.ptvl
