@@ -77,7 +77,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   $scope.userHasExchangeAcct = $scope.exchange.user;
 
   $scope.getAccounts = () => {
-    if (!$scope.exchange.user) { return; }
+    if (!$scope.exchange.user || !$scope.medium) { return; }
 
     let success = (accounts) => {
       $scope.accounts = accounts;
