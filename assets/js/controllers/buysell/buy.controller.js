@@ -122,7 +122,6 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   };
 
   $scope.getQuote = () => {
-    if ($scope.quote) { $scope.getPaymentMethods(); return; }
     if ($scope.trade) { $scope.updateAmounts(); return; }
 
     $scope.quote = null;
