@@ -8,7 +8,7 @@
 
   //- card || bank
   .width-25.flex-column.flex-center(ng-class="{blue: afterStep('accept-terms') && beforeStep('isx')}")
-    i.type-lrg.ti-credit-card(ng-class="{bank: (getMethod().inMedium === 'bank' || medium === 'bank') || isKYC}")
+    i.type-lrg.ti-credit-card(ng-class="{bank: (getMedium().inMedium === 'bank' || medium === 'bank') || isKYC}")
     span(translate="METHOD")
 
   .flex-justify

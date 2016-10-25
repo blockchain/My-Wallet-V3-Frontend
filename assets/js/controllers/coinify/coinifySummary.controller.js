@@ -14,8 +14,8 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
     };
 
     const calculateMax = (rate) => {
-      $scope.$parent.limits.max = buySell.calculateMax(rate, $scope.method).max;
-      $scope.$parent.limits.available = buySell.calculateMax(rate, $scope.method).available;
+      $scope.$parent.limits.max = buySell.calculateMax(rate, $scope.medium).max;
+      $scope.$parent.limits.available = buySell.calculateMax(rate, $scope.medium).available;
     };
 
     return buySell.fetchProfile(true).then(() => {
@@ -74,10 +74,10 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
 
     let buyError = eventualError('ERROR_TRADE_CREATE');
 
-    $scope.exchange.buy(-$scope.quote.baseAmount, $scope.quote.baseCurrency, $scope.getMethod().inMedium)
-                   .catch(buyError)
-                   .then(success, $scope.standardError)
-                   .then($scope.watchAddress);
+    $scope.accounts[0].buy(-$scope.quote.baseAmount, $scope.quote.baseCurrency, $scope.getMedium().inMedium)
+                      .catch(buyError)
+                      .then(success, $scope.standardError)
+                      .then($scope.watchAddress);
   };
 
   $scope.$watch('transaction.currency', (newVal, oldVal) => {
