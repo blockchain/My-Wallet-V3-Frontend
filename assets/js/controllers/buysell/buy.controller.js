@@ -122,28 +122,35 @@ function BuyCtrl ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts
   };
 
   $scope.getQuote = () => {
-    if ($scope.quote) { $scope.getPaymentMethods(); return; }
     if ($scope.trade) { $scope.updateAmounts(); return; }
 
     $scope.quote = null;
-    $scope.transaction.btc = 0;
-    $scope.status.gettingQuote = true;
     $scope.status.waiting = true;
-    if (!$scope.transaction.fiat) { $scope.status = {}; return; }
+    $scope.status.gettingQuote = true;
 
     let quoteError = eventualError('ERROR_QUOTE_FETCH');
-    let currCode = $scope.transaction.currency.code;
-    let amount = Math.round($scope.transaction.fiat * 100);
+    let baseCurr = buyOptions.btc ? 'BTC' : $scope.transaction.currency.code;
+    let quoteCurr = buyOptions.btc ? $scope.transaction.currency.code : 'BTC';
+    let amount = buyOptions.btc ? -Math.round($scope.transaction.btc * 100000000) : Math.round($scope.transaction.fiat * 100);
 
     const success = (quote) => {
       $scope.status = {};
       $scope.expiredQuote = false;
       $scope.quote = quote;
       Alerts.clear($scope.alerts);
-      $scope.transaction.btc = quote.quoteAmount / 100000000;
+      if (quote.baseCurrency === 'BTC') {
+        $scope.transaction.btc = quote.baseAmount / 100000000;
+        $scope.transaction.fiat = -quote.quoteAmount / 100;
+      } else {
+        $scope.transaction.fiat = -quote.baseAmount / 100;
+        $scope.transaction.btc = quote.quoteAmount / 100000000;
+      }
     };
 
-    return buySell.getExchange().getBuyQuote(amount, currCode)
+    // reset buyOptions so we don't use btc for quote anymore
+    buyOptions = {};
+
+    return buySell.getExchange().getBuyQuote(amount, baseCurr, quoteCurr)
       .then(success, quoteError)
       .then($scope.getPaymentMethods)
       .catch($scope.standardError);
