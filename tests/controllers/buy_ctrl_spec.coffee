@@ -29,6 +29,7 @@ describe "BuyCtrl", ->
       buySell.getExchange = () ->
         profile: {}
         user: {}
+        getBuyQuote: (amt, b, q) -> $q.resolve({"baseCurrency":"EUR","quoteCurrency":"BTC", "getPaymentMethods": () -> $q.resolve()})
 
       Wallet.settings.currency = { code: "USD" }
       Wallet.changeCurrency = () -> $q.resolve()

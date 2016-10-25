@@ -73,9 +73,8 @@ function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency, Alerts
     }
 
     let buyError = eventualError('ERROR_TRADE_CREATE');
-    let amount = -$scope.quote.baseAmount;
 
-    $scope.exchange.buy(amount, $scope.transaction.currency.code, $scope.getMethod().inMedium)
+    $scope.exchange.buy(-$scope.quote.baseAmount, $scope.quote.baseCurrency, $scope.getMethod().inMedium)
                    .catch(buyError)
                    .then(success, $scope.standardError)
                    .then($scope.watchAddress);
