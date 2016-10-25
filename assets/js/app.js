@@ -51,6 +51,7 @@ angular.module('walletApp', modules)
   var bcPhoneNumberLazyLoadFiles = [
     'js/bc-phone-number.min.js'
   ];
+  $compileProvider.debugInfoEnabled(false);
   /* @endif */
 
   $ocLazyLoadProvider.config({
