@@ -35,7 +35,6 @@ function isignthis ($sce) {
       // TODO: use elem or avoid usage alltogether:
       var e = document.getElementById('isx-iframe');
 
-      // scope.url = $sce.trustAsResourceUrl('https://verify.isignthis.com/landing/' + iSignThisID + '?embed=true');
       scope.url = $sce.trustAsResourceUrl('https://stage-verify.isignthis.com/landing/' + iSignThisID + '?embed=true');
 
       // iSignThis iframe contoller code, TODO:
@@ -100,7 +99,6 @@ function isignthis ($sce) {
         eventer(messageEvent, function (e) {
           // Check for the domain who sent the messageEvent
           var origin = e.origin || e.originalEvent.origin;
-          // if (origin !== 'https://verify.isignthis.com') {
           if (origin !== 'https://stage-verify.isignthis.com') {
             // Event not generated from ISX, simply return
             return;
