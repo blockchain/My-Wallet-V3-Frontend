@@ -1113,6 +1113,7 @@
   "ACCEPT_TOS": "I have read and agree to the <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Terms of Service</a>",
   "SIMPLE_SECURE_SEAMLESS": "Simple. Secure. Seamless.",
   "BUY_SIMPLE_STEPS": "The world's most popular bitcoin wallet <br> now lets you buy bitcoin in 4 <br> simple and secure steps.",
+  "BUY_SIMPLE_STEPS_2": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet both a seamless and secure experience.",
   "METADATA_DOWN_EXCHANGE": "Unable to load your exchange details. Please try refreshing the page.",
   "FETCHING_INFO_EXCHANGE": "Getting information from your exchange partner. This could take a few seconds.",
   "ORDER_HISTORY": "Order History",

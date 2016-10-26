@@ -208,20 +208,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('wallet.common.buy-sell', {
-      url: '/buy-sell',
-      views: {
-        top: top,
-        left: {
-          templateUrl: 'partials/wallet-navigation.jade',
-          controller: 'WalletNavigationCtrl'
-        },
-        right: {
-          templateUrl: 'partials/buy-sell.jade',
-          controller: 'BuySellCtrl'
-        }
-      }
-    })
     .state('wallet.common.security-center', {
       url: '/security-center',
       params: {
@@ -229,10 +215,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       },
       views: {
         top: top,
-        left: {
-          templateUrl: 'partials/wallet-navigation.jade',
-          controller: 'WalletNavigationCtrl'
-        },
+        left: walletNav,
         right: {
           templateUrl: 'partials/security-center.jade',
           controller: 'SettingsSecurityCenterCtrl',
@@ -271,10 +254,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/settings',
       views: {
         top: top,
-        left: {
-          templateUrl: 'partials/wallet-navigation.jade',
-          controller: 'WalletNavigationCtrl'
-        },
+        left: walletNav,
         right: {
           controller: 'SettingsCtrl',
           templateUrl: 'partials/settings/settings.jade'
@@ -285,13 +265,73 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/faq',
       views: {
         top: top,
-        left: {
-          templateUrl: 'partials/wallet-navigation.jade',
-          controller: 'WalletNavigationCtrl'
-        },
+        left: walletNav,
         right: {
           templateUrl: 'partials/faq.jade',
           controller: 'faqCtrl'
+        }
+      }
+    });
+
+  $stateProvider
+    .state('wallet.common.buy-sell', {
+      url: '/buy-sell',
+      resolve: {
+        country () {
+          return null;
+        }
+      },
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/buy-sell-select-partner.jade',
+          controller: 'BuySellSelectPartnerController'
+        }
+      }
+    })
+    .state('wallet.common.buy-sell.coinify', {
+      url: '',
+      views: {
+        'right@wallet.common': {
+          templateUrl: 'partials/buy-sell.jade',
+          controller: 'BuySellCtrl'
+        }
+      }
+    })
+    .state('wallet.common.buy-sell.sfox', {
+      url: '',
+      resolve: {
+        exchange (MyWallet) {
+          return MyWallet.wallet.external.sfox;
+        }
+      },
+      views: {
+        'right@wallet.common': {
+          templateUrl: 'partials/sfox/checkout.jade',
+          controller: 'SfoxCheckoutController'
+        }
+      }
+    })
+    .state('wallet.common.buy-sell.sfox.signup', {
+      url: '/signup/:step',
+      views: {
+        'top@wallet.common': {
+          templateUrl: 'partials/sfox/signup-steps.jade',
+          controller: 'SfoxSignupStepsController'
+        },
+        'right@wallet.common': {
+          templateUrl ($stateParams, $state) {
+            let view = (name) => `partials/sfox/${name}.jade`;
+            switch ($stateParams.step) {
+              case 'create': return view('create-account');
+              case 'verify': return view('verify');
+              case 'link': return view('link');
+              case 'buy': return view('buy');
+              default: throw new Error('sfox_invalid_signup_state');
+            }
+          },
+          controller: 'SfoxSignupController'
         }
       }
     });

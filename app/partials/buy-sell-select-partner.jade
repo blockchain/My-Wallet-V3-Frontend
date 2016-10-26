@@ -1,0 +1,12 @@
+.buy-sell
+  .flex-row.flex-column-tablet
+    .width-50.mrl.pal.border
+      span.type-h4.em-500 Find your exchange partner:
+      .mtl
+        span.em-500 Country of residence:
+        ui-select(ng-model="country" on-select="selectPartner($item)")
+          ui-select-match(placeholder="Select country") {{$select.selected}}
+          ui-select-choices(repeat="c in countries") {{c}}
+    .flex-column.width-50.mlvl.mtml
+      .font-2.blue.em-300.lh1(translate="SIMPLE_SECURE_SEAMLESS")
+      .type-h4.em-300.mtm.basic-grey(translate="BUY_SIMPLE_STEPS_2")
