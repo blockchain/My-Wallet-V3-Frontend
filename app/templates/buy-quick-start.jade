@@ -41,7 +41,7 @@
             name="btc"
             step="any"
             tabindex="1"
-            ng-change="transaction.fiat = null; getQuote(transaction.btc);"
+            ng-change="transaction.fiat = null; getQuote();"
             ng-model-options="{debounce: 250}"
             placeholder="{{placeholder}}")
           div.input-group-btn
