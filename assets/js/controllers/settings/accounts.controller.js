@@ -2,9 +2,10 @@ angular
   .module('walletApp')
   .controller('SettingsAccountsController', SettingsAccountsController);
 
-function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFilter, $ocLazyLoad) {
+function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFilter, $ocLazyLoad, modals) {
   $scope.accounts = Wallet.accounts;
   $scope.activeSpendableAddresses = () => Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly && a.balance > 0);
+  $scope.openTransferAll = () => modals.openTransfer($scope.activeSpendableAddresses());
 
   $scope.display = {
     archived: false
