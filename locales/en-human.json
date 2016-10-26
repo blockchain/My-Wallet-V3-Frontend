@@ -652,7 +652,7 @@
   "WHAT_DO_YOU_THINK": "What do you think of Blockchain Wallet?",
   "VIEW_OPTIONS": "View Options",
   "DEAUTH_BROWSER": "You are now logged out!",
-  "DEAUTH_EXPLAIN": "Click the button below to require email authorization the next time you login on this computer. Do this if you are using a shared or public computer.",
+  "DEAUTH_EXPLAIN": "Click the button below to require email authorization the next time you login with this browser. Do this if you are using a shared or public computer.",
   "DEAUTHORIZE": "De-Authorize Browser",
   "PENDING_REDIRECT": "Redirecting in {{time}} seconds",
   "BOUGHT": "Bought",
