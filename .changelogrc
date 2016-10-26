@@ -28,6 +28,10 @@
             "grep": "^style"
         },
         {
+            "title": "Copy",
+            "grep": "^copy"
+        },
+        {
             "title": "Test",
             "grep": "^test"
         },
