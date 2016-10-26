@@ -38,7 +38,7 @@
       include ./coinify/email
     div.width-80(ng-show="onStep('accept-terms')" ng-controller="CoinifySignupController")
       include ./coinify/signup
-    div.width-80(ng-show="onStep('select-payment-method')" ng-controller="CoinifyMediumController")
+    div.width-80(ng-show="onStep('select-payment-medium')" ng-controller="CoinifyMediumController")
       include ./coinify/medium
     div.width-80(ng-show="onStep('summary')" ng-controller="CoinifySummaryController")
       include ./coinify/summary
