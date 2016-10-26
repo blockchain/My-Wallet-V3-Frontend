@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller('BuySelectCountryCtrl', BuySelectCountryCtrl);
+  .controller('CoinifyCountryController', CoinifyCountryController);
 
-function BuySelectCountryCtrl ($scope, country, MyWallet, buySell) {
+function CoinifyCountryController ($scope, country, MyWallet, buySell) {
   $scope.countries = country;
 
   let blacklist = [{'Name': 'Algeria', 'Code': 'DZ'},

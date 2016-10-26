@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller('BuyEmailCtrl', BuyEmailCtrl);
+  .controller('CoinifyEmailController', CoinifyEmailController);
 
-function BuyEmailCtrl ($scope, Alerts, Wallet, $q) {
+function CoinifyEmailController ($scope, Alerts, Wallet, $q) {
   $scope.toggleEmail = () => $scope.editEmail = !$scope.editEmail;
 
   $scope.changeEmail = (email, successCallback, errorCallback) => {

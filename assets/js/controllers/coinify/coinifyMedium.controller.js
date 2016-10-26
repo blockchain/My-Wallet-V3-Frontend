@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller('BuySelectPaymentMethodCtrl', BuySelectPaymentMethodCtrl);
+  .controller('CoinifyMediumController', CoinifyMediumController);
 
-function BuySelectPaymentMethodCtrl ($scope, Alerts, buySell) {
+function CoinifyMediumController ($scope, Alerts, buySell) {
   $scope.$parent.method = $scope.trade ? $scope.trade.medium : undefined;
   $scope.$parent.methods = {};
 

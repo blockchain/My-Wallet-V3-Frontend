@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller('BuySummaryCtrl', BuySummaryCtrl);
+  .controller('CoinifySummaryController', CoinifySummaryController);
 
-function BuySummaryCtrl ($scope, $q, $timeout, Wallet, buySell, currency, Alerts) {
+function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts) {
   $scope.$parent.limits = {};
   $scope.exchange = buySell.getExchange();
   $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
