@@ -1,4 +1,4 @@
-describe "BuyCtrl", ->
+describe "CoinifyController", ->
   scope = undefined
   Wallet = undefined
   Alerts = undefined
@@ -45,7 +45,7 @@ describe "BuyCtrl", ->
 
   getControllerScope = (params = {}) ->
     scope = $rootScope.$new()
-    $controller "BuyCtrl",
+    $controller "CoinifyController",
       $scope: scope,
       $uibModalInstance: params.modalInstance ? { close: (->) dismiss: (->) }
       trade: params.trade ? false

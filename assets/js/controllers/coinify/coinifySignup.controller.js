@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller('BuyAcceptTermsCtrl', BuyAcceptTermsCtrl);
+  .controller('CoinifySignupController', CoinifySignupController);
 
-function BuyAcceptTermsCtrl ($scope, Alerts, buySell) {
+function CoinifySignupController ($scope, Alerts, buySell) {
   $scope.$parent.signup = () => {
     $scope.status.waiting = true;
     Alerts.clear($scope.alerts);

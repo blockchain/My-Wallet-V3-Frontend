@@ -32,16 +32,16 @@
   .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'), 'isx': onStep('isx')}")
     .alert-in-app
       alerts(context="alerts")
-    div.width-80(ng-show="onStep('select-country')" ng-controller="BuySelectCountryCtrl")
-      include ./buy/select-country
-    div.width-80(ng-show="onStep('email')" ng-controller="BuyEmailCtrl")
-      include ./buy/email
-    div.width-80(ng-show="onStep('accept-terms')" ng-controller="BuyAcceptTermsCtrl")
-      include ./buy/accept-terms
-    div.width-80(ng-show="onStep('select-payment-method')" ng-controller="BuySelectPaymentMethodCtrl")
-      include ./buy/select-payment-method
-    div.width-80(ng-show="onStep('summary')" ng-controller="BuySummaryCtrl")
-      include ./buy/summary
+    div.width-80(ng-show="onStep('select-country')" ng-controller="CoinifyCountryController")
+      include ./coinify/country
+    div.width-80(ng-show="onStep('email')" ng-controller="CoinifyEmailController")
+      include ./coinify/email
+    div.width-80(ng-show="onStep('accept-terms')" ng-controller="CoinifySignupController")
+      include ./coinify/signup
+    div.width-80(ng-show="onStep('select-payment-method')" ng-controller="CoinifyMediumController")
+      include ./coinify/medium
+    div.width-80(ng-show="onStep('summary')" ng-controller="CoinifySummaryController")
+      include ./coinify/summary
     div.iframe(ng-if="onStep('isx')")
       isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="formatTrade" payment-info="paymentInfo" on-resize="onResize(step)")
     div.width-80(ng-if="onStep('trade-in-review', 'trade-formatted')")

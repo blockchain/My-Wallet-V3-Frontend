@@ -1,4 +1,4 @@
-describe "BuySelectCountryCtrl", ->
+describe "CoinifyCountryController", ->
   scope = undefined
   country = undefined
   MyWallet = undefined
@@ -29,7 +29,7 @@ describe "BuySelectCountryCtrl", ->
 
   getControllerScope = (params = {}) ->
     scope = $rootScope.$new()
-    $controller "BuySelectCountryCtrl",
+    $controller "CoinifyCountryController",
       $scope: scope,
     scope
 
