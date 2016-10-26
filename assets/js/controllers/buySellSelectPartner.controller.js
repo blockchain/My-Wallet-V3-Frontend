@@ -2,8 +2,11 @@ angular
   .module('walletApp')
   .controller('BuySellSelectPartnerController', BuySellSelectPartnerController);
 
-function BuySellSelectPartnerController ($scope, $state, country) {
+function BuySellSelectPartnerController ($scope, $state, country, MyWallet) {
   let base = 'wallet.common.buy-sell';
+
+  if (MyWallet.wallet.external.coinify.user) $state.go(base + '.coinify');
+  if (MyWallet.wallet.external.sfox.user) $state.go(base + '.sfox');
 
   $scope.countries = ['USA', 'Other'];
 
