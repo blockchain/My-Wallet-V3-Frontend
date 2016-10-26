@@ -7,7 +7,7 @@
       ng-model-options="{debounce:250}")
     i.ti-search
 
-.row.ptvl
+.row.ptvl(data-preflight-tag="Accounts")
   .col-xs-12
     table.accounts-container.width-100(ng-if="status.isLoggedIn")
       tr.responsive.width-100(ng-repeat="account in accounts() | filter:{label: searchText}")
