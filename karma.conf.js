@@ -40,7 +40,7 @@ module.exports = function (config) {
       'assets/js/walletLazyLoad.js',
       'assets/js/core/*.js',
       'tests/filters/*.coffee',
-      'tests/controllers/*.coffee',
+      'tests/controllers/**/*.coffee',
       'tests/components/*.coffee',
       'tests/services/**/*.coffee',
       'tests/directives/*.coffee',

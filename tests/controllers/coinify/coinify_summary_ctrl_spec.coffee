@@ -1,4 +1,4 @@
-describe "CoinifySummaryCtrl", ->
+describe "CoinifySummaryController", ->
   scope = undefined
   Wallet = undefined
   currency = undefined
@@ -58,7 +58,7 @@ describe "CoinifySummaryCtrl", ->
   getControllerScope = (params = {}) ->
     scope = $rootScope.$new()
     scope.transaction = {fiat: 0, btc: 0, fee: 0, total: 0, currency: {symbol: 'E', code: 'EUR'}};
-    $controller "CoinifySummaryCtrl",
+    $controller "CoinifySummaryController",
       $scope: scope
       exchange: {}
     scope
