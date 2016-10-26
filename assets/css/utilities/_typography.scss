@@ -25,6 +25,7 @@
 .upper { text-transform: uppercase; }
 .italic { font-style: italic; }
 .parens { &:before { content: '('; } &:after { content: ')'; } }
+.ellipsis:after { content: '...'; }
 
 .text-overflow-hidden, .ui-select-match-text {
   text-overflow: ellipsis;

@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .controller('LogoutController', LogoutController);
 
-function LogoutController ($scope, $cookies, $q, Wallet, Alerts) {
+function LogoutController ($scope, $cookies, $q, $interval, $state, Wallet, Alerts) {
   $scope.deauth = () => {
     $scope.deauthorizing = true;
     let sessionToken = $cookies.get('session');
@@ -14,4 +14,11 @@ function LogoutController ($scope, $cookies, $q, Wallet, Alerts) {
       .catch(() => { Alerts.displayError('ERROR_DEAUTH'); })
       .finally(() => $scope.deauthorizing = false);
   };
+
+  $scope.timeToRedirect = 10;
+  $interval(() => {
+    if (--$scope.timeToRedirect === 0) {
+      $state.go('public.login-no-uid');
+    }
+  }, 1000);
 }
