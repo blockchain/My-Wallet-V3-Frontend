@@ -10,12 +10,12 @@
 
 .row.ptvl(data-preflight-tag="AccountAddresses")
   .col-xs-12.table-container
-    .flex-between.flex-center
-      h2.mvl.pbl {{account.label}}
+    .flex-between.flex-center.mvl.pvm
+      span.type-md.em-500 {{account.label}}
         span.label.label-primary.btn-xs(translate="DEFAULT", ng-show="!account.archived && isDefault(account)")
         span.label.label-default.btn-xs(translate="ARCHIVED" ng-show="account.archived")
       span(uib-dropdown on-toggle="toggled(open)")
-        a(href uib-dropdown-toggle id="more-dropdown" translate="More Options") 
+        a.pbl(href uib-dropdown-toggle id="more-dropdown" translate="More Options")
         ul.dropdown-menu.dropdown-menu-right(uib-dropdown-menu aria-labelledby="more-dropdown")
           li
             a(translate="EDIT_NAME" ng-click="editAccount(account)")
