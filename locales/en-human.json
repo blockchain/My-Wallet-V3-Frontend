@@ -780,6 +780,8 @@
   "BROWSER" : "Browser",
   "IP_ADDRESS" : "IP Address",
   "COUNTRY_OF_ORIGIN" : "Country Of Origin",
+  "COUNTRY": "Country",
+  "STATE": "State",
   "AUTHORIZE_REJECT_SUCCESS" : "Login attempt rejected! Please contact support if this was not you.",
   "CHECKING_LOGIN_ATTEMPT" : "Checking login attempt",
   "ERROR" : "Error",
@@ -1072,11 +1074,14 @@
   "BUY_AMT_LOW": "Buy amount too low.",
   "BUY_AMT_HIGH": "Buy amount too high.",
   "UPDATE": "Update",
-  "SUBSCRIBE": {
+  "BUY_SUBSCRIBE": {
     "TITLE": "This feature is coming soon!",
     "BODY": "The world's most popular bitcoin wallet now lets you buy bitcoin securely. Sign up to get access as soon as we launch in your area!",
     "BUTTON": "Sign Up"
   },
+  "SUBSCRIBE_TITLE": "Sign up for Blockchain updates!",
+  "SUBSCRIBE_BODY": "Opt-in to stay up-to-date on new features, bitcoin news, and other exciting things at Blockchain. Confirm your email and region below.",
+  "SUBSCRIBE_BUTTON": "Subscribe",
   "BUY_FEEDBACK": {
     "PROMPT": "I thought the Buy Bitcoin feature was easy to use",
     "DISAGREE": "Strongly Disagree",
@@ -1113,5 +1118,6 @@
   "HIDE": "Hide",
   "EDIT_NAME": "Edit Name",
   "NOT_BACKED_BY_RECOVERY": "Not backed up by your Recovery Phrase. Transfer into a wallet to secure funds.",
-  "EXCHANGE_RATE_HELPER": "The rate offered by your region's exchange partner. May include fees."
+  "EXCHANGE_RATE_HELPER": "The rate offered by your region's exchange partner. May include fees.",
+  "SUBSCRIBE": "Subscribe"
 }

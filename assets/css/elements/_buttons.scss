@@ -105,8 +105,13 @@ button[disabled] {
   background: transparent;
   color: white;
   border: none;
+  &:hover {
+    color: white !important;
+    background: transparent !important;
+  }
 }
 .button-default { border: 1px solid #e0e0e0; }
+.button-border { border: 1px solid white; }
 .button-nowrap { white-space: nowrap; }
 .button-short {
   padding: .25em;

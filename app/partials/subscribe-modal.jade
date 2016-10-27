@@ -1,8 +1,48 @@
-#subscribe(translate-namespace="SUBSCRIBE")
-  .modal-body.flex
-    .flex-column
-      span.type-h4.em-500.flex-start.pts(translate=".TITLE")
-      p.em-300.ptm(translate=".BODY")
-  .modal-footer.flex-end.flex-row
-    button.button-muted.mrm(translate="NO_THANKS" ng-click="$close()")
-    button.button-primary(translate=".BUTTON" ng-click="signupForAccess()")
+div
+  .modal-body.flex-column.width-100
+    .ptl.pll.prl
+      span.type-h4.em-500.flex-start(translate="SUBSCRIBE_TITLE")
+      p.em-300.ptm(translate="SUBSCRIBE_BODY")
+      // Begin MailChimp Signup Form
+      form.validate(action="//blockchain.us14.list-manage.com/subscribe/post?u=d74ffe6e610e00dc5772900bd&amp;id=85aa8eae51"
+                    method="post"
+                    ng-submit="subscribe()"
+                    id="mc-embedded-subscribe-form"
+                    name="mc-embedded-subscribe-form"
+                    target="_blank" 
+                    novalidate)
+        .form-group
+          label(for='mce-EMAIL')
+            | Email Address
+          input.form-control(type='email', value='', name='EMAIL' ng-model="fields.email")
+        .form-group.flex-justify
+          label(translate="COUNTRY")
+          .flex-1
+            ui-select(ng-model="fields.countryCode" tagging)
+              ui-select-match(placeholder="{{'SEARCH' | translate}}...") 
+                span {{ $select.selected['Name'] }}
+              ui-select-choices(repeat="country['Code'] as country in countries.countryCodes | filter:$select.search:checkStartsWith")
+                span(ng-bind-html="country['Name'] | highlight: $select.search")
+        .form-group.hide
+          label(for='mce-COUNTRY') Country 
+          input.form-control(type='text', value='{{fields.country}}', name='COUNTRY')
+        .form-group.flex-justify(ng-show="fields.countryCode === 'US'")
+          label(translate="STATE")
+          .flex-1
+            ui-select(ng-model="fields.stateCode" tagging)
+              ui-select-match(placeholder="{{'SEARCH' | translate}}...") 
+                span {{ $select.selected['Name'] }}
+              ui-select-choices(repeat="state['Code'] as state in states.stateCodes | filter:$select.search:checkStartsWith")
+                span(ng-bind-html="state['Name'] | highlight: $select.search")
+        .form-group.hide
+          label(for='mce-STATE') State 
+          input.form-control(type='text', value='{{fields.state}}', name='STATE')
+        #mce-responses.clear
+          #mce-error-response.response(style='display:none')
+          #mce-success-response.response(style='display:none')
+        // real people should not fill this in and expect good things - do not remove this or risk form bot signups
+        div(style='position: absolute; left: -5000px;', aria-hidden='true')
+          input(type='text', name='b_d74ffe6e610e00dc5772900bd_85aa8eae51', tabindex='-1', value='')
+        .flex-end.border-top.ptl
+          a.button.button-muted.mrm(translate="NO_THANKS" ng-click="$close();")
+          button.button.button-primary(translate="SUBSCRIBE_BUTTON" type='submit', value='Subscribe', name='subscribe' ng-disabled="!fields.email.length")

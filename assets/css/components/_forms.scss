@@ -7,6 +7,19 @@
   }
 }
 
+.form-control {
+  height: 40px;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  border-radius: 0px !important;
+}
+
+.input-group-btn {
+  .btn {
+    padding: 9px 12px;
+  }
+}
+
 .bc-form {
   background: $light-blue;
   border: 1px solid $eee;

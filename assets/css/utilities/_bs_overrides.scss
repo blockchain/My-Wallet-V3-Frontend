@@ -46,8 +46,7 @@ $select-fg: #686868;
       box-shadow: none;
     }
     > span {
-      border: 1px solid $eee !important;
-
+      border: 1px solid $ccc !important;
       box-shadow: none;
       padding-bottom: 0;
       color: $black !important;
@@ -132,7 +131,10 @@ $select-fg: #686868;
 
 //Give toggle min height
 .ui-select-container{
-.ui-select-toggle{height: 34px;}
+  .ui-select-toggle{
+    height: 40px;
+    padding: 8px 12px;
+  }
 }
 
 //form errors in modals

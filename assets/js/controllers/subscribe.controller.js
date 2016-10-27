@@ -2,17 +2,33 @@ angular
   .module('walletApp')
   .controller('SubscribeCtrl', SubscribeCtrl);
 
-function SubscribeCtrl ($scope, MyWallet, country, buySell) {
+function SubscribeCtrl ($rootScope, $scope, MyWallet, country, state, buySell, $cookies, $uibModalStack) {
   $scope.countries = country;
+  $scope.states = state;
+  $scope.data = {};
 
   $scope.fields = {
+    stateCode: '',
     email: MyWallet.wallet.accountInfo.email,
     countryCode: MyWallet.wallet.accountInfo.countryCodeGuess
   };
 
   $scope.signupForAccess = () => {
     let email = encodeURIComponent($scope.fields.email);
-    let country = $scope.countries.countryCodes.filter(c => c['Code'] === $scope.fields.countryCode)[0]['Name'];
-    buySell.signupForAccess(email, country);
+    buySell.signupForAccess(email, $scope.fields.country);
   };
+
+  $scope.subscribe = () => {
+    $cookies.put('subscribed', true);
+    $rootScope.isSubscribed = true;
+    $uibModalStack.dismissAll();
+  };
+
+  $scope.$watch('fields.countryCode', (countryCode) => {
+    countryCode && ($scope.fields.country = $scope.countries.countryCodes.filter(c => c['Code'] === $scope.fields.countryCode)[0]['Name']);
+  });
+
+  $scope.$watch('fields.stateCode', (stateCode) => {
+    stateCode && ($scope.fields.state = $scope.states.stateCodes.filter(s => s['Code'] === $scope.fields.stateCode)[0]['Name']);
+  });
 }
