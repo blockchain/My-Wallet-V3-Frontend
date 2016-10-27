@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SettingsAddressesCtrl', SettingsAddressesCtrl);
 
-function SettingsAddressesCtrl ($scope, $stateParams, $q, $sce, Wallet, MyWalletHelpers, MyBlockchainApi, Alerts, paymentRequests, $uibModal) {
+function SettingsAddressesCtrl ($scope, $state, $stateParams, $q, $sce, Wallet, MyWalletHelpers, MyBlockchainApi, Alerts, paymentRequests, $uibModal) {
   $scope.paymentRequests = paymentRequests;
   $scope.account = Wallet.accounts()[$stateParams.account];
   $scope.receiveIndex = $scope.account.receiveIndex;
@@ -116,4 +116,5 @@ function SettingsAddressesCtrl ($scope, $stateParams, $q, $sce, Wallet, MyWallet
   $scope.archive = (account) => Wallet.archive(account);
   $scope.unarchive = (account) => Wallet.unarchive(account);
   $scope.isDefault = (account) => Wallet.isDefaultAccount(account);
+  $scope.$watch('account.archived', (isArchived) => isArchived && $state.go('wallet.common.settings.accounts_index'));
 }
