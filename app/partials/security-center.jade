@@ -18,7 +18,7 @@
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="user.isEmailVerified" placement="bottom" content="EMAIL_ADDRESS_TOOLTIP" img="img/badge-verifyemail.png" message="EMAIL_VERIFIED")
-      .badge-panel.hidden-desktop(ng-show="display.action == 'email'")
+      .badge-panel.visible-xs-block(ng-show="display.action == 'email'")
         div(ng-show="display.action == 'email' && !display.editingEmail")
           .verify-email
             p(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
@@ -44,7 +44,7 @@
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="status.didConfirmRecoveryPhrase" placement="bottom" content="RECOVERY_PHRASE_TOOLTIP" img="img/badge-securityphrase.png" message="PHRASE_BACKED")
-      .badge-panel.hidden-desktop(ng-show="display.action == 'securityphrase'")
+      .badge-panel.visible-xs-block(ng-show="display.action == 'securityphrase'")
         .flex-center
           p.flex-1.prl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
           .flex-1.mll.backup-phrase-actions
@@ -61,7 +61,7 @@
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="user.passwordHint" placement="bottom" content="PASSWORD_HINT_TOOLTIP" img="img/badge-passwordhint.png" message="HINT_STORED")
-      .badge-panel.hidden-desktop(ng-show="display.action == 'passwordhint'")
+      .badge-panel.visible-xs-block(ng-show="display.action == 'passwordhint'")
         bc-async-input(custom inline placeholder="'ADD_PASSWORD_HINT' | translate" ng-model="user.passwordHint" on-cancel="cancelEditPasswordHint" on-save="changePasswordHint" action-title="'CHANGE' | translate" editing=1)
           .flex-center
             .form-group.width-50.flex-column(ng-class="{'has-error': !validate()}")
@@ -71,7 +71,7 @@
             .width-50.mll.pll
               button.button-success(ng-click="save()",ng-disabled="!validate() || form.newValue == ngModel",ui-ladda="status.saving", ladda-translate="SAVE", data-style="expand-left")
 
-    .badge-panel.hidden-phone(ng-show="display.action == 'email' || display.action == 'securityphrase' || display.action == 'passwordhint' ")
+    .badge-panel.hidden-xs(ng-show="display.action == 'email' || display.action == 'securityphrase' || display.action == 'passwordhint' ")
       div(ng-show="display.action == 'email' && !display.editingEmail")
         .verify-email
           p(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
@@ -125,7 +125,7 @@
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="user.isMobileVerified" content="MOBILE_NUMBER_TOOLTIP" img="img/badge-addmobile.png" message="MOBILE_LINKED")
-      .badge-panel.hidden-desktop(ng-show="display.action == 'mobilenumber'")
+      .badge-panel.visible-xs-block(ng-show="display.action == 'mobilenumber'")
         div
           configure-mobile-number(on-success="mobileNumber.step = 2" on-cancel="mobileNumber.step = 1; toggle('mobilenumber');" ng-show="mobileNumber.step == 1" full-width)          
           div(ng-show="mobileNumber.step == 2")
@@ -143,12 +143,12 @@
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="settings.needs2FA" content="2FA_TOOLTIP" img="img/badge-add2FA.png" message="TWO_STEP_ENABLED")
-      .badge-panel.hidden-desktop(ng-show="display.action == 'twofactor'")     
+      .badge-panel.visible-xs-block(ng-show="display.action == 'twofactor'")     
         div.flex-center
           p.flex-1.prl(translate="SC_CONFIGURE_2FA")
           .flex-1.mll
             a.button-primary(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA")
-    .badge-panel.hidden-phone(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
+    .badge-panel.hidden-xs(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
       div(ng-show="display.action == 'mobilenumber'")
         configure-mobile-number(on-success="mobileNumber.step = 2" on-cancel="mobileNumber.step = 1; toggle('mobilenumber');" ng-show="mobileNumber.step == 1" full-width)          
         div(ng-show="mobileNumber.step == 2")
@@ -178,13 +178,13 @@
                 i.ti-check.bright-green
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="settings.blockTOR" content="BLOCK_TOR_TOOLTIP" img="img/badge-blockTOR.png" message="TOR_BLOCKED")
-        .badge-panel.hidden-desktop(ng-show="display.action == 'blocktor'")
+        .badge-panel.visible-xs-block(ng-show="display.action == 'blocktor'")
           .flex-center(ng-show="display.action == 'blocktor'")
             p.flex-1(TRANSLATE="BLOCK_TOR_EXPLAIN")
             .mll.pll.block-tor-actions
               tor(button-class="button-success")
 
-    .badge-panel.hidden-phone(ng-show="display.action == 'blocktor'")
+    .badge-panel.hidden-xs(ng-show="display.action == 'blocktor'")
       .flex-center(ng-show="display.action == 'blocktor'")
         p.flex-1(TRANSLATE="BLOCK_TOR_EXPLAIN")
         .mll.pll.block-tor-actions
