@@ -322,14 +322,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         },
         'right@wallet.common': {
           templateUrl ($stateParams, $state) {
-            let view = (name) => `partials/sfox/${name}.jade`;
-            switch ($stateParams.step) {
-              case 'create': return view('create-account');
-              case 'verify': return view('verify');
-              case 'link': return view('link');
-              case 'buy': return view('buy');
-              default: throw new Error('sfox_invalid_signup_state');
-            }
+            return `partials/sfox/${$stateParams.step}.jade`;
           },
           controller: 'SfoxSignupController'
         }
