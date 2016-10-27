@@ -14,5 +14,13 @@ function modals ($uibModal, $ocLazyLoad) {
     }).result
   );
 
+  service.expandTray = (templateUrl) => (
+    $uibModal.open({
+      templateUrl,
+      backdrop: false,
+      windowClass: 'tray'
+    })
+  );
+
   return service;
 }
