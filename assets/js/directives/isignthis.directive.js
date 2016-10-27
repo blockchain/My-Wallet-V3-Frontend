@@ -99,7 +99,7 @@ function isignthis ($sce) {
         eventer(messageEvent, function (e) {
           // Check for the domain who sent the messageEvent
           var origin = e.origin || e.originalEvent.origin;
-          if (origin !== 'https://verify.isignthis.com') {
+          if (origin !== 'https://stage-verify.isignthis.com') {
             // Event not generated from ISX, simply return
             return;
           }
@@ -181,13 +181,11 @@ function isignthis ($sce) {
             case 'EXPIRED':
               scope.onComplete('expired');
               break;
+            case 'FAILED':
             case 'DECLINED':
             case 'REJECTED':
             case 'MANUAL_REJECTED':
               scope.onComplete('rejected');
-              break;
-            case 'FAILED':
-              scope.onComplete('failed');
               break;
             case 'CANCELLED':
               scope.onComplete('cancelled');
