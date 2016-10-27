@@ -4,7 +4,7 @@ tr.width-100
     .flex-row
       span.pointer.aaa(ng-hide="address.label || status.edit" translate="ADD_A_LABEL" ng-click="status.edit=1")
       span(ng-bind-html="address.label | escapeHtml | highlight:searchText", ng-hide="status.edit || !address.label").prm.oflow
-      .form-group(ng-class="{'has-error': errors.label}", ng-show="status.edit")
+      .form-group.mbn(ng-class="{'has-error': errors.label}", ng-show="status.edit")
         .col-sm-12
           bc-async-input(inline ng-model="address.label" on-save="changeLabel" on-cancel="cancelEdit" is-required editing="true" on-focus="status.edit")
             span.help-block(ng-show="errors.label") {{::errors.label}}  
