@@ -5,22 +5,20 @@ angular
 function modals ($uibModal, $ocLazyLoad) {
   const service = {};
 
-  service.openTransfer = (addresses) => (
-    $uibModal.open({
-      templateUrl: 'partials/settings/transfer.jade',
-      controller: 'TransferController',
-      windowClass: 'bc-modal',
-      resolve: { address: () => addresses }
-    }).result
+  let open = (defaults, options = {}) => (
+    $uibModal.open(angular.merge(options, defaults))
   );
 
-  service.expandTray = (templateUrl) => (
-    $uibModal.open({
-      templateUrl,
-      backdrop: false,
-      windowClass: 'tray'
-    })
-  );
+  service.openTransfer = (addresses) => open({
+    templateUrl: 'partials/settings/transfer.jade',
+    controller: 'TransferController',
+    windowClass: 'bc-modal',
+    resolve: { address: () => addresses }
+  }).result;
+
+  service.expandTray = (options) => open({
+    backdrop: false, windowClass: 'tray'
+  }, options).result;
 
   return service;
 }

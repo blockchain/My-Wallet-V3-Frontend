@@ -311,20 +311,16 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/sfox/checkout.jade',
           controller: 'SfoxCheckoutController'
         }
-      }
-    })
-    .state('wallet.common.buy-sell.sfox.signup', {
-      url: '/signup/:step',
-      views: {
-        'top@wallet.common': {
-          templateUrl: 'partials/sfox/signup-steps.jade',
-          controller: 'SfoxSignupStepsController'
-        },
-        'right@wallet.common': {
-          templateUrl ($stateParams, $state) {
-            return `partials/sfox/${$stateParams.step}.jade`;
-          },
-          controller: 'SfoxSignupController'
+      },
+      onEnter ($state, $stateParams, modals, exchange) {
+        if (exchange.profile == null) {
+          modals.expandTray({
+            templateUrl: 'partials/sfox/signup.jade',
+            controllerAs: 'vm',
+            controller: 'SfoxSignupController'
+          }) .finally(() => {
+            $state.go('wallet.common.buy-sell');
+          });
         }
       }
     });
