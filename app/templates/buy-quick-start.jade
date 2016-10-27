@@ -30,7 +30,7 @@
             ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
               li(ng-repeat="currency in currencies"
                  role="menuitem" 
-                 ng-click="changeCurrency({currency: currency});"
+                 ng-click="transaction.btc = null; changeCurrency({currency: currency}); getQuote();"
                  ng-class="{active: isCurrencySelected(currency)}")
                 a(ng-click="$event.preventDefault()") {{ currency.code }}
         i.ti-arrows-horizontal.mhm.type-h4
@@ -41,7 +41,7 @@
             name="btc"
             step="any"
             tabindex="1"
-            ng-change="transaction.fiat = null; getQuote(transaction.btc);"
+            ng-change="transaction.fiat = null; getQuote();"
             ng-model-options="{debounce: 250}"
             placeholder="{{placeholder}}")
           div.input-group-btn

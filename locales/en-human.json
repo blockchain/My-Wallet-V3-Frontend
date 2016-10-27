@@ -1112,5 +1112,6 @@
   "SHOW": "Show",
   "HIDE": "Hide",
   "EDIT_NAME": "Edit Name",
-  "NOT_BACKED_BY_RECOVERY": "Not backed up by your Recovery Phrase. Transfer into a wallet to secure funds."
+  "NOT_BACKED_BY_RECOVERY": "Not backed up by your Recovery Phrase. Transfer into a wallet to secure funds.",
+  "EXCHANGE_RATE_HELPER": "The rate offered by your region's exchange partner. May include fees."
 }
