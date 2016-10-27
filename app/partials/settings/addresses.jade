@@ -61,11 +61,13 @@ div(ng-if="showPast" ng-init="setAddresses(page)")
     .col-xs-12.table-container
       table.accounts-container.addresses.responsive.width-100
         tr.short
-          td.col-md-3.em-500(translate="ADDRESS")
-          td.col-md-3.em-500(translate="LABEL")
-          td.col-md-3.em-500.right-align
-            span(translate="CURRENT_BALANCE")
-            helper-button.mrn(content="CURRENT_BALANCE_HELP" placement="left")
+          td.col-md-6.em-500(translate="ADDRESS")
+          td.col-md-6.em-500
+            .flex-between.flex-row
+              span(translate="LABEL")
+              div
+                span(translate="CURRENT_BALANCE")
+                helper-button.mrn(content="CURRENT_BALANCE_HELP" placement="left")
         tr(
           account="account"
           ng-repeat="address in usedAddresses | orderBy:'-index' track by address.index"

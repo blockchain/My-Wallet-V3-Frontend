@@ -38,7 +38,8 @@
       padding: 10px;
     }
     &.addresses {
-      td {
+      td:first-child,
+      td:last-child, {
         padding: 10px 25px;
         &.pan {
           padding: 0px;
@@ -102,6 +103,7 @@ table.accounts-container {
   }
 
   td {
+    padding-left: 0px;
     border-left: none;
     border-right: none;
     border-top: 1px solid $grey;
