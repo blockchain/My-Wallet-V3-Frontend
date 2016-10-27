@@ -36,11 +36,11 @@ export API_DOMAIN:=api.blockchain.info
 endif
 
 dist: build
-	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN)
+	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --network=${NETWORK}
 	npm shrinkwrap --dev
 
 dist_fixed_domain: build
-	grunt dist --versionFrontend=$(VERSION) --rootDomain=blockchain.info --apiDomain=api.blockchain.info
+	grunt dist --versionFrontend=$(VERSION) --rootDomain=blockchain.info --apiDomain=api.blockchain.info --network=${NETWORK}
 	npm shrinkwrap --dev
 
 changelog: node_modules

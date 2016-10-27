@@ -4,9 +4,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'MyWalletMetadata', 'theme'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'MyWalletMetadata', 'theme', 'BlockchainConstants'];
 
-function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, MyWalletMetadata, theme) {
+function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, MyWalletMetadata, theme, BlockchainConstants) {
   const wallet = {
     goal: {
       auth: false,
@@ -56,6 +56,9 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
   wallet.api = MyBlockchainApi;
   wallet.rng = MyBlockchainRng;
+
+  const network = $rootScope.network || 'bitcoin';
+  BlockchainConstants.NETWORK = network;
 
   // $rootScope.rootURL is already set because this file is lazy loaded.
   wallet.api.ROOT_URL = $rootScope.rootURL;
