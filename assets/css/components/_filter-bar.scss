@@ -103,9 +103,9 @@
 
 @media (max-width: 768px) {
   .filter-bar {
+    border-top: 1px solid $eee;
     width: 100%;
-    top: 145px;
+    top: 200px;
     left: 0;
-    border-top: 1px solid $eee
   }
 }

@@ -76,7 +76,7 @@
     width: 100%;
     position: relative;
     margin-left: 0;
-    height: 95px;
+    height: 150px;
     top: 0px;
   }
   .transactions { top: 0; }
@@ -103,7 +103,6 @@
 
 @for $i from 1 through 20 {
   .width-#{$i*5}-mobile {
-    width: percentage($i*5/100);
     @media (max-width: 992px) {
       width: percentage($i*5/100);
     }
@@ -118,13 +117,10 @@
 
 @media (max-width: 992px) {
   .top-view .heavy h1 { font-size: 1.75em; }
-  .top-view .heavy p { font-size: 1em; }
 }
 
 @media (max-width: 768px) {
-  .top-view .heavy h1 { font-size: 1.25em; }
-  .top-view .heavy p { font-size: .9em; }
-  .top-view .heavy { top: -6px; }
+  .top-view .heavy p { font-size: 1.2em; }
 }
 
 @media (max-width:480px) {
