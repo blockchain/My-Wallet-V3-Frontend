@@ -7,8 +7,9 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
   $scope.settings = Wallet.settings;
 
   $scope.whatsNewTemplate = 'templates/whats-new.jade';
-
   $scope.lastViewedWhatsNew = null;
+
+  $rootScope.isSubscribed = $cookies.get('subscribed');
 
   $scope.getTheme = () => $scope.settings.theme;
 
@@ -84,6 +85,14 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
       $cookies.put('whatsNewViewed', lastViewed);
     }
   });
+
+  $scope.subscribe = () => {
+    $uibModal.open({
+      templateUrl: 'partials/subscribe-modal.jade',
+      windowClass: 'bc-modal initial',
+      controller: 'SubscribeCtrl'
+    });
+  };
 
   $scope.logout = () => {
     let isSynced = Wallet.isSynchronizedWithServer();
