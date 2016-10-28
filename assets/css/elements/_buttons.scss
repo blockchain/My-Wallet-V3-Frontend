@@ -22,6 +22,9 @@ button[disabled] {
   &.initial-text {
     text-transform: none;
   }
+  &.full-width {
+    width: 100%;
+  }
 }
 
 @mixin button($name, $background:white, $color:white, $max-width:none) {

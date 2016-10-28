@@ -1,12 +1,18 @@
 .buy-sell
   .flex-row.flex-column-tablet
-    .width-50.mrl.pal.border
-      span.type-h4.em-500 Find your exchange partner:
-      .mtl
-        span.em-500 Country of residence:
-        ui-select(ng-model="country" on-select="selectPartner($item)")
-          ui-select-match(placeholder="Select country") {{$select.selected}}
-          ui-select-choices(repeat="c in countries") {{c}}
+    .find-partner.width-50.mrl.mtl.pal.border.flex-column.flex-between
+      div
+        span.type-h4.em-500.colon(translate="Find your exchange partner")
+        .mtl
+          span.em-500.colon(translate="Country of residence")
+          ui-select.mtm(ng-model="$parent.country")
+            ui-select-match(placeholder="Select country") {{$select.selected}}
+            ui-select-choices(repeat="c in countries") {{c}}
+      div(ng-show="country")
+        .pal
+          p.type-h4 {{ getPartner(country).icon }}
+          p Our partner {{ getPartner(country).name }} will process your Bitcoin purchases. You will need to provide some information about yourself and link a payment method before purchasing Bitcoin.
+        button.btn.button-primary.full-width(translate="CONTINUE" ng-click="selectPartner(country)")
     .flex-column.width-50.mlvl.mtml
       .font-2.blue.em-300.lh1(translate="SIMPLE_SECURE_SEAMLESS")
       .type-h4.em-300.mtm.basic-grey(translate="BUY_SIMPLE_STEPS_2")
