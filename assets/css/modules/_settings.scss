@@ -37,15 +37,6 @@
       border: 1px solid $border-grey;
       padding: 10px;
     }
-    &.addresses {
-      td:first-child,
-      td:last-child, {
-        padding: 10px 25px;
-        &.pan {
-          padding: 0px;
-        }
-      }
-    }
   }
   // Preferences
   .clearfix {
@@ -59,7 +50,7 @@
     }
   }
   // Accounts & Addresses
-  @media (max-width: 900px) {
+  @media (max-width: 992px) {
     .accounts-container {
       width: 100%;
       tr {
@@ -115,18 +106,36 @@ table.accounts-container {
     }
   }
 
-  &.addresses {
-    td:first-child {
-      border-left: 1px solid $grey;
+  @media (min-width: 993px) {
+    &.addresses {
+      td:first-child,
+      td:last-child, {
+        padding: 10px 25px;
+        &.pan {
+          padding: 0px;
+        }
+      }
+      td:first-child {
+        border-left: 1px solid $grey;
+      }
+      td:last-child {
+        border-right: 1px solid $grey;
+      }
+      tr:first-child td {
+        border-top: 1px solid $grey;
+      }
+      tr:last-child td {
+        border-bottom: 1px solid $grey;
+      }
     }
-    td:last-child {
-      border-right: 1px solid $grey;
-    }
-    tr:first-child td {
-      border-top: 1px solid $grey;
-    }
-    tr:last-child td {
-      border-bottom: 1px solid $grey;
+  }
+
+  @media (max-width: 992px) {
+    &.addresses {
+      tr:not(:first-child) td:last-child {
+        padding-bottom: 10px;
+        border-bottom: 1px solid $grey;
+      }
     }
   }
 }

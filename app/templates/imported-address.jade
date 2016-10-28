@@ -10,8 +10,8 @@ tr.width-100
             span.help-block(ng-show="errors.label") {{::errors.label}}  
       a(ng-click="status.edit=1" ng-hide="status.edit || !address.label")
         i.ti-pencil.prm   
-  td.col-md-3.center
-    span.display-inline-block.right-align(ng-show="address.balance != null")
+  td.col-md-3.center.left-align-tablet
+    span.display-inline-block.right-align.left-align-tablet(ng-show="address.balance != null")
       span.display-block.em-500 {{ address.balance | toBitCurrency:settings.btcCurrency }}
       fiat(btc="address.balance")
     img(ng-show="address.balance == null" src="img/spinner.gif")
