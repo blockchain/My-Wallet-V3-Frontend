@@ -10,6 +10,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
     scope: {
       buy: '&',
       limits: '=',
+      modalOpen: '=',
       transaction: '=',
       currencySymbol: '=',
       changeCurrency: '&'
@@ -72,5 +73,8 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
 
     scope.getExchangeRate();
     scope.$on('$destroy', stopFetchingQuote);
+    scope.$watch('modalOpen', (modalOpen) => {
+      modalOpen ? stopFetchingQuote() : startFetchingQuote();
+    });
   }
 }

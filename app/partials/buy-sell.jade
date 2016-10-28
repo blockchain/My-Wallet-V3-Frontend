@@ -10,6 +10,7 @@
       .width-50.mrl(ng-show="state.buy")
         buy-quick-start(transaction="transaction"
                         currency-symbol="currencySymbol"
+                        modal-open="status.modalOpen"
                         change-currency="changeCurrency(currency)"
                         limits="limits"
                         buy="buy(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
