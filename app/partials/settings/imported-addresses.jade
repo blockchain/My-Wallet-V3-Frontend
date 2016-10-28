@@ -13,7 +13,7 @@
         ng-repeat="address in legacyAddresses() | filter:{archived: false} | addressOrNameMatch:searchText | limitTo:$render.limit track by $index"
         in-view="$last && $render.next()")
 
-div(ng-controller="SettingsImportedAddressesCtrl")
+div.mtvl.ptl(ng-controller="SettingsImportedAddressesCtrl")
   .flex-between.flex-center.mtl
     span.type-md.em-500(translate="ARCHIVED_ADDRESSES")
     span.pointer.blue(translate="{{display.archived ? 'HIDE' : 'SHOW'}}" ng-click="toggleDisplayArchived()")

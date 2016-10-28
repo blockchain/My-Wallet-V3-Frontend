@@ -1,5 +1,6 @@
 describe "SettingsAddressesCtrl", ->
   $q = undefined
+  $state = undefined
   scope = undefined
   Wallet = undefined
   Alerts = undefined
@@ -13,6 +14,7 @@ describe "SettingsAddressesCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller, _$q_) ->
       $q = _$q_
+      $state = $injector.get('$state')
       Wallet = $injector.get("Wallet")
       Alerts = $injector.get("Alerts")
       MyBlockchainApi = $injector.get("MyBlockchainApi")
@@ -39,6 +41,7 @@ describe "SettingsAddressesCtrl", ->
       scope = $rootScope.$new()
       $controller "SettingsAddressesCtrl",
         $scope: scope,
+        $state: $state,
         $stateParams: { account: 0 }
         Wallet: Wallet
         $uibModal: modal
@@ -145,3 +148,10 @@ describe "SettingsAddressesCtrl", ->
       expect(indexes).toEqual([3, 1])
       indexes = scope.getIndexesForPage(2)
       expect(indexes).toEqual([0])
+
+  it "should redirect to accounts page if account is archived", inject(($state) ->
+    spyOn($state, "go").and.callThrough()
+    scope.account.archived = true
+    scope.$digest()
+    expect($state.go).toHaveBeenCalledWith('wallet.common.settings.accounts_index')
+  )

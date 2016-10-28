@@ -10,12 +10,12 @@
 
 .row.ptvl(data-preflight-tag="AccountAddresses")
   .col-xs-12.table-container
-    .flex-between.flex-center
-      h2.mvl.pbl {{account.label}}
+    .flex-between.flex-center.mvl.pvm
+      span.type-md.em-500 {{account.label}}
         span.label.label-primary.btn-xs(translate="DEFAULT", ng-show="!account.archived && isDefault(account)")
         span.label.label-default.btn-xs(translate="ARCHIVED" ng-show="account.archived")
       span(uib-dropdown on-toggle="toggled(open)")
-        a(href uib-dropdown-toggle id="more-dropdown" translate="More Options") 
+        a.pbl(href uib-dropdown-toggle id="more-dropdown" translate="More Options")
         ul.dropdown-menu.dropdown-menu-right(uib-dropdown-menu aria-labelledby="more-dropdown")
           li
             a(translate="EDIT_NAME" ng-click="editAccount(account)")
@@ -61,11 +61,13 @@ div(ng-if="showPast" ng-init="setAddresses(page)")
     .col-xs-12.table-container
       table.accounts-container.addresses.responsive.width-100
         tr.short
-          td.col-md-3.em-500(translate="ADDRESS")
-          td.col-md-3.em-500(translate="LABEL")
-          td.col-md-3.em-500.right-align
-            span(translate="CURRENT_BALANCE")
-            helper-button.mrn(content="CURRENT_BALANCE_HELP" placement="left")
+          td.col-md-6.em-500(translate="ADDRESS")
+          td.col-md-6.em-500
+            .flex-between.flex-row
+              span(translate="LABEL")
+              div
+                span(translate="CURRENT_BALANCE")
+                helper-button.mrn(content="CURRENT_BALANCE_HELP" placement="left")
         tr(
           account="account"
           ng-repeat="address in usedAddresses | orderBy:'-index' track by address.index"
