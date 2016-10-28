@@ -1,2 +1,48 @@
-.buy-sell(ng-controller="SfoxCreateAccountController")
-  span SfoxCreateAccountController
+.flex-row
+  .width-40.mtl
+    .width-80
+      h4(translate="SFOX Account")
+      span.type-h5.em-300(translate="Please verify your email and phone number to set up your SFOX account.")
+  .width-60
+    form.bc-form-next(name="accountForm" ng-submit="vm.goTo('verify')" novalidate autocomplete="off")
+      fieldset(ng-disabled="state.busy")
+        .group
+          label Email Address
+          div(ng-show="state.verifiedEmail")
+            .item
+              .text
+                span We have the following email address for you.
+              input(ng-model="state.email" name="email" required)
+              button.button-muted(type="button" ng-show="state.email != user.email" ng-click="changeEmail()") Update
+          div(ng-hide="state.verifiedEmail")
+            .item
+              .text
+                span We sent a confirmation code to your email {{state.email}}. Please enter the code below.
+                span Didn’t get the email? Resend or change email address.
+              input(ng-model="state.confirmEmail" name="confirmEmail" ng-required="!state.verifiedEmail")
+              button.button-muted(type="button" ng-show="state.confirmEmail" ng-click="verifyEmail()") Verify
+        .group
+          label Phone Number
+          div(ng-show="state.verifiedMobile")
+            .item
+              .text
+                span We have the following mobile number for you.
+              input(ng-model="state.mobile" name="mobile" required)
+              button.button-muted(type="button" ng-show="state.mobile != user.mobileNumber" ng-click="changeMobile()") Update
+          div(ng-hide="state.verifiedMobile")
+            .item
+              .text
+                span Enter your phone number and we’ll send you a verifcation code via SMS.
+              input(ng-model="state.mobile" name="mobile" ng-change="state.sentCode=false" ng-required="!state.verifiedMobile")
+              button.button-muted(type="button" ng-show="state.mobile && !state.sentCode" ng-click="changeMobile()") Send Code
+            .item
+              .text
+                span Enter verification code sent to your mobile phone.
+              input(ng-model="state.confirmMobile" name="confirmMobile" ng-required="!state.verifiedMobile")
+              button.button-muted(type="button" ng-show="state.confirmMobile" ng-click="verifyMobile()") Verify
+        .group
+          .item.check
+            input#terms(type="checkbox" ng-model="state.terms" name="terms" required)
+            label(for="terms") I accept SFOX’s Terms of Service and Privacy Policy.
+        .group
+          button.btn.button-primary.full(type="submit" ng-disabled="accountForm.$invalid") Continue

@@ -119,3 +119,49 @@ input.lrg {
 input[type="checkbox"] {
   margin: 0;
 }
+
+form.bc-form-next {
+  width: 100%;
+  .group {
+    width: 80%;
+    padding-bottom: 1em;
+    label {
+      font-size: 16px;
+    }
+    .item {
+      &.check {
+        display: flex;
+        align-items: center;
+        label {
+          font-weight: 400;
+          font-size: 14px;
+          cursor: pointer;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  input {
+    height: 3em;
+    width: 75%;
+    margin: 1em 0;
+    border-width: 1px;
+    outline: none;
+    border: 1px solid #DDDDDD;
+    &:focus {
+      border: 1px solid $blue;
+    }
+    &[type="checkbox"] {
+      margin: 1em 0.5em 1em 0;
+      width: 1em;
+      height: 1em;
+    }
+  }
+
+  button {
+    &.full {
+      width: 100%;
+    }
+  }
+}

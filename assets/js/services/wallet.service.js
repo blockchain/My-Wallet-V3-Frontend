@@ -921,7 +921,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
   wallet.changeMobile = (mobile, successCallback, errorCallback) => {
     wallet.settings_api.changeMobileNumber(mobile, () => {
-      wallet.user.mobile = mobile;
+      wallet.user.mobileNumber = mobile;
       wallet.user.isMobileVerified = false;
       successCallback();
       $rootScope.$safeApply();

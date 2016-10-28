@@ -1,8 +1,9 @@
-.flex-row.flex-between.height-100
-  .mtl.pal.flex-1
-    span.type-h4.em-300(translate="Complete the following steps to buy your first bitcoin!")
+.flex-row.height-100.pvl
+  .width-40.mtl.pal
+    .width-80
+      span.type-h4.em-300(translate="Complete the following steps to buy your first bitcoin!")
 
-  .buy-steps.mtl.pal.flex-row.flex-between.flex-baseline.center.flex-2
+  .width-60.mtl.pvl.flex-row.flex-baseline.center
     .width-25.flex-column.flex-center(ng-class="{blue: vm.onStep('create')}")
       i.type-lrg.ti-user
       span(translate="Create Account")
@@ -28,5 +29,5 @@
       i.type-lrg.ti-shopping-cart
       span(translate="Buy Bitcoin")
 
-  .mas
+  .mrl
     i.ti-close.type-h4.pointer(ng-click="$close()")
