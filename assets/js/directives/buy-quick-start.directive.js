@@ -51,9 +51,11 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
       startFetchingQuote();
       scope.getExchangeRate();
       scope.status.waiting = true;
-      scope.transaction.btc
-        ? buySell.getQuote(-scope.transaction.btc, 'BTC', scope.transaction.currency.code).then(success, error)
-        : buySell.getQuote(scope.transaction.fiat, scope.transaction.currency.code).then(success, error);
+      if (scope.transaction.btc) {
+        buySell.getQuote(-scope.transaction.btc, 'BTC', scope.transaction.currency.code).then(success, error);
+      } else if (scope.transaction.fiat) {
+        buySell.getQuote(scope.transaction.fiat, scope.transaction.currency.code).then(success, error);
+      }
     };
 
     const success = (quote) => {
