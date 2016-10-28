@@ -10,6 +10,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
     scope: {
       buy: '&',
       limits: '=',
+      modalOpen: '=',
       transaction: '=',
       currencySymbol: '=',
       changeCurrency: '&'
@@ -47,9 +48,10 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
 
     scope.getQuote = () => {
       stopFetchingQuote();
-      startFetchingQuote();
+      if (!scope.transaction.btc && !scope.transaction.fiat) return;
+
       scope.getExchangeRate();
-      scope.status.waiting = true;
+      startFetchingQuote();
       scope.transaction.btc
         ? buySell.getQuote(-scope.transaction.btc, 'BTC', scope.transaction.currency.code).then(success, error)
         : buySell.getQuote(scope.transaction.fiat, scope.transaction.currency.code).then(success, error);
@@ -72,5 +74,8 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
 
     scope.getExchangeRate();
     scope.$on('$destroy', stopFetchingQuote);
+    scope.$watch('modalOpen', (modalOpen) => {
+      modalOpen ? stopFetchingQuote() : startFetchingQuote();
+    });
   }
 }
