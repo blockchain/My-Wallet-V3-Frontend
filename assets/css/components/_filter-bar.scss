@@ -1,13 +1,15 @@
 .filter-bar {
-  position: fixed;
-  width: calc(100% - 270px);
-  left: 270px;
-  top: 175px;
-  height: 50px;
-  background: $light-blue;
-  padding: 0 30px;
-  border-bottom: 1px solid #ddd;
   z-index: 1;
+  top: 175px;
+  left: 270px;
+  height: 50px;
+  position: fixed;
+  background: $light-blue;
+  width: calc(100% - 270px);
+  border-bottom: 1px solid #ddd;
+  @media (max-width: 768px) {
+    padding: 0 10px;
+  }
   .ui-select-container {
     width: 360px;
     .divider {
