@@ -686,7 +686,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   };
 
   wallet.isValidAddress = (address) => MyWalletHelpers.isBitcoinAddress(address);
-  wallet.isValidPrivateKey = (priv) => MyWalletHelpers.isValidPrivateKey(priv);
+  wallet.isValidPrivateKey = (priv) => MyWalletHelpers.isBitcoinPrivateKey(priv);
 
   wallet.archive = (address_or_account) => {
     wallet.saveActivity(3);
