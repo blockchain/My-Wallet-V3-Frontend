@@ -162,7 +162,7 @@ describe "walletServices", () ->
       newNumber = {country: "+31", number: "0100000000"}
       Wallet.changeMobile(newNumber, (()->),(()->))
       expect(Wallet.settings_api.changeMobileNumber).toHaveBeenCalled()
-      expect(Wallet.user.mobile).toBe(newNumber)
+      expect(Wallet.user.mobileNumber).toBe(newNumber)
       expect(Wallet.user.isMobileVerified).toBe(false)
     )
 
