@@ -4,6 +4,10 @@ button[disabled] {
   opacity: .6;
 }
 
+button.full {
+  width: 100%;
+}
+
 %button-base {
   border-radius: 5px;
   border: none;

@@ -130,6 +130,9 @@ form.bc-form-next {
     }
     label {
       font-size: 16px;
+      &.sm {
+        font-size: 14px;
+      }
     }
     .item {
       display: flex;
@@ -138,9 +141,8 @@ form.bc-form-next {
         margin-right: 1em;
       }
       &.check {
-        display: flex;
-        align-items: center;
-        flex-direction: row;
+        @extend .flex-row;
+        @extend .flex-center;
         label {
           font-weight: 400;
           font-size: 14px;
@@ -152,11 +154,12 @@ form.bc-form-next {
   }
 
   input {
+    width: 75%;
     height: 3em;
-    padding-left: 1em;
-    margin: 0.5em 0;
-    border-width: 1px;
     outline: none;
+    margin: .5em 0;
+    border-width: 1px;
+    padding-left: 12px;
     border: 1px solid #DDDDDD;
     &:focus {
       border: 1px solid $blue;
@@ -168,7 +171,10 @@ form.bc-form-next {
     }
   }
 
-  .full {
+  .group.full {
     width: 100%;
+    input {
+      width: 100%;
+    }
   }
 }

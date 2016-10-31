@@ -1,2 +1,38 @@
-.buy-sell(ng-controller="SfoxLinkController")
-  span SfoxLinkController
+.flex-row.mtl
+  .width-40
+    .width-80
+      h4.mtn(translate="Link Bank Account")
+      span.type-h5.em-300(translate="You can either securely sign in through your bank or enter your bank routing and account numbers.")
+  .width-50
+    button.btn.button-primary.full(disabled) Sign In To Your Bank Account
+
+    .mvvl
+      span.or-horizontal.flex-justify(translate="OR")
+
+    form.bc-form-next(name="bankAccountForm" ng-submit="link()" novalidate autocomplete="off")
+      fieldset(ng-disabled="state.busy")
+        .group.full
+          label.sm Nickname
+          .item
+            input(ng-model="fields.nickname" name="nickname" required)
+        .group.full
+          label.sm Routing Number
+            button.helper(ng-click="openBankHelper()" tabindex="-1")
+              span ?
+          .item
+            input(ng-model="fields.routingNumber" name="routingNumber" required)
+        .group.full
+          label.sm Account Number
+            button.helper(ng-click="openBankHelper()" tabindex="-1")
+              span ?
+          .item
+            input(ng-model="fields.accountNumber" name="accountNumber" required)
+        .group.full.mbl
+          label.sm Account Type
+          ui-select(ng-model="fields.type" tagging)
+            ui-select-match(placeholder="{{'SEARCH' | translate}}...") 
+              span.capitalize {{ $select.selected }}
+            ui-select-choices(repeat="type in types")
+              span.capitalize(ng-bind-html="type | highlight: $select.search")
+        .group.full
+          button.btn.button-primary.full(type="submit" ng-disabled="bankAccountForm.$invalid") Add Account
