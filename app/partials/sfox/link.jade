@@ -1,4 +1,4 @@
-.flex-row.mtl
+.flex-row.mtl(ng-show="!account")
   .width-40
     .width-80
       h4.mtn(translate="Link Bank Account")
@@ -36,3 +36,10 @@
               span.capitalize(ng-bind-html="type | highlight: $select.search")
         .group.full
           button.btn.button-primary.full(type="submit" ng-disabled="bankAccountForm.$invalid") Add Account
+.flex-row.mtl(ng-show="account")
+  .width-40
+    .width-80
+      h4.mtn(translate="Verify Bank Account")
+      span.type-h5.em-300(translate="To protect against fraud, SFOX will send and withdraw 2 small deposits to your bank account. These amounts will appear in your account in 1-2 days. You will need to enter these amounts to verify your bank account.")
+  .width-50
+    

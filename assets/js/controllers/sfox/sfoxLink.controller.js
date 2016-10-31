@@ -23,7 +23,7 @@ function SfoxLinkController ($scope, $q) {
     $q.resolve(exchange.getBuyQuote(1, 'USD', 'BTC'))
       .then((quote) => quote.getPaymentMediums())
       .then((mediums) => addAccount(mediums))
-      .then((account) => $scope.account = account)
+      .then((account) => { $scope.account = account; console.log(account); })
       .catch(error => console.error(error))
       .finally($scope.free);
 
