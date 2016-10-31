@@ -3,6 +3,7 @@ angular
   .controller('SfoxCreateAccountController', SfoxCreateAccountController);
 
 function SfoxCreateAccountController ($scope, $q, Wallet) {
+  let exchange = $scope.vm.exchange;
   let user = $scope.user = Wallet.user;
 
   let state = $scope.state = {
@@ -38,6 +39,15 @@ function SfoxCreateAccountController ($scope, $q, Wallet) {
   $scope.verifyMobile = () => {
     let code = state.confirmMobile;
     $q(Wallet.verifyMobile.bind(null, code)).then($scope.setState);
+  };
+
+  $scope.createAccount = () => {
+    $scope.lock();
+    $q.resolve(exchange.signup())
+      .then(() => exchange.fetchProfile())
+      .then(() => $scope.vm.goTo('verify'))
+      .catch(error => console.error(error))
+      .finally($scope.free);
   };
 
   $scope.lock = () => { state.busy = true; };

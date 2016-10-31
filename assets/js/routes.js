@@ -312,13 +312,17 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           controller: 'SfoxCheckoutController'
         }
       },
-      onEnter ($state, $stateParams, modals, exchange) {
+      onEnter ($state, $stateParams, MyWallet, modals) {
+        let exchange = MyWallet.wallet.external.sfox;
         if (exchange.profile == null) {
           modals.expandTray({
             templateUrl: 'partials/sfox/signup.jade',
             controllerAs: 'vm',
-            controller: 'SfoxSignupController'
-          }) .finally(() => {
+            controller: 'SfoxSignupController',
+            resolve: {
+              exchange () { return exchange; }
+            }
+          }).finally(() => {
             $state.go('wallet.common.buy-sell');
           });
         }
