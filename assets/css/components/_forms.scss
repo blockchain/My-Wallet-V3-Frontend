@@ -121,17 +121,26 @@ input[type="checkbox"] {
 }
 
 form.bc-form-next {
-  width: 100%;
   .group {
-    width: 80%;
     padding-bottom: 1em;
+    display: flex;
+    flex-direction: column;
+    &.inline {
+      flex-direction: row;
+    }
     label {
       font-size: 16px;
     }
     .item {
+      display: flex;
+      flex-direction: column;
+      &:not(:last-child) {
+        margin-right: 1em;
+      }
       &.check {
         display: flex;
         align-items: center;
+        flex-direction: row;
         label {
           font-weight: 400;
           font-size: 14px;
@@ -144,8 +153,8 @@ form.bc-form-next {
 
   input {
     height: 3em;
-    width: 75%;
-    margin: 1em 0;
+    padding-left: 1em;
+    margin: 0.5em 0;
     border-width: 1px;
     outline: none;
     border: 1px solid #DDDDDD;
@@ -159,9 +168,7 @@ form.bc-form-next {
     }
   }
 
-  button {
-    &.full {
-      width: 100%;
-    }
+  .full {
+    width: 100%;
   }
 }

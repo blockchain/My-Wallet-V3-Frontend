@@ -1,2 +1,47 @@
-.buy-sell(ng-controller="SfoxVerifyController")
-  span SfoxVerifyController
+.flex-row
+  .width-40.mtl
+    .width-80
+      h4(translate="Verify Identity")
+      span.type-h5.em-300(translate="Strong verification procedures help reduce fraud and money laundering activites. As part of your registration, SFOX will need the following information from you to verify your identity.")
+      br
+      span.type-h5.em-300(translate="You may also be asked to upload identification documents.")
+  .width-60
+    form.bc-form-next(name="verifyForm" ng-submit="vm.goTo('verify')" novalidate autocomplete="off")
+      fieldset(ng-disabled="state.busy")
+        .group.inline
+          .item.width-33
+            label First Name
+            input(ng-model="state.first" name="first" required)
+          .item.width-33
+            label Middle Name
+            input(ng-model="state.middle" name="middle" required)
+          .item.width-33
+            label Last Name
+            input(ng-model="state.last" name="last" required)
+        .group.inline
+          .item.width-33
+            label Social Security Number
+            input(ng-model="state.ssn" name="ssn" placeholder="___-___-____" required)
+          .item.width-33
+            label Date of Birth
+            input(ng-model="state.dob" name="dob" placeholder="mm/dd/yyyy" required)
+        .group
+          .item.full
+            label Address Line 1
+            input(ng-model="state.addr1" name="addr1" placeholder="Street address, P.O. box, etc." required)
+        .group
+          .item.full
+            label Address Line 2
+            input(ng-model="state.addr2" name="addr2" placeholder="Apartment, unit, floor, etc." required)
+        .group.inline
+          .item.width-33
+            label City
+            input(ng-model="state.city" name="city" required)
+          .item.width-33
+            label State
+            input(ng-model="state.state" name="state" required)
+          .item.width-33
+            label Zipcode
+            input(ng-model="state.zipcode" name="zipcode" required)
+        .group
+          button.btn.button-primary.full(type="submit" ng-disabled="verifyForm.$invalid") Continue
