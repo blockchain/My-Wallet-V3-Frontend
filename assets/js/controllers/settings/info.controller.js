@@ -25,7 +25,7 @@ function SettingsInfoCtrl ($scope, $q, Wallet, Alerts) {
     let success = (code) => { $scope.pairingCode = code; };
 
     let error = (err) => {
-      if (err === 'cancelled') return;
+      if (err === 'cancelled' || err === 'backdrop click') return;
       let msg = err === 'incorrect_main_pw' ? 'INCORRECT_PASSWORD' : 'SHOW_PAIRING_CODE_FAIL';
       Alerts.displayError(msg);
     };
