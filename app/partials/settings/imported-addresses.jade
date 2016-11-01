@@ -23,10 +23,22 @@ div.mtvl.ptl(ng-controller="SettingsImportedAddressesCtrl")
   .row(ng-show="display.archived")
     .col-xs-12.table-container
       table.accounts-container.addresses.responsive.width-100(ng-controller="SettingsImportedAddressesCtrl")
+        tr.hidden
+          td.col-md-3
+          td.col-md-3
+          td.col-md-3
         tr(ng-repeat="address in legacyAddresses() | filter:{archived: true} | addressOrNameMatch:searchText")
-          td(ng-bind-html="address.address | escapeHtml | highlight:searchText")
-          td(ng-bind-html="address.label | escapeHtml | highlight:searchText")
-          td.right-align
-            a(translate="UNARCHIVE", ng-click="unarchive(address)")
-          td.right-align
-            a(translate="DELETE", ng-click="delete(address)")
+          td.col-md-3
+            span(ng-bind-html="address.address | escapeHtml | highlight:searchText")
+            span.label.label-default.btn-xs(translate="WATCH_ONLY" ng-show="address.isWatchOnly")
+            span(ng-bind-html="address.label | escapeHtml | highlight:searchText", ng-hide="status.edit || !address.label").prm.oflow
+          td.col-md-3
+          td.col-md-3.right-align
+            span(uib-dropdown on-toggle="toggled(open)")
+              a(href uib-dropdown-toggle id="more-dropdown" translate="More Options") 
+              ul.dropdown-menu.dropdown-menu-right(uib-dropdown-menu aria-labelledby="more-dropdown")
+                li
+                  a(translate="UNARCHIVE", ng-click="unarchive(address)")
+                li
+                  a(translate="DELETE", ng-click="delete(address)")
+            
