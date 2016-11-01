@@ -5,7 +5,7 @@ div(data-preflight-tag="Logout" ng-hide="deauthorized")
         h3.em-300.mtn(translate="DEAUTH_BROWSER")
         span.ellipsis(
           ng-show="timeToRedirect <= 5 && timeToRedirect >= 0"
-          translate="PENDING_REDIRECT"
+          translate="PENDING_REFRESH"
           translate-values="{time:timeToRedirect}")
   .flex-column.mtl
     .flex-column.flex-between.flex-center
