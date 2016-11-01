@@ -12,8 +12,8 @@
   .col-xs-12.table-container
     .flex-between.flex-center.mvl.pvm
       span.type-md.em-500 {{account.label}}
-        span.label.label-primary.btn-xs(translate="DEFAULT", ng-show="!account.archived && isDefault(account)")
-        span.label.label-default.btn-xs(translate="ARCHIVED" ng-show="account.archived")
+        span.label.label-primary.btn-xs.mlm(translate="DEFAULT", ng-show="!account.archived && isDefault(account)")
+        span.label.label-default.btn-xs.mlm(translate="ARCHIVED" ng-show="account.archived")
       span(uib-dropdown on-toggle="toggled(open)")
         a.pbl(href uib-dropdown-toggle id="more-dropdown" translate="More Options")
         ul.dropdown-menu.dropdown-menu-right(uib-dropdown-menu aria-labelledby="more-dropdown")
@@ -42,7 +42,7 @@
         search-text="searchText"
         remove="removeAddressLabel(address.index, paymentRequests.indexOf(address))")
 
-.flex-between.flex-center.mtl
+.flex-between.flex-center.mvl
   .type-lbl.em-500(translate="PAST_ADDRESSES")
   a(translate="{{showPast ? 'HIDE' : 'SHOW'}}" ng-click="toggleShowPast()" ng-class="{active:showPast}")
 .flex-row.flex-between(ng-if="showPast")
@@ -60,7 +60,7 @@ div(ng-if="showPast" ng-init="setAddresses(page)")
   .row
     .col-xs-12.table-container
       table.accounts-container.addresses.responsive.width-100
-        tr.short
+        tr.short.hidden-xs.hidden-sm
           td.col-md-6.em-500(translate="ADDRESS")
           td.col-md-6.em-500
             .flex-between.flex-row

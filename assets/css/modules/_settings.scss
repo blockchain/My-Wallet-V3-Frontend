@@ -3,7 +3,6 @@
   margin-bottom: 3em;
   .label {
     font-weight: normal;
-    margin-left: 10px;
   }
   .label-warning { background-color: $security-red; }
   .label-success { background-color: $security-green; }
@@ -57,18 +56,25 @@
         height: auto;
         display: block;
         position: relative;
+        border-bottom: 1px solid $grey;
         td {
           border: 0px;
           padding: 0px;
           display: block;
           margin: 10px 0;
-          button {
-            display: block;
-            margin-top: 10px;
-          }
           &:first-child {
+            float: left;
             padding-top: 10px;
-            border-top: 1px solid $grey;
+            > span:first-child {
+              display: block;
+            }
+          }
+          &:nth-child(2):not(.address-label) {
+            float: right;
+            padding-top: 10px;
+          }
+          &:last-child {
+            clear: both;
           }
         }
       }
@@ -111,9 +117,6 @@ table.accounts-container {
       td:first-child,
       td:last-child, {
         padding: 10px 25px;
-        &.pan {
-          padding: 0px;
-        }
       }
       td:first-child {
         border-left: 1px solid $grey;
@@ -133,15 +136,33 @@ table.accounts-container {
   @media (max-width: 992px) {
     tr {
       height: 80px;
-      &:first-child td {
-        margin-top: 0px;
+      &:before {
+        content: '';
+        display: table;
+      }
+      &:after {
+        clear: both;
+        content: '';
+        display: table;
       }
     }
 
     &.addresses {
-      tr:not(:first-child) td:last-child {
-        padding-bottom: 10px;
-        border-bottom: 1px solid $grey;
+      tr {
+        padding-left: 15px;
+        padding-right: 15px;
+        border-left: 1px solid $grey;
+        border-right: 1px solid $grey;
+        &:first-child {
+          height: 40px;
+          border-top: 1px solid $grey;
+          td {
+            padding-top: 0px;
+          }
+        }
+        &:not(:first-child) td:last-child {
+          padding-bottom: 10px;
+        }
       }
     }
   }
