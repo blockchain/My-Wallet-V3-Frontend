@@ -17,7 +17,8 @@ function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, 
   $scope.txLimit = 10;
 
   let all = { label: $translate.instant('ALL'), index: '', type: 'Accounts' };
-  $scope.accounts = [all].concat(smartAccount.getOptions());
+  $scope.accounts = smartAccount.getOptions();
+  if ($scope.accounts.length > 1) $scope.accounts.unshift(all);
   $scope.filterByAccount.account = $scope.accounts[0];
 
   let txList = MyWallet.wallet.txList;
