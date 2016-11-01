@@ -1,4 +1,3 @@
-
 angular
   .module('walletApp')
   .controller('LogoutController', LogoutController);
@@ -20,7 +19,9 @@ function LogoutController ($scope, $cookies, $q, $timeout, $interval, $state, Wa
       .then(() => $timeout($scope.toLogin, 3000));
   };
 
-  $interval(() => {
+  $scope.redirectInterval = $interval(() => {
     if (--$scope.timeToRedirect === 0) $scope.toLogin();
   }, 1000);
+
+  $scope.$on('$destroy', () => $interval.cancel($scope.redirectInterval));
 }
