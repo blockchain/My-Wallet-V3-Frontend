@@ -1,8 +1,8 @@
 .filter-bar.flex-between.flex-center(data-preflight-tag="AccountsSearch")
   a.flex-center.text.em-400.black(ng-click="back()")
       i.ti-arrow-left.mrm
-  .filter-search
-    input(
+  .filter-search.input-group
+    input.form-control(
       type="text"
       placeholder="{{::'SEARCH' | translate}}"
       ng-model="searchText")

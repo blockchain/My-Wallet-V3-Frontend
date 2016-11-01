@@ -20,8 +20,8 @@
     .flex-center
       a.black.mrl.em-500.em-alt(ng-click="exportHistory()")
         i.ti-export
-      .filter-search
-        input(
+      .filter-search.input-group
+        input.form-control(
           type="text"
           placeholder="{{::'SEARCH' | translate}}"
           ng-model="$parent.searchText"

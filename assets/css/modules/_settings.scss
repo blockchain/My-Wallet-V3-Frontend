@@ -131,6 +131,13 @@ table.accounts-container {
   }
 
   @media (max-width: 992px) {
+    tr {
+      height: 80px;
+      &:first-child td {
+        margin-top: 0px;
+      }
+    }
+
     &.addresses {
       tr:not(:first-child) td:last-child {
         padding-bottom: 10px;
@@ -202,6 +209,11 @@ table.accounts-container {
       }
     }
   }
+}
+
+.account-settings {
+  position: relative;
+  top: 45px;
 }
 
 @media (max-width: 768px) {

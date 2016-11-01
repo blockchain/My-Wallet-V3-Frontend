@@ -2,8 +2,9 @@
   z-index: 1;
   top: 175px;
   left: 270px;
-  height: 50px;
+  height: 60px;
   position: fixed;
+  padding: 0px 30px;
   background: $light-blue;
   width: calc(100% - 270px);
   border-bottom: 1px solid #ddd;
@@ -62,8 +63,9 @@
   }
   .ti-search {
     position: absolute;
+    z-index: 3;
     right: 8px;
-    top: 6px;
+    top: 12px;
   }
 }
 
@@ -84,17 +86,11 @@
   }
 }
 
-@media (max-width: 667px) {
-  .filter-search {
-    display: none;
-  }
-}
-
 @media (max-width: 768px) {
   .filter-search input { padding-right: 25px !important }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 992px) {
   .filter-search input { padding-right: 25px !important }
 }
 
