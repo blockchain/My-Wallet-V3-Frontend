@@ -276,42 +276,27 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('wallet.common.buy-sell', {
       url: '/buy-sell',
-      resolve: {
-        country () {
-          return null;
-        }
-      },
       views: {
         top: top,
         left: walletNav,
         right: {
-          templateUrl: 'partials/buy-sell-select-partner.jade',
-          controller: 'BuySellSelectPartnerController'
+          template: '<ui-view/>',
+          controller: 'BuySellMasterController',
+          controllerAs: 'vm'
         }
       }
+    })
+    .state('wallet.common.buy-sell.select', {
+      templateUrl: 'partials/buy-sell-select-partner.jade',
+      controller: 'BuySellSelectPartnerController'
     })
     .state('wallet.common.buy-sell.coinify', {
-      url: '',
-      views: {
-        'right@wallet.common': {
-          templateUrl: 'partials/buy-sell.jade',
-          controller: 'BuySellCtrl'
-        }
-      }
+      templateUrl: 'partials/buy-sell.jade',
+      controller: 'BuySellCtrl'
     })
     .state('wallet.common.buy-sell.sfox', {
-      url: '',
-      resolve: {
-        exchange (MyWallet) {
-          return MyWallet.wallet.external.sfox;
-        }
-      },
-      views: {
-        'right@wallet.common': {
-          templateUrl: 'partials/sfox/checkout.jade',
-          controller: 'SfoxCheckoutController'
-        }
-      },
+      templateUrl: 'partials/sfox/checkout.jade',
+      controller: 'SfoxCheckoutController',
       onEnter ($state, $stateParams, MyWallet, modals) {
         let exchange = MyWallet.wallet.external.sfox;
         if (exchange.profile == null) {
@@ -323,7 +308,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
               exchange () { return exchange; }
             }
           }).finally(() => {
-            $state.go('wallet.common.buy-sell');
+            let base = 'wallet.common.buy-sell';
+            let goingToBuySellState = $state.current.name.indexOf(base) === 0;
+            if (goingToBuySellState) $state.go('wallet.common.buy-sell');
           });
         }
       }
