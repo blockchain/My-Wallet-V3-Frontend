@@ -63,7 +63,7 @@
   height: 100%;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .left-nav {
     left: -270px;
     z-index: 11; //just enough to be visible
@@ -95,7 +95,7 @@
 @for $i from 1 through 20 {
   .width-#{$i*5} {
     width: percentage($i*5/100);
-    @media (max-width: 992px) {
+    @media (max-width: 991px) {
       width: auto;
     }
   }
@@ -103,7 +103,7 @@
 
 @for $i from 1 through 20 {
   .width-#{$i*5}-mobile {
-    @media (max-width: 992px) {
+    @media (max-width: 991px) {
       width: percentage($i*5/100);
     }
   }
@@ -115,11 +115,11 @@
 
 .brdrn { border-radius: 0px !important; }
 
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .top-view .heavy h1 { font-size: 1.75em; }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .top-view .heavy p { font-size: 1.2em; }
 }
 
@@ -151,7 +151,7 @@
 .clear-right { clear: right; }
 
 .width-100 {
-  @media (max-width: 992px) {
+  @media (max-width: 991px) {
     width: 100%;
   }
 }

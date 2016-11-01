@@ -153,7 +153,7 @@
 }
 
 // mobile flex support
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .flex-start-tablet {
     -webkit-box-pack: start;
     -webkit-justify-content: flex-start;
@@ -169,7 +169,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .flex-column-mobile {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;

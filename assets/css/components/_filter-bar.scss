@@ -8,7 +8,7 @@
   background: $light-blue;
   width: calc(100% - 270px);
   border-bottom: 1px solid #ddd;
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     padding: 0 10px;
   }
   .ui-select-container {
@@ -86,7 +86,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .filter-search input { padding-right: 25px !important }
 }
 
@@ -94,12 +94,12 @@
   .filter-search input { padding-right: 25px !important }
 }
 
-@media (min-width: 768px) and (max-width: 900px) {
+@media (min-width: 768px) and (max-width: 991px) {
   .filter-search input { min-width: 180px }
   .filter-search .ti-search { display: none; }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .filter-bar {
     border-top: 1px solid $eee;
     width: 100%;

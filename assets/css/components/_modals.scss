@@ -20,7 +20,7 @@
   z-index: $zindex-modal;
   -webkit-overflow-scrolling: touch;
   outline: 0;
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     overflow: auto;
     position: absolute;
     display: block !important;
@@ -40,7 +40,7 @@
     width: 35vw;
     margin: 0 auto;
     max-width: 35vw;
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
       max-width: 85vw;
       width: 85vw;
     }
@@ -197,7 +197,7 @@
   @extend .flex-center;
   .modal-dialog {
     width: 55vw;
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
       margin: 30px auto !important;
     }
   }
@@ -236,7 +236,7 @@
     @media (max-width: 1052px) {
       .modal-dialog { width: 65vw; }
     }
-    @media (max-width: 992px) {
+    @media (max-width: 991px) {
       .modal-dialog { width: 85vw; }
     }
   }
@@ -401,7 +401,7 @@
   .rocket-gif {
     border-radius: 5px;
     height: 430px;
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
       display: none;
     }
   }
@@ -432,7 +432,7 @@
   .modal-dialog { width: 65vw; }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .bc-modal, .bc-modal.small {
     .modal-dialog {
       width: 95%; /* fallback for browsers without support for vw */
@@ -454,7 +454,7 @@
     }
   }
 }
-@media (min-width: 769px) and (max-width: 992px) {
+@media (min-width: 768px) and (max-width: 991px) {
   .bc-modal, .bc-modal.small {
     .modal-dialog {
       width: 60vw;

@@ -23,7 +23,7 @@
             font-family: 'ThemifyIcons';
           }
         }
-        @media (max-width: 758px) {
+        @media (max-width: 767px) {
           > span {
             left: 0;
             right: 0;
@@ -82,7 +82,7 @@
           display: inline-block;
           position: relative;
           max-width: 85%;
-          @media (max-width: 768px) {
+          @media (max-width: 767px) {
             max-width: 80%;
           }
           &:before {

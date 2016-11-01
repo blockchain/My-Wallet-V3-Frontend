@@ -36,12 +36,12 @@
   display: block;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .left-align-mobile { text-align: left; }
   .center-mobile { text-align: center; }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .left-align-tablet { text-align: left; }
   .center-tablet { text-align: center; }
 }
@@ -64,7 +64,7 @@ $multiplier: 100;
 }
 
 @for $i from 1 through 5 {
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .font-#{$i}-mobile {
       font-size: #{$i}em;
     }

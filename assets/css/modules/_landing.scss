@@ -3,7 +3,7 @@
     @media (min-width: 768px) {
       width: auto;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
       margin-right: 0;
     }
   }
@@ -33,7 +33,7 @@
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
       padding-top: 285px;
       background-position: 10% 100%;
     }
@@ -58,7 +58,7 @@
     small {
       color: white;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
       span {
         font-size: 20px;
       }
@@ -101,7 +101,7 @@
       padding-right: 3em;
       padding-left: 3em;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
       .plrl-desk {
         padding-left: 0;
         padding-right: 0;
@@ -148,7 +148,7 @@
       min-height: 335px;
       position: relative;
       background: $light-grey;
-      @media (max-width: 768px) {
+      @media (max-width: 767px) {
         margin-top: 20px;
         min-height: 300px;
       }
@@ -249,7 +249,7 @@
       font-size: 24px;
       left: 50%;
       top: 35px;
-      @media (max-width: 768px) {
+      @media (max-width: 767px) {
         left: 0;
         top: 20px;
         width: 100%;
@@ -265,7 +265,7 @@
         height: 16px !important;
         width: 16px !important;
         background: $mid-grey;
-        @media (max-width: 768px) {
+        @media (max-width: 767px) {
           height: 12px !important;
           width: 12px !important;
         }

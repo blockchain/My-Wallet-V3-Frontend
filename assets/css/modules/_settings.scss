@@ -41,7 +41,7 @@
   .clearfix {
     .form-group {
       &:hover { background: $hover-blue; }
-      @media(max-width: 992px) {
+      @media(max-width: 991px) {
         .setting-result {
           clear: left;
         }
@@ -49,7 +49,7 @@
     }
   }
   // Accounts & Addresses
-  @media (max-width: 992px) {
+  @media (max-width: 991px) {
     .accounts-container {
       width: 100%;
       tr {
@@ -112,7 +112,7 @@ table.accounts-container {
     }
   }
 
-  @media (min-width: 993px) {
+  @media (min-width: 992px) {
     &.addresses {
       td:first-child,
       td:last-child, {
@@ -133,7 +133,7 @@ table.accounts-container {
     }
   }
 
-  @media (max-width: 992px) {
+  @media (max-width: 991px) {
     tr {
       height: 80px;
       &:before {
@@ -237,13 +237,13 @@ table.accounts-container {
   top: 45px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .settings {
     padding: 15px 15px;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .pbm-m {
     padding-bottom: 0.625em;
   }
