@@ -1,10 +1,10 @@
-div(data-preflight-tag="Logout")
+div(data-preflight-tag="Logout" ng-hide="deauthorized")
   header
     hgroup
       .flex-between.flex-center.flex-wrap
         h3.em-300.mtn(translate="DEAUTH_BROWSER")
         span.ellipsis(
-          ng-show="timeToRedirect <= 5"
+          ng-show="timeToRedirect <= 5 && timeToRedirect >= 0"
           translate="PENDING_REDIRECT"
           translate-values="{time:timeToRedirect}")
   .flex-column.mtl
@@ -13,12 +13,14 @@ div(data-preflight-tag="Logout")
         p.em-300.type-h5(translate="DEAUTH_EXPLAIN")
       .flex-1.flex-center.flex-column
         button.button-success.button-nowrap(
-          ng-hide="deauthorized"
           ng-click="deauth()"
           ng-disabled="deauthorizing"
           translate="DEAUTHORIZE")
-        span.success(ng-show="deauthorized")
-          i.ti-check.success-green
-          span.mam(translate="SUCCESS")
         span.mtl
           a.em-300(ui-sref="public.login-no-uid" translate="CONTINUE_TO_LOGIN")
+
+.flex-center.flex-justify.flex-column(ng-show="deauthorized")
+  .level-complete.flex-center.flex-justify.mtl
+    i.ti-check.bright-green
+  h4.em-300.mtl(translate="SUCCESS")
+  p.em-300(translate="DEAUTH_SUCCESS")
