@@ -4,6 +4,7 @@
   left: 270px;
   height: 60px;
   position: fixed;
+  overflow-x: auto;
   padding: 0px 30px;
   background: $light-blue;
   width: calc(100% - 270px);
