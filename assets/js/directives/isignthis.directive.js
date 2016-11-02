@@ -168,27 +168,29 @@ function isignthis ($sce) {
           scope.onResize({step: e.route.match(/\/(.*)\//)[1]});
 
           // handle states in between awaiting_transfer_in and completed
-          switch (e.state) {
-            case 'SUCCESS':
-            case 'MANUAL_ACCEPTED':
+          switch (e.compound_state) {
+            case 'SUCCESS.MANUAL_ACCEPTED':
+            case 'SUCCESS.COMPLETE':
               scope.onComplete('processing');
               break;
-            case 'MANUAL_HOLD':
-            case 'MANUAL_REVIEW':
-            case 'PROCESSING_DOCUMENT':
-              scope.onComplete('reviewing');
+            case 'CANCELLED.CANCELLED':
+              scope.onComplete('cancelled');
               break;
-            case 'EXPIRED':
+            case 'EXPIRED.EXPIRED':
               scope.onComplete('expired');
               break;
-            case 'FAILED':
-            case 'DECLINED':
-            case 'REJECTED':
-            case 'MANUAL_REJECTED':
+            case 'DECLINED.CARD_ISSUER_COUNTRY':
+            case 'DECLINED.SPLIT_TOKEN_DENIED':
+            case 'DECLINED.TOO_MANY_ATTEMPTS':
+            case 'DECLINED.OTP_TOKEN_DENIED':
+            case 'DECLINED.UNKNOWN_ERROR':
+            case 'FAILED.UNEXPECTED_ERROR':
+            case 'REJECTED.UPSTREAM_REJECTED':
               scope.onComplete('rejected');
               break;
-            case 'CANCELLED':
-              scope.onComplete('cancelled');
+            case 'PROCESSING_DOCUMENT.PENDING':
+            case 'PENDING.MANUAL_REVIEW':
+              scope.onComplete('reviewing');
               break;
           }
         })
