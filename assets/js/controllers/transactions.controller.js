@@ -7,7 +7,10 @@ function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, 
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.totals = Wallet.totals;
-  $scope.filterByAccount = {};
+  $scope.filterBy = {
+    type: undefined,
+    account: undefined
+  };
 
   $scope.getTotal = Wallet.total;
 
@@ -16,10 +19,13 @@ function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, 
   $scope.canDisplayDescriptions = false;
   $scope.txLimit = 10;
 
+  $scope.isFilterOpen = false;
+  $scope.toggleFilter = () => $scope.isFilterOpen = !$scope.isFilterOpen;
+
   let all = { label: $translate.instant('ALL'), index: '', type: 'Accounts' };
   $scope.accounts = smartAccount.getOptions();
   if ($scope.accounts.length > 1) $scope.accounts.unshift(all);
-  $scope.filterByAccount.account = $scope.accounts[0];
+  $scope.filterBy.account = $scope.accounts[0];
 
   let txList = MyWallet.wallet.txList;
   $scope.transactions = txList.transactions(smartAccount.getDefaultIdx());
@@ -43,10 +49,10 @@ function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, 
   });
 
   let setTxs = $scope.setTxs = () => {
-    let idx = $scope.filterByAccount.account.index;
+    let idx = $scope.filterBy.account.index;
     let newTxs = idx === '' || !isNaN(idx)
       ? txList.transactions(idx)
-      : $scope.filterByAddress($scope.filterByAccount.account);
+      : $scope.filterByAddress($scope.filterBy.account);
     if ($scope.transactions.length > newTxs.length) $scope.allTxsLoaded = false;
     $scope.transactions = newTxs;
     $scope.$safeApply();
@@ -58,7 +64,7 @@ function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, 
     windowClass: 'bc-modal',
     resolve: {
       activeIndex: () => {
-        let idx = $scope.filterByAccount.account.index;
+        let idx = $scope.filterBy.account.index;
         return isNaN(idx) ? 'imported' : idx.toString();
       }
     }
@@ -69,8 +75,8 @@ function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, 
 
   // Searching and filtering
   $scope.filterTypes = ['ALL', 'SENT', 'RECEIVED', 'TRANSFERRED'];
-  $scope.setFilterType = (type) => $scope.filterBy = $scope.filterTypes[type];
-  $scope.isFilterType = (type) => $scope.filterBy === $scope.filterTypes[type];
+  $scope.setFilterType = (type) => $scope.filterBy.type = $scope.filterTypes[type];
+  $scope.isFilterType = (type) => $scope.filterBy.type === $scope.filterTypes[type];
   $scope.setFilterType(0);
 
   $scope.transactionFilter = item => {
@@ -97,7 +103,7 @@ function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, 
   };
 
   $scope.filterByType = tx => {
-    switch ($scope.filterBy) {
+    switch ($scope.filterBy.type) {
       case $scope.filterTypes[0]:
         return true;
       case $scope.filterTypes[1]:
@@ -117,5 +123,5 @@ function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, 
     )
   );
 
-  $scope.$watch('filterByAccount.account', setTxs);
+  $scope.$watch('filterBy.account', setTxs);
 }

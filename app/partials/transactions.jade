@@ -1,9 +1,11 @@
 .transactions(ng-if="status.isLoggedIn")
-  .filter-bar.flex-between.flex-center(data-preflight-tag="TxsOptions")
-    .flex-row.flex-center
-      ui-select.mrl(
+  .filter-bar.flex-center(data-preflight-tag="TxsOptions" ng-class="{open: isFilterOpen}")
+    .hidden-md.hidden-lg.pointer.blue(translate="FILTER" ng-hide="isFilterOpen" ng-click="toggleFilter()")
+    .hidden-md.hidden-lg.pointer.blue.mvl(translate="HIDE" ng-show="isFilterOpen" ng-click="toggleFilter()")
+    .hidden-md.hidden-lg(ng-class="{hide: !isFilterOpen}")
+      ui-select.mbl(
         ng-show="accounts.length > 1"
-        ng-model="filterByAccount.account"
+        ng-model="filterBy.account"
         name="accounts"
         tagging)
         ui-select-match
@@ -11,22 +13,50 @@
         ui-select-choices(repeat="account in accounts | filter:{label:$select.search} | limitTo:accountLimit" group-by="'type'")
           span(in-view="$last && account.type==='Imported Addresses' && increaseLimit()")
             label-origin(origin="::account" highlight="$select.search")
-      .filter-buttons.flex
-        a.black.em-500.em-alt(
-          ng-repeat="f in filterTypes track by f"
-          ng-click="setFilterType($index)"
-          ng-class="{'active': isFilterType($index)}"
-          translate="{{::f}}")
-    .flex-center
-      a.black.mhl.em-500.em-alt(ng-click="exportHistory()")
-        i.ti-export
-      .filter-search.input-group
-        input.form-control(
+      ui-select.mbl(
+        ng-model="filterBy.type"
+        name="filters"
+        tagging)
+        ui-select-match
+          span {{$select.selected | translate}}
+        ui-select-choices(repeat="filter in filterTypes")
+          span {{ filter | translate }}
+      .filter-search.input-group.width-100
+        input.form-control.width-100(
           type="text"
           placeholder="{{::'SEARCH' | translate}}"
           ng-model="$parent.searchText"
           ng-model-options="{ debounce: 250 }")
         i.ti-search
+
+    .flex-between.width-100.hidden-xs.hidden-sm
+      .flex-row.flex-center
+        ui-select.mrl(
+          ng-show="accounts.length > 1"
+          ng-model="filterBy.account"
+          name="accounts"
+          tagging)
+          ui-select-match
+            label-origin(origin="$select.selected")
+          ui-select-choices(repeat="account in accounts | filter:{label:$select.search} | limitTo:accountLimit" group-by="'type'")
+            span(in-view="$last && account.type==='Imported Addresses' && increaseLimit()")
+              label-origin(origin="::account" highlight="$select.search")
+        .filter-buttons
+          a.black.em-500.em-alt(
+            ng-repeat="f in filterTypes track by f"
+            ng-click="setFilterType($index)"
+            ng-class="{'active': isFilterType($index)}"
+            translate="{{::f}}")
+      .flex-center
+        a.black.mhl.em-500.em-alt.hidden-xs.hidden-sm(ng-click="exportHistory()")
+          i.ti-export
+        .filter-search.input-group
+          input.form-control(
+            type="text"
+            placeholder="{{::'SEARCH' | translate}}"
+            ng-model="$parent.searchText"
+            ng-model-options="{ debounce: 250 }")
+          i.ti-search
   .transaction-feed(data-preflight-tag="TxsFeed")
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || getTotal(account) > 0 || filteredTransactions.length > 0 || selectedaccount == 'imported'")
       .flex-column.mbl.border-bottom.black
