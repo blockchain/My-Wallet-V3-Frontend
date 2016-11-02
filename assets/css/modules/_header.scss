@@ -31,7 +31,7 @@
     display: none;
     padding: 0px 20px;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     span.ti-angle-down, span.ti-angle-up {
       display: inline-block;
     }
@@ -196,7 +196,7 @@ img#logo {
   }
   .navbar-brand {
     line-height: 60px;
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
       line-height: 50px;
     }
     img {

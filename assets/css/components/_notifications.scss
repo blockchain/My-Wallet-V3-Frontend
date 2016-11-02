@@ -24,7 +24,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .notification-modal {
     .modal-dialog {
       width: 100vw;
@@ -39,7 +39,7 @@
   transform: translateY(-50%); 
   -webkit-transform: translateY(-50%); // ensure centering
   z-index: 1049; //above everything except modals (1050)
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     right: 5px;
   }
   @media (max-height: 550px) {

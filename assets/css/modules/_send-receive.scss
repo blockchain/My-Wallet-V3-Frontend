@@ -48,7 +48,7 @@
     }
     > div, textarea, .bitcoin-address {
       @extend .mlm;
-      @media (min-width: 769px) {
+      @media (min-width: 768px) {
         max-width: 440px;
         min-width: 440px;
       }
@@ -58,7 +58,7 @@
         min-width: initial;
       }
     }
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
       display: block;
       > label {
         min-width: auto;
@@ -98,7 +98,7 @@
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .row {
       display: block;
     }
@@ -205,7 +205,7 @@
       .flex-row {
         > span.account {
           text-align: left;
-          @media (max-width: 768px) {
+          @media (max-width: 767px) {
             overflow: hidden;
             text-overflow: ellipsis;
           }
@@ -222,7 +222,7 @@
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     &.fade {
       opacity: 1 !important;
     }
@@ -284,7 +284,7 @@
 // RECEIVE
 
 #receive {
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     opacity: 1 !important;
   }
   @media (min-width: 769px) {
@@ -374,7 +374,7 @@
       bottom: 0;
     }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     display: block;
     > div {
       width: 100%;
@@ -410,7 +410,7 @@
 }
 
 #sign-msg {
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     opacity: 1 !important;
   }
   @media (min-width: 769px) {

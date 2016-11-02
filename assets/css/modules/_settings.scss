@@ -3,7 +3,6 @@
   margin-bottom: 3em;
   .label {
     font-weight: normal;
-    margin-left: 10px;
   }
   .label-warning { background-color: $security-red; }
   .label-success { background-color: $security-green; }
@@ -37,21 +36,12 @@
       border: 1px solid $border-grey;
       padding: 10px;
     }
-    &.addresses {
-      td:first-child,
-      td:last-child, {
-        padding: 10px 25px;
-        &.pan {
-          padding: 0px;
-        }
-      }
-    }
   }
   // Preferences
   .clearfix {
     .form-group {
       &:hover { background: $hover-blue; }
-      @media(max-width: 992px) {
+      @media(max-width: 991px) {
         .setting-result {
           clear: left;
         }
@@ -59,25 +49,32 @@
     }
   }
   // Accounts & Addresses
-  @media (max-width: 900px) {
+  @media (max-width: 991px) {
     .accounts-container {
       width: 100%;
       tr {
         height: auto;
         display: block;
         position: relative;
+        border-bottom: 1px solid $grey;
         td {
           border: 0px;
           padding: 0px;
           display: block;
           margin: 10px 0;
-          button {
-            display: block;
-            margin-top: 10px;
-          }
           &:first-child {
+            float: left;
             padding-top: 10px;
-            border-top: 1px solid $grey;
+            > span:first-child {
+              display: block;
+            }
+          }
+          &:nth-child(2):not(.address-label) {
+            float: right;
+            padding-top: 10px;
+          }
+          &:last-child {
+            clear: both;
           }
         }
       }
@@ -115,18 +112,58 @@ table.accounts-container {
     }
   }
 
-  &.addresses {
-    td:first-child {
-      border-left: 1px solid $grey;
+  @media (min-width: 992px) {
+    &.addresses {
+      td:first-child,
+      td:last-child, {
+        padding: 10px 25px;
+      }
+      td:first-child {
+        border-left: 1px solid $grey;
+      }
+      td:last-child {
+        border-right: 1px solid $grey;
+      }
+      tr:first-child td {
+        border-top: 1px solid $grey;
+      }
+      tr:last-child td {
+        border-bottom: 1px solid $grey;
+      }
     }
-    td:last-child {
-      border-right: 1px solid $grey;
+  }
+
+  @media (max-width: 991px) {
+    tr {
+      height: 80px;
+      &:before {
+        content: '';
+        display: table;
+      }
+      &:after {
+        clear: both;
+        content: '';
+        display: table;
+      }
     }
-    tr:first-child td {
-      border-top: 1px solid $grey;
-    }
-    tr:last-child td {
-      border-bottom: 1px solid $grey;
+
+    &.addresses {
+      tr {
+        padding-left: 15px;
+        padding-right: 15px;
+        border-left: 1px solid $grey;
+        border-right: 1px solid $grey;
+        &:first-child {
+          height: 40px;
+          border-top: 1px solid $grey;
+          td {
+            padding-top: 0px;
+          }
+        }
+        &:not(:first-child) td:last-child {
+          padding-bottom: 10px;
+        }
+      }
     }
   }
 }
@@ -195,13 +232,18 @@ table.accounts-container {
   }
 }
 
-@media (max-width: 768px) {
+.account-settings {
+  position: relative;
+  top: 45px;
+}
+
+@media (max-width: 767px) {
   .settings {
     padding: 15px 15px;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .pbm-m {
     padding-bottom: 0.625em;
   }

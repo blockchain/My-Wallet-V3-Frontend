@@ -13,6 +13,7 @@
 .right-align { text-align: right; }
 .left-align { text-align: left; }
 .center-align { text-align: center; }
+.center { text-align: center; }
 .line-height { line-height: 1.75; }
 .shadow { text-shadow: 0 1px 1px #ccc; }
 .em-alt { text-transform: uppercase; }
@@ -35,6 +36,16 @@
   display: block;
 }
 
+@media (max-width: 767px) {
+  .left-align-mobile { text-align: left; }
+  .center-mobile { text-align: center; }
+}
+
+@media (max-width: 991px) {
+  .left-align-tablet { text-align: left; }
+  .center-tablet { text-align: center; }
+}
+
 $multiplier: 100;
 
 @for $i from 1 through 9 {
@@ -53,7 +64,7 @@ $multiplier: 100;
 }
 
 @for $i from 1 through 5 {
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .font-#{$i}-mobile {
       font-size: #{$i}em;
     }

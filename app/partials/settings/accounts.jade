@@ -1,18 +1,18 @@
-.filter-bar.flex-end.flex-center(data-preflight-tag="AccountsSearch")
-  .filter-search
-    input(
+.filter-bar.flex-end.flex-center.flex-start-tablet(data-preflight-tag="AccountsSearch")
+  .filter-search.input-group
+    input.form-control(
       type="text"
       placeholder="{{::'SEARCH' | translate}}"
       ng-model="searchText"
       ng-model-options="{debounce:250}")
     i.ti-search
 
-.row.ptvl(data-preflight-tag="Accounts")
+.row.account-settings(data-preflight-tag="Accounts")
   .col-xs-12
     table.accounts-container.width-100(ng-if="status.isLoggedIn")
       tr.responsive.width-100(ng-repeat="account in accounts() | filter:{label: searchText}")
         td.col-md-3
-          span.type-md.em-500(ng-bind-html="account.label | escapeHtml | highlight:searchText" ng-class="{'o-3': account.archived}")
+          span.type-md.em-500.mrm(ng-bind-html="account.label | escapeHtml | highlight:searchText" ng-class="{'o-3': account.archived}")
           span.label.label-primary.btn-xs(translate="DEFAULT", ng-show="!account.archived && isDefault(account)")
           span.label.label-default.btn-xs.mrm(translate="ARCHIVED" ng-show="account.archived")
         td.col-md-3.center
@@ -33,15 +33,15 @@
         td.col-md-3
         td.col-md-3
 
-    .flex-between.flex-center.mbl.mtvl
+    .flex-between.flex-center.mbl.mvvl
       div
         span.type-md.em-500(translate="IMPORTED_ADDRESSES")
         |  
-        i.ti-alert.security-red
+        i.ti-alert.security-red.hidden-xs
         |  
-        span.security-red(translate="NOT_BACKED_BY_RECOVERY")
+        span.security-red.hidden-xs(translate="NOT_BACKED_BY_RECOVERY")
       .flex-center.flex-row
-        button.button-primary.mrl(
+        button.button-primary.mrl.hidden-sm.hidden-xs(
           translate="TRANSFER_ALL"
           ng-show="activeSpendableAddresses().length > 0"
           ng-click="openTransferAll()"

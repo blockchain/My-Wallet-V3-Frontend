@@ -19,7 +19,6 @@ body {
   width: 100%;
 }
 
-.center { text-align: center; }
 .center-self { 
   transform: translate(-50%,-50%); 
   -ms-transform: translate(-50%,-50%); 
@@ -82,11 +81,5 @@ noscript {
 .tilda-before {
   &:before {
     content: '~';
-  }
-}
-
-@media (max-width: 768px) {
-  hidden-xs {
-    display: none;
   }
 }
