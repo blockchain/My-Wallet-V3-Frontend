@@ -40,7 +40,6 @@ function CoinifyCountryController ($scope, country, MyWallet, buySell) {
                    {'Name': 'Poland', 'Code': 'PL'},
                    {'Name': 'Portugal', 'Code': 'PT'},
                    {'Name': 'Réunion', 'Code': 'RE'},
-                   {'Name': 'Romania', 'Code': 'RO'},
                    {'Name': 'Saint Barthélemy', 'Code': 'BL'},
                    {'Name': 'Saint Martin (French part)', 'Code': 'MF'},
                    {'Name': 'Saint Pierre and Miquelon', 'Code': 'PM'},
