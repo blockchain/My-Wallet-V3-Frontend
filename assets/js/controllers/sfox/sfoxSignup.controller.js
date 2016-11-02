@@ -9,5 +9,18 @@ function SfoxSignupController ($stateParams, exchange) {
   this.steps = enumify('create', 'verify', 'link', 'buy');
   this.onStep = (s) => this.steps[s] === this.step;
   this.goTo = (s) => { this.step = this.steps[s]; };
-  this.goTo('create');
+
+  let profile = this.exchange.profile;
+  if (!profile) {
+    this.goTo('create');
+  } else {
+    let status = profile.verificationStatus;
+    if (status === 'unverified') {
+      this.goTo('verify');
+    } else if (status === 'pending') {
+      this.goTo('link');
+    } else {
+      this.goTo('buy');
+    }
+  }
 }

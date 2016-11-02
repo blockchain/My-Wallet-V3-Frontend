@@ -297,21 +297,17 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     .state('wallet.common.buy-sell.sfox', {
       templateUrl: 'partials/sfox/checkout.jade',
       controller: 'SfoxCheckoutController',
+      resolve: {
+        _fetchProfile ($q, MyWallet) {
+          let exchange = MyWallet.wallet.external.sfox;
+          return exchange.user && !exchange.profile
+            ? exchange.fetchProfile() : $q.resolve();
+        }
+      },
       onEnter ($state, $stateParams, MyWallet, modals) {
         let exchange = MyWallet.wallet.external.sfox;
         if (exchange.profile == null) {
-          modals.expandTray({
-            templateUrl: 'partials/sfox/signup.jade',
-            controllerAs: 'vm',
-            controller: 'SfoxSignupController',
-            resolve: {
-              exchange () { return exchange; }
-            }
-          }).finally(() => {
-            let base = 'wallet.common.buy-sell';
-            let goingToBuySellState = $state.current.name.indexOf(base) === 0;
-            if (goingToBuySellState) $state.go('wallet.common.buy-sell');
-          });
+          modals.openSfoxSignup(exchange);
         }
       }
     });
