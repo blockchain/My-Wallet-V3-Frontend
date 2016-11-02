@@ -13,6 +13,9 @@
   @media (max-height: 550px) {
     overflow: auto;
   }
+  @media (max-width: 767px) {
+    height: calc(100% - 50px);
+  }
   .active-accounts{
     margin-bottom: 30px;
   }

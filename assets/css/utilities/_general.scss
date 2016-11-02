@@ -13,10 +13,21 @@ body {
   width: 100%;
 }
 
+.wallet-top-navigation.navbar-inverse {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
 .wallet-container {
   position: fixed;
   height: 100%;
   width: 100%;
+  top: 60px;
+  @media (max-width: 767px) {
+    top: 50px;
+  }
 }
 
 .center-self { 
