@@ -9,6 +9,11 @@ function modals ($state, $uibModal, $ocLazyLoad) {
     $uibModal.open(angular.merge(options, defaults))
   );
 
+  service.openBankHelper = () => open({
+    templateUrl: 'partials/bank-check-modal.jade',
+    windowClass: 'bc-modal medium'
+  });
+
   service.openTransfer = (addresses) => open({
     templateUrl: 'partials/settings/transfer.jade',
     controller: 'TransferController',

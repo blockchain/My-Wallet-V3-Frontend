@@ -2,9 +2,11 @@ angular
   .module('walletApp')
   .controller('SfoxLinkController', SfoxLinkController);
 
-function SfoxLinkController ($scope, $q) {
+function SfoxLinkController ($scope, $q, modals) {
   let exchange = $scope.vm.exchange;
   let accounts = $scope.vm.accounts;
+
+  $scope.openBankHelper = modals.openBankHelper;
 
   let state = $scope.state = {
     terms: false,
