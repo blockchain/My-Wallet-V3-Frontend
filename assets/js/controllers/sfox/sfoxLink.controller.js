@@ -50,4 +50,5 @@ function SfoxLinkController ($scope, $q) {
   };
 
   $scope.types = ['checking', 'savings'];
+  $scope.installLock();
 }

@@ -52,4 +52,5 @@ function SfoxCreateAccountController ($scope, $q, Wallet) {
   $scope.$watch('user.isEmailVerified', $scope.setState);
   $scope.$watch('user.isMobileVerified', $scope.setState);
   $scope.setState();
+  $scope.installLock();
 }

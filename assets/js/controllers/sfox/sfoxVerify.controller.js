@@ -36,4 +36,6 @@ function SfoxVerifyController ($scope, $q, state) {
       $scope.free();
     }
   };
+
+  $scope.installLock();
 }

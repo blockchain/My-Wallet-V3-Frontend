@@ -125,7 +125,9 @@ angular.module('walletApp', modules)
   let code = languages.parseFromUrl($location.absUrl());
   if (code) languages.set(code);
 
-  $rootScope.locked = false;
-  $rootScope.lock = function () { this.locked = true; };
-  $rootScope.free = function () { this.locked = false; };
+  $rootScope.installLock = function () {
+    this.locked = false;
+    this.lock = () => { this.locked = true; };
+    this.free = () => { this.locked = false; };
+  };
 });
