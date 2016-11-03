@@ -1117,6 +1117,7 @@
   "DOUBLE_SPEND": "This transaction may be at risk of a double spend.",
   "SHOW": "Show",
   "HIDE": "Hide",
+  "FILTER": "Filter",
   "EDIT_NAME": "Edit Name",
   "NOT_BACKED_BY_RECOVERY": "Not backed up by your Recovery Phrase. Transfer into a wallet to secure funds.",
   "EXCHANGE_RATE_HELPER": "The rate offered by your region's exchange partner. May include fees.",
