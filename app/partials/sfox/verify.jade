@@ -8,7 +8,7 @@
         span.type-h5.em-300(translate="You may also be asked to upload identification documents.")
   .width-60
     form.bc-form-next(name="verifyForm" ng-submit="verify()" novalidate autocomplete="off")
-      fieldset(ng-disabled="state.busy")
+      fieldset(ng-disabled="locked")
         .group.inline
           .item.width-33
             label First Name

@@ -10,7 +10,7 @@
       span.or-horizontal.flex-justify(translate="OR")
 
     form.bc-form-next(name="bankAccountForm" ng-submit="link()" novalidate autocomplete="off")
-      fieldset(ng-disabled="state.busy")
+      fieldset(ng-disabled="locked")
         .group.full
           label.sm Nickname
           .item
@@ -53,7 +53,7 @@
       span.type-h5.em-300(translate="SFOX sent 2 small deposits to your bank account. Enter these amounts in any order to verify your account.")
   .width-50
     form.bc-form-next(name="verifyBankAccountForm" ng-submit="verify()" novalidate autocomplete="off")
-      fieldset(ng-disabled="state.busy")
+      fieldset(ng-disabled="locked")
         .group.full
           label.sm Deposit 1
           .item

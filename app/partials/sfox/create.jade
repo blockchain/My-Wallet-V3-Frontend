@@ -5,7 +5,7 @@
       span.type-h5.em-300(translate="Please verify your email and phone number to set up your SFOX account.")
   .width-60
     form.bc-form-next.width-80(name="accountForm" ng-submit="createAccount()" novalidate autocomplete="off")
-      fieldset(ng-disabled="state.busy")
+      fieldset(ng-disabled="locked")
         .group.width-75
           .item(ng-show="state.verifiedEmail")
             label Email Address

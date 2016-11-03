@@ -6,7 +6,7 @@ function SfoxVerifyController ($scope, $q, state) {
   let exchange = $scope.vm.exchange;
 
   $scope.states = state.stateCodes;
-  $scope.state = { busy: false };
+  $scope.state = {};
 
   $scope.verify = () => {
     $scope.lock();
@@ -36,7 +36,4 @@ function SfoxVerifyController ($scope, $q, state) {
       $scope.free();
     }
   };
-
-  $scope.lock = () => { $scope.state.busy = true; };
-  $scope.free = () => { $scope.state.busy = false; };
 }

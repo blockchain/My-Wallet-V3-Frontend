@@ -7,7 +7,6 @@ function SfoxCreateAccountController ($scope, $q, Wallet) {
   let user = $scope.user = Wallet.user;
 
   let state = $scope.state = {
-    busy: false,
     terms: false
   };
 
@@ -49,9 +48,6 @@ function SfoxCreateAccountController ($scope, $q, Wallet) {
       .catch(error => console.error(error))
       .finally($scope.free);
   };
-
-  $scope.lock = () => { state.busy = true; };
-  $scope.free = () => { state.busy = false; };
 
   $scope.$watch('user.isEmailVerified', $scope.setState);
   $scope.$watch('user.isMobileVerified', $scope.setState);

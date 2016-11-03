@@ -7,7 +7,6 @@ function SfoxLinkController ($scope, $q) {
   let accounts = $scope.vm.accounts;
 
   let state = $scope.state = {
-    busy: false,
     terms: false,
     account: accounts[0],
     readyToVerify: undefined
@@ -27,7 +26,7 @@ function SfoxLinkController ($scope, $q) {
 
     $q.resolve(exchange.getBuyMethods())
       .then((methods) => addAccount(methods))
-      .then((account) => $scope.state.account = account)
+      .then((account) => state.account = account)
       .catch(error => console.error(error))
       .finally($scope.free);
 
@@ -44,14 +43,11 @@ function SfoxLinkController ($scope, $q) {
   $scope.verify = () => {
     $scope.lock();
 
-    $q.resolve($scope.state.account.verify($scope.fields.deposit1, $scope.fields.deposit2))
+    $q.resolve(state.account.verify($scope.fields.deposit1, $scope.fields.deposit2))
       .then(() => $scope.vm.goTo('buy'))
       .catch((err) => console.log(err))
       .finally($scope.free);
   };
-
-  $scope.lock = () => { state.busy = true; };
-  $scope.free = () => { state.busy = false; };
 
   $scope.types = ['checking', 'savings'];
 }
