@@ -5,7 +5,7 @@ angular
 function SfoxLinkController ($scope, $q, $uibModalStack) {
   let exchange = $scope.vm.exchange;
   let accounts = $scope.vm.accounts;
-  accounts[0].status === 'active' && $scope.vm.goTo('buy');
+  accounts[0] && accounts[0].status === 'active' && $scope.vm.goTo('buy');
 
   let state = $scope.state = {
     busy: false,
