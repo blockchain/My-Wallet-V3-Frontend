@@ -1,4 +1,4 @@
-.flex-row.mtl(ng-show="!state.account")
+.flex-row.mtl(ng-show="!state.accounts.length")
   .width-40
     .width-80
       h4.mtn(translate="Link Bank Account")
@@ -36,7 +36,7 @@
               span.capitalize(ng-bind-html="type | highlight: $select.search")
         .group.full
           button.btn.button-primary.full(type="submit" ng-disabled="bankAccountForm.$invalid") Add Account
-.flex-row.mtl(ng-show="state.account && !state.readyToVerify")
+.flex-row.mtl(ng-show="state.accounts.length && !state.readyToVerify")
   .width-40
     .width-80
       h4.mtn(translate="Verify Bank Account")
@@ -46,7 +46,7 @@
     p.type-h5.em-300.mts.mbl(translate="Deposits will appear in your account as 'SFOX' in 1-2 days")
     button.btn.button-primary.full(ng-click="state.readyToVerify = true") Verify Now
     a.display-block.center.mtl(ng-click="$close()") Finish Later
-.flex-row.mtl(ng-show="state.account && state.readyToVerify")
+.flex-row.mtl(ng-show="state.accounts.length && state.readyToVerify")
   .width-40
     .width-80
       h4.mtn(translate="Verify Bank Account")
