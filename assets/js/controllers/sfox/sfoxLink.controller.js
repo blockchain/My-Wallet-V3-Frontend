@@ -2,10 +2,9 @@ angular
   .module('walletApp')
   .controller('SfoxLinkController', SfoxLinkController);
 
-function SfoxLinkController ($scope, $q, $uibModalStack) {
+function SfoxLinkController ($scope, $q) {
   let exchange = $scope.vm.exchange;
   let accounts = $scope.vm.accounts;
-  accounts[0] && accounts[0].status === 'active' && $scope.vm.goTo('buy');
 
   let state = $scope.state = {
     busy: false,
@@ -53,7 +52,6 @@ function SfoxLinkController ($scope, $q, $uibModalStack) {
 
   $scope.lock = () => { state.busy = true; };
   $scope.free = () => { state.busy = false; };
-  $scope.close = () => { $uibModalStack.dismissAll(); };
 
   $scope.types = ['checking', 'savings'];
 }

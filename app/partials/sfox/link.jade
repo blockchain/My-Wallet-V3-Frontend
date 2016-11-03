@@ -45,7 +45,7 @@
     img.width-100(src="img/bank-statement.jpg")
     p.type-h5.em-300.mts.mbl(translate="Deposits will appear in your account as 'SFOX' in 1-2 days")
     button.btn.button-primary.full(ng-click="state.readyToVerify = true") Verify Now
-    a.display-block.center.mtl(ng-click="close()") Finish Later
+    a.display-block.center.mtl(ng-click="$close()") Finish Later
 .flex-row.mtl(ng-show="state.account && state.readyToVerify")
   .width-40
     .width-80
@@ -64,4 +64,4 @@
             input(ng-model="fields.deposit2" name="deposit2" type="number" required)
         .group.full
           button.btn.button-primary.full(type="submit" ng-disabled="verifyBankAccountForm.$invalid") Verify
-          a.display-block.center.mtl(ng-click="close()") Finish Later
+          a.display-block.center.mtl(ng-click="$close()") Finish Later
