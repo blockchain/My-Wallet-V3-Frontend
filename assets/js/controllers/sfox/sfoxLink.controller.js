@@ -2,15 +2,21 @@ angular
   .module('walletApp')
   .controller('SfoxLinkController', SfoxLinkController);
 
-function SfoxLinkController ($scope, $q) {
+function SfoxLinkController ($scope, $q, $uibModalStack) {
   let exchange = $scope.vm.exchange;
+  let accounts = $scope.vm.accounts;
+  accounts[0].status === 'active' && $scope.vm.goTo('buy');
 
   let state = $scope.state = {
     busy: false,
-    terms: false
+    terms: false,
+    account: accounts[0],
+    readyToVerify: undefined
   };
 
   $scope.fields = {
+    deposit1: undefined,
+    deposit2: undefined,
     nickname: undefined,
     routingNumber: undefined,
     accountNumber: undefined,
@@ -20,16 +26,15 @@ function SfoxLinkController ($scope, $q) {
   $scope.link = () => {
     $scope.lock();
 
-    $q.resolve(exchange.getBuyQuote(1, 'USD', 'BTC'))
-      .then((quote) => quote.getPaymentMediums())
-      .then((mediums) => addAccount(mediums))
-      .then((account) => { $scope.account = account; console.log(account); })
+    $q.resolve(exchange.getBuyMethods())
+      .then((methods) => addAccount(methods))
+      .then((account) => $scope.state.account = account)
       .catch(error => console.error(error))
       .finally($scope.free);
 
-    let addAccount = (mediums) => {
+    let addAccount = (methods) => {
       // routingNumber, accountNumber, name, nickname, type
-      return mediums.ach.addAccount($scope.fields.routingNumber,
+      return methods.ach.addAccount($scope.fields.routingNumber,
                                     $scope.fields.accountNumber,
                                     'name',
                                     $scope.fields.nickname,
@@ -37,8 +42,18 @@ function SfoxLinkController ($scope, $q) {
     };
   };
 
+  $scope.verify = () => {
+    $scope.lock();
+
+    $q.resolve($scope.state.account.verify($scope.fields.deposit1, $scope.fields.deposit2))
+      .then(() => $scope.vm.goTo('buy'))
+      .catch((err) => console.log(err))
+      .finally($scope.free);
+  };
+
   $scope.lock = () => { state.busy = true; };
   $scope.free = () => { state.busy = false; };
+  $scope.close = () => { $uibModalStack.dismissAll(); };
 
   $scope.types = ['checking', 'savings'];
 }

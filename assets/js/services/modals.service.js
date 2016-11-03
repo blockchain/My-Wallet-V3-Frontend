@@ -25,7 +25,12 @@ function modals ($state, $uibModal, $ocLazyLoad) {
     controllerAs: 'vm',
     controller: 'SfoxSignupController',
     resolve: {
-      exchange () { return exchange; }
+      exchange () { return exchange; },
+      accounts: ($q) => {
+        return exchange.profile
+        ? exchange.getBuyMethods().then((methods) => methods.ach.getAccounts())
+        : $q.resolve();
+      }
     }
   }).finally(() => {
     let base = 'wallet.common.buy-sell';
