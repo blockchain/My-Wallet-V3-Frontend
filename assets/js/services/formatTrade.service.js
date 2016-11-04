@@ -23,6 +23,14 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     bank_transfer
   };
 
+  let errorStates = {
+    'cancelled': 'canceled',
+    'rejected': 'rejected',
+    'expired': 'expired'
+  };
+
+  let getState = (state) => errorStates[state] || state;
+
   let getLabel = (trade) => {
     let accountIndex = trade.accountIndex;
     return accountIndex != null ? MyWallet.wallet.hdwallet.accounts[accountIndex].label : '';
@@ -55,8 +63,8 @@ function formatTrade ($filter, MyWallet, $rootScope) {
       namespace: 'TX_ERROR_STATE',
       values: {
         curr: trade.inCurrency,
-        state: state || trade.state,
         fiatAmt: trade.sendAmount / 100,
+        state: state || getState(trade.state),
         btcAmt: (trade.outAmount || trade.outAmountExpected) / 100000000
       }
     };
