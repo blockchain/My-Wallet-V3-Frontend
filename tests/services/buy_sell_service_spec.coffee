@@ -42,7 +42,7 @@ describe "buySell service", () ->
   beforeEach ->
     exchange = buySell.getExchange()
 
-    trades = ["pending", "completed", "completed_test", "cancelled"].map(makeTrade)
+    trades = ["processing", "completed", "completed_test", "cancelled"].map(makeTrade)
 
     spyOn(exchange, "getBuyCurrencies").and.returnValue($q.resolve(["USD", "EUR"]))
     spyOn(exchange, "getTrades").and.returnValue($q.resolve(trades))
@@ -71,7 +71,7 @@ describe "buySell service", () ->
     trades = {}
 
     beforeEach ->
-      trades = pending: makeTrade("pending"), completed: makeTrade("completed")
+      trades = pending: makeTrade("processing"), completed: makeTrade("completed")
       Object.keys(trades).forEach((t) -> spyOn(trades[t], 'watchAddress').and.callThrough())
 
     it "should watch if bitcoin has not been received", ->
