@@ -46,7 +46,7 @@ uib-progressbar.modal-progress(
           span(ng-hide="status.loading")
             span.em-500 {{ totalAmount | convert }}
             | &emsp;
-            span.em-300 ({{ totalAmount | convert:true:true:true }})
+            span.em-300 ({{ totalAmount | convert:'secondary' }})
 
     .form-group
       span.type-lbl.col-sm-3.control-label.colon(translate="FEES")
@@ -56,7 +56,7 @@ uib-progressbar.modal-progress(
           span(ng-hide="status.loading")
             span.em-500 {{ totalFees | convert }}
             | &emsp;
-            span.em-300 ({{ totalFees | convert:true:true:true }})
+            span.em-300 ({{ totalFees | convert:'secondary' }})
 
 .modal-footer.pal.flex-end
   button.button-muted.mrm(

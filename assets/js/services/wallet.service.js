@@ -1109,6 +1109,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       () => Alerts.displayError('POOR_CONNECTION'));
   };
 
+  wallet.getDefaultAccount = () => (
+    wallet.accounts()[wallet.getDefaultAccountIndex()]
+  );
+
   wallet.setDefaultAccount = (account) => {
     wallet.my.wallet.hdwallet.defaultAccountIndex = account.index;
   };

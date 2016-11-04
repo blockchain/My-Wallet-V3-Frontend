@@ -1,13 +1,69 @@
 .buy-sell
-  .flex-row.flex-column-tablet
-    .width-50.border.mrl.pal.flex-column.flex-between.flex-center(ng-hide="signupCompleted")
+  .flex-row.flex-column-tablet(ng-hide="signupCompleted")
+    .width-50.border.mrl.pal.flex-column.flex-between.flex-center
       span.type-h4.width-100 Just a few steps away!
       .mvl.flex-column.flex-center.blue.type-h4
         i.ti-credit-card.bank.type-lrg
         span - Appropriate Step Description
       button.btn.button-primary.full(ng-click="openSfoxSignup()") Continue
-    .width-50.border.mrl.pal.flex-column.flex-between.flex-center(ng-show="signupCompleted")
-      h2 Buy Bitcoin
     .flex-column.width-50.mlvl.mtml
       .font-2.blue.em-300.lh1(translate="SIMPLE_SECURE_SEAMLESS")
       .type-h4.em-300.mtm.basic-grey(translate="BUY_SIMPLE_STEPS")
+  .width-50.border.mrl.pal.flex-column.flex-between(ng-show="signupCompleted")
+    .flex-between.flex-baseline.mbl
+      span.type-h4.em-500 Buy Bitcoin
+      div
+        span Powered by
+        span &nbsp;
+        span.blue.em-500 🐕 SFOX
+    form.bc-form-next.mtl(name="checkoutForm" novalidate autocomplete="off")
+      fieldset(ng-disabled="locked")
+        .group.mtl
+          .item
+            .flex-between.flex-baseline.mbs
+              span.type-h5.em-500 Enter Amount
+              span 1 {{ bitcoin.code }} = ${{ 1e8 | convert:dollars:false }}
+            .flex-center
+              .flex-1.flex-center.border
+                input.form-control.no-border(
+                  type="number"
+                  name="fiat"
+                  ng-model="state.amount"
+                  ng-min="minLimit"
+                  ng-max="maxLimit"
+                  transform-currency="dollars"
+                  required)
+                span.mrm {{dollars.code}}
+              i.ti-arrows-horizontal.h4.aaa.phm
+              .flex-1.flex-center.border
+                input.form-control.no-border(
+                  type="number"
+                  name="btc"
+                  ng-model="state.amount"
+                  ng-min="minLimit"
+                  ng-max="maxLimit"
+                  transform-currency="bitcoin"
+                  required)
+                span.mrm {{bitcoin.code}}
+            .text.mts
+              span.type-sm Your daily buy limit is ${{ maxLimit | convert:dollars:false }}
+        .group.mtl
+          .item
+            .flex-between.mbm
+              span.type-h5.em-500 Payment Method
+              a Edit
+            .border.form-control.flex-center
+              span {{ account.accountType }} ({{ account.accountNumber }})
+        .group.mtl
+          .item
+            .mbm
+              span.type-h5.em-500 Order Summary
+            .border.flex-column
+              .flex-between.flex-center.form-control.no-border
+                span.colon Send To
+                span {{ btcAccount.label }}
+              .flex-between.flex-center.form-control.no-border.em-500
+                span.colon Total
+                span {{ state.amount || 0 | convert:dollars }}
+        .group.mtl
+          button.btn.button-primary.full(ng-click="buy()" ng-disabled="checkoutForm.$invalid") Buy Bitcoin

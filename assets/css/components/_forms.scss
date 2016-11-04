@@ -154,15 +154,13 @@ form.bc-form-next {
   }
 
   input {
-    width: 75%;
     height: 3em;
     outline: none;
-    margin: .5em 0;
     border-width: 1px;
     padding-left: 12px;
     border: 1px solid #DDDDDD;
     &:focus {
-      border: 1px solid $blue;
+      box-shadow: none;
     }
     &[type="checkbox"] {
       margin: 1em 0.5em 1em 0;
@@ -176,5 +174,9 @@ form.bc-form-next {
     input {
       width: 100%;
     }
+  }
+
+  .no-border {
+    border: none;
   }
 }
