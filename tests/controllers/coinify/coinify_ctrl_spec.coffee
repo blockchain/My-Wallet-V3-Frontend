@@ -140,7 +140,7 @@ describe "CoinifyController", ->
     it "should switch to isx step", ->
       scope.transaction.fiat = 1
       scope.exchange.user = {}
-      scope.trade = {state: 'pending'}
+      scope.trade = {state: 'awaiting_transfer_in'}
       scope.nextStep()
       scope.nextStep()
       expect(scope.onStep('isx')).toEqual(true)
