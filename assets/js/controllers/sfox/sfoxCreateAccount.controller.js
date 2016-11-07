@@ -15,6 +15,7 @@ function SfoxCreateAccountController ($scope, $q, Wallet) {
     state.mobile = user.mobileNumber;
     state.verifiedEmail = user.isEmailVerified;
     state.verifiedMobile = user.isMobileVerified;
+    state.isVerified = state.verifiedEmail && state.verifiedMobile;
   };
 
   $scope.changeEmail = () => {
