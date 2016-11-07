@@ -2,13 +2,15 @@ angular
   .module('walletApp')
   .controller('SfoxCreateAccountController', SfoxCreateAccountController);
 
-function SfoxCreateAccountController ($scope, $q, Wallet) {
+function SfoxCreateAccountController ($scope, $q, Wallet, bcPhoneNumber) {
   let exchange = $scope.vm.exchange;
   let user = $scope.user = Wallet.user;
 
   let state = $scope.state = {
     terms: false
   };
+
+  $scope.format = bcPhoneNumber.format;
 
   $scope.setState = () => {
     state.email = user.email;

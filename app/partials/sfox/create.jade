@@ -22,23 +22,30 @@
             div
               input.width-80(ng-model="state.confirmEmail" name="confirmEmail" ng-required="!state.verifiedEmail")
               button.button-muted(type="button" ng-show="state.confirmEmail" ng-click="verifyEmail()") Verify
-        .group.width-75(ng-show="state.verifiedMobile")
+        .group.width-75
           .item
             label Phone Number
             .text
-              span We have the following mobile number for you.
+              span(ng-show="state.verifiedMobile") We have the following mobile number for you.
+              span(ng-hide="state.verifiedMobile") Enter your phone number and we’ll send you a verifcation code via SMS.
             div
-              input.width-80(ng-model="state.mobile" name="mobile" required)
-              button.button-muted(type="button" ng-show="state.mobile != user.mobileNumber" ng-click="changeMobile()") Update
-        .group.width-75(ng-hide="state.verifiedMobile")
-          .item
-            label Phone Number
-            .text
-              span Enter your phone number and we’ll send you a verifcation code via SMS.
-            div
-              input.width-80(ng-model="state.mobile" name="mobile" ng-change="state.sentCode=false" ng-required="!state.verifiedMobile")
-              button.button-muted(type="button" ng-show="state.mobile && !state.sentCode" ng-click="changeMobile()") Send Code
-          .item
+              bc-phone-number.width-80(
+                ng-model="state.mobile"
+                ng-change="state.sentCode=false"
+                name="mobile"
+                default-country="us"
+                preferred-countries="us ca gb au"
+                required)
+              div(ng-hide="accountForm.mobile.$invalid")
+                button.button-muted(
+                  type="button"
+                  ng-show="state.mobile !== format(user.mobileNumber)"
+                  ng-click="changeMobile()") Update
+                button.button-muted(
+                  type="button"
+                  ng-hide="state.sentCode || state.verifiedMobile"
+                  ng-click="changeMobile()") Send Code
+          .item(ng-hide="state.verifiedMobile")
             .text
               span Enter verification code sent to your mobile phone.
             div

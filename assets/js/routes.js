@@ -298,6 +298,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       templateUrl: 'partials/sfox/checkout.jade',
       controller: 'SfoxCheckoutController',
       resolve: {
+        _loadBcPhoneNumber ($ocLazyLoad) {
+          return $ocLazyLoad.load('bcPhoneNumber');
+        },
         _fetchProfile ($q, MyWallet) {
           let exchange = MyWallet.wallet.external.sfox;
           return exchange.user && !exchange.profile
