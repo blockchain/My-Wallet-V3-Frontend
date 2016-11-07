@@ -28,7 +28,7 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
     .col-sm-12.col-md-6.setting-result
       div(ng-show="mobileNumber.step == 0")
         //- Don't use one-time binding for mobileNumber
-        h2.status.complete.hidden-xs.long-input(ng-hide="user.mobileNumber.length < 5") {{ formattedMobileNumber }}
+        p.em-400.type-h5.mbm(ng-hide="user.mobileNumber.length < 5") {{ formattedMobileNumber }}
         a.button-primary.display-inline-block(ng-click="mobileNumber.step = 1", translate="CHANGE")
       configure-mobile-number(on-success="mobileNumber.step = 2" on-cancel="mobileNumber.step = 0" ng-show="mobileNumber.step == 1")
       verify-mobile-number(on-success="mobileNumber.step = 0" ng-show="user.mobileNumber.length > 4 && !user.isMobileVerified && mobileNumber.step != 1")
