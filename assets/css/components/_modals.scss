@@ -540,4 +540,28 @@
       -webkit-transition: top $slow, opacity 0s !important;
     }
   }
+
+  @media (max-width: 767px) {
+    left: 0px;
+    &.fade {
+      &.ng-enter,
+      &.in {
+        top: 140px;
+      }
+    }
+
+    .sfox-signup {
+      > .pal {
+        .width-60 {
+          margin-top: 3em;
+        }
+      }
+    }
+
+    .close-modal {
+      position: absolute;
+      right: 1.25em;
+      top: 1.25em;
+    }
+  }
 }
