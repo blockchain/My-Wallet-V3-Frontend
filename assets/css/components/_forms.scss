@@ -1,48 +1,16 @@
-.form-ctrl {
-  padding: 15px 0;
-  input {
-    border: 1px solid $border-grey;
-    border-radius: 5px;
-    padding: 3px;
-  }
-}
-
 .form-control {
   height: 40px;
   box-shadow: none;
   -webkit-box-shadow: none;
   border-radius: 0px !important;
+  &:focus {
+    box-shadow: none;
+  }
 }
 
 .input-group-btn {
   .btn {
     padding: 9px 12px;
-  }
-}
-
-.bc-form {
-  background: $light-blue;
-  border: 1px solid $eee;
-  border-radius: 5px;
-  margin-bottom: 3em;
-  input {
-    border: 1px solid $eee;
-    border-radius: 5px;
-    min-height: 34px;
-    &:focus {
-      outline: none;
-    }
-  }
-}
-
-.bc-form-header {
-  border-bottom: 1px solid $eee;
-  margin-bottom: .55em;
-}
-
-.bc-radio-group {
-  label {
-    font-weight: 400;
   }
 }
 
@@ -53,18 +21,6 @@
   h4 {
     font-size: 2em;
     font-weight: 300;
-  }
-}
-
-@media (max-width: 767px) {
-  .bc-form {
-    width: 90vw;
-    width: 100%;
-  }
-}
-@media (min-width: 991px) {
-  .bc-form {
-    min-width: 40vw;
   }
 }
 
@@ -120,13 +76,12 @@ input[type="checkbox"] {
   margin: 0;
 }
 
-form.bc-form-next {
+form.bc-form {
   .group {
     padding-bottom: 1em;
-    display: flex;
-    flex-direction: column;
+    @extend .flex-column;
     &.inline {
-      flex-direction: row;
+      @extend .flex-row;
     }
     label {
       font-size: 16px;
@@ -134,9 +89,11 @@ form.bc-form-next {
         font-size: 14px;
       }
     }
+    .text {
+      @extend .mbs;
+    }
     .item {
-      display: flex;
-      flex-direction: column;
+      @extend .flex-column;
       &:not(:last-child) {
         margin-right: 1em;
       }
@@ -154,14 +111,7 @@ form.bc-form-next {
   }
 
   input {
-    height: 3em;
-    outline: none;
-    border-width: 1px;
-    padding-left: 12px;
-    border: 1px solid #DDDDDD;
-    &:focus {
-      box-shadow: none;
-    }
+    @extend .form-control;
     &[type="checkbox"] {
       margin: 1em 0.5em 1em 0;
       width: 1em;
