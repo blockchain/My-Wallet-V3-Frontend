@@ -2,11 +2,48 @@ angular
   .module('walletApp')
   .controller('SfoxVerifyController', SfoxVerifyController);
 
-function SfoxVerifyController ($scope, $q, state) {
+function SfoxVerifyController ($scope, $q, state, $http, Upload) {
+  $scope.states = state.stateCodes;
   let exchange = $scope.vm.exchange;
 
-  $scope.states = state.stateCodes;
-  $scope.state = {};
+  $scope.state = {
+    signedURL: undefined,
+    // verificationStatus: exchange.profile.verificationStatus
+    // Mock
+    verificationStatus: 'needs_documents'
+  };
+
+  $scope.fields = {
+    idType: 'id',
+    file: undefined
+  };
+
+  $scope.setState = () => {
+    // state.verificationStatus = exchange.profile.verificationStatus;
+    // Mock
+    $scope.state.verificationStatus = 'needs_documents';
+  };
+
+  $scope.getSignedURL = () => {
+    let profile = exchange.profile;
+    let idType = $scope.fields.idType;
+
+    $q.resolve(profile.getSignedURL(idType)
+      .then((res) => state.signedURL = res.signed_url)
+      .catch((err) => console.log(err)));
+  };
+
+  $scope.upload = () => {
+    Upload.upload({
+      method: 'PUT',
+      url: state.signedURL,
+      data: { file: $scope.fields.file }
+    }).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      console.log(err);
+    });
+  };
 
   $scope.verify = () => {
     $scope.lock();
@@ -38,4 +75,5 @@ function SfoxVerifyController ($scope, $q, state) {
   };
 
   $scope.installLock();
+  $scope.$watch('fields.idType', $scope.getSignedURL);
 }

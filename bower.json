@@ -24,7 +24,8 @@
     "bootstrap-sass": "3.3.*",
     "blockchain-wallet": "3.24.*",
     "bc-phone-number": "5.0.11",
-    "oclazyload": "1.0.*"
+    "oclazyload": "1.0.*",
+    "ng-file-upload": "~12.2.13"
   },
   "devDependencies": {
     "compare-versions": "^2.0.1"

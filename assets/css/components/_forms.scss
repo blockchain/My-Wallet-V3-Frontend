@@ -130,3 +130,22 @@ form.bc-form {
     border: none;
   }
 }
+
+.file-upload {
+  @extend .center;
+  @extend .border;
+  @extend .width-100;
+  @extend .height-100;
+  @extend .flex-column;
+  @extend .flex-around;
+  @extend .flex-center;
+  &.dragover {
+    border: 1px dashed $blue;
+  }
+}
+
+.queued {
+  .file-upload {
+    border: 1px solid $blue;
+  }
+}
