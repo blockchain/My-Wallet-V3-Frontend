@@ -305,6 +305,12 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           let exchange = MyWallet.wallet.external.sfox;
           return exchange.user && !exchange.profile
             ? exchange.fetchProfile() : $q.resolve();
+        },
+        accounts ($q, MyWallet) {
+          let exchange = MyWallet.wallet.external.sfox;
+          return exchange.hasAccount
+            ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
+            : $q.resolve([]);
         }
       },
       onEnter ($state, $stateParams, MyWallet, modals) {

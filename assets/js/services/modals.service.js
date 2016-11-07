@@ -33,8 +33,8 @@ function modals ($state, $uibModal, $ocLazyLoad) {
       exchange () { return exchange; },
       accounts: ($q) => {
         return exchange.profile
-        ? exchange.getBuyMethods().then((methods) => methods.ach.getAccounts())
-        : $q.resolve();
+          ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
+          : $q.resolve([]);
       }
     }
   }).finally(() => {

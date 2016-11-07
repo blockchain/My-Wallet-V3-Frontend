@@ -29,6 +29,7 @@
                   type="number"
                   name="fiat"
                   ng-model="state.amount"
+                  ng-model-options="{debounce:250}"
                   ng-min="minLimit"
                   ng-max="maxLimit"
                   transform-currency="dollars"
@@ -40,6 +41,7 @@
                   type="number"
                   name="btc"
                   ng-model="state.amount"
+                  ng-model-options="{debounce:250}"
                   ng-min="minLimit"
                   ng-max="maxLimit"
                   transform-currency="bitcoin"
@@ -67,3 +69,17 @@
                 span {{ state.amount || 0 | convert:dollars }}
         .group.mtl
           button.btn.button-primary.full(ng-click="buy()" ng-disabled="checkoutForm.$invalid") Buy Bitcoin
+  .flex-column.mtl(ng-show="trades.length")
+    .flex-row.flex-between.flex-center
+      h4.type-h4(translate="ORDER_HISTORY")
+      span SFOX Account: user@sfox.com
+    table.width-100
+      tr.border.bg-light-blue
+        th.phml.pvs(translate="STATUS")
+        th.phml.pvs(translate="DATE")
+        th.phml.right-align.pvs BTC
+        th.phml.right-align.pvs(translate="TOTAL")
+      tr(
+        ng-repeat="trade in trades | orderBy:'createdAt':true"
+        trade="trade"
+        buy="")
