@@ -29,14 +29,14 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
     let idType = $scope.fields.idType;
 
     $q.resolve(profile.getSignedURL(idType)
-      .then((res) => state.signedURL = res.signed_url)
+      .then((res) => $scope.state.signedURL = res.signed_url)
       .catch((err) => console.log(err)));
   };
 
   $scope.upload = () => {
     Upload.upload({
       method: 'PUT',
-      url: state.signedURL,
+      url: $scope.state.signedURL,
       data: { file: $scope.fields.file }
     }).then((res) => {
       console.log(res);
