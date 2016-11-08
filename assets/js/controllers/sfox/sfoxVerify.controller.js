@@ -20,8 +20,9 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
     $scope.lock();
     let profile = exchange.profile;
     let idType = $scope.fields.idType;
+    let filename = $scope.fields.file.name;
 
-    $q.resolve(profile.getSignedURL(idType))
+    $q.resolve(profile.getSignedURL(idType, filename))
       .then((res) => $scope.state.signedURL = res.signed_url)
       .catch((err) => console.log(err))
       .finally($scope.free);
@@ -72,5 +73,5 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
   };
 
   $scope.installLock();
-  $scope.$watch('vm.exchange.profile', (p) => p && $scope.getSignedURL());
+  $scope.$watch('fields.file', (file) => file && $scope.getSignedURL());
 }
