@@ -26,7 +26,7 @@ function publicHeader ($rootScope, $location, languages) {
           <ul ng-if="false" class="nav navbar-nav navbar-right hidden-sm">
             <li class="hidden-md">
               <form action="{{searchUrl}}" method="GET">
-                <input type="text" name="search" class="form-control input-sm mts search-query" placeholder="{{'SEARCH'|translate}}">
+                <input type="text" name="search" class="form-control input-sm search-query" placeholder="{{'SEARCH'|translate}}">
               </form>
             </li>
             <li class="dropdown" uib-dropdown>
