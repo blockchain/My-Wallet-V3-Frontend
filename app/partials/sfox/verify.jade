@@ -58,13 +58,13 @@
       .mbl
         form
           div
-            input(type="radio" name="idType" value="id" id="id" ng-model="fields.idType")
+            input(type="radio" name="idType" value="id" id="id" ng-model="fields.idType" ng-change="getSignedURL()")
             label(translate="Driver's license or state issued ID" for="id")
           div
-            input(type="radio" name="idType" value="passport" id="passport" ng-model="fields.idType")
+            input(type="radio" name="idType" value="passport" id="passport" ng-model="fields.idType" ng-change="getSignedURL()")
             label(translate="Copy of passport" for="passport")
           div
-            input(type="radio" name="idType" value="address" id="address" ng-model="fields.idType")
+            input(type="radio" name="idType" value="address" id="address" ng-model="fields.idType" ng-change="getSignedURL()")
             label(translate="A recent utility bill or bank account statement" for="address")
 
   .width-60

@@ -30,10 +30,10 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
   $scope.upload = () => {
     $scope.lock();
 
-    Upload.upload({
+    Upload.http({
       method: 'PUT',
       url: $scope.state.signedURL,
-      data: { file: $scope.fields.file },
+      data: $scope.fields.file,
       headers: {
         'content-type': 'application/octet-stream'
       }}).then(() => $scope.vm.goTo('link'))
@@ -72,5 +72,5 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
   };
 
   $scope.installLock();
-  $scope.$watch('fields.idType', (idType) => { idType && $scope.getSignedURL(); });
+  $scope.$watch('vm.exchange.profile', (p) => p && $scope.getSignedURL());
 }
