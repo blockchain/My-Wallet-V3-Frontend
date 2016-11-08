@@ -518,6 +518,7 @@
   @include transition(top $slow, opacity 0s $slow);
 
   .modal-content {
+    overflow: auto;
     min-height: 100%;
     opacity: 1 !important;
   }

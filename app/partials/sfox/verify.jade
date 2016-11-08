@@ -50,7 +50,7 @@
           button.btn.button-primary.full(type="submit" ng-disabled="verifyForm.$invalid") Continue
 
 .flex-row.flex-column-mobile(ng-show="state.verificationStatus === 'needs_documents'")
-  .width-40.mtl
+  .width-40
     .width-80
       h4(translate="Upload Photo ID")
       .mbl
@@ -69,11 +69,12 @@
 
   .width-60
     label(translate="Photo Identification")
-    div.file-upload(ngf-drop ngf-select ngf-multiple="true" ng-model="fields.file" ngf-drag-over-class="'dragover'" ngf-pattern="'image/*,application/pdf'")
+    div.file-upload(ngf-drop ngf-select ng-model="fields.file" ngf-drag-over-class="'dragover'" ngf-pattern="'image/*'")
       span.type-h5.em-300.mtvl Drag and drop your document here
-      img.width-20(src="img/document.png")
+      img.width-20.mobile-width-40(src="img/document.png" ng-hide="fields.file")
+      img.width-40.mobile-width-40(ngf-src="fields.file" ng-show="fields.file")
       span.type-h5.em-300.mbvl Or
         |  
         span.blue.pointer Upload document
     div(ngf-no-file-drop) File Drag/Drop is not supported for this browser
-    button.mtl.btn.button-primary.full(ng-click="upload()" ng-disabled="!fields.file") Continue
+    button.mtl.btn.button-primary.full(ng-click="upload()" ng-disabled="!fields.file || locked") Continue

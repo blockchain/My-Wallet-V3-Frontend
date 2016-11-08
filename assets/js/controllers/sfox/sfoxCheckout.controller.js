@@ -4,10 +4,11 @@ angular
 
 function SfoxCheckoutController ($scope, $timeout, $q, Wallet, Alerts, currency, modals, accounts) {
   let exchange = $scope.vm.external.sfox;
+  $scope.openSfoxSignup = () => modals.openSfoxSignup(exchange);
+
   if (!exchange.profile || !accounts.length) return;
 
   $scope.signupCompleted = accounts[0].status === 'active';
-  $scope.openSfoxSignup = () => modals.openSfoxSignup(exchange);
 
   $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];

@@ -18,6 +18,7 @@
             label Email Address
             .text
               span We sent a confirmation code to your email {{state.email}}. Please enter the code below.
+              |  
               span Didn’t get the email? Resend or change email address.
             div
               input.width-80(ng-model="state.confirmEmail" name="confirmEmail" ng-required="!state.verifiedEmail")
@@ -45,7 +46,7 @@
                   type="button"
                   ng-hide="state.sentCode || state.verifiedMobile"
                   ng-click="changeMobile()") Send Code
-          .item(ng-hide="state.verifiedMobile")
+          .item.mtm(ng-hide="state.verifiedMobile")
             .text
               span Enter verification code sent to your mobile phone.
             div

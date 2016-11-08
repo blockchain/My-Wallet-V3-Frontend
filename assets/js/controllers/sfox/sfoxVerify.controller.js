@@ -8,9 +8,7 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
 
   $scope.state = {
     signedURL: undefined,
-    // verificationStatus: exchange.profile.verificationStatus
-    // Mock
-    verificationStatus: 'needs_documents'
+    verificationStatus: 'unverified'
   };
 
   $scope.fields = {
@@ -18,31 +16,29 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
     file: undefined
   };
 
-  $scope.setState = () => {
-    // state.verificationStatus = exchange.profile.verificationStatus;
-    // Mock
-    $scope.state.verificationStatus = 'needs_documents';
-  };
-
   $scope.getSignedURL = () => {
+    $scope.lock();
     let profile = exchange.profile;
     let idType = $scope.fields.idType;
 
-    $q.resolve(profile.getSignedURL(idType)
+    $q.resolve(profile.getSignedURL(idType))
       .then((res) => $scope.state.signedURL = res.signed_url)
-      .catch((err) => console.log(err)));
+      .catch((err) => console.log(err))
+      .finally($scope.free);
   };
 
   $scope.upload = () => {
+    $scope.lock();
+
     Upload.upload({
       method: 'PUT',
       url: $scope.state.signedURL,
-      data: { file: $scope.fields.file }
-    }).then((res) => {
-      console.log(res);
-    }).catch((err) => {
-      console.log(err);
-    });
+      data: { file: $scope.fields.file },
+      headers: {
+        'content-type': 'application/octet-stream'
+      }}).then(() => $scope.vm.goTo('link'))
+         .catch((err) => console.log(err))
+         .finally($scope.free);
   };
 
   $scope.verify = () => {
@@ -66,7 +62,8 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
       );
 
       $q.resolve(profile.verify())
-        .then(() => $scope.vm.goTo('link'))
+        // .then(() => $scope.vm.goTo('link'))
+        .then(() => $scope.state.verificationStatus = 'needs_documents')
         .finally($scope.free);
     } catch (error) {
       console.error(error);
@@ -75,5 +72,5 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
   };
 
   $scope.installLock();
-  $scope.$watch('fields.idType', $scope.getSignedURL);
+  $scope.$watch('fields.idType', (idType) => { idType && $scope.getSignedURL(); });
 }
