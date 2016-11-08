@@ -70,11 +70,13 @@
   .width-60
     label(translate="Photo Identification")
     div.file-upload(ngf-drop ngf-select ng-model="fields.file" ngf-drag-over-class="'dragover'" ngf-pattern="'image/*'")
-      span.type-h5.em-300.mtvl Drag and drop your document here
+      span.type-h5.em-300.mtvl(ng-hide="fields.file") Drag and drop your document here
+      span.type-h5.em-300.mtvl(ng-show="fields.file") Thanks for uploading your documents!
       img.width-20.mobile-width-40(src="img/document.png" ng-hide="fields.file")
       img.width-40.mobile-width-40(ngf-src="fields.file" ng-show="fields.file")
-      span.type-h5.em-300.mbvl Or
+      span.type-h5.em-300.mbvl(ng-hide="fields.file") Or
         |  
         span.blue.pointer Upload document
+      span.type-h5.em-300.mbvl(ng-show="fields.file") Click continue to verify them
     div(ngf-no-file-drop) File Drag/Drop is not supported for this browser
     button.mtl.btn.button-primary.full(ng-click="upload()" ng-disabled="!fields.file || locked") Continue
