@@ -6,7 +6,7 @@
       helper-button(content="EXCHANGE_RATE_HELPER")
   form(name="fiatForm" ng-submit="triggerBuy()")
     .mtl
-      label.em-500 Enter amount:
+      label.em-500(translate="ENTER_AMOUNT:")
       helper-button(ng-show="limits.card.min && limits.card.max" content="MAX_MIN_HELPER" values="{cardMax: limits.card.max, min: limits.card.min, bankMax: limits.bank.max, symbol: currencySymbol.symbol}")
       .flex-row.flex-between.flex-center
         section.input-group.width-45
@@ -51,7 +51,7 @@
         span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max" translate="BUY_AMT_HIGH")
     .flex-end.mtvl.pos-rel
       span.coinify-logo.coinify-logo-left
-        span.mrs.type-sm Powered by
+        span.mrs.type-sm(translate="POWERED_BY")
         a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
           img(src="img/coinify-logo.svg")
           span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
