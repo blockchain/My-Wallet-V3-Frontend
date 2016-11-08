@@ -225,6 +225,7 @@
   "CREATE_ACCOUNT" : "Create New",
   "CREATE_ADDRESS" : "Next Address",
   "ACCOUNT_NAME" : "Name:",
+  "ACCOUNT": "Account",
   "REVEAL_XPUB" : "Show xPub",
   "MANAGE_ADDRESSES" : "Manage",
   "ACCOUNT_XPUB_MODAL_TITLE" : "Extended Public Key",
@@ -1120,5 +1121,10 @@
   "EDIT_NAME": "Edit Name",
   "NOT_BACKED_BY_RECOVERY": "Not backed up by your Recovery Phrase. Transfer into a wallet to secure funds.",
   "EXCHANGE_RATE_HELPER": "The rate offered by your region's exchange partner. May include fees.",
-  "SUBSCRIBE": "Subscribe"
+  "SUBSCRIBE": "Subscribe",
+  "GET_BITCOIN": "Get Bitcoin",
+  "POWERED_BY": "Powered By",
+  "EDIT_ORDER": "Edit Order",
+  "TOTAL_COST:": "Total Cost:",
+  "ENTER_AMOUNT:": "Enter amount:"
 }
