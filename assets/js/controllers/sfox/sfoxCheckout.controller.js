@@ -10,17 +10,37 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, Alerts, currency,
 
   $scope.signupCompleted = accounts[0].status === 'active';
 
+  $scope.format = currency.formatCurrencyForView;
   $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.btcAccount = Wallet.getDefaultAccount();
 
   $scope.account = accounts[0];
   $scope.trades = exchange.trades;
-  $scope.minLimit = currency.convertToSatoshi(10, $scope.dollars);
-  $scope.maxLimit = currency.convertToSatoshi(exchange.profile.limits.buy, $scope.dollars);
+  $scope.min = 10;
+  $scope.max = 100;
 
   $scope.state = {
-    amount: $scope.maxLimit
+    base: $scope.max * 100,
+    quote: 0,
+    primary: $scope.dollars,
+    get secondary () {
+      return this.primary === $scope.dollars ? $scope.bitcoin : $scope.dollars;
+    },
+    get fiat () {
+      return (this.primary === $scope.dollars ? this.base : this.quote) / 100;
+    },
+    get btc () {
+      return this.primary === $scope.bitcoin ? this.base : this.quote;
+    },
+    set fiat (value) {
+      this.primary = $scope.dollars;
+      this.base = value * 100;
+    },
+    set btc (value) {
+      this.primary = $scope.bitcoin;
+      this.base = value;
+    }
   };
 
   $scope.buy = () => {
@@ -33,12 +53,17 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, Alerts, currency,
   };
 
   $scope.refreshQuote = () => {
-    let amount = currency.convertFromSatoshi($scope.state.amount, $scope.dollars);
-    exchange.getBuyQuote(amount, $scope.dollars.code, $scope.bitcoin.code)
-      .then(quote => { $scope.quote = quote; });
+    let s = $scope.state;
+    let quoteP = exchange.getBuyQuote(s.base, s.primary.code, s.secondary.code);
+    $q.resolve(quoteP).then(quote => {
+      $scope.quote = quote;
+      s.base = quote.baseAmount;
+      s.quote = quote.quoteAmount;
+    });
+    s.quote = 0;
   };
 
-  $scope.$watch('state.amount', () =>
+  $scope.$watch('state.base', () =>
     $scope.checkoutForm.$valid && $scope.refreshQuote()
   );
 
