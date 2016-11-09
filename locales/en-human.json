@@ -1050,6 +1050,16 @@
     "BODY": "@:KYC_IN_REVIEW.BODY",
     "LINK": "Finish verification"
   },
+  "KYC_EXPIRED": {
+    "TITLE": "Identity Verification Expired",
+    "BODY": "Your identity verification expired. Please try uploading different identification. Bank transfers are unavailable until we can successfully verify your identity.",
+    "LINK": "Try again"
+  },
+  "KYC_IN_HOLD": {
+    "TITLE": "Identity Verification Put on Hold",
+    "BODY": "Your identity verification was put on hold. Bank transfers are unavailable until we can successfully verify your identity. We apologize for any inconvenience",
+    "LINK": "Review status"
+  },
   "COINIFY_TRADE": "Coinify trade",
   "ISX_ID": "iSignthis ID",
   "VERIFY_CARD_NOTE": "For secure card transactions, you will need to verify ownership of the card. You will only have to do this once per card added.",
