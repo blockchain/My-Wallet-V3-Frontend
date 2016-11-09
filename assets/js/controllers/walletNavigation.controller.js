@@ -8,6 +8,7 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Alerts, Sec
   $scope.security = SecurityCenter.security;
 
   let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
+  $scope.userHasAccount = () => MyWallet.wallet.external && MyWallet.wallet.external.coinify.hasAccount;
   $scope.isUserInvited = accountInfo && accountInfo.invited;
   $scope.isUserWhitelisted = accountInfo && [
     'GB'
