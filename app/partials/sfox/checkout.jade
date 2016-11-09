@@ -32,6 +32,7 @@
                   ng-model-options="{debounce:250}"
                   ng-min="min"
                   ng-max="max"
+                  ng-focus="state.baseCurr = dollars"
                   required)
                 span.mrm {{dollars.code}}
               i.ti-arrows-horizontal.h4.aaa.phm
@@ -41,6 +42,7 @@
                   name="btc"
                   ng-model="state.btc"
                   ng-model-options="{debounce:250}"
+                  ng-focus="state.baseCurr = bitcoin"
                   transform-currency="bitcoin"
                   required)
                 span.mrm {{bitcoin.code}}
@@ -63,7 +65,7 @@
                 span {{ btcAccount.label }}
               .flex-between.flex-center.form-control.no-border.em-500
                 span.colon Total
-                span {{ format(state.fiat, dollars, true) }}
+                span {{ format(state.fiat || 0, dollars, true) }}
         .group.mtl
           button.btn.button-primary.full(ng-click="buy()" ng-disabled="checkoutForm.$invalid") Buy Bitcoin
   .flex-column.mtl(ng-show="trades.length")

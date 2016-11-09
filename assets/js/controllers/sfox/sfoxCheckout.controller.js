@@ -21,26 +21,11 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, Alerts, currency,
   $scope.max = 100;
 
   $scope.state = {
-    base: $scope.max * 100,
-    quote: 0,
-    primary: $scope.dollars,
-    get secondary () {
-      return this.primary === $scope.dollars ? $scope.bitcoin : $scope.dollars;
-    },
-    get fiat () {
-      return (this.primary === $scope.dollars ? this.base : this.quote) / 100;
-    },
-    get btc () {
-      return this.primary === $scope.bitcoin ? this.base : this.quote;
-    },
-    set fiat (value) {
-      this.primary = $scope.dollars;
-      this.base = value * 100;
-    },
-    set btc (value) {
-      this.primary = $scope.bitcoin;
-      this.base = value;
-    }
+    fiat: $scope.max,
+    btc: 0,
+    baseCurr: $scope.dollars,
+    get quoteCurr () { return this.baseFiat ? $scope.bitcoin : $scope.dollars; },
+    get baseFiat () { return this.baseCurr === $scope.dollars; }
   };
 
   $scope.buy = () => {
@@ -52,18 +37,23 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, Alerts, currency,
       .finally($scope.free);
   };
 
+  $scope.getQuoteArgs = (state) => [
+    state.baseFiat ? state.fiat * 100 : state.btc,
+    state.baseCurr.code,
+    state.quoteCurr.code
+  ];
+
   $scope.refreshQuote = () => {
-    let s = $scope.state;
-    let quoteP = exchange.getBuyQuote(s.base, s.primary.code, s.secondary.code);
-    $q.resolve(quoteP).then(quote => {
+    $scope.state.quote = 0;
+    let args = $scope.getQuoteArgs($scope.state);
+    $q.resolve(exchange.getBuyQuote(...args)).then(quote => {
       $scope.quote = quote;
-      s.base = quote.baseAmount;
-      s.quote = quote.quoteAmount;
+      if ($scope.state.baseFiat) $scope.state.btc = quote.quoteAmount;
+      else $scope.state.fiat = quote.quoteAmount / 100;
     });
-    s.quote = 0;
   };
 
-  $scope.$watch('state.base', () =>
+  $scope.$watch('state.fiat + state.btc + state.baseCurr', () =>
     $scope.checkoutForm.$valid && $scope.refreshQuote()
   );
 
