@@ -192,3 +192,11 @@ describe "CoinifyController", ->
       scope.goTo('select-country')
       scope.close()
       expect(Alerts.confirm).toHaveBeenCalledWith('CONFIRM_CLOSE_ACCT', {action: 'IM_DONE'})
+
+  describe "needsISX", ->
+    it "should return true if trade is in a pending state", ->
+      scope.trade = 
+        state: 'pending',
+        bankAccount: undefined
+
+      expect(scope.needsISX()).toBe(true)
