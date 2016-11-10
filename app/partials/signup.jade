@@ -40,7 +40,7 @@ form.form-horizontal(
           ng-model="fields.password"
           ng-maxlength="255"
           min-entropy="25"
-          focus-when="fields.email"
+          focus-when="fields.emailIsFromState"
           ng-change="fields.confirmation = ''"
           required)
         password-entropy.help-block(password="fields.password")

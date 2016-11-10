@@ -153,6 +153,8 @@ function SignupCtrl ($scope, $state, $cookies, $filter, $timeout, $translate, Wa
     email: $state.params.email || ''
   };
 
+  $state.params.email ? $scope.fields.emailIsFromState = true : '';
+
   $scope.signup = () => {
     $scope.working = true;
 
