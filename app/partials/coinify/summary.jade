@@ -1,13 +1,17 @@
 .flex-column.mbvl
   span.type-h5.em-500.flex-start.pts(
-    ng-hide="isBankTransfer()"
+    ng-hide="isBankTransfer() && tempFiatForm.$invalid"
     translate="CONFIRM_YOUR_ORDER")
   span.type-h5.em-500.flex-start.pts.state-danger-text(
-    ng-show="isBankTransfer()"
+    ng-show="isBankTransfer() && tempFiatForm.$error.max"
     translate="ERROR_DAILY_LIMIT")
+  span.type-h5.em-500.flex-start.pts.state-danger-text(
+    ng-show="isBankTransfer() && tempFiatForm.$error.min && !tempFiatForm.$error.max"
+    translate="ERROR_MIN_LIMIT")
   p.mvm
-    span(translate="ORDER_CONFIRMATION_COPY" ng-hide="isBankTransfer()")
-    span(translate="ERROR_DAILY_LIMIT_COPY" ng-show="isBankTransfer()" translate-values="{code: tempCurrency.code, max: limits.available}")
+    span(translate="ORDER_CONFIRMATION_COPY" ng-hide="isBankTransfer() && tempFiatForm.$invalid")
+    span(translate="ERROR_DAILY_LIMIT_COPY" ng-show="isBankTransfer() && tempFiatForm.$error.max" translate-values="{code: tempCurrency.code, max: limits.available}")
+    span(translate="ERROR_MIN_LIMIT_COPY" ng-show="isBankTransfer() && tempFiatForm.$error.min && !tempFiatForm.$error.max" translate-values="{code: tempCurrency.code, min: limits.min}")
   .flex-center.flex-between.flex-row-reverse
     .mam
       span.type-sm.blue.underline.pointer(ng-click="toggleEditAmount()" ng-hide="editAmount") Edit Order
