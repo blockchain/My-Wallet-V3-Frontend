@@ -148,7 +148,7 @@
     form.form-horizontal(
       role="form"
       name="signupForm"
-      ng-submit="signup(fields)"
+      ng-submit="signup(fields.email)"
       autocomplete="off"
       novalidate)
       .form-group.flex-row.flex-center.flex-column-mobile.mbvl(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
