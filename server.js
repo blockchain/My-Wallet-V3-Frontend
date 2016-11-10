@@ -89,8 +89,11 @@ if (dist) {
   app.set('views', __dirname);
 }
 
+rootApp.use(express.static(__dirname + '/rootApp'));
+
 rootApp.use(function (req, res) {
   res.status(404).send('<center><h1>404 Not Found</h1></center>');
+  res.setHeader('Access-Control-Allow-Origin', '*');
 });
 
 app.use(function (req, res) {
