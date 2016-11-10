@@ -75,6 +75,9 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   $scope.getPaymentMethods = () => {
     if (!$scope.exchange.user) { return; }
 
+    // reset buyOptions
+    buyOptions = {};
+
     $scope.status.waiting = true;
 
     let success = (methods) => {
@@ -123,6 +126,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
 
   $scope.getQuote = () => {
     if ($scope.trade) { $scope.updateAmounts(); return; }
+    if (buyOptions.quote) { $scope.getPaymentMethods(); return; }
 
     $scope.quote = null;
     $scope.status.waiting = true;
@@ -146,9 +150,6 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
         $scope.transaction.btc = quote.quoteAmount / 100000000;
       }
     };
-
-    // reset buyOptions so we don't use btc for quote anymore
-    buyOptions = {};
 
     return buySell.getExchange().getBuyQuote(amount, baseCurr, quoteCurr)
       .then(success, quoteError)
