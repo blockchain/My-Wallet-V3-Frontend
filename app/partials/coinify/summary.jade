@@ -10,8 +10,8 @@
     span(translate="ERROR_DAILY_LIMIT_COPY" ng-show="isBankTransfer()" translate-values="{code: tempCurrency.code, max: limits.available}")
   .flex-center.flex-between.flex-row-reverse
     .mam
-      span.type-sm.blue.underline.pointer(ng-click="toggleEditAmount()" ng-hide="editAmount") Edit Order
-      span.type-sm.blue.underline.pointer(ng-click="cancel()" ng-show="editAmount") Cancel
+      span.type-sm.blue.underline.pointer(ng-click="toggleEditAmount()" ng-hide="editAmount" translate="EDIT_ORDER")
+      span.type-sm.blue.underline.pointer(ng-click="cancel()" ng-show="editAmount" translate="CANCEL")
     .flex-center(ng-show="(tempFiatForm.fiat.$error.max || tempFiatForm.fiat.$error.min) && !isBankTransfer()")
       i.ti-alert.state-danger-text.mrs.type-h4
       span.state-danger-text.mrs(ng-show="tempFiatForm.fiat.$error.max" translate="MAX_LIMIT_EXCEEDED" translate-values="{code: tempCurrency.code, max: limits.available}")
@@ -60,5 +60,5 @@
       span(translate="PAYMENT_FEE")
       span {{ transaction.methodFee | format }} {{ transaction.currency.code }}
     .flex-row.flex-between.pam(ng-hide="isBankTransfer()")
-      span.em-500 Total Cost:
+      span.em-500(translate="TOTAL_COST:")
       span {{ currencySymbol.symbol }}{{ transaction.total }} {{ transaction.currency.code }}

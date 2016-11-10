@@ -225,6 +225,7 @@
   "CREATE_ACCOUNT" : "Create New",
   "CREATE_ADDRESS" : "Next Address",
   "ACCOUNT_NAME" : "Name:",
+  "ACCOUNT": "Account",
   "REVEAL_XPUB" : "Show xPub",
   "MANAGE_ADDRESSES" : "Manage",
   "ACCOUNT_XPUB_MODAL_TITLE" : "Extended Public Key",
@@ -1049,6 +1050,16 @@
     "BODY": "@:KYC_IN_REVIEW.BODY",
     "LINK": "Finish verification"
   },
+  "KYC_EXPIRED": {
+    "TITLE": "Identity Verification Expired",
+    "BODY": "Your identity verification expired. Please try uploading different identification. Bank transfers are unavailable until we can successfully verify your identity.",
+    "LINK": "Try again"
+  },
+  "KYC_IN_HOLD": {
+    "TITLE": "Identity Verification Put on Hold",
+    "BODY": "Your identity verification was put on hold. Bank transfers are unavailable until we can successfully verify your identity. We apologize for any inconvenience",
+    "LINK": "Review status"
+  },
   "COINIFY_TRADE": "Coinify trade",
   "ISX_ID": "iSignthis ID",
   "VERIFY_CARD_NOTE": "For secure card transactions, you will need to verify ownership of the card. You will only have to do this once per card added.",
@@ -1104,7 +1115,6 @@
   "PAYMENT_FEE": "Payment Fee:",
   "NEEDS_REFRESH": "Please refresh your wallet to access this feature.",
   "GO_BACK": "Go Back",
-  "AMOUNT_FOR": "{{::symbol}}{{::amount}} for",
   "LANDING": {
     "NEW_TO_BITCOIN" : "New To Bitcoin?",
     "WHAT_IS_BITCOIN": "What is Bitcoin?",
@@ -1121,5 +1131,10 @@
   "EDIT_NAME": "Edit Name",
   "NOT_BACKED_BY_RECOVERY": "Not backed up by your Recovery Phrase. Transfer into a wallet to secure funds.",
   "EXCHANGE_RATE_HELPER": "The rate offered by your region's exchange partner. May include fees.",
-  "SUBSCRIBE": "Subscribe"
+  "SUBSCRIBE": "Subscribe",
+  "GET_BITCOIN": "Get Bitcoin",
+  "POWERED_BY": "Powered By",
+  "EDIT_ORDER": "Edit Order",
+  "TOTAL_COST:": "Total Cost:",
+  "ENTER_AMOUNT:": "Enter amount:"
 }

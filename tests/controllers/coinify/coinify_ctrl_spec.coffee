@@ -140,7 +140,7 @@ describe "CoinifyController", ->
     it "should switch to isx step", ->
       scope.transaction.fiat = 1
       scope.exchange.user = {}
-      scope.trade = {state: 'pending'}
+      scope.trade = {state: 'awaiting_transfer_in'}
       scope.nextStep()
       scope.nextStep()
       expect(scope.onStep('isx')).toEqual(true)
@@ -192,3 +192,11 @@ describe "CoinifyController", ->
       scope.goTo('select-country')
       scope.close()
       expect(Alerts.confirm).toHaveBeenCalledWith('CONFIRM_CLOSE_ACCT', {action: 'IM_DONE'})
+
+  describe "needsISX", ->
+    it "should return true if trade is in a pending state", ->
+      scope.trade = 
+        state: 'pending',
+        bankAccount: undefined
+
+      expect(scope.needsISX()).toBe(true)

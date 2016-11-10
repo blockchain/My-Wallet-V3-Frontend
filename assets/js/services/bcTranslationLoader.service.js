@@ -10,6 +10,7 @@ BCTranslateStaticFilesLoader.$inject = ['$http', '$q', '$translateStaticFilesLoa
 function BCTranslateStaticFilesLoader ($http, $q, $translateStaticFilesLoader, $rootScope) {
   const map = {
     de: 'build/locales/de.json',
+    cs: 'build/locales/cs.json',
     hi: 'build/locales/hi.json',
     no: 'build/locales/no.json',
     ru: 'build/locales/ru.json',
@@ -34,7 +35,8 @@ function BCTranslateStaticFilesLoader ($http, $q, $translateStaticFilesLoader, $
     da: 'build/locales/da.json',
     ro: 'build/locales/ro.json',
     nl: 'build/locales/nl.json',
-    tr: 'build/locales/tr.json'
+    tr: 'build/locales/tr.json',
+    uk: 'build/locales/uk.json'
   };
 
   return function (options) {

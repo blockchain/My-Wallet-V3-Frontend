@@ -203,6 +203,7 @@ module.exports = (grunt) ->
     },
     "merge-json": # TODO: generate this list...
       bg: {src: [ "locales/bg-*.json" ], dest: "build/locales/bg.json"}
+      cs: {src: [ "locales/cs-*.json" ], dest: "build/locales/cs.json"}
       da: {src: [ "locales/da-*.json" ], dest: "build/locales/da.json"}
       de: {src: [ "locales/de-*.json" ], dest: "build/locales/de.json"}
       el: {src: [ "locales/el-*.json" ], dest: "build/locales/el.json"}
@@ -225,6 +226,7 @@ module.exports = (grunt) ->
       sv: {src: [ "locales/sv-*.json" ], dest: "build/locales/sv.json"}
       th: {src: [ "locales/th-*.json" ], dest: "build/locales/th.json"}
       tr: {src: [ "locales/tr-*.json" ], dest: "build/locales/tr.json"}
+      uk: {src: [ "locales/uk-*.json" ], dest: "build/locales/uk.json"}
       vi: {src: [ "locales/vi-*.json" ], dest: "build/locales/vi.json"}
       "zh-cn": {src: [ "locales/zh-cn-*.json" ], dest: "build/locales/zh-cn.json"}
 

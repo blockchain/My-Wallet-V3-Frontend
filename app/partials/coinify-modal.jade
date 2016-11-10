@@ -10,13 +10,13 @@
                                     tooltip-append-to-body="true"
                                     tooltip-placement="right"
                                     tooltip-enable="!hideQuote()")
-          .flex-row.type-h5.em-400
-            span(ng-hide="!transaction.btc || trade || needsKyc()" translate="AMOUNT_FOR" translate-values="{symbol: currencySymbol.symbol, amount: transaction.fiat}")
-            span(ng-show="trade && !isKYC && !needsKyc()" translate="AMOUNT_FOR" translate-values="{symbol: currencySymbol.symbol, amount: transaction.total}")
-            | &nbsp;
+          .flex-row.type-h5.em-500
             span(ng-hide="!transaction.btc || trade || needsKyc()") {{ transaction.btc }} BTC
             span(ng-show="trade && !isKYC && !needsKyc()" ng-class="{italic: expiredQuote && needsISX(), 'tilda-before': expiredQuote && needsISX()}") {{ expiredQuote && needsISX() ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} BTC
-          quote-countdown(ng-hide="isKYC" quote="quote" trade-obj="trade" expired-quote="expiredQuote" ng-class="{'fade': hideQuote() }")
+            | &nbsp;
+            span(ng-hide="!transaction.btc || trade || needsKyc()") ({{currencySymbol.symbol}}{{ transaction.fiat }})
+            span(ng-show="trade && !isKYC && !needsKyc()") ({{currencySymbol.symbol}}{{ transaction.total }})
+          quote-countdown.mid-grey(ng-hide="isKYC" quote="quote" trade-obj="trade" expired-quote="expiredQuote" ng-class="{'fade': hideQuote() }")
           p.security-red.pointer(ng-show="buySellDebug && quote.id")
             i.ti-search.mrm.right-align(ng-click="quote.expire()")  QA: Now
       buy-steps(transaction="transaction"
@@ -51,16 +51,16 @@
         span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")
     .flex-end.flex-center.mtl.coinify-logo(ng-hide="afterStep('summary')")
       span.pos-rel
-        span.mrs.type-sm Powered by
+        span.mrs.type-sm(translate="POWERED_BY")
         a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
           img(src="img/coinify-logo.svg")
           span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
-  //- needs directive
   .modal-footer.flex-end.flex-row
     button.button-muted(ng-hide="onStep('select-country', 'select-payment-method') || afterStep('summary')"
                         ng-click="prevStep()" translate="GO_BACK")
     
     .flex-1.flex-end(ng-hide="status.loading")
+      button.button-muted.mrm(ng-click="$close()" translate="CLOSE" ng-show="onStep('trade-formatted') && bitcoinReceived")
       button.button-muted.mrm(ng-click="close()" translate="CANCEL_ORDER" ng-hide="afterStep('summary')")
       button.button-muted.mrm(ng-click="close(true)" translate="FINISH_LATER" ng-show="onStep('isx')")
       div(ng-hide="afterStep('summary')")

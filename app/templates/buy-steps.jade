@@ -1,7 +1,7 @@
 .buy-steps.flex-row.flex-between.flex-baseline.center(ng-hide="status.loading" ng-click="buy()" ng-class="{'flex-justify': exchangeAcct}")
   .width-25.flex-column.flex-center(ng-class="{blue: beforeStep('select-payment-method')}" ng-hide="exchangeAcct")
     i.type-lrg.ti-user
-    span(translate="Account")
+    span(translate="ACCOUNT")
 
   .flex-justify(ng-hide="exchangeAcct")
     i.ti-arrow-right.type-h4
@@ -24,4 +24,4 @@
 
   .width-25.flex-column.flex-center(ng-class="{blue: onStep('trade-formatted')}")
     i.type-lrg.ti-shopping-cart
-    span(translate="Get Bitcoin")
+    span(translate="GET_BITCOIN")

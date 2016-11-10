@@ -39,20 +39,26 @@ describe "buyQuickStart", ->
     isoScope.$digest()
   )
 
-  it "should have a status ready", ->
-    expect(isoScope.status.ready).toBe(true)
-
   describe "getQuote", ->
-    it "should not get a quote when it is empty", ->
-      spyOn(buySell, 'getQuote').and.callThrough()
+    it "should get an exchange rate with empty fields", ->
+      spyOn(isoScope, 'getExchangeRate')
       isoScope.transaction.fiat = undefined
       isoScope.transaction.btc = undefined
       isoScope.getQuote()
-      expect(buySell.getQuote).not.toHaveBeenCalled()
+      expect(isoScope.getExchangeRate).toHaveBeenCalled()
 
     it "should get a quote if btc is entered", ->
       spyOn(buySell, 'getQuote').and.callThrough()
       isoScope.transaction.fiat = undefined
       isoScope.transaction.btc = 1
       isoScope.getQuote()
-      expect(buySell.getQuote).toHaveBeenCalled()      
+      expect(buySell.getQuote).toHaveBeenCalled()
+
+  describe "modalOpen watcher", ->
+    it "should call getQuote when modal is closed", ->
+      spyOn(isoScope, 'getQuote')
+      isoScope.modalOpen = true
+      isoScope.$digest()
+      isoScope.modalOpen = false
+      isoScope.$digest()
+      expect(isoScope.getQuote).toHaveBeenCalled()
