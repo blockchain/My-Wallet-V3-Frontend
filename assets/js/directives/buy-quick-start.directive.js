@@ -1,9 +1,9 @@
 angular.module('walletApp')
   .directive('buyQuickStart', buyQuickStart);
 
-buyQuickStart.$inject = ['currency', 'buySell', 'Alerts', '$interval'];
+buyQuickStart.$inject = ['currency', 'buySell', 'Alerts', '$interval', '$timeout', '$q'];
 
-function buyQuickStart (currency, buySell, Alerts, $interval) {
+function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, $q) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -26,8 +26,12 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
     scope.currencies = currency.coinifyCurrencies;
 
     scope.getExchangeRate = () => {
+      stopFetchingQuote();
+      startFetchingQuote();
+
       buySell.getQuote(-1, 'BTC', scope.transaction.currency.code).then((quote) => {
         scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
+        scope.getQuote();
       }, error);
     };
 
@@ -39,7 +43,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
 
     let fetchingQuote;
     let startFetchingQuote = () => {
-      fetchingQuote = $interval(() => scope.getQuote(), 1000 * 60);
+      fetchingQuote = $interval(() => scope.getExchangeRate(), 1000 * 60);
     };
 
     let stopFetchingQuote = () => {
@@ -47,10 +51,6 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
     };
 
     scope.getQuote = () => {
-      stopFetchingQuote();
-      scope.getExchangeRate();
-      startFetchingQuote();
-
       if (scope.transaction.btc) {
         buySell.getQuote(-scope.transaction.btc, 'BTC', scope.transaction.currency.code).then(success, error);
       } else if (scope.transaction.fiat) {

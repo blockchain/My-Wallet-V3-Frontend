@@ -1,4 +1,4 @@
-describe "buyQuickStart", ->
+fdescribe "buyQuickStart", ->
   $q = undefined
   scope = undefined
   element = undefined
@@ -40,18 +40,11 @@ describe "buyQuickStart", ->
   )
 
   describe "getQuote", ->
-    it "should get an exchange rate with empty fields", ->
-      spyOn(isoScope, 'getExchangeRate')
-      isoScope.transaction.fiat = undefined
-      isoScope.transaction.btc = undefined
-      isoScope.getQuote()
-      expect(isoScope.getExchangeRate).toHaveBeenCalled()
-
-    it "should get a quote if btc is entered", ->
+    it "should get a quote", ->
       spyOn(buySell, 'getQuote').and.callThrough()
       isoScope.transaction.fiat = undefined
       isoScope.transaction.btc = 1
-      isoScope.getQuote()
+      isoScope.getExchangeRate()
       expect(buySell.getQuote).toHaveBeenCalled()
 
   describe "modalOpen watcher", ->
