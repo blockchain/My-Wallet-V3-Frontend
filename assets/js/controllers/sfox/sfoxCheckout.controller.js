@@ -8,6 +8,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, Alerts, currency,
 
   if (!exchange.profile || !accounts.length) return;
 
+  $scope.inspectTrade = modals.openTradeSummary.bind(null, 'processing');
   $scope.signupCompleted = accounts[0].status === 'active';
 
   $scope.format = currency.formatCurrencyForView;
@@ -32,8 +33,9 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, Alerts, currency,
     $scope.lock();
     $q.resolve($scope.quote.getPaymentMediums())
       .then(mediums => mediums.ach.buy($scope.account))
-      .then(() => { Alerts.displaySuccess('BOUGHT'); })
+      .then(trade => { modals.openTradeSummary('initiated', trade); })
       .catch(error => { Alerts.displayError(error); })
+      .then($scope.refreshQuote)
       .finally($scope.free);
   };
 

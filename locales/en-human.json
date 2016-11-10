@@ -1001,19 +1001,19 @@
   "SOLD_VIA": "Sold via {{exchange}}",
   "TX_ERROR_STATE": {
     "TITLE": "Transaction {{::state}}",
-    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> has been {{::state}}."
+    "BODY": "Your purchase has been {{::state}}."
   },
   "TX_PENDING": {
     "TITLE": "Order Pending",
-    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> is currently being processed. Coinify will send a status update your way within 1 business day."
+    "BODY": "Your purchase is currently being processed. Our exchange partner will send a status update your way within 1 business day."
   },
   "TX_SUCCESS": {
     "TITLE": "Order Purchased",
-    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> was successful! Bitcoins were sent to <b>{{::label}}</b>."
+    "BODY": "Your purchase was successful! Bitcoins were sent to <b>{{::label}}</b>."
   },
   "TX_IN_REVIEW": {
     "TITLE": "Transaction in review.",
-    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> is currently being processed. Any issues should be resolved shortly. Thank you for your patience."
+    "BODY": "Your purchase is currently being processed. Any issues should be resolved shortly. Thank you for your patience."
   },
   "TX_EXPIRED": {
     "TITLE": "Transaction expired.",
@@ -1027,9 +1027,13 @@
     "TITLE": "Action Required",
     "BODY": "Send <b>{{::amt}} {{::curr}}</b> to the bank account below within the next <b>48 hours</b> to process your transaction. Bank transfers can take a day or more. Once the transfer is complete, your bitcoin will be automatically sent to <b>{{::label}}</b>. "
   },
+  "TX_INITIATED": {
+    "TITLE": "Trade Initiated",
+    "BODY": "An email confirmation will be sent to {{::email}}. You can expect your BTC in 3-5 days."
+  },
   "BITCOIN_RECEIVED": {
     "TITLE": "Bitcoin received!",
-    "BODY": "You have just received bitcoin from Coinify! <br/> Bitcoins were sent to <b>{{::label}}</b>."
+    "BODY": "You have just received the bitcoins you purchased! <br/> Bitcoins were sent to <b>{{::label}}</b>."
   },
   "CLICK_TO_CANCEL": "Cancel trade",
   "SPEND_IMPORTED_ADDRESS": "Spend",
@@ -1073,7 +1077,9 @@
   "VERIFY_CARD_NOTE": "For secure card transactions, you will need to verify ownership of the card. You will only have to do this once per card added.",
   "VERIFY_ID_NOTE": "Please note that in order to buy bitcoin via bank transfer, you will need to verify your identity. You will only have to do this once.",
   "KYC_APPROVED": "Identity verification approved! Click here to start buying bitcoin via bank transfer.",
-  "DATE_INITIALIZED": "Date initialized",
+  "DATE_INITIALIZED": "Date Ordered",
+  "TOTAL_COST": "Total Cost",
+  "SEND_TO": "Send To",
   "RECEIVING_WALLET": "Receiving wallet",
   "RECEIVING_ADDRESS": "QA: Receiving address",
   "RECEIVE_BITCOIN_TO": "Bitcoins will be sent to {{::label}}.",

@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .factory('formatTrade', formatTrade);
 
-formatTrade.$inject = ['$filter', 'MyWallet', '$rootScope'];
+formatTrade.$inject = ['$rootScope', '$filter', 'Wallet', 'MyWallet', 'currency'];
 
-function formatTrade ($filter, MyWallet, $rootScope) {
+function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
   const service = {
     // format for possible coinify trade states
     // awaiting_transfer_in is ignored because trade is not in a formattable state yet
@@ -16,6 +16,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     expired,
     completed,
     completed_test,
+    initiated,
 
     kyc,
     error,
@@ -44,10 +45,15 @@ function formatTrade ($filter, MyWallet, $rootScope) {
   function completed_test (trade) { return service.success(trade); }
 
   let addTradeDetails = (trade) => {
-    let transaction = {};
-    transaction['COINIFY_TRADE'] = '#' + trade.id;
-    transaction['DATE_INITIALIZED'] = $filter('date')(trade.createdAt, 'd MMMM yyyy, HH:mm');
-    transaction['RECEIVING_WALLET'] = getLabel(trade);
+    let transaction = {
+      'DATE_INITIALIZED': $filter('date')(trade.createdAt, 'd MMMM yyyy, HH:mm'),
+      'TOTAL_COST': currency.formatCurrencyForView(trade.inAmount / 100, { code: trade.inCurrency }),
+      'BTC': currency.convertFromSatoshi(trade.outAmount || trade.outAmountExpected, currency.bitCurrencies[0]),
+      'SEND_TO': getLabel(trade)
+    };
+    if (trade.id != null) {
+      transaction['COINIFY_TRADE'] = '#' + trade.id;
+    }
     if ($rootScope.buySellDebug) {
       transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
     }
@@ -62,10 +68,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
       class: 'state-danger-text',
       namespace: 'TX_ERROR_STATE',
       values: {
-        curr: trade.inCurrency,
-        fiatAmt: trade.sendAmount / 100,
-        state: state || getState(trade.state),
-        btcAmt: (trade.outAmount || trade.outAmountExpected) / 100000000
+        state: state || getState(trade.state)
       }
     };
   }
@@ -78,10 +81,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
       tx: tx,
       class: 'success',
       values: {
-        label: getLabel(trade),
-        curr: trade.inCurrency,
-        fiatAmt: trade.sendAmount / 100,
-        btcAmt: (trade.outAmount || trade.outAmountExpected) / 100000000
+        label: getLabel(trade)
       },
       namespace: 'TX_SUCCESS'
     };
@@ -93,12 +93,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     return {
       tx: tx,
       class: 'blue',
-      values: {
-        label: getLabel(trade),
-        curr: trade.inCurrency,
-        fiatAmt: trade.sendAmount / 100,
-        btcAmt: (trade.outAmount || trade.outAmountExpected) / 100000000
-      },
+      values: {},
       namespace: 'TX_PENDING'
     };
   }
@@ -109,12 +104,21 @@ function formatTrade ($filter, MyWallet, $rootScope) {
     return {
       tx: tx,
       class: 'blue',
-      namespace: 'TX_IN_REVIEW',
+      values: {},
+      namespace: 'TX_IN_REVIEW'
+    };
+  }
+
+  function initiated (trade) {
+    let tx = addTradeDetails(trade);
+
+    return {
+      tx: tx,
+      class: 'success',
       values: {
-        curr: trade.inCurrency,
-        fiatAmt: trade.sendAmount / 100,
-        btcAmt: (trade.outAmount || trade.outAmountExpected) / 100000000
-      }
+        email: Wallet.user.email
+      },
+      namespace: 'TX_INITIATED'
     };
   }
 
