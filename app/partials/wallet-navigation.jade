@@ -10,6 +10,7 @@
         span(translate="MY_TRANSACTIONS")
 
     li.header(ui-sref-active="current" ng-show="isUserWhitelisted || userHasAccount()")
+      buy-alert
       a(ui-sref="wallet.common.buy-sell" ng-show="isUserInvited || userHasAccount()")
         i.ti-direction-alt
         span(translate="BUY_BITCOIN")
