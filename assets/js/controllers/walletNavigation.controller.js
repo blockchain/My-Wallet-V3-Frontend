@@ -49,12 +49,4 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Options, Al
     templateUrl: 'partials/support.jade',
     windowClass: 'bc-modal auto'
   });
-
-  $scope.signupForBuyAccess = () => {
-    $uibModal.open({
-      templateUrl: 'partials/buy-subscribe-modal.jade',
-      controller: 'SubscribeCtrl',
-      windowClass: 'bc-modal xs'
-    });
-  };
 }

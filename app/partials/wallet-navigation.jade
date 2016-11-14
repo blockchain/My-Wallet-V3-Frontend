@@ -9,13 +9,10 @@
         i.ti-layout-list-post
         span(translate="MY_TRANSACTIONS")
 
-    li.header(ui-sref-active="current" ng-show="isCountryWhitelisted || userHasAccount()")
+    li.header(ui-sref-active="current" ng-show="(isCountryWhitelisted && isUserInvited) || userHasAccount()")
       span(ng-show="!userHasAccount()")
         buy-alert
-      a(ui-sref="wallet.common.buy-sell" ng-show="isUserInvited || userHasAccount()")
-        i.ti-direction-alt
-        span(translate="BUY_BITCOIN")
-      a(ng-click="signupForBuyAccess()" ng-show="!isUserInvited && !userHasAccount()")
+      a(ui-sref="wallet.common.buy-sell")
         i.ti-direction-alt
         span(translate="BUY_BITCOIN")
 
