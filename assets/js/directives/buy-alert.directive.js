@@ -15,12 +15,12 @@ function buyAlert ($cookies) {
 
   function link (scope, elem, attrs) {
     scope.reveal = false;
-    scope.dismissed = $cookies.get('buy-alert');
+    scope.dismissed = $cookies.get('buy-alert-seen');
 
     scope.dismissMessage = () => {
       scope.dismissed = true;
       scope.reveal = false;
-      $cookies.put('buy-alert', true);
+      $cookies.put('buy-alert-seen', true);
     };
 
     scope.revealMsg = () =>
