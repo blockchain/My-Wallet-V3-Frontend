@@ -34,7 +34,6 @@
                   type="number"
                   name="fiat"
                   ng-model="state.fiat"
-                  ng-model-options="{debounce:250}"
                   ng-min="min"
                   ng-max="max"
                   ng-focus="state.baseCurr = dollars"
@@ -46,7 +45,6 @@
                   type="number"
                   name="btc"
                   ng-model="state.btc"
-                  ng-model-options="{debounce:250}"
                   ng-focus="state.baseCurr = bitcoin"
                   transform-currency="bitcoin"
                   required)

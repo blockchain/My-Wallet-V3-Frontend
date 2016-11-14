@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxCheckoutController', SfoxCheckoutController);
 
-function SfoxCheckoutController ($scope, $timeout, $q, Wallet, Alerts, currency, modals, accounts) {
+function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, accounts) {
   let exchange = $scope.vm.external.sfox;
   $scope.openSfoxSignup = () => modals.openSfoxSignup(exchange);
 
@@ -21,7 +21,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, Alerts, currency,
   $scope.min = 10;
   $scope.max = 100;
 
-  $scope.state = {
+  let state = $scope.state = {
     fiat: $scope.max,
     btc: 0,
     baseCurr: $scope.dollars,
@@ -45,22 +45,31 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, Alerts, currency,
     state.quoteCurr.code
   ];
 
-  $scope.refreshQuote = () => {
-    $scope.state.quote = 0;
-    let args = $scope.getQuoteArgs($scope.state);
-    $q.resolve(exchange.getBuyQuote(...args)).then(quote => {
-      $scope.quote = quote;
-      $scope.state.loadFailed = false;
-      if ($scope.state.baseFiat) $scope.state.btc = quote.quoteAmount;
-      else $scope.state.fiat = quote.quoteAmount / 100;
-    }).catch(() => {
-      $scope.state.loadFailed = true;
-    });
+  $scope.cancelRefresh = () => {
+    $timeout.cancel($scope.refreshTimeout);
   };
 
-  $scope.$watch('state.fiat + state.btc + state.baseCurr', () =>
-    $scope.checkoutForm.$valid && $scope.refreshQuote()
-  );
+  $scope.refreshQuote = MyWalletHelpers.asyncOnce(() => {
+    state.quote = 0;
+    $scope.cancelRefresh();
+    let args = $scope.getQuoteArgs(state);
 
+    let fetchSuccess = (quote) => {
+      $scope.quote = quote;
+      state.loadFailed = false;
+      let timeToExpiration = new Date(quote.expiresAt) - new Date();
+      $scope.refreshTimeout = $timeout($scope.refreshQuote, timeToExpiration);
+      if (state.baseFiat) state.btc = quote.quoteAmount;
+      else state.fiat = quote.quoteAmount / 100;
+    };
+
+    $q.resolve(exchange.getBuyQuote(...args))
+      .then(fetchSuccess, () => { state.loadFailed = true; });
+  }, 500);
+
+  $scope.refreshIfValid = () => $scope.checkoutForm.$valid && $scope.refreshQuote();
+  $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid());
+  $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid());
+  $scope.$on('$destroy', $scope.cancelRefresh);
   $scope.installLock();
 }
