@@ -9,6 +9,7 @@ function Options ($http) {
 
   const service = {
     get: get,
+    didFetch: fetchedOptions,
     options: {}
   };
 

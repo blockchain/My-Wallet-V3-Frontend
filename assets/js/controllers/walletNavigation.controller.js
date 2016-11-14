@@ -53,6 +53,10 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Options, Al
     windowClass: 'bc-modal auto'
   });
 
-  $scope.setIsCountryWhitelisted(Options.options);
-  Options.get().then($scope.setIsCountryWhitelisted);
+  // .then() waits for the next digest, which causes a flicker.
+  if (Options.didFetch) {
+    $scope.setIsCountryWhitelisted(Options.options);
+  } else {
+    Options.get().then($scope.setIsCountryWhitelisted);
+  }
 }
