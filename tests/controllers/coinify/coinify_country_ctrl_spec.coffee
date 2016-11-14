@@ -16,11 +16,21 @@ describe "CoinifyCountryController", ->
       MyWallet = $injector.get("MyWallet")
       country = $injector.get("country")
       buySell = $injector.get("buySell")
+      Options = $injector.get("Options")
 
       buySell.getExchange = () ->
         profile: {}
         user: {}
 
+      Options.get = () ->
+        Promise.resolve({
+          "showBuySellTab": ["US"],
+          "partners": {
+            "coinify": {
+              "countries": ["US"]
+            }
+          }
+        })
       MyWallet.wallet = {}
       MyWallet.wallet.accountInfo = {}
       MyWallet.wallet.hdwallet =

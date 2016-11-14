@@ -17,6 +17,17 @@ describe "buySell service", () ->
       $uibModal = $injector.get("$uibModal")
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
+      Options = $injector.get("Options")
+
+      Options.get = () ->
+        Promise.resolve({
+          "showBuySellTab": ["US"],
+          "partners": {
+            "coinify": {
+              "countries": ["US"]
+            }
+          }
+        })
 
       MyWallet.wallet =
         accountInfo:
