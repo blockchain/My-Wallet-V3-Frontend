@@ -5,22 +5,24 @@ angular
 Options.$inject = ['$http'];
 
 function Options ($http) {
-  let _options = null;
+  let fetchedOptions = false;
 
   const service = {
-    get: get
+    get: get,
+    options: {}
   };
 
   function get () {
-    if (_options) {
-      return Promise.resolve(_options);
+    if (fetchedOptions) {
+      return Promise.resolve(service.options);
     }
     return $http.get('/Resources/wallet-options.json')
       .success((res) => {
-        _options = res;
+        service.options = res;
+        fetchedOptions = true;
       })
       .then(() => {
-        return _options;
+        return service.options;
       });
   }
 

@@ -12,9 +12,12 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Options, Al
   $scope.isUserInvited = accountInfo && accountInfo.invited;
 
   $scope.isCountryWhitelisted = null;
-  Options.get().then((options) => {
-    $scope.isCountryWhitelisted = accountInfo && options.showBuySellTab.indexOf(accountInfo.countryCodeGuess) > -1;
-  });
+
+  $scope.setIsCountryWhitelisted = (options) => {
+    let whitelist = options.showBuySellTab || [];
+    let countryInWhitelist = whitelist.indexOf(accountInfo.countryCodeGuess) > -1;
+    $scope.isCountryWhitelisted = accountInfo && countryInWhitelist;
+  };
 
   // Debug:
   // $scope.isUserInvited = false;
@@ -49,4 +52,7 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Options, Al
     templateUrl: 'partials/support.jade',
     windowClass: 'bc-modal auto'
   });
+
+  $scope.setIsCountryWhitelisted(Options.options);
+  Options.get().then($scope.setIsCountryWhitelisted);
 }
