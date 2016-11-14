@@ -4,7 +4,7 @@
     div(ng-show="exchangeRate.fiat")
       span.type-sm 1 BTC = {{currencySymbol.symbol}}{{ exchangeRate.fiat }}
       helper-button(content="EXCHANGE_RATE_HELPER")
-  form(name="fiatForm" ng-submit="fiatForm.$valid && triggerBuy()")
+  form(name="fiatForm" ng-submit="!status.busy && fiatForm.$valid && triggerBuy()")
     .mtl
       label.em-500(translate="ENTER_AMOUNT:")
       helper-button(ng-show="limits.card.min && limits.card.max" content="MAX_MIN_HELPER" values="{cardMax: limits.card.max, min: limits.card.min, bankMax: limits.bank.max, symbol: currencySymbol.symbol}")
@@ -15,14 +15,13 @@
             ng-model="transaction.fiat"
             name="fiat"
             tabindex="1"
-            focus-when="status.ready || lastInput === 'fiat'"
+            focus-when="status.ready"
             ng-change="updateLastInput('fiat'); getExchangeRate();"
             ng-model-options="{debounce: 250}"
             placeholder="{{placeholder}}"
             min="{{limits.card.min}}"
             max="{{limits.bank.available > limits.card.available ? limits.bank.available : limits.card.available}}"
             step="0.01"
-            ng-disabled="fiatForm.fiat.$valid && status.busy"
             required)
           div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
             button.btn.btn-default.dropdown-toggle.brdrn(type="button" uib-dropdown-toggle aria-haspopup="true")
@@ -38,12 +37,10 @@
         section.input-group.width-45
           input.form-control.brdrn(
             type="number"
-            focus-when="lastInput === 'btc'"
             ng-model="transaction.btc"
             name="btc"
             step="any"
             tabindex="1"
-            ng-disabled="status.busy"
             ng-change="updateLastInput('btc'); getExchangeRate();"
             ng-model-options="{debounce: 250}"
             placeholder="{{placeholder}}"
@@ -59,4 +56,4 @@
         a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
           img(src="img/coinify-logo.svg")
           span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
-      button.button-primary(translate="Buy Bitcoin" type="submit" ng-disabled="!fiatForm.$valid")
+      button.button-primary(translate="Buy Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || status.busy")

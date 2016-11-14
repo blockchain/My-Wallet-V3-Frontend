@@ -30,6 +30,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout) {
     scope.getExchangeRate = () => {
       stopFetchingQuote();
       startFetchingQuote();
+      scope.status.busy = true;
 
       buySell.getQuote(-1, 'BTC', scope.transaction.currency.code).then((quote) => {
         scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
@@ -52,8 +53,6 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout) {
     };
 
     scope.getQuote = () => {
-      scope.status.busy = true;
-
       if (scope.lastInput === 'btc') {
         buySell.getQuote(-scope.transaction.btc, 'BTC', scope.transaction.currency.code).then(success, error);
       } else if (scope.lastInput === 'fiat') {
