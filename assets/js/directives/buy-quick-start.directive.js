@@ -1,9 +1,9 @@
 angular.module('walletApp')
   .directive('buyQuickStart', buyQuickStart);
 
-buyQuickStart.$inject = ['currency', 'buySell', 'Alerts', '$interval', '$timeout', '$q'];
+buyQuickStart.$inject = ['currency', 'buySell', 'Alerts', '$interval', '$timeout'];
 
-function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, $q) {
+function buyQuickStart (currency, buySell, Alerts, $interval, $timeout) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -21,9 +21,11 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, $q) {
   return directive;
 
   function link (scope, elem, attr) {
-    scope.status = {ready: true};
     scope.exchangeRate = {};
+    scope.status = {ready: true};
     scope.currencies = currency.coinifyCurrencies;
+
+    scope.updateLastInput = (type) => scope.lastInput = type;
 
     scope.getExchangeRate = () => {
       stopFetchingQuote();
@@ -31,8 +33,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, $q) {
 
       buySell.getQuote(-1, 'BTC', scope.transaction.currency.code).then((quote) => {
         scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
-        scope.getQuote();
-      }, error);
+      }, error).finally(scope.getQuote);
     };
 
     scope.isCurrencySelected = (currency) => currency === scope.transaction.currency;
@@ -51,10 +52,14 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, $q) {
     };
 
     scope.getQuote = () => {
-      if (scope.transaction.btc) {
+      scope.status.busy = true;
+
+      if (scope.lastInput === 'btc') {
         buySell.getQuote(-scope.transaction.btc, 'BTC', scope.transaction.currency.code).then(success, error);
-      } else if (scope.transaction.fiat) {
+      } else if (scope.lastInput === 'fiat') {
         buySell.getQuote(scope.transaction.fiat, scope.transaction.currency.code).then(success, error);
+      } else {
+        scope.status = {};
       }
     };
 
@@ -70,6 +75,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, $q) {
     };
 
     const error = () => {
+      scope.status = {};
       Alerts.displayError('ERROR_QUOTE_FETCH');
     };
 

@@ -15,13 +15,14 @@
             ng-model="transaction.fiat"
             name="fiat"
             tabindex="1"
-            focus-when="status.ready"
-            ng-change="transaction.btc = null; getExchangeRate();"
+            focus-when="status.ready || lastInput === 'fiat'"
+            ng-change="updateLastInput('fiat'); getExchangeRate();"
             ng-model-options="{debounce: 250}"
             placeholder="{{placeholder}}"
             min="{{limits.card.min}}"
             max="{{limits.bank.available > limits.card.available ? limits.bank.available : limits.card.available}}"
             step="0.01"
+            ng-disabled="fiatForm.fiat.$valid && status.busy"
             required)
           div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
             button.btn.btn-default.dropdown-toggle.brdrn(type="button" uib-dropdown-toggle aria-haspopup="true")
@@ -30,18 +31,20 @@
             ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
               li(ng-repeat="currency in currencies"
                  role="menuitem" 
-                 ng-click="transaction.btc = null; changeCurrency({currency: currency}); getExchangeRate();"
+                 ng-click="changeCurrency({currency: currency}); getExchangeRate();"
                  ng-class="{active: isCurrencySelected(currency)}")
                 a(ng-click="$event.preventDefault()") {{ currency.code }}
         i.ti-arrows-horizontal.mhm.type-h4
         section.input-group.width-45
           input.form-control.brdrn(
             type="number"
+            focus-when="lastInput === 'btc'"
             ng-model="transaction.btc"
             name="btc"
             step="any"
             tabindex="1"
-            ng-change="transaction.fiat = null; getExchangeRate();"
+            ng-disabled="status.busy"
+            ng-change="updateLastInput('btc'); getExchangeRate();"
             ng-model-options="{debounce: 250}"
             placeholder="{{placeholder}}"
             required)

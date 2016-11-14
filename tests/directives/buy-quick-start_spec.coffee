@@ -1,4 +1,4 @@
-fdescribe "buyQuickStart", ->
+describe "buyQuickStart", ->
   $q = undefined
   scope = undefined
   element = undefined
