@@ -42,6 +42,7 @@
             name="btc"
             step="any"
             tabindex="1"
+            min="0.00000001"
             ng-change="updateLastInput('btc'); getExchangeRate();"
             ng-model-options="{debounce: 250}"
             placeholder="{{placeholder}}"
