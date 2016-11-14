@@ -2,8 +2,17 @@
   position: relative;
   padding: 20px 30px 0 30px;
   margin-bottom: 60px;
-  @media (max-width: 992px) {
-    padding: 20px 10px 0 10px;
+  @media (max-width: 991px) {
+    padding: 10px 10px 0 10px;
+    .width-50 {
+      margin: 0px;
+      & + .width-50 {
+        margin-top: 1.25em;
+      }
+    }
+    .quick-start {
+      margin-top: 0px;
+    }
   }
   &.loading {
     height: 100%;
@@ -125,48 +134,72 @@
         height: 500px;
         #isx-iframe {
           height: 650px;
+          @media (max-width: 767px) {
+            height: 950px;
+          }
         }
       }
       &.secret {
         height: 400px;
         #isx-iframe {
           height: 400px;
+          @media (max-width: 767px) {
+            height: 700px;
+          }
         }
       }
       &.otp {
         height: 415px;
         #isx-iframe {
           height: 445px;
+          @media (max-width: 767px) {
+            height: 745px;
+          }
         }
       }
       &.otp-pin {
         height: 500px;
         #isx-iframe {
           height: 632px;
+          @media (max-width: 767px) {
+            height: 930px;
+          }
         }
       }
       &.pin {
         height: 366px;
         #isx-iframe {
           height: 366px;
+          @media (max-width: 767px) {
+            height: 600px;
+          }
         }
       }
       &.verify-pin {
         height: 347px;
         #isx-iframe {
           height: 347px;
+          @media (max-width: 767px) {
+            height: 650px;
+          }
         }
       }
       &.kyc {
         height: 500px;
         #isx-iframe {
           height: 700px;
+          @media (max-width: 767px) {
+            height: 1000px;
+          }
         }
       }
       &.documents {
         height: 500px;
         #isx-iframe {
           height: 520px;
+          @media (max-width: 767px) {
+            height: 1450px;
+          }
         }
       }
       // default height
@@ -269,8 +302,10 @@
 }
 
 .modal .buy-steps {
-  width: 450px;
   margin: auto;
+  @media (min-width: 768px) {
+    width: 450px;
+  }
 }
 
 .pos-rel {

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('WalletNavigationCtrl', WalletNavigationCtrl);
 
-function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Alerts, SecurityCenter, $state, $uibModal, filterFilter, $location) {
+function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Options, Alerts, SecurityCenter, $state, $uibModal, filterFilter, $location) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.security = SecurityCenter.security;
@@ -10,43 +10,18 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Alerts, Sec
   let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
   $scope.userHasAccount = () => MyWallet.wallet.external && MyWallet.wallet.external.coinify.hasAccount;
   $scope.isUserInvited = accountInfo && accountInfo.invited;
-  $scope.isUserWhitelisted = accountInfo && [
-    'GB'
-    // 'DK',
-    // 'BE',
-    // 'BG',
-    // 'CZ',
-    // 'DE',
-    // 'EE',
-    // 'IE',
-    // 'EL',
-    // 'ES',
-    // 'FR',
-    // 'HR',
-    // 'IT',
-    // 'CY',
-    // 'LV',
-    // 'LT',
-    // 'LU',
-    // 'HU',
-    // 'MT',
-    // 'NL',
-    // 'AT',
-    // 'PL',
-    // 'PT',
-    // 'RO',
-    // 'SI',
-    // 'SK',
-    // 'FI',
-    // 'SE',
-    // 'NO',
-    // 'CH',
-    // 'LI',
-    // 'IS'
-  ].indexOf(accountInfo.countryCodeGuess) > -1;
-  // debug uninvited user and whitelisted
+
+  $scope.isCountryWhitelisted = null;
+  Options.get().then((options) => {
+    $scope.isCountryWhitelisted = accountInfo && options.showBuySellTab.indexOf(accountInfo.countryCodeGuess) > -1;
+  });
+
+  // Debug:
   // $scope.isUserInvited = false;
-  // $scope.isUserWhitelisted = true;
+
+  // debug invited user and whitelisted
+  // $scope.isUserInvited = true;
+  // $scope.isCountryWhitelisted = true;
 
   $scope.numberOfActiveLegacyAddresses = () => {
     if (!Wallet.status.isLoggedIn) return null;

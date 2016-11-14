@@ -1,6 +1,10 @@
 angular.module('walletApp').controller('LandingCtrl', LandingCtrl);
 
 function LandingCtrl ($scope, $state, $sce, languages) {
+  $scope.fields = {
+    email: undefined
+  };
+
   $scope.firstLoad = () => {
     let language_code = languages.get();
 
@@ -12,6 +16,7 @@ function LandingCtrl ($scope, $state, $sce, languages) {
   };
 
   $scope.firstLoad();
+
   $scope.signup = () => {
     $state.go('public.signup', { email: $scope.fields.email });
   };

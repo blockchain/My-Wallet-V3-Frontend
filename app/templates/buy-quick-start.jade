@@ -8,7 +8,7 @@
     .mtl
       label.em-500(translate="ENTER_AMOUNT:")
       helper-button(ng-show="limits.card.min && limits.card.max" content="MAX_MIN_HELPER" values="{cardMax: limits.card.max, min: limits.card.min, bankMax: limits.bank.max, symbol: currencySymbol.symbol}")
-      .flex-row.flex-between.flex-center
+      .flex-row.flex-between.flex-center.flex-column-tablet
         section.input-group.width-45
           input.form-control.brdrn(
             type="number"
@@ -33,7 +33,8 @@
                  ng-click="transaction.btc = null; changeCurrency({currency: currency}); getQuote();"
                  ng-class="{active: isCurrencySelected(currency)}")
                 a(ng-click="$event.preventDefault()") {{ currency.code }}
-        i.ti-arrows-horizontal.mhm.type-h4
+        i.ti-arrows-horizontal.mhm.type-h4.hidden-sm.hidden-xs
+        i.ti-arrows-vertical.mvs.type-h4.visible-sm.visible-xs
         section.input-group.width-45
           input.form-control.brdrn(
             type="number"

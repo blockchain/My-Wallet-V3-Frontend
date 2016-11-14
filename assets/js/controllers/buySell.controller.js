@@ -2,9 +2,10 @@ angular
   .module('walletApp')
   .controller('BuySellCtrl', BuySellCtrl);
 
-function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet) {
+function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet, $cookies) {
   $scope.buySellStatus = buySell.getStatus;
   $scope.trades = buySell.trades;
+  $cookies.put('buy-alert-seen', true);
 
   $scope.status = {
     loading: false,

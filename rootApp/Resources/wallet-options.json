@@ -1,0 +1,13 @@
+{
+  "showBuySellTab": ["GB", "NL", "DE", "US"],
+  "partners": {
+    "coinify": {
+      "countries": ["GB", "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI",
+                    "FR", "GF", "DE", "GI", "GR", "GP", "GG", "HU", "IS", "IE",
+                    "IM", "IT", "JE", "LV", "LI", "LT", "LU", "MT", "MQ", "YT",
+                    "MC", "NL", "NO", "PL", "PT", "RE", "BL", "MF", "PM", "SM",
+                    "SK", "SI", "ES", "SE", "CH"
+                  ]
+    }
+  }
+}

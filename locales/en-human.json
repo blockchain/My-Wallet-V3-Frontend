@@ -1074,7 +1074,9 @@
   "CONFIRM_YOUR_ORDER": "Confirm your order:",
   "ORDER_CONFIRMATION_COPY": "Please confirm your order details before we direct you to our secure payment provider.",
   "ERROR_DAILY_LIMIT": "Error: Exceeds Daily Limit",
-  "ERROR_DAILY_LIMIT_COPY": "The amount selected exceeds your daily buy limit. For bank transfers, you can exchange up to {{max}} {{code}} per day. Please update your order to proceed.",
+  "ERROR_MIN_LIMIT": "Error: Below Minimum Limit",
+  "ERROR_DAILY_LIMIT_COPY": "The amount selected exceeds your daily buy limit. For bank transfers, you can exchange {{max}} {{code}} more today. Please update your order to proceed.",
+  "ERROR_MIN_LIMIT_COPY": "The amount selected is below the minimum limit required to create a trade. Please enter an amount greater than {{min}} {{code}} to proceed.",
   "ERROR_QUOTE_FETCH" : "Unable to obtain quote at this time, please try again later.",
   "ERROR_PAYMENT_METHODS_FETCH" : "Something went wrong, please try again later.",
   "ERROR_TRADE_CREATE" : "Unable to place your order at this time, please try again later.",
@@ -1136,5 +1138,6 @@
   "POWERED_BY": "Powered By",
   "EDIT_ORDER": "Edit Order",
   "TOTAL_COST:": "Total Cost:",
-  "ENTER_AMOUNT:": "Enter amount:"
+  "ENTER_AMOUNT:": "Enter amount:",
+  "BUY_BITCOIN_ALERT": "You can now buy Bitcoin with your Blockchain wallet! Click below to get started."
 }
