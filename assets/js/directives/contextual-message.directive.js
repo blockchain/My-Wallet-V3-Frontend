@@ -9,6 +9,7 @@ function contextualMessage ($cookies, $window, Wallet, SecurityCenter, filterFil
   const directive = {
     restrict: 'E',
     replace: true,
+    scope: {},
     templateUrl: 'templates/contextual-message.jade',
     link: link
   };

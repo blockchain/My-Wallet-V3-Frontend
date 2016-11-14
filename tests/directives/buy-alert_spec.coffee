@@ -10,16 +10,13 @@ describe "Buy alert message", ->
   beforeEach inject((_$compile_, _$rootScope_, $injector) ->
     $compile = _$compile_
     $rootScope = _$rootScope_
-    scope = $rootScope.$new()
-
     $cookies = $injector.get("$cookies")
 
-    return
+    element = $compile("<buy-alert></buy-alert>")($rootScope)
+    $rootScope.$digest()
+    scope = element.isolateScope()
+    scope.$digest()
   )
-
-  beforeEach ->
-    element = $compile("<buy-alert></buy-alert>")(scope)
-    scope.$apply()
 
   it "should dismiss the message", ->
     spyOn($cookies, 'put')
