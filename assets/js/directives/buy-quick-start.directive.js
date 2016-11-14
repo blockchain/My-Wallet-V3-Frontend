@@ -81,7 +81,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout) {
     scope.getExchangeRate();
     scope.$on('$destroy', stopFetchingQuote);
     scope.$watch('modalOpen', (modalOpen) => {
-      modalOpen ? stopFetchingQuote() : scope.getQuote();
+      modalOpen ? stopFetchingQuote() : scope.getExchangeRate();
     });
   }
 }
