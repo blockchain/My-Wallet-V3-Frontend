@@ -44,7 +44,7 @@ Optionally you can add:
 
 ```
 AUTO_RELOAD=1
-WEBSOCKET_URL=wss://blockchain.info/inv
+WEB_SOCKET_URL=wss://ws.blockchain.info/inv
 API_DOMAIN=https://api.blockchain.info
 ```
 

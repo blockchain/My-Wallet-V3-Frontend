@@ -467,10 +467,7 @@ module.exports = (grunt) ->
         replacements: [{
           from: 'customWebSocketURL = $rootScope.webSocketURL'
           to: () =>
-            prefix = "wss://"
-            if @rootDomain && @rootDomain.substr(0,5) == "local"
-              prefix = "ws://"
-            'customWebSocketURL = "' + prefix + @rootDomain + '/inv"'
+            "customWebSocketURL = '#{ @webSocketURL }'"
         }]
       buy_sell_debug:
         src: ['build/js/app.js'],
@@ -578,6 +575,7 @@ module.exports = (grunt) ->
   grunt.registerTask "dist", () =>
     versionFrontend = grunt.option('versionFrontend')
     rootDomain = grunt.option('rootDomain')
+    webSocketURL = grunt.option('webSocketURL')
     apiDomain = grunt.option('apiDomain')
     if !versionFrontend
       versionFrontend = "intermediate"
@@ -592,10 +590,11 @@ module.exports = (grunt) ->
       # Tor will only work with   rootURL = "/"
       console.log("No root domain specified, assuming blockchain.info or tor");
       @rootDomain = null
+      @webSocketURL = null # Don't use websockets on Tor
 
       grunt.task.run [
         "replace:root_url"
-        # Web socket URL will default to wss://blockchain.info/inv
+        # Web socket URL will default to wss://ws.blockchain.info/inv
         # Web sockets currently don't work on our Tor site
         # "replace:web_socket_url"
         "replace:buy_sell_debug"
@@ -604,6 +603,7 @@ module.exports = (grunt) ->
     else
       console.log("Root domain: " + rootDomain)
       @rootDomain = rootDomain
+      @webSocketURL = webSocketURL
 
       grunt.task.run [
         "replace:root_url"

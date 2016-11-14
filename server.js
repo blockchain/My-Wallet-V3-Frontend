@@ -10,7 +10,7 @@ loadEnv('.env');
 var port = process.env.PORT || 8080;
 var dist = parseInt(process.env.DIST, 10) === 1;
 var rootURL = process.env.ROOT_URL || 'https://blockchain.info';
-var webSocketURL = process.env.WEBSOCKET_URL || false;
+var webSocketURL = process.env.WEB_SOCKET_URL || false;
 var apiDomain = process.env.API_DOMAIN;
 var iSignThisDomain = rootURL === 'https://blockchain.info' ? 'https://verify.isignthis.com/' : 'https://stage-verify.isignthis.com/';
 
@@ -43,7 +43,7 @@ app.use(function (req, res, next) {
       'connect-src ' + [
         "'self'",
         rootURL,
-        (webSocketURL || 'wss://*.blockchain.info'),
+        (webSocketURL || 'wss://ws.blockchain.info'),
         (apiDomain || 'https://api.blockchain.info'),
         'https://app-api.coinify.com'
       ].join(' '),
