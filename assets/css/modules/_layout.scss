@@ -168,4 +168,7 @@
   left: 270px;
   padding: 15px 30px;
   background-color: $light-blue-transparent;
+  @media (max-width: 767px) {
+    left: 0px;
+  }
 }

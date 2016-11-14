@@ -208,6 +208,14 @@
         &.isx { width: 700px; }
       }
     }
+    @media (max-width: 767px) {
+      .modal-dialog {
+        .modal-body {
+          width: auto;
+          &.isx { width: auto; }
+        }
+      }
+    }
   }
   &.block {
     display: block !important;
