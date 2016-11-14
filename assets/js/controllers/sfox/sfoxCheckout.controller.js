@@ -50,8 +50,11 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, Alerts, currency,
     let args = $scope.getQuoteArgs($scope.state);
     $q.resolve(exchange.getBuyQuote(...args)).then(quote => {
       $scope.quote = quote;
+      $scope.state.loadFailed = false;
       if ($scope.state.baseFiat) $scope.state.btc = quote.quoteAmount;
       else $scope.state.fiat = quote.quoteAmount / 100;
+    }).catch(() => {
+      $scope.state.loadFailed = true;
     });
   };
 

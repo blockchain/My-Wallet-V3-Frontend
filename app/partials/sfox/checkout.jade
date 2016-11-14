@@ -22,7 +22,12 @@
           .item
             .flex-between.flex-baseline.mbs
               span.type-h5.em-500 Enter Amount
-              span(ng-show="quote") 1 {{ bitcoin.code }} = ${{ quote.rate }}
+              span
+                div(ng-show="quote && !state.loadFailed")
+                  span 1 {{ bitcoin.code }} = ${{ quote.rate }}
+                .state-danger-text(ng-show="state.loadFailed")
+                  i.ti-alert
+                  span.mls Failed to load exchange data
             .flex-center
               .flex-1.flex-center.border
                 input.form-control.no-border(
@@ -67,7 +72,7 @@
                 span.colon Total
                 span {{ format(state.fiat || 0, dollars, true) }}
         .group.mtl
-          button.btn.button-primary.full(ng-click="buy()" ng-disabled="checkoutForm.$invalid") Buy Bitcoin
+          button.btn.button-primary.full(ng-click="buy()" ng-disabled="checkoutForm.$invalid || !quote || state.loadFailed") Buy Bitcoin
   .flex-column.mtl(ng-show="trades.length")
     .flex-row.flex-between.flex-center
       h4.type-h4(translate="ORDER_HISTORY")
