@@ -1,9 +1,9 @@
 angular.module('walletApp')
   .directive('buyQuickStart', buyQuickStart);
 
-buyQuickStart.$inject = ['currency', 'buySell', 'Alerts', '$interval'];
+buyQuickStart.$inject = ['currency', 'buySell', 'Alerts', '$interval', '$timeout'];
 
-function buyQuickStart (currency, buySell, Alerts, $interval) {
+function buyQuickStart (currency, buySell, Alerts, $interval, $timeout) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -21,14 +21,20 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
   return directive;
 
   function link (scope, elem, attr) {
-    scope.status = {ready: true};
     scope.exchangeRate = {};
+    scope.status = {ready: true};
     scope.currencies = currency.coinifyCurrencies;
 
+    scope.updateLastInput = (type) => scope.lastInput = type;
+
     scope.getExchangeRate = () => {
+      stopFetchingQuote();
+      startFetchingQuote();
+      scope.status.busy = true;
+
       buySell.getQuote(-1, 'BTC', scope.transaction.currency.code).then((quote) => {
         scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
-      }, error);
+      }, error).finally(scope.getQuote);
     };
 
     scope.isCurrencySelected = (currency) => currency === scope.transaction.currency;
@@ -39,7 +45,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
 
     let fetchingQuote;
     let startFetchingQuote = () => {
-      fetchingQuote = $interval(() => scope.getQuote(), 1000 * 60);
+      fetchingQuote = $interval(() => scope.getExchangeRate(), 1000 * 60);
     };
 
     let stopFetchingQuote = () => {
@@ -47,14 +53,12 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
     };
 
     scope.getQuote = () => {
-      stopFetchingQuote();
-      scope.getExchangeRate();
-      startFetchingQuote();
-
-      if (scope.transaction.btc) {
+      if (scope.lastInput === 'btc') {
         buySell.getQuote(-scope.transaction.btc, 'BTC', scope.transaction.currency.code).then(success, error);
-      } else if (scope.transaction.fiat) {
+      } else if (scope.lastInput === 'fiat') {
         buySell.getQuote(scope.transaction.fiat, scope.transaction.currency.code).then(success, error);
+      } else {
+        scope.status = {};
       }
     };
 
@@ -70,6 +74,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval) {
     };
 
     const error = () => {
+      scope.status = {};
       Alerts.displayError('ERROR_QUOTE_FETCH');
     };
 
