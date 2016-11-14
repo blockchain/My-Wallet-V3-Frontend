@@ -10,7 +10,6 @@ describe "Contextual message directive", ->
   beforeEach inject((_$compile_, _$rootScope_, $injector) ->
     $compile = _$compile_
     $rootScope = _$rootScope_
-    scope = $rootScope.$new()
 
     $cookies = $injector.get("$cookies")
     Wallet = $injector.get("Wallet")
@@ -27,10 +26,6 @@ describe "Contextual message directive", ->
 
     Wallet.status.isLoggedIn = true
 
-    return
-  )
-
-  beforeEach ->
     spyOn($cookies, "getObject").and.returnValue({ when: 1000 })
     spyOn(Wallet, "total").and.returnValue(1)
     spyOn(Date, "now").and.returnValue(1001)
@@ -38,8 +33,11 @@ describe "Contextual message directive", ->
     Wallet.status.needs2FA = false
     Wallet.user.isEmailVerified = false
 
-    element = $compile("<div><contextual-message></contextual-message></div>")(scope)
-    scope.$apply()
+    element = $compile("<div><contextual-message></contextual-message></div>")($rootScope)
+    $rootScope.$digest()
+    scope = element.children().isolateScope()
+    scope.$digest()
+  )
 
   it "has a 2 preset messages", ->
     expect(scope.presets.length).toEqual(2)

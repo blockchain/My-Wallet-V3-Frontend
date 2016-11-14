@@ -8,6 +8,7 @@ function buyAlert ($cookies) {
   const directive = {
     restrict: 'E',
     replace: true,
+    scope: {},
     templateUrl: 'templates/buy-alert.jade',
     link: link
   };
