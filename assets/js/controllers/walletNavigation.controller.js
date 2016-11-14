@@ -48,6 +48,10 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Alerts, Sec
   // $scope.isUserInvited = false;
   // $scope.isUserWhitelisted = true;
 
+  // debug invited user and whitelisted
+  // $scope.isUserInvited = true;
+  // $scope.isUserWhitelisted = true;
+
   $scope.numberOfActiveLegacyAddresses = () => {
     if (!Wallet.status.isLoggedIn) return null;
 

@@ -1138,5 +1138,6 @@
   "POWERED_BY": "Powered By",
   "EDIT_ORDER": "Edit Order",
   "TOTAL_COST:": "Total Cost:",
-  "ENTER_AMOUNT:": "Enter amount:"
+  "ENTER_AMOUNT:": "Enter amount:",
+  "BUY_BITCOIN_ALERT": "You can now buy Bitcoin with your Blockchain wallet! Click below to get started."
 }

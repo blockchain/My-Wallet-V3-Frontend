@@ -1,0 +1,6 @@
+.message.pointer(ng-hide="dismissed")
+  .message-beacon.green(ng-click="revealMsg()")
+  .message-contextual.pal(ng-show="reveal")
+    p.mbl(translate="BUY_BITCOIN_ALERT")
+    .flex-center.flex-around
+      a.button-success-alt(ng-click="dismissMessage()" ui-sref="wallet.common.buy-sell" translate="BUY_BITCOIN") 
