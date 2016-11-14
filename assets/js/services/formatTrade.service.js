@@ -49,11 +49,9 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
       'DATE_INITIALIZED': $filter('date')(trade.createdAt, 'd MMMM yyyy, HH:mm'),
       'TOTAL_COST': currency.formatCurrencyForView(trade.inAmount / 100, { code: trade.inCurrency }),
       'BTC': currency.convertFromSatoshi(trade.outAmount || trade.outAmountExpected, currency.bitCurrencies[0]),
-      'SEND_TO': getLabel(trade)
+      'SEND_TO': getLabel(trade),
+      'TRADE_ID': '#' + trade.id
     };
-    if (trade.id != null) {
-      transaction['COINIFY_TRADE'] = '#' + trade.id;
-    }
     if ($rootScope.buySellDebug) {
       transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
     }

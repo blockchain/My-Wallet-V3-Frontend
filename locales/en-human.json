@@ -1072,7 +1072,7 @@
     "BODY": "Your identity verification was put on hold. Bank transfers are unavailable until we can successfully verify your identity. We apologize for any inconvenience",
     "LINK": "Review status"
   },
-  "COINIFY_TRADE": "Coinify trade",
+  "TRADE_ID": "Trade ID",
   "ISX_ID": "iSignthis ID",
   "VERIFY_CARD_NOTE": "For secure card transactions, you will need to verify ownership of the card. You will only have to do this once per card added.",
   "VERIFY_ID_NOTE": "Please note that in order to buy bitcoin via bank transfer, you will need to verify your identity. You will only have to do this once.",
