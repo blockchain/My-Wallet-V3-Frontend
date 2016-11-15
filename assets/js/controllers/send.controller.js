@@ -399,14 +399,13 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
       : dest = $scope.transaction.destinations[0].address;
 
     $timeout(() => {
-
       event.target.value
         ? dest = event.target.value
         : dest = $scope.transaction.destinations[0].address;
 
       function extractFromUri (URI, RegEx, sliceAmount) {
         const data = URI.match(RegEx)[0];
-        return data.slice(sliceAmount, data.length)
+        return data.slice(sliceAmount, data.length);
       }
 
       $scope.transaction.destinations[0].address = extractFromUri(dest, /(?=\:)(.*)(?=\?)/, 1);
@@ -415,8 +414,7 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
       $scope.setPaymentAmount(); // keep
 
     }, 250);
-
-  }
+  };
 
   $scope.finalBuild = () => $q((resolve, reject) => {
     $scope.payment.build().then(p => {
