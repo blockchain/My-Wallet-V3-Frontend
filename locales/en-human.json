@@ -1139,5 +1139,7 @@
   "EDIT_ORDER": "Edit Order",
   "TOTAL_COST:": "Total Cost:",
   "ENTER_AMOUNT:": "Enter amount:",
-  "BUY_BITCOIN_ALERT": "You can now buy Bitcoin with your Blockchain wallet! Click below to get started."
+  "BUY_BITCOIN_ALERT": "You can now buy Bitcoin with your Blockchain wallet! Click below to get started.",
+  "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
+  "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend."
 }
