@@ -44,3 +44,15 @@ describe "LandingCtrl", ->
       scope.firstLoad()
       expect($sce.trustAsResourceUrl.calls.argsFor(0)[0]).toContain('zh-cn.mp4')
     )
+
+    it "should use the Russian video for Russian and Ukrainian users", inject(($sce, languages)->
+      spyOn($sce, "trustAsResourceUrl")
+
+      languages.get = () -> "ru"
+      scope.firstLoad()
+      expect($sce.trustAsResourceUrl.calls.argsFor(0)[0]).toContain('-ru.mp4')
+
+      languages.get = () -> "uk"
+      scope.firstLoad()
+      expect($sce.trustAsResourceUrl.calls.argsFor(1)[0]).toContain('-ru.mp4')
+    )
