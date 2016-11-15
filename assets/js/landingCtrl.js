@@ -8,11 +8,19 @@ function LandingCtrl ($scope, $state, $sce, languages) {
   $scope.firstLoad = () => {
     let language_code = languages.get();
 
+    let suffix;
+
     if (language_code === 'zh-cn' || language_code === 'zh_CN') {
-      $scope.adUrl = $sce.trustAsResourceUrl('https://storage.googleapis.com/bc_public_assets/video/blockchain-ad-zh-cn.mp4');
+      suffix = '-zh-cn';
+    } else if (language_code === 'ru') {
+      suffix = '-ru';
+    } else if (language_code === 'uk') {
+      suffix = '-ru';
     } else {
-      $scope.adUrl = $sce.trustAsResourceUrl('https://storage.googleapis.com/bc_public_assets/video/blockchain-ad.mp4');
+      suffix = '';
     }
+
+    $scope.adUrl = $sce.trustAsResourceUrl(`https://storage.googleapis.com/bc_public_assets/video/blockchain-ad${ suffix }.mp4`);
   };
 
   $scope.firstLoad();
