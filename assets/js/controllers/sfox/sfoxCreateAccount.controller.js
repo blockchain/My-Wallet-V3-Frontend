@@ -7,7 +7,8 @@ function SfoxCreateAccountController ($scope, $q, Wallet, bcPhoneNumber) {
   let user = $scope.user = Wallet.user;
 
   let state = $scope.state = {
-    terms: false
+    terms: false,
+    editEmail: false
   };
 
   $scope.format = bcPhoneNumber.format;
@@ -20,16 +21,22 @@ function SfoxCreateAccountController ($scope, $q, Wallet, bcPhoneNumber) {
     state.isVerified = state.verifiedEmail && state.verifiedMobile;
   };
 
+  $scope.toggleEmail = () => {
+    state.editEmail = !state.editEmail;
+  };
+
   $scope.changeEmail = () => {
     $scope.lock();
     let email = state.email;
+    state.editEmail = false;
     $q(Wallet.changeEmail.bind(null, email)).then($scope.setState).finally($scope.free);
   };
 
-  $scope.verifyEmail = () => {
-    let code = state.confirmEmail;
-    $q(Wallet.verifyEmail.bind(null, code)).then($scope.setState);
-  };
+  // Verify by Confirmation Code
+  // $scope.verifyEmail = () => {
+  //   let code = state.confirmEmail;
+  //   $q(Wallet.verifyEmail.bind(null, code)).then($scope.setState);
+  // };
 
   $scope.changeMobile = () => {
     $scope.lock();

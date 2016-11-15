@@ -17,7 +17,7 @@ function SfoxLinkController ($scope, $q, modals) {
   $scope.fields = {
     deposit1: undefined,
     deposit2: undefined,
-    nickname: undefined,
+    nickname: '',
     routingNumber: undefined,
     accountNumber: undefined,
     type: 'checking'
@@ -37,7 +37,7 @@ function SfoxLinkController ($scope, $q, modals) {
       return methods.ach.addAccount($scope.fields.routingNumber,
                                     $scope.fields.accountNumber,
                                     'name',
-                                    $scope.fields.nickname,
+                                    'nickname',
                                     $scope.fields.type);
     };
   };

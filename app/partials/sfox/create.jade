@@ -16,13 +16,25 @@
               button.button-muted(type="button" ng-show="state.email != user.email" ng-click="changeEmail()") Update
           .item(ng-hide="state.verifiedEmail")
             label Email Address
-            .text
-              span We sent a confirmation code to your email {{state.email}}. Please enter the code below.
+            .text(ng-hide="state.editEmail")
+              span We sent a verification email to 
+              b {{state.email}}
+              span . Click the verification link to continue.
               |  
-              span Didn’t get the email? Resend or change email address.
-            div
-              input.width-80(ng-model="state.confirmEmail" name="confirmEmail" ng-required="!state.verifiedEmail")
-              button.button-muted(type="button" ng-show="state.confirmEmail" ng-click="verifyEmail()") Verify
+              span Didn’t get the email? 
+              |  
+              span.blue.pointer(ng-click="changeEmail()") Resend 
+              | or
+              |  
+              span.blue.pointer(ng-click="toggleEmail()") change email address.
+            //- Verify by Confirmation Code
+            //- div
+            //-   input.width-80(ng-model="state.confirmEmail" name="confirmEmail" ng-required="!state.verifiedEmail")
+            //-   button.button-muted(type="button" ng-show="state.confirmEmail" ng-click="verifyEmail()") Verify
+            div(ng-show="state.editEmail")
+              input.width-80(ng-model="state.email" name="email" focus-when="state.editEmail" type="email" required)
+              button.button-muted(type="button" ng-click="changeEmail()" ng-disabled="accountForm.email.$invalid") Change
+
         .group.width-75
           .item
             label Phone Number

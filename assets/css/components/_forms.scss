@@ -93,6 +93,7 @@ form.bc-form {
       @extend .mbs;
     }
     .item {
+      position: relative;
       @extend .flex-column;
       &:not(:last-child) {
         margin-right: 1em;
@@ -111,11 +112,48 @@ form.bc-form {
   }
 
   input {
+    @include transition(all 0.3s);
     @extend .form-control;
     &[type="checkbox"] {
       margin: 1em 0.5em 1em 0;
       width: 1em;
       height: 1em;
+    }
+  }
+
+  input,
+  .ui-select-container {
+    &.ng-touched {
+      &.ng-valid {
+        & + i:before {
+          color: $success;
+          content: "\e64c";
+        }
+      }
+      &.ng-invalid {
+        border-color: $state-danger-text;
+        & + i:before {
+          color: $state-danger-text;
+          content: "\e646"; 
+        }
+      }
+      &.ng-valid,
+      &.ng-invalid {
+        & + i {
+          top: 0px;
+          opacity: 1;
+        }
+      }
+    }
+    & + i {
+      top: 10px;
+      opacity: 0;
+      right: 0px;
+      font-size: 14px;
+      position: absolute;
+      font-style: normal;
+      font-family: 'ThemifyIcons';
+      @include transition(opacity 0.2s, top 0.2s);
     }
   }
 

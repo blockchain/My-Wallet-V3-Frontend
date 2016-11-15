@@ -12,21 +12,19 @@
     form.bc-form(name="bankAccountForm" ng-submit="link()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .group.full
-          label.sm Nickname
           .item
-            input(ng-model="fields.nickname" name="nickname" required)
-        .group.full
-          label.sm Routing Number
-            button.helper(ng-click="openBankHelper()" tabindex="-1")
-              span ?
-          .item
+            label.sm Routing Number
+              button.helper(ng-click="openBankHelper()" tabindex="-1")
+                span ?
             input(ng-model="fields.routingNumber" name="routingNumber" required)
+            i
         .group.full
-          label.sm Account Number
-            button.helper(ng-click="openBankHelper()" tabindex="-1")
-              span ?
           .item
+            label.sm Account Number
+              button.helper(ng-click="openBankHelper()" tabindex="-1")
+                span ?
             input(ng-model="fields.accountNumber" name="accountNumber" required)
+            i
         .group.full.mbl
           label.sm Account Type
           ui-select(ng-model="fields.type" tagging)
@@ -55,13 +53,15 @@
     form.bc-form(name="verifyBankAccountForm" ng-submit="verify()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .group.full
-          label.sm Deposit 1
           .item
+            label.sm Deposit 1
             input(ng-model="fields.deposit1" name="deposit1" type="number" required)
+            i
         .group.full
-          label.sm Deposit 2
           .item
+            label.sm Deposit 2
             input(ng-model="fields.deposit2" name="deposit2" type="number" required)
+            i
         .group.full
           button.btn.button-primary.full(type="submit" ng-disabled="verifyBankAccountForm.$invalid") Verify
           a.display-block.center.mtl(ng-click="$close()") Finish Later
