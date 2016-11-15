@@ -4,6 +4,7 @@ angular
 
 function HomeCtrl ($scope, Wallet, $uibModal) {
   $scope.getTotal = () => Wallet.total('');
+  $scope.getLegacyTotal = () => Wallet.total('imported');
 
   $scope.activeLegacyAddresses = () => (
     Wallet.status.isLoggedIn
