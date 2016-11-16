@@ -19,7 +19,7 @@ describe "WalletNavigationCtrl", ->
         hdwallet: {
           accounts: [{ archived: false }, { archived: false }, { archived: true }]
         }
-        accountInfo: { invited: false }
+        accountInfo: { invited: false, countryCodeGuess: "US" }
       }
 
       Wallet.status.isLoggedIn = true
@@ -52,3 +52,20 @@ describe "WalletNavigationCtrl", ->
   it "should show account based on state", inject(() ->
     expect(scope.showOrHide()).toBe(false)
   )
+
+  describe "setIsCountryWhitelisted", ->
+    it "should set isWhitelisted if guess is on whitelist", ->
+      mockOptions = { showBuySellTab: ["US"] }
+      scope.setIsCountryWhitelisted(mockOptions)
+      expect(scope.isCountryWhitelisted).toBeTruthy()
+
+    it "should not set isWhitelisted if guess is not on whitelist", ->
+      mockOptions = { showBuySellTab: ["UK"] }
+      scope.setIsCountryWhitelisted(mockOptions)
+      expect(scope.isCountryWhitelisted).toBeFalsy()
+
+    it "should set isWhitelisted if accountInfo is null", ->
+      mockOptions = { showBuySellTab: ["UK"] }
+      scope.accountInfo = null
+      scope.setIsCountryWhitelisted(mockOptions)
+      expect(scope.isCountryWhitelisted).toBeFalsy()
