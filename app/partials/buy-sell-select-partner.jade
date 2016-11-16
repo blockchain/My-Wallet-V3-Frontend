@@ -5,10 +5,10 @@
         span.type-h4.em-500.colon(translate="Find your exchange partner")
         .mtl
           span.em-500.colon(translate="Country of residence")
-          ui-select.mtm(ng-model="$parent.country")
-            ui-select-match(placeholder="Select country") {{$select.selected}}
-            ui-select-choices(repeat="c in countries") {{c}}
-      div(ng-show="country")
+          ui-select.mtm(ng-model="$parent.country" tagging)
+            ui-select-match(placeholder="Select country") {{$select.selected.Name}}
+            ui-select-choices(repeat="c in countries | filter:$select.search track by c.Name") {{c.Name}}
+      div(ng-if="country")
         .pal
           p.type-h4 {{ getPartner(country).icon }}
           p Our partner {{ getPartner(country).name }} will process your Bitcoin purchases. You will need to provide some information about yourself and link a payment method before purchasing Bitcoin.

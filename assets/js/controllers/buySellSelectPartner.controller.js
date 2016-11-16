@@ -2,12 +2,13 @@ angular
   .module('walletApp')
   .controller('BuySellSelectPartnerController', BuySellSelectPartnerController);
 
-function BuySellSelectPartnerController ($scope, $state, MyWallet) {
+function BuySellSelectPartnerController ($scope, $state, MyWallet, country) {
   $scope.country = null;
-  $scope.countries = ['USA', 'Other'];
+  $scope.countries = country.countryCodes;
+  $scope.sfoxCountries = ['US'];
 
   $scope.getPartner = (country) => (
-    country === 'USA'
+    $scope.sfoxCountries.indexOf(country.Code) > -1
       ? { name: 'SFOX', icon: '🐕 SFOX', route: '.sfox' }
       : { name: 'Coinify', icon: 'Coinify', route: '.coinify' }
   );
