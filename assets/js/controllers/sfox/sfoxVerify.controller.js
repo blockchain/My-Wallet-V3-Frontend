@@ -5,22 +5,33 @@ angular
 function SfoxVerifyController ($scope, $q, state, $http, Upload) {
   $scope.states = state.stateCodes;
   let exchange = $scope.vm.exchange;
+  let idTypes = exchange.profile ? exchange.profile.verificationStatus.required_docs : ['ssn', 'id', 'address'];
+
+  // Address Line 2
+  // 'testing-docs-id' (the user will be required to upload proof of id)
+  // 'testing-docs-address' (the user will be required to upload proof of address)
+  // 'testing-docs-all' (the user will be required to upload both proof of id and proof of address)
+  // 'testing-user-block' (the user will be marked as blocked and will not be allowed to buy/sell)
+  let debugStates = ['testing-docs-id', 'testing-docs-address', 'testing-docs-all', 'testing-user-block'];
 
   $scope.state = {
-    signedURL: undefined,
-    verificationStatus: 'unverified'
+    idType: idTypes[0],
+    signedURL: undefined
   };
 
-  $scope.fields = {
-    idType: 'id',
-    file: undefined
+  $scope.setState = () => {
+    idTypes.shift();
+    $scope.state.file = undefined;
+    $scope.state.idType = idTypes[0];
+    $scope.state.verificationStatus = exchange.profile.verificationStatus;
   };
 
   $scope.getSignedURL = () => {
     $scope.lock();
+    let fields = $scope.state;
     let profile = exchange.profile;
-    let idType = $scope.fields.idType;
-    let filename = $scope.fields.file.name;
+    let idType = fields.idType;
+    let filename = fields.file.name;
 
     $q.resolve(profile.getSignedURL(idType, filename))
       .then((res) => $scope.state.signedURL = res.signed_url)
@@ -30,41 +41,45 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
 
   $scope.upload = () => {
     $scope.lock();
+    let fields = $scope.state;
+
+    // Override Address Line 2 Debugger;
+    debugStates.indexOf($scope.state.addr2) > -1 && ($scope.state.addr2 = '2');
 
     Upload.http({
       method: 'PUT',
       url: $scope.state.signedURL,
-      data: $scope.fields.file,
+      data: fields.file,
       headers: {
         'content-type': 'application/octet-stream'
-      }}).then(() => $scope.vm.goTo('link'))
+      }}).then(() => $scope.verify())
          .catch((err) => console.log(err))
          .finally($scope.free);
   };
 
   $scope.verify = () => {
     $scope.lock();
-    try {
-      let profile = exchange.profile;
-      let fields = $scope.state;
 
-      profile.firstName = fields.first;
-      profile.middleName = fields.middle;
-      profile.lastName = fields.last;
-      profile.dateOfBirth = new Date(fields.dob);
-      profile.setSSN(fields.ssn);
+    try {
+      let fields = $scope.state;
+      let profile = exchange.profile;
+
+      profile.firstName = profile.firstName || fields.first;
+      profile.middleName = profile.middleName || fields.middle;
+      profile.lastName = profile.lastName || fields.last;
+      profile.dateOfBirth = profile.dateOfBirth || new Date(fields.dob);
+      profile.setSSN(profile.identity.number || fields.ssn);
 
       profile.setAddress(
-        fields.addr1,
-        fields.addr2,
-        fields.city,
-        fields.state.Code,
-        fields.zipcode
+        profile.address.street.line1 || fields.addr1,
+        profile.address.street.line2 || fields.addr2,
+        profile.address.city || fields.city,
+        profile.address.state || fields.state.Code,
+        profile.address.zipcode || fields.zipcode
       );
 
       $q.resolve(profile.verify())
-        // .then(() => $scope.vm.goTo('link'))
-        .then(() => $scope.state.verificationStatus = 'needs_documents')
+        .then(() => $scope.setState())
         .finally($scope.free);
     } catch (error) {
       console.error(error);
@@ -73,5 +88,6 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
   };
 
   $scope.installLock();
-  $scope.$watch('fields.file', (file) => file && $scope.getSignedURL());
+  $scope.$watch('state.file', (file) => file && $scope.getSignedURL());
+  $scope.$watch('state.verificationStatus.level', (newVal) => newVal === 'verified' && $scope.vm.goTo('link'));
 }

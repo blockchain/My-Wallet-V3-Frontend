@@ -19,7 +19,7 @@ function SfoxSignupController ($stateParams, exchange, accounts) {
     let status = profile.verificationStatus;
     let hasAccount = this.accounts.length && this.accounts[0].status === 'active';
 
-    if (status === 'unverified') {
+    if (status.level !== 'verified') {
       this.goTo('verify');
     } else if (!hasAccount) {
       this.goTo('link');
