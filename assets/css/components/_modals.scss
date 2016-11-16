@@ -509,13 +509,14 @@
 }
 
 .modal.tray {
+  $timing: 0.8s;
   left: 270px;
   overflow: auto;
   position: fixed;
   margin-top: 60px;
   opacity: 1 !important;
   top: calc(100% - 60px);
-  @include transition(top $slow, opacity 0s $slow);
+  @include transition(top $timing, opacity 0s $timing);
 
   .modal-content {
     overflow: auto;
@@ -536,9 +537,9 @@
     &.ng-enter,
     &.in {
       top: 0%;
-      transition: top $slow, opacity 0s !important;
-      -moz-transition: top $slow, opacity 0s !important;
-      -webkit-transition: top $slow, opacity 0s !important;
+      transition: top $timing, opacity 0s !important;
+      -moz-transition: top $timing, opacity 0s !important;
+      -webkit-transition: top $timing, opacity 0s !important;
     }
   }
 
