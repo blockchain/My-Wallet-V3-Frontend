@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxCreateAccountController', SfoxCreateAccountController);
 
-function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, bcPhoneNumber) {
+function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, Alerts, bcPhoneNumber) {
   let exchange = $scope.vm.exchange;
   let user = $scope.user = Wallet.user;
 
@@ -25,18 +25,16 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, bcPhoneNumbe
     state.editEmail = !state.editEmail;
   };
 
+  $scope.displayError = (msg) => {
+    Alerts.displayError(msg);
+  };
+
   $scope.changeEmail = () => {
     $scope.lock();
     let email = state.email;
     state.editEmail = false;
     $q(Wallet.changeEmail.bind(null, email)).then($scope.setState).finally($scope.free);
   };
-
-  // Verify by Confirmation Code
-  // $scope.verifyEmail = () => {
-  //   let code = state.confirmEmail;
-  //   $q(Wallet.verifyEmail.bind(null, code)).then($scope.setState);
-  // };
 
   $scope.changeMobile = () => {
     $scope.lock();
@@ -47,7 +45,7 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, bcPhoneNumbe
 
   $scope.verifyMobile = () => {
     let code = state.confirmMobile;
-    $q(Wallet.verifyMobile.bind(null, code)).then($scope.setState);
+    $q(Wallet.verifyMobile.bind(null, code)).then($scope.setState, $scope.displayError);
   };
 
   $scope.createAccount = () => {
@@ -55,7 +53,7 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, bcPhoneNumbe
     $q.resolve(exchange.signup())
       .then(() => exchange.fetchProfile())
       .then(() => $scope.vm.goTo('verify'))
-      .catch(error => console.error(error))
+      .catch($scope.displayError)
       .finally($scope.free);
   };
 
