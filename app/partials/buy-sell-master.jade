@@ -1,0 +1,11 @@
+.height-100.pbvl.flex-center.flex-around(ng-if="state.transitioning")
+
+  .mbvl.blue.flex-column.flex-center(ng-show="state.loading")
+    i.ti-cloud-down.type-yuge
+    span.type-h4 Loading
+
+  .mbvl.state-danger-text.flex-column.flex-center(ng-show="state.error")
+    i.ti-alert.type-yuge
+    span.type-h4 Connection Error
+
+ui-view(ng-hide="state.transitioning")

@@ -280,7 +280,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         top: top,
         left: walletNav,
         right: {
-          template: '<ui-view/>',
+          templateUrl: 'partials/buy-sell-master.jade',
           controller: 'BuySellMasterController',
           controllerAs: 'vm'
         }
