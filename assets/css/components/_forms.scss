@@ -82,6 +82,9 @@ form.bc-form {
     @extend .flex-column;
     &.inline {
       @extend .flex-row;
+      .item:not(:last-child) {
+        margin-right: 1em;
+      }
     }
     label {
       font-size: 16px;
@@ -95,9 +98,6 @@ form.bc-form {
     .item {
       position: relative;
       @extend .flex-column;
-      &:not(:last-child) {
-        margin-right: 1em;
-      }
       &.check {
         @extend .flex-row;
         @extend .flex-center;
