@@ -8,7 +8,7 @@
       a(ui-sref="wallet.common.transactions")
         i.ti-layout-list-post
         span(translate="MY_TRANSACTIONS")
-
+    // Don't forget to update controllers/buySell.controller.js
     li.header(ui-sref-active="current" ng-show="(isCountryWhitelisted && isUserInvited) || userHasAccount()")
       span(ng-show="!userHasAccount()")
         buy-alert

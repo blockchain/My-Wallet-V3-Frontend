@@ -96,11 +96,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $scope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
     let wallet = MyWallet.wallet;
-    let isUserInvited = wallet && wallet.accountInfo && wallet.accountInfo.invited;
     if ($scope.isPublicState(toState.name) && Wallet.status.isLoggedIn) {
-      event.preventDefault();
-    }
-    if (!isUserInvited && toState.name === 'wallet.common.buy-sell') {
       event.preventDefault();
     }
     if (wallet && wallet.isDoubleEncrypted && toState.name === 'wallet.common.buy-sell') {

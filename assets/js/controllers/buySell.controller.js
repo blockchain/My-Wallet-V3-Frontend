@@ -2,7 +2,21 @@ angular
   .module('walletApp')
   .controller('BuySellCtrl', BuySellCtrl);
 
-function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet, $cookies) {
+function BuySellCtrl ($rootScope, Options, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet, $cookies) {
+  // Invite-only phase, remove after full release:
+  let accountInfo = MyWallet.wallet.accountInfo;
+  let whitelist = Options.options.showBuySellTab || [];
+  let countryInWhitelist = whitelist.indexOf(accountInfo.countryCodeGuess) > -1;
+  let isCountryWhitelisted = accountInfo && countryInWhitelist;
+  let isUserInvited = accountInfo && accountInfo.invited;
+  let userHasAccount = MyWallet.wallet.external && MyWallet.wallet.external.coinify.hasAccount;
+
+  if (!((isCountryWhitelisted && isUserInvited) || userHasAccount)) {
+    $state.go('wallet.common.home');
+    return;
+  }
+  // End of invite-only code
+
   $scope.buySellStatus = buySell.getStatus;
   $scope.trades = buySell.trades;
   $cookies.put('buy-alert-seen', true);
