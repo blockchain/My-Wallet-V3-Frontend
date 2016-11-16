@@ -5,7 +5,9 @@ angular
 function SfoxVerifyController ($scope, $q, state, $http, Upload) {
   $scope.states = state.stateCodes;
   let exchange = $scope.vm.exchange;
-  let idTypes = exchange.profile ? exchange.profile.verificationStatus.required_docs : ['ssn', 'id', 'address'];
+  let idTypes = exchange.profile && exchange.profile.identity.number
+                ? exchange.profile.verificationStatus.required_docs
+                : ['ssn', 'id', 'address'];
 
   // Address Line 2
   // 'testing-docs-id' (the user will be required to upload proof of id)

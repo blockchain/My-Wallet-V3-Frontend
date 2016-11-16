@@ -49,53 +49,23 @@
               input(ng-model="state.zipcode" name="zipcode" type="number" required)
           .group
             button.btn.button-primary.full(type="submit" ng-disabled="verifyForm.$invalid") Continue
->>>>>>> feat(SFOX): required docs
-
-  .flex-row.flex-column-mobile(ng-show="state.idType === 'id'")
+  .flex-row.flex-column-mobile(ng-show="state.idType === 'id' || state.idType === 'address'")
     .width-40
       .width-80
-        h4(translate="Upload Photo ID")
+        h4(translate="{{state.idType + '_ID'}}.TITLE")
         .mbl
-          span.type-h5.em-300(translate="To verify your identity, we need you to upload a government issued form of photo identification showing nationality or residence and clearly displaying identification number. You can upload any of the following identification:")
+          span.type-h5.em-300(translate="{{state.idType + '_ID'}}.COPY")
         .mbl
-          p 1) State issued driver’s license
-          p 2) State issued identification card 
-          p 3) Copy of passport 
-          p 4) Government issued identification  
+          p(translate="{{state.idType + '_ID'}}.OPTION1")
+          p(translate="{{state.idType + '_ID'}}.OPTION2")
+          p(translate="{{state.idType + '_ID'}}.OPTION3")
+          p(translate="{{state.idType + '_ID'}}.OPTION4")  
           form.hide
             div
               input(name="idType" value="id" ng-model="state.idType")
 
     .width-60
-      label(translate="Photo Identification")
-      div.file-upload(ngf-drop ngf-select ng-model="state.file" ngf-drag-over-class="'dragover'" ngf-pattern="'image/*'")
-        span.type-h5.em-300.mtvl(ng-hide="state.file") Drag and drop your document here
-        span.type-h5.em-300.mtvl(ng-show="state.file") Thanks for uploading your documents!
-        img.width-20.mobile-width-40(src="img/document.png" ng-hide="state.file")
-        img.width-40.mobile-width-40(ngf-src="state.file" ng-show="state.file")
-        span.type-h5.em-300.mbvl(ng-hide="state.file") Or
-          |  
-          span.blue.pointer Upload document
-        span.type-h5.em-300.mbvl(ng-show="state.file") Click continue to verify them
-      div(ngf-no-file-drop) File Drag/Drop is not supported for this browser
-      button.mtl.btn.button-primary.full(ng-click="upload()" ng-disabled="!state.file || locked") Continue
-  .flex-row.flex-column-mobile(ng-show="state.idType === 'address'")
-    .width-40
-      .width-80
-        h4(translate="Upload Proof of Address")
-        .mbl
-          span.type-h5.em-300(translate="Please upload a document bearing your address dated within the past 6 months. You can upload any of the following documents: ")
-        .mbl
-          p 1) Utility bill (except mobile phone bills)
-          p 2) First page and signature page of lease
-          p 3) First page of your bank statement
-          p 4) DMV or Voter registration
-          form.hide
-            div
-              input(name="idType" value="address" ng-model="state.idType")
-
-    .width-60
-      label(translate="Proof of Address")
+      label(translate="{{state.idType + '_ID'}}.UPLOAD_TITLE")
       div.file-upload(ngf-drop ngf-select ng-model="state.file" ngf-drag-over-class="'dragover'" ngf-pattern="'image/*'")
         span.type-h5.em-300.mtvl(ng-hide="state.file") Drag and drop your document here
         span.type-h5.em-300.mtvl(ng-show="state.file") Thanks for uploading your documents!
