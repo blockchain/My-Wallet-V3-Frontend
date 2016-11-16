@@ -36,8 +36,7 @@ function SfoxLinkController ($scope, $q, modals) {
       // routingNumber, accountNumber, name, nickname, type
       return methods.ach.addAccount($scope.fields.routingNumber,
                                     $scope.fields.accountNumber,
-                                    'name',
-                                    'nickname',
+                                    'name1',
                                     $scope.fields.type);
     };
   };
