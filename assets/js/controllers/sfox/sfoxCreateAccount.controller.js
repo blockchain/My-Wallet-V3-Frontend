@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxCreateAccountController', SfoxCreateAccountController);
 
-function SfoxCreateAccountController ($scope, $q, Wallet, bcPhoneNumber) {
+function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, bcPhoneNumber) {
   let exchange = $scope.vm.exchange;
   let user = $scope.user = Wallet.user;
 
@@ -61,6 +61,7 @@ function SfoxCreateAccountController ($scope, $q, Wallet, bcPhoneNumber) {
 
   $scope.$watch('user.isEmailVerified', $scope.setState);
   $scope.$watch('user.isMobileVerified', $scope.setState);
+  $scope.$watch('state.mobile', () => $timeout(() => { state.sentCode = false; }));
   $scope.setState();
   $scope.installLock();
 }

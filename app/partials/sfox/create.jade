@@ -6,64 +6,60 @@
   .width-60
     form.bc-form.width-80(name="accountForm" ng-submit="createAccount()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
-        .group.width-75
+        .group
           .item(ng-show="state.verifiedEmail")
             label Email Address
             .text
               span We have the following email address for you.
-            div
-              input.width-80(ng-model="state.email" name="email" required)
-              button.button-muted(type="button" ng-show="state.email != user.email" ng-click="changeEmail()") Update
+            .flex-center
+              .width-80
+                input(ng-model="state.email" name="email" required)
+              a.width-20.center(type="button" ng-show="state.email != user.email" ng-click="changeEmail()") Update
           .item(ng-hide="state.verifiedEmail")
             label Email Address
             .text(ng-hide="state.editEmail")
               span We sent a verification email to 
               b {{state.email}}
               span . Click the verification link to continue.
-              |  
+              | &nbsp;
               span Didn’t get the email? 
-              |  
-              span.blue.pointer(ng-click="changeEmail()") Resend 
+              | &nbsp;
+              span.blue.pointer(ng-click="changeEmail()") Resend
+              | &nbsp;
               | or
-              |  
+              | &nbsp;
               span.blue.pointer(ng-click="toggleEmail()") change email address.
-            //- Verify by Confirmation Code
-            //- div
-            //-   input.width-80(ng-model="state.confirmEmail" name="confirmEmail" ng-required="!state.verifiedEmail")
-            //-   button.button-muted(type="button" ng-show="state.confirmEmail" ng-click="verifyEmail()") Verify
-            div(ng-show="state.editEmail")
-              input.width-80(ng-model="state.email" name="email" focus-when="state.editEmail" type="email" required)
-              button.button-muted(type="button" ng-click="changeEmail()" ng-disabled="accountForm.email.$invalid") Change
-
-        .group.width-75
+            .flex-center(ng-show="state.editEmail")
+              .width-80
+                input(ng-model="state.email" name="email" focus-when="state.editEmail" type="email" required)
+              a.width-20.center(type="button" ng-click="changeEmail()" ng-disabled="accountForm.email.$invalid") Change
+        .group
           .item
             label Phone Number
             .text
               span(ng-show="state.verifiedMobile") We have the following mobile number for you.
               span(ng-hide="state.verifiedMobile") Enter your phone number and we’ll send you a verifcation code via SMS.
-            div
+            .flex-center
               bc-phone-number.width-80(
                 ng-model="state.mobile"
-                ng-change="state.sentCode=false"
                 name="mobile"
                 default-country="us"
                 preferred-countries="us ca gb au"
                 required)
-              div(ng-hide="accountForm.mobile.$invalid")
-                button.button-muted(
-                  type="button"
+              .width-20.center(ng-hide="accountForm.mobile.$invalid || state.sentCode")
+                a(type="button"
+                  ng-show="!state.verifiedMobile && state.mobile === format(user.mobileNumber)"
+                  ng-click="changeMobile()") Resend Code
+                a(type="button"
                   ng-show="state.mobile !== format(user.mobileNumber)"
                   ng-click="changeMobile()") Update
-                button.button-muted(
-                  type="button"
-                  ng-hide="state.sentCode || state.verifiedMobile"
-                  ng-click="changeMobile()") Send Code
           .item.mtm(ng-hide="state.verifiedMobile")
             .text
               span Enter verification code sent to your mobile phone.
-            div
-              input.width-80(ng-model="state.confirmMobile" name="confirmMobile" ng-required="!state.verifiedMobile")
-              button.button-muted(type="button" ng-show="state.confirmMobile" ng-click="verifyMobile()") Verify
+            .flex-center
+              .width-80
+                input(ng-model="state.confirmMobile" name="confirmMobile" ng-required="!state.verifiedMobile")
+              a.width-20.center(type="button" ng-show="state.confirmMobile" ng-click="verifyMobile()") Verify
         .group
           .item.check
             input#terms(type="checkbox" ng-model="state.terms" name="terms" required)
