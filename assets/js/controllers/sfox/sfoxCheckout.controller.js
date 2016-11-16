@@ -34,7 +34,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
     $q.resolve($scope.quote.getPaymentMediums())
       .then(mediums => mediums.ach.buy($scope.account))
       .then(trade => { modals.openTradeSummary('initiated', trade); })
-      .catch(error => { Alerts.displayError(error); })
+      .catch(() => { Alerts.displayError('Error connecting to our exchange partner'); })
       .then($scope.refreshQuote)
       .finally($scope.free);
   };
