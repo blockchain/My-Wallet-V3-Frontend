@@ -9,7 +9,10 @@ blocket-loading
           li.flex-between.border-bottom-light(ng-repeat="account in activeAccounts()")
             span.em-500 {{::account.label}}
             fiat-or-btc(btc="account.balance")
-          ul
+          li.flex-between.border-bottom-light.mid-grey(ng-show="activeLegacyAddresses().length > 5")
+            span.em-500(translate="IMPORTED_ADDRESSES")
+            fiat-or-btc(btc="getLegacyTotal()")
+          ul(ng-show="activeLegacyAddresses().length <= 5")
             li.flex-between.border-bottom-light.mid-grey(ng-repeat="address in activeLegacyAddresses()")
               span.em-400 {{::address.address}}
               fiat-or-btc(btc="address.balance")
