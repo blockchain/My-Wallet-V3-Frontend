@@ -16,11 +16,6 @@ describe "SfoxLinkController", ->
       Wallet = $injector.get("Wallet")
       modals = $injector.get("modals")
 
-      $rootScope.installLock = () ->
-        scope.locked = false;
-        scope.lock = () -> scope.locked = true;
-        scope.free = () -> scope.locked = false;
-
   getControllerScope = (params = {}) ->
     scope = $rootScope.$new()
     scope.vm = 

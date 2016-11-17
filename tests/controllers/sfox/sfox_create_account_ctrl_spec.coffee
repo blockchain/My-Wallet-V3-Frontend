@@ -15,11 +15,6 @@ describe "SfoxCreateAccountController", ->
 
       Wallet = $injector.get("Wallet")
 
-      $rootScope.installLock = () ->
-        scope.locked = false;
-        scope.lock = () -> scope.locked = true;
-        scope.free = () -> scope.locked = false;
-
       Wallet.user =
         email: 'sn@blockchain.com'
         mobileNumber: '123-456-7891'
