@@ -13,7 +13,7 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
   // 'testing-docs-id' (the user will be required to upload proof of id)
   // 'testing-docs-address' (the user will be required to upload proof of address)
   // 'testing-docs-all' (the user will be required to upload both proof of id and proof of address)
-  // 'testing-user-block' (the user will be marked as blocked and will not be allowed to buy/sell)
+  //  TODO: 'testing-user-block' (the user will be marked as blocked and will not be allowed to buy/sell)
   let debugStates = ['testing-docs-id', 'testing-docs-address', 'testing-docs-all', 'testing-user-block'];
 
   $scope.state = {
