@@ -7,16 +7,15 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Options, Al
   $scope.settings = Wallet.settings;
   $scope.security = SecurityCenter.security;
 
-  let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
-  $scope.userHasAccount = () => MyWallet.wallet.external && MyWallet.wallet.external.coinify.hasAccount;
-  $scope.isUserInvited = accountInfo && accountInfo.invited;
+  $scope.accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
+  $scope.userHasAccount = () => MyWallet.wallet.external && MyWallet.wallet.external.coinify && MyWallet.wallet.external.coinify.hasAccount;
+  $scope.isUserInvited = $scope.accountInfo && $scope.accountInfo.invited;
 
   $scope.isCountryWhitelisted = null;
 
   $scope.setIsCountryWhitelisted = (options) => {
     let whitelist = options.showBuySellTab || [];
-    let countryInWhitelist = whitelist.indexOf(accountInfo.countryCodeGuess) > -1;
-    $scope.isCountryWhitelisted = accountInfo && countryInWhitelist;
+    $scope.isCountryWhitelisted = $scope.accountInfo && whitelist.indexOf($scope.accountInfo.countryCodeGuess) > -1;
   };
 
   // Debug:
