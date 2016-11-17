@@ -14,7 +14,6 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
   // 'testing-docs-address' (the user will be required to upload proof of address)
   // 'testing-docs-all' (the user will be required to upload both proof of id and proof of address)
   //  TODO: 'testing-user-block' (the user will be marked as blocked and will not be allowed to buy/sell)
-  let debugStates = ['testing-docs-id', 'testing-docs-address', 'testing-docs-all', 'testing-user-block'];
 
   $scope.state = {
     idType: idTypes[0],
@@ -45,9 +44,6 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
   $scope.upload = () => {
     $scope.lock();
     let fields = $scope.state;
-
-    // Override Address Line 2 Debugger;
-    debugStates.indexOf($scope.state.addr2) > -1 && ($scope.state.addr2 = '2');
 
     Upload.http({
       method: 'PUT',
