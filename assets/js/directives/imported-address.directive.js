@@ -1,4 +1,4 @@
-angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $uibModal) => {
+angular.module('walletDirectives').directive('importedAddress', (Wallet, $translate, $uibModal) => {
   return {
     restrict: 'A',
     replace: true,

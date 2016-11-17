@@ -4,6 +4,7 @@ describe "Fiat Directive", ->
   scope = undefined
   isoScope = undefined
 
+  beforeEach module('walletDirectives');
   beforeEach module("walletApp")
 
   beforeEach ->

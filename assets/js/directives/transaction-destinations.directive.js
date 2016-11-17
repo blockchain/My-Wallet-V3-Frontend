@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('transactionDestinations', transactionDestinations);
 
 function transactionDestinations ($rootScope, Wallet, $translate) {

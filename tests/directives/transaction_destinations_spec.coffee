@@ -1,10 +1,11 @@
-describe "Transaction Destinations Directive", ->  
+describe "Transaction Destinations Directive", ->
   $compile = undefined
   $rootScope = undefined
   element = undefined
   isoScope = undefined
   Wallet = undefined
 
+  beforeEach module('walletDirectives');
   beforeEach module("walletApp")
 
   beforeEach inject((_$compile_, _$rootScope_, $injector) ->
@@ -64,7 +65,7 @@ describe "Transaction Destinations Directive", ->
           { coinType: 'external', change: false, address: '12LV2iRVZR', identity: undefined, label: '12LV2iRVZR' },
           { coinType: 'external', change: false, address: '1FYQe1ANT', identity: undefined, label: '1FYQe1ANT' },
           { coinType: 'external', change: false, address: '1PEAb1abhx6', identity: undefined, label: '1PEAb1abhx6' }
-        ]   
+        ]
       }
 
       html = "<transaction-destinations transaction='transaction'></transaction-destinations>"

@@ -4,6 +4,7 @@ describe "ChangePasswordCtrl", ->
 
   strongPassword = 't3stp@ssw0rd'
 
+  beforeEach(angular.mock.module('walletDirectives'));
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->

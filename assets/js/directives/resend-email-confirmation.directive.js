@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('resendEmailConfirmation', resendEmailConfirmation);
 
 function resendEmailConfirmation ($translate, Wallet) {

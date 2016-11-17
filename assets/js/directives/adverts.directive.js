@@ -1,6 +1,5 @@
-
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('adverts', adverts);
 
 adverts.$inject = ['Adverts', '$window'];

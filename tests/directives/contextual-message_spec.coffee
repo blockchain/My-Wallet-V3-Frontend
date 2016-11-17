@@ -5,6 +5,7 @@ describe "Contextual message directive", ->
   Wallet = undefined
   $cookies = undefined
 
+  beforeEach module('walletDirectives');
   beforeEach module("walletApp")
 
   beforeEach inject((_$compile_, _$rootScope_, $injector) ->

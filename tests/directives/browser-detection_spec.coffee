@@ -5,6 +5,7 @@ describe "browserDetection", ->
   isoScope = undefined
   MyWallet = undefined
 
+  beforeEach module('walletDirectives');
   beforeEach module("walletApp")
 
   beforeEach inject((_$compile_, _$rootScope_) ->
