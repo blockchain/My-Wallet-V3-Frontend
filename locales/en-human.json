@@ -1165,19 +1165,19 @@
   "id_ID": {
     "TITLE": "Upload Photo ID",
     "COPY": "To verify your identity, we need you to upload a government issued form of photo identification showing nationality or residence and clearly displaying identification number. You can upload any of the following identification:",
-    "OPTION1": "1) State issued driver’s license",
-    "OPTION2": "2) State issued identification card",
-    "OPTION3": "3) Copy of passport",
-    "OPTION4": "4) Government issued identification",
+    "OPTION1": "State issued driver’s license",
+    "OPTION2": "State issued identification card",
+    "OPTION3": "Copy of passport",
+    "OPTION4": "Government issued identification",
     "UPLOAD_TITLE": "Photo Identification"
   },
   "address_ID": {
     "TITLE": "Upload Proof of Address",
     "COPY": "Please upload a document bearing your address dated within the past 6 months. You can upload any of the following documents:",
-    "OPTION1": "1) Utility bill (except mobile phone bills)",
-    "OPTION2": "2) First page and signature page of lease",
-    "OPTION3": "3) First page of your bank statement",
-    "OPTION4": "4) DMV or Voter registration",
+    "OPTION1": "Utility bill (except mobile phone bills)",
+    "OPTION2": "First page and signature page of lease",
+    "OPTION3": "First page of your bank statement",
+    "OPTION4": "DMV or Voter registration",
     "UPLOAD_TITLE": "Proof of Address"
   }
 }

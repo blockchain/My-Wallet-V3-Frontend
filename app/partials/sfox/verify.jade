@@ -54,14 +54,23 @@
       h4(translate="{{state.idType + '_ID'}}.TITLE")
       .mbl
         span.type-h5.em-300(translate="{{state.idType + '_ID'}}.COPY")
-      .mbl
-        p(translate="{{state.idType + '_ID'}}.OPTION1")
-        p(translate="{{state.idType + '_ID'}}.OPTION2")
-        p(translate="{{state.idType + '_ID'}}.OPTION3")
-        p(translate="{{state.idType + '_ID'}}.OPTION4")  
-        form.hide
-          div
-            input(name="idType" value="id" ng-model="state.idType")
+      .mbl.type-h5.em-300
+        p
+          span 1)
+          |  
+          span(translate="{{state.idType + '_ID'}}.OPTION1")
+        p
+          span 2)
+          |  
+          span(translate="{{state.idType + '_ID'}}.OPTION2")
+        p
+          span 3)
+          |  
+          span(translate="{{state.idType + '_ID'}}.OPTION3")
+        p
+          span 4)
+          |  
+          span(translate="{{state.idType + '_ID'}}.OPTION4")
 
   .width-60
     label(translate="{{state.idType + '_ID'}}.UPLOAD_TITLE")
