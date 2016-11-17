@@ -15,6 +15,11 @@ describe "SfoxCreateAccountController", ->
 
       Wallet = $injector.get("Wallet")
 
+      $rootScope.installLock = () ->
+        scope.locked = false;
+        scope.lock = () -> scope.locked = true;
+        scope.free = () -> scope.locked = false;
+
       Wallet.user =
         email: 'sn@blockchain.com'
         mobileNumber: '123-456-7891'
@@ -26,6 +31,7 @@ describe "SfoxCreateAccountController", ->
 
   getControllerScope = (params = {}) ->
     scope = $rootScope.$new()
+    scope.vm = {exchange: 'SFOX'}
     $controller "SfoxCreateAccountController",
       $scope: scope
     scope
@@ -36,17 +42,17 @@ describe "SfoxCreateAccountController", ->
 
   describe "state", ->
 
-    it "should set 'busy' and 'terms' to false", ->
-      expect(scope.state.busy).toBe(false)
+    it "should set 'terms' and 'editEmail' to false", ->
       expect(scope.state.terms).toBe(false)
+      expect(scope.state.editEmail).toBe(false)
 
     describe "lock and free", ->
 
       it "should toggle the busy state", ->
         scope.lock()
-        expect(scope.state.busy).toBe(true)
+        expect(scope.locked).toBe(true)
         scope.free()
-        expect(scope.state.busy).toBe(false)
+        expect(scope.locked).toBe(false)
 
   describe "setState", ->
 
@@ -67,13 +73,6 @@ describe "SfoxCreateAccountController", ->
       spyOn(Wallet, 'changeEmail')
       scope.changeEmail()
       expect(Wallet.changeEmail).toHaveBeenCalled()
-
-  describe "verifyEmail", ->
-
-    it "should verify the users email address", ->
-      spyOn(Wallet, 'verifyEmail')
-      scope.verifyEmail()
-      expect(Wallet.verifyEmail).toHaveBeenCalled()
 
   describe "changeMobile", ->
 
