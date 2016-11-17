@@ -1,91 +1,90 @@
-#verify
-  .flex-row.flex-column-mobile(ng-show="state.idType === 'ssn'")
-    .width-40
-      .width-80
-        h4(translate="Verify Identity")
-        .mbl
-          span.type-h5.em-300(translate="Strong verification procedures help reduce fraud and money laundering activites. As part of your registration, SFOX will need the following information from you to verify your identity.")
-        .mbl
-          span.type-h5.em-300(translate="You may also be asked to upload identification documents.")
-    .width-60
-      form.bc-form(name="verifyForm" ng-submit="verify()" novalidate autocomplete="off")
-        fieldset(ng-disabled="locked")
-          .group.inline
-            .item.width-33
-              label First Name
-              input(ng-model="state.first" name="first" required)
-            .item.width-33
-              label Middle Name
-              input(ng-model="state.middle" name="middle" required)
-            .item.width-33
-              label Last Name
-              input(ng-model="state.last" name="last" required)
-          .group.inline
-            .item.width-33
-              label Social Security Number
-              input(ng-model="state.ssn" name="ssn" placeholder="___-___-____" format-ssn required)
-            .item.width-33
-              label Date of Birth
-              input(ng-model="state.dob" name="dob" type="date" placeholder="mm/dd/yyyy" required)
-          .group
-            .item.full
-              label Address Line 1
-              input(ng-model="state.addr1" name="addr1" placeholder="Street address, P.O. box, etc." required)
-          .group
-            .item.full
-              label Address Line 2
-              input(ng-model="state.addr2" name="addr2" placeholder="Apartment, unit, floor, etc.")
-          .group.inline
-            .item.width-33
-              label City
-              input(ng-model="state.city" name="city" required)
-            .item.width-33
-              label State
-              ui-select(ng-model="state.state" name="state" required)
-                ui-select-match {{$select.selected.Name}}
-                ui-select-choices(repeat="s in states | filter:$select.search") {{s.Name}}
-            .item.width-33
-              label Zipcode
-              input(ng-model="state.zipcode" name="zipcode" type="number" required)
-          .group
-            button.btn.button-primary.full(type="submit" ng-disabled="verifyForm.$invalid") Continue
-  .flex-row.flex-column-mobile(ng-show="state.idType === 'id' || state.idType === 'address'")
-    .width-40
-      .width-80
-        h4(translate="{{state.idType + '_ID'}}.TITLE")
-        .mbl
-          span.type-h5.em-300(translate="{{state.idType + '_ID'}}.COPY")
-        .mbl
-          p(translate="{{state.idType + '_ID'}}.OPTION1")
-          p(translate="{{state.idType + '_ID'}}.OPTION2")
-          p(translate="{{state.idType + '_ID'}}.OPTION3")
-          p(translate="{{state.idType + '_ID'}}.OPTION4")  
-          form.hide
-            div
-              input(name="idType" value="id" ng-model="state.idType")
+.flex-row.flex-column-mobile(ng-show="state.idType === 'ssn'")
+  .width-40
+    .width-80
+      h4(translate="Verify Identity")
+      .mbl
+        span.type-h5.em-300(translate="Strong verification procedures help reduce fraud and money laundering activites. As part of your registration, SFOX will need the following information from you to verify your identity.")
+      .mbl
+        span.type-h5.em-300(translate="You may also be asked to upload identification documents.")
+  .width-60
+    form.bc-form(name="verifyForm" ng-submit="verify()" novalidate autocomplete="off")
+      fieldset(ng-disabled="locked")
+        .group.inline
+          .item.width-33
+            label First Name
+            input(ng-model="state.first" name="first" required)
+          .item.width-33
+            label Middle Name
+            input(ng-model="state.middle" name="middle" required)
+          .item.width-33
+            label Last Name
+            input(ng-model="state.last" name="last" required)
+        .group.inline
+          .item.width-33
+            label Social Security Number
+            input(ng-model="state.ssn" name="ssn" placeholder="___-___-____" format-ssn required)
+          .item.width-33
+            label Date of Birth
+            input(ng-model="state.dob" name="dob" type="date" placeholder="mm/dd/yyyy" required)
+        .group
+          .item.full
+            label Address Line 1
+            input(ng-model="state.addr1" name="addr1" placeholder="Street address, P.O. box, etc." required)
+        .group
+          .item.full
+            label Address Line 2
+            input(ng-model="state.addr2" name="addr2" placeholder="Apartment, unit, floor, etc.")
+        .group.inline
+          .item.width-33
+            label City
+            input(ng-model="state.city" name="city" required)
+          .item.width-33
+            label State
+            ui-select(ng-model="state.state" name="state" required)
+              ui-select-match {{$select.selected.Name}}
+              ui-select-choices(repeat="s in states | filter:$select.search") {{s.Name}}
+          .item.width-33
+            label Zipcode
+            input(ng-model="state.zipcode" name="zipcode" type="number" required)
+        .group
+          button.btn.button-primary.full(type="submit" ng-disabled="verifyForm.$invalid") Continue
+.flex-row.flex-column-mobile(ng-show="state.idType === 'id' || state.idType === 'address'")
+  .width-40
+    .width-80
+      h4(translate="{{state.idType + '_ID'}}.TITLE")
+      .mbl
+        span.type-h5.em-300(translate="{{state.idType + '_ID'}}.COPY")
+      .mbl
+        p(translate="{{state.idType + '_ID'}}.OPTION1")
+        p(translate="{{state.idType + '_ID'}}.OPTION2")
+        p(translate="{{state.idType + '_ID'}}.OPTION3")
+        p(translate="{{state.idType + '_ID'}}.OPTION4")  
+        form.hide
+          div
+            input(name="idType" value="id" ng-model="state.idType")
 
-    .width-60
-      label(translate="{{state.idType + '_ID'}}.UPLOAD_TITLE")
-      div.file-upload(ngf-drop ngf-select ng-model="state.file" ngf-drag-over-class="'dragover'" ngf-pattern="'image/*'")
-        span.type-h5.em-300.mtvl(ng-hide="state.file") Drag and drop your document here
-        span.type-h5.em-300.mtvl(ng-show="state.file") Thanks for uploading your documents!
-        img.width-20.mobile-width-40(src="img/document.png" ng-hide="state.file")
-        img.width-40.mobile-width-40(ngf-src="state.file" ng-show="state.file")
-        span.type-h5.em-300.mbvl(ng-hide="state.file") Or
-          |  
-          span.blue.pointer Upload document
-        span.type-h5.em-300.mbvl(ng-show="state.file") Click continue to verify them
-      div(ngf-no-file-drop) File Drag/Drop is not supported for this browser
-      button.mtl.btn.button-primary.full(ng-click="upload()" ng-disabled="!state.file || locked") Continue
-  .flex-row.flex-column-mobile(ng-show="!state.idType || state.verificationStatus.level === 'pending'")
-    .width-40
-      .width-80
-        h4(translate="Identity Verification Pending")
-        .mbl
-          span.type-h5.em-300(translate="We've sent your details over to SFOX to review. You can continue to linking a payment method in the meanwhile.")
+  .width-60
+    label(translate="{{state.idType + '_ID'}}.UPLOAD_TITLE")
+    div.file-upload(ngf-drop ngf-select ng-model="state.file" ngf-drag-over-class="'dragover'" ngf-pattern="'image/*'")
+      span.type-h5.em-300.mtvl(ng-hide="state.file") Drag and drop your document here
+      span.type-h5.em-300.mtvl(ng-show="state.file") Thanks for uploading your documents!
+      img.width-20.mobile-width-40(src="img/document.png" ng-hide="state.file")
+      img.width-40.mobile-width-40(ngf-src="state.file" ng-show="state.file")
+      span.type-h5.em-300.mbvl(ng-hide="state.file") Or
+        |  
+        span.blue.pointer Upload document
+      span.type-h5.em-300.mbvl(ng-show="state.file") Click continue to verify them
+    div(ngf-no-file-drop) File Drag/Drop is not supported for this browser
+    button.mtl.btn.button-primary.full(ng-click="upload()" ng-disabled="!state.file || locked") Continue
+.flex-row.flex-column-mobile(ng-show="!state.idType")
+  .width-40
+    .width-80
+      h4(translate="Identity Verification Pending")
+      .mbl
+        span.type-h5.em-300(translate="We've sent your details over to SFOX to review. They will reach out once your review is complete.")
 
-    .width-60
-      div.center.border.width-100.height-100.flex-column.flex-center
-        span.type-h4.em-400.mtvl Identity verification is pending.
-        span.type-h5.em-300.mtm SFOX will reach out once your review is complete.
-      button.mtl.btn.button-primary.full(ng-click="vm.goTo('link')") Continue
+  .width-60
+    div.center.border.width-100.height-100.flex-column.flex-center
+      span.type-h4.em-400.mtvl Identity verification is pending.
+      span.type-h5.em-300.mtm You can continue to linking a payment method in the meanwhile.
+    button.mtl.btn.button-primary.full(ng-click="vm.goTo('link')") Continue

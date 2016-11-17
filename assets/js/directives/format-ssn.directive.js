@@ -11,12 +11,12 @@ function formatSsn () {
   };
 
   function link (scope, elem, attrs, ctrl) {
-    let isSSN = (ssn) => (/^\d{3}-\d{3}-\d{4}$/).test(ssn);
+    let isSSN = (ssn) => (/^\d{3}-\d{2}-\d{4}$/).test(ssn);
 
     let format = (str) => ([
       str.slice(0, 3),
-      str.slice(3, 6),
-      str.slice(6, 10)
+      str.slice(3, 5),
+      str.slice(5, 9)
     ]).filter(x => x).join('-');
 
     let parse = (str) => (
