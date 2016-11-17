@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('faqQuestion', faqQuestion);
 
 function faqQuestion () {

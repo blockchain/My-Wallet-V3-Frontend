@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('buyAlert', buyAlert);
 
 buyAlert.$inject = ['$cookies'];

@@ -5,7 +5,7 @@ describe "Transaction Note Directive", ->
   isoScope = undefined
   Wallet = undefined
 
-  # Load the myApp module, which contains the directive
+  beforeEach module('walletDirectives');
   beforeEach module("walletApp")
 
   # Store references to $rootScope and $compile

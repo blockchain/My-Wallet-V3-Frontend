@@ -4,6 +4,7 @@ describe "downloadButton", ->
   isoScope = undefined
   $timeout = undefined
 
+  beforeEach module('walletDirectives');
   beforeEach module("walletApp")
 
   beforeEach inject(($compile, $rootScope, $window, _$timeout_) ->

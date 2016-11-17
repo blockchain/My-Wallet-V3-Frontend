@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('blocketTroposphere', blocketTroposphere);
 
 function blocketTroposphere () {

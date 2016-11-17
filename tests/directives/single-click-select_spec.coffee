@@ -5,6 +5,7 @@ describe "Click to highlight directive", ->
   $scope = undefined
   $window = undefined
 
+  beforeEach module('walletDirectives');
   beforeEach module("walletApp")
 
   beforeEach inject((_$compile_, _$rootScope_, _$window_) ->

@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('contextualMessage', contextualMessage);
 
 contextualMessage.$inject = ['$cookies', '$window', 'Wallet', 'SecurityCenter', 'filterFilter'];

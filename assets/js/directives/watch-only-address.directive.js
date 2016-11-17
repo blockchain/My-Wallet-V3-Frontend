@@ -1,4 +1,4 @@
-angular.module('walletApp').directive('watchOnlyAddress', (Wallet, $translate, Alerts) => {
+angular.module('walletDirectives').directive('watchOnlyAddress', (Wallet, $translate, Alerts) => {
   return {
     restrict: 'A',
     replace: true,

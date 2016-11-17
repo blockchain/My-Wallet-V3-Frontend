@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('virtualKeyboard', virtualKeyboard);
 
 function virtualKeyboard ($document, $window) {

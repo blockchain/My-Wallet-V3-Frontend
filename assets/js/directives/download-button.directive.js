@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('downloadButton', downloadButton);
 
 function downloadButton ($window, $timeout) {

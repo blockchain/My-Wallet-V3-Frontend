@@ -1,4 +1,4 @@
-angular.module('walletApp')
+angular.module('walletDirectives')
   .directive('buySteps', buySteps);
 
 function buySteps () {

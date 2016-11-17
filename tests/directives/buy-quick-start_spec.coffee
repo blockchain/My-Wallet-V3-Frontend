@@ -7,6 +7,8 @@ describe "buyQuickStart", ->
   MyWallet = undefined
   buySell = undefined
 
+  beforeEach module('walletDirectives');
+
   beforeEach module("walletApp")
 
   beforeEach inject(($compile, $rootScope, $injector, _$q_) ->

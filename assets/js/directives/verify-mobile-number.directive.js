@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('verifyMobileNumber', verifyMobileNumber);
 
 function verifyMobileNumber ($translate, Wallet, $filter) {

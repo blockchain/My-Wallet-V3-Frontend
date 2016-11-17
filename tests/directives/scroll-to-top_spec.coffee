@@ -4,6 +4,7 @@ describe "Scroll To Top Directive", ->
   $scope = undefined
   element = undefined
 
+  beforeEach module('walletDirectives');
   beforeEach module("walletApp")
 
   beforeEach inject((_$compile_, _$rootScope_) ->

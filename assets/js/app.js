@@ -17,6 +17,7 @@ const modules = [
   'ui.router',
   'translations',
   'sharedDirectives',
+  'walletDirectives',
   'oc.lazyLoad',
   // Not needed for landing page, but loading it now for the config step below:
   'ui.select'

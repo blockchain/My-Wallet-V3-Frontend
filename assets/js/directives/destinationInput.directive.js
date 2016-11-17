@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('destinationInput', destinationInput);
 
 destinationInput.$inject = ['$rootScope', '$timeout', 'Wallet', 'format'];
