@@ -13,39 +13,49 @@
           .item.width-33
             label First Name
             input(ng-model="state.first" name="first" required)
+            i
           .item.width-33
             label Middle Name
             input(ng-model="state.middle" name="middle" required)
+            i
           .item.width-33
             label Last Name
             input(ng-model="state.last" name="last" required)
+            i
         .group.inline
           .item.width-33
             label Social Security Number
             input(ng-model="state.ssn" name="ssn" placeholder="___-___-____" format-ssn required)
+            i
           .item.width-33
             label Date of Birth
             input(ng-model="state.dob" name="dob" type="date" placeholder="mm/dd/yyyy" required)
+            i
         .group
           .item.full
             label Address Line 1
             input(ng-model="state.addr1" name="addr1" placeholder="Street address, P.O. box, etc." required)
+            i
         .group
           .item.full
             label Address Line 2
             input(ng-model="state.addr2" name="addr2" placeholder="Apartment, unit, floor, etc.")
+            i
         .group.inline
           .item.width-33
             label City
             input(ng-model="state.city" name="city" required)
+            i
           .item.width-33
             label State
             ui-select(ng-model="state.state" name="state" required)
               ui-select-match {{$select.selected.Name}}
               ui-select-choices(repeat="s in states | filter:$select.search") {{s.Name}}
+              i
           .item.width-33
             label Zipcode
             input(ng-model="state.zipcode" name="zipcode" type="number" required)
+            i
         .group
           button.btn.button-primary.full(type="submit" ng-disabled="verifyForm.$invalid") Continue
 .flex-row.flex-column-mobile(ng-show="state.idType === 'id' || state.idType === 'address'")
