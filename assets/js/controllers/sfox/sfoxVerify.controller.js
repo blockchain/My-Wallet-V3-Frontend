@@ -25,7 +25,8 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
     $scope.state.verificationStatus = exchange.profile.verificationStatus;
     $scope.state.idType = idTypes[0];
     $scope.state.file = undefined;
-    idTypes.shift();
+
+    idTypes = exchange.profile.verificationStatus.required_docs.shift();
   };
 
   $scope.getSignedURL = () => {
