@@ -12,6 +12,7 @@ const modules = [
   'ui.bootstrap',
   'ngCookies',
   'ngAnimate',
+  'ngFileUpload',
 
   'ui.select',
   'ngAudio',
