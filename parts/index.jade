@@ -20,13 +20,15 @@ head
   script(src='/wallet/bower_components/angular-ui-router/release/angular-ui-router.js', defer)
   script(src='/wallet/bower_components/angular-ui-select/dist/select.js', defer)
 
-  script(src='/wallet/build/js/walletDirectives.js' defer)
+  script(src='/wallet/assets/js/walletDirectives.js' defer)
   script(src='/wallet/build/js/templates.js' defer)
-  script(src='/wallet/build/js/directives/' + directiveCamel + '.directive.js' defer)
+  if directive
+    script(src='/wallet/assets/js/directives/' + directiveCamel + '.directive.js' defer)
   script(src='/parts/app.js' defer)
-  script(src='mocks.js' defer)
-  script(src='/wallet/build/js/services/bcTranslationLoader.service.js' defer)
-  script(src='/wallet/build/js/translations.js' defer)
+  if directive
+    script(src='mocks.js' defer)
+  script(src='/wallet/assets/js/services/bcTranslationLoader.service.js' defer)
+  script(src='/wallet/assets/js/translations.js' defer)
 
   if directive
     title= directive + ' directive'

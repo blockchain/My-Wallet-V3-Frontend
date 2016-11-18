@@ -2,10 +2,10 @@ all: clean node_modules test pgp dist changelog
 
 node_modules:
 	npm install -g grunt-cli coffee-script
-	npm install
 
 build: node_modules
-	grunt build
+	# This calls 'grunt build' in postinstall
+	npm install
 
 test: build
 	./node_modules/karma/bin/karma start karma.conf.js --single-run
