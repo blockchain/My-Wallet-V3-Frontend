@@ -97,13 +97,6 @@ function BuySellCtrl ($rootScope, Options, $scope, $state, Alerts, Wallet, curre
       $scope.status.disabled = false;
     }
 
-    let kycStates = ['pending', 'manual_review', 'reviewing', 'declined', 'rejected', 'expired'];
-    $scope.showKycStatus = () => (
-      $scope.kyc &&
-      buySell.getExchange().profile.level.name < 2 &&
-      kycStates.indexOf($scope.kyc.state) > -1
-    );
-
     $scope.openKyc = () => {
       ['declined', 'rejected', 'expired'].indexOf($scope.kyc.state) > -1
         ? buySell.triggerKYC().then(kyc => $scope.buy(kyc))
