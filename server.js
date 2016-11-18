@@ -23,6 +23,14 @@ var partsApp = parts.app(rootURL, webSocketURL, apiDomain);
 
 app.use(compression());
 
+rootApp.get('/parts', (req, res, next) => {
+  if (req.url === '/parts') {
+    res.redirect('/parts/');
+  } else {
+    next();
+  }
+});
+
 rootApp.use('/parts', partsApp);
 
 rootApp.use('/:lang?/wallet', app);
