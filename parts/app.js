@@ -3,10 +3,10 @@
 const modules = [
   'ngAnimate',
   'ngSanitize',
-  // 'pascalprecht.translate',
-  // 'bcTranslateStaticFilesLoader',
+  'pascalprecht.translate',
+  'bcTranslateStaticFilesLoader',
   'ui.bootstrap',
-  // 'translations',
+  'translations',
   'ui.select',
   'walletDirectives',
   'templates-main'

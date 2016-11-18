@@ -1,10 +1,22 @@
 var express = require('express');
 
+String.prototype.toCamelCase = function () { // eslint-disable-line no-extend-native
+  return this.replace(/^([A-Z])|\s(\w)/g, function (match, p1, p2, offset) {
+    if (p2) return p2.toUpperCase();
+    return p1.toLowerCase();
+  });
+};
+
 function app (rootURL, webSocketURL, apiDomain) {
   var app = express();
 
   app.use(function (req, res, next) {
-    if (req.url.match(/\/directives\/[A-Za-z]+\/$/)) {
+    var isDirective = req.url.match(/\/directives\/([A-Za-z\-]+)\/$/);
+    var isAsset = req.url.match(/(\/(?:img|locales)\/.*)/);
+
+    if (isDirective) {
+      var directive = isDirective[1];
+      var directiveCamel = directive.toCamelCase();
       var cspHeader = ([
         "img-src 'self' data: blob:",
         "style-src 'self'",
@@ -23,10 +35,20 @@ function app (rootURL, webSocketURL, apiDomain) {
       ]).join('; ');
       res.setHeader('content-security-policy', cspHeader);
       res.setHeader('X-Frame-Options', 'SAMEORIGIN');
-      // TODO: get controller name, etc
-      res.render('index.jade');
+      var jade = require('jade');
+      res.render('index.jade', {
+        directive: directive,
+        directiveCamel: directiveCamel,
+        templateRender: jade.renderFile
+      });
       return;
     }
+
+    if (isAsset) {
+      res.redirect('/wallet/build' + isAsset[1]);
+      return;
+    }
+
     res.setHeader('Cache-Control', 'public, max-age=0, no-cache');
     next();
   });
