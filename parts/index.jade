@@ -14,24 +14,25 @@ head
   script(src='/wallet/bower_components/angular-sanitize/angular-sanitize.js', defer)
   script(src='/wallet/bower_components/angular-animate/angular-animate.js', defer)
   script(src='/wallet/bower_components/angular-bootstrap/ui-bootstrap-tpls.js', defer)
-  //- script(src='/wallet/bower_components/angular-translate/angular-translate.js', defer)
-  //- script(src='/wallet/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js', defer)
+  script(src='/wallet/bower_components/angular-translate/angular-translate.js', defer)
+  script(src='/wallet/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js', defer)
   script(src='/wallet/bower_components/browserdetection/src/browser-detection.js')
   script(src='/wallet/bower_components/angular-ui-router/release/angular-ui-router.js', defer)
   script(src='/wallet/bower_components/angular-ui-select/dist/select.js', defer)
 
   script(src='/wallet/build/js/walletDirectives.js' defer)
   script(src='/wallet/build/js/templates.js' defer)
-  script(src='/wallet/build/js/directives/adverts.directive.js' defer)
+  script(src='/wallet/build/js/directives/' + directiveCamel + '.directive.js' defer)
   script(src='/parts/app.js' defer)
   script(src='mocks.js' defer)
-  //- script(src='/wallet/build/js/services/bcTranslationLoader.service.js' defer)
+  script(src='/wallet/build/js/services/bcTranslationLoader.service.js' defer)
+  script(src='/wallet/build/js/translations.js' defer)
 
-  title Adverts Directive
+  title= directive + ' directive'
   link(rel='stylesheet' href='/wallet/build/css/wallet.css')
 
 body
-  include ./directives/adverts/index
+  != templateRender('parts/directives/' + directive + '/index.jade')
   noscript
     img(src="/wallet/img/logo-bw.png")
     h3 Please enable JavaScript to use the Blockchain Wallet
