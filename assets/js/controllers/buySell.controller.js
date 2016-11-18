@@ -97,7 +97,7 @@ function BuySellCtrl ($rootScope, Options, $scope, $state, Alerts, Wallet, curre
       $scope.status.disabled = false;
     }
 
-    let kycStates = ['pending', 'manual_review', 'reviewing', 'declined', 'rejected'];
+    let kycStates = ['pending', 'manual_review', 'reviewing', 'declined', 'rejected', 'expired'];
     $scope.showKycStatus = () => (
       $scope.kyc &&
       buySell.getExchange().profile.level.name < 2 &&
@@ -105,7 +105,7 @@ function BuySellCtrl ($rootScope, Options, $scope, $state, Alerts, Wallet, curre
     );
 
     $scope.openKyc = () => {
-      ['declined', 'rejected'].indexOf($scope.kyc.state) > -1
+      ['declined', 'rejected', 'expired'].indexOf($scope.kyc.state) > -1
         ? buySell.triggerKYC().then(kyc => $scope.buy(kyc))
         : $scope.buy($scope.kyc);
     };

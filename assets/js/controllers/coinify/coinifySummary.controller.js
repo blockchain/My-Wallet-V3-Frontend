@@ -67,7 +67,7 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
 
     // check if bank transfer and kyc level
     if ($scope.needsKyc()) {
-      return buySell.kycs.length && ['declined', 'rejected'].indexOf(buySell.kycs[0].state) > -1
+      return buySell.kycs.length && ['declined', 'rejected', 'expired'].indexOf(buySell.kycs[0].state) > -1
         ? buySell.triggerKYC().then(success, $scope.standardError)
         : buySell.getOpenKYC().then(success, $scope.standardError);
     }
