@@ -1,4 +1,5 @@
 var express = require('express');
+var fs = require('fs');
 
 String.prototype.toCamelCase = function () { // eslint-disable-line no-extend-native
   return this.replace(/^([A-Z])|\s(\w)/g, function (match, p1, p2, offset) {
@@ -14,9 +15,7 @@ function app (rootURL, webSocketURL, apiDomain) {
     var isDirective = req.url.match(/\/directives\/([A-Za-z\-]+)\/$/);
     var isAsset = req.url.match(/(\/(?:img|locales)\/.*)/);
 
-    if (isDirective) {
-      var directive = isDirective[1];
-      var directiveCamel = directive.toCamelCase();
+    if (isDirective || req.url === '/') {
       var cspHeader = ([
         "img-src 'self' data: blob:",
         "style-src 'self'",
@@ -36,11 +35,24 @@ function app (rootURL, webSocketURL, apiDomain) {
       res.setHeader('content-security-policy', cspHeader);
       res.setHeader('X-Frame-Options', 'SAMEORIGIN');
       var jade = require('jade');
-      res.render('index.jade', {
-        directive: directive,
-        directiveCamel: directiveCamel,
-        templateRender: jade.renderFile
-      });
+
+      if (isDirective) {
+        var directive = isDirective[1];
+        var directiveCamel = directive.toCamelCase();
+        res.render('index.jade', {
+          directive: directive,
+          directiveCamel: directiveCamel,
+          templateRender: jade.renderFile
+        });
+      } else {
+        var dirs = p => fs.readdirSync(p).filter(
+          f => fs.statSync(p + '/' + f).isDirectory()
+        );
+
+        res.render('index.jade', {
+          directives: dirs(__dirname + '/directives')
+        });
+      }
       return;
     }
 

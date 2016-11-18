@@ -28,11 +28,22 @@ head
   script(src='/wallet/build/js/services/bcTranslationLoader.service.js' defer)
   script(src='/wallet/build/js/translations.js' defer)
 
-  title= directive + ' directive'
+  if directive
+    title= directive + ' directive'
+  else
+    title Parts 
+    
   link(rel='stylesheet' href='/wallet/build/css/wallet.css')
 
 body
-  != templateRender('parts/directives/' + directive + '/index.jade')
+  if directive
+    != templateRender('parts/directives/' + directive + '/index.jade')
+  else
+    h2 Directives
+    ul
+      each directive in directives
+        li
+          a(href= 'directives/' + directive + '/')=directive
   noscript
     img(src="/wallet/img/logo-bw.png")
     h3 Please enable JavaScript to use the Blockchain Wallet
