@@ -67,9 +67,9 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
       .then(fetchSuccess, () => { state.loadFailed = true; });
   }, 500);
 
-  $scope.refreshIfValid = () => $scope.checkoutForm.$valid && $scope.refreshQuote();
-  $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid());
-  $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid());
+  $scope.refreshIfValid = (field) => $scope.checkoutForm[field].$valid && $scope.refreshQuote();
+  $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
+  $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
   $scope.$on('$destroy', $scope.cancelRefresh);
   $scope.installLock();
 }
