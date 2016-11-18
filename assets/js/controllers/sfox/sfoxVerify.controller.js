@@ -8,15 +8,12 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
 
   let getNextIdType = () => {
     if (!exchange.profile) return 'ssn';
+    let { level, required_docs = [] } = exchange.profile.verificationStatus;
 
-    let requiredDocs = exchange.profile.verificationStatus.required_docs;
-
-    let verificationInProgress = requiredDocs && requiredDocs.length === 0 &&
-                                 exchange.profile.verificationStatus.level === 'pending';
-
+    let verificationInProgress = level === 'pending' && required_docs.length === 0;
     let needsSSN = !exchange.profile.identity.number && !verificationInProgress;
 
-    return needsSSN ? 'ssn' : requiredDocs[0];
+    return needsSSN ? 'ssn' : required_docs[0];
   };
 
   // Address Line 2
