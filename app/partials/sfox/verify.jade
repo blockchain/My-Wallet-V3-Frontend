@@ -6,6 +6,16 @@
         span.type-h5.em-300(translate="Strong verification procedures help reduce fraud and money laundering activites. As part of your registration, SFOX will need the following information from you to verify your identity.")
       .mbl
         span.type-h5.em-300(translate="You may also be asked to upload identification documents.")
+      .mbl(ng-show="buySellDebug")
+        div.type-h4.mbm.underline
+          i.mrs.ti-search
+          span QA:
+        ul
+          li.type-lbl.pointer.blue(ng-click="SFOXAddressForm()") Autofill Address Form
+          //- li.type-lbl.pointer(ng-click="state.addr2 = 'testing-docs-id'") 'testing-docs-id'
+          //- li.type-lbl.pointer(ng-click="state.addr2 = 'testing-docs-address'") 'testing-docs-address'
+          //- li.type-lbl.pointer(ng-click="state.addr2 = 'testing-docs-all'") 'testing-docs-all'
+          //- li.type-lbl.pointer(ng-click="state.addr2 = 'testing-user-block'") 'testing-user-block'
   .width-60
     form.bc-form(name="verifyForm" ng-submit="verify()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxVerifyController', SfoxVerifyController);
 
-function SfoxVerifyController ($scope, $q, state, $http, Upload) {
+function SfoxVerifyController ($rootScope, $scope, $q, state, $http, Upload, QA) {
   $scope.states = state.stateCodes;
   let exchange = $scope.vm.exchange;
 
@@ -15,12 +15,6 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
 
     return needsSSN ? 'ssn' : required_docs[0];
   };
-
-  // Address Line 2
-  // 'testing-docs-id' (the user will be required to upload proof of id)
-  // 'testing-docs-address' (the user will be required to upload proof of address)
-  // 'testing-docs-all' (the user will be required to upload both proof of id and proof of address)
-  //  TODO: 'testing-user-block' (the user will be marked as blocked and will not be allowed to buy/sell)
 
   $scope.state = {
     idType: getNextIdType(),
@@ -94,4 +88,12 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
   $scope.installLock();
   $scope.$watch('state.file', (file) => file && $scope.getSignedURL());
   $scope.$watch('state.verificationStatus.level', (newVal) => newVal === 'verified' && $scope.vm.goTo('link'));
+
+  // QA Tools
+  $scope.SFOXAddressForm = () => {
+    let fields = QA.SFOXAddressForm();
+    let keys = Object.keys(fields);
+
+    keys.forEach((key) => $scope.state[key] = fields[key]);
+  };
 }
