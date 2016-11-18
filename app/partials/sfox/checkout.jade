@@ -72,9 +72,9 @@
         .group.mtl
           button.btn.button-primary.full(ng-click="buy()" ng-disabled="checkoutForm.$invalid || !quote || state.loadFailed") Buy Bitcoin
   .flex-column.mtl(ng-show="trades.length")
-    .flex-row.flex-between.flex-center
+    .flex-row.flex-between.flex-baseline
       h4.type-h4(translate="ORDER_HISTORY")
-      span SFOX Account: user@sfox.com
+      span.em-300 SFOX Account: {{user.email}}
     table.width-100
       tr.border.bg-light-blue
         th.phml.pvs(translate="STATUS")
