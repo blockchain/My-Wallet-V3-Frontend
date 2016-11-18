@@ -5,9 +5,19 @@ angular
 function SfoxVerifyController ($scope, $q, state, $http, Upload) {
   $scope.states = state.stateCodes;
   let exchange = $scope.vm.exchange;
-  let idTypes = exchange.profile && exchange.profile.identity.number
-                ? exchange.profile.verificationStatus.required_docs
-                : ['ssn', 'id', 'address'];
+
+  let getNextIdType = () => {
+    if (!exchange.profile) return 'ssn';
+
+    let requiredDocs = exchange.profile.verificationStatus.required_docs;
+
+    let verificationInProgress = requiredDocs && requiredDocs.length === 0 &&
+                                 exchange.profile.verificationStatus.level === 'pending';
+
+    let needsSSN = !exchange.profile.identity.number && !verificationInProgress;
+
+    return needsSSN ? 'ssn' : requiredDocs[0];
+  };
 
   // Address Line 2
   // 'testing-docs-id' (the user will be required to upload proof of id)
@@ -16,17 +26,14 @@ function SfoxVerifyController ($scope, $q, state, $http, Upload) {
   //  TODO: 'testing-user-block' (the user will be marked as blocked and will not be allowed to buy/sell)
 
   $scope.state = {
-    idType: idTypes[0],
+    idType: getNextIdType(),
     signedURL: undefined
   };
 
   $scope.setState = () => {
-    idTypes.length > 2 && (idTypes = exchange.profile.verificationStatus.required_docs);
     $scope.state.verificationStatus = exchange.profile.verificationStatus;
-    $scope.state.idType = idTypes[0];
+    $scope.state.idType = getNextIdType();
     $scope.state.file = undefined;
-
-    idTypes = exchange.profile.verificationStatus.required_docs.shift();
   };
 
   $scope.getSignedURL = () => {
