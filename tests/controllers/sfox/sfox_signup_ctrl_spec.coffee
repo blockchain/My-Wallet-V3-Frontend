@@ -3,7 +3,7 @@ describe "SfoxSignupController", ->
   $rootScope = undefined
   $controller = undefined
 
-  profile = (status) -> verificationStatus: status
+  profile = (status) -> verificationStatus: level: status
   accounts = (first) -> if first then [first] else []
 
   beforeEach angular.mock.module("walletApp")
@@ -30,23 +30,23 @@ describe "SfoxSignupController", ->
       ctrl.goTo('buy')
       expect(ctrl.onStep('buy')).toEqual(true)
 
-  describe "setStep", ->
-    it "should go to 'create' when there is no profile", ->
+  describe "initial step", ->
+    it "should be 'create' when there is no profile", ->
       ctrl = getController()
       expect(ctrl.onStep('create')).toEqual(true)
 
-    it "should go to 'verify' if profile is unverified", ->
+    it "should be 'verify' if profile is unverified", ->
       ctrl = getController(profile('unverified'))
       expect(ctrl.onStep('verify')).toEqual(true)
 
-    it "should go to 'link' if user does not have an account", ->
+    it "should be 'link' if user does not have an account", ->
       ctrl = getController(profile('verified'), accounts())
       expect(ctrl.onStep('link')).toEqual(true)
 
-    it "should go to 'link' if user does not have an active account", ->
+    it "should be 'link' if user does not have an active account", ->
       ctrl = getController(profile('verified'), accounts(status: 'pending'))
       expect(ctrl.onStep('link')).toEqual(true)
 
-    it "should go to 'buy' if user is verified and has account", ->
+    it "should be 'buy' if user is verified and has account", ->
       ctrl = getController(profile('verified'), accounts(status: 'active'))
       expect(ctrl.onStep('buy')).toEqual(true)

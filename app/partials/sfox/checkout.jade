@@ -3,8 +3,8 @@
     .width-50.border.mrl.pal.flex-column.flex-between.flex-center
       span.type-h4.width-100 Just a few steps away!
       .mvl.flex-column.flex-center.blue.type-h4
-        i.ti-credit-card.bank.type-lrg
-        span - Appropriate Step Description
+        i.bank.type-lrg(ng-class="stepDescription().i")
+        span(translate="{{stepDescription().text}}")
       button.btn.button-primary.full(ng-click="openSfoxSignup()") Continue
     .flex-column.width-50.mlvl.mtml
       .font-2.blue.em-300.lh1(translate="SIMPLE_SECURE_SEAMLESS")

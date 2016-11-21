@@ -2,9 +2,18 @@ angular
   .module('walletApp')
   .controller('SfoxCheckoutController', SfoxCheckoutController);
 
-function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, accounts) {
+function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts) {
   let exchange = $scope.vm.external.sfox;
   $scope.openSfoxSignup = () => modals.openSfoxSignup(exchange);
+
+  $scope.stepDescription = () => {
+    let stepDescriptions = {
+      'verify': { text: 'Verify Identity', i: 'ti-id-badge' },
+      'link': { text: 'Link Payment', i: 'ti-credit-card' }
+    };
+    let step = sfox.determineStep(exchange, accounts);
+    return stepDescriptions[step];
+  };
 
   if (!exchange.profile || !accounts.length) return;
 
