@@ -64,9 +64,17 @@
               .flex-between.flex-center.form-control.no-border
                 span.colon Send To
                 span {{ btcAccount.label }}
+              .border-bottom-light.mhm
+              .flex-between.flex-center.form-control.no-border
+                span.colon Amount
+                span {{ format(state.fiat || 0, dollars, true) }}
+              .flex-between.flex-center.form-control.no-border
+                span.colon Fee
+                span {{ format(state.fee || 0, dollars, true) }}
+              .border-bottom-light.mhm
               .flex-between.flex-center.form-control.no-border.em-500
                 span.colon Total
-                span {{ format(state.fiat || 0, dollars, true) }}
+                span {{ format(state.total || 0, dollars, true) }}
         .group.mtl
           button.btn.button-primary.full(ng-click="buy()" ng-disabled="checkoutForm.$invalid || !quote || state.loadFailed") Buy Bitcoin
   .flex-column.mtl(ng-show="trades.length")
