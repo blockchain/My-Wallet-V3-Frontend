@@ -63,7 +63,10 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
       else scope.status = {};
     });
     scope.$watch('status.canceling', () => {
-      scope.canCancel = !scope.status.canceling && scope.trade.state === 'awaiting_transfer_in';
+      scope.canCancel =
+        !scope.status.canceling &&
+        scope.trade.state === 'awaiting_transfer_in' &&
+        angular.isFunction(trade.cancel);
     });
   }
 }
