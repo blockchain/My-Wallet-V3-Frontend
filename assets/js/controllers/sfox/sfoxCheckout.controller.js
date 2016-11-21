@@ -9,7 +9,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
   $scope.stepDescription = () => {
     let stepDescriptions = {
       'verify': { text: 'Verify Identity', i: 'ti-id-badge' },
-      'link': { text: 'Link Payment', i: 'ti-credit-card' }
+      'link': { text: 'Link Payment', i: 'ti-credit-card bank bank-lrg' }
     };
     let step = sfox.determineStep(exchange, accounts);
     return stepDescriptions[step];
