@@ -501,6 +501,28 @@ module.exports = (grunt) ->
             console.log "iSignThis domain: #{ domain }"
             domain
         }]
+      buy_sell_sfox:
+        src: ['build/js/wallet.js'],
+        overwrite: true,
+        replacements: [{
+          from: "sfox.api.apiKey = '6CD61A0E965D48A7B1883A860490DC9E'"
+          to: () =>
+            apiKey = '6CD61A0E965D48A7B1883A860490DC9E'
+            if @rootDomain == null || @rootDomain == 'blockchain.info'
+              apiKey = 'f31614a7-5074-49f2-8c2a-bfb8e55de2bd'
+            console.log "SFOX API key: #{ apiKey }"
+            "sfox.api.apiKey = '#{ apiKey }'"
+        },
+        {
+          from: 'sfox.api.production = false'
+          to: () =>
+            p = 'false'
+            if @rootDomain == null || @rootDomain == 'blockchain.info'
+              p = 'true'
+            console.log "SFOX production: #{ p }"
+            "sfox.api.production = #{ p }"
+        }]
+
       api_domain:
         src: ['build/js/wallet.js'],
         overwrite: true,
@@ -615,6 +637,7 @@ module.exports = (grunt) ->
       "replace:web_socket_url"
       "replace:buy_sell_debug"
       "replace:buy_sell_coinify"
+      "replace:buy_sell_sfox"
     ]
 
     if apiDomain

@@ -29,6 +29,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       if (_buySellMyWallet.exchanges) { // Absent if 2nd password set
         _buySellMyWallet.exchanges.coinify.partnerId = 18; // Replaced by Grunt for production
         _buySellMyWallet.exchanges.sfox.api.apiKey = '6CD61A0E965D48A7B1883A860490DC9E'; // Replaced by Grunt for production
+        _buySellMyWallet.exchanges.sfox.api.production = false; // Replaced by Grunt for production
       }
     }
     return _buySellMyWallet;
