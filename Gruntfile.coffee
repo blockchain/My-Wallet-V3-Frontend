@@ -512,6 +512,13 @@ module.exports = (grunt) ->
             else
               "customApiDomain = 'https://" + @apiDomain + "/'"
         }]
+      network:
+        src: ['build/js/wallet.js'],
+        overwrite: true,
+        replacements: [{
+          from: "network = $rootScope.network"
+          to: () => "network = '" + @network + "'"
+        }]
       version_frontend:
         src: ['build/js/app.js'],
         overwrite: true,
@@ -577,6 +584,8 @@ module.exports = (grunt) ->
     rootDomain = grunt.option('rootDomain')
     webSocketURL = grunt.option('webSocketURL')
     apiDomain = grunt.option('apiDomain')
+    network = grunt.option('network')
+
     if !versionFrontend
       versionFrontend = "intermediate"
     else if versionFrontend[0] != "v"
@@ -584,6 +593,11 @@ module.exports = (grunt) ->
       exit(1)
 
     @versionFrontend = versionFrontend
+
+    if !network
+      network = "bitcoin"
+
+    @network = network
 
     if !rootDomain
       # Production will work with rootURL = "https://blockchain.info/" and "/"
@@ -614,6 +628,7 @@ module.exports = (grunt) ->
     grunt.task.run [
       "replace:version_frontend"
       "replace:version_my_wallet"
+      "replace:network"
       "preprocess:js"
       "concat:landingNotMinifiedDependencies"
       "uglify:landingDependencies"
