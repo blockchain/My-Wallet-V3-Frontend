@@ -639,8 +639,8 @@
   "BEFORE_LEAVE": "Bevor Sie gehen ...",
   "SURVEY_ASK": "Würden Sie uns freundlicherweise bei der Verbesserung Ihrer Wallet-Welt unterstützen und an einer kurzen Umfrage teilnehmen?<br>Wir wissen Ihr Feedback zu schätzen!",
   "SURVEY_CONFIRM": {
-    "TITLE": "@:BEVOR_GEHEN",
-    "BODY": "@:UMFRAGE_FRAGEN"
+    "TITLE": "@:BEFORE_LEAVE",
+    "BODY": "@:SURVEY_ASK"
   },
   "BACKUP_REMINDER": {
     "TITLE": "Warten Sie!",
@@ -794,7 +794,7 @@
     "BODY": "{{::archivable}} von {{::total}} Adressen wurden erfolgreich nach {{::account}} übertragen. Möchten Sie diese Adressen jetzt archivieren?"
   },
   "SWEEP_FINISHED_SINGLE": {
-    "TITLE": "@:SÄUBERN_BEENDET.TITEL",
+    "TITLE": "@:SWEEP_FINISHED.TITLE",
     "BODY": "{{::archivable}} Adresse wurde erfolgreich nach {{::account}} übertragen. Möchten Sie diese Adresse jetzt archivieren?"
   },
   "YOU_WILL_LOSE": "Sie werden alle Ihre Bitcoins verlieren! Sind Sie sich sicher?",
@@ -996,7 +996,7 @@
     "BODY": "Diese Transaktion ist abgelaufen. Zum erneuten Bitcoin-Kaufversuch anklicken."
   },
   "TX_KYC_PENDING": {
-    "TITLE": "@:KYC_WIRD_ÜBERPRÜFT.TITEL",
+    "TITLE": "@:KYC_IN_REVIEW.TITLE",
     "BODY": "Ihre Authentifizierungsanfrage wurde zur manuellen Überprüfung markiert. Coinify wird innerhalb von 1 Tag ein Status-Update an Sie senden. Entschuldigen Sie die Unannehmlichkeit - und bereits im Voraus vielen Dank für Ihre Geduld!"
   },
   "TX_BANK_TRANSFER": {
@@ -1031,7 +1031,7 @@
   },
   "KYC_PENDING": {
     "TITLE": "Identitätsverifizierung abschließen",
-    "BODY": "@:KYC_WIRD_ÜBERPRÜFT.KÖRPER",
+    "BODY": "@:KYC_IN_REVIEW.BODY",
     "LINK": "Verifizierung beenden"
   },
   "COINIFY_TRADE": "Coinify-Handel",
