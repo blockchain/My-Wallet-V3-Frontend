@@ -5,28 +5,28 @@
         span.type-h4.em-300(translate="Complete the following steps to buy your first bitcoin!")
 
     .width-60.mtl.pal.flex-row.flex-baseline.flex-between-mobile.center
-      .width-25.flex-column.flex-center(ng-class="{blue: vm.onStep('create')}" ng-click="vm.goTo('create')")
+      .width-25.flex-column.flex-center(ng-class="{blue: vm.onStep('create')}" ng-click="buySellDebug && vm.goTo('create')")
         i.type-lrg.ti-user
         span(translate="Create Account")
 
       .flex-justify
         i.ti-arrow-right.type-h4
 
-      .width-25.flex-column.flex-center(ng-class="{blue: vm.onStep('verify')}" ng-click="vm.goTo('verify')")
+      .width-25.flex-column.flex-center(ng-class="{blue: vm.onStep('verify')}" ng-click="buySellDebug && vm.goTo('verify')")
         i.type-lrg.ti-id-badge
         span(translate="Verify Identity")
 
       .flex-justify
         i.ti-arrow-right.type-h4
 
-      .width-25.flex-column.flex-center(ng-class="{blue: vm.onStep('link')}" ng-click="vm.goTo('link')")
+      .width-25.flex-column.flex-center(ng-class="{blue: vm.onStep('link')}" ng-click="buySellDebug && vm.goTo('link')")
         i.type-lrg.ti-credit-card.bank
         span(translate="Link Payment")
 
       .flex-justify
         i.ti-arrow-right.type-h4
 
-      .width-25.flex-column.flex-center(ng-class="{blue: vm.onStep('buy')}" ng-click="vm.goTo('buy')")
+      .width-25.flex-column.flex-center(ng-class="{blue: vm.onStep('buy')}" ng-click="buySellDebug && vm.goTo('buy')")
         i.type-lrg.ti-shopping-cart
         span(translate="Buy Bitcoin")
   .mrl.close-modal
