@@ -6,9 +6,8 @@ angular
 function QA () {
   const service = {};
 
-  let unique = new Date().getTime().toString();
-
   service.SFOXAddressForm = () => {
+    let unique = new Date().getTime().toString();
     let fields = {
       first: 'Satoshi' + unique,
       last: 'Nakamoto' + unique,
@@ -23,6 +22,8 @@ function QA () {
 
     return fields;
   };
+
+  service.SFOXDebugDocs = ['testing-docs-id', 'testing-docs-address', 'testing-docs-all', 'testing-user-block'];
 
   return service;
 }

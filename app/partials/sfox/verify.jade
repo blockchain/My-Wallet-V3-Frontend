@@ -7,15 +7,15 @@
       .mbl
         span.type-h5.em-300(translate="You may also be asked to upload identification documents.")
       .mbl(ng-show="buySellDebug")
-        div.type-h4.mbm.underline
+        div.type-h4.mbs.underline
           i.mrs.ti-search
-          span QA:
-        ul
-          li.type-lbl.pointer.blue(ng-click="SFOXAddressForm()") Autofill Address Form
-          //- li.type-lbl.pointer(ng-click="state.addr2 = 'testing-docs-id'") 'testing-docs-id'
-          //- li.type-lbl.pointer(ng-click="state.addr2 = 'testing-docs-address'") 'testing-docs-address'
-          //- li.type-lbl.pointer(ng-click="state.addr2 = 'testing-docs-all'") 'testing-docs-all'
-          //- li.type-lbl.pointer(ng-click="state.addr2 = 'testing-user-block'") 'testing-user-block'
+          span QA
+        ul.pll
+          li.type-lbl.mbm.pointer.blue(ng-click="SFOXAddressForm()") Autofill Address Form
+          li.mbm
+            ui-select(ng-model="state.addr2" name="doc" required)
+              ui-select-match(placeholder="Test Document Uploads") {{$select.selected}}
+              ui-select-choices(repeat="doc in SFOXDebugDocs") {{doc}}
   .width-60
     form.bc-form(name="verifyForm" ng-submit="verify()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
@@ -92,6 +92,13 @@
           span 4)
           |  
           span(translate="{{state.idType + '_ID'}}.OPTION4")
+      .mbl(ng-show="buySellDebug")
+        div.type-h4.mbs.underline
+          i.mrs.ti-search
+          span QA
+        .flex-row.flex-center.lh1
+          input.mrs(type="checkbox" id="verify-doc" ng-model="state.verifyDoc")
+          label.em-400.type-lbl.mls(for="verify-doc") Check this box if you want this doc to be approved right away.
 
   .width-60
     label(translate="{{state.idType + '_ID'}}.UPLOAD_TITLE")

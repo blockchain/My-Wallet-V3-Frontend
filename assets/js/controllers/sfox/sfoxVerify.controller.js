@@ -34,6 +34,9 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
     let idType = fields.idType;
     let filename = fields.file.name;
 
+    // QA Tool
+    fields.verifyDoc && (filename = 'testing-' + filename);
+
     $q.resolve(profile.getSignedURL(idType, filename))
       .then((res) => $scope.state.signedURL = res.signed_url)
       .catch((err) => console.log(err))
@@ -43,6 +46,18 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
   $scope.upload = () => {
     $scope.lock();
     let fields = $scope.state;
+    let profile = exchange.profile;
+
+    // Need to override testing-docs-*
+    if ($scope.SFOXDebugDocs.indexOf(profile.address.street.line2) > -1) {
+      profile.setAddress(
+        profile.address.street.line1,
+        '2',
+        profile.address.city,
+        profile.address.state,
+        profile.address.zipcode
+      );
+    }
 
     Upload.http({
       method: 'PUT',
@@ -90,6 +105,7 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
   $scope.$watch('state.file', (file) => file && $scope.getSignedURL());
   $scope.$watch('state.verificationStatus.level', (newVal) => newVal === 'verified' && $scope.vm.goTo('link'));
 
-  // QA Tools
+  // QA Tool
+  $scope.SFOXDebugDocs = QA.SFOXDebugDocs;
   $scope.SFOXAddressForm = () => angular.merge($scope.state, QA.SFOXAddressForm());
 }
