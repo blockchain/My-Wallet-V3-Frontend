@@ -122,11 +122,9 @@ describe "SfoxCheckoutController", ->
     beforeEach ->
       scope = getControllerScope([{status:'active'}])
 
-    it "should reset the quote amount and the refresh timeout", ->
-      scope.state.quote = 100
+    it "should reset the refresh timeout", ->
       spyOn(scope, 'cancelRefresh')
       scope.refreshQuote()
-      expect(scope.state.quote).toEqual(0)
       expect(scope.cancelRefresh).toHaveBeenCalled()
 
     it "should call exchange.getBuyQuote()", ->

@@ -61,7 +61,6 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
   };
 
   $scope.refreshQuote = MyWalletHelpers.asyncOnce(() => {
-    state.quote = 0;
     $scope.cancelRefresh();
     let args = $scope.getQuoteArgs(state);
 
@@ -79,7 +78,13 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
       .then(fetchSuccess, () => { state.loadFailed = true; });
   }, 500);
 
-  $scope.refreshIfValid = (field) => $scope.checkoutForm[field].$valid && $scope.refreshQuote();
+  $scope.refreshIfValid = (field) => {
+    if ($scope.checkoutForm[field].$valid) {
+      $scope.quote = null;
+      $scope.refreshQuote();
+    }
+  };
+
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
   $scope.$on('$destroy', $scope.cancelRefresh);
