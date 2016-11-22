@@ -50,7 +50,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
   };
 
   $scope.getQuoteArgs = (state) => [
-    state.baseFiat ? state.fiat * 100 : state.btc,
+    state.baseFiat ? (state.fiat * 100) | 0 : state.btc,
     state.baseCurr.code,
     state.quoteCurr.code
   ];

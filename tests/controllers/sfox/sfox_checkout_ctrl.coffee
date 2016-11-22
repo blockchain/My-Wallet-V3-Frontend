@@ -110,6 +110,11 @@ describe "SfoxCheckoutController", ->
       scope.state.btc = 350000
       expect(scope.getQuoteArgs(scope.state)).toEqual([350000, "BTC", "USD"])
 
+    it "should get the correct fiat arg with a number js has trouble with", ->
+      scope.state.baseCurr = scope.dollars
+      scope.state.fiat = 1.1
+      expect(scope.getQuoteArgs(scope.state)).toEqual([110, "USD", "BTC"])
+
   describe ".cancelRefresh()", ->
     beforeEach ->
       scope = getControllerScope([{status:'active'}])
