@@ -17,7 +17,6 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
 
   if (!exchange.profile || !accounts.length) return;
 
-  $scope.user = Wallet.user;
   $scope.inspectTrade = modals.openTradeSummary.bind(null, 'processing');
   $scope.signupCompleted = accounts[0].status === 'active';
 
