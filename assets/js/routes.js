@@ -301,10 +301,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         _loadBcPhoneNumber ($ocLazyLoad) {
           return $ocLazyLoad.load('bcPhoneNumber');
         },
-        _loadExchangeData ($q, MyWallet) {
+        _loadExchangeData ($q, MyWallet, sfox) {
           let exchange = MyWallet.wallet.external.sfox;
           return exchange.user && !exchange.profile
-            ? $q.all([exchange.fetchProfile(), exchange.getTrades()])
+            ? sfox.fetchExchangeData(exchange)
             : $q.resolve();
         },
         accounts ($q, MyWallet) {

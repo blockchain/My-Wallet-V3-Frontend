@@ -2,9 +2,10 @@ angular
   .module('walletApp')
   .factory('sfox', sfox);
 
-function sfox () {
+function sfox ($q) {
   const service = {
-    determineStep
+    determineStep,
+    fetchExchangeData
   };
 
   return service;
@@ -24,5 +25,11 @@ function sfox () {
         return 'buy';
       }
     }
+  }
+
+  function fetchExchangeData (exchange) {
+    return $q.resolve(exchange.fetchProfile())
+      .then(() => exchange.getTrades())
+      .then(() => exchange.monitorPayments());
   }
 }
