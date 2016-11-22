@@ -23,7 +23,7 @@ describe "SfoxVerifyController", ->
 
   getControllerScope = (params = {}) ->
     scope = $rootScope.$new()
-    scope.vm = 
+    scope.vm =
       goTo: () ->
       exchange:
         profile:
@@ -54,7 +54,7 @@ describe "SfoxVerifyController", ->
 
   beforeEach ->
     scope = getControllerScope()
-    $rootScope.$digest()  
+    $rootScope.$digest()
 
   describe "setState", ->
 
@@ -66,12 +66,6 @@ describe "SfoxVerifyController", ->
       idTypes = ['ssn', 'id', 'address']
       scope.setState()
       expect(scope.state.idType).toBe('ssn')
-
-    it "should shift the idType after each state set", ->
-      idTypes = ['ssn', 'id', 'address']
-      scope.setState()
-      scope.setState()
-      expect(scope.state.idType).toBe('id')
 
   beforeEach ->
     scope.state =

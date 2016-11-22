@@ -9,4 +9,7 @@ angular.module('walletApp.core').factory 'MyWalletBuySell', () ->
           getBuyCurrencies: () ->
           monitorPayments: () ->
         }
+        sfox: {
+          api: {}
+        }
     }

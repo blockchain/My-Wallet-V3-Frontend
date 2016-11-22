@@ -23,10 +23,10 @@ describe('convertFilter', () => {
     expect(convert()).toBe(null);
   }));
 
-  it('should not convert to the display currency if specified', inject(($filter, Wallet, currency) => {
+  it('should convert to btc currency', inject(($filter, Wallet, currency) => {
     let convert = $filter('convert');
-    Wallet.settings.displayCurrency = currency.bitCurrencies[1];
-    expect(convert(100000000, false)).toBe('1 BTC');
+    Wallet.settings.displayCurrency = currency.currencies[0];
+    Wallet.settings.btcCurrency = currency.bitCurrencies[1];
+    expect(convert(100000000, 'btc')).toBe('1,000 mBTC');
   }));
-
 });

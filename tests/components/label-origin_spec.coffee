@@ -18,6 +18,8 @@ describe "label-origin.component", ->
     element = compileElement({ address: '1abcd' })
     expect(element.innerHTML).toContain('1abcd')
 
-  it "should display a balance", ->
+  it "should display a balance", inject((Wallet, currency) ->
+    Wallet.settings.displayCurrency = currency.bitCurrencies[0]
     element = compileElement({ balance: 10000 })
     expect(element.innerHTML).toContain('(0.0001 BTC)')
+  )
