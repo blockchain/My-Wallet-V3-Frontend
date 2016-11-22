@@ -43,7 +43,9 @@ describe "SfoxCheckoutController", ->
   getControllerScope = (accounts) ->
     scope = $rootScope.$new()
     scope.vm = external: { sfox:
-      profile: { verificationStatus: level: "unverified" }
+      profile:
+        limits: buy: 100
+        verificationStatus: level: "unverified"
       getBuyQuote: () -> $q.resolve({})
     }
     template = $templateCache.get('partials/sfox/checkout.jade')

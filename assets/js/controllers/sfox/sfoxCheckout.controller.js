@@ -27,8 +27,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
 
   $scope.account = accounts[0];
   $scope.trades = exchange.trades;
-  $scope.min = 10;
-  $scope.max = 100;
+  $scope.max = exchange.profile.limits.buy;
 
   let state = $scope.state = {
     fiat: $scope.max,
