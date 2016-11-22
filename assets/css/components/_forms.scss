@@ -124,12 +124,6 @@ form.bc-form {
   input,
   .ui-select-container {
     &.ng-touched {
-      &.ng-valid {
-        & + i:before {
-          color: $success;
-          content: "\e64c";
-        }
-      }
       &.ng-invalid {
         border-color: $state-danger-text;
         & + i:before {
