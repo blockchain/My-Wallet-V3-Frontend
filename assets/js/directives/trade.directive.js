@@ -57,6 +57,14 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
       scope.trade.btcExpected().then(success);
     };
 
+    scope.logDetails = (trade) => {
+      console.log('------------ Details ------------');
+      console.log('Trade ID:', trade.id);
+      console.log('Trade State:', trade.state);
+      console.log('Created At:', trade.createdAt);
+      console.log('Receive Address:', trade.receiveAddress);
+    };
+
     scope.$watch('trade.state', scope.update);
     scope.$watch('expiredQuote', (newVal, oldVal) => {
       if (newVal) scope.updateBTCExpected();
