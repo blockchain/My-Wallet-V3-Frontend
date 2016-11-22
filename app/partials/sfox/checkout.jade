@@ -17,7 +17,7 @@
         span &nbsp;
         span.blue.em-500 🐕 SFOX
     form.bc-form.mtl(name="checkoutForm" novalidate autocomplete="off")
-      fieldset(ng-disabled="locked")
+      fieldset
         .group.mtl
           .item
             .flex-between.flex-baseline.mbs
@@ -37,8 +37,9 @@
                   ng-min="min"
                   ng-max="max"
                   ng-focus="state.baseCurr = dollars"
+                  ng-disabled="locked"
                   required)
-                span.mrm {{dollars.code}}
+                span.mhm {{dollars.code}}
               i.ti-arrows-horizontal.h4.aaa.phm
               .flex-1.flex-center.border
                 input.form-control.no-border(
@@ -46,9 +47,10 @@
                   name="btc"
                   ng-model="state.btc"
                   ng-focus="state.baseCurr = bitcoin"
+                  ng-disabled="locked"
                   transform-currency="bitcoin"
                   required)
-                span.mrm {{bitcoin.code}}
+                span.mhm {{bitcoin.code}}
             .text.mts
               span.type-sm Your daily buy limit is ${{ max }}
         .group.mtl
@@ -76,7 +78,7 @@
                 span.colon Total
                 span {{ format(state.total || 0, dollars, true) }}
         .group.mtl
-          button.btn.button-primary.full(ng-click="buy()" ng-disabled="checkoutForm.$invalid || !quote || state.loadFailed") Buy Bitcoin
+          button.btn.button-primary.full(ng-click="buy()" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") Buy Bitcoin
   .flex-column.mtl(ng-show="trades.length")
     h4.type-h4(translate="ORDER_HISTORY")
     table.width-100
