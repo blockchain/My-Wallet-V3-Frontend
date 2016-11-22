@@ -90,10 +90,5 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, Upload, QA)
   $scope.$watch('state.verificationStatus.level', (newVal) => newVal === 'verified' && $scope.vm.goTo('link'));
 
   // QA Tools
-  $scope.SFOXAddressForm = () => {
-    let fields = QA.SFOXAddressForm();
-    let keys = Object.keys(fields);
-
-    keys.forEach((key) => $scope.state[key] = fields[key]);
-  };
+  $scope.SFOXAddressForm = () => angular.merge($scope.state, QA.SFOXAddressForm());
 }
