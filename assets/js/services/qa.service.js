@@ -11,8 +11,7 @@ function QA () {
   service.SFOXAddressForm = () => {
     let fields = {
       first: 'Satoshi' + unique,
-      middle: 'Naka' + unique,
-      last: 'Moto' + unique,
+      last: 'Nakamoto' + unique,
       ssn: unique.slice(4, 13),
       dob: new Date(1991, 4, 14),
       addr1: '123 Bitcoin Lane',
