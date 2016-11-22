@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxVerifyController', SfoxVerifyController);
 
-function SfoxVerifyController ($rootScope, $scope, $q, state, $http, Upload, QA) {
+function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Upload, QA) {
   $scope.states = state.stateCodes;
   let exchange = $scope.vm.exchange;
 
@@ -78,6 +78,7 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, Upload, QA)
 
       $q.resolve(profile.verify())
         .then(() => $scope.setState())
+        .catch(sfox.displayError)
         .finally($scope.free);
     } catch (error) {
       console.error(error);

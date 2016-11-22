@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxLinkController', SfoxLinkController);
 
-function SfoxLinkController ($scope, $q, modals) {
+function SfoxLinkController ($scope, $q, sfox, modals) {
   let exchange = $scope.vm.exchange;
   let accounts = $scope.vm.accounts;
 
@@ -27,9 +27,9 @@ function SfoxLinkController ($scope, $q, modals) {
     $scope.lock();
 
     $q.resolve(exchange.getBuyMethods())
-      .then((methods) => addAccount(methods))
-      .then((account) => state.accounts[0] = account)
-      .catch(error => console.error(error))
+      .then(methods => addAccount(methods))
+      .then(account => state.accounts[0] = account)
+      .catch(sfox.displayError)
       .finally($scope.free);
 
     let addAccount = (methods) => {
@@ -46,7 +46,7 @@ function SfoxLinkController ($scope, $q, modals) {
 
     $q.resolve(state.accounts[0].verify($scope.fields.deposit1, $scope.fields.deposit2))
       .then(() => $scope.vm.goTo('buy'))
-      .catch((err) => console.log(err))
+      .catch(sfox.displayError)
       .finally($scope.free);
   };
 
