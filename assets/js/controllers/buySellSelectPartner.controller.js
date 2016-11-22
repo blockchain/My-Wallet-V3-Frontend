@@ -9,12 +9,13 @@ function BuySellSelectPartnerController ($scope, $state, MyWallet, country) {
 
   $scope.getPartner = (country) => (
     $scope.sfoxCountries.indexOf(country.Code) > -1
-      ? { name: 'SFOX', icon: '🐕 SFOX', route: '.sfox' }
-      : { name: 'Coinify', icon: 'Coinify', route: '.coinify' }
+      ? { name: 'SFOX', logo: 'img/sfox-logo.png', href: 'https://www.sfox.com/', route: '.sfox' }
+      : { name: 'Coinify', logo: 'img/coinify-logo.svg', href: 'https://www.coinify.com/', route: '.coinify' }
   );
 
-  $scope.selectPartner = (country) => {
-    let partner = $scope.getPartner($scope.country);
+  $scope.selectPartner = (partner) => {
     $state.go($scope.vm.base + partner.route);
   };
+
+  $scope.$watch('country', (c) => { $scope.partner = $scope.getPartner(c); });
 }

@@ -90,6 +90,14 @@
   }
 }
 
+.sfox-logo {
+  img { width: 60px; }
+}
+
+.partner-logo {
+  height: 44px;
+}
+
 .payment-methods {
   input {
     & ~ .flex-column img {

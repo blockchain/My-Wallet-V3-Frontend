@@ -12,10 +12,10 @@
   .width-50.border.mrl.pal.flex-column.flex-between(ng-show="signupCompleted")
     .flex-between.flex-baseline.mbl
       span.type-h4.em-500 Buy Bitcoin
-      div
-        span Powered by
-        span &nbsp;
-        span.blue.em-500 🐕 SFOX
+      .sfox-logo
+        span.mrs.type-sm(translate="POWERED_BY")
+        a(href="https://www.sfox.com/" target="_blank" rel="noopener noreferrer")
+          img.mbs(src="img/sfox-logo.png")
     form.bc-form.mtl(name="checkoutForm" novalidate autocomplete="off")
       fieldset
         .group.mtl
