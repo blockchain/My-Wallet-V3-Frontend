@@ -10,7 +10,8 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
     replace: true,
     scope: {
       trade: '=',
-      buy: '='
+      buy: '=',
+      usa: '='
     },
     templateUrl: 'templates/trade.jade',
     link: link
@@ -30,6 +31,7 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
     scope.update();
     scope.status = {};
     scope.expiredQuote = new Date() > scope.trade.quoteExpireTime;
+    scope.dateFormat = 'd MMMM yyyy, ' + (scope.usa ? 'h:mm a' : 'HH:mm');
 
     scope.cancel = (trade) => {
       scope.status.canceling = true;
