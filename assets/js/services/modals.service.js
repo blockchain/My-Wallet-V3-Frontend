@@ -43,11 +43,11 @@ function modals ($state, $uibModal, $ocLazyLoad) {
     if (goingToBuySellState) $state.go('wallet.common.buy-sell');
   });
 
-  service.openTradeSummary = (state, trade) => open({
+  service.openTradeSummary = (trade, state) => open({
     templateUrl: 'partials/trade-modal.jade',
     windowClass: 'bc-modal auto buy',
     controller ($scope, trade, formatTrade) {
-      $scope.formattedTrade = formatTrade[state](trade);
+      $scope.formattedTrade = formatTrade[state || trade.state](trade);
     },
     resolve: {
       trade: () => trade

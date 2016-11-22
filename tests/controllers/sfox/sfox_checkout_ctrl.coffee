@@ -85,7 +85,7 @@ describe "SfoxCheckoutController", ->
       spyOn(modals, "openTradeSummary")
       scope.buy()
       scope.$digest()
-      expect(modals.openTradeSummary).toHaveBeenCalledWith('initiated', 'TRADE')
+      expect(modals.openTradeSummary).toHaveBeenCalledWith('TRADE', 'initiated')
 
     it "should show an alert in case of error", ->
       spyOn(Alerts, "displayError")
