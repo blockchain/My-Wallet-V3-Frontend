@@ -81,6 +81,8 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
     if ($scope.checkoutForm[field].$valid) {
       $scope.quote = null;
       $scope.refreshQuote();
+    } else {
+      $scope.refreshQuote.cancel();
     }
   };
 
