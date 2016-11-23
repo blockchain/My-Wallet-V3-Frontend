@@ -20,7 +20,6 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
       if (!Wallet.settings.secondPassword) {
         $scope.metaData = MyWallet.wallet.metadata(2, mockFailure);
         $scope.metaData.fetch().then((res) => {
-          console.log("Did fetch:", res);
           if (res !== null) {
             $scope.lastViewedWhatsNew = res.lastViewed;
           } else {
@@ -78,7 +77,6 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
     if (!Wallet.settings.secondPassword) {
       // Set cookie as a fallback in case metadata service is down
       $cookies.put('whatsNewViewed', lastViewed);
-      console.log('Go update', lastViewed);
       $scope.metaData.update({
         lastViewed: lastViewed
       });
