@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('NavigationCtrl', NavigationCtrl);
 
-function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeout, $cookies, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWalletMetadata) {
+function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeout, $cookies, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
 
@@ -18,7 +18,7 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
   $scope.initialize = (mockFailure) => {
     const fetchLastViewed = () => {
       if (!Wallet.settings.secondPassword) {
-        $scope.metaData = new MyWalletMetadata(2, mockFailure);
+        $scope.metaData = MyWallet.wallet.metadata(2, mockFailure);
         $scope.metaData.fetch().then((res) => {
           if (res !== null) {
             $scope.lastViewedWhatsNew = res.lastViewed;

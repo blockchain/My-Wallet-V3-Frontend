@@ -27,6 +27,11 @@ describe "NavigationCtrl", ->
         secondPassword: false
       }
 
+      MyWallet.wallet =
+        metadata: (n, mockFailure) ->
+          fetch: () -> if mockFailure then $q.reject() else $q.resolve(lastViewed: 3)
+          update: () -> $q.resolve()
+
       MyWallet.logout = () ->
         Wallet.status.isLoggedIn = false
 
@@ -86,7 +91,8 @@ describe "NavigationCtrl", ->
 
     describe "without 2nd password", ->
       beforeEach ->
-        scope.initialize();
+        scope.initialize()
+        scope.$digest()
 
       it "should get the last viewed time from metadata service", ->
         expect(scope.lastViewedWhatsNew).toEqual(3)
@@ -106,7 +112,8 @@ describe "NavigationCtrl", ->
 
     describe "without 2nd password if metadata service is down", ->
       beforeEach ->
-        scope.initialize(true);
+        scope.initialize(true)
+        scope.$digest()
 
       it "should get the last viewed time from a cookie", ->
         expect(scope.lastViewedWhatsNew).toEqual(2)
@@ -128,6 +135,7 @@ describe "NavigationCtrl", ->
       beforeEach ->
         Wallet.settings.secondPassword = true
         scope.initialize()
+        scope.$digest()
 
       it "should get the last viewed time from a cookie", ->
         expect(scope.lastViewedWhatsNew).toEqual(2)
@@ -148,7 +156,8 @@ describe "NavigationCtrl", ->
     describe "for a v2 wallet", ->
       beforeEach ->
         scope.status.didUpgradeToHd = false
-        scope.initialize();
+        scope.initialize()
+        scope.$digest()
 
       it "should not fetch", ->
         expect(scope.lastViewedWhatsNew).toEqual(null)
