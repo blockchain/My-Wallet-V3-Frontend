@@ -1,8 +1,6 @@
 angular
-  .module('buyStatus', [])
+  .module('walletApp')
   .factory('buyStatus', buyStatus);
-
-buyStatus.$inject = ['MyWallet', 'Options'];
 
 function buyStatus (MyWallet, Options) {
   const service = {};

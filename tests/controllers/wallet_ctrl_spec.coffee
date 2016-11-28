@@ -12,6 +12,7 @@ describe "WalletCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
+      buyStatus = $injector.get("buyStatus")
       $httpBackend = $injector.get("$httpBackend")
       $cookies = $injector.get("$cookies")
       $rootScope.rootURL = "https://blockchain.info/"
@@ -109,7 +110,7 @@ describe "WalletCtrl", ->
     )
 
   describe "welcome modal", ->
-    it "should open when firstTime goal is set", inject((Wallet, $rootScope, $timeout, $uibModal, $httpBackend) ->
+    it "should open when firstTime goal is set", inject((Wallet, $rootScope, $timeout, $uibModal) ->
       spyOn($uibModal, 'open').and.returnValue(mockModalInstance)
 
       $httpBackend.expectGET('/Resources/wallet-options.json').respond({showBuySellTab: true})
@@ -117,7 +118,6 @@ describe "WalletCtrl", ->
       Wallet.status.isLoggedIn = true
       Wallet.goal.firstTime = true
 
-      $httpBackend.flush()
       $rootScope.$digest()
       $timeout.flush()
 
