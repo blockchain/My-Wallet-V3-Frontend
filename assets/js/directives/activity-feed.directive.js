@@ -19,7 +19,7 @@ function activityFeed ($http, Wallet, MyWallet, Activity, Options, buyStatus) {
     scope.status = Wallet.status;
     scope.activities = Activity.activities;
 
-    scope.canBuy = buyStatus.canBuy;
+    scope.canBuy = buyStatus.canBuy();
 
     scope.$watch(() => Activity.activities, (activities) => {
       scope.activities = activities;

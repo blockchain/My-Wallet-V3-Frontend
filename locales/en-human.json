@@ -659,6 +659,10 @@
     "TITLE": "Wait!",
     "BODY": "Before you sign out, make sure to record your backup phrase. This will allow you to recover your wallet if you ever forget your password."
   },
+  "BUY_BITCOIN_REMINDER": {
+    "TITLE": "Need Bitcoin?",
+    "BODY": "Get the most out of your wallet. Buy bitcoin now and start transacting with others all around the world!"
+  },
   "WHAT_DO_YOU_THINK": "What do you think of Blockchain Wallet?",
   "VIEW_OPTIONS": "View Options",
   "DEAUTH_BROWSER": "You are now logged out!",

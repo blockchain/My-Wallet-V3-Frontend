@@ -9,8 +9,8 @@
         i.ti-layout-list-post
         span(translate="MY_TRANSACTIONS")
     // Don't forget to update controllers/buySell.controller.js
-    li.header(ui-sref-active="current" ng-show="canBuy() || userHasAccount()")
-      span(ng-show="!userHasAccount()")
+    li.header(ui-sref-active="current" ng-show="canBuy || userHasAccount")
+      span(ng-show="!userHasAccount")
         buy-alert
       a(ui-sref="wallet.common.buy-sell")
         i.ti-direction-alt

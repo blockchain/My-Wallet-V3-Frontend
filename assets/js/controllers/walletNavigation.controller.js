@@ -6,15 +6,8 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Options, Al
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.security = SecurityCenter.security;
-  $scope.canBuy = buyStatus.canBuy;
-  $scope.userHasAccount = buyStatus.userHasAccount;
-
-  // Debug:
-  // $scope.isUserInvited = false;
-
-  // debug invited user and whitelisted
-  // $scope.isUserInvited = true;
-  // $scope.isCountryWhitelisted = true;
+  $scope.canBuy = buyStatus.canBuy();
+  $scope.userHasAccount = buyStatus.userHasAccount();
 
   $scope.numberOfActiveLegacyAddresses = () => {
     if (!Wallet.status.isLoggedIn) return null;
