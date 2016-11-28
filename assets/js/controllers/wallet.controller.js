@@ -2,9 +2,8 @@ angular
   .module('walletApp')
   .controller('WalletCtrl', WalletCtrl);
 
-function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, MyWallet, currency, $translate, $window, Options) {
+function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, MyWallet, currency, $translate, $window, buyStatus) {
   $scope.goal = Wallet.goal;
-  $scope.accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
 
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
@@ -43,15 +42,6 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   $scope.$on('$destroy', () => $interval.cancel($scope.inactivityInterval));
 
   $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia) !== void 0;
-
-  $scope.isUserInvited = $scope.accountInfo && $scope.accountInfo.invited;
-
-  $scope.isCountryWhitelisted = null;
-
-  $scope.setIsCountryWhitelisted = (options) => {
-    let whitelist = options.showBuySellTab || [];
-    $scope.isCountryWhitelisted = $scope.accountInfo && whitelist.indexOf($scope.accountInfo.countryCodeGuess) > -1;
-  };
 
   $scope.request = () => {
     Alerts.clear();
@@ -177,8 +167,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         Wallet.goal.auth = void 0;
       }
       if (Wallet.goal.firstTime) {
-        let canBuy = $scope.isUserInvited && $scope.isCountryWhitelisted;
-        let template = canBuy ? 'partials/buy-login-modal.jade' : 'partials/first-login-modal.jade';
+        let template = buyStatus.canBuy() ? 'partials/buy-login-modal.jade' : 'partials/first-login-modal.jade';
         $uibModal.open({
           templateUrl: template,
           windowClass: 'bc-modal rocket-modal initial'
@@ -206,6 +195,4 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   };
 
   $scope.back = () => $window.history.back();
-
-  Options.get().then($scope.setIsCountryWhitelisted);
 }

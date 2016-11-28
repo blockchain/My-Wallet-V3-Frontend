@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .directive('activityFeed', activityFeed);
 
-activityFeed.$inject = ['$http', 'Wallet', 'Activity'];
+activityFeed.$inject = ['$http', 'Wallet', 'MyWallet', 'Activity', 'Options', 'buyStatus'];
 
-function activityFeed ($http, Wallet, Activity) {
+function activityFeed ($http, Wallet, MyWallet, Activity, Options, buyStatus) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -15,9 +15,11 @@ function activityFeed ($http, Wallet, Activity) {
   return directive;
 
   function link (scope, elem, attrs) {
+    scope.loading = true;
     scope.status = Wallet.status;
     scope.activities = Activity.activities;
-    scope.loading = true;
+
+    scope.canBuy = buyStatus.canBuy;
 
     scope.$watch(() => Activity.activities, (activities) => {
       scope.activities = activities;

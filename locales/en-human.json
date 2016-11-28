@@ -642,6 +642,7 @@
   "DYK" : "Did You Know?",
   "ACTIVITY_EMPTY": "Welcome to your Activity Feed",
   "ACTIVITY_EMPTY_MSG": "Here we'll give you a snapshot of recent transactions + important activites surrounding your wallet. Get a head start by sharing your address to receive bitcoins into your wallet",
+  "CAN_BUY_ACTIVITY_EMPTY_MSG": "Here we’ll give you a snapshot of recent transactions + important activities surrounding your wallet. Get started by adding some bitcoins to your wallet!",
   "RECEIVE_BTC": "Start Receiving Bitcoins",
   "FEATURE": "Feature",
   "EDUCATIONAL": "Educational",
