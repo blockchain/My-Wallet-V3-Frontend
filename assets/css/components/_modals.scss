@@ -494,3 +494,10 @@
   height: auto;
   margin: 0px;
 }
+
+.modal-body .close-modal {
+  position: absolute;
+  cursor: pointer;
+  right: 10px;
+  top: 10px;
+}

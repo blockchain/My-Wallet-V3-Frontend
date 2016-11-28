@@ -109,12 +109,15 @@ describe "WalletCtrl", ->
     )
 
   describe "welcome modal", ->
-    it "should open when firstTime goal is set", inject((Wallet, $rootScope, $timeout, $uibModal) ->
+    it "should open when firstTime goal is set", inject((Wallet, $rootScope, $timeout, $uibModal, $httpBackend) ->
       spyOn($uibModal, 'open').and.returnValue(mockModalInstance)
+
+      $httpBackend.expectGET('/Resources/wallet-options.json').respond({showBuySellTab: true})
 
       Wallet.status.isLoggedIn = true
       Wallet.goal.firstTime = true
 
+      $httpBackend.flush()
       $rootScope.$digest()
       $timeout.flush()
 
