@@ -39,7 +39,7 @@
             i
           .item.width-33
             label Date of Birth
-            input(ng-model="state.dob" name="dob" placeholder="mm/dd/yyyy" format-input="xx/xx/xxxx" required)
+            input(ng-model="state.dob" name="dob" placeholder="mm/dd/yyyy" format-input="xx/xx/xxxx" is-valid="isBeforeNow(state.dob)" required)
             i
           .item.width-33
         .group

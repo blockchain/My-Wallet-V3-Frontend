@@ -73,6 +73,19 @@ describe "SfoxVerifyController", ->
         name: 'test-passport.jpg'
       signedURL: 'sfox.com/signed'
 
+  describe "isBeforeNow", ->
+    beforeEach ->
+      mockNow = new Date("11/24/2016").getTime()
+      spyOn(Date, "now").and.returnValue(mockNow)
+
+    it "should return true if date is in past", ->
+      past = "11/23/2016"
+      expect(scope.isBeforeNow(past)).toEqual(true)
+
+    it "should return false if date is in future", ->
+      future = "11/25/2016"
+      expect(scope.isBeforeNow(future)).toEqual(false)
+
   describe "getSignedURL", ->
 
     it "should get a signed url", ->

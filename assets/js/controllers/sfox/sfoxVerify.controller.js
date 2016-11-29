@@ -27,6 +27,11 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
     $scope.state.file = undefined;
   };
 
+  $scope.isBeforeNow = (date) => {
+    let then = new Date(date).getTime();
+    return then < Date.now();
+  };
+
   $scope.getSignedURL = () => {
     $scope.lock();
     let fields = $scope.state;
