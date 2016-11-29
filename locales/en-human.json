@@ -23,6 +23,10 @@
   "NEED_MORE_HELP": "Can't find what you're looking for?",
   "VISIT_SUPPORT": "Support Center",
   "FAQ_QUESTIONS": {
+    "CAN_I_BUY": {
+      "Q": "Can I Buy Bitcoin?",
+      "A": "If you're in a SEPA zone, you can buy bitcoin directly from your wallet! <span class='pointer blue'>{{::text | translate}}</span> <br> If you're outside the SEPA zone, stay tuned! This feature will be available in your area soon."
+    },
     "WALLET_SAFETY": {
       "Q": "What do I need to do to keep my wallet safe?",
       "A": "Our Security Center can help you keep your wallet secure and ensure that you can access your funds even if you lose your password - all in less than 5 minutes. A great place to start is to enable 2-Step Verification to help prevent unauthorized access to your wallet and write down your Recovery Phrase to make sure you never lose access to your funds. We also recommend using a unique, random password that’s at least 16 characters or more."
@@ -642,8 +646,8 @@
   "MOST_RECENT_ACTIVITY" : "Most Recent Activity",
   "DYK" : "Did You Know?",
   "ACTIVITY_EMPTY": "Welcome to your Activity Feed",
-  "ACTIVITY_EMPTY_MSG": "Here we'll give you a snapshot of recent transactions + important activites surrounding your wallet. Get a head start by sharing your address to receive bitcoins into your wallet",
-  "CAN_BUY_ACTIVITY_EMPTY_MSG": "Here we’ll give you a snapshot of recent transactions + important activities surrounding your wallet. Get started by adding some bitcoins to your wallet!",
+  "ACTIVITY_EMPTY_MSG": "Here we'll give you a snapshot of recent transactions & important activites surrounding your wallet. Get a head start by sharing your address to receive bitcoins into your wallet",
+  "CAN_BUY_ACTIVITY_EMPTY_MSG": "Here we’ll give you a snapshot of recent transactions & important activities surrounding your wallet. Get started by adding some bitcoins to your wallet!",
   "RECEIVE_BTC": "Start Receiving Bitcoins",
   "FEATURE": "Feature",
   "EDUCATIONAL": "Educational",
@@ -897,6 +901,7 @@
   "ERR_NOTE_LENGTH": "Description cannot be longer than 512 characters",
   "GET_STARTED": "Get Started",
   "START_CLICK_HERE": "Click here to get started.",
+  "CLICK_TO_GET_BTC": "Click here to get some bitcoin",
   "CREATE_YOUR_WALLET": "Create Your Wallet",
   "NEW_USERS": "New Users",
   "NEW_USERS_COPY": "Creating a Blockchain Wallet takes a few seconds. Send and receive payments immediately.",
