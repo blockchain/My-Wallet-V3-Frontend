@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('faq', faq);
 
-function faq (buyStatus) {
+function faq () {
   const questions = [
     { name: 'CAN_I_BUY',
       values: {'link': 'wallet.common.buy-sell', 'text': 'CLICK_TO_GET_BTC'} },
