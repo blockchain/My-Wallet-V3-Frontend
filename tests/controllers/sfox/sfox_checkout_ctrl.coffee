@@ -1,4 +1,3 @@
-
 describe "SfoxCheckoutController", ->
   $rootScope = undefined
   $controller = undefined
@@ -37,6 +36,7 @@ describe "SfoxCheckoutController", ->
       Wallet = $injector.get('Wallet')
       MyWalletHelpers = $injector.get('MyWalletHelpers')
 
+      Wallet.accounts = () -> []
       Wallet.getDefaultAccount = () -> {}
       MyWalletHelpers.asyncOnce = (f) => f
 
@@ -65,6 +65,17 @@ describe "SfoxCheckoutController", ->
     spyOn(modals, "openSfoxSignup")
     scope.openSfoxSignup()
     expect(modals.openSfoxSignup).toHaveBeenCalledWith(scope.vm.external.sfox)
+
+  describe "hasMultipleAccounts", ->
+    it "should be false for one account", ->
+      spyOn(Wallet, "accounts").and.returnValue([{active: true}])
+      scope = getControllerScope([{status:'active'}])
+      expect(scope.hasMultipleAccounts).toEqual(false)
+
+    it "should be true for more than one account", ->
+      spyOn(Wallet, "accounts").and.returnValue([{active: true}, {active: true}])
+      scope = getControllerScope([{status:'active'}])
+      expect(scope.hasMultipleAccounts).toEqual(true)
 
   describe ".buy()", ->
     beforeEach ->

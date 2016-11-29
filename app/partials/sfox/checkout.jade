@@ -63,10 +63,11 @@
             .mbm
               span.type-h5.em-500 Order Summary
             .border.flex-column
-              .flex-between.flex-center.form-control.no-border
-                span.colon Send To
-                span {{ btcAccount.label }}
-              .border-bottom-light.mhm
+              div(ng-show="hasMultipleAccounts")
+                .flex-between.flex-center.form-control.no-border
+                  span.colon Send To
+                  span {{ btcAccount.label }}
+                .border-bottom-light.mhm
               .flex-between.flex-center.form-control.no-border
                 span.colon Amount
                 span {{ format(state.fiat || 0, dollars, true) }}
