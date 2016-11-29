@@ -612,7 +612,8 @@
   "FIRST_LOGIN_TEXT_1" : " Our wallet makes transacting easy and intuitive and is helping create a fair, accessible and open financial future. Visit our  ",
   "FIRST_LOGIN_TEXT_2" : " and keep your wallet safe.",
   "FIRST_LOGIN_ACTION" : "Get Started",
-  "BUY_FIRST_LOGIN_TEXT": "Thanks for joining the world’s most popular bitcoin wallet. We’re helping create a fair and open financial future. Get started now by purchasing your first bitcoins!",
+  "BUY_FIRST_LOGIN_TEXT_1": "Thanks for joining the world’s most popular bitcoin wallet. We’re helping create a fair and open financial future.",
+  "BUY_FIRST_LOGIN_TEXT_2": "Get started now by purchasing your first bitcoins!", 
   "TOS" : "ToS",
   "PRIVACY" : "Privacy Policy",
   "CREATE_NEW_ACCOUNT_MODAL" : "Divide your wallet to better allocate, track and manage your bitcoins. Some common names include Savings, Spending, and Business Expenses.",
@@ -635,7 +636,7 @@
   "NOTE_LC" : "Note:",
   "SECURE_WALLET_MSG_1" : "We’re thrilled you’re using your bitcoin wallet! But it looks like you’re still not as secure as you could be. Securing your wallet can help keep funds safe.",
   "SECURE_WALLET_MSG_2" : "Don't forget to secure your wallet - take advantage of our Security Center and keep your funds safe",
-  "NO_THANKS" : "No Thanks",
+  "NO_THANKS" : "No thanks",
   "CONTINUE_LOGOUT": "Continue signing out",
   "SECURE_WALLET" : "Secure Wallet",
   "MOST_RECENT_ACTIVITY" : "Most Recent Activity",
@@ -660,8 +661,8 @@
     "BODY": "Before you sign out, make sure to record your backup phrase. This will allow you to recover your wallet if you ever forget your password."
   },
   "BUY_BITCOIN_REMINDER": {
-    "TITLE": "Need Bitcoin?",
-    "BODY": "Get the most out of your wallet. Buy bitcoin now and start transacting with others all around the world!"
+    "TITLE": "Did you know?",
+    "BODY": "You can buy Bitcoin directly from your wallet! Checkout our buy feature to top off your balance."
   },
   "WHAT_DO_YOU_THINK": "What do you think of Blockchain Wallet?",
   "VIEW_OPTIONS": "View Options",

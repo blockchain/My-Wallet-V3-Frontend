@@ -6,7 +6,6 @@ function buyStatus (Wallet, MyWallet, Options, $cookies, Alerts, $state, $q) {
   const service = {};
 
   let isCountryWhitelisted = null;
-  let buyReminder = $cookies.getObject('buy-bitcoin-reminder');
   let nextWeek = () => new Date(Date.now() + 604800000).getTime();
 
   let setIsCountryWhitelisted = (options) => {
@@ -30,6 +29,7 @@ function buyStatus (Wallet, MyWallet, Options, $cookies, Alerts, $state, $q) {
   };
 
   service.shouldShowBuyReminder = () => {
+    let buyReminder = $cookies.getObject('buy-bitcoin-reminder');
     let timeHasPassed = buyReminder ? new Date() > buyReminder.when : true;
     let shownTwice = buyReminder ? buyReminder.index >= 2 : false;
     let firstTime = Wallet.goal.firstTime;
@@ -38,6 +38,8 @@ function buyStatus (Wallet, MyWallet, Options, $cookies, Alerts, $state, $q) {
   };
 
   service.showBuyReminder = () => {
+    let buyReminder = $cookies.getObject('buy-bitcoin-reminder');
+
     let options = (ops) => angular.merge({ friendly: true, modalClass: 'top' }, ops);
     let saidNoThanks = (e) => e === 'cancelled' ? $q.resolve() : $q.reject();
     let goToBuy = () => $state.go('wallet.common.buy-sell');
