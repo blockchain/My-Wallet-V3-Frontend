@@ -246,9 +246,8 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   };
 
   $scope.close = () => {
-    let text, action, link;
+    let text, action, link, index;
     let surveyOpened = $cookies.getObject('survey-opened');
-    let index = surveyOpened ? surveyOpened.index : 0;
 
     if (!$scope.exchange.user) {
       index = 0;
