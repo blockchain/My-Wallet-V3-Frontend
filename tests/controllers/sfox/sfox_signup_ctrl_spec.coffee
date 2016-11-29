@@ -1,9 +1,8 @@
-
 describe "SfoxSignupController", ->
   $rootScope = undefined
   $controller = undefined
 
-  profile = (status) -> verificationStatus: level: status
+  profile = (status, docs) -> verificationStatus: { level: status, required_docs: docs }
   accounts = (first) -> if first then [first] else []
 
   beforeEach angular.mock.module("walletApp")
@@ -38,6 +37,14 @@ describe "SfoxSignupController", ->
     it "should be 'verify' if profile is unverified", ->
       ctrl = getController(profile('unverified'))
       expect(ctrl.onStep('verify')).toEqual(true)
+
+    it "should be 'verify' if profile is pending verification and needs docs", ->
+      ctrl = getController(profile('pending', ['id']))
+      expect(ctrl.onStep('verify')).toEqual(true)
+
+    it "should be 'link' if profile is pending verification and does not need docs", ->
+      ctrl = getController(profile('pending'))
+      expect(ctrl.onStep('link')).toEqual(true)
 
     it "should be 'link' if user does not have an account", ->
       ctrl = getController(profile('verified'), accounts())

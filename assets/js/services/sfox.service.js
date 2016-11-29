@@ -28,9 +28,10 @@ function sfox ($q, Alerts) {
     if (!profile) {
       return 'create';
     } else {
-      let status = profile.verificationStatus;
+      let { level, required_docs = [] } = profile.verificationStatus;
+      let didVerify = (level === 'verified') || (level === 'pending' && required_docs.length === 0);
       let hasAccount = accounts.length && accounts[0].status === 'active';
-      if (status.level !== 'verified') {
+      if (!didVerify) {
         return 'verify';
       } else if (!hasAccount) {
         return 'link';
