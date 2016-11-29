@@ -53,7 +53,6 @@
     .modal-footer {
       border-radius: 0px 0px 5px 5px;
       background-color: #fff;
-      padding: 10px;
     }
     &.fade .modal-dialog {
       -webkit-transform: translate(0,-25%);
@@ -455,9 +454,13 @@
     .modal-body { padding: 1em; }
     .rocket-gif { height: 325px; }
     .rocket-text {
-      padding-right: 1em;
+      padding: 1em 1em;
+      text-align: center;
       p { font-size: 12px; }
-      h3 { font-size: 18px; }
+      h3 {
+        font-size: 18px;
+        margin-top: 0px;
+      }
       .button-success { font-size: 12px; padding: .5em; }
     }
   }
@@ -493,4 +496,14 @@
 .bc-modal.buy .bc-modal-header img {
   height: auto;
   margin: 0px;
+}
+
+.modal-body .close-modal {
+  @extend .lh1;
+  position: absolute;
+  cursor: pointer;
+  font-size: 20px;
+  color: #979797;
+  right: 20px;
+  top: 20px;
 }

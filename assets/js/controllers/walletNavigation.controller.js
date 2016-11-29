@@ -2,28 +2,12 @@ angular
   .module('walletApp')
   .controller('WalletNavigationCtrl', WalletNavigationCtrl);
 
-function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Options, Alerts, SecurityCenter, $state, $uibModal, filterFilter, $location) {
+function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Options, Alerts, SecurityCenter, $state, $uibModal, filterFilter, $location, buyStatus) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.security = SecurityCenter.security;
-
-  $scope.accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
-  $scope.userHasAccount = () => MyWallet.wallet.external && MyWallet.wallet.external.coinify && MyWallet.wallet.external.coinify.hasAccount;
-  $scope.isUserInvited = $scope.accountInfo && $scope.accountInfo.invited;
-
-  $scope.isCountryWhitelisted = null;
-
-  $scope.setIsCountryWhitelisted = (options) => {
-    let whitelist = options.showBuySellTab || [];
-    $scope.isCountryWhitelisted = $scope.accountInfo && whitelist.indexOf($scope.accountInfo.countryCodeGuess) > -1;
-  };
-
-  // Debug:
-  // $scope.isUserInvited = false;
-
-  // debug invited user and whitelisted
-  // $scope.isUserInvited = true;
-  // $scope.isCountryWhitelisted = true;
+  $scope.userHasAccount = buyStatus.userHasAccount();
+  buyStatus.canBuy().then((res) => $scope.canBuy = res);
 
   $scope.numberOfActiveLegacyAddresses = () => {
     if (!Wallet.status.isLoggedIn) return null;
@@ -51,11 +35,4 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Options, Al
     templateUrl: 'partials/support.jade',
     windowClass: 'bc-modal auto'
   });
-
-  // .then() waits for the next digest, which causes a flicker.
-  if (Options.didFetch) {
-    $scope.setIsCountryWhitelisted(Options.options);
-  } else {
-    Options.get().then($scope.setIsCountryWhitelisted);
-  }
 }

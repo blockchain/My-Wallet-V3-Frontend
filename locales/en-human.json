@@ -23,6 +23,14 @@
   "NEED_MORE_HELP": "Can't find what you're looking for?",
   "VISIT_SUPPORT": "Support Center",
   "FAQ_QUESTIONS": {
+    "CAN_I_BUY": {
+      "Q": "Can I buy Bitcoin?",
+      "A": "Yes, you can! It's simple, secure and seamless. <span class='pointer blue'>{{::text | translate}}</span>"
+    },
+    "CAN_I_BUY_UNINVITED": {
+      "Q": "Can I buy Bitcoin?",
+      "A": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet both a seamless and secure experience. We’ll be rolling out more regions soon, stay tuned."
+    },
     "WALLET_SAFETY": {
       "Q": "What do I need to do to keep my wallet safe?",
       "A": "Our Security Center can help you keep your wallet secure and ensure that you can access your funds even if you lose your password - all in less than 5 minutes. A great place to start is to enable 2-Step Verification to help prevent unauthorized access to your wallet and write down your Recovery Phrase to make sure you never lose access to your funds. We also recommend using a unique, random password that’s at least 16 characters or more."
@@ -424,7 +432,7 @@
   "SECOND_PASSWORD_INCORRECT" : "Incorrect Second Password, please try again.",
   "SET_SECOND_PASSWORD" : "Set Second Password",
   "SET_PASSWORD" : "Set Password",
-  "UPGRADE_WALLET" : "Welcome to your Blockchain Wallet",
+  "UPGRADE_WALLET" : "Welcome to your Blockchain Wallet!",
   "NEED_SECOND_PASSWORD_FOR_UPGRADE" : "Your second password is required to upgrade the wallet.",
   "UPGRADE_WELCOME" : "Welcome to the new version of the Blockchain Wallet!",
   "UPGRADE_NEW_DESIGN" : "Completely updated design and user experience",
@@ -609,9 +617,11 @@
   "PHRASE_BACKED" : "Phrase Backed",
   "EMAIL_VERIFIED" : "Email Verified",
   "THANK_YOU_FOR_JOINING": "Welcome! Thank you for joining over 7 million Blockchain wallet users.",
-  "FIRST_LOGIN_TEXT_1" : " Our wallet makes transacting easy and intuitive and is helping create a fair, accessible and open financial future. Visit our  ",
+  "FIRST_LOGIN_TEXT_1" : " Our wallet makes transacting easy and intuitive and is helping to create a fair, accessible and open financial future. Visit our  ",
   "FIRST_LOGIN_TEXT_2" : " and keep your wallet safe.",
   "FIRST_LOGIN_ACTION" : "Get Started",
+  "BUY_FIRST_LOGIN_TEXT_1": "Thanks for joining the world’s most popular bitcoin wallet. We’re helping to create a fair and open financial future.",
+  "BUY_FIRST_LOGIN_TEXT_2": "Get started now by purchasing your first bitcoins!", 
   "TOS" : "ToS",
   "PRIVACY" : "Privacy Policy",
   "CREATE_NEW_ACCOUNT_MODAL" : "Divide your wallet to better allocate, track and manage your bitcoins. Some common names include Savings, Spending, and Business Expenses.",
@@ -634,13 +644,14 @@
   "NOTE_LC" : "Note:",
   "SECURE_WALLET_MSG_1" : "We’re thrilled you’re using your bitcoin wallet! But it looks like you’re still not as secure as you could be. Securing your wallet can help keep funds safe.",
   "SECURE_WALLET_MSG_2" : "Don't forget to secure your wallet - take advantage of our Security Center and keep your funds safe",
-  "NO_THANKS" : "No Thanks",
+  "NO_THANKS" : "No thanks",
   "CONTINUE_LOGOUT": "Continue signing out",
   "SECURE_WALLET" : "Secure Wallet",
   "MOST_RECENT_ACTIVITY" : "Most Recent Activity",
   "DYK" : "Did You Know?",
   "ACTIVITY_EMPTY": "Welcome to your Activity Feed",
-  "ACTIVITY_EMPTY_MSG": "Here we'll give you a snapshot of recent transactions + important activites surrounding your wallet. Get a head start by sharing your address to receive bitcoins into your wallet",
+  "ACTIVITY_EMPTY_MSG": "Here we'll give you a snapshot of recent transactions & important activites surrounding your wallet. Get a head start by sharing your address to receive bitcoins into your wallet",
+  "CAN_BUY_ACTIVITY_EMPTY_MSG": "Here we’ll give you a snapshot of recent transactions & important activities surrounding your wallet. Get started by adding some bitcoins to your wallet!",
   "RECEIVE_BTC": "Start Receiving Bitcoins",
   "FEATURE": "Feature",
   "EDUCATIONAL": "Educational",
@@ -656,6 +667,10 @@
   "BACKUP_REMINDER": {
     "TITLE": "Wait!",
     "BODY": "Before you sign out, make sure to record your backup phrase. This will allow you to recover your wallet if you ever forget your password."
+  },
+  "BUY_BITCOIN_REMINDER": {
+    "TITLE": "Did you know?",
+    "BODY": "You can buy Bitcoin directly from your wallet! Checkout our buy feature to top off your balance."
   },
   "WHAT_DO_YOU_THINK": "What do you think of Blockchain Wallet?",
   "VIEW_OPTIONS": "View Options",
@@ -890,6 +905,7 @@
   "ERR_NOTE_LENGTH": "Description cannot be longer than 512 characters",
   "GET_STARTED": "Get Started",
   "START_CLICK_HERE": "Click here to get started.",
+  "CLICK_TO_GET_BTC": "Click here to buy bitcoin now!",
   "CREATE_YOUR_WALLET": "Create Your Wallet",
   "NEW_USERS": "New Users",
   "NEW_USERS_COPY": "Creating a Blockchain Wallet takes a few seconds. Send and receive payments immediately.",

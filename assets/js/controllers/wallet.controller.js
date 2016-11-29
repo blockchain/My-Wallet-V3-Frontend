@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('WalletCtrl', WalletCtrl);
 
-function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, MyWallet, currency, $translate, $window) {
+function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, MyWallet, currency, $translate, $window, buyStatus) {
   $scope.goal = Wallet.goal;
 
   $scope.status = Wallet.status;
@@ -156,23 +156,26 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       }
       if (Wallet.goal.auth) {
         Alerts.clear();
-        $translate(['AUTHORIZED', 'AUTHORIZED_MESSAGE']).then(translations => {
-          $scope.$emit('showNotification', {
-            type: 'authorization-verified',
-            icon: 'ti-check',
-            heading: translations.AUTHORIZED,
-            msg: translations.AUTHORIZED_MESSAGE
-          });
-        });
         Wallet.goal.auth = void 0;
       }
       if (Wallet.goal.firstTime) {
-        $uibModal.open({
-          templateUrl: 'partials/first-login-modal.jade',
-          windowClass: 'bc-modal rocket-modal initial'
+        buyStatus.canBuy().then((canBuy) => {
+          let template = canBuy ? 'partials/buy-login-modal.jade' : 'partials/first-login-modal.jade';
+          $uibModal.open({
+            templateUrl: template,
+            windowClass: 'bc-modal rocket-modal initial'
+          });
+        }).finally(() => {
+          Wallet.goal.firstLogin = true;
+          Wallet.goal.firstTime = void 0;
         });
-        Wallet.goal.firstLogin = true;
-        Wallet.goal.firstTime = void 0;
+      }
+      if (!Wallet.goal.firstTime) {
+        buyStatus.canBuy().then((canBuy) => {
+          if (buyStatus.shouldShowBuyReminder() &&
+              !buyStatus.userHasAccount() &&
+              canBuy) buyStatus.showBuyReminder();
+        });
       }
       if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {
         if (Wallet.goal.send != null) {
