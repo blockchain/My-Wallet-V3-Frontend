@@ -27,7 +27,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     if (!_buySellMyWallet) {
       _buySellMyWallet = new MyWalletBuySell(MyWallet.wallet, $rootScope.buySellDebug);
       if (_buySellMyWallet.exchanges) { // Absent if 2nd password set
-        _buySellMyWallet.exchanges.coinify.partnerId = 18; // Replaced by Grunt for production
+        _buySellMyWallet.exchanges.coinify.partnerId = 19; // Replaced by Grunt for production
       }
     }
     return _buySellMyWallet;

@@ -25,11 +25,11 @@
   "FAQ_QUESTIONS": {
     "CAN_I_BUY": {
       "Q": "Can I buy Bitcoin?",
-      "A": "If you're in a SEPA zone, you can buy bitcoin directly from your wallet! <span class='pointer blue'>{{::text | translate}}</span>."
+      "A": "Yes, you can! It's simple, secure and seamless. <span class='pointer blue'>{{::text | translate}}</span>"
     },
     "CAN_I_BUY_UNINVITED": {
       "Q": "Can I buy Bitcoin?",
-      "A": "If you're outside the SEPA zone, stay tuned! This feature will be available in your area soon."
+      "A": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet both a seamless and secure experience. We’ll be rolling out more regions soon, stay tuned."
     },
     "WALLET_SAFETY": {
       "Q": "What do I need to do to keep my wallet safe?",
@@ -905,7 +905,7 @@
   "ERR_NOTE_LENGTH": "Description cannot be longer than 512 characters",
   "GET_STARTED": "Get Started",
   "START_CLICK_HERE": "Click here to get started.",
-  "CLICK_TO_GET_BTC": "Click here to get some bitcoin",
+  "CLICK_TO_GET_BTC": "Click here to buy bitcoin now!",
   "CREATE_YOUR_WALLET": "Create Your Wallet",
   "NEW_USERS": "New Users",
   "NEW_USERS_COPY": "Creating a Blockchain Wallet takes a few seconds. Send and receive payments immediately.",

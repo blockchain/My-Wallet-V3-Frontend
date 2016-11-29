@@ -7,6 +7,6 @@ function faqCtrl ($scope, faq, buyStatus) {
   $scope.toggle = (q) => { q.displayed = !q.displayed; };
 
   buyStatus.canBuy().then((canBuy) => {
-    !canBuy && ($scope.questions[0] = {name: 'CAN_I_BUY_UNINVITED'});
+    !buyStatus.userHasAccount() && !canBuy && ($scope.questions[0] = {name: 'CAN_I_BUY_UNINVITED'});
   });
 }
