@@ -153,17 +153,9 @@
     "TITLE": "Cancel Trade?",
     "BODY": "You're so close to receiving bitcoin."
   },
-  "CONFIRM_CLOSE": {
-    "TITLE": "Finish Later?",
-    "BODY": "You'll be able to finish paying later."
-  },
-  "CONFIRM_CLOSE_ACCT": {
+  "CONFIRM_CLOSE_BUY": {
     "TITLE": "Are You Sure?",
     "BODY": "You're just a few steps from receiving bitcoin, are you sure you want to stop?"
-  },
-  "CONFIRM_CLOSE_AMT": {
-    "TITLE": "Are You Sure?",
-    "BODY": "Clicking Close will exit the modal, but you can buy bitcoin anytime."
   },
   "LANGUAGE_EXPLAIN" : "Set your preferred language.",
   "EMAIL_ADDRESS" : "Email Address",
@@ -1141,5 +1133,10 @@
   "ENTER_AMOUNT:": "Enter amount:",
   "BUY_BITCOIN_ALERT": "You can now buy Bitcoin with your Blockchain wallet! Click below to get started.",
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
-  "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend."
+  "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
+  "COINIFY_SURVEY": {
+    "TITLE": "Before you go...",
+    "BODY": "Would you like to provide feedback regarding your experience today?"
+  },
+  "TAKE_SURVEY": "Take Survey"
 }

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buyOptions, $timeout, $interval, formatTrade, buySell, $rootScope) {
+function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buyOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -245,14 +245,36 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     $scope.trade = null;
   };
 
-  $scope.close = (acct) => {
-    let text, action;
-    if (acct) {
-      [text, action] = ['CONFIRM_CLOSE', 'IM_DONE'];
+  $scope.close = () => {
+    let text, action, link;
+    let surveyOpened = $cookies.getObject('survey-opened');
+    let index = surveyOpened ? surveyOpened.index : 0;
+
+    if (!$scope.exchange.user) {
+      index = 0;
+      link = 'https://blockchain.co1.qualtrics.com/SE/?SID=SV_8pupOEQPGkXx8Kp';
+    } else if (!$scope.trades.length && !$scope.trade) {
+      index = 1;
+      link = 'https://blockchain.co1.qualtrics.com/SE/?SID=SV_4ZuHusilGeNWm6V';
     } else {
-      [text, action] = ['CONFIRM_CLOSE_ACCT', 'IM_DONE'];
+      index = 2;
+      link = 'https://blockchain.co1.qualtrics.com/SE/?SID=SV_1RF9VhC96M8xXh3';
     }
-    Alerts.confirm(text, {action: action}).then($scope.cancel);
+
+    let hasSeenPrompt = surveyOpened && surveyOpened.index >= index;
+
+    if (hasSeenPrompt) {
+      [text, action] = ['CONFIRM_CLOSE_BUY', 'IM_DONE'];
+      Alerts.confirm(text, {action: action}).then($scope.cancel);
+    } else {
+      [text, action] = ['COINIFY_SURVEY', 'TAKE_SURVEY'];
+      let openSurvey = () => {
+        $scope.cancel();
+        $window.open(link);
+        $cookies.putObject('survey-opened', {index: index});
+      };
+      Alerts.confirm(text, {action: action, friendly: true, cancel: 'NO_THANKS'}).then(openSurvey, $scope.cancel);
+    }
   };
 
   $scope.getQuoteHelper = () => {

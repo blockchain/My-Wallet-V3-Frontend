@@ -183,15 +183,10 @@ describe "CoinifyController", ->
     beforeEach ->
       spyOn(Alerts, 'confirm').and.callThrough()
 
-    it "should confirm close when acct is true", ->
+    it "should prompt for survey first", ->
       scope.goTo('select-country')
       scope.close(true)
-      expect(Alerts.confirm).toHaveBeenCalledWith('CONFIRM_CLOSE', {action: 'IM_DONE'})
-
-    it "should confirm close account otherwise", ->
-      scope.goTo('select-country')
-      scope.close()
-      expect(Alerts.confirm).toHaveBeenCalledWith('CONFIRM_CLOSE_ACCT', {action: 'IM_DONE'})
+      expect(Alerts.confirm).toHaveBeenCalledWith('COINIFY_SURVEY', {friendly: true, action: 'TAKE_SURVEY', cancel: 'NO_THANKS'})
 
   describe "needsISX", ->
     it "should return true if trade is in a pending state", ->
