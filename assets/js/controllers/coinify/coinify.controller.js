@@ -13,6 +13,10 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   $scope.trade = trade;
   $scope.quote = buyOptions.quote;
 
+  let links = ['https://blockchain.co1.qualtrics.com/SE/?SID=SV_8pupOEQPGkXx8Kp',
+               'https://blockchain.co1.qualtrics.com/SE/?SID=SV_4ZuHusilGeNWm6V',
+               'https://blockchain.co1.qualtrics.com/SE/?SID=SV_1RF9VhC96M8xXh3'];
+
   $scope.buySellDebug = $rootScope.buySellDebug;
 
   let accountIndex = $scope.trade && $scope.trade.accountIndex ? $scope.trade.accountIndex : MyWallet.wallet.hdwallet.defaultAccount.index;
@@ -249,16 +253,11 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     let text, action, link, index;
     let surveyOpened = $cookies.getObject('survey-opened');
 
-    if (!$scope.exchange.user) {
-      index = 0;
-      link = 'https://blockchain.co1.qualtrics.com/SE/?SID=SV_8pupOEQPGkXx8Kp';
-    } else if (!$scope.trades.length && !$scope.trade) {
-      index = 1;
-      link = 'https://blockchain.co1.qualtrics.com/SE/?SID=SV_4ZuHusilGeNWm6V';
-    } else {
-      index = 2;
-      link = 'https://blockchain.co1.qualtrics.com/SE/?SID=SV_1RF9VhC96M8xXh3';
-    }
+    if (!$scope.exchange.user) index = 0;
+    else if (!$scope.trades.length && !$scope.trade) index = 1;
+    else index = 2;
+
+    link = links[index];
 
     let hasSeenPrompt = surveyOpened && surveyOpened.index >= index;
 
