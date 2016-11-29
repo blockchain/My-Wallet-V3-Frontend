@@ -26,8 +26,7 @@ function formatInput () {
       if (s == null || f == null) return '';
 
       if (f === language.digit) {
-        let nextIsValid = f === language.digit && isDigit(s);
-        return (nextIsValid ? s : '') + reformat(fRest, sRest);
+        return (isDigit(s) ? s : '') + reformat(fRest, sRest);
       } else {
         return f + reformat(fRest, (s === f) ? sRest : str);
       }
