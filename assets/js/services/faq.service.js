@@ -2,8 +2,7 @@ angular
   .module('walletApp')
   .factory('faq', faq);
 
-function faq () {
-  // make can i buy specific to region
+function faq (buyStatus) {
   const questions = [
     { name: 'CAN_I_BUY',
       values: {'link': 'wallet.common.buy-sell', 'text': 'CLICK_TO_GET_BTC'} },

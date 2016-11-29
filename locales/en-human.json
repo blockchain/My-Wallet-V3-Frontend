@@ -25,7 +25,11 @@
   "FAQ_QUESTIONS": {
     "CAN_I_BUY": {
       "Q": "Can I buy Bitcoin?",
-      "A": "If you're in a SEPA zone, you can buy bitcoin directly from your wallet! <span class='pointer blue'>{{::text | translate}}</span> <br> If you're outside the SEPA zone, stay tuned! This feature will be available in your area soon."
+      "A": "If you're in a SEPA zone, you can buy bitcoin directly from your wallet! <span class='pointer blue'>{{::text | translate}}</span>."
+    },
+    "CAN_I_BUY_UNINVITED": {
+      "Q": "Can I buy Bitcoin?",
+      "A": "If you're outside the SEPA zone, stay tuned! This feature will be available in your area soon."
     },
     "WALLET_SAFETY": {
       "Q": "What do I need to do to keep my wallet safe?",
