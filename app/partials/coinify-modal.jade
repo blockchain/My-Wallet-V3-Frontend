@@ -62,7 +62,7 @@
     .flex-1.flex-end(ng-hide="status.loading")
       button.button-muted.mrm(ng-click="$close()" translate="CLOSE" ng-show="onStep('trade-formatted') && bitcoinReceived")
       button.button-muted.mrm(ng-click="close()" translate="CANCEL_ORDER" ng-hide="afterStep('summary')")
-      button.button-muted.mrm(ng-click="close(true)" translate="FINISH_LATER" ng-show="onStep('isx')")
+      button.button-muted.mrm(ng-click="close()" translate="FINISH_LATER" ng-show="onStep('isx')")
       div(ng-hide="afterStep('summary')")
         button.button-primary(
           ladda-translate="CONTINUE"
