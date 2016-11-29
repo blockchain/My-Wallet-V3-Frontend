@@ -156,14 +156,6 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       }
       if (Wallet.goal.auth) {
         Alerts.clear();
-        $translate(['AUTHORIZED', 'AUTHORIZED_MESSAGE']).then(translations => {
-          $scope.$emit('showNotification', {
-            type: 'authorization-verified',
-            icon: 'ti-check',
-            heading: translations.AUTHORIZED,
-            msg: translations.AUTHORIZED_MESSAGE
-          });
-        });
         Wallet.goal.auth = void 0;
       }
       if (Wallet.goal.firstTime) {
@@ -176,6 +168,13 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         }).finally(() => {
           Wallet.goal.firstLogin = true;
           Wallet.goal.firstTime = void 0;
+        });
+      }
+      if (!Wallet.goal.firstTime) {
+        buyStatus.canBuy().then((canBuy) => {
+          if (buyStatus.shouldShowBuyReminder() &&
+              !buyStatus.userHasAccount() &&
+              canBuy) buyStatus.showBuyReminder();
         });
       }
       if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {

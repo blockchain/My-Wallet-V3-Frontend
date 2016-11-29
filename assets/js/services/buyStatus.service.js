@@ -28,6 +28,7 @@ function buyStatus (Wallet, MyWallet, Options, $cookies, Alerts, $state, $q) {
     }
   };
 
+  // check to make sure this does not get called on home
   service.shouldShowBuyReminder = () => {
     let buyReminder = $cookies.getObject('buy-bitcoin-reminder');
     let timeHasPassed = buyReminder ? new Date() > buyReminder.when : true;

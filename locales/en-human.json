@@ -24,7 +24,7 @@
   "VISIT_SUPPORT": "Support Center",
   "FAQ_QUESTIONS": {
     "CAN_I_BUY": {
-      "Q": "Can I Buy Bitcoin?",
+      "Q": "Can I buy Bitcoin?",
       "A": "If you're in a SEPA zone, you can buy bitcoin directly from your wallet! <span class='pointer blue'>{{::text | translate}}</span> <br> If you're outside the SEPA zone, stay tuned! This feature will be available in your area soon."
     },
     "WALLET_SAFETY": {
@@ -613,10 +613,10 @@
   "PHRASE_BACKED" : "Phrase Backed",
   "EMAIL_VERIFIED" : "Email Verified",
   "THANK_YOU_FOR_JOINING": "Welcome! Thank you for joining over 7 million Blockchain wallet users.",
-  "FIRST_LOGIN_TEXT_1" : " Our wallet makes transacting easy and intuitive and is helping create a fair, accessible and open financial future. Visit our  ",
+  "FIRST_LOGIN_TEXT_1" : " Our wallet makes transacting easy and intuitive and is helping to create a fair, accessible and open financial future. Visit our  ",
   "FIRST_LOGIN_TEXT_2" : " and keep your wallet safe.",
   "FIRST_LOGIN_ACTION" : "Get Started",
-  "BUY_FIRST_LOGIN_TEXT_1": "Thanks for joining the world’s most popular bitcoin wallet. We’re helping create a fair and open financial future.",
+  "BUY_FIRST_LOGIN_TEXT_1": "Thanks for joining the world’s most popular bitcoin wallet. We’re helping to create a fair and open financial future.",
   "BUY_FIRST_LOGIN_TEXT_2": "Get started now by purchasing your first bitcoins!", 
   "TOS" : "ToS",
   "PRIVACY" : "Privacy Policy",
