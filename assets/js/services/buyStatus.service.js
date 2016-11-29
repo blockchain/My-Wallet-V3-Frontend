@@ -22,10 +22,10 @@ function buyStatus (Wallet, MyWallet, Options, $cookies, Alerts, $state, $q) {
 
     if (Options.didFetch) {
       setIsCountryWhitelisted(Options.options);
-      return isUserInvited && isCountryWhitelisted;
+      return $q.resolve(isUserInvited && isCountryWhitelisted);
     } else {
-      Options.get().then(setIsCountryWhitelisted)
-                   .then(() => isUserInvited && isCountryWhitelisted);
+      return Options.get().then(setIsCountryWhitelisted)
+                          .then(() => isUserInvited && isCountryWhitelisted);
     }
   };
 

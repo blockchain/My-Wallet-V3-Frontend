@@ -6,8 +6,8 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Options, Al
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.security = SecurityCenter.security;
-  $scope.canBuy = buyStatus.canBuy();
   $scope.userHasAccount = buyStatus.userHasAccount();
+  buyStatus.canBuy().then((res) => $scope.canBuy = res);
 
   $scope.numberOfActiveLegacyAddresses = () => {
     if (!Wallet.status.isLoggedIn) return null;

@@ -6,9 +6,11 @@ function HomeCtrl ($scope, Wallet, $uibModal, buyStatus) {
   $scope.getTotal = () => Wallet.total('');
   $scope.getLegacyTotal = () => Wallet.total('imported');
 
-  if (buyStatus.shouldShowBuyReminder() &&
-      !buyStatus.userHasAccount() &&
-      buyStatus.canBuy()) buyStatus.showBuyReminder();
+  buyStatus.canBuy().then((canBuy) => {
+    if (buyStatus.shouldShowBuyReminder() &&
+        !buyStatus.userHasAccount() &&
+        canBuy) buyStatus.showBuyReminder();
+  });
 
   $scope.activeLegacyAddresses = () => (
     Wallet.status.isLoggedIn

@@ -167,13 +167,16 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         Wallet.goal.auth = void 0;
       }
       if (Wallet.goal.firstTime) {
-        let template = buyStatus.canBuy() ? 'partials/buy-login-modal.jade' : 'partials/first-login-modal.jade';
-        $uibModal.open({
-          templateUrl: template,
-          windowClass: 'bc-modal rocket-modal initial'
+        buyStatus.canBuy().then((canBuy) => {
+          let template = canBuy ? 'partials/buy-login-modal.jade' : 'partials/first-login-modal.jade';
+          $uibModal.open({
+            templateUrl: template,
+            windowClass: 'bc-modal rocket-modal initial'
+          });
+        }).finally(() => {
+          Wallet.goal.firstLogin = true;
+          Wallet.goal.firstTime = void 0;
         });
-        Wallet.goal.firstLogin = true;
-        Wallet.goal.firstTime = void 0;
       }
       if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {
         if (Wallet.goal.send != null) {
