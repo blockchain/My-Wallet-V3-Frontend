@@ -141,7 +141,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
 
   $scope.getQuote = () => {
     if ($scope.trade) { $scope.updateAmounts(); return; }
-    if (buyOptions.quote) { $scope.getPaymentMethods(); return; }
+    if (buyOptions.quote) { $scope.getPaymentMediums(); return; }
 
     $scope.quote = null;
     $scope.status.waiting = true;

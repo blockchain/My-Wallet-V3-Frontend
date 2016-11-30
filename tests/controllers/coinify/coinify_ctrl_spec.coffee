@@ -1,4 +1,4 @@
-describe "CoinifyController", ->
+fdescribe "CoinifyController", ->
   scope = undefined
   Wallet = undefined
   Alerts = undefined
@@ -161,6 +161,13 @@ describe "CoinifyController", ->
       err = '{"error":"email_address_in_use","error_description":"A user already exists with the given email address."}'
       scope.standardError(err)
       expect(scope.rejectedEmail).toEqual(true)
+
+  describe "getQuote", ->
+    it "should call getPaymentMediums", ->
+      spyOn(scope, 'getPaymentMediums')
+      scope.getQuote()
+      scope.$digest()
+      expect(scope.getPaymentMediums).toHaveBeenCalled()
 
   describe "hideQuote", ->
     it "should hide the quote", ->
