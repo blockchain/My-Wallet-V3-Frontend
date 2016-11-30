@@ -752,6 +752,17 @@ describe "SendCtrl", ->
         scope.$digest()
         expect(Alerts.prompt).toHaveBeenCalledWith('NEED_BIP38', jasmine.any(Object))
 
+    describe "with a pasted custom bitcoin url", ->
+      
+      it "should parse the url and update scope", inject (($timeout) ->
+        pasteEvent = { target: { value:  'bitcoin:145JWCey6sK7B8XrY44Q3LeugeJT7M2N4i?amount=0.00034961&message=this%20is%20not%20the%20bitcoin%20you\'re%20looking%20for'} }
+        scope.transaction.destinations = [{address: 'bitcoin:145JWCey6sK7B8XrY44Q3LeugeJT7M2N4i?amount=0.00034961&message=this%20is%20not%20the%20bitcoin%20you\'re%20looking%20for'}]
+        scope.handlePaste(pasteEvent, 0)
+        $timeout.flush()
+        expect(scope.transaction.amounts[0]).toEqual(34961)
+        expect(scope.transaction.destinations[0].address).toEqual('145JWCey6sK7B8XrY44Q3LeugeJT7M2N4i')
+      )
+
   describe "with a payment request", ->
     beforeEach ->
       angular.mock.inject ($injector, $rootScope, $controller, $compile) ->

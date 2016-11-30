@@ -14,7 +14,7 @@ blocket-loading
             fiat-or-btc(btc="getLegacyTotal()")
           ul(ng-show="activeLegacyAddresses().length <= 5")
             li.flex-between.border-bottom-light.mid-grey(ng-repeat="address in activeLegacyAddresses()")
-              span.em-400 {{::address.address}}
+              span.em-400 {{ address.label ? address.label : address.address}}
               fiat-or-btc(btc="address.balance")
           li.flex-between.border-bottom-light.basic-grey.em-500
             span Total
