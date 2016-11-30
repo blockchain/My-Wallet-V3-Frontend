@@ -49,12 +49,12 @@ describe "BuySellSelectPartnerController", ->
       spyOn($state, "go")
 
     it "should select 'coinify'", ->
-      scope.selectPartner(scope.partners["coinify"])
-      expect($state.go).toHaveBeenCalledWith("base.coinify")
+      scope.selectPartner(scope.partners["coinify"], "GB")
+      expect($state.go).toHaveBeenCalledWith("base.coinify", countryCode: "GB")
 
     it "should select 'sfox'", ->
-      scope.selectPartner(scope.partners["sfox"])
-      expect($state.go).toHaveBeenCalledWith("base.sfox")
+      scope.selectPartner(scope.partners["sfox"], "US")
+      expect($state.go).toHaveBeenCalledWith("base.sfox", countryCode: "US")
 
   describe ".onWhitelist()", ->
     beforeEach ->

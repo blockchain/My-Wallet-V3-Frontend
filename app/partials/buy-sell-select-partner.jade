@@ -13,7 +13,7 @@
           a(ng-href="{{partner.href}}" target="_blank" rel="noopener noreferrer")
             img.partner-logo.mbm(ng-src="{{partner.logo}}")
           p Our partner {{partner.name}} will process your Bitcoin purchases. You will need to provide some information about yourself and link a payment method before purchasing Bitcoin.
-        button.btn.button-primary.full-width(translate="CONTINUE" ng-click="selectPartner(partner)")
+        button.btn.button-primary.full-width(translate="CONTINUE" ng-click="selectPartner(partner, country.Code)")
     .flex-column.width-50.mlvl.mtml
       .font-2.blue.em-300.lh1(translate="SIMPLE_SECURE_SEAMLESS")
       .type-h4.em-300.mtm.basic-grey(translate="BUY_SIMPLE_STEPS_2")

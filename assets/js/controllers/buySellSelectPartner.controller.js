@@ -27,8 +27,8 @@ function BuySellSelectPartnerController ($scope, $state, MyWallet, buySell, coun
     }
   };
 
-  $scope.selectPartner = (partner) => {
-    $state.go($scope.vm.base + partner.route);
+  $scope.selectPartner = (partner, countryCode) => {
+    $state.go($scope.vm.base + partner.route, { countryCode });
   };
 
   $scope.onWhitelist = (countryCode) => (

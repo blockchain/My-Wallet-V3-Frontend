@@ -116,9 +116,6 @@ describe "CoinifyController", ->
       scope.user.email = "a@b.com"
       scope.$digest()
 
-    it "should switch to select-country step", ->
-      expect(scope.onStep('select-country')).toEqual(true)
-
     it "should switch to email step", ->
       scope.fields.countryCode = 'GB'
       scope.nextStep()
@@ -185,7 +182,7 @@ describe "CoinifyController", ->
       scope.goTo('summary')
       scope.exchange.user = true
       scope.prevStep()
-      expect(scope.step).toBe(3)
+      expect(scope.step).toBe(2)
 
   describe "close", ->
     beforeEach ->
@@ -198,7 +195,7 @@ describe "CoinifyController", ->
 
   describe "needsISX", ->
     it "should return true if trade is in a pending state", ->
-      scope.trade = 
+      scope.trade =
         state: 'pending',
         bankAccount: undefined
 
