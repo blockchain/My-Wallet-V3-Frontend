@@ -38,6 +38,7 @@ function BuySellSelectPartnerController ($scope, $state, MyWallet, buySell, coun
 
   $scope.$watch('country', (c) => {
     let whitelisted = $scope.onWhitelist(c.Code);
+    $scope.blacklisted = !whitelisted;
     $scope.partner = whitelisted ? $scope.partners[whitelisted] : null;
   });
 }

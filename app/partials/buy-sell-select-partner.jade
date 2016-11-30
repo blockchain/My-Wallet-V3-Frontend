@@ -8,6 +8,8 @@
           ui-select.mtm(ng-model="$parent.country" tagging)
             ui-select-match(placeholder="Select country") {{$select.selected.Name}}
             ui-select-choices(repeat="c in countries | filter:$select.search track by c.Name") {{c.Name}}
+          .mts(ng-show="blacklisted")
+            span.state-danger-text Buying bitcoin is not yet available in your country.
       div(ng-if="partner")
         .pal
           a(ng-href="{{partner.href}}" target="_blank" rel="noopener noreferrer")
