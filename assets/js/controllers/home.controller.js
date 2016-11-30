@@ -2,8 +2,9 @@ angular
   .module('walletApp')
   .controller('HomeCtrl', HomeCtrl);
 
-function HomeCtrl ($scope, Wallet, $uibModal) {
+function HomeCtrl ($scope, Wallet, $uibModal, buyStatus) {
   $scope.getTotal = () => Wallet.total('');
+  $scope.getLegacyTotal = () => Wallet.total('imported');
 
   $scope.activeLegacyAddresses = () => (
     Wallet.status.isLoggedIn

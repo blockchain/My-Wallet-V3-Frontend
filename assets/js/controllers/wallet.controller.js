@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('WalletCtrl', WalletCtrl);
 
-function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, MyWallet, currency, $translate, $window) {
+function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, MyWallet, currency, $translate, $window, buyStatus) {
   $scope.goal = Wallet.goal;
 
   $scope.status = Wallet.status;
@@ -96,11 +96,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $scope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
     let wallet = MyWallet.wallet;
-    let isUserInvited = wallet && wallet.accountInfo && wallet.accountInfo.invited;
     if ($scope.isPublicState(toState.name) && Wallet.status.isLoggedIn) {
-      event.preventDefault();
-    }
-    if (!isUserInvited && toState.name === 'wallet.common.buy-sell') {
       event.preventDefault();
     }
     if (wallet && wallet.isDoubleEncrypted && toState.name === 'wallet.common.buy-sell') {
@@ -160,23 +156,25 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       }
       if (Wallet.goal.auth) {
         Alerts.clear();
-        $translate(['AUTHORIZED', 'AUTHORIZED_MESSAGE']).then(translations => {
-          $scope.$emit('showNotification', {
-            type: 'authorization-verified',
-            icon: 'ti-check',
-            heading: translations.AUTHORIZED,
-            msg: translations.AUTHORIZED_MESSAGE
-          });
-        });
         Wallet.goal.auth = void 0;
       }
       if (Wallet.goal.firstTime) {
-        $uibModal.open({
-          templateUrl: 'partials/first-login-modal.jade',
-          windowClass: 'bc-modal rocket-modal initial'
+        buyStatus.canBuy().then((canBuy) => {
+          let template = canBuy ? 'partials/buy-login-modal.jade' : 'partials/first-login-modal.jade';
+          $uibModal.open({
+            templateUrl: template,
+            windowClass: 'bc-modal rocket-modal initial'
+          });
         });
         Wallet.goal.firstLogin = true;
         Wallet.goal.firstTime = void 0;
+      }
+      if (!Wallet.goal.firstLogin) {
+        buyStatus.canBuy().then((canBuy) => {
+          if (buyStatus.shouldShowBuyReminder() &&
+              !buyStatus.userHasAccount() &&
+              canBuy) buyStatus.showBuyReminder();
+        });
       }
       if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {
         if (Wallet.goal.send != null) {

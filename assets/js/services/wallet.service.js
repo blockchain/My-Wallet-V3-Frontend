@@ -4,9 +4,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'MyWalletMetadata', 'theme'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'MyWalletMetadata', 'theme', 'BlockchainConstants'];
 
-function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, MyWalletMetadata, theme) {
+function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, MyWalletMetadata, theme, BlockchainConstants) {
   const wallet = {
     goal: {
       auth: false,
@@ -56,6 +56,9 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
   wallet.api = MyBlockchainApi;
   wallet.rng = MyBlockchainRng;
+
+  const network = $rootScope.network || 'bitcoin';
+  BlockchainConstants.NETWORK = network;
 
   // $rootScope.rootURL is already set because this file is lazy loaded.
   wallet.api.ROOT_URL = $rootScope.rootURL;
@@ -285,7 +288,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   };
 
   wallet.legacyAddresses = () => (
-    wallet.status.isLoggedIn ? wallet.my.wallet.keys : []
+  wallet.status.isLoggedIn ? wallet.my.wallet.keys : []
   );
 
   wallet.getReceiveAddress = MyWalletHelpers.memoize((acctIdx, addrIdx) => {
@@ -304,10 +307,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let labelledAddresses = wallet.getLabelledHdAddresses(acctIdx);
     let addresses = labelledAddresses.map(a => a.address);
     return $q.resolve(MyBlockchainApi.getBalances(addresses)).then(data => (
-      labelledAddresses.map(({ index, address, label }) => ({
-        index, address, label,
-        ntxs: data[address].n_tx
-      })).filter(a => a.ntxs === 0)
+    labelledAddresses.map(({ index, address, label }) => ({
+      index, address, label,
+      ntxs: data[address].n_tx
+    })).filter(a => a.ntxs === 0)
     ));
   };
 
@@ -316,7 +319,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let address = wallet.getReceiveAddress(account.index, index);
     let label = $translate.instant('DEFAULT_NEW_ADDRESS_LABEL');
     return $q.resolve(account.setLabelForReceivingAddress(index, label, 15))
-      .then(() => ({ index, address, label }));
+      .then(() => ({index, address, label}));
   };
 
   wallet.create = (password, email, currency, language, success_callback) => {
@@ -371,9 +374,9 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   };
 
   wallet.askForMainPasswordConfirmation = () => (
-    Alerts.prompt('MAIN_PW_REQUIRED', { type: 'password' })
-      .then(wallet.isCorrectMainPassword)
-      .then(correct => correct ? $q.resolve(true) : $q.reject('incorrect_main_pw'))
+  Alerts.prompt('MAIN_PW_REQUIRED', { type: 'password' })
+    .then(wallet.isCorrectMainPassword)
+    .then(correct => correct ? $q.resolve(true) : $q.reject('incorrect_main_pw'))
   );
 
   wallet.saveActivity = () => {
@@ -457,8 +460,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.status.didConfirmRecoveryPhrase = true;
   };
 
-  wallet.isCorrectMainPassword = (candidate) =>
-    wallet.store.isCorrectMainPassword(candidate);
+  wallet.isCorrectMainPassword = (candidate) => wallet.store.isCorrectMainPassword(candidate);
 
   wallet.changePassword = (newPassword, successCallback, errorCallback) => {
     wallet.store.changePassword(newPassword, () => {
@@ -572,8 +574,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       .then(proceed, cancel);
   };
 
-  wallet.getAddressBookLabel = (address) =>
-    wallet.my.wallet.getAddressBookLabel(address);
+  wallet.getAddressBookLabel = (address) => wallet.my.wallet.getAddressBookLabel(address);
 
   wallet.getMnemonic = (successCallback, errorCallback, cancelCallback) => {
     let proceed = (password) => {
@@ -664,8 +665,28 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     return result;
   };
 
-  wallet.isSynchronizedWithServer = () =>
-    wallet.store.isSynchronizedWithServer();
+  wallet.parseBitcoinURL = (destinations) => {
+    if (destinations.length === 0) return;
+    function extractFromUri (URI) {
+      let result = {};
+      const addressRegex = /(?=\:)(.*)(?=\?)/;
+      const amountRegex = /amount=[0-9.]*/;
+      const noteRegex = /message=.*/;
+      const addressSlice = 1;
+      const amountSlice = 7;
+      const noteSlice = 8;
+      const address = URI.match(addressRegex)[0];
+      result['address'] = address.slice(addressSlice, address.length);
+      const amount = URI.match(amountRegex);
+      amount ? result['amount'] = parseFloat(amount[0].slice(amountSlice, amount[0].length)) * 100000000 : '';
+      const note = URI.match(noteRegex);
+      note ? result['note'] = decodeURI(note[0].slice(noteSlice, note[0].length)) : '';
+      return result;
+    }
+    return extractFromUri(destinations[0].address);
+  };
+
+  wallet.isSynchronizedWithServer = () => wallet.store.isSynchronizedWithServer();
 
   window.onbeforeunload = (event) => {
     if (!wallet.isSynchronizedWithServer() && wallet.my.wallet.isEncryptionConsistent) {
@@ -676,10 +697,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     if (wallet.askForDeauth()) {
       $window.name = 'blockchain-logout';
     }
-    // TODO: fix autoreload dev feature
-    // if ($rootScope.autoReload) {
-    //   $cookies.put('reload.url', $location.url());
-    // }
+  // TODO: fix autoreload dev feature
+  // if ($rootScope.autoReload) {
+  //   $cookies.put('reload.url', $location.url())
+  // }
   };
 
   wallet.isValidAddress = (address) => MyWalletHelpers.isBitcoinAddress(address);
@@ -738,7 +759,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       .filter(o => !o.change && o.address !== input.address);
 
     let setLabel = (io) => (
-      io.label = io.label || wallet.getAddressBookLabel(io.address) || io.address
+    io.label = io.label || wallet.getAddressBookLabel(io.address) || io.address
     );
 
     setLabel(input);
@@ -1110,11 +1131,9 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.my.wallet.hdwallet.defaultAccountIndex = account.index;
   };
 
-  wallet.isDefaultAccount = (account) =>
-    wallet.my.wallet.hdwallet.defaultAccountIndex === account.index;
+  wallet.isDefaultAccount = (account) => wallet.my.wallet.hdwallet.defaultAccountIndex === account.index;
 
-  wallet.isValidBIP39Mnemonic = (mnemonic) =>
-    MyWalletHelpers.isValidBIP39Mnemonic(mnemonic);
+  wallet.isValidBIP39Mnemonic = (mnemonic) => MyWalletHelpers.isValidBIP39Mnemonic(mnemonic);
 
   wallet.exportHistory = (start, end, active) => {
     let json2csv = (json) => {
@@ -1129,7 +1148,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     };
 
     let currency = wallet.settings.currency;
-    let p = MyBlockchainApi.exportHistory(active, currency.code, { start, end });
+    let p = MyBlockchainApi.exportHistory(active, currency.code, {start, end});
     return $q.resolve(p)
       .then(history => {
         if (!history.length) return $q.reject('NO_HISTORY');
@@ -1173,13 +1192,13 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
           if (res === null) {
             whatsNew.create({lastViewed: whatsNewViewed}).then(() => {
               // TODO: uncomment once cookie fallback is removed
-              // $cookies.remove('whatsNewViewed');
+              // $cookies.remove('whatsNewViewed')
               success();
             });
           } else {
             whatsNew.update({lastViewed: whatsNewViewed}).then(() => {
               // TODO: uncomment once cookie fallback is removed
-              // $cookies.remove('whatsNewViewed');
+              // $cookies.remove('whatsNewViewed')
               success();
             });
           }
@@ -1196,8 +1215,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.my.wallet.decrypt(password, didDecrypt, error, decrypting, syncing);
   };
 
-  wallet.validateSecondPassword = (password) =>
-    wallet.my.wallet.validateSecondPassword(password);
+  wallet.validateSecondPassword = (password) => wallet.my.wallet.validateSecondPassword(password);
 
   wallet.setSecondPassword = (password, successCallback) => {
     let success = () => {
@@ -1230,7 +1248,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       throw new Error("saving your What's New view status failed");
     });
 
-    let other = $q.resolve(); // $q.reject('it can't be combined with feature X');
+    let other = $q.resolve(); // $q.reject('it can't be combined with feature X')
 
     $q.all([whatsNew, other]).then(proceed).catch((reason) => {
       console.log('all');

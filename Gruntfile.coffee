@@ -512,6 +512,13 @@ module.exports = (grunt) ->
             else
               "customApiDomain = 'https://" + @apiDomain + "/'"
         }]
+      network:
+        src: ['build/js/wallet.js'],
+        overwrite: true,
+        replacements: [{
+          from: "network = $rootScope.network"
+          to: () => "network = '" + @network + "'"
+        }]
       version_frontend:
         src: ['build/js/app.js'],
         overwrite: true,
@@ -577,6 +584,8 @@ module.exports = (grunt) ->
     rootDomain = grunt.option('rootDomain')
     webSocketURL = grunt.option('webSocketURL')
     apiDomain = grunt.option('apiDomain')
+    network = grunt.option('network')
+
     if !versionFrontend
       versionFrontend = "intermediate"
     else if versionFrontend[0] != "v"
@@ -585,32 +594,28 @@ module.exports = (grunt) ->
 
     @versionFrontend = versionFrontend
 
+    if !network
+      network = "bitcoin"
+
+    @network = network
+
     if !rootDomain
       # Production will work with rootURL = "https://blockchain.info/" and "/"
       # Tor will only work with   rootURL = "/"
       console.log("No root domain specified, assuming blockchain.info or tor");
       @rootDomain = null
-      @webSocketURL = null # Don't use websockets on Tor
-
-      grunt.task.run [
-        "replace:root_url"
-        # Web socket URL will default to wss://ws.blockchain.info/inv
-        # Web sockets currently don't work on our Tor site
-        # "replace:web_socket_url"
-        "replace:buy_sell_debug"
-        "replace:buy_sell_coinify"
-      ]
     else
       console.log("Root domain: " + rootDomain)
       @rootDomain = rootDomain
-      @webSocketURL = webSocketURL
 
-      grunt.task.run [
-        "replace:root_url"
-        "replace:web_socket_url"
-        "replace:buy_sell_debug"
-        "replace:buy_sell_coinify"
-      ]
+    @webSocketURL = webSocketURL
+
+    grunt.task.run [
+      "replace:root_url"
+      "replace:web_socket_url"
+      "replace:buy_sell_debug"
+      "replace:buy_sell_coinify"
+    ]
 
     if apiDomain
       @apiDomain = apiDomain
@@ -623,6 +628,7 @@ module.exports = (grunt) ->
     grunt.task.run [
       "replace:version_frontend"
       "replace:version_my_wallet"
+      "replace:network"
       "preprocess:js"
       "concat:landingNotMinifiedDependencies"
       "uglify:landingDependencies"

@@ -2,9 +2,9 @@ angular
   .module('options', [])
   .factory('Options', Options);
 
-Options.$inject = ['$http'];
+Options.$inject = ['$http', '$rootScope'];
 
-function Options ($http) {
+function Options ($http, $rootScope) {
   let fetchedOptions = false;
 
   const service = {
@@ -16,10 +16,16 @@ function Options ($http) {
   };
 
   function get () {
+    let url;
+    if ($rootScope.buySellDebug) {
+      url = '/Resources/wallet-options-debug.json';
+    } else {
+      url = '/Resources/wallet-options.json';
+    }
     if (fetchedOptions) {
       return Promise.resolve(service.options);
     }
-    return $http.get('/Resources/wallet-options.json')
+    return $http.get(url)
       .success((res) => {
         service.options = res;
         fetchedOptions = true;

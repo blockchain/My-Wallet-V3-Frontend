@@ -1,0 +1,11 @@
+.modal-body.flex(data-preflight-tag="FirstLoginBuy")
+  i.ti-close.close-modal(ng-click="$close()")
+  img.rocket-gif(src="img/rocket.gif")
+  .flex-column.flex-between.rocket-text.flex-1.plvl
+    .flex-column
+      h3.mbl.mtvl.type-lrg.em-300(translate="UPGRADE_WALLET")
+      p.mbl.type-h5.width-100.em-300
+        span(translate="BUY_FIRST_LOGIN_TEXT_1")
+      p.mbl.type-h5.width-100.em-300
+        span(translate="BUY_FIRST_LOGIN_TEXT_2")
+    button.uppercase.button-primary.mtl(ui-sref="wallet.common.buy-sell" translate="GET_BITCOIN")

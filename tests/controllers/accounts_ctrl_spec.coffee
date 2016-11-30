@@ -19,7 +19,7 @@ describe "WalletNavigationCtrl", ->
         hdwallet: {
           accounts: [{ archived: false }, { archived: false }, { archived: true }]
         }
-        accountInfo: { invited: false }
+        accountInfo: { invited: false, countryCodeGuess: "US" }
       }
 
       Wallet.status.isLoggedIn = true

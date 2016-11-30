@@ -9,10 +9,13 @@ describe "Activity Feed directive", ->
   beforeEach inject((_$compile_, _$rootScope_, $injector) ->
     $compile = _$compile_
     $rootScope = _$rootScope_
+    $httpBackend = $injector.get("$httpBackend")
     scope = $rootScope.$new()
 
     Wallet = $injector.get("Wallet")
     MyWallet = $injector.get("MyWallet")
+
+    $httpBackend.whenGET("/Resources/wallet-options.json").respond();
 
     MyWallet.wallet = {
       hdwallet:

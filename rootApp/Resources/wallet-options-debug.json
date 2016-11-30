@@ -1,5 +1,5 @@
 {
-  "showBuySellTab": ["GB", "SE", "DK", "NO", "NL", "DE"],
+  "showBuySellTab": ["GB", "NL", "DE", "US"],
   "partners": {
     "coinify": {
       "countries": ["GB", "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI",

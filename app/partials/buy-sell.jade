@@ -18,7 +18,7 @@
         div(ng-hide="trades.pending.length || trades.completed.length || (kyc && kyc.state !== 'completed')")
           .font-2.blue.em-300.lh1(translate="SIMPLE_SECURE_SEAMLESS")
           .type-h4.em-300.mtm.basic-grey(translate="BUY_SIMPLE_STEPS")
-        kyc-status(ng-if="showKycStatus()" state="kyc.state" on-trigger="openKyc()" limits="limits")
+        kyc-status(state="kyc.state" on-trigger="openKyc()" limits="limits")
     .flex-column.mtl(ng-show="trades.pending.length || trades.completed.length" data-preflight-tag="BuySellTrades")
       .flex-row.flex-between.flex-center
         h4.type-h4(translate="ORDER_HISTORY")
