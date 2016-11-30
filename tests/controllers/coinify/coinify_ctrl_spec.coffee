@@ -166,19 +166,6 @@ describe "CoinifyController", ->
       scope.goTo('trade-formatted')
       expect(scope.hideQuote()).toBe(true)
 
-  describe "prevStep", ->
-    it "should go back one step", ->
-      scope.exchange.user = undefined
-      scope.step = 1
-      scope.prevStep()
-      expect(scope.step).toBe(0)
-
-    it "should go to a specific step", ->
-      scope.goTo('summary')
-      scope.exchange.user = true
-      scope.prevStep()
-      expect(scope.step).toBe(3)
-
   describe "close", ->
     beforeEach ->
       spyOn(Alerts, 'confirm').and.callThrough()

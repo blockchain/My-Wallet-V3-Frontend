@@ -189,18 +189,6 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     }
   };
 
-  $scope.prevStep = () => {
-    if ($scope.status.waiting) return;
-
-    if ($scope.exchange.user && $scope.afterStep('accept-terms')) {
-      $scope.goTo('select-payment-method');
-    } else if ($scope.afterStep('email')) {
-      $scope.goTo('select-country');
-    } else {
-      $scope.step--;
-    }
-  };
-
   $scope.isDisabled = () => {
     if ($scope.onStep('select-country')) {
       return !$scope.fields.countryCode || $scope.isCountryBlacklisted;
