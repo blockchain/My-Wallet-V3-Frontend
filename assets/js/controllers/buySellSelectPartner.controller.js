@@ -2,20 +2,42 @@ angular
   .module('walletApp')
   .controller('BuySellSelectPartnerController', BuySellSelectPartnerController);
 
-function BuySellSelectPartnerController ($scope, $state, MyWallet, country) {
-  $scope.country = null;
-  $scope.countries = country.countryCodes;
-  $scope.sfoxCountries = ['US'];
+function BuySellSelectPartnerController ($scope, $state, MyWallet, buySell, country, options) {
+  let contains = (val, list) => list.indexOf(val) > -1;
+  let codeGuess = MyWallet.wallet.accountInfo && MyWallet.wallet.accountInfo.countryCodeGuess;
 
-  $scope.getPartner = (country) => (
-    $scope.sfoxCountries.indexOf(country.Code) > -1
-      ? { name: 'SFOX', logo: 'img/sfox-logo.png', href: 'https://www.sfox.com/', route: '.sfox' }
-      : { name: 'Coinify', logo: 'img/coinify-logo.svg', href: 'https://www.coinify.com/', route: '.coinify' }
-  );
+  $scope.countries = country.countryCodes;
+  $scope.country = $scope.countries.filter(c => c.Code === codeGuess)[0];
+
+  $scope.coinifyWhitelist = options.partners.coinify.countries;
+  $scope.sfoxWhitelist = ['US'];
+
+  $scope.partners = {
+    'coinify': {
+      name: 'Coinify',
+      logo: 'img/coinify-logo.svg',
+      href: 'https://www.coinify.com/',
+      route: '.coinify'
+    },
+    'sfox': {
+      name: 'SFOX',
+      logo: 'img/sfox-logo.png',
+      href: 'https://www.sfox.com/',
+      route: '.sfox'
+    }
+  };
 
   $scope.selectPartner = (partner) => {
     $state.go($scope.vm.base + partner.route);
   };
 
-  $scope.$watch('country', (c) => { $scope.partner = $scope.getPartner(c); });
+  $scope.onWhitelist = (countryCode) => (
+    (contains(countryCode, $scope.coinifyWhitelist) && 'coinify') ||
+    (contains(countryCode, $scope.sfoxWhitelist) && 'sfox') || false
+  );
+
+  $scope.$watch('country', (c) => {
+    let whitelisted = $scope.onWhitelist(c.Code);
+    $scope.partner = whitelisted ? $scope.partners[whitelisted] : null;
+  });
 }

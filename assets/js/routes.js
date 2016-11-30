@@ -288,7 +288,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     })
     .state('wallet.common.buy-sell.select', {
       templateUrl: 'partials/buy-sell-select-partner.jade',
-      controller: 'BuySellSelectPartnerController'
+      controller: 'BuySellSelectPartnerController',
+      resolve: {
+        options (Options) { return Options.get(); }
+      }
     })
     .state('wallet.common.buy-sell.coinify', {
       templateUrl: 'partials/buy-sell.jade',
