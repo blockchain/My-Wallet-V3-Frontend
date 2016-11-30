@@ -2,20 +2,43 @@ angular
   .module('walletApp')
   .controller('BuySellSelectPartnerController', BuySellSelectPartnerController);
 
-function BuySellSelectPartnerController ($scope, $state, MyWallet, country) {
-  $scope.country = null;
+function BuySellSelectPartnerController ($scope, $state, MyWallet, buySell, country, options) {
+  let contains = (val, list) => list.indexOf(val) > -1;
+  let codeGuess = MyWallet.wallet.accountInfo && MyWallet.wallet.accountInfo.countryCodeGuess;
+
   $scope.countries = country.countryCodes;
-  $scope.sfoxCountries = ['US'];
+  $scope.country = $scope.countries.filter(c => c.Code === codeGuess)[0];
 
-  $scope.getPartner = (country) => (
-    $scope.sfoxCountries.indexOf(country.Code) > -1
-      ? { name: 'SFOX', logo: 'img/sfox-logo.png', href: 'https://www.sfox.com/', route: '.sfox' }
-      : { name: 'Coinify', logo: 'img/coinify-logo.svg', href: 'https://www.coinify.com/', route: '.coinify' }
-  );
+  $scope.coinifyWhitelist = options.partners.coinify.countries;
+  $scope.sfoxWhitelist = ['US'];
 
-  $scope.selectPartner = (partner) => {
-    $state.go($scope.vm.base + partner.route);
+  $scope.partners = {
+    'coinify': {
+      name: 'Coinify',
+      logo: 'img/coinify-logo.svg',
+      href: 'https://www.coinify.com/',
+      route: '.coinify'
+    },
+    'sfox': {
+      name: 'SFOX',
+      logo: 'img/sfox-logo.png',
+      href: 'https://www.sfox.com/',
+      route: '.sfox'
+    }
   };
 
-  $scope.$watch('country', (c) => { $scope.partner = $scope.getPartner(c); });
+  $scope.selectPartner = (partner, countryCode) => {
+    $state.go($scope.vm.base + partner.route, { countryCode });
+  };
+
+  $scope.onWhitelist = (countryCode) => (
+    (contains(countryCode, $scope.coinifyWhitelist) && 'coinify') ||
+    (contains(countryCode, $scope.sfoxWhitelist) && 'sfox') || false
+  );
+
+  $scope.$watch('country', (c) => {
+    let whitelisted = $scope.onWhitelist(c.Code);
+    $scope.blacklisted = !whitelisted;
+    $scope.partner = whitelisted ? $scope.partners[whitelisted] : null;
+  });
 }

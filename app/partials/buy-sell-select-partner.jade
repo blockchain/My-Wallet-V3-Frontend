@@ -3,17 +3,18 @@
     .find-partner.width-50.mrl.mtl.pal.border.flex-column.flex-between
       div
         span.type-h4.em-500.colon(translate="Find your exchange partner")
-        .mtl
-          span.em-500.colon(translate="Country of residence")
+        .mtvl(ng-class="{'ui-select-border-red': blacklisted}")
           ui-select.mtm(ng-model="$parent.country" tagging)
             ui-select-match(placeholder="Select country") {{$select.selected.Name}}
             ui-select-choices(repeat="c in countries | filter:$select.search track by c.Name") {{c.Name}}
+          .mts(ng-show="blacklisted")
+            span.state-danger-text Buying bitcoin is not yet available in your country.
       div(ng-if="partner")
         .pal
           a(ng-href="{{partner.href}}" target="_blank" rel="noopener noreferrer")
             img.partner-logo.mbm(ng-src="{{partner.logo}}")
-          p Our partner {{partner.name}} will process your Bitcoin purchases. You will need to provide some information about yourself and link a payment method before purchasing Bitcoin.
-        button.btn.button-primary.full-width(translate="CONTINUE" ng-click="selectPartner(partner)")
+          p(translate="EXCHANGE_PARTNER_PROCESS" translate-values="{partner: partner.name}")
+        button.btn.button-primary.full-width(translate="CONTINUE" ng-click="selectPartner(partner, country.Code)")
     .flex-column.width-50.mlvl.mtml
       .font-2.blue.em-300.lh1(translate="SIMPLE_SECURE_SEAMLESS")
-      .type-h4.em-300.mtm.basic-grey(translate="BUY_SIMPLE_STEPS_2")
+      .type-h4.em-300.mtm.basic-grey(translate="BUY_SIMPLE_STEPS")

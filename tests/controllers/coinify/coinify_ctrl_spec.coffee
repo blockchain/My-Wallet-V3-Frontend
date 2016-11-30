@@ -116,9 +116,6 @@ describe "CoinifyController", ->
       scope.user.email = "a@b.com"
       scope.$digest()
 
-    it "should switch to select-country step", ->
-      expect(scope.onStep('select-country')).toEqual(true)
-
     it "should switch to email step", ->
       scope.fields.countryCode = 'GB'
       scope.nextStep()
@@ -174,19 +171,6 @@ describe "CoinifyController", ->
       scope.goTo('trade-formatted')
       expect(scope.hideQuote()).toBe(true)
 
-  describe "prevStep", ->
-    it "should go back one step", ->
-      scope.exchange.user = undefined
-      scope.step = 1
-      scope.prevStep()
-      expect(scope.step).toBe(0)
-
-    it "should go to a specific step", ->
-      scope.goTo('summary')
-      scope.exchange.user = true
-      scope.prevStep()
-      expect(scope.step).toBe(3)
-
   describe "close", ->
     beforeEach ->
       spyOn(Alerts, 'confirm').and.callThrough()
@@ -198,7 +182,7 @@ describe "CoinifyController", ->
 
   describe "needsISX", ->
     it "should return true if trade is in a pending state", ->
-      scope.trade = 
+      scope.trade =
         state: 'pending',
         bankAccount: undefined
 
