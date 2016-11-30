@@ -1149,7 +1149,6 @@
   "NOT_BACKED_BY_RECOVERY": "Not backed up by your Recovery Phrase. Transfer into a wallet to secure funds.",
   "EXCHANGE_RATE_HELPER": "The rate offered by your region's exchange partner. May include fees.",
   "SUBSCRIBE": "Subscribe",
-<<<<<<< 933e1489f5c63ae5e581b253f123b9c9b105a39f
   "GET_BITCOIN": "Get Bitcoin",
   "POWERED_BY": "Powered By",
   "EDIT_ORDER": "Edit Order",
@@ -1163,11 +1162,9 @@
     "BODY": "Would you like to provide feedback regarding your experience today?"
   },
   "TAKE_SURVEY": "Take Survey",
-=======
->>>>>>> fix(SFOX): error handling improvements
   "id_ID": {
     "TITLE": "Upload Photo ID",
-    "COPY": "To verify your identity, we need you to upload a government issued form of photo identification showing nationality or residence and clearly displaying the identification number. You can upload any of the following identification:",
+    "COPY": "To verify your identity, we need you to upload a government issued form of photo identification showing nationality or residence and clearly displaying identification number. You can upload any of the following identification:",
     "OPTION1": "State issued driver’s license",
     "OPTION2": "State issued identification card",
     "OPTION3": "Copy of passport",
