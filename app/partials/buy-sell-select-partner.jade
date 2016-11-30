@@ -3,8 +3,7 @@
     .find-partner.width-50.mrl.mtl.pal.border.flex-column.flex-between
       div
         span.type-h4.em-500.colon(translate="Find your exchange partner")
-        .mtl
-          span.em-500.colon(translate="Country of residence")
+        .mtvl(ng-class="{'ui-select-border-red': blacklisted}")
           ui-select.mtm(ng-model="$parent.country" tagging)
             ui-select-match(placeholder="Select country") {{$select.selected.Name}}
             ui-select-choices(repeat="c in countries | filter:$select.search track by c.Name") {{c.Name}}
