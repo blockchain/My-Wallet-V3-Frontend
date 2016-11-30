@@ -494,14 +494,27 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.settings_api.resendEmailConfirmation(wallet.user.email, success, error);
   };
 
+  wallet.sendConfirmationCode = (successCallback, errorCallback) => {
+    let success = () => {
+      successCallback && successCallback();
+      $rootScope.$safeApply();
+    };
+    let error = () => {
+      errorCallback && errorCallback();
+      $rootScope.$safeApply();
+    };
+    wallet.settings_api.sendConfirmationCode(success, error);
+  };
+
   wallet.verifyEmail = (code, successCallback, errorCallback) => {
     let success = () => {
+      wallet.user.isEmailVerified = 1;
       successCallback();
       $rootScope.$safeApply();
     };
 
-    let error = () => {
-      errorCallback('Invalid confirmation code');
+    let error = (err) => {
+      errorCallback(err);
       $rootScope.$safeApply();
     };
 

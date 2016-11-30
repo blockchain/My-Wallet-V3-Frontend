@@ -56,7 +56,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   $scope.formattedTrade = undefined;
   $scope.bitcoinReceived = buyOptions.bitcoinReceived && $scope.trade && $scope.trade.bitcoinReceived;
 
-  $scope.fields = { email: $scope.user.email, countryCode: $scope.exchange.profile.country };
+  $scope.fields = { email: $scope.user.email, countryCode: $scope.exchange.profile.country, emailVerification: undefined };
 
   $scope.transaction = trade == null
     ? ({ fiat: buyOptions.fiat, btc: buyOptions.btc, fee: 0, total: 0, currency: buyOptions.currency || buySell.getCurrency() })
@@ -204,6 +204,8 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   $scope.isDisabled = () => {
     if ($scope.onStep('select-country')) {
       return !$scope.fields.countryCode || $scope.isCountryBlacklisted;
+    } else if ($scope.onStep('email')) {
+      return !$scope.fields.emailVerification;
     } else if ($scope.onStep('accept-terms')) {
       return !$scope.signupForm.$valid;
     } else if ($scope.onStep('select-payment-method')) {
