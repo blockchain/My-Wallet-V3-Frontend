@@ -1,4 +1,4 @@
-fdescribe "CoinifyController", ->
+describe "CoinifyController", ->
   scope = undefined
   Wallet = undefined
   Alerts = undefined
