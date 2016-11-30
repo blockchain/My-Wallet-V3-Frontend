@@ -196,16 +196,6 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     }
   };
 
-  $scope.prevStep = () => {
-    if ($scope.status.waiting) return;
-
-    if ($scope.exchange.user && $scope.afterStep('accept-terms')) {
-      $scope.goTo('select-payment-medium');
-    } else {
-      $scope.step--;
-    }
-  };
-
   $scope.isDisabled = () => {
     if ($scope.onStep('accept-terms')) {
       return !$scope.signupForm.$valid;

@@ -54,8 +54,7 @@
           img(src="img/coinify-logo.svg")
           span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
   .modal-footer.flex-end.flex-row
-    button.button-muted(ng-hide="onStep('select-payment-medium') || afterStep('summary')"
-                        ng-click="prevStep()" translate="GO_BACK")
+    button.button-muted(ng-show="onStep('summary')" ng-click="goTo('select-payment-medium')" translate="GO_BACK")
     
     .flex-1.flex-end(ng-hide="status.loading")
       button.button-muted.mrm(ng-click="$close()" translate="CLOSE" ng-show="onStep('trade-formatted') && bitcoinReceived")
