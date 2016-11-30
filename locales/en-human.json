@@ -1188,5 +1188,6 @@
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
   "EXCHANGE_CONNECT_ERROR": "Error connecting to our exchange partner",
+  "EXCHANGE_PARTNER_PROCESS": "Our exchange partner {{::partner}} will process your Bitcoin purchases. Continue to begin creating your exchange account.",
   "": ""
 }
