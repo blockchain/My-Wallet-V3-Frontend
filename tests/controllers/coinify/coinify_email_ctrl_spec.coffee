@@ -18,6 +18,10 @@ describe "CoinifyEmailController", ->
 
   getControllerScope = (params = {}) ->
     scope = $rootScope.$new()
+
+    scope.$parent.fields = {
+      emailConfirmation: undefined
+    }
     
     scope.steps =
       'email': 1
@@ -35,6 +39,12 @@ describe "CoinifyEmailController", ->
       expect(scope.editEmail).toBe(undefined)
       scope.toggleEmail()
       expect(scope.editEmail).toBe(true)
+
+  describe "verifyEmail", ->
+    it "should verify users email", ->
+      spyOn(Wallet, "verifyEmail")
+      scope.$parent.verifyEmail()
+      expect(Wallet.verifyEmail).toHaveBeenCalled()
 
   describe "changeEmail", ->
     it "should reset rejectedEmail", ->
