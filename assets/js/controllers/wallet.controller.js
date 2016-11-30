@@ -165,12 +165,11 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
             templateUrl: template,
             windowClass: 'bc-modal rocket-modal initial'
           });
-        }).finally(() => {
-          Wallet.goal.firstLogin = true;
-          Wallet.goal.firstTime = void 0;
         });
+        Wallet.goal.firstLogin = true;
+        Wallet.goal.firstTime = void 0;
       }
-      if (!Wallet.goal.firstTime) {
+      if (!Wallet.goal.firstLogin) {
         buyStatus.canBuy().then((canBuy) => {
           if (buyStatus.shouldShowBuyReminder() &&
               !buyStatus.userHasAccount() &&
