@@ -9,22 +9,23 @@
     .flex-column.width-50.mlvl.mtml
       .f-24.blue.em-500.lh1(translate="SIMPLE_SECURE_SEAMLESS")
       .f-16.mtm.basic-grey(translate="BUY_SIMPLE_STEPS")
-  .width-50.border.mrl.pal.flex-column.flex-between(ng-show="signupCompleted")
-    .flex-between.flex-baseline.mbl
+  .flex-column(ng-show="signupCompleted")
+    .flex-row.flex-between
       span.type-h4.em-500 Buy Bitcoin
       .sfox-logo
         span.mrs.type-sm(translate="POWERED_BY")
         a(href="https://www.sfox.com/" target="_blank" rel="noopener noreferrer")
           img.mbs(src="img/sfox-logo.png")
-    form.bc-form.mtl(name="checkoutForm" novalidate autocomplete="off")
+    form.width-50.pal.border.bc-form.mtl(name="checkoutForm" novalidate autocomplete="off")
       fieldset
-        .group.mtl
+        .group.mts
           .item
             .flex-between.flex-baseline.mbs
               span.type-h5.em-500.colon Enter Amount
               span
-                div(ng-show="quote && !state.loadFailed")
+                div.flex-row.flex-center(ng-show="quote && !state.loadFailed")
                   span 1 {{ bitcoin.code }} = ${{ quote.rate }}
+                  helper-button(content="EXCHANGE_RATE_HELPER")
                 .state-danger-text(ng-show="state.loadFailed")
                   i.ti-alert
                   span.mls Failed to load exchange data
