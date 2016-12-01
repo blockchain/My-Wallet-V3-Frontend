@@ -33,11 +33,10 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
   let state = $scope.state = {
     fiat: $scope.max,
     btc: 0,
-    fee: 0,
     baseCurr: $scope.dollars,
     get quoteCurr () { return this.baseFiat ? $scope.bitcoin : $scope.dollars; },
     get baseFiat () { return this.baseCurr === $scope.dollars; },
-    get total () { return this.fiat + this.fee; }
+    get total () { return this.fiat; }
   };
 
   $scope.buy = () => {
@@ -69,7 +68,6 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
       state.loadFailed = false;
       let timeToExpiration = new Date(quote.expiresAt) - new Date();
       $scope.refreshTimeout = $timeout($scope.refreshQuote, timeToExpiration);
-      state.fee = quote.feeAmount / 100;
       if (state.baseFiat) state.btc = quote.quoteAmount;
       else state.fiat = quote.quoteAmount / 100;
     };
