@@ -14,6 +14,9 @@ describe "walletServices 2nd pwd", () ->
           hdwallet:
             isMnemonicVerified: true
             accounts: [{balance: 1, archived: false},{balance: 2, archived: false}]
+          metadata: (n) ->
+            fetch: () -> $q.resolve(lastViewed: 4)
+            update: () -> $q.resolve(lastViewed: 4)
           encrypt: () ->
           decrypt: (password, didDecrypt, error) ->
             didDecrypt()
