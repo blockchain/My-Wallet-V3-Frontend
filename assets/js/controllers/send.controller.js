@@ -391,6 +391,31 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     return $q.resolve();
   };
 
+  $scope.handlePaste = (event) => {
+    let dest;
+
+    event.target.value
+      ? dest = event.target.value
+      : dest = $scope.transaction.destinations[0].address;
+
+    $timeout(() => {
+      event.target.value
+        ? dest = event.target.value
+        : dest = $scope.transaction.destinations[0].address;
+
+      function extractFromUri (URI, RegEx, sliceAmount) {
+        const data = URI.match(RegEx)[0];
+        return data.slice(sliceAmount, data.length);
+      }
+
+      $scope.transaction.destinations[0].address = extractFromUri(dest, /(?=\:)(.*)(?=\?)/, 1);
+      $scope.transaction.amounts[0] = extractFromUri(dest, /(?=amount=)(.*)(?=&message)/, 7) * 100000000;
+      $scope.transaction.note = decodeURI(extractFromUri(dest, /(?=&message=)(.*)/, 9));
+      $scope.setPaymentAmount(); // keep
+
+    }, 250);
+  };
+
   $scope.finalBuild = () => $q((resolve, reject) => {
     $scope.payment.build().then(p => {
       resolve(p.transaction);

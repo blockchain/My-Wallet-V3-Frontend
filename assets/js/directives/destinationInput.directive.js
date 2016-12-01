@@ -67,7 +67,6 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     if (!scope.model) scope.clearModel();
     scope.$watch('model', scope.change);
     scope.$watch('selectOpen', (open) => open && scope.focusInput());
-
     scope.$watch('ignore', (ignore) => {
       scope.destinations = accounts.concat(addresses).map(format.destination).concat(addressBook);
       if (ignore && typeof ignore === 'object') {
