@@ -4,9 +4,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'MyWalletMetadata', 'theme', 'BlockchainConstants'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants'];
 
-function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, MyWalletMetadata, theme, BlockchainConstants) {
+function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants) {
   const wallet = {
     goal: {
       auth: false,
@@ -1170,7 +1170,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       // This falls back to cookies if 2nd password is enabled:
       let whatsNewViewed = $cookies.get('whatsNewViewed');
       if (whatsNewViewed) {
-        let whatsNew = new MyWalletMetadata(2);
+        // let whatsNew = new MyWalletMetadata(2);
+        let whatsNew = wallet.my.wallet.metadata(2);
 
         whatsNew.fetch().then((res) => {
           if (res === null) {
@@ -1224,7 +1225,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
     // whatsNew
     // This falls back to cookies if 2nd password is enabled:
-    let whatsNew = new MyWalletMetadata(2);
+    // let whatsNew = new MyWalletMetadata(2);
+    let whatsNew = wallet.my.wallet.metadata(2);
     whatsNew.fetch().then((res) => {
       if (res !== null) {
         $cookies.put('whatsNewViewed', res.lastViewed);
