@@ -21,7 +21,7 @@
         .group.mtl
           .item
             .flex-between.flex-baseline.mbs
-              span.type-h5.em-500 Enter Amount
+              span.type-h5.em-500.colon Enter Amount
               span
                 div(ng-show="quote && !state.loadFailed")
                   span 1 {{ bitcoin.code }} = ${{ quote.rate }}
@@ -55,25 +55,24 @@
               span.type-sm Your daily buy limit is ${{ max }}
         .group.mtl
           .item
-            span.type-h5.em-500.mbm Payment Method
-            .border.form-control.flex-center
-              span {{ account.accountType }} ({{ account.accountNumber }})
-        .group.mtl
-          .item
             .mbm
-              span.type-h5.em-500 Order Summary
-            .border.flex-column
+              span.type-h5.em-500.colon Confirm Purchase
+            .border.flex-column.bg-light-blue
               div(ng-show="hasMultipleAccounts")
-                .flex-between.flex-center.form-control.no-border
+                .flex-between.flex-center.form-control.bg-light-blue.no-border
                   span.colon Send To
                   span {{ btcAccount.label }}
                 .border-bottom-light.mhm
-              .flex-between.flex-center.form-control.no-border
-                span.colon Amount
-                span {{ format(state.fiat || 0, dollars, true) }}
+              .flex-between.flex-center.form-control.bg-light-blue.no-border
+                span.colon BTC Order
+                span {{ format(formatSatoshi(state.btc || 0, bitcoin), bitcoin, true) }}
               .border-bottom-light.mhm
-              .flex-between.flex-center.form-control.no-border.em-500
-                span.colon Total
+              .flex-between.flex-center.form-control.bg-light-blue.no-border
+                span.colon Payment Method
+                span.capitalize {{ account.accountType }} ({{ account.accountNumber }})
+              .border-bottom-light.mhm
+              .flex-between.flex-center.form-control.bg-light-blue.no-border.em-500
+                span.colon Total Cost
                 span {{ format(state.total || 0, dollars, true) }}
         .group.mtl
           button.btn.button-primary.full(ng-click="buy()" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") Buy Bitcoin

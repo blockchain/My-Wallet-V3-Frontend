@@ -21,6 +21,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
   $scope.signupCompleted = accounts[0].status === 'active';
 
   $scope.format = currency.formatCurrencyForView;
+  $scope.formatSatoshi = currency.convertFromSatoshi;
   $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.hasMultipleAccounts = Wallet.accounts().filter(a => a.active).length > 1;
