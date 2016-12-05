@@ -24,12 +24,12 @@
   "VISIT_SUPPORT": "Support Center",
   "FAQ_QUESTIONS": {
     "CAN_I_BUY": {
-      "Q": "Can I buy Bitcoin?",
-      "A": "Yes, you can! It's simple, secure and seamless. <span class='pointer blue'>{{::text | translate}}</span>"
+      "Q": "How do I buy Bitcoin?",
+      "A": "It’s simple, secure and seamless. <span class='pointer blue'>{{::text | translate}}</span>"
     },
     "CAN_I_BUY_UNINVITED": {
       "Q": "Can I buy Bitcoin?",
-      "A": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet both a seamless and secure experience. We’ll be rolling out more regions soon, stay tuned."
+      "A": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet both a seamless and secure experience. To be the first to know when we launch in your region, <span class='pointer blue'>click here</span>."
     },
     "WALLET_SAFETY": {
       "Q": "What do I need to do to keep my wallet safe?",
@@ -425,6 +425,7 @@
   "SET_SECOND_PASSWORD" : "Set Second Password",
   "SET_PASSWORD" : "Set Password",
   "UPGRADE_WALLET" : "Welcome to your Blockchain Wallet!",
+  "WELCOME": "Welcome!",
   "NEED_SECOND_PASSWORD_FOR_UPGRADE" : "Your second password is required to upgrade the wallet.",
   "UPGRADE_WELCOME" : "Welcome to the new version of the Blockchain Wallet!",
   "UPGRADE_NEW_DESIGN" : "Completely updated design and user experience",
@@ -612,7 +613,7 @@
   "FIRST_LOGIN_TEXT_1" : " Our wallet makes transacting easy and intuitive and is helping to create a fair, accessible and open financial future. Visit our  ",
   "FIRST_LOGIN_TEXT_2" : " and keep your wallet safe.",
   "FIRST_LOGIN_ACTION" : "Get Started",
-  "BUY_FIRST_LOGIN_TEXT_1": "Thanks for joining the world’s most popular bitcoin wallet. We’re helping to create a fair and open financial future.",
+  "BUY_FIRST_LOGIN_TEXT_1": "Thanks for joining the world’s most popular bitcoin wallet platform. We’re helping to create a fair and open financial future.",
   "BUY_FIRST_LOGIN_TEXT_2": "Get started now by purchasing your first bitcoins!", 
   "TOS" : "ToS",
   "PRIVACY" : "Privacy Policy",
@@ -643,7 +644,7 @@
   "DYK" : "Did You Know?",
   "ACTIVITY_EMPTY": "Welcome to your Activity Feed",
   "ACTIVITY_EMPTY_MSG": "Here we'll give you a snapshot of recent transactions & important activites surrounding your wallet. Get a head start by sharing your address to receive bitcoins into your wallet",
-  "CAN_BUY_ACTIVITY_EMPTY_MSG": "Here we’ll give you a snapshot of recent transactions & important activities surrounding your wallet. Get started by adding some bitcoins to your wallet!",
+  "CAN_BUY_ACTIVITY_EMPTY_MSG": "No transactions yet? No problem. Get started by adding some bitcoins to your wallet!",
   "RECEIVE_BTC": "Start Receiving Bitcoins",
   "FEATURE": "Feature",
   "EDUCATIONAL": "Educational",
@@ -662,7 +663,7 @@
   },
   "BUY_BITCOIN_REMINDER": {
     "TITLE": "Did you know?",
-    "BODY": "You can buy Bitcoin directly from your wallet! Checkout our buy feature to top off your balance."
+    "BODY": "You can buy Bitcoin directly from your wallet! Check out our buy feature to top off your balance."
   },
   "WHAT_DO_YOU_THINK": "What do you think of Blockchain Wallet?",
   "VIEW_OPTIONS": "View Options",
@@ -897,7 +898,6 @@
   "ERR_NOTE_LENGTH": "Description cannot be longer than 512 characters",
   "GET_STARTED": "Get Started",
   "START_CLICK_HERE": "Click here to get started.",
-  "CLICK_TO_GET_BTC": "Click here to buy bitcoin now!",
   "CREATE_YOUR_WALLET": "Create Your Wallet",
   "NEW_USERS": "New Users",
   "NEW_USERS_COPY": "Creating a Blockchain Wallet takes a few seconds. Send and receive payments immediately.",
@@ -911,7 +911,7 @@
   "LOGIN_LEGACY": "Legacy Login",
   "SUPPORT_BUTTON": "Support Pages",
   "CONFUSED_READ": "Confused? Read",
-  "MY_WALLET_IS": "My Wallet is the world's most popular Bitcoin wallet. It's free, open source, and trusted by more than 7 million users.",
+  "MY_WALLET_IS": "My Wallet is the world's most popular Bitcoin wallet. It's free, open source, and trusted by more than 10 million users.",
   "MOST_POPULAR_WALLET": "The World's Most Popular Bitcoin Wallet",
   "ABOUT_BLOCKCHAIN_WALLET": "We are not a bank. We cannot view your balance, see your transactions<br class='hidden-xs'/>or make payments on your behalf. You retain complete ownership of your money.",
   "CREATE_NEW": "Create a Free Bitcoin Wallet",
