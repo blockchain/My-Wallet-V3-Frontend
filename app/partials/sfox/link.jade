@@ -47,7 +47,10 @@
 .flex-row.mtl(ng-show="state.accounts.length && state.readyToVerify")
   .width-40
     .width-80
-      h4.f-20.em-500.mvn.mb-10(translate="Verify Bank Account")
+      .flex-row
+        h4.f-20.em-500.mvn.mb-10(translate="Verify Bank Account")
+        button.helper(ng-click="openDepositHelper()" tabindex="-1")
+          span ?
       span.f-16(translate="SFOX sent 2 small deposits to your bank account. Enter these amounts in any order to verify your account.")
   .width-50
     form.bc-form(name="verifyBankAccountForm" ng-submit="verify()" novalidate autocomplete="off")
