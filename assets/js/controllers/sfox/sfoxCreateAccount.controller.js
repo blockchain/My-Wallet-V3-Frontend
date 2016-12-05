@@ -2,14 +2,23 @@ angular
   .module('walletApp')
   .controller('SfoxCreateAccountController', SfoxCreateAccountController);
 
-function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, sfox, bcPhoneNumber) {
+function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, Alerts, sfox, bcPhoneNumber) {
+  const views = ['summary', 'email', 'mobile'];
   let exchange = $scope.vm.exchange;
   let user = $scope.user = Wallet.user;
 
   let state = $scope.state = {
     terms: false,
-    editEmail: false
+    get verified () { return this.verifiedEmail && this.verifiedMobile; }
   };
+
+  $scope.resolveView = (state) => {
+    let i = !state.verifiedEmail ? 1 : !state.verifiedMobile ? 2 : 0;
+    return views[i];
+  };
+
+  $scope.view = (v) => { state.view = v; };
+  $scope.viewing = (v) => v === state.view;
 
   $scope.format = bcPhoneNumber.format;
 
@@ -18,30 +27,42 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, sfox, bcPhon
     state.mobile = user.mobileNumber;
     state.verifiedEmail = user.isEmailVerified;
     state.verifiedMobile = user.isMobileVerified;
-    state.isVerified = state.verifiedEmail && state.verifiedMobile;
+    state.sentEmailCode = !state.verifiedEmail && state.sentEmailCode;
+    state.sentMobileCode = !state.verifiedMobile && state.sentMobileCode;
+    state.mobileCode = state.emailCode = '';
+    state.view = $scope.resolveView(state);
   };
 
-  $scope.toggleEmail = () => {
-    state.editEmail = !state.editEmail;
-  };
+  $scope.emailCodeSent = () => { state.sentEmailCode = true; };
+  $scope.mobileCodeSent = () => { state.sentMobileCode = true; };
 
   $scope.changeEmail = () => {
+    Alerts.displayWarning('Send email code not implemented (would have sent email code just now, sent verification link instead)');
     $scope.lock();
-    let email = state.email;
-    state.editEmail = false;
-    $q(Wallet.changeEmail.bind(null, email)).then($scope.setState).finally($scope.free);
+    $q(Wallet.changeEmail.bind(null, state.email)).then($scope.emailCodeSent).then($scope.setState).finally($scope.free);
+  };
+
+  $scope.sendEmailCode = () => {
+    Alerts.displayWarning('Send email code not implemented (would have sent email code just now)');
+    $timeout($scope.emailCodeSent, 500);
+  };
+
+  $scope.verifyEmail = () => {
+    Alerts.displayWarning('Verify email by code not implemented (would have verified just now)');
+    $timeout($scope.setState, 500);
   };
 
   $scope.changeMobile = () => {
     $scope.lock();
-    state.sentCode = true;
-    let mobile = state.mobile;
-    $q(Wallet.changeMobile.bind(null, mobile)).then($scope.setState).finally($scope.free);
+    $q(Wallet.changeMobile.bind(null, state.mobile)).then($scope.mobileCodeSent).then($scope.setState).finally($scope.free);
+  };
+
+  $scope.sendMobileCode = () => {
+    $scope.changeMobile();
   };
 
   $scope.verifyMobile = () => {
-    let code = state.confirmMobile;
-    $q(Wallet.verifyMobile.bind(null, code)).then($scope.setState, sfox.displayError);
+    $q(Wallet.verifyMobile.bind(null, state.mobileCode)).then($scope.setState, sfox.displayError);
   };
 
   $scope.createAccount = () => {
@@ -55,7 +76,14 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, sfox, bcPhon
 
   $scope.$watch('user.isEmailVerified', $scope.setState);
   $scope.$watch('user.isMobileVerified', $scope.setState);
-  $scope.$watch('state.mobile', () => $timeout(() => { state.sentCode = false; }));
+
+  $scope.$watch('state.view', (view) => {
+    let shouldSendEmail = !state.verifiedEmail && state.email && state.email.indexOf('@') > -1;
+    let shouldSendMobile = !state.verifiedMobile && bcPhoneNumber.isValid(state.mobile);
+    if (view === 'email' && shouldSendEmail) $scope.sendEmailCode();
+    if (view === 'mobile' && shouldSendMobile) $scope.sendMobileCode();
+  });
+
   $scope.setState();
   $scope.installLock();
 }

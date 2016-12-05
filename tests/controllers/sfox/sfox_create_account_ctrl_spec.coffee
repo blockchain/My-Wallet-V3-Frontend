@@ -37,9 +37,8 @@ describe "SfoxCreateAccountController", ->
 
   describe "state", ->
 
-    it "should set 'terms' and 'editEmail' to false", ->
+    it "should set 'terms' to false", ->
       expect(scope.state.terms).toBe(false)
-      expect(scope.state.editEmail).toBe(false)
 
     describe "lock and free", ->
 
