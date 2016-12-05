@@ -74,7 +74,7 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
 
     let buyError = eventualError('ERROR_TRADE_CREATE');
 
-    $scope.accounts[0].buy(-$scope.quote.baseAmount, $scope.quote.baseCurrency, $scope.getMedium().inMedium)
+    $scope.accounts[0].buy()
                       .catch(buyError)
                       .then(success, $scope.standardError)
                       .then($scope.watchAddress);
