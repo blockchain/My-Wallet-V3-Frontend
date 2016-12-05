@@ -18,21 +18,21 @@
   .width-60(ng-show="viewing('summary')")
     form.bc-form.width-80(name="accountForm" ng-submit="createAccount()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
-        .group
+        .group.pb-30
           .item
             label Email Address
             .flex-center
               .width-80
                 input(ng-model="state.email" name="email" disabled)
-              a.width-20.center(type="button" ng-click="view('email')") Change
-        .group
+              a.width-20.f-14.center(type="button" ng-click="view('email')") Change
+        .group.pb-40
           .item
             label Phone Number
             .flex-center
               .width-80
                 input(ng-model="state.mobile" name="mobile" disabled)
-              a.width-20.center(type="button" ng-click="view('mobile')") Change
-        .group
+              a.width-20.f-14.center(type="button" ng-click="view('mobile')") Change
+        .group.pb-30
           .item.check
             input#terms(type="checkbox" ng-model="state.terms" name="terms" required)
             label(for="terms") I accept SFOX’s Terms of Service and Privacy Policy.
@@ -47,15 +47,15 @@
             label Confirm email:
             input(ng-model="state.email" ng-change="state.sentEmailCode = false" name="email" type="email" required)
         div(ng-hide="state.sentEmailCode")
-          .group
-            button.btn.button-primary.full(type="button" ng-click="changeEmail()" ng-disabled="emailForm.email.$invalid || (state.verified && state.email === user.email)") Send Verification Email
-            a.display-block.center.mtl(ng-show="state.verified" ng-click="setState()") Go Back
+          .group.pt-25
+            button.btn.button-primary.full.pb-15(type="button" ng-click="changeEmail()" ng-disabled="emailForm.email.$invalid || (state.verified && state.email === user.email)") Send Verification Email
+            a.f-14.display-block.center.pt-15(ng-show="state.verified" ng-click="setState()") Go Back
         div(ng-show="state.sentEmailCode")
-          .group
+          .group.pt-30
             .item
               label Enter verification code sent to your email:
               input(ng-model="state.emailCode" name="emailCode" required)
-          .group
+          .group.pt-25
             button.btn.button-primary.full(type="submit" ng-disabled="emailForm.$invalid") Continue
 
   .width-60(ng-show="viewing('mobile')")
@@ -66,13 +66,13 @@
             label Add phone number:
             bc-phone-number(ng-model="state.mobile" ng-change="state.sentMobileCode = false" name="mobile" default-country="us" preferred-countries="us ca gb au" required)
         div(ng-hide="state.sentMobileCode")
-          .group
-            button.btn.button-primary.full(type="button" ng-click="changeMobile()" ng-disabled="mobileForm.mobile.$invalid || (state.verified && state.mobile === format(user.mobileNumber))") Text Verification Code
-            a.display-block.center.mtl(ng-show="state.verified" ng-click="setState()") Go Back
+          .group.pt-25
+            button.btn.button-primary.full.pb-15(type="button" ng-click="changeMobile()" ng-disabled="mobileForm.mobile.$invalid || (state.verified && state.mobile === format(user.mobileNumber))") Text Verification Code
+            a.f-14.display-block.center.pt-15(ng-show="state.verified" ng-click="setState()") Go Back
         div(ng-show="state.sentMobileCode")
-          .group
+          .group.pt-30
             .item
               label Enter verification code sent to your mobile phone:
               input(ng-model="state.mobileCode" name="mobileCode" ng-required="test")
-          .group
+          .group.pt-25
             button.btn.button-primary.full(type="submit" ng-disabled="mobileForm.$invalid") Continue

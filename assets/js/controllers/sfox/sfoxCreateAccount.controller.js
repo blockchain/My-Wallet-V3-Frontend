@@ -43,7 +43,7 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, Alerts, sfox
   };
 
   $scope.sendEmailCode = () => {
-    Alerts.displayWarning('Send email code not implemented (would have sent email code just now)');
+    Alerts.displayWarning('Send email code not implemented (would have sent email code just now). To get passed this step, verify your email via link and relog.');
     $timeout($scope.emailCodeSent, 500);
   };
 
