@@ -77,6 +77,8 @@ module.exports = (grunt) ->
           "bower_components/browserdetection/src/browser-detection.js"
           "bower_components/oclazyload/dist/ocLazyLoad.js"
           'bower_components/angular-ui-select/dist/select.js'
+          'bower_components/ng-file-upload/ng-file-upload-shim.min.js'
+          'bower_components/ng-file-upload/ng-file-upload.min.js'
           "build/js/sharedDirectives.js"
           "build/js/sharedDirectives/public-header.directive.js"
           "build/js/sharedDirectives/video-container.directive.js"

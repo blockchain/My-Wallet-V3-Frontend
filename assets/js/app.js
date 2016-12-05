@@ -18,9 +18,10 @@ const modules = [
   'translations',
   'sharedDirectives',
   'oc.lazyLoad',
-  'ngFileUpload',
   // Not needed for landing page, but loading it now for the config step below:
-  'ui.select'
+  'ui.select',
+  // Not needed for landing page, TODO: lazy load
+  'ngFileUpload'
 ];
 
 angular.module('walletApp', modules)
