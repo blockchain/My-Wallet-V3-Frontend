@@ -7,6 +7,7 @@ function SfoxLinkController ($scope, $q, sfox, modals) {
   let accounts = $scope.vm.accounts;
 
   $scope.openBankHelper = modals.openBankHelper;
+  $scope.openDepositHelper = modals.openDepositHelper;
 
   let state = $scope.state = {
     terms: false,

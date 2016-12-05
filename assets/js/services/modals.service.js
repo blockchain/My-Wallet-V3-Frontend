@@ -14,6 +14,11 @@ function modals ($state, $uibModal, $ocLazyLoad) {
     windowClass: 'bc-modal medium'
   });
 
+  service.openDepositHelper = () => open({
+    templateUrl: 'partials/bank-deposit-modal.jade',
+    windowClass: 'bc-modal medium'
+  });
+
   service.openTransfer = (addresses) => open({
     templateUrl: 'partials/settings/transfer.jade',
     controller: 'TransferController',
