@@ -498,7 +498,8 @@
   margin: 0px;
 }
 
-.modal-body .close-modal {
+.modal-body .close-modal,
+.tray .close-modal {
   @extend .lh1;
   position: absolute;
   cursor: pointer;
@@ -508,12 +509,18 @@
   top: 20px;
 }
 
+.tray .close-modal {
+  top: 25px;
+  right: 40px;
+}
+
 .modal.tray {
   $timing: 0.8s;
   left: 270px;
   overflow: auto;
   position: fixed;
   margin-top: 60px;
+  line-height: 20px;
   opacity: 1 !important;
   top: calc(100% - 60px);
   @include transition(top $timing, opacity 0s $timing);
@@ -553,10 +560,14 @@
     }
 
     .sfox-signup {
-      > .pal {
-        .width-60 {
-          margin-top: 3em;
-        }
+      .pl-40 {
+        padding-left: 20px;
+      }
+      .pr-40 {
+        padding-right: 20px;
+      }
+      .pt-40 {
+        padding-top: 20px;
       }
     }
 

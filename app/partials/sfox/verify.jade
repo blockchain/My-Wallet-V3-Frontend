@@ -1,11 +1,11 @@
 .flex-row.flex-column-mobile(ng-show="state.idType === 'ssn'")
   .width-40
     .width-80
-      h4(translate="Verify Identity")
+      h4.f-20.em-500.mvn.mb-10(translate="Verify Identity")
       .mbl
-        span.type-h5.em-300(translate="Strong verification procedures help reduce fraud and money laundering activites. As part of your registration, SFOX will need the following information from you to verify your identity.")
+        span.f-16(translate="Strong verification procedures help reduce fraud and money laundering activites. As part of your registration, SFOX will need the following information from you to verify your identity.")
       .mbl
-        span.type-h5.em-300(translate="You may also be asked to upload identification documents.")
+        span.f-16(translate="You may also be asked to upload identification documents.")
       .mbl(ng-show="buySellDebug")
         div.type-h4.mbs.underline
           i.mrs.ti-search
@@ -19,7 +19,7 @@
   .width-60
     form.bc-form(name="verifyForm" ng-submit="verify()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
-        .group.inline
+        .group.inline.pb-30
           .item.width-33
             label First Name
             input(ng-model="state.first" name="first" required)
@@ -32,7 +32,7 @@
             label Last Name
             input(ng-model="state.last" name="last" required)
             i
-        .group.inline
+        .group.inline.pb-30
           .item.width-33
             label Social Security Number
             input(ng-model="state.ssn" name="ssn" placeholder="___-___-____" format-input="xxx-xx-xxxx" required)
@@ -42,17 +42,17 @@
             input(ng-model="state.dob" name="dob" placeholder="mm/dd/yyyy" format-input="xx/xx/xxxx" is-valid="isBeforeNow(state.dob)" required)
             i
           .item.width-33
-        .group
+        .group.pb-15
           .item.full
             label Address Line 1
             input(ng-model="state.addr1" name="addr1" placeholder="Street address, P.O. box, etc." required)
             i
-        .group
+        .group.pb-15
           .item.full
             label Address Line 2
             input(ng-model="state.addr2" name="addr2" placeholder="Apartment, unit, floor, etc.")
             i
-        .group.inline
+        .group.inline.pb-15
           .item.width-33
             label City
             input(ng-model="state.city" name="city" required)
@@ -72,26 +72,20 @@
 .flex-row.flex-column-mobile(ng-show="state.idType === 'id' || state.idType === 'address'")
   .width-40
     .width-80
-      h4(translate="{{state.idType + '_ID'}}.TITLE")
+      h4.f-20.em-500.mvn.mb-10(translate="{{state.idType + '_ID'}}.TITLE")
       .mbl
-        span.type-h5.em-300(translate="{{state.idType + '_ID'}}.COPY")
-      .mbl.type-h5.em-300
-        p
-          span 1)
-          |  
+        span.f-16(translate="{{state.idType + '_ID'}}.COPY")
+      ul.mbl.pln.pl-20.f-16
+        li.pb-5
           span(translate="{{state.idType + '_ID'}}.OPTION1")
-        p
-          span 2)
-          |  
+        li.pb-5
           span(translate="{{state.idType + '_ID'}}.OPTION2")
-        p
-          span 3)
-          |  
+        li.pb-5
           span(translate="{{state.idType + '_ID'}}.OPTION3")
-        p
-          span 4)
-          |  
+        li.pb-5
           span(translate="{{state.idType + '_ID'}}.OPTION4")
+      .mbl
+        span.f-16(translate="{{state.idType + '_ID'}}.COPY_2")
       .mbl(ng-show="buySellDebug")
         div.type-h4.mbs.underline
           i.mrs.ti-search
@@ -101,7 +95,7 @@
           label.em-400.type-lbl.mls(for="verify-doc") Check this box if you want this doc to be approved right away.
 
   .width-60
-    label(translate="{{state.idType + '_ID'}}.UPLOAD_TITLE")
+    label.f-14(translate="{{state.idType + '_ID'}}.UPLOAD_TITLE")
     div.file-upload(ngf-drop ngf-select ng-model="state.file" ngf-drag-over-class="'dragover'" ngf-pattern="'image/*'")
       span.type-h5.em-300.mtvl(ng-hide="state.file") Drag and drop your document here
       span.type-h5.em-300.mtvl(ng-show="state.file")
@@ -118,7 +112,7 @@
 .flex-row.flex-column-mobile(ng-show="!state.idType")
   .width-40
     .width-80
-      h4(translate="Identity Verification Pending")
+      h4.f-20.em-500.mvn.mb-10(translate="Identity Verification Pending")
       .mbl
         span.type-h5.em-300(translate="We've sent your details over to SFOX to review. They will reach out once your review is complete.")
 

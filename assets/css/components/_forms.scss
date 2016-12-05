@@ -78,7 +78,6 @@ input[type="checkbox"] {
 
 form.bc-form {
   .group {
-    padding-bottom: 1em;
     @extend .flex-column;
     &.inline {
       @extend .flex-row;
@@ -87,10 +86,7 @@ form.bc-form {
       }
     }
     label {
-      font-size: 16px;
-      &.sm {
-        font-size: 14px;
-      }
+      font-size: 14px;
     }
     .text {
       @extend .mbs;
