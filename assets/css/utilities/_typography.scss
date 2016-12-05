@@ -7,6 +7,12 @@
 .type-lrg { font-size: 2em; }
 .type-med { font-size: 2.2em; }
 .type-yuge { font-size: 5em; }
+
+.f-24 { font-size: 24px; }
+.f-20 { font-size: 20px; }
+.f-16 { font-size: 16px; }
+.f-14 { font-size: 14px; }
+
 .title { font-size: 3.5em; }
 .underline { text-decoration: underline; &:hover { text-decoration: underline; } }
 .underline-blue { border-bottom: 2px solid $blue; }

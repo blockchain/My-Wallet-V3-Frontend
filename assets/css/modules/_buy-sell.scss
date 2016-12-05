@@ -266,6 +266,15 @@ i.ti-credit-card.bank {
     background-image: url('../img/bank.png');
   }
 }
+
+.sfox-signup {
+  i.ti-credit-card.bank {
+    &:after {
+      top: 0px;
+    }
+  }
+}
+
 .blue {
   i.ti-credit-card.bank {
     &:after {

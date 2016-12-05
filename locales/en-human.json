@@ -1164,6 +1164,7 @@
   "id_ID": {
     "TITLE": "Upload Photo ID",
     "COPY": "To verify your identity, we need you to upload a government issued form of photo identification showing nationality or residence and clearly displaying identification number. You can upload any of the following identification:",
+    "COPY_2": "Only the front side of your ID is needed, which must clearly display your identification number.",
     "OPTION1": "State issued driver’s license",
     "OPTION2": "State issued identification card",
     "OPTION3": "Copy of passport",
