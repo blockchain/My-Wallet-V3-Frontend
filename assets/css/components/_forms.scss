@@ -124,7 +124,7 @@ form.bc-form {
         border-color: $state-danger-text;
         & + i:before {
           color: $state-danger-text;
-          content: "\e646"; 
+          content: "\e646";
         }
       }
       &.ng-valid,
@@ -156,6 +156,11 @@ form.bc-form {
 
   .no-border {
     border: none;
+  }
+
+  .help {
+    position: relative;
+    span { position: fixed; }
   }
 }
 
