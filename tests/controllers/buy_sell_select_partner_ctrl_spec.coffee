@@ -26,6 +26,7 @@ describe "BuySellSelectPartnerController", ->
 
     options = partners:
       coinify: countries: ["GB"]
+      sfox: countries: ["US"]
 
     $controller "BuySellSelectPartnerController",
       $scope: $scope
