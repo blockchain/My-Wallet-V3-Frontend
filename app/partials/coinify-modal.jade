@@ -66,8 +66,15 @@
           ng-click="nextStep()"
           data-style="expand-left"
           ui-ladda="status.waiting"
-          ng-disabled="isDisabled() || onStep('email')"
-          ng-hide="afterStep('email')")
+          ng-disabled="isDisabled()"
+          ng-show="onStep('select-country')")
+        button.button-primary(
+          ladda-translate="CONTINUE"
+          ng-click="verifyEmail()"
+          data-style="expand-left"
+          ui-ladda="status.waiting"
+          ng-disabled="isDisabled()"
+          ng-show="onStep('email')")
         button.button-primary(
           ladda-translate="CONTINUE"
           ng-click="signup()"

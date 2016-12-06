@@ -5,6 +5,12 @@ angular
 function CoinifyEmailController ($scope, Alerts, Wallet, $q) {
   $scope.toggleEmail = () => $scope.editEmail = !$scope.editEmail;
 
+  $scope.$parent.verifyEmail = () => {
+    $q(Wallet.verifyEmail.bind(null, $scope.$parent.fields.emailVerification)).catch((err) => {
+      Alerts.displayError(err);
+    });
+  };
+
   $scope.changeEmail = (email, successCallback, errorCallback) => {
     $scope.$parent.rejectedEmail = void 0;
     Alerts.clear($scope.alerts);
@@ -15,6 +21,6 @@ function CoinifyEmailController ($scope, Alerts, Wallet, $q) {
   };
 
   $scope.$watch('$parent.step', (newVal) => {
-    if ($scope.steps['email'] === newVal && !Wallet.goal.firstLogin) Wallet.resendEmailConfirmation();
+    if ($scope.steps['email'] === newVal) Wallet.sendConfirmationCode();
   });
 }

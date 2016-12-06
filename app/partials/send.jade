@@ -68,6 +68,7 @@
                 ng-model="transaction.destinations[$index]"
                 ng-model-options="{ updateOn: 'blur' }"
                 ng-change="checkForSameDestination()"
+                ng-paste="handlePaste($event, $index)"
                 on-payment-request="applyPaymentRequest(request, $index)"
                 ignore="transaction.from"
                 required)

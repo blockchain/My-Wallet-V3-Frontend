@@ -101,7 +101,7 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
       templateUrl: 'partials/send.jade',
       windowClass: 'bc-modal initial',
       controller: 'SendCtrl',
-      resolve: { paymentRequest }
+      resolve: {paymentRequest}
     }), 500);
     $uibModalInstance.dismiss();
   };
@@ -389,6 +389,20 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
       }
     }
     return $q.resolve();
+  };
+
+  $scope.handlePaste = (event, index) => {
+    let destinations = [];
+    $timeout(() => {
+      event.target.value
+        ? destinations.push({address: event.target.value})
+        : destinations = $scope.transaction.destinations;
+      const result = Wallet.parseBitcoinURL(destinations, index);
+      $scope.transaction.destinations[index].address = result.address;
+      $scope.transaction.amounts[index] = result.amount;
+      index === 0 ? $scope.transaction.note = result.note : '';
+      $scope.setPaymentAmount(); // keep
+    }, 250);
   };
 
   $scope.finalBuild = () => $q((resolve, reject) => {
