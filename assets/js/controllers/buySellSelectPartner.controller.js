@@ -2,7 +2,14 @@ angular
   .module('walletApp')
   .controller('BuySellSelectPartnerController', BuySellSelectPartnerController);
 
-function BuySellSelectPartnerController ($scope, $state, MyWallet, buySell, country, options) {
+function BuySellSelectPartnerController ($scope, $state, MyWallet, buySell, country, options, buyStatus) {
+  buyStatus.canBuy().then((canBuy) => {
+    if (!canBuy) {
+      $state.go('wallet.common.home');
+      return;
+    }
+  });
+
   let contains = (val, list) => list.indexOf(val) > -1;
   let codeGuess = MyWallet.wallet.accountInfo && MyWallet.wallet.accountInfo.countryCodeGuess;
 
@@ -10,7 +17,7 @@ function BuySellSelectPartnerController ($scope, $state, MyWallet, buySell, coun
   $scope.country = $scope.countries.filter(c => c.Code === codeGuess)[0];
 
   $scope.coinifyWhitelist = options.partners.coinify.countries;
-  $scope.sfoxWhitelist = ['US'];
+  $scope.sfoxWhitelist = options.partners.sfox.countries;
 
   $scope.partners = {
     'coinify': {
