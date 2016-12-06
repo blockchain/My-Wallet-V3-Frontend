@@ -19,6 +19,7 @@ bower_components
 .env
 e2e-tests/ignore.js
 .settings
+.tern-project
 
 # Generated files
 Changelog.md
