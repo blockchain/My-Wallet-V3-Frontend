@@ -129,6 +129,20 @@ $multiplier: 5;
   }
 }
 
+@for $i from 1 through 20 {
+  .ph-#{$i * $multiplier} {
+    padding-left: #{$i * $multiplier}px;
+    padding-right: #{$i * $multiplier}px;
+  }
+}
+
+@for $i from 1 through 20 {
+  .pv-#{$i * $multiplier} {
+    padding-top: #{$i * $multiplier}px;
+    padding-bottom: #{$i * $multiplier}px;
+  }
+}
+
 // Margin in multiples of 5
 
 @for $i from 1 through 20 {
@@ -152,5 +166,19 @@ $multiplier: 5;
 @for $i from 1 through 20 {
   .ml-#{$i * $multiplier} {
     margin-left: #{$i * $multiplier}px;
+  }
+}
+
+@for $i from 1 through 20 {
+  .mh-#{$i * $multiplier} {
+    margin-left: #{$i * $multiplier}px;
+    margin-right: #{$i * $multiplier}px;
+  }
+}
+
+@for $i from 1 through 20 {
+  .mv-#{$i * $multiplier} {
+    margin-top: #{$i * $multiplier}px;
+    margin-bottom: #{$i * $multiplier}px;
   }
 }

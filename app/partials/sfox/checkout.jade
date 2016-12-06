@@ -9,22 +9,23 @@
     .flex-column.width-50.mlvl.mtml
       .f-24.blue.em-500.lh1(translate="SIMPLE_SECURE_SEAMLESS")
       .f-16.mtm.basic-grey(translate="BUY_SIMPLE_STEPS")
-  .width-50.border.mrl.pal.flex-column.flex-between(ng-show="signupCompleted")
-    .flex-between.flex-baseline.mbl
+  .flex-column(ng-show="signupCompleted")
+    .flex-row.flex-between
       span.type-h4.em-500 Buy Bitcoin
       .sfox-logo
         span.mrs.type-sm(translate="POWERED_BY")
         a(href="https://www.sfox.com/" target="_blank" rel="noopener noreferrer")
           img.mbs(src="img/sfox-logo.png")
-    form.bc-form.mtl(name="checkoutForm" novalidate autocomplete="off")
+    form.width-50.ph-20.pv-25.mt-10.border.bc-form(name="checkoutForm" novalidate autocomplete="off")
       fieldset
-        .group.mtl
+        .group.mts
           .item
             .flex-between.flex-baseline.mbs
-              span.type-h5.em-500 Enter Amount
+              span.f-16.em-500.colon Enter Amount
               span
-                div(ng-show="quote && !state.loadFailed")
+                div.flex-row.flex-center(ng-show="quote && !state.loadFailed")
                   span 1 {{ bitcoin.code }} = ${{ quote.rate }}
+                  helper-button(content="EXCHANGE_RATE_HELPER")
                 .state-danger-text(ng-show="state.loadFailed")
                   i.ti-alert
                   span.mls Failed to load exchange data
@@ -52,34 +53,31 @@
                   required)
                 span.mhm {{bitcoin.code}}
             .text.mts
-              span.type-sm Your daily buy limit is ${{ max }}
-        .group.mtl
-          .item
-            span.type-h5.em-500.mbm Payment Method
-            .border.form-control.flex-center
-              span {{ account.accountType }} ({{ account.accountNumber }})
+              span.f-12 Your daily buy limit is ${{ max }}
         .group.mtl
           .item
             .mbm
-              span.type-h5.em-500 Order Summary
-            .border.flex-column
+              span.f-16.em-500.colon Order Summary
+            .border.flex-column.bg-light-blue
               div(ng-show="hasMultipleAccounts")
-                .flex-between.flex-center.form-control.no-border
+                .flex-between.flex-center.form-control.bg-light-blue.no-border
                   span.colon Send To
                   span {{ btcAccount.label }}
-                .border-bottom-light.mhm
-              .flex-between.flex-center.form-control.no-border
-                span.colon Amount
-                span {{ format(state.fiat || 0, dollars, true) }}
-              .flex-between.flex-center.form-control.no-border
-                span.colon Fee
-                span {{ format(state.fee || 0, dollars, true) }}
-              .border-bottom-light.mhm
-              .flex-between.flex-center.form-control.no-border.em-500
-                span.colon Total
+                .border-bottom-thick.mhm
+              .flex-between.flex-center.form-control.bg-light-blue.no-border
+                span.colon BTC Order
+                span {{ format(formatSatoshi(state.btc || 0, bitcoin), bitcoin, true) }}
+              .border-bottom-thick.mhm
+              .flex-between.flex-center.form-control.bg-light-blue.no-border
+                span.colon Payment Method
+                span.capitalize {{ account.accountType }} ({{ account.accountNumber }})
+              .border-bottom-thick.mhm
+              .flex-between.flex-center.form-control.bg-light-blue.no-border.em-500
+                span.colon Total Cost
                 span {{ format(state.total || 0, dollars, true) }}
         .group.mtl
-          button.btn.button-primary.full(ng-click="buy()" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") Buy Bitcoin
+          button.btn.button-primary.full(ng-hide="enabled" ng-click="enableBuy()" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") Buy Bitcoin
+          button.btn.button-success.full(ng-show="enabled" ng-click="buy()") Confirm Purchase
   .flex-column.mtl(ng-show="trades.length")
     h4.type-h4(translate="ORDER_HISTORY")
     table.width-100
