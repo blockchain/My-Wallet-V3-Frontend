@@ -17,10 +17,10 @@ function publicHeader ($rootScope, $location, languages) {
         <div ng-class="{'in bg-blue' : !navCollapsed}" ng-click="navCollapsed=true" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-left" ng-show="i18nLoaded">
             <li class="item"><a href="{{rootURL}}" translate="HOME" class="pam"></a></li>
-            <li class="item"><a href="{{rootURL}}charts" translate="CHARTS" class="pam"></a></li>
-            <li class="item"><a href="{{rootURL}}stats" translate="STATS" class="pam"></a></li>
-            <li class="item"><a href="https://markets.blockchain.info" translate="MARKETS" class="pam"></a></li>
-            <li class="item"><a href="{{rootURL}}api" translate="API" class="pam"></a></li>
+            <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}charts" translate="CHARTS" class="pam"></a></li>
+            <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}stats" translate="STATS" class="pam"></a></li>
+            <li class="item" ng-hide="isTestnet"><a href="https://markets.blockchain.info" translate="MARKETS" class="pam"></a></li>
+            <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}api" translate="API" class="pam"></a></li>
             <li class="item active"><a href="#" translate="WALLET" class="pam"></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right hidden-sm">
@@ -55,6 +55,7 @@ function publicHeader ($rootScope, $location, languages) {
     scope.rootURL = $rootScope.rootURL;
     scope.languages = languages.languages;
     scope.path = () => $location.path();
+    scope.isTestnet = $rootScope.network === 'testnet';
     scope.$watch(languages.get, (code) => {
       scope.language = languages.mapCodeToName(code);
       scope.searchUrl = code === 'en' ? '/search' : `/${code}/search`;
