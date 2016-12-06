@@ -85,7 +85,7 @@
         li.pb-5
           span(translate="{{state.idType + '_ID'}}.OPTION4")
       .mbl
-        span.f-16(translate="{{state.idType + '_ID'}}.COPY_2")
+        span.f-16(translate="{{state.idType + '_ID'}}.COPY_2" ng-show="state.idType === 'id'")
       .mbl(ng-show="buySellDebug")
         div.type-h4.mbs.underline
           i.mrs.ti-search
