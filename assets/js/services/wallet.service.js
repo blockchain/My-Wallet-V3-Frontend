@@ -667,6 +667,27 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     return result;
   };
 
+  wallet.parseBitcoinURL = (destinations) => {
+    if (destinations.length === 0) return;
+    function extractFromUri (URI) {
+      let result = {};
+      const addressRegex = /(?=\:)(.*)(?=\?)/;
+      const amountRegex = /amount=[0-9.]*/;
+      const noteRegex = /message=.*/;
+      const addressSlice = 1;
+      const amountSlice = 7;
+      const noteSlice = 8;
+      const address = URI.match(addressRegex)[0];
+      result['address'] = address.slice(addressSlice, address.length);
+      const amount = URI.match(amountRegex);
+      amount ? result['amount'] = parseFloat(amount[0].slice(amountSlice, amount[0].length)) * 100000000 : '';
+      const note = URI.match(noteRegex);
+      note ? result['note'] = decodeURI(note[0].slice(noteSlice, note[0].length)) : '';
+      return result;
+    }
+    return extractFromUri(destinations[0].address);
+  };
+
   wallet.isSynchronizedWithServer = () =>
     wallet.store.isSynchronizedWithServer();
 
@@ -681,7 +702,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     }
     // TODO: fix autoreload dev feature
     // if ($rootScope.autoReload) {
-    //   $cookies.put('reload.url', $location.url());
+    //   $cookies.put('reload.url', $location.url())
     // }
   };
 
