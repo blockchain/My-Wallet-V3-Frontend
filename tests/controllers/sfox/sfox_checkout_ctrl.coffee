@@ -38,7 +38,10 @@ describe "SfoxCheckoutController", ->
 
       Wallet.accounts = () -> []
       Wallet.getDefaultAccount = () -> {}
-      MyWalletHelpers.asyncOnce = (f) => f
+      MyWalletHelpers.asyncOnce = (f) ->
+        async = () -> f()
+        async.cancel = () ->
+        return async
 
   getControllerScope = (accounts) ->
     scope = $rootScope.$new()
@@ -173,6 +176,7 @@ describe "SfoxCheckoutController", ->
         quote = mockQuote()
         quoteP = $q.resolve(quote)
         spyOn(scope.vm.external.sfox, "getBuyQuote").and.returnValue(quoteP)
+        scope.state.btc = 1
         scope.refreshQuote()
 
       it "should set the new quote on the scope", ->
