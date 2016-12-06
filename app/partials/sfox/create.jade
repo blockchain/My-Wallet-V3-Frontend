@@ -80,6 +80,6 @@
           .group.pt-30
             .item
               label Enter verification code sent to your mobile phone:
-              input(ng-model="state.mobileCode" name="mobileCode" ng-required="test")
+              input(ng-model="state.mobileCode" name="mobileCode" required)
           .group.pt-25
             button.btn.button-primary.full(type="submit" ng-disabled="mobileForm.$invalid") Continue
