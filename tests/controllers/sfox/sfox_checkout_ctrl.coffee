@@ -77,6 +77,16 @@ describe "SfoxCheckoutController", ->
       scope = getControllerScope([{status:'active'}])
       expect(scope.hasMultipleAccounts).toEqual(true)
 
+  describe ".enableBuy()", ->
+    it "should enable buy()", ->
+      scope.enableBuy()
+      expect(scope.enabled).toBe(true)
+
+  describe ".disableBuy()", ->
+    it "should disable buy()", ->
+      scope.disableBuy()
+      expect(scope.enabled).toBe(false)
+
   describe ".buy()", ->
     beforeEach ->
       scope = getControllerScope([{status:'active'}])
@@ -89,10 +99,16 @@ describe "SfoxCheckoutController", ->
       expect(scope.locked).toEqual(false)
 
     it "should refresh the quote after buying", ->
-      spyOn(scope, 'refreshQuote')
+      spyOn(scope, "refreshQuote")
       scope.buy()
       scope.$digest()
       expect(scope.refreshQuote).toHaveBeenCalled()
+
+    it "should disable buy again", ->
+      spyOn(scope, "disableBuy")
+      scope.buy()
+      scope.$digest()
+      expect(scope.disableBuy).toHaveBeenCalled()
 
     it "should open the trade summary modal", ->
       spyOn(modals, "openTradeSummary")

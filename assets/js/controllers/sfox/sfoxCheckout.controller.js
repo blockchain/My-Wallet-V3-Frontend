@@ -4,6 +4,7 @@ angular
 
 function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts) {
   let exchange = $scope.vm.external.sfox;
+  $scope.enabled = false;
   $scope.openSfoxSignup = () => modals.openSfoxSignup(exchange);
 
   $scope.stepDescription = () => {
@@ -40,6 +41,9 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
     get total () { return this.fiat; }
   };
 
+  $scope.enableBuy = () => $scope.enabled = true;
+  $scope.disableBuy = () => $scope.enabled = false;
+
   $scope.buy = () => {
     $scope.lock();
     $q.resolve($scope.quote.getPaymentMediums())
@@ -47,6 +51,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
       .then(trade => { modals.openTradeSummary(trade, 'initiated'); })
       .catch(() => { Alerts.displayError('Error connecting to our exchange partner'); })
       .then($scope.refreshQuote)
+      .then($scope.disableBuy)
       .finally($scope.free);
   };
 
@@ -88,6 +93,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
 
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
+  $scope.$watchGroup(['state.fiat', 'state.btc'], () => $scope.disableBuy());
   $scope.$on('$destroy', $scope.cancelRefresh);
   $scope.installLock();
 }
