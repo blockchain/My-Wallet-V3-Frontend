@@ -321,6 +321,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       onEnter ($state, $stateParams, MyWallet, modals) {
         let exchange = MyWallet.wallet.external.sfox;
         if (exchange.profile == null) {
+          $state.transition = null; // hack to prevent transition
           modals.openSfoxSignup(exchange);
         }
       }
