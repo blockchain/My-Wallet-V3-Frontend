@@ -507,10 +507,14 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   };
 
   wallet.verifyEmail = (code, successCallback, errorCallback) => {
-    let success = () => {
-      wallet.user.isEmailVerified = 1;
-      successCallback();
-      $rootScope.$safeApply();
+    let success = (res) => {
+      if (res.success) {
+        wallet.user.isEmailVerified = 1;
+        $rootScope.$safeApply();
+        successCallback();
+      } else {
+        error(res.error);
+      }
     };
 
     let error = (err) => {
