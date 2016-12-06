@@ -24,12 +24,12 @@ describe "CoinifyController", ->
       currency = $injector.get("currency")
       buySell = $injector.get("buySell")
 
-      mediums = {'card': { inMedium: "card" }, 'bank': { inMedium: "bank" }}
+      mediums = {'card': { inMedium: "card", getAccounts: () -> $q.resolve() }, 'bank': { inMedium: "bank", getAccounts: () -> $q.resolve() }}
 
       buySell.getExchange = () ->
         profile: {}
         user: {}
-        getBuyQuote: (amt, b, q) -> $q.resolve({"baseCurrency":"EUR","quoteCurrency":"BTC", "getPaymentMediums": () -> $q.resolve(mediums)})
+        getBuyQuote: (amt, b, q) -> $q.resolve({"baseCurrency":"EUR","quoteCurrency":"BTC", "paymentMediums": mediums, "getPaymentMediums": () -> $q.resolve(mediums)})
 
       Wallet.settings.currency = { code: "USD" }
       Wallet.changeCurrency = () -> $q.resolve()
@@ -79,6 +79,8 @@ describe "CoinifyController", ->
       expect(scope.currencySymbol).toEqual("P")
 
     it "should set the transaction currency and refresh payment mediums data", ->
+      scope.mediums = mediums
+      scope.medium = 'card'
       scope.changeCurrency()
       $rootScope.$digest()
       expect(scope.transaction.currency.code).toEqual("USD")
@@ -94,7 +96,7 @@ describe "CoinifyController", ->
 
     it "should update with the correct values", ->
       scope.exchange.user = {}
-      scope.mediums = {'card': {}, 'bank': {}}
+      scope.mediums = mediums
       scope.medium = 'card'
       scope.quote =
         quoteAmount: 10000 # $100.00
@@ -160,6 +162,10 @@ describe "CoinifyController", ->
       expect(scope.rejectedEmail).toEqual(true)
 
   describe "getQuote", ->
+    beforeEach ->
+      scope.mediums = mediums
+      scope.medium = 'card'
+
     it "should call getPaymentMediums", ->
       spyOn(scope, 'getPaymentMediums')
       scope.getQuote()

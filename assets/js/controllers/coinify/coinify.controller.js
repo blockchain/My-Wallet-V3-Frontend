@@ -168,6 +168,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     return buySell.getExchange().getBuyQuote(amount, baseCurr, quoteCurr)
       .then(success, quoteError)
       .then($scope.getPaymentMediums)
+      .then($scope.getAccounts)
       .catch($scope.standardError);
   };
 
