@@ -33,8 +33,8 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
   $scope.max = exchange.profile.limits.buy;
 
   let state = $scope.state = {
-    fiat: $scope.max,
-    btc: 0,
+    fiat: null,
+    btc: null,
     baseCurr: $scope.dollars,
     get quoteCurr () { return this.baseFiat ? $scope.bitcoin : $scope.dollars; },
     get baseFiat () { return this.baseCurr === $scope.dollars; },
@@ -83,7 +83,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
   }, 500);
 
   $scope.refreshIfValid = (field) => {
-    if ($scope.checkoutForm[field].$valid) {
+    if (state[field] && $scope.checkoutForm[field].$valid) {
       $scope.quote = null;
       $scope.refreshQuote();
     } else {
