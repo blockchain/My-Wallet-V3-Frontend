@@ -14,14 +14,14 @@
         .group.full.mb-30
           .item
             label Routing Number
-              button.helper(ng-click="openBankHelper()" tabindex="-1")
+              button.helper(ng-click="openBankHelper()" type="button" tabindex="-1")
                 span ?
             input(ng-model="fields.routingNumber" name="routingNumber" required)
             i
         .group.full.mb-30
           .item
             label Account Number
-              button.helper(ng-click="openBankHelper()" tabindex="-1")
+              button.helper(ng-click="openBankHelper()" type="button" tabindex="-1")
                 span ?
             input(ng-model="fields.accountNumber" name="accountNumber" required)
             i
@@ -49,7 +49,7 @@
     .width-80
       .flex-row
         h4.f-20.em-500.mvn.mb-10(translate="Verify Bank Account")
-        button.helper(ng-click="openDepositHelper()" tabindex="-1")
+        button.helper(ng-click="openDepositHelper()" type="button" tabindex="-1")
           span ?
       span.f-16(translate="SFOX sent 2 small deposits to your bank account. Enter these amounts in any order to verify your account.")
   .width-50
