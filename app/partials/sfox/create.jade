@@ -15,7 +15,7 @@
         span.f-16(ng-hide="state.sentMobileCode" translate="Please add your phone number to create your SFOX exchange account.")
         span.f-16(ng-show="state.sentMobileCode" translate="We just sent a verification code to your phone. Please enter the verification code to continue creating your SFOX exchange account.")
 
-  .width-60(ng-show="viewing('summary')")
+  .width-60.flex-justify(ng-show="viewing('summary')")
     form.bc-form.width-80(name="accountForm" ng-submit="createAccount()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .group.pb-30
@@ -46,7 +46,7 @@
         .group
           button.btn.button-primary.full(type="submit" ng-disabled="accountForm.$invalid") Continue
 
-  .width-60(ng-show="viewing('email')")
+  .width-60.flex-justify(ng-show="viewing('email')")
     form.bc-form.width-60(name="emailForm" ng-submit="verifyEmail(); emailForm.$setUntouched()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .group
@@ -65,7 +65,7 @@
           .group.pt-25
             button.btn.button-primary.full(type="submit" ng-disabled="emailForm.$invalid") Continue
 
-  .width-60(ng-show="viewing('mobile')")
+  .width-60.flex-justify(ng-show="viewing('mobile')")
     form.bc-form.width-60(name="mobileForm" ng-submit="verifyMobile(); mobileForm.$setUntouched()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .group
