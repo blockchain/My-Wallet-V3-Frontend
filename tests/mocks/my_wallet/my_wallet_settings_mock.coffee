@@ -10,4 +10,5 @@ angular.module('walletApp.core').factory 'MyBlockchainSettings', () ->
     enableRememberTwoFactor: (success, error) -> success()
     disableRememberTwoFactor: (success, error) -> success()
     toggleSave2FA: (flag, success, error) -> success()
+    sendConfirmationCode: (success, error) -> success()
   }

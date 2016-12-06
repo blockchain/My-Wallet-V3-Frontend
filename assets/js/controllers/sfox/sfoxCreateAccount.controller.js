@@ -37,19 +37,19 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, Alerts, sfox
   $scope.mobileCodeSent = () => { state.sentMobileCode = true; };
 
   $scope.changeEmail = () => {
-    Alerts.displayWarning('Send email code not implemented (would have sent email code just now, sent verification link instead)');
     $scope.lock();
-    $q(Wallet.changeEmail.bind(null, state.email)).then($scope.emailCodeSent).then($scope.setState).finally($scope.free);
+    $q(Wallet.changeEmail.bind(null, state.email))
+      .then(() => $q(Wallet.sendConfirmationCode))
+      .then($scope.emailCodeSent).then($scope.setState).finally($scope.free);
   };
 
   $scope.sendEmailCode = () => {
-    Alerts.displayWarning('Send email code not implemented (would have sent email code just now). To get passed this step, verify your email via link and relog.');
-    $timeout($scope.emailCodeSent, 500);
+    $q(Wallet.sendConfirmationCode).then($scope.emailCodeSent);
   };
 
   $scope.verifyEmail = () => {
-    Alerts.displayWarning('Verify email by code not implemented (would have verified just now)');
-    $timeout($scope.setState, 500);
+    $scope.lock();
+    $q(Wallet.verifyEmail.bind(null, state.emailCode)).then($scope.setState).finally($scope.free);
   };
 
   $scope.changeMobile = () => {
@@ -62,7 +62,8 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, Alerts, sfox
   };
 
   $scope.verifyMobile = () => {
-    $q(Wallet.verifyMobile.bind(null, state.mobileCode)).then($scope.setState, sfox.displayError);
+    $scope.lock();
+    $q(Wallet.verifyMobile.bind(null, state.mobileCode)).then($scope.setState, sfox.displayError).finally($scope.free);
   };
 
   $scope.createAccount = () => {
