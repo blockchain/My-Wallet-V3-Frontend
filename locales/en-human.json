@@ -2,6 +2,7 @@
   "CUSTOMIZE" : "Customize",
   "REGULAR_RECEIVE" : "Regular Receive",
   "UID": "Wallet ID",
+  "NO_SHARING": "This is your personal login information. Do not share it with others.",
   "PASSWORD": "Password",
   "LOGIN": "Login",
   "LOG_IN": "Log in",
