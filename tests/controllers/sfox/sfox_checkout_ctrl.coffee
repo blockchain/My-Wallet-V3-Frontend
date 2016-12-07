@@ -101,11 +101,11 @@ describe "SfoxCheckoutController", ->
       scope.$digest()
       expect(scope.locked).toEqual(false)
 
-    it "should refresh the quote after buying", ->
-      spyOn(scope, "refreshQuote")
+    it "should reset the form fields after buying", ->
+      spyOn(scope, "resetFields")
       scope.buy()
       scope.$digest()
-      expect(scope.refreshQuote).toHaveBeenCalled()
+      expect(scope.resetFields).toHaveBeenCalled()
 
     it "should disable buy again", ->
       spyOn(scope, "disableBuy")

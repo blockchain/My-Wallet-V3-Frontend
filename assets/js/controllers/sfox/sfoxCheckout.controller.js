@@ -44,13 +44,18 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
   $scope.enableBuy = () => $scope.enabled = true;
   $scope.disableBuy = () => $scope.enabled = false;
 
+  $scope.resetFields = () => {
+    state.fiat = state.btc = null;
+    state.baseCurr = $scope.dollars;
+  };
+
   $scope.buy = () => {
     $scope.lock();
     $q.resolve($scope.quote.getPaymentMediums())
       .then(mediums => mediums.ach.buy($scope.account))
       .then(trade => { modals.openTradeSummary(trade, 'initiated'); })
+      .then($scope.resetFields)
       .catch(() => { Alerts.displayError('Error connecting to our exchange partner'); })
-      .then($scope.refreshQuote)
       .then($scope.disableBuy)
       .finally($scope.free);
   };
