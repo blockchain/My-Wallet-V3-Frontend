@@ -69,6 +69,11 @@ describe "SfoxCheckoutController", ->
     scope.openSfoxSignup()
     expect(modals.openSfoxSignup).toHaveBeenCalledWith(scope.vm.external.sfox)
 
+  it "should get an initial quote (to show the exchange rate)", ->
+    scope = getControllerScope([{status:'active'}])
+    scope.$digest()
+    expect(scope.quote).toBeDefined()
+
   describe "hasMultipleAccounts", ->
     it "should be false for one account", ->
       spyOn(Wallet, "accounts").and.returnValue([{active: true}])

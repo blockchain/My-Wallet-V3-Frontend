@@ -87,6 +87,12 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
       .then(fetchSuccess, () => { state.loadFailed = true; });
   }, 500);
 
+  $scope.getInitialQuote = () => {
+    let args = [1e8, $scope.bitcoin.code, $scope.dollars.code];
+    let quoteP = $q.resolve(exchange.getBuyQuote(...args));
+    quoteP.then(quote => { $scope.quote = quote; });
+  };
+
   $scope.refreshIfValid = (field) => {
     if (state[field] && $scope.checkoutForm[field].$valid) {
       $scope.quote = null;
@@ -100,5 +106,6 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
   $scope.$watchGroup(['state.fiat', 'state.btc'], () => $scope.disableBuy());
   $scope.$on('$destroy', $scope.cancelRefresh);
+  $scope.getInitialQuote();
   $scope.installLock();
 }
