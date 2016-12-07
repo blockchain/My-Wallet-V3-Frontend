@@ -614,7 +614,7 @@
   "FIRST_LOGIN_TEXT_2" : " and keep your wallet safe.",
   "FIRST_LOGIN_ACTION" : "Get Started",
   "BUY_FIRST_LOGIN_TEXT_1": "Thanks for joining the world’s most popular bitcoin wallet platform. We’re helping to create a fair and open financial future.",
-  "BUY_FIRST_LOGIN_TEXT_2": "Get started now by purchasing your first bitcoins!", 
+  "BUY_FIRST_LOGIN_TEXT_2": "Get started now by purchasing your first bitcoins!",
   "TOS" : "ToS",
   "PRIVACY" : "Privacy Policy",
   "CREATE_NEW_ACCOUNT_MODAL" : "Divide your wallet to better allocate, track and manage your bitcoins. Some common names include Savings, Spending, and Business Expenses.",
@@ -1190,6 +1190,7 @@
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
   "EXCHANGE_CONNECT_ERROR": "Error connecting to our exchange partner",
-  "EXCHANGE_PARTNER_PROCESS": "Our exchange partner {{::partner}} will process your Bitcoin purchases. Continue to begin creating your exchange account.",
+  "COINIFY_EXPLAIN": "Our exchange partner Coinify will process your Bitcoin purchases. Click Continue to begin buying bitcoin.",
+  "SFOX_EXPLAIN": "Our partner SFOX will process your Bitcoin purchases. You will need to provide some information about yourself and link a payment method before purchasing Bitcoin.",
   "": ""
 }

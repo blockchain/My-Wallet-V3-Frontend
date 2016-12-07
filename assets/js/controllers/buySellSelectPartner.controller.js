@@ -24,12 +24,14 @@ function BuySellSelectPartnerController ($scope, $state, MyWallet, buySell, coun
       name: 'Coinify',
       logo: 'img/coinify-logo.svg',
       href: 'https://www.coinify.com/',
+      subtext: 'COINIFY_EXPLAIN',
       route: '.coinify'
     },
     'sfox': {
       name: 'SFOX',
       logo: 'img/sfox-logo.png',
       href: 'https://www.sfox.com/',
+      subtext: 'SFOX_EXPLAIN',
       route: '.sfox'
     }
   };
