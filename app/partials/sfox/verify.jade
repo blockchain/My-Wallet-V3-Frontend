@@ -109,15 +109,3 @@
       span.type-h5.em-300.mbvl(ng-show="state.file") Document will be sent to SFOX for review.
     div(ngf-no-file-drop) File Drag/Drop is not supported for this browser
     button.mtl.btn.button-primary.full(ng-click="upload()" ng-disabled="!state.file || locked") Submit
-.flex-row.flex-column-mobile(ng-show="!state.idType")
-  .width-40
-    .width-80
-      h4.f-20.em-500.mvn.mb-10(translate="Identity Verification Pending")
-      .mbl
-        span.type-h5.em-300(translate="We've sent your details over to SFOX to review. They will reach out once your review is complete.")
-
-  .width-60
-    div.center.border.width-100.height-100.flex-column.flex-center
-      span.type-h4.em-400.mtvl Identity verification is pending.
-      span.type-h5.em-300.mtm You can continue to linking a payment method in the meanwhile.
-    button.mtl.btn.button-primary.full(ng-click="vm.goTo('link')") Continue

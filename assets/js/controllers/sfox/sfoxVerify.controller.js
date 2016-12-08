@@ -107,6 +107,7 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
   $scope.installLock();
   $scope.$watch('state.file', (file) => file && $scope.getSignedURL());
   $scope.$watch('state.verificationStatus.level', (newVal) => newVal === 'verified' && $scope.vm.goTo('link'));
+  $scope.$watch('state.idType', (idType) => idType == null && $scope.vm.goTo('link'));
 
   // QA Tool
   $scope.SFOXDebugDocs = QA.SFOXDebugDocs;
