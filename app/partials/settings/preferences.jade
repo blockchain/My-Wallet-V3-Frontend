@@ -68,10 +68,10 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
       .flex-column.flex-end.display-inline-block.mbl
         label.flex-between.flex-center
           input(type="checkbox" ng-model="notifications.email" ng-checked="user.isEmailVerified && notifications.email" ng-change="updateNotificationsType()" ng-disabled="!user.isEmailVerified")
-          span.mlm(translate="EMAIL" uib-tooltip="{{::'VERIFY_EMAIL_FIRST'|translate}}" tooltip-enable="!user.isEmailVerified" tooltip-placement="left")
+          span.mlm(translate="EMAIL" uib-tooltip="{{::'VERIFY_EMAIL_FIRST'|translate}}" tooltip-enable="!user.isEmailVerified" tooltip-placement="{{responsivePlacement}}")
         label.flex-between.flex-center
           input(type="checkbox" ng-model="notifications.sms" ng-checked="user.isMobileVerified && notifications.sms" ng-change="updateNotificationsType()" ng-disabled="!user.isMobileVerified")
-          span.mlm(translate="SMS" uib-tooltip="{{::'VERIFY_MOBILE_FIRST'|translate}}" tooltip-enable="!user.isMobileVerified" tooltip-placement="left")
+          span.mlm(translate="SMS" uib-tooltip="{{::'VERIFY_MOBILE_FIRST'|translate}}" tooltip-enable="!user.isMobileVerified" tooltip-placement="{{responsivePlacement}}")
 
   .form-group.mbn.border-bottom.clearfix.pvl(ng-show="browserCanHandleBitcoinLinks" data-preflight-tag="HandleLinks")
     .col-sm-12.col-md-6
