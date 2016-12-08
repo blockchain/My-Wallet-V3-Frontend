@@ -40,21 +40,23 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, Alerts, sfox
     $scope.lock();
     $q(Wallet.changeEmail.bind(null, state.email))
       .then(() => $q(Wallet.sendConfirmationCode))
-      .then($scope.emailCodeSent).then($scope.setState).finally($scope.free);
+      .then($scope.emailCodeSent).then($scope.setState, sfox.displayError).finally($scope.free);
   };
 
   $scope.sendEmailCode = () => {
-    $q(Wallet.sendConfirmationCode).then($scope.emailCodeSent);
+    $q(Wallet.sendConfirmationCode).then($scope.emailCodeSent, sfox.displayError);
   };
 
   $scope.verifyEmail = () => {
     $scope.lock();
-    $q(Wallet.verifyEmail.bind(null, state.emailCode)).then($scope.setState).finally($scope.free);
+    $q(Wallet.verifyEmail.bind(null, state.emailCode))
+      .then($scope.setState, sfox.displayError).finally($scope.free);
   };
 
   $scope.changeMobile = () => {
     $scope.lock();
-    $q(Wallet.changeMobile.bind(null, state.mobile)).then($scope.mobileCodeSent).then($scope.setState).finally($scope.free);
+    $q(Wallet.changeMobile.bind(null, state.mobile))
+      .then($scope.mobileCodeSent).then($scope.setState, sfox.displayError).finally($scope.free);
   };
 
   $scope.sendMobileCode = () => {
@@ -63,7 +65,8 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, Alerts, sfox
 
   $scope.verifyMobile = () => {
     $scope.lock();
-    $q(Wallet.verifyMobile.bind(null, state.mobileCode)).then($scope.setState, sfox.displayError).finally($scope.free);
+    $q(Wallet.verifyMobile.bind(null, state.mobileCode))
+      .then($scope.setState, sfox.displayError).finally($scope.free);
   };
 
   $scope.createAccount = () => {
