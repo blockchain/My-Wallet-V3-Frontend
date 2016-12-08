@@ -59,10 +59,7 @@
             i
           .item.width-33
             label State
-            ui-select(ng-model="state.state" name="state" required)
-              ui-select-match {{$select.selected.Name}}
-              ui-select-choices(repeat="s in states | filter:$select.search") {{s.Name}}
-              i
+            select(ng-model="state.state" name="state" ng-options="s as s['Name'] for s in states" tabindex="" required)
           .item.width-33
             label Zipcode
             input(ng-model="state.zipcode" name="zipcode" type="number" required)

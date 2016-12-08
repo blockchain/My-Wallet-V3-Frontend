@@ -117,8 +117,15 @@ form.bc-form {
     }
   }
 
+  select {
+    height: 40px;
+    background: white;
+    @extend .form-control;
+    border: 1px solid #ccc;
+  }
+
   input,
-  .ui-select-container {
+  select {
     &.ng-touched {
       &.ng-invalid {
         border-color: $state-danger-text;
