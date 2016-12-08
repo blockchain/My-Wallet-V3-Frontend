@@ -97,16 +97,16 @@
   .width-60
     label.f-14(translate="{{state.idType + '_ID'}}.UPLOAD_TITLE")
     div.file-upload(ngf-drop ngf-select ng-model="state.file" ngf-drag-over-class="'dragover'" ngf-pattern="'image/*'")
-      span.type-h5.em-300.mtvl(ng-hide="state.file") Drag and drop your document here
+      span.type-h5.em-300.mtvl(ng-hide="state.file") Drag and Drop Document (PDF, JPG, or PNG)
       span.type-h5.em-300.mtvl(ng-show="state.file")
         b {{state.file.name}}
-        | &nbsp;uploaded
+        |  successfully uploaded!
       img.width-20.mobile-width-40(src="img/document.png" ng-hide="state.file")
       img.width-40.mobile-width-40(ngf-src="state.file" ng-show="state.file")
       span.type-h5.em-300.mbvl(ng-hide="state.file") Or
         |  
-        span.blue.pointer select file
-      .mbvl(ng-show="state.file")
+        span.blue.pointer.em-400 Select Document
+      span.type-h5.em-300.mbvl(ng-show="state.file") Document will be sent to SFOX for review.
     div(ngf-no-file-drop) File Drag/Drop is not supported for this browser
     button.mtl.btn.button-primary.full(ng-click="upload()" ng-disabled="!state.file || locked") Submit
 .flex-row.flex-column-mobile(ng-show="!state.idType")
