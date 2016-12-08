@@ -22,7 +22,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
   $scope.signupCompleted = accounts[0].status === 'active';
 
   $scope.format = currency.formatCurrencyForView;
-  $scope.formatSatoshi = currency.convertFromSatoshi;
+  $scope.fromSatoshi = currency.convertFromSatoshi;
   $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.hasMultipleAccounts = Wallet.accounts().filter(a => a.active).length > 1;
@@ -30,7 +30,8 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
 
   $scope.account = accounts[0];
   $scope.trades = exchange.trades;
-  $scope.max = exchange.profile.limits.buy;
+  $scope.max = currency.convertToSatoshi(exchange.profile.limits.buy, $scope.dollars);
+  $scope.min = currency.convertToSatoshi(0.01, $scope.dollars);
 
   let state = $scope.state = {
     fiat: null,
@@ -61,7 +62,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
   };
 
   $scope.getQuoteArgs = (state) => [
-    state.baseFiat ? (state.fiat * 100) | 0 : state.btc,
+    state.baseFiat ? currency.convertFromSatoshi(state.fiat, $scope.dollars) * 100 | 0 : state.btc,
     state.baseCurr.code,
     state.quoteCurr.code
   ];
@@ -80,7 +81,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
       let timeToExpiration = new Date(quote.expiresAt) - new Date();
       $scope.refreshTimeout = $timeout($scope.refreshQuote, timeToExpiration);
       if (state.baseFiat) state.btc = quote.quoteAmount;
-      else state.fiat = quote.quoteAmount / 100;
+      else state.fiat = currency.convertToSatoshi(quote.quoteAmount, $scope.dollars) / 100;
     };
 
     $q.resolve(exchange.getBuyQuote(...args))

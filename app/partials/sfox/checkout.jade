@@ -36,9 +36,11 @@
                   name="fiat"
                   ng-model="state.fiat"
                   ng-max="max"
-                  ng-min="0.01"
+                  ng-min="min"
                   ng-focus="state.baseCurr = dollars"
                   ng-disabled="locked"
+                  step="1"
+                  transform-currency="dollars"
                   required)
                 span.mhm {{dollars.code}}
               i.ti-arrows-horizontal.h4.aaa.phm
@@ -49,11 +51,13 @@
                   ng-model="state.btc"
                   ng-focus="state.baseCurr = bitcoin"
                   ng-disabled="locked"
+                  step="0.01"
                   transform-currency="bitcoin"
                   required)
                 span.mhm {{bitcoin.code}}
             .text.mts
-              span.f-12(ng-class="{'state-danger-text':checkoutForm.fiat.$error.max}") Your daily buy limit is ${{ max }}
+              span.f-12(ng-class="{'state-danger-text':checkoutForm.fiat.$error.max}")
+                | Your daily buy limit is ${{ fromSatoshi(max, dollars) }}
         .group.mtl
           .item
             .mbm
@@ -66,7 +70,7 @@
                 .border-bottom-thick.mhm
               .flex-between.flex-center.form-control.bg-light-blue.no-border
                 span.colon BTC Order
-                span {{ format(formatSatoshi(state.btc || 0, bitcoin), bitcoin, true) }}
+                span {{ format(fromSatoshi(state.btc || 0, bitcoin), bitcoin, true) }}
               .border-bottom-thick.mhm
               .flex-between.flex-center.form-control.bg-light-blue.no-border
                 span.colon Payment Method
@@ -74,7 +78,7 @@
               .border-bottom-thick.mhm
               .flex-between.flex-center.form-control.bg-light-blue.no-border.em-500
                 span.colon Total Cost
-                span {{ format(state.total || 0, dollars, true) }}
+                span {{ format(fromSatoshi(state.total || 0, dollars), dollars, true) }}
         .group.mtl
           button.btn.button-primary.full(ng-hide="enabled" ng-click="enableBuy()" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") Buy Bitcoin
           button.btn.button-success.full(ng-show="enabled" ng-click="buy()") Confirm Purchase
