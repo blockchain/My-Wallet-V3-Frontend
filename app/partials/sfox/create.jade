@@ -21,17 +21,11 @@
         .group.pb-30
           .item
             label Email Address
-            .flex-center
-              .width-80
-                input(ng-model="state.email" name="email" disabled)
-              a.width-20.f-14.center(type="button" ng-click="view('email')") Change
+            input(ng-model="state.email" name="email" disabled)
         .group.pb-40
           .item
             label Phone Number
-            .flex-center
-              .width-80
-                input(ng-model="state.mobile" name="mobile" disabled)
-              a.width-20.f-14.center(type="button" ng-click="view('mobile')") Change
+            input(ng-model="state.mobile" name="mobile" disabled)
         .group.pb-30
           .item.check
             input#terms(type="checkbox" ng-model="state.terms" name="terms" required)
