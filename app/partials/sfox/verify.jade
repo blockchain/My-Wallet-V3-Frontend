@@ -65,7 +65,7 @@
             span.error(translate="Required field")
         .group
           button.btn.button-primary.full(type="submit" ng-disabled="verifyForm.$invalid") Continue
-.flex-row.flex-column-mobile(ng-show="state.idType === 'id' || state.idType === 'address'")
+.flex-row.flex-start.flex-column-mobile(ng-show="state.idType === 'id' || state.idType === 'address'")
   .width-40
     .width-80
       h4.f-20.em-500.mvn.mb-10(translate="{{state.idType + '_ID'}}.TITLE")

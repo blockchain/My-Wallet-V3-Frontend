@@ -168,10 +168,10 @@ form.bc-form {
   @extend .center;
   @extend .border;
   @extend .width-100;
-  @extend .height-100;
   @extend .flex-column;
   @extend .flex-around;
   @extend .flex-center;
+  min-height: 500px;
   &.dragover {
     border: 1px dashed $blue;
   }
