@@ -68,6 +68,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
   ];
 
   $scope.cancelRefresh = () => {
+    $scope.refreshQuote.cancel();
     $timeout.cancel($scope.refreshTimeout);
   };
 
@@ -99,7 +100,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
       $scope.quote = null;
       $scope.refreshQuote();
     } else {
-      $scope.refreshQuote.cancel();
+      $scope.cancelRefresh();
     }
   };
 
