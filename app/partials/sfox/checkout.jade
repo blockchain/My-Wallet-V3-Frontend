@@ -49,6 +49,8 @@
                   type="number"
                   name="btc"
                   ng-model="state.btc"
+                  ng-max="max"
+                  ng-min="min"
                   ng-focus="state.baseCurr = bitcoin"
                   ng-disabled="locked"
                   step="0.01"
@@ -56,7 +58,7 @@
                   required)
                 span.mhm {{bitcoin.code}}
             .text.mts
-              span.f-12(ng-class="{'state-danger-text':checkoutForm.fiat.$error.max}")
+              span.f-12(ng-class="{'state-danger-text':checkoutForm.$error.max}")
                 | Your daily buy limit is ${{ fromSatoshi(max, dollars) }}
         .group.mtl
           .item
