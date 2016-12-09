@@ -15,14 +15,14 @@ function formatInput () {
     let language = { digit: 'x', open_group: '(', close_group: ')' };
     let isDigit = (d) => (/^\d$/).test(d);
 
-    let isValid = (str) => {
+    let isValid = scope.isValid = (str) => {
       let normalized = str.replace(/\d/g, language.digit);
       let grouped = inputFormat.replace(/\(.*\)/g, '');
       let ungrouped = inputFormat.replace(/[()]/g, '');
       return [grouped, ungrouped].some(format => format === normalized);
     };
 
-    let reformat = (format, str) => {
+    let reformat = scope.reformat = (format, str) => {
       let [s, ...sRest] = str;
       let [f, ...fRest] = format;
 
