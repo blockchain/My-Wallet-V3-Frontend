@@ -43,6 +43,9 @@ describe "SfoxCheckoutController", ->
         async.cancel = () ->
         return async
 
+      currency = $injector.get("currency")
+      currency.conversions["USD"] = { conversion: 2 }
+
   getControllerScope = (accounts) ->
     scope = $rootScope.$new()
     scope.vm = external: { sfox:
@@ -68,6 +71,11 @@ describe "SfoxCheckoutController", ->
     spyOn(modals, "openSfoxSignup")
     scope.openSfoxSignup()
     expect(modals.openSfoxSignup).toHaveBeenCalledWith(scope.vm.external.sfox)
+
+  it "should get an initial quote (to show the exchange rate)", ->
+    scope = getControllerScope([{status:'active'}])
+    scope.$digest()
+    expect(scope.quote).toBeDefined()
 
   describe "hasMultipleAccounts", ->
     it "should be false for one account", ->
@@ -101,11 +109,11 @@ describe "SfoxCheckoutController", ->
       scope.$digest()
       expect(scope.locked).toEqual(false)
 
-    it "should refresh the quote after buying", ->
-      spyOn(scope, "refreshQuote")
+    it "should reset the form fields after buying", ->
+      spyOn(scope, "resetFields")
       scope.buy()
       scope.$digest()
-      expect(scope.refreshQuote).toHaveBeenCalled()
+      expect(scope.resetFields).toHaveBeenCalled()
 
     it "should disable buy again", ->
       spyOn(scope, "disableBuy")
@@ -132,7 +140,7 @@ describe "SfoxCheckoutController", ->
 
     it "should get args for a USD->BTC quote", ->
       scope.state.baseCurr = scope.dollars
-      scope.state.fiat = 75
+      scope.state.fiat = 150
       expect(scope.getQuoteArgs(scope.state)).toEqual([7500, "USD", "BTC"])
 
     it "should get args for a BTC->USD quote", ->
@@ -142,7 +150,7 @@ describe "SfoxCheckoutController", ->
 
     it "should get the correct fiat arg with a number js has trouble with", ->
       scope.state.baseCurr = scope.dollars
-      scope.state.fiat = 1.1
+      scope.state.fiat = 2.2
       expect(scope.getQuoteArgs(scope.state)).toEqual([110, "USD", "BTC"])
 
   describe ".cancelRefresh()", ->
@@ -195,7 +203,7 @@ describe "SfoxCheckoutController", ->
       it "should set state.fiat to quoteAmount if not in baseFiat", ->
         scope.state.baseCurr = scope.bitcoin
         scope.$digest()
-        expect(scope.state.fiat).toEqual(1230)
+        expect(scope.state.fiat).toEqual(2460)
 
     describe "failure", ->
       beforeEach ->

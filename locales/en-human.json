@@ -614,7 +614,7 @@
   "FIRST_LOGIN_TEXT_2" : " and keep your wallet safe.",
   "FIRST_LOGIN_ACTION" : "Get Started",
   "BUY_FIRST_LOGIN_TEXT_1": "Thanks for joining the world’s most popular bitcoin wallet platform. We’re helping to create a fair and open financial future.",
-  "BUY_FIRST_LOGIN_TEXT_2": "Get started now by purchasing your first bitcoins!", 
+  "BUY_FIRST_LOGIN_TEXT_2": "Get started now by purchasing your first bitcoins!",
   "TOS" : "ToS",
   "PRIVACY" : "Privacy Policy",
   "CREATE_NEW_ACCOUNT_MODAL" : "Divide your wallet to better allocate, track and manage your bitcoins. Some common names include Savings, Spending, and Business Expenses.",
@@ -1163,22 +1163,22 @@
   },
   "TAKE_SURVEY": "Take Survey",
   "id_ID": {
-    "TITLE": "Upload Photo ID",
-    "COPY": "To verify your identity, we need you to upload a government issued form of photo identification showing nationality or residence and clearly displaying identification number. You can upload any of the following identification:",
+    "TITLE": "Upload A Photo ID",
+    "COPY": "To verify your identity, we need one of the following government-issued forms of identification showing your country of residence:",
     "COPY_2": "Only the front side of your ID is needed, which must clearly display your identification number.",
     "OPTION1": "State issued driver’s license",
     "OPTION2": "State issued identification card",
-    "OPTION3": "Copy of passport",
+    "OPTION3": "Passport",
     "OPTION4": "Government issued identification",
     "UPLOAD_TITLE": "Photo Identification"
   },
   "address_ID": {
-    "TITLE": "Upload Proof of Address",
-    "COPY": "Please upload a document bearing your address dated within the past 6 months. You can upload any of the following documents:",
+    "TITLE": "Upload A Proof of Address",
+    "COPY": "Please upload one of the following documents clearly displaying your address dated within the past 6 months:",
     "OPTION1": "Utility bill (except mobile phone bills)",
     "OPTION2": "First page and signature page of lease",
     "OPTION3": "First page of your bank statement",
-    "OPTION4": "DMV or Voter registration",
+    "OPTION4": "DMV or voter registration",
     "UPLOAD_TITLE": "Proof of Address"
   },
   "GET_BITCOIN": "Get Bitcoin",
@@ -1190,6 +1190,7 @@
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
   "EXCHANGE_CONNECT_ERROR": "Error connecting to our exchange partner",
-  "EXCHANGE_PARTNER_PROCESS": "Our exchange partner {{::partner}} will process your Bitcoin purchases. Continue to begin creating your exchange account.",
+  "COINIFY_EXPLAIN": "Our exchange partner Coinify will process your Bitcoin purchases. Click Continue to begin buying bitcoin.",
+  "SFOX_EXPLAIN": "Our partner SFOX will process your Bitcoin purchases. You will need to provide some information about yourself and link a payment method before purchasing Bitcoin.",
   "": ""
 }

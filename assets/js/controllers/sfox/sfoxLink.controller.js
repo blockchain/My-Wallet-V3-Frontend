@@ -10,15 +10,6 @@ function SfoxLinkController ($scope, $q, sfox, modals) {
   $scope.openBankHelper = modals.openBankHelper;
   $scope.openDepositHelper = modals.openDepositHelper;
 
-  $scope.setFormValidity = (error, valid) => {
-    let form = $scope.$$childHead.verifyBankAccountForm;
-    form.deposit1.$setValidity(error, valid);
-    form.deposit2.$setValidity(error, valid);
-  };
-
-  $scope.displayInlineError = () => $scope.setFormValidity('amount', false);
-  $scope.clearInlineError = () => $scope.setFormValidity('amount', true);
-
   let state = $scope.state = {
     terms: false,
     accounts: accounts,
@@ -34,21 +25,44 @@ function SfoxLinkController ($scope, $q, sfox, modals) {
     type: 'checking'
   };
 
+  $scope.displayInlineError = (error) => {
+    let bankForm = $scope.$$childHead.bankAccountForm;
+    let verifyForm = $scope.$$childHead.verifyBankAccountForm;
+    switch (JSON.parse(error).error) {
+      case 'must provide routing number':
+        bankForm.routingNumber.$setValidity('value', false);
+        break;
+      case 'must provide account number':
+        bankForm.accountNumber.$setValidity('value', false);
+        break;
+      case 'invalid amounts':
+        verifyForm.deposit1.$setValidity('value', false);
+        verifyForm.deposit2.$setValidity('value', false);
+        break;
+      default:
+        sfox.displayError(error);
+    }
+  };
+
+  $scope.clearInlineErrors = (form, ...fields) => {
+    fields.forEach(f => form[f].$setValidity('value', true));
+  };
+
   $scope.link = () => {
     $scope.lock();
-    $q.resolve(exchange.getBuyMethods())
-      .then(methods => addAccount(methods))
-      .then(account => state.accounts[0] = account)
-      .catch(sfox.displayError)
-      .finally($scope.free);
 
-    let addAccount = (methods) => {
-      // routingNumber, accountNumber, name, nickname, type
-      return methods.ach.addAccount($scope.fields.routingNumber,
-                                    $scope.fields.accountNumber,
-                                    'name1',
-                                    $scope.fields.type);
-    };
+    let addAccount = (methods) => methods.ach.addAccount(
+      $scope.fields.routingNumber,
+      $scope.fields.accountNumber,
+      'name1',
+      $scope.fields.type
+    );
+
+    $q.resolve(exchange.getBuyMethods())
+      .then(addAccount)
+      .then(account => state.accounts[0] = account)
+      .catch($scope.displayInlineError)
+      .finally($scope.free);
   };
 
   $scope.verify = () => {

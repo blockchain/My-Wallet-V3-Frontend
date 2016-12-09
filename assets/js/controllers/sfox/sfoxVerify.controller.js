@@ -50,7 +50,7 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
 
   $scope.upload = () => {
     $scope.lock();
-    let fields = $scope.state;
+    let { signedURL, file } = $scope.state;
     let profile = exchange.profile;
 
     // Need to override testing-docs-*
@@ -66,13 +66,11 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
 
     Upload.http({
       method: 'PUT',
-      url: $scope.state.signedURL,
-      data: fields.file,
-      headers: {
-        'content-type': 'application/octet-stream'
-      }}).then(() => $scope.verify())
-         .catch((err) => console.log(err))
-         .finally($scope.free);
+      url: signedURL,
+      data: file,
+      headers: { 'content-type': 'application/octet-stream' }
+    }).then(() => $scope.verify())
+      .catch(sfox.displayError);
   };
 
   $scope.verify = () => {
@@ -109,6 +107,7 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
   $scope.installLock();
   $scope.$watch('state.file', (file) => file && $scope.getSignedURL());
   $scope.$watch('state.verificationStatus.level', (newVal) => newVal === 'verified' && $scope.vm.goTo('link'));
+  $scope.$watch('state.idType', (idType) => idType == null && $scope.vm.goTo('link'));
 
   // QA Tool
   $scope.SFOXDebugDocs = QA.SFOXDebugDocs;
