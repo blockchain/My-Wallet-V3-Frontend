@@ -12,10 +12,8 @@ const problemProviders = [
 ];
 
 function ChangeEmailCtrl ($scope, Wallet, MyWallet) {
-  // TODO: add function to My-Wallet-V3 to check if the user has any exchange account:
   $scope.userHasExchangeAcct = MyWallet.wallet.external &&
-                               MyWallet.wallet.external.coinify &&
-                               MyWallet.wallet.external.coinify.user;
+                               MyWallet.wallet.external.hasExchangeAccount;
 
   $scope.isProblemProvider = (email) => {
     let provider = email && email.split('@')[1] || false;

@@ -16,11 +16,8 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
   $scope.isMainPassword = Wallet.isCorrectMainPassword;
   $scope.validateSecondPassword = Wallet.validateSecondPassword;
 
-  // TODO: add function to My-Wallet-V3 to check if the user has any exchange account:
   $scope.userHasExchangeAcct = MyWallet.wallet.external &&
-                               MyWallet.wallet.external.coinify &&
-                               MyWallet.wallet.external.coinify.user;
-
+                               MyWallet.wallet.external.hasExchangeAccount;
   $scope.reset = () => {
     $scope.fields = {
       password: '',
