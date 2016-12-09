@@ -129,16 +129,18 @@ form.bc-form {
     &.ng-touched {
       &.ng-invalid {
         border-color: $state-danger-text;
-        & + span {
+        & + .error {
           display: block;
         }
       }
     }
-    & + span {
+    & + .error {
       left: 0px;
       bottom: -20px;
-      @extend .f-12;
       display: none;
+      @extend .f-12;
+      @extend .pos-abs;
+      @extend .state-danger-text;
     }
   }
 
