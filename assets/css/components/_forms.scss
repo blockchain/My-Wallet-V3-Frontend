@@ -117,33 +117,30 @@ form.bc-form {
     }
   }
 
+  select {
+    height: 40px;
+    background: white;
+    @extend .form-control;
+    border: 1px solid #ccc;
+  }
+
   input,
-  .ui-select-container {
+  select {
     &.ng-touched {
       &.ng-invalid {
         border-color: $state-danger-text;
-        & + i:before {
-          color: $state-danger-text;
-          content: "\e646";
-        }
-      }
-      &.ng-valid,
-      &.ng-invalid {
-        & + i {
-          top: 0px;
-          opacity: 1;
+        & + .error {
+          display: block;
         }
       }
     }
-    & + i {
-      top: 10px;
-      opacity: 0;
-      right: 0px;
-      font-size: 14px;
-      position: absolute;
-      font-style: normal;
-      font-family: 'ThemifyIcons';
-      @include transition(opacity 0.2s, top 0.2s);
+    & + .error {
+      left: 0px;
+      bottom: -20px;
+      display: none;
+      @extend .f-12;
+      @extend .pos-abs;
+      @extend .state-danger-text;
     }
   }
 
@@ -160,7 +157,10 @@ form.bc-form {
 
   .help {
     position: relative;
-    span { position: absolute; }
+    span { 
+      @extend .f-12;
+      position: absolute;
+    }
   }
 }
 
@@ -168,10 +168,10 @@ form.bc-form {
   @extend .center;
   @extend .border;
   @extend .width-100;
-  @extend .height-100;
   @extend .flex-column;
   @extend .flex-around;
   @extend .flex-center;
+  min-height: 500px;
   &.dragover {
     border: 1px dashed $blue;
   }
