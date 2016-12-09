@@ -17,7 +17,7 @@ describe "SfoxCheckoutController", ->
       buy: () -> $q.resolve(mockTrade())
 
   mockQuote = (fail) ->
-    quoteAmount: 123000
+    quoteAmount: 150
     getPaymentMediums: () -> if fail then $q.reject(fail) else $q.resolve(mockMediums())
 
   beforeEach angular.mock.module("walletApp")
@@ -198,12 +198,12 @@ describe "SfoxCheckoutController", ->
       it "should set state.btc to quoteAmount if in baseFiat", ->
         scope.state.baseCurr = scope.dollars
         scope.$digest()
-        expect(scope.state.btc).toEqual(123000)
+        expect(scope.state.btc).toEqual(150)
 
       it "should set state.fiat to quoteAmount if not in baseFiat", ->
         scope.state.baseCurr = scope.bitcoin
         scope.$digest()
-        expect(scope.state.fiat).toEqual(2460)
+        expect(scope.state.fiat).toEqual(3)
 
     describe "failure", ->
       beforeEach ->
