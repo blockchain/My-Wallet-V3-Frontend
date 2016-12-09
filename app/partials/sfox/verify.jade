@@ -41,16 +41,16 @@
             input(ng-model="state.dob" name="dob" placeholder="mm/dd/yyyy" format-input="xx/xx/xxxx" is-valid="isBeforeNow(state.dob)" required)
             span.error(translate="Required field")
           .item.width-33
-        .group.pb-15
+        .group.pb-20
           .item.full
             label Address Line 1
             input(ng-model="state.addr1" name="addr1" placeholder="Street address, P.O. box, etc." required)
             span.error(translate="Required field")
-        .group.pb-15
+        .group.pb-20
           .item.full
             label Address Line 2
             input(ng-model="state.addr2" name="addr2" placeholder="Apartment, unit, floor, etc.")
-        .group.inline.pb-15
+        .group.inline.pb-30
           .item.width-33
             label City
             input(ng-model="state.city" name="city" required)
