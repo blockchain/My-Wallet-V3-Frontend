@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('cta', cta);
 
-function cta ($cookies, Wallet) {
+function cta ($cookies, Wallet, buyStatus) {
   const cookieJar = {};
   const ONE_WEEK = 604800000;
   const BUY_CTA_KEY = 'buy-alert-seen';
@@ -26,7 +26,9 @@ function cta ($cookies, Wallet) {
   }
 
   function shouldShowBuyCta () {
-    return cookieJar[BUY_CTA_KEY] !== 'true';
+    let hasAccount = buyStatus.userHasAccount();
+    let hasSeenCta = cookieJar[BUY_CTA_KEY] === 'true';
+    return !hasAccount && !hasSeenCta;
   }
 
   function setBuyCtaDissmissed () {
@@ -35,6 +37,7 @@ function cta ($cookies, Wallet) {
   }
 
   function shouldShowSecurityWarning () {
+    if (service.shouldShowBuyCta()) return false;
     let messageCookie = cookieJar[SECURITY_WARNING_KEY];
     let isTime = messageCookie ? Date.now() > messageCookie.when : true;
     let hasBalance = Wallet.total('') > 0;

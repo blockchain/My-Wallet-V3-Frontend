@@ -9,12 +9,16 @@ describe "cta", () ->
     angular.mock.inject (_$injector_) ->
       $injector = _$injector_
       Wallet = $injector.get("Wallet")
+      MyWallet = $injector.get("MyWallet")
       $cookies = $injector.get("$cookies")
 
       Wallet.total = () -> 0
       Wallet.status = {}
       Wallet.settings = {}
       Wallet.user = {}
+
+      MyWallet.wallet =
+        external: {}
 
   getService = (cookies = {}) ->
     spyOn($cookies, "put").and.callThrough()
@@ -49,6 +53,7 @@ describe "cta", () ->
     cta = undefined
     beforeEach ->
       cta = getService(securityWarning: { when: 1000 })
+      spyOn(cta, "shouldShowBuyCta").and.returnValue(false)
       spyOn(Date, "now").and.returnValue(1001)
       spyOn(Wallet, "total").and.returnValue(1)
       Wallet.status.didConfirmRecoveryPhrase = false
@@ -82,6 +87,10 @@ describe "cta", () ->
       Wallet.status.needs2FA = false
       Wallet.user.isEmailVerified = false
       expect(cta.shouldShowSecurityWarning()).toBe(true)
+
+    it "should now show if the buy cta is showing", ->
+      cta.shouldShowBuyCta.and.returnValue(true)
+      expect(cta.shouldShowSecurityWarning()).toBe(false)
 
   describe ".setSecurityWarningDismissed()", ->
     beforeEach ->
