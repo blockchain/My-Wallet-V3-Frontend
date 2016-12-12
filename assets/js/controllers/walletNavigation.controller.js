@@ -2,11 +2,18 @@ angular
   .module('walletApp')
   .controller('WalletNavigationCtrl', WalletNavigationCtrl);
 
-function WalletNavigationCtrl ($rootScope, $scope, Wallet, MyWallet, Options, Alerts, SecurityCenter, $state, $uibModal, filterFilter, $location, buyStatus) {
+function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $state, $uibModal, filterFilter, $location, buyStatus, cta) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.security = SecurityCenter.security;
   $scope.userHasAccount = buyStatus.userHasAccount();
+
+  $scope.shouldShowBuyCta = cta.shouldShowBuyCta;
+  $scope.setBuyCtaDismissed = cta.setBuyCtaDissmissed;
+  $scope.shouldShowSecurityWarning = cta.shouldShowSecurityWarning;
+  $scope.setSecurityWarningDismissed = cta.setSecurityWarningDismissed;
+  $scope.getSecurityWarningMessage = cta.getSecurityWarningMessage;
+
   buyStatus.canBuy().then((res) => $scope.canBuy = res);
 
   $scope.numberOfActiveLegacyAddresses = () => {

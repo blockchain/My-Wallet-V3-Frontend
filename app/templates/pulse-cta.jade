@@ -1,0 +1,7 @@
+.message.pointer(ng-show="active")
+  .message-beacon(ng-click="revealMessage()" ng-class="color")
+  .message-contextual.pal(ng-show="revealed")
+    p.mbl(translate="{{messageText}}")
+    .flex-center.flex-around
+      a.aaa(ng-click="dismissMessage()" translate="NO_THANKS")
+      a.button-success-alt(ng-click="dismissMessage()" ui-sref="{{route}}" translate="{{buttonText}}")
