@@ -26,6 +26,9 @@ angular
       };
       this.getState = () => this.stateMap[this.state];
 
+      this.profile = buySell.getExchange().profile;
+      this.level = this.profile ? +this.profile.level.name : null;
+
       this.getCardMax = () => {
         let symbol = this.limits.currency && this.limits.currency.symbol;
         let amt = this.limits.card && this.limits.card.max;
