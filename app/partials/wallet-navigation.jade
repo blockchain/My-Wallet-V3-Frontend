@@ -11,13 +11,25 @@
     // Don't forget to update controllers/buySell.controller.js
     li.header(ui-sref-active="current" ng-show="canBuy || userHasAccount")
       span(ng-show="!userHasAccount")
-        buy-alert
+        pulse-cta(
+          active-when="shouldShowBuyCta()"
+          on-dismiss="setBuyCtaDismissed()"
+          message-text="BUY_BITCOIN_ALERT"
+          button-text="BUY_BITCOIN"
+          route="wallet.common.buy-sell"
+          color="green")
       a(ui-sref="wallet.common.buy-sell")
         i.ti-direction-alt
         span(translate="BUY_BITCOIN")
 
     li.header.mbm(ui-sref-active="current",  ng-click="hideMenu()")
-      contextual-message
+      pulse-cta(
+        active-when="shouldShowSecurityWarning()"
+        on-dismiss="setSecurityWarningDismissed()"
+        message-text="{{getSecurityWarningMessage()}}"
+        button-text="SECURE_WALLET"
+        route="wallet.common.security-center"
+        color="red")
       a(ui-sref="wallet.common.security-center")
         i.bc-icon-security.security-red(ng-show="security.level <= 2")
         i.bc-icon-security.security-yellow(ng-show="security.level > 2 && security.level < 6")
