@@ -21,27 +21,26 @@
         .group.pb-30
           .item
             label Email Address
-            .flex-center
-              .width-80
-                input(ng-model="state.email" name="email" disabled)
-              a.width-20.f-14.center(type="button" ng-click="view('email')") Change
+            input(ng-model="state.email" name="email" disabled)
+          div(ng-show="accountForm.email.$error.registered")
+            .help
+              span.state-danger-text Sorry, this email is already registered with SFOX.
+            .help.flex-end
+              span.blue.pointer(ng-click="view('email')") Change Email
         .group.pb-40
           .item
             label Phone Number
-            .flex-center
-              .width-80
-                input(ng-model="state.mobile" name="mobile" disabled)
-              a.width-20.f-14.center(type="button" ng-click="view('mobile')") Change
+            input(ng-model="state.mobile" name="mobile" disabled)
         .group.pb-30
           .item.check
             input#terms(type="checkbox" ng-model="state.terms" name="terms" required)
             label(for="terms")
               | I accept Blockchain's 
-              a(href="https://www.blockchain.com/assets/pdf/Blockchain_BuySellAlphaAgreement.pdf" translate="Alpha Agreement" target="_blank" rel="noopener noreferrer")
+              a.black.em-500(href="https://www.blockchain.com/assets/pdf/Blockchain_BuySellAlphaAgreement.pdf" translate="Alpha Agreement" target="_blank" rel="noopener noreferrer")
               | , SFOX’s 
-              a(href="https://www.sfox.com/terms.html" translate="TERMS_OF_SERVICE" target="_blank" rel="noopener noreferrer")
+              a.black.em-500(href="https://www.sfox.com/terms.html" translate="TERMS_OF_SERVICE" target="_blank" rel="noopener noreferrer")
               |  and SFOX's 
-              a(href="https://www.sfox.com/privacy.html" translate="PRIVACY" target="_blank" rel="noopener noreferrer")
+              a.black.em-500(href="https://www.sfox.com/privacy.html" translate="PRIVACY" target="_blank" rel="noopener noreferrer")
               | .
         .group
           button.btn.button-primary.full(type="submit" ng-disabled="accountForm.$invalid") Continue

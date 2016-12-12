@@ -36,8 +36,25 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, Alerts, sfox
   $scope.emailCodeSent = () => { state.sentEmailCode = true; };
   $scope.mobileCodeSent = () => { state.sentMobileCode = true; };
 
+  $scope.displayInlineError = (error) => {
+    let form = $scope.$$childHead.accountForm;
+    switch (JSON.parse(error).error) {
+      case 'user is already registered':
+        form.email.$setValidity('registered', false);
+        break;
+      default:
+        sfox.displayError(error);
+    }
+  };
+
+  $scope.clearInlineErrors = () => {
+    let form = $scope.$$childHead.accountForm;
+    form.email.$setValidity('registered', true);
+  };
+
   $scope.changeEmail = () => {
     $scope.lock();
+    $scope.clearInlineErrors();
     $q(Wallet.changeEmail.bind(null, state.email))
       .then(() => $q(Wallet.sendConfirmationCode))
       .then($scope.emailCodeSent).then($scope.setState, sfox.displayError).finally($scope.free);
@@ -74,7 +91,7 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, Alerts, sfox
     $q.resolve(exchange.signup())
       .then(() => exchange.fetchProfile())
       .then(() => $scope.vm.goTo('verify'))
-      .catch(sfox.displayError)
+      .catch($scope.displayInlineError)
       .finally($scope.free);
   };
 
