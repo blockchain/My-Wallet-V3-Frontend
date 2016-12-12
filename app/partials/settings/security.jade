@@ -47,7 +47,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
         p.em-300.text.hidden-xs.security-red(translate="WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN" ng-show="userHasExchangeAcct")
       .col-sm-12.col-md-6.setting-result(ng-hide="active || removing")
         button.button-primary.display-inline-block(ng-click="activate()", translate="SET_SECOND_PASSWORD", ng-show="!settings.secondPassword" ng-disabled="userHasExchangeAcct")
-        button.button-danger.display-inline-block.mlm(ng-click="activate()" translate="REMOVE_SECOND_PASSWORD" ng-show="settings.secondPassword")
+        button.button-primary.display-inline-block.mlm(ng-click="activate()" translate="REMOVE_SECOND_PASSWORD" ng-show="settings.secondPassword")
       .col-sm-12.col-md-6(ng-show="active")
         include ./manage-second-password.jade
    

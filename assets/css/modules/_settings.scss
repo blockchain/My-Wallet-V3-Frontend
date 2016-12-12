@@ -3,6 +3,7 @@
   margin-bottom: 3em;
   .label {
     font-weight: normal;
+    margin-left: 5px;
   }
   .label-warning { background-color: $security-red; }
   .label-success { background-color: $security-green; }
