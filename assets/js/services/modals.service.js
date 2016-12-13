@@ -51,11 +51,17 @@ function modals ($state, $uibModal, $ocLazyLoad) {
   service.openTradeSummary = (trade, state) => open({
     templateUrl: 'partials/trade-modal.jade',
     windowClass: 'bc-modal auto buy',
-    controller ($scope, trade, formatTrade) {
-      $scope.formattedTrade = formatTrade[state || trade.state](trade);
+    controller ($scope, trade, formatTrade, accounts) {
+      $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);
     },
     resolve: {
-      trade: () => trade
+      trade: () => trade,
+      accounts ($q, MyWallet) {
+        let exchange = MyWallet.wallet.external.sfox;
+        return exchange.hasAccount
+          ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
+          : $q.resolve([]);
+      }
     }
   }).result;
 
