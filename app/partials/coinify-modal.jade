@@ -96,7 +96,7 @@
           ng-click="buy()"
           data-style="expand-left"
           ui-ladda="status.waiting"
-          ng-disabled="isDisabled() || fiatFormInvalid"
+          ng-disabled="isDisabled() || fiatFormInvalid || status.gettingQuote"
           ng-show="onStep('summary')")
       div(ng-show="onStep('trade-in-review') || onStep('trade-formatted') && !bitcoinReceived")
         button.button-success(translate="CLOSE" ng-click="cancel()")
