@@ -12,14 +12,11 @@ function formatInput () {
 
   function link (scope, elem, attrs, ctrl) {
     let inputFormat = attrs.formatInput;
-    let language = { digit: 'x', open_group: '(', close_group: ')' };
+    let language = { digit: 'x' };
     let isDigit = (d) => (/^\d$/).test(d);
 
     let isValid = scope.isValid = (str) => {
-      let normalized = str.replace(/\d/g, language.digit);
-      let grouped = inputFormat.replace(/\(.*\)/g, '');
-      let ungrouped = inputFormat.replace(/[()]/g, '');
-      return [grouped, ungrouped].some(format => format === normalized);
+      return str.replace(/\d/g, language.digit) === inputFormat;
     };
 
     let reformat = scope.reformat = (format, str) => {
@@ -30,8 +27,6 @@ function formatInput () {
 
       if (f === language.digit) {
         return (isDigit(s) ? s : '') + reformat(fRest, sRest);
-      } else if (f === language.open_group || f === language.close_group) {
-        return reformat(fRest, str);
       } else {
         return f + reformat(fRest, (s === f) ? sRest : str);
       }
