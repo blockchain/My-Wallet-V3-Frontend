@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('singleClickSelect', singleClickSelect);
 
 function singleClickSelect ($window) {

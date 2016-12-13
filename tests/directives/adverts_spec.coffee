@@ -4,6 +4,8 @@ describe "Adverts Directive", ->
   element = undefined
   isoScope = undefined
 
+  beforeEach module('walletDirectives');
+
   beforeEach ->
     module "walletApp", ($provide) ->
       $provide.value 'Adverts',

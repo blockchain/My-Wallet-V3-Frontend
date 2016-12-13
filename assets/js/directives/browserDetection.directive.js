@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('browserDetection', directive);
 
 //   Browser compatibility warnings:

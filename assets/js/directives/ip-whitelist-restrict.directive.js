@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('ipWhitelistRestrict', ipWhitelistRestrict);
 
 ipWhitelistRestrict.$inject = ['$translate', 'Wallet'];

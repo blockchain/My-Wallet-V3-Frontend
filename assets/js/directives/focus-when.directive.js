@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('focusWhen', focusWhen);
 
 function focusWhen ($timeout) {

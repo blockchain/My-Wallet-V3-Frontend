@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('fiatOrBtc', fiatOrBtc);
 
 fiatOrBtc.$inject = ['Wallet', 'currency'];

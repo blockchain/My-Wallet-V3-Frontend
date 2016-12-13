@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('hdAddress', hdAddress);
 
 function hdAddress ($rootScope, $sce, Wallet, Alerts) {

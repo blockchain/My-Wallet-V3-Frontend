@@ -1,0 +1,51 @@
+doctype
+html(
+  lang='en'
+  ng-app='partsApp'
+  ng-init="rootURL='#{ process.env.ROOT_URL }/'; webSocketURL='#{ process.env.WEB_SOCKET_URL }'; apiDomain='#{ process.env.API_DOMAIN }/';" 
+  ng-csp 
+  ng-class="{'not-fixed': outOfApp}"
+)
+head
+  meta(charset='utf-8')
+  meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1")
+  meta(name="theme-color" content="#187fc0")
+  script(src='/wallet/bower_components/angular/angular.js', defer)
+  script(src='/wallet/bower_components/angular-sanitize/angular-sanitize.js', defer)
+  script(src='/wallet/bower_components/angular-animate/angular-animate.js', defer)
+  script(src='/wallet/bower_components/angular-bootstrap/ui-bootstrap-tpls.js', defer)
+  script(src='/wallet/bower_components/angular-translate/angular-translate.js', defer)
+  script(src='/wallet/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js', defer)
+  script(src='/wallet/bower_components/browserdetection/src/browser-detection.js')
+  script(src='/wallet/bower_components/angular-ui-router/release/angular-ui-router.js', defer)
+  script(src='/wallet/bower_components/angular-ui-select/dist/select.js', defer)
+
+  script(src='/wallet/assets/js/walletDirectives.js' defer)
+  script(src='/wallet/build/js/templates.js' defer)
+  if directive
+    script(src='/wallet/assets/js/directives/' + directiveCamel + '.directive.js' defer)
+  script(src='/parts/app.js' defer)
+  if directive
+    script(src='mocks.js' defer)
+  script(src='/wallet/assets/js/services/bcTranslationLoader.service.js' defer)
+  script(src='/wallet/assets/js/translations.js' defer)
+
+  if directive
+    title= directive + ' directive'
+  else
+    title Parts 
+    
+  link(rel='stylesheet' href='/wallet/build/css/wallet.css')
+
+body
+  if directive
+    != templateRender('parts/directives/' + directive + '/index.jade')
+  else
+    h2 Directives
+    ul
+      each directive in directives
+        li
+          a(href= 'directives/' + directive + '/')=directive
+  noscript
+    img(src="/wallet/img/logo-bw.png")
+    h3 Please enable JavaScript to use the Blockchain Wallet

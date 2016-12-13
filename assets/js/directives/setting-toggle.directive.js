@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('settingToggle', settingToggle);
 
 function settingToggle ($translate, Wallet) {

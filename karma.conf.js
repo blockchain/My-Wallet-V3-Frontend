@@ -33,6 +33,7 @@ module.exports = function (config) {
       'assets/js/components/**/*.component.js',
       'assets/js/filters.js',
       'assets/js/services/**/*.service.js',
+      'assets/js/walletDirectives.js',
       'assets/js/directives/*.directive.js',
       'assets/js/sharedDirectives.js',
       'assets/js/sharedDirectives/*.directive.js',

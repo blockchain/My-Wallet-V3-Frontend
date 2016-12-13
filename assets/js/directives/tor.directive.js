@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('tor', tor);
 
 function tor ($translate, Wallet) {

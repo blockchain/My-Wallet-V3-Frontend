@@ -16,6 +16,7 @@ describe 'bcAsyncInput Directive', ->
 
     return isoScope
 
+  beforeEach module('walletDirectives');
   beforeEach module('walletApp')
 
   beforeEach inject((_$compile_, $rootScope, Wallet) ->
