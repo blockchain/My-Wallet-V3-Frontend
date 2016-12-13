@@ -1,6 +1,6 @@
 div(data-preflight-tag="TradeSummary")
   span.type-h5.em-500.flex-start.pts.capitalize(class="{{formattedTrade.class}}" translate="{{formattedTrade.namespace}}.TITLE" translate-values="formattedTrade.values")
-  p.em-300.ptm(translate="{{formattedTrade.namespace}}.BODY" translate-values="formattedTrade.values")
+  p.ptm(translate="{{formattedTrade.namespace}}.BODY" translate-values="formattedTrade.values")
   div(ng-if="formattedTrade.tx")
     label.em-500.flex-start.pts.mtl(translate="{{isKYC || needsKyc() ? 'DETAILS' : 'ORDER_DETAILS'}}")
     ul.em-300.bg-light-blue
