@@ -24,18 +24,34 @@ function toBitCurrencyFilter (currency) {
 
 convertFilter.$inject = ['Wallet', 'currency'];
 function convertFilter (Wallet, currency) {
-  return function (amount, useDisplayCurrency = true, useBtcSettings, swap) {
-    let fiatSettings = Wallet.settings.currency;
-    let btcSettings = Wallet.settings.btcCurrency;
+  let caseof = (condition, casemap) => {
+    let result = casemap[condition] || casemap[undefined];
+    if (result instanceof Error) throw result;
+    else return result;
+  };
 
-    let bitcoin = useBtcSettings ? btcSettings : currency.bitCurrencies[0];
-    let displayCurrency = Wallet.settings.displayCurrency || bitcoin;
-    let curr = useDisplayCurrency ? displayCurrency : bitcoin;
+  // target => { 'primary' | 'secondary' | 'btc' | 'fiat' | currency }
+  return function (amount, target = 'primary', showCode) {
+    let fiat = Wallet.settings.currency;
+    let btc = Wallet.settings.btcCurrency;
+    let display = Wallet.settings.displayCurrency;
+    let curr;
 
-    if (swap) curr = currency.isBitCurrency(curr) ? fiatSettings : btcSettings;
+    if (typeof target === 'string') {
+      curr = caseof(target, {
+        'primary': display,
+        'secondary': currency.isBitCurrency(display) ? fiat : btc,
+        'btc': btc,
+        'fiat': fiat
+      });
+    } else if (target.code) {
+      curr = target;
+    } else {
+      curr = display;
+    }
 
     let conversion = currency.convertFromSatoshi(amount, curr);
-    return currency.formatCurrencyForView(conversion, curr);
+    return currency.formatCurrencyForView(conversion, curr, showCode);
   };
 }
 

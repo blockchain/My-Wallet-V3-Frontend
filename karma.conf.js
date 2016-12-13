@@ -25,6 +25,7 @@ module.exports = function (config) {
       'bower_components/angular-inview/angular-inview.js',
       'bower_components/browserdetection/src/browser-detection.js',
       'bower_components/compare-versions/index.js',
+      'bower_components/ng-file-upload/ng-file-upload.min.js',
       'tests/app.module.spec.js',
       'assets/js/landingCtrl.js',
       'assets/js/core/core.module.js',

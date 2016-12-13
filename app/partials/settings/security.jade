@@ -1,7 +1,7 @@
 h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
 
 .clearfix
-  .form-group.mbn.border-bottom.clearfix.pvl(data-preflight-tag="BackupPhrase")
+  .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="BackupPhrase")
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="WALLET_RECOVERY_PHRASE")
@@ -11,22 +11,22 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
     .col-sm-12.col-md-6.setting-result
       confirm-recovery-phrase
 
-  .form-group.mbn.border-bottom.clearfix.pvl(ng-controller="ChangePasswordCtrl" data-preflight-tag="ChangePassword")
+  .form-group.mbn.border-bottom.clearfix.pvl.phm(ng-controller="ChangePasswordCtrl" data-preflight-tag="ChangePassword")
     div(settings-form)
       .col-sm-12.col-md-6
         .flex-center.flex-between-mobile.mbm
-          label.em-400.type-h5.mbn(translate="WALLET_PASSWORD")
+          label.em-400.type-h5.mbn.mrm(translate="WALLET_PASSWORD")
           span.label.label-success(translate="PASSWORD_SET")
         p.text.em-300.hidden-xs(translate="WALLET_PASSWORD_EXPLAIN")
       .col-sm-12.col-md-6.setting-result.mtm(ng-hide="active")
         a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
       .col-sm-12.col-md-6(ng-show="active")
         include ./change-password.jade
-  .form-group.mbn.border-bottom.clearfix.pvl(ng-class="{'has-error':errors.passwordHint}" ng-controller="ChangePasswordHintCtrl" data-preflight-tag="ChangePasswordHint")
+  .form-group.mbn.border-bottom.clearfix.pvl.phm(ng-class="{'has-error':errors.passwordHint}" ng-controller="ChangePasswordHintCtrl" data-preflight-tag="ChangePasswordHint")
     div(settings-form)
       .col-sm-12.col-md-6
         .flex-center.flex-between-mobile.mbm
-          label.em-400.type-h5.mbn(translate="PASSWORD_HINT")
+          label.em-400.type-h5.mbn.mrm(translate="PASSWORD_HINT")
           span.label.label-warning(translate="NOT_STORED", ng-show="!user.passwordHint")
           span.label.label-success(translate="HINT_STORED", ng-show="user.passwordHint")
         p.text.em-300.hidden-xs(translate="PASSWORD_HINT_EXPLAIN")    
@@ -36,7 +36,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
       .col-sm-12.col-md-6(ng-show="active")
         include ./change-password-hint.jade
       
-  .form-group.mbn.border-bottom.clearfix.pvl(ng-controller="ManageSecondPasswordCtrl" data-preflight-tag="ManageSecondPassword")
+  .form-group.mbn.border-bottom.clearfix.pvl.phm(ng-controller="ManageSecondPasswordCtrl" data-preflight-tag="ManageSecondPassword")
     div(settings-form)
       .col-sm-12.col-md-6
         .flex-center.flex-between-mobile.mbm
@@ -51,10 +51,10 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
       .col-sm-12.col-md-6(ng-show="active")
         include ./manage-second-password.jade
    
-  .form-group.mbn.border-bottom.clearfix.pvl(data-preflight-tag="ManageTwoFactor")
+  .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="ManageTwoFactor")
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
-        label.em-400.type-h5.mbn(translate="TWO_STEP_VERIFICATION")
+        label.em-400.type-h5.mbn.mrm(translate="TWO_STEP_VERIFICATION")
         span.label.label-warning(translate="DISABLED", ng-show="!settings.needs2FA")
         span.label.label-success(translate="ENABLED", ng-show="settings.needs2FA")
       p.text.em-300.hidden-xs(translate="TWO_STEP_EXPLAIN")    
@@ -62,7 +62,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
       a.button-primary.display-inline-block(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA" ng-hide="settings.needs2FA")
       a.button-primary.display-inline-block(ng-click="changeTwoFactor()" translate="DISABLE" ng-show="settings.needs2FA")
 
-  .form-group.mbn.border-bottom.clearfix.pvl(data-preflight-tag="RememberTwoFactor")
+  .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="RememberTwoFactor")
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="REMEMBER_2FA")
@@ -80,7 +80,7 @@ h5.well.type-h5.em-400.hidden-xs(ng-show="display.advanced")
   span(translate="SECURITY_ADVANCED_EXPLAIN")
     
 div.clearfix(ng-show="display.advanced")
-  .form-group.mbn.border-bottom.clearfix.pvl(data-preflight-tag="ManageLogging")
+  .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="ManageLogging")
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="LOGGING")
@@ -95,7 +95,7 @@ div.clearfix(ng-show="display.advanced")
         disable-title="DISABLE"
       )
       
-  .form-group.mbn.border-bottom.clearfix.pvl(data-preflight-tag="WhitelistRestrict")
+  .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="WhitelistRestrict")
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="IP_WHITELIST_RESTRICT")
@@ -105,7 +105,7 @@ div.clearfix(ng-show="display.advanced")
     .col-sm-12.col-md-6.setting-result
       ip-whitelist-restrict
       
-  .form-group.mbn.border-bottom.clearfix.pvl(ng-class="{'has-error': errors.ipWhitelist}" ng-controller="ChangeIpWhitelistCtrl" data-preflight-tag="ChangeIPWhitelist")
+  .form-group.mbn.border-bottom.clearfix.pvl.phm(ng-class="{'has-error': errors.ipWhitelist}" ng-controller="ChangeIpWhitelistCtrl" data-preflight-tag="ChangeIPWhitelist")
     div(settings-form)
       .col-sm-12.col-md-6
         label.type-h5.em-400(translate="IP_WHITELIST")
@@ -116,7 +116,7 @@ div.clearfix(ng-show="display.advanced")
       .col-sm-12.col-md-6(ng-show="active")
         include ./change-ip-whitelist.jade
       
-   .form-group.mbn.border-bottom.clearfix.pvl(data-preflight-tag="BlockTOR")
+   .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="BlockTOR")
       .col-sm-12.col-md-6
         .flex-center.flex-between-mobile.mbm
           label.type-h5.em-400(translate="BLOCK_TOR")
@@ -126,7 +126,7 @@ div.clearfix(ng-show="display.advanced")
       .col-sm-12.col-md-6.setting-result
         tor
 
-  .form-group.mbn.border-bottom.clearfix.pvl(ng-class="{'has-error':errors.pbkdf2}" ng-controller="ChangePbkdf2Ctrl" data-preflight-tag="ChangePbkdf2")
+  .form-group.mbn.border-bottom.clearfix.pvl.phm(ng-class="{'has-error':errors.pbkdf2}" ng-controller="ChangePbkdf2Ctrl" data-preflight-tag="ChangePbkdf2")
     div(settings-form)
       .col-sm-12.col-md-6
         label.type-h5.em-400(translate="PBKDF2_ITERATIONS")
@@ -137,7 +137,7 @@ div.clearfix(ng-show="display.advanced")
       .col-sm-12.col-md-6(ng-show="active")
         include ./change-pbkdf2.jade
 
-  .form-group.mbn.border-bottom.clearfix.pvl(data-preflight-tag="ApiAccess")
+  .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="ApiAccess")
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="API_ACCESS")

@@ -19,7 +19,9 @@ const modules = [
   'sharedDirectives',
   'oc.lazyLoad',
   // Not needed for landing page, but loading it now for the config step below:
-  'ui.select'
+  'ui.select',
+  // Not needed for landing page, TODO: lazy load
+  'ngFileUpload'
 ];
 
 angular.module('walletApp', modules)
@@ -114,7 +116,10 @@ angular.module('walletApp', modules)
     // These are set by grunt dist:
     $rootScope.versionFrontend = null;
     $rootScope.versionMyWallet = null;
-    $rootScope.buySellDebug = true;
+    $rootScope.allowDebug = true;
+
+    // Not set by grunt dist:
+    $rootScope.buySellDebug = false;
 
     console.info(
       'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s, connecting to %s',
@@ -124,4 +129,10 @@ angular.module('walletApp', modules)
 
   let code = languages.parseFromUrl($location.absUrl());
   if (code) languages.set(code);
+
+  $rootScope.installLock = function () {
+    this.locked = false;
+    this.lock = () => { this.locked = true; };
+    this.free = () => { this.locked = false; };
+  };
 });

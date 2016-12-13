@@ -11,6 +11,7 @@
 .flex-start,
 .flex-column,
 .flex-center,
+.flex-justify,
 .flex-align-start,
 .flex-align-end,
 .flex-baseline,
@@ -193,6 +194,6 @@
     -webkit-align-items: center;
     -ms-flex-align: center;
     -ms-grid-row-align: center;
-    align-items: center; 
+    align-items: center;
   }
 }

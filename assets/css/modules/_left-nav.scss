@@ -3,6 +3,19 @@
   position: relative;
   @extend .flex-between;
   flex-direction: column;
+  li.header {
+    .message {
+      right: -3px;
+    }
+  }
+}
+
+.tray ~ .wallet-container {
+  li.header {
+    .message-contextual {
+      right: 0px;
+    }
+  }
 }
 
 ul.aside {

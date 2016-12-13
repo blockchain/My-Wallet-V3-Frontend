@@ -12,7 +12,7 @@ function buySteps () {
       onStep: '=',
       afterStep: '=',
       beforeStep: '=',
-      getMethod: '=',
+      getMedium: '=',
       transaction: '=',
       exchangeAcct: '=',
       paymentInfo: '=',

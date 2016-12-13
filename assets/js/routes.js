@@ -208,20 +208,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('wallet.common.buy-sell', {
-      url: '/buy-sell',
-      views: {
-        top: top,
-        left: {
-          templateUrl: 'partials/wallet-navigation.jade',
-          controller: 'WalletNavigationCtrl'
-        },
-        right: {
-          templateUrl: 'partials/buy-sell.jade',
-          controller: 'BuySellCtrl'
-        }
-      }
-    })
     .state('wallet.common.security-center', {
       url: '/security-center',
       params: {
@@ -229,10 +215,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       },
       views: {
         top: top,
-        left: {
-          templateUrl: 'partials/wallet-navigation.jade',
-          controller: 'WalletNavigationCtrl'
-        },
+        left: walletNav,
         right: {
           templateUrl: 'partials/security-center.jade',
           controller: 'SettingsSecurityCenterCtrl',
@@ -271,10 +254,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/settings',
       views: {
         top: top,
-        left: {
-          templateUrl: 'partials/wallet-navigation.jade',
-          controller: 'WalletNavigationCtrl'
-        },
+        left: walletNav,
         right: {
           controller: 'SettingsCtrl',
           templateUrl: 'partials/settings/settings.jade'
@@ -285,13 +265,64 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/faq',
       views: {
         top: top,
-        left: {
-          templateUrl: 'partials/wallet-navigation.jade',
-          controller: 'WalletNavigationCtrl'
-        },
+        left: walletNav,
         right: {
           templateUrl: 'partials/faq.jade',
           controller: 'faqCtrl'
+        }
+      }
+    });
+
+  $stateProvider
+    .state('wallet.common.buy-sell', {
+      url: '/buy-sell',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/buy-sell-master.jade',
+          controller: 'BuySellMasterController',
+          controllerAs: 'vm'
+        }
+      }
+    })
+    .state('wallet.common.buy-sell.select', {
+      templateUrl: 'partials/buy-sell-select-partner.jade',
+      controller: 'BuySellSelectPartnerController',
+      resolve: {
+        options (Options) { return Options.get(); }
+      }
+    })
+    .state('wallet.common.buy-sell.coinify', {
+      templateUrl: 'partials/buy-sell.jade',
+      controller: 'BuySellCtrl',
+      params: { countryCode: null }
+    })
+    .state('wallet.common.buy-sell.sfox', {
+      templateUrl: 'partials/sfox/checkout.jade',
+      controller: 'SfoxCheckoutController',
+      resolve: {
+        _loadBcPhoneNumber ($ocLazyLoad) {
+          return $ocLazyLoad.load('bcPhoneNumber');
+        },
+        _loadExchangeData ($q, MyWallet, sfox) {
+          let exchange = MyWallet.wallet.external.sfox;
+          return exchange.user && !exchange.profile
+            ? sfox.fetchExchangeData(exchange)
+            : $q.resolve();
+        },
+        accounts ($q, MyWallet) {
+          let exchange = MyWallet.wallet.external.sfox;
+          return exchange.hasAccount
+            ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
+            : $q.resolve([]);
+        }
+      },
+      onEnter ($state, $stateParams, MyWallet, modals) {
+        let exchange = MyWallet.wallet.external.sfox;
+        if (exchange.profile == null) {
+          $state.transition = null; // hack to prevent transition
+          modals.openSfoxSignup(exchange);
         }
       }
     });

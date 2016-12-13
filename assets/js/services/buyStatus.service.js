@@ -6,10 +6,15 @@ function buyStatus (Wallet, MyWallet, Options, $cookies, Alerts, $state, $q) {
   const service = {};
 
   let isCountryWhitelisted = null;
+  let isCoinifyCountry = null;
+
   let nextWeek = () => new Date(Date.now() + 604800000).getTime();
 
-  let setIsCountryWhitelisted = (options) => {
+  let processOptions = (options) => {
     let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
+
+    // Coinify countries are no longer invite-only
+    isCoinifyCountry = options.partners.coinify.countries.indexOf(accountInfo.countryCodeGuess) > -1;
 
     let whitelist = options.showBuySellTab || [];
     isCountryWhitelisted = accountInfo && whitelist.indexOf(accountInfo.countryCodeGuess) > -1;
@@ -19,12 +24,18 @@ function buyStatus (Wallet, MyWallet, Options, $cookies, Alerts, $state, $q) {
     let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
     let isUserInvited = accountInfo && accountInfo.invited;
 
+    // The user can buy if:
+    // * they already have an account; or
+    // * their IP is in a country supported by Coinify; or
+    // * their IP is in a country supported by SFOX AND their email is invited
+    let canBuy = () => service.userHasAccount() || isCoinifyCountry || (isUserInvited && isCountryWhitelisted);
+
     if (Options.didFetch) {
-      setIsCountryWhitelisted(Options.options);
-      return $q.resolve(isUserInvited && isCountryWhitelisted);
+      processOptions(Options.options);
+      return $q.resolve(canBuy());
     } else {
-      return Options.get().then(setIsCountryWhitelisted)
-                          .then(() => isUserInvited && isCountryWhitelisted);
+      return Options.get().then(processOptions)
+                          .then(canBuy);
     }
   };
 
@@ -56,7 +67,14 @@ function buyStatus (Wallet, MyWallet, Options, $cookies, Alerts, $state, $q) {
     });
   };
 
-  service.userHasAccount = () => MyWallet.wallet.external && MyWallet.wallet.external.coinify && MyWallet.wallet.external.coinify.hasAccount;
+  service.userHasAccount = () => {
+    let external = MyWallet.wallet.external;
+
+    return external && (
+      (external.coinify && external.coinify.hasAccount) ||
+      (external.sfox && external.sfox.hasAccount)
+    );
+  };
 
   return service;
 }

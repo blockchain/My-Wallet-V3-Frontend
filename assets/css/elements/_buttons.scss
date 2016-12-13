@@ -4,6 +4,10 @@ button[disabled] {
   opacity: .6;
 }
 
+button.full {
+  width: 100%;
+}
+
 %button-base {
   border-radius: 5px;
   border: none;
@@ -21,6 +25,9 @@ button[disabled] {
   }
   &.initial-text {
     text-transform: none;
+  }
+  &.full-width {
+    width: 100%;
   }
 }
 

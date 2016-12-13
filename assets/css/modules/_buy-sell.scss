@@ -90,6 +90,14 @@
   }
 }
 
+.sfox-logo {
+  img { width: 60px; }
+}
+
+.partner-logo {
+  height: 44px;
+}
+
 .payment-methods {
   input {
     & ~ .flex-column img {
@@ -233,35 +241,51 @@
     -ms-transform: scale(-1, 1);
     transform: scale(-1, 1);
   }
-  i.ti-credit-card.bank {
-    position: relative;
-    &:before {
-      opacity: 0;
-    }
+}
+
+i.ti-credit-card.bank {
+  position: relative;
+  &.bank-lrg {
     &:after {
-      top: 8px;
-      left: 2px;
-      content: '';
-      width: 22px;
-      height: 22px;
-      display: block;
-      position: absolute;
-      background-size: cover;
-      background-image: url('../img/bank.png');
+      width: 39px;
+      height: 39px;
     }
   }
-  .blue {
-    i.ti-credit-card.bank {
-      &:after {
-        background-image: url('../img/bank-blue.png');
-      }
+  &:before {
+    opacity: 0;
+  }
+  &:after {
+    top: 8px;
+    left: 2px;
+    content: '';
+    width: 22px;
+    height: 22px;
+    display: block;
+    position: absolute;
+    background-size: cover;
+    background-image: url('../img/bank.png');
+  }
+}
+
+.sfox-signup {
+  i.ti-credit-card.bank {
+    &:after {
+      top: 0px;
     }
   }
-  .success {
-    i.ti-credit-card.bank {
-      &:after {
-        background-image: url('../img/bank-success.png');
-      }
+}
+
+.blue {
+  i.ti-credit-card.bank {
+    &:after {
+      background-image: url('../img/bank-blue.png');
+    }
+  }
+}
+.success {
+  i.ti-credit-card.bank {
+    &:after {
+      background-image: url('../img/bank-success.png');
     }
   }
 }
@@ -388,4 +412,8 @@
       }
     }
   }
+}
+
+.find-partner {
+  height: 350px;
 }
