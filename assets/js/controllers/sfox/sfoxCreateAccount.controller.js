@@ -86,6 +86,11 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, Alerts, sfox
       .then($scope.setState, sfox.displayError).finally($scope.free);
   };
 
+  $scope.mobileFormSubmit = () => {
+    if ($scope.state.sentMobileCode) $scope.verifyMobile();
+    else $scope.changeMobile();
+  };
+
   $scope.createAccount = () => {
     $scope.lock();
     $q.resolve(exchange.signup())
