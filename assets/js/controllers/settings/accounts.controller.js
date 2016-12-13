@@ -16,7 +16,6 @@ function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFi
   $scope.isDefault = (account) => Wallet.isDefaultAccount(account);
   $scope.unarchive = (account) => Wallet.unarchive(account);
   $scope.getLegacyTotal = () => Wallet.total('imported');
-  $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency;
 
   $scope.newAccount = () => {
     Alerts.clear();

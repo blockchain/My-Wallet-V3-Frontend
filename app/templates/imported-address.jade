@@ -13,7 +13,8 @@ tr.width-100
         i.ti-pencil.prm
   td.col-md-3.center
     span.display-inline-block.right-align(ng-show="address.balance != null")
-      fiat-or-btc(btc="address.balance")
+      span.display-block.em-500 {{ address.balance | toBitCurrency:settings.btcCurrency }}
+      fiat(btc="address.balance")
     img(ng-show="address.balance == null" src="img/spinner.gif")
   td.col-md-3.right-align
     span(uib-dropdown on-toggle="toggled(open)")
