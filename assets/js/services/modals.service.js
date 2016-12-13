@@ -50,7 +50,7 @@ function modals ($state, $uibModal, $ocLazyLoad) {
 
   service.openTradeSummary = (trade, state) => open({
     templateUrl: 'partials/trade-modal.jade',
-    windowClass: 'bc-modal auto buy',
+    windowClass: 'bc-modal trade-summary',
     controller ($scope, trade, formatTrade, accounts) {
       $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);
     },
