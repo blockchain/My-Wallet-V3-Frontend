@@ -21,6 +21,6 @@ function CoinifyEmailController ($scope, Alerts, Wallet, $q) {
   };
 
   $scope.$watch('$parent.step', (newVal) => {
-    if ($scope.steps['email'] === newVal) Wallet.sendConfirmationCode();
+    if ($scope.steps['email'] === newVal && !Wallet.goal.firstLogin) Wallet.resendEmailConfirmation();
   });
 }

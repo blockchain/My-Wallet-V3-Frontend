@@ -70,7 +70,7 @@
           ng-show="onStep('select-country')")
         button.button-primary(
           ladda-translate="CONTINUE"
-          ng-click="verifyEmail()"
+          ng-click="nextStep()"
           data-style="expand-left"
           ui-ladda="status.waiting"
           ng-disabled="isDisabled()"

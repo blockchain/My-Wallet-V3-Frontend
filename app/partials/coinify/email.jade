@@ -3,9 +3,7 @@ div
     span.type-h5.em-500.flex-start.pts(translate="VERIFY_EMAIL")
     p.mtl.mbm
       span(translate="SENT_VERIFICATION" translate-values="{email: user.email}")
-    form.clearfix(ng-hide="state.editEmail")
-      input.form-control(ng-model="$parent.fields.emailVerification" name="confirmEmail")
-    div.mtm
+    .mtm
       span.flex-center.pointer(translate="CHANGE_EMAIL" ng-click="toggleEmail()")
   form.clearfix(name="emailForm" ng-show="editEmail || rejectedEmail")
     bc-async-input(type="email"
