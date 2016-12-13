@@ -15,11 +15,11 @@ function formatInput () {
     let language = { digit: 'x' };
     let isDigit = (d) => (/^\d$/).test(d);
 
-    let isValid = (str) => {
+    let isValid = scope.isValid = (str) => {
       return str.replace(/\d/g, language.digit) === inputFormat;
     };
 
-    let reformat = (format, str) => {
+    let reformat = scope.reformat = (format, str) => {
       let [s, ...sRest] = str;
       let [f, ...fRest] = format;
 
