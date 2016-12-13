@@ -54,10 +54,16 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
 
   $scope.buy = () => {
     $scope.lock();
+
+    let success = (trade) => {
+      sfox.watchTrade(trade);
+      modals.openTradeSummary(trade, 'initiated');
+      $scope.resetFields();
+    };
+
     $q.resolve($scope.quote.getPaymentMediums())
       .then(mediums => mediums.ach.buy($scope.account))
-      .then(trade => { modals.openTradeSummary(trade, 'initiated'); })
-      .then($scope.resetFields)
+      .then(success)
       .catch(() => { Alerts.displayError('Error connecting to our exchange partner'); })
       .then($scope.disableBuy)
       .finally($scope.free);

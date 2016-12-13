@@ -166,6 +166,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         }
         wallet.status.isLoggedIn = true;
         $injector.get('buySell'); // init buySell to monitor incoming payments
+        $injector.get('sfox').init(MyWallet.wallet.external.sfox); // init sfox to monitor incoming payments
         $rootScope.$safeApply();
         successCallback && successCallback(result.guid);
       });

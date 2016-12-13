@@ -2,14 +2,24 @@ angular
   .module('walletApp')
   .factory('sfox', sfox);
 
-function sfox ($q, Alerts) {
+function sfox ($q, Alerts, modals) {
+  const watching = {};
+
   const service = {
+    init,
     displayError,
     determineStep,
-    fetchExchangeData
+    fetchExchangeData,
+    watchTrades,
+    watchTrade
   };
 
   return service;
+
+  function init (exchange) {
+    if (exchange.trades) service.watchTrades(exchange.trades);
+    exchange.monitorPayments();
+  }
 
   function displayError (error) {
     if (angular.isString(error)) {
@@ -44,6 +54,19 @@ function sfox ($q, Alerts) {
   function fetchExchangeData (exchange) {
     return $q.resolve(exchange.fetchProfile())
       .then(() => exchange.getTrades())
-      .then(() => exchange.monitorPayments());
+      .then(service.watchTrades);
+  }
+
+  function watchTrades (trades) {
+    trades
+      .filter(t => !t.bitcoinReceived && !watching[t.receiveAddress])
+      .forEach(service.watchTrade);
+  }
+
+  function watchTrade (trade) {
+    watching[trade.receiveAddress] = true;
+    $q.resolve(trade.watchTrade())
+      .then(() => trade.refresh())
+      .then(() => { modals.openTradeSummary(trade, 'success'); });
   }
 }
