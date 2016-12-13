@@ -82,7 +82,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
   MyBlockchainApi.API_CODE = wallet.api_code;
 
-  if ($rootScope.allowDebug) {
+  if (!$rootScope.isProduction) {
     const KEY = 'qa-tools-enabled';
     $rootScope.buySellDebug = $cookies.get(KEY) === 'true';
     let reloadWithDebug = (debug) => { $cookies.put(KEY, debug); $window.location.reload(); };
