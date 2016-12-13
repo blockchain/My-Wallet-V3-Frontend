@@ -475,12 +475,12 @@ module.exports = (grunt) ->
         src: ['build/js/app.js'],
         overwrite: true,
         replacements: [{
-          from: 'buySellDebug = true'
+          from: 'allowDebug = true'
           to: () =>
             if @rootDomain == null || @rootDomain == 'blockchain.info'
-              'buySellDebug = false'
+              'allowDebug = false'
             else
-              'buySellDebug = true'
+              'allowDebug = true'
         }]
       buy_sell_coinify:
         src: ['build/js/wallet.js'],
