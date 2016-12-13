@@ -620,6 +620,7 @@
   "CREATE_NEW_ACCOUNT_MODAL" : "Divide your wallet to better allocate, track and manage your bitcoins. Some common names include Savings, Spending, and Business Expenses.",
   "TRANSACTION_DETAIL_STATUS" : "Your transaction has been submitted to the bitcoin network and is waiting for miners to validate the transaction. A transaction is considered to be confirmed when there are 3 network confirmations.",
   "SEND_BITOIN_STEP2B" : "Add a note to remind yourself what this transaction relates to. This note will be private and only seen by you.",
+  "REQUEST_BITCOIN_STEP2B": "Add a note to remind yourself what this transaction relates to. You can edit this description in the Transactions tab, or in Settings --> Addresses --> {{::walletLabel}} --> Manage",
   "BACK_TO_FEED" : "Back to Transaction Feed",
   "VALUE_AT_SEND" : "Value when Sent",
   "VALUE_WHEN_RECEIVED": "Value when Received",
