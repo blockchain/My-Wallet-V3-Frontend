@@ -44,6 +44,8 @@ angular.module('walletApp', modules).run(($rootScope) => {
     this.lock = () => { this.locked = true; };
     this.free = () => { this.locked = false; };
   };
+
+  $rootScope.isProduction = true;
 });
 
 beforeEach(module('templates-main'));
