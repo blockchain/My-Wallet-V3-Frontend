@@ -1,8 +1,8 @@
 #buy(ng-class="{rendered:rendered}" data-preflight-tag="BuyModal")
-  .modal-header.bc-modal-header.flex-between.flex-center
+  .modal-header-no-border.bc-modal-header.flex-between.flex-center
     .flex-column.flex-1
       .flex-row.flex-between.flex-center
-        h3(translate="BUY_BITCOIN")
+        h3.mlm(translate="BANK_TRANSFER_HEADING")
         .flex-column.flex-align-end(ng-show="status.gettingQuote")
           img(src="img/spinner.gif")
         .flex-column.flex-align-end(ng-hide="status.gettingQuote"
@@ -19,16 +19,6 @@
           quote-countdown.mid-grey(ng-hide="isKYC" quote="quote" trade-obj="trade" expired-quote="expiredQuote" ng-class="{'fade': hideQuote() }")
           p.security-red.pointer(ng-show="buySellDebug && quote.id")
             i.ti-search.mrm.right-align(ng-click="quote.expire()")  QA: Now
-      buy-steps(transaction="transaction"
-                on-step="onStep"
-                needs-kyc="needsKyc"
-                get-method="getMethod"
-                after-step="afterStep"
-                before-step="beforeStep"
-                payment-info="paymentInfo"
-                exchange-acct="userHasExchangeAcct"
-                currency-symbol="currencySymbol"
-                trade-obj="trade")
   .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'), 'isx': onStep('isx')}")
     .alert-in-app
       alerts(context="alerts")
@@ -46,6 +36,7 @@
       isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="formatTrade" payment-info="paymentInfo" on-resize="onResize(step)")
     div.width-80(ng-if="onStep('trade-in-review', 'trade-formatted')")
       include ./trade-summary
+      p(translate="BANK_TRANSFER_NEXT_STEPS")
       p.security-red.pointer(ng-show="buySellDebug && trade.bankAccount && trade.state === 'awaiting_transfer_in'")
         i.ti-search.mrm
         span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")
@@ -99,6 +90,6 @@
           ng-disabled="isDisabled() || fiatFormInvalid"
           ng-show="onStep('summary')")
       div(ng-show="onStep('trade-in-review') || onStep('trade-formatted') && !bitcoinReceived")
-        button.button-success(translate="CLOSE" ng-click="cancel()")
+        button.button-primary(translate="CLOSE" ng-click="cancel()")
       div(ng-show="onStep('trade-formatted') && bitcoinReceived")
         button.button-success(translate="SEE_BITCOIN" ng-click="cancel()" ui-sref="wallet.common.transactions")

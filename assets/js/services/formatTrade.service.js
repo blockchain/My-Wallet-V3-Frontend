@@ -147,7 +147,7 @@ function formatTrade ($filter, MyWallet, $rootScope) {
           trade.bankAccount.bankAddress.zipcode + ' ' + trade.bankAccount.bankAddress.city,
           trade.bankAccount.bankAddress.country
         ].join(', '),
-        'Message': trade.bankAccount.referenceText
+        'Reference': `Order ID ${trade.bankAccount.referenceText}`
       },
       values: {
         label: getLabel(trade),

@@ -954,6 +954,8 @@
   "PHONE_NUMBER": "Phone Number",
   "EDIT_PROFILE": "Edit Your Profile",
   "BUY_BITCOIN": "Buy Bitcoin",
+  "BANK_TRANSFER_HEADING": "Bank Transfer",
+  "BANK_TRANSFER_NEXT_STEPS": "Bank transfers can take a day or more depending on your bank. Once the transfer is complete, your bitcoin will be sent to <b>My Bitcoin Wallet.</b>",
   "SELL_BITCOIN": "Sell Bitcoin",
   "SENT_CONFIRMATION_CODE": "We just sent a confirmation code to <span class='em-500'>{{::email}}</span>. Enter the code below to continue.",
   "CHANGE_EMAIL": "Want to change your email address?&nbsp;<span class='blue'>Click here.</span>",
@@ -1027,8 +1029,8 @@
     "BODY": "Your request for authentication has been flagged for manual review. Coinify will send a status update your way within 1 business day. Apologies for the inconvenience and thanks, in advance, for your patience!"
   },
   "TX_BANK_TRANSFER": {
-    "TITLE": "Action Required",
-    "BODY": "Send <b>{{::amt}} {{::curr}}</b> to the bank account below within the next <b>48 hours</b> to process your transaction. Bank transfers can take a day or more. Once the transfer is complete, your bitcoin will be automatically sent to <b>{{::label}}</b>. "
+    "TITLE": "",
+    "BODY": "Send <b>{{::amt}} {{::curr}}</b> from your bank account held in your own name within <b>the next 48 hours</b>. Coinify will reject any transfers from third party accounts."
   },
   "BITCOIN_RECEIVED": {
     "TITLE": "Bitcoin received!",
@@ -1092,7 +1094,8 @@
   "ERROR_PAYMENT_METHODS_FETCH" : "Something went wrong, please try again later.",
   "ERROR_TRADE_CREATE" : "Unable to place your order at this time, please try again later.",
   "ERROR_TRADE_CANCEL": "Unable to cancel your trade at this time, please try again later.",
-  "ORDER_DETAILS": "Order details:",
+  "ORDER_DETAILS": "Send your funds to the following bank account:",
+  "ORDER_ID_REFERENCE": "Make sure to include the reference / Order ID as a message in the payment.",
   "MAX_LIMIT_EXCEEDED": "Exceeds your remaining daily buy amount of {{::max}} {{::code}}.",
   "BELOW_MIN_LIMIT": "Below your minimum buy amount of {{::min}} {{::code}}.",
   "MAX_MIN_HELPER": "Minimum buy amount is {{::symbol}}{{::min}}. Maximum daily amounts are {{::symbol}}{{::cardMax}} for credit card payments and {{::symbol}}{{::bankMax}} for bank transfers.",
