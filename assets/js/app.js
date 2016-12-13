@@ -116,7 +116,7 @@ angular.module('walletApp', modules)
     // These are set by grunt dist:
     $rootScope.versionFrontend = null;
     $rootScope.versionMyWallet = null;
-    $rootScope.isProduction = true;
+    $rootScope.isProduction = false;
 
     // Not set by grunt dist:
     $rootScope.buySellDebug = false;

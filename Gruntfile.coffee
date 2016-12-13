@@ -475,7 +475,7 @@ module.exports = (grunt) ->
         src: ['build/js/app.js'],
         overwrite: true,
         replacements: [{
-          from: 'isProduction = true'
+          from: 'isProduction = false'
           to: () =>
             if @rootDomain == null || @rootDomain == 'blockchain.info'
               'isProduction = true'
