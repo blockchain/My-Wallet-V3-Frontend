@@ -6,6 +6,14 @@
 .type-lbl { font-size: 1.1em; }
 .type-lrg { font-size: 2em; }
 .type-med { font-size: 2.2em; }
+.type-yuge { font-size: 5em; }
+
+.f-24 { font-size: 24px; }
+.f-20 { font-size: 20px; }
+.f-16 { font-size: 16px; }
+.f-14 { font-size: 14px; }
+.f-12 { font-size: 12px; }
+
 .title { font-size: 3.5em; }
 .underline { text-decoration: underline; &:hover { text-decoration: underline; } }
 .underline-blue { border-bottom: 2px solid $blue; }
@@ -27,6 +35,7 @@
 .italic { font-style: italic; }
 .parens { &:before { content: '('; } &:after { content: ')'; } }
 .ellipsis:after { content: '...'; }
+.flip { transform: rotateY(180deg); }
 
 .text-overflow-hidden, .ui-select-match-text {
   text-overflow: ellipsis;

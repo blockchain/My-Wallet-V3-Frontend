@@ -1,48 +1,16 @@
-.form-ctrl {
-  padding: 15px 0;
-  input {
-    border: 1px solid $border-grey;
-    border-radius: 5px;
-    padding: 3px;
-  }
-}
-
 .form-control {
   height: 40px;
   box-shadow: none;
   -webkit-box-shadow: none;
   border-radius: 0px !important;
+  &:focus {
+    box-shadow: none;
+  }
 }
 
 .input-group-btn {
   .btn {
     padding: 9px 12px;
-  }
-}
-
-.bc-form {
-  background: $light-blue;
-  border: 1px solid $eee;
-  border-radius: 5px;
-  margin-bottom: 3em;
-  input {
-    border: 1px solid $eee;
-    border-radius: 5px;
-    min-height: 34px;
-    &:focus {
-      outline: none;
-    }
-  }
-}
-
-.bc-form-header {
-  border-bottom: 1px solid $eee;
-  margin-bottom: .55em;
-}
-
-.bc-radio-group {
-  label {
-    font-weight: 400;
   }
 }
 
@@ -53,18 +21,6 @@
   h4 {
     font-size: 2em;
     font-weight: 300;
-  }
-}
-
-@media (max-width: 767px) {
-  .bc-form {
-    width: 90vw;
-    width: 100%;
-  }
-}
-@media (min-width: 991px) {
-  .bc-form {
-    min-width: 40vw;
   }
 }
 
@@ -118,4 +74,115 @@ input.lrg {
 
 input[type="checkbox"] {
   margin: 0;
+}
+
+form.bc-form {
+  .group {
+    @extend .flex-column;
+    &.inline {
+      @extend .flex-row;
+      .item:not(:last-child) {
+        margin-right: 1em;
+      }
+    }
+    label {
+      font-size: 14px;
+    }
+    .text {
+      @extend .mbs;
+    }
+    .item {
+      position: relative;
+      @extend .flex-column;
+      &.check {
+        @extend .flex-row;
+        @extend .flex-center;
+        label {
+          font-weight: 400;
+          font-size: 14px;
+          cursor: pointer;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  input {
+    @include transition(all 0.3s);
+    @extend .form-control;
+    &[type="checkbox"] {
+      margin: 1em 0.5em 1em 0;
+      width: 1em;
+      height: 1em;
+    }
+  }
+
+  select {
+    height: 40px;
+    background: white;
+    @extend .form-control;
+    border: 1px solid #ccc;
+  }
+
+  input,
+  select {
+    &.ng-touched {
+      &.ng-invalid {
+        border-color: $state-danger-text;
+        & + .error {
+          display: block;
+        }
+      }
+    }
+    & + .error {
+      left: 0px;
+      bottom: -20px;
+      display: none;
+      @extend .f-12;
+      @extend .pos-abs;
+      @extend .state-danger-text;
+    }
+  }
+
+  .group.full {
+    width: 100%;
+    input {
+      width: 100%;
+    }
+  }
+
+  .no-border {
+    border: none;
+  }
+
+  .help {
+    position: relative;
+    span { 
+      @extend .f-12;
+      position: absolute;
+    }
+  }
+}
+
+.file-upload {
+  @extend .center;
+  @extend .border;
+  @extend .width-100;
+  @extend .flex-column;
+  @extend .flex-around;
+  @extend .flex-center;
+  min-height: 500px;
+  &.dragover {
+    border: 1px dashed $blue;
+  }
+}
+
+.queued {
+  .file-upload {
+    border: 1px solid $blue;
+  }
+}
+
+bc-phone-number button.dropdown-toggle {
+  border-radius: 0px;
 }

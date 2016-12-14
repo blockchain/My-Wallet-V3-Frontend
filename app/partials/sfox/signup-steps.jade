@@ -1,0 +1,33 @@
+.flex-row.height-100.pt-70.pb-40.pl-40.pr-40
+  .flex-row.flex-column-mobile.center-mobile.width-100-mobile.width-100
+    .width-40
+      .width-80
+        span.f-20.em-500(translate="Complete the following steps to buy your first Bitcoin!")
+
+    .width-60.flex-row.flex-baseline.flex-between-mobile.center
+      .width-25.flex-column.flex-center(ng-class="{blue: vm.onStep('create')}" ng-click="buySellDebug && vm.goTo('create')")
+        i.type-lrg.ti-user
+        span.mt-5(translate="Create Account")
+
+      .flex-justify
+        i.ti-arrow-right.type-h4
+
+      .width-25.flex-column.flex-center(ng-class="{blue: vm.onStep('verify')}" ng-click="buySellDebug && vm.goTo('verify')")
+        i.type-lrg.ti-id-badge
+        span.mt-5(translate="Verify Identity")
+
+      .flex-justify
+        i.ti-arrow-right.type-h4
+
+      .width-25.flex-column.flex-center(ng-class="{blue: vm.onStep('link')}" ng-click="buySellDebug && vm.goTo('link')")
+        i.type-lrg.ti-credit-card.bank
+        span.mt-5(translate="Link Payment")
+
+      .flex-justify
+        i.ti-arrow-right.type-h4
+
+      .width-25.flex-column.flex-center(ng-class="{blue: vm.onStep('buy')}" ng-click="buySellDebug && vm.goTo('buy')")
+        i.type-lrg.ti-shopping-cart.flip.mrs
+        span.mt-5(translate="Buy Bitcoin")
+  .close-modal
+    i.ti-close.pointer(ng-click="$close()")

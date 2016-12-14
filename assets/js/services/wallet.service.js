@@ -82,6 +82,14 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
   MyBlockchainApi.API_CODE = wallet.api_code;
 
+  if (!$rootScope.isProduction) {
+    const KEY = 'qa-tools-enabled';
+    $rootScope.buySellDebug = $cookies.get(KEY) === 'true';
+    let reloadWithDebug = (debug) => { $cookies.put(KEY, debug); $window.location.reload(); };
+    $window.enableQA = () => reloadWithDebug(true);
+    $window.disableQA = () => reloadWithDebug(false);
+  }
+
   wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) => {
     let didLogin = (result) => {
       wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
@@ -959,7 +967,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
   wallet.changeMobile = (mobile, successCallback, errorCallback) => {
     wallet.settings_api.changeMobileNumber(mobile, () => {
-      wallet.user.mobile = mobile;
+      wallet.user.mobileNumber = mobile;
       wallet.user.isMobileVerified = false;
       successCallback();
       $rootScope.$safeApply();
@@ -1146,6 +1154,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       () => wallet.user.alias = null,
       () => Alerts.displayError('POOR_CONNECTION'));
   };
+
+  wallet.getDefaultAccount = () => (
+    wallet.accounts()[wallet.getDefaultAccountIndex()]
+  );
 
   wallet.setDefaultAccount = (account) => {
     wallet.my.wallet.hdwallet.defaultAccountIndex = account.index;

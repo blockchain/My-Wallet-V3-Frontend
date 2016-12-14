@@ -2,7 +2,6 @@
   "CUSTOMIZE" : "Customize",
   "REGULAR_RECEIVE" : "Regular Receive",
   "UID": "Wallet ID",
-  "NO_SHARING": "This is your personal login information. Do not share it with others.",
   "PASSWORD": "Password",
   "LOGIN": "Login",
   "LOG_IN": "Log in",
@@ -154,7 +153,7 @@
   "ADVANCED_SETTINGS" : "Advanced Settings",
   "SECURITY_CENTER" : "Security Center",
   "WALLET_RECOVERY" : "Wallet Recovery",
-  "ADD_WALLET_RECOVERY" : "Backup Recovery Phrase",
+  "ADD_WALLET_RECOVERY" : "Backup Security Phrase",
   "PRINT_RECOVERY_SHEET" : "Print Recovery Sheet",
   "ARE_YOU_SURE_LOGOUT" : "Are you sure you wish to logout?",
   "FINISH_LATER": "Finish Later",
@@ -524,7 +523,8 @@
   "HIT_SEND" : "Click <b class='pointer black em-500'><i class='bc-icon-send'></i> Send </b> to instantly send bitcoin anywhere in the world!",
   "FIRST_ACCOUNT_NAME" : "My Bitcoin Wallet",
   "EMAIL_VERIFIED_SUCCESS" : "You've successfully verified your email! Please return to your previous browser / tab to see your wallet.",
-  "UID_EXPLAIN" : "Wallet ID is your unique identifier. It is completely individual to you and what you will use to access your wallet.",
+  "UID_EXPLAIN" : "Wallet ID is your unique identifier. It is completely individual to you, and it is what you will use to log in and access your wallet. It is <b>not</b> a bitcoin address for sending or receiving.",
+  "UID_EXPLAIN_WARN": "Do not share your Wallet ID with others.",
   "AUTHORIZED" : "Authorized!",
   "AUTHORIZED_MESSAGE" : "You have authorized this login attempt.",
   "ADVANCED_SEND" : "Advanced Send",
@@ -551,7 +551,7 @@
   "GO_BACK" : "Go Back",
   "CLICK_HERE_TO_CREATE_WALLET" : "create a wallet",
   "RESEND" : "Resend",
-  "FIND_GUID_EXPLAIN" : "Find the login link in your email, e.g. <i>blockchain.info/wallet/1111-222-333...</i> The series of numbers and dashes at the end of the link is your Wallet ID.",
+  "FIND_GUID_EXPLAIN" : "Find the login link in your email, e.g. <i>blockchain.info/wallet/1111-222-333...</i> The series of numbers and dashes at the end of the link is your Login ID.",
   "UNKNOWN_IDENTIFIER" : "Unknown wallet identifier. <span class='underline pointer'>Click here</span> if you need a reminder.",
   "WELCOME_BACK" : "Welcome back",
   "LOGIN_BELOW" : "Sign in to your wallet below",
@@ -616,13 +616,13 @@
   "FIRST_LOGIN_TEXT_2" : " and keep your wallet safe.",
   "FIRST_LOGIN_ACTION" : "Get Started",
   "BUY_FIRST_LOGIN_TEXT_1": "Thanks for joining the world’s most popular bitcoin wallet platform. We’re helping to create a fair and open financial future.",
-  "BUY_FIRST_LOGIN_TEXT_2": "Get started now by purchasing your first bitcoins!", 
+  "BUY_FIRST_LOGIN_TEXT_2": "Get started now by purchasing your first bitcoins!",
   "TOS" : "ToS",
   "PRIVACY" : "Privacy Policy",
   "CREATE_NEW_ACCOUNT_MODAL" : "Divide your wallet to better allocate, track and manage your bitcoins. Some common names include Savings, Spending, and Business Expenses.",
   "TRANSACTION_DETAIL_STATUS" : "Your transaction has been submitted to the bitcoin network and is waiting for miners to validate the transaction. A transaction is considered to be confirmed when there are 3 network confirmations.",
   "SEND_BITOIN_STEP2B" : "Add a note to remind yourself what this transaction relates to. This note will be private and only seen by you.",
-  "REQUEST_BITCOIN_STEP2B": "Add a note to remind yourself what this transaction relates to. You can edit this description in the Transactions tab, or before the BTC is received by going to Settings --> Addresses --> My Wallet --> Manage",
+  "REQUEST_BITCOIN_STEP2B": "Add a note to remind yourself what this transaction relates to. You can edit this description in the Transactions tab, or in Settings --> Addresses --> {{::walletLabel}} --> Manage",
   "BACK_TO_FEED" : "Back to Transaction Feed",
   "VALUE_AT_SEND" : "Value when Sent",
   "VALUE_WHEN_RECEIVED": "Value when Received",
@@ -1006,19 +1006,19 @@
   "SOLD_VIA": "Sold via {{exchange}}",
   "TX_ERROR_STATE": {
     "TITLE": "Transaction {{::state}}",
-    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> has been {{::state}}."
+    "BODY": "Your purchase has been {{::state}}."
   },
   "TX_PENDING": {
     "TITLE": "Order Pending",
-    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> is currently being processed. Coinify will send a status update your way within 1 business day."
+    "BODY": "Your purchase is currently being processed. Our exchange partner will send a status update your way within 1 business day."
   },
   "TX_SUCCESS": {
     "TITLE": "Order Purchased",
-    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> was successful! Bitcoins were sent to <b>{{::label}}</b>."
+    "BODY": "Your purchase was successful! Bitcoins were sent to <b>{{::label}}</b>."
   },
   "TX_IN_REVIEW": {
     "TITLE": "Transaction in review.",
-    "BODY": "Your purchase of <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b> is currently being processed. Any issues should be resolved shortly. Thank you for your patience."
+    "BODY": "Your purchase is currently being processed. Any issues should be resolved shortly. Thank you for your patience."
   },
   "TX_EXPIRED": {
     "TITLE": "Transaction expired.",
@@ -1032,9 +1032,13 @@
     "TITLE": "",
     "BODY": "Send <b>{{::amt}} {{::curr}}</b> from your bank account held in your own name within <b>the next 48 hours</b>. Coinify will reject any transfers from third party accounts."
   },
+  "TX_INITIATED": {
+    "TITLE": "Trade Initiated",
+    "BODY": "An email confirmation will be sent to {{::email}}. You can expect your BTC in 3-5 days."
+  },
   "BITCOIN_RECEIVED": {
     "TITLE": "Bitcoin received!",
-    "BODY": "You have just received bitcoin from Coinify! <br/> Bitcoins were sent to <b>{{::label}}</b>."
+    "BODY": "You have just received the bitcoins you purchased! <br/> Bitcoins were sent to <b>{{::label}}</b>."
   },
   "CLICK_TO_CANCEL": "Cancel trade",
   "SPEND_IMPORTED_ADDRESS": "Spend",
@@ -1073,12 +1077,14 @@
     "BODY": "Your identity verification was put on hold. Bank transfers are unavailable until we can successfully verify your identity. We apologize for any inconvenience",
     "LINK": "Review status"
   },
-  "COINIFY_TRADE": "Coinify trade",
+  "TRADE_ID": "Trade ID",
   "ISX_ID": "iSignthis ID",
   "VERIFY_CARD_NOTE": "For secure card transactions, you will need to verify ownership of the card. You will only have to do this once per card added.",
   "VERIFY_ID_NOTE": "Please note that in order to buy bitcoin via bank transfer, you will need to verify your identity. You will only have to do this once.",
   "KYC_APPROVED": "Identity verification approved! Click here to start buying bitcoin via bank transfer.",
-  "DATE_INITIALIZED": "Date initialized",
+  "DATE_INITIALIZED": "Date Ordered",
+  "TOTAL_COST": "Total Cost",
+  "SEND_TO": "Send To",
   "RECEIVING_WALLET": "Receiving wallet",
   "RECEIVING_ADDRESS": "QA: Receiving address",
   "RECEIVE_BITCOIN_TO": "Bitcoins will be sent to {{::label}}.",
@@ -1091,7 +1097,7 @@
   "ERROR_DAILY_LIMIT_COPY": "The amount selected exceeds your daily buy limit. For bank transfers, you can exchange {{max}} {{code}} more today. Please update your order to proceed.",
   "ERROR_MIN_LIMIT_COPY": "The amount selected is below the minimum limit required to create a trade. Please enter an amount greater than {{min}} {{code}} to proceed.",
   "ERROR_QUOTE_FETCH" : "Unable to obtain quote at this time, please try again later.",
-  "ERROR_PAYMENT_METHODS_FETCH" : "Something went wrong, please try again later.",
+  "ERROR_PAYMENT_MEDIUMS_FETCH" : "Something went wrong, please try again later.",
   "ERROR_TRADE_CREATE" : "Unable to place your order at this time, please try again later.",
   "ERROR_TRADE_CANCEL": "Unable to cancel your trade at this time, please try again later.",
   "ORDER_DETAILS": "Send your funds to the following bank account:",
@@ -1118,7 +1124,7 @@
   "SPEND_IMPORTED_ADDRESS": "Spend",
   "ACCEPT_TOS": "I have read and agree to the <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Terms of Service</a>",
   "SIMPLE_SECURE_SEAMLESS": "Simple. Secure. Seamless.",
-  "BUY_SIMPLE_STEPS": "The world's most popular bitcoin wallet <br> now lets you buy bitcoin in 4 <br> simple and secure steps.",
+  "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet secure and seamless in 4 simple steps.",
   "METADATA_DOWN_EXCHANGE": "Unable to load your exchange details. Please try refreshing the page.",
   "FETCHING_INFO_EXCHANGE": "Getting information from your exchange partner. This could take a few seconds.",
   "ORDER_HISTORY": "Order History",
@@ -1126,9 +1132,9 @@
   "CHOOSE_EXCHANGE_AMOUNT": "Choose amount to exchange:",
   "SELECT_COUNTRY": "Select country of residence:",
   "VERIFY_EMAIL": "Verify email:",
-  "SENT_VERIFICATION": "We sent a confirmation code to <b>{{::email}}</b>. Enter it below to verify your email account.",
+  "SENT_VERIFICATION": "We sent a verification link to <b>{{::email}}</b>. Click it and return here to continue with your purchase.",
   "ACCEPT_TERMS": "Coinify account terms:",
-  "SELECT_PAYMENT_METHOD": "Select your preferred payment method:",
+  "SELECT_PAYMENT_MEDIUM": "Select your preferred payment method:",
   "PAYMENT_FEE": "Payment Fee:",
   "NEEDS_REFRESH": "Please refresh your wallet to access this feature.",
   "GO_BACK": "Go Back",
@@ -1161,5 +1167,36 @@
     "TITLE": "Before you go...",
     "BODY": "Would you like to provide feedback regarding your experience today?"
   },
-  "TAKE_SURVEY": "Take Survey"
+  "TAKE_SURVEY": "Take Survey",
+  "id_ID": {
+    "TITLE": "Upload A Photo ID",
+    "COPY": "To verify your identity, we need one of the following government-issued forms of identification showing your country of residence:",
+    "COPY_2": "Only the front side of your ID is needed, which must clearly display your identification number.",
+    "OPTION1": "State issued driver’s license",
+    "OPTION2": "State issued identification card",
+    "OPTION3": "Passport",
+    "OPTION4": "Government issued identification",
+    "UPLOAD_TITLE": "Photo Identification"
+  },
+  "address_ID": {
+    "TITLE": "Upload A Proof of Address",
+    "COPY": "Please upload one of the following documents clearly displaying your address dated within the past 6 months:",
+    "OPTION1": "Utility bill (except mobile phone bills)",
+    "OPTION2": "First page and signature page of lease",
+    "OPTION3": "First page of your bank statement",
+    "OPTION4": "DMV or voter registration",
+    "UPLOAD_TITLE": "Proof of Address"
+  },
+  "GET_BITCOIN": "Get Bitcoin",
+  "POWERED_BY": "Powered By",
+  "EDIT_ORDER": "Edit Order",
+  "TOTAL_COST:": "Total Cost:",
+  "ENTER_AMOUNT:": "Enter amount:",
+  "BUY_BITCOIN_ALERT": "You can now buy Bitcoin with your Blockchain wallet! Click below to get started.",
+  "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
+  "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
+  "EXCHANGE_CONNECT_ERROR": "Error connecting to our exchange partner",
+  "COINIFY_EXPLAIN": "Our exchange partner Coinify will process your Bitcoin purchases. Click Continue to begin buying bitcoin.",
+  "SFOX_EXPLAIN": "Our partner SFOX will process your Bitcoin purchases. You will need to provide some information about yourself and link a payment method before purchasing Bitcoin.",
+  "": ""
 }

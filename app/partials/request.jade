@@ -64,13 +64,13 @@
         .form-group.row.pbm.flex-justify.flex-center.description(ng-class="{'has-error': !requestForm.label.$valid}")
           label.mbn.pts(translate="DESCRIPTION:")
           div
-            .flex-center.prl.border-bottom
+            .flex-center.border-bottom
               input.form-control.no-border.pln.pbn(
                 type="text"
                 ng-model="fields.label"
                 name="label"
               )
-              helper-button(content="REQUEST_BITCOIN_STEP2B")
+              helper-button(ng-model="fields" content="REQUEST_BITCOIN_STEP2B" values="{walletLabel: fields.to.label}")
             span.help-block(ng-show="requestForm.label.$error.characters", translate="INVALID_CHARACTERS_FOR_LABEL") 
             span.help-block(ng-show="requestForm.label.$error.gap", translate="LABEL_ERROR_BIP_44_GAP") 
 

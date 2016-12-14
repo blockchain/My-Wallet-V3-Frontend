@@ -77,6 +77,8 @@ module.exports = (grunt) ->
           "bower_components/browserdetection/src/browser-detection.js"
           "bower_components/oclazyload/dist/ocLazyLoad.js"
           'bower_components/angular-ui-select/dist/select.js'
+          'bower_components/ng-file-upload/ng-file-upload-shim.min.js'
+          'bower_components/ng-file-upload/ng-file-upload.min.js'
           "build/js/sharedDirectives.js"
           "build/js/sharedDirectives/public-header.directive.js"
           "build/js/sharedDirectives/video-container.directive.js"
@@ -473,12 +475,12 @@ module.exports = (grunt) ->
         src: ['build/js/app.js'],
         overwrite: true,
         replacements: [{
-          from: 'buySellDebug = true'
+          from: 'isProduction = false'
           to: () =>
             if @rootDomain == null || @rootDomain == 'blockchain.info'
-              'buySellDebug = false'
+              'isProduction = true'
             else
-              'buySellDebug = true'
+              'isProduction = false'
         }]
       buy_sell_coinify:
         src: ['build/js/wallet.js'],
@@ -501,6 +503,28 @@ module.exports = (grunt) ->
             console.log "iSignThis domain: #{ domain }"
             domain
         }]
+      buy_sell_sfox:
+        src: ['build/js/wallet.js'],
+        overwrite: true,
+        replacements: [{
+          from: "sfox.api.apiKey = '6CD61A0E965D48A7B1883A860490DC9E'"
+          to: () =>
+            apiKey = '6CD61A0E965D48A7B1883A860490DC9E'
+            if @rootDomain == null || @rootDomain == 'blockchain.info'
+              apiKey = 'f31614a7-5074-49f2-8c2a-bfb8e55de2bd'
+            console.log "SFOX API key: #{ apiKey }"
+            "sfox.api.apiKey = '#{ apiKey }'"
+        },
+        {
+          from: 'sfox.api.production = false'
+          to: () =>
+            p = 'false'
+            if @rootDomain == null || @rootDomain == 'blockchain.info'
+              p = 'true'
+            console.log "SFOX production: #{ p }"
+            "sfox.api.production = #{ p }"
+        }]
+
       api_domain:
         src: ['build/js/wallet.js'],
         overwrite: true,
@@ -615,6 +639,7 @@ module.exports = (grunt) ->
       "replace:web_socket_url"
       "replace:buy_sell_debug"
       "replace:buy_sell_coinify"
+      "replace:buy_sell_sfox"
     ]
 
     if apiDomain

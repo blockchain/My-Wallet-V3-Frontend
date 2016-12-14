@@ -17,7 +17,8 @@
           span.label.label-default.btn-xs.mrm(translate="ARCHIVED" ng-show="account.archived")
         td.col-md-3.center
           span.display-inline-block.right-align(ng-show="!account.archived && account.balance != null")
-            fiat-or-btc.pointer(btc="account.balance" ng-click="toggleDisplayCurrency()")
+            span.display-block.em-500 {{ account.balance | toBitCurrency:settings.btcCurrency }}
+            fiat(btc="account.balance")
         td.col-md-3.right-align
           span.pointer.blue(
             ui-sref="wallet.common.settings.accounts_addresses({account: account.index})"
@@ -25,10 +26,10 @@
             ng-show="!account.archived"
           )
           span.pointer.blue(translate="UNARCHIVE" ng-click="unarchive(account)" ng-show="account.archived")")
-      tr.width-100
+      tr.width-100.pointer(ng-click="newAccount()")
         td.col-md-3
-          i.ti-plus.blue.mrm.pointer(ng-click="newAccount()")
-          span.pointer(translate="ADD_WALLET" ng-click="newAccount()")
+          i.ti-plus.blue.mrm
+          span(translate="ADD_WALLET")
         td.col-md-3
         td.col-md-3
 

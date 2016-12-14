@@ -1,4 +1,4 @@
-.kyc-status.flex-row.border.pbl.ptl(ng-show="$ctrl.getState()")
+.kyc-status.flex-row.border.pbl.ptl(ng-show="$ctrl.getState() && $ctrl.level < 2")
   .flex-1.pll.mlm
     h1
       i.type-h4(ng-class="$ctrl.getState().i")

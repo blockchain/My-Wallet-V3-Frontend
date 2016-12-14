@@ -16,12 +16,8 @@ function Options ($http, $rootScope) {
   };
 
   function get () {
-    let url;
-    if ($rootScope.buySellDebug) {
-      url = '/Resources/wallet-options-debug.json';
-    } else {
-      url = '/Resources/wallet-options.json';
-    }
+    let file = $rootScope.isProduction ? 'wallet-options' : 'wallet-options-debug';
+    let url = `/Resources/${file}.json`;
     if (fetchedOptions) {
       return Promise.resolve(service.options);
     }

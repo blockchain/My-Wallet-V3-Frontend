@@ -36,14 +36,13 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   let eventualError = (message) => Promise.reject.bind(Promise, { message });
 
   $scope.steps = {
-    'select-country': 0,
-    'email': 1,
-    'accept-terms': 2,
-    'select-payment-method': 3,
-    'summary': 4,
-    'isx': 5,
-    'trade-in-review': 6,
-    'trade-formatted': 7
+    'email': 0,
+    'accept-terms': 1,
+    'select-payment-medium': 2,
+    'summary': 3,
+    'isx': 4,
+    'trade-in-review': 5,
+    'trade-formatted': 6
   };
 
   $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
@@ -56,7 +55,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   $scope.formattedTrade = undefined;
   $scope.bitcoinReceived = buyOptions.bitcoinReceived && $scope.trade && $scope.trade.bitcoinReceived;
 
-  $scope.fields = { email: $scope.user.email, countryCode: $scope.exchange.profile.country, emailVerification: undefined };
+  $scope.fields = { email: $scope.user.email };
 
   $scope.transaction = trade == null
     ? ({ fiat: buyOptions.fiat, btc: buyOptions.btc, fee: 0, total: 0, currency: buyOptions.currency || buySell.getCurrency() })
@@ -76,7 +75,18 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
 
   $scope.userHasExchangeAcct = $scope.exchange.user;
 
-  $scope.getPaymentMethods = () => {
+  $scope.getAccounts = () => {
+    if (!$scope.exchange.user) { return; }
+
+    let success = (accounts) => {
+      $scope.accounts = accounts;
+    };
+
+    let accountsError = eventualError('ERROR_ACCOUNTS_FETCH');
+    return $scope.mediums[$scope.medium].getAccounts().then(success, accountsError);
+  };
+
+  $scope.getPaymentMediums = () => {
     if (!$scope.exchange.user) { return; }
 
     // reset buyOptions
@@ -84,14 +94,14 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
 
     $scope.status.waiting = true;
 
-    let success = (methods) => {
-      $scope.methods = methods;
+    let success = (mediums) => {
+      $scope.mediums = mediums;
       $scope.status.waiting = false;
-      $scope.method && $scope.updateAmounts();
+      $scope.medium && $scope.updateAmounts();
     };
 
-    let methodsError = eventualError('ERROR_PAYMENT_METHODS_FETCH');
-    return $scope.quote.getPaymentMethods().then(success, methodsError);
+    let mediumsError = eventualError('ERROR_PAYMENT_MEDIUMS_FETCH');
+    return $scope.quote.getPaymentMediums().then(success, mediumsError);
   };
 
   $scope.changeCurrency = (curr) => {
@@ -121,8 +131,8 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     if (!$scope.trade && (!$scope.quote || !$scope.exchange.user)) return;
 
     if ($scope.quote) {
-      $scope.transaction.methodFee = ($scope.quote.paymentMethods[$scope.method].fee / 100).toFixed(2);
-      $scope.transaction.total = ($scope.quote.paymentMethods[$scope.method].total / 100).toFixed(2);
+      $scope.transaction.methodFee = ($scope.quote.paymentMediums[$scope.medium].fee / 100).toFixed(2);
+      $scope.transaction.total = ($scope.quote.paymentMediums[$scope.medium].total / 100).toFixed(2);
     } else if ($scope.trade) {
       $scope.transaction.total = ($scope.trade.sendAmount / 100).toFixed(2);
     }
@@ -130,7 +140,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
 
   $scope.getQuote = () => {
     if ($scope.trade) { $scope.updateAmounts(); return; }
-    if (buyOptions.quote) { $scope.getPaymentMethods(); return; }
+    if (buyOptions.quote) { $scope.getPaymentMediums(); return; }
 
     $scope.quote = null;
     $scope.status.waiting = true;
@@ -157,7 +167,8 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
 
     return buySell.getExchange().getBuyQuote(amount, baseCurr, quoteCurr)
       .then(success, quoteError)
-      .then($scope.getPaymentMethods)
+      .then($scope.getPaymentMediums)
+      .then($scope.getAccounts)
       .catch($scope.standardError);
   };
 
@@ -165,16 +176,13 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
 
   $scope.nextStep = () => {
     if (!$scope.trade) {
-      if (!$scope.isCountrySelected && !$scope.exchange.user) {
-        $scope.goTo('select-country');
-        $scope.isCountrySelected = true;
-      } else if ((!$scope.user.isEmailVerified || $scope.rejectedEmail) && !$scope.exchange.user) {
+      if ((!$scope.user.isEmailVerified || $scope.rejectedEmail) && !$scope.exchange.user) {
         $scope.goTo('email');
       } else if (!$scope.exchange.user) {
         $scope.goTo('accept-terms');
-      } else if (!$scope.isMethodSelected) {
-        $scope.goTo('select-payment-method');
-        $scope.isMethodSelected = true;
+      } else if (!$scope.isMediumSelected) {
+        $scope.goTo('select-payment-medium');
+        $scope.isMediumSelected = true;
       } else {
         $scope.goTo('summary');
       }
@@ -190,14 +198,12 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   };
 
   $scope.isDisabled = () => {
-    if ($scope.onStep('select-country')) {
-      return !$scope.fields.countryCode || $scope.isCountryBlacklisted;
-    } else if ($scope.onStep('email')) {
-      return !$scope.fields.emailVerification;
+    if ($scope.onStep('email')) {
+      return !$scope.user.isEmailVerified;
     } else if ($scope.onStep('accept-terms')) {
       return !$scope.signupForm.$valid;
-    } else if ($scope.onStep('select-payment-method')) {
-      return !$scope.quote || !$scope.method;
+    } else if ($scope.onStep('select-payment-medium')) {
+      return !$scope.quote || !$scope.medium;
     } else if ($scope.onStep('summary')) {
       return $scope.editAmount || !$scope.limits.max;
     }
@@ -277,7 +283,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     $scope.$digest();
   });
 
-  $scope.$watch('method', (newVal) => newVal && $scope.updateAmounts());
+  $scope.$watch('medium', (newVal) => newVal && $scope.getAccounts().then($scope.updateAmounts));
   $scope.$watchGroup(['exchange.user', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
   $scope.$watch('user.isEmailVerified', () => $scope.onStep('email') && $scope.nextStep());
   $scope.$watch('bitcoinReceived', (newVal) => newVal && ($scope.formattedTrade = formatTrade['success']($scope.trade)));

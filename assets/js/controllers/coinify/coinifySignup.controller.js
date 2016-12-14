@@ -2,15 +2,15 @@ angular
   .module('walletApp')
   .controller('CoinifySignupController', CoinifySignupController);
 
-function CoinifySignupController ($scope, Alerts, buySell) {
+function CoinifySignupController ($scope, $stateParams, Alerts, buySell) {
   $scope.$parent.signup = () => {
     $scope.status.waiting = true;
     Alerts.clear($scope.alerts);
     $scope.$parent.exchange = buySell.getExchange();
 
-    return $scope.exchange.signup($scope.fields.countryCode, $scope.transaction.currency.code)
+    return $scope.exchange.signup($stateParams.countryCode, $scope.transaction.currency.code)
       .then(() => $scope.exchange.fetchProfile())
-      .then(() => $scope.getPaymentMethods())
+      .then(() => $scope.getPaymentMediums())
       .catch($scope.standardError);
   };
 

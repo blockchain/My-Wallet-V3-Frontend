@@ -8,6 +8,9 @@
                     "MC", "NL", "NO", "PL", "PT", "RE", "BL", "MF", "PM", "SM",
                     "SK", "SI", "ES", "SE", "CH"
                   ]
+    },
+    "sfox": {
+      "countries": []
     }
   }
 }
