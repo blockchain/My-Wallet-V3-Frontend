@@ -70,6 +70,11 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, Alerts, sfox
       .then($scope.setState, sfox.displayError).finally($scope.free);
   };
 
+  $scope.emailFormSubmit = () => {
+    if ($scope.state.sentEmailCode) $scope.verifyEmail();
+    else $scope.changeEmail();
+  };
+
   $scope.changeMobile = () => {
     $scope.lock();
     $q(Wallet.changeMobile.bind(null, state.mobile))
