@@ -6,8 +6,6 @@ formatTrade.$inject = ['$rootScope', '$filter', 'Wallet', 'MyWallet', 'currency'
 
 function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
   const service = {
-    // format for possible coinify trade states
-    // awaiting_transfer_in is ignored because trade is not in a formattable state yet
     reviewing,
     processing,
     cancelled,
@@ -45,7 +43,9 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
   function completed_test (trade) { return service.success(trade); }
 
   let addTradeDetails = (trade, account) => {
+    let showTradeID = !account;
     let transaction = {
+      'TRADE_ID': showTradeID ? '#' + trade.id : null,
       'DATE_INITIALIZED': $filter('date')(trade.createdAt, 'd MMMM yyyy, HH:mm'),
       'BTC_PURCHASED': currency.convertFromSatoshi(trade.outAmount || trade.outAmountExpected, currency.bitCurrencies[0]),
       'PAYMENT_METHOD': account ? account.accountType + ' ' + account.accountNumber : null,
