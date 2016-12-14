@@ -138,20 +138,34 @@
           helper-button(content="TX_FEE_HELP")
         .miners-fee-selection
           .fee-custom
-            .flex-1
-              .flex-center.border-bottom
-                span.mrm {{ btcCurrency.code }}:
-                input.form-control.no-border(
-                  type="number"
-                  name="fee"
-                  tabindex="1"
-                  ng-model="transaction.fee"
-                  min="546"
-                  step="any"
-                  ng-change="setPaymentFee()"
-                  required
-                  transform-currency="settings.btcCurrency"
-                  placeholder="Enter your fee here")
+            .flex-center.border-bottom
+              span.mrm {{ btcCurrency.code }}:
+              input.form-control.no-border(
+                type="number"
+                name="fee"
+                tabindex="1"
+                ng-model="transaction.fee"
+                min="546"
+                step="any"
+                ng-keyup="setPaymentFee()"
+                required
+                transform-currency="settings.btcCurrency"
+                placeholder="Enter fee in btc")
+            i.ti-arrows-horizontal.h4.aaa.prm
+            .flex-center.border-bottom
+              span.mrm {{ fiatCurrency.code }}:
+              input.form-control.no-border(
+                type="number"
+                name="fee"
+                tabindex="1"
+                ng-model="transaction.fee"
+                min="546"
+                max="21000000000"
+                step="any"
+                ng-change="setPaymentFee()"
+                required
+                transform-currency="fiatCurrency"
+                placeholder="Enter fee")
       span.type-sm.help-block.state-danger-text(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$dirty && advanced")
       span.type-sm.help-block.blue(ng-show="!sendForm.$invalid && amountsAreValid() && advanced")
         span(ng-show="transaction.blockIdx <= 6 && transaction.blockIdx >= 1")
