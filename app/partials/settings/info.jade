@@ -3,7 +3,10 @@ h5.well.em-400.type-h5.hidden-xs(translate="WALLET_INFO_EXPLAIN")
   .form-group.mbn.border-bottom.clearfix.pvl(data-preflight-tag="WalletId")
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="UID")
-      p.text.em-300.hidden-xs(translate="UID_EXPLAIN")    
+      p.text.em-300.hidden-xs
+        span(translate="UID_EXPLAIN")
+        span 
+        span.security-red(translate="UID_EXPLAIN_WARN")
     .col-sm-12.col-md-6.setting-result.flex-column
       label.em-400.type-h5(ng-bind="guid")
 
