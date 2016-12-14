@@ -2,9 +2,10 @@ angular
   .module('walletApp')
   .controller('SfoxVerifyController', SfoxVerifyController);
 
-function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Upload, QA, $interval, $timeout) {
+function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Upload, QA, $interval, $timeout, Alerts) {
   $scope.states = state.stateCodes;
   let exchange = $scope.vm.exchange;
+  $scope.browserWithCamera = $rootScope.browserWithCamera;
 
   let getNextIdType = () => {
     if (!exchange.profile) return 'ssn';
@@ -130,6 +131,11 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
 
   $scope.disableWebcam = () => {
     $scope.state.webcam = {};
+  };
+
+  $scope.webcamError = () => {
+    $scope.disableWebcam();
+    Alerts.displayError('CAMERA_PERMISSION_DENIED');
   };
 
   var getVideoData = (x, y, w, h) => {

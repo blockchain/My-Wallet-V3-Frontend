@@ -100,14 +100,19 @@
       img.width-20.mobile-width-40(src="img/document.png" ng-hide="state.file")
       img.width-40.mobile-width-40(ngf-src="state.file" ng-show="state.file")
       canvas#snapshot.hide
-      span.type-h5.em-300(ng-hide="state.file" ng-click="enableWebcam($event)") Or
-        |  
-        span.blue.pointer.em-400 Upload via Webcam
+      span(ng-hide="browserWithCamera")
+        span.type-h5.em-300.mbvl(ng-hide="state.file") Or
+          |  
+          span.blue.pointer.em-400 Select Document
+      span(ng-show="browserWithCamera")
+        span.type-h5.em-300(ng-hide="state.file" ng-click="enableWebcam($event)") Or
+          |  
+          span.blue.pointer.em-400 Upload via Webcam
       span.type-h5.em-300(ng-show="state.file") Document will be sent to SFOX for review.
     div(ng-hide="state.webcam.streaming" ngf-no-file-drop) File Drag/Drop is not supported for this browser
 
     div.webcam(ng-if="state.webcam.streaming")
-      webcam(channel="webcam")
+      webcam(channel="webcam" on-error="webcamError()")
     button.mtl.btn.button-primary.full(ng-show="state.webcam.streaming && !state.webcam.ready" ng-click="state.webcam.ready = true") Capture
 
     form(ng-submit="state.file ? upload() : capture()")
