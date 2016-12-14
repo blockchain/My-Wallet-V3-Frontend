@@ -9,6 +9,7 @@ describe "SfoxCheckoutController", ->
   modals = undefined
   Alerts = undefined
   Wallet = undefined
+  MyWallet = undefined
 
   mockTrade = () -> 'TRADE'
 
@@ -34,14 +35,20 @@ describe "SfoxCheckoutController", ->
       modals = $injector.get('modals')
       Alerts = $injector.get('Alerts')
       Wallet = $injector.get('Wallet')
+      MyWallet = $injector.get("MyWallet")
       MyWalletHelpers = $injector.get('MyWalletHelpers')
 
+      MyWallet.wallet = {}
       Wallet.accounts = () -> []
       Wallet.getDefaultAccount = () -> {}
       MyWalletHelpers.asyncOnce = (f) ->
         async = () -> f()
         async.cancel = () ->
         return async
+
+      MyWallet.wallet.external =
+        sfox:
+          profile: {}
 
       currency = $injector.get("currency")
       currency.conversions["USD"] = { conversion: 2 }

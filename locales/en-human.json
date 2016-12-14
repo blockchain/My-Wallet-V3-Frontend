@@ -1031,7 +1031,7 @@
   },
   "TX_INITIATED": {
     "TITLE": "Trade Initiated",
-    "BODY": "An email confirmation will be sent to {{::email}}. You can expect your BTC in 3-5 days."
+    "BODY": "An email confirmation will be sent to {{::email}}.<br>You can expect your BTC in 3-5 days."
   },
   "BITCOIN_RECEIVED": {
     "TITLE": "Bitcoin received!",
@@ -1081,6 +1081,8 @@
   "KYC_APPROVED": "Identity verification approved! Click here to start buying bitcoin via bank transfer.",
   "DATE_INITIALIZED": "Date Ordered",
   "TOTAL_COST": "Total Cost",
+  "BTC_PURCHASED": "BTC Purchased",
+  "PAYMENT_METHOD": "Payment Method",
   "SEND_TO": "Send To",
   "RECEIVING_WALLET": "Receiving wallet",
   "RECEIVING_ADDRESS": "QA: Receiving address",
@@ -1097,7 +1099,7 @@
   "ERROR_PAYMENT_MEDIUMS_FETCH" : "Something went wrong, please try again later.",
   "ERROR_TRADE_CREATE" : "Unable to place your order at this time, please try again later.",
   "ERROR_TRADE_CANCEL": "Unable to cancel your trade at this time, please try again later.",
-  "ORDER_DETAILS": "Order details:",
+  "ORDER_DETAILS": "Order Details:",
   "MAX_LIMIT_EXCEEDED": "Exceeds your remaining daily buy amount of {{::max}} {{::code}}.",
   "BELOW_MIN_LIMIT": "Below your minimum buy amount of {{::min}} {{::code}}.",
   "MAX_MIN_HELPER": "Minimum buy amount is {{::symbol}}{{::min}}. Maximum daily amounts are {{::symbol}}{{::cardMax}} for credit card payments and {{::symbol}}{{::bankMax}} for bank transfers.",

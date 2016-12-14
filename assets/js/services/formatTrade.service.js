@@ -6,8 +6,6 @@ formatTrade.$inject = ['$rootScope', '$filter', 'Wallet', 'MyWallet', 'currency'
 
 function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
   const service = {
-    // format for possible coinify trade states
-    // awaiting_transfer_in is ignored because trade is not in a formattable state yet
     reviewing,
     processing,
     cancelled,
@@ -44,13 +42,14 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
   function completed (trade) { return service.success(trade); }
   function completed_test (trade) { return service.success(trade); }
 
-  let addTradeDetails = (trade) => {
+  let addTradeDetails = (trade, account) => {
+    let showTradeID = !account;
     let transaction = {
+      'TRADE_ID': showTradeID ? '#' + trade.id : null,
       'DATE_INITIALIZED': $filter('date')(trade.createdAt, 'd MMMM yyyy, HH:mm'),
-      'TOTAL_COST': currency.formatCurrencyForView(trade.inAmount / 100, { code: trade.inCurrency }),
-      'BTC': currency.convertFromSatoshi(trade.outAmount || trade.outAmountExpected, currency.bitCurrencies[0]),
-      'SEND_TO': getLabel(trade),
-      'TRADE_ID': '#' + trade.id
+      'BTC_PURCHASED': currency.convertFromSatoshi(trade.outAmount || trade.outAmountExpected, currency.bitCurrencies[0]),
+      'PAYMENT_METHOD': account ? account.accountType + ' ' + account.accountNumber : null,
+      'TOTAL_COST': currency.formatCurrencyForView(trade.inAmount / 100, { code: trade.inCurrency })
     };
     if ($rootScope.buySellDebug) {
       transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
@@ -85,8 +84,9 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     };
   }
 
-  function processing (trade) {
-    let tx = addTradeDetails(trade);
+  function processing (trade, accounts) {
+    let account = accounts && accounts[0];
+    let tx = addTradeDetails(trade, account);
 
     return {
       tx: tx,
@@ -107,8 +107,9 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     };
   }
 
-  function initiated (trade) {
-    let tx = addTradeDetails(trade);
+  function initiated (trade, accounts) {
+    let account = accounts && accounts[0];
+    let tx = addTradeDetails(trade, account);
 
     return {
       tx: tx,
