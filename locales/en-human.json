@@ -306,6 +306,7 @@
   "CURRENT_SECOND_PASSWORD": "Current Second Password",
   "SECOND_PASSWORD_EXPLAIN" : "For Additional security, you can choose a second password that is required whenever you want to spend bitcoins. This is different from your standard wallet password. If you set your second wallet password, don’t forget it!",
   "SECOND_PASSWORD_WARNING" : "This is different from your standard wallet password. If you set your second wallet password, don’t forget it!",
+  "SECOND_PASSWORD_WRITE_MNEMONIC": "Before setting your Second Wallet Password, make sure you have written down your Wallet Recovery Phrase, which can be found above.",
   "SECOND_PASSWORD_CANCEL": "Your second password is required to send bitcoin. Please try again",
   "SECOND_PASSWORD_REMOVE_SUCCESS" : "Second password has been removed.",
   "SECOND_PASSWORD_REMOVE_LOGOUT" : "You need to logout and then login again to proceed.",
@@ -418,7 +419,7 @@
   "IP_NOT_ALLOWED" : "%.%.%.% is not allowed",
   "WALLET_SECOND_PASSWORD" : "Second Wallet Password",
   "WALLET_SECOND_PASSWORD_EXPLAIN" : "For additional security, you can choose a second password that is asked whenever you want to spend bitcoins. Beware that there is no password reset functionality.",
-  "WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN": "You cannot set a second password if you have an exchange account.",
+  "WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN": "For additional security, you can choose a second password that is asked whenever you want to spend bitcoins. Beware that there is no password reset functionality, and you cannot set a second password if you have an exchange account linked to your Blockchain Wallet.",
   "SECOND_PASSWORD_SET" : "Second Password Enabled",
   "REMOVE_SECOND_PASSWORD" : "Remove Second Password",
   "SECOND_PASSWORD_INCORRECT" : "Incorrect Second Password, please try again.",
@@ -953,11 +954,13 @@
   "PHONE_NUMBER": "Phone Number",
   "EDIT_PROFILE": "Edit Your Profile",
   "BUY_BITCOIN": "Buy Bitcoin",
+  "BANK_TRANSFER_HEADING": "Bank Transfer",
+  "BANK_TRANSFER_NEXT_STEPS": "Bank transfers can take a day or more depending on your bank. Once the transfer is complete, your bitcoin will be sent to <b>My Bitcoin Wallet.</b>",
   "SELL_BITCOIN": "Sell Bitcoin",
   "SENT_CONFIRMATION_CODE": "We just sent a confirmation code to <span class='em-500'>{{::email}}</span>. Enter the code below to continue.",
   "CHANGE_EMAIL": "Want to change your email address?&nbsp;<span class='blue'>Click here.</span>",
   "PARTNER": "<span class='success'>Email Verified!</span> Our partner Coinify will process your bitcoin purchase. By clicking 'Continue' you will create an account with Coinify. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
-  "ACCEPT_PARTNER_TOS_PRIVACY": "Accept <a href='https://www.blockchain.com/assets/pdf/Blockchain_BuySellAlphaAgreement.pdf' target='_blank' rel='noopener noreferrer'>our Alpha Agreement</a>, Coinify's <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>Terms of Service</a> and <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>Privacy Policy</a>",
+  "ACCEPT_PARTNER_TOS_PRIVACY": "Accept <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf' target='_blank' rel='noopener noreferrer'>our Terms of Service</a>, Coinify's <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>Terms of Service</a> and <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>Privacy Policy</a>",
   "EMAIL_IN_USE": "{{::email}} is already in use. ",
   "CLICK_TO_CHANGE": "Click here to change it.",
   "METHOD": "Method",
@@ -1026,8 +1029,8 @@
     "BODY": "Your request for authentication has been flagged for manual review. Coinify will send a status update your way within 1 business day. Apologies for the inconvenience and thanks, in advance, for your patience!"
   },
   "TX_BANK_TRANSFER": {
-    "TITLE": "Action Required",
-    "BODY": "Send <b>{{::amt}} {{::curr}}</b> to the bank account below within the next <b>48 hours</b> to process your transaction. Bank transfers can take a day or more. Once the transfer is complete, your bitcoin will be automatically sent to <b>{{::label}}</b>. "
+    "TITLE": "",
+    "BODY": "Send <b>{{::amt}} {{::curr}}</b> from your bank account held in your own name within <b>the next 48 hours</b>. Coinify will reject any transfers from third party accounts."
   },
   "TX_INITIATED": {
     "TITLE": "Trade Initiated",
@@ -1097,7 +1100,8 @@
   "ERROR_PAYMENT_MEDIUMS_FETCH" : "Something went wrong, please try again later.",
   "ERROR_TRADE_CREATE" : "Unable to place your order at this time, please try again later.",
   "ERROR_TRADE_CANCEL": "Unable to cancel your trade at this time, please try again later.",
-  "ORDER_DETAILS": "Order details:",
+  "ORDER_DETAILS": "Send your funds to the following bank account:",
+  "ORDER_ID_REFERENCE": "Make sure to include the reference / Order ID as a message in the payment.",
   "MAX_LIMIT_EXCEEDED": "Exceeds your remaining daily buy amount of {{::max}} {{::code}}.",
   "BELOW_MIN_LIMIT": "Below your minimum buy amount of {{::min}} {{::code}}.",
   "MAX_MIN_HELPER": "Minimum buy amount is {{::symbol}}{{::min}}. Maximum daily amounts are {{::symbol}}{{::cardMax}} for credit card payments and {{::symbol}}{{::bankMax}} for bank transfers.",

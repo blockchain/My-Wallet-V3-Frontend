@@ -120,6 +120,12 @@
   margin-top: -2px;
 }
 
+.modal-header-no-border {
+  padding: $modal-title-padding;
+  padding-bottom: 0px;
+  min-height: ($modal-title-padding + $modal-title-line-height);
+}
+
 // Title text within header
 .modal-title {
   margin: 0;
