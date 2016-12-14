@@ -46,7 +46,7 @@
           button.btn.button-primary.full(type="submit" ng-disabled="accountForm.$invalid") Continue
 
   .width-60.flex-justify(ng-show="viewing('email')")
-    form.bc-form.width-60(name="emailForm" ng-submit="verifyEmail(); emailForm.$setUntouched()" novalidate autocomplete="off")
+    form.bc-form.width-60(name="emailForm" ng-submit="state.sentEmailCode ? verifyEmail() : changeEmail(); emailForm.$setUntouched();" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .group
           .item
@@ -54,7 +54,7 @@
             input(ng-model="state.email" ng-change="state.sentEmailCode = false" name="email" type="email" required)
         div(ng-hide="state.sentEmailCode")
           .group.pt-25
-            button.btn.button-primary.full.pb-15(type="button" ng-click="changeEmail()" ng-disabled="emailForm.email.$invalid || (state.verified && state.email === user.email)") Send Verification Email
+            button.btn.button-primary.full.pb-15(type="submit" ng-disabled="emailForm.email.$invalid || (state.verified && state.email === user.email)") Send Verification Email
             a.f-14.display-block.center.pt-15(ng-show="state.verified" ng-click="setState()") Go Back
         div(ng-show="state.sentEmailCode")
           .group.pt-30
@@ -65,7 +65,7 @@
             button.btn.button-primary.full(type="submit" ng-disabled="emailForm.$invalid") Continue
 
   .width-60.flex-justify(ng-show="viewing('mobile')")
-    form.bc-form.width-60(name="mobileForm" ng-submit="verifyMobile(); mobileForm.$setUntouched()" novalidate autocomplete="off")
+    form.bc-form.width-60(name="mobileForm" ng-submit="state.sentMobileCode ? verifyMobile() : changeMobile(); mobileForm.$setUntouched();" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .group
           .item
@@ -73,7 +73,7 @@
             bc-phone-number(ng-model="state.mobile" ng-change="state.sentMobileCode = false" name="mobile" default-country="us" preferred-countries="us ca gb au" required)
         div(ng-hide="state.sentMobileCode")
           .group.pt-25
-            button.btn.button-primary.full.pb-15(type="button" ng-click="changeMobile()" ng-disabled="mobileForm.mobile.$invalid || (state.verified && state.mobile === format(user.mobileNumber))") Text Verification Code
+            button.btn.button-primary.full.pb-15(type="submit" ng-disabled="mobileForm.mobile.$invalid || (state.verified && state.mobile === format(user.mobileNumber))") Text Verification Code
             a.f-14.display-block.center.pt-15(ng-show="state.verified" ng-click="setState()") Go Back
         div(ng-show="state.sentMobileCode")
           .group.pt-30
