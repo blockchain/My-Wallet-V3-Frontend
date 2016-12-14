@@ -92,18 +92,26 @@
 
   .width-60
     label.f-14(translate="{{state.idType + '_ID'}}.UPLOAD_TITLE")
-    div.file-upload(ngf-drop ngf-select ng-model="state.file" ngf-drag-over-class="'dragover'" ngf-pattern="'image/*'")
-      span.type-h5.em-300.mtvl(ng-hide="state.file") Drag and Drop Document (PDF, JPG, or PNG)
-      span.type-h5.em-300.mtvl(ng-show="state.file")
-        b {{state.file.name}}
+    div.file-upload(ng-hide="state.webcam.streaming" ngf-drop ngf-select ng-model="state.file" ngf-drag-over-class="'dragover'" ngf-pattern="'image/*'")
+      span.type-h5.em-300(ng-hide="state.file") Drag and Drop Document (PDF, JPG, or PNG)
+      span.type-h5.em-300(ng-show="state.file")
+        b {{state.file.name || 'Snapshot'}}
         |  successfully uploaded!
       img.width-20.mobile-width-40(src="img/document.png" ng-hide="state.file")
       img.width-40.mobile-width-40(ngf-src="state.file" ng-show="state.file")
-      span.type-h5.em-300.mbvl(ng-hide="state.file") Or
+      canvas#snapshot.hide
+      span.type-h5.em-300(ng-hide="state.file" ng-click="enableWebcam($event)") Or
         |  
-        span.blue.pointer.em-400 Select Document
-      span.type-h5.em-300.mbvl(ng-show="state.file") Document will be sent to SFOX for review.
-    div(ngf-no-file-drop) File Drag/Drop is not supported for this browser
-    form(ng-submit="upload()")
-      button.mtl.btn.button-primary.full(type="submit" focus-when="state.file" ng-disabled="!state.file || locked") Submit
+        span.blue.pointer.em-400 Upload via Webcam
+      span.type-h5.em-300(ng-show="state.file") Document will be sent to SFOX for review.
+    div(ng-hide="state.webcam.streaming" ngf-no-file-drop) File Drag/Drop is not supported for this browser
+
+    div.webcam(ng-if="state.webcam.streaming")
+      webcam(channel="webcam")
+    button.mtl.btn.button-primary.full(ng-show="state.webcam.streaming && !state.webcam.ready" ng-click="state.webcam.ready = true") Capture
+
+    form(ng-submit="state.file ? upload() : capture()")
+      button.mtl.btn.button-primary.full(ng-hide="state.webcam.streaming" type="submit" focus-when="state.file" ng-disabled="!state.file || locked") Submit
+      button.mtl.btn.button-success.full(ng-show="state.webcam.streaming &&  state.webcam.ready" type="submit") Confirm Capture
+
       a.display-block.center.mtl(ng-click="state.file = null" ng-show="state.file") Change Document

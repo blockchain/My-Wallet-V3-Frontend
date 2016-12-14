@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxVerifyController', SfoxVerifyController);
 
-function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Upload, QA) {
+function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Upload, QA, $interval, $timeout) {
   $scope.states = state.stateCodes;
   let exchange = $scope.vm.exchange;
 
@@ -113,4 +113,46 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
   // QA Tool
   $scope.SFOXDebugDocs = QA.SFOXDebugDocs;
   $scope.SFOXAddressForm = () => angular.merge($scope.state, QA.SFOXAddressForm());
+
+  // Webcam related
+  $scope.canvasOpts = {x: 0, y: 0, w: 400, h: 300};
+  $scope.webcam = {
+    video: null // Will reference the video element on success
+  };
+
+  $scope.enableWebcam = ($event) => {
+    $event.preventDefault();
+    $event.stopPropagation();
+    $scope.state.webcam = {
+      streaming: true
+    };
+  };
+
+  $scope.disableWebcam = () => {
+    $scope.state.webcam = {};
+  };
+
+  var getVideoData = (x, y, w, h) => {
+    let hiddenCanvas = document.createElement('canvas');
+    hiddenCanvas.width = $scope.webcam.video.width;
+    hiddenCanvas.height = $scope.webcam.video.height;
+    var ctx = hiddenCanvas.getContext('2d');
+    ctx.drawImage($scope.webcam.video, 0, 0, $scope.webcam.video.width, $scope.webcam.video.height);
+    return ctx.getImageData(x, y, w, h);
+  };
+
+  $scope.capture = () => {
+    let canvas = document.querySelector('#snapshot');
+    canvas.width = $scope.webcam.video.width;
+    canvas.height = $scope.webcam.video.height;
+    var ctxPat = canvas.getContext('2d');
+
+    let idata = getVideoData($scope.canvasOpts.x, $scope.canvasOpts.y, $scope.canvasOpts.w, $scope.canvasOpts.h);
+    ctxPat.putImageData(idata, 0, 0);
+
+    canvas.toBlob((blob) => {
+      $scope.state.file = blob;
+      $scope.state.webcam = {};
+    }, 'image/png');
+  };
 }
