@@ -30,7 +30,9 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
 
   $scope.account = accounts[0];
   $scope.trades = exchange.trades;
-  $scope.max = currency.convertToSatoshi(exchange.profile.limits.buy, $scope.dollars);
+
+  $scope.buyLimit = exchange.profile.limits.buy;
+  $scope.max = currency.convertToSatoshi($scope.buyLimit, $scope.dollars);
   $scope.min = currency.convertToSatoshi(0.01, $scope.dollars);
 
   let state = $scope.state = {
