@@ -62,7 +62,7 @@
                 span.mhm {{bitcoin.code}}
             .text.mts
               span.f-12(ng-class="{'state-danger-text':checkoutForm.$error.max}")
-                | Your daily buy limit is ${{ format(fromSatoshi(max, dollars), dollars, false) }}
+                | Your daily buy limit is ${{ format(buyLimit, dollars, false) }}
         .group.mtl
           .item
             .mbm
