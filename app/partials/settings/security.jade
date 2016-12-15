@@ -15,7 +15,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
     div(settings-form)
       .col-sm-12.col-md-6
         .flex-center.flex-between-mobile.mbm
-          label.em-400.type-h5.mbn.mrm(translate="WALLET_PASSWORD")
+          label.em-400.type-h5.mbn(translate="WALLET_PASSWORD")
           span.label.label-success(translate="PASSWORD_SET")
         p.text.em-300.hidden-xs(translate="WALLET_PASSWORD_EXPLAIN")
       .col-sm-12.col-md-6.setting-result.mtm(ng-hide="active")
@@ -26,7 +26,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
     div(settings-form)
       .col-sm-12.col-md-6
         .flex-center.flex-between-mobile.mbm
-          label.em-400.type-h5.mbn.mrm(translate="PASSWORD_HINT")
+          label.em-400.type-h5.mbn(translate="PASSWORD_HINT")
           span.label.label-warning(translate="NOT_STORED", ng-show="!user.passwordHint")
           span.label.label-success(translate="HINT_STORED", ng-show="user.passwordHint")
         p.text.em-300.hidden-xs(translate="PASSWORD_HINT_EXPLAIN")    
@@ -47,14 +47,14 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
         p.em-300.text.hidden-xs(translate="WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN" ng-show="userHasExchangeAcct")
       .col-sm-12.col-md-6.setting-result(ng-hide="active || removing")
         button.button-primary.display-inline-block(ng-click="activate()", translate="SET_SECOND_PASSWORD", ng-show="!settings.secondPassword" ng-disabled="userHasExchangeAcct")
-        button.button-danger.display-inline-block.mlm(ng-click="activate()" translate="REMOVE_SECOND_PASSWORD" ng-show="settings.secondPassword")
+        button.button-primary.display-inline-block.mlm(ng-click="activate()" translate="REMOVE_SECOND_PASSWORD" ng-show="settings.secondPassword")
       .col-sm-12.col-md-6(ng-show="active")
         include ./manage-second-password.jade
    
   .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="ManageTwoFactor")
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
-        label.em-400.type-h5.mbn.mrm(translate="TWO_STEP_VERIFICATION")
+        label.em-400.type-h5.mbn(translate="TWO_STEP_VERIFICATION")
         span.label.label-warning(translate="DISABLED", ng-show="!settings.needs2FA")
         span.label.label-success(translate="ENABLED", ng-show="settings.needs2FA")
       p.text.em-300.hidden-xs(translate="TWO_STEP_EXPLAIN")    
