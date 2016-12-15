@@ -14,6 +14,10 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $stat
   $scope.setSecurityWarningDismissed = cta.setSecurityWarningDismissed;
   $scope.getSecurityWarningMessage = cta.getSecurityWarningMessage;
 
+  $scope.dismissBuyCta = () => {
+    if ($scope.shouldShowBuyCta()) $scope.setBuyCtaDismissed();
+  };
+
   buyStatus.canBuy().then((res) => $scope.canBuy = res);
   buyStatus.shouldShowInviteForm().then((res) => $scope.shouldShowInviteForm = res);
 
