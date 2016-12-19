@@ -173,16 +173,17 @@ form.bc-form {
   @extend .flex-column;
   @extend .flex-around;
   @extend .flex-center;
-  min-height: 375px;
-  &.dragover {
-    border: 1px dashed $blue;
+  max-height: 330px;
+  height: 330px;
+  &.disabled {
+    background: rgba(0, 0 , 0, 0.44);
   }
 }
 
 .webcam {
   video {
-    height: 300px !important;
-    width: auto !important;
+    height: 100% !important;
+    width: 100% !important;
   }
 }
 
