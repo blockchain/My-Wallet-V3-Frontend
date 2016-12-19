@@ -5,7 +5,6 @@ angular
 function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Upload, QA, $interval, $timeout, Alerts) {
   $scope.states = state.stateCodes;
   let exchange = $scope.vm.exchange;
-  $scope.browserWithCamera = $rootScope.browserWithCamera;
 
   let getNextIdType = () => {
     if (!exchange.profile) return 'ssn';

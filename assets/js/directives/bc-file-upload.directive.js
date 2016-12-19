@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .directive('bcFileUpload', bcFileUpload);
 
-bcFileUpload.$inject = ['Alerts'];
+bcFileUpload.$inject = ['$rootScope', 'Alerts'];
 
-function bcFileUpload (Alerts) {
+function bcFileUpload ($rootScope, Alerts) {
   const directive = {
     restrict: 'E',
     scope: {
@@ -17,6 +17,7 @@ function bcFileUpload (Alerts) {
   return directive;
 
   function link (scope, elem, attrs) {
+    scope.browserWithCamera = $rootScope.browserWithCamera;
     scope.canvasOpts = {x: 0, y: 0, w: 400, h: 300};
     scope.webcam = {
       video: null

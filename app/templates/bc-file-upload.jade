@@ -13,7 +13,8 @@ div
     div.webcam(ng-if="state.webcam.streaming")
       webcam(channel="webcam" on-error="webcamError()")
     div.webcam.disabled.flex-center.flex-justify(ng-if="!state.webcam.streaming")
-      span.f-16.white Please allow webcam access.
+      span.f-16.white(ng-show="browserWithCamera") Please allow webcam access.
+      span.f-16.white(ng-show="browserWithCamera") You do not have a webcam. Use Select Document below.
     form(ng-submit="capture()")
       button.btn.button-primary.full(ng-show="!state.webcam.ready" ng-disabled="!state.webcam.streaming" ng-click="state.webcam.ready = true" type="button")
         i.mr-10.ti-camera
