@@ -15,6 +15,15 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $stat
   $scope.getSecurityWarningMessage = cta.getSecurityWarningMessage;
 
   buyStatus.canBuy().then((res) => $scope.canBuy = res);
+  buyStatus.shouldShowInviteForm().then((res) => $scope.shouldShowInviteForm = res);
+
+  $scope.showInviteForm = () => {
+    $uibModal.open({
+      templateUrl: 'partials/buy-subscribe-modal.jade',
+      windowClass: 'bc-modal xs',
+      controller: 'SubscribeCtrl'
+    });
+  };
 
   $scope.numberOfActiveLegacyAddresses = () => {
     if (!Wallet.status.isLoggedIn) return null;

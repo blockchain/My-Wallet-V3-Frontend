@@ -10,7 +10,8 @@
                   ]
     },
     "sfox": {
-      "countries": ["US"]
+      "countries": ["US"],
+      "inviteFormFraction": 0.1
     }
   }
 }
