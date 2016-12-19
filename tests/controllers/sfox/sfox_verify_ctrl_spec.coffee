@@ -4,6 +4,7 @@ describe "SfoxVerifyController", ->
   $rootScope = undefined
   $controller = undefined
   $q = undefined
+  Plaid = undefined
 
   beforeEach angular.mock.module("walletApp")
 

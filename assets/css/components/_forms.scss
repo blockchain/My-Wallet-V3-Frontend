@@ -111,10 +111,11 @@ form.bc-form {
   input {
     @include transition(all 0.3s);
     @extend .form-control;
+    &[type="radio"],
     &[type="checkbox"] {
+      width: auto;
+      height: auto;
       margin: 1em 0.5em 1em 0;
-      width: 1em;
-      height: 1em;
     }
   }
 

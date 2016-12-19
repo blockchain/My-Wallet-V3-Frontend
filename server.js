@@ -14,6 +14,7 @@ var webSocketURL = process.env.WEB_SOCKET_URL || false;
 var apiDomain = process.env.API_DOMAIN;
 var production = Boolean(rootURL === 'https://blockchain.info');
 var iSignThisDomain = production ? 'https://verify.isignthis.com/' : 'https://stage-verify.isignthis.com/';
+var plaidDomain = ' https://cdn.plaid.com';
 
 // App configuration
 var rootApp = express();
@@ -38,14 +39,15 @@ app.use(function (req, res, next) {
       // Safari throws the same error, but without suggesting an hash to whitelist.
       // Firefox appears to just allow unsafe-inline CSS
       "style-src 'self' 'uD+9kGdg1SXQagzGsu2+gAKYXqLRT/E07bh4OhgXN8Y=' '4IfJmohiqxpxzt6KnJiLmxBD72c3jkRoQ+8K5HT5K8o='",
-      'child-src ' + iSignThisDomain,
-      'frame-src ' + iSignThisDomain,
-      "script-src 'self' ",
+      'child-src ' + iSignThisDomain + plaidDomain,
+      'frame-src ' + iSignThisDomain + plaidDomain,
+      "script-src 'self' https://cdn.plaid.com/link/v2/stable/link-initialize.js",
       'connect-src ' + [
         "'self'",
         rootURL,
         (webSocketURL || 'wss://ws.blockchain.info'),
         (apiDomain || 'https://api.blockchain.info'),
+        'https://api.sfox.com',
         'https://app-api.coinify.com',
         `https://api.${production ? '' : 'staging.'}sfox.com`,
         `https://quotes.${production ? '' : 'staging.'}sfox.com`,

@@ -1199,5 +1199,6 @@
   "COINIFY_EXPLAIN": "Our exchange partner Coinify will process your Bitcoin purchases. Click Continue to begin buying bitcoin.",
   "SFOX_EXPLAIN": "Our partner SFOX will process your Bitcoin purchases. You will need to provide some information about yourself and link a payment method before purchasing Bitcoin.",
   "unable to verify identity": "We were unable to verify your identity. Please try again.",
+  "error listing accounts: unauthorized product": "Sorry, there was an error validating your information with our partner. If this issue persists please try contacting support.",
   "": ""
 }
