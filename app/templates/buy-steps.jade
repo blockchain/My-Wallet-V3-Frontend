@@ -1,4 +1,4 @@
-.buy-steps.flex-row.flex-between.flex-baseline.center(ng-hide="status.loading" ng-click="buy()" ng-class="{'flex-justify': exchangeAcct}")
+.buy-steps.flex-row.flex-between.flex-baseline.center(ng-hide="status.loading || afterStep('isx')" ng-click="buy()" ng-class="{'flex-justify': exchangeAcct}")
   .width-25.flex-column.flex-center(ng-class="{blue: beforeStep('select-payment-medium')}" ng-hide="exchangeAcct")
     i.type-lrg.ti-user
     span(translate="ACCOUNT")
