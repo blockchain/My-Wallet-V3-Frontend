@@ -11,7 +11,10 @@ describe "SfoxCheckoutController", ->
   Wallet = undefined
   MyWallet = undefined
 
-  mockTrade = () -> 'TRADE'
+  mockTrade = () ->
+    id: 'TRADE'
+    refresh: () ->
+    watchTrade: () ->
 
   mockMediums = () ->
     ach:
@@ -132,7 +135,8 @@ describe "SfoxCheckoutController", ->
       spyOn(modals, "openTradeSummary")
       scope.buy()
       scope.$digest()
-      expect(modals.openTradeSummary).toHaveBeenCalledWith('TRADE', 'initiated')
+      trade = jasmine.objectContaining({ id: "TRADE" })
+      expect(modals.openTradeSummary).toHaveBeenCalledWith(trade, 'initiated')
 
     it "should show an alert in case of error", ->
       spyOn(Alerts, "displayError")

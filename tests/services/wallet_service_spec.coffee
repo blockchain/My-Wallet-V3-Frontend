@@ -65,6 +65,8 @@ describe "walletServices", () ->
           email: "steve@me.com"
           mobile: "+1234"
           currency: "USD"
+        external:
+          sfox: { monitorPayments: -> }
 
       return
 
