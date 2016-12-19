@@ -42,7 +42,7 @@ function BuySellSelectPartnerController ($scope, $state, MyWallet, buySell, coun
 
   $scope.onWhitelist = (countryCode) => (
     (contains(countryCode, $scope.coinifyWhitelist) && 'coinify') ||
-    (contains(countryCode, $scope.sfoxWhitelist) && 'sfox') || false
+    (contains(countryCode, $scope.sfoxWhitelist) && codeGuess === 'US' && 'sfox') || false
   );
 
   $scope.$watch('country', (c) => {
