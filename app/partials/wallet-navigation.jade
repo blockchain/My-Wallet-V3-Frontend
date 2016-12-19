@@ -9,15 +9,20 @@
         i.ti-layout-list-post
         span(translate="MY_TRANSACTIONS")
     // Don't forget to update controllers/buySell.controller.js
-    li.header(ui-sref-active="current" ng-show="canBuy || userHasAccount")
+    li.header(ui-sref-active="current" ng-show="canBuy || shouldShowInviteForm")
       pulse-cta(
-        active-when="shouldShowBuyCta()"
+        active-when="shouldShowBuyCta() && !shouldShowInviteForm"
         on-dismiss="setBuyCtaDismissed()"
         message-text="BUY_BITCOIN_ALERT"
         button-text="BUY_BITCOIN"
         route="wallet.common.buy-sell"
         color="green")
-      a(ui-sref="wallet.common.buy-sell")
+      a(ng-hide="shouldShowInviteForm"
+        ui-sref="wallet.common.buy-sell")
+        i.ti-direction-alt
+        span(translate="BUY_BITCOIN")
+      a(ng-show="shouldShowInviteForm"
+        ng-click="showInviteForm()")
         i.ti-direction-alt
         span(translate="BUY_BITCOIN")
 
