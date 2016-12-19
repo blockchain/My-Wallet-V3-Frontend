@@ -1,15 +1,18 @@
 angular.module('walletApp')
   .directive('buyQuickStart', buyQuickStart);
 
-buyQuickStart.$inject = ['currency', 'buySell', 'Alerts', '$interval', '$timeout'];
+const ONE_DAY_MS = 86400000;
 
-function buyQuickStart (currency, buySell, Alerts, $interval, $timeout) {
+buyQuickStart.$inject = ['currency', 'buySell', 'Alerts', '$interval', '$timeout', 'modals'];
+
+function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, modals) {
   const directive = {
     restrict: 'E',
     replace: true,
     scope: {
       buy: '&',
       limits: '=',
+      canTrade: '=',
       modalOpen: '=',
       transaction: '=',
       currencySymbol: '=',
@@ -76,6 +79,13 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout) {
     const error = () => {
       scope.status = {};
       Alerts.displayError('ERROR_QUOTE_FETCH');
+    };
+
+    scope.openVerificationNeeded = () => {
+      let verifyDate = buySell.getExchange().profile.canTradeAfter;
+      let days = isNaN(verifyDate) ? 1 : Math.ceil((verifyDate - Date.now()) / ONE_DAY_MS);
+      let options = { windowClass: 'bc-modal sm' };
+      modals.openTemplate('partials/verification-needed-modal.jade', { days }, options);
     };
 
     scope.getExchangeRate();
