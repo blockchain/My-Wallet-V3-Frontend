@@ -8,6 +8,11 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $stat
   $scope.security = SecurityCenter.security;
   $scope.userHasAccount = buyStatus.userHasAccount();
 
+  // TODO: remove me
+  buyStatus.shouldShowInviteForm().then((res) => {
+    console.log('Should show form?', res);
+  });
+
   $scope.shouldShowBuyCta = cta.shouldShowBuyCta;
   $scope.setBuyCtaDismissed = cta.setBuyCtaDissmissed;
   $scope.shouldShowSecurityWarning = cta.shouldShowSecurityWarning;

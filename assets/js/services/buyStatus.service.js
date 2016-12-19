@@ -2,11 +2,14 @@ angular
   .module('walletApp')
   .factory('buyStatus', buyStatus);
 
-function buyStatus (Wallet, MyWallet, Options, $cookies, Alerts, $state, $q) {
+function buyStatus (Wallet, MyWallet, MyWalletHelpers, Options, $cookies, Alerts, $state, $q) {
   const service = {};
 
   let isCountryWhitelisted = null;
   let isCoinifyCountry = null;
+  let isSFOXCountry = null;
+
+  let sfoxInviteFraction = 0;
 
   let nextWeek = () => new Date(Date.now() + 604800000).getTime();
 
@@ -15,14 +18,17 @@ function buyStatus (Wallet, MyWallet, Options, $cookies, Alerts, $state, $q) {
 
     // Coinify countries are no longer invite-only
     isCoinifyCountry = options.partners.coinify.countries.indexOf(accountInfo.countryCodeGuess) > -1;
+    isSFOXCountry = options.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1;
 
     let whitelist = options.showBuySellTab || [];
     isCountryWhitelisted = accountInfo && whitelist.indexOf(accountInfo.countryCodeGuess) > -1;
+
+    sfoxInviteFraction = (options.partners.sfox && options.partners.sfox.inviteFormFraction) || 0;
   };
 
   service.canBuy = () => {
     let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
-    let isUserInvited = accountInfo && accountInfo.invited;
+    let isUserInvited = accountInfo && accountInfo.invited && accountInfo.invited.sfox;
 
     // The user can buy if:
     // * they already have an account; or
@@ -37,6 +43,20 @@ function buyStatus (Wallet, MyWallet, Options, $cookies, Alerts, $state, $q) {
       return Options.get().then(processOptions)
                           .then(canBuy);
     }
+  };
+
+  service.shouldShowInviteForm = () => {
+    let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
+
+    return service.canBuy().then((res) => {
+      if (res) {
+        return false; // Don't show invite form for invited users
+      } else {
+        if (!isSFOXCountry) { return false; }
+        if (!accountInfo.email) { return false; }
+        return MyWalletHelpers.isEmailInvited(accountInfo.email, sfoxInviteFraction);
+      }
+    });
   };
 
   // check to make sure this does not get called on home
