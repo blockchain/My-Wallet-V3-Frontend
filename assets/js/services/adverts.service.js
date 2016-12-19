@@ -24,7 +24,7 @@ function Adverts ($http, $rootScope) {
     let advertsFeed = $rootScope.apiDomain + 'ads/get?wallet=true&n=2';
     $http.get(advertsFeed)
       .success(data => {
-	service.ads.push.apply(service.ads, data);
+        service.ads.push.apply(service.ads, data);
       });
   }
 }

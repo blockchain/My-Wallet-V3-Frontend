@@ -8,7 +8,7 @@ describe "Adverts Directive", ->
     module "walletApp", ($provide) ->
       $provide.value 'Adverts',
         fetchOnce:  () ->
-        ads: [{link: "http://www.google.com/"}]
+        ads: [{url: "http://www.google.com/"}]
       return
 
     inject((_$compile_, _$rootScope_, Adverts) ->
