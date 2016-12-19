@@ -21,16 +21,10 @@ function Adverts ($http, $rootScope) {
   }
 
   function fetch () {
-    let advertsFeed = $rootScope.rootURL + 'adverts_feed?wallet_version=3';
+    let advertsFeed = $rootScope.apiDomain + 'ads/get?wallet=true&n=2';
     $http.get(advertsFeed)
       .success(data => {
-        let adverts = data.partners.home_buttons.splice(0);
-        service.ads.push(randFromArray(adverts));
-        service.ads.push(randFromArray(adverts));
+	service.ads.push.apply(service.ads, data);
       });
-  }
-
-  function randFromArray (array) {
-    return array.splice(Math.floor(Math.random() * array.length), 1)[0];
   }
 }

@@ -20,7 +20,7 @@ function adverts (Adverts, $window) {
     Adverts.fetchOnce();
 
     scope.visit = (ad) => {
-      $window.open(ad.link, '_blank');
+      $window.open(ad.url, '_blank');
     };
   }
 }
