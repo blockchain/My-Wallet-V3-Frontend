@@ -12,7 +12,8 @@ var dist = parseInt(process.env.DIST, 10) === 1;
 var rootURL = process.env.ROOT_URL || 'https://blockchain.info';
 var webSocketURL = process.env.WEB_SOCKET_URL || false;
 var apiDomain = process.env.API_DOMAIN;
-var iSignThisDomain = rootURL === 'https://blockchain.info' ? 'https://verify.isignthis.com/' : 'https://stage-verify.isignthis.com/';
+var production = Boolean(rootURL === 'https://blockchain.info');
+var iSignThisDomain = production ? 'https://verify.isignthis.com/' : 'https://stage-verify.isignthis.com/';
 
 // App configuration
 var rootApp = express();
@@ -46,9 +47,9 @@ app.use(function (req, res, next) {
         (webSocketURL || 'wss://ws.blockchain.info'),
         (apiDomain || 'https://api.blockchain.info'),
         'https://app-api.coinify.com',
-        'https://api.staging.sfox.com',
-        'https://quotes.staging.sfox.com',
-        'https://sfox-kyctest.s3.amazonaws.com'
+        `https://api.${production ? '' : 'staging.'}sfox.com`,
+        `https://quotes.${production ? '' : 'staging.'}sfox.com`,
+        `https://sfox-kyc${production ? '' : 'test'}.s3.amazonaws.com`
       ].join(' '),
       "object-src 'none'",
       "media-src 'self' https://storage.googleapis.com/bc_public_assets/ data: mediastream: blob:",

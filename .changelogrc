@@ -40,6 +40,10 @@
             "grep": "^test"
         },
         {
+            "title": "Developer Tools",
+            "grep": "^dev"
+        },
+        {
             "title": "Chore",
             "grep": "^chore"
         },
