@@ -157,6 +157,62 @@ form.bc-form {
     border: none;
   }
 
+  .radio-group {
+    .radio-label {
+      label {
+        @extend .mbn;
+        @extend .pt-25;
+        @extend .pb-25;
+        @extend .pl-35;
+        @extend .pr-35;
+        @extend .border;
+        @extend .pointer;
+        border-bottom-width: 0px;
+        &:before {
+          @extend .mr-30;
+        }
+      }
+      &:last-child {
+        label {
+          border-bottom-width: 1px;
+        }
+      }
+    }
+  }
+
+  .radio-label {
+    label {
+      @extend .em-400;
+      @extend .flex-row;
+      @extend .flex-center;
+    }
+    input[type="radio"] {
+      display: none;
+      & + label:before {
+        content: '';
+        width: 16px;
+        height: 16px;
+        min-width: 16px;
+        border-radius: 8px;
+        background-color: white;
+        border: 1px solid $blue;
+        @include transition(background-color $fast);
+      }
+      &:checked {
+        & + label:before {
+          content: '';
+          width: 16px;
+          height: 16px;
+          background-color: $blue;
+        }
+      }
+    }
+  }
+
+  .radio-group {
+
+  }
+
   .help {
     position: relative;
     span { 
