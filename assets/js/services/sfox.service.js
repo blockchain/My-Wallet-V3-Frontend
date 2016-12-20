@@ -65,7 +65,7 @@ function sfox ($q, Alerts, modals) {
 
   function watchTrade (trade) {
     watching[trade.receiveAddress] = true;
-    $q.resolve(trade.watchTrade())
+    $q.resolve(trade.watchAddress())
       .then(() => trade.refresh())
       .then(() => { modals.openTradeSummary(trade, 'success'); });
   }
