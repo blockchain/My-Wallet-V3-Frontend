@@ -14,7 +14,7 @@ describe "SfoxCheckoutController", ->
   mockTrade = () ->
     id: 'TRADE'
     refresh: () ->
-    watchTrade: () ->
+    watchAddress: () ->
 
   mockMediums = () ->
     ach:
