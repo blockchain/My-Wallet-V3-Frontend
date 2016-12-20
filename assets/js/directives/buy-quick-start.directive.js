@@ -12,7 +12,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, modals) 
     scope: {
       buy: '&',
       limits: '=',
-      canTrade: '=',
+      tradingDisabled: '=',
       modalOpen: '=',
       transaction: '=',
       currencySymbol: '=',

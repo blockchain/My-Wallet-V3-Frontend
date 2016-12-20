@@ -13,7 +13,7 @@
                         modal-open="status.modalOpen"
                         change-currency="changeCurrency(currency)"
                         limits="limits"
-                        can-trade="exchange.profile.canTrade"
+                        trading-disabled="getIsTradingDisabled()"
                         buy="buy(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
       .flex-column.width-50.mlvl.mt-55
         div(ng-hide="trades.pending.length || trades.completed.length || (kyc && kyc.state !== 'completed')")

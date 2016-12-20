@@ -126,6 +126,12 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     buySell.getRate($scope.exchange.profile.defaultCurrency, $scope.transaction.currency.code).then(calculateMax);
   };
 
+  $scope.getIsTradingDisabled = () => {
+    let profile = $scope.exchange && $scope.exchange.profile;
+    let canTrade = profile && profile.canTrade;
+    return canTrade === false;
+  };
+
   $rootScope.$on('fetchExchangeProfile', () => {
     $scope.status.disabled = true;
     $scope.initialize();
