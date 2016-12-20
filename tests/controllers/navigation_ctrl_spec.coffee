@@ -14,6 +14,9 @@ describe "NavigationCtrl", ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       Alerts = $injector.get("Alerts")
+      buyStatus = $injector.get("buyStatus")
+
+      buyStatus.canBuy = () -> $q.resolve(true)
 
       Alerts.confirm = (msg) ->
         $q.resolve()

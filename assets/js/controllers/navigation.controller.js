@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('NavigationCtrl', NavigationCtrl);
 
-function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeout, $cookies, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet) {
+function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeout, $cookies, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
 
@@ -129,4 +129,8 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
   $interval(() => {
     if (Wallet.status.isLoggedIn) currency.fetchExchangeRate();
   }, 15 * 60000);
+
+  buyStatus.canBuy().then(canBuy => {
+    $scope.showBuyWhatsNew = canBuy;
+  });
 }
