@@ -14,7 +14,6 @@ var webSocketURL = process.env.WEB_SOCKET_URL || false;
 var apiDomain = process.env.API_DOMAIN;
 var production = Boolean(rootURL === 'https://blockchain.info');
 var iSignThisDomain = production ? 'https://verify.isignthis.com/' : 'https://stage-verify.isignthis.com/';
-var plaidDomain = ' https://cdn.plaid.com';
 
 // App configuration
 var rootApp = express();
@@ -29,8 +28,9 @@ rootApp.get('/:lang?/search', (req, res) => {
 });
 
 app.use(function (req, res, next) {
+  var cspHeader;
   if (req.url === '/') {
-    var cspHeader = ([
+    cspHeader = ([
       "img-src 'self' " + rootURL + ' data: blob:',
       // echo -n "outline: 0;" | openssl dgst -sha256 -binary | base64
       // "outline: 0;"        : ud+9... from ui-select
@@ -39,9 +39,9 @@ app.use(function (req, res, next) {
       // Safari throws the same error, but without suggesting an hash to whitelist.
       // Firefox appears to just allow unsafe-inline CSS
       "style-src 'self' 'uD+9kGdg1SXQagzGsu2+gAKYXqLRT/E07bh4OhgXN8Y=' '4IfJmohiqxpxzt6KnJiLmxBD72c3jkRoQ+8K5HT5K8o='",
-      'child-src ' + iSignThisDomain + plaidDomain,
-      'frame-src ' + iSignThisDomain + plaidDomain,
-      "script-src 'self' https://cdn.plaid.com/link/v2/stable/link-initialize.js",
+      "child-src 'self' " + iSignThisDomain,
+      "frame-src 'self' " + iSignThisDomain,
+      "script-src 'self'",
       'connect-src ' + [
         "'self'",
         rootURL,
@@ -63,6 +63,22 @@ app.use(function (req, res, next) {
     return;
   } else if (req.url === '/landing.html') {
     res.render(dist ? 'landing.html' : 'build/landing.jade');
+    return;
+  } else if (req.url === '/plaid.html') {
+    cspHeader = ([
+      "img-src 'self' " + rootURL,
+      "style-src 'self'",
+      'child-src https://cdn.plaid.com',
+      'frame-src https://cdn.plaid.com',
+      "script-src 'self' https://cdn.plaid.com",
+      "connect-src 'none'",
+      "object-src 'none'",
+      "media-src 'none'",
+      "font-src 'self'", ''
+    ]).join('; ');
+    res.setHeader('content-security-policy', cspHeader);
+    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+    res.render(dist ? 'plaid.html' : 'build/plaid.jade');
     return;
   }
   if (dist) {

@@ -21,7 +21,14 @@
       button.btn.button-primary.full.mt-15(type="submit" ng-disabled="bankLinkForm.$invalid") Add Account
 
   .width-50(ng-hide="state.bankAccounts")
-    button#linkButton.btn.button-primary.full Sign In To Your Bank Account
+    p IFRAME:
+    iframe(
+      src='/wallet/plaid.html'
+      sandbox='allow-same-origin allow-scripts allow-forms'
+      scrolling = 'no'
+      id='plaid-iframe'
+    )
+    //- button#linkButton.btn.button-primary.full Sign In To Your Bank Account
     .mvvl
       span.or-horizontal.flex-justify(translate="OR")
     form.bc-form(name="bankAccountForm" ng-submit="link()" novalidate autocomplete="off")

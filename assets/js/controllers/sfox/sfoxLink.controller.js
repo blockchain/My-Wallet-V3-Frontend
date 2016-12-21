@@ -107,26 +107,28 @@ function SfoxLinkController ($scope, $q, $timeout, sfox, modals) {
       .finally($scope.free);
   };
 
-  var linkHandler = Plaid.create({
-    product: 'auth',
-    env: 'production',
-    clientName: 'SFOX',
-    key: '0b041cd9e9fbf1e7d93a0d5a39f5b9',
-    onLoad: function () {},
-    onSuccess: function (public_token, metadata) {
-      $scope.token = public_token;
-      $scope.getBankAccounts($scope.token);
-    },
-    onExit: function () {}
-  });
+  // TODO: show iframe, pass key to it, wait for token
 
-  let bindPlaidLink = () => {
-    $timeout(() => {
-      document.getElementById('linkButton').onclick = function () {
-        linkHandler.open();
-      };
-    }, 10);
-  };
+  // var linkHandler = Plaid.create({
+  //   product: 'auth',
+  //   env: 'production',
+  //   clientName: 'SFOX',
+  //   key: '0b041cd9e9fbf1e7d93a0d5a39f5b9',
+  //   onLoad: function () {},
+  //   onSuccess: function (public_token, metadata) {
+  //     $scope.token = public_token;
+  //     $scope.getBankAccounts($scope.token);
+  //   },
+  //   onExit: function () {}
+  // });
+  //
+  // let bindPlaidLink = () => {
+  //   $timeout(() => {
+  //     document.getElementById('linkButton').onclick = function () {
+  //       linkHandler.open();
+  //     };
+  //   }, 10);
+  // };
 
   $scope.$watch('vm.step', (newVal) => {
     $scope.vm.steps['link'] === newVal && bindPlaidLink();

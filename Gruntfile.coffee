@@ -163,6 +163,7 @@ module.exports = (grunt) ->
         files:
           'build/index.jade': 'app/index.jade'
           'build/landing.jade': 'app/landing.jade'
+          'build/plaid.jade': 'app/plaid.jade'
 
     concat_css: {
       app: {
@@ -302,6 +303,7 @@ module.exports = (grunt) ->
         files:
           "build/index.html": "app/index.jade"
           "build/landing.html": "app/landing.jade"
+          "build/plaid.html": "app/plaid.jade"
 
 
     babel:
