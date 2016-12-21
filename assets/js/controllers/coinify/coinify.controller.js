@@ -26,6 +26,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
 
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
+  $scope.isPendingBankTransfer = () => $scope.medium === 'bank' && $scope.trade.state === 'awaiting_transfer_in';
   $scope.needsKyc = () => $scope.isMedium('bank') && +$scope.exchange.profile.level.name < 2;
   $scope.needsISX = () => $scope.trade && !$scope.trade.bankAccount && buySell.tradeStateIn(buySell.states.pending)($scope.trade) || $scope.isKYC;
   $scope.needsReview = () => $scope.trade && buySell.tradeStateIn(buySell.states.pending)($scope.trade);
