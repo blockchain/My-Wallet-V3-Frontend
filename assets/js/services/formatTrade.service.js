@@ -49,7 +49,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
       'DATE_INITIALIZED': $filter('date')(trade.createdAt, 'd MMMM yyyy, HH:mm'),
       'BTC_PURCHASED': currency.convertFromSatoshi(trade.outAmount || trade.outAmountExpected, currency.bitCurrencies[0]),
       'PAYMENT_METHOD': account ? account.accountType + ' ' + account.accountNumber : null,
-      'TOTAL_COST': currency.formatCurrencyForView(trade.inAmount / 100, { code: trade.inCurrency })
+      'TOTAL_COST': currency.formatCurrencyForView(trade.sendAmount / 100, { code: trade.inCurrency })
     };
     if ($rootScope.buySellDebug) {
       transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
