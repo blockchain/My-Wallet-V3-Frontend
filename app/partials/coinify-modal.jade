@@ -2,7 +2,8 @@
   .modal-header-no-border.bc-modal-header.flex-between.flex-center
     .flex-column.flex-1
       .flex-row.flex-between.flex-center
-        h3.mlm(translate="BANK_TRANSFER_HEADING")
+        h3.mlm(ng-hide="medium === 'bank' && afterStep('isx')" translate="BUY_BITCOIN")
+        h3.mlm(ng-show="medium === 'bank' && afterStep('isx')" translate="BANK_TRANSFER_HEADING")
         .flex-column.flex-align-end(ng-show="status.gettingQuote")
           img(src="img/spinner.gif")
         .flex-column.flex-align-end(ng-hide="status.gettingQuote"
@@ -44,7 +45,6 @@
       isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="formatTrade" payment-info="paymentInfo" on-resize="onResize(step)")
     div.width-80(ng-if="onStep('trade-in-review', 'trade-formatted')")
       include ./trade-summary
-      p(translate="BANK_TRANSFER_NEXT_STEPS")
       p.security-red.pointer(ng-show="buySellDebug && trade.bankAccount && trade.state === 'awaiting_transfer_in'")
         i.ti-search.mrm
         span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")
