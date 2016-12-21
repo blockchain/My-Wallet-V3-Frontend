@@ -5,6 +5,7 @@ node_modules:
 	npm install
 
 build: node_modules
+	./check_bad_strings.rb
 	grunt build
 
 test: build

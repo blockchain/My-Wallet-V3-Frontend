@@ -2,8 +2,7 @@ tr
   td.col-md-6
     a(ng-href="{{::addressLink(address.address)}}"
       ng-bind-html="::address.address | escapeHtml | highlight:searchText"
-      target="_blank"
-      rel="noopener noreferrer")
+      target="_blank" rel="noopener noreferrer")
     | &nbsp;
     span.security-yellow.parens(translate="NO_TXS" ng-show="pastAddress && address.ntxs === 0")
   td.col-md-6.address-label

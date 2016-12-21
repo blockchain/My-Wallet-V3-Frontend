@@ -10,7 +10,7 @@ function downloadButton ($window, $timeout) {
       filename: '@',
       content: '='
     },
-    template: '<a href="{{dataRef}}" download="{{filename}}" target="_blank">{{::"DOWNLOAD"|translate}}</a>',
+    template: '<a href="{{dataRef}}" download="{{filename}}" target="_blank" rel="noopener noreferrer">{{::"DOWNLOAD"|translate}}</a>',
     link: link
   };
   return directive;
