@@ -11,6 +11,7 @@ function SfoxLinkController ($scope, $q, $timeout, sfox, modals) {
   $scope.openDepositHelper = modals.openDepositHelper;
 
   let state = $scope.state = {
+    plaid: {},
     terms: false,
     accounts: accounts,
     readyToVerify: undefined
@@ -107,32 +108,18 @@ function SfoxLinkController ($scope, $q, $timeout, sfox, modals) {
       .finally($scope.free);
   };
 
-  // TODO: show iframe, pass key to it, wait for token
+  $scope.enablePlaid = () => $scope.state.plaid.enabled = true;
+  $scope.disablePlaid = () => $scope.state.plaid = {};
 
-  // var linkHandler = Plaid.create({
-  //   product: 'auth',
-  //   env: 'production',
-  //   clientName: 'SFOX',
-  //   key: '0b041cd9e9fbf1e7d93a0d5a39f5b9',
-  //   onLoad: function () {},
-  //   onSuccess: function (public_token, metadata) {
-  //     $scope.token = public_token;
-  //     $scope.getBankAccounts($scope.token);
-  //   },
-  //   onExit: function () {}
-  // });
-  //
-  // let bindPlaidLink = () => {
-  //   $timeout(() => {
-  //     document.getElementById('linkButton').onclick = function () {
-  //       linkHandler.open();
-  //     };
-  //   }, 10);
-  // };
+  let receiveMessage = (e) => {
+    if (e.origin !== window.location.origin) return;
+    if (e.data.id !== 'plaid') return;
 
-  $scope.$watch('vm.step', (newVal) => {
-    $scope.vm.steps['link'] === newVal && bindPlaidLink();
-  });
+    $scope[e.data.function](e.data.msg);
+    $scope.$safeApply();
+  };
+
+  window.addEventListener('message', receiveMessage, false);
 
   $scope.installLock();
 }

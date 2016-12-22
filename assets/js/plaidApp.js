@@ -9,36 +9,25 @@ angular.module('plaidApp', modules)
 .config(($compileProvider) => {
 })
 .run(($rootScope, $state, $q, $timeout, $location) => {
-  console.log('Hello World');
-
-  var linkHandler; // TODO fix async loading bugs
-
   $timeout(() => {
-    // TODO: move this to a controller, broadcast events out of frame
-    var linkHandler = Plaid.create({
+    var linkHandler = window.Plaid.create({
       product: 'auth',
       env: 'production',
       clientName: 'SFOX',
       key: '0b041cd9e9fbf1e7d93a0d5a39f5b9',
-      onLoad: function () {
-        console.log('Loaded')
+      onLoad: function () {},
+      onExit: function () {
+        window.parent.postMessage({id: 'plaid', function: 'disablePlaid'}, window.location.origin);
       },
       onSuccess: function (public_token, metadata) {
-        $scope.token = public_token;
-        $scope.getBankAccounts($scope.token);
-      },
-      onExit: function () {}
+        window.parent.postMessage({id: 'plaid', function: 'setToken', msg: public_token}, window.location.origin);
+      }
     });
-
-    let bindPlaidLink = () => {
-      $timeout(() => {
-        console.log('Bind link to', document.getElementById('linkButton'));
-        document.getElementById('linkButton').onclick = function () {
-          linkHandler.open();
-        };
-      }, 10);
-    };
-
-    bindPlaidLink();
-  }, 1000);
+    $timeout(() => {
+      document.getElementById('linkButton').onclick = function () {
+        window.parent.postMessage({id: 'plaid', function: 'enablePlaid'}, window.location.origin);
+        linkHandler.open();
+      };
+    }, 1);
+  }, 1);
 });
