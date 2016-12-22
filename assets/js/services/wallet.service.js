@@ -165,8 +165,12 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
           wallet.my.wallet.getHistory().then(didFetchTransactions);
         }
         wallet.status.isLoggedIn = true;
+        let { external } = MyWallet.wallet;
         $injector.get('buySell'); // init buySell to monitor incoming payments
-        $injector.get('sfox').init(MyWallet.wallet.external.sfox); // init sfox to monitor incoming payments
+        if (external) {
+          let { sfox } = external;
+          if (sfox) $injector.get('sfox').init(sfox); // init sfox to monitor incoming payments
+        }
         $rootScope.$safeApply();
         successCallback && successCallback(result.guid);
       });
