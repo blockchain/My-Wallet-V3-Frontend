@@ -6,7 +6,7 @@
         i.type-lrg(ng-class="stepDescription().i")
         span(translate="{{stepDescription().text}}")
       form.width-100(ng-submit="openSfoxSignup()")
-        button.btn.button-primary.full(type="submit" focus-when="!signupCompleted") Continue
+        button.btn.button-primary.full(type="submit" focus-when="!signupCompleted" ng-disabled="modalOpen") Continue
     .flex-column.width-50.mlvl.mtml
       .f-24.blue.em-500.lh1(translate="SIMPLE_SECURE_SEAMLESS")
       .f-16.mtm.basic-grey(translate="BUY_SIMPLE_STEPS")

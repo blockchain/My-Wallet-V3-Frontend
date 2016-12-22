@@ -81,7 +81,7 @@ describe "SfoxCheckoutController", ->
 
   it "should set scope.openSfoxSignup on init", ->
     scope = getControllerScope([{status:'active'}])
-    spyOn(modals, "openSfoxSignup")
+    spyOn(modals, "openSfoxSignup").and.returnValue($q.resolve())
     scope.openSfoxSignup()
     expect(modals.openSfoxSignup).toHaveBeenCalledWith(scope.vm.external.sfox)
 
