@@ -57,8 +57,8 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
     $scope.lock();
 
     let success = (trade) => {
-      sfox.watchTrade(trade);
-      modals.openTradeSummary(trade, 'initiated');
+      let modalInstance = modals.openTradeSummary(trade, 'initiated');
+      sfox.watchTrade(trade, () => modalInstance.dismiss());
       $scope.resetFields();
     };
 

@@ -63,10 +63,11 @@ function sfox ($q, Alerts, modals) {
       .forEach(service.watchTrade);
   }
 
-  function watchTrade (trade) {
+  function watchTrade (trade, completedCallback) {
     watching[trade.receiveAddress] = true;
     $q.resolve(trade.watchAddress())
       .then(() => trade.refresh())
-      .then(() => { modals.openTradeSummary(trade, 'success'); });
+      .then(() => { modals.openTradeSummary(trade, 'success'); })
+      .then(completedCallback);
   }
 }

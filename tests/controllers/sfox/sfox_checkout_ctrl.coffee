@@ -10,6 +10,7 @@ describe "SfoxCheckoutController", ->
   Alerts = undefined
   Wallet = undefined
   MyWallet = undefined
+  sfox = undefined
 
   mockTrade = () ->
     id: 'TRADE'
@@ -41,6 +42,7 @@ describe "SfoxCheckoutController", ->
       Wallet = $injector.get('Wallet')
       MyWallet = $injector.get("MyWallet")
       MyWalletHelpers = $injector.get('MyWalletHelpers')
+      sfox = $injector.get('sfox')
 
       MyWallet.wallet = {}
       Wallet.accounts = () -> []
@@ -133,8 +135,18 @@ describe "SfoxCheckoutController", ->
       scope.$digest()
       expect(scope.disableBuy).toHaveBeenCalled()
 
+    it "should watch the trade for completion and close the first modal", ->
+      dismissSpy = jasmine.createSpy("dismiss")
+      spyOn(modals, "openTradeSummary").and.returnValue(dismiss: dismissSpy)
+      spyOn(sfox, "watchTrade").and.callFake((trade, cb) -> cb())
+      scope.buy()
+      scope.$digest()
+      trade = jasmine.objectContaining({ id: "TRADE" })
+      expect(sfox.watchTrade).toHaveBeenCalledWith(trade, jasmine.any(Function))
+      expect(dismissSpy).toHaveBeenCalled()
+
     it "should open the trade summary modal", ->
-      spyOn(modals, "openTradeSummary")
+      spyOn(modals, "openTradeSummary").and.callThrough()
       scope.buy()
       scope.$digest()
       trade = jasmine.objectContaining({ id: "TRADE" })
