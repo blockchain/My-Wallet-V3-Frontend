@@ -89,7 +89,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
       $scope.quote = quote;
       state.rate = quote.rate;
       state.loadFailed = false;
-      let timeToExpiration = new Date(quote.expiresAt) - new Date();
+      let timeToExpiration = new Date(quote.expiresAt) - new Date() - 1000;
       $scope.refreshTimeout = $timeout($scope.refreshQuote, timeToExpiration);
       if (state.baseFiat) state.btc = quote.quoteAmount;
       else state.fiat = currency.convertToSatoshi(quote.quoteAmount, $scope.dollars) / 100;
@@ -97,7 +97,10 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
 
     $q.resolve(exchange.getBuyQuote(...args))
       .then(fetchSuccess, () => { state.loadFailed = true; });
-  }, 500);
+  }, 500, () => {
+    $scope.quote = null;
+    $scope.disableBuy();
+  });
 
   $scope.getInitialQuote = () => {
     let args = [1e8, $scope.bitcoin.code, $scope.dollars.code];
