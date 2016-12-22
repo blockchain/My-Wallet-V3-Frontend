@@ -414,6 +414,18 @@ i.ti-credit-card.bank {
   }
 }
 
+.bank-transfer {
+  border: 0px;
+  li {
+    border: 0px;
+    display: block;
+    > span:first-child {
+      @extend .em-500;
+      @extend .mr-5;
+    }
+  }
+}
+
 .find-partner {
   height: 350px;
 }

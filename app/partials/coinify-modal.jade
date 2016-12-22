@@ -1,9 +1,9 @@
 #buy(ng-class="{rendered:rendered}" data-preflight-tag="BuyModal")
-  .modal-header-no-border.bc-modal-header.flex-between.flex-center
+  .modal-header.bc-modal-header.flex-between.flex-center(ng-class="{'no-border': isPendingBankTransfer()}")
     .flex-column.flex-1
       .flex-row.flex-between.flex-center
-        h3.mlm(ng-hide="medium === 'bank' && afterStep('isx')" translate="BUY_BITCOIN")
-        h3.mlm(ng-show="medium === 'bank' && afterStep('isx')" translate="BANK_TRANSFER_HEADING")
+        h3.mlm(ng-hide="isPendingBankTransfer()" translate="BUY_BITCOIN")
+        h3.mlm(ng-show="isPendingBankTransfer()" translate="BANK_TRANSFER_HEADING")
         .flex-column.flex-align-end(ng-show="status.gettingQuote")
           img(src="img/spinner.gif")
         .flex-column.flex-align-end(ng-hide="status.gettingQuote"
@@ -28,6 +28,7 @@
                 before-step="beforeStep"
                 payment-info="paymentInfo"
                 exchange-acct="userHasExchangeAcct"
+                ng-hide="status.loading || isPendingBankTransfer()"
                 currency-symbol="currencySymbol"
                 trade-obj="trade")
   .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'), 'isx': onStep('isx')}")
