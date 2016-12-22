@@ -38,6 +38,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
   let state = $scope.state = {
     fiat: null,
     btc: null,
+    rate: null,
     baseCurr: $scope.dollars,
     get quoteCurr () { return this.baseFiat ? $scope.bitcoin : $scope.dollars; },
     get baseFiat () { return this.baseCurr === $scope.dollars; },
@@ -86,6 +87,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
 
     let fetchSuccess = (quote) => {
       $scope.quote = quote;
+      state.rate = quote.rate;
       state.loadFailed = false;
       let timeToExpiration = new Date(quote.expiresAt) - new Date();
       $scope.refreshTimeout = $timeout($scope.refreshQuote, timeToExpiration);
@@ -100,7 +102,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
   $scope.getInitialQuote = () => {
     let args = [1e8, $scope.bitcoin.code, $scope.dollars.code];
     let quoteP = $q.resolve(exchange.getBuyQuote(...args));
-    quoteP.then(quote => { $scope.quote = quote; });
+    quoteP.then(quote => { $scope.state.rate = quote.rate; });
   };
 
   $scope.refreshIfValid = (field) => {

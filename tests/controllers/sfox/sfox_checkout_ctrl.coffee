@@ -22,6 +22,7 @@ describe "SfoxCheckoutController", ->
 
   mockQuote = (fail) ->
     quoteAmount: 150
+    rate: 867
     getPaymentMediums: () -> if fail then $q.reject(fail) else $q.resolve(mockMediums())
 
   beforeEach angular.mock.module("walletApp")
@@ -62,7 +63,7 @@ describe "SfoxCheckoutController", ->
       profile:
         limits: buy: 100
         verificationStatus: level: "unverified"
-      getBuyQuote: () -> $q.resolve({})
+      getBuyQuote: () -> $q.resolve(mockQuote())
     }
     template = $templateCache.get('partials/sfox/checkout.jade')
     $controller "SfoxCheckoutController",
@@ -82,10 +83,11 @@ describe "SfoxCheckoutController", ->
     scope.openSfoxSignup()
     expect(modals.openSfoxSignup).toHaveBeenCalledWith(scope.vm.external.sfox)
 
-  it "should get an initial quote (to show the exchange rate)", ->
+  it "should get an initial quote but only set the rate", ->
     scope = getControllerScope([{status:'active'}])
     scope.$digest()
-    expect(scope.quote).toBeDefined()
+    expect(scope.quote).not.toBeDefined()
+    expect(scope.state.rate).toEqual(mockQuote().rate)
 
   describe "hasMultipleAccounts", ->
     it "should be false for one account", ->
@@ -201,6 +203,10 @@ describe "SfoxCheckoutController", ->
       it "should set the new quote on the scope", ->
         scope.$digest()
         expect(scope.quote).toEqual(quote)
+
+      it "should set the quote rate to the scope state", ->
+        scope.$digest()
+        expect(scope.state.rate).toEqual(mockQuote().rate)
 
       it "should have loadFailed set to false", ->
         scope.$digest()

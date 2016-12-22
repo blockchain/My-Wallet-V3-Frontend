@@ -24,8 +24,8 @@
             .flex-between.flex-baseline.mbs
               span.f-16.em-500.colon Enter Amount
               span
-                div.flex-row.flex-center(ng-show="quote && !state.loadFailed")
-                  span 1 {{ bitcoin.code }} = ${{ quote.rate }}
+                div.flex-row.flex-center(ng-show="state.rate && !state.loadFailed")
+                  span 1 {{ bitcoin.code }} = ${{ state.rate }}
                   helper-button(content="EXCHANGE_RATE_HELPER")
                 .state-danger-text(ng-show="state.loadFailed")
                   i.ti-alert
