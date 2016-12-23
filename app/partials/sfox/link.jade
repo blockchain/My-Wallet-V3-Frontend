@@ -15,6 +15,7 @@
         .radio-label(ng-repeat="bankAccount in state.bankAccounts")
           input(type="radio" ng-model="$parent.fields.bankAccount" ng-value="bankAccount" id="{{bankAccount._id}}")
           label(for="{{bankAccount._id}}")
+            include ../banks
             .flex-column
               span.f-16 {{ bankAccount.meta.name }} ending in {{ bankAccount.meta.number }}
               span.f-14.capitalize {{ bankAccount.institution_type }} Bank
