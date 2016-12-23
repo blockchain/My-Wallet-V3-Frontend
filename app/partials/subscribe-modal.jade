@@ -15,7 +15,7 @@ div
           label(for='mce-EMAIL')
             | Email Address
           input.form-control(type='email', value='', name='EMAIL' ng-model="fields.email")
-        .form-group.flex-justify
+        .form-group
           label(translate="COUNTRY")
           .flex-1
             ui-select(ng-model="fields.countryCode" tagging)
@@ -26,7 +26,7 @@ div
         .form-group.hide
           label(for='mce-COUNTRY') Country 
           input.form-control(type='text', value='{{fields.country}}', name='COUNTRY')
-        .form-group.flex-justify(ng-show="fields.countryCode === 'US'")
+        .form-group(ng-show="fields.countryCode === 'US'")
           label(translate="STATE")
           .flex-1
             ui-select(ng-model="fields.stateCode" tagging)
