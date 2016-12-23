@@ -2,7 +2,10 @@
   .width-40(ng-hide="state.bankAccounts")
     .width-80
       h4.f-20.em-500.mvn.mb-10(translate="Link Bank Account")
-      span.f-16(translate="You can either securely sign in through your bank or enter your bank routing and account numbers.")
+      .mbl
+        span.f-16(translate="Securely sign in to your bank (using your bank login information) to instantly link your account.")
+      .mbl
+        span.f-16(translate="Alternatively, you can enter your routing and account numbers. SFOX will use that information to send two small deposits to verify your bank account. This can take up to 3 days.")
   .width-40(ng-show="state.bankAccounts")
     .width-80
       h4.f-20.em-500.mvn.mb-10(translate="Select Payment Account")
