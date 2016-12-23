@@ -112,9 +112,10 @@ function SfoxLinkController ($scope, $q, $timeout, sfox, modals) {
   $scope.disablePlaid = () => $scope.state.plaid = {};
 
   let receiveMessage = (e) => {
-    if (e.origin !== window.location.origin) return;
+    if (e.origin !== 'http://localhost:8081') return;
     if (e.data.id !== 'plaid') return;
 
+    // TODO: don't blindly call arbitrary functions:
     $scope[e.data.function](e.data.msg);
     $scope.$safeApply();
   };

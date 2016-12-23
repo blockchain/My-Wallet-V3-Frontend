@@ -17,15 +17,15 @@ angular.module('plaidApp', modules)
       key: '0b041cd9e9fbf1e7d93a0d5a39f5b9',
       onLoad: function () {},
       onExit: function () {
-        window.parent.postMessage({id: 'plaid', function: 'disablePlaid'}, window.location.origin);
+        window.parent.postMessage({id: 'plaid', function: 'disablePlaid'}, 'http://localhost:8080');
       },
       onSuccess: function (public_token, metadata) {
-        window.parent.postMessage({id: 'plaid', function: 'setToken', msg: public_token}, window.location.origin);
+        window.parent.postMessage({id: 'plaid', function: 'setToken', msg: public_token}, 'http://localhost:8080');
       }
     });
     $timeout(() => {
       document.getElementById('linkButton').onclick = function () {
-        window.parent.postMessage({id: 'plaid', function: 'enablePlaid'}, window.location.origin);
+        window.parent.postMessage({id: 'plaid', function: 'enablePlaid'}, 'http://localhost:8080');
         linkHandler.open();
       };
     }, 1);
