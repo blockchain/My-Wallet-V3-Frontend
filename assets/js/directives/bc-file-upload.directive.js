@@ -20,7 +20,7 @@ function bcFileUpload ($rootScope, Alerts) {
     scope.browserWithCamera = $rootScope.browserWithCamera;
     scope.canvasOpts = {x: 0, y: 0, w: 400, h: 300};
     scope.webcam = {
-      video: null
+      video: {}
     };
 
     scope.enableWebcam = () => {
