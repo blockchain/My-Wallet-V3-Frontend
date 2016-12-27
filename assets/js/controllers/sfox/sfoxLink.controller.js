@@ -76,7 +76,8 @@ function SfoxLinkController ($scope, $q, $timeout, sfox, modals) {
   };
 
   $scope.getBankAccounts = (token) => {
-    $q.resolve(exchange.bankLink.getAccounts(token))
+    $scope.token = token;
+    $q.resolve(exchange.bankLink.getAccounts($scope.token))
       .then((bankAccounts) => $scope.state.bankAccounts = bankAccounts)
       .then(() => $scope.fields.bankAccount = $scope.state.bankAccounts[0])
       .catch(sfox.displayError);
@@ -110,13 +111,16 @@ function SfoxLinkController ($scope, $q, $timeout, sfox, modals) {
 
   $scope.enablePlaid = () => $scope.state.plaid.enabled = true;
   $scope.disablePlaid = () => $scope.state.plaid = {};
+  $scope.plaidWhitelist = ['enablePlaid', 'disablePlaid', 'getBankAccounts'];
 
   let receiveMessage = (e) => {
+    if (!e.data.command) return;
+    if (e.data.from !== 'plaid') return;
+    if (e.data.to !== 'exchange') return;
     if (e.origin !== 'http://localhost:8081') return;
-    if (e.data.id !== 'plaid') return;
+    if ($scope.plaidWhitelist.indexOf(e.data.command) < 0) return;
 
-    // TODO: don't blindly call arbitrary functions:
-    $scope[e.data.function](e.data.msg);
+    e.data.msg ? $scope[e.data.command](e.data.msg) : $scope[e.data.command]();
     $scope.$safeApply();
   };
 
