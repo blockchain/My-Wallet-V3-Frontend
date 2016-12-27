@@ -12,6 +12,11 @@ function settingsForm () {
       scope.$parent.active = false;
       scope.$parent.reset();
 
+      scope.$parent.promptRecovery = () => {
+        scope.$parent.promptForRecovery = true;
+        scope.$parent.recoveryModal();
+      };
+
       scope.$parent.activate = () => {
         scope.$parent.active = true;
       };

@@ -319,6 +319,8 @@
   "SECOND_PASSWORD_REMOVE_SUCCESS" : "Second password has been removed.",
   "SECOND_PASSWORD_REMOVE_LOGOUT" : "You need to logout and then login again to proceed.",
   "SECOND_PASSWORD_REMOVE_ERR": "Second password cannot be removed. Please contact support.",
+  "RECOVERY_BEFORE_SECOND_PASSWORD": "Setting a second password without your recovery phrase",
+  "RECOVERY_BEFORE_SECOND_EXPLAINER": "We highly recommend that you backup your recovery phrase before setting a second password. Click the button below to start the recovery phrase process, and be sure to have a pen or pencil handy, as the recovery phrase should not be stored on your computer.",
   "REMEMBER_2FA" : "Remember 2-step Verification",
   "REMEMBER_2FA_EXPLAIN" : "Your browser will be remembered for a short period of time, allowing you to login again without having to re-authenticate. Disable this to require full authentication every time you login. This will not affect your current browser until you delete all cookies.",
   "BLOCK_TOR" : "Wallet Access via Tor",
