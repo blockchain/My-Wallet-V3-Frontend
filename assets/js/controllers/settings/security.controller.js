@@ -4,9 +4,8 @@ angular
 
 function SettingsSecurityCtrl ($scope, $uibModal, Wallet, Alerts) {
   $scope.settings = Wallet.settings;
-  $scope.status = Wallet.status;
   $scope.user = Wallet.user;
-  console.log($scope, 'from settings ctrl')
+
   $scope.processToggleRememberTwoFactor = null;
 
   $scope.display = { advanced: false };

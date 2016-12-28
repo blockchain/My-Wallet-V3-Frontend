@@ -10,11 +10,10 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
   };
   $scope.status = {
     waiting: false,
-    removed: false,
-    didConfirmRecoveryPhrase: Wallet.status.didConfirmRecoveryPhrase
+    removed: false
   };
-  $scope.status = Wallet.status;
-  console.log('from ManageSecondPasswordCtrl', $scope)
+
+  $scope.walletStatus = Wallet.status;
   $scope.promptForRecovery = false;
   $scope.isMainPassword = Wallet.isCorrectMainPassword;
   $scope.validateSecondPassword = Wallet.validateSecondPassword;
@@ -66,7 +65,6 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
   };
 
   $scope.recoveryModal = () => {
-    console.log('open modal here')
     const openModal = () => $uibModal.open({
       templateUrl: 'partials/recovery-before-second-password.jade',
       controller: 'RecoveryBeforeSecondPasswordCtrl',
@@ -74,7 +72,6 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
     });
 
     if (!Wallet.status.didConfirmRecoveryPhrase && !Wallet.settings.secondPassword) {
-      console.log('opening modal')
       openModal();
     }
   };
