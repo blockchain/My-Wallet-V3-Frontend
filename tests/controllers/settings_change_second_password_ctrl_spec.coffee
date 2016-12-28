@@ -2,6 +2,8 @@ describe "ManageSecondPasswordCtrl", ->
   scope = undefined
   Wallet = undefined
   MyWallet = undefined
+  modal =
+    open: ->
   modalInstance =
     close: ->
     dismiss: ->
@@ -23,11 +25,29 @@ describe "ManageSecondPasswordCtrl", ->
 
       $controller "ManageSecondPasswordCtrl",
         $scope: scope,
-        $uibModalInstance: modalInstance
+        $uibModalInstance: modalInstance,
+        $uibModal: modal
 
       scope.model = { fields: {} }
       $compile(template)(scope)
       scope.$digest()
+
+  describe "recovery phrase prompt modal", ->
+
+    it "should open if recovery phrase and second pw are false", ->
+      spyOn(modal, "open")
+      scope.recoveryModal()
+      expect(modal.open).toHaveBeenCalled()
+
+    it "should not open if recovery phrase has been backed up", ->
+      spyOn(modal, "open")
+      Wallet.status.didConfirmRecoveryPhrase = true
+      expect(modal.open).not.toHaveBeenCalled()
+
+    it "should not open if second password has been set already", ->
+      spyOn(modal, "open")
+      Wallet.settings.secondPassword = true
+      expect(modal.open).not.toHaveBeenCalled()
 
   describe "password", ->
 
