@@ -49,6 +49,27 @@ describe "ManageSecondPasswordCtrl", ->
       Wallet.settings.secondPassword = true
       expect(modal.open).not.toHaveBeenCalled()
 
+    it "should activate the form if user dismisses prompt", ->
+      Wallet.dismissedRecoveryPrompt()
+      scope.$digest()
+      expect(scope.active).toEqual(true)
+
+  describe "buttons", ->
+
+    it "should show if recovery phrase has been backed up", ->
+      scope.walletStatus.didConfirmRecoveryPhrase = true
+      expect(scope.showButton()).toEqual(true)
+
+    it "should hide if prompt was dismissed and second PW is present", ->
+      scope.walletStatus.dismissedRecoveryPrompt = true
+      Wallet.settings.secondPassword = true
+      expect(scope.hideButton()).toEqual(true)
+
+    it "should not hide if recovery phrase confirmed but no second PW", ->
+      scope.walletStatus.didConfirmRecoveryPhrase = true
+      Wallet.settings.secondPassword = false
+      expect(scope.hideButton()).toEqual(false)
+
   describe "password", ->
 
     it "should be valid if the password is ok", ->

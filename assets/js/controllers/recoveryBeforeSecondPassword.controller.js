@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('RecoveryBeforeSecondPasswordCtrl', RecoveryBeforeSecondPasswordCtrl);
 
-function RecoveryBeforeSecondPasswordCtrl ($scope, $uibModal, $uibModalInstance) {
+function RecoveryBeforeSecondPasswordCtrl (Wallet, $scope, $uibModal, $uibModalInstance) {
   $scope.openRecoveryModal = () => {
     $uibModalInstance.close('');
     $uibModal.open({
@@ -10,5 +10,10 @@ function RecoveryBeforeSecondPasswordCtrl ($scope, $uibModal, $uibModalInstance)
       controller: 'ConfirmRecoveryPhraseCtrl',
       windowClass: 'bc-modal'
     });
+  };
+
+  $scope.setSecondPasswordAnyway = () => {
+    Wallet.dismissedRecoveryPrompt();
+    $uibModalInstance.close('');
   };
 }

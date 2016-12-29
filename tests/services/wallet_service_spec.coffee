@@ -552,3 +552,11 @@ describe "walletServices", () ->
           expect(Alerts.displayError).toHaveBeenCalledWith('NO_HISTORY')
           done()
         $rootScope.$digest()
+
+    describe "dismissed recovery prompt", ->
+      beforeEach ->
+        Wallet.status.dismissedRecoveryPrompt = false
+
+      it "should be true if called", ->
+        Wallet.dismissedRecoveryPrompt()
+        expect(Wallet.status.dismissedRecoveryPrompt).toBe(true)

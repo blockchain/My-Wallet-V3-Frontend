@@ -27,6 +27,12 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
     };
   };
 
+  $scope.$watch('walletStatus.dismissedRecoveryPrompt', (newVal, oldVal) => {
+    if ($scope.walletStatus.dismissedRecoveryPrompt) {
+      $scope.active = true;
+    }
+  });
+
   $scope.removeSecondPassword = () => {
     if ($scope.status.waiting) return;
     $scope.status.waiting = true;
@@ -73,6 +79,34 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
 
     if (!Wallet.status.didConfirmRecoveryPhrase && !Wallet.settings.secondPassword) {
       openModal();
+    }
+  };
+
+  $scope.showButton = () => {
+    const confirmed = $scope.walletStatus.didConfirmRecoveryPhrase;
+    const dismissed = $scope.walletStatus.dismissedRecoveryPrompt;
+    const secondPW = Wallet.settings.secondPassword;
+
+    if (confirmed) {
+      return true;
+    } else if (dismissed && secondPW) {
+      return true;
+    }
+  };
+
+  $scope.hideButton = () => {
+    const confirmed = $scope.walletStatus.didConfirmRecoveryPhrase;
+    const dismissed = $scope.walletStatus.dismissedRecoveryPrompt;
+    const secondPW = Wallet.settings.secondPassword;
+
+    if (confirmed && !secondPW) {
+      return false;
+    } else if (secondPW) {
+      return true;
+    } else if (!dismissed || !confirmed) {
+      return true;
+    } else if (dismissed && secondPW) {
+      return true;
     }
   };
 }

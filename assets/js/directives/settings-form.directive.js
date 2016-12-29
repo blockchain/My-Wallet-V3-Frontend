@@ -23,6 +23,9 @@ function settingsForm () {
 
       scope.$parent.deactivate = () => {
         scope.$parent.active = false;
+        if (scope.$parent.walletStatus) {
+          scope.$parent.walletStatus.dismissedRecoveryPrompt = false;
+        }
         scope.$parent.reset();
       };
 

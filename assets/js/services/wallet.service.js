@@ -19,7 +19,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       didLoadSettings: false,
       didLoadTransactions: false,
       didLoadBalances: false,
-      didConfirmRecoveryPhrase: false
+      didConfirmRecoveryPhrase: false,
+      dismissedRecoveryPrompt: false
     },
     settings: {
       currency: null,
@@ -1206,6 +1207,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.removeSecondPassword = (password, successCallback, errorCallback) => {
     let success = () => {
       wallet.settings.secondPassword = false;
+      wallet.status.dismissedRecoveryPrompt = false;
       successCallback();
     };
     let error = () => {
@@ -1262,6 +1264,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let success = () => {
       Alerts.displaySuccess('Second password set.');
       wallet.settings.secondPassword = true;
+      wallet.status.dismissedRecoveryPrompt = false;
       successCallback();
     };
     let error = () => {
@@ -1302,6 +1305,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
   wallet.refresh = () => {
     wallet.my.refresh();
+  };
+
+  wallet.dismissedRecoveryPrompt = () => {
+    wallet.status.dismissedRecoveryPrompt = true;
   };
 
   wallet.isMock = wallet.my.mockShouldFailToSend !== void 0;
