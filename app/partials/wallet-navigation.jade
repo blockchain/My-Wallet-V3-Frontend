@@ -18,7 +18,8 @@
         route="wallet.common.buy-sell"
         color="green")
       a(ng-hide="shouldShowInviteForm"
-        ui-sref="wallet.common.buy-sell")
+        ui-sref="wallet.common.buy-sell"
+        ng-click="dismissBuyCta()")
         i.ti-direction-alt
         span(translate="BUY_BITCOIN")
       a(ng-show="shouldShowInviteForm"
