@@ -23,7 +23,8 @@
               placeholder="{{placeholder}}"
               min="{{limits.card.min}}"
               max="{{limits.bank.available > limits.card.available ? limits.bank.available : limits.card.available}}"
-              step="0.01"
+              step="1"
+              prevent-event="mousewheel"
               required)
             div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
               button.btn.btn-default.dropdown-toggle.brdrn(type="button" uib-dropdown-toggle aria-haspopup="true")
@@ -43,6 +44,7 @@
               ng-model="transaction.btc"
               name="btc"
               step="any"
+              prevent-event="mousewheel"
               tabindex="1"
               min="0.00000001"
               ng-change="updateLastInput('btc'); getExchangeRate();"
