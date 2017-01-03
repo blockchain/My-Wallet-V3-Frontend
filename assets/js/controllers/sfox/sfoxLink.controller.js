@@ -28,7 +28,7 @@ function SfoxLinkController ($scope, $q, sfox, modals) {
   $scope.displayInlineError = (error) => {
     let bankForm = $scope.$$childHead.bankAccountForm;
     let verifyForm = $scope.$$childHead.verifyBankAccountForm;
-    switch (JSON.parse(error).error) {
+    switch (sfox.interpretError(error)) {
       case 'must provide routing number':
         bankForm.routingNumber.$setValidity('value', false);
         break;

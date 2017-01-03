@@ -38,7 +38,7 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, Alerts, sfox
 
   $scope.displayInlineError = (error) => {
     let form = $scope.$$childHead.accountForm;
-    switch (JSON.parse(error).error) {
+    switch (sfox.interpretError(error)) {
       case 'user is already registered':
         form.email.$setValidity('registered', false);
         break;
