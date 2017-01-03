@@ -2,9 +2,8 @@ angular
   .module('walletApp')
   .controller('SfoxCheckoutController', SfoxCheckoutController);
 
-function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts) {
+function SfoxCheckoutController ($scope, $timeout, $q, $uibModal, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts, formatTrade) {
   let exchange = $scope.vm.external.sfox;
-  $scope.enabled = false;
   $scope.openSfoxSignup = () => modals.openSfoxSignup(exchange);
 
   $scope.stepDescription = () => {
@@ -44,18 +43,32 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
     get total () { return this.fiat; }
   };
 
-  $scope.enableBuy = () => $scope.enabled = true;
-  $scope.disableBuy = () => $scope.enabled = false;
-
   $scope.resetFields = () => {
     state.fiat = state.btc = null;
     state.baseCurr = $scope.dollars;
+  };
+
+  $scope.enableBuy = () => {
+    let obj = {
+      'BTC Order': $scope.format($scope.fromSatoshi(state.btc || 0, $scope.bitcoin), $scope.bitcoin, true),
+      'Payment Method': $scope.account.accountType + ' (' + $scope.account.accountNumber + ')',
+      'Total Cost': $scope.format($scope.fromSatoshi(state.total || 0, $scope.dollars), $scope.dollars, true)
+    };
+
+    $scope.formattedTrade = formatTrade.confirm(obj);
+
+    $uibModal.open({
+      templateUrl: 'partials/confirm-trade-modal.jade',
+      windowClass: 'bc-modal trade-summary',
+      scope: $scope
+    });
   };
 
   $scope.buy = () => {
     $scope.lock();
 
     let success = (trade) => {
+      modals.dismissAll();
       sfox.watchTrade(trade);
       modals.openTradeSummary(trade, 'initiated');
       $scope.resetFields();
@@ -65,7 +78,6 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
       .then(mediums => mediums.ach.buy($scope.account))
       .then(success)
       .catch(() => { Alerts.displayError('Error connecting to our exchange partner'); })
-      .then($scope.disableBuy)
       .finally($scope.free);
   };
 
@@ -114,7 +126,6 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
 
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
-  $scope.$watchGroup(['state.fiat', 'state.btc'], () => $scope.disableBuy());
   $scope.$on('$destroy', $scope.cancelRefresh);
   $scope.getInitialQuote();
   $scope.installLock();

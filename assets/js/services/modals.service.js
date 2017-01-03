@@ -2,12 +2,16 @@ angular
   .module('walletApp')
   .factory('modals', modals);
 
-function modals ($state, $uibModal, $ocLazyLoad) {
+function modals ($state, $uibModal, $uibModalStack, $ocLazyLoad) {
   const service = {};
 
   let open = (defaults, options = {}) => (
     $uibModal.open(angular.merge(options, defaults))
   );
+
+  service.dismissAll = () => {
+    $uibModalStack.dismissAll();
+  };
 
   service.openBankHelper = () => open({
     templateUrl: 'partials/bank-check-modal.jade',

@@ -1,0 +1,7 @@
+#buy(data-preflight-tag="ConfirmTradeModal")
+  .modal-body.fade.flex-center.flex-justify
+    .width-100.pam
+      include ./trade-summary
+      .flex-1.flex-end.ptm
+        button.button-muted.mrm(ng-click="$close()" translate="CANCEL")
+        button.btn.button-primary(ng-click="buy()" ladda-translate="CONFIRM" ui-ladda="locked" data-style="expand-left")

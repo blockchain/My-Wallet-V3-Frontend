@@ -1005,6 +1005,10 @@
     "TITLE": "Transaction {{::state}}",
     "BODY": "Your purchase has been {{::state}}."
   },
+  "TX_CONFIRM": {
+    "TITLE": "Confirm Purchase",
+    "BODY": "You are about to authorize a bank transfer for your SFOX purchase. Bank transfers can take 3-5 days to complete."
+  },
   "TX_PENDING": {
     "TITLE": "Order Pending",
     "BODY": "Your purchase is currently being processed. Our exchange partner will send a status update your way within 1 business day."
