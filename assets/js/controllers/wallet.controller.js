@@ -99,12 +99,17 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     if ($scope.isPublicState(toState.name) && Wallet.status.isLoggedIn) {
       event.preventDefault();
     }
-    if (wallet && wallet.isDoubleEncrypted && toState.name === 'wallet.common.buy-sell') {
-      event.preventDefault();
-      Alerts.displayError('MUST_DISABLE_2ND_PW');
-    } else if (wallet && $rootScope.needsRefresh && toState.name === 'wallet.common.buy-sell') {
-      event.preventDefault();
-      Alerts.displayError('NEEDS_REFRESH');
+    if (wallet && toState.name === 'wallet.common.buy-sell') {
+      let error;
+
+      if (wallet.external && !wallet.external.loaded) error = 'POOR_CONNECTION';
+      else if (wallet.isDoubleEncrypted) error = 'MUST_DISABLE_2ND_PW';
+      else if ($rootScope.needsRefresh) error = 'NEEDS_REFRESH';
+
+      if (error) {
+        event.preventDefault();
+        Alerts.displayError(error);
+      }
     }
   });
 
