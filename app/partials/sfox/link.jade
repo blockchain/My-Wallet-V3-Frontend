@@ -38,25 +38,14 @@
               span.capitalize(ng-bind-html="type | highlight: $select.search")
         .group.full
           button.btn.button-primary.full(type="submit" ng-disabled="bankAccountForm.$invalid") Add Account
-.flex-row.mtl(ng-show="state.accounts.length && !state.readyToVerify")
+.flex-row.mtl(ng-show="state.accounts.length")
   .width-40
     .width-80
-      h4.f-20.em-500.mvn.mb-10(translate="Verify Bank Account")
-      span.f-16(translate="To protect against fraud, SFOX will send and withdraw 2 small deposits to your bank account. These amounts will appear in your account in 1-2 days. You will need to enter these amounts to verify your bank account.")
-  .width-50
-    img.width-100(src="img/bank-statement.jpg")
-    p.type-h5.em-300.mts.mbl(translate="Deposits will appear in your account as 'SFOX' in 1-2 days")
-    form(ng-submit="state.readyToVerify = true")
-      button.btn.button-primary.full(type="submit" focus-when="state.accounts.length && !state.readyToVerify") Verify Now
-      a.display-block.center.mtl(ng-click="$close()") Finish Later
-.flex-row.mtl(ng-show="state.accounts.length && state.readyToVerify")
-  .width-40
-    .width-80
-      .flex-row
-        h4.f-20.em-500.mvn.mb-10(translate="Verify Bank Account")
+      .flex-row.flex-center.mb-10
+        h4.f-20.em-500.mvn(translate="Verify Bank Account")
         button.helper(ng-click="openDepositHelper()" type="button" tabindex="-1")
           span ?
-      span.f-16(translate="SFOX sent 2 small deposits to your bank account. Enter these amounts in any order to verify your account.")
+      span.f-16(translate="To protect against fraud, SFOX will send (and withdraw) 2 small deposits to your bank account. These amounts will appear in your account in 1-2 days. Please enter these amounts in any order to verify your account.")
   .width-50
     form.bc-form(name="verifyBankAccountForm" ng-submit="verify()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")

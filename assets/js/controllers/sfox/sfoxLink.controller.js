@@ -12,8 +12,7 @@ function SfoxLinkController ($scope, $q, sfox, modals) {
 
   let state = $scope.state = {
     terms: false,
-    accounts: accounts,
-    readyToVerify: undefined
+    accounts: accounts
   };
 
   $scope.fields = {
