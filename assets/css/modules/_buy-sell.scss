@@ -429,3 +429,10 @@ i.ti-credit-card.bank {
 .find-partner {
   height: 350px;
 }
+
+.pl7em {
+  padding-left: 2em;
+  @media(min-width: 992px) {
+    padding-left: 7em;
+  }
+}
