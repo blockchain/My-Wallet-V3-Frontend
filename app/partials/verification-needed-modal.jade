@@ -1,0 +1,7 @@
+.modal-body.width-100
+  .flex-column.flex-center.mtl
+    i.ti-lock.blue.type-yuge
+    span.f-24.em-500(translate="VERIFICATION_NEEDED")
+    p.f-16.ptm.width-60.center(translate="VERIFICATION_NEEDED_EXPLAIN" translate-values="{days:days}")
+  .flex-row.flex-end
+    button.button.button-primary.width-20.mtl(ng-click="$close()" translate="CLOSE")

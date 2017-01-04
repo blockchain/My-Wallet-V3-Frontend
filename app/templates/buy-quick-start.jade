@@ -2,14 +2,14 @@
   span.f-20.em-500(translate="BUY_BITCOIN")
   .mt-15.pt-30.pb-30.pl-15.pr-15.phm.border
     form(name="fiatForm" ng-submit="!status.busy && fiatForm.$valid && triggerBuy()")
-      div
-        .flex-row.flex-between
-          div
-            label.em-500(translate="ENTER_AMOUNT:")
-            helper-button(ng-show="limits.card.min && limits.card.max" content="MAX_MIN_HELPER" values="{cardMax: limits.card.max, min: limits.card.min, bankMax: limits.bank.max, symbol: currencySymbol.symbol}")
-          div(ng-show="exchangeRate.fiat")
-            span.type-sm.em-500 1 BTC = {{currencySymbol.symbol}}{{ exchangeRate.fiat }}
-            helper-button(content="EXCHANGE_RATE_HELPER")
+      .flex-row.flex-between
+        div
+          label.em-500(translate="ENTER_AMOUNT:")
+          helper-button(ng-disabled="false" ng-show="limits.card.min && limits.card.max" content="MAX_MIN_HELPER" values="{cardMax: limits.card.max, min: limits.card.min, bankMax: limits.bank.max, symbol: currencySymbol.symbol}")
+        div(ng-show="exchangeRate.fiat")
+          span.type-sm.em-500 1 BTC = {{currencySymbol.symbol}}{{ exchangeRate.fiat }}
+          helper-button(content="EXCHANGE_RATE_HELPER")
+      fieldset(ng-disabled="tradingDisabled")
         .flex-row.flex-between.flex-center.flex-column-tablet
           section.input-group.width-45
             input.form-control.brdrn(
@@ -53,13 +53,18 @@
               required)
             div.input-group-btn
               button.btn.btn-default.brdrn.disabled BTC
-        .mts.pos-rel
+        .mts.pos-rel(ng-hide="tradingDisabled")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="BUY_AMT_LOW")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max" translate="BUY_AMT_HIGH")
+        .mts.pos-rel(ng-show="tradingDisabled")
+          span.pos-abs.type-sm
+            span.state-danger-text(translate="BUY_AMT_IS" translate-values="{symbol: currencySymbol.symbol, amount: 0}")
+            span  
+            span.blue.pointer(ng-click="openVerificationNeeded()" translate="WHY")
       .flex-end.mtvl.pos-rel
         span.coinify-logo.coinify-logo-left
           span.mrs.type-sm(translate="POWERED_BY")
           a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
             img(src="img/coinify-logo.svg")
             span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
-        button.button-primary(translate="Buy Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || status.busy")
+        button.button-primary(translate="Buy Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || status.busy || tradingDisabled")
