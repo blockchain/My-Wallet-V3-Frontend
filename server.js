@@ -83,7 +83,7 @@ helperApp.use(function (req, res, next) {
   var cspHeader;
   if (req.url === '/plaid/') {
     cspHeader = ([
-      "img-src 'self' " + rootURL,
+      "img-src 'none'",
       "style-src 'self'",
       'child-src https://cdn.plaid.com',
       'frame-src https://cdn.plaid.com',
