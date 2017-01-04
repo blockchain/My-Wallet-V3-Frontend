@@ -81,7 +81,8 @@
   "license": "",
   "semistandard": {
     "ignore": [
-      "tests/"
+      "tests/",
+      "helperApp/"
     ],
     "globals": [
       "angular",
