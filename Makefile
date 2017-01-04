@@ -54,5 +54,5 @@ server: .env dist_fixed_domain
 	npm start
 
 clean:
-	rm -rf build dist node_modules bower_components npm-shrinkwrap.json coverage .sass-cache
+	rm -rf build helperApp/build dist node_modules bower_components npm-shrinkwrap.json coverage .sass-cache
 	npm cache clean

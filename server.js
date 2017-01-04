@@ -8,26 +8,26 @@ var compression = require('compression');
 loadEnv('.env');
 
 var port = parseInt(process.env.PORT, 10) || 8080;
-var plaidPort = port + 1;
+var helperAppPort = port + 1;
 var dist = parseInt(process.env.DIST, 10) === 1;
 var rootURL = process.env.ROOT_URL || 'https://blockchain.info';
 var webSocketURL = process.env.WEB_SOCKET_URL || false;
 var apiDomain = process.env.API_DOMAIN;
 var production = Boolean(rootURL === 'https://blockchain.info');
 var iSignThisDomain = production ? 'https://verify.isignthis.com/' : 'https://stage-verify.isignthis.com/';
-var plaidFrameDomain = `http://localhost:${ plaidPort }`;
+var helperAppFrameDomain = `http://localhost:${ helperAppPort }`;
 
 // App configuration
 var rootApp = express();
 var app = express();
-var plaidApp = express();
+var helperApp = express();
 
 app.use(compression());
-plaidApp.use(compression());
+helperApp.use(compression());
 
 rootApp.use('/:lang?/wallet', app);
 
-rootApp.use('/:lang?/plaid', plaidApp);
+rootApp.use('/:lang?/plaid', helperApp);
 
 rootApp.get('/:lang?/search', (req, res) => {
   res.redirect(`${rootURL}/search?search=${req.query.search}`);
@@ -45,8 +45,8 @@ app.use(function (req, res, next) {
       // Safari throws the same error, but without suggesting an hash to whitelist.
       // Firefox appears to just allow unsafe-inline CSS
       "style-src 'self' 'uD+9kGdg1SXQagzGsu2+gAKYXqLRT/E07bh4OhgXN8Y=' '4IfJmohiqxpxzt6KnJiLmxBD72c3jkRoQ+8K5HT5K8o='",
-      `child-src ${ plaidFrameDomain } ${ iSignThisDomain} `,
-      `frame-src ${ plaidFrameDomain } ${ iSignThisDomain} `,
+      `child-src ${ helperAppFrameDomain } ${ iSignThisDomain} `,
+      `frame-src ${ helperAppFrameDomain } ${ iSignThisDomain} `,
       "script-src 'self'",
       'connect-src ' + [
         "'self'",
@@ -79,25 +79,25 @@ app.use(function (req, res, next) {
   next();
 });
 
-plaidApp.use(function (req, res, next) {
+helperApp.use(function (req, res, next) {
   var cspHeader;
-  if (req.url === '/plaid.html') {
+  if (req.url === '/plaid/') {
     cspHeader = ([
       "img-src 'self' " + rootURL,
       "style-src 'self'",
       'child-src https://cdn.plaid.com',
       'frame-src https://cdn.plaid.com',
       'frame-ancestors http://localhost:8080',
-      "script-src 'self' https://cdn.plaid.com",
+      "script-src 'self' https://cdn.plaid.com https://ajax.googleapis.com",
       "connect-src 'none'",
       "object-src 'none'",
       "media-src 'none'",
-      "font-src 'self'", ''
+      "font-src 'self'"
     ]).join('; ');
     res.setHeader('content-security-policy', cspHeader);
     // Not supported in Chrome, so using frame-ancestors instead
     // res.setHeader('X-Frame-Options', 'ALLOW-FROM http://localhost:8080/');
-    res.render(dist ? 'plaid.html' : 'build/plaid.jade');
+    res.render('plaid/index.html');
     return;
   }
   if (dist) {
@@ -124,20 +124,18 @@ if (dist) {
   app.use(express.static('dist'));
   app.set('views', path.join(__dirname, 'dist'));
 
-  plaidApp.engine('html', ejs.renderFile);
-  plaidApp.use(express.static('plaid/dist'));
-  plaidApp.set('views', path.join(__dirname, 'plaid/dist'));
+  helperApp.engine('html', ejs.renderFile);
+  helperApp.use(express.static('helperApp/dist'));
+  helperApp.set('views', path.join(__dirname, 'helperApp/dist'));
 } else {
   console.log('Development mode: multiple javascript files, not cached');
   app.use(express.static(__dirname));
   app.set('view engine', 'jade');
   app.set('views', __dirname);
 
-  // Assuming for now, Plaid and wallet resources are shared
-  // plaidApp.use(express.static(__dirname + '/plaid'));
-  plaidApp.use(express.static(__dirname));
-  plaidApp.set('view engine', 'jade');
-  plaidApp.set('views', __dirname + '/plaid');
+  helperApp.engine('html', ejs.renderFile);
+  helperApp.use(express.static('helperApp/build'));
+  helperApp.set('views', path.join(__dirname, 'helperApp/build'));
 }
 
 rootApp.use(express.static(__dirname + '/rootApp'));
@@ -151,7 +149,7 @@ app.use(function (req, res) {
   res.status(404).send('<center><h1>404 Not Found</h1></center>');
 });
 
-plaidApp.use(function (req, res) {
+helperApp.use(function (req, res) {
   res.status(404).send('<center><h1>404 Not Found</h1></center>');
 });
 
@@ -159,8 +157,8 @@ rootApp.listen(port, function () {
   console.log('Visit http://localhost:%d/', port);
 });
 
-plaidApp.listen(plaidPort, function () {
-  console.log('Plaid running on http://localhost:%d/', plaidPort);
+helperApp.listen(helperAppPort, function () {
+  console.log('Plaid running on http://localhost:%d/', helperAppPort);
 });
 
 // Helper functions
