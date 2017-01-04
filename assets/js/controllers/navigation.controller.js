@@ -58,14 +58,13 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
 
   let nLatestFeats = null;
   $scope.nLatestFeats = () => {
-    if (nLatestFeats === null && $scope.lastViewedWhatsNew !== null) {
-      nLatestFeats = whatsNew.filter(({ date }) => date > $scope.lastViewedWhatsNew).length;
+    if (!$scope.feats) {
+      return 0;
+    } else if (nLatestFeats === null && $scope.lastViewedWhatsNew !== null) {
+      nLatestFeats = $scope.feats.filter(({ date }) => date > $scope.lastViewedWhatsNew).length;
     }
-
     return nLatestFeats;
   };
-
-  $scope.feats = whatsNew;
 
   $scope.viewedWhatsNew = () => $timeout(() => {
     if ($scope.viewedWhatsNew === null) {
@@ -131,6 +130,7 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
   }, 15 * 60000);
 
   buyStatus.canBuy().then(canBuy => {
-    $scope.showBuyWhatsNew = canBuy;
+    let filterBuy = (feat) => !(feat.title === 'BUY_BITCOIN' && !canBuy);
+    $scope.feats = whatsNew.filter(filterBuy);
   });
 }

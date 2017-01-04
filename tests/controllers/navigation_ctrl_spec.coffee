@@ -90,6 +90,7 @@ describe "NavigationCtrl", ->
       expect(scope.whatsNewTemplate).toEqual('templates/whats-new.jade')
 
     it "should have the feature array injected", ->
+      scope.$digest()
       expect(scope.feats.length).toEqual(2)
 
     describe "without 2nd password", ->

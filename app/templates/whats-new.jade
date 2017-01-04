@@ -1,7 +1,6 @@
 li(
   ng-if="status.didUpgradeToHd"
   ng-repeat="feat in feats | orderBy:'-date' track by $index"
-  ng-hide="feat.title === 'BUY_BITCOIN' && !showBuyWhatsNew"
   ng-class="::{flash: feat.date > lastViewedWhatsNew}")
   h4 {{::feat.title | translate}}
     small.aaa.mlm {{::feat.date | date:'shortDate'}}
