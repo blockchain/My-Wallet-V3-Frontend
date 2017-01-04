@@ -108,7 +108,7 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
   $scope.$watch('state.file', (file) => file && $scope.getSignedURL());
   $scope.$watch('state.verificationStatus.level', (newVal) => newVal === 'verified' && $scope.vm.goTo('link'));
   $scope.$watch('state.idType', (idType) => idType == null && $scope.vm.goTo('link'));
-  $scope.$on('$destroy', () => { exchange.profile.setSSN(null); });
+  $scope.$on('$destroy', () => { exchange.profile && exchange.profile.setSSN(null); });
 
   // QA Tool
   $scope.SFOXDebugDocs = QA.SFOXDebugDocs;

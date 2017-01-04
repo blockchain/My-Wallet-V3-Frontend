@@ -5,7 +5,11 @@ angular
 function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts) {
   let exchange = $scope.vm.external.sfox;
   $scope.enabled = false;
-  $scope.openSfoxSignup = () => modals.openSfoxSignup(exchange);
+
+  $scope.openSfoxSignup = () => {
+    $scope.modalOpen = true;
+    modals.openSfoxSignup(exchange).finally(() => { $scope.modalOpen = false; });
+  };
 
   $scope.stepDescription = () => {
     let stepDescriptions = {
@@ -38,6 +42,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
   let state = $scope.state = {
     fiat: null,
     btc: null,
+    rate: null,
     baseCurr: $scope.dollars,
     get quoteCurr () { return this.baseFiat ? $scope.bitcoin : $scope.dollars; },
     get baseFiat () { return this.baseCurr === $scope.dollars; },
@@ -56,8 +61,8 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
     $scope.lock();
 
     let success = (trade) => {
-      sfox.watchTrade(trade);
-      modals.openTradeSummary(trade, 'initiated');
+      let modalInstance = modals.openTradeSummary(trade, 'initiated');
+      sfox.watchTrade(trade, () => modalInstance.dismiss());
       $scope.resetFields();
     };
 
@@ -86,8 +91,9 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
 
     let fetchSuccess = (quote) => {
       $scope.quote = quote;
+      state.rate = quote.rate;
       state.loadFailed = false;
-      let timeToExpiration = new Date(quote.expiresAt) - new Date();
+      let timeToExpiration = new Date(quote.expiresAt) - new Date() - 1000;
       $scope.refreshTimeout = $timeout($scope.refreshQuote, timeToExpiration);
       if (state.baseFiat) state.btc = quote.quoteAmount;
       else state.fiat = currency.convertToSatoshi(quote.quoteAmount, $scope.dollars) / 100;
@@ -95,12 +101,15 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
 
     $q.resolve(exchange.getBuyQuote(...args))
       .then(fetchSuccess, () => { state.loadFailed = true; });
-  }, 500);
+  }, 500, () => {
+    $scope.quote = null;
+    $scope.disableBuy();
+  });
 
   $scope.getInitialQuote = () => {
     let args = [1e8, $scope.bitcoin.code, $scope.dollars.code];
     let quoteP = $q.resolve(exchange.getBuyQuote(...args));
-    quoteP.then(quote => { $scope.quote = quote; });
+    quoteP.then(quote => { $scope.state.rate = quote.rate; });
   };
 
   $scope.refreshIfValid = (field) => {

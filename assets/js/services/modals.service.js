@@ -63,7 +63,7 @@ function modals ($state, $uibModal, $ocLazyLoad) {
           : $q.resolve([]);
       }
     }
-  }).result;
+  });
 
   return service;
 }
