@@ -118,22 +118,22 @@ rootApp.use(function (req, res, next) {
   }
 });
 
+helperApp.engine('html', ejs.renderFile);
+
 if (dist) {
   console.log('Production mode: single javascript file, cached');
   app.engine('html', ejs.renderFile);
   app.use(express.static('dist'));
   app.set('views', path.join(__dirname, 'dist'));
 
-  helperApp.engine('html', ejs.renderFile);
-  helperApp.use(express.static('helperApp/dist'));
-  helperApp.set('views', path.join(__dirname, 'helperApp/dist'));
+  helperApp.use(express.static('dist/helper-app'));
+  helperApp.set('views', path.join(__dirname, 'dist/helper-app'));
 } else {
   console.log('Development mode: multiple javascript files, not cached');
   app.use(express.static(__dirname));
   app.set('view engine', 'jade');
   app.set('views', __dirname);
 
-  helperApp.engine('html', ejs.renderFile);
   helperApp.use(express.static('helperApp/build'));
   helperApp.set('views', path.join(__dirname, 'helperApp/build'));
 }

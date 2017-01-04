@@ -36,9 +36,13 @@ ifndef API_DOMAIN
 export API_DOMAIN:=api.blockchain.info
 endif
 
-dist: build
+helperApp/dist:
+	cd helperApp && make dist
+
+dist: helperApp/dist build
 	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --network=${NETWORK} --webSocketURL=$(WEB_SOCKET_URL)
 	npm shrinkwrap --dev
+	mv helperApp/dist dist/helper-app
 
 dist_fixed_domain: build
 	grunt dist --versionFrontend=$(VERSION) --rootDomain=blockchain.info --apiDomain=api.blockchain.info --network=${NETWORK}
@@ -54,5 +58,6 @@ server: .env dist_fixed_domain
 	npm start
 
 clean:
-	rm -rf build helperApp/build dist node_modules bower_components npm-shrinkwrap.json coverage .sass-cache
+	rm -rf build dist node_modules bower_components npm-shrinkwrap.json coverage .sass-cache
 	npm cache clean
+	cd helperApp && make clean

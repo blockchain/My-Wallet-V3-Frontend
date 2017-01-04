@@ -11,13 +11,9 @@ module.exports = (grunt) ->
         banner: "/*! <%= pkg.name %> <%= grunt.template.today(\"yyyy-mm-dd\") %> */\n"
         mangle: false
 
-      plaidDependencies:
-        src: [
-          "build/js/*.js",
-        ]
-        dest: "build/js/plaidApp.min.js"
-        options: {
-          mangle: false
+      plaid:
+        files: {
+          "dist/plaid/plaid.min.js" : ["build/plaid/plaid.js", "build/**/*.js"]
         }
 
     preprocess:
@@ -29,29 +25,8 @@ module.exports = (grunt) ->
 
       html:
         expand: true
-        src: ['build/plaid/plaid.html']
+        src: ['dist/plaid/index.html']
         dest: ''
-
-    concat:
-      options:
-        banner: "(function () {\n"
-        separator: "})();\n(function () {\n"
-        footer: "})();"
-
-      plaidNotMinifiedDependencies:
-        src: [
-          'bower_components/angular-ui-router/release/angular-ui-router.js'
-          'build/js/plaidApp.js'
-        ]
-        dest: "build/js/plaid-not-minified-dependencies.js"
-
-      plaid:
-        src: [
-          "bower_components/angular/angular.min.js",
-          "bower_components/angular-sanitize/angular-sanitize.min.js",
-          "build/js/landing-minified-dependencies.min.js"
-        ]
-        dest: "dist/js/plaid.min.js"
 
     sass:
       build:
@@ -66,15 +41,13 @@ module.exports = (grunt) ->
       main:
         files: [
           {src: ["**/*.html"], dest: "dist/", cwd: "build", expand: true}
+          {src: ["**/*.css"], dest: "dist/", cwd: "build", expand: true}
         ]
 
       build:
         files: [
           {src: ["plaid/*.html"], dest: "build/", expand: true}
         ]
-
-      css_dist:
-          {src: ["plaid/app.css"], dest: "dist/css/plaid.css", cwd: "build/css", expand: true }
 
     watch:
       html:
@@ -102,12 +75,12 @@ module.exports = (grunt) ->
       build:
         files: [{
           expand: true,
-          src: ['plaid/plaid.js'],
+          src: ['plaid/**/*.js'],
           dest: 'build',
         }]
 
     rename:
-      landing: # Renames plaid.min.js/css and updates index.html
+      plaid: # Renames plaid.min.js/css and updates index.html
         options:
           skipIfHashed: true
           startSymbol: "{{"
@@ -118,30 +91,29 @@ module.exports = (grunt) ->
           callback: (befores, afters) ->
             publicdir = fs.realpathSync("dist")
 
-            for referring_file_path in ["dist/plaid/index.html"]
-              contents = grunt.file.read(referring_file_path)
+            for referring_file_path in ["plaid/index.html"]
+              contents = grunt.file.read("dist/" + referring_file_path)
               before = undefined
               after = undefined
               i = 0
 
               while i < befores.length
-                before = path.relative(publicdir, befores[i])
-                after = path.relative(publicdir, afters[i])
+                dir = publicdir + '/' + referring_file_path.split('/')[0]
+                before = path.relative(dir, befores[i])
+                after = path.relative(dir, afters[i])
                 contents = contents.split(before).join(after)
 
                 i++
-              grunt.file.write referring_file_path, contents
+              grunt.file.write "dist/" + referring_file_path, contents
 
         files:
           src: [
-            'dist/plaid/js/plaid.min.js'
-            'dist/plaid/css/plaid.css'
+            'dist/plaid/plaid.min.js'
+            'dist/plaid/plaid.css'
           ]
 
   grunt.loadNpmTasks "grunt-contrib-uglify"
-  grunt.loadNpmTasks('grunt-contrib-concat')
   grunt.loadNpmTasks('grunt-contrib-copy')
-  grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-sass')
   grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-rename-assets')
@@ -160,15 +132,10 @@ module.exports = (grunt) ->
     "watch"
   ]
 
-  grunt.registerTask "dist", () =>
-    grunt.task.run [
-      "preprocess:js"
-      "concat:plaidNotMinifiedDependencies"
-      "uglify:plaidDependencies"
-      "concat:plaid"
-      "uglify:plaid"
-      "preprocess:html"
-      "copy:main"
-      "copy:css_dist"
-      "rename:plaid"
-    ]
+  grunt.registerTask "dist", [
+    "build"
+    "uglify:plaid"
+    "copy:main"
+    "preprocess"
+    "rename:plaid"
+  ]
