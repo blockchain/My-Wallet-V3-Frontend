@@ -39,7 +39,7 @@ endif
 helperApp/dist:
 	cd helperApp && make dist
 
-dist: helperApp/dist build
+dist: build helperApp/dist
 	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --network=${NETWORK} --webSocketURL=$(WEB_SOCKET_URL)
 	npm shrinkwrap --dev
 	mv helperApp/dist dist/helper-app

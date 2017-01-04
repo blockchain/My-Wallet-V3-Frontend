@@ -4,3 +4,6 @@ node_modules:
 
 dist: node_modules
 	grunt dist
+
+clean:
+	rm -rf node_modules build dist
