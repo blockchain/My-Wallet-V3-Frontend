@@ -1,14 +1,39 @@
 .flex-row.flex-column-mobile(ng-show="!state.accounts.length")
-  .width-40
+  .width-40(ng-hide="state.bankAccounts")
     .width-80
       h4.f-20.em-500.mvn.mb-10(translate="Link Bank Account")
-      span.f-16(translate="You can either securely sign in through your bank or enter your bank routing and account numbers.")
-  .width-50
-    button.btn.button-primary.full(disabled) Sign In To Your Bank Account
+      .mbl
+        span.f-16(translate="Securely sign in to your bank (using your bank login information) to instantly link your account.")
+      .mbl
+        span.f-16(translate="Alternatively, you can enter your routing and account numbers. SFOX will use that information to send two small deposits to verify your bank account. This can take up to 3 days.")
+  .width-40(ng-show="state.bankAccounts")
+    .width-80
+      h4.f-20.em-500.mvn.mb-10(translate="Select Payment Account")
+      span.f-16(translate="Please select your preferred bank account to make bitcoin purchases.")
 
+  .width-50(ng-show="state.bankAccounts")
+    label.f-14.colon(translate="Select Account")
+    form.bc-form(name="bankLinkForm" ng-submit="setBankAccount()")
+      .radio-group
+        .radio-label(ng-repeat="bankAccount in state.bankAccounts")
+          input(type="radio" ng-model="$parent.fields.bankAccount" ng-value="bankAccount" id="{{bankAccount._id}}")
+          label(for="{{bankAccount._id}}")
+            include ../banks
+            .flex-column
+              span.f-16 {{ bankAccount.meta.name }} ending in {{ bankAccount.meta.number }}
+              span.f-14.capitalize {{ bankAccount.institution_type }} Bank
+      button.btn.button-primary.full.mt-15(type="submit" ng-disabled="bankLinkForm.$invalid") Add Account
+
+  .width-50(ng-hide="state.bankAccounts" id="wallet")
+    iframe(
+      src='http://localhost:8081/plaid.html'
+      sandbox='allow-same-origin allow-scripts allow-forms'
+      ng-class='{enabled: state.plaid.enabled}'
+      scrolling = 'no'
+      id='plaid'
+    )
     .mvvl
       span.or-horizontal.flex-justify(translate="OR")
-
     form.bc-form(name="bankAccountForm" ng-submit="link()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .group.full.mb-30
