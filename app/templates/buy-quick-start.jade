@@ -1,7 +1,7 @@
 .quick-start
   span.f-20.em-500(translate="BUY_BITCOIN")
   .mt-15.pt-30.pb-30.pl-15.pr-15.phm.border
-    form(name="fiatForm" ng-submit="!status.busy && fiatForm.$valid && triggerBuy()")
+    form(name="fiatForm" ng-submit="!status.busy && fiatForm.$valid && triggerBuy()" novalidate)
       .flex-row.flex-between
         div
           label.em-500(translate="ENTER_AMOUNT:")
@@ -23,7 +23,7 @@
               placeholder="{{placeholder}}"
               min="{{limits.card.min}}"
               max="{{limits.bank.available > limits.card.available ? limits.bank.available : limits.card.available}}"
-              step="1"
+              step="any"
               prevent-event="mousewheel"
               required)
             div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
