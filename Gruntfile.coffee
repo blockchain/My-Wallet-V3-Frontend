@@ -295,6 +295,12 @@ module.exports = (grunt) ->
         options:
           spawn: false
 
+      plaid:
+        files: ['helperApp/plaid/**/*']
+        tasks: ['exec:webpack']
+        options:
+          spawn: false
+
     jade:
       html:
         options:
@@ -447,6 +453,10 @@ module.exports = (grunt) ->
         force: true
         recursive: true
 
+    exec:
+      webpack:
+        cmd: './node_modules/.bin/webpack'
+
     replace:
       root_url:
         src: ['build/js/app.js'],
@@ -579,10 +589,12 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-karma-coveralls')
   grunt.loadNpmTasks('grunt-text-replace')
   grunt.loadNpmTasks('grunt-include-source')
+  grunt.loadNpmTasks('grunt-exec')
 
   grunt.registerTask "build", [
     "html2js"
     "babel:build"
+    "exec:webpack"
     "concat:wallet"
     "concat:qrReader"
     "concat:bcPhoneNumber"
