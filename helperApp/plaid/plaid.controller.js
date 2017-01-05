@@ -1,6 +1,6 @@
-angular.module('plaidApp')
-.controller('PlaidController', function ($scope, $routeParams) {
-  var isInIframe = (parent !== window);
+
+function PlaidController ($scope, $routeParams) {
+  const isInIframe = (window.parent !== window);
 
   if (!isInIframe) {
     console.error('Must be inside iframe');
@@ -27,4 +27,6 @@ angular.module('plaidApp')
     window.parent.postMessage({from: 'plaid', to: 'exchange', command: 'enablePlaid'}, parentUrl);
     linkHandler.open();
   };
-});
+}
+
+export default PlaidController;

@@ -1,21 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="plaidApp" ng-csp></html>
+<html lang="en" ng-app="plaid" ng-csp></html>
 <head>
   <meta charset="utf-8">
   <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js" defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.10/angular.min.js" defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.10/angular-sanitize.min.js" defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.10/angular-route.min.js" defer></script>
-  <!-- @if !PRODUCTION -->
-  <script src="plaid.js" defer></script>
-  <script src="plaid.controller.js" defer></script>
-  <!-- @endif -->
-  <!-- @if PRODUCTION !>
-  <script src="plaid.min.js" defer></script>
-  <!-- @endif -->
+  <script src="bundle.js" defer></script>
   <title>Plaid</title>
-
-  <link rel='stylesheet' href='plaid.css'>
+  <link rel="stylesheet" href="plaid.css">
 </head>
 <body>
   <div ng-view></div>
