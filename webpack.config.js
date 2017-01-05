@@ -9,7 +9,7 @@ module.exports = {
     'plaid': './helperApp/plaid/plaid.js'
   },
   output: {
-    path: `./helperApp/${DIST ? 'dist' : 'build'}/plaid`,
+    path: `./helperApp/build/plaid`,
     filename: DIST ? 'plaid-[hash].js' : 'plaid.js'
   },
   module: {
