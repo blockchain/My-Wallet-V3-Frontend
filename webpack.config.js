@@ -1,14 +1,16 @@
 
-let CopyWebpackPlugin = require('copy-webpack-plugin');
+const DIST = Boolean(process.env.DIST);
+
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
     'plaid': './helperApp/plaid/plaid.js'
   },
   output: {
-    path: './helperApp/build',
-    filename: '[name]/bundle.js'
+    path: `./helperApp/${DIST ? 'dist' : 'build'}/plaid`,
+    filename: DIST ? 'plaid-[hash].js' : 'plaid.js'
   },
   module: {
     loaders: [
@@ -26,12 +28,12 @@ module.exports = {
     ]
   },
   plugins: [
-    new CopyWebpackPlugin([
-      {
-        from: 'helperApp/plaid/index.html',
-        to: 'plaid'
-      }
-    ]),
-    new ExtractTextPlugin('plaid/[name].css')
+    new HtmlWebpackPlugin({
+      template: './helperApp/plaid/index.html',
+      filename: 'index.html'
+    }),
+    new ExtractTextPlugin(
+      DIST ? '[name]-[hash].css' : '[name].css'
+    )
   ]
 };
