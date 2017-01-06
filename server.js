@@ -27,8 +27,6 @@ helperApp.use(compression());
 
 rootApp.use('/:lang?/wallet', app);
 
-rootApp.use('/:lang?/plaid', helperApp);
-
 rootApp.get('/:lang?/search', (req, res) => {
   res.redirect(`${rootURL}/search?search=${req.query.search}`);
 });
@@ -99,6 +97,24 @@ helperApp.use(function (req, res, next) {
     // res.setHeader('X-Frame-Options', 'ALLOW-FROM http://localhost:8080/');
     res.render('plaid/index.html');
     return;
+  } else if (req.url === '/sift-science/') {
+    cspHeader = ([
+      "img-src 'none'",
+      "style-src 'none'",
+      "child-src 'none'",
+      "frame-src 'none'",
+      'frame-ancestors http://localhost:8080',
+      "script-src 'self' https://ajax.googleapis.com",
+      "connect-src 'none'",
+      "object-src 'none'",
+      "media-src 'none'",
+      "font-src 'none'"
+    ]).join('; ');
+    res.setHeader('content-security-policy', cspHeader);
+    // Not supported in Chrome, so using frame-ancestors instead
+    // res.setHeader('X-Frame-Options', 'ALLOW-FROM http://localhost:8080/');
+    res.render('sift-science/index.html');
+    return;
   }
   if (dist) {
     res.setHeader('Cache-Control', 'public, max-age=31557600');
@@ -158,7 +174,7 @@ rootApp.listen(port, function () {
 });
 
 helperApp.listen(helperAppPort, function () {
-  console.log('Plaid running on http://localhost:%d/', helperAppPort);
+  console.log('Helper App running on http://localhost:%d/', helperAppPort);
 });
 
 // Helper functions
