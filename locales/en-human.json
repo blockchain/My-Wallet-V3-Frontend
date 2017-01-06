@@ -1015,7 +1015,7 @@
   },
   "TX_IN_REVIEW": {
     "TITLE": "Transaction in review.",
-    "BODY": "Your purchase is currently being processed. Any issues should be resolved shortly. Thank you for your patience."
+    "BODY": "Your purchase is currently being reviewed. This process will complete within one business day. In case your order cannot be processed, a refund will be issued. Thank you for your patience!"
   },
   "TX_EXPIRED": {
     "TITLE": "Transaction expired.",
