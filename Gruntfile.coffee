@@ -295,6 +295,12 @@ module.exports = (grunt) ->
         options:
           spawn: false
 
+      helper:
+        files: ['helperApp/plaid/**/*']
+        tasks: ['shell:webpack']
+        options:
+          spawn: false
+
     jade:
       html:
         options:
@@ -438,6 +444,10 @@ module.exports = (grunt) ->
       tag_release:
         command: (newVersion, message) ->
           "git tag -a -s #{ newVersion } -m '#{ message }' && git push origin #{ newVersion }"
+
+      webpack:
+        command: () ->
+          './node_modules/.bin/webpack'
 
     coveralls:
       options:
@@ -583,6 +593,7 @@ module.exports = (grunt) ->
   grunt.registerTask "build", [
     "html2js"
     "babel:build"
+    "shell:webpack"
     "concat:wallet"
     "concat:qrReader"
     "concat:bcPhoneNumber"

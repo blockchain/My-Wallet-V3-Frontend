@@ -134,7 +134,7 @@ if (dist) {
   app.set('view engine', 'jade');
   app.set('views', __dirname);
 
-  helperApp.use(express.static('helperApp/build'));
+  helperApp.use(express.static(path.join(__dirname, 'helperApp/build')));
   helperApp.set('views', path.join(__dirname, 'helperApp/build'));
 }
 
