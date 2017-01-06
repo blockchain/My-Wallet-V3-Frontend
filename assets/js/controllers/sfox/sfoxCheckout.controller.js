@@ -18,6 +18,9 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
 
   if (!exchange.profile || !accounts.length) return;
 
+  $scope.siftScienceEnabled = false;
+  $scope.userId = exchange.user;
+
   $scope.inspectTrade = modals.openTradeSummary;
   $scope.signupCompleted = accounts[0].status === 'active';
 
@@ -56,9 +59,14 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
     $scope.lock();
 
     let success = (trade) => {
+      // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
+      $scope.siftScienceEnabled = true;
+      $scope.tradeId = trade.id;
+
       sfox.watchTrade(trade);
       modals.openTradeSummary(trade, 'initiated');
       $scope.resetFields();
+      $scope.$safeApply();
     };
 
     $q.resolve($scope.quote.getPaymentMediums())

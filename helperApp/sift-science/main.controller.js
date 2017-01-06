@@ -1,6 +1,6 @@
 
 function MainController ($scope) {
-  console.error('Please pass in the Sift Science API key');
+  console.error('Usage: /key/:apiKey/user/:userId/trade/:tradeId');
 }
 
 export default MainController;

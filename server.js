@@ -99,12 +99,12 @@ helperApp.use(function (req, res, next) {
     return;
   } else if (req.url === '/sift-science/') {
     cspHeader = ([
-      "img-src 'none'",
+      'img-src https://hexagon-analytics.com',
       "style-src 'none'",
       "child-src 'none'",
       "frame-src 'none'",
       'frame-ancestors http://localhost:8080',
-      "script-src 'self' https://ajax.googleapis.com",
+      "script-src 'self' https://ajax.googleapis.com https://cdn.siftscience.com",
       "connect-src 'none'",
       "object-src 'none'",
       "media-src 'none'",

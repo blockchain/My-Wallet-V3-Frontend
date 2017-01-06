@@ -5,7 +5,7 @@ function RoutesConfig ($routeProvider) {
       controller: 'MainController',
       template: ''
     })
-    .when('/key/:apiKey', {
+    .when('/key/:apiKey/user/:userId/trade/:tradeId', {
       controller: 'SiftController',
       template: ''
     })

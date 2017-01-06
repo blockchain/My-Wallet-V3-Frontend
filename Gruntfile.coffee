@@ -296,7 +296,7 @@ module.exports = (grunt) ->
           spawn: false
 
       helper:
-        files: ['helperApp/plaid/**/*']
+        files: ['helperApp/plaid/**/*', 'helperApp/sift-science/**/*']
         tasks: ['shell:webpack']
         options:
           spawn: false
