@@ -1,8 +1,8 @@
 
-const DIST = Boolean(process.env.DIST);
+var DIST = Boolean(process.env.DIST);
 
-let ExtractTextPlugin = require('extract-text-webpack-plugin');
-let HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
