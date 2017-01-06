@@ -32,7 +32,6 @@
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-uglify": "1.0.*",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-exec": "~1.0.1",
     "grunt-html2js": "^0.2.9",
     "grunt-include-source": "^0.7.1",
     "grunt-karma-coveralls": "^2.5.4",

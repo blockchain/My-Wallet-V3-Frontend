@@ -295,9 +295,9 @@ module.exports = (grunt) ->
         options:
           spawn: false
 
-      plaid:
+      helper:
         files: ['helperApp/plaid/**/*']
-        tasks: ['exec:webpack']
+        tasks: ['shell:webpack']
         options:
           spawn: false
 
@@ -445,6 +445,10 @@ module.exports = (grunt) ->
         command: (newVersion, message) ->
           "git tag -a -s #{ newVersion } -m '#{ message }' && git push origin #{ newVersion }"
 
+      webpack:
+        command: () ->
+          './node_modules/.bin/webpack'
+
     coveralls:
       options:
         debug: true
@@ -452,10 +456,6 @@ module.exports = (grunt) ->
         dryRun: false
         force: true
         recursive: true
-
-    exec:
-      webpack:
-        cmd: './node_modules/.bin/webpack'
 
     replace:
       root_url:
@@ -589,12 +589,11 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-karma-coveralls')
   grunt.loadNpmTasks('grunt-text-replace')
   grunt.loadNpmTasks('grunt-include-source')
-  grunt.loadNpmTasks('grunt-exec')
 
   grunt.registerTask "build", [
     "html2js"
     "babel:build"
-    "exec:webpack"
+    "shell:webpack"
     "concat:wallet"
     "concat:qrReader"
     "concat:bcPhoneNumber"
