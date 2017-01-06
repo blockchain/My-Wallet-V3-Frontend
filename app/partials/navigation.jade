@@ -13,7 +13,7 @@
         span.ti-angle-up.white.h4(ng-show="!navCollapsed")
     .navbar-collapse.collapse(ng-class="{'in bg-blue' : !navCollapsed}", ng-click="navCollapsed=true")
       ul.nav.navbar-nav.navbar-right(ng-show="status.isLoggedIn")
-        li.item.hidden-xs(ng-hide="isSubscribed")
+        li.item.hidden-xs(ng-hide="true")
           button.button-transparent.button-border.button(translate="SUBSCRIBE" ng-click="subscribe()")
         li.item(ng-show="settings.btcCurrency")
           a.flex-important.flex-column(href="https://markets.blockchain.info/" target="_blank" rel="noopener noreferrer")

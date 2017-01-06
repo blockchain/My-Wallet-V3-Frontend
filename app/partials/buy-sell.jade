@@ -13,6 +13,7 @@
                         modal-open="status.modalOpen"
                         change-currency="changeCurrency(currency)"
                         limits="limits"
+                        trading-disabled="getIsTradingDisabled()"
                         buy="buy(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
       .flex-column.width-50.mlvl.mt-55
         div(ng-hide="trades.pending.length || trades.completed.length || (kyc && kyc.state !== 'completed')")
@@ -25,10 +26,10 @@
         span Coinify Account: {{ exchange.profile.email }}
       table.width-100
         tr.border.bg-light-blue
-          th.phml.pvs(translate="STATUS")
+          th.phml.pvs.width-35.pl7em(translate="STATUS")
           th.phml.pvs(translate="DATE")
-          th.phml.right-align.pvs BTC
-          th.phml.right-align.pvs(translate="TOTAL")
+          th.phml.right-align.pvs.center-align BTC
+          th.phml.right-align.pvs.center-align.width-15(translate="TOTAL")
         tr(
           ng-repeat="trade in trades.pending.concat(trades.completed) | orderBy:'createdAt':true | limitTo:tradeLimit"
           trade="trade"

@@ -13,8 +13,7 @@ function SfoxLinkController ($scope, $q, $timeout, sfox, modals) {
   let state = $scope.state = {
     plaid: {},
     terms: false,
-    accounts: accounts,
-    readyToVerify: undefined
+    accounts: accounts
   };
 
   $scope.fields = {
@@ -30,7 +29,7 @@ function SfoxLinkController ($scope, $q, $timeout, sfox, modals) {
   $scope.displayInlineError = (error) => {
     let bankForm = $scope.$$childHead.bankAccountForm;
     let verifyForm = $scope.$$childHead.verifyBankAccountForm;
-    switch (JSON.parse(error).error) {
+    switch (sfox.interpretError(error)) {
       case 'must provide routing number':
         bankForm.routingNumber.$setValidity('value', false);
         break;

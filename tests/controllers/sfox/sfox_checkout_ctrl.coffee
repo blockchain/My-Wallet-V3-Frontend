@@ -10,6 +10,7 @@ describe "SfoxCheckoutController", ->
   Alerts = undefined
   Wallet = undefined
   MyWallet = undefined
+  sfox = undefined
 
   mockTrade = () ->
     id: 'TRADE'
@@ -22,6 +23,7 @@ describe "SfoxCheckoutController", ->
 
   mockQuote = (fail) ->
     quoteAmount: 150
+    rate: 867
     getPaymentMediums: () -> if fail then $q.reject(fail) else $q.resolve(mockMediums())
 
   beforeEach angular.mock.module("walletApp")
@@ -40,6 +42,7 @@ describe "SfoxCheckoutController", ->
       Wallet = $injector.get('Wallet')
       MyWallet = $injector.get("MyWallet")
       MyWalletHelpers = $injector.get('MyWalletHelpers')
+      sfox = $injector.get('sfox')
 
       MyWallet.wallet = {}
       Wallet.accounts = () -> []
@@ -62,7 +65,7 @@ describe "SfoxCheckoutController", ->
       profile:
         limits: buy: 100
         verificationStatus: level: "unverified"
-      getBuyQuote: () -> $q.resolve({})
+      getBuyQuote: () -> $q.resolve(mockQuote())
     }
     template = $templateCache.get('partials/sfox/checkout.jade')
     $controller "SfoxCheckoutController",
@@ -78,14 +81,15 @@ describe "SfoxCheckoutController", ->
 
   it "should set scope.openSfoxSignup on init", ->
     scope = getControllerScope([{status:'active'}])
-    spyOn(modals, "openSfoxSignup")
+    spyOn(modals, "openSfoxSignup").and.returnValue($q.resolve())
     scope.openSfoxSignup()
     expect(modals.openSfoxSignup).toHaveBeenCalledWith(scope.vm.external.sfox)
 
-  it "should get an initial quote (to show the exchange rate)", ->
+  it "should get an initial quote but only set the rate", ->
     scope = getControllerScope([{status:'active'}])
     scope.$digest()
-    expect(scope.quote).toBeDefined()
+    expect(scope.quote).not.toBeDefined()
+    expect(scope.state.rate).toEqual(mockQuote().rate)
 
   describe "hasMultipleAccounts", ->
     it "should be false for one account", ->
@@ -131,8 +135,18 @@ describe "SfoxCheckoutController", ->
       scope.$digest()
       expect(scope.disableBuy).toHaveBeenCalled()
 
+    it "should watch the trade for completion and close the first modal", ->
+      dismissSpy = jasmine.createSpy("dismiss")
+      spyOn(modals, "openTradeSummary").and.returnValue(dismiss: dismissSpy)
+      spyOn(sfox, "watchTrade").and.callFake((trade, cb) -> cb())
+      scope.buy()
+      scope.$digest()
+      trade = jasmine.objectContaining({ id: "TRADE" })
+      expect(sfox.watchTrade).toHaveBeenCalledWith(trade, jasmine.any(Function))
+      expect(dismissSpy).toHaveBeenCalled()
+
     it "should open the trade summary modal", ->
-      spyOn(modals, "openTradeSummary")
+      spyOn(modals, "openTradeSummary").and.callThrough()
       scope.buy()
       scope.$digest()
       trade = jasmine.objectContaining({ id: "TRADE" })
@@ -201,6 +215,10 @@ describe "SfoxCheckoutController", ->
       it "should set the new quote on the scope", ->
         scope.$digest()
         expect(scope.quote).toEqual(quote)
+
+      it "should set the quote rate to the scope state", ->
+        scope.$digest()
+        expect(scope.state.rate).toEqual(mockQuote().rate)
 
       it "should have loadFailed set to false", ->
         scope.$digest()

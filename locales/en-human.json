@@ -344,7 +344,7 @@
     "BODY": "Viewing used addresses can be helpful for debugging purposes, and is recommended for advanced users only. For privacy reasons, we strongly discourage using each address more than once."
   },
   "PAST_ADDRESSES" : "Used Addresses",
-  "PAST_ADDRESSES_COPY": "Previously used addresses are helpful for debugging purposes and viewing associated balances. For privacy <br> reasons, we do not recommend re-using these addresses.",
+  "PAST_ADDRESSES_COPY": "Previously used addresses are helpful for debugging purposes and viewing associated balances. For privacy <br> reasons, we do not recommend re-using these addresses. Change addresses are not included here.",
   "TOTAL_RECEIVED" : "Total Received",
   "CURRENT_BALANCE" : "Current Balance",
   "CURRENT_BALANCE_HELP" : "When you send bitcoin, your Blockchain wallet automatically selects addresses to spend from. That's why the current balance of an address can be different from the total received value.",
@@ -1107,6 +1107,8 @@
   "MAX_MIN_HELPER": "Minimum buy amount is {{::symbol}}{{::min}}. Maximum daily amounts are {{::symbol}}{{::cardMax}} for credit card payments and {{::symbol}}{{::bankMax}} for bank transfers.",
   "BUY_AMT_LOW": "Buy amount too low.",
   "BUY_AMT_HIGH": "Buy amount too high.",
+  "BUY_AMT_IS": "Your limit is set to {{::symbol}}{{::amount}}.",
+  "WHY": "Why?",
   "UPDATE": "Update",
   "BUY_SUBSCRIBE": {
     "TITLE": "This feature is coming soon!",
@@ -1200,5 +1202,7 @@
   "SFOX_EXPLAIN": "Our partner SFOX will process your Bitcoin purchases. You will need to provide some information about yourself and link a payment method before purchasing Bitcoin.",
   "unable to verify identity": "We were unable to verify your identity. Please try again.",
   "error listing accounts: unauthorized product": "Sorry, there was an error validating your information with our partner. If this issue persists please try contacting support.",
+  "VERIFICATION_NEEDED": "Verification Needed",
+  "VERIFICATION_NEEDED_EXPLAIN": "Please bear with us as our exchange partner verifies your credit card information. This will only happen once, and you may resume purchasing bitcoin in <b>{{days}} day(s).</b>",
   "": ""
 }

@@ -19,6 +19,13 @@ function modals ($state, $uibModal, $ocLazyLoad) {
     windowClass: 'bc-modal medium'
   });
 
+  service.openTemplate = (templateUrl, scope, options) => {
+    open({
+      templateUrl,
+      controller ($scope) { angular.merge($scope, scope); }
+    }, options).result;
+  };
+
   service.openTransfer = (addresses) => open({
     templateUrl: 'partials/settings/transfer.jade',
     controller: 'TransferController',
@@ -63,7 +70,7 @@ function modals ($state, $uibModal, $ocLazyLoad) {
           : $q.resolve([]);
       }
     }
-  }).result;
+  });
 
   return service;
 }

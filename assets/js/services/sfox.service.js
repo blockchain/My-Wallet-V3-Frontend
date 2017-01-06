@@ -7,6 +7,7 @@ function sfox ($q, Alerts, modals) {
 
   const service = {
     init,
+    interpretError,
     displayError,
     determineStep,
     fetchExchangeData,
@@ -21,7 +22,7 @@ function sfox ($q, Alerts, modals) {
     exchange.monitorPayments();
   }
 
-  function displayError (error) {
+  function interpretError (error) {
     if (angular.isString(error)) {
       try {
         error = JSON.parse(error).error;
@@ -30,7 +31,11 @@ function sfox ($q, Alerts, modals) {
     } else {
       error = error.error || error.message || error.initial_error || error;
     }
-    Alerts.displayError(error);
+    return error;
+  }
+
+  function displayError (error) {
+    Alerts.displayError(service.interpretError(error));
   }
 
   function determineStep (exchange, accounts) {
@@ -63,10 +68,11 @@ function sfox ($q, Alerts, modals) {
       .forEach(service.watchTrade);
   }
 
-  function watchTrade (trade) {
+  function watchTrade (trade, completedCallback) {
     watching[trade.receiveAddress] = true;
     $q.resolve(trade.watchAddress())
       .then(() => trade.refresh())
-      .then(() => { modals.openTradeSummary(trade, 'success'); });
+      .then(() => { modals.openTradeSummary(trade, 'success'); })
+      .then(completedCallback);
   }
 }
