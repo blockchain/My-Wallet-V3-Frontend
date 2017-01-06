@@ -4,12 +4,14 @@ var DIST = Boolean(process.env.DIST);
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
+var outputRoot = DIST ? './helperApp/dist' : './helperApp/build';
+
 module.exports = {
   entry: {
     'plaid': './helperApp/plaid/plaid.js'
   },
   output: {
-    path: `./helperApp/build/plaid`,
+    path: outputRoot + '/plaid',
     filename: DIST ? 'plaid-[hash].js' : 'plaid.js'
   },
   module: {
