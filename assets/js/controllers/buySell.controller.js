@@ -139,6 +139,12 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
   $scope.getIsTradingDisabled = () => {
     let profile = $scope.exchange && $scope.exchange.profile;
     let canTrade = profile && profile.canTrade;
+    let cannotTradeReason = profile && profile.cannotTradeReason;
+
+    // Coinify is not setting canTrade to false when purchase is pending.
+    // If that bug is fixed after we deploy this returns false and uses
+    // getIsPurchasePending logic above.
+    if (cannotTradeReason === 'awaiting_first_trade_completion') return false;
 
     return canTrade === false;
   };
