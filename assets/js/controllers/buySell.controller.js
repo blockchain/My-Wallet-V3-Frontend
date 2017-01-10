@@ -131,7 +131,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     let completedTrades = trades && trades.filter(buySell.tradeStateIn(buySell.states.success));
     let purchasePending = trades && trades[0] && buySell.tradeStateIn(buySell.states.pending)(trades[0]);
 
-    $scope.pendingTrade = purchasePending ? trades[0] : undefined;
+    if (purchasePending) $scope.pendingTrade = trades[0];
 
     return purchasePending && completedTrades.length === 0;
   };

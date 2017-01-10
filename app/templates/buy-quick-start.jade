@@ -71,7 +71,7 @@
             | 
             span(translate="PURCHASE_PENDING")
             | 
-            span {{ format(pendingTrade.sendAmount, {code: pendingTrade.inCurrency}, true) }}
+            span {{ format(pendingTrade.sendAmount / 100, {code: pendingTrade.inCurrency}, true) }}
             | .
         .mts.pos-rel(ng-show="isPendingTrade && !canCancelTrade")
           span.pos-abs.type-sm
