@@ -17,76 +17,11 @@
         span.mrs.type-sm(translate="POWERED_BY")
         a(href="https://www.sfox.com/" target="_blank" rel="noopener noreferrer")
           img.mbs(src="img/sfox-logo.png")
-    form.width-50.border.mt-15.pt-30.pb-30.pl-15.pr-15.bc-form(name="checkoutForm" ng-submit="enabled ? buy() : enableBuy()" novalidate autocomplete="off")
-      fieldset
-        .group.mts
-          .item
-            .flex-between.flex-baseline.mbs
-              span.f-16.em-500.colon Enter Amount
-              span
-                div.flex-row.flex-center(ng-show="state.rate && !state.loadFailed")
-                  span 1 {{ bitcoin.code }} = ${{ state.rate }}
-                  helper-button(content="EXCHANGE_RATE_HELPER")
-                .state-danger-text(ng-show="state.loadFailed")
-                  i.ti-alert
-                  span.mls Failed to load exchange data
-            .flex-center
-              .flex-1.flex-center.border
-                input.form-control.no-border(
-                  type="number"
-                  name="fiat"
-                  ng-model="state.fiat"
-                  ng-max="max"
-                  ng-min="min"
-                  ng-focus="state.baseCurr = dollars"
-                  ng-disabled="locked"
-                  step="1"
-                  prevent-event="mousewheel"
-                  transform-currency="dollars"
-                  required)
-                span.mhm {{dollars.code}}
-              i.ti-arrows-horizontal.h4.aaa.phm
-              .flex-1.flex-center.border
-                input.form-control.no-border(
-                  type="number"
-                  name="btc"
-                  ng-model="state.btc"
-                  ng-max="max"
-                  ng-min="min"
-                  ng-focus="state.baseCurr = bitcoin"
-                  ng-disabled="locked"
-                  step="0.01"
-                  prevent-event="mousewheel"
-                  transform-currency="bitcoin"
-                  required)
-                span.mhm {{bitcoin.code}}
-            .text.mts
-              span.f-12(ng-class="{'state-danger-text':checkoutForm.$error.max}")
-                | Your daily buy limit is ${{ format(buyLimit, dollars, false) }}
-        .group.mtl
-          .item
-            .mbm
-              span.f-16.em-500.colon Order Summary
-            .border.flex-column.bg-light-blue
-              div(ng-show="hasMultipleAccounts")
-                .flex-between.flex-center.form-control.bg-light-blue.no-border
-                  span.colon Send To
-                  span {{ btcAccount.label }}
-                .border-bottom-thick.mhm
-              .flex-between.flex-center.form-control.bg-light-blue.no-border
-                span.colon BTC Order
-                span {{ format(fromSatoshi(state.btc || 0, bitcoin), bitcoin, true) }}
-              .border-bottom-thick.mhm
-              .flex-between.flex-center.form-control.bg-light-blue.no-border
-                span.colon Payment Method
-                span.capitalize {{ account.accountType }} ({{ account.accountNumber }})
-              .border-bottom-thick.mhm
-              .flex-between.flex-center.form-control.bg-light-blue.no-border.em-500
-                span.colon Total Cost
-                span {{ format(fromSatoshi(state.total || 0, dollars), dollars, true) }}
-        .group.mtl
-          button.btn.button-primary.full(type="submit" ng-hide="enabled" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") Buy Bitcoin
-          button.btn.button-success.full(type="submit" ng-show="enabled" ng-disabled="locked || !quote") Confirm Purchase
+    buy-checkout.width-50.border.mt-15.pt-30.pb-30.pl-15.pr-15(
+      buy-limit="buyLimit"
+      buy-account="account"
+      handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
+      handle-buy="buyHandler(quote)")
   .flex-column.mtl(ng-show="trades.length")
     h4.type-h4(translate="ORDER_HISTORY")
     table.width-100

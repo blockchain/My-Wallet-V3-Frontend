@@ -11,6 +11,8 @@ function sfox ($q, Alerts, modals) {
     displayError,
     determineStep,
     fetchExchangeData,
+    fetchQuote,
+    buy,
     watchTrades,
     watchTrade
   };
@@ -60,6 +62,16 @@ function sfox ($q, Alerts, modals) {
     return $q.resolve(exchange.fetchProfile())
       .then(() => exchange.getTrades())
       .then(service.watchTrades);
+  }
+
+  function fetchQuote (exchange, amount, baseCurr, quoteCurr) {
+    let quoteP = exchange.getBuyQuote(amount, baseCurr, quoteCurr);
+    return $q.resolve(quoteP);
+  }
+
+  function buy (account, quote) {
+    return $q.resolve(quote.getPaymentMediums())
+      .then(mediums => mediums.ach.buy(account));
   }
 
   function watchTrades (trades) {

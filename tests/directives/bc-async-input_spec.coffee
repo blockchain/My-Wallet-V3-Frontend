@@ -121,6 +121,7 @@ describe 'bcAsyncInput Directive', ->
   describe 'cancel', ->
 
     beforeEach ->
+      isoScope = compileElement()
       isoScope.bcAsyncForm.input.$setViewValue('newValue')
       isoScope.cancel()
 
