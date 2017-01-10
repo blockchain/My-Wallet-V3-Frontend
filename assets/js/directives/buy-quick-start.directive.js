@@ -104,6 +104,8 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, modals) 
       modals.openTemplate('partials/verification-needed-modal.jade', { days }, options);
     };
 
+    scope.canCancelTrade = scope.pendingTrade && scope.pendingTrade.state === 'awaiting_transfer_in';
+
     scope.getExchangeRate();
     scope.$on('$destroy', stopFetchingQuote);
     scope.$watch('modalOpen', (modalOpen) => {

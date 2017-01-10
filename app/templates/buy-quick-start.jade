@@ -61,7 +61,7 @@
             span.state-danger-text(translate="BUY_AMT_IS" translate-values="{symbol: currencySymbol.symbol, amount: 0}")
             span  
             span.blue.pointer(ng-click="openVerificationNeeded()" translate="WHY")
-        .mts.pos-rel(ng-show="isPendingTrade")
+        .mts.pos-rel(ng-show="isPendingTrade && canCancelTrade")
           span.pos-abs.type-sm
             span.blue.pointer(ng-click="openPendingTrade()" translate="FINISH")
             | 
@@ -71,8 +71,11 @@
             | 
             span(translate="PURCHASE_PENDING")
             | 
-            span ${{ format(pendingTrade.sendAmount / 100, pendingTrade.inCurrency, false) }}
+            span {{ format(pendingTrade.sendAmount, {code: pendingTrade.inCurrency}, true) }}
             | .
+        .mts.pos-rel(ng-show="isPendingTrade && !canCancelTrade")
+          span.pos-abs.type-sm
+            span.blue.pointer(ng-click="openPendingTrade()" translate="PURCHASE_PENDING_CANT_CANCEL")
       .flex-end.mtvl.pos-rel
         span.coinify-logo.coinify-logo-left
           span.mrs.type-sm(translate="POWERED_BY")
