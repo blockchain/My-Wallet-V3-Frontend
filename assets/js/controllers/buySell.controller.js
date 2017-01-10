@@ -130,10 +130,11 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     let trades = $scope.exchange && $scope.exchange.trades.sort((a, b) => b.id - a.id);
     let completedTrades = trades && trades.filter(buySell.tradeStateIn(buySell.states.success));
     let purchasePending = trades && trades[0] && buySell.tradeStateIn(buySell.states.pending)(trades[0]);
+    let isMediumCard = trades && trades[0] && trades[0].medium === 'card';
 
     $scope.pendingTrade = purchasePending ? trades[0] : undefined;
 
-    return purchasePending === true && completedTrades.length === 0;
+    return purchasePending && isMediumCard && completedTrades.length === 0;
   };
 
   $scope.getIsTradingDisabled = () => {
