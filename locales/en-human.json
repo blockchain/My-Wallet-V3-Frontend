@@ -1194,7 +1194,6 @@
   "EDIT_ORDER": "Edit Order",
   "TOTAL_COST:": "Total Cost:",
   "ENTER_AMOUNT:": "Enter amount:",
-  "BUY_BITCOIN_ALERT": "You can now buy Bitcoin with your Blockchain wallet! Click below to get started.",
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
   "EXCHANGE_CONNECT_ERROR": "Error connecting to our exchange partner",
@@ -1205,5 +1204,6 @@
   "VERIFICATION_NEEDED_EXPLAIN": "Please bear with us as our exchange partner verifies your credit card information. This will only happen once, and you may resume purchasing bitcoin in <b>{{days}} day(s).</b>",
   "PURCHASE_PENDING": "your pending purchase for",
   "PURCHASE_PENDING_CANT_CANCEL": "Please wait for your pending trade to complete.",
+  "BUY_BITCOIN_EXPLAIN": "You can now buy Bitcoin with your Blockchain wallet!",
   "": ""
 }
