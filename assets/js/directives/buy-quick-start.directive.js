@@ -12,7 +12,11 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, modals) 
     scope: {
       buy: '&',
       limits: '=',
+      disabled: '=',
       tradingDisabled: '=',
+      isPendingTrade: '=',
+      openPendingTrade: '&',
+      pendingTrade: '=',
       modalOpen: '=',
       transaction: '=',
       currencySymbol: '=',
@@ -27,6 +31,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, modals) 
     scope.exchangeRate = {};
     scope.status = {ready: true};
     scope.currencies = currency.coinifyCurrencies;
+    scope.format = currency.formatCurrencyForView;
 
     scope.updateLastInput = (type) => scope.lastInput = type;
 
@@ -81,6 +86,16 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, modals) 
       Alerts.displayError('ERROR_QUOTE_FETCH');
     };
 
+    scope.cancelTrade = () => {
+      scope.disabled = true;
+      Alerts.confirm('CONFIRM_CANCEL_TRADE', {
+        action: 'CANCEL_TRADE',
+        cancel: 'GO_BACK'
+      }).then(() => scope.pendingTrade.cancel(), () => {})
+        .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); })
+        .finally(() => scope.disabled = false);
+    };
+
     scope.openVerificationNeeded = () => {
       let verifyDate = buySell.getExchange().profile.canTradeAfter;
       console.log('verifyDate', verifyDate);
@@ -93,6 +108,9 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, modals) 
     scope.$on('$destroy', stopFetchingQuote);
     scope.$watch('modalOpen', (modalOpen) => {
       modalOpen ? stopFetchingQuote() : scope.getExchangeRate();
+    });
+    scope.$watch('pendingTrade.state', (state) => {
+      scope.canCancelTrade = state === 'awaiting_transfer_in';
     });
   }
 }
