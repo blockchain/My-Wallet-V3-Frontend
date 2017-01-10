@@ -1,4 +1,4 @@
-fdescribe "BC File Upload Directive", ->
+describe "BC File Upload Directive", ->
   scope = undefined
   isoScope = undefined
 
