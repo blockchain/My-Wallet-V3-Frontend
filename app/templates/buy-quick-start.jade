@@ -9,7 +9,7 @@
         div(ng-show="exchangeRate.fiat")
           span.type-sm.em-500 1 BTC = {{currencySymbol.symbol}}{{ exchangeRate.fiat }}
           helper-button(content="EXCHANGE_RATE_HELPER")
-      fieldset(ng-disabled="tradingDisabled")
+      fieldset(ng-disabled="tradingDisabled || isPendingTrade")
         .flex-row.flex-between.flex-center.flex-column-tablet
           section.input-group.width-45
             input.form-control.brdrn(
@@ -53,7 +53,7 @@
               required)
             div.input-group-btn
               button.btn.btn-default.brdrn.disabled BTC
-        .mts.pos-rel(ng-hide="tradingDisabled")
+        .mts.pos-rel(ng-hide="tradingDisabled || isPendingTrade")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="BUY_AMT_LOW")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max" translate="BUY_AMT_HIGH")
         .mts.pos-rel(ng-show="tradingDisabled")
@@ -61,10 +61,25 @@
             span.state-danger-text(translate="BUY_AMT_IS" translate-values="{symbol: currencySymbol.symbol, amount: 0}")
             span  
             span.blue.pointer(ng-click="openVerificationNeeded()" translate="WHY")
+        .mts.pos-rel(ng-show="isPendingTrade && canCancelTrade")
+          span.pos-abs.type-sm
+            span.blue.pointer(ng-click="openPendingTrade()" translate="FINISH")
+            | 
+            span(translate="OR")
+            | 
+            span.blue.pointer(ng-click="cancelTrade()" translate="CANCEL")
+            | 
+            span(translate="PURCHASE_PENDING")
+            | 
+            span {{ format(pendingTrade.sendAmount / 100, {code: pendingTrade.inCurrency}, true) }}
+            | .
+        .mts.pos-rel(ng-show="isPendingTrade && !canCancelTrade")
+          span.pos-abs.type-sm
+            span.blue.pointer(ng-click="openPendingTrade()" translate="PURCHASE_PENDING_CANT_CANCEL")
       .flex-end.mtvl.pos-rel
         span.coinify-logo.coinify-logo-left
           span.mrs.type-sm(translate="POWERED_BY")
           a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
             img(src="img/coinify-logo.svg")
             span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
-        button.button-primary(translate="Buy Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || status.busy || tradingDisabled")
+        button.button-primary(translate="Buy Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || status.busy || tradingDisabled || isPendingTrade")

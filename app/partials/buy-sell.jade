@@ -8,12 +8,16 @@
   div(ng-if="!status.loading && !status.metaDataDown && !status.exchangeDown || status.disabled")
     .flex-row.flex-column-tablet
       .width-50.mrl.mtl(ng-show="state.buy")
-        buy-quick-start(transaction="transaction"
+        buy-quick-start(limits="limits"
+                        transaction="transaction"
+                        disabled="status.disabled"
                         currency-symbol="currencySymbol"
                         modal-open="status.modalOpen"
                         change-currency="changeCurrency(currency)"
-                        limits="limits"
                         trading-disabled="getIsTradingDisabled()"
+                        is-pending-trade="getIsPurchasePending()"
+                        open-pending-trade="buy(pendingTrade)"
+                        pending-trade="pendingTrade"
                         buy="buy(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
       .flex-column.width-50.mlvl.mt-55
         div(ng-hide="trades.pending.length || trades.completed.length || (kyc && kyc.state !== 'completed')")

@@ -126,9 +126,26 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     buySell.getRate($scope.exchange.profile.defaultCurrency, $scope.transaction.currency.code).then(calculateMax);
   };
 
+  $scope.getIsPurchasePending = () => {
+    let trades = $scope.exchange && $scope.exchange.trades.sort((a, b) => b.id - a.id);
+    let completedTrades = trades && trades.filter(buySell.tradeStateIn(buySell.states.success));
+    let purchasePending = trades && trades[0] && buySell.tradeStateIn(buySell.states.pending)(trades[0]);
+
+    if (purchasePending) $scope.pendingTrade = trades[0];
+
+    return purchasePending && completedTrades.length === 0;
+  };
+
   $scope.getIsTradingDisabled = () => {
     let profile = $scope.exchange && $scope.exchange.profile;
     let canTrade = profile && profile.canTrade;
+    let cannotTradeReason = profile && profile.cannotTradeReason;
+
+    // Coinify is not setting canTrade to false when purchase is pending.
+    // If that bug is fixed after we deploy this returns false and uses
+    // getIsPurchasePending logic above.
+    if (cannotTradeReason === 'awaiting_first_trade_completion') return false;
+
     return canTrade === false;
   };
 

@@ -14,6 +14,9 @@ describe "NavigationCtrl", ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       Alerts = $injector.get("Alerts")
+      buyStatus = $injector.get("buyStatus")
+
+      buyStatus.canBuy = () -> $q.resolve(true)
 
       Alerts.confirm = (msg) ->
         $q.resolve()
@@ -87,6 +90,7 @@ describe "NavigationCtrl", ->
       expect(scope.whatsNewTemplate).toEqual('templates/whats-new.jade')
 
     it "should have the feature array injected", ->
+      scope.$digest()
       expect(scope.feats.length).toEqual(2)
 
     describe "without 2nd password", ->

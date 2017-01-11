@@ -65,7 +65,7 @@
             span.error(translate="Required field")
         .group
           button.btn.button-primary.full(type="submit" ng-disabled="verifyForm.$invalid") Continue
-.flex-row.flex-start.flex-column-mobile(ng-show="state.idType === 'id' || state.idType === 'address'")
+.flex-row.flex-start.flex-column-mobile(ng-if="state.idType === 'id' || state.idType === 'address'")
   .width-40
     .width-80
       h4.f-20.em-500.mvn.mb-10(translate="{{state.idType + '_ID'}}.TITLE")
@@ -92,18 +92,4 @@
 
   .width-60
     label.f-14(translate="{{state.idType + '_ID'}}.UPLOAD_TITLE")
-    div.file-upload(ngf-drop ngf-select ng-model="state.file" ngf-drag-over-class="'dragover'" ngf-pattern="'image/*'")
-      span.type-h5.em-300.mtvl(ng-hide="state.file") Drag and Drop Document (PDF, JPG, or PNG)
-      span.type-h5.em-300.mtvl(ng-show="state.file")
-        b {{state.file.name}}
-        |  successfully uploaded!
-      img.width-20.mobile-width-40(src="img/document.png" ng-hide="state.file")
-      img.width-40.mobile-width-40(ngf-src="state.file" ng-show="state.file")
-      span.type-h5.em-300.mbvl(ng-hide="state.file") Or
-        |  
-        span.blue.pointer.em-400 Select Document
-      span.type-h5.em-300.mbvl(ng-show="state.file") Document will be sent to SFOX for review.
-    div(ngf-no-file-drop) File Drag/Drop is not supported for this browser
-    form(ng-submit="upload()")
-      button.mtl.btn.button-primary.full(type="submit" focus-when="state.file" ng-disabled="!state.file || locked") Submit
-      a.display-block.center.mtl(ng-click="state.file = null" ng-show="state.file") Change Document
+    bc-file-upload(state="state" on-upload="upload")
