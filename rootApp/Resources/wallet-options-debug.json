@@ -11,6 +11,7 @@
     },
     "sfox": {
       "countries": ["US"],
+      "states": ["AL", "AZ", "CA", "CO", "GA", "KS", "MD", "MA", "MO", "MT", "SC", "TX"],
       "inviteFormFraction": 0.1
     }
   }

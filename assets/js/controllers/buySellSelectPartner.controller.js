@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySellSelectPartnerController', BuySellSelectPartnerController);
 
-function BuySellSelectPartnerController ($scope, $state, MyWallet, buySell, country, options, buyStatus) {
+function BuySellSelectPartnerController ($scope, $state, Wallet, MyWallet, buySell, country, state, options, buyStatus) {
   buyStatus.canBuy().then((canBuy) => {
     if (!canBuy) {
       $state.go('wallet.common.home');
@@ -13,11 +13,17 @@ function BuySellSelectPartnerController ($scope, $state, MyWallet, buySell, coun
   let contains = (val, list) => list.indexOf(val) > -1;
   let codeGuess = MyWallet.wallet.accountInfo && MyWallet.wallet.accountInfo.countryCodeGuess;
 
+  $scope.states = state.stateCodes;
+  $scope.state = $scope.states[0];
+
   $scope.countries = country.countryCodes;
   $scope.country = $scope.countries.filter(c => c.Code === codeGuess)[0];
 
   $scope.coinifyWhitelist = options.partners.coinify.countries;
   $scope.sfoxWhitelist = options.partners.sfox.countries;
+  $scope.sfoxStateWhitelist = options.partners.sfox.states;
+
+  $scope.email = Wallet.user.email;
 
   $scope.partners = {
     'coinify': {
@@ -36,6 +42,14 @@ function BuySellSelectPartnerController ($scope, $state, MyWallet, buySell, coun
     }
   };
 
+  $scope.signupForAccess = () => {
+    let email = encodeURIComponent($scope.email);
+    let country = $scope.country.Name;
+    let state = $scope.country.Code === 'US' ? $scope.state.Name : undefined;
+
+    buySell.signupForAccess(email, country, state);
+  };
+
   $scope.selectPartner = (partner, countryCode) => {
     $state.go($scope.vm.base + partner.route, { countryCode });
   };
@@ -45,8 +59,18 @@ function BuySellSelectPartnerController ($scope, $state, MyWallet, buySell, coun
     (contains(countryCode, $scope.sfoxWhitelist) && codeGuess === 'US' && 'sfox') || false
   );
 
+  $scope.onStateWhitelist = (stateCode) => (
+    contains(stateCode, $scope.sfoxStateWhitelist) && 'sfox' || false
+  );
+
   $scope.$watch('country', (c) => {
     let whitelisted = $scope.onWhitelist(c.Code);
+    $scope.blacklisted = !whitelisted;
+    $scope.partner = whitelisted ? $scope.partners[whitelisted] : null;
+  });
+
+  $scope.$watch('state', (s) => {
+    let whitelisted = s && $scope.onStateWhitelist(s.Code);
     $scope.blacklisted = !whitelisted;
     $scope.partner = whitelisted ? $scope.partners[whitelisted] : null;
   });
